@@ -1,0 +1,23 @@
+name: Gap work
+description: Work toward one of the ranked gaps G1-G19
+labels: [gap]
+body:
+  - type: input
+    id: gap
+    attributes:
+      label: Gap id
+      placeholder: "G3"
+    validations: { required: true }
+  - type: textarea
+    id: scope
+    attributes:
+      label: What this closes, and what it explicitly does not
+    validations: { required: true }
+  - type: checkboxes
+    id: discipline
+    attributes:
+      label: Blind-run discipline
+      options:
+        - label: No historical target enters the data flow before sealing
+        - label: Checkpoint hashes recorded
+        - label: Comparison targets loaded only after unblinding

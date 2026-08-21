@@ -1,0 +1,24 @@
+# Normalize line endings so diffs stay clean across machines.
+* text=auto eol=lf
+
+*.sh   text eol=lf
+*.bat  text eol=crlf
+
+# Binary — never diff or merge these.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.pdf  binary
+*.zip  binary
+*.parquet binary
+*.onnx binary
+*.pt   binary
+
+# Notebooks: treat as text but don't let GitHub count them as the repo language.
+*.ipynb text linguist-detectable=false
+
+# Keep generated/vendored files out of language stats and diffs.
+**/vendor/**   linguist-vendored
+**/generated/** linguist-generated
+*.lock         linguist-generated -diff

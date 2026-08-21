@@ -1,0 +1,79 @@
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.shared.json
+
+# ---- Secrets & local config ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+!**/testdata/**/*.key
+secrets.*
+.claude/settings.local.json
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+.ipynb_checkpoints/
+
+# ---- Node ----
+node_modules/
+.next/
+.nuxt/
+.turbo/
+.parcel-cache/
+*.tsbuildinfo
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---- Rust / Go ----
+target/
+vendor/
+
+# ---- TeX ----
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.bbl
+*.blg
+
+# ---- Data & artifacts ----
+# Large inputs/outputs belong outside git (or in LFS). Keep small fixtures in
+# tests/fixtures/ and check them in deliberately.
+data/raw/
+data/interim/
+data/processed/
+artifacts/
+outputs/
+*.sqlite
+*.sqlite3
+*.db
+*.parquet
+*.h5
+*.ckpt
+*.pt
+*.onnx

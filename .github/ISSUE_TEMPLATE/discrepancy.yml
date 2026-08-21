@@ -1,0 +1,26 @@
+name: Numerical discrepancy
+description: A printed value disagrees with its own definition
+labels: [discrepancy]
+body:
+  - type: input
+    id: section
+    attributes:
+      label: Corpus section
+      placeholder: "MASTER_THEORY §5.5"
+    validations: { required: true }
+  - type: textarea
+    id: values
+    attributes:
+      label: The two values
+      description: Give both, exactly as printed, plus the gap in absolute terms and in ulps.
+    validations: { required: true }
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Most likely cause
+      options:
+        - Bug in the check
+        - Transcription slip in the registry
+        - Real discrepancy in the corpus
+        - Unknown
+    validations: { required: true }
