@@ -140,7 +140,7 @@ scripts/    stack detection, bootstrap, check — one source of truth for CI and
 
 ## What the verifier found
 
-52 invariants currently re-derive cleanly. Six are recorded as **findings**.
+58 invariants currently re-derive cleanly. Six are recorded as **findings**.
 Three are places where the corpus's own wording is slightly tighter than its
 numbers:
 
@@ -189,6 +189,35 @@ The quarantine *architecture* is sound — targets stay module-local and the
 engine is launched with a clean environment. The gap is in detecting a target
 already inside the engine, which is exactly the case the scan exists to rule
 out.
+
+## A result, not just a check
+
+`G11` asked for near-Gamma uniformity and the corpus recorded only a warning:
+below some radius the `O(u²)` isolation gap `~u²|k|²` meets the `O(u⁴)` scale,
+and until that radius is named a fixed-momentum coefficient theorem cannot be
+promoted to a uniformly isolated band theorem.
+
+The radius is now explicit:
+
+```
+|k| ≥ K·u,     K = (π/2)·√(W₄ / (θ t₃))
+```
+
+At `θ = 1/2` that is `K = 17.04` for the historical kernel and `23.66` for
+v10a.26. It rests on Jordan's inequality `q(k) ≥ (4/π²)|k|²` — tight at both
+`k = 0` and the zone corner, so it holds across the whole zone rather than only
+near Gamma.
+
+**It does not depend on C2.** `K` enters only through `√W₄`, so the larger
+disputed bandwidth bounds both cases: `K = 23.66` is valid whichever kernel the
+adjudication selects, and can be stated before G3 runs. It also bounds where
+the claim means anything (`u < 0.133` at `θ = 1/2`) and what it gives up (the
+excluded fraction grows as `u³`: 0.18% at `u = 0.02`, 22.36% at `u = 0.10`).
+
+This is a sufficient criterion from a conservative bound, not the sharp
+constant, and it says nothing about the ball's interior. G11 is partially
+discharged, not closed. See
+[ADR 0003](docs/decisions/0003-near-gamma-exclusion-radius.md).
 
 ## Status
 
