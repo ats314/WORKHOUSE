@@ -189,41 +189,42 @@ gaps:
   - id: G14
     tier: 3
     title: Mechanism of the tier collapse B_shp = D_shp = 0
-    status: mechanism proposed, prediction pending
-    detail: "Accident, selection rule, or boundary-ideal remnant? And does the L^-4 tier appear at fifth or sixth order?"
-    proposed_mechanism:
-      claim: "a degree bound, not a dynamical selection rule"
-      reformulation: >
-        Clearing the denominator, q*eps_4 = c_0 q + A q^2 + 4C e_2 + B (q e_2)
-        + D e_3. The basis stratifies by total degree in the a_i: degree 1 is
-        c_0, degree 2 is {A_shp, C_shp}, degree 3 is {B_shp, D_shp}. Since
-        a_i ~ L^-2, degree 3 IS the L^-4 tier — so "the tier is not selected"
-        and "the numerator has no degree-3 part" are the same statement.
-      structural_input: >
-        The face-to-link Bloch incidence is the curl matrix [d]_x with entries
-        linear in d, satisfying B B^dagger = q I - d conj(d)^T with eigenvalues
-        (0, q, q). That reproduces the recorded second-order C-odd spectrum
-        exactly, with the flat carrier as the d-direction. Each entry is
-        bilinear in (d, conj d): one hop costs one power of a.
-      bound: "order u^(2r) -> 2r vertices -> numerator degree <= r in the a_i"
-      consistency:
-        - "r=1, O(u^2): degree <= 1 -> q only. Observed t_N q, with no degree-2 term that cubic symmetry would have permitted. A real check."
-        - "r=2, O(u^4): degree <= 2 -> {q, q^2, e_2}. Forces B_shp = D_shp = 0."
-        - "r=3, O(u^6): degree <= 3 -> adds {q e_2, e_3}."
-      assumptions:
-        - "every vertex is linear in d or conj(d) — true of the incidence entries, but the full amplitude also carries colour factors and resolvents"
-        - "energy denominators are k-independent — true at the one-plaquette level, where the unperturbed flux energies do not disperse"
-      status: conjectured mechanism, not a theorem
-      recorded_in: docs/decisions/0004-tier-collapse-as-a-degree-bound.md
-    prediction:
-      statement: "the L^-4 tier appears at SIXTH order, not fifth; odd orders add no hop"
-      falsified_by: "m_6 returning B_shp = D_shp = 0 again"
-      tested_by: G9
-      note: >
-        This is the point of recording the mechanism now: it converts a dormant
-        "why" question into a prediction that an already-planned computation
-        settles either way.
-    depends_on: [G9]
+    status: open — better posed, one mechanism tried and retracted
+    detail: >
+      Restated: why does the degree-3 part of d^dagger H_4 d vanish, when the
+      two-hop enumeration produces it? MASTER_THEORY 5.1 records that the 144
+      ordered two-hop sequences give the numerator span at rank five, which
+      INCLUDES q e_2 and e_3. So the terms are generated and the dynamics sets
+      their coefficients to zero — a dynamical vanishing, not a kinematic one.
+    exact_reformulation:
+      claim: "the vanishing pair IS the degree-3 part of the numerator"
+      detail: >
+        Clearing the denominator, q eps_4 = c_0 q + A q^2 + 4C e_2 + B (q e_2)
+        + D e_3. Degrees in the a_i are 1, 2, 2, 3, 3. Since a_i ~ L^-2, degree
+        3 is the L^-4 tier. This is an identity, independent of any mechanism,
+        and it survives the retraction below.
+      also_established: >
+        The carrier is the d-direction with d^dagger d = q, so
+        eps_4 = (d^dagger H_4 d)/q — which is where the 1/q in the ansatz comes
+        from. And B B^dagger = q I - d conj(d)^T has eigenvalues (0, q, q),
+        reproducing the recorded second-order C-odd spectrum.
+    retracted_mechanism:
+      claim: "a degree bound: 2r vertices -> numerator degree <= r, forbidding B and D at fourth order"
+      why_it_fails: >
+        The numerator is d^dagger H_4 d, not H_4. The carrier projection adds one
+        further d and one further conj(d), so four vertices bound H_4 entries at
+        a-degree 2 but the numerator at 3 — exactly the degree of {B_shp, D_shp}.
+        The count permits the pair it was meant to forbid. Witness:
+        d^dagger diag(a_i^2) d = sum a_i^3 = q^3 - 3 q e_2 + 3 e_3, nonzero in e_3.
+      counter_evidence_already_available: >
+        MASTER_THEORY 5.1's rank-five span includes the degree-3 elements. That
+        was in the document being modelled and was under-weighted.
+      withdrawn_prediction: "the L^-4 tier appears first at sixth order"
+      recorded_in: docs/decisions/0005-retracting-the-degree-bound.md
+    note: >
+      A second-order analogue does not help: d^dagger H_2 d = 0 exactly, but the
+      cause is known (homological protection, B^dagger psi = 0), so it is not an
+      independent instance of a top-degree-unpopulated pattern.
 
   - id: G15
     tier: 3
