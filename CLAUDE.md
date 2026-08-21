@@ -102,6 +102,7 @@ make verify    # re-derive every exact claim (T1/T2)
 make status    # contradiction and gap registers
 make frontier  # regenerate FRONTIER.md — established / disputed / refuted / next
 make certified # regenerate CERTIFIED.md — every checked claim, ranked by tier
+make lit       # published work, and which claim each paper bears on
 make check     # ruff + pytest, what CI runs
 make lean      # T0: proof-check the Lean core (needs elan; see lean/README.md)
 make manifest  # re-pin theory/ after a deliberate, reviewed corpus change

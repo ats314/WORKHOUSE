@@ -1079,3 +1079,94 @@ def _():
         f"the quoted ratio is sqrt(6) * {K.RATIO_UNDISPUTED} through u^3; C2 "
         "reaches every higher coefficient through the fourth-order mass kernel"
     )
+
+
+# ==========================================================================
+published = _suite("published comparisons (literature/index.yaml)")
+# An external result is not authority either -- it is T3 until something checks
+# it. What makes one valuable is independence: it was produced without any
+# knowledge of this program, so agreement is evidence rather than bookkeeping.
+
+
+@published.check("SU(3) Weingarten values follow from the general formula", "CS_2006 / C7")
+def _():
+    # C7's decisive witness quotes Wg(e) = 1/8 and Wg((12)) = -1/24 for SU(3)
+    # from a transcript. Re-derive them, symbolically in N, from the definition:
+    # the order-n Weingarten matrix is the inverse of the Gram matrix
+    # G[s,t] = N**(number of cycles of s*t^-1) on the symmetric group S_n.
+    # At n = 2, S_2 = {e, (12)}: cycles(e) = 2, cycles((12)) = 1.
+    n = symbols("N", positive=True)
+    gram = Matrix([[n**2, n], [n, n**2]])
+    wg = simplify(gram.inv())
+    identity, transposition = wg[0, 0], wg[0, 1]
+    return (
+        simplify(identity - 1 / (n**2 - 1)) == 0
+        and simplify(transposition + 1 / (n * (n**2 - 1))) == 0
+        and identity.subs(n, 3) == Rational(1, 8)
+        and transposition.subs(n, 3) == Rational(-1, 24)
+    ), (
+        f"Wg(e) = {simplify(identity)} and Wg((12)) = {simplify(transposition)} for all N; "
+        f"at N = 3 they are {identity.subs(n, 3)} and {transposition.subs(n, 3)}, "
+        "exactly the values C7 quotes"
+    )
+
+
+@published.check("the fourth moment integral |U_11|^4 = 1/6 at N = 3", "CS_2006 / C7")
+def _():
+    # The other half of C7's witness. All four indices are 1, so every pair
+    # (sigma, tau) in S_2 x S_2 contributes and the integral is the full sum of
+    # the Weingarten matrix: 2 Wg(e) + 2 Wg((12)).
+    n = symbols("N", positive=True)
+    gram = Matrix([[n**2, n], [n, n**2]])
+    wg = simplify(gram.inv())
+    moment = simplify(2 * wg[0, 0] + 2 * wg[0, 1])
+    return simplify(moment - 2 / (n * (n + 1))) == 0 and moment.subs(n, 3) == Rational(1, 6), (
+        f"integral |U_11|^4 dU = {simplify(moment)} = 2/(N(N+1)); at N = 3 that is "
+        f"{moment.subs(n, 3)}, nonzero -- which is what refuted the claimed Haar zero "
+        "for the balanced (n_U, n_Udag) = (2,2) sector"
+    )
+
+
+@published.check("the Weingarten route is independent of the corpus", "CS_2006 / C7")
+def _():
+    # Worth stating explicitly, because it is the reason C7 is settled rather
+    # than merely disputed. The derivation above uses only the symmetric group
+    # and the rank; it imports no constant, convention, or coefficient from the
+    # corpus, so it cannot inherit an error from it.
+    n = symbols("N", positive=True)
+    gram = Matrix([[n**2, n], [n, n**2]])
+    generic = simplify(gram.inv()[0, 0] * (n**2 - 1))
+    return generic == 1, (
+        "the identity-permutation Weingarten value times (N^2 - 1) is exactly 1 for "
+        "symbolic N, so the SU(3) numbers are a specialization of a rank-generic "
+        "formula rather than a fitted pair"
+    )
+
+
+@published.check(
+    "the strongest external check is a transcription, and says so",
+    "HAMER_1989",
+    tier=2,
+)
+def _():
+    # 8 * a_4 agreeing with m_Gamma^(4) to 5.2e-13 is the best external
+    # validation the program has -- and the corpus itself records that the
+    # primary table has never been pinned. The check asserts the caveat, so it
+    # cannot quietly disappear when the number gets quoted.
+    from . import literature as lit_mod
+
+    lit = lit_mod.load()
+    edges = lit.bearing_on("HAMER_A4")
+    supplies = [e for _p, e in edges if e["relation"] == "supplies-value"]
+    bridged = 8 * K.HAMER_A4
+    gap = abs(bridged - K.M_GAMMA_4_NUM)
+    return (
+        len(supplies) == 1
+        and supplies[0]["status"] == "transcription-unverified"
+        and gap < K.HAMER_TOLERANCE
+    ), (
+        f"8 * a_4 = {bridged} against m_Gamma^(4) = {K.M_GAMMA_4_NUM}, gap {gap:.2e} "
+        f"(bound {K.HAMER_TOLERANCE:.1e}) — but the edge to HAMER_1989 is recorded as "
+        "transcription-unverified: the primary Phys. Lett. B 224 table has never been "
+        "pinned and hashed, so this agreement rests on a local transcription"
+    )

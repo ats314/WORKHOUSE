@@ -8,6 +8,7 @@ import sys
 from . import certified as certified_mod
 from . import frontier as frontier_mod
 from . import ledger as ledger_mod
+from . import literature as literature_mod
 from . import triage as triage_mod
 from .invariants import SUITES
 
@@ -110,6 +111,18 @@ def _certified(write: bool) -> int:
     return 0
 
 
+def _lit(target: str | None) -> int:
+    lit = literature_mod.load()
+    problems = literature_mod.validate(lit)
+    print(literature_mod.format_index(lit, target=target))
+    if problems:
+        print("\n\033[31mLiterature index problems\033[0m")
+        for p in problems:
+            print(f"  - {p}")
+        return 1
+    return 0
+
+
 def _triage(directory: str, limit: int) -> int:
     from pathlib import Path
 
@@ -139,6 +152,14 @@ def main(argv: list[str] | None = None) -> int:
         "-b", "--brief", action="store_true", help="the short form injected at session start"
     )
 
+    li = sub.add_parser("lit", help="published work, and which claim each paper bears on")
+    li.add_argument(
+        "--for",
+        dest="target",
+        metavar="ID",
+        help="show only work bearing on this claim (C2, G18, R14, U3, or a constant)",
+    )
+
     ce = sub.add_parser(
         "certified", help="what is certified, ranked by tier, with how to re-check each claim"
     )
@@ -154,6 +175,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.command == "verify":
         return _verify(args.verbose, args.only, args.tier)
+    if args.command == "lit":
+        return _lit(args.target)
     if args.command == "certified":
         return _certified(args.write)
     if args.command == "frontier":

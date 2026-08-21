@@ -96,12 +96,14 @@ make check        # ruff + pytest — what CI runs
 make status       # the contradiction and gap registers
 make frontier     # regenerate FRONTIER.md
 make certified    # regenerate CERTIFIED.md
+make lit          # published work, and which claim each paper bears on
 make lean         # T0: proof-check the Lean core (needs elan)
 make manifest     # re-pin theory/ after a deliberate, reviewed corpus change
 
 workhouse verify --only TEXT     # one claim, with its numbers and source line
 workhouse verify --tier 1        # only the exact re-derivations
 workhouse frontier --brief       # the block the SessionStart hook injects
+workhouse lit --for C7           # published work bearing on one claim
 workhouse triage /path/to/dir    # survey an unpinned archive, read-only
 ```
 
@@ -187,6 +189,7 @@ ledger/        R1–R23 (authority), C1–C22, G1–G19, unifying candidates
 src/workhouse/ constants registry, invariant suites, frontier, CLI
 lean/          T0 — the proof-checked core
 tests/         every invariant as its own test case
+literature/    published work, indexed by the claim each paper bears on
 settlement/    received cold-run transcripts and the adjudication harness
 corpus-import/ 928 files of research history — targeted access only
 docs/decisions/ ADRs, including the ones this repository retracted

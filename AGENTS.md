@@ -147,6 +147,12 @@ spectral geometry, Feshbach/resolvent constructions, linked-cluster
 cancellation, conserved flux, graph structure, degeneracy, selection rules,
 algebraic factorization.
 
+`literature/index.yaml` is the external half of this: published results
+indexed by the claim they bear on, queryable with `workhouse lit --for <id>`.
+An external result counts because it is **independent** — produced without
+knowledge of this program — not because it is published. It is T3 until
+something checks it, same as any document here.
+
 But distinguish analogy from derivation. If several results look like instances
 of one principle, write the candidate general theorem down and say exactly what
 would prove or falsify it. That statement is worth more than the analogy.

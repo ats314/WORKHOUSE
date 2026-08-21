@@ -85,7 +85,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 61
+## T1 — re-derived exactly — 64
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -232,6 +232,17 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the crosswalk is exactly scalar on the momentum axes`
   - src/workhouse/invariants.py:458 · MASTER_THEORY §5.5
   - `workhouse verify --only 'the crosswalk is exactly scalar on the momentum axes'`
+**published comparisons (literature/index.yaml)**
+
+- `SU(3) Weingarten values follow from the general formula`
+  - src/workhouse/invariants.py:1091 · CS_2006 / C7
+  - `workhouse verify --only 'SU(3) Weingarten values follow from the general formula'`
+- `the Weingarten route is independent of the corpus`
+  - src/workhouse/invariants.py:1130 · CS_2006 / C7
+  - `workhouse verify --only 'the Weingarten route is independent of the corpus'`
+- `the fourth moment integral |U_11|^4 = 1/6 at N = 3`
+  - src/workhouse/invariants.py:1114 · CS_2006 / C7
+  - `workhouse verify --only 'the fourth moment integral |U_11|^4 = 1/6 at N = 3'`
 **second order, all ranks**
 
 - `N^3 t_N increases monotonically to 1/4`
@@ -299,7 +310,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:790 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
-## T2 — float agreement within a stated tolerance — 19
+## T2 — float agreement within a stated tolerance — 20
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -368,6 +379,11 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `crosswalk reproduces the recorded off-axis band splits`
   - src/workhouse/invariants.py:445 · MASTER_THEORY §5.5
   - `workhouse verify --only 'crosswalk reproduces the recorded off-axis band splits'`
+**published comparisons (literature/index.yaml)**
+
+- `the strongest external check is a transcription, and says so`
+  - src/workhouse/invariants.py:1146 · HAMER_1989
+  - `workhouse verify --only 'the strongest external check is a transcription, and says so'`
 
 ## What is not here
 
