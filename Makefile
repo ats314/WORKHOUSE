@@ -1,4 +1,4 @@
-.PHONY: help bootstrap check lint test verify status frontier fmt manifest corpus-manifest lean index lock clean
+.PHONY: help bootstrap check lint test verify status frontier certified fmt manifest corpus-manifest lean index lock clean
 
 help:            ## Show this help
 	@grep -hE '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk -F':.*?## ' '{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -20,6 +20,9 @@ verify:          ## Re-derive every exact claim in the corpus
 
 status:          ## Print the contradiction and gap registers
 	@.venv/bin/workhouse status
+
+certified:       ## Regenerate CERTIFIED.md — every checked claim, ranked by tier
+	@.venv/bin/workhouse certified --write
 
 frontier:        ## Regenerate FRONTIER.md from the ledgers and the suites
 	@.venv/bin/workhouse frontier --write

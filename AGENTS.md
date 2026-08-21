@@ -96,6 +96,9 @@ plan. Read in this order and stop when the question is answered:
 
 1. **`FRONTIER.md`** — generated; what is established, disputed, refuted, and
    what the cheapest next test is. Regenerate with `workhouse frontier`.
+   **`CERTIFIED.md`** is its companion: every checked claim, ranked by tier,
+   each with a command that re-establishes it alone in about a second. Reach
+   for it whenever you are about to *rely* on something.
 2. **`ledger/`** — `governing_register.yaml` (R1–R23, the authority),
    `contradictions.yaml` (C1–C22), `gaps.yaml` (G1–G19).
 3. **`src/workhouse/invariants.py`** — every checked claim, with its corpus

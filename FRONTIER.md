@@ -30,6 +30,13 @@ it cannot drift from what the repository actually checks.
 | isotropic pentagonal cap band (v4.3 §9.3) | 9/9 |
 | native string tension through fifth order (v4.3 §11.2) | 7/7 |
 
+`CERTIFIED.md` lists every one of these claims individually, ranked by
+tier, each with the command that re-establishes it in about a second:
+
+```bash
+workhouse verify --only 'h_4^side = A_+'   # one claim, with its numbers
+```
+
 Everything else in the corpus is **T3: asserted and unchecked**. That is
 the default, not an accusation.
 

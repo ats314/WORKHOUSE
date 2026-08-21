@@ -193,6 +193,13 @@ def render(f: Frontier) -> str:
     for name, ok, n in f.suites:
         w(f"| {name} | {ok}/{n} |")
     w("")
+    w("`CERTIFIED.md` lists every one of these claims individually, ranked by")
+    w("tier, each with the command that re-establishes it in about a second:")
+    w("")
+    w("```bash")
+    w("workhouse verify --only 'h_4^side = A_+'   # one claim, with its numbers")
+    w("```")
+    w("")
     w("Everything else in the corpus is **T3: asserted and unchecked**. That is")
     w("the default, not an accusation.")
     w("")
@@ -309,6 +316,11 @@ def brief() -> str:
         f"State: {f.checks_passed}/{f.checks_total} checks pass, "
         f"{f.lean_theorems} Lean theorems with {f.lean_sorries} sorry. "
         f"{len(f.disputed)} open contradiction, {len(f.open_gaps)} gaps.",
+        "",
+        "Strongest work first: CERTIFIED.md ranks every checked claim by tier "
+        "(T0 Lean, T1 exact, T2 numerical) and gives each one a re-check "
+        "command — `workhouse verify --only '<name>'` runs it alone, with its "
+        "numbers, in about a second.",
         "",
         "No document is authority; only a machine check is. Everything in "
         "theory/ is T3 (asserted, unchecked) until an invariant says otherwise.",
