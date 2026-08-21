@@ -143,10 +143,34 @@ gaps:
   - id: G11
     tier: 2
     title: Interval rigor and near-Gamma touching gates
+    status: partially discharged
     detail: >
       Outward-rounded pi. Without this, a fixed-momentum coefficient theorem
       must NOT be promoted to a uniformly isolated near-Gamma band theorem:
       for |k| <~ u the O(u^2) splitting ~ u^2|k|^2 meets the O(u^4) scale.
+    exclusion_radius:
+      result: "|k| >= K*u with K = (pi/2) sqrt(W_4 / (theta t_3))"
+      derivation: >
+        The isolation gap is t(u) q(k) with q(k) = sum_i 4 sin^2(k_i/2). Since
+        b_3 > 0, t(u) >= t_3 u^2. Requiring the fourth-order spread W_4 u^4 to
+        occupy at most a fraction theta of that gap, and bounding q from below
+        by Jordan's inequality q(k) >= (4/pi^2)|k|^2 — tight at k=0 and at the
+        zone corner, so valid across the whole zone rather than only near
+        Gamma — gives the radius.
+      K_historical_theta_half: 17.0383
+      K_v10a26_theta_half: 23.6575
+      independent_of_C2: >
+        K enters only through sqrt(W_4), so the larger disputed bandwidth
+        bounds both. K = 23.66 holds whichever kernel G3 selects; the radius
+        can be stated before the adjudication runs.
+      non_vacuous_below: "u < 0.132795 at theta=1/2; u < 0.187800 at theta=1"
+      excluded_fraction: "grows as u^3: 0.18% at u=0.02, 2.79% at u=0.05, 22.36% at u=0.10"
+      still_open: >
+        A sufficient criterion from a conservative bound, not the sharp
+        constant. Says nothing about touching or level crossing INSIDE the
+        ball, and is not the outward-rounded interval arithmetic over the zone
+        edges that forms the other half of G11.
+      recorded_in: docs/decisions/0003-near-gamma-exclusion-radius.md
 
   - id: G12
     tier: 2
