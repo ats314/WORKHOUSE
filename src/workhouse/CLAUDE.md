@@ -41,5 +41,5 @@ third, add an explicit `FINDING:` check that *asserts* the discrepancy.
 - `atlas.py` — the graph as one self-contained HTML page; a view, never checked in
 - `corpus_index.py` — exact rationals in code, certificates, notebooks
 - `corpus_registry.py` — near-miss, multiple, and coverage sweeps over the whole corpus
-- `tier_collapse.py`, `near_gamma.py`, `settlement.py` — one investigation each
+- `tier_collapse.py`, `near_gamma.py`, `settlement.py`, `payloads.py` — one investigation each
 - `triage.py` — read-only survey of an unpinned archive

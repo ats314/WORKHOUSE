@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 21 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 87/87 checks pass.
+**T1/T2 — re-derived here.** 100/100 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -30,6 +30,8 @@ it cannot drift from what the repository actually checks.
 | isotropic pentagonal cap band (v4.3 §9.3) | 9/9 |
 | native string tension through fifth order (v4.3 §11.2) | 7/7 |
 | published comparisons (literature/index.yaml) | 7/7 |
+| restored payloads (G1) | 11/11 |
+| coupling erratum (C4/G2) | 2/2 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -109,12 +111,12 @@ Transitive closure over the ledger's own `unblocks`, `depends_on`, and
 
 | Gap | Gates | What cannot move until it does |
 |---|---|---|
-| `G3` Fourth-order adjudication — run the marked-cluster engine target-blind | 4 | G9, C2, C22, C3 |
-| `G1` Ship or restore machine-readable payloads that are only record-backed | 3 | G5, C15, C16 |
-| `G2` Regenerate all displayed tables in canonical u | 1 | C4 |
+| `G3` Fourth-order adjudication — run the marked-cluster engine target-blind | 2 | G9, C2 |
 | `G5` Tetrahedral local Haar-resolvent coefficient | 1 | C15 |
-| `G6` B_N fixed-rank holdout ledger for N = 7..18 | 1 | C17 |
+| `G1` Ship or restore machine-readable payloads that are only record-backed | 0 | — |
 | `G10` Full fifth-order pentagonal coefficient | 0 | — |
+| `G11` Interval rigor and near-Gamma touching gates | 0 | — |
+| `G12` Hyperhoneycomb O(u) candidate | 0 | — |
 
 - G3 -> G9 and the mass ratio at orders 4-6
 - nothing further without G17 + G18
@@ -127,15 +129,14 @@ Ready — no open prerequisite — and decisive: it resolves a contradiction,
 unblocks another gap, or is load-bearing. Cheapest first. Bookkeeping that
 settles nothing is excluded however cheap it looks.
 
-- `G1` (days) Ship or restore machine-readable payloads that are only record-backed — settles C15, C16
-  - SU(3) 189-record kernel with reference SHA; Q_32 and P_402 ledgers; SU(5)/SU(6) exceptional certificates; pentagonal h_4 run artifacts; tetrahedral-coefficient certificate.
-- `G2` (days) Regenerate all displayed tables in canonical u — settles C4
-  - Single conversion statement; kills the residue of C4.
-- `G3` (weeks) Fourth-order adjudication — run the marked-cluster engine target-blind — settles C2, C3, C22, G9
+- `G3` (weeks) Fourth-order adjudication — run the marked-cluster engine target-blind — settles C2, G9
   - The 11-item frozen protocol of GLUEBALL §18.1. This is the load-bearing finite computation of the entire program. Scope narrowed once C1 was dissolved as an anchoring distinction: what G3 must now settle is the off-axis coefficient C_shp, since the Gamma-point scalar is externally validated against Hamer and Phi_C(0) = 0 makes Gamma-point data structurally incapable of constraining Delta_C.
 - `G5` (weeks) Tetrahedral local Haar-resolvent coefficient — settles C15
   - Cheap falsification test of circuit-allowance versus survival.
-- `G6` (weeks) B_N fixed-rank holdout ledger for N = 7..18 — settles C17
+- `G17` (unbounded) PC-2 free-energy stability and the source-radius reduction — settles load-bearing
+  - The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction.
+- `G18` (unbounded) The spectral bridge — settles load-bearing
+  - Volume-uniform overlap of a smeared/dressed T_1^{+-} operator built on the protected carrier with the transfer-matrix spectrum, then multi-plaquette survival of the b_2-fold protected level. The corpus's own Monte Carlo shows the BARE operator carries <4% (2 sigma) of the physical state, so the theorem must live in the smeared basis.
 
 ## 7b. What published work bears on this
 

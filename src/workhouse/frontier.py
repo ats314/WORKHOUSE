@@ -92,13 +92,18 @@ def _downstream(led: ledger_mod.Ledgers) -> list[tuple[str, int, list[str]]]:
     Edges are ``unblocks`` (forward), the reverse of ``depends_on``, and each
     contradiction's ``blocks``. Weight is the size of the transitive closure
     plus the contradictions the gap claims to resolve -- everything that cannot
-    move until this one does.
+    move until this one does. A contradiction whose status is already
+    ``resolved`` gates nothing and counts for nothing: a settled dispute is
+    not downstream work, however recently it settled.
     """
+    settled = {c["id"] for c in led.contradictions if c["status"] == "resolved"}
     forward: dict[str, set[str]] = {g["id"]: set(g.get("unblocks", [])) for g in led.gaps}
     for g in led.gaps:
         for prerequisite in g.get("depends_on", []):
             forward.setdefault(prerequisite, set()).add(g["id"])
     for c in led.contradictions:
+        if c["id"] in settled:
+            continue
         for blocked in c.get("blocks", []):
             # C blocks G, and whatever resolves C therefore gates G too.
             for g in led.gaps:
@@ -119,7 +124,7 @@ def _downstream(led: ledger_mod.Ledgers) -> list[tuple[str, int, list[str]]]:
     ranked = []
     for g in led.gaps:
         reached = sorted(closure(g["id"]))
-        resolves = sorted(g.get("resolves", []))
+        resolves = sorted(c for c in g.get("resolves", []) if c not in settled)
         ranked.append((g["id"], len(reached) + len(resolves), reached + resolves))
     ranked.sort(key=lambda row: (-row[1], row[0]))
     return ranked
@@ -130,13 +135,20 @@ def _cheapest(led: ledger_mod.Ledgers) -> list[dict[str, Any]]:
 
     Two filters, and the second is the one that matters. A gap is ready if no
     prerequisite gap is still open. A gap is decisive if it resolves a
-    contradiction, unblocks another gap, or is marked load-bearing. Cheap
-    bookkeeping that settles nothing is not a decisive test however cheap it
-    is, and listing it as one is how a frontier starts recommending busywork.
+    contradiction *that is still unsettled*, unblocks another gap, or is
+    marked load-bearing. Cheap bookkeeping that settles nothing is not a
+    decisive test however cheap it is, and listing it as one is how a
+    frontier starts recommending busywork -- the same goes for re-settling a
+    contradiction whose status is already resolved.
     """
+    settled = {c["id"] for c in led.contradictions if c["status"] == "resolved"}
     unresolved = led.gap_ids
     ready = [g for g in led.gaps if not (set(g.get("depends_on", [])) & unresolved)]
-    decisive = [g for g in ready if g.get("resolves") or g.get("unblocks") or g.get("load_bearing")]
+    decisive = []
+    for g in ready:
+        still_open = [c for c in g.get("resolves", []) if c not in settled]
+        if still_open or g.get("unblocks") or g.get("load_bearing"):
+            decisive.append({**g, "settles": still_open + list(g.get("unblocks", []))})
     return sorted(decisive, key=lambda g: (g["tier"], g["id"]))
 
 
@@ -283,7 +295,7 @@ def render(f: Frontier) -> str:
     w("settles nothing is excluded however cheap it looks.")
     w("")
     for g in f.cheapest[:5]:
-        settles = ", ".join(g.get("resolves", []) + g.get("unblocks", [])) or "load-bearing"
+        settles = ", ".join(g.get("settles", [])) or "load-bearing"
         w(f"- `{g['id']}` ({TIER_COST[g['tier']]}) {g['title']} — settles {settles}")
         detail = " ".join(str(g.get("detail", "")).split())
         if detail:
