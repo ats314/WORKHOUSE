@@ -263,6 +263,44 @@ HAMER_MT_NUM = (  # 2++ (tensor) — external data with no in-program counterpar
 )
 HAMER_TOLERANCE = 5.3e-13
 
+#: Kogut-Pearson-Shigemitsu, "The string tension, confinement and roughening
+#: in SU(3) Hamiltonian lattice gauge theory" (KPS_1981 in the literature
+#: index). Transcribed 2026-08-21 from the KEK library scan of the September
+#: 1980 preprint ILL-(TH)-80-41, pinned by digest in literature/index.yaml;
+#: the Phys. Lett. B 98 (1981) 63 journal pages remain unread. Conventions,
+#: eqs. (1)-(2): H = (g**2/2a)(Sum E**2 - x Sum tr[U(p)+h.c.]), x = 2/g**4
+#: = 2u, T = (g**2/2a**2) W(x), W(x) = Sum t_n x**n -- the same electric
+#: normalization and coupling as the Hamer table, so the same
+#: sigma_n = 2**(n-1) t_n bridge. Table 2 (3+1 dimensions) prints the t_n as
+#: EXACT rationals ("the glorious, exact coefficients", computed in MACSYMA);
+#: they are Rational here because the paper's own printing is exact, and the
+#: published-comparisons suite holds them against the certified SIGMA_n.
+#: The t_2..t_5 transcriptions are confirmed EXACTLY by that agreement; t_6
+#: has no certified counterpart yet (it is the published target for G7's
+#: native sigma_6 rerun), so its 56-digit numerator rests on the scan plus
+#: agreement with the paper's own 7-digit float (5.8e-11) -- a future native
+#: run must re-verify the digit string, not trust this transcription.
+KPS_T0 = Rational(4, 3)
+KPS_T2 = Rational(-11, 153)
+KPS_T3 = Rational(-61, 1632)
+KPS_T4 = Rational(-737327120374220449, 58004722308819686400)
+KPS_T5 = Rational(-137767222189182735950309, 32156851302637820478720000)
+KPS_T6 = Rational(
+    -13130661661034190772935959348816444649800714410750015999,
+    5396526208239719926042764329601696551230239968145408000000,
+)
+#: The same series as eq. (6a) prints it, W(x) = 4/3 (1 + sum w_n x**n),
+#: w_n = t_n / (4/3), 7 printed digits, n = 2..6. Kept beside the exact
+#: table so the internal cross-check (floats vs rationals, one printed ulp)
+#: guards the transcription of both.
+KPS_W_NUM = (
+    -0.05392157,
+    -0.02803309,
+    -0.009533626,
+    -0.003213169,
+    -0.001824877,
+)
+
 #: Rejected by both sides; recorded so it is never silently resurrected.
 QUARANTINED_SCALAR = Rational(-160506019419340168451, 14501180577204921600)
 RAW_FOLDED_AXIAL_GAMMA_NUM = -11.9485781794007

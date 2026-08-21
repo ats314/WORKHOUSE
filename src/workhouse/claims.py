@@ -310,7 +310,8 @@ def collect() -> list[Claim]:
             )
         )
 
-    for paper in literature_mod.load().papers:
+    lit = literature_mod.load()
+    for paper in lit.papers:
         for edge in paper.get("bears_on", []):
             out.append(
                 Claim(
@@ -327,6 +328,35 @@ def collect() -> list[Claim]:
                     related=[edge["target"]],
                 )
             )
+    # Paper-level nodes, one per indexed paper or stub, so the curated
+    # citation web has endpoints to hang on. The per-edge records above stay:
+    # they are the evidence claims; these are the papers themselves.
+    in_degree = lit.in_degree()
+    for record in lit.papers + lit.stubs:
+        rid = record["id"]
+        stub = rid in lit.stub_ids
+        standing = "stub — cited by the web, not indexed" if stub else "indexed"
+        if lit.obtained(rid):
+            standing += " · pinned"
+        citations = record.get("inspire_citations") or {}
+        weights = f"cited in-web by {in_degree.get(rid, 0)}"
+        if citations.get("count") is not None:
+            weights += f"; INSPIRE {citations['count']} as of {citations.get('as_of', '')}"
+        out.append(
+            Claim(
+                id=f"LIT:{rid}",
+                kind="paper",
+                statement=f"{record['title']} ({record['year']})",
+                tier=3,
+                where="literature/index.yaml",
+                cites=record.get("doi") or record.get("arxiv") or "",
+                status=standing,
+                detail=f"{weights}. {' '.join(str(record.get('note', '')).split())}".strip(),
+                related=sorted(
+                    {e["target"] for e in record.get("bears_on", [])} | set(record.get("cites", []))
+                ),
+            )
+        )
 
     # The T0 layer. The scrape supplies name and location; everything else is
     # transcribed by hand in ledger/theorems.yaml, following the symbols.yaml

@@ -243,6 +243,17 @@ work by two mutually disputing computations that agree on it.
    absent from the strong-coupling literature; the central-binomial pattern
    in particular looks like something a 1980s series expansion may contain.
    Pointers welcome — a prior source would *strengthen* the anchor table.
+   *(Update 2026-08-21: a bounded negative search is on record —
+   `novelty_search_2026-08-21.md` beside this file. Everything on arXiv
+   citing Hamer 1989 has been read and is clean; the five priority primary
+   sources that remain unread, led by Munster 1981 and Seo 1982, are named
+   there with why each is where the family would live. The search's
+   sharpest find: O'Brien–Zuber, Nucl. Phys. B253 (1985) 621, attaches
+   signed central binomials to the sewing of closed plaquette surfaces at
+   large N, and `C(2n−2,n−1) = n·Cat(n−1)` ties this family's signed counts
+   to those weights up to the cyclic factor n — same combinatorial family,
+   different limit and dynamics. Whether Theorem 2 is derivable from their
+   cumulant weights is the open adjudication any novelty claim must argue.)*
 
 ## 8. Reproduction
 
