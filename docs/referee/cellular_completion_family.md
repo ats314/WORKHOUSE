@@ -147,9 +147,12 @@ c_prim = (−1)^{n−1} · 2^{n−1} · C(2n−2, n−1) / (N (N²−1)^{n−1})
 Instances (exhaustively verified for n = 3, 4, 5, 6 — i.e. up to 720
 histories): `S = 6, −20, 70, −252`, giving coefficients
 `24/(N(N²−1)²)`, `−160/(N(N²−1)³)`, `1120/(N(N²−1)⁴)`, `−8064/(N(N²−1)⁵)`.
-For all n the closed form rests on a run-length Catalan factorization of the
-subset sums (a dynamic-programming identity); the instances above are what
-this brief certifies exhaustively.
+For all n the closed form is **proved in Appendix A** (added 2026-08-21):
+the run-length Catalan factorization this paragraph previously cited as a
+dynamic-programming identity is Lemma A.1 there, a two-line induction
+through the Catalan convolution. The instances above remain independently
+machine-exhausted, and the appendix's lemma and theorem carry their own
+exhaustive checks (§8).
 
 **Key step.** Let `T` be the set of inserted squares after `k` steps. The
 boundary loop of `cap ∪ T` has length
@@ -281,3 +284,119 @@ A referee wishing to check without any of this can reproduce Theorem 1 in a
 dozen lines of any CAS: enumerate the two orderings, verify the merged loop
 lengths 3 → 4 → 3, apply `∫U_ij U†_kl = δδ/N` twice, and divide by
 `E(4) − E(3) = C_F/2`.
+
+Appendix A's lemma and theorem carry their own exhaustive checks, in the
+same suite:
+
+```bash
+workhouse verify --only 'run-length Catalan factorization'
+workhouse verify --only "closed form holds through n = 9"
+```
+
+## Appendix A (added 2026-08-21): Theorem 2 for all n
+
+The instances of Theorem 2 were certified exhaustively; this appendix proves
+the closed form for every `n ≥ 2`. Everything reduces to one combinatorial
+lemma whose proof is a two-line induction, and the resolvent weight `1/blocks`
+turns out to be exactly the weight that makes the sum factor.
+
+### A.1 Reduction to a chain sum
+
+Number the prism's squares by the cyclic index set `Z_n`. Two facts hold for
+every `n`, both already used in §5:
+
+**(i) Every one of the `n!` insertion orderings is admissible.** Let `T` be
+the inserted set, `s ∉ T` the next square. The current state is the boundary
+loop of `p ∪ T` (`p` the starting cap). The edges `s` shares with that loop
+are: its cap-side edge (an unclaimed edge of `∂p`, always on the loop), plus
+one vertical edge for each cyclic neighbour of `s` lying in `T` (a vertical
+edge is on the loop iff exactly one of its two squares is inserted, and here
+`s ∉ T`). These form a single connected path — vertical, cap, vertical, in
+order along `∂s` — so hypothesis 1 of §2 holds. After the merge,
+`p ∪ T ∪ {s}` is a disc for `|T ∪ {s}| ≤ n − 1` (every square meets the cap;
+no proper subset of squares encloses the far cap), so its boundary is a
+single simple loop and hypothesis 2 holds. The final insertion closes onto
+the reversed boundary of `q` by `∂(sum of all coherently oriented faces) = 0`,
+which is hypothesis 3.
+
+**(ii) `ℓ(T) = n + 2·blocks(T)`** — §5's edge count: `n − |T|` unclaimed cap
+edges, `|T|` far-cap edges, and two boundary vertical edges per cyclic run.
+
+Consequently every resolvent denominator is
+`E(n) − E(ℓ(T_k)) = −blocks(T_k)·C_F`, and
+
+```
+S_n = Σ_orderings Π_{k=1}^{n−1} 2/(ℓ₀ − ℓ_k) = (−1)^{n−1} · A(n),
+A(n) := Σ_{orderings of Z_n} Π_{k=1}^{n−1} 1/blocks(T_k).
+```
+
+### A.2 Lemma (run-length Catalan factorization)
+
+For a proper subset `T ⊊ Z_n` with cyclic runs of lengths `λ₁, …, λ_c`
+(so `blocks(T) = c`), define the chain sum over insertion orderings of `T`,
+
+```
+F(T) := Σ_{orderings (x₁…x_t) of T} Π_{k=1}^{t} 1/blocks({x₁,…,x_k}),   F(∅) = 1.
+```
+
+Then `F(T) = Π_i Cat(λ_i)`, with `Cat` the Catalan numbers, `Cat(0) = 1`.
+
+**Proof.** Induction on `t = |T|`; `t = 0` is the empty product. For `t ≥ 1`,
+condition on the last inserted element:
+
+```
+F(T) = (1/blocks(T)) · Σ_{x∈T} F(T∖{x}).
+```
+
+Since `T` is proper, each run is an arc. Removing the `j`-th site of a run of
+length `λ_i` (any `j ∈ {1,…,λ_i}`) leaves runs of lengths `j−1` and `λ_i−j`
+in its place — endpoint and interior removals are the `j−1 = 0` or
+`λ_i−j = 0` cases of the same formula, with empty runs discarded and
+`Cat(0) = 1` absorbing them. By the induction hypothesis,
+
+```
+Σ_{x∈T} F(T∖{x}) = Σ_i [ Σ_{j=1}^{λ_i} Cat(j−1)·Cat(λ_i−j) ] · Π_{k≠i} Cat(λ_k)
+                 = Σ_i Cat(λ_i) · Π_{k≠i} Cat(λ_k)          (Catalan convolution)
+                 = c · Π_i Cat(λ_i),
+```
+
+and the prefactor `1/blocks(T) = 1/c` cancels the `c`. ∎
+
+Each of the `c` runs absorbs exactly one Catalan recurrence, and the
+resolvent's block count divides the resulting factor of `c` back out: the
+`1/blocks` weight produced by the electric denominators is precisely the
+weight under which the chain sum factorizes over runs. That is the
+"run-length Catalan factorization" of §5, as mathematics rather than as a
+dynamic-programming observation.
+
+### A.3 Theorem
+
+Split `A(n)` by the last-inserted square `x`: the first `n−1` insertions form
+an ordering of the arc `Z_n∖{x}` (a single run of length `n−1`), and the
+product `Π_{k=1}^{n−1} 1/blocks(T_k)` is exactly the product `F` sums — the
+`k = n` step carries no resolvent. Hence, by Lemma A.2 and cyclic symmetry,
+
+```
+A(n) = Σ_{x∈Z_n} F(Z_n∖{x}) = n·Cat(n−1) = C(2n−2, n−1),
+```
+
+the last equality being the bridge `C(2n−2, n−1) = n·Cat(n−1)` (verified
+symbolically by the published-comparisons suite's "signed counts are
+n × Catalan" check; elementary from the factorial forms). With A.1,
+
+```
+S_n = (−1)^{n−1} C(2n−2, n−1),
+c_prim = (−1)^{n−1} · 2^{n−1} · C(2n−2, n−1) / (N (N²−1)^{n−1})   for all n ≥ 2. ∎
+```
+
+### A.4 What is machine-checked
+
+Lemma A.2 exhaustively for every proper subset of `Z_n`, `n ≤ 7` (376
+subsets), with the chain sum computed by its definitional lattice recursion
+and, for `n ≤ 5`, additionally by literal enumeration of all `|T|!`
+orderings; Theorem A.3 through `n = 9` by the same DP, against both the
+binomial and the closed coefficient; the engine instances `n ≤ 6` of §5
+unchanged. The two checks are listed in §8, beside the existing
+`n × Catalan` bridge check. A Lean formalization of A.2–A.3 is the natural
+next promotion; the statement is pure combinatorics over subsets of a
+cycle, and Mathlib carries the Catalan convolution.

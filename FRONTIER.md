@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 120/120 checks pass.
+**T1/T2 — re-derived here.** 122/122 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -32,7 +32,7 @@ it cannot drift from what the repository actually checks.
 | published comparisons (literature/index.yaml) | 16/16 |
 | restored payloads (G1) | 11/11 |
 | coupling erratum (C4/G2) | 2/2 |
-| tetrahedral Haar-resolvent coefficient (G5) | 11/11 |
+| tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
