@@ -42,6 +42,7 @@ CLAIMS = INDEX_DIR / "claims.jsonl"
 SYMBOLS = INDEX_DIR / "symbols.jsonl"
 SYMBOL_SOURCE = ROOT / "ledger" / "symbols.yaml"
 THEOREM_SOURCE = ROOT / "ledger" / "theorems.yaml"
+PROVENANCE_SOURCE = ROOT / "ledger" / "provenance.yaml"
 DECISIONS_DIR = ROOT / "docs" / "decisions"
 
 KINDS = (
@@ -54,6 +55,7 @@ KINDS = (
     "paper",
     "theorem",
     "decision",
+    "document",
 )
 
 #: A ledger id anywhere in free text. Case-sensitive on purpose: `u4` in
@@ -121,6 +123,11 @@ def check_id(suite_name: str, check_name: str) -> str:
 
 def load_theorems(path: Path | None = None) -> list[dict[str, Any]]:
     return yaml.safe_load((path or THEOREM_SOURCE).read_text())["theorems"]
+
+
+def load_provenance(path: Path | None = None) -> list[dict[str, Any]]:
+    """The curated originating-document register (ledger/provenance.yaml)."""
+    return yaml.safe_load((path or PROVENANCE_SOURCE).read_text())["documents"]
 
 
 def _adr_status(text: str) -> str:
@@ -351,6 +358,25 @@ def collect() -> list[Claim]:
                 status=first_sentence,
                 detail=adr["status"],
                 related=sorted({*adr["mentions"], *adr["amends"], *adr["retracts"]}),
+            )
+        )
+
+    # Originating corpus documents. Still T3 — the register machine-checks the
+    # provenance (pin, quote, line), never the truth of what the document says.
+    for doc in load_provenance():
+        out.append(
+            Claim(
+                id=f"DOC:{doc['id']}",
+                kind="document",
+                statement=" ".join(str(doc["meaning"]).split()),
+                tier=3,
+                where=f"corpus-import/{doc['path']}",
+                cites="ledger/provenance.yaml",
+                status=doc["role"],
+                detail="; ".join(
+                    f"originates {o['target']}: {o['what']}" for o in doc["originates"]
+                ),
+                related=sorted({o["target"] for o in doc["originates"]}),
             )
         )
 

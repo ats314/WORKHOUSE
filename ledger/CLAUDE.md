@@ -8,12 +8,17 @@
 
 Where R and C disagree, R controls.
 
-Two curated crosslink files sit beside them, same discipline (judgement in the
-YAML, the join derived, validation mechanical): `symbols.yaml` maps repo names
-to corpus spellings, and `theorems.yaml` maps each Lean theorem to the claims
-it `formalizes` and the checks it `promotes`. `tests/test_graph.py` rejects an
-entry whose name, formalizes target, or promotes check does not resolve — and
-a promotes check must resolve to exactly one registered check.
+Three curated crosslink files sit beside them, same discipline (judgement in
+the YAML, the join derived, validation mechanical): `symbols.yaml` maps repo
+names to corpus spellings, `theorems.yaml` maps each Lean theorem to the
+claims it `formalizes` and the checks it `promotes`, and `provenance.yaml`
+names the corpus documents that *originate* values — originators, never
+carriers, because repetition is not independence. `tests/test_graph.py`
+rejects an entry whose name, formalizes target, or promotes check does not
+resolve — a promotes check must resolve to exactly one registered check — and
+`tests/test_provenance.py` rejects a provenance entry whose file does not hash
+to its corpus pin, whose quote is not found near its recorded line, or whose
+target does not resolve.
 
 ## Do not hand-edit governing_register.yaml
 

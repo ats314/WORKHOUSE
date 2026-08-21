@@ -5,9 +5,11 @@ plus the symbols in ``index/symbols.jsonl`` — but the relationships between
 them were siloed in six formats: ledger edge fields, the symbol records'
 ``claims``/``code_names`` lists, free-text section strings on checks,
 literature ``bears_on`` edges, ADR prose, and (until ``ledger/theorems.yaml``)
-nothing at all for the Lean layer. This module reads each of those sources and
-emits ``index/graph.jsonl``: one JSON record per edge,
-``{src, dst, type, how, source}``.
+nothing at all for the Lean layer. ``ledger/provenance.yaml`` extends the
+reach into the corpus itself: pinned originating documents, with
+``originates`` edges to the claims their values come from. This module reads
+each of those sources and emits ``index/graph.jsonl``: one JSON record per
+edge, ``{src, dst, type, how, source}``.
 
 Two rules keep the graph honest:
 
@@ -56,6 +58,7 @@ CURATED_TYPES = frozenset(
         "bears_on",  # literature/index.yaml
         "formalizes",  # theorems.yaml
         "promotes",  # theorems.yaml: the T1/T2 check a theorem lifts to T0
+        "originates",  # provenance.yaml: the corpus document a value comes from
     }
 )
 DERIVED_TYPES = frozenset({"cites", "mentions", "amends", "retracts"})
@@ -181,6 +184,16 @@ def build(
         for check_name in theorem.get("promotes", []):
             for chk in chk_ids.get(check_name, [f"CHK:?{check_name}"]):
                 add(tid, chk, "promotes", "curated", "ledger/theorems.yaml")
+
+    for doc in claims_mod.load_provenance():
+        for origin in doc["originates"]:
+            add(
+                f"DOC:{doc['id']}",
+                origin["target"],
+                "originates",
+                "curated",
+                "ledger/provenance.yaml",
+            )
 
     return Graph(edges=sorted(edges), dangling=sorted(dangling))
 

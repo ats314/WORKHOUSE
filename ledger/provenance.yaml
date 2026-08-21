@@ -1,0 +1,119 @@
+# Originating corpus documents, curated by hand and pinned by digest.
+#
+# This file exists because the graph stopped at the repository's edge: a claim
+# could point at checks, constants, theorems, and ADRs, but not at the corpus
+# document its value actually comes from. With 928 heavily copied files, that
+# distinction is the load-bearing one — **repetition is not independence**, and
+# an `originates` edge asserts the judgement that THIS document is a distinct
+# originating statement or computation, not one of the forty carriers of a
+# pasted number. A carrier does not belong here.
+#
+# Every entry is verified mechanically (tests/test_provenance.py):
+#   - `path` exists and `sha256` equals the corpus pin in
+#     corpus-import/SHA256SUMS, so a corpus change breaks this file loudly;
+#   - every `quote` is a fixed string found in the file, within a window of
+#     `near_line`, the same observed-not-invented discipline as
+#     symbols.yaml's corpus_spellings;
+#   - every `target` resolves in the claim catalogue.
+#
+# The graph (graph.py) emits one curated `originates` edge per (document,
+# target) pair; `workhouse why <id>` then shows which corpus document a claim
+# rests on, and `workhouse search` reaches the document records.
+#
+# These entries are still T3: an originating *statement* is not a derivation.
+# What is machine-checked is the provenance — that the document says this,
+# here, in a pinned file — never the truth of what it says.
+schema: provenance/v1
+
+documents:
+  - id: transcript-final-unified-theory
+    path: "records/transcripts/#-Final-unified-theory.txt"
+    sha256: 5bd80546886d9ff7ec1a303e62103c9862b3529855427ab5437038d8fec7e581
+    role: transcript
+    meaning: >
+      The sole corpus statement of the primitive completion law
+      c_{r,prim} = 2^(r-1) S_r/(N(N^2-1)^(r-1)) as a table with all four
+      geometry rows, and the only place the tetrahedral value appears.
+      Also carries the pentagonal "120 histories, S_5 = 70" count the
+      cellular suite re-derives.
+    originates:
+      - target: C15
+        what: the tetrahedral row -8/[N(N^2-1)], asserted with no artifact
+        near_line: 170
+        quote: '-8/[N(N^2-1)]'
+      - target: "CONST:c_2^tet (primitive)"
+        what: the r = 2 instance of the primitive completion table
+        near_line: 170
+        quote: '-8/[N(N^2-1)]'
+      - target: "CONST:PRISM_COMPLETION_3_SU3"
+        what: the r = 3 (triangular prism, square sector) table row
+        near_line: 171
+        quote: '64/[N(N^2-1)^2]'
+      - target: "CONST:PENT_COMPLETION_5_SU3"
+        what: the r = 5 row's SU(3) value and its 120-history, S_5 = 70 count
+        near_line: 175
+        quote: 'c_{5,\rm prim}(3)=35/384'
+
+  - id: thm-flux-cellular-circuit-mobility
+    path: theory/notes/THM_FLUX_hodge_cellular_circuit_mobility_theorem.md
+    sha256: 8f9d663dea492ed7c671aea554ba028764877f19fcbf5f168b4771d83c32e044
+    role: research-note
+    meaning: >
+      The mobility theorem: the weighted cellular-circuit bound
+      r >= w_min - 2, the survival gates that scope it (C6's surviving
+      form), the tetrahedral r = 2 prediction, and the admission — twice —
+      that no tetrahedral coefficient artifact exists, which is C15's
+      absent-artifact half.
+    originates:
+      - target: C6
+        what: the scoped circuit bound that survives the F-2 rule's refutation
+        near_line: 122
+        quote: 'r\ge w_{\min}-2'
+      - target: C15
+        what: the admission that the tetrahedral coefficient was never computed
+        near_line: 29
+        quote: remains to be calculated
+      - target: "CONST:PRISM_BANDWIDTH_3_SU3"
+        what: the printed third-order prism bandwidth 6 c_3(3) = 2
+        near_line: 329
+        quote: '\Delta_3(3)=2'
+
+  - id: nb-haar-prismatic-cell-escape
+    path: numerics/notebooks/NB_HAAR_prismatic_minimal_cell_escape_test.ipynb
+    sha256: 1bfdaab6bcf22aa5e38d07377d7a7edbb489a6522d220b42a8f6270dbf5178b0
+    role: notebook
+    meaning: >
+      The shipped cap-sector computation (24/24 gates): permutation
+      enumeration with connected-share and single-cycle requirements,
+      E(L) = L*C_F/2, a flat assumed 1/N per insertion, and the closed
+      Catalan family (-1)^(n-1) 2^(n-1) C(2n-2,n-1)/(N(N^2-1)^(n-1)) whose
+      n = 3 value 24 is the cap-sector coefficient — a different endpoint
+      sector of the prism, not a rival of the printed 64.
+    originates:
+      - target: "CONST:PRISM_CAP_COMPLETION_3_SU3"
+        what: the cap-sector Catalan family and its n = 3 value 1/8
+        near_line: 485
+        quote: '((-1)**(n-1)) * 2**(n-1) * sy.binomial(2*n-2, n-1)'
+
+  - id: transcript-818
+    path: records/transcripts/818.txt
+    sha256: f4348a6e5bfa0402238556fef2bf46c928f034d761879f8e9b24f08d55a17e9e
+    role: transcript
+    meaning: >
+      The cube row's derivation record: 24 temporal orderings collapsing to
+      three multiplicity-8 classes with amplitudes (-8, -8, -4) in units of
+      N^4 E_0^3, E_0 = (N^2-1)/N, plus the cold-certificate rerun quoting
+      c_3^square = -5/48 — the sealed-core anchor the cellular suite
+      reproduces class by class. Also records the supersession of the old
+      prism candidate 24 by the square-sector 64 as a sector choice.
+    originates:
+      - target: "CONST:CUBE_COMPLETION_4"
+        what: the three multiplicity-8 temporal classes behind -160/(N(N^2-1)^3)
+        near_line: 3982
+        quote: >-
+          The 24 temporal orderings of the four side faces reduce to three
+          symmetry classes of multiplicity eight
+      - target: "CONST:CUBE_COMPLETION_4"
+        what: the cold-certificate rerun of the SU(3) value
+        near_line: 4511
+        quote: 'c_3^\square=-5/48'
