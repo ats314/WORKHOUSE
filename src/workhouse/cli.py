@@ -122,10 +122,27 @@ def _certified(write: bool) -> int:
     return 0
 
 
-def _lit(target: str | None, holes: bool = False) -> int:
+def _lit(
+    target: str | None,
+    holes: bool = False,
+    acquire: bool = False,
+    intake_dir: str | None = None,
+    resolve_id: str | None = None,
+) -> int:
+    from pathlib import Path
+
+    from . import acquisition as acquisition_mod
+
     lit = literature_mod.load()
     problems = literature_mod.validate(lit)
-    if holes:
+    if resolve_id:
+        print(acquisition_mod.format_resolution(acquisition_mod.resolve(resolve_id, lit)))
+    elif intake_dir is not None:
+        directory = Path(intake_dir) if intake_dir else acquisition_mod.INBOX
+        print(acquisition_mod.format_intake(directory, lit))
+    elif acquire:
+        print(acquisition_mod.format_manifest(lit))
+    elif holes:
         print(literature_mod.format_holes(lit))
     else:
         print(literature_mod.format_index(lit, target=target))
@@ -269,6 +286,26 @@ def main(argv: list[str] | None = None) -> int:
         help="the missing-link report: papers on one claim with no citation path, "
         "and papers skipping their claim's most-cited source",
     )
+    li.add_argument(
+        "--acquire",
+        action="store_true",
+        help="the acquisition manifest: every unobtained paper, ranked, with the "
+        "browser links a human needs to fetch it",
+    )
+    li.add_argument(
+        "--intake",
+        nargs="?",
+        const="",
+        metavar="DIR",
+        help="survey literature/inbox (or DIR): identify dropped PDFs, print the "
+        "digest to pin and what the licence permits; edits nothing",
+    )
+    li.add_argument(
+        "--resolve",
+        metavar="ID",
+        help="try the automation-welcome open sources (arXiv, INSPIRE documents, "
+        "KEK scans, OpenAlex) for one paper and download a hit into the inbox",
+    )
 
     ce = sub.add_parser(
         "certified", help="what is certified, ranked by tier, with how to re-check each claim"
@@ -294,7 +331,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "atlas":
         return _atlas(args.out)
     if args.command == "lit":
-        return _lit(args.target, args.holes)
+        return _lit(args.target, args.holes, args.acquire, args.intake, args.resolve)
     if args.command == "certified":
         return _certified(args.write)
     if args.command == "frontier":

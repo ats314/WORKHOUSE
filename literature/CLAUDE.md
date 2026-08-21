@@ -77,6 +77,18 @@ The web caught its first conflation before it was a day old: Hamer 1989's
 two-author KS_1975 this index once pointed the supersession at. Two papers,
 one hyphenated name-blur, thirteen years apart. Author counts are data.
 
+## The inbox is not the repository
+
+`inbox/` holds working copies awaiting reading — gitignored except its
+README, because storing a paper is republishing it. `workhouse lit --resolve`
+downloads only from sources that welcome automation (arXiv, INSPIRE-hosted
+documents, KEK library scans, OpenAlex locations); the bot-walled open
+archives are `--acquire`'s browser links for a person, and nothing in this
+repository may impersonate a browser to defeat a publisher's wall.
+`--intake` identifies and hashes what landed and prints the pinning advice;
+it never edits the index. Pinning, edge flips, and new checks are curation,
+done by hand after the paper is actually read.
+
 ## Adding an entry
 
 Verified metadata only. An unverified citation is the same failure mode as an
