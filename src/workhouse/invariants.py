@@ -11,6 +11,7 @@ each side reports, and the exact size of the disagreement between them.
 
 from __future__ import annotations
 
+import re
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
@@ -33,6 +34,7 @@ from sympy import (
 )
 
 from . import constants as K
+from . import settlement as S
 
 
 @dataclass
@@ -543,3 +545,105 @@ def _():
 def run_all() -> list[Result]:
     """Run every suite and return a flat list of results."""
     return [r for s in SUITES for r in s.run()]
+
+
+# ==========================================================================
+adjudication = _suite("settlement package and adjudication harness")
+
+
+@adjudication.check("cold reruns re-certify both in-corpus audits", "SETTLEMENT.md §2")
+def _():
+    runs = S.read_cold_runs()
+    ok = len(runs) == 2 and all(r.passed == r.total == 8 for r in runs)
+    detail = "; ".join(f"{r.name.replace('cold_rerun_', '')} {r.passed}/{r.total}" for r in runs)
+    return ok, detail
+
+
+@adjudication.check("stranded-flux zero backend stays falsified (C7)", "MASTER_THEORY C7")
+def _():
+    run = next(r for r in S.read_cold_runs() if "stranded_flux" in r.name)
+    # Cold rerun, so C7's evidence class rises from in-corpus to cold-reproduced.
+    return run.verdict == "ZERO_BACKEND_FALSIFIED", (
+        f"{run.passed}/{run.total}, verdict {run.verdict}; generating script "
+        f"sha256 {run.source_sha256[:16]}... (the script is absent from this repo; "
+        "settlement/SHA256SUMS pins the transcript, not the script)"
+    )
+
+
+@adjudication.check(
+    "FINDING: the target-blindness scan cannot see two scalar-determining targets",
+    "settlement/mce_adjudication_harness.py",
+)
+def _():
+    audit = S.audit_contamination_scan()
+    missed = audit.uncovered_scalar_determining
+    # Asserting the gap, per the repository's convention for findings. When the
+    # harness's CONTAMINATION_STRINGS is extended upstream this check will fail,
+    # and the correct response is to retire it, not to widen it.
+    return missed == {"delta_gamma", "hamer_8a4"}, (
+        f"quarantined targets {len(audit.targets)}, scan strings {len(audit.strings)}; "
+        f"uncovered {sorted(audit.uncovered)}. Two of those determine the disputed "
+        "scalar: m_Gamma = q_band + Delta_Gamma exactly, and Hamer's 8*a_4 IS the "
+        "scalar to 13 digits. The scan covers the 16-digit oracle form "
+        "7751458630189173, but that string does NOT contain 7751458630184 — they "
+        "diverge at index 12 — so an engine carrying either constant passes the scan. "
+        "Closing it means adding 0827701250956414, 7751458630184 (and the ...417 "
+        "rounding), 160506019419340168451, 7250590288602460800, 4405310420659200."
+    )
+
+
+@adjudication.check(
+    "FINDING: the contamination scan reads only the engine file",
+    "settlement/mce_adjudication_harness.py",
+)
+def _():
+    return S.scans_a_single_file(), (
+        "src = open(engine).read() — an engine that imports a helper module, loads a "
+        "JSON/npz, or restores from the sqlite checkpoint carries that content past "
+        "the scan entirely"
+    )
+
+
+@adjudication.check(
+    "FINDING: the harness can never report COMPLETE",
+    "settlement/mce_adjudication_harness.py",
+)
+def _():
+    # item10_W22_toggle is assigned "OPEN (...)" unconditionally and the
+    # completeness predicate rejects any OPEN value.
+    return not S.verdict_can_be_complete(), (
+        "protocol item 10 (W22 order-schedule toggle) is hardcoded OPEN, and the "
+        "completeness predicate rejects any OPEN value, so even a certificate that "
+        "discharges items 8 and 9 with a full shape block yields PARTIAL. Honest as a "
+        "default, but the protocol has no path to closure until the engine exposes "
+        "the toggle."
+    )
+
+
+@adjudication.check(
+    "the harness carries the printed Delta_Gamma, not the rounded one",
+    "settlement/mce_adjudication_harness.py",
+)
+def _():
+    v = S.harness_delta_gamma()
+    return v == K.DELTA_GAMMA_AS_PRINTED, (
+        f"harness has {v!r}, matching the corpus's printed value; the correctly "
+        f"rounded value is {K.DELTA_GAMMA!r}. Harmless after unblinding, but if the "
+        "digit string is added to the scan, add both forms."
+    )
+
+
+@adjudication.check("quarantined targets never reach the engine process", "GLUEBALL §18.1 item 6")
+def _():
+    audit = S.audit_contamination_scan()
+    src = S.HARNESS.read_text()
+    # The architecture itself is sound: Q is module-local and the engine is
+    # launched with a plain env, so no target is exported. The weakness audited
+    # above is detection of a target already inside the engine, not leakage.
+    leaks = re.findall(r"env\s*=\s*dict\(os\.environ,([^)]*)\)", src)
+    exported = [seg for seg in leaks if any(t in seg for t in audit.targets)]
+    return not exported, (
+        f"{len(audit.targets)} targets held module-local; engine env carries only "
+        "HODGE_SU3_M4_SEALED_SOURCE_FD. Quarantine architecture is sound — the gap "
+        "is in detecting a target already present in the engine."
+    )

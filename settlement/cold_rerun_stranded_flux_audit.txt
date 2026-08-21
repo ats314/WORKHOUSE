@@ -1,0 +1,25 @@
+PENTAGONAL O(4) STRANDED-FLUX ZERO AUDIT
+========================================================================
+[PASS] history count is 20 :: 20
+[PASS] two expected temporal multisets, 10 each :: {((0, -1), (1, -1), (2, -1), (2, 1)): 10, ((0, -1), (1, 1), (2, -1), (2, 1)): 10}
+[PASS] every history is exactly endpoint-balanced :: 
+[PASS] every backend rejection is exactly two balanced (2,2) links :: {(2, 2): 40}
+[PASS] SU(3) p=2 coefficient Wg(e)=1/8 :: 1/8
+[PASS] SU(3) p=2 coefficient Wg((12))=-1/24 :: -1/24
+[PASS] explicit balanced component integral |U_11|^4=1/6 :: 1/6
+[PASS] all 20 complete bare endpoint Haar contractions equal 1 :: Counter({'1': 20})
+
+RESULT: 8/8 checks pass
+VERDICT: ZERO_BACKEND_FALSIFIED
+
+Decisive witness:
+  Every submitted history has two links with (n_U,n_Udag)=(2,2).
+  The submitted backend returns zero for this balanced sector.
+  Exact SU(3) Haar gives Wg(e)=1/8, Wg((12))=-1/24,
+  and integral |U_11|^4 = 1/6 != 0.
+  Exact contraction of each complete six-trace endpoint network = 1.
+
+This falsifies the asserted stranded-flux/Haar-zero mechanism. It does not compute the representation-resolved electric resolvents or h4_side.
+JSON: /tmp/settle/audit_stranded_flux_zero_backend_results.json
+TEXT: /tmp/settle/audit_stranded_flux_zero_backend_results.txt
+SOURCE_SHA256: 77cf99f85a726ae4ec7a9595ab848c677c54669976bc2646a58624908691f813

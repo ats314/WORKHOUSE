@@ -122,7 +122,26 @@ contradictions:
   - id: C7
     title: Stranded-flux zero backend
     status: falsified
-    resolution: "Claimed Haar zero for all 20 pentagonal histories refuted by exact Weingarten/network contractions (8/8)"
+    evidence: cold-reproduced
+    resolution: >
+      Claimed Haar zero for all 20 pentagonal histories refuted by exact
+      Weingarten/network contractions (8/8).
+    cold_rerun:
+      artifact: settlement/cold_rerun_stranded_flux_audit.txt
+      gates: 8/8
+      verdict: ZERO_BACKEND_FALSIFIED
+      generating_script_sha256: 77cf99f85a726ae4ec7a9595ab848c677c54669976bc2646a58624908691f813
+      note: >
+        Evidence class rises from in-corpus to cold-reproduced. The
+        SOURCE_SHA256 above hashes the GENERATING SCRIPT, which is absent from
+        this repository; settlement/SHA256SUMS pins the transcript. Do not
+        conflate the two.
+      decisive_witness: >
+        Every submitted history has two links with (n_U, n_Udag) = (2,2); the
+        submitted backend returns zero for that balanced sector, while exact
+        SU(3) Haar gives Wg(e) = 1/8, Wg((12)) = -1/24 and integral |U_11|^4 =
+        1/6 != 0, with each complete six-trace endpoint network contracting to 1.
+      does_not_settle: "representation-resolved electric resolvents, or h4_side"
 
   - id: C8
     title: Pentagonal degenerate space

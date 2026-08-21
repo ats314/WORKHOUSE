@@ -109,6 +109,7 @@ make check         # lint + full test suite
 
 ```
 theory/     the three source documents, plus a SHA256 manifest (immutable evidence)
+settlement/ received artifacts: two cold-rerun transcripts and the adjudication harness
 ledger/     contradictions.yaml (C1–C22) and gaps.yaml (G1–G19), machine-readable
 src/        constants registry, invariant checks, ledger validation, CLI
 tests/      every invariant as an individual test case
@@ -117,8 +118,9 @@ scripts/    stack detection, bootstrap, check — one source of truth for CI and
 
 ## What the verifier found
 
-45 invariants currently re-derive cleanly. Three are recorded as **findings** —
-places where the corpus's own wording is slightly tighter than its numbers:
+52 invariants currently re-derive cleanly. Six are recorded as **findings**.
+Three are places where the corpus's own wording is slightly tighter than its
+numbers:
 
 - **C20 agreement is overstated.** The register says the exact gate value
   `−1474623/1675520` and the printed float-reconstruction
@@ -143,6 +145,28 @@ places where the corpus's own wording is slightly tighter than its numbers:
 
 None changes any physics. All three are exactly the class of drift that a prose
 corpus cannot catch on its own.
+
+Three more concern the adjudication harness in `settlement/`, which is the tool
+that would actually decide C2:
+
+- **The target-blindness scan cannot see two scalar-determining targets.**
+  `m_Γ = q_band + Δ_Γ` exactly, and Hamer's `8·a₄` *is* the scalar to 13
+  digits — so an engine carrying either constant is seeded with the answer it
+  is supposed to reconstruct blind. The scan covers the 16-digit oracle form
+  `7751458630189173`, but that string does **not** contain `7751458630184`;
+  they diverge at index 12. Both would pass `[PASS] target-contamination scan`.
+- **The scan reads only the engine file.** An engine that imports a helper
+  module, loads a data file, or restores from the sqlite checkpoint carries
+  that content past it untouched.
+- **The verdict can never be `COMPLETE`.** Protocol item 10 (the W22 toggle) is
+  hardcoded `OPEN` and the completeness predicate rejects any `OPEN` value, so
+  even a certificate discharging items 8 and 9 with a full shape block yields
+  `PARTIAL`.
+
+The quarantine *architecture* is sound — targets stay module-local and the
+engine is launched with a clean environment. The gap is in detecting a target
+already inside the engine, which is exactly the case the scan exists to rule
+out.
 
 ## Status
 
