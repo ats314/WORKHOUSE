@@ -47,11 +47,66 @@ gaps:
     inventory_trap: >
       The 3895 Stage-3H topologies and the 3850 stable-rank trace topologies are
       DIFFERENT inventories and must never be interchanged.
+    harness:
+      artifact: settlement/mce_adjudication_harness.py
+      status: built and verified upstream through preflight; `run` stage outstanding
+      verified_upstream:
+        - contamination scan (engine source clean of the listed constants)
+        - engine self-test 47/47
+        - geometry preflight, 609 evaluations, coverage SHA match, zero physics
+        - sealed-memfd authenticated launch, checkpoint write, interrupt and resume
+      remaining: "the `run` stage on production hardware (Linux; the A100 box)"
+      engine_absent: >
+        Hodge_SU3_Exact_MarkedCluster_m4_Colab.py is not in this repository, so
+        no stage can be executed here. The repository's checks are static
+        analysis of the harness source only.
+      audit_findings:
+        - >
+          The target-blindness scan misses two scalar-determining targets. Since
+          m_Gamma = q_band + Delta_Gamma exactly, and Hamer's 8*a_4 is the scalar
+          to 13 digits, an engine carrying either is seeded with the answer. The
+          scan covers the 16-digit oracle form 7751458630189173, which does NOT
+          contain 7751458630184 (they diverge at index 12). Closing it means
+          adding 0827701250956414, 7751458630184 and its ...417 rounding,
+          160506019419340168451, 7250590288602460800, 4405310420659200.
+        - >
+          The scan reads only the engine file. An engine that imports a helper
+          module, loads a data file, or restores from the sqlite checkpoint
+          carries that content past it.
+        - >
+          The verdict can never be COMPLETE: protocol item 10 (W22 toggle) is
+          hardcoded OPEN and the completeness predicate rejects any OPEN value.
+          Honest as a default, but the protocol has no path to closure until the
+          engine exposes the toggle.
+        - >
+          The harness carries the printed Delta_Gamma (...414) rather than the
+          correctly rounded ...417. Harmless after unblinding.
 
   - id: G4
     tier: 1
     title: Pentagonal O(u^4) closure in-corpus
     detail: "Fierz closure of the 20-history cut spaces, Gram quotient, physical resolvents, summed compression."
+    progress:
+      artifact: settlement/cold_rerun_pentagonal_frontier.txt
+      gates: 8/8
+      closed: >
+        The raw history Gram/Haar frontier. 20 histories in two temporal
+        multisets of 10; raw cut dimensions 4, 10, 20 with Gram ranks 4, 6, 6;
+        raw Haar sectors exactly (1,1), (2,2), (3,3); balanced local Gram ranks
+        1, 2, 6; the (4,1) delta-epsilon raw Gram rank 3 with alternating null
+        relation [-1,1,-1,1]; all 20 complete bare endpoint Haar contractions
+        equal 1.
+      key_distinction: >
+        Raw prefix overlaps need only the balanced (1,1), (2,2), (3,3)
+        projectors. The SU(3)-specific (4,1)/(1,4) sector is NOT a raw-prefix
+        overlap — it enters only after Fierz/electric closure.
+      remaining: >
+        Generate the Fierz closure of each raw cut space, retaining the
+        SU(3)-specific (4,1)/(1,4) rank-3 delta-epsilon sector, then form G_k
+        and H0_k on the physical quotient and evaluate
+        R_k = Q (E0 G_k - H0_k)^(-1) Q.
+      not_settled: "No h4_side value is imported or inferred by this run."
+      generating_script_sha256: d2936491440db5c2df0bfbb5231012597f904266976b81e71dc340fc89ffa2cb
 
   - id: G5
     tier: 1

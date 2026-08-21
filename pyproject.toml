@@ -33,6 +33,9 @@ addopts = "-q --strict-markers"
 [tool.ruff]
 line-length = 100
 src = ["src", "tests"]
+# settlement/ holds received artifacts pinned by settlement/SHA256SUMS.
+# Formatting them would change their hashes and destroy the provenance record.
+extend-exclude = ["settlement"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
