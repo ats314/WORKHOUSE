@@ -35,7 +35,9 @@ line-length = 100
 src = ["src", "tests"]
 # settlement/ holds received artifacts pinned by settlement/SHA256SUMS.
 # Formatting them would change their hashes and destroy the provenance record.
-extend-exclude = ["settlement"]
+# Received evidence. Formatting it rewrites the corpus: a first run silently
+# modified 296 files under corpus-import/ before this line existed.
+extend-exclude = ["settlement", "corpus-import", "lean"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]

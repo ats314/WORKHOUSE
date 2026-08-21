@@ -7,19 +7,46 @@ THEORY = Path(__file__).resolve().parents[1] / "theory"
 
 # Recorded when the documents were loaded into the repository. A change here is
 # not a failure of the theory, but it must be a deliberate, reviewed event.
-EXPECTED = {
-    "MASTER_THEORY.md",
-    "MASTER_THEORY_UNIFIED_2026-08-20_v2.md",
+#: The current stack. Superseded documents live in theory/superseded/ and are
+#: pinned too, so drift in an archived document is still caught.
+CURRENT = {
+    "MASTER_THEORY_UNIFIED_2026-08-20_v3.md",
     "GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md",
+    "GLUEBALL_SOURCE_CONSOLIDATION_GUIDE_2026-08-20_v3.md",
+    "GLUEBALL_CANONICAL_SOURCE_MANIFEST_2026-08-20_v3.csv",
+    "README.md",
 }
+SUPERSEDED = {
+    "superseded/MASTER_THEORY.md",
+    "superseded/MASTER_THEORY_UNIFIED_2026-08-20_v2.md",
+}
+EXPECTED = CURRENT | SUPERSEDED
 
 
-def test_all_three_documents_present():
-    assert {p.name for p in THEORY.glob("*.md")} == EXPECTED
+def test_current_stack_present():
+    names = {p.name for p in THEORY.glob("*.md")} | {p.name for p in THEORY.glob("*.csv")}
+    assert names == CURRENT
+
+
+def test_superseded_documents_are_quarantined_not_deleted():
+    """Kept for the audit trail; never readable as current."""
+    names = {f"superseded/{p.name}" for p in (THEORY / "superseded").glob("*.md")}
+    assert names == SUPERSEDED
+
+
+def test_the_truncated_unified_v2_is_not_in_the_current_stack():
+    """v2 stops mid-structure at 2.5; v3 carries the governing register."""
+    v2 = THEORY / "superseded" / "MASTER_THEORY_UNIFIED_2026-08-20_v2.md"
+    v3 = THEORY / "MASTER_THEORY_UNIFIED_2026-08-20_v3.md"
+    assert v2.exists() and v3.exists()
+    assert len(v3.read_text().splitlines()) > 5 * len(v2.read_text().splitlines())
+    assert "Governing contradiction and errata register" in v3.read_text()
 
 
 def test_documents_are_non_trivial():
     for p in THEORY.glob("*.md"):
+        if p.name == "README.md":
+            continue
         assert p.stat().st_size > 5000, f"{p.name} looks truncated"
 
 

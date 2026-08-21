@@ -14,7 +14,7 @@ def archive(tmp_path):
     (root / "drafts").mkdir(parents=True)
     repo = triage.Path(__file__).resolve().parents[1]
 
-    pinned = (repo / "theory" / "MASTER_THEORY.md").read_bytes()
+    pinned = (repo / "theory" / "superseded" / "MASTER_THEORY.md").read_bytes()
     (root / "MASTER_THEORY.md").write_bytes(pinned)  # pinned duplicate
     (root / "drafts" / "MT_backup.md").write_bytes(pinned)  # internal duplicate
     (root / "drafts" / "note_20260612.md").write_text(
@@ -28,8 +28,8 @@ def archive(tmp_path):
 def test_finds_files_already_pinned(archive):
     report = triage.scan(archive)
     dups = {str(f.path): f.duplicate_of for f in report.duplicates}
-    assert dups["MASTER_THEORY.md"] == "theory/MASTER_THEORY.md"
-    assert dups["drafts/MT_backup.md"] == "theory/MASTER_THEORY.md"
+    assert dups["MASTER_THEORY.md"] == "theory/superseded/MASTER_THEORY.md"
+    assert dups["drafts/MT_backup.md"] == "theory/superseded/MASTER_THEORY.md"
 
 
 def test_finds_duplicates_within_the_archive(archive):
