@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import Any
 
 from . import ledger as ledger_mod
+from . import literature as literature_mod
 from .invariants import SUITES
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -53,6 +54,7 @@ class Frontier:
     spine: list[str]
     headline: str
     unifying: list[dict[str, Any]]
+    external: list[tuple[str, str, str, str]]
 
 
 def _lean_counts() -> tuple[int, int]:
@@ -163,6 +165,10 @@ def compute() -> Frontier:
         spine=led.dependency_spine,
         headline=led.headline,
         unifying=led.unifying_candidates,
+        external=[
+            (paper["id"], edge["target"], edge["relation"], edge["status"])
+            for paper, edge in literature_mod.load().edges()
+        ],
     )
 
 
@@ -192,6 +198,13 @@ def render(f: Frontier) -> str:
     w("|---|---|")
     for name, ok, n in f.suites:
         w(f"| {name} | {ok}/{n} |")
+    w("")
+    w("`CERTIFIED.md` lists every one of these claims individually, ranked by")
+    w("tier, each with the command that re-establishes it in about a second:")
+    w("")
+    w("```bash")
+    w("workhouse verify --only 'h_4^side = A_+'   # one claim, with its numbers")
+    w("```")
     w("")
     w("Everything else in the corpus is **T3: asserted and unchecked**. That is")
     w("the default, not an accusation.")
@@ -277,6 +290,27 @@ def render(f: Frontier) -> str:
             w(f"  - {detail}")
     w("")
 
+    w("## 7b. What published work bears on this")
+    w("")
+    w("`literature/index.yaml` maps papers to claims; `workhouse lit --for C2`")
+    w("queries it. External results matter here because they are **independent**")
+    w("-- produced without knowledge of this program -- not because they are")
+    w("published. A paper is T3 until something checks it, same as any document.")
+    w("")
+    w("| Paper | Bears on | Relation | Status |")
+    w("|---|---|---|---|")
+    for pid, target, relation, status in f.external:
+        w(f"| `{pid}` | `{target}` | {relation} | {status} |")
+    unread = sum(
+        1 for _p, _t, _r, s in f.external if s in ("not-yet-obtained", "transcription-unverified")
+    )
+    w("")
+    w(f"**{unread} of {len(f.external)} edges rest on a source nobody here has read")
+    w("or pinned** -- including the strongest external agreement the program has,")
+    w("`8 a_4` against `m_Gamma^(4)` to 5.2e-13, which rests on a transcription of")
+    w("a table that has never been hashed.")
+    w("")
+
     w("## 8. What might unify the established results")
     w("")
     w("Research judgement, so it is data with a falsifier attached rather than")
@@ -309,6 +343,11 @@ def brief() -> str:
         f"State: {f.checks_passed}/{f.checks_total} checks pass, "
         f"{f.lean_theorems} Lean theorems with {f.lean_sorries} sorry. "
         f"{len(f.disputed)} open contradiction, {len(f.open_gaps)} gaps.",
+        "",
+        "Strongest work first: CERTIFIED.md ranks every checked claim by tier "
+        "(T0 Lean, T1 exact, T2 numerical) and gives each one a re-check "
+        "command — `workhouse verify --only '<name>'` runs it alone, with its "
+        "numbers, in about a second.",
         "",
         "No document is authority; only a machine check is. Everything in "
         "theory/ is T3 (asserted, unchecked) until an invariant says otherwise.",

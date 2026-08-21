@@ -1,0 +1,204 @@
+# Published literature, and what each paper actually bears on.
+#
+# This is an evidence map, not a bibliography. An entry earns its place by
+# naming a specific claim in this repository -- a contradiction, a gap, a
+# register item, a unifying candidate, or a constant -- and saying what
+# relationship the paper has to it. `workhouse lit --for C7` answers "what
+# published work bears on this claim?"; validate() rejects an entry whose
+# target does not resolve.
+#
+# A published paper is NOT authority here either. It is T3 until something
+# checks it, exactly like a corpus document. The difference is that an
+# external result was produced without knowledge of this program, so where it
+# agrees, the agreement is evidence rather than bookkeeping.
+schema: literature/v1
+
+# relation vocabulary, closed:
+#   supplies-value      the paper publishes a number this repository compares against
+#   supplies-method     the paper's technique is the one a claim's derivation uses
+#   corroborates        independent agreement with a claim here
+#   contradicts         independent disagreement with a claim here
+#   supplies-comparison a modern result the program's output should be placed against
+#   confusable          NOT a source; recorded so it stops being mistaken for one
+#
+# edge status vocabulary, closed:
+#   verified                 the value has been checked against the primary source
+#   transcription-unverified a number is quoted from the paper but the primary
+#                            table has not been pinned and hashed
+#   not-yet-obtained         the paper has not been read
+#   refuted                  the comparison was made and it failed
+
+papers:
+  - id: KS_1975
+    title: Hamiltonian formulation of Wilson's lattice gauge theories
+    authors: [J. B. Kogut, L. Susskind]
+    venue: Phys. Rev. D 11, 395-408
+    year: 1975
+    doi: 10.1103/PhysRevD.11.395
+    arxiv: null
+    licence: publisher-copyright
+    fulltext: null
+    note: >
+      Some secondary sources give the page range as 359-408. The ADS bibcode
+      1975PhRvD..11..395K gives 395, and that is what is recorded here.
+    bears_on:
+      - target: R2
+        relation: supplies-method
+        status: not-yet-obtained
+        detail: >
+          The Hamiltonian whose charge-odd one-plaquette flux sector this whole
+          program studies. The electric term H_0 = (1/2) sum_e E_e^2 and the
+          coupling normalization that fixes u = beta_N/(2N) originate here, so
+          the coordinate convention in R2 is ultimately a statement about this
+          paper's conventions.
+
+  - id: HAMER_1989
+    title: Hamiltonian strong coupling expansions for glueball masses in SU(3)
+    authors: [C. J. Hamer]
+    venue: Phys. Lett. B 224, 339-342
+    year: 1989
+    doi: 10.1016/0370-2693(89)91242-2
+    arxiv: null
+    licence: publisher-copyright
+    fulltext: null
+    bears_on:
+      - target: HAMER_A4
+        relation: supplies-value
+        status: transcription-unverified
+        detail: >
+          a_4 = -0.0968932328773 is transcribed from this paper's table. Through
+          the bridge m_n = 2**(n-1) a_n it gives 8 a_4 = -0.7751458630184,
+          agreeing with m_Gamma^(4) to about 5.2e-13 -- the strongest external
+          validation the program has. The corpus is explicit (v4.3 section 2.2)
+          that the primary table has not been pinned and hashed, so the decimal
+          is a local transcription and the agreement rests on it.
+      - target: C1
+        relation: corroborates
+        status: transcription-unverified
+        detail: >
+          The oracle that produced m_Gamma^(4) ran with the historical target
+          disabled and recovered m_1, m_2, m_3 first, so agreement with this
+          paper is substantive rather than internal bookkeeping. That argument
+          is only as good as the transcription above.
+    open_questions:
+      # Verbatim from the corpus's own audit, FLATBAND_PAPER_EXPANSION_AUDIT
+      # 2026-07-25 section 2.5. Obtaining the four-page paper answers all five.
+      - Hamiltonian normalization -- electric Casimir and magnetic-term conventions
+      - expansion parameter -- conversion between Hamer's variable and y
+      - energy definition -- one-particle energy versus vacuum-subtracted mass
+      - 1^{+-} coefficients -- equality or disagreement through the shared order
+      - momentum resolution -- whether Hamer computed only k=0 masses or a full band
+
+  - id: HIP_1986
+    title: >
+      Cluster expansion approach to non-abelian lattice gauge theory in (3+1)D
+      (II). SU(3)
+    authors: [C. J. Hamer, A. C. Irving, T. E. Preece]
+    venue: Nucl. Phys. B270, 553
+    year: 1986
+    doi: 10.1016/0550-3213(86)90568-7
+    arxiv: null
+    licence: publisher-copyright
+    fulltext: null
+    bears_on:
+      - target: G7
+        relation: supplies-value
+        status: not-yet-obtained
+        detail: >
+          The linked-cluster string-tension series this program's sigma(u)
+          should be compared against. G7 asks for native torelon reruns of
+          sigma_5 and sigma_6; an independent published series is the cheaper
+          half of that comparison.
+      - target: R14
+        relation: supplies-method
+        status: not-yet-obtained
+        detail: >
+          The odd-order sign convention that R14 states as
+          sigma_n^phys = (-1)**n sigma_n^raw has to be read against this
+          paper's conventions to know which of the two this paper prints.
+
+  - id: HSB_2000
+    title: Green's Function Monte Carlo study of SU(3) lattice gauge theory in (3+1)D
+    authors: [C. J. Hamer, M. Samaras, R. J. Bursill]
+    venue: Phys. Rev. D 62, 074506
+    year: 2000
+    doi: 10.1103/PhysRevD.62.074506
+    arxiv: hep-lat/0005009
+    licence: arxiv-assumed-1991-2003
+    fulltext: null
+    bears_on:
+      - target: HAMER_A4
+        relation: confusable
+        status: verified
+        detail: >
+          NOT the source of a_4, and the corpus's own recovery engine
+          (ENGINE_Y6_su3_y5_historical_recovery_r2.py) rejects it explicitly by
+          scanning for "Green's function Monte Carlo" in the first three pages.
+          Same first author, same subject, eleven years later, different method.
+          Recorded here so the rejection survives outside that one script.
+
+  - id: MP_1999
+    title: The glueball spectrum from an anisotropic lattice study
+    authors: [Colin J. Morningstar, Mike Peardon]
+    venue: Phys. Rev. D 60, 034509
+    year: 1999
+    doi: 10.1103/PhysRevD.60.034509
+    arxiv: hep-lat/9901004
+    licence: arxiv-assumed-1991-2003
+    fulltext: null
+    bears_on:
+      - target: G18
+        relation: supplies-comparison
+        status: not-yet-obtained
+        detail: >
+          The standard continuum-extrapolated SU(3) glueball spectrum,
+          including the 1^{+-}. G18 is the spectral bridge: the claim that the
+          protected carrier is the glueball. Any bridge that lands has to land
+          on numbers like these, and the corpus's own Monte Carlo shows the
+          bare operator carries under 4 percent of the physical state.
+
+  - id: CS_2006
+    title: >
+      Integration with respect to the Haar measure on unitary, orthogonal and
+      symplectic group
+    authors: [Benoit Collins, Piotr Sniady]
+    venue: Comm. Math. Phys. 264, 773-795
+    year: 2006
+    doi: 10.1007/s00220-006-1554-3
+    arxiv: math-ph/0402073
+    licence: arxiv-assumed-1991-2003
+    fulltext: null
+    bears_on:
+      - target: C7
+        relation: supplies-method
+        status: verified
+        detail: >
+          The Weingarten calculus that falsified the stranded-flux zero
+          backend. C7's decisive witness quotes Wg(e) = 1/8,
+          Wg((12)) = -1/24 and integral |U_11|^4 = 1/6 for SU(3); all three are
+          now re-derived symbolically in N from the n=2 Gram matrix
+          G[s,t] = N**cycles(s t^-1), giving 1/(N^2-1), -1/(N(N^2-1)) and
+          2/(N(N+1)). See the "published comparisons" invariant suite. This is
+          the one edge in this file that has been promoted from prose to T1.
+
+# Papers the program needs and does not have. Each says what it would settle,
+# so this is a work list rather than a wish list. Moving one into `papers`
+# requires verified metadata -- an unverified citation is the same failure mode
+# as an unverified coefficient.
+wanted:
+  - what: Kogut, Pearson, Shigemitsu -- SU(3) string tension and roughening (c. 1981)
+    would_settle: >
+      Named by the corpus's own recovery engine as KPS_1981_string, one of the
+      three primary sources it tries to locate. Independent string-tension
+      series for the sigma comparison in G7.
+  - what: A modern continuum SU(N) glueball spectrum at several N
+    would_settle: >
+      Whether the all-rank family alpha_N, beta_N has any continuum shadow.
+      Currently nothing in the corpus reaches the scaling window (G19), so this
+      would bound how far the finite-order results can be pushed.
+  - what: A review of Schrieffer-Wolff / Feshbach projection error control
+    would_settle: >
+      U3 conjectures that both vanishings in this corpus are properties of the
+      Q projection rather than of either geometry. A general statement about
+      Q P Q on a degenerate sector is what would promote it, and G14 is the
+      cubic half.

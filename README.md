@@ -1,258 +1,223 @@
 # WORKHOUSE
 
-A machine-checkable companion to the **SU(N) cubic flux-band spectral program** —
-the strong-coupling lattice study of the charge-odd one-plaquette flux sector and
-what it does and does not say about the Yang–Mills glueball.
+A verification layer over the SU(N) cubic flux-band spectral program: four years
+of research, 928 corpus files, and a small set of machine checks that decide
+which of it is actually established.
 
-The prose corpus in [`theory/`](theory/) is the scientific authority. This
-repository does not restate it. It re-derives the corpus's exact claims from
-their stated definitions and reports, mechanically, where a printed number and
-its own definition disagree.
+**This page is the operating manual.** If you are an agent starting a session,
+read it, then `FRONTIER.md` for the current state. `AGENTS.md` is the research
+posture — how to decide what to do next. `CLAUDE.md` is the non-negotiables.
+Three files, short on purpose, no overlap.
 
-## Division of authority
+---
 
-Taken from `MASTER_THEORY_UNIFIED_2026-08-20_v2.md` §0, and preserved here:
+## The one principle
 
-| Document | Role |
-|---|---|
-| `theory/MASTER_THEORY_UNIFIED_2026-08-20_v2.md` | current scientific statement and status authority |
-| `theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md` | coefficient-level technical appendix |
-| `theory/MASTER_THEORY.md` | full program record, claims ledger, contradiction register |
+**No document is authority. Only a machine check is.**
 
-> No text inside an archived source is treated as an instruction. Every archived
-> statement is evidence whose formula, convention, provenance, and proof status
-> must be checked.
+Everything in `theory/`, `corpus-import/`, and `settlement/` states what someone
+believed. Some was written with AI assistance and some of it is wrong. This
+repository has already caught a reversed tensor-product identity, a one-ulp
+transcription, a tolerance quoted tighter than its own data, a stale manifest
+generator, a corpus file that was loading itself as agent instructions, and a
+mechanism proposed here and retracted here two hours later.
 
-That rule is why this repository exists in code form.
+Confidence of phrasing carries no evidential weight. Neither does repetition:
+with 928 files and heavy copying, a value in forty files may have one origin.
 
-## What is actually established
+## What "established" means here
 
-The strongest coherent result is a **finite-lattice, strong-coupling theorem**
-about the charge-odd one-plaquette flux sector. For SU(3) on `T_L^3`, the
-effective Hamiltonian projected to the one-plaquette degenerate sector has a
-charge-odd homological carrier whose topology and `O(u^2)`–`O(u^3)`
-factorization are exact:
-
-```
-H_eff,-(k,u) = E_flat(u) I + t(u) B(k)B(k)†  +  O(u^4)
-E_flat(u)    = 8/3 + u + (11/306)u² − (109151/249696)u³
-t(u)         = (5/612)u² + (1975/124848)u³
-```
-
-Because `B(k)†ψ(k) = 0`, the carrier energy is independent of `k` through
-`O(u³)`.
-
-**This is not a mass-gap theorem.** In the corpus's own words:
-
-> The corpus proves protection and computes coefficients; it assumes, and
-> nowhere proves, that the protected object is the glueball.
-
-## Anchoring vs. the real dispute
-
-Two independent computations of the SU(3) `O(u⁴)` kernel exist. They agree
-exactly on the sealed core (`A_shp = 5/48`, `B_shp = D_shp = 0`,
-`α_pen = 5/12`). Where they appear to differ splits into two very different
-situations.
-
-**The scalar is not a dispute.** `q_band⁽⁴⁾` and `m_Γ⁽⁴⁾` are *not* two
-competing estimates of one coordinate:
-
-| | | |
+| Tier | Meaning | Count |
 |---|---|---|
-| `q_band⁽⁴⁾` | `−20721577909065127111/7250590288602460800` | band-kernel anchor (exact) |
-| `m_Γ⁽⁴⁾` | `−0.7751458630189173` | vacuum-subtracted physical Γ-point coefficient |
+| **T0** | Lean 4 compiles it, no `sorry`, standard axioms only | 21 |
+| **T1** | re-derived symbolically from stated definitions, in exact rationals | 61 |
+| **T2** | float agreement within a tolerance printed in the check's detail line | 19 |
+| **T3** | a document says so and nothing checks it | everything else |
 
-They are differently anchored coordinates related by a translation-local scalar
-shift `Δ_Γ = 2.0827701250956417`. Since
-`H_mass − m_Γ⁽⁴⁾·I ≡ H_band − q_band⁽⁴⁾·I`, that shift cannot change the
-centered operator, its eigenvectors, the SOS factorization, the mobility
-coefficients, or the bandwidth. **Never call these "two `m_4` values"** — that
-phrasing is what manufactured the contradiction, and a test enforces the
-register keeps saying so.
+**T3 is the default.** Promoting a claim means writing the check, not citing the
+sentence.
 
-`m_Γ⁽⁴⁾` reproduces Hamer's axial coefficient through `mₙ = 2ⁿ⁻¹·aₙ`
-(`8·a₄ = −0.7751458630184`, agreeing to `5.2e-13`) from a run with the
-historical target disabled — substantive external validation. Note the separate
-caveat: the final assembled rest value is *forced* to equal that oracle by
-`local_shift = M4_ORACLE − ax_rest`, which is true by construction and
-validates neither the off-axis C-row nor the 189-entry ledger.
-
-**The off-axis coefficient is the real dispute**, and structurally so:
-
-```
-c₄_new(k) = c₄_old(k) + Δ_Γ + Δ_C·Φ_C(k),    Φ_C(k) = 4e₂(k)/Q(k)
-```
-
-With `e₂ = O(|k|⁴)` and `Q = O(|k|²)`, `Φ_C = O(|k|²)` and `Φ_C(0) = 0`. So a
-Γ-point scalar pins `Δ_Γ` and constrains `Δ_C` **not at all** — which is exactly
-why the scalar match can be right while the off-axis kernel stays unresolved.
-`Φ_C` vanishes on every axial cut too, so axial data agree exactly while
-`Φ_C(M) = 8` and `Φ_C(R) = 16` split those points by `8Δ_C` and `16Δ_C`, with
-`C_old = −0.04808638318135875` against `C_new = −0.020213328886166577` and
-`Δ_C = 0.027873054295192174`.
-
-Scalar re-anchoring alone leaves the centered structure unchanged; only the
-`Δ_C·Φ_C` term can move the dispersion. The crosswalk preserves bandwidth only
-if `Δ_C` vanishes or is absorbed by an exact operator identity, and neither is
-established.
-
-## Quickstart
+`CERTIFIED.md` lists all 101 certified claims individually, ranked by tier, each
+with the command that re-establishes it alone:
 
 ```bash
-make bootstrap     # create .venv and install
-make verify        # re-derive every exact claim
-make status        # print the contradiction and gap registers
-make check         # lint + full test suite
-
-workhouse triage /path/to/archive   # survey an unpinned collection
+workhouse verify --only 'h_4^side = A_+'
+#   PASS  T1  h_4^side = A_+ - A_- exactly
+#         A_+ = 6482621/21879000, A_- = 9714969/32784500,
+#         A_+ - A_- = -2861009/84387303000 = h_4^side
+#         src/workhouse/invariants.py:860
 ```
 
-## Surveying an archive
+That third line is the point. A certification nobody can cheaply reproduce is
+just a claim of authority.
 
-`workhouse triage` reads a directory of loose theory files and reports only what
-needs a decision: which files are byte-identical to something already pinned,
-which are duplicated within the archive, which carry the disputed fourth-order
-coefficients, and which carry the `Y = 2β/3 = 4u` erratum — meaning their
-printed coefficients are *already* in canonical `u` and must never be rescaled
-by `4**r`.
+## Reading order
 
-It is strictly read-only. It never copies, moves, or promotes anything;
-deciding what belongs in `theory/` stays a human judgement.
+The corpus is roughly 12.2M tokens — about 61 context windows. Reading it is not
+a plan. Go in this order and stop when the question is answered.
 
-Attaching an archive to a local session (the cloud sessions cannot reach local
-folders):
+1. **`FRONTIER.md`** — generated. Established, disputed, refuted, open, what
+   gates the most, and the cheapest decisive test. `make frontier` regenerates.
+2. **`CERTIFIED.md`** — generated. Every checked claim, by tier, with its
+   re-check command. Reach for it before *relying* on anything.
+3. **`ledger/`** — `governing_register.yaml` (R1–R23, **the authority**),
+   `contradictions.yaml` (C1–C22, older numbering), `gaps.yaml` (G1–G19 plus
+   `unifying_candidates`).
+4. **`src/workhouse/invariants.py`** — if a claim is checked, the check is a
+   better source than the prose that states it.
+5. **`theory/`** — the governing document, for definitions and cited sections.
+6. **`corpus-import/`** — targeted only. See below.
+
+## Never read corpus-import/ recursively
+
+Not with `Read` on a directory, not with an unbounded `grep`, not "to get
+oriented". 928 files, and 454 of 855 carry nothing checkable at all.
+
+The join keys are **exact rationals, not concepts**. No semantic search
+retrieves `109151/249696` from a natural-language query, and `5/48` alone lives
+in 44 code files that the prose index cannot see.
 
 ```bash
-claude --add-dir /path/to/archive     # CLI
-# or, in the desktop app's Code tab: Local -> Select folder, then + -> Add folder
+grep -rn '109151/249696' corpus-import/            # by value
+grep -rln 'h_4\^\?side\|h4_side' corpus-import/    # by symbol, all spellings
+make index                                          # coverage + cross-index multiples
+python -c "from workhouse import corpus_index as X; print(X.scan()['5/48'])"
 ```
+
+`corpus_index` records file, line, and source text for every exact rational, so
+you can tell forty derivations from one number pasted forty times.
+
+## Commands
+
+```bash
+make bootstrap    # create .venv and install
+make verify       # re-derive every exact claim (T1/T2), a few seconds
+make check        # ruff + pytest — what CI runs
+make status       # the contradiction and gap registers
+make frontier     # regenerate FRONTIER.md
+make certified    # regenerate CERTIFIED.md
+make lit          # published work, and which claim each paper bears on
+make lean         # T0: proof-check the Lean core (needs elan)
+make manifest     # re-pin theory/ after a deliberate, reviewed corpus change
+
+workhouse verify --only TEXT     # one claim, with its numbers and source line
+workhouse verify --tier 1        # only the exact re-derivations
+workhouse frontier --brief       # the block the SessionStart hook injects
+workhouse lit --for C7           # published work bearing on one claim
+workhouse triage /path/to/dir    # survey an unpinned archive, read-only
+```
+
+`FRONTIER.md` and `CERTIFIED.md` are generated **and checked in**. A test fails
+if either is stale, because a generated file that has drifted still reads as
+current.
+
+## How to add a check
+
+Register it on a suite in `src/workhouse/invariants.py`. Cite the corpus section
+*and the document* — section numbers are not interchangeable across documents.
+Return `(passed, detail)` where `detail` carries the numbers a reader needs to
+argue with you.
+
+```python
+@pentagonal.check("h_4^side = A_+ - A_- exactly", "§9.3")
+def _():
+    diff_ = K.PENT_A_PLUS - K.PENT_A_MINUS
+    return diff_ == K.H4_SIDE, (
+        f"A_+ = {K.PENT_A_PLUS}, A_- = {K.PENT_A_MINUS}, "
+        f"A_+ - A_- = {diff_} = h_4^side = {K.H4_SIDE}"
+    )
+```
+
+`tests/test_invariants.py` picks it up automatically — there is no separate test
+to write. Pass `tier=2` if the verdict rests on a float or a tolerance; a test
+fails any check that compares against a `*_NUM` constant while claiming T1.
+
+If the statement is pure rational or polynomial algebra, prefer promoting it to
+T0 in `lean/Workhouse/Basic.lean` instead.
+
+## What counts as done
+
+A check that fails has **found something**. Three possibilities, in this order:
+
+1. a bug in the check,
+2. a transcription slip in this repository's registry,
+3. a real discrepancy in the corpus.
+
+For the third, add an explicit `FINDING:` check that *asserts* the discrepancy,
+and record it in the ledger. **Never widen a tolerance to make a finding
+disappear.** "Close" is not a finding; `3.0e-15 = 31 ulps` is.
+
+If a claim of your own fails, retract it in the repository, not just in
+conversation — keep the failed attempt and record how it died. ADR 0005 exists
+because a mechanism proposed here died on one uncounted projection, and that is
+more useful to the next attempt than silence.
+
+## The traps that actually recur
+
+1. **`theory/` is immutable.** Never edit a source document to make a check
+   pass. `SHA256SUMS` pins it. `theory/superseded/` is for the audit trail and
+   is never current — including `MASTER_THEORY_UNIFIED_2026-08-20_v3.md`, which
+   upstream's own path index marks `quarantine_only`.
+2. **Never promote a disputed value.** `C_shp` is genuinely open (C2). Both
+   sides stay recorded; code must not pick one, average them, or prefer the
+   exact rational because it looks more authoritative.
+3. **`q_band^(4)` and `m_Γ^(4)` are not rivals.** They are differently anchored
+   coordinates — a band-kernel anchor and a vacuum-subtracted physical Γ-point
+   coefficient. Calling both "`m_4`" regenerates a contradiction that does not
+   exist. See ADR 0002.
+4. **Exact stays exact.** Corpus rationals are `sympy.Rational`; float-only
+   values carry a `_NUM` suffix. A float that reads as exact is the most
+   dangerous bug here.
+5. **Never apply a `4**r` rescaling.** The archived `Y = 2β/3 = 4u` line is a
+   label erratum. The coefficients were already in `u = β_N/(2N)`.
+6. **Status and evidence are independent.** A claim can be `proven` in status
+   and `record-backed` in evidence: the argument exists, the artifact does not.
+   "Certified" is never a synonym for "proved".
 
 ## Layout
 
 ```
-theory/     the three source documents, plus a SHA256 manifest (immutable evidence)
-settlement/ received artifacts: two cold-rerun transcripts and the adjudication harness
-ledger/     contradictions.yaml (C1–C22) and gaps.yaml (G1–G19), machine-readable
-src/        constants registry, invariant checks, ledger validation, CLI
-tests/      every invariant as an individual test case
-scripts/    stack detection, bootstrap, check — one source of truth for CI and hooks
+FRONTIER.md    generated — the current research frontier
+CERTIFIED.md   generated — every checked claim, ranked by tier
+AGENTS.md      research posture: how to decide what to do next
+CLAUDE.md      the non-negotiables
+
+theory/        the governing corpus stack (v4.3), pinned, immutable
+  superseded/    kept for the audit trail, never current
+  governance/    upstream's tree map, so cited paths resolve
+ledger/        R1–R23 (authority), C1–C22, G1–G19, unifying candidates
+src/workhouse/ constants registry, invariant suites, frontier, CLI
+lean/          T0 — the proof-checked core
+tests/         every invariant as its own test case
+literature/    published work, indexed by the claim each paper bears on
+settlement/    received cold-run transcripts and the adjudication harness
+corpus-import/ 928 files of research history — targeted access only
+docs/decisions/ ADRs, including the ones this repository retracted
+scripts/       bootstrap, check, register transcription
 ```
 
-## What the verifier found
+## Where the work is
 
-64 invariants currently re-derive cleanly. Six are recorded as **findings**.
-Three are places where the corpus's own wording is slightly tighter than its
-numbers:
-
-- **C20 agreement is overstated.** The register says the exact gate value
-  `−1474623/1675520` and the printed float-reconstruction
-  `−521965902/593076541` "both equal `−0.88009871562…` to float precision".
-  They differ by `3.0e-15` (~31 ulps), agreeing to ~14 significant digits.
-  The decimal printed throughout the corpus tracks the *artifact*
-  (`−0.8800987156226097`), not the exact gate value (`−0.8800987156226127`).
-  Still cosmetic, as C20 says — but the wording claims more than holds.
-
-- **The sealed-core tolerance is quoted too tight.** `GLUEBALL §10` states the
-  v10a.26 values match the sealed rationals to `≤2.3e-13`. `A`, `B` and `D` do.
-  `α_new = 0.41666666666691` is off `5/12` by `2.4331e-13`, just outside — because
-  `α = 4A` inherits four times `A`'s deviation, while the quoted bound tracks
-  `D` (`2.23e-13`). The sealed core itself is unaffected: `α_new` and `4·A_new`
-  agree to `2.0e-15`.
-
-- **`Δ_Γ` is printed one ulp low.** The register gives `2.0827701250956414`.
-  In high precision the difference is `2.082770125095641678…`, which correctly
-  rounds to `…417`; the printed value comes from rounding `q_band⁽⁴⁾` to a
-  double *before* subtracting. Cosmetic, but the printed digit is not the
-  correctly rounded one.
-
-None changes any physics. All three are exactly the class of drift that a prose
-corpus cannot catch on its own.
-
-Three more concern the adjudication harness in `settlement/`, which is the tool
-that would actually decide C2:
-
-- **The target-blindness scan cannot see two scalar-determining targets.**
-  `m_Γ = q_band + Δ_Γ` exactly, and Hamer's `8·a₄` *is* the scalar to 13
-  digits — so an engine carrying either constant is seeded with the answer it
-  is supposed to reconstruct blind. The scan covers the 16-digit oracle form
-  `7751458630189173`, but that string does **not** contain `7751458630184`;
-  they diverge at index 12. Both would pass `[PASS] target-contamination scan`.
-- **The scan reads only the engine file.** An engine that imports a helper
-  module, loads a data file, or restores from the sqlite checkpoint carries
-  that content past it untouched.
-- **The verdict can never be `COMPLETE`.** Protocol item 10 (the W22 toggle) is
-  hardcoded `OPEN` and the completeness predicate rejects any `OPEN` value, so
-  even a certificate discharging items 8 and 9 with a full shape block yields
-  `PARTIAL`.
-
-The quarantine *architecture* is sound — targets stay module-local and the
-engine is launched with a clean environment. The gap is in detecting a target
-already inside the engine, which is exactly the case the scan exists to rule
-out.
-
-## A result, not just a check
-
-`G11` asked for near-Gamma uniformity and the corpus recorded only a warning:
-below some radius the `O(u²)` isolation gap `~u²|k|²` meets the `O(u⁴)` scale,
-and until that radius is named a fixed-momentum coefficient theorem cannot be
-promoted to a uniformly isolated band theorem.
-
-The radius is now explicit:
+One contradiction is genuinely open — **C2**, the fourth-order off-axis
+coefficient, `-0.04808638…` against `-0.02021332…`, a gap of `0.02787305…`. It
+cannot be closed by re-anchoring: the crosswalk is
 
 ```
-|k| ≥ K·u,     K = (π/2)·√(W₄ / (θ t₃))
+c_4_new(k) = c_4_old(k) + Δ_Γ + Δ_C · Φ_C(k),   Φ_C(k) = 4·e_2(k)/Q(k)
 ```
 
-At `θ = 1/2` that is `K = 17.04` for the historical kernel and `23.66` for
-v10a.26. It rests on Jordan's inequality `q(k) ≥ (4/π²)|k|²` — tight at both
-`k = 0` and the zone corner, so it holds across the whole zone rather than only
-near Gamma.
+and `Φ_C(0) = 0`, so the Γ-point scalar pins `Δ_Γ` and places **no** constraint
+on `Δ_C`. `Φ_C` also vanishes on every axial cut, which is why axial data agree
+exactly while M and R split by `8Δ_C` and `16Δ_C`. That is the finite-order
+bottleneck of the whole program, and G3 is the run that would settle it.
 
-**It does not depend on C2.** `K` enters only through `√W₄`, so the larger
-disputed bandwidth bounds both cases: `K = 23.66` is valid whichever kernel the
-adjudication selects, and can be stated before G3 runs. It also bounds where
-the claim means anything (`u < 0.133` at `θ = 1/2`) and what it gives up (the
-excluded fraction grows as `u³`: 0.18% at `u = 0.02`, 22.36% at `u = 0.10`).
+The corpus's own one-sentence summary of its largest unpaid debt:
 
-This is a sufficient criterion from a conservative bound, not the sharp
-constant, and it says nothing about the ball's interior. G11 is partially
-discharged, not closed. See
-[ADR 0003](docs/decisions/0003-near-gamma-exclusion-radius.md).
+> The corpus proves protection and computes coefficients; it assumes, and
+> nowhere proves, that the protected object is the glueball.
 
-## A mechanism, offered for refutation — and refuted
+`FRONTIER.md` §5–7 has the ranked open list and what is cheapest next.
 
-`G14` asks why `B_shp = D_shp = 0` at every solved rank. Two things came out of
-attacking it, and they should be read separately.
+## Licence
 
-**An exact reformulation, which stands.** Clearing the denominator, the
-numerator basis stratifies by total degree in the `aᵢ`, and the vanishing pair
-`{B_shp, D_shp}` is **exactly** the degree-3 part. Since `aᵢ ~ L⁻²`, "the `L⁻⁴`
-tier" and "degree 3" are the same set. Along the way: the carrier is the
-`d`-direction with `d†d = q`, which is where the `1/q` in the ansatz comes from,
-and `B B† = q·I − d·conj(d)ᵀ` has eigenvalues `(0, q, q)`, reproducing the
-recorded second-order spectrum.
-
-**A mechanism, which does not.** The proposal was that `2r` vertices bound the
-numerator at degree `r`, making degree 3 unreachable at fourth order. That
-misses the carrier projection: the numerator is `d†H₄d`, and `d†(·)d` adds one
-more power of `a`. Four vertices bound `H₄` at degree 2 and the numerator at
-**3** — precisely the degree it was supposed to forbid. `MASTER_THEORY §5.1`
-had already recorded the two-hop enumeration producing a rank-five span
-including those terms, which is a dynamical vanishing, not a kinematic one.
-
-Retracted in
-[ADR 0005](docs/decisions/0005-retracting-the-degree-bound.md), which supersedes
-[ADR 0004](docs/decisions/0004-tier-collapse-as-a-degree-bound.md). G14 is open
-again — better posed, no closer to answered. The failed attempt is kept rather
-than deleted: how it failed is evidence about the problem.
-
-## Status
-
-Pre-1.0. The verifier covers the second-order rank law, the SU(3) second- and
-third-order ledgers, the fourth-order sealed core and axial law, the dispute
-arithmetic, the generalized Hodge pencil, checkpoint extraction, and the
-homology count. The fourth-order adjudication itself (gap **G3**) is not
-implemented — see [`ledger/gaps.yaml`](ledger/gaps.yaml) for the 11-item frozen
-protocol it must follow. Its scope narrowed once C1 was dissolved: what G3 must
-settle is `C_shp`, since `Φ_C(0) = 0` makes Γ-point data structurally incapable
-of constraining `Δ_C`.
+None. See `NOTICE` — unpublished private research, all rights reserved.

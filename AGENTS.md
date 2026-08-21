@@ -1,8 +1,9 @@
 # Research mission
 
-Read `CLAUDE.md` first — it is the working agreement, and its non-negotiables
-bind. This file is the posture: what the work *is*, and how to decide what to do
-next.
+Three files, no overlap. `README.md` is the operating manual — reading order,
+commands, how to add a check, what counts as done. `CLAUDE.md` is the
+non-negotiables, and they bind. **This file is the posture**: what the work *is*
+and how to decide what to do next.
 
 ## What this repository is
 
@@ -89,27 +90,12 @@ Resolve by mathematics, never by preference or recency. C1 was dissolved by
 noticing that `q_band^(4)` and `m_Γ^(4)` are differently anchored coordinates —
 not by picking the better-looking number.
 
-## Finding things, cheaply
+## Finding things
 
-The corpus is 12.2M tokens: about 61× a context window. Reading it is not a
-plan. Read in this order and stop when the question is answered:
-
-1. **`FRONTIER.md`** — generated; what is established, disputed, refuted, and
-   what the cheapest next test is. Regenerate with `workhouse frontier`.
-2. **`ledger/`** — `governing_register.yaml` (R1–R23, the authority),
-   `contradictions.yaml` (C1–C22), `gaps.yaml` (G1–G19).
-3. **`src/workhouse/invariants.py`** — every checked claim, with its corpus
-   citation. If a claim is checked, the check is a better source than the prose.
-4. **`theory/`** — the governing document, for definitions and for sections the
-   checks cite.
-5. **Value search** across the corpus — see below.
-6. **`corpus-import/`** — only ever targeted. Never read it recursively.
-
-The join keys here are **exact rationals, not concepts**. No embedding retrieves
-`109151/249696` from a natural-language query, and 454 of 855 corpus files carry
-nothing checkable at all. Search by exact rational, decimal prefix, symbol,
-alias, coefficient, function name, and characteristic output — an algebraic
-expression is usually a better key than terminology.
+`README.md` has the retrieval order and the search mechanics; do not re-derive
+them here. The one thing worth repeating, because it is the thing agents get
+wrong: the corpus is about 61 context windows, so reading it is not a plan, and
+the join keys are **exact rationals, not concepts**. Search by value first.
 
 ## Prefer decisive calculations
 
@@ -160,6 +146,12 @@ chain complexes, boundary operators, representation theory, invariant theory,
 spectral geometry, Feshbach/resolvent constructions, linked-cluster
 cancellation, conserved flux, graph structure, degeneracy, selection rules,
 algebraic factorization.
+
+`literature/index.yaml` is the external half of this: published results
+indexed by the claim they bear on, queryable with `workhouse lit --for <id>`.
+An external result counts because it is **independent** — produced without
+knowledge of this program — not because it is published. It is T3 until
+something checks it, same as any document here.
 
 But distinguish analogy from derivation. If several results look like instances
 of one principle, write the candidate general theorem down and say exactly what

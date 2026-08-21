@@ -50,6 +50,10 @@ class Result:
     passed: bool
     detail: str = ""
     section: str = ""
+    #: T1 = re-derived exactly; T2 = float agreement within a stated tolerance.
+    tier: int = 1
+    #: Line of the check's body, so a reader can go argue with the source.
+    line: int = 0
 
 
 @dataclass
@@ -57,23 +61,34 @@ class Suite:
     """A named group of checks."""
 
     name: str
-    checks: list[tuple[str, str, Callable[[], tuple[bool, str]]]] = field(default_factory=list)
+    checks: list[tuple[str, str, int, Callable[[], tuple[bool, str]]]] = field(default_factory=list)
 
-    def check(self, name: str, section: str = ""):
+    def check(self, name: str, section: str = "", tier: int = 1):
+        """Register a check.
+
+        ``tier`` is the verification tier the check establishes, and it is
+        declared rather than inferred because the difference is the whole point:
+        T1 is exact re-derivation, T2 is float agreement within a tolerance. A
+        check that compares against a ``*_NUM`` constant or a stated tolerance
+        is T2 however exact its inputs look.
+        """
+        if tier not in (1, 2):
+            raise ValueError(f"{name}: a check establishes T1 or T2, not T{tier}")
+
         def register(fn):
-            self.checks.append((name, section, fn))
+            self.checks.append((name, section, tier, fn))
             return fn
 
         return register
 
     def run(self) -> list[Result]:
         out = []
-        for name, section, fn in self.checks:
+        for name, section, tier, fn in self.checks:
             try:
                 passed, detail = fn()
             except Exception as exc:  # a broken check is a failure
                 passed, detail = False, f"raised {type(exc).__name__}: {exc}"
-            out.append(Result(name, passed, detail, section))
+            out.append(Result(name, passed, detail, section, tier, fn.__code__.co_firstlineno))
         return out
 
 
@@ -210,7 +225,13 @@ def _():
 
 @sealed.check("alpha_3 = 4*|c_4^square(3)|", "MOB §4")
 def _():
-    return 4 * abs(K.CUBE_COMPLETION_4) == K.ALPHA_PEN_3, "cube-completion route agrees"
+    # Exact: both sides are Rational. A second, independent route to alpha_3 --
+    # the cube-completion coefficient rather than the shape coefficient A.
+    route = 4 * abs(K.CUBE_COMPLETION_4)
+    return route == K.ALPHA_PEN_3, (
+        f"4*|c_4^square(3)| = 4*|{K.CUBE_COMPLETION_4}| = {route} = alpha_3, the "
+        f"same value the shape route gives as 4*A_shp = 4*{K.A_SHP_3}"
+    )
 
 
 def _sealed_gaps():
@@ -222,7 +243,7 @@ def _sealed_gaps():
     }
 
 
-@sealed.check("v10a.26 A, B, D match the sealed rationals within 2.3e-13", "GLUEBALL §10")
+@sealed.check("v10a.26 A, B, D match the sealed rationals within 2.3e-13", "GLUEBALL §10", tier=2)
 def _():
     gaps = _sealed_gaps()
     subset = {k: gaps[k] for k in ("A", "B", "D")}
@@ -230,7 +251,11 @@ def _():
     return ok, "; ".join(f"{k} {v:.3e}" for k, v in subset.items())
 
 
-@sealed.check("FINDING: alpha_new falls outside the corpus's own 2.3e-13 bound", "GLUEBALL §10")
+@sealed.check(
+    "FINDING: alpha_new falls outside the corpus's own 2.3e-13 bound",
+    "GLUEBALL §10",
+    tier=2,
+)
 def _():
     gaps = _sealed_gaps()
     # alpha = 4A, so it inherits four times A's deviation. The corpus's stated
@@ -259,7 +284,7 @@ def _():
 dispute = _suite("fourth order, anchoring and the residual dispute")
 
 
-@dispute.check("historical q_3 decimal expansion", "MASTER_THEORY §5.5")
+@dispute.check("historical q_3 decimal expansion", "MASTER_THEORY §5.5", tier=2)
 def _():
     d = abs(float(K.Q_BAND_4) - (-2.857915988114559))
     return d < 1e-15, f"|diff| = {d:.2e}"
@@ -271,7 +296,7 @@ def _():
     return v == K.C_SHP_HISTORICAL, f"= {v}"
 
 
-@dispute.check("Delta_Gamma = m_Gamma^(4) - q_band^(4)", "MASTER_THEORY §5.5 / C1")
+@dispute.check("Delta_Gamma = m_Gamma^(4) - q_band^(4)", "MASTER_THEORY §5.5 / C1", tier=2)
 def _():
     v = K.M_GAMMA_4_NUM - float(K.Q_BAND_4)
     # Double-precision evaluation lands one ulp below the correctly rounded
@@ -280,7 +305,7 @@ def _():
     return ok, f"double eval {v!r}; exact rounds to {K.DELTA_GAMMA!r}"
 
 
-@dispute.check("FINDING: the printed Delta_Gamma is one ulp low", "MASTER_THEORY §5.5")
+@dispute.check("FINDING: the printed Delta_Gamma is one ulp low", "MASTER_THEORY §5.5", tier=2)
 def _():
     from sympy import Float
 
@@ -314,33 +339,37 @@ def _():
     )
 
 
-@dispute.check("Delta_C = C_new - C_old > 0 (the real discrepancy)", "MASTER_THEORY §5.5 / C2")
+@dispute.check(
+    "Delta_C = C_new - C_old > 0 (the real discrepancy)",
+    "MASTER_THEORY §5.5 / C2",
+    tier=2,
+)
 def _():
     v = K.C_SHP_NEW_NUM - float(K.C_SHP_HISTORICAL)
     d = abs(v - K.DELTA_C)
     return d < 1e-16 and v > 0, f"{v!r} vs recorded {K.DELTA_C!r} (|diff| {d:.1e})"
 
 
-@dispute.check("beta_new = 8A + 16*C_new", "MASTER_THEORY §5.5")
+@dispute.check("beta_new = 8A + 16*C_new", "MASTER_THEORY §5.5", tier=2)
 def _():
     v = 8 * float(K.A_SHP_3) + 16 * K.C_SHP_NEW_NUM
     return abs(v - 0.5099200711546681) < 1e-15, f"= {v!r}"
 
 
-@dispute.check("off-axis band splits are 8*Delta_C and 16*Delta_C", "MASTER_THEORY §5.5")
+@dispute.check("off-axis band splits are 8*Delta_C and 16*Delta_C", "MASTER_THEORY §5.5", tier=2)
 def _():
     m, r = 8 * K.DELTA_C, 16 * K.DELTA_C
     ok = abs(m - 0.2229844343615374) < 1e-15 and abs(r - 0.4459688687230748) < 1e-15
     return ok, f"M: {m!r}, R: {r!r}; axial cuts agree exactly"
 
 
-@dispute.check("bandwidth ratio W4_new / W4_old ~ 1.93", "MASTER_THEORY §5.5")
+@dispute.check("bandwidth ratio W4_new / W4_old ~ 1.93", "MASTER_THEORY §5.5", tier=2)
 def _():
     ratio = K.W4_NEW_NUM / K.W4_HISTORICAL
     return abs(ratio - 1.93) < 5e-3, f"= {ratio:.6f}"
 
 
-@dispute.check("Hamer 8*a_4 matches m_Gamma to ~5.2e-13", "GLUEBALL §2.3")
+@dispute.check("Hamer 8*a_4 matches m_Gamma to ~5.2e-13", "GLUEBALL §2.3", tier=2)
 def _():
     d = abs(8 * K.HAMER_A4 - K.M_GAMMA_4_NUM)
     return d < K.HAMER_TOLERANCE, (
@@ -349,13 +378,13 @@ def _():
     )
 
 
-@dispute.check("quarantined scalar decimal", "MASTER_THEORY §5.5")
+@dispute.check("quarantined scalar decimal", "MASTER_THEORY §5.5", tier=2)
 def _():
     d = abs(float(K.QUARANTINED_SCALAR) - (-11.068479463778765))
     return d < 1e-14, f"|diff| = {d:.2e}; rejected by both sides"
 
 
-@dispute.check("C20: exact gate value vs printed float-reconstruction", "MASTER_THEORY C20")
+@dispute.check("C20: exact gate value vs printed float-reconstruction", "MASTER_THEORY C20", tier=2)
 def _():
     exact = float(K.LINKED_VACUUM_4)
     artifact = float(K.LINKED_VACUUM_4_ARTIFACT)
@@ -373,7 +402,7 @@ def _():
     )
 
 
-@dispute.check("run's applied shift is not Delta_Gamma", "GLUEBALL §9.2 / C22")
+@dispute.check("run's applied shift is not Delta_Gamma", "GLUEBALL §9.2 / C22", tier=2)
 def _():
     # Gate 85's equality was produced by construction with this shift, so it
     # certifies internal bookkeeping rather than independent agreement.
@@ -413,7 +442,11 @@ def _():
     return got == want, f"{ {k: str(v) for k, v in got.items()} }"
 
 
-@crosswalk.check("crosswalk reproduces the recorded off-axis band splits", "MASTER_THEORY §5.5")
+@crosswalk.check(
+    "crosswalk reproduces the recorded off-axis band splits",
+    "MASTER_THEORY §5.5",
+    tier=2,
+)
 def _():
     # c_4_new(k) - c_4_old(k) - Delta_Gamma == Delta_C * Phi_C(k)
     m = K.DELTA_C * float(K.phi_c((pi, pi, 0)))
@@ -431,7 +464,7 @@ def _():
     )
 
 
-@crosswalk.check("bandwidth is preserved only if Delta_C vanishes", "MASTER_THEORY §5.5")
+@crosswalk.check("bandwidth is preserved only if Delta_C vanishes", "MASTER_THEORY §5.5", tier=2)
 def _():
     # The scalar term drops out of any difference of band values; only Phi_C survives.
     spread = K.DELTA_C * (float(K.phi_c((pi, pi, pi))) - float(K.phi_c((pi, 0, 0))))
@@ -680,7 +713,7 @@ def _():
     return K.B_3 > 0, f"b_3 = {K.B_3} > 0; t(u) - t_3 u^2 = b_3 u^3 >= 0"
 
 
-@near_gamma.check("crossover constant K = (pi/2) sqrt(W_4 / (theta t_3))", "GLUEBALL §18.3")
+@near_gamma.check("crossover constant K = (pi/2) sqrt(W_4 / (theta t_3))", "GLUEBALL §18.3", tier=2)
 def _():
     theta = Rational(1, 2)
     got = G.crossover_constant(K.W4_HISTORICAL, theta)
@@ -691,6 +724,7 @@ def _():
 @near_gamma.check(
     "the criterion survives C2: K depends on the kernel only through sqrt(W_4)",
     "MASTER_THEORY §5.5 / C2",
+    tier=2,
 )
 def _():
     theta = Rational(1, 2)
@@ -706,7 +740,11 @@ def _():
     )
 
 
-@near_gamma.check("the statement is non-vacuous only below an explicit coupling", "GLUEBALL §18.3")
+@near_gamma.check(
+    "the statement is non-vacuous only below an explicit coupling",
+    "GLUEBALL §18.3",
+    tier=2,
+)
 def _():
     theta = Rational(1, 2)
     u_max = float(G.max_coupling(theta))
@@ -719,7 +757,7 @@ def _():
     )
 
 
-@near_gamma.check("excluded zone fraction grows as u^3", "GLUEBALL §18.3")
+@near_gamma.check("excluded zone fraction grows as u^3", "GLUEBALL §18.3", tier=2)
 def _():
     f1 = G.excluded_zone_fraction(0.02)
     f2 = G.excluded_zone_fraction(0.04)
@@ -1040,4 +1078,95 @@ def _():
     return len(K.RATIO_UNDISPUTED) == 4, (
         f"the quoted ratio is sqrt(6) * {K.RATIO_UNDISPUTED} through u^3; C2 "
         "reaches every higher coefficient through the fourth-order mass kernel"
+    )
+
+
+# ==========================================================================
+published = _suite("published comparisons (literature/index.yaml)")
+# An external result is not authority either -- it is T3 until something checks
+# it. What makes one valuable is independence: it was produced without any
+# knowledge of this program, so agreement is evidence rather than bookkeeping.
+
+
+@published.check("SU(3) Weingarten values follow from the general formula", "CS_2006 / C7")
+def _():
+    # C7's decisive witness quotes Wg(e) = 1/8 and Wg((12)) = -1/24 for SU(3)
+    # from a transcript. Re-derive them, symbolically in N, from the definition:
+    # the order-n Weingarten matrix is the inverse of the Gram matrix
+    # G[s,t] = N**(number of cycles of s*t^-1) on the symmetric group S_n.
+    # At n = 2, S_2 = {e, (12)}: cycles(e) = 2, cycles((12)) = 1.
+    n = symbols("N", positive=True)
+    gram = Matrix([[n**2, n], [n, n**2]])
+    wg = simplify(gram.inv())
+    identity, transposition = wg[0, 0], wg[0, 1]
+    return (
+        simplify(identity - 1 / (n**2 - 1)) == 0
+        and simplify(transposition + 1 / (n * (n**2 - 1))) == 0
+        and identity.subs(n, 3) == Rational(1, 8)
+        and transposition.subs(n, 3) == Rational(-1, 24)
+    ), (
+        f"Wg(e) = {simplify(identity)} and Wg((12)) = {simplify(transposition)} for all N; "
+        f"at N = 3 they are {identity.subs(n, 3)} and {transposition.subs(n, 3)}, "
+        "exactly the values C7 quotes"
+    )
+
+
+@published.check("the fourth moment integral |U_11|^4 = 1/6 at N = 3", "CS_2006 / C7")
+def _():
+    # The other half of C7's witness. All four indices are 1, so every pair
+    # (sigma, tau) in S_2 x S_2 contributes and the integral is the full sum of
+    # the Weingarten matrix: 2 Wg(e) + 2 Wg((12)).
+    n = symbols("N", positive=True)
+    gram = Matrix([[n**2, n], [n, n**2]])
+    wg = simplify(gram.inv())
+    moment = simplify(2 * wg[0, 0] + 2 * wg[0, 1])
+    return simplify(moment - 2 / (n * (n + 1))) == 0 and moment.subs(n, 3) == Rational(1, 6), (
+        f"integral |U_11|^4 dU = {simplify(moment)} = 2/(N(N+1)); at N = 3 that is "
+        f"{moment.subs(n, 3)}, nonzero -- which is what refuted the claimed Haar zero "
+        "for the balanced (n_U, n_Udag) = (2,2) sector"
+    )
+
+
+@published.check("the Weingarten route is independent of the corpus", "CS_2006 / C7")
+def _():
+    # Worth stating explicitly, because it is the reason C7 is settled rather
+    # than merely disputed. The derivation above uses only the symmetric group
+    # and the rank; it imports no constant, convention, or coefficient from the
+    # corpus, so it cannot inherit an error from it.
+    n = symbols("N", positive=True)
+    gram = Matrix([[n**2, n], [n, n**2]])
+    generic = simplify(gram.inv()[0, 0] * (n**2 - 1))
+    return generic == 1, (
+        "the identity-permutation Weingarten value times (N^2 - 1) is exactly 1 for "
+        "symbolic N, so the SU(3) numbers are a specialization of a rank-generic "
+        "formula rather than a fitted pair"
+    )
+
+
+@published.check(
+    "the strongest external check is a transcription, and says so",
+    "HAMER_1989",
+    tier=2,
+)
+def _():
+    # 8 * a_4 agreeing with m_Gamma^(4) to 5.2e-13 is the best external
+    # validation the program has -- and the corpus itself records that the
+    # primary table has never been pinned. The check asserts the caveat, so it
+    # cannot quietly disappear when the number gets quoted.
+    from . import literature as lit_mod
+
+    lit = lit_mod.load()
+    edges = lit.bearing_on("HAMER_A4")
+    supplies = [e for _p, e in edges if e["relation"] == "supplies-value"]
+    bridged = 8 * K.HAMER_A4
+    gap = abs(bridged - K.M_GAMMA_4_NUM)
+    return (
+        len(supplies) == 1
+        and supplies[0]["status"] == "transcription-unverified"
+        and gap < K.HAMER_TOLERANCE
+    ), (
+        f"8 * a_4 = {bridged} against m_Gamma^(4) = {K.M_GAMMA_4_NUM}, gap {gap:.2e} "
+        f"(bound {K.HAMER_TOLERANCE:.1e}) — but the edge to HAMER_1989 is recorded as "
+        "transcription-unverified: the primary Phys. Lett. B 224 table has never been "
+        "pinned and hashed, so this agreement rests on a local transcription"
     )

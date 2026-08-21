@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 21 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 80/80 checks pass.
+**T1/T2 — re-derived here.** 84/84 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -29,6 +29,14 @@ it cannot drift from what the repository actually checks.
 | tier collapse (G14) | 6/6 |
 | isotropic pentagonal cap band (v4.3 §9.3) | 9/9 |
 | native string tension through fifth order (v4.3 §11.2) | 7/7 |
+| published comparisons (literature/index.yaml) | 4/4 |
+
+`CERTIFIED.md` lists every one of these claims individually, ranked by
+tier, each with the command that re-establishes it in about a second:
+
+```bash
+workhouse verify --only 'h_4^side = A_+'   # one claim, with its numbers
+```
 
 Everything else in the corpus is **T3: asserted and unchecked**. That is
 the default, not an accusation.
@@ -128,6 +136,29 @@ settles nothing is excluded however cheap it looks.
 - `G5` (weeks) Tetrahedral local Haar-resolvent coefficient — settles C15
   - Cheap falsification test of circuit-allowance versus survival.
 - `G6` (weeks) B_N fixed-rank holdout ledger for N = 7..18 — settles C17
+
+## 7b. What published work bears on this
+
+`literature/index.yaml` maps papers to claims; `workhouse lit --for C2`
+queries it. External results matter here because they are **independent**
+-- produced without knowledge of this program -- not because they are
+published. A paper is T3 until something checks it, same as any document.
+
+| Paper | Bears on | Relation | Status |
+|---|---|---|---|
+| `KS_1975` | `R2` | supplies-method | not-yet-obtained |
+| `HAMER_1989` | `HAMER_A4` | supplies-value | transcription-unverified |
+| `HAMER_1989` | `C1` | corroborates | transcription-unverified |
+| `HIP_1986` | `G7` | supplies-value | not-yet-obtained |
+| `HIP_1986` | `R14` | supplies-method | not-yet-obtained |
+| `HSB_2000` | `HAMER_A4` | confusable | verified |
+| `MP_1999` | `G18` | supplies-comparison | not-yet-obtained |
+| `CS_2006` | `C7` | supplies-method | verified |
+
+**6 of 8 edges rest on a source nobody here has read
+or pinned** -- including the strongest external agreement the program has,
+`8 a_4` against `m_Gamma^(4)` to 5.2e-13, which rests on a transcription of
+a table that has never been hashed.
 
 ## 8. What might unify the established results
 

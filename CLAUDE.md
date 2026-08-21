@@ -101,16 +101,25 @@ code files.
 make verify    # re-derive every exact claim (T1/T2)
 make status    # contradiction and gap registers
 make frontier  # regenerate FRONTIER.md — established / disputed / refuted / next
+make certified # regenerate CERTIFIED.md — every checked claim, ranked by tier
+make lit       # published work, and which claim each paper bears on
 make check     # ruff + pytest, what CI runs
 make lean      # T0: proof-check the Lean core (needs elan; see lean/README.md)
 make manifest  # re-pin theory/ after a deliberate, reviewed corpus change
 
+workhouse verify --only 'h_4^side'  # re-establish ONE claim, with its numbers
+workhouse verify --tier 1           # only the exact re-derivations
 workhouse frontier --brief          # the block injected at session start
 workhouse triage /path/to/archive   # survey an unpinned collection
 ```
 
-`FRONTIER.md` is generated and checked in. A test fails if it is stale, because
-a generated file that has drifted still reads as current.
+`FRONTIER.md` and `CERTIFIED.md` are generated and checked in. A test fails if
+either is stale, because a generated file that has drifted still reads as
+current.
+
+`CERTIFIED.md` is the answer to "what is the best-established thing here, and
+how do I check it myself?" — every claim ranked by tier, every row carrying its
+own one-second reproduction command. Point a skeptical reader there first.
 
 ## Adding a unifying candidate
 
