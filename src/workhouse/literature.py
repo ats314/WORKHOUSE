@@ -228,6 +228,8 @@ def format_index(lit: Literature | None = None, target: str | None = None) -> st
             w(f"      → {edge['target']:<12} {edge['relation']:<20} {edge['status']}")
         for question in paper.get("open_questions", []):
             w(f"        ? {question}")
+        for answered in paper.get("answered_questions", []):
+            w(f"        \033[2m✓ {answered['q']}\033[0m")
 
     w("\n\033[1mWanted\033[0m — named because they would settle something")
     for want in lit.wanted:

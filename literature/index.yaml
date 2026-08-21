@@ -61,33 +61,91 @@ papers:
     arxiv: null
     licence: publisher-copyright
     fulltext: null
+    # Publisher copyright: the paper is NOT stored. A maintainer-supplied copy
+    # of the published article was read on 2026-08-21, Table 1 was verified
+    # against the rendered page image (not OCR), and the digest below pins the
+    # copy read. The full Table 1 decimals are registered as HAMER_MA_NUM /
+    # HAMER_MS_NUM / HAMER_MT_NUM in the constants registry.
+    source_sha256: 96b3ec0f6e2da458cc9530701c717723d869e4b0f6dd871b49a4410e897edc51
+    note: >
+      Series to order x^7 (g^-28) for the 0++, 1+- and 2++ glueball masses.
+      Hamer states his x^3 and x^4 terms DISAGREE with Kogut-Sinclair-Susskind
+      [7], so this table supersedes KS_1975 at exactly the orders this program
+      uses. Estimates beyond the table (Pade/Shafer approximants, mass-ratio
+      trajectories, m_S/sqrt(sigma)) are not registered — only Table 1 is.
     bears_on:
       - target: HAMER_A4_NUM
         relation: supplies-value
-        status: transcription-unverified
+        status: verified
         detail: >
-          a_4 = -0.0968932328773 is transcribed from this paper's table. Through
-          the bridge m_n = 2**(n-1) a_n it gives 8 a_4 = -0.7751458630184,
-          agreeing with m_Gamma^(4) to about 5.2e-13 -- the strongest external
-          validation the program has. The corpus is explicit (v4.3 section 2.2)
-          that the primary table has not been pinned and hashed, so the decimal
-          is a local transcription and the agreement rests on it.
+          Verified digit for digit against Table 1 (M_A column, order 4) of
+          the pinned copy: -0.968932328773 E-1. Through the bridge
+          m_n = 2**(n-1) a_n it gives 8 a_4 = -0.7751458630184, agreeing with
+          m_Gamma^(4) = -0.7751458630189173 to 5.17e-13 -- the strongest
+          external validation the program has, now primary-source rather than
+          a local transcription.
       - target: C1
         relation: corroborates
-        status: transcription-unverified
+        status: verified
         detail: >
           The oracle that produced m_Gamma^(4) ran with the historical target
           disabled and recovered m_1, m_2, m_3 first, so agreement with this
-          paper is substantive rather than internal bookkeeping. That argument
-          is only as good as the transcription above.
-    open_questions:
-      # Verbatim from the corpus's own audit, FLATBAND_PAPER_EXPANSION_AUDIT
-      # 2026-07-25 section 2.5. Obtaining the four-page paper answers all five.
-      - Hamiltonian normalization -- electric Casimir and magnetic-term conventions
-      - expansion parameter -- conversion between Hamer's variable and y
-      - energy definition -- one-particle energy versus vacuum-subtracted mass
-      - 1^{+-} coefficients -- equality or disagreement through the shared order
-      - momentum resolution -- whether Hamer computed only k=0 masses or a full band
+          paper is substantive rather than internal bookkeeping. With the
+          table pinned, that argument no longer rests on a transcription.
+      - target: D_3
+        relation: corroborates
+        status: verified
+        detail: >
+          4 a_3(M_A) = -0.437135556836 against the cold-certified
+          D_3 = -109151/249696 = -0.437135556837114: gap 1.1e-12, inside the
+          half-ulp of the paper's 12 printed digits times the bridge factor 4.
+          Published 37 years before this program computed the rational.
+      - target: BAND_EVEN_BOTTOM
+        relation: corroborates
+        status: verified
+        detail: >
+          2 a_2(M_S) = -0.21274509804 against the corpus's vacuum-subtracted
+          A1++ coefficient -217/1020 = -0.212745098039216: gap 7.8e-13. The
+          C-even sector agrees too, not just the carrier's.
+      - target: M3_EVEN_K0
+        relation: corroborates
+        status: verified
+        detail: >
+          4 a_3(M_S) = -0.1039004229144 against the corpus certificate value
+          -54049/520200 = -0.103900422914264: gap 1.4e-13. Third order,
+          C-even, from a table printed in 1989.
+    answered_questions:
+      # The five open_questions of the corpus's own audit (FLATBAND_PAPER_
+      # EXPANSION_AUDIT 2026-07-25 section 2.5), answered from the pinned copy.
+      - q: Hamiltonian normalization -- electric Casimir and magnetic-term conventions
+        a: >
+          W = (2/g^2) a H = Sum_l E_l^2 - x Sum_p (Z_p + Z_p^dag), eq. (1).
+          The single-plaquette rest energy is a_0 = 16/3 (recurring-decimal
+          dot in the table), i.e. fundamental Casimir 4/3 per link -- the same
+          electric convention as the program's H_0 = (1/2) Sum E^2.
+      - q: expansion parameter -- conversion between Hamer's variable and y
+        a: >
+          x = 2/g^4, so x = 2u in the canonical coordinate u = beta/6 = 1/g^4.
+          No 4**r ambiguity arises; the bridge below carries the whole
+          conversion.
+      - q: energy definition -- one-particle energy versus vacuum-subtracted mass
+        a: >
+          M is the mass gap of W (excitation above the vacuum of W), and the
+          physical mass is m a = (g^2/2) M, eq. (2). Combined with x = 2u this
+          gives exactly the corpus bridge m_n = 2**(n-1) a_n, which the
+          published-comparisons suite now proves as algebra.
+      - q: 1^{+-} coefficients -- equality or disagreement through the shared order
+        a: >
+          Equality, at the paper's printed precision, at every shared order.
+          n = 0: 16/3 / 2 = 8/3 exactly; n = 1: +1 exactly; n = 2: 2 a_2 vs
+          11/306, gap 9.9e-14; n = 3: 4 a_3 vs D_3, gap 1.1e-12; n = 4 is the
+          a_4 agreement above. The C-even sector agrees through n = 3 as well.
+      - q: momentum resolution -- whether Hamer computed only k=0 masses or a full band
+        a: >
+          k = 0 only: the states, eqs. (3)-(5), are translationally invariant
+          single-plaquette combinations, and only mass gaps are computed. So
+          this paper structurally cannot constrain the off-axis coefficient
+          C_shp -- consistent with Phi_C(0) = 0 and the scope G3 must settle.
 
   - id: HIP_1986
     title: >

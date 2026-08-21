@@ -42,21 +42,28 @@ def test_every_paper_is_pinnable():
         assert paper.get("doi") or paper.get("arxiv"), paper["id"]
 
 
-def test_the_hamer_edge_stays_marked_as_a_transcription():
-    """The program's strongest external agreement rests on an unpinned table.
+def test_the_hamer_edge_is_verified_and_stays_pinned():
+    """The upgrade this test's predecessor demanded has happened — guard it.
 
-    5.2e-13 against Hamer's a_4 is the best independent evidence here, and the
-    corpus itself says the primary table has never been hashed. If someone
-    upgrades this edge to `verified`, they must have actually obtained the
-    paper — this test is the place that forces the question.
+    The old test forced the question: an upgrade to `verified` requires the
+    Phys. Lett. B 224 table pinned and hashed and the five open questions
+    answered. On 2026-08-21 a maintainer-supplied copy of the paper was read,
+    Table 1 verified against the page image, the digest recorded, and all
+    five questions answered from the text. What must not rot now: the digest
+    must stay present (the publisher-copyright PDF itself is never stored),
+    the answers must stay with the entry, and a downgrade back to
+    transcription status would be silent evidence-loss.
     """
-    edges = L.load().bearing_on("HAMER_A4_NUM")
+    lit = L.load()
+    paper = next(p for p in lit.papers if p["id"] == "HAMER_1989")
+    edges = lit.bearing_on("HAMER_A4_NUM")
     supplies = [e for _p, e in edges if e["relation"] == "supplies-value"]
     assert len(supplies) == 1
-    assert supplies[0]["status"] == "transcription-unverified", (
-        "if this was upgraded, Phys. Lett. B 224 must be pinned and hashed and "
-        "the five open_questions in the index answered"
-    )
+    assert supplies[0]["status"] == "verified"
+    assert len(str(paper.get("source_sha256", ""))) == 64, "the pin must not disappear"
+    assert paper.get("fulltext") is None, "publisher copyright: the PDF is never stored"
+    assert len(paper.get("answered_questions", [])) == 5
+    assert all(q.get("q") and q.get("a") for q in paper["answered_questions"])
 
 
 def test_the_confusable_paper_is_recorded_as_such():

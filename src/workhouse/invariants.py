@@ -1157,31 +1157,104 @@ def _():
 
 
 @published.check(
-    "the strongest external check is a transcription, and says so",
+    "the Hamer table is pinned, and the a_4 agreement is primary-source",
     "HAMER_1989",
     tier=2,
 )
 def _():
-    # 8 * a_4 agreeing with m_Gamma^(4) to 5.2e-13 is the best external
-    # validation the program has -- and the corpus itself records that the
-    # primary table has never been pinned. The check asserts the caveat, so it
-    # cannot quietly disappear when the number gets quoted.
+    # This check used to assert its own caveat: the strongest external
+    # agreement rested on an unhashed transcription. On 2026-08-21 the
+    # four-page primary was obtained, digest-pinned (sha256 in the index; the
+    # publisher-copyright PDF is NOT stored), and Table 1 (M_A, order 4) reads
+    # -0.968932328773 E-1 — digit for digit the registry's a_4, verified
+    # against the rendered page image rather than OCR. The caveat is retired,
+    # not forgotten: the bound is unchanged, and the pin is asserted here so
+    # it cannot quietly disappear.
     from . import literature as lit_mod
 
     lit = lit_mod.load()
+    paper = next(p for p in lit.papers if p["id"] == "HAMER_1989")
     edges = lit.bearing_on("HAMER_A4_NUM")
     supplies = [e for _p, e in edges if e["relation"] == "supplies-value"]
     bridged = 8 * K.HAMER_A4_NUM
     gap = abs(bridged - K.M_GAMMA_4_NUM)
+    digest = str(paper.get("source_sha256", ""))
     return (
         len(supplies) == 1
-        and supplies[0]["status"] == "transcription-unverified"
+        and supplies[0]["status"] == "verified"
+        and len(digest) == 64
+        and K.HAMER_MA_NUM[2] == K.HAMER_A4_NUM
+        and len(paper.get("answered_questions", [])) == 5
         and gap < K.HAMER_TOLERANCE
     ), (
         f"8 * a_4 = {bridged} against m_Gamma^(4) = {K.M_GAMMA_4_NUM}, gap {gap:.2e} "
-        f"(bound {K.HAMER_TOLERANCE:.1e}) — but the edge to HAMER_1989 is recorded as "
-        "transcription-unverified: the primary Phys. Lett. B 224 table has never been "
-        "pinned and hashed, so this agreement rests on a local transcription"
+        f"(bound {K.HAMER_TOLERANCE:.1e}); the copy read is pinned as sha256 "
+        f"{digest[:16]}…, a_4 equals Table 1's M_A order-4 entry, and the corpus "
+        "audit's five open questions carry answers from the pinned copy"
+    )
+
+
+@published.check(
+    "Hamer's 1+- series matches the C-odd Gamma-point coefficients through x^3",
+    "HAMER_1989 / C1",
+    tier=2,
+)
+def _():
+    # Table 1's M_A column against the program's vacuum-subtracted C-odd
+    # series under the bridge m_n = 2**(n-1) a_n. Orders 0 and 1 are exact in
+    # the paper: a_0 = 16/3 (recurring-decimal dot) halves to the free
+    # plaquette energy 8/3, and a_1 = +1 is the u-coefficient of e_flat.
+    # Orders 2 and 3 are printed to 12 significant digits; the bounds are a
+    # few times the printed half-ulp times the bridge factor, and the detail
+    # carries the measured gaps so nobody has to trust the bound choice.
+    exact_ok = Rational(16, 3) / 2 == K.e_flat(0) == Rational(8, 3)
+    gap2 = abs(2 * K.HAMER_MA_NUM[0] - float(Rational(11, 306)))
+    gap3 = abs(4 * K.HAMER_MA_NUM[1] - float(K.D_3))
+    return exact_ok and gap2 < 2e-13 and gap3 < 3e-12, (
+        f"n=0: 16/3 / 2 = 8/3 = e_flat(0) exactly; n=1: a_1 = +1 = the u-coefficient; "
+        f"n=2: 2 a_2 = {2 * K.HAMER_MA_NUM[0]!r} vs 11/306, gap {gap2:.2e} (bound 2e-13); "
+        f"n=3: 4 a_3 = {4 * K.HAMER_MA_NUM[1]!r} vs D_3 = -109151/249696, gap {gap3:.2e} "
+        "(bound 3e-12 = printed half-ulp x 4 with margin) — a 1989 table agreeing with "
+        "rationals this program computed cold, at every shared order"
+    )
+
+
+@published.check(
+    "Hamer's 0++ series matches the C-even Gamma-point coefficients through x^3",
+    "HAMER_1989",
+    tier=2,
+)
+def _():
+    # The C-even sector too: Table 1's M_S column against the corpus's
+    # vacuum-subtracted A1++ coefficients at k = 0. The n = 3 target is a
+    # corpus certificate value (RUN_TROM d3) not independently re-derived
+    # here, so this check binds two INDEPENDENT sources to each other: a 1989
+    # journal table and a 2026 cold run, neither computed with knowledge of
+    # the other.
+    exact_ok = Rational(16, 3) / 2 == Rational(8, 3) and K.HAMER_MS_NUM[0] < 0
+    gap2 = abs(2 * K.HAMER_MS_NUM[0] - float(K.BAND_EVEN_BOTTOM))
+    gap3 = abs(4 * K.HAMER_MS_NUM[1] - float(K.M3_EVEN_K0))
+    return exact_ok and gap2 < 2e-12 and gap3 < 5e-13, (
+        f"n=2: 2 a_2 = {2 * K.HAMER_MS_NUM[0]!r} vs -217/1020, gap {gap2:.2e} "
+        f"(bound 2e-12); n=3: 4 a_3 = {4 * K.HAMER_MS_NUM[1]!r} vs -54049/520200, "
+        f"gap {gap3:.2e} (bound 5e-13); a_1 = -1 in the scalar channel where the "
+        "carrier's is +1 — the sign structure matches too"
+    )
+
+
+@published.check("the m_n = 2^(n-1) a_n bridge is the x = 2u conversion", "HAMER_1989")
+def _():
+    # The bridge the corpus asserts, proved as algebra: with x = 2/g^4 = 2u
+    # and m a = (g^2/2) M (Hamer eqs. (1)-(2)), the series m(u) = M(x=2u)/2
+    # term by term, so the u^n coefficient is a_n 2^n / 2 = 2^(n-1) a_n. Not
+    # a fit and not a convention choice — the two printed equations force it.
+    u_, x_ = symbols("u x", positive=True)
+    a = symbols("a0:5", positive=True)
+    series_m = sum(coefficient * x_**n for n, coefficient in enumerate(a)).subs(x_, 2 * u_) / 2
+    bridged = [simplify(series_m.coeff(u_, n) - 2 ** (n - 1) * a[n]) for n in range(5)]
+    return all(b == 0 for b in bridged), (
+        "M(2u)/2 has u^n coefficient 2^(n-1) a_n for n = 0..4 identically — the "
+        "half from m a = (g^2/2) M, the 2^n from x = 2u; no 4**r ambiguity anywhere"
     )
 
 
