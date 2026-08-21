@@ -29,3 +29,13 @@ target-blindness scan has gaps — see the `FINDING:` checks.
 The harness drives `Hodge_SU3_Exact_MarkedCluster_m4_Colab.py`, which is not in
 this repository. Nothing here can run the `freeze`, `run` or `adjudicate`
 stages; the checks below are static analysis of the harness source only.
+
+## verify_master_identities.py was never received either
+
+`SETTLEMENT.md` §1 describes running `verify_master_identities.py` ("66/66
+PASS, ~4 min") — that script is **not in this repository** and no digest for
+it was received, so do not hunt for it or try to run it. Its territory —
+finite exact re-derivations of the identity layer — is covered by the
+invariant suites here, which re-derive the incidence factorization, the Betti
+counts, the pencil algebra, and the dispute arithmetic independently; anything
+of its 66 identities *not* re-covered is unverified, not silently inherited.

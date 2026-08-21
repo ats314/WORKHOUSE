@@ -218,14 +218,18 @@ def collect() -> list[Claim]:
         raw = getattr(K, name)
         # Sets are closed vocabularies, not values, and their repr ordering is
         # not stable across runs -- which would make this file spuriously
-        # "stale" on every regeneration.
-        if isinstance(raw, (set, frozenset, dict, str)):
+        # "stale" on every regeneration. Bare Symbols (N, L) are coordinates,
+        # not constants, and their "value" is their own name.
+        if isinstance(raw, (set, frozenset, dict, str)) or getattr(raw, "is_Symbol", False):
             continue
         if isinstance(raw, tuple):
-            parts = [_as_value(v)[0] for v in raw]
-            if any(part is None for part in parts):
+            # Only tuples of actual numbers. A tuple of records (REGISTRY)
+            # would otherwise emit its entire repr as a "value" — a 2 KB blob
+            # that substring-matches half of all queries.
+            parts = [_as_value(v) for v in raw]
+            if not parts or any(decimal is None for _exact, decimal in parts):
                 continue
-            exact, decimal = ", ".join(parts), None
+            exact, decimal = ", ".join(p[0] for p in parts), None
         else:
             exact, decimal = _as_value(raw)
         if exact is None:
@@ -259,6 +263,13 @@ def collect() -> list[Claim]:
             )
         )
     for entry in led.gaps:
+        # "cost", not "tier": the gap scale is days/weeks/months/unbounded and
+        # must never read as the T0-T3 verification vocabulary.
+        state = entry.get("state", "open")
+        status_prose = " ".join(str(entry.get("status", "")).split())
+        detail = " ".join(str(entry.get("detail", "")).split())
+        if state != "open" and status_prose:
+            detail = f"{status_prose} · {detail}" if detail else status_prose
         out.append(
             Claim(
                 id=entry["id"],
@@ -266,9 +277,9 @@ def collect() -> list[Claim]:
                 statement=entry["title"],
                 tier=3,
                 where="ledger/gaps.yaml",
-                status=f"tier {entry['tier']}"
+                status=f"cost {entry['tier']} · {state}"
                 + (" load-bearing" if entry.get("load_bearing") else ""),
-                detail=" ".join(str(entry.get("detail", "")).split()),
+                detail=detail,
                 related=sorted(entry.get("resolves", []) + entry.get("unblocks", [])),
             )
         )
@@ -381,6 +392,21 @@ def collect() -> list[Claim]:
         )
 
     return out
+
+
+def load_catalogue(path: Path | None = None) -> list[Claim]:
+    """The checked-in catalogue, rehydrated without running a single check.
+
+    ``index/claims.jsonl`` is staleness-tested, so it is current at every
+    commit; a *finding* tool (search) can read it in milliseconds instead of
+    re-running every suite to rebuild what is already on disk. ``why`` keeps
+    calling ``collect()`` because it promises live verdicts. Falls back to a
+    live ``collect()`` when the index has not been generated yet.
+    """
+    target = path or CLAIMS
+    if not target.exists():
+        return collect()
+    return [Claim(**json.loads(line)) for line in target.read_text().splitlines() if line]
 
 
 def load_symbols(path: Path | None = None) -> list[dict[str, Any]]:

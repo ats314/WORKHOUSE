@@ -74,7 +74,7 @@ def conservative_constant(theta=DEFAULT_THETA):
     gives a bound that also holds for the smaller one.
     """
     return max(
-        (crossover_constant(w, theta) for w in (K.W4_HISTORICAL, K.W4_NEW_NUM)),
+        (crossover_constant(w, theta) for w in (K.W4_HISTORICAL_NUM, K.W4_NEW_NUM)),
         key=float,
     )
 

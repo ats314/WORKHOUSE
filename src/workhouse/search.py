@@ -148,32 +148,50 @@ def search(
     return ranked, matched_symbols
 
 
-def corpus_occurrences(query: str, limit: int = 10) -> list[tuple[str, int, str]]:
-    """Where an exact rational actually appears in the 928-file corpus.
+@dataclass
+class CorpusPresence:
+    """Where an exact value lives in the corpus, shaped for independence
+    counting: AGENTS.md's instruction is to count distinct originating
+    computations, not raw occurrences, so files are the unit here."""
 
-    Separate and opt-in: scanning the corpus costs real time, and most questions
-    are answered by the catalogue without touching it.
+    total_occurrences: int
+    #: (relative path, occurrences in that file, first line, sample text)
+    files: list[tuple[str, int, int, str]]
+
+
+def corpus_occurrences(query: str, limit: int = 10) -> CorpusPresence | None:
+    """Where an exact rational actually appears across BOTH prose and code.
+
+    Separate and opt-in: scanning the corpus costs real time. Prose files are
+    included because ~200 values exist only there, and a front-door "no corpus
+    occurrence" for a value sitting in six .md files is a confident false
+    negative — the exact failure mode this repository's culture warns against.
     """
     from . import corpus_index
 
     wanted = _as_fraction(query)
     if wanted is None:
-        return []
-    table = corpus_index.scan()
+        return None
+    table = corpus_index.scan_cached()
     record = table.get(wanted)
     if record is None:
-        return []
-    return [
-        (str(o.path.relative_to(corpus_index.CORPUS_DIR)), o.line, " ".join(o.text.split())[:120])
-        for o in record.occurrences[:limit]
-    ]
+        return CorpusPresence(0, [])
+    seen: dict[str, list] = {}
+    for o in record.occurrences:
+        rel = str(o.path.relative_to(corpus_index.CORPUS_DIR))
+        seen.setdefault(rel, []).append(o)
+    files = []
+    for rel in sorted(seen, key=lambda r: (-len(seen[r]), r))[:limit]:
+        first = min(seen[rel], key=lambda o: o.line)
+        files.append((rel, len(seen[rel]), first.line, " ".join(first.text.split())[:120]))
+    return CorpusPresence(len(record.occurrences), files)
 
 
 def format_results(
     query: str,
     hits: list[Hit],
     symbols: list[dict[str, Any]],
-    occurrences: list[tuple[str, int, str]] | None = None,
+    occurrences: CorpusPresence | None = None,
     limit: int = 20,
 ) -> str:
     out: list[str] = []
@@ -225,12 +243,19 @@ def format_results(
     if len(hits) > limit:
         w(f"\n  … {len(hits) - limit} more (raise --limit)")
 
-    if occurrences:
-        w(f"\n\033[1mIn the corpus\033[0m ({len(occurrences)} shown)")
-        for path, line, text in occurrences:
-            w(f"  {path}:{line}")
+    if occurrences is not None and occurrences.files:
+        shown = len(occurrences.files)
+        distinct = "file" if shown == 1 else "files"
+        w(
+            f"\n\033[1mIn the corpus\033[0m — {occurrences.total_occurrences} occurrences "
+            f"(prose and code), showing {shown} {distinct}. Repetition is not "
+            "independence: count originating computations, not copies."
+        )
+        for path, count, line, text in occurrences.files:
+            times = f"  (x{count})" if count > 1 else ""
+            w(f"  {path}:{line}{times}")
             w(f"    \033[2m{text}\033[0m")
     elif occurrences is not None:
-        w("\n\033[2mNo corpus occurrence of that exact value.\033[0m")
+        w("\n\033[2mNo corpus occurrence of that exact value, in prose or code.\033[0m")
 
     return "\n".join(out)

@@ -53,8 +53,8 @@ def _signatures() -> dict[str, list[list[str]]]:
         "linked vacuum": K.LINKED_VACUUM_4,
         "m_Gamma^(4)": K.M_GAMMA_4_NUM,
         "C_shp v10a.26": K.C_SHP_NEW_NUM,
-        "Hamer a_4": K.HAMER_A4,
-        "Delta_Gamma": K.DELTA_GAMMA_AS_PRINTED,
+        "Hamer a_4": K.HAMER_A4_NUM,
+        "Delta_Gamma": K.DELTA_GAMMA_AS_PRINTED_NUM,
     }
     out: dict[str, list[list[str]]] = {}
     for label, value in named.items():

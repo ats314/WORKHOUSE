@@ -51,7 +51,7 @@ def test_the_ledger_edges_survive_the_round_trip():
     assert ("SYM:c_shp", "C2", "claims") in TRIPLES
     assert ("SYM:q_band_4", "CONST:Q_BAND_4", "code_names") in TRIPLES
     assert ("LIT:CS_2006:C7", "C7", "bears_on") in TRIPLES
-    assert ("LIT:HAMER_1989:HAMER_A4", "CONST:HAMER_A4", "bears_on") in TRIPLES
+    assert ("LIT:HAMER_1989:HAMER_A4_NUM", "CONST:HAMER_A4_NUM", "bears_on") in TRIPLES
     assert ("U3", "G14", "supported_by") in TRIPLES
     assert ("U3", "ADR:0005", "supported_by") in TRIPLES
 

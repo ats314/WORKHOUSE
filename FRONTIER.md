@@ -76,14 +76,12 @@ Claims this repository made and withdrew:
 
 **Tier 0 — days**
 
-- `G1` Ship or restore machine-readable payloads that are only record-backed
-- `G2` Regenerate all displayed tables in canonical u
+- `G1` Ship or restore machine-readable payloads that are only record-backed *(partial — see its status in the ledger)*
 
 **Tier 1 — weeks**
 
 - `G3` Fourth-order adjudication — run the marked-cluster engine target-blind
-- `G4` Pentagonal O(u^4) closure in-corpus
-- `G5` Tetrahedral local Haar-resolvent coefficient
+- `G4` Pentagonal O(u^4) closure in-corpus *(partial — see its status in the ledger)*
 - `G6` B_N fixed-rank holdout ledger for N = 7..18
 - `G7` Native torelon reruns of sigma_5 and sigma_6
 - `G8` Cold one-shot regeneration of the all-rank fourth-order bundle
@@ -92,7 +90,7 @@ Claims this repository made and withdrew:
 
 - `G9` m_6: global sixth-order geometry census
 - `G10` Full fifth-order pentagonal coefficient
-- `G11` Interval rigor and near-Gamma touching gates
+- `G11` Interval rigor and near-Gamma touching gates *(partial — see its status in the ledger)*
 - `G12` Hyperhoneycomb O(u) candidate
 
 **Tier 3 — unbounded**
@@ -105,6 +103,11 @@ Claims this repository made and withdrew:
 - `G18` The spectral bridge **[load-bearing]**
 - `G19` Continuum limit
 
+**Discharged** — finished work stays recorded, not re-queued:
+
+- `G2` Regenerate all displayed tables in canonical u — discharged 2026-08-21
+- `G5` Tetrahedral local Haar-resolvent coefficient — discharged 2026-08-21
+
 ## 6. What blocks the most downstream theory
 
 Transitive closure over the ledger's own `unblocks`, `depends_on`, and
@@ -113,11 +116,6 @@ Transitive closure over the ledger's own `unblocks`, `depends_on`, and
 | Gap | Gates | What cannot move until it does |
 |---|---|---|
 | `G3` Fourth-order adjudication — run the marked-cluster engine target-blind | 2 | G9, C2 |
-| `G1` Ship or restore machine-readable payloads that are only record-backed | 0 | — |
-| `G10` Full fifth-order pentagonal coefficient | 0 | — |
-| `G11` Interval rigor and near-Gamma touching gates | 0 | — |
-| `G12` Hyperhoneycomb O(u) candidate | 0 | — |
-| `G13` Classification theorem for shortest physical temporal histories | 0 | — |
 
 - G3 -> G9 and the mass ratio at orders 4-6
 - nothing further without G17 + G18
@@ -147,11 +145,11 @@ published. A paper is T3 until something checks it, same as any document.
 | Paper | Bears on | Relation | Status |
 |---|---|---|---|
 | `KS_1975` | `R2` | supplies-method | not-yet-obtained |
-| `HAMER_1989` | `HAMER_A4` | supplies-value | transcription-unverified |
+| `HAMER_1989` | `HAMER_A4_NUM` | supplies-value | transcription-unverified |
 | `HAMER_1989` | `C1` | corroborates | transcription-unverified |
 | `HIP_1986` | `G7` | supplies-value | not-yet-obtained |
 | `HIP_1986` | `R14` | supplies-method | not-yet-obtained |
-| `HSB_2000` | `HAMER_A4` | confusable | verified |
+| `HSB_2000` | `HAMER_A4_NUM` | confusable | verified |
 | `MP_1999` | `G18` | supplies-comparison | not-yet-obtained |
 | `CS_2006` | `C7` | supplies-method | verified |
 | `SCHIERHOLZ_1988` | `G18` | corroborates | verified |

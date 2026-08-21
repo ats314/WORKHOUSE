@@ -99,7 +99,7 @@ def _known_targets() -> set[str]:
 
     Ledger ids, unifying-candidate ids, and the names of registered constants.
     A constant is a legitimate target: "this paper publishes the number
-    HAMER_A4 holds" is the sharpest kind of edge there is.
+    HAMER_A4_NUM holds" is the sharpest kind of edge there is.
     """
     led = ledger_mod.load()
     ids = led.contradiction_ids | led.gap_ids | led.register_ids
@@ -112,6 +112,17 @@ def validate(lit: Literature | None = None) -> list[str]:
     lit = lit or load()
     problems: list[str] = []
     known = _known_targets()
+
+    # Storing a paper is republishing it, so a file in fulltext/ with no index
+    # entry has bypassed the licence gate entirely. Glob the directory itself:
+    # every stored file must be some paper's declared fulltext.
+    fulltext_dir = LITERATURE_DIR / "fulltext"
+    if fulltext_dir.is_dir():
+        declared = {str(p.get("fulltext", "")) for p in lit.papers}
+        for stored in sorted(fulltext_dir.iterdir()):
+            rel = str(stored.relative_to(LITERATURE_DIR))
+            if stored.is_file() and rel not in declared:
+                problems.append(f"orphan stored file with no licence record: {rel}")
 
     seen: set[str] = set()
     for paper in lit.papers:

@@ -56,4 +56,8 @@ if [ -z "$stacks" ]; then
   echo "check: no stacks detected — nothing to run."
 fi
 
+# CI lints the shell scripts; run the same check locally when the tool is
+# present, so a hook edit cannot pass here and then fail there.
+command -v shellcheck >/dev/null 2>&1 && run shellcheck scripts/*.sh .claude/hooks/*.sh
+
 exit "$status"

@@ -180,12 +180,13 @@ The goal is compression, not accumulation:
 950 files  →  ~100 real results  →  ~20 structural principles  →  a few theorems
 ```
 
-Progress is measurable. Today: 100 machine checks, 21 Lean theorems, 23
-governing register items, 22 contradictions (one genuinely open: C2), 19 gaps
-of which two are discharged (G1 largely, G2 fully — see their `status` fields),
-and seven FINDING checks this repository holds against the corpus. Every
-session should move at least one claim from T3 toward T1, or record why it
-cannot be moved.
+Progress is measurable — and the measurements live in the generated views, not
+here, because a hand-written count is stale the session after it is written.
+`FRONTIER.md` §1 carries the live check and theorem counts; the ledger carries
+the contradiction and gap states (one contradiction genuinely open: C2); the
+FINDING checks this repository holds against the corpus are listed in
+`CERTIFIED.md`. Every session should move at least one claim from T3 toward
+T1, or record why it cannot be moved.
 
 ## Default loop
 

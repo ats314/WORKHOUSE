@@ -83,9 +83,16 @@ class Suite:
 
         return register
 
-    def run(self) -> list[Result]:
+    def run(self, names: set[str] | None = None) -> list[Result]:
+        """Run the checks, or just the named subset.
+
+        ``names`` exists so ``verify --only`` can keep its promise of one
+        claim in about a second — filtering after a full run cannot.
+        """
         out = []
         for name, section, tier, fn in self.checks:
+            if names is not None and name not in names:
+                continue
             try:
                 passed, detail = fn()
             except Exception as exc:  # a broken check is a failure
@@ -303,8 +310,8 @@ def _():
     v = K.M_GAMMA_4_NUM - float(K.Q_BAND_4)
     # Double-precision evaluation lands one ulp below the correctly rounded
     # value; both are recorded, so accept either.
-    ok = min(abs(v - K.DELTA_GAMMA), abs(v - K.DELTA_GAMMA_AS_PRINTED)) < 1e-15
-    return ok, f"double eval {v!r}; exact rounds to {K.DELTA_GAMMA!r}"
+    ok = min(abs(v - K.DELTA_GAMMA_NUM), abs(v - K.DELTA_GAMMA_AS_PRINTED_NUM)) < 1e-15
+    return ok, f"double eval {v!r}; exact rounds to {K.DELTA_GAMMA_NUM!r}"
 
 
 @dispute.check("FINDING: the printed Delta_Gamma is one ulp low", "MASTER_THEORY §5.5", tier=2)
@@ -313,12 +320,12 @@ def _():
 
     exact = (Float(repr(K.M_GAMMA_4_NUM), 25) - K.Q_BAND_4).evalf(25)
     # Rounding q_band^(4) to a double before subtracting loses the last digit.
-    correct = abs(float(exact) - K.DELTA_GAMMA) < 1e-16
-    printed_is_low = K.DELTA_GAMMA_AS_PRINTED < K.DELTA_GAMMA
-    gap = K.DELTA_GAMMA - K.DELTA_GAMMA_AS_PRINTED
+    correct = abs(float(exact) - K.DELTA_GAMMA_NUM) < 1e-16
+    printed_is_low = K.DELTA_GAMMA_AS_PRINTED_NUM < K.DELTA_GAMMA_NUM
+    gap = K.DELTA_GAMMA_NUM - K.DELTA_GAMMA_AS_PRINTED_NUM
     return correct and printed_is_low, (
-        f"high precision {exact} rounds to {K.DELTA_GAMMA!r}; corpus prints "
-        f"{K.DELTA_GAMMA_AS_PRINTED!r}, low by {gap:.3e} (1 ulp). Cosmetic, but "
+        f"high precision {exact} rounds to {K.DELTA_GAMMA_NUM!r}; corpus prints "
+        f"{K.DELTA_GAMMA_AS_PRINTED_NUM!r}, low by {gap:.3e} (1 ulp). Cosmetic, but "
         "the printed digit is not the correctly rounded one."
     )
 
@@ -348,32 +355,32 @@ def _():
 )
 def _():
     v = K.C_SHP_NEW_NUM - float(K.C_SHP_HISTORICAL)
-    d = abs(v - K.DELTA_C)
-    return d < 1e-16 and v > 0, f"{v!r} vs recorded {K.DELTA_C!r} (|diff| {d:.1e})"
+    d = abs(v - K.DELTA_C_NUM)
+    return d < 1e-16 and v > 0, f"{v!r} vs recorded {K.DELTA_C_NUM!r} (|diff| {d:.1e})"
 
 
 @dispute.check("beta_new = 8A + 16*C_new", "MASTER_THEORY §5.5", tier=2)
 def _():
     v = 8 * float(K.A_SHP_3) + 16 * K.C_SHP_NEW_NUM
-    return abs(v - 0.5099200711546681) < 1e-15, f"= {v!r}"
+    return abs(v - K.BETA_PEN_NEW_NUM) < 1e-15, f"= {v!r}"
 
 
 @dispute.check("off-axis band splits are 8*Delta_C and 16*Delta_C", "MASTER_THEORY §5.5", tier=2)
 def _():
-    m, r = 8 * K.DELTA_C, 16 * K.DELTA_C
-    ok = abs(m - 0.2229844343615374) < 1e-15 and abs(r - 0.4459688687230748) < 1e-15
+    m, r = 8 * K.DELTA_C_NUM, 16 * K.DELTA_C_NUM
+    ok = abs(m - K.M_SPLIT_RECORDED_NUM) < 1e-15 and abs(r - K.R_SPLIT_RECORDED_NUM) < 1e-15
     return ok, f"M: {m!r}, R: {r!r}; axial cuts agree exactly"
 
 
 @dispute.check("bandwidth ratio W4_new / W4_old ~ 1.93", "MASTER_THEORY §5.5", tier=2)
 def _():
-    ratio = K.W4_NEW_NUM / K.W4_HISTORICAL
+    ratio = K.W4_NEW_NUM / K.W4_HISTORICAL_NUM
     return abs(ratio - 1.93) < 5e-3, f"= {ratio:.6f}"
 
 
 @dispute.check("Hamer 8*a_4 matches m_Gamma to ~5.2e-13", "GLUEBALL §2.3", tier=2)
 def _():
-    d = abs(8 * K.HAMER_A4 - K.M_GAMMA_4_NUM)
+    d = abs(8 * K.HAMER_A4_NUM - K.M_GAMMA_4_NUM)
     return d < K.HAMER_TOLERANCE, (
         f"|diff| = {d:.2e}; a_4 is an unverified notebook transcription, "
         "so this is a normalization cross-check, not primary-source proof"
@@ -409,8 +416,8 @@ def _():
     # Gate 85's equality was produced by construction with this shift, so it
     # certifies internal bookkeeping rather than independent agreement.
     return (
-        abs(K.RUN15_APPLIED_SHIFT - K.DELTA_GAMMA) > 1.0,
-        f"applied {K.RUN15_APPLIED_SHIFT} vs Delta_Gamma {K.DELTA_GAMMA} "
+        abs(K.RUN15_APPLIED_SHIFT_NUM - K.DELTA_GAMMA_NUM) > 1.0,
+        f"applied {K.RUN15_APPLIED_SHIFT_NUM} vs Delta_Gamma {K.DELTA_GAMMA_NUM} "
         "— target-derived, so gate 85 is not an independent scalar verification",
     )
 
@@ -451,9 +458,9 @@ def _():
 )
 def _():
     # c_4_new(k) - c_4_old(k) - Delta_Gamma == Delta_C * Phi_C(k)
-    m = K.DELTA_C * float(K.phi_c((pi, pi, 0)))
-    r = K.DELTA_C * float(K.phi_c((pi, pi, pi)))
-    ok = abs(m - 0.2229844343615374) < 1e-15 and abs(r - 0.4459688687230748) < 1e-15
+    m = K.DELTA_C_NUM * float(K.phi_c((pi, pi, 0)))
+    r = K.DELTA_C_NUM * float(K.phi_c((pi, pi, pi)))
+    ok = abs(m - K.M_SPLIT_RECORDED_NUM) < 1e-15 and abs(r - K.R_SPLIT_RECORDED_NUM) < 1e-15
     return ok, f"M -> {m!r}, R -> {r!r}; independently recorded as 8*Delta_C and 16*Delta_C"
 
 
@@ -469,7 +476,7 @@ def _():
 @crosswalk.check("bandwidth is preserved only if Delta_C vanishes", "MASTER_THEORY §5.5", tier=2)
 def _():
     # The scalar term drops out of any difference of band values; only Phi_C survives.
-    spread = K.DELTA_C * (float(K.phi_c((pi, pi, pi))) - float(K.phi_c((pi, 0, 0))))
+    spread = K.DELTA_C_NUM * (float(K.phi_c((pi, pi, pi))) - float(K.phi_c((pi, 0, 0))))
     return abs(spread) > 1e-3, (
         f"scalar re-anchoring alone leaves the centered structure unchanged, but the "
         f"additional Delta_C*Phi_C term spreads R against X by {spread:.6f}. Bandwidth "
@@ -498,15 +505,22 @@ def _():
     return ok, f"eigenvalues {sorted(str(e) for e in eig)} — PSD, in fact PD"
 
 
-@pencil.check("centered kernel difference is PSD (vanishes on axes)", "MASTER_THEORY §5.5")
+@pencil.check("centered kernel difference is PSD (vanishes on axes)", "MASTER_THEORY §5.5", tier=2)
 def _():
-    # C^dagger[(H4_new - s_new) - (H4_old - q_old)]C = 4*Delta_C*sum_{i<j} L_i L_j
-    m = Matrix(3, 3, lambda i, j: 0 if i == j else 2 * K.DELTA_C)
-    eig = [complex(e).real for e in m.eigenvals()]
-    return K.DELTA_C > 0, (
-        f"4*Delta_C*sum_(i<j) L_iL_j with Delta_C = {K.DELTA_C:.6e} > 0; "
-        f"form eigenvalues {sorted(round(e, 6) for e in eig)} — indefinite as a free "
-        "quadratic form, PSD on the cube-amplitude sector where the pencil is scoped"
+    # C^dagger[(H4_new - s_new) - (H4_old - q_old)]C = 4*Delta_C*sum_{i<j} L_i L_j.
+    # The eigenstructure is exact algebra on a symbolic Delta_C — the matrix
+    # 2d(J - I) has eigenvalues 4d, -2d, -2d — and only the SIGN of Delta_C
+    # is a float fact, because C_new exists only as the v10a.26 float. That
+    # sign is the whole verdict, so the check is T2, not T1.
+    d = symbols("d", positive=True)
+    m = Matrix(3, 3, lambda i, j: 0 if i == j else 2 * d)
+    eig = {simplify(e): mult for e, mult in m.eigenvals().items()}
+    structure_ok = eig == {4 * d: 1, -2 * d: 2}
+    return structure_ok and K.DELTA_C_NUM > 0, (
+        f"form eigenvalues exactly {{4d: 1, -2d: 2}} for symbolic d; with Delta_C = "
+        f"{K.DELTA_C_NUM:.6e} > 0 (float — C_new exists only as v10a.26 output) the form is "
+        "indefinite as a free quadratic form, PSD on the cube-amplitude sector where "
+        "the pencil is scoped"
     )
 
 
@@ -518,10 +532,7 @@ _As, _Bs, _Cs, _Ds, _c0 = symbols("A_shp B_shp C_shp D_shp c0")
 
 def _eps4(k):
     """Generic cubic-invariant fourth-order correction on the flat fiber."""
-    a = [4 * sin(sympify(ki) / 2) ** 2 for ki in k]
-    q = sum(a)
-    e2 = a[0] * a[1] + a[0] * a[2] + a[1] * a[2]
-    e3 = a[0] * a[1] * a[2]
+    q, e2, e3 = K.cubic_invariants(k)
     return simplify(_c0 + _As * q + _Bs * e2 + _Cs * 4 * e2 / q + _Ds * e3 / q)
 
 
@@ -663,13 +674,16 @@ def _():
 @adjudication.check(
     "the harness carries the printed Delta_Gamma, not the rounded one",
     "settlement/mce_adjudication_harness.py",
+    tier=2,
 )
 def _():
+    # Byte-for-byte float equality, no tolerance — but both sides ARE floats,
+    # so by this repository's own rule the check is T2 however exact it looks.
     v = S.harness_delta_gamma()
-    return v == K.DELTA_GAMMA_AS_PRINTED, (
-        f"harness has {v!r}, matching the corpus's printed value; the correctly "
-        f"rounded value is {K.DELTA_GAMMA!r}. Harmless after unblinding, but if the "
-        "digit string is added to the scan, add both forms."
+    return v == K.DELTA_GAMMA_AS_PRINTED_NUM, (
+        f"harness has {v!r}, matching the corpus's printed value exactly (float identity, "
+        f"not a tolerance); the correctly rounded value is {K.DELTA_GAMMA_NUM!r}. Harmless "
+        "after unblinding, but if the digit string is added to the scan, add both forms."
     )
 
 
@@ -718,8 +732,8 @@ def _():
 @near_gamma.check("crossover constant K = (pi/2) sqrt(W_4 / (theta t_3))", "GLUEBALL §18.3", tier=2)
 def _():
     theta = Rational(1, 2)
-    got = G.crossover_constant(K.W4_HISTORICAL, theta)
-    want = (pi / 2) * sqrt(nsimplify(K.W4_HISTORICAL, rational=True) / (theta * K.T_MINUS_2))
+    got = G.crossover_constant(K.W4_HISTORICAL_NUM, theta)
+    want = (pi / 2) * sqrt(nsimplify(K.W4_HISTORICAL_NUM, rational=True) / (theta * K.T_MINUS_2))
     return simplify(got - want) == 0, f"K_historical(theta=1/2) = {float(got):.4f}"
 
 
@@ -730,10 +744,10 @@ def _():
 )
 def _():
     theta = Rational(1, 2)
-    k_hist = float(G.crossover_constant(K.W4_HISTORICAL, theta))
+    k_hist = float(G.crossover_constant(K.W4_HISTORICAL_NUM, theta))
     k_new = float(G.crossover_constant(K.W4_NEW_NUM, theta))
     ratio = k_new / k_hist
-    expected = (K.W4_NEW_NUM / K.W4_HISTORICAL) ** 0.5
+    expected = (K.W4_NEW_NUM / K.W4_HISTORICAL_NUM) ** 0.5
     conservative = float(G.conservative_constant(theta))
     return abs(ratio - expected) < 1e-12 and conservative >= max(k_hist, k_new), (
         f"K_hist = {k_hist:.4f}, K_new = {k_new:.4f}, ratio {ratio:.6f} = "
@@ -1095,19 +1109,18 @@ def _():
     # C7's decisive witness quotes Wg(e) = 1/8 and Wg((12)) = -1/24 for SU(3)
     # from a transcript. Re-derive them, symbolically in N, from the definition:
     # the order-n Weingarten matrix is the inverse of the Gram matrix
-    # G[s,t] = N**(number of cycles of s*t^-1) on the symmetric group S_n.
-    # At n = 2, S_2 = {e, (12)}: cycles(e) = 2, cycles((12)) = 1.
-    n = symbols("N", positive=True)
-    gram = Matrix([[n**2, n], [n, n**2]])
-    wg = simplify(gram.inv())
-    identity, transposition = wg[0, 0], wg[0, 1]
+    # G[s,t] = N**(number of cycles of s*t^-1) on the symmetric group S_n —
+    # built once, in cellular.weingarten_2, beside the n = 1 case the
+    # tetrahedral merge lemma rests on.
+    n = CELL.N
+    identity, transposition = CELL.weingarten_2()
     return (
         simplify(identity - 1 / (n**2 - 1)) == 0
         and simplify(transposition + 1 / (n * (n**2 - 1))) == 0
         and identity.subs(n, 3) == Rational(1, 8)
         and transposition.subs(n, 3) == Rational(-1, 24)
     ), (
-        f"Wg(e) = {simplify(identity)} and Wg((12)) = {simplify(transposition)} for all N; "
+        f"Wg(e) = {identity} and Wg((12)) = {transposition} for all N; "
         f"at N = 3 they are {identity.subs(n, 3)} and {transposition.subs(n, 3)}, "
         "exactly the values C7 quotes"
     )
@@ -1118,12 +1131,11 @@ def _():
     # The other half of C7's witness. All four indices are 1, so every pair
     # (sigma, tau) in S_2 x S_2 contributes and the integral is the full sum of
     # the Weingarten matrix: 2 Wg(e) + 2 Wg((12)).
-    n = symbols("N", positive=True)
-    gram = Matrix([[n**2, n], [n, n**2]])
-    wg = simplify(gram.inv())
-    moment = simplify(2 * wg[0, 0] + 2 * wg[0, 1])
+    n = CELL.N
+    identity, transposition = CELL.weingarten_2()
+    moment = simplify(2 * identity + 2 * transposition)
     return simplify(moment - 2 / (n * (n + 1))) == 0 and moment.subs(n, 3) == Rational(1, 6), (
-        f"integral |U_11|^4 dU = {simplify(moment)} = 2/(N(N+1)); at N = 3 that is "
+        f"integral |U_11|^4 dU = {moment} = 2/(N(N+1)); at N = 3 that is "
         f"{moment.subs(n, 3)}, nonzero -- which is what refuted the claimed Haar zero "
         "for the balanced (n_U, n_Udag) = (2,2) sector"
     )
@@ -1135,9 +1147,8 @@ def _():
     # than merely disputed. The derivation above uses only the symmetric group
     # and the rank; it imports no constant, convention, or coefficient from the
     # corpus, so it cannot inherit an error from it.
-    n = symbols("N", positive=True)
-    gram = Matrix([[n**2, n], [n, n**2]])
-    generic = simplify(gram.inv()[0, 0] * (n**2 - 1))
+    identity, _transposition = CELL.weingarten_2()
+    generic = simplify(identity * (CELL.N**2 - 1))
     return generic == 1, (
         "the identity-permutation Weingarten value times (N^2 - 1) is exactly 1 for "
         "symbolic N, so the SU(3) numbers are a specialization of a rank-generic "
@@ -1158,9 +1169,9 @@ def _():
     from . import literature as lit_mod
 
     lit = lit_mod.load()
-    edges = lit.bearing_on("HAMER_A4")
+    edges = lit.bearing_on("HAMER_A4_NUM")
     supplies = [e for _p, e in edges if e["relation"] == "supplies-value"]
-    bridged = 8 * K.HAMER_A4
+    bridged = 8 * K.HAMER_A4_NUM
     gap = abs(bridged - K.M_GAMMA_4_NUM)
     return (
         len(supplies) == 1
@@ -1604,27 +1615,30 @@ def _():
 def _():
     # E(L) = L*C_F/2 is not a new convention: at N = 3 it is the certified
     # pentagonal pair E_SIDE and E_CAP, and its L = 4 value is the certified
-    # one-plaquette rest energy e_flat(0) = 8/3.
-    def energy(length, n=K.N):
-        n = sympify(n)
-        return length * (n**2 - 1) / (4 * n)
-
+    # one-plaquette rest energy e_flat(0) = 8/3. The registered
+    # electric_energy function is the single home; this check binds it to the
+    # certified values AND to cellular's C_F-unit resolvent denominators.
+    energy = K.electric_energy
+    cf = (K.N**2 - 1) / (2 * K.N)
+    cellular_unit = simplify((energy(3) - energy(4)) / cf)  # tetra denominator
     ok = (
         energy(4, 3) == K.E_SIDE
         and energy(5, 3) == K.E_CAP
         and energy(4, 3) == K.e_flat(0)
         and simplify(energy(4) - (K.N**2 - 1) / K.N) == 0
+        and cellular_unit == Rational(-1, 2)
     )
     return ok, (
         f"L*C_F/2 at N = 3: E(4) = {energy(4, 3)} = E_SIDE = e_flat(0), "
-        f"E(5) = {energy(5, 3)} = E_CAP; symbolically E(4) = 2 C_F = (N^2-1)/N, "
-        "the face rest energy the resolvents are anchored to"
+        f"E(5) = {energy(5, 3)} = E_CAP; symbolically E(4) = 2 C_F = (N^2-1)/N; and "
+        f"(E(3) - E(4))/C_F = {cellular_unit} — exactly cellular's (l_0 - l)/2 "
+        "denominator for the tetrahedral intermediate"
     )
 
 
 @tetra.check("the cube instance re-derives the sealed core, temporal classes included", "818 ~3963")
 def _():
-    c4, s4, hist = CELL.c_prim(CELL.CUBE, 0, 1)
+    c4, s4, hist = CELL.c_prim(CELL.CUBE, *CELL.CAP_SECTOR)
     classes = {}
     for h in hist:
         key = (h.lengths, h.weight_e0(4))
@@ -1678,8 +1692,8 @@ def _():
     # retained vertical-square sector actually uses. 818.txt records the
     # supersession of 24 by 64 as the sector choice — an ADR-0002-style
     # dissolution, not an arithmetic conflict.
-    cap, s_cap, hist_cap = CELL.c_prim(CELL.TRIANGULAR_PRISM, 0, 1)
-    square, s_sq, _ = CELL.c_prim(CELL.TRIANGULAR_PRISM, 2, 3)
+    cap, s_cap, hist_cap = CELL.c_prim(CELL.TRIANGULAR_PRISM, *CELL.CAP_SECTOR)
+    square, s_sq, _ = CELL.c_prim(CELL.TRIANGULAR_PRISM, *CELL.SQUARE_SECTOR)
     ok = (
         s_cap == 6
         and len(hist_cap) == 6
@@ -1702,13 +1716,13 @@ def _():
     rows = {}
     for sides in range(3, 7):
         cell = CELL.prism(sides)
-        c, s, hist = CELL.c_prim(cell, 0, 1)
+        c, s, hist = CELL.c_prim(cell, *CELL.CAP_SECTOR)
         rows[sides] = (s, len(hist), simplify(c - CELL.catalan_cap_coefficient(sides)) == 0)
     counts_ok = all(
         rows[n][0] == (-1) ** (n - 1) * binomial(2 * n - 2, n - 1) and rows[n][2]
         for n in range(3, 7)
     )
-    c5, s5, hist5 = CELL.c_prim(CELL.PENTAGONAL_PRISM, 0, 1)
+    c5, s5, hist5 = CELL.c_prim(CELL.PENTAGONAL_PRISM, *CELL.CAP_SECTOR)
     ok = (
         counts_ok
         and (s5, len(hist5)) == (70, 120)
@@ -1731,10 +1745,10 @@ def _():
     # from a document this repository never treats as current; the sign here
     # comes from the derivation, anchored by the even-order certified cube row.
     cells = [
-        (CELL.TETRAHEDRON, 0, 1),
-        (CELL.TRIANGULAR_PRISM, 2, 3),
-        (CELL.CUBE, 0, 1),
-        (CELL.PENTAGONAL_PRISM, 0, 1),
+        (CELL.TETRAHEDRON, 0, 1),  # any pair; face-transitive
+        (CELL.TRIANGULAR_PRISM, *CELL.SQUARE_SECTOR),
+        (CELL.CUBE, *CELL.CAP_SECTOR),
+        (CELL.PENTAGONAL_PRISM, *CELL.CAP_SECTOR),
     ]
     all_longer, signed = True, []
     for cell, p, q in cells:

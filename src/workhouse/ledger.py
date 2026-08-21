@@ -28,6 +28,11 @@ CONTRADICTION_STATUSES = frozenset(
     {"open", "resolved", "falsified", "superseded", "unresolved-in-corpus"}
 )
 TIERS = frozenset({0, 1, 2, 3})
+#: Machine-readable gap lifecycle. The prose stays in `status`; this field is
+#: what code reads, because FRONTIER once advertised discharged gaps as open
+#: work — the exact "redo finished work" failure mode AGENTS.md warns about.
+#: `partial` still counts as open work; only `discharged` leaves the queue.
+GAP_STATES = frozenset({"open", "partial", "discharged"})
 UNIFYING_STATUSES = frozenset({"conjectured", "supported", "promoted", "refuted"})
 
 
@@ -68,6 +73,19 @@ class Ledgers:
     def load_bearing_gaps(self) -> list[dict[str, Any]]:
         return [g for g in self.gaps if g.get("load_bearing")]
 
+    @property
+    def open_gaps(self) -> list[dict[str, Any]]:
+        """Gaps that still carry work: state open or partial, never discharged."""
+        return [g for g in self.gaps if g.get("state", "open") != "discharged"]
+
+    @property
+    def open_gap_ids(self) -> set[str]:
+        return {g["id"] for g in self.open_gaps}
+
+    @property
+    def discharged_gaps(self) -> list[dict[str, Any]]:
+        return [g for g in self.gaps if g.get("state") == "discharged"]
+
     def gaps_by_tier(self, tier: int) -> list[dict[str, Any]]:
         return [g for g in self.gaps if g["tier"] == tier]
 
@@ -87,11 +105,41 @@ def load(directory: Path | None = None) -> Ledgers:
     )
 
 
+#: Path-valued leaf keys inside ledger entries, at any nesting depth. These are
+#: exactly what `workhouse why` hands an agent as the next file to open, so a
+#: moved artifact must be a validation failure, not a silent dead end.
+PATH_KEYS = frozenset({"artifact", "recorded_in", "leads"})
+
+
+def _walk_paths(value: Any) -> list[str]:
+    """Every string under a PATH_KEYS key, recursively."""
+    found: list[str] = []
+    if isinstance(value, dict):
+        for key, sub in value.items():
+            if key in PATH_KEYS:
+                items = sub if isinstance(sub, list) else [sub]
+                found.extend(str(s) for s in items if isinstance(s, str))
+            else:
+                found.extend(_walk_paths(sub))
+    elif isinstance(value, list):
+        for sub in value:
+            found.extend(_walk_paths(sub))
+    return found
+
+
 def validate(ledgers: Ledgers) -> list[str]:
     """Return a list of structural problems. Empty means the ledgers are sound."""
     problems: list[str] = []
+    root = LEDGER_DIR.parent
 
-    def seq_complete(ids: set[str], prefix: str, label: str) -> None:
+    def seq_complete(entries: list[dict[str, Any]], prefix: str, label: str) -> None:
+        raw = [e["id"] for e in entries]
+        ids = set(raw)
+        # Duplicate ids collapse silently in the set views, and every consumer
+        # doing `next(g for g in ...)` would then pick one copy at random.
+        if len(raw) != len(ids):
+            duplicated = sorted({i for i in raw if raw.count(i) > 1})
+            problems.append(f"{label}: duplicate ids {duplicated}")
         nums = sorted(int(i[1:]) for i in ids if re.fullmatch(rf"{prefix}\d+", i))
         if len(nums) != len(ids):
             problems.append(f"{label}: malformed ids present")
@@ -100,9 +148,9 @@ def validate(ledgers: Ledgers) -> list[str]:
             missing = sorted(set(expected) - set(nums))
             problems.append(f"{label}: id sequence has gaps at {missing}")
 
-    seq_complete(ledgers.contradiction_ids, "C", "contradictions")
-    seq_complete(ledgers.gap_ids, "G", "gaps")
-    seq_complete(ledgers.register_ids, "R", "governing register")
+    seq_complete(ledgers.contradictions, "C", "contradictions")
+    seq_complete(ledgers.gaps, "G", "gaps")
+    seq_complete(ledgers.register, "R", "governing register")
 
     for r in ledgers.register:
         if not r.get("text", "").strip():
@@ -127,12 +175,32 @@ def validate(ledgers: Ledgers) -> list[str]:
     for g in ledgers.gaps:
         if g["tier"] not in TIERS:
             problems.append(f"{g['id']}: unknown tier {g['tier']!r}")
+        if g.get("state") not in GAP_STATES:
+            problems.append(
+                f"{g['id']}: state must be one of {sorted(GAP_STATES)}, got {g.get('state')!r}"
+            )
+        # A discharged verdict needs its evidence in prose; bare enum rots.
+        if g.get("state") in ("partial", "discharged") and not str(g.get("status", "")).strip():
+            problems.append(f"{g['id']}: state {g['state']} but no status prose recording why")
         for ref in g.get("resolves", []):
             if ref not in ledgers.contradiction_ids:
                 problems.append(f"{g['id']} resolves unknown contradiction {ref}")
         for ref in g.get("depends_on", []) + g.get("unblocks", []):
             if ref not in ledgers.gap_ids:
                 problems.append(f"{g['id']} references unknown gap {ref}")
+
+    # Path-valued fields, wherever they nest. Contradictions carry them too.
+    for entry in ledgers.gaps + ledgers.contradictions:
+        for rel in _walk_paths(entry):
+            if not (root / rel).exists():
+                problems.append(f"{entry['id']}: path {rel!r} does not exist")
+
+    # The dependency spine renders verbatim into FRONTIER §6; its ids must
+    # resolve or a renumbering reads as current forever.
+    for line in ledgers.dependency_spine:
+        for ref in re.findall(r"\b[CG]\d+\b", str(line)):
+            if ref not in (ledgers.contradiction_ids | ledgers.gap_ids):
+                problems.append(f"dependency_spine cites unknown {ref}: {line!r}")
 
     seen_unifying: set[str] = set()
     for uc in ledgers.unifying_candidates:
