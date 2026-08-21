@@ -61,9 +61,7 @@ class Suite:
     """A named group of checks."""
 
     name: str
-    checks: list[tuple[str, str, int, Callable[[], tuple[bool, str]]]] = field(
-        default_factory=list
-    )
+    checks: list[tuple[str, str, int, Callable[[], tuple[bool, str]]]] = field(default_factory=list)
 
     def check(self, name: str, section: str = "", tier: int = 1):
         """Register a check.
@@ -253,7 +251,11 @@ def _():
     return ok, "; ".join(f"{k} {v:.3e}" for k, v in subset.items())
 
 
-@sealed.check("FINDING: alpha_new falls outside the corpus's own 2.3e-13 bound", "GLUEBALL §10", tier=2)
+@sealed.check(
+    "FINDING: alpha_new falls outside the corpus's own 2.3e-13 bound",
+    "GLUEBALL §10",
+    tier=2,
+)
 def _():
     gaps = _sealed_gaps()
     # alpha = 4A, so it inherits four times A's deviation. The corpus's stated
@@ -337,7 +339,11 @@ def _():
     )
 
 
-@dispute.check("Delta_C = C_new - C_old > 0 (the real discrepancy)", "MASTER_THEORY §5.5 / C2", tier=2)
+@dispute.check(
+    "Delta_C = C_new - C_old > 0 (the real discrepancy)",
+    "MASTER_THEORY §5.5 / C2",
+    tier=2,
+)
 def _():
     v = K.C_SHP_NEW_NUM - float(K.C_SHP_HISTORICAL)
     d = abs(v - K.DELTA_C)
@@ -436,7 +442,11 @@ def _():
     return got == want, f"{ {k: str(v) for k, v in got.items()} }"
 
 
-@crosswalk.check("crosswalk reproduces the recorded off-axis band splits", "MASTER_THEORY §5.5", tier=2)
+@crosswalk.check(
+    "crosswalk reproduces the recorded off-axis band splits",
+    "MASTER_THEORY §5.5",
+    tier=2,
+)
 def _():
     # c_4_new(k) - c_4_old(k) - Delta_Gamma == Delta_C * Phi_C(k)
     m = K.DELTA_C * float(K.phi_c((pi, pi, 0)))
@@ -730,7 +740,11 @@ def _():
     )
 
 
-@near_gamma.check("the statement is non-vacuous only below an explicit coupling", "GLUEBALL §18.3", tier=2)
+@near_gamma.check(
+    "the statement is non-vacuous only below an explicit coupling",
+    "GLUEBALL §18.3",
+    tier=2,
+)
 def _():
     theta = Rational(1, 2)
     u_max = float(G.max_coupling(theta))

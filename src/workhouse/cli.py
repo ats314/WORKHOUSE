@@ -28,8 +28,7 @@ def _verify(verbose: bool, only: str | None = None, tier: int | None = None) -> 
         results = [
             r
             for r in suite.run()
-            if (needle is None or needle in r.name.lower())
-            and (tier is None or r.tier == tier)
+            if (needle is None or needle in r.name.lower()) and (tier is None or r.tier == tier)
         ]
         if not results:
             continue
