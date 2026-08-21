@@ -106,7 +106,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 95
+## T1 — re-derived exactly — 97
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -380,13 +380,16 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:1982 · 818 ~3402
   - `workhouse verify --only '24 and 64 are different endpoint sectors of one prism, not rivals'`
 - `G5: the tetrahedral coefficient is exactly -8/(N(N^2-1))`
-  - src/workhouse/invariants.py:2064 · transcript ~170 / C15
+  - src/workhouse/invariants.py:2193 · transcript ~170 / C15
   - `workhouse verify --only 'G5: the tetrahedral coefficient is exactly -8/(N(N^2-1))'`
+- `Theorem 2's closed form holds through n = 9, past the engine's exhaustive range`
+  - src/workhouse/invariants.py:2122 · cellular brief, appendix A
+  - `workhouse verify --only 'Theorem 2'"'"'s closed form holds through n = 9, past the engine'"'"'s exhaustive range'`
 - `a merge contributes exactly 1/N at every shared-path length`
   - src/workhouse/invariants.py:1886 · transcript ~136
   - `workhouse verify --only 'a merge contributes exactly 1/N at every shared-path length'`
 - `primitive proper returns are scalar on the tetrahedral face space`
-  - src/workhouse/invariants.py:2116 · U3 (partial)
+  - src/workhouse/invariants.py:2245 · U3 (partial)
   - `workhouse verify --only 'primitive proper returns are scalar on the tetrahedral face space'`
 - `the cube instance re-derives the sealed core, temporal classes included`
   - src/workhouse/invariants.py:1934 · 818 ~3963
@@ -398,7 +401,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:2007 · transcript ~175
   - `workhouse verify --only 'the n-gonal cap family is Catalan; the pentagonal row is n = 5'`
 - `the primitive sign is the resolvent parity`
-  - src/workhouse/invariants.py:2034 · quarantined master v3 erratum 9
+  - src/workhouse/invariants.py:2163 · quarantined master v3 erratum 9
   - `workhouse verify --only 'the primitive sign is the resolvent parity'`
 - `the prism square sector re-derives the printed 64/(N(N^2-1)^2)`
   - src/workhouse/invariants.py:1958 · THM_FLUX §3.2
@@ -406,8 +409,11 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the resolvent unit is the certified electric convention`
   - src/workhouse/invariants.py:1909 · v4.3 §9.3 / §4.4
   - `workhouse verify --only 'the resolvent unit is the certified electric convention'`
+- `the run-length Catalan factorization holds for every proper subset through n = 7`
+  - src/workhouse/invariants.py:2034 · cellular brief, appendix A
+  - `workhouse verify --only 'the run-length Catalan factorization holds for every proper subset through n = 7'`
 - `the tetrahedral circuit attains its bound with nonzero weight`
-  - src/workhouse/invariants.py:2090 · THM_FLUX §2 / C6
+  - src/workhouse/invariants.py:2219 · THM_FLUX §2 / C6
   - `workhouse verify --only 'the tetrahedral circuit attains its bound with nonzero weight'`
 **tier collapse (G14)**
 
