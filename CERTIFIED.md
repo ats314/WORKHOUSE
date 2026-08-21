@@ -85,7 +85,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 65
+## T1 — re-derived exactly — 67
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -237,6 +237,12 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `SU(3) Weingarten values follow from the general formula`
   - src/workhouse/invariants.py:1091 · CS_2006 / C7
   - `workhouse verify --only 'SU(3) Weingarten values follow from the general formula'`
+- `a cross-regime paper never supplies a value`
+  - src/workhouse/invariants.py:1207 · KRS_2023 / §12
+  - `workhouse verify --only 'a cross-regime paper never supplies a value'`
+- `stored full text is verbatim, and the licence is checked`
+  - src/workhouse/invariants.py:1231 · KRS_2023
+  - `workhouse verify --only 'stored full text is verbatim, and the licence is checked'`
 - `the Weingarten route is independent of the corpus`
   - src/workhouse/invariants.py:1130 · CS_2006 / C7
   - `workhouse verify --only 'the Weingarten route is independent of the corpus'`

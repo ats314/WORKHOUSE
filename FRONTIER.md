@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 21 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 85/85 checks pass.
+**T1/T2 — re-derived here.** 87/87 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -29,7 +29,7 @@ it cannot drift from what the repository actually checks.
 | tier collapse (G14) | 6/6 |
 | isotropic pentagonal cap band (v4.3 §9.3) | 9/9 |
 | native string tension through fifth order (v4.3 §11.2) | 7/7 |
-| published comparisons (literature/index.yaml) | 5/5 |
+| published comparisons (literature/index.yaml) | 7/7 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -156,8 +156,10 @@ published. A paper is T3 until something checks it, same as any document.
 | `CS_2006` | `C7` | supplies-method | verified |
 | `SCHIERHOLZ_1988` | `G18` | corroborates | verified |
 | `SCHIERHOLZ_1988` | `G19` | supplies-method | verified |
+| `KRS_2023` | `U1` | supplies-comparison | verified |
+| `KRS_2023` | `R2` | supplies-method | verified |
 
-**6 of 10 edges rest on a source nobody here has read
+**6 of 12 edges rest on a source nobody here has read
 or pinned** -- including the strongest external agreement the program has,
 `8 a_4` against `m_Gamma^(4)` to 5.2e-13, which rests on a transcription of
 a table that has never been hashed.
