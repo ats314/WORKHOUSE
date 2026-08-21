@@ -28,6 +28,7 @@ CONTRADICTION_STATUSES = frozenset(
     {"open", "resolved", "falsified", "superseded", "unresolved-in-corpus"}
 )
 TIERS = frozenset({0, 1, 2, 3})
+UNIFYING_STATUSES = frozenset({"conjectured", "supported", "promoted", "refuted"})
 
 
 @dataclass
@@ -37,6 +38,7 @@ class Ledgers:
     register: list[dict[str, Any]]
     dependency_spine: list[str]
     headline: str
+    unifying_candidates: list[dict[str, Any]]
 
     @property
     def contradiction_ids(self) -> set[str]:
@@ -81,6 +83,7 @@ def load(directory: Path | None = None) -> Ledgers:
         register=register["items"],
         dependency_spine=gaps.get("dependency_spine", []),
         headline=gaps.get("headline", "").strip(),
+        unifying_candidates=gaps.get("unifying_candidates", []),
     )
 
 
@@ -130,6 +133,22 @@ def validate(ledgers: Ledgers) -> list[str]:
         for ref in g.get("depends_on", []) + g.get("unblocks", []):
             if ref not in ledgers.gap_ids:
                 problems.append(f"{g['id']} references unknown gap {ref}")
+
+    seen_unifying: set[str] = set()
+    for uc in ledgers.unifying_candidates:
+        if uc["status"] not in UNIFYING_STATUSES:
+            problems.append(f"{uc['id']}: unknown status {uc['status']!r}")
+        # No falsifier means it is an analogy, and analogies are not candidates.
+        if not str(uc.get("falsifier", "")).strip():
+            problems.append(f"{uc['id']}: no falsifier — state what would refute it")
+        if uc["id"] in seen_unifying:
+            problems.append(f"{uc['id']}: duplicate id")
+        seen_unifying.add(uc["id"])
+        for ref in uc.get("supported_by", []):
+            if re.fullmatch(r"[CG]\d+", ref) and ref not in (
+                ledgers.contradiction_ids | ledgers.gap_ids
+            ):
+                problems.append(f"{uc['id']} cites unknown {ref}")
 
     # Every open contradiction must be reachable from some gap's `resolves`.
     claimed = {r for g in ledgers.gaps for r in g.get("resolves", [])}

@@ -3,6 +3,10 @@
 This repository is a verification layer over a scientific corpus. The usual
 software instinct — make the failing check pass — is frequently **wrong** here.
 
+This file is the rules. `AGENTS.md` is the posture — what the research is and
+how to decide what to do next. `FRONTIER.md` is the current state, generated.
+Read all three before changing anything; they are short on purpose.
+
 ## The one principle
 
 **No document is authority. Only a machine check is.**
@@ -96,11 +100,25 @@ code files.
 ```bash
 make verify    # re-derive every exact claim (T1/T2)
 make status    # contradiction and gap registers
+make frontier  # regenerate FRONTIER.md — established / disputed / refuted / next
 make check     # ruff + pytest, what CI runs
 make lean      # T0: proof-check the Lean core (needs elan; see lean/README.md)
+make manifest  # re-pin theory/ after a deliberate, reviewed corpus change
 
+workhouse frontier --brief          # the block injected at session start
 workhouse triage /path/to/archive   # survey an unpinned collection
 ```
+
+`FRONTIER.md` is generated and checked in. A test fails if it is stale, because
+a generated file that has drifted still reads as current.
+
+## Adding a unifying candidate
+
+`ledger/gaps.yaml` holds `unifying_candidates` — the claim that several results
+are one mechanism. Each needs a **falsifier**: what would have to be exhibited
+for the identification to fail. `ledger.validate` rejects one without it, and
+that rule is the whole value of the list. A candidate with no falsifier is an
+analogy, and analogies accumulate without ever being wrong.
 
 ## Adding an invariant
 

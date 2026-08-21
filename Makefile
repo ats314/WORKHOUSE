@@ -1,4 +1,4 @@
-.PHONY: help bootstrap check lint test verify status fmt manifest corpus-manifest lean index lock clean
+.PHONY: help bootstrap check lint test verify status frontier fmt manifest corpus-manifest lean index lock clean
 
 help:            ## Show this help
 	@grep -hE '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk -F':.*?## ' '{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -21,11 +21,20 @@ verify:          ## Re-derive every exact claim in the corpus
 status:          ## Print the contradiction and gap registers
 	@.venv/bin/workhouse status
 
+frontier:        ## Regenerate FRONTIER.md from the ledgers and the suites
+	@.venv/bin/workhouse frontier --write
+
 fmt:             ## Auto-format
 	@.venv/bin/ruff check --fix . && .venv/bin/ruff format .
 
 manifest:        ## Regenerate theory/SHA256SUMS after a deliberate corpus change
-	@cd theory && sha256sum *.md > SHA256SUMS && echo "theory/SHA256SUMS regenerated:" && cat SHA256SUMS
+	@.venv/bin/python -c "import hashlib,pathlib; \
+	 root=pathlib.Path('theory'); \
+	 ns=sorted(str(p.relative_to(root)) for p in root.rglob('*') \
+	           if p.is_file() and p.name != 'SHA256SUMS'); \
+	 (root/'SHA256SUMS').write_text(''.join( \
+	     f'{hashlib.sha256((root/n).read_bytes()).hexdigest()}  {n}' + chr(10) for n in ns)); \
+	 print(f'theory/SHA256SUMS: {len(ns)} files')"
 
 lean:            ## T0: proof-check the Lean core (needs elan on PATH)
 	@cd lean && lake build && echo "Lean core: proof-checked, no sorries"
