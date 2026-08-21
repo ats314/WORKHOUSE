@@ -334,10 +334,13 @@ def render(f: Frontier) -> str:
         1 for _p, _t, _r, s in f.external if s in ("not-yet-obtained", "transcription-unverified")
     )
     w("")
-    w(f"**{unread} of {len(f.external)} edges rest on a source nobody here has read")
-    w("or pinned** -- including the strongest external agreement the program has,")
-    w("`8 a_4` against `m_Gamma^(4)` to 5.2e-13, which rests on a transcription of")
-    w("a table that has never been hashed.")
+    if unread:
+        w(f"**{unread} of {len(f.external)} edges rest on a source nobody here has read")
+        w("or pinned.** Obtaining and digest-pinning a primary source upgrades its")
+        w("edges from assertion to verification — the Hamer 1989 table did exactly")
+        w("that for the program's strongest external agreement.")
+    else:
+        w(f"All {len(f.external)} edges rest on read, pinned sources.")
     w("")
 
     w("## 8. What might unify the established results")

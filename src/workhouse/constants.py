@@ -134,6 +134,11 @@ TOWER_B3_MINUS = Rational(7, 432)  # C-odd, order (beta/4)**3
 B_3 = Rational(1975, 124848)  # third-order hopping
 LEAK_3 = Rational(-12331, 249696)  # renamed from ell_3 to avoid collision with all-rank ell_N
 D_3 = Rational(-109151, 249696)  # = 7/32 + 12*LEAK_3 - 4*B_3
+#: Vacuum-subtracted C-even A1++ mass coefficient at k = 0, order u^3, from the
+#: corpus certificate RUN_TROM_d3_results.json ("m3_even_k0"). Not
+#: independently re-derived here; registered because Hamer's 1989 table
+#: corroborates it externally (published-comparisons suite).
+M3_EVEN_K0 = Rational(-54049, 520200)
 
 
 def e_flat(coupling=u):
@@ -221,10 +226,41 @@ BETA_PEN_NEW_NUM = 0.5099200711546681
 W4_HISTORICAL_NUM = 0.48061786909826
 W4_NEW_NUM = 0.9265867378213348
 
-#: Hamer-convention cross-check. a_4 is a notebook transcription that has NOT
-#: been pinned to a hashed primary table (GLUEBALL §2.3) — a local normalization
-#: check, not primary-source verification.
-HAMER_A4_NUM = -0.0968932328773
+#: Hamer (1989), Phys. Lett. B 224, 339 — Table 1 of the digest-pinned primary
+#: (sha256 in literature/index.yaml; the paper itself is publisher-copyright
+#: and is NOT stored). Read 2026-08-21 and verified against the rendered page
+#: image, not OCR. Convention: x = 2/g**4 = 2u; the dimensionless gap M of
+#: W = (2/g**2) a H obeys m a = (g**2/2) M, so u-coefficients bridge as
+#: m_n = 2**(n-1) a_n. Orders 0 and 1 are exact in the paper (16/3 with a
+#: recurring-decimal dot, and -1/+1/-1) and appear directly in the checks;
+#: the printed decimals below are floats, orders n = 2..7. Trailing printed
+#: zeros (e.g. 0.106372549020) are precision information a float cannot carry;
+#: the per-check bounds account for the printed half-ulp.
+HAMER_A4_NUM = -0.0968932328773  # = HAMER_MA_NUM[2]; kept under its long-standing name
+HAMER_MA_NUM = (  # 1+- (axial vector) — the program's C-odd carrier
+    0.0179738562092,
+    -0.109283889209,
+    -0.0968932328773,
+    -0.06981386378,
+    -0.041089676435,
+    -0.017154548532,
+)
+HAMER_MS_NUM = (  # 0++ (scalar)
+    -0.10637254902,
+    -0.0259751057286,
+    -0.1388695423,
+    -0.1343376068,
+    -0.099473993,
+    -0.0232246442,
+)
+HAMER_MT_NUM = (  # 2++ (tensor) — external data with no in-program counterpart yet
+    0.10931372549,
+    0.0501374471357,
+    0.00481356764,
+    0.01315377296,
+    0.00495936854,
+    -0.00042445283,
+)
 HAMER_TOLERANCE = 5.3e-13
 
 #: Rejected by both sides; recorded so it is never silently resurrected.

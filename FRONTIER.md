@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 111/111 checks pass.
+**T1/T2 — re-derived here.** 114/114 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -29,7 +29,7 @@ it cannot drift from what the repository actually checks.
 | tier collapse (G14) | 6/6 |
 | isotropic pentagonal cap band (v4.3 §9.3) | 9/9 |
 | native string tension through fifth order (v4.3 §11.2) | 7/7 |
-| published comparisons (literature/index.yaml) | 7/7 |
+| published comparisons (literature/index.yaml) | 10/10 |
 | restored payloads (G1) | 11/11 |
 | coupling erratum (C4/G2) | 2/2 |
 | tetrahedral Haar-resolvent coefficient (G5) | 11/11 |
@@ -145,8 +145,11 @@ published. A paper is T3 until something checks it, same as any document.
 | Paper | Bears on | Relation | Status |
 |---|---|---|---|
 | `KS_1975` | `R2` | supplies-method | not-yet-obtained |
-| `HAMER_1989` | `HAMER_A4_NUM` | supplies-value | transcription-unverified |
-| `HAMER_1989` | `C1` | corroborates | transcription-unverified |
+| `HAMER_1989` | `HAMER_A4_NUM` | supplies-value | verified |
+| `HAMER_1989` | `C1` | corroborates | verified |
+| `HAMER_1989` | `D_3` | corroborates | verified |
+| `HAMER_1989` | `BAND_EVEN_BOTTOM` | corroborates | verified |
+| `HAMER_1989` | `M3_EVEN_K0` | corroborates | verified |
 | `HIP_1986` | `G7` | supplies-value | not-yet-obtained |
 | `HIP_1986` | `R14` | supplies-method | not-yet-obtained |
 | `HSB_2000` | `HAMER_A4_NUM` | confusable | verified |
@@ -157,10 +160,10 @@ published. A paper is T3 until something checks it, same as any document.
 | `KRS_2023` | `U1` | supplies-comparison | verified |
 | `KRS_2023` | `R2` | supplies-method | verified |
 
-**6 of 12 edges rest on a source nobody here has read
-or pinned** -- including the strongest external agreement the program has,
-`8 a_4` against `m_Gamma^(4)` to 5.2e-13, which rests on a transcription of
-a table that has never been hashed.
+**4 of 15 edges rest on a source nobody here has read
+or pinned.** Obtaining and digest-pinning a primary source upgrades its
+edges from assertion to verification — the Hamer 1989 table did exactly
+that for the program's strongest external agreement.
 
 ## 8. What might unify the established results
 
