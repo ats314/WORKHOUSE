@@ -272,3 +272,57 @@ dependency_spine:
 headline: >
   The corpus proves protection and computes coefficients; it assumes, and
   nowhere proves, that the protected object is the glueball.
+
+# Candidate unifying principles. Question 8 of the frontier, and the only one
+# that is a research judgement rather than a computation -- so each entry
+# carries a falsifier. A candidate with no falsifier is an analogy, and
+# analogies do not belong here (AGENTS.md, "Look for the structure underneath").
+# status: conjectured | supported | promoted | refuted
+unifying_candidates:
+  - id: U1
+    statement: >
+      The protection, the flat band, the Betti count, and the spectrum are all
+      consequences of the chain complex, not of the dynamics. The signed
+      incidence factorization S(k) + 4I = B(k) B(k)^dagger fixes the spectrum
+      {-4, -4 + q_a, -4 + q_a} and the carrier psi(k) = (d3_bar, -d2_bar, d1_bar)
+      with |psi|^2 = q_a before any Hamiltonian is chosen.
+    supported_by: [UNIFIED §3.2, UNIFIED §3.3, UNIFIED §3.4]
+    falsifier: >
+      A lattice geometry whose signed incidence admits the same factorization
+      but whose retained sector carries no flat band, or one with a flat band
+      and no such factorization. Either breaks the implication.
+    status: supported
+
+  - id: U2
+    statement: >
+      Every fourth-order shape coefficient is a symmetric function of the Bloch
+      scalars: eps_4 = c_0 + A q_a + B e_2 + C (4 e_2/q_a) + D (e_3/q_a), so the
+      obstruction space is spanned by elementary symmetric polynomials in the
+      a_i and nothing else appears.
+    supported_by: [UNIFIED §5.1, UNIFIED §5.3, "ADR 0005"]
+    falsifier: >
+      A fourth-order coefficient of the retained operator that cannot be written
+      in {q_a, e_2, e_3}. The five-shape enumeration of §5.1 would then be
+      incomplete rather than merely unexplained.
+    status: supported
+
+  - id: U3
+    statement: >
+      The two vanishings in this corpus are one mechanism. The cubic shape tier
+      collapses (B_shp = D_shp = 0) even though the carrier projection makes
+      a-degree 3 reachable, and all 28 proper-return pentagonal histories vanish
+      individually after exact Q projection. Both are "reachable by degree
+      count, zero after projection off the retained sector", in two unrelated
+      geometries. Candidate: the vanishing is a property of the Feshbach Q
+      projection rather than of either geometry.
+    supported_by: [UNIFIED §5.1, UNIFIED §9.3, G14, "ADR 0005"]
+    falsifier: >
+      A geometry where the Q-projected proper-return contributions vanish while
+      the shape tier does NOT collapse, or the reverse. If the two are one
+      mechanism they must stand or fall together; exhibiting one without the
+      other refutes the identification and leaves two coincidences.
+    status: conjectured
+    note: >
+      Stated as an analogy that has not yet been reduced to a derivation. What
+      would promote it is a single statement about Q P Q on the charge-odd
+      sector that specializes to both. G14 is the cubic half.

@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import sys
 
+from . import frontier as frontier_mod
 from . import ledger as ledger_mod
 from . import triage as triage_mod
 from .invariants import SUITES
@@ -65,6 +66,18 @@ def _status() -> int:
     return 0
 
 
+def _frontier(write: bool, brief: bool) -> int:
+    if brief:
+        print(frontier_mod.brief())
+        return 0
+    if write:
+        target = frontier_mod.write()
+        print(f"wrote {target.relative_to(frontier_mod.ROOT)}")
+        return 0
+    print(frontier_mod.render(frontier_mod.compute()))
+    return 0
+
+
 def _triage(directory: str, limit: int) -> int:
     from pathlib import Path
 
@@ -86,6 +99,12 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("status", help="print the contradiction and gap registers")
 
+    fr = sub.add_parser("frontier", help="what is established, disputed, refuted, and next")
+    fr.add_argument("-w", "--write", action="store_true", help="regenerate FRONTIER.md")
+    fr.add_argument(
+        "-b", "--brief", action="store_true", help="the short form injected at session start"
+    )
+
     t = sub.add_parser(
         "triage",
         help="survey an unpinned archive against what this repository already knows",
@@ -96,6 +115,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.command == "verify":
         return _verify(args.verbose)
+    if args.command == "frontier":
+        return _frontier(args.write, args.brief)
     if args.command == "triage":
         return _triage(args.directory, args.limit)
     return _status()

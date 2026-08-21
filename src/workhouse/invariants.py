@@ -811,3 +811,233 @@ def _():
         "the prediction rested on degree 3 being unreachable through O(u^4); it is "
         "reachable, so the prediction has no basis and G14 keeps no falsifier from it"
     )
+
+
+# ==========================================================================
+pentagonal = _suite("isotropic pentagonal cap band (v4.3 §9.3)")
+# A separate geometry and retained sector. Nothing here bears on the cubic
+# SU(3) fourth-order kernel, and the checks say so where it would be tempting
+# to borrow a number across.
+
+
+@pentagonal.check("the two face energies differ, so the eigenspace must be chosen", "§9.3 / C8")
+def _():
+    # H_0 = (1/2) sum_e E_e^2 with E_cap = 10/3, E_side = 8/3. Because these are
+    # unequal there is no single equal-energy one-face manifold to fall into by
+    # default: the physical sector is the charge-odd cap sector, and the formal
+    # cap-plus-side cycle space is a different object (R21).
+    gap = K.E_CAP - K.E_SIDE
+    return K.E_CAP != K.E_SIDE and gap == Rational(2, 3), (
+        f"E_cap = {K.E_CAP}, E_side = {K.E_SIDE}, gap = {gap}; the degenerate "
+        "space is not the whole one-face space"
+    )
+
+
+@pentagonal.check("h_4^side = A_+ - A_- exactly", "§9.3")
+def _():
+    diff_ = K.PENT_A_PLUS - K.PENT_A_MINUS
+    return diff_ == K.H4_SIDE, (
+        f"A_+ = {K.PENT_A_PLUS}, A_- = {K.PENT_A_MINUS}, "
+        f"A_+ - A_- = {diff_} = h_4^side = {K.H4_SIDE}"
+    )
+
+
+@pentagonal.check("the h_4^side -> tau_4 factor is exactly 5", "§9.3")
+def _():
+    # Exact D_5 covariance. Recording the multiplier is the point: two printed
+    # coefficients differing by an undocumented integer factor are
+    # indistinguishable from a transcription error until someone names the group.
+    ratio = K.TAU_4 / K.H4_SIDE
+    return ratio == K.D5_COVARIANCE_FACTOR, (
+        f"tau_4 / h_4^side = {ratio}, the order of the cyclic symmetry C_5 "
+        f"of the pentagonal cap; tau_4 = {K.TAU_4}"
+    )
+
+
+@pentagonal.check("the tau_4 -> Delta E_cap factor is exactly 2", "§9.3")
+def _():
+    # The two terms of the Hermitian hop |a_z><a_{z+1}| + |a_{z+1}><a_z|, which
+    # is why cos k rather than exp(ik) appears. Not a second convention.
+    ratio = K.DELTA_E_CAP_4 / K.TAU_4
+    return ratio == K.HOP_HERMITIAN_FACTOR, (
+        f"Delta E_cap^(4) / tau_4 = {ratio}; the hop is Hermitian, so the "
+        f"symbol is 2 tau_4 cos k with 2 tau_4 = {K.DELTA_E_CAP_4}"
+    )
+
+
+@pentagonal.check("bandwidth = 4|tau_4| and the band minimum sits at k = 0", "§9.3")
+def _():
+    k = symbols("k", real=True)
+    symbol = K.DELTA_E_CAP_4 * sympify("cos(k)").subs(symbols("k"), k)
+    width = simplify(symbol.subs(k, pi) - symbol.subs(k, 0))
+    at_zero = symbol.subs(k, 0)
+    at_pi = symbol.subs(k, pi)
+    return (
+        width == K.PENT_BANDWIDTH_4 and 4 * abs(K.TAU_4) == K.PENT_BANDWIDTH_4 and at_zero < at_pi
+    ), (
+        f"2 tau_4 (cos pi - cos 0) = {width} = 4|tau_4| = {K.PENT_BANDWIDTH_4}; "
+        f"E(0) = {at_zero} < E(pi) = {at_pi}, so tau_4 < 0 puts the minimum at k = 0"
+    )
+
+
+@pentagonal.check("240 = 5 x 48 histories per adjacent direction", "§9.3")
+def _():
+    return K.PENT_HISTORIES_PER_DIRECTION == 5 * K.PENT_FIXED_SIDE_HISTORIES, (
+        f"{K.PENT_HISTORIES_PER_DIRECTION} = 5 x {K.PENT_FIXED_SIDE_HISTORIES}: the "
+        "48 fixed-side histories carried around the five cap positions, which is "
+        "the same C_5 orbit that produced the factor 5 above"
+    )
+
+
+@pentagonal.check("hop range 4 refutes the r = w_min - 2 promotion", "§9.3 / C6")
+def _():
+    # C6: the promotion r_physical = w_min - 2 is falsified here. w_min = 7 for
+    # this geometry, so the rule predicts 5 while the exact calculation gives 4.
+    w_min = 7
+    predicted = w_min - 2
+    return K.PENT_HOP_RANGE == 4 and predicted == 5 and predicted > K.PENT_HOP_RANGE, (
+        f"r_hop = {K.PENT_HOP_RANGE}, but w_min - 2 = {predicted}; the scoped "
+        "bound r >= w_min - 2 does not survive as an equality"
+    )
+
+
+@pentagonal.check("the tuned cap-plus-side symbol is a different Hamiltonian", "§9.3 / R21")
+def _():
+    # mu(k) = 4 cos k (1 - cos k)/(7 - 2 cos k) is the OLD formal compression. It
+    # is not proportional to the isotropic symbol cos k, so no rescaling carries
+    # h_4^side across; the tuned model needs w_vertical = (3/2) w_horizontal.
+    k = symbols("k", real=True)
+    c = sympify("cos(k)").subs(symbols("k"), k)
+    mu = 4 * c * (1 - c) / (7 - 2 * c)
+    ratio = simplify(mu / c)
+    return simplify(diff(ratio, k)) != 0 and Rational(3, 2) == K.PENT_TUNED_WEIGHT_RATIO, (
+        f"mu(k)/cos k = {ratio} is k-dependent, so mu is not a multiple of the "
+        f"isotropic symbol; the tuned model requires w_vertical/w_horizontal = "
+        f"{K.PENT_TUNED_WEIGHT_RATIO} and a fresh anisotropic backend"
+    )
+
+
+@pentagonal.check("h_4^side and the cubic kernel share no denominator structure", "§9.3")
+def _():
+    # Guard against the most natural misuse: quoting the pentagonal coefficient
+    # as though it constrained the disputed cubic fourth order.
+    shared = K.H4_SIDE.q == K.Q_BAND_4.q
+    return not shared, (
+        f"h_4^side has denominator {K.H4_SIDE.q}, q_band^(4) has "
+        f"{K.Q_BAND_4.q}; separate geometries, separate retained sectors, and "
+        "the pentagonal theorem leaves the cubic fourth-order scalar untouched"
+    )
+
+
+# ==========================================================================
+string_tension = _suite("native string tension through fifth order (v4.3 §11.2)")
+
+
+@string_tension.check("sigma_n^phys = (-1)^n sigma_n^raw, and C5 is the n = 3 case", "§11.2 / C5")
+def _():
+    # C5 recorded "-61/408 (the earlier +61/408 was an odd-order convention
+    # error)" without saying which rule produced it. R14 states the rule; this
+    # check is that C5's number is what the rule gives at n = 3.
+    raw_3 = -K.SIGMA_3
+    phys_3 = (-1) ** 3 * raw_3
+    return (
+        phys_3 == K.SIGMA_3
+        and raw_3 == Rational(61, 408)
+        and K.SIGMA_5_RAW == -K.SIGMA_5
+        and K.SIGMA_5 < 0
+    ), (
+        f"sigma_3^raw = +{raw_3} -> sigma_3^phys = {phys_3}, exactly C5's "
+        f"correction; sigma_5^raw = +{K.SIGMA_5_RAW} -> sigma_5^phys = {K.SIGMA_5}, "
+        "so both odd physical coefficients are negative"
+    )
+
+
+@string_tension.check("the even coefficients are not sign-flipped", "§11.2")
+def _():
+    # A rule applied to the wrong parity is the classic way this erratum comes
+    # back. (-1)^n is +1 at n = 2 and n = 4, so those printed signs are the raw
+    # signs and must be left alone.
+    return all((-1) ** n == 1 for n in (2, 4)) and K.SIGMA_2 < 0 and K.SIGMA_4 < 0, (
+        f"sigma_2 = {K.SIGMA_2} and sigma_4 = {K.SIGMA_4} are negative in BOTH "
+        "conventions; only odd n flips"
+    )
+
+
+@string_tension.check("sigma_4 shares the historical-branch denominator", "§11.2 / §6")
+def _():
+    # Same 7250590288602460800 as q_band^(4). Both are historical-branch fourth
+    # order, so this is a provenance fingerprint, not a coincidence -- and it is
+    # the reason sigma_4 inherits whatever the fourth-order kernel dispute
+    # settles on.
+    return K.SIGMA_4.q == K.Q_BAND_4.q, (
+        f"sigma_4 and q_band^(4) both have denominator {K.SIGMA_4.q}; "
+        f"q_band^(4)/sigma_4 = {K.Q_BAND_4 / K.SIGMA_4}"
+    )
+
+
+@string_tension.check("the seven-prime CRT reconstruction clears its uniqueness bound", "§11.2")
+def _():
+    numerator_bits = K.SIGMA_5_RAW.p.bit_length()
+    denominator_bits = K.SIGMA_5_RAW.q.bit_length()
+    bound = K.SIGMA_5_MODULUS_BITS // 2
+    return (
+        numerator_bits == 77
+        and denominator_bits == 81
+        and bound == K.SIGMA_5_UNIQUENESS_BITS
+        and max(numerator_bits, denominator_bits) < bound
+    ), (
+        f"189-bit modulus gives a {bound}-bit rational-reconstruction bound; the "
+        f"recovered numerator is {numerator_bits} bits and the denominator "
+        f"{denominator_bits} bits, so the pair is the unique preimage"
+    )
+
+
+@string_tension.check("the ratio and sigma series reproduce E_flat exactly", "§11.2 vs §4.4")
+def _():
+    # The strongest thing in §11.2, and it is not stated there. Two independent
+    # routes meet:
+    #   §11.2 gives sigma(u) and m/sqrt(sigma) = sqrt(6)(4/3 + u/2 + 11/68 u^2
+    #         - 7559/499392 u^3 + O(u^4));
+    #   §4.4 gives E_flat(u) = 8/3 + u + 11/306 u^2 + D_3 u^3 from the C-even /
+    #         C-odd hopping ledger, with D_3 = 7/32 + 12 leak_3 - 4 b_3.
+    # Multiplying the first two recovers the third term by term, D_3 included.
+    # Nothing was fitted: the ratio coefficients and sigma come from the string
+    # sector, D_3 from the mass sector.
+    coupling = symbols("u", positive=True)
+    sigma = K.SIGMA_0 + sum(
+        c * coupling**n for n, c in ((2, K.SIGMA_2), (3, K.SIGMA_3), (4, K.SIGMA_4), (5, K.SIGMA_5))
+    )
+    ratio = sqrt(6) * sum(c * coupling**n for n, c in enumerate(K.RATIO_UNDISPUTED))
+    recovered = series(ratio * sqrt(sigma), coupling, 0, 4).removeO()
+    expected = K.e_flat(coupling)
+    residual = simplify(expand(recovered - expected))
+    coefficients = [simplify(recovered.coeff(coupling, n)) for n in range(4)]
+    return residual == 0, (
+        f"sqrt(6) * ratio(u) * sqrt(sigma(u)) = {coefficients} through u^3, which "
+        f"is E_flat term by term: 8/3, 1, 11/306, and D_3 = {K.D_3}. The u^3 "
+        "coefficient is the discriminating one -- a normalization slip anywhere in "
+        "either series would not land on it"
+    )
+
+
+@string_tension.check("m_{1+-}(0) = 8/3 follows from sigma(0) = 2/3 alone", "§11.2")
+def _():
+    # The constant term separately, because it is the one an eye can check:
+    # sqrt(6) * (4/3) * sqrt(2/3) = 8/3, the free one-plaquette energy.
+    leading = simplify(sqrt(6) * K.RATIO_UNDISPUTED[0] * sqrt(K.SIGMA_0))
+    return leading == Rational(8, 3), (
+        f"sqrt(6) * {K.RATIO_UNDISPUTED[0]} * sqrt({K.SIGMA_0}) = {leading}, the "
+        "u -> 0 flat-band energy; the ratio's constant term is fixed by sigma(0), "
+        "not free"
+    )
+
+
+@string_tension.check("the ratio series stops before the disputed order", "§11.2 / C2")
+def _():
+    # Four coefficients, ending at u^3. The u^4 term is withheld because it
+    # inherits C2, not because it is unknown -- and the check above shows the
+    # first four are tightly constrained, so the omission is load-bearing.
+    return len(K.RATIO_UNDISPUTED) == 4, (
+        f"the quoted ratio is sqrt(6) * {K.RATIO_UNDISPUTED} through u^3; C2 "
+        "reaches every higher coefficient through the fourth-order mass kernel"
+    )

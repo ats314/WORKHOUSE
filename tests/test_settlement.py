@@ -4,6 +4,10 @@ import hashlib
 
 from workhouse import settlement as S
 
+#: Repository guidance, deliberately outside the pin -- the manifest is what
+#: marks a file as received evidence (ADR 0006).
+REPO_AUTHORED = {"SHA256SUMS", "CLAUDE.md"}
+
 EXPECTED = {
     "SETTLEMENT.md",
     "README.md",
@@ -14,7 +18,7 @@ EXPECTED = {
 
 
 def test_all_artifacts_present():
-    names = {p.name for p in S.SETTLEMENT_DIR.iterdir() if p.name != "SHA256SUMS"}
+    names = {p.name for p in S.SETTLEMENT_DIR.iterdir() if p.name not in REPO_AUTHORED}
     assert names == EXPECTED
 
 

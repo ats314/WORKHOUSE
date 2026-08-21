@@ -225,6 +225,68 @@ RUN15_APPLIED_SHIFT = 11.17343231638178
 Q4_CROSS = Rational(17607806155349, 1101327605164800)  # = BETA_PEN_3 / 4
 
 # --------------------------------------------------------------------------
+# Isotropic pentagonal-prism cap band  (UNIFIED v4.3 §9.3, PROVEN for its
+# own retained sector -- a *separate geometry*, outside the cubic SU(3) kernel)
+# --------------------------------------------------------------------------
+# Standard isotropic Kogut-Susskind electric Hamiltonian H_0 = (1/2) sum_e E_e^2.
+# The two face energies differ, which is what forces the choice of physical
+# degenerate eigenspace before anything else (C8, R21).
+E_CAP = Rational(10, 3)
+E_SIDE = Rational(8, 3)
+
+#: Endpoint subtotals over the 48 fixed-side histories; their difference IS the
+#: coefficient, derived by two independent backends without embedding the target.
+PENT_A_PLUS = Rational(6482621, 21879000)
+PENT_A_MINUS = Rational(9714969, 32784500)
+#: h_4^side = A_+ - A_-.
+H4_SIDE = Rational(-2861009, 84387303000)
+#: tau_4, from h_4^side by exact D_5 covariance. The factor is 5 = |C_5|, and
+#: recording it here is the point: an undocumented multiplier between two
+#: printed coefficients is indistinguishable from a transcription error.
+D5_COVARIANCE_FACTOR = 5
+TAU_4 = Rational(-2861009, 16877460600)
+#: Coefficient of u^4 cos k in Delta E_cap^(4). The factor 2 is the two terms
+#: of the Hermitian hop |z><z+1| + |z+1><z|, not a second convention.
+HOP_HERMITIAN_FACTOR = 2
+DELTA_E_CAP_4 = Rational(-2861009, 8438730300)
+#: Continuous fourth-order bandwidth 4|tau_4|; band minimum at k = 0.
+PENT_BANDWIDTH_4 = Rational(2861009, 4219365150)
+#: Hop range: nearest-neighbour cap transfer only, 240 = 5 x 48 histories each way.
+PENT_HOP_RANGE = 4
+PENT_HISTORIES_PER_DIRECTION = 240
+PENT_FIXED_SIDE_HISTORIES = 48
+#: The formal cap-plus-side compression mu(k) belongs to a DIFFERENT, tuned
+#: Hamiltonian with w_vertical = (3/2) w_horizontal. The isotropic h_4^side may
+#: not be transferred to it (R21).
+PENT_TUNED_WEIGHT_RATIO = Rational(3, 2)
+
+
+# --------------------------------------------------------------------------
+# Native string tension through fifth order  (UNIFIED v4.3 §11.2)
+# --------------------------------------------------------------------------
+#: sigma(u) in the canonical *physical* perturbation convention.
+SIGMA_0 = Rational(2, 3)
+SIGMA_2 = Rational(-22, 153)
+SIGMA_3 = Rational(-61, 408)
+SIGMA_4 = Rational(-737327120374220449, 7250590288602460800)
+SIGMA_5 = Rational(-137767222189182735950309, 2009803206414863779920000)
+#: The native engine reconstructs positive unit-insertion magnitudes; the
+#: physical series follows from V = -sum_p (chi_p + chi_p_bar), giving
+#: sigma_n^phys = (-1)^n sigma_n^raw. C5's -61/408 is the n = 3 instance.
+SIGMA_5_RAW = -SIGMA_5
+#: Seven-prime CRT reconstruction: 189-bit modulus, so the uniqueness bound is
+#: 94 bits and the recovered 77-bit numerator and 81-bit denominator clear it.
+SIGMA_5_CRT_PRIMES = 7
+SIGMA_5_MODULUS_BITS = 189
+SIGMA_5_UNIQUENESS_BITS = 94
+SIGMA_5_TOPOLOGIES = 22820
+
+#: Scale-matched ratio m_{1+-}/sqrt(sigma), undisputed part only: the u^4 and
+#: higher coefficients inherit the fourth-order mass-kernel dispute (C2).
+RATIO_UNDISPUTED = (Rational(4, 3), Rational(1, 2), Rational(11, 68), Rational(-7559, 499392))
+
+
+# --------------------------------------------------------------------------
 # Exceptional (determinant) sectors
 # --------------------------------------------------------------------------
 DELTA_BETA_3 = Rational(-25, 64)
