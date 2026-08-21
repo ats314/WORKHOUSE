@@ -111,6 +111,7 @@ make frontier     # regenerate FRONTIER.md
 make certified    # regenerate CERTIFIED.md
 make lit          # published work, and which claim each paper bears on
 make catalogue    # regenerate index/ — claims.jsonl, symbols.jsonl, graph.jsonl
+make atlas        # render the theory graph to atlas.html (a view; not checked in)
 make lean         # T0: proof-check the Lean core (needs elan)
 make manifest     # re-pin theory/ after a deliberate, reviewed corpus change
 
@@ -120,6 +121,7 @@ workhouse frontier --brief       # the block the SessionStart hook injects
 workhouse search QUERY           # value, decimal, symbol, alias, or claim id
 workhouse why ID                 # everything recorded about one claim: edges,
                                  #   checks with live verdicts, theorems, ADRs
+workhouse atlas                  # the same graph as an interactive HTML page
 workhouse lit --for C7           # published work bearing on one claim
 workhouse triage /path/to/dir    # survey an unpinned archive, read-only
 ```

@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import sys
 
+from . import atlas as atlas_mod
 from . import certified as certified_mod
 from . import claims as claims_mod
 from . import frontier as frontier_mod
@@ -159,6 +160,19 @@ def _why(node_id: str) -> int:
     return 0 if found else 1
 
 
+def _atlas(out: str | None) -> int:
+    from pathlib import Path
+
+    data = atlas_mod.collect_data()
+    target = atlas_mod.write(Path(out) if out else None, data)
+    try:
+        shown = target.relative_to(atlas_mod.ROOT)
+    except ValueError:
+        shown = target
+    print(f"wrote {shown}: {len(data['nodes'])} nodes, {len(data['edges'])} edges")
+    return 0
+
+
 def _triage(directory: str, limit: int) -> int:
     from pathlib import Path
 
@@ -209,6 +223,11 @@ def main(argv: list[str] | None = None) -> int:
         help="C2 | G14 | R5 | U3 | CONST:t_N | LEAN:newton_three | ADR:0005 | SYM:c_shp",
     )
 
+    at = sub.add_parser("atlas", help="render the theory graph to one self-contained HTML page")
+    at.add_argument(
+        "-o", "--out", metavar="PATH", help="output file (default: atlas.html, not checked in)"
+    )
+
     li = sub.add_parser("lit", help="published work, and which claim each paper bears on")
     li.add_argument(
         "--for",
@@ -238,6 +257,8 @@ def main(argv: list[str] | None = None) -> int:
         return _index(args.write)
     if args.command == "why":
         return _why(args.id)
+    if args.command == "atlas":
+        return _atlas(args.out)
     if args.command == "lit":
         return _lit(args.target)
     if args.command == "certified":
