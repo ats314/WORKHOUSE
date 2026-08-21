@@ -1,0 +1,245 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{remark}{Remark}
+
+\title{Doc 07 (Referee-proof): A Uniform Wilson Hessian Bound for SU(3) in Hilbert--Schmidt Norm}
+\author{Project extraction / consolidation}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Purpose}
+
+This note isolates a single analytic statement that is both:
+(i) genuinely \emph{global} (independent of the field amplitude $A$ and the lattice volume), and
+(ii) directly useful for turning numerical convexity scans into \emph{validated} convexity certificates.
+
+The key technical point is to work in exponential coordinates $U_\ell = \exp(A_\ell)$ with $A_\ell\in\mathfrak{su}(3)$ and to use the Hilbert--Schmidt (HS) norm, which is invariant under left/right multiplication by unitary matrices. This removes spurious factors like $e^{c\|A\|}$ that appear if one treats $\exp(A)$ as an arbitrary matrix.
+
+\section{Setup}
+
+Let $G=\mathrm{SU}(3)$ and $\mathfrak{g}=\mathfrak{su}(3)$ (skew-Hermitian, traceless $3\times 3$ matrices).
+For $X\in\mathbb{C}^{3\times 3}$ define the HS norm
+\[
+\|X\|_{HS} := \sqrt{\mathrm{Tr}(X^\dagger X)}.
+\]
+For a finite lattice with oriented link set $\mathcal{E}$, define the configuration space
+\[
+\mathcal{X} := \mathfrak{g}^{\mathcal{E}}
+\]
+with inner product and norm
+\[
+\langle A,B\rangle_{\mathcal{X}} := \sum_{\ell\in\mathcal{E}} \mathrm{Tr}(A_\ell^\dagger B_\ell),
+\qquad
+\|A\|_{\mathcal{X}}^2 := \sum_{\ell\in\mathcal{E}} \|A_\ell\|_{HS}^2.
+\]
+
+For each oriented link $\ell\in\mathcal{E}$ write
+\[
+U_\ell(A) := e^{A_\ell}\in SU(3).
+\]
+If $\bar\ell$ denotes the reversed orientation, set $U_{\bar\ell}(A) := U_\ell(A)^{-1} = U_\ell(A)^\dagger = e^{-A_\ell}$.
+
+For an oriented plaquette $p=(\ell_1,\ell_2,\ell_3,\ell_4)$ define the plaquette matrix
+\[
+U_p(A) := U_{\ell_1}(A)U_{\ell_2}(A)U_{\ell_3}(A)U_{\ell_4}(A)\in SU(3),
+\]
+and the Wilson plaquette action
+\[
+S_W(A) := \beta \sum_{p\in\mathcal{P}} \left(1-\frac{1}{3}\mathrm{Re\,Tr}\,U_p(A)\right).
+\]
+The constant term $\beta\sum_p 1$ plays no role for derivatives and will be ignored when convenient.
+
+We view $\nabla^2 S_W(A)$ as a self-adjoint operator on $\mathcal{X}$, and denote its operator norm by
+\[
+\|\nabla^2 S_W(A)\|_{\mathrm{op}}
+:=
+\sup_{\substack{H\neq 0\\K\neq 0}}
+\frac{|\langle H,\nabla^2 S_W(A)K\rangle_{\mathcal{X}}|}{\|H\|_{\mathcal{X}}\|K\|_{\mathcal{X}}}.
+\]
+
+\section{Uniform bounds for derivatives of the matrix exponential}
+
+\begin{lemma}[First and second Fr\'echet derivatives of $\exp$ in HS norm]
+\label{lem:exp-derivatives}
+Let $A\in\mathfrak{su}(3)$ and $H,K\in\mathfrak{su}(3)$. Then the Fr\'echet derivatives satisfy
+\[
+De^{A}[H]=\int_0^1 e^{(1-s)A}\,H\,e^{sA}\,ds,
+\]
+\[
+D^2e^{A}[H,K]=\int_0^1\!\!\int_0^s e^{(1-s)A}\,H\,e^{(s-u)A}\,K\,e^{uA}\,du\,ds
+\;+\;
+(H\leftrightarrow K),
+\]
+and, crucially, the HS bounds
+\[
+\boxed{\ \|De^A[H]\|_{HS}\le \|H\|_{HS}\ },
+\qquad
+\boxed{\ \|D^2e^A[H,K]\|_{HS}\le \|H\|_{HS}\|K\|_{HS}\ }.
+\]
+The same bounds hold for $e^{-A}$.
+\end{lemma}
+
+\begin{proof}
+Since $A\in\mathfrak{su}(3)$, $e^{tA}$ is unitary for all $t\in\mathbb{R}$. The HS norm is unitarily invariant:
+$\|UXV\|_{HS}=\|X\|_{HS}$ for all unitary $U,V$.
+Therefore for each $s$,
+$\|e^{(1-s)A}He^{sA}\|_{HS}=\|H\|_{HS}$, and integrating gives $\|De^A[H]\|_{HS}\le\|H\|_{HS}$.
+
+For the second derivative, by submultiplicativity in operator$\times$HS norms and $\|M\|_{\mathrm{op}}\le\|M\|_{HS}$,
+\[
+\|e^{(1-s)A}H e^{(s-u)A}K e^{uA}\|_{HS}
+=\|H e^{(s-u)A}K\|_{HS}
+\le \|H\|_{\mathrm{op}}\|K\|_{HS}
+\le \|H\|_{HS}\|K\|_{HS}.
+\]
+The triangle-domain integral has area $1/2$, and there are two symmetric terms, so the stated bound with constant $1$ follows.
+The same reasoning applies to $e^{-A}$ since $e^{-tA}$ is also unitary.
+\end{proof}
+
+\section{Derivative bounds for the plaquette trace}
+
+Define the basic plaquette trace functional on $(SU(3))^4$:
+\[
+\phi(X_1,X_2,X_3,X_4)
+:=
+-\frac{1}{3}\mathrm{Re\,Tr}(X_1X_2X_3X_4).
+\]
+For each $i$ denote by $D_i\phi$ and $D^2_{ij}\phi$ the first and second Fr\'echet derivatives in the $X_i$ variables.
+
+\begin{lemma}[Uniform first and mixed second derivative bounds for $\phi$]
+\label{lem:trace-derivatives}
+For all $X_1,\dots,X_4\in SU(3)$ and all variations $\Delta_i,\Delta_j\in\mathbb{C}^{3\times 3}$,
+\[
+|D_i\phi[\Delta_i]|\le \frac{1}{\sqrt{3}}\|\Delta_i\|_{HS},
+\]
+and for $i\neq j$,
+\[
+|D^2_{ij}\phi[\Delta_i,\Delta_j]|\le \frac{1}{3}\|\Delta_i\|_{HS}\,\|\Delta_j\|_{HS}.
+\]
+Moreover $D^2_{ii}\phi\equiv 0$ (linearity in each $X_i$ separately).
+\end{lemma}
+
+\begin{proof}
+Fix $i$. By product rule,
+$D_i\phi[\Delta_i]=-(1/3)\mathrm{Re\,Tr}(U\Delta_i V)$ for some unitary $U,V$ (products of the other $X_k$). Then
+\[
+|D_i\phi[\Delta_i]|
+\le \frac{1}{3}|\mathrm{Tr}(U\Delta_i V)|
+= \frac{1}{3}|\mathrm{Tr}(\Delta_i W)|,\quad W:=VU\in SU(3).
+\]
+Using HS Cauchy--Schwarz, $|\mathrm{Tr}(\Delta_i W)|\le \|\Delta_i\|_{HS}\|W\|_{HS}$, and $\|W\|_{HS}=\sqrt{\mathrm{Tr}(I)}=\sqrt{3}$, giving the first bound.
+
+For $i\neq j$, $D^2_{ij}\phi[\Delta_i,\Delta_j]=-(1/3)\mathrm{Re\,Tr}(U\Delta_i V\Delta_j W)$ with $U,V,W$ unitary. Using $\mathrm{Re}(\cdot)\le|\cdot|$, cyclicity, and the Frobenius inequality $|\mathrm{Tr}(AB)|\le \|A\|_{HS}\|B\|_{HS}$,
+\[
+|\mathrm{Tr}(U\Delta_i V\Delta_j W)|
+=|\mathrm{Tr}((U\Delta_i V)(\Delta_j W))|
+\le \|U\Delta_i V\|_{HS}\,\|\Delta_j W\|_{HS}
+=\|\Delta_i\|_{HS}\|\Delta_j\|_{HS}.
+\]
+The $D^2_{ii}\phi=0$ statement follows because $\phi$ is linear in each argument separately.
+\end{proof}
+
+\section{Uniform Hessian bound for the Wilson action}
+
+Let $p=(\ell_1,\ell_2,\ell_3,\ell_4)$ be a plaquette and define $S_p(A):=\beta\,\phi(U_{\ell_1}(A),\dots,U_{\ell_4}(A))$.
+The total Wilson action is $S_W(A)=\sum_{p\in\mathcal{P}}S_p(A)$.
+
+\begin{lemma}[Per-plaquette block bounds]
+\label{lem:plaquette-blocks}
+Fix a plaquette $p$ with links $\ell_1,\dots,\ell_4$.
+Then the Hessian of $S_p$ as an operator on $\mathfrak{su}(3)^4$ has block operator norms bounded by:
+\[
+\|(\nabla^2 S_p(A))_{ij}\|_{\mathrm{op}}
+\le
+\begin{cases}
+\beta/\sqrt{3}, & i=j,\\[3pt]
+\beta/3, & i\neq j,
+\end{cases}
+\qquad\text{for all }A.
+\]
+\end{lemma}
+
+\begin{proof}
+Write $X_i(A)=U_{\ell_i}(A)=e^{\pm A_{\ell_i}}$ depending on orientation; by Lemma~\ref{lem:exp-derivatives} the sign is irrelevant for the norms.
+
+For $i\neq j$, $D^2_{A_i,A_j}S_p$ involves only the mixed derivative of $\phi$ composed with first derivatives of $X_i$ and $X_j$:
+\[
+D^2_{A_i,A_j}S_p[H_i,K_j]
+=
+\beta\,D^2_{ij}\phi\big[DX_i[H_i],DX_j[K_j]\big].
+\]
+By Lemmas~\ref{lem:trace-derivatives} and \ref{lem:exp-derivatives},
+\[
+|D^2_{A_i,A_j}S_p[H_i,K_j]|
+\le \beta\cdot \frac{1}{3}\|DX_i[H_i]\|_{HS}\|DX_j[K_j]\|_{HS}
+\le \beta\cdot \frac{1}{3}\|H_i\|_{HS}\|K_j\|_{HS}.
+\]
+By duality this implies the block operator norm bound $\|(\nabla^2 S_p)_{ij}\|_{\mathrm{op}}\le \beta/3$.
+
+For $i=j$, $D^2_{ii}\phi\equiv 0$, so the only second derivative contribution comes from the second derivative of the exponential:
+\[
+D^2_{A_i,A_i}S_p[H_i,K_i]
+=
+\beta\,D_i\phi\big[D^2X_i[H_i,K_i]\big].
+\]
+Using Lemmas~\ref{lem:trace-derivatives} and \ref{lem:exp-derivatives},
+\[
+|D^2_{A_i,A_i}S_p[H_i,K_i]|
+\le \beta\cdot\frac{1}{\sqrt{3}}\|D^2X_i[H_i,K_i]\|_{HS}
+\le \beta\cdot\frac{1}{\sqrt{3}}\|H_i\|_{HS}\|K_i\|_{HS},
+\]
+so $\|(\nabla^2 S_p)_{ii}\|_{\mathrm{op}}\le \beta/\sqrt{3}$.
+\end{proof}
+
+\begin{theorem}[Uniform (field-independent) Wilson Hessian bound in 4D]
+\label{thm:uniform-wilson-hessian}
+On a 4D hypercubic lattice, each oriented link belongs to at most $n_p=6$ plaquettes.
+For all $A\in\mathcal{X}$,
+\[
+\boxed{
+\|\nabla^2 S_W(A)\|_{\mathrm{op}}
+\le
+C_W\,\beta,
+\qquad
+C_W := n_p\left(1+\frac{1}{\sqrt{3}}\right)=6\left(1+\frac{1}{\sqrt{3}}\right).
+}
+\]
+In particular, a simpler but looser bound is $\|\nabla^2 S_W(A)\|_{\mathrm{op}}\le 8\sqrt{3}\,\beta$.
+\end{theorem}
+
+\begin{proof}
+View $\nabla^2 S_W(A)$ as a block matrix indexed by links:
+\[
+\nabla^2 S_W(A) = \big(H_{\ell\ell'}(A)\big)_{\ell,\ell'\in\mathcal{E}},
+\quad
+H_{\ell\ell'}(A):\mathfrak{su}(3)\to\mathfrak{su}(3).
+\]
+A standard block-matrix estimate gives
+\[
+\|\nabla^2 S_W(A)\|_{\mathrm{op}}
+\le \sup_{\ell\in\mathcal{E}} \sum_{\ell'\in\mathcal{E}} \|H_{\ell\ell'}(A)\|_{\mathrm{op}}.
+\]
+Fix a link $\ell$. Only plaquettes $p\ni \ell$ contribute to the row $\ell$, and each such plaquette couples $\ell$ to at most three other links plus itself. By Lemma~\ref{lem:plaquette-blocks}, the row-sum contribution of one plaquette is at most
+\[
+\frac{\beta}{\sqrt{3}} + 3\cdot \frac{\beta}{3} = \beta\left(1+\frac{1}{\sqrt{3}}\right).
+\]
+Since at most $n_p=6$ plaquettes contain $\ell$, the row sum is bounded by $n_p(1+1/\sqrt{3})\beta$. Taking the supremum over $\ell$ proves the bound.
+The looser estimate $8\sqrt{3}\beta$ follows from the inequality $6(1+1/\sqrt{3})\le 8\sqrt{3}$.
+\end{proof}
+
+\begin{remark}[Generalization and what this buys you]
+The same argument works for $SU(N)$ with $\sqrt{3}$ replaced by $\sqrt{N}$, and $n_p$ replaced by the maximum plaquette incidence for the chosen lattice dimension.
+
+This bound is \emph{uniform in the field amplitude} and \emph{uniform in the lattice volume}.
+It is exactly the kind of analytic lemma that makes ``grid+Lipschitz+residual'' convexity certification realistic: one can combine it with a quadratic mass term (Haar or surrogate) to obtain global strong-coupling convexity, and locally one can bound third derivatives to extend verified eigenvalue checks from grid points to a whole ball.
+\end{remark}
+
+\end{document}

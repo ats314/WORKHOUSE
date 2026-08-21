@@ -1,0 +1,294 @@
+## Part 2 — Configuration manifold, gauge action, horizontal sector, and linkwise calculus
+
+### 2.1. Lattice and configuration manifold
+
+Fix a finite (d)-dimensional lattice region (\Lambda\subset \mathbb Z^d). For concreteness (and because your later Fourier-symbol arguments use it), one may keep in mind the periodic box
+[
+\Lambda=\prod_{\mu=1}^d (\mathbb Z/L_\mu\mathbb Z),
+]
+but **nothing in Part 2** depends on periodicity except when we write explicit adjoint formulas.
+
+Let (V(\Lambda)) be the set of sites and let (E(\Lambda)) be a chosen set of **positively oriented** nearest-neighbor edges
+[
+E(\Lambda):={(x,\mu): x\in V(\Lambda),\ \mu\in{1,\dots,d}},
+]
+where ((x,\mu)) represents the oriented bond from (x) to (x+\hat\mu). (When needed, the reverse edge is ((x+\hat\mu,-\mu)).)
+
+Fix a compact connected Lie group (G) (in your target case (G=\mathrm{SU}(N))) with Lie algebra (\mathfrak g=T_eG). The lattice configuration manifold is the compact product
+[
+M_\Lambda ;:=; \prod_{e\in E(\Lambda)} G;\cong;G^{E(\Lambda)}. \tag{2.1}
+]
+This is exactly the standard finite-volume lattice configuration space. 
+
+A configuration is (U=(U_e)*{e\in E(\Lambda)}\in M*\Lambda), with (U_e\in G).
+
+---
+
+### 2.2. Product metric and tangent identification (right-trivialization)
+
+Choose an (\mathrm{Ad})-invariant inner product (\langle\cdot,\cdot\rangle_{\mathfrak g}) on (\mathfrak g). In your (\mathrm{SU}(N)) case, your notes use the standard choice
+[
+\langle X,Y\rangle_{\mathfrak g} := -\mathrm{Tr}(XY)
+\quad\text{for }X,Y\in \mathfrak{su}(N)\ \text{anti-Hermitian},
+]
+possibly rescaled by a constant; and you explicitly track normalization dependence. 
+
+Let (g_G) be the induced bi-invariant Riemannian metric on (G). Give (M_\Lambda) the product metric (g_\Lambda) defined by
+[
+g_\Lambda(U)(V,W) := \sum_{e\in E(\Lambda)} g_G(U_e)(V_e,W_e).
+\tag{2.2}
+]
+This is the same product-metric setup you use at the vacuum and later for Hessian comparisons. 
+
+**Tangent space.** For each (U\in M_\Lambda),
+[
+T_U M_\Lambda \cong \bigoplus_{e\in E(\Lambda)} T_{U_e}G.
+\tag{2.3}
+]
+This is the canonical tangent identification for products. 
+
+**Right-trivialization (linkwise).** For each (g\in G), right multiplication (R_g(h)=hg) gives an isomorphism ((dR_g)*e:\mathfrak g\to T_gG). Thus each (V_e\in T*{U_e}G) can be represented uniquely as
+[
+V_e = (dR_{U_e})_e X_e
+\quad\text{for a unique }X_e\in\mathfrak g.
+\tag{2.4}
+]
+This right-trivialization is exactly the link-by-link identification you rely on throughout. 
+
+Under this identification, we will freely write tangent vectors as (\mathfrak g)-valued 1-cochains:
+[
+T_U M_\Lambda ;\cong; \mathcal C^1(\Lambda;\mathfrak g):=\mathfrak g^{E(\Lambda)}
+]
+with the product inner product (\langle X,Y\rangle_{\mathcal C^1}:=\sum_{e}\langle X_e,Y_e\rangle_{\mathfrak g}), as you do at the vacuum. 
+
+---
+
+### 2.3. Gauge group action
+
+Define the lattice gauge group
+[
+\mathcal G_\Lambda := G^{V(\Lambda)}.
+]
+For (g=(g_x)*{x\in V(\Lambda)}\in\mathcal G*\Lambda) and (U\in M_\Lambda), the standard left-right action is
+[
+(g\cdot U)*{x,\mu} := g_x,U*{x,\mu},g_{x+\hat\mu}^{-1}.
+\tag{2.5}
+]
+This is the action recorded in your adjoint/orthogonality notes. 
+
+A function (f:M_\Lambda\to\mathbb R) is **gauge invariant** if
+[
+f(g\cdot U)=f(U)\qquad\forall g\in\mathcal G_\Lambda,\ \forall U\in M_\Lambda.
+\tag{2.6}
+]
+
+---
+
+### 2.4. Vertical and horizontal subspaces
+
+Fix (U\in M_\Lambda). Consider the orbit map
+[
+O_U:\mathcal G_\Lambda\to M_\Lambda,\qquad O_U(g)=g\cdot U.
+\tag{2.7}
+]
+Define the **vertical** and **horizontal** subspaces at (U) by
+[
+\mathrm{Ver}_U := \mathrm{Im}\big((dO_U)*e\big)\subset T_U M*\Lambda,
+\qquad
+\mathrm{Hor}_U := (\mathrm{Ver}_U)^\perp
+\tag{2.8}
+]
+(orthogonal complement w.r.t. the product metric). This is exactly the canonical “vertical/orbit vs horizontal/orthogonal” split as stated in your abstract interface part. 
+
+---
+
+### 2.5. Infinitesimal gauge action and the discrete operator (d_0)
+
+Let (\phi=(\phi_x)*{x\in V(\Lambda)}\in \mathcal C^0(\Lambda;\mathfrak g)) be a Lie-algebra-valued site field. Consider the one-parameter gauge path (g(t)=(\exp(t\phi_x))*x\in\mathcal G*\Lambda). Then (t\mapsto g(t)\cdot U) is a curve in (M*\Lambda) through (U). Its derivative at (t=0) is a vertical tangent vector (V_U(\phi)\in T_U M_\Lambda) (your notes denote it as the tangent to the orbit). 
+
+Under right-trivialization, the corresponding (\mathfrak g)-valued 1-cochain is the **covariant discrete gradient**
+[
+(d_0^U\phi)*{x,\mu}
+:= \phi_x - \mathrm{Ad}*{U_{x,\mu}},\phi_{x+\hat\mu}.
+\tag{2.9}
+]
+At the vacuum (U^{(0)}) (identity on every link), (\mathrm{Ad}*{U^{(0)}*{x,\mu}}=\mathrm{Id}) and hence
+[
+(d_0\phi)*{x,\mu}=\phi_x-\phi*{x+\hat\mu}.
+\tag{2.10}
+]
+(Up to sign conventions, this is the standard lattice gradient; your Part 9B formulas use the “forward difference” convention ( (d_0\varphi)*{x,\mu}=\varphi*{x+\hat\mu}-\varphi_x).  We will align with that convention below when we write explicit adjoints.)
+
+From here on, for the *linearized* (vacuum) complexes used in Parts 9/9B/18C, we fix the vacuum (U^{(0)}) and write (d_0:=d_0^{U^{(0)}}).
+
+---
+
+### 2.6. The cochain complex (d_0,d_1) at the vacuum and the adjoint (d_0^*)
+
+Define cochain spaces (all finite-dimensional):
+[
+\mathcal C^0(\Lambda;\mathfrak g)=\mathfrak g^{V(\Lambda)},\quad
+\mathcal C^1(\Lambda;\mathfrak g)=\mathfrak g^{E(\Lambda)},\quad
+\mathcal C^2(\Lambda;\mathfrak g)=\mathfrak g^{P(\Lambda)}.
+\tag{2.11}
+]
+This setup is stated in your Part 9 cochains section. 
+
+**Forward-difference convention (matching Part 9B).** For (\varphi\in\mathcal C^0), define
+[
+(d_0\varphi)*{x,\mu} := \varphi*{x+\hat\mu}-\varphi_x.
+\tag{2.12}
+]
+This is exactly the definition substituted in Part 9B’s proof that (d_1d_0=0). 
+
+For a (\mathfrak g)-valued 1-form (X\in\mathcal C^1), define the 2-form (d_1X\in\mathcal C^2) (discrete curl on a plaquette ((x;\mu,\nu)), (\mu<\nu)) by
+[
+(d_1X)*{x;\mu,\nu}
+:=X*{x,\mu}+X_{x+\hat\mu,\nu}-X_{x+\hat\nu,\mu}-X_{x,\nu}.
+\tag{2.13}
+]
+This is the explicit formula used throughout Part 9B. 
+
+Equip (\mathcal C^0,\mathcal C^1,\mathcal C^2) with the natural product inner products induced by (\langle\cdot,\cdot\rangle_{\mathfrak g}). Then (d_0^*:\mathcal C^1\to\mathcal C^0) is defined by adjointness
+[
+\langle d_0\varphi,X\rangle_{\mathcal C^1}
+=\langle \varphi,d_0^*X\rangle_{\mathcal C^0}.
+\tag{2.14}
+]
+On a periodic lattice, Part 9B computes (d_0^*) explicitly as the discrete divergence:
+[
+(d_0^*X)*x=\sum*{\mu=1}^d\big(X_{x-\hat\mu,\mu}-X_{x,\mu}\big).
+\tag{2.15}
+]
+This is Proposition 9B.1. 
+
+---
+
+### 2.7. Horizontal sector at the vacuum
+
+Define the **horizontal sector at the vacuum**
+[
+H_{U^{(0)}} ;:=; \ker(d_0^*)\ \subset\ \mathcal C^1(\Lambda;\mathfrak g).
+\tag{2.16}
+]
+This is the finite-dimensional “divergence-free” (Coulomb) constraint encoded by your discrete adjoint (d_0^*).
+
+Two remarks that matter later:
+
+1. By elementary linear algebra, ((\mathrm{im},d_0)^\perp=\ker(d_0^*)). So (H_{U^{(0)}}) is exactly the orthogonal complement of pure-gauge directions at the vacuum.
+2. Part 9B also records the standard complex identity (d_1d_0=0), i.e. pure gauges have zero linearized curvature, which is the algebraic reason the Wilson Hessian has gauge zero-modes. 
+
+---
+
+### 2.8. Linkwise gradient and carré du champ
+
+Let ({e_a}*{a=1}^{\dim\mathfrak g}) be an orthonormal basis of ((\mathfrak g,\langle\cdot,\cdot\rangle*{\mathfrak g})).
+
+For each link (e\in E(\Lambda)) and (a), define the right-invariant vector field acting on (f\in C^\infty(M_\Lambda)) by
+[
+(\nabla_{e,a}f)(U)
+:=\left.\frac{d}{dt}\right|*{t=0}
+f\big(U^{(e,t)}\big),
+\quad
+U^{(e,t)}*{e}:=U_e\exp(t e_a),
+\quad
+U^{(e,t)}*{e'}:=U*{e'}\ \ (e'\neq e).
+\tag{2.17}
+]
+Equivalently, the link-gradient (\nabla_e f(U)\in\mathfrak g) is defined by
+[
+\langle \nabla_e f(U), e_a\rangle_{\mathfrak g} = (\nabla_{e,a}f)(U)
+\qquad \forall a.
+\tag{2.18}
+]
+Define the full gradient (\nabla f(U)\in \mathcal C^1(\Lambda;\mathfrak g)) by
+[
+\nabla f(U) := (\nabla_e f(U))_{e\in E(\Lambda)}.
+\tag{2.19}
+]
+
+Then the squared gradient norm is the **sum over links**
+[
+|\nabla f(U)|^2_{g_\Lambda}
+:= \sum_{e\in E(\Lambda)} |\nabla_e f(U)|*{\mathfrak g}^2.
+\tag{2.20}
+]
+This is precisely the “linkwise sum” representation used later as the Dirichlet energy (\int|\nabla f|^2,d\mu*\Lambda). 
+
+---
+
+### 2.9. Generator and carré du champ for the reversible diffusion
+
+Given a smooth action (S_\Lambda:M_\Lambda\to\mathbb R), define the Gibbs measure
+[
+d\mu_\Lambda(U)=Z_\Lambda^{-1}e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U).
+\tag{2.21}
+]
+As in your Part 6 notes, the diffusion generator
+[
+L_\Lambda f
+:= \Delta_{g_\Lambda} f - \langle \nabla S_\Lambda,\nabla f\rangle_{g_\Lambda}
+\tag{2.22}
+]
+is symmetric in (L^2(\mu_\Lambda)) and is the reversible generator you use for the analytic gap. 
+
+Its carré du champ is
+[
+\Gamma_\Lambda(f)
+:=\frac12\big(L_\Lambda(f^2)-2fL_\Lambda f\big)
+=|\nabla f|*{g*\Lambda}^2
+=\sum_{e\in E(\Lambda)}|\nabla_e f|_{\mathfrak g}^2.
+\tag{2.23}
+]
+(Here the last identity is the standard computation for diffusion generators of the form (\Delta-\nabla S\cdot \nabla) on a Riemannian manifold; in your notes this is the exact Dirichlet form object used downstream. )
+
+---
+
+### 2.10. Gauge invariance forces horizontality of the gradient
+
+This is the key “where (d_0^*) starts to bite.”
+
+**Proposition 2.1 (Gauge invariance (\Rightarrow) horizontal gradient).**
+Let (f\in C^\infty(M_\Lambda)) be gauge invariant in the sense of (2.6). Then for every (U\in M_\Lambda),
+[
+\nabla f(U)\ \in\ \mathrm{Hor}*U=(\mathrm{Ver}*U)^\perp.
+\tag{2.24}
+]
+Equivalently, (\langle \nabla f(U),V\rangle*{g*\Lambda}=0) for all vertical (V\in\mathrm{Ver}_U).
+
+*Proof.* Fix (U) and an infinitesimal gauge parameter (\phi\in\mathcal C^0(\Lambda;\mathfrak g)). Let (g(t)=\exp(t\phi)\in\mathcal G_\Lambda). Gauge invariance gives (f(g(t)\cdot U)=f(U)) for all (t), hence
+[
+0=\left.\frac{d}{dt}\right|*{t=0} f(g(t)\cdot U)
+=\langle \nabla f(U), V_U(\phi)\rangle*{g_\Lambda},
+\tag{2.25}
+]
+where (V_U(\phi)=\left.\frac{d}{dt}\right|_{0}(g(t)\cdot U)\in \mathrm{Ver}_U). This holds for all (\phi), hence (\nabla f(U)\perp \mathrm{Ver}_U), i.e. (\nabla f(U)\in\mathrm{Hor}_U). ∎
+
+This is exactly the “orbit differentiation” argument stated in your interface note and is the conceptual reason the carré du champ for gauge-invariant observables lives in the horizontal sector. 
+
+**Corollary 2.2 (Carré du champ is purely horizontal for gauge invariants).**
+If (f) is gauge invariant, then
+[
+\Gamma_\Lambda(f)(U)=|\nabla f(U)|^2
+=|\nabla^{\mathrm{hor}} f(U)|^2,
+\tag{2.26}
+]
+where (\nabla^{\mathrm{hor}} f) denotes the orthogonal projection of (\nabla f) to (\mathrm{Hor}_U) (which equals (\nabla f) itself by Proposition 2.1). This is the content of the proposition you already recorded (“for gauge-invariant observables, the carré du champ depends only on the horizontal gradient”). 
+
+---
+
+### 2.11. What Part 2 sets up for later
+
+* Later, when we work **near the vacuum** (U^{(0)}), Proposition 2.1 becomes the explicit algebraic statement
+  [
+  \nabla f(U^{(0)})\in (\mathrm{im},d_0)^\perp=\ker(d_0^*),
+  ]
+  as you already wrote in the explicit-adjoint notes. 
+* This is the exact doorway through which the operator (d_1^*d_1) becomes the relevant “Maxwell symbol” on (\ker(d_0^*)) in your later Hessian and covariance estimates.
+
+---
+
+That’s Part 2.
+
+Next, the clean Part 3 (when you’re ready) is usually: define the Wilson action (S_\Lambda), fix the vacuum (U^{(0)}), and state the vacuum Hessian identity (“Wilson Hessian (=\frac{\beta}{3} d_1^*d_1) on (\ker d_0^*)” in your normalization), because that’s where the analytic engine starts producing actual coercivity.
+

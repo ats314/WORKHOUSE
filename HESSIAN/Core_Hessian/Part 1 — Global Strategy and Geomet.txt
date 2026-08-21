@@ -1,0 +1,366 @@
+Part 1 — Global Strategy and Geometric Framework
+
+## 1.1. Motivation and global strategy
+
+The ultimate goal of this project is to understand **mass scales** in four–dimensional nonabelian Yang–Mills theory through a combination of:
+
+* geometric information (curvature, Hessians, Haar geometry),
+* probabilistic structure (Gibbs measures and diffusions),
+* functional inequalities (Poincaré and log-Sobolev),
+* and Osterwalder–Schrader (OS) reconstruction and continuum limits.
+
+In the Clay formulation, a Yang–Mills mass gap means that in the continuum theory on (\mathbb{R}^4) the Hamiltonian (H) on the physical Hilbert space has a strictly positive spectral gap
+[
+\Delta := \inf{ \sigma(H)\setminus{0}} > 0,
+]
+and the theory satisfies the OS axioms and gauge invariance.
+
+The framework developed here proceeds in layers:
+
+1. **Finite-dimensional geometric/analytic layer (Parts 1–3).**
+   For a finite-dimensional Riemannian manifold ((M,g)), a (C^2) potential (S), and the Gibbs measure
+   [
+   d\mu(x) = Z^{-1} e^{-S(x)},d\mathrm{vol}_g(x),
+   ]
+   we study the diffusion with generator
+   [
+   L f = \Delta_g f - \langle \nabla S,\nabla f\rangle
+   ]
+   and its carré du champ (\Gamma,\Gamma_2). A **curvature–dimension** lower bound (in the sense of Bakry–Émery) implies Poincaré and log-Sobolev inequalities (LSI) and hence a spectral gap for (-L).
+
+2. **Lattice Yang–Mills geometry (Part 2).**
+   Lattice YM provides a family of finite-dimensional configuration manifolds (M_\Lambda = G^{E(\Lambda)}), with a product bi-invariant metric and a Gibbs measure built from the Wilson action and Haar volume. One can identify a **small-field region** where the Bakry–Émery tensor has a positive lower bound in the **horizontal (physical)** directions, uniformly in the finite volume (\Lambda).
+
+3. **Local-to-global FI and spectral gaps (Part 3).**
+   For a general diffusion, a **local curvature–dimension bound** on a region (\Omega\subset M) plus an appropriate **Lyapunov condition** yields global Poincaré/LSI with uniform constants. Applied to lattice YM, this suggests a route to volume-uniform spectral gaps, provided small-field curvature and Lyapunov estimates can be established.
+
+4. **OS reconstruction and continuum limits (Parts 4–5).**
+   OS axioms and reflection positivity turn Euclidean lattice measures into finite-volume Hamiltonians (H_\Lambda) with gaps (\Delta_\Lambda), controlling Euclidean-time correlation decay. A continuum mass gap would follow from appropriate **uniform-in-(\Lambda)** control of gaps and correlation lengths along scaling trajectories.
+
+**Part 1** provides the basic geometric and probabilistic framework in which all of this lives:
+
+* finite-dimensional Riemannian configuration spaces ((M,g)),
+* Gibbs measures (d\mu \propto e^{-S}d\mathrm{vol}_g),
+* the diffusion generator (L) and carré du champ (\Gamma,\Gamma_2),
+* Dirichlet forms, semigroups, variance and entropy,
+* and the formal notions of Poincaré and log-Sobolev inequalities.
+
+We do not yet use curvature estimates in this part; we set up the objects that will interact with curvature in Parts 2–3.
+
+---
+
+## 1.2. Configuration space and basic geometric structure
+
+Throughout Part 1 we work in a **finite-dimensional** setting.
+
+Let (n\in\mathbb{N}) and let (M) be a smooth, connected, (n)-dimensional manifold.
+
+### 1.2.1. Riemannian structure
+
+We assume:
+
+* (M) is equipped with a smooth Riemannian metric (g).
+* The associated Riemannian volume measure is denoted
+  [
+  d\mathrm{vol}_g(x).
+  ]
+
+For each (x\in M):
+
+* (T_x M) denotes the tangent space.
+* The metric inner product on (T_xM) is (\langle\cdot,\cdot\rangle_x).
+* The corresponding norm is (|v|_x := \sqrt{\langle v,v\rangle_x}) for (v\in T_xM).
+
+We impose standard global hypotheses to avoid boundary issues and ensure good diffusion theory:
+
+* (M) is **geodesically complete** as a Riemannian manifold,
+* (M) has no boundary (or, equivalently, we work with reflecting boundary conditions and absorb them into the definition of (L)).
+
+These assumptions guarantee the existence of a well-defined Laplace–Beltrami operator (\Delta_g) and of a diffusion process with generator (\Delta_g).
+
+---
+
+## 1.3. Potentials and Gibbs measures
+
+We now introduce an interaction potential (S) and form the associated Gibbs measure.
+
+### 1.3.1. Potential and growth assumptions
+
+Let
+[
+S : M \to \mathbb{R}
+]
+be a twice continuously differentiable function ((C^2)).
+
+We impose two basic conditions:
+
+1. **Lower boundedness.**
+   There exists a constant (c\in\mathbb{R}) such that
+   [
+   S(x) \ge c \quad \text{for all } x\in M.
+   ]
+
+2. **Integrability.**
+   The partition function
+   [
+   Z := \int_M e^{-S(x)},d\mathrm{vol}_g(x)
+   ]
+   is finite and strictly positive:
+   [
+   0 < Z < \infty.
+   ]
+
+These conditions ensure the Gibbs measure below is a well-defined probability measure.
+
+### 1.3.2. Gibbs measure
+
+Define (\mu) on Borel subsets (A\subset M) by
+[
+\mu(A) := \frac{1}{Z} \int_A e^{-S(x)},d\mathrm{vol}_g(x).
+]
+Equivalently, in density form,
+[
+d\mu(x) = Z^{-1} e^{-S(x)},d\mathrm{vol}_g(x).
+]
+
+We refer to the quadruple ((M,g,S,\mu)) as a **finite-dimensional Gibbs system** or **Gibbs configuration space**.
+
+Later, in lattice Yang–Mills, (M) will be a configuration manifold such as (G^{E(\Lambda)}), and (S) will be the Wilson action plus possible local counterterms; but for now we keep the setting abstract.
+
+---
+
+## 1.4. Function spaces and Sobolev structure
+
+To speak about gradients, Dirichlet forms, and generators, we fix a minimal analytic framework.
+
+Let (L^2(\mu)) and (L^p(\mu)) denote the usual spaces with respect to (\mu), and let (C_c^\infty(M)) be the space of smooth functions with compact support.
+
+### 1.4.1. Basic classes of functions
+
+We work with the following dense subspaces:
+
+* (C_c^\infty(M)\subset L^2(\mu)),
+* Smooth functions with polynomial or exponential growth that are integrable against (\mu),
+* In the Riemannian setting, the usual Sobolev spaces (H^1(\mu)), defined as the completion of (C_c^\infty(M)) under the norm
+  [
+  |f|_{H^1(\mu)}^2 := \int_M f^2,d\mu + \int_M |\nabla f|^2,d\mu.
+  ]
+
+We will shortly see that the **Dirichlet form** associated with the diffusion generates its own canonical domain (\mathcal{D}(\mathcal{E})\subset H^1(\mu)).
+
+---
+
+## 1.5. Diffusion generator and carré du champ
+
+Given ((M,g,S,\mu)), we consider the standard second-order differential operator
+[
+L f := \Delta_g f - \langle \nabla S,\nabla f\rangle,
+]
+initially defined on (C_c^\infty(M)).
+
+### 1.5.1. Carré du champ
+
+The **carré du champ** of the diffusion generated by (L) is the bilinear form
+[
+\Gamma(f,g) := \frac{1}{2}\left( L(fg) - f,Lg - g,Lf \right),
+]
+with (\Gamma(f) := \Gamma(f,f)).
+
+A straightforward computation using the explicit expression for (L) shows that
+[
+\Gamma(f,g) = \langle \nabla f,\nabla g\rangle,\qquad
+\Gamma(f) = |\nabla f|^2.
+]
+
+This identity is the analytic bridge between the generator (L) and the underlying geometry: the energy form is literally the integral of squared gradient.
+
+### 1.5.2. Dirichlet form
+
+On (C_c^\infty(M)), define
+[
+\mathcal{E}(f,g) := \int_M \Gamma(f,g),d\mu
+= \int_M \langle \nabla f(x),\nabla g(x)\rangle_x,d\mu(x),
+]
+and in particular
+[
+\mathcal{E}(f,f) = \int_M |\nabla f|^2,d\mu.
+]
+
+This is a symmetric, nonnegative bilinear form on (C_c^\infty(M)).
+
+Because
+
+* (M) is finite-dimensional and complete,
+* (\mu) has a smooth positive density with respect to (d\mathrm{vol}_g),
+* (C_c^\infty(M)) is dense in (L^2(\mu)),
+
+classical Dirichlet form theory implies that ((\mathcal{E},C_c^\infty(M))) is **closable** in (L^2(\mu)), and its closure ((\mathcal{E},\mathcal{D}(\mathcal{E}))) is a **Dirichlet form** in the usual sense: it is Markovian (stable under normal contractions) and nonnegative.
+
+We denote by (\mathcal{D}(\mathcal{E})) the closure of (C_c^\infty(M)) under the norm
+[
+|f|*{\mathcal{E}}^2 := |f|*{L^2(\mu)}^2 + \mathcal{E}(f,f),
+]
+so that (\mathcal{D}(\mathcal{E})\subset H^1(\mu)); in many cases, one has equality.
+
+### 1.5.3. Self-adjoint realization of (L)
+
+By general Dirichlet form theory there exists a unique nonnegative self-adjoint operator (-L) on (L^2(\mu)) such that
+[
+\mathcal{E}(f,g) = \langle f,-Lg\rangle_{L^2(\mu)}
+]
+for all (f\in\mathcal{D}(\mathcal{E})) and (g\in\mathcal{D}(-L)). Moreover, this operator agrees with the formal expression
+[
+Lf = \Delta_g f - \langle \nabla S,\nabla f\rangle
+]
+on (C_c^\infty(M)).
+
+We henceforth write (L) for this self-adjoint realization and do not distinguish notationally between the formal and closed operators.
+
+---
+
+## 1.6. Semigroup, invariance, and reversible diffusion
+
+The self-adjoint operator (-L) generates a strongly continuous contraction semigroup ((P_t)_{t\ge0}) on (L^2(\mu)) given by
+[
+P_t := e^{tL},\quad t\ge0.
+]
+
+Standard spectral theory yields:
+
+* (P_0 = \mathrm{Id}) and (P_{t+s} = P_t P_s),
+* (|P_t f|*{L^2(\mu)} \le |f|*{L^2(\mu)}) for all (t\ge0),
+* (P_t) is **Markovian** (positivity preserving, (P_t 1 = 1)) and **(\mu)-symmetric**, i.e.
+  [
+  \int f P_t g,d\mu = \int g P_t f,d\mu
+  ]
+  for all suitable (f,g).
+
+Thus ((P_t)*{t\ge0}) is the semigroup of a reversible diffusion process ((X_t)*{t\ge0}) on (M) with invariant measure (\mu). In particular, for bounded measurable (f),
+[
+P_t f(x) = \mathbb{E}_x[ f(X_t)],
+]
+where (\mathbb{E}_x) denotes expectation for the diffusion started at (X_0=x).
+
+In finite dimension and under confining assumptions on (S), the spectrum of (-L) is purely discrete, with eigenvalues
+[
+0 = \lambda_0 < \lambda_1 \le \lambda_2 \le \cdots \uparrow \infty,
+]
+and an orthonormal basis of eigenfunctions ((\varphi_k)_{k\ge0}) in (L^2(\mu)).
+
+The **spectral gap** of (-L) is (\lambda_1), and it controls the exponential decay of (P_t) in the orthogonal complement of constants.
+
+---
+
+## 1.7. Variance, entropy, and functional inequalities
+
+Functional inequalities measure how “spread out” a function can be under a given control of its gradient. In this framework two inequalities play a central role: Poincaré and log-Sobolev.
+
+### 1.7.1. Variance and entropy
+
+For (f\in L^2(\mu)), the variance is
+[
+\operatorname{Var}_\mu(f) := \int_M \left( f - \int_M f,d\mu\right)^2 d\mu.
+]
+
+For nonnegative (f\in L^2(\mu)), the entropy functional is
+[
+\operatorname{Ent}_\mu(f^2)
+:= \int_M f^2 \log f^2,d\mu
+
+* \left(\int_M f^2,d\mu\right)
+  \log\left(\int_M f^2,d\mu\right),
+  ]
+  with the convention (0\log 0 = 0).
+
+Both functionals vanish exactly when (f) is (almost surely) constant.
+
+### 1.7.2. Poincaré inequality
+
+We say that (\mu) satisfies a **Poincaré inequality** with constant (C_P>0) if
+[
+\operatorname{Var}_\mu(f)
+\le C_P \int_M |\nabla f|^2,d\mu
+\quad\text{for all suitable } f.
+]
+
+When (-L) has purely discrete spectrum, this is equivalent to a **spectral gap** inequality (\lambda_1 \ge 1/C_P). In particular, if one can show a bound
+[
+\operatorname{Var}_\mu(f) \le \frac{1}{\rho} \int \Gamma(f),d\mu,
+]
+then (\lambda_1 \ge \rho). This is exactly the type of estimate we will later extract from curvature bounds.
+
+### 1.7.3. Logarithmic Sobolev inequality
+
+We say that (\mu) satisfies a **logarithmic Sobolev inequality** (LSI) with constant (C_{\mathrm{LS}}>0) if
+[
+\operatorname{Ent}*\mu(f^2)
+\le 2 C*{\mathrm{LS}} \int_M |\nabla f|^2,d\mu
+\quad\text{for all smooth } f \text{ with } \int f^2,d\mu = 1.
+]
+
+An LSI is strictly stronger than a Poincaré inequality and implies a range of powerful consequences: hypercontractivity of (P_t), Gaussian concentration for Lipschitz functions, exponential convergence of the diffusion in relative entropy, etc. For the purposes of this project, the key point is that a uniform LSI constant acts as a robust “mass scale” for the configuration-space diffusion.
+
+In the Bakry–Émery framework, a global curvature–dimension condition (CD(\rho,\infty)) implies that (\mu) satisfies a Poincaré inequality with constant (1/\rho) and an LSI with constant (2/\rho), and that the spectral gap satisfies (\lambda_1\ge\rho).
+
+---
+
+## 1.8. Curvature-controlled Gibbs measures: input/output summary
+
+The remainder of Part I develops a **curvature-controlled** theory of Gibbs measures: starting from the basic objects above, we introduce the Bakry–Émery tensor
+[
+\operatorname{Ric}_\mu := \operatorname{Ric}_g + \nabla^2 S,
+]
+the (\Gamma_2) operator, and the curvature–dimension condition (CD(\rho,\infty)).
+
+The core input/output structure is:
+
+* **Input:** A lower bound
+  [
+  \operatorname{Ric}_\mu \ge \rho,g\quad (\rho>0)
+  ]
+  on all of (M) (or, later, on an open region (\Omega\subset M)).
+
+* **Output (global case):**
+  From the Bochner–Bakry–Émery identity and semigroup methods, one obtains:
+
+  * (CD(\rho,\infty)),
+  * a Poincaré inequality with constant (1/\rho),
+  * an LSI with constant (2/\rho),
+  * a spectral gap (\lambda_1 \ge \rho).
+
+* **Output (local case):**
+  If (CD(\rho_{\mathrm{loc}},\infty)) holds on an open set (\Omega\subset M), then on relatively compact subsets (U\subset\Omega) one obtains **local** Poincaré and log-Sobolev inequalities.
+
+* **Local-to-global upgrades:**
+  Under an additional **Lyapunov (drift) condition**
+  [
+  LW \le -\alpha W + \beta 1_K
+  ]
+  for some (W\ge1), constants (\alpha>0,\beta\ge0), and compact (K\subset\Omega), the local functional inequalities can be “bootstrapped” to global Poincaré/LSI with explicit constants.
+
+This algebra of inputs and outputs is **completely independent** of Yang–Mills; it applies to any finite-dimensional Gibbs measure. In later parts we will feed the geometry of lattice YM into these abstract theorems.
+
+---
+
+## 1.9. Interface with lattice Yang–Mills and the rest of the project
+
+From the point of view of the overall Yang–Mills mass-gap program, Part 1 provides:
+
+* A general language for finite-dimensional Gibbs configuration spaces ((M,g,S,\mu)),
+* The diffusion generator ((L,\Gamma,\Gamma_2)) and Dirichlet form (\mathcal{E}),
+* Variance and entropy functionals, and the basic definitions of Poincaré and LSI,
+* The abstract “curvature ⇒ FI ⇒ spectral gap” template (to be made concrete in Parts 2–3).
+
+Subsequent parts use this framework as follows:
+
+* **Part 2** identifies the configuration manifolds (M_\Lambda = G^{E(\Lambda)}) for lattice Yang–Mills, endowed with product bi-invariant metrics and Haar volume. It analyzes Haar Ricci curvature and the Hessian of the Wilson action, and proves a **local horizontal Bakry–Émery lower bound** in a small-field region, uniformly in (\Lambda).
+
+* **Part 3** abstracts local curvature plus Lyapunov drift into general local-to-global Poincaré and LSI theorems, and applies them to the lattice YM setup, spelling out the remaining analytic tasks (notably, establishing suitable Lyapunov and small-field concentration estimates).
+
+* **Parts 4–5** then explain how finite-volume spectral gaps and functional inequalities interact with OS reconstruction, scaling limits, and the continuum mass gap.
+
+In this way, the finite-dimensional Gibbs/diffusion framework of Part 1 is the basic coordinate system for the entire project: every later construction (lattice YM geometry, OS Hamiltonians, continuum limits) is designed to plug into this set of objects and inequalities.
+
+---
+
+That’s the full Part 1/20 draft. The next parts (2 and 3) will dive into the Bakry–Émery (\Gamma_2) calculus and then push curvature information all the way to Poincaré/LSI, turning the abstract machine outlined here into an engine you can actually hook the Yang–Mills geometry into.

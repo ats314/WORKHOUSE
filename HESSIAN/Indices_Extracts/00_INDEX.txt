@@ -1,0 +1,54 @@
+Mass Gap Block-Convexity Package
+================================
+
+This package is a structured set of LaTeX notes that capture the *conditional* block–convexity
+framework for mass gaps that we developed in this ChatGPT session.
+
+It is explicitly designed for feeding into another LLM or assistant as a coherent bundle of
+assumptions, lemmas, and conjectures. No claim is made that this solves the 4D Yang–Mills
+mass gap problem. The documents are ordered so that a new model can reconstruct the logic
+without relying on any hidden context.
+
+File order and purpose
+----------------------
+
+01_overview_and_structure.tex
+    High-level description of the framework:
+    - What “Spark / Flow / Gap” means.
+    - How the various lemmas relate.
+    - What is *proved* vs *conjectural*.
+
+02_haar_mechanism_obstruction.tex
+    Formalization of the “Haar mass” mechanism at finite cutoff and proof that it cannot
+    control the continuum limit for 4D Wilson Yang–Mills. This explicitly kills the idea
+    that the Haar Hessian bound alone can provide the mass gap.
+
+03_block_convexity_lemmas.tex
+    Abstract measure-theoretic lemmas:
+    - Linear coarse-graining preserving convexity (Brascamp–Lieb / Bakry–Émery style).
+    - Tensorization and stability of spectral gap under weak interactions.
+    These are stated in a way that can be reused in other models.
+
+04_3d_compact_qed_spark.tex
+    The “Spark” in a model where it is actually known:
+    - Polyakov’s 3D compact QED.
+    - Monopole gas → sine-Gordon → emergent strictly convex potential for the dual photon.
+    - Interpretation in block-convexity terms (kappa0 = 2 zeta).
+
+05_4d_ym_spark_conjecture.tex
+    The conjectural “Spark” for 4D Yang–Mills:
+    - Restriction to the Fundamental Modular Region / Gribov region.
+    - Geometric entropy picture: hard wall in configuration space inducing a soft
+      quadratic IR potential for coarse modes.
+    - A precise conjecture that the effective potential for IR modes has Hessian
+      bounded below by c gamma^2 at the origin.
+
+How to feed this to a new LLM
+-----------------------------
+
+1. Provide 01_overview_and_structure.tex first so it sees the global architecture.
+2. Then supply 02_haar_mechanism_obstruction.tex and 03_block_convexity_lemmas.tex.
+3. Next, give 04_3d_compact_qed_spark.tex as the “toy model validation”.
+4. Finally, provide 05_4d_ym_spark_conjecture.tex as the open-end target.
+
+Everything is written so that each file is self-contained but also consistent with the others.

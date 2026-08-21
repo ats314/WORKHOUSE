@@ -1,0 +1,466 @@
+Part 10 — Haar Mass, Effective Potential, and Local Horizontal Bakry–Émery Curvature
+
+In Parts 6–9 we assembled the geometric and quadratic pieces of finite-volume lattice Yang–Mills:
+
+* The configuration manifold
+  (M_\Lambda = G^{E(\Lambda)}) with product bi-invariant metric (g_\Lambda) and product Haar volume (d\mathrm{vol}*{g*\Lambda}), satisfying
+  (\mathrm{Ric}*{g*\Lambda} = \kappa_G, g_\Lambda) uniformly in (\Lambda). 
+* The Wilson action (S_W), the lattice gauge group (\mathcal{G}*\Lambda), and the identification of vertical and horizontal (physical) directions (T_U M*\Lambda = H_U \oplus V_U), with gradients of gauge-invariant observables lying in (H_U).  
+* The linearized Wilson Hessian at the trivial configuration (U^{(0)}), expressed in discrete cochain language and shown to be strictly positive on physical modes.
+
+The goal of this part is to **combine**:
+
+1. the positive Ricci curvature of the Haar geometry,
+2. the Wilson Hessian on horizontal directions,
+3. and lower bounds on the Hessian of additional local terms,
+
+to obtain a **local horizontal Bakry–Émery curvature lower bound** near the trivial configuration, **uniform in (\Lambda)**. This yields a **local curvature–dimension condition** (CD(\rho_{\mathrm{loc}},\infty)) for gauge-invariant observables in a small-field region.
+
+We work throughout in the **Riemannian-volume-as-reference** picture, i.e. Gibbs measures of the form
+(d\mu_\Lambda = Z_\Lambda^{-1}e^{-S_\Lambda}d\mathrm{vol}*{g*\Lambda}); in this picture Haar geometry contributes via (\mathrm{Ric}*{g*\Lambda}), not as an explicit potential. 
+
+---
+
+## 10.1. Effective action and Bakry–Émery tensor
+
+Fix a compact, connected Lie group (G) with a bi-invariant Riemannian metric (g_G), and let (\Lambda) be a finite lattice with oriented edge set (E(\Lambda)).
+
+As in Part 6, we define the configuration manifold
+(M_\Lambda := G^{E(\Lambda)}), equipped with the product metric (g_\Lambda) and product Haar volume form (d\mathrm{vol}*{g*\Lambda}). The Ricci tensor satisfies
+[
+\mathrm{Ric}*{g*\Lambda} = \kappa_G,g_\Lambda,
+]
+for some (\kappa_G>0) depending only on ((G,g_G)), not on (\Lambda). 
+
+### 10.1.1. Effective action
+
+We assume that the **effective action** on (M_\Lambda) is of the form
+[
+S_\Lambda(U) = S_W(U) + S_{\mathrm{add},\Lambda}(U),
+]
+where:
+
+1. (S_W) is the Wilson plaquette action from Part 7, smooth and gauge-invariant. 
+2. (S_{\mathrm{add},\Lambda}) collects all additional gauge-invariant, local terms (gauge fixing, regulators, etc.).
+
+We impose the following structural hypotheses on (S_{\mathrm{add},\Lambda}) (these match the ones used later in the core curvature theorem):
+
+* **Locality.** (S_{\mathrm{add},\Lambda}) is a finite sum of translates of a fixed local function, depending on only finitely many link variables in a bounded neighborhood (independent of (\Lambda)).
+
+* **Uniform Hessian lower bound.** There exists a constant (C_{\mathrm{add}}\ge 0), independent of (\Lambda), such that
+  [
+  \nabla^2 S_{\mathrm{add},\Lambda}(U);\ge; -C_{\mathrm{add}},g_\Lambda(U)
+  \quad \text{as quadratic forms on }T_U M_\Lambda
+  ]
+  for all (U\in M_\Lambda).
+
+The lattice Yang–Mills **Gibbs measure** is then
+[
+d\mu_\Lambda(U)
+= Z_\Lambda^{-1} e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U),
+\quad
+Z_\Lambda = \int_{M_\Lambda} e^{-S_\Lambda},d\mathrm{vol}*{g*\Lambda}.
+]
+
+### 10.1.2. Bakry–Émery tensor
+
+In this Riemannian-volume picture the **Bakry–Émery tensor** of (\mu_\Lambda) is
+[
+\mathrm{Ric}*{\mu*\Lambda}
+= \mathrm{Ric}*{g*\Lambda} + \nabla^2 S_\Lambda.
+]
+
+The associated generator and carré du champ are
+[
+L_\Lambda f
+= \Delta_{g_\Lambda} f - \langle \nabla S_\Lambda,\nabla f\rangle,
+\quad
+\Gamma_\Lambda(f)
+= |\nabla f|*{g*\Lambda}^2.
+]
+
+Our aim is to estimate (\mathrm{Ric}*{\mu*\Lambda}) **on the horizontal subspaces** (H_U\subset T_U M_\Lambda) defined in Part 8. Recall that for any **gauge-invariant observable** (f),
+(\nabla f(U)\in H_U) for all (U), so only the restriction of (\mathrm{Ric}*{\mu*\Lambda}) to (H_U) is relevant. 
+
+---
+
+## 10.2. Haar “mass” and group Ricci
+
+Before combining the action and the geometry, it is helpful to recall how the Haar measure contributes an effective “mass term” in exponential coordinates. 
+
+### 10.2.1. Single-link Haar density in exponential coordinates
+
+On the group (G) with bi-invariant metric (g_G), choose geodesic normal coordinates at the identity via the exponential map
+[
+\exp_G:\mathfrak{g}\to G,
+\quad
+X\mapsto U = \exp_G(X),
+]
+where (\mathfrak{g}=T_e G) carries the inner product (\langle\cdot,\cdot\rangle_G).
+
+In these coordinates the Riemannian volume form can be written as
+[
+d\mathrm{vol}_{g_G}(U) = J_G(X),dX,
+]
+where (dX) is Lebesgue measure on (\mathfrak{g}) and (J_G(X)) is a positive smooth Jacobian density with (J_G(0)=1).
+
+Define the **Haar potential**
+[
+S_H(X):= -\log J_G(X).
+]
+
+Using the standard expansion of the metric determinant in geodesic normal coordinates, one finds
+[
+S_H(X) = \frac{1}{6},\mathrm{Ric}_G(X,X) + \mathcal{O}(|X|^3),
+]
+so that
+[
+\nabla^2 S_H(0)(X,X) = \tfrac{1}{3},\mathrm{Ric}_G(X,X);\ge; c_H,|X|_G^2
+]
+for some (c_H>0) whenever (\mathrm{Ric}_G\ge \kappa_G g_G) with (\kappa_G>0). 
+
+Thus, in exponential coordinates with **flat** reference measure, the Haar density contributes a **strictly convex quadratic term** near the identity, with curvature proportional to the Ricci tensor.
+
+### 10.2.2. Product Haar measure on the lattice
+
+On the lattice configuration manifold (M_\Lambda = G^{E(\Lambda)}), in exponential coordinates (X = (X_\ell)*{\ell\in E(\Lambda)}\in \mathfrak{g}^{E(\Lambda)}) near the trivial configuration (U^{(0)}), we similarly have
+[
+d\mathrm{vol}*{g_\Lambda}(U)
+= \exp!\Big(-S_{H,\Lambda}(X)\Big),dX,
+\quad
+S_{H,\Lambda}(X)
+= \sum_{\ell\in E(\Lambda)} S_H(X_\ell),
+]
+and
+[
+\nabla^2 S_{H,\Lambda}(0) \ge c_H,\mathrm{Id}
+\quad\text{on }\mathfrak{g}^{E(\Lambda)}.
+]
+
+So, with **Lebesgue** as reference, Haar volume appears as a strictly convex potential (S_{H,\Lambda}) with a uniformly positive Hessian.
+
+### 10.2.3. Ricci vs Haar potential: two viewpoints
+
+There are then two equivalent viewpoints:
+
+1. **Riemannian-volume reference (our choice).**
+   Use (d\mathrm{vol}*{g*\Lambda}) as reference. The Gibbs density is (e^{-S_\Lambda}); Haar curvature appears entirely in (\mathrm{Ric}*{g*\Lambda}=\kappa_G g_\Lambda), while (S_\Lambda) includes only the Wilson and additional terms.
+
+2. **Flat reference in exponential coordinates.**
+   Use (dX) as reference. The total potential is
+   (\tilde S_\Lambda = S_{H,\Lambda} + S_W + S_{\mathrm{add},\Lambda}), and the Bakry–Émery tensor is purely the Hessian of (\tilde S_\Lambda).
+
+In this part we work with the **first** viewpoint: the Haar “mass” is encoded in the Ricci tensor (\mathrm{Ric}*{g*\Lambda}), while the Wilson and additional terms contribute via (\nabla^2 S_\Lambda). The exponential-coordinate picture above is mainly explanatory; it shows explicitly that Haar geometry gives a **positive quadratic contribution in all directions** near the identity. 
+
+---
+
+## 10.3. Horizontal subspaces and Wilson Hessian at the vacuum
+
+We now recall the geometry of gauge orbits and the structure of the Wilson Hessian at the vacuum (U^{(0)}).
+
+### 10.3.1. Vertical and horizontal splitting
+
+The lattice gauge group (\mathcal{G}*\Lambda = G^{V(\Lambda)}) acts smoothly and isometrically on (M*\Lambda) by
+[
+(g\cdot U)*{x,\mu} = g_x U*{x,\mu} g_{x+\hat\mu}^{-1}.
+]
+
+At each configuration (U), the **vertical subspace** (V_U\subset T_U M_\Lambda) is the tangent space to the gauge orbit (\mathcal{O}*U), and the **horizontal subspace** is the orthogonal complement
+[
+H_U := V_U^\perp,
+\quad
+T_U M*\Lambda = H_U \oplus V_U.
+]
+
+For any smooth **gauge-invariant observable** (f), the gradient satisfies
+[
+\nabla f(U)\in H_U
+\quad\forall U,
+]
+so the carré du champ on gauge-invariant functions involves only horizontal directions. 
+
+### 10.3.2. Wilson Hessian at the trivial configuration
+
+Write (U^{(0)}\in M_\Lambda) for the trivial configuration (all links equal to the identity). Using right-invariant exponential coordinates at (U^{(0)}), we can identify
+[
+T_{U^{(0)}}M_\Lambda \cong \mathcal{C}^1(\Lambda;\mathfrak{g}),
+]
+the space of (\mathfrak{g})-valued 1-cochains on the lattice. In this identification, the Wilson action has Hessian
+[
+\nabla^2 S_W(U^{(0)})
+= 2c_W,d_1^* d_1,
+]
+where (d_1) is the discrete exterior derivative from edge to plaquette cochains and (d_1^*) its adjoint. 
+
+The discrete Hodge decomposition, adapted to the gauge geometry, decomposes the tangent space at (U^{(0)}) as
+[
+T_{U^{(0)}}M_\Lambda
+;\cong;
+\underbrace{\mathrm{im}(d_0)}*{\text{pure gauge}}
+\oplus
+\underbrace{\ker\Delta_1}*{\text{harmonic}}
+\oplus
+\underbrace{\mathrm{im}(d_1^*)}_{\text{co-exact (physical)}},
+]
+where (d_0) is the coboundary on 0-cochains and (\Delta_1 = d_1^* d_1 + d_0 d_0^*).
+
+On this decomposition:
+
+* (\nabla^2 S_W(U^{(0)})) vanishes on pure gauge and harmonic modes,
+* (\nabla^2 S_W(U^{(0)})) is strictly positive on co-exact modes.
+
+The horizontal subspace (H_{U^{(0)}}) is naturally identified with the **physical** subspace (harmonic (\oplus) co-exact), while the vertical subspace corresponds to pure gauge modes. In particular:
+
+* On (H_{U^{(0)}}), the Hessian (\nabla^2 S_W(U^{(0)})) is **nonnegative**, and strictly positive on the co-exact part.
+
+This is the analytic expression of “quadratic confinement” of physical fluctuations by the Wilson action near the trivial configuration.
+
+---
+
+## 10.4. Lower bound for (\nabla^2 S_\Lambda) on horizontal directions
+
+We now combine the Wilson Hessian with the lower bound on (\nabla^2 S_{\mathrm{add},\Lambda}) to obtain a **horizontal lower bound** for (\nabla^2 S_\Lambda) at (U^{(0)}).
+
+Let (v\in T_{U^{(0)}}M_\Lambda). Decompose (v = v_H + v_V) with (v_H\in H_{U^{(0)}}), (v_V\in V_{U^{(0)}}). Since (\nabla^2 S_\Lambda = \nabla^2 S_W + \nabla^2 S_{\mathrm{add},\Lambda}),
+[
+\nabla^2 S_\Lambda(U^{(0)})(v,v)
+= \nabla^2 S_W(U^{(0)})(v,v)
+
+* \nabla^2 S_{\mathrm{add},\Lambda}(U^{(0)})(v,v).
+  ]
+
+Restricting to horizontal directions (v=v_H\in H_{U^{(0)}}), we have:
+
+* By the Hodge/positivity structure,
+  (\nabla^2 S_W(U^{(0)})(v_H,v_H)\ge 0).
+* By the Hessian bound on (S_{\mathrm{add},\Lambda}),
+  (\nabla^2 S_{\mathrm{add},\Lambda}(U^{(0)})(v_H,v_H)\ge -C_{\mathrm{add}} |v_H|*{g*\Lambda}^2).
+
+Thus
+
+> **Lemma 10.1 (Horizontal Hessian lower bound at the vacuum).**
+> Under the hypotheses on (S_{\mathrm{add},\Lambda}) in §10.1, for all (v\in H_{U^{(0)}}),
+> [
+> \nabla^2 S_\Lambda(U^{(0)})(v,v)
+> ;\ge; -C_{\mathrm{add}},|v|*{g*\Lambda}^2.
+> ]
+
+No positivity of (\nabla^2 S_W) is needed to get this lower bound; it is enough that (\nabla^2 S_W) is **nonnegative** on horizontal directions.
+
+---
+
+## 10.5. Horizontal Bakry–Émery curvature at the vacuum
+
+We are now ready to estimate the Bakry–Émery tensor at (U^{(0)}) on horizontal directions.
+
+By definition,
+[
+\mathrm{Ric}*{\mu*\Lambda}
+= \mathrm{Ric}*{g*\Lambda} + \nabla^2 S_\Lambda,
+]
+so
+[
+\mathrm{Ric}*{\mu*\Lambda}(U^{(0)})(v,v)
+= \mathrm{Ric}*{g*\Lambda}(U^{(0)})(v,v)
+
+* \nabla^2 S_\Lambda(U^{(0)})(v,v).
+  ]
+
+On all directions (w\in T_{U^{(0)}}M_\Lambda) we have
+[
+\mathrm{Ric}*{g*\Lambda}(U^{(0)})(w,w)
+= \kappa_G |w|*{g*\Lambda}^2
+]
+by the product Ricci calculation. 
+
+Combining this with Lemma 10.1 gives, for any horizontal (v\in H_{U^{(0)}}),
+[
+\mathrm{Ric}*{\mu*\Lambda}(U^{(0)})(v,v)
+;\ge; (\kappa_G - C_{\mathrm{add}}),|v|*{g*\Lambda}^2.
+]
+
+Assuming, as we will, that
+[
+\kappa_G > C_{\mathrm{add}},
+]
+we obtain:
+
+> **Proposition 10.2 (Horizontal Bakry–Émery bound at the vacuum).**
+> Let (G), (g_G), (M_\Lambda), (g_\Lambda), and (S_\Lambda) be as in §10.1, with (\mathrm{Ric}*{g*\Lambda} = \kappa_G g_\Lambda) and (\nabla^2 S_{\mathrm{add},\Lambda}\ge -C_{\mathrm{add}} g_\Lambda), where (\kappa_G>C_{\mathrm{add}}). Then for every (v\in H_{U^{(0)}}),
+> [
+> \mathrm{Ric}*{\mu*\Lambda}(U^{(0)})(v,v)
+> ;\ge;
+> \rho_0,|v|*{g*\Lambda}^2,
+> \quad
+> \rho_0 := \kappa_G - C_{\mathrm{add}} > 0.
+> ]
+
+In words: at the trivial configuration, the **horizontal Bakry–Émery curvature is strictly positive**, uniformly in (\Lambda), with a lower bound (\rho_0) determined by the group Ricci and the worst-case concavity of the additional terms.
+
+---
+
+## 10.6. Extension to a small-field neighborhood
+
+We next extend the curvature lower bound from (U^{(0)}) to a small geodesic ball around (U^{(0)}), in a way that is uniform in (\Lambda).
+
+### 10.6.1. Continuity of horizontal directions and curvature
+
+Two ingredients are needed:
+
+1. **Continuity of the horizontal bundle.**
+   The vertical spaces (V_U = T_U \mathcal{O}*U) depend smoothly on (U) on the set of regular configurations (which is open and dense), and hence so do the horizontal spaces (H_U = V_U^\perp). The gauge action is smooth and isometric, so in a neighborhood of (U^{(0)}) the dimensions (\dim V_U) and (\dim H_U) are constant, and the projection (T_U M*\Lambda\to H_U) varies smoothly with (U). 
+
+2. **Continuity (indeed smoothness) of (\mathrm{Ric}*{\mu*\Lambda}).**
+   The tensor (U\mapsto \mathrm{Ric}*{\mu*\Lambda}(U)) is smooth on (M_\Lambda): both (\mathrm{Ric}*{g*\Lambda}) and (\nabla^2 S_\Lambda) are smooth tensors.
+
+Together, these imply that the quadratic form
+[
+(U,v)\mapsto \mathrm{Ric}*{\mu*\Lambda}(U)(v,v),
+\quad U\in M_\Lambda,\ v\in H_U,
+]
+depends continuously on (U) and (v).
+
+### 10.6.2. Compactness argument for a uniform radius
+
+Fix a finite lattice (\Lambda). On the unit sphere of horizontal directions at (U^{(0)}),
+[
+\mathbb{S}*{H*{U^{(0)}}} := { v\in H_{U^{(0)}} : |v|*{g*\Lambda}=1},
+]
+Proposition 10.2 gives
+[
+\mathrm{Ric}*{\mu*\Lambda}(U^{(0)})(v,v) \ge \rho_0
+\quad\forall v\in \mathbb{S}*{H*{U^{(0)}}}.
+]
+
+By continuity of (\mathrm{Ric}*{\mu*\Lambda}) and (H_U), for each fixed (v\in \mathbb{S}*{H*{U^{(0)}}}) there exists (r_v>0) such that
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)(\tilde v,\tilde v) \ge \tfrac{1}{2}\rho_0
+]
+for all (U) with (d_{g_\Lambda}(U,U^{(0)})\le r_v), and all unit vectors (\tilde v\in H_U) sufficiently close to (v).
+
+By compactness of (\mathbb{S}*{H*{U^{(0)}}}), we can cover it by finitely many such neighborhoods and take
+[
+r_\Lambda := \min_i r_{v_i} > 0,
+]
+so that for all (U\in B_{r_\Lambda}(U^{(0)})) and all unit (v\in H_U),
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)(v,v) \ge \tfrac{1}{2}\rho_0.
+]
+
+This yields a small-field radius (r_\Lambda) and curvature bound (\rho_\Lambda := \tfrac{1}{2}\rho_0>0) for each fixed (\Lambda).
+
+We now explain why these constants can be chosen **independent of (\Lambda)**.
+
+### 10.6.3. Uniformity in (\Lambda)
+
+The dependence of (\mathrm{Ric}*{\mu*\Lambda}) and of the horizontal bundle on (U) is governed by **local lattice geometry** and the **locality of the action**, not by the total number of edges or plaquettes.
+
+More concretely:
+
+* The configuration manifold is a finite product of identical factors ((G,g_G)), one per edge. The derivatives of the metric and Ricci tensor are controlled by finitely many derivatives of (g_G), independent of (\Lambda).
+
+* Each term of the Wilson action (S_W) involves only a bounded number (four) of neighboring links. The additional term (S_{\mathrm{add},\Lambda}) is assumed to be a sum of translates of a fixed local function involving a bounded neighborhood. Therefore the derivatives of (\nabla^2 S_\Lambda) in a small neighborhood of (U^{(0)}) can be bounded uniformly in (\Lambda), in terms of local lattice connectivity and derivatives of the underlying local potentials.
+
+* The gauge group (\mathcal{G}_\Lambda) is itself a product of copies of (G), one per site, and the gauge action on each edge is determined by the pair of endpoint group elements. Thus the derivatives of the vertical fields and of the orthogonal projections onto (V_U) and (H_U) in a small neighborhood of (U^{(0)}) can also be bounded uniformly in (\Lambda).
+
+It follows that the modulus of continuity of the map
+[
+(U,v)\mapsto \mathrm{Ric}*{\mu*\Lambda}(U)(v,v)
+\quad \text{on unit horizontal vectors near }U^{(0)}
+]
+can be bounded in terms of:
+
+* finitely many derivatives of (g_G) and of the local action terms,
+* and the local connectivity of the lattice,
+
+all of which are independent of (\Lambda). Therefore we can choose a **fixed** radius (r>0) and (\rho_{\mathrm{loc}}>0) with
+[
+0<\rho_{\mathrm{loc}}\le \tfrac{1}{2}(\kappa_G - C_{\mathrm{add}})
+]
+such that for every finite lattice (\Lambda),
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)(v,v)
+;\ge; \rho_{\mathrm{loc}},|v|*{g*\Lambda}^2
+\quad\text{for all }U\in B_r(U^{(0)}),\ v\in H_U.
+]
+
+Summarizing:
+
+> **Proposition 10.3 (Uniform local horizontal curvature bound).**
+> Under the hypotheses of Proposition 10.2 and the locality assumptions in §10.1, there exist constants (\rho_{\mathrm{loc}}>0) and (r>0), depending only on (G), (g_G), the local action terms (Wilson and additional), and the local lattice connectivity, such that for every finite lattice (\Lambda),
+> [
+> \mathrm{Ric}*{\mu*\Lambda}(U)(v,v)
+> ;\ge;
+> \rho_{\mathrm{loc}},|v|*{g*\Lambda}^2
+> \quad\forall,U\in B_r(U^{(0)}),\ \forall v\in H_U.
+> ]
+
+In particular, the lower bound is uniform in (\Lambda).
+
+This is essentially the “local horizontal curvature bound” that appears as Lemma 7.1 in the original formulation. 
+
+---
+
+## 10.7. Local (CD(\rho,\infty)) condition for gauge-invariant observables
+
+We now translate the horizontal Bakry–Émery curvature bound into a **local curvature–dimension condition** (CD(\rho_{\mathrm{loc}},\infty)) for gauge-invariant observables.
+
+Let (\mathcal{A}*\Lambda^{\mathrm{inv}}) denote the algebra of smooth gauge-invariant functions on (M*\Lambda). For (f\in\mathcal{A}_\Lambda^{\mathrm{inv}}):
+
+* (\nabla f(U)\in H_U) for all (U),
+* The carré du champ is (\Gamma_\Lambda(f)(U) = |\nabla f(U)|^2),
+* The second carré du champ satisfies the Bochner–Bakry–Émery identity
+  [
+  \Gamma_{2,\Lambda}(f)(U)
+  = |\nabla^2 f(U)|_{\mathrm{HS}}^2
+
+  * \mathrm{Ric}*{\mu*\Lambda}(U)\big(\nabla f(U),\nabla f(U)\big).
+    ] 
+
+On the ball (B_r(U^{(0)})), Proposition 10.3 gives, for all (U\in B_r(U^{(0)})) and all (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}),
+[
+\mathrm{Ric}*{\mu_\Lambda}(U)\big(\nabla f(U),\nabla f(U)\big)
+;\ge;
+\rho_{\mathrm{loc}},|\nabla f(U)|^2
+= \rho_{\mathrm{loc}},\Gamma_\Lambda(f)(U).
+]
+
+Since (|\nabla^2 f(U)|*{\mathrm{HS}}^2\ge 0), we obtain the pointwise inequality
+[
+\Gamma*{2,\Lambda}(f)(U)
+;\ge;
+\rho_{\mathrm{loc}},\Gamma_\Lambda(f)(U),
+\quad
+U\in B_r(U^{(0)}).
+]
+
+In other words:
+
+> **Proposition 10.4 (Local (CD(\rho,\infty)) for gauge-invariant observables).**
+> Under the hypotheses of Proposition 10.3, for each finite lattice (\Lambda) and every smooth gauge-invariant observable (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}), the carré du champ operators satisfy
+> [
+> \Gamma*{2,\Lambda}(f)(U)
+> ;\ge;
+> \rho_{\mathrm{loc}},\Gamma_\Lambda(f)(U)
+> \quad\text{for all }U\in B_r(U^{(0)}).
+> ]
+> Equivalently, the restriction of the Markov triple ((M_\Lambda,\mu_\Lambda,L_\Lambda)) to gauge-invariant observables on the small-field region (B_r(U^{(0)})) satisfies a **local curvature–dimension condition** (CD(\rho_{\mathrm{loc}},\infty)) with constants (\rho_{\mathrm{loc}},r) independent of (\Lambda).
+
+This is precisely the kind of local (CD(\rho,\infty)) input used in Part I to derive **local Poincaré** and **local log-Sobolev** inequalities on bounded sets, and in Part III to build **global** functional inequalities via Lyapunov methods.
+
+---
+
+## 10.8. Summary and interface to the next part
+
+In this part we have:
+
+1. Interpreted Haar geometry as a source of **uniform positive curvature** (a “Haar mass”) through the Ricci tensor (\mathrm{Ric}*{g*\Lambda} = \kappa_G g_\Lambda). 
+2. Combined this with:
+
+   * the nonnegative Wilson Hessian on horizontal directions at the vacuum, and
+   * the global lower bound (\nabla^2 S_{\mathrm{add},\Lambda} \ge -C_{\mathrm{add}} g_\Lambda),
+     to obtain a **strictly positive horizontal Bakry–Émery curvature lower bound** at (U^{(0)}) whenever (\kappa_G > C_{\mathrm{add}}).
+3. Used continuity and locality to extend this bound to a **small-field ball** (B_r(U^{(0)})), with radius (r>0) and curvature (\rho_{\mathrm{loc}}>0) independent of (\Lambda).
+4. Translated this into a **local curvature–dimension condition** (CD(\rho_{\mathrm{loc}},\infty)) for gauge-invariant observables on (B_r(U^{(0)})), again uniform in (\Lambda).
+
+In **Part 11** we will package these results into a single **core curvature theorem** for lattice Yang–Mills, explicitly aligning them with the abstract hypothesis (H_{\mathrm{curv}}) from Part I, and making precise how this geometric input feeds into the functional-inequality and spectral-gap machinery developed earlier.

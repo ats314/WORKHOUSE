@@ -1,0 +1,369 @@
+## Appendix G — Smooth plaquette proxy and the Lyapunov drift computation (uniform constants)
+
+This appendix replaces the nonsmooth plaquette functional
+[
+z_p(U)=d_G!\big(U_p(U),\mathbf 1\big)^2
+]
+by a globally smooth, conjugation‑invariant proxy and redoes the Lyapunov drift computation in a form that **eliminates any additive (O(|P(\Lambda)|))** leakage in (L_\Lambda W_\Lambda/W_\Lambda). The specific obstruction identified elsewhere is the appearance of second derivatives (X_\ell^aX_\ell^a z_p) when (z_p=d_G^2), which are not uniformly controlled globally due to cut‑locus nonsmoothness; the bottleneck is explicitly diagnosed as “replace (z_p=d^2) by a globally smooth proxy.” 
+
+### G.1. Setup: configuration manifold, generator, and carré du champ
+
+Let (G=\mathrm{SU}(N)) equipped with a fixed bi‑invariant Riemannian metric (g_G). Let
+[
+M_\Lambda := G^{E(\Lambda)}
+]
+be the finite‑volume configuration manifold with the product metric (g_\Lambda) (left/right multiplications in each factor are isometries). 
+
+Let (S_\Lambda\in C^2(M_\Lambda)) be the (finite‑volume) action and
+[
+d\mu_\Lambda(U)=Z_\Lambda^{-1},e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U)
+]
+the Gibbs measure.
+
+Define the reversible diffusion generator on (M_\Lambda)
+[
+L_\Lambda F := \Delta_\Lambda F-\langle \nabla S_\Lambda,\nabla F\rangle_{g_\Lambda},
+]
+with (\Delta_\Lambda) the Laplace–Beltrami operator on ((M_\Lambda,g_\Lambda)). 
+
+The carré du champ is
+[
+\Gamma_\Lambda(F,G):=\frac12\big(L_\Lambda(FG)-F L_\Lambda G-G L_\Lambda F\big),
+\qquad \Gamma_\Lambda(F):=\Gamma_\Lambda(F,F),
+]
+and for this diffusion one has the explicit formula
+[
+\Gamma_\Lambda(F,G)=\sum_{\ell\in E(\Lambda)}\langle \nabla_\ell F,\nabla_\ell G\rangle_{\mathfrak g},
+\qquad \Gamma_\Lambda(F)=|\nabla F|^2_{g_\Lambda}.
+]
+
+
+(Here (\nabla_\ell) is the gradient in the (\ell)-th group factor; equivalently one can write in a right‑invariant orthonormal frame ({X_\ell^a}*a) on the (\ell)-factor that (\Delta*\Lambda=\sum_{\ell,a}(X_\ell^a)^2) and (\Gamma_\Lambda(F)=\sum_{\ell,a}(X_\ell^aF)^2), consistent with the displayed proof in the source. )
+
+### G.2. The smooth conjugation‑invariant plaquette proxy
+
+Define the class function
+[
+\phi(g):=1-\frac1N\operatorname{ReTr}(g),\qquad g\in \mathrm{SU}(N).
+]
+This is explicitly adopted in the project as the canonical plaquette observable and is declared under “no ‘SAFE’ terminology” when defining the good set. 
+
+Basic properties:
+
+1. **Nonnegativity and normalization.** Since (\operatorname{ReTr}(g)\le N), (\phi(g)\ge 0) and (\phi(\mathbf 1)=0). 
+2. **Conjugation invariance.** For (h\in G),
+   (\phi(hgh^{-1})=\phi(g)) because (\operatorname{Tr}(hgh^{-1})=\operatorname{Tr}(g)).
+3. **Global smoothness.** (\phi) is real‑analytic in the matrix entries, hence (C^\infty) on the compact manifold (G).
+4. **Uniform boundedness.** (\operatorname{ReTr}(g)\ge -N) implies (0\le \phi(g)\le 2).
+
+For a configuration (U\in M_\Lambda), let (U_p(U)\in G) denote the plaquette holonomy. Define the **smooth plaquette deviation**
+[
+\widetilde z_p(U):=\phi!\big(U_p(U)\big)\in[0,2].
+]
+This is gauge invariant because under a gauge transformation, (U_p(U)) is conjugated at the basepoint, and (\phi) is conjugation invariant.
+
+### G.3. Uniform first and second derivative bounds for (\widetilde z_p)
+
+The drift computation requires control of first and second derivatives of (\widetilde z_p) along link directions. The distance‑square (d_G^2) fails to be (C^2) at the cut locus, hence the stated obstruction. 
+
+With (\widetilde z_p=\phi\circ U_p), the needed bounds are automatic from smoothness and compactness, and (crucially) the constants are **independent of the lattice volume** because (\widetilde z_p) depends on only (O(1)) link variables.
+
+#### Lemma G.1 (Locality of derivatives)
+
+Let (\ell\in E(\Lambda)) be a link and (p\in P(\Lambda)) a plaquette. Then
+[
+\nabla_\ell \widetilde z_p \equiv 0 \quad\text{if }\ell\notin \partial p,
+]
+and if (\ell\in\partial p) then (\nabla_\ell \widetilde z_p) depends only on the four link variables on (\partial p).
+
+**Proof.**
+By definition (U_p(U)) is the ordered product of the link variables along the boundary (\partial p) (with inverses when traversed against orientation). Therefore (U_p(U)), and hence (\widetilde z_p(U)=\phi(U_p(U))), is independent of (U_\ell) when (\ell\notin \partial p). ∎
+
+#### Lemma G.2 (Uniform (C^2) bounds for (\widetilde z_p))
+
+There exist constants (C^{(1)}*\phi, C^{(2)}*\phi<\infty), depending only on (G), the fixed metric (g_G), and the fixed function (\phi), such that for all finite (\Lambda), all plaquettes (p), all links (\ell), and all configurations (U\in M_\Lambda),
+[
+|\nabla_\ell \widetilde z_p(U)|*{\mathfrak g}\le C^{(1)}*\phi;\mathbf 1_{{\ell\in\partial p}},
+]
+and
+[
+\big| \nabla_\ell\nabla_\ell \widetilde z_p(U)\big|*{\mathrm{op}}
+\le C^{(2)}*\phi;\mathbf 1_{{\ell\in\partial p}},
+]
+where (\nabla_\ell\nabla_\ell) denotes the covariant Hessian in the (\ell)-factor.
+
+**Proof.**
+Fix an oriented plaquette (p). By Lemma G.1, (\widetilde z_p) is the pullback of a smooth function on (G^4):
+[
+\widetilde z_p(U)=\Psi_p\big(U_{\ell_1},U_{\ell_2},U_{\ell_3},U_{\ell_4}\big),
+]
+where (\Psi_p:=\phi\circ m_p) and
+[
+m_p(g_1,g_2,g_3,g_4)=g_1g_2g_3^{-1}g_4^{-1}.
+]
+The map (m_p:G^4\to G) is smooth, and (\phi) is smooth; hence (\Psi_p\in C^\infty(G^4)). Since (G^4) is compact, all first and second derivatives of (\Psi_p) are bounded in operator norm. Pulling back to (M_\Lambda), the derivative in the (\ell)-factor is either identically (0) if (\ell\notin\partial p), or a derivative of (\Psi_p) with respect to one of the four arguments. Therefore uniform bounds exist, and because the construction uses only the fixed map (m_p) and the fixed function (\phi), the constants do not depend on (\Lambda). ∎
+
+**Remark (what this fixes).** The uncontrolled term reported in the Lyapunov drift computation was precisely of the form (X_\ell^aX_\ell^a z_p) with (z_p=d_G^2), which is not uniformly controlled due to cut‑locus issues; replacing (z_p) by (\widetilde z_p) removes this obstruction because Lemma G.2 gives a uniform bound on second derivatives. 
+
+### G.4. Lyapunov choice and the reason for (\Phi'(0)=0)
+
+Let (\Phi:[0,2]\to\mathbb{R}_+) be (C^2) and satisfy
+[
+\Phi(0)=0,\qquad \Phi'(0)=0.
+]
+A concrete admissible choice is (\Phi(s)=s^2), which the user explicitly requested.
+
+Define the plaquette Lyapunov potential and its exponential:
+[
+V_\Lambda(U):=\sum_{p\in P(\Lambda)}\Phi\big(\widetilde z_p(U)\big),
+\qquad
+W_\Lambda(U):=\exp\big(\kappa V_\Lambda(U)\big)
+]
+for a parameter (\kappa>0).
+
+The project uses the standard diffusion chain rule for exponentials
+[
+L_\Lambda\big(e^{\kappa V_\Lambda}\big)
+=e^{\kappa V_\Lambda}\Big(\kappa,L_\Lambda V_\Lambda+\kappa^2\Gamma_\Lambda(V_\Lambda)\Big),
+]
+as the starting point of the drift analysis. 
+
+The role of (\Phi'(0)=0) is quantitative: it forces (\Phi') to be **at most linear** near (0), hence any uniform bound on (L_\Lambda\widetilde z_p) contributes at most (O(\widetilde z_p)), not (O(1)), and therefore does **not** yield an additive (O(|P(\Lambda)|)) term when summing over plaquettes.
+
+#### Lemma G.3 (Linear control of (\Phi'))
+
+Let (\Phi\in C^2([0,2])) with (\Phi'(0)=0). Then for all (s\in[0,2]),
+[
+|\Phi'(s)|\le |\Phi''|*\infty, s,
+\qquad
+\text{where }|\Phi''|*\infty:=\sup_{t\in[0,2]}|\Phi''(t)|.
+]
+
+**Proof.**
+By the fundamental theorem of calculus,
+[
+\Phi'(s)=\Phi'(0)+\int_0^s\Phi''(t),dt=\int_0^s\Phi''(t),dt.
+]
+Hence (|\Phi'(s)|\le \int_0^s|\Phi''|*\infty,dt=|\Phi''|*\infty s.) ∎
+
+For (\Phi(s)=s^2), (\Phi'(s)=2s) and (|\Phi''|_\infty=2), so the estimate is sharp.
+
+### G.5. Full drift expansion for (W_\Lambda) and uniform constant tracking
+
+We now compute (L_\Lambda W_\Lambda/W_\Lambda) and bound all contributions coming from the second‑order part (\Delta_\Lambda) in terms of the **plaquette deviation totals**
+[
+D^{(1)}*\Lambda(U):=\sum*{p\in P(\Lambda)}\widetilde z_p(U),
+\qquad
+D^{(2)}*\Lambda(U):=\sum*{p\in P(\Lambda)}\widetilde z_p(U)^2.
+]
+Note (0\le \widetilde z_p\le 2) implies
+[
+D^{(2)}*\Lambda(U)\le 2D^{(1)}*\Lambda(U)\quad\text{for all }U.
+\tag{G.1}
+]
+
+#### Proposition G.4 (Lyapunov drift identity)
+
+For (W_\Lambda=e^{\kappa V_\Lambda}) with (V_\Lambda=\sum_p\Phi(\widetilde z_p)),
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+=\kappa,L_\Lambda V_\Lambda+\kappa^2,\Gamma_\Lambda(V_\Lambda),
+]
+and
+[
+L_\Lambda V_\Lambda
+=\sum_{p\in P(\Lambda)}
+\Big(
+\Phi'(\widetilde z_p),L_\Lambda\widetilde z_p
++\Phi''(\widetilde z_p),\Gamma_\Lambda(\widetilde z_p)
+\Big),
+]
+with
+[
+L_\Lambda \widetilde z_p
+=\Delta_\Lambda \widetilde z_p-\langle \nabla S_\Lambda,\nabla \widetilde z_p\rangle_{g_\Lambda}.
+]
+
+**Proof.**
+The first identity is the diffusion chain rule for exponentials already used in the project. 
+The second identity is the standard chain rule for (L_\Lambda) applied to the scalar map (\Phi) composed with (\widetilde z_p): for any diffusion generator (L) with carré du champ (\Gamma),
+[
+L(\Phi\circ u)=\Phi'(u),Lu+\Phi''(u),\Gamma(u),
+]
+which follows by expanding (L) in a local orthonormal frame and using the product/Leibniz rules. (This is the same calculus underlying the explicit formula for (\Gamma_\Lambda) shown in the project. )
+Finally (L_\Lambda=\Delta_\Lambda-\langle\nabla S_\Lambda,\nabla\cdot\rangle) by definition.  ∎
+
+The remaining work is to show that the **(\Delta_\Lambda)-driven** pieces of (L_\Lambda V_\Lambda) and (\Gamma_\Lambda(V_\Lambda)) admit bounds with constants independent of (\Lambda), and—because of (\Phi'(0)=0)—produce no additive (O(|P(\Lambda)|)) term.
+
+#### Proposition G.5 (Uniform bounds for Laplacian/Hessian contributions; no (O(|P|)) leakage)
+
+Assume (\Phi\in C^2([0,2])) with (\Phi'(0)=0). Let
+[
+M_1:=|\Phi''|*\infty,\qquad M_2:=|\Phi''|*\infty
+]
+(we keep a single symbol; both are the same bound). Let (C^{(1)}*\phi,C^{(2)}*\phi) be as in Lemma G.2, and set
+[
+C_\Delta:=\sup_{\text{plaquette-local }f}\ \sup_{U}\ |\Delta_\Lambda f(U)|
+]
+for (f=\widetilde z_p) (this exists and is finite by Lemma G.2, with (C_\Delta) independent of (\Lambda) since (\widetilde z_p) is plaquette-local).
+
+Then there exist constants (A_1,A_2<\infty), depending only on (G), (\phi), (\Phi), and the lattice dimension (d=4), such that for all (\Lambda) and all (U\in M_\Lambda),
+[
+\sum_{p}\Phi'(\widetilde z_p),\Delta_\Lambda \widetilde z_p
+\le A_1,D^{(1)}*\Lambda(U),
+\tag{G.2}
+]
+and
+[
+\sum_p \Phi''(\widetilde z_p),\Gamma*\Lambda(\widetilde z_p)
+\le A_2,D^{(1)}_\Lambda(U).
+\tag{G.3}
+]
+In particular, neither bound contains any additive term proportional to (|P(\Lambda)|).
+
+**Proof.**
+
+**Step 1: bound (\sum_p \Phi'(\widetilde z_p)\Delta_\Lambda\widetilde z_p).**
+By Lemma G.3 and the definition of (C_\Delta),
+[
+\Phi'(\widetilde z_p),\Delta_\Lambda \widetilde z_p
+\le |\Phi'(\widetilde z_p)|,|\Delta_\Lambda \widetilde z_p|
+\le (M_1 \widetilde z_p), C_\Delta.
+]
+Summing over (p) gives (G.2) with (A_1:=M_1C_\Delta). The key point is that (\Phi'(0)=0) forces (|\Phi'(\widetilde z_p)|\lesssim \widetilde z_p), hence the Laplacian term is weighted by (\widetilde z_p) and does not contribute a plaquette‑counting constant.
+
+**Step 2: bound (\sum_p \Phi''(\widetilde z_p)\Gamma_\Lambda(\widetilde z_p)).**
+Since (|\Phi''|\le M_2),
+[
+\sum_p \Phi''(\widetilde z_p)\Gamma_\Lambda(\widetilde z_p)
+\le M_2 \sum_p \Gamma_\Lambda(\widetilde z_p).
+]
+Now (\Gamma_\Lambda(\widetilde z_p)=|\nabla \widetilde z_p|^2_{g_\Lambda}=\sum_{\ell}|\nabla_\ell\widetilde z_p|^2) by the explicit (\Gamma_\Lambda) formula. 
+By Lemma G.1, only (\ell\in\partial p) contribute, and (|\partial p|=4). By Lemma G.2, (|\nabla_\ell \widetilde z_p|\le C^{(1)}*\phi) for each (\ell\in\partial p). Hence
+[
+\Gamma*\Lambda(\widetilde z_p)\le 4,(C^{(1)}*\phi)^2.
+]
+This bound alone would still yield (O(|P(\Lambda)|)) upon summation, but we refine as follows: since (\widetilde z_p) has a strict minimum (0) at the identity and is smooth, one has a global inequality of the form
+[
+\Gamma*\Lambda(\widetilde z_p)\le C_{\nabla/\phi},\widetilde z_p,
+\tag{G.4}
+]
+with (C_{\nabla/\phi}<\infty) depending only on (\phi) and the fixed metric on (G). A direct proof of (G.4) is standard: on (G\setminus{\mathbf1}), the function (|\nabla\phi|^2/\phi) is continuous; near (\mathbf1), Taylor expansion in exponential coordinates shows (\phi(\exp X)\sim c|X|^2) and (|\nabla\phi(\exp X)|\sim c'|X|), hence (|\nabla\phi|^2/\phi) remains bounded and extends continuously at (\mathbf1). Compactness gives a finite global supremum (C_{\nabla/\phi}). (Because (\widetilde z_p) is (\phi\circ U_p) and the plaquette map uses group multiplications/inversions, which are isometries under the bi‑invariant metric, the same bound transfers to (\widetilde z_p) with the same constant.)
+
+Using (G.4) gives
+[
+\sum_p \Phi''(\widetilde z_p)\Gamma_\Lambda(\widetilde z_p)
+\le M_2 C_{\nabla/\phi}\sum_p \widetilde z_p
+= A_2,D^{(1)}*\Lambda(U),
+]
+with (A_2:=M_2C*{\nabla/\phi}). Again no (|P(\Lambda)|) term appears because the bound is linear in (\widetilde z_p). ∎
+
+#### Proposition G.6 (Uniform bound for (\Gamma_\Lambda(V_\Lambda)))
+
+Let (d=4). Then there is a constant (A_3<\infty), depending only on (G), (\phi), (\Phi), and (d), such that
+[
+\Gamma_\Lambda(V_\Lambda)(U)\le A_3,D^{(1)}*\Lambda(U)\qquad\forall U\in M*\Lambda.
+\tag{G.5}
+]
+
+**Proof.**
+Compute linkwise:
+[
+\nabla_\ell V_\Lambda
+=\sum_{p:,\ell\in\partial p}\Phi'(\widetilde z_p),\nabla_\ell\widetilde z_p.
+]
+For fixed (\ell), the number of plaquettes containing (\ell) is (2(d-1)=6) in (d=4). Using Cauchy–Schwarz,
+[
+|\nabla_\ell V_\Lambda|^2
+\le 6\sum_{p:,\ell\in\partial p} \big(\Phi'(\widetilde z_p)\big)^2,|\nabla_\ell\widetilde z_p|^2.
+]
+Summing over (\ell) and swapping sums yields
+[
+\Gamma_\Lambda(V_\Lambda)
+=\sum_{\ell}|\nabla_\ell V_\Lambda|^2
+\le 6\sum_{p}\big(\Phi'(\widetilde z_p)\big)^2\sum_{\ell\in\partial p}|\nabla_\ell\widetilde z_p|^2.
+]
+By Lemma G.2, (|\nabla_\ell\widetilde z_p|\le C^{(1)}*\phi), and (|\partial p|=4), so
+[
+\Gamma*\Lambda(V_\Lambda)
+\le 6\cdot 4,(C^{(1)}*\phi)^2 \sum_p \big(\Phi'(\widetilde z_p)\big)^2.
+]
+Now use Lemma G.3: (|\Phi'(\widetilde z_p)|\le M_1\widetilde z_p), hence ((\Phi'(\widetilde z_p))^2\le M_1^2,\widetilde z_p^2). Using (\widetilde z_p^2\le 2\widetilde z_p) (since (\widetilde z_p\in[0,2])) gives
+[
+\Gamma*\Lambda(V_\Lambda)\le 6\cdot 4,(C^{(1)}*\phi)^2,M_1^2\cdot 2 \sum_p \widetilde z_p
+= A_3,D^{(1)}*\Lambda,
+]
+with (A_3:=48,(C^{(1)}_\phi)^2 M_1^2). ∎
+
+### G.6. Final drift bound: what is now closed, and what remains an explicit input
+
+Combine the identities and bounds.
+
+From Proposition G.4,
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+=\kappa L_\Lambda V_\Lambda+\kappa^2\Gamma_\Lambda(V_\Lambda),
+]
+and
+[
+L_\Lambda V_\Lambda
+=\sum_p\Big(
+\Phi'(\widetilde z_p)\Delta_\Lambda \widetilde z_p
++\Phi''(\widetilde z_p)\Gamma_\Lambda(\widetilde z_p)
+-\Phi'(\widetilde z_p)\langle\nabla S_\Lambda,\nabla \widetilde z_p\rangle
+\Big).
+]
+
+By Propositions G.5–G.6, the **entire contribution of the second‑order part** (\Delta_\Lambda) (including the Laplacian/Hessian term that previously produced the (X_\ell^aX_\ell^a z_p) obstruction) is controlled by (D^{(1)}*\Lambda) with constants independent of (\Lambda). Concretely, there exists a constant
+[
+A:=A_1+A_2+\kappa A_3
+]
+such that for all (U),
+[
+\frac{L*\Lambda W_\Lambda}{W_\Lambda}(U)
+\le
+\kappa,A,D^{(1)}*\Lambda(U)
+;-;
+\kappa\sum_p \Phi'(\widetilde z_p(U)),\langle\nabla S*\Lambda(U),\nabla \widetilde z_p(U)\rangle.
+\tag{G.6}
+]
+
+**Key point (uniform constants).** The bound (G.6) has **no additive term proportional to (|P(\Lambda)|)**: every positive term is weighted by (\widetilde z_p) (hence by (D^{(1)}_\Lambda)) because (\Phi'(0)=0) enforces (|\Phi'(s)|\lesssim s). This is exactly the mechanism requested in the prompt.
+
+#### Corollary G.7 (Lyapunov inequality reduced to a single coercive drift estimate)
+
+Suppose there exist constants (c_0>0), (b_0\ge 0), independent of (\Lambda), such that the drift term satisfies the pointwise lower bound
+[
+\sum_{p\in P(\Lambda)} \Phi'(\widetilde z_p(U)),\langle\nabla S_\Lambda(U),\nabla \widetilde z_p(U)\rangle
+;\ge;
+c_0,D^{(1)}*\Lambda(U)-b_0
+\qquad\forall U\in M*\Lambda.
+\tag{G.7}
+]
+Then, choosing (\kappa>0) small enough so that (A\le \tfrac12 c_0), the Lyapunov drift inequality
+[
+L_\Lambda W_\Lambda
+\le
+\Big(-\tfrac12\kappa c_0,D^{(1)}*\Lambda + \kappa b_0\Big),W*\Lambda
+\tag{G.8}
+]
+holds with constants uniform in (\Lambda).
+
+**Proof.**
+Insert (G.7) into (G.6):
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+\le \kappa A D^{(1)}*\Lambda -\kappa(c_0D^{(1)}*\Lambda-b_0)
+============================================================
+
+-\kappa(c_0-A)D^{(1)}_\Lambda+\kappa b_0.
+]
+If (A\le c_0/2), then (c_0-A\ge c_0/2), yielding (G.8). ∎
+
+### G.7. What this appendix actually accomplishes
+
+* It removes the specific analytic obstruction previously flagged: the lack of uniform control on (X_\ell^aX_\ell^a z_p) when (z_p=d_G^2). The replacement by (\widetilde z_p=\phi(U_p)) makes all derivatives uniformly bounded by compactness and locality (Lemma G.2). 
+* It implements the second requested fix: choosing (\Phi) with (\Phi'(0)=0) makes the Laplacian/Hessian contributions to (L_\Lambda V_\Lambda) **weighted by (\widetilde z_p)** (Lemma G.3 and Proposition G.5), hence no additive (O(|P(\Lambda)|)) term appears in (L_\Lambda W_\Lambda/W_\Lambda).
+* The remaining step needed to obtain a complete Lyapunov drift inequality is precisely the coercive drift estimate (G.7), i.e. a lower bound on the alignment of (\nabla S_\Lambda) with the plaquette deviation gradients. This estimate is not established in the material excerpted here; the appendix isolates it as the only remaining input once the nonsmoothness issue is removed.
+
+This concludes Appendix G.

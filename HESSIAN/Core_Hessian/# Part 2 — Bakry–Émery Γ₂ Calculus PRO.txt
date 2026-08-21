@@ -1,0 +1,1111 @@
+# Part 2 — Bakry–Émery Γ₂ Calculus and the Curvature–Dimension Condition CD(ρ,∞)
+
+## 2.0 Purpose of this part
+
+This part builds the **Γ–Γ₂ calculus** for a Gibbs diffusion on a Riemannian manifold and derives the **Bochner–Bakry–Émery identity**
+
+[
+\Gamma_2(f)=|\nabla^2 f|*{\mathrm{HS}}^2+\mathrm{Ric}*\mu(\nabla f,\nabla f),
+\qquad
+\mathrm{Ric}_\mu:=\mathrm{Ric}_g+\nabla^2 S,
+]
+
+together with the equivalence
+
+[
+CD(\rho,\infty)\quad\Longleftrightarrow\quad \mathrm{Ric}_\mu\ge \rho,g .
+]
+
+It also explains how to restrict this framework to **gauge‑invariant observables** by using the horizontal (orbit‑orthogonal) directions, without relying on any other part.
+
+---
+
+## 2.1 Setting from first principles
+
+### 2.1.1 Geometry and calculus on ((M,g))
+
+Let ((M,g)) be a smooth, connected, complete (n)-dimensional Riemannian manifold **without boundary** (or with boundary but with boundary conditions specified; for lattice gauge configuration spaces we are boundaryless). Let
+
+* (\nabla) denote the Levi–Civita connection,
+* (\mathrm{grad},f) the Riemannian gradient of a smooth function (f),
+* (\mathrm{Hess},f=\nabla^2 f) the covariant Hessian,
+* (\Delta) the Laplace–Beltrami operator defined by (\Delta f=\mathrm{div}(\mathrm{grad},f)).
+
+Conventions:
+
+* I use (\Delta) as the **nonnegative** Laplacian on compact manifolds? In Bakry–Émery literature there are two sign conventions. Here I adopt the convention compatible with diffusion generators:
+  [
+  \Delta = \mathrm{div}\circ \nabla
+  ]
+  so that on (\mathbb{R}^n), (\Delta=\sum_i \partial_i^2), and the heat equation is (\partial_t u=\Delta u).
+
+The pointwise inner product is (\langle \cdot,\cdot\rangle=\langle \cdot,\cdot\rangle_g), and (|X|^2=\langle X,X\rangle).
+
+The Riemannian volume form is (d\mathrm{vol}_g).
+
+### 2.1.2 Gibbs measure and diffusion generator
+
+Let (S\in C^2(M)) be a “potential” (physically: an action). Define the **Gibbs measure** (\mu) by
+
+[
+d\mu = Z^{-1} e^{-S},d\mathrm{vol}_g
+]
+
+where (Z=\int_M e^{-S},d\mathrm{vol}_g\in(0,\infty)) (assume this normalization exists; for compact (M) it does whenever (S) is bounded below).
+
+Define the second‑order differential operator
+
+[
+L := \Delta - \langle \nabla S,\nabla(\cdot)\rangle.
+]
+
+This is the standard reversible diffusion generator with invariant measure (\mu). It is sometimes called the **Witten Laplacian on functions** (up to sign conventions).
+
+We will prove:
+
+1. (L) is symmetric on (C^\infty(M)\subset L^2(\mu)).
+2. The associated Dirichlet form is (\mathcal E(f,g)=\int \langle \nabla f,\nabla g\rangle,d\mu).
+
+### 2.1.3 Integration by parts and symmetry of (L)
+
+**Lemma 2.1 (weighted divergence identity).**
+Let (X) be a smooth vector field on (M) with compact support (or (M) compact). Then
+
+[
+\int_M \mathrm{div}(X),e^{-S},d\mathrm{vol}_g
+=============================================
+
+-\int_M \langle X,\nabla S\rangle,e^{-S},d\mathrm{vol}_g.
+]
+
+**Proof.** Consider the vector field (e^{-S}X). Using the product rule for divergence,
+[
+\mathrm{div}(e^{-S}X)= e^{-S}\mathrm{div}(X) + \langle \nabla(e^{-S}),X\rangle.
+]
+But (\nabla(e^{-S})=-e^{-S}\nabla S), hence
+[
+\mathrm{div}(e^{-S}X)= e^{-S}\mathrm{div}(X) - e^{-S}\langle \nabla S,X\rangle.
+]
+Integrate over (M). If (X) has compact support (or (M) is compact without boundary), the divergence theorem gives
+(\int_M \mathrm{div}(e^{-S}X),d\mathrm{vol}_g=0). Rearranging yields the identity. ∎
+
+**Lemma 2.2 (symmetry of (L)).**
+For (f,g\in C_c^\infty(M)) (or (C^\infty(M)) if (M) compact),
+[
+\int f,Lg,d\mu = -\int \langle \nabla f,\nabla g\rangle,d\mu
+=\int g,Lf,d\mu.
+]
+
+**Proof.** Using (Lg=\Delta g-\langle \nabla S,\nabla g\rangle) and the identity (\Delta g = \mathrm{div}(\nabla g)),
+[
+\int f,\Delta g,d\mu = Z^{-1}\int f,\mathrm{div}(\nabla g),e^{-S},d\mathrm{vol}_g.
+]
+Apply Lemma 2.1 with (X=f\nabla g). We have
+[
+\mathrm{div}(f\nabla g)=\langle \nabla f,\nabla g\rangle + f,\mathrm{div}(\nabla g)
+=\langle \nabla f,\nabla g\rangle + f,\Delta g.
+]
+Then Lemma 2.1 yields
+[
+\int \big(\langle \nabla f,\nabla g\rangle + f\Delta g\big)e^{-S},d\mathrm{vol}_g
+=================================================================================
+
+# -\int \langle f\nabla g,\nabla S\rangle e^{-S},d\mathrm{vol}_g
+
+-\int f\langle \nabla g,\nabla S\rangle e^{-S},d\mathrm{vol}_g.
+]
+Rearrange:
+[
+\int f\Delta g,e^{-S}d\mathrm{vol}_g
+====================================
+
+-\int \langle \nabla f,\nabla g\rangle e^{-S}d\mathrm{vol}_g
++\int f\langle \nabla S,\nabla g\rangle e^{-S}d\mathrm{vol}_g.
+]
+Divide by (Z) and substitute (Lg=\Delta g-\langle \nabla S,\nabla g\rangle):
+[
+\int f,Lg,d\mu
+==============
+
+-\int \langle \nabla f,\nabla g\rangle,d\mu.
+]
+Symmetry follows by swapping (f,g). ∎
+
+**Corollary 2.3 (Dirichlet form).**
+The bilinear form
+[
+\mathcal E(f,g):=\int \langle \nabla f,\nabla g\rangle,d\mu
+]
+satisfies (\mathcal E(f,g)=-\int f,Lg,d\mu). In particular (\mathcal E(f,f)\ge 0).
+
+This is the canonical reversible diffusion form associated to ((M,g,\mu)).
+
+---
+
+## 2.2 Carré du champ Γ and its elementary identities
+
+### 2.2.1 Definition and explicit formula
+
+**Definition 2.4 (carré du champ).**
+For smooth (f,g) define
+
+[
+\Gamma(f,g):=\frac12\Big(L(fg)-f,Lg-g,Lf\Big),
+\qquad \Gamma(f):=\Gamma(f,f).
+]
+
+This definition makes sense for any diffusion generator (L) satisfying a Leibniz-type identity; in our Riemannian setting it will become the gradient inner product.
+
+**Lemma 2.5 (Γ is the gradient product).**
+For the generator (L=\Delta-\langle \nabla S,\nabla\cdot\rangle),
+[
+\Gamma(f,g)=\langle \nabla f,\nabla g\rangle,\qquad
+\Gamma(f)=|\nabla f|^2.
+]
+
+**Proof.** Compute (L(fg)). First for (\Delta) we have the well-known product rule
+[
+\Delta(fg)=f,\Delta g + g,\Delta f + 2\langle \nabla f,\nabla g\rangle.
+]
+(Proof: in local coordinates or using (\mathrm{div}(f\nabla g)=\langle\nabla f,\nabla g\rangle+f\Delta g), symmetrize.)
+
+For the drift term,
+[
+-\langle \nabla S,\nabla(fg)\rangle= -f\langle \nabla S,\nabla g\rangle - g\langle \nabla S,\nabla f\rangle.
+]
+So
+[
+L(fg)= fLg + gLf + 2\langle \nabla f,\nabla g\rangle.
+]
+Insert into the definition of (\Gamma) to get (\Gamma(f,g)=\langle \nabla f,\nabla g\rangle). ∎
+
+So in this Gibbs diffusion setting, Γ is not mysterious: it is literally the metric pairing of gradients.
+
+### 2.2.2 Symmetry, Leibniz, and chain rules for Γ
+
+Because (\Gamma(f,g)=\langle \nabla f,\nabla g\rangle), it immediately has:
+
+* **Symmetry**: (\Gamma(f,g)=\Gamma(g,f)).
+
+* **Bilinearity** in each argument.
+
+* **Leibniz rule**: for smooth (f,g,h),
+  [
+  \Gamma(fg,h)=f,\Gamma(g,h)+g,\Gamma(f,h),
+  ]
+  since (\nabla(fg)=f\nabla g+g\nabla f).
+
+* **Chain rule**: for smooth (\Phi,\Psi:\mathbb R\to\mathbb R),
+  [
+  \Gamma(\Phi(f),\Psi(g))=\Phi'(f)\Psi'(g),\Gamma(f,g),
+  ]
+  since (\nabla \Phi(f)=\Phi'(f)\nabla f).
+
+We will also need the chain rule for (L).
+
+### 2.2.3 Chain rule for the generator L
+
+**Lemma 2.6 (diffusion chain rule for (L)).**
+Let (\Phi\in C^2(\mathbb R)) and (f\in C^\infty(M)). Then
+[
+L(\Phi(f))=\Phi'(f),Lf+\Phi''(f),\Gamma(f).
+]
+
+**Proof.** Using (L=\Delta-\langle \nabla S,\nabla\cdot\rangle):
+
+1. For (\Delta), the standard formula is
+   [
+   \Delta(\Phi(f))=\Phi'(f)\Delta f + \Phi''(f)|\nabla f|^2.
+   ]
+   This is a coordinate computation: in local coordinates,
+   [
+   \partial_i(\Phi(f))=\Phi'(f)\partial_i f,\qquad
+   \partial_{ij}(\Phi(f))=\Phi''(f)\partial_i f,\partial_j f + \Phi'(f)\partial_{ij}f,
+   ]
+   and tracing with the metric plus Christoffel correction yields the covariant expression above.
+
+2. For the drift,
+   [
+   -\langle \nabla S,\nabla(\Phi(f))\rangle = -\Phi'(f)\langle \nabla S,\nabla f\rangle.
+   ]
+
+Combine:
+[
+L(\Phi(f))=\Phi'(f)\big(\Delta f-\langle \nabla S,\nabla f\rangle\big)+\Phi''(f)|\nabla f|^2
+=\Phi'(f)Lf+\Phi''(f)\Gamma(f).
+]
+∎
+
+This identity is a key “diffusion property” behind Bakry–Émery calculus.
+
+---
+
+## 2.3 The iterated carré du champ Γ₂
+
+### 2.3.1 Definition
+
+**Definition 2.7 (iterated carré du champ).**
+For smooth (f,g),
+
+[
+\Gamma_2(f,g)
+:=
+\frac12\Big(L\Gamma(f,g)-\Gamma(f,Lg)-\Gamma(g,Lf)\Big),
+\qquad
+\Gamma_2(f):=\Gamma_2(f,f).
+]
+
+With (\Gamma(f,g)=\langle \nabla f,\nabla g\rangle), this becomes a second‑order object encoding curvature.
+
+### 2.3.2 A “commutator” identity that motivates Γ₂
+
+For a diffusion semigroup, one basic computation is the evolution of (\Gamma(u(t))) when (u) solves the heat equation.
+
+Let (u(t,x)) be smooth in (t) and (x). Then
+
+[
+\frac{d}{dt}\Gamma(u)
+=2\Gamma(u,\partial_t u)
+]
+by bilinearity and product rule.
+
+If (\partial_t u=Lu), then
+
+[
+\partial_t \Gamma(u)=2\Gamma(u,Lu).
+]
+
+On the other hand,
+
+[
+L\Gamma(u)=L\Gamma(u,u).
+]
+
+By definition of (\Gamma_2(u)),
+[
+2\Gamma_2(u)= L\Gamma(u)-2\Gamma(u,Lu),
+]
+so we get the fundamental PDE identity
+[
+(\partial_t - L)\Gamma(u) = -2\Gamma_2(u).
+]
+This is the “Bochner inequality in semigroup form.” The content of Bakry–Émery theory is: if (\Gamma_2\ge \rho \Gamma), then gradients decay exponentially along the semigroup.
+
+But to use this, we need an explicit formula for (\Gamma_2). That’s the Bochner–Bakry–Émery identity.
+
+---
+
+## 2.4 Bochner identity and the Bakry–Émery tensor
+
+### 2.4.1 Classical Bochner formula for the Laplacian
+
+First recall the standard Bochner identity for (\Delta) (no drift).
+
+**Theorem 2.8 (Bochner formula).**
+For (f\in C^\infty(M)),
+[
+\frac12,\Delta |\nabla f|^2
+===========================
+
+|\nabla^2 f|_{\mathrm{HS}}^2
++
+\langle \nabla f,\nabla(\Delta f)\rangle
++
+\mathrm{Ric}_g(\nabla f,\nabla f).
+]
+
+Here (\nabla^2 f) is the Hessian (a symmetric 2‑tensor) and (|\cdot|_{\mathrm{HS}}) denotes the Hilbert–Schmidt norm induced by (g).
+
+**Proof sketch with the key steps (fully local).**
+Fix a point (p\in M). Choose normal coordinates at (p) so that:
+
+* (g_{ij}(p)=\delta_{ij}),
+* (\partial_k g_{ij}(p)=0),
+* Christoffel symbols (\Gamma^k_{ij}(p)=0).
+
+Let (f_i=\partial_i f), (f_{ij}=\partial_{ij}f) at (p) in these coordinates. Then at (p),
+[
+|\nabla f|^2 = \sum_i f_i^2.
+]
+Differentiate:
+[
+\partial_j(|\nabla f|^2)= 2\sum_i f_i f_{ij}.
+]
+Differentiate again and sum over (j) to get (\Delta|\nabla f|^2) at (p) (since in normal coordinates (\Delta=\sum_j \partial_{jj}) at (p)):
+[
+\Delta|\nabla f|^2(p)=\sum_j \partial_{jj}\Big(\sum_i f_i^2\Big)
+=2\sum_{i,j} \big(f_{ij}^2 + f_i f_{ijj}\big).
+]
+Thus
+[
+\frac12\Delta|\nabla f|^2(p)=\sum_{i,j} f_{ij}^2 + \sum_i f_i\Big(\sum_j f_{ijj}\Big).
+]
+The first term is (|\nabla^2 f|^2_{\mathrm{HS}}(p)).
+
+The second term should become (\langle \nabla f,\nabla(\Delta f)\rangle + \mathrm{Ric}(\nabla f,\nabla f)). This is exactly where curvature enters: commuting derivatives (f_{ijj}) and (f_{jji}) is not free globally, even though Christoffels vanish at the point. One uses the commutation identity for covariant derivatives:
+[
+\nabla_i\nabla_j\nabla_j f - \nabla_j\nabla_j\nabla_i f = \mathrm{Ric}*{ik}\nabla_k f
+]
+(at (p) in normal coordinates this is a standard curvature computation). This yields
+[
+\sum_j f*{ijj} = \partial_i(\Delta f)(p) + \sum_k \mathrm{Ric}*{ik}(p) f_k.
+]
+Plugging back gives
+[
+\sum_i f_i \sum_j f*{ijj} = \sum_i f_i \partial_i(\Delta f) + \sum_{i,k} f_i \mathrm{Ric}_{ik} f_k
+= \langle \nabla f,\nabla(\Delta f)\rangle + \mathrm{Ric}(\nabla f,\nabla f).
+]
+Since the identity holds at each point (p), it holds globally. ∎
+
+This is the fundamental identity that “explains” Ricci curvature in analytic terms.
+
+### 2.4.2 Bochner identity for the Gibbs generator (L=\Delta-\nabla S\cdot\nabla)
+
+Now incorporate the drift (-\nabla S\cdot\nabla).
+
+**Theorem 2.9 (Bochner–Bakry–Émery identity).**
+For (L=\Delta-\langle \nabla S,\nabla\cdot\rangle) and all (f\in C^\infty(M)),
+
+[
+\Gamma_2(f)
+===========
+
+|\nabla^2 f|_{\mathrm{HS}}^2
++
+\big(\mathrm{Ric}_g+\nabla^2 S\big)(\nabla f,\nabla f).
+]
+
+Equivalently,
+[
+\boxed{\quad
+\Gamma_2(f)=|\nabla^2 f|*{\mathrm{HS}}^2+\mathrm{Ric}*\mu(\nabla f,\nabla f),\quad
+\mathrm{Ric}_\mu:=\mathrm{Ric}_g+\nabla^2 S.
+\quad}
+]
+
+**Proof.** Start from the definition
+[
+\Gamma_2(f)=\frac12\Big(L\Gamma(f)-2\Gamma(f,Lf)\Big)
+=====================================================
+
+\frac12\Big(L|\nabla f|^2-2\langle \nabla f,\nabla(Lf)\rangle\Big).
+]
+Compute each term using (L=\Delta-\langle \nabla S,\nabla\cdot\rangle).
+
+1. Expand (L|\nabla f|^2):
+   [
+   L|\nabla f|^2=\Delta|\nabla f|^2-\langle \nabla S,\nabla|\nabla f|^2\rangle.
+   ]
+
+2. Expand (\nabla(Lf)):
+   [
+   \nabla(Lf)=\nabla(\Delta f)-\nabla\big(\langle \nabla S,\nabla f\rangle\big).
+   ]
+   Therefore
+   [
+   \langle \nabla f,\nabla(Lf)\rangle
+   =
+   \langle \nabla f,\nabla(\Delta f)\rangle
+
+*
+
+\langle \nabla f,\nabla\langle \nabla S,\nabla f\rangle\rangle.
+]
+
+Insert into (\Gamma_2):
+[
+\Gamma_2(f)
+===========
+
+\frac12\Delta|\nabla f|^2
+-\frac12\langle \nabla S,\nabla|\nabla f|^2\rangle
+-\langle \nabla f,\nabla(\Delta f)\rangle
++
+\langle \nabla f,\nabla\langle \nabla S,\nabla f\rangle\rangle.
+]
+
+Now apply the classical Bochner identity (Theorem 2.8) to the first, third, and Ricci terms:
+
+[
+\frac12\Delta|\nabla f|^2 - \langle \nabla f,\nabla(\Delta f)\rangle
+====================================================================
+
+|\nabla^2 f|_{\mathrm{HS}}^2 + \mathrm{Ric}_g(\nabla f,\nabla f).
+]
+
+So we reduce to proving the drift contribution equals (\nabla^2 S(\nabla f,\nabla f)), i.e.
+
+[
+-\frac12\langle \nabla S,\nabla|\nabla f|^2\rangle
++
+\langle \nabla f,\nabla\langle \nabla S,\nabla f\rangle\rangle
+==============================================================
+
+\nabla^2 S(\nabla f,\nabla f).
+]
+
+This is a pure covariant-derivative identity. Use two standard facts:
+
+* For any (f),
+  [
+  \nabla|\nabla f|^2 = 2,\nabla^2 f(\nabla f,\cdot)
+  ]
+  meaning: for any vector (X),
+  [
+  X(|\nabla f|^2)=2\langle \nabla_X\nabla f,\nabla f\rangle.
+  ]
+
+* For any (S,f),
+  [
+  \nabla\langle \nabla S,\nabla f\rangle
+  ======================================
+
+  \nabla^2 S(\nabla f,\cdot)+\nabla^2 f(\nabla S,\cdot),
+  ]
+  because for any (X),
+  [
+  X\langle \nabla S,\nabla f\rangle
+  =\langle \nabla_X\nabla S,\nabla f\rangle + \langle \nabla S,\nabla_X\nabla f\rangle
+  =\nabla^2 S(X,\nabla f)+\nabla^2 f(X,\nabla S).
+  ]
+
+Now compute:
+
+* The first drift term:
+  [
+  -\frac12\langle \nabla S,\nabla|\nabla f|^2\rangle
+  ==================================================
+
+  # -\frac12\cdot 2,\nabla^2 f(\nabla f,\nabla S)
+
+  -\nabla^2 f(\nabla f,\nabla S).
+  ]
+
+* The second drift term:
+  [
+  \langle \nabla f,\nabla\langle \nabla S,\nabla f\rangle\rangle
+  ==============================================================
+
+  # \langle \nabla f,\nabla^2 S(\nabla f,\cdot)+\nabla^2 f(\nabla S,\cdot)\rangle
+
+  \nabla^2 S(\nabla f,\nabla f)+\nabla^2 f(\nabla S,\nabla f).
+  ]
+
+Since (\nabla^2 f) is symmetric, (\nabla^2 f(\nabla S,\nabla f)=\nabla^2 f(\nabla f,\nabla S)). Therefore the (\nabla^2 f)-terms cancel and we are left with exactly (\nabla^2 S(\nabla f,\nabla f)).
+
+Putting everything together yields
+[
+\Gamma_2(f)=|\nabla^2 f|_{\mathrm{HS}}^2 + \mathrm{Ric}_g(\nabla f,\nabla f)+\nabla^2 S(\nabla f,\nabla f).
+]
+∎
+
+### 2.4.3 Definition of the Bakry–Émery tensor
+
+**Definition 2.10 (Bakry–Émery / weighted Ricci).**
+[
+\mathrm{Ric}_\mu := \mathrm{Ric}_g+\nabla^2 S.
+]
+This is the curvature tensor that naturally appears for the reversible diffusion with invariant density (e^{-S}).
+
+For Euclidean space (\mathbb R^n) (Ricci (=0)), this reduces to (\mathrm{Ric}_\mu=\nabla^2 S).
+
+---
+
+## 2.5 Curvature–dimension condition (CD(\rho,\infty)) and equivalence with (\mathrm{Ric}_\mu\ge \rho g)
+
+### 2.5.1 Definition
+
+**Definition 2.11 (CD((\rho,\infty))).**
+We say (L) satisfies the curvature–dimension condition (CD(\rho,\infty)) if for all smooth (f),
+
+[
+\Gamma_2(f)\ge \rho,\Gamma(f)
+\qquad\text{pointwise on }M.
+]
+
+Here (\rho\in\mathbb R). The case (\rho>0) is the “positive curvature” regime and is the one that yields uniform functional inequalities.
+
+### 2.5.2 Equivalence with a tensor inequality
+
+**Theorem 2.12.**
+For the Gibbs generator (L=\Delta-\nabla S\cdot\nabla),
+
+[
+CD(\rho,\infty)\quad\Longleftrightarrow\quad \mathrm{Ric}_\mu \ge \rho,g
+\ \text{ as symmetric 2-tensors.}
+]
+
+**Proof.**
+
+**((\Leftarrow))** Assume (\mathrm{Ric}_\mu\ge \rho g). Then by Theorem 2.9,
+[
+\Gamma_2(f)
+===========
+
+|\nabla^2 f|*{\mathrm{HS}}^2 + \mathrm{Ric}*\mu(\nabla f,\nabla f)
+\ge
+0 + \rho,|\nabla f|^2
+=====================
+
+\rho,\Gamma(f).
+]
+So (CD(\rho,\infty)) holds.
+
+**((\Rightarrow))** Assume (CD(\rho,\infty)) holds. Fix a point (p\in M) and a unit vector (v\in T_pM) ((|v|=1)). We will construct a smooth function (f) such that at (p),
+[
+\nabla f(p)=v,\qquad \nabla^2 f(p)=0.
+]
+Then evaluating (CD(\rho,\infty)) at (p) will give (\mathrm{Ric}_\mu(v,v)\ge \rho).
+
+Construction: choose normal coordinates at (p) via the exponential map (\exp_p). Let ((x^1,\dots,x^n)) be geodesic normal coordinates so that (\partial_{x^1}\big|_p=v) (possible after an orthogonal change of basis). Define (f) in a neighborhood of (p) by (f(x)=x^1). Then at (p), by properties of normal coordinates:
+
+* (\nabla f(p)=\partial_{x^1}\big|_p=v),
+* Christoffels vanish at (p), so the covariant second derivatives equal ordinary second derivatives at (p), hence (\nabla^2 f(p)=0) because (f) is linear in coordinates.
+
+Now compute at (p). Since (\nabla^2 f(p)=0), Theorem 2.9 gives
+[
+\Gamma_2(f)(p) = 0 + \mathrm{Ric}*\mu(\nabla f(p),\nabla f(p))=\mathrm{Ric}*\mu(v,v).
+]
+Also (\Gamma(f)(p)=|\nabla f(p)|^2=|v|^2=1). The inequality (CD(\rho,\infty)) at (p) gives
+[
+\mathrm{Ric}*\mu(v,v) = \Gamma_2(f)(p) \ge \rho,\Gamma(f)(p)=\rho.
+]
+Since (v) was arbitrary unit vector, this proves (\mathrm{Ric}*\mu\ge \rho g). ∎
+
+So the CD condition is not “another hypothesis”; it is exactly the tensor lower bound for the Bakry–Émery curvature.
+
+---
+
+## 2.6 Semigroup consequences proved inside this part
+
+We now derive (i) the gradient estimate for (P_t=e^{tL}), and (ii) from it the Poincaré inequality and spectral gap bound. I’ll also include the standard Bakry–Émery route to log‑Sobolev (with explicit constants) because later parts typically lean on it.
+
+### 2.6.1 The diffusion semigroup
+
+Assume (L) is essentially self‑adjoint on (C_c^\infty(M)) (true under mild completeness/growth conditions; automatic on compact (M)), so (L) generates a strongly continuous Markov semigroup ((P_t)_{t\ge 0}) on (L^2(\mu)) with:
+
+* (P_0=\mathrm{Id}),
+* (P_{s+t}=P_sP_t),
+* (\partial_t P_t f = L P_t f) for smooth (f),
+* (P_t) is positivity preserving and (P_t 1=1) (conservative).
+
+We will use smooth functions so all computations are classical.
+
+### 2.6.2 Key PDE identity: ((\partial_t-L)\Gamma(u)=-2\Gamma_2(u))
+
+Let (u(t,x)=P_t f(x)). Then (\partial_t u = Lu).
+
+As explained earlier:
+[
+\partial_t \Gamma(u)
+=2\Gamma(u,\partial_t u)
+=2\Gamma(u,Lu),
+]
+and by definition of (\Gamma_2),
+[
+2\Gamma_2(u)=L\Gamma(u)-2\Gamma(u,Lu).
+]
+Subtracting yields:
+[
+(\partial_t - L)\Gamma(u) = -2\Gamma_2(u).
+]
+This is exact; no inequality yet.
+
+### 2.6.3 Gradient estimate under (CD(\rho,\infty))
+
+**Theorem 2.13 (Bakry–Émery gradient estimate).**
+If (CD(\rho,\infty)) holds, then for all smooth (f) and all (t\ge 0),
+
+[
+\Gamma(P_t f)\le e^{-2\rho t},P_t\Gamma(f).
+]
+
+**Proof.** Let (u(t)=P_t f). Under (CD(\rho,\infty)), (\Gamma_2(u)\ge \rho,\Gamma(u)). Plug into the PDE identity:
+
+[
+(\partial_t - L)\Gamma(u)
+=========================
+
+-2\Gamma_2(u)
+\le
+-2\rho,\Gamma(u).
+]
+
+Define (w(t,x):= e^{2\rho t}\Gamma(u(t,x))). Then
+[
+\partial_t w = 2\rho e^{2\rho t}\Gamma(u) + e^{2\rho t}\partial_t\Gamma(u),
+\qquad
+L w = e^{2\rho t} L\Gamma(u)
+]
+since (e^{2\rho t}) depends only on (t), not on (x). Therefore
+[
+(\partial_t - L)w
+=================
+
+e^{2\rho t}\big((\partial_t - L)\Gamma(u) + 2\rho,\Gamma(u)\big)
+\le 0.
+]
+
+So (w) is a **subsolution** of the heat equation ((\partial_t - L)w\le 0).
+
+Now apply the standard comparison principle for Markov semigroups: if ((\partial_t-L)w\le 0) and (w(0,\cdot)=\Gamma(f)), then
+[
+w(t,\cdot)\le P_t w(0,\cdot)=P_t\Gamma(f).
+]
+(One way to see it: consider (h(t)=P_{T-t}w(t)) and differentiate; or use Duhamel’s formula.)
+
+Thus
+[
+e^{2\rho t}\Gamma(P_t f)\le P_t\Gamma(f),
+]
+which is the desired inequality. ∎
+
+This single inequality is the main “analytic engine” of the Bakry–Émery method.
+
+### 2.6.4 Spectral gap / Poincaré inequality with constant (1/\rho)
+
+Assume (\rho>0).
+
+**Definition 2.14 (variance).**
+[
+\mathrm{Var}_\mu(f)=\int (f-\mu f)^2,d\mu,
+\qquad \mu f := \int f,d\mu.
+]
+
+**Theorem 2.15 (Poincaré inequality from (CD(\rho,\infty))).**
+If (CD(\rho,\infty)) holds with (\rho>0), then for all smooth (f),
+
+[
+\mathrm{Var}_\mu(f)\le \frac{1}{\rho}\int \Gamma(f),d\mu
+========================================================
+
+\frac{1}{\rho}\int |\nabla f|^2,d\mu.
+]
+
+Equivalently, the (L^2(\mu))-spectral gap of (-L) satisfies (\lambda_1\ge \rho).
+
+**Proof.** Let (g=f-\mu f) so that (\mu g=0). Because (P_t) is (\mu)-symmetric and preserves constants, (\mu(P_t g)=0) for all (t). Define
+[
+F(t):=|P_t g|_{L^2(\mu)}^2 = \int (P_t g)^2,d\mu.
+]
+Differentiate using (\partial_t P_t g = L P_t g):
+[
+F'(t)=2\int (P_t g)(L P_t g),d\mu.
+]
+By symmetry of (L) (Lemma 2.2),
+[
+\int (P_t g)(L P_t g),d\mu = -\int \Gamma(P_t g),d\mu.
+]
+So
+[
+F'(t)=-2\int \Gamma(P_t g),d\mu\le 0.
+]
+
+Next, since (\rho>0), (P_t g\to 0) in (L^2(\mu)) as (t\to\infty) (a consequence of the spectral gap we are about to show; or can be shown by Grönwall after we establish the inequality below). Assuming this (standard for ergodic reversible diffusions with (\rho>0)), we write:
+[
+|g|*2^2 = F(0)-\lim*{t\to\infty}F(t)= -\int_0^\infty F'(t),dt
+=2\int_0^\infty \int \Gamma(P_t g),d\mu,dt.
+]
+
+Now apply the gradient estimate (Theorem 2.13) and invariance of (\mu) under (P_t) (i.e. (\int P_t h,d\mu=\int h,d\mu)):
+[
+\int \Gamma(P_t g),d\mu
+\le
+e^{-2\rho t}\int P_t\Gamma(g),d\mu
+==================================
+
+e^{-2\rho t}\int \Gamma(g),d\mu.
+]
+Insert into the integral:
+[
+|g|_2^2
+\le
+2\int_0^\infty e^{-2\rho t},dt \int \Gamma(g),d\mu
+==================================================
+
+\frac{1}{\rho}\int \Gamma(g),d\mu.
+]
+Since (\Gamma(g)=\Gamma(f)), we obtain the Poincaré inequality.
+
+The spectral gap statement (\lambda_1\ge \rho) is equivalent: by definition,
+[
+\lambda_1 = \inf\left{\frac{\int \Gamma(h),d\mu}{\int h^2,d\mu}:\ \mu h=0,\ h\not\equiv 0\right},
+]
+and the Poincaré inequality is exactly (\int h^2\le (1/\rho)\int \Gamma(h)), i.e. (\int\Gamma(h)/\int h^2\ge \rho). ∎
+
+### 2.6.5 Logarithmic Sobolev inequality under (CD(\rho,\infty))
+
+There are several standard proofs. Here is a semigroup-based one that stays inside the Γ–Γ₂ framework.
+
+**Definition 2.16 (entropy).**
+For a nonnegative integrable (F),
+[
+\mathrm{Ent}_\mu(F):=\int F\log F,d\mu -\left(\int F,d\mu\right)\log\left(\int F,d\mu\right).
+]
+
+**Theorem 2.17 (Bakry–Émery log‑Sobolev).**
+Assume (CD(\rho,\infty)) with (\rho>0). Then for all smooth (f),
+
+[
+\mathrm{Ent}_\mu(f^2)\le \frac{2}{\rho}\int \Gamma(f),d\mu
+==========================================================
+
+\frac{2}{\rho}\int |\nabla f|^2,d\mu.
+]
+
+**Proof (entropy dissipation + curvature).**
+Assume (f) is smooth and strictly positive (approximation handles sign/zeros). Let (u(t):=P_t(f^2)). Then (u>0) and (\partial_t u = Lu).
+
+Define the entropy along the flow:
+[
+H(t):=\mathrm{Ent}_\mu(u(t))=\int u\log u,d\mu - \left(\int u,d\mu\right)\log\left(\int u,d\mu\right).
+]
+But (\int u,d\mu = \int P_t(f^2),d\mu = \int f^2,d\mu) is constant in (t), so the second term is constant and
+[
+H'(t)=\frac{d}{dt}\int u\log u,d\mu.
+]
+Differentiate:
+[
+\frac{d}{dt}\int u\log u,d\mu
+=============================
+
+# \int (\partial_t u)\log u,d\mu + \int (\partial_t u),d\mu
+
+\int (Lu)\log u,d\mu + \int Lu,d\mu.
+]
+Since (\mu) is invariant (equivalently, (L) is symmetric and (L1=0)), (\int Lu,d\mu=0). Hence
+[
+H'(t)=\int (Lu)\log u,d\mu.
+]
+Use symmetry / integration by parts (Lemma 2.2) with (f=\log u), (g=u):
+[
+\int (Lu)\log u,d\mu = \int u,L(\log u),d\mu
+]
+or more directly,
+[
+\int (Lu)\log u,d\mu = -\int \Gamma(u,\log u),d\mu.
+]
+But by the chain rule for Γ,
+[
+\Gamma(u,\log u)=\Gamma(u)\cdot \frac{1}{u}=\frac{\Gamma(u)}{u}.
+]
+So
+[
+H'(t)=-\int \frac{\Gamma(u)}{u},d\mu = -\int u,\Gamma(\log u),d\mu.
+]
+This is the (weighted) Fisher information.
+
+Now we need to bound (H(0)) by (H'(0)) using curvature. The Bakry–Émery method proves exponential decay of the Fisher information, which when integrated gives LSI.
+
+Define
+[
+I(t):=\int u,\Gamma(\log u),d\mu=\int \frac{\Gamma(u)}{u},d\mu.
+]
+We have (H'(t)=-I(t)).
+
+Compute (I'(t)). This is the technical step. One standard identity in Γ-calculus is:
+[
+\frac{d}{dt} I(t) = -2\int u,\Gamma_2(\log u),d\mu.
+]
+Let me justify it briefly (still first principles, but streamlined):
+
+* Since (u) solves (\partial_t u=Lu) and (\log u) is smooth, one can use the evolution identity for (\Gamma(\log u)) plus integration by parts. A clean way is to use the identity
+  [
+  (\partial_t - L)\big(u,\Gamma(\log u)\big) = -2u,\Gamma_2(\log u)
+  ]
+  which follows from the diffusion property and the definition of (\Gamma_2) (this is a standard computation in Bakry–Émery theory; it is the analogue of ((\partial_t-L)\Gamma(u)=-2\Gamma_2(u)) but with the logarithmic transform).
+
+* Integrate this identity against (d\mu). The (\int L(\cdot),d\mu) term vanishes by invariance. Thus
+  [
+  I'(t)=\frac{d}{dt}\int u\Gamma(\log u),d\mu = -2\int u,\Gamma_2(\log u),d\mu.
+  ]
+
+Now apply (CD(\rho,\infty)) to the test function (\log u):
+[
+\Gamma_2(\log u)\ge \rho,\Gamma(\log u).
+]
+Multiply by (u\ge 0) and integrate:
+[
+\int u,\Gamma_2(\log u),d\mu \ge \rho \int u,\Gamma(\log u),d\mu = \rho,I(t).
+]
+Therefore
+[
+I'(t)\le -2\rho,I(t).
+]
+So (I(t)\le e^{-2\rho t}I(0)).
+
+Finally integrate (H'(t)=-I(t)) from (0) to (\infty). Under (\rho>0), (u(t)\to \int f^2 d\mu) (constant) in (L^1) and entropy (H(t)\to 0) as (t\to\infty). Hence
+[
+H(0)= -\int_0^\infty H'(t),dt = \int_0^\infty I(t),dt
+\le \int_0^\infty e^{-2\rho t}I(0),dt = \frac{1}{2\rho}I(0).
+]
+So
+[
+\mathrm{Ent}_\mu(f^2)=H(0)\le \frac{1}{2\rho}I(0).
+]
+
+Now express (I(0)) in terms of (\Gamma(f)). Since (u(0)=f^2),
+[
+I(0)=\int \frac{\Gamma(f^2)}{f^2},d\mu.
+]
+But (\Gamma(f^2)=|\nabla(f^2)|^2 = |2f\nabla f|^2 = 4f^2|\nabla f|^2 = 4f^2\Gamma(f)). Hence
+[
+I(0)=\int \frac{4f^2\Gamma(f)}{f^2},d\mu = 4\int \Gamma(f),d\mu.
+]
+Therefore
+[
+\mathrm{Ent}_\mu(f^2)\le \frac{1}{2\rho}\cdot 4\int \Gamma(f),d\mu = \frac{2}{\rho}\int \Gamma(f),d\mu,
+]
+which is the log‑Sobolev inequality with constant (2/\rho). ∎
+
+So in the (\rho>0) regime we have, inside this part, the whole chain:
+[
+\mathrm{Ric}_\mu\ge \rho g
+\Rightarrow
+CD(\rho,\infty)
+\Rightarrow
+\text{Gradient estimate}
+\Rightarrow
+\text{Poincaré + LSI + spectral gap}.
+]
+
+---
+
+## 2.7 Families of Gibbs systems and uniformity
+
+In lattice Yang–Mills you do not study one manifold: you study a family indexed by finite lattices (\Lambda). Let ((M_\Lambda,g_\Lambda)) be a family of compact Riemannian manifolds and (S_\Lambda\in C^2(M_\Lambda)). Define (\mu_\Lambda\propto e^{-S_\Lambda},d\mathrm{vol}*{g*\Lambda}) and (L_\Lambda=\Delta_\Lambda-\nabla S_\Lambda\cdot \nabla).
+
+The structural identity remains:
+
+[
+\mathrm{Ric}*{\mu*\Lambda}=\mathrm{Ric}*{g*\Lambda}+\nabla^2 S_\Lambda.
+]
+
+The fundamental uniformity question is:
+
+> Can we find (\rho_*>0) independent of (\Lambda) such that
+> (\mathrm{Ric}*{\mu*\Lambda}\ge \rho_* g_\Lambda) (globally, or at least on the physically relevant directions/region)?
+
+If yes, all constants become volume‑uniform:
+[
+C_P(\Lambda)\le \frac1{\rho_*},\qquad
+C_{LS}(\Lambda)\le \frac2{\rho_*},\qquad
+\lambda_1(\Lambda)\ge \rho_*.
+]
+
+**Practical decomposition of the problem.**
+You can prove a lower bound of the form
+[
+\mathrm{Ric}*{g*\Lambda}\ge \rho_0,g_\Lambda
+]
+from geometry alone (e.g. compact Lie groups with bi-invariant metrics), and then control the action Hessian by
+[
+\nabla^2 S_\Lambda \ge -c_\Lambda,g_\Lambda.
+]
+Then
+[
+\mathrm{Ric}*{\mu*\Lambda}\ge (\rho_0-c_\Lambda),g_\Lambda.
+]
+If (c_\Lambda) is bounded uniformly in (\Lambda), you get uniform (\rho_*).
+
+In Yang–Mills, the full (\nabla^2 S_\Lambda) is not globally bounded below uniformly without some restriction (small field region, regulators, or alternative methods). That motivates the horizontal/invariant restriction next.
+
+---
+
+## 2.8 Horizontal restriction for gauge‑invariant observables
+
+This is the precise version of what your draft calls “horizontal Bakry–Émery.” I’ll phrase it in a way that avoids unproved quotient geometry.
+
+### 2.8.1 Group action and vertical/horizontal splitting
+
+Let a compact Lie group (\mathcal G) act smoothly on (M) by isometries. For each (x\in M), define the **vertical subspace**
+[
+\mathcal V_x := {, \xi_M(x) : \xi\in \mathfrak g ,}\subset T_xM,
+]
+where (\xi_M) is the fundamental vector field generated by (\xi).
+
+Define the **horizontal subspace** as the orthogonal complement:
+[
+\mathcal H_x := \mathcal V_x^\perp \subset T_xM.
+]
+
+This gives a pointwise splitting (T_xM=\mathcal H_x\oplus \mathcal V_x) (not necessarily a smooth subbundle globally if orbit dimensions vary, but in lattice YM on the regular set it is; for the analytic inequalities we usually restrict to a regular region anyway).
+
+### 2.8.2 Gauge invariance implies horizontality of the gradient
+
+A key fact we will use repeatedly:
+
+**Lemma 2.18.**
+If (f\in C^\infty(M)) is (\mathcal G)-invariant (i.e. (f(g\cdot x)=f(x)) for all (g\in\mathcal G)), then (\nabla f(x)\in \mathcal H_x) for all (x).
+
+**Proof.** Fix (x\in M) and a vertical vector (v\in\mathcal V_x). Then (v=\xi_M(x)) for some (\xi\in\mathfrak g). Consider the curve (c(t)=\exp(t\xi)\cdot x), which lies in the orbit through (x) and has (c'(0)=\xi_M(x)=v). Since (f) is invariant, (f(c(t))) is constant in (t), hence
+[
+0=\frac{d}{dt}\Big|_{t=0} f(c(t)) = df_x(v) = \langle \nabla f(x), v\rangle.
+]
+So (\nabla f(x)) is orthogonal to every (v\in\mathcal V_x), hence lies in (\mathcal H_x). ∎
+
+This is the clean way to formalize “the physical gradients are horizontal.”
+
+### 2.8.3 Horizontal curvature condition sufficient for invariant CD
+
+Suppose we have a uniform lower bound **only along horizontal vectors**:
+[
+\mathrm{Ric}_\mu(v,v)\ge \rho,|v|^2 \quad \text{for all } v\in \mathcal H_x,\ \forall x.
+]
+Then for invariant functions (f), since (\nabla f\in \mathcal H), the Bochner identity gives
+
+[
+\Gamma_2(f)=|\nabla^2 f|^2_{\mathrm{HS}} + \mathrm{Ric}_\mu(\nabla f,\nabla f)
+\ge 0 + \rho |\nabla f|^2
+= \rho\Gamma(f).
+]
+
+So we get (CD(\rho,\infty)) **on the class of invariant observables**.
+
+**Proposition 2.19 (Invariant CD from horizontal Bakry–Émery).**
+Assume (f) ranges over (\mathcal G)-invariant smooth functions. If
+[
+\inf_{x\in M}\inf_{v\in \mathcal H_x\setminus{0}}\frac{\mathrm{Ric}_\mu(v,v)}{|v|^2}\ge \rho,
+]
+then
+[
+\Gamma_2(f)\ge \rho,\Gamma(f)\qquad\text{for all invariant }f.
+]
+
+Everything in §2.6 (gradient estimates, Poincaré, LSI) then applies *within the invariant subspace* (i.e. for gauge‑invariant observables), because the semigroup (P_t) preserves invariance if (L) commutes with the (\mathcal G)-action (true when (S) is gauge invariant and (g) is (\mathcal G)-invariant).
+
+That is the mathematically safe way to do “horizontal Bakry–Émery” without taking a quotient or invoking O’Neill tensors.
+
+---
+
+## 2.9 Specialization to lattice gauge configuration spaces
+
+This section explains how the above objects look on a finite lattice, still in stand‑alone form.
+
+### 2.9.1 Configuration manifold and metric
+
+Fix a finite lattice (\Lambda) with edge set (E(\Lambda)) and vertex set (V(\Lambda)). Let (G) be a compact Lie group (e.g. (SU(N))).
+
+Define
+[
+M_\Lambda := G^{E(\Lambda)} = \prod_{e\in E(\Lambda)} G_e,
+]
+where each (G_e\cong G) is a copy assigned to the edge (e).
+
+Choose an (\mathrm{Ad})-invariant inner product (\langle\cdot,\cdot\rangle_{\mathfrak g}) on (\mathfrak g=\mathrm{Lie}(G)). This induces a **bi‑invariant Riemannian metric** on (G) and therefore a product metric on (M_\Lambda):
+[
+g_\Lambda := \bigoplus_{e\in E(\Lambda)} g^{(e)}.
+]
+
+The corresponding Laplacian is the sum of Laplacians on each factor:
+[
+\Delta_\Lambda = \sum_{e\in E(\Lambda)} \Delta_e,
+]
+where (\Delta_e) is the Laplace–Beltrami operator on (G_e) acting on the (e)-coordinate.
+
+### 2.9.2 Gibbs measure and generator
+
+Let (S_\Lambda\in C^2(M_\Lambda)) be a gauge-invariant lattice action (Wilson action or heat‑kernel action, possibly plus regulators). Define
+
+[
+d\mu_\Lambda(U) = Z_\Lambda^{-1} e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U),
+\qquad
+L_\Lambda = \Delta_\Lambda - \langle \nabla S_\Lambda,\nabla\cdot\rangle.
+]
+
+Then:
+[
+\mathrm{Ric}*{\mu*\Lambda}=\mathrm{Ric}*{g*\Lambda}+\nabla^2 S_\Lambda.
+]
+
+### 2.9.3 Ricci curvature from Haar geometry is uniform in volume
+
+For a compact Lie group with bi-invariant metric, (\mathrm{Ric}_g) is **nonnegative**, and for semisimple (G) it is **positive definite**. In particular, there exists a constant (\rho_G>0) depending only on (G) and the chosen metric scaling such that
+[
+\mathrm{Ric}_G \ge \rho_G,g_G.
+]
+
+Because the lattice configuration space is a product, the Ricci tensor is block-diagonal and preserves the same lower bound:
+[
+\mathrm{Ric}*{g*\Lambda}\ge \rho_G, g_\Lambda,
+]
+with the **same** (\rho_G) independent of (|E(\Lambda)|).
+
+(Reason: on a Riemannian product, the Ricci tensor is the direct sum of the Ricci tensors of the factors; lower bounds tensorially add and preserve the minimum constant.)
+
+So the only possible loss of curvature comes from the action Hessian (\nabla^2 S_\Lambda).
+
+### 2.9.4 Action Hessian contribution and the curvature budget
+
+At any (U\in M_\Lambda),
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)=\mathrm{Ric}*{g*\Lambda}(U)+\nabla^2 S_\Lambda(U).
+]
+
+A generic estimate is:
+
+* If you can prove (on some region (\Omega\subset M_\Lambda), or in some directions)
+  [
+  \nabla^2 S_\Lambda(U)\ge -C_\mathrm{add},g_\Lambda
+  \quad\text{(as quadratic forms)}
+  ]
+  then on that region/direction set you get
+  [
+  \mathrm{Ric}*{\mu*\Lambda}\ge (\rho_G-C_\mathrm{add}),g_\Lambda.
+  ]
+
+This is the “curvature budget” logic: Haar geometry gives a positive baseline (\rho_G); the action can subtract; if subtraction is smaller, you retain positive Bakry–Émery curvature.
+
+For Yang–Mills, the correct statement is usually:
+
+* you retain a positive lower bound in a **small-field region**, and/or
+* you retain it on **horizontal directions** (gauge-invariant gradients), and/or
+* you use a combination of curvature bounds + alternative methods (Lyapunov/Dobrushin) to globalize.
+
+### 2.9.5 Gauge action and horizontal directions on the lattice
+
+The lattice gauge group is
+[
+\mathcal G_\Lambda := G^{V(\Lambda)}
+]
+acting on (M_\Lambda=G^{E(\Lambda)}) by
+[
+(U_e)*{e\in E} \mapsto (g*{s(e)},U_e,g_{t(e)}^{-1})_{e\in E},
+]
+where (s(e),t(e)) are the source/target vertices of the oriented edge (e).
+
+This action is by isometries (bi-invariant metric on each edge factor) and preserves any gauge-invariant action (S_\Lambda). Therefore it preserves (\mu_\Lambda) and commutes with (L_\Lambda), so the semigroup (P_t^{(\Lambda)}) preserves gauge invariance.
+
+Thus the “horizontal CD” argument of §2.8 applies to lattice YM.
+
+---
+
+## 2.10 What this part gives you in the overall program
+
+This part provides:
+
+1. **Exact curvature formula.**
+   [
+   \Gamma_2(f)=|\nabla^2 f|^2+\langle(\mathrm{Ric}_g+\nabla^2 S)\nabla f,\nabla f\rangle.
+   ]
+   So any curvature lower bound becomes a tangible inequality about the action Hessian plus a known geometric term.
+
+2. **Equivalence (CD(\rho,\infty)\iff \mathrm{Ric}_\mu\ge \rho g).**
+   This means you can freely switch between the tensor statement (geometry) and the functional statement (Γ₂ calculus).
+
+3. **Full semigroup consequences, proved here.**
+   From (CD(\rho,\infty)) you get:
+
+   * gradient decay,
+   * Poincaré inequality with constant (1/\rho),
+   * log‑Sobolev inequality with constant (2/\rho),
+   * spectral gap bound (\lambda_1\ge \rho).
+
+4. **A rigorous invariant/horizontal restriction.**
+   For gauge theories, you don’t need global curvature on all directions: it suffices to have a positive lower bound on (\mathrm{Ric}_\mu) **on horizontal directions**, because gauge‑invariant observables have horizontal gradients.
+
+That’s the entire Γ₂/Bakry–Émery “curvature engine” laid out with no dependencies on other parts.
+
+---
+
+If you want to keep the *exact* formatting/notation conventions (e.g. whether you denote the action by (S) vs (V), whether (\Delta) is (+) or (-), whether (\Gamma(f)=|\nabla f|^2) or half of that), those can be normalized globally across the 20+ parts later; the mathematics above is robust under the standard convention shifts (with corresponding constant changes).

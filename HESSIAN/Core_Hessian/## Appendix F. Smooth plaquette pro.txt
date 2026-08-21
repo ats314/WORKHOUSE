@@ -1,0 +1,385 @@
+## Appendix F. Smooth plaquette proxy and the Lyapunov drift computation (uniform constants)
+
+This appendix replaces the nonsmooth plaquette distance-square potential
+[
+z_p(U)=d_G!\big(U_p(U),\mathbf 1\big)^2
+]
+by a globally smooth, conjugation-invariant proxy, and re-runs the generator calculation for the exponential Lyapunov candidate. The sole objective is to eliminate the “additive (O(|P(\Lambda)|))” leakage in ((LW)/W) coming from second-derivative terms, by ensuring all second-derivative contributions are **weighted by plaquette badness** rather than by a per-plaquette constant. The need for this replacement and the intended benefit are explicitly stated in the analytic-engine notes: replace (d^2) by a globally smooth class function such as (1-\frac1N\Re\Tr) so that ((X_\ell^a X_\ell^a z_p)) is uniformly bounded. 
+
+Throughout, (G=\mathrm{SU}(N)) with a fixed bi-invariant Riemannian metric, (\Lambda\subset\mathbb Z^4) finite, (E(\Lambda)) oriented links, and (P(\Lambda)) oriented plaquettes. Configuration space is
+[
+M_\Lambda:=G^{E(\Lambda)},
+]
+with product metric and product Haar probability (\mathrm dU).
+
+---
+
+### F.1. The smooth conjugation-invariant plaquette proxy
+
+Define the class function
+[
+\vartheta(g);:=;1-\frac1N,\Re\Tr(g),\qquad g\in \mathrm{SU}(N).
+]
+This is one of the two canonical examples already adopted in the project’s “plaquette badness” interface. 
+
+For each plaquette (p\in P(\Lambda)), define
+[
+\widetilde z_p(U);:=;\vartheta\big(U_p(U)\big),
+]
+where (U_p(U)\in G) is the usual oriented product of the four link variables around (p) (with inverses when the link orientation is opposite).
+
+#### Lemma F.1 (basic properties of (\vartheta))
+
+The function (\vartheta) satisfies:
+
+1. (\vartheta\in C^\infty(G)) and (\vartheta(hgh^{-1})=\vartheta(g)) for all (g,h\in G).
+2. (\vartheta(e)=0), and (0\le \vartheta(g)\le 2) for all (g\in G).
+3. (\nabla\vartheta(e)=0).
+4. There exist constants (r_0>0) and (c_-,c_+>0) (depending only on (G) and the chosen metric) such that for all (g) in the geodesic ball (B_{r_0}(e)),
+   [
+   c_-,d_G(g,e)^2\ \le\ \vartheta(g)\ \le\ c_+,d_G(g,e)^2.
+   ]
+5. There exists a finite constant (C_{\nabla/\vartheta}<\infty) such that
+   [
+   |\nabla\vartheta(g)|^2\ \le\ C_{\nabla/\vartheta},\vartheta(g)\qquad \forall g\in G.
+   ]
+
+**Proof.**
+
+(1) Smoothness is obvious because (g\mapsto \Tr(g)) is polynomial in entries; conjugation invariance holds because trace is conjugation invariant.
+
+(2) Since (g) is unitary, its eigenvalues lie on the unit circle, hence (|\Tr(g)|\le N) and (\Re\Tr(g)\in[-N,N]). Therefore
+[
+0\le 1-\frac1N\Re\Tr(g)\le 1-\frac1N(-N)=2.
+]
+
+(3) Let (X\in\mathfrak{su}(N)=T_eG). Consider the curve (g(t)=e^{tX}). Then
+[
+\left.\frac{\mathrm d}{\mathrm dt}\right|*{t=0}\vartheta(e^{tX})
+=-\frac1N\Re\Tr!\left(\left.\frac{\mathrm d}{\mathrm dt}\right|*{0}e^{tX}\right)
+=-\frac1N\Re\Tr(X)=0
+]
+since (\Tr(X)=0) for (X\in\mathfrak{su}(N)). Thus (\nabla\vartheta(e)=0).
+
+(4) Write (g=\exp(X)) with (|X|) small in the chosen metric. Using the Taylor expansion (\exp(X)=I+X+\frac12X^2+O(|X|^3)) and (\Tr(X)=0),
+[
+\Re\Tr(\exp(X))=N+\frac12\Re\Tr(X^2)+O(|X|^3).
+]
+For (X\in\mathfrak{su}(N)) skew-Hermitian, (\Re\Tr(X^2)=\Tr(X^2)\le 0) and (-\Tr(X^2)) is comparable to (|X|^2). Hence
+[
+\vartheta(\exp(X))
+=1-\frac1N\Re\Tr(\exp(X))
+=-\frac{1}{2N}\Re\Tr(X^2)+O(|X|^3)
+]
+is strictly quadratic to leading order. Equivalence with (d_G(g,e)^2\sim |X|^2) for (|X|) sufficiently small yields constants (r_0,c_\pm).
+
+(5) Define for (g\neq e),
+[
+R(g):=\frac{|\nabla\vartheta(g)|^2}{\vartheta(g)}.
+]
+Away from (e), (\vartheta) is continuous and positive, and (|\nabla\vartheta|) is continuous, hence (R) is continuous. Near (e), (4) and (\nabla\vartheta(e)=0) imply (|\nabla\vartheta(g)|=O(d_G(g,e))) while (\vartheta(g)\ge c_-d_G(g,e)^2), so (R(g)) remains bounded near (e). Therefore (R) extends to a continuous function on the compact (G) by setting (R(e):=\lim_{g\to e}R(g)<\infty), hence (\sup_G R<\infty). Taking (C_{\nabla/\vartheta}:=\sup_G R) gives the claim. ∎
+
+---
+
+### F.2. Uniform first and second derivative bounds for (\widetilde z_p(U)=\vartheta(U_p(U)))
+
+Fix an orthonormal basis ({E_a}*{a=1}^{\dim G}) of (\mathfrak g). For each link (\ell\in E(\Lambda)) and (a), define the right-invariant link vector field (X*\ell^a) acting on (f\in C^\infty(M_\Lambda)) by
+[
+(X_\ell^a f)(U);:=;\left.\frac{\mathrm d}{\mathrm dt}\right|*{t=0}
+f\big(U^{(\ell,a,t)}\big),
+]
+where (U^{(\ell,a,t)}) coincides with (U) except
+[
+U^{(\ell,a,t)}*\ell = U_\ell \exp(tE_a).
+]
+Define the configuration Laplacian (\Delta_\Lambda:=\sum_{\ell,a}(X_\ell^a)^2).
+
+The following locality-plus-compactness mechanism is used throughout the project: a plaquette term depends on only four links, each link lies in boundedly many plaquettes, and smoothness on compact (G) bounds all derivatives uniformly. 
+
+#### Lemma F.2 (uniform first derivatives)
+
+Let (\widetilde z_p(U)=\vartheta(U_p(U))). Then:
+
+1. If (\ell\notin\partial p), then (X_\ell^a\widetilde z_p(U)=0).
+2. If (\ell\in\partial p), then
+   [
+   |X_\ell^a \widetilde z_p(U)|\ \le\ |\nabla\vartheta|*\infty,
+   ]
+   where ( |\nabla\vartheta|*\infty := \sup_{g\in G}|\nabla\vartheta(g)|<\infty).
+   This bound is exactly the mechanism already recorded in the project’s localization analysis. 
+3. Moreover, for (\ell\in\partial p),
+   [
+   (X_\ell^a\widetilde z_p(U))^2\ \le\ C_{\nabla/\vartheta},\widetilde z_p(U),
+   ]
+   with (C_{\nabla/\vartheta}) from Lemma F.1(5).
+
+**Proof.**
+(1) If (\ell\notin\partial p), then (U_p(U)) does not depend on (U_\ell), hence the derivative is (0).
+
+(2) For (\ell\in\partial p), varying (U_\ell\mapsto U_\ell\exp(tE_a)) changes (U_p) by left/right multiplication (and possibly conjugation, if (\ell) appears inverted). Each of these maps is an isometry for the fixed bi-invariant group metric. Therefore the speed of the induced curve (t\mapsto U_p(U^{(\ell,a,t)})) is (|E_a|=1), and the chain rule gives
+[
+|X_\ell^a \widetilde z_p(U)| = |(\nabla\vartheta)(U_p)\cdot \dot U_p|\le |\nabla\vartheta|_\infty.
+]
+This is the same argument already written in the project for the averaged badness Lipschitz bound. 
+
+(3) Apply Lemma F.1(5) at (g=U_p(U)): (|\nabla\vartheta(g)|^2\le C_{\nabla/\vartheta}\vartheta(g)). Since (|X_\ell^a\widetilde z_p|\le |\nabla\vartheta(g)|) (because (|\dot U_p|=1)), we get ((X_\ell^a\widetilde z_p)^2\le C_{\nabla/\vartheta}\widetilde z_p). ∎
+
+#### Lemma F.3 (uniform second derivatives along link directions)
+
+There exists a constant
+[
+C_{2,\vartheta}\ :=\ \sup_{g\in G}\ \sup_{|X|=1}\ \big|\nabla^2\vartheta(g)[X,X]\big|\ <\ \infty
+]
+such that for every (\Lambda), every plaquette (p), every link (\ell), every (a),
+[
+\big|(X_\ell^a X_\ell^a)\widetilde z_p(U)\big|
+\ \le
+\begin{cases}
+C_{2,\vartheta},& \ell\in\partial p,\
+0,& \ell\notin\partial p.
+\end{cases}
+]
+
+**Proof.**
+If (\ell\notin\partial p), (\widetilde z_p) is independent of (U_\ell) so the second derivative vanishes.
+
+If (\ell\in\partial p), then the path (t\mapsto U_p(U^{(\ell,a,t)})) is of the form
+[
+g(t)=A\exp(\pm tE_a')B
+]
+for fixed (A,B\in G) and some (E_a'\in\mathfrak g) with (|E_a'|=1) (the sign and (E_a') reflect whether the link appears as (U_\ell) or (U_\ell^{-1}), and whether there is conjugation; in all cases (E_a') is an (\mathrm{Ad})-image of (E_a), hence norm-preserving). Therefore,
+[
+(X_\ell^a X_\ell^a)\widetilde z_p(U)
+=\left.\frac{\mathrm d^2}{\mathrm dt^2}\right|*{t=0}\vartheta(g(t))
+=\nabla^2\vartheta(g(0))[ \dot g(0), \dot g(0)],
+]
+and (|\dot g(0)|=1). Taking the supremum defines (C*{2,\vartheta}<\infty) by compactness and smoothness. ∎
+
+This is precisely the point of the replacement recommended in the analytic-engine notes: with (\widetilde z_p) globally smooth, the second derivative term is uniformly bounded. 
+
+---
+
+### F.3. Exponential Lyapunov candidate and the generator expansion
+
+Let the finite-volume Gibbs measure be (\mu_\Lambda(\mathrm dU)=Z_\Lambda^{-1}e^{-S_\Lambda(U)},\mathrm dU), with (S_\Lambda) smooth and local. (This is the standing form used throughout the project’s localization machinery. )
+
+Let (L_\Lambda) denote the reversible diffusion generator associated with (\mu_\Lambda):
+[
+L_\Lambda f
+:=\Delta_\Lambda f-\langle\nabla S_\Lambda,\nabla f\rangle
+=\sum_{\ell,a}(X_\ell^a)^2 f-\sum_{\ell,a}(X_\ell^aS_\Lambda)(X_\ell^af).
+]
+Let the carré du champ be
+[
+\Gamma_\Lambda(f):=\sum_{\ell,a}(X_\ell^af)^2.
+]
+
+Fix (\Phi\in C^2([0,2])) satisfying:
+[
+\Phi(0)=0,\qquad \Phi'(0)=0,\qquad \Phi'\ge 0.
+]
+A concrete example is (\Phi(s)=s^2), as requested.
+
+Define
+[
+V_\Lambda(U):=\sum_{p\in P(\Lambda)}\Phi(\widetilde z_p(U)),
+\qquad
+W_\Lambda(U):=\exp\big(\eta V_\Lambda(U)\big),
+]
+with (\eta>0) fixed (to be tuned).
+
+#### Lemma F.4 (generator on exponentials)
+
+For (W_\Lambda=e^{\eta V_\Lambda}),
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+=\eta,L_\Lambda V_\Lambda+\eta^2,\Gamma_\Lambda(V_\Lambda).
+]
+
+**Proof.**
+Use the diffusion product rule (L(fg)=fLg+gLf+2\Gamma(f,g)) and apply it to (f=g=e^{\eta V/2}), or directly differentiate (e^{\eta V}) twice along each (X_\ell^a). The standard identity is
+[
+L(e^{\eta V})=e^{\eta V}\left(\eta LV+\eta^2\Gamma(V)\right).
+]
+∎
+
+#### Lemma F.5 (chain rule for (L_\Lambda V_\Lambda))
+
+For each plaquette term,
+[
+L_\Lambda\big(\Phi(\widetilde z_p)\big)
+=\Phi'(\widetilde z_p),L_\Lambda \widetilde z_p
++\Phi''(\widetilde z_p),\Gamma_\Lambda(\widetilde z_p).
+]
+Hence
+[
+L_\Lambda V_\Lambda
+=\sum_{p}\Phi'(\widetilde z_p),L_\Lambda \widetilde z_p
++\sum_{p}\Phi''(\widetilde z_p),\Gamma_\Lambda(\widetilde z_p).
+]
+
+**Proof.**
+This is the usual chain rule for diffusion generators:
+[
+L(\Phi\circ u)=\Phi'(u)Lu+\Phi''(u)\Gamma(u),
+]
+valid for (u\in C^2) and (\Phi\in C^2). It follows by applying ((X_\ell^a)^2) to (\Phi(u)) and summing. ∎
+
+---
+
+### F.4. The key point: no additive (O(|P|)) term in ((L_\Lambda W_\Lambda)/W_\Lambda)
+
+Set the derivative bound
+[
+M_\Phi:=\sup_{s\in[0,2]}|\Phi''(s)|<\infty.
+]
+Since (\Phi'(0)=0) and (\Phi') is Lipschitz with constant (M_\Phi), the mean value theorem gives
+[
+|\Phi'(s)|\le M_\Phi,s,\qquad s\in[0,2].
+\tag{F.1}
+]
+
+Define the “linear badness functional”
+[
+D^{(1)}*\Lambda(U):=\sum*{p\in P(\Lambda)}\widetilde z_p(U)
+=\sum_{p}\vartheta(U_p(U)).
+]
+
+#### Proposition F.6 (Laplacian/Hessian term is weighted by (\widetilde z_p))
+
+There exists a constant (C_{\mathrm{Lap}}<\infty), depending only on ((G,\Phi)) and the fixed metric (but **not** on (\Lambda)), such that for all (\Lambda) and all (U\in M_\Lambda),
+[
+\sum_{p\in P(\Lambda)}\Phi'(\widetilde z_p(U))\ \Delta_\Lambda \widetilde z_p(U)
+\ \le\ C_{\mathrm{Lap}},D^{(1)}_\Lambda(U).
+]
+
+**Proof.**
+Expand (\Delta_\Lambda=\sum_{\ell,a}(X_\ell^a)^2). For a fixed (p), only (\ell\in\partial p) contribute. By Lemma F.3,
+[
+\big|(X_\ell^a X_\ell^a)\widetilde z_p(U)\big|\le C_{2,\vartheta}
+\quad\text{for }\ell\in\partial p.
+]
+Therefore
+[
+\Delta_\Lambda \widetilde z_p(U)
+=\sum_{\ell\in\partial p}\sum_{a}(X_\ell^aX_\ell^a)\widetilde z_p(U)
+\le 4,(\dim G),C_{2,\vartheta}.
+]
+Multiplying by (\Phi'(\widetilde z_p)) and using (F.1),
+[
+\Phi'(\widetilde z_p),\Delta_\Lambda \widetilde z_p
+\le M_\Phi,\widetilde z_p\cdot 4(\dim G)C_{2,\vartheta}.
+]
+Summing over (p) yields the claim with (C_{\mathrm{Lap}}:=4(\dim G)C_{2,\vartheta}M_\Phi). ∎
+
+This is the precise replacement of the “(O(|P|)) constant leak”: without the factor (\Phi'(\widetilde z_p)\sim \widetilde z_p), the bound would be (\Delta_\Lambda \widetilde z_p\le \text{const}) per plaquette, and summing would produce (\text{const}\cdot|P(\Lambda)|). The analytic-engine notes explicitly identify this as the obstruction and propose the same fix. 
+
+#### Proposition F.7 (the (\Phi'',\Gamma) term is also weighted by (\widetilde z_p))
+
+There exists (C_{\Gamma}<\infty) depending only on ((G,\Phi)) such that
+[
+\sum_{p}\Phi''(\widetilde z_p),\Gamma_\Lambda(\widetilde z_p)
+\ \le\ C_{\Gamma},D^{(1)}_\Lambda(U)\qquad \forall U.
+]
+
+**Proof.**
+By definition,
+[
+\Gamma_\Lambda(\widetilde z_p)=\sum_{\ell,a}(X_\ell^a\widetilde z_p)^2
+=\sum_{\ell\in\partial p}\sum_a (X_\ell^a\widetilde z_p)^2.
+]
+Lemma F.2(3) gives ((X_\ell^a\widetilde z_p)^2\le C_{\nabla/\vartheta}\widetilde z_p) for (\ell\in\partial p). Hence
+[
+\Gamma_\Lambda(\widetilde z_p)\le 4(\dim G),C_{\nabla/\vartheta},\widetilde z_p.
+]
+Since (|\Phi''(\widetilde z_p)|\le M_\Phi), we obtain
+[
+\Phi''(\widetilde z_p)\Gamma_\Lambda(\widetilde z_p)
+\le M_\Phi\cdot 4(\dim G),C_{\nabla/\vartheta},\widetilde z_p,
+]
+and summing over (p) gives (C_\Gamma:=4(\dim G)C_{\nabla/\vartheta}M_\Phi). ∎
+
+---
+
+### F.5. Resulting drift formula with uniform constants (and what remains)
+
+Collecting Lemmas F.4–F.5 and Propositions F.6–F.7 yields:
+
+#### Theorem F.8 (drift expansion with no additive (O(|P|)) term)
+
+Let (\widetilde z_p(U)=1-\frac1N\Re\Tr(U_p(U))) and (V_\Lambda=\sum_p\Phi(\widetilde z_p)) with (\Phi\in C^2([0,2])), (\Phi(0)=\Phi'(0)=0), (\Phi'\ge 0). Define (W_\Lambda=e^{\eta V_\Lambda}). Then there exist constants (C_1,C_2<\infty), depending only on (G) and (\Phi) (not on (\Lambda)), such that for all (U\in M_\Lambda),
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}(U)
+\le
+-\eta\sum_{p}\Phi'(\widetilde z_p),\langle\nabla S_\Lambda,\nabla \widetilde z_p\rangle
+;+;\eta,C_1,D^{(1)}*\Lambda(U)
+;+;\eta^2,\Gamma*\Lambda(V_\Lambda)(U),
+]
+and the constant (C_1) may be taken as (C_1=C_{\mathrm{Lap}}+C_\Gamma).
+
+In particular, **there is no volume-proportional additive term** of the form (\text{const}\cdot|P(\Lambda)|) appearing in ((L_\Lambda W_\Lambda)/W_\Lambda). All contributions coming from (\Delta_\Lambda\widetilde z_p) and (\Gamma_\Lambda(\widetilde z_p)) are proportional to the badness functional (D^{(1)}_\Lambda=\sum_p\widetilde z_p).
+
+**Proof.**
+Insert the chain rule decomposition:
+[
+\frac{L W}{W}=\eta\sum_p\Phi'(\widetilde z_p),L\widetilde z_p+\eta\sum_p\Phi''(\widetilde z_p)\Gamma(\widetilde z_p)+\eta^2\Gamma(V).
+]
+With (L\widetilde z_p=\Delta\widetilde z_p-\langle\nabla S,\nabla\widetilde z_p\rangle), the (\Delta\widetilde z_p) term is bounded by Proposition F.6 and the (\Phi''\Gamma(\widetilde z_p)) term by Proposition F.7. ∎
+
+This theorem is the “drift re-run” requested: the **only** point where the original (z_p=d_G^2) fails is that the second derivatives are not globally bounded due to the cut-locus nonsmoothness of (d_G^2); once (\widetilde z_p) is used, ((X_\ell^aX_\ell^a\widetilde z_p)) is uniformly bounded, exactly as anticipated in the analytic-engine notes. 
+
+---
+
+### F.6. Conditional closure of a Foster–Lyapunov inequality
+
+To “close” a Foster–Lyapunov inequality of the form
+[
+L_\Lambda W_\Lambda \ \le\ -\lambda,W_\Lambda + b,\mathbf 1_{C}(U)
+\tag{F.2}
+]
+with (\lambda,b) independent of (\Lambda), one still needs a **coercive negative term** dominating the positive (\eta C_1 D^{(1)}*\Lambda) and the positive (\eta^2\Gamma(V*\Lambda)). Theorem F.8 removes the volume-proportional obstruction, but does not, by itself, manufacture coercivity.
+
+A minimal conditional interface is the following:
+
+#### Assumption F.9 (coercive drift against the Lyapunov potential)
+
+There exist constants (c_0>0), (c_1\ge 0) independent of (\Lambda) such that for all (U),
+[
+\sum_{p}\Phi'(\widetilde z_p),\langle\nabla S_\Lambda,\nabla \widetilde z_p\rangle
+\ \ge\ c_0,D^{(1)}_\Lambda(U)\ -\ c_1.
+\tag{F.3}
+]
+
+This is precisely the missing “sign/size” step: it is a pointwise lower bound on the drift pairing (\langle\nabla S,\nabla(\text{badness})\rangle). No file in the project, as currently written, provides (F.3) in a form strong enough to use here; if it is intended, it must be proved as a standalone lemma.
+
+#### Corollary F.10 (conditional Foster–Lyapunov inequality with uniform constants)
+
+Assume (F.3) and suppose additionally that there exists (C_V<\infty) independent of (\Lambda) such that
+[
+\Gamma_\Lambda(V_\Lambda)(U)\ \le\ C_V,D^{(1)}*\Lambda(U)\qquad \forall U.
+\tag{F.4}
+]
+Then for (\eta>0) small enough (depending only on (c_0,C_1,C_V)), one has
+[
+\frac{L*\Lambda W_\Lambda}{W_\Lambda}(U)\ \le\ -\eta\Big(c_0-C_1-\eta C_V\Big),D^{(1)}*\Lambda(U)\ +\ \eta c_1.
+]
+In particular, defining (C:={D^{(1)}*\Lambda\le 2c_1/c_0}), one obtains (F.2) with
+[
+\lambda:=\eta\Big(c_0-C_1-\eta C_V\Big)\cdot \frac{2c_1}{c_0},
+\qquad
+b:=\eta c_1,\sup_{U\in C}W_\Lambda(U),
+]
+and all constants are independent of (\Lambda).
+
+**Proof.**
+Combine Theorem F.8 with (F.3) and (F.4). Choose (\eta) so that (c_0-C_1-\eta C_V>0). The stated decomposition into “outside (C)” and “inside (C)” is the standard conversion of a (-\text{const}\cdot D^{(1)}_\Lambda + \text{const}) drift to a (-\lambda+\text{const}\cdot\mathbf 1_C) drift. ∎
+
+**Status note.** The project *does* already implement the purely geometric part needed for uniform derivative bounds (locality + compactness + bounded overlap) in multiple places, e.g. the bounded-derivative argument for Wilson-action higher derivatives.  It also explicitly proposes the present (\widetilde z_p)-replacement as the workaround for the nonsmooth distance-square term.  What is not present (as a proved lemma) is an inequality of the form (F.3) or (F.4) for the actual chosen action (S_\Lambda). Without such a coercive drift estimate, one cannot claim a closed Lyapunov inequality.
+
+---
+
+### F.7. Summary of what Appendix F accomplishes
+
+1. The replacement (\widetilde z_p(U)=1-\frac1N\Re\Tr(U_p(U))) is globally smooth and conjugation-invariant, and its first/second derivatives along link vector fields are uniformly bounded, as required. 
+2. With (\Phi'(0)=0) (e.g. (\Phi(s)=s^2)), the second-derivative/Laplacian contribution in ((L_\Lambda W_\Lambda)/W_\Lambda) is proportional to the badness functional (\sum_p\widetilde z_p), not to (|P(\Lambda)|). This is the elimination of the “(O(|P|)) constant leak”.
+3. Full closure of a Foster–Lyapunov inequality still requires a coercive lower bound on the drift pairing (\sum_p \Phi'(\widetilde z_p)\langle\nabla S_\Lambda,\nabla\widetilde z_p\rangle) and a compatible control of (\Gamma(V_\Lambda)). Those bounds are not supplied by the current files and must be proved (or assumed) explicitly.

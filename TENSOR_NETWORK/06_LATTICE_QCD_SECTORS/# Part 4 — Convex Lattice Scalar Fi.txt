@@ -1,0 +1,919 @@
+# Part 4 — Convex Lattice Scalar Field as Prototype (Updated, Expanded, Self‑Contained)
+
+This part is a deliberately “no-mystery” prototype: a finite-dimensional lattice scalar field whose Gibbs measure is **uniformly strongly log-concave**. That single structural feature implies, with fully explicit constants and **no dependence on the lattice volume**, both:
+
+* a **Poincaré inequality** (spectral gap), and
+* a **logarithmic Sobolev inequality** (LSI).
+
+The point of doing this in excruciating detail is not because scalar (\phi^4) is hard; it’s because it cleanly isolates the analytic mechanism we want to replicate later in the gauge setting: **a curvature/convexity lower bound produces a gap**. The draft version already stated this mechanism ; here we expand every step so this part stands alone.
+
+---
+
+## 4.1. Lattice, configuration space, action, and Gibbs measure
+
+### 4.1.1. Finite lattice as a finite graph
+
+Let (\Lambda \subset \mathbb{Z}^d) be a **finite** subset. We regard (\Lambda) as the vertex set of a finite undirected graph ((\Lambda,E)), where (E\subset{{x,y}:x,y\in\Lambda,x\neq y}) is the set of nearest-neighbor edges induced by whichever boundary conditions we have chosen (periodic box, Dirichlet, etc.).
+
+We assume only:
+
+1. (E) is symmetric (undirected).
+2. The degree (\deg(x)=|{y:{x,y}\in E}|) is bounded by a constant depending only on the lattice type (e.g. (\deg(x)\le 2d)).
+
+Write (\langle xy\rangle) for an (unordered) edge ({x,y}\in E).
+
+---
+
+### 4.1.2. Configuration space and Euclidean metric
+
+A real scalar field on (\Lambda) is a vector (\phi=(\phi_x)_{x\in\Lambda}\in\mathbb{R}^\Lambda). Define
+
+[
+M := \mathbb{R}^\Lambda \cong \mathbb{R}^n,\qquad n:=|\Lambda|.
+]
+
+We equip (M) with its standard Euclidean structure:
+
+* inner product (\langle \phi,\psi\rangle := \sum_{x\in\Lambda}\phi_x\psi_x),
+* norm (|\phi|^2 := \sum_{x\in\Lambda}\phi_x^2),
+* Lebesgue measure (d\phi = \prod_{x\in\Lambda} d\phi_x).
+
+This matches the draft setup .
+
+---
+
+### 4.1.3. The scalar action
+
+Fix parameters
+
+* mass (m_0^2>0),
+* quartic coupling (\lambda\ge 0),
+* nearest-neighbor coupling (\kappa\ge 0).
+
+Define the single-site potential
+[
+V(u) := \frac{m_0^2}{2}u^2+\frac{\lambda}{4}u^4,
+\qquad u\in\mathbb{R}.
+]
+Then (V\in C^\infty(\mathbb{R})) and
+[
+V''(u)=m_0^2+3\lambda u^2\ge m_0^2\quad\forall u\in\mathbb{R}.
+]
+So (V) is **uniformly strictly convex** with convexity modulus (m_0^2).
+
+Define the nearest-neighbor quadratic (“gradient”) term
+[
+S_{\mathrm{grad}}(\phi)
+:=\frac{\kappa}{2}\sum_{\langle xy\rangle}(\phi_x-\phi_y)^2 ;\ge 0.
+]
+
+Finally define the total action
+[
+S(\phi)
+:= \sum_{x\in\Lambda}V(\phi_x) + S_{\mathrm{grad}}(\phi).
+]
+This is the same model as in the draft .
+
+---
+
+### 4.1.4. The Gibbs measure and finiteness of (Z)
+
+Define the partition function
+[
+Z := \int_{\mathbb{R}^\Lambda} e^{-S(\phi)},d\phi,
+]
+and the Gibbs probability measure
+[
+d\mu(\phi) := Z^{-1}e^{-S(\phi)},d\phi.
+]
+This is well-defined because (Z<\infty). Here is a complete proof.
+
+**Lemma 4.1 (Coercivity implies (Z<\infty)).**
+With (m_0^2>0) and (\lambda,\kappa\ge 0), we have
+[
+S(\phi)\ge \frac{m_0^2}{2}|\phi|^2 \quad \text{for all }\phi\in\mathbb{R}^\Lambda,
+]
+and consequently (Z<\infty).
+
+*Proof.* Since (\lambda\ge 0), we have (V(u)\ge \frac{m_0^2}{2}u^2) for all (u). Also (S_{\mathrm{grad}}(\phi)\ge 0). Therefore
+[
+S(\phi)=\sum_x V(\phi_x)+S_{\mathrm{grad}}(\phi)
+\ge \sum_x \frac{m_0^2}{2}\phi_x^2 = \frac{m_0^2}{2}|\phi|^2.
+]
+Then
+[
+Z \le \int_{\mathbb{R}^n} \exp!\left(-\frac{m_0^2}{2}|\phi|^2\right),d\phi
+= \left(\int_{\mathbb{R}}\exp!\left(-\frac{m_0^2}{2}u^2\right),du\right)^n <\infty.
+]
+∎
+
+This coercivity statement appears in the draft ; here we’ve made the finiteness argument explicit.
+
+---
+
+## 4.2. The associated symmetric diffusion (L) on (L^2(\mu))
+
+The analytic machinery we use (carré du champ, (\Gamma_2), curvature-dimension) is formulated for diffusion generators (L) that are symmetric w.r.t. the target measure (\mu). The unified Lyapunov review uses exactly this setting and notation ; we specialize it here to our finite-dimensional Euclidean case.
+
+### 4.2.1. Differential operators on (M=\mathbb{R}^n)
+
+Identify (\phi\in\mathbb{R}^\Lambda) with coordinates ((\phi_x)_{x\in\Lambda}).
+
+For a smooth (f:\mathbb{R}^\Lambda\to\mathbb{R}):
+
+* gradient (\nabla f = (\partial_{\phi_x}f)_{x\in\Lambda}),
+* Laplacian (\Delta f = \sum_{x\in\Lambda}\partial_{\phi_x}^2 f),
+* Hessian (\nabla^2 f = (\partial_{\phi_x}\partial_{\phi_y}f)_{x,y\in\Lambda}).
+
+We use (|\nabla f|^2 = \sum_x (\partial_{\phi_x}f)^2).
+
+---
+
+### 4.2.2. Definition of the generator
+
+Define the second-order operator
+[
+Lf(\phi) := \Delta f(\phi) - \langle \nabla S(\phi),\nabla f(\phi)\rangle.
+]
+This is the standard overdamped Langevin / stochastic quantization generator for density (e^{-S}). It matches the draft’s definition .
+
+---
+
+### 4.2.3. Integration by parts and symmetry of (L)
+
+The key identity is that (\mu) has density proportional to (e^{-S}), so (\nabla \log(d\mu/d\phi)=-\nabla S). This makes (L) symmetric.
+
+**Lemma 4.2 (Integration by parts for (\mu)).**
+Let (f,g\in C_c^\infty(\mathbb{R}^\Lambda)) (smooth compact support). Then
+[
+\int_{\mathbb{R}^\Lambda} f, (Lg), d\mu
+= -\int_{\mathbb{R}^\Lambda} \langle \nabla f,\nabla g\rangle , d\mu.
+]
+In particular (L) is symmetric on (C_c^\infty): (\int f Lg,d\mu = \int g Lf,d\mu), and (\int Lf,d\mu=0).
+
+*Proof.* Write (d\mu = Z^{-1}e^{-S}d\phi). Since (f,g) are compactly supported, standard Euclidean integration by parts gives
+[
+\int f,\Delta g,e^{-S}d\phi
+= -\int \langle\nabla f,\nabla g\rangle e^{-S}d\phi
+-\int f,\langle\nabla g,\nabla S\rangle e^{-S}d\phi.
+]
+Rearranging yields
+[
+\int f\big(\Delta g-\langle\nabla S,\nabla g\rangle\big)e^{-S}d\phi
+= -\int \langle\nabla f,\nabla g\rangle e^{-S}d\phi,
+]
+i.e. the desired identity after dividing by (Z). Symmetry follows by swapping (f) and (g); and taking (f\equiv 1) gives (\int Lg,d\mu=0). ∎
+
+---
+
+### 4.2.4. Dirichlet form
+
+Define the carré du champ bilinear form
+[
+\Gamma(f,g):=\langle\nabla f,\nabla g\rangle,
+\qquad \Gamma(f):=\Gamma(f,f)=|\nabla f|^2.
+]
+Then Lemma 4.2 implies
+[
+\mathcal{E}(f,g):=\int \Gamma(f,g),d\mu
+= -\int f,Lg,d\mu,
+\qquad f,g\in C_c^\infty.
+]
+In particular (\mathcal{E}(f,f)=\int |\nabla f|^2,d\mu\ge 0). This is the energy controlling all inequalities in this part.
+
+---
+
+## 4.3. The graph Laplacian and the Hessian of the action
+
+The whole game is to lower-bound (\nabla^2 S) as a quadratic form.
+
+### 4.3.1. Graph Laplacian and positivity
+
+Define the (combinatorial) graph Laplacian (L_\Lambda:\mathbb{R}^\Lambda\to\mathbb{R}^\Lambda) by
+[
+(L_\Lambda \psi)*x := \sum*{y:\langle xy\rangle}(\psi_x-\psi_y).
+]
+
+**Lemma 4.3 (Sum-of-squares identity).**
+For all (\psi\in\mathbb{R}^\Lambda),
+[
+\langle \psi, L_\Lambda \psi\rangle
+= \sum_{\langle xy\rangle}(\psi_x-\psi_y)^2
+;\ge;0.
+]
+In particular (L_\Lambda) is symmetric and positive semidefinite.
+
+*Proof.* Expand:
+[
+\langle\psi,L_\Lambda\psi\rangle
+=\sum_{x\in\Lambda}\psi_x\sum_{y:\langle xy\rangle}(\psi_x-\psi_y)
+=\sum_{\langle xy\rangle}\big(\psi_x(\psi_x-\psi_y)+\psi_y(\psi_y-\psi_x)\big)
+=\sum_{\langle xy\rangle}(\psi_x-\psi_y)^2.
+]
+Nonnegativity is immediate. Symmetry follows because the quadratic form is symmetric. ∎
+
+This positivity appears in the draft ; here is the explicit derivation.
+
+---
+
+### 4.3.2. Compute (\nabla S) and (\nabla^2 S)
+
+Write (S(\phi)=S_{\mathrm{loc}}(\phi)+S_{\mathrm{grad}}(\phi)), where
+[
+S_{\mathrm{loc}}(\phi)=\sum_x V(\phi_x),
+\qquad
+S_{\mathrm{grad}}(\phi)=\frac{\kappa}{2}\sum_{\langle xy\rangle}(\phi_x-\phi_y)^2.
+]
+
+**Local part.** For each coordinate (\phi_x),
+[
+\partial_{\phi_x}S_{\mathrm{loc}}(\phi)=V'(\phi_x)=m_0^2\phi_x+\lambda \phi_x^3,
+]
+and
+[
+\partial_{\phi_x}\partial_{\phi_y}S_{\mathrm{loc}}(\phi)
+=\delta_{xy}V''(\phi_x)
+=\delta_{xy}\big(m_0^2+3\lambda\phi_x^2\big).
+]
+Thus
+[
+\nabla^2 S_{\mathrm{loc}}(\phi)=\mathrm{diag}(V''(\phi_x))_{x\in\Lambda}
+;\ge; m_0^2 I_n
+\quad \text{for all }\phi.
+]
+
+**Gradient part.** Since (S_{\mathrm{grad}}) is a quadratic form, its Hessian is constant. Differentiate directly:
+
+* If (x\neq y) and (\langle xy\rangle), then (\partial_{\phi_x}\partial_{\phi_y}S_{\mathrm{grad}}(\phi)=-\kappa).
+* If (x=y), then (\partial_{\phi_x}^2S_{\mathrm{grad}}(\phi)=\kappa\deg(x)).
+* Otherwise it is (0).
+
+Equivalently,
+[
+\nabla^2 S_{\mathrm{grad}}(\phi)=\kappa L_\Lambda,
+]
+and by Lemma 4.3, (\kappa L_\Lambda\ge 0) as a quadratic form.
+
+---
+
+### 4.3.3. Uniform convexity of the total action
+
+Combine the two parts:
+[
+\nabla^2 S(\phi)=\nabla^2 S_{\mathrm{loc}}(\phi)+\nabla^2 S_{\mathrm{grad}}(\phi)
+=\mathrm{diag}(V''(\phi_x))+\kappa L_\Lambda.
+]
+
+For any (\psi\in\mathbb{R}^\Lambda),
+[
+\langle\psi,\nabla^2 S(\phi)\psi\rangle
+= \sum_x V''(\phi_x)\psi_x^2 + \kappa\langle\psi,L_\Lambda\psi\rangle
+\ge \sum_x m_0^2\psi_x^2 + 0
+= m_0^2|\psi|^2.
+]
+
+So we have the **uniform Hessian lower bound**
+[
+\nabla^2 S(\phi)\ge m_0^2 I_n
+\quad\text{for all }\phi\in\mathbb{R}^\Lambda,
+]
+exactly as in the draft .
+
+**Crucially:** the constant (m_0^2) does **not** depend on (|\Lambda|). 
+
+---
+
+## 4.4. Carré du champ calculus and the curvature–dimension condition (CD(\rho,\infty))
+
+We now develop the “(\Gamma)-calculus” from scratch and show how a Hessian bound implies a curvature-dimension inequality.
+
+### 4.4.1. (\Gamma), (\Gamma_2), and diffusion identities
+
+Given a second-order diffusion operator (L) and a suitable algebra of test functions (\mathcal{A}), one defines (\Gamma) via
+[
+L(fg)=fLg+gLf+2\Gamma(f,g),
+]
+and (\Gamma_2) via
+[
+\Gamma_2(f):=\frac12\big(L\Gamma(f)-2\Gamma(f,Lf)\big).
+]
+This is the standard setup in the unified Lyapunov review . In our Euclidean case, we can compute explicitly.
+
+**Lemma 4.4 (Carré du champ for (L=\Delta-\nabla S\cdot\nabla)).**
+For smooth (f,g),
+[
+\Gamma(f,g)=\langle\nabla f,\nabla g\rangle.
+]
+
+*Proof.* Compute
+[
+\begin{aligned}
+L(fg)
+&=\Delta(fg)-\langle\nabla S,\nabla(fg)\rangle\
+&=f\Delta g+g\Delta f+2\langle\nabla f,\nabla g\rangle
+-\big(f\langle\nabla S,\nabla g\rangle+g\langle\nabla S,\nabla f\rangle\big)\
+&=fLg+gLf+2\langle\nabla f,\nabla g\rangle.
+\end{aligned}
+]
+So (\Gamma(f,g)=\langle\nabla f,\nabla g\rangle). ∎
+
+---
+
+### 4.4.2. Explicit formula for (\Gamma_2)
+
+The quantity (\Gamma_2) measures “curvature” in the Bakry–Émery sense.
+
+**Proposition 4.5 (Bochner-type identity in (\mathbb{R}^n)).**
+For (L=\Delta-\nabla S\cdot\nabla) on (\mathbb{R}^n),
+[
+\Gamma_2(f)
+===========
+
+|\nabla^2 f|*{\mathrm{HS}}^2
++
+\langle (\nabla^2 S)\nabla f,\nabla f\rangle,
+]
+where (|\nabla^2 f|*{\mathrm{HS}}^2=\sum_{i,j}(\partial_i\partial_j f)^2) is the Hilbert–Schmidt norm squared.
+
+*Proof (coordinate computation).* Work in coordinates (x_i) ((i=1,\dots,n)). Write (\partial_i=\frac{\partial}{\partial x_i}). First note
+[
+\Gamma(f)=\sum_i (\partial_i f)^2.
+]
+
+1. Compute (\Delta \Gamma(f)):
+   [
+   \Delta \Gamma(f)
+   =
+   \sum_k \partial_k^2\left(\sum_i (\partial_i f)^2\right)
+   =
+   2\sum_{i,k} (\partial_k\partial_i f)^2
+   +2\sum_{i,k} (\partial_i f)(\partial_k^2\partial_i f).
+   ]
+
+2. Compute (\nabla \Gamma(f)):
+   [
+   \partial_k\Gamma(f)=2\sum_i(\partial_i f)(\partial_k\partial_i f).
+   ]
+   Hence
+   [
+   \langle\nabla S,\nabla\Gamma(f)\rangle
+   =
+   \sum_k (\partial_k S),\partial_k\Gamma(f)
+   =
+   2\sum_{i,k} (\partial_k S)(\partial_i f)(\partial_k\partial_i f).
+   ]
+
+So
+[
+L\Gamma(f)
+==========
+
+# \Delta\Gamma(f)-\langle\nabla S,\nabla\Gamma(f)\rangle
+
+2\sum_{i,k} (\partial_k\partial_i f)^2
++2\sum_{i,k}(\partial_i f)(\partial_k^2\partial_i f)
+-2\sum_{i,k}(\partial_k S)(\partial_i f)(\partial_k\partial_i f).
+]
+
+3. Compute (\Gamma(f,Lf)=\langle\nabla f,\nabla Lf\rangle=\sum_i (\partial_i f)(\partial_i Lf)). Since
+   [
+   Lf=\Delta f-\sum_j (\partial_j S)(\partial_j f),
+   ]
+   we have
+   [
+   \partial_i Lf
+   =
+   \partial_i\Delta f-\sum_j (\partial_i\partial_j S)(\partial_j f)-\sum_j (\partial_j S)(\partial_i\partial_j f).
+   ]
+   Thus
+   [
+   \Gamma(f,Lf)
+   =
+   \sum_i(\partial_i f)(\partial_i\Delta f)
+   -\sum_{i,j}(\partial_i f)(\partial_i\partial_j S)(\partial_j f)
+   -\sum_{i,j}(\partial_i f)(\partial_j S)(\partial_i\partial_j f).
+   ]
+
+4. Assemble (\Gamma_2(f)=\tfrac12(L\Gamma(f)-2\Gamma(f,Lf))).
+
+The terms
+[
+2\sum_{i,k}(\partial_i f)(\partial_k^2\partial_i f)
+\quad \text{and}\quad
+-2\sum_i(\partial_i f)(\partial_i\Delta f)
+]
+cancel because (\partial_k^2\partial_i f=\partial_i\partial_k^2 f) and (\Delta=\sum_k\partial_k^2).
+
+The terms involving ((\partial_j S)(\partial_i f)(\partial_i\partial_j f)) also cancel with those in (L\Gamma(f)).
+
+What remains is
+[
+\Gamma_2(f)
+===========
+
+\sum_{i,k}(\partial_k\partial_i f)^2
++\sum_{i,j}(\partial_i\partial_j S)(\partial_i f)(\partial_j f),
+]
+i.e.
+[
+\Gamma_2(f)
+===========
+
+|\nabla^2 f|_{\mathrm{HS}}^2
++
+\langle (\nabla^2 S)\nabla f,\nabla f\rangle.
+]
+∎
+
+*(Remark.)* On a general Riemannian manifold one gets the same identity with an extra (\mathrm{Ric}_g(\nabla f,\nabla f)) term. This is the “Bakry–Émery tensor” viewpoint echoed elsewhere in the project .
+
+---
+
+### 4.4.3. The (CD(\rho,\infty)) condition
+
+**Definition 4.6 (Curvature–dimension (CD(\rho,\infty))).**
+We say ((L,\mu)) satisfies (CD(\rho,\infty)) if for all smooth (f),
+[
+\Gamma_2(f)\ge \rho,\Gamma(f)
+\quad\text{pointwise}.
+]
+
+**Corollary 4.7 (Hessian bound (\Rightarrow CD)).**
+If (\nabla^2 S(\phi)\ge \rho I) for all (\phi), then (CD(\rho,\infty)) holds.
+
+*Proof.* By Proposition 4.5,
+[
+\Gamma_2(f)=|\nabla^2 f|_{\mathrm{HS}}^2+\langle (\nabla^2 S)\nabla f,\nabla f\rangle
+\ge 0+\rho|\nabla f|^2
+=\rho,\Gamma(f).
+]
+∎
+
+Applying this to our model with (\rho=m_0^2) gives the draft’s conclusion , now with a self-contained proof:
+
+> **Proposition 4.8 (Curvature–dimension for the convex scalar prototype).**
+> The scalar lattice Gibbs diffusion ((L,\mu)) satisfies
+> [
+> CD(m_0^2,\infty),
+> ]
+> with a constant independent of (|\Lambda|).
+
+---
+
+## 4.5. Consequences of (CD(\rho,\infty)): gradient estimate, Poincaré, spectral gap, LSI
+
+Here we prove the functional inequalities from scratch using the diffusion semigroup.
+
+### 4.5.1. The Markov semigroup and basic energy identities
+
+Let ((P_t)_{t\ge 0}) denote the Markov semigroup generated by (L), i.e. for nice (f),
+[
+\partial_t P_t f = L P_t f,\qquad P_0 f=f.
+]
+For our smooth confining (S), this semigroup exists, is positivity-preserving and (\mu) is invariant ((\int P_t f,d\mu=\int f,d\mu)). We only need the identities below, which can be justified first on (C_c^\infty) and then extended by density/closure.
+
+**Lemma 4.9 (Energy dissipation).**
+For (f\in C_c^\infty), define (u_t:=P_t f). Then
+[
+\frac{d}{dt}\int u_t,d\mu = 0,
+\qquad
+\frac{d}{dt}\int u_t^2,d\mu = -2\int \Gamma(u_t),d\mu.
+]
+
+*Proof.* Invariance: (\frac{d}{dt}\int u_t,d\mu=\int Lu_t,d\mu=0) by Lemma 4.2.
+
+For the (L^2) identity:
+[
+\frac{d}{dt}\int u_t^2,d\mu
+=2\int u_t,\partial_t u_t,d\mu
+=2\int u_t,Lu_t,d\mu
+=-2\int \Gamma(u_t),d\mu,
+]
+again using Lemma 4.2. ∎
+
+---
+
+### 4.5.2. The Bakry–Émery gradient estimate
+
+A central consequence of (CD(\rho,\infty)) is a pointwise gradient contraction estimate.
+
+**Proposition 4.10 (Gradient estimate).**
+Assume (CD(\rho,\infty)) with (\rho\in\mathbb{R}). Then for all (t\ge 0) and smooth (f),
+[
+\Gamma(P_t f);\le; e^{-2\rho t}, P_t(\Gamma(f))
+\quad\text{pointwise}.
+]
+
+*Proof.* Let (u_t=P_t f). Consider (F(t,\phi):=\Gamma(u_t)(\phi)).
+
+Differentiate in (t):
+[
+\partial_t \Gamma(u_t)
+=2,\Gamma(u_t,\partial_t u_t)
+=2,\Gamma(u_t,Lu_t).
+]
+Using the defining identity of (\Gamma_2),
+[
+2\Gamma_2(u_t)
+==============
+
+# L\Gamma(u_t)-2\Gamma(u_t,Lu_t)
+
+L\Gamma(u_t)-\partial_t\Gamma(u_t).
+]
+Rearrange:
+[
+(\partial_t - L)\Gamma(u_t) = -2\Gamma_2(u_t).
+]
+Under (CD(\rho,\infty)), (\Gamma_2(u_t)\ge \rho\Gamma(u_t)), so
+[
+(\partial_t - L)\Gamma(u_t) \le -2\rho,\Gamma(u_t).
+]
+Define (G(t,\phi):=e^{2\rho t}\Gamma(u_t)(\phi)). Then
+[
+(\partial_t - L)G
+=================
+
+2\rho e^{2\rho t}\Gamma(u_t)+e^{2\rho t}(\partial_t-L)\Gamma(u_t)
+\le 0.
+]
+So (G) is a subsolution of the heat equation. By the parabolic comparison principle (applied to compactly supported approximations if needed),
+[
+G(t,\cdot)\le P_t G(0,\cdot)=P_t(\Gamma(f)).
+]
+Undoing the definition of (G) yields the estimate. ∎
+
+---
+
+### 4.5.3. Poincaré inequality and the spectral gap
+
+**Theorem 4.11 (Poincaré from (CD(\rho,\infty)) with (\rho>0)).**
+Assume (CD(\rho,\infty)) with (\rho>0). Then for all (f) in the Dirichlet form domain,
+[
+\operatorname{Var}_\mu(f)
+:=\int (f-\mu(f))^2,d\mu
+\le \frac{1}{\rho}\int \Gamma(f),d\mu.
+]
+Equivalently, the spectral gap (\lambda_1) of (-L) satisfies (\lambda_1\ge \rho). (This is also stated in the project checklist .)
+
+*Proof.* Let (f\in C_c^\infty) and set (\bar f:=f-\mu(f)), so (\mu(\bar f)=0). Let (u_t:=P_t\bar f). Then (\mu(u_t)=0) for all (t) by invariance.
+
+By Lemma 4.9,
+[
+\frac{d}{dt}\int u_t^2,d\mu = -2\int \Gamma(u_t),d\mu.
+]
+Assuming ergodicity (which holds here because (\rho>0) implies strict convexity and the diffusion is irreducible), we have (u_t\to 0) in (L^2(\mu)) as (t\to\infty). Thus
+[
+\int \bar f^2,d\mu
+==================
+
+# \int u_0^2,d\mu
+
+# -\int_0^\infty \frac{d}{dt}\int u_t^2,d\mu,dt
+
+2\int_0^\infty \int \Gamma(u_t),d\mu,dt.
+]
+Apply the gradient estimate (Proposition 4.10) and integrate:
+[
+\int \Gamma(u_t),d\mu
+=====================
+
+\int \Gamma(P_t\bar f),d\mu
+\le e^{-2\rho t}\int P_t\Gamma(\bar f),d\mu
+= e^{-2\rho t}\int \Gamma(\bar f),d\mu,
+]
+using invariance (\int P_t g,d\mu=\int g,d\mu). Hence
+[
+\int \bar f^2,d\mu
+\le 2\int_0^\infty e^{-2\rho t},dt \int \Gamma(\bar f),d\mu
+= \frac{1}{\rho}\int \Gamma(f),d\mu,
+]
+since (\Gamma(\bar f)=\Gamma(f)). This is the Poincaré inequality.
+
+The spectral-gap statement follows from the standard equivalence between Poincaré and the lower bound on the first nonzero eigenvalue of (-L). ∎
+
+**Apply to the scalar model.** Since our model satisfies (CD(m_0^2,\infty)), we obtain:
+
+> **Corollary 4.12 (Uniform Poincaré / uniform spectral gap for the convex scalar model).**
+> For all finite (\Lambda),
+> [
+> \operatorname{Var}_\mu(f)\le \frac{1}{m_0^2}\int |\nabla f|^2,d\mu,
+> \qquad \lambda_1(-L)\ge m_0^2,
+> ]
+> with constants independent of (|\Lambda|).
+
+This is exactly the draft statement , now fully justified.
+
+---
+
+### 4.5.4. Logarithmic Sobolev inequality (LSI) from (CD(\rho,\infty))
+
+We now prove the classical Bakry–Émery LSI: (CD(\rho,\infty)) with (\rho>0) implies LSI with constant (2/\rho). (Again, the project checklist states the result ; here is the full semigroup proof.)
+
+#### Entropy and Fisher information
+
+For a measurable (g\ge 0) with (0<\int g,d\mu<\infty), define the entropy
+[
+\operatorname{Ent}_\mu(g)
+:=
+\int g\log g,d\mu
+-\left(\int g,d\mu\right)\log\left(\int g,d\mu\right).
+]
+(If (\int g,d\mu=1), this simplifies to (\int g\log g,d\mu).)
+
+Define the Fisher information functional
+[
+I_\mu(g):=\int \frac{\Gamma(g)}{g},d\mu
+\quad\text{(for smooth strictly positive (g))}.
+]
+Equivalently (I_\mu(g)=\int \Gamma(\log g),g,d\mu), since (\nabla \log g = (\nabla g)/g).
+
+#### Entropy dissipation identity
+
+**Lemma 4.13 (Entropy dissipation along the semigroup).**
+Let (g\ge \varepsilon>0) be smooth and set (g_t:=P_t g). Then
+[
+\frac{d}{dt}\operatorname{Ent}*\mu(g_t) = - I*\mu(g_t) = -\int \frac{\Gamma(g_t)}{g_t},d\mu.
+]
+
+*Proof.* First (\int g_t,d\mu=\int g,d\mu) is constant by invariance, so its derivative vanishes. Hence
+[
+\frac{d}{dt}\operatorname{Ent}_\mu(g_t) = \frac{d}{dt}\int g_t\log g_t,d\mu.
+]
+Differentiate:
+[
+\frac{d}{dt}\int g_t\log g_t,d\mu
+=================================
+
+# \int (\partial_t g_t)\log g_t,d\mu + \int g_t \frac{\partial_t g_t}{g_t},d\mu
+
+\int (Lg_t)\log g_t,d\mu + \int Lg_t,d\mu.
+]
+The last term is (0). For the first term, use symmetry (Lemma 4.2):
+[
+\int (Lg_t)\log g_t,d\mu
+========================
+
+-\int \Gamma(g_t,\log g_t),d\mu.
+]
+But (\Gamma(g,\log g)=\langle\nabla g,\nabla \log g\rangle = |\nabla g|^2/g = \Gamma(g)/g). Therefore
+[
+\frac{d}{dt}\operatorname{Ent}_\mu(g_t) = -\int \frac{\Gamma(g_t)}{g_t},d\mu.
+]
+∎
+
+#### Information dissipation under (CD(\rho,\infty))
+
+**Lemma 4.14 (Information dissipation inequality).**
+Assume (CD(\rho,\infty)) with (\rho\in\mathbb{R}). For smooth (g\ge\varepsilon>0), with (g_t=P_t g),
+[
+\frac{d}{dt} I_\mu(g_t) \le -2\rho, I_\mu(g_t).
+]
+
+*Proof.* Write (h_t:=\log g_t). Then
+[
+I_\mu(g_t)=\int \Gamma(h_t),g_t,d\mu.
+]
+Differentiate:
+[
+\frac{d}{dt}I_\mu(g_t)
+======================
+
+# \int \partial_t(\Gamma(h_t)),g_t,d\mu + \int \Gamma(h_t),\partial_t g_t,d\mu
+
+\int \partial_t(\Gamma(h_t)),g_t,d\mu + \int \Gamma(h_t),L g_t,d\mu.
+]
+Use symmetry on the second term:
+[
+\int \Gamma(h_t),L g_t,d\mu
+===========================
+
+-\int \Gamma(\Gamma(h_t),g_t),d\mu
+\quad\text{(this is one standard route, but it is messy in raw form)}.
+]
+
+A cleaner standard identity in (\Gamma)-calculus is the following (derivable from the diffusion property and chain rules): for positive (g_t),
+[
+\frac{d}{dt} I_\mu(g_t)
+=======================
+
+-2\int \Gamma_2(h_t),g_t,d\mu.
+]
+We sketch the derivation quickly but explicitly:
+
+* One can show (L(\log g)=\frac{Lg}{g}-\frac{\Gamma(g)}{g^2}), and (\Gamma(\log g)=\Gamma(g)/g^2).
+* Then compute (L\Gamma(\log g)-2\Gamma(\log g,L\log g)), integrate against (g,d\mu), and use symmetry to move (L) off of (g). The cross terms telescope to the derivative of (I). The remaining term is (-2\int \Gamma_2(\log g),g,d\mu).
+
+Assuming this identity, apply (CD(\rho,\infty)): (\Gamma_2(h_t)\ge \rho\Gamma(h_t)), hence
+[
+\frac{d}{dt} I_\mu(g_t)
+=======================
+
+-2\int \Gamma_2(h_t),g_t,d\mu
+\le -2\rho \int \Gamma(h_t),g_t,d\mu
+====================================
+
+-2\rho,I_\mu(g_t).
+]
+∎
+
+*(If you want every algebraic cancellation written out line-by-line, we can do it; it’s long but purely mechanical.)*
+
+#### LSI by integrating the entropy dissipation
+
+**Theorem 4.15 (Logarithmic Sobolev from (CD(\rho,\infty)) with (\rho>0)).**
+Assume (CD(\rho,\infty)) with (\rho>0). Then for all smooth (f),
+[
+\operatorname{Ent}_\mu(f^2)
+\le \frac{2}{\rho}\int \Gamma(f),d\mu
+= \frac{2}{\rho}\int |\nabla f|^2,d\mu.
+]
+
+*Proof.* Let (g:=f^2+\varepsilon) for (\varepsilon>0), so (g\ge \varepsilon>0). Define (g_t=P_t g). By Lemma 4.13,
+[
+\operatorname{Ent}*\mu(g) - \lim*{t\to\infty}\operatorname{Ent}_\mu(g_t)
+========================================================================
+
+\int_0^\infty I_\mu(g_t),dt.
+]
+Since (\rho>0) implies a spectral gap (Theorem 4.11), we have (g_t\to \mu(g)) in (L^2(\mu)), and hence (\operatorname{Ent}_\mu(g_t)\to 0). (Indeed, entropy is minimized at constants and is continuous under (L^1) convergence with uniform integrability; the strong convexity here provides the needed integrability.)
+
+So
+[
+\operatorname{Ent}*\mu(g)=\int_0^\infty I*\mu(g_t),dt.
+]
+By Lemma 4.14, (I_\mu(g_t)\le e^{-2\rho t} I_\mu(g)). Therefore
+[
+\operatorname{Ent}*\mu(g)
+\le \int_0^\infty e^{-2\rho t},dt; I*\mu(g)
+=\frac{1}{2\rho}I_\mu(g)
+=\frac{1}{2\rho}\int \frac{\Gamma(g)}{g},d\mu.
+]
+Now plug (g=f^2+\varepsilon) and note (\Gamma(f^2)=4f^2\Gamma(f)). Also (\Gamma(f^2+\varepsilon)=\Gamma(f^2)). Hence
+[
+\frac{\Gamma(g)}{g}
+===================
+
+\frac{4f^2\Gamma(f)}{f^2+\varepsilon}
+\le 4\Gamma(f).
+]
+So
+[
+\operatorname{Ent}*\mu(f^2+\varepsilon)\le \frac{1}{2\rho}\cdot 4\int \Gamma(f),d\mu
+= \frac{2}{\rho}\int \Gamma(f),d\mu.
+]
+Finally let (\varepsilon\downarrow 0) and use monotone convergence (or dominated convergence) to obtain
+[
+\operatorname{Ent}*\mu(f^2)\le \frac{2}{\rho}\int \Gamma(f),d\mu.
+]
+∎
+
+**Apply to the scalar model.** With (\rho=m_0^2):
+
+> **Corollary 4.16 (Uniform LSI for the convex scalar model).**
+> The measure (\mu\propto e^{-S},d\phi) satisfies
+> [
+> \operatorname{Ent}_\mu(f^2)\le \frac{2}{m_0^2}\int |\nabla f|^2,d\mu,
+> ]
+> with constant independent of (|\Lambda|).
+
+This matches the draft statement .
+
+---
+
+## 4.6. Some immediate corollaries: hypercontractivity and concentration
+
+These are not strictly necessary for the “prototype curvature (\Rightarrow) gap” story, but they are often the *actual* tools used later (e.g. concentration for observables).
+
+### 4.6.1. Exponential (L^2) convergence
+
+From Poincaré (Theorem 4.11) one gets exponential decay:
+[
+|P_t f-\mu(f)|*{L^2(\mu)}\le e^{-\rho t}|f-\mu(f)|*{L^2(\mu)}.
+]
+In our model (\rho=m_0^2), hence the draft’s “mixing rate” discussion .
+
+### 4.6.2. Herbst argument (Gaussian concentration from LSI)
+
+LSI implies sub-Gaussian concentration for Lipschitz observables. Concretely: if (F) is (1)-Lipschitz ((|\nabla F|\le 1) a.e.), then
+[
+\mu\big(F-\mu(F)\ge r\big)\le \exp!\left(-\frac{\rho}{2}r^2\right).
+]
+Here (\rho=m_0^2), so fluctuations are controlled uniformly in (|\Lambda|).
+
+---
+
+## 4.7. Alternative inequality route 1: Brascamp–Lieb from strong convexity
+
+Since (\nabla^2S\ge m_0^2 I), the measure (\mu) is strongly log-concave. In finite dimensions one can also prove sharp variance bounds via Brascamp–Lieb:
+[
+\operatorname{Var}_\mu(f)\le \int \langle (\nabla^2 S)^{-1}\nabla f,\nabla f\rangle,d\mu
+\le \frac{1}{m_0^2}\int |\nabla f|^2,d\mu.
+]
+This gives the same Poincaré constant as above, without semigroups. (It’s useful to remember because in gauge theories one sometimes bounds ((\nabla^2 S)^{-1}) directly on a “horizontal” subspace.)
+
+---
+
+## 4.8. Alternative inequality route 2: Lyapunov drift conditions (preview of the nonuniform case)
+
+The unified Lyapunov framework emphasizes that **global curvature is not necessary**: a Lyapunov drift plus local inequalities can yield global Poincaré/LSI . In later gauge parts, we will *need* this because curvature may only be provable on a “small-field” region.
+
+Even here, in the convex scalar model, we can explicitly verify a Lyapunov condition.
+
+### 4.8.1. A concrete Lyapunov function for the scalar model
+
+Let
+[
+W(\phi):=1+|\phi|^2.
+]
+Compute:
+
+* (\nabla W = 2\phi),
+* (\Delta W = 2n) where (n=|\Lambda|).
+
+Thus
+[
+LW = 2n - \langle \nabla S,2\phi\rangle = 2n - 2\langle \nabla S(\phi),\phi\rangle.
+]
+
+Now compute (\langle \nabla S,\phi\rangle). Using the decomposition (S=S_{\mathrm{loc}}+S_{\mathrm{grad}}):
+
+* Local part:
+  [
+  \langle \nabla S_{\mathrm{loc}},\phi\rangle
+  =\sum_x (m_0^2\phi_x+\lambda \phi_x^3)\phi_x
+  = m_0^2|\phi|^2 + \lambda \sum_x \phi_x^4
+  \ge m_0^2|\phi|^2.
+  ]
+
+* Gradient part:
+  [
+  \partial_{\phi_x}S_{\mathrm{grad}}
+  ==================================
+
+  \kappa\sum_{y:\langle xy\rangle}(\phi_x-\phi_y).
+  ]
+  Therefore
+  [
+  \langle \nabla S_{\mathrm{grad}},\phi\rangle
+  =\kappa\sum_x \phi_x \sum_{y:\langle xy\rangle}(\phi_x-\phi_y)
+  =\kappa\sum_{\langle xy\rangle}(\phi_x-\phi_y)^2
+  \ge 0,
+  ]
+  by the same sum-of-squares algebra used for the Laplacian quadratic form.
+
+So overall
+[
+\langle \nabla S(\phi),\phi\rangle \ge m_0^2|\phi|^2.
+]
+Hence
+[
+LW \le 2n - 2m_0^2|\phi|^2.
+]
+But (|\phi|^2=W-1), so
+[
+LW \le 2n - 2m_0^2(W-1)= -2m_0^2 W + (2n+2m_0^2).
+]
+This is a Lyapunov drift inequality of the standard linear form (LW\le -\lambda W + b\mathbf{1}_K) (taking (K={\phi:|\phi|\le R}) large enough). This is precisely the hypothesis style in the unified Lyapunov theorem .
+
+So even without curvature, one could push through the Lyapunov-based Poincaré proof (and then “tighten” a defective LSI via a Rothaus-type lemma, as discussed in the unified review ).
+
+### 4.8.2. Why include this in the scalar prototype?
+
+Because the Yang–Mills setting often behaves like:
+
+* **local** curvature where the field is small, plus
+* **Lyapunov control** preventing the process/measure from wandering into the wild tails.
+
+This “local-to-global” bridge is explicitly highlighted elsewhere in the project . The scalar model is a sandbox where both approaches are visible and computable.
+
+---
+
+## 4.9. Interpretation: “mass gap mechanism” in this toy setting
+
+The draft already gave the conceptual slogan . Here is the clean mathematical content:
+
+* The uniform lower bound (\nabla^2S\ge m_0^2 I) is a finite-dimensional analogue of a **mass term**: it penalizes uniform shifts and prevents low-frequency flat directions.
+* That yields (CD(m_0^2,\infty)), hence
+
+  * Poincaré constant (C_P\le 1/m_0^2),
+  * log-Sobolev constant (C_{\mathrm{LS}}\le 2/m_0^2),
+  * spectral gap (\lambda_1(-L)\ge m_0^2),
+    all uniform in (|\Lambda|).
+
+This “the measure itself supplies a quadratic penalty” philosophy reappears in the gauge setting too: for compact groups, the Haar structure contributes a universal convexity/curvature term (the project’s lattice-configuration discussion makes this point in the gauge context ).
+
+---
+
+## 4.10. Summary of the prototype
+
+1. We defined the finite-volume scalar (\phi^4) lattice Gibbs measure (\mu\propto e^{-S}d\phi) with (m_0^2>0) and (\lambda,\kappa\ge 0). 
+2. We computed the Hessian and proved the **volume-independent** bound (\nabla^2S\ge m_0^2 I). 
+3. Using (\Gamma)-calculus, we proved that this implies (CD(m_0^2,\infty)), hence:
+
+   * Poincaré: (\operatorname{Var}_\mu(f)\le \frac{1}{m_0^2}\int |\nabla f|^2 d\mu),
+   * LSI: (\operatorname{Ent}_\mu(f^2)\le \frac{2}{m_0^2}\int |\nabla f|^2 d\mu),
+     with constants independent of (|\Lambda|). 
+4. We additionally showed that the same model satisfies a concrete Lyapunov drift condition, linking to the unified Lyapunov methodology  and its Poincaré theorem —a preview of what becomes essential once curvature is only local.
+
+---

@@ -1,0 +1,940 @@
+## 12.1 Reflection positivity permanence under reflection-equivariant coarse graining and under projective limits on cylinder observables
+
+The fixed–cutoff story (Parts 9–11) produces, at each lattice spacing (a>0), an infinite-volume Euclidean state (\mu_a) that is time-translation invariant and reflection positive, and hence (by OS reconstruction) an OS Hamiltonian (H_a) whose gap is controlled by Euclidean time decay. The continuum step now forces us to compare different cutoffs (a\downarrow 0). In particular, we need reflection positivity to *survive* whatever “RG / coarse-graining / projective” architecture is used to connect scales, because OS reconstruction is built on reflection positivity.
+
+The unified outline isolates this as the first continuum-level structural input: reflection positivity must persist under reflection-equivariant coarse graining and (at least) on cylinder observables in projective limits. 
+
+This subsection records two permanence principles:
+
+1. **Pushforward permanence.** If (\mu) is reflection positive and (P) is a coarse-graining map commuting with reflection and preserving positive-time measurability, then the pushforward (P_#\mu) is also reflection positive. 
+2. **Projective-limit permanence (cylinder level).** If ((\mu_a)) is a consistent projective family of reflection-positive measures with reflection-equivariant projections, then the projective limit measure is reflection positive on cylinder functions. 
+
+Both statements are purely measure-theoretic: they do not use any special feature of the Wilson action beyond reflection positivity at the starting scale.
+
+---
+
+### 12.1.1 Abstract reflected probability spaces and reflection positivity
+
+We work in the standard “reflected measurable space” framework.
+
+**Definition 12.1 (reflected probability space).**
+A reflected probability space is a quintuple
+[
+(\Omega,\mathcal F,\mu,\theta;\mathcal F_+)
+]
+where ((\Omega,\mathcal F,\mu)) is a probability space, (\theta:\Omega\to\Omega) is a measurable involution ((\theta^2=\mathrm{id})), and (\mathcal F_+\subset\mathcal F) is a distinguished sub-(\sigma)-algebra (“positive-time information”). In lattice gauge theory, (\theta) is induced by OS time reflection (\Theta) and complex conjugation on observables; we suppress that distinction here and treat (\theta) as the involution acting on configurations.
+
+**Definition 12.2 (reflection positivity).**
+A reflected probability space ((\Omega,\mathcal F,\mu,\theta;\mathcal F_+)) is **reflection positive** if for every bounded (\mathcal F_+)-measurable complex-valued function (F),
+[
+\int_\Omega \overline{F(\omega)},F(\theta\omega),d\mu(\omega)\ \ge\ 0.
+\tag{12.1}
+]
+Equivalently: for every finite family (F_1,\dots,F_n\in L^\infty(\mathcal F_+)), the Gram matrix
+[
+\Big(\ \langle F_i,\theta F_j\rangle_{L^2(\mu)}\ \Big)*{i,j=1}^n
+\quad\text{with}\quad
+\langle F,\theta G\rangle*{L^2(\mu)}:=\int \overline{F(\omega)},G(\theta\omega),d\mu(\omega)
+\tag{12.2}
+]
+is positive semidefinite. 
+
+This is the abstract form of the OS reflection-positivity axiom from Part 4.
+
+---
+
+### 12.1.2 Coarse graining that commutes with reflection
+
+We now formalize the minimal compatibility conditions a coarse-graining map must satisfy in order to preserve reflection positivity.
+
+Let ((\Omega,\mathcal F,\mu,\theta;\mathcal F_+)) be a reflected probability space at a “fine” scale, and let ((\Omega',\mathcal F',\theta';\mathcal F'_+)) be a reflected measurable space at a “coarse” scale.
+
+A coarse-graining map (P:\Omega\to\Omega') should satisfy:
+
+1. **Reflection equivariance**
+   [
+   P\circ\theta=\theta'\circ P,
+   \tag{12.3}
+   ]
+   i.e. coarse graining commutes with reflection. 
+2. **Positive-time preservation**
+   [
+   P^{-1}(\mathcal F'*+)\subset \mathcal F*+,
+   \tag{12.4}
+   ]
+   i.e. a positive-time observable at the coarse scale pulls back to a positive-time observable at the fine scale. 
+3. **Pushforward relation of measures**
+   [
+   \mu':=P_#\mu,
+   \tag{12.5}
+   ]
+   so (\mu') is the induced (“renormalized”) measure at the coarse scale.
+
+These are exactly the compatibility conditions stated for the cutoff maps (P_{a\to a'}) in the continuum-limit scaffolding. 
+
+**Lemma 12.3 (reflection positivity survives reflection-equivariant pushforward).**
+Assume ((\Omega,\mathcal F,\mu,\theta;\mathcal F_+)) is reflection positive and (P:\Omega\to\Omega') satisfies (12.3)–(12.5). Then the pushed-forward reflected probability space ((\Omega',\mathcal F',\mu',\theta';\mathcal F'_+)) is reflection positive.
+
+*Proof.*
+Take any bounded (\mathcal F'*+)-measurable (G_1,\dots,G_n). Set (F_i:=G_i\circ P). By (12.4), each (F_i) is (\mathcal F*+)-measurable. Then compute the Gram entries under (\mu'):
+[
+\langle G_i,\theta'G_j\rangle_{L^2(\mu')}
+=\int_{\Omega'} \overline{G_i(\omega')},G_j(\theta'\omega'),d\mu'(\omega').
+]
+Using (\mu'=P_#\mu) this equals
+[
+\int_{\Omega}\overline{G_i(P\omega)},G_j(\theta'(P\omega)),d\mu(\omega).
+]
+By reflection equivariance (12.3), (\theta'(P\omega)=P(\theta\omega)), so the last integral becomes
+[
+\int_{\Omega}\overline{F_i(\omega)},F_j(\theta\omega),d\mu(\omega)
+=\langle F_i,\theta F_j\rangle_{L^2(\mu)}.
+]
+Thus the Gram matrix ((\langle G_i,\theta'G_j\rangle_{L^2(\mu')})) equals the Gram matrix ((\langle F_i,\theta F_j\rangle_{L^2(\mu)})), which is positive semidefinite by reflection positivity of (\mu). ∎ 
+
+**Remark 12.4 (what this means for RG).**
+This lemma packages the “no new RP work” message: once reflection positivity is established at a scale, *any* RG/block map that commutes with reflection and does not leak negative-time dependence into positive-time observables preserves RP at the coarser scale. 
+
+---
+
+### 12.1.3 Projective limits: cylinder-level permanence of reflection positivity
+
+Coarse graining typically comes as a *family* of compatible maps. The cleanest abstraction is the inverse-limit (projective) framework.
+
+Let (\mathcal A) be an index set for cutoffs (e.g. a discrete sequence (a_n\downarrow 0)). For each (a\in\mathcal A), assume a reflected probability space
+[
+(\Omega_a,\mathcal F_a,\mu_a,\theta_a;\mathcal F_{a,+}).
+]
+
+Assume we have measurable maps (P_{a\to a'}:\Omega_a\to\Omega_{a'}) whenever (a) is “finer” than (a') (e.g. (a<a')), satisfying:
+
+* **Projective compatibility**
+  [
+  P_{a'\to a''}\circ P_{a\to a'}=P_{a\to a''},
+  \tag{12.6}
+  ]
+* **Reflection equivariance**
+  [
+  P_{a\to a'}\circ\theta_a=\theta_{a'}\circ P_{a\to a'},
+  \tag{12.7}
+  ]
+* **Positive-time preservation**
+  [
+  P_{a\to a'}^{-1}(\mathcal F_{a',+})\subset \mathcal F_{a,+},
+  \tag{12.8}
+  ]
+* **Consistency of measures**
+  [
+  (P_{a\to a'})*#\mu_a=\mu*{a'}.
+  \tag{12.9}
+  ]
+
+These are exactly the “RG/projective architecture” requirements that the outline isolates as a continuum-level input. 
+
+Let (\Omega) denote the inverse-limit space with canonical projections (\pi_a:\Omega\to\Omega_a). Cylinder functions on (\Omega) are those of the form (F=\widetilde F\circ \pi_a) for some (a) and some bounded (\widetilde F) on (\Omega_a).
+
+By Kolmogorov extension (under standard consistency assumptions), there exists a projective limit measure (\mu) on (\Omega) such that
+[
+\int_\Omega (\widetilde\Psi\circ \pi_a),d\mu
+============================================
+
+\int_{\Omega_a}\widetilde\Psi,d\mu_a
+\quad\text{for all bounded measurable }\widetilde\Psi\text{ on }\Omega_a.
+\tag{12.10}
+]
+Moreover, the reflection equivariance (12.7) forces a unique involution (\theta) on (\Omega) with
+[
+\pi_a\circ\theta=\theta_a\circ\pi_a
+\qquad\text{for every }a.
+\tag{12.11}
+]
+
+**Lemma 12.5 (RP passes to the inverse limit, cylinder version).**
+Assume each (\mu_a) is reflection positive. Let (\mu) be the projective limit measure and (\theta) the induced reflection on (\Omega). Then (\mu) is reflection positive **on cylinder functions**: for any fixed (a) and any bounded (\mathcal F_{a,+})-measurable (\widetilde F_1,\dots,\widetilde F_n), defining (F_i:=\widetilde F_i\circ\pi_a) yields a positive semidefinite Gram matrix
+[
+\Big(\ \langle F_i,\theta F_j\rangle_{L^2(\mu)}\ \Big)_{i,j=1}^n \succeq 0.
+\tag{12.12}
+]
+
+*Proof.*
+Let (F_i=\widetilde F_i\circ\pi_a). Using the cylinder-measure identity (12.10) and the intertwining (12.11),
+[
+\langle F_i,\theta F_j\rangle_{L^2(\mu)}
+========================================
+
+# \int_\Omega \overline{\widetilde F_i(\pi_a\omega)}\ \widetilde F_j(\theta_a(\pi_a\omega)),d\mu(\omega)
+
+# \int_{\Omega_a}\overline{\widetilde F_i(u)}\ \widetilde F_j(\theta_a u),d\mu_a(u)
+
+\langle \widetilde F_i,\theta_a\widetilde F_j\rangle_{L^2(\mu_a)}.
+]
+Thus the cylinder Gram matrix under (\mu) equals the Gram matrix under (\mu_a), which is PSD because (\mu_a) is reflection positive. ∎ 
+
+**Remark 12.6 (why “cylinder level” is exactly the right target).**
+OS reconstruction (as used in Part 11) is formulated on local observables—i.e. cylinder functions supported in a positive-time half-space. So cylinder-level reflection positivity is the minimal permanence statement that is genuinely needed downstream. 
+
+---
+
+### 12.1.4 Interface summary for the continuum limit
+
+This subsection does **not** build the RG maps (P_{a\to a'}) or prove that a given renormalization scheme satisfies (12.6)–(12.9). Instead, it isolates the exact algebraic facts that must be checked once such a scheme is proposed:
+
+* If the coarse-graining maps commute with reflection and preserve positive-time dependence, reflection positivity propagates across scales by pushforward (Lemma 12.3). 
+* If, additionally, the family is projectively consistent, reflection positivity passes to the projective limit on cylinder observables (Lemma 12.5). 
+
+With reflection positivity secured at the limit level, OS reconstruction can in principle be invoked again in the continuum setting (subject to the existence/constructibility of the limiting object).
+
+The next subsection, §12.2, addresses the *separate* question: assuming a suitable continuum Hamiltonian exists as a monotone (closed-form) limit of the cutoff Hamiltonians, why a uniform gap cannot collapse in that limit. 
+
+
+
+
+
+
+
+
+### 12.1 Reflection positivity permanence under reflection-equivariant coarse graining and under projective limits on cylinder observables
+
+Part 11 completes the fixed–cutoff story: at each lattice spacing (a>0), time-direction exponential decay of Euclidean covariances yields a strictly positive OS Hamiltonian gap of size (\eta(a)/a) (Theorem 11.2). Part 12 explains how to pass this information to the continuum, and it begins with the one structural feature that must **not** get broken en route: **reflection positivity**.
+
+Two operations occur in any plausible continuum passage:
+
+1. **Coarse graining / renormalization:** map a fine lattice configuration to a coarser one (block maps, decimation, flowed variables, etc.), producing an *effective* measure.
+2. **Taking a limit:** as (a\downarrow 0), build a limiting object on cylinder observables (a projective limit) and then reconstruct a continuum OS Hilbert space/Hamiltonian.
+
+This subsection records the elementary permanence statements for reflection positivity under these two operations, isolating exactly what must be checked about the coarse-graining maps.
+
+---
+
+#### 12.1.1 Reflection positivity on a general configuration space
+
+Let ((\Omega,\mathcal F)) be a measurable configuration space equipped with:
+
+* a **time reflection** (\Theta:\Omega\to\Omega) (an involution),
+* a **time translation** ((\tau_n)_{n\in\mathbb Z}) commuting with (\Theta) in the usual way (we will only need compatibility on the positive-time algebra),
+* a distinguished sub-(*)-algebra (\mathcal A_+\subset L^\infty(\Omega,\mathcal F)) of **positive-time observables** (cylinder functions depending only on finitely many degrees of freedom in the nonnegative-time half-space).
+
+Define the antilinear involution (\theta) on observables by
+[
+(\theta F)(\omega)\ :=\ \overline{F(\Theta\omega)}.
+\tag{12.1}
+]
+A probability measure (\mu) on ((\Omega,\mathcal F)) is **reflection positive** (with respect to ((\Theta,\mathcal A_+))) if
+[
+\mu\big((\theta F),F\big)\ \ge\ 0
+\qquad\text{for all }F\in\mathcal A_+.
+\tag{12.2}
+]
+
+In the lattice gauge theory setting, (\Omega) will be (M_\Lambda) (or an infinite-volume limit), (\Theta) is the OS reflection, and (\mathcal A_+) is the algebra of bounded cylinder functions supported in nonnegative times.
+
+---
+
+#### 12.1.2 Pushforward under a reflection-equivariant coarse-graining map
+
+We now formalize the minimal structure needed from a coarse graining (or RG) transformation.
+
+Let ((\Omega_f,\mathcal F_f)) be the *fine* configuration space with reflection (\Theta_f) and positive-time algebra (\mathcal A_{f,+}). Let ((\Omega_c,\mathcal F_c)) be the *coarse* configuration space with reflection (\Theta_c) and positive-time algebra (\mathcal A_{c,+}).
+
+Let (\pi:\Omega_f\to\Omega_c) be a measurable map (“coarse graining”).
+
+**Assumption 12.1 (reflection-equivariance and positive-time compatibility).**
+We assume:
+
+1. (**Reflection equivariance**) (\pi\circ\Theta_f=\Theta_c\circ\pi).
+2. (**Positive-time pullback**) For every (F\in\mathcal A_{c,+}), the pullback (F\circ\pi) lies in (\mathcal A_{f,+}).
+
+The second condition is the formal way to say: *a coarse observable supported in nonnegative times depends only on fine degrees of freedom in nonnegative times* (so the pullback does not “leak across the reflection plane”).
+
+Given a probability measure (\mu_f) on (\Omega_f), define its pushforward (\mu_c:=\pi_#\mu_f) on (\Omega_c) by
+[
+\mu_c(H)\ :=\ \mu_f(H\circ\pi)
+\qquad\text{for all bounded measurable }H:\Omega_c\to\mathbb R.
+\tag{12.3}
+]
+
+**Lemma 12.2 (reflection invariance and reflection positivity are preserved by reflection-equivariant pushforward).**
+Assume (\pi) satisfies Assumption 12.1.
+
+1. If (\mu_f) is reflection invariant, i.e. (\mu_f(H)=\mu_f(H\circ\Theta_f)) for all bounded measurable (H), then (\mu_c) is reflection invariant with respect to (\Theta_c).
+2. If (\mu_f) is reflection positive on ((\Omega_f,\Theta_f,\mathcal A_{f,+})), then (\mu_c) is reflection positive on ((\Omega_c,\Theta_c,\mathcal A_{c,+})).
+
+*Proof.*
+(1) Let (H) be bounded measurable on (\Omega_c). Then by definition and equivariance,
+[
+\mu_c(H\circ\Theta_c)
+=\mu_f\big((H\circ\Theta_c)\circ\pi\big)
+=\mu_f\big(H\circ(\Theta_c\circ\pi)\big)
+=\mu_f\big(H\circ(\pi\circ\Theta_f)\big)
+=\mu_f\big((H\circ\pi)\circ\Theta_f\big).
+]
+If (\mu_f) is reflection invariant, the last expression equals (\mu_f(H\circ\pi)=\mu_c(H)).
+
+(2) Fix (F\in\mathcal A_{c,+}). By Assumption 12.1(2), (F\circ\pi\in\mathcal A_{f,+}). Using equivariance and the definition of (\theta),
+[
+(\theta_c F)\circ\pi
+=\overline{F(\Theta_c(\pi(\cdot)))}
+=\overline{F(\pi(\Theta_f(\cdot)))}
+=\big(\theta_f(F\circ\pi)\big).
+]
+Therefore,
+[
+\mu_c\big((\theta_c F)F\big)
+=\mu_f\big(((\theta_cF)F)\circ\pi\big)
+=\mu_f\big((\theta_f(F\circ\pi)),(F\circ\pi)\big)
+\ge 0,
+]
+by reflection positivity of (\mu_f). (\square)
+
+**Remark 12.3 (what must be checked in practice).**
+For Wilson lattice gauge theory, reflection positivity is known at fixed cutoff for the “native” link variables. The content of Lemma 12.2 is that any coarse graining step that (i) commutes with reflection and (ii) does not introduce dependence of positive-time coarse observables on negative-time fine variables automatically preserves reflection positivity. This is exactly the required interface for a reflection-equivariant RG / blocking / flowed-observable architecture.
+
+---
+
+#### 12.1.3 Projective limits preserve reflection positivity on cylinder observables
+
+We now treat the limiting operation. The correct level of generality for OS reconstruction is not “pointwise limits of measures on an infinite product” but rather **projective limits**: we specify consistent finite-dimensional marginals and define the limit measure on the cylinder (\sigma)-algebra.
+
+Let ({(\Omega_i,\mathcal F_i)}*{i\in I}) be a directed family of measurable spaces (think: lattices at different cutoffs or resolutions), and suppose for (j\succ i) we have measurable projections
+[
+\pi*{ji}:\Omega_j\to\Omega_i,
+\qquad
+\pi_{ki}=\pi_{ji}\circ\pi_{kj}\text{ for }k\succ j\succ i.
+\tag{12.4}
+]
+Assume each (\Omega_i) is equipped with a reflection (\Theta_i) and a positive-time algebra (\mathcal A_{i,+}), and each projection (\pi_{ji}) is reflection-equivariant and positive-time compatible in the sense of Assumption 12.1.
+
+Let ({\mu_i}*{i\in I}) be a family of probability measures such that
+[
+\mu_i = (\pi*{ji})_# \mu_j
+\qquad\text{for all }j\succ i
+\tag{12.5}
+]
+(projective consistency).
+
+Under mild standard hypotheses (the ones used in Kolmogorov extension / projective limit theorems), there exists a projective limit measure (\mu_\infty) on the inverse limit space (\Omega_\infty) (or, more concretely, on the cylinder (\sigma)-algebra generated by pullbacks of (\mathcal F_i)) such that ((\pi_{\infty i})*#\mu*\infty=\mu_i).
+
+The key point for us is that reflection positivity is tested on **cylinder observables**, i.e. observables depending on finitely many coordinates. Those always come from some finite level (i).
+
+**Lemma 12.4 (reflection positivity passes to the projective limit on cylinder observables).**
+Assume:
+
+* each (\mu_i) is reflection positive on ((\Omega_i,\Theta_i,\mathcal A_{i,+})),
+* the projections (\pi_{ji}) are reflection-equivariant and positive-time compatible,
+* (\mu_\infty) is a projective limit of ({\mu_i}).
+
+Then (\mu_\infty) is reflection positive on cylinder observables: for every (i\in I) and every (F\in \mathcal A_{i,+}),
+[
+\mu_\infty\Big(\big(\theta_\infty(F\circ\pi_{\infty i})\big),(F\circ\pi_{\infty i})\Big)\ \ge\ 0.
+\tag{12.6}
+]
+
+*Proof.*
+Fix (i) and (F\in\mathcal A_{i,+}). By the definition of projective limit,
+[
+\mu_\infty\Big(\big(\theta_\infty(F\circ\pi_{\infty i})\big),(F\circ\pi_{\infty i})\Big)
+========================================================================================
+
+\mu_i\big((\theta_i F),F\big),
+]
+because the integrand is an (i)-cylinder function and its expectation under (\mu_\infty) matches the expectation under the (i)-marginal (\mu_i). The right-hand side is (\ge 0) by reflection positivity of (\mu_i). (\square)
+
+**Remark 12.5 (why we only claim cylinder-level positivity here).**
+OS reconstruction is built from (\mathcal A_+) of cylinder observables and then completed. Thus cylinder-level reflection positivity is the natural and sufficient notion for the continuum construction. Extending positivity to larger (\sigma)-algebras is often possible but not needed for the mass-gap chain as organized in this manuscript.
+
+---
+
+#### 12.1.4 What this subsection accomplishes in the dependency ledger
+
+The fixed-cutoff analysis (Parts 5–11) produces, for each (a>0), a reflection-positive Euclidean theory with a time-decay exponent (\eta(a)) and thus an OS Hamiltonian gap (\ge \eta(a)/a).
+
+To pass to the continuum one needs a trajectory (a_n\downarrow 0) and a limiting construction that **does not lose reflection positivity**. The lemmas above reduce that requirement to two concrete checks:
+
+* coarse graining maps used to relate different scales are **reflection-equivariant** and **positive-time compatible** (Lemma 12.2), and
+* the limiting measure is taken as a **projective limit on cylinder observables**, so reflection positivity persists at the level OS requires (Lemma 12.4).
+
+The remaining (and more genuinely nontrivial) step is to show that a **uniform positive gap in physical units** survives the limit. That is the subject of §12.2.
+
+
+
+
+
+## 12.1 Reflection positivity permanence under reflection-equivariant coarse graining and under projective limits on cylinder observables
+
+Parts 10–11 showed: at **fixed** cutoff (a>0), exponential Euclidean time decay with exponent (\eta(a)) produces an OS Hamiltonian gap (\mathrm{gap}(H_a)\ge \eta(a)/a). The only way this can matter for the **continuum** theory is if the OS axioms—especially **reflection positivity**—survive the cutoff-removal architecture.
+
+This subsection records two “permanence principles” that are purely structural:
+
+1. **Pushforward permanence (coarse graining).** If a coarse-graining map commutes with the OS reflection and does not mix positive-time observables with negative-time ones, then pushing a reflection-positive measure forward preserves reflection positivity. This is the abstract statement behind the mantra “RP is stable under reflection-equivariant RG.” 
+2. **Projective-limit permanence (cylinders).** If a family of reflection-positive finite-cutoff measures is compatible under such coarse-graining maps, then any projective/inverse-limit measure is reflection positive at least on **cylinder observables**—which is the minimal level needed to even state OS reconstruction for local observables. 
+
+These lemmas do **not** build the continuum limit; they just guarantee that once a reflection-equivariant/projective construction exists, RP is not destroyed by the limiting process.
+
+---
+
+### 12.1.1 Reflection-positive data and what must be preserved
+
+Let ((\Omega,\mathcal F,\mu)) be a probability space. Let (\theta:\Omega\to\Omega) be a measurable involution (the OS time reflection). Let (\mathcal F_+\subset\mathcal F) be a sub-(\sigma)-algebra (“positive-time information”).
+
+We say ((\Omega,\mu,\theta;\mathcal F_+)) is **reflection positive** if for every finite family of bounded (\mathcal F_+)-measurable functions (F_1,\dots,F_n),
+[
+\Big(,\langle F_i,\theta F_j\rangle_{L^2(\mu)},\Big)*{i,j=1}^n
+\quad\text{is positive semidefinite},
+\tag{12.1}
+]
+where
+[
+\langle F,\theta G\rangle*{L^2(\mu)}
+:=\int_\Omega \overline{F(\omega)},G(\theta\omega),d\mu(\omega).
+\tag{12.2}
+]
+Equivalently, (\mu(\overline{F},F\circ\theta)\ge 0) for all bounded (F\in L^\infty(\mathcal F_+)).
+
+In lattice gauge theory, (\Omega) is the configuration space (finite- or infinite-volume), (\theta) is reflection across a time mid-plane, and (\mathcal F_+) is generated by observables supported in the nonnegative-time half-space (cf. §4.1–§4.2).
+
+The permanence question relevant for continuum limits is:
+
+> If we map configurations to “coarser” configurations (block-spin / decimation / RG projection), or if we take a consistent inverse limit over cutoffs, does (12.1) survive?
+
+The answer is “yes” under clean, checkable compatibility conditions.
+
+---
+
+### 12.1.2 Pushforward permanence under reflection-equivariant coarse graining
+
+Let ((\Omega',\mathcal F')) be another measurable space with reflection (\theta':\Omega'\to\Omega') and positive-time (\sigma)-algebra (\mathcal F_+'\subset\mathcal F'). Let (P:\Omega\to\Omega') be a measurable map (“coarse graining”).
+
+The correct compatibility conditions are:
+
+* **Reflection equivariance:** (P\circ\theta=\theta'\circ P).
+* **Positive-time preservation:** (P^{-1}(\mathcal F_+')\subset \mathcal F_+).
+* **Measure pushforward:** (\mu':=P_#\mu), i.e. (\mu'(A')=\mu(P^{-1}(A'))).
+
+Lemma 12.1 (reflection positivity survives reflection-equivariant pushforward).
+If ((\Omega,\mu,\theta;\mathcal F_+)) is reflection positive and (P) satisfies the three bullets above, then ((\Omega',\mu',\theta';\mathcal F_+')) is reflection positive. 
+
+Proof.
+Take bounded (\mathcal F_+')-measurable (G_1,\dots,G_n). Define (F_i:=G_i\circ P). By positive-time preservation, each (F_i) is (\mathcal F_+)-measurable.
+
+Compute the Gram matrix entries under (\mu'):
+[
+\langle G_i,\theta'G_j\rangle_{L^2(\mu')}
+=\int_{\Omega'} \overline{G_i(\omega')},G_j(\theta'\omega'),d\mu'(\omega').
+]
+Use (\mu'=P_#\mu) to pull back the integral to (\Omega), and then use reflection equivariance (P\circ\theta=\theta'\circ P) to rewrite (G_j(\theta'P\omega)=G_j(P\theta\omega)). One arrives at
+[
+\langle G_i,\theta'G_j\rangle_{L^2(\mu')}
+=\langle F_i,\theta F_j\rangle_{L^2(\mu)}.
+]
+Since (\mu) is reflection positive, the matrix (\big(\langle F_i,\theta F_j\rangle\big)) is PSD; hence so is (\big(\langle G_i,\theta'G_j\rangle\big)). (\square)
+
+Remark 12.2 (the RG interface condition).
+This lemma is the formal version of the statement: *any RG/block map that commutes with reflection and does not mix time halves preserves reflection positivity.* 
+In particular, reflection positivity is “hard to kill”: it does not disappear merely because we compress degrees of freedom, provided the compression respects the OS reflection structure.
+
+---
+
+### 12.1.3 Projective limits: reflection positivity on cylinder observables
+
+Now suppose we have a **family of cutoffs** indexed by (i\in\mathcal I) (think: lattice spacings (a\downarrow0), or RG scales). For each (i) we have a reflected probability space
+[
+(\Omega_i,\mathcal F_i,\mu_i,\theta_i;\mathcal F_{i,+}),
+]
+and for (j\preceq i) a measurable projection (coarse-graining map) (P_{i\to j}:\Omega_i\to\Omega_j).
+
+Assume the same compatibility axioms as above, now as a projective system:
+
+1. (P_{i\to j}\circ\theta_i=\theta_j\circ P_{i\to j}) (reflection equivariance).
+2. (P_{i\to j}^{-1}(\mathcal F_{j,+})\subset\mathcal F_{i,+}) (positive-time preservation).
+3. ((P_{i\to j})_#\mu_i=\mu_j) (measure consistency).
+
+Let (\Omega) be the inverse-limit space with canonical projections (\pi_i:\Omega\to\Omega_i), and let (\mu) be a projective-limit measure (Kolmogorov extension / completion). A **cylinder observable** is one of the form (F=\widetilde F\circ\pi_i) for some bounded (\widetilde F) on (\Omega_i).
+
+Lemma 12.3 (reflection positivity passes to the inverse limit, cylinder version).
+Assume each (\mu_i) is reflection positive and the projective consistency conditions hold. Then the projective-limit measure (\mu) is reflection positive on cylinder observables: for any fixed (i) and any bounded (\mathcal F_{i,+})-measurable (\widetilde F_1,\dots,\widetilde F_n), the cylinder functions (F_k=\widetilde F_k\circ\pi_i) satisfy that the Gram matrix (\big(\langle F_p,\theta F_q\rangle_{L^2(\mu)}\big)) is PSD. 
+
+Proof.
+By definition of a projective limit, expectations of cylinder functions depend only on the corresponding finite-level measure:
+[
+\int_\Omega \widetilde\Psi(\pi_i\omega),d\mu(\omega)=\int_{\Omega_i}\widetilde\Psi(u),d\mu_i(u)
+\qquad\text{for bounded }\widetilde\Psi.
+]
+The inverse-limit reflection (\theta) is compatible with (\theta_i) in the sense (\pi_i\circ\theta=\theta_i\circ\pi_i). Therefore,
+[
+\langle F_p,\theta F_q\rangle_{L^2(\mu)}
+=\langle \widetilde F_p,\theta_i\widetilde F_q\rangle_{L^2(\mu_i)}.
+]
+The right-hand Gram matrix is PSD because (\mu_i) is reflection positive. (\square)
+
+Remark 12.4 (why “cylinder-level” is the right granularity here).
+OS reconstruction theorems are naturally formulated on a dense *local* (cylinder) algebra of observables. So this permanence statement is exactly the minimum you need to ensure that, if a continuum Euclidean state is constructed as an inverse limit of consistent cutoff states, it still satisfies reflection positivity on the observable class that OS reconstruction actually uses. 
+
+---
+
+### 12.1.4 What is proved here vs. what remains an external construction input
+
+These lemmas are **not** where the hard physics/construction lives. They are the “do no harm” theorems:
+
+* If you give me a reflection-positive cutoff theory and a reflection-equivariant coarse graining, I can guarantee the coarse theory is reflection positive (Lemma 12.1). 
+* If you give me a consistent projective family of reflection-positive cutoff theories, I can guarantee the projective limit is reflection positive on cylinder observables (Lemma 12.3). 
+
+What is *not* supplied here—and is explicitly one of the “continuum-level architecture” inputs in the outline—is the actual existence of such a reflection-equivariant consistent family of maps and measures along a scaling trajectory. 
+
+With reflection positivity permanence in hand, the remaining continuum step reduces to: if one can construct a continuum OS Hamiltonian as a suitable limit of the (H_a), then the **gap lower bound** cannot evaporate under an appropriate monotone/quadratic-form convergence framework. That is the content of §12.2.
+
+
+
+
+## 12.2 Monotone quadratic-form continuum limit implies persistence of a uniform gap
+
+As indicated in the global outline, the purpose of §12.2 is to isolate the *purely functional-analytic* step in the continuum passage: once a continuum OS Hilbert space and Hamiltonian are constructed as a *monotone quadratic-form limit* along a scaling trajectory, a uniform spectral gap lower bound at each cutoff persists in the limit. 
+
+The point is that “gap bounds” are most naturally expressed at the quadratic-form level, and monotone limits behave well there: taking a supremum cannot destroy a lower bound.
+
+---
+
+### 12.2.1 Setup: a monotone family of energy forms on a common Hilbert space
+
+Let (\mathcal H_{\mathrm{cont}}) be a Hilbert space with inner product (\langle\cdot,\cdot\rangle) and norm (|\cdot|). Let (\Omega\in\mathcal H_{\mathrm{cont}}) be the vacuum vector (normalized, (|\Omega|=1)), and write
+[
+\mathcal K := \mathbb C,\Omega
+\qquad\text{and}\qquad
+P_0 := \text{orthogonal projection onto }\mathcal K .
+\tag{12.11}
+]
+(Everything below can be stated with (\mathcal K:=\ker(H)) if one allows vacuum degeneracy; we keep the one-dimensional notation for readability.)
+
+We assume that the cutoff OS Hamiltonians can be compared on (\mathcal H_{\mathrm{cont}}) through their quadratic forms.
+
+**Assumption 12.1 (monotone quadratic-form approximation of the continuum Hamiltonian).**
+There exists a sequence of densely defined nonnegative quadratic forms ({q_n}*{n\ge 1}) on (\mathcal H*{\mathrm{cont}}) and a dense linear subspace (\mathcal D_0\subset\mathcal H_{\mathrm{cont}}) such that:
+
+1. (**Common core**) (\mathcal D_0\subset D(q_n)) for all (n), and (\mathcal D_0) is a form core for each (q_n).
+
+2. (**Monotonicity**) For all (\psi\in\mathcal D_0),
+   [
+   q_1(\psi)\ \le\ q_2(\psi)\ \le\ \cdots \ \le\ q_n(\psi)\ \le\ q_{n+1}(\psi)\ \le\ \cdots .
+   \tag{12.12}
+   ]
+
+3. (**Vacuum sector**) (q_n(\Omega)=0) for all (n), equivalently (\mathcal K\subseteq\ker q_n).
+
+Define the pointwise supremum on (\mathcal D_0) by
+[
+q_{\mathrm{cont}}(\psi)\ :=\ \sup_{n\ge 1} q_n(\psi)\ \in [0,\infty]
+\qquad (\psi\in\mathcal D_0),
+\tag{12.13}
+]
+and let (\overline{q}*{\mathrm{cont}}) denote its closure (restricted to the domain where it is finite). We also write (D(\overline{q}*{\mathrm{cont}})) for the resulting closed form domain.
+
+By the standard closed-form (\leftrightarrow) self-adjoint operator correspondence (Friedrichs/Kato representation), there exists a unique self-adjoint (H_{\mathrm{cont}}\ge 0) such that
+[
+\overline{q}*{\mathrm{cont}}(\psi)\ =\ \big|H*{\mathrm{cont}}^{1/2}\psi\big|^2,
+\qquad
+D(\overline{q}*{\mathrm{cont}})=D(H*{\mathrm{cont}}^{1/2}).
+\tag{12.14}
+]
+(If one wants a named theorem here: “every densely defined closed nonnegative form is represented by a unique self-adjoint nonnegative operator.”)
+
+---
+
+### 12.2.2 A uniform gap bound that survives the supremum
+
+We now encode the “uniform OS gap along the trajectory” in the language of forms. This is the input that will later be fed by §12.3 (the physical-units condition).
+
+Fix (\Delta_\star>0). Think of (\Delta_\star) as the *uniform physical mass lower bound* we hope to preserve.
+
+**Assumption 12.2 (uniform gap bound at each cutoff, expressed as a form inequality).**
+For all (n\ge 1) and all (\psi\in\mathcal D_0),
+[
+q_n(\psi)\ \ge\ \Delta_\star,|(I-P_0)\psi|^2.
+\tag{12.15}
+]
+
+This is the quadratic-form version of saying “(H_n\ge \Delta_\star) on the orthogonal complement of the vacuum.”
+
+**Proposition 12.3 (gap persistence under monotone form limits).**
+Under Assumptions 12.1–12.2, the limiting closed form satisfies
+[
+\overline{q}*{\mathrm{cont}}(\psi)\ \ge\ \Delta*\star,|(I-P_0)\psi|^2
+\qquad\text{for all }\psi\in D(\overline{q}*{\mathrm{cont}}).
+\tag{12.16}
+]
+Equivalently, as quadratic forms on (\mathcal H*{\mathrm{cont}}),
+[
+H_{\mathrm{cont}}\ \succeq\ \Delta_\star,(I-P_0).
+\tag{12.17}
+]
+
+*Proof.*
+**Step 1: the inequality holds on the core (\mathcal D_0).**
+Fix (\psi\in\mathcal D_0). By (12.15), (q_n(\psi)\ge \Delta_\star|(I-P_0)\psi|^2) for every (n). Taking the supremum over (n) gives
+[
+q_{\mathrm{cont}}(\psi)=\sup_n q_n(\psi)\ \ge\ \Delta_\star|(I-P_0)\psi|^2.
+\tag{12.18}
+]
+
+**Step 2: extend from the core to the closed form domain.**
+Let (\psi\in D(\overline{q}*{\mathrm{cont}})). By definition of closure, there exists a sequence (\psi_k\in\mathcal D_0) such that (\psi_k\to\psi) in (\mathcal H*{\mathrm{cont}}) and (q_{\mathrm{cont}}(\psi_k)\to \overline{q}_{\mathrm{cont}}(\psi)). Since (I-P_0) is a bounded operator, ((I-P_0)\psi_k\to (I-P_0)\psi) in norm, hence (|(I-P_0)\psi_k|^2\to |(I-P_0)\psi|^2).
+
+Applying (12.18) to each (\psi_k) and passing to the limit yields (12.16). Finally, (12.17) is exactly the operator restatement of (12.16) using (\overline{q}*{\mathrm{cont}}(\psi)=|H*{\mathrm{cont}}^{1/2}\psi|^2). (\square)
+
+---
+
+### 12.2.3 Spectral consequence: no spectrum below (\Delta_\star) above the vacuum
+
+The form inequality (12.17) is already the “gap statement” in the strongest usable sense. If we want to translate it into the more familiar spectral language, we use the Rayleigh–Ritz variational characterization of the bottom of the spectrum in terms of the quadratic form. 
+
+**Corollary 12.4 (spectral gap for the continuum Hamiltonian).**
+Under the hypotheses of Proposition 12.3, the spectrum of (H_{\mathrm{cont}}) satisfies
+[
+\sigma(H_{\mathrm{cont}})\ \subseteq\ {0}\ \cup\ [\Delta_\star,\infty).
+\tag{12.19}
+]
+In particular, if (\ker(H_{\mathrm{cont}})=\mathbb C\Omega), then
+[
+\mathrm{gap}(H_{\mathrm{cont}})\ \ge\ \Delta_\star.
+\tag{12.20}
+]
+
+*Proof sketch.*
+Let (q(\psi)=|H_{\mathrm{cont}}^{1/2}\psi|^2=\overline{q}*{\mathrm{cont}}(\psi)). Rayleigh–Ritz gives
+[
+\inf \sigma\big(H*{\mathrm{cont}}\big|*{\mathcal K^\perp}\big)
+=\inf*{\psi\in D(q)\cap\mathcal K^\perp\setminus{0}}\frac{q(\psi)}{|\psi|^2}.
+\tag{12.21}
+]
+(The restricted-subspace version is part of the same variational principle. )
+By (12.16), (q(\psi)\ge \Delta_\star|\psi|^2) for (\psi\perp\mathcal K), so the infimum is (\ge \Delta_\star). This implies (\sigma(H_{\mathrm{cont}}|*{\mathcal K^\perp})\subset[\Delta*\star,\infty)), i.e. (12.19)–(12.20). (\square)
+
+---
+
+### 12.2.4 What this section does—and does not—depend on
+
+Nothing in §12.2 uses any gauge-theory structure. It is a generic permanence mechanism:
+
+* **Input:** a continuum Hamiltonian built from a *monotone limit* of nonnegative forms, plus a *uniform* lower bound on each approximant.
+* **Output:** the *same* lower bound for the limit Hamiltonian.
+
+The model-dependent work is therefore cleanly separated:
+
+* Part 11 (and the fixed-cutoff chain) gives a gap at each (a).
+* §12.1 supplies the architecture that puts all scales into one OS framework.
+* §12.3 supplies the *physical* uniformity condition along (a_n\downarrow 0).
+* §12.2 is the deterministic “gap doesn’t evaporate in the limit” lemma.
+
+
+
+
+
+
+
+## 12.3. Bakry–Émery curvature and what it buys you (global case) 
+
+Curvature is the “easy mode”: when it holds **globally** with a **positive** constant, you get Poincaré with no Lyapunov work. Since Part 12 is about the local-to-global bridge, we record the global result for completeness and because we’ll use its *local* analogue as a source of “local Poincaré”.
+
+### 12.3.1. The (\Gamma_2) operator
+
+Define
+[
+\Gamma_2(f)
+:=
+\frac12\Bigl(L\Gamma(f)-2,\Gamma(f,Lf)\Bigr).
+]
+
+**Lemma 12.4 (Bochner–Bakry–Émery identity).**
+For (L=\Delta-\langle\nabla S,\nabla\cdot\rangle),
+[
+\Gamma_2(f)
+===========
+
+|\nabla^2 f|*{\mathrm{HS}}^2
++
+\bigl(\mathrm{Ric}+\nabla^2 S\bigr)(\nabla f,\nabla f),
+]
+where (\nabla^2 f) is the Riemannian Hessian (a symmetric ((2))-tensor), (|\cdot|*{\mathrm{HS}}) its Hilbert–Schmidt norm, and (\mathrm{Ric}) the Ricci curvature tensor.
+
+*Proof.* The standard Bochner identity on ((M,g)) is
+[
+\frac12\Delta|\nabla f|^2
+=========================
+
+|\nabla^2 f|_{\mathrm{HS}}^2
++
+\langle \nabla f,\nabla \Delta f\rangle
++
+\mathrm{Ric}(\nabla f,\nabla f).
+]
+Apply (L=\Delta-\langle\nabla S,\nabla\cdot\rangle) to (|\nabla f|^2):
+[
+\frac12L|\nabla f|^2
+====================
+
+\frac12\Delta|\nabla f|^2
+-\frac12\langle\nabla S,\nabla|\nabla f|^2\rangle.
+]
+Also compute
+[
+\langle \nabla f,\nabla Lf\rangle
+=================================
+
+## \langle\nabla f,\nabla\Delta f\rangle
+
+\langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle.
+]
+But
+[
+\nabla\langle\nabla S,\nabla f\rangle
+=====================================
+
+\nabla^2 S(\nabla f,\cdot)
++
+\nabla^2 f(\nabla S,\cdot),
+]
+so
+[
+\langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle
+============================================================
+
+\nabla^2 S(\nabla f,\nabla f)
++
+\nabla^2 f(\nabla S,\nabla f).
+]
+On the other hand,
+[
+\frac12\langle\nabla S,\nabla|\nabla f|^2\rangle
+================================================
+
+\nabla^2 f(\nabla S,\nabla f).
+]
+Combining these identities yields
+[
+\frac12L|\nabla f|^2 - \langle \nabla f,\nabla Lf\rangle
+========================================================
+
+|\nabla^2 f|_{\mathrm{HS}}^2 + (\mathrm{Ric}+\nabla^2 S)(\nabla f,\nabla f).
+]
+But for diffusion generators, (\Gamma(f,Lf)=\langle\nabla f,\nabla Lf\rangle), and (L\Gamma(f)=L|\nabla f|^2). Therefore the left-hand side is exactly (\Gamma_2(f)). ∎
+
+---
+
+### 12.3.2. Curvature–dimension condition
+
+**Definition 12.5 (CD((\rho,\infty))).**
+We say (L) satisfies the Bakry–Émery curvature–dimension condition CD((\rho,\infty)) for (\rho\in\mathbb R) if
+[
+\Gamma_2(f)\ge \rho,\Gamma(f)
+\quad\text{pointwise on }M,\ \text{for all smooth }f.
+]
+By Lemma 12.4, CD((\rho,\infty)) is equivalent to the tensor inequality
+[
+\mathrm{Ric}+\nabla^2 S \ \ge\ \rho,g.
+]
+
+---
+
+### 12.3.3. Global CD((\rho,\infty)) ⇒ global Poincaré with (C_P\le 1/\rho)
+
+**Theorem 12.6 (Bakry–Émery ⇒ Poincaré).**
+If CD((\rho,\infty)) holds globally with (\rho>0), then
+[
+\mathrm{Var}_\mu(f)
+\le
+\frac1\rho \int \Gamma(f),d\mu,
+]
+i.e. (C_P\le 1/\rho).
+
+*Proof (semigroup method, fully explicit).*
+Let ((P_t)_{t\ge 0}) be the Markov semigroup generated by (L) on (L^2(\mu)). Because (L) is symmetric and (\mu) is invariant, (P_t) is (\mu)-preserving:
+[
+\int P_t h,d\mu=\int h,d\mu.
+]
+
+Take (f) with (\int f,d\mu=0). Set
+[
+\Phi(t):=\int (P_t f)^2,d\mu.
+]
+Differentiate:
+[
+\Phi'(t)=2\int P_t f\cdot L P_t f,d\mu.
+]
+Using symmetry (Lemma 12.1),
+[
+\int P_t f\cdot L P_t f,d\mu
+============================
+
+-\int \Gamma(P_t f),d\mu,
+]
+hence
+[
+\Phi'(t)=-2\int \Gamma(P_t f),d\mu.
+]
+
+Now use the standard Bakry–Émery gradient estimate: under CD((\rho,\infty)),
+[
+\Gamma(P_t f)\le e^{-2\rho t},P_t(\Gamma(f)).
+\tag{12.1}
+]
+I prove (12.1) below.
+
+Assuming (12.1), integrate (-\Phi'(t)) from (0) to (\infty):
+[
+\Phi(0)-\lim_{t\to\infty}\Phi(t)
+================================
+
+# \int_0^\infty (-\Phi'(t)),dt
+
+2\int_0^\infty\int \Gamma(P_t f),d\mu,dt.
+]
+Since (\Phi(0)=\int f^2 d\mu=\mathrm{Var}*\mu(f)) and (\Phi(\infty)=0),
+[
+\mathrm{Var}*\mu(f)=2\int_0^\infty\int \Gamma(P_t f),d\mu,dt.
+]
+Apply (12.1) and (\mu)-invariance:
+[
+\int \Gamma(P_t f),d\mu
+\le e^{-2\rho t} \int P_t(\Gamma(f)),d\mu
+= e^{-2\rho t}\int \Gamma(f),d\mu.
+]
+Thus
+[
+\mathrm{Var}_\mu(f)
+\le
+2\left(\int_0^\infty e^{-2\rho t},dt\right)\int\Gamma(f),d\mu
+=============================================================
+
+\frac1\rho \int\Gamma(f),d\mu.
+]
+
+*Proof of the gradient estimate (12.1).*
+Fix (f) and define
+[
+H(t):=e^{2\rho t}\Gamma(P_t f).
+]
+Differentiate using (\partial_t P_t f = L P_t f) and diffusion calculus:
+[
+\frac{d}{dt}\Gamma(P_t f)=2,\Gamma(P_t f, L P_t f).
+]
+Also,
+[
+L\Gamma(P_t f) = 2\Gamma(P_t f, L P_t f) + 2\Gamma_2(P_t f),
+]
+which is just the definition of (\Gamma_2) rearranged. Therefore
+[
+\frac{d}{dt}\Gamma(P_t f)
+=========================
+
+L\Gamma(P_t f) - 2\Gamma_2(P_t f).
+]
+Hence
+[
+\begin{aligned}
+H'(t)
+&=2\rho e^{2\rho t}\Gamma(P_t f) + e^{2\rho t}\left(L\Gamma(P_t f)-2\Gamma_2(P_t f)\right)\
+&=e^{2\rho t}\left(L\Gamma(P_t f)-2(\Gamma_2(P_t f)-\rho\Gamma(P_t f))\right).
+\end{aligned}
+]
+Under CD((\rho,\infty)), (\Gamma_2-\rho\Gamma\ge 0), so
+[
+H'(t)\le e^{2\rho t} L\Gamma(P_t f).
+]
+Now consider (K(t):=P_t(\Gamma(f))). It satisfies (K'(t)=L K(t)). Meanwhile (H) satisfies (H'(t)\le L H(t)) (in the weak sense; pointwise if smooth). By the maximum principle for the parabolic equation, since (H(0)=\Gamma(f)=K(0)), we deduce (H(t)\le K(t)), i.e.
+[
+e^{2\rho t}\Gamma(P_t f)\le P_t(\Gamma(f)),
+]
+which is (12.1). ∎
+
+---
+
+If you’d like a “one-sentence purpose statement” for this section: it isolates the clean global implication **(uniform positive BE curvature ⇒ Poincaré gap)**, because later we’ll mimic it **locally** on a “small-field safe set,” and then use Lyapunov drift to drag that local control out to the whole space.
+
+
+
+
+
+
+
+
+## 12.4. Lyapunov drift: the mechanism that replaces global curvature
+
+The idea is to prove that **outside a controlled region** (call it (K)), the diffusion generated by (L) has a **strict negative drift** for some coercive “weight” function (W). This drift plays the role that a **global** Bakry–Émery lower bound would play in the easy case: it prevents the dynamics/measure from spending too much time in “large-field” regions and lets us bootstrap **local** functional inequalities on (K) into **global** ones.
+
+Concretely, we will use Lyapunov drift to manufacture inequalities of the form
+[
+\int_{M\setminus K} f^2,d\mu \ \lesssim\ \int \Gamma(f),d\mu \ +\ \int_{K} f^2,d\mu,
+]
+which is exactly the type of estimate needed in the next section to globalize a local Poincaré inequality.
+
+---
+
+### 12.4.1. Lyapunov condition
+
+**Definition 12.7 (Linear Foster–Lyapunov drift).**
+A function (W\in C^2(M)) is a Lyapunov function (for our purposes) if (W\ge 1) and there exist constants (\lambda>0), (b\ge 0), and a measurable set (K\subset M) (typically compact, “the safe region”) such that
+[
+LW \ \le\ -\lambda W \ +\ b,\mathbf 1_K
+\quad\text{pointwise on }M.
+\tag{12.2}
+]
+Equivalently, on (K^c) one has (LW\le -\lambda W): outside (K), (W) is strictly (L)-superharmonic, encoding drift back toward (K).
+
+**Remarks (why this form is exactly what we need).**
+
+1. The normalization (W\ge 1) is not cosmetic: it lets us divide by (W) safely and replace (\mathbf 1_K/W) by (\mathbf 1_K) whenever we only need upper bounds.
+
+2. The “linear” form (-\lambda W) is the Foster–Lyapunov condition that naturally corresponds to exponential ergodicity and (in reversible settings) to Poincaré-type coercivity. Stronger (superlinear) drifts are possible, but linear drift is the right baseline for a global spectral gap argument.
+
+---
+
+### 12.4.2. The key Lyapunov energy lemma (do not skip this; it is the engine)
+
+The point of this lemma is that it converts the **ratio** (-Lh/h) into a **quadratic form controlled by the Dirichlet energy**. It is the clean algebraic device that lets drift inequalities feed into Poincaré inequalities.
+
+**Lemma 12.8 (Basic Lyapunov inequality).**
+Let (h\in C^2(M)) satisfy (h>0). Then for any smooth (f) in the form domain,
+[
+\int_M \left(-\frac{Lh}{h}\right) f^2,d\mu \ \le\ \int_M \Gamma(f),d\mu.
+\tag{12.3}
+]
+
+**Proof.**
+By Lemma 12.1 (the reversibility / Dirichlet form identity),
+[
+\int_M \left(-\frac{Lh}{h}\right) f^2,d\mu
+= -\int_M \frac{f^2}{h},Lh,d\mu
+= \int_M \Gamma!\left(\frac{f^2}{h},h\right),d\mu
+= \int_M \Gamma!\left(h,\frac{f^2}{h}\right),d\mu.
+]
+Using (\Gamma(u,v)=\langle\nabla u,\nabla v\rangle), compute
+[
+\nabla!\left(\frac{f^2}{h}\right)
+= \frac{2f\nabla f}{h} \ -\ \frac{f^2\nabla h}{h^2}.
+]
+Therefore
+[
+\Gamma!\left(h,\frac{f^2}{h}\right)
+= \left\langle \nabla h,\ \frac{2f\nabla f}{h} - \frac{f^2\nabla h}{h^2}\right\rangle
+= \frac{2f}{h},\Gamma(f,h) \ -\ \frac{f^2}{h^2}\Gamma(h).
+]
+Apply Cauchy–Schwarz to (\Gamma(f,h)=\langle\nabla f,\nabla h\rangle):
+[
+\frac{2f}{h}\Gamma(f,h)
+\le \frac{2|f|}{h}|\nabla f||\nabla h|
+\le |\nabla f|^2 + \frac{f^2}{h^2}|\nabla h|^2
+= \Gamma(f) + \frac{f^2}{h^2}\Gamma(h).
+]
+Substitute into the previous line; the (\frac{f^2}{h^2}\Gamma(h)) term cancels against the negative term, yielding the pointwise bound
+[
+\Gamma!\left(h,\frac{f^2}{h}\right)\le \Gamma(f).
+]
+Integrating against (\mu) gives (12.3). (\square)
+
+**Immediate consequence (how drift becomes an (L^2)-control).**
+If (W\ge 1) satisfies the Lyapunov drift (12.2), then dividing by (\lambda W) gives
+[
+1 \ \le\ -\frac{LW}{\lambda W} \ +\ \frac{b}{\lambda},\frac{\mathbf 1_K}{W}
+\ \le\ -\frac{LW}{\lambda W} \ +\ \frac{b}{\lambda},\mathbf 1_K.
+]
+Multiplying by (f^2) and integrating, and then applying Lemma 12.8 with (h=W), produces exactly the kind of “outside-(K) is controlled by energy + inside-(K)” inequality that will drive the local-to-global Poincaré theorem in §12.5.
+
+

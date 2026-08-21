@@ -1,0 +1,104 @@
+import jax
+import jax.numpy as jnp
+import jax.scipy as jsp
+import matplotlib.pyplot as plt
+import numpy as np
+
+jax.config.update("jax_enable_x64", True)
+
+# ... (Previous SU3/Wilson definitions: su3_generators, build_links, wilson_action) ...
+# RE-DEFINE for safety:
+def su3_generators():
+    lam = [jnp.array([[0,1,0],[1,0,0],[0,0,0]], jnp.complex128),
+           jnp.array([[0,-1j,0],[1j,0,0],[0,0,0]], jnp.complex128),
+           jnp.array([[1,0,0],[0,-1,0],[0,0,0]], jnp.complex128),
+           jnp.array([[0,0,1],[0,0,0],[1,0,0]], jnp.complex128),
+           jnp.array([[0,0,-1j],[0,0,0],[1j,0,0]], jnp.complex128),
+           jnp.array([[0,0,0],[0,0,1],[0,1,0]], jnp.complex128),
+           jnp.array([[0,0,0],[0,0,-1j],[0,1j,0]], jnp.complex128),
+           jnp.array([[1,0,0],[0,1,0],[0,0,-2]], jnp.complex128)/jnp.sqrt(3)]
+    return 1j * jnp.stack(lam) / 2
+T = su3_generators()
+def su3_alg_from_vec(a): return jnp.einsum("...a,aij->...ij", a, T)
+def su3_exp(A): return jax.scipy.linalg.expm(A)
+def build_links(theta, L):
+    flat = theta.reshape(-1, 8)
+    A = jax.vmap(su3_alg_from_vec)(flat)
+    U = jax.vmap(su3_exp)(A)
+    return U.reshape(L, L, L, L, 4, 3, 3)
+def wilson_action(theta, L):
+    U = build_links(theta, L)
+    S = 0.0
+    for mu in range(4):
+        for nu in range(mu+1, 4):
+            U1 = U[..., mu, :, :]
+            U2 = jnp.roll(U[..., nu, :, :], -1, axis=mu)
+            U3 = jnp.swapaxes(jnp.conjugate(jnp.roll(U[..., mu, :, :], -1, axis=nu)), -1, -2)
+            U4 = jnp.swapaxes(jnp.conjugate(U[..., nu, :, :]), -1, -2)
+            tr = jnp.real(jnp.einsum("...ii->...", U1 @ U2 @ U3 @ U4))
+            S += jnp.sum(1.0 - tr/3.0)
+    return S
+
+def get_plaquette_vector(L, site, mu, nu, color_idx):
+    # Same as before
+    vec = jnp.zeros((L, L, L, L, 4, 8), dtype=jnp.float64)
+    x, y, z, t = site
+    def shift(pos, d, val=1):
+        p = list(pos)
+        p[d] = (p[d] + val) % L
+        return tuple(p)
+    vec = vec.at[site + (mu, color_idx)].set(1.0)
+    next_site = shift(site, mu)
+    vec = vec.at[next_site + (nu, color_idx)].set(1.0)
+    up_site = shift(site, nu)
+    vec = vec.at[up_site + (mu, color_idx)].set(-1.0)
+    vec = vec.at[site + (nu, color_idx)].set(-1.0)
+    return vec.reshape(-1) / 2.0
+
+# ----- THE TRACKER -----
+def track_physical_gap(L):
+    print(f"--- Tracking Physical Gap (Index 152) for L={L} ---")
+    flat = jax.jit(lambda t: wilson_action(t, L))
+    hessian_fn = jax.jit(jax.jacfwd(jax.grad(flat)))
+    
+    # Define Plaquette Twist
+    target_plaq = get_plaquette_vector(L, (0,0,0,0), 0, 1, 0)
+    target_plaq = target_plaq / jnp.linalg.norm(target_plaq)
+    
+    amplitudes = np.linspace(0.0, 1.5, 10)
+    physical_gaps = []
+    gauge_artifacts = []
+    
+    print(f"{'Amp':<5} | {'Physical Gap (idx 152)':<25} | {'Gauge Artifact (idx 0)'}")
+    print("-" * 60)
+    
+    for amp in amplitudes:
+        theta = amp * target_plaq
+        H = hessian_fn(theta)
+        eigs = jnp.linalg.eigvalsh(H)
+        
+        # We know from Plot 1 that the "Wall" is at index 152
+        gap = eigs[152] 
+        artifact = eigs[0]
+        
+        physical_gaps.append(gap)
+        gauge_artifacts.append(artifact)
+        print(f"{amp:<5.2f} | {gap:<25.6f} | {artifact:<25.6f}")
+
+    return amplitudes, physical_gaps, gauge_artifacts
+
+# Run
+L = 2
+amps, gaps, artifacts = track_physical_gap(L)
+
+# Plot
+plt.figure(figsize=(10,6))
+plt.plot(amps, gaps, 'o-', linewidth=3, color='blue', label='Physical Gap (Index 152)')
+plt.plot(amps, artifacts, 'x--', linewidth=1, color='red', alpha=0.5, label='Gauge Artifact (Index 0)')
+plt.axhline(0, color='black', linewidth=1)
+plt.title("True Convexity Check: Physical Mode vs Gauge Artifact")
+plt.xlabel("Plaquette Flux Amplitude")
+plt.ylabel("Curvature (Eigenvalue)")
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.show()

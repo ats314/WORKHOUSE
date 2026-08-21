@@ -1,0 +1,227 @@
+ Below is a self-contained operator-theoretic proof of a uniform trace bound for the PBH flow, phrased in a way you can drop straight into your framework.
+
+I will:
+	1.	Set up the PBH flow as an ODE for a family of self-adjoint operators.
+	2.	State structural assumptions on the curvature term \mathcal{R}(h) and anomaly term \mathcal{K}_t that are exactly what you get from uniform curvature/“anomaly source” bounds.
+	3.	Derive a scalar Riccati inequality for y(t) := \operatorname{Tr}(h_t).
+	4.	Prove that this forces a uniform in t bound \operatorname{Tr}(h_t)\le H_{\mathrm{Tr}}.
+
+Throughout, “rigorous” means: all assumptions are explicit, and all inequalities are justified.
+
+⸻
+
+1. Abstract PBH flow: operator setting
+
+Let \mathcal{H} be a (complex) Hilbert space. For the RG-regularized Yang–Mills flow you can take \mathcal{H} to be finite-dimensional (e.g. the span of a finite block of gauge-invariant modes after spatial cutoff and projection), but the argument works for trace-class operators on a separable \mathcal{H} as well.
+
+1.1 The projected Hessian
+
+For each RG time t\ge 0, let
+h_t : \mathcal{H}\to \mathcal{H}
+be a bounded, self-adjoint, trace-class operator. Think of h_t as the “projected Hessian” of an effective action along the PBH flow, already restricted to the gauge-invariant/horizontal sector; we do not need more structure than:
+	•	h_t = h_t^* for all t,
+	•	h_t depends C^1 on t in the trace-norm topology,
+	•	for each t, h_t is trace-class, so \operatorname{Tr}(h_t) is well-defined.
+
+1.2 Evolution equation (PBH flow)
+
+Assume h_t satisfies the PBH evolution equation
+\frac{d}{dt}h_t = -h_t^2 + \mathcal{R}(h_t) + \mathcal{K}_t,
+\tag{1}
+where:
+	•	\mathcal{R}:\mathcal{B}(\mathcal{H})_{\mathrm{sa}}\to\mathcal{B}(\mathcal{H})_{\mathrm{sa}} is a (nonlinear) map built from curvature data (Bochner–Hessian term),
+	•	\mathcal{K}_t is a family of self-adjoint trace-class operators (anomaly source).
+
+The equality is understood in the strong operator topology and in the trace-norm topology (so in particular we may differentiate traces by bringing the derivative inside).
+
+⸻
+
+2. Structural hypotheses on \mathcal{R} and \mathcal{K}_t
+
+To get a uniform upper bound on the trace, we need quantitative control on the trace of the curvature and anomaly terms.
+
+We assume:
+
+(R) Trace growth bound for the curvature term
+
+There exist constants
+c_R\ge 0,\quad C_R\ge 0
+such that for every trace-class self-adjoint operator S with \operatorname{Tr}|S|<\infty,
+\operatorname{Tr}(\mathcal{R}(S)) \le c_R\,\operatorname{Tr}(S) + C_R.
+\tag{R}
+
+In the YM PBH context this is the abstract form of “curvature contributes at most linearly to the trace of the Hessian plus a bounded offset”. Geometrically, if the orbit-space curvature tensor is uniformly bounded (as in your previous curvature bound), the Ricci/Bochner term acts as a zeroth-order perturbation of h_t with a uniform operator-norm bound, which implies (R).
+
+(K) Uniform trace bound for the anomaly source
+
+There exists a constant
+K_0\ge 0
+such that
+\operatorname{Tr}(\mathcal{K}_t)\le K_0
+\quad\text{for all }t\ge 0.
+\tag{K}
+
+This encodes that the “anomaly source” \mathcal{K}_t is trace-class and its total “mass” injection is uniformly bounded in time (as you get if \mathcal{K}_t is built from a fixed local anomaly density with uniform RG control).
+
+These are the only nontrivial hypotheses: the rest of the proof is pure operator calculus.
+
+⸻
+
+3. Derivative of the trace and a Riccati-type inequality
+
+Define
+y(t) := \operatorname{Tr}(h_t).
+
+Because h_t is trace-class and t\mapsto h_t is C^1 in trace norm, we may differentiate under the trace:
+\frac{d}{dt} y(t)
+= \operatorname{Tr}\Big(\frac{d}{dt}h_t\Big).
+
+Using the PBH evolution (1),
+\frac{d}{dt} y(t)
+= \operatorname{Tr}(-h_t^2) + \operatorname{Tr}(\mathcal{R}(h_t)) + \operatorname{Tr}(\mathcal{K}_t).
+\tag{2}
+
+We now bound each term on the right:
+
+3.1 Negative quadratic term -\operatorname{Tr}(h_t^2)
+
+Let \lambda_1(t),\dots,\lambda_n(t) be the eigenvalues of h_t (in finite-dimensional approximation; in the trace-class case the same inequality holds using spectral measure). Then
+\operatorname{Tr}(h_t) = \sum_{i=1}^n \lambda_i(t),\qquad
+\operatorname{Tr}(h_t^2) = \sum_{i=1}^n \lambda_i(t)^2.
+
+By Cauchy–Schwarz in \mathbb{R}^n,
+\left(\sum_{i=1}^n \lambda_i^2\right)\left(\sum_{i=1}^n 1^2\right) \ge \left(\sum_{i=1}^n \lambda_i\right)^2,
+so
+\operatorname{Tr}(h_t^2) \ge \frac{1}{n}\left(\operatorname{Tr}(h_t)\right)^2.
+\tag{3}
+
+This holds for any self-adjoint h_t; no positivity of eigenvalues is required.
+
+Hence
+-\operatorname{Tr}(h_t^2)
+\le -\frac{1}{n}\,y(t)^2.
+\tag{4}
+
+Here n:=\dim \mathcal{H} at the chosen UV cutoff; in an infinite-dimensional trace-class setting, one can take n to be the rank of the finite-rank projection onto the PBH block, or use Hilbert-Schmidt norms, but for RG-regularized YM you are in finite dimension at each scale anyway.
+
+3.2 Curvature and anomaly terms
+
+Using (R),
+\operatorname{Tr}(\mathcal{R}(h_t)) \le c_R\,\operatorname{Tr}(h_t) + C_R = c_R y(t) + C_R.
+\tag{5}
+
+Using (K),
+\operatorname{Tr}(\mathcal{K}_t)\le K_0.
+\tag{6}
+
+3.3 Combined inequality
+
+Insert (4), (5), (6) into (2):
+
+\frac{d}{dt} y(t)
+\le -\frac{1}{n} y(t)^2 + c_R y(t) + C_R + K_0.
+
+Define constants
+a := \frac{1}{n} >0,\quad
+b := c_R\ge 0,\quad
+c := C_R + K_0\ge 0.
+
+Then
+\boxed{
+\frac{d}{dt} y(t) \;\le\; -a\,y(t)^2 + b\,y(t) + c.
+}
+\tag{7}
+
+This is a scalar Riccati-type differential inequality. All constants a,b,c are independent of t.
+
+⸻
+
+4. Uniform bound from the scalar Riccati inequality
+
+We now prove that any C^1 scalar function y(t) satisfying (7) is uniformly bounded from above for all t\ge 0.
+
+4.1 The comparison polynomial
+
+Consider the quadratic polynomial
+P(y) := -a y^2 + b y + c,\qquad a>0.
+
+As y\to\infty, P(y)\to -\infty because the leading coefficient is negative. Therefore there exists some R>0 such that
+P(y) \le 0 \quad\text{for all }y\ge R.
+
+Explicitly, if b^2 + 4ac\ge 0, the polynomial has two real roots and the larger root is
+y_* := \frac{b + \sqrt{b^2 + 4ac}}{2a}.
+Then P(y)\le 0 for all y\ge y_*. Any R\ge y_* will do. For concreteness, pick
+R := y_*.
+
+4.2 Comparison argument
+
+Define
+H_{\mathrm{Tr}} := \max\{ y(0), R\}.
+
+We claim:
+y(t) \le H_{\mathrm{Tr}}\quad\text{for all }t\ge 0.
+
+Proof by contradiction.
+
+Assume there exists t_1>0 with y(t_1) > H_{\mathrm{Tr}}. By continuity of y, there is a first time
+t_* := \inf\{ t\ge 0 : y(t) = H_{\mathrm{Tr}}\}.
+
+By definition of H_{\mathrm{Tr}}, we have t_*>0 only if H_{\mathrm{Tr}}>y(0). In any case, for t>t_* small enough we have y(t)>H_{\mathrm{Tr}}, so at the first hitting time t_* the derivative satisfies
+\frac{d}{dt}y(t_*) \ge 0.
+
+But from (7) and the fact that y(t_*) = H_{\mathrm{Tr}}\ge R,
+\frac{d}{dt} y(t_*)
+\le P( y(t_*) )
+= P(H_{\mathrm{Tr}})
+\le P(R) \le 0,
+because R was chosen so that P(y)\le 0 for all y\ge R.
+
+Hence we obtain
+0 \le \frac{d}{dt}y(t_*) \le 0,
+so \frac{d}{dt}y(t_*)=0 and P(H_{\mathrm{Tr}})=0. But then the same argument applied for t>t_* shows that y(t) cannot cross above H_{\mathrm{Tr}} immediately after t_*, contradicting the assumption that some later time has y(t)>H_{\mathrm{Tr}}.
+
+Therefore no such t_1 exists, and
+y(t) \le H_{\mathrm{Tr}} \quad\forall t\ge 0.
+
+In other words, the trace \operatorname{Tr}(h_t) is uniformly bounded in RG time:
+\boxed{
+\operatorname{Tr}(h_t) \le H_{\mathrm{Tr}} < \infty \quad\text{for all }t\ge 0.
+}
+
+By construction, H_{\mathrm{Tr}} depends only on:
+	•	n = \dim\mathcal{H} (fixed by your UV cutoff and gauge-invariant mode count),
+	•	c_R,C_R from the curvature term,
+	•	K_0 from the anomaly term,
+	•	and the initial trace y(0)=\operatorname{Tr}(h_0),
+
+and is independent of t.
+
+⸻
+
+5. Final theorem statement (drop-in version)
+
+You can now package the above as:
+
+Theorem (Uniform trace bound for the PBH flow).
+Let \mathcal{H} be a finite-dimensional Hilbert space and h_t a C^1 family of self-adjoint trace-class operators on \mathcal{H}, defined for all t\ge 0, satisfying the PBH evolution equation
+> \frac{d}{dt}h_t = -h_t^2 + \mathcal{R}(h_t) + \mathcal{K}_t.
+>
+Assume:
+	1.	Curvature trace bound: There exist constants c_R\ge 0, C_R\ge 0 such that for all trace-class S=S^*,
+>    \operatorname{Tr}(\mathcal{R}(S)) \le c_R\,\operatorname{Tr}(S) + C_R.
+>
+	2.	Anomaly trace bound: There exists K_0\ge 0 such that
+>    \operatorname{Tr}(\mathcal{K}_t)\le K_0
+>    \quad\text{for all }t\ge 0.
+>
+
+Then there exists a finite constant H_{\mathrm{Tr}}, depending only on n=\dim\mathcal{H}, c_R,C_R,K_0 and \operatorname{Tr}(h_0), such that
+> \operatorname{Tr}(h_t) \le H_{\mathrm{Tr}} \quad\text{for all } t\ge 0.
+>
+
+In the Yang–Mills PBH setting:
+	•	n is fixed by the UV cutoff and the horizontal/gauge-invariant sector.
+	•	c_R,C_R come from uniform bounds on the curvature of the gauge-orbit geometry (Bochner term).
+	•	K_0 comes from the uniform RG control of the anomaly source \mathcal{K}_t.
+
+Thus you can legitimately point to a finite, RG-time-independent upper bound H_{\mathrm{Tr}} on the total “Bochner mass” \operatorname{Tr}(h_t) along the entire PBH flow.

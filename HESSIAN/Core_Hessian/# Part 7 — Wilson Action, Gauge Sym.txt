@@ -1,0 +1,339 @@
+# Part 7 — Wilson Action, Gauge Symmetry, and Reflection Positivity (Configuration Level)
+
+In this part we finally put a Yang–Mills interaction on the configuration manifold constructed in Part 6 and record two structural facts that are used repeatedly later:
+
+1. The Wilson plaquette action is a smooth, local, gauge-invariant potential on
+   ((M_\Lambda,g_\Lambda)), and, together with the product Haar measure, defines a finite-dimensional Gibbs system.
+
+2. On a spacetime lattice, the same Wilson action is reflection positive with respect to Euclidean time reflection in the classical Osterwalder–Seiler sense.
+
+The first point is what allows us to feed lattice Yang–Mills into the Bakry–Émery curvature machinery (via (\operatorname{Ric}*{g*\Lambda} + \nabla^2 S_\Lambda)). The second point is the key OS input for constructing a transfer matrix and Hamiltonian in Parts 16–17.
+
+We work first on a purely spatial lattice (for curvature and Bakry–Émery) and then extend to a spacetime lattice to discuss time reflection and reflection positivity.
+
+---
+
+## 7.1. Spatial lattice and configuration manifold (recap)
+
+Let (\Lambda \subset \mathbb{Z}^d) be a finite hypercubic lattice (e.g. a periodic box).
+
+* Vertices (sites): (V(\Lambda)).
+* Oriented edges (links): (E(\Lambda)).
+* Oriented plaquettes: (P(\Lambda)), i.e. unit squares with an orientation.
+
+The configuration manifold is the product of one group copy per oriented edge,
+[
+M_\Lambda := G^{E(\Lambda)},
+]
+where (G) is a fixed compact, connected Lie group such as (SU(N)). A configuration (U\in M_\Lambda) is a collection of link variables
+[
+U = (U_{x,\mu})*{(x,\mu)\in E(\Lambda)}, \quad U*{x,\mu} \in G.
+]
+
+We equip each factor (G) with a fixed bi-invariant Riemannian metric (g_G), and (M_\Lambda) with the product metric
+[
+g_\Lambda = \bigoplus_{\ell \in E(\Lambda)} g_G,
+]
+and the corresponding product Haar volume form (\mathrm{vol}*{g*\Lambda}). This is exactly the structure built in Part 6; we recall it here only to fix notation and emphasize that ((M_\Lambda,g_\Lambda)) is a compact, positively curved Riemannian manifold with product Haar measure as reference. 
+
+In this chapter we keep the metric and volume fixed and add an interaction potential — the Wilson action.
+
+---
+
+## 7.2. Plaquette holonomies on the spatial lattice
+
+The Wilson action is built from oriented plaquette holonomies, which discretize the curvature.
+
+### 7.2.1. Orientation conventions
+
+Fix once and for all an orientation convention for plaquettes: for each spatial plaquette (p \in P(\Lambda)), pick a basepoint (x\in V(\Lambda)) and an ordered pair of coordinate directions (\mu,\nu\in{1,\dots,d}) so that (p) is the unit square with corners
+[
+x,\quad x+\hat\mu,\quad x+\hat\mu+\hat\nu,\quad x+\hat\nu,
+]
+traversed counterclockwise, say.
+
+Different choices of orientation or basepoint differ only by conjugation or inversion of the resulting holonomy; since the action will use a class function of the holonomy (trace or character), these conventions are immaterial.
+
+### 7.2.2. Plaquette holonomy
+
+Given a configuration (U = (U_{x,\mu})\in M_\Lambda), define the plaquette holonomy (U_p(U)\in G) as the ordered product of link variables around the boundary of (p):
+[
+U_p(U) := U_{x,\mu}, U_{x+\hat\mu,\nu}, U^{-1}*{x+\hat\nu,\mu}, U^{-1}*{x,\nu}.
+]
+
+This is the discrete analogue of the path-ordered exponential of the gauge field around a small loop. The map
+[
+M_\Lambda \longrightarrow G,\quad U\longmapsto U_p(U)
+]
+is smooth and depends only on the finitely many links on the boundary of (p). 
+
+---
+
+## 7.3. Wilson plaquette action as a smooth local potential
+
+We now define the Wilson action on the spatial lattice and record its basic analytic properties.
+
+### 7.3.1. Single-plaquette contribution
+
+Fix a coupling parameter (\beta > 0). For definiteness, take (G = SU(N)); the general compact case follows with a character.
+
+The single-plaquette Wilson term is
+[
+S_p(U) := \beta\left( 1 - \frac{1}{N},\Re\operatorname{Tr} U_p(U) \right).
+]
+
+Properties:
+
+1. **Smoothness.**
+   (S_p) is smooth as a function of (U), being a composition of smooth group operations and the matrix trace.
+
+2. **Non-negativity and boundedness.**
+   For (U_p\in SU(N)),
+   [
+   \Re \operatorname{Tr} U_p \le N,
+   ]
+   hence (S_p(U)\ge 0). On the compact space (M_\Lambda), all (S_p) are bounded above as well.
+
+3. **Locality.**
+   (S_p(U)) depends only on the four link variables around (p): the interaction is strictly local at the lattice scale. 
+
+For a general compact Lie group (G), one can replace the normalized trace with a fixed real-valued class function (\chi) on (G) and define
+[
+S_p(U) := \beta \big( c_0 - \chi(U_p(U))\big)
+]
+for a suitable constant (c_0); the geometric and analytic features we use (smoothness, locality, gauge invariance) are unchanged. 
+
+### 7.3.2. Total Wilson action
+
+The Wilson action on the spatial lattice is the sum of these plaquette contributions:
+[
+S_W(U) := \sum_{p\in P(\Lambda)} S_p(U)
+= \beta \sum_{p\in P(\Lambda)} \left( 1 - \frac{1}{N},\Re\operatorname{Tr} U_p(U)\right).
+]
+
+This defines a smooth function (S_W : M_\Lambda \to \mathbb{R}_{\ge 0}), local at the lattice scale (finite-range interaction), and gauge-invariant in a sense we now make precise. 
+
+---
+
+## 7.4. Lattice gauge group and its action
+
+The lattice gauge group is the product of one copy of (G) per site:
+[
+\mathcal{G}*\Lambda := G^{V(\Lambda)},\quad g = (g_x)*{x\in V(\Lambda)}.
+]
+
+It acts on (M_\Lambda) by “endpoint conjugation”:
+[
+(U^g)*{x,\mu} := g_x, U*{x,\mu}, g_{x+\hat\mu}^{-1}.
+]
+
+This action satisfies:
+
+* **Isometry.**
+  Each map (U\mapsto U^g) is a product of left and right translations in the group (G); since the metric on each factor is bi-invariant, the action is isometric for (g_\Lambda).
+
+* **Volume preservation.**
+  Haar measure on each factor is left- and right-invariant, so the product Haar volume (\mathrm{vol}*{g*\Lambda}) is invariant under (\mathcal{G}_\Lambda).
+
+* **Gauge invariance of the action.**
+  Under this action the plaquette holonomy transforms by conjugation:
+  [
+  U_p(U^g) = h_p, U_p(U), h_p^{-1}
+  ]
+  for some site-dependent element (h_p) built from the (g_x)’s at the plaquette corners. Because (S_p) depends on (U_p) only through a class function (trace / character), we have
+  [
+  S_p(U^g) = S_p(U),\quad \text{hence}\quad S_W(U^g) = S_W(U)
+  ]
+  for all (g\in \mathcal{G}_\Lambda).
+
+Thus the Wilson action is gauge-invariant and the pair ((M_\Lambda,g_\Lambda)) carries a smooth isometric action of the gauge group.
+
+---
+
+## 7.5. Wilson Gibbs measure on configuration space
+
+The finite-volume Wilson Gibbs measure on the spatial configuration manifold is
+[
+d\mu_\Lambda^W(U) := \frac{1}{Z_\Lambda^W}, e^{-S_W(U)}, d\mathrm{vol}*{g*\Lambda}(U),
+\qquad Z_\Lambda^W = \int_{M_\Lambda} e^{-S_W(U)}, d\mathrm{vol}*{g*\Lambda}(U).
+]
+
+Because (M_\Lambda) is compact and (S_W) is continuous, (Z_\Lambda^W < \infty) and (\mu_\Lambda^W) is a probability measure.
+
+The structural properties we need later are:
+
+1. **Gauge invariance.**
+   The action and volume are invariant under (\mathcal{G}*\Lambda), so (\mu*\Lambda^W) is invariant. Expectation values only depend on the orbit of (U), and gauge-invariant observables can be viewed as functions on the quotient (M_\Lambda / \mathcal{G}_\Lambda).
+
+2. **Compatibility with Bakry–Émery.**
+   In Part 6 we saw that (\mathrm{Ric}*{g*\Lambda}) is uniformly positive. The total Bakry–Émery tensor for (\mu_\Lambda^W) is
+   [
+   \operatorname{Ric}*{\mu*\Lambda^W}
+   = \operatorname{Ric}*{g*\Lambda} + \nabla^2 S_W,
+   ]
+   so the Wilson action contributes a Hessian term that we can combine with the Haar “mass” term in later parts. The detailed Hessian analysis is done in Part 9; here we only record the smooth potential structure and gauge invariance.
+
+This gives a perfectly good finite-dimensional Gibbs system in the sense of Bakry–Émery: compact configuration space, smooth convex-ish potential, and a natural diffusion generator associated with (\mu_\Lambda^W).
+
+---
+
+## 7.6. From spatial to spacetime lattice
+
+To talk about reflection positivity and OS reconstruction, we upgrade the spatial lattice to a Euclidean spacetime lattice with one distinguished time direction.
+
+Fix a finite spatial lattice (\Lambda_S \subset \mathbb{Z}^d) and a time range ({-T,\dots,T}). The spacetime lattice is
+[
+\Lambda := {(x_0,x): x_0\in{-T,\dots,T},\ x\in\Lambda_S}.
+]
+
+Edges (E(\Lambda)) are now labelled by a spacetime point ((x_0,x)) and a direction (\mu\in{0,1,\dots,d}):
+
+* (\mu=0) is the temporal direction.
+* (\mu=1,\dots,d) are spatial directions.
+
+On each oriented edge ((x_0,x;\mu)) we place a link variable
+[
+U(x_0,x;\mu) \in G,
+]
+and the configuration space is again
+[
+M_\Lambda = G^{E(\Lambda)},
+]
+with product Haar volume and Wilson action built from plaquette holonomies in this ((d+1))-dimensional lattice, defined exactly as before but now including time-like plaquettes. 
+
+### 7.6.1. Time reflection on sites and links
+
+Define a time reflection on sites:
+[
+\theta(x_0,x) := (-x_0,x),
+]
+which flips Euclidean time and leaves spatial coordinates unchanged.
+
+This induces a map (\Theta) on link variables:
+
+* **Spatial links** ((\mu = i \in {1,\dots,d})):
+  [
+  \Theta\big(U(x_0,x;i)\big) := U(\theta(x_0,x); i) = U(-x_0,x;i).
+  ]
+
+* **Temporal links** ((\mu = 0)), oriented from ((x_0,x)) to ((x_0+1,x)):
+  [
+  \Theta\big(U(x_0,x;0)\big)
+  := U(\theta(x_0+1,x);0)^{-1}
+  = U(-x_0-1,x;0)^{-1}.
+  ]
+
+This choice has three key properties:
+
+1. (\Theta) is an involution: (\Theta^2 = \mathrm{Id}) on (M_\Lambda).
+2. Plaquette structure is respected: plaquettes are mapped to plaquettes, with orientation reversals paired with group inversion in a way compatible with the holonomy definition.
+3. Spatial and temporal directions are treated in a way consistent with usual OS reflection.
+
+We extend (\Theta) to all of (M_\Lambda) componentwise. On observables (F), the OS reflection is the conjugate-linear map
+[
+(\theta F)(U) := \overline{F(\Theta U)}.
+] 
+
+---
+
+## 7.7. Reflection positivity of the Wilson weight
+
+We can now formulate reflection positivity for the Wilson action.
+
+### 7.7.1. Positive-time algebra
+
+Split the spacetime lattice into negative-time, time-zero, and positive-time slices. Define the **strictly positive-time region**
+[
+\Lambda_+ := {(x_0,x)\in\Lambda : x_0 > 0}.
+]
+
+Let (A_\Lambda^{\mathrm{inv}}) be the algebra of gauge-invariant local observables (functions depending on finitely many link variables and invariant under (\mathcal{G}*\Lambda)). Define the **positive-time algebra** (A*\Lambda^+\subset A_\Lambda^{\mathrm{inv}}) to be the *-subalgebra generated by gauge-invariant local observables supported entirely in (\Lambda_+); that is, each factor depends only on link variables whose spacetime support lies in (\Lambda_+).
+
+Elements (F\in A_\Lambda^+) are finite linear combinations of finite products of such local observables; these are the test functions at positive times in the OS formalism.
+
+Reflection positivity for a measure (\mu_\Lambda) on (M_\Lambda) means that
+[
+\int (\theta F)(U), F(U), d\mu_\Lambda(U) \ge 0
+\quad\text{for all } F\in A_\Lambda^+.
+]
+
+In our case, (\mu_\Lambda = \mu_\Lambda^W) is the Gibbs measure defined by the spacetime Wilson action and product Haar volume.
+
+### 7.7.2. “Square of a norm” representation (Osterwalder–Seiler mechanism)
+
+At this point we invoke the classical Osterwalder–Seiler reflection-positivity argument for Wilson-type lattice actions. Structurally, one proceeds as follows:
+
+1. **Decomposition of the action.**
+   Write the Wilson action as
+   [
+   S_W(U) = S_-(U) + S_0(U) + S_+(U),
+   ]
+   where:
+
+   * (S_-) depends only on link variables in negative times;
+   * (S_+) depends only on link variables in positive times;
+   * (S_0) consists of “straddling” plaquette terms that touch both time (x_0\le 0) and (x_0\ge 0).
+
+2. **Kernel representation of the straddling factor.**
+   The key step is to rewrite
+   [
+   e^{-S_0(U)} = \sum_\alpha \overline{K_\alpha(\Theta U)}, K_\alpha(U),
+   ]
+   for suitable functionals (K_\alpha) that depend only on positive-time link variables (and possibly the time-zero layer). The existence of such a representation is a nontrivial but standard combinatorial fact for Wilson plaquette actions: it uses locality, the product structure of Haar integration, and the fact that each “crossing” plaquette can be expanded into a sum of products of positive-time functionals and their reflections. 
+
+3. **Factorization of the measure.**
+   The product Haar measure factorizes between negative-time and nonnegative-time variables, and the negative-time Wilson contributions (e^{-S_-(U)}) can be integrated out explicitly as an overall positive weight on the kernel representation.
+
+Putting this together, one obtains
+[
+e^{-S_W(U)}
+= e^{-S_-(U)};
+\sum_\alpha \overline{K_\alpha(\Theta U)}, K_\alpha(U);
+e^{-S_+(U)}.
+] 
+
+### 7.7.3. Positivity of the quadratic form
+
+Let (\mu_\Lambda^W) be the Wilson measure on (M_\Lambda). For any (F\in A_\Lambda^+), we can compute
+[
+\int (\theta F)(U), F(U), d\mu_\Lambda^W(U)
+]
+by first integrating out negative-time variables, using the kernel representation.
+
+One finds
+[
+\int (\theta F) F, d\mu_\Lambda^W
+= \sum_\alpha
+\left|
+\int F(U), K_\alpha(U), e^{-S_+(U)}, d\mu_+(U)
+\right|^2 \ge 0,
+]
+where (d\mu_+) is a measure on positive-time link variables incorporating the Haar measure and (e^{-S_+(U)}). The right-hand side is a sum of squared moduli, hence nonnegative. 
+
+This proves **reflection positivity of the Wilson weight**:
+[
+\int (\theta F)(U), F(U), d\mu_\Lambda^W(U) \ge 0
+\quad\text{for all } F\in A_\Lambda^+.
+]
+
+In this project we treat this as a structural theorem: the detailed combinatorial construction of the (K_\alpha) is recorded once in the reflection-positivity section of your OS part and is not repeated in later arguments.
+
+---
+
+## 7.8. Role of reflection positivity and outlook
+
+At the level of this part, we have established three structural facts that will be used repeatedly:
+
+1. The spatial Wilson Gibbs measure (\mu_\Lambda^W) is a well-defined finite-dimensional Gibbs system on ((M_\Lambda,g_\Lambda)), with smooth local potential (S_W). This is the starting point for curvature and Bakry–Émery analysis once we add Haar mass and gauge-fixing contributions.
+
+2. The lattice gauge group (\mathcal{G}*\Lambda) acts isometrically on ((M*\Lambda,g_\Lambda)), preserves the Haar volume and the Wilson action, and hence preserves (\mu_\Lambda^W). Gauge-invariant observables form a natural sector that will later be identified with functions on the physical configuration space.
+
+3. The spacetime extension of the Wilson action satisfies reflection positivity with respect to Euclidean time reflection. This is the minimal OS input needed, in Part 16–17, to construct a transfer matrix and a positive self-adjoint Hamiltonian (H_\Lambda) whose spectral gap is the lattice “mass gap”.
+
+From here the story branches:
+
+* Part 8 implements the abstract gauge-invariant curvature interface (Part 5) in the concrete lattice setting by analyzing gauge orbits, vertical and horizontal directions, and physical gradients.
+* Part 9 analyzes the Wilson Hessian and combines it with Haar mass to obtain positivity of the total Bakry–Émery tensor in physical directions near the vacuum.
+* Later OS parts (16–17) use the reflection-positivity structure recorded here to construct the OS Hilbert space and Hamiltonian.
+
+That’s the entire “Wilson + gauge + reflection positivity” chapter in one place; everything beyond this is curvature and dynamics built on top of that skeleton.

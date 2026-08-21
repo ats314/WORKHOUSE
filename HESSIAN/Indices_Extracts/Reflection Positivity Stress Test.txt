@@ -1,0 +1,110 @@
+Here’s a compact, actionable plan to extend your reflection‑positivity numerics from scalar prototypes to the full Wilson gauge action and verify transfer‑matrix positivity on tiny lattices (4×4×4×4) using **right‑invariant** coordinates.
+
+---
+
+## Goal (precise)
+
+Numerically test Osterwalder–Schrader (OS) reflection positivity for SU(N) lattice gauge theory with Wilson action:
+
+* Show ( \langle F^\Theta F\rangle_\beta \ge 0 ) for a separating time plane (t=0.5), for a **generating set** of cylindrical functionals (F) measurable w.r.t. (t\ge 1) links, under the **right‑invariant** Haar measure parametrization.
+* Cross‑check by building the (compressed) transfer matrix (T) on one time step and verifying (T\succeq 0) on a truncated gauge‑invariant subspace.
+
+---
+
+## Setup (minimal)
+
+* Lattice: (L_t=4), (L_s=4) (so 4×4×4×4). Periodic b.c.
+* Group: start with SU(2), then SU(3).
+* Coordinates: **right‑invariant**: (\delta U_\mu(x)=U_\mu(x) X), (X\in\mathfrak{su}(N)).
+* Action: Wilson (S_W=\beta\sum_p \big(1-\frac{1}{N}\Re \mathrm{Tr}, U_p\big)).
+* Reflection (\Theta): flip (t\to -t+1), reverse time‑like link orientation across the plane, conjugate functionals (F\mapsto F^\Theta).
+
+---
+
+## Tests (in increasing strength)
+
+1. **OS quadratic forms (Monte Carlo)**
+
+* Choose a spanning set ( {F_i}_{i=1}^m ) with support in (t\ge 1). Use:
+
+  * single‑plaquette characters (\chi_R(\square_{t=1})),
+  * short Wilson lines ending on the reflection plane,
+  * small Wilson loops fully in (t\ge 1),
+  * products of two disjoint objects (to check cross‑terms).
+* Estimate the Gram matrix (G_{ij}=\langle F_i^\Theta F_j\rangle) by MC over right‑invariant proposals.
+* **Acceptance criterion:** all eigenvalues (\lambda_k(G)\ge -\varepsilon) with (\varepsilon) at roundoff/MC error. Report min‑eig with CI.
+
+2. **Half‑space conditional positivity**
+
+* Condition on links on the reflection plane (fix a configuration (B) on (t=0) time‑like links), integrate only (t\ge 1) links:
+  [
+  G_{ij}(B)=\int \overline{F_i(\Theta U)}F_j(U), e^{-S_W(U)} d\mu_{t\ge 1},.
+  ]
+* Sample several (B) (drawn from equilibrium). Check (G(B)\succeq 0) for each.
+
+3. **Compressed transfer matrix (T)**
+
+* Build (T) via one‑slice path integral between (t=0) and (t=1), then project to a **finite** gauge‑invariant basis:
+
+  * Basis = products of a few fundamental characters on spatial plaquettes at (t=0) (or spin‑network states with small total rep labels).
+  * Compute matrix elements by integrating the time‑like links only (links straddling 0↔1).
+* Check (T) Hermitian (within num tol) and (T\succeq 0) (min‑eig ≥ 0 within tol). Also check (T=K^\dagger K) factorization via Cholesky if possible.
+
+---
+
+## Implementation skeleton (clean; fill in your kernels)
+
+* **Right‑invariant proposals**: heatbath/over‑relaxation or small‑angle Gaussian in (\mathfrak{su}(N)) mapped by (U \mapsto U \exp(X)).
+* **Reflection map**: implement once; unit test on link orientations + plaquettes crossing the plane.
+* **Observables (F_i)**: define as pure functions of links in (t\ge 1), return complex scalars (characters).
+* **MC estimator**: accumulate (G_{ij}=\frac{1}{N}\sum_n \overline{F_i(\Theta U^{(n)})} F_j(U^{(n)})).
+* **Error bars**: batch or autocorrelation‑aware jackknife; print min‑eig ± CI.
+* **Transfer matrix block**:
+
+  1. Enumerate a small basis ({\phi_a}) at (t=0) (gauge‑invariant).
+  2. For each (a,b), estimate (T_{ab}=\langle \overline{\phi_a^\Theta},\phi_b\rangle) with only the straddling links active (others clamped as per definition).
+  3. Symmetrize (T\leftarrow \frac{1}{2}(T+T^\dagger)) and eigendecompose.
+
+---
+
+## What to print (concise, reproducible)
+
+* Lattice/group/(\beta), proposal type, accepted step stats.
+* Basis list ({F_i}) (or ({\phi_a})) with supports.
+* ( \lambda_{\min}(G) ) with CI for tests (1) and (2).
+* For test (3): ( \lambda_{\min}(T) ), condition number, rank, and a few leading eigenvalues.
+* Sanity checks: flip to **left‑invariant** parametrization and show the same positivity (should hold if the pipeline is correct; any systematic sign problem flags a bug in (\Theta) or measure factors, not a physics effect).
+
+---
+
+## Pitfalls (watch these)
+
+* **Orientation bookkeeping** at the plane: time‑like links must be inverted under reflection; cross‑plaquettes need careful ordering.
+* **Gauge fixing**: do **not** fix gauge across the plane in the OS test; only use gauge‑invariant functionals or gauge‑average basis states.
+* **Finite‑basis artifacts** for (T): your truncation must be invariant under reflection and spatial gauge transformations.
+* **Right‑ vs left‑invariant**: physics is invariant; discrepancies indicate implementation bugs (common: wrong sign in exponent, mishandled dagger).
+
+---
+
+## Minimal success criteria (to “close the loop”)
+
+* On SU(2), (L=4), (\beta\in{1.8,2.2,2.6}):
+
+  * Test (1): ( \lambda_{\min}(G) \ge -3\sigma ) with (|\lambda_{\min}|\lesssim 10^{-3}).
+  * Test (3): ( \lambda_{\min}(T) \ge -3\sigma ) on a 10–30‑dim gauge‑invariant basis.
+* Replicate on SU(3) at one (\beta) (e.g., 6.0) with a very small basis.
+
+---
+
+## Why this matters (no hype)
+
+* If the numerics confirm (G\succeq 0) and (T\succeq 0) with clean error bars, you’ve **empirically closed** the reflection‑positivity leg from your **convexity (Bakry–Émery) control** to **OS reconstruction** on finite (a).
+* It does **not** prove continuum positivity, but it removes an implementation ambiguity (right‑invariant pipeline) and validates the transfer‑matrix positivity on the same kernels you use for Hessians/RG.
+
+If you want, I can deliver a single self‑contained script (SU(2) first) that:
+
+1. builds (\Theta),
+2. defines a default ( {F_i} ),
+3. runs MC on (4^4),
+4. prints ( \lambda_{\min}(G) ) with jackknife CIs, and
+5. (optionally) assembles a tiny (T) block and reports its spectrum.

@@ -1,0 +1,1605 @@
+## 5.1 Vacuum configuration and linearization
+
+This section begins the quantitative study of the Wilson action by isolating its exact linearization at the trivial configuration. The key point is that, in right-trivialized coordinates, the plaquette holonomy map linearizes to the discrete coboundary operator (d_1), and the Wilson potential admits a strictly convex quadratic Taylor expansion at the identity. These two facts together identify the quadratic approximation to the Wilson action at the vacuum and set the stage for the operator-level Hessian identity proved in §5.2.
+
+Throughout, (\Lambda) is the finite four–torus lattice from §2.1, (E(\Lambda)) the positively oriented link set, (P(\Lambda)) the oriented plaquette set, and
+[
+M_\Lambda ;=; G^{E(\Lambda)}
+]
+the configuration manifold with product bi-invariant metric (g_\Lambda) from §3.1. The Wilson action at inverse coupling (\beta>0) is
+[
+S_{\Lambda,\beta}(U);=;\sum_{p\in P(\Lambda)}\Phi_\beta!\big(U_p(U)\big),
+\qquad
+\Phi_\beta(V);=;\beta\Bigl(1-\frac{1}{n}\Re\mathrm{Tr}(V)\Bigr),
+]
+with (\mathrm{Tr}) taken in the fixed faithful unitary representation (\rho:G\to U(n)) as in §2.2–§2.3. We write (S_W:=S_{\Lambda,\beta}) when (\Lambda,\beta) are held fixed.
+
+### 5.1.1 The vacuum configuration and linkwise geodesics
+
+Recall the trivial configuration (U^{(0)}\in M_\Lambda) from Definition 3.33:
+[
+U^{(0)}*{x,\mu};=;\mathbf 1,\qquad (x,\mu)\in E(\Lambda).
+]
+Since (\Phi*\beta(\mathbf 1)=0) and (\Phi_\beta\ge 0) on (G) (§2.3.3), one has (S_W(U^{(0)})=0) and (S_W\ge 0) on (M_\Lambda).
+
+The tangent space at (U^{(0)}) is canonically identified with the (\mathfrak g)-valued 1-cochains:
+[
+T_{U^{(0)}}M_\Lambda
+;\cong;
+\bigoplus_{b\in E(\Lambda)} T_{\mathbf 1}G
+;\cong;
+\mathfrak g^{E(\Lambda)}
+;=;
+\mathcal C^1(\Lambda;\mathfrak g),
+]
+and this identification is isometric with respect to the product metric (g_\Lambda) and the (\ell^2) cochain inner product from Definition 3.13.
+
+Given (X=(X_b)*{b\in E(\Lambda)}\in \mathcal C^1(\Lambda;\mathfrak g)), define the linkwise exponential curve (U_X(t)\in M*\Lambda) by
+[
+(U_X(t))*b ;:=; \exp(tX_b),
+\qquad b\in E(\Lambda),\quad t\in\mathbb R.
+]
+Because the metric on each factor (G) is bi-invariant, (t\mapsto \exp(tX_b)) is a unit-speed geodesic through (\mathbf 1) when (|X_b|*{\mathfrak g}=1), and therefore (t\mapsto U_X(t)) is a geodesic in the product manifold through (U^{(0)}) with initial velocity equal to (X) under the identification (T_{U^{(0)}}M_\Lambda\simeq \mathcal C^1(\Lambda;\mathfrak g)).
+
+### 5.1.2 A uniform two–term Baker–Campbell–Hausdorff estimate
+
+To control the plaquette holonomy (U_p(U_X(t))) for small (t), we use a uniform local BCH expansion. Since (G) is compact, its injectivity radius (\mathrm{inj}*G(\mathbf 1)) is positive; fix once and for all a radius
+[
+0<r*\star<\mathrm{inj}*G(\mathbf 1).
+]
+For any (g\in B*{r_\star}^G(\mathbf 1)), let (\log(g)\in\mathfrak g) denote the inverse of the Riemannian exponential map at (\mathbf 1) (equivalently, the local group logarithm in this ball). All Lie algebra norms (|\cdot|) below are (|\cdot|_{\mathfrak g}).
+
+**Lemma 5.1 (two–term BCH with quadratic remainder).**
+There exist constants (r_0\in(0,r_\star)) and (C_{\mathrm{BCH}}<\infty), depending only on ((G,g_G)), such that for all (A,B\in\mathfrak g) with (|A|\le r_0) and (|B|\le r_0),
+[
+\log!\big(\exp(A)\exp(B)\big)
+;=;
+A+B + R(A,B),
+\qquad
+|R(A,B)|\le C_{\mathrm{BCH}}(|A|+|B|)^2.
+]
+Equivalently, for every (A,B\in\mathfrak g) and every (t) satisfying (|t|(|A|+|B|)\le r_0),
+[
+\log!\big(\exp(tA)\exp(tB)\big)
+;=;
+t(A+B) + t^2,Q(A,B,t),
+\qquad
+|Q(A,B,t)|\le 4C_{\mathrm{BCH}}(|A|+|B|)^2.
+]
+
+*Proof.* Consider the smooth map
+[
+F(A,B);:=;\log!\big(\exp(A)\exp(B)\big)
+]
+defined on a neighborhood of ((0,0)\in\mathfrak g\times\mathfrak g). Smoothness follows from smoothness of multiplication and exponential on (G), together with smoothness of (\log) on (B_{r_\star}(\mathbf 1)); choosing (r_0<r_\star) ensures (\exp(A)\exp(B)\in B_{r_\star}(\mathbf 1)) whenever (|A|,|B|\le r_0). Differentiating at ((0,0)) gives (DF(0,0)[(A,B)]=A+B), since (\exp(A)\exp(B)=\mathbf 1 + A + B + O(|(A,B)|^2)) in any coordinate chart.
+
+Define (G(A,B):=F(A,B)-(A+B)). Then (G(0,0)=0) and (DG(0,0)=0). By Taylor’s theorem with integral remainder on the finite-dimensional vector space (\mathfrak g\times\mathfrak g), there is a constant (C_{\mathrm{BCH}}) such that
+[
+|G(A,B)|;\le; C_{\mathrm{BCH}}(|A|+|B|)^2
+]
+on the closed ball ({|A|\le r_0,\ |B|\le r_0}). This proves the first estimate with (R(A,B)=G(A,B)). The scaled statement follows by applying the first estimate to ((tA,tB)) and dividing by (t^2), noting (|tA|+|tB|\le r_0) under the stated smallness condition. (\square)
+
+The same argument applies to products of finitely many exponentials: the logarithm of a product of (m) exponentials near (\mathbf 1) is the sum of the exponents plus a quadratic remainder bounded by (C(m)) times the square of the maximal exponent size. We will only need the case (m=4) corresponding to plaquettes.
+
+### 5.1.3 Linearization of plaquette holonomy: emergence of (d_1)
+
+Fix an oriented plaquette (p=(x;\mu,\nu)\in P(\Lambda)) with (\mu<\nu). Recall the plaquette holonomy map (U\mapsto U_p(U)\in G) from Definition 2.5:
+[
+U_p(U)
+======
+
+U_{x,\mu},U_{x+\hat e_\mu,\nu},U_{x+\hat e_\nu,\mu}^{-1},U_{x,\nu}^{-1}.
+]
+Let (d_1:\mathcal C^1(\Lambda;\mathfrak g)\to\mathcal C^2(\Lambda;\mathfrak g)) be the discrete coboundary (“curl”) from Definition 3.15:
+[
+(d_1X)_{(x;\mu,\nu)}
+====================
+
+X_{x,\mu}+X_{x+\hat e_\mu,\nu}-X_{x+\hat e_\nu,\mu}-X_{x,\nu}.
+]
+
+**Lemma 5.2 (plaquette holonomy linearization with uniform quadratic remainder).**
+There exist constants (t_0>0) and (C_0<\infty), depending only on ((G,g_G)), such that for every (X\in\mathcal C^1(\Lambda;\mathfrak g)), every plaquette (p\in P(\Lambda)), and every (t) satisfying
+[
+|t|;|X|*\infty ;\le; t_0,
+\qquad |X|*\infty:=\max_{b\in E(\Lambda)}|X_b|,
+]
+one has
+[
+U_p\big(U_X(t)\big)
+===================
+
+\exp!\Big(t,(d_1X)*p + t^2 R_p(t)\Big),
+\qquad
+|R_p(t)|\le C_0,|X|*\infty^2.
+]
+In particular, the differential of the plaquette holonomy map at the vacuum satisfies
+[
+\left.\frac{d}{dt}\right|*{t=0}U_p\big(U_X(t)\big)
+;=;
+(dR*{\mathbf 1})*{\mathbf 1}\big((d_1X)*p\big)
+;\in T*{\mathbf 1}G,
+]
+or equivalently, under the identification (T*{\mathbf 1}G\simeq\mathfrak g), one has
+[
+d(U\mapsto U_p(U))\big|_{U^{(0)}}[X] ;=; (d_1X)_p.
+]
+
+*Proof.* Fix (p=(x;\mu,\nu)). Along (U_X(t)) one has
+[
+U_p\big(U_X(t)\big)
+===================
+
+\exp(tX_{x,\mu}),
+\exp(tX_{x+\hat e_\mu,\nu}),
+\exp(-tX_{x+\hat e_\nu,\mu}),
+\exp(-tX_{x,\nu}).
+]
+Choose (t_0>0) small enough that whenever (|t||X|*\infty\le t_0), each factor lies in (B*{r_0}(\mathbf 1)) (with (r_0) as in Lemma 5.1), and moreover the full product lies in (B_{r_\star}(\mathbf 1)) so that (\log) is well-defined. For example, it suffices to take (t_0\le r_0/4) and (t_0\le r_\star/4), since a product of four (r_0)-small elements remains (O(r_0))-close to (\mathbf 1).
+
+Define (Y_p(t)\in\mathfrak g) by
+[
+Y_p(t);:=;\log!\Big(U_p\big(U_X(t)\big)\Big).
+]
+We now expand (Y_p(t)). Consider the smooth map on a neighborhood of (0\in\mathfrak g^4),
+[
+\Psi(A_1,A_2,A_3,A_4)
+:=
+\log!\big(\exp(A_1)\exp(A_2)\exp(A_3)\exp(A_4)\big).
+]
+Then (Y_p(t)=\Psi(tX_1,tX_2,-tX_3,-tX_4)), where
+[
+X_1:=X_{x,\mu},\quad X_2:=X_{x+\hat e_\mu,\nu},\quad X_3:=X_{x+\hat e_\nu,\mu},\quad X_4:=X_{x,\nu}.
+]
+By smoothness, (D\Psi(0)) exists and equals ((A_1,A_2,A_3,A_4)\mapsto A_1+A_2+A_3+A_4). Hence Taylor’s theorem implies
+[
+\Psi(A_1,A_2,A_3,A_4)=A_1+A_2+A_3+A_4 + \mathcal R(A_1,A_2,A_3,A_4),
+]
+with a bound (|\mathcal R|\le C,\max_i|A_i|^2) for (\max_i|A_i|\le r_0), where (C) depends only on ((G,g_G)). Applying this with ((A_1,A_2,A_3,A_4)=(tX_1,tX_2,-tX_3,-tX_4)) gives
+[
+Y_p(t)
+======
+
+t(X_1+X_2-X_3-X_4) + t^2 R_p(t),
+\qquad
+|R_p(t)|\le C,|X|_\infty^2,
+]
+which is precisely the stated form since (X_1+X_2-X_3-X_4=(d_1X)_p). Exponentiating yields the claimed representation for (U_p(U_X(t))).
+
+For the differential statement, observe that (Y_p(t)=t(d_1X)*p+O(t^2)), hence (\frac{d}{dt}|*{0}Y_p(t)=(d_1X)*p). Since (\exp:\mathfrak g\to G) has differential ((d\exp)*0=\mathrm{Id}*{\mathfrak g}) under the identification (T*{\mathbf 1}G\simeq\mathfrak g), one obtains (d(U\mapsto U_p(U))|_{U^{(0)}}[X]=(d_1X)_p). (\square)
+
+**Remark 5.3 (nonabelian curvature and the (O(|X|^2)) correction).**
+Lemma 5.2 is the lattice analogue of the continuum expansion (F(A)=dA + A\wedge A): the linear piece is (d_1X), while the quadratic remainder (R_p(t)) encodes commutator corrections and higher BCH terms. Only the linear piece will be needed to identify the vacuum Hessian exactly; the explicit control of the remainder becomes essential later when comparing (\nabla^2 S_W(U)) to (\nabla^2 S_W(U^{(0)})) on a small-field region (§5.3–§5.4).
+
+### 5.1.4 Quadratic Taylor expansion of the trace potential at the identity
+
+We now record the Taylor expansion of (\Phi_\beta) near (\mathbf 1\in G). To state it cleanly, we isolate the constant relating the chosen (\mathrm{Ad})-invariant inner product on (\mathfrak g) to the trace form induced by the representation used in (\Phi_\beta).
+
+Let (d\rho:\mathfrak g\to\mathfrak u(n)) be the derived Lie algebra representation. Since (\rho) is unitary, (d\rho(Y)) is skew-Hermitian for all (Y\in\mathfrak g). The symmetric bilinear form
+[
+B_\rho(X,Y);:=;-\Re\mathrm{Tr}!\big(d\rho(X),d\rho(Y)\big)
+]
+is (\mathrm{Ad})-invariant and positive definite on (\mathfrak g) (faithfulness removes the kernel). When (\mathfrak g) is simple (in particular for (G=\mathrm{SU}(N))), all (\mathrm{Ad})-invariant inner products are proportional, hence there exists a scalar (\lambda_\rho>0) such that
+[
+B_\rho(X,Y);=;\frac{1}{\lambda_\rho},\langle X,Y\rangle_{\mathfrak g},
+\qquad X,Y\in\mathfrak g.
+]
+(If one chooses (\langle\cdot,\cdot\rangle_{\mathfrak g}=B_\rho), then (\lambda_\rho=1). For (G=\mathrm{SU}(N)) in the defining representation and the convention (\langle X,Y\rangle_\lambda=\lambda(-\mathrm{Tr}(XY))) from §3.1.1, one has (\lambda_\rho=\lambda).)
+
+**Lemma 5.4 (trace potential expansion at (\mathbf 1)).**
+There exist radii (r_{\mathrm{Tr}}\in(0,r_\star)) and a constant (C_{\mathrm{Tr}}<\infty), depending only on ((G,\rho,g_G)), such that for all (Y\in\mathfrak g) with (|Y|\le r_{\mathrm{Tr}}),
+[
+\Phi_\beta!\big(\exp(Y)\big)
+============================
+
+\frac{\beta}{2n,\lambda_\rho},|Y|^2 ;+; \mathcal E_\beta(Y),
+\qquad
+|\mathcal E_\beta(Y)|\le C_{\mathrm{Tr}},\beta,|Y|^3.
+]
+In particular,
+[
+D\Phi_\beta(\mathbf 1)=0,
+\qquad
+D^2\Phi_\beta(\mathbf 1)[Y,Y]
+=============================
+
+\frac{\beta}{n,\lambda_\rho},|Y|^2.
+]
+
+*Proof.* Write (A:=d\rho(Y)\in\mathfrak u(n)), so (\rho(\exp Y)=\exp(A)). Expanding (\exp(A)) in a Taylor series in operator norm (valid for (|Y|) small) yields
+[
+\exp(A)=I + A + \tfrac12 A^2 + O(|A|^3).
+]
+Taking the trace and real part, (\Re\mathrm{Tr}(A)=0) because (A) is skew-Hermitian, while (\Re\mathrm{Tr}(A^2)=\mathrm{Tr}(A^2)) is real and nonpositive. Thus
+[
+\Re\mathrm{Tr}(\exp(A))
+=======================
+
+# n + \tfrac12,\Re\mathrm{Tr}(A^2) + O(|A|^3)
+
+n - \tfrac12,B_\rho(Y,Y) + O(|Y|^3),
+]
+where the final step uses that (-\Re\mathrm{Tr}(A^2)=B_\rho(Y,Y)) and that (|A|\lesssim |Y|) in finite dimension. Therefore
+[
+1-\frac{1}{n}\Re\mathrm{Tr}(\rho(\exp Y))
+=========================================
+
+# \frac{1}{2n},B_\rho(Y,Y) + O(|Y|^3)
+
+\frac{1}{2n,\lambda_\rho},|Y|^2 + O(|Y|^3).
+]
+Multiplying by (\beta) gives the stated expansion. The bound (|\mathcal E_\beta(Y)|\le C_{\mathrm{Tr}}\beta|Y|^3) follows from Taylor’s theorem with remainder applied to the smooth map (Y\mapsto \Phi_\beta(\exp Y)) on the compact ball ({|Y|\le r_{\mathrm{Tr}}}). The derivative identities are immediate by differentiating the quadratic expansion. (\square)
+
+### 5.1.5 Quadratic approximation of the Wilson action along geodesics through (U^{(0)})
+
+Combining Lemma 5.2 and Lemma 5.4 gives a precise quadratic approximation of each plaquette term, hence of (S_W), along any linkwise geodesic (U_X(t)) through the vacuum.
+
+Fix (X\in\mathcal C^1(\Lambda;\mathfrak g)). For each plaquette (p), Lemma 5.2 provides (for (|t||X|*\infty) sufficiently small) a Lie algebra element
+[
+Y_p(t);:=;\log!\Big(U_p\big(U_X(t)\big)\Big)
+;=;t(d_1X)*p + t^2R_p(t),
+\qquad |R_p(t)|\le C_0|X|*\infty^2.
+]
+For (t) small enough that (|Y_p(t)|\le r*{\mathrm{Tr}}) for all plaquettes (p), Lemma 5.4 gives
+[
+\Phi_\beta!\Big(U_p\big(U_X(t)\big)\Big)
+========================================
+
+# \Phi_\beta\big(\exp(Y_p(t))\big)
+
+\frac{\beta}{2n\lambda_\rho},|Y_p(t)|^2 + \mathcal E_\beta(Y_p(t)).
+]
+Since (Y_p(t)=t(d_1X)*p+O(t^2)), it follows that
+[
+\Phi*\beta!\Big(U_p\big(U_X(t)\big)\Big)
+========================================
+
+\frac{\beta}{2n\lambda_\rho},t^2,|(d_1X)*p|^2 ;+; O!\big(\beta,|t|^3\big),
+]
+with an error term that is uniform in (p) once (G,\rho) are fixed and (|t||X|*\infty) is constrained.
+
+Summing over plaquettes yields the basic quadratic approximation
+[
+S_W\big(U_X(t)\big)
+===================
+
+\frac{\beta}{2n\lambda_\rho},t^2,|d_1X|*{\mathcal C^2}^2
+;+; O!\big(\beta,|t|^3\big),
+]
+where (|d_1X|*{\mathcal C^2}^2=\sum_{p\in P(\Lambda)}|(d_1X)*p|^2). In particular, the first derivative vanishes:
+[
+\left.\frac{d}{dt}\right|*{t=0} S_W\big(U_X(t)\big)=0,
+]
+and the second derivative at (t=0) is the quadratic form
+[
+\left.\frac{d^2}{dt^2}\right|_{t=0} S_W\big(U_X(t)\big)
+=======================================================
+
+\frac{\beta}{n\lambda_\rho},|d_1X|_{\mathcal C^2}^2.
+]
+
+This computation is the conceptual reason the discrete coboundary (d_1) and the discrete Maxwell operator (d_1^*d_1) appear in the vacuum Hessian. The precise operator identity
+[
+\nabla^2 S_W(U^{(0)}) ;=; \frac{\beta}{n\lambda_\rho},d_1^*d_1
+]
+(in right-trivialized coordinates at (U^{(0)})) is recorded and proved in §5.2.
+
+
+### 5.2 Hessian at the vacuum = discrete Maxwell operator
+
+The expansion in §5.1.5 identifies the **quadratic form** of the Wilson action at the vacuum. The purpose of this subsection is to upgrade that quadratic-form computation to a precise **operator identity**: in the right-trivialized coordinates at (U^{(0)}), the Riemannian Hessian (\nabla^2 S_W(U^{(0)})) is exactly a constant multiple of the discrete Maxwell operator (d_1^*d_1) from §3.4.
+
+Throughout, we use the canonical identification
+[
+T_{U^{(0)}}M_\Lambda ;\cong; \mathcal C^1(\Lambda;\mathfrak g)
+]
+from §5.1.1 (equivalently from §3.1.3 at (U^{(0)})), and we write (\langle\cdot,\cdot\rangle_{\mathcal C^k}) for the (\ell^2) cochain inner products induced by (\langle\cdot,\cdot\rangle_{\mathfrak g}) (Definition 3.13).
+
+#### 5.2.1 A Hessian chain rule at critical values
+
+The key simplification at the vacuum is that each plaquette term is a **composition** (\Phi_\beta\circ U_p), and (\Phi_\beta) has vanishing first derivative at (\mathbf 1). The following lemma is the general mechanism behind the “only the linearization matters” phenomenon.
+
+**Lemma 5.5 (Hessian chain rule at a critical value).**
+Let ((M,g_M)) and ((N,g_N)) be Riemannian manifolds with Levi–Civita connections (\nabla^M) and (\nabla^N). Let (F:M\to N) be smooth and let (f:N\to\mathbb R) be (C^2). Fix (x_0\in M) and set (y_0:=F(x_0)). Then for all (X,Y\in T_{x_0}M),
+[
+\nabla^2_M(f\circ F)(x_0)[X,Y]
+==============================
+
+\nabla^2_N f(y_0)\big[dF(x_0)X,\ dF(x_0)Y\big]
+;+;
+df(y_0)\Big[(\nabla dF)(x_0)[X,Y]\Big],
+]
+where ((\nabla dF)(x_0)[X,Y]\in T_{y_0}N) denotes the covariant derivative of the differential (the second fundamental form of (F)):
+[
+(\nabla dF)(x_0)[X,Y]
+:=
+\nabla^N_{dF(x_0)X}\big(dF(\cdot)Y\big)\Big|_{x_0}
+;-;
+dF(x_0)\big(\nabla^M_X Y\big).
+]
+In particular, if (df(y_0)=0), then
+[
+\nabla^2_M(f\circ F)(x_0)[X,Y]
+==============================
+
+\nabla^2_N f(y_0)\big[dF(x_0)X,\ dF(x_0)Y\big].
+]
+
+*Proof.*
+Let (\widetilde X,\widetilde Y) be smooth vector fields on (M) defined near (x_0) with (\widetilde X(x_0)=X), (\widetilde Y(x_0)=Y). Recall the coordinate-free definition of the Hessian:
+[
+\nabla^2_M u(x_0)[X,Y]
+======================
+
+## \widetilde X\big(\widetilde Y u\big)(x_0)
+
+\big(\nabla^M_{\widetilde X}\widetilde Y\big)(u)(x_0),
+\qquad u\in C^2(M).
+]
+Apply this with (u=f\circ F). Using the chain rule for first derivatives,
+[
+\widetilde Y(f\circ F)
+======================
+
+df(F)\big[dF(\widetilde Y)\big].
+]
+Differentiate this expression in the (\widetilde X)-direction. The derivative of the scalar function (x\mapsto df(F(x))[dF_x(\widetilde Y_x)]) splits into two pieces: differentiating (df) along (F), and differentiating the (N)-vector field (x\mapsto dF_x(\widetilde Y_x)). Precisely,
+[
+\widetilde X!\left(df(F)\big[dF(\widetilde Y)\big]\right)
+=========================================================
+
+\nabla^2_N f(F)\big[dF(\widetilde X),dF(\widetilde Y)\big]
++
+df(F)!\left(\nabla^N_{dF(\widetilde X)}(dF(\widetilde Y))\right),
+]
+where the second term uses the covariant derivative on (N) to differentiate the (N)-vector field (dF(\widetilde Y)) along the (N)-direction (dF(\widetilde X)). Therefore,
+[
+\widetilde X\big(\widetilde Y(f\circ F)\big)
+============================================
+
+\nabla^2_N f(F)\big[dF(\widetilde X),dF(\widetilde Y)\big]
++
+df(F)!\left(\nabla^N_{dF(\widetilde X)}(dF(\widetilde Y))\right).
+]
+Subtract the second Hessian term ((\nabla^M_{\widetilde X}\widetilde Y)(f\circ F)=df(F)[dF(\nabla^M_{\widetilde X}\widetilde Y)]) to obtain
+[
+\nabla^2_M(f\circ F)
+====================
+
+\nabla^2_N f(F)\circ (dF\otimes dF)
++
+df(F)\circ(\nabla dF),
+]
+with ((\nabla dF)(\widetilde X,\widetilde Y)=\nabla^N_{dF(\widetilde X)}(dF(\widetilde Y)) - dF(\nabla^M_{\widetilde X}\widetilde Y)). Evaluating at (x_0) yields the displayed identity. If (df(y_0)=0), the second term vanishes, giving the simplified formula. (\square)
+
+#### 5.2.2 The global plaquette map and its vacuum differential
+
+It is convenient to package all plaquette holonomies into a single “curvature” map.
+
+Define the product plaquette map
+[
+\mathcal U_\Lambda: M_\Lambda \longrightarrow G^{P(\Lambda)},
+\qquad
+\big(\mathcal U_\Lambda(U)\big)*p ;:=; U_p(U),
+]
+and the product potential
+[
+\mathcal \Phi*\beta: G^{P(\Lambda)}\longrightarrow \mathbb R,
+\qquad
+\mathcal \Phi_\beta(V);:=;\sum_{p\in P(\Lambda)} \Phi_\beta(V_p).
+]
+With these notations,
+[
+S_W ;=; S_{\Lambda,\beta} ;=; \mathcal \Phi_\beta \circ \mathcal U_\Lambda.
+]
+Equip (G^{P(\Lambda)}) with the product bi-invariant metric induced from (g_G) on each factor; in particular, right-trivialization identifies (T_{\mathbf 1^{P(\Lambda)}}G^{P(\Lambda)}) isometrically with
+[
+\mathfrak g^{P(\Lambda)} ;=; \mathcal C^2(\Lambda;\mathfrak g).
+]
+
+**Lemma 5.6 (vacuum differential of the plaquette map).**
+Under the canonical identifications
+[
+T_{U^{(0)}}M_\Lambda ;\cong; \mathcal C^1(\Lambda;\mathfrak g),
+\qquad
+T_{\mathbf 1^{P(\Lambda)}}G^{P(\Lambda)} ;\cong; \mathcal C^2(\Lambda;\mathfrak g),
+]
+the differential of (\mathcal U_\Lambda) at (U^{(0)}) is exactly the coboundary (d_1):
+[
+d\mathcal U_\Lambda(U^{(0)}) ;=; d_1:\mathcal C^1(\Lambda;\mathfrak g)\to\mathcal C^2(\Lambda;\mathfrak g).
+]
+Equivalently, for each (X\in\mathcal C^1(\Lambda;\mathfrak g)) and each plaquette (p\in P(\Lambda)),
+[
+d(U\mapsto U_p(U))\big|_{U^{(0)}}[X] ;=; (d_1X)*p \in \mathfrak g \cong T*{\mathbf 1}G.
+]
+
+*Proof.*
+This is exactly the differential statement at the end of Lemma 5.2: along the geodesic (U_X(t)) defined by ((U_X(t))*b=\exp(tX_b)), one has
+[
+U_p\big(U_X(t)\big)=\exp!\big(t(d_1X)*p+O(t^2)\big),
+]
+hence (\frac{d}{dt}|*{t=0}U_p(U_X(t))=(d_1X)*p) under the identification (T*{\mathbf 1}G\simeq\mathfrak g). Since (\mathcal U*\Lambda) collects these components, (d\mathcal U_\Lambda(U^{(0)})) is precisely (d_1). (\square)
+
+#### 5.2.3 Hessian of the Wilson action at the vacuum
+
+We next record the Hessian of (\Phi_\beta) at (\mathbf 1) as a bilinear form on (\mathfrak g). Lemma 5.4 gave the quadratic expansion; we now state the bilinear version explicitly.
+
+**Lemma 5.7 (Hessian of the trace potential at (\mathbf 1)).**
+Let (\lambda_\rho>0) be the constant relating the trace form (B_\rho(X,Y)=-\Re\mathrm{Tr}(d\rho(X)d\rho(Y))) to (\langle\cdot,\cdot\rangle_{\mathfrak g}) as in §5.1.4. Then the Riemannian Hessian of (\Phi_\beta) at the identity satisfies
+[
+\nabla^2_G\Phi_\beta(\mathbf 1)[A,B]
+====================================
+
+\frac{\beta}{n,\lambda_\rho},\langle A,B\rangle_{\mathfrak g},
+\qquad A,B\in T_{\mathbf 1}G\simeq\mathfrak g.
+]
+Consequently, for the product potential (\mathcal\Phi_\beta) on (G^{P(\Lambda)}),
+[
+\nabla^2_{G^{P(\Lambda)}}\mathcal\Phi_\beta(\mathbf 1^{P(\Lambda)})[F,H]
+========================================================================
+
+\frac{\beta}{n,\lambda_\rho},\langle F,H\rangle_{\mathcal C^2},
+\qquad F,H\in \mathcal C^2(\Lambda;\mathfrak g).
+]
+
+*Proof.*
+By Lemma 5.4, for (|Y|) small one has
+[
+\Phi_\beta(\exp Y)=\frac{\beta}{2n\lambda_\rho}|Y|^2 + O(\beta|Y|^3),
+]
+which implies (D\Phi_\beta(\mathbf 1)=0) and
+[
+D^2\Phi_\beta(\mathbf 1)[Y,Y]=\frac{\beta}{n\lambda_\rho}|Y|^2.
+]
+Since (\Phi_\beta) is (C^\infty), the second differential (D^2\Phi_\beta(\mathbf 1)) is a symmetric bilinear form on (\mathfrak g), and the polarization identity yields, for all (A,B\in\mathfrak g),
+[
+D^2\Phi_\beta(\mathbf 1)[A,B]
+=============================
+
+# \frac14\Big(D^2\Phi_\beta(\mathbf 1)[A+B,A+B]-D^2\Phi_\beta(\mathbf 1)[A-B,A-B]\Big)
+
+\frac{\beta}{n\lambda_\rho},\langle A,B\rangle_{\mathfrak g}.
+]
+At (\mathbf 1), the identification (T_{\mathbf 1}G\simeq\mathfrak g) is isometric, so the bilinear form computed above is exactly the Riemannian Hessian (\nabla^2_G\Phi_\beta(\mathbf 1)).
+
+For (\mathcal\Phi_\beta(V)=\sum_p\Phi_\beta(V_p)) on the product group, the product metric makes the Hessian block-diagonal across plaquettes, and summing the single-factor identities gives
+[
+\nabla^2_{G^{P(\Lambda)}}\mathcal\Phi_\beta(\mathbf 1^{P(\Lambda)})[F,H]
+========================================================================
+
+# \sum_{p\in P(\Lambda)} \nabla^2_G\Phi_\beta(\mathbf 1)[F_p,H_p]
+
+# \frac{\beta}{n\lambda_\rho}\sum_{p}\langle F_p,H_p\rangle_{\mathfrak g}
+
+\frac{\beta}{n\lambda_\rho}\langle F,H\rangle_{\mathcal C^2}.
+\quad\square
+]
+
+We now combine the preceding ingredients.
+
+**Proposition 5.8 (vacuum Hessian identity; Maxwell operator).**
+Under the canonical identification (T_{U^{(0)}}M_\Lambda\simeq \mathcal C^1(\Lambda;\mathfrak g)), the Riemannian Hessian of the Wilson action at the vacuum satisfies, for all (X,Y\in \mathcal C^1(\Lambda;\mathfrak g)),
+[
+\nabla^2 S_W(U^{(0)})[X,Y]
+==========================
+
+\frac{\beta}{n,\lambda_\rho},\langle d_1X,\ d_1Y\rangle_{\mathcal C^2}.
+]
+Equivalently, as a self-adjoint linear operator on (\mathcal C^1(\Lambda;\mathfrak g)) (with respect to (\langle\cdot,\cdot\rangle_{\mathcal C^1})),
+[
+\nabla^2 S_W(U^{(0)})
+;=;
+\frac{\beta}{n,\lambda_\rho},d_1^*d_1
+;=;
+\frac{\beta}{n,\lambda_\rho},\mathsf M_1,
+]
+where (\mathsf M_1) is the discrete Maxwell operator from Definition 3.42.
+
+*Proof.*
+Write (S_W=\mathcal\Phi_\beta\circ \mathcal U_\Lambda). At the vacuum, (\mathcal U_\Lambda(U^{(0)})=\mathbf 1^{P(\Lambda)}). Moreover (d\mathcal\Phi_\beta(\mathbf 1^{P(\Lambda)})=0) because (D\Phi_\beta(\mathbf 1)=0) (Lemma 5.4, or Lemma 5.7).
+
+Apply Lemma 5.5 with (M=M_\Lambda), (N=G^{P(\Lambda)}), (F=\mathcal U_\Lambda), (f=\mathcal\Phi_\beta), (x_0=U^{(0)}), (y_0=\mathbf 1^{P(\Lambda)}). Since (df(y_0)=0), the second fundamental form term drops and we obtain, for (X,Y\in T_{U^{(0)}}M_\Lambda),
+[
+\nabla^2 S_W(U^{(0)})[X,Y]
+==========================
+
+\nabla^2_{G^{P(\Lambda)}}\mathcal\Phi_\beta(\mathbf 1^{P(\Lambda)})\big[d\mathcal U_\Lambda(U^{(0)})X,\ d\mathcal U_\Lambda(U^{(0)})Y\big].
+]
+Identify (T_{U^{(0)}}M_\Lambda\simeq \mathcal C^1) and (T_{\mathbf 1^{P(\Lambda)}}G^{P(\Lambda)}\simeq \mathcal C^2). By Lemma 5.6, (d\mathcal U_\Lambda(U^{(0)})=d_1). By Lemma 5.7,
+[
+\nabla^2_{G^{P(\Lambda)}}\mathcal\Phi_\beta(\mathbf 1^{P(\Lambda)})[F,H]
+========================================================================
+
+\frac{\beta}{n\lambda_\rho}\langle F,H\rangle_{\mathcal C^2}.
+]
+Substituting yields
+[
+\nabla^2 S_W(U^{(0)})[X,Y]
+==========================
+
+\frac{\beta}{n\lambda_\rho},\langle d_1X,d_1Y\rangle_{\mathcal C^2},
+]
+which is the bilinear form identity.
+
+To rewrite this as an operator identity, use adjointness of (d_1^*) (Definition 3.17):
+[
+\langle d_1X,d_1Y\rangle_{\mathcal C^2}
+=======================================
+
+\langle X,d_1^*d_1Y\rangle_{\mathcal C^1}.
+]
+Since (\nabla^2 S_W(U^{(0)})) is a symmetric bilinear form on the finite-dimensional inner-product space (\mathcal C^1(\Lambda;\mathfrak g)), it is represented uniquely by a self-adjoint linear operator; the displayed identity shows that operator is (\frac{\beta}{n\lambda_\rho}d_1^*d_1). (\square)
+
+#### 5.2.4 Positivity, kernel, and gauge zero-modes
+
+The operator identity immediately implies the expected semidefinite structure of the vacuum Hessian.
+
+**Corollary 5.9 (positivity and kernel).**
+For all (X\in \mathcal C^1(\Lambda;\mathfrak g)),
+[
+\nabla^2 S_W(U^{(0)})[X,X]
+==========================
+
+\frac{\beta}{n\lambda_\rho},|d_1X|_{\mathcal C^2}^2
+;\ge;0,
+]
+and
+[
+\ker\big(\nabla^2 S_W(U^{(0)})\big)=\ker(d_1).
+]
+In particular, (\mathrm{im}(d_0)\subseteq \ker(\nabla^2 S_W(U^{(0)}))).
+
+*Proof.*
+Positivity is immediate from Proposition 5.8. The kernel identity follows because (d_1^*d_1X=0) if and only if (d_1X=0) (Corollary 3.44), and the prefactor (\beta/(n\lambda_\rho)) is strictly positive. Finally, (\mathrm{im}(d_0)\subseteq\ker(d_1)) by (d_1d_0=0) (Lemma 3.16). (\square)
+
+**Remark 5.10 (horizontal restriction and harmonic modes).**
+By Proposition 3.35, the vacuum horizontal space is (H_{U^{(0)}}=\ker(d_0^*)). Restricting Corollary 5.9 to (H_{U^{(0)}}) and using the horizontal Hodge decomposition (Proposition 3.36) yields
+[
+H_{U^{(0)}}=\ker(\Delta_1)\ \oplus\ \mathrm{im}(d_1^*),
+\qquad
+\ker!\left(d_1^*d_1\big|*{H*{U^{(0)}}}\right)=\ker(\Delta_1),
+]
+so on horizontals the only remaining vacuum zero-modes are harmonic (1)-cochains (torus topology / finite-size modes). This is the precise sense in which the Wilson Hessian is “Maxwell-positive” transversely but has unavoidable degeneracies tied to gauge symmetry and topology; later coercivity inequalities compensate for these degeneracies using the strictly positive Haar/Ricci contribution on a small-field region.
+
+
+
+
+
+
+### 5.3 Canonical small-field region (K_\Lambda(r)) and uniform exponential coordinates
+
+The operator identity of §5.2 isolates the *vacuum* Hessian of the Wilson action as a constant multiple of the discrete Maxwell operator (d_1^*d_1). To turn this into a *robust* coercivity statement (and ultimately a Bakry–Émery curvature lower bound on horizontal directions), we need a region of configuration space on which:
+
+1. every link variable admits a unique logarithm in (\mathfrak g) (so that local Taylor expansions are uniform), and
+2. the nonlinear Hessian (\nabla^2 S_W(U)) is a controlled perturbation of (\nabla^2 S_W(U^{(0)})).
+
+The purpose of the present subsection is to fix such a canonical “small-field” region and record the basic geometric consequences of working on it.
+
+#### 5.3.1 Injectivity radius scale and a choice of small-field radius
+
+Let ((G,g_G)) be the compact Lie group equipped with the bi-invariant Riemannian metric from §3.1. Let
+[
+\iota_G ;:=; \mathrm{inj}_G(\mathbf 1)
+]
+denote the injectivity radius at the identity. Recall that (\iota_G>0) and that the Riemannian exponential at (\mathbf 1) coincides with the group exponential (\exp:\mathfrak g\to G).
+
+From §5.1 we have already fixed radii (r_\star>0) (domain of a smooth logarithm map (\log) at (\mathbf 1)), (r_0>0) (validity radius for a uniform two-term BCH estimate), and (r_{\mathrm{Tr}}>0) (validity radius for the cubic remainder expansion of (\Phi_\beta(\exp Y))). We now choose a single “small-field” radius (r_{\mathrm{sf}}) satisfying
+[
+0< r_{\mathrm{sf}} ;\le; \min\Big{\frac{r_\star}{4},\ \frac{r_0}{4},\ \frac{r_{\mathrm{Tr}}}{4}\Big}.
+\tag{5.3}
+]
+The factors of (4) are chosen so that if each link variable lies in a ball of radius (r_{\mathrm{sf}}) about (\mathbf 1), then each plaquette holonomy—being a product of four such link factors (with inverses)—lies in a ball of radius (4r_{\mathrm{sf}}) about (\mathbf 1), hence remains within the domains of (\log), BCH, and the trace-potential Taylor expansion.
+
+In what follows, fix an arbitrary
+[
+0<r\le r_{\mathrm{sf}}.
+]
+
+#### 5.3.2 Definition of the canonical small-field region (K_\Lambda(r))
+
+Let (d_G) be the Riemannian distance on (G) and let
+[
+B_r^G(\mathbf 1);:=;{g\in G:\ d_G(g,\mathbf 1)<r}
+]
+denote the open geodesic ball of radius (r) about the identity.
+
+**Definition 5.11 (linkwise small-field region).**
+Define the canonical small-field region
+[
+K_\Lambda(r)
+;:=;
+\Big{
+U\in M_\Lambda=G^{E(\Lambda)}:\ U_b\in B_r^G(\mathbf 1)\ \text{for every }b\in E(\Lambda)
+\Big}
+;=;
+\prod_{b\in E(\Lambda)} B_r^G(\mathbf 1).
+\tag{5.4}
+]
+Equivalently, in terms of the linkwise distance,
+[
+K_\Lambda(r)=\Big{U\in M_\Lambda:\ \max_{b\in E(\Lambda)} d_G(U_b,\mathbf 1)<r\Big}.
+]
+
+**Remarks.**
+
+1. The definition is intentionally *linkwise* (an (\ell^\infty)-type restriction over links). This is the natural domain on which one obtains uniform Taylor constants for the plaquette map (U\mapsto U_p(U)) and for (\Phi_\beta).
+2. The set (K_\Lambda(r)) is generally **not gauge invariant** (a gauge transformation can move a link variable away from (\mathbf 1) even when all links were initially close to (\mathbf 1)). This is not a defect: the role of (K_\Lambda(r)) is to provide a domain for *pointwise* operator inequalities. Gauge invariance enters later via horizontal restriction (Lemma 3.38) and via localization/probability estimates that do not require (K_\Lambda(r)) itself to be invariant.
+3. Because inversion is an isometry on a bi-invariant metric ((d_G(g^{-1},\mathbf 1)=d_G(g,\mathbf 1))), the orientation-reversal convention (U_{b^{-1}}=U_b^{-1}) remains within the same radius: if (U\in K_\Lambda(r)) and (b\in E(\Lambda)), then (U_{b^{-1}}\in B_r^G(\mathbf 1)).
+
+#### 5.3.3 Product exponential chart and linkwise logarithmic coordinates
+
+To work with explicit coordinates on (K_\Lambda(r)), we use product exponential and logarithm maps.
+
+Define the linkwise (\ell^\infty) ball in the Lie algebra product:
+[
+B_r^\infty
+;:=;
+\Big{
+X\in \mathfrak g^{E(\Lambda)}:\ |X|*\infty:=\max*{b\in E(\Lambda)}|X_b|*{\mathfrak g}<r
+\Big}.
+\tag{5.5}
+]
+Define the product exponential map
+[
+\mathrm{Exp}*\Lambda:\mathfrak g^{E(\Lambda)}\to M_\Lambda,
+\qquad
+\big(\mathrm{Exp}*\Lambda(X)\big)*b:=\exp(X_b),
+\tag{5.6}
+]
+and, whenever (U_b\in B_r^G(\mathbf 1)) for all (b), define the product logarithm map
+[
+\mathrm{Log}*\Lambda:K*\Lambda(r)\to \mathfrak g^{E(\Lambda)},
+\qquad
+\big(\mathrm{Log}_\Lambda(U)\big)_b:=\log(U_b).
+\tag{5.7}
+]
+
+**Lemma 5.12 (coordinate diffeomorphism on (K_\Lambda(r))).**
+For every (0<r<\iota_G), the map (\mathrm{Exp}*\Lambda) restricts to a diffeomorphism
+[
+\mathrm{Exp}*\Lambda:\ B_r^\infty \xrightarrow{\ \sim\ } K_\Lambda(r),
+]
+with inverse (\mathrm{Log}_\Lambda) given by the componentwise logarithm (5.7).
+
+**Proof.**
+For (0<r<\iota_G), the exponential (\exp:\mathfrak g\to G) restricts to a diffeomorphism from the open ball ({Y\in\mathfrak g:\ |Y|*{\mathfrak g}<r}) onto (B_r^G(\mathbf 1)), with inverse (\log) defined on (B_r^G(\mathbf 1)). Since (E(\Lambda)) is finite, the product of finitely many diffeomorphisms is a diffeomorphism between the corresponding product domains. Applying this componentwise proves that (\mathrm{Exp}*\Lambda:B_r^\infty\to \prod_{b}B_r^G(\mathbf 1)=K_\Lambda(r)) is a diffeomorphism with inverse (\mathrm{Log}_\Lambda). (\square)
+
+Thus, on (K_\Lambda(r)) we may unambiguously write
+[
+U=\mathrm{Exp}*\Lambda(A)
+\quad\Longleftrightarrow\quad
+A=\mathrm{Log}*\Lambda(U),
+]
+where (A=(A_b)_{b\in E(\Lambda)}\in \mathfrak g^{E(\Lambda)}=\mathcal C^1(\Lambda;\mathfrak g)) plays the role of a linkwise gauge potential in exponential coordinates.
+
+#### 5.3.4 Relation between linkwise control and the global product distance
+
+Let (d_\Lambda) denote the Riemannian distance on ((M_\Lambda,g_\Lambda)). Recall from Lemma 3.7 that the distance has the exact product form
+[
+d_\Lambda(U,V)^2=\sum_{b\in E(\Lambda)} d_G(U_b,V_b)^2.
+\tag{5.8}
+]
+In particular, for the vacuum (U^{(0)}=(\mathbf 1)*b), we have
+[
+d*\Lambda(U,U^{(0)})^2=\sum_{b\in E(\Lambda)} d_G(U_b,\mathbf 1)^2.
+\tag{5.9}
+]
+
+**Lemma 5.13 (metric ball inclusions).**
+Let
+[
+B_r^\Lambda(U^{(0)}):={U\in M_\Lambda:\ d_\Lambda(U,U^{(0)})<r}
+]
+be the geodesic ball of radius (r) about the vacuum in ((M_\Lambda,g_\Lambda)). Then for every (r>0),
+[
+B_r^\Lambda(U^{(0)}) \subseteq K_\Lambda(r)
+\subseteq B_{\sqrt{|E(\Lambda)|},r}^\Lambda(U^{(0)}).
+\tag{5.10}
+]
+
+**Proof.**
+If (U\in B_r^\Lambda(U^{(0)})), then (5.9) gives (\sum_b d_G(U_b,\mathbf 1)^2<r^2), hence each term satisfies (d_G(U_b,\mathbf 1)<r). Thus (U\in\prod_b B_r^G(\mathbf 1)=K_\Lambda(r)), proving the first inclusion.
+
+Conversely, if (U\in K_\Lambda(r)), then (d_G(U_b,\mathbf 1)<r) for all (b), hence (5.9) yields
+[
+d_\Lambda(U,U^{(0)})^2=\sum_b d_G(U_b,\mathbf 1)^2
+< |E(\Lambda)|,r^2,
+]
+so (U\in B_{\sqrt{|E(\Lambda)|},r}^\Lambda(U^{(0)})). (\square)
+
+The next lemma identifies the product distance with the (\ell^2) norm of the logarithmic coordinates, as long as one remains within the injectivity radius on each link.
+
+**Lemma 5.14 (distance equals (\ell^2)-norm in exponential coordinates).**
+Fix (0<r<\iota_G). For every (X\in B_r^\infty),
+[
+d_\Lambda!\bigl(U^{(0)},\mathrm{Exp}_\Lambda(X)\bigr)^2
+=======================================================
+
+# \sum_{b\in E(\Lambda)} |X_b|_{\mathfrak g}^2
+
+|X|_{\mathcal C^1}^2.
+\tag{5.11}
+]
+
+**Proof.**
+Let (U=\mathrm{Exp}*\Lambda(X)). By the product distance formula (5.8),
+[
+d*\Lambda(U^{(0)},U)^2
+======================
+
+\sum_{b\in E(\Lambda)} d_G(\mathbf 1,\exp(X_b))^2.
+]
+Since (|X_b|*{\mathfrak g}<r<\iota_G), the curve (t\mapsto \exp(tX_b)) is the unique minimizing geodesic from (\mathbf 1) to (\exp(X_b)), with length (|X_b|*{\mathfrak g}). Hence (d_G(\mathbf 1,\exp(X_b))=|X_b|*{\mathfrak g}) for each (b). Substituting yields
+[
+d*\Lambda(U^{(0)},U)^2=\sum_b |X_b|_{\mathfrak g}^2,
+]
+which is exactly (5.11). (\square)
+
+As a useful corollary, if (U\in K_\Lambda(r)) with (r<\iota_G) and (X=\mathrm{Log}*\Lambda(U)), then
+[
+|X|*\infty<r,
+\qquad
+|X|_{\mathcal C^1}\le \sqrt{|E(\Lambda)|},r,
+]
+with no hidden constants.
+
+#### 5.3.5 Plaquette holonomies remain small on (K_\Lambda(r))
+
+On (K_\Lambda(r)) we can also uniformly control the *plaquette* holonomies. This will allow us to work with (\log(U_p(U))) and apply the Taylor expansions from §5.1 uniformly in (p).
+
+**Lemma 5.15 (plaquette holonomy distance bound on (K_\Lambda(r))).**
+Let (0<r<\iota_G) and (U\in K_\Lambda(r)). Then for every plaquette (p\in P(\Lambda)),
+[
+d_G!\big(U_p(U),\mathbf 1\big)\ \le\ 4r.
+\tag{5.12}
+]
+In particular, if (r\le r_\star/4) then (U_p(U)\in B_{r_\star}^G(\mathbf 1)) for every (p), so (\log\big(U_p(U)\big)) is well-defined and smooth on (K_\Lambda(r)).
+
+**Proof.**
+Fix (p=(x;\mu,\nu)). By definition,
+[
+U_p(U)
+======
+
+U_{x,\mu},U_{x+\hat e_\mu,\nu},U_{x+\hat e_\nu,\mu}^{-1},U_{x,\nu}^{-1}.
+]
+Using left invariance of the distance, the triangle inequality, and the fact that inversion is an isometry for a bi-invariant metric,
+[
+\begin{aligned}
+d_G(U_p(U),\mathbf 1)
+&= d_G!\Big(U_{x,\mu},U_{x+\hat e_\mu,\nu},U_{x+\hat e_\nu,\mu}^{-1},U_{x,\nu}^{-1},\ \mathbf 1\Big) \
+&\le d_G(U_{x,\mu},\mathbf 1)
+
+* d_G(U_{x+\hat e_\mu,\nu},\mathbf 1)
+* d_G(U_{x+\hat e_\nu,\mu}^{-1},\mathbf 1)
+* d_G(U_{x,\nu}^{-1},\mathbf 1) \
+  &= d_G(U_{x,\mu},\mathbf 1)
+* d_G(U_{x+\hat e_\mu,\nu},\mathbf 1)
+* d_G(U_{x+\hat e_\nu,\mu},\mathbf 1)
+* d_G(U_{x,\nu},\mathbf 1).
+  \end{aligned}
+  ]
+  Since (U\in K_\Lambda(r)), each link appearing above lies in (B_r^G(\mathbf 1)), so each distance term is (<r). Therefore (d_G(U_p(U),\mathbf 1)\le 4r). The final statement follows immediately from (4r\le r_\star). (\square)
+
+#### 5.3.6 Locality implies uniform derivative bounds on (K_\Lambda(r))
+
+The last structural point we record is that, on (K_\Lambda(r)), any *local* smooth map depending on only (O(1)) link variables has (C^k) norms bounded uniformly in the volume. This is the mechanism that later lets us estimate operator differences (such as (\nabla^2 S_W(U)-\nabla^2 S_W(U^{(0)}))) without incurring factors growing with (|\Lambda|).
+
+We state a version adapted to the maps needed later (plaquette holonomy, its logarithm, and the single-plaquette energy).
+
+**Lemma 5.16 (uniform (C^k) bounds for plaquette-local maps).**
+Fix (0<r\le r_{\mathrm{sf}}). Let (F) be any smooth map constructed from finitely many group operations (multiplication, inversion, conjugation), the representation (\rho), and the maps (\exp,\log), applied only to the four link variables in a plaquette boundary. Concretely, (F) may be taken as any of the following examples:
+
+* (U\mapsto U_p(U)\in G),
+* (U\mapsto \log(U_p(U))\in \mathfrak g) (well-defined on (K_\Lambda(r)) by Lemma 5.15 and the choice of (r_{\mathrm{sf}})),
+* (U\mapsto \Phi_\beta(U_p(U))\in\mathbb R).
+
+Then for each integer (k\ge 0) there exists a finite constant (C_{F,k}(r)), depending only on ((G,g_G)), on (\rho), on (k), and on (r) (and on (\beta) only through the explicit prefactor in (\Phi_\beta)), such that for every lattice (\Lambda) and every plaquette (p\in P(\Lambda)),
+[
+\sup_{U\in K_\Lambda(r)} \big|\nabla^k F(U)\big|
+;\le;
+C_{F,k}(r),
+\tag{5.13}
+]
+where (\nabla^k) denotes the (k)-th covariant derivative on (M_\Lambda) and (|\cdot|) denotes the corresponding operator norm with respect to the product metric (g_\Lambda).
+
+**Proof.**
+Fix a plaquette (p). By construction, each of the listed maps depends only on the four link coordinates appearing in (\partial p); all other coordinates of (U\in M_\Lambda) are irrelevant. Denote these four links by (b_1,\dots,b_4). Then (F(U)) can be written as
+[
+F(U)=\widetilde F(U_{b_1},\dots,U_{b_4})
+]
+for a smooth map (\widetilde F:G^4\to(\text{target space})) built from the corresponding smooth group operations and, when present, (\log) restricted to (B_{r_\star}^G(\mathbf 1)) (which contains all plaquette holonomies on (K_\Lambda(r)) by Lemma 5.15 and the choice of (r_{\mathrm{sf}})).
+
+Now restrict (\widetilde F) to the compact set (\overline{B_r^G(\mathbf 1)}^{,4}\subset G^4). Since (\widetilde F) is smooth, all covariant derivatives up to order (k) are continuous, hence attain finite suprema on this compact set. The corresponding bounds depend only on (\widetilde F), on (k), and on (r), and not on (\Lambda) or on the location of the plaquette (p).
+
+Finally, because the product metric (g_\Lambda) is orthogonal across links and because (F) ignores all coordinates outside ({b_1,\dots,b_4}), the operator norms of (\nabla^k F(U)) computed in (M_\Lambda) coincide with the operator norms of the derivatives of (\widetilde F) computed in (G^4) (with its product metric), uniformly in (\Lambda). This yields the uniform bound (5.13). (\square)
+
+**Remark 5.17 (what this buys later).**
+Lemma 5.16 supplies the “Taylor constants ledger” needed for stability arguments: on (K_\Lambda(r)) one can bound differences of Hessians by integrating a uniformly bounded third derivative along a short geodesic segment (with length controlled by Lemma 5.14). The remaining step is to convert plaquette-local bounds into global operator bounds using the bounded overlap constants ((m_\partial,\nu)) from §3.4; that bookkeeping is carried out in the matrix hinge estimate of §5.4.
+
+---
+
+This completes the definition and basic geometric control of the canonical small-field region (K_\Lambda(r)). In §5.4 we use these coordinates and uniform derivative bounds to compare (\nabla^2 S_W(U)) to its vacuum value (\frac{\beta}{n\lambda_\rho}d_1^*d_1) on (K_\Lambda(r)) and to obtain the localized matrix hinge inequality on the horizontal sector.
+
+
+
+
+
+### 5.4 Local stability of the Wilson Hessian and the localized matrix hinge inequality
+
+On the canonical small-field region (K_\Lambda(r)) from §5.3, we may uniformly Taylor-expand each plaquette term and quantify how far the full Wilson Hessian (\nabla^2S_W(U)) can drift from its vacuum value. The key point is that, although (S_W) is a sum over all plaquettes, each summand depends on only four link variables, and therefore the deviation (\nabla^2S_W(U)-\nabla^2S_W(U^{(0)})) is controlled by the bounded overlap constants from §3.4 rather than by (|P(\Lambda)|).
+
+Throughout this subsection, fix
+[
+0<r\le r_{\mathrm{sf}}
+]
+as in §5.3.1, and work on (K_\Lambda(r)).
+
+#### 5.4.1 A third-derivative constant for a single plaquette term
+
+Fix an oriented plaquette (p=(x;\mu,\nu)). As in §3.2, write its ordered boundary links as
+[
+\partial p=\big(b_1,b_2,b_3,b_4\big)
+:=
+\big((x,\mu),\ (x+\hat e_\mu,\nu),\ (x+\hat e_\nu,\mu),\ (x,\nu)\big),
+]
+so that the plaquette holonomy is
+[
+U_p(U)=U_{b_1},U_{b_2},U_{b_3}^{-1},U_{b_4}^{-1}.
+]
+Let (U_{\partial p}\in G^4) denote the boundary 4-tuple
+[
+U_{\partial p}:=(U_{b_1},U_{b_2},U_{b_3},U_{b_4})\in G^4.
+]
+
+Recall that the trace-potential from §5.1 is
+[
+\Phi_\beta(V)=\beta\Big(1-\frac1n\mathrm{Re},\mathrm{Tr}(V)\Big)
+=\frac{\beta}{n},\mathrm{Re},\mathrm{Tr}(\mathbf 1-V),
+\qquad V\in G.
+]
+Accordingly, define the smooth single-plaquette function
+[
+F:G^4\to\mathbb R,
+\qquad
+F(g_1,g_2,g_3,g_4)
+:=
+\mathrm{Re},\mathrm{Tr}!\Big(\mathbf 1-g_1g_2g_3^{-1}g_4^{-1}\Big),
+\tag{5.14}
+]
+so that the Wilson action can be written as
+[
+S_W(U)=\frac{\beta}{n}\sum_{p\in P(\Lambda)}F(U_{\partial p}).
+\tag{5.15}
+]
+
+We will use uniform control of the third derivative of (F) on a compact neighborhood of (\mathbf 1^4\in G^4). Let (g_{G^4}) be the product bi-invariant metric on (G^4), and identify each tangent space (T_{(g_1,\dots,g_4)}G^4) with (\mathfrak g^4) by componentwise right translation as in §3.1.6. For (k\ge 1), let (D^kF) denote the (k)-th covariant derivative of (F) on ((G^4,g_{G^4})), viewed as a (k)-linear form on (\mathfrak g^4) via this trivialization, and let (|\cdot|_{\mathrm{op}}) denote the operator norm induced by the product inner product on (\mathfrak g^4).
+
+Fix (r_\star>0) from §5.1 so that (\log) is smooth on (B_{r_\star}^G(\mathbf 1)). Since (r\le r_{\mathrm{sf}}\le r_\star/4), we have (B_r^G(\mathbf 1)\subset B_{r_\star}^G(\mathbf 1)). Define
+[
+M_3(r_\star)
+;:=;
+\sup_{(g_1,\dots,g_4)\in \big(\overline{B_{r_\star}^G(\mathbf 1)}\big)^4}
+\big|D^3F(g_1,\dots,g_4)\big|*{\mathrm{op}}
+;<;\infty,
+\tag{5.16}
+]
+which is finite because (F) is smooth and (\big(\overline{B*{r_\star}^G(\mathbf 1)}\big)^4) is compact.
+
+The next lemma is the basic “tensor mean value” estimate that will drive the hinge.
+
+Lemma 5.18 (Lipschitz control of the single-plaquette Hessian near (\mathbf 1^4)).
+Let (r_\star>0) and (M_3(r_\star)) be as in (5.16). Then for any (g\in (B_{r_\star}^G(\mathbf 1))^4) and any (\xi\in\mathfrak g^4),
+[
+D^2F(g)(\xi,\xi)
+;\ge;
+D^2F(\mathbf 1^4)(\xi,\xi)
+;-;
+M_3(r_\star), d_{G^4}(g,\mathbf 1^4),|\xi|^2.
+\tag{5.17}
+]
+
+Proof.
+Fix (g\in (B_{r_\star}^G(\mathbf 1))^4). Since each component lies within the injectivity radius of (\mathbf 1), there is a unique minimizing geodesic (\gamma:[0,1]\to G^4) from (\mathbf 1^4) to (g), and it is given componentwise by
+[
+\gamma(t)=\big(\exp(tY_1),\dots,\exp(tY_4)\big),
+\qquad
+Y_i:=\log(g_i)\in\mathfrak g,
+]
+so that (d_{G^4}(g,\mathbf 1^4)=|\dot\gamma(t)|) is constant and equals (\sqrt{|Y_1|^2+\cdots+|Y_4|^2}).
+
+Consider the real-valued function
+[
+\psi(t):=D^2F(\gamma(t))(\xi,\xi).
+]
+Since (D^2F) is (C^1) on ((B_{r_\star}^G(\mathbf 1))^4), we may differentiate along (\gamma) and use the definition of the covariant derivative of (D^2F) to obtain
+[
+\psi'(t)=D^3F(\gamma(t))\big(\dot\gamma(t),\xi,\xi\big).
+]
+Taking absolute values and applying the operator norm bound (5.16) yields
+[
+|\psi'(t)|
+;\le;
+\big|D^3F(\gamma(t))\big|*{\mathrm{op}},|\dot\gamma(t)|,|\xi|^2
+;\le;
+M_3(r*\star),|\dot\gamma(t)|,|\xi|^2.
+]
+Integrating from (t=0) to (t=1) gives
+[
+\psi(1)-\psi(0)
+\ge
+-\int_0^1 |\psi'(t)|,dt
+\ge
+
+* M_3(r_\star),|\dot\gamma| ,|\xi|^2
+  =
+* M_3(r_\star), d_{G^4}(g,\mathbf 1^4),|\xi|^2.
+  ]
+  Since (\psi(1)=D^2F(g)(\xi,\xi)) and (\psi(0)=D^2F(\mathbf 1^4)(\xi,\xi)), this is exactly (5.17). (\square)
+
+#### 5.4.2 Wilson Hessian stability on (K_\Lambda(r))
+
+We now lift the single-plaquette estimate to the full action and express the result as a volume-uniform operator inequality.
+
+For (X\in\mathcal C^1(\Lambda;\mathfrak g)=\mathfrak g^{E(\Lambda)}), let (X_{\partial p}\in\mathfrak g^4) denote the restriction of (X) to the four boundary links of (p), in the same order as (U_{\partial p}):
+[
+X_{\partial p}:=(X_{b_1},X_{b_2},X_{b_3},X_{b_4})\in\mathfrak g^4,
+\qquad
+|X_{\partial p}|^2=\sum_{i=1}^4 |X_{b_i}|*{\mathfrak g}^2.
+\tag{5.18}
+]
+As in §3.1.6, we identify tangent vectors at each (U\in M*\Lambda) with elements of (\mathcal C^1(\Lambda;\mathfrak g)) via right translation. Under this identification, the Hessian (\nabla^2S_W(U)) may be viewed as a quadratic form on (\mathcal C^1(\Lambda;\mathfrak g)).
+
+Lemma 5.19 (Wilson Hessian stability on (K_\Lambda(r))).
+Let (\nu) be the bounded overlap constant from §3.4 (so that each link belongs to at most (\nu) plaquette boundaries). Fix (r_\star>0) and (M_3(r_\star)) as in (5.16). Then for any (0<r\le r_\star), any (U\in K_\Lambda(r)), and any (X\in\mathcal C^1(\Lambda;\mathfrak g)),
+[
+\nabla^2 S_W(U)(X,X)
+;\ge;
+\nabla^2 S_W(U^{(0)})(X,X)
+;-;
+R_W(r),|X|*{\mathcal C^1}^2,
+\tag{5.19}
+]
+where
+[
+R_W(r)
+;:=;
+\Big(\frac{\beta}{n}\Big),\big(2\nu,M_3(r*\star)\big),r.
+\tag{5.20}
+]
+Equivalently, as quadratic forms on (\mathcal C^1(\Lambda;\mathfrak g)),
+[
+\nabla^2 S_W(U)\ \succeq\ \nabla^2 S_W(U^{(0)})\ -\ R_W(r),I.
+\tag{5.21}
+]
+
+Proof.
+Write (S_W) in the single-plaquette form (5.15). For each plaquette (p), since the (p)-summand depends only on the four boundary link variables, the product geometry gives
+[
+\nabla^2 S_W(U)(X,X)
+=\frac{\beta}{n}\sum_{p\in P(\Lambda)} D^2F(U_{\partial p})\big(X_{\partial p},X_{\partial p}\big).
+\tag{5.22}
+]
+
+**Step 1: Apply Lemma 5.18 plaquette-by-plaquette.**
+Fix (p). If (U\in K_\Lambda(r)), then each boundary link satisfies (U_{b_i}\in B_r^G(\mathbf 1)\subset B_{r_\star}^G(\mathbf 1)), hence (U_{\partial p}\in (B_{r_\star}^G(\mathbf 1))^4). Applying Lemma 5.18 with (g=U_{\partial p}) and (\xi=X_{\partial p}) yields
+[
+D^2F(U_{\partial p})(X_{\partial p},X_{\partial p})
+;\ge;
+D^2F(\mathbf 1^4)(X_{\partial p},X_{\partial p})
+------------------------------------------------
+
+M_3(r_\star), d_{G^4}(U_{\partial p},\mathbf 1^4),|X_{\partial p}|^2.
+\tag{5.23}
+]
+
+**Step 2: Control the boundary 4-tuple distance by the linkwise radius.**
+By the exact product distance formula on (G^4),
+[
+d_{G^4}(U_{\partial p},\mathbf 1^4)^2
+=\sum_{i=1}^4 d_G(U_{b_i},\mathbf 1)^2
+\le 4r^2,
+]
+so
+[
+d_{G^4}(U_{\partial p},\mathbf 1^4)\le 2r.
+\tag{5.24}
+]
+Substituting (5.24) into (5.23) gives
+[
+D^2F(U_{\partial p})(X_{\partial p},X_{\partial p})
+;\ge;
+D^2F(\mathbf 1^4)(X_{\partial p},X_{\partial p})
+------------------------------------------------
+
+2M_3(r_\star),r,|X_{\partial p}|^2.
+\tag{5.25}
+]
+
+**Step 3: Sum over plaquettes and use bounded overlap.**
+Insert (5.25) into (5.22) and sum:
+[
+\nabla^2 S_W(U)(X,X)
+\ge
+\frac{\beta}{n}\sum_{p} D^2F(\mathbf 1^4)(X_{\partial p},X_{\partial p})
+------------------------------------------------------------------------
+
+\Big(\frac{\beta}{n}\Big),(2M_3(r_\star),r)\sum_{p}|X_{\partial p}|^2.
+\tag{5.26}
+]
+The first term is exactly (\nabla^2S_W(U^{(0)})(X,X)), since at the vacuum (U^{(0)}_{\partial p}=\mathbf 1^4) for every (p).
+
+For the second term, expand and bound using (\nu):
+[
+\sum_{p}|X_{\partial p}|^2
+==========================
+
+# \sum_{p}\sum_{b\in\partial p}|X_b|^2
+
+\sum_{b\in E(\Lambda)}\Big(#{p:\ b\in\partial p}\Big)|X_b|^2
+\le
+\nu \sum_{b}|X_b|^2
+===================
+
+\nu |X|_{\mathcal C^1}^2.
+\tag{5.27}
+]
+Combining (5.26)–(5.27) yields (5.19) with (R_W(r)) as in (5.20). The operator form (5.21) is the corresponding quadratic-form restatement. (\square)
+
+Remark 5.20 (interpretation).
+Lemma 5.19 is the precise volume-uniform statement that on the linkwise small-field region (K_\Lambda(r)), the Wilson Hessian remains within an (O(r)) perturbation of its vacuum “Maxwell matrix.” The crucial point is that the perturbation scales with the overlap constant (\nu) rather than with (|P(\Lambda)|).
+
+#### 5.4.3 The localized matrix hinge inequality for the Bakry–Émery curvature matrix
+
+Let (\mu_{\Lambda,\beta}) be the Wilson Gibbs measure on (M_\Lambda),
+[
+d\mu_{\Lambda,\beta}(U)=Z_{\Lambda,\beta}^{-1},e^{-S_W(U)},d\mathrm{vol}*{g*\Lambda}(U).
+\tag{5.28}
+]
+As recalled in §4.2 (Bochner–Bakry–Émery/Weitzenböck form), the curvature matrix controlling (\Gamma_2) is
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)
+=====================================
+
+\mathrm{Ric}*{g*\Lambda}(U)+\nabla^2 S_W(U),
+\tag{5.29}
+]
+viewed as a symmetric operator on (T_U M_\Lambda) (or, via right-trivialization, on (\mathcal C^1(\Lambda;\mathfrak g))).
+
+Assume the uniform “Haar/Ricci mass” bound from §4.1: there exists a constant (c_H\ge 0), depending only on ((G,g_G)), such that
+[
+\mathrm{Ric}*{g*\Lambda}(U)\ \succeq\ c_H,I
+\qquad\text{for all }U\in M_\Lambda,
+\tag{5.30}
+]
+uniformly in (\Lambda). (For semisimple (G), one has (c_H>0); for groups with abelian factors, (c_H) may be (0).)
+
+Proposition 5.21 (Localized matrix hinge inequality on (K_\Lambda(r))).
+Fix (r_\star>0) and (M_3(r_\star)) as in (5.16), and let (R_W(r)) be as in (5.20). Then for every (0<r\le r_\star) and every (U\in K_\Lambda(r)),
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)
+\ \succeq
+\big(c_H-R_W(r)\big),I\ +\ \nabla^2 S_W(U^{(0)}).
+\tag{5.31}
+]
+In particular, using the vacuum Hessian identity from §5.2,
+[
+\nabla^2 S_W(U^{(0)})=\frac{\beta}{n\lambda_\rho},d_1^*d_1,
+]
+we obtain the explicit hinge form
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)
+\ \succeq
+\big(c_H-R_W(r)\big),I\ +\ \frac{\beta}{n\lambda_\rho},d_1^*d_1,
+\qquad U\in K_\Lambda(r).
+\tag{5.32}
+]
+
+Proof.
+Combine the Ricci lower bound (5.30) with the Wilson stability estimate (5.21):
+[
+\mathrm{Ric}*{g*\Lambda}(U)+\nabla^2S_W(U)
+\ \succeq
+c_H I+\nabla^2S_W(U^{(0)})-R_W(r)I
+==================================
+
+\big(c_H-R_W(r)\big)I+\nabla^2S_W(U^{(0)}),
+]
+which is (5.31). Substituting (\nabla^2S_W(U^{(0)})=\frac{\beta}{n\lambda_\rho}d_1^*d_1) gives (5.32). (\square)
+
+Corollary 5.22 (Uniform positive curvature on a sufficiently small-field region).
+Choose (r\in(0,r_\star]) such that
+[
+R_W(r)\le \frac{c_H}{2},
+\qquad\text{equivalently}\qquad
+r\ \le\ \frac{c_H}{\frac{\beta}{n},(4\nu M_3(r_\star))}.
+\tag{5.33}
+]
+Then for all (U\in K_\Lambda(r)),
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)\ \succeq\ \frac{c_H}{2},I,
+\tag{5.34}
+]
+as quadratic forms on (T_U M_\Lambda). Moreover, the strengthened bound
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)\ \succeq\ \frac{c_H}{2},I\ +\ \frac{\beta}{n\lambda_\rho},d_1^*d_1
+\tag{5.35}
+]
+also holds on (K_\Lambda(r)).
+
+Proof.
+Under (5.33), Proposition 5.21 gives ((c_H-R_W(r))I\succeq (c_H/2)I), and since (d_1^*d_1\succeq 0), the Maxwell term only improves the lower bound. (\square)
+
+Remark 5.23 (restriction to horizontals).
+All inequalities above are stated on the full tangent space. Since restricting a positive-semidefinite operator inequality to a subspace preserves the inequality, Proposition 5.21 and Corollary 5.22 immediately apply after restricting to the horizontal sector (H_U\subset T_UM_\Lambda) (or, in particular, to (H_{U^{(0)}}=\ker(d_0^*)) at the vacuum). This is the form needed later when the analysis is applied to gauge-invariant observables, whose gradients are horizontal by Lemma 3.38.
+
+⸻
+
+The hinge inequality (5.32) is the main output of this subsection: on (K_\Lambda(r)), the Bakry–Émery curvature matrix has a “scalar mass” contribution ((c_H-R_W(r))I) plus the structured Maxwell contribution (\frac{\beta}{n\lambda_\rho}d_1^*d_1). In §5.5 we explain how this matrix lower bound feeds into local Poincaré/LSI estimates on the small-field region and why the matrix (rather than scalar) structure matters in the Helffer–Sjöstrand representation.
+
+
+
+
+### 5.5 Local functional inequalities on the small-field region and the “matrix-not-scalar” payoff
+
+The output of §5.4 is the **localized matrix hinge**: on the canonical small-field region (K_\Lambda(r)), the Bakry–Émery curvature matrix of the Wilson Gibbs measure has a **uniform scalar floor** plus a **structured Maxwell contribution**:
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)
+\ \succeq
+\big(c_H-R_W(r)\big),I \ +\ \frac{\beta}{n\lambda_\rho},d_1^*d_1,
+\qquad U\in K_\Lambda(r),
+\tag{5.36}
+]
+with (R_W(r)=\big(\frac{\beta}{n}\big)(2\nu M_3(r_\star)),r) from (5.20).
+
+This inequality has two distinct consequences:
+
+1. **Scalar consequence (functional inequalities).**
+   Dropping the nonnegative Maxwell term shows that on (K_\Lambda(r)) we have a **positive curvature-dimension constant**
+   [
+   \rho_{\mathrm{loc}}(r);:=;c_H-R_W(r),
+   \tag{5.37}
+   ]
+   and therefore (after a mild localization device) one gets **local Poincaré** and **local log-Sobolev** inequalities with constants (\asymp 1/\rho_{\mathrm{loc}}(r)).
+
+2. **Matrix consequence (correlation control).**
+   Keeping the full operator (\rho_{\mathrm{loc}}(r)I+\alpha,d_1^*d_1) (with (\alpha=\beta/(n\lambda_\rho))) is what makes the Helffer–Sjöstrand covariance representation produce an inverse **massive Maxwell operator**, whose kernel has off-diagonal decay. A scalarized bound (\mathrm{Ric}*{\mu}\succeq \rho*{\mathrm{loc}} I) would only yield a crude ((1/\rho_{\mathrm{loc}}))-Lipschitz covariance bound and would completely erase the lattice geometry encoded by (d_1^*d_1).
+
+We now make these statements precise.
+
+---
+
+#### 5.5.1 A smooth localization of (K_\Lambda(r)) and the conditioned dynamics
+
+The set (K_\Lambda(r)=\prod_{b\in E(\Lambda)}B_r^G(\mathbf 1)) is natural for Taylor expansions, but its boundary has corners (a product of balls). For diffusion/semigroup arguments, it is convenient to work on a **smooth** domain contained in (K_\Lambda(r)). We therefore use the geodesic ball around the vacuum in the product manifold ((M_\Lambda,g_\Lambda)):
+[
+\Omega_\Lambda(r);:=;B_r^\Lambda(U^{(0)})
+={U\in M_\Lambda:\ d_\Lambda(U,U^{(0)})<r}.
+\tag{5.38}
+]
+By Lemma 5.13, (\Omega_\Lambda(r)\subseteq K_\Lambda(r)) for all (r>0). Hence every pointwise estimate proved on (K_\Lambda(r)) automatically holds on (\Omega_\Lambda(r)).
+
+Assume throughout this subsection that (r>0) is chosen so that:
+
+* (r<\iota_G) (so (\Omega_\Lambda(r)) is a regular geodesic ball around (U^{(0)})), and
+* (\rho_{\mathrm{loc}}(r)=c_H-R_W(r)>0).
+
+Define the **conditioned Gibbs measure** on (\Omega_\Lambda(r)) by
+[
+\mu_{\Lambda,\beta}^{(r)}(dU)
+;:=;
+\frac{\mathbf 1_{\Omega_\Lambda(r)}(U)}{\mu_{\Lambda,\beta}(\Omega_\Lambda(r))}
+,\mu_{\Lambda,\beta}(dU)
+;=;
+Z_{\Lambda,\beta,r}^{-1},\mathbf 1_{\Omega_\Lambda(r)}(U),e^{-S_W(U)},d\mathrm{vol}*{g*\Lambda}(U).
+\tag{5.39}
+]
+We consider the reversible diffusion on (\Omega_\Lambda(r)) with **reflecting (Neumann) boundary condition**. Its generator is the drifted Laplacian
+[
+L_{\Lambda,\beta} f
+;:=;
+\Delta_\Lambda f ;-;\langle \nabla S_W,\nabla f\rangle_{g_\Lambda},
+\tag{5.40}
+]
+realized on (\Omega_\Lambda(r)) with Neumann boundary condition (\partial_{\mathbf n}f|*{\partial\Omega*\Lambda(r)}=0), where (\mathbf n) is the outward unit normal.
+
+We write ((P_t^{(r)})*{t\ge0}) for the corresponding Markov semigroup on (L^2(\mu*{\Lambda,\beta}^{(r)})).
+
+**Lemma 5.24 (integration by parts on (\Omega_\Lambda(r)), Neumann).**
+Let (f,g\in C^\infty(\overline{\Omega_\Lambda(r)})) satisfy Neumann boundary conditions (\partial_{\mathbf n}f=\partial_{\mathbf n}g=0) on (\partial\Omega_\Lambda(r)). Then
+[
+\int_{\Omega_\Lambda(r)} f,L_{\Lambda,\beta}g,d\mu_{\Lambda,\beta}^{(r)}
+;=;
+-\int_{\Omega_\Lambda(r)} \langle \nabla f,\nabla g\rangle,d\mu_{\Lambda,\beta}^{(r)}.
+\tag{5.41}
+]
+In particular, the Dirichlet form of (-L_{\Lambda,\beta}) on (\Omega_\Lambda(r)) is
+[
+\mathcal E_r(f,g)
+;:=;
+\int_{\Omega_\Lambda(r)} \langle \nabla f,\nabla g\rangle,d\mu_{\Lambda,\beta}^{(r)}
+;=;
+-\int_{\Omega_\Lambda(r)} f,L_{\Lambda,\beta}g,d\mu_{\Lambda,\beta}^{(r)}.
+\tag{5.42}
+]
+
+**Proof.**
+Write (d\mu_{\Lambda,\beta}^{(r)}=Z_{\Lambda,\beta,r}^{-1}e^{-S_W}d\mathrm{vol}) on (\Omega_\Lambda(r)). Then
+[
+L_{\Lambda,\beta}g
+==================
+
+e^{S_W},\mathrm{div}\big(e^{-S_W}\nabla g\big),
+]
+where (\mathrm{div}) is the Riemannian divergence on ((M_\Lambda,g_\Lambda)). Hence
+[
+\int_{\Omega} f,L_{\Lambda,\beta}g,e^{-S_W}d\mathrm{vol}
+========================================================
+
+\int_{\Omega} f,\mathrm{div}(e^{-S_W}\nabla g),d\mathrm{vol}.
+]
+Apply the divergence theorem on (\Omega=\Omega_\Lambda(r)):
+[
+\int_{\Omega} f,\mathrm{div}(e^{-S_W}\nabla g),d\mathrm{vol}
+============================================================
+
+-\int_{\Omega}\langle \nabla f, e^{-S_W}\nabla g\rangle,d\mathrm{vol}
++\int_{\partial\Omega} f,\langle e^{-S_W}\nabla g,\mathbf n\rangle,d\sigma.
+]
+The boundary term vanishes because (\partial_{\mathbf n}g=\langle \nabla g,\mathbf n\rangle=0) on (\partial\Omega). Dividing by (Z_{\Lambda,\beta,r}) yields (5.41). (\square)
+
+---
+
+#### 5.5.2 Local curvature-dimension on (\Omega_\Lambda(r))
+
+Recall from §4.2 that for the diffusion with invariant measure (e^{-S_W}d\mathrm{vol}), the Bakry–Émery curvature matrix is
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)
+=====================================
+
+\mathrm{Ric}*{g*\Lambda}(U)+\nabla^2 S_W(U),
+\tag{5.43}
+]
+and the Bochner–Bakry–Émery identity reads
+[
+\Gamma_2(f)
+===========
+
+|\nabla^2 f|*{\mathrm{HS}}^2
++
+\big\langle \mathrm{Ric}*{\mu_{\Lambda,\beta}},\nabla f,\ \nabla f\big\rangle,
+\tag{5.44}
+]
+where (\Gamma(f)=|\nabla f|^2) and (\Gamma_2(f)=\tfrac12\big(L\Gamma(f)-2\Gamma(f,Lf)\big)).
+
+**Lemma 5.25 (local (CD(\rho_{\mathrm{loc}}(r),\infty)) on (\Omega_\Lambda(r))).**
+Let (r>0) satisfy (\rho_{\mathrm{loc}}(r)=c_H-R_W(r)>0). Then for every (U\in\Omega_\Lambda(r)),
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)\ \succeq\ \rho_{\mathrm{loc}}(r),I,
+\tag{5.45}
+]
+and consequently for every smooth (f) on (\Omega_\Lambda(r)),
+[
+\Gamma_2(f)(U)\ \ge\ \rho_{\mathrm{loc}}(r),\Gamma(f)(U),
+\qquad U\in\Omega_\Lambda(r).
+\tag{5.46}
+]
+
+**Proof.**
+Since (\Omega_\Lambda(r)\subseteq K_\Lambda(r)), Proposition 5.21 gives on (\Omega_\Lambda(r)) the stronger matrix bound
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)
+\ \succeq
+\big(c_H-R_W(r)\big),I \ +\ \frac{\beta}{n\lambda_\rho},d_1^*d_1.
+]
+Dropping the nonnegative term (\frac{\beta}{n\lambda_\rho}d_1^*d_1\succeq0) yields (5.45). Inserting (5.45) into (5.44) implies (5.46) since (|\nabla^2 f|_{\mathrm{HS}}^2\ge 0). (\square)
+
+---
+
+#### 5.5.3 Local Poincaré and local log-Sobolev on (\Omega_\Lambda(r))
+
+We record here the standard semigroup consequences of (CD(\rho,\infty)), specialized to our local constant (\rho_{\mathrm{loc}}(r)). (These are the local versions of the global statements proved in §4.3; the only additional ingredient is the Neumann integration by parts from Lemma 5.24.)
+
+Write
+[
+\mathrm{Var}*{\mu^{(r)}}(f)
+:=\int*{\Omega_\Lambda(r)}\Big(f-\mu_{\Lambda,\beta}^{(r)}(f)\Big)^2,d\mu_{\Lambda,\beta}^{(r)},
+\quad
+\mathrm{Ent}_{\mu^{(r)}}(h)
+:=\int h\log h,d\mu^{(r)}-\mu^{(r)}(h)\log\mu^{(r)}(h),
+\tag{5.47}
+]
+with the convention (0\log 0=0).
+
+---
+
+**Proposition 5.26 (local Poincaré on (\Omega_\Lambda(r))).**
+Assume (\rho_{\mathrm{loc}}(r)>0). Then for every smooth (f) on (\overline{\Omega_\Lambda(r)}) satisfying the Neumann boundary condition,
+[
+\mathrm{Var}*{\mu*{\Lambda,\beta}^{(r)}}(f)
+;\le;
+\frac{1}{\rho_{\mathrm{loc}}(r)}
+\int_{\Omega_\Lambda(r)} |\nabla f|^2,d\mu_{\Lambda,\beta}^{(r)}.
+\tag{5.48}
+]
+
+**Proof.**
+Set (g:=f-\mu^{(r)}(f)) so that (\mu^{(r)}(g)=0). Let (g_t:=P_t^{(r)}g). Then (\mu^{(r)}(g_t)=0) for all (t) by invariance of (\mu^{(r)}). Define (H(t):=|g_t|_{L^2(\mu^{(r)})}^2). Using (\partial_t g_t=L g_t) and Lemma 5.24,
+[
+H'(t)
+=====
+
+# 2\int g_t,L g_t,d\mu^{(r)}
+
+# -2\int |\nabla g_t|^2,d\mu^{(r)}
+
+-2\int \Gamma(g_t),d\mu^{(r)}.
+\tag{5.49}
+]
+
+Next consider the “energy” (E(t):=\int \Gamma(g_t),d\mu^{(r)}). Differentiate using the carré du champ calculus:
+[
+E'(t)
+=====
+
+# 2\int \Gamma(g_t, Lg_t),d\mu^{(r)}
+
+-2\int \Gamma_2(g_t),d\mu^{(r)},
+\tag{5.50}
+]
+where the second identity is the standard relation
+(\int \Gamma(g,Lg),d\mu=-\int\Gamma_2(g),d\mu),
+valid in the Neumann setting by the same integration-by-parts argument as in §4.3.
+
+By Lemma 5.25 (local (CD(\rho_{\mathrm{loc}}(r),\infty))),
+[
+\Gamma_2(g_t)\ge \rho_{\mathrm{loc}}(r),\Gamma(g_t)
+\quad\Rightarrow\quad
+E'(t)\le -2\rho_{\mathrm{loc}}(r),E(t).
+\tag{5.51}
+]
+Grönwall gives
+[
+E(t)\le e^{-2\rho_{\mathrm{loc}}(r)t},E(0)
+==========================================
+
+e^{-2\rho_{\mathrm{loc}}(r)t}\int \Gamma(g),d\mu^{(r)}.
+\tag{5.52}
+]
+
+Integrate (5.49) from (t=0) to (t=\infty). Since (\Omega_\Lambda(r)) is connected and the Neumann diffusion is ergodic, (g_t\to 0) in (L^2(\mu^{(r)})), hence (H(t)\to 0). Therefore
+[
+|g|_2^2
+=======
+
+2\int_0^\infty \int \Gamma(g_t),d\mu^{(r)},dt
+\le
+2\int_0^\infty e^{-2\rho_{\mathrm{loc}}(r)t},dt,
+\int \Gamma(g),d\mu^{(r)}
+=========================
+
+\frac{1}{\rho_{\mathrm{loc}}(r)}\int \Gamma(g),d\mu^{(r)}.
+]
+Since (\Gamma(g)=\Gamma(f)), this is exactly (5.48). (\square)
+
+---
+
+**Proposition 5.27 (local log-Sobolev on (\Omega_\Lambda(r))).**
+Assume (\rho_{\mathrm{loc}}(r)>0). Then for every smooth (f) on (\overline{\Omega_\Lambda(r)}) satisfying Neumann boundary conditions,
+[
+\mathrm{Ent}*{\mu*{\Lambda,\beta}^{(r)}}(f^2)
+;\le;
+\frac{2}{\rho_{\mathrm{loc}}(r)}
+\int_{\Omega_\Lambda(r)} |\nabla f|^2,d\mu_{\Lambda,\beta}^{(r)}.
+\tag{5.53}
+]
+
+**Proof.**
+Let (h:=f^2\ge 0) and normalize (\tilde h:=h/\mu^{(r)}(h)) so that (\mu^{(r)}(\tilde h)=1). Let (\tilde h_t:=P_t^{(r)}\tilde h). Standard entropy dissipation (proved as in §4.3 using Lemma 5.24) gives
+[
+\frac{d}{dt}\mathrm{Ent}_{\mu^{(r)}}(\tilde h_t)
+================================================
+
+-\int \tilde h_t,\Gamma(\log \tilde h_t),d\mu^{(r)}
+=:-I(t),
+\tag{5.54}
+]
+where (I(t)) is the Fisher information. Differentiating once more and using the (\Gamma_2)-calculus yields
+[
+I'(t)
+=====
+
+-2\int \tilde h_t,\Gamma_2(\log \tilde h_t),d\mu^{(r)}.
+\tag{5.55}
+]
+By Lemma 5.25,
+(\Gamma_2(\log \tilde h_t)\ge \rho_{\mathrm{loc}}(r)\Gamma(\log \tilde h_t)),
+hence
+[
+I'(t)\le -2\rho_{\mathrm{loc}}(r),I(t),
+\qquad\Rightarrow\qquad
+I(t)\le e^{-2\rho_{\mathrm{loc}}(r)t},I(0).
+\tag{5.56}
+]
+Since (\tilde h_t\to 1) in (L^1) (and in fact in (L^2) by Proposition 5.26 applied to (\tilde h_t-1)), we have (\mathrm{Ent}(\tilde h_t)\to 0) as (t\to\infty). Integrating (5.54) from (0) to (\infty) gives
+[
+\mathrm{Ent}(\tilde h)
+======================
+
+\int_0^\infty I(t),dt
+\le
+\int_0^\infty e^{-2\rho_{\mathrm{loc}}(r)t},dt;I(0)
+===================================================
+
+\frac{1}{2\rho_{\mathrm{loc}}(r)},I(0).
+\tag{5.57}
+]
+Finally, (I(0)=\int \tilde h,\Gamma(\log \tilde h),d\mu^{(r)}). Since (\tilde h=h/\mu^{(r)}(h)), one checks (\Gamma(\log \tilde h)=\Gamma(\log h)), and for (h=f^2),
+[
+h,\Gamma(\log h)
+================
+
+# f^2,\Gamma(2\log|f|)
+
+# 4,\Gamma(f)
+
+4|\nabla f|^2.
+\tag{5.58}
+]
+Substituting (I(0)=4\int|\nabla f|^2,d\mu^{(r)}) into (5.57) yields (5.53). (\square)
+
+---
+
+**Corollary 5.28 (local Poincaré on (\Omega_\Lambda(r)) for the *unconditioned* measure).**
+Assume (\rho_{\mathrm{loc}}(r)>0). Then for every smooth (f) on (M_\Lambda),
+[
+\int_{\Omega_\Lambda(r)}\Big(f-\mu_{\Lambda,\beta}!\left(f,\middle|,\Omega_\Lambda(r)\right)\Big)^2,d\mu_{\Lambda,\beta}
+;\le;
+\frac{1}{\rho_{\mathrm{loc}}(r)}\int_{M_\Lambda}|\nabla f|^2,d\mu_{\Lambda,\beta}.
+\tag{5.59}
+]
+
+**Proof.**
+Apply Proposition 5.26 to the conditional measure (\mu^{(r)}), then multiply both sides by (\mu_{\Lambda,\beta}(\Omega_\Lambda(r))) and use (\int_{\Omega}|\nabla f|^2,d\mu\le \int_{M}|\nabla f|^2,d\mu). (\square)
+
+This is precisely the form of “local Poincaré on a core set” needed later in the Lyapunov drift / local-to-global step.
+
+---
+
+#### 5.5.4 Helffer–Sjöstrand covariance control and why the matrix hinge matters
+
+The scalar lower bound (\mathrm{Ric}*\mu\succeq \rho*{\mathrm{loc}}I) is already enough to get a (local) spectral gap and LSI. But to control *correlations* of spatially separated observables, we want an estimate that retains the **operator geometry**. This is where the hinge term (\alpha d_1^*d_1) earns its keep.
+
+For readability define the two parameters
+[
+m^2(r);:=;\rho_{\mathrm{loc}}(r)=c_H-R_W(r),
+\qquad
+\alpha;:=;\frac{\beta}{n\lambda_\rho},
+\tag{5.60}
+]
+and the corresponding **massive Maxwell operator**
+[
+\mathsf M_{m(r)};:=;m^2(r),I+\alpha,d_1^*d_1
+\qquad\text{acting on }\ \mathcal C^1(\Lambda;\mathfrak g).
+\tag{5.61}
+]
+(We will later exploit the locality and Fourier structure of (d_1^*d_1) recorded in §3.4.)
+
+---
+
+**Proposition 5.29 (Helffer–Sjöstrand covariance representation on (\Omega_\Lambda(r))).**
+Let (r) satisfy (m^2(r)>0), and work with the conditioned measure (\mu_{\Lambda,\beta}^{(r)}) and Neumann generator (L_{\Lambda,\beta}) on (\Omega_\Lambda(r)). For any smooth (F,G) on (\overline{\Omega_\Lambda(r)}) (Neumann boundary), let (\widetilde G:=G-\mu^{(r)}(G)), and let (u) be the unique mean-zero solution of the Poisson problem
+[
+-,L_{\Lambda,\beta}u=\widetilde G,
+\qquad
+\mu^{(r)}(u)=0,
+\qquad
+\partial_{\mathbf n}u|*{\partial\Omega}=0.
+\tag{5.62}
+]
+Then
+[
+\mathrm{Cov}*{\mu_{\Lambda,\beta}^{(r)}}(F,G)
+=============================================
+
+\int_{\Omega_\Lambda(r)}\langle \nabla F,\nabla u\rangle,d\mu_{\Lambda,\beta}^{(r)}.
+\tag{5.63}
+]
+Moreover, (\nabla u) can be written using the inverse of the Witten/Helffer–Sjöstrand operator on (1)-forms:
+[
+\nabla u
+========
+
+\big(\mathcal L^{(1)}\big)^{-1}\nabla \widetilde G,
+\qquad
+\mathcal L^{(1)}:=\nabla^*\nabla+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(\cdot),
+\tag{5.64}
+]
+so that
+[
+\mathrm{Cov}*{\mu*{\Lambda,\beta}^{(r)}}(F,G)
+=============================================
+
+\int_{\Omega_\Lambda(r)}
+\Big\langle \nabla F,\ \big(\mathcal L^{(1)}\big)^{-1}\nabla \widetilde G\Big\rangle,d\mu_{\Lambda,\beta}^{(r)}.
+\tag{5.65}
+]
+
+**Proof.**
+Using Lemma 5.24 with (f=F) and (g=u),
+[
+\int F,(-L u),d\mu^{(r)}
+========================
+
+\int \langle \nabla F,\nabla u\rangle,d\mu^{(r)}.
+]
+Since (-Lu=\widetilde G), the left-hand side is (\int F,\widetilde G,d\mu^{(r)}=\mathrm{Cov}_{\mu^{(r)}}(F,G)), proving (5.63).
+
+For (5.64)–(5.65), differentiate the Poisson equation (-Lu=\widetilde G) and use the standard commutation relation between (\nabla) and (L) (proved in §4.4 via the Weitzenböck identity): on vector fields,
+[
+\nabla(-Lu)=\big(\nabla^*\nabla+\mathrm{Ric}*{\mu*{\Lambda,\beta}}\big)\nabla u
+=\mathcal L^{(1)}\nabla u.
+]
+Since (\nabla\widetilde G=\nabla G), we obtain (\mathcal L^{(1)}\nabla u=\nabla\widetilde G), hence (\nabla u=(\mathcal L^{(1)})^{-1}\nabla\widetilde G). Substituting into (5.63) gives (5.65). (\square)
+
+---
+
+**Corollary 5.30 (matrix Brascamp–Lieb bound via the hinge).**
+Assume (m^2(r)>0). For every (U\in\Omega_\Lambda(r)\subset K_\Lambda(r)),
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)\ \succeq\ \mathsf M_{m(r)}
+\qquad\Longrightarrow\qquad
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)^{-1}\ \preceq\ \mathsf M_{m(r)}^{-1}.
+\tag{5.66}
+]
+Consequently, for smooth (F,G) as above,
+[
+\big|\mathrm{Cov}*{\mu*{\Lambda,\beta}^{(r)}}(F,G)\big|
+;\le;
+\int_{\Omega_\Lambda(r)}
+\Big\langle \nabla F,\ \mathsf M_{m(r)}^{-1},\nabla G\Big\rangle,d\mu_{\Lambda,\beta}^{(r)}.
+\tag{5.67}
+]
+
+**Proof.**
+The hinge (5.36) says (\mathrm{Ric}*{\mu}(U)\succeq m^2(r)I+\alpha d_1^*d_1=\mathsf M*{m(r)}) for all (U\in K_\Lambda(r)), hence for all (U\in\Omega_\Lambda(r)). Since both operators are positive definite (because (m^2(r)>0)), inversion reverses the Loewner order, giving (5.66).
+
+Next, (\mathcal L^{(1)}=\nabla^*\nabla+\mathrm{Ric}*\mu\succeq \mathrm{Ric}*\mu), hence ((\mathcal L^{(1)})^{-1}\preceq \mathrm{Ric}*\mu^{-1}). Insert this into the Helffer–Sjöstrand representation (5.65) and use (5.66) to obtain
+[
+\big|\mathrm{Cov}(F,G)\big|
+\le
+\int \langle \nabla F,\mathrm{Ric}*\mu^{-1}\nabla G\rangle,d\mu^{(r)}
+\le
+\int \langle \nabla F,\mathsf M_{m(r)}^{-1}\nabla G\rangle,d\mu^{(r)}.
+]
+This is (5.67). (\square)
+
+---
+
+**Remark 5.31 (why the scalar route is too blunt).**
+If we drop the Maxwell term and only use (\mathrm{Ric}_\mu\succeq m^2(r)I), then (5.67) collapses to
+[
+|\mathrm{Cov}(F,G)|
+\le
+\frac{1}{m^2(r)}\int |\nabla F|,|\nabla G|,d\mu^{(r)},
+]
+which has *no spatial content*: it cannot see that (\nabla F) and (\nabla G) are supported on far-separated link sets, and it cannot produce exponential clustering.
+
+By contrast, keeping
+[
+\mathsf M_{m(r)}=m^2(r)I+\alpha d_1^*d_1
+]
+makes the covariance bound depend on the kernel of (\mathsf M_{m(r)}^{-1}). Since (d_1^*d_1) is local and (on the transverse sector) diagonalizes in Fourier as in §3.4.4, (\mathsf M_{m(r)}^{-1}) is a **massive lattice Green’s operator**. Proving its off-diagonal decay is a purely linear statement about the Maxwell operator; that analytic “Green’s function lemma” is precisely what later turns (5.67) into exponential decay of correlations.
+
+---
+
+**Remark 5.32 (gauge invariance and horizontality).**
+For gauge-invariant observables (F), Lemma 3.38 implies (\nabla F(U)\in H_U) for every (U). Since all operator inequalities above are preserved under restriction to subspaces, one may apply (5.67) after restricting all gradients to the horizontal sector. This is the natural setting in which the Maxwell term (\alpha d_1^*d_1) is interpreted as the “transverse curvature energy” and where the Fourier scalarization of §3.4.4 becomes most transparent.
+
+---
+
+This completes the passage from the **localized matrix hinge** (a pointwise geometric statement) to:
+
+* **local Poincaré/LSI** on a small-field neighborhood (a scalar functional-inequality consequence), and
+* a **matrix covariance bound** featuring (\mathsf M_{m(r)}^{-1}) (the starting point for exponential clustering once the Green’s function of the massive Maxwell operator is controlled).
+

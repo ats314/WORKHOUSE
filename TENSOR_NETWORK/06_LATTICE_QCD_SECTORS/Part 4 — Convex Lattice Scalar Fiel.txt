@@ -1,0 +1,421 @@
+Part 4 — Convex Lattice Scalar Field as Prototype
+
+In this part we give a fully explicit example where the general curvature machinery of Parts 2–3 applies with essentially no subtleties:
+
+* finite-dimensional configuration space (M = \mathbb{R}^{|\Lambda|}),
+* strictly convex potential with a **uniform Hessian lower bound**,
+* hence a **volume-independent Poincaré inequality and log-Sobolev inequality**.
+
+The model is the standard lattice scalar (\phi^4) theory with a strictly positive mass parameter (m_0^2>0). This serves as a clean prototype of the “curvature–controlled gap mechanism” that we later aim to realize for lattice Yang–Mills.
+
+Throughout we assume familiarity with:
+
+* the Bakry–Émery tensor (\operatorname{Ric}_\mu = \operatorname{Ric}_g + \nabla^2 S) and the curvature–dimension condition (CD(\rho,\infty)) (Part 2),
+* the consequences (CD(\rho,\infty)\Rightarrow) Poincaré and log-Sobolev inequalities with constants (1/\rho), (2/\rho) (Part 3).
+
+---
+
+## 4.1. Lattice, configuration space, and scalar action
+
+Let (\Lambda\subset\mathbb{Z}^d) be a finite subset (for example, a periodic box), with (|\Lambda|<\infty). We denote sites by (x,y\in\Lambda), and write (\langle xy\rangle) for unordered nearest-neighbor pairs ({x,y}) in (\Lambda), with boundary conditions chosen so that the neighbor relation is symmetric and each site has uniformly bounded degree.
+
+### 4.1.1. Configuration space and metric
+
+The configuration space of real scalar fields on (\Lambda) is
+[
+M := \mathbb{R}^{\Lambda}
+= \big{ \phi = (\phi_x)_{x\in\Lambda} : \phi_x \in \mathbb{R}\big}.
+]
+
+We equip (M) with the standard Euclidean structure:
+
+* as a vector space, (M \cong \mathbb{R}^n) with (n := |\Lambda|),
+* inner product and norm
+  [
+  \langle \phi,\psi\rangle
+  = \sum_{x\in\Lambda} \phi_x \psi_x,
+  \qquad
+  |\phi|^2 = \sum_{x\in\Lambda} \phi_x^2.
+  ]
+
+Thus ((M,g)) is just ((\mathbb{R}^n,) Euclidean metric()), and the Riemannian volume coincides with Lebesgue measure (d\phi) on (\mathbb{R}^n).
+
+### 4.1.2. Local single-site potential
+
+Fix parameters
+
+* mass parameter (m_0^2 > 0),
+* quartic coupling (\lambda \ge 0),
+* nearest-neighbor coupling (\kappa \ge 0).
+
+For each site (x\in\Lambda) define the local single-site potential
+[
+V(\phi_x)
+:= \frac{m_0^2}{2},\phi_x^2 + \frac{\lambda}{4},\phi_x^4.
+]
+
+Then (V\in C^\infty(\mathbb{R})) and
+[
+V''(\phi_x) = m_0^2 + 3\lambda \phi_x^2 ;\ge; m_0^2
+\quad\forall,\phi_x\in\mathbb{R}.
+]
+
+In particular, (V) is uniformly strictly convex with modulus (m_0^2>0), independent of (\phi_x).
+
+### 4.1.3. Gradient (kinetic) term and graph Laplacian
+
+The nearest-neighbor quadratic (kinetic) interaction is
+[
+S_{\text{grad}}(\phi)
+:= \frac{\kappa}{2} \sum_{\langle xy\rangle} (\phi_x - \phi_y)^2,
+]
+a nonnegative quadratic form in (\phi).
+
+It is convenient to rewrite this in terms of the **graph Laplacian** (L_\Lambda) on (\Lambda). Define a linear operator (L_\Lambda:\mathbb{R}^\Lambda\to\mathbb{R}^\Lambda) by
+[
+(L_\Lambda \psi)*x
+:= \sum*{y:\langle xy\rangle} (\psi_x - \psi_y),
+\qquad x\in\Lambda.
+]
+
+A standard calculation shows that
+[
+\sum_{\langle xy\rangle} (\psi_x - \psi_y)^2
+= \langle \psi, L_\Lambda \psi\rangle
+= \sum_{x\in\Lambda} \psi_x (L_\Lambda\psi)_x,
+]
+and that:
+
+* (L_\Lambda) is symmetric with respect to the Euclidean inner product,
+* (L_\Lambda) is **positive semidefinite**, i.e.
+  [
+  \langle \psi, L_\Lambda\psi\rangle
+  = \sum_{\langle xy\rangle} (\psi_x - \psi_y)^2 \ge 0
+  \quad \forall \psi\in\mathbb{R}^{\Lambda}.
+  ]
+
+Thus (S_{\text{grad}}) is convex, and its Hessian is the nonnegative matrix (\kappa L_\Lambda).
+
+### 4.1.4. Total action, confining property, and Gibbs measure
+
+The **total action** is
+[
+S(\phi)
+:= \sum_{x\in\Lambda} V(\phi_x)
+;+; \frac{\kappa}{2}\sum_{\langle xy\rangle} (\phi_x - \phi_y)^2.
+]
+
+Because (V(\phi_x)\ge \frac{m_0^2}{2}\phi_x^2) and (S_{\text{grad}}(\phi)\ge 0),
+[
+S(\phi)
+;\ge; \frac{m_0^2}{2}\sum_{x\in\Lambda} \phi_x^2
+;=; \frac{m_0^2}{2}|\phi|^2.
+]
+
+In particular,
+
+* (S(\phi)\to\infty) as (|\phi|\to\infty),
+* (S) is bounded below (indeed (S\ge 0)).
+
+Therefore the **finite-volume Gibbs measure** (\mu) on (M) is well-defined by
+[
+d\mu(\phi)
+:= Z^{-1} e^{-S(\phi)},d\phi,
+]
+with partition function
+[
+Z = \int_{\mathbb{R}^{\Lambda}} e^{-S(\phi)},d\phi < \infty.
+]
+
+We are now precisely in the abstract setting of Parts 1–3 with:
+
+* configuration manifold (M = \mathbb{R}^{\Lambda}),
+* Euclidean metric (g),
+* potential (S),
+* generator
+  [
+  L f(\phi) = \Delta f(\phi) - \langle \nabla S(\phi), \nabla f(\phi)\rangle,
+  ]
+* Gibbs measure (\mu \propto e^{-S} d\phi).
+
+---
+
+## 4.2. Hessian of the action and Bakry–Émery curvature
+
+Because ((M,g)) is Euclidean with (\operatorname{Ric}*g \equiv 0), the Bakry–Émery tensor reduces to
+[
+\operatorname{Ric}*\mu = \nabla^2 S,
+]
+and the curvature–dimension condition (CD(\rho,\infty)) is equivalent to a uniform Hessian lower bound
+[
+\nabla^2 S(\phi) \ge \rho I_n \quad \forall \phi\in\mathbb{R}^n
+]
+in the sense of symmetric matrices.
+
+We now compute (\nabla^2 S) explicitly.
+
+### 4.2.1. Hessian of the local part
+
+Consider the local contribution
+[
+S_{\text{loc}}(\phi) := \sum_{x\in\Lambda} V(\phi_x).
+]
+
+The gradient and Hessian are diagonal in the site index:
+
+* Gradient:
+  [
+  \frac{\partial}{\partial \phi_x} S_{\text{loc}}(\phi)
+  = V'(\phi_x).
+  ]
+* Hessian:
+  [
+  \frac{\partial^2}{\partial \phi_x \partial \phi_y} S_{\text{loc}}(\phi)
+  = \delta_{xy} V''(\phi_x)
+  = \delta_{xy}\big(m_0^2 + 3\lambda \phi_x^2\big).
+  ]
+
+Using (V''(\phi_x)\ge m_0^2) for all (\phi_x), we obtain the matrix inequality
+[
+\nabla^2 S_{\text{loc}}(\phi) ;\ge; m_0^2 I_n
+\quad\forall \phi\in\mathbb{R}^\Lambda.
+]
+
+### 4.2.2. Hessian of the gradient term
+
+Now consider the gradient term
+[
+S_{\text{grad}}(\phi)
+= \frac{\kappa}{2}\sum_{\langle xy\rangle} (\phi_x - \phi_y)^2.
+]
+
+Since this is quadratic, its Hessian is independent of (\phi). A direct computation yields:
+
+* for (x\neq y) with (\langle xy\rangle),
+  [
+  \frac{\partial^2 S_{\text{grad}}}{\partial \phi_x \partial \phi_y}
+  = -\kappa,
+  ]
+* for (x=y),
+  [
+  \frac{\partial^2 S_{\text{grad}}}{\partial \phi_x^2}
+  = \kappa \cdot \deg(x),
+  ]
+  where (\deg(x)) is the number of nearest neighbors of (x).
+
+Equivalently, in matrix form,
+[
+\nabla^2 S_{\text{grad}}(\phi) = \kappa L_\Lambda.
+]
+
+Since (L_\Lambda) is positive semidefinite, we obtain
+[
+\nabla^2 S_{\text{grad}}(\phi) ;\ge; 0
+\quad\text{as a quadratic form for all }\phi\in\mathbb{R}^{\Lambda}.
+]
+
+### 4.2.3. Total Hessian and uniform convexity
+
+Combining the contributions, the total Hessian is
+[
+\nabla^2 S(\phi)
+= \nabla^2 S_{\text{loc}}(\phi) + \nabla^2 S_{\text{grad}}(\phi)
+= \mathrm{diag}\big(V''(\phi_x)\big)*{x\in\Lambda}
+;+; \kappa L*{\Lambda}.
+]
+
+For any vector (\psi\in\mathbb{R}^{\Lambda}),
+[
+\begin{aligned}
+\langle \psi,\nabla^2 S(\phi),\psi\rangle
+&= \sum_{x\in\Lambda} V''(\phi_x),\psi_x^2
+
+* \kappa \langle \psi, L_{\Lambda}\psi\rangle \
+  &\ge \sum_{x\in\Lambda} m_0^2,\psi_x^2 + 0 \
+  &= m_0^2,|\psi|^2.
+  \end{aligned}
+  ]
+
+Thus we obtain the **uniform Hessian lower bound**
+[
+\nabla^2 S(\phi) ;\ge; m_0^2 I_n
+\quad\text{for all } \phi\in\mathbb{R}^{\Lambda}.
+]
+
+Equivalently, in the Bakry–Émery notation,
+[
+\operatorname{Ric}*\mu
+= \nabla^2 S ;\ge; m_0^2 g,
+]
+with lower curvature constant
+[
+\rho** := m_0^2 > 0,
+]
+independent of (\phi) and of the lattice volume (|\Lambda|).
+
+### 4.2.4. Curvature–dimension condition
+
+By the geometric criterion of Part 2 (Theorem 2.6), a uniform Bakry–Émery lower bound (\operatorname{Ric}_\mu \ge \rho g) implies the curvature–dimension condition
+[
+CD(\rho,\infty):\quad
+\Gamma_2(f) \ge \rho,\Gamma(f)\quad\forall f\in C^\infty(M).
+]
+
+Applying this with (\rho=\rho_* = m_0^2) we conclude:
+
+> **Proposition 4.1 (Curvature–dimension for the scalar prototype).**
+> For the scalar lattice model described above, the diffusion ((M,g,S,\mu,L)) satisfies
+> [
+> CD(m_0^2,\infty).
+> ]
+
+The constant (m_0^2) is independent of the finite volume (|\Lambda|).
+
+---
+
+## 4.3. Poincaré and log-Sobolev inequalities
+
+In Part 3 we showed that a global (CD(\rho,\infty)) condition implies both a Poincaré inequality (spectral gap) and a log-Sobolev inequality with explicit dependence on (\rho). In the present setting, those results apply with (\rho = m_0^2).
+
+Let (\Gamma(f) = |\nabla f|^2) be the carré du champ and
+[
+\mathcal{E}(f,f)
+= \int_M \Gamma(f),d\mu
+= \int_{\mathbb{R}^{\Lambda}} |\nabla f(\phi)|^2,d\mu(\phi)
+]
+the associated Dirichlet form.
+
+### 4.3.1. Poincaré inequality and spectral gap
+
+By the general result (CD(\rho,\infty)\Rightarrow) Poincaré inequality (Part 3), the curvature bound (CD(m_0^2,\infty)) implies: for all (f) in the Dirichlet form domain,
+[
+\operatorname{Var}*\mu(f)
+:= \int (f - \mu(f))^2,d\mu
+;\le; \frac{1}{m_0^2},\mathcal{E}(f,f)
+= \frac{1}{m_0^2}
+\int*{\mathbb{R}^{\Lambda}} |\nabla f(\phi)|^2,d\mu(\phi).
+]
+
+Equivalently, the spectrum of the self-adjoint operator (-L) on (L^2(\mu)) satisfies
+[
+\lambda_1 ;\ge; m_0^2,
+]
+where (\lambda_1) is the smallest nonzero eigenvalue (the spectral gap).
+
+> **Theorem 4.2 (Uniform spectral gap).**
+> The generator (L) of the scalar lattice model has spectral gap
+> [
+> \lambda_1 \ge m_0^2,
+> ]
+> and the corresponding Poincaré constant satisfies (C_P\le 1/m_0^2).
+> Both bounds are **independent of the volume** (|\Lambda|).
+
+### 4.3.2. Logarithmic Sobolev inequality
+
+Similarly, the general result (CD(\rho,\infty)\Rightarrow) log-Sobolev inequality (under mild positivity and ergodicity assumptions, which are satisfied here since (\mu) has smooth, strictly positive density and (S) is confining) yields: for all smooth (f),
+[
+\operatorname{Ent}*\mu(f^2)
+:= \int f^2 \log\frac{f^2}{\int f^2 d\mu},d\mu
+;\le; \frac{2}{m_0^2},\mathcal{E}(f,f)
+= \frac{2}{m_0^2}
+\int*{\mathbb{R}^{\Lambda}} |\nabla f(\phi)|^2,d\mu(\phi).
+]
+
+> **Theorem 4.3 (Uniform log-Sobolev inequality).**
+> The Gibbs measure (\mu) of the scalar lattice model satisfies a log-Sobolev inequality with constant (C_{LS} \le 2/m_0^2), independent of (|\Lambda|).
+
+### 4.3.3. Semigroup interpretation
+
+Let (P_t = e^{tL}) be the Markov semigroup generated by (L) on (L^2(\mu)). Then:
+
+* The Poincaré inequality is equivalent to the **exponential decay** of the centered semigroup in (L^2(\mu)):
+  [
+  |P_t f - \mu(f)|*{L^2(\mu)}
+  \le e^{-m_0^2 t},|f - \mu(f)|*{L^2(\mu)}
+  \quad\forall t\ge 0.
+  ]
+* The log-Sobolev inequality implies **entropy dissipation** and **hypercontractivity** for (P_t), with decay rate controlled by (m_0^2).
+
+These interpretations will be useful later when comparing configuration-space generators to Hamiltonians in the OS framework.
+
+---
+
+## 4.4. Interpretation: uniform “mass gap” for the scalar model
+
+Although the discussion so far has been entirely Euclidean and in configuration space, the spectral gap (\lambda_1) of (-L) plays the usual roles associated with a “massive” theory.
+
+### 4.4.1. Static interpretation
+
+Statically, the Poincaré inequality expresses that fluctuations of observables under (\mu) are controlled by their gradients:
+
+[
+\operatorname{Var}_\mu(f)
+\le \frac{1}{m_0^2}
+\int |\nabla f|^2,d\mu.
+]
+
+In particular:
+
+* observables with small gradient energies have small variance;
+* correlations decay on a scale controlled (in a Gaussian approximation) by (1/m_0).
+
+The crucial feature is that the constant (1/m_0^2) does **not deteriorate as the volume (|\Lambda|) grows**. This is the finite-volume analogue of a **uniform mass gap**.
+
+### 4.4.2. Dynamic interpretation
+
+Dynamically, the spectral gap bound (\lambda_1\ge m_0^2) means that (P_t = e^{tL}) converges to equilibrium in (L^2(\mu)) at least as fast as (e^{-m_0^2 t}):
+
+[
+|P_t f - \mu(f)|*{L^2(\mu)}
+\le e^{-m_0^2 t},|f - \mu(f)|*{L^2(\mu)}.
+]
+
+This is a genuine **mixing rate** for the Langevin dynamics of the scalar field, again uniform in (|\Lambda|). If one thinks of (-L) as an “Euclidean transfer operator,” the gap (m_0^2) is a robust spectral gap.
+
+### 4.4.3. Relation to physical mass
+
+In a Hamiltonian framework, a physical mass gap typically refers to a lower bound on the spectrum of a quantum Hamiltonian (H) above the ground state. The generator (L) here is not that Hamiltonian, but the pattern is parallel:
+
+* a uniform lower bound on curvature,
+* implies a uniform spectral gap of a natural generator,
+* which controls correlation lengths and relaxation times.
+
+The scalar model thus realizes, in a transparent way, the slogan
+
+> **“Positive curvature (uniform convexity) ⇒ volume-independent spectral gap.”**
+
+---
+
+## 4.5. Summary and role as prototype
+
+We summarize the main points established in this part.
+
+1. **Explicit geometric setup.**
+   The configuration space is (M = \mathbb{R}^{\Lambda}) with Euclidean metric, and the scalar action is
+   [
+   S(\phi) = \sum_{x\in\Lambda} \Big(\frac{m_0^2}{2}\phi_x^2 + \frac{\lambda}{4}\phi_x^4\Big)
+   + \frac{\kappa}{2}\sum_{\langle xy\rangle} (\phi_x - \phi_y)^2,
+   ]
+   with (m_0^2>0), (\lambda,\kappa\ge 0).
+
+2. **Uniform convexity / curvature bound.**
+   The Hessian of (S) satisfies
+   [
+   \nabla^2 S(\phi) \ge m_0^2 I_n \quad\forall \phi,
+   ]
+   so the Bakry–Émery tensor obeys (\operatorname{Ric}*\mu = \nabla^2 S \ge m_0^2 g). Hence the diffusion satisfies (CD(m_0^2,\infty)) with curvature constant (\rho** = m_0^2), independent of (|\Lambda|).
+
+3. **Functional inequalities and spectral gap.**
+   By the general (CD(\rho,\infty)) theory:
+
+   * Poincaré inequality with constant (C_P\le 1/m_0^2),
+   * log-Sobolev inequality with constant (C_{LS}\le 2/m_0^2),
+   * spectral gap (\lambda_1\ge m_0^2),
+     all independent of (|\Lambda|).
+
+4. **Prototype for curvature–controlled gaps.**
+   This model provides a fully rigorous, finite-dimensional demonstration that
+
+   > **A simple, explicit Hessian lower bound (\nabla^2 S \ge \rho_* I) yields volume-independent functional inequalities and spectral gaps, exactly as predicted by the Bakry–Émery framework.**
+
+In later parts, lattice Yang–Mills will be embedded into an analogous geometric–analytic structure: we will identify a configuration manifold with a nontrivial Riemannian metric (Haar + gauge-fixing), construct an effective action (S_{\text{eff}}), and aim to prove a **horizontal** Hessian (curvature) lower bound of the same qualitative form on the physical directions. The scalar model analyzed here is the clean, linear prototype that shows the curvature mechanism in its simplest possible guise.

@@ -1,0 +1,523 @@
+INSTRCUTIONS 
+
+Short version: you accidentally built a pretty serious mini-“math research OS” for Yang–Mills. It’s already good. It can absolutely be sharper.
+
+I’ll walk through what’s here, what it’s doing for your mass-gap program, and where I’d upgrade it.
+
+---
+
+## 1. Big-picture: what this project actually is
+
+You don’t just have a pile of scripts; you have layers:
+
+1. **Document & data layer**
+
+   * `yangmills.db` with tables `math_objects`, `object_dependencies`, `documents`, `document_object_links`. 
+   * JSON exports of those tables (`math_objects.json`, `documents.json`, `document_object_links.json`, `object_dependencies.json`).  
+
+2. **Backend “research assistant”**
+
+   * FastAPI server (`backend/main.py` etc.) exposing:
+
+     * document upload & classification
+     * RAG-based Q&A
+     * modes: ingest, qa, audit, derivation, code, synthesis.  
+
+3. **Pipelines & CLI tools**
+
+   * `manage_data.py`: unified “upload” + “ingest” wrapper. 
+   * `batch_import.py`: auto-classify documents, auto-tag them, mark hallucinations, etc. 
+   * `organize_files.py`: physical folder hierarchy by usefulness/quality/category. 
+   * `organize_experiments.py`: turns raw PDFs/notebooks into `organized_experiments/manifest.json`. 
+
+4. **Math object world**
+
+   * Objects have:
+
+     * `type`: definition / lemma / theorem / proof / conjecture / code / experiment / note
+     * `status`: REAL / CONDITIONALLY_VALID / SPECULATIVE / UNDEFINED / INCONSISTENT
+     * `source_kind`: USER_ORIGINAL / EXTERNAL_PAPER / LLM_GENERATED
+     * `domain`, `latex`, `plain_text`.  
+
+5. **Trust & verification layer**
+
+   * Spec is in `VERIFICATION_PIPELINE.md` and implemented in `verify_with_tools.py`.  
+   * SymPy parses LaTeX, simplifies, checks equations or tautologies.
+   * Z3 is stubbed in for inequality/logic awareness (currently mostly “Z3: maybe applicable”). 
+   * Trust hierarchy:
+
+     * 🟢 REAL – external papers, (future) Lean proofs.
+     * 🟡 CONDITIONALLY_VALID – SymPy/Z3/numerical verified.
+     * 🟠 SPECULATIVE – pure LLM / unverified.
+     * 🔴 INCONSISTENT – known wrong. 
+
+6. **Synthesis & proof management**
+
+   * Synthesis mode: `/api/mode/synthesis` described in `SYNTHESIS_MODE.md`. 
+   * Proof-stack workflow: `build_dependency_graph.py`, `deduplicate_objects.py`, `create_layers.py`, `export_proof_stack.py` + doc `PROOF_STACK_WORKFLOW.md`.    
+
+7. **Experiment & numerics layer**
+
+   * JAX codes for SU(2) Haar/Wilson convexity, beta_c, concentration of measure, and full 4D SU(2) lattices:
+
+     * `analysis_beta_c.py` (critical beta for convexity). 
+     * `analysis_haar_bound.py` (global Haar Hessian ≥ 1/6, Wilson Hessian norm). 
+     * `analysis_concentration.py` (measure of “non-convex” region vs β). 
+     * `analysis_lattice_mc.py` & `analysis_mc_defects.py` (4D SU(2) Monte Carlo with Metropolis on links).  
+   * `organize_experiments.py` + `unify_results.py` + `unification_report.md` tie these back to theory.   
+
+8. **UI / Control panel**
+
+   * `dashboard.py`: Streamlit GUI with tabs for knowledge graph, synthesis, audit, data. 
+
+9. **Prompting / safety scaffolding**
+
+   * GPT-5.1 prompting guide specialized for this backend, including “never claim a Yang–Mills mass gap proof exists”, corpus-only answering, and explicit claim classification. 
+
+The net effect: you can take thousands of files → structured math objects → trust-graded proof stack → synthetic proof plans + numeric checks.
+
+That’s *way* beyond “some scripts”.
+
+---
+
+## 2. Data model & ingestion: strong foundation, a little gluey
+
+**What’s good**
+
+* Clean separation between **raw documents** and **extracted mathematical objects**:
+
+  * `documents` table for raw sources.
+  * `math_objects` for logical units (definitions, lemmas, etc.). 
+  * `document_object_links` connecting them, preserving provenance. 
+
+* Ingestion pipeline is reasonably unified:
+
+  * `manage_data.py upload` → POSTs to `/api/documents/upload`. 
+  * `manage_data.py ingest` → `/api/mode/ingest` to create math objects; tracks cost and created objects. 
+  * `batch_import.py` is the “fancier” upload that also:
+
+    * sets up tags (“Gauge Theory”, “Lattice Methods”, etc.)
+    * auto-tags documents with quality/useful/hallucination tags via AI classification. 
+
+* You’ve got **quality and hallucination tracking** baked in at the document level *and* the object level.  
+
+* `organize_files.py` then mirrors the semantic classification into a directory tree:
+
+  * `organized_documents/useful/high_quality/gauge-theory/...`. 
+
+**Weak points / improvements**
+
+1. **Two upload pathways** (`manage_data.py` vs `batch_import.py`) are overlapping:
+
+   * One hits `/api/mode/ingest`, one hits `/api/documents/upload?auto_classify=true`.  
+   * Suggestion: expose *one* canonical pipeline:
+
+     * `manage_data.py upload` → upload + classification + tagging.
+     * `manage_data.py ingest` → only ingestion.
+
+2. **Hard-coded paths & ports everywhere**
+
+   * `BASE_URL = "http://localhost:8001"` is repeated in several scripts.  
+   * `DB_PATH = "yangmills.db"` duplicated in `organize_files.py` and other places. 
+
+   → Pull these into a single config module (or `.env`) and import.
+
+3. **Interactivity in batch scripts**
+
+   * `build_dependency_graph.py`, `deduplicate_objects.py`, `batch_audit_v2.py`, `manage_data.py ingest` all ask for input (`Press Enter`, `Apply? (y/n)`, etc.).    
+   * Great for human use, annoying for automation.
+   * Suggest: add `--yes` / `--no-input` flags so CODDE or other tooling can orchestrate the entire pipeline non-interactively.
+
+---
+
+## 3. Math objects, dependency graph & proof stack
+
+### 3.1 Object semantics
+
+You’ve actually *curated* a mini-library:
+
+* Clay-style Yang–Mills mass gap conjecture as a REAL external object. 
+* Standard definitions like Bakry–Émery curvature as REAL, with your own proofs/derivations as USER_ORIGINAL & UNDEFINED. 
+* Many objects are your own lemmas like “Uniform Convexity Lemma”, “Uniform lower bound on the Hessian of the lattice action”, etc., currently UNDEFINED. 
+
+This is exactly the right split: external lore vs your program vs speculation.
+
+**Upgrade idea:** for your own key lemmas, start promoting them to CONDITIONALLY_VALID via the verification tools whenever possible (SymPy for formulas, numerical checks for bounds) so they can serve as “trusted” building blocks during synthesis.
+
+### 3.2 Dependency graph & deduplication
+
+The “proof stack” workflow is a neat pipeline: 
+
+1. `build_dependency_graph.py`
+
+   * For each object, LLM is asked which other objects it *uses/cites/generalizes*.
+   * Writes these into `ObjectDependency` relations. 
+
+2. `deduplicate_objects.py`
+
+   * Uses title similarity + LLM judgement to identify duplicates of the same definition/theorem. 
+   * Marks a canonical object `REAL`, others as `SUPERSEDED`, and adds dependency links.
+
+3. `create_layers.py`
+
+   * Computes layers: 0 = foundations (no deps), N = depends only on lower layers; unresolved/cycles → 99. 
+   * Stores layer info in the `domain` field as “Layer X”.
+
+4. `export_proof_stack.py` / `export_to_html.py`
+
+   * Export layered hierarchy to HTML (`PROOF_STACK.html` and `complete_export.html`) with full content.  
+
+**What’s good**
+
+* This is the right *shape* for a mass-gap program: explicit DAG of dependencies, foundations, and theorems.
+* Deduping before layering avoids ghost copies of the same idea.
+* Full HTML export gives a browsable “math book” with 404 REAL/CONDITIONALLY_VALID objects. 
+
+**What I’d fix**
+
+* **Layer info stored in `domain`** is hacky:
+
+  * `obj.domain = "Layer 3"` in `create_layers.py`. 
+  * Better: add a dedicated `layer` integer column in `MathObject`. Then domain can stay “YM_lattice / Bakry_Emery / etc.”
+
+* **Dependency extraction is “flat” and unconstrained**
+
+  * LLM sees up to 100 other objects and picks dependencies; no check that the graph is acyclic or minimal. 
+  * Improvement: when synthesizing proofs, *enforce* that you only use layers ≤ current layer; this will quickly expose cycles and missing foundations.
+
+---
+
+## 4. Trust & verification pipeline
+
+`VERIFICATION_PIPELINE.md` + `verify_with_tools.py` is one of the strongest parts of the design.  
+
+**Nice things**
+
+* Status transitions are explicit:
+
+  * SPECULATIVE/UNDEFINED → CONDITIONALLY_VALID when SymPy/Z3 succeed.
+  * SPECULATIVE → INCONSISTENT when SymPy proves false.
+
+* SymPy flow:
+
+  * Parse LaTeX.
+  * Simplify; check if identically true/false.
+  * For `Equality`, simplify `lhs - rhs` and test if 0. 
+
+* Z3 hook:
+
+  * For now, just detects inequalities/bounds text and says “Z3 maybe applicable”, but the place to plug a real translation is there. 
+
+* `VERIFICATION_PIPELINE.md` clearly lays out:
+
+  * The trust hierarchy.
+  * Intended expansions (Lean, Coq, numerical JAX). 
+
+**Improvements**
+
+1. **SymPy: target the high-value objects**
+
+   Right now, pipeline potentially sweeps all SPECULATIVE/UNDEFINED; but `math_objects.json` shows a *lot* of notes and code snippets. 
+
+   Short-term:
+
+   * Filter by `type` ∈ {LEMMA, THEOREM, PROOF, CONJECTURE} when running the pipeline.
+   * Optionally restrict by `domain` (“Bakry_Emery”, “YM_lattice”) so you focus on stuff relevant to the convexity/mass-gap argument.  
+
+2. **Z3: actually encode a pattern**
+
+   You already have inequality-ish statements like:
+
+   * Uniform convexity bounds,
+   * “If β > β_c and ‖F‖ < ε then λ_min > 0”.  
+
+   You don’t need full auto-translation to get value:
+
+   * For a subset of objects, manually parse templates like
+     `"For all x, V''(φ_x) ≥ m0^2"` into Z3 quantifier-free checks.
+   * Even a tiny library of 3–5 templates will catch a lot of algebraic slips.
+
+3. **Numerical verification integration**
+
+   `VERIFICATION_PIPELINE.md` lists “Future: JAX numerical verification”. 
+
+   You already *have* JAX tools:
+
+   * Haar bound checker (`verify_haar_bound` prints PASS and min eigenvalue ≥ 1/6). 
+   * Wilson Hessian norm estimator + derived β_convex bound. 
+   * Convexity / concentration analysis vs β. 
+
+   Hook these in by:
+
+   * Creating objects like “Global Haar Hessian ≥ 1/6” and tagging them as CONDITIONALLY_VALID by linking to a JAX run with tolerances.
+   * Store the script name & parameters in `reasoning` or a dedicated metadata field.
+
+---
+
+## 5. Synthesis mode & QA: using your corpus *honestly*
+
+The synthesis & QA behavior is carefully constrained, which is good for not hallucinating “I solved Clay”.
+
+* Synthesis mode:
+
+  * Uses only REAL + CONDITIONALLY_VALID objects as a base.
+  * Creates new LLM bridges as SPECULATIVE.
+  * Returns:
+
+    * `steps` with descriptions, sources, supporting object IDs.
+    * explicit `gaps` list.
+    * `new_objects` (bridge conjectures). 
+* Q&A mode:
+
+  * Answer is broken into claims with kind: established / conditional / speculative / invalid / unknown and supporting object IDs. 
+  * System prompt includes rules:
+
+    * Corpus-only.
+    * Never claim a mass-gap proof exists.
+    * Always distinguish external_paper vs user_original vs llm_generated. 
+
+This is exactly the kind of meta-rigour you want.
+
+**Where it could be sharper**
+
+1. **Tighter integration with layers**
+
+   Synthesis should:
+
+   * Prefer using **lower-layer** objects as much as possible (structurally simpler).
+   * Flag any step that uses a layer 99 object (circular/uncategorized) as inherently speculative.
+
+   You have layer info from `create_layers.py`; feed that into synthesis selection. 
+
+2. **Expose synthesis output in the dashboard**
+
+   `dashboard.py` already has a Synthesis tab that calls `/api/mode/synthesis` and displays steps, gaps, and cost. 
+
+   Extra niceties:
+
+   * Color nodes in the knowledge graph by status (REAL / COND / SPEC / INCONSISTENT); you already set colors but it’s per-node, not per-step. 
+   * On clicking a node, show where it appears in synthesis plans.
+
+3. **“Mass-gap program view”**
+
+   Using `math_objects.json` + the dependency graph, you could build a *single* view:
+
+   * root node: “Yang–Mills Mass Gap Conjecture” (REAL, external). 
+   * immediate children: your main programmatic conjectures (Haar + Wilson convexity, RG convexity, continuum limit, anomaly–curvature identity).  
+   * colour edges by status (edge uses only REAL/COND vs includes SPEC).
+
+   Practically: just a filtered knowledge-graph view in `dashboard.py` where you select a “goal object” and see its dependency tree.
+
+---
+
+## 6. Unification of theory & experiments
+
+`organize_experiments.py` + `unify_results.py` + `unification_report.md` are your “theory vs numerics” bridge.   
+
+What happens:
+
+1. Raw experiments (PDFs, notebooks) go into `raw_experiments/`.
+
+2. `organize_experiments.py`:
+
+   * Extracts text/snippets from PDFs/IPYNB.
+   * Asks an LLM to produce metadata (title/date/tags/summary) and renames them to `YYYY-MM-DD_Title_tags.ext`.
+   * Writes a `manifest.json` with original/new name + metadata. 
+
+3. `unify_results.py`:
+
+   * Loads `proof_synthesis_plan.tex` and `manifest.json`.
+   * LLM extracts claims from the LaTeX (`extract_claims_from_latex`). 
+   * For each claim, LLM checks which experiments support or contradict it and produces a JSON status.
+   * Writes `unification_report.md` summarizing each claim with ✅ “supported”, ❌ “contradicted”, ⚪ “no evidence”. 
+
+   Example from `unification_report.md`:
+
+   * Claims like “mass gap m > 0 exists for β > β_c” and “spectral gap of H_Λ equals physical mass gap” are **supported** by finite-cutoff mass-gap derivation PDFs. 
+   * Claims about global Bakry–Émery convexity, RG analysis, infinite-volume limit etc. currently show **no direct experimental evidence**. 
+
+This is excellent as a coarse sanity check: you know which parts of your story are actually backed by code/experiments.
+
+**Improvements**
+
+* Treat experiments as *math objects*:
+
+  * Right now experiments live in a separate manifest.
+  * You could ingest each experiment as `type="EXPERIMENT"` objects so they join the same dependency/proof graph.
+
+* Instead of one big `unification_report.md`, you could:
+
+  * Annotate each claim object with fields like `experimental_status: supported/contradicted/none` and `supporting_experiments: [file_ids]`.
+  * Then synthesis & QA can reason about “experimentally supported but not proved” separately from “pure conjecture”.
+
+* Tighten the mapping of experiment → claim:
+
+  * For key JAX scripts, include explicit “what claim is this testing?” metadata in the code docstring, then link that directly rather than via fuzzy LLM summaries.
+
+---
+
+## 7. Numerics / JAX Yang–Mills machinery
+
+You’ve got a solid cluster of JAX scripts that are essentially small physics papers:
+
+1. **Haar and Wilson convexity & β_c**
+
+   * `analysis_beta_c.py`:
+
+     * Builds SU(2) via Pauli matrices and an exponential map.
+     * Defines Haar log Jacobian and Wilson action in a simplified setting.
+     * Computes the Hessian of total action and scans over radius and β, reporting the minimal eigenvalues to find where convexity breaks. 
+
+   * `analysis_haar_bound.py`:
+
+     * Computes the Hessian of `S_Haar = -2 log(sin(r)/r)` exactly.
+     * Compares JAX numeric eigenvalues vs analytic formulas λ_r, λ_t, confirming a global lower bound λ ≥ 1/6. 
+     * Estimates the Wilson Hessian norm (max eigenvalue of Hess(-0.5 Re Tr(U))) and yields a theoretical β_convex bound ~ 1/(6 λ_W). 
+
+   * `analysis_concentration.py`:
+
+     * Finds radius r_crit where convexity is lost for given β.
+     * Integrates the “bad” region weight under the measure with density ∝ sin²(r) e^{β cos r}.
+     * Prints `Mass(Bad)` and its ratio to total mass for β ranging from ~4.5 to 100, showing the bad region becomes exponentially small: ideal Holley–Stroock scenario. 
+
+   That trio is a clean, fairly rigorous “Haar + Wilson is convex almost everywhere and effective convexity dominates at large β” story for a one-link model.
+
+2. **4D lattice SU(2) Monte Carlo**
+
+   * `analysis_lattice_mc.py`:
+
+     * Builds 4D periodic lattice, precomputes neighbor tables. 
+     * Computes staples around each link and does Metropolis updates:
+
+       * Proposes new link via small SU(2) rotation using `exp_map_pauli`.
+       * Computes local action difference via staples sum.
+       * Accept/reject via exp(-ΔS).
+   * `analysis_mc_defects.py`:
+
+     * Similar but heavier emphasis on small defects, uses 64-bit complex for precision and carefully documented staple geometry. 
+
+3. **Integration with proof-level claims**
+
+   Through `unification_report.md`, these numerics are cited as evidence for:
+
+   * Finite-cutoff mass gap m > 0 at β > β_c.
+   * Identification of spectral gap with physical mass gap. 
+
+**Code-level improvements**
+
+* Some JAX code mixes Python loops and `jit` in ways that are not ideal:
+
+  * E.g. in `calculate_staples`, a python `for nu in range(4)` inside a `jit`-decorated function will work but limits optimization flexibility. 
+  * In `analysis_mc_defects.py` the staples function is deliberately left un-jitted due to tracer issues; this is fine but slower. 
+
+  Refactors:
+
+  * Use `lax.fori_loop` or `vmap` over directions instead of Python loops inside jit.
+  * Represent link fields as flat arrays and use `jax.vmap` to update whole sublattices (checkerboard updates).
+
+* The one-link and lattice-level definitions of Haar/Wilson are duplicated with slight differences between scripts.   
+
+  * Extract a small `ym_su2.py` module with:
+
+    * one canonical `exp_map`, `haar_log_jacobian`, `wilson_link_action`, etc.
+    * reuse across analysis scripts.
+
+---
+
+## 8. Where your Yang–Mills proof program stands (from the code’s POV)
+
+From `math_objects.json` + `unification_report.md` + the analysis scripts:    
+
+Rough state:
+
+* **Solid foundations**
+
+  * Definitions of mass gap, Bakry–Émery curvature, Gibbs measures, scalar field convexity lemmas, etc. Many marked REAL (external) or UNDEFINED but very standard.   
+  * JAX checks giving strong evidence for:
+
+    * global Haar Hessian lower bounds,
+    * bounded Wilson curvature,
+    * measure concentration at large β.
+
+* **Finite-cutoff mass gap program**
+
+  * Some derivations & experiments in `FiniteCutoffYangMillsMassGap` PDFs are recognized in `unification_report.md` as supporting finite-volume spectral gap ↔ mass gap claims. 
+
+* **Still-fragile pieces (no experimental or formal support yet)**
+
+  * Global Bakry–Émery convexity of the *full* action S_Λ(A) on the 4D lattice.
+  * Renormalisation-group arguments controlling convexity across scales.
+  * Infinite-volume limit Λ → ℤ⁴ and uniformity of constants.
+  * Conjectural anomaly–curvature identity in the continuum effective action.  
+
+The system itself is already telling you where the dragons live: in the RG/infinite-volume/continuum part, rather than the local convexity numerics.
+
+---
+
+## 9. Concrete priorities / “how to do better”
+
+If you want “you + CODEX” to level this up, I’d do it in this order:
+
+### Tier 1 – Infrastructure hygiene (high leverage, low risk)
+
+1. **Config & flags**
+
+   * Centralize `BASE_URL`, `DB_PATH`, etc.
+   * Add `--yes` flags to interactive scripts so CODDE can orchestrate end-to-end runs.   
+
+2. **Layer field**
+
+   * Add a `layer: int` to `MathObject` instead of overloading `domain` with “Layer X”. Update `create_layers.py` accordingly. 
+
+3. **Factor out common SU(2) tools**
+
+   * Single shared module for Haar/Wilson/JAX SU(2) operations used in all analysis scripts.   
+
+### Tier 2 – Proof-relevant verification & synthesis
+
+4. **Targeted verification**
+
+   * Run `verify_with_tools.py` on:
+
+     * all LEMMA/THEOREM/PROOF objects in domains “YM_lattice” and “Bakry_Emery”.
+     * your key conjectures (even if SymPy only says “well-formed”).   
+
+5. **Experiment objects**
+
+   * Ingest experiments as `type="EXPERIMENT"` math objects and link them:
+
+     * claims (theoretical) → experiments (support/contradict).
+   * Encode experimental support in object-level metadata rather than just in `unification_report.md`.   
+
+6. **Layer-aware synthesis**
+
+   * Teach `/api/mode/synthesis` to:
+
+     * prefer lower-layer objects,
+     * flag any steps that climb through layer 99 or SPECULATIVE-heavy subtrees.  
+
+### Tier 3 – Yang–Mills specific advances
+
+7. **RG / infinite-volume experiments**
+
+   * Use your JAX lattice code to:
+
+     * measure how convexity constants scale with lattice size,
+     * attempt finite-size scaling of the spectral gap.
+   * Add explicit “this experiment probes claim X” markers and link them.
+
+8. **Conjecture object refinement**
+
+   * Your high-level conjectures (e.g. anomaly–curvature identity) are currently quite global. 
+   * Break them into finer-grained conjectures (local vs global, finite vs infinite volume).
+   * This will give synthesis mode more granular building blocks and clearer gaps.
+
+9. **Long-term: formalization**
+
+   * Start formalizing small but central bits (Haar Hessian bound, simple Bakry–Émery inequalities) in Lean or Coq as a proof-of-concept REAL upgrade path, as you already plan. 
+
+---
+
+That’s the “in detail” tour: what you built, how its pieces fit, where it’s already supporting your Yang–Mills program, and where it’s still hand-wavy.
+
+The cool part is: you now have a *framework* for a proof, not just random notes. Every time you push a new lemma or experiment, you can ask: “what does this do to the graph of objects aimed at the mass gap conjecture?”. That’s exactly the kind of feedback loop mathematicians usually only get in their heads.

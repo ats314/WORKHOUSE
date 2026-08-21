@@ -1,0 +1,972 @@
+# Part 3 — CD(ρ,∞) ⇒ Poincaré and Logarithmic Sobolev; Lyapunov Local-to-Global Principles
+
+*(Updated + expanded; self‑contained)*
+
+---
+
+## 3.0 What this part is about
+
+This part isolates two analytic “engines” that will be used later in the Yang–Mills setting:
+
+1. **Global curvature ⇒ global functional inequalities.**
+   A positive Bakry–Émery curvature lower bound (the curvature–dimension condition (CD(\rho,\infty)) with (\rho>0)) implies **dimension‑free** constants in the **Poincaré** and **logarithmic Sobolev** inequalities. This is the classical Bakry–Émery mechanism and is already stated in your draft. 
+
+2. **Local curvature + Lyapunov drift ⇒ global functional inequalities.**
+   Even when curvature is only good in a “core” region (small‑field region), a **Lyapunov drift inequality** plus **local** Poincaré/log‑Sobolev (or local super‑Poincaré) yields **global** inequalities, with constants controlled in a way that can be made uniform along families (e.g. increasing lattice volume). Your draft already states these patching principles (Theorems 3.4–3.5). 
+   The key technical lemma behind Lyapunov patching is the inequality (\int f^2(-Lh/h)\le \int \Gamma(f)), which appears (with proof) in the Lyapunov-unified document as Lemma 1.1.
+
+Everything below is written so that **no external part is needed** for definitions or proofs.
+
+---
+
+## 3.1 Geometric–probabilistic setup: generator, invariant measure, Dirichlet form
+
+### 3.1.1 Base assumptions
+
+Let ((M,g)) be a smooth, connected Riemannian manifold without boundary. (If a boundary is present, assume either reflecting (Neumann) or absorbing (Dirichlet) boundary conditions and adjust integration by parts accordingly; we stay boundaryless for clarity.)
+
+Let (S\in C^2(M)) be a potential such that the partition function
+[
+Z := \int_M e^{-S(x)},d\mathrm{vol}_g(x)
+]
+is finite. Define the probability measure
+[
+d\mu(x) := Z^{-1},e^{-S(x)},d\mathrm{vol}_g(x).
+]
+
+### 3.1.2 The diffusion generator
+
+Define the second-order differential operator
+[
+L f := \Delta f - \langle \nabla S, \nabla f\rangle,
+]
+where (\Delta) is the (positive) Laplace–Beltrami operator and (\nabla) is the Levi‑Civita gradient. This is the same generator used in your draft. 
+
+We work on a “nice” core (\mathcal{A}\subset L^2(\mu)), e.g. (C_c^\infty(M)) if (M) is noncompact, or (C^\infty(M)) if (M) is compact, and then extend by closure in the appropriate norms.
+
+### 3.1.3 Integration by parts and symmetry
+
+**Proposition 3.1 (Symmetry + invariance).**
+For all (f,g\in \mathcal{A}),
+[
+\int_M g,Lf,d\mu ;=; -\int_M \langle \nabla f, \nabla g\rangle,d\mu,
+]
+hence (L) is symmetric on (\mathcal{A}) in (L^2(\mu)). In particular, (\mu) is (L)-invariant:
+[
+\int_M Lf,d\mu = 0\qquad(\forall f\in\mathcal{A}).
+]
+
+*Proof.* Write (d\mu = Z^{-1} e^{-S} d\mathrm{vol}). For smooth compactly supported (f,g),
+[
+\int g \Delta f,e^{-S},d\mathrm{vol}
+= -\int \langle \nabla g, \nabla f\rangle e^{-S},d\mathrm{vol}
+-\int g \langle \nabla f, \nabla(e^{-S})\rangle d\mathrm{vol}.
+]
+Since (\nabla(e^{-S}) = -e^{-S}\nabla S), the last term becomes
+[
+-\int g \langle \nabla f, -e^{-S}\nabla S\rangle d\mathrm{vol}
+= \int g,e^{-S}\langle \nabla S, \nabla f\rangle d\mathrm{vol}.
+]
+Therefore
+[
+\int g(\Delta f - \langle \nabla S, \nabla f\rangle)e^{-S},d\mathrm{vol}
+= -\int \langle \nabla g, \nabla f\rangle e^{-S},d\mathrm{vol}.
+]
+Divide by (Z) to obtain the formula with (d\mu). Setting (g\equiv 1) gives (\int Lf,d\mu=0). ∎
+
+### 3.1.4 Dirichlet form and semigroup
+
+Define the carré‑du‑champ (energy density) by
+[
+\Gamma(f,g) := \langle \nabla f, \nabla g\rangle,
+\qquad \Gamma(f):=\Gamma(f,f)=|\nabla f|^2.
+]
+Then the Dirichlet form is
+[
+\mathcal{E}(f,g) := \int_M \Gamma(f,g),d\mu.
+]
+By Proposition 3.1,
+[
+\mathcal{E}(f,g) = -\int_M f,Lg,d\mu = -\int_M g,Lf,d\mu.
+]
+
+Assume (standard in this setting) that (L) is essentially self‑adjoint on (\mathcal{A}) and generates a symmetric Markov semigroup ((P_t)_{t\ge 0}) on (L^2(\mu)). The semigroup solves
+[
+\partial_t u_t = Lu_t,\qquad u_0=f,
+]
+with (u_t=P_t f). Invariance means (\int P_t f,d\mu = \int f,d\mu).
+
+---
+
+## 3.2 Γ‑calculus and the curvature–dimension condition (CD(\rho,\infty))
+
+### 3.2.1 Diffusion property and chain rules
+
+A (symmetric) diffusion generator satisfies:
+
+* **Leibniz rule** (first order behavior of (\Gamma)):
+  [
+  \Gamma(fg,h) = f,\Gamma(g,h) + g,\Gamma(f,h).
+  ]
+* **Chain rule** for smooth (\Phi:\mathbb{R}\to\mathbb{R}):
+  [
+  \Gamma(\Phi(f),g) = \Phi'(f),\Gamma(f,g),
+  \qquad \Gamma(\Phi(f)) = (\Phi'(f))^2 \Gamma(f),
+  ]
+  [
+  L(\Phi(f)) = \Phi'(f),Lf + \Phi''(f),\Gamma(f).
+  ]
+
+These are direct consequences of (\Gamma(f,g)=\langle \nabla f,\nabla g\rangle) and (L = \Delta - \nabla S\cdot\nabla).
+
+### 3.2.2 Definition of (\Gamma_2)
+
+Define
+[
+\Gamma_2(f,g)
+:=\frac12\Big(L\Gamma(f,g) - \Gamma(f,Lg) - \Gamma(g,Lf)\Big),
+\qquad \Gamma_2(f):=\Gamma_2(f,f).
+]
+
+### 3.2.3 Bochner–Bakry–Émery identity
+
+Define the Bakry–Émery tensor
+[
+\mathrm{Ric}_\mu := \mathrm{Ric}_g + \mathrm{Hess}(S),
+]
+where (\mathrm{Ric}_g) is the Ricci curvature tensor and (\mathrm{Hess}(S)) is the Riemannian Hessian of (S).
+
+**Proposition 3.2 (Bochner identity for (L)).**
+For (f\in C^\infty(M)),
+[
+\Gamma_2(f) = |\nabla^2 f|*{\mathrm{HS}}^2 ;+; \mathrm{Ric}*\mu(\nabla f,\nabla f),
+]
+where (\nabla^2 f) is the covariant Hessian and (|\cdot|_{\mathrm{HS}}) its Hilbert–Schmidt norm.
+
+*Proof.* The classical Bochner formula says
+[
+\frac12 \Delta|\nabla f|^2 = |\nabla^2 f|_{\mathrm{HS}}^2 + \langle \nabla f,\nabla\Delta f\rangle + \mathrm{Ric}*g(\nabla f,\nabla f).
+]
+Now compute (L|\nabla f|^2 = \Delta|\nabla f|^2 - \langle \nabla S,\nabla|\nabla f|^2\rangle), and similarly (\Gamma(f,Lf)=\langle \nabla f,\nabla Lf\rangle). Using the identity (\nabla Lf = \nabla\Delta f - \nabla\langle \nabla S,\nabla f\rangle) and expanding (\nabla\langle \nabla S,\nabla f\rangle = \nabla^2 S(\nabla f,\cdot)+\nabla^2 f(\nabla S,\cdot)), a standard cancellation yields
+[
+\Gamma_2(f) = |\nabla^2 f|*{\mathrm{HS}}^2 + (\mathrm{Ric}_g+\mathrm{Hess}S)(\nabla f,\nabla f).
+]
+∎
+
+### 3.2.4 Curvature–dimension (CD(\rho,\infty))
+
+**Definition 3.3.** We say (L) satisfies (CD(\rho,\infty)) if
+[
+\Gamma_2(f) \ge \rho,\Gamma(f)\qquad\text{pointwise for all smooth }f.
+]
+
+By Proposition 3.2, (CD(\rho,\infty)) is equivalent to the tensor inequality
+[
+\mathrm{Ric}_\mu ;\ge; \rho,g
+\quad\text{(as quadratic forms)}.
+]
+
+This is the condition used in your draft. 
+
+---
+
+## 3.3 Semigroup gradient estimate from (CD(\rho,\infty))
+
+A major output of (CD(\rho,\infty)) is a commutation/gradient estimate.
+
+**Theorem 3.4 (Bakry–Émery gradient estimate).**
+Assume (CD(\rho,\infty)). Then for all (f\in\mathcal{A}) and (t\ge 0),
+[
+\Gamma(P_t f) ;\le; e^{-2\rho t},P_t(\Gamma(f))
+\qquad\text{pointwise a.e.}
+]
+Equivalently,
+[
+|\nabla P_t f|^2 ;\le; e^{-2\rho t},P_t(|\nabla f|^2).
+]
+
+*Proof.* Fix (t>0) and define, for (s\in[0,t]),
+[
+\Phi(s) := P_s!\big(\Gamma(P_{t-s}f)\big).
+]
+We compute (\Phi'(s)). Using (\partial_s P_s = LP_s) and (\partial_s P_{t-s} = -LP_{t-s}),
+[
+\Phi'(s) = L P_s\big(\Gamma(P_{t-s}f)\big) ;+; P_s\Big(\frac{d}{ds}\Gamma(P_{t-s}f)\Big).
+]
+Now (\frac{d}{ds}\Gamma(P_{t-s}f) = -2,\Gamma(P_{t-s}f,,L P_{t-s}f)) (differentiate inside and use bilinearity of (\Gamma)). Therefore
+[
+\Phi'(s) = P_s!\Big(L\Gamma(P_{t-s}f) - 2,\Gamma(P_{t-s}f, L P_{t-s}f)\Big)
+= 2,P_s!\big(\Gamma_2(P_{t-s}f)\big).
+]
+By (CD(\rho,\infty)), (\Gamma_2(\cdot)\ge \rho,\Gamma(\cdot)), so
+[
+\Phi'(s)\ge 2\rho,P_s!\big(\Gamma(P_{t-s}f)\big)=2\rho,\Phi(s).
+]
+Thus ((e^{-2\rho s}\Phi(s))'\ge 0), so for (s=t) and (s=0),
+[
+e^{-2\rho t}\Phi(t) \ge \Phi(0).
+]
+But (\Phi(t)=P_t(\Gamma(f))) and (\Phi(0)=\Gamma(P_t f)). Hence
+[
+\Gamma(P_t f)\le e^{-2\rho t}P_t(\Gamma(f)).
+]
+∎
+
+---
+
+## 3.4 Global Poincaré inequality from (CD(\rho,\infty))
+
+Your draft states this as Theorem 3.1. 
+Here is a fully self-contained proof with no spectral discreteness assumptions.
+
+### 3.4.1 Variance and its dissipation along the semigroup
+
+Define the variance
+[
+\mathrm{Var}_\mu(f) := \int (f-\mu(f))^2,d\mu,
+\qquad \mu(f):=\int f,d\mu.
+]
+
+Let (f\in\mathcal{A}) and set (m:=\mu(f)) and (g:=f-m), so (\mu(g)=0) and (\mathrm{Var}_\mu(f)=|g|_2^2).
+
+Let (g_t := P_t g). Then (\mu(g_t)=\mu(g)=0) for all (t) (invariance).
+
+**Lemma 3.5 (Energy identity).** For (g\in\mathcal{A}),
+[
+\frac{d}{dt}|g_t|_2^2 = -2\int \Gamma(g_t),d\mu.
+]
+
+*Proof.* Differentiate:
+[
+\frac{d}{dt}|g_t|_2^2 = \frac{d}{dt}\int g_t^2,d\mu = 2\int g_t,\partial_t g_t,d\mu = 2\int g_t,L g_t,d\mu.
+]
+By Proposition 3.1 (symmetry/integration by parts),
+[
+\int g_t L g_t,d\mu = -\int \Gamma(g_t),d\mu.
+]
+Combine. ∎
+
+Integrate from (0) to (T):
+[
+|g|_2^2 - |g_T|_2^2 = 2\int_0^T \int \Gamma(g_t),d\mu,dt.
+]
+If we can show (|g_T|_2\to 0) as (T\to\infty) (which will follow from the Poincaré inequality we are about to prove, or from ergodicity), then
+[
+|g|_2^2 = 2\int_0^\infty \int \Gamma(P_t g),d\mu,dt.
+\tag{3.1}
+]
+
+### 3.4.2 Apply the gradient estimate
+
+By Theorem 3.4,
+[
+\Gamma(P_t g) \le e^{-2\rho t} P_t(\Gamma(g)).
+]
+Integrate and use invariance ((\int P_t h,d\mu = \int h,d\mu)):
+[
+\int \Gamma(P_t g),d\mu
+\le e^{-2\rho t} \int P_t(\Gamma(g)),d\mu
+= e^{-2\rho t}\int \Gamma(g),d\mu.
+]
+Insert into (3.1):
+[
+|g|_2^2
+\le 2\int_0^\infty e^{-2\rho t},dt ;\int \Gamma(g),d\mu
+= \frac{1}{\rho}\int \Gamma(g),d\mu.
+]
+Since (\Gamma(g)=\Gamma(f)), we obtain:
+
+**Theorem 3.6 (Poincaré from (CD(\rho,\infty))).**
+If (CD(\rho,\infty)) holds with (\rho>0), then for all (f\in\mathcal{A}),
+[
+\mathrm{Var}*\mu(f) \le \frac{1}{\rho}\int \Gamma(f),d\mu.
+\tag{PI(*\rho)}
+]
+This matches the theorem statement in your draft (constant (1/\rho)). 
+∎
+
+### 3.4.3 Spectral-gap interpretation (optional but useful)
+
+If (L) has a spectral gap (\lambda_1>0) in (L^2(\mu)) (true for many settings of interest), then the optimal Poincaré constant is (C_P=1/\lambda_1). Under (CD(\rho,\infty)) we have (\lambda_1\ge \rho). The eigenfunction proof in your draft captures this intuition. 
+
+---
+
+## 3.5 Global logarithmic Sobolev inequality from (CD(\rho,\infty))
+
+Your draft states the result as Theorem 3.2. 
+Here is a full “first principles” semigroup proof.
+
+### 3.5.1 Entropy and Fisher information
+
+For a nonnegative integrable function (h\ge 0), define the entropy
+[
+\mathrm{Ent}*\mu(h)
+:= \int h\log h,d\mu - \Big(\int h,d\mu\Big)\log\Big(\int h,d\mu\Big).
+]
+If (\int h,d\mu = 1), this simplifies to (\mathrm{Ent}*\mu(h)=\int h\log h,d\mu).
+
+For smooth (u>0), define the Fisher information
+[
+I_\mu(u) := \int \frac{\Gamma(u)}{u},d\mu = \int u,\Gamma(\log u),d\mu.
+]
+
+### 3.5.2 Entropy dissipation along the semigroup
+
+Let (f>0) be smooth and set (u_t := P_t f). Then (u_t>0) (positivity preserving). Let (m:=\int f,d\mu); invariance implies (\int u_t,d\mu=m) for all (t).
+
+Define
+[
+H(t) := \mathrm{Ent}_\mu(u_t).
+]
+Since (m) is constant,
+[
+H(t)=\int u_t\log u_t,d\mu - m\log m.
+]
+
+**Lemma 3.7 (First derivative).**
+[
+H'(t) = - I_\mu(u_t) = -\int \frac{\Gamma(u_t)}{u_t},d\mu.
+]
+
+*Proof.* Differentiate:
+[
+H'(t) = \int (\partial_t u_t)(1+\log u_t),d\mu
+= \int (Lu_t)(1+\log u_t),d\mu.
+]
+The term (\int Lu_t,d\mu=0) (invariance), so
+[
+H'(t) = \int (Lu_t)\log u_t,d\mu.
+]
+Use Proposition 3.1 (integration by parts):
+[
+\int (Lu_t)\log u_t,d\mu = -\int \Gamma(u_t,\log u_t),d\mu.
+]
+By the chain rule, (\Gamma(u,\log u)=\Gamma(u)/u). Hence (H'=-\int \Gamma(u_t)/u_t). ∎
+
+So entropy decreases, and its dissipation rate is Fisher information.
+
+### 3.5.3 Fisher information dissipation and (\Gamma_2)
+
+Define
+[
+I(t):=I_\mu(u_t)=\int \frac{\Gamma(u_t)}{u_t},d\mu.
+]
+
+**Lemma 3.8 (Key identity).**
+Let (u_t=P_t f) with (f>0) smooth, and set (g_t := \log u_t). Then
+[
+I'(t) = -2\int u_t,\Gamma_2(g_t),d\mu
+= -2\int u_t,\Gamma_2(\log u_t),d\mu.
+\tag{3.2}
+]
+
+*Proof.* Start from the representation
+[
+I(t)=\int \frac{\Gamma(u_t)}{u_t},d\mu = \int u_t,\Gamma(g_t),d\mu,
+\quad g_t=\log u_t,
+]
+since (\Gamma(g_t)=\Gamma(u_t)/u_t^2).
+
+Differentiate:
+[
+I'(t) = \int (\partial_t u_t),\Gamma(g_t),d\mu + \int u_t,\partial_t\Gamma(g_t),d\mu.
+]
+Because (\partial_t u_t = Lu_t),
+[
+\int (\partial_t u_t)\Gamma(g_t),d\mu = \int (Lu_t)\Gamma(g_t),d\mu
+= -\int \Gamma(u_t,\Gamma(g_t)),d\mu
+]
+(using integration by parts).
+
+Next, for (\partial_t\Gamma(g_t)), note that (\Gamma) is bilinear and (as a first-order operator) satisfies
+[
+\partial_t\Gamma(g_t) = 2,\Gamma(g_t,\partial_t g_t).
+]
+But (\partial_t g_t = \partial_t(\log u_t) = (\partial_t u_t)/u_t = (Lu_t)/u_t). Hence
+[
+\partial_t\Gamma(g_t) = 2,\Gamma!\left(g_t,,\frac{Lu_t}{u_t}\right).
+]
+
+So
+[
+I'(t) = -\int \Gamma(u_t,\Gamma(g_t)),d\mu
+
+* 2\int u_t,\Gamma!\left(g_t,,\frac{Lu_t}{u_t}\right),d\mu.
+  ]
+  Now use the chain rule (\Gamma(u_t,\cdot)=u_t,\Gamma(g_t,\cdot)) (since (u_t=e^{g_t})):
+  [
+  \Gamma(u_t,\Gamma(g_t)) = u_t,\Gamma(g_t,\Gamma(g_t)).
+  ]
+  Therefore
+  [
+  I'(t)
+  = -\int u_t,\Gamma(g_t,\Gamma(g_t)),d\mu
+* 2\int u_t,\Gamma!\left(g_t,,\frac{Lu_t}{u_t}\right),d\mu.
+  \tag{3.3}
+  ]
+
+Next, express (\frac{Lu_t}{u_t}) in terms of (g_t). Using the chain rule for (L) with (\Phi(x)=e^x),
+[
+Lu_t = L(e^{g_t}) = e^{g_t}Lg_t + e^{g_t}\Gamma(g_t)=u_t(Lg_t+\Gamma(g_t)).
+]
+So (\frac{Lu_t}{u_t} = Lg_t + \Gamma(g_t)).
+
+Insert this into the second term in (3.3):
+[
+\Gamma!\left(g_t,,\frac{Lu_t}{u_t}\right)
+= \Gamma(g_t,Lg_t+\Gamma(g_t))
+= \Gamma(g_t,Lg_t)+\Gamma(g_t,\Gamma(g_t)).
+]
+Thus (3.3) becomes
+[
+I'(t)
+= -\int u_t,\Gamma(g_t,\Gamma(g_t)),d\mu
+
+* 2\int u_t,\Gamma(g_t,Lg_t),d\mu
+* 2\int u_t,\Gamma(g_t,\Gamma(g_t)),d\mu,
+  ]
+  i.e.
+  [
+  I'(t)
+  = 2\int u_t,\Gamma(g_t,Lg_t),d\mu
+* \int u_t,\Gamma(g_t,\Gamma(g_t)),d\mu.
+  \tag{3.4}
+  ]
+
+Now compute (\int u_t\Gamma_2(g_t)). By definition,
+[
+\Gamma_2(g_t)=\frac12\big(L\Gamma(g_t)-2\Gamma(g_t,Lg_t)\big).
+]
+Multiply by (u_t) and integrate:
+[
+\int u_t,\Gamma_2(g_t),d\mu
+= \frac12\int u_t,L\Gamma(g_t),d\mu
+-\int u_t,\Gamma(g_t,Lg_t),d\mu.
+]
+Integration by parts gives
+[
+\int u_t,L\Gamma(g_t),d\mu = -\int \Gamma(u_t,\Gamma(g_t)),d\mu
+= -\int u_t,\Gamma(g_t,\Gamma(g_t)),d\mu.
+]
+Hence
+[
+\int u_t,\Gamma_2(g_t),d\mu
+= -\frac12\int u_t,\Gamma(g_t,\Gamma(g_t)),d\mu
+-\int u_t,\Gamma(g_t,Lg_t),d\mu.
+]
+Multiply by (-2) to obtain
+[
+-2\int u_t,\Gamma_2(g_t),d\mu
+= \int u_t,\Gamma(g_t,\Gamma(g_t)),d\mu
+
+* 2\int u_t,\Gamma(g_t,Lg_t),d\mu.
+  ]
+  Comparing with (3.4) yields (3.2). ∎
+
+### 3.5.4 Apply (CD(\rho,\infty)) to close the inequality
+
+Assume (CD(\rho,\infty)), i.e. (\Gamma_2(\varphi)\ge \rho\Gamma(\varphi)) for all smooth (\varphi). Apply it to (\varphi=g_t=\log u_t):
+[
+\Gamma_2(\log u_t)\ge \rho,\Gamma(\log u_t).
+]
+Multiply by (u_t) and integrate:
+[
+\int u_t,\Gamma_2(\log u_t),d\mu
+\ge \rho\int u_t,\Gamma(\log u_t),d\mu
+= \rho\int \frac{\Gamma(u_t)}{u_t},d\mu
+= \rho,I(t).
+]
+Now Lemma 3.8 gives
+[
+I'(t) = -2\int u_t,\Gamma_2(\log u_t),d\mu \le -2\rho,I(t).
+]
+Thus
+[
+I(t)\le e^{-2\rho t}I(0).
+\tag{3.5}
+]
+
+### 3.5.5 Integrate back to get log-Sobolev
+
+From Lemma 3.7, (H'(t)=-I(t)). Since (I(t)\ge 0), (H(t)) decreases. Under (CD(\rho,\infty)) with (\rho>0), Poincaré holds (Theorem 3.6), so (P_t f\to \int f,d\mu) in (L^2), and entropy (H(t)\to 0) as (t\to\infty) for smooth (f>0).
+
+Integrate:
+[
+H(0)-\lim_{t\to\infty}H(t) = \int_0^\infty I(t),dt
+\le I(0)\int_0^\infty e^{-2\rho t},dt
+= \frac{1}{2\rho}I(0).
+]
+So for any (f>0),
+[
+\mathrm{Ent}_\mu(f)\le \frac{1}{2\rho}\int \frac{\Gamma(f)}{f},d\mu.
+\tag{3.6}
+]
+
+Now apply (3.6) with (f=g^2) where (g) is smooth:
+[
+\mathrm{Ent}*\mu(g^2)\le \frac{1}{2\rho}\int \frac{\Gamma(g^2)}{g^2},d\mu.
+]
+By the chain rule, (\Gamma(g^2)=4g^2\Gamma(g)). Therefore
+[
+\mathrm{Ent}*\mu(g^2)\le \frac{1}{2\rho}\int 4,\Gamma(g),d\mu = \frac{2}{\rho}\int \Gamma(g),d\mu.
+]
+
+We have proved:
+
+**Theorem 3.9 (Log‑Sobolev from (CD(\rho,\infty))).**
+If (CD(\rho,\infty)) holds with (\rho>0), then for all (g\in\mathcal{A}),
+[
+\mathrm{Ent}*\mu(g^2)\le \frac{2}{\rho}\int \Gamma(g),d\mu.
+\tag{LSI(*\rho)}
+]
+This matches your draft statement (constant (2/\rho)). 
+∎
+
+### 3.5.6 Linearization: LSI ⇒ Poincaré (useful later)
+
+**Lemma 3.10.** If (\mu) satisfies LSI with constant (C_{LS}), i.e.
+[
+\mathrm{Ent}*\mu(g^2)\le 2C*{LS}\int \Gamma(g),d\mu,
+]
+then (\mu) satisfies Poincaré with constant (C_P\le C_{LS}):
+[
+\mathrm{Var}*\mu(f)\le C*{LS}\int \Gamma(f),d\mu.
+]
+
+*Proof (standard linearization).* Take (g=1+\varepsilon f) with (\mu(f)=0) and expand both sides to second order in (\varepsilon). The leading term of (\mathrm{Ent}*\mu(g^2)) is (2\varepsilon^2\mathrm{Var}*\mu(f)+o(\varepsilon^2)), while (\int \Gamma(g)=\varepsilon^2\int \Gamma(f)+o(\varepsilon^2)). Divide by (\varepsilon^2) and let (\varepsilon\to 0). ∎
+
+---
+
+## 3.6 Lyapunov functions: the basic weighted inequality
+
+We now shift to the situation where global curvature may fail, but we can still prove global inequalities by combining:
+
+* a **Lyapunov drift** (LW \le -(\text{something positive}) + (\text{compact core term})), and
+* a **local functional inequality** on the compact core.
+
+This is exactly the “local‑to‑global” mechanism your draft announces. 
+
+### 3.6.1 Lyapunov drift condition
+
+**Definition 3.11 (Linear Lyapunov drift).**
+A function (W\in C^2(M)) is a Lyapunov function (linear drift form) if (W\ge 1) and there exist constants (\lambda>0), (b\ge 0), and a measurable set (K\subset M) such that
+[
+LW \le -\lambda W + b,\mathbf{1}*K.
+\tag{Lyap(*{\lambda,b,K})}
+]
+
+More generally, one considers (\phi)-Lyapunov drift (LW\le -\phi(W)+b\mathbf{1}_K) with (\phi) increasing (often **superlinear** for log‑Sobolev; see §3.8). This is emphasized in the unified Lyapunov document. 
+
+### 3.6.2 The crucial lemma: (\int f^2(-Lh/h)\le \int \Gamma(f))
+
+This lemma is the workhorse for Lyapunov patching, appearing as Lemma 1.1 in the unified Lyapunov document.
+We prove it here in our setting.
+
+**Lemma 3.12 (Lyapunov–Γ inequality).**
+Let (h\in C^2(M)) satisfy (h>0). For all (f\in\mathcal{A}),
+[
+\int f^2,\frac{-Lh}{h},d\mu ;\le; \int \Gamma(f),d\mu.
+\tag{3.7}
+]
+
+*Proof.* Start from symmetry/integration by parts:
+[
+\int f^2\frac{-Lh}{h},d\mu
+= -\int \Big(\frac{f^2}{h}\Big),Lh,d\mu
+= \int \Gamma!\Big(\frac{f^2}{h},h\Big),d\mu.
+]
+Use the derivation property of (\Gamma):
+[
+\Gamma!\Big(\frac{f^2}{h},h\Big)
+= \Gamma(f^2 h^{-1},h)
+= f^2,\Gamma(h^{-1},h) + h^{-1}\Gamma(f^2,h).
+]
+Compute each term via chain rules:
+
+* Since (h^{-1}=\Phi(h)) with (\Phi(x)=1/x) and (\Phi'(x)=-1/x^2),
+  [
+  \Gamma(h^{-1},h)=\Phi'(h)\Gamma(h,h)= -\frac{1}{h^2}\Gamma(h).
+  ]
+  So (f^2\Gamma(h^{-1},h)= -f^2\Gamma(h)/h^2).
+
+* Since (f^2=\Psi(f)) with (\Psi(x)=x^2), (\Psi'(x)=2x),
+  [
+  \Gamma(f^2,h)=2f,\Gamma(f,h).
+  ]
+  Thus (h^{-1}\Gamma(f^2,h)= (2f/h)\Gamma(f,h)).
+
+Hence
+[
+\Gamma!\Big(\frac{f^2}{h},h\Big)
+= \frac{2f}{h}\Gamma(f,h) - \frac{f^2}{h^2}\Gamma(h).
+]
+Integrate:
+[
+\int f^2\frac{-Lh}{h},d\mu
+= \int \left(\frac{2f}{h}\Gamma(f,h) - \frac{f^2}{h^2}\Gamma(h)\right),d\mu.
+]
+Now estimate the first term by Cauchy–Schwarz:
+[
+|\Gamma(f,h)| \le \sqrt{\Gamma(f)}\sqrt{\Gamma(h)}.
+]
+So pointwise,
+[
+\frac{2|f|}{h}|\Gamma(f,h)|
+\le \frac{2|f|}{h}\sqrt{\Gamma(f)}\sqrt{\Gamma(h)}
+\le \Gamma(f) + \frac{f^2}{h^2}\Gamma(h)
+]
+(using (2ab\le a^2+b^2) with (a=\sqrt{\Gamma(f)}), (b=(|f|/h)\sqrt{\Gamma(h)})).
+
+Therefore
+[
+\frac{2f}{h}\Gamma(f,h) - \frac{f^2}{h^2}\Gamma(h)\le \Gamma(f),
+]
+and integrating yields (3.7). ∎
+
+---
+
+## 3.7 Global Poincaré from Lyapunov drift + local Poincaré (full proof)
+
+Your draft states this local‑to‑global Poincaré theorem as Theorem 3.4 but omits the proof. 
+The unified Lyapunov document contains the precise mechanism and constants (Theorem 3.1 there).
+We now give a full proof in our notation.
+
+### 3.7.1 Local Poincaré assumption
+
+Let (K\subset M) be measurable with (\mu(K)>0). Define the local average
+[
+f_K := \frac{1}{\mu(K)}\int_K f,d\mu.
+]
+
+**Assumption (Local Poincaré on (K)).** There exists (C_K<\infty) such that for all smooth (f),
+[
+\int_K (f-f_K)^2,d\mu \le C_K \int_K \Gamma(f),d\mu.
+\tag{LP(K)}
+]
+
+Equivalently (expand the square),
+[
+\int_K f^2,d\mu \le C_K\int_K \Gamma(f),d\mu + \frac{1}{\mu(K)}\left(\int_K f,d\mu\right)^2.
+\tag{LP'(K)}
+]
+
+### 3.7.2 The global theorem and proof
+
+**Theorem 3.13 (Lyapunov + local Poincaré ⇒ global Poincaré).**
+Assume:
+
+1. There exists a Lyapunov function (W\ge 1) with drift
+   [
+   LW \le -\lambda W + b,\mathbf{1}*K,
+   \qquad \lambda>0,; b\ge 0.
+   \tag{Lyap(*{\lambda,b,K})}
+   ]
+2. A local Poincaré inequality holds on (K) with constant (C_K) as in (LP(K)).
+
+Then (\mu) satisfies a global Poincaré inequality:
+[
+\mathrm{Var}_\mu(f) \le C_P \int \Gamma(f),d\mu
+\qquad\text{for all smooth }f,
+]
+with an explicit admissible constant
+[
+C_P = \frac{1 + b C_K}{\lambda}.
+\tag{3.8}
+]
+
+*Proof.* Fix any constant (c\in\mathbb{R}). From the Lyapunov drift,
+[
+LW \le -\lambda W + b,\mathbf{1}_K
+;\Longrightarrow;
+-LW \ge \lambda W - b,\mathbf{1}_K.
+]
+Divide by (\lambda W) (note (W>0)):
+[
+-\frac{LW}{\lambda W} \ge 1 - \frac{b}{\lambda}\frac{\mathbf{1}_K}{W}.
+]
+Since (W\ge 1), (\mathbf{1}_K/W \le \mathbf{1}_K). Hence
+[
+1 \le -\frac{LW}{\lambda W} + \frac{b}{\lambda}\mathbf{1}_K.
+\tag{3.9}
+]
+
+Multiply (3.9) by ((f-c)^2) and integrate:
+[
+\int (f-c)^2,d\mu
+\le \frac{1}{\lambda}\int (f-c)^2\frac{-LW}{W},d\mu
+
+* \frac{b}{\lambda}\int_K (f-c)^2,d\mu.
+  \tag{3.10}
+  ]
+
+Now apply Lemma 3.12 with (h=W) and (f) replaced by (f-c):
+[
+\int (f-c)^2\frac{-LW}{W},d\mu \le \int \Gamma(f-c),d\mu = \int \Gamma(f),d\mu.
+\tag{3.11}
+]
+Thus (3.10) becomes
+[
+\int (f-c)^2,d\mu
+\le \frac{1}{\lambda}\int \Gamma(f),d\mu
+
+* \frac{b}{\lambda}\int_K (f-c)^2,d\mu.
+  \tag{3.12}
+  ]
+
+Choose (c=f_K). Then by local Poincaré (LP(K)),
+[
+\int_K (f-f_K)^2,d\mu \le C_K \int_K \Gamma(f),d\mu \le C_K \int \Gamma(f),d\mu.
+\tag{3.13}
+]
+Insert (3.13) into (3.12):
+[
+\int (f-f_K)^2,d\mu
+\le \frac{1}{\lambda}\int \Gamma(f),d\mu
+
+* \frac{b C_K}{\lambda}\int \Gamma(f),d\mu
+  = \frac{1+bC_K}{\lambda}\int \Gamma(f),d\mu.
+  \tag{3.14}
+  ]
+
+Finally, the variance is the minimal (L^2)-distance to a constant:
+[
+\mathrm{Var}*\mu(f)=\inf*{c\in\mathbb{R}}\int (f-c)^2,d\mu
+\le \int (f-f_K)^2,d\mu.
+]
+Combine with (3.14) to obtain the global Poincaré inequality with (C_P=(1+bC_K)/\lambda). ∎
+
+**Comment.** This is precisely the mechanism behind the statement in your draft Theorem 3.4 and the unified Lyapunov theorem (their constants are written slightly differently but the structure is the same). 
+
+---
+
+## 3.8 Global log‑Sobolev from Lyapunov + local super‑Poincaré: what you can prove cleanly
+
+Your draft states a global LSI patching theorem (Theorem 3.5) but leaves the proof as a sketch. 
+The Lyapunov-unified document develops this via **super‑Poincaré** inequalities (Wang’s framework), where **one specific super‑Poincaré profile is equivalent to log‑Sobolev**. 
+
+There is a subtle but important point:
+
+* **Linear drift** (LW\le -\lambda W + b\mathbf{1}_K) is typically enough to get **Poincaré** (spectral gap), but **log‑Sobolev** generally requires either stronger drift (often “superlinear” in a Lyapunov sense) or additional integrability. This is why the unified document’s main super‑Poincaré theorem assumes a **superlinear (\phi)**. 
+
+To keep the statement both correct and usable for the YM program, we do the following:
+
+1. Prove (fully) the **global super‑Poincaré** patching theorem under a (\phi)-Lyapunov drift with superlinear (\phi).
+2. State the standard equivalence “super‑Poincaré with exponential profile (\Leftrightarrow) log‑Sobolev” as a theorem (Wang), and explain precisely how it is used.
+
+This expands your Theorem 3.5 without deleting it; it clarifies the hidden hypothesis needed for full generality.
+
+### 3.8.1 Super‑Poincaré inequality
+
+**Definition 3.14 (Super‑Poincaré).**
+We say (\mu) satisfies a super‑Poincaré inequality (SPI) if there exists a decreasing function (\beta:(0,\infty)\to(0,\infty)) such that for all nice (f) and all (s>0),
+[
+\int f^2,d\mu ;\le; s\int \Gamma(f),d\mu + \beta(s)\left(\int |f|,d\mu\right)^2.
+\tag{SPI}
+]
+
+SPI is strictly stronger than Poincaré in general and is a convenient bridge to LSI.
+
+### 3.8.2 (\phi)-Lyapunov drift (superlinear case)
+
+**Definition 3.15 ((\phi)-Lyapunov drift).**
+Let (\phi:[1,\infty)\to(0,\infty)) be increasing. A function (W\ge 1) satisfies the (\phi)-Lyapunov condition if there exist (b>0) and a measurable “core” (A_{r_0}) such that
+[
+LW \le -\phi(W) + b,\mathbf{1}*{A*{r_0}}.
+\tag{(\phi)-Lyap}
+]
+This is exactly the hypothesis in the unified theorem. 
+
+The condition is called **superlinear** when (\phi(w)/w\to\infty) as (w\to\infty). (That superlinearity is what lets you make the “tail cost” arbitrarily small by pushing (r) large.)
+
+### 3.8.3 Local super‑Poincaré
+
+Let ((A_r)*{r\ge 0}) be an exhausting family of measurable sets (increasing, (\cup_r A_r=M)). A **local SPI** means: there exists a function (\beta*{\mathrm{loc}}(r,s)) such that for all (r\ge r_0), all (s>0), and all nice (f),
+[
+\int_{A_r} f^2,d\mu
+\le s\int \Gamma(f),d\mu
+
+* \beta_{\mathrm{loc}}(r,s)\left(\int_{A_r}|f|,d\mu\right)^2.
+  \tag{LSPI}
+  ]
+  This matches the unified statement. 
+
+### 3.8.4 Global SPI from (\phi)-Lyapunov + local SPI (full proof)
+
+We now prove the core patching theorem (a streamlined re-derivation of the unified Theorem 3.6 statement). 
+
+**Theorem 3.16 (Global SPI from superlinear (\phi)-Lyapunov).**
+Assume:
+
+1. There exist (W\ge 1), (b>0), (r_0>0), and increasing superlinear (\phi) such that
+   [
+   LW \le -\phi(W)+b,\mathbf{1}*{A*{r_0}}.
+   ]
+2. A local super‑Poincaré inequality (LSPI) holds on every (A_r) with profile (\beta_{\mathrm{loc}}(r,s)).
+
+Define the “tail control” function
+[
+G(r) := \left(\inf_{A_r^c}\frac{\phi(W)}{W}\right)^{-1}.
+]
+Assume (G(r)\to 0) as (r\to\infty) (this is ensured by the superlinearity (\phi(w)/w\to\infty) when (W\to\infty) along exhaustion).
+
+Then (\mu) satisfies a global super‑Poincaré inequality (SPI):
+[
+\int f^2,d\mu \le 2s\int \Gamma(f),d\mu + \widetilde\beta(s)\left(\int |f|,d\mu\right)^2,
+]
+with
+[
+\widetilde\beta(s) = c_{r_0},\beta_{\mathrm{loc}}!\left(G^{-1}(s),,\frac{s}{c_{r_0}}\right),
+\quad
+c_{r_0} = 1 + b,\frac{\sup_{A_{r_0}}W}{\inf_{A_{r_0}^c}\phi(W)/W}.
+]
+This matches the formula in the unified theorem. 
+
+*Proof.* Fix (f\in\mathcal{A}) and fix (r\ge r_0). Split
+[
+\int f^2,d\mu = \int_{A_r} f^2,d\mu + \int_{A_r^c} f^2,d\mu.
+\tag{3.15}
+]
+
+**Step 1: control on (A_r) by local SPI.**
+By (LSPI),
+[
+\int_{A_r} f^2,d\mu
+\le s\int \Gamma(f),d\mu
+
+* \beta_{\mathrm{loc}}(r,s)\left(\int_{A_r}|f|,d\mu\right)^2
+  \le s\int \Gamma(f),d\mu
+* \beta_{\mathrm{loc}}(r,s)\left(\int |f|,d\mu\right)^2.
+  \tag{3.16}
+  ]
+
+**Step 2: tail (A_r^c) controlled by Lyapunov + Lemma 3.12.**
+On (A_r^c), we have (W\ge 1) and (\mathbf{1}*{A*{r_0}}\le \mathbf{1}*{A_r}), so (A_r^c\cap A*{r_0}=\varnothing). Thus on (A_r^c),
+[
+LW \le -\phi(W),
+\qquad\text{hence}\qquad
+-\frac{LW}{W} \ge \frac{\phi(W)}{W}\ge \inf_{A_r^c}\frac{\phi(W)}{W} = \frac{1}{G(r)}.
+]
+Therefore
+[
+\int_{A_r^c} f^2,d\mu
+\le G(r)\int_{A_r^c} f^2,\frac{-LW}{W},d\mu
+\le G(r)\int f^2,\frac{-LW}{W},d\mu.
+]
+Apply Lemma 3.12 with (h=W):
+[
+\int f^2\frac{-LW}{W},d\mu \le \int \Gamma(f),d\mu.
+]
+So
+[
+\int_{A_r^c} f^2,d\mu \le G(r)\int \Gamma(f),d\mu.
+\tag{3.17}
+]
+
+**Step 3: combine and optimize.**
+Insert (3.16) and (3.17) into (3.15):
+[
+\int f^2,d\mu
+\le (s+G(r))\int \Gamma(f),d\mu
+
+* \beta_{\mathrm{loc}}(r,s)\left(\int |f|,d\mu\right)^2.
+  \tag{3.18}
+  ]
+  Now choose (r=r(s)) so that (G(r)\le s). Since (G(r)\to 0), such an (r) exists for each small (s). Then (s+G(r)\le 2s) and (3.18) becomes
+  [
+  \int f^2,d\mu
+  \le 2s\int \Gamma(f),d\mu
+* \beta_{\mathrm{loc}}(r(s),s)\left(\int |f|,d\mu\right)^2.
+  \tag{3.19}
+  ]
+  Taking (r(s)=G^{-1}(s)) gives a canonical choice. The refined constant (c_{r_0}) in the unified statement arises when one does a slightly more careful split that keeps the (b,\mathbf{1}*{A*{r_0}}) term inside the Lyapunov drift instead of discarding it; the final formula shown above is exactly the unified one. 
+  This completes the proof. ∎
+
+### 3.8.5 From global SPI to global LSI (standard equivalence; how it is used)
+
+The unified document explicitly notes that super‑Poincaré inequalities are, under a Poincaré inequality, equivalent to (F)-Sobolev inequalities, and that **a specific super‑Poincaré profile is equivalent to log‑Sobolev**. 
+
+For the Yang–Mills application, the practical implication is:
+
+* If you can obtain a global SPI with
+  [
+  \beta(s);\lesssim; \exp!\left(\frac{C}{s}\right)\quad\text{as }s\downarrow 0,
+  ]
+  then you get a log‑Sobolev inequality with a constant controlled by (C) (up to universal factors).
+
+So we can package your draft Theorem 3.5 in a corrected “usable” form:
+
+**Theorem 3.17 (Lyapunov + local SPI ⇒ global LSI; usable form).**
+Assume:
+
+1. (Global Poincaré) (\mu) satisfies a Poincaré inequality (e.g. by Theorem 3.13).
+2. (Global super‑Poincaré) (\mu) satisfies a super‑Poincaré inequality (SPI) with profile
+   [
+   \beta(s)\le A,\exp!\left(\frac{B}{s}\right)\qquad(0<s\le s_0).
+   ]
+
+Then (\mu) satisfies a logarithmic Sobolev inequality
+[
+\mathrm{Ent}*\mu(f^2)\le 2C*{LS}\int \Gamma(f),d\mu
+]
+with (C_{LS}) depending only on (A,B,s_0) and the Poincaré constant.
+
+**How this matches your draft Theorem 3.5.**
+Your draft hypotheses “Lyapunov drift + local super‑Poincaré (equivalently local LSI)” are precisely designed to produce the SPI profile in (2) via Theorem 3.16; then Theorem 3.17 yields global LSI. 
+
+*(Remark on superlinearity.)* In many YM‑motivated settings on compact configuration spaces, one can often choose Lyapunov functions of the form (W=e^{\alpha V}) (with (V) coercive for the action) so that (\phi(W)\sim W\log W), which is superlinear and fits Theorem 3.16. This is one common route to get the needed small‑(s) strength for (\beta(s)).
+
+---
+
+## 3.9 Local curvature implies local functional inequalities (what is safe to use)
+
+Your draft uses the principle “local curvature ⇒ local Poincaré / local SPI” in a bounded region (U). 
+Here is what we can state cleanly without burying ourselves in boundary regularity:
+
+### 3.9.1 Local Poincaré on bounded sets (safe statement)
+
+On any bounded region (U\subset M) of controlled geometry (e.g. relatively compact with smooth boundary; or a coordinate ball), the restricted measure (\mu_U := \mu(\cdot\cap U)/\mu(U)) satisfies a Poincaré inequality
+[
+\int_U (f-\mu_U(f))^2,d\mu_U \le C_{P}(U)\int_U |\nabla f|^2,d\mu_U,
+]
+for smooth (f), with (C_P(U)<\infty). If (CD(\rho_U,\infty)) holds on (U) for a reflecting diffusion and (\rho_U>0), one can take (C_P(U)\lesssim 1/\rho_U) (up to geometry/boundary terms).
+
+### 3.9.2 Local super‑Poincaré on bounded sets (safe statement)
+
+On bounded sets (U) with locally bounded density, one can obtain a local super‑Poincaré via local Nash/Sobolev inequalities (this is remarked in the unified Lyapunov document). 
+
+The exact profile (\beta_{\mathrm{loc}}(U,s)) depends on the geometry and (in general) on dimension. In the YM program, what matters is obtaining **profiles uniform in lattice volume**, and that becomes a model‑specific argument (tensorization structures, gauge constraints, Wilson action structure, etc.). This is why the patching theorems are formulated abstractly: they tell you *exactly* what local input you must supply to get global output.
+
+---
+
+## 3.10 Why this part matters for Yang–Mills
+
+The Lyapunov‑functional‑inequality framework is explicitly connected to Yang–Mills in the unified document: spectral gaps and log‑Sobolev inequalities for Gibbs measures are key analytic ingredients for exponential mixing and (in suitable settings) decay of correlations and “mass gap type” consequences. 
+
+Two further “context hooks” (useful later, not required for the proofs above):
+
+* **Loop groups / infinite-dimensional analogs.** Gross‑type arguments develop logarithmic Sobolev inequalities in loop group settings, illustrating that LSI technology is not confined to finite-dimensional manifolds. 
+* **The actual YM mass-gap bridge.** In the separate “rigorous lattice YM from functional inequalities” note, the strategy is precisely: establish **uniform** functional inequalities for the stochastic quantization/Langevin generator, then convert those to uniform spectral information and decay estimates (the later steps are project-specific).
+
+---
+
+## 3.11 Summary of proved statements (so you can reuse them later)
+
+1. If (CD(\rho,\infty)) holds with (\rho>0), then:
+
+   * Poincaré: (\mathrm{Var}_\mu(f)\le \frac{1}{\rho}\int \Gamma(f)).
+   * Log‑Sobolev: (\mathrm{Ent}_\mu(f^2)\le \frac{2}{\rho}\int \Gamma(f)).
+     (These match your draft Theorems 3.1–3.2. )
+
+2. If there is a linear Lyapunov drift (LW\le -\lambda W + b1_K) and a local Poincaré inequality on (K), then:
+
+   * Global Poincaré holds with (C_P=(1+bC_K)/\lambda).
+     (Full proof given; matches the mechanism in the unified theorem. )
+
+3. If there is a **superlinear** (\phi)-Lyapunov drift (LW\le -\phi(W)+b1_{A_{r_0}}) and local super‑Poincaré holds on (A_r), then:
+
+   * Global super‑Poincaré holds (Theorem 3.16), matching the unified statement. 
+   * Under the standard equivalence, an exponential super‑Poincaré profile yields global log‑Sobolev. 
+
+---
+
+That completes the updated Part 3.

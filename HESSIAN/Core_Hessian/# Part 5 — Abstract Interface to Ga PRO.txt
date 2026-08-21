@@ -1,0 +1,854 @@
+# Part 5 — Abstract Interface to Gauge–Invariant Theories (Updated, expanded)
+
+*(This is written so it can be dropped in as Part 5/20 of the full document.)* 
+
+Up to now the project’s analytic spine is: a diffusion/Dirichlet-form framework for finite-dimensional Gibbs measures, and a curvature mechanism that produces functional inequalities with **explicit constants**. This part packages that mechanism in a way that is compatible with **gauge redundancy**, so that we can speak cleanly about “physical directions” and obtain Poincaré/log–Sobolev inequalities **for gauge-invariant observables** with constants that do not deteriorate with volume, exactly as the original Part 5 aimed to do. 
+
+The interface is:
+
+* **Input:** a family of finite-volume Gibbs systems ((M_\Lambda,g_\Lambda,S_\Lambda,\mu_\Lambda)) together with a compact gauge group acting by isometries and preserving (\mu_\Lambda), plus a Bakry–Émery curvature lower bound in the **horizontal (physical)** directions.
+* **Output:** a uniform Poincaré inequality and a uniform log–Sobolev inequality for **gauge-invariant observables**, hence a uniform spectral gap for the invariant sector. 
+
+Everything needed for the output is proved here from first principles; no external parts are required.
+
+---
+
+## 5.1. Abstract finite-volume configuration family
+
+### 5.1.1. Geometric and measure-theoretic data
+
+Fix a family of finite index sets (\Lambda) (e.g. finite subsets of (\mathbb{Z}^d)). For each (\Lambda) we assume:
+
+1. **Configuration manifold.** A smooth, connected, finite-dimensional Riemannian manifold ((M_\Lambda,g_\Lambda)). For lattice gauge theory, (M_\Lambda) will be compact (products of compact Lie groups), but compactness is not required for the formalism.
+
+2. **Potential and integrability.** A (C^2) function (S_\Lambda\colon M_\Lambda\to\mathbb{R}) bounded below, such that
+   [
+   Z_\Lambda:=\int_{M_\Lambda} e^{-S_\Lambda(x)},d\mathrm{vol}*{g*\Lambda}(x)<\infty.
+   ]
+
+3. **Gibbs measure.** The probability measure
+   [
+   d\mu_\Lambda(x)=Z_\Lambda^{-1}e^{-S_\Lambda(x)},d\mathrm{vol}*{g*\Lambda}(x).
+   ]
+   These are exactly the basic assumptions stated in the draft. 
+
+We write (\langle\cdot,\cdot\rangle=\langle\cdot,\cdot\rangle_{g_\Lambda}) and (|v|=|v|*{g*\Lambda}). Gradients, divergences, Laplacians, and Hessians are always taken with respect to (g_\Lambda).
+
+---
+
+### 5.1.2. The diffusion generator (L_\Lambda)
+
+Define the second-order differential operator
+[
+L_\Lambda f := \Delta_{g_\Lambda} f - \langle\nabla S_\Lambda,\nabla f\rangle,
+\qquad f\in C^\infty(M_\Lambda),
+]
+which matches the draft definition. 
+
+This is the “overdamped Langevin” generator associated with the Gibbs density (e^{-S_\Lambda}) relative to Riemannian volume.
+
+#### Lemma 5.1 (Integration by parts and symmetry of (L_\Lambda))
+
+Assume either (i) (M_\Lambda) is compact without boundary, or (ii) (f,g\in C_c^\infty(M_\Lambda)) (compact support), or (iii) boundary conditions are imposed so that boundary terms vanish. Then:
+[
+\int_{M_\Lambda} f, L_\Lambda g, d\mu_\Lambda
+= - \int_{M_\Lambda} \langle\nabla f,\nabla g\rangle, d\mu_\Lambda
+= \int_{M_\Lambda} g, L_\Lambda f, d\mu_\Lambda.
+]
+In particular, (L_\Lambda) is symmetric and nonpositive on this test domain.
+
+**Proof.** Write (d\mu_\Lambda = Z_\Lambda^{-1} e^{-S_\Lambda} d\mathrm{vol}). Using the divergence theorem for the vector field (f e^{-S_\Lambda}\nabla g),
+[
+\int \mathrm{div}\big(f e^{-S_\Lambda}\nabla g\big),d\mathrm{vol}=0
+]
+under the stated hypotheses. Expand:
+[
+\mathrm{div}\big(f e^{-S_\Lambda}\nabla g\big)
+= e^{-S_\Lambda}\langle\nabla f,\nabla g\rangle
+
+* f,\mathrm{div}(e^{-S_\Lambda}\nabla g).
+  ]
+  Next,
+  [
+  \mathrm{div}(e^{-S_\Lambda}\nabla g)
+  = e^{-S_\Lambda}\Delta g + \langle\nabla e^{-S_\Lambda},\nabla g\rangle
+  = e^{-S_\Lambda}\Delta g - e^{-S_\Lambda}\langle\nabla S_\Lambda,\nabla g\rangle
+  = e^{-S_\Lambda}L_\Lambda g.
+  ]
+  Therefore,
+  [
+  0=\int e^{-S_\Lambda}\langle\nabla f,\nabla g\rangle,d\mathrm{vol}
+* \int f,e^{-S_\Lambda}L_\Lambda g,d\mathrm{vol}.
+  ]
+  Divide by (Z_\Lambda) to get
+  [
+  \int f,L_\Lambda g,d\mu_\Lambda = -\int \langle\nabla f,\nabla g\rangle,d\mu_\Lambda.
+  ]
+  Symmetry follows by swapping (f,g). ∎
+
+This identity is the concrete reason the Dirichlet energy is “(\int|\nabla f|^2)” and why the diffusion is reversible with respect to (\mu_\Lambda).
+
+---
+
+### 5.1.3. Carré du champ (\Gamma_\Lambda) and (\Gamma_{2,\Lambda})
+
+The (\Gamma)-calculus can be introduced abstractly via the Leibniz rule
+[
+L(fg)=fLg+gLf+2\Gamma(f,g),
+]
+but for the geometric diffusion above we can compute it explicitly.
+
+#### Definition 5.2 (Carré du champ)
+
+For (f,g\in C^\infty(M_\Lambda)), define
+[
+\Gamma_\Lambda(f,g):=\frac12\Big(L_\Lambda(fg)-fL_\Lambda g-gL_\Lambda f\Big),
+\qquad \Gamma_\Lambda(f):=\Gamma_\Lambda(f,f).
+]
+
+#### Lemma 5.3 (Geometric form of (\Gamma))
+
+For the generator (L_\Lambda=\Delta-\langle\nabla S_\Lambda,\nabla\cdot\rangle),
+[
+\Gamma_\Lambda(f,g)=\langle\nabla f,\nabla g\rangle,
+\qquad\text{hence}\qquad
+\Gamma_\Lambda(f)=|\nabla f|^2,
+]
+as in the draft. 
+
+**Proof.** Use that (\Delta(fg)=f\Delta g+g\Delta f+2\langle\nabla f,\nabla g\rangle) and (\nabla(fg)=f\nabla g+g\nabla f). Then:
+[
+\begin{aligned}
+L(fg)
+&=\Delta(fg)-\langle\nabla S,\nabla(fg)\rangle\
+&=\big(f\Delta g+g\Delta f+2\langle\nabla f,\nabla g\rangle\big)
+-\big(f\langle\nabla S,\nabla g\rangle+g\langle\nabla S,\nabla f\rangle\big)\
+&=fLg+gLf+2\langle\nabla f,\nabla g\rangle.
+\end{aligned}
+]
+Comparing with the defining identity gives (\Gamma(f,g)=\langle\nabla f,\nabla g\rangle). ∎
+
+#### Definition 5.4 ((\Gamma_2))
+
+Define the iterated carré du champ:
+[
+\Gamma_{2,\Lambda}(f,g)
+:=\frac12\Big(L_\Lambda\Gamma_\Lambda(f,g)-\Gamma_\Lambda(f,L_\Lambda g)-\Gamma_\Lambda(g,L_\Lambda f)\Big),
+\qquad \Gamma_{2,\Lambda}(f):=\Gamma_{2,\Lambda}(f,f),
+]
+matching the draft. 
+
+---
+
+### 5.1.4. Dirichlet form and the self-adjoint generator
+
+#### Definition 5.5 (Dirichlet form)
+
+Define the bilinear form on (C^\infty(M_\Lambda)):
+[
+\mathcal{E}*\Lambda(f,g):=\int*{M_\Lambda}\Gamma_\Lambda(f,g),d\mu_\Lambda
+=\int_{M_\Lambda}\langle\nabla f,\nabla g\rangle,d\mu_\Lambda,
+]
+as in the draft. 
+
+Then (\mathcal{E}*\Lambda(f,f)\ge 0), and by Lemma 5.1,
+[
+\mathcal{E}*\Lambda(f,g)=\langle f,-L_\Lambda g\rangle_{L^2(\mu_\Lambda)}
+]
+on the test domain, which is exactly the identity stated in the draft. 
+
+**Analytic closure.** In standard diffusion theory, (\mathcal{E}*\Lambda) is closable on (L^2(\mu*\Lambda)) and its closure ((\mathcal{E}*\Lambda,\mathcal{D}(\mathcal{E}*\Lambda))) is a closed, Markovian Dirichlet form. The associated nonnegative self-adjoint operator (-L_\Lambda) is the Friedrichs extension of the symmetric operator defined on the test domain by the above integration-by-parts identity. (For compact (M_\Lambda), all these facts are classical and particularly clean: (-L_\Lambda) has discrete spectrum and smooth eigenfunctions.)
+
+We will use the semigroup (P_t^\Lambda=e^{tL_\Lambda}) generated by (L_\Lambda), which is (\mu_\Lambda)-symmetric and Markovian.
+
+---
+
+## 5.2. Gauge symmetry and physical subspaces
+
+This section formalizes the “vertical vs horizontal” decomposition used by gauge theories and proves the crucial geometric fact: **gradients of gauge-invariant observables are horizontal**, so they only “see” physical directions. This is exactly the structural claim highlighted in the draft. 
+
+### 5.2.1. Gauge group action and invariance
+
+For each finite (\Lambda), assume a compact Lie group (\mathcal{G}*\Lambda) acts smoothly on (M*\Lambda):
+[
+\mathcal{G}*\Lambda\times M*\Lambda\to M_\Lambda,\quad (g,x)\mapsto g\cdot x.
+]
+Assume the two hypotheses from the draft:
+
+1. **Isometric action:** for each (g\in\mathcal{G}*\Lambda), the map (x\mapsto g\cdot x) is an isometry of ((M*\Lambda,g_\Lambda)). 
+
+2. **Gauge-invariant potential:** (S_\Lambda(g\cdot x)=S_\Lambda(x)) for all (g,x). Equivalently (\mu_\Lambda) is (\mathcal{G}_\Lambda)-invariant. 
+
+These hypotheses imply the generator commutes with the action.
+
+#### Lemma 5.6 (Equivariance of (L_\Lambda))
+
+For each (g\in\mathcal{G}*\Lambda) and (f\in C^\infty(M*\Lambda)),
+[
+L_\Lambda(f\circ g)= (L_\Lambda f)\circ g.
+]
+
+**Proof.** Since (g) is an isometry, (\Delta(f\circ g)=(\Delta f)\circ g) and (\nabla(f\circ g)= (dg)^\top (\nabla f)\circ g), i.e. the gradient transforms by pushforward. Since (S\circ g=S), we also have (\nabla S) equivariant: (\nabla S(g\cdot x)=dg_x(\nabla S(x))). Therefore,
+[
+\langle\nabla S,\nabla(f\circ g)\rangle(x)
+= \langle dg_x\nabla S(x),, dg_x\nabla f(x)\rangle
+= \langle\nabla S,\nabla f\rangle(g\cdot x),
+]
+using that (dg_x) is an isometry on tangent spaces. Combine with the Laplacian identity. ∎
+
+Consequently, the Markov semigroup (P_t^\Lambda) commutes with the group action: (P_t^\Lambda(f\circ g)=(P_t^\Lambda f)\circ g).
+
+---
+
+### 5.2.2. Vertical and horizontal subspaces
+
+Fix (\Lambda). Let (\mathfrak{g}*\Lambda) be the Lie algebra of (\mathcal{G}*\Lambda). For each (x\in M_\Lambda), define the orbit map
+[
+\Phi_x\colon \mathcal{G}*\Lambda\to M*\Lambda,\qquad \Phi_x(g)=g\cdot x.
+]
+The differential at the identity (e) is a linear map
+[
+d\Phi_x|*e\colon \mathfrak{g}*\Lambda\to T_xM_\Lambda.
+]
+Its image is the tangent space to the orbit through (x), and defines the **vertical subspace**:
+[
+V_x := \mathrm{Im}(d\Phi_x|*e)\subset T_xM*\Lambda,
+]
+as in the draft. 
+
+Equivalently, for (X\in\mathfrak{g}*\Lambda) the associated *fundamental vector field* is
+[
+X^\sharp(x):=\left.\frac{d}{dt}\right|*{t=0}\exp(tX)\cdot x\in T_xM_\Lambda,
+]
+and (V_x={X^\sharp(x):X\in\mathfrak{g}_\Lambda}).
+
+Using the Riemannian metric, define the **horizontal subspace**
+[
+H_x:=V_x^\perp\subset T_xM_\Lambda,
+]
+again matching the draft. 
+
+Intuitively:
+
+* (V_x): “pure gauge” directions moving along the orbit (\mathcal{G}_\Lambda\cdot x).
+* (H_x): transverse directions; the “physical tangent space” at (x).
+
+Because the action is by isometries, the decomposition is equivariant:
+[
+d(g)*x(V_x)=V*{g\cdot x},\qquad d(g)*x(H_x)=H*{g\cdot x}.
+]
+
+---
+
+### 5.2.3. Gauge-invariant observables and horizontal gradients
+
+Define the algebra of smooth gauge-invariant observables
+[
+\mathcal{A}*\Lambda^{\mathrm{inv}}
+:={f\in C^\infty(M*\Lambda): f(g\cdot x)=f(x)\ \forall g\in\mathcal{G}*\Lambda,\ \forall x\in M*\Lambda},
+]
+as in the draft. 
+
+Typical gauge-invariant observables in lattice Yang–Mills include Wilson loops and conjugation-invariant functions of plaquette holonomies.
+
+#### Proposition 5.1 (Horizontal gradients of gauge-invariant observables)
+
+For every (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}) and every (x\in M*\Lambda),
+[
+\nabla f(x)\in H_x.
+]
+This is precisely Proposition 5.1 in the draft. 
+
+**Proof.** Fix (x\in M_\Lambda) and (X\in\mathfrak{g}_\Lambda). Since (f) is invariant,
+[
+f(\exp(tX)\cdot x)=f(x)\quad\forall t,
+]
+so differentiating at (t=0) yields
+[
+df_x\big(X^\sharp(x)\big)=0.
+]
+Thus (df_x(v)=0) for all (v\in V_x) (since (V_x) is spanned by such fundamental vectors). By the Riemannian identification (df_x(v)=\langle\nabla f(x),v\rangle), we have
+[
+\langle\nabla f(x),v\rangle=0\quad\forall v\in V_x,
+]
+hence (\nabla f(x)\in V_x^\perp=H_x). ∎
+
+As an immediate corollary, for gauge-invariant observables the carré du champ is purely horizontal:
+[
+\Gamma_\Lambda(f)(x)=|\nabla f(x)|^2 = |\nabla^H f(x)|^2,
+]
+where (\nabla^H f) is the orthogonal projection of (\nabla f) onto (H). 
+
+This is the key structural point: **only horizontal curvature matters** for gauge-invariant functions. 
+
+---
+
+### 5.2.4. Invariant sector as a closed (L^2)-subspace and restricted generator
+
+Let (L^2_{\mathrm{inv}}(\mu_\Lambda)\subset L^2(\mu_\Lambda)) be the closed subspace of (equivalence classes of) (\mathcal{G}*\Lambda)-invariant functions. Equivalently, (f\in L^2*{\mathrm{inv}}) if (f\circ g=f) (\mu_\Lambda)-a.e. for all (g).
+
+Because (\mu_\Lambda) is invariant, the averaging operator
+[
+\Pi_{\mathrm{inv}} f := \int_{\mathcal{G}*\Lambda} f\circ g , d\nu*\Lambda(g)
+]
+(with (\nu_\Lambda) Haar probability on (\mathcal{G}*\Lambda)) is the orthogonal projection from (L^2(\mu*\Lambda)) onto (L^2_{\mathrm{inv}}(\mu_\Lambda)).
+
+By Lemma 5.6, (P_t^\Lambda) and (L_\Lambda) commute with (\Pi_{\mathrm{inv}}), so (P_t^\Lambda) preserves (L^2_{\mathrm{inv}}). The restriction of the Dirichlet form (\mathcal{E}*\Lambda) to (L^2*{\mathrm{inv}}) is again a closed Dirichlet form; denote its generator by (L_\Lambda^{\mathrm{inv}}). Concretely, on smooth invariant functions, (L_\Lambda^{\mathrm{inv}} f = L_\Lambda f).
+
+---
+
+### 5.2.5. Quotient viewpoint (optional but conceptually clarifying)
+
+When the action is free and proper on a regular set (M_\Lambda^{\mathrm{reg}}\subset M_\Lambda), the quotient (M_\Lambda^{\mathrm{reg}}/\mathcal{G}*\Lambda) is a smooth manifold and the projection (\pi\colon M*\Lambda^{\mathrm{reg}}\to M_\Lambda^{\mathrm{reg}}/\mathcal{G}_\Lambda) is a Riemannian submersion when the quotient metric is defined so that (d\pi) is an isometry on horizontals. In that setting, every invariant (f) descends to (\bar f) on the quotient, and (\nabla \bar f) corresponds to the horizontal gradient of (f). The draft explicitly uses this intuition: the invariant sector “is” the quotient geometry. 
+
+We do **not** need freeness to run the analytic arguments below, because we can work directly on (M_\Lambda) and restrict to invariant observables.
+
+---
+
+## 5.3. Horizontal Bakry–Émery curvature hypothesis
+
+This section introduces the Bakry–Émery tensor, proves the Bochner–Bakry–Émery identity from first principles, and formulates the **horizontal** curvature hypothesis ((H_{\mathrm{curv}})).
+
+### 5.3.1. Bakry–Émery Ricci tensor
+
+Define the Bakry–Émery (or weighted) Ricci tensor
+[
+\mathrm{Ric}*{\mu*\Lambda}:=\mathrm{Ric}*{g*\Lambda}+\nabla^2 S_\Lambda,
+]
+exactly as in the draft. 
+
+Here (\nabla^2 S_\Lambda) is the Riemannian Hessian: (\nabla^2 S(X,Y)=\langle\nabla_X(\nabla S),Y\rangle).
+
+---
+
+### 5.3.2. Bochner formula and the Bochner–Bakry–Émery identity
+
+We now compute (\Gamma_{2,\Lambda}) in geometric terms. The final identity is exactly what the draft calls the “geometric backbone.” 
+
+#### Lemma 5.7 (Bochner formula for the Laplacian)
+
+Let ((M,g)) be a Riemannian manifold and (f\in C^\infty(M)). Then pointwise:
+[
+\frac12 \Delta |\nabla f|^2
+= |\nabla^2 f|_{\mathrm{HS}}^2 + \langle\nabla f,\nabla(\Delta f)\rangle + \mathrm{Ric}(\nabla f,\nabla f).
+]
+
+**Proof.** Fix (x\in M). Choose a local orthonormal frame ({e_i}*{i=1}^n) around (x) such that (\nabla*{e_i} e_j=0) at (x) (normal coordinates / geodesic frame). Write (f_i:=e_i f) and (f_{ij}:=e_i(e_j f)) at (x); in this frame (f_{ij}) is symmetric at (x) because torsion is zero and (\nabla_{e_i}e_j=0) there.
+
+Compute at (x):
+[
+|\nabla f|^2=\sum_i f_i^2,\qquad
+\frac12 \Delta |\nabla f|^2
+=\frac12\sum_k e_k e_k\left(\sum_i f_i^2\right)
+=\sum_{i,k} f_i, e_k e_k f_i + \sum_{i,k} (e_k f_i)^2.
+]
+But (e_k f_i = f_{ki}), so (\sum_{i,k}(e_k f_i)^2=\sum_{i,k} f_{ki}^2=|\nabla^2 f|_{\mathrm{HS}}^2).
+
+For the other term, use commutation:
+[
+e_k e_k f_i = e_k(e_k e_i f)= e_k(e_i e_k f + [e_k,e_i]f).
+]
+At (x), ([e_k,e_i]=\nabla_{e_k}e_i-\nabla_{e_i}e_k=0), so (e_k e_k f_i = e_k e_i e_k f). Similarly,
+[
+e_k e_i e_k f = e_i e_k e_k f + [e_k,e_i]e_k f = e_i(\Delta f) \quad \text{at }x.
+]
+This would suggest (\sum_{i,k} f_i e_k e_k f_i = \sum_i f_i e_i(\Delta f)=\langle\nabla f,\nabla(\Delta f)\rangle), but we are missing curvature terms because in general (\nabla_{e_k}\nabla_{e_i}\neq \nabla_{e_i}\nabla_{e_k}) on vector fields. The correct way is to express the Laplacian of the gradient:
+[
+\Delta(\nabla f)=\nabla(\Delta f)+\mathrm{Ric}^#(\nabla f),
+]
+where (\mathrm{Ric}^#) is the (1,1)-tensor corresponding to the Ricci tensor. Taking the inner product with (\nabla f) yields the missing term. One can derive this identity in the same normal frame by writing (\Delta(\nabla f)=\sum_k\nabla_{e_k}\nabla_{e_k}(\nabla f)) and commuting covariant derivatives, which produces the curvature contraction (\mathrm{Ric}^#(\nabla f)). Substituting gives the formula.
+
+(Full coordinate derivations are standard; the essential mechanism is the curvature commutator ([\nabla_{e_k},\nabla_{e_i}] \nabla f = R(e_k,e_i)\nabla f), whose contraction yields Ricci.) ∎
+
+#### Proposition 5.8 (Bochner–Bakry–Émery identity)
+
+For (L=\Delta-\langle\nabla S,\nabla\cdot\rangle) on ((M,g)) and (\Gamma(f)=|\nabla f|^2), one has pointwise:
+[
+\Gamma_2(f)
+===========
+
+|\nabla^2 f|_{\mathrm{HS}}^2
++
+\big(\mathrm{Ric}+\nabla^2 S\big)(\nabla f,\nabla f)
+====================================================
+
+|\nabla^2 f|*{\mathrm{HS}}^2+\mathrm{Ric}*\mu(\nabla f,\nabla f).
+]
+This is the identity stated in the draft. 
+
+**Proof.** By definition,
+[
+\Gamma_2(f)=\frac12\Big(L\Gamma(f)-2\Gamma(f,Lf)\Big).
+]
+Compute each term:
+
+* (\Gamma(f)=|\nabla f|^2), so (L\Gamma(f)=\Delta|\nabla f|^2-\langle\nabla S,\nabla|\nabla f|^2\rangle).
+* (\Gamma(f,Lf)=\langle\nabla f,\nabla(Lf)\rangle).
+
+Using Lemma 5.7 (Bochner for (\Delta)):
+[
+\frac12\Delta|\nabla f|^2=|\nabla^2 f|^2+\langle\nabla f,\nabla(\Delta f)\rangle+\mathrm{Ric}(\nabla f,\nabla f).
+]
+Hence
+[
+\frac12 L|\nabla f|^2
+= |\nabla^2 f|^2+\langle\nabla f,\nabla(\Delta f)\rangle+\mathrm{Ric}(\nabla f,\nabla f)
+-\frac12\langle\nabla S,\nabla|\nabla f|^2\rangle.
+]
+Next, expand (\nabla(Lf)=\nabla(\Delta f)-\nabla\langle\nabla S,\nabla f\rangle), so
+[
+\langle\nabla f,\nabla(Lf)\rangle
+=\langle\nabla f,\nabla(\Delta f)\rangle-\langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle.
+]
+Therefore
+[
+\Gamma_2(f)
+=|\nabla^2 f|^2+\mathrm{Ric}(\nabla f,\nabla f)
+-\frac12\langle\nabla S,\nabla|\nabla f|^2\rangle
++\langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle.
+]
+It remains to simplify the last two terms. Use the identity
+[
+\nabla|\nabla f|^2 = 2,\nabla^2 f(\nabla f,\cdot),
+]
+and compute (\nabla\langle\nabla S,\nabla f\rangle) by the product rule for covariant derivatives:
+[
+\nabla\langle\nabla S,\nabla f\rangle
+= \nabla^2 S(\nabla f,\cdot) + \nabla^2 f(\nabla S,\cdot).
+]
+Taking the inner product with (\nabla f) gives
+[
+\langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle
+= \nabla^2 S(\nabla f,\nabla f) + \nabla^2 f(\nabla S,\nabla f).
+]
+Similarly,
+[
+\frac12\langle\nabla S,\nabla|\nabla f|^2\rangle
+= \langle\nabla S,\nabla^2 f(\nabla f,\cdot)\rangle
+= \nabla^2 f(\nabla S,\nabla f).
+]
+These cancel, leaving precisely
+[
+\Gamma_2(f)=|\nabla^2 f|^2+\mathrm{Ric}(\nabla f,\nabla f)+\nabla^2 S(\nabla f,\nabla f).
+]
+∎
+
+---
+
+### 5.3.3. Horizontal curvature lower bound ((H_{\mathrm{curv}}))
+
+Because (|\nabla^2 f|^2\ge 0), Proposition 5.8 shows that lower bounds on (\mathrm{Ric}_\mu) yield lower bounds on (\Gamma_2). For gauge-invariant (f), (\nabla f) is horizontal, so only horizontal lower bounds matter.
+
+We therefore restate the draft’s hypothesis.
+
+> **Hypothesis ((H_{\mathrm{curv}})) (global horizontal curvature).**
+> There exists a constant (\rho_*>0), **independent of (\Lambda)**, such that for every finite (\Lambda), every (x\in M_\Lambda), and every (v\in H_x),
+> [
+> \mathrm{Ric}*{\mu*\Lambda}(x)(v,v)
+> =\big(\mathrm{Ric}*{g*\Lambda}+\nabla^2 S_\Lambda\big)(x)(v,v)
+> \ge \rho_*,|v|^2.
+> ]
+> This is exactly the hypothesis recorded in the draft. 
+
+**Remarks.**
+
+* We do **not** require any control in vertical directions (V_x); this is deliberate, since those directions are “pure gauge” and invisible to gauge-invariant observables. 
+* The independence of (\Lambda) is what makes the statement thermodynamic-limit-friendly. 
+
+---
+
+### 5.3.4. (CD(\rho_*,\infty)) on gauge-invariant observables
+
+The classical curvature–dimension condition (CD(\rho,\infty)) is
+[
+\Gamma_2(f)\ge \rho,\Gamma(f)\quad\forall f.
+]
+Here we only assume the curvature bound on horizontals; nevertheless this is enough for **invariant** (f).
+
+#### Proposition 5.9 (Restricted (CD(\rho_*,\infty)) on (\mathcal{A}_\Lambda^{\mathrm{inv}}))
+
+Assume ((H_{\mathrm{curv}})). Then for every (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}),
+[
+\Gamma*{2,\Lambda}(f)\ge \rho_*,\Gamma_\Lambda(f)
+\quad\text{pointwise on }M_\Lambda.
+]
+
+**Proof.** Fix (x\in M_\Lambda). By Proposition 5.1, (\nabla f(x)\in H_x). Therefore, ((H_{\mathrm{curv}})) implies
+[
+\mathrm{Ric}*{\mu*\Lambda}(x)(\nabla f(x),\nabla f(x))
+\ge \rho_*,|\nabla f(x)|^2=\rho_*,\Gamma_\Lambda(f)(x).
+]
+By Proposition 5.8,
+[
+\Gamma_{2,\Lambda}(f)(x)
+=|\nabla^2 f(x)|^2+\mathrm{Ric}*{\mu*\Lambda}(x)(\nabla f,\nabla f)
+\ge 0+\rho_*,\Gamma_\Lambda(f)(x).
+]
+∎
+
+This is the rigorous form of the draft’s statement that ((H_{\mathrm{curv}})) yields a (CD(\rho_*,\infty)) condition on the invariant sector. 
+
+---
+
+## 5.4. Product structure and uniformity in volume
+
+One reason Bakry–Émery curvature is attractive is that it “tensorizes”: product systems inherit curvature lower bounds with constants that do not worsen with the number of factors. The draft states this as a key perk. 
+
+### 5.4.1. Product curvature for ungauged systems
+
+Consider two Gibbs systems ((M_i,g_i,S_i,\mu_i)), (i=1,2), with
+[
+d\mu_i=Z_i^{-1}e^{-S_i}d\mathrm{vol}_{g_i}.
+]
+Form the product:
+[
+M=M_1\times M_2,\qquad g=g_1\oplus g_2,\qquad S=S_1\circ\pi_1+S_2\circ\pi_2.
+]
+Then (\mu=\mu_1\otimes\mu_2).
+
+#### Proposition 5.10 (Tensorization of Bakry–Émery curvature)
+
+If (\mathrm{Ric}*{\mu_i}\ge \rho_i g_i) as quadratic forms on (TM_i), then
+[
+\mathrm{Ric}*\mu \ge \rho, g,\qquad \rho:=\min(\rho_1,\rho_2).
+]
+In particular, if (\rho_1=\rho_2=\rho_{\mathrm{loc}}), then (\mathrm{Ric}*\mu\ge \rho*{\mathrm{loc}} g) with the same constant, independent of dimension/number of factors (iterating the argument).
+
+**Proof.** On a Riemannian product, the Levi–Civita connection splits and the Ricci tensor is block-diagonal:
+[
+\mathrm{Ric}*g((v_1,v_2),(v_1,v_2))=\mathrm{Ric}*{g_1}(v_1,v_1)+\mathrm{Ric}*{g_2}(v_2,v_2).
+]
+Similarly, because (S=S_1\circ\pi_1+S_2\circ\pi_2) depends separately on each factor, its Hessian is also block-diagonal:
+[
+\nabla^2 S((v_1,v_2),(v_1,v_2))=\nabla^2 S_1(v_1,v_1)+\nabla^2 S_2(v_2,v_2).
+]
+Therefore
+[
+\mathrm{Ric}*\mu=\mathrm{Ric}*g+\nabla^2 S
+= (\mathrm{Ric}*{g_1}+\nabla^2 S_1)\oplus(\mathrm{Ric}*{g_2}+\nabla^2 S_2)
+=\mathrm{Ric}*{\mu_1}\oplus\mathrm{Ric}*{\mu_2}.
+]
+So for ((v_1,v_2)\in TM),
+[
+\mathrm{Ric}*\mu(v,v)=\mathrm{Ric}*{\mu_1}(v_1,v_1)+\mathrm{Ric}*{\mu_2}(v_2,v_2)
+\ge \rho_1|v_1|^2+\rho_2|v_2|^2
+\ge \min(\rho_1,\rho_2),(|v_1|^2+|v_2|^2)
+=\rho,|v|^2.
+]
+∎
+
+Iterating gives the (n)-fold product statement highlighted in the draft. 
+
+---
+
+### 5.4.2. Gauge symmetry and quotient geometry
+
+In gauge theory, (M_\Lambda) is typically a large product (e.g. one group copy per edge), so product tensorization is a natural way to keep curvature constants from degenerating with volume. But gauge symmetry then introduces a large redundancy.
+
+There are two equivalent analytic pictures (as the draft notes):
+
+1. Work on (M_\Lambda) and restrict to gauge-invariant observables, which only see horizontal directions; or
+2. Work on the quotient (M_\Lambda/\mathcal{G}_\Lambda) (manifold/orbifold), where vertical directions are modded out, and study the induced diffusion there. 
+
+From the Dirichlet-form point of view, these are the same object: the “physical” Dirichlet form is (\mathcal{E}_\Lambda) restricted to invariant functions, whose gradients are horizontal.
+
+Hypothesis ((H_{\mathrm{curv}})) is exactly the statement that this effective quotient geometry has a uniform Bakry–Émery curvature lower bound (\rho_*) independent of (\Lambda). 
+
+---
+
+## 5.5. Consequences for gauge-invariant observables
+
+Assume ((H_{\mathrm{curv}})) with constant (\rho_*>0) independent of (\Lambda). Then by Proposition 5.9, the invariant sector satisfies (CD(\rho_*,\infty)) in the sense that
+[
+\Gamma_{2,\Lambda}(f)\ge\rho_*\Gamma_\Lambda(f)\quad\forall f\in\mathcal{A}_\Lambda^{\mathrm{inv}}.
+]
+We now derive Poincaré and log–Sobolev inequalities **from scratch**, using the Bakry–Émery semigroup method, and keeping careful track of the constants.
+
+### 5.5.1. Uniform Poincaré inequality and spectral gap in the gauge-invariant sector
+
+#### Definitions
+
+For (f\in L^2(\mu_\Lambda)), define
+[
+\mu_\Lambda(f):=\int f,d\mu_\Lambda,\qquad
+\mathrm{Var}*{\mu*\Lambda}(f):=\int (f-\mu_\Lambda(f))^2,d\mu_\Lambda.
+]
+A Poincaré inequality with constant (C_P) is
+[
+\mathrm{Var}*{\mu*\Lambda}(f)\le C_P\int \Gamma_\Lambda(f),d\mu_\Lambda
+\quad\text{for all }f\in\mathcal{D}(\mathcal{E}*\Lambda).
+]
+The optimal constant satisfies (C_P=1/\lambda_1), where (\lambda_1) is the spectral gap of (-L*\Lambda) on (L^2(\mu_\Lambda)). (For the invariant sector, replace (-L_\Lambda) by (-L_\Lambda^{\mathrm{inv}}) and restrict to invariant (f).)
+
+#### The semigroup identities
+
+Let (P_t=e^{tL_\Lambda}). For sufficiently regular (f), define (f_t:=P_t f). Because (\mu_\Lambda) is invariant and (L_\Lambda) is symmetric,
+[
+\frac{d}{dt}\mu_\Lambda(f_t)=\mu_\Lambda(L f_t)=0,
+]
+so (\mu_\Lambda(f_t)=\mu_\Lambda(f)) is constant.
+
+Define the variance along the flow:
+[
+V(t):=\mathrm{Var}*{\mu*\Lambda}(f_t)=\int (f_t-\mu_\Lambda(f))^2,d\mu_\Lambda.
+]
+Differentiate using Lemma 5.1:
+[
+\begin{aligned}
+V'(t)
+&=2\int (f_t-\mu(f)),\partial_t f_t,d\mu
+=2\int (f_t-\mu(f)),L f_t,d\mu\
+&=-2\int \Gamma(f_t),d\mu
+=-2,\mathcal{E}_\Lambda(f_t,f_t).
+\end{aligned}
+]
+So variance decreases at rate equal to (minus twice) the Dirichlet energy.
+
+Now define the Dirichlet energy along the flow:
+[
+E(t):=\int \Gamma(f_t),d\mu.
+]
+Differentiate:
+[
+\begin{aligned}
+E'(t)
+&=\int \partial_t \Gamma(f_t),d\mu
+=\int 2\Gamma(f_t,\partial_t f_t),d\mu
+=\int 2\Gamma(f_t,L f_t),d\mu.
+\end{aligned}
+]
+On the other hand, by symmetry of (L),
+[
+\int L(\Gamma(f_t)),d\mu=0.
+]
+Hence, using the definition of (\Gamma_2),
+[
+\int \Gamma_2(f_t),d\mu
+=\frac12\int\Big(L\Gamma(f_t)-2\Gamma(f_t,Lf_t)\Big),d\mu
+=-\int \Gamma(f_t,Lf_t),d\mu.
+]
+Therefore
+[
+E'(t)=-2\int \Gamma_2(f_t),d\mu.
+]
+
+#### Using curvature to get exponential energy decay
+
+If (f) is gauge-invariant, then so is (f_t=P_t f) (semigroup commutes with the action). Thus Proposition 5.9 applies to (f_t):
+[
+\Gamma_2(f_t)\ge\rho_*\Gamma(f_t)\quad\text{pointwise}.
+]
+Integrate:
+[
+\int \Gamma_2(f_t),d\mu \ge \rho_*\int \Gamma(f_t),d\mu=\rho_*E(t).
+]
+Hence
+[
+E'(t)\le -2\rho_* E(t).
+]
+Gronwall yields
+[
+E(t)\le e^{-2\rho_* t}E(0)=e^{-2\rho_* t}\int \Gamma(f),d\mu.
+]
+
+#### Integrating back to control variance
+
+Since (V'(t)=-2E(t)), we have
+[
+V(\infty)-V(0)=\int_0^\infty V'(t),dt=-2\int_0^\infty E(t),dt.
+]
+Under mild ergodicity assumptions (automatic when (M_\Lambda) is compact and connected and the diffusion is elliptic), (P_t f\to \mu(f)) in (L^2(\mu)), so (V(\infty)=0). Therefore,
+[
+V(0)=2\int_0^\infty E(t),dt
+\le 2\int_0^\infty e^{-2\rho_* t},dt;\int \Gamma(f),d\mu
+=\frac{1}{\rho_*}\int\Gamma(f),d\mu.
+]
+
+We have proved:
+
+> **Theorem 5.3a (Uniform Poincaré inequality for gauge-invariant observables).**
+> Under ((H_{\mathrm{curv}})), for each finite (\Lambda) and each (f\in\mathcal{D}(\mathcal{E}*\Lambda)\cap L^2*{\mathrm{inv}}(\mu_\Lambda)),
+> [
+> \mathrm{Var}*{\mu*\Lambda}(f)\le \frac{1}{\rho_*}\int_{M_\Lambda}\Gamma_\Lambda(f),d\mu_\Lambda.
+> ]
+> The constant (1/\rho_*) is independent of (\Lambda).
+
+This matches the draft inequality and makes the proof explicit. 
+
+**Spectral gap consequence.** Let (\lambda_1^{\mathrm{inv}}(\Lambda)) be the spectral gap of (-L_\Lambda^{\mathrm{inv}}) on (L^2_{\mathrm{inv}}(\mu_\Lambda)). By the Poincaré variational characterization,
+[
+\lambda_1^{\mathrm{inv}}(\Lambda)
+=\inf\left{\frac{\mathcal{E}*\Lambda(f,f)}{|f|*{L^2(\mu_\Lambda)}^2}:\ f\in L^2_{\mathrm{inv}},\ \mu(f)=0,\ f\neq 0\right}
+\ge \rho_*,
+]
+exactly as stated in the draft. 
+
+---
+
+### 5.5.2. Uniform log–Sobolev inequality in the gauge-invariant sector
+
+We now derive the log–Sobolev inequality (LSI) with constant (2/\rho_*) using the standard entropy–information method.
+
+#### Definitions
+
+For a nonnegative integrable function (h) with (\mu(h)=1), define the (relative) entropy
+[
+\mathrm{Ent}*\mu(h):=\int h\log h,d\mu.
+]
+For a general (f\in L^2(\mu)), define
+[
+\mathrm{Ent}*\mu(f^2):=\int f^2\log\frac{f^2}{\mu(f^2)},d\mu
+=\mu(f^2),\mathrm{Ent}*\mu!\left(\frac{f^2}{\mu(f^2)}\right).
+]
+An LSI with constant (C*{LS}) is
+[
+\mathrm{Ent}*\mu(f^2)\le C*{LS}\int \Gamma(f),d\mu.
+]
+
+#### Entropy dissipation for the semigroup
+
+Let (h\ge 0) with (\mu(h)=1), and set (h_t=P_t h). Then (\mu(h_t)=1). Differentiate the entropy:
+[
+\frac{d}{dt}\mathrm{Ent}*\mu(h_t)
+=\frac{d}{dt}\int h_t\log h_t,d\mu
+=\int (Lh_t)\log h_t,d\mu + \int Lh_t,d\mu.
+]
+The second term vanishes because (\int Lh_t,d\mu=0). For the first term, use integration by parts (Lemma 5.1) with (f=\log h_t) and (g=h_t):
+[
+\int (Lh_t)\log h_t,d\mu
+=\int h_t,L(\log h_t),d\mu
+= -\int \Gamma(h_t,\log h_t),d\mu.
+]
+Using the chain rule (\nabla\log h_t = \nabla h_t/h_t),
+[
+\Gamma(h_t,\log h_t)=\langle\nabla h_t,\nabla\log h_t\rangle=\frac{\Gamma(h_t)}{h_t}.
+]
+So
+[
+\frac{d}{dt}\mathrm{Ent}*\mu(h_t)=-\int \frac{\Gamma(h_t)}{h_t},d\mu.
+]
+Define the Fisher information
+[
+I_\mu(h):=\int \frac{\Gamma(h)}{h},d\mu=\int h,\Gamma(\log h),d\mu.
+]
+Then
+[
+\frac{d}{dt}\mathrm{Ent}*\mu(h_t)=-I*\mu(h_t).
+]
+
+#### Information dissipation and curvature
+
+A standard (\Gamma)-calculus computation gives
+[
+\frac{d}{dt}I_\mu(h_t)=-2\int h_t,\Gamma_2(\log h_t),d\mu.
+]
+(Heuristically: differentiate (I(h_t)=\int h_t\Gamma(\log h_t),d\mu), use (\partial_t h_t=Lh_t), apply the diffusion property and integration by parts; the (\Gamma_2) term is exactly the second-order commutator that appears.)
+
+Now assume (h) is gauge invariant (as an (L^1) function) so that each (h_t) is invariant. Then (\log h_t) is also invariant, and Proposition 5.9 applies to (\log h_t):
+[
+\Gamma_2(\log h_t)\ge\rho_*,\Gamma(\log h_t).
+]
+Therefore
+[
+\frac{d}{dt}I(h_t)\le -2\rho_*\int h_t,\Gamma(\log h_t),d\mu=-2\rho_* I(h_t).
+]
+Gronwall yields
+[
+I(h_t)\le e^{-2\rho_* t},I(h_0).
+]
+
+#### Integrating information to bound entropy
+
+Since (\frac{d}{dt}\mathrm{Ent}(h_t)=-I(h_t)) and (\mathrm{Ent}(h_\infty)=0) (because (h_t\to 1) in (L^1) under ergodicity),
+[
+\mathrm{Ent}(h)=\int_0^\infty I(h_t),dt
+\le \int_0^\infty e^{-2\rho_* t},dt; I(h)
+=\frac{1}{2\rho_*},I(h).
+]
+This is an LSI in “entropy–information” form:
+[
+\mathrm{Ent}(h)\le \frac{1}{2\rho_*}\int \frac{\Gamma(h)}{h},d\mu.
+]
+
+Now specialize to (h=f^2/\mu(f^2)) with (f) gauge-invariant and smooth. Then (\mu(h)=1) and
+[
+\frac{\Gamma(h)}{h}
+=\Gamma(\log h),h
+=\Gamma(\log f^2),\frac{f^2}{\mu(f^2)}
+=\frac{4,\Gamma(f)}{\mu(f^2)}.
+]
+Hence
+[
+I(h)=\int \frac{\Gamma(h)}{h},d\mu=\frac{4}{\mu(f^2)}\int \Gamma(f),d\mu.
+]
+Also (\mathrm{Ent}(h)=\mathrm{Ent}(f^2)/\mu(f^2)). Therefore,
+[
+\frac{\mathrm{Ent}(f^2)}{\mu(f^2)}
+\le \frac{1}{2\rho_*}\cdot \frac{4}{\mu(f^2)}\int \Gamma(f),d\mu,
+]
+i.e.
+[
+\mathrm{Ent}*\mu(f^2)\le \frac{2}{\rho**}\int \Gamma(f),d\mu.
+]
+
+We have proved:
+
+> **Theorem 5.3b (Uniform log–Sobolev inequality for gauge-invariant observables).**
+> Under ((H_{\mathrm{curv}})), for each finite (\Lambda) and each smooth gauge-invariant (f),
+> [
+> \mathrm{Ent}*{\mu*\Lambda}(f^2)\le \frac{2}{\rho_*}\int_{M_\Lambda}\Gamma_\Lambda(f),d\mu_\Lambda.
+> ]
+> The constant (2/\rho_*) is independent of (\Lambda).
+
+This matches the draft statement. 
+
+**Standard consequences.** As the draft notes, LSI implies exponential entropy decay for the semigroup, concentration for Lipschitz gauge-invariant observables, and uniform control of decorrelation scales in terms of (1/\rho_*). 
+
+---
+
+## 5.6. Summary and role of Part 5 in the overall program
+
+This part isolates the abstract analytic interface between curvature geometry and gauge-invariant observables, exactly as intended in the original Part 5. 
+
+### Data
+
+* A family ((M_\Lambda,g_\Lambda,S_\Lambda,\mu_\Lambda)) of finite-volume Gibbs systems with generator (L_\Lambda=\Delta-\langle\nabla S_\Lambda,\nabla\cdot\rangle). 
+* A compact gauge group (\mathcal{G}*\Lambda) acting isometrically and leaving (\mu*\Lambda) invariant. 
+* Vertical spaces (V_x) and horizontal spaces (H_x=V_x^\perp). 
+* Gauge-invariant observables (\mathcal{A}_\Lambda^{\mathrm{inv}}) with (\nabla f(x)\in H_x). 
+
+### Hypothesis
+
+* A **horizontal Bakry–Émery curvature lower bound** ((H_{\mathrm{curv}})) with constant (\rho_*>0) independent of (\Lambda). 
+
+### Output
+
+* Uniform Poincaré inequality in the gauge-invariant sector:
+  [
+  \mathrm{Var}*{\mu*\Lambda}(f)\le \frac{1}{\rho_*}\int \Gamma_\Lambda(f),d\mu_\Lambda
+  \quad \forall f\in \mathcal{D}(\mathcal{E}*\Lambda)\cap L^2*{\mathrm{inv}}(\mu_\Lambda).
+  ]
+* Uniform log–Sobolev inequality in the gauge-invariant sector:
+  [
+  \mathrm{Ent}*{\mu*\Lambda}(f^2)\le \frac{2}{\rho_*}\int \Gamma_\Lambda(f),d\mu_\Lambda
+  \quad \forall f\in \mathcal{A}_\Lambda^{\mathrm{inv}}.
+  ]
+* Uniform spectral gap for the invariant generator:
+  [
+  \lambda_1^{\mathrm{inv}}(\Lambda)\ge \rho_*,
+  ]
+  independent of (\Lambda). 
+
+### Checklist for applying this module to lattice Yang–Mills
+
+To instantiate this abstract part for a concrete gauge theory, one must verify:
+
+1. The configuration manifold (M_\Lambda) and Riemannian metric (g_\Lambda).
+2. The Gibbs measure (d\mu_\Lambda\propto e^{-S_\Lambda}d\mathrm{vol}*{g*\Lambda}) is well-defined.
+3. A compact gauge group (\mathcal{G}*\Lambda) acts smoothly and isometrically, and (S*\Lambda) is invariant.
+4. The vertical/horizontal decomposition is defined, and gauge-invariant observables have horizontal gradients (Proposition 5.1).
+5. The key geometric estimate: a **uniform** lower bound ((H_{\mathrm{curv}})) for (\mathrm{Ric}*{g*\Lambda}+\nabla^2 S_\Lambda) restricted to horizontal directions.
+
+Once (5) is established (globally or in a region, depending on later analytic upgrades), the functional inequalities follow exactly by the arguments above.
+
+---

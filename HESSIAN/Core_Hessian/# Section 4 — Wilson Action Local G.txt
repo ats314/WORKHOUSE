@@ -1,0 +1,480 @@
+# Section 4 — Wilson Action: Local Geometry and Hessians
+
+## 4.0 Input / Output
+
+**Input from Sections 1–3.**
+
+* A finite 4D lattice (\Lambda\subset\mathbb Z^4) (or 4-torus) with oriented edges (E(\Lambda)) and oriented plaquettes (P(\Lambda)).
+* A compact gauge group (G=\mathrm{SU}(N)) with Lie algebra (\mathfrak g=\mathfrak{su}(N)), equipped with an (\mathrm{Ad})-invariant inner product (\langle\cdot,\cdot\rangle_{\mathfrak g}).
+* Configuration manifold (M_\Lambda := G^{E(\Lambda)}) with the product bi-invariant Riemannian metric (g_\Lambda) and product Haar volume (\mathrm{vol}*{g*\Lambda}).
+* The “Haar mass”/geometry constant (c_H>0) from Section 3 such that
+  [
+  \mathrm{Ric}*{g*\Lambda}(U) \succeq c_H, g_\Lambda(U)\qquad \text{for all }U\in M_\Lambda,
+  ]
+  uniformly in (\Lambda) (block-diagonal across links). 
+
+**Output of Section 4.**
+A **local coercivity/curvature estimate** for the Wilson action: on an explicit small-field region (K_\Lambda(r)), the Wilson Hessian is a controlled perturbation of its vacuum “Maxwell” matrix (d_1^*d_1), and consequently the Bakry–Émery curvature matrix
+(\mathrm{Ric}*{\mu*\Lambda}=\mathrm{Ric}*{g*\Lambda}+\nabla^2 S_W)
+admits a uniform lower bound with constants independent of (|\Lambda|).
+
+---
+
+## 4.1 Wilson plaquette action: definition, gauge invariance, locality
+
+### 4.1.1 Oriented plaquette holonomy
+
+Fix an oriented plaquette (p=(x;\mu,\nu)) with (\mu<\nu) (standard hypercubic convention). The plaquette holonomy map (U\mapsto U_p(U)\in G) is
+[
+U_p(U) ;:=; U_{x,\mu},U_{x+\hat\mu,\nu},U^{-1}*{x+\hat\nu,\mu},U^{-1}*{x,\nu}.
+]
+This is the standard product around (\partial p) in boundary order. 
+
+### 4.1.2 Single-plaquette potential and Wilson action
+
+Define the smooth class function (“trace potential”)
+[
+\Phi: G\to\mathbb R,\qquad
+\Phi(V):=\frac{\beta}{N},\mathrm{Re,Tr}(I-V)
+=\beta\Big(1-\frac1N\mathrm{Re,Tr}(V)\Big),
+]
+with coupling parameter (\beta>0). 
+
+The Wilson plaquette action is then
+[
+S_W(U);:=;\sum_{p\in P(\Lambda)} \Phi\big(U_p(U)\big).
+]
+
+
+**Remarks (global smooth proxy).**
+The function (V\mapsto 1-\frac1N\mathrm{Re,Tr}(V)) is globally smooth and conjugation-invariant on (G); it is precisely the “proxy” the project uses in place of (d_G(V,e)^2) when a smooth class function is required. (This will matter later for Lyapunov/drift constructions, but here it enters simply as the Wilson plaquette potential.)
+
+### 4.1.3 Gauge invariance
+
+Let the lattice gauge group be (\mathcal G_\Lambda := G^{V(\Lambda)}), acting on (M_\Lambda) by
+[
+(g\cdot U)*{x,\mu} := g_x,U*{x,\mu},g_{x+\hat\mu}^{-1}.
+]
+
+**Lemma 4.1 (Gauge invariance of (S_W)).**
+For all (g\in \mathcal G_\Lambda) and (U\in M_\Lambda), (S_W(g\cdot U)=S_W(U)).
+
+*Proof.*
+Fix a plaquette (p=(x;\mu,\nu)). Expanding the product (U_p(g\cdot U)) and using telescoping cancellations yields
+[
+U_p(g\cdot U)=g_x,U_p(U),g_x^{-1},
+]
+i.e. plaquette holonomy transforms by conjugation at the basepoint. This is the standard gauge-covariance property of Wilson loops. Since (\Phi) is a class function (trace is conjugation-invariant), (\Phi(g_x U_p(U) g_x^{-1})=\Phi(U_p(U))). Summing over plaquettes gives the claim. ∎
+
+(Definitions and invariance structure are explicitly used throughout the Wilson-action development. )
+
+### 4.1.4 Locality and bounded overlap
+
+Each plaquette term (\Phi(U_p(U))) depends only on the four link variables in (\partial p). On the hypercubic lattice in dimension (d), each oriented edge belongs to at most (2(d-1)) oriented plaquettes. In (d=4) one may take
+[
+\nu := \max_{\ell\in E(\Lambda)}#{p\in P(\Lambda): \ell\in\partial p}\le 2(d-1)=6.
+]
+
+
+This **bounded overlap** is the key combinatorial input preventing any (O(|P(\Lambda)|)) degradation in operator norm bounds for derivatives of (S_W).
+
+---
+
+## 4.2 Linearization near the vacuum and the discrete coboundary (d_1)
+
+### 4.2.1 Vacuum configuration and tangent identification
+
+Let (U^{(0)}\in M_\Lambda) denote the trivial configuration (U^{(0)}*\ell=e) for all links (\ell). At (U^{(0)}),
+[
+T*{U^{(0)}}M_\Lambda ;\cong;\bigoplus_{\ell\in E(\Lambda)}T_eG ;\cong;\mathfrak g^{E(\Lambda)}.
+]
+This is identified with the space of (\mathfrak g)-valued 1-cochains
+[
+\mathcal C^1(\Lambda;\mathfrak g):=\mathfrak g^{E(\Lambda)},
+]
+with the (\ell^2) inner product (\langle X,Y\rangle_{\mathcal C^1}:=\sum_{\ell}\langle X_\ell,Y_\ell\rangle_{\mathfrak g}). 
+
+### 4.2.2 Discrete coboundary operators (d_0) and (d_1)
+
+Define cochains (\mathcal C^0(\Lambda;\mathfrak g)=\mathfrak g^{V(\Lambda)}), (\mathcal C^2(\Lambda;\mathfrak g)=\mathfrak g^{P(\Lambda)}), and coboundaries (d_0:\mathcal C^0\to\mathcal C^1), (d_1:\mathcal C^1\to\mathcal C^2) by
+[
+(d_0\varphi)*{(x,\mu)}:=\varphi*{x+\hat\mu}-\varphi_x,
+]
+and for (p=(x;\mu,\nu)), (\mu<\nu),
+[
+(d_1X)*{(x;\mu,\nu)}
+:=X*{x,\mu}+X_{x+\hat\mu,\nu}-X_{x+\hat\nu,\mu}-X_{x,\nu}.
+]
+
+
+**Lemma 4.2 ((d_1d_0=0)).**
+(d_1\circ d_0\equiv 0).
+
+*Proof.*
+Compute ((d_1(d_0\varphi))_{(x;\mu,\nu)}) by expanding the four terms; each vertex value (\varphi_y) appears twice with opposite signs, hence cancels identically.  ∎
+
+Let (d_0^*) and (d_1^*) denote the adjoints with respect to the (\ell^2) cochain inner products. Define the Hodge Laplacian on 1-cochains:
+[
+\Delta_1:=d_0d_0^*+d_1^*d_1.
+]
+
+
+---
+
+## 4.3 Second variation of the Wilson action at the vacuum
+
+The goal is to compute (\nabla^2 S_W(U^{(0)})) explicitly.
+
+### 4.3.1 Linearization of plaquette holonomy (BCH control)
+
+Fix (X\in\mathcal C^1(\Lambda;\mathfrak g)). Consider the smooth curve (U(t)\in M_\Lambda) defined linkwise by
+[
+U_\ell(t):=\exp(tX_\ell).
+]
+
+**Lemma 4.3 (Plaquette BCH expansion).**
+There exist constants (t_0>0) and (C_0<\infty), depending only on ((G,g_G)), such that for every plaquette (p) and all (|t|\le t_0/|X|_\infty),
+[
+U_p(U(t))=\exp\Big(t(d_1X)*p + t^2 R_p(t)\Big),
+\qquad \text{with }\ |R_p(t)|\le C_0 |X|*\infty^2.
+]
+
+
+*Proof.*
+Write (U_p(U(t))) as a product of four exponentials of (\pm tX_{\ell}). Apply the Baker–Campbell–Hausdorff formula iteratively to combine (\exp(tA)\exp(tB)) into (\exp(t(A+B)+t^2Q(A,B,t))) with remainder controlled by (|A||B|) for small (t). The first-order term is exactly the oriented sum of the boundary edge elements, which is ((d_1X)_p). Collecting all second-order BCH remainders yields the stated form with uniform constants (because only finitely many multiplications/inversions occur per plaquette). ∎
+
+(As stated in the source, this lemma is precisely the “plaquette map is linearized by (d_1) with quadratic remainder” input. )
+
+### 4.3.2 Taylor expansion of the trace potential at the identity
+
+Let (Y\in\mathfrak g) and consider (V=\exp(Y)) near (e).
+
+**Lemma 4.4 (Trace potential expansion).**
+There exists (r_{\mathrm{Tr}}>0) and (C_{\mathrm{Tr}}<\infty) such that for (|Y|\le r_{\mathrm{Tr}}),
+[
+\Phi(\exp Y)
+=\frac{\beta}{2N\lambda},|Y|^2 + O(|Y|^3),
+\qquad
+\Big|\Phi(\exp Y)-\frac{\beta}{2N\lambda}|Y|^2\Big|\le C_{\mathrm{Tr}}|Y|^3,
+]
+where (\lambda) is the normalization constant linking (|Y|^2) to (-\mathrm{Tr}(Y^2)) in the chosen inner product convention. 
+
+*Proof.*
+Expand (\exp(Y)=I+Y+\frac12Y^2+O(|Y|^3)). Since (Y\in\mathfrak{su}(N)) has (\mathrm{Tr}(Y)=0), the linear term drops from (\mathrm{Re,Tr}(I-\exp Y)), leaving a quadratic leading term proportional to (-\mathrm{Tr}(Y^2)), which is proportional to (|Y|^2) by definition of (\langle\cdot,\cdot\rangle_{\mathfrak g}). The remainder is bounded by (C|Y|^3) by smoothness. ∎
+
+(The source provides the precise statement and constant bookkeeping for this Taylor expansion. )
+
+### 4.3.3 Vacuum Hessian = discrete Maxwell operator
+
+**Proposition 4.5 (Wilson Hessian at the vacuum).**
+At (U^{(0)}), the Hessian of the Wilson action satisfies
+[
+\nabla^2 S_W(U^{(0)}) ;=; \frac{\beta}{N\lambda}, d_1^* d_1
+\quad\text{as an operator on }\mathcal C^1(\Lambda;\mathfrak g)\cong T_{U^{(0)}}M_\Lambda,
+]
+equivalently,
+[
+\nabla^2 S_W(U^{(0)})(X,X)=\frac{\beta}{N\lambda},|d_1X|_{\mathcal C^2}^2\ge 0
+\qquad\forall X\in\mathcal C^1(\Lambda;\mathfrak g).
+]
+
+
+*Proof.*
+Let (U(t)=\exp(tX)) as above. For each plaquette (p), Lemma 4.3 gives
+[
+U_p(U(t))=\exp\big(t(d_1X)*p+t^2R_p(t)\big).
+]
+For (t) small enough, (\big|t(d_1X)*p+t^2R_p(t)\big|) is within the Taylor radius of Lemma 4.4, hence
+[
+\Phi\big(U_p(U(t))\big)
+=\frac{\beta}{2N\lambda},\big|t(d_1X)*p+t^2R_p(t)\big|^2 ;+; O(t^3|X|*\infty^3).
+]
+Expanding the square shows
+[
+\Phi(U_p(U(t)))=\frac{\beta}{2N\lambda}t^2|(d_1X)*p|^2+O(t^3|X|*\infty^3).
+]
+Summing over plaquettes yields
+[
+S_W(U(t))=S_W(U^{(0)})+\frac{\beta}{2N\lambda}t^2\sum*{p}|(d_1X)*p|^2 + O(t^3|X|*\infty^3).
+]
+Thus (\frac{d}{dt}S_W(U(t))|*{t=0}=0) and
+[
+\frac{d^2}{dt^2}S_W(U(t))\Big|*{t=0}=\frac{\beta}{N\lambda}|d_1X|*{\mathcal C^2}^2.
+]
+By definition of the Hessian at a critical point, this is exactly (\nabla^2 S_W(U^{(0)})(X,X)), and since (\langle X,d_1^*d_1X\rangle=|d_1X|^2), the operator identity follows. ∎
+
+(Full derivations are provided in the project text; the above proof is the explicit chain of Lemma 4.3 + Lemma 4.4 (\Rightarrow) second variation. )
+
+---
+
+## 4.4 Gauge directions and kernel structure at the vacuum
+
+Because (S_W) is gauge-invariant, its Hessian cannot be strictly positive along gauge-orbit directions. This is encoded discretely by (d_0).
+
+### 4.4.1 Vertical space at the vacuum
+
+At (U^{(0)}), the infinitesimal gauge action reduces to
+[
+\varphi\in\mathcal C^0(\Lambda;\mathfrak g) \mapsto d_0\varphi \in \mathcal C^1(\Lambda;\mathfrak g),
+]
+so
+[
+\mathrm{Vert}_{U^{(0)}}=\mathrm{im}(d_0).
+]
+
+
+### 4.4.2 Hodge decomposition and horizontals
+
+**Lemma 4.6 (Finite-dimensional Hodge decomposition on (\mathcal C^1)).**
+With (\Delta_1=d_0d_0^*+d_1^*d_1), there is an orthogonal decomposition
+[
+\mathcal C^1(\Lambda;\mathfrak g)
+=================================
+
+\mathrm{im}(d_0)\ \oplus\ \ker(\Delta_1)\ \oplus\ \mathrm{im}(d_1^*),
+]
+and (\ker(\Delta_1)=\ker(d_0^*)\cap\ker(d_1)). 
+
+*Proof.*
+This is linear algebra in a finite-dimensional Hilbert complex:
+
+1. For any linear map (A), ((\mathrm{im}A)^\perp=\ker(A^*)).
+2. Apply to (d_0): (\mathcal C^1=\mathrm{im}(d_0)\oplus\ker(d_0^*)).
+3. Restrict (d_1) to (\ker(d_0^*)). Again, (\ker(d_0^*)=\mathrm{im}(d_1^*)\oplus\ker(d_1)\cap\ker(d_0^*)).
+4. Finally (\ker(d_1)\cap\ker(d_0^*)=\ker(\Delta_1)) because (\langle X,\Delta_1X\rangle=|d_0^*X|^2+|d_1X|^2).
+
+All splittings are orthogonal because they are built from orthogonal complements. ∎
+
+The **horizontal space at the vacuum** is
+[
+H_{U^{(0)}} := (\mathrm{Vert}*{U^{(0)}})^\perp=\ker(d_0^*),
+]
+hence
+[
+H*{U^{(0)}}=\ker(\Delta_1)\ \oplus\ \mathrm{im}(d_1^*).
+]
+
+
+### 4.4.3 Consequences for the Wilson Hessian
+
+Since (\nabla^2S_W(U^{(0)})=\frac{\beta}{N\lambda}d_1^*d_1), its kernel is (\ker(d_1)). By Lemma 4.2, (\mathrm{im}(d_0)\subseteq\ker(d_1)), so gauge directions lie in the kernel.
+
+Restricted to horizontals, the only remaining kernel is harmonic:
+[
+\ker\big(d_1^*d_1|*{H*{U^{(0)}}}\big)=\ker(d_1)\cap\ker(d_0^*)=\ker(\Delta_1).
+]
+This is the project’s precise meaning of “nonnegative on horizontals, strictly positive on coexact, zero only on harmonic.” 
+
+No volume-uniform lower bound of (d_1^*d_1) on (\mathrm{im}(d_1^*)) is asserted here; such a bound depends on boundary conditions and lattice topology and is not used for the local curvature mechanism in later sections.
+
+---
+
+## 4.5 Uniform local Hessian stability on a small-field region
+
+The Wilson action is not globally convex, and for large (\beta) its Hessian may have negative directions far from the vacuum. The local curvature engine therefore requires a **uniform small-field neighborhood** in which (\nabla^2 S_W) remains close to the vacuum matrix.
+
+### 4.5.1 The small-field region (K_\Lambda(r))
+
+Let (B_r(e)\subset G) denote the geodesic ball around the identity in the bi-invariant metric.
+
+**Definition 4.7 (Linkwise small-field region).**
+For (r>0),
+[
+K_\Lambda(r)\ :=\ {U\in M_\Lambda:\ U_\ell\in B_r(e)\ \text{ for every link }\ell\in E(\Lambda)}.
+]
+
+
+This definition is deliberately “linkwise”: it yields uniform control on derivatives of each plaquette term without any dependence on (|E(\Lambda)|).
+
+### 4.5.2 Third-derivative constant for a single plaquette
+
+For each plaquette (p), let (U_{\partial p}\in G^4) denote the ordered 4-tuple of boundary edge variables. Define the smooth “single-plaquette function”
+[
+F(g_1,g_2,g_3,g_4):=\mathrm{Re,Tr}\big(I-g_1g_2g_3^{-1}g_4^{-1}\big),
+]
+so that
+[
+S_W(U)=\frac{\beta}{N}\sum_{p\in P(\Lambda)}F(U_{\partial p}).
+]
+(For (\mathrm{SU}(3)) this is written explicitly in the project notes; the general-(N) replacement is only the prefactor (\beta/N).) 
+
+Fix (r_\star) strictly within the injectivity radius of (G) and define
+[
+M_3(r_\star)\ :=\ \sup_{(g_1,\dots,g_4)\in (B_{r_\star}(e))^4}\ \big|D^3F(g_1,\dots,g_4)\big|*{\mathrm{op}} ;<\infty.
+]
+Finiteness holds because (F) is smooth and ((B*{r_\star}(e))^4) is compact. 
+
+### 4.5.3 Controlled perturbation lemma for (\nabla^2 S_W)
+
+**Lemma 4.8 (Wilson Hessian stability on (K_\Lambda(r))).**
+Let (\nu) be the bounded overlap constant from §4.1.4. Fix (r_\star>0) and (M_3(r_\star)) as above. Then for any (0<r\le r_\star), any (U\in K_\Lambda(r)), and any (X\in\mathcal C^1(\Lambda;\mathfrak g)\cong T_{U^{(0)}}M_\Lambda),
+[
+\nabla^2 S_W(U)(X,X)\ \ge\ \nabla^2 S_W(U^{(0)})(X,X)\ -\ R_W(r),|X|^2,
+]
+where
+[
+R_W(r)\ :=\ \Big(\frac{\beta}{N}\Big),(2\nu,M_3(r_\star)),r.
+]
+Equivalently, as quadratic forms,
+[
+\nabla^2 S_W(U)\ \succeq\ \nabla^2 S_W(U^{(0)})\ -\ R_W(r),I.
+]
+This is the general-(N) version of the project lemma stated for (N=3). 
+
+*Proof.*
+Write (S_W(U)=\frac{\beta}{N}\sum_p F(U_{\partial p})). For a global tangent direction (X\in\mathcal C^1), let (X_{\partial p}\in\mathfrak g^4) be its restriction to the four boundary links of (p). Then
+[
+\nabla^2 S_W(U)(X,X)=\frac{\beta}{N}\sum_{p} D^2F(U_{\partial p})\big(X_{\partial p},X_{\partial p}\big).
+]
+
+
+**Step 1: Lipschitz control of (D^2F) on ((B_{r_\star}(e))^4).**
+Since (D^2F) is (C^1) on ((B_{r_\star}(e))^4), its derivative is bounded by (M_3(r_\star)), and therefore for any (g,h\in(B_{r_\star}(e))^4) and (\xi\in\mathfrak g^4),
+[
+\big|D^2F(g)(\xi,\xi)-D^2F(h)(\xi,\xi)\big|
+\le M_3(r_\star),\mathrm{dist}_{G^4}(g,h),|\xi|^2.
+]
+
+
+**Step 2: Apply to (g=U_{\partial p}), (h=e_{\partial p}).**
+If (U\in K_\Lambda(r)), each boundary edge satisfies (U_\ell\in B_r(e)), hence the 4-tuple (U_{\partial p}\in(B_r(e))^4\subset(B_{r_\star}(e))^4). Moreover
+[
+\mathrm{dist}*{G^4}(U*{\partial p},e_{\partial p}) \le \sqrt{4},r = 2r.
+]
+
+
+Thus,
+[
+D^2F(U_{\partial p})(X_{\partial p},X_{\partial p})
+\ge
+D^2F(e_{\partial p})(X_{\partial p},X_{\partial p}) - 2M_3(r_\star)r,|X_{\partial p}|^2.
+]
+
+
+**Step 3: Sum over plaquettes and use bounded overlap.**
+Summing and multiplying by (\beta/N),
+[
+\nabla^2 S_W(U)(X,X)
+\ge
+\nabla^2 S_W(U^{(0)})(X,X) - \Big(\frac{\beta}{N}\Big) 2M_3(r_\star)r\sum_p |X_{\partial p}|^2.
+]
+To bound (\sum_p |X_{\partial p}|^2), expand:
+[
+\sum_{p}|X_{\partial p}|^2
+==========================
+
+# \sum_{p}\sum_{\ell\in\partial p}|X_\ell|^2
+
+\sum_{\ell}\Big(#{p:\ell\in\partial p}\Big)|X_\ell|^2
+\le \nu \sum_{\ell}|X_\ell|^2
+=============================
+
+\nu |X|^2.
+]
+
+
+This gives the stated remainder (R_W(r)=\frac{\beta}{N}(2\nu M_3(r_\star))r). ∎
+
+**Interpretation.**
+Lemma 4.8 is the precise operator-level statement that “in the linkwise (r)-ball, the Wilson Hessian stays within an (O(r)) perturbation of the vacuum Maxwell matrix,” with the perturbation controlled by **locality** ((\nu)) rather than (|P(\Lambda)|).
+
+---
+
+## 4.6 Combined Haar + Wilson convexity region: local coercivity / hinge inequality
+
+Define the Wilson Gibbs measure (no additional term in this section)
+[
+d\mu_\Lambda(U) := Z_\Lambda^{-1} e^{-S_W(U)},d\mathrm{vol}*{g*\Lambda}(U).
+]
+
+In Bochner–Bakry–Émery form, the “curvature matrix” is
+[
+\mathrm{Ric}*{\mu*\Lambda}(U) = \mathrm{Ric}*{g*\Lambda}(U) + \nabla^2 S_W(U).
+]
+
+
+### 4.6.1 Localized hinge inequality
+
+**Proposition 4.9 (Localized curvature / coercivity on (K_\Lambda(r))).**
+Assume the Haar-mass bound (\mathrm{Ric}*{g*\Lambda}\succeq c_H I) from Section 3. 
+Fix (r_\star>0) and (M_3(r_\star)). For (0<r\le r_\star) and all (U\in K_\Lambda(r)),
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)\ \succeq\ (c_H-R_W(r)),I\ +\ \nabla^2 S_W(U^{(0)}),
+]
+where (R_W(r)) is defined in Lemma 4.8. In particular, using Proposition 4.5,
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)\ \succeq\ (c_H-R_W(r)),I\ +\ \frac{\beta}{N\lambda},d_1^*d_1.
+]
+This is the general-(N) version of the project’s “hinge” inequality. 
+
+*Proof.*
+Combine (\mathrm{Ric}*{g*\Lambda}\succeq c_H I) with Lemma 4.8:
+[
+\mathrm{Ric}*{g*\Lambda}+\nabla^2 S_W(U)
+\succeq
+c_H I + \nabla^2 S_W(U^{(0)}) - R_W(r)I
+=======================================
+
+(c_H-R_W(r))I+\nabla^2 S_W(U^{(0)}).
+]
+Substitute the vacuum Hessian identity from Proposition 4.5 to obtain the explicit form. ∎
+
+### 4.6.2 Uniform positive curvature on a sufficiently small field region
+
+Because (R_W(r)=O(\beta r)), for fixed (\beta) one can choose (r) small enough so that (c_H-R_W(r)) remains strictly positive.
+
+**Corollary 4.10 (Uniform coercivity on (K_\Lambda(r))).**
+Choose (r\in(0,r_\star]) such that
+[
+R_W(r)\le \frac{c_H}{2},
+\quad\text{i.e.}\quad
+r\le \frac{c_H}{\frac{\beta}{N}(4\nu M_3(r_\star))}.
+]
+Then for all (U\in K_\Lambda(r)),
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)\ \succeq\ \frac{c_H}{2},I
+\qquad\text{(as quadratic forms on }T_U M_\Lambda\text{)}.
+]
+Since (d_1^*d_1\succeq 0), the (d_1^*d_1) term only strengthens the bound.
+
+*Proof.*
+Under the displayed condition, Proposition 4.9 yields ((c_H-R_W(r))I\succeq (c_H/2)I), hence the claim. ∎
+
+**Comments on gauge directions.**
+The estimate in Corollary 4.10 is on the full tangent space of (M_\Lambda). For gauge-invariant observables, later sections restrict gradients to horizontal subspaces; this only improves the applicability (since Corollary 4.10 does not rely on quotienting).
+
+---
+
+## 4.7 Section 4 output summary (interfaces for later use)
+
+The section provides the following reusable inputs:
+
+1. **Exact vacuum Hessian identity (Maxwell matrix):**
+   [
+   \nabla^2S_W(U^{(0)})=\frac{\beta}{N\lambda}d_1^*d_1,
+   \quad \nabla^2S_W(U^{(0)})(X,X)=\frac{\beta}{N\lambda}|d_1X|^2\ge 0.
+   ]
+
+
+2. **Kernel / gauge structure at vacuum:**
+   (\mathrm{Vert}*{U^{(0)}}=\mathrm{im}(d_0)\subseteq \ker(d_1)), and
+   [
+   H*{U^{(0)}}=\ker(d_0^*)=\ker(\Delta_1)\oplus \mathrm{im}(d_1^*),
+   ]
+   with harmonic kernel (\ker(\Delta_1)=\ker(d_0^*)\cap\ker(d_1)). 
+
+3. **Uniform local stability of the Wilson Hessian on (K_\Lambda(r)):**
+   [
+   \nabla^2S_W(U)\succeq \nabla^2S_W(U^{(0)})-R_W(r)I,\qquad
+   R_W(r)=\Big(\frac{\beta}{N}\Big)(2\nu M_3(r_\star))r.
+   ]
+
+
+4. **Combined Haar + Wilson local coercivity (“hinge”) on (K_\Lambda(r)):**
+   [
+   \mathrm{Ric}*{\mu*\Lambda}(U)=\mathrm{Ric}*{g*\Lambda}(U)+\nabla^2S_W(U)
+   \succeq (c_H-R_W(r))I+\frac{\beta}{N\lambda}d_1^*d_1,
+   ]
+   and in particular (\mathrm{Ric}*{\mu*\Lambda}(U)\succeq (c_H/2)I) provided (R_W(r)\le c_H/2). 
+
+These are the precise “local coercivity” outputs required by Section 5 (local functional inequalities via Bochner/Bakry–Émery on the good region).

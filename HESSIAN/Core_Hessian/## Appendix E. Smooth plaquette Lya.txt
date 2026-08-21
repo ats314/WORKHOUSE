@@ -1,0 +1,323 @@
+## Appendix E. Smooth plaquette Lyapunov potentials and a uniform drift calculus
+
+This appendix replaces the non‑smooth plaquette “distance–square” observable
+[
+z_p(U);=;d_G(U_p(U),\mathbf 1)^2
+]
+by a globally smooth, conjugation‑invariant proxy and redoes the diffusion–drift computation in a form that **removes the only singular term** in the Lyapunov calculation (the second derivative of (d_G^2) at the cut locus). The obstruction and the proposed fix are explicitly identified in the project notes: the uncontrolled term is the plaquette second derivative ((X^a_\ell X^a_\ell z_p)), and the fix is to replace (z_p) by a smooth class function such as (1-\frac1N\Re\Tr).  
+
+Throughout, (G=\mathrm{SU}(N)) equipped with a bi‑invariant Riemannian metric induced by a fixed (\mathrm{Ad})-invariant inner product on (\mathfrak g); left and right translations are isometries. 
+
+---
+
+### E.1. A globally smooth conjugation‑invariant plaquette proxy
+
+Define the class function
+[
+\phi(g);:=;1-\frac1N\Re\Tr(g),\qquad g\in \mathrm{SU}(N).
+\tag{E.1}
+]
+This choice is already used as the canonical plaquette observable elsewhere in the project. 
+
+#### Lemma E.1 (basic properties of (\phi)).
+
+For all (g\in \mathrm{SU}(N)):
+
+1. (\phi(g)\ge 0) and (\phi(\mathbf 1)=0).
+2. (0\le \phi(g)\le 2).
+3. (\phi) is conjugation‑invariant: (\phi(hgh^{-1})=\phi(g)).
+4. (\phi\in C^\infty(\mathrm{SU}(N))).
+
+**Proof.**
+
+1. Since (\Re\Tr(\mathbf 1)=N), (\phi(\mathbf 1)=0). Also (\Re\Tr(g)\le N) for unitary (g) (each eigenvalue lies on the unit circle, so each contributes at most (1) to the real part), hence (\phi(g)=1-\frac1N\Re\Tr(g)\ge 0).
+2. Likewise (\Re\Tr(g)\ge -N), so (\phi(g)\le 1-\frac1N(-N)=2).
+3. Conjugation invariance is immediate from (\Tr(hgh^{-1})=\Tr(g)).
+4. The map (g\mapsto \Re\Tr(g)) is real‑analytic on matrices, hence smooth on the embedded compact submanifold (\mathrm{SU}(N)). ∎
+
+---
+
+### E.2. Quadratic behavior near the identity
+
+To connect (\phi) to the usual small‑field control (which is often stated in terms of geodesic distance or Lie algebra coordinates), one needs the quadratic expansion at the identity, which appears in the project as a Taylor lemma for (\Re\Tr(I-e^A)). 
+
+#### Lemma E.2 (quadratic Taylor expansion of (\phi) at (\mathbf 1)).
+
+Let (A\in \mathfrak{su}(N)) be small and set (g=\exp(A)). Then
+[
+\phi(\exp A)
+= \frac{1}{2N},(-\Tr(A^2)) ;+; O(|A|^3),
+\qquad A\to 0,
+\tag{E.2}
+]
+where (|A|) is any fixed norm on (\mathfrak{su}(N)) induced by the chosen inner product.
+
+In particular, there exist constants (c_-,c_+>0) and (\varepsilon>0) (depending only on the metric normalization and (N)) such that
+[
+c_-,|A|^2 ;\le; \phi(\exp A);\le; c_+,|A|^2
+\qquad\text{whenever }|A|\le \varepsilon.
+\tag{E.3}
+]
+
+**Proof.** Using the power series (\exp A = I + A + \tfrac12 A^2 + O(|A|^3)) and (\Tr(A)=0) for (A\in \mathfrak{su}(N)), we obtain
+[
+\Tr(\exp A)= \Tr(I)+\frac12\Tr(A^2)+O(|A|^3)
+= N+\frac12\Tr(A^2)+O(|A|^3).
+]
+For (A\in\mathfrak{su}(N)) (anti‑Hermitian), (\Tr(A^2)\in \mathbb{R}) and (\Tr(A^2)\le 0), so (\Re\Tr(\exp A)=N+\frac12\Tr(A^2)+O(|A|^3)). Hence
+[
+\phi(\exp A)= 1-\frac1N\Re\Tr(\exp A)
+= 1-\frac1N\Bigl(N+\frac12\Tr(A^2)+O(|A|^3)\Bigr)
+= -\frac{1}{2N}\Tr(A^2)+O(|A|^3),
+]
+which is (E.2). This is the same series computation recorded in the project’s Taylor lemma. 
+
+The two‑sided bound (E.3) follows by absorbing the (O(|A|^3)) remainder into (\frac12|A|^2) for (|A|) sufficiently small. ∎
+
+---
+
+### E.3. Plaquette functions on configuration space and uniform derivative bounds
+
+Fix a finite lattice (\Lambda) with oriented edge set (E(\Lambda)) and plaquette set (P(\Lambda)). The configuration manifold is
+[
+M_\Lambda := G^{E(\Lambda)}
+]
+with product Riemannian metric (g_\Lambda) induced from the bi‑invariant metric on (G).  
+
+For each plaquette (p\in P(\Lambda)), let (U_p(U)\in G) denote the plaquette holonomy (ordered product of the four link variables around (\partial p), with inverses according to orientation), and define the smooth plaquette observable
+[
+z_p(U);:=;\phi(U_p(U))\in[0,2].
+\tag{E.4}
+]
+
+The Lyapunov obstruction in the original draft computation is precisely the term ((X_\ell^aX_\ell^a z_p)) when (z_p=d_G^2(U_p,\mathbf 1)); this term is not uniformly bounded because (d_G^2) fails to be (C^2) at the cut locus.  Replacing (z_p) by a smooth class function makes these second derivatives uniformly bounded on all of (M_\Lambda). 
+
+We now prove the needed uniform derivative bounds.
+
+#### Definition E.3 (link vector fields).
+
+Fix an orthonormal basis ({T^a}*{a=1}^{\dim\mathfrak g}) of (\mathfrak g). For each link (\ell\in E(\Lambda)), define the left‑invariant vector field (X*\ell^a) on (M_\Lambda) by
+[
+(X_\ell^a F)(U)
+:= \left.\frac{d}{dt}\right|*{t=0}
+F\bigl(U^{(\ell,a)}(t)\bigr),
+\qquad
+U^{(\ell,a)}(t)*e :=
+\begin{cases}
+\exp(tT^a),U*\ell, & e=\ell,\
+U_e, & e\neq \ell.
+\end{cases}
+\tag{E.5}
+]
+These fields are orthonormal in the product metric and satisfy (\Delta*\Lambda = \sum_{\ell,a}(X_\ell^a)^2) (the standard Casimir/Laplace–Beltrami identity on a compact group product; this identity is used in the project’s carré‑du‑champ derivation). 
+
+#### Lemma E.4 (uniform first and second derivative bounds for (z_p)).
+
+There exist finite constants (M_1,M_2\in(0,\infty)), depending only on (G) and the chosen metric normalization, such that for every finite (\Lambda), every plaquette (p\in P(\Lambda)), every link (\ell\in E(\Lambda)), and every (a),
+[
+|X_\ell^a z_p(U)| \le M_1 ,\mathbf 1_{{\ell\in \partial p}},
+\qquad
+|(X_\ell^a)^2 z_p(U)| \le M_2 ,\mathbf 1_{{\ell\in \partial p}},
+\qquad \forall U\in M_\Lambda.
+\tag{E.6}
+]
+Consequently, for each (p),
+[
+\sup_{U\in M_\Lambda}\Big|\Delta_\Lambda z_p(U)\Big|
+;\le; 4,(\dim\mathfrak g), M_2.
+\tag{E.7}
+]
+
+**Proof.**
+
+Step 1: reduction to a fixed local map (G^4\to G).
+Fix (p). The plaquette holonomy has the form
+[
+U_p(U) = U_{\ell_1}^{\sigma_1} U_{\ell_2}^{\sigma_2} U_{\ell_3}^{\sigma_3} U_{\ell_4}^{\sigma_4},
+\qquad \sigma_i\in{+1,-1},
+\tag{E.8}
+]
+where (-1) means group inverse. Thus (U\mapsto U_p(U)) factors through the projection (M_\Lambda\to G^4) onto the four links in (\partial p), followed by the smooth map
+[
+F: G^4\to G,\qquad F(g_1,g_2,g_3,g_4)= g_1^{\sigma_1} g_2^{\sigma_2} g_3^{\sigma_3} g_4^{\sigma_4}.
+\tag{E.9}
+]
+Therefore (z_p = \phi\circ F\circ \pi_p), where (\pi_p) is the projection onto the plaquette links.
+
+Step 2: boundedness of derivatives on compact domains.
+Since (G^4) is compact and (F\in C^\infty(G^4;G)), both (dF) and (d^2F) are bounded in operator norm on (G^4). Since (\phi\in C^\infty(G)) and (G) is compact, (\nabla \phi) and (\nabla^2\phi) are bounded on (G). Define
+[
+M_1 := \sup_{g\in G} |\nabla \phi(g)|,\qquad
+M_2 := \sup_{g\in G} |\nabla^2 \phi(g)|_{\mathrm{op}} + C_F,
+\tag{E.10}
+]
+where (C_F) is any finite bound on the contribution arising from (d^2F) in the second derivative chain rule for compositions. (Existence of (C_F<\infty) follows from compactness of (G^4) and smoothness of (F).)
+
+Step 3: localization to (\ell\in\partial p) and uniformity.
+If (\ell\notin\partial p), then (U_p(U)) does not depend on (U_\ell), hence (X_\ell^a z_p \equiv 0) and ((X_\ell^a)^2 z_p\equiv 0).
+
+If (\ell\in\partial p), then (t\mapsto U^{(\ell,a)}(t)) varies only one coordinate among the four entering (F). Along such one‑coordinate variations, the differential of (F) is a left or right translation (and possibly composed with inversion) of the tangent vector in (T_{U_\ell}G). Left and right translations are isometries for the chosen metric (bi‑invariance), and inversion is also an isometry; these invariances are recorded for the product metric on (M_\Lambda).  Thus the operator norm of the one‑coordinate differential contribution is 1, and we obtain
+[
+|X_\ell^a z_p(U)| \le \sup_{g\in G}|\nabla \phi(g)| = M_1.
+]
+A second application of the chain rule along the same one‑coordinate flow gives a uniform bound on ((X_\ell^a)^2 z_p) by a constant depending only on (\phi) and (F), hence only on (G) and the plaquette geometry, not on (\Lambda). This yields (E.6).
+
+Finally, (E.7) follows by summing ((X_\ell^a)^2 z_p) over the (4) links in (\partial p) and over (a=1,\dots,\dim\mathfrak g). ∎
+
+**Remark (what has been fixed).**
+The earlier obstruction was that for (z_p=d_G(U_p,\mathbf 1)^2), the quantity ((X_\ell^a)^2 z_p) is not uniformly bounded on (G) because (d_G^2) is not (C^2) at the cut locus; this is explicitly flagged as the “real bottleneck” in the Lyapunov step.  Lemma E.4 removes that obstruction by replacing (d_G^2) with a globally smooth (\phi), exactly as proposed in the project notes. 
+
+---
+
+### E.4. Generator calculus and the exponential Lyapunov identity
+
+Let (S_\Lambda:M_\Lambda\to\mathbb R) be a (C^2) lattice action (Wilson or another local plaquette action) and define the Gibbs measure
+[
+\mu_\Lambda(dU) := Z_\Lambda^{-1} e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U).
+]
+The reversible diffusion generator on (M_\Lambda) is
+[
+L_\Lambda F := \Delta_\Lambda F - \langle \nabla S_\Lambda,\nabla F\rangle_{g_\Lambda},
+\tag{E.11}
+]
+as in the project’s standing setup. 
+
+The carré du champ operator is
+[
+\Gamma_\Lambda(F,G)
+:=\frac12\Big(L_\Lambda(FG)-F,L_\Lambda G-G,L_\Lambda F\Big),
+]
+and the project records the explicit identity
+[
+\Gamma_\Lambda(F,G)=\sum_{\ell\in E(\Lambda)}\langle \nabla_\ell F,\nabla_\ell G\rangle_{\mathfrak g},
+\quad
+\Gamma_\Lambda(F):=\Gamma_\Lambda(F,F)=|\nabla F|^2_{g_\Lambda}.
+\tag{E.12}
+]
+
+
+We now record the basic exponential identity used in Lyapunov drift arguments.
+
+#### Lemma E.5 (exponential Lyapunov identity).
+
+Let (V\in C^2(M_\Lambda)) and (\eta\in\mathbb R). Define (W:=e^{\eta V}). Then
+[
+L_\Lambda W
+= W\Big(\eta,L_\Lambda V+\eta^2,\Gamma_\Lambda(V)\Big).
+\tag{E.13}
+]
+This identity is stated in the project as the key step for Lyapunov drift computations. 
+
+**Proof.** Use the diffusion chain rule for (C^2) functions: for any (C^2) scalar function (\Psi:\mathbb R\to\mathbb R),
+[
+L_\Lambda(\Psi\circ V) = \Psi'(V)L_\Lambda V + \Psi''(V)\Gamma_\Lambda(V),
+]
+which follows from the definition of (\Gamma_\Lambda) and the fact that the drift part of (L_\Lambda) is a first‑order derivation (hence cancels in (\Gamma_\Lambda)); this is the same mechanism used in the project’s derivation of (E.12).  Taking (\Psi(s)=e^{\eta s}) gives (\Psi'=\eta e^{\eta s}), (\Psi''=\eta^2 e^{\eta s}), hence (E.13). ∎
+
+---
+
+### E.5. The plaquette Lyapunov function with (\Phi'(0)=0) and the disappearance of the volume leak
+
+Fix a (C^2) function (\Phi:[0,2]\to[0,\infty)) with
+[
+\Phi(0)=0,\qquad \Phi'(0)=0.
+\tag{E.14}
+]
+A canonical choice consistent with the requested constraint is (\Phi(s)=s^2).
+
+Define
+[
+V_\Lambda(U);:=;\sum_{p\in P(\Lambda)} \Phi(z_p(U)),\qquad
+W_\Lambda(U);:=;\exp(\eta V_\Lambda(U)),\quad \eta>0.
+\tag{E.15}
+]
+
+The project explicitly identifies the need to choose (\Phi) so that the Laplacian/Hessian term does not “leak” a raw (|P|) constant into (L_\Lambda W_\Lambda/W_\Lambda); the condition (\Phi'(0)=0) is the stated fix. 
+
+We now formalize that statement.
+
+#### Lemma E.6 (mean‑value bound from (\Phi'(0)=0)).
+
+Let (\Phi\in C^2([0,2])) with (\Phi'(0)=0). Then for all (s\in[0,2]),
+[
+|\Phi'(s)| \le |\Phi''|*\infty, s,
+\qquad
+\text{where }|\Phi''|*\infty := \sup_{u\in[0,2]}|\Phi''(u)|.
+\tag{E.16}
+]
+
+**Proof.** By the mean value theorem, (\Phi'(s)-\Phi'(0)=\Phi''(\xi)s) for some (\xi\in(0,s)). Since (\Phi'(0)=0), (|\Phi'(s)|\le |\Phi''|_\infty s). ∎
+
+#### Proposition E.7 (drift expansion and the bounded second derivative term).
+
+With (V_\Lambda,W_\Lambda) as in (E.15), one has
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+=\eta,L_\Lambda V_\Lambda + \eta^2 \Gamma_\Lambda(V_\Lambda)
+\tag{E.17}
+]
+and
+[
+L_\Lambda V_\Lambda
+=\sum_{p\in P(\Lambda)}\Big(
+\Phi'(z_p),L_\Lambda z_p
++\Phi''(z_p),\Gamma_\Lambda(z_p)
+\Big).
+\tag{E.18}
+]
+Moreover, the contribution of the pure Laplacian part of (L_\Lambda z_p) satisfies the **volume‑uniform bound**
+[
+\Big|\sum_{p\in P(\Lambda)}\Phi'(z_p),\Delta_\Lambda z_p\Big|
+;\le;
+\bigl(4\dim\mathfrak g,M_2\bigr),|\Phi''|*\infty \sum*{p\in P(\Lambda)} z_p,
+\tag{E.19}
+]
+where (M_2) is the uniform second derivative bound from Lemma E.4.
+
+In particular, the formerly uncontrolled term (\sum_{p,\ell,a} \Phi'(z_p)(X_\ell^a)^2 z_p) is now controlled by a constant depending only on (G), (\Phi), and the **configuration functional** (\sum_p z_p), with no hidden cut‑locus singularity. 
+
+**Proof.**
+
+(E.17) is Lemma E.5 with (V=V_\Lambda). (E.18) is obtained by linearity of (L_\Lambda) and applying the diffusion chain rule to each composite (\Phi(z_p)).
+
+For (E.19), write (L_\Lambda z_p = \Delta_\Lambda z_p -\langle \nabla S_\Lambda,\nabla z_p\rangle). Discard the drift piece and use Lemma E.4 to bound (|\Delta_\Lambda z_p|\le 4\dim\mathfrak g,M_2). Then
+[
+\Big|\sum_p \Phi'(z_p)\Delta_\Lambda z_p\Big|
+\le (4\dim\mathfrak g,M_2)\sum_p |\Phi'(z_p)|
+\overset{\text{(E.16)}}{\le}
+(4\dim\mathfrak g,M_2),|\Phi''|_\infty\sum_p z_p,
+]
+which is (E.19). ∎
+
+**Interpretation.**
+If one had taken (\Phi(s)=s) (so (\Phi'(0)=1)), then (\sum_p \Phi'(z_p)\Delta z_p) would contribute a raw (|P(\Lambda)|) term, because (\Delta z_p) is bounded below/above by constants independent of configuration. Proposition E.7 shows that choosing (\Phi'(0)=0) forces that Laplacian contribution to be weighted by (z_p) (hence by the plaquette “badness”), which is exactly the structural fix requested in the project’s Lyapunov discussion. 
+
+---
+
+### E.6. What this appendix does (and does not) complete
+
+1. **Completed here.**
+   The appendix provides a fully rigorous replacement of (d_G^2) by a smooth class function (\phi) and proves the uniform boundedness of the previously uncontrolled second derivative term ((X_\ell^aX_\ell^a z_p)) on all of configuration space. This is the specific analytic gap explicitly flagged as the “real bottleneck” in the Lyapunov step.  
+
+2. **Remaining hinge (outside this appendix).**
+   Any *actual* Foster–Lyapunov inequality of the form
+   [
+   L_\Lambda W_\Lambda \le \bigl(-c,D_\Lambda + b,\mathbf 1_{K_\Lambda}\bigr),W_\Lambda
+   \tag{E.20}
+   ]
+   still requires a **separate coercivity estimate** that relates the drift contribution
+   (-\langle \nabla S_\Lambda,\nabla V_\Lambda\rangle) and the quadratic term (\Gamma_\Lambda(V_\Lambda)) to a chosen dissipation functional (D_\Lambda) (and a core set (K_\Lambda)), with constants uniform in (\Lambda). The project isolates this as the central “YM‑Lyapunov” requirement. 
+
+   Appendix E removes the *only* non‑smooth obstruction to establishing such an inequality using the plaquette observable; it does not, by itself, supply the missing coercivity estimate (which depends on the precise form of (S_\Lambda) and on how (K_\Lambda) is chosen).
+
+---
+
+### E.7. Minimal interface statement for downstream use
+
+For later sections/appendices that invoke Lyapunov drift globalizations:
+
+* The plaquette observable (\phi(g)=1-\frac1N\Re\Tr(g)) is globally smooth, conjugation‑invariant, and quadratic at the identity (Lemma E.2).  
+* For (z_p(U)=\phi(U_p(U))), all linkwise second derivatives ((X_\ell^a)^2 z_p) are uniformly bounded with constants independent of (\Lambda) (Lemma E.4).
+* For exponential Lyapunov functions (W_\Lambda=\exp(\eta\sum_p\Phi(z_p))), the exact identity (E.17) holds and the Laplacian contribution is controlled by (E.19), with the (\Phi'(0)=0) choice ensuring the Laplacian term is weighted by (\sum_p z_p) rather than (|P(\Lambda)|).
+
+These are the only facts from this appendix that should be imported into later drift‑based arguments; any further coercivity input must be stated as an explicit lemma/assumption at the point of use.

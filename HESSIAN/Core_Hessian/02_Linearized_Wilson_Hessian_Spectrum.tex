@@ -1,0 +1,170 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+
+\title{Linearized Wilson Action Hessian at Vacuum and Its Spectrum (Finite Volume)}
+\date{}
+
+\begin{document}
+\maketitle
+
+\paragraph{Dependency.}
+This document uses the configuration-space notation and the vacuum gauge projector $P_0$ from \emph{Document~01}.
+
+\section{Wilson action}
+
+Fix $\beta>0$.  For $U\in\mathcal M_L$, define the Wilson action
+\[
+S_W(U) := \beta\sum_{x\in\Lambda_L}\sum_{0\le \mu<\nu\le 3}\left(1-\frac13\mathrm{Re}\,\mathrm{Tr}\,U_{\mu\nu}(x)\right),
+\]
+where the plaquette variable is
+\[
+U_{\mu\nu}(x):=U_\mu(x)\,U_\nu(x+\hat\mu)\,U_\mu(x+\hat\nu)^{-1}\,U_\nu(x)^{-1}.
+\]
+
+\section{Right-invariant small-field coordinates}
+
+Work in right-trivialized coordinates near the vacuum $U\equiv I$:
+\[
+U_\mu(x)=\exp(A_\mu(x)),\qquad A_\mu(x)\in \mathfrak{su}(3),\qquad \|A\|\ll 1.
+\]
+
+\begin{definition}[Discrete forward difference]
+For a lattice field $f:\Lambda_L\to V$ (any vector space $V$), define
+\[
+(\Delta_\mu f)(x):=f(x+\hat\mu)-f(x).
+\]
+\end{definition}
+
+\begin{definition}[Discrete exterior derivative on $1$-forms]
+For a $1$-form $A=\{A_\mu(x)\}$, define the $2$-form $dA$ by
+\[
+(dA)_{\mu\nu}(x):=(\Delta_\mu A_\nu)(x)-(\Delta_\nu A_\mu)(x),\qquad \mu<\nu.
+\]
+\end{definition}
+
+\section{Quadratic expansion}
+
+\begin{lemma}[Class-function expansion at identity]\label{lem:class}
+Let $X\in\mathfrak{su}(3)$ be small and set $V=\exp(X)\in SU(3)$.
+Then
+\[
+1-\frac13\mathrm{Re}\,\mathrm{Tr}\,V = -\frac16\,\mathrm{Tr}(X^2) + O(\|X\|^3).
+\]
+With the inner product $\langle A,B\rangle=-\mathrm{Tr}(AB)$, this can be written as
+\[
+1-\frac13\mathrm{Re}\,\mathrm{Tr}\,\exp(X) = \frac16\,\langle X,X\rangle + O(\|X\|^3).
+\]
+\end{lemma}
+
+\begin{proof}
+Use the Taylor expansion $\exp(X)=I+X+\tfrac12X^2+O(\|X\|^3)$ and $\mathrm{Tr}(X)=0$ for $X\in\mathfrak{su}(3)$.
+Since $X$ is anti-Hermitian, $\mathrm{Tr}(X^2)$ is real.
+\end{proof}
+
+\begin{proposition}[Quadratic part of $S_W$ at vacuum]\label{prop:quad}
+At $U\equiv I$, the action expanded in $A$ has the form
+\[
+S_W(\exp(A)) = \frac{\beta}{12}\sum_{x\in\Lambda_L}\sum_{\mu<\nu}\| (dA)_{\mu\nu}(x)\|^2 + O(\|A\|^3).
+\]
+Equivalently, writing $\|dA\|^2:=\sum_{x,\mu<\nu}\|(dA)_{\mu\nu}(x)\|^2$,
+\[
+S_W(\exp(A)) = \frac{\beta}{12}\|dA\|^2+O(\|A\|^3).
+\]
+\end{proposition}
+
+\begin{proof}
+For each plaquette, the group element $U_{\mu\nu}(x)$ equals $\exp\!\big((dA)_{\mu\nu}(x)+O(\|A\|^2)\big)$.
+Insert this into Lemma~\ref{lem:class}.  The $O(\|A\|^2)$ correction in the exponent contributes only $O(\|A\|^3)$ to the action because the quadratic term depends only on the linear part of the exponent.
+\end{proof}
+
+\section{The Hessian operator at vacuum}
+
+Let $H_0:=\nabla^2 S_W(I)$ denote the Hessian at the vacuum, viewed as a self-adjoint operator on $\mathfrak{su}(3)^{E_L}$ with respect to the inner product of Document~01.
+
+\begin{definition}[Adjoint $d^\ast$ and the $1$-form Laplacian]
+Define $d^\ast$ as the adjoint of $d$ with respect to the lattice inner products on $1$-forms and $2$-forms induced by $\langle\cdot,\cdot\rangle$ on $\mathfrak{su}(3)$.
+Define the (coexact) $1$-form Laplacian by
+\[
+\Delta_1 := d^\ast d.
+\]
+\end{definition}
+
+\begin{theorem}[Vacuum Hessian equals discrete $1$-form Laplacian]\label{thm:H0}
+The Hessian at the vacuum satisfies
+\[
+H_0 = \frac{\beta}{6}\,\Delta_1
+\]
+as operators on $\mathfrak{su}(3)^{E_L}$.
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:quad},
+\[
+S_W(\exp(A)) = \frac{\beta}{12}\langle dA,dA\rangle + O(\|A\|^3) = \frac{\beta}{12}\langle A,\Delta_1 A\rangle + O(\|A\|^3).
+\]
+By definition of the Hessian, the quadratic form is
+\[
+S_W(\exp(A)) = S_W(I) + \frac12\langle A,H_0 A\rangle + O(\|A\|^3).
+\]
+Matching the quadratic terms gives $H_0=\frac{\beta}{6}\Delta_1$.
+\end{proof}
+
+\section{Kernel and spectral gap on the physical subspace}
+
+The operator $\Delta_1=d^\ast d$ has the following exact kernel at finite volume:
+\begin{itemize}[leftmargin=*]
+\item \emph{Exact (gauge) modes:} $A=d\omega$ (discrete gradient of a $0$-form), which satisfy $dA=dd\omega\equiv 0$.
+\item \emph{Harmonic (toron) modes:} constant $1$-forms $A_\mu(x)\equiv c_\mu$, which satisfy both $dA\equiv 0$ and $d^\ast A\equiv 0$.
+\end{itemize}
+
+Let $P_0$ be the vacuum projector from Document~01 onto $\ker(G_0^\dagger)$ (divergence-free sector).  Let $T$ be the orthogonal projector onto the toron subspace $\mathcal H_{\mathrm{tor}}$.
+
+Define the \emph{strictly physical} subspace at vacuum as
+\[
+\mathcal H_{\mathrm{phys}}^{\mathrm{strict}} := \mathrm{Im}(P_0)\cap \ker(T) = \ker(G_0^\dagger)\cap \mathcal H_{\mathrm{tor}}^\perp .
+\]
+
+\begin{theorem}[Finite-volume physical gap at vacuum]\label{thm:gap}
+On $\mathcal H_{\mathrm{phys}}^{\mathrm{strict}}$, the operator $\Delta_1$ has a strictly positive spectral gap.
+More precisely, in Fourier space one finds that the nonzero eigenvalues coincide with the scalar lattice Laplacian symbol
+\[
+\hat\lambda(k) = 4\sum_{\mu=0}^3 \sin^2\!\Big(\frac{k_\mu}{2}\Big),
+\qquad k_\mu=\frac{2\pi n_\mu}{L},\ \ n_\mu\in\{0,1,\dots,L-1\},
+\]
+restricted to $k\ne 0$ and transverse polarizations.
+Hence the smallest positive eigenvalue is
+\[
+\lambda_{\min}(\Delta_1|\_{\mathcal H_{\mathrm{phys}}^{\mathrm{strict}}}) = 4\sin^2\!\Big(\frac{\pi}{L}\Big).
+\]
+Consequently, by Theorem~\ref{thm:H0},
+\[
+\lambda_{\min}(H_0|\_{\mathcal H_{\mathrm{phys}}^{\mathrm{strict}}})
+=\frac{\beta}{6}\,4\sin^2\!\Big(\frac{\pi}{L}\Big)
+\sim \frac{\beta}{6}\Big(\frac{2\pi}{L}\Big)^2
+\qquad (L\to\infty).
+\]
+\end{theorem}
+
+\begin{proof}
+This is a standard discrete Fourier diagonalization argument:
+the symbol of the forward difference $\Delta_\mu$ is $e^{ik_\mu}-1$, so $|\Delta_\mu|^2=4\sin^2(k_\mu/2)$.
+For each nonzero $k$, the longitudinal polarization is in $\mathrm{Im}(G_0)$ and is removed by $P_0$; the remaining transverse polarizations carry eigenvalue $\hat\lambda(k)$.
+The smallest nonzero $|k|$ on the periodic box occurs at $k=(2\pi/L,0,0,0)$ up to symmetry.
+\end{proof}
+
+\section{Consequences for uniform-in-$L$ convexity claims}
+
+Theorem~\ref{thm:gap} shows that the vacuum physical gap scales like $L^{-2}$.
+Therefore, any claim of an \emph{$L$-uniform} positive lower bound for the Wilson Hessian in a fixed neighborhood of $U\equiv I$ is incompatible with the vacuum linearization unless additional structure is introduced (e.g.\ a separate local mass term, a shrinking neighborhood in $L$, or a different notion of ``physical'' projection).
+
+\end{document}

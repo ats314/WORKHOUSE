@@ -1,0 +1,163 @@
+---
+title: "EXTRACT 03 — Gradient Flow as Action-Space RG: An Exact Functional Equation and Truncation Dynamics"
+date: "2025-12-31"
+---
+
+# Executive summary
+
+One of the archive’s most reusable derivations is an **exact** flow equation for an effective action $S_t$ defined by
+pushing the Wilson action forward along the (lattice) gradient/Wilson flow and integrating out preimages.
+
+This turns “gradient flow time” into a bona fide **renormalization-group–like scale parameter**:
+\[
+  \partial_t S_t = (\text{quadratic term in }\nabla S_t)\; +\; (\text{Laplacian source term}).
+\]
+
+That structural form is rare: it looks like a functional Hamilton–Jacobi equation.
+
+This extract is based on `PROOF_02_Gradient_Flow_Stability.md`.
+
+# 1. Defining the flowed effective action
+
+Define $S_t[V]$ by the pushforward identity
+\[
+  e^{-S_t[V]} \equiv \int DU\; \delta\!\bigl(V-\bar V_t[U]\bigr)\,e^{-S_W[U]},
+\]
+where $\bar V_t[U]$ is the configuration obtained by flowing $U$ for time $t$
+under the Wilson (gradient) flow.
+
+Differentiating the defining relation and using integration by parts on the compact group
+yields a closed functional PDE for $S_t$.
+
+# 2. The exact functional flow equation
+
+The derivation in the archive leads to (schematically)
+\[
+  \frac{d S_t[V]}{dt}
+  = g_0^2 \sum_{x,\mu}\left\{
+      \partial_{x,\mu}^a S_t[V]\;\partial_{x,\mu}^a S_W[V]
+      - (\partial_{x,\mu}^a)^2 S_W[V]
+    \right\}.
+\]
+
+Key features:
+
+- **Quadratic drift**: the term $\partial S_t\cdot \partial S_W$ couples the evolving action $S_t$
+  to the Wilson “seed” action.
+- **Source term**: $-(\partial^a)^2 S_W$ is a $V$‑local forcing term, independent of $S_t$.
+- **RG flavor**: flow time $t$ plays the role of a smoothing / coarse‑graining scale (often $\sqrt{8t}$).
+
+The paper then generalizes the construction to a *time‑dependent generator* $S_t$ itself,
+making the evolution equation **quadratic in functional derivatives of $S_t$**.
+
+# 3. Truncation to finitely many Wilson loops
+
+A key “physics move” is the loop truncation ansatz:
+\[
+  S_t[V] \approx -\frac{1}{6}\sum_{i=0}^7 \beta_i(t)\,W_i[V],
+\]
+where $W_0$ is the plaquette and the other $W_i$ represent extended loops.
+
+In the *linear* Wilson‑seed case, the coupling vector satisfies
+\[
+  \dot{\boldsymbol\beta}(t) = M\,\boldsymbol\beta(t) + \boldsymbol J,
+\qquad \boldsymbol J_i = 32\delta_{i0},
+\]
+hence is explicitly solvable.
+
+In the 8‑coupling truncation, one mode has eigenvalues $\pm i\,2\sqrt7$,
+producing **oscillatory** dependence on $t$.
+
+# 4. Explicit solution (linear Wilson-flow case)
+
+For the 8‑coupling truncation, the archive reconstructs the explicit formulas (with bare $\beta$):
+\[
+  \beta_0(t)
+  = \beta \cos(2\sqrt7\,t) + \frac{16}{\sqrt7}\sin(2\sqrt7\,t),
+\]
+\[
+  \gamma(t) = \frac{8}{7}\left(1-\cos(2\sqrt7\,t)\right) + \frac{\beta}{2\sqrt7}\sin(2\sqrt7\,t),
+\qquad
+  \beta_1(t) = -\gamma(t),
+\]
+and similarly $\beta_i(t)=M_{i0}\gamma(t)$ for $i\ge 1$.
+
+A more severe truncation (keeping only $\beta_0,\beta_1$) instead gives hyperbolic functions:
+\[
+  \beta_0(t)=\beta\cosh(\sqrt{30}\,t)+\frac{16}{15}\sqrt{30}\,\sinh(\sqrt{30}\,t),
+\]
+\[
+  \beta_1(t)= -\frac{16}{15}\left(\cosh(\sqrt{30}\,t)-1\right)-\frac{\beta}{\sqrt{30}}\sinh(\sqrt{30}\,t).
+\]
+
+# 5. Numerical reproduction (from the explicit formulas)
+
+The table below evaluates $(\beta_0(t),\beta_1(t))$ at $\beta=6$ for several values of $\sqrt{8t}$.
+This reproduces the qualitative observations that:
+
+- the “rectangle” coefficient $\beta_1(t)$ is negative for $t>0$;
+- different truncations produce dramatically different flow-time dependence.
+
+## 5.1 Code (Python)
+
+```python
+import math
+
+beta = 6.0
+
+def trunc8(beta, t):
+    w = 2*math.sqrt(7)
+    beta0 = beta*math.cos(w*t) + (16/math.sqrt(7))*math.sin(w*t)
+    gamma = (8/7)*(1-math.cos(w*t)) + (beta/(2*math.sqrt(7)))*math.sin(w*t)
+    beta1 = -gamma
+    return beta0, beta1
+
+def trunc2(beta, t):
+    a = math.sqrt(30)
+    beta0 = beta*math.cosh(a*t) + (16/15)*a*math.sinh(a*t)
+    beta1 = -(16/15)*(math.cosh(a*t)-1) - (beta/a)*math.sinh(a*t)
+    return beta0, beta1
+
+for s in [0.0, 0.5, 1.0, 1.5, 2.0]:
+    t = s*s/8
+    b0_8, b1_8 = trunc8(beta, t)
+    b0_2, b1_2 = trunc2(beta, t)
+    print(s, t, b0_8, b1_8, b0_2, b1_2)
+```
+
+## 5.2 Values
+
+|   sqrt(8t) |       t |   beta0_8c |   beta1_8c |   beta0_2c |   beta1_2c |
+|-----------:|--------:|-----------:|-----------:|-----------:|-----------:|
+|        0   | 0       |    6       |  -0        |     6      |   -0       |
+|        0.5 | 0.03125 |    6.9136  |  -0.202236 |     7.093  |   -0.20408 |
+|        1   | 0.125   |    8.44931 |  -0.937514 |    11.782  |   -1.0699  |
+|        1.5 | 0.28125 |    6.52164 |  -2.17864  |    27.6498 |   -3.9753  |
+|        2   | 0.5     |   -2.40022 |  -2.68755  |    91.5793 |  -15.6515  |
+
+# 6. Why this is potentially useful for a mass gap program
+
+The mass gap problem wants a stable long‑distance scale.  
+This formalism offers an “effective action at scale $\sqrt{8t}$”, generated by a controlled PDE,
+and suggests a route:
+
+- derive (or assume) a PBH/Riccati inequality for the Hessian of $S_t$,
+- show a positive lower bound on the effective source term,
+- conclude a uniform convexity / spectral gap at each scale.
+
+The archive’s larger picture is exactly this coupling of “RG‑like action flow” to a Riccati convexity mechanism.
+
+# 7. Next steps that would sharpen this
+
+1. **Error control beyond truncation**  
+   The explicit formulas are for a truncated operator basis; a rigorous bridge requires controlling
+   the remainder operator norms.
+
+2. **Hessian evolution from the exact PDE**  
+   Differentiate the functional flow equation twice and isolate the Riccati structure explicitly
+   (with curvature/source terms identified precisely).
+
+3. **Coupling to Bakry–Émery curvature bounds**  
+   If $\mathrm{Ric}_g+\beta\nabla^2 S_W$ has a horizontal lower bound (Extract 01),
+   feed it into the Hessian flow to obtain a uniform convexity constant for $S_t$.
+

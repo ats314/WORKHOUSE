@@ -1,0 +1,224 @@
+import jax
+import jax.numpy as jnp
+import jax.scipy as jsp
+from jax import random, lax
+import numpy as np
+import pandas as pd
+import time, os
+
+# 1. CRITICAL: Enable 64-bit precision for mass gap sensitivity
+jax.config.update("jax_enable_x64", True)
+
+# ----- SU(3) algebra basics -----
+def su3_generators():
+    # Standard Gell-Mann matrices
+    lam = []
+    lam.append(jnp.array([[0,1,0],[1,0,0],[0,0,0]], jnp.complex128))
+    lam.append(jnp.array([[0,-1j,0],[1j,0,0],[0,0,0]], jnp.complex128))
+    lam.append(jnp.array([[1,0,0],[0,-1,0],[0,0,0]], jnp.complex128))
+    lam.append(jnp.array([[0,0,1],[0,0,0],[1,0,0]], jnp.complex128))
+    lam.append(jnp.array([[0,0,-1j],[0,0,0],[1j,0,0]], jnp.complex128))
+    lam.append(jnp.array([[0,0,0],[0,0,1],[0,1,0]], jnp.complex128))
+    lam.append(jnp.array([[0,0,0],[0,0,-1j],[0,1j,0]], jnp.complex128))
+    lam.append(jnp.array([[1,0,0],[0,1,0],[0,0,-2]], jnp.complex128)/jnp.sqrt(3))
+    lam = jnp.stack(lam, axis=0)
+    return 1j * lam / 2
+
+T = su3_generators()
+
+def su3_alg_from_vec(a):
+    return jnp.einsum("...a,aij->...ij", a, T)
+
+def su3_exp(A):
+    return jsp.linalg.expm(A)
+
+def build_links(theta, L):
+    # theta shape: [L^4 * 4 * 8]
+    flat = theta.reshape(-1, 8)
+    A = jax.vmap(su3_alg_from_vec)(flat)
+    U = jax.vmap(su3_exp)(A)
+    return U.reshape(L, L, L, L, 4, 3, 3)
+
+def wilson_action(theta, L, beta=1.0):
+    U = build_links(theta, L)
+    S = 0.0
+    for mu in range(4):
+        for nu in range(mu+1, 4):
+            U1 = U[..., mu, :, :]
+            U2 = jnp.roll(U[..., nu, :, :], -1, axis=mu)
+            U3 = jnp.swapaxes(jnp.conjugate(jnp.roll(U[..., mu, :, :], -1, axis=nu)), -1, -2)
+            U4 = jnp.swapaxes(jnp.conjugate(U[..., nu, :, :]), -1, -2)
+            P  = U1 @ U2 @ U3 @ U4
+            tr = jnp.real(jnp.einsum("...ii->...", P))
+            S  = S + jnp.sum(1.0 - tr/3.0)
+    return beta * S
+
+def make_flat_action(L, beta=1.0):
+    @jax.jit
+    def flat(theta):
+        return wilson_action(theta, L, beta)
+    return flat
+
+# ----- GAUGE PROJECTION (FFT Based) -----
+def make_projector(L):
+    # Precompute momentum lattice constants
+    n = jnp.arange(L)
+    k = 2 * jnp.pi * n / L
+    # Grid of k values for each dimension
+    K0, K1, K2, K3 = jnp.meshgrid(k, k, k, k, indexing='ij')
+    # Lattice Laplacian eigenvalues in momentum space: sum(4*sin^2(k/2))
+    denom = (4.0 * jnp.sin(K0/2)**2 + 
+             4.0 * jnp.sin(K1/2)**2 + 
+             4.0 * jnp.sin(K2/2)**2 + 
+             4.0 * jnp.sin(K3/2)**2)
+    # Handle the zero mode (k=0) to avoid division by zero
+    denom = jnp.where(denom < 1e-9, 1.0, denom)
+    
+    # Phase factors for forward/backward difference
+    # Forward: e^{ik} - 1
+    # Backward: e^{-ik} - 1
+    def get_mom(K):
+        return jnp.exp(1j * K) - 1.0
+    
+    momenta = jnp.stack([get_mom(K0), get_mom(K1), get_mom(K2), get_mom(K3)], axis=-1) # [L,L,L,L,4]
+    momenta_conj = jnp.conjugate(momenta)
+
+    @jax.jit
+    def project(v_flat):
+        # 1. Unflatten to (L,L,L,L, 4, 8)
+        v = v_flat.reshape(L, L, L, L, 4, 8)
+        
+        # 2. FFT to momentum space (spatial axes 0,1,2,3)
+        v_k = jnp.fft.fftn(v, axes=(0,1,2,3)) # Complex128
+        
+        # 3. Compute Divergence in k-space: sum_mu (e^{-ik} - 1) * v_mu
+        # broadcasting momenta: [L,L,L,L,4] vs v_k: [L,L,L,L,4,8]
+        # Sum over mu (axis 4)
+        div_k = jnp.sum(momenta_conj[..., None] * v_k, axis=4) # [L,L,L,L,8]
+        
+        # 4. Solve Poisson: omega = div / Laplacian
+        omega_k = div_k / denom[..., None]
+        
+        # 5. Zero out the zero-mode (constant gauge shift)
+        omega_k = jnp.where(denom[..., None] < 1e-9, 0.0, omega_k)
+        
+        # 6. Compute Longitudinal part: grad(omega) -> (e^{ik}-1) * omega
+        v_long_k = momenta[..., None] * omega_k[..., None, :] # [L,L,L,L,4,8]
+        
+        # 7. Subtract and IFFT
+        v_trans_k = v_k - v_long_k
+        v_trans = jnp.fft.ifftn(v_trans_k, axes=(0,1,2,3))
+        
+        return jnp.real(v_trans).reshape(-1)
+
+    return project
+
+# ----- Projected Lanczos -----
+def make_lanczos_projected(flat_action, project_fn, k=25):
+    grad_flat = jax.grad(flat_action)
+
+    def hvp(theta, v):
+        _, hv = jax.jvp(grad_flat, (theta,), (v,))
+        return hv
+
+    @jax.jit
+    def lanczos(theta, v0):
+        # Initial projection of starting vector
+        v0 = project_fn(v0)
+        v0 = v0 / jnp.linalg.norm(v0)
+
+        def step(carry, _):
+            v_prev, v_cur, beta_prev = carry
+            
+            # Apply Hessian
+            w = hvp(theta, v_cur)
+            
+            # CRITICAL: Project w back to transverse space
+            # This ensures we stay in the physical sector
+            w = project_fn(w)
+            
+            w = w - beta_prev * v_prev
+            alpha = jnp.vdot(v_cur, w).real
+            w = w - alpha * v_cur
+            
+            # Re-orthogonalize (optional but good for stability)
+            # w = w - jnp.vdot(v_prev, w) * v_prev 
+            
+            beta = jnp.linalg.norm(w)
+            v_next = jnp.where(beta > 1e-12, w / beta, v_cur * 0.0)
+            return (v_cur, v_next, beta), (alpha, beta)
+
+        init = (jnp.zeros_like(v0), v0, 0.0)
+        (_, _, _), (alphas, betas) = lax.scan(step, init, None, length=k)
+        
+        # Solve tridiagonal
+        Tm = jnp.diag(jnp.array(alphas)) + \
+             jnp.diag(jnp.array(betas[:-1]), 1) + \
+             jnp.diag(jnp.array(betas[:-1]), -1)
+        eigs = jnp.linalg.eigvalsh(Tm)
+        return eigs[0] # Return lowest eigenvalue
+
+    return lanczos
+
+# ----- Run Scan -----
+LATTICES = [2, 3, 4]
+THETAS   = [0.01, 0.03] # Reduced set for speed
+BATCH    = 32           # Reduced batch for speed/precision check
+SEED     = 123
+
+results = []
+for L in LATTICES:
+    n = (L**4)*4*8
+    print(f"\n===== L = {L} (x64, Projected) =====")
+    
+    flat = make_flat_action(L)
+    proj = make_projector(L)
+    lanczos = make_lanczos_projected(flat, proj, k=30) # Increased K for precision
+
+    # Warmup
+    theta0 = jnp.zeros((n,))
+    v0 = jnp.ones((n,))
+    _ = lanczos(theta0, v0)
+
+    for theta_amp in THETAS:
+        key = random.PRNGKey(SEED + L)
+        dirs = random.normal(key, (BATCH, n))
+        dirs = dirs / jnp.linalg.norm(dirs, axis=1, keepdims=True)
+        
+        vals = []
+        for i in range(BATCH):
+            th = theta_amp * dirs[i]
+            # Use random start vector for Lanczos, not the direction itself
+            v_rand = random.normal(random.PRNGKey(i), (n,))
+            lam = lanczos(th, v_rand)
+            vals.append(lam)
+        
+        vals = np.array(vals)
+        # Check if values are still negative
+        print(f"L={L}, theta={theta_amp}: min_eig mean={vals.mean():.6f}, range=[{vals.min():.6f}, {vals.max():.6f}]")
+        results.append((L, theta_amp, vals.mean(), vals.min()))
+
+df = pd.DataFrame(results, columns=["L", "Theta", "Mean_Eig", "Min_Eig"])
+print(df)
+
+
+
+
+===== L = 2 (x64, Projected) =====
+L=2, theta=0.01: min_eig mean=-0.000000, range=[-0.000000, -0.000000]
+L=2, theta=0.03: min_eig mean=-0.000002, range=[-0.000002, -0.000001]
+
+===== L = 3 (x64, Projected) =====
+L=3, theta=0.01: min_eig mean=-0.000000, range=[-0.000000, -0.000000]
+L=3, theta=0.03: min_eig mean=-0.000000, range=[-0.000000, -0.000000]
+
+===== L = 4 (x64, Projected) =====
+L=4, theta=0.01: min_eig mean=-0.000000, range=[-0.000000, -0.000000]
+L=4, theta=0.03: min_eig mean=-0.000000, range=[-0.000000, -0.000000]
+   L  Theta      Mean_Eig       Min_Eig
+0  2   0.01 -1.976670e-07 -2.402710e-07
+1  2   0.03 -1.779061e-06 -2.162811e-06
+2  3   0.01 -4.090643e-08 -4.594163e-08
+3  3   0.03 -3.733315e-07 -4.179242e-07
+4  4   0.01 -1.189477e-08 -1.244925e-08
+5  4   0.03 -1.070530e-07 -1.120433e-07

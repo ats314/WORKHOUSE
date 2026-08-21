@@ -1,0 +1,214 @@
+## Part 5 — The canonical set (K_\Lambda) and the localized hinge inequality on (H_{U^{(0)}}=\ker d_0^*)
+
+This part does two things:
+
+1. it fixes a single “small–field” region (K_\Lambda) (no more “SAFE”), and
+2. it proves the **matrix hinge** you asked for: on (H_{U^{(0)}}=\ker d_0^*),
+   [
+   \mathrm{Hess},S_\Lambda(U)\ \succeq\ \frac{c_H}{2}I+\frac{\beta}{3}d_1^*d_1
+   \qquad \text{for all }U\in K_\Lambda,
+   ]
+   with the remainder term made explicit in the defining parameter of (K_\Lambda).
+
+A crucial bookkeeping choice: on a Riemannian configuration manifold ((M_\Lambda,g_\Lambda)) with Gibbs density (e^{-S_\Lambda},d\mathrm{vol}*{g*\Lambda}), the object that plays the role of the “matrix Hessian” in Bochner/Helffer–Sjöstrand is the **Bakry–Émery curvature matrix**
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)\ :=\ \mathrm{Ric}*{g*\Lambda}(U)\ +\ \nabla^2 S_\Lambda(U),
+]
+as appears in the Bochner identity with drift. 
+This is exactly where the Haar “mass” lives: (\mathrm{Ric}*{g*\Lambda}) is a uniform on-site positive term, independent of volume. 
+
+So below I state the hinge as a lower bound for (\mathrm{Ric}*{\mu*\Lambda}(U)). If you prefer to *rename* this combined object as “(\mathrm{Hess},S_\Lambda)” in your notes (because it is the matrix that actually drives the analytic engine), you can—just do it once and stick to it.
+
+---
+
+### 5.1. Geometry and identifications (fixed once)
+
+Let
+[
+M_\Lambda := G^{E(\Lambda)}
+]
+with the product bi-invariant metric (g_\Lambda) induced by the chosen (\mathrm{Ad})-invariant inner product on (\mathfrak g). We use the right-invariant trivialization
+[
+T_U M_\Lambda \cong \mathcal C^1(\Lambda;\mathfrak g),\qquad
+X=(X_\ell)*{\ell\in E(\Lambda)}\ \mapsto\ \Big(\frac{d}{dt}\Big|*{t=0} U_\ell \exp(tX_\ell)\Big)*\ell.
+]
+All norms (|X|^2:=\sum*{\ell}|X_\ell|^2) and adjoints ((\cdot)^*) are with respect to this (\ell^2)–product inner product.
+
+As in Parts 3–4, (d_0:\mathcal C^0\to\mathcal C^1) and (d_1:\mathcal C^1\to\mathcal C^2) are the usual lattice coboundaries, and
+[
+H_{U^{(0)}} := \ker(d_0^*)\subset\mathcal C^1(\Lambda;\mathfrak g)
+]
+is the vacuum horizontal space.
+
+---
+
+### 5.2. Definition of the canonical region (K_\Lambda)
+
+Fix (r>0) (chosen later, explicitly). Let (B_r(e)\subset G) denote the geodesic ball around the identity in the bi-invariant metric.
+
+Define the **small-field region**
+[
+K_\Lambda(r)\ :=\ \big{,U\in M_\Lambda:\ U_\ell\in B_r(e)\ \text{for every link }\ell\in E(\Lambda),\big}.
+\tag{5.1}
+]
+
+This definition is “linkwise small,” which is exactly what you need to make the Wilson Hessian a controlled perturbation of its vacuum incidence matrix.
+
+**Remark (other common small-field notions).**
+If you prefer a gauge-invariant “badness” control, one can define an averaged plaquette-energy set
+[
+K_\Lambda^{\mathrm{av}}(\varepsilon):=
+\Big{U:\ \frac{1}{|P(\Lambda)|}\sum_{p\in P(\Lambda)}\big(1-\tfrac1N\Re\mathrm{Tr},U_p\big)\le\varepsilon\Big}.
+]
+Then the uniform plaquette condition (\max_{p}(1-\tfrac1N\Re\mathrm{Tr},U_p)\le\varepsilon) is a stronger sufficient condition sitting inside it (trivial inclusion). I’m not using (K_\Lambda^{\mathrm{av}}) in the hinge proof because the hinge is a **pointwise operator lower bound**, and for that you really want **uniform** control over the local Taylor constants. (You *can* still build a probabilistic argument later that (\mu_\Lambda(K_\Lambda^{\mathrm{av}}(\varepsilon))) is large at large (\beta), but that’s a different step.)
+
+---
+
+### 5.3. The “vacuum matrix” you want to keep
+
+Take (G=\mathrm{SU}(3)) with the normalization (|A|^2=-\mathrm{Tr}(A^2)). Then the Wilson Hessian at the vacuum is exactly the discrete Maxwell operator:
+[
+\nabla^2 S_W(U^{(0)})=\frac{\beta}{3},d_1^*d_1.
+\tag{5.2}
+]
+This is the specialization of the general identity (\nabla^2 S_W(U^{(0)})=(\beta/N)d_1^*d_1) in your notes. 
+
+This is the part we **refuse to destroy** by taking absolute values later. It is already a PSD matrix with sparse incidence structure.
+
+---
+
+### 5.4. Local stability of the Wilson Hessian on (K_\Lambda(r))
+
+We now prove the one estimate you actually need: in (K_\Lambda(r)), the Wilson Hessian stays close (as an operator) to its vacuum matrix, with an explicit (O(r)) remainder.
+
+Let (S_W(U)=\sum_{p}\Phi(U_p)) be the Wilson action with (\Phi(U)=\frac{\beta}{3}\Re\mathrm{Tr}(I-U)) for (\mathrm{SU}(3)).
+
+For each plaquette (p), write (U_{\partial p}\in G^4) for its four edge variables (in boundary order), and define the **single-plaquette function**
+[
+F(g_1,g_2,g_3,g_4):=\Re\mathrm{Tr}\big(I-g_1g_2g_3^{-1}g_4^{-1}\big).
+\tag{5.3}
+]
+Then (S_W(U)=\frac{\beta}{3}\sum_{p}F(U_{\partial p})).
+
+Fix once and for all a radius (r_\star>0) within the injectivity radius of (G), and set
+[
+M_3(r_\star)\ :=\ \sup_{(g_1,\dots,g_4)\in (B_{r_\star}(e))^4}\ \big|D^3F(g_1,\dots,g_4)\big|*{\mathrm{op}} \ <\infty.
+\tag{5.4}
+]
+Finiteness holds because (F) is smooth and ((B*{r_\star}(e))^4) is compact.
+
+Let (\nu) be the maximal number of plaquettes containing a given oriented edge in your lattice complex. On the (d)-dimensional hypercubic lattice, (\nu\le 2(d-1)) (in (d=4), (\nu=6)).
+
+#### Lemma 5.1 (Wilson Hessian is a controlled perturbation of the vacuum matrix).
+
+For any (0<r\le r_\star), any (U\in K_\Lambda(r)), and any (X\in\mathcal C^1(\Lambda;\mathfrak{su}(3))),
+[
+\nabla^2 S_W(U)(X,X)\ \ge\ \nabla^2 S_W(U^{(0)})(X,X)\ -\ \underbrace{\Big(\frac{2\nu,M_3(r_\star)}{3}\Big)\beta,r}_{=:R_W(r)}\ |X|^2.
+\tag{5.5}
+]
+Equivalently, as quadratic forms on (\mathcal C^1),
+[
+\nabla^2 S_W(U)\ \succeq\ \frac{\beta}{3}d_1^*d_1\ -\ R_W(r),I.
+\tag{5.6}
+]
+
+**Proof.**
+Fix a plaquette (p). Restrict a global tangent vector (X\in\mathcal C^1) to its boundary edges: (X_{\partial p}\in(\mathfrak{su}(3))^4). Then
+[
+\nabla^2 S_W(U)(X,X)=\frac{\beta}{3}\sum_{p} D^2F(U_{\partial p})\big(X_{\partial p},X_{\partial p}\big).
+]
+On the compact set ((B_{r_\star}(e))^4), the map (D^2F) is Lipschitz with Lipschitz constant (M_3(r_\star)). In particular, for any (g,h\in(B_{r_\star}(e))^4),
+[
+\big|D^2F(g)(\xi,\xi)-D^2F(h)(\xi,\xi)\big|
+\ \le\ M_3(r_\star),\mathrm{dist}*{G^4}(g,h),|\xi|^2.
+]
+For (U\in K*\Lambda(r)), each edge in (\partial p) lies in (B_r(e)), hence
+[
+\mathrm{dist}*{G^4}(U*{\partial p},e_{\partial p})
+\ \le\ \sqrt{4},r=2r.
+]
+Therefore, for each plaquette,
+[
+D^2F(U_{\partial p})(X_{\partial p},X_{\partial p})
+\ \ge\ D^2F(e_{\partial p})(X_{\partial p},X_{\partial p})\ -\ 2M_3(r_\star)r,|X_{\partial p}|^2.
+]
+Summing over plaquettes and multiplying by (\beta/3) gives
+[
+\nabla^2 S_W(U)(X,X)
+\ \ge\ \nabla^2 S_W(U^{(0)})(X,X)
+\ -\ \frac{\beta}{3},2M_3(r_\star)r\sum_{p}|X_{\partial p}|^2.
+]
+Finally, expand
+[
+\sum_{p}|X_{\partial p}|^2=\sum_{p}\sum_{\ell\in\partial p}|X_\ell|^2
+= \sum_{\ell}\big(#{p:\ell\in\partial p}\big)|X_\ell|^2
+\ \le\ \nu\sum_{\ell}|X_\ell|^2=\nu|X|^2.
+]
+This yields (5.5)–(5.6). ∎
+
+---
+
+### 5.5. The hinge inequality on (K_\Lambda(r)) (with explicit remainder)
+
+Let (\mu_\Lambda\propto e^{-S_W},d\mathrm{vol}*{g*\Lambda}) be the Wilson Gibbs measure on ((M_\Lambda,g_\Lambda)). In the Bochner–Bakry–Émery identity, the curvature matrix is
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)=\mathrm{Ric}*{g*\Lambda}(U)+\nabla^2 S_W(U).
+]
+
+
+Assume the compact group (G=\mathrm{SU}(3)) is equipped with the same bi-invariant metric as above, so there is a constant (c_H>0) with
+[
+\mathrm{Ric}*{g*\Lambda}\ \succeq\ c_H,I
+\qquad\text{(block-diagonal across links, uniform in (\Lambda)).}
+\tag{5.7}
+]
+This is exactly the “Haar mass” lower bound used in your Part 10 development. 
+
+Combine (5.6) with (5.7):
+
+#### Proposition 5.2 (Localized hinge inequality on (K_\Lambda(r))).
+
+Fix (r_\star>0) and (M_3(r_\star)) as in (5.4), and define
+[
+R_W(r)=\Big(\frac{2\nu,M_3(r_\star)}{3}\Big)\beta,r.
+\tag{5.8}
+]
+Then for every (0<r\le r_\star) and every (U\in K_\Lambda(r)),
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)\ \succeq\ \big(c_H-R_W(r)\big)I\ +\ \frac{\beta}{3},d_1^*d_1
+\qquad\text{as quadratic forms on }\mathcal C^1(\Lambda;\mathfrak{su}(3)).
+\tag{5.9}
+]
+In particular, if (r) is chosen so that
+[
+R_W(r)\ \le\ \frac{c_H}{2}
+\qquad\text{i.e.}\qquad
+r\ \le\ \frac{3c_H}{4\nu,M_3(r_\star)}\cdot\frac1\beta,
+\tag{5.10}
+]
+then for all (U\in K_\Lambda(r)),
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)\ \succeq\ \frac{c_H}{2}I+\frac{\beta}{3}d_1^*d_1.
+\tag{5.11}
+]
+Restricting (5.11) to (H_{U^{(0)}}=\ker d_0^*) gives the requested hinge inequality on the horizontal sector.
+
+**Proof.**
+(5.9) is immediate from (\mathrm{Ric}*{\mu*\Lambda}=\mathrm{Ric}*{g*\Lambda}+\nabla^2S_W), the uniform bound (5.7), and Lemma 5.1. The condition (5.10) turns (5.9) into (5.11). Restriction to a subspace preserves the operator inequality. ∎
+
+**Specializing the purely combinatorial constant in (d=4).**
+On the 4D hypercubic lattice, each edge lies in (\nu=6) plaquettes, hence
+[
+R_W(r)=\Big(\frac{12,M_3(r_\star)}{3}\Big)\beta r=4M_3(r_\star),\beta r.
+\tag{5.12}
+]
+
+---
+
+### 5.6. Why this is the “matrix-not-scalar” hinge
+
+The point of (5.11) is that it keeps the Wilson contribution as the **structured PSD operator** ((\beta/3)d_1^*d_1), rather than flattening it into a worst-case scalar off-diagonal bound. Everything painful in the old scalar route happens precisely when one replaces the signed incidence matrix structure by (|\mathrm{Hess}*{\ell,\ell'}|\le J) and then sums absolute values. Here, the coupling part stays a **positive semidefinite matrix** all the way to the Green’s function step; only the localization error is scalarized into (R_W(r)I), and you see exactly how small (r) must be in terms of (\beta) and the fixed Taylor constant (M_3(r*\star)).
+
+---
+
+That’s Part 5: the canonical region (K_\Lambda(r)) plus the localized hinge inequality, with the remainder (R_W(r)=O(\beta r)) stated explicitly and absorbed by taking (r\lesssim 1/\beta).

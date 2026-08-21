@@ -1,0 +1,121 @@
+% Document B: Hessian Bound for the Wilson Action and C_V(N)
+% Suggested file name: wilson_hessian_bound.tex
+% =========================================================
+
+\section{Hessian Bound for the Wilson Action and $C_V(N)$}
+
+Consider the Wilson plaquette action for $SU(N)$,
+\[
+S_W(U) = \sum_p S_p(U_p),
+\quad
+S_p(U_p) = 1 - \frac{1}{N}\Re \Tr(U_p),
+\]
+where $U_p$ is the ordered product of four link variables around plaquette $p$.
+
+We equip $\mathcal{C} = SU(N)^{|B|}$ with the product Riemannian metric induced by
+$\langle X_b, Y_b \rangle = -\Tr(X_b Y_b)$ on each link.
+
+\subsection{Single-plaquette Hessian bound}
+
+Fix a plaquette $p$ and consider its contribution
+\[
+S_p : G^4 \rightarrow \mathbb{R}, \quad
+S_p(V_1,V_2,V_3,V_4) = 1 - \frac{1}{N}\Re \Tr(V_1 V_2 V_3 V_4).
+\]
+
+Let $(V_1,\dots,V_4) \in G^4$ and $X^{(p)} = (X_1,\dots,X_4) \in \mathfrak{g}^4$ be a tangent vector.
+Define
+\[
+F_p(V_1,\dots,V_4) = S_p(V_1,\dots,V_4).
+\]
+Then the Hessian of $F_p$ at $(V_1,\dots,V_4)$ is a bilinear form
+\[
+\mathrm{Hess}F_p(V_1,\dots,V_4) : \mathfrak{g}^4\times\mathfrak{g}^4 \to \mathbb{R}.
+\]
+
+Since $G^4$ is compact and $F_p$ is smooth, the operator norm of
+$\mathrm{Hess}F_p$ is bounded:
+\[
+\|\mathrm{Hess}F_p(V_1,\dots,V_4)\|_{\mathrm{op}} \le C_{\mathrm{plaq}}(N)
+\quad \forall (V_1,\dots,V_4).
+\]
+
+For a sharper explicit bound one can use the following:
+
+\begin{lemma}[One-plaquette bound]
+For all $U \in SU(N)$ and $X \in \mathfrak{su}(N)$,
+\[
+\left|\big\langle X, \mathrm{Hess}\,S_p(U)\,X \big\rangle\right|
+\le \frac{1}{N} \|X\|^2.
+\]
+\end{lemma}
+
+\begin{proof}
+Write $U(\varepsilon) = e^{\varepsilon X}U$ and expand
+\[
+S_p(\varepsilon) = 1 - \frac{1}{N}\Re \Tr(e^{\varepsilon X} U).
+\]
+Then
+\[
+S_p''(0) = -\frac{1}{N}\Re \Tr(X^2 U).
+\]
+Let $H = -X^2$, which is Hermitian positive semidefinite. Its eigenvalues
+$\lambda_j \ge 0$ satisfy $\sum_j \lambda_j = \|X\|^2$.
+By von~Neumann's trace inequality for $H$ and unitary $U$,
+\[
+|\Tr(X^2 U)| = |\Tr(-H U)|
+\le \sum_j \lambda_j = \|X\|^2.
+\]
+Thus
+\[
+|S_p''(0)| \le \frac{1}{N}\|X\|^2,
+\]
+which is exactly the stated bound.
+\end{proof}
+
+So for any plaquette $p$ and any tangent $X^{(p)}\in \mathfrak{g}^4$,
+\[
+\big|\mathrm{Hess}F_p(X^{(p)},X^{(p)})\big|
+\le \frac{1}{N} \|X^{(p)}\|^2
+= \frac{1}{N} \sum_{j=1}^4 \|X_j\|^2.
+\]
+
+\subsection{Global bound and the constant $C_V(N)$}
+
+Let $A = (A_b)_{b\in B}$ be a tangent vector on $\mathcal{C}$.
+The Wilson Hessian quadratic form decomposes as
+\[
+\langle A, \mathrm{Hess} S_W(U) A\rangle
+= \sum_p \mathrm{Hess}F_p\big(A^{(p)},A^{(p)}\big),
+\]
+where $A^{(p)}$ is the restriction of $A$ to the four bonds in $p$.
+
+Using the plaquette bound and counting how many plaquettes touch each bond:
+\[
+\big|\langle A, \mathrm{Hess} S_W(U) A\rangle\big|
+\le \frac{1}{N}\sum_p \sum_{b\in\partial p} \|A_b\|^2.
+\]
+In $d$ dimensions each bond lies in at most $M_d = 2(d-1)$ plaquettes,
+so in $d=4$,
+\[
+\sum_p \sum_{b\in\partial p} \|A_b\|^2
+\le 6\sum_b \|A_b\|^2.
+\]
+
+Thus
+\[
+\big|\langle A, \mathrm{Hess} S_W(U) A\rangle\big|
+\le \frac{6}{N} \|A\|^2.
+\]
+
+\begin{theorem}[Wilson Hessian bound in 4D]
+For $SU(N)$ lattice gauge theory with Wilson action in four dimensions,
+the Hessian of the Wilson action satisfies
+\[
+\big|\langle A, \mathrm{Hess} S_W(U) A\rangle\big|
+\le C_V(N) \|A\|^2
+\quad\text{with}\quad
+C_V(N) = \frac{6}{N},
+\]
+for all configurations $U$ and tangent vectors $A$ (in particular, all horizontal $A$).
+\end{theorem}

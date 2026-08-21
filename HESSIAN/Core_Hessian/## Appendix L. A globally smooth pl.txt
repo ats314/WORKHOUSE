@@ -1,0 +1,376 @@
+## Appendix L. A globally smooth plaquette Lyapunov function and the full drift expansion
+
+This appendix addresses the **specific analytic bottleneck** isolated in the drift computation: for a plaquette-distance choice (z_p=d_G(U_p,\mathbf 1)^2), the term (X_\ell^a X_\ell^a z_p) is not uniformly controllable because (d_G(\cdot,\mathbf 1)^2) is not globally smooth on a compact Lie group (cut-locus issues). The file set pinpoints exactly this as the obstruction and suggests replacing (d^2) by a **globally smooth class function** such as
+[
+\widetilde z(g):=1-\frac1N \Re\operatorname{Tr}(g)\quad (g\in \mathrm{SU}(N)),
+]
+so that (X_\ell^a X_\ell^a \widetilde z_p) becomes uniformly bounded.  
+
+A second, more subtle bookkeeping issue flagged in your prompt is the potential leakage of an (O(|P(\Lambda)|)) **volume-growing constant** into ((L_\Lambda W_\Lambda)/W_\Lambda). In this appendix I show how choosing a scalar shaping function (\Phi) with (\Phi'(0)=0) forces the “pure Laplacian/Hessian” contributions to be **weighted by the plaquette deviation** and therefore removes the “every plaquette contributes a constant even at the vacuum” pathology.
+
+I will be explicit about what is proven here and what remains a separate, genuinely nontrivial estimate: after the replacement (d^2\mapsto \widetilde z), the drift computation becomes fully rigorous (no hidden regularity gaps), but turning the resulting identity into a **sign-definite Lyapunov drift inequality** still requires an additional coercivity/monotonicity input that is not established in the uploaded drafts (and is identified elsewhere as the “real bottleneck”). 
+
+---
+
+### L.1. Setup: configuration diffusion generator and link vector fields
+
+Let (\Lambda\subset\mathbb Z^d) be finite, with oriented edge set (E(\Lambda)) and plaquette set (P(\Lambda)). The configuration manifold is
+[
+M_\Lambda := G^{E(\Lambda)},\qquad G=\mathrm{SU}(N),
+]
+equipped with the product of a fixed bi-invariant Riemannian metric on (G). 
+
+Let (\mu_\Lambda(dU)=Z_\Lambda^{-1}e^{-S_\Lambda(U)},dU) be the Gibbs measure with smooth action (S_\Lambda).  A canonical case (used repeatedly in the project) is the Wilson action
+[
+S_\Lambda(U)=\beta\sum_{p\in P(\Lambda)}\Bigl(1-\frac1N\Re\operatorname{Tr}(U_p)\Bigr),
+]
+with (U_p) the ordered plaquette holonomy. 
+
+For each oriented edge (\ell\in E(\Lambda)), and each element (T) of the Lie algebra (\mathfrak g=\mathfrak{su}(N)), define the right-invariant directional derivative on the (\ell)-coordinate by
+[
+(X_{\ell}^{T}F)(U)\ :=\ \left.\frac{d}{dt}\right|*{t=0}F\bigl(\dots,U*\ell e^{tT},\dots\bigr).
+]
+Equivalently, fixing an orthonormal basis ({T^a}*{a=1}^{\dim\mathfrak g}) of (\mathfrak g) (with respect to the chosen inner product), we write (X*\ell^a:=X_\ell^{T^a}). 
+
+The configuration diffusion generator is
+[
+L_\Lambda F \ :=\ \Delta_\Lambda F-\langle \nabla S_\Lambda,\nabla F\rangle,
+\qquad
+\Delta_\Lambda:=\sum_{\ell\in E(\Lambda)}\sum_{a}(X_\ell^a)^2,
+]
+as in the project’s geometric setup. 
+
+The carré du champ is (in this coordinate description)
+[
+\Gamma_\Lambda(F,G)=\sum_{\ell,a}(X_\ell^aF)(X_\ell^aG),\qquad \Gamma_\Lambda(F)=\Gamma_\Lambda(F,F),
+]
+consistent with the diffusion calculus used in the main text. 
+
+---
+
+### L.2. The smooth plaquette proxy (\widetilde z) and its uniform derivative bounds
+
+#### L.2.1. Definition of the proxy and its basic properties
+
+Define the class function
+[
+\widetilde z:G\to[0,\infty),\qquad
+\widetilde z(g):=1-\frac{1}{N}\Re\operatorname{Tr}(g).
+]
+This exact function is already singled out in the drafts as the canonical “smooth proxy” for plaquette distance-squared.  It is also used in the project’s “canonical good set” definitions. 
+
+For each plaquette (p\in P(\Lambda)), define its pullback to configuration space:
+[
+\widetilde z_p(U):=\widetilde z(U_p).
+]
+
+Because (\widetilde z) is smooth on compact (G), all derivatives of (\widetilde z) are bounded on (G); in particular its gradient and Hessian norms are bounded. This is exactly the “smoothness + compactness ⇒ uniform derivative bounds” principle used elsewhere for plaquette-local functions. 
+
+#### L.2.2. First-derivative bound on (\widetilde z_p)
+
+**Lemma L.1 (uniform first derivative bound for one plaquette).**
+There exists a constant (C_1<\infty), depending only on (G) (and the chosen metric), such that for every lattice (\Lambda), every plaquette (p), every edge (\ell), and every basis direction (a),
+[
+|X_\ell^a \widetilde z_p(U)|\ \le\ C_1\cdot \mathbf 1_{{\ell\in \partial p}}
+\qquad\text{for all }U\in M_\Lambda.
+]
+
+**Proof.**
+
+* If (\ell\notin\partial p), then (U_p) does not depend on (U_\ell), hence (X_\ell^a\widetilde z_p=0).
+* If (\ell\in\partial p), vary (U_\ell\mapsto U_\ell e^{tT^a}). The plaquette holonomy (U_p(U)) changes by multiplication by (e^{t(\mathrm{Ad}\text{-conjugate of }T^a)}) either on the left or right, depending on the orientation of (\ell) in the boundary word for (p). Concretely, there exists a smooth map (A_{\ell,p}(U)\in G) such that
+  [
+  U_p(U_\ell e^{tT^a}) = A_{\ell,p}(U),e^{tT^a},A_{\ell,p}(U)^{-1},U_p(U)
+  \quad\text{or}\quad
+  U_p(U_\ell e^{tT^a}) = U_p(U),A_{\ell,p}(U),e^{tT^a},A_{\ell,p}(U)^{-1},
+  ]
+  i.e. the infinitesimal tangent direction in (T_{U_p}G) is a **left- or right-invariant vector** at (U_p) generated by an (\mathrm{Ad})-conjugate of (T^a).
+* The metric on (G) is bi-invariant, hence (\mathrm{Ad}) acts by isometries on (\mathfrak g). Therefore the pushforward tangent vector has norm (|T^a|=1).
+* Thus, by definition of gradient norm,
+  [
+  |X_\ell^a\widetilde z_p(U)| = |(\nabla \widetilde z)(U_p)\cdot v|\le \sup_{g\in G}|\nabla \widetilde z(g)|=:C_1,
+  ]
+  uniformly in (\Lambda,p,\ell,a,U). ∎
+
+This is the same “local dependence + (\mathrm{Ad})-isometry + compactness” mechanism that shows plaquette-local Taylor constants remain uniform in volume, as used for (D^3F) bounds in the Wilson Hessian stability argument. 
+
+#### L.2.3. Second-derivative bound: the bottleneck term becomes controlled
+
+**Lemma L.2 (uniform second derivative bound for one plaquette).**
+There exists a constant (C_2<\infty), depending only on (G) and (\widetilde z), such that for all (\Lambda,p,\ell,a,U),
+[
+\bigl|X_\ell^a X_\ell^a \widetilde z_p(U)\bigr|\ \le\ C_2\cdot \mathbf 1_{{\ell\in\partial p}}.
+]
+
+**Proof.** The proof repeats Lemma L.1 at one higher derivative order.
+
+* If (\ell\notin\partial p), again the expression vanishes.
+* If (\ell\in\partial p), the map (t\mapsto U_p(U_\ell e^{tT^a})) is a smooth curve in (G), obtained by composing the smooth holonomy map with a one-parameter subgroup in the (\ell)-coordinate.
+* The second derivative (X_\ell^a X_\ell^a \widetilde z_p(U)) is the second directional derivative of the smooth function (\widetilde z) along that curve, hence it is controlled by the operator norm of the Hessian of (\widetilde z) on (G), plus a bounded correction coming from the second derivative of the holonomy map in that coordinate.
+* All objects involved are smooth on compact manifolds, and—crucially—the holonomy map for a single plaquette depends only on 4 edge variables and involves only group multiplication/inversion, so its second-derivative operator norm is bounded by a constant that does **not** depend on (|\Lambda|).
+
+Formally: define the “single-plaquette word map”
+[
+m:G^4\to G,\qquad m(g_1,g_2,g_3,g_4):=g_1g_2g_3^{-1}g_4^{-1}.
+]
+Then (\widetilde z_p = \widetilde z\circ m\circ \pi_{\partial p}), where (\pi_{\partial p}:M_\Lambda\to G^4) projects to the 4 boundary edges. Both (m) and (\widetilde z) are (C^\infty), and the domain (G^4) is compact, so
+[
+\sup_{g\in G^4}|D^2(\widetilde z\circ m)(g)|_{\mathrm{op}}<\infty.
+]
+This supremum is exactly an admissible choice of (C_2). ∎
+
+This lemma is the mathematical core of the “fix”: the drafts explicitly note that the uncontrolled term is (X_\ell^aX_\ell^a z_p), and that replacing (z_p=d^2) by a globally smooth class function makes this term uniformly bounded.  
+
+---
+
+### L.3. The full drift expansion for (W_\Lambda=\exp(\eta\sum_p \Phi(\widetilde z_p)))
+
+Fix a function (\Phi\in C^2([0,\infty))) and define the Lyapunov “potential”
+[
+V_\Lambda(U):=\sum_{p\in P(\Lambda)}\Phi(\widetilde z_p(U)),
+\qquad
+W_\Lambda(U):=\exp\bigl(\eta V_\Lambda(U)\bigr),
+]
+for some (\eta>0).
+
+This is exactly the canonical ansatz analyzed in the draft drift computation: (W_\Lambda=\exp(\eta\sum_p\Phi(z_p))) with a plaquette scalar (z_p), and the uncontrolled term appears in ((L_\Lambda W_\Lambda)/W_\Lambda). 
+
+#### L.3.1. Chain rules: composition and exponential
+
+We will use two standard diffusion identities that are explicitly included in your notes.
+
+**Lemma L.3 (composition rule).**
+Let (L) be a diffusion generator with carré du champ (\Gamma). If (\Psi\in C^2(\mathbb R)) and (f\in C^2), then
+[
+L(\Psi(f))=\Psi'(f),Lf + \Psi''(f),\Gamma(f).
+]
+
+**Proof.** This is the standard chain rule for second-order diffusion operators and is stated (and used) in the project’s diffusion calculus. 
+For completeness: apply Itô’s formula to (\Psi(f(X_t))) for the diffusion generated by (L), or compute directly from the definition of (\Gamma) and bilinearity. ∎
+
+**Lemma L.4 (exponential rule).**
+For (W=e^{\kappa V}) with (\kappa\in\mathbb R), one has
+[
+LW = W\bigl(\kappa LV + \kappa^2\Gamma(V)\bigr).
+]
+
+**Proof.** Take (\Psi(s)=e^{\kappa s}) in Lemma L.3; then (\Psi'=\kappa e^{\kappa s}), (\Psi''=\kappa^2 e^{\kappa s}), so
+[
+L(e^{\kappa V})=\kappa e^{\kappa V} LV + \kappa^2 e^{\kappa V}\Gamma(V).
+]
+This is exactly Lemma 14.3 in the notes.  ∎
+
+#### L.3.2. Expand (LV_\Lambda) and (\Gamma(V_\Lambda))
+
+By linearity of (L_\Lambda),
+[
+L_\Lambda V_\Lambda
+=\sum_{p}L_\Lambda\bigl(\Phi(\widetilde z_p)\bigr).
+]
+Apply Lemma L.3 with (f=\widetilde z_p):
+[
+L_\Lambda\bigl(\Phi(\widetilde z_p)\bigr)
+=\Phi'(\widetilde z_p),L_\Lambda \widetilde z_p+\Phi''(\widetilde z_p),\Gamma_\Lambda(\widetilde z_p).
+]
+Hence
+[
+L_\Lambda V_\Lambda
+=\sum_p \Phi'(\widetilde z_p),L_\Lambda \widetilde z_p
++\sum_p \Phi''(\widetilde z_p),\Gamma_\Lambda(\widetilde z_p).
+\tag{L.1}
+]
+
+Similarly, since (\Gamma_\Lambda) is bilinear,
+[
+\Gamma_\Lambda(V_\Lambda)
+=\Gamma_\Lambda\Big(\sum_p\Phi(\widetilde z_p)\Big)
+=\sum_{p,q}\Gamma_\Lambda\big(\Phi(\widetilde z_p),\Phi(\widetilde z_q)\big).
+]
+But
+[
+\Gamma_\Lambda\big(\Phi(\widetilde z_p),\Phi(\widetilde z_q)\big)
+=\Phi'(\widetilde z_p)\Phi'(\widetilde z_q),\Gamma_\Lambda(\widetilde z_p,\widetilde z_q)
+]
+because (X_\ell^a(\Phi(\widetilde z_p))=\Phi'(\widetilde z_p),X_\ell^a\widetilde z_p) and (\Gamma_\Lambda) is the sum of products (X_\ell^a f\cdot X_\ell^a g).  Thus
+[
+\Gamma_\Lambda(V_\Lambda)
+=\sum_{p,q}\Phi'(\widetilde z_p)\Phi'(\widetilde z_q),\Gamma_\Lambda(\widetilde z_p,\widetilde z_q).
+\tag{L.2}
+]
+
+#### L.3.3. The full formula for ((L_\Lambda W_\Lambda)/W_\Lambda)
+
+Now apply Lemma L.4 with (W_\Lambda=e^{\eta V_\Lambda}):
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+=\eta,L_\Lambda V_\Lambda+\eta^2,\Gamma_\Lambda(V_\Lambda).
+\tag{L.3}
+]
+Inserting (L.1) and (L.2) gives the explicit expansion
+[
+\boxed{
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+=====================================
+
+\eta\sum_p \Phi'(\widetilde z_p),L_\Lambda \widetilde z_p
++\eta\sum_p \Phi''(\widetilde z_p),\Gamma_\Lambda(\widetilde z_p)
++\eta^2\sum_{p,q}\Phi'(\widetilde z_p)\Phi'(\widetilde z_q),\Gamma_\Lambda(\widetilde z_p,\widetilde z_q).
+}
+\tag{L.4}
+]
+
+This is the rigorous, un-schematic version of the drift computation described in the draft summary: after expanding (L_\Lambda W_\Lambda), the remaining “geometric obstruction” is the appearance of second derivatives of the plaquette scalar along link fields. 
+
+---
+
+### L.4. Where the (X_\ell^aX_\ell^a\widetilde z_p) term enters, and why it is now controlled
+
+To connect (L.4) with the “uncontrolled term” language in your notes, expand (L_\Lambda \widetilde z_p) in link-coordinates. From the definition (L_\Lambda=\Delta_\Lambda-\langle\nabla S_\Lambda,\nabla\cdot\rangle), 
+[
+L_\Lambda \widetilde z_p
+========================
+
+\sum_{\ell,a} (X_\ell^a)^2\widetilde z_p
+-\sum_{\ell,a}(X_\ell^a S_\Lambda)(X_\ell^a\widetilde z_p).
+\tag{L.5}
+]
+The first term contains exactly the object
+[
+(X_\ell^a)^2\widetilde z_p,
+]
+whose uniform boundedness is the bottleneck for (z_p=d^2) and is fixed by replacing (d^2) with a globally smooth class function.  
+
+Using Lemma L.2, we can uniformly control this entire contribution:
+
+**Lemma L.5 (uniform control of the second-derivative drift contribution).**
+Assume (\Phi') is bounded on the range of (\widetilde z) (e.g. on ([0,2]) for (\widetilde z(g)=1-\frac1N\Re\mathrm{Tr}(g))). Then there exists (C<\infty), depending only on (G,\widetilde z,\Phi) and the lattice local degree, such that for all (\Lambda) and all (U),
+[
+\left|
+\eta\sum_p\Phi'(\widetilde z_p)\sum_{\ell,a}(X_\ell^a)^2\widetilde z_p
+\right|
+\ \le\
+C,\eta,|P(\Lambda)|.
+]
+
+**Proof.** By Lemma L.2, for each fixed plaquette (p),
+[
+\bigl|(X_\ell^a)^2\widetilde z_p\bigr|\le C_2\mathbf 1_{{\ell\in\partial p}}.
+]
+Hence
+[
+\sum_{\ell,a}\bigl|(X_\ell^a)^2\widetilde z_p\bigr|
+\le
+C_2\sum_{\ell\in\partial p}\sum_a 1
+===================================
+
+C_2\cdot|\partial p|\cdot\dim\mathfrak g,
+]
+where (|\partial p|=4). Therefore, using (|\Phi'|*\infty<\infty),
+[
+\left|
+\sum_p\Phi'(\widetilde z_p)\sum*{\ell,a}(X_\ell^a)^2\widetilde z_p
+\right|
+\le
+\sum_p |\Phi'|_\infty \cdot C_2\cdot 4\cdot\dim\mathfrak g
+==========================================================
+
+C,|P(\Lambda)|.
+]
+Multiply by (\eta). ∎
+
+This lemma shows: **the “uncontrolled term” is no longer uncontrolled**—it is a bounded local contribution per plaquette.
+
+However, as written it still scales like (|P(\Lambda)|), which is exactly why you asked for the (\Phi'(0)=0) refinement: to ensure we do not get a volume-growing constant contribution even when the configuration is in the small-field region.
+
+---
+
+### L.5. The (\Phi'(0)=0) trick: removing the “constant per plaquette at the vacuum” leakage
+
+The key observation is:
+
+* The “pure second derivative” piece in (L_\Lambda\widetilde z_p), namely (\sum_{\ell,a}(X_\ell^a)^2\widetilde z_p), is **generically nonzero** even at a plaquette vacuum configuration (U_p=\mathbf 1).
+* If (\Phi'(0)\neq 0), then each plaquette contributes approximately (\Phi'(0)\cdot (\Delta\widetilde z)(\mathbf 1)), and the drift expansion can carry an (O(|P|)) constant term even in a small-field region.
+* If (\Phi'(0)=0), then in a small-field region (\widetilde z_p) is small, so (\Phi'(\widetilde z_p)) is small, and the second-derivative term becomes weighted by the plaquette deviation.
+
+A particularly clean sufficient condition is Lipschitz control of (\Phi') at 0.
+
+**Lemma L.6 (weighting by (\widetilde z_p)).**
+Assume (\Phi\in C^2([0,2])) with (\Phi'(0)=0). Then for all (s\in[0,2]),
+[
+|\Phi'(s)|\le |\Phi''|_\infty, s.
+]
+
+**Proof.** By the mean value theorem applied to (\Phi') on ([0,s]),
+[
+\Phi'(s)-\Phi'(0)=\Phi''(\xi)s
+]
+for some (\xi\in(0,s)). Since (\Phi'(0)=0), take absolute values and bound (|\Phi''(\xi)|\le|\Phi''|_\infty). ∎
+
+Now combine Lemma L.6 with Lemma L.2:
+
+**Corollary L.7 (no “pure constant per plaquette” term once (\Phi'(0)=0)).**
+With (\Phi'(0)=0), there exists (C<\infty) depending only on (G,\widetilde z,\Phi) and the lattice local degree such that
+[
+\left|
+\eta\sum_p\Phi'(\widetilde z_p)\sum_{\ell,a}(X_\ell^a)^2\widetilde z_p
+\right|
+\le
+C,\eta \sum_{p\in P(\Lambda)}\widetilde z_p(U).
+\tag{L.6}
+]
+
+**Proof.** Use (|(X_\ell^a)^2\widetilde z_p|\le C_2\mathbf 1_{{\ell\in\partial p}}) and (|\Phi'(\widetilde z_p)|\le|\Phi''|_\infty \widetilde z_p). Summing exactly as in Lemma L.5 yields a bound proportional to (\sum_p \widetilde z_p). ∎
+
+This is precisely the mechanism you requested: with (\Phi'(0)=0), the Laplacian/Hessian contribution is **automatically weighted** by the plaquette deviation (\widetilde z_p), rather than contributing a constant even when (\widetilde z_p\approx 0).
+
+A canonical concrete choice is (\Phi(s)=s^2), for which (\Phi'(s)=2s) and (\Phi''(s)=2), so (L.6) holds with (|\Phi''|_\infty=2).
+
+---
+
+### L.6. What this appendix *does* and *does not* complete
+
+At this point we have accomplished the two “purely analytic” repairs:
+
+1. **Global regularity repair**: replacing (z_p=d_G(U_p,\mathbf 1)^2) by (\widetilde z_p(U)=1-\frac1N\Re\mathrm{Tr}(U_p)) makes the previously uncontrolled term (X_\ell^aX_\ell^a z_p) uniformly bounded, as suggested in the notes.  
+
+2. **No vacuum-volume leakage**: choosing (\Phi) with (\Phi'(0)=0) converts the potentially volume-growing “Laplacian constant” into a term weighted by (\sum_p\widetilde z_p), eliminating the “every plaquette contributes a constant even at the vacuum” failure mode (Corollary L.7).
+
+What remains is turning the exact identity (L.4) into a **sign-definite Lyapunov drift inequality** of the kind targeted in the analytic engine (e.g. an estimate of the schematic form
+[
+L_\Lambda W_\Lambda \le \bigl(-c,D_\Lambda + b\bigr),W_\Lambda
+\quad\text{with}\quad D_\Lambda\sim \sum_p \widetilde z_p,
+]
+or the “superlinear” variants needed for LSI upgrades). This is identified in the project text as the genuinely hard remaining component—the “measure concentration / Lyapunov” step—once the geometric/gluing machinery is in place. 
+
+So, strictly and honestly:
+
+* **This appendix completes** the missing regularity and bookkeeping pieces so that the drift computation is now fully rigorous and free of the cut-locus obstruction.
+* **This appendix does not by itself prove** the final drift *sign* condition (because that requires additional estimates tying the various terms in (L.4)—notably the (-\langle\nabla S_\Lambda,\nabla \widetilde z_p\rangle) contribution inside (L_\Lambda\widetilde z_p)—to a definite restoring functional (D_\Lambda) at all configurations, which is not established in the drafts and is explicitly called out as the remaining bottleneck).
+
+---
+
+### L.7. Optional “engineering note” (still within the rules): a clean reduction statement
+
+If you want one crisp “handoff lemma” that summarizes what you gain from this appendix, it is the following.
+
+**Proposition L.8 (reduction of YM-Lyapunov to a remaining coercivity bound).**
+Let (S_\Lambda) be the Wilson action (\beta\sum_p \widetilde z_p).  Fix (\Phi(s)=s^2). Then for (W_\Lambda=\exp(\eta\sum_p \widetilde z_p^2)),
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+=====================================
+
+\eta\sum_p 2\widetilde z_p,L_\Lambda \widetilde z_p
++\eta\sum_p 2,\Gamma_\Lambda(\widetilde z_p)
++\eta^2\sum_{p,q}4\widetilde z_p\widetilde z_q,\Gamma_\Lambda(\widetilde z_p,\widetilde z_q),
+]
+and every term here is well-defined and finite with constants controlled uniformly in (\Lambda) at the level of the differential operators (no hidden global smoothness gap). Moreover, the only remaining step to obtain a drift inequality of the form
+[
+L_\Lambda W_\Lambda \le (-c,D_\Lambda + b),W_\Lambda
+]
+is a **pure inequality** comparing (L_\Lambda \widetilde z_p) and the various (\Gamma_\Lambda(\widetilde z_p,\widetilde z_q)) to (D_\Lambda) (e.g. (D_\Lambda=\sum_p \widetilde z_p) or (\sum_p \widetilde z_p^2)), with (c,b) independent of (\Lambda).
+
+This proposition is not claiming the coercivity bound holds; it is packaging the outcome: with the smooth proxy, the drift program’s remaining difficulty is no longer a hidden differential-geometric regularity issue, but a single explicit analytic inequality problem.
+
+---
+
+That completes Appendix L.

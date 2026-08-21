@@ -1,0 +1,181 @@
+(3) Wilson action Hessian scan on GPU
+# ---------------------------------------
+import jax
+import jax.numpy as jnp
+import jax.scipy as jsp
+from jax import random, lax
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import time, os
+
+jax.config.update("jax_enable_x64", False)
+
+# ----- SU(3) algebra basics -----
+def su3_generators():
+    lam=[]
+    lam.append(jnp.array([[0,1,0],[1,0,0],[0,0,0]],jnp.complex64))
+    lam.append(jnp.array([[0,-1j,0],[1j,0,0],[0,0,0]],jnp.complex64))
+    lam.append(jnp.array([[1,0,0],[0,-1,0],[0,0,0]],jnp.complex64))
+    lam.append(jnp.array([[0,0,1],[0,0,0],[1,0,0]],jnp.complex64))
+    lam.append(jnp.array([[0,0,-1j],[0,0,0],[1j,0,0]],jnp.complex64))
+    lam.append(jnp.array([[0,0,0],[0,0,1],[0,1,0]],jnp.complex64))
+    lam.append(jnp.array([[0,0,0],[0,0,-1j],[0,1j,0]],jnp.complex64))
+    lam.append(jnp.array([[1,0,0],[0,1,0],[0,0,-2]],jnp.complex64)/jnp.sqrt(3))
+    lam=jnp.stack(lam,axis=0)
+    return 1j*lam/2
+
+T = su3_generators()  # shape (8,3,3)
+
+def su3_alg_from_vec(a):
+    return jnp.einsum("...a,aij->...ij", a, T)
+
+def su3_exp(A):
+    return jsp.linalg.expm(A)
+
+def build_links(theta, L):
+    flat = theta.reshape(-1, 8)                  # [n_links, 8]
+    A = jax.vmap(su3_alg_from_vec)(flat)         # [n_links, 3,3]
+    U = jax.vmap(su3_exp)(A)                     # [n_links, 3,3]
+    return U.reshape(L, L, L, L, 4, 3, 3)        # (x,y,z,t,mu,i,j)
+
+def wilson_action(theta, L, beta=1.0):
+    U = build_links(theta, L)
+    S = 0.0
+    for mu in range(4):
+        for nu in range(mu+1, 4):
+            U1 = U[..., mu, :, :]
+            U2 = jnp.roll(U[..., nu, :, :], -1, axis=mu)
+            U3 = jnp.swapaxes(jnp.conjugate(jnp.roll(U[..., mu, :, :], -1, axis=nu)), -1, -2)
+            U4 = jnp.swapaxes(jnp.conjugate(U[..., nu, :, :]), -1, -2)
+            P  = U1 @ U2 @ U3 @ U4
+            tr = jnp.real(jnp.einsum("...ii->...", P))
+            S  = S + jnp.sum(1.0 - tr/3.0)
+    return beta * S
+
+def make_flat_action(L, beta=1.0):
+    @jax.jit
+    def flat(theta):
+        return wilson_action(theta, L, beta)
+    return flat
+
+# ----- Hessian-vector product + jitted Lanczos -----
+def make_lanczos(flat_action, k=20):
+    grad_flat = jax.grad(flat_action)
+
+    def hvp(theta, v):
+        _, hv = jax.jvp(grad_flat, (theta,), (v,))
+        return hv
+
+    @jax.jit
+    def lanczos(theta, v0):
+        v0 = v0 / jnp.linalg.norm(v0)
+
+        def step(carry, _):
+            v_prev, v_cur, beta_prev = carry
+            w = hvp(theta, v_cur)
+            w = w - beta_prev * v_prev
+            alpha = jnp.vdot(v_cur, w).real
+            w = w - alpha * v_cur
+            beta = jnp.linalg.norm(w)
+            v_next = jnp.where(beta > 0, w / beta, v_cur * 0.0)
+            return (v_cur, v_next, beta), (alpha, beta)
+
+        init = (jnp.zeros_like(v0), v0, 0.0)
+        (_, _, _), (alphas, betas) = lax.scan(step, init, None, length=k)
+        a = jnp.array(alphas)
+        b = jnp.array(betas[:-1])
+        Tm = jnp.diag(a) + jnp.diag(b,1) + jnp.diag(b,-1)
+        eigs = jnp.linalg.eigvalsh(Tm)
+        return eigs[0]
+
+    return lanczos
+
+# ----- Big random-direction scan -----
+LATTICES = [2, 3, 4]
+THETAS   = [0.01, 0.02, 0.03]
+BATCH    = 128
+SEED     = 777
+
+results = []
+for L in LATTICES:
+    n = (L**4)*4*8
+    print(f"\n===== L = {L}, n_params = {n} =====")
+    flat    = make_flat_action(L, beta=1.0)
+    lanczos = make_lanczos(flat, k=25)
+
+    # Prime JIT
+    theta0 = jnp.zeros((n,), dtype=jnp.float32)
+    _ = flat(theta0)
+    v0 = jnp.ones_like(theta0)
+    _ = lanczos(theta0, v0)
+
+    for theta_amp in THETAS:
+        key = random.PRNGKey(SEED + int(1000*theta_amp) + L)
+        dirs = random.normal(key, (BATCH, n))
+        dirs = dirs / jnp.linalg.norm(dirs, axis=1, keepdims=True)
+
+        t0 = time.time()
+        lam_list = []
+        for i in range(BATCH):
+            th = theta_amp * dirs[i]
+            lam = lanczos(th, dirs[i])
+            lam_list.append(lam)
+        lam_arr = np.array(lam_list)
+        C_vals = -lam_arr / (theta_amp**2)
+        t1 = time.time()
+
+        print(f"L={L}, θ={theta_amp:0.3f}: λ_min in [{lam_arr.min():+0.4f}, {lam_arr.max():+0.4f}], "
+              f"best C_W \u2248 {C_vals.max():+0.4f}, median C_W \u2248 {np.median(C_vals):+0.4f}, "
+              f"{t1-t0:0.1f}s")
+
+        results.append((L, theta_amp, C_vals.max(), C_vals.mean(), C_vals.min()))
+
+# Save + small table
+df = pd.DataFrame(results, columns=["L","theta","C_max","C_mean","C_min"])
+print("\nSummary:")
+print(df)
+
+os.makedirs("/mnt/data", exist_ok=True)
+out_path = "/mnt/data/CW_scan_L2_L4.csv"
+df.to_csv(out_path, index=False)
+print("\nSaved CSV to", out_path)
+
+
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+
+===== L = 2, n_params = 512 =====
+/usr/local/lib/python3.12/dist-packages/jax/_src/lax/lax.py:5473: ComplexWarning: Casting complex values to real discards the imaginary part
+  x_bar = _convert_element_type(x_bar, x.aval.dtype, x.aval.weak_type)
+L=2, θ=0.010: λ_min in [-0.0008, -0.0005], best C_W ≈ +8.4992, median C_W ≈ +6.0047, 7.0s
+L=2, θ=0.020: λ_min in [-0.0012, -0.0008], best C_W ≈ +2.9791, median C_W ≈ +2.4583, 6.9s
+L=2, θ=0.030: λ_min in [-0.0018, -0.0012], best C_W ≈ +2.0458, median C_W ≈ +1.6465, 6.9s
+
+===== L = 3, n_params = 2592 =====
+L=3, θ=0.010: λ_min in [-0.0004, -0.0003], best C_W ≈ +3.8060, median C_W ≈ +3.3293, 7.8s
+L=3, θ=0.020: λ_min in [-0.0005, -0.0004], best C_W ≈ +1.1582, median C_W ≈ +1.0473, 7.7s
+L=3, θ=0.030: λ_min in [-0.0006, -0.0005], best C_W ≈ +0.6748, median C_W ≈ +0.6258, 7.7s
+
+===== L = 4, n_params = 8192 =====
+L=4, θ=0.010: λ_min in [-0.0003, -0.0002], best C_W ≈ +2.8910, median C_W ≈ +2.4581, 11.1s
+L=4, θ=0.020: λ_min in [-0.0003, -0.0002], best C_W ≈ +0.7395, median C_W ≈ +0.6400, 11.0s
+L=4, θ=0.030: λ_min in [-0.0003, -0.0003], best C_W ≈ +0.3551, median C_W ≈ +0.3202, 11.0s
+
+Summary:
+   L  theta     C_max    C_mean     C_min
+0  2   0.01  8.499188  6.108894  4.894550
+1  2   0.02  2.979125  2.463496  2.015607
+2  2   0.03  2.045841  1.630564  1.364948
+3  3   0.01  3.805959  3.332590  2.838637
+4  3   0.02  1.158239  1.048603  0.951946
+5  3   0.03  0.674830  0.626421  0.576313
+6  4   0.01  2.890960  2.465952  2.112421
+7  4   0.02  0.739550  0.642270  0.560863
+8  4   0.03  0.355076  0.320883  0.298484
+
+Saved CSV to /mnt/data/CW_scan_L2_L4.csv
+
+

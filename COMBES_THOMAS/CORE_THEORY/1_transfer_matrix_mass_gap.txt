@@ -1,0 +1,99 @@
+Title: Transfer Matrix, Spectral Gap, and Mass Gap (Summary from Chat)
+
+This document summarizes the structurally correct derivations and identities related to
+the transfer matrix, spectral gap, and the Yang–Mills mass gap that appeared in our chat.
+Nothing here is a new result; it is a cleaned-up restatement of standard structure.
+
+
+1. Transfer Matrix on the Lattice
+
+In Euclidean lattice Yang–Mills (pure gauge SU(3) for concreteness), with temporal lattice
+spacing a, one constructs a transfer matrix T(a) acting on a Hilbert space of gauge-invariant
+states on a fixed time slice.
+
+Formally,
+    T(a) = e^{-a H(a)}
+
+where:
+    - H(a) is the (lattice) Hamiltonian;
+    - a > 0 is the lattice spacing in the time direction.
+
+
+2. Eigenvalues and Energy Levels
+
+Assume:
+    T(a) |ψ_n(a)⟩ = λ_n(a) |ψ_n(a)⟩,
+
+with eigenvalues λ_n(a) ≥ 0 ordered as:
+    λ_0(a) > λ_1(a) ≥ λ_2(a) ≥ …
+
+Then, by definition of the transfer matrix,
+    λ_n(a) = e^{-a E_n(a)},
+
+where E_n(a) are the energy eigenvalues of H(a). In particular:
+    E_n(a) = - (1/a) log λ_n(a).
+
+
+3. Definition of the Mass Gap
+
+Let E_0(a) be the vacuum energy (lowest eigenvalue), and E_1(a) the energy of the first
+nontrivial excitation (e.g. the lightest glueball in pure YM). Then the mass gap at
+lattice spacing a is:
+    m(a) = E_1(a) - E_0(a).
+
+In terms of λ_0(a), λ_1(a):
+
+    λ_0(a) = e^{-a E_0(a)},
+    λ_1(a) = e^{-a E_1(a)}.
+
+So:
+
+    m(a) = E_1(a) - E_0(a)
+         = - (1/a) [log λ_1(a) - log λ_0(a)]
+         = - (1/a) log (λ_1(a) / λ_0(a)).
+
+Thus, the mass gap is directly tied to the ratio of the two largest eigenvalues of T(a).
+
+
+4. Correlation Functions and Exponential Decay
+
+Consider a gauge-invariant operator O(t) defined on time slices, and the Euclidean
+two-point function:
+
+    C(t) = ⟨ O(t) O(0) ⟩.
+
+Inserting a complete set of energy eigenstates:
+
+    C(t) = Σ_n |⟨0|O|n⟩|^2 e^{-E_n t}.
+
+As t → ∞, the dominant term is the lowest excitation that couples to O, typically
+n = 1 for a suitable glueball operator. Then:
+
+    C(t) ~ |⟨0|O|1⟩|^2 e^{-m t},
+    m = E_1 - E_0.
+
+In transfer-matrix language:
+
+    C(t) = Σ_n |⟨0|O|n⟩|^2
+           (λ_n / λ_0)^t,
+
+and asymptotically:
+
+    C(t) ~ const · (λ_1 / λ_0)^t = const · e^{-m t}.
+
+
+5. Mass Gap in the Continuum Limit (Conceptual)
+
+In the continuum limit a → 0, a rigorous mass gap statement would assert that:
+
+    lim_{a→0} m(a) = m_phys > 0,
+
+which in transfer-matrix language is equivalent to:
+
+    lim_{a→0} [ - (1/a) log (λ_1(a) / λ_0(a)) ] = m_phys > 0.
+
+A Clay-level proof would need to show:
+    - the existence of the continuum Hamiltonian H with well-defined spectrum;
+    - that the spectral gap E_1 - E_0 remains strictly positive in that limit.
+
+This document only encodes the algebraic relationships; it is not a proof that the gap exists.

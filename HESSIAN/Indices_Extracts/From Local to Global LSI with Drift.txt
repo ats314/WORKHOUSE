@@ -1,0 +1,58 @@
+Here’s a compact, technical brief on a useful program: **upgrade a local LSI on a SAFE set to a global LSI** using a Lyapunov drift + local (uniform‑in‑volume) LSI + entropy/variance decomposition.
+
+---
+
+### Setup
+
+* Probability measure ( \mu \propto e^{-V(x)},dx ) on a (product) manifold (M).
+* SAFE region (K\subset M): you can prove a **local LSI** with constant (\rho_K>0), uniformly in volume (blocks/scales).
+* Goal: global LSI ( \operatorname{Ent}_\mu(f^2) \le \tfrac{2}{\rho}\int |\nabla f|^2,d\mu ) with (\rho>0) independent of system size.
+
+### Ingredients
+
+1. **Lyapunov function** (W\ge 1) with drift:
+   [
+   LW \le -\alpha W + b,\mathbf{1}_{K} \quad (\alpha>0)
+   ]
+   for the Langevin generator (L=\Delta-\nabla V!\cdot!\nabla).
+   This implies integrability/tail control (finite “escape functional”) and gives a Foster–Lyapunov bound.
+2. **Local LSI on (K)**:
+   [
+   \operatorname{Ent}_{\mu_K}(g^2) \le \tfrac{2}{\rho_K}\int |\nabla g|^2,d\mu_K,
+   ]
+   uniformly over volumes/tiles (same (\rho_K)).
+3. **Local‑to‑global decomposition** (patched entropy/variance): split (f) with a partition of unity ({\phi,1-\phi}) where (\phi) localizes to (K). Control
+   [
+   \operatorname{Ent}*\mu(f^2)
+   ;\le;
+   \underbrace{\operatorname{Ent}*{\mu}((\phi f)^2)}_{\text{local on }K}
+
+   * \underbrace{\operatorname{Ent}*{\mu}(((1-\phi)f)^2)}*{\text{tails}}
+   * \text{cross terms},
+     ]
+     and bound tail/cross terms via the Lyapunov weight (W) and a weighted Poincaré/LSI.
+
+### Canonical theorem (skeleton)
+
+Let (W\ge1) satisfy (LW\le -\alpha W + b,\mathbf{1}_{K}) and assume a uniform local LSI on (K) with constant (\rho_K). Then (\mu) satisfies a **global LSI** with
+[
+\rho ;\gtrsim; \min!\left{\rho_K,; \frac{\alpha}{1+\log!\int W,d\mu + C(b,\nabla \phi)}\right},
+]
+where (C) depends on the cutoff (\phi) (transition layer size) and geometric constants. The proof patches the local LSI with a weighted (Lyapunov) control of (f) outside (K), using Herbst/transport or Rothaus‑type lemma to absorb cross terms.
+
+### How this helps your YM stack
+
+* **SAFE region = convex/Hessian‑positive set** you already control (via Haar+Wilson Hessian lower bound). That gives (\rho_K) uniformly on blocks.
+* **Lyapunov function**: take (W=\exp(\eta,\Psi)) with (\Psi) an escape potential (e.g., sum of link‑wise distances / plaquette energies). Your Bakry–Émery drift outside SAFE gives (LW) negativity for (\eta) small.
+* **Uniform‑in‑volume**: the constants are stable under product/tiling provided the local LSI and drift parameters don’t degrade with block size; this is consistent with your block‑RG/PBH maps.
+* **Output**: a **global LSI constant (\rho>0)** that survives volume → ∞ and is compatible with your RG step (contractivity preserves (\rho)), yielding uniform spectral gap and exponential correlations.
+
+### Minimal checklist (actionable)
+
+* [ ] Exhibit (W) with explicit ((\alpha,b)) from your Hessian lower bounds outside SAFE.
+* [ ] Prove local LSI on SAFE with explicit (\rho_K) (you already have BE curvature ≥ (\kappa>0) there → (\rho_K\ge \kappa)).
+* [ ] Build (\phi) with controlled (|\nabla\phi|_\infty); quantify the transition shell.
+* [ ] Patch entropy: bound cross/outer terms via (\int f^2 \log\frac{f^2}{\mu f^2},d\mu \lesssim \int |\nabla f|^2 + \int f^2 W,d\mu); absorb with drift.
+* [ ] Record final (\rho) explicitly and propagate through one RG step; check monotonicity.
+
+

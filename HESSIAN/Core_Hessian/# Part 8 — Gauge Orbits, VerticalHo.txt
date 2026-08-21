@@ -1,0 +1,379 @@
+# Part 8 — Gauge Orbits, Vertical/Horizontal Decomposition, and the Physical Sector
+
+In this part we implement the abstract gauge-symmetry interface of Part 5 in the concrete setting of lattice Yang–Mills. For a fixed finite spatial lattice (\Lambda\subset\mathbb{Z}^d), we:
+
+* Describe the action of the lattice gauge group (G_\Lambda) on the configuration manifold (M_\Lambda = G^{E(\Lambda)}),
+* Identify **gauge orbits** and the associated **vertical** subspaces (V_U\subset T_U M_\Lambda),
+* Define **horizontal** subspaces (H_U = V_U^\perp) and verify gauge-equivariance of the decomposition,
+* Show that **gauge-invariant observables have horizontal gradients**, (\nabla f(U)\in H_U),
+* Interpret the Dirichlet form on gauge-invariant observables as the Dirichlet form on the quotient (M_\Lambda / G_\Lambda), i.e. on the **physical configuration space**.
+
+This realizes, concretely, the “physical tangent bundle” (H\subset TM_\Lambda) on which we will impose curvature bounds in Parts 9–11, and it provides the configuration-space side of the physical sector used later in Parts 16–18.
+
+Throughout, (G) is a fixed compact, connected Lie group (e.g. (SU(N))), endowed with a bi-invariant Riemannian metric (g_G). We use the spatial lattice notation from Part 7.
+
+---
+
+## 8.1. Gauge orbits in configuration space
+
+### 8.1.1. Configuration manifold and gauge group
+
+Let (\Lambda\subset\mathbb{Z}^d) be a finite hypercubic lattice (e.g. a periodic box). We denote:
+
+* Vertices (sites): (V(\Lambda)),
+* Oriented edges (links): (E(\Lambda)).
+
+The **configuration manifold** is the product of one copy of (G) per oriented edge:
+[
+M_\Lambda := G^{E(\Lambda)}
+= \big{ U = (U_{x,\mu})*{(x,\mu)\in E(\Lambda)} : U*{x,\mu}\in G \big}.
+]
+
+We equip (M_\Lambda) with the **product Riemannian metric**
+[
+g_\Lambda = \bigoplus_{\ell\in E(\Lambda)} g_G^{(\ell)},
+]
+and the corresponding product Haar volume (\mathrm{vol}*{g*\Lambda}). This is exactly the structure built in Part 6.
+
+The **lattice gauge group** is the product of one copy of (G) per site:
+[
+G_\Lambda := G^{V(\Lambda)}
+= \big{ g = (g_x)_{x\in V(\Lambda)} : g_x\in G \big},
+]
+with group law given by componentwise multiplication.
+
+The gauge group acts on (M_\Lambda) by **endpoint conjugation**:
+[
+(g\cdot U)*{x,\mu} := g_x, U*{x,\mu}, g_{x+\hat\mu}^{-1},
+\qquad g\in G_\Lambda,\ U\in M_\Lambda,\ (x,\mu)\in E(\Lambda).
+]
+
+This is a smooth left action, and for each fixed (g\in G_\Lambda), the map
+[
+\Phi_g : M_\Lambda \to M_\Lambda,\quad U \mapsto g\cdot U
+]
+is an isometry of ((M_\Lambda,g_\Lambda)) and preserves the product Haar volume. Thus the data ((M_\Lambda,g_\Lambda,G_\Lambda,\cdot)) fit precisely into the abstract gauge-symmetry setup of Part 5.
+
+In particular, any potential (S_\Lambda) which is **gauge invariant**,
+[
+S_\Lambda(g\cdot U) = S_\Lambda(U),\quad \forall g\in G_\Lambda,\ \forall U\in M_\Lambda,
+]
+together with (\mathrm{vol}*{g*\Lambda}) defines a Gibbs measure (\mu_\Lambda) on (M_\Lambda) which is invariant under the gauge action:
+[
+d\mu_\Lambda(U)
+= Z_\Lambda^{-1} e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U),
+\qquad \mu_\Lambda(g\cdot A) = \mu_\Lambda(A).
+]
+
+### 8.1.2. Gauge orbits and regular configurations
+
+For a configuration (U\in M_\Lambda), the **gauge orbit** through (U) is
+[
+\mathcal{O}*U := { g\cdot U : g\in G*\Lambda} \subset M_\Lambda.
+]
+
+Standard Lie group action theory implies:
+
+* (\mathcal{O}*U) is an immersed submanifold of (M*\Lambda),
+* Its dimension is
+  [
+  \dim \mathcal{O}*U = \dim G*\Lambda - \dim \mathrm{Stab}(U),
+  ]
+  where the **stabilizer subgroup** is
+  [
+  \mathrm{Stab}(U) := { g\in G_\Lambda : g\cdot U = U}.
+  ]
+
+Define the set of **regular configurations**
+[
+M_\Lambda^{\mathrm{reg}}
+:= \big{ U\in M_\Lambda : \dim \mathcal{O}_U \text{ is locally constant near }U \big}.
+]
+
+Basic facts (again from standard theory of Lie group actions):
+
+* (M_\Lambda^{\mathrm{reg}}) is open and dense in (M_\Lambda),
+* Over (M_\Lambda^{\mathrm{reg}}), the orbit dimension is constant and the orbits (\mathcal{O}_U) vary smoothly in (U).
+
+We will work primarily on (M_\Lambda^{\mathrm{reg}}). The complement (M_\Lambda \setminus M_\Lambda^{\mathrm{reg}}) is a union of lower-dimensional strata (configurations with non-generic stabilizers). Since it has strictly lower dimension, it is negligible for the product Haar measure and hence for any Gibbs measure (\mu_\Lambda) absolutely continuous with respect to (\mathrm{vol}*{g*\Lambda}). In particular, it has (\mu_\Lambda)-measure zero, so it can be safely ignored in (L^2(\mu_\Lambda)) and Dirichlet-form considerations.
+
+---
+
+## 8.2. Vertical subspaces and fundamental vector fields
+
+We now describe the tangent spaces to gauge orbits and identify **vertical** subspaces as the infinitesimal gauge directions.
+
+### 8.2.1. Gauge Lie algebra and fundamental fields
+
+The Lie algebra of (G) is (\mathfrak{g} = \mathrm{Lie}(G)), equipped with the inner product induced by (g_G). The Lie algebra of the product group (G_\Lambda) is
+[
+\mathfrak{g}*\Lambda
+:= \bigoplus*{x\in V(\Lambda)} \mathfrak{g},
+]
+one copy of (\mathfrak{g}) for each site.
+
+For (X = (X_x)*{x\in V(\Lambda)}\in\mathfrak{g}*\Lambda), the associated one-parameter subgroup is
+[
+g(t) = \exp(tX) \in G_\Lambda,
+\qquad g(t)_x = \exp_G(t X_x).
+]
+
+This defines a **fundamental vector field** (X^\sharp) on (M_\Lambda) by
+[
+X^\sharp(U) := \left.\frac{d}{dt}\right|*{t=0} (g(t)\cdot U),\qquad U\in M*\Lambda.
+]
+
+In edge components, for each ((x,\mu)\in E(\Lambda)),
+[
+\big(X^\sharp(U)\big)*{x,\mu}
+= \left.\frac{d}{dt}\right|*{t=0}
+\Big( \exp_G(t X_x), U_{x,\mu}, \exp_G(-t X_{x+\hat\mu}) \Big).
+]
+
+Thus (X^\sharp(U)\in T_U M_\Lambda) describes the infinitesimal effect of the gauge transformation generated by (X).
+
+### 8.2.2. Vertical subspaces as tangent spaces to gauge orbits
+
+At each (U\in M_\Lambda^{\mathrm{reg}}), define the **vertical subspace**
+[
+V_U := { X^\sharp(U) : X\in \mathfrak{g}*\Lambda} \subset T_U M*\Lambda.
+]
+
+By general properties of smooth group actions:
+
+* (V_U = T_U \mathcal{O}_U), the tangent space to the gauge orbit through (U),
+* (\dim V_U = \dim \mathcal{O}*U) is constant on (M*\Lambda^{\mathrm{reg}}),
+* The vertical subspaces fit together to give a smooth subbundle
+  [
+  V \subset T M_\Lambda|*{M*\Lambda^{\mathrm{reg}}}.
+  ]
+
+Intuitively, (V_U) consists of **pure gauge variations**: moving in directions (v\in V_U) changes the representative of the gauge-equivalence class ([U]), but not the underlying physical configuration.
+
+---
+
+## 8.3. Horizontal subspaces and gauge equivariance
+
+We now single out the **physical** directions, orthogonal to the pure gauge directions.
+
+### 8.3.1. Orthogonal decomposition
+
+On each tangent space (T_U M_\Lambda) we have the inner product induced by the product metric (g_\Lambda). Since (V_U\subset T_U M_\Lambda) is a linear subspace, we can take its orthogonal complement
+[
+H_U := V_U^\perp \subset T_U M_\Lambda.
+]
+
+On (M_\Lambda^{\mathrm{reg}}) this gives a smooth rank-((\dim M_\Lambda - \dim G_\Lambda + \dim \mathrm{Stab}(U))) subbundle
+[
+H \subset T M_\Lambda|*{M*\Lambda^{\mathrm{reg}}}
+]
+and a pointwise orthogonal decomposition
+[
+T_U M_\Lambda = H_U \oplus V_U,\qquad U\in M_\Lambda^{\mathrm{reg}}.
+]
+
+We regard (H_U) as the space of **physical directions** at (U): those tangent directions which change gauge-equivalence classes rather than just changing the representative of a fixed class.
+
+### 8.3.2. Gauge-equivariance of the decomposition
+
+Let (\Phi_g(U) = g\cdot U) denote the gauge action. Since each (\Phi_g) is an isometry of ((M_\Lambda,g_\Lambda)), its differential
+[
+d\Phi_g(U): T_U M_\Lambda \to T_{g\cdot U} M_\Lambda
+]
+is an isometry with respect to (g_\Lambda).
+
+Moreover, the fundamental vector fields transform covariantly:
+[
+d\Phi_g(U)\big( X^\sharp(U) \big)
+= (\mathrm{Ad}*g X)^\sharp(g\cdot U),
+]
+where (\mathrm{Ad}*g X\in\mathfrak{g}*\Lambda) is the componentwise adjoint action. In particular,
+[
+d\Phi_g(U) V_U = V*{g\cdot U}.
+]
+
+Taking orthogonal complements and using that (d\Phi_g(U)) is an isometry, we also obtain
+[
+d\Phi_g(U) H_U = H_{g\cdot U}.
+]
+
+Thus the decomposition (T_U M_\Lambda = H_U\oplus V_U) is **gauge-equivariant**: the vertical and horizontal bundles are preserved by the gauge action. This is the concrete instantiation, in lattice YM, of the abstract decomposition of Part 5.
+
+---
+
+## 8.4. Gauge-invariant observables and horizontal gradients
+
+We now see why physical observables only see horizontal directions.
+
+### 8.4.1. Gauge-invariant observables
+
+Let (\mathcal{A}*\Lambda^{\mathrm{inv}}) be the algebra of smooth **gauge-invariant** observables:
+[
+\mathcal{A}*\Lambda^{\mathrm{inv}}
+:= \big{ f\in C^\infty(M_\Lambda) : f(g\cdot U) = f(U)\ \forall g\in G_\Lambda,\ \forall U\in M_\Lambda \big}.
+]
+
+Typical examples include:
+
+* Wilson loops: products of plaquette or loop holonomies along closed loops, traced in some representation,
+* Gauge-invariant polynomials in plaquette variables (or their traces),
+* Finite linear combinations of such observables.
+
+These are precisely the functions that descend to the quotient (M_\Lambda / G_\Lambda).
+
+### 8.4.2. Horizontality of gradients
+
+Let (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}). For any (X\in\mathfrak{g}*\Lambda) and any (U\in M_\Lambda),
+[
+f\big( \exp(tX)\cdot U \big) = f(U)\quad\forall t,
+]
+so differentiating at (t=0),
+[
+df_U\big( X^\sharp(U) \big) = 0 \quad\forall X\in\mathfrak{g}_\Lambda.
+]
+
+By definition of the vertical subspace, ({X^\sharp(U):X\in\mathfrak{g}_\Lambda} = V_U), so we have
+[
+df_U(v) = 0\quad\forall v\in V_U.
+]
+
+Let (\nabla f(U)\in T_U M_\Lambda) be the Riemannian gradient of (f) at (U), defined by
+[
+g_\Lambda\big( \nabla f(U), v \big) = df_U(v)\quad\forall v\in T_U M_\Lambda.
+]
+
+Applying this to (v\in V_U), we find
+[
+g_\Lambda\big( \nabla f(U), v\big) = 0\quad\forall v\in V_U.
+]
+That is,
+[
+\nabla f(U) \perp V_U\quad\Rightarrow\quad \nabla f(U)\in H_U.
+]
+
+We record this as a proposition.
+
+> **Proposition 8.1 (Horizontal gradients of gauge-invariant observables).**
+> For every (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}) and every (U\in M*\Lambda^{\mathrm{reg}}),
+> [
+> \nabla f(U) \in H_U.
+> ]
+
+Equivalently, for gauge-invariant observables the gradient has no vertical component: all infinitesimal variation is in the physical directions.
+
+### 8.4.3. Consequences for the carré du champ
+
+Recall from Parts 1 and 5 that the carré du champ associated with ((M_\Lambda,g_\Lambda,S_\Lambda,\mu_\Lambda)) is
+[
+\Gamma_\Lambda(f,g)(U) := \langle \nabla f(U),\nabla g(U)\rangle_{g_\Lambda},\qquad
+\Gamma_\Lambda(f) := \Gamma_\Lambda(f,f).
+]
+
+If (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}), then by Proposition 8.1
+[
+\nabla f(U)\in H_U,\quad\forall U,
+]
+so we may define the **horizontal gradient**
+[
+\nabla^H f(U) := \nabla f(U) \in H_U,
+]
+and, for any gauge-invariant (f),
+[
+\Gamma*\Lambda(f)(U) = |\nabla f(U)|*{g*\Lambda}^2
+= |\nabla^H f(U)|*{g*\Lambda}^2.
+]
+
+Thus on gauge-invariant observables the carré du champ is **purely horizontal**. This is the key structural point: when we later impose curvature bounds, we only need curvature in the subbundle (H).
+
+---
+
+## 8.5. Physical Dirichlet form and quotient interpretation
+
+We now interpret the Dirichlet form in the physical sector as a Dirichlet form on the quotient configuration space.
+
+### 8.5.1. Dirichlet form on gauge-invariant observables
+
+Let (\mu_\Lambda) be the lattice Yang–Mills Gibbs measure constructed in Parts 7 and 10:
+[
+d\mu_\Lambda(U) = Z_\Lambda^{-1} e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U),
+]
+with (S_\Lambda) gauge invariant. The associated Dirichlet form on (L^2(\mu_\Lambda)) is
+[
+\mathcal{E}*\Lambda(f,g)
+:= \int*{M_\Lambda} \Gamma_\Lambda(f,g)(U),d\mu_\Lambda(U)
+= \int_{M_\Lambda} \langle \nabla f(U),\nabla g(U)\rangle_{g_\Lambda},d\mu_\Lambda(U).
+]
+
+Restricting to **gauge-invariant** observables (f,g\in\mathcal{A}*\Lambda^{\mathrm{inv}}), we obtain the **physical Dirichlet form**
+[
+\mathcal{E}*\Lambda^{\mathrm{phys}}(f,g)
+:= \mathcal{E}*\Lambda(f,g)
+= \int*{M_\Lambda} \langle \nabla^H f(U),\nabla^H g(U)\rangle_{g_\Lambda},d\mu_\Lambda(U),
+\qquad f,g\in\mathcal{A}_\Lambda^{\mathrm{inv}}.
+]
+
+Here we used that (\nabla f) and (\nabla g) are horizontal. This form is symmetric, nonnegative, and closable on (L^2(\mu_\Lambda)) restricted to gauge-invariant functions; its closure generates the **configuration-space generator** restricted to the physical sector (see Part 18).
+
+### 8.5.2. Quotient geometry (M_\Lambda/G_\Lambda)
+
+On the regular set (M_\Lambda^{\mathrm{reg}}), the gauge orbits are smooth submanifolds and the quotient (M_\Lambda^{\mathrm{reg}}/G_\Lambda) is a smooth orbifold (or manifold, away from potential global issues). Each equivalence class
+[
+[U] := { g\cdot U : g\in G_\Lambda}
+]
+is a gauge orbit in (M_\Lambda^{\mathrm{reg}}).
+
+Due to gauge invariance of (S_\Lambda) and the product Haar volume, the measure (\mu_\Lambda) is invariant under the gauge action and descends to a measure (\bar\mu_\Lambda) on the quotient, at least on the regular set:
+[
+\mu_\Lambda\ \text{on }M_\Lambda^{\mathrm{reg}}
+\quad\leftrightarrow\quad
+\bar\mu_\Lambda\ \text{on } M_\Lambda^{\mathrm{reg}}/G_\Lambda.
+]
+
+Similarly, every (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}) is constant on gauge orbits and therefore descends to a smooth function (\bar f) on the quotient:
+[
+f = \bar f\circ \pi,\qquad \pi : M*\Lambda^{\mathrm{reg}} \to M_\Lambda^{\mathrm{reg}}/G_\Lambda.
+]
+
+As in Part 5, one can endow the quotient with a Riemannian metric (g_\Lambda^{\mathrm{quot}}) such that:
+
+* The differential (d\pi(U): H_U\to T_{[U]}(M_\Lambda^{\mathrm{reg}}/G_\Lambda)) is an isometry,
+* Horizontal vectors at (U) are identified with tangent vectors at ([U]).
+
+Then, for a gauge-invariant (f) with descendant (\bar f),
+[
+\nabla^{\mathrm{quot}} \bar f([U])
+\cong d\pi(U) \nabla^H f(U),
+]
+and hence
+[
+|\nabla^{\mathrm{quot}} \bar f([U])|*{g*\Lambda^{\mathrm{quot}}}^2
+= |\nabla^H f(U)|*{g*\Lambda}^2.
+]
+
+Integrating, we obtain the **Dirichlet-form identification**
+[
+\mathcal{E}*\Lambda^{\mathrm{phys}}(f,f)
+= \int*{M_\Lambda} |\nabla^H f(U)|*{g*\Lambda}^2,d\mu_\Lambda(U)
+= \int_{M_\Lambda^{\mathrm{reg}}/G_\Lambda}
+|\nabla^{\mathrm{quot}}\bar f|*{g*\Lambda^{\mathrm{quot}}}^2,d\bar\mu_\Lambda.
+]
+
+Thus, **the Dirichlet form on gauge-invariant observables is the Dirichlet form of the quotient diffusion** ((M_\Lambda^{\mathrm{reg}}/G_\Lambda, g_\Lambda^{\mathrm{quot}}, \bar\mu_\Lambda)). Put differently, all configuration-space spectral and functional-inequality information in the gauge-invariant sector is really information about the quotient geometry.
+
+### 8.5.3. Summary for the Yang–Mills program
+
+Let us summarize the role of this part in the overall strategy:
+
+1. The configuration manifold (M_\Lambda = G^{E(\Lambda)}) carries a huge redundancy due to the gauge group (G_\Lambda).
+2. The gauge action partitions (M_\Lambda) into orbits (\mathcal{O}_U); their tangent spaces (V_U) are the **vertical** (pure gauge) directions.
+3. The orthogonal complements (H_U = V_U^\perp) define a smooth horizontal subbundle (H) of the tangent bundle.
+4. Any gauge-invariant observable (f) has gradient (\nabla f(U)\in H_U); its carré du champ is purely horizontal.
+5. The Dirichlet form on gauge-invariant observables coincides with the Dirichlet form of a diffusion on the quotient (M_\Lambda^{\mathrm{reg}}/G_\Lambda).
+
+Consequently:
+
+* **Only the horizontal curvature matters** for the analysis of gauge-invariant observables.
+* The Bakry–Émery curvature we will estimate in Parts 9–11 may be viewed equivalently as curvature on the quotient manifold ((M_\Lambda^{\mathrm{reg}}/G_\Lambda,g_\Lambda^{\mathrm{quot}})) with measure (\bar\mu_\Lambda).
+* The configuration-space spectral gap for gauge-invariant observables (Part 18) is the spectral gap of the quotient diffusion.
+
+In the next part (Part 9) we analyze the **Wilson Hessian** and the discrete Hodge decomposition, identifying how the interaction distinguishes pure gauge directions from physical co-exact modes and how positivity emerges in the horizontal sector at the vacuum.

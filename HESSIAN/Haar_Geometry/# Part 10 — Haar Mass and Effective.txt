@@ -1,0 +1,910 @@
+# Part 10 — Haar Mass and Effective Potential
+
+## (Uniform local Bakry–Émery curvature near the trivial lattice connection)
+
+This part expands your existing “Part 10 — Haar Mass, Effective Poincaré” draft, whose core goal is to isolate the *strictly positive* contribution coming from the **Haar/Riemannian geometry** of the compact gauge group and show it yields a **uniform local curvature lower bound** (independent of the lattice volume) in a neighborhood of the vacuum. 
+
+A recurring theme (also emphasized elsewhere in your notes) is that one can treat Haar geometry in two equivalent ways:
+
+* **Riemannian reference measure picture:** the Gibbs measure is (e^{-S_\Lambda},d\mathrm{vol}*{g*\Lambda}), and curvature enters via (\mathrm{Ric}*{g*\Lambda}). 
+* **Flat-coordinate picture near the identity:** write (U_\ell=\exp(X_\ell)), pull back (d\mathrm{vol}*{g*\Lambda}) to Lebesgue measure (dX), and the Jacobian becomes an **effective potential** (S_{H,\Lambda}(X)) with a strictly convex quadratic part (“Haar mass”). 
+
+Both pictures describe the same Bakry–Émery object, and we will use whichever gives the cleanest first-principles derivations at each step. 
+
+Finally, as background motivation: the product Haar measure is not an optional aesthetic choice; it is the canonical gauge-invariant integration on link variables and is the standard reference measure in lattice formulations and in Hamiltonian/quantization viewpoints.  
+
+---
+
+## 10.1 Standing assumptions and set-up
+
+### 10.1.1 Finite lattice, configuration manifold, and metric
+
+Fix a finite lattice (\Lambda\subset \mathbb{Z}^d) (box, torus, or any finite CW-complex-like subgraph), with:
+
+* vertex set (V(\Lambda)),
+* oriented edge set (E(\Lambda)),
+* plaquette (2-cell) set (P(\Lambda)).
+
+Fix a compact Lie group (G) with Lie algebra (\mathfrak g), equipped with a **bi-invariant Riemannian metric** (g_G). (We will later need a *strictly positive* Ricci lower bound; this excludes flat torus factors—see §10.2.2.)
+
+The **lattice configuration manifold** is the product
+[
+M_\Lambda := G^{E(\Lambda)},
+]
+i.e. a copy of (G) per edge. The Riemannian metric on (M_\Lambda) is the product metric
+[
+g_\Lambda := \bigoplus_{\ell\in E(\Lambda)} g_G,
+]
+and the reference volume form (d\mathrm{vol}*{g*\Lambda}) is the product Haar/Riemannian volume. 
+
+We denote the **trivial configuration** (vacuum) by
+[
+U^{(0)} := (e)*{\ell\in E(\Lambda)} \in M*\Lambda,
+]
+where (e\in G) is the group identity.
+
+We write (d_\Lambda(\cdot,\cdot)) for the Riemannian distance on ((M_\Lambda,g_\Lambda)), and
+[
+B_r(U^{(0)}):={U\in M_\Lambda:\ d_\Lambda(U,U^{(0)})<r}
+]
+for the geodesic ball of radius (r) about the vacuum.
+
+---
+
+### 10.1.2 Gibbs measure and Bakry–Émery tensor
+
+Let (S_\Lambda\in C^\infty(M_\Lambda)) be a smooth lattice action. We consider Gibbs measures of the form
+[
+d\mu_\Lambda(U)
+:= Z_\Lambda^{-1},e^{-S_\Lambda(U)}, d\mathrm{vol}*{g*\Lambda}(U),
+\qquad
+Z_\Lambda = \int_{M_\Lambda} e^{-S_\Lambda}, d\mathrm{vol}*{g*\Lambda}.
+]
+This is precisely the standing measure form assumed in your draft. 
+
+Define the **Bakry–Émery tensor**
+[
+\mathrm{Ric}*{\mu*\Lambda}
+:= \mathrm{Ric}*{g*\Lambda} + \nabla^2 S_\Lambda,
+]
+where (\nabla^2) is the Riemannian (covariant) Hessian with respect to (g_\Lambda). 
+
+This tensor is the geometric input for curvature-dimension estimates (CD(\rho,\infty)) via the Bochner identity (§10.7).
+
+---
+
+### 10.1.3 Decomposition of the action and the “additive” Hessian bound
+
+We decompose the action as
+[
+S_\Lambda = S_W + S_{\mathrm{add},\Lambda},
+]
+where:
+
+* (S_W) is the Wilson plaquette action (gauge-invariant, local).
+* (S_{\mathrm{add},\Lambda}) is an additional smooth term (e.g. regulator, gauge-compatible modification, or other stabilizing term).
+
+We assume:
+
+> **Assumption 10.1 (Uniform lower Hessian bound on the added term).**
+> There exists a constant (C_{\mathrm{add}}\ge 0), independent of (\Lambda), such that
+> [
+> \nabla^2 S_{\mathrm{add},\Lambda}(U) \ \ge\  -,C_{\mathrm{add}}, g_\Lambda
+> \qquad\text{for all }U\in M_\Lambda.
+> ]
+>
+
+This is exactly your draft assumption, but we will also explain in §10.6.3 how such a uniform bound is natural for sums of uniformly (C^2) local terms.
+
+---
+
+## 10.2 Haar mass and group Ricci
+
+The “Haar mass” language is shorthand for: **positive Ricci curvature of ((G,g_G))** induces a universal quadratic confinement in exponential coordinates near (e), and therefore contributes a strictly positive “mass-like” term to the effective convexity of the Gibbs weight.
+
+### 10.2.1 Two equivalent viewpoints
+
+Your draft emphasizes the point that Haar geometry contributes via (\mathrm{Ric}*{g*\Lambda}) rather than as an explicit potential, because we work with (d\mathrm{vol}*{g*\Lambda}) as the reference measure. 
+
+However, the coordinate (flat (dX)) viewpoint is often illuminating and is formally identical after pulling back by the exponential map. This equivalence is stated explicitly in your configuration-manifold notes: (\mathrm{Ric}*{g*\Lambda}\ge \kappa_G g_\Lambda) corresponds to convexity of the Haar Jacobian potential in exponential coordinates. 
+
+We now prove both the group Ricci fact and the Jacobian expansion from first principles.
+
+---
+
+### 10.2.2 Ricci curvature of a compact Lie group with bi-invariant metric
+
+#### Assumption needed for a strictly positive constant
+
+A bi-invariant metric always gives (\mathrm{Ric}_G\ge 0). But to have a *strict* lower bound (\mathrm{Ric}_G\ge \kappa_G g_G) with (\kappa_G>0), one must exclude flat directions—equivalently, (G) must have no torus factor in its identity component (e.g. (G) semisimple compact). This is exactly the condition used implicitly in your other parts when you assume (\kappa_G>0) exists. 
+
+So we assume from now on:
+
+> **Assumption 10.2 (Positive Ricci group).**
+> ((G,g_G)) satisfies (\mathrm{Ric}_G \ge \kappa_G g_G) for some (\kappa_G>0).
+
+For simple compact (G) with a suitable normalization (e.g. (g_G) proportional to (-)Killing), one actually has equality (\mathrm{Ric}_G=\kappa_G g_G) (Einstein). We prove the core formula below.
+
+---
+
+#### The Levi–Civita connection for bi-invariant metrics
+
+Let (\langle\cdot,\cdot\rangle) denote the inner product on (\mathfrak g=T_eG) induced by (g_G). Extend (X\in\mathfrak g) to the left-invariant vector field (X^L) on (G).
+
+**Claim.** If (g_G) is bi-invariant then the Levi–Civita connection satisfies
+[
+\nabla_{X^L}Y^L = \tfrac12 [X,Y]^L.
+]
+
+**Proof.** Apply the Koszul formula for the Levi–Civita connection:
+[
+2\langle \nabla_A B, C\rangle
+= A\langle B,C\rangle + B\langle C,A\rangle - C\langle A,B\rangle
+
+* \langle [A,B],C\rangle - \langle [B,C],A\rangle - \langle [C,A],B\rangle.
+  ]
+  Take (A=X^L), (B=Y^L), (C=Z^L), with (X,Y,Z\in\mathfrak g). Because the metric is left-invariant, the inner products (\langle Y^L,Z^L\rangle) are constant, so the derivative terms vanish:
+  [
+  X^L\langle Y^L,Z^L\rangle = Y^L\langle Z^L,X^L\rangle = Z^L\langle X^L,Y^L\rangle = 0.
+  ]
+  Also, for left-invariant fields, ([X^L,Y^L]=[X,Y]^L). Hence the Koszul formula reduces to
+  [
+  2\langle \nabla_{X^L}Y^L, Z^L\rangle
+  = \langle [X,Y]^L,Z^L\rangle - \langle [Y,Z]^L,X^L\rangle - \langle [Z,X]^L,Y^L\rangle.
+  ]
+  Now use **Ad-invariance** of the inner product (equivalent to bi-invariance of the metric): for all (X,Y,Z\in\mathfrak g),
+  [
+  \langle [X,Y],Z\rangle = \langle X,[Y,Z]\rangle = -\langle Y,[X,Z]\rangle.
+  ]
+  Thus
+  [
+  -\langle [Y,Z],X\rangle = -\langle Y,[Z,X]\rangle = \langle [Z,X],Y\rangle,
+  ]
+  so the last two terms combine:
+  [
+  -\langle [Y,Z],X\rangle - \langle [Z,X],Y\rangle = 0.
+  ]
+  Therefore
+  [
+  2\langle \nabla_{X^L}Y^L,Z^L\rangle = \langle [X,Y],Z\rangle,
+  ]
+  for all (Z), which implies
+  [
+  \nabla_{X^L}Y^L = \tfrac12 [X,Y]^L.
+  ]
+  ∎
+
+---
+
+#### Curvature and Ricci tensor formula
+
+Using (\nabla_{X^L}Y^L=\frac12 [X,Y]^L), compute the curvature operator
+[
+R(A,B)C := \nabla_A\nabla_B C - \nabla_B\nabla_A C - \nabla_{[A,B]}C.
+]
+Let (A=X^L), (B=Y^L), (C=Z^L). Then
+[
+\nabla_{X^L}\nabla_{Y^L}Z^L
+= \nabla_{X^L}\left(\tfrac12 [Y,Z]^L\right)
+= \tfrac12\cdot\tfrac12 [X,[Y,Z]]^L
+= \tfrac14 [X,[Y,Z]]^L.
+]
+Similarly,
+[
+\nabla_{Y^L}\nabla_{X^L}Z^L = \tfrac14 [Y,[X,Z]]^L,
+]
+and
+[
+\nabla_{[X^L,Y^L]}Z^L
+= \nabla_{[X,Y]^L}Z^L
+= \tfrac12 [[X,Y],Z]^L.
+]
+Hence
+[
+R(X^L,Y^L)Z^L
+= \left(\tfrac14 [X,[Y,Z]] - \tfrac14 [Y,[X,Z]] - \tfrac12 [[X,Y],Z]\right)^L.
+]
+By the Jacobi identity,
+[
+[X,[Y,Z]] - [Y,[X,Z]] = [[X,Y],Z],
+]
+so the bracket becomes
+[
+\tfrac14 [[X,Y],Z] - \tfrac12 [[X,Y],Z] = -\tfrac14 [[X,Y],Z].
+]
+Therefore
+[
+R(X^L,Y^L)Z^L = -\tfrac14 [[X,Y],Z]^L.
+]
+
+Now compute Ricci. Let ({e_i}_{i=1}^{\dim G}) be an orthonormal basis of ((\mathfrak g,\langle\cdot,\cdot\rangle)) and extend each to (e_i^L). Then
+[
+\mathrm{Ric}_G(X,X)
+= \sum_i \langle R(X^L,e_i^L)e_i^L, X^L\rangle
+= \sum_i \left\langle -\tfrac14 [[X,e_i],e_i], X\right\rangle.
+]
+Use Ad-invariance:
+[
+\langle [[X,e_i],e_i],X\rangle
+= \langle [X,e_i],[e_i,X]\rangle
+= \langle [X,e_i],- [X,e_i]\rangle
+= -|[X,e_i]|^2.
+]
+Thus
+[
+\mathrm{Ric}_G(X,X)
+= \sum_i \left(-\tfrac14\right)\left(-|[X,e_i]|^2\right)
+= \tfrac14 \sum_i |[X,e_i]|^2
+\ \ge\ 0.
+]
+This gives a concrete, first-principles proof that bi-invariant metrics have nonnegative Ricci curvature, and makes strict positivity transparent when ([X,\cdot]\not\equiv 0) (no abelian factor).
+
+Moreover, for compact **simple** (G), the operator (\sum_i \mathrm{ad}*{e_i}^2) is a scalar on (\mathfrak g) (Casimir in the adjoint representation), hence (\mathrm{Ric}*G=\kappa_G g_G) for some (\kappa_G>0). This is the Einstein property used implicitly in your draft’s “(\mathrm{Ric}*{g*\Lambda}=\kappa_G g_\Lambda)” statement. 
+
+---
+
+### 10.2.3 Ricci of the product configuration manifold
+
+On (M_\Lambda = G^{E(\Lambda)}) with product metric (g_\Lambda=\bigoplus_{\ell} g_G), the curvature is block-diagonal and each factor contributes independently. Concretely, if (v=(v_\ell)*\ell \in T_U M*\Lambda \cong \bigoplus_\ell T_{U_\ell}G), then
+[
+\mathrm{Ric}*{g*\Lambda}(v,v)
+= \sum_{\ell\in E(\Lambda)} \mathrm{Ric}*G(v*\ell,v_\ell).
+]
+Hence if (\mathrm{Ric}*G \ge \kappa_G g_G), then
+[
+\mathrm{Ric}*{g_\Lambda}(v,v)
+\ge \kappa_G \sum_\ell g_G(v_\ell,v_\ell)
+= \kappa_G, g_\Lambda(v,v),
+]
+i.e.
+[
+\mathrm{Ric}*{g*\Lambda} \ \ge\ \kappa_G, g_\Lambda,
+]
+with the same constant (\kappa_G), **independent of (\Lambda)**. This is exactly the uniform curvature backbone invoked in your draft. 
+
+---
+
+### 10.2.4 Haar Jacobian and the effective Haar potential in exponential coordinates
+
+Now we prove the “Haar mass” expansion from first principles.
+
+Let (p=e\in G). Choose an orthonormal basis of (\mathfrak g \cong T_eG) and use the Riemannian exponential map
+[
+\exp_e : T_eG \cong \mathfrak g \to G.
+]
+For a bi-invariant metric, (\exp_e) coincides with the group exponential (\exp_G).
+
+In a sufficiently small neighborhood of (0\in\mathfrak g), exponential coordinates define a diffeomorphism onto a neighborhood of (e). In these coordinates, the Riemannian volume has density
+[
+d\mathrm{vol}_{g_G}(U) = J_G(X), dX,
+\qquad U=\exp_G(X),
+]
+where (dX) is Lebesgue measure and (J_G) is the Jacobian with (J_G(0)=1). This is the starting point in your “Haar potential” discussion. 
+
+Define
+[
+S_H(X) := -\log J_G(X),
+]
+so (d\mathrm{vol}_{g_G} = e^{-S_H(X)},dX). 
+
+#### The normal-coordinate expansion
+
+A standard Riemannian geometry fact: in geodesic normal coordinates around a point (p), the metric has the expansion
+[
+g_{ij}(x) = \delta_{ij} - \tfrac13 R_{ikjl}(p),x^k x^l + \mathcal O(|x|^3),
+]
+and therefore
+[
+\sqrt{\det(g_{ij}(x))}
+= 1 - \tfrac16 \mathrm{Ric}*{kl}(p),x^k x^l + \mathcal O(|x|^3).
+]
+(Here (R*{ikjl}) is the Riemann curvature tensor and (\mathrm{Ric}*{kl}=R*{k i l i}) is the Ricci tensor.)
+
+Since (J_G(X)=\sqrt{\det(g_{ij}(X))}) in these coordinates, we obtain
+[
+J_G(X) = 1 - \tfrac16 \mathrm{Ric}_G(X,X) + \mathcal O(|X|^3).
+]
+Taking (-\log) and using (-\log(1-a)=a+\mathcal O(a^2)) yields
+[
+S_H(X) = \tfrac16 \mathrm{Ric}_G(X,X) + \mathcal O(|X|^3).
+]
+Differentiating twice at (0) gives
+[
+\nabla^2 S_H(0)(X,X) = \tfrac13 \mathrm{Ric}_G(X,X).
+]
+This is exactly the expansion you recorded earlier (including the (\tfrac16) and (\tfrac13) constants). 
+
+In particular, if (\mathrm{Ric}_G\ge \kappa_G g_G) then
+[
+\nabla^2 S_H(0) \ \ge\ \tfrac13 \kappa_G,\mathrm{Id}.
+]
+This is the single-link “Haar mass” mechanism.
+
+#### Product Haar potential
+
+On the product manifold, in exponential coordinates (U_\ell=\exp_G(X_\ell)) near (U^{(0)}), the volume form factorizes:
+[
+d\mathrm{vol}*{g*\Lambda}(U)
+= \prod_{\ell\in E(\Lambda)} J_G(X_\ell), dX
+= \exp!\Big(-\sum_{\ell} S_H(X_\ell)\Big),dX.
+]
+Define the product Haar potential
+[
+S_{H,\Lambda}(X) := \sum_{\ell\in E(\Lambda)} S_H(X_\ell).
+]
+Then
+[
+d\mathrm{vol}*{g*\Lambda}(U)= e^{-S_{H,\Lambda}(X)},dX,
+]
+and its Hessian at (0) is block-diagonal, yielding a uniform convexity bound independent of (\Lambda). 
+
+This is the precise sense in which Haar geometry supplies a universal “mass-like” quadratic penalty for link fields in flat coordinates. 
+
+> **Important conceptual warning (consistent with your synth note).**
+> This quadratic term is **not** a gauge-fixing mass term inserted by hand. It is the Jacobian of the invariant measure in non-flat coordinates; it preserves gauge invariance and does not represent a Proca-like gauge-breaking deformation. 
+
+---
+
+## 10.3 Gauge orbits, horizontal subspaces, and the Wilson Hessian at the vacuum
+
+Your draft’s curvature estimate is “horizontal” because gauge-invariant observables have gradients orthogonal to gauge orbits, and because the Wilson Hessian has a large kernel tied to gauge freedom and topology. 
+
+To make this part self-contained, we now re-derive:
+
+1. the vertical/horizontal splitting from the gauge action;
+2. the discrete cochain formalism at the vacuum;
+3. the quadratic expansion (Hessian) of the Wilson action and its relation to discrete Hodge operators.
+
+### 10.3.1 Gauge group action and vertical tangent space
+
+The lattice gauge group is
+[
+\mathcal G_\Lambda := G^{V(\Lambda)}.
+]
+For (g=(g_x)*{x\in V(\Lambda)}\in \mathcal G*\Lambda) and (U=(U_{x\to y})*{(x\to y)\in E(\Lambda)}\in M*\Lambda), define
+[
+(g\cdot U)*{x\to y} := g_x,U*{x\to y},g_y^{-1}.
+]
+This is the standard endpoint conjugation action.
+
+**Isometry.** Because (g_G) is bi-invariant, left and right multiplication on (G) are isometries. Therefore each map
+[
+U_{x\to y} \mapsto g_x U_{x\to y} g_y^{-1}
+]
+is an isometry of ((G,g_G)), and the product action is an isometry of ((M_\Lambda,g_\Lambda)). Hence it preserves (d\mathrm{vol}*{g*\Lambda}).
+
+(Your Part 7 notes record gauge invariance of the Wilson action and the induced invariance of the Wilson Gibbs measure; we’re just re-proving the differential-geometric mechanism here.) 
+
+---
+
+### 10.3.2 Infinitesimal gauge action and horizontal gradients for gauge-invariant observables
+
+Let (\xi=(\xi_x)*{x\in V(\Lambda)}\in \mathfrak g^{V(\Lambda)}). Consider the one-parameter subgroup (g(t)\in \mathcal G*\Lambda) defined by (g_x(t)=\exp(t\xi_x)). Then the infinitesimal action at (U) is the tangent vector
+[
+\mathcal V_\xi(U) := \left.\frac{d}{dt}\right|*{t=0} (g(t)\cdot U)\ \in\ T_U M*\Lambda.
+]
+On a single link (\ell=(x\to y)), differentiation gives
+[
+\left.\frac{d}{dt}\right|*{0} \left(\exp(t\xi_x),U*\ell,\exp(-t\xi_y)\right)
+= (\xi_x)^L(U_\ell) - (\xi_y)^R(U_\ell),
+]
+where ((\xi)^L) and ((\xi)^R) are the left- and right-invariant vector fields on (G) generated by (\xi).
+
+Define the **vertical subspace**
+[
+\mathrm{Vert}*U := {\mathcal V*\xi(U): \xi\in \mathfrak g^{V(\Lambda)}}\subset T_U M_\Lambda.
+]
+Define the **horizontal subspace**
+[
+\mathrm{Hor}*U := \mathrm{Vert}*U^\perp
+]
+(the orthogonal complement in (T_U M*\Lambda) w.r.t. (g*\Lambda)).
+
+Now the key lemma:
+
+> **Lemma 10.1 (Gauge invariance ⇒ horizontal gradient).**
+> If (f\in C^1(M_\Lambda)) is gauge-invariant, i.e. (f(g\cdot U)=f(U)) for all (g\in\mathcal G_\Lambda), then for every (U\in M_\Lambda) we have
+> [
+> \nabla f(U)\ \in\ \mathrm{Hor}_U.
+> ]
+
+**Proof.** Fix (U) and (\xi). Gauge invariance implies
+[
+0 = \left.\frac{d}{dt}\right|*{0} f(g(t)\cdot U) = df(U)\big[\mathcal V*\xi(U)\big].
+]
+By definition of the Riemannian gradient, (df(U)[w]=g_\Lambda(\nabla f(U),w)) for all (w\in T_U M_\Lambda). Therefore
+[
+g_\Lambda\big(\nabla f(U),\mathcal V_\xi(U)\big)=0
+\quad\text{for all }\xi,
+]
+i.e. (\nabla f(U)) is orthogonal to every vertical vector, so (\nabla f(U)\in \mathrm{Vert}_U^\perp=\mathrm{Hor}_U). ∎
+
+This is the reason horizontal curvature bounds are the right ones for gauge-invariant observables.
+
+---
+
+### 10.3.3 Tangent identification at the vacuum and discrete cochains
+
+At the vacuum (U^{(0)}), each link variable equals (e). Using right translation, identify
+[
+T_e G \cong \mathfrak g.
+]
+Therefore
+[
+T_{U^{(0)}} M_\Lambda \cong \bigoplus_{\ell\in E(\Lambda)} \mathfrak g
+=: \mathcal C^1(\Lambda;\mathfrak g),
+]
+the space of (\mathfrak g)-valued 1-cochains on the lattice. This identification and its induced inner product are recorded in your Wilson Hessian/Hodge writeup. 
+
+We equip cochains with the product inner products:
+[
+\langle X,Y\rangle_{\mathcal C^1}
+:= \sum_{\ell\in E(\Lambda)} \langle X_\ell, Y_\ell\rangle_G,
+\qquad
+\langle F,G\rangle_{\mathcal C^2}
+:= \sum_{p\in P(\Lambda)} \langle F_p, G_p\rangle_G,
+]
+etc.
+
+---
+
+### 10.3.4 Discrete exterior derivative (d_1) and linearized curvature
+
+Define the discrete exterior derivative (coboundary)
+[
+d_1:\mathcal C^1(\Lambda;\mathfrak g)\to \mathcal C^2(\Lambda;\mathfrak g)
+]
+by summing oriented edge variables around each plaquette. For a plaquette (p=(x;\mu,\nu)) with the standard orientation,
+[
+(d_1X)*p
+:= X*{x,\mu}+X_{x+\hat\mu,\nu}-X_{x+\hat\nu,\mu}-X_{x,\nu}.
+]
+This is exactly your definition. 
+
+Now parameterize configurations near the vacuum by exponential coordinates
+[
+U_\ell = \exp_G(X_\ell),
+\qquad X_\ell\ \text{small}.
+]
+Then the plaquette holonomy is a product of exponentials. Using the Baker–Campbell–Hausdorff expansion, one obtains the key linearization:
+[
+U_p(U) = \exp_G\big( (d_1X)_p + \mathcal O(|X|^2)\big),
+]
+uniformly for plaquettes (p) in a sufficiently small neighborhood of (X=0). 
+
+This is the discrete analogue of (F=dA + A\wedge A): at quadratic order, only the linear (dA) piece matters.
+
+---
+
+### 10.3.5 Quadratic expansion of the Wilson action and its Hessian
+
+Take the Wilson plaquette action in the standard form
+[
+S_W(U)= \frac{\beta}{N}\sum_{p\in P(\Lambda)} \mathrm{Re},\mathrm{Tr}\big(I - U_p(U)\big),
+]
+with (\beta=\frac{2N}{g_0^2}) and (U_p(U)) the plaquette holonomy. 
+
+We expand (S_W(\exp(X))) around (X=0). Using:
+
+1. (U_p(U)=\exp\big((d_1X)_p+\mathcal O(|X|^2)\big)) from §10.3.4;
+2. the Taylor expansion of the class function (U\mapsto \mathrm{Re,Tr}(I-U)) at (U=e),
+
+one obtains
+[
+S_W(U) = S_W(U^{(0)}) + S_W^{(2)}(X) + \mathcal O(|X|^3),
+]
+where the quadratic term is (for some constant (c_{HS}>0) depending only on normalization)
+[
+S_W^{(2)}(X)
+= \frac{\beta c_{HS}}{N}\sum_{p\in P(\Lambda)} |(d_1X)*p|*G^2
+= \frac{\beta c*{HS}}{N},|d_1X|*{\mathcal C^2}^2.
+]
+This is precisely the quadratic expansion stated in your Hessian/Hodge part. 
+
+From this quadratic form, the Hessian at the vacuum is
+[
+\nabla^2 S_W(U^{(0)})
+= 2,\frac{\beta c_{HS}}{N}, d_1^* d_1
+\quad\text{as an operator on }\mathcal C^1(\Lambda;\mathfrak g),
+]
+and in particular
+[
+\nabla^2 S_W(U^{(0)})(X,X)
+= 2,\frac{\beta c_{HS}}{N},|d_1X|_{\mathcal C^2}^2
+\ \ge\ 0
+\quad\text{for all }X.
+]
+So (S_W) is *positive semidefinite to second order* at the vacuum.
+
+---
+
+### 10.3.6 Kernel structure and discrete Hodge decomposition (at the vacuum)
+
+Since (d_1^*d_1) is positive semidefinite, its kernel is (\ker d_1) (edge-cochains with zero discrete curl). This kernel includes:
+
+* **Exact 1-forms**: (\mathrm{im},d_0), coming from infinitesimal gauge transformations.
+* **Harmonic 1-forms**: depending on the lattice topology (e.g. torus), cochains in (\ker d_1\cap \ker d_0^*).
+
+This is the familiar Hodge picture.
+
+To make that rigorous, define the coboundary
+[
+d_0:\mathcal C^0(\Lambda;\mathfrak g)\to\mathcal C^1(\Lambda;\mathfrak g),
+\qquad (d_0\phi)_{x\to y} := \phi_y-\phi_x,
+]
+(with sign conventions matching edge orientations). Its adjoint (d_0^*) is the negative divergence operator (with respect to the counting/edge inner products). Define the Hodge Laplacian on 1-cochains
+[
+\Delta_1 := d_0 d_0^* + d_1^* d_1.
+]
+In any finite-dimensional inner-product complex, one has the orthogonal decomposition
+[
+\mathcal C^1 = \mathrm{im},d_0\ \oplus\ \ker \Delta_1\ \oplus\ \mathrm{im},d_1^*,
+]
+with
+[
+\ker\Delta_1 = \ker d_0^* \cap \ker d_1.
+]
+(Proof: use ((\mathrm{im},d)^ \perp = \ker d^*), plus standard linear algebra on the ranges and kernels of (d_0,d_1).)
+
+Now relate this to vertical/horizontal:
+
+* At the vacuum, the infinitesimal gauge action reduces exactly to (d_0\phi), so
+  [
+  \mathrm{Vert}_{U^{(0)}} = \mathrm{im},d_0.
+  ]
+* Hence
+  [
+  \mathrm{Hor}_{U^{(0)}} = (\mathrm{im},d_0)^\perp = \ker d_0^*
+  = \ker\Delta_1 \ \oplus\ \mathrm{im},d_1^*.
+  ]
+
+Therefore on the horizontal space at the vacuum, the Wilson Hessian is nonnegative and vanishes precisely on harmonic 1-forms. This is the structural input used in your Part 10 lemma about the vacuum Hessian bound. 
+
+---
+
+## 10.4 Lower bound for (\nabla^2 S_\Lambda) on horizontal directions at the vacuum
+
+This corresponds to your Lemma 10.1. 
+
+> **Lemma 10.2 (Vacuum Hessian lower bound on horizontals).**
+> Let (S_\Lambda=S_W+S_{\mathrm{add},\Lambda}) with Assumption 10.1. Then for every (v\in \mathrm{Hor}*{U^{(0)}}),
+> [
+> \nabla^2 S*\Lambda(U^{(0)})(v,v)\ \ge\ -,C_{\mathrm{add}},|v|*{g*\Lambda}^2.
+> ]
+
+**Proof.** By bilinearity of the Hessian,
+[
+\nabla^2 S_\Lambda = \nabla^2 S_W + \nabla^2 S_{\mathrm{add},\Lambda}.
+]
+At the vacuum, we proved
+[
+\nabla^2 S_W(U^{(0)})(v,v)\ge 0
+\quad\text{for all }v\in T_{U^{(0)}}M_\Lambda,
+]
+hence in particular for all (v\in\mathrm{Hor}*{U^{(0)}}). Meanwhile Assumption 10.1 gives
+[
+\nabla^2 S*{\mathrm{add},\Lambda}(U^{(0)})(v,v)\ge -C_{\mathrm{add}},|v|^2.
+]
+Add the inequalities to obtain the claim. ∎
+
+This matches the logic in your draft lemma. 
+
+---
+
+## 10.5 Horizontal Bakry–Émery curvature at the vacuum
+
+This corresponds to your Proposition 10.2. 
+
+> **Proposition 10.3 (Uniform positive horizontal curvature at the vacuum).**
+> Assume (\mathrm{Ric}*{g*\Lambda}\ge \kappa_G g_\Lambda) with (\kappa_G>0) (from §10.2.3) and Assumption 10.1 with constant (C_{\mathrm{add}}).
+> Then for every (v\in \mathrm{Hor}*{U^{(0)}}),
+> [
+> \mathrm{Ric}*{\mu_\Lambda}(U^{(0)})(v,v)
+> \ \ge\ (\kappa_G - C_{\mathrm{add}}),|v|*{g*\Lambda}^2.
+> ]
+> In particular, if (\rho_0:=\kappa_G-C_{\mathrm{add}}>0), we have
+> [
+> \mathrm{Ric}*{\mu*\Lambda}(U^{(0)})\big|*{\mathrm{Hor}}
+> \ \ge\ \rho_0, g*\Lambda\big|_{\mathrm{Hor}}.
+> ]
+
+**Proof.** By definition,
+[
+\mathrm{Ric}*{\mu*\Lambda} = \mathrm{Ric}*{g*\Lambda}+\nabla^2 S_\Lambda.
+]
+For (v\in\mathrm{Hor}*{U^{(0)}}),
+[
+\mathrm{Ric}*{g_\Lambda}(v,v)\ge \kappa_G |v|^2
+]
+by §10.2.3, and
+[
+\nabla^2 S_\Lambda(U^{(0)})(v,v)\ge -C_{\mathrm{add}}|v|^2
+]
+by Lemma 10.2. Adding yields
+[
+\mathrm{Ric}*{\mu*\Lambda}(U^{(0)})(v,v)\ge (\kappa_G-C_{\mathrm{add}})|v|^2.
+]
+∎
+
+This is the same conclusion as your draft proposition. 
+
+---
+
+## 10.6 Persistence: a uniform neighborhood of the vacuum with positive curvature
+
+Your draft’s Proposition 10.3 states that the vacuum bound persists in a small ball (B_r(U^{(0)})), with constants (r,\rho_{\mathrm{loc}}) independent of (\Lambda). 
+
+We now expand the continuity argument to first principles and make the “uniform in (\Lambda)” mechanism explicit.
+
+### 10.6.1 What must be controlled?
+
+Since (\mathrm{Ric}*{g*\Lambda}) is constant in (U) (product of homogeneous manifolds), the only (U)-dependence in
+[
+\mathrm{Ric}*{\mu*\Lambda}(U) = \mathrm{Ric}*{g*\Lambda} + \nabla^2 S_\Lambda(U)
+]
+comes from (\nabla^2 S_\Lambda(U)).
+
+Thus we need a uniform estimate of the form:
+[
+\nabla^2 S_\Lambda(U) \ \ge\ - (C_{\mathrm{add}}+\varepsilon),g_\Lambda
+\quad\text{for }U\in B_r(U^{(0)}),
+]
+with (\varepsilon) small when (r) is small, uniformly in (\Lambda). Then
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)
+\ge (\kappa_G - C_{\mathrm{add}} - \varepsilon),g_\Lambda.
+]
+
+This yields in particular the desired bound on horizontals.
+
+---
+
+### 10.6.2 A clean perturbative estimate from third derivatives
+
+A standard Riemannian calculus estimate: if (F\in C^3(M_\Lambda)) and (|\nabla^3 F|) is bounded on a ball, then (\nabla^2F) is Lipschitz there:
+[
+|\nabla^2 F(U) - \nabla^2 F(V)|*{\mathrm{op}}
+\ \le\ \sup*{W\in B_r}|\nabla^3 F(W)|*{\mathrm{op}}\cdot d*\Lambda(U,V).
+]
+(Proof: integrate the covariant derivative of (\nabla^2F) along a minimizing geodesic.)
+
+Apply this to (F=S_W). Since (\nabla^2 S_W(U^{(0)})\ge 0) as a quadratic form, we get for any (U\in B_r(U^{(0)})):
+[
+\nabla^2 S_W(U)
+\ge -|\nabla^2S_W(U)-\nabla^2S_W(U^{(0)})|*{\mathrm{op}}\cdot g*\Lambda
+\ge -L_W,r\cdot g_\Lambda,
+]
+where
+[
+L_W := \sup_{W\in B_r(U^{(0)})}|\nabla^3 S_W(W)|*{\mathrm{op}}.
+]
+Therefore
+[
+\nabla^2 S*\Lambda(U)
+= \nabla^2 S_W(U) + \nabla^2 S_{\mathrm{add},\Lambda}(U)
+\ge -(L_Wr + C_{\mathrm{add}}),g_\Lambda.
+]
+
+So it suffices to ensure that (L_W) can be chosen uniformly in (\Lambda) for sufficiently small (r).
+
+---
+
+### 10.6.3 Why (L_W) is uniform in (\Lambda) (locality + bounded overlap)
+
+The Wilson action is a sum over plaquettes:
+[
+S_W(U) = \sum_{p\in P(\Lambda)} \Phi\big(U_p(U)\big)
+]
+for a fixed smooth class function (\Phi:G\to\mathbb R) (e.g. (\Phi(V)=\frac{\beta}{N}\mathrm{ReTr}(I-V))).
+
+Key combinatorial facts:
+
+1. Each plaquette term depends only on the finitely many links in (\partial p) (exactly 4 in the square lattice).
+2. Each link participates in at most (2(d-1)) plaquettes in (\mathbb Z^d) (a uniform degree bound).
+
+Because (G) is compact and (\Phi) is smooth, all derivatives of (\Phi) are bounded on (G). Also, the map (U\mapsto U_p(U)) is smooth and depends only on a bounded number of link variables, with uniformly bounded derivatives on a sufficiently small neighborhood of (U^{(0)}) (again by compactness and smoothness of multiplication/inversion).
+
+When you take (\nabla^3 S_W), each third derivative lands on at most a bounded number of plaquette terms involving the links touched by the three tangent directions, and each such term has derivatives bounded by constants depending only on (G,\Phi), and the chosen small neighborhood—not on (|\Lambda|).
+
+Thus there is a constant (C_3) depending only on (G,\Phi,d) such that on (B_r(U^{(0)})),
+[
+|\nabla^3 S_W(U)|_{\mathrm{op}} \le C_3
+\quad\text{for all }\Lambda.
+]
+Hence (L_W) can be chosen as (C_3), uniformly in (\Lambda).
+
+This is the rigorous content behind your draft statement that “by compactness and locality, we can pick (r) independent of volume.” 
+
+---
+
+### 10.6.4 The uniform local curvature bound
+
+We can now prove the proposition in a slightly stronger form than your draft (it will automatically imply the horizontal version).
+
+> **Proposition 10.4 (Uniform local Bakry–Émery lower bound near the vacuum).**
+> Assume:
+>
+> 1. (\mathrm{Ric}*{g*\Lambda}\ge \kappa_G g_\Lambda) with (\kappa_G>0) independent of (\Lambda).
+> 2. (\nabla^2 S_{\mathrm{add},\Lambda}\ge -C_{\mathrm{add}} g_\Lambda) with (C_{\mathrm{add}}) independent of (\Lambda).
+> 3. There exists (C_3<\infty) independent of (\Lambda) such that (|\nabla^3 S_W|_{\mathrm{op}}\le C_3) on (B_r(U^{(0)})) for small enough (r) (as in §10.6.3).
+>
+> Then there exists (r>0) and (\rho_{\mathrm{loc}}>0), both independent of (\Lambda), such that for all (U\in B_r(U^{(0)})) and all (v\in T_U M_\Lambda),
+> [
+> \mathrm{Ric}*{\mu*\Lambda}(U)(v,v)\ \ge\ \rho_{\mathrm{loc}},|v|^2.
+> ]
+> In particular the same holds for all (v\in \mathrm{Hor}_U).
+
+**Proof.** Fix (\rho_0:=\kappa_G-C_{\mathrm{add}}>0). Choose (r>0) so small that (C_3 r \le \rho_0/2). On (B_r(U^{(0)})), the Lipschitz estimate gives
+[
+\nabla^2 S_W(U) \ge -C_3 r,g_\Lambda \ge -\rho_0/2,g_\Lambda.
+]
+Therefore
+[
+\nabla^2 S_\Lambda(U)
+= \nabla^2 S_W(U)+\nabla^2 S_{\mathrm{add},\Lambda}(U)
+\ge -(\rho_0/2 + C_{\mathrm{add}}),g_\Lambda.
+]
+Add (\mathrm{Ric}*{g*\Lambda}\ge \kappa_G g_\Lambda) to obtain
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)
+\ge \big(\kappa_G - C_{\mathrm{add}} - \rho_0/2\big),g_\Lambda
+= (\rho_0/2),g_\Lambda.
+]
+Thus we may take (\rho_{\mathrm{loc}}:=\rho_0/2>0), independent of (\Lambda). ∎
+
+This proposition is the expanded, first-principles justification of the neighborhood statement in your draft Proposition 10.3. 
+
+---
+
+## 10.7 Local curvature-dimension estimate for gauge-invariant observables
+
+Your draft’s Proposition 10.4 states that the neighborhood curvature bound implies a local (CD(\rho_{\mathrm{loc}},\infty)) inequality for gauge-invariant functions, because their gradients are horizontal. 
+
+We now prove this carefully from the Bochner identity.
+
+### 10.7.1 Generator and carré du champ
+
+Given (\mu_\Lambda = Z^{-1}e^{-S_\Lambda}d\mathrm{vol}*{g*\Lambda}), the associated reversible diffusion generator on ((M_\Lambda,g_\Lambda)) is
+[
+L_\Lambda f := \Delta f - \langle \nabla S_\Lambda,\nabla f\rangle,
+]
+where (\Delta) is the Laplace–Beltrami operator and all gradients are w.r.t. (g_\Lambda).
+
+Define the carré du champ operators:
+[
+\Gamma(f,g):= \tfrac12\big(L(fg)-fLg-gLf\big),
+\qquad
+\Gamma(f):=\Gamma(f,f).
+]
+One checks directly (using Leibniz rule for (\Delta) and compatibility of (\nabla)) that
+[
+\Gamma(f)=|\nabla f|^2.
+]
+
+Define
+[
+\Gamma_2(f):= \tfrac12\big(L\Gamma(f)-2\Gamma(f,Lf)\big).
+]
+
+---
+
+### 10.7.2 Bochner–Bakry–Émery identity (with proof)
+
+> **Lemma 10.5 (Bochner identity with drift).**
+> For smooth (f),
+> [
+> \Gamma_2(f)
+> = |\nabla^2 f|*{HS}^2 + \mathrm{Ric}*{\mu_\Lambda}(\nabla f,\nabla f),
+> ]
+> where (|\nabla^2 f|*{HS}^2) is the Hilbert–Schmidt norm squared of the Hessian, and
+> (\mathrm{Ric}*{\mu_\Lambda}=\mathrm{Ric}*{g*\Lambda}+\nabla^2 S_\Lambda).
+
+**Proof.** Start from the classical Bochner formula on a Riemannian manifold:
+[
+\tfrac12 \Delta |\nabla f|^2 - \langle \nabla f,\nabla \Delta f\rangle
+= |\nabla^2 f|*{HS}^2 + \mathrm{Ric}*{g_\Lambda}(\nabla f,\nabla f).
+]
+Now incorporate the drift term (-\langle \nabla S_\Lambda,\nabla \cdot\rangle). A direct computation gives
+[
+L|\nabla f|^2
+= \Delta |\nabla f|^2 - \langle \nabla S_\Lambda,\nabla |\nabla f|^2\rangle,
+]
+and
+[
+\langle \nabla f,\nabla Lf\rangle
+= \langle \nabla f,\nabla\Delta f\rangle - \langle \nabla f,\nabla\langle \nabla S_\Lambda,\nabla f\rangle\rangle.
+]
+Expand
+[
+\nabla\langle \nabla S_\Lambda,\nabla f\rangle
+= \nabla^2 S_\Lambda(\cdot,\nabla f) + \nabla^2 f(\cdot,\nabla S_\Lambda),
+]
+so
+[
+\langle \nabla f,\nabla\langle \nabla S_\Lambda,\nabla f\rangle\rangle
+= \nabla^2 S_\Lambda(\nabla f,\nabla f) + \nabla^2 f(\nabla f,\nabla S_\Lambda).
+]
+Also
+[
+\langle \nabla S_\Lambda,\nabla|\nabla f|^2\rangle
+= 2,\nabla^2 f(\nabla f,\nabla S_\Lambda).
+]
+Combine these in
+[
+\tfrac12 L|\nabla f|^2 - \langle \nabla f,\nabla Lf\rangle
+]
+and observe the (\nabla^2 f(\nabla f,\nabla S_\Lambda)) terms cancel, leaving
+[
+\tfrac12 L|\nabla f|^2 - \langle \nabla f,\nabla Lf\rangle
+= |\nabla^2 f|*{HS}^2 + \mathrm{Ric}*{g_\Lambda}(\nabla f,\nabla f)
+
+* \nabla^2 S_\Lambda(\nabla f,\nabla f).
+  ]
+  But the left-hand side equals (\Gamma_2(f)) because (\Gamma(f)=|\nabla f|^2) and (\Gamma(f,Lf)=\langle \nabla f,\nabla Lf\rangle). Thus
+  [
+  \Gamma_2(f)=|\nabla^2 f|*{HS}^2 + (\mathrm{Ric}*{g_\Lambda}+\nabla^2 S_\Lambda)(\nabla f,\nabla f)
+  = |\nabla^2 f|*{HS}^2 + \mathrm{Ric}*{\mu_\Lambda}(\nabla f,\nabla f).
+  ]
+  ∎
+
+---
+
+### 10.7.3 Local (CD(\rho_{\mathrm{loc}},\infty)) on gauge-invariant functions
+
+> **Proposition 10.6 (Local (CD(\rho_{\mathrm{loc}},\infty)) for gauge-invariant observables).**
+> Let (B_r(U^{(0)})) and (\rho_{\mathrm{loc}}) be as in Proposition 10.4.
+> Then for every smooth gauge-invariant function (f) and every (U\in B_r(U^{(0)})),
+> [
+> \Gamma_2(f)(U)\ \ge\ \rho_{\mathrm{loc}},\Gamma(f)(U).
+> ]
+> Equivalently, ((M_\Lambda,g_\Lambda,\mu_\Lambda)) satisfies a local curvature-dimension estimate (CD(\rho_{\mathrm{loc}},\infty)) on (B_r(U^{(0)})) in the gauge-invariant sector.
+
+**Proof.** Fix (U\in B_r(U^{(0)})). By Lemma 10.1, (\nabla f(U)\in \mathrm{Hor}*U). Proposition 10.4 gives (in fact for all tangent vectors, hence in particular for horizontals)
+[
+\mathrm{Ric}*{\mu_\Lambda}(U)(\nabla f,\nabla f) \ge \rho_{\mathrm{loc}} |\nabla f|^2.
+]
+Now apply Lemma 10.5:
+[
+\Gamma_2(f)
+= |\nabla^2 f|*{HS}^2 + \mathrm{Ric}*{\mu_\Lambda}(\nabla f,\nabla f)
+\ge 0 + \rho_{\mathrm{loc}}|\nabla f|^2
+= \rho_{\mathrm{loc}}\Gamma(f).
+]
+∎
+
+This is the expanded proof of your Proposition 10.4. 
+
+---
+
+## 10.8 Summary and interface to later steps
+
+Your draft summary can now be stated with explicit provenance:
+
+1. **Vacuum bound.** On gauge-invariant (horizontal) directions at (U^{(0)}),
+   [
+   \mathrm{Ric}*{\mu*\Lambda}(U^{(0)})|*{\mathrm{Hor}} \ge (\kappa_G-C*{\mathrm{add}}),g_\Lambda|*{\mathrm{Hor}},
+   ]
+   with (\kappa_G) depending only on ((G,g_G)) and (C*{\mathrm{add}}) uniform. 
+
+2. **Persistence in a uniform neighborhood.** There exist (r>0) and (\rho_{\mathrm{loc}}>0), independent of (\Lambda), such that on (B_r(U^{(0)})) the Bakry–Émery tensor has the lower bound (\mathrm{Ric}*{\mu*\Lambda}\ge \rho_{\mathrm{loc}} g_\Lambda) (hence also on horizontals). This is your neighborhood statement, now with a first-principles Lipschitz/Hessian mechanism. 
+
+3. **Local (CD(\rho_{\mathrm{loc}},\infty)) for gauge-invariant functions.** On (B_r(U^{(0)})),
+   [
+   \Gamma_2(f)\ge \rho_{\mathrm{loc}}\Gamma(f)
+   \quad\text{for gauge-invariant }f,
+   ]
+   i.e. local (CD(\rho_{\mathrm{loc}},\infty)) holds in the gauge-invariant sector. 
+
+4. **Why this matters.** This local curvature input is exactly what your later “local-to-global” functional inequality machinery is designed to consume: a Lyapunov/dissipativity argument controls excursions outside (B_r(U^{(0)})), and the local (CD) estimate is patched into global Poincaré/log-Sobolev constants uniform in volume and coupling, as stated in your original interface summary. 
+
+---
+
+## Optional add-on: “effective Poincaré” inside the ball
+
+Because you already have the general Bakry–Émery consequences recorded elsewhere (variance decay, Poincaré/LSI from (CD(\rho,\infty))), it’s worth spelling out the *local* version that justifies the “Effective Po…” label in the part title.
+
+On a region where (CD(\rho_{\mathrm{loc}},\infty)) holds and with appropriate boundary conditions (e.g. reflecting/Neumann for the killed/reflected diffusion, or by working with a smooth cutoff and localization estimates), one obtains a **Poincaré inequality with constant (\sim 1/\rho_{\mathrm{loc}})** for the localized measure. This is the same semigroup mechanism already summarized in your Bakry–Émery calculus notes. 
+
+I’m not formalizing the boundary-localization framework here because your later “Lyapunov patching” parts are where you decide which localization device you want (cutoff partitions vs. restricted measures vs. coercive drift). But analytically, this part provides exactly the **strictly positive local curvature input** needed for any of those strategies.
+
+---

@@ -1,0 +1,310 @@
+New file: `80_Appendices/F_Plaquette_proxy_derivative_bounds.md`
+
+```markdown
+# Appendix F — Plaquette proxy derivative bounds and diffusion-term closure
+
+**File status:** **Established** (all statements are proved here from smoothness/compactness + lattice locality + bi-invariance isometries).
+
+**Scope:** This appendix isolates the *constant-hygiene* estimates needed whenever the diffusion generator \(L_\Lambda\) is applied to plaquette-local functionals built from a globally smooth proxy \(\widetilde z_p\). The goal is to guarantee: **no hidden \(|P(\Lambda)|\)** factors appear from Laplacians/Hessians/carré-du-champ terms; every such contribution is controlled by the aggregate “badness” \(\mathcal D_\Lambda=\sum_p \widetilde z_p\), with constants independent of the volume.
+
+**Non-scope:** Any coercive **lower bound** for the drift “pairing term” is **not** in this file.
+
+---
+
+## F.1 Setup: product geometry and linkwise differential operators
+
+### F.1.1 Configuration manifold and product metric
+Let \(G\) be a compact Lie group with a fixed **bi-invariant** Riemannian metric \(g_G\), Lie algebra \(\mathfrak g\), and an \(\mathrm{Ad}\)-invariant inner product \(\langle\cdot,\cdot\rangle_{\mathfrak g}\).
+
+Let \(\Lambda\) be a finite periodic hypercubic lattice. Write:
+- \(E(\Lambda)\): oriented link set,
+- \(P(\Lambda)\): oriented plaquette set,
+- configuration manifold \(M_\Lambda := G^{E(\Lambda)}\) with product metric \(g_\Lambda\).
+
+Each plaquette has perimeter
+\[
+m_\partial := |\partial p| = 4.
+\]
+Fix an overlap constant \(\nu\) such that each link lies in the boundary of at most \(\nu\) plaquettes.
+
+### F.1.2 Linkwise orthonormal frame, carré du champ, and Laplacian
+For each link \(\ell\in E(\Lambda)\), choose an orthonormal basis \(\{X^a\}_{a=1}^{\dim\mathfrak g}\) of \(\mathfrak g\) and let \(\{X_\ell^a\}\) be the corresponding right-invariant vector fields acting in the \(\ell\)-coordinate of \(M_\Lambda\).
+
+For \(f\in C^\infty(M_\Lambda)\),
+\[
+\Gamma_\Lambda(f)
+:=\langle \nabla f,\nabla f\rangle_{g_\Lambda}
+=\sum_{\ell\in E(\Lambda)}\sum_{a=1}^{\dim\mathfrak g} (X_\ell^a f)^2,
+\]
+and
+\[
+\Delta_\Lambda f
+=\sum_{\ell\in E(\Lambda)}\sum_{a=1}^{\dim\mathfrak g} X_\ell^aX_\ell^a f.
+\]
+Write \(\nabla_\ell f\) and \(\Delta_\ell f\) for the gradient/Laplacian in the \(\ell\)-coordinate (so \(\Gamma_\Lambda(f)=\sum_\ell |\nabla_\ell f|^2\) and \(\Delta_\Lambda=\sum_\ell \Delta_\ell\)).
+
+---
+
+## F.2 The smooth proxy on \(G\): definition and global derivative constants
+
+### F.2.1 Trace-defect proxy
+Fix a faithful unitary representation \(\rho:G\to U(n)\). Define the **trace defect**
+\[
+\widetilde z(g)
+:=1-\frac{1}{n}\Re\mathrm{Tr}\big(\rho(g)\big),
+\qquad g\in G.
+\]
+This is smooth and conjugation-invariant.
+
+#### Lemma F.1 (range and unique minimum) — **Established**
+For all \(g\in G\),
+\[
+0\le \widetilde z(g)\le 2,
+\qquad\text{and}\qquad
+\widetilde z(g)=0 \iff g=\mathbf 1.
+\]
+
+*Proof.* Since \(\rho(g)\in U(n)\), its eigenvalues lie on the unit circle, hence \(\Re\mathrm{Tr}(\rho(g))\in[-n,n]\), which gives \(0\le \widetilde z\le 2\). If \(\widetilde z(g)=0\), then \(\Re\mathrm{Tr}(\rho(g))=n\), forcing \(\rho(g)=I_n\); faithfulness implies \(g=\mathbf 1\). ∎
+
+### F.2.2 Global \(C^2\) bounds by compactness
+Define the constants
+\[
+C^{(1)}_{\widetilde z}:=\sup_{g\in G} |\nabla_G\widetilde z(g)|,
+\qquad
+C^{(2)}_{\widetilde z}:=\sup_{g\in G} \|\nabla_G^2\widetilde z(g)\|_{\mathrm{op}},
+\qquad
+C_\Delta:=\sup_{g\in G} |\Delta_G \widetilde z(g)|.
+\]
+
+#### Lemma F.2 (uniform \(C^2\) bounds on \(G\)) — **Established**
+The constants \(C^{(1)}_{\widetilde z},C^{(2)}_{\widetilde z},C_\Delta\) are finite.
+
+*Proof.* \(\widetilde z\in C^\infty(G)\), so \(\nabla_G\widetilde z\) and \(\nabla_G^2\widetilde z\) are continuous tensor fields. Compactness of \(G\) implies their norms attain maxima. Since \(\Delta_G\widetilde z=\mathrm{tr}(\nabla_G^2\widetilde z)\), the Laplacian is also bounded. ∎
+
+### F.2.3 Global gradient domination
+Define on \(G\setminus\{\mathbf 1\}\) the ratio
+\[
+Q(g):=\frac{|\nabla_G \widetilde z(g)|^2}{\widetilde z(g)}.
+\]
+
+#### Lemma F.3 (global gradient domination) — **Established**
+There exists \(C_\nabla<\infty\) such that for all \(g\in G\),
+\[
+|\nabla_G\widetilde z(g)|^2 \le C_\nabla\,\widetilde z(g).
+\]
+Moreover, \(Q\) extends continuously to \(g=\mathbf 1\).
+
+*Proof.* By Lemma F.1, \(\widetilde z(g)>0\) for \(g\neq\mathbf 1\), so \(Q\) is continuous on \(G\setminus\{\mathbf 1\}\). It remains to control \(Q(g)\) as \(g\to\mathbf 1\).
+
+Work in normal coordinates \(g=\exp(Y)\) near \(\mathbf 1\). The Taylor expansion of the single-plaquette potential at \(\mathbf 1\) (equivalently, of \(\widetilde z(\exp Y)\)) has:
+- no linear term (since \(\mathbf 1\) is a minimum),
+- a strictly positive quadratic term proportional to \(|Y|^2\).
+
+Concretely, one has
+\[
+\widetilde z(\exp Y)=\frac{1}{2n\lambda_\rho}|Y|^2+O(|Y|^3),
+\qquad
+\nabla_G\widetilde z(\exp Y)=\frac{1}{n\lambda_\rho}Y+O(|Y|^2),
+\]
+hence
+\[
+\frac{|\nabla_G\widetilde z(\exp Y)|^2}{\widetilde z(\exp Y)}
+\longrightarrow
+\frac{2}{n\lambda_\rho}
+\quad\text{as }Y\to 0.
+\]
+Thus \(Q\) extends continuously to \(g=\mathbf 1\). By compactness, the continuous extension has a finite supremum; call it \(C_\nabla\). ∎
+
+---
+
+## F.3 Lifting to plaquettes: locality + bi-invariant isometries
+
+### F.3.1 Plaquette lift
+For each plaquette \(p\in P(\Lambda)\), define the plaquette holonomy \(U_p(U)\in G\) as the ordered product of the four boundary link variables (with inverses on oppositely oriented edges), and define
+\[
+\widetilde z_p(U):=\widetilde z\big(U_p(U)\big),
+\qquad U\in M_\Lambda.
+\]
+
+### F.3.2 Link support and one-link factorization
+
+#### Lemma F.4 (support and one-link factorization) — **Established**
+Fix a plaquette \(p\) with boundary \(\partial p\subset E(\Lambda)\). For a link \(\ell\in E(\Lambda)\):
+
+1. If \(\ell\notin\partial p\), then \(\nabla_\ell \widetilde z_p\equiv 0\) and \(\Delta_\ell \widetilde z_p\equiv 0\).
+2. If \(\ell\in\partial p\), then holding the other three boundary links fixed, the map \(g:=U_\ell\mapsto \widetilde z_p(U)\) can be written as
+   \[
+   g\longmapsto \widetilde z(A\,g^\sigma\,B)
+   \]
+   for some \(A,B\in G\) and \(\sigma\in\{+1,-1\}\). The map \(g\mapsto A g^\sigma B\) is an isometry of \((G,g_G)\).
+
+*Proof.* If \(\ell\notin\partial p\), the plaquette word \(U_p(U)\) is independent of \(U_\ell\), so all \(\ell\)-derivatives vanish.
+
+If \(\ell\in\partial p\), the plaquette word has the schematic form
+\[
+U_p = U_{b_1}\,U_{b_2}\,U_{b_3}^{-1}\,U_{b_4}^{-1}.
+\]
+Fixing the other three link variables, the dependence on \(U_\ell\) is either by left/right multiplication or by inversion (depending on whether \(\ell\) appears with exponent \(+1\) or \(-1\)), hence \(U_p(U)=A g^\sigma B\).
+
+Left/right multiplication are isometries for any bi-invariant metric, and inversion is also an isometry for a bi-invariant metric. Therefore their composition \(g\mapsto A g^\sigma B\) is an isometry. ∎
+
+### F.3.3 Derivative bounds for \(\widetilde z_p\)
+
+#### Lemma F.5 (uniform linkwise derivative bounds for \(\widetilde z_p\)) — **Established**
+With the constants from §F.2, for every plaquette \(p\), every link \(\ell\), and every configuration \(U\in M_\Lambda\),
+\[
+|\nabla_\ell \widetilde z_p(U)| \le C^{(1)}_{\widetilde z}\,\mathbf 1_{\{\ell\in\partial p\}},
+\]
+\[
+\big\|\nabla_\ell^2 \widetilde z_p(U)\big\|_{\mathrm{op}} \le C^{(2)}_{\widetilde z}\,\mathbf 1_{\{\ell\in\partial p\}},
+\]
+\[
+|\nabla_\ell \widetilde z_p(U)|^2 \le C_\nabla\,\widetilde z_p(U)\,\mathbf 1_{\{\ell\in\partial p\}}.
+\]
+Moreover, the full product Laplacian satisfies
+\[
+|\Delta_\Lambda \widetilde z_p(U)|\le m_\partial\,C_\Delta = 4C_\Delta.
+\]
+
+*Proof.* If \(\ell\notin\partial p\), everything is \(0\) by Lemma F.4(1).
+
+If \(\ell\in\partial p\), write \(\widetilde z_p = \widetilde z\circ \Psi\) in the \(\ell\)-coordinate with \(\Psi(g)=A g^\sigma B\), an isometry by Lemma F.4(2). For any smooth \(f\) and isometry \(\Psi\), one has
+\[
+|\nabla(f\circ\Psi)|(g)=|\nabla f|(\Psi(g)),
+\qquad
+\Delta(f\circ\Psi)(g)=(\Delta f)(\Psi(g)),
+\]
+and similarly \(\|\nabla^2(f\circ\Psi)\|_{\mathrm{op}}(g)=\|\nabla^2 f\|_{\mathrm{op}}(\Psi(g))\).
+Applying this with \(f=\widetilde z\) yields the first three bounds.
+
+Finally, \(\Delta_\Lambda=\sum_\ell \Delta_\ell\), and only the four links in \(\partial p\) contribute; each contribution is bounded in magnitude by \(C_\Delta\), hence \(|\Delta_\Lambda \widetilde z_p|\le 4C_\Delta\). ∎
+
+#### Corollary F.6 (plaquette carré du champ bound) — **Established**
+For all \(p\) and \(U\),
+\[
+\Gamma_\Lambda(\widetilde z_p)(U)
+=\sum_{\ell\in E(\Lambda)} |\nabla_\ell \widetilde z_p(U)|^2
+\le m_\partial\,C_\nabla\,\widetilde z_p(U)
+=4C_\nabla\,\widetilde z_p(U).
+\]
+
+*Proof.* Only \(\ell\in\partial p\) contribute; each such link contributes at most \(C_\nabla \widetilde z_p(U)\) by Lemma F.5. ∎
+
+---
+
+## F.4 Uniform closure of diffusion-generated terms for \(\Phi(s)=s^2\)
+
+### F.4.1 Aggregate functionals
+Define
+\[
+\mathcal D_\Lambda(U):=\sum_{p\in P(\Lambda)} \widetilde z_p(U),
+\qquad
+V_\Lambda(U):=\sum_{p\in P(\Lambda)} \widetilde z_p(U)^2.
+\]
+The intended Lyapunov function elsewhere is \(W_\Lambda=e^{\kappa V_\Lambda}\); this appendix only supplies bounds for the diffusion-generated pieces that arise from differentiating \(V_\Lambda\) and \(W_\Lambda\).
+
+### F.4.2 Chain-rule reminder (diffusion part only)
+For smooth \(\Phi:\mathbb R\to\mathbb R\) and smooth \(f\) on \(M_\Lambda\),
+\[
+\Delta_\Lambda(\Phi\circ f)=\Phi'(f)\,\Delta_\Lambda f+\Phi''(f)\,\Gamma_\Lambda(f).
+\]
+For \(\Phi(s)=s^2\), \(\Phi'(s)=2s\) and \(\Phi''(s)=2\).
+
+### F.4.3 The uniform closure proposition
+
+#### Proposition F.7 (diffusion-term closure by \(\mathcal D_\Lambda\) for \(\Phi(s)=s^2\)) — **Established**
+There exist constants \(A_1,A_2,A_3<\infty\), depending only on \((G,g_G)\), \(\rho\), and \(\nu\) (not on \(\Lambda\)), such that for all \(U\in M_\Lambda\),
+\[
+\Big|\sum_{p} 2\widetilde z_p(U)\,\Delta_\Lambda \widetilde z_p(U)\Big|
+\le A_1\,\mathcal D_\Lambda(U),
+\]
+\[
+2\sum_{p}\Gamma_\Lambda(\widetilde z_p)(U)
+\le A_2\,\mathcal D_\Lambda(U),
+\]
+\[
+\Gamma_\Lambda(V_\Lambda)(U)\le A_3\,\mathcal D_\Lambda(U).
+\]
+One explicit choice is
+\[
+A_1=8C_\Delta,
+\qquad
+A_2=8C_\nabla,
+\qquad
+A_3=64\,\nu\,C_\nabla.
+\]
+
+*Proof.*
+
+1. **Laplacian/Hessian term.** By Lemma F.5, \(|\Delta_\Lambda \widetilde z_p|\le 4C_\Delta\). Therefore
+   \[
+   \Big|\sum_{p} 2\widetilde z_p\,\Delta_\Lambda \widetilde z_p\Big|
+   \le \sum_p 2\widetilde z_p\cdot 4C_\Delta
+   =8C_\Delta\sum_p \widetilde z_p
+   =A_1\,\mathcal D_\Lambda.
+   \]
+
+2. **Chain-rule \(\Gamma\)-term.** By Corollary F.6,
+   \[
+   2\sum_p \Gamma_\Lambda(\widetilde z_p)
+   \le 2\sum_p 4C_\nabla \widetilde z_p
+   =8C_\nabla\,\mathcal D_\Lambda,
+   \]
+   so \(A_2=8C_\nabla\).
+
+3. **Carré du champ of \(V_\Lambda\).** For each link \(\ell\),
+   \[
+   \nabla_\ell V_\Lambda
+   =\sum_{p:\,\ell\in\partial p}\nabla_\ell(\widetilde z_p^2)
+   =\sum_{p:\,\ell\in\partial p} 2\widetilde z_p\,\nabla_\ell \widetilde z_p.
+   \]
+   Apply Cauchy–Schwarz to the finite sum over \(p\) meeting \(\ell\):
+   \[
+   |\nabla_\ell V_\Lambda|^2
+   \le \Big(\#\{p:\ell\in\partial p\}\Big)\sum_{p:\ell\in\partial p} 4\widetilde z_p^2\,|\nabla_\ell \widetilde z_p|^2.
+   \]
+   Since \(\#\{p:\ell\in\partial p\}\le \nu\), summing over links gives
+   \[
+   \Gamma_\Lambda(V_\Lambda)
+   =\sum_\ell |\nabla_\ell V_\Lambda|^2
+   \le 4\nu \sum_\ell\sum_{p:\ell\in\partial p}\widetilde z_p^2\,|\nabla_\ell \widetilde z_p|^2
+   =4\nu \sum_p \widetilde z_p^2\sum_{\ell\in\partial p}|\nabla_\ell \widetilde z_p|^2.
+   \]
+   The inner sum is \(\le \Gamma_\Lambda(\widetilde z_p)\), so Corollary F.6 gives
+   \[
+   \Gamma_\Lambda(V_\Lambda)
+   \le 4\nu \sum_p \widetilde z_p^2\cdot (4C_\nabla \widetilde z_p)
+   =16\nu C_\nabla \sum_p \widetilde z_p^3.
+   \]
+   Using the range bound \(0\le \widetilde z_p\le 2\) (Lemma F.1), we have \(\widetilde z_p^3\le 4\widetilde z_p\). Therefore
+   \[
+   \Gamma_\Lambda(V_\Lambda)
+   \le 16\nu C_\nabla \sum_p 4\widetilde z_p
+   =64\nu C_\nabla\,\mathcal D_\Lambda,
+   \]
+   i.e. \(A_3=64\nu C_\nabla\). ∎
+
+---
+
+## F.5 What this appendix guarantees (and what it does not)
+
+**Guaranteed here (Established):**
+- global bounds \(C^{(1)}_{\widetilde z},C^{(2)}_{\widetilde z},C_\Delta\) by compactness;
+- global gradient domination \(|\nabla\widetilde z|^2\le C_\nabla \widetilde z\);
+- locality/isometry lift implies the same bounds for plaquette observables \(\widetilde z_p\) without volume factors;
+- for \(\Phi(s)=s^2\), every diffusion-generated term in the chain rule closes with constants times \(\mathcal D_\Lambda\), uniformly in \(\Lambda\).
+
+**Not addressed here:**
+- any lower bound (coercivity) for drift pairing/cross terms.
+
+---
+
+## Source material used (traceability only)
+- `APPENDIX_J.md` (entire Appendix J structure: proxy definition, global bounds, isometry lift, closure proposition)
+- `## 5.1 Vacuum configuration and linearization.txt` (Taylor expansion at \(\mathbf 1\) used to justify the \(Q(g)\) extension argument)
+- `## 7. Lyapunov drift and uniform-in-volume functional inequalities.txt` (same estimates in the main-line drift section; Appendix F is the standalone constant-hygiene extraction)
+```
+
+**Appendix-series progress note:** Under the *current outline* (A, B, C, D, E, F, G, H, Z), **Appendix F is complete**. The remaining appendices in this outline are **G, H, and Z**.
+
+Grounding citations (not part of the file): Lemmas/structure for proxy + bounds + lift + closure are in APPENDIX_J; the Taylor expansion inputs used for the (Q)-extension are explicitly recorded in the gradient-domination proof and traced back to the vacuum linearization expansion of the trace potential.

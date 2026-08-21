@@ -1,0 +1,289 @@
+YM MASS GAP PROJECT – TECHNICAL APPENDIX
+Appendix C – Haar Measure Induced Mass Term in Lattice Yang–Mills
+=================================================================
+
+C.0. Purpose
+------------
+
+This appendix derives, in detail, the effective "mass term" that arises
+purely from the Haar measure on the group manifold when one writes lattice
+Yang–Mills variables in exponential coordinates.  The key result is that the
+Haar measure contributes an effective potential
+
+    S_Haar(A) = − log J(A),
+
+whose second-order expansion in the gauge potential A has a strictly positive
+quadratic form, i.e., a positive mass term independent of the bare action.
+
+This is an exact finite-dimensional, group-theoretic statement.
+
+We will work with G = SU(N) for definiteness, but the calculations adapt to
+any compact Lie group with similar properties.
+
+
+C.1. Lattice Configuration Space and Exponential Coordinates
+------------------------------------------------------------
+
+On a given lattice, denote by 𝔅 the set of oriented bonds (links).  A lattice
+configuration is a collection of group elements
+
+    U = (U_b)_{b∈𝔅} ∈ G^{𝔅}.
+
+The product Haar measure is
+
+    dμ_0(U) = ∏_{b∈𝔅} dHaar_G(U_b).
+
+To express U_b in terms of a "gauge potential" A_b taking values in the Lie
+algebra 𝔤 = su(N), we use the exponential map.  Let a be the lattice spacing,
+and g the gauge coupling.  For small fields A_b, write
+
+    U_b = exp(i a g A_b),
+
+where A_b ∈ su(N) is anti-Hermitian (or equivalently, i A_b is Hermitian).
+
+
+C.2. Jacobian of the Exponential Map
+------------------------------------
+
+We need the Jacobian determinant of the map
+
+    A_b  ↦  U_b = exp(i a g A_b)
+
+from 𝔤 to G.  In terms of left-invariant or right-invariant measures, the
+Haar measure is invariant under translation but not under the nonlinear change
+of coordinates.  The general formula for the Jacobian density J(A) is known
+from Lie group geometry:
+
+    dHaar_G(U) = J(A) dA,     U = exp(A),
+
+with
+
+    J(A) = det ( (sinh(ad_A/2)) / (ad_A/2) ),
+
+where ad_A : 𝔤 → 𝔤 is the adjoint map ad_A(X) = [A,X].  This formula arises
+from the Baker–Campbell–Hausdorff structure and the relation between the
+left-invariant volume form and the Lebesgue measure in a linear coordinate
+system on 𝔤.
+
+
+C.2.1. Spectral Representation of ad_A
+--------------------------------------
+
+The operator ad_A is skew-adjoint with respect to the Killing form on 𝔤.
+Let {λ_j} be the eigenvalues of ad_A (complex numbers, purely imaginary for
+su(N) under the standard inner product).  Then the Jacobian can be expressed
+as the product over eigenvalues:
+
+    J(A) = ∏_{j} (sinh(λ_j/2) / (λ_j/2)).
+
+Since λ_j = 0 occurs with multiplicity equal to the dimension of the central
+subalgebra (one for SU(N)), the corresponding factor should be interpreted as
+taking the limit (sinh x)/x → 1 as x → 0, so no singularity arises.
+
+We are interested in the small-A behavior, i.e., in a Taylor expansion of
+−log J(A) up to quadratic order in A.
+
+
+C.3. Expansion of −log J(A)
+---------------------------
+
+Let T = ad_A.  The function
+
+    f(T) = (sinh(T/2)) / (T/2)
+
+is an analytic function of T.  For a scalar variable x, the power series is
+
+    sinh(x/2) = (x/2) + (x^3/2^3 · 3!) + (x^5/2^5 · 5!) + ...
+
+Hence
+
+    sinh(x/2) / (x/2)
+      = 1 + x^2 / (2^2 · 3!) + x^4 / (2^4 · 5!) + ...
+
+      = 1 + x^2/24 + O(x^4).
+
+Thus for the operator T = ad_A, the functional calculus gives
+
+    f(T) = I + (T^2 / 24) + O(||T||^4).
+
+Therefore,
+
+    J(A) = det f(T)
+         = det(I + T^2 / 24 + O(||T||^4)).
+
+Taking the logarithm:
+
+    log J(A) = Tr log(I + T^2/24 + O(T^4)).
+
+Using log(I + X) = X − X^2/2 + ..., we get to second order in T:
+
+    log J(A) = Tr(T^2 / 24) + O(||T||^4).
+
+The linear term in T vanishes since f(T) is an even function and Tr(T) = 0
+for ad_A in a semisimple Lie algebra.
+
+Thus
+
+    S_Haar(A) := − log J(A) = −(1/24) Tr(T^2) + O(||T||^4).
+
+
+C.3.1. Expressing Tr(T^2) in Terms of A
+---------------------------------------
+
+Recall T = ad_A.  Acting on a basis {X_k} of 𝔤, we have
+
+    T(X_k) = [A, X_k].
+
+Then
+
+    Tr(T^2) = ∑_k ⟨ T^2 X_k, X_k ⟩
+            = ∑_k ⟨ [A, [A, X_k]], X_k ⟩,
+
+where ⟨·,·⟩ is the Killing form or a suitably normalized invariant inner
+product on 𝔤.  Using invariance of the inner product:
+
+    ⟨ [A, Y], Z ⟩ = ⟨ Y, [A, Z] ⟩,
+
+we find
+
+    ⟨ [A, [A, X_k]], X_k ⟩
+      = −⟨ [A, X_k], [A, X_k] ⟩.
+
+Therefore,
+
+    Tr(T^2) = − ∑_k || [A, X_k] ||^2.
+
+In particular, for SU(N), Tr(T^2) is negative, so −(1/24) Tr(T^2) is positive.
+One may also recast Tr(T^2) in terms of Casimir invariants.  Specifically,
+for SU(N), we know that
+
+    Tr( (ad_A)^2 ) = c_ad Tr(A^2),
+
+where Tr(A^2) is the standard Hilbert–Schmidt norm on 𝔤 and c_ad is a
+group-dependent positive constant equal to twice the dual Coxeter number:
+
+    c_ad = 2N for SU(N), up to normalization conventions.
+
+With a conventional normalization of the inner product on 𝔤, one obtains
+
+    Tr( (ad_A)^2 ) = − 2 N Tr(A^2),
+
+so that
+
+    −(1/24) Tr(T^2) = (N / 12) Tr(A^2).
+
+The precise coefficient depends on the normalization of Tr on 𝔤, but what
+matters structurally is that it is strictly positive.
+
+
+C.4. Effective Quadratic Term and Mass
+--------------------------------------
+
+Combining the above, for small A we obtain
+
+    S_Haar(A) = c_0 Tr(A^2) + O(||A||^4),
+
+with c_0 > 0 depending only on the group and normalization conventions.  On
+the lattice, summing over links b ∈ 𝔅:
+
+    S_Haar(U)
+      = − ∑_{b∈𝔅} log J(A_b)
+      = ∑_{b∈𝔅} (c_0 Tr(A_b^2) + O(||A_b||^4)).
+
+Thus the total Haar-induced part of the effective action (after change of
+variables to A_b) has a strictly positive quadratic part in A:
+
+    S_Haar^{(2)}(A) = c_0 ∑_{b∈𝔅} Tr(A_b^2).
+
+In terms of the Hessian at the origin, we find
+
+    ∇^2 S_Haar(0) = 2 c_0 I,
+
+in the natural basis of the link-space of su(N)-valued fields.  Equivalently,
+the measure
+
+    dμ_0(U) = exp(−S_Haar(A)) dA
+
+has a Gaussian-like "mass term" proportional to Tr(A^2).
+
+
+C.5. Combination with Wilson Action
+-----------------------------------
+
+In a standard lattice gauge theory, one typically starts with the Wilson
+action in terms of plaquette loops:
+
+    S_Wilson(U) = β ∑_{plaquettes p} (1 − (1/N) Re Tr U_p),
+
+where U_p is the ordered product of link variables around p.  Expanding near
+the identity, U_b = exp(i a g A_b), and using a continuum limit, this
+produces the usual Yang–Mills action ∝ ∫ Tr(F^2).  However, at the lattice
+level, the change of variables to A_b also transforms the Wilson action in a
+nonlinear way and adds the Jacobian contribution S_Haar(A).
+
+Thus, the full effective action in A-coordinates is schematically
+
+    S_eff(A) = S_Wilson(A) + S_Haar(A).
+
+To quadratic order,
+    S_eff(A) = S_Wilson^{(2)}(A) + S_Haar^{(2)}(A) + higher-order terms.
+
+The Wilson quadratic term, in standard normalization, produces something like
+
+    S_Wilson^{(2)}(A) ~ β a^4 ∑_x Tr( (∇_μ A_ν − ∇_ν A_μ)^2 ),
+
+which in momentum space contributes a kinetic term ∝ |p|^2.  The Haar term
+S_Haar^{(2)}(A) adds a strictly positive *mass-like* term c_0 ∑ Tr(A_b^2).
+
+At fixed lattice spacing a and coupling g, this implies that the Hessian of
+S_eff at A = 0 has strictly positive spectrum, bounded below by c_0 > 0, even
+if the Wilson term alone would give only nonnegative eigenvalues with a
+zero-mode at p = 0.
+
+
+C.6. Interpretation as "Mass from Geometry"
+-------------------------------------------
+
+The key point is that the Haar measure contribution S_Haar(A) is not an
+arbitrary added mass term; it is forced by the geometry of the compact gauge
+group and the choice of exponential coordinates on the lattice configuration
+space.  Its Hessian is positive definite and independent of the Wilson action
+parameters.
+
+This means that, at finite lattice spacing, the gauge fields experience an
+effective mass proportional to c_0 that originates from the measure, not from
+explicit mass terms in the action.  This mass term can be viewed as a
+"measure-induced gap" in the quadratic approximation at the origin.
+
+
+C.7. Summary
+------------
+
+In this appendix we have:
+
+  • Written the lattice gauge variables U_b ∈ SU(N) in exponential
+    coordinates U_b = exp(i a g A_b), with A_b in the Lie algebra.
+
+  • Recalled the Jacobian formula for the exponential map in a compact Lie
+    group:
+
+        J(A) = det( sinh(ad_A/2) / (ad_A/2) ).
+
+  • Expanded J(A) for small A using the functional calculus for T = ad_A,
+    obtaining
+
+        − log J(A) = −(1/24) Tr( (ad_A)^2 ) + O(||A||^4)
+                    = c_0 Tr(A^2) + O(||A||^4),
+
+    with c_0 > 0 determined by the group and normalization.
+
+  • Summed over links to obtain a lattice effective action contribution
+
+        S_Haar(A) = c_0 ∑_{b} Tr(A_b^2) + O(∑ ||A_b||^4),
+
+    producing a strictly positive quadratic term (a genuine mass term) in the
+    gauge potential variables.
+
+This provides a precise, finite-dimensional statement that the Haar measure
+geometry generates a local mass term in lattice Yang–Mills when working in
+exponential coordinates.

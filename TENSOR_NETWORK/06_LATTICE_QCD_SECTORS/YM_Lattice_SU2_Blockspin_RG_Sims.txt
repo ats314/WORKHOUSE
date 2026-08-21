@@ -1,0 +1,99 @@
+Lattice Simulations: SU(2) Gauge-Covariant Block-Spin RG and Curvature
+======================================================================
+
+This file describes a gauge-covariant block-spin renormalization attempt for SU(2) lattice gauge theory and its effect on the curvature (Hessian) of the Wilson action.
+
+WARNING: This is an exploratory toy implementation, not a fully faithful Wilsonian RG.
+
+----------------------------------------------------------------------
+1. Block-Spin Map (2^4 → 1^4)
+----------------------------------------------------------------------
+
+Fine lattice:
+    L_fine = 2, SU(2) gauge fields on links, action S_fine = β ∑_plaquettes (1 - 1/2 Tr(U_p)).
+
+We define a coarse lattice with L_coarse = 1 and define coarse links U'_μ as:
+
+    U'_μ = Proj_SU(2)[ U_μ(x) U_μ(x+e_μ) ],
+
+where x = (0,0,0,0) is a reference site, and e_μ is the unit vector in direction μ.
+Because L_fine=2, the neighbor x+e_μ wraps around by periodic boundary conditions.
+
+SU(2) projection:
+
+    Given M ∈ C^{2×2}, we define U = M (M† M)^{-1/2} to project onto SU(2).
+
+In code:
+
+    def su2_project(M):
+        H = M.conj().T @ M
+        H_inv_sqrt = jnp.linalg.inv(jnp.sqrt(H + 1e-12*jnp.eye(2)))
+        return M @ H_inv_sqrt
+
+We then extract the coarse algebra coordinates A'_μ ∈ R^3 from U'_μ by inverting:
+
+    U'_μ = exp( A'_μᵃ σ_a/2 ).
+
+We do this via angle-axis extraction:
+
+    tr(U) = 2 cos θ,
+    and U = cos θ I + i sin θ (n·σ), so A' = θ n.
+
+----------------------------------------------------------------------
+2. Coarse Action and β-Renormalization
+----------------------------------------------------------------------
+
+We define a coarse Wilson action on the L_coarse=1 lattice:
+
+    S_coarse = β_coarse ∑_{plaquettes} (1 - 1/2 Tr(U'_p)),
+
+where the sum runs over plaquettes of the single coarse site.
+
+Naively, if we took β_coarse = β * 16, we would simply multiply the entire action by 16, and the Hessian would scale by a factor of 16. This is not a useful RG step.
+
+Instead, for a toy demonstration, we keep β_coarse = β to avoid trivial scaling:
+
+    β_coarse = β.
+
+This is not the physical Wilsonian β-flow but a way to see how the shape of curvature changes independent of a trivial rescaling.
+
+----------------------------------------------------------------------
+3. Hessian on Coarse Lattice
+----------------------------------------------------------------------
+
+We reuse the make_wilson_action function with L=1 and β=β_coarse:
+
+    W_coarse = make_wilson_action(L=1, beta_coarse)
+
+We then compute:
+
+    H_coarse_fn = jax.jacfwd(jax.jacrev(W_coarse))
+    H_coarse = H_coarse_fn(v1_coarse)
+    evals_coarse = np.linalg.eigvalsh(np.array(H_coarse))
+
+where v1_coarse is the vector of coarse algebra coords A'_μ reconstructed via gauge_covariant_block from the fine configuration.
+
+Observed behavior (qualitative):
+
+- For the trivial configuration (all fine links = identity), the coarse configuration is also identity, and a naive test might produce an identical curvature floor. However, when more realistic backgrounds or fluctuations are included, coarse curvature can differ.
+- As implemented, our particular mapping at the trivial background is too symmetric to produce a nontrivial curvature flow; it essentially preserves the combined mass-like contribution at identity.
+
+True Wilsonian RG would:
+- integrate out short-distance fluctuations, not just combine link variables algebraically;
+- produce a new effective action with different β and higher-order terms;
+- change curvature in a more interesting way.
+
+Our gauge-covariant block spin is only the first step toward such a picture.
+
+----------------------------------------------------------------------
+4. Lessons from the RG Curvature Experiment
+----------------------------------------------------------------------
+
+1. A simple "multiply and project" blockspin, combined with a trivial β-rescaling rule, can generate either a blow-up of eigenvalues (if β scaled by volume) or near-identical curvature if β is kept fixed.
+2. The nontrivial RG behavior of curvature requires a more careful treatment:
+    - β-flow,
+    - higher-order induced operators,
+    - effects of integrating out fluctuations beyond the trivial configuration.
+3. Even so, the machinery of JAX Hessian computations and SU(2) exponentials/projections is now in place to explore these ideas more systematically in the future.
+
+End of SU(2) blockspin RG file.

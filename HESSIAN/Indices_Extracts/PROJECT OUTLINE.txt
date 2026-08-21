@@ -1,0 +1,416 @@
+Below is a **single, self-contained outline** designed explicitly for an LLM that is given **only this outline plus one appendix or core file at a time**.
+
+The goal is not narrative flow, but **role-identification**: the LLM should immediately know *why this file exists*, *what it is allowed to prove*, *what it must not assume*, and *where its outputs are consumed*.
+
+Think of this as a **semantic map + contract**, not a table of contents.
+
+---
+
+# Global Structure: What This Manuscript Is Doing
+
+**Objective (global):**
+Prove a **fixed-cutoff mass gap** for 4D lattice Yang–Mills via exponential clustering, then isolate the *conditional* interfaces required to extend that gap toward a continuum statement.
+
+**Strategy (global chain):**
+
+1. Define the lattice gauge model and geometry.
+2. Linearize the Wilson action at the vacuum → discrete Maxwell operator.
+3. Prove local coercivity (Bakry–Émery curvature) on a canonical “good set.”
+4. Convert curvature → covariance bounds (Helffer–Sjöstrand).
+5. Prove exponential decay of the inverse deterministic operator.
+6. Combine to get exponential clustering.
+7. Remove conditioning using typicality.
+8. Convert Euclidean decay → OS Hamiltonian gap.
+9. Isolate conditional continuum interfaces.
+
+Every appendix or core file exists to serve **exactly one link** in this chain.
+
+---
+
+# Core Files (Logical Spine)
+
+## Core-0 — Manuscript TOC and Dependency DAG
+
+**Purpose:**
+Single authoritative map of the manuscript.
+
+**What it answers:**
+
+* What exists?
+* What depends on what?
+* What remains conditional or external?
+
+**LLM rule:**
+Do **not** introduce new math here. Only reorganize, clarify dependencies, or update roles.
+
+---
+
+## Core-1 — Lattice Gauge Model at Fixed Cutoff
+
+**Purpose:**
+Define the **object of study**.
+
+**Provides:**
+
+* Lattice, links, plaquettes
+* Configuration space ( M_\Lambda = G^{E(\Lambda)} )
+* Gauge action
+* Wilson action and Gibbs measure
+* Admissible observables
+
+**Does NOT do:**
+
+* No analysis
+* No decay
+* No continuum talk
+
+**Feeds into:** Everything.
+
+---
+
+## Core-2 — Configuration Geometry and Differential Calculus
+
+**Purpose:**
+Build the **analytic language** on configuration space.
+
+**Provides:**
+
+* Gradients, Laplacian, carré du champ
+* Cylinder observables and intrinsic support
+* Link-distance geometry
+* Horizontal/vertical (gauge) splitting
+
+**Key role:**
+Allows later statements to say “gradient supported near X” or “distance between observables.”
+
+---
+
+## Core-3 — OS Framework at Fixed Cutoff
+
+**Purpose:**
+Set up the **Osterwalder–Schrader interface**.
+
+**Provides:**
+
+* Reflection, time translations
+* Positive-time algebra
+* Explicit pointer to OS reconstruction as an *external input*
+
+**Does NOT:**
+
+* Prove OS reconstruction
+* Prove a gap
+
+**Role:**
+Purely an interface: Euclidean decay → operator statements later.
+
+---
+
+## Core-4 — Vacuum Linearization and Discrete Maxwell Structure
+
+**Purpose:**
+Identify the **quadratic theory**.
+
+**Provides:**
+
+* Wilson action Hessian at the vacuum
+* Identification with ( d_1^* d_1 )
+* Discrete Maxwell operator
+
+**Key insight:**
+This is where “mass = curvature” becomes concrete.
+
+---
+
+## Core-5 — Local Coercivity / Matrix Hinge on a Good Set
+
+**Purpose:**
+Produce a **pointwise curvature lower bound**.
+
+**Provides:**
+
+* Canonical good set ( \mathcal K_{\Lambda,\beta} )
+* Bakry–Émery curvature ≥ deterministic operator
+* “Matrix hinge” inequality
+
+**Does NOT:**
+
+* Prove the good set is typical
+* Do probabilistic estimates
+
+**Status:**
+Deterministic, local, pointwise.
+
+---
+
+## Core-6 — Conditional Covariance via HS and Hinge
+
+**Purpose:**
+Turn **curvature into covariance bounds**.
+
+**Provides:**
+
+* Helffer–Sjöstrand identity (via Appendix F)
+* Operator-order comparison
+* Covariance bounded by inverse of deterministic operator
+
+**Condition:**
+Everything is **conditional on the good set**.
+
+---
+
+## Core-7 — Conditioned Exponential Clustering
+
+**Purpose:**
+Insert **inverse-kernel decay** into covariance bounds.
+
+**Provides:**
+
+* Exponential decay of deterministic inverse operator
+* Conditional exponential clustering under ( \mu(\cdot\mid \mathcal K) )
+
+**Key input:**
+Finite-range inverse decay (Appendix G).
+
+---
+
+## Core-8 — Localization: Conditional → Unconditional
+
+**Purpose:**
+Remove the conditioning.
+
+**Provides:**
+
+* Covariance decomposition across an event
+* Error controlled by ( \mu(\mathcal K^c) )
+* Full (unconditional) exponential clustering
+
+**Only new assumption:**
+Typicality of the good set.
+
+---
+
+## Core-9 — Thermodynamic Limit and OS Gap at Fixed Cutoff
+
+**Purpose:**
+Convert **clustering → mass gap**.
+
+**Provides:**
+
+* Infinite-volume limits
+* Euclidean time decay
+* OS Hamiltonian gap at fixed cutoff
+
+**Key role:**
+This is the **fixed-cutoff mass-gap theorem**.
+
+---
+
+## Core-10 — Conditional Continuum Extension
+
+**Purpose:**
+Isolate *exactly* what is needed to talk about the continuum.
+
+**Provides:**
+
+* Reflection-positivity permanence
+* Gap permanence under limits
+* Conditional continuum mass-gap statement
+
+**Crucial:**
+This file **does not claim existence** of the continuum limit—it only states *if X, then gap persists*.
+
+---
+
+# Appendices (Single-Purpose Engines)
+
+## Appendix A — Notation and Constants
+
+**Purpose:**
+Single source of truth for symbols and constants.
+
+**Rule:**
+No proofs, no logic.
+
+---
+
+## Appendix B — Lattice Cell Complex and Cochains
+
+**Purpose:**
+Discrete topology and combinatorics.
+
+**Provides:**
+
+* ( d_0, d_1 ), adjoints
+* Horizontal subspace
+* Finite-range and degree bounds
+
+---
+
+## Appendix C — Configuration Geometry
+
+**Purpose:**
+Riemannian geometry on ( G^{E(\Lambda)} ).
+
+**Provides:**
+
+* Right-trivialized calculus
+* Gauge-action isometries
+* Coordinate formulas for gradients/Laplacians
+
+---
+
+## Appendix D — Wilson Action Vacuum Expansion
+
+**Purpose:**
+Do the **hard differentiation once**.
+
+**Provides:**
+
+* Linearization of plaquette holonomy
+* Hessian of Wilson action
+* Identification with Maxwell operator
+
+---
+
+## Appendix E — Bakry–Émery Calculus
+
+**Purpose:**
+Abstract curvature machinery.
+
+**Provides:**
+
+* Γ, Γ₂ calculus
+* Curvature matrix formalism
+* Bridge between geometry and coercivity
+
+---
+
+## Appendix F — Helffer–Sjöstrand Covariance
+
+**Purpose:**
+Convert **covariance ↔ inverse operator**.
+
+**Provides:**
+
+* HS identity
+* Matrix Brascamp–Lieb bound
+* Operator comparison logic
+
+**Uses external elliptic inputs (explicitly logged).**
+
+---
+
+## Appendix G — Combes–Thomas Inverse Decay
+
+**Purpose:**
+Prove exponential decay of inverses of finite-range operators.
+
+**Provides:**
+
+* Deterministic kernel decay
+* Explicit constants
+* Volume-uniform bounds
+
+---
+
+## Appendix H — (If present) Maxwell Green Kernel Specialization
+
+**Purpose:**
+Refinement/specialization of Appendix G for Maxwell-type operators.
+
+---
+
+## Appendix I — Localization Algebra
+
+**Purpose:**
+Pure probability bookkeeping.
+
+**Provides:**
+
+* Exact covariance decomposition across an event
+* Error bounds proportional to ( \mu(K^c) )
+
+**No geometry. No analysis.**
+
+---
+
+## Appendix J — Typicality Mechanism for the Good Set
+
+**Purpose:**
+Show ( \mu(\mathcal K^c) ) is exponentially small.
+
+**Provides:**
+
+* Canonical definition of ( \mathcal K )
+* Volume-scale large deviation bound
+
+**This is the ONLY probabilistic input needed later.**
+
+
+
+---
+
+## Appendix K — Reflection Positivity for Wilson Measure
+
+**Purpose:**
+Prove finite-volume OS positivity.
+
+**Provides:**
+
+* Reflection datum
+* Sum-of-squares kernel decomposition
+* Positivity of the Wilson measure
+
+---
+
+## Appendix L — OS Reconstruction and Gap Extraction
+
+**Purpose:**
+Euclidean decay → spectral gap.
+
+**Provides:**
+
+* OS Hilbert space interface
+* Transfer operator
+* Spectral-measure gap argument
+
+---
+
+## Appendix M — Continuum Permanence Interfaces
+
+**Purpose:**
+Abstract limit stability.
+
+**Provides:**
+
+* Reflection-positivity permanence
+* Gap permanence for quadratic forms
+
+**Purely structural.**
+
+---
+
+## Appendix N — External Inputs Ledger
+
+**Purpose:**
+Absolute transparency.
+
+**Provides:**
+
+* Complete list of all non-internal assumptions
+* Where they are used
+* Nothing hidden
+
+---
+
+# How an LLM Should Use This Outline
+
+If given **one file + this outline**, the LLM should:
+
+1. Identify the file’s **unique role**.
+2. Check that all claims align with that role.
+3. Refuse to import results that belong elsewhere.
+4. Flag anything that violates the dependency contract.
+
+That’s the whole game.

@@ -1,0 +1,744 @@
+### 9.1 Abstract finite-range inverse decay lemma via Combes–Thomas conjugation
+
+The purpose of Part 9 is to convert the “matrix covariance bound” from Part 6 into an explicit exponential-in-distance estimate by understanding the Green kernel of a massive finite-range operator on the link graph. The workhorse is a Combes–Thomas–type conjugation argument: if an operator is uniformly positive and has finite interaction range, then its inverse has exponentially decaying matrix elements.
+
+We state the lemma in a form that is directly compatible with our later application to the massive Maxwell operator on link cochains (vector-valued entries are allowed).
+
+---
+
+#### 9.1.1 Setup: operators on a finite graph with fiber
+
+Let (V) be a finite set equipped with a graph distance
+[
+\mathrm{dist}:V\times V\to \mathbb N\cup{0}.
+]
+Let (\mathsf H_0) be a finite-dimensional real Hilbert space (in our application (\mathsf H_0\simeq\mathfrak g)), and consider the Hilbert space
+[
+\mathsf H := \ell^2(V;\mathsf H_0)
+=\Big{f:V\to \mathsf H_0:\ |f|^2:=\sum_{x\in V}|f(x)|*{\mathsf H_0}^2<\infty\Big}.
+]
+Any linear operator (A:\mathsf H\to\mathsf H) can be written in block-matrix form
+[
+(Af)(x)=\sum*{y\in V} A_{xy},f(y),
+\qquad A_{xy}\in \mathrm{End}(\mathsf H_0).
+\tag{9.1}
+]
+We write (|\cdot|_{\mathrm{op}}) for the operator norm on (\mathrm{End}(\mathsf H_0)), and also for the induced operator norm on (\mathsf H).
+
+---
+
+#### 9.1.2 A finite-range inverse-decay lemma
+
+We isolate the three hypotheses we will check later for the massive Maxwell operator (or for its Hodge-Laplacian avatar on the horizontal sector).
+
+**Assumption 9.1 (positivity gap, finite range, row-sum bound).**
+Let (A:\mathsf H\to\mathsf H) be self-adjoint. Assume:
+
+1. **Uniform positivity (mass gap).** There exists (a_0>0) such that
+   [
+   A \succeq a_0 I
+   \qquad\text{as quadratic forms on }\mathsf H.
+   \tag{9.2}
+   ]
+   In particular, (A) is invertible and (|A^{-1}|\le a_0^{-1}).
+
+2. **Finite range.** There exists an integer (R\ge 1) such that
+   [
+   A_{xy}=0\qquad\text{whenever }\mathrm{dist}(x,y)>R.
+   \tag{9.3}
+   ]
+
+3. **Off-diagonal row-sum bound.** Define
+   [
+   B := \sup_{x\in V}\sum_{\substack{y\in V\y\neq x}} |A_{xy}|_{\mathrm{op}} <\infty.
+   \tag{9.4}
+   ]
+   (This constant is purely “local”: on bounded-degree graphs for finite-range operators, (B) is controlled by a combinatorial degree bound times a uniform coefficient bound.)
+
+With these in hand, we have the following uniform Combes–Thomas estimate.
+
+---
+
+**Lemma 9.2 (finite-range inverse decays exponentially).**
+Under Assumption 9.1, for every (x,y\in V),
+[
+| (A^{-1})*{xy}|*{\mathrm{op}}
+\ \le
+\frac{2}{a_0},\exp!\big(-\eta,\mathrm{dist}(x,y)\big),
+\tag{9.5}
+]
+where the decay rate (\eta>0) can be chosen as
+[
+\eta
+\ :=
+\frac{1}{R}\log!\Bigl(1+\frac{a_0}{2B}\Bigr).
+\tag{9.6}
+]
+(If (B=0), then (A) is diagonal in the (V)-index and (9.5) holds trivially with (\eta=+\infty).)
+
+---
+
+#### Proof of Lemma 9.2
+
+Fix (y\in V). Define the 1-Lipschitz weight function
+[
+\phi_y(x):=\mathrm{dist}(x,y),
+\qquad x\in V,
+\tag{9.7}
+]
+and for (t\ge 0) define the diagonal multiplication operator (W_t:\mathsf H\to\mathsf H) by
+[
+(W_t f)(x):=e^{t\phi_y(x)},f(x).
+\tag{9.8}
+]
+Clearly (W_t) is invertible with ((W_t^{-1}f)(x)=e^{-t\phi_y(x)}f(x)).
+
+Define the conjugated operator
+[
+A_t := W_t A W_t^{-1}.
+\tag{9.9}
+]
+Its block entries satisfy
+[
+(A_t)*{xy}=e^{t(\phi_y(x)-\phi_y(y))},A*{xy}
+= e^{t(\phi_y(x)-\phi_y(y))},A_{xy}.
+\tag{9.10}
+]
+
+---
+
+**Step 1: bound the perturbation (A_t-A).**
+Let (K_t:=A_t-A). Then for all (x,y\in V),
+[
+(K_t)*{xy}
+=\big(e^{t(\phi_y(x)-\phi_y(y))}-1\big),A*{xy}.
+\tag{9.11}
+]
+If (A_{xy}\neq 0), then by the finite-range assumption (\mathrm{dist}(x,y)\le R). Since (\phi_y) is 1-Lipschitz with respect to (\mathrm{dist}),
+[
+|\phi_y(x)-\phi_y(y)|\le \mathrm{dist}(x,y)\le R.
+\tag{9.12}
+]
+Therefore, whenever (A_{xy}\neq 0),
+[
+|(K_t)*{xy}|*{\mathrm{op}}
+\le \big(e^{tR}-1\big),|A_{xy}|*{\mathrm{op}}.
+\tag{9.13}
+]
+Summing over (y\neq x) gives the row bound
+[
+\sum*{y\neq x}|(K_t)*{xy}|*{\mathrm{op}}
+\le (e^{tR}-1)\sum_{y\neq x}|A_{xy}|*{\mathrm{op}}
+\le (e^{tR}-1),B.
+\tag{9.14}
+]
+Since (A) is self-adjoint, (|A*{xy}|*{\mathrm{op}}=|A*{yx}|_{\mathrm{op}}), so the analogous column bound holds as well. A standard Schur-test estimate for block kernels then yields
+[
+|K_t|
+\le (e^{tR}-1),B.
+\tag{9.15}
+]
+
+---
+
+**Step 2: invertibility and norm control of (A_t^{-1}).**
+By (9.2), (A) is invertible and (|A^{-1}|\le a_0^{-1}). If we choose (t\ge 0) so that
+[
+|K_t|\le \frac{a_0}{2},
+\tag{9.16}
+]
+then
+[
+|K_t A^{-1}|
+\le |K_t|,|A^{-1}|
+\le \frac{a_0}{2}\cdot \frac{1}{a_0}
+=\frac12.
+\tag{9.17}
+]
+Hence (I+K_tA^{-1}) is invertible and we may write
+[
+A_t^{-1}
+=\big(A+K_t\big)^{-1}
+= A^{-1},(I+K_tA^{-1})^{-1}.
+\tag{9.18}
+]
+Taking norms and using (|(I+T)^{-1}|\le (1-|T|)^{-1}) when (|T|<1), we get
+[
+|A_t^{-1}|
+\le |A^{-1}|\cdot \frac{1}{1-|K_tA^{-1}|}
+\le \frac{1}{a_0}\cdot \frac{1}{1-1/2}
+=\frac{2}{a_0}.
+\tag{9.19}
+]
+
+Now by (9.15), the sufficient condition (9.16) holds provided
+[
+(e^{tR}-1)B\le \frac{a_0}{2}.
+\tag{9.20}
+]
+Equivalently,
+[
+t \le \frac{1}{R}\log!\Bigl(1+\frac{a_0}{2B}\Bigr).
+\tag{9.21}
+]
+
+---
+
+**Step 3: extract the off-diagonal decay of (A^{-1}).**
+From (A_t=W_tAW_t^{-1}) we have (A^{-1}=W_t^{-1}A_t^{-1}W_t), hence for the block ((x,y)),
+[
+(A^{-1})*{xy}
+= e^{-t\phi_y(x)}, (A_t^{-1})*{xy}, e^{t\phi_y(y)}.
+\tag{9.22}
+]
+But (\phi_y(y)=\mathrm{dist}(y,y)=0), and (\phi_y(x)=\mathrm{dist}(x,y)). Therefore
+[
+|(A^{-1})*{xy}|*{\mathrm{op}}
+\le e^{-t,\mathrm{dist}(x,y)},|A_t^{-1}|
+\le e^{-t,\mathrm{dist}(x,y)}\cdot \frac{2}{a_0}.
+\tag{9.23}
+]
+Choosing (t) as large as allowed by (9.21), namely
+[
+t=\eta:=\frac{1}{R}\log!\Bigl(1+\frac{a_0}{2B}\Bigr),
+\tag{9.24}
+]
+gives exactly (9.5)–(9.6). (\square)
+
+---
+
+#### 9.1.3 Remarks for later use
+
+1. **Uniformity in volume is automatic at this stage.**
+   The constants in Lemma 9.2 depend only on ((a_0,B,R)), not on (|V|). This is why we insist on bounded-degree/finite-range structure when we specialize to (V=E(\Lambda)).
+
+2. **Matrix-valued fibers cause no trouble.**
+   The argument only uses operator norms of blocks and a row-sum Schur estimate, so it applies verbatim when each (A_{xy}) is an element of (\mathrm{End}(\mathfrak g)).
+
+3. **What we will do next.**
+   In §9.2 we apply Lemma 9.2 to the massive Maxwell operator from §6.5 (more precisely, to the operator acting on the horizontal sector), identify (a_0=m^2), identify the range (R) with respect to the link adjacency distance (\mathrm{dist}_E), and bound the row-sum constant (B) in terms of (\alpha) and the bounded-degree constant for the link graph.
+
+
+
+### 9.2 Exponential Green kernel bound for the massive Maxwell operator on the link graph
+
+Section 9.1 gives an abstract “finite range + mass gap ⇒ exponential decay of the inverse kernel” lemma. In this section we specialize it to the massive Maxwell operator that appears in the hinge comparison from Part 6, and we record the resulting decay estimate in the exact form needed for the Helffer–Sjöstrand covariance bound.
+
+Throughout, (\Lambda) is a finite periodic hypercubic lattice in fixed dimension (d\ge 2). We write (E(\Lambda)) for the set of oriented links and (P(\Lambda)) for the set of oriented plaquettes. The Lie algebra fiber is (\mathsf H_0\simeq \mathfrak g) with the fixed (\mathrm{Ad})-invariant inner product, and we work on
+[
+\mathsf H_E ;:=;\ell^2!\big(E(\Lambda);\mathfrak g\big)
+\cong \mathcal C^1(\Lambda;\mathfrak g).
+\tag{9.25}
+]
+
+The operator of interest is the **massive Maxwell operator**
+[
+M_\Lambda ;:=; m^2 I ;+; \alpha, d_1^*d_1
+\qquad\text{on }\mathsf H_E,
+\tag{9.26}
+]
+with parameters (m^2>0) (the Haar/Ricci “mass”) and (\alpha>0) (the vacuum Wilson–Hessian coefficient; e.g. (\alpha=\beta/3) for (\mathrm{SU}(3)) in the normalization used earlier).
+
+We will apply Lemma 9.2 with (V=E(\Lambda)) and the link-graph distance (\mathrm{dist}_E) defined below.
+
+⸻
+
+#### 9.2.1 Link adjacency and bounded degree
+
+Define the **link adjacency relation** (\sim) on (E(\Lambda)) by declaring that (b\sim b') if there exists a plaquette (p\in P(\Lambda)) such that both links (b) and (b') appear among the four oriented boundary links of (p) (ignoring whether they enter (U_p) with exponent (+1) or (-1)). Let (\mathrm{dist}_E) be the associated graph distance on (E(\Lambda)).
+
+We record the bounded-degree constant for this link graph.
+
+**Lemma 9.3 (bounded degree of the link graph).**
+Let
+[
+D_E ;:=;\sup_{b\in E(\Lambda)} #{b'\in E(\Lambda):\ b'\neq b,\ b'\sim b}.
+\tag{9.27}
+]
+Then (D_E<\infty), with a bound depending only on the lattice dimension (d) (in particular independent of (|\Lambda|)). More concretely, if
+[
+\nu ;:=;\sup_{b\in E(\Lambda)} #{p\in P(\Lambda): b\in \partial p}
+\tag{9.28}
+]
+denotes the plaquette–link overlap constant, then
+[
+D_E ;\le; 3\nu.
+\tag{9.29}
+]
+On the periodic hypercubic lattice one may take (\nu\le 2(d-1)), hence
+[
+D_E ;\le; 6(d-1),
+\qquad\text{and in }d=4:\quad D_E\le 18.
+\tag{9.30}
+]
+
+*Proof.* Fix (b\in E(\Lambda)). Each plaquette (p) with (b\in\partial p) contains exactly three other boundary links (b'\neq b). Thus (b) has at most (3,#{p:\ b\in\partial p}\le 3\nu) neighbors. (\square)
+
+⸻
+
+#### 9.2.2 Finite-range structure and the row-sum constant (B)
+
+To apply Lemma 9.2 we must verify Assumption 9.1 (positivity gap, finite range, row-sum bound) for (A=M_\Lambda) on (\mathsf H_E), with (V=E(\Lambda)) and (\mathrm{dist}=\mathrm{dist}_E).
+
+**Lemma 9.4 (verification of Assumption 9.1 for (M_\Lambda)).**
+Let (M_\Lambda=m^2I+\alpha d_1^*d_1) as in (9.26). Then:
+
+1. *(Uniform positivity gap)* (M_\Lambda\succeq m^2 I) as quadratic forms on (\mathsf H_E). Hence we may take
+   [
+   a_0 ;=; m^2.
+   \tag{9.31}
+   ]
+
+2. *(Finite range in (\mathrm{dist}_E))* The kernel blocks ((M_\Lambda)*{bb'}\in \mathrm{End}(\mathfrak g)) satisfy
+   [
+   (M*\Lambda)_{bb'}=0
+   \qquad\text{whenever }\mathrm{dist}_E(b,b')>1.
+   \tag{9.32}
+   ]
+   Thus we may take the interaction range
+   [
+   R;=;1.
+   \tag{9.33}
+   ]
+
+3. *(Row-sum bound)* There is a purely combinatorial constant (B<\infty), independent of (\Lambda), such that
+   [
+   \sup_{b\in E(\Lambda)}\sum_{\substack{b'\in E(\Lambda)\ b'\neq b}}
+   \big|(M_\Lambda)*{bb'}\big|*{\mathrm{op}}
+   \ \le\ B.
+   \tag{9.34}
+   ]
+   In fact one may take
+   [
+   B ;\le; \alpha,D_E,
+   \tag{9.35}
+   ]
+   where (D_E) is the bounded degree constant from Lemma 9.3.
+
+*Proof.*
+(1) Since (d_1^*d_1\succeq 0), we have (M_\Lambda=m^2I+\alpha d_1^*d_1\succeq m^2I).
+
+(2) The operator (d_1) is the plaquette coboundary, so ((d_1X)*p) depends only on the four link components ({X*{b}: b\in\partial p}). Consequently, ((d_1^*d_1X)*b) depends only on link components (X*{b'}) with (b') lying in the boundary of some plaquette containing (b); equivalently, (b'=b) or (b'\sim b). Thus ((d_1^*d_1)_{bb'}=0) if (b'\not\sim b) and (b'\neq b), which is exactly (9.32).
+
+(3) By the preceding point, for fixed (b) there are at most (D_E) links (b'\neq b) with ((d_1^*d_1)*{bb'}\neq 0). Moreover, (d_1) is an incidence operator with coefficients in ({0,\pm 1}), and (d_1^*d_1) acts componentwise in (\mathfrak g), so each off-diagonal block ((d_1^*d_1)*{bb'}) is an integer coefficient times (\mathrm{Id}*{\mathfrak g}), with uniformly bounded absolute value; in particular, we may use the crude bound
+[
+\big|(d_1^*d_1)*{bb'}\big|*{\mathrm{op}}\le 1
+\qquad(b'\neq b).
+\tag{9.36}
+]
+Therefore
+[
+\sum*{b'\neq b}\big|(M_\Lambda)*{bb'}\big|*{\mathrm{op}}
+========================================================
+
+\alpha\sum_{b'\neq b}\big|(d_1^*d_1)*{bb'}\big|*{\mathrm{op}}
+\le
+\alpha\cdot #{b'\neq b:\ b'\sim b}
+\le \alpha D_E,
+]
+which is (9.35). (\square)
+
+*Remark 9.5 (fiber triviality).*
+Because (d_1) is defined by scalar incidence signs and does not mix Lie algebra components, every block ((M_\Lambda)*{bb'}) is a scalar multiple of (\mathrm{Id}*{\mathfrak g}). We nonetheless keep (|\cdot|_{\mathrm{op}}) notation to match the abstract lemma and to remain compatible with any later vector-bundle variants.
+
+⸻
+
+#### 9.2.3 Exponential decay of the massive Maxwell inverse kernel
+
+We can now apply Lemma 9.2 directly.
+
+**Proposition 9.6 (Combes–Thomas decay for the massive Maxwell Green kernel).**
+Let (\Lambda) be any finite periodic lattice and let (M_\Lambda=m^2I+\alpha d_1^*d_1) with (m^2>0), (\alpha>0). Then for all links (b,b'\in E(\Lambda)),
+[
+\big|\big(M_\Lambda^{-1}\big)*{bb'}\big|*{\mathrm{op}}
+\ \le
+\frac{2}{m^2},
+\exp!\big(-\eta,\mathrm{dist}_E(b,b')\big),
+\tag{9.37}
+]
+where one may choose the decay rate
+[
+\eta
+;:=;
+\log!\Bigl(1+\frac{m^2}{2\alpha D_E}\Bigr),
+\tag{9.38}
+]
+with (D_E) as in Lemma 9.3. In particular, (\eta>0) and the constants in (9.37) depend only on (m^2), (\alpha), and the dimension (d) (via (D_E)), but **not** on (|\Lambda|).
+
+*Proof.* Apply Lemma 9.2 with (V=E(\Lambda)), (\mathsf H_0=\mathfrak g), (\mathrm{dist}=\mathrm{dist}*E), and (A=M*\Lambda). Lemma 9.4 provides the three inputs with (a_0=m^2), (R=1), and (B\le \alpha D_E). Substituting into (9.5)–(9.6) yields (9.37)–(9.38). (\square)
+
+*Remark 9.7 (non-optimality is fine).*
+The Combes–Thomas exponent (\eta) scales like (m^2/(\alpha D_E)) when (m^2\ll \alpha), which is typically not sharp compared to Fourier-based computations. For the clustering program here we only need a strictly positive (\eta) uniform in volume; optimal constants are not the bottleneck.
+
+⸻
+
+#### 9.2.4 Compatibility with the horizontal Green operator used in Part 6
+
+In Part 6 the Helffer–Sjöstrand representation couples (\nabla F) and (\nabla G) through the inverse of the massive Maxwell operator on the **horizontal sector** at the vacuum,
+[
+H_{U^{(0)}};=;\ker(d_0^*)\subset \mathsf H_E.
+\tag{9.39}
+]
+Since (d_0^*d_1^*=0), the operator (d_1^*d_1) preserves (\ker(d_0^*)), and hence so does (M_\Lambda). Therefore the inverse on the horizontal sector is simply the restriction of (M_\Lambda^{-1}) to (\ker(d_0^*)).
+
+**Corollary 9.8 (kernel decay for the horizontal Green operator).**
+Let (G_{\Lambda,H}:=\big(M_\Lambda|*{\ker d_0^*}\big)^{-1}) denote the Green operator on the horizontal sector. Then the same pointwise kernel bound (9.37) holds for (G*{\Lambda,H}) (interpreting its matrix elements via the ambient link-coordinate representation). In particular, the exponential decay rate (\eta) is volume-uniform.
+
+*Proof.* Since (M_\Lambda) preserves (\ker(d_0^*)) and (M_\Lambda\succeq m^2I), the restriction (M_\Lambda|_{\ker d_0^*}) is invertible and its inverse coincides with (M_\Lambda^{-1}) on (\ker(d_0^*)). The ambient matrix elements of (G_{\Lambda,H}) can therefore be taken to be those of (M_\Lambda^{-1}), and (9.37) applies. (\square)
+
+⸻
+
+This completes the Part 9 “Green kernel” input: the inverse of the massive finite-range operator produced by the hinge inequality has an exponentially decaying kernel with constants independent of the volume. In the next section we feed (9.37) into the conditional covariance representation from Part 6 (and then into the localization bookkeeping from Part 8) to obtain the final exponential-in-distance clustering estimate.
+
+
+
+
+
+### 9.3 Uniformity in volume and boundary conditions
+
+The Combes–Thomas estimate of Lemma 9.2 is only useful for clustering if its constants do **not** degrade as the lattice volume grows. In our application the underlying index set is the link set (V=E(\Lambda)), which grows with (|\Lambda|), and one may also wish to vary spatial boundary conditions (periodic torus vs finite box) without rebuilding the decay argument. This subsection records the (fortunately simple) uniformity mechanism: the Combes–Thomas parameters ((a_0,B,R)) are **local** and therefore can be bounded by constants depending only on the fixed dimension and the operator coefficients, not on (|E(\Lambda)|). 
+
+Throughout, we keep the massive Maxwell operator from §6.5:
+[
+M ;=; m^2 I ;+;\alpha, d_1^*d_1
+\qquad\text{on }\mathcal C^1(\Lambda;\mathfrak g),
+]
+with parameters (m^2=c_H/2>0) and (\alpha=\beta/(n\lambda_\rho)>0) as in (6.18)–(6.19), and we measure link separation using the link adjacency distance (\mathrm{dist}_E) from Definition 6.19.
+
+⸻
+
+#### 9.3.1 The link graph has uniformly bounded local complexity
+
+Let (\sim) be the link adjacency relation: (b\sim b') iff there exists a plaquette (p) whose boundary contains both links. Let (\mathrm{dist}_E) be the induced graph distance on (E(\Lambda)).
+
+The bounded overlap constant (\nu) from §3.4 says that each link belongs to the boundary of at most (\nu) plaquettes. Since each plaquette boundary has length (m_\partial=4), a fixed link (b) can share a plaquette with at most (3) other boundary links per incident plaquette. Hence the adjacency degree of the link graph is bounded by
+[
+\deg_E(b);\le; 3,\deg_P(b);\le; 3\nu,
+\tag{9.25}
+]
+uniformly in (\Lambda). In (d=4) hypercubic geometry one may take (\nu\le 6) (each link sits in at most (2(d-1)) plaquettes), so (3\nu\le 18).
+
+This degree bound is the basic reason the kernel decay constants will be uniform: every row of the matrix of a finite-range operator interacts with only (O(1)) neighbors, regardless of volume.
+
+⸻
+
+#### 9.3.2 Uniform control of the Combes–Thomas parameters ((a_0,B,R)) for (M)
+
+We now verify that (M) satisfies Assumption 9.1 with constants independent of (\Lambda), and we make the dependence on boundary conditions explicit.
+
+**Lemma 9.4 (volume- and boundary-uniform Combes–Thomas parameters for (M)).**
+Fix a lattice dimension (here (d=4)). For each finite lattice (\Lambda) (periodic torus or a finite box with any standard local boundary convention for the cochain complex), consider
+[
+M ;=; m^2 I + \alpha d_1^*d_1
+\quad\text{on}\quad \mathsf H=\ell^2(E(\Lambda);\mathfrak g)\cong \mathcal C^1(\Lambda;\mathfrak g),
+]
+and measure distance by (\mathrm{dist}_E) on (E(\Lambda)). Then:
+
+1. **Uniform positivity.** (M\succeq m^2 I) on (\mathsf H). In particular, one can take
+   [
+   a_0 = m^2.
+   \tag{9.26}
+   ]
+
+2. **Finite range.** In the link-coordinate block matrix representation (M_{b,b'}\in \mathrm{End}(\mathfrak g)),
+   [
+   M_{b,b'}=0 \quad\text{whenever}\quad \mathrm{dist}_E(b,b')>1.
+   \tag{9.27}
+   ]
+   Hence one can take
+   [
+   R=1.
+   \tag{9.28}
+   ]
+
+3. **Row-sum bound.** The off-diagonal row-sum constant (B) from Assumption 9.1 satisfies
+   [
+   B ;\le; \alpha,C_B,
+   \qquad
+   C_B := 3\nu,
+   \tag{9.29}
+   ]
+   uniformly in (\Lambda) and uniformly across boundary conditions. In particular, in (d=4) one may take (C_B\le 18).
+
+*Proof.*
+
+(1) Since (d_1^*d_1\succeq 0), for any (X\in\mathcal C^1(\Lambda;\mathfrak g)),
+[
+\langle X,MX\rangle
+= m^2|X|^2+\alpha|d_1X|^2 \ge m^2|X|^2,
+]
+so (M\succeq m^2 I), giving (9.26).
+
+(2) The operator (d_1^*d_1) is plaquette-local: ((d_1X)_p) depends only on the four boundary links of (p), and then ((d_1^*F)_b) depends only on plaquettes containing (b). Consequently, ((d_1^*d_1X)*b) depends only on those (X*{b'}) where (b') appears in the boundary of a plaquette that also contains (b), i.e. on links with (\mathrm{dist}_E(b,b')\le 1). The diagonal mass term (m^2I) is range (0). This yields (9.27)–(9.28).
+
+(3) Only the Maxwell part contributes off-diagonal blocks. Concretely, expanding (d_1^*d_1) in a fixed oriented cochain convention yields
+[
+(d_1^*d_1X)_b
+=============
+
+\sum_{p:,b\in\partial p} \varepsilon(b,p),(d_1X)*p,
+\qquad
+(d_1X)*p=\sum*{b'\in\partial p}\varepsilon(b',p),X*{b'},
+]
+with (\varepsilon(\cdot,\cdot)\in{\pm 1}). Hence
+[
+(d_1^*d_1X)_b
+=============
+
+\sum_{p:,b\in\partial p};\sum_{b'\in\partial p}
+\varepsilon(b,p)\varepsilon(b',p),X_{b'}.
+]
+Therefore, for (b'\neq b), the coefficient multiplying (X_{b'}) is a signed sum over plaquettes containing both (b) and (b'). In particular its absolute value is (\le) the number of such plaquettes, which is (\le 1) in the hypercubic setting and in any case (\le \deg_P(b)\le \nu). A coarse bound sufficient for the Schur row-sum is obtained by counting neighbors rather than exact coefficients: each plaquette containing (b) contributes interactions with at most (3) other boundary links, and there are at most (\nu) such plaquettes. Hence
+[
+\sum_{b'\neq b}\big|(d_1^*d_1)*{b,b'}\big|*{\mathrm{op}}
+\le 3\nu,
+]
+and multiplying by (\alpha) gives (9.29). Boundary links (in finite boxes) belong to fewer plaquettes, so the same upper bound remains valid (and is actually improved). (\square)
+
+⸻
+
+#### 9.3.3 Uniform exponential decay of (M^{-1}) across volumes
+
+With Lemma 9.4 in hand, Lemma 9.2 applies to (A=M) on the link index set (V=E(\Lambda)), with constants ((a_0,B,R)) bounded uniformly in (\Lambda). This yields a **volume-uniform** exponential kernel bound.
+
+**Corollary 9.5 (uniform Green kernel decay for the massive Maxwell operator).**
+Let (M=m^2I+\alpha d_1^*d_1) on (\mathcal C^1(\Lambda;\mathfrak g)), with (m^2>0) and (\alpha>0). Then for every finite (\Lambda) and all links (b,b'\in E(\Lambda)),
+[
+\big|(M^{-1})*{b,b'}\big|*{\mathrm{op}}
+\ \le
+\frac{2}{m^2},\exp!\big(-\eta,\mathrm{dist}_E(b,b')\big),
+\tag{9.30}
+]
+where one may choose the decay rate
+[
+\eta
+\ :=
+\log!\Bigl(1+\frac{m^2}{2\alpha C_B}\Bigr),
+\qquad C_B=3\nu,
+\tag{9.31}
+]
+(and in particular (C_B\le 18) in (d=4)). The constants in (9.30)–(9.31) depend only on ((m^2,\alpha)) and the fixed lattice dimension (through (\nu)), and **do not** depend on (|\Lambda|).
+
+*Proof.* Apply Lemma 9.2 with (a_0=m^2), (R=1), and (B\le \alpha C_B) from Lemma 9.4. (\square)
+
+**Remark 9.6 (fiber structure).**
+Because (d_1^*d_1) acts componentwise in (\mathfrak g) and uses only the (\mathrm{Ad})-invariant inner product, the linkwise blocks ((M^{-1})*{b,b'}) are (\mathbb R)-scalar multiples of (\mathrm{Id}*{\mathfrak g}) in an orthonormal (\mathfrak g)-basis. The Combes–Thomas estimate is already phrased in the basis-free operator norm (|\cdot|_{\mathrm{op}}), so no additional dimension-dependent constants appear.
+
+⸻
+
+#### 9.3.4 Boundary conditions: periodic vs finite box (and why the constants don’t care)
+
+There are two distinct “boundary” issues in the overall argument:
+
+1. **Spatial boundary conditions on the lattice (\Lambda)** (periodic torus vs finite box).
+2. **Reflecting boundary conditions in configuration space** (the localized generator (L^K) on (K_\Lambda(r)) from Part 6).
+
+Only the first affects the cochain operators (d_0,d_1) and hence (M). The second affects the diffusion generator used in the HS identity, but not the deterministic operator (M) itself.
+
+For the spatial boundary conditions:
+
+* On a **periodic torus**, every link has the same local incidence counts; (\nu) is a pure dimension constant and the bound above is immediate.
+
+* On a **finite box with free/Dirichlet/Neumann-type local conventions** for the cochain complex, links near the boundary participate in *fewer* plaquettes than in the periodic case. This can only **decrease** the row-sum constant (B) and never increases the interaction range (R). The mass lower bound (M\succeq m^2 I) remains unchanged. Therefore the same constants (C=2/m^2) and (\eta) in (9.30)–(9.31) are valid uniformly across these boundary choices; if anything, the true decay can only be stronger in the presence of boundaries.
+
+**Remark 9.7 (wrap-around distance on a torus).**
+On a periodic lattice, (\mathrm{dist}_E) is the graph distance on the *wrapped* link graph; thus it already accounts for the possibility of “going around the torus.” This is the correct distance for a bound that is uniform in volume, since the inverse kernel genuinely feels wrap-around when the separation is comparable to the torus size. In the thermodynamic limit, for fixed local observables and separations much smaller than the linear size, (\mathrm{dist}_E) agrees with the infinite-lattice distance, so the exponent (\eta) passes cleanly to the limit.
+
+⸻
+
+#### 9.3.5 Compatibility with the horizontal sector
+
+Part 6 ultimately needs exponential decay for the kernel used in the HS covariance bound on gauge-invariant observables. Those gradients are horizontal, and (M) preserves the orthogonal splitting (\mathcal C^1=\mathrm{im}(d_0)\oplus \ker(d_0^*)) (Lemma 6.14). Since the Combes–Thomas estimate was proved for (M^{-1}) on the full link space, it automatically controls the action of (M^{-1}) on horizontal inputs, and hence controls the “horizontal Green kernel” used in §6.5 without any volume loss.
+
+(If one prefers to phrase everything intrinsically on (H^{(0)}=\ker(d_0^*)), one may simply observe that (M^{-1}) maps (H^{(0)}) to itself and equals ((M|_{H^{(0)}})^{-1}) there; the same decay estimate applies.)
+
+⸻
+
+This completes the uniformity bookkeeping: the Green kernel decay constants depend only on the fixed parameters ((m^2,\alpha)) and local lattice combinatorics, and therefore are stable under volume growth and under standard lattice boundary conditions. In §9.4 we insert (9.30) into the matrix Helffer–Sjöstrand bound from Part 6 to obtain an explicit exponential-in-distance conditional covariance estimate.
+
+
+
+
+### 9.4 Insertion into the Helffer–Sjöstrand covariance inequality
+
+Part 6 reduced covariance control on the good set (K=K_\Lambda(r)) to an inequality involving the inverse of the massive Maxwell operator (restricted to horizontals). Part 9.1–9.3 then supplied the missing analytic input: exponential off–diagonal decay of the Green kernel of (M_H^{-1}), with constants uniform in (|\Lambda|) and stable under the boundary-condition choices discussed in §9.3. In the outline, this is exactly the “insert decay into HS” step that bridges Green’s function bounds to exponential clustering. 
+
+We now perform that insertion carefully and package the result in the form used in Part 10.
+
+---
+
+#### 9.4.1 Starting point: HS + massive Maxwell inverse on the good set
+
+Fix (0<r\le r_{\mathrm{sf}}) so that the matrix hinge bound from Part 5 applies on (K=K_\Lambda(r)), and let (\mu^K) denote the localized/conditioned state on (K) (implemented via the reflected/Neumann dynamics from §6.2). Recall the conditional matrix covariance bound from §6.4–§6.5:
+
+[
+\mathrm{Cov}*{\mu^K}(F,G)
+;\le;
+\int*{K}\Big\langle \nabla_H F,\ M_H^{-1},\nabla_H G\Big\rangle_{\mathcal C^1},d\mu^K,
+\tag{9.38}
+]
+
+for (C^1) gauge-invariant observables (F,G) with (\mu^K(G)=0). Here:
+
+* (\nabla_H) denotes the horizontal gradient (equivalently, (\nabla) followed by the orthogonal projection to horizontals), and for gauge invariants (\nabla F) is automatically horizontal;
+* (M_H = m^2 I + \alpha (d_1^* d_1)|_{H^{(0)}}) is the massive Maxwell operator on the vacuum horizontal sector (H^{(0)}=\ker(d_0^*));
+* (M_H^{-1}) is understood as the inverse on (H^{(0)}), and we use the linkwise kernel convention from §6.5:
+  [
+  \big(M_H^{-1}\eta\big)*b = \sum*{b'\in E(\Lambda)} (M_H^{-1})*{b,b'},\eta*{b'}.
+  \tag{9.39}
+  ]
+
+The point of §9.1–§9.3 is that the kernel blocks ((M_H^{-1})_{b,b'}) decay exponentially in the link adjacency distance (\mathrm{dist}_E) introduced in §6.5.4.
+
+---
+
+#### 9.4.2 Kernel expansion and the basic bilinear estimate
+
+Let (A:=\mathrm{supp}_E(F)\subseteq E(\Lambda)) and (B:=\mathrm{supp}_E(G)\subseteq E(\Lambda)) be the link supports (Definition 6.18). For any (U\in K), the linkwise components satisfy ((\nabla_H F(U))*b=0) for (b\notin A) and ((\nabla_H G(U))*{b'}=0) for (b'\notin B). Expanding (9.38) in the link basis yields
+
+[
+\mathrm{Cov}*{\mu^K}(F,G)
+;\le;
+\sum*{b\in A}\sum_{b'\in B}
+\int_K
+\Big\langle (\nabla_HF)*b,\ (M_H^{-1})*{b,b'},(\nabla_HG)*{b'}\Big\rangle*{\mathfrak g},d\mu^K.
+\tag{9.40}
+]
+
+Taking absolute values and applying Cauchy–Schwarz in (L^2(\mu^K)) gives, for each fixed ((b,b')),
+
+[
+\left|
+\int_K
+\Big\langle (\nabla_HF)*b,\ (M_H^{-1})*{b,b'},(\nabla_HG)*{b'}\Big\rangle,d\mu^K
+\right|
+\le
+|(M_H^{-1})*{b,b'}|*{\mathrm{op}},
+|(\nabla_HF)*b|*{L^2(\mu^K)},
+|(\nabla_HG)*{b'}|_{L^2(\mu^K)}.
+\tag{9.41}
+]
+
+Summing (9.41) over (b\in A), (b'\in B) yields the “raw HS + kernel” inequality:
+
+[
+\big|\mathrm{Cov}*{\mu^K}(F,G)\big|
+\le
+\sum*{b\in A}\sum_{b'\in B}
+|(M_H^{-1})*{b,b'}|*{\mathrm{op}},
+|(\nabla_HF)*b|*{L^2(\mu^K)},
+|(\nabla_HG)*{b'}|*{L^2(\mu^K)}.
+\tag{9.42}
+]
+
+So far: no decay, just a clean separation between (i) a kernel factor and (ii) observable-dependent gradient factors.
+
+---
+
+#### 9.4.3 Injecting the exponential kernel decay
+
+From §9.2 (application of Lemma 9.2) and §9.3 (uniformity), we have constants (C_M,\eta_M>0), depending only on ((m^2,\alpha)) and the local combinatorics of the link graph (but **not** on (|\Lambda|)), such that
+
+[
+|(M_H^{-1})*{b,b'}|*{\mathrm{op}}
+\ \le
+C_M,e^{-\eta_M,\mathrm{dist}_E(b,b')}
+\qquad
+\forall,b,b'\in E(\Lambda).
+\tag{9.43}
+]
+
+Define the separation distance between supports in the link graph:
+
+[
+D_E(A,B):=\mathrm{dist}_E(A,B)=\min{\mathrm{dist}_E(b,b'):\ b\in A,\ b'\in B}.
+\tag{9.44}
+]
+
+Then (\mathrm{dist}_E(b,b')\ge D_E(A,B)) for every (b\in A), (b'\in B), and hence (9.43) implies the uniform bound
+
+[
+|(M_H^{-1})*{b,b'}|*{\mathrm{op}}
+\ \le
+C_M,e^{-\eta_M,D_E(A,B)}
+\qquad
+(b\in A,\ b'\in B).
+\tag{9.45}
+]
+
+Insert (9.45) into (9.42):
+
+[
+\big|\mathrm{Cov}*{\mu^K}(F,G)\big|
+\le
+C_M,e^{-\eta_M,D_E(A,B)}
+\left(\sum*{b\in A}|(\nabla_HF)*b|*{L^2(\mu^K)}\right)
+\left(\sum_{b'\in B}|(\nabla_HG)*{b'}|*{L^2(\mu^K)}\right).
+\tag{9.46}
+]
+
+This already has the right qualitative structure: an exponential distance factor times a prefactor depending only on (F) and (G) (through finitely many link-gradients).
+
+For a slightly cleaner prefactor, apply Cauchy–Schwarz to the finite sums over (A) and (B):
+
+[
+\sum_{b\in A}|(\nabla_HF)*b|*{L^2(\mu^K)}
+\le
+\sqrt{|A|}\left(\sum_{b\in A}|(\nabla_HF)*b|*{L^2(\mu^K)}^2\right)^{1/2}
+========================================================================
+
+\sqrt{|A|}\left(\int_K |\nabla_HF|^2,d\mu^K\right)^{1/2},
+\tag{9.47}
+]
+and similarly for (G). Combining with (9.46) yields:
+
+[
+\boxed{
+\big|\mathrm{Cov}_{\mu^K}(F,G)\big|
+\le
+C_M,\sqrt{|A|,|B|};
+e^{-\eta_M,D_E(A,B)}
+\left(\int_K |\nabla_HF|^2,d\mu^K\right)^{1/2}
+\left(\int_K |\nabla_HG|^2,d\mu^K\right)^{1/2}.
+}
+\tag{9.48}
+]
+
+Because (F) and (G) are local observables, (|A|) and (|B|) are (O(1)) numbers independent of (|\Lambda|), and the gradient integrals are also (O(1)) (they depend on (F,G) but not on the volume).
+
+---
+
+#### 9.4.4 “Clustering-ready” statement on the good set
+
+We now record the form that will be fed into Part 10 (where (K) will later be upgraded to full measure via §8.1–§8.3 localization/typicality).
+
+**Proposition 9.6 (conditional exponential covariance bound on (K_\Lambda(r))).**
+Assume the hinge radius (r) is chosen so that the massive Maxwell operator (M_H) from §6.5 controls the Witten Laplacian on (K_\Lambda(r)), and assume the Green kernel bound (9.43) with constants (C_M,\eta_M) (established in §9.2–§9.3). Let (F,G) be (C^1), gauge-invariant, local observables with link supports
+[
+A=\mathrm{supp}*E(F),\qquad B=\mathrm{supp}*E(G).
+]
+Then for the conditioned/reflected measure (\mu^K=\mu*\Lambda(\cdot\mid K*\Lambda(r))) (with the corresponding generator used in §6.2–§6.4),
+[
+\big|\mathrm{Cov}*{\mu^K}(F,G)\big|
+\le
+C_M,e^{-\eta_M,\mathrm{dist}*E(A,B)}
+\left(\sum*{b\in A}|(\nabla_HF)*b|*{L^2(\mu^K)}\right)
+\left(\sum*{b'\in B}|(\nabla_HG)*{b'}|*{L^2(\mu^K)}\right),
+\tag{9.49}
+]
+and in particular the coarser but often more convenient estimate (9.48) holds.
+
+*Proof.* Expand the HS bound in link coordinates as in (9.40), apply Cauchy–Schwarz and the operator norm to obtain (9.42), then insert the exponential kernel decay (9.43) and factor out the minimum-distance exponent as in (9.45). The refined form (9.48) follows by Cauchy–Schwarz in the finite sums over supports. (\square)
+
+---
+
+#### 9.4.5 What has been achieved, and what remains for Part 10
+
+At this point the “HS → exponential decay” mechanism is complete **on the good set**:
+
+* Part 6 gave a matrix Brascamp–Lieb/HS inequality reducing covariance to (M_H^{-1}).
+* Part 9 gave (M_H^{-1}) kernel decay with explicit exponent (via Combes–Thomas) and constants uniform in volume.
+* Section 9.4 converts those two inputs into an explicit exponential-in-distance covariance bound under (\mu^K).
+
+Part 10 is now a matter of bookkeeping rather than new analysis: combine (9.49)/(9.48) with the localization decomposition of §8.1, and then choose the canonical (K_\Lambda(\varepsilon)) and a typicality bound ensuring (\mu_\Lambda(K_\Lambda(\varepsilon)^c)) is small enough not to spoil the distance exponent—exactly the bridge laid out in the master outline. 
+

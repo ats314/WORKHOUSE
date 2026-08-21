@@ -1,0 +1,304 @@
+VERIFIED
+Title: Scalar Lattice Field: Uniform Convexity, Bakry–Émery Curvature, and Spectral Gap
+
+**Abstract**
+
+We consider a real scalar \(\phi^4\) field on a finite four‑dimensional periodic lattice \(\Lambda_L\subset\mathbb{Z}^4\) with action
+\[
+S_\Lambda(\phi)
+= \sum_{x\in \Lambda_L} \Big(
+  \frac{m_0^2}{2}\,\phi_x^2 + \frac{\lambda}{4}\,\phi_x^4
+\Big)
++ \frac{\kappa}{2} \sum_{\langle x,y\rangle} (\phi_x - \phi_y)^2,
+\quad m_0^2>0,\ \lambda>0,\ \kappa\ge 0.
+\]
+We prove that \(S_\Lambda\) is uniformly strictly convex with Hessian bounded below by \(m_0^2\) independently of the lattice volume. For the associated Langevin generator
+\(L_\Lambda = \Delta - \nabla S_\Lambda\cdot\nabla\) on \(L^2(\mu_\Lambda)\), where \(\mu_\Lambda\) is the Gibbs measure with density \(Z_\Lambda^{-1}e^{-S_\Lambda}\), we use Bochner’s identity to establish the Bakry–Émery curvature‑dimension condition \(CD(m_0^2,\infty)\). This yields sharp Poincaré and logarithmic Sobolev inequalities with constant \(m_0^2\), and implies a spectral gap for the self‑adjoint operator \(H_\Lambda=-L_\Lambda\): the first nonzero eigenvalue satisfies \(\lambda_1\ge m_0^2\). This furnishes a clean prototype of the pattern “Hessian lower bound ⇒ Bakry–Émery ⇒ functional inequalities ⇒ spectral gap” to be reused in the Yang–Mills setting.
+
+---
+
+## 1. Lattice scalar field and Gibbs measure
+
+Let \(\Lambda_L\subset\mathbb{Z}^4\) be a finite hypercubic lattice with periodic boundary conditions. A real scalar field configuration is
+\[
+\phi = (\phi_x)_{x\in\Lambda_L} \in \mathbb{R}^{|\Lambda_L|}.
+\]
+
+Define the action
+\[
+S_\Lambda(\phi)
+= \sum_{x\in \Lambda_L} \left(
+  \frac{m_0^2}{2}\,\phi_x^2 + \frac{\lambda}{4}\,\phi_x^4
+\right)
++ \frac{\kappa}{2} \sum_{\langle x,y\rangle} (\phi_x - \phi_y)^2,
+\]
+with parameters
+\[
+m_0^2>0,\qquad \lambda>0,\qquad \kappa\ge 0.
+\]
+
+The associated Gibbs measure on \(\mathbb{R}^{|\Lambda_L|}\) is
+\[
+d\mu_\Lambda(\phi)
+= Z_\Lambda^{-1} e^{-S_\Lambda(\phi)} \prod_{x\in\Lambda_L} d\phi_x,
+\]
+where \(Z_\Lambda\) is the normalizing partition function. Since the local potential grows quartically and \(m_0^2,\lambda>0\), \(Z_\Lambda<\infty\) and \(\mu_\Lambda\) is a well‑defined probability measure.
+
+We equip \(\mathbb{R}^{|\Lambda_L|}\) with the standard Euclidean inner product
+\[
+\langle u,v\rangle = \sum_{x\in\Lambda_L} u_x v_x,\qquad
+\|v\|^2 = \langle v,v\rangle,
+\]
+and denote by \(\nabla S_\Lambda(\phi)\) and \(\nabla^2 S_\Lambda(\phi)\) the gradient and Hessian of \(S_\Lambda\) at \(\phi\).
+
+---
+
+## 2. Uniform convexity: Hessian lower bound
+
+We decompose the action into on‑site and interaction parts:
+\[
+S_\Lambda(\phi) = \sum_{x\in\Lambda_L} V(\phi_x) + K(\phi),
+\]
+where
+\[
+V(\phi_x) = \frac{m_0^2}{2}\phi_x^2 + \frac{\lambda}{4}\phi_x^4,
+\qquad
+K(\phi) = \frac{\kappa}{2}\sum_{\langle x,y\rangle} (\phi_x - \phi_y)^2.
+\]
+
+### Lemma 1 (Uniform Hessian lower bound)
+
+For all \(\phi\in\mathbb{R}^{|\Lambda_L|}\) and all \(v\in\mathbb{R}^{|\Lambda_L|}\),
+\[
+\langle v, \nabla^2 S_\Lambda(\phi)\, v\rangle \;\ge\; \rho_* \|v\|^2,
+\qquad \rho_* = m_0^2.
+\]
+
+**Proof.**
+
+1. **Local potential.**  
+   For each site \(x\),
+   \[
+   V'(\phi_x) = m_0^2 \phi_x + \lambda \phi_x^3,\qquad
+   V''(\phi_x) = m_0^2 + 3\lambda \phi_x^2.
+   \]
+   Since \(\lambda>0\) and \(\phi_x^2\ge 0\),
+   \[
+   V''(\phi_x) \ge m_0^2 \quad\text{for all }x,\phi_x.
+   \]
+
+2. **Interaction term.**  
+   The interaction is quadratic in \(\phi\):
+   \[
+   K(\phi) = \frac{\kappa}{2}\sum_{\langle x,y\rangle} (\phi_x - \phi_y)^2.
+   \]
+   Differentiating twice, the Hessian of \(K\) is independent of \(\phi\) and coincides (up to \(\kappa\)) with the graph Laplacian on \(\Lambda_L\). Its quadratic form is
+   \[
+   \langle v, \nabla^2 K(\phi)\, v\rangle
+   = \kappa \sum_{\langle x,y\rangle} (v_x - v_y)^2.
+   \]
+   Each term \((v_x - v_y)^2\ge 0\), and \(\kappa\ge 0\), hence
+   \[
+   \langle v, \nabla^2 K(\phi)\, v\rangle \ge 0
+   \quad\text{for all }v,\phi.
+   \]
+
+3. **Combination.**  
+   The Hessian of \(S_\Lambda\) is the sum of the diagonal Hessian of the on‑site potential and the Hessian of the interaction:
+   \[
+   \begin{aligned}
+   \langle v, \nabla^2 S_\Lambda(\phi)\, v\rangle
+   &= \sum_{x\in\Lambda_L} V''(\phi_x)\, v_x^2
+      + \langle v, \nabla^2 K(\phi)\, v\rangle \\
+   &\ge \sum_{x\in\Lambda_L} m_0^2 v_x^2 \\
+   &= m_0^2 \|v\|^2.
+   \end{aligned}
+   \]
+   This bound is uniform in \(\phi\) and in the lattice volume. ∎
+
+Thus \(S_\Lambda\) is uniformly strictly convex with curvature at least \(m_0^2\).
+
+---
+
+## 3. Bakry–Émery curvature and functional inequalities
+
+### 3.1 Langevin generator and carré du champ
+
+Consider the Langevin generator \(L_\Lambda\) acting on smooth functions \(f:\mathbb{R}^{|\Lambda_L|}\to\mathbb{R}\):
+\[
+L_\Lambda f = \Delta f - \nabla S_\Lambda \cdot \nabla f,
+\]
+where \(\Delta\) is the standard Laplacian on \(\mathbb{R}^{|\Lambda_L|}\). In divergence form,
+\[
+L_\Lambda f = e^{S_\Lambda}\,\nabla\cdot\big(e^{-S_\Lambda}\nabla f\big),
+\]
+so \(L_\Lambda\) is symmetric on \(L^2(\mu_\Lambda)\) and \(\mu_\Lambda\) is invariant.
+
+The carré du champ operator \(\Gamma\) and its iterated version \(\Gamma_2\) are defined by
+\[
+\Gamma(f) = \tfrac12\big(L_\Lambda(f^2) - 2f L_\Lambda f\big) = |\nabla f|^2,
+\]
+\[
+\Gamma_2(f) = \tfrac12 L_\Lambda \Gamma(f) - \Gamma(f,L_\Lambda f),
+\]
+where \(\Gamma(f,g) = \tfrac12(L_\Lambda(fg) - f L_\Lambda g - g L_\Lambda f)\).
+
+In Euclidean space with potential \(S_\Lambda\), Bochner’s identity yields
+\[
+\Gamma_2(f)
+= \|\nabla^2 f\|_{\mathrm{HS}}^2
+  + \langle \nabla^2 S_\Lambda\, \nabla f, \nabla f\rangle,
+\]
+where \(\|\cdot\|_{\mathrm{HS}}\) is the Hilbert–Schmidt norm of the Hessian \(\nabla^2 f\).
+
+### 3.2 Curvature‑dimension condition
+
+**Proposition 2 (Bakry–Émery \(CD(\rho_*,\infty)\)).**  
+With \(\rho_* = m_0^2\) as in Lemma 1,
+\[
+\Gamma_2(f) \;\ge\; \rho_*\, \Gamma(f)
+\quad\text{for all smooth }f.
+\]
+
+**Proof.**
+
+From Bochner’s identity,
+\[
+\Gamma_2(f)
+= \|\nabla^2 f\|_{\mathrm{HS}}^2
+  + \langle \nabla^2 S_\Lambda\, \nabla f, \nabla f\rangle.
+\]
+The first term is nonnegative:
+\[
+\|\nabla^2 f\|_{\mathrm{HS}}^2 \ge 0.
+\]
+Applying Lemma 1 with \(v = \nabla f(\phi)\) at each \(\phi\),
+\[
+\langle \nabla^2 S_\Lambda\, \nabla f, \nabla f\rangle
+\ge m_0^2 \|\nabla f\|^2
+= \rho_* \Gamma(f).
+\]
+Therefore
+\[
+\Gamma_2(f) \ge \rho_* \Gamma(f).
+\]
+This is precisely the curvature‑dimension condition \(CD(\rho_*,\infty)\). ∎
+
+### 3.3 Poincaré and log‑Sobolev inequalities
+
+Let \(\mathrm{Var}_{\mu_\Lambda}(f) = \int f^2\,d\mu_\Lambda - \big(\int f\,d\mu_\Lambda\big)^2\) and
+\(\mathrm{Ent}_{\mu_\Lambda}(g) = \int g\log g\,d\mu_\Lambda - \big(\int g\,d\mu_\Lambda\big)\log\big(\int g\,d\mu_\Lambda\big)\).
+
+**Theorem 3 (Poincaré and log‑Sobolev inequalities).**  
+For all smooth \(f\),
+\[
+\mathrm{Var}_{\mu_\Lambda}(f)
+\;\le\; \frac{1}{\rho_*} \int |\nabla f|^2\, d\mu_\Lambda,
+\]
+\[
+\mathrm{Ent}_{\mu_\Lambda}(f^2)
+\;\le\; \frac{2}{\rho_*} \int |\nabla f|^2\, d\mu_\Lambda.
+\]
+
+**Proof (standard Bakry–Émery argument, sketched).**
+
+Let \(P_t = e^{tL_\Lambda}\) be the Markov semigroup generated by \(L_\Lambda\). The curvature‑dimension condition \(CD(\rho_*,\infty)\) implies the gradient estimate
+\[
+\Gamma(P_t f) \le e^{-2\rho_* t} P_t\Gamma(f).
+\]
+Integrating against \(\mu_\Lambda\) and using invariance of \(\mu_\Lambda\) under \(P_t\),
+\[
+\int \Gamma(P_t f)\,d\mu_\Lambda
+\le e^{-2\rho_* t} \int \Gamma(f)\,d\mu_\Lambda.
+\]
+
+1. **Poincaré.**  
+   The variance along the semigroup satisfies
+   \[
+   \frac{d}{dt}\mathrm{Var}_{\mu_\Lambda}(P_t f)
+   = -2\int \Gamma(P_t f)\,d\mu_\Lambda
+   \le -2\rho_*\,\mathrm{Var}_{\mu_\Lambda}(P_t f),
+   \]
+   where the last inequality uses the gradient bound and the standard identity
+   \(\frac{d}{dt}\mathrm{Var}_{\mu_\Lambda}(P_t f) = -2\int \Gamma(P_t f)\,d\mu_\Lambda\).
+   Grönwall’s lemma yields
+   \[
+   \mathrm{Var}_{\mu_\Lambda}(P_t f)
+   \le e^{-2\rho_* t}\,\mathrm{Var}_{\mu_\Lambda}(f).
+   \]
+   Integrating this decay in time and using the representation of variance via the Dirichlet form gives
+   \[
+   \mathrm{Var}_{\mu_\Lambda}(f)
+   \le \frac{1}{\rho_*} \int \Gamma(f)\,d\mu_\Lambda
+   = \frac{1}{\rho_*} \int |\nabla f|^2\,d\mu_\Lambda.
+   \]
+
+2. **Log‑Sobolev.**  
+   Similarly, for \(g_t = P_t(f^2)\), the entropy satisfies
+   \[
+   \frac{d}{dt}\mathrm{Ent}_{\mu_\Lambda}(g_t)
+   = -2\int \frac{\Gamma(\sqrt{g_t})}{g_t}\,g_t\,d\mu_\Lambda
+   = -2\int \Gamma(\sqrt{g_t})\,d\mu_\Lambda.
+   \]
+   The curvature condition implies exponential decay of entropy with rate \(2\rho_*\), and integrating this decay yields
+   \[
+   \mathrm{Ent}_{\mu_\Lambda}(f^2)
+   \le \frac{2}{\rho_*} \int \Gamma(f)\,d\mu_\Lambda
+   = \frac{2}{\rho_*} \int |\nabla f|^2\,d\mu_\Lambda.
+   \]
+   Full details follow the standard Bakry–Émery theory for \(CD(\rho_*,\infty)\). ∎
+
+---
+
+## 4. Dynamic mass gap: spectral gap of the Langevin generator
+
+Define the operator
+\[
+H_\Lambda = -L_\Lambda
+\]
+on \(L^2(\mu_\Lambda)\). Since the configuration space is finite‑dimensional and \(S_\Lambda\) is confining and smooth, \(H_\Lambda\) is essentially self‑adjoint on smooth functions and has purely discrete spectrum
+\[
+0 = \lambda_0 < \lambda_1 \le \lambda_2 \le \dots \to \infty.
+\]
+The eigenvalue \(\lambda_0=0\) corresponds to constant functions, which are annihilated by \(L_\Lambda\).
+
+The Dirichlet form associated with \(H_\Lambda\) is
+\[
+\mathcal{E}(f,f)
+= \int \Gamma(f)\,d\mu_\Lambda
+= \int |\nabla f|^2\,d\mu_\Lambda.
+\]
+
+**Corollary 4 (Spectral gap).**  
+The first nonzero eigenvalue \(\lambda_1\) of \(H_\Lambda\) satisfies
+\[
+\lambda_1 \;\ge\; \rho_* = m_0^2.
+\]
+
+**Proof.**
+
+By the Rayleigh–Ritz variational characterization of \(\lambda_1\),
+\[
+\lambda_1
+= \inf_{\substack{f\in L^2(\mu_\Lambda)\\ f\not\equiv\text{const}}}
+\frac{\mathcal{E}(f,f)}{\mathrm{Var}_{\mu_\Lambda}(f)}
+= \inf_{\substack{f\in L^2(\mu_\Lambda)\\ f\not\equiv\text{const}}}
+\frac{\int |\nabla f|^2\,d\mu_\Lambda}{\mathrm{Var}_{\mu_\Lambda}(f)}.
+\]
+The Poincaré inequality from Theorem 3 states that for all \(f\),
+\[
+\mathrm{Var}_{\mu_\Lambda}(f)
+\le \frac{1}{\rho_*} \int |\nabla f|^2\,d\mu_\Lambda,
+\]
+or equivalently
+\[
+\frac{\int |\nabla f|^2\,d\mu_\Lambda}{\mathrm{Var}_{\mu_\Lambda}(f)}
+\ge \rho_*.
+\]
+Taking the infimum over nonconstant \(f\) yields
+\[
+\lambda_1 \ge \rho_* = m_0^2.
+\]
+∎
+
+This lower bound on \(\lambda_1\) is independent of the lattice volume and provides a uniform “dynamic mass gap” for the scalar model: the slowest relaxation mode of the Langevin dynamics decays at rate at least \(m_0^2\).

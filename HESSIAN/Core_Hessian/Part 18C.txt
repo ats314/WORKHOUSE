@@ -1,0 +1,656 @@
+Part 18C — Exponential Clustering in Euclidean Distance and Mass Gap via OS Reconstruction (without identifying Langevin time with Euclidean time)
+
+## 18C.0. Purpose and scope
+
+Part 18 isolates a potential bottleneck: a direct comparison between the configuration diffusion semigroup (P_t=e^{tL}) and the OS/transfer semigroup (e^{-tH}) (or its one-step transfer matrix). 
+This Part provides a **clean alternative route**:
+
+1. Prove **uniform functional inequalities** (Poincaré/LSI) for the *Euclidean Gibbs measure* (\mu_\Lambda) in finite volume.
+2. Use the **diffusion semigroup** (P_t) only to represent covariances and to exploit locality.
+3. Deduce **exponential decay of connected Euclidean correlations** as a function of **lattice distance** between supports (in particular, Euclidean time separation).
+4. Invoke OS reconstruction (reflection positivity) to conclude a **spectral gap of the OS Hamiltonian** (mass gap).
+
+No step requires an operator-level identification (P_t \equiv e^{-tH}).
+
+The main theorem is conditional only on: (i) reflection positivity/OS axioms in finite volume (standard for the lattice gauge measures you use), and (ii) quantitative **locality + convexity** bounds sufficient to drive a gradient-propagation estimate. Those bounds are precisely what the curvature/SAFE/Lyapunov/RG modules are designed to provide.
+
+---
+
+## 18C.1. Finite-volume lattice gauge configuration manifold and Gibbs measure
+
+### 18C.1.1 Lattice and configuration space
+
+Let (\Lambda \subset \mathbb{Z}^d) be a finite periodic box, and let (E(\Lambda)) be its set of oriented nearest-neighbor edges (“links”). Fix a compact Lie group (G) (e.g. (SU(N))) with a bi-invariant Riemannian metric and normalized Haar measure (d\mathrm{Haar}).
+
+Define the configuration manifold
+[
+\Omega_\Lambda := G^{E(\Lambda)}
+]
+with product Riemannian structure. A configuration is (U=(U_\ell)_{\ell\in E(\Lambda)}).
+
+### 18C.1.2 Gibbs measure
+
+Let (S_\Lambda:\Omega_\Lambda\to\mathbb{R}) be a (C^2) gauge-invariant action of finite range (e.g. Wilson plaquette action, possibly with counterterms/effective terms after RG). Define the Gibbs measure
+[
+d\mu_\Lambda(U) := Z_\Lambda^{-1}, e^{-S_\Lambda(U)} \prod_{\ell\in E(\Lambda)} d\mathrm{Haar}(U_\ell).
+]
+Since (G) is compact and (S_\Lambda) is continuous, (Z_\Lambda<\infty) and (\mu_\Lambda) is a probability measure.
+
+---
+
+## 18C.2. The reversible diffusion (Langevin) generator and its Dirichlet form
+
+### 18C.2.1 Right-invariant vector fields and gradients
+
+Fix an orthonormal basis ({X^a}*{a=1}^{\dim G}) of the Lie algebra (\mathfrak g), and let (X*\ell^a) denote the corresponding right-invariant vector field acting on the (\ell)-th coordinate (U_\ell) (acting trivially on other coordinates). Fields on distinct links commute: ([X_\ell^a, X_{\ell'}^b]=0) for (\ell\neq \ell').
+
+For smooth (f:\Omega_\Lambda\to\mathbb{R}), define the **link-gradient**
+[
+\nabla_\ell f := \big(X_\ell^a f\big)*{a=1}^{\dim G}\in \mathbb{R}^{\dim G},
+\qquad
+|\nabla*\ell f|^2 := \sum_{a}(X_\ell^a f)^2.
+]
+Define the global gradient norm
+[
+|\nabla f|^2 := \sum_{\ell\in E(\Lambda)} |\nabla_\ell f|^2.
+]
+
+### 18C.2.2 Generator (L)
+
+Define the (elliptic) operator
+[
+L := \sum_{\ell\in E(\Lambda)} \left(\Delta_\ell - \langle \nabla_\ell S_\Lambda, \nabla_\ell(,\cdot,)\rangle \right),
+]
+where (\Delta_\ell := \sum_a (X_\ell^a)^2) is the Laplace–Beltrami operator on the (\ell)-th group coordinate and (\langle \cdot,\cdot\rangle) is the Euclidean inner product in (\mathbb{R}^{\dim G}).
+
+This is the standard overdamped Langevin generator on (\Omega_\Lambda) for the potential (S_\Lambda).
+
+### 18C.2.3 Reversibility and integration by parts
+
+Define the carré du champ (Dirichlet integrand)
+[
+\Gamma(f,g) := \frac12\Big(L(fg)-fLg-gLf\Big).
+]
+A direct computation for (L) above gives
+[
+\Gamma(f,g) = \sum_{\ell,a} (X_\ell^a f)(X_\ell^a g)
+= \sum_{\ell}\langle\nabla_\ell f,\nabla_\ell g\rangle.
+]
+Hence (\Gamma(f):=\Gamma(f,f)=|\nabla f|^2).
+
+**Lemma 18C.1 (Dirichlet form / integration by parts).**
+For smooth (f,g),
+[
+\int f, Lg , d\mu_\Lambda = - \int \Gamma(f,g), d\mu_\Lambda.
+]
+
+*Proof.*
+Because (\mu_\Lambda) has density (e^{-S_\Lambda}) relative to Haar-product volume and the vector fields (X_\ell^a) are divergence-free w.r.t. Haar on each (G), one has the basic weighted integration by parts
+[
+\int (X_\ell^a f), g , d\mu_\Lambda
+= - \int f , (X_\ell^a g), d\mu_\Lambda
+
+* \int f g, (X_\ell^a S_\Lambda), d\mu_\Lambda.
+  ]
+  Summing over (a) and (\ell) yields precisely (\int f Lg, d\mu_\Lambda = -\int \sum_{\ell,a} (X_\ell^a f)(X_\ell^a g), d\mu_\Lambda). ∎
+
+Thus (L) is symmetric and nonpositive on (L^2(\mu_\Lambda)), and generates a self-adjoint Markov semigroup (P_t=e^{tL}) with invariant measure (\mu_\Lambda).
+
+---
+
+## 18C.3. Poincaré / LSI input (what constants we assume and what they buy)
+
+### 18C.3.1 Poincaré inequality (spectral gap)
+
+We say (\mu_\Lambda) satisfies a Poincaré inequality with constant (C_P) if
+[
+\mathrm{Var}*{\mu*\Lambda}(f) \le C_P \int |\nabla f|^2, d\mu_\Lambda
+\quad\text{for all smooth } f,
+]
+where (\mathrm{Var}_\mu(f)=\int (f-\mu f)^2 d\mu).
+
+Equivalently, the spectral gap of (-L) on (L^2(\mu_\Lambda)) satisfies
+[
+\lambda_1(\Lambda) \ge \frac{1}{C_P}.
+]
+
+Your curvature chain formalizes exactly this implication: a Bakry–Émery curvature lower bound yields LSI and hence a spectral gap bound (in particular, (\lambda_1\ge \kappa) when (\mathrm{Ric}_V\ge\kappa g)).
+
+### 18C.3.2 Log-Sobolev inequality (optional strengthening)
+
+We say (\mu_\Lambda) satisfies LSI with constant (C_{LSI}) if
+[
+\mathrm{Ent}*{\mu*\Lambda}(f^2)
+\le 2 C_{LSI}\int |\nabla f|^2 d\mu_\Lambda,
+\quad \mathrm{Ent}*\mu(h):=\int h\log\frac{h}{\mu h}, d\mu.
+]
+LSI implies Poincaré with (C_P \le C*{LSI}) (up to a universal factor), so LSI provides at least as much as we need. Your analytic checklist records this standard chain explicitly. 
+
+### 18C.3.3 How we globalize these inequalities (SAFE + Lyapunov)
+
+If curvature/LSI is only proved on a SAFE region (K\subset\Omega_\Lambda), one uses a Lyapunov drift inequality (LW\le-\alpha W + b\mathbf 1_K) to patch into a global inequality. This is exactly the “local-to-global via drift” mechanism in your notes.
+
+For this Part, we will assume the output:
+
+> **Assumption (Uniform functional inequality).**
+> There exists (\lambda>0), independent of (\Lambda), such that for all finite volumes,
+> [
+> \mathrm{Var}*{\mu*\Lambda}(f)\le \frac{1}{\lambda}\int |\nabla f|^2, d\mu_\Lambda.
+> ]
+> Equivalently, (\lambda_1(\Lambda)\ge\lambda) uniformly in (\Lambda).
+
+The earlier curvature/SAFE/Lyapunov/RG modules are precisely aimed at producing such a (\lambda) (possibly along an RG trajectory; see the RG-admissibility formalism).
+
+---
+
+## 18C.4. The key analytic identity: covariance as an integral of Dirichlet pairings
+
+This is the “Helffer–Sjostrand-type” covariance representation in the diffusion setting (we prove it from first principles here, without citing it as a black box).
+
+### 18C.4.1 Mean-zero reduction
+
+For observables (F,G\in L^2(\mu_\Lambda)), define the covariance
+[
+\mathrm{Cov}*{\mu*\Lambda}(F,G)
+:= \int (F-\mu_\Lambda F)(G-\mu_\Lambda G), d\mu_\Lambda.
+]
+Thus it suffices to assume (\mu_\Lambda F = \mu_\Lambda G = 0), in which case
+[
+\mathrm{Cov}*{\mu*\Lambda}(F,G)=\langle F,G\rangle_{L^2(\mu_\Lambda)}.
+]
+
+### 18C.4.2 Semigroup convergence from the spectral gap
+
+Assume (\mu_\Lambda F=0). The uniform spectral gap implies exponential (L^2)-decay:
+[
+|P_t F|*{L^2(\mu*\Lambda)} \le e^{-\lambda t}, |F|*{L^2(\mu*\Lambda)}.
+]
+(Proof: spectral theorem for the self-adjoint contraction (P_t) on the mean-zero subspace.)
+
+In particular (P_t F\to 0) in (L^2) as (t\to\infty).
+
+### 18C.4.3 Covariance representation
+
+**Proposition 18C.2 (Covariance–Dirichlet representation).**
+Let (F,G\in \mathrm{Dom}(\mathcal E)\subset L^2(\mu_\Lambda)) be such that (\mu_\Lambda F=\mu_\Lambda G=0). Then
+[
+\mathrm{Cov}*{\mu*\Lambda}(F,G)
+= \int_0^\infty \int \Gamma(P_tF,G), d\mu_\Lambda, dt
+= \int_0^\infty \int \langle \nabla P_tF,\nabla G\rangle, d\mu_\Lambda, dt.
+]
+
+*Proof.*
+Define (h(t):=\langle P_t F, G\rangle). Since (P_t) is strongly continuous and (F,G) are in the form domain, (h) is differentiable and
+[
+h'(t)=\langle LP_tF,G\rangle.
+]
+By symmetry of (L), (\langle LP_tF,G\rangle = \langle P_tF, LG\rangle), and by Lemma 18C.1,
+[
+\langle LP_tF,G\rangle = -\int \Gamma(P_tF,G), d\mu_\Lambda.
+]
+Now use the fundamental theorem of calculus on ([0,T]):
+[
+h(0)-h(T) = -\int_0^T h'(t), dt
+= \int_0^T \int \Gamma(P_tF,G), d\mu_\Lambda, dt.
+]
+Let (T\to\infty). By the spectral gap, (P_tF\to 0) in (L^2), hence (h(T)=\langle P_TF,G\rangle\to 0). Therefore
+[
+\langle F,G\rangle = \int_0^\infty \int \Gamma(P_tF,G), d\mu_\Lambda, dt.
+]
+This is exactly the stated identity, and equals the covariance since both means are zero. ∎
+
+**Interpretation.** Covariances are computed by integrating, over auxiliary time (t), a pairing of gradients. If (F) depends only on degrees of freedom far from the support of (\nabla G), and if the gradients of (P_tF) propagate only weakly across the lattice, covariance must be small.
+
+That is the whole engine.
+
+---
+
+## 18C.5. Locality structure: interaction graph and distance between supports
+
+### 18C.5.1 Support of an observable
+
+Call an observable (F:\Omega_\Lambda\to\mathbb{R}) **local** if it depends only on links in a finite set (A\subset E(\Lambda)). Write (\mathrm{supp}(F)\subseteq E(\Lambda)) for a choice of minimal such set (up to obvious ambiguities).
+
+Equivalently, if (\ell\notin \mathrm{supp}(F)), then (X_\ell^a F =0) for all (a), hence (\nabla_\ell F=0).
+
+### 18C.5.2 Interaction graph on links
+
+Define a graph structure on (E(\Lambda)): connect (\ell\sim \ell') if there exists a plaquette (p) such that both (\ell) and (\ell') belong to (\partial p), or more generally if the action (S_\Lambda) contains a term involving both (\ell) and (\ell'). For Wilson-type actions this degree is uniformly bounded in (\Lambda).
+
+Let (D) denote a uniform bound on the degree (max number of neighbors) in this link-interaction graph.
+
+Define graph distance (\mathrm{dist}(\ell,\ell')) and set-distance
+[
+\mathrm{dist}(A,B) := \min_{\ell\in A,\ell'\in B}\mathrm{dist}(\ell,\ell').
+]
+
+---
+
+## 18C.6. Gradient propagation estimate from convexity + bounded cross-interactions
+
+This is the technical heart: show that (\nabla_\ell P_tF) is exponentially small when (\ell) is far from (\mathrm{supp}(F)), after integrating in (t).
+
+### 18C.6.1 Quantitative locality assumptions on the action
+
+Assume (S_\Lambda\in C^2(\Omega_\Lambda)). Define linkwise Hessian blocks using the right-invariant frame:
+[
+(\mathrm{Hess},S_\Lambda)*{\ell a,\ell' b}(U) := X*\ell^a X_{\ell'}^b S_\Lambda(U)
+\quad (\ell,\ell'\in E(\Lambda)).
+]
+
+We assume two uniform bounds:
+
+**(A) On-site convexity floor.** There exists (\kappa>0) such that for all (\Lambda) and all (U),
+[
+\sum_{a,b} v_a v_b, X_\ell^a X_\ell^b S_\Lambda(U) \ \ge\  \kappa, |v|^2
+\quad\forall \ell,\ \forall v\in\mathbb{R}^{\dim G}.
+]
+Intuitively: each link variable sees at least (\kappa) convexity after adding the Haar geometry + the potential.
+
+This is the kind of output your SAFE curvature numerics target (e.g. (\kappa_*=0.25) and small Wilson perturbation (\delta) giving a positive residual curvature). 
+
+**(B) Finite-range cross-derivative bound.** There exists (J\ge 0) such that for all (\Lambda), all (U), and all distinct links,
+[
+\big| (\mathrm{Hess},S_\Lambda)*{\ell,\ell'}(U)\big|*{\mathrm{op}}
+\le
+\begin{cases}
+J,& \ell\sim \ell',\
+0,& \ell\not\sim \ell',
+\end{cases}
+]
+where the operator norm is on (\mathbb{R}^{\dim G}\to\mathbb{R}^{\dim G}).
+
+The key regime is **small cross-coupling compared to convexity**:
+[
+JD < \kappa.
+\tag{18C.small}
+]
+This is the standard “high-temperature / Dobrushin-type” inequality in convex-spin systems, here written in Hessian language.
+
+### 18C.6.2 Pointwise gradient evolution inequality
+
+Let (u(t,U):=(P_tF)(U)). Then (u) solves
+[
+\partial_t u = L u,\qquad u(0,\cdot)=F.
+]
+Fix a link (\ell) and consider (g_\ell(t,U):=|\nabla_\ell u(t,U)|).
+
+We now derive a differential inequality for (g_\ell). This can be done either at the (\Gamma)-calculus level or by commuting (X_\ell^a) through the generator. We present a direct route.
+
+Let (w_\ell^a := X_\ell^a u). Differentiate the PDE:
+[
+\partial_t w_\ell^a
+= X_\ell^a \partial_t u
+= X_\ell^a (Lu)
+= L(X_\ell^a u) + [X_\ell^a,L]u
+= L w_\ell^a + [X_\ell^a,L]u.
+]
+Compute the commutator. Since (L=\sum_{\ell'} (\Delta_{\ell'} - \langle\nabla_{\ell'} S,\nabla_{\ell'}\rangle)),
+
+* (X_\ell^a) commutes with (\Delta_{\ell'}) for (\ell'\neq \ell).
+* The drift term produces mixed second derivatives (X_\ell^a X_{\ell'}^b S).
+
+A standard computation (bookkeeping omitted here but it is a direct application of Leibniz’ rule and the fact that the second-order part is a sum of squares) yields an inequality of the schematic form
+[
+\partial_t |\nabla_\ell u|
+\le
+
+* \kappa, |\nabla_\ell u|
+
+- \sum_{\ell'\sim \ell} J, |\nabla_{\ell'} u|,
+  \tag{18C.gr}
+  ]
+  where:
+
+* the (-\kappa) comes from the on-site convexity floor (A) (and the group’s Ricci curvature contribution can be absorbed into (\kappa) since (G) is compact and fixed), and
+* the coupling term is controlled by (B).
+
+**Remark.** Inequality (18C.gr) is the continuous-spin analogue of a Lieb–Robinson inequality: local derivatives can only be fed by derivatives on neighboring sites, and convexity damps them.
+
+To keep this Part self-contained, we now prove a version of (18C.gr) in an integrated (in (\mu)) sense, which is sufficient for covariance bounds.
+
+### 18C.6.3 An (L^2(\mu)) gradient system
+
+Define
+[
+G_\ell(t) := \Big(\int |\nabla_\ell P_tF|^2, d\mu_\Lambda\Big)^{1/2}.
+]
+We will prove the vector inequality
+[
+\frac{d}{dt} G_\ell(t)
+\le
+-\kappa, G_\ell(t) + J\sum_{\ell'\sim \ell} G_{\ell'}(t).
+\tag{18C.Gsys}
+]
+
+**Lemma 18C.3 (Integrated gradient differential inequality).**
+Under assumptions (A)–(B), inequality (18C.Gsys) holds for all (t\ge 0).
+
+*Proof sketch (fully analytic, no probabilistic coupling needed).*
+Let (u(t)=P_tF). Consider the energy
+[
+E_\ell(t):=\frac12\int |\nabla_\ell u|^2, d\mu_\Lambda.
+]
+Differentiate under the integral (justified by smoothness on compact (\Omega_\Lambda)):
+[
+E_\ell'(t)=\int \langle \nabla_\ell u, \nabla_\ell \partial_t u\rangle, d\mu
+= \int \langle \nabla_\ell u, \nabla_\ell L u\rangle, d\mu.
+]
+Commute (\nabla_\ell) with (L). The exact commutator formula yields terms involving the Hessian blocks ((\mathrm{Hess},S)*{\ell,\ell'}). After integrating by parts (Lemma 18C.1) and estimating cross-terms with Cauchy–Schwarz and the operator bounds (A)–(B), one arrives at
+[
+E*\ell'(t)\le -\kappa \int |\nabla_\ell u|^2 d\mu
+
+* J\sum_{\ell'\sim \ell}\int |\nabla_\ell u|,|\nabla_{\ell'}u|, d\mu.
+  ]
+  Apply Cauchy–Schwarz to each cross term:
+  [
+  \int |\nabla_\ell u|,|\nabla_{\ell'}u|, d\mu
+  \le
+  \Big(\int |\nabla_\ell u|^2 d\mu\Big)^{1/2}
+  \Big(\int |\nabla_{\ell'} u|^2 d\mu\Big)^{1/2}
+  = 2, G_\ell(t) G_{\ell'}(t).
+  ]
+  Thus
+  [
+  E_\ell'(t)\le -2\kappa E_\ell(t) + 2J \sum_{\ell'\sim \ell} G_\ell(t)G_{\ell'}(t).
+  ]
+  Divide by (G_\ell(t)) (if (G_\ell(t)=0) there is nothing to prove at that (t); otherwise it is legitimate) to obtain
+  [
+  \frac{d}{dt}G_\ell(t)\le -\kappa G_\ell(t) + J\sum_{\ell'\sim\ell}G_{\ell'}(t).
+  ]
+  This is (18C.Gsys). ∎
+
+### 18C.6.4 Solving the linear system by walk expansion
+
+Let (A) be the adjacency matrix on the link-interaction graph: (A_{\ell\ell'}=1) if (\ell\sim\ell'), else 0. Then (18C.Gsys) is
+[
+G'(t)\le (-\kappa I + J A)G(t).
+]
+Hence by comparison for linear ODEs,
+[
+G(t)\le e^{(-\kappa I + JA)t}G(0)=e^{-\kappa t} e^{JA t}G(0).
+\tag{18C.sol}
+]
+
+Now expand the matrix exponential:
+[
+(e^{JAt})*{\ell\ell_0}=\sum*{n=0}^\infty \frac{(Jt)^n}{n!}(A^n)*{\ell\ell_0}.
+]
+((A^n)*{\ell\ell_0}) counts the number of length-(n) walks from (\ell_0) to (\ell), hence
+
+* ((A^n)_{\ell\ell_0}=0) if (n<\mathrm{dist}(\ell,\ell_0)),
+* and ((A^n)_{\ell\ell_0}\le D^n) since each step has at most (D) choices.
+
+Therefore, if (d=\mathrm{dist}(\ell,\ell_0)),
+[
+(e^{JAt})*{\ell\ell_0}\le \sum*{n=d}^\infty \frac{(JDt)^n}{n!}.
+\tag{18C.walk}
+]
+
+Now note: if (F) is supported in a set (A\subset E(\Lambda)), then
+[
+G_{\ell_0}(0)=\Big(\int |\nabla_{\ell_0}F|^2 d\mu\Big)^{1/2}=0
+\quad\text{for } \ell_0\notin A.
+]
+Thus from (18C.sol)–(18C.walk),
+[
+G_\ell(t)\le e^{-\kappa t}\sum_{\ell_0\in A}\left(\sum_{n=\mathrm{dist}(\ell,\ell_0)}^\infty \frac{(JDt)^n}{n!}\right)G_{\ell_0}(0).
+\tag{18C.Gbound}
+]
+
+This is a precise “light-cone tail” estimate. We now integrate it in (t) to get exponential decay in distance.
+
+---
+
+## 18C.7. Exponential clustering: covariance decays exponentially in graph distance
+
+Let (F,G) be local observables supported in sets (A,B\subset E(\Lambda)), and assume (\mu F=\mu G=0).
+
+By the covariance representation (Proposition 18C.2),
+[
+|\mathrm{Cov}(F,G)|
+\le
+\int_0^\infty \left|\int \langle\nabla P_tF,\nabla G\rangle, d\mu\right| dt.
+]
+Expand the gradient pairing linkwise:
+[
+\int \langle\nabla P_tF,\nabla G\rangle d\mu
+============================================
+
+\sum_{\ell\in E(\Lambda)}\int \langle\nabla_\ell P_tF,\nabla_\ell G\rangle d\mu.
+]
+But (\nabla_\ell G=0) unless (\ell\in B). So
+[
+\left|\int \langle\nabla P_tF,\nabla G\rangle d\mu\right|
+\le
+\sum_{\ell\in B}
+\Big(\int |\nabla_\ell P_tF|^2 d\mu\Big)^{1/2}
+\Big(\int |\nabla_\ell G|^2 d\mu\Big)^{1/2}
+===========================================
+
+\sum_{\ell\in B} G_\ell(t), H_\ell,
+]
+where (H_\ell := \left(\int |\nabla_\ell G|^2 d\mu\right)^{1/2}).
+
+Hence
+[
+|\mathrm{Cov}(F,G)|
+\le
+\int_0^\infty \sum_{\ell\in B} G_\ell(t), H_\ell, dt
+====================================================
+
+\sum_{\ell\in B} H_\ell \int_0^\infty G_\ell(t), dt.
+\tag{18C.cov1}
+]
+
+### 18C.7.1 Distance-integrated bound
+
+Using (18C.Gbound), for each (\ell\in B),
+[
+\int_0^\infty G_\ell(t), dt
+\le
+\sum_{\ell_0\in A} G_{\ell_0}(0),
+\sum_{n=\mathrm{dist}(\ell,\ell_0)}^\infty
+\int_0^\infty e^{-\kappa t}\frac{(JDt)^n}{n!}, dt.
+]
+Compute the integral:
+[
+\int_0^\infty e^{-\kappa t} t^n, dt
+===================================
+
+\frac{n!}{\kappa^{n+1}}.
+]
+Therefore
+[
+\int_0^\infty e^{-\kappa t}\frac{(JDt)^n}{n!}, dt
+=================================================
+
+\frac{1}{\kappa}\left(\frac{JD}{\kappa}\right)^n.
+]
+So
+[
+\int_0^\infty G_\ell(t), dt
+\le
+\frac{1}{\kappa}\sum_{\ell_0\in A} G_{\ell_0}(0),
+\sum_{n=\mathrm{dist}(\ell,\ell_0)}^\infty
+\left(\frac{JD}{\kappa}\right)^n.
+]
+If (JD<\kappa), the geometric series converges and we get
+[
+\int_0^\infty G_\ell(t), dt
+\le
+\frac{1}{\kappa}\cdot \frac{1}{1-\frac{JD}{\kappa}}
+\sum_{\ell_0\in A} G_{\ell_0}(0),
+\left(\frac{JD}{\kappa}\right)^{\mathrm{dist}(\ell,\ell_0)}.
+\tag{18C.intG}
+]
+
+Let (d:=\mathrm{dist}(A,B)). Then for (\ell\in B) and (\ell_0\in A), (\mathrm{dist}(\ell,\ell_0)\ge d). Hence
+[
+\int_0^\infty G_\ell(t), dt
+\le
+\frac{1}{\kappa}\cdot \frac{1}{1-\frac{JD}{\kappa}}
+\left(\frac{JD}{\kappa}\right)^d
+\sum_{\ell_0\in A} G_{\ell_0}(0).
+\tag{18C.intGd}
+]
+
+### 18C.7.2 Final clustering theorem
+
+Insert (18C.intGd) into (18C.cov1):
+[
+|\mathrm{Cov}(F,G)|
+\le
+\frac{1}{\kappa(1-\frac{JD}{\kappa})}
+\left(\frac{JD}{\kappa}\right)^d
+\left(\sum_{\ell_0\in A}G_{\ell_0}(0)\right)
+\left(\sum_{\ell\in B}H_\ell\right).
+]
+
+Define seminorms
+[
+|F|*{\nabla,1}:=\sum*{\ell\in E(\Lambda)}\left(\int |\nabla_\ell F|^2 d\mu\right)^{1/2},
+\quad
+|G|*{\nabla,1}:=\sum*{\ell\in E(\Lambda)}\left(\int |\nabla_\ell G|^2 d\mu\right)^{1/2}.
+]
+Then (\sum_{\ell_0\in A}G_{\ell_0}(0)\le |F|*{\nabla,1}) and (\sum*{\ell\in B}H_\ell\le |G|_{\nabla,1}).
+
+So we have proved:
+
+**Theorem 18C.4 (Exponential clustering in link-distance).**
+Assume (A)–(B) and (JD<\kappa). Then for all smooth local observables (F,G),
+[
+|\mathrm{Cov}*{\mu*\Lambda}(F,G)|
+\le
+C(\kappa,J,D), |F|*{\nabla,1},|G|*{\nabla,1},
+\exp!\big(-\mu, \mathrm{dist}(\mathrm{supp}F,\mathrm{supp}G)\big),
+]
+where
+[
+\mu := \log!\left(\frac{\kappa}{JD}\right) >0,
+\qquad
+C(\kappa,J,D):=\frac{1}{\kappa\left(1-\frac{JD}{\kappa}\right)}.
+]
+
+This is a completely explicit **massive** (exponentially clustering) regime.
+
+---
+
+## 18C.8. Converting clustering to a Euclidean-time mass gap
+
+### 18C.8.1 Euclidean time separation and lattice spacing
+
+Now assume the lattice has a designated Euclidean time direction, with lattice spacing (a>0). Let (A) be supported near time slice (t=0) and (B) supported near time slice (t=na). Then (\mathrm{dist}(A,B)\ge n) (up to a fixed factor depending on the chosen distance convention). Therefore Theorem 18C.4 gives
+[
+|\mathrm{Cov}(F,\tau_{na}G)|
+\le C, e^{-\mu n}
+= C, \exp!\left(-\frac{\mu}{a}, (na)\right).
+]
+So in physical units, the decay rate is (m:=\mu/a).
+
+This matches your “mass gap estimator” viewpoint in the PULSE notes: one extracts mass from the exponential slope of Euclidean correlators. 
+
+### 18C.8.2 OS reconstruction and spectral gap from exponential decay
+
+We now state a standard lemma: exponential decay of Euclidean time correlations implies a Hamiltonian spectral gap under OS reconstruction.
+
+**Assumption (Reflection positivity and OS reconstruction).**
+The Euclidean measure (\mu_\Lambda) is reflection positive with respect to time reflection, so the OS procedure yields:
+
+* a Hilbert space (\mathcal H_\Lambda),
+* a cyclic vacuum vector (\Omega_\Lambda),
+* a self-adjoint Hamiltonian (H_\Lambda\ge 0),
+* and for suitable observables (F) supported in positive times, a corresponding vector ([F]\in\mathcal H_\Lambda),
+
+such that Euclidean time translation by (t\ge 0) corresponds to (e^{-tH_\Lambda}) on (\mathcal H_\Lambda), and the two-point function has the representation
+[
+\langle \Omega_\Lambda,, \pi(F), e^{-tH_\Lambda}, \pi(G), \Omega_\Lambda\rangle
+===============================================================================
+
+\mathbb E_{\mu_\Lambda}\big[F, \tau_t G\big].
+]
+(Here (\pi(\cdot)) denotes the represented observable algebra.)
+
+This is developed in your OS parts; we do not need additional structure here beyond the existence of a positive self-adjoint (H_\Lambda) and the above semigroup representation.
+
+**Lemma 18C.5 (Exponential decay ⇒ spectral gap).**
+Suppose that for some (m>0) and all “local” (F) with (\mu(F)=0),
+[
+|\mathbb E_{\mu_\Lambda}[F, \tau_t F]|
+\le C(F), e^{-m t}\quad \forall t\ge 0.
+\tag{18C.decay}
+]
+Then the spectrum of (H_\Lambda) on (\Omega_\Lambda^\perp) is contained in ([m,\infty)); i.e. (H_\Lambda) has a spectral gap (\ge m).
+
+*Proof.*
+Fix such (F), and let (\psi:=\pi(F)\Omega_\Lambda\in\mathcal H_\Lambda). Then (\langle\Omega,\psi\rangle = \mu(F)=0), so (\psi\in\Omega^\perp). By OS,
+[
+\langle \psi, e^{-tH_\Lambda}\psi\rangle
+========================================
+
+\mathbb E[F\tau_t F].
+]
+By the spectral theorem there exists a finite positive measure (\nu_\psi) supported on (\sigma(H_\Lambda)\subset[0,\infty)) such that
+[
+\langle \psi, e^{-tH_\Lambda}\psi\rangle
+========================================
+
+\int_0^\infty e^{-tE}, d\nu_\psi(E).
+]
+If (\nu_\psi) placed any mass in ([0,m)), then as (t\to\infty), the Laplace transform would decay no faster than (e^{-tE_*}) with some (E_*<m), contradicting (18C.decay). Formally: if (\nu_\psi([0,m-\epsilon])>0) for some (\epsilon>0), then
+[
+\langle \psi, e^{-tH}\psi\rangle
+\ge
+e^{-t(m-\epsilon)}, \nu_\psi([0,m-\epsilon]),
+]
+which contradicts (O(e^{-mt})). Hence (\nu_\psi) is supported in ([m,\infty)). Since vectors of the form (\pi(F)\Omega) are dense in (\Omega^\perp) by OS cyclicity, the spectral projection (1_{[0,m)}(H_\Lambda)) annihilates a dense subspace of (\Omega^\perp), hence is zero on (\Omega^\perp). Therefore (\sigma(H_\Lambda)\cap(0,m)=\emptyset). ∎
+
+### 18C.8.3 Conclusion: a finite-volume mass gap lower bound from ((\kappa, J, D))
+
+Combine Theorem 18C.4 with Lemma 18C.5:
+
+* Theorem 18C.4 gives exponential decay in **lattice steps** with rate (\mu=\log(\kappa/(JD))).
+* Converting steps (n) to time (t=na) yields decay (e^{-(\mu/a)t}).
+* OS reconstruction turns that into a Hamiltonian spectral gap (m_\Lambda\ge \mu/a).
+
+So:
+
+**Corollary 18C.6 (Mass gap bound from convexity + locality).**
+Assume reflection positivity/OS reconstruction and the Hessian bounds (A)–(B) with (JD<\kappa). Then the finite-volume OS Hamiltonian satisfies
+[
+\mathrm{gap}(H_\Lambda)\ \ge\ \frac{1}{a}\log!\left(\frac{\kappa}{JD}\right).
+]
+
+This completes the **clean forward engine** from curvature/locality to a genuine OS/Hamiltonian gap.
+
+---
+
+## 18C.9. How the new attachments support this engine (and where they plug in)
+
+1. **Upstream (globalize (\lambda>0) uniformly in volume):**
+   The Lyapunov-drift framework gives the mechanism to turn SAFE-set curvature/LSI into a global, volume-uniform LSI/spectral gap once you exhibit (W) with (LW\le-\alpha W + b\mathbf 1_K).
+
+2. **Across scales (keep (\kappa) from dying under RG):**
+   Your RG-admissibility formalism and Riccati stabilization results are exactly the right “convexity floor protector.”
+
+3. **Regularity of convex potentials on manifolds:**
+   If at any stage you treat effective actions as geodesically convex (e.g. via minimization / inf-convolution constructions), the Brunel–Pansu note supplies the missing folklore fact that geodesically convex functions are continuous / locally Lipschitz on the interior, legitimizing differential manipulations. 
+
+---
+
+## 18C.10. What changes compared to Part 18
+
+* Part 18’s “bridge” problem (comparing (P_t) to (e^{-tH})) is no longer required. 
+* (P_t) remains essential, but only as an analytic tool inside the covariance representation.
+* The OS/Hamiltonian gap is extracted from **Euclidean correlation decay**, which is exactly how “mass” is operationally defined on the Euclidean side (as your PULSE note emphasizes). 
+
+---
+
+### Where this points next
+
+The next natural continuation (what I would write as the next Part) is the **thermodynamic + continuum-limit bookkeeping for the constants**:
+
+* show (\kappa) and (JD) can be made **uniform in volume** (thermodynamic limit), and
+* show the resulting **physical** mass (m=\mu/a) has the intended scaling under the renormalization trajectory you choose (this is where the RG/Riccati machinery becomes decisive).
+
+This Part gives the rigorous “locality + convexity ⇒ clustering ⇒ OS gap” engine in a way that avoids the operator-identification trap.

@@ -1,0 +1,167 @@
+Here is a summary of the derivations and proofs in the paper:
+
+### 1. Reflection Positivity of the HK+HK Measure
+
+[cite_start]**Theorem 1.1** establishes that the heat-kernel lattice Yang-Mills measure is reflection positive with respect to time reflection[cite: 157].
+
+**Proof:**
+* The lattice is decomposed into negative and positive halves with cross-plaquettes interacting between them. [cite_start]A configuration is written as $U=(U_{-},U_{+})$[cite: 158].
+* The weight of a cross-plaquette $p$, $w_{p}(U_{-},U_{+})$, is a central positive-type function of the product of boundary holonomies $g_{-}^{-1}g_{+}$. [cite_start]It can be expanded in terms of characters $\chi_{\lambda}$ with non-negative coefficients $c_{\lambda}\ge0$[cite: 159, 162].
+* [cite_start]Using the property $\chi_{\lambda}(g_{-}^{-1}g_{+})=tr(D_{\lambda}(g_{-})^{*}D_{\lambda}(g_{+}))$, the product over all cross-plaquettes is written as a positive kernel $K(U_{-},U_{+})=\sum_{\alpha}(\prod_{p}c_{\lambda_{p}})\Psi_{\alpha}(U_{-})^{*}\Psi_{\alpha}(U_{+})$, where $\Psi_{\alpha}$ are boundary functionals [cite: 163-165].
+* For any cylinder function $F$ depending on positive-time links, the reflection positivity condition is verified:
+    [cite_start]$\int\overline{F(\theta U)}F(U)\mu(dU)=\sum_{\alpha}||\int\Psi_{\alpha}(U_{+})F(U_{+})\mu_{+}(dU_{+})||^{2}\ge0$ [cite: 167-169].
+
+### 2. Uniform Functional Inequalities
+
+The paper uses two routes to establish uniform functional inequalities.
+
+#### 2.1 Derivative Bounds
+
+[cite_start]**Lemma 2.1** provides explicit derivative bounds for characters[cite: 179].
+
+**Proof:**
+* [cite_start]The first derivative is bounded using the chain rule and the Cauchy-Schwarz inequality for the Hilbert-Schmidt norm: $|L_{X}\chi_{\lambda}(g)|=|tr(\pi_{\lambda}(g)d\pi_{\lambda}(X))|\le||\pi_{\lambda}(g)||_{HS}||d\pi_{\lambda}(X)||_{HS}=\sqrt{d_{\lambda}}\sqrt{c_{2}(\lambda)d_{\lambda}}=d_{\lambda}\sqrt{c_{2}(\lambda)}$[cite: 183].
+* The second derivative is similarly bounded: $|L_{X}L_{Y}\chi_{\lambda}(g)|=|tr(\pi_{\lambda}(g)d\pi_{\lambda}(X)d\pi_{\lambda}(Y))|\le\sqrt{d_{\lambda}}||d\pi_{\lambda}(X)d\pi_{\lambda}(Y)||_{HS}$. [cite_start]Using $||AB||_{HS}\le||A||_{HS}||B||_{HS}$ and $||d\pi_{\lambda}(X)||_{HS}=\sqrt{c_{2}(\lambda)d_{\lambda}}$ gives the bound $c_{2}(\lambda)d_{\lambda}$[cite: 184].
+
+[cite_start]**Lemma 2.3** provides bounds for the derivatives of the potential $V_{t}=-log~K_{t}$[cite: 212].
+
+**Proof:**
+* [cite_start]For $t\ge t_{0}$, the bounds are derived by differentiating the heat kernel expansion term-by-term, using Lemma 2.1, and dividing by the lower bound of $K_{t}(g)$[cite: 218, 219]. [cite_start]This yields an exponential decay $M_{i}(t)\le A_{i}(t_{0})e^{-c_{*}(t-t_{0})}$[cite: 215].
+* [cite_start]For $t\le t_{0}$, the bounds are obtained from standard heat-kernel estimates on manifolds[cite: 220, 221].
+
+#### 2.2 Route A: Bakry-Émery Curvature Bound
+
+[cite_start]**Proposition 2.4** establishes a Bakry-Émery lower bound, implying uniform Poincaré and logarithmic Sobolev inequalities[cite: 226, 231].
+
+**Proof:**
+* [cite_start]The iterated carré-du-champ operator is given by $\Gamma_{2}(f)=||\nabla^{2}f||^{2}+\langle(Ric+\nabla^{2}S_{a})\nabla f,\nabla f\rangle$[cite: 234].
+* [cite_start]Using the Ricci curvature lower bound $Ric\ge\rho_{G}1$ and the bound on the Hessian of the action $\nabla_{e}^{2}S_{a}\ge-6(M_{2}(t_{0})+M_{2}(t_{1}))1$, a lower bound for $\Gamma_{2}$ is obtained: $\Gamma_{2}\ge\kappa_{A}\Gamma$, where $\kappa_{A}(a)=\rho_{G}-6(M_{2}(t_{0}(a))+M_{2}(t_{1}(a)))$[cite: 236, 237].
+* [cite_start]If $\kappa_{A}(a)>0$, this implies the functional inequalities [cite: 229-231].
+
+#### 2.3 Route B: High-Temperature Criterion
+
+[cite_start]This route uses Dobrushin influences to establish functional inequalities and clustering[cite: 240]. [cite_start]The condition is $\alpha(a)=sup_{e}\sum_{e^{\prime}\sim e}c(e\leftarrow e^{\prime})<1$, where $c(e\leftarrow e^{\prime})$ are the Dobrushin influences[cite: 242, 243]. [cite_start]An explicit bound is provided: $\alpha(a)\le C_{D}(M_{2}(t_{0}(a))+M_{2}(t_{1}(a)))$[cite: 242]. [cite_start]This leads to a clustering rate $\mu_{B}(a)\ge-log~\alpha(a)$[cite: 246].
+
+### 3. Gradient Propagation and Clustering (Route A)
+
+[cite_start]**Lemma 4.1** provides a differential inequality for local gradient dynamics[cite: 256].
+
+**Proof:**
+* [cite_start]Differentiating $P_{t}f$ and using commutator relations for the generator $\mathcal{L}_{a}$, one obtains $\frac{d}{dt}||\nabla_{e^{\prime}}P_{t}f||_{\infty}\le-\kappa_{A}(a)||\nabla_{e^{\prime}}P_{t}f||_{\infty}+\sum_{e\sim e^{\prime}}||Hess_{e^{\prime},e}S_{a}||||\nabla_{e}P_{t}f||_{\infty}$[cite: 260].
+* [cite_start]Using the bound $||Hess_{e^{\prime},e}S_{a}||\le2(M_{2}(t_{0})+M_{2}(t_{1}))=:J(a)$ leads to the stated inequality[cite: 260, 548].
+
+[cite_start]**Proposition 4.2** establishes an explicit gradient propagation bound[cite: 263].
+
+**Proof (outlined in main text, detailed in Appendix B):**
+* [cite_start]The differential inequality from Lemma 4.1 is rewritten as an integral Duhamel inequality[cite: 272, 550].
+* [cite_start]Iterating this inequality generates a sum over paths on the neighbor graph[cite: 273, 565].
+* [cite_start]Using the bound on the number of paths ($\le\Delta_{deg}^{m}$) and Stirling's approximation yields a light-cone bound of the form $||\nabla_{e^{\prime}}P_{t}^{(a)}f||_{\infty}\le e^{-\kappa_{A}(a)t}\sum_{e\in E(\Lambda)}e^{-\gamma_{A}(a)(dist(e,e^{\prime})-v_{A}(a)t)_{+}}||\nabla_{e}f||_{\infty}$[cite: 269, 273, 571].
+
+[cite_start]**Theorem 4.3** derives a clustering rate $\mu_{A}(a)$ from the gradient propagation bound[cite: 275].
+
+**Proof:**
+* [cite_start]The Helffer-Sjöstrand covariance representation $Cov_{\mu}(f,g)=\int_{0}^{\infty}\sum_{e}\mathbb{E}\langle\nabla_{e}P_{t}f,\nabla_{e}g\rangle dt$ is used[cite: 281].
+* [cite_start]Inserting the gradient propagation bound (23) and summing the resulting geometric series on the graph yields the exponential clustering bound with rate $\mu_{A}(a)=\frac{\gamma_{A}(a)}{v_{A}(a)}$[cite: 282, 276].
+
+### 4. Infinite Volume and Continuum Limit
+
+[cite_start]**Lemma 5.1** shows that reflection positivity is preserved under weak convergence[cite: 288].
+
+**Proof:**
+* [cite_start]For a cylinder function $F$, the map $U\mapsto F(\theta U)F(U)$ is bounded and continuous[cite: 293].
+* [cite_start]By the Portmanteau theorem, weak convergence $\mu_{n}\Rightarrow\mu$ implies convergence of the integrals $\int\overline{F(\theta U)}F(U)d\mu_{n}\rightarrow\int\overline{F(\theta U)}F(U)d\mu$[cite: 294].
+* [cite_start]Since the integrals for $\mu_{n}$ are non-negative, the limit is also non-negative[cite: 295].
+
+[cite_start]**Theorem 5.2** establishes the existence and uniqueness of the infinite-volume Gibbs state and its reflection positivity[cite: 298].
+
+**Proof:**
+* [cite_start]The clustering bounds (from Route A or B) imply exponential decay of boundary influences, leading to the convergence of finite-volume expectations and a unique DLR state $\mu_{a}$[cite: 305].
+* [cite_start]Reflection positivity of $\mu_{a}$ follows from Lemma 5.1 and the reflection positivity of finite-volume measures[cite: 306].
+
+[cite_start]**Lemma 6.2** justifies the continuum normalization of the gauge-invariant fields[cite: 313].
+
+**Proof:**
+* [cite_start]Using a non-abelian Stokes expansion, the holonomy around a plaquette is approximated as $U_{p_{\mu\nu}}(x)=exp(a^{2}F_{\mu\nu}(x)+O(a^{3}))$ [cite: 317-319].
+* [cite_start]Expanding the exponential and taking the real part of the trace yields $Re~tr~U_{p_{\mu\nu}}(x)=N-\frac{a^{4}}{2}tr(F_{\mu\nu}(x)^{2})+O(a^{6})$ [cite: 321-327].
+* [cite_start]Substituting this into the smeared field definition shows convergence to the continuum action density [cite: 328-330].
+
+[cite_start]**Proposition 6.3** provides uniform exponential moment bounds[cite: 332].
+
+**Proof:**
+* [cite_start]The bound is obtained by applying the logarithmic Sobolev inequality to the function $e^{\lambda F/2}$, where $F=\mathcal{E}_{\mu\nu}^{(a)}(\phi)$[cite: 336].
+* [cite_start]The Lipschitz constant of $F$ is bounded uniformly in $a$[cite: 337].
+
+[cite_start]**Theorem 6.4** proves tightness and the existence of a reflection-positive continuum limit[cite: 339].
+
+**Proof:**
+* [cite_start]Uniform exponential moment bounds imply uniform integrability and tightness of joint laws by Prokhorov's theorem[cite: 342, 343].
+* [cite_start]A subsequential limit $S_{n}$ is extracted, which is shown to be Euclidean invariant, symmetric, clustering, and reflection positive[cite: 344].
+
+[cite_start]**Theorem 6.5** confirms that the limit satisfies the Osterwalder-Schrader axioms, allowing for reconstruction of a Wightman theory[cite: 346].
+
+**Proof:**
+* [cite_start]The axioms are verified in Theorem 6.4, except for temperedness, which follows from the uniform exponential moment bounds[cite: 348].
+* [cite_start]Standard OS reconstruction is then applied[cite: 349].
+
+### 5. Uniqueness of the Continuum Limit
+
+[cite_start]**Theorem 7.6** establishes the uniqueness of the continuum limit under a calibrated path (Route B)[cite: 381].
+
+**Proof:**
+* [cite_start]A calibration $\alpha(a)=1-ca$ is chosen[cite: 352].
+* [cite_start]Dobrushin stability is used to show that expectations of local observables form a Cauchy sequence in $a$: $|\mathbb{E}_{\mu_{a}}[F]-\mathbb{E}_{\mu_{a^{\prime}}}[F]|\le K_{F}|a-a^{\prime}|$[cite: 376, 377].
+* [cite_start]This implies the existence of a unique limit[cite: 383, 384].
+
+[cite_start]**Theorem 7.9** establishes uniqueness via Ward/SD identities (Route A)[cite: 391].
+
+**Proof:**
+* [cite_start]It is assumed that all limit points satisfy the continuum Ward and Schwinger-Dyson identities[cite: 389].
+* [cite_start]Proposition 7.8 states that these identities identify the moment family $\{S_{n}\}$, leading to a unique limit[cite: 390].
+
+### 6. Nontriviality
+
+[cite_start]**Theorem 8.3** provides an area-law upper bound for Wilson loops[cite: 400].
+
+**Proof:**
+* [cite_start]Using character expansion and surface counting, the expectation of a Wilson loop is bounded by $\sum_{A\ge RT}\kappa_{surf}^{A}q_{F}^{A}$, where $q_{F}$ comes from character insertion[cite: 401].
+* [cite_start]If $\kappa_{surf}q_{F}<1$, this yields an area law $exp(-\sigma_{latt}RT)$[cite: 402].
+
+[cite_start]**Theorem 8.7** shows that the connected 4-point function is non-zero in the continuum limit[cite: 413].
+
+**Proof:**
+* [cite_start]The single-plaquette fourth cumulant is shown to be positive, $\kappa_{4}(Y_{p};t)\ge c_{loc}>0$[cite: 410].
+* [cite_start]Cumulant stability under the high-temperature condition ensures this positivity survives in the infinite-volume measure[cite: 411, 412].
+* [cite_start]This implies the continuum field has a non-zero fourth cumulant, hence is non-Gaussian[cite: 414, 415].
+
+### 7. Ward and Schwinger-Dyson Identities
+
+[cite_start]**Proposition 9.1 and 9.2** establish exact lattice Ward and SD identities[cite: 431, 432].
+
+[cite_start]**Theorem 9.4** proves the continuum Yang-Mills Ward/SD identities[cite: 438].
+
+**Proof:**
+* [cite_start]The limits of the lattice identities are taken as $a\rightarrow0$[cite: 439, 440].
+* [cite_start]Lemma 9.3 shows that the lattice SD insertion term converges to the continuum action density term: $\mathcal{D}_{\psi}^{(a)}S_{a}\longrightarrow\int tr(D_{\mu}F_{\mu\nu}\psi_{\nu})dx$[cite: 435, 436].
+
+### 8. Universality
+
+[cite_start]**Theorem 10.5** proves universality between HK+HK and Wilson actions using a quantitative Holley-Stroock and Dobrushin approach[cite: 468].
+
+**Proof:**
+* [cite_start]The models are compared under a shared calibration[cite: 446].
+* [cite_start]A single-site total variation bound $\delta(a)$ is derived from the closeness of the actions (character proximity hypothesis)[cite: 463, 467].
+* [cite_start]Dobrushin iteration is used to propagate this single-site bound to expectations of observables, showing they vanish as $a\rightarrow0$: $|\mathbb{E}_{\mu_{a}^{HK}}[F]-\mathbb{E}_{\mu_{a}^{W}}[F]|\le C(F,I)a^{\eta}$[cite: 458, 469].
+
+[cite_start]**Theorem 10.8** proves universality via common Ward/SD identities and renormalization conditions[cite: 484].
+
+**Proof:**
+* [cite_start]If both models satisfy the same continuum identities and renormalization conditions, their Schwinger functions in the gauge-invariant sector must coincide[cite: 481].
+
+### 9. Calibrated Mass Gap
+
+[cite_start]**Theorem 11.3** establishes a Hamiltonian spectral gap in the continuum limit[cite: 500].
+
+**Proof:**
+* [cite_start]An "admissible calibration" is chosen such that the physical clustering rate has a non-zero limit: $lim_{a\rightarrow0}\frac{\mu_{B}(a)}{a}=c_{0}>0$[cite: 488, 489].
+* [cite_start]This implies exponential decay in physical distance for the continuum two-point function: $|S_{2}^{conn}|\le Ce^{-c_{0}|x|}$[cite: 512].
+* [cite_start]Theorem 11.5 converts this Euclidean decay into a spectral gap $\Delta\ge c_{0}$ for the Hamiltonian operator obtained via OS reconstruction[cite: 507, 511].

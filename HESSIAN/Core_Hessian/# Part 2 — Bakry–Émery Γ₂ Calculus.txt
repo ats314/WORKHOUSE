@@ -1,0 +1,392 @@
+# Part 2 — Bakry–Émery Γ₂ Calculus and the Curvature–Dimension Condition CD(ρ,∞)
+
+*(This is written to sit as Part 2/20, immediately after the general framework of Part 1.)*
+
+---
+
+## 2.1. Setting: Gibbs diffusions and carré du champ
+
+We stay in the finite-dimensional Riemannian/Gibbs setting introduced in Part 1, but now focus on the Γ–Γ₂ calculus that underlies Bakry–Émery curvature.
+
+Let
+
+* ((M,g)) be a smooth, connected, complete, finite-dimensional Riemannian manifold,
+* (S \in C^2(M)) a potential (the “action”), and
+* (\mu) the associated Gibbs measure
+  [
+  d\mu(x) = Z^{-1} e^{-S(x)}, d\mathrm{vol}_g(x), \qquad
+  Z = \int_M e^{-S(x)}, d\mathrm{vol}_g(x) \in (0,\infty).
+  ]
+
+We use the **Riemannian volume** as reference measure; in lattice Yang–Mills this will be the product Haar volume on (G^{E(\Lambda)}) with the product bi-invariant metric.
+
+The associated diffusion generator (reversible w.r.t. (\mu)) is
+[
+L f = \Delta_g f - \langle \nabla S, \nabla f \rangle,
+]
+initially on (C_c^\infty(M)), and then as the self-adjoint generator of the Markov semigroup
+[
+P_t = e^{tL} : L^2(\mu) \to L^2(\mu).
+]
+
+The **carré du champ** (square field) is the bilinear form
+[
+\Gamma(f,g) := \tfrac12\big(L(fg) - f,Lg - g,Lf\big),
+\qquad
+\Gamma(f) := \Gamma(f,f),
+]
+which in this setting reduces to
+[
+\Gamma(f,g) = \langle \nabla f, \nabla g\rangle,
+\qquad
+\Gamma(f) = |\nabla f|^2.
+]
+
+The associated Dirichlet form
+[
+\mathcal{E}(f,g) = \int_M \Gamma(f,g), d\mu
+= \int_M \langle \nabla f, \nabla g\rangle, d\mu
+]
+is closed and Markovian; the self-adjoint operator (-L) is characterized by
+[
+\mathcal{E}(f,g) = \langle f, -Lg\rangle_{L^2(\mu)}.
+]
+
+So far this is just Part 1 in slightly more “differential-operator” clothes. The point of Part 2 is to introduce the **iterated carré du champ** (\Gamma_2) and the Bakry–Émery tensor that packages curvature and the Hessian of the potential.
+
+---
+
+## 2.2. Basic Γ-calculus identities
+
+Define the **iterated carré du champ** by
+[
+\Gamma_2(f,g) := \tfrac12\big(L\Gamma(f,g) - \Gamma(f, Lg) - \Gamma(g, Lf)\big),
+\qquad
+\Gamma_2(f) := \Gamma_2(f,f).
+]
+
+For our purposes, it suffices to understand (\Gamma_2(f)). The following formal properties will be used repeatedly:
+
+For (f,g,h \in C^\infty(M)):
+
+1. **Symmetry**
+   [
+   \Gamma(f,g) = \Gamma(g,f).
+   ]
+
+2. **Leibniz rule**
+   [
+   \Gamma(fg,h) = f,\Gamma(g,h) + g,\Gamma(f,h).
+   ]
+
+3. **Chain rule**
+   If (\Phi\in C^1(\mathbb{R})), then
+   [
+   \Gamma(\Phi(f),g) = \Phi'(f),\Gamma(f,g).
+   ]
+
+All of these follow directly from
+[
+\Gamma(f,g) = \frac12(L(fg) - f,Lg - g,Lf)
+]
+and the fact that (L) is a diffusion operator (second-order, no zeroth-order term).
+
+The iterated operator (\Gamma_2) is built in the same spirit; it “differentiates” (\Gamma) once more and therefore exposes curvature.
+
+---
+
+## 2.3. Bochner identity and the Bakry–Émery tensor
+
+The heart of the Bakry–Émery story is the **Bochner identity**, which expresses (\Gamma_2(f)) in geometric terms.
+
+### 2.3.1. Bochner formula on a weighted manifold
+
+Let (\operatorname{Ric}*g) be the usual Riemannian Ricci tensor, and let (\nabla^2 f) denote the Riemannian Hessian (covariant second derivative). A standard Bochner–Weitzenböck calculation yields the identity
+[
+\frac12 L|\nabla f|^2 - \langle \nabla f, \nabla Lf\rangle
+= |\nabla^2 f|*{\mathrm{HS}}^2 + \operatorname{Ric}_g(\nabla f, \nabla f)
+
+* \nabla^2 S(\nabla f, \nabla f).
+  ]
+
+On the other hand, the left-hand side is exactly (\Gamma_2(f)), thanks to the definition and the fact that (\Gamma(f)=|\nabla f|^2):
+[
+\Gamma_2(f)
+= \tfrac12\big(L\Gamma(f) - 2 \Gamma(f,Lf)\big)
+= \tfrac12 L|\nabla f|^2 - \langle \nabla f,\nabla Lf\rangle.
+]
+
+Putting these together,
+[
+\Gamma_2(f) = |\nabla^2 f|_{\mathrm{HS}}^2
+
+* \Big[\operatorname{Ric}_g + \nabla^2 S\Big](\nabla f, \nabla f).
+  ]
+
+This motivates the key definition.
+
+### 2.3.2. The Bakry–Émery tensor
+
+Define the **Bakry–Émery tensor** (or “weighted Ricci tensor”) by
+[
+\operatorname{Ric}_\mu := \operatorname{Ric}_g + \nabla^2 S.
+]
+
+Then the Bochner identity becomes the compact formula
+[
+\boxed{;
+\Gamma_2(f) = |\nabla^2 f|_{\mathrm{HS}}^2
+
+* \operatorname{Ric}_\mu(\nabla f,\nabla f).;}
+  ]
+
+In flat Euclidean space ((M = \mathbb{R}^n, g = \delta_{ij})), this reduces to the coordinate-level formula you proved in the P02 note: the Laplacian term drops out of (\operatorname{Ric}*g), and one gets
+[
+\Gamma_2(f) = |\nabla^2 f|*{\mathrm{HS}}^2
+
+* \langle \nabla^2 S\cdot \nabla f, \nabla f\rangle.
+  ]
+
+---
+
+## 2.4. The curvature–dimension condition CD(ρ,∞)
+
+The Bochner identity shows that (\Gamma_2) is a sum of a **nonnegative Hessian term** and a **curvature term**. A lower bound on the Bakry–Émery tensor translates directly into a (\Gamma_2) inequality.
+
+### 2.4.1. Definition: CD(ρ,∞)
+
+We say that ((M,g,\mu)) satisfies the **curvature–dimension condition** (CD(\rho,\infty)) if
+[
+\Gamma_2(f) ;\ge; \rho,\Gamma(f) \quad \text{for all smooth } f,
+]
+for some constant (\rho\in\mathbb{R}).
+
+Using the Bochner identity, this is equivalent to the tensor inequality
+[
+\operatorname{Ric}_\mu ;\ge; \rho,g
+\quad \text{(as quadratic forms)}.
+]
+
+Indeed, since (|\nabla^2 f|*{\mathrm{HS}}^2 \ge 0), we have
+[
+\Gamma_2(f) \ge \operatorname{Ric}*\mu(\nabla f,\nabla f)
+\ge \rho |\nabla f|^2 = \rho \Gamma(f)
+]
+whenever (\operatorname{Ric}*\mu \ge \rho g). Conversely, if the CD-inequality holds for all test functions, one can recover (\operatorname{Ric}*\mu \ge \rho g) by testing on appropriately chosen (f) whose gradient points in a given direction at a point.
+
+So:
+
+> **Curvature–dimension condition (CD(\rho,\infty))**
+> (\Longleftrightarrow) Bakry–Émery tensor bounded below:
+> (\operatorname{Ric}_\mu \ge \rho g).
+
+This is the geometric input that will feed into functional inequalities and spectral gap results in Part 3 (and in your P02/P05 notes).
+
+---
+
+## 2.5. Semigroup consequences of CD(ρ,∞)
+
+Part 3 will develop the full “curvature ⇒ Poincaré + LSI + spectral gap” machinery. Here we record the key semigroup inequalities that link (\Gamma), (\Gamma_2), and (P_t).
+
+Assume (CD(\rho,\infty)) with (\rho \in \mathbb{R}).
+
+### 2.5.1. Gradient estimate for the heat semigroup
+
+Let (u(t,x) = P_t f(x)). Differentiating (\Gamma(u(t)) = |\nabla u(t)|^2) along the flow and using the Bochner identity yields
+[
+\frac{d}{dt}\Gamma(u(t))
+= 2\Gamma(u(t), Lu(t))
+= 2\big(\Gamma_2(u(t)) - \tfrac12 L\Gamma(u(t))\big).
+]
+
+At the level of expectations, (CD(\rho,\infty)) implies
+[
+\Gamma_2(u(t)) ;\ge; \rho \Gamma(u(t)).
+]
+Combining these and applying the maximum principle gives the pointwise estimate
+[
+\Gamma(P_t f) ;\le; e^{-2\rho t} P_t \Gamma(f),
+]
+for all (t \ge 0). This is a standard Bakry–Émery gradient bound: curvature controls the decay of the gradient along the heat flow.
+
+In particular, when (\rho>0) this shows that gradients are exponentially damped at rate (2\rho).
+
+### 2.5.2. Variance and entropy decay (preview)
+
+Using the gradient estimate and reversibility, one obtains:
+
+* **Variance decay**
+  [
+  \operatorname{Var}*\mu(P_t f) \le e^{-2\rho t}, \operatorname{Var}*\mu(f).
+  ]
+* **Entropy decay**
+  [
+  \operatorname{Ent}*\mu((P_t f)^2)
+  \le e^{-2\rho t}, \operatorname{Ent}*\mu(f^2).
+  ]
+
+These semigroup estimates are equivalent to the **Poincaré inequality** and **log-Sobolev inequality** with constants (1/\rho) and (2/\rho) respectively, when (\rho>0). That equivalence is proved in full generality (and in discrete families) in your P02/P05 notes and will be systematized in Part 3.
+
+Morally:
+
+* **Input:** (CD(\rho,\infty)) with (\rho>0).
+* **Output:** Poincaré, LSI, spectral gap (\lambda_1 \ge \rho), plus nice semigroup behavior (contractivity, hypercontractivity, etc.).
+
+Part 3 will treat this as a general analytic machine, including local and defective versions.
+
+---
+
+## 2.6. Families of Gibbs systems and uniform curvature bounds
+
+In the Yang–Mills program we do not have a single Gibbs system but a **family** ({(M_\Lambda, g_\Lambda, S_\Lambda, \mu_\Lambda)}_\Lambda) indexed by a finite lattice (\Lambda). The curvature–dimension condition becomes a **uniformity question**:
+
+> Can we find (\rho_* > 0) independent of (\Lambda) such that
+> (\operatorname{Ric}*{\mu*\Lambda} \ge \rho_* g_\Lambda) on the relevant directions?
+
+If yes, then the curvature ⇒ FI ⇒ spectral gap machinery produces **volume-uniform** constants:
+[
+C_P(\Lambda) \le \frac{1}{\rho_*}, \quad
+C_{\mathrm{LS}}(\Lambda) \le \frac{2}{\rho_*}, \quad
+\lambda_1(\Lambda) \ge \rho_*,
+]
+independent of the number of sites. This is the finite-volume analytic notion of a **uniform mass scale** at the level of configuration-space diffusion.
+
+Exactly this structure appears in your more concrete scalar model prototype (P19) and in the Bakry–Émery-based spectral gap results (P02, P05).
+
+For Yang–Mills, the situation is subtler: you only have good curvature in a **small-field region** and only in **horizontal (physical)** directions. That’s where the “horizontal Bakry–Émery” variant comes in.
+
+---
+
+## 2.7. Horizontal Γ–Γ₂ calculus on a subbundle
+
+Gauge theories live naturally on **quotients** ( \mathcal{M} = \mathcal{A}/\mathcal{G} ) or, equivalently, on the “horizontal directions” of a principal bundle. To handle this, we need a version of Γ–Γ₂ restricted to a subbundle.
+
+Let (\mathcal{H} \subset TM) be a smooth subbundle (the **horizontal bundle**). In the YM case, (M) is a configuration manifold (e.g. (G^{E(\Lambda)})), and (\mathcal{H}) is the orthogonal complement (w.r.t. (g)) of the gauge orbits; gradients of gauge-invariant observables lie in (\mathcal{H}).
+
+For a smooth function (f), define the **horizontal gradient**
+[
+\nabla^\mathcal{H} f := \text{orthogonal projection of } \nabla f \text{ onto } \mathcal{H},
+]
+and the **horizontal carré du champ**
+[
+\Gamma^\mathcal{H}(f,g) := \langle \nabla^\mathcal{H} f, \nabla^\mathcal{H} g\rangle,
+\qquad
+\Gamma^\mathcal{H}(f) := |\nabla^\mathcal{H} f|^2.
+]
+
+One can similarly define a horizontal Hessian ((\nabla^2 f)^\mathcal{H}) and a **horizontal Bakry–Émery tensor** by restricting (\operatorname{Ric}*\mu) to (\mathcal{H}):
+[
+\operatorname{Ric}*\mu^\mathcal{H}(v,v) := \operatorname{Ric}_\mu(v,v)
+\quad\text{for } v\in \mathcal{H}.
+]
+
+The Bochner identity then restricts to
+[
+\Gamma_2^\mathcal{H}(f)
+= |(\nabla^2 f)^\mathcal{H}|_{\mathrm{HS}}^2
+
+* \operatorname{Ric}_\mu^\mathcal{H}(\nabla^\mathcal{H} f, \nabla^\mathcal{H} f),
+  ]
+  for all **gauge-invariant** test functions (f) (so that (\nabla f) is horizontal).
+
+We can therefore formulate a **horizontal curvature–dimension condition**:
+
+> **Horizontal CD(ρ,∞).**
+> There exists (\rho>0) such that for every smooth gauge-invariant (f),
+> [
+> \Gamma_2^\mathcal{H}(f) ;\ge; \rho, \Gamma^\mathcal{H}(f).
+> ]
+> Equivalently, (\operatorname{Ric}*\mu^\mathcal{H} \ge \rho, g|*{\mathcal{H}}).
+
+In the lattice YM setting, this is exactly the content of your horizontal curvature hypotheses and “H_{\text{curv}}” in the interface framework: only horizontal directions matter, and those are exactly gradients of gauge-invariant observables.
+
+---
+
+## 2.8. Decomposing Ric(_\mu) for lattice Yang–Mills
+
+For a finite lattice (\Lambda), the configuration manifold is
+[
+M_\Lambda = G^{E(\Lambda)},
+]
+the product of a compact Lie group (G) (e.g. (SU(N))) over the set of oriented edges (E(\Lambda)), with the product bi-invariant metric (g_\Lambda) and product Haar volume. The Gibbs measure has density
+[
+d\mu_\Lambda(U) = Z_\Lambda^{-1} e^{-S_\Lambda(U)}, d\mathrm{vol}*{g*\Lambda}(U),
+]
+where (S_\Lambda) is the Wilson action plus any regulators.
+
+The Bakry–Émery tensor decomposes as
+[
+\operatorname{Ric}*{\mu*\Lambda}
+= \operatorname{Ric}*{g*\Lambda} + \nabla^2 S_\Lambda.
+]
+
+This is the geometric spine of the whole YM curvature story:
+
+* (\operatorname{Ric}*{g*\Lambda}) comes from **Haar geometry**: the compact Lie group (G) has strictly positive Ricci curvature in directions orthogonal to its center, and the product metric simply adds contributions from each edge. This gives a positive “background curvature” depending only on (G).
+* (\nabla^2 S_\Lambda) comes from the **action** (Wilson + gauge-fixing / regulator terms). This can contribute positive or negative curvature depending on the details, but is **local and controllable**.
+
+At the vacuum configuration (U^{(0)}) (all links = identity), one has a concrete estimate of the form
+[
+\operatorname{Ric}*{\mu*\Lambda}(U^{(0)})(v,v)
+= \operatorname{Ric}*{g*\Lambda}(v,v) + \nabla^2 S_\Lambda(U^{(0)})(v,v)
+;\ge; (\kappa_G - C_{\mathrm{add}}), |v|*{g*\Lambda}^2,
+]
+for horizontal vectors (v), where
+
+* (\kappa_G > 0) encodes the group-theoretic Haar curvature (depending only on (G)),
+* (C_{\mathrm{add}}) collects the worst-case negative contribution from the action Hessian in those directions.
+
+If (\kappa_G > C_{\mathrm{add}}), this gives a **strictly positive horizontal Bakry–Émery curvature lower bound at the vacuum**:
+[
+\operatorname{Ric}*{\mu*\Lambda}^\mathcal{H}(U^{(0)}) \ge \rho_* g_\Lambda|*\mathcal{H},\quad
+\rho** := \kappa_G - C_{\mathrm{add}} > 0.
+]
+
+In later geometric parts you extend this pointwise inequality to a small-field ball
+[
+B_r(U^{(0)}) \subset M_\Lambda,
+]
+showing that the **horizontal curvature–dimension condition** (CD(\rho_{\mathrm{loc}},\infty)) holds on that ball with (\rho_{\mathrm{loc}}>0) independent of (\Lambda). This is precisely the “local horizontal curvature” assumption that feeds the local-to-global functional-inequality machinery of Parts 12–13.
+
+---
+
+## 2.9. Role of Part 2 in the overall program
+
+Let’s situate what we’ve just built in the 20-part machine.
+
+1. **Abstract curvature–FI link.**
+   The Bochner–Bakry–Émery identity and the CD((\rho,\infty)) condition are the geometric input driving the analytic results of Part 3:
+   [
+   \operatorname{Ric}_\mu \ge \rho g
+   \quad\Longrightarrow\quad
+   \text{Poincaré, LSI, spectral gap }\lambda_1 \ge \rho.
+   ]
+   For local versions (curvature on a region only), this feeds into the local PI/LSI and local-to-global theorems of Parts 12–13.
+
+2. **Abstract interface to gauge theories.**
+   The decomposition
+   [
+   \operatorname{Ric}*\mu = \operatorname{Ric}*g + \nabla^2 S
+   ]
+   and its horizontal restriction (\operatorname{Ric}*\mu^\mathcal{H}) are the geometric objects entering your Yang–Mills curvature hypothesis (H*{\text{curv}}):
+   “Horizontal Bakry–Émery curvature of the gauge orbit space is bounded below by (\rho>0) in a small-field region, uniformly in the finite lattice (\Lambda).”
+
+3. **Concrete curvature bounds for lattice YM.**
+   On the actual lattice configuration manifolds (M_\Lambda = G^{E(\Lambda)}), the tensor
+   [
+   \operatorname{Ric}*{\mu*\Lambda}
+   = \operatorname{Ric}*{g*\Lambda} + \nabla^2 S_\Lambda
+   ]
+   lets you combine:
+
+   * positive Ricci curvature from Haar geometry, and
+   * controlled Hessians of the Wilson + regulator action,
+     to obtain the **core horizontal curvature theorem** in the YM parts. That theorem provides a local horizontal CD((\rho_{\mathrm{loc}},\infty)) condition on a small-field region, with constants independent of (\Lambda), which then feeds into the local-to-global FI machinery (Parts 12–13) and OS/continuum analysis (Parts 17–19).
+
+In short:
+
+* Part 1 set up the diffusion, Dirichlet form, variance/entropy, and functional-inequality language.
+* **Part 2 defines the curvature object** (\operatorname{Ric}_\mu), derives the Bochner identity and CD((\rho,\infty)), and explains how to restrict this to the horizontal (physical) bundle relevant for gauge theories.
+* Later parts plug in **specific YM geometry** (Haar + Wilson + gauge-fixing) to produce the local curvature bounds that drive Poincaré/LSI and, through OS reconstruction and Riccati flow, candidate mass gaps.
+
+That’s the updated Part 2: structure preserved, Γ–Γ₂/Hessian/weighted-Ricci story made explicit, and the gauge-theoretic hooks (horizontal curvature, lattice decomposition) kept in place so you can bolt the later YM parts directly onto it.

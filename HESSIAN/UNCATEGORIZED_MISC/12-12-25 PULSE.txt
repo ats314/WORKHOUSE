@@ -1,0 +1,422 @@
+Here’s a compact, self‑contained note on the Haar density in exponential coordinates for compact Lie groups and how its small‑H expansion produces the standard quadratic form from the root system.
+
+---
+
+# Haar density, Weyl factor, and the quadratic term
+
+Let (G) be a compact connected Lie group with maximal torus (T), Lie algebra (\mathfrak g), Cartan (\mathfrak t), and root system (R\subset \mathfrak t^*). Write elements near the identity as (g=\exp(iH)) with (H\in\mathfrak t) small. The Weyl integration formula gives, for a class function (f),
+[
+\int_G f(g),dg = \frac{1}{|W|}\int_{\mathfrak t} f!\big(\exp(iH)\big), j(H), dH,
+]
+with the **Haar Jacobian**
+[
+j(H)=\prod_{\alpha>0}\left(\frac{\sin\frac{\alpha(H)}{2}}{\frac{\alpha(H)}{2}}\right)^{2}
+= \bigl|\Delta(e^{iH})\bigr|^2,
+]
+where the product is over positive roots and (\Delta) is the Weyl denominator. Define the “Haar action” (log‑Jacobian)
+[
+S_H(H)\coloneqq -\log j(H)= -\sum_{\alpha>0} 2\log!\left(\frac{\sin\frac{\alpha(H)}{2}}{\frac{\alpha(H)}{2}}\right).
+]
+
+## Small‑(H) expansion (quadratic term)
+
+Using (\displaystyle \frac{\sin x}{x}=1-\frac{x^2}{6}+O(x^4)),
+[
+\log!\left(\frac{\sin x}{x}\right)= -\frac{x^2}{6}+O(x^4).
+]
+Set (x=\tfrac{\alpha(H)}{2}). Then
+[
+S_H(H)= -\sum_{\alpha>0} 2\left(-\frac{(\alpha(H))^2}{24}+O(|H|^4)\right)
+= \frac{1}{12}\sum_{\alpha>0}\bigl(\alpha(H)\bigr)^2 + O(|H|^4).
+]
+Thus the quadratic form at the identity is
+[
+\boxed{\quad S_H(H)= \tfrac{1}{12}\sum_{\alpha>0}\alpha(H)^2 + O(|H|^4)\quad}
+]
+and the Hessian at (H=0) is
+[
+\nabla^2 S_H(0)= \tfrac{1}{12}\sum_{\alpha>0} \alpha\otimes\alpha,
+]
+viewing (\alpha) as a linear form on (\mathfrak t) and (\alpha\otimes\alpha) as the rank‑one operator (v\mapsto \alpha(v),\alpha^\sharp) (with (\alpha^\sharp) the metric dual).
+
+## Concrete check: (G=SU(n))
+
+For (SU(n)) with (\mathfrak t={H=\mathrm{diag}(h_1,\dots,h_n),\ \sum h_i=0}) and roots (\alpha_{ij}(H)=h_i-h_j) ((i<j)),
+[
+j(H)=\prod_{i<j}\left(\frac{\sin\frac{h_i-h_j}{2}}{\frac{h_i-h_j}{2}}\right)^{2},\qquad
+S_H(H)=\frac{1}{12}\sum_{i<j}(h_i-h_j)^2+O(|H|^4).
+]
+Equivalently, (\nabla^2 S_H(0)=\tfrac{1}{12}\sum_{i<j}(e_i-e_j)\otimes(e_i-e_j)) on the trace‑zero subspace.
+
+---
+
+## Why this matters (analysis/LSI/RG contexts)
+
+* The Haar factor contributes a **universal, positive semidefinite quadratic form** tied entirely to the root system. In any convexity/BE‑curvature estimate near the identity (e.g., your SAFE‑region arguments), you can drop in
+  [
+  \nabla^2(-\log j)(0)=\tfrac{1}{12}\sum_{\alpha>0}\alpha\otimes\alpha
+  ]
+  as the leading‑order group‑geometric curvature term.
+* When combined with additional potentials (e.g., Wilson plaquette terms), the total Hessian inherits this base contribution; away from (H=0) you control corrections via explicit (\sin) bounds.
+
+If you want, I can package this as a short LaTeX lemma + proof block (generic (G), then the (SU(n)) specialization) ready to paste into your “Haar‑induced convexity” section.
+
+
+
+
+
+//////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+Here’s a compact, technical plan to test whether your constants scale **sub‑exponentially in volume** and to lock uniformity for the global argument.
+
+---
+
+# Goal (precise)
+
+Given finite‑volume measures (\mu_\Lambda \propto e^{-S_\Lambda}) (lattice YM with Haar+Wilson, or your scalar prototype), certify that each key constant—Hessian lower bound (\kappa_\Lambda), local LSI (\rho_{K,\Lambda}), drift (\alpha_\Lambda), and the SAFE‑escape weight (c_\Lambda)—obeys
+[
+-\frac{1}{|\Lambda|}\log C_\Lambda ;\xrightarrow[|\Lambda|\to\infty]{}; 0
+\quad\text{for } C_\Lambda\in{\kappa_\Lambda^{-1},;\rho_{K,\Lambda}^{-1},;\alpha_\Lambda^{-1},;c_\Lambda^{-1}}.
+]
+Equivalently, (C_\Lambda \le \exp{o(|\Lambda|)}). This is the exact sub‑exponential criterion needed to upgrade all “finite‑box” bounds to volume‑uniform statements.
+
+---
+
+# What to bound (minimal list)
+
+1. **SAFE‑region Hessian** (physical gauge‑projected block):
+   [
+   \nabla^2 S_\Lambda\big|*{\mathrm{phys}} \succeq \kappa*\Lambda,I \quad\text{on }K_\Lambda,
+   ]
+   with (\kappa_\Lambda) certified by your explicit Haar+Wilson Hessian constants.
+
+2. **Local LSI on (K_\Lambda)**:
+   [
+   \operatorname{Ent}*{\mu*\Lambda}(f^2;K_\Lambda);\le;\frac{2}{\rho_{K,\Lambda}}!\int_{K_\Lambda} !!\Gamma(f),d\mu_\Lambda.
+   ]
+
+3. **Lyapunov drift (global)**:
+   Find (W_\Lambda\ge1) s.t.
+   [
+   L_\Lambda W_\Lambda \le -\alpha_\Lambda W_\Lambda + b_\Lambda\mathbf{1}*{K*\Lambda}.
+   ]
+
+4. **SAFE mass (escape control)**:
+   (\mu_\Lambda(K_\Lambda^c)\le c_\Lambda) with (c_\Lambda) small but permitted to be (e^{-o(|\Lambda|)}).
+
+---
+
+# Sufficient condition (single lemma you can drop in)
+
+**Lemma (Sub‑exp. scaling ⇒ Volume‑uniform LSI).**
+Assume (1)–(4) above and that as (|\Lambda|\to\infty):
+[
+\kappa_\Lambda^{-1},;\rho_{K,\Lambda}^{-1},;\alpha_\Lambda^{-1},;c_\Lambda^{-1};\le;\exp{o(|\Lambda|)}.
+]
+Then the global LSI constant (\rho_\Lambda) obtained via “Local SAFE LSI + Lyapunov + decomposition” satisfies
+[
+\rho_\Lambda \ge \exp{-o(|\Lambda|)},
+]
+hence (\inf_\Lambda \rho_\Lambda>0) along any sequence with (o(|\Lambda|)\to 0).
+*Sketch:* Standard entropy splitting on (K_\Lambda) plus Foster–Lyapunov controls the complement; the assembled constant is a rational combination of (\kappa_\Lambda,\rho_{K,\Lambda},\alpha_\Lambda) and ((1-c_\Lambda)^{-1}). Sub‑exponential growth of the reciprocals implies the product/sum remains (\exp{-o(|\Lambda|)}), yielding a positive uniform limit.
+
+---
+
+# How to verify (deterministic bounds + numerics)
+
+**A. Deterministic bookkeeping (no compute):**
+
+* Express (\kappa_\Lambda) via explicit **Haar+Wilson Hessian** minima on (K_\Lambda). Track only terms that can scale with the boundary/plaquette count; show the lower bound depends on **local** curvature constants and a **finite‑range** interaction radius ⇒ (\kappa_\Lambda) bounded below by a (|\Lambda|)-independent value up to boundary corrections (O(|\partial\Lambda|)). This already implies (\kappa_\Lambda^{-1}=\exp{o(|\Lambda|)}).
+* For (\rho_{K,\Lambda}): certify via **tensorization + finite‑overlap** of local blocks covering (K_\Lambda) (SAFE locality). Overlap multiplicity is (O(1)); constants compile multiplicatively at most by (\exp{O(|\partial\Lambda|)}) ⇒ sub‑exp.
+* For (\alpha_\Lambda): choose (W_\Lambda) as a sum of local convex coercive pieces (your (\Phi(z_p)) structure). Generator acts locally; the negative part scales with volume but with density bounded below ⇒ (\alpha_\Lambda) admits a (|\Lambda|)-independent lower bound up to boundary (o(|\Lambda|)).
+* For (c_\Lambda): define (K_\Lambda) by **volume‑average** quadratic cutoff of the gauge‑invariant local fields. A Chernoff/Hoeffding‑type bound from local LSI or BE curvature yields (\mu_\Lambda(K_\Lambda^c)\le \exp{-\gamma|\Lambda|}) for some (\gamma>0) (best case) or at worst (\exp{-o(|\Lambda|)}).
+
+**B. Minimal numeric stress‑tests (lightweight):**
+
+* Run **box‑doubling**: (|\Lambda|=L^d) with (L=8,12,16,24). Extract empirical (\hat\kappa_\Lambda,\hat\rho_{K,\Lambda},\hat\alpha_\Lambda,\hat c_\Lambda) from your existing eigenvalue scans and SAFE‑mass histograms.
+* Plot (\log C_\Lambda / |\Lambda|) vs. (|\Lambda|). The target is a clear **downward trend to 0**. Flat or rising indicates a problem.
+
+---
+
+# What to prepare (artifact checklist)
+
+* **Constants ledger (live):** a table listing (\kappa_\Lambda,\rho_{K,\Lambda},\alpha_\Lambda,c_\Lambda) with analytic bound form (local constants + overlap multiplicity + boundary term) and the corresponding numeric estimates for each (L).
+* **SAFE definition spec:** the exact gauge‑invariant inequalities defining (K_\Lambda) (so tail bounds are clean).
+* **Overlap graph bound:** a one‑page proof that the cover multiplicity is (O(1)) independent of (|\Lambda|).
+
+---
+
+# Failure modes to watch
+
+* Any step that introduces a factor like (\exp{c|\Lambda|}) in a **denominator** (e.g., gluing inequalities with uncontrolled partition‑of‑unity weights). Avoid by using covers with bounded multiplicity and block‑wise LSI with **harmonic mean** aggregations rather than naive products.
+* A (K_\Lambda) whose definition depends on **max** over sites rather than an average—this can force (\mu_\Lambda(K_\Lambda^c)) to decay only polynomially. Use averages (or trimmed sums), not maxima.
+
+---
+
+# If you want a single drop‑in theorem (ready form)
+
+I can deliver a LaTeX block: **“Sub‑Exponential Constant Assembly ⇒ Uniform LSI”** with the exact constants propagation (harmonic vs arithmetic means, overlap factor, boundary scaling). It will reference only the objects above and align with your SAFE/LSI/RG sections.
+
+
+
+
+
+
+
+
+
+
+/////////////////////
+
+
+
+
+
+
+
+
+
+
+Here’s a compact, first‑pass bridge between **diffusion spectral gaps** and **OS/transfer‑matrix mass gaps**, with the key conventions spelled out so you don’t lose an (a).
+
+---
+
+# **RP ⇒ OS transfer operator and its gap**
+
+**Setup.** On a reflection‑positive Euclidean lattice theory with spacing (a>0), Osterwalder–Schrader (OS) reconstruction yields a Hilbert space (\mathcal H), a self‑adjoint Hamiltonian (H\ge 0), and a **transfer operator**
+[
+T_a ;=; e^{-aH},\qquad |T_a|\le 1.
+]
+Let ({\lambda_n}_{n\ge 0}) be eigenvalues of (T_a) in non‑increasing order with eigenvectors ({\psi_n}), and (E_n) the corresponding energy levels of (H) (so (E_n\ge 0), (E_0) is the ground energy).
+
+**Eigenvalue–energy relation.**
+[
+\lambda_n ;=; e^{-aE_n},\qquad E_n ;=; -\frac{1}{a}\log \lambda_n .
+]
+
+**Mass gap.** The (OS/physical) mass gap is
+[
+m ;=; E_1-E_0 ;=; -\frac{1}{a}\log!\left(\frac{\lambda_1}{\lambda_0}\right).
+]
+If the vacuum is normalized so that (\lambda_0=1) (i.e., (E_0=0)), then (m = -\tfrac{1}{a}\log \lambda_1).
+
+---
+
+# **Reversible diffusion ⇒ (L^2) contraction**
+
+Let ((\mu,L)) be a reversible Markov diffusion (generator (L), invariant measure (\mu)) with **Poincaré/spectral‑gap constant** (\lambda_P>0), i.e.
+[
+\mathrm{Var}*\mu(f);\le;\frac{1}{\lambda_P},\int \Gamma(f),d\mu,
+]
+equivalently the (L^2(\mu)) semigroup (P_t=e^{tL}) contracts:
+[
+|P_t f-\mu f|*{L^2(\mu)} ;\le; e^{-\lambda_P t},|f-\mu f|_{L^2(\mu)}.
+]
+
+---
+
+# **Lemma (Diffusion gap ↔ Transfer gap via OS time‑slice).**
+
+Assume a reflection‑positive lattice measure whose one‑time‑step Markov operator (K_a) on the OS time‑slice is **reversible** and **(L^2)‑contractive** with rate (\lambda_P(a)):
+[
+|K_a^n f - \langle f,\mathbf 1\rangle \mathbf 1|_2 ;\le; e^{-n,\lambda_P(a)}|f-\langle f,\mathbf 1\rangle \mathbf 1|_2.
+]
+If (K_a) and the OS transfer (T_a) coincide on the physical subspace (standard in RP→OS), then their nontrivial spectral radii match and
+[
+\lambda_1(T_a);=;e^{-\lambda_P(a)}.
+]
+Hence, with (E_0=0),
+[
+m(a);=;-\frac{1}{a}\log \lambda_1(T_a);=;\frac{\lambda_P(a)}{a}.
+]
+
+**Proof (sketch).** (K_a) reversible ⇒ self‑adjoint on (L^2). The contraction rate equals the **spectral gap** of (K_a): (\mathrm{gap}(K_a)= -\log \lambda_1(K_a)) per step. Under RP→OS identification of a single Euclidean step with (T_a) on (\mathcal H), the non‑vacuum eigenvalue satisfies (\lambda_1(K_a)=\lambda_1(T_a)=e^{-aE_1}). Combine to get (aE_1=\lambda_P(a)). ∎
+
+---
+
+# **Corollary (Unit step vs. physical time).**
+
+Be explicit about **units**:
+
+* If one **Euclidean step** equals time (a), then “per‑step” contraction (e^{-\lambda_P(a)}) corresponds to “per‑physical‑time” rate (\lambda_P(a)/a).
+* Therefore the OS mass gap extracted from two‑point decay in lattice units satisfies
+  [
+  m(a)=\frac{\lambda_P(a)}{a}.
+  ]
+  Any confusion about factors almost always comes from mixing “per step” and “per time” conventions.
+
+---
+
+# **What to check in your stack**
+
+* RP is actually used (reflection plane = time slice; fields split into (\Theta)-positive/negative).
+* The Markov operator on the time slice is **the** OS transfer restricted to the physical subspace.
+* The gap (\lambda_P(a)) you compute is the **per‑step** spectral gap of that operator (not a continuous‑time generator unless you have it).
+* When normalizing correlators, ensure (\lambda_0=1) (i.e., subtract (E_0)) so (m=-a^{-1}\log \lambda_1).
+
+---
+
+# **One‑liner you can drop near your constants ledger**
+
+[
+\boxed{\quad m(a);=;-\frac{1}{a}\log!\left(\frac{\lambda_1}{\lambda_0}\right);=;\frac{\lambda_P(a)}{a}\quad\text{(with }\lambda_0=1\text{)}. \quad}
+]
+
+If you want, I can convert this into a LaTeX theorem/proof block that matches your RP→OS section numbering and your (a)/units conventions.
+
+
+
+///////////////////
+
+
+Here’s a compact, first‑pass technical note on **preserving Osterwalder–Schrader (OS) reflection positivity under coarse‑graining**, and how that feeds chessboard estimates and OS reconstruction.
+
+---
+
+# RP under Coarse‑Graining: what actually works
+
+**Background (2 lines).**
+Reflection positivity (RP) for a Euclidean lattice measure (e.g., Wilson action) means: with respect to a plane reflection (θ), the bilinear form ⟨f,θf⟩ is ≥0 for all observables supported on the “+” half. This is the gateway to OS reconstruction (Hilbert space + positive Hamiltonian). The usual failure mode under RG is that generic block maps do **not** commute with θ or they generate non‑RP cross‑terms.
+
+**Practical route.**
+Use **positivity‑preserving, reflection‑commuting** block maps—essentially **block averages** aligned to the reflection plane. These are the maps underlying **chessboard estimates**: they average/replicate local patterns over reflected tiles while keeping θ‑symmetry manifest. The general pattern:
+
+* Choose a reflection plane that **cuts blocks cleanly** (no partial blocks crossing the mirror).
+* Define the coarse variable as a **linear average with nonnegative weights** of fine variables inside each block.
+* Ensure the averaging operator **commutes with θ** (block partitions are θ‑invariant).
+* Pushforward of an RP measure by such a map remains RP; product structures needed for chessboard bounds are preserved.
+
+---
+
+# Drop‑in lemma (RP ⇒ RP under block averaging)
+
+**Lemma (RP preserved by reflection‑commuting positive linear coarse‑graining).**
+Let (Ω,𝔽,μ) be a lattice Euclidean field/gauge measure on Λ⊂ℤ^d that is reflection positive w.r.t. plane reflection θ:Λ→Λ, with θ‑induced involution on observables (Θf = f∘θ, complex conjugation suppressed).
+Let P: L^2(μ)→L^2(μ) be the linear projection implementing **block averaging** on a θ‑invariant partition 𝔅 of Λ (i.e., θ(𝔅)=𝔅) with **nonnegative weights** summing to 1 in each block, and suppose P and Θ commute: PΘ=ΘP. Denote the coarse σ‑algebra by 𝔽_B generated by block variables and the **pushforward** measure μ_B := μ∘P^{-1} on coarse configurations.
+
+Then μ_B is reflection positive w.r.t. the induced reflection θ_B on blocks: for any coarse observable F supported on the “+” half of blocks,
+[
+\int F,(\Theta_B F), d\mu_B ;=; \int (PF), \Theta(PF), d\mu ;\ge; 0.
+]
+
+*Proof (one line).* Commutation PΘ=ΘP and positivity of the quadratic form for μ give ⟨PF,Θ(PF)⟩_μ≥0; identification of PF with the pullback of F under P yields the claim. ∎
+
+**Notes.**
+
+* Nonnegative weights ensure P is a **Markov** (positivity‑preserving, norm‑nonincreasing) map.
+* Θ‑invariance of the block partition is the only geometric constraint; align blocks to the mirror.
+
+---
+
+# Chessboard estimate stub (ready to paste)
+
+**Proposition (Chessboard estimate under RP‑stable blocking).**
+Assume μ is RP and let 𝔅 be a θ‑invariant tiling. For any local nonnegative observable G supported in a single block on the “+” half, let G^{#} denote its **reflected‑tiled** product (G replicated by reflections/translations across the chessboard). Then
+[
+\int G^{#}, d\mu ;\le; \Big(\int G, d\mu\Big)^{N},
+]
+where N is the number of tiles in the chessboard (precise exponent depends on the tiling group; equality cases as usual).
+
+*Proof sketch.* Standard chessboard: apply RP iteratively with reflections across each mirror, each step using Cauchy–Schwarz on the RP inner product ⟨·,Θ·⟩. Because blocking and reflection commute, the same argument applies at the coarse level and is invariant under pushing forward by P. ∎
+
+---
+
+# Why this matters for OS reconstruction and RG
+
+* **OS stability:** If the microscopic measure is RP (e.g., Wilson action with the standard reflection), then any **sequence of block‑averaging coarse‑grainings** that commute with θ produces **RP measures at all scales**. This keeps the OS Hilbert space construction valid after each RG step.
+
+* **Model‑specifics:**
+
+  * For spins/real scalar fields: take literal arithmetic means on θ‑aligned blocks.
+  * For lattice gauge fields: average objects that transform linearly and respect reflection (e.g., Lie‑algebra valued proxies such as small‑fluctuation link angles, or averaged plaquette variables), or use **group‑averaging via heat‑kernel/conditional expectation** on SU(N) that is class‑function preserving and θ‑commuting. The key is a **positive, θ‑equivariant Markov map** on the chosen coordinateization.
+
+* **What not to do:** arbitrary decimations, nonlocal projections that cross the mirror, or reparametrizations that break θ‑equivariance; these can kill RP.
+
+---
+
+# Minimal checklist (actionable)
+
+1. Pick the reflection plane; define θ.
+2. Choose a θ‑invariant block partition.
+3. Define P with nonnegative weights and verify PΘ=ΘP.
+4. For gauge models: ensure the chosen coordinates/conditional expectations are **positive** (Markov) and θ‑equivariant.
+5. Use the lemma to propagate RP to μ_B; then apply chessboard to control correlations/bounds at the coarse scale.
+6. Iterate across scales; OS reconstruction remains valid at each scale.
+
+If you want, I can tailor the gauge‑specific version (SU(2)/SU(3)) to your Part II “RP→OS” section with the exact θ, block geometry, and the conditional expectation you’re using for link/plaquette variables.
+
+
+
+
+/////////////////////////
+
+
+
+
+Here’s a clean, first‑principles explainer on how **reflection positivity (RP)** + a **transfer matrix** gives you a spectral form for Euclidean correlators and an operational definition of the **mass gap**.
+
+---
+
+# **RP ⇒ Transfer matrix ⇒ Spectral form ⇒ Mass gap**
+
+**Setup (Euclidean lattice/continuum):**
+Pick a Hermitian, time‑reflection–even observable (F) (e.g., a gauge‑invariant local operator). Assume **reflection positivity** across a Euclidean time slice and finite action so that an Osterwalder–Schrader (OS) reconstruction applies. Then there is a Hilbert space (\mathcal H), a cyclic vacuum (|0\rangle), and a positive self‑adjoint Hamiltonian (H\ge 0) with **transfer matrix** (T_a = e^{-aH}) for time step (a>0).
+
+**Two‑point function:**
+Define (C_F(t)=\langle F(0)F(t)\rangle_E) for (t=na\in a\mathbb N). RP + OS ensure:
+[
+C_F(t)=\sum_{n\ge 0} \big|\langle 0|F|n\rangle\big|^2 e^{-E_n t},\qquad 0=E_0\le E_1\le E_2\le\cdots,
+]
+i.e., a **nonnegative spectral expansion** with energies ({E_n}) (transfer‑matrix eigenvalues (\lambda_n=e^{-aE_n})).
+
+**Mass gap (definition/estimator):**
+If (F) has nonzero overlap with the first excited state in the target channel, the **mass gap**
+[
+m ;=; E_1 - E_0 ;=; E_1
+]
+is read off from the large‑(t) decay:
+[
+m ;=; -\lim_{t\to\infty}\frac{1}{t},\log!\frac{C_F(t)}{C_F(0)}
+;=; -\frac{1}{a}\log!\frac{\lambda_1}{\lambda_0}.
+]
+(Here (\lambda_0=1) because (E_0=0) sets the vacuum energy.)
+
+**Practical lattice extraction (discrete times (t=na)):**
+
+* Effective mass: (m_{\rm eff}(t)=\frac{1}{a}\log!\frac{C_F(t)}{C_F(t+a)};\xrightarrow[t\to\infty]{}; m).
+* Use variational/GEVP with an operator basis ({F_i}) to isolate (\lambda_1) in the desired quantum numbers.
+* Ensure RP‑compatible smearings (reflection‑even) and sufficiently large (t) windows to suppress excited‑state contamination.
+
+**Why RP matters:**
+RP guarantees (i) positivity of the inner product in the OS Hilbert space, (ii) positivity of (H), (iii) complete monotonicity of (C_F(t)), hence the **Stieltjes‑type** spectral representation above. Without RP, the clean nonnegative spectral weights and the mass‑gap estimator lose rigor.
+
+**Equivalently in transfer‑matrix language:**
+Let (T_a) have eigenpairs ((\lambda_n,|n\rangle)) with (\lambda_n=e^{-aE_n}). Then
+[
+C_F(na)=\langle 0|F,T_a^n,F|0\rangle
+=\sum_{m}\big|\langle 0|F|m\rangle\big|^2 \lambda_m^{,n},
+]
+and the asymptotics are controlled by the largest sub‑vacuum eigenvalue (\lambda_1<1). Thus
+[
+m ;=; -\frac{1}{a}\log\lambda_1 ;=; -\frac{1}{a}\log!\Big(\frac{\lambda_1}{\lambda_0}\Big).
+]
+
+**Minimal checklist (rigorous use):**
+
+* RP of the measure/action and reflection‑even (F).
+* Existence of (T_a=e^{-aH}) with (H\ge 0).
+* Nonzero overlap (\langle 0|F|1\rangle\neq 0) in the target channel.
+* Large‑(t) window where single‑exponential dominates (with error control).
+
+If you want, I can drop a one‑page LaTeX lemma (“RP ⇒ spectral form; effective‑mass limit”) you can paste straight into your RP→OS section.
+
+

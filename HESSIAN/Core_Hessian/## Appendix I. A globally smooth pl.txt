@@ -1,0 +1,440 @@
+## Appendix I. A globally smooth plaquette proxy and the full Lyapunov drift computation
+
+This appendix implements the technical repair suggested in the drift analysis: replace the nonsmooth large–field Lyapunov seed
+[
+z_p(U)=d_G(U_p(U),e)^2
+]
+(which fails to be globally (C^2) on a compact Lie group because of the cut locus) by a *globally smooth, conjugation–invariant* plaquette observable already used in the canonical “good set” (K_\Lambda), namely
+[
+\phi(g):=1-\frac1N\operatorname{ReTr}(g),\qquad g\in \mathrm{SU}(N),
+]
+so (\phi\ge 0) and (\phi(e)=0). 
+
+We then re-run the Lyapunov drift calculation in complete detail and show exactly where the “(O(|P(\Lambda)|)) constant leakage” disappears once one also imposes the structural condition (\Phi'(0)=0) on the outer scalar function (\Phi) (e.g. (\Phi(s)=s^2)). The computation is fully explicit and volume-uniform in the sense that every constant depends only on (G=\mathrm{SU}(N)), the chosen bi-invariant metric scale, and the local lattice degree (how many plaquettes touch a link), but **not** on (|\Lambda|).
+
+What remains *intrinsically nontrivial* (and is not supplied elsewhere in the current drafts) is a coercivity estimate for the mixed drift term coming from (-\langle\nabla S_\Lambda,\nabla\cdot\rangle). This appendix isolates that remaining inequality as a single clearly stated hypothesis—everything else is now controlled.
+
+---
+
+### I.1. Setup: configuration manifold, plaquettes, generator
+
+Let (\Lambda\subset \mathbb Z^d) be finite. Let (E(\Lambda)) be its oriented nearest-neighbor edges and (P(\Lambda)) its oriented plaquettes.
+
+Fix (G=\mathrm{SU}(N)) with a bi-invariant Riemannian metric induced by an (\mathrm{Ad})-invariant inner product on (\mathfrak g=\mathfrak{su}(N)) (the drafts use (\langle A,B\rangle_\lambda:=\lambda(-\mathrm{Tr}(AB))) for (\lambda>0) as a normalization device). 
+
+Define the configuration manifold
+[
+M_\Lambda:=G^{E(\Lambda)}={U=(U_\ell)*{\ell\in E(\Lambda)}:\ U*\ell\in G},
+]
+equipped with the product bi-invariant metric. 
+
+For an oriented plaquette (p=(x;i,j)) with boundary edges ((x,x+e_i),(x+e_i,x+e_i+e_j),(x+e_j,x+e_i+e_j),(x,x+e_j)), define the plaquette holonomy
+[
+U_p(U)
+:=U_{(x,x+e_i)},U_{(x+e_i,x+e_i+e_j)},
+U_{(x+e_j,x+e_i+e_j)}^{-1},U_{(x,x+e_j)}^{-1}.
+]
+
+
+Let (S_\Lambda\in C^2(M_\Lambda)) be a smooth gauge-invariant action and
+[
+\mu_\Lambda(dU)=Z_\Lambda^{-1}e^{-S_\Lambda(U)},dU
+]
+the Gibbs measure. 
+
+Define the reversible diffusion generator
+[
+L_\Lambda F:=\Delta_\Lambda F-\langle\nabla S_\Lambda,\nabla F\rangle_{g_\Lambda},
+]
+with carré du champ
+[
+\Gamma_\Lambda(F,G)
+=\sum_{\ell\in E(\Lambda)}\langle\nabla_\ell F,\nabla_\ell G\rangle_{\mathfrak g},
+\qquad \Gamma_\Lambda(F)=|\nabla F|^2.
+]
+
+
+The exponential chain rule we will use repeatedly is:
+
+> **Lemma (diffusion exponential chain rule).** For any smooth (V) and constant (\kappa),
+> [
+> L(e^{\kappa V})=e^{\kappa V}\big(\kappa,LV+\kappa^2,\Gamma(V)\big).
+> ]
+>
+
+---
+
+### I.2. The plaquette proxy (\phi(g)=1-\frac1N\Re\mathrm{Tr}(g)): basic bounds
+
+Define
+[
+\phi(g):=1-\frac1N\mathrm{ReTr}(g),\qquad g\in\mathrm{SU}(N).
+]
+
+
+#### Lemma I.1 (pointwise bounds)
+
+For all (g\in\mathrm{SU}(N)),
+[
+0\le \phi(g)\le 2.
+]
+
+**Proof.** The eigenvalues of (g) have form (e^{i\theta_1},\dots,e^{i\theta_N}). Hence
+[
+\Re\mathrm{Tr}(g)=\sum_{k=1}^N \cos\theta_k\in[-N,N],
+]
+so (1-\frac1N\Re\mathrm{Tr}(g)\in[0,2]). (\square)
+
+#### Lemma I.2 (Hilbert–Schmidt identity)
+
+Let (|\cdot|*{HS}) denote the Hilbert–Schmidt norm, (|A|*{HS}^2=\mathrm{Tr}(A^\dagger A)). Then for all (g\in\mathrm{SU}(N)),
+[
+|g-I|_{HS}^2=2N,\phi(g).
+]
+
+**Proof.**
+[
+|g-I|_{HS}^2
+=\mathrm{Tr}((g-I)^\dagger(g-I))
+=\mathrm{Tr}((g^\dagger-I)(g-I))
+=\mathrm{Tr}(2I-g-g^\dagger)
+=2N-2\Re\mathrm{Tr}(g)
+=2N\phi(g).
+\quad\square
+]
+
+---
+
+### I.3. Uniform first-derivative control: (|\nabla \phi|^2 \lesssim \phi)
+
+The key technical feature we need is that the “energy” (\phi) controls the size of its own gradient. This is what lets us replace “a sum of bounded terms” (which would scale like (|P(\Lambda)|)) by “a sum weighted by (\phi)” (which is the desired drift functional).
+
+We work with the bi-invariant metric induced by (\langle A,B\rangle_\lambda=\lambda(-\mathrm{Tr}(AB))) on (\mathfrak{su}(N)). 
+
+#### Lemma I.3 (global gradient domination for (\phi))
+
+There exists a constant (C_\nabla=C_\nabla(N,\lambda)>0) such that
+[
+|\nabla \phi(g)|*{g*\lambda}^2 \ \le\ C_\nabla ,\phi(g),
+\qquad \forall g\in \mathrm{SU}(N).
+]
+
+**Proof (from first principles).**
+
+1. Consider (f(g)=\Re\mathrm{Tr}(g)). For a right-invariant tangent vector at (g) of the form (gX) with (X\in\mathfrak{su}(N)),
+   [
+   df_g(gX)
+   =\left.\frac{d}{dt}\right|_{t=0}\Re\mathrm{Tr}(g e^{tX})
+   =\Re\mathrm{Tr}(gX).
+   ]
+
+2. For (X\in\mathfrak{su}(N)) we have (X^\dagger=-X). A direct algebraic identity gives
+   [
+   \Re\mathrm{Tr}(gX)
+   =\frac12 \mathrm{Tr}\big((g-g^\dagger)X\big).
+   ]
+   (Indeed (\overline{\mathrm{Tr}(gX)}=\mathrm{Tr}((gX)^\dagger)=\mathrm{Tr}(X^\dagger g^\dagger)=\mathrm{Tr}((-X)g^\dagger)=-\mathrm{Tr}(g^\dagger X)), so (\Re\mathrm{Tr}(gX)=\frac12(\mathrm{Tr}(gX)-\mathrm{Tr}(g^\dagger X))=\frac12\mathrm{Tr}((g-g^\dagger)X)).)
+
+3. With the Hilbert–Schmidt inner product ((A,B)*{HS}:=\Re\mathrm{Tr}(A^\dagger B)), Cauchy–Schwarz yields
+   [
+   |df_g(gX)|
+   =\frac12|\mathrm{Tr}((g-g^\dagger)X)|
+   \le \frac12|g-g^\dagger|*{HS},|X|_{HS}.
+   ]
+
+4. Left translation (g\mapsto hg) is an isometry; the operator norm of (df_g) (hence (|\nabla f(g)|)) is therefore controlled by (|g-g^\dagger|*{HS}). Moreover,
+   [
+   |g-g^\dagger|*{HS}
+   \le |g-I|*{HS}+|g^\dagger-I|*{HS}
+   =2|g-I|*{HS},
+   ]
+   since (|g^\dagger-I|*{HS}=|g^{-1}-I|*{HS}=|g-I|*{HS}) for unitary (g).
+
+5. Combining with Lemma I.2,
+   [
+   |\nabla f(g)|^2 \ \lesssim\ |g-I|*{HS}^2
+   =2N,\phi(g),
+   ]
+   where the implicit constant is a pure metric normalization factor converting (|\cdot|*{HS}) to (|\cdot|*{g*\lambda}). Write that factor explicitly as (1/\lambda). Thus
+   [
+   |\nabla (\Re\mathrm{Tr})(g)|*{g*\lambda}^2 \le \frac{2N}{\lambda},\phi(g).
+   ]
+
+6. Finally (\phi(g)=1-\frac1N f(g)), so (\nabla\phi=-(1/N)\nabla f). Therefore,
+   [
+   |\nabla\phi(g)|*{g*\lambda}^2
+   =\frac1{N^2}|\nabla f(g)|*{g*\lambda}^2
+   \le \frac1{N^2}\cdot\frac{2N}{\lambda},\phi(g)
+   =\frac{2}{N\lambda},\phi(g).
+   ]
+   So we may take (C_\nabla=\frac{2}{N\lambda}). (\square)
+
+---
+
+### I.4. Lifting (\phi) to plaquettes and uniform linkwise derivative bounds
+
+Define for each plaquette (p\in P(\Lambda)) the smooth gauge-invariant observable
+[
+z_p(U):=\phi(U_p(U)).
+]
+(Here (U_p(U)) is the plaquette holonomy.) 
+
+Let (\nabla_\ell) denote the Riemannian gradient acting only on the (G)-factor at link (\ell), so that (\Gamma_\Lambda(F)=\sum_{\ell}|\nabla_\ell F|^2). 
+
+Let
+[
+\nu_d:=\sup_{\ell\in E(\Lambda)} |{p\in P(\Lambda):\ \ell \text{ is in the boundary of }p}|
+]
+be the maximal number of plaquettes touching a given link. On a hypercubic lattice in dimension (d), (\nu_d=2(d-1)); in particular, in (d=4), (\nu_4=6). (Only the finiteness and volume-independence of (\nu_d) matters.)
+
+#### Lemma I.4 (support and translation invariance)
+
+If (\ell\notin \partial p), then (\nabla_\ell z_p\equiv 0). If (\ell\in\partial p), then (z_p(U)) viewed as a function of the single variable (U_\ell) is of the form
+[
+U_\ell\ \longmapsto\ \phi\big(A,U_\ell^{\sigma},B\big)
+]
+for some fixed (A,B\in G) depending on the other links of (p), and (\sigma\in{+1,-1}) depending on orientation.
+
+In particular, since left/right multiplication and inversion are isometries for the bi-invariant metric, all pointwise derivative inequalities for (\phi) transfer to (z_p) with the **same constants**.
+
+**Proof.** Immediate from the definition of plaquette holonomy as a product of four link variables with possible inversions, and the fact that at fixed (U) the “other” three link factors are constants with respect to differentiation in the (\ell)-variable. (\square)
+
+#### Corollary I.5 (plaquette gradient domination)
+
+With (C_\nabla) from Lemma I.3,
+[
+|\nabla_\ell z_p(U)|^2 \le C_\nabla, z_p(U),\mathbf 1_{{\ell\in\partial p}},
+\qquad \forall U\in M_\Lambda.
+]
+Consequently,
+[
+\Gamma_\Lambda(z_p)(U)=\sum_{\ell}|\nabla_\ell z_p(U)|^2
+\le 4C_\nabla, z_p(U),
+]
+because each plaquette has exactly four boundary links.
+
+---
+
+### I.5. The repaired Lyapunov candidate and the complete drift expansion
+
+The original candidate discussed in the drift section is of the form
+[
+W_\Lambda(U)=\exp\Big(\kappa\sum_{p} d_G(U_p(U),e)^2\Big),
+]
+with the point that one must compute (L_\Lambda W_\Lambda) using the exponential chain rule. 
+
+Here we replace the nonsmooth seed (d_G^2) by (z_p=\phi(U_p)), and we also impose (\Phi'(0)=0) by choosing, concretely,
+[
+\Phi(s)=s^2,\qquad \Phi'(s)=2s,\qquad \Phi''(s)=2.
+]
+
+Define
+[
+V_\Lambda(U):=\sum_{p\in P(\Lambda)} \Phi(z_p(U))=\sum_{p} z_p(U)^2,
+\qquad
+W_\Lambda(U):=\exp\big(\kappa V_\Lambda(U)\big).
+]
+
+By Lemma 14.3, for the diffusion generator (L_\Lambda),
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+=\kappa, L_\Lambda V_\Lambda+\kappa^2,\Gamma_\Lambda(V_\Lambda).
+]
+
+
+So everything reduces to explicit formulas for (L_\Lambda V_\Lambda) and (\Gamma_\Lambda(V_\Lambda)).
+
+---
+
+#### I.5.1. Computing (L_\Lambda V_\Lambda)
+
+First note (L_\Lambda=\Delta_\Lambda-\langle\nabla S_\Lambda,\nabla\cdot\rangle). 
+
+For each fixed plaquette (p), apply the diffusion chain rule to the composition (\Phi\circ z_p). Since the carré du champ is (\Gamma_\Lambda(F)=|\nabla F|^2) and (L_\Lambda) is a diffusion generator, one has the standard identity
+[
+L_\Lambda(\Phi(z_p))
+=\Phi'(z_p),L_\Lambda z_p+\Phi''(z_p),\Gamma_\Lambda(z_p),
+]
+which is exactly the same “(\Psi'(V)LV+\Psi''(V)\Gamma(V))” principle used to prove Lemma 14.3. 
+
+With (\Phi(s)=s^2),
+[
+L_\Lambda(z_p^2)=2z_p,L_\Lambda z_p+2,\Gamma_\Lambda(z_p).
+]
+Summing over plaquettes,
+[
+L_\Lambda V_\Lambda
+=\sum_{p}\Big(2z_p,L_\Lambda z_p+2\Gamma_\Lambda(z_p)\Big).
+\tag{I.1}
+]
+
+Now expand (L_\Lambda z_p=\Delta_\Lambda z_p-\langle\nabla S_\Lambda,\nabla z_p\rangle). Thus
+[
+L_\Lambda V_\Lambda
+=\underbrace{\sum_p 2z_p,\Delta_\Lambda z_p}*{\text{(A) Laplacian on the proxy}}
+-\underbrace{\sum_p 2z_p,\langle\nabla S*\Lambda,\nabla z_p\rangle}*{\text{(B) mixed drift term}}
++\underbrace{\sum_p 2\Gamma*\Lambda(z_p)}_{\text{(C) proxy gradient term}}.
+\tag{I.2}
+]
+
+**Term (C)** is already controlled by the proxy:
+[
+\sum_p 2\Gamma_\Lambda(z_p)
+\le \sum_p 2\cdot 4C_\nabla z_p
+=8C_\nabla \sum_p z_p.
+\tag{I.3}
+]
+
+**Term (A)** is the one that, with (z_p=d_G^2), produces the hard-to-control (\sum_{\ell,a} X_{\ell}^a X_{\ell}^a z_p) contribution. The key point here is:
+
+* (\Delta_\Lambda z_p) is a finite sum of second derivatives of a globally smooth function on a compact manifold, hence bounded; and
+* the prefactor (z_p) (coming from (\Phi'(z_p)=2z_p), i.e. (\Phi'(0)=0)) prevents any volume-scaling constant.
+
+Formally, define
+[
+C_\Delta:=\sup_{U\in M_\Lambda}\ |\Delta_\Lambda z_p(U)|
+]
+for a *single plaquette* (this is independent of (\Lambda) by translation invariance and compactness; equivalently, one can define (C_\Delta) as a supremum over (g\in G) of (|\Delta_G \phi(g)|) times the fixed plaquette boundary size 4). Then
+[
+\Big|\sum_p 2z_p,\Delta_\Lambda z_p\Big|
+\le \sum_p 2 z_p, C_\Delta
+=2C_\Delta\sum_p z_p.
+\tag{I.4}
+]
+
+So terms (A) and (C) are both bounded above by a constant times (\sum_p z_p) with constants **independent of (|P(\Lambda)|)**. This is *exactly* what fails without (\Phi'(0)=0): if (\Phi'(0)\ne 0), then (A) would contain a piece (\sim \Phi'(0)\sum_p \Delta_\Lambda z_p), which is generically (O(|P(\Lambda)|)).
+
+**Term (B)** is the only genuinely dynamical piece:
+[
+-\sum_p 2z_p,\langle\nabla S_\Lambda,\nabla z_p\rangle.
+\tag{I.5}
+]
+No further simplification is possible at this level without additional structure of (S_\Lambda) (for instance, the Wilson action (S_\Lambda=\beta\sum_p z_p) as in the standing setup). 
+
+Putting (I.3)–(I.5) into (I.2), we obtain the **fully expanded** bound
+[
+L_\Lambda V_\Lambda(U)
+\le (2C_\Delta+8C_\nabla)\sum_{p} z_p(U)
+;-;2\sum_{p} z_p(U),\langle\nabla S_\Lambda(U),\nabla z_p(U)\rangle.
+\tag{I.6}
+]
+
+---
+
+#### I.5.2. Computing (\Gamma_\Lambda(V_\Lambda)) with local degree control
+
+Now compute (\Gamma_\Lambda(V_\Lambda)=|\nabla V_\Lambda|^2=\sum_{\ell}|\nabla_\ell V_\Lambda|^2). 
+
+Fix a link (\ell). Since (V_\Lambda=\sum_p z_p^2),
+[
+\nabla_\ell V_\Lambda=\sum_{p:\ \ell\in\partial p} \nabla_\ell(z_p^2)
+=\sum_{p:\ \ell\in\partial p} 2z_p,\nabla_\ell z_p.
+\tag{I.7}
+]
+There are at most (\nu_d) plaquettes (p) contributing. Thus, by the elementary inequality (\big|\sum_{i=1}^m v_i\big|^2\le m\sum_{i=1}^m |v_i|^2),
+[
+|\nabla_\ell V_\Lambda|^2
+\le \nu_d \sum_{p:\ \ell\in\partial p} |2z_p,\nabla_\ell z_p|^2
+=4\nu_d\sum_{p:\ \ell\in\partial p} z_p^2,|\nabla_\ell z_p|^2.
+\tag{I.8}
+]
+Summing over (\ell) gives
+[
+\Gamma_\Lambda(V_\Lambda)
+=\sum_\ell |\nabla_\ell V_\Lambda|^2
+\le 4\nu_d \sum_p z_p^2\sum_{\ell\in\partial p}|\nabla_\ell z_p|^2
+=4\nu_d \sum_p z_p^2,\Gamma_\Lambda(z_p).
+\tag{I.9}
+]
+Apply Corollary I.5: (\Gamma_\Lambda(z_p)\le 4C_\nabla z_p). Then
+[
+\Gamma_\Lambda(V_\Lambda)
+\le 4\nu_d \sum_p z_p^2\cdot 4C_\nabla z_p
+=16\nu_d C_\nabla \sum_p z_p^3.
+\tag{I.10}
+]
+Finally, using (0\le z_p\le 2) (Lemma I.1) gives (z_p^3\le 2 z_p^2), so
+[
+\Gamma_\Lambda(V_\Lambda)\le 32\nu_d C_\nabla \sum_p z_p^2.
+\tag{I.11}
+]
+And since (z^2\le 2z) for (z\in[0,2]), we also have the alternative form
+[
+\Gamma_\Lambda(V_\Lambda)\le 64\nu_d C_\nabla \sum_p z_p.
+\tag{I.12}
+]
+
+**Summary:** (\Gamma_\Lambda(V_\Lambda)) is controlled by (\sum_p z_p) with constants independent of (|\Lambda|).
+
+---
+
+### I.6. Final assembled drift formula and the “uniform-constant closure”
+
+Combine Lemma 14.3  with (I.6) and (I.12). For all (U\in M_\Lambda),
+[
+\frac{L_\Lambda W_\Lambda(U)}{W_\Lambda(U)}
+=\kappa L_\Lambda V_\Lambda(U)+\kappa^2 \Gamma_\Lambda(V_\Lambda)(U)
+]
+and therefore
+[
+\frac{L_\Lambda W_\Lambda(U)}{W_\Lambda(U)}
+\le
+\kappa(2C_\Delta+8C_\nabla)\sum_{p} z_p(U)
+;-;2\kappa\sum_{p} z_p(U),\langle\nabla S_\Lambda(U),\nabla z_p(U)\rangle
+;+;\kappa^2,64\nu_d C_\nabla\sum_{p} z_p(U).
+\tag{I.13}
+]
+
+Define the “drift functional”
+[
+D_\Lambda(U):=\sum_{p\in P(\Lambda)} z_p(U)
+=\sum_p \phi(U_p(U)).
+\tag{I.14}
+]
+This is exactly the unnormalized version of the averaged badness used to define (K_\Lambda). 
+
+Then (I.13) becomes
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+\le
+A_1,D_\Lambda
+-2\kappa\sum_{p} z_p,\langle\nabla S_\Lambda,\nabla z_p\rangle,
+\qquad
+A_1:=\kappa(2C_\Delta+8C_\nabla)+\kappa^2,64\nu_d C_\nabla.
+\tag{I.15}
+]
+
+At this point, every “second-derivative obstruction” is gone:
+
+* The dangerous (X_\ell^aX_\ell^a z_p) term is absorbed into (C_\Delta) **and comes multiplied by (z_p)** because (\Phi'(0)=0). This prevents an (O(|P(\Lambda)|)) leakage into (\frac{LW}{W}) (the exact issue flagged in the earlier drift analysis). 
+* The (\Gamma)-term is controlled using only the local combinatorics (\nu_d) and the global gradient domination (|\nabla z_p|^2\lesssim z_p), so it is also (O(D_\Lambda)) with uniform constants.
+
+So the Lyapunov drift condition reduces to a single remaining inequality on the mixed drift term:
+
+> **Required coercivity inequality (the remaining “missing lemma”).**
+> Find constants (c_0>0) and (b_0\ge 0), independent of (\Lambda), such that for all (U\in M_\Lambda),
+> [
+> 2\kappa\sum_{p} z_p(U),\langle\nabla S_\Lambda(U),\nabla z_p(U)\rangle
+> \ \ge\ (A_1+c_0),D_\Lambda(U)-b_0.
+> \tag{I.16}
+> ]
+> (Or any variant that yields (LW\le(-c_0D_\Lambda+b_0),W).)
+
+If (I.16) holds, then combining with (I.15) gives the **closed, volume-uniform** Lyapunov drift bound
+[
+L_\Lambda W_\Lambda(U)\ \le\ \big(-c_0D_\Lambda(U)+b_0\big),W_\Lambda(U),
+\tag{I.17}
+]
+with constants (c_0,b_0) independent of (|\Lambda|). This is the exact schematic drift form targeted in the Lyapunov framework used later (e.g. the (LW\le -\alpha W+\beta\mathbf 1_K) mechanism and its tail estimate). 
+
+---
+
+### I.7. What this appendix *does* and *does not* claim
+
+* **What is completed here:** the full, explicit drift expansion for a repaired Lyapunov function built from a globally smooth plaquette observable (\phi(g)=1-\frac1N\Re\mathrm{Tr}(g)), together with uniform control of *all* Laplacian/Hessian and (\Gamma)-terms in (\frac{LW}{W}) by the natural drift functional (D_\Lambda=\sum_p\phi(U_p)), with constants independent of volume. This is precisely the point of choosing a smooth proxy and enforcing (\Phi'(0)=0). 
+
+* **What remains open (in the current drafts):** a volume-uniform lower bound for the mixed term (\sum_p z_p\langle\nabla S_\Lambda,\nabla z_p\rangle) sufficient to produce a *negative* drift (-cD_\Lambda). That term depends on the detailed structure of the action (S_\Lambda) (e.g. Wilson vs heat-kernel vs flowed effective action) and is not settled by smoothness alone.
+
+In other words: the “analytic obstruction” coming from (d_G^2) is truly removed here; what remains is a substantive dynamical coercivity estimate for the specific lattice action.
+
+---

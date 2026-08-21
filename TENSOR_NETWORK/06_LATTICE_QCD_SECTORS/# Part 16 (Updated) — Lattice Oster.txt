@@ -1,0 +1,642 @@
+# Part 16 (Updated) — Lattice Osterwalder–Schrader Axioms for Wilson Yang–Mills
+
+## 16.1 Setup: finite Euclidean lattice gauge theory
+
+### 16.1.1 The spacetime lattice and oriented links
+
+Fix dimension (d=4). Let (\Lambda\subset \mathbb{Z}^4) be a finite hypercubic lattice (typically a discrete 4‑torus with periodic boundary conditions, but nothing in this part uses periodicity in an essential way until reconstruction).
+
+Write lattice sites as (x=(x_0,\vec x)) with “Euclidean time” coordinate (x_0\in\mathbb Z) and spatial coordinate (\vec x\in\mathbb Z^3).
+
+Let (\hat e_\mu) ((\mu=0,1,2,3)) denote the standard basis vectors.
+
+Define **positively oriented nearest‑neighbor links**
+[
+E^+(\Lambda);:=;{(x,\mu):x\in\Lambda,\ \mu\in{0,1,2,3},\ x+\hat e_\mu\in\Lambda},
+]
+and for each (b=(x,\mu)\in E^+(\Lambda)) define its reversed orientation
+[
+b^{-1}:=(x+\hat e_\mu,\mu)^{-1},
+]
+which we treat formally as the same geometric edge with opposite orientation.
+
+I will use the standard notation
+[
+\partial_- b = x,\qquad \partial_+ b = x+\hat e_\mu.
+]
+
+### 16.1.2 Gauge group and configuration space
+
+Let (G=\mathrm{SU}(N)) with (N\ge 2). (Most of what follows extends to any compact Lie group equipped with a fixed faithful unitary representation; I’ll stick to (\mathrm{SU}(N)) because the Wilson plaquette action is defined via the fundamental trace.)
+
+A **lattice gauge field** is an assignment
+[
+U={U_b}*{b\in E^+(\Lambda)}\in G^{E^+(\Lambda)}
+]
+together with the convention
+[
+U*{b^{-1}}:=U_b^{-1}.
+]
+Thus the configuration space is the compact manifold
+[
+M_\Lambda:=G^{E^+(\Lambda)}.
+]
+
+Let (\mathrm{d}U_b) be normalized Haar measure on (G). The “kinematic” product measure is
+[
+\mathrm{d}\mu_0(U):=\prod_{b\in E^+(\Lambda)} \mathrm{d}U_b.
+]
+This is the Haar volume on the product group (M_\Lambda).
+
+### 16.1.3 Plaquettes and plaquette holonomy
+
+For (\mu<\nu), an oriented plaquette based at (x) in the ((\mu,\nu))-plane is the ordered loop
+[
+p=(x;\mu,\nu):\quad x\to x+\hat e_\mu \to x+\hat e_\mu+\hat e_\nu \to x+\hat e_\nu \to x.
+]
+
+Its **plaquette holonomy** (parallel transport around the plaquette) is
+[
+U_p ;:=; U_{x,\mu};U_{x+\hat e_\mu,\nu};U_{x+\hat e_\nu,\mu}^{-1};U_{x,\nu}^{-1};\in G.
+]
+If (p^{-1}) denotes the same plaquette with opposite orientation, then (U_{p^{-1}}=U_p^{-1}).
+
+### 16.1.4 Gauge transformations and gauge invariance
+
+A lattice gauge transformation is a map (g:\Lambda\to G). It acts on link variables by
+[
+(g\cdot U)*{x,\mu}:=g_x,U*{x,\mu},g_{x+\hat e_\mu}^{-1}.
+]
+Under this action,
+[
+U_p \mapsto g_x,U_p,g_x^{-1}
+]
+for a plaquette (p=(x;\mu,\nu)). Therefore any class function of (U_p) is gauge invariant.
+
+Because Haar measure is bi‑invariant, (\mu_0) is gauge invariant, and any Wilson‑type plaquette action (defined below) is gauge invariant.
+
+---
+
+## 16.2 Wilson action and Euclidean Gibbs measure
+
+### 16.2.1 Wilson plaquette action
+
+Define the Wilson plaquette action (up to an irrelevant additive constant) by
+[
+S_W(U);:=;-\frac{\beta}{N}\sum_{p\in P(\Lambda)} \Re\operatorname{Tr}(U_p),
+]
+where (P(\Lambda)) is the set of oriented plaquettes (choose one orientation per geometric plaquette), (\beta>0) is the inverse coupling, and (\operatorname{Tr}) is the fundamental trace on (\mathrm{SU}(N)).
+
+Equivalently, many texts use
+[
+S_W^{\mathrm{std}}(U) := \beta\sum_{p}\Big(1-\frac{1}{N}\Re\operatorname{Tr}(U_p)\Big)
+]
+which differs by an additive constant (\beta|P(\Lambda)|). The Gibbs measure only depends on (e^{-S_W}), so the distinction is harmless.
+
+### 16.2.2 Finite‑volume Gibbs measure and partition function
+
+The finite‑volume Euclidean lattice Yang–Mills measure is
+[
+\mathrm{d}\mu_\Lambda(U);:=;\frac{1}{Z_\Lambda},e^{-S_W(U)},\mathrm{d}\mu_0(U),
+\qquad
+Z_\Lambda:=\int_{M_\Lambda} e^{-S_W(U)},\mathrm{d}\mu_0(U).
+]
+Because (M_\Lambda) is compact and (S_W) is continuous, (e^{-S_W}) is bounded and (0<Z_\Lambda<\infty). Hence (\mu_\Lambda) is a well-defined probability measure.
+
+### 16.2.3 Observables and Schwinger functions
+
+Let (\mathcal A_\Lambda) be the algebra of bounded measurable complex functions on (M_\Lambda). (One may restrict to cylinder functions or continuous functions as needed; on a finite product of compact groups, all the usual choices behave well.)
+
+Gauge invariant observables form the subalgebra
+[
+\mathcal A_\Lambda^{\mathrm{inv}}:={F\in\mathcal A_\Lambda:\ F(g\cdot U)=F(U)\ \forall g:\Lambda\to G}.
+]
+
+For (F_1,\dots,F_n\in\mathcal A_\Lambda), define the **Schwinger function**
+[
+S_n(F_1,\dots,F_n):=\int_{M_\Lambda} \prod_{k=1}^n F_k(U),\mathrm{d}\mu_\Lambda(U).
+]
+Since multiplication of scalar functions is commutative, these Schwinger functions are symmetric under permutations in a trivial way (this becomes nontrivial only in continuum distributional limits).
+
+---
+
+## 16.3 The OS time reflection on the lattice
+
+### 16.3.1 Reflection on sites and links
+
+Fix the “OS reflection plane” between time slices (x_0=0) and (x_0=1). Define the site reflection
+[
+\vartheta(x_0,\vec x):=(1-x_0,\vec x),
+]
+which is an involution on (\mathbb Z^4). This is the choice used in the draft. 
+
+For an oriented link (b=(x,x+\hat e_\mu)), define the reflected link (\vartheta b = (\vartheta x,\vartheta(x+\hat e_\mu))). For (\mu=1,2,3) (spatial links) this preserves the orientation convention, while for (\mu=0) (time-like links) it reverses orientation. 
+
+### 16.3.2 The induced reflection (\Theta) on configurations
+
+Define (\Theta:M_\Lambda\to M_\Lambda) on link variables by:
+
+* if (b) is spatial ((\mu=1,2,3)), set ((\Theta U)*b := U*{\vartheta b}),
+* if (b) is time-like ((\mu=0)), set ((\Theta U)*b := U*{\vartheta b}^{-1}),
+
+so that orientation reversal is compensated by group inversion.
+
+This convention is exactly the “time-like links must be inverted under reflection” rule highlighted in your stress-test note. 
+
+It is straightforward to check that (\Theta) is an involution: (\Theta^2=\mathrm{id}).
+
+### 16.3.3 The antilinear involution on observables
+
+Define (\Theta) (by abuse of notation) on observables (F\in\mathcal A_\Lambda) by pullback:
+[
+(F\circ\Theta)(U):=F(\Theta U),
+]
+and define the OS antilinear involution
+[
+\theta F := \overline{F\circ\Theta}.
+]
+Then (\theta) is antilinear and (\theta^2=\mathrm{id}).
+
+---
+
+## 16.4 Lattice OS axioms (finite volume) and full proofs
+
+The draft’s OS0–OS2 statements are: regularity/permutation symmetry, Euclidean invariance, and reflection positivity. 
+I now re-derive them from scratch and expand the reflection-positivity proof to full “square of a norm” detail, including the representation-theoretic input behind the straddling-plaquette kernel decomposition. 
+
+### 16.4.1 OS0: Regularity and permutation symmetry
+
+**Proposition 16.1 (OS0 on a finite lattice).**
+For any bounded measurable (F_1,\dots,F_n\in\mathcal A_\Lambda), the Schwinger function (S_n(F_1,\dots,F_n)) is finite. Moreover,
+
+1. (Permutation symmetry) (S_n(F_{\sigma(1)},\dots,F_{\sigma(n)})=S_n(F_1,\dots,F_n)) for any permutation (\sigma\in S_n).
+2. (Conjugation) (\overline{S_n(F_1,\dots,F_n)} = S_n(\overline{F_1},\dots,\overline{F_n})).
+
+**Proof.**
+
+1. Since (\mu_\Lambda) is a probability measure and each (F_i) is bounded,
+   [
+   \left|\int \prod_{k=1}^n F_k,\mathrm{d}\mu_\Lambda\right|
+   \le \int \prod_{k=1}^n |F_k|*\infty,\mathrm{d}\mu*\Lambda
+   = \prod_{k=1}^n |F_k|_\infty <\infty.
+   ]
+2. Permutation symmetry holds because multiplication in (\mathbb C) is commutative:
+   (\prod_{k=1}^n F_k = \prod_{k=1}^n F_{\sigma(k)}) pointwise.
+3. Conjugation holds because complex conjugation passes through the integral:
+   [
+   \overline{\int \prod_k F_k,\mathrm{d}\mu_\Lambda}
+   = \int \overline{\prod_k F_k},\mathrm{d}\mu_\Lambda
+   = \int \prod_k \overline{F_k},\mathrm{d}\mu_\Lambda.
+   ]
+   ∎
+
+---
+
+### 16.4.2 OS1: Euclidean invariance (lattice symmetry group)
+
+#### 16.4.2.1 The discrete Euclidean symmetry group on the lattice
+
+At finite lattice spacing (a), the full continuum group (\mathrm{SO}(4)) is reduced to the **hypercubic group** (H_4) (coordinate permutations, sign flips) semidirect with translations, i.e.
+[
+\mathcal G_{\mathrm{lat}} = \mathbb Z^4 \rtimes H_4.
+]
+This is exactly the symmetry picture noted in the PULSE memo: discrete translation invariance holds at any (a), rotations reduce to (H_4), and continuum rotational invariance is restored as (a\to 0) with leading (O(a^2)) discretization errors for Wilson-loop actions. 
+
+#### 16.4.2.2 Action of lattice symmetries on link fields
+
+Let (\gamma\in\mathcal G_{\mathrm{lat}}) be a lattice automorphism mapping (\Lambda) to itself and preserving nearest-neighbor structure. It induces a permutation of oriented links:
+[
+b=(x,\mu)\mapsto \gamma b := (\gamma x, \gamma \mu),
+]
+where (\gamma\mu) is the image of the direction under (\gamma) (including possible sign flips). Define the pushforward action on configurations:
+[
+(\gamma\cdot U)*b := U*{\gamma^{-1} b}.
+]
+This simply relabels link variables.
+
+#### 16.4.2.3 OS1 invariance proof
+
+**Proposition 16.2 (OS1).**
+For any (\gamma\in\mathcal G_{\mathrm{lat}}) and any observable (F\in\mathcal A_\Lambda),
+[
+\int_{M_\Lambda} F(U),\mathrm{d}\mu_\Lambda(U)
+==============================================
+
+\int_{M_\Lambda} F(\gamma\cdot U),\mathrm{d}\mu_\Lambda(U).
+]
+
+**Proof.**
+
+1. **Invariance of the Haar product.** The map (U\mapsto \gamma\cdot U) permutes the link coordinates. Since (\mu_0) is a product measure with identical Haar factors on each link,
+   [
+   \mathrm{d}\mu_0(\gamma\cdot U)=\mathrm{d}\mu_0(U).
+   ]
+2. **Invariance of the action.** A lattice symmetry maps plaquettes to plaquettes, preserving the plaquette holonomy up to relabeling/orientation. Because the Wilson action is a sum over plaquettes of the class function (U_p\mapsto \Re\operatorname{Tr}(U_p)), it is invariant under such relabelings:
+   [
+   S_W(\gamma\cdot U)=S_W(U).
+   ]
+3. Combine: (\mathrm{d}\mu_\Lambda(\gamma\cdot U)=\mathrm{d}\mu_\Lambda(U)), hence the claim by change of variables.
+   ∎
+
+---
+
+### 16.4.3 OS2: Reflection positivity
+
+#### 16.4.3.1 Positive-time region and positive-time algebra
+
+Define the **strictly positive-time region**
+[
+\Lambda_+ := {(x_0,\vec x)\in\Lambda:\ x_0>0},
+]
+exactly as in the draft conventions. 
+
+Let (E_+\subset E^+(\Lambda)) be the set of oriented links whose geometric support lies entirely in (\Lambda_+) (i.e., both endpoints are in (\Lambda_+)). Let (\mathcal A_\Lambda^+\subset \mathcal A_\Lambda) be the (*)-subalgebra generated by bounded cylinder functions depending only on links in (E_+). In gauge theory we will ultimately focus on the gauge-invariant subalgebra ((\mathcal A_\Lambda^+)^{\mathrm{inv}}), but reflection positivity is a statement about the measure and a half-space algebra, so the proof works for (\mathcal A_\Lambda^+) as defined.
+
+Reflection positivity means:
+[
+\int_{M_\Lambda} (\theta F)(U),F(U),\mathrm{d}\mu_\Lambda(U)\ge 0
+\qquad \forall F\in\mathcal A_\Lambda^+,
+]
+which matches the draft OS2 statement. 
+
+---
+
+#### 16.4.3.2 Slice decomposition of variables and measure
+
+Define three link sets relative to the reflection plane between (x_0=0) and (x_0=1):
+
+* (E_+): links completely in (\Lambda_+) (already defined).
+* (E_-): links completely in (\Lambda_-:=\vartheta(\Lambda_+)={x_0<1}\cap\Lambda), i.e. the strictly negative-time half.
+* (E_0): all remaining links, i.e. those which touch the reflection plane. Concretely, these include the time-like links from (x_0=0) to (x_0=1) (the links crossing the plane).
+
+Then (E^+(\Lambda)) is the disjoint union (E_-\sqcup E_0\sqcup E_+), and the configuration manifold splits as a direct product
+[
+M_\Lambda \cong M_- \times M_0 \times M_+,
+\qquad
+M_\pm := G^{E_\pm},\quad M_0:=G^{E_0}.
+]
+Accordingly the Haar product measure factorizes:
+[
+\mathrm{d}\mu_0(U)=\mathrm{d}\mu_-(U_-),\mathrm{d}\mu_0(U_0),\mathrm{d}\mu_+(U_+).
+]
+
+The reflection (\Theta) exchanges (M_+) and (M_-) (and acts on (M_0) by inversion on the cross-plane time-like links), consistent with the link-level definition. 
+
+---
+
+#### 16.4.3.3 Decomposition of the Wilson action
+
+Partition plaquettes into:
+
+* (P_+): plaquettes whose links lie entirely in (\Lambda_+),
+* (P_-): plaquettes whose links lie entirely in (\Lambda_-),
+* (P_0): **straddling plaquettes**, i.e. plaquettes that cross the reflection plane and therefore contain at least one link in (E_0).
+
+Then
+[
+S_W(U) = S_+(U_+) + S_0(U_-,U_0,U_+) + S_-(U_-),
+]
+where (S_\pm) are the sums over (P_\pm) and (S_0) the sum over (P_0).
+
+The draft records the key compatibility properties (reflected plaquettes and trace invariance) in Lemma 16.2. 
+The essential consequence we need is:
+
+* (S_-(U_-)=S_+(\Theta U_-)) (negative half is the reflected copy of the positive half),
+* (S_0(\Theta U)=S_0(U)) (the straddling part is reflection-even).
+
+These are checked directly from how plaquette loops are mapped by reflection and from (\Re\operatorname{Tr}(g^{-1})=\Re\operatorname{Tr}(g)) in (\mathrm{SU}(N)).
+
+---
+
+#### 16.4.3.4 The representation-theoretic “positive type” lemma
+
+The “square of a norm” mechanism rests on this fundamental harmonic-analysis fact.
+
+**Definition 16.3 (positive type / positive definite class function).**
+A function (w:G\to\mathbb C) is **of positive type** if for every (n) and every (g_1,\dots,g_n\in G), the matrix
+[
+\big(w(g_i^{-1}g_j)\big)_{1\le i,j\le n}
+]
+is positive semidefinite.
+
+If additionally (w) is a **class function** (central), i.e. (w(hgh^{-1})=w(g)), we call it a positive type class function.
+
+**Lemma 16.4 (matrix-coefficient factorization).**
+Let (\pi:G\to U(V_\pi)) be an irreducible unitary representation of dimension (d_\pi). Then
+[
+\chi_\pi(gh^{-1})=\sum_{i,j=1}^{d_\pi} \pi(g)*{ij},\overline{\pi(h)*{ij}}
+]
+for any (g,h\in G), where (\pi(g)*{ij}) are matrix coefficients in an orthonormal basis and (\chi*\pi=\mathrm{Tr},\pi).
+
+**Proof.**
+Since (\pi) is unitary, (\pi(h^{-1})=\pi(h)^\dagger). Hence
+[
+\chi_\pi(gh^{-1})=\mathrm{Tr}(\pi(g)\pi(h)^\dagger)=\sum_{i,j}\pi(g)*{ij}\overline{\pi(h)*{ij}}.
+]
+∎
+
+**Lemma 16.5 (positive type (\Rightarrow) nonnegative character expansion, central case).**
+Let (w\in L^2(G)) be central. Consider the convolution operator on (V_\pi):
+[
+T_\pi := \int_G w(g),\pi(g),\mathrm{d}g.
+]
+Then (T_\pi) is a scalar multiple of the identity: (T_\pi = a_\pi I) (Schur’s lemma), and if (w) is of positive type then (a_\pi\ge 0) for every irreducible (\pi). Moreover, formally (and rigorously in (L^2)),
+[
+w(g)=\sum_{\pi\in\widehat G} a_\pi,\chi_\pi(g)
+\qquad\text{with } a_\pi\ge 0.
+]
+
+**Proof (core idea; all steps standard on compact groups).**
+
+* Centrality implies (T_\pi) commutes with (\pi(h)) for all (h\in G), hence (T_\pi=a_\pi I).
+* If (w) is positive type, then (T_\pi) is positive semidefinite as an operator (test it on vectors and use the defining PSD matrix condition), so its scalar (a_\pi) is (\ge 0).
+* The Peter–Weyl theorem implies that the characters (\chi_\pi) form an orthonormal basis of the central subspace of (L^2(G)), so (w) admits an (L^2) expansion in characters with coefficients (a_\pi).
+  ∎
+
+This is the conceptual reason why positive type class functions admit “sum of squares” decompositions.
+
+---
+
+#### 16.4.3.5 Wilson plaquette weights are positive type (explicit coefficient positivity)
+
+For Wilson, each plaquette contributes the class function
+[
+w_\beta(g) := \exp!\Big(\frac{\beta}{N}\Re\operatorname{Tr}(g)\Big),
+\qquad g\in \mathrm{SU}(N).
+]
+We now prove directly that (w_\beta) has a character expansion with **nonnegative** coefficients, hence is positive type.
+
+**Lemma 16.6 (nonnegative character expansion for (w_\beta)).**
+Let (\rho) be the fundamental representation of (\mathrm{SU}(N)), and (\bar\rho) its conjugate. Set (a:=\frac{\beta}{2N}). Then
+[
+w_\beta(g)=\exp!\big(a,\mathrm{Tr},\rho(g)\big)\ \exp!\big(a,\mathrm{Tr},\rho(g^{-1})\big)
+]
+and (w_\beta) admits an expansion
+[
+w_\beta(g)=\sum_{\pi\in\widehat G} c_\pi(\beta),\chi_\pi(g),
+\qquad c_\pi(\beta)\ge 0.
+]
+
+**Proof (from first principles: tensor-power expansion).**
+
+1. Since (g\in\mathrm{SU}(N)), (\Re\mathrm{Tr}(g)=\tfrac12(\mathrm{Tr}(g)+\mathrm{Tr}(g^{-1}))). Hence
+   [
+   w_\beta(g) = \exp!\Big(a,\mathrm{Tr},\rho(g)\Big)\ \exp!\Big(a,\mathrm{Tr},\rho(g^{-1})\Big).
+   ]
+2. Expand each exponential as an absolutely convergent series (uniformly on compact (G)):
+   [
+   \exp!\Big(a,\mathrm{Tr},\rho(g)\Big) = \sum_{n\ge 0}\frac{a^n}{n!},\big(\mathrm{Tr},\rho(g)\big)^n,
+   ]
+   [
+   \exp!\Big(a,\mathrm{Tr},\rho(g^{-1})\Big) = \sum_{m\ge 0}\frac{a^m}{m!},\big(\mathrm{Tr},\rho(g^{-1})\big)^m.
+   ]
+3. Recognize tensor characters: (\big(\mathrm{Tr},\rho(g)\big)^n = \chi_{\rho^{\otimes n}}(g)), because the trace of (g) on (\rho^{\otimes n}) is the product of traces. Similarly (\big(\mathrm{Tr},\rho(g^{-1})\big)^m = \chi_{\bar\rho^{\otimes m}}(g)).
+4. Multiply:
+   [
+   w_\beta(g)=\sum_{n,m\ge 0}\frac{a^{n+m}}{n!,m!},\chi_{\rho^{\otimes n}}(g),\chi_{\bar\rho^{\otimes m}}(g)
+   =\sum_{n,m\ge 0}\frac{a^{n+m}}{n!,m!},\chi_{\rho^{\otimes n}\otimes \bar\rho^{\otimes m}}(g).
+   ]
+5. Decompose the finite-dimensional representation (\rho^{\otimes n}\otimes \bar\rho^{\otimes m}) into irreducibles:
+   [
+   \rho^{\otimes n}\otimes \bar\rho^{\otimes m}\cong \bigoplus_{\pi\in\widehat G} N_{\pi}^{n,m},\pi,
+   \qquad N_{\pi}^{n,m}\in\mathbb N\cup{0}.
+   ]
+   Taking characters gives
+   [
+   \chi_{\rho^{\otimes n}\otimes \bar\rho^{\otimes m}}(g) = \sum_{\pi} N_{\pi}^{n,m},\chi_\pi(g).
+   ]
+6. Substitute back:
+   [
+   w_\beta(g)=\sum_{\pi}\left(\sum_{n,m\ge 0}\frac{a^{n+m}}{n!,m!},N_{\pi}^{n,m}\right)\chi_\pi(g).
+   ]
+   Each coefficient is a sum of nonnegative terms, hence nonnegative:
+   [
+   c_\pi(\beta):=\sum_{n,m\ge 0}\frac{a^{n+m}}{n!,m!},N_{\pi}^{n,m};\ge 0.
+   ]
+   ∎
+
+So the Wilson plaquette weight is a positive type class function.
+
+---
+
+#### 16.4.3.6 Straddling plaquette kernel decomposition (“Osterwalder–Seiler mechanism”)
+
+This is the explicit version of the draft’s key step: rewrite the straddling factor as a sum of conjugate products. 
+
+**Lemma 16.7 (single straddling plaquette decomposition).**
+Let (p\in P_0) be a plaquette crossing the reflection plane. Then there exist measurable functions ({K_{\alpha,p}}*\alpha) depending only on ((U_0,U*+)) such that
+[
+w_\beta(U_p(U)) = \sum_{\alpha}\overline{K_{\alpha,p}(\Theta U)}\ K_{\alpha,p}(U).
+]
+
+**Proof (construct (K_{\alpha,p}) explicitly).**
+
+1. Choose a decomposition of the plaquette loop into a “positive half-path” followed by the inverse of a “negative half-path.” Concretely, for a straddling plaquette in the ((0,i))-plane based at time (x_0=0), the plaquette holonomy can be written as
+   [
+   U_p = G_p(U_0,U_+)\ H_p(U_0,U_-)^{-1},
+   ]
+   where (G_p) is the holonomy along the path going into (x_0=1), across, and back down, while (H_p) is the holonomy along the bottom spatial edge at (x_0=0). (This is just “loop = path (\cdot) reverse(path)” bookkeeping.)
+2. By Lemma 16.6, (w_\beta) admits an expansion
+   [
+   w_\beta(g)=\sum_{\pi} c_\pi(\beta),\chi_\pi(g),
+   \quad c_\pi(\beta)\ge 0.
+   ]
+3. Apply Lemma 16.4 with (g=G_p(U_0,U_+)), (h=H_p(U_0,U_-)):
+   [
+   \chi_\pi(gh^{-1})=\sum_{i,j} \pi(g)*{ij},\overline{\pi(h)*{ij}}.
+   ]
+4. Therefore
+   [
+   w_\beta(U_p)
+   =\sum_{\pi} c_\pi(\beta)\sum_{i,j} \pi(G_p)*{ij}\ \overline{\pi(H_p)*{ij}}
+   =\sum_{\pi,i,j} \overline{\big(\sqrt{c_\pi(\beta)},\pi(H_p)*{ij}\big)}\ \big(\sqrt{c*\pi(\beta)},\pi(G_p)_{ij}\big).
+   ]
+5. Define the index (\alpha=(\pi,i,j)) and set
+   [
+   K_{\alpha,p}(U):=\sqrt{c_\pi(\beta)},\pi(G_p(U_0,U_+))*{ij}.
+   ]
+   Under reflection, (G_p) and (H_p) exchange (up to the orientation/inversion conventions built into (\Theta)), so (\pi(H_p)) becomes (\pi(G_p(\Theta U))) and the displayed identity takes the desired form
+   [
+   w*\beta(U_p(U))=\sum_{\alpha} \overline{K_{\alpha,p}(\Theta U)},K_{\alpha,p}(U).
+   ]
+   ∎
+
+**Corollary 16.8 (product over all straddling plaquettes).**
+There exists an index set (\mathcal I) and functions ({K_\alpha}*{\alpha\in\mathcal I}), each depending only on ((U_0,U*+)), such that
+[
+e^{-S_0(U)}=\prod_{p\in P_0} w_\beta(U_p(U))
+=\sum_{\alpha\in\mathcal I}\overline{K_\alpha(\Theta U)}\ K_\alpha(U).
+]
+This is exactly the structure recorded in the earlier draft and in Part 7.  
+
+---
+
+#### 16.4.3.7 Positivity of the OS quadratic form
+
+We now complete the reflection positivity proof by turning (\langle \theta F,F\rangle) into a sum of squared norms.
+
+**Proposition 16.9 (OS2: reflection positivity).**
+For every (F\in\mathcal A_\Lambda^+),
+[
+Q(F):=\int_{M_\Lambda} (\theta F)(U),F(U),\mathrm{d}\mu_\Lambda(U)\ \ge\ 0.
+]
+
+**Proof.**
+Write (U=(U_-,U_0,U_+)) under the slice decomposition, and correspondingly decompose the action
+[
+S_W(U)=S_-(U_-)+S_0(U_-,U_0,U_+)+S_+(U_+).
+]
+
+1. **Start with the definition.**
+   [
+   Q(F)=\frac{1}{Z_\Lambda}\int \overline{F(\Theta U)},F(U),e^{-S_-(U_-)}e^{-S_0(U)}e^{-S_+(U_+)},
+   \mathrm{d}\mu_-(U_-)\mathrm{d}\mu_0(U_0)\mathrm{d}\mu_+(U_+).
+   ]
+2. **Use the straddling decomposition.** By Corollary 16.8,
+   [
+   e^{-S_0(U)}=\sum_{\alpha}\overline{K_\alpha(\Theta U)},K_\alpha(U),
+   ]
+   with each (K_\alpha) depending only on ((U_0,U_+)).
+   Substitute this into (Q(F)) and swap sum/integral (absolute convergence holds because everything is bounded on compact (M_\Lambda)):
+   [
+   Q(F)=\frac{1}{Z_\Lambda}\sum_{\alpha}\int \Big(\overline{F(\Theta U)},\overline{K_\alpha(\Theta U)},e^{-S_-(U_-)}\Big),
+   \Big(F(U),K_\alpha(U),e^{-S_+(U_+)}\Big),\mathrm{d}\mu_-,\mathrm{d}\mu_0,\mathrm{d}\mu_+.
+   ]
+3. **Separate the ((U_-)) and ((U_+)) integrations (Fubini).**
+   For fixed (U_0), the first parenthesis depends only on (U_-) (because (F\in\mathcal A_\Lambda^+\Rightarrow F(\Theta U)) depends only on ((\Theta U)*+), i.e. on (U*-)), while the second depends only on (U_+). Hence:
+   [
+   Q(F)=\frac{1}{Z_\Lambda}\sum_{\alpha}\int_{M_0}
+   \left[\int_{M_-} \overline{F(\Theta U)},\overline{K_\alpha(\Theta U)},e^{-S_-(U_-)},\mathrm{d}\mu_-(U_-)\right]
+   \left[\int_{M_+} F(U),K_\alpha(U),e^{-S_+(U_+)},\mathrm{d}\mu_+(U_+)\right]
+   \mathrm{d}\mu_0(U_0).
+   ]
+4. **Identify the two brackets as complex conjugates.**
+   Define, for each (\alpha) and each fixed (U_0),
+   [
+   I_\alpha(U_0):=\int_{M_+} F(U_0,U_+),K_\alpha(U_0,U_+),e^{-S_+(U_+)},\mathrm{d}\mu_+(U_+).
+   ]
+   Consider the “negative” integral
+   [
+   J_\alpha(U_0):=\int_{M_-} \overline{F(\Theta(U_-,U_0,U_+))},\overline{K_\alpha(\Theta(U_-,U_0,U_+))},e^{-S_-(U_-)},\mathrm{d}\mu_-(U_-),
+   ]
+   where (U_+) is irrelevant because all dependence is through (\Theta) and the fact that (F,K_\alpha) are supported in the positive half. Now change variables (V=\Theta U_-), which is a bijection (M_-\to M_+) preserving Haar measure (Haar is invariant under inversion and relabeling). Using (S_-(U_-)=S_+(V)) and (\Theta(\Theta U_-)=U_-), we obtain
+   [
+   J_\alpha(U_0)=\int_{M_+} \overline{F(U_0,V)},\overline{K_\alpha(U_0,V)},e^{-S_+(V)},\mathrm{d}\mu_+(V)
+   =\overline{I_\alpha(U_0)}.
+   ]
+5. **Conclude “sum of squares.”** Substitute (J_\alpha(U_0)=\overline{I_\alpha(U_0)}) into the separated expression:
+   [
+   Q(F)=\frac{1}{Z_\Lambda}\sum_{\alpha}\int_{M_0} \overline{I_\alpha(U_0)},I_\alpha(U_0),\mathrm{d}\mu_0(U_0)
+   =\frac{1}{Z_\Lambda}\sum_{\alpha}\int_{M_0} |I_\alpha(U_0)|^2,\mathrm{d}\mu_0(U_0)\ \ge\ 0.
+   ]
+   This proves reflection positivity.
+   ∎
+
+This is the fully expanded “square of a norm” mechanism that the draft summarizes (and that is also summarized in Part 7). 
+
+---
+
+### 16.4.4 Summary: finite-volume OS package for Wilson lattice YM
+
+**Theorem 16.10 (Finite-volume OS0–OS2 for Wilson lattice YM).**
+The Wilson lattice Yang–Mills measure (\mu_\Lambda) satisfies:
+
+1. OS0 (regularity and permutation symmetry),
+2. OS1 (invariance under the lattice Euclidean symmetry group (\mathcal G_{\mathrm{lat}})),
+3. OS2 (reflection positivity with respect to the time reflection (\vartheta(x_0,\vec x)=(1-x_0,\vec x)) and the induced (\theta F=\overline{F\circ\Theta})).
+
+These are exactly the OS0–OS2 targets in the draft. 
+
+---
+
+## 16.5 What OS positivity buys you (without waving hands)
+
+Reflection positivity is not just a moral victory; it is the gatekeeper for turning Euclidean correlators into a genuine Hilbert space with a positive Hamiltonian (transfer matrix). That’s the conceptual bridge from “Euclidean measure” to “mass gap.”
+
+At the level of what we will actually use later, the key outputs are:
+
+1. A pre-Hilbert inner product on (\mathcal A_\Lambda^+):
+   [
+   (F,G)*{\mathrm{OS}} := \int (\theta F),G,\mathrm{d}\mu*\Lambda,
+   ]
+   which is positive semidefinite by OS2.
+2. After quotient by null vectors and completion, a Hilbert space (\mathcal H_\Lambda).
+3. Time translations act as a contraction semigroup (or, on a discrete lattice, powers of a positive transfer operator (T)).
+4. Two-point functions of time-separated observables admit a nonnegative spectral representation in terms of eigenvalues of (T), hence exponential decay and a clean definition of a lattice mass gap.
+
+This “RP ⇒ transfer matrix ⇒ spectral form ⇒ mass gap” chain is spelled out in your PULSE note. 
+And it includes the constant bookkeeping that matters later: if (\lambda_1<\lambda_0=1) are the top two eigenvalues of the one-step transfer matrix, then
+[
+m(a) = -\frac{1}{a}\log!\left(\frac{\lambda_1}{\lambda_0}\right),
+]
+and one must be careful about “per step” versus “per time” conventions. 
+
+(Full OS reconstruction details can be written either in the classic continuum OS style or in an explicitly lattice-transfer-matrix style; in your project that’s the natural next step.)
+
+---
+
+## 16.6 How this interfaces with the “curvature/functional inequality engine”
+
+Up to this point, everything has been about **positivity** and **Euclidean → Hamiltonian** reconstruction. That is orthogonal (but complementary) to the analytic “engine” you’ve been developing in earlier parts: curvature bounds (\Rightarrow) LSI (\Rightarrow) Poincaré (\Rightarrow) spectral gap / exponential mixing.
+
+A useful way to say it cleanly:
+
+* Functional inequalities (LSI/Poincaré) are about the **spectral gap of a Markov generator** (typically a diffusion on configuration space or a Glauber-type dynamics).
+* OS positivity is about the **positivity of the transfer matrix** and the existence of a **physical Hamiltonian** whose spectral gap is the (Euclidean) **mass gap**.
+
+The two must be connected carefully; they are not the same operator in general. Your “Curvature → LSI → Poincaré → spectral gap” note emphasizes the local-to-global step and how a Lyapunov drift can be used to globalize LSI and then infer a spectral gap. 
+Part 16’s job is: *ensure the OS bridge is genuinely available* for the lattice YM measure we are studying.
+
+---
+
+## 16.7 Stability of reflection positivity under coarse-graining (RG-safe sufficient condition)
+
+A big practical problem is that reflection positivity can die under naive RG maps. Your December memo gives a sharp sufficient condition: use **reflection-commuting positive (Markov) block averages** aligned to the reflection plane; then RP is preserved by pushforward. 
+
+Here is the rigorous lemma in the exact form we can reuse later.
+
+**Lemma 16.11 (RP preserved by reflection-equivariant pushforward).**
+Let ((\Omega,\mathcal F,\mu)) be a probability space with a measurable involution (\theta:\Omega\to\Omega). Let (\mathcal F_+\subset\mathcal F) be the “positive half” (\sigma)-algebra, and assume (\mu) is reflection positive:
+[
+\big(\langle F_i, \theta F_j\rangle_{L^2(\mu)}\big)*{i,j}\succeq 0
+\quad\text{for all finite families }F_i\ \text{measurable w.r.t. }\mathcal F*+.
+]
+Let (P:\Omega\to\Omega') be a measurable map to another space ((\Omega',\mathcal F')) with involution (\theta':\Omega'\to\Omega') such that (P\circ\theta=\theta'\circ P), and define (\mu':=P_#\mu). Then ((\Omega',\mu',\theta')) is reflection positive.
+
+**Proof.**
+Take any finite family (G_i) measurable w.r.t. the positive half (\mathcal F'*+). Define (F_i:=G_i\circ P). By equivariance,
+[
+\langle G_i,\theta' G_j\rangle*{L^2(\mu')}
+=\langle F_i,\theta F_j\rangle_{L^2(\mu)}.
+]
+The right-hand Gram matrix is PSD by RP of (\mu), hence so is the left-hand matrix. ∎
+
+This is exactly the lemma/proof content in your PULSE writeup.  
+
+**Why we care later.** This provides a clean *RG-safe* path: if we design coarse-graining maps that commute with the OS reflection, then OS reconstruction remains valid at every scale. 
+
+---
+
+## 16.8 Practical reflection-positivity “stress tests” (optional but sanity-preserving)
+
+Even with a rigorous proof on paper, implementations can break RP via a sign error in (\Theta) or a link-ordering bug on cross-plane plaquettes. Your stress test checklist is exactly the right kind of paranoia: time-like links must be inverted; do not gauge-fix across the plane; basis truncations must be reflection/gauge invariant; right- vs left-invariant parametrizations should agree. 
+
+I’m explicitly including this here because it’s the difference between “the theorem is true” and “the pipeline you build later actually respects the theorem.”
+
+---
+
+## 16.9 End of Part 16: what is now locked in
+
+At this point we have, at finite lattice spacing and finite volume:
+
+* A concrete OS reflection (\vartheta(x_0,\vec x)=(1-x_0,\vec x)) and its link-level implementation (\Theta) (including inversion on time links). 
+* OS0 and OS1 essentially for free from compactness and lattice symmetries.
+* A fully explicit OS2 proof for the Wilson action by:
+
+  1. slicing the action into (S_-!+!S_0!+!S_+), 
+  2. decomposing the straddling factor as (\sum_\alpha \overline{K_\alpha(\Theta U)}K_\alpha(U)), 
+  3. rewriting (Q(F)) as (\sum_\alpha\int |I_\alpha|^2\ge 0).
+
+So the OS bridge is solid at the lattice level, and (importantly) we have a clean condition for preserving it under reflection-equivariant coarse-graining. 
+
+That sets the stage for the reconstruction/transfer-matrix chapter (the next natural step).

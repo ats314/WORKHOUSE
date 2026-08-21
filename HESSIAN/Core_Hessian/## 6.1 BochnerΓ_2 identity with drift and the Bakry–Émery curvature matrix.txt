@@ -1,0 +1,1521 @@
+## 6.1 Bochner/Γ_2 identity with drift and the Bakry–Émery curvature matrix
+
+This subsection fixes the reversible diffusion operator naturally associated to the Gibbs measure and records the fundamental **Bochner–Bakry–Émery identity** (a Γ_2/Weitzenböck formula). This is the analytic hinge-point in the logical spine
+
+[
+\text{(pointwise curvature)}\ \Longrightarrow\ \text{(functional inequalities)}\ \Longrightarrow\ \text{(covariance bounds)}.
+]
+
+Throughout, ((M_\Lambda,g_\Lambda)) is the configuration manifold (G^{E(\Lambda)}) with product bi-invariant metric from §3.1, and we write (\nabla,\Delta) for the Riemannian gradient and Laplace–Beltrami operator on ((M_\Lambda,g_\Lambda)). Let (S_\Lambda\in C^2(M_\Lambda)) be a smooth action; in the Wilson case (S_\Lambda=S_W) from §2.3 and §5.1–§5.4.
+
+Define the (normalized) Gibbs measure
+[
+d\mu_\Lambda(U);:=;Z_\Lambda^{-1}e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U),
+\qquad
+Z_\Lambda=\int_{M_\Lambda}e^{-S_\Lambda},d\mathrm{vol}*{g*\Lambda}.
+\tag{6.1}
+]
+
+### 6.1.1 The reversible diffusion generator and its divergence form
+
+The canonical Markov diffusion reversible w.r.t. (\mu_\Lambda) is the gradient-drift (overdamped Langevin / Witten) generator.
+
+**Definition 6.1 (reversible generator (L_\Lambda)).**
+For (f\in C^\infty(M_\Lambda)) define
+[
+L_\Lambda f ;:=; \Delta f ;-;\langle \nabla S_\Lambda,\nabla f\rangle_{g_\Lambda}.
+\tag{6.2}
+]
+Equivalently, (L_\Lambda=\Delta-\nabla S_\Lambda\cdot\nabla) in the usual “vector-field dot gradient” shorthand. 
+
+The next lemma is a bookkeeping identity that makes symmetry/invariance essentially automatic.
+
+**Lemma 6.2 (weighted divergence form).**
+For every (f\in C^\infty(M_\Lambda)),
+[
+L_\Lambda f ;=; e^{S_\Lambda},\mathrm{div}!\big(e^{-S_\Lambda}\nabla f\big),
+\tag{6.3}
+]
+where (\mathrm{div}) is the Riemannian divergence on ((M_\Lambda,g_\Lambda)).
+
+**Proof.** Use the product rule for divergence:
+[
+\mathrm{div}(hX)=\langle \nabla h,X\rangle + h,\mathrm{div}(X)
+]
+with (h=e^{-S_\Lambda}) and (X=\nabla f). Since (\mathrm{div}(\nabla f)=\Delta f) and (\nabla(e^{-S_\Lambda})=-e^{-S_\Lambda}\nabla S_\Lambda), we obtain
+[
+\mathrm{div}(e^{-S_\Lambda}\nabla f)=
+-e^{-S_\Lambda}\langle\nabla S_\Lambda,\nabla f\rangle
++e^{-S_\Lambda}\Delta f.
+]
+Multiplying by (e^{S_\Lambda}) gives (6.3). ∎
+
+The divergence form yields the basic integration-by-parts identity with respect to (\mu_\Lambda).
+
+**Proposition 6.3 (invariance and symmetry of (L_\Lambda)).**
+For all (f,g\in C^\infty(M_\Lambda)),
+[
+\int_{M_\Lambda} f,(L_\Lambda g),d\mu_\Lambda
+;=;
+-\int_{M_\Lambda}\langle \nabla f,\nabla g\rangle_{g_\Lambda},d\mu_\Lambda.
+\tag{6.4}
+]
+In particular,
+[
+\int L_\Lambda g,d\mu_\Lambda=0
+\quad\text{and}\quad
+\int f,L_\Lambda g,d\mu_\Lambda=\int g,L_\Lambda f,d\mu_\Lambda,
+\tag{6.5}
+]
+so (L_\Lambda) is (\mu_\Lambda)-symmetric and (\mu_\Lambda) is invariant under the Markov semigroup (e^{tL_\Lambda}).
+
+**Proof.** Write (d\mu_\Lambda=e^{-S_\Lambda},d\mathrm{vol}*{g*\Lambda}) (absorbing (Z_\Lambda^{-1}) into normalization). Starting from the Laplace–Beltrami integration-by-parts formula on the compact manifold (M_\Lambda) (no boundary),
+[
+\int f,\Delta g,e^{-S_\Lambda},d\mathrm{vol}
+============================================
+
+-\int \langle \nabla(fe^{-S_\Lambda}),\nabla g\rangle,d\mathrm{vol}.
+]
+Compute (\nabla(fe^{-S_\Lambda})=e^{-S_\Lambda}\nabla f-fe^{-S_\Lambda}\nabla S_\Lambda), hence
+[
+\int f,\Delta g,d\mu_\Lambda
+============================
+
+-\int \langle\nabla f,\nabla g\rangle,d\mu_\Lambda
++\int f,\langle\nabla S_\Lambda,\nabla g\rangle,d\mu_\Lambda.
+]
+Rearranging yields (6.4) for (L_\Lambda=\Delta-\langle\nabla S_\Lambda,\nabla\cdot\rangle). The identities in (6.5) follow by taking (f\equiv 1) and by symmetry of (\langle\nabla f,\nabla g\rangle).  ∎
+
+---
+
+### 6.1.2 Carré du champ and iterated carré du champ
+
+The Bakry–Émery calculus packages the first and second derivative information of the semigroup into two bilinear forms (\Gamma) and (\Gamma_2).
+
+**Definition 6.4 (carré du champ).**
+For (f,g\in C^\infty(M_\Lambda)) define
+[
+\Gamma_\Lambda(f,g)
+:=
+\frac12\Big(L_\Lambda(fg)-f,L_\Lambda g-g,L_\Lambda f\Big),
+\qquad
+\Gamma_\Lambda(f):=\Gamma_\Lambda(f,f).
+\tag{6.6}
+]
+
+
+**Lemma 6.5 (explicit formula: (\Gamma=|\nabla\cdot|^2)).**
+For (L_\Lambda) of the form (6.2),
+[
+\Gamma_\Lambda(f,g)=\langle \nabla f,\nabla g\rangle_{g_\Lambda},
+\qquad
+\Gamma_\Lambda(f)=|\nabla f|*{g*\Lambda}^2.
+\tag{6.7}
+]
+
+**Proof.** Use the product rule for (\Delta) and the Leibniz rule for directional derivatives:
+[
+\Delta(fg)=f,\Delta g+g,\Delta f+2\langle\nabla f,\nabla g\rangle,
+]
+and
+[
+\langle\nabla S_\Lambda,\nabla(fg)\rangle
+=========================================
+
+f\langle\nabla S_\Lambda,\nabla g\rangle+g\langle\nabla S_\Lambda,\nabla f\rangle.
+]
+Subtracting (fL_\Lambda g+gL_\Lambda f) from (L_\Lambda(fg)) cancels the drift terms, leaving (2\langle\nabla f,\nabla g\rangle). Divide by 2.  ∎
+
+**Definition 6.6 (iterated carré du champ).**
+For (f,g\in C^\infty(M_\Lambda)), define
+[
+\Gamma_{2,\Lambda}(f,g)
+:=
+\frac12\Big(
+L_\Lambda\Gamma_\Lambda(f,g)
+-\Gamma_\Lambda(f,L_\Lambda g)
+-\Gamma_\Lambda(g,L_\Lambda f)
+\Big),
+\qquad
+\Gamma_{2,\Lambda}(f):=\Gamma_{2,\Lambda}(f,f).
+\tag{6.8}
+]
+
+
+---
+
+### 6.1.3 The Bakry–Émery curvature matrix and the Bochner identity with drift
+
+The effective curvature controlling (\Gamma_2) is not the Riemannian Ricci tensor alone, but the Ricci tensor **plus** the Hessian of the drift potential (S_\Lambda).
+
+**Definition 6.7 (Bakry–Émery tensor / curvature matrix).**
+Define the Bakry–Émery tensor (a symmetric bilinear form on each (T_UM_\Lambda)) by
+[
+\mathrm{Ric}*{\mu*\Lambda}
+;:=;
+\mathrm{Ric}*{g*\Lambda}+\nabla^2 S_\Lambda,
+\tag{6.9}
+]
+where (\nabla^2 S_\Lambda) is the Riemannian Hessian:
+[
+(\nabla^2 S_\Lambda)(X,Y):=\langle \nabla_X(\nabla S_\Lambda),Y\rangle_{g_\Lambda}.
+]
+
+
+We refer to (\mathrm{Ric}*{\mu*\Lambda}(U)) as the **curvature matrix** at (U), because in right-trivialized coordinates on (T_UM_\Lambda\simeq\mathcal C^1(\Lambda;\mathfrak g)) it becomes a symmetric matrix/operator acting on cochains (this is exactly the object bounded from below in the “matrix hinge” of §5.4). 
+
+We now state and prove the Bochner identity for (L_\Lambda).
+
+**Proposition 6.8 (Bochner–Bakry–Émery identity).**
+For every (f\in C^\infty(M_\Lambda)),
+[
+\Gamma_{2,\Lambda}(f)
+;=;
+|\nabla^2 f|*{\mathrm{HS}}^2
+;+;
+\mathrm{Ric}*{\mu_\Lambda}(\nabla f,\nabla f),
+\tag{6.10}
+]
+where (|\nabla^2 f|*{\mathrm{HS}}^2) denotes the Hilbert–Schmidt norm squared of the Hessian:
+[
+|\nabla^2 f|*{\mathrm{HS}}^2
+:=\sum_{i,j}\big(\nabla^2 f(e_i,e_j)\big)^2
+\quad\text{for any orthonormal basis }(e_i)\text{ of }T_UM_\Lambda.
+]
+
+**Proof.** Start from the classical Bochner identity for the Laplace–Beltrami operator on a Riemannian manifold:
+[
+\frac12\Delta |\nabla f|^2
+==========================
+
+\langle\nabla f,\nabla\Delta f\rangle
++
+|\nabla^2 f|*{\mathrm{HS}}^2
++
+\mathrm{Ric}*{g_\Lambda}(\nabla f,\nabla f).
+\tag{6.11}
+]
+(One derivation is by choosing normal coordinates at a point and differentiating (|\nabla f|^2=g^{ij}\partial_i f,\partial_j f), tracking curvature terms; we take (6.11) as standard.)
+
+Now compute (\Gamma_{2,\Lambda}(f)=\frac12(L_\Lambda\Gamma_\Lambda(f)-2\Gamma_\Lambda(f,L_\Lambda f))). Using (\Gamma_\Lambda(f)=|\nabla f|^2) from Lemma 6.5,
+[
+L_\Lambda\Gamma_\Lambda(f)=\Delta|\nabla f|^2-\langle\nabla S_\Lambda,\nabla|\nabla f|^2\rangle,
+]
+and
+[
+\Gamma_\Lambda(f,L_\Lambda f)
+=============================
+
+# \langle\nabla f,\nabla L_\Lambda f\rangle
+
+\langle\nabla f,\nabla\Delta f\rangle
+-\langle\nabla f,\nabla\langle\nabla S_\Lambda,\nabla f\rangle\rangle.
+]
+Substituting gives
+[
+\Gamma_{2,\Lambda}(f)
+=====================
+
+\frac12\Delta|\nabla f|^2-\langle\nabla f,\nabla\Delta f\rangle
+-\frac12\langle\nabla S_\Lambda,\nabla|\nabla f|^2\rangle
++\langle\nabla f,\nabla\langle\nabla S_\Lambda,\nabla f\rangle\rangle.
+\tag{6.12}
+]
+
+
+Insert (6.11) into (6.12) to handle the first two terms, obtaining
+[
+\Gamma_{2,\Lambda}(f)
+=====================
+
+|\nabla^2 f|*{\mathrm{HS}}^2+\mathrm{Ric}*{g_\Lambda}(\nabla f,\nabla f)
+-\frac12\langle\nabla S_\Lambda,\nabla|\nabla f|^2\rangle
++\langle\nabla f,\nabla\langle\nabla S_\Lambda,\nabla f\rangle\rangle.
+\tag{6.13}
+]
+
+It remains to simplify the drift correction (the last two terms). Using metric-compatibility and torsion-freeness of the Levi–Civita connection, one has the standard identity
+[
+\nabla\langle\nabla S_\Lambda,\nabla f\rangle
+=============================================
+
+\nabla^2 S_\Lambda(\cdot,\nabla f)+\nabla^2 f(\cdot,\nabla S_\Lambda),
+]
+so
+[
+\langle\nabla f,\nabla\langle\nabla S_\Lambda,\nabla f\rangle\rangle
+====================================================================
+
+\nabla^2 S_\Lambda(\nabla f,\nabla f)+\nabla^2 f(\nabla f,\nabla S_\Lambda).
+]
+Also,
+[
+\langle\nabla S_\Lambda,\nabla|\nabla f|^2\rangle
+=================================================
+
+2,\nabla^2 f(\nabla f,\nabla S_\Lambda).
+]
+
+
+Therefore the two drift terms combine as
+[
+-\frac12\langle\nabla S_\Lambda,\nabla|\nabla f|^2\rangle
++\langle\nabla f,\nabla\langle\nabla S_\Lambda,\nabla f\rangle\rangle
+=====================================================================
+
+-\nabla^2 f(\nabla f,\nabla S_\Lambda)
++\nabla^2 S_\Lambda(\nabla f,\nabla f)+\nabla^2 f(\nabla f,\nabla S_\Lambda)
+============================================================================
+
+\nabla^2 S_\Lambda(\nabla f,\nabla f).
+]
+Plugging back into (6.13) yields
+[
+\Gamma_{2,\Lambda}(f)
+=====================
+
+# |\nabla^2 f|*{\mathrm{HS}}^2+\big(\mathrm{Ric}*{g_\Lambda}+\nabla^2 S_\Lambda\big)(\nabla f,\nabla f)
+
+|\nabla^2 f|*{\mathrm{HS}}^2+\mathrm{Ric}*{\mu_\Lambda}(\nabla f,\nabla f),
+]
+which is (6.10).  ∎
+
+---
+
+### 6.1.4 Immediate consequence: curvature lower bounds imply a CD(ρ,∞) inequality
+
+The Bochner identity is powerful because it turns a pointwise *matrix* inequality into a pointwise Γ_2 inequality.
+
+**Corollary 6.9 (curvature-dimension inequality CD((\rho,\infty))).**
+If on a set (K\subseteq M_\Lambda) one has a pointwise lower bound
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)\ \succeq\ \rho,I
+\qquad\text{for all }U\in K,
+\tag{6.14}
+]
+then for every (f\in C^\infty(M_\Lambda)) and every (U\in K),
+[
+\Gamma_{2,\Lambda}(f)(U)\ \ge\ \rho,\Gamma_\Lambda(f)(U).
+\tag{6.15}
+]
+
+**Proof.** From Proposition 6.8,
+[
+\Gamma_{2,\Lambda}(f)=|\nabla^2 f|*{\mathrm{HS}}^2+\mathrm{Ric}*{\mu_\Lambda}(\nabla f,\nabla f).
+]
+The Hilbert–Schmidt norm term is nonnegative, and (6.14) implies (\mathrm{Ric}*{\mu*\Lambda}(\nabla f,\nabla f)\ge \rho|\nabla f|^2=\rho,\Gamma_\Lambda(f)). ∎
+
+**Remark 6.10 (where the §5.4 hinge plugs in).**
+On the small-field region (K_\Lambda(r)) from §5.3, §5.4 gives a pointwise **operator** lower bound for (\mathrm{Ric}*{\mu*{\Lambda,\beta}}=\mathrm{Ric}*{g*\Lambda}+\nabla^2 S_W) of the form
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)\ \succeq\ \big(c_H-R_W(r)\big),I\ +\ \frac{\beta}{n\lambda_\rho},d_1^*d_1,
+\qquad U\in K_\Lambda(r),
+]
+so Corollary 6.9 applies there with (\rho=c_H-R_W(r)) at the scalar level, while *preserving* the additional structured Maxwell contribution (this “do not scalarize away PSD structure” point is exactly what §5.5 formalizes). 
+
+**Remark 6.11 (horizontal restriction for gauge-invariant observables).**
+If (F) is gauge-invariant, then (\nabla F(U)\in H_U) for every (U) (Lemma 3.38). Hence, every occurrence of (\mathrm{Ric}*{\mu*\Lambda}(\nabla F,\nabla F)) in (6.10) may be read as the restriction of the curvature matrix to the horizontal subspace. This is the “horizontal Bakry–Émery” viewpoint used later without needing to construct the quotient manifold explicitly.
+
+---
+
+This completes §6.1: we have fixed the reversible generator (L_\Lambda), identified (\Gamma_\Lambda) with (|\nabla\cdot|^2), and obtained the Bochner–Bakry–Émery identity expressing (\Gamma_2) in terms of the **Bakry–Émery curvature matrix** (\mathrm{Ric}*{\mu*\Lambda}=\mathrm{Ric}*{g*\Lambda}+\nabla^2 S_\Lambda). In §6.2 we use local lower bounds on this matrix (available on (K_\Lambda(r)) from §5.4) to derive **local** Poincaré and log-Sobolev inequalities via the (CD(\rho,\infty)) mechanism.
+
+
+
+
+
+
+## 6.2 Local curvature implies local Poincaré and local log–Sobolev inequalities on (K_\Lambda(r))
+
+The matrix hinge inequality of §5.4 gives a **pointwise** lower bound on the Bakry–Émery curvature matrix
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U);=;\mathrm{Ric}*{g*\Lambda}(U)+\nabla^2 S_W(U)
+]
+on the canonical small-field region (K_\Lambda(r)). In this subsection we explain how such a curvature bound immediately yields **local functional inequalities**—a local Poincaré inequality and a local logarithmic Sobolev inequality—on (K_\Lambda(r)), with constants uniform in the volume.
+
+The role of these local inequalities is twofold:
+
+1. they provide the “local coercivity” input needed by Lyapunov/local-to-global patching arguments later (Part 7 in the outline), and
+2. they give a clean analytic baseline for the semigroup identities used in the Helffer–Sjöstrand covariance representation (Part 6.3–6.4).
+
+Throughout, fix a finite 4–torus lattice (\Lambda), write (M_\Lambda=G^{E(\Lambda)}) with product metric (g_\Lambda), and let (\mu_{\Lambda,\beta}) be the Wilson Gibbs measure
+[
+d\mu_{\Lambda,\beta}(U)=Z_{\Lambda,\beta}^{-1},e^{-S_W(U)},d\mathrm{vol}*{g*\Lambda}(U).
+]
+
+---
+
+### 6.2.1 Localization device: the reflected diffusion on (\overline{K}_\Lambda(r))
+
+Recall the linkwise small-field set from Definition 5.11:
+[
+K_\Lambda(r);=;\prod_{b\in E(\Lambda)} B_r^G(\mathbf 1);\subset;M_\Lambda,
+\qquad 0<r\le r_{\mathrm{sf}}.
+]
+We will work on the **compact** set (\overline{K}_\Lambda(r)=\prod_b \overline{B_r^G(\mathbf 1)}) equipped with the induced Riemannian structure.
+
+On (M_\Lambda) define the reversible diffusion generator associated with (\mu_{\Lambda,\beta}):
+[
+L_\Lambda f ;:=; \Delta_{g_\Lambda} f - \langle \nabla S_W,\nabla f\rangle_{g_\Lambda}
+;=; e^{S_W},\mathrm{div}*{g*\Lambda}!\big(e^{-S_W}\nabla f\big),
+\tag{6.1}
+]
+initially on (C^\infty(M_\Lambda)).
+
+To localize to (\overline{K}*\Lambda(r)) we take the **Neumann (reflecting) realization** of (L*\Lambda) on (\overline{K}*\Lambda(r)). Concretely, let (L*{\Lambda,r}) denote the operator (6.1) acting on functions on (\overline{K}*\Lambda(r)) with reflecting boundary condition
+[
+\partial*{\mathbf n} f ;=;0\quad\text{on }\partial K_\Lambda(r)
+\tag{6.2}
+]
+(on each smooth boundary face; see Remark 6.6 below on corners).
+
+Define the conditioned (“local”) probability measure
+[
+d\mu_{\Lambda,\beta,r}(U)
+;:=;
+Z_{\Lambda,\beta,r}^{-1},\mathbf 1_{K_\Lambda(r)}(U),e^{-S_W(U)},d\mathrm{vol}*{g*\Lambda}(U),
+\tag{6.3}
+]
+so that (\mu_{\Lambda,\beta,r}) is (\mu_{\Lambda,\beta}) renormalized on (K_\Lambda(r)).
+
+#### Lemma 6.1 (integration by parts on (\overline{K}_\Lambda(r)); symmetry and invariance).
+
+Assume (f,g\in C^\infty(\overline{K}*\Lambda(r))) satisfy the Neumann boundary condition (6.2). Then
+[
+\int*{\overline{K}*\Lambda(r)} f,L*{\Lambda,r}g,d\mu_{\Lambda,\beta,r}
+;=;
+-\int_{\overline{K}*\Lambda(r)} \langle\nabla f,\nabla g\rangle*{g_\Lambda},d\mu_{\Lambda,\beta,r}.
+\tag{6.4}
+]
+In particular, (L_{\Lambda,r}) is symmetric in (L^2(\mu_{\Lambda,\beta,r})), and
+[
+\int_{\overline{K}*\Lambda(r)} L*{\Lambda,r}f,d\mu_{\Lambda,\beta,r}=0
+\qquad\text{(i.e. (\mu_{\Lambda,\beta,r}) is invariant).}
+\tag{6.5}
+]
+
+**Proof.** Write (d\mu_{\Lambda,\beta,r}=Z_{\Lambda,\beta,r}^{-1},e^{-S_W}d\mathrm{vol}*{g*\Lambda}) on (\overline{K}*\Lambda(r)). Using the divergence-form expression in (6.1),
+[
+\int f,L*{\Lambda,r}g,d\mu_{\Lambda,\beta,r}
+============================================
+
+Z_{\Lambda,\beta,r}^{-1}\int_{\overline{K}} f,\mathrm{div}*{g*\Lambda}!\big(e^{-S_W}\nabla g\big),d\mathrm{vol}*{g*\Lambda}.
+]
+Apply the divergence theorem on (\overline{K}=\overline{K}*\Lambda(r)):
+[
+\int*{\overline{K}} f,\mathrm{div}(e^{-S_W}\nabla g),d\mathrm{vol}
+==================================================================
+
+-\int_{\overline{K}} \langle \nabla f, e^{-S_W}\nabla g\rangle,d\mathrm{vol}
+;+;\int_{\partial K} f,\langle e^{-S_W}\nabla g,\mathbf n\rangle,d\sigma.
+]
+The boundary term vanishes because (\langle \nabla g,\mathbf n\rangle=\partial_{\mathbf n}g=0) on (\partial K), hence (\langle e^{-S_W}\nabla g,\mathbf n\rangle=0). Therefore
+[
+\int f,L_{\Lambda,r}g,d\mu_{\Lambda,\beta,r}
+============================================
+
+* Z_{\Lambda,\beta,r}^{-1}\int_{\overline{K}} e^{-S_W}\langle\nabla f,\nabla g\rangle,d\mathrm{vol}
+  =
+  -\int \langle\nabla f,\nabla g\rangle,d\mu_{\Lambda,\beta,r},
+  ]
+  which is (6.4). Taking (g\equiv 1) gives (\nabla g=0), hence (\int L_{\Lambda,r}f,d\mu_{\Lambda,\beta,r}=0). ∎
+
+Let ((P_t^{(r)})*{t\ge 0}) denote the Markov semigroup generated by (L*{\Lambda,r}) on (L^2(\mu_{\Lambda,\beta,r})). By construction, (P_t^{(r)}) is (\mu_{\Lambda,\beta,r})-invariant and symmetric.
+
+---
+
+### 6.2.2 Curvature–dimension on (K_\Lambda(r))
+
+Let (\Gamma_r) be the carré du champ associated to (L_{\Lambda,r}):
+[
+\Gamma_r(f,g)
+;:=;
+\frac12\Big(L_{\Lambda,r}(fg)-f,L_{\Lambda,r}g-g,L_{\Lambda,r}f\Big),
+\qquad
+\Gamma_r(f):=\Gamma_r(f,f).
+\tag{6.6}
+]
+For the gradient-drift operator (6.1), one has the standard identity
+[
+\Gamma_r(f,g)=\langle \nabla f,\nabla g\rangle_{g_\Lambda},
+\qquad
+\Gamma_r(f)=|\nabla f|*{g*\Lambda}^2,
+\tag{6.7}
+]
+pointwise on (\overline{K}_\Lambda(r)).
+
+Define also the iterated carré du champ:
+[
+\Gamma_{2,r}(f,g)
+:=
+\frac12\Big(L_{\Lambda,r}\Gamma_r(f,g)-\Gamma_r(f,L_{\Lambda,r}g)-\Gamma_r(g,L_{\Lambda,r}f)\Big),
+\qquad
+\Gamma_{2,r}(f):=\Gamma_{2,r}(f,f).
+\tag{6.8}
+]
+
+In §6.1 we established the Bochner–Bakry–Émery identity (with drift) for this generator:
+[
+\Gamma_{2,r}(f)
+===============
+
+|\nabla^2 f|*{\mathrm{HS}}^2
++
+\mathrm{Ric}*{\mu_{\Lambda,\beta}}(\nabla f,\nabla f)
+\quad\text{on }\overline{K}*\Lambda(r),
+\tag{6.9}
+]
+where (\nabla^2 f) is the Riemannian Hessian and (\mathrm{Ric}*{\mu_{\Lambda,\beta}}=\mathrm{Ric}*{g*\Lambda}+\nabla^2 S_W).
+
+#### Definition 6.2 (local curvature–dimension condition).
+
+We say (L_{\Lambda,r}) satisfies (CD(\rho_{\mathrm{loc}},\infty)) on (\overline{K}*\Lambda(r)) if
+[
+\Gamma*{2,r}(f)\ \ge\ \rho_{\mathrm{loc}},\Gamma_r(f)
+\qquad\text{pointwise on }\overline{K}_\Lambda(r)
+\tag{6.10}
+]
+for all smooth (f) satisfying the Neumann boundary condition (6.2).
+
+By (6.9), a sufficient condition is the **tensor inequality**
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)\ \succeq\ \rho_{\mathrm{loc}},I
+\qquad\text{as quadratic forms on }T_U M_\Lambda,\ \forall,U\in \overline{K}*\Lambda(r),
+\tag{6.11}
+]
+since (|\nabla^2 f|*{\mathrm{HS}}^2\ge 0).
+
+Now recall the matrix hinge inequality from §5.4: for (U\in K_\Lambda(r)),
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)
+\ \succeq
+\big(c_H-R_W(r)\big),I\ +\ \frac{\beta}{n\lambda_\rho},d_1^*d_1,
+\tag{6.12}
+]
+with (c_H) the uniform Haar/Ricci lower bound (from §4.1 / (5.30)) and (R_W(r)=O(\beta r)) the Wilson Hessian perturbation constant (from (5.20)).
+
+Since (d_1^*d_1\succeq 0), (6.12) implies the scalar lower bound
+[
+\mathrm{Ric}*{\mu*{\Lambda,\beta}}(U)\ \succeq\ \rho_{\mathrm{loc}}(r),I,
+\qquad
+\rho_{\mathrm{loc}}(r):=c_H-R_W(r).
+\tag{6.13}
+]
+In particular, if (r) is chosen so that (R_W(r)\le c_H/2) (as in Corollary 5.22), then
+[
+\rho_{\mathrm{loc}}(r)\ \ge\ \frac{c_H}{2}>0.
+\tag{6.14}
+]
+Thus, on such a small-field region, (CD(\rho_{\mathrm{loc}},\infty)) holds with a constant uniform in the volume.
+
+---
+
+### 6.2.3 Semigroup dissipation identities
+
+All the standard functional inequalities will be derived from two “dissipation” computations for the Neumann semigroup (P_t^{(r)}).
+
+#### Lemma 6.3 (energy dissipation / variance identity).
+
+Let (u_t:=P_t^{(r)} f). Then
+[
+\frac{d}{dt}\int_{\overline{K}*\Lambda(r)} u_t^2,d\mu*{\Lambda,\beta,r}
+=======================================================================
+
+# 2\int u_t,L_{\Lambda,r}u_t,d\mu_{\Lambda,\beta,r}
+
+-2\int \Gamma_r(u_t),d\mu_{\Lambda,\beta,r}.
+\tag{6.15}
+]
+
+**Proof.** Differentiate under the integral and use (\partial_t u_t=L_{\Lambda,r}u_t). Then apply the integration by parts identity (6.4) with (f=g=u_t):
+[
+\int u_t,L_{\Lambda,r}u_t,d\mu_{\Lambda,\beta,r}=-\int \Gamma_r(u_t),d\mu_{\Lambda,\beta,r}.
+]
+This yields (6.15). ∎
+
+Next define entropy and Fisher information for positive functions.
+
+#### Definition 6.4 (entropy and Fisher information on (K_\Lambda(r))).
+
+For (h\ge 0) integrable, define
+[
+\mathrm{Ent}*{\mu*{\Lambda,\beta,r}}(h)
+:=
+\int h\log h,d\mu_{\Lambda,\beta,r}
+-\Big(\int h,d\mu_{\Lambda,\beta,r}\Big)\log\Big(\int h,d\mu_{\Lambda,\beta,r}\Big).
+\tag{6.16}
+]
+For (h>0) smooth, define the Fisher information
+[
+\mathcal I_{\mu_{\Lambda,\beta,r}}(h)
+:=
+\int \frac{\Gamma_r(h)}{h},d\mu_{\Lambda,\beta,r}
+=================================================
+
+\int h,\Gamma_r(\log h),d\mu_{\Lambda,\beta,r}.
+\tag{6.17}
+]
+
+#### Lemma 6.5 (entropy dissipation).
+
+Let (h>0) be smooth and let (h_t:=P_t^{(r)}h). Then (\int h_t,d\mu_{\Lambda,\beta,r}) is constant in (t), and
+[
+\frac{d}{dt}\mathrm{Ent}*{\mu*{\Lambda,\beta,r}}(h_t)
+=====================================================
+
+-\mathcal I_{\mu_{\Lambda,\beta,r}}(h_t).
+\tag{6.18}
+]
+
+**Proof.** Because (\mu_{\Lambda,\beta,r}) is invariant, (\frac{d}{dt}\int h_t,d\mu=\int L_{\Lambda,r}h_t,d\mu=0). Hence the second term in (6.16) is constant in (t).
+
+Differentiate the first term:
+[
+\frac{d}{dt}\int h_t\log h_t,d\mu
+=================================
+
+# \int (\partial_t h_t)(1+\log h_t),d\mu
+
+\int (L_{\Lambda,r}h_t)\log h_t,d\mu,
+]
+since (\int L_{\Lambda,r}h_t,d\mu=0). Now apply integration by parts (6.4):
+[
+\int (L_{\Lambda,r}h_t)\log h_t,d\mu
+====================================
+
+-\int \Gamma_r(h_t,\log h_t),d\mu.
+]
+Finally, (\Gamma_r(h,\log h)=\langle \nabla h,\nabla \log h\rangle = |\nabla h|^2/h=\Gamma_r(h)/h), so the right-hand side equals (-\mathcal I(h_t)). ∎
+
+#### Lemma 6.6 (information dissipation).
+
+Let (h>0) be smooth and (h_t=P_t^{(r)}h). Then
+[
+\frac{d}{dt}\mathcal I_{\mu_{\Lambda,\beta,r}}(h_t)
+===================================================
+
+-2\int h_t,\Gamma_{2,r}(\log h_t),d\mu_{\Lambda,\beta,r}.
+\tag{6.19}
+]
+Consequently, if (CD(\rho_{\mathrm{loc}},\infty)) holds on (\overline{K}*\Lambda(r)), then
+[
+\frac{d}{dt}\mathcal I*{\mu_{\Lambda,\beta,r}}(h_t)
+\ \le\ -2\rho_{\mathrm{loc}},\mathcal I_{\mu_{\Lambda,\beta,r}}(h_t),
+\qquad
+\text{hence}\qquad
+\mathcal I_{\mu_{\Lambda,\beta,r}}(h_t)\le e^{-2\rho_{\mathrm{loc}}t},\mathcal I_{\mu_{\Lambda,\beta,r}}(h).
+\tag{6.20}
+]
+
+**Proof.** Write (u_t:=\log h_t), so (h_t=e^{u_t}). Then
+[
+\mathcal I(h_t)=\int h_t,\Gamma_r(u_t),d\mu.
+]
+Differentiate:
+[
+\frac{d}{dt}\mathcal I(h_t)
+===========================
+
+\int (\partial_t h_t)\Gamma_r(u_t),d\mu + \int h_t,\partial_t\Gamma_r(u_t),d\mu.
+\tag{6.21}
+]
+First, (\partial_t h_t=L_{\Lambda,r}h_t). Second, by the diffusion chain rule,
+[
+L_{\Lambda,r}(\log h_t) = \frac{L_{\Lambda,r}h_t}{h_t}-\frac{\Gamma_r(h_t)}{h_t^2}
+= \frac{L_{\Lambda,r}h_t}{h_t}-\Gamma_r(u_t),
+]
+so (\partial_t u_t = (\partial_t h_t)/h_t = (Lh_t)/h_t = L u_t + \Gamma_r(u_t)). Also,
+[
+\partial_t\Gamma_r(u_t)=2,\Gamma_r\big(u_t,\partial_t u_t\big)
+=2\Gamma_r\big(u_t,Lu_t\big)+2\Gamma_r\big(u_t,\Gamma_r(u_t)\big).
+\tag{6.22}
+]
+Insert these identities into (6.21) to obtain
+[
+\frac{d}{dt}\mathcal I(h_t)
+===========================
+
+\int (Lh_t)\Gamma(u_t),d\mu
++2\int h_t,\Gamma(u_t,Lu_t),d\mu
++2\int h_t,\Gamma(u_t,\Gamma(u_t)),d\mu.
+\tag{6.23}
+]
+Use integration by parts (6.4) on the first term with (\phi=\Gamma(u_t)):
+[
+\int (Lh_t)\Gamma(u_t),d\mu
+===========================
+
+-\int \Gamma(h_t,\Gamma(u_t)),d\mu.
+]
+Since (h_t=e^{u_t}), we have (\nabla h_t = h_t\nabla u_t), hence
+[
+\Gamma(h_t,\Gamma(u_t))=\langle \nabla h_t,\nabla \Gamma(u_t)\rangle
+=h_t\langle \nabla u_t,\nabla \Gamma(u_t)\rangle
+=h_t,\Gamma\big(u_t,\Gamma(u_t)\big).
+]
+Therefore
+[
+\int (Lh_t)\Gamma(u_t),d\mu
+===========================
+
+-\int h_t,\Gamma(u_t,\Gamma(u_t)),d\mu.
+\tag{6.24}
+]
+Plugging (6.24) back into (6.23) cancels one of the two (\Gamma(u_t,\Gamma(u_t))) terms and yields
+[
+\frac{d}{dt}\mathcal I(h_t)
+===========================
+
+2\int h_t,\Gamma(u_t,Lu_t),d\mu
++\int h_t,\Gamma(u_t,\Gamma(u_t)),d\mu.
+\tag{6.25}
+]
+Now use the definition of (\Gamma_{2,r}):
+[
+\Gamma_{2,r}(u_t)
+=================
+
+\frac12\Big(L\Gamma(u_t)-2\Gamma(u_t,Lu_t)\Big),
+]
+so
+[
+-2\int h_t,\Gamma_{2,r}(u_t),d\mu
+=================================
+
+-\int h_t,L\Gamma(u_t),d\mu
++2\int h_t,\Gamma(u_t,Lu_t),d\mu.
+\tag{6.26}
+]
+Finally, integrate by parts again on (\int h_t L\Gamma(u_t),d\mu):
+[
+\int h_t,L\Gamma(u_t),d\mu = -\int \Gamma(h_t,\Gamma(u_t)),d\mu
+= -\int h_t,\Gamma(u_t,\Gamma(u_t)),d\mu,
+]
+so (-\int h_t L\Gamma(u_t),d\mu = \int h_t \Gamma(u_t,\Gamma(u_t)),d\mu). Substituting into (6.26) shows that the right-hand side equals exactly (6.25). This proves the exact identity (6.19).
+
+Under (CD(\rho_{\mathrm{loc}},\infty)), we have (\Gamma_{2,r}(u_t)\ge \rho_{\mathrm{loc}}\Gamma_r(u_t)), hence
+[
+\frac{d}{dt}\mathcal I(h_t)
+===========================
+
+-2\int h_t,\Gamma_{2,r}(u_t),d\mu
+\le
+-2\rho_{\mathrm{loc}}\int h_t,\Gamma_r(u_t),d\mu
+================================================
+
+-2\rho_{\mathrm{loc}},\mathcal I(h_t),
+]
+which integrates to (6.20). ∎
+
+---
+
+### 6.2.4 Local Poincaré inequality on (K_\Lambda(r))
+
+We now derive a spectral-gap/Poincaré inequality for the reflected process on the local set.
+
+#### Theorem 6.7 (local Poincaré inequality).
+
+Assume (CD(\rho_{\mathrm{loc}},\infty)) holds on (\overline{K}*\Lambda(r)) for some (\rho*{\mathrm{loc}}>0). Then for every (f\in C^\infty(\overline{K}*\Lambda(r))) satisfying the Neumann boundary condition (6.2),
+[
+\mathrm{Var}*{\mu_{\Lambda,\beta,r}}(f)
+;:=;
+\int \bigl(f-\mu_{\Lambda,\beta,r}(f)\bigr)^2,d\mu_{\Lambda,\beta,r}
+;\le;
+\frac{1}{\rho_{\mathrm{loc}}}\int \Gamma_r(f),d\mu_{\Lambda,\beta,r}.
+\tag{6.27}
+]
+Equivalently, the Neumann realization of (-L_{\Lambda,r}) on (L^2(\mu_{\Lambda,\beta,r})) has spectral gap at least (\rho_{\mathrm{loc}}).
+
+**Proof.** Let (\bar f:=f-\mu_{\Lambda,\beta,r}(f)), so (\mu_{\Lambda,\beta,r}(\bar f)=0). Set
+[
+u_t:=P_t^{(r)}\bar f.
+]
+By invariance of (\mu_{\Lambda,\beta,r}), (\mu_{\Lambda,\beta,r}(u_t)=\mu_{\Lambda,\beta,r}(\bar f)=0) for all (t).
+
+**Step 1: the variance representation by energy dissipation.**
+By Lemma 6.3,
+[
+\frac{d}{dt}|u_t|*{L^2(\mu*{\Lambda,\beta,r})}^2
+================================================
+
+-2\int \Gamma_r(u_t),d\mu_{\Lambda,\beta,r}.
+\tag{6.28}
+]
+Because (L_{\Lambda,r}) is symmetric and (\overline{K}*\Lambda(r)) is connected, the kernel of (-L*{\Lambda,r}) consists exactly of constants: if (L_{\Lambda,r}h=0), then by (6.4),
+[
+0=\int h,L_{\Lambda,r}h,d\mu=-\int \Gamma_r(h),d\mu,
+]
+so (\nabla h=0) a.e., hence (h) is constant on each connected component, and thus constant on (\overline{K}_\Lambda(r)). Therefore (P_t^{(r)}) converges in (L^2) to the projection onto constants; since (\mu(u_t)=0), this implies (u_t\to 0) in (L^2) as (t\to\infty). Integrating (6.28) from (t=0) to (\infty) gives
+[
+|\bar f|_2^2
+============
+
+2\int_0^\infty \int \Gamma_r(u_t),d\mu,dt.
+\tag{6.29}
+]
+
+**Step 2: exponential decay of Dirichlet energy under (CD(\rho_{\mathrm{loc}},\infty)).**
+Define (E(t):=\int \Gamma_r(P_t^{(r)}g),d\mu). Differentiate using (\partial_t P_t g=L P_t g):
+[
+E'(t)=2\int \Gamma_r(P_t g,,L P_t g),d\mu.
+\tag{6.30}
+]
+Using invariance (\int L(\cdot),d\mu=0) and the definition of (\Gamma_{2,r}),
+[
+\int \Gamma_{2,r}(P_t g),d\mu
+=============================
+
+# \frac12\int \Big(L\Gamma_r(P_t g)-2\Gamma_r(P_t g, L P_t g)\Big),d\mu
+
+-\int \Gamma_r(P_t g, L P_t g),d\mu,
+]
+so (E'(t)=-2\int \Gamma_{2,r}(P_t g),d\mu). Under (CD(\rho_{\mathrm{loc}},\infty)), (\Gamma_{2,r}\ge \rho_{\mathrm{loc}}\Gamma_r), hence
+[
+E'(t)\le -2\rho_{\mathrm{loc}} E(t),
+\qquad\text{so}\qquad
+E(t)\le e^{-2\rho_{\mathrm{loc}}t},E(0).
+\tag{6.31}
+]
+Apply this with (g=\bar f). Since (\Gamma_r(\bar f)=\Gamma_r(f)), we get
+[
+\int \Gamma_r(u_t),d\mu
+=======================
+
+\int \Gamma_r(P_t^{(r)}\bar f),d\mu
+\le
+e^{-2\rho_{\mathrm{loc}}t}\int \Gamma_r(f),d\mu.
+\tag{6.32}
+]
+
+**Step 3: conclude (6.27).**
+Insert (6.32) into (6.29):
+[
+\mathrm{Var}_{\mu}(f)
+=|\bar f|*2^2
+\le
+2\int_0^\infty e^{-2\rho*{\mathrm{loc}}t},dt\ \int \Gamma_r(f),d\mu
+===================================================================
+
+\frac{1}{\rho_{\mathrm{loc}}}\int \Gamma_r(f),d\mu,
+]
+which is exactly (6.27). ∎
+
+---
+
+### 6.2.5 Local log–Sobolev inequality on (K_\Lambda(r))
+
+#### Theorem 6.8 (local log–Sobolev inequality).
+
+Assume (CD(\rho_{\mathrm{loc}},\infty)) holds on (\overline{K}*\Lambda(r)) with (\rho*{\mathrm{loc}}>0). Then for every (f\in C^\infty(\overline{K}*\Lambda(r))) satisfying the Neumann boundary condition (6.2),
+[
+\mathrm{Ent}*{\mu_{\Lambda,\beta,r}}(f^2)
+;\le;
+\frac{2}{\rho_{\mathrm{loc}}}\int \Gamma_r(f),d\mu_{\Lambda,\beta,r}.
+\tag{6.33}
+]
+
+**Proof.** Let (h:=f^2\ge 0). If (\int h,d\mu=0) then (h=0) (\mu)-a.e. and the inequality is trivial. Otherwise define the normalization
+[
+\widetilde h:=\frac{h}{\int h,d\mu},
+\qquad\text{so that}\qquad \int \widetilde h,d\mu=1.
+\tag{6.34}
+]
+Since (\mathrm{Ent}(c h)=c,\mathrm{Ent}(h)) for (c>0), it suffices to prove
+[
+\mathrm{Ent}*{\mu}(\widetilde h)\ \le\ \frac{1}{2\rho*{\mathrm{loc}}},\mathcal I_\mu(\widetilde h).
+\tag{6.35}
+]
+
+Let (\widetilde h_t:=P_t^{(r)}\widetilde h). Then (\int \widetilde h_t,d\mu=1) for all (t\ge 0).
+
+**Step 1: entropy dissipation.**
+Lemma 6.5 gives
+[
+\frac{d}{dt}\mathrm{Ent}_\mu(\widetilde h_t)
+============================================
+
+-\mathcal I_\mu(\widetilde h_t).
+\tag{6.36}
+]
+
+**Step 2: information decay.**
+Lemma 6.6 and (CD(\rho_{\mathrm{loc}},\infty)) give
+[
+\mathcal I_\mu(\widetilde h_t)\le e^{-2\rho_{\mathrm{loc}}t},\mathcal I_\mu(\widetilde h).
+\tag{6.37}
+]
+
+**Step 3: (\mathrm{Ent}_\mu(\widetilde h_t)\to 0) as (t\to\infty).**
+By Theorem 6.7 applied to (\widetilde h_t-1) (which has mean zero) and Lemma 6.3 applied to (u_t:=\widetilde h_t-1), one obtains exponential (L^2(\mu))-convergence (\widetilde h_t\to 1). Since (\overline{K}*\Lambda(r)) is compact and (P_t^{(r)}) is a smoothing semigroup for (t>0), this convergence improves to uniform convergence (e.g. by spectral expansion of the self-adjoint Neumann generator). Hence (\widetilde h_t\to 1) uniformly, and therefore
+[
+\mathrm{Ent}*\mu(\widetilde h_t)\to \mathrm{Ent}_\mu(1)=0.
+\tag{6.38}
+]
+
+**Step 4: integrate and conclude (6.35).**
+Integrate (6.36) from (t=0) to (t=\infty) and use (6.38):
+[
+\mathrm{Ent}_\mu(\widetilde h)
+==============================
+
+# \mathrm{Ent}*\mu(\widetilde h_0)-\lim*{t\to\infty}\mathrm{Ent}_\mu(\widetilde h_t)
+
+\int_0^\infty \mathcal I_\mu(\widetilde h_t),dt
+\le
+\int_0^\infty e^{-2\rho_{\mathrm{loc}}t},dt\ \mathcal I_\mu(\widetilde h)
+=========================================================================
+
+\frac{1}{2\rho_{\mathrm{loc}}},\mathcal I_\mu(\widetilde h),
+]
+which is (6.35).
+
+Finally, return from (\widetilde h) to (h=f^2). Using the chain rule for (\Gamma_r),
+[
+\Gamma_r(f^2)=4f^2,\Gamma_r(f),
+\qquad\text{hence}\qquad
+\mathcal I_\mu(f^2)
+===================
+
+# \int \frac{\Gamma_r(f^2)}{f^2},d\mu
+
+4\int \Gamma_r(f),d\mu.
+\tag{6.39}
+]
+Combine (6.35) with (6.39) to obtain (6.33). ∎
+
+---
+
+### 6.2.6 Uniform constants and the “hinge input” packaged for later use
+
+The entire point of the hinge inequality (6.12) is that it yields a **volume-uniform** local curvature–dimension constant. Concretely, once (r) is chosen so that (\rho_{\mathrm{loc}}(r)=c_H-R_W(r)>0) (e.g. (\rho_{\mathrm{loc}}(r)\ge c_H/2)), Theorems 6.7–6.8 give:
+
+* a local Poincaré constant (C_P^{\mathrm{loc}} = 1/\rho_{\mathrm{loc}}(r)), and
+* a local log–Sobolev constant (C_{\mathrm{LSI}}^{\mathrm{loc}} = 1/\rho_{\mathrm{loc}}(r)) in the convention
+  (\mathrm{Ent}(f^2)\le 2 C_{\mathrm{LSI}}^{\mathrm{loc}}\int |\nabla f|^2,d\mu).
+
+Both constants depend only on the **group geometry** (through (c_H)), the **local Taylor constant** (M_3), the **overlap bound** (\nu\le 6), and the chosen radius (r) (which itself may be taken (O(\beta^{-1})) via Corollary 5.22). They do **not** grow with (|\Lambda|).
+
+#### Remark 6.9 (why the matrix structure is not used here).
+
+In (6.12) we have a stronger lower bound with an additional positive semidefinite term (\frac{\beta}{n\lambda_\rho}d_1^*d_1). For the scalar Poincaré/LSI in this subsection we only exploited the scalar part (\rho_{\mathrm{loc}}(r)I). The **matrix** term becomes essential in §6.3–§6.5, where we invert a 1-form operator (the Witten Laplacian) and keep the Maxwell structure rather than collapsing it to a scalar.
+
+#### Remark 6.10 (corners of (\overline{K}_\Lambda(r))).
+
+The boundary of (\overline{K}*\Lambda(r)=\prod_b \overline{B_r^G(\mathbf 1)}) has corners. One can treat the reflected diffusion and the integration-by-parts identities face-by-face (the corners have codimension (\ge2) and do not contribute to boundary integrals), or one can replace (K*\Lambda(r)) by a smooth, strongly convex domain contained in it (e.g. a small geodesic ball (B_r^\Lambda(U^{(0)})\subset K_\Lambda(r)) from Lemma 5.13) and obtain the same local inequalities on that smooth localization. Either device is compatible with the later conditional-covariance localization, since all curvature bounds are pointwise and pass to subsets.
+
+---
+
+This completes the derivation “local curvature (\Rightarrow) local Poincaré/LSI” on the small-field region. In §6.3 we move to the Helffer–Sjöstrand covariance representation, where the key object is no longer a scalar inequality but an inverse of a **matrix-valued** operator on 1-forms, into which the Maxwell structure from §5.4 feeds directly.
+
+
+
+
+
+### 6.3 Helffer–Sjöstrand representation of covariance and its matrix inequality form
+
+This subsection is where the “matrix-not-scalar” philosophy becomes operational. The basic outcome is a covariance identity that expresses (\mathrm{Cov}(F,G)) in terms of the inverse of a *positive operator on gradients*—the **Witten Laplacian on 1-forms** (a.k.a. the Helffer–Sjöstrand operator). Once we have a *matrix lower bound* on the Bakry–Émery curvature operator (as in the localized hinge inequality of §5.4), we can compare that inverse to the inverse of a structured “massive Maxwell” operator without ever taking absolute values of cross-couplings.
+
+Throughout, (M_\Lambda=G^{E(\Lambda)}) carries the product bi-invariant metric (g_\Lambda), and (\mu_\Lambda) denotes the Gibbs measure
+[
+d\mu_\Lambda(U)=Z_\Lambda^{-1}e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U),
+]
+with (S_\Lambda) gauge-invariant and (C^2) (in our application (S_\Lambda=S_{\Lambda,\beta}) is the Wilson action). The reversible generator from §3.5 and §6.1 is
+[
+L_\Lambda f ;:=;\Delta_\Lambda f-\big\langle \nabla S_\Lambda,\nabla f\big\rangle_{g_\Lambda},
+\qquad f\in C^\infty(M_\Lambda),
+]
+so that (L_\Lambda) is self-adjoint on (L^2(\mu_\Lambda)), (L_\Lambda 1=0), and the Dirichlet form is
+[
+\mathcal E_\Lambda(f,g);:=;\int \langle \nabla f,\nabla g\rangle_{g_\Lambda},d\mu_\Lambda
+;=;-\int f,L_\Lambda g,d\mu_\Lambda .
+\tag{6.36}
+]
+
+#### 6.3.1 Poisson equation and covariance as a Dirichlet pairing
+
+Let (L_0^2(\mu_\Lambda):={h\in L^2(\mu_\Lambda): \int h,d\mu_\Lambda=0}). Since (M_\Lambda) is compact and (L_\Lambda) is symmetric with (L_\Lambda 1=0), the operator (-L_\Lambda) is nonnegative and has kernel containing the constants; hence (-L_\Lambda) is invertible on (L_0^2(\mu_\Lambda)). In particular, for any smooth (G) with (\mu_\Lambda(G)=0), there exists a unique mean-zero solution (u\in L_0^2(\mu_\Lambda)\cap C^\infty(M_\Lambda)) to the Poisson equation
+[
+-L_\Lambda u ;=; G,
+\qquad \mu_\Lambda(u)=0.
+\tag{6.37}
+]
+
+The next lemma is just the integration-by-parts mechanism that underlies every Brascamp–Lieb/Helffer–Sjöstrand argument.
+
+**Lemma 6.23 (covariance via the Poisson solution).**
+Let (F,G\in C^\infty(M_\Lambda)) with (\mu_\Lambda(G)=0), and let (u) solve ((-L_\Lambda)u=G) with (\mu_\Lambda(u)=0). Then
+[
+\mathrm{Cov}*{\mu*\Lambda}(F,G)
+;=;\int F,G,d\mu_\Lambda
+;=;\int \langle \nabla F,\nabla u\rangle_{g_\Lambda},d\mu_\Lambda.
+\tag{6.38}
+]
+
+*Proof.* Since (\mu_\Lambda(G)=0), we have (\mathrm{Cov}(F,G)=\int FG,d\mu_\Lambda). Using (G=-L_\Lambda u) and the Dirichlet identity (6.36),
+[
+\int FG,d\mu_\Lambda
+=\int F(-L_\Lambda u),d\mu_\Lambda
+=\mathcal E_\Lambda(F,u)
+=\int \langle \nabla F,\nabla u\rangle,d\mu_\Lambda.
+\qquad\square
+]
+
+So far, nothing “matrix-like” has happened: we have reduced covariance to (\nabla u). The real point is that (\nabla u) can be written as the inverse of a *vector-valued* elliptic operator applied to (\nabla G).
+
+#### 6.3.2 The Witten Laplacian on gradients and the commutation identity
+
+We now introduce the 1-form/vector-field operator whose inverse will appear.
+
+We freely identify 1-forms and vector fields via (g_\Lambda). Thus (\nabla f) is viewed as a tangent vector field, and (\nabla^2 f) as the symmetric bilinear Hessian.
+
+**Definition 6.24 (Helffer–Sjöstrand operator / Witten Laplacian on 1-forms).**
+Define (\mathcal L^{(1)}*\Lambda) acting on smooth vector fields (\Xi) on (M*\Lambda) by
+[
+\mathcal L^{(1)}*\Lambda ;:=; (-L*\Lambda)\otimes I ;+;\mathrm{Ric}*{g*\Lambda};+;\nabla^2 S_\Lambda.
+\tag{6.39}
+]
+Here (\mathrm{Ric}*{g*\Lambda}) is the Ricci endomorphism of ((M_\Lambda,g_\Lambda)), and ((-L_\Lambda)\otimes I) denotes the natural drifted connection Laplacian on vector fields:
+in a local orthonormal frame ((e_i)*{i=1}^{\dim M*\Lambda}),
+[
+\big(({-L_\Lambda})\otimes I\big)\Xi
+====================================
+
+-\sum_{i}\Big(\nabla_{e_i}\nabla_{e_i}\Xi-\nabla_{\nabla_{e_i}e_i}\Xi\Big)
+;+;\nabla_{\nabla S_\Lambda}\Xi .
+\tag{6.40}
+]
+(Equivalently: the sum of the rough Laplacian on vector fields and the drift (\nabla_{\nabla S_\Lambda}).)
+
+The next lemma is the precise commutation statement: applying (\nabla) to the scalar Poisson equation produces (\mathcal L^{(1)}_\Lambda) on the gradient field.
+
+**Lemma 6.25 (gradient–generator commutation).**
+For every (u\in C^\infty(M_\Lambda)),
+[
+\nabla(-L_\Lambda u) ;=;\mathcal L^{(1)}_\Lambda(\nabla u).
+\tag{6.41}
+]
+
+*Proof.* Expand using (L_\Lambda=\Delta_\Lambda-\langle \nabla S_\Lambda,\nabla\cdot\rangle):
+[
+\nabla(-L_\Lambda u)
+====================
+
+\nabla(-\Delta_\Lambda u)
++\nabla\big\langle \nabla S_\Lambda,\nabla u\big\rangle.
+\tag{6.42}
+]
+
+**Step 1: the Laplacian part produces the Ricci term.**
+A standard curvature-commutation identity gives
+[
+\nabla(\Delta_\Lambda u)
+========================
+
+\Delta_\Lambda(\nabla u);-;\mathrm{Ric}*{g*\Lambda}(\nabla u),
+\tag{6.43}
+]
+where (\Delta_\Lambda(\nabla u)) is the rough Laplacian on the vector field (\nabla u). (One way to see (6.43) is to choose normal coordinates at a point (U) so that (\nabla_{e_i}e_j(U)=0), write (\Delta_\Lambda=\sum_i\nabla_{e_i}\nabla_{e_i}) at (U), and use the curvature commutator (\nabla_{e_i}\nabla_{e_j}\nabla u-\nabla_{e_j}\nabla_{e_i}\nabla u=R(e_i,e_j)\nabla u); tracing in (i) yields the Ricci contraction.) Rewriting (6.43),
+[
+\nabla(-\Delta_\Lambda u)
+=========================
+
+-\Delta_\Lambda(\nabla u);+;\mathrm{Ric}*{g*\Lambda}(\nabla u).
+\tag{6.44}
+]
+
+**Step 2: the drift part produces the Hessian of (S_\Lambda).**
+Let (h(U):=\langle \nabla S_\Lambda,\nabla u\rangle). For any tangent vector (X),
+[
+Xh
+==
+
+# X\langle \nabla S_\Lambda,\nabla u\rangle
+
+\langle \nabla_X\nabla S_\Lambda,\nabla u\rangle
++\langle \nabla S_\Lambda,\nabla_X\nabla u\rangle.
+\tag{6.45}
+]
+The first term is (\nabla^2 S_\Lambda(X,\nabla u)), i.e. (\langle (\nabla^2 S_\Lambda)(\nabla u),X\rangle). The second term is (\langle \nabla_{\nabla S_\Lambda}\nabla u,X\rangle) by symmetry of the Hessian in its two slots:
+[
+\langle \nabla S_\Lambda,\nabla_X\nabla u\rangle
+================================================
+
+# \nabla^2 u(X,\nabla S_\Lambda)
+
+\langle \nabla_{\nabla S_\Lambda}\nabla u, X\rangle.
+\tag{6.46}
+]
+Since (6.45) holds for all (X), it follows that
+[
+\nabla\langle \nabla S_\Lambda,\nabla u\rangle
+==============================================
+
+(\nabla^2 S_\Lambda)(\nabla u);+;\nabla_{\nabla S_\Lambda}\nabla u.
+\tag{6.47}
+]
+
+**Step 3: collect terms.**
+Substitute (6.44) and (6.47) into (6.42):
+[
+\nabla(-L_\Lambda u)
+====================
+
+\Big(-\Delta_\Lambda(\nabla u)+\nabla_{\nabla S_\Lambda}\nabla u\Big)
++\mathrm{Ric}*{g*\Lambda}(\nabla u)+(\nabla^2 S_\Lambda)(\nabla u).
+\tag{6.48}
+]
+The parenthesized term is exactly (\big(({-L_\Lambda})\otimes I\big)(\nabla u)) by (6.40). Hence (6.48) is (6.41). (\square)
+
+#### 6.3.3 Helffer–Sjöstrand covariance identity
+
+We can now identify (\nabla u) explicitly in terms of (\nabla G).
+
+**Proposition 6.26 (Helffer–Sjöstrand / Witten-Laplacian covariance identity).**
+Let (F,G\in C^\infty(M_\Lambda)) with (\mu_\Lambda(G)=0). Then
+[
+\mathrm{Cov}*{\mu*\Lambda}(F,G)
+===============================
+
+\int \Big\langle \nabla F,;(\mathcal L^{(1)}*\Lambda)^{-1}\nabla G\Big\rangle,d\mu*\Lambda,
+\tag{6.49}
+]
+where ((\mathcal L^{(1)}*\Lambda)^{-1}) denotes the inverse of (\mathcal L^{(1)}*\Lambda) on (\ker(\mathcal L^{(1)}_\Lambda)^\perp) (equivalently, the Moore–Penrose pseudoinverse; (\nabla G) lies in the range).
+
+*Proof.* Let (u) solve ((-L_\Lambda)u=G) with (\mu_\Lambda(u)=0). By Lemma 6.23,
+[
+\mathrm{Cov}*{\mu*\Lambda}(F,G)=\int \langle \nabla F,\nabla u\rangle,d\mu_\Lambda.
+\tag{6.50}
+]
+Apply (\nabla) to ((-L_\Lambda)u=G) and use Lemma 6.25:
+[
+\nabla G=\nabla(-L_\Lambda u)=\mathcal L^{(1)}*\Lambda(\nabla u).
+\tag{6.51}
+]
+Thus (\nabla u) is the unique element of (\ker(\mathcal L^{(1)}*\Lambda)^\perp) solving (\mathcal L^{(1)}*\Lambda\xi=\nabla G), i.e.
+[
+\nabla u=(\mathcal L^{(1)}*\Lambda)^{-1}\nabla G.
+\tag{6.52}
+]
+Substitute (6.52) into (6.50) to obtain (6.49). (\square)
+
+**Remark 6.27 (horizontal gradients for gauge-invariant observables).**
+If (F) (or (G)) is gauge-invariant, then (\nabla F(U)) lies in the horizontal space (H_U) for every (U) (Lemma 3.38). Consequently, in the identity (6.49) one may insert the orthogonal projection (\Pi_{H_U}) pointwise on (\nabla F,\nabla G) without changing the value. This will be used later to avoid vertical zero-modes when comparing ((\mathcal L^{(1)}_\Lambda)^{-1}) to a massive Maxwell inverse on the horizontal sector.
+
+#### 6.3.4 The matrix inequality form (matrix Brascamp–Lieb)
+
+The payoff of writing covariance through ((\mathcal L^{(1)}*\Lambda)^{-1}) is that (\mathcal L^{(1)}*\Lambda) contains the Bakry–Émery curvature matrix (\mathrm{Ric}*{\mu*\Lambda}) *as an additive term*.
+
+Recall from §6.1 that the Bakry–Émery curvature endomorphism is
+[
+\mathrm{Ric}*{\mu*\Lambda}(U) ;:=; \mathrm{Ric}*{g*\Lambda}(U)+\nabla^2 S_\Lambda(U),
+\tag{6.53}
+]
+so that (by definition of (\mathcal L^{(1)}*\Lambda)),
+[
+\mathcal L^{(1)}*\Lambda
+========================
+
+(-L_\Lambda)\otimes I ;+;\mathrm{Ric}*{\mu*\Lambda}.
+\tag{6.54}
+]
+Since (({-L_\Lambda})\otimes I\succeq 0) as an operator on (L^2(\mu_\Lambda;TM_\Lambda)), we have the quadratic-form inequality
+[
+\mathcal L^{(1)}*\Lambda \ \succeq\ \mathrm{Ric}*{\mu_\Lambda}.
+\tag{6.55}
+]
+
+Whenever (\mathrm{Ric}*{\mu*\Lambda}) dominates a *fixed* positive operator, (6.55) immediately turns into an inequality for inverses.
+
+**Corollary 6.28 (matrix Brascamp–Lieb bound from a curvature lower bound).**
+Assume there exists a self-adjoint operator (M) on the tangent fibers (identified with (\mathcal C^1(\Lambda;\mathfrak g)) by right trivialization) such that
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)\ \succeq\ M
+\qquad\text{for all }U\text{ in a domain }\mathcal D\subseteq M_\Lambda,
+\tag{6.56}
+]
+and (M) is strictly positive on the subspace of interest (e.g. on horizontals). Then on (\mathcal D),
+[
+(\mathcal L^{(1)}*\Lambda)^{-1}\ \preceq\ M^{-1},
+\tag{6.57}
+]
+and consequently, for any smooth (F,G) with (\mu*\Lambda(G)=0) whose gradients are supported in (\mathcal D) (or after conditioning/localization to (\mathcal D)),
+[
+\big|\mathrm{Cov}*{\mu*\Lambda}(F,G)\big|
+\ \le
+\left(\int \langle \nabla F, M^{-1}\nabla F\rangle,d\mu_\Lambda\right)^{!1/2}
+\left(\int \langle \nabla G, M^{-1}\nabla G\rangle,d\mu_\Lambda\right)^{!1/2}.
+\tag{6.58}
+]
+
+*Proof.* From (6.54) and the assumption (6.56),
+[
+\mathcal L^{(1)}_\Lambda
+========================
+
+(-L_\Lambda)\otimes I+\mathrm{Ric}*{\mu*\Lambda}
+\ \succeq
+\mathrm{Ric}*{\mu*\Lambda}
+\ \succeq
+M,
+]
+in the sense of quadratic forms on vector fields. For strictly positive self-adjoint operators, the inverse is order-reversing, so ((\mathcal L^{(1)}_\Lambda)^{-1}\preceq M^{-1}), giving (6.57). Insert (6.57) into the Helffer–Sjöstrand identity (6.49) and apply Cauchy–Schwarz in the (M^{-1})-inner product to obtain (6.58). (\square)
+
+**Remark 6.29 (why we insist on “matrix” lower bounds).**
+The covariance control mechanism (6.49)–(6.58) only needs *one* operator to invert. If the curvature lower bound is kept in operator form (rather than scalarized by absolute values), then the inverse retains the structured sparsity (here: massive Maxwell) that later yields exponential off-diagonal decay. This is exactly the slot where the localized hinge inequality of §5.4 will be injected in §6.4.
+
+---
+
+**Source alignment note (internal):** this section matches and expands the project’s HS/Witten-Laplacian draft and the earlier “Witten Laplacian on 1-forms” scaffold.  
+
+
+
+
+
+
+
+### 6.4 Conditional covariance bound on (K_\Lambda(r)) in terms of a massive Maxwell inverse
+
+The Helffer–Sjöstrand (HS) representation from §6.3 expresses covariances through the inverse of the Witten Laplacian on (1)-forms. The purpose of the present subsection is to combine that representation with the *localized matrix hinge* from §5.4 in order to obtain, on the small-field region (K_\Lambda(r)), a *matrix Brascamp–Lieb type* covariance bound in which the inverse of a **massive Maxwell operator**
+[
+M ;\approx; m^2 I ;+; \alpha, d_1^*d_1
+]
+appears explicitly. This is the point at which the “matrix-not-scalar” structure becomes decisive: we keep the positive semidefinite operator (d_1^*d_1) intact rather than collapsing it into absolute-value bounds. 
+
+Throughout, fix (0<r\le r_{\mathrm{sf}}) and write (K:=K_\Lambda(r)\subset M_\Lambda) for the canonical linkwise small-field region from §5.3. We also write (\mu=\mu_{\Lambda,\beta}) for the Wilson Gibbs measure
+[
+d\mu(U)=Z_{\Lambda,\beta}^{-1}e^{-S_W(U)},d\mathrm{vol}*{g*\Lambda}(U),
+]
+and (\mathrm{Ric}*\mu(U)=\mathrm{Ric}*{g_\Lambda}(U)+\nabla^2S_W(U)) for the Bakry–Émery curvature matrix.
+
+---
+
+#### 6.4.1 From the hinge to a massive Maxwell lower bound for the Witten Laplacian
+
+Recall from §6.3 the Witten Laplacian on (1)-forms (or, equivalently via the metric, on vector fields) associated to the reversible generator
+[
+L=\Delta_{g_\Lambda}-\langle\nabla S_W,\nabla(\cdot)\rangle_{g_\Lambda},
+]
+namely the self-adjoint operator (\mathcal L^{(1)}) characterized by the commutation identity
+[
+\nabla(-Lu)=\mathcal L^{(1)}(\nabla u),
+]
+and admitting the Bochner–Weitzenböck decomposition
+[
+\mathcal L^{(1)} ;=; (-L)\otimes I ;+; \mathrm{Ric}*{g*\Lambda};+;\nabla^2S_W
+;=; (-L)\otimes I ;+; \mathrm{Ric}*\mu.
+\tag{6.10}
+]
+The crucial feature is that ((-L)\otimes I) is nonnegative as an operator on (L^2(\mu;T M*\Lambda)). Consequently,
+[
+\mathcal L^{(1)} \ \succeq\ \mathrm{Ric}*\mu
+\qquad\text{(as quadratic forms on (L^2(\mu;TM*\Lambda))).}
+\tag{6.11}
+]
+This is the operator-level version of “the Witten Laplacian dominates the curvature matrix.” 
+
+On the other hand, the localized hinge from §5.4 gives a *pointwise* lower bound for (\mathrm{Ric}*\mu(U)) on (K): there exists an explicit remainder (R_W(r)=O(\beta r)) such that for all (U\in K),
+[
+\mathrm{Ric}*\mu(U)
+\ \succeq
+\big(c_H-R_W(r)\big),I\ +\ \nabla^2S_W(U^{(0)}),
+\tag{6.12}
+]
+and using the vacuum Hessian identity (\nabla^2S_W(U^{(0)})=\frac{\beta}{n\lambda_\rho},d_1^*d_1),
+[
+\mathrm{Ric}*\mu(U)
+\ \succeq
+\big(c_H-R_W(r)\big),I\ +\ \frac{\beta}{n\lambda*\rho},d_1^*d_1,
+\qquad U\in K.
+\tag{6.13}
+]
+(Here (c_H) is the uniform Haar/Ricci lower bound for the product metric, and (n,\lambda_\rho) are the representation constants from §5.1–§5.2.) 
+
+If we choose (r) so that (c_H-R_W(r)\ge \frac{c_H}{2}) (as in Corollary 5.22), then on (K) we obtain the clean *massive Maxwell* lower bound
+[
+\mathrm{Ric}*\mu(U)
+\ \succeq
+\frac{c_H}{2},I\ +\ \frac{\beta}{n\lambda*\rho},d_1^*d_1
+\ =:\ M,
+\qquad U\in K,
+\tag{6.14}
+]
+where (M) is a fixed (i.e. (U)-independent) self-adjoint operator on (\mathcal C^1(\Lambda;\mathfrak g)) under right-trivialization. 
+
+Combining (6.11)–(6.14) yields, on the region (K),
+[
+\mathcal L^{(1)} \ \succeq\ M.
+\tag{6.15}
+]
+
+---
+
+#### 6.4.2 Inverse monotonicity: ((\mathcal L^{(1)})^{-1}\preceq M^{-1})
+
+To turn (6.15) into a covariance bound we need the elementary—but crucial—order reversal property of inverses.
+
+**Lemma 6.12 (inverse order reversal).**
+Let (A,B) be self-adjoint operators on a Hilbert space with
+[
+A\succeq B \succ 0 .
+]
+Then (A) and (B) are injective with bounded inverses on their ranges, and
+[
+A^{-1}\ \preceq\ B^{-1}.
+]
+
+*Proof.* Since (B\succ0), (B^{1/2}) is invertible. Conjugate the inequality by (B^{-1/2}) to obtain
+[
+B^{-1/2}AB^{-1/2}\ \succeq\ I.
+]
+The operator (C:=B^{-1/2}AB^{-1/2}) is positive definite, so by the spectral theorem its spectrum is contained in ([1,\infty)), hence (\sigma(C^{-1})\subset (0,1]) and therefore (C^{-1}\preceq I). Rewriting (C^{-1}=B^{1/2}A^{-1}B^{1/2}) gives
+[
+B^{1/2}A^{-1}B^{1/2}\ \preceq\ I,
+]
+and conjugating back yields (A^{-1}\preceq B^{-1}). (\square)
+
+Applying Lemma 6.12 with (A=\mathcal L^{(1)}) and (B=M) (on the appropriate Hilbert space of (L^2) vector fields over the region where (6.15) holds, e.g. in the localized/reflected setup from §6.2) gives:
+[
+(\mathcal L^{(1)})^{-1}\ \preceq\ M^{-1}.
+\tag{6.16}
+]
+
+---
+
+#### 6.4.3 Conditional HS covariance bound on (K)
+
+We now combine the HS representation from §6.3 with (6.16). There are two equivalent ways to phrase the result, depending on the localization device fixed in §6.2:
+
+* either as a covariance bound for the *conditioned/localized* Gibbs state on (K) (implemented via reflecting boundary/Neumann generator), or
+* as the bound that holds for the HS integrand *whenever the configuration lies in (K)*, with the complement handled later by the localization decomposition in Part 8.
+
+We state the bound in the conditional/reflected form since that is exactly what is needed in the “good-set + error” strategy.
+
+Let (\mu^K) denote the probability measure obtained by restricting (\mu) to (K) and normalizing, together with the corresponding reversible generator (L^K) on (K) (e.g. Neumann/reflecting). Let (\mathcal L_K^{(1)}) be the associated Witten Laplacian.
+
+**Proposition 6.13 (conditional matrix covariance bound on (K_\Lambda(r))).**
+Assume (r) is chosen so that (6.14) holds on (K=K_\Lambda(r)), and let
+[
+M ;=;\frac{c_H}{2},I ;+;\frac{\beta}{n\lambda_\rho},d_1^*d_1
+]
+be the corresponding massive Maxwell operator. Then for all (C^1) observables (F,G) with (\mu^K(G)=0),
+[
+\mathrm{Cov}*{\mu^K}(F,G)
+;=;
+\int*{K}\Big\langle \nabla F,\ (\mathcal L_K^{(1)})^{-1}\nabla G\Big\rangle,d\mu^K
+;\le;
+\int_{K}\Big\langle \nabla F,\ M^{-1}\nabla G\Big\rangle,d\mu^K.
+\tag{6.17}
+]
+If (F) and (G) are gauge invariant, then (\nabla F(U)\in H_U) and (\nabla G(U)\in H_U) for all (U), and one may equivalently replace (\nabla) by the horizontal gradient (\nabla_H) throughout (or insert the orthogonal projection onto horizontals) without changing the identity or inequality.
+
+*Proof.*
+
+1. **HS identity on (K).** By §6.3 (applied to the localized generator (L^K)), if (\mu^K(G)=0) and (u) solves (-L^K u=G), then
+   [
+   \mathrm{Cov}*{\mu^K}(F,G)=\int_K \langle \nabla F,\nabla u\rangle,d\mu^K,
+   ]
+   and the commutation identity gives (\nabla u=(\mathcal L_K^{(1)})^{-1}\nabla G). Hence
+   [
+   \mathrm{Cov}*{\mu^K}(F,G)=\int_K \big\langle \nabla F,(\mathcal L_K^{(1)})^{-1}\nabla G\big\rangle,d\mu^K.
+   ]
+
+2. **Lower bound for (\mathcal L_K^{(1)}).** The Bochner–Weitzenböck decomposition on (K) gives
+   [
+   \mathcal L_K^{(1)} = (-L^K)\otimes I + \mathrm{Ric}*\mu,
+   ]
+   and ((-L^K)\otimes I\succeq 0). Thus (\mathcal L_K^{(1)}\succeq \mathrm{Ric}*\mu). On (K), the hinge lower bound (6.14) yields (\mathrm{Ric}_\mu(U)\succeq M), hence (\mathcal L_K^{(1)}\succeq M).
+
+3. **Invert and conclude.** Since (M\succ 0) (because (c_H/2>0) for semisimple (G)), Lemma 6.12 applies and gives ((\mathcal L_K^{(1)})^{-1}\preceq M^{-1}). Substituting into the HS identity yields (6.17).
+
+4. **Horizontality for gauge invariants.** If (F) (resp. (G)) is gauge invariant, then (\nabla F(U)) (resp. (\nabla G(U))) is orthogonal to gauge orbits, hence horizontal, by Lemma 3.38. Therefore inserting the horizontal projection does not change the integrand. (\square)
+
+---
+
+#### 6.4.4 Interpretation and the next reduction
+
+Proposition 6.13 reduces covariance control on the canonical small-field region to understanding the inverse (M^{-1}), i.e. the Green’s function of a **massive Maxwell operator**. This is exactly the object whose kernel can be shown to decay exponentially by a Combes–Thomas type argument on the lattice (Part 9). The only input used here is the matrix hinge inequality on (K_\Lambda(r)) and the HS representation; no scalarization or adversarial bounding of cross-terms is required. 
+
+In §6.5 we fix the notation for (M), specify precisely on which cochain space (full (\mathcal C^1) vs. horizontal sector) it will be inverted, and record the linkwise kernel notation that will later feed into the exponential decay step.
+
+
+
+
+
+
+
+### 6.5 The massive Maxwell operator (M) and its Green kernel on horizontals
+
+Proposition 6.13 reduces covariance control on the small-field region (K=K_\Lambda(r)) to understanding the inverse of a fixed “massive Maxwell” operator. The purpose of this subsection is to (i) fix the precise operator we will invert, (ii) specify the *subspace* on which we invert it (full (\mathcal C^1) versus a horizontal sector), and (iii) introduce the linkwise kernel notation and distance conventions that will be used in Part 9 to prove exponential off-diagonal decay.
+
+Throughout, (\Lambda) is the finite periodic lattice from §2.1, and we identify (by right trivialization) tangent vectors with (\mathfrak g)-valued 1-cochains
+[
+T_U M_\Lambda \ \simeq\ \mathcal C^1(\Lambda;\mathfrak g)=\mathfrak g^{E(\Lambda)},
+\qquad
+\langle X,Y\rangle_{\mathcal C^1}:=\sum_{b\in E(\Lambda)}\langle X_b,Y_b\rangle_{\mathfrak g}.
+]
+
+---
+
+#### 6.5.1 Definition of (M) and the parameters ((m^2,\alpha))
+
+Assume (r) has been chosen so that the hinge bound (6.14) holds on (K):
+[
+\mathrm{Ric}*\mu(U)\ \succeq\ \frac{c_H}{2},I\ +\ \frac{\beta}{n\lambda*\rho},d_1^*d_1,
+\qquad U\in K,
+]
+where (c_H) is the uniform Haar/Ricci lower bound (cf. §4.1 / (5.30)), and (\lambda_\rho>0) is the representation constant from §5.1–§5.2.
+
+It is convenient to package constants as
+[
+m^2\ :=\ \frac{c_H}{2},
+\qquad
+\alpha\ :=\ \frac{\beta}{n\lambda_\rho}.
+\tag{6.18}
+]
+Then the operator appearing in (6.14) is
+[
+M ;:=; m^2 I;+;\alpha,d_1^*d_1.
+\tag{6.19}
+]
+
+**Basic properties.** Since (d_1^*d_1\succeq 0), we have for all (X\in\mathcal C^1(\Lambda;\mathfrak g)),
+[
+\langle X,MX\rangle_{\mathcal C^1}
+= m^2|X|*{\mathcal C^1}^2 + \alpha|d_1X|*{\mathcal C^2}^2
+\ \ge\ m^2|X|*{\mathcal C^1}^2.
+\tag{6.20}
+]
+In particular, if (m^2>0) (e.g. (G) semisimple), then (M) is strictly positive and invertible on (\mathcal C^1), with the uniform bound
+[
+|M^{-1}|*{\mathcal C^1\to\mathcal C^1}\ \le\ \frac{1}{m^2}.
+\tag{6.21}
+]
+
+---
+
+#### 6.5.2 Which space do we invert on: full (\mathcal C^1) vs the horizontal sector?
+
+The matrix covariance bound of §6.4 involves (M^{-1}) applied to (\nabla F(U)) and (\nabla G(U)). For *gauge-invariant* observables, these gradients are horizontal in the sense of §3.3 (Lemma 3.38). The key point for the decay analysis is that we should treat the inverse on a *fixed divergence-free sector*, because the longitudinal sector carries a nonlocal projection which is invisible to gauge-invariant gradients but can obscure kernel decay if left untreated.
+
+Recall the **vacuum horizontal space** (Proposition 3.35):
+[
+H^{(0)} ;:=; H_{U^{(0)}} ;=; \ker(d_0^*)\ \subset\ \mathcal C^1(\Lambda;\mathfrak g),
+\tag{6.22}
+]
+with orthogonal projection (\Pi_{H^{(0)}}:\mathcal C^1\to H^{(0)}) (explicitly (I-d_0G_0d_0^*) by Lemma 3.41).
+
+The following invariance facts explain why (H^{(0)}) is the right “analysis space” for the Green kernel.
+
+**Lemma 6.14 (invariance and block structure of (d_1^*d_1) and (M)).**
+On the cochain space (\mathcal C^1(\Lambda;\mathfrak g)), one has:
+
+1. (\mathrm{im}(d_0)\subset \ker(d_1^*d_1)).
+2. (d_1^*d_1) maps (\mathcal C^1) into (\ker(d_0^*)), hence (H^{(0)}=\ker(d_0^*)) is invariant under (d_1^*d_1).
+3. Consequently (M=m^2I+\alpha d_1^*d_1) preserves the orthogonal splitting
+   [
+   \mathcal C^1(\Lambda;\mathfrak g);=;\mathrm{im}(d_0)\ \oplus\ H^{(0)}.
+   \tag{6.23}
+   ]
+
+*Proof.*
+
+1. If (X=d_0\varphi), then (d_1X=d_1d_0\varphi=0) (Lemma 3.16), hence (d_1^*d_1X=0).
+2. Since (d_1d_0=0), taking Hilbert adjoints gives (d_0^*d_1^*=0). Therefore for any (X),
+   [
+   d_0^*(d_1^*d_1X)=(d_0^*d_1^*)d_1X=0,
+   ]
+   so (d_1^*d_1X\in\ker(d_0^*)). In particular, if (X\in\ker(d_0^*)), then also (d_1^*d_1X\in\ker(d_0^*)), i.e. (H^{(0)}) is invariant.
+3. The identity operator preserves every subspace, and (d_1^*d_1) preserves both (\mathrm{im}(d_0)) (by (1)) and (H^{(0)}) (by (2)), hence so does (M). (\square)
+
+Because of Lemma 6.14, we may unambiguously define the restricted operator
+[
+M_H\ :=\ M\big|*{H^{(0)}}:\ H^{(0)}\to H^{(0)},
+\qquad
+M_H = m^2 I*{H^{(0)}} + \alpha,(d_1^*d_1)\big|_{H^{(0)}}.
+\tag{6.24}
+]
+
+**Corollary 6.15 (inverse on horizontals).**
+If (m^2>0), then (M_H\succ 0) on (H^{(0)}) and hence (M_H^{-1}) exists. Moreover, for all (\xi,\eta\in H^{(0)}),
+[
+\langle \xi,\ M^{-1}\eta\rangle_{\mathcal C^1}
+;=;
+\langle \xi,\ M_H^{-1}\eta\rangle_{\mathcal C^1}.
+\tag{6.25}
+]
+
+*Proof.* By Lemma 6.14, (M) is block diagonal with respect to the orthogonal splitting (6.23), hence (M^{-1}) is block diagonal as well. Since (\xi,\eta\in H^{(0)}), only the (H^{(0)})-block contributes, giving (6.25). (\square)
+
+**Remark 6.16 (why we do not analyze (M^{-1}) on the full (\mathcal C^1) for decay).**
+Although (M\succ 0) on the full (\mathcal C^1) when (m^2>0), the inverse (M^{-1}) contains the orthogonal projector onto (\mathrm{im}(d_0)), and this projection is a nonlocal operator (it involves the Green operator (G_0=(d_0^*d_0)^{-1}) on mean-zero vertex fields; cf. Lemma 3.41). Since gauge-invariant gradients are horizontal, the physically relevant quantity in the HS bound is the bilinear form on (H^{(0)}), and it is (M_H^{-1}) whose kernel we will prove decays exponentially.
+
+---
+
+#### 6.5.3 Linkwise kernel notation for (M_H^{-1})
+
+We now fix the notational conventions that convert the operator inequality in Proposition 6.13 into a *distance-dependent* bound, once we know that the Green kernel of (M_H^{-1}) decays.
+
+Let (b,b'\in E(\Lambda)) be oriented links. Any (\xi\in\mathcal C^1(\Lambda;\mathfrak g)) has components (\xi_b\in\mathfrak g). Since (M_H^{-1}) is a linear operator on (H^{(0)}\subset\mathcal C^1), we may write it via its link-kernel:
+there exist linear maps (\big(M_H^{-1}\big)*{b,b'}\in \mathrm{End}(\mathfrak g)) such that for all (\eta\in H^{(0)}),
+[
+\big(M_H^{-1}\eta\big)*b ;=; \sum*{b'\in E(\Lambda)} \big(M_H^{-1}\big)*{b,b'},\eta_{b'}.
+\tag{6.26}
+]
+Equivalently, for (\xi,\eta\in H^{(0)}),
+[
+\big\langle \xi,\ M_H^{-1}\eta\big\rangle_{\mathcal C^1}
+========================================================
+
+\sum_{b,b'\in E(\Lambda)}
+\Big\langle \xi_b,\ \big(M_H^{-1}\big)*{b,b'},\eta*{b'}\Big\rangle_{\mathfrak g}.
+\tag{6.27}
+]
+We will measure the size of the kernel entry by the operator norm induced by (\langle\cdot,\cdot\rangle_{\mathfrak g}):
+[
+\Big|\big(M_H^{-1}\big)*{b,b'}\Big|*{\mathrm{op}}
+;:=;
+\sup\Big{\ \big|\big(M_H^{-1}\big)*{b,b'}v\big|*{\mathfrak g}\ :\ |v|_{\mathfrak g}=1\ \Big}.
+\tag{6.28}
+]
+
+**Remark 6.17 (Lie algebra factorization).**
+Because (d_1) and (d_1^*) act componentwise in (\mathfrak g) and use only the (\mathrm{Ad})-invariant inner product, the operator (M_H) is the tensor product of a scalar operator on link indices with the identity on (\mathfrak g). In particular, in an orthonormal basis of (\mathfrak g), (\big(M_H^{-1}\big)*{b,b'}) is a scalar multiple of (\mathrm{Id}*{\mathfrak g}). We keep the (\mathrm{End}(\mathfrak g)) notation because it is basis-free and compatible with later operator inequalities.
+
+---
+
+#### 6.5.4 Supports and link distances
+
+To turn (6.27) into a decay estimate for covariances of *local* observables, we must encode “how far apart” the supports are in a way adapted to the sparsity of (d_1^*d_1).
+
+**Definition 6.18 (link support).**
+For an observable (F:M_\Lambda\to\mathbb R), define (\mathrm{supp}_E(F)\subseteq E(\Lambda)) to be the minimal link set (A) such that (F(U)) depends only on ({U_b:\ b\in A}). Equivalently, (b\notin\mathrm{supp}_E(F)) iff (\nabla_b F\equiv 0) (the linkwise gradient vanishes identically).
+
+**Definition 6.19 (link adjacency and distance).**
+Recall the link adjacency relation (b\sim b') from Definition 3.47: (b\sim b') iff there exists a plaquette whose boundary contains both links. Let (\mathrm{dist}_E(b,b')) be the graph distance induced by (\sim) on (E(\Lambda)). For link sets (A,B\subseteq E(\Lambda)), define
+[
+\mathrm{dist}_E(A,B);:=;\min{\mathrm{dist}_E(b,b'):\ b\in A,\ b'\in B}.
+\tag{6.29}
+]
+By Corollary 3.49, the adjacency graph has uniformly bounded degree (in (d=4), each link has at most (18) neighbors other than itself), so (\mathrm{dist}_E) is a natural metric for the Combes–Thomas/finite-range arguments in Part 9.
+
+---
+
+#### 6.5.5 The Green kernel estimate we will prove later
+
+With the above conventions, the analytic input needed to convert Proposition 6.13 into exponential clustering is an off-diagonal decay estimate for (\big(M_H^{-1}\big)_{b,b'}) in the distance (\mathrm{dist}_E). This is proved in Part 9 (Combes–Thomas type conjugation argument / Fourier analysis on the divergence-free sector, depending on boundary conditions).
+
+For ease of reference, we record the target statement here (proved later).
+
+**Lemma 6.20 (massive Maxwell Green kernel decay on (H^{(0)}); proved in Part 9).**
+Let (M_H=m^2I+\alpha d_1^*d_1) on (H^{(0)}=\ker(d_0^*)) with (m^2>0) and (\alpha>0). Then there exist constants (C,\eta>0), depending only on the dimension and the parameters ((m^2,\alpha)) (and on the boundary condition choice, but not on (|\Lambda|)), such that for all (b,b'\in E(\Lambda)),
+[
+\Big|\big(M_H^{-1}\big)*{b,b'}\Big|*{\mathrm{op}}
+\ \le\
+C,e^{-\eta,\mathrm{dist}_E(b,b')}.
+\tag{6.30}
+]
+
+---
+
+This completes the definition of the operator (M) (and its horizontal restriction (M_H)) and the kernel/distance notation needed for the decay step. In Part 9 we will supply the proof of Lemma 6.20 and then insert it into the conditional covariance bound (6.17) to obtain exponential clustering on (K_\Lambda(r)), with constants uniform in volume.
+

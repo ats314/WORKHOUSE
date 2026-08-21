@@ -1,0 +1,115 @@
+Here’s a compact, self‑contained derivation showing how Haar geometry yields a positive “mass” (convexity) term for Wilson’s measure and fixes the sign in the Bakry–Émery tensor under the pulled‑back Haar metric.
+
+# One‑page derivation: Haar curvature ⇒ Wilson mass (sign check)
+
+**Setting.**
+Let (G=\mathrm{SU}(N)) with bi‑invariant metric (\langle\cdot,\cdot\rangle) induced by (-\mathrm{Tr}) on (\mathfrak g=\mathfrak{su}(N)). For a finite lattice (\Lambda), the configuration space is
+[
+\mathscr A ;=; G^{E},\qquad E:=\text{oriented edges},
+]
+endowed with the product Riemannian metric (g) (the pullback of the Haar metric on each factor). Write (U=(U_e)*{e\in E}\in\mathscr A). The Gibbs density is
+[
+d\mu*\beta(U);=;Z^{-1},e^{-S_\beta(U)},d\mathrm{vol}*g(U),
+\quad
+S*\beta(U)=\beta \sum_{p\in P}\Big(N- \mathrm{Re},\mathrm{Tr},U_p\Big),
+]
+with (U_p) the oriented plaquette product and (P) the plaquette set.
+
+**Goal.** Show that near the identity sector the Bakry–Émery tensor
+[
+\mathrm{Ric}*{\mu*\beta};:=;\mathrm{Ric}*g + \nabla^2 S*\beta
+]
+is positive in horizontal directions, yielding a uniform convexity (a “mass term”) of size (\simeq c,\beta) with an explicit (c>0) at small angles. This gives a local spectral‑gap/LSI lower bound and, after coarse‑graining, an emergent effective mass.
+
+---
+
+## 1) Geometry of (\mathscr A) and baseline Ricci
+
+Each factor (G) is compact, Einstein, with
+[
+\mathrm{Ric}*{G} ;=; \kappa, g_G,\qquad \kappa>0
+]
+((\kappa = \tfrac{1}{4}C*{\mathrm{adj}}) under a standard normalization; constants not needed for the sign). The product metric on (\mathscr A) gives
+[
+\mathrm{Ric}_g ;=; \kappa, g \quad\text{on}\quad T\mathscr A,
+]
+i.e., nonnegative and strictly positive on each factor. This supplies a **baseline positive curvature** independent of (\beta).
+
+---
+
+## 2) Second variation of the Wilson action (pulled‑back Haar metric)
+
+Fix a link (e) and set a small right‑invariant variation
+[
+\delta U_e ;=; U_e X_e,\qquad X_e\in\mathfrak g,
+]
+(all other links fixed). For a plaquette (p\ni e), write (U_p = \cdots U_e \cdots). Let (\theta_p\in\mathfrak g) be the small Lie‑algebra angle near identity so that
+[
+U_p = \exp(\theta_p),\qquad \theta_p=\sum_{e'\in \partial p} \sigma_{p,e'},\mathrm{Ad}*{\text{path}(e'\to p)}(X*{e'}) + O(X^2),
+]
+with (\sigma_{p,e'}\in{\pm 1}) the incidence sign and the Ad‑transport determined by the other (fixed) links on the boundary of (p).
+
+Use the expansion
+[
+\mathrm{Re},\mathrm{Tr},(\exp\theta_p)=N-\tfrac12|\theta_p|*{\text{HS}}^2 + O(|\theta_p|^3).
+]
+Therefore, at a background close to identity,
+[
+S*\beta(U) ;=; \frac{\beta}{2}\sum_{p}|\theta_p|^2 + O(\theta^3).
+]
+Taking second variation in the right‑invariant frame gives the quadratic form
+[
+\delta^2 S_\beta[ X ] ;=; \beta \sum_{p}\big\langle \theta_p'(X),,\theta_p'(X)\big\rangle
+;=; \beta, \langle X,; \mathcal H_W, X\rangle,
+]
+where (\mathcal H_W) is the **Wilson Hessian** on (T_U\mathscr A), explicitly a sparse, gauge‑covariant elliptic block operator built from incidence/signs and Ad‑transports. Crucially, (\mathcal H_W\ge 0) and on **horizontal directions** (modulo gauge or after projection by the Gauss constraint projector (P_0)) we have
+[
+\mathcal H_W ;\simeq; C^\ast C \quad \Rightarrow \quad \delta^2 S_\beta[ X_{\text{hor}} ] ;\ge; \beta, \lambda_{\min}(C^\ast C),|X_{\text{hor}}|^2.
+]
+Thus, **sign:** (\nabla^2 S_\beta) is **nonnegative**, and strictly positive on horizontal modes near identity.
+
+*Gauge directions.* Along pure gauge (vertical) directions (X= \nabla\phi) at the identity sector, the plaquette angle (\theta_p) cancels at quadratic order, giving the expected kernel. Either work on the quotient by gauge or insert the horizontal projector (P_0); all inequalities below are formulated on (P_0T\mathscr A).
+
+---
+
+## 3) Bakry–Émery tensor and the emergent mass
+
+Combine curvature and potential:
+[
+\mathrm{Ric}*{\mu*\beta}
+;=;
+\mathrm{Ric}*g + \nabla^2 S*\beta
+;\ge;
+\kappa, g ;+; \beta, P_0^\top \mathcal H_W P_0 .
+]
+Near identity configurations (small plaquette angles), there is a uniform constant (c_W>0) such that on horizontal directions
+[
+\langle X,, P_0^\top \mathcal H_W P_0, X\rangle ;\ge; c_W,|X|^2,
+]
+hence
+[
+\mathrm{Ric}*{\mu*\beta};\ge; (\kappa + \beta c_W), g \quad \text{on } P_0T\mathscr A.
+]
+This is the **mass‑from‑geometry** statement: a **positive Bakry–Émery lower bound** of size (\kappa+\beta c_W). The (\kappa) term is Haar‑geometric (background), the (\beta c_W) term is the **emergent Wilson mass** coming from the Hessian of the action in the pulled‑back Haar metric. The sign is strictly **positive** on physical (horizontal) fluctuations.
+
+---
+
+## 4) Immediate consequences (local, then RG‑stable)
+
+* **Local convexity / LSI / spectral gap.** A positive lower bound (\rho:=\kappa+\beta c_W>0) for (\mathrm{Ric}*{\mu*\beta}) on horizontal directions yields standard Bakry–Émery consequences locally: Poincaré and log‑Sobolev with constants (\gtrsim \rho) on small‑angle tubes (or globally after gauge fixing + small‑field domination).
+* **Effective mass parameter.** Linearizing the generator (L=\Delta_g-\nabla S_\beta\cdot\nabla) around identity and projecting horizontally gives a massive Ornstein–Uhlenbeck‑type drift with rate (\sim \beta c_W), i.e. a **mass scale (m_{\mathrm{eff}}^2 \sim \beta c_W)** at the lattice scale.
+* **Under coarse‑graining.** HOTRG/BRG preserve positivity of curvature lower bounds under convexity‑stable maps; the (\kappa) piece is scale‑invariant (product/Haar), while the (\beta c_W) piece flows, supplying the RG‑level “mass from curvature” mechanism.
+
+---
+
+## 5) Summary (sign + mechanism)
+
+* The product Haar geometry supplies (\mathrm{Ric}_g=\kappa g\ge 0).
+* The Wilson action’s second variation in the **right‑invariant (pulled‑back Haar)** metric is **positive semidefinite**, and **strictly positive on horizontal** modes near identity: (\nabla^2 S_\beta \ge \beta c_W P_0).
+* Therefore,
+  [
+  \boxed{\ \mathrm{Ric}*{\mu*\beta}=\mathrm{Ric}*g+\nabla^2 S*\beta \ \ge\ (\kappa+\beta c_W),g\ \text{ on horizontals}\ }
+  ]
+  fixing the **positive sign** and yielding an **emergent mass** (m_{\mathrm{eff}}^2\sim \kappa+\beta c_W).
+
+If you want this written as a LaTeX lemma/proposition with explicit (P_0), incidence signs, and an (\mathrm{Ad})-transport bound that pins down a concrete (c_W) (via a small‑angle sector (|\theta_p|\le \theta_0)), I’ll draft it next.

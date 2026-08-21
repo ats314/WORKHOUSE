@@ -1,0 +1,835 @@
+# Part 9 — Wilson Hessian, Discrete Hodge Decomposition, and Physical Positivity
+
+*(expanded, self-contained, first-principles version)*
+
+This part isolates what the Wilson plaquette action is doing **to second order** around the trivial lattice connection (“the vacuum”), and how that quadratic form interacts with:
+
+* the **lattice cochain complex** ( \mathcal C^0 \xrightarrow{d_0} \mathcal C^1 \xrightarrow{d_1} \mathcal C^2 ),
+* **discrete Hodge theory** (exact / coexact / harmonic decomposition),
+* the **gauge-group action** and its tangent (“vertical”) directions,
+* and the crucial **positivity on physical (coexact) modes**.
+
+The punchline is the linearized identity
+
+[
+\nabla^2 S_W(U^{(0)}) ;=; 2c_W, d_1^* d_1
+\quad\text{on}\quad
+T_{U^{(0)}}M_\Lambda \cong \mathcal C^1(\Lambda;\mathfrak g),
+]
+
+so the Wilson Hessian is a discrete Maxwell operator (curl(^*)curl). Its kernel consists of closed 1-forms; the gauge directions sit inside that kernel; and—after we project away gauge and harmonic directions—the Hessian is **strictly positive** on the **coexact** sector, i.e. the physical “transverse” fluctuations.
+
+We also include a rigorous local “Haar mass” statement: using Haar/Riemannian geometry (equivalently, Haar Jacobian in exponential coordinates), one gets an additional **uniformly positive** quadratic form near the identity that lifts the remaining harmonic zero-modes on horizontal directions.
+
+---
+
+## 9.0. Standing conventions
+
+### 9.0.1. Lattice and cell sets
+
+Fix a finite (d)-dimensional hypercubic lattice region (\Lambda \subset \mathbb Z^d). Let
+
+* (V(\Lambda)) be the vertex set (sites),
+* (E(\Lambda)) be the set of **oriented** edges (links),
+* (P(\Lambda)) be the set of **oriented** plaquettes (unit squares).
+
+Concretely, we write an oriented edge as ((x,\mu)) meaning the edge from (x) to (x+\hat\mu) (where (\hat\mu) is the unit vector in direction (\mu)). The reverse orientation corresponds to ((x+\hat\mu,\mu)^{-1}) or, if you prefer, ((x,-\mu)).
+
+Similarly an oriented plaquette is specified by ((x;\mu,\nu)) with (\mu<\nu), oriented (say) counterclockwise in the ((\mu,\nu))-plane.
+
+Boundary conditions can be periodic (torus), or open (box) with various conventions; **all algebraic statements below hold in any finite case**, while the **dimension of harmonic forms** depends on topology/boundary conditions.
+
+### 9.0.2. Gauge group and Lie algebra
+
+Let (G) be a compact connected Lie group (e.g. (G=\mathrm{SU}(N))) with Lie algebra (\mathfrak g).
+
+Fix an (\mathrm{Ad})-invariant inner product (\langle\cdot,\cdot\rangle_{\mathfrak g}) on (\mathfrak g). This defines:
+
+* a bi-invariant Riemannian metric (g_G) on (G),
+* and product metrics on any finite product of copies of (G).
+
+For (G=\mathrm{SU}(N)), a standard choice is
+[
+\langle X,Y\rangle_{\mathfrak g} := -\mathrm{Tr}(XY)
+\quad (X,Y\in \mathfrak{su}(N)\text{ anti-Hermitian}),
+]
+or a rescaled version. **All constants below depend on this normalization**, and we will keep them explicit.
+
+---
+
+## 9.1. Configuration manifold and identification of the tangent space at the vacuum
+
+### 9.1.1. Configuration manifold
+
+The finite-volume lattice configuration manifold is
+[
+M_\Lambda := G^{E(\Lambda)}.
+]
+A configuration is (U=(U_\ell)*{\ell\in E(\Lambda)}) with (U*\ell\in G).
+
+Equip (M_\Lambda) with the product metric:
+[
+g_\Lambda(U)(V,W)
+:= \sum_{\ell\in E(\Lambda)} g_G(U_\ell)(V_\ell,W_\ell).
+]
+
+### 9.1.2. Trivial configuration (“vacuum”)
+
+Define the trivial configuration
+[
+U^{(0)} := (e)*{\ell\in E(\Lambda)} \in M*\Lambda,
+]
+i.e. every link variable is the identity element (e\in G).
+
+### 9.1.3. Tangent identification (T_{U^{(0)}}M_\Lambda \cong \mathcal C^1(\Lambda;\mathfrak g))
+
+For each link (\ell), right translation identifies (T_{e}G \cong \mathfrak g) via
+[
+\mathfrak g \ni X \mapsto \left.\frac{d}{dt}\right|*{t=0} \exp_G(tX) \in T_e G.
+]
+Thus
+[
+T*{U^{(0)}}M_\Lambda \cong \bigoplus_{\ell\in E(\Lambda)} T_eG \cong \mathfrak g^{E(\Lambda)}.
+]
+
+Define the space of (\mathfrak g)-valued 1-cochains
+[
+\mathcal C^1(\Lambda;\mathfrak g) := {X=(X_\ell)*{\ell\in E(\Lambda)} : X*\ell\in\mathfrak g}.
+]
+With the product inner product
+[
+\langle X,Y\rangle_{\mathcal C^1}
+:= \sum_{\ell\in E(\Lambda)} \langle X_\ell,Y_\ell\rangle_{\mathfrak g},
+]
+the identification (T_{U^{(0)}}M_\Lambda \cong \mathcal C^1(\Lambda;\mathfrak g)) is an isometry.
+
+---
+
+## 9.2. Lattice cochains, coboundaries, adjoints, and Laplacians
+
+This section is pure finite-dimensional linear algebra on a cell complex—no analysis, no limits.
+
+### 9.2.1. Cochain spaces and inner products
+
+Define:
+
+* ( \mathcal C^0(\Lambda;\mathfrak g) := \mathfrak g^{V(\Lambda)}) (vertex fields),
+* ( \mathcal C^1(\Lambda;\mathfrak g) := \mathfrak g^{E(\Lambda)}) (edge fields),
+* ( \mathcal C^2(\Lambda;\mathfrak g) := \mathfrak g^{P(\Lambda)}) (plaquette fields).
+
+Use the product inner products:
+[
+\langle \phi,\psi\rangle_{\mathcal C^0} := \sum_{x\in V(\Lambda)} \langle\phi_x,\psi_x\rangle_{\mathfrak g},
+]
+[
+\langle X,Y\rangle_{\mathcal C^1} := \sum_{\ell\in E(\Lambda)} \langle X_\ell,Y_\ell\rangle_{\mathfrak g},
+]
+[
+\langle F,H\rangle_{\mathcal C^2} := \sum_{p\in P(\Lambda)} \langle F_p,H_p\rangle_{\mathfrak g}.
+]
+
+Because everything is finite-dimensional, every linear map has a well-defined Hilbert adjoint with respect to these inner products.
+
+### 9.2.2. The discrete gradient (d_0)
+
+Define (d_0:\mathcal C^0\to\mathcal C^1) by, on an oriented edge ((x,\mu)),
+[
+(d_0\phi)*{x,\mu} := \phi*{x+\hat\mu} - \phi_x.
+]
+This is exactly the cellular coboundary map (C^0\to C^1).
+
+### 9.2.3. The discrete curl (d_1)
+
+Define (d_1:\mathcal C^1\to\mathcal C^2) by, on a plaquette (p=(x;\mu,\nu)) oriented counterclockwise,
+[
+(d_1X)*{x;\mu,\nu}
+:= X*{x,\mu} + X_{x+\hat\mu,\nu} - X_{x+\hat\nu,\mu} - X_{x,\nu}.
+]
+This is the cellular coboundary (C^1\to C^2).
+
+### 9.2.4. Proof that (d_1 d_0 = 0)
+
+Take (\phi\in\mathcal C^0) and compute ((d_1d_0\phi)*{x;\mu,\nu}):
+[
+(d_1(d_0\phi))*{x;\mu,\nu}
+= (d_0\phi)*{x,\mu} + (d_0\phi)*{x+\hat\mu,\nu} - (d_0\phi)*{x+\hat\nu,\mu} - (d_0\phi)*{x,\nu}.
+]
+Substitute definitions:
+[
+(d_0\phi)*{x,\mu} = \phi*{x+\hat\mu}-\phi_x,
+]
+[
+(d_0\phi)*{x+\hat\mu,\nu} = \phi*{x+\hat\mu+\hat\nu}-\phi_{x+\hat\mu},
+]
+[
+(d_0\phi)*{x+\hat\nu,\mu} = \phi*{x+\hat\nu+\hat\mu}-\phi_{x+\hat\nu},
+]
+[
+(d_0\phi)*{x,\nu} = \phi*{x+\hat\nu}-\phi_x.
+]
+Adding with the signs gives complete cancellation:
+
+* (\phi_{x+\hat\mu}) cancels,
+* (\phi_{x+\hat\nu}) cancels,
+* (\phi_{x+\hat\mu+\hat\nu}) cancels,
+* (\phi_x) cancels,
+  so ((d_1 d_0\phi)_{x;\mu,\nu}=0) for every plaquette. Hence
+  [
+  d_1 d_0 = 0.
+  ]
+
+This is the discrete version of (d\circ d = 0).
+
+### 9.2.5. Adjoint operators (d_0^*) and (d_1^*)
+
+Define (d_0^*:\mathcal C^1\to\mathcal C^0) as the unique linear map such that
+[
+\langle d_0\phi, X\rangle_{\mathcal C^1} = \langle \phi, d_0^*X\rangle_{\mathcal C^0}
+\quad\forall \phi\in\mathcal C^0,; X\in\mathcal C^1.
+]
+
+A direct computation yields a “discrete divergence” formula. Write (X_{x,\mu}) for the oriented edge from (x) to (x+\hat\mu). Then, for each vertex (x),
+[
+(d_0^*X)*x = \sum*{\mu=1}^d \big( X_{x-\hat\mu,\mu} - X_{x,\mu} \big),
+]
+with the understanding that boundary edges are handled according to your boundary conditions (periodic wrap, or omission for open boundaries).
+
+Similarly, define (d_1^*:\mathcal C^2\to\mathcal C^1) by
+[
+\langle d_1X, F\rangle_{\mathcal C^2} = \langle X, d_1^*F\rangle_{\mathcal C^1}
+\quad\forall X\in\mathcal C^1,; F\in\mathcal C^2.
+]
+This is the discrete “co-curl”. One can write explicit component formulas; the key structural facts we will use are:
+
+* (d_0^*) and (d_1^*) exist and are linear,
+* (d_0^*d_0), (d_1^*d_1) are self-adjoint and nonnegative.
+
+### 9.2.6. Hodge Laplacians
+
+Define
+[
+\Delta_0 := d_0^* d_0 : \mathcal C^0 \to \mathcal C^0,
+]
+[
+\Delta_1 := d_0 d_0^* + d_1^* d_1 : \mathcal C^1 \to \mathcal C^1.
+]
+Both are self-adjoint and nonnegative (sum of squares).
+
+Define harmonic 1-forms:
+[
+\mathcal H^1(\Lambda;\mathfrak g) := \ker(\Delta_1)
+= {X\in\mathcal C^1 : d_1X=0,; d_0^*X=0}.
+]
+
+---
+
+## 9.3. Plaquette holonomy and its linearization
+
+### 9.3.1. Holonomy around a plaquette
+
+Given (U\in M_\Lambda), define the plaquette holonomy (for (p=(x;\mu,\nu))):
+[
+U_p(U)
+:= U_{x,\mu}, U_{x+\hat\mu,\nu}, U^{-1}*{x+\hat\nu,\mu}, U^{-1}*{x,\nu}.
+]
+This is a product of four group elements.
+
+### 9.3.2. Exponential coordinates near the vacuum
+
+Near (U^{(0)}), write link variables as
+[
+U_{x,\mu} = \exp_G(X_{x,\mu})
+\quad\text{with } X_{x,\mu}\in\mathfrak g \text{ small}.
+]
+Thus (X=(X_{x,\mu})\in \mathcal C^1(\Lambda;\mathfrak g)) parameterizes small fluctuations.
+
+### 9.3.3. BCH expansion and the discrete curvature (d_1X)
+
+We now show that the **first-order** part of (\log U_p) is exactly ((d_1X)_p).
+
+Recall the Baker–Campbell–Hausdorff (BCH) formula for small (A,B\in\mathfrak g):
+[
+\log(\exp A,\exp B)
+= A+B + \tfrac12[A,B] + \tfrac1{12}[A,[A,B]] + \tfrac1{12}[B,[B,A]] + \cdots
+]
+In particular:
+
+* the **linear** part is (A+B),
+* the **quadratic** part begins with (\frac12[A,B]),
+* everything beyond is at least cubic in ((A,B)).
+
+Apply this iteratively to the plaquette product
+[
+U_p = \exp(X_1)\exp(X_2)\exp(-X_3)\exp(-X_4),
+]
+where
+[
+X_1=X_{x,\mu},\quad X_2=X_{x+\hat\mu,\nu},\quad X_3=X_{x+\hat\nu,\mu},\quad X_4=X_{x,\nu}.
+]
+
+If we define (Y_p(X):=\log U_p), then by iterated BCH:
+
+* the **linear** part of (Y_p(X)) is
+  [
+  X_1+X_2-X_3-X_4 = (d_1X)_p,
+  ]
+* the remainder satisfies (Y_p(X)=(d_1X)_p + Q_p(X)) where (Q_p(X)=O(|X|^2)) is quadratic (commutator) plus higher.
+
+More precisely: there exist constants (C>0) and a neighborhood (|X|*{\mathcal C^1}\le \varepsilon) such that for every plaquette (p),
+[
+|Q_p(X)|*{\mathfrak g} \le C |X|_{\mathcal C^1}^2.
+]
+
+**Interpretation.** This is the lattice analogue of the continuum curvature expansion
+[
+F = dA + A\wedge A,
+]
+where the linear piece is (dA) and the non-abelian correction (A\wedge A) is quadratic.
+
+---
+
+## 9.4. The Wilson action and its quadratic expansion
+
+### 9.4.1. Wilson plaquette action
+
+For (G=\mathrm{SU}(N)) in the defining representation, define
+[
+S_W(U)
+:= \frac{\beta}{N}\sum_{p\in P(\Lambda)} \mathrm{Re},\mathrm{Tr}\big(I - U_p(U)\big),
+\qquad \beta>0.
+]
+(Any equivalent convention—e.g. (\beta\sum_p (1 - \frac1N\mathrm{ReTr}U_p))—differs only by an additive constant.)
+
+### 9.4.2. A Lie-algebra Taylor lemma: (\mathrm{ReTr}(I-\exp A)) is quadratic to leading order
+
+Define for (A\in\mathfrak{su}(N)) small:
+[
+\Phi(A) := \mathrm{Re},\mathrm{Tr}(I-\exp A).
+]
+
+**Lemma 9.1 (quadratic Taylor expansion at the identity).**
+There exists (c_{\mathrm{HS}}>0) (depending only on the chosen (\langle\cdot,\cdot\rangle_{\mathfrak g}) and the trace normalization) such that, as (A\to 0),
+[
+\Phi(A) = \frac{c_{\mathrm{HS}}}{2}, |A|*{\mathfrak g}^2 ;+; O(|A|*{\mathfrak g}^3).
+]
+
+**Proof (direct series expansion).**
+Use (\exp A = I + A + \frac12A^2 + \frac16A^3 + \cdots). Then
+[
+\mathrm{Tr}(I-\exp A) = -\mathrm{Tr}(A) - \frac12\mathrm{Tr}(A^2) - \frac16\mathrm{Tr}(A^3)-\cdots
+]
+For (A\in\mathfrak{su}(N)), (\mathrm{Tr}(A)=0). Also (A) is anti-Hermitian, so (\mathrm{Tr}(A^2)) is real and (\le 0), hence
+[
+\mathrm{ReTr}(I-\exp A) = -\frac12\mathrm{Tr}(A^2) + O(|A|^3).
+]
+If we choose (|A|*{\mathfrak g}^2 := -\mathrm{Tr}(A^2)), then (c*{\mathrm{HS}}=1). If we choose a rescaled inner product, (c_{\mathrm{HS}}) changes accordingly. ∎
+
+### 9.4.3. Quadratic expansion of (S_W) near the vacuum
+
+Write (U=\exp(X)) linkwise, (X\in\mathcal C^1(\Lambda;\mathfrak g)) small. For each plaquette,
+[
+U_p(U) = \exp\big(Y_p(X)\big),\qquad Y_p(X)=(d_1X)_p + Q_p(X),\quad Q_p(X)=O(|X|^2).
+]
+Then Lemma 9.1 gives:
+[
+\mathrm{ReTr}(I-U_p)
+====================
+
+\frac{c_{\mathrm{HS}}}{2},|Y_p(X)|^2 + O(|Y_p(X)|^3).
+]
+But (|Y_p(X)|=|(d_1X)_p + O(|X|^2)| = O(|X|)). Therefore
+[
+|Y_p(X)|^2
+==========
+
+|(d_1X)_p|^2 + O(|X|^3)
+]
+(the cross term (\langle (d_1X)_p, Q_p(X)\rangle) is (O(|X|\cdot|X|^2)=O(|X|^3))).
+
+Summing over plaquettes yields the quadratic expansion:
+[
+S_W(\exp X)
+===========
+
+S_W(U^{(0)}) ;+;
+\frac{\beta}{N}\cdot \frac{c_{\mathrm{HS}}}{2}\sum_{p\in P(\Lambda)} |(d_1X)*p|*{\mathfrak g}^2
+;+; O(|X|_{\mathcal C^1}^3).
+]
+
+Define the constant
+[
+c_W := \frac{\beta}{N}\cdot \frac{c_{\mathrm{HS}}}{2} ;>; 0.
+]
+Then
+[
+S_W(\exp X)
+===========
+
+S_W(U^{(0)}) + c_W,|d_1X|*{\mathcal C^2}^2 + O(|X|*{\mathcal C^1}^3).
+]
+
+### 9.4.4. Identification of the Hessian
+
+By definition of the Riemannian Hessian at (U^{(0)}) (equivalently, the second derivative of (S_W(\exp(tX))) at (t=0)),
+[
+S_W(\exp(tX))
+=============
+
+S_W(U^{(0)}) + \frac{t^2}{2},\langle X,\nabla^2S_W(U^{(0)})X\rangle_{\mathcal C^1} + O(t^3).
+]
+Comparing with
+[
+S_W(\exp(tX))
+=============
+
+# S_W(U^{(0)}) + c_W,|d_1(tX)|_{\mathcal C^2}^2 + O(t^3)
+
+S_W(U^{(0)}) + c_W t^2,|d_1X|*{\mathcal C^2}^2 + O(t^3),
+]
+we get, for all (X),
+[
+\frac12\langle X,\nabla^2S_W(U^{(0)})X\rangle*{\mathcal C^1}
+============================================================
+
+c_W \langle d_1X,d_1X\rangle_{\mathcal C^2}.
+]
+Using the adjoint (d_1^*) defined by (\langle d_1X,F\rangle_{\mathcal C^2}=\langle X,d_1^*F\rangle_{\mathcal C^1}), we have
+[
+\langle d_1X,d_1X\rangle_{\mathcal C^2}
+=======================================
+
+\langle X,d_1^*d_1X\rangle_{\mathcal C^1}.
+]
+Thus
+[
+\langle X,\nabla^2S_W(U^{(0)})X\rangle_{\mathcal C^1}
+=====================================================
+
+2c_W,\langle X, d_1^*d_1X\rangle_{\mathcal C^1}
+\quad\forall X.
+]
+Therefore the operators are equal:
+
+**Proposition 9.2 (Wilson Hessian = discrete Maxwell operator).**
+[
+\nabla^2S_W(U^{(0)}) = 2c_W, d_1^*d_1
+\quad\text{as operators on }\mathcal C^1(\Lambda;\mathfrak g).
+]
+
+---
+
+## 9.5. Immediate spectral consequences: nonnegativity and kernel
+
+Since (d_1^*d_1) is self-adjoint and nonnegative,
+[
+\langle X, d_1^*d_1X\rangle_{\mathcal C^1} = |d_1X|_{\mathcal C^2}^2 \ge 0,
+]
+we get:
+
+**Corollary 9.3 (nonnegativity).**
+(\nabla^2S_W(U^{(0)})) is self-adjoint and nonnegative:
+[
+\langle X,\nabla^2S_W(U^{(0)})X\rangle_{\mathcal C^1} = 2c_W|d_1X|_{\mathcal C^2}^2 \ge 0.
+]
+
+**Corollary 9.4 (kernel = closed 1-forms).**
+[
+\ker\big(\nabla^2S_W(U^{(0)})\big) = \ker(d_1).
+]
+Indeed, (|d_1X|^2=0\iff d_1X=0).
+
+So **closed** discrete 1-forms are the quadratic zero-modes of the Wilson action.
+
+---
+
+## 9.6. Discrete Hodge decomposition on (\mathcal C^1(\Lambda;\mathfrak g)) (full proof)
+
+Because everything is finite-dimensional, the Hodge decomposition here is a theorem of linear algebra once we define (d_0,d_1) and their adjoints.
+
+### 9.6.1. Orthogonality relations
+
+**Lemma 9.5.**
+[
+\mathrm{im}(d_0) \perp \mathrm{im}(d_1^*).
+]
+
+**Proof.**
+Take (d_0\phi\in\mathrm{im}(d_0)) and (d_1^*F\in\mathrm{im}(d_1^*)). Then
+[
+\langle d_0\phi, d_1^*F\rangle_{\mathcal C^1}
+=============================================
+
+# \langle d_1d_0\phi, F\rangle_{\mathcal C^2}
+
+\langle 0, F\rangle_{\mathcal C^2}
+=0,
+]
+using (d_1d_0=0). ∎
+
+### 9.6.2. Images as orthogonal complements of kernels
+
+**Lemma 9.6.**
+[
+\mathrm{im}(d_1^*) = (\ker d_1)^\perp,
+\qquad
+\mathrm{im}(d_0) = (\ker d_0^*)^\perp.
+]
+
+**Proof (first identity; second is analogous).**
+
+1. For any (F\in\mathcal C^2) and any (X\in\ker d_1),
+   [
+   \langle X,d_1^*F\rangle_{\mathcal C^1} = \langle d_1X, F\rangle_{\mathcal C^2}=0,
+   ]
+   so (\mathrm{im}(d_1^*) \subset (\ker d_1)^\perp).
+
+2. Both spaces have the same dimension. Indeed,
+   [
+   \dim(\mathrm{im}(d_1^*)) = \mathrm{rank}(d_1^*) = \mathrm{rank}(d_1),
+   ]
+   and by rank–nullity on (d_1:\mathcal C^1\to\mathcal C^2),
+   [
+   \mathrm{rank}(d_1) = \dim(\mathcal C^1)-\dim(\ker d_1) = \dim((\ker d_1)^\perp).
+   ]
+   Thus inclusion plus equal dimension gives equality. ∎
+
+### 9.6.3. Decomposition of (\ker d_1) into exact + harmonic
+
+Define the harmonic 1-forms
+[
+\mathcal H^1 := \ker d_1 \cap \ker d_0^*.
+]
+
+**Lemma 9.7.**
+[
+\ker d_1 = \mathrm{im}(d_0);\oplus; \mathcal H^1
+\quad\text{(orthogonal direct sum)}.
+]
+
+**Proof.**
+
+* We already know (\mathrm{im}(d_0)\subset \ker d_1) because (d_1d_0=0).
+* Inside (\ker d_1), take the orthogonal decomposition with respect to (\mathrm{im}(d_0)):
+  [
+  \ker d_1 = \mathrm{im}(d_0)\oplus \big(\ker d_1\cap \mathrm{im}(d_0)^\perp\big).
+  ]
+* But (\mathrm{im}(d_0)^\perp = \ker d_0^*) (same “image = orthogonal complement of kernel” argument as Lemma 9.6).
+  So the second summand is
+  [
+  \ker d_1\cap \ker d_0^* = \mathcal H^1.
+  ]
+  Orthogonality is built into the construction. ∎
+
+### 9.6.4. Full Hodge decomposition on 1-cochains
+
+**Theorem 9.8 (discrete Hodge decomposition on (\mathcal C^1)).**
+[
+\mathcal C^1(\Lambda;\mathfrak g)
+=================================
+
+\mathrm{im}(d_0);\oplus;\mathcal H^1(\Lambda;\mathfrak g);\oplus;\mathrm{im}(d_1^*),
+]
+orthogonal direct sum.
+
+**Proof.**
+
+From Lemma 9.6,
+[
+\mathcal C^1 = \ker d_1 \oplus (\ker d_1)^\perp = \ker d_1 \oplus \mathrm{im}(d_1^*).
+]
+Then substitute Lemma 9.7 for (\ker d_1):
+[
+\mathcal C^1
+============
+
+\big(\mathrm{im}(d_0)\oplus \mathcal H^1\big)\oplus \mathrm{im}(d_1^*).
+]
+Orthogonality between (\mathrm{im}(d_0)) and (\mathrm{im}(d_1^*)) is Lemma 9.5; orthogonality between (\mathcal H^1\subset\ker d_0^*) and (\mathrm{im}(d_0)) is by definition; and (\mathcal H^1\subset\ker d_1) is orthogonal to (\mathrm{im}(d_1^*)) by Lemma 9.6. ∎
+
+**Remark (topology).**
+(\mathcal H^1) is naturally isomorphic to the first cohomology of the lattice cell complex with coefficients in (\mathfrak g). For a periodic (d)-torus, (\dim \mathcal H^1 = d\cdot \dim\mathfrak g) (one constant mode per direction per Lie algebra component). For a contractible box with suitable boundary conditions, (\mathcal H^1) may be zero.
+
+---
+
+## 9.7. Gauge group action, vertical/horizontal subspaces, and their cochain form
+
+### 9.7.1. Lattice gauge group and action
+
+The lattice gauge group is
+[
+\mathcal G_\Lambda := G^{V(\Lambda)}.
+]
+For (g=(g_x)*{x\in V(\Lambda)}\in\mathcal G*\Lambda), define its action on (U\in M_\Lambda) by
+[
+(g\cdot U)*{x,\mu} := g_x, U*{x,\mu}, g_{x+\hat\mu}^{-1}.
+]
+This is smooth and isometric (bi-invariance of (g_G) implies left/right translations are isometries, so products are isometries).
+
+### 9.7.2. Vertical space at the vacuum equals (\mathrm{im}(d_0))
+
+The **gauge orbit** through (U) is (\mathcal O_U := {g\cdot U : g\in\mathcal G_\Lambda}). The **vertical space** is its tangent:
+[
+V_U := T_U\mathcal O_U \subset T_U M_\Lambda.
+]
+
+At (U^{(0)}), we can compute (V_{U^{(0)}}) explicitly.
+
+Let (\phi\in\mathcal C^0(\Lambda;\mathfrak g)). Define a curve (g(t)\in\mathcal G_\Lambda) by
+[
+g_x(t):=\exp_G(t\phi_x).
+]
+Then
+[
+(g(t)\cdot U^{(0)})*{x,\mu} = g_x(t), e, g*{x+\hat\mu}(t)^{-1} = g_x(t),g_{x+\hat\mu}(t)^{-1}.
+]
+Expand at (t=0). Since (g_x(t)=I+t\phi_x+O(t^2)) in any faithful matrix representation (or intrinsically via the exponential chart), and (g_{x+\hat\mu}(t)^{-1}=I-t\phi_{x+\hat\mu}+O(t^2)), we get
+[
+g_x(t)g_{x+\hat\mu}(t)^{-1}
+===========================
+
+# I + t(\phi_x-\phi_{x+\hat\mu}) + O(t^2)
+
+\exp\big(t(\phi_x-\phi_{x+\hat\mu}) + O(t^2)\big).
+]
+Thus the tangent vector (identified as a 1-cochain) is
+[
+X_{x,\mu} = \phi_x-\phi_{x+\hat\mu} = -(d_0\phi)*{x,\mu}.
+]
+Therefore
+[
+V*{U^{(0)}} = \mathrm{im}(d_0)
+]
+(up to the irrelevant sign convention; (\mathrm{im}(-d_0)=\mathrm{im}(d_0))).
+
+So **pure gauge directions = exact 1-forms**.
+
+### 9.7.3. Horizontal space at the vacuum equals (\ker d_0^*)
+
+Define the **horizontal space** at (U) to be the orthogonal complement of (V_U):
+[
+H_U := V_U^\perp \subset T_U M_\Lambda.
+]
+At (U^{(0)}),
+[
+H_{U^{(0)}} = (\mathrm{im}(d_0))^\perp = \ker(d_0^*).
+]
+
+Combining with the Hodge decomposition,
+[
+\ker(d_0^*) = \mathcal H^1 \oplus \mathrm{im}(d_1^*).
+]
+So horizontal directions decompose into:
+
+* **harmonic** modes (global/topological),
+* **coexact** modes (physical/transverse).
+
+### 9.7.4. Gradients of gauge-invariant observables are horizontal
+
+Let (f:M_\Lambda\to\mathbb R) be smooth and gauge-invariant:
+[
+f(g\cdot U)=f(U)\quad \forall g\in\mathcal G_\Lambda,; U\in M_\Lambda.
+]
+
+**Lemma 9.9.** For every (U\in M_\Lambda), (\nabla f(U)\in H_U).
+
+**Proof.**
+Gauge invariance implies (f) is constant along the orbit (\mathcal O_U). Therefore its differential vanishes on every vertical tangent vector (v\in V_U):
+[
+df(U)[v]=0 \quad\forall v\in V_U.
+]
+By definition of the Riemannian gradient, (df(U)[v]=g_\Lambda(U)(\nabla f(U),v)). Hence
+[
+g_\Lambda(U)(\nabla f(U),v)=0\quad\forall v\in V_U,
+]
+so (\nabla f(U)\perp V_U), i.e. (\nabla f(U)\in H_U). ∎
+
+This is why “horizontal positivity” is the relevant notion for gauge-invariant analysis.
+
+---
+
+## 9.8. Physical positivity of the Wilson Hessian
+
+We now combine:
+
+* the operator identity (\nabla^2S_W(U^{(0)}) = 2c_W d_1^*d_1),
+* and the Hodge decomposition ( \mathcal C^1 = \mathrm{im}(d_0)\oplus \mathcal H^1 \oplus \mathrm{im}(d_1^*)).
+
+### 9.8.1. Hessian vanishes on exact and harmonic sectors
+
+1. If (X\in\mathrm{im}(d_0)), then (X=d_0\phi) for some (\phi), hence
+   [
+   d_1X = d_1d_0\phi = 0 \quad\Rightarrow\quad d_1^*d_1X=0.
+   ]
+
+2. If (X\in\mathcal H^1\subset\ker d_1), then again (d_1X=0) and (d_1^*d_1X=0).
+
+So ( \nabla^2S_W(U^{(0)})) vanishes on (\mathrm{im}(d_0)\oplus\mathcal H^1).
+
+### 9.8.2. Strict positivity on the coexact sector
+
+Let (X\in \mathrm{im}(d_1^*)), (X\neq 0). Then (X\perp \ker d_1) by Lemma 9.6, so (X\notin \ker d_1). In particular, (d_1X\neq 0).
+
+Now compute:
+[
+\langle X, d_1^*d_1X\rangle_{\mathcal C^1} = \langle d_1X,d_1X\rangle_{\mathcal C^2} = |d_1X|_{\mathcal C^2}^2 > 0.
+]
+Thus (d_1^*d_1) is positive definite on (\mathrm{im}(d_1^*)).
+
+Because (\mathrm{im}(d_1^*)) is finite-dimensional, the minimum of the Rayleigh quotient on the unit sphere exists and is positive:
+[
+\lambda_{\min}
+:= \min\left{\langle X,d_1^*d_1X\rangle_{\mathcal C^1} : X\in\mathrm{im}(d_1^*),; |X|_{\mathcal C^1}=1\right} > 0.
+]
+
+Therefore:
+
+**Theorem 9.10 (physical positivity).**
+There exists (\lambda_{\min}>0) (depending on lattice geometry/boundary conditions, but finite and strictly positive in finite volume) such that for all (X\in \mathrm{im}(d_1^*)),
+[
+\langle X,\nabla^2S_W(U^{(0)})X\rangle_{\mathcal C^1}
+=====================================================
+
+2c_W,\langle X,d_1^*d_1X\rangle_{\mathcal C^1}
+\ge
+2c_W,\lambda_{\min},|X|_{\mathcal C^1}^2.
+]
+
+Equivalently: the Wilson Hessian is **strictly positive** on coexact (transverse/physical) modes and **zero** on gauge and harmonic modes.
+
+### 9.8.3. Positivity on the horizontal space
+
+Recall (H_{U^{(0)}}=\ker d_0^*=\mathcal H^1\oplus \mathrm{im}(d_1^*)). Then:
+
+* on (H_{U^{(0)}}), the Wilson Hessian is nonnegative,
+* the only horizontal kernel comes from (\mathcal H^1) (harmonic modes),
+* and on the physically propagating sector (\mathrm{im}(d_1^*)) it has a spectral gap.
+
+---
+
+## 9.9. Haar “mass” and lifting of harmonic horizontal modes (local statement)
+
+This part is about the **geometry of the group manifold**, not about the Wilson action. It matters because it supplies the missing uniform positivity on the harmonic sector of horizontals.
+
+There are two equivalent ways to package it:
+
+1. **Bakry–Émery / Riemannian picture:** the reference measure is Haar (Riemannian volume), and the positive Ricci curvature contributes directly to the curvature lower bound.
+
+2. **Exponential-coordinate picture:** rewrite Haar measure as a density (J(X),dX) relative to flat Lebesgue (dX), and view (S_H(X):=-\log J(X)) as an added effective potential whose Hessian at (0) is positive.
+
+Here is the local exponential-coordinate version (because it is closest to the “mass term” intuition).
+
+### 9.9.1. Jacobian of the exponential map and its expansion
+
+Let ((G,g_G)) be a compact Lie group with bi-invariant metric. In geodesic normal coordinates (X\in\mathfrak g\mapsto \exp_G(X)), the Riemannian volume form satisfies
+[
+d\mathrm{vol}*{g_G}(\exp_G X) = J_G(X), dX,
+]
+where (dX) is Lebesgue measure on (\mathfrak g) induced by (\langle\cdot,\cdot\rangle*{\mathfrak g}), and (J_G(X)) is smooth with (J_G(0)=1).
+
+A standard normal-coordinate expansion in Riemannian geometry gives
+[
+J_G(X) = 1 - \frac{1}{6}\mathrm{Ric}_G(X,X) + O(|X|^3).
+]
+Consequently,
+[
+S_H(X):= -\log J_G(X)
+= \frac{1}{6}\mathrm{Ric}_G(X,X) + O(|X|^3),
+]
+and therefore
+[
+\nabla^2 S_H(0) = \frac{1}{3}\mathrm{Ric}_G.
+]
+
+For a compact Lie group with bi-invariant metric, (\mathrm{Ric}_G) is positive semidefinite and, for semisimple (G), strictly positive definite; in fact (G) is Einstein on each simple factor, so
+[
+\mathrm{Ric}*G = \kappa_G, g_G
+\quad\text{for some }\kappa_G>0.
+]
+Hence
+[
+\nabla^2S_H(0);\ge; \frac{\kappa_G}{3},\mathrm{Id}*{\mathfrak g}.
+]
+
+*(If (G) has a nontrivial torus factor, (\kappa_G) may vanish on that abelian factor; in the Yang–Mills applications one typically takes (G) semisimple like (\mathrm{SU}(N)), so (\kappa_G>0) on all directions.)*
+
+### 9.9.2. Product Haar mass on the lattice configuration space
+
+On (M_\Lambda=G^{E(\Lambda)}), near (U^{(0)}), we have independent normal coordinates on each link:
+[
+U_\ell = \exp_G(X_\ell),\qquad X=(X_\ell)\in \mathcal C^1(\Lambda;\mathfrak g).
+]
+The product Haar volume becomes
+[
+d\mathrm{vol}*{g*\Lambda}(U) = \prod_{\ell\in E(\Lambda)} J_G(X_\ell), dX_\ell
+= \exp\Big(-\sum_{\ell} S_H(X_\ell)\Big),\prod_\ell dX_\ell.
+]
+Define the product Haar potential
+[
+S_{H,\Lambda}(X) := \sum_{\ell\in E(\Lambda)} S_H(X_\ell).
+]
+Then
+[
+\nabla^2 S_{H,\Lambda}(0) \ge \frac{\kappa_G}{3},\mathrm{Id}_{\mathcal C^1}.
+]
+Crucially, the constant (\kappa_G/3) depends only on ((G,g_G)), **not** on (\Lambda) (volume-independent).
+
+### 9.9.3. Effective Hessian on horizontals
+
+If one works in the flat-coordinate density picture, the combined “effective quadratic form” near (U^{(0)}) is
+[
+\nabla^2 S_{\mathrm{eff}}(U^{(0)})
+==================================
+
+# \nabla^2S_W(U^{(0)}) + \nabla^2S_{H,\Lambda}(0)
+
+2c_W d_1^*d_1 + \nabla^2S_{H,\Lambda}(0).
+]
+Restricting to the horizontal subspace (H_{U^{(0)}}=\ker d_0^*),
+[
+\nabla^2 S_{\mathrm{eff}}(U^{(0)})|*{H*{U^{(0)}}}
+;\ge;
+\frac{\kappa_G}{3},\mathrm{Id}*{H*{U^{(0)}}}.
+]
+
+**Corollary 9.11 (uniform horizontal positivity with Haar contribution).**
+Near the vacuum, after including the Haar geometric contribution, the effective Hessian is **strictly positive on all horizontal directions**, including harmonic modes, with a volume-independent lower bound (\kappa_G/3).
+
+This is the precise sense in which “Haar geometry provides a mass term” that lifts the remaining horizontal zero modes that the Wilson quadratic form alone cannot lift.
+
+---
+
+## 9.10. Summary of what this part establishes
+
+1. **Tangent identification.**
+   (T_{U^{(0)}}M_\Lambda \cong \mathcal C^1(\Lambda;\mathfrak g)) with the product inner product.
+
+2. **Linearized curvature = lattice curl.**
+   The plaquette holonomy satisfies (\log U_p = (d_1X)_p + O(|X|^2)).
+
+3. **Wilson quadratic form.**
+   The second variation of the Wilson action at the vacuum is
+   [
+   \nabla^2S_W(U^{(0)}) = 2c_W, d_1^*d_1.
+   ]
+
+4. **Kernel.**
+   (\ker\nabla^2S_W(U^{(0)}) = \ker d_1) (closed 1-forms).
+
+5. **Discrete Hodge decomposition.**
+   [
+   \mathcal C^1 = \mathrm{im}(d_0)\oplus \mathcal H^1 \oplus \mathrm{im}(d_1^*),
+   ]
+   where (\mathrm{im}(d_0)) are exact (pure gauge), (\mathcal H^1) are harmonic (global), and (\mathrm{im}(d_1^*)) are coexact (physical).
+
+6. **Gauge geometry.**
+   At the vacuum, vertical directions are (\mathrm{im}(d_0)); horizontals are (\ker d_0^*=\mathcal H^1\oplus\mathrm{im}(d_1^*)); gradients of gauge-invariant functions lie in the horizontal subspace.
+
+7. **Physical positivity.**
+   The Wilson Hessian is strictly positive on (\mathrm{im}(d_1^*)), zero on gauge and harmonic modes.
+
+8. **Haar mass (local).**
+   The Haar/Riemannian geometry contributes an additional uniformly positive quadratic form near the identity which yields strict positivity on **all** horizontal directions when combined with the Wilson Hessian.
+
+---
+
+If you want to keep the “part” structure but also make the proof even more atomic, the natural place to split into a **Part 9b** is: “Normal-coordinate expansion of the Haar Jacobian + explicit computation of (\kappa_G) for (G=\mathrm{SU}(N)) under a fixed normalization.” That computation is standard but normalization-sensitive, and it’s the one place in this chapter where “first-principles” explodes into Riemannian curvature algebra.

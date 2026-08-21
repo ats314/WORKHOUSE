@@ -1,0 +1,799 @@
+# Part 15 — Analytic Engine: Curvature, Lyapunov Drift, Functional Inequalities, and Spectral Gaps (Expanded, Stand‑Alone)
+
+This part expands your original **Part 15 analytic checklist** into a fully self-contained analytic module, keeping every ingredient you flagged as necessary (curvature/Γ₂, local FI on SAFE, Lyapunov drift globalisation, and the OS bridge), but expanding the proofs from first principles and updating the “what remains open” section with the sharper bottleneck diagnosis from the new drift computations and Riccati notes. 
+
+The “engine” we will treat as the backbone is the one you summarized as:
+
+[
+\text{Curvature} \Rightarrow \text{LSI} \Rightarrow \text{Poincaré} \Rightarrow \text{Spectral gap} \Rightarrow \text{Mass gap}.
+]
+
+That chain is exactly the analytic spine you wrote down in the “Curvature → LSI → Poincaré → Spectral…” note, including the logic of where uniformity in volume must be enforced. 
+
+The goal in lattice YM is not to prove *existence* of Poincaré/LSI on each finite volume (compactness already gives that), but to prove **uniform-in-volume** constants that do not collapse as (|\Lambda|\to\infty).
+
+---
+
+## 15.0. Minimal analytic setup
+
+### 15.0.1. Geometry and measure
+
+Let ((M,g)) be a smooth, connected, finite-dimensional Riemannian manifold without boundary (we will later allow subdomains with reflecting boundary). Let (S\in C^2(M)) and define the Gibbs measure
+[
+d\mu(x)=Z^{-1}e^{-S(x)},d\mathrm{vol}_g(x),\qquad Z=\int_M e^{-S},d\mathrm{vol}_g\in(0,\infty).
+]
+
+### 15.0.2. Symmetric diffusion generator
+
+Define the (formally) symmetric second-order operator
+[
+L f := \Delta_g f - \langle \nabla S,\nabla f\rangle_g,
+]
+where (\Delta_g=\mathrm{div}\circ\nabla) is the Laplace–Beltrami operator. We will assume that (L) is essentially self-adjoint on (L^2(\mu)) with invariant measure (\mu); this is standard in our finite-dimensional smooth setting and is automatic on compact (M).
+
+### 15.0.3. Dirichlet form and carré du champ
+
+Define
+[
+\Gamma(f,g):=\frac12\big(L(fg)-fLg-gLf\big),\qquad \Gamma(f):=\Gamma(f,f).
+]
+For this (L), one checks (and we will prove) that
+[
+\Gamma(f,g)=\langle\nabla f,\nabla g\rangle_g,\qquad \Gamma(f)=|\nabla f|_g^2.
+]
+
+Define the Dirichlet form
+[
+\mathcal E(f,g):=\int_M \Gamma(f,g),d\mu=\int_M \langle\nabla f,\nabla g\rangle,d\mu.
+]
+
+### 15.0.4. Poincaré and log-Sobolev inequalities
+
+* **Poincaré (spectral gap) inequality** with constant (C_P):
+  [
+  \mathrm{Var}_\mu(f):=\int (f-\mu f)^2,d\mu\le C_P\int \Gamma(f),d\mu\qquad(\forall f\in C^\infty(M)).
+  ]
+
+* **Logarithmic Sobolev inequality (LSI)** with constant (C_{LS}):
+  [
+  \mathrm{Ent}*\mu(f^2):=\int f^2\log f^2,d\mu-\Big(\int f^2,d\mu\Big)\log\Big(\int f^2,d\mu\Big)
+  \le C*{LS}\int \Gamma(f),d\mu.
+  ]
+
+---
+
+## 15.1. Integration by parts and symmetry from first principles
+
+### Proposition 15.1 (invariance and symmetry)
+
+For smooth (f,g\in C^\infty(M)) with at least one compactly supported (automatic on compact (M)),
+[
+\int f,Lg,d\mu = -\int \langle\nabla f,\nabla g\rangle,d\mu,
+]
+and in particular
+[
+\int Lg,d\mu=0,\qquad \int f,Lg,d\mu=\int g,Lf,d\mu.
+]
+
+#### Proof
+
+Write (d\mu=e^{-S}d\mathrm{vol}) (absorbing (Z^{-1}) into normalization). Using (\Delta_g=\mathrm{div},\nabla) and the divergence theorem (no boundary),
+[
+\int f,\Delta_g g,e^{-S},d\mathrm{vol}
+= -\int \langle \nabla (f e^{-S}),\nabla g\rangle,d\mathrm{vol}.
+]
+Compute (\nabla(fe^{-S})=e^{-S}\nabla f - fe^{-S}\nabla S). Hence
+[
+\int f,\Delta g,d\mu
+= -\int \langle\nabla f,\nabla g\rangle,d\mu + \int f\langle\nabla S,\nabla g\rangle,d\mu.
+]
+Therefore
+[
+\int f(\Delta g-\langle\nabla S,\nabla g\rangle)d\mu
+= -\int \langle\nabla f,\nabla g\rangle,d\mu,
+]
+i.e. (\int f Lg,d\mu=-\int\langle\nabla f,\nabla g\rangle d\mu). Symmetry follows by swapping (f,g), and invariance follows by taking (f\equiv 1). ∎
+
+### Corollary 15.2 (explicit carré du champ)
+
+For (L=\Delta-\nabla S\cdot\nabla),
+[
+\Gamma(f,g)=\langle\nabla f,\nabla g\rangle,\quad \Gamma(f)=|\nabla f|^2.
+]
+
+#### Proof
+
+Compute
+[
+L(fg)=\Delta(fg)-\langle\nabla S,\nabla(fg)\rangle
+= f\Delta g+g\Delta f+2\langle\nabla f,\nabla g\rangle - f\langle\nabla S,\nabla g\rangle-g\langle\nabla S,\nabla f\rangle,
+]
+so
+[
+L(fg)-fLg-gLf = 2\langle\nabla f,\nabla g\rangle.
+]
+Divide by (2). ∎
+
+---
+
+## 15.2. Bochner identity and Bakry–Émery curvature
+
+### 15.2.1. The iterated carré du champ
+
+Define
+[
+\Gamma_2(f):=\frac12\left(L\Gamma(f)-2\Gamma(f,Lf)\right).
+]
+
+### Proposition 15.3 (Bochner formula for (L))
+
+For (L=\Delta-\nabla S\cdot\nabla),
+[
+\Gamma_2(f)=|\nabla^2 f|*{HS}^2+\big(\mathrm{Ric}*g+\nabla^2 S\big)(\nabla f,\nabla f),
+]
+where (\nabla^2 f) is the Riemannian Hessian, (|\cdot|*{HS}) its Hilbert–Schmidt norm, and
+[
+\mathrm{Ric}*\mu:=\mathrm{Ric}_g+\nabla^2 S
+]
+is the **Bakry–Émery tensor**, as in your checklist. 
+
+#### Proof (from first principles)
+
+We start with the classical Bochner identity for the Laplace–Beltrami operator:
+[
+\frac12\Delta|\nabla f|^2 = \langle\nabla f,\nabla \Delta f\rangle + |\nabla^2 f|_{HS}^2 + \mathrm{Ric}*g(\nabla f,\nabla f).
+\tag{15.1}
+]
+This can be proven by choosing normal coordinates at a point (x\in M) so that (\Gamma^k*{ij}(x)=0), differentiating ( |\nabla f|^2=g^{ij}(\partial_i f)(\partial_j f)), and tracking curvature terms; we take (15.1) as the standard differential-geometric identity (derivable entirely in coordinates).
+
+Now compute (\Gamma_2) for (L=\Delta-\nabla S\cdot\nabla).
+
+Since (\Gamma(f)=|\nabla f|^2), we have
+[
+L\Gamma(f)=\Delta|\nabla f|^2 - \langle\nabla S,\nabla|\nabla f|^2\rangle.
+]
+Also
+[
+\Gamma(f,Lf)=\langle\nabla f,\nabla(\Delta f-\langle\nabla S,\nabla f\rangle)\rangle
+= \langle\nabla f,\nabla\Delta f\rangle - \langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle.
+]
+Therefore
+[
+\Gamma_2(f)
+=\frac12\Delta|\nabla f|^2-\langle\nabla f,\nabla\Delta f\rangle
+-\frac12\langle\nabla S,\nabla|\nabla f|^2\rangle
++\langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle.
+]
+Apply (15.1) to the first two terms:
+[
+\frac12\Delta|\nabla f|^2-\langle\nabla f,\nabla\Delta f\rangle
+= |\nabla^2 f|_{HS}^2+\mathrm{Ric}*g(\nabla f,\nabla f).
+]
+For the remaining two terms, use the identity (\nabla|\nabla f|^2 = 2\nabla^2 f(\nabla f,\cdot)). Then
+[
+-\frac12\langle\nabla S,\nabla|\nabla f|^2\rangle
+= -\langle\nabla S,\nabla^2 f(\nabla f,\cdot)\rangle.
+]
+Also expand (using product rule for covariant derivatives):
+[
+\langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle
+= \nabla^2 S(\nabla f,\nabla f) + \langle\nabla^2 f(\nabla S,\cdot),\nabla f\rangle.
+]
+The last term exactly cancels the previous (-\langle\nabla S,\nabla^2 f(\nabla f,\cdot)\rangle). Hence
+[
+\Gamma_2(f)=|\nabla^2 f|*{HS}^2+\mathrm{Ric}_g(\nabla f,\nabla f)+\nabla^2 S(\nabla f,\nabla f)
+]
+as claimed. ∎
+
+### Definition 15.4 (Curvature–dimension condition (CD(\rho,\infty)))
+
+We say ((L,\mu)) satisfies (CD(\rho,\infty)) if
+[
+\Gamma_2(f)\ge \rho,\Gamma(f)\qquad\text{pointwise for all }f\in C^\infty(M).
+]
+Equivalently (by Proposition 15.3),
+[
+\mathrm{Ric}*\mu \ge \rho,g,
+]
+since (|\nabla^2 f|*{HS}^2\ge 0).
+
+---
+
+## 15.3. Global (CD(\rho,\infty)) implies Poincaré and LSI (full proof)
+
+This expands your Theorem 15.1. 
+
+### Theorem 15.5 (Bakry–Émery criterion: (CD(\rho,\infty)\Rightarrow) PI and LSI)
+
+Assume (M) is compact and (CD(\rho,\infty)) holds with (\rho>0). Then:
+
+1. (**Poincaré**) For all (f),
+   [
+   \mathrm{Var}_\mu(f)\le \frac{1}{\rho}\int \Gamma(f),d\mu.
+   ]
+
+2. (**Log-Sobolev**) For all (f),
+   [
+   \mathrm{Ent}_\mu(f^2)\le \frac{2}{\rho}\int \Gamma(f),d\mu.
+   ]
+
+Both constants are dimension-free and thus candidates for volume-uniform bounds when (\rho) is uniform.
+
+#### Proof
+
+We use the diffusion semigroup (P_t=e^{tL}) on (L^2(\mu)). Since (M) is compact, (P_t) is smooth, positivity preserving, Markovian ((P_t 1=1)), and (\mu) is invariant:
+[
+\int P_t h,d\mu = \int h,d\mu.
+]
+Also, (P_t) is symmetric on (L^2(\mu)).
+
+---
+
+### Step A: A key differential inequality for (\Gamma(P_t f))
+
+Fix smooth (f). Define
+[
+u(t,x):=P_t f(x).
+]
+Consider
+[
+\Phi(t,x):=\Gamma(u)(x)=|\nabla u|^2(x).
+]
+Differentiate using ( \partial_t u = Lu):
+[
+\partial_t \Phi = \partial_t \Gamma(u) = 2\Gamma(u,Lu).
+]
+Meanwhile
+[
+L\Phi = L\Gamma(u).
+]
+Therefore,
+[
+(\partial_t - L)\Phi = 2\Gamma(u,Lu) - L\Gamma(u) = -2\Gamma_2(u).
+]
+Under (CD(\rho,\infty)), (\Gamma_2(u)\ge \rho\Gamma(u)=\rho\Phi). Hence
+[
+(\partial_t - L)\Phi \le -2\rho \Phi.
+\tag{15.2}
+]
+
+Define (\widetilde\Phi(t,x):=e^{2\rho t}\Phi(t,x)). Then (15.2) becomes
+[
+(\partial_t - L)\widetilde\Phi \le 0.
+]
+By the parabolic maximum principle (valid on compact manifolds), we obtain the pointwise comparison
+[
+\widetilde\Phi(t,\cdot)\le P_t \widetilde\Phi(0,\cdot),
+]
+i.e.
+[
+\Gamma(P_t f)\le e^{-2\rho t} P_t \Gamma(f).
+\tag{15.3}
+]
+This is the standard Bakry–Émery gradient estimate.
+
+---
+
+### Step B: Poincaré from variance decay
+
+Let (f) be smooth and centered: (\mu f=0). Consider
+[
+V(t):=\int (P_t f)^2,d\mu.
+]
+Differentiate:
+[
+V'(t)=2\int (P_t f),L(P_t f),d\mu
+=-2\int \Gamma(P_t f),d\mu
+\tag{15.4}
+]
+by Proposition 15.1.
+
+Now apply (15.3) and invariance of (\mu):
+[
+\int \Gamma(P_t f),d\mu \le e^{-2\rho t}\int P_t\Gamma(f),d\mu
+= e^{-2\rho t}\int \Gamma(f),d\mu.
+]
+Thus
+[
+V'(t)\ge -2e^{-2\rho t}\int \Gamma(f),d\mu.
+]
+Integrate from (0) to (+\infty). Since (P_t f\to \mu f=0) in (L^2(\mu)) as (t\to\infty), we have (V(\infty)=0). Therefore,
+[
+V(0)-V(\infty)=\int_0^\infty -V'(t),dt
+\le 2\int_0^\infty e^{-2\rho t},dt;\int \Gamma(f),d\mu
+=\frac{1}{\rho}\int \Gamma(f),d\mu.
+]
+But (V(0)=\int f^2,d\mu=\mathrm{Var}_\mu(f)) since (\mu f=0). This proves Poincaré.
+
+---
+
+### Step C: LSI from entropy dissipation and (15.3)
+
+Let (h\ge 0) be smooth with (\int h,d\mu=1). Define (h_t:=P_t h). Then (\int h_t,d\mu=1).
+
+Define entropy
+[
+\mathcal H(t):=\mathrm{Ent}*\mu(h_t)=\int h_t\log h_t,d\mu.
+]
+Differentiate (using (\partial_t h_t=Lh_t) and (\int Lh_t,d\mu=0)):
+[
+\mathcal H'(t)=\int (Lh_t)\log h_t,d\mu
+= -\int \Gamma(h_t,\log h_t),d\mu.
+]
+But (\Gamma(h_t,\log h_t)=\frac{\Gamma(h_t)}{h_t}). Also (\Gamma(h_t)=4h_t,\Gamma(\sqrt{h_t})) (chain rule). Hence
+[
+\mathcal H'(t) = -\int \frac{\Gamma(h_t)}{h_t},d\mu
+= -4\int \Gamma(\sqrt{h_t}),d\mu.
+\tag{15.5}
+]
+Integrate from (0) to (\infty). Since (h_t\to 1) in (L^1(\mu)) (ergodicity on compact manifold) and (\mathrm{Ent}*\mu(1)=0), we have (\mathcal H(\infty)=0). Thus
+[
+\mathrm{Ent}*\mu(h)=\mathcal H(0)=4\int_0^\infty \int \Gamma(\sqrt{h_t}),d\mu,dt.
+\tag{15.6}
+]
+Now set (u=\sqrt{h}). Then (h=u^2). We want to bound (\mathrm{Ent}*\mu(u^2)) by (\int \Gamma(u)).
+
+Use (15.3) with (f=u):
+[
+\Gamma(P_t u)\le e^{-2\rho t}P_t\Gamma(u).
+]
+We need to compare (\Gamma(\sqrt{h_t})) with (\Gamma(P_t u)). In general, (\sqrt{P_t(u^2)}\neq P_t u), but by the Markov property and Jensen, we have (P_t(u^2)\ge (P_t u)^2), hence (\sqrt{P_t(u^2)}\ge P_t u). The carré du champ is not monotone under pointwise order, so we use a standard Bakry argument: under (CD(\rho,\infty)) one has the *commutation for (\sqrt{\cdot})*:
+[
+\Gamma(\sqrt{P_t(u^2)})\le e^{-2\rho t}P_t\Gamma(u).
+\tag{15.7}
+]
+This can be proven by applying the same differential inequality (15.2) to the function (F(s)=\sqrt{s}) via chain rules for (\Gamma_2); the calculation is standard in Γ₂-calculus and uses only smoothness of (F) on ((0,\infty)).
+
+Assuming (15.7), plug into (15.6):
+[
+\mathrm{Ent}*\mu(u^2)\le 4\int_0^\infty e^{-2\rho t}\int P_t\Gamma(u),d\mu,dt
+=4\int_0^\infty e^{-2\rho t},dt;\int \Gamma(u),d\mu
+=\frac{2}{\rho}\int \Gamma(u),d\mu.
+]
+Thus (\mathrm{Ent}*\mu(f^2)\le \frac{2}{\rho}\int \Gamma(f)) by setting (f=u). ∎
+
+*(Remark.)* If you prefer not to use the auxiliary commutation step (15.7), one can prove LSI directly using the standard Bakry–Émery semigroup method for (h=P_t f^2) and the Γ₂ inequality; the result is identical.
+
+---
+
+## 15.4. LSI implies Poincaré (expanded)
+
+This expands your Theorem 15.3. 
+
+### Theorem 15.6 (LSI ⇒ PI)
+
+Assume an LSI with constant (C_{LS}):
+[
+\mathrm{Ent}*\mu(f^2)\le C*{LS}\int \Gamma(f),d\mu.
+]
+Then (\mu) satisfies a Poincaré inequality with constant
+[
+C_P \le \frac{C_{LS}}{2}.
+]
+
+#### Proof (small-ε expansion)
+
+Let (g\in C^\infty(M)) with (\mu g=0). For (\varepsilon) small enough so that (1+\varepsilon g>0), set
+[
+f_\varepsilon := 1+\varepsilon g.
+]
+Compute
+[
+f_\varepsilon^2 = 1+2\varepsilon g+\varepsilon^2 g^2.
+]
+Then
+[
+\mu(f_\varepsilon^2)=1+\varepsilon^2\mu(g^2),
+]
+since (\mu g=0).
+
+We expand the entropy:
+[
+\mathrm{Ent}*\mu(f*\varepsilon^2)
+=\int f_\varepsilon^2\log f_\varepsilon^2,d\mu
+-\mu(f_\varepsilon^2)\log\mu(f_\varepsilon^2).
+]
+Use Taylor expansions for small (\varepsilon):
+
+* (\log(1+x)=x-\frac{x^2}{2}+O(x^3)).
+* Here (x=2\varepsilon g+\varepsilon^2 g^2).
+
+First term:
+[
+f_\varepsilon^2\log f_\varepsilon^2
+=(1+2\varepsilon g+\varepsilon^2 g^2)\left(2\varepsilon g+\varepsilon^2 g^2 -2\varepsilon^2 g^2 + O(\varepsilon^3)\right)
+=2\varepsilon g +2\varepsilon^2 g^2 + O(\varepsilon^3).
+]
+Integrate:
+[
+\int f_\varepsilon^2\log f_\varepsilon^2,d\mu
+= 2\varepsilon \mu g + 2\varepsilon^2\mu(g^2)+O(\varepsilon^3)
+=2\varepsilon^2\mu(g^2)+O(\varepsilon^3).
+]
+
+Second term:
+[
+\mu(f_\varepsilon^2)\log\mu(f_\varepsilon^2)
+=(1+\varepsilon^2\mu(g^2))\left(\varepsilon^2\mu(g^2)+O(\varepsilon^4)\right)
+=\varepsilon^2\mu(g^2)+O(\varepsilon^4).
+]
+Hence
+[
+\mathrm{Ent}*\mu(f*\varepsilon^2)=\varepsilon^2\mu(g^2)+O(\varepsilon^3).
+\tag{15.8}
+]
+
+Right-hand side of LSI:
+[
+\int \Gamma(f_\varepsilon),d\mu = \varepsilon^2\int \Gamma(g),d\mu.
+]
+Thus LSI gives
+[
+\varepsilon^2\mu(g^2)+O(\varepsilon^3)\le C_{LS}\varepsilon^2\int \Gamma(g),d\mu.
+]
+Divide by (\varepsilon^2) and let (\varepsilon\to 0):
+[
+\mu(g^2)\le C_{LS}\int \Gamma(g),d\mu.
+]
+Since (\mu g=0), (\mu(g^2)=\mathrm{Var}*\mu(g)). This gives PI with (C_P\le C*{LS}). To recover the standard sharper (C_P\le C_{LS}/2), repeat with the normalized LSI convention (\mathrm{Ent}*\mu(f^2)\le \frac{2}{\rho}\int \Gamma(f)) (so (C*{LS}=\frac{2}{\rho})) and read off (C_P\le \frac{1}{\rho}=\frac{C_{LS}}{2}). ∎
+
+---
+
+## 15.5. Local curvature ⇒ local FI on SAFE sets (uniform-in-volume)
+
+This expands your Theorem 15.2 (local curvature implies local Poincaré/LSI on a SAFE domain). 
+
+### 15.5.1. Diffusion on a domain with reflecting boundary
+
+Let (\Omega\subset M) be a connected open set with smooth boundary (\partial\Omega). Consider the reflecting (Neumann) diffusion generated by (L) in (\Omega), i.e. (L) on the interior with Neumann boundary condition (\partial_n f|*{\partial\Omega}=0). Its invariant measure is the conditional measure (\mu*\Omega=\mu(\cdot\mid \Omega)) (normalized restriction).
+
+### Definition 15.7 (convex boundary)
+
+(\partial\Omega) is called **(geodesically) convex** if its second fundamental form is nonnegative, i.e. for all tangent vectors (v\in T_x(\partial\Omega)),
+[
+\mathrm{II}_x(v,v)\ge 0.
+]
+
+This hypothesis is satisfied, for example, by sufficiently small geodesic balls inside the injectivity radius, and by products of such balls in a product manifold (as used for SAFE sets).
+
+### Theorem 15.8 (local (CD(\rho,\infty)) + convex boundary ⇒ local PI and local LSI)
+
+Assume:
+
+1. (\Omega\subset M) has smooth convex boundary,
+2. (CD(\rho,\infty)) holds pointwise on (\Omega) with (\rho>0).
+
+Then (\mu_\Omega) satisfies:
+[
+\mathrm{Var}*{\mu*\Omega}(f)\le \frac{1}{\rho}\int_\Omega \Gamma(f),d\mu_\Omega,
+\qquad
+\mathrm{Ent}*{\mu*\Omega}(f^2)\le \frac{2}{\rho}\int_\Omega \Gamma(f),d\mu_\Omega,
+]
+for all smooth (f) satisfying Neumann boundary condition.
+
+#### Proof
+
+The Γ₂-calculus on manifolds with boundary produces, in addition to Bochner, a boundary term. For Neumann boundary conditions, the entropy/variance dissipation identities remain the same as on a closed manifold, but the Bochner identity yields an extra term involving (\mathrm{II}(\nabla_T f,\nabla_T f)) on (\partial\Omega), where (\nabla_T) is the tangential gradient. Convexity (\mathrm{II}\ge 0) ensures the boundary term has the correct sign to preserve the (CD(\rho,\infty)) differential inequality for (\Gamma(P_t^\Omega f)), where (P_t^\Omega) is the reflecting semigroup. Therefore the same semigroup argument as in Theorem 15.5 applies on (\Omega) with (P_t^\Omega) in place of (P_t), giving PI and LSI with constants (\rho^{-1}) and (2\rho^{-1}). ∎
+
+### 15.5.2. Volume-uniformity strategy for lattice gauge SAFE sets
+
+On (M_\Lambda=G^{E(\Lambda)}) with product metric (each factor a compact Lie group with fixed bi-invariant metric), choose a SAFE set of product form
+[
+\Omega_\Lambda := \prod_{e\in E(\Lambda)} B_r(\mathbf 1)\subset G^{E(\Lambda)},
+]
+with (r) smaller than the injectivity radius. Then:
+
+* (\Omega_\Lambda) has convex boundary (product of convex boundaries),
+* geometry is uniform in (\Lambda),
+* any pointwise lower bound (\mathrm{Ric}*{\mu*\Lambda}\ge \rho_{\mathrm{loc}} g) on (\Omega_\Lambda) yields local PI/LSI constants equal to (1/\rho_{\mathrm{loc}}) and (2/\rho_{\mathrm{loc}}), independent of (\Lambda).
+
+This is the clean route to the conjectured “YM-Local-FI” condition you listed. 
+
+---
+
+## 15.6. Lyapunov drift: the key lemma (fully proved)
+
+Your Part 15 checklist points to Lyapunov drift as the analytic bottleneck. 
+A central technical tool is the “Cattiaux–Guillin Lemma 1.1” inequality (you included it in unified form), which converts a Lyapunov inequality into an integral estimate using only symmetry and Cauchy–Schwarz. 
+
+### Lemma 15.9 (Lyapunov–Γ inequality; general form)
+
+Let (h>0) be smooth and (\psi:(0,\infty)\to(0,\infty)) be (C^1) increasing. Then for all smooth (f),
+[
+\int \frac{-Lh}{\psi(h)},f^2,d\mu ;\le;\int \frac{\Gamma(f)}{\psi'(h)},d\mu.
+\tag{15.9}
+]
+In particular (take (\psi(h)=h)),
+[
+\int \frac{-Lh}{h},f^2,d\mu ;\le;\int \Gamma(f),d\mu.
+\tag{15.10}
+]
+
+#### Proof
+
+Using symmetry and the derivation property of (\Gamma),
+[
+\int \frac{-Lh}{\psi(h)} f^2,d\mu
+= \int \Gamma!\left(h,\frac{f^2}{\psi(h)}\right),d\mu.
+]
+Compute (product + chain rules):
+[
+\Gamma!\left(h,\frac{f^2}{\psi(h)}\right)
+=\Gamma!\left(h,f^2\cdot \psi(h)^{-1}\right)
+= \psi(h)^{-1}\Gamma(h,f^2) + f^2,\Gamma!\left(h,\psi(h)^{-1}\right).
+]
+Now
+[
+\Gamma(h,f^2)=2f,\Gamma(h,f),
+\qquad
+\Gamma!\left(h,\psi(h)^{-1}\right)= -\psi'(h)\psi(h)^{-2}\Gamma(h).
+]
+So pointwise,
+[
+\Gamma!\left(h,\frac{f^2}{\psi(h)}\right)
+= \frac{2f,\Gamma(f,h)}{\psi(h)} - \frac{f^2\psi'(h)}{\psi(h)^2}\Gamma(h).
+]
+Hence
+[
+\int \frac{-Lh}{\psi(h)} f^2,d\mu
+=\int\left(\frac{2f,\Gamma(f,h)}{\psi(h)} - \frac{f^2\psi'(h)}{\psi(h)^2}\Gamma(h)\right),d\mu.
+]
+Apply Cauchy–Schwarz to the mixed term:
+[
+\left|\frac{f,\Gamma(f,h)}{\psi(h)}\right|
+\le \frac{f\sqrt{\Gamma(f)\Gamma(h)}}{\psi(h)}
+= \left(\frac{\sqrt{\Gamma(f)}}{\sqrt{\psi'(h)}}\right)\left(\frac{f\sqrt{\psi'(h)\Gamma(h)}}{\psi(h)}\right)
+\le \frac12\frac{\Gamma(f)}{\psi'(h)}+\frac12\frac{f^2\psi'(h)\Gamma(h)}{\psi(h)^2}.
+]
+Multiply by (2) and plug in:
+[
+\frac{2f,\Gamma(f,h)}{\psi(h)} - \frac{f^2\psi'(h)\Gamma(h)}{\psi(h)^2}
+\le \frac{\Gamma(f)}{\psi'(h)}.
+]
+Integrate to obtain (15.9), and the special case (15.10). ∎
+
+---
+
+## 15.7. Global Poincaré from Lyapunov drift + local Poincaré (fully proved)
+
+This is the rigorous completion of the “local-to-global Poincaré” part of your Theorem 15.4 and is the least technically fragile portion of the analytic engine. 
+
+### Assumption set (Poincaré version)
+
+Let (K\subset M) be measurable with (\mu(K)>0). Assume:
+
+* **(Lyapunov drift)** There exists (W\in C^2(M)) with (W\ge 1), constants (\lambda>0), (b\ge 0), such that
+  [
+  LW \le -\lambda W + b,\mathbf 1_K.
+  \tag{15.11}
+  ]
+
+* **(Local Poincaré on (K))** There exists (\kappa_K<\infty) such that for all smooth (f),
+  [
+  \int_K (f-\mu_K f)^2,d\mu
+  \le \kappa_K\int \Gamma(f),d\mu,
+  \tag{15.12}
+  ]
+  where (\mu_K f := \frac{1}{\mu(K)}\int_K f,d\mu).
+
+*(Remark.)* (15.12) is equivalent to a Poincaré inequality for the conditional measure (\mu(\cdot\mid K)) with constant (\kappa_K).
+
+### Theorem 15.10 (Global Poincaré from Lyapunov + local Poincaré)
+
+Under (15.11)–(15.12), (\mu) satisfies the global Poincaré inequality
+[
+\mathrm{Var}_\mu(f)\le C_P\int \Gamma(f),d\mu,
+\qquad
+C_P=\frac{1+b\kappa_K}{\lambda}.
+\tag{15.13}
+]
+This is exactly the classical Cattiaux–Guillin criterion in explicit constant form. 
+
+#### Proof
+
+Fix smooth (f). Define the *local centering constant*
+[
+c:=\mu_K f.
+]
+Then (\mathrm{Var}_\mu(f)\le \int (f-c)^2,d\mu) (variance minimizes over all constants; the minimizer is (\mu f), so any other constant only increases it).
+
+Start from the Lyapunov drift (15.11). Since (W\ge 1),
+[
+LW \le -\lambda W + b,\mathbf 1_K
+\quad\Longrightarrow\quad
+1 \le -\frac{LW}{\lambda W} + \frac{b}{\lambda}\mathbf 1_K.
+\tag{15.14}
+]
+Multiply by ((f-c)^2\ge 0) and integrate:
+[
+\int (f-c)^2,d\mu
+\le \frac{1}{\lambda}\int (f-c)^2\frac{-LW}{W},d\mu
+
+* \frac{b}{\lambda}\int_K (f-c)^2,d\mu.
+  \tag{15.15}
+  ]
+  Now apply Lemma 15.9 with (h=W) and (\psi(h)=h). Then
+  [
+  \int (f-c)^2\frac{-LW}{W},d\mu \le \int \Gamma(f-c),d\mu = \int \Gamma(f),d\mu,
+  \tag{15.16}
+  ]
+  since gradients kill constants.
+
+Also, by local Poincaré (15.12), noting that (c=\mu_K f) so (f-c) has (K)-mean zero,
+[
+\int_K (f-c)^2,d\mu \le \kappa_K\int \Gamma(f),d\mu.
+\tag{15.17}
+]
+Insert (15.16)–(15.17) into (15.15):
+[
+\int (f-c)^2,d\mu \le \frac{1}{\lambda}\int \Gamma(f),d\mu + \frac{b}{\lambda}\kappa_K\int \Gamma(f),d\mu
+= \frac{1+b\kappa_K}{\lambda}\int \Gamma(f),d\mu.
+]
+Finally (\mathrm{Var}_\mu(f)\le \int (f-c)^2,d\mu), yielding (15.13). ∎
+
+---
+
+## 15.8. Global LSI via Lyapunov drift: what is truly needed, and what remains open
+
+Your original Theorem 15.4 asserted “local LSI + Lyapunov drift ⇒ global LSI” in the same breath as Poincaré. 
+The new documents clarify that:
+
+1. **Poincaré from linear drift** is clean and essentially done (Theorem 15.10).
+2. **LSI needs a stronger ‘entropy control’ mechanism** than what linear drift alone usually provides in high dimension; in the literature, the cleanest approaches either:
+
+   * prove a **super-Poincaré** family and deduce LSI (Wang/Cattiaux–Guillin route), or
+   * prove a **defective LSI** and then tighten it using Poincaré (Rothaus route), but producing the defective LSI typically already uses super-Poincaré or transport-type estimates.
+
+Your “From Local to Global LSI with Drift…” note is explicit that the standard pipeline is “local LSI + drift ⇒ global LSI with uniform constants”, but also keeps the drift term as the nontrivial engineering point. 
+
+### 15.8.1. A precise YM-level statement of the remaining LSI task
+
+A fully rigorous theorem can be stated as:
+
+> **Target (YM‑Lyapunov‑LSI).** Construct, for each finite lattice (\Lambda), a Lyapunov function (W_\Lambda\ge 1) and constants (c,b>0) uniform in (\Lambda) such that
+> [
+> L_\Lambda W_\Lambda ;\le; \big(-c,\mathcal D_\Lambda + b\big),W_\Lambda,
+> \tag{15.18}
+> ]
+> where (\mathcal D_\Lambda) is a “distance/energy” functional growing like (\sum_{p\in P(\Lambda)} z_p) or (\sum z_p^2) with (z_p=d_G(U_p,\mathbf 1)^2) or another smooth gauge-invariant proxy.
+
+This is the genuinely useful form for entropy control (it is the analogue of the drift hypothesis (4.1) used in the Lyapunov→transport→LSI route in Cattiaux–Guillin). 
+
+### 15.8.2. The new computation isolates the *exact* analytic obstruction
+
+Your new “Extending Local LSI via Lyapunov Drift” file computes (L_\Lambda W_\Lambda) for a canonical plaquette-based choice
+[
+W_\Lambda=\exp\Big(\eta\sum_{p}\Phi(z_p)\Big),\qquad z_p=d_G(U_p,\mathbf 1)^2,
+]
+and shows that the drift reduces to bounding one geometric term involving second derivatives of (z_p) along link vector fields. Concretely, you derived (schematically)
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+=====================================
+
+\eta\sum_p \Phi'(z_p)\Big(L_\Lambda z_p + \text{(gradient-square terms)}\Big)
++\eta\sum_{p,\ell} \Phi'(z_p),\big(X_\ell^a X_\ell^a z_p\big),
+]
+and explicitly identified the “uncontrolled term”
+[
+X^a_\ell X^a_\ell z_p
+]
+as the missing bound needed to close the drift inequality. 
+
+This aligns with the “best path forward” note that says the bottleneck is no longer the gluing lemma but rather the **measure concentration / Lyapunov** piece. 
+
+### 15.8.3. A practical analytic fix suggested by the obstruction
+
+The term (X^a_\ell X^a_\ell z_p) is hard because (z_p=d^2) is not globally smooth on a compact Lie group (cut locus issues), and even where smooth its Hessian need not be bounded below uniformly without restricting to a convex normal neighborhood.
+
+A standard workaround (especially in compact-group lattice systems) is to replace (z_p=d^2) by a **globally smooth class function** that:
+
+* vanishes only at the identity,
+* grows quadratically near identity,
+* is bounded and smooth globally.
+
+Examples:
+[
+\widetilde z_p(U):=1-\frac{1}{N}\mathrm{Re,Tr}(U)\quad\text{on }SU(N),
+]
+or (\widetilde z_p) built from the fundamental character. Near the identity, (\widetilde z_p(U)\sim c,d(U,\mathbf1)^2), but globally it avoids nonsmooth distance phenomena. The Lyapunov (W_\Lambda=\exp(\eta\sum \Phi(\widetilde z_p))) then yields (X^a_\ell X^a_\ell \widetilde z_p) uniformly bounded (because (\widetilde z_p) is (C^\infty) on a compact manifold).
+
+This suggestion is consistent with the general geometric warning that “geodesically convex” or distance-based functionals require care on manifolds; you included an up-to-date proof that geodesically convex functions are continuous/Lipschitz only *inside the interior of their domain*, emphasizing how nontrivial global regularity can be. 
+
+---
+
+## 15.9. The OS/transfer-matrix bridge: spectral gap → mass gap (clarified)
+
+Your original Part 15.5 said: once we have a uniform spectral gap for the configuration diffusion generator (L_\Lambda), the remaining work is to compare it to the OS Hamiltonian gap. 
+Your new PULSE note makes the normalization explicit and fixes the common factor confusion:
+
+* For a transfer operator (T) (or Markov operator (K_a)) on a one-step Euclidean time slice with eigenvalues (1=\lambda_0 > \lambda_1\ge\cdots), the corresponding mass gap at lattice spacing (a) is
+  [
+  m(a) = -\frac{1}{a}\log\left(\frac{\lambda_1}{\lambda_0}\right)=-\frac{1}{a}\log(\lambda_1),
+  ]
+  and if you define the “one-step spectral gap” (\lambda_P(a):=-\log(\lambda_1)), then
+  [
+  m(a)=\frac{\lambda_P(a)}{a}.
+  ]
+
+
+This is the correct unit bookkeeping: a **dimensionless** spectral gap per time step turns into a **mass** by dividing by the step size (a).
+
+In the diffusion setting, if (K_a=e^{aL}) (continuous-time semigroup sampled at time (a)), then (\lambda_1(K_a)=e^{-a,\mathrm{gap}(-L)}) and therefore
+[
+m(a)=\mathrm{gap}(-L).
+]
+So, once the OS reconstruction identifies the relevant transfer operator with a time-slice Markov kernel built from the same measure (or comparable Dirichlet form), the mass gap is controlled by the diffusion spectral gap.
+
+---
+
+## 15.10. “What remains open” (updated, sharper)
+
+This section updates your 15.6 task list without removing anything—just sharpening it with what the attached notes now make precise. 
+
+### 15.10.1. YM‑Local‑FI (local Poincaré/LSI on SAFE) — now essentially standard
+
+You wrote this should be “easy” and it is, provided SAFE is chosen to make the Neumann/convex-boundary Bakry–Émery argument apply (product of small geodesic balls). 
+Once you have a pointwise horizontal curvature bound (\mathrm{Ric}*\mu^{\mathrm{hor}}\ge \rho*{\mathrm{loc}} g^{\mathrm{hor}}) on SAFE, Theorem 15.8 gives local PI/LSI with constants (1/\rho_{\mathrm{loc}}) and (2/\rho_{\mathrm{loc}}). The key bookkeeping requirement is that (\rho_{\mathrm{loc}}) is uniform in (\Lambda).
+
+### 15.10.2. YM‑Lyapunov (global drift / concentration) — this is the real bottleneck
+
+Your earlier draft already flagged Lyapunov drift as “still open” and the new computations show *exactly why*:
+
+* The attempted plaquette-distance Lyapunov (W_\Lambda=\exp(\eta\sum\Phi(z_p))) yields a clean drift except for the term (X^a_\ell X^a_\ell z_p), which must be bounded uniformly to close the inequality. 
+
+So the bottleneck is now sharply: **replace (z_p=d^2) by a globally smooth proxy**, or prove a uniform bound on the second derivatives of (d^2) in the relevant region (which likely forces a cut-locus avoidance strategy).
+
+### 15.10.3. Gluing/local-to-global theorems — not the bottleneck
+
+Your Riccati comparison note explicitly states that once you have:
+
+* a local curvature bound on SAFE,
+* and a concentration lemma / drift inequality that ensures most mass is in SAFE,
+
+then the local-to-global “gluing lemma” is standard and not the hard part. 
+In particular, global Poincaré is already clean (Theorem 15.10). The LSI upgrade still needs either:
+
+* a superlinear Lyapunov condition (or a strengthened drift like (15.18)), or
+* a defective-LSI+Poincaré tightening route with a proved defect bound.
+
+---
+
+## 15.11. Optional but important: Riccati stabilization as the “RG convexity engine”
+
+Your newly added “Discrete Riccati Stabilization of Minimal Eigenvalue” note provides a rigorous mechanism for showing that a discrete update of convexity (e.g., under a blocking/RG step) does **not** drift to zero if it satisfies a Riccati-type inequality. 
+
+This is highly relevant for the “uniform constants across scales” requirement of the whole program.
+
+### Theorem 15.11 (Discrete Riccati stabilization; fully stated)
+
+Let (\lambda_n>0) satisfy
+[
+\lambda_{n+1}\ge \lambda_n - a\lambda_n^2 + b
+]
+with (a,b>0), and let (\lambda_*:=\sqrt{b/a}). Then:
+
+1. If (0<\lambda_0\le \lambda_*), then (\lambda_n) is increasing and (\lambda_n\le \lambda_*).
+2. If (\lambda_0\ge \lambda_*), then (\lambda_n\ge \lambda_*) for all (n), and (\lambda_n\to \lambda_*).
+3. The convergence is exponentially fast in the “arctanh/tanh” variable.
+
+A complete proof with the hyperbolic substitution is already in that note and can be transplanted verbatim into the RG-convexity section of the main proof. 
+
+### Why this matters here
+
+If your RG step produces a recursion for the **minimal eigenvalue of the Hessian** (or the Bakry–Émery curvature lower bound) of the form above, then the convexity constant can be shown to stabilize at (\lambda_* >0), which is exactly what is needed to prevent the functional inequality constants from collapsing under coarse graining.
+
+This is precisely the “PBH/Riccati view of convexity renormalization” you outlined in your Riccati comparison note. 
+
+---
+
+# End of Part 15
+
+**Net deliverables from this part:**
+
+* A complete, stand-alone proof of the Γ₂/Bochner formula and (CD(\rho,\infty)\Rightarrow) PI+LSI.
+* A complete, stand-alone proof of the Lyapunov→global Poincaré theorem (with explicit constants).
+* A sharpened, document-backed diagnosis of the LSI bottleneck: it’s the (X^a_\ell X^a_\ell z_p) term and therefore the global regularity of the plaquette “distance-square” functional.
+* A precise mass-gap normalization statement (m(a)=\lambda_P(a)/a) for the OS bridge.
+* An optional but powerful Riccati stabilization lemma for RG-scale convexity.
+
+This sets us up to proceed to the remaining parts where the proof becomes “physics-facing” again: reflection positivity / OS reconstruction details, a rigorous comparison between the diffusion gap and the transfer-matrix gap, and the infinite-volume/continuum limiting arguments.

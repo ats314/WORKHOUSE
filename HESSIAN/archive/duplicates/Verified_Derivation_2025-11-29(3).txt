@@ -1,0 +1,189 @@
+VERIFIED
+
+# Title
+
+Haar Measure Contribution to the Effective Action for \(SU(N)\) and Positivity of the Quadratic Term
+
+# Abstract
+
+We consider the contribution of the Haar measure to the effective action for a lattice gauge link \(U\in SU(N)\) parameterized via the exponential map \(U = \exp(a g A_b)\) with \(A_b \in \mathfrak{su}(N)\) anti‑Hermitian. Using the standard Jacobian of the exponential map for compact Lie groups, we show that the measure is governed by the operator-valued function \(\sin(\mathcal{L}/2)/(\mathcal{L}/2)\), where \(\mathcal{L} = -i a g\,\mathrm{ad}_{A_b}\) has real eigenvalues. Expanding the resulting effective Haar action for small lattice spacing and coupling, we derive the quadratic term
+\[
+S_{\mathrm{Haar}}^{(2)} = \frac{N}{12}\,a^2 g^2 \,\|A_b\|^2,
+\]
+with \(\|A_b\|^2 = -\mathrm{Tr}(A_b^2)\). This term is strictly positive for \(N\ge 2\), implying a positive definite Hessian at the origin and a Gaussian suppression of fluctuations in the Euclidean path integral. The corrected derivation resolves the sign error of the original treatment and is consistent with the compactness of \(SU(N)\).
+
+# Verified Derivation
+
+## 1. Setup and Haar Measure Jacobian
+
+We consider a single lattice gauge link variable \(U\in SU(N)\), parameterized by an element of the Lie algebra \(\mathfrak{su}(N)\) via the exponential map
+\[
+U = \exp(a g A_b),
+\]
+where
+- \(a\) is the lattice spacing,
+- \(g\) is the gauge coupling,
+- \(A_b \in \mathfrak{su}(N)\) is anti‑Hermitian: \(A_b^\dagger = -A_b\).
+
+The Haar measure on the group induces a measure on the algebra through the Jacobian of the exponential map:
+\[
+dU = J(A_b)\, dA_b.
+\]
+
+For a left-invariant Haar measure, the Jacobian of the exponential map at \(X\in\mathfrak{g}\) is
+\[
+J(X) = \det\!\left(\frac{1 - e^{-\mathrm{ad}_X}}{\mathrm{ad}_X}\right),
+\]
+where \(\mathrm{ad}_X(Y) = [X,Y]\) is the adjoint action on the Lie algebra \(\mathfrak{g}\).
+
+We are interested in the effective action associated with the Haar measure,
+\[
+S_{\mathrm{Haar}}(A_b) = -\log J(A_b).
+\]
+
+For compact groups, it is convenient to isolate the part of the Jacobian that depends on the spectrum of the adjoint action in a manifestly real form. Define the dimensionless operator
+\[
+\mathcal{L} \equiv -i\,a g\,\mathrm{ad}_{A_b}.
+\]
+
+Since \(A_b\) is anti‑Hermitian, \(\mathrm{ad}_{A_b}\) is anti‑Hermitian with respect to the Killing form, and its eigenvalues are purely imaginary. Writing these eigenvalues as \(i\mu_j\) with \(\mu_j\in\mathbb{R}\), the eigenvalues of \(\mathcal{L}\) are real:
+\[
+\mathcal{L} \sim \mu_j \in \mathbb{R}.
+\]
+
+The modulus of the eigenvalues of \(\frac{1 - e^{-\mathrm{ad}_{ag A_b}}}{\mathrm{ad}_{ag A_b}}\) can be expressed in terms of \(\sin\) of these real eigenvalues. One finds
+\[
+\left|\frac{1 - e^{-\mathrm{ad}_{ag A_b}}}{\mathrm{ad}_{ag A_b}}\right|
+\;\sim\;
+\left|\frac{\sin(\mathcal{L}/2)}{\mathcal{L}/2}\right|.
+\]
+
+Thus, up to an irrelevant phase and overall constant, the Jacobian relevant for the effective action is
+\[
+J(A_b) = \det\!\left(\frac{\sin(\mathcal{L}/2)}{\mathcal{L}/2}\right).
+\]
+
+Accordingly, the Haar contribution to the effective action is
+\[
+S_{\mathrm{Haar}}(A_b)
+= -\mathrm{Tr}_{\mathfrak{g}} \log\!\left(\frac{\sin(\mathcal{L}/2)}{\mathcal{L}/2}\right),
+\]
+where \(\mathrm{Tr}_{\mathfrak{g}}\) denotes the trace over the Lie algebra (adjoint representation).
+
+This is the compact‑group analogue of the non‑compact expression involving \(\sinh\), and the replacement \(\sinh \to \sin\) for real eigenvalues of \(\mathcal{L}\) is the key structural correction.
+
+## 2. Small‑Field Expansion of the Haar Action
+
+We now expand \(S_{\mathrm{Haar}}(A_b)\) for small \(a g\), i.e. for small \(\mathcal{L}\).
+
+The Taylor expansion of \(\sin x / x\) around \(x=0\) is
+\[
+\frac{\sin x}{x} = 1 - \frac{x^2}{6} + O(x^4).
+\]
+
+Substituting \(x = \mathcal{L}/2\), we obtain
+\[
+\frac{\sin(\mathcal{L}/2)}{\mathcal{L}/2}
+= \mathbb{I} - \frac{1}{6}\left(\frac{\mathcal{L}}{2}\right)^2 + O(\mathcal{L}^4)
+= \mathbb{I} - \frac{1}{24}\mathcal{L}^2 + O(\mathcal{L}^4).
+\]
+
+For an operator close to the identity, we use
+\[
+\log(\mathbb{I} - \epsilon) = -\epsilon + O(\epsilon^2),
+\]
+valid when \(\|\epsilon\|\ll 1\). Here \(\epsilon = \frac{1}{24}\mathcal{L}^2 + O(\mathcal{L}^4)\), so to quadratic order in \(A_b\) we may neglect \(O(\mathcal{L}^4)\) and write
+\[
+\log\!\left(\frac{\sin(\mathcal{L}/2)}{\mathcal{L}/2}\right)
+= \log\!\left(\mathbb{I} - \frac{1}{24}\mathcal{L}^2 + O(\mathcal{L}^4)\right)
+\approx -\frac{1}{24}\mathcal{L}^2.
+\]
+
+Therefore, to quadratic order,
+\[
+\begin{aligned}
+S_{\mathrm{Haar}}(A_b)
+&= -\mathrm{Tr}_{\mathfrak{g}} \log\!\left(\frac{\sin(\mathcal{L}/2)}{\mathcal{L}/2}\right) \\
+&\approx -\mathrm{Tr}_{\mathfrak{g}}\!\left(-\frac{1}{24}\mathcal{L}^2\right) \\
+&= \frac{1}{24}\,\mathrm{Tr}_{\mathfrak{g}}(\mathcal{L}^2).
+\end{aligned}
+\]
+
+This establishes the sign of the quadratic term in terms of \(\mathrm{Tr}_{\mathfrak{g}}(\mathcal{L}^2)\).
+
+## 3. Expressing the Trace in Terms of \(A_b\)
+
+Using the definition \(\mathcal{L} = -i a g\,\mathrm{ad}_{A_b}\), we have
+\[
+\mathcal{L}^2 = (-i a g)^2\,\mathrm{ad}_{A_b}^2 = -a^2 g^2\,\mathrm{ad}_{A_b}^2.
+\]
+
+Substituting into the action,
+\[
+S_{\mathrm{Haar}}(A_b)
+= \frac{1}{24}\,\mathrm{Tr}_{\mathfrak{g}}(\mathcal{L}^2)
+= \frac{1}{24}\,\mathrm{Tr}_{\mathfrak{g}}\!\left(-a^2 g^2\,\mathrm{ad}_{A_b}^2\right)
+= -\frac{a^2 g^2}{24}\,\mathrm{Tr}_{\mathfrak{g}}(\mathrm{ad}_{A_b}^2).
+\]
+
+For \(X\in\mathfrak{su}(N)\), the Killing form can be expressed in terms of the fundamental representation trace. With the usual normalization of the generators in the fundamental representation, one has the standard identity
+\[
+\mathrm{Tr}_{\mathfrak{g}}(\mathrm{ad}_X^2)
+= 2N\,\mathrm{Tr}_{\mathrm{fund}}(X^2).
+\]
+
+Applying this with \(X = A_b\),
+\[
+\mathrm{Tr}_{\mathfrak{g}}(\mathrm{ad}_{A_b}^2)
+= 2N\,\mathrm{Tr}(A_b^2),
+\]
+where \(\mathrm{Tr}\) denotes the trace in the fundamental representation.
+
+Thus,
+\[
+S_{\mathrm{Haar}}(A_b)
+= -\frac{a^2 g^2}{24}\,(2N)\,\mathrm{Tr}(A_b^2)
+= -\frac{N a^2 g^2}{12}\,\mathrm{Tr}(A_b^2).
+\]
+
+This is the quadratic contribution to the Haar effective action expressed directly in terms of \(A_b\).
+
+## 4. Norm, Sign, and Positivity of the Quadratic Term
+
+Because \(A_b\) is anti‑Hermitian, its eigenvalues are purely imaginary, and \(\mathrm{Tr}(A_b^2)\) is non‑positive. It is convenient to define a positive definite norm on the algebra by
+\[
+\|A_b\|^2 \equiv -\mathrm{Tr}(A_b^2).
+\]
+
+Then \(\mathrm{Tr}(A_b^2) = -\|A_b\|^2\), and the Haar action becomes
+\[
+S_{\mathrm{Haar}}(A_b)
+= -\frac{N a^2 g^2}{12}\,\bigl(-\|A_b\|^2\bigr)
+= \frac{N a^2 g^2}{12}\,\|A_b\|^2.
+\]
+
+Equivalently, we can write the quadratic part of the action as
+\[
+S_{\mathrm{Haar}}^{(2)}(A_b)
+= \frac{c_0}{2}\,a^2 g^2\,\|A_b\|^2,
+\quad
+c_0 = \frac{N}{6}.
+\]
+
+For \(SU(N)\) with \(N\ge 2\), we have \(c_0>0\). Thus the quadratic form is strictly positive for nonzero \(A_b\), and the Hessian of \(S_{\mathrm{Haar}}\) at \(A_b=0\) is positive definite and proportional to the identity in the space of algebra components.
+
+## 5. Hessian and Physical Interpretation
+
+Near \(A_b = 0\), the Haar contribution to the Euclidean action is
+\[
+S_{\mathrm{Haar}}(A_b)
+= \frac{N a^2 g^2}{12}\,\|A_b\|^2 + O(A_b^4).
+\]
+
+In the Euclidean path integral
+\[
+\int \mathcal{D}A_b \,\exp\bigl(-S_{\mathrm{Haar}}(A_b) - S_{\text{other}}(A_b)\bigr),
+\]
+this term provides a Gaussian suppression of fluctuations in \(A_b\) around the origin. The positive definite Hessian corresponds to a stabilizing, “mass‑like” contribution induced purely by the compactness of the group manifold and the nontrivial Jacobian of the exponential map.
+
+This resolves the earlier sign error (which had led to an apparent tachyonic instability) and yields a consistent, stable quadratic effective action from the Haar measure for \(SU(N)\).

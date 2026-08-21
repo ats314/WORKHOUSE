@@ -1,0 +1,271 @@
+Part 15 — Analytic Checklist for the Yang–Mills Mass-Gap Program
+
+This part collects, in one place, the analytic requirements and consequences of the curvature–diffusion framework developed earlier, with an eye toward the Yang–Mills mass-gap problem. It reorganizes and sharpens the “analytic checklist” originally formulated in the global functional inequality module. 
+
+The goals are:
+
+* to separate clearly what is already proved within this framework,
+* to state precisely what remains as analytic tasks for lattice Yang–Mills,
+* and to indicate how these pieces interact with spectral gaps and mass gaps downstream.
+
+Throughout, we stay at **finite lattice spacing** and **finite volume**; all limits are relegated to later parts.
+
+---
+
+## 15.1. Proven analytic ingredients in the curvature–diffusion framework
+
+We recall what has been rigorously established for finite-dimensional Gibbs diffusions ((M,g,S,\mu)) with generator
+(L = \Delta_g - \langle\nabla S,\nabla\cdot\rangle) and Bakry–Émery curvature tensor (\operatorname{Ric}_\mu = \operatorname{Ric}_g + \nabla^2 S). 
+
+### 15.1.1. Curvature ⇒ Poincaré, LSI, and spectral gap
+
+If the global curvature–dimension condition
+[
+CD(\rho,\infty):\quad \Gamma_2(f) ;\ge; \rho,\Gamma(f) \quad (\rho>0)
+]
+holds for all smooth (f), then:
+
+* **Poincaré inequality** (spectral gap):
+  [
+  \operatorname{Var}_\mu(f)
+  ;\le; \frac{1}{\rho}\int_M \Gamma(f),d\mu,
+  ]
+  and the spectral gap of (-L) satisfies (\lambda_1 \ge \rho).
+
+* **Logarithmic Sobolev inequality**:
+  [
+  \operatorname{Ent}_\mu(f^2)
+  ;\le; \frac{2}{\rho}\int_M \Gamma(f),d\mu.
+  ]
+
+The proofs use the Bochner–Bakry–Émery identity, the (CD(\rho,\infty)) inequality, and semigroup methods; they are standard and dimension-free in the sense that the constants (1/\rho) and (2/\rho) depend only on the curvature lower bound. 
+
+### 15.1.2. Local curvature ⇒ local Poincaré and LSI
+
+If instead one has a **local curvature–dimension bound** on an open set (\Omega\subset M),
+[
+\Gamma_2(f)(x) ;\ge; \rho_{\mathrm{loc}} ,\Gamma(f)(x) \quad \text{for all } x\in\Omega,
+]
+then on bounded subsets (U\Subset\Omega) one obtains:
+
+* a **local Poincaré inequality** on (U),
+* and a **local log-Sobolev (or super-Poincaré) inequality** on (U),
+
+with constants depending on (\rho_{\mathrm{loc}}), the geometry of (U), and the restriction of (\mu) to (U), but *not* on the ambient dimension. This is the finite-dimensional version of the standard “curvature ⇒ local FI on bounded domains” theory. 
+
+### 15.1.3. Lyapunov + local FI ⇒ global FI
+
+To globalize, one uses Lyapunov drift conditions. Suppose there exists a **Lyapunov function** (W\ge 1) such that
+[
+L W ;\le; -\alpha W + \beta,\mathbf{1}_K
+]
+for some (\alpha>0), (\beta\ge 0), and relatively compact (K\subset M). Together with:
+
+* a **local Poincaré inequality** on a bounded set (U\supset K),
+* or a **local super-Poincaré / LSI** on (U),
+
+one can derive:
+
+* a **global Poincaré inequality** (hence spectral gap),
+* and, under appropriate growth conditions on (W), a **global LSI**.
+
+This is the Cattiaux–Guillin / Wang style Lyapunov–Γ machinery, adapted to the present setting and proved in the earlier analytic module. 
+
+In short: the analytic “engine” is now in place — local curvature + Lyapunov + local FI ⇒ global FI.
+
+---
+
+## 15.2. Geometric input from finite-volume lattice Yang–Mills
+
+For each finite lattice (\Lambda), the geometry of lattice Yang–Mills is encoded in:
+
+* the configuration manifold (M_\Lambda = G^{E(\Lambda)}) with product bi-invariant metric (g_\Lambda),
+* the product Haar volume form (d\mathrm{vol}*{g*\Lambda}),
+* the effective action (S_\Lambda = S_W + S_{\mathrm{add},\Lambda}) incorporating Wilson plaquette terms and additional local terms (gauge-fixing, regulators),
+* and the corresponding Gibbs measure
+  [
+  d\mu_\Lambda(U) = Z_\Lambda^{-1} e^{-S_\Lambda(U)}, d\mathrm{vol}*{g*\Lambda}(U).
+  ]
+
+The key geometric facts already established are:
+
+1. **Gauge geometry and horizontal gradients.**
+   The lattice gauge group (\mathcal{G}*\Lambda = G^{V(\Lambda)}) acts isometrically on (M*\Lambda), with orbits (\mathcal{O}_U) and vertical tangent spaces (V_U = T_U\mathcal{O}*U). The horizontal subspaces (H_U = V_U^\perp) give an orthogonal splitting
+   [
+   T_U M*\Lambda = H_U \oplus V_U.
+   ]
+   For any smooth gauge-invariant observable (f), one has
+   [
+   \nabla f(U)\in H_U,
+   ]
+   so all gradients in the physical algebra are horizontal. 
+
+2. **Wilson Hessian and discrete Hodge decomposition.**
+   In exponential edge coordinates at the trivial configuration (U^{(0)}), the Hessian of the Wilson action is
+   [
+   \nabla^2 S_W(U^{(0)}) = 2 c_W, d_1^* d_1,
+   ]
+   acting on edge cochains. It is nonnegative, vanishing precisely on pure gauge plus harmonic modes, and strictly positive on co-exact (physical) modes.
+
+3. **Haar / Ricci curvature.**
+   The product metric (g_\Lambda) has Ricci tensor
+   [
+   \operatorname{Ric}*{g*\Lambda} ;=; \kappa_G, g_\Lambda
+   ]
+   with (\kappa_G>0) depending only on the group and metric normalization, not on (\Lambda). In exponential coordinates this appears as a strictly convex “Haar mass” potential with uniformly positive Hessian.
+
+4. **Local horizontal Bakry–Émery bound.**
+   Combining the Ricci term and the Hessian of (S_\Lambda), and imposing a uniform lower bound (\nabla^2 S_{\mathrm{add},\Lambda}\ge -C_{\mathrm{add}} g_\Lambda) with (C_{\mathrm{add}}<\kappa_G), one obtains a **local horizontal curvature lower bound**
+   [
+   \operatorname{Ric}*{\mu*\Lambda}(U)(v,v) ;\ge; \rho_{\mathrm{loc}} |v|*{g*\Lambda}^2
+   ]
+   for all (U) in a small-field ball (B_r(U^{(0)})) and all (v\in H_U), with (\rho_{\mathrm{loc}},r>0) independent of (\Lambda). For gauge-invariant observables, this is a local (CD(\rho_{\mathrm{loc}},\infty)) condition. 
+
+This is the geometric backbone: in a fixed-radius ball around the vacuum, the Bakry–Émery curvature is strictly positive in physical directions, uniformly in (\Lambda).
+
+---
+
+## 15.3. Analytic conditions still required for lattice Yang–Mills
+
+To actually apply the local-to-global functional inequality machinery to (\mu_\Lambda), one needs **two additional analytic ingredients** beyond the local curvature bound.
+
+We phrase them as explicit conditions:
+
+### 15.3.1. YM-Local-FI: uniform local Poincaré and LSI on small-field regions
+
+For each finite (\Lambda), there should exist:
+
+* a bounded, gauge-invariant region (U_\Lambda\subset B_r(U^{(0)})),
+* constants (C_{\mathrm{loc}}, C_{\mathrm{LS,loc}}) independent of (\Lambda),
+
+such that for all smooth gauge-invariant (f),
+
+* **Local Poincaré inequality**:
+  [
+  \int_{U_\Lambda} (f - f_{U_\Lambda})^2,d\mu_\Lambda
+  ;\le; C_{\mathrm{loc}} \int_{U_\Lambda} \Gamma_\Lambda(f),d\mu_\Lambda,
+  ]
+  where (f_{U_\Lambda}) is the average of (f) over (U_\Lambda) with respect to (\mu_\Lambda).
+
+* **Local LSI** (or super-Poincaré) on (U_\Lambda):
+  [
+  \operatorname{Ent}*{\mu*\Lambda}(f^2,\mathbf{1}*{U*\Lambda})
+  ;\le; C_{\mathrm{LS,loc}} \int_{U_\Lambda} \Gamma_\Lambda(f),d\mu_\Lambda,
+  ]
+  with (\int_{U_\Lambda} f^2,d\mu_\Lambda = 1).
+
+From the local (CD(\rho_{\mathrm{loc}},\infty)) bound on (B_r(U^{(0)})) and the boundedness of (U_\Lambda), *some* local FI is automatic; the nontrivial requirement is the **uniformity in (\Lambda)** of the constants. This is expected from product/locality structure, but has to be checked in detail for Yang–Mills.
+
+### 15.3.2. YM-Lyapunov: volume-uniform Lyapunov drift toward small-field region
+
+There should exist, for each (\Lambda):
+
+* a smooth, gauge-invariant Lyapunov function (W_\Lambda \ge 1),
+* constants (\alpha>0,\beta\ge 0) independent of (\Lambda),
+* a gauge-invariant compact set (K_\Lambda\subset B_r(U^{(0)})),
+
+such that
+[
+L_\Lambda W_\Lambda ;\le; -\alpha W_\Lambda + \beta,\mathbf{1}*{K*\Lambda}
+\quad\text{on } M_\Lambda.
+]
+
+Intuitively, (W_\Lambda) measures “distance” from the small-field region, e.g. via a weighted sum of plaquette energies or a gauge-invariant norm of curvature. The drift inequality expresses that, away from (K_\Lambda), the dynamics is pulled back toward the small-field region with a strength (\alpha) that does not deteriorate with volume.
+
+Constructing such a (W_\Lambda) with **volume-uniform** Lyapunov constants is a major, still-open analytic problem for interacting lattice gauge fields; it is one of the core analytic tasks singled out by this program.
+
+---
+
+## 15.4. What follows if YM-Local-FI and YM-Lyapunov hold?
+
+Assume now that **both** YM-Local-FI and YM-Lyapunov are verified for the family ((M_\Lambda,\mu_\Lambda,L_\Lambda)) of finite-volume Yang–Mills systems. Then the abstract local-to-global machinery yields:
+
+1. **Uniform Poincaré inequality for gauge-invariant observables.**
+   There exists (C_P>0), independent of (\Lambda), such that for all (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}),
+   [
+   \operatorname{Var}*{\mu_\Lambda}(f)
+   ;\le; C_P \int_{M_\Lambda} \Gamma_\Lambda(f),d\mu_\Lambda.
+   ]
+   Equivalently, the spectral gap of the configuration-space generator (-L_\Lambda^{\mathrm{inv}}) in the gauge-invariant sector satisfies
+   [
+   \lambda_1^{\mathrm{inv}}(\Lambda) ;\ge; \lambda_* > 0
+   \quad\text{uniformly in }\Lambda.
+   ]
+
+2. **Uniform log-Sobolev inequality in the gauge-invariant sector.**
+   There exists (C_{\mathrm{LS}}>0), independent of (\Lambda), such that
+   [
+   \operatorname{Ent}*{\mu*\Lambda}(f^2)
+   ;\le; C_{\mathrm{LS}} \int_{M_\Lambda} \Gamma_\Lambda(f),d\mu_\Lambda
+   \quad\forall f\in\mathcal{A}_\Lambda^{\mathrm{inv}}.
+   ]
+
+3. **Uniform mixing and concentration in configuration space.**
+   These inequalities imply:
+
+   * exponential convergence in (L^2(\mu_\Lambda)) and entropy to equilibrium for the configuration diffusion,
+   * dimension-free concentration inequalities for gauge-invariant observables,
+   * robust control on fluctuations that does not worsen as (|\Lambda|\to\infty).
+
+Conceptually: once YM-Local-FI and YM-Lyapunov are in hand, the configuration-space side of the Yang–Mills mass-gap program is “analytically complete” at finite volume: we have volume-uniform spectral gaps and functional inequalities for the physical sector.
+
+---
+
+## 15.5. Bridge to spectral gaps and mass gaps (forward look)
+
+The ultimate goal is not just a spectral gap for the **configuration diffusion** (-L_\Lambda^{\mathrm{inv}}), but a **mass gap** for the **OS Hamiltonian** (H_\Lambda) arising from Osterwalder–Schrader reconstruction, and ideally its persistence in the continuum/infinite-volume limit.
+
+At a high level:
+
+* Parts 1–15 (in the new numbering) provide a **configuration-space analytic module**:
+
+  * local curvature control,
+  * potential-driven Lyapunov structure,
+  * and, conditionally, volume-uniform Poincaré/LSI for gauge-invariant observables.
+
+* Subsequent parts (OS and continuum limit) provide the **field-theoretic module**:
+
+  * lattice OS axioms and reflection positivity of Wilson’s action,
+  * reconstruction of a finite-volume Hilbert space (\mathcal{H}*\Lambda) and Hamiltonian (H*\Lambda),
+  * relations between Euclidean-time decay of Schwinger functions and the spectrum of (H_\Lambda),
+  * and scenarios for continuum and infinite-volume limits.
+
+The analytic checklist of this part indicates **where** the configuration-side information can feed into the OS-side story:
+
+* Uniform Poincaré / LSI controls correlation lengths and fluctuations in configuration space, which should constrain the growth of physical correlation lengths and help prevent “massless” scaling scenarios.
+* If one could rigorously relate the Dirichlet form of (-L_\Lambda^{\mathrm{inv}}) to quadratic forms associated with the transfer matrix or OS Hamiltonian, one would obtain lower bounds on the OS spectral gap from the configuration-space spectral gap.
+
+Making this bridge fully rigorous requires additional work (comparison of generators, OS reconstruction in gauge-invariant sectors, control of scaling limits), which is addressed conceptually in the later OS/continuum parts.
+
+---
+
+## 15.6. Checklist summary
+
+To summarize, the **analytic side** of the lattice Yang–Mills mass-gap program, at finite lattice spacing, can be organized as follows: 
+
+1. **Already proved within this framework:**
+
+   * Bakry–Émery curvature–dimension (CD(\rho,\infty)) ⇒ global Poincaré and LSI with constants (1/\rho), (2/\rho).
+   * Local curvature–dimension (CD(\rho_{\mathrm{loc}},\infty)) ⇒ local FI on bounded sets.
+   * Lyapunov drift + local FI ⇒ global Poincaré and (under mild extra hypotheses) global LSI.
+   * For finite-volume lattice Yang–Mills:
+
+     * precise gauge geometry (vertical/horizontal decomposition, horizontal gradients for gauge-invariant observables),
+     * Wilson Hessian structure in discrete Hodge language,
+     * Haar/Ricci curvature of the product group configuration manifold,
+     * and a **local horizontal BE curvature bound**: a small-field (CD(\rho_{\mathrm{loc}},\infty)) for gauge-invariant observables, uniform in (\Lambda).
+
+2. **Analytic tasks still open:**
+
+   * **YM-Local-FI:**
+     Prove that the local Poincaré / log-Sobolev constants on small-field regions can be chosen **uniform in (\Lambda)** for gauge-invariant observables.
+   * **YM-Lyapunov:**
+     Construct gauge-invariant Lyapunov functions (W_\Lambda) with volume-uniform drift inequalities (L_\Lambda W_\Lambda \le -\alpha W_\Lambda + \beta 1_{K_\Lambda}).
+
+3. **Downstream tasks (OS / continuum):**
+
+   * Use lattice OS axioms and reflection positivity of Wilson’s action to build Hilbert spaces (\mathcal{H}*\Lambda) and Hamiltonians (H*\Lambda).
+   * Understand how configuration-space spectral gaps and functional inequalities constrain the spectral gap of (H_\Lambda).
+   * Control continuum and infinite-volume limits so that a positive lower bound on the OS spectral gap survives as a **continuum mass gap**.
+
+In this sense, Part 15 serves as the **control panel** of the analytic machinery: it records what has been firmly established, what remains to be proved on the Gibbs/curvature side, and how those results are intended to interact with the OS/continuum analysis in the rest of the project.

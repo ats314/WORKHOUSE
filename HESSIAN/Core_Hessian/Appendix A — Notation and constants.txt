@@ -1,0 +1,482 @@
+Appendix A — Notation and constants
+
+**Status:** Established (definitions + elementary combinatorics).  
+**Scope:** This file is a *symbol table / constant ledger*. It fixes conventions used everywhere else.  
+**Non-scope:** No simulations, no probabilistic estimates, no “typicality,” no OS reconstruction, no global functional inequalities.
+
+---
+
+## A.0 Conventions and notational hygiene
+
+### A.0.1 Default parameters
+- Default lattice dimension: \(d=4\) unless explicitly stated otherwise.
+- Gauge coupling / inverse temperature: \(\beta\ge 0\).
+- Fixed unitary representation: \(\rho:G\to U(n)\), with \(n=\dim(\rho)\).
+
+### A.0.2 Orientation and “block-matrix” viewpoint
+- We write operator kernels on links as block matrices:
+  \[
+  A:\ell^2(E(\Lambda);\mathfrak g)\to \ell^2(E(\Lambda);\mathfrak g),
+  \qquad
+  A_{b,\tilde b}\in \mathrm{End}(\mathfrak g).
+  \]
+- Operator norm on blocks is always the norm induced by the fixed inner product on \(\mathfrak g\):
+  \[
+  \|T\|_{\mathrm{op}}:=\sup_{|v|_{\mathfrak g}=1}|Tv|_{\mathfrak g},
+  \qquad T\in\mathrm{End}(\mathfrak g).
+  \]
+
+### A.0.3 Legacy collision: \(\Delta_1\)
+In the raw corpus, the symbol “\(\Delta_1\)” is used in *two different* ways.
+To avoid future dependency drift, the rebuilt system uses:
+
+- **Maxwell (curl–curl) operator**
+  \[
+  \mathsf M_1 := d_1^\*d_1
+  \quad\text{on }\mathcal C^1(\Lambda;\mathfrak g).
+  \]
+- **Hodge Laplacian on 1-cochains**
+  \[
+  \Delta_1 := d_0 d_0^\* + d_1^\* d_1.
+  \]
+
+**Translation rule:** any legacy “row-sum constant for \(\Delta_1\)” coming from Part 9/Davies/Combes–Thomas should be read as a constant for \(\mathsf M_1=d_1^\*d_1\).
+
+---
+
+## A.1 Lattice geometry (finite periodic hypercubic lattice)
+
+### A.1.1 The discrete torus
+Fix side lengths \(L_0,\dots,L_{d-1}\in\mathbb N\). The periodic lattice (discrete torus) is
+\[
+\Lambda=\prod_{\mu=0}^{d-1}(\mathbb Z/L_\mu\mathbb Z).
+\]
+Vertices are denoted \(x=(x_0,\dots,x_{d-1})\in V(\Lambda)=\Lambda\).  
+Let \(\hat e_\mu\) denote the \(\mu\)-th unit coordinate vector (modulo periodicity).
+
+### A.1.2 Oriented links and plaquettes
+- Oriented link set (reference orientation): \(E(\Lambda)\). A canonical choice is “positive coordinate orientation,”
+  \[
+  b=(x,\mu): x\to x+\hat e_\mu.
+  \]
+- Opposite orientation is denoted \(b^{-1}\).
+
+- Oriented plaquettes: \(P(\Lambda)\). A canonical coordinate plaquette is \(p=(x;\mu,\nu)\) with \(\mu<\nu\), whose boundary word uses four links.
+
+### A.1.3 Elementary counting identities (periodic hypercubic)
+Let \(|V|:=|V(\Lambda)|\).
+
+- Each vertex has exactly \(d\) outgoing positively oriented links, hence
+  \[
+  |E(\Lambda)| = d\,|V|.
+  \]
+- Each vertex is the basepoint of one plaquette for each unordered pair \(\{\mu,\nu\}\), hence
+  \[
+  |P(\Lambda)|=\binom d2\,|V|=\frac{d(d-1)}2\,|V|.
+  \]
+Therefore
+\[
+\frac{|E(\Lambda)|}{|P(\Lambda)|}=\frac{2}{d-1}.
+\]
+Define the edge/plaquette comparison constant
+\[
+C_{E/P}:=\frac{2}{d-1}
+\quad\text{(so }C_{E/P}=2/3\text{ when }d=4\text{)}.
+\]
+
+### A.1.4 Plaquette perimeter
+Every plaquette boundary has exactly four links. Define
+\[
+m_\partial:=|\partial p|=4\qquad(\text{for any }p\in P(\Lambda)).
+\]
+
+### A.1.5 Bounded overlap constant \(\nu\)
+Let \(\nu\) be the maximal number of plaquettes whose boundary contains a given oriented link.
+
+On a \(d\)-dimensional hypercubic lattice, a fixed link in direction \(\mu\) participates in exactly two plaquettes for each transverse direction \(\nu\neq\mu\), so
+\[
+\nu \le 2(d-1),
+\qquad\text{and in }d=4:\ \nu\le 6.
+\]
+
+### A.1.6 Link adjacency graph and distance
+Define link adjacency \(b\sim b'\) iff there exists a plaquette whose boundary contains both \(b\) and \(b'\) (possibly with inverses).
+
+- Define \(\mathrm{dist}_E(b,b')\) as the graph distance on \(E(\Lambda)\) induced by \(\sim\).
+- For sets \(A,B\subseteq E(\Lambda)\),
+  \[
+  \mathrm{dist}_E(A,B):=\min\{\mathrm{dist}_E(b,b'):\ b\in A,\ b'\in B\}.
+  \]
+
+**Degree bound (combinatorial).** Each plaquette containing \(b\) contributes at most 3 adjacent links \(b'\neq b\), hence
+\[
+D_E:=\sup_{b}\#\{b'\neq b:\ b\sim b'\}\ \le\ 3\nu \ \le\ 6(d-1),
+\qquad\text{so in }d=4:\ D_E\le 18.
+\]
+This “\(3\nu\)” constant is the same combinatorial input that later appears in row-sum bounds.
+
+---
+
+## A.2 Gauge group, Lie algebra, and Riemannian structure
+
+### A.2.1 Group and Lie algebra
+- \(G\): compact Lie group.
+- \(\mathfrak g\): Lie algebra of \(G\).
+- \(\langle\cdot,\cdot\rangle_{\mathfrak g}\): fixed \(\mathrm{Ad}\)-invariant inner product on \(\mathfrak g\).
+- \(|X|_{\mathfrak g}:=\sqrt{\langle X,X\rangle_{\mathfrak g}}\).
+
+### A.2.2 Bi-invariant metric and distance
+- \(g_G\): the bi-invariant Riemannian metric on \(G\) induced by \(\langle\cdot,\cdot\rangle_{\mathfrak g}\).
+- \(d_G\): the corresponding Riemannian distance on \((G,g_G)\).
+- \(\exp:\mathfrak g\to G\): Riemannian exponential at the identity \(\mathbf 1\).
+- \(\log\): local inverse of \(\exp\) on a small ball about \(\mathbf 1\).
+- \(\iota_G := \mathrm{inj}_G(\mathbf 1)\): injectivity radius at \(\mathbf 1\).
+
+---
+
+## A.3 Fixed representation and trace potential constants
+
+### A.3.1 Unitary representation and induced bilinear form
+Fix a faithful unitary representation \(\rho:G\to U(n)\). Let \(d\rho:\mathfrak g\to\mathfrak u(n)\) be the derived representation.
+
+Define the symmetric \(\mathrm{Ad}\)-invariant bilinear form
+\[
+B_\rho(X,Y):=-\Re\mathrm{Tr}\big(d\rho(X)\,d\rho(Y)\big),
+\qquad X,Y\in\mathfrak g.
+\]
+Faithfulness implies \(B_\rho\) is positive definite.
+
+### A.3.2 The scalar \(\lambda_\rho\) (normalization constant)
+If \(\mathfrak g\) is simple (e.g. \(G=\mathrm{SU}(N)\)), all \(\mathrm{Ad}\)-invariant inner products are proportional, so there exists \(\lambda_\rho>0\) such that
+\[
+B_\rho(X,Y)=\frac{1}{\lambda_\rho}\,\langle X,Y\rangle_{\mathfrak g}.
+\]
+**Conditional note:** if \(G\) has multiple simple factors, proportionality is factorwise; a single scalar \(\lambda_\rho\) is then a normalization choice (or must be replaced by a block-scaling operator). The later formulas that use one scalar \(\lambda_\rho\) implicitly assume a regime where this scalar normalization is valid (typically: \(G\) simple, or conventions chosen accordingly).
+
+### A.3.3 Proxy / trace defect and plaquette potential
+Define the proxy (trace defect)
+\[
+\widetilde z(g):=1-\frac{1}{n}\Re\mathrm{Tr}(\rho(g)),
+\qquad g\in G.
+\]
+Define the single-plaquette potential
+\[
+\Phi_\beta(g):=\beta\,\widetilde z(g)
+=\beta\Bigl(1-\frac{1}{n}\Re\mathrm{Tr}(\rho(g))\Bigr),
+\qquad \beta\ge 0.
+\]
+
+### A.3.4 Local Taylor constants at \(\mathbf 1\)
+There exist constants \(r_{\mathrm{Tr}}>0\) and \(C_{\mathrm{Tr}}<\infty\) (depending only on \((G,\rho,g_G)\)) such that for all \(Y\in\mathfrak g\) with \(|Y|_{\mathfrak g}\le r_{\mathrm{Tr}}\),
+\[
+\Phi_\beta(\exp Y)=\frac{\beta}{2n\lambda_\rho}\,|Y|_{\mathfrak g}^2+\mathcal E_\beta(Y),
+\qquad
+|\mathcal E_\beta(Y)|\le C_{\mathrm{Tr}}\beta|Y|_{\mathfrak g}^3.
+\]
+
+---
+
+## A.4 Configuration manifold and cochains
+
+### A.4.1 Configuration space and vacuum
+- Configuration manifold:
+  \[
+  M_\Lambda := G^{E(\Lambda)}.
+  \]
+- Vacuum configuration:
+  \[
+  U^{(0)}_b=\mathbf 1\quad\forall\,b\in E(\Lambda).
+  \]
+- Reference measure: product Haar probability measure \(dU\) on \(G^{E(\Lambda)}\).
+
+### A.4.2 Cochain spaces and \(\ell^2\) inner products
+Define \(\mathfrak g\)-valued cochains:
+\[
+\mathcal C^0(\Lambda;\mathfrak g):=\mathfrak g^{V(\Lambda)},\quad
+\mathcal C^1(\Lambda;\mathfrak g):=\mathfrak g^{E(\Lambda)},\quad
+\mathcal C^2(\Lambda;\mathfrak g):=\mathfrak g^{P(\Lambda)}.
+\]
+Equip each with the product \(\ell^2\) inner product induced by \(\langle\cdot,\cdot\rangle_{\mathfrak g}\), e.g.
+\[
+\langle X,Y\rangle_{\mathcal C^1}:=\sum_{b\in E(\Lambda)}\langle X_b,Y_b\rangle_{\mathfrak g},
+\qquad
+|X|_{\mathcal C^1}:=\sqrt{\langle X,X\rangle_{\mathcal C^1}}.
+\]
+
+Define the sup norm (used for small-field control):
+\[
+|X|_\infty:=\max_{b\in E(\Lambda)}|X_b|_{\mathfrak g}.
+\]
+
+### A.4.3 Coboundary operators
+- Discrete gradient \(d_0:\mathcal C^0\to\mathcal C^1\):
+  \[
+  (d_0\varphi)_{x,\mu}:=\varphi_{x+\hat e_\mu}-\varphi_x.
+  \]
+- Discrete curl \(d_1:\mathcal C^1\to\mathcal C^2\) (coordinate plaquette \(p=(x;\mu,\nu)\), \(\mu<\nu\)):
+  \[
+  (d_1X)_{(x;\mu,\nu)}
+  =X_{x,\mu}+X_{x+\hat e_\mu,\nu}-X_{x+\hat e_\nu,\mu}-X_{x,\nu}.
+  \]
+- Exactness identity (linear “Bianchi”):
+  \[
+  d_1d_0=0.
+  \]
+Adjoints \(d_0^\*,d_1^\*\) are taken with respect to the \(\ell^2\) cochain inner products.
+
+### A.4.4 Vertical/horizontal at the vacuum
+- Vertical (gauge) directions at the vacuum:
+  \[
+  V_{U^{(0)}}=\mathrm{im}(d_0)\subset\mathcal C^1(\Lambda;\mathfrak g).
+  \]
+- Horizontal space at the vacuum:
+  \[
+  H^{(0)}:=\ker(d_0^\*)=(\mathrm{im}\,d_0)^\perp.
+  \]
+
+### A.4.5 Canonical operators
+- Maxwell operator (curl–curl):
+  \[
+  \mathsf M_1:=d_1^\*d_1.
+  \]
+- Hodge Laplacian on 1-cochains:
+  \[
+  \Delta_1:=d_0d_0^\*+d_1^\*d_1.
+  \]
+
+---
+
+## A.5 Wilson action and finite-volume Gibbs measure
+
+### A.5.1 Plaquette holonomy
+For a coordinate plaquette \(p=(x;\mu,\nu)\) with \(\mu<\nu\), the plaquette holonomy is the ordered product around \(\partial p\):
+\[
+U_p(U)
+=
+U_{x,\mu}\,U_{x+\hat e_\mu,\nu}\,U_{x+\hat e_\nu,\mu}^{-1}\,U_{x,\nu}^{-1}\in G.
+\]
+
+### A.5.2 Action and measure
+- Wilson action:
+  \[
+  S_{\Lambda,\beta}(U):=\sum_{p\in P(\Lambda)}\Phi_\beta\!\big(U_p(U)\big).
+  \]
+- Finite-volume Gibbs measure:
+  \[
+  \mu_{\Lambda,\beta}(dU):=Z_{\Lambda,\beta}^{-1}\,e^{-S_{\Lambda,\beta}(U)}\,dU.
+  \]
+
+### A.5.3 Alternate weight used in reflection positivity
+Define
+\[
+w_\beta(g):=\exp\!\Big(\frac{\beta}{n}\Re\mathrm{Tr}(\rho(g))\Big).
+\]
+Then \(e^{-\Phi_\beta(g)}=e^{-\beta}\,w_\beta(g)\), so \(w_\beta\) differs from \(e^{-\Phi_\beta}\) only by an overall constant (absorbed by \(Z_{\Lambda,\beta}\)).
+
+---
+
+## A.6 Small-field region and product exponential chart
+
+### A.6.1 Linkwise small-field region
+For \(r>0\), define the linkwise small-field set
+\[
+K_\Lambda(r):=\prod_{b\in E(\Lambda)}B_r^G(\mathbf 1)
+=
+\{U\in M_\Lambda:\ \max_{b\in E(\Lambda)}d_G(U_b,\mathbf 1)<r\}.
+\]
+
+### A.6.2 Linkwise Lie algebra ball and product charts
+Define the \(\ell^\infty\) Lie algebra ball
+\[
+B_r^\infty:=\{X\in\mathfrak g^{E(\Lambda)}:\ |X|_\infty<r\}.
+\]
+Define the product exponential map
+\[
+\mathrm{Exp}_\Lambda:\mathfrak g^{E(\Lambda)}\to M_\Lambda,
+\qquad
+(\mathrm{Exp}_\Lambda(X))_b:=\exp(X_b).
+\]
+When \(U\in K_\Lambda(r)\) is small enough that \(\log\) is defined linkwise, define the product logarithm
+\[
+\mathrm{Log}_\Lambda:K_\Lambda(r)\to\mathfrak g^{E(\Lambda)},
+\qquad
+(\mathrm{Log}_\Lambda(U))_b:=\log(U_b).
+\]
+
+### A.6.3 Small-field radii
+Fix a radius \(r_\star\in(0,\iota_G)\) so that \(\log\) is well-defined on \(B_{r_\star}^G(\mathbf 1)\).
+
+Let \(r_0>0\) be a radius small enough for the uniform BCH remainder estimates used in plaquette expansions.
+
+Define the project-wide small-field cutoff
+\[
+r_{\mathrm{sf}}
+:=\min\!\left(\frac{r_\star}{4},\ \frac{r_0}{4},\ \frac{r_{\mathrm{Tr}}}{4}\right).
+\]
+
+---
+
+## A.7 Wilson Hessian perturbation constant
+
+### A.7.1 Four-link trace defect and its third derivative constant
+Define
+\[
+F(g_1,g_2,g_3,g_4):=\Re\mathrm{Tr}\big(I-g_1g_2g_3^{-1}g_4^{-1}\big).
+\]
+Define the uniform third-derivative bound
+\[
+M_3(r_\star)
+:=
+\sup_{g\in(B_{r_\star}^G(\mathbf 1))^4}\ \big\|D^3F(g)\big\|_{\mathrm{op}}.
+\]
+
+### A.7.2 The perturbation-size constant \(R_W(r)\)
+For \(0<r\le r_{\mathrm{sf}}\), define
+\[
+R_W(r)
+:=
+\Big(\frac{\beta}{n}\Big)\,\big(2\nu\,M_3(r_\star)\big)\,r.
+\]
+This is the “uniform Hessian perturbation size” used in the small-field hinge step (it measures how much the Wilson Hessian can deviate from its vacuum value on \(K_\Lambda(r)\), up to the combinatorial overlap factor \(\nu\)).
+
+---
+
+## A.8 Ricci constant and massive Maxwell parameters
+
+### A.8.1 Haar/Ricci lower bound constant \(c_H\)
+Let \(c_H\ge 0\) denote a uniform Ricci lower bound for the product metric on \(M_\Lambda\):
+\[
+\mathrm{Ric}_{g_\Lambda}(U)\ \succeq\ c_H\,I
+\quad\text{as quadratic forms on }T_UM_\Lambda,\ \forall\,U\in M_\Lambda.
+\]
+**Conditional note:** whether \(c_H>0\) depends on the chosen \(G\) and metric (e.g. torus factors can force \(c_H=0\)).
+
+### A.8.2 Massive Maxwell parameters and operator
+Define
+\[
+m^2:=\frac{c_H}{2},
+\qquad
+\alpha:=\frac{\beta}{n\lambda_\rho}.
+\]
+Define the massive Maxwell operator
+\[
+M:=m^2I+\alpha\,\mathsf M_1
+\quad\text{on }\mathcal C^1(\Lambda;\mathfrak g),
+\]
+and its horizontal restriction
+\[
+M_H:=M\big|_{H^{(0)}}.
+\]
+
+### A.8.3 Kernel notation
+For oriented links \(b,b'\in E(\Lambda)\),
+\[
+(M_H^{-1}\eta)_b=\sum_{b'\in E(\Lambda)}(M_H^{-1})_{b,b'}\,\eta_{b'},
+\qquad (M_H^{-1})_{b,b'}\in\mathrm{End}(\mathfrak g).
+\]
+Block operator norm convention:
+\[
+\|(M_H^{-1})_{b,b'}\|_{\mathrm{op}}
+:=\sup_{|v|_{\mathfrak g}=1}|(M_H^{-1})_{b,b'}v|_{\mathfrak g}.
+\]
+
+---
+
+## A.9 Row-sum constants for \(\mathsf M_1\)
+
+These constants are used when converting finite-range structure into kernel decay bounds.
+
+### A.9.1 Off-diagonal row-sum constant
+Define
+\[
+C_0(\mathsf M_1):=\max_{b}\ \sum_{\tilde b\neq b}\ \big\|(\mathsf M_1)_{b,\tilde b}\big\|_{\mathrm{op}}.
+\]
+
+### A.9.2 Boundary row-sum constant
+Fix \(b'\in E(\Lambda)\) and define \(\phi_{b'}(b):=\mathrm{dist}_E(b,b')\). Define
+\[
+C_\partial(\mathsf M_1)
+:=
+\sup_{b'}\ \max_b\ \sum_{\substack{\tilde b\neq b\\ |\phi_{b'}(b)-\phi_{b'}(\tilde b)|=1}}
+\big\|(\mathsf M_1)_{b,\tilde b}\big\|_{\mathrm{op}}.
+\]
+Always \(C_\partial(\mathsf M_1)\le C_0(\mathsf M_1)\).
+
+### A.9.3 The “\(3\nu\)” constant
+A coarse, dimension-only bound for the generic off-diagonal row-sum in the Maxwell part is
+\[
+C_B:=3\nu,
+\qquad\text{so in }d=4:\ C_B\le 18.
+\]
+
+---
+
+## A.10 Combes–Thomas constants (abstract)
+
+Let \(A\) be self-adjoint on \(\ell^2(V;\mathsf H_0)\) with finite-dimensional fiber \(\mathsf H_0\), and let \(\mathrm{dist}\) be a graph distance on \(V\).
+
+Assumptions and constants:
+- Positivity gap \(a_0>0\): \(A\succeq a_0 I\).
+- Interaction range \(R\in\mathbb N\): \(A_{xy}=0\) when \(\mathrm{dist}(x,y)>R\).
+- Off-diagonal row-sum constant
+  \[
+  B:=\sup_{x\in V}\sum_{y\neq x}\|A_{xy}\|_{\mathrm{op}}.
+  \]
+- Combes–Thomas decay rate
+  \[
+  \eta_{\mathrm{CT}}
+  :=
+  \frac{1}{R}\log\!\Bigl(1+\frac{a_0}{2B}\Bigr).
+  \]
+
+**Canonical specialization (massive Maxwell):** when applying Combes–Thomas to \(M\) or \(M_H\) on the link graph \((V=E(\Lambda),\mathrm{dist}=\mathrm{dist}_E)\), one uses \(a_0=m^2\), \(R=1\), and \(B\lesssim \alpha\,C_B\).
+
+---
+
+## A.11 Quick-reference table (symbols defined here)
+
+### Geometry
+- \(d\): lattice dimension (default 4)
+- \(\Lambda\): periodic hypercubic lattice
+- \(V(\Lambda),E(\Lambda),P(\Lambda)\): vertices / oriented links / oriented plaquettes
+- \(m_\partial=4\): plaquette perimeter
+- \(\nu\le 2(d-1)\): bounded overlap (plaquettes incident to a link)
+- \(\mathrm{dist}_E\): link-graph distance
+- \(D_E\le 3\nu\): link-graph degree bound
+- \(C_{E/P}=2/(d-1)\): edge/plaquette ratio
+
+### Group/representation
+- \(G,\mathfrak g,\langle\cdot,\cdot\rangle_{\mathfrak g},|\cdot|_{\mathfrak g}\)
+- \(g_G,d_G,\exp,\log,\iota_G\)
+- \(\rho:G\to U(n)\), \(n=\dim\rho\)
+- \(\lambda_\rho\): scalar normalization (simple \(\mathfrak g\) case)
+- \(\widetilde z,\ \Phi_\beta\)
+- \(r_{\mathrm{Tr}},C_{\mathrm{Tr}}\): local Taylor constants
+- \(r_\star,r_0,r_{\mathrm{sf}}\): geometric/BCH smallness radii
+
+### Operators/constants
+- \(M_\Lambda=G^{E(\Lambda)}\), \(U^{(0)}\)
+- \(\mathcal C^k(\Lambda;\mathfrak g)\), \(|\cdot|_{\mathcal C^k}\), \(|\cdot|_\infty\)
+- \(d_0,d_1,d_0^\*,d_1^\*\)
+- \(\mathsf M_1=d_1^\*d_1\), \(\Delta_1=d_0d_0^\*+d_1^\*d_1\)
+- \(H^{(0)}=\ker d_0^\*\)
+- \(c_H\), \(m^2=c_H/2\), \(\alpha=\beta/(n\lambda_\rho)\)
+- \(M=m^2I+\alpha\mathsf M_1\), \(M_H=M|_{H^{(0)}}\)
+- \(M_3(r_\star)\), \(R_W(r)\)
+- \(C_0(\mathsf M_1)\), \(C_\partial(\mathsf M_1)\), \(C_B=3\nu\)
+- \((a_0,R,B,\eta_{\mathrm{CT}})\): Combes–Thomas constants
+
+---
+
+## A.12 Source material used (traceability only)
+Primary sources in the raw corpus:
+- `NOTATION_AND_CONSTANTS.md`
+- `## 2. Lattice Yang–Mills setup and.txt`
+- `### 3.1 Product Lie-group manifold.txt`
+- `V2 and 3. Configuration manifold ## Part 3...txt`
+- `## 5.1 Vacuum configuration and linearization.txt`
+- `### 9.1 Abstract finite-range inverse decay lemma via Combes–Thomas conjugation.txt`
+- `005_Definition_row_sum_constants_for_Delta_1.md`
+- `007_Definition_boundary_row_sum_constant.md`
+
+(Anything simulation-based is intentionally excluded from this appendix.)

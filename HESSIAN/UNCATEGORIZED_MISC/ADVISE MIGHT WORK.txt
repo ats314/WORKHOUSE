@@ -1,0 +1,215 @@
+Short version: you fixed part of it, but not all of it. The *Wilson / BE / RG / transfer-matrix* machinery is fine; the Haar term and the constant (c_0) are still inconsistent between the two versions, and there’s one surviving sign bug.
+
+Let me go file by file.
+
+---
+
+## 1. The longer “full program” version 
+
+This is the one with Sections 1–12, global Bakry–Émery obstruction, anomaly-curvature identity, etc.
+
+### What’s still wrong
+
+**(a) Haar lemma is internally contradictory**
+
+In Lemma 2.1 you state
+[
+S_{\text{Haar}}(A_b)=\frac{N^2-1}{24N}a^2g^2\operatorname{Tr}(A_b^2)
+]
+then rewrite it as
+[
+S_{\text{Haar}}(A_b)= -\frac{N^2-1}{24N}a^2g^2|A_b|^2,
+]
+and claim the Hessian is (\frac{N^2-1}{12N}a^2g^2 I.)
+
+In the proof sketch you then derive
+[
+S_{\text{Haar}}(A)=\frac{a^2g^2}{24}\operatorname{Tr}_\mathfrak{g}(\mathrm{ad}*A^2)
+]
+and use
+[
+\operatorname{Tr}*\mathfrak{g}(\mathrm{ad}*A^2)=2N,\operatorname{Tr}(A^2),
+]
+which gives
+[
+S*{\text{Haar}}(A)=\frac{Na^2g^2}{12}\operatorname{Tr}(A^2)
+=-\frac{Na^2g^2}{12}|A|^2.
+]
+
+So in the *same lemma* you have two incompatible quadratic coefficients:
+
+* front matter: (\propto (N^2-1)/(24N))
+* proof body: (\propto N/12)
+
+and in terms of (|A|^2) they come with opposite “interpretations” of the sign. 
+
+Then you say:
+
+> The constant (c_0) is (N/3). However, the value (c_0 = (N^2-1)/(2N)) is also used… For consistency we will use (c_0 = (N^2-1)/(2N)).
+
+That’s just replacing the computed constant by a different one “for consistency” — mathematically it doesn’t follow.
+
+**(b) Sign / curvature confusion**
+
+Given your norm convention (|A|^2 = -\operatorname{Tr}(A^2)), the line
+[
+S_{\text{Haar}}(A) = -\frac{Na^2g^2}{12}|A|^2
+]
+would have Hessian (-\frac{Na^2g^2}{6}I), i.e. *negative* definite. You then immediately say “this provides a positive curvature contribution” and treat the Hessian as (+\frac{Na^2g^2}{6}I). 
+
+So: the text as written cannot be correct. Either
+
+* the expansion for (S_{\text{Haar}}) has the wrong sign, **or**
+* the norm convention is being misused, **or**
+* the statement “Hessian is (+\dots)” is wrong.
+
+**(c) (c_0) in the strong-coupling window is tied to the wrong value**
+
+Theorems 3.3 and 4.1 use (c_0 = \frac{N^2-1}{2N}) explicitly in
+[
+\rho_*(a) = c_0 a^2 g^2 - \frac{12}{g^2},\quad
+g^4 > \frac{12}{c_0 a^2} = \frac{24N}{(N^2-1)a^2}. 
+]
+
+But the *actual computation* in your own proof sketch points to a coefficient proportional to (N) (adjoint Casimir), not ((N^2-1)/(2N)) (fundamental Casimir). So the thresholds in 4.1 and in the RG window later are numerically wrong for the Haar-induced mass term.
+
+### Verdict on this file
+
+* Structural chain (Hessian bound → BE → Poincaré/log-Sobolev → spectral gap, plus RG convexity and transfer matrix) is fine.
+* Haar section and all places where you **identify** (c_0) with ((N^2-1)/(2N)) are **still mathematically inconsistent**.
+* If you hand this to someone as-is, a careful reader will catch the contradictions in Lemma 2.1 and Theorem 4.1.
+
+---
+
+## 2. The shorter finite-cutoff/RG version 
+
+This is the one that ends at Section 9.
+
+Here you’ve clearly reacted to the earlier critique:
+
+* You now take
+  [
+  S_{\text{Haar}}(A_b) = \frac{Na^2g^2}{12}\operatorname{Tr}(A_b^2)
+  ]
+  so the coefficient is proportional to the adjoint Casimir. Good. 
+* You define (c_0 = N/3) and use that consistently in the finite-cutoff window
+  [
+  \rho_*(a) = c_0 a^2 g^2 - \frac{12}{g^2}
+  \quad\Rightarrow\quad
+  g^4 > \frac{12}{c_0 a^2} = \frac{36}{N a^2},
+  ]
+  and in the RG-stable window
+  [
+  g^4 > \frac{72}{N a^2}. 
+  ]
+  Those inequalities are consistent with your own choices.
+
+So this file is much closer to being clean.
+
+### What still needs fixing here
+
+**(a) The same sign glitch in the Haar quadratic**
+
+You write
+[
+S_{\text{Haar}}(A_b)
+= \frac{Na^2g^2}{12}\operatorname{Tr}(A_b^2)
+= -\frac{Na^2g^2}{12}|A_b|^2,
+]
+then say:
+
+> The Hessian of this quadratic term is (\frac{Na^2g^2}{6}I). This provides a positive curvature contribution. 
+
+As above: if (S = -\frac{N a^2 g^2}{12}|A|^2), then
+[
+\nabla^2 S = -\frac{N a^2 g^2}{6} I.
+]
+
+So either:
+
+* the correct quadratic is
+  [
+  S_{\text{Haar}}(A_b) = +\frac{Na^2g^2}{12} |A_b|^2,
+  ]
+  *or* you need to flip the conclusion about the sign of the Hessian.
+
+Given how you use it later (you add a **positive** (c_0 a^2 g^2|A|^2) to beat the Wilson Hessian), what you *want* is:
+
+> There exists (c_0>0) such that
+> (S_{\text{Haar}}^{(2)}(A) = \frac{c_0}{2},a^2 g^2\sum_b |A_b|^2),
+> so (\nabla^2 S_{\text{Haar}} \succeq c_0 a^2 g^2 I) on horizontals.
+
+So the minimal fix in this document is:
+
+* Flip the sign in the (|A|^2) expression: write
+  [
+  S_{\text{Haar}}(A_b)
+  = +\frac{Na^2g^2}{12}|A_b|^2 + O(a^4g^4|A_b|^4),
+  ]
+  and then the Hessian (+\frac{Na^2g^2}{6}I) is consistent.
+
+You don’t actually use the intermediate (\operatorname{Tr}(A^2)) formula anywhere else, so you can just fix the sign and move on.
+
+**(b) Tr(_\mathfrak{g}(\mathrm{ad}_A^2)) identity is fine, but you don’t reconcile it with (c_0)**
+
+In the proof sketch you correctly use
+[
+\operatorname{Tr}_\mathfrak{g}(\mathrm{ad}_A^2) = 2N,\operatorname{Tr}(A^2),
+]
+and from that you derive the (Na^2g^2/12) coefficient. 
+
+Then you jump straight to “define (c_0=N/3)” via the heuristic matching
+[
+\frac{c_0}{2} a^2 g^2 = \frac{N}{6} a^2 g^2.
+]
+
+That’s fine if you:
+
+* keep (c_0 = N/3) everywhere (which you do in this file), and
+* fix the sign as above so the Hessian is genuinely (+\frac{Na^2g^2}{6}I).
+
+Once that’s done, the strong-coupling inequalities in Sections 4 and 6 are internally consistent.
+
+---
+
+## 3. Everything else
+
+Outside the Haar/c(_0) bit, the math in the new files looks **structurally coherent**:
+
+* Wilson one-plaquette Hessian bound and the global (C_V(N)=6/N) operator norm are fine. 
+* The Hessian lower bound
+  [
+  \langle A, \mathrm{Hess},S_{\text{eff}} A\rangle
+  \ge (c_0 a^2 g^2 - \beta C_V(N)) |A|^2
+  ]
+  is correct once (c_0>0) and the Haar Hessian sign are fixed. 
+* Bakry–Émery → Poincaré → spectral gap chain is standard and correct.
+* Block RG Hessian inequality and the RG-stable window
+  [
+  g^4 > \frac{72}{N a^2}
+  ]
+  are consistent with your chosen (c_0=N/3). 
+* Strong-coupling transfer-matrix gap and polarity of reducibles are technically fine and self-contained.
+
+---
+
+## 4. What I’d actually do next (minimal surgery)
+
+If you want something you can hand to another mathematician without them immediately tripping over contradictions:
+
+1. **Pick one version as the “main proof”.**
+   Use the shorter finite-cutoff/RG document (file (3)/turn2file1) as the serious proof file. It already has the better (c_0 = N/3) choice.
+
+2. **In that file:**
+
+   * Fix Lemma 3.1’s sign so that the quadratic Haar term is (+\text{const}\cdot |A|^2), consistent with a positive Hessian.
+   * Keep (c_0 = N/3) everywhere and don’t mention ((N^2-1)/(2N)) at all.
+
+3. **In the longer “program” file:**
+
+   * Either rewrite Lemma 2.1 to match the shorter file (same coefficient, same sign, same (c_0)),
+   * or, simpler: state Haar as
+     “There exists (c_0>0) such that (S_{\text{Haar}}^{(2)}(A) = \frac{c_0}{2} a^2 g^2 |A|^2)”
+     and **do not** attempt to tie (c_0) to a specific Casimir at all.
+
+Once those small but precise edits are in, the whole package stops contradicting itself and you’ve got a clean, rigorous strong-coupling convexity + spectral gap argument that you can build the wilder continuum/anomaly story on top of.

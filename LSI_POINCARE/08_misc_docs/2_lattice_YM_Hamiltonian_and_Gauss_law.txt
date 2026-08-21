@@ -1,0 +1,98 @@
+Title: Lattice Yang–Mills Hamiltonian and Gauss’s Law (Summary from Chat)
+
+This document summarizes the key structures we discussed that are standard in Hamiltonian
+lattice gauge theory for SU(3), focusing on the Hamiltonian and Gauss’s law constraint.
+
+
+1. Degrees of Freedom on the Lattice
+
+We consider a spatial lattice with sites x and directions μ = 1,2,3.
+
+- Link variables:
+    U_{x,μ} ∈ SU(3),
+  live on oriented links from x to x+μ.
+
+- Electric fields (canonically conjugate to the links):
+    E_{x,μ}^a,  a = 1,…,8,
+  taking values in the Lie algebra su(3).
+
+The E_{x,μ}^a satisfy the SU(3) commutation relations and act as left/right invariant
+vector fields on SU(3) in the Kogut–Susskind formalism.
+
+
+2. Kogut–Susskind Hamiltonian (Pure Gauge SU(3))
+
+The standard Hamiltonian for pure SU(3) gauge theory on the lattice is:
+
+    H = H_E + H_B,
+
+with
+
+    H_E = (g^2 / 2) Σ_{x,μ} E_{x,μ}^a E_{x,μ}^a,
+
+    H_B = - (1 / 2g^2) Σ_{plaquettes p} [ Tr(U_p) + Tr(U_p^†) ].
+
+Here:
+
+- g is the gauge coupling;
+- U_p is the ordered product of link variables around an elementary plaquette p;
+- H_E is the electric (kinetic) energy;
+- H_B is the magnetic (potential) energy, measuring the non-Abelian curvature via plaquettes.
+
+This operator H acts on a Hilbert space of wavefunctionals ψ[{U}] over link configurations
+equipped with the Haar measure on SU(3) per link.
+
+
+3. Gauss’s Law Constraint and Physical Hilbert Space
+
+Local SU(3) gauge transformations act on link variables as:
+
+    U_{x,μ} → G_x U_{x,μ} G_{x+μ}^{-1},   G_x ∈ SU(3).
+
+The generators of these gauge transformations at each site x are the Gauss operators G_x^a.
+
+Physical states |ψ⟩ must be gauge-invariant:
+
+    G_x^a |ψ⟩ = 0  for all x, a.
+
+The physical Hilbert space is then:
+
+    H_phys = { |ψ⟩ : G_x^a |ψ⟩ = 0, ∀ x,a } = ker G.
+
+This constraint removes most naive low-energy degrees of freedom and is essential
+for the physical spectrum (glueballs, etc.).
+
+
+4. Hamiltonian Restricted to the Physical Subspace
+
+While H acts on a larger kinematic Hilbert space, the physically relevant operator is
+H restricted to H_phys:
+
+    H_phys (as an operator) = H |_{H_phys}.
+
+The energies E_n that define the spectrum and the mass gap come from solving:
+
+    H_phys |ψ_n⟩ = E_n |ψ_n⟩,
+
+with |ψ_n⟩ ∈ H_phys.
+
+The vacuum |0⟩ is the lowest-energy solution; glueball states are higher-energy,
+gauge-invariant excitations of this Hamiltonian.
+
+
+5. Intuitive Role of Gauss’s Law in the Mass Gap
+
+In Abelian (U(1)) theory, Gauss’s law still permits transverse, long-wavelength modes
+that can have arbitrarily low energy → massless photons.
+
+In SU(3), the combination of:
+
+- Gauss’s law,
+- non-Abelian commutator term in F_{μν},
+- and the nonlinearity of H_B,
+
+means that physical excitations are extended, loop-like objects (Wilson-loop-like),
+and there are no arbitrarily soft, gauge-invariant excitations in the usual physical picture.
+
+A rigorous proof that H_phys has a strictly positive spectral gap is exactly the mass-gap problem;
+this document merely encodes the operator structure, not a proof.

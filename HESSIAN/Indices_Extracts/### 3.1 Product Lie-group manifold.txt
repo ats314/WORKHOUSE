@@ -1,0 +1,1468 @@
+### 3.1 Product Lie-group manifold and right-invariant trivialization
+
+In §2 the finite-volume configuration space was introduced as the compact product space (\Omega_\Lambda=G^{E(\Lambda)}), equipped with product Haar measure and the Wilson action. For the analytic part of the argument (Bakry–Émery curvature bounds, functional inequalities, Helffer–Sjöstrand covariance control), it is convenient—and ultimately essential—to view (\Omega_\Lambda) canonically as a smooth compact Riemannian manifold with a preferred global orthonormal frame obtained from right-invariant vector fields.
+
+Accordingly, throughout the remainder of the manuscript we identify
+[
+M_\Lambda ;:=;\Omega_\Lambda ;=; G^{E(\Lambda)}
+]
+as a smooth compact manifold and equip it with a product bi-invariant Riemannian metric built from an (\mathrm{Ad})-invariant inner product on (\mathfrak g=\mathrm{Lie}(G)). This subsection fixes these geometric conventions and records the linkwise right-trivialization (T_U M_\Lambda \simeq \mathfrak g^{E(\Lambda)}) used in all subsequent derivative and Hessian computations.
+
+#### 3.1.1 Lie algebra inner product and induced bi-invariant metric on (G)
+
+Let (G) be a compact Lie group and let
+[
+\mathfrak g ;:=; T_{\mathbf 1}G
+]
+denote its Lie algebra, where (\mathbf 1\in G) is the identity element.
+
+**Definition 3.1 (Ad-invariant inner product).**
+Fix an (\mathrm{Ad})-invariant inner product (\langle\cdot,\cdot\rangle_{\mathfrak g}) on (\mathfrak g), i.e.
+[
+\langle \mathrm{Ad}*g X,\mathrm{Ad}*g Y\rangle*{\mathfrak g} ;=;\langle X,Y\rangle*{\mathfrak g},
+\qquad \forall g\in G,\ \forall X,Y\in\mathfrak g.
+]
+Write (|X|*{\mathfrak g}:=\sqrt{\langle X,X\rangle*{\mathfrak g}}).
+
+**Example (the (\mathrm{SU}(N)) normalization).**
+When (G=\mathrm{SU}(N)), we regard (\mathfrak g=\mathfrak{su}(N)) as the space of anti-Hermitian traceless matrices and may parameterize the metric normalization by
+[
+\langle X,Y\rangle_\lambda ;:=; \lambda\bigl(-\mathrm{Tr}(XY)\bigr),
+\qquad \lambda>0,\quad X,Y\in\mathfrak{su}(N),
+]
+with (\mathrm{Tr}) taken in the defining representation. The parameter (\lambda) is independent of the coupling (\beta) in the Wilson action; it determines the geometric scale on (G) (and hence on (M_\Lambda)).
+
+Let (L_g) and (R_g) denote left and right translations on (G):
+[
+L_g(h)=gh,\qquad R_g(h)=hg,\qquad g,h\in G.
+]
+
+**Definition 3.2 (bi-invariant Riemannian metric on (G)).**
+Define a Riemannian metric (g_G) on (G) by transporting (\langle\cdot,\cdot\rangle_{\mathfrak g}) using left translation: for (g\in G) and (v,w\in T_gG),
+[
+g_G(g)(v,w);:=;\Big\langle (dL_{g^{-1}})*g v,\ (dL*{g^{-1}})*g w\Big\rangle*{\mathfrak g}.
+]
+
+**Lemma 3.3 (bi-invariance).**
+The metric (g_G) is bi-invariant: both (L_h) and (R_h) are isometries of ((G,g_G)) for every (h\in G).
+
+*Proof.* Left invariance is immediate from the definition. For right invariance, one uses the identity
+[
+(dL_{(gh)^{-1}})*{gh}\circ (dR_h)*g ;=; (dC*{h^{-1}})*{\mathbf 1}\circ (dL_{g^{-1}})*g,
+\qquad C*{h^{-1}}(x)=h^{-1}xh,
+]
+and then (\mathrm{Ad})-invariance of (\langle\cdot,\cdot\rangle_{\mathfrak g}) to conclude
+(g_G(gh)((dR_h)_g v,(dR_h)_g w)=g_G(g)(v,w)). (\square)
+
+Let (d_G) denote the associated Riemannian distance on (G), and let (B_r^G(g)) denote the open (d_G)-ball of radius (r) about (g).
+
+Because ((G,g_G)) is a compact Riemannian manifold, its injectivity radius at (\mathbf 1) is strictly positive; we denote it by (\mathrm{inj}*G(\mathbf 1)). For any fixed radius (0<r<\mathrm{inj}*G(\mathbf 1)), the Riemannian exponential map (\exp^R*{\mathbf 1}:T*{\mathbf 1}G\to G) restricts to a diffeomorphism from ({X\in\mathfrak g:|X|_{\mathfrak g}<r}) onto (B_r^G(\mathbf 1)). For a bi-invariant metric this Riemannian exponential coincides with the group exponential, but we will only use the local diffeomorphism property.
+
+#### 3.1.2 The configuration manifold (M_\Lambda=G^{E(\Lambda)})
+
+Recall from §2.1–§2.2 that (E(\Lambda)) denotes the set of positively oriented nearest-neighbor links of the finite lattice (\Lambda). The configuration space is
+[
+M_\Lambda ;=; G^{E(\Lambda)} ;=;\prod_{b\in E(\Lambda)} G,
+]
+whose points are written (U=(U_b)*{b\in E(\Lambda)}) with (U_b\in G). As in §2.2.2, orientation reversal is treated as a bookkeeping convention: for a reversed link symbol (b^{-1}) we set (U*{b^{-1}}:=U_b^{-1}), but only the coordinates on (E(\Lambda)) are independent variables.
+
+Since (E(\Lambda)) is finite and (G) is a smooth compact manifold, (M_\Lambda) is a smooth compact manifold of dimension (|E(\Lambda)|\cdot\dim G). If (B\subset E(\Lambda)) is any subset of links, we similarly write
+[
+M_B ;:=; G^B,\qquad U|_B\in M_B
+]
+for restricted configurations.
+
+#### 3.1.3 Tangent space of a product and the right-invariant trivialization
+
+Let (U=(U_b)*{b\in E(\Lambda)}\in M*\Lambda). By the standard differential geometry of finite products,
+[
+T_U M_\Lambda ;\cong; \bigoplus_{b\in E(\Lambda)} T_{U_b}G,
+]
+with the identification obtained by differentiating the coordinate projections (\pi_b:M_\Lambda\to G).
+
+To obtain a *global* identification of tangent spaces with a fixed vector space, we use right translation.
+
+For (g\in G), right multiplication is the diffeomorphism (R_g:G\to G), (R_g(h)=hg). Its differential at (\mathbf 1) gives an isomorphism
+[
+(dR_g)*{\mathbf 1}:\mathfrak g \longrightarrow T_gG.
+]
+Equivalently, every (v\in T_gG) can be written uniquely as
+[
+v = (dR_g)*{\mathbf 1}X
+\quad\text{for a unique }X\in\mathfrak g,
+]
+and this (X) is recovered by
+[
+X ;=; (dR_{g^{-1}})_g,v.
+]
+
+**Definition 3.4 (right-trivialization on (G)).**
+Define the right-trivialization map
+[
+\omega_g^R: T_gG \to \mathfrak g,
+\qquad \omega_g^R(v):=(dR_{g^{-1}})*g v,
+]
+with inverse (\tau_g^R:\mathfrak g\to T_gG), (\tau_g^R(X)=(dR_g)*{\mathbf 1}X).
+
+Applying this coordinatewise on the product manifold yields a canonical trivialization of the tangent bundle of (M_\Lambda).
+
+**Definition 3.5 (right-trivialization on (M_\Lambda)).**
+For (U\in M_\Lambda), define
+[
+\omega_U^R: T_U M_\Lambda \longrightarrow \mathfrak g^{E(\Lambda)}
+]
+by
+[
+\omega_U^R(V) ;=; \bigl((dR_{U_b^{-1}})*{U_b}V_b\bigr)*{b\in E(\Lambda)},
+]
+where (V_b\in T_{U_b}G) denotes the (b)-component of (V\in T_U M_\Lambda) under the direct-sum identification. The inverse map (\tau_U^R:\mathfrak g^{E(\Lambda)}\to T_U M_\Lambda) is
+[
+\tau_U^R(X);=;\bigl((dR_{U_b})*{\mathbf 1}X_b\bigr)*{b\in E(\Lambda)}.
+]
+
+Thus, (T_U M_\Lambda) is canonically identified with (\mathfrak g^{E(\Lambda)}) for every (U), and the identification depends smoothly on (U). In particular,
+[
+TM_\Lambda ;\cong; M_\Lambda\times \mathfrak g^{E(\Lambda)}
+]
+as smooth vector bundles.
+
+It will be convenient to use the following standard (\ell^2) and (\ell^\infty) norms on (\mathfrak g^{E(\Lambda)}):
+[
+|X|*2^2 ;:=;\sum*{b\in E(\Lambda)} |X_b|*{\mathfrak g}^2,
+\qquad
+|X|*\infty ;:=;\max_{b\in E(\Lambda)} |X_b|_{\mathfrak g}.
+]
+Both norms will appear later: (|\cdot|*2) is the natural norm induced by the product Riemannian metric, while (|\cdot|*\infty) is adapted to “small-field” regions defined linkwise.
+
+#### 3.1.4 Product metric on (M_\Lambda) and the induced distance
+
+Equip (M_\Lambda=\prod_{b\in E(\Lambda)}G) with the product Riemannian metric
+[
+g_\Lambda ;:=;\bigoplus_{b\in E(\Lambda)} g_G.
+]
+Concretely, for (U\in M_\Lambda) and (V,W\in T_U M_\Lambda),
+[
+g_\Lambda(U)(V,W);:=;\sum_{b\in E(\Lambda)} g_G(U_b)(V_b,W_b).
+]
+
+In right-trivialized coordinates this metric is constant across (U).
+
+**Lemma 3.6 (metric in right-trivialized form).**
+Let (U\in M_\Lambda) and (V,W\in T_U M_\Lambda), and set (X:=\omega_U^R(V)), (Y:=\omega_U^R(W)) in (\mathfrak g^{E(\Lambda)}). Then
+[
+g_\Lambda(U)(V,W);=;\sum_{b\in E(\Lambda)} \langle X_b,Y_b\rangle_{\mathfrak g}.
+]
+In particular,
+[
+|V|*{g*\Lambda}^2 ;=; \sum_{b\in E(\Lambda)} |(\omega_U^R V)*b|*{\mathfrak g}^2.
+]
+
+*Proof.* For each factor (G), bi-invariance implies that ((dR_{U_b^{-1}})*{U_b}) is an isometry from ((T*{U_b}G,g_G(U_b))) onto ((\mathfrak g,\langle\cdot,\cdot\rangle_{\mathfrak g})). Summing over links yields the claimed identity. (\square)
+
+Let (d_\Lambda) denote the Riemannian distance on ((M_\Lambda,g_\Lambda)). Because the metric is a direct sum, the distance has an exact product form.
+
+**Lemma 3.7 (exact distance formula on the product).**
+For (U,V\in M_\Lambda),
+[
+d_\Lambda(U,V)^2 ;=; \sum_{b\in E(\Lambda)} d_G(U_b,V_b)^2.
+]
+
+*Proof.* Let (\gamma:[0,1]\to M_\Lambda) be any piecewise (C^1) curve from (U) to (V), and write (\gamma(t)=(\gamma_b(t))*{b\in E(\Lambda)}). By definition of the product metric,
+[
+|\dot\gamma(t)|*{g_\Lambda}^2=\sum_{b\in E(\Lambda)} |\dot\gamma_b(t)|*{g_G}^2.
+]
+Using Cauchy–Schwarz in (\mathbb R^{|E(\Lambda)|}),
+[
+|\dot\gamma(t)|*{g_\Lambda}
+===========================
+
+\Big(\sum_b |\dot\gamma_b(t)|_{g_G}^2\Big)^{1/2}
+\ge
+\Big(\sum_b \big(\tfrac{d}{dt},\ell_b(t)\big)^2\Big)^{1/2},
+]
+where (\ell_b(t)) is the arc-length accumulated in the (b)-coordinate. Integrating shows (\mathrm{Length}(\gamma)\ge \big(\sum_b d_G(U_b,V_b)^2\big)^{1/2}). Equality is achieved by taking each (\gamma_b) to be a constant-speed minimizing geodesic from (U_b) to (V_b), synchronized so that all coordinate speeds are constant. (\square)
+
+This identity implies that “local” (linkwise) geometric control is compatible with the global product geometry without volume-dependent distortion: there is no hidden factor of (|E(\Lambda)|) in the relation between (d_\Lambda) and linkwise distances.
+
+#### 3.1.5 Riemannian volume and Haar measure
+
+Let (\mathrm{vol}*{g_G}) denote the Riemannian volume measure on ((G,g_G)). By bi-invariance, (\mathrm{vol}*{g_G}) is both left- and right-invariant; on a compact group, normalized bi-invariant measures are unique.
+
+**Lemma 3.8 (volume on ((G,g_G)) equals Haar after normalization).**
+The normalized Riemannian volume measure on ((G,g_G)) coincides with normalized Haar measure on (G).
+
+*Proof.* The Riemannian volume measure (\mathrm{vol}*{g_G}) is left invariant under (L_h) for all (h\in G) because (L_h) is an isometry, and similarly right invariant under (R_h). Hence (\mathrm{vol}*{g_G}) is a (finite) bi-invariant Borel measure. Haar measure is the unique (up to scalar multiple) left-invariant regular Borel measure; bi-invariance fixes the same scalar on both sides. Normalizing to total mass (1) yields equality with the normalized Haar probability measure. (\square)
+
+On the product manifold ((M_\Lambda,g_\Lambda)), the Riemannian volume measure is the product of the factor volume measures. Therefore, after normalization, it coincides with the product Haar probability measure (dU=\prod_{b\in E(\Lambda)}d\mathrm{Haar}(U_b)) introduced in §2.4. In particular, the Gibbs law (\mu_{\Lambda,\beta}(dU)\propto e^{-S_{\Lambda,\beta}(U)},dU) from §2.4 is equivalently a smooth log-density with respect to Riemannian volume on ((M_\Lambda,g_\Lambda)).
+
+#### 3.1.6 Linkwise right-invariant vector fields and a global orthonormal frame
+
+Fix once and for all an orthonormal basis ({T^a}*{a=1}^{\dim\mathfrak g}) of ((\mathfrak g,\langle\cdot,\cdot\rangle*{\mathfrak g})).
+
+For each link (b\in E(\Lambda)) and each (a), define a smooth vector field (X_b^a) on (M_\Lambda) by declaring its action on smooth functions (f\in C^\infty(M_\Lambda)) to be the directional derivative obtained by right-multiplying the (b)-coordinate:
+
+**Definition 3.9 (right-invariant derivatives on (M_\Lambda)).**
+For (f\in C^\infty(M_\Lambda)), (U\in M_\Lambda), and (b\in E(\Lambda)), (a\in{1,\dots,\dim\mathfrak g}), set
+[
+(X_b^a f)(U)
+;:=;
+\left.\frac{d}{dt}\right|*{t=0}
+f!\big(U^{(b,a)}(t)\big),
+]
+where (U^{(b,a)}(t)\in M*\Lambda) is defined by
+[
+U^{(b,a)}(t)_{b'}
+=================
+
+\begin{cases}
+U_b,\exp(tT^a), & b'=b,\
+U_{b'}, & b'\neq b.
+\end{cases}
+]
+(Here (\exp:\mathfrak g\to G) denotes the Lie group exponential.)
+
+By construction, (X_b^a) is the lift to the product manifold of the right-invariant vector field on the (b)-th factor corresponding to (T^a), and it acts trivially on all other link coordinates.
+
+**Lemma 3.10 (orthonormal frame and commutation across links).**
+The collection ({X_b^a: b\in E(\Lambda),,1\le a\le \dim\mathfrak g}) is a global orthonormal frame on ((M_\Lambda,g_\Lambda)). Moreover, for (b\neq b'),
+[
+[X_b^a,,X_{b'}^{a'}]=0,
+]
+i.e. the linkwise derivatives commute across distinct links.
+
+*Proof.* Orthogonality and unit length follow from Lemma 3.6: (X_b^a(U)) is the tangent vector whose right-trivialized components are (T^a) at the coordinate (b) and (0) elsewhere, hence the frame is orthonormal. If (b\neq b'), the two vector fields act on disjoint coordinate factors and therefore commute. (\square)
+
+(For completeness: when (b=b'), the commutator ([X_b^a,X_b^{a'}]) reproduces the Lie bracket on (\mathfrak g) with the standard sign corresponding to right-invariant fields, but the explicit structure constants will not be needed at this stage.)
+
+These vector fields are the basic building blocks for all differential operators used later. In §3.5 we will define the Riemannian gradient (\nabla), Laplace–Beltrami operator (\Delta_\Lambda), and carré du champ (\Gamma_\Lambda) in this orthonormal frame; the key practical consequence is that (\Delta_\Lambda) becomes a *linkwise sum of squares* in the frame ({X_b^a}).
+
+#### 3.1.7 Gauge transformations act by isometries
+
+The lattice gauge group (\mathcal G_\Lambda=G^{V(\Lambda)}) acts on (M_\Lambda) by
+[
+(g\cdot U)*{(x,\mu)} ;=; g_x,U*{(x,\mu)},g_{x+\hat e_\mu}^{-1}
+]
+as in §2.2. Because (g_G) is bi-invariant on each factor, this action is automatically isometric for the product metric.
+
+**Lemma 3.11 (gauge action is smooth and isometric).**
+For each (g\in\mathcal G_\Lambda), the map (U\mapsto g\cdot U) is a smooth diffeomorphism of (M_\Lambda) and an isometry of ((M_\Lambda,g_\Lambda)). Consequently it preserves Riemannian volume, and hence preserves the product Haar measure (dU).
+
+*Proof.* Smoothness and invertibility follow from smoothness of multiplication and inversion in (G), applied linkwise. For each link (b=(x,\mu)), the map (U_b\mapsto g_xU_bg_{x+\hat e_\mu}^{-1}) is the composition of a left translation and a right translation on (G), hence an isometry of ((G,g_G)) by bi-invariance. Summing over links shows it is an isometry for (g_\Lambda). (\square)
+
+This compatibility between gauge symmetry and the product Riemannian structure will be used in §3.3 to define vertical and horizontal tangent directions and to relate gauge-invariant observables to horizontal gradients. 
+
+
+
+### 3.2 Lattice cochains and operators: (d_0:\mathcal C^0\to\mathcal C^1), (d_1:\mathcal C^1\to\mathcal C^2), adjoints and (\ell^2) geometry
+
+The analytic part of the argument requires a precise linear-algebraic model for “infinitesimal gauge transformations” and “infinitesimal curvature” on the lattice, together with the associated adjoint operators and energy identities. This subsection introduces the (\mathfrak g)-valued cochain complex on the oriented cell sets from §2.1 and fixes the (\ell^2) inner products induced by (\langle\cdot,\cdot\rangle_{\mathfrak g}). These operators are the discrete algebraic backbone for the horizontal/vertical splitting in §3.3 and the Maxwell operator in §3.4.  
+
+#### 3.2.1 (\mathfrak g)-valued cochains and (\ell^2) inner products
+
+Recall the finite cell sets:
+[
+V(\Lambda)=\Lambda,\qquad
+E(\Lambda)={(x,\mu):x\in\Lambda,\ \mu\in{0,1,2,3}},
+]
+[
+P(\Lambda)={(x;\mu,\nu):x\in\Lambda,\ 0\le \mu<\nu\le 3}.
+]
+We use the orientation conventions of §2.1 throughout, in particular the signed incidence coefficients (\sigma_{p,b}\in{-1,0,+1}) characterized by
+[
+\partial p=\sum_{b\in E(\Lambda)}\sigma_{p,b},b
+\qquad\text{(as a signed 1–chain).}
+]
+
+Definition 3.12 (cochain spaces).
+Define the (\mathfrak g)-valued cochain spaces in degrees (0,1,2) by
+[
+\mathcal C^0(\Lambda;\mathfrak g);:=;\mathfrak g^{V(\Lambda)},
+\qquad
+\mathcal C^1(\Lambda;\mathfrak g);:=;\mathfrak g^{E(\Lambda)},
+\qquad
+\mathcal C^2(\Lambda;\mathfrak g);:=;\mathfrak g^{P(\Lambda)}.
+]
+Thus an element (\varphi\in\mathcal C^0) is a vertex field ((\varphi_x)*{x\in\Lambda}), an element (X\in\mathcal C^1) is a link field ((X*{x,\mu})*{(x,\mu)\in E(\Lambda)}), and an element (F\in\mathcal C^2) is a plaquette field ((F*{x;\mu,\nu})_{(x;\mu,\nu)\in P(\Lambda)}).
+
+Definition 3.13 ((\ell^2) inner products and norms).
+Equip each (\mathcal C^k(\Lambda;\mathfrak g)) with the product (\ell^2) inner product induced by (\langle\cdot,\cdot\rangle_{\mathfrak g}):
+[
+\langle \varphi,\psi\rangle_{\mathcal C^0}
+:=\sum_{x\in\Lambda}\langle \varphi_x,\psi_x\rangle_{\mathfrak g},
+\qquad
+\langle X,Y\rangle_{\mathcal C^1}
+:=\sum_{(x,\mu)\in E(\Lambda)}\langle X_{x,\mu},Y_{x,\mu}\rangle_{\mathfrak g},
+]
+[
+\langle F,H\rangle_{\mathcal C^2}
+:=\sum_{(x;\mu,\nu)\in P(\Lambda)}\langle F_{x;\mu,\nu},H_{x;\mu,\nu}\rangle_{\mathfrak g}.
+]
+Write (|\cdot|_{\mathcal C^k}) for the induced norms.
+
+Remark (relationship to the configuration manifold).
+By §3.1.3–§3.1.4, the right-trivialization identifies each tangent space (T_U M_\Lambda) with (\mathfrak g^{E(\Lambda)}). In particular,
+[
+T_{U^{(0)}}M_\Lambda \cong \mathfrak g^{E(\Lambda)} = \mathcal C^1(\Lambda;\mathfrak g)
+]
+isometrically at the vacuum (U^{(0)}), and more generally the bundle (TM_\Lambda) is globally identified with (M_\Lambda\times\mathcal C^1(\Lambda;\mathfrak g)). The operators (d_0,d_1) defined below live purely on the lattice cell complex; they will enter the analysis by composing with this trivialization (and with the horizontal projection in §3.3).
+
+#### 3.2.2 The coboundary (d_0:\mathcal C^0\to\mathcal C^1)
+
+Definition 3.14 (discrete gradient / coboundary (d_0)).
+For (\varphi\in\mathcal C^0(\Lambda;\mathfrak g)), define (d_0\varphi\in\mathcal C^1(\Lambda;\mathfrak g)) by
+[
+(d_0\varphi)*{(x,\mu)} ;:=; \varphi*{x+\hat e_\mu}-\varphi_x,
+\qquad (x,\mu)\in E(\Lambda).
+]
+Equivalently, for an oriented edge (b) with tail (\partial_-b) and head (\partial_+b),
+[
+(d_0\varphi)*b = \varphi*{\partial_+b}-\varphi_{\partial_-b}.
+]
+
+This is the discrete analogue of the exterior derivative on 0-forms: it measures oriented differences of the vertex field along links. On the periodic lattice, the shift (x\mapsto x\pm\hat e_\mu) is understood modulo (L_\mu).
+
+Remark (infinitesimal gauge transformations).
+If one writes a small gauge transformation as (g_x=\exp(t\varphi_x)) and a small link field near the vacuum as (U_{x,\mu}(t)=\exp(tX_{x,\mu})), then differentiating the gauge action (U\mapsto g\cdot U) at (t=0) produces a variation in the (X)-variables of the form (X\mapsto X-(d_0\varphi)). This is the precise sense in which (\mathrm{im}(d_0)) is the “pure gauge” (vertical) subspace at the vacuum, formalized in §3.3.
+
+#### 3.2.3 The coboundary (d_1:\mathcal C^1\to\mathcal C^2)
+
+Definition 3.15 (discrete curl / coboundary (d_1)).
+For (X\in\mathcal C^1(\Lambda;\mathfrak g)), define (d_1X\in\mathcal C^2(\Lambda;\mathfrak g)) by oriented plaquette summation. For a plaquette (p=(x;\mu,\nu)) with (\mu<\nu),
+[
+(d_1X)*{(x;\mu,\nu)}
+;:=;
+X*{x,\mu};+;X_{x+\hat e_\mu,\nu};-;X_{x+\hat e_\nu,\mu};-;X_{x,\nu}.
+]
+Equivalently, using the incidence coefficients (\sigma_{p,b}) from §2.1.3(b),
+[
+(d_1X)*p ;=; \sum*{b\in E(\Lambda)} \sigma_{p,b},X_b.
+]
+
+This is the discrete analogue of the exterior derivative on 1-forms (“curl”): it measures the oriented circulation of a 1-cochain around an elementary plaquette.
+
+Lemma 3.16 (cochain complex identity (d_1\circ d_0\equiv 0)).
+One has (d_1d_0=0) as a map (\mathcal C^0(\Lambda;\mathfrak g)\to\mathcal C^2(\Lambda;\mathfrak g)).
+
+Proof.
+Fix (\varphi\in\mathcal C^0(\Lambda;\mathfrak g)) and (p=(x;\mu,\nu)) with (\mu<\nu). Expanding by definition,
+[
+(d_1d_0\varphi)_{(x;\mu,\nu)}
+=============================
+
+(d_0\varphi)*{x,\mu}+(d_0\varphi)*{x+\hat e_\mu,\nu}-(d_0\varphi)*{x+\hat e*\nu,\mu}-(d_0\varphi)*{x,\nu}.
+]
+Substitute ((d_0\varphi)*{y,\alpha}=\varphi_{y+\hat e_\alpha}-\varphi_y) and cancel:
+[
+\begin{aligned}
+(d_1d_0\varphi)*{(x;\mu,\nu)}
+&=(\varphi*{x+\hat e_\mu}-\varphi_x)
++(\varphi_{x+\hat e_\mu+\hat e_\nu}-\varphi_{x+\hat e_\mu}) \
+&\quad-(\varphi_{x+\hat e_\nu+\hat e_\mu}-\varphi_{x+\hat e_\nu})
+-(\varphi_{x+\hat e_\nu}-\varphi_x)
+=0.
+\end{aligned}
+]
+Since this holds for every plaquette, (d_1d_0\equiv 0). (\square)
+
+Remark (geometric meaning).
+The identity (d_1d_0=0) is the discrete statement “curl grad (=0)” and expresses the fact that the signed boundary of an oriented plaquette is itself a boundary: the coboundary operator squares to zero on the cellular cochain complex.
+
+#### 3.2.4 Adjoint operators (d_0^*) and (d_1^*)
+
+Because the cochain spaces are finite-dimensional Hilbert spaces under the (\ell^2) inner products, each (d_k) has a unique adjoint (d_k^*) characterized by integration-by-parts identities.
+
+Definition 3.17 (adjoints).
+Define (d_0^*:\mathcal C^1\to\mathcal C^0) and (d_1^*:\mathcal C^2\to\mathcal C^1) by
+[
+\langle d_0\varphi, X\rangle_{\mathcal C^1}
+===========================================
+
+\langle \varphi, d_0^*X\rangle_{\mathcal C^0},
+\qquad
+\langle d_1X, F\rangle_{\mathcal C^2}
+=====================================
+
+\langle X, d_1^*F\rangle_{\mathcal C^1},
+]
+for all (\varphi\in\mathcal C^0), (X\in\mathcal C^1), (F\in\mathcal C^2).
+
+We now record explicit coordinate formulas in the periodic (torus) geometry adopted in §2.1. On other finite regions, the same computations produce boundary terms; those will be stated explicitly whenever such geometries are used.
+
+Lemma 3.18 (explicit formula for (d_0^*): minus divergence).
+On the periodic lattice (\Lambda), for (X\in\mathcal C^1(\Lambda;\mathfrak g)),
+[
+(d_0^*X)*x ;=; \sum*{\mu=0}^3\Bigl(X_{x-\hat e_\mu,\mu}-X_{x,\mu}\Bigr),
+\qquad x\in\Lambda,
+]
+with (x-\hat e_\mu) understood modulo periodicity.
+
+Proof.
+Compute
+[
+\langle d_0\varphi,X\rangle_{\mathcal C^1}
+==========================================
+
+\sum_{x\in\Lambda}\sum_{\mu=0}^3
+\left\langle \varphi_{x+\hat e_\mu}-\varphi_x,\ X_{x,\mu}\right\rangle_{\mathfrak g}.
+]
+Split the sum and reindex the first term by the shift (x\mapsto x-\hat e_\mu) (legal on the torus):
+[
+\sum_{x,\mu}\langle \varphi_{x+\hat e_\mu},X_{x,\mu}\rangle
+===========================================================
+
+\sum_{x,\mu}\langle \varphi_{x},X_{x-\hat e_\mu,\mu}\rangle.
+]
+Therefore
+[
+\langle d_0\varphi,X\rangle_{\mathcal C^1}
+==========================================
+
+# \sum_{x,\mu}\langle \varphi_x, X_{x-\hat e_\mu,\mu}-X_{x,\mu}\rangle_{\mathfrak g}
+
+\sum_x \left\langle \varphi_x,\ \sum_{\mu=0}^3(X_{x-\hat e_\mu,\mu}-X_{x,\mu})\right\rangle_{\mathfrak g},
+]
+which identifies ((d_0^*X)_x) as claimed. (\square)
+
+Thus (d_0^*) is the negative of the usual discrete divergence: it subtracts the outgoing link field from the incoming link field at each vertex.
+
+To write (d_1^*) explicitly, it is convenient to extend 2-cochains antisymmetrically in the coordinate indices.
+
+Definition 3.19 (antisymmetric extension of a 2-cochain).
+Given (F\in\mathcal C^2(\Lambda;\mathfrak g)), define an antisymmetric family ((F_{x;\mu,\nu})) for all (\mu,\nu\in{0,1,2,3}) by setting:
+
+* (F_{x;\mu,\nu}) equals the given plaquette component when (\mu<\nu),
+* (F_{x;\nu,\mu}:=-F_{x;\mu,\nu}) when (\mu<\nu),
+* (F_{x;\mu,\mu}:=0).
+
+Lemma 3.20 (explicit formula for (d_1^*)).
+On the periodic lattice (\Lambda), for (F\in\mathcal C^2(\Lambda;\mathfrak g)) (under the antisymmetric extension of Definition 3.19),
+[
+(d_1^*F)*{x,\mu}
+;=;
+\sum*{\nu\neq \mu}\Bigl(F_{x;\mu,\nu}-F_{x-\hat e_\nu;\mu,\nu}\Bigr),
+\qquad (x,\mu)\in E(\Lambda),
+]
+with (x-\hat e_\nu) understood modulo periodicity.
+
+Proof.
+Using the incidence representation ((d_1X)*p=\sum_b\sigma*{p,b}X_b), we compute
+[
+\langle d_1X,F\rangle_{\mathcal C^2}
+====================================
+
+# \sum_{p\in P(\Lambda)}\left\langle \sum_{b\in E(\Lambda)}\sigma_{p,b}X_b,\ F_p\right\rangle_{\mathfrak g}
+
+\sum_{b\in E(\Lambda)}\left\langle X_b,\ \sum_{p\in P(\Lambda)}\sigma_{p,b}F_p\right\rangle_{\mathfrak g},
+]
+so ((d_1^*F)*b=\sum*{p}\sigma_{p,b}F_p).
+
+To obtain the coordinate formula, fix (b=(x,\mu)). The plaquettes (p) with (\sigma_{p,b}\neq 0) are exactly those plaquettes in the ((\mu,\nu))-planes incident to the edge (b), and the two such plaquettes for a given (\nu\neq\mu) contribute with opposite signs (one based at (x), one based at (x-\hat e_\nu)). Tracking these signs with the antisymmetric extension yields precisely
+[
+(d_1^*F)_{x,\mu}
+================
+
+\sum_{\nu\neq\mu}\bigl(F_{x;\mu,\nu}-F_{x-\hat e_\nu;\mu,\nu}\bigr).
+]
+This is the discrete analogue of the co-differential (minus divergence) applied to a 2-form. (\square)
+
+#### 3.2.5 Discrete Hodge Laplacians and energy identities
+
+Definition 3.21 (Hodge Laplacians in degrees (0,1,2)).
+Define the degree-0, degree-1, and degree-2 Hodge Laplacians by
+[
+\Delta_0 ;:=; d_0^*d_0:\mathcal C^0\to\mathcal C^0,
+\qquad
+\Delta_1 ;:=; d_0d_0^*+d_1^*d_1:\mathcal C^1\to\mathcal C^1,
+\qquad
+\Delta_2 ;:=; d_1d_1^*:\mathcal C^2\to\mathcal C^2.
+]
+
+The operator (\Delta_1) is the discrete analogue of the Hodge Laplacian on 1-forms; its second term (d_1^*d_1) is the discrete Maxwell operator (also called “curl–curl”), and it will appear as the vacuum Hessian of the Wilson action in §5.2.
+
+Lemma 3.22 (energy identity and kernel characterization for (\Delta_1)).
+For every (X\in\mathcal C^1(\Lambda;\mathfrak g)),
+[
+\langle X,\Delta_1X\rangle_{\mathcal C^1}
+=========================================
+
+|d_0^*X|*{\mathcal C^0}^2
++
+|d_1X|*{\mathcal C^2}^2.
+]
+In particular,
+[
+\ker(\Delta_1)=\ker(d_0^*)\cap \ker(d_1).
+]
+
+Proof.
+By adjointness,
+[
+\langle X,d_0d_0^*X\rangle_{\mathcal C^1}
+=========================================
+
+# \langle d_0^*X,d_0^*X\rangle_{\mathcal C^0}
+
+|d_0^*X|*{\mathcal C^0}^2,
+]
+and similarly
+[
+\langle X,d_1^*d_1X\rangle*{\mathcal C^1}
+=========================================
+
+# \langle d_1X,d_1X\rangle_{\mathcal C^2}
+
+|d_1X|_{\mathcal C^2}^2.
+]
+Summing yields the energy identity. The kernel statement follows because both terms are nonnegative, and their sum vanishes if and only if both terms vanish. (\square)
+
+Corollary 3.23 (compatibility (d_0^*d_1^*=0) and inclusion (\mathrm{im}(d_1^*)\subseteq \ker(d_0^*))).
+From (d_1d_0=0) (Lemma 3.16), taking adjoints gives
+[
+d_0^*d_1^*=(d_1d_0)^* = 0.
+]
+Hence (\mathrm{im}(d_1^*)\subseteq \ker(d_0^*)).
+
+Remark (harmonic 1-cochains and topology).
+On the periodic lattice (\Lambda\cong(\mathbb Z/L_0\mathbb Z)\times\cdots\times(\mathbb Z/L_3\mathbb Z)), the space (\ker(\Delta_1)=\ker(d_0^*)\cap\ker(d_1)) is typically nontrivial: it contains harmonic 1-cochains reflecting the nontrivial first cohomology of the discrete 4–torus. This harmonic sector is responsible for global (topological) zero modes of (d_1^*d_1) at the vacuum; in later sections, the analytic mechanism that yields a strictly positive lower bound on the *effective* horizontal curvature combines the Wilson Hessian with the strictly positive Haar/Ricci contribution (localized near the identity) so that the remaining horizontal degeneracies are lifted.
+
+Remark (finite-dimensional Hodge decomposition).
+In any finite-dimensional cochain complex, one has the orthogonal decomposition
+[
+\mathcal C^1(\Lambda;\mathfrak g)
+=================================
+
+\mathrm{im}(d_0)\ \oplus\ \ker(\Delta_1)\ \oplus\ \mathrm{im}(d_1^*),
+]
+with (\ker(\Delta_1)=\ker(d_0^*)\cap\ker(d_1)). This statement will be invoked explicitly in §3.3–§3.4 when identifying vertical directions with (\mathrm{im}(d_0)) and transverse physical directions with (\mathrm{im}(d_1^*)).
+
+#### 3.2.6 Sparsity and locality in operator form
+
+Although the main combinatorial constants are recorded in §2.1.4 and exploited in §3.4, it is useful to note already at the cochain level that (d_0) and (d_1) are uniformly local operators:
+
+* Each component ((d_0\varphi)*{x,\mu}) depends on exactly two vertex values (\varphi_x) and (\varphi*{x+\hat e_\mu}).
+* Each component ((d_1X)_{x;\mu,\nu}) is an oriented sum of exactly four link values, corresponding to the plaquette boundary (\partial(x;\mu,\nu)).
+
+Equivalently, in the incidence-coefficient form, each row of the matrix representation of (d_1) has exactly four nonzero coefficients (\pm 1), and each column participates in only (O(1)) rows (bounded by (\nu\le 6) in (d=4)). This uniform sparsity is the discrete locality mechanism behind volume-independent operator norm bounds that will later be required in the Bakry–Émery and Helffer–Sjöstrand estimates.
+
+⸻
+
+
+
+### 3.3 Gauge directions vs horizontal directions; vacuum horizontal space (H_{U^{(0)}}=\ker d_0^*)
+
+The gauge group (\mathcal G_\Lambda=G^{V(\Lambda)}) acts smoothly and isometrically on the configuration manifold (M_\Lambda=G^{E(\Lambda)}) by the rule
+[
+(g\cdot U)*{(x,\mu)} ;=; g_x,U*{(x,\mu)},g_{x+\hat e_\mu}^{-1},
+\qquad g=(g_x)*{x\in\Lambda}\in \mathcal G*\Lambda,\ U=(U_{x,\mu})\in M_\Lambda,
+]
+as recalled in §2.2 and §3.1.7. The purpose of the present subsection is to identify precisely which tangent directions are “pure gauge” (tangent to the gauge orbit) and which are “physical” (orthogonal to the orbit), and to relate the vacuum horizontal space to the discrete divergence operator (d_0^*) from §3.2.
+
+#### 3.3.1 Gauge orbits and the vertical/horizontal splitting
+
+For (U\in M_\Lambda), let
+[
+\mathcal O_U ;:=;\mathcal G_\Lambda\cdot U ;=;{g\cdot U:\ g\in\mathcal G_\Lambda}
+]
+denote the gauge orbit through (U).
+
+**Definition 3.24 (vertical and horizontal tangent spaces).**
+For (U\in M_\Lambda), define the **vertical tangent space**
+[
+V_U ;:=; T_U \mathcal O_U ;\subseteq; T_U M_\Lambda
+]
+and define the **horizontal tangent space** to be its orthogonal complement with respect to the product metric (g_\Lambda) from §3.1.4:
+[
+H_U ;:=; V_U^\perp ;\subseteq; T_U M_\Lambda.
+]
+
+Because (T_U M_\Lambda) is finite-dimensional, this is an orthogonal direct sum:
+[
+T_U M_\Lambda ;=; V_U \oplus H_U.
+]
+
+**Lemma 3.25 (gauge equivariance of the splitting).**
+For each (g\in\mathcal G_\Lambda) and (U\in M_\Lambda), the differential
+[
+(d(g\cdot))*U: T_U M*\Lambda \longrightarrow T_{g\cdot U} M_\Lambda
+]
+maps (V_U) onto (V_{g\cdot U}) and (H_U) onto (H_{g\cdot U}).
+
+*Proof.* Since the action map is a diffeomorphism and (\mathcal O_{g\cdot U}=g\cdot\mathcal O_U), its differential maps the tangent space of (\mathcal O_U) at (U) onto the tangent space of (\mathcal O_{g\cdot U}) at (g\cdot U). Thus ((d(g\cdot))*U(V_U)=V*{g\cdot U}). Because the action is an isometry (Lemma 3.11), ((d(g\cdot))_U) preserves the inner product on tangent spaces, hence it sends orthogonal complements to orthogonal complements, giving ((d(g\cdot))*U(H_U)=H*{g\cdot U}). (\square)
+
+#### 3.3.2 Infinitesimal gauge transformations in right-trivialized coordinates
+
+The Lie algebra of (\mathcal G_\Lambda) is canonically identified with (\mathcal C^0(\Lambda;\mathfrak g)=\mathfrak g^{V(\Lambda)}): an infinitesimal gauge parameter is a vertex field (\varphi=(\varphi_x)_{x\in\Lambda}) with (\varphi_x\in\mathfrak g).
+
+Fix (U\in M_\Lambda). For (\varphi\in\mathcal C^0(\Lambda;\mathfrak g)), define the smooth one-parameter subgroup (g(t)\in\mathcal G_\Lambda) by
+[
+g(t)*x ;:=; \exp(t\varphi_x),
+\qquad t\in\mathbb R.
+]
+Then (t\mapsto g(t)\cdot U) is a smooth curve in (M*\Lambda) through (U), hence its velocity at (t=0) defines a vertical tangent vector at (U).
+
+To express this velocity in a coordinate-free but computationally effective way, we use the right-trivialization (\omega_U^R: T_U M_\Lambda\to \mathfrak g^{E(\Lambda)}=\mathcal C^1(\Lambda;\mathfrak g)) from Definition 3.5. (Recall: (\omega_U^R) maps a tangent vector at (U) to its linkwise right-trivialized Lie-algebra components.)
+
+**Definition 3.26 (covariant discrete gradient (d_{0,U})).**
+For (U\in M_\Lambda), define the linear operator
+[
+d_{0,U}: \mathcal C^0(\Lambda;\mathfrak g)\longrightarrow \mathcal C^1(\Lambda;\mathfrak g)
+]
+by
+[
+(d_{0,U}\varphi)*{(x,\mu)}
+;:=;
+\mathrm{Ad}*{U_{x,\mu}}(\varphi_{x+\hat e_\mu})-\varphi_x,
+\qquad (x,\mu)\in E(\Lambda).
+]
+Here (\mathrm{Ad}_{g}(X):=gXg^{-1}) denotes the adjoint action of (G) on (\mathfrak g).
+
+This is the lattice analogue of the covariant differential (d_A\varphi=\nabla\varphi+[A,\varphi]); the dependence on (U) enters only through the adjoint transport by the link variables.
+
+**Lemma 3.27 (infinitesimal gauge action; vertical space as (\mathrm{im}(d_{0,U}))).**
+Let (U\in M_\Lambda) and (\varphi\in\mathcal C^0(\Lambda;\mathfrak g)), and let (g(t)=\exp(t\varphi)\in\mathcal G_\Lambda) be as above. Then the velocity
+[
+W ;:=; \left.\frac{d}{dt}\right|*{t=0} (g(t)\cdot U)\ \in\ T_U M*\Lambda
+]
+has right-trivialized components
+[
+(\omega_U^R W)*{(x,\mu)} ;=; \varphi_x-\mathrm{Ad}*{U_{x,\mu}}(\varphi_{x+\hat e_\mu})
+;=; -(d_{0,U}\varphi)*{(x,\mu)}.
+]
+Consequently,
+[
+V_U ;=; \tau_U^R\big(\mathrm{im}(d*{0,U})\big)\ \subseteq\ T_U M_\Lambda,
+]
+and under the right-trivialization (T_U M_\Lambda\simeq\mathcal C^1(\Lambda;\mathfrak g)) this becomes the identification
+[
+\omega_U^R(V_U)=\mathrm{im}(d_{0,U})\subseteq \mathcal C^1(\Lambda;\mathfrak g).
+]
+
+*Proof.* Fix a link ((x,\mu)). By definition of the gauge action,
+[
+(g(t)\cdot U)_{x,\mu}
+=====================
+
+\exp(t\varphi_x),U_{x,\mu},\exp(-t\varphi_{x+\hat e_\mu}).
+]
+Expanding to first order in (t) and using smoothness of multiplication in (G),
+[
+(g(t)\cdot U)_{x,\mu}
+=====================
+
+U_{x,\mu}
++t\big(\varphi_x U_{x,\mu}-U_{x,\mu}\varphi_{x+\hat e_\mu}\big)+o(t),
+]
+hence the tangent vector (W) has (b=(x,\mu)) component in (T_{U_{x,\mu}}G) given by the derivative of this curve at (t=0). Right-trivializing at (U_{x,\mu}) (i.e. multiplying by (U_{x,\mu}^{-1}) in matrix form, or applying ((dR_{U_{x,\mu}^{-1}})*{U*{x,\mu}}) in intrinsic form) yields
+[
+(\omega_U^R W)_{x,\mu}
+======================
+
+# \big(\varphi_x U_{x,\mu}-U_{x,\mu}\varphi_{x+\hat e_\mu}\big)U_{x,\mu}^{-1}
+
+\varphi_x-\mathrm{Ad}*{U*{x,\mu}}(\varphi_{x+\hat e_\mu}),
+]
+which is (- (d_{0,U}\varphi)*{x,\mu}) by Definition 3.26. Since the tangent space to the orbit is spanned by such infinitesimal variations, its right-trivialized image is (\mathrm{im}(d*{0,U})), and the final statement follows by applying (\tau_U^R=(\omega_U^R)^{-1}). (\square)
+
+**Remark 3.28 (stabilizers and the kernel of (d_{0,U})).**
+The map (\varphi\mapsto (d/dt)|*{0}(\exp(t\varphi)\cdot U)) has kernel equal to the Lie algebra of the stabilizer subgroup (\mathrm{Stab}(U)={g\in\mathcal G*\Lambda:\ g\cdot U=U}). Equivalently,
+[
+\ker(d_{0,U})={\varphi\in\mathcal C^0:\ \varphi_x=\mathrm{Ad}*{U*{x,\mu}}(\varphi_{x+\hat e_\mu})\text{ for all }(x,\mu)}.
+]
+In particular, for the vacuum (U^{(0)}) (defined below) one has (\ker(d_{0,U^{(0)}})) equal to the space of constant (\mathfrak g)-valued vertex fields, reflecting the large stabilizer of the trivial configuration under global conjugations.
+
+#### 3.3.3 Horizontal directions as a covariant divergence-free condition
+
+To characterize (H_U=V_U^\perp) in the right-trivialized model (\mathcal C^1(\Lambda;\mathfrak g)), we compute the Hilbert adjoint of (d_{0,U}) with respect to the (\ell^2) inner products from Definition 3.13 and the (\mathrm{Ad})-invariance of (\langle\cdot,\cdot\rangle_{\mathfrak g}).
+
+**Definition 3.29 (adjoint (d_{0,U}^*)).**
+Let (U\in M_\Lambda). Define (d_{0,U}^*:\mathcal C^1(\Lambda;\mathfrak g)\to\mathcal C^0(\Lambda;\mathfrak g)) to be the Hilbert adjoint of (d_{0,U}) characterized by
+[
+\langle d_{0,U}\varphi,\ X\rangle_{\mathcal C^1}
+================================================
+
+\langle \varphi,\ d_{0,U}^*X\rangle_{\mathcal C^0}
+\qquad\text{for all }\varphi\in\mathcal C^0,\ X\in\mathcal C^1.
+]
+
+**Lemma 3.30 (explicit formula for (d_{0,U}^*): covariant negative divergence).**
+On the periodic lattice (\Lambda), for (U\in M_\Lambda) and (X\in\mathcal C^1(\Lambda;\mathfrak g)),
+[
+(d_{0,U}^*X)_x
+==============
+
+\sum_{\mu=0}^3\Big(\mathrm{Ad}*{U*{x-\hat e_\mu,\mu}}^{-1}(X_{x-\hat e_\mu,\mu})-X_{x,\mu}\Big),
+\qquad x\in\Lambda,
+]
+with (x-\hat e_\mu) interpreted modulo periodicity.
+
+*Proof.* By definition,
+[
+\langle d_{0,U}\varphi, X\rangle_{\mathcal C^1}
+===============================================
+
+\sum_{x\in\Lambda}\sum_{\mu=0}^3
+\Big\langle \mathrm{Ad}*{U*{x,\mu}}(\varphi_{x+\hat e_\mu})-\varphi_x,\ X_{x,\mu}\Big\rangle_{\mathfrak g}.
+]
+Using (\mathrm{Ad})-invariance of (\langle\cdot,\cdot\rangle_{\mathfrak g}), the first term can be rewritten as
+[
+\Big\langle \mathrm{Ad}*{U*{x,\mu}}(\varphi_{x+\hat e_\mu}),\ X_{x,\mu}\Big\rangle
+==================================================================================
+
+\Big\langle \varphi_{x+\hat e_\mu},\ \mathrm{Ad}*{U*{x,\mu}}^{-1}(X_{x,\mu})\Big\rangle.
+]
+Reindex the corresponding sum by shifting (x\mapsto x-\hat e_\mu) (permitted on the discrete torus), obtaining
+[
+\sum_{x,\mu}\Big\langle \varphi_{x+\hat e_\mu},\ \mathrm{Ad}*{U*{x,\mu}}^{-1}(X_{x,\mu})\Big\rangle
+===================================================================================================
+
+\sum_{x,\mu}\Big\langle \varphi_x,\ \mathrm{Ad}*{U*{x-\hat e_\mu,\mu}}^{-1}(X_{x-\hat e_\mu,\mu})\Big\rangle.
+]
+Therefore
+[
+\langle d_{0,U}\varphi, X\rangle_{\mathcal C^1}
+===============================================
+
+\sum_x \left\langle \varphi_x,\ \sum_{\mu=0}^3\big(\mathrm{Ad}*{U*{x-\hat e_\mu,\mu}}^{-1}(X_{x-\hat e_\mu,\mu})-X_{x,\mu}\big)\right\rangle_{\mathfrak g},
+]
+which identifies ((d_{0,U}^*X)_x) as claimed. (\square)
+
+The next lemma is the key bridge: it identifies horizontal directions with the covariant divergence-free condition (d_{0,U}^*X=0).
+
+**Lemma 3.31 (horizontal space as (\ker(d_{0,U}^*)) in right-trivialization).**
+Let (U\in M_\Lambda). Under the right-trivialization (\omega_U^R: T_U M_\Lambda\to\mathcal C^1(\Lambda;\mathfrak g)),
+[
+\omega_U^R(H_U)=\ker(d_{0,U}^*)\subseteq \mathcal C^1(\Lambda;\mathfrak g).
+]
+
+*Proof.* By Lemma 3.27, (\omega_U^R(V_U)=\mathrm{im}(d_{0,U})). Since (\omega_U^R) is an isometry (Lemma 3.6), orthogonal complements are preserved. Therefore
+[
+\omega_U^R(H_U)
+===============
+
+# \omega_U^R(V_U^\perp)
+
+# \big(\omega_U^R(V_U)\big)^\perp
+
+# \big(\mathrm{im}(d_{0,U})\big)^\perp
+
+\ker(d_{0,U}^*),
+]
+using the standard finite-dimensional identity ((\mathrm{im}A)^\perp=\ker(A^*)). (\square)
+
+**Remark 3.32 (Coulomb/Landau gauge interpretation).**
+The condition (d_{0,U}^*X=0) is the lattice analogue of the Coulomb/Landau gauge condition (\nabla\cdot A=0). At the vacuum it reduces to the usual discrete divergence-free constraint (d_0^*X=0).
+
+#### 3.3.4 The vacuum configuration and the identification (H_{U^{(0)}}=\ker(d_0^*))
+
+We now specialize to the trivial configuration.
+
+**Definition 3.33 (vacuum configuration).**
+Define the **vacuum** (or trivial) configuration (U^{(0)}\in M_\Lambda) by
+[
+U^{(0)}_{x,\mu}:=\mathbf 1
+\qquad\text{for all }(x,\mu)\in E(\Lambda).
+]
+
+At (U^{(0)}), the covariant operator (d_{0,U}) reduces to the ordinary coboundary (d_0) from §3.2.
+
+**Lemma 3.34 (linearization at the vacuum).**
+For (\varphi\in\mathcal C^0(\Lambda;\mathfrak g)),
+[
+d_{0,U^{(0)}}\varphi = d_0\varphi,
+\qquad\text{and}\qquad
+d_{0,U^{(0)}}^* = d_0^*.
+]
+
+*Proof.* Since (U^{(0)}*{x,\mu}=\mathbf 1), (\mathrm{Ad}*{U^{(0)}*{x,\mu}}=\mathrm{Id}*{\mathfrak g}). Thus
+[
+(d_{0,U^{(0)}}\varphi)_{x,\mu}
+==============================
+
+# \mathrm{Ad}*{\mathbf 1}(\varphi*{x+\hat e_\mu})-\varphi_x
+
+# \varphi_{x+\hat e_\mu}-\varphi_x
+
+(d_0\varphi)*{x,\mu}.
+]
+Taking adjoints with respect to the same (\ell^2) inner products yields (d*{0,U^{(0)}}^*=d_0^*). (\square)
+
+Combining Lemma 3.27 and Lemma 3.31 with Lemma 3.34 gives the desired identification of the vacuum vertical and horizontal subspaces with cochain subspaces.
+
+**Proposition 3.35 (vacuum vertical and horizontal spaces).**
+Under the isometric identification (T_{U^{(0)}}M_\Lambda\simeq \mathcal C^1(\Lambda;\mathfrak g)) induced by (\omega_{U^{(0)}}^R),
+[
+V_{U^{(0)}} = \mathrm{im}(d_0),
+\qquad
+H_{U^{(0)}} = \ker(d_0^*).
+]
+
+*Proof.* The first identity is Lemma 3.27 with (U=U^{(0)}), using (d_{0,U^{(0)}}=d_0). The second identity follows by orthogonal complement:
+[
+H_{U^{(0)}}=V_{U^{(0)}}^\perp=(\mathrm{im}(d_0))^\perp=\ker(d_0^*).
+]
+(\square)
+
+#### 3.3.5 Hodge structure of the vacuum horizontal space
+
+The operator (d_1:\mathcal C^1\to\mathcal C^2) and its adjoint (d_1^*) were introduced in §3.2, along with the Hodge Laplacian
+[
+\Delta_1 = d_0d_0^* + d_1^*d_1.
+]
+We record explicitly the induced Hodge decomposition of the vacuum horizontal space. This decomposition will later explain precisely which modes remain in the kernel of the vacuum Wilson Hessian and why an additional “Haar mass” term is needed to obtain a strictly positive coercivity operator on horizontals uniformly in volume.
+
+**Proposition 3.36 (horizontal Hodge decomposition at the vacuum).**
+One has the orthogonal decomposition
+[
+\mathcal C^1(\Lambda;\mathfrak g)
+=================================
+
+\mathrm{im}(d_0)\ \oplus\ \ker(\Delta_1)\ \oplus\ \mathrm{im}(d_1^*).
+]
+Consequently,
+[
+H_{U^{(0)}}
+===========
+
+# \ker(d_0^*)
+
+\ker(\Delta_1)\ \oplus\ \mathrm{im}(d_1^*),
+]
+orthogonally.
+
+*Proof.* The decomposition
+(\mathcal C^1=\mathrm{im}(d_0)\oplus\ker(\Delta_1)\oplus\mathrm{im}(d_1^*)) is the standard finite-dimensional Hodge decomposition on a cochain complex with inner products, using the identities ((\mathrm{im}d_0)^\perp=\ker(d_0^*)) and ((\mathrm{im}d_1^*)^\perp=\ker(d_1)), together with (\ker(\Delta_1)=\ker(d_0^*)\cap\ker(d_1)) (Lemma 3.22). Intersecting with (\ker(d_0^*)) and using (\mathrm{im}(d_1^*)\subseteq\ker(d_0^*)) (Corollary 3.23) yields
+(\ker(d_0^*)=\ker(\Delta_1)\oplus \mathrm{im}(d_1^*)). (\square)
+
+**Remark 3.37 (harmonic 1-cochains on the discrete 4–torus).**
+On the periodic lattice (\Lambda\cong(\mathbb Z/L_0\mathbb Z)\times\cdots\times(\mathbb Z/L_3\mathbb Z)), (\ker(\Delta_1)) is typically nontrivial. In the simplest description, it contains the constant (\mathfrak g)-valued 1-cochains
+[
+X_{x,\mu}\equiv c_\mu\in\mathfrak g
+\qquad(\mu=0,1,2,3),
+]
+which satisfy (d_0^*X=0) and (d_1X=0). This harmonic sector corresponds to the nontrivial first cohomology of the 4–torus and is responsible for global zero modes of (d_1^*d_1) restricted to (\ker(d_0^*)). Later coercivity estimates explicitly retain this sector and compensate for it using the strictly positive “Haar curvature” contribution in the Bakry–Émery matrix on a canonical small-field region.
+
+#### 3.3.6 Gauge invariance implies horizontality of differentials (and gradients)
+
+Although the vertical/horizontal splitting is defined geometrically at the level of tangent spaces, it becomes truly effective only once coupled to gauge invariance of observables and of the Gibbs law. We record the basic calculus lemma that converts gauge invariance into horizontality.
+
+**Lemma 3.38 (gauge invariance annihilates vertical directions).**
+Let (F:M_\Lambda\to\mathbb C) be (C^1) and gauge invariant, i.e. (F(g\cdot U)=F(U)) for all (g\in\mathcal G_\Lambda) and (U\in M_\Lambda). Then for every (U\in M_\Lambda),
+[
+dF(U)[W]=0\qquad\text{for all }W\in V_U.
+]
+Equivalently, if (\nabla F(U)) denotes the Riemannian gradient (characterized by (dF(U)[W]=g_\Lambda(U)(\nabla F(U),W))), then
+[
+\nabla F(U)\in H_U.
+]
+
+*Proof.* Fix (U\in M_\Lambda) and (W\in V_U). By definition of (V_U=T_U(\mathcal G_\Lambda\cdot U)), there exists a smooth curve (g(t)\in\mathcal G_\Lambda) with (g(0)=\mathbf 1_\Lambda) such that (\frac{d}{dt}|_{t=0}(g(t)\cdot U)=W). Gauge invariance gives (F(g(t)\cdot U)=F(U)) for all (t), hence
+[
+dF(U)[W]
+========
+
+# \left.\frac{d}{dt}\right|_{t=0}F(g(t)\cdot U)
+
+0.
+
+]
+The gradient statement follows immediately from the defining identity of (\nabla F): if (g_\Lambda(\nabla F,W)=0) for all (W\in V_U), then (\nabla F\in V_U^\perp=H_U). (\square)
+
+**Remark 3.39 (why only horizontal coercivity matters later).**
+For gauge-invariant observables, all derivative information (gradients, Hessians in Bochner identities, Helffer–Sjöstrand covariance formulas) lives in (H_U). This is precisely why later Bakry–Émery curvature bounds are formulated and used on the horizontal subbundle: degeneracies of the Wilson action along gauge orbits are irrelevant for gauge-invariant correlation estimates, whereas coercivity on (H_U) is the decisive input.
+
+#### 3.3.7 Orthogonal projection onto the vacuum horizontal space
+
+For later operator comparisons, it is convenient to have an explicit formula for the orthogonal projection onto (H_{U^{(0)}}=\ker(d_0^*)) within (\mathcal C^1(\Lambda;\mathfrak g)). Because (d_0) is not injective on the torus (its kernel is the constant vertex fields), one naturally uses the inverse of (\Delta_0=d_0^*d_0) on the mean-zero subspace or, equivalently, the Moore–Penrose pseudoinverse.
+
+Let
+[
+\mathcal C^0_0(\Lambda;\mathfrak g)
+:=
+\left{\varphi\in\mathcal C^0(\Lambda;\mathfrak g):\ \sum_{x\in\Lambda}\varphi_x=0\right},
+]
+the orthogonal complement of the constant fields in (\mathcal C^0). On (\mathcal C^0_0), the operator (\Delta_0=d_0^*d_0) is strictly positive and hence invertible.
+
+**Definition 3.40 (vacuum Green operator (G_0)).**
+Define (G_0:\mathcal C^0(\Lambda;\mathfrak g)\to\mathcal C^0(\Lambda;\mathfrak g)) by
+[
+G_0\varphi
+:=
+\begin{cases}
+(\Delta_0|_{\mathcal C^0_0})^{-1}\varphi, & \varphi\in \mathcal C^0_0,\
+0, & \varphi\ \text{constant}.
+\end{cases}
+]
+Equivalently, (G_0) is the Moore–Penrose pseudoinverse of (\Delta_0).
+
+**Lemma 3.41 (projection formula).**
+The orthogonal projection (\Pi_{H^{(0)}}:\mathcal C^1(\Lambda;\mathfrak g)\to \ker(d_0^*)) onto the vacuum horizontal space is given by
+[
+\Pi_{H^{(0)}} ;=; I_{\mathcal C^1}- d_0,G_0,d_0^*.
+]
+The complementary projection onto the vertical space (\mathrm{im}(d_0)) is (\Pi_{V^{(0)}}=d_0G_0d_0^*).
+
+*Proof.* The operator (d_0G_0d_0^*) is self-adjoint because (G_0) is self-adjoint and (d_0^*) is the adjoint of (d_0). Moreover,
+[
+(d_0G_0d_0^*)^2
+===============
+
+# d_0G_0(d_0^*d_0)G_0d_0^*
+
+# d_0G_0\Delta_0G_0d_0^*
+
+d_0G_0d_0^*,
+]
+since (G_0\Delta_0) is the orthogonal projection onto (\mathcal C^0_0), and (d_0^*) annihilates constants. Thus (d_0G_0d_0^*) is an orthogonal projection. Its range is contained in (\mathrm{im}(d_0)) by construction, and conversely any element of (\mathrm{im}(d_0)) is fixed by this projection because (G_0\Delta_0) acts as the identity on (\mathcal C^0_0) and (d_0) vanishes on constants. Therefore (\Pi_{V^{(0)}}=d_0G_0d_0^*) is the orthogonal projection onto (\mathrm{im}(d_0)). The orthogonal projection onto the complement (\ker(d_0^*)) is (I-\Pi_{V^{(0)}}), i.e. (\Pi_{H^{(0)}}=I-d_0G_0d_0^*). (\square)
+
+This concludes the precise identification of gauge versus horizontal directions, both at general (U) (via (d_{0,U}^*)) and at the vacuum (via (d_0^*)). In §3.4 we introduce the discrete Maxwell operator (d_1^*d_1) and record the key bounded-overlap constants needed for uniform operator norm control.
+
+
+### 3.4 Discrete Maxwell operator and combinatorial overlap constants
+
+The operator (d_1^*d_1) is the discrete analogue of the Maxwell “curl–curl” operator acting on (\mathfrak g)-valued lattice 1-cochains. It is the canonical quadratic form measuring infinitesimal curvature energy, and it will later reappear as the leading Hessian of the Wilson action at the vacuum. The purpose of this subsection is twofold: (i) to isolate the algebraic and spectral properties of (d_1^*d_1) that do not depend on the nonlinear group structure, and (ii) to record the purely combinatorial bounded-overlap constants that make all subsequent operator inequalities uniform in the volume. 
+
+#### 3.4.1 The discrete Maxwell operator (d_1^*d_1) and its quadratic form
+
+Recall from §3.2 the coboundary
+[
+d_1:\mathcal C^1(\Lambda;\mathfrak g)\longrightarrow \mathcal C^2(\Lambda;\mathfrak g),
+\qquad
+(d_1X)_{(x;\mu,\nu)}
+====================
+
+X_{x,\mu}+X_{x+\hat e_\mu,\nu}-X_{x+\hat e_\nu,\mu}-X_{x,\nu},
+]
+and its Hilbert adjoint (d_1^*:\mathcal C^2\to\mathcal C^1) (Definition 3.17 and Lemma 3.20), taken with respect to the (\ell^2) inner products induced by (\langle\cdot,\cdot\rangle_{\mathfrak g}).
+
+**Definition 3.42 (discrete Maxwell operator).**
+Define the discrete Maxwell operator (or curl–curl operator) on 1-cochains by
+[
+\mathsf M_1 ;:=; d_1^*d_1:\mathcal C^1(\Lambda;\mathfrak g)\longrightarrow \mathcal C^1(\Lambda;\mathfrak g).
+]
+
+**Lemma 3.43 (energy identity for (\mathsf M_1)).**
+For every (X\in\mathcal C^1(\Lambda;\mathfrak g)),
+[
+\langle X,\mathsf M_1X\rangle_{\mathcal C^1}
+============================================
+
+# \langle X,d_1^*d_1X\rangle_{\mathcal C^1}
+
+# \langle d_1X,d_1X\rangle_{\mathcal C^2}
+
+|d_1X|_{\mathcal C^2}^2
+;\ge;0.
+]
+
+*Proof.* This is immediate from adjointness:
+[
+\langle X,d_1^*d_1X\rangle_{\mathcal C^1}
+=========================================
+
+\langle d_1X,d_1X\rangle_{\mathcal C^2}.
+\qquad\square
+]
+
+**Corollary 3.44 (kernel).**
+[
+\ker(\mathsf M_1)=\ker(d_1).
+]
+In particular, (\mathrm{im}(d_0)\subseteq \ker(\mathsf M_1)) since (d_1d_0=0) (Lemma 3.16).
+
+*Proof.* By Lemma 3.43, (\langle X,\mathsf M_1X\rangle=|d_1X|^2), so (\mathsf M_1X=0) implies (d_1X=0). Conversely, (d_1X=0) implies (\mathsf M_1X=0) by definition. (\square)
+
+**Remark 3.45 (relation to horizontality).**
+On the vacuum horizontal space (H_{U^{(0)}}=\ker(d_0^*)) (Proposition 3.35), the Hodge decomposition of Proposition 3.36 yields
+[
+H_{U^{(0)}}=\ker(\Delta_1)\ \oplus\ \mathrm{im}(d_1^*),
+]
+and (\mathsf M_1=d_1^*d_1) vanishes on (\ker(\Delta_1)\subseteq\ker(d_1)) while being strictly positive on (\mathrm{im}(d_1^*)) at fixed volume. No volume-uniform positive lower bound for (\mathsf M_1) holds on (\mathrm{im}(d_1^*)) under periodic boundary conditions: the smallest nonzero eigenvalue scales like (O(L^{-2})) as the box grows. This non-uniformity is precisely why later coercivity estimates incorporate an additional strictly positive “Haar/Ricci” contribution on the horizontal sector.
+
+#### 3.4.2 Explicit local formula and sparsity of (\mathsf M_1)
+
+For later “local-to-global” arguments it is useful to know exactly which link variables enter ((\mathsf M_1X)_{x,\mu}). We record a coordinate formula on the periodic lattice (\Lambda).
+
+To streamline the notation, extend any plaquette field antisymmetrically in indices as in Definition 3.19, and observe that the definition of (d_1) may likewise be used for all (\mu\neq\nu) via the identity
+[
+(d_1X)*{x;\nu,\mu}=-(d_1X)*{x;\mu,\nu},
+]
+so the formula
+[
+(d_1X)_{x;\mu,\nu}
+==================
+
+X_{x,\mu}+X_{x+\hat e_\mu,\nu}-X_{x+\hat e_\nu,\mu}-X_{x,\nu}
+]
+holds for all (\mu\neq\nu) provided one interprets the left-hand side antisymmetrically.
+
+**Lemma 3.46 (stencil of (\mathsf M_1)).**
+For (X\in\mathcal C^1(\Lambda;\mathfrak g)) and ((x,\mu)\in E(\Lambda)),
+[
+(\mathsf M_1X)_{x,\mu}
+======================
+
+\sum_{\nu\neq\mu}\Bigl( (d_1X)*{x;\mu,\nu}-(d_1X)*{x-\hat e_\nu;\mu,\nu}\Bigr),
+]
+that is,
+[
+(\mathsf M_1X)_{x,\mu}
+======================
+
+\sum_{\nu\neq\mu}\Bigl[
+\bigl(X_{x,\mu}+X_{x+\hat e_\mu,\nu}-X_{x+\hat e_\nu,\mu}-X_{x,\nu}\bigr)
+-------------------------------------------------------------------------
+
+\bigl(X_{x-\hat e_\nu,\mu}+X_{x-\hat e_\nu+\hat e_\mu,\nu}-X_{x,\mu}-X_{x-\hat e_\nu,\nu}\bigr)
+\Bigr].
+]
+In particular, ((\mathsf M_1X)*{x,\mu}) depends only on those link values (X*{y,\alpha}) whose links ((y,\alpha)) belong to a plaquette incident to the link ((x,\mu)).
+
+*Proof.* The first identity is exactly Lemma 3.20 applied to (F=d_1X). Expanding (d_1X) yields the second. The locality claim follows because (d_1X) at a plaquette involves exactly the four boundary links, and (d_1^*) at a link sums contributions only over plaquettes containing that link. (\square)
+
+A convenient language for this locality is the following.
+
+**Definition 3.47 (plaquette star and edge adjacency).**
+For a link (b\in E(\Lambda)), define its plaquette star
+[
+\mathrm{Star}(b);:=;{p\in P(\Lambda):\ \sigma_{p,b}\neq0},
+]
+i.e. the set of plaquettes whose oriented boundary contains (b) with nonzero incidence coefficient.
+For links (b,b'\in E(\Lambda)), write (b\sim b') if there exists a plaquette (p\in P(\Lambda)) such that (\sigma_{p,b}\neq0) and (\sigma_{p,b'}\neq0); equivalently, if (b) and (b') lie on a common plaquette boundary.
+
+Then Lemma 3.46 implies:
+[
+(\mathsf M_1X)*b \ \text{depends only on}\ {X*{b'}:\ b'\sim b}.
+]
+
+#### 3.4.3 Bounded overlap constants and uniform operator norm bounds
+
+Two finite combinatorial constants control the size of cochain operators uniformly in the volume:
+
+* the plaquette perimeter
+  [
+  m_\partial:=|\partial p|=4,
+  ]
+  i.e. each plaquette boundary contains exactly four links;
+
+* the maximal plaquette overlap per link
+  [
+  \nu;:=;\max_{b\in E(\Lambda)}|\mathrm{Star}(b)|.
+  ]
+  By Lemma 2.1 in (d=4), one has (\nu\le 6).
+
+These constants directly yield volume-independent operator bounds.
+
+**Proposition 3.48 (uniform (\ell^2) bounds for (d_1) and (\mathsf M_1)).**
+For all (X\in\mathcal C^1(\Lambda;\mathfrak g)),
+[
+|d_1X|*{\mathcal C^2}^2
+;\le;
+m*\partial,\nu,|X|*{\mathcal C^1}^2.
+]
+Equivalently,
+[
+|d_1|*{\mathcal C^1\to\mathcal C^2}^2;\le;m_\partial,\nu,
+\qquad
+|\mathsf M_1|*{\mathcal C^1\to\mathcal C^1};\le;m*\partial,\nu.
+]
+In our case (d=4), (m_\partial=4), (\nu\le6), hence
+[
+|d_1|^2\le 24,
+\qquad
+|\mathsf M_1|\le 24.
+]
+
+*Proof.* Fix (X\in\mathcal C^1). For each plaquette (p), write (\partial p={b_1,\dots,b_{m_\partial}}) (directed boundary edges, with signs (\pm 1) encoded in (\sigma_{p,b})). Then
+[
+(d_1X)*p=\sum*{j=1}^{m_\partial}\varepsilon_j X_{b_j},\qquad \varepsilon_j\in{\pm1}.
+]
+By Cauchy–Schwarz in the Hilbert space (\mathfrak g),
+[
+|(d_1X)*p|*{\mathfrak g}^2
+==========================
+
+\left|\sum_{j=1}^{m_\partial}\varepsilon_j X_{b_j}\right|*{\mathfrak g}^2
+\le
+m*\partial\sum_{j=1}^{m_\partial}|X_{b_j}|*{\mathfrak g}^2.
+]
+Summing over plaquettes and exchanging sums,
+[
+|d_1X|*{\mathcal C^2}^2
+=======================
+
+\sum_{p\in P(\Lambda)}|(d_1X)*p|*{\mathfrak g}^2
+\le
+m_\partial\sum_{p\in P(\Lambda)}\sum_{b\in E(\Lambda)}\mathbf 1_{{\sigma_{p,b}\neq0}},|X_b|_{\mathfrak g}^2
+===========================================================================================================
+
+m_\partial\sum_{b\in E(\Lambda)}|\mathrm{Star}(b)|,|X_b|*{\mathfrak g}^2.
+]
+By definition of (\nu), (|\mathrm{Star}(b)|\le \nu) for all (b), hence
+[
+|d_1X|*{\mathcal C^2}^2
+\le
+m_\partial,\nu\sum_{b\in E(\Lambda)}|X_b|_{\mathfrak g}^2
+=========================================================
+
+m_\partial,\nu,|X|*{\mathcal C^1}^2.
+]
+This gives (|d_1|^2\le m*\partial\nu). Since (\mathsf M_1=d_1^*d_1) is self-adjoint and positive semidefinite, Lemma 3.43 implies
+[
+\langle X,\mathsf M_1X\rangle=|d_1X|^2\le m_\partial\nu |X|^2
+\quad\text{for all }X,
+]
+hence (|\mathsf M_1|\le m_\partial\nu). In (d=4), (m_\partial=4) and (\nu\le6), so the numerical bounds follow. (\square)
+
+**Corollary 3.49 (uniform sparsity degree).**
+For each link (b\in E(\Lambda)), the set ({b'\in E(\Lambda): b'\sim b}) has cardinality at most (1+3\nu). In particular, in (d=4),
+[
+#{b': b'\sim b}\le 1+3\cdot 6=19.
+]
+
+*Proof.* The link (b) belongs to at most (\nu) plaquettes. Each such plaquette contains exactly 4 links, hence at most 3 links different from (b). Therefore the number of links adjacent to (b) (including (b) itself) is at most (1+3\nu). (\square)
+
+This “bounded local degree” is the matrix-level reason that sums of plaquette-local quadratic forms can be converted into global (\ell^2) coercivity bounds without acquiring spurious factors of (|\Lambda|).
+
+#### 3.4.4 Fourier symbol on the periodic torus and the transverse scalarization
+
+Although most of the analysis in later sections is geometric (Bakry–Émery, Helffer–Sjöstrand), the long-distance behavior of the resolvent ((m^2I+\alpha\mathsf M_1)^{-1}) is most transparently controlled by Fourier diagonalization on the periodic lattice. We therefore record the symbol of (\mathsf M_1) and the key simplification that occurs on the horizontal (divergence-free) sector.
+
+Let (k=(k_0,k_1,k_2,k_3)) range over the discrete dual torus
+[
+\mathbb T_\Lambda
+:=
+\left{k:\ k_\mu=\frac{2\pi n_\mu}{L_\mu},\ n_\mu\in{0,1,\dots,L_\mu-1}\right}.
+]
+For (\varphi\in\mathcal C^0(\Lambda;\mathfrak g)) and (X\in\mathcal C^1(\Lambda;\mathfrak g)), define the discrete Fourier transforms (componentwise in (\mathfrak g))
+[
+\widehat \varphi(k):=\sum_{x\in\Lambda} e^{-ik\cdot x},\varphi_x,
+\qquad
+\widehat X_\mu(k):=\sum_{x\in\Lambda} e^{-ik\cdot x},X_{x,\mu},
+]
+with inverse formulas obtained by averaging over (\mathbb T_\Lambda) (the exact normalization constants play no role in the algebraic symbol computations below).
+
+Define the standard lattice multipliers
+[
+q_\mu(k):=e^{ik_\mu}-1,
+\qquad
+\lambda(k):=\sum_{\mu=0}^3|q_\mu(k)|^2
+======================================
+
+4\sum_{\mu=0}^3\sin^2!\left(\frac{k_\mu}{2}\right).
+]
+
+**Lemma 3.50 (symbols of (d_0), (d_0^*), and (\mathsf M_1)).**
+For all (k\in\mathbb T_\Lambda),
+[
+\widehat{(d_0\varphi)}*\mu(k)=q*\mu(k),\widehat\varphi(k),
+\qquad
+\widehat{(d_0^*X)}(k)= -\sum_{\mu=0}^3 \overline{q_\mu(k)},\widehat X_\mu(k).
+]
+Moreover, (\mathsf M_1=d_1^*d_1) acts in Fourier space by the (4\times4) matrix multiplier
+[
+\widehat{(\mathsf M_1X)}_\mu(k)
+===============================
+
+\sum_{\nu=0}^3\Bigl(\lambda(k)\delta_{\mu\nu}-q_\mu(k),\overline{q_\nu(k)}\Bigr),\widehat X_\nu(k),
+]
+i.e.
+[
+\widehat{\mathsf M_1}(k)=\lambda(k),I - q(k)\otimes \overline{q(k)},
+]
+where (q(k)=(q_0(k),\dots,q_3(k))) and ((q\otimes \overline q)\eta=q,(\overline q\cdot \eta)).
+
+*Proof.* The (d_0) symbol is immediate from ((d_0\varphi)*{x,\mu}=\varphi*{x+\hat e_\mu}-\varphi_x), since shifting (x\mapsto x+\hat e_\mu) produces the factor (e^{ik_\mu}). Taking adjoints yields the (d_0^*) symbol.
+
+For (\mathsf M_1), one computes the symbol of (d_1) first:
+[
+\widehat{(d_1X)}*{\mu\nu}(k)=q*\mu(k)\widehat X_\nu(k)-q_\nu(k)\widehat X_\mu(k),
+]
+and then applies the (d_1^*) symbol (which is the Hilbert adjoint in Fourier space) to obtain
+[
+\widehat{(d_1^*d_1X)}_\mu(k)
+============================
+
+# \sum_{\nu=0}^3 \Bigl(|q_\nu(k)|^2,\widehat X_\mu(k)-q_\mu(k)\overline{q_\nu(k)},\widehat X_\nu(k)\Bigr)
+
+\lambda(k)\widehat X_\mu(k)-q_\mu(k)\sum_{\nu}\overline{q_\nu(k)}\widehat X_\nu(k),
+]
+which is exactly ((\lambda I-q\otimes\overline q)\widehat X). (\square)
+
+**Corollary 3.51 (scalarization on the horizontal sector).**
+If (X\in\ker(d_0^*)), then for each Fourier mode (k),
+[
+\sum_{\nu=0}^3 \overline{q_\nu(k)},\widehat X_\nu(k)=0,
+]
+and hence
+[
+\widehat{(\mathsf M_1X)}(k)=\lambda(k),\widehat X(k).
+]
+Equivalently, (\mathsf M_1) acts as multiplication by the scalar (\lambda(k)) on the divergence-free (“transverse”) modes.
+
+*Proof.* The horizontal constraint (d_0^*X=0) is equivalent in Fourier space to (\overline{q(k)}\cdot\widehat X(k)=0) by Lemma 3.50. Under this constraint, ((q\otimes\overline q)\widehat X=q(\overline q\cdot \widehat X)=0), so (\widehat{\mathsf M_1}(k)\widehat X=\lambda(k)\widehat X). (\square)
+
+**Remark 3.52 (the (k=0) mode and harmonic 1-cochains).**
+At (k=0), one has (q(0)=0) and (\lambda(0)=0), so the Fourier symbol vanishes. On the finite periodic lattice this corresponds to the harmonic subspace (\ker(\Delta_1)\subseteq\ker(d_0^*)\cap\ker(d_1)) discussed in Remark 3.37. On infinite volume (\mathbb Z^4), the (k=0) mode is not in (\ell^2), and the harmonic subspace disappears; this distinction is important when formulating exponential decay of the massive resolvent and in passing to infinite volume.
+
+---
+
+This completes the linear-algebraic and combinatorial setup for the “curvature energy” operator (\mathsf M_1=d_1^*d_1). In §3.5 we introduce the differential operators on the configuration manifold (M_\Lambda) (gradient, Laplacian, carré du champ) and connect them to the cochain calculus developed in §3.1–§3.4.
+
+
+
+### 3.5 Differential operators on the configuration manifold: gradient, Laplacian, carré du champ, Dirichlet form
+
+This subsection introduces the basic differential operators on the compact Riemannian manifold
+[
+(M_\Lambda,g_\Lambda);=;\bigl(G^{E(\Lambda)},\ \bigoplus_{b\in E(\Lambda)}g_G\bigr)
+]
+from §3.1, and relates them to the Gibbs measure (\mu_{\Lambda,\beta}) from §2.4. These objects provide the analytic interface used later in Bakry–Émery curvature bounds, functional inequalities, and Helffer–Sjöstrand covariance representations.
+
+Throughout, we identify the normalized product Haar measure (dU) from §2.4 with the normalized Riemannian volume on ((M_\Lambda,g_\Lambda)) (Lemma 3.8).
+
+#### 3.5.1 Linkwise right-invariant derivatives and the gradient as a 1-cochain
+
+Fix an orthonormal basis ({T^a}*{a=1}^{\dim\mathfrak g}) of ((\mathfrak g,\langle\cdot,\cdot\rangle*{\mathfrak g})). Recall from Definition 3.9 the global orthonormal frame ({X_b^a}*{b\in E(\Lambda),,a}) on (M*\Lambda), where (X_b^a) differentiates only in the (b)-th group coordinate by right multiplication by (\exp(tT^a)).
+
+It is convenient to package first derivatives linkwise as (\mathfrak g)-valued objects.
+
+**Definition 3.53 (linkwise gradient and right-trivialized global gradient).**
+Let (f\in C^\infty(M_\Lambda)). For each link (b\in E(\Lambda)), define the linkwise gradient (\nabla_b f:M_\Lambda\to\mathfrak g) by
+[
+\nabla_b f(U);:=;\sum_{a=1}^{\dim\mathfrak g} (X_b^a f)(U),T^a\ \in\ \mathfrak g.
+]
+Define the right-trivialized global gradient (\nabla f(U)\in \mathfrak g^{E(\Lambda)}\cong \mathcal C^1(\Lambda;\mathfrak g)) by
+[
+\nabla f(U);:=;\bigl(\nabla_b f(U)\bigr)*{b\in E(\Lambda)}.
+]
+Equivalently, viewing (\nabla^{\mathrm{Riem}} f(U)\in T_U M*\Lambda) as the Riemannian gradient, one has
+[
+\nabla^{\mathrm{Riem}} f(U);=;\sum_{b\in E(\Lambda)}\sum_{a=1}^{\dim\mathfrak g} (X_b^a f)(U),X_b^a(U),
+\qquad
+\omega_U^R\big(\nabla^{\mathrm{Riem}} f(U)\big)=\nabla f(U).
+]
+
+**Lemma 3.54 (norm identities and locality).**
+For every (f\in C^\infty(M_\Lambda)) and (U\in M_\Lambda),
+[
+|\nabla^{\mathrm{Riem}} f(U)|*{g*\Lambda}^2
+=\sum_{b\in E(\Lambda)}|\nabla_b f(U)|*{\mathfrak g}^2
+=\sum*{b\in E(\Lambda)}\sum_{a=1}^{\dim\mathfrak g} \bigl(X_b^a f(U)\bigr)^2.
+]
+Moreover, if (f) depends only on the link variables (U|_B) for some (B\subset E(\Lambda)), then (\nabla_b f\equiv 0) for all (b\notin B).
+
+*Proof.* The frame ({X_b^a}) is orthonormal (Lemma 3.10), so the standard gradient expansion in an orthonormal frame yields the first identity. The second claim follows because (X_b^a) differentiates only the coordinate (U_b). (\square)
+
+**Remark 3.55 (gradient as a cochain).**
+Via the identification (\mathfrak g^{E(\Lambda)}=\mathcal C^1(\Lambda;\mathfrak g)) from §3.2.1, the right-trivialized gradient (\nabla f(U)) is naturally a (\mathfrak g)-valued 1-cochain. This is the point of contact between smooth calculus on (M_\Lambda) and the discrete operators (d_0,d_1): later, Hessians and Witten-type Laplacians will be expressed as operators acting on such cochains.
+
+#### 3.5.2 Laplace–Beltrami operator as a linkwise sum of squares
+
+Let (\Delta_\Lambda=\Delta_{g_\Lambda}) denote the Laplace–Beltrami operator on ((M_\Lambda,g_\Lambda)) with the diffusion (probabilistic) sign convention
+[
+\Delta_{g_\Lambda} f ;:=; \operatorname{div}*{g*\Lambda}(\nabla^{\mathrm{Riem}} f),
+]
+so that on Euclidean space it coincides with (\sum_i \partial_i^2) and on a compact manifold it is self-adjoint and nonpositive on (L^2) (constants lie in its kernel).
+
+Because the vector fields (X_b^a) generate right translations in one coordinate, they preserve (dU); hence they have zero divergence with respect to (dU), and (\Delta_\Lambda) is exactly a sum of squares in this frame.
+
+**Definition 3.56 (link Laplacians and global Laplacian).**
+For each link (b\in E(\Lambda)), define the link Laplacian
+[
+\Delta_b f ;:=;\sum_{a=1}^{\dim\mathfrak g} X_b^a X_b^a f.
+]
+Define the global Laplace–Beltrami operator by
+[
+\Delta_\Lambda ;:=; \sum_{b\in E(\Lambda)} \Delta_b
+;=;
+\sum_{b\in E(\Lambda)}\sum_{a=1}^{\dim\mathfrak g} X_b^a X_b^a.
+]
+This is the Laplace–Beltrami operator on ((M_\Lambda,g_\Lambda)) in the orthonormal frame ({X_b^a}). 
+
+**Lemma 3.57 (locality and commutation across links).**
+If (f) is independent of (U_b), then (\Delta_b f=0). Moreover, for (b\neq b'),
+[
+[\Delta_b,\Delta_{b'}]=0.
+]
+
+*Proof.* The first claim follows because each (X_b^a) annihilates functions independent of (U_b). For (b\neq b'), the fields (X_b^a) and (X_{b'}^{a'}) commute (Lemma 3.10), so the sums of squares commute as well. (\square)
+
+**Lemma 3.58 (integration by parts for (dU)).**
+For (f,g\in C^\infty(M_\Lambda)),
+[
+\int_{M_\Lambda} f,(\Delta_\Lambda g),dU
+========================================
+
+# -\int_{M_\Lambda}\langle \nabla^{\mathrm{Riem}} f,\nabla^{\mathrm{Riem}} g\rangle_{g_\Lambda},dU
+
+-\sum_{b,a}\int_{M_\Lambda}(X_b^a f)(X_b^a g),dU.
+]
+
+*Proof.* This is the standard Green identity on a compact manifold without boundary, applied to (\Delta_\Lambda=\operatorname{div}(\nabla)), together with Lemma 3.54. (\square)
+
+#### 3.5.3 The reversible Gibbs generator (L_{\Lambda,\beta})
+
+Recall the Wilson Gibbs measure from §2.4:
+[
+\mu_{\Lambda,\beta}(dU)
+=======================
+
+Z_{\Lambda,\beta}^{-1}e^{-S_{\Lambda,\beta}(U)},dU,
+\qquad
+S_{\Lambda,\beta}\in C^\infty(M_\Lambda).
+]
+The canonical diffusion operator reversible with respect to (\mu_{\Lambda,\beta}) is the drifted Laplacian with drift (-\nabla S_{\Lambda,\beta}).
+
+**Definition 3.59 (Gibbs generator).**
+Define (L_{\Lambda,\beta}:C^\infty(M_\Lambda)\to C^\infty(M_\Lambda)) by
+[
+L_{\Lambda,\beta} f
+;:=;
+\Delta_\Lambda f
+----------------
+
+\big\langle \nabla^{\mathrm{Riem}} S_{\Lambda,\beta},\ \nabla^{\mathrm{Riem}} f\big\rangle_{g_\Lambda}.
+]
+In the orthonormal frame ({X_b^a}),
+[
+L_{\Lambda,\beta} f
+===================
+
+## \sum_{b,a} X_b^aX_b^a f
+
+\sum_{b,a} (X_b^a S_{\Lambda,\beta})(X_b^a f).
+] 
+
+**Lemma 3.60 (divergence form).**
+One has the exact identity
+[
+L_{\Lambda,\beta} f
+===================
+
+e^{S_{\Lambda,\beta}},
+\operatorname{div}*{g*\Lambda}!\big(e^{-S_{\Lambda,\beta}}\nabla^{\mathrm{Riem}} f\big).
+] 
+
+*Proof.* Expand (\operatorname{div}(e^{-S}\nabla f)) using the product rule (\operatorname{div}(\phi V)=\langle\nabla\phi,V\rangle+\phi\operatorname{div}V) with (\phi=e^{-S}), then multiply by (e^S). (\square)
+
+**Proposition 3.61 (symmetry and energy–generator identity).**
+For all (f,g\in C^\infty(M_\Lambda)),
+[
+\int f,L_{\Lambda,\beta}g,\mu_{\Lambda,\beta}(dU)
+=================================================
+
+# -\int \langle\nabla^{\mathrm{Riem}} f,\nabla^{\mathrm{Riem}} g\rangle_{g_\Lambda},\mu_{\Lambda,\beta}(dU)
+
+\int g,L_{\Lambda,\beta}f,\mu_{\Lambda,\beta}(dU).
+]
+In particular, (L_{\Lambda,\beta}) is symmetric and nonpositive on (L^2(\mu_{\Lambda,\beta})), and (L_{\Lambda,\beta}\mathbf 1=0).
+
+*Proof.* Using Lemma 3.60 and compactness (no boundary terms),
+[
+\int f,L g,d\mu
+===============
+
+# Z^{-1}\int f,e^{S}\operatorname{div}(e^{-S}\nabla g),e^{-S}dU
+
+# Z^{-1}\int f,\operatorname{div}(e^{-S}\nabla g),dU
+
+* Z^{-1}\int \langle\nabla f,\ e^{-S}\nabla g\rangle,dU
+  =
+  -\int \langle\nabla f,\nabla g\rangle,d\mu,
+  ]
+  and symmetry follows by swapping (f) and (g). (\square)
+
+#### 3.5.4 Carré du champ and basic diffusion identities
+
+The carré du champ is the intrinsic “energy density” associated with (L_{\Lambda,\beta}).
+
+**Definition 3.62 (carré du champ).**
+For (f,g\in C^\infty(M_\Lambda)), set
+[
+\Gamma_\Lambda(f,g)
+:=
+\frac12\Big(L_{\Lambda,\beta}(fg)-f,L_{\Lambda,\beta}g-g,L_{\Lambda,\beta}f\Big),
+\qquad
+\Gamma_\Lambda(f):=\Gamma_\Lambda(f,f).
+]
+
+**Lemma 3.63 (Γ is the gradient pairing).**
+For all (f,g\in C^\infty(M_\Lambda)),
+[
+\Gamma_\Lambda(f,g)=\langle\nabla^{\mathrm{Riem}} f,\nabla^{\mathrm{Riem}} g\rangle_{g_\Lambda}
+=\sum_{b\in E(\Lambda)}\langle\nabla_b f,\nabla_b g\rangle_{\mathfrak g}
+=\sum_{b,a}(X_b^a f)(X_b^a g),
+]
+and hence (\Gamma_\Lambda(f)=|\nabla^{\mathrm{Riem}} f|*{g*\Lambda}^2\ge 0). 
+
+*Proof.* The drift term (-\langle\nabla S,\nabla(\cdot)\rangle) is a first-order derivation, so it satisfies the Leibniz rule exactly and cancels in the definition of (\Gamma_\Lambda). For the Laplacian, the standard product rule gives
+[
+\Delta_\Lambda(fg)=f,\Delta_\Lambda g+g,\Delta_\Lambda f+2\langle\nabla f,\nabla g\rangle,
+]
+which implies (L(fg)=fLg+gLf+2\langle\nabla f,\nabla g\rangle). Substituting into the definition of (\Gamma_\Lambda) yields (\Gamma_\Lambda(f,g)=\langle\nabla f,\nabla g\rangle). (\square)
+
+In particular, the decomposition (\Gamma_\Lambda=\sum_{b\in E(\Lambda)}\Gamma_b) with
+[
+\Gamma_b(f,g):=\langle\nabla_b f,\nabla_b g\rangle_{\mathfrak g}
+]
+is strictly linkwise: (\Gamma_b(f)=0) if (f) does not depend on (U_b).
+
+**Definition 3.64 (Dirichlet form).**
+Define the (pre-)Dirichlet form on (C^\infty(M_\Lambda)) by
+[
+\mathcal E_{\Lambda,\beta}(f,g)
+:=
+\int_{M_\Lambda}\Gamma_\Lambda(f,g),\mu_{\Lambda,\beta}(dU)
+===========================================================
+
+\int_{M_\Lambda}\langle\nabla^{\mathrm{Riem}} f,\nabla^{\mathrm{Riem}} g\rangle_{g_\Lambda},\mu_{\Lambda,\beta}(dU),
+\qquad
+\mathcal E_{\Lambda,\beta}(f):=\mathcal E_{\Lambda,\beta}(f,f).
+] 
+
+By Proposition 3.61,
+[
+\mathcal E_{\Lambda,\beta}(f,g)
+===============================
+
+# -\int f,L_{\Lambda,\beta}g,d\mu_{\Lambda,\beta}
+
+-\int g,L_{\Lambda,\beta}f,d\mu_{\Lambda,\beta}.
+]
+
+**Lemma 3.65 (Leibniz and chain rules for (\Gamma_\Lambda)).**
+For smooth (f,g,h) and (C^1) functions (\Phi,\Psi:\mathbb R\to\mathbb R),
+[
+\Gamma_\Lambda(fg,h)=f,\Gamma_\Lambda(g,h)+g,\Gamma_\Lambda(f,h),
+\qquad
+\Gamma_\Lambda(\Phi(f),\Psi(g))=\Phi'(f)\Psi'(g),\Gamma_\Lambda(f,g).
+] 
+
+*Proof.* These follow from (\Gamma_\Lambda(f,g)=\langle\nabla f,\nabla g\rangle) and the usual product/chain rules for gradients. (\square)
+
+**Lemma 3.66 (diffusion chain rule for (L_{\Lambda,\beta})).**
+If (\Phi\in C^2(\mathbb R)) and (f\in C^\infty(M_\Lambda)), then
+[
+L_{\Lambda,\beta}(\Phi(f))
+==========================
+
+\Phi'(f),L_{\Lambda,\beta}f
++
+\Phi''(f),\Gamma_\Lambda(f).
+] 
+
+In particular, for (\kappa\in\mathbb R),
+[
+L_{\Lambda,\beta}(e^{\kappa f})
+===============================
+
+e^{\kappa f}\bigl(\kappa,L_{\Lambda,\beta}f+\kappa^2,\Gamma_\Lambda(f)\bigr).
+] 
+
+*Proof.* The Laplace–Beltrami operator satisfies (\Delta(\Phi(f))=\Phi'(f)\Delta f+\Phi''(f)|\nabla f|^2), while the drift satisfies (-\langle\nabla S,\nabla(\Phi(f))\rangle=-\Phi'(f)\langle\nabla S,\nabla f\rangle). Combine and use (\Gamma_\Lambda(f)=|\nabla f|^2). (\square)
+
+**Remark 3.67 (semigroup and Dirichlet form closure).**
+Since (M_\Lambda) is compact and (S_{\Lambda,\beta}) is smooth, (L_{\Lambda,\beta}) extends to a self-adjoint operator on (L^2(\mu_{\Lambda,\beta})) with discrete spectrum, generating a symmetric Markov semigroup (P_t^\Lambda=e^{tL_{\Lambda,\beta}}). The form (\mathcal E_{\Lambda,\beta}) is closable and its closure is a Markovian Dirichlet form. 
+
+This completes the differential-operator setup needed later: the geometry from §3.1 supplies (\nabla) and (\Delta), the Gibbs weight from §2.4 supplies the drift, and the carré du champ/Dirichlet form calculus packages these into identities that are stable under locality and gauge symmetry. 
+

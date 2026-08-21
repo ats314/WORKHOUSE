@@ -1,0 +1,467 @@
+Gotcha, let’s actually *write* Part 2 as a serious chapter, not a summary. I’ll use your updated Section 2 as the backbone (fixing the encoding glitches) and fold in the clean Bochner identity and the Ric(_\mu) = Ric(_g) + Hess (S) formulas, plus the YM corollary hook.
+
+---
+
+# Part 2 — Bakry–Émery Γ(_2) Calculus and the Curvature–Dimension Condition (CD(\rho,\infty))
+
+*(This is written so it can be dropped in as Part 2/20 of the full document.)*
+
+---
+
+## 2.1. Setting
+
+Let ((M,g)) be a smooth, connected, complete, finite-dimensional Riemannian manifold.
+Let (S\in C^2(M)) be a potential such that the Gibbs normalization constant
+[
+Z := \int_M e^{-S(x)},d\mathrm{vol}_g(x)
+]
+is finite. We define the Gibbs measure
+[
+d\mu(x) := Z^{-1} e^{-S(x)},d\mathrm{vol}_g(x).
+]
+
+We work throughout with the **Riemannian volume as reference measure**; this is the convention used later for lattice Yang–Mills, where (d\mathrm{vol}_g) will be the product Haar volume on the configuration manifold.
+
+The associated diffusion generator is
+[
+L f = \Delta_g f - \langle \nabla S,\nabla f\rangle,
+]
+initially defined on (C_c^\infty(M)) and then viewed as the generator of a (\mu)-symmetric Markov semigroup ((P_t)_{t\ge0}) on (L^2(\mu)). Here (\Delta_g) is the Laplace–Beltrami operator and (\nabla) the Riemannian gradient.
+
+The associated **carré du champ** (square field) is
+[
+\Gamma(f,g) := \langle \nabla f,\nabla g\rangle,
+\qquad
+\Gamma(f) := \Gamma(f,f) = |\nabla f|^2.
+]
+
+The Dirichlet form associated with (L) is
+[
+\mathcal{E}(f,g) := \int_M \Gamma(f,g),d\mu
+= \int_M \langle \nabla f,\nabla g\rangle,d\mu.
+]
+As recalled in Section 1, ((\mathcal{E},\mathcal{D}(\mathcal{E}))) is a closed, Markovian form and there exists a unique nonnegative self-adjoint operator (-L) with
+[
+\mathcal{E}(f,g) = \langle f,-Lg\rangle_{L^2(\mu)}
+\quad
+\forall f\in\mathcal{D}(\mathcal{E}),\ \forall g\in\mathcal{D}(-L).
+]
+
+---
+
+## 2.2. Basic Γ-calculus identities
+
+The carré du champ inherits several formal properties from the diffusion generator (L). For (f,g,h\in C^\infty(M)), we have:
+
+1. **Symmetry:**
+   [
+   \Gamma(f,g) = \Gamma(g,f).
+   ]
+
+2. **Leibniz rule:**
+   [
+   \Gamma(fg,h) = f,\Gamma(g,h) + g,\Gamma(f,h).
+   ]
+
+3. **Chain rule:**
+   For (\Phi\in C^1(\mathbb{R})),
+   [
+   \Gamma(\Phi(f),g) = \Phi'(f),\Gamma(f,g).
+   ]
+
+These are straightforward consequences of (\Gamma(f,g) = \frac12\big(L(fg)-fLg-gLf\big)) together with the diffusion property of (L) (i.e. (L) is a second-order differential operator without zeroth-order term). They will be used tacitly in the sequel.
+
+---
+
+## 2.3. The iterated carré du champ Γ(_2)
+
+The **iterated carré du champ** (Bakry–Émery Γ(_2) operator) is defined by
+[
+\Gamma_2(f,g)
+:= \frac12\big(L\Gamma(f,g) - \Gamma(f,Lg) - \Gamma(g,Lf)\big),
+\qquad
+\Gamma_2(f) := \Gamma_2(f,f).
+]
+
+In our Riemannian setting with (L = \Delta_g - \langle\nabla S,\nabla\cdot\rangle) and (\Gamma(f,g)=\langle\nabla f,\nabla g\rangle), (\Gamma_2(f)) can be expressed geometrically in terms of the Hessian of (f), the Ricci curvature of ((M,g)), and the Hessian of the potential (S). Deriving this identity is the content of the Bochner–Bakry–Émery calculation below.
+
+---
+
+## 2.4. Bochner identity for the Laplace–Beltrami operator
+
+We first recall the classical Bochner identity for the Laplace–Beltrami operator (\Delta_g) on ((M,g)). Let (\nabla^2 f) denote the Riemannian Hessian of (f), and define the **Hilbert–Schmidt norm** of (\nabla^2 f) at a point (x\in M) by
+[
+|\nabla^2 f(x)|*{\mathrm{HS}}^2
+= \sum*{i,j=1}^n \big(\nabla^2 f(e_i,e_j)\big)^2,
+]
+for any orthonormal basis ({e_i}_{i=1}^n) of (T_xM).
+
+The **Bochner identity** states that for all (f\in C^\infty(M)),
+[
+\frac12 \Delta_g |\nabla f|^2
+= |\nabla^2 f|_{\mathrm{HS}}^2
+
+* \langle \nabla f,\nabla(\Delta_g f)\rangle
+* \operatorname{Ric}_g(\nabla f,\nabla f),
+  ]
+  where (\operatorname{Ric}_g) is the Riemannian Ricci tensor. Equivalently,
+  [
+  \frac12\Big(
+  \Delta_g|\nabla f|^2
+
+- 2\langle\nabla f,\nabla(\Delta_g f)\rangle
+  \Big)
+  = |\nabla^2 f|_{\mathrm{HS}}^2 + \operatorname{Ric}_g(\nabla f,\nabla f).
+  ]
+
+This identity is purely geometric: it depends only on ((M,g)), not on the potential (S).
+
+---
+
+## 2.5. Full Bochner–Bakry–Émery computation
+
+We now compute (\Gamma_2(f)) for the generator
+[
+L f = \Delta_g f - \langle \nabla S,\nabla f\rangle,
+]
+using the definition
+[
+\Gamma_2(f)
+= \frac12\big(L|\nabla f|^2 - 2\langle \nabla f,\nabla(Lf)\rangle\big).
+]
+
+### 2.5.1. Decomposition of (\Gamma_2(f))
+
+Compute the two pieces separately:
+
+1. **First term: (L|\nabla f|^2).** Using (L = \Delta_g - \langle\nabla S,\nabla\cdot\rangle),
+   [
+   L|\nabla f|^2
+   = \Delta_g |\nabla f|^2
+
+   * \langle\nabla S,\nabla|\nabla f|^2\rangle.
+     ]
+
+2. **Second term: (\nabla(Lf)).** Since
+   [
+   Lf = \Delta_g f - \langle\nabla S,\nabla f\rangle,
+   ]
+   we have
+   [
+   \nabla(Lf)
+   = \nabla(\Delta_g f) - \nabla\langle\nabla S,\nabla f\rangle.
+   ]
+
+Substituting into the definition of (\Gamma_2(f)) gives
+[
+\begin{aligned}
+\Gamma_2(f)
+&= \frac12\Big[
+\Delta_g|\nabla f|^2
+- \langle\nabla S,\nabla|\nabla f|^2\rangle \
+&\qquad\qquad
+- 2\langle\nabla f,\nabla(\Delta_g f)\rangle
++ 2\langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle
+\Big].
+\end{aligned}
+]
+
+Now apply the Bochner identity for (\Delta_g):
+[
+\frac12\Delta_g|\nabla f|^2
+= |\nabla^2 f|_{\mathrm{HS}}^2
+
+* \langle \nabla f,\nabla(\Delta_g f)\rangle
+* \operatorname{Ric}*g(\nabla f,\nabla f).
+  ]
+  Substituting this into the expression for (\Gamma_2(f)) yields
+  [
+  \begin{aligned}
+  \Gamma_2(f)
+  &= \big(|\nabla^2 f|*{\mathrm{HS}}^2
+
+  * \langle\nabla f,\nabla(\Delta_g f)\rangle
+  * \operatorname{Ric}_g(\nabla f,\nabla f)\big) \
+    &\quad - \frac12\langle\nabla S,\nabla|\nabla f|^2\rangle
+
+  - \langle\nabla f,\nabla(\Delta_g f)\rangle
+
+  * \langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle.
+    \end{aligned}
+    ]
+
+The (\langle\nabla f,\nabla(\Delta_g f)\rangle) terms cancel, leaving
+[
+\Gamma_2(f)
+= |\nabla^2 f|_{\mathrm{HS}}^2
+
+* \operatorname{Ric}_g(\nabla f,\nabla f)
+
+- \tfrac12\langle\nabla S,\nabla|\nabla f|^2\rangle
+
+* \langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle.
+  ]
+
+### 2.5.2. Simplifying the (S)-dependent terms
+
+We now show that the last two terms combine into the Hessian of (S) evaluated on (\nabla f). Write (\nabla^2 S) for the Riemannian Hessian of (S). For vector fields (X,Y),
+[
+\nabla^2 S(X,Y)
+= X\langle\nabla S,Y\rangle - \langle\nabla S,\nabla_X Y\rangle.
+]
+
+A standard computation in normal coordinates (or any standard reference on Riemannian geometry) shows that
+[
+-\tfrac12\langle\nabla S,\nabla|\nabla f|^2\rangle
+
+* \langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle
+  = \nabla^2 S(\nabla f,\nabla f).
+  ]
+
+Sketch: work in a local orthonormal frame ({e_i}) with (\nabla_{e_i}e_j=0) at the point (x). Write (\nabla f = \sum_i f_i e_i), (f_i = e_i f), and (S_i = e_i S). One checks that
+[
+|\nabla f|^2 = \sum_i f_i^2,
+\qquad
+\nabla|\nabla f|^2 = 2\sum_i f_i \nabla f_i,
+]
+and derives explicit formulas for (\langle\nabla S,\nabla|\nabla f|^2\rangle) and (\langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle). The mixed terms cancel and the remainder is exactly (\nabla^2 S(\nabla f,\nabla f)).
+
+Substituting this identity into the expression for (\Gamma_2(f)) gives the **Bochner–Bakry–Émery identity**:
+[
+\boxed{
+\Gamma_2(f)
+= |\nabla^2 f|_{\mathrm{HS}}^2
+
+* \operatorname{Ric}_g(\nabla f,\nabla f)
+* \nabla^2 S(\nabla f,\nabla f).
+  }
+
+]
+
+---
+
+## 2.6. The Bakry–Émery curvature tensor and (CD(\rho,\infty))
+
+The calculation above naturally leads to the **Bakry–Émery Ricci tensor** associated with the Gibbs measure (\mu):
+
+> **Definition 2.1 (Bakry–Émery curvature).**
+> For the Gibbs measure (d\mu = Z^{-1}e^{-S}d\mathrm{vol}*g) on ((M,g)), the **Bakry–Émery Ricci tensor** is the symmetric 2-tensor
+> [
+> \operatorname{Ric}*\mu := \operatorname{Ric}_g + \nabla^2 S.
+> ]
+
+In this notation, the Bochner–Bakry–Émery identity can be rewritten as
+[
+\boxed{
+\Gamma_2(f)
+= |\nabla^2 f|_{\mathrm{HS}}^2
+
+* \operatorname{Ric}_\mu(\nabla f,\nabla f).
+  }
+  ]
+
+Since (|\nabla^2 f|_{\mathrm{HS}}^2\ge0) pointwise, this immediately suggests the **curvature–dimension condition**.
+
+> **Definition 2.2 (Curvature–dimension condition (CD(\rho,\infty))).**
+> We say that ((M,g,\mu)) satisfies (CD(\rho,\infty)) for some (\rho\in\mathbb{R}) if
+> [
+> \Gamma_2(f)(x) ;\ge; \rho,\Gamma(f)(x)
+> \quad\text{for all } f\in C^\infty(M),\ x\in M.
+> ]
+
+Using the Bochner–Bakry–Émery identity, this condition is equivalent to a pointwise lower bound on (\operatorname{Ric}_\mu):
+
+> **Proposition 2.3 (Equivalence of (CD(\rho,\infty)) and tensor lower bound).**
+> The following are equivalent:
+>
+> 1. (CD(\rho,\infty)) holds, i.e.
+>    [
+>    \Gamma_2(f) \ge \rho,\Gamma(f)
+>    \quad\text{for all smooth } f.
+>    ]
+> 2. The Bakry–Émery tensor satisfies
+>    [
+>    \operatorname{Ric}_\mu(x)(v,v) \ge \rho,|v|_g^2
+>    \quad\forall x\in M,\ \forall v\in T_xM.
+>    ]
+
+*Proof.*
+
+* (2) (\Rightarrow) (1) is immediate: if (\operatorname{Ric}*\mu\ge \rho g), then for any (f),
+  [
+  \Gamma_2(f)
+  = |\nabla^2 f|*{\mathrm{HS}}^2 + \operatorname{Ric}_\mu(\nabla f,\nabla f)
+  \ge 0 + \rho |\nabla f|^2
+  = \rho,\Gamma(f).
+  ]
+
+* (1) (\Rightarrow) (2): fix a point (x\in M) and a vector (v\in T_xM). We choose a smooth function (f) with
+  [
+  \nabla f(x) = v,\qquad \nabla^2 f(x) = 0.
+  ]
+  Such (f) exists by standard local coordinate constructions. Evaluating the Bochner–Bakry–Émery identity at (x), we get
+  [
+  \Gamma_2(f)(x)
+  = |\nabla^2 f(x)|_{\mathrm{HS}}^2
+
+  * \operatorname{Ric}*\mu(x)(v,v)
+    = \operatorname{Ric}*\mu(x)(v,v).
+    ]
+    On the other hand, (CD(\rho,\infty)) implies (\Gamma_2(f)(x)\ge \rho,\Gamma(f)(x) = \rho |v|*g^2). Hence
+    [
+    \operatorname{Ric}*\mu(x)(v,v) \ge \rho |v|_g^2.
+    ]
+    Since (x) and (v) were arbitrary, (2) holds. ∎
+
+Thus in finite dimensions the curvature–dimension condition (CD(\rho,\infty)) is equivalent to a genuine geometric lower bound on the Bakry–Émery curvature tensor (\operatorname{Ric}_\mu). This is the sense in which the Gibbs measure (d\mu) is **curvature-controlled**.
+
+This equivalence is used explicitly later when we restate local curvature assumptions in terms of pointwise bounds on (\operatorname{Ric}_\mu) on a region (\Omega\subset M).
+
+---
+
+## 2.7. Stability and examples
+
+### 2.7.1. Strongly convex potentials on (\mathbb{R}^n)
+
+On (\mathbb{R}^n) with the Euclidean metric, (\operatorname{Ric}*g\equiv 0). If (S\colon\mathbb{R}^n\to\mathbb{R}) is uniformly convex in the sense that
+[
+\nabla^2 S(x) \ge \rho I_n
+\quad\forall x\in\mathbb{R}^n
+]
+for some (\rho>0), then
+[
+\operatorname{Ric}*\mu(x) = 0 + \nabla^2 S(x) \ge \rho I_n,
+]
+so (CD(\rho,\infty)) holds. The associated Gibbs measure (\mu) (e.g. a Gaussian or strongly log-concave measure) therefore satisfies all the consequences of (CD(\rho,\infty)), in particular a Poincaré and a log-Sobolev inequality with constants controlled by (1/\rho) and (2/\rho) respectively (proved in Part I, Section 3).
+
+### 2.7.2. Products
+
+Let ((M_i,g_i,S_i)), (i=1,\dots,N), be finite-dimensional Riemannian manifolds with potentials (S_i\in C^2(M_i)) and Gibbs measures
+[
+d\mu_i = Z_i^{-1} e^{-S_i} d\mathrm{vol}*{g_i}.
+]
+Form the product manifold
+[
+(M,g) := \Big(\prod*{i=1}^N M_i,\ \bigoplus_{i=1}^N g_i\Big),
+]
+with product metric, and the product potential
+[
+S(x_1,\dots,x_N) := \sum_{i=1}^N S_i(x_i),
+]
+so that
+[
+d\mu = \bigotimes_{i=1}^N \mu_i.
+]
+
+In this setting:
+
+* The Ricci tensor of the product is the orthogonal sum
+  [
+  \operatorname{Ric}*g = \bigoplus*{i=1}^N \operatorname{Ric}_{g_i},
+  ]
+* The Hessian of (S) is block-diagonal,
+  [
+  \nabla^2 S = \bigoplus_{i=1}^N \nabla^2 S_i.
+  ]
+
+Thus
+[
+\operatorname{Ric}*\mu = \bigoplus*{i=1}^N \operatorname{Ric}*{\mu_i},
+\quad\text{where}\quad \operatorname{Ric}*{\mu_i} = \operatorname{Ric}_{g_i} + \nabla^2 S_i.
+]
+
+If each component satisfies
+[
+\operatorname{Ric}*{\mu_i} \ge \rho,g_i
+]
+for some common (\rho>0), then the product satisfies
+[
+\operatorname{Ric}*\mu \ge \rho,g,
+]
+and hence (CD(\rho,\infty)) holds on the product. This **product stability** of curvature is a crucial ingredient when we pass from a single gauge group (G) to the full lattice configuration manifold (M_\Lambda = G^{E(\Lambda)}) equipped with the product bi-invariant metric and product Haar volume.
+
+---
+
+## 2.8. Specialization to lattice Yang–Mills (formal corollary)
+
+We briefly record the specialization of the Bakry–Émery tensor to the lattice Yang–Mills configuration space; the full details are developed in Part II, but the formula is already used here as a guiding example.
+
+For a finite lattice (\Lambda), let
+[
+M_\Lambda := G^{E(\Lambda)}
+]
+with product bi-invariant metric (g_\Lambda). The reference measure is the product Haar volume (d\mathrm{vol}*{g*\Lambda}), and the effective action
+[
+S_\Lambda(U) = S_W(U) + S_{\mathrm{add},\Lambda}(U)
+]
+includes the Wilson plaquette action (S_W) and possible additional smooth, gauge-invariant contributions (S_{\mathrm{add},\Lambda}).
+
+The finite-volume YM Gibbs measure is
+[
+d\mu_\Lambda(U)
+:= Z_\Lambda^{-1} e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U),
+]
+and the corresponding generator is
+[
+L_\Lambda f = \Delta_{g_\Lambda} f - \langle\nabla S_\Lambda,\nabla f\rangle_{g_\Lambda}.
+]
+
+By the same computation as above, the associated Bakry–Émery tensor is
+[
+\operatorname{Ric}*{\mu*\Lambda}
+= \operatorname{Ric}*{g*\Lambda} + \nabla^2 S_\Lambda.
+]
+
+Key geometric facts established in Part II are:
+
+* The configuration manifold has **uniform positive Ricci curvature**:
+  [
+  \operatorname{Ric}*{g*\Lambda} \ge \kappa_G,g_\Lambda,
+  ]
+  where (\kappa_G>0) depends only on the Lie group (G) and the normalization of its bi-invariant metric, not on (\Lambda). This is the “Haar mass” contribution.
+
+* The additional potential (S_{\mathrm{add},\Lambda}) has Hessian bounded below by (-C_{\mathrm{add}} g_\Lambda). At the trivial configuration (U^{(0)}), one has on horizontal (physical) directions
+  [
+  \nabla^2 S_\Lambda(U^{(0)})(v,v)
+  \ge -C_{\mathrm{add}},|v|*{g*\Lambda}^2.
+  ]
+
+Consequently, at (U^{(0)}) and on horizontal directions (v\in H_{U^{(0)}}),
+[
+\operatorname{Ric}*{\mu*\Lambda}(v,v)
+= \operatorname{Ric}*{g*\Lambda}(v,v)
+
+* \nabla^2 S_\Lambda(U^{(0)})(v,v)
+  \ge (\kappa_G - C_{\mathrm{add}}),|v|*{g*\Lambda}^2.
+  ]
+
+If (\kappa_G>C_{\mathrm{add}}), this provides a **strictly positive horizontal Bakry–Émery curvature lower bound** at the vacuum configuration. In Part II, Section 6, this pointwise estimate is extended to a small-field neighborhood of (U^{(0)}), yielding a local horizontal curvature–dimension condition that serves as the main YM input into the abstract functional-inequality machinery of Parts III–V.
+
+---
+
+## 2.9. Interface with the rest of the program
+
+The material of this part plays three distinct roles in the overall YM mass-gap program:
+
+1. **Abstract curvature–FI link (Part I, Section 3).**
+   The Bochner–Bakry–Émery identity and the (CD(\rho,\infty)) condition are the starting point for proving volume-uniform Poincaré and log-Sobolev inequalities under curvature lower bounds. These results are developed in full in Part I, Section 3.
+
+2. **Abstract interface to gauge theories (Part I, Section 5).**
+   The Bakry–Émery tensor (\operatorname{Ric}*\mu) is the geometric object that enters the abstract **gauge-invariant curvature hypothesis** (H*{\mathrm{curv}}) in the interface framework for Yang–Mills. There, one restricts (\operatorname{Ric}_\mu) to horizontal (physical) directions and demands a uniform lower bound on that restriction.
+
+3. **Concrete curvature bounds for lattice YM (Parts II–III).**
+   On the concrete lattice configuration manifold (M_\Lambda = G^{E(\Lambda)}), the decomposition
+   [
+   \operatorname{Ric}*{\mu*\Lambda} = \operatorname{Ric}*{g*\Lambda} + \nabla^2 S_\Lambda
+   ]
+   allows one to combine:
+
+   * positive Ricci curvature coming from Haar geometry, and
+   * controlled Hessians of the Wilson plus regulator action,
+     to obtain the **core curvature theorem** of Part II, Section 7, and the corresponding **local curvature–dimension condition** that feeds into the local-to-global FI results of Part III.
+
+These structures are then transported, via the OS reconstruction and comparison between configuration diffusion and Hamiltonian dynamics, into statements about finite-volume spectral gaps and candidate continuum mass gaps, as discussed in Parts IV–V.
+
+---
+
+That’s the rebuilt Part 2: it keeps your full Γ–Γ(*2) machinery, the explicit Bochner–Bakry–Émery calculation, the geometric interpretation via (\operatorname{Ric}*\mu), and the YM specialization hooks, with the notation and conventions cleaned up so it plugs directly into the later parts.

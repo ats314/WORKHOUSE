@@ -1,0 +1,69 @@
+% Document F: Gaussian Toy Model for Hessian Flow
+% Suggested file name: gaussian_hessian_flow.tex
+% =========================================================
+
+\section{Gaussian Toy Model: Exact Hessian Flow and Gap Decay}
+
+Consider the initial Gaussian action
+\[
+S_0(x) = \frac{1}{2} x^\top A_0 x, \quad A_0 > 0,
+\]
+with density $\rho_0(x) = e^{-S_0(x)}$.
+
+Let $\rho_t$ satisfy the heat equation $\partial_t \rho_t = \Delta \rho_t$. Then
+\[
+\rho_t = G_t * \rho_0,
+\]
+where $G_t$ is the heat kernel. Convolution of Gaussians is Gaussian, so
+\[
+\rho_t(x) = \exp\!\Big(-\frac{1}{2} x^\top \Sigma_t^{-1} x\Big)\times \text{(normalization)},
+\]
+with covariance
+\[
+\Sigma_t = \Sigma_0 + 2t\, I,\quad \Sigma_0 := A_0^{-1}.
+\]
+
+Thus the effective action is
+\[
+S_t(x) = \frac{1}{2} x^\top H_t x + \text{const},
+\quad H_t = \Sigma_t^{-1}.
+\]
+
+\subsection{Eigenvalue flow}
+
+Diagonalize $A_0$ as $A_0 = Q^\top \Lambda_0 Q$ with
+$\Lambda_0 = \mathrm{diag}(\lambda_1(0),\dots,\lambda_d(0))$.
+Then
+\[
+\Sigma_0 = A_0^{-1} = Q^\top \Lambda_0^{-1} Q,
+\quad
+\Sigma_t = Q^\top(\Lambda_0^{-1} + 2tI) Q,
+\]
+and
+\[
+H_t = \Sigma_t^{-1}
+= Q^\top (\Lambda_0^{-1} + 2tI)^{-1} Q.
+\]
+
+So each eigenvalue of $H_t$ is
+\[
+\lambda_i(t)
+= \frac{1}{\lambda_i(0)^{-1} + 2t}
+= \frac{\lambda_i(0)}{1 + 2t\,\lambda_i(0)}.
+\]
+
+Differentiating,
+\[
+\frac{d}{dt}\lambda_i(t)
+= -2\,\lambda_i(t)^2.
+\]
+
+Hence in this toy model the Hessian eigenvalues solve the scalar Riccati ODE
+\[
+\frac{d}{dt}\lambda = -2\lambda^2,\quad \lambda(0)>0,
+\]
+with explicit solution $\lambda(t) = \lambda(0)/(1+2t\lambda(0))$.
+
+The smallest eigenvalue $\lambda_{\min}(t)$ is positive for all $t\ge 0$ but decays to zero
+as $t\to \infty$ like $1/(2t)$, illustrating that in flat space with pure heat-flow RG,
+bare convexity alone does not produce a permanent mass gap.

@@ -1,0 +1,286 @@
+## Part 6 — Helffer–Sjöstrand covariance representation and the massive Maxwell Green’s function
+
+This part is the “matrix-not-scalar” payoff: once you have the **localized hinge inequality** from Part 5 on your canonical region (K_\Lambda), you can push correlation decay through a **covariance representation** in which the inverse of a **positive operator**
+[
+M ;\approx; \frac{c_H}{2}I ;+; \frac{\beta}{3},d_1^*d_1
+]
+appears explicitly. No absolute values, no adversarial cross-terms: the geometry is inside (d_1^*d_1).
+
+I will write this in a way that is (i) cleanly reusable, (ii) explicit about the projection to (\ker d_0^*), and (iii) explicit about what lemma is still needed to convert (M^{-1}) into exponential clustering.
+
+---
+
+### 6.1. Gibbs measure, link-gradients, and the reversible generator
+
+Fix a finite region (\Lambda\subset\mathbb Z^d) and the configuration manifold
+[
+M_\Lambda := G^{E(\Lambda)}
+]
+with (G=\mathrm{SU}(3)) (or (\mathrm{SU}(N))) equipped with the bi-invariant Riemannian metric induced by your fixed (\mathrm{Ad})-invariant inner product on (\mathfrak g) (e.g. (\langle A,B\rangle=-\mathrm{Tr}(AB)) up to the scale factor (\lambda)).
+
+Let (S_\Lambda:M_\Lambda\to\mathbb R) be your lattice action (Wilson + whatever boundary/interface terms you have fixed earlier), assumed (C^2) and gauge-invariant.
+
+Define the Gibbs measure
+[
+\nu_\Lambda(dU) ;:=; Z_\Lambda^{-1},e^{-S_\Lambda(U)},d\mu_{\mathrm{Haar}}^{\otimes E(\Lambda)}(U),
+]
+where (d\mu_{\mathrm{Haar}}) is the Haar probability measure on (G); for the product manifold this equals its Riemannian volume.
+
+For each link (\ell\in E(\Lambda)), let (\nabla_\ell) denote the Riemannian gradient acting only in the (G)-factor of (\ell). The total gradient is
+[
+\nabla f ;:=; (\nabla_\ell f)*{\ell\in E(\Lambda)} \in \mathcal C^1(\Lambda;\mathfrak g),
+\qquad
+|\nabla f|^2 := \sum*{\ell\in E(\Lambda)} |\nabla_\ell f|_{\mathfrak g}^2 .
+]
+
+Define the (Langevin-type) diffusion generator
+[
+Lf ;:=;\sum_{\ell\in E(\Lambda)} \Delta_\ell f ;-;\sum_{\ell\in E(\Lambda)}\Big\langle \nabla_\ell S_\Lambda,;\nabla_\ell f\Big\rangle_{\mathfrak g},
+\tag{6.1}
+]
+where (\Delta_\ell) is the Laplace–Beltrami operator on the (\ell)-th (G)-factor.
+
+This is the standard reversible generator: for smooth (f,g),
+[
+\mathcal E_\Lambda(f,g) ;:=; \int \langle \nabla f,\nabla g\rangle ,d\nu_\Lambda
+;=;-\int f,Lg,d\nu_\Lambda,
+\tag{6.2}
+]
+so (L) is self-adjoint on (L^2(\nu_\Lambda)) and (L1=0).
+
+---
+
+### 6.2. Horizontal sector and why gauge invariance forces it
+
+Let (\mathcal G_\Lambda := G^{V(\Lambda)}) act by lattice gauge transformations. The tangent to the gauge orbit at the vacuum (U^{(0)}) is the “exact” subspace (\mathrm{im}(d_0)\subset \mathcal C^1(\Lambda;\mathfrak g)), and we define the fixed **horizontal sector**
+[
+H_{U^{(0)}} ;:=; \ker(d_0^*) ;\subset; \mathcal C^1(\Lambda;\mathfrak g).
+\tag{6.3}
+]
+
+**Lemma 6.1 (Gauge invariance (\Rightarrow) horizontal gradients).**
+If (F:M_\Lambda\to\mathbb R) is gauge-invariant, then for every (U\in M_\Lambda), the differential (dF(U)) annihilates vertical (gauge) tangent vectors. Equivalently, (\nabla F(U)) is orthogonal to the gauge orbit at (U). In particular, under the vacuum-based identification used in Parts 2–5, one may harmlessly insert the orthogonal projection (\Pi_H) onto (H_{U^{(0)}}):
+[
+\nabla F ;=; \Pi_H \nabla F \quad\text{(up to the same (O(r)) identification error already tracked in Part 5)}.
+\tag{6.4}
+]
+So, from here on, all gradients in covariance bounds may be replaced by (\Pi_H\nabla(\cdot)).
+
+*Proof.* This is standard: gauge invariance says (F(g\cdot U)=F(U)) for all (g\in \mathcal G_\Lambda). Differentiate along a smooth gauge curve (g(t)) with (g(0)=e) to get (dF(U)[\dot U_{\mathrm{vert}}]=0). By the Riemannian definition of gradient, this means (\nabla F(U)\perp T_U(\mathcal G_\Lambda\cdot U)). ∎
+
+---
+
+### 6.3. The Helffer–Sjöstrand representation: covariance = inverse Witten Laplacian on gradients
+
+Let (L_0^2(\nu_\Lambda)) be the mean-zero subspace. Since (-L) is a positive self-adjoint operator on (L_0^2(\nu_\Lambda)), for any (G\in C^\infty) with (\nu_\Lambda(G)=0), there exists a unique (u\in L_0^2) solving
+[
+-Lu ;=; G.
+\tag{6.5}
+]
+
+Then for any (F\in C^\infty),
+[
+\mathrm{Cov}*{\nu*\Lambda}(F,G) ;:=;\int FG,d\nu_\Lambda
+;=;\int F(-Lu),d\nu_\Lambda
+;=;\int \langle \nabla F,\nabla u\rangle ,d\nu_\Lambda
+\tag{6.6}
+]
+by integration by parts (6.2).
+
+To express (\nabla u) in terms of (\nabla G), one uses the “commutation” between (\nabla) and (-L), which produces the **Witten Laplacian** (a.k.a. Helffer–Sjöstrand operator) acting on (\mathcal C^1(\Lambda;\mathfrak g))-valued fields:
+[
+\mathcal L^{(1)} ;:=; (-L)\otimes I ;+; \mathrm{Hess},S_\Lambda ;+; \mathrm{Ric}*{M*\Lambda}.
+\tag{6.7}
+]
+
+Here:
+
+* (\mathrm{Hess},S_\Lambda(U)) is the Riemannian Hessian acting on tangent vectors at (U),
+* (\mathrm{Ric}*{M*\Lambda}) is the Ricci tensor of the configuration manifold (product of copies of (G)), which is constant on each (G)-factor by bi-invariance.
+
+**Proposition 6.2 (Helffer–Sjöstrand / Witten-Laplacian covariance identity).**
+For (F,G\in C^\infty(M_\Lambda)) with (\nu_\Lambda(G)=0),
+[
+\mathrm{Cov}*{\nu*\Lambda}(F,G)
+;=;
+\int \left\langle \nabla F,; (\mathcal L^{(1)})^{-1}\nabla G\right\rangle, d\nu_\Lambda,
+\tag{6.8}
+]
+where ((\mathcal L^{(1)})^{-1}) is the inverse on the orthogonal complement of the kernel.
+
+*Proof (referee-style, but compact).*
+Let (u) solve (6.5). Differentiating (6.5) yields
+[
+\nabla G ;=;\nabla(-Lu).
+]
+For gradient diffusions, the Bochner–Weitzenböck identity gives the commutation relation
+[
+\nabla(-Lu) ;=; \mathcal L^{(1)}(\nabla u),
+\tag{6.9}
+]
+where (\mathcal L^{(1)}) is exactly (6.7). This implies (\nabla u=(\mathcal L^{(1)})^{-1}\nabla G), and inserting into (6.6) yields (6.8). ∎
+
+This identity is standard and appears in many forms in the literature; a clean self-contained derivation in Euclidean coordinates (with (\mathcal L^{(1)}=(-L)\otimes I + \mathrm{Hess},S)) is given, for example, in treatments of the Brascamp–Lieb inequality via Helffer–Sjostrand. ([NYU Courant][1])
+
+---
+
+### 6.4. From the representation to a **matrix** covariance bound using the (K_\Lambda) hinge
+
+The key operator inequality is simply:
+[
+\mathcal L^{(1)} ;=; (-L)\otimes I ;+; \big(\mathrm{Ric}*{M*\Lambda} + \mathrm{Hess},S_\Lambda\big)
+;\succeq; \mathrm{Ric}*{M*\Lambda} + \mathrm{Hess},S_\Lambda,
+\tag{6.10}
+]
+since ((-L)\otimes I) is positive semidefinite.
+
+Therefore, wherever you have a pointwise lower bound (\mathrm{Ric}*{M*\Lambda} + \mathrm{Hess},S_\Lambda(U)\succeq M), you immediately get an upper bound on the inverse:
+[
+(\mathcal L^{(1)})^{-1} ;\preceq; M^{-1}.
+\tag{6.11}
+]
+(This is monotonicity of the inverse on positive definite operators.)
+
+Combining (6.8) and (6.11) gives the Brascamp–Lieb-type covariance bound (in matrix form). ([NYU Courant][1])
+
+Now specialize to your situation.
+
+From Part 5 (the (K_\Lambda) hinge proposition), you have for all (U\in K_\Lambda), on the fixed horizontal sector (H_{U^{(0)}}=\ker d_0^*),
+[
+\mathrm{Ric}*{M*\Lambda} + \mathrm{Hess},S_\Lambda(U)
+;\succeq;
+\frac{c_H}{2} I ;+; \frac{\beta}{3}, d_1^* d_1
+;-;R_\Lambda(U),
+\tag{6.12}
+]
+where (R_\Lambda(U)) is a controlled remainder (either (O(r)) for a ball (B_r(U^{(0)})), or (O(\varepsilon)) for an averaged-badness definition), and where the inequality is meant as a quadratic form on (H_{U^{(0)}}).
+
+Assume you have chosen (K_\Lambda) so that
+[
+R_\Lambda(U) ;\preceq; \frac{c_H}{2},I
+\quad\text{for all }U\in K_\Lambda,
+\tag{6.13}
+]
+so that the clean lower bound
+[
+\mathrm{Ric}*{M*\Lambda} + \mathrm{Hess},S_\Lambda(U)
+;\succeq;
+M
+;:=;
+\frac{c_H}{2} I ;+; \frac{\beta}{3}, d_1^* d_1
+\tag{6.14}
+]
+holds uniformly for (U\in K_\Lambda) on (H_{U^{(0)}}).
+
+Then the matrix covariance bound on the horizontal sector reads:
+
+**Proposition 6.3 (Matrix covariance bound on (H_{U^{(0)}})).**
+Let (F,G\in C^\infty(M_\Lambda)) be gauge-invariant with (\nu_\Lambda(F)=\nu_\Lambda(G)=0). On the event (U\in K_\Lambda), one has
+[
+\mathrm{Cov}*{\nu*\Lambda}(F,G)
+;\le;
+\int \left\langle \Pi_H \nabla F,; M^{-1},\Pi_H\nabla G\right\rangle,d\nu_\Lambda
+;+;\text{(localization error from }K_\Lambda^c\text{)}.
+\tag{6.15}
+]
+
+**What this buys you immediately:** the *only* operator you need to study for decay is
+[
+M ;=; \frac{c_H}{2}I + \frac{\beta}{3},d_1^*d_1
+\quad\text{on}\quad H_{U^{(0)}}=\ker d_0^*.
+\tag{6.16}
+]
+
+**Where the scalar “absolute value” step disappears.**
+In the earlier scalar proof, one bounds cross-terms by
+[
+\big|\mathrm{Hess}*{\ell,\ell'} S*\Lambda(U)\big|;\le;J
+\quad\Rightarrow\quad
+\text{adversarial sum } J\sum_{\ell'\sim\ell}|\partial_{\ell'}|.
+]
+Here, the Wilson cross-couplings are not bounded term-by-term; instead they sit inside the PSD matrix ((\beta/3),d_1^*d_1). No absolute values are taken: the sign pattern is preserved and becomes an advantage.
+
+---
+
+### 6.5. The Green’s function lemma you need for exponential clustering
+
+To turn (6.15) into a spatial decay bound, you need a kernel estimate on (M^{-1}).
+
+To state it, define:
+
+* For a function (F) depending only on links in a set (A\subset E(\Lambda)), we say (\mathrm{supp}_E(F)\subset A).
+* Let (\mathrm{dist}(A,B)) be the graph distance between link sets (minimum over endpoints).
+
+Write (M^{-1}) as an operator kernel on links:
+[
+\left\langle \xi,;M^{-1}\eta\right\rangle
+;=;
+\sum_{\ell,\ell'\in E(\Lambda)}
+\left\langle \xi_\ell,; \big(M^{-1}\big)*{\ell,\ell'},\eta*{\ell'}\right\rangle_{\mathfrak g}.
+\tag{6.17}
+]
+
+The lemma you need is:
+
+**Lemma 6.4 (Massive Maxwell Green’s function decay on the horizontal sector).**
+Let (M = m^2 I + \alpha,d_1^*d_1) acting on (\mathcal C^1(\Lambda;\mathfrak g)) and restricted to (H_{U^{(0)}}=\ker d_0^*). Assume (m^2>0) and (\alpha>0). Then there exist constants (C_d,c_d>0) (depending only on (d) and the boundary type, but not on (|\Lambda|)) such that for all links (\ell,\ell'),
+[
+\big|\big(M^{-1}\big)*{\ell,\ell'}\big|*{\mathrm{op}}
+;\le;
+C_d,
+\exp!\Big(-c_d,\frac{m}{\sqrt{\alpha}};\mathrm{dist}(\ell,\ell')\Big).
+\tag{6.18}
+]
+
+For periodic boxes, this is most transparently proved by Fourier diagonalization on the divergence-free (horizontal) sector, where the Maxwell symbol becomes scalar:
+[
+d_1^*d_1\ \text{has symbol}\ \lambda(k),P_T(k),
+\quad\Rightarrow\quad
+M\ \text{has symbol}\ m^2+\alpha,\lambda(k)
+\ \text{on }P_T(k)\text{-modes}.
+\tag{6.19}
+]
+(Here (P_T(k)) is the transverse projector and (\lambda(k)) is the usual lattice Laplacian symbol.) Exponential decay then follows by standard complex deformation/Combes–Thomas-type estimates. ([arXiv][2])
+
+**Corollary 6.5 (Exponential clustering from (6.15) + (6.18)).**
+If (F,G) are gauge-invariant local observables with link supports (A,B\subset E(\Lambda)), then
+[
+\big|\mathrm{Cov}*{\nu*\Lambda}(F,G)\big|
+;\le;
+C,e^{-m_{\mathrm{eff}}\mathrm{dist}(A,B)}
+\left(\sum_{\ell\in A}|\nabla_\ell F|*{L^2(\nu*\Lambda)}\right)
+\left(\sum_{\ell'\in B}|\nabla_{\ell'} G|*{L^2(\nu*\Lambda)}\right)
+;+;\text{(localization error)} ,
+\tag{6.20}
+]
+with (m_{\mathrm{eff}} \asymp \dfrac{\sqrt{c_H/2}}{\sqrt{\beta/3}}) once you plug (m^2=c_H/2) and (\alpha=\beta/3).
+
+---
+
+### 6.6. Specialization to SU(3) with your constants
+
+With (G=\mathrm{SU}(3)), your normalization choice gives (as you stated)
+[
+M ;=; \frac{1}{4}I ;+;\frac{\beta}{3},d_1^*d_1
+\quad\text{on }H_{U^{(0)}}=\ker d_0^*,
+\tag{6.21}
+]
+so (6.18) gives a certified exponential decay rate of the Green function (hence correlations) in terms of (\beta), independent of (|\Lambda|).
+
+---
+
+### 6.7. One explicit “to-do” that this Part leaves behind (and it’s the right to-do)
+
+Part 6 is structurally complete, but it flags exactly one remaining analytic hinge:
+
+**Remaining lemma needed (the one you explicitly asked for):** prove (or cite) the Green function decay (6.18) for the **massive discrete Maxwell operator** (m^2 I + \alpha d_1^*d_1) on (H_{U^{(0)}}), with constants (C_d,c_d) uniform in (|\Lambda|) and compatible with your chosen boundary conditions.
+
+A clean, self-contained reference line for exponential decay of lattice Green functions (in finite volume, with explicit method-of-images machinery) is available in the “lattice Green functions: exponential decay” literature. ([arXiv][2])
+If you prefer to keep everything “physics-adjacent”, you can also derive (6.18) from a heat-kernel representation and standard heat-kernel bounds, but then you must state the heat-kernel bound you are using.
+
+---
+
+If you confirm you want the next part immediately, the natural **Part 7** is: *perform the localization step cleanly* — i.e. show how to replace the “localization error from (K_\Lambda^c)” in (6.15)/(6.20) by an explicit bound (measure-small, or capacity-small, or Lyapunov-controlled), in a way that does not spoil the exponential rate coming from (M^{-1}).*
+
+[1]: https://cims.nyu.edu/~bauerschmidt/teaching/math253x/spin.pdf?utm_source=chatgpt.com "Ferromagnetic spin systems"
+[2]: https://arxiv.org/abs/2303.10754?utm_source=chatgpt.com "Lattice Green functions for pedestrians: Exponential decay"

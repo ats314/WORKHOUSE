@@ -1,0 +1,220 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\title{Referee Report and Salvage Map: ``Curvature--Stable Renormalization and the Mass Gap'' Notes}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Clean document set (this is the surviving corpus)}
+
+The project directory contained multiple overlapping LaTeX drafts and computational logs.
+The material that survives scrutiny has been reorganized into the following self-contained documents:
+
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Document 01:} \emph{Gauge Generator and Physical Projector on a Periodic $4$D Lattice (Finite Volume).}
+Definitions of $\mathcal M_L$, the gauge generator, and the \emph{vacuum} orthogonal projector $P_0$.
+
+\item \textbf{Document 02:} \emph{Linearized Wilson Action Hessian at Vacuum and Its Spectrum (Finite Volume).}
+A complete derivation of the vacuum Hessian identity
+$H_0=(\beta/6)\Delta_1$ and the finite-volume physical gap
+$\lambda_{\min}(H_0|\_{\mathrm{phys}})=\frac{\beta}{6}\,4\sin^2(\pi/L)$.
+This is the strongest \emph{proved} statement currently supported.
+
+\item \textbf{Document 03:} \emph{Conditional Pipeline: (Gauge Reduction) $\Rightarrow$ (LSI) $\Rightarrow$ (RG Stability) $\Rightarrow$ (OS Mass Gap).}
+The intended mass-gap argument as a sequence of \emph{explicit hypotheses} plus labeled external inputs.
+No theorem about Yang--Mills mass gap is proved here; this document states exactly what would be required.
+
+\item \textbf{Document 04:} \emph{Quarantined Computational Material (Non-Proofs): Hessian Spectra, Projectors, HOTRG Jacobians.}
+A cleaned record of numerical experiments and code sketches, explicitly quarantined from the proof pipeline.
+\end{enumerate}
+
+\paragraph{Dependency ordering.}
+Document~01 is prerequisite for Document~02.
+Document~03 assumes Documents~01--02 for notation and identifies missing lemmas.
+Document~04 is independent evidence-only material.
+
+\section{Classification of claims in the original drafts}
+
+The original drafts (notably \texttt{12-5-25 LEMMA2.txt}, \texttt{12-5-25 LEMMA.txt}, \texttt{12-6-25 LEMMA.txt}, \texttt{LEMMA 12-5-25.txt}) mix definitions, conditional theorems, and non sequiturs.
+Below is the maximal salvage classification consistent with the corpus.
+
+\subsection*{Proved statements (in the clean docset)}
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Vacuum Hessian identity and spectrum.}
+At $U\equiv I$, the Wilson action Hessian equals $(\beta/6)\Delta_1$ on lattice $1$-forms (per color),
+and the strictly physical finite-volume gap equals $\frac{\beta}{6}\,4\sin^2(\pi/L)$.
+(See Document~02.)
+
+\item \textbf{Vacuum projector algebra.}
+The Moore--Penrose formula
+$P_0 = I - G_0(G_0^\dagger G_0)^+G_0^\dagger$
+defines an orthogonal projector onto $\ker(G_0^\dagger)$ at vacuum.
+(See Document~01.)
+\end{enumerate}
+
+\subsection*{Conditionally correct statements (true if explicit hypotheses hold)}
+\begin{enumerate}[leftmargin=*]
+\item \textbf{``Coercivity $\Rightarrow$ LSI $\Rightarrow$ spectral gap'' on a genuine quotient diffusion.}
+This is a standard consequence of Bakry--\'Emery theory \emph{provided} one has:
+(i) a gauge reduction to a manifold $Q_L$,
+(ii) a symmetric diffusion generator on $Q_L$,
+and (iii) a uniform convexity bound for the descended potential.
+In the drafts this is asserted for an ad hoc projected generator; in the clean docset it is stated as a conditional pipeline (Document~03).
+
+\item \textbf{RG stability of LSI under Lipschitz pushforward.}
+A statement of the form ``LSI constant degrades by at most $L_{\mathrm{RG}}^2$ under an $L_{\mathrm{RG}}$-Lipschitz coarse map''
+is conditionally correct as an external input, \emph{provided} the RG step is indeed a Lipschitz pushforward on the relevant metric-measure space.
+(Recorded as EI3 in Document~03.)
+\end{enumerate}
+
+\subsection*{Conjectural / heuristic statements (not proved, not falsified by a direct contradiction)}
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Riccati/Hamilton--Jacobi ``convexity preservation'' in the physical sector.}
+The drafts state that viscous Hamilton--Jacobi flow preserves the physical convexity bound.
+No closed evolution inequality for the projected Hessian is derived in the corpus, and curvature terms are not controlled.
+This remains conjectural.
+
+\item \textbf{HOTRG Jacobian control in a right-invariant frame.}
+The idea ``use a right-invariant tangent frame so that Hessians push forward as $H'\approx J^\top HJ$'' is a plausible computational architecture.
+A theorem requires a careful treatment of (i) manifold second derivatives, (ii) truncation/SVD nonsmoothness, and (iii) reflection positivity/locality preservation.
+\end{enumerate}
+
+\subsection*{Incorrect or structurally invalid statements}
+The following items are not salvageable as stated.
+
+\begin{enumerate}[leftmargin=*]
+
+\item \textbf{Configuration space mis-specified as $SU(3)^{\Lambda_4}$ or $SU(3)^{\Lambda_L}$.}
+
+Removed / Downgraded because:
+the drafts write $\mathcal M_L = SU(3)^{\Lambda_4}$ while also indexing link variables as $U_\mu(x)$ over directions $\mu\in\{0,1,2,3\}$.
+This is a category error: the configuration space must be $SU(3)^{E_L}$ with $E_L=\Lambda_L\times\{0,1,2,3\}$ (or an equivalent link-set convention).
+
+\item \textbf{Uniform-in-$L$ vacuum-neighborhood coercivity as stated.}
+
+Removed / Downgraded because:
+Lemma ``Gauge--Projected Coercivity'' asserts existence of $C_W>0$ and a \emph{single} neighborhood $\mathcal N$ of vacuum such that
+$P_L(U)\nabla^2 S_L(U)P_L(U)\succeq C_W P_L(U)$ for all $L$ and all $U\in\mathcal N$.
+Document~02 proves that at the vacuum itself the strictly physical Hessian gap equals $(\beta/6)\,4\sin^2(\pi/L)\sim c\,L^{-2}$,
+so no positive lower bound independent of $L$ can hold near vacuum unless the notion of ``physical'' is altered (e.g.\ excluding small momenta) or the theory is modified by an explicit mass term.
+
+\item \textbf{Claim ``Gauge invariance implies $\nabla^2 S(U)\,G(U)\equiv 0$'' (as an identity for all $U$).}
+
+Removed / Downgraded because:
+the drafts assert this as the justification for restricting the Hessian to the physical sector.
+Gauge invariance implies that the \emph{first} derivative vanishes along gauge orbits; the Hessian annihilation statement does not follow without additional hypotheses and is generally false away from critical points.
+Even if the quadratic form vanishes on gauge tangents, the operator identity needs a connection-dependent argument that is not supplied.
+
+\item \textbf{Bakry--\'Emery $\Gamma_2$ computation for the projected generator.}
+
+Removed / Downgraded because:
+the drafts define a projected operator of the form $\tilde Lf=\mathrm{div}(P(U)\nabla f)-\langle P(U)\nabla S,P(U)\nabla f\rangle$
+and then write $\Gamma_2(f)=\|P\nabla^2 fP\|^2+\langle P\nabla^2 S P\nabla f,\nabla f\rangle$.
+This omits the derivatives of the \emph{variable} projector $P(U)$ and does not establish that $\tilde L$ is a symmetric Markov diffusion on any quotient.
+Consequently the claimed curvature--dimension inequality is not derived.
+
+\item \textbf{Derivation of spectral gap from LSI via ``$\mathrm{Var}\le \mathrm{Ent}$''.}
+
+Removed / Downgraded because:
+the drafts use $\mathrm{Var}(f)\le \mathrm{Ent}(f^2)$ to deduce a Poincar\'e inequality.
+This inequality is false in general.  The implication ``LSI $\Rightarrow$ Poincar\'e'' is true, but requires a separate argument (typically a small-perturbation expansion), which is not provided.
+
+\item \textbf{Identification of a ``mass gap'' as $m_{\mathrm{gap}}\ge \sqrt{C_W}$.}
+
+Removed / Downgraded because:
+a lower bound on a \emph{Markov generator} spectral gap (even if established) does not directly imply a Hamiltonian mass gap without an Osterwalder--Schrader/transfer-matrix identification plus reflection positivity and locality.
+No such justification is supplied in the corpus, and the dimensional relationship $m\sim \sqrt{C_W}$ is not derived.
+
+\item \textbf{Treating numerics as proof of continuum mass gap.}
+
+Removed / Downgraded because:
+\texttt{12-6-25 LEMMA.txt} and related drafts explicitly cite numerical Hessian diagonalization / Langevin relaxation / spectroscopy as ``support'' for the convexity hypothesis and then describe the result as establishing a continuum mass gap.
+Numerical experiments do not establish the required uniform-in-$L$, uniform-in-$a$ bounds nor the OS reconstruction hypotheses.
+All numerical material has been quarantined into Document~04.
+
+\item \textbf{Hallucinated ``volume-independent lower bound $C_W\approx 8/3$'' from $L=2$ micro-tests.}
+
+Removed / Downgraded because:
+the project logs also contain computed vacuum gaps $2/3$ at $L=2$ and $1/2$ at $L=3$ in the projected sector, consistent with the analytic $L^{-2}$ scaling.
+Thus claims of an $L$-independent lower bound inferred from a single small-$L$ computation are contradicted by other material in the same corpus and by the exact vacuum spectrum (Document~02).
+\end{enumerate}
+
+\section{Structural contributions worth preserving}
+
+The following items appear to be genuine organizing ideas.
+They are not theorems, but they are not nonsense.
+
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Pipeline Architecture.}
+A proposed chain:
+\[
+\text{(physical convexity/coercivity)} \Rightarrow \text{(LSI)} \Rightarrow \text{(spectral gap)} \Rightarrow \text{(RG stability)} \Rightarrow \text{(OS mass gap)}.
+\]
+This is a coherent architecture if each arrow is made precise with correct hypotheses (Document~03).
+
+\item \textbf{Pipeline Architecture (computational).}
+Use of a right-invariant tangent identification for $SU(3)^{E_L}$ together with an explicit gauge/toron projector to compute physically meaningful Hessian spectra, and (in principle) to transport Hessians through coarse-graining maps via Jacobians.
+
+\item \textbf{Rigidity Mechanism (conjectural).}
+The claim that a Riccati/Hamilton--Jacobi-type smoothing flow could ``convexify'' or stabilize the physical Hessian lower bound is a rigidity mechanism proposal.
+It is not established; the curvature terms must be controlled.
+
+\item \textbf{Implicit theorem (standard, but correctly recoverable).}
+The vacuum quadratic form of Wilson action is the discrete Yang--Mills energy $\|dA\|^2$; the Hessian is a discrete $1$-form Laplacian (Document~02).
+Standard result; appears in the lattice gauge theory literature.  No novelty claim supported.
+\end{enumerate}
+
+\section{Known vs new}
+
+\begin{itemize}[leftmargin=*]
+\item The Bakry--\'Emery log-Sobolev mechanism is a standard result (external).
+\item The vacuum Hessian/Laplacian identification is standard.
+\item The combination ``LSI + RG stability + OS'' as a single mass-gap proof pipeline:
+\emph{I do not know} whether this exact packaging is present in the literature; the individual components are well known.
+\item The HOTRG-Jacobian-based curvature propagation proposal:
+plausibly novel as a computational program, but cannot be promoted without external verification and, in particular, without a correct treatment of differentiability/truncation and reflection positivity.
+\end{itemize}
+
+\section{What strengthens this work most}
+
+\subsection*{Missing lemmas that would solidify the core}
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Gauge reduction lemma.}
+Construct a mathematically legitimate quotient or gauge-fixing framework producing a symmetric diffusion generator on the reduced space; show that it matches the intended ``physical'' projection.
+
+\item \textbf{Non-vacuum, nonperturbative lower bound.}
+Replace the (false-as-stated) uniform vacuum-neighborhood coercivity with a correct statement:
+either a uniform convexity bound on the reduced space away from vacuum, or an effective-action lower bound after integrating UV modes, or a different coercivity notion that does not contradict Document~02.
+
+\item \textbf{RG Lipschitz control (with truncation).}
+Prove that the actual coarse-graining map used (e.g.\ HOTRG step with truncation) is Lipschitz on the relevant metric space and quantify its constant uniformly across scales, \emph{including} the SVD/truncation nonsmoothness.
+
+\item \textbf{Reflection positivity preservation.}
+Show that the coarse-graining step preserves (or at least does not destroy) the properties needed for OS reconstruction, and that the Euclidean spectral gap implied by the functional inequalities transfers to a Hamiltonian mass gap.
+\end{enumerate}
+
+\subsection*{Single sharpest theorem currently supported}
+The strongest statement currently supported by the corpus is:
+
+\medskip
+\noindent
+\emph{At $U\equiv I$, the Wilson action Hessian equals $(\beta/6)\Delta_1$ and its strictly physical finite-volume spectral gap equals $\frac{\beta}{6}\,4\sin^2(\pi/L)$.}
+\medskip
+
+\subsection*{Minimum additional assumption needed to close the main gap}
+The minimal assumption that turns the pipeline into a valid theorem is:
+
+\medskip
+\noindent
+\emph{Existence of a gauge-reduced diffusion generator on a smooth reduced space $Q_L$ such that the descended effective action is uniformly $\kappa$-convex with $\kappa>0$ independent of lattice size and scale.}
+\medskip
+
+This is strictly stronger than anything proved in the corpus, and it is not compatible with the vacuum linearization unless ``uniform'' refers to a different scaling regime or to a modified effective action.
+
+\end{document}

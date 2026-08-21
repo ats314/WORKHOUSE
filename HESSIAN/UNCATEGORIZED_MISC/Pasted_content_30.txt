@@ -1,0 +1,188 @@
+I’ll focus on two pieces:
+	1.	A precise formulation of tightness for gauge-invariant Yang–Mills measures in a continuum limit.
+	2.	How a uniform Bakry–Émery CD(\rho,\infty) (or BE(\rho,\infty)) condition might be stable under limits (lattice \to continuum) via Dirichlet form convergence.
+
+I will treat these as “research program”–level steps: precise formulations and plausible strategies, not claims that they are already established in 4D.
+
+⸻
+
+1. Tightness for Gauge-Invariant Yang–Mills Measures
+
+1.1 What you ultimately want
+
+Fix a bounded Euclidean region \Lambda \subset \mathbb{R}^4. For each lattice spacing a with \Lambda_a\subset \Lambda a hypercubic lattice approximation, you have a gauge-invariant lattice measure
+\mu_a(dU) = Z_a^{-1} e^{-S_a[U]} \prod_{\ell \subset \Lambda_a} dU_\ell,
+with Wilson action and Haar measure on SU(N).
+
+You want to view \mu_a as a probability measure on some continuum configuration space modulo gauge and show:
+	1.	The family \{\mu_a\}_{a\downarrow 0} is tight.
+	2.	Any weak limit \mu is a probability measure on a space of “gauge orbits of distribution-valued connections” (in the spirit of Cao–Chatterjee’s 3D construction). ￼
+	3.	Limits of gauge-invariant lattice observables converge to continuum correlators.
+
+The main technical problem: the “state space” is not a simple Banach space; it’s something like a quotient of a distribution space by an infinite-dimensional gauge group.
+
+1.2 Step 1: Embed lattice fields into a fixed Banach space
+
+Pick a Sobolev index s>2 so that H^{-s}(\Lambda) is large enough to contain typical Yang–Mills configurations (like a 4D GFF-style scaling heuristic). For each lattice configuration U, construct an interpolated connection 1-form A_a(U) on \Lambda (e.g. piecewise-constant or smooth interpolation on each plaquette) and regard
+A_a : \text{(lattice configs)} \to H^{-s}(\Lambda;\mathfrak{su}(N)).
+
+This gives a pushforward measure
+\nu_a := (A_a)_\# \mu_a
+on H^{-s}(\Lambda;\mathfrak{su}(N)). There is still gauge redundancy, but we at least have a well-defined Borel probability measure on a separable Banach space.
+
+Goal (tightness in the raw field space):
+Prove that \{\nu_a\}_{a\downarrow 0} is tight in H^{-s}, i.e. for all \varepsilon>0 there exists a compact set K_\varepsilon \subset H^{-s} such that
+\nu_a(K_\varepsilon) \ge 1-\varepsilon
+\quad\text{for all sufficiently small }a.
+
+This kind of tightness is standard in constructive QFT: you show uniform moment or exponential moment bounds on norms \|A\|_{H^{-s}}, then use Prokhorov. For scalar fields, one uses correlation inequalities and uniform bounds on the covariance. For gauge fields, it’s harder, but conceptually similar.
+
+1.3 Using functional inequalities from CD(\rho,\infty)
+
+Assume (this is your Prong C input) that at each scale a you can construct a gauge-fixed version of \mu_a,
+\mu_a^{\mathrm{gf}}(dA) = Z_a^{-1} e^{-S_{\mathrm{eff},a}(A)} dA,
+on some Hilbert space H_a\subset H^{-s} (say, Coulomb gauge), such that:
+	•	S_{\mathrm{eff},a} is uniformly \rho-convex in directions where you’ve integrated out gauge redundancies:
+\mathrm{Hess}\, S_{\mathrm{eff},a} \;\ge\; \rho\, I
+\quad\text{in form sense on }H_a,
+with \rho>0 independent of a. This is the infinite-dimensional analogue of your lattice Hessian bound.
+	•	The corresponding diffusion generator
+L_a = \Delta - \langle \nabla S_{\mathrm{eff},a}, \nabla \cdot \rangle
+satisfies a Bakry–Émery curvature–dimension condition BE(\rho,\infty) (a.k.a. CD(\rho,\infty)) with respect to \mu_a^{\mathrm{gf}}. ￼
+
+In this setting, you know a lot: BE(\rho,\infty) implies (for symmetric diffusion operators) a logarithmic Sobolev inequality (LSI) and Poincaré inequality with constants controlled by 1/\rho. ￼ In particular:
+	•	For any 1-Lipschitz functional F: H_a\to\mathbb{R} with \int F\,d\mu_a^{\mathrm{gf}}=0,
+\int e^{\lambda F} d\mu_a^{\mathrm{gf}} \le \exp\!\left(\frac{\lambda^2}{2\rho}\right)
+\quad\text{for all }\lambda\in\mathbb{R},
+i.e. Gaussian concentration with variance scale 1/\rho.
+
+The trick is to choose Lipschitz functionals that control the Sobolev norm \|A\|_{H^{-s}}. For instance, if you pick a finite-dimensional projection \Pi_R onto modes up to some cutoff R, then
+F_R(A) := \|\Pi_R A\|_{H^{-s}}
+is Lipschitz in the Hilbert norm and obeys exponential integrability. Using a diagonal argument:
+	1.	For each fixed cutoff R, concentration + LSI give uniform (in a) bounds on the tails of F_R.
+	2.	As R\to \infty, completeness of H^{-s} + control of the tail in frequency domain can be handled by the Gaussian-like short-distance behaviour (heuristically Yang–Mills looks like a GFF at small scales ￼), or by explicit ultraviolet renormalization estimates if you had them.
+
+The formal structure: under CD(\rho,\infty), you get uniform exponential moment bounds of the form
+\int \exp\big(c\|A\|_{H^{-s}}^2\big) d\mu_a^{\mathrm{gf}}(A) \le C
+\quad\text{for some }c>0, C<\infty \text{ independent of }a.
+\tag{*}
+
+If you can obtain (*), it implies tightness of \{\mu_a^{\mathrm{gf}}\} in H^{-s} (by standard arguments: exponential integrability of a proper lower semicontinuous norm implies tightness via Chebyshev and Prokhorov).
+
+1.4 From gauge-fixed tightness to gauge-invariant tightness
+
+Gauge invariance complicates the topology, but not dramatically:
+	•	The gauge group \mathcal{G} (e.g. Sobolev H^{s'} gauge transformations) acts continuously on H^{-s}, and you can either:
+	•	work with the gauge-fixed measures \mu_a^{\mathrm{gf}} on a slice; or
+	•	push them forward to a quotient “orbit space” in the sense of Borel equivalence relations, like Cao–Chatterjee do in 3D by viewing the state space as “random distributional gauge orbits”. ￼
+
+For tightness of gauge-invariant observables, it suffices to have tightness of the underlying \mu_a^{\mathrm{gf}} on a fixed field space together with:
+	•	uniform LSI / Poincaré so that expectations of bounded-Lipschitz gauge-invariant functionals are uniformly controlled and equicontinuous in a.
+
+Concretely, denote by \mathcal{O} the class of bounded, gauge-invariant, Lipschitz functionals on H^{-s} (for instance, built from smeared Wilson loops after suitable renormalization). Then:
+	•	Tightness of \mu_a^{\mathrm{gf}} in H^{-s} + equicontinuity on \mathcal{O} implies tightness of the family of laws \{\mu_a\circ O^{-1}\} in \mathbb{R} for each O\in\mathcal{O}.
+	•	A standard diagonal argument then yields subsequences with joint convergence for all O_1,\dots,O_k \in \mathcal{O}.
+
+So the technical core is really: can your CD(\rho,\infty) inequality be lifted to an infinite-dimensional, gauge-fixed setup, and can you get a Gaussian-type exponential tail for a norm that controls the topology?
+
+There are abstract frameworks where BE(K,\infty) is extended to Dirichlet forms on infinite-dimensional spaces (Gross measure, gradient flows in Wasserstein space). Ambrosio–Gigli–Savaré, Ambrosio–Erbar–Savaré and others have made this precise in metric-measure spaces and for Dirichlet forms. ￼
+
+To apply them to Yang–Mills, you’d need a careful construction of the gauge-fixed Dirichlet form and its generator; that’s nontrivial but conceptually clear.
+
+⸻
+
+2. Stability of CD(\rho,\infty) under Continuum Limits
+
+Next: suppose at each scale a you have a Bakry–Émery curvature lower bound
+CD(\rho,\infty)
+\quad\text{for }(\mu_a,L_a),
+with \rho>0 independent of a. Under what conditions can you pass this to a limit a\to 0 and conclude that the limiting Dirichlet form also satisfies CD(\rho,\infty)?
+
+2.1 BE(K,\infty) for Dirichlet forms
+
+Let (X_a,\mu_a) be probability spaces and (\mathcal{E}_a,\mathcal{D}_a) symmetric, strongly local Dirichlet forms on L^2(X_a,\mu_a) with generator L_a and carré du champ \Gamma_a. The BE(K,\infty) condition can be formulated as: for all nice f,
+\Gamma_{2,a}(f) \;\ge\; K\,\Gamma_a(f),
+where
+\Gamma_{2,a}(f)
+:= \frac{1}{2}\left(L_a \Gamma_a(f) - 2\Gamma_a(f,L_a f)\right).
+
+This is the abstract version of your Bochner-type inequality:
+\Gamma_2(f)
+= \|\nabla^2 f\|_{HS}^2 + \mathrm{Ric}_V(\nabla f,\nabla f) \ge K \Gamma(f),
+with K=\rho. ￼
+
+The BE condition BE(K,\infty) for Dirichlet forms is known to be equivalent to a raft of functional inequalities and gradient estimates for the associated semigroup (P_t^a)_{t\ge 0}. For instance:
+|\nabla P_t^a f|^2 \le e^{-2Kt} P_t^a(|\nabla f|^2)
+\quad\text{(a.e.)},\ \forall t\ge 0,
+and log-Sobolev, Poincaré, Harnack inequalities etc. ￼
+
+This functional-analytic rephrasing is exactly what you need for stability: you want conditions under which convergence of Dirichlet forms / semigroups preserves these inequalities.
+
+2.2 Convergence of Dirichlet forms: Mosco convergence
+
+A standard notion: Mosco convergence of Dirichlet forms. Given forms (\mathcal{E}_a,\mathcal{D}_a) on Hilbert spaces L^2(X_a,\mu_a) and a candidate limit (\mathcal{E},\mathcal{D}) on L^2(X,\mu), Mosco convergence implies convergence of resolvents and semigroups in strong operator topology. ￼
+
+For our purposes, you’d want a setting where:
+	1.	All X_a embed into a common Polish space X (e.g. H^{-s} or a quotient space).
+	2.	\mu_a \Rightarrow \mu weakly on X.
+	3.	(\mathcal{E}_a,\mathcal{D}_a) Mosco-converges to (\mathcal{E},\mathcal{D}) on L^2(X,\mu).
+
+Then:
+	•	P_t^a \to P_t strongly on L^2(X,\mu).
+	•	Spectral quantities (gap, etc.) are lower semicontinuous.
+
+Exactly this kind of framework is used in the analysis of heat kernels and geometric limits of metric measure spaces. ￼
+
+2.3 Known stability results for CD / BE conditions
+
+In the metric-measure setting, the synthetic curvature-dimension conditions CD(K,N) and their strengthening RCD(K,N) are known to be stable under measured Gromov–Hausdorff (pmG) convergence and related topologies. Lott–Villani, Sturm and many others showed:
+	•	If (X_n,d_n,m_n) satisfy CD(K,N) with uniform K,N, and they converge in an appropriate sense (pmG, D-convergence, concentration topology), then the limit (X,d,m) satisfies CD(K,N). ￼
+
+For the BE(K,\infty) formulation on Dirichlet forms, Ambrosio–Gigli–Savaré and coauthors have shown:
+	•	The BE(K,\infty) condition is equivalent to (or implies) an evolution variational inequality (EVI) property of the heat flow as a gradient flow of entropy in the Wasserstein space.
+	•	EVI/gradient-flow characterizations are stable under suitable convergence of measures and forms (Γ-convergence / Mosco convergence), hence one can deduce stability of BE(K,\infty) under limit passages. ￼
+
+More recent work also discusses “rough” curvature-dimension and stability under weaker convergences. ￼
+
+So at an abstract level:
+
+If (X_a,\mu_a,\mathcal{E}_a) satisfy BE(K,\infty) with uniform K, and they converge to (X,\mu,\mathcal{E}) in a sense that preserves semigroup / Dirichlet form structure (Mosco, pmG, etc.), then (X,\mu,\mathcal{E}) also satisfies BE(K,\infty).
+
+The exact technical hypotheses (e.g. quasi-regularity, locality, non-branching) must be checked in each application.
+
+2.4 Translating this to the Yang–Mills / PBH context
+
+In your program, the rough picture would be:
+	•	For each lattice spacing a, construct a continuum-embedded, gauge-fixed Dirichlet form (\mathcal{E}_a,\mathcal{D}_a) on L^2(H^{-s},\mu_a^{\mathrm{gf}}), coming from the YM effective action S_{\mathrm{eff},a} and your PBH flow (essentially, \mathcal{E}_a(f,f) = \int |\nabla f|^2 d\mu_a^{\mathrm{gf}}).
+	•	Prove a uniform BE(\rho,\infty) estimate with \rho>0 independent of a; this is what Prong C gives at the finite-dimensional (lattice) level, and you’d need an infinite-dimensional extension.
+	•	Show that \{\mu_a^{\mathrm{gf}}\} is tight and converges weakly to some \mu on a suitable state space X of distributional connections (or gauge orbits).
+	•	Show Mosco convergence of Dirichlet forms (\mathcal{E}_a,\mathcal{D}_a)\to (\mathcal{E},\mathcal{D}) on L^2(X,\mu) (this requires uniform coercivity, control on drift terms, etc.).
+
+Under these hypotheses, you could invoke the general BE(K,\infty) stability results to conclude that the limiting Dirichlet form satisfies BE(\rho,\infty). That buys you:
+	•	Uniform log-Sobolev and Poincaré inequalities in the continuum.
+	•	A uniform spectral gap estimate for the generator L of the continuum heat flow in field space, with gap \ge \rho.
+	•	Strong concentration, which feeds into control of continuum correlation functions.
+
+This pushes your Prong C nonperturbative anomaly-source positivity into the continuum limit.
+
+2.5 Where the hard work sits
+
+The hardest steps (and those that are not currently solved in 4D YM) are:
+	1.	Defining a good field-space topology and measure (X,\mu) that can be realized as a limit of (X_a,\mu_a^{\mathrm{gf}}). Recent progress in 3D YM on the torus shows one way to do this (Cao–Chatterjee’s “random gauge orbits”). ￼
+	2.	Showing Mosco convergence of field-space Dirichlet forms with interacting, non-Gaussian drifts across scales, including renormalization. Techniques from SPDE on manifolds and infinite-dimensional Dirichlet forms might be adaptable. ￼
+	3.	Extending BE(\rho,\infty) uniformly in a to infinite-dimensional limits. At the finite-dimensional lattice level, Prong C gave you a discrete CD(\rho,\infty) via strictly convex gauge-fixing. To pass to infinite dimensions, you need careful control of the Hessian of the effective action and its coercivity in the limit—this is essentially a uniform convexity/curvature control problem in an infinite-dimensional, gauge-invariant setting.
+
+⸻
+
+3. How These Pieces Fit Your Mass Gap Program
+
+If you could actually execute the two steps we just drilled into, you’d have:
+	1.	Tightness and limit: A continuum Euclidean Yang–Mills measure \mu on a distributional field space (or on gauge orbits), obtained as a limit of lattice measures.
+	2.	CD(\rho,\infty) stability: The continuum Dirichlet form associated with the YM effective action satisfies BE(\rho,\infty) with the same positive \rho coming from the lattice Prong C analysis.
+	3.	Uniform spectral gap: BE(\rho,\infty) implies a Poincaré/spectral gap inequality with constant \rho, transferring your anomaly-source bound to the continuum as a nonzero field-space spectral gap.
+	4.	Combined with OS reflection positivity and reconstruction (still another large step), this spectral gap should be connected to a physical mass gap in the Minkowski theory.
+
+The tightness and BE-stability machinery are the core analytic tools that could make your PBH/Bakry–Émery path to the mass gap technically viable, but both require careful, new work in the Yang–Mills setting.
+
+If you’d like, next we can:
+	•	Make the Dirichlet form / BE(\rho,\infty) structure completely explicit for a finite-dimensional truncation of YM (e.g. Fourier modes up to |k|\le \Lambda) and show how the tightness + stability arguments work in that toy model, which is a good intermediate step toward the real thing.

@@ -1,0 +1,479 @@
+## Part 9B — Explicit Adjoints, Orthogonal Projections, and Fourier Spectrum of the Wilson Hessian (Maxwell Operator) on a Periodic Hypercubic Lattice
+
+### 9B.0. What this part adds (and why)
+
+Part 9 already establishes the key identification
+[
+\nabla^2 S_W(U^{(0)}) ;=; 2c_W, d_1^* d_1,
+]
+i.e. the Wilson Hessian at the vacuum is a positive multiple of the discrete Maxwell operator on lattice 1‑cochains , and it records the (finite-dimensional) Hodge decomposition
+[
+\mathcal C^1 ;=; \operatorname{im}(d_0);\oplus;\ker(\Delta_1);\oplus;\operatorname{im}(d_1^*)\quad\text{(orthogonal)} .
+]
+
+But two things were left a bit “black-boxy”:
+
+1. **What are (d_0^*) and (d_1^*) concretely?** Part 9 defines them abstractly by adjointness , but for later estimates it’s useful to have explicit summation-by-parts formulas.
+2. **Where does the “strictly positive spectral gap on (\operatorname{im}(d_1^*))” really come from?** Part 9 states it “formally” . In finite volume it’s true for purely linear-algebraic reasons, and on a periodic box we can compute the eigenvalues explicitly by Fourier modes.
+
+This 9B supplies those missing first-principles proofs and (when periodic) explicit constants.
+
+---
+
+### 9B.1. Lattice, cochains, orientations, inner products
+
+Fix dimension (d\ge 2). Let the lattice be the discrete (d)-torus
+[
+\Lambda ;=; \prod_{\mu=1}^d \big(\mathbb Z/L_\mu\mathbb Z\big),
+]
+with standard unit vectors (\hat\mu). All shifts (x\pm\hat\mu) are understood modulo (L_\mu) (periodic boundary conditions).
+
+Let (G) be a compact Lie group with Lie algebra (\mathfrak g) and a fixed (\operatorname{Ad})-invariant inner product (\langle\cdot,\cdot\rangle_G) on (\mathfrak g). (Everything below acts componentwise in (\mathfrak g), so the Lie algebra is mostly a “passenger”.)
+
+**0‑cochains.**
+(\mathcal C^0(\Lambda;\mathfrak g)) is the space of vertex fields (\varphi=(\varphi_x)_{x\in\Lambda}) with (\varphi_x\in\mathfrak g).
+
+**1‑cochains.**
+(\mathcal C^1(\Lambda;\mathfrak g)) is the space of edge fields (X=(X_{x,\mu})) where (X_{x,\mu}\in\mathfrak g) is attached to the oriented edge ((x\to x+\hat\mu)). This is exactly the tangent identification used at the vacuum in Part 9 .
+
+**2‑cochains.**
+(\mathcal C^2(\Lambda;\mathfrak g)) is the space of plaquette fields (Y=(Y_{x;\mu,\nu})) attached to oriented plaquettes. As in Part 9, it suffices to store them for (\mu<\nu) and use the standard sign conventions under orientation changes . (For explicit adjoint formulas, it’s convenient to extend antisymmetrically; we’ll do that below.)
+
+**Inner products.** Use product inner products:
+[
+\langle \varphi,\psi\rangle_{\mathcal C^0}=\sum_{x}\langle \varphi_x,\psi_x\rangle_G,\qquad
+\langle X,Z\rangle_{\mathcal C^1}=\sum_{x,\mu}\langle X_{x,\mu},Z_{x,\mu}\rangle_G,
+]
+and similarly on (\mathcal C^2) by summing over plaquettes as in Part 9 .
+
+---
+
+### 9B.2. The discrete coboundaries (d_0) and (d_1), and the identity (d_1d_0=0)
+
+#### 9B.2.1. Discrete gradient (d_0)
+
+As in Part 9, define
+[
+(d_0\varphi)*{x,\mu};:=;\varphi*{x+\hat\mu}-\varphi_x. 
+]
+
+This is the usual (forward) discrete gradient / coboundary from vertices to edges.
+
+#### 9B.2.2. Discrete curl (d_1)
+
+As in Part 9, for a plaquette (p=(x;\mu,\nu)) with (\mu<\nu),
+[
+(d_1X)*{x;\mu,\nu}
+:=X*{x,\mu}+X_{x+\hat\mu,\nu}-X_{x+\hat\nu,\mu}-X_{x,\nu}. 
+]
+
+This is the lattice analogue of (\mathrm{curl}) / (d) from 1‑forms to 2‑forms.
+
+#### 9B.2.3. Proof that (d_1d_0=0) (discrete “(d^2=0)”)
+
+Fix (\varphi\in\mathcal C^0). Compute on a plaquette ((x;\mu,\nu)) ((\mu<\nu)):
+[
+(d_1 d_0\varphi)*{x;\mu,\nu}
+=(d_0\varphi)*{x,\mu}+(d_0\varphi)*{x+\hat\mu,\nu}-(d_0\varphi)*{x+\hat\nu,\mu}-(d_0\varphi)*{x,\nu}.
+]
+Substitute the definition of (d_0):
+[
+\begin{aligned}
+(d_0\varphi)*{x,\mu}&=\varphi_{x+\hat\mu}-\varphi_x,\
+(d_0\varphi)*{x+\hat\mu,\nu}&=\varphi*{x+\hat\mu+\hat\nu}-\varphi_{x+\hat\mu},\
+(d_0\varphi)*{x+\hat\nu,\mu}&=\varphi*{x+\hat\nu+\hat\mu}-\varphi_{x+\hat\nu},\
+(d_0\varphi)*{x,\nu}&=\varphi*{x+\hat\nu}-\varphi_x.
+\end{aligned}
+]
+Then
+[
+\begin{aligned}
+(d_1 d_0\varphi)*{x;\mu,\nu}
+&=(\varphi*{x+\hat\mu}-\varphi_x)+(\varphi_{x+\hat\mu+\hat\nu}-\varphi_{x+\hat\mu})\
+&\qquad-(\varphi_{x+\hat\nu+\hat\mu}-\varphi_{x+\hat\nu})-(\varphi_{x+\hat\nu}-\varphi_x)\
+&=0
+\end{aligned}
+]
+by cancellation (and commutativity of shifts (\hat\mu+\hat\nu=\hat\nu+\hat\mu)). Hence (d_1d_0=0) identically.
+
+This one identity is the algebraic heart of why **pure gauge fluctuations have zero linearized curvature**, and therefore sit in the kernel of the Wilson Hessian (see Part 9’s discussion of pure gauge modes) .
+
+---
+
+### 9B.3. Explicit formulas for the adjoints (d_0^*) and (d_1^*) (periodic summation-by-parts)
+
+Part 9 defines (d_0^*) and (d_1^*) abstractly via
+[
+\langle d_0\varphi,X\rangle_{\mathcal C^1}=\langle\varphi,d_0^*X\rangle_{\mathcal C^0},\qquad
+\langle d_1X,Y\rangle_{\mathcal C^2}=\langle X,d_1^*Y\rangle_{\mathcal C^1}. 
+]
+On a periodic lattice we can compute them explicitly.
+
+#### Proposition 9B.1 (Explicit divergence formula for (d_0^*))
+
+For (X\in\mathcal C^1(\Lambda;\mathfrak g)),
+[
+(d_0^*X)*x ;=;\sum*{\mu=1}^d \big(X_{x-\hat\mu,\mu}-X_{x,\mu}\big).
+]
+
+**Proof.** Compute:
+[
+\langle d_0\varphi,X\rangle_{\mathcal C^1}
+=\sum_{x,\mu}\langle \varphi_{x+\hat\mu}-\varphi_x,;X_{x,\mu}\rangle_G.
+]
+Split the sum:
+[
+\sum_{x,\mu}\langle \varphi_{x+\hat\mu},X_{x,\mu}\rangle_G - \sum_{x,\mu}\langle \varphi_x,X_{x,\mu}\rangle_G.
+]
+In the first term change variables (x\mapsto x-\hat\mu) (allowed because we are on a torus):
+[
+\sum_{x,\mu}\langle \varphi_{x},X_{x-\hat\mu,\mu}\rangle_G - \sum_{x,\mu}\langle \varphi_x,X_{x,\mu}\rangle_G
+=\sum_x \left\langle \varphi_x,\sum_\mu(X_{x-\hat\mu,\mu}-X_{x,\mu})\right\rangle_G.
+]
+Thus (d_0^*) is exactly the stated discrete negative divergence. ∎
+
+**Interpretation.** (d_0^*X=0) is the discrete analogue of “(\nabla\cdot X=0)” (Coulomb/Landau gauge condition). This is why Part 9 identifies the horizontal space at the vacuum as (\ker(d_0^*)) .
+
+---
+
+#### Proposition 9B.2 (Explicit formula for (d_1^*) as a discrete co‑divergence on 2‑forms)
+
+To write a clean formula, extend plaquette fields antisymmetrically: define (Y_{x;\mu,\nu}) for all (\mu\neq\nu) by
+[
+Y_{x;\nu,\mu}:=-Y_{x;\mu,\nu},\qquad Y_{x;\mu,\mu}:=0.
+]
+(When (\mu<\nu), this agrees with the stored plaquette component.)
+
+Then for (Y\in\mathcal C^2(\Lambda;\mathfrak g)),
+[
+(d_1^*Y)*{x,\mu};=;\sum*{\nu\neq\mu}\big(Y_{x;\mu,\nu}-Y_{x-\hat\nu;\mu,\nu}\big).
+]
+
+**Proof (direct from the definition).** Start from the defining adjointness relation
+(\langle d_1X,Y\rangle_{\mathcal C^2}=\langle X,d_1^*Y\rangle_{\mathcal C^1}) 
+and expand (\langle d_1X,Y\rangle_{\mathcal C^2}) using
+((d_1X)*{x;\mu,\nu}=X*{x,\mu}+X_{x+\hat\mu,\nu}-X_{x+\hat\nu,\mu}-X_{x,\nu}) .
+Then collect all coefficients multiplying a fixed edge variable (X_{x,\mu}). Each (X_{x,\mu}) appears in exactly the two plaquettes in the (\mu\nu)-plane that share that edge with opposite orientation, for each (\nu\neq\mu). Using periodic index shifts (no boundary terms), the coefficient is precisely
+(\sum_{\nu\neq\mu}(Y_{x;\mu,\nu}-Y_{x-\hat\nu;\mu,\nu})).
+This coefficient is, by definition, ((d_1^*Y)_{x,\mu}). ∎
+
+**Two useful corollaries.**
+
+1. (d_0^*d_1^*=0). Indeed (d_0^*d_1^*=(d_1d_0)^*=0) since (d_1d_0=0).
+2. (\operatorname{im}(d_1^*)\subseteq\ker(d_0^*)). So every co‑exact 1‑form is automatically “divergence-free”.
+
+---
+
+### 9B.4. Laplacians and harmonicity: (\ker(\Delta_1)=\ker(d_1)\cap\ker(d_0^*))
+
+Part 9 defines the discrete Hodge Laplacians
+[
+\Delta_0=d_0^*d_0,\qquad \Delta_1=d_0d_0^*+d_1^*d_1 
+and states
+[
+\ker(\Delta_1)={X\in\mathcal C^1:\ d_1X=0,\ d_0^*X=0}. 
+Here is the full proof (it’s short but fundamental).
+
+#### Lemma 9B.3 (Kernel characterization)
+
+For any (X\in\mathcal C^1),
+[
+\langle X,\Delta_1X\rangle_{\mathcal C^1}=|d_0^*X|*{\mathcal C^0}^2+|d_1X|*{\mathcal C^2}^2.
+]
+Consequently (\Delta_1X=0) iff (d_0^*X=0) and (d_1X=0).
+
+**Proof.**
+Using self-adjointness and definitions:
+[
+\langle X,\Delta_1X\rangle
+=\langle X,d_0d_0^*X\rangle+\langle X,d_1^*d_1X\rangle
+=\langle d_0^*X,d_0^*X\rangle+\langle d_1X,d_1X\rangle.
+]
+Both terms are norms, hence nonnegative and sum to zero iff each is zero. Finally, if (d_0^*X=d_1X=0) then (\Delta_1X=d_0d_0^*X+d_1^*d_1X=0). ∎
+
+---
+
+### 9B.5. Full orthogonal Hodge decomposition in degree 1 (first principles linear algebra)
+
+Part 9 records the decomposition
+[
+\mathcal C^1=\operatorname{im}(d_0)\oplus \ker(\Delta_1)\oplus \operatorname{im}(d_1^*) \quad\text{orthogonal} .
+]
+Here is a self-contained proof.
+
+#### Fact 9B.4 (Orthogonal complements of images)
+
+Let (A:V\to W) be a linear map between finite-dimensional inner product spaces. Then
+[
+(\operatorname{im}A)^\perp=\ker(A^*).
+]
+This is standard: (w\perp \operatorname{im}A) iff (\langle Av,w\rangle=0) for all (v), i.e. (\langle v,A^*w\rangle=0) for all (v), i.e. (A^*w=0).
+
+Apply to (A=d_0) and (A=d_1):
+[
+(\operatorname{im}d_0)^\perp=\ker(d_0^*),\qquad (\operatorname{im}d_1^*)^\perp=\ker(d_1).
+]
+
+#### Lemma 9B.5 (Orthogonality of exact and co-exact)
+
+(\operatorname{im}(d_0)\perp \operatorname{im}(d_1^*)).
+
+**Proof.** For any (\varphi\in\mathcal C^0), (Y\in\mathcal C^2):
+[
+\langle d_0\varphi,\ d_1^*Y\rangle_{\mathcal C^1}
+=\langle d_1 d_0\varphi,\ Y\rangle_{\mathcal C^2}=0
+]
+because (d_1d_0=0). ∎
+
+#### Theorem 9B.6 (Hodge decomposition in degree 1)
+
+[
+\mathcal C^1 ;=; \operatorname{im}(d_0);\oplus;\ker(\Delta_1);\oplus;\operatorname{im}(d_1^*),
+]
+and the sum is orthogonal.
+
+**Proof.**
+
+1. By Lemma 9B.5, (\operatorname{im}(d_0)) and (\operatorname{im}(d_1^*)) are orthogonal, so their sum (W:=\operatorname{im}(d_0)\oplus\operatorname{im}(d_1^*)) is an orthogonal direct sum.
+
+2. Compute the orthogonal complement:
+   [
+   W^\perp
+   =(\operatorname{im}d_0)^\perp \cap (\operatorname{im}d_1^*)^\perp
+   =\ker(d_0^*)\cap \ker(d_1).
+   ]
+   By Lemma 9B.3, (\ker(d_0^*)\cap \ker(d_1)=\ker(\Delta_1)). So (W^\perp=\ker(\Delta_1)).
+
+3. In any finite-dimensional inner product space, (V=W\oplus W^\perp). Therefore
+   [
+   \mathcal C^1 = \big(\operatorname{im}d_0\oplus\operatorname{im}d_1^*\big)\oplus\ker(\Delta_1),
+   ]
+   which is exactly the claim. ∎
+
+This is the rigorous backbone of Part 9’s “pure gauge vs physical” splitting.
+
+---
+
+### 9B.6. Gauge invariance forces physical gradients to be horizontal: (\nabla f(U^{(0)})\in\ker(d_0^*))
+
+Part 8 emphasizes that for any gauge-invariant observable (f), its gradient is horizontal (\nabla f(U)\in H_U) , and Part 9 repeats this at the vacuum . Here is the short proof at first principles level, because it is a key “why we can ignore vertical directions” point.
+
+Let the lattice gauge group be (\mathcal G_\Lambda=G^{V(\Lambda)}) acting by
+[
+(g\cdot U)*{x,\mu}=g_x,U*{x,\mu},g_{x+\hat\mu}^{-1}. 
+
+Let (f:M_\Lambda\to\mathbb R) be gauge invariant: (f(g\cdot U)=f(U)) for all (g).
+
+Fix (U) and a Lie algebra element (\phi=(\phi_x)\in\mathcal C^0(\Lambda;\mathfrak g)). Consider the one-parameter gauge path (g(t)=\exp(t\phi)). Gauge invariance gives
+[
+0=\frac{d}{dt}\Big|*{t=0} f(g(t)\cdot U)
+=\langle \nabla f(U),\ V_U(\phi)\rangle*{g_\Lambda},
+]
+where (V_U(\phi)) is the tangent vector at (U) to the gauge orbit (a vertical vector).
+
+At the vacuum (U^{(0)}), the linearized gauge action is exactly (V_{U^{(0)}}(\phi)=d_0\phi) (this is the identification (V_{U^{(0)}}=\operatorname{im}(d_0)) recorded in Part 9) . Therefore
+[
+\langle \nabla f(U^{(0)}),\ d_0\phi\rangle_{\mathcal C^1}=0\quad\forall \phi,
+]
+so (\nabla f(U^{(0)})\perp \operatorname{im}(d_0)), i.e.
+[
+\nabla f(U^{(0)})\in(\operatorname{im}d_0)^\perp=\ker(d_0^*).
+]
+Thus physical gradients live in the horizontal space (\ker(d_0^*)), which Part 9 further identifies with (\ker(\Delta_1)\oplus\operatorname{im}(d_1^*)) .
+
+---
+
+### 9B.7. Rigorous spectral gap on (\operatorname{im}(d_1^*)): the finite-dimensional argument
+
+Part 9 states “formally” that (d_1^*d_1) has a strictly positive spectral gap when restricted to (\operatorname{im}(d_1^*)) . Here’s the clean proof.
+
+#### Lemma 9B.7 (No zero-modes in the co-exact sector)
+
+[
+\ker(d_1)\cap \operatorname{im}(d_1^*)={0}.
+]
+
+**Proof.** Take (X\in\ker(d_1)\cap\operatorname{im}(d_1^*)). Then:
+
+* (X\in\operatorname{im}(d_1^*)) implies (d_0^*X=0), because (d_0^*d_1^*=(d_1d_0)^*=0).
+* Also (d_1X=0) by assumption.
+
+Hence (X\in\ker(d_0^*)\cap\ker(d_1)=\ker(\Delta_1)) by Lemma 9B.3. But Hodge decomposition says (\ker(\Delta_1)\perp \operatorname{im}(d_1^*)) (orthogonal summands), so the only vector in both is (0). ∎
+
+#### Theorem 9B.8 (Positive definiteness of (d_1^*d_1) on (\operatorname{im}(d_1^*)))
+
+There exists (\lambda_{\min}(\Lambda)>0) such that for all (X\in\operatorname{im}(d_1^*)),
+[
+\langle X,d_1^*d_1X\rangle_{\mathcal C^1};\ge;\lambda_{\min}(\Lambda),|X|_{\mathcal C^1}^2.
+]
+
+**Proof.** On (\operatorname{im}(d_1^*)), the quadratic form is
+[
+Q(X)=\langle X,d_1^*d_1X\rangle=|d_1X|_{\mathcal C^2}^2\ge 0.
+]
+By Lemma 9B.7, (Q(X)=0) implies (d_1X=0) implies (X=0) on (\operatorname{im}(d_1^*)). So (Q) is **positive definite** on the finite-dimensional space (\operatorname{im}(d_1^*)).
+
+Equivalently, the self-adjoint operator (A:=d_1^*d_1) restricted to (\operatorname{im}(d_1^*)) has strictly positive eigenvalues. Let (\lambda_{\min}(\Lambda)) be its smallest eigenvalue. Then the Rayleigh–Ritz characterization gives
+[
+\langle X,AX\rangle \ge \lambda_{\min}(\Lambda)|X|^2
+]
+for all (X) in that subspace. ∎
+
+**Important nuance (for later scaling discussions).**
+This (\lambda_{\min}(\Lambda)) is positive for each fixed finite lattice, but it generally **depends on lattice side lengths**. On a periodic box it scales like (L^{-2}) as (L\to\infty). The *volume-independent* positivity in the program comes later from adding the Haar convexity term (the “Haar mass”) which gives a uniform (+c_H I) at the vacuum .
+
+---
+
+### 9B.8. Fourier analysis on a periodic box: explicit eigenvalues and explicit (\lambda_{\min})
+
+Now assume periodic boundary conditions as in 9B.1.
+
+#### 9B.8.1. Discrete Fourier modes
+
+For (k=(k_1,\dots,k_d)) with
+[
+k_\mu = \frac{2\pi n_\mu}{L_\mu},\qquad n_\mu\in{0,1,\dots,L_\mu-1},
+]
+define (e_k(x)=\exp(i k\cdot x)). These form an orthogonal basis of scalar functions on (\Lambda). For (\mathfrak g)-valued fields, apply componentwise.
+
+Define the lattice “momentum factors”
+[
+q_\mu(k):=e^{ik_\mu}-1,\qquad \overline{q_\mu(k)}=e^{-ik_\mu}-1.
+]
+Then
+[
+|q_\mu(k)|^2=(e^{ik_\mu}-1)(e^{-ik_\mu}-1)=2-2\cos(k_\mu)=4\sin^2\Big(\frac{k_\mu}{2}\Big).
+]
+Define the scalar symbol
+[
+\lambda(k):=\sum_{\mu=1}^d |q_\mu(k)|^2
+=4\sum_{\mu=1}^d \sin^2\Big(\frac{k_\mu}{2}\Big).
+]
+This is the eigenvalue of the scalar Laplacian (\Delta_0=d_0^*d_0) at momentum (k).
+
+#### 9B.8.2. Symbols of (d_0) and (d_0^*)
+
+Let (\varphi_x=\xi,e_k(x)). Then
+[
+(d_0\varphi)*{x,\mu} = (\varphi*{x+\hat\mu}-\varphi_x)
+= \xi (e^{ik_\mu}-1) e_k(x)=\xi, q_\mu(k),e_k(x).
+]
+So in Fourier, (d_0(k)) is multiplication by the vector (q(k)=(q_\mu(k))).
+
+Similarly, the explicit formula for (d_0^*) from Proposition 9B.1 gives (on a 1-form mode (X_{x,\mu}=\eta_\mu e_k(x))):
+[
+(d_0^*X)*x=\sum*\mu (X_{x-\hat\mu,\mu}-X_{x,\mu})
+=\sum_\mu \eta_\mu (e^{-ik_\mu}-1)e_k(x)=\sum_\mu \eta_\mu,\overline{q_\mu(k)},e_k(x).
+]
+So (d_0^*(k)) is the “dot product” with (\overline{q(k)}).
+
+#### 9B.8.3. Symbol of (d_1), and the structure of (d_1^*d_1)
+
+Take a Fourier 1-form (X_{x,\mu}=\eta_\mu e_k(x)). Using Part 9’s curl definition ,
+[
+(d_1X)*{x;\mu,\nu}
+= X*{x,\mu}+X_{x+\hat\mu,\nu}-X_{x+\hat\nu,\mu}-X_{x,\nu}.
+]
+Substitute the mode:
+[
+(d_1X)*{x;\mu,\nu}
+= \big(\eta*\mu(1-e^{ik_\nu})+\eta_\nu(e^{ik_\mu}-1)\big)e_k(x)
+=\big(q_\mu(k)\eta_\nu-q_\nu(k)\eta_\mu\big)e_k(x).
+]
+So in Fourier, (d_1(k)) is the antisymmetric “wedge” (q\wedge \eta).
+
+A standard (and easy-to-check) identity then gives:
+[
+(d_1^*d_1)(k),\eta
+=\lambda(k),\eta - q(k),\big(\overline{q(k)}\cdot \eta\big).
+]
+This is the discrete analogue of the continuum Maxwell operator (-\Delta \eta+\nabla(\nabla\cdot\eta)): it is (\lambda(k)) times identity minus projection onto the longitudinal direction (q(k)).
+
+Two immediate consequences:
+
+* **Longitudinal (exact) mode:** if (\eta) is proportional to (q(k)), then (\overline{q}\cdot\eta=\overline{q}\cdot q=\lambda(k)) (up to the scalar factor), and the two terms cancel, so (d_1^*d_1=0) on exact modes (this matches (d_1d_0=0)).
+* **Transverse (co-exact) modes:** if (\overline{q(k)}\cdot\eta=0) (discrete divergence-free), then
+  [
+  (d_1^*d_1)(k)\eta=\lambda(k)\eta.
+  ]
+
+For (k\neq 0), the constraint (\overline{q}\cdot\eta=0) cuts out a ((d-1))-dimensional subspace in the (d)-dimensional space of edge components, so transverse modes have multiplicity ((d-1)\dim\mathfrak g).
+
+#### 9B.8.4. Explicit (\lambda_{\min}) on the co-exact sector
+
+On a periodic torus, for every nonzero (k), (\lambda(k)>0). The co-exact sector is made of transverse modes for (k\neq 0) plus (possibly) harmonic modes at (k=0). On the transverse sector,
+[
+\langle X,d_1^*d_1X\rangle=\lambda(k)|X|^2.
+]
+Hence the smallest positive eigenvalue of (d_1^*d_1) on (\operatorname{im}(d_1^*)) is
+[
+\lambda_{\min}(\Lambda)=\min_{k\neq 0}\lambda(k)
+=4\min_{k\neq 0}\sum_{\mu=1}^d\sin^2\Big(\frac{k_\mu}{2}\Big).
+]
+
+A convenient explicit lower bound is obtained by choosing the smallest nonzero momentum in one coordinate:
+[
+\lambda_{\min}(\Lambda)=4\min_{\mu=1,\dots,d}\sin^2\Big(\frac{\pi}{L_\mu}\Big).
+]
+In the isotropic case (L_\mu=L),
+[
+\lambda_{\min}(\Lambda)=4\sin^2\Big(\frac{\pi}{L}\Big)\sim \frac{4\pi^2}{L^2}\quad(L\to\infty).
+]
+
+---
+
+### 9B.9. Translating back to the Wilson Hessian: explicit physical positivity constants
+
+Part 9 shows
+[
+\nabla^2 S_W(U^{(0)})=2c_W,d_1^*d_1,\qquad c_W=\frac{\beta c_{HS}}{N}>0 
+]
+and that the physically relevant sector is the horizontal space
+[
+H_{U^{(0)}}=\ker(d_0^*)=\ker(\Delta_1)\oplus\operatorname{im}(d_1^*) .
+]
+
+Combining with Theorem 9B.8 gives a fully rigorous version of the “formal spectral gap” line in Part 9 :
+
+#### Corollary 9B.9 (Physical positivity with explicit (\lambda_{\min}(\Lambda)))
+
+For all (X\in\operatorname{im}(d_1^*)),
+[
+\big\langle X,\nabla^2S_W(U^{(0)})X\big\rangle_{\mathcal C^1}
+;=;2c_W,\langle X,d_1^*d_1X\rangle_{\mathcal C^1}
+;\ge;2c_W,\lambda_{\min}(\Lambda),|X|*{\mathcal C^1}^2.
+]
+On a periodic box this constant can be taken as
+[
+\lambda*{\min}(\Lambda)=4\min_\mu \sin^2\Big(\frac{\pi}{L_\mu}\Big).
+]
+
+This is exactly the quantitative sharpening of Part 9’s Theorem 9.3 positivity statement , now with a complete proof and explicit periodic-box eigenvalue.
+
+---
+
+### 9B.10. How this interfaces with the “Haar mass” mechanism (brief, but logically closed)
+
+Part 9 then adds the Haar convexity contribution at the vacuum, modeled as a uniform positive quadratic term (c_0 I) on link coordinates , and Part 6 proves a uniform convexity bound for the product Haar potential near the identity (a constant (c_H>0) independent of (\Lambda)) .
+
+The key point for later parts is:
+
+* The Wilson Hessian controls **co-exact** modes with a gap (\sim L^{-2}) in large volume.
+* The Haar term controls **all** modes uniformly near the identity (volume-independent), which is why the combined effective Hessian has a **volume-independent** lower bound on the physical horizontal sector in the small-field region .
+
+That’s the analytic “reason” the program can hope to get uniform functional inequalities despite the Maxwell operator’s vanishing gap in the thermodynamic limit.
+
+---
+
+### 9B.11. Summary of what we proved here
+
+* We computed (d_0^*) explicitly as discrete divergence and (d_1^*) explicitly as a discrete co-divergence on 2‑forms (periodic summation-by-parts), starting only from the abstract adjoint characterization in Part 9 .
+* We gave a complete finite-dimensional proof of the degree‑1 Hodge decomposition stated in Part 9 .
+* We proved rigorously (no “formal”) that (d_1^*d_1) is positive definite on (\operatorname{im}(d_1^*)), hence admits a strictly positive (\lambda_{\min}(\Lambda)).
+* On a periodic box we computed the Fourier spectrum and obtained an explicit formula
+  [
+  \lambda_{\min}(\Lambda)=4\min_\mu \sin^2\Big(\frac{\pi}{L_\mu}\Big),
+  ]
+  and thus an explicit quantitative “physical positivity” constant for the Wilson Hessian via (\nabla^2S_W(U^{(0)})=2c_Wd_1^*d_1) .
+
+That completes the “make the Maxwell operator completely explicit” supplement to Part 9, and sets the stage for the curvature/functional-inequality machinery that comes next.

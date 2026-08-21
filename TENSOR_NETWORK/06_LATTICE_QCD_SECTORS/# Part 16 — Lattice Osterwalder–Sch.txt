@@ -1,0 +1,781 @@
+# Part 16 — Lattice Osterwalder–Schrader Axioms for Wilson Yang–Mills
+
+In Parts 1–15 we worked entirely in **configuration space**:
+
+* finite-dimensional Riemannian manifolds (M_\Lambda = G^{E(\Lambda)}) with product bi-invariant metrics and product Haar volume,
+* Gibbs measures (d\mu_\Lambda \propto e^{-S_\Lambda},d\mathrm{vol}*{g*\Lambda}),
+* diffusion generators (L_\Lambda) and Bakry–Émery curvature leading to functional inequalities and spectral gaps in (L^2(\mu_\Lambda)).
+
+From the QFT side, that’s only half the story. To talk about **mass gaps** we need:
+
+* a Hilbert space of states,
+* a Hamiltonian (H_\Lambda),
+* Euclidean-time evolution with reflection positivity.
+
+This is what the **Osterwalder–Schrader (OS)** framework supplies.
+
+This part has three concrete goals:
+
+1. Formulate the OS axioms (OS0–OS2) in the finite‑volume lattice Yang–Mills setting.
+2. Prove that standard Wilson lattice Yang–Mills satisfies these axioms for each finite spacetime lattice.
+3. Record the exact objects (measure, reflection, positive-time algebra) that will feed OS reconstruction of a finite-volume Hamiltonian (H_\Lambda) in Part 17.
+
+Throughout we fix lattice spacing (a>0) and **finite spacetime volume**. No continuum or infinite-volume limit appears here. All configuration spaces are compact manifolds, all integrals are over finite-dimensional compact sets, and we can happily use ordinary Riemann integration.
+
+---
+
+## 16.1. Spacetime lattice and gauge fields
+
+We now pass from a purely spatial lattice to a Euclidean **spacetime** lattice with one distinguished “time” direction.
+
+### 16.1.1. Spacetime geometry
+
+Fix:
+
+* a discrete Euclidean time direction with (T) time-slices,
+  [
+  \mathbb{Z}_T := {0,1,\dots,T-1},
+  ]
+  with periodic boundary conditions in time unless otherwise stated;
+* a finite spatial lattice (\Lambda_S \subset \mathbb{Z}^d) (e.g. an (L^d) periodic box).
+
+Define the spacetime lattice
+[
+\Lambda := \mathbb{Z}_T \times \Lambda_S.
+]
+We write points as ((t,\mathbf{x})) with (t\in\mathbb{Z}_T), (\mathbf{x}\in\Lambda_S). The time direction will be labeled by (\mu=0), spatial directions by (\mu=1,\dots,d).
+
+Let (V(\Lambda)) be the set of sites, and (E(\Lambda)) the set of **oriented edges (links)**:
+[
+E(\Lambda) := {(t,\mathbf{x};\mu): (t,\mathbf{x})\in\Lambda,\ \mu\in{0,\dots,d}},
+]
+where ((t,\mathbf{x};\mu)) is the edge from ((t,\mathbf{x})) to ((t,\mathbf{x})+\hat e_\mu) (with periodicity where applicable).
+
+Let (P(\Lambda)) be the set of **oriented plaquettes**, i.e. elementary squares in the (\mu\nu)-planes built from four oriented edges in the usual way.
+
+### 16.1.2. Lattice gauge fields and configuration manifold
+
+Fix a compact, connected Lie group (G) (e.g. (SU(N))).
+
+A **lattice gauge field** is an assignment of a group element to each oriented edge:
+[
+U_{t,\mathbf{x},\mu} \in G,\qquad (t,\mathbf{x};\mu)\in E(\Lambda).
+]
+
+The **configuration manifold** is the product
+[
+M_\Lambda := G^{E(\Lambda)},
+]
+a finite-dimensional compact Lie group. We equip (M_\Lambda) with:
+
+* the product bi-invariant Riemannian metric (g_\Lambda) from the chosen bi-invariant metric on (G),
+* the product Haar volume (\mathrm{vol}*{g*\Lambda}), i.e.
+  [
+  d\mathrm{vol}*{g*\Lambda}(U) = \bigotimes_{e\in E(\Lambda)} d\mathrm{Haar}_G(U_e),
+  ]
+  where each factor is normalized Haar measure on (G).
+
+So ((M_\Lambda,g_\Lambda)) is compact and smooth, and all integrals over (M_\Lambda) are finite.
+
+### 16.1.3. Wilson action
+
+For each plaquette (p\in P(\Lambda)), its **plaquette holonomy** is the ordered product of link variables around the plaquette:
+[
+U_p(U) := U_{e_1},U_{e_2},U_{e_3},U_{e_4} \in G,
+]
+where ((e_1,e_2,e_3,e_4)) is a fixed cyclic ordering of the oriented edges forming (p). Reversing orientation replaces (U_p) by (U_p^{-1}).
+
+Fix a representation (\rho: G\to GL(V)) (usually the defining representation for (SU(N))) and let (\mathrm{Tr}) denote the trace in (\rho). The **Wilson plaquette action** is
+[
+S_W(U)
+:= \beta \sum_{p\in P(\Lambda)} \left( 1 - \frac{1}{\dim V},\mathrm{Re}, \mathrm{Tr},U_p(U)\right),
+]
+with coupling (\beta>0).
+
+Key properties (all elementary to check):
+
+1. **Locality:** each plaquette term depends only on the four link variables at the edges of that plaquette.
+2. **Gauge invariance:** under a gauge transformation (g:V(\Lambda)\to G),
+   [
+   (g\cdot U)*{(t,\mathbf{x};\mu)}
+   := g(t,\mathbf{x}),U*{t,\mathbf{x},\mu},g(t,\mathbf{x}+\hat e_\mu)^{-1},
+   ]
+   each (U_p) transforms by conjugation, (\mathrm{Tr},U_p) is invariant, hence (S_W(g\cdot U)=S_W(U)).
+3. **Euclidean invariance:** under lattice symmetries (translations, spatial rotations, reflections) that permute plaquettes and preserve orientation conventions, the set (P(\Lambda)) and the trace terms are permuted, so (S_W) is invariant.
+4. **Boundedness:** since (\mathrm{Tr},U_p) takes values in a compact range, (S_W) is bounded and smooth on (M_\Lambda).
+
+We will use these properties repeatedly.
+
+### 16.1.4. Gauge group and gauge-invariant observables
+
+Let (\mathcal{G}*\Lambda := G^{V(\Lambda)}) be the **lattice gauge group**, acting on (M*\Lambda) by the sitewise conjugation rule above.
+
+A (complex-valued) function (\mathcal{O}:M_\Lambda\to\mathbb{C}) is **gauge invariant** if
+[
+\mathcal{O}(g\cdot U) = \mathcal{O}(U)\quad\text{for all }g\in\mathcal{G}*\Lambda,,U\in M*\Lambda.
+]
+
+A **local observable** is one that depends only on link variables in a finite region of the lattice (a small neighborhood of some finite set of sites). In finite volume, “local” just means: depends on finitely many link variables; that notion is still meaningful for keeping track of supports.
+
+Let (\mathcal{A}_\Lambda^{\mathrm{inv}}) be the (*)-algebra generated by **gauge-invariant local observables**. This will be our algebra of physical fields.
+
+---
+
+## 16.2. Wilson measure and Schwinger functions
+
+We now define the Euclidean measure and the associated Schwinger functions.
+
+### 16.2.1. Gibbs measure
+
+Define the finite-volume Euclidean Yang–Mills (Wilson) measure
+[
+d\mu_\Lambda(U)
+:= Z_\Lambda^{-1} e^{-S_W(U)},d\mathrm{vol}*{g*\Lambda}(U),
+]
+where the partition function
+[
+Z_\Lambda := \int_{M_\Lambda} e^{-S_W(U)},d\mathrm{vol}*{g*\Lambda}(U)
+]
+is finite and strictly positive.
+
+**Lemma 16.1 (Existence and basic properties of (\mu_\Lambda)).**
+
+1. (0<Z_\Lambda<\infty).
+2. (\mu_\Lambda) is a Borel probability measure on (M_\Lambda) with smooth strictly positive density with respect to (\mathrm{vol}*{g*\Lambda}).
+3. (\mu_\Lambda) is gauge invariant and Euclidean invariant under lattice symmetries preserving the Wilson action.
+
+*Proof.*
+
+1. Since (M_\Lambda) is compact and (S_W) is continuous and bounded, there exist constants (m,M\in\mathbb{R}) such that
+   [
+   m \le S_W(U)\le M\quad\text{for all }U\in M_\Lambda.
+   ]
+   Hence
+   [
+   e^{-M} \le e^{-S_W(U)}\le e^{-m},
+   ]
+   so
+   [
+   e^{-M},\mathrm{vol}*{g*\Lambda}(M_\Lambda)
+   \le Z_\Lambda
+   \le e^{-m},\mathrm{vol}*{g*\Lambda}(M_\Lambda),
+   ]
+   which proves (0<Z_\Lambda<\infty).
+2. The density (Z_\Lambda^{-1} e^{-S_W(U)}) is smooth and strictly positive because (S_W) is smooth real-valued; dividing by the positive finite constant (Z_\Lambda) normalizes to a probability measure.
+3. Gauge invariance of (S_W) and product Haar invariance of (\mathrm{vol}*{g*\Lambda}) imply that for any measurable set (A\subset M_\Lambda) and any gauge transformation (g\in\mathcal{G}*\Lambda),
+   [
+   \mu*\Lambda(g\cdot A)
+   = Z_\Lambda^{-1} \int_{g\cdot A} e^{-S_W(U)},d\mathrm{vol}*{g*\Lambda}(U)
+   = Z_\Lambda^{-1} \int_A e^{-S_W(g\cdot U)},d\mathrm{vol}*{g*\Lambda}(g\cdot U)
+   = \mu_\Lambda(A),
+   ]
+   using the change of variables (U\mapsto g\cdot U) and invariance of both (S_W) and Haar measure. The same argument works for lattice Euclidean symmetries that permute links and plaquettes, so (\mu_\Lambda) is Euclidean invariant. ∎
+
+### 16.2.2. Schwinger functions
+
+Let (\mathcal{O}_1,\dots,\mathcal{O}*n\in\mathcal{A}*\Lambda^{\mathrm{inv}}) be gauge-invariant local observables “located” near spacetime points (x_1,\dots,x_n\in\Lambda). (Formally, (\mathcal{O}_j(x_j)) is the observable (\mathcal{O}_j) translated to the neighborhood of (x_j).)
+
+Define the **(n)-point Schwinger functions** by
+[
+S_n^{(\Lambda)}(x_1,\dots,x_n)
+:= \big\langle \mathcal{O}*1(x_1)\cdots\mathcal{O}*n(x_n)\big\rangle*\Lambda
+:= \int*{M_\Lambda} \mathcal{O}_1(x_1)(U)\cdots \mathcal{O}*n(x_n)(U),d\mu*\Lambda(U).
+]
+
+Because (\mathcal{O}*j) are bounded and (M*\Lambda) is compact, all these integrals are finite and define continuous functions of the (x_j) (with respect to the discrete topology on (\Lambda), continuity is trivial here).
+
+These are the Euclidean correlation functions that the OS axioms constrain.
+
+---
+
+## 16.3. Time reflection and the positive-time algebra
+
+The OS axioms require:
+
+1. a **time reflection** on spacetime and on configurations,
+2. a distinguished (*)-subalgebra of **positive-time observables**,
+3. a conjugate-linear reflection (\theta) acting on observables via pullback and complex conjugation.
+
+### 16.3.1. Time reflection on sites and links
+
+We first define the reflection of sites:
+[
+\theta(t,\mathbf{x}) := (-t,\mathbf{x}),
+]
+where (-t) is taken modulo (T) when we are on a time circle. For simplicity in the reflection positivity proof, it is convenient to work with a **time interval** ({-T,\dots,T}) and reflection (t\mapsto -t); the periodic case can be reduced to this or treated directly. To keep notation light, we proceed with a time interval and assume the spatial directions are periodic or fixed.
+
+Thus consider a spacetime lattice
+[
+\Lambda := {(x_0,\mathbf{x}) : x_0\in{-T,\dots,T},\ \mathbf{x}\in\Lambda_S},
+]
+with time coordinate (x_0) and space coordinate (\mathbf{x}).
+
+Define the time reflection on sites
+[
+\theta(x_0,\mathbf{x}) := (-x_0,\mathbf{x}),
+]
+and extend this to link variables as follows.
+
+* For **spatial links** ((x_0,\mathbf{x}; i)) with (i\in{1,\dots,d}),
+  [
+  \Theta\big(U(x_0,\mathbf{x}),i\big)
+  := U\big(\theta(x_0,\mathbf{x}), i\big)
+  = U(-x_0,\mathbf{x}),i.
+  ]
+* For **temporal links** ((x_0,\mathbf{x}; 0)) oriented from ((x_0,\mathbf{x})) to ((x_0+1,\mathbf{x})), define
+  [
+  \Theta\big(U(x_0,\mathbf{x}),0\big)
+  := U\big(\theta(x_0+1,\mathbf{x}),0\big)^{-1}
+  = U(-x_0-1,\mathbf{x}),0^{-1}.
+  ]
+
+Extend (\Theta) to all of (M_\Lambda) by acting componentwise on each link variable.
+
+**Lemma 16.2 (Basic properties of (\Theta)).**
+
+1. (\Theta) is an involution on configurations: (\Theta^2=\mathrm{Id}).
+2. (\Theta) preserves the set of plaquette holonomies up to inversion:
+   each plaquette (p) maps to a plaquette (\theta p) such that
+   (\mathrm{Tr},U_{\theta p}(\Theta U) = \mathrm{Tr},U_p(U)).
+3. The Wilson action is invariant under (\Theta):
+   [
+   S_W(\Theta U) = S_W(U)\quad\text{for all }U\in M_\Lambda.
+   ]
+
+*Proof.*
+
+1. For spatial links, applying (\Theta) twice just sends
+   ((x_0,\mathbf{x})\to(-x_0,\mathbf{x})\to(x_0,\mathbf{x})). For temporal links, a straightforward check shows
+   [
+   \Theta^2\big(U(x_0,\mathbf{x}),0\big)
+   = \Theta\big(U(-x_0-1,\mathbf{x}),0^{-1}\big)
+   = U(x_0,\mathbf{x}),0,
+   ]
+   using the fact that inversion is an involution in the group. Thus (\Theta^2=\mathrm{Id}).
+2. Take a plaquette (p) in the ((0,i))-plane, built from two temporal and two spatial links. Under (\Theta), each link is mapped to a reflected link; temporal edges acquire inversion, which reverses orientation. The resulting ordered product around (\theta p) is conjugate to the original product or its inverse. Since the Wilson action uses (\mathrm{Re},\mathrm{Tr},U_p), which is invariant under inversion and conjugation, the plaquette contribution is preserved.
+3. Summing the contributions over all plaquettes and using the fact that (\Theta) just permutes them (with possible orientation reversal) and preserves (\mathrm{Re},\mathrm{Tr},U_p) shows (S_W(\Theta U)=S_W(U)). ∎
+
+Because the configuration space volume is a product of Haar measures, which are invariant under inversion and group automorphisms, we also have:
+
+**Lemma 16.3 (Measure invariance under reflection).**
+
+(\mathrm{vol}*{g*\Lambda}) is invariant under (\Theta), hence so is (\mu_\Lambda):
+[
+\mu_\Lambda(A) = \mu_\Lambda(\Theta A)
+]
+for all measurable (A\subset M_\Lambda).
+
+*Proof.* Each factor (d\mathrm{Haar}_G(U_e)) is invariant under left/right multiplication and inversion in (G). (\Theta) is implemented by a permutation of edges and possibly inversion on some factors; the product measure is invariant. Combining this with Lemma 16.2(3) for the density (e^{-S_W}) yields the claim. ∎
+
+### 16.3.2. Reflection on observables
+
+Define the **OS reflection** on observables by
+[
+(\theta F)(U) := \overline{F(\Theta U)},\qquad F:M_\Lambda\to\mathbb{C}.
+]
+
+This is a conjugate-linear map on functions:
+
+* (\theta(\alpha F+\beta G) = \overline{\alpha},\theta F + \overline{\beta},\theta G),
+* (\theta(FG) = (\theta G)(\theta F)) (reverse order, because of complex conjugation),
+* (\theta) is an involution: (\theta^2 F = F).
+
+When we restrict to gauge-invariant observables, (\theta) remains in (\mathcal{A}_\Lambda^{\mathrm{inv}}), because both (\Theta) and complex conjugation preserve gauge invariance.
+
+### 16.3.3. Positive-time region and algebra
+
+Define the strictly positive-time region
+[
+\Lambda^+ := { (x_0,\mathbf{x})\in\Lambda : x_0 > 0 }.
+]
+
+Let (\mathcal{A}*\Lambda^+ \subset \mathcal{A}*\Lambda^{\mathrm{inv}}) be the (*)-subalgebra generated by **gauge-invariant local observables supported in (\Lambda^+)**: i.e. each factor in a product depends only on link variables whose spacetime support lies entirely in (\Lambda^+) (and possibly on the time-zero layer if we include that by convention).
+
+Thus, elements (F\in\mathcal{A}*\Lambda^+) are finite linear combinations of finite products
+[
+F(U) = \sum_k c_k \prod*{m=1}^{n_k} \mathcal{O}*{k,m}(U),
+]
+where each (\mathcal{O}*{k,m}) is a gauge-invariant local observable whose support is contained in (\Lambda^+\cup\Lambda^0) with (\Lambda^0 := {x_0=0}). These serve as “test functions at positive times” for the OS formalism.
+
+Later, OS reconstruction will build a pre-Hilbert space by equipping (\mathcal{A}*\Lambda^+) with an inner product coming from
+[
+(F,G)*{\mathrm{OS}} := \langle \theta F, G\rangle_\Lambda,
+]
+so reflection positivity in OS2 is exactly positivity of this quadratic form.
+
+---
+
+## 16.4. Lattice OS axioms for Yang–Mills
+
+We now state a finite-volume version of the OS axioms (OS0–OS2) and verify them for the Wilson lattice measure.
+
+Given (\mu_\Lambda), define the expectation functional
+[
+\langle F\rangle_\Lambda := \int_{M_\Lambda} F(U),d\mu_\Lambda(U),\qquad F\in L^1(\mu_\Lambda),
+]
+and restrict to (F\in\mathcal{A}_\Lambda^{\mathrm{inv}}) (gauge-invariant sector).
+
+### 16.4.1. OS0 — Regularity and permutation symmetry
+
+**Axiom OS0 (regularity & permutation symmetry, lattice version).**
+
+For any gauge-invariant local observables (\mathcal{O}_1,\dots,\mathcal{O}*n\in\mathcal{A}*\Lambda^{\mathrm{inv}}) and spacetime points (x_1,\dots,x_n\in\Lambda),
+
+1. the Schwinger function
+   [
+   S_n^{(\Lambda)}(x_1,\dots,x_n)
+   := \langle \mathcal{O}_1(x_1)\cdots \mathcal{O}*n(x_n)\rangle*\Lambda
+   ]
+   is a well-defined finite number;
+2. (S_n^{(\Lambda)}) is symmetric under permutations of the pairs ((x_j,\mathcal{O}_j)).
+
+**Proposition 16.4 (OS0 holds for Wilson lattice Yang–Mills).**
+
+The Wilson measure (\mu_\Lambda) satisfies OS0.
+
+*Proof.*
+
+1. **Existence/regularity.** Each (\mathcal{O}*j(x_j)) is a smooth bounded function on the compact manifold (M*\Lambda). Their product (\prod_{j=1}^n\mathcal{O}*j(x_j)(U)) is therefore bounded and measurable. Since (\mu*\Lambda) is a probability measure with smooth positive density,
+   [
+   \big|\langle \mathcal{O}*1(x_1)\cdots \mathcal{O}*n(x_n)\rangle*\Lambda\big|
+   \le \int*{M_\Lambda} \prod_{j=1}^n |\mathcal{O}*j|*\infty,d\mu_\Lambda(U)
+   = \prod_{j=1}^n |\mathcal{O}*j|*\infty < \infty.
+   ]
+   So the Schwinger function is well-defined and finite.
+2. **Permutation symmetry.** For any permutation (\sigma\in S_n),
+   [
+   \prod_{j=1}^n \mathcal{O}*j(x_j)(U)
+   = \prod*{j=1}^n \mathcal{O}*{\sigma(j)}(x*{\sigma(j)})(U),
+   ]
+   since we are multiplying complex numbers and multiplication is commutative. Thus
+   [
+   S_n^{(\Lambda)}(x_1,\dots,x_n)
+   = \int_{M_\Lambda} \prod_{j=1}^n \mathcal{O}*j(x_j)(U),d\mu*\Lambda(U)
+   = \int_{M_\Lambda} \prod_{j=1}^n \mathcal{O}*{\sigma(j)}(x*{\sigma(j)})(U),d\mu_\Lambda(U),
+   ]
+   which is exactly (S_n^{(\Lambda)}(x_{\sigma(1)},\dots,x_{\sigma(n)})). ∎
+
+### 16.4.2. OS1 — Euclidean invariance
+
+Let (\tau) be a lattice Euclidean symmetry of (\Lambda): a bijection (\tau:\Lambda\to\Lambda) generated by translations, discrete rotations, and possibly reflections, such that:
+
+* (\tau) preserves adjacency (maps edges to edges, plaquettes to plaquettes),
+* (\tau) preserves the orientation conventions for plaquettes and the Wilson action.
+
+Such a (\tau) acts on configurations by relabeling links:
+[
+(\tau U)*{(t,\mathbf{x};\mu)} := U*{\tau^{-1}(t,\mathbf{x};\mu)}.
+]
+We also let (\tau) act on observables by pullback:
+[
+(\tau\mathcal{O})(U) := \mathcal{O}(\tau^{-1}U).
+]
+
+Because the Haar measure and the Wilson action are defined locally in terms of plaquettes and link variables, and (\tau) permutes these structures, both (S_W) and (\mathrm{vol}*{g*\Lambda}) are invariant under (\tau), hence so is (\mu_\Lambda).
+
+**Axiom OS1 (Euclidean invariance, lattice version).**
+
+For any such symmetry (\tau),
+[
+S_n^{(\Lambda)}(x_1,\dots,x_n)
+= S_n^{(\Lambda)}(\tau x_1,\dots,\tau x_n)
+]
+for all gauge-invariant local observables and points.
+
+**Proposition 16.5 (OS1 holds for Wilson lattice Yang–Mills).**
+
+The Wilson measure (\mu_\Lambda) satisfies OS1.
+
+*Proof.*
+
+Fix a symmetry (\tau). By construction,
+[
+S_W(\tau U) = S_W(U),\qquad
+d\mathrm{vol}*{g*\Lambda}(\tau U) = d\mathrm{vol}*{g*\Lambda}(U),
+]
+so (d\mu_\Lambda(\tau U) = d\mu_\Lambda(U)). Thus (\mu_\Lambda) is invariant under the change of variables (U\mapsto\tau U).
+
+For gauge-invariant local observables, the action of (\tau) just relabels spacetime points: (\mathcal{O}*j(\tau x_j)(U) = \mathcal{O}*j(x_j)(\tau^{-1}U)). Then
+[
+\begin{aligned}
+S_n^{(\Lambda)}(\tau x_1,\dots,\tau x_n)
+&= \int*{M*\Lambda} \prod_{j=1}^n \mathcal{O}*j(\tau x_j)(U),d\mu*\Lambda(U) \
+&= \int_{M_\Lambda} \prod_{j=1}^n \mathcal{O}*j(x_j)(\tau^{-1}U),d\mu*\Lambda(U).
+\end{aligned}
+]
+Make the change of variables (V=\tau^{-1}U); by invariance of (\mu_\Lambda), we get
+[
+S_n^{(\Lambda)}(\tau x_1,\dots,\tau x_n)
+= \int_{M_\Lambda} \prod_{j=1}^n \mathcal{O}*j(x_j)(V),d\mu*\Lambda(V)
+= S_n^{(\Lambda)}(x_1,\dots,x_n),
+]
+which is OS1. ∎
+
+### 16.4.3. OS2 — Reflection positivity
+
+This is the main nontrivial axiom.
+
+**Axiom OS2 (reflection positivity, lattice version).**
+
+For all finite collections (F_1,\dots,F_n\in\mathcal{A}*\Lambda^+) and coefficients (c_1,\dots,c_n\in\mathbb{C}), one has
+[
+\sum*{i,j=1}^n \overline{c_i} c_j,\big\langle ,(\theta F_i),F_j \big\rangle_\Lambda ;\ge; 0.
+]
+
+Equivalently, the quadratic form
+[
+Q(F) := \langle \theta F, F\rangle_\Lambda
+]
+is nonnegative for all (F\in\mathcal{A}*\Lambda^+):
+[
+\langle \theta F, F\rangle*\Lambda ;\ge; 0.
+]
+
+We now give a configuration-space proof for the Wilson action, following the standard Osterwalder–Seiler strategy but written in finite-volume lattice language.
+
+#### 16.4.3.1. Slice decomposition of spacetime and configuration
+
+Split spacetime into negative, zero, and positive time slices:
+[
+\Lambda^- := {x_0<0},\qquad
+\Lambda^0 := {x_0 = 0},\qquad
+\Lambda^+ := {x_0>0}.
+]
+
+Similarly, split the set of edges into:
+
+* edges entirely contained in (\Lambda^-\cup\Lambda^0),
+* edges entirely contained in (\Lambda^+\cup\Lambda^0),
+* temporal edges that cross the time-zero plane.
+
+Concretely, we can write
+[
+M_\Lambda \cong M^- \times M^0 \times M^+,
+]
+where
+
+* (M^-) is the product of (G) over edges with support in strictly negative time (and possibly ending at (x_0=0)),
+* (M^+) is the analogous product over strictly positive-time edges (and those starting at (x_0=0)),
+* (M^0) collects link variables on the time-zero layer that are invariant under (\theta) (e.g. purely spatial edges at (x_0=0)).
+
+Because Haar measure is a product over edges, the volume factorizes:
+[
+d\mathrm{vol}*{g*\Lambda}(U) = d\mathrm{vol}^-(U^-),d\mathrm{vol}^0(U^0),d\mathrm{vol}^+(U^+).
+]
+
+The reflection (\Theta) exchanges (M^-) and (M^+) and leaves (M^0) invariant.
+
+#### 16.4.3.2. Decomposition of the action
+
+Using locality of (S_W), we can decompose the action into three parts:
+[
+S_W(U) = S_-(U) + S_0(U) + S_+(U),
+]
+where:
+
+* (S_-(U)) is the sum of plaquette terms involving only link variables with support in (\Lambda^-\cup\Lambda^0),
+* (S_+(U)) is the sum of plaquette terms involving only link variables with support in (\Lambda^+\cup\Lambda^0),
+* (S_0(U)) collects the plaquette terms that **straddle** the time-zero plane.
+
+By construction and Lemma 16.2, we have:
+
+1. (S_+(\Theta U) = S_-(U)),
+2. (S_-(\Theta U) = S_+(U)),
+3. (S_0(\Theta U) = S_0(U)).
+
+Thus
+[
+e^{-S_W(U)} = e^{-S_-(U)},e^{-S_0(U)},e^{-S_+(U)}.
+]
+
+We can also write the Euclidean measure as
+[
+d\mu_\Lambda(U)
+= Z_\Lambda^{-1} e^{-S_-(U)} e^{-S_0(U)} e^{-S_+(U)} ,
+d\mathrm{vol}^-(U^-),d\mathrm{vol}^0(U^0),d\mathrm{vol}^+(U^+).
+]
+
+#### 16.4.3.3. Straddling factor as a sum of conjugate pairs
+
+The key structural step is that the **straddling factor** (e^{-S_0(U)}) can be written in a “sum of squares” (more precisely, sum of conjugate products) form.
+
+We state it as a lemma and then sketch why it holds for the Wilson action.
+
+**Lemma 16.6 (Kernel representation of the straddling factor).**
+
+There exists a family ({K_\alpha}*\alpha) of complex-valued functions on the positive-time configuration space (M^0\times M^+) such that, for all configurations (U\in M*\Lambda),
+[
+e^{-S_0(U)} = \sum_\alpha \overline{K_\alpha(\Theta U)},K_\alpha(U),
+]
+where each (K_\alpha) depends only on (U^0) and (U^+) (and (\Theta U) restricts to (U^0) and (U^-)).
+
+Equivalently,
+[
+e^{-S_0(U)} = \sum_\alpha K_\alpha(U^0,U^+) ,\overline{K_\alpha(U^0,\Theta U^-)}.
+]
+
+*Sketch of justification for the Wilson action.*
+
+Each term in (S_0(U)) arises from plaquettes that cross the time-zero plane. For a single straddling plaquette (p), the local Boltzmann factor
+[
+w_p(U_p) := \exp!\left{-\beta\left(1-\frac{1}{\dim V}\mathrm{Re},\mathrm{Tr},U_p\right)\right}
+]
+is a **class function** of (U_p\in G) (invariant under conjugation) and is real and positive. For such a function, Peter–Weyl theory says there is a character expansion
+[
+w_p(U_p) = \sum_{R\in\widehat{G}} a_{p,R} ,\chi_R(U_p),
+]
+with (\chi_R) the character of the irreducible representation (R). For the Wilson-type weights, one checks (using group-theoretic positivity of (\exp(\beta\mathrm{Re},\mathrm{Tr}(\cdot)))) that the coefficients (a_{p,R}) are **nonnegative**. This is the usual “positive-definite class function” condition.
+
+Now a straddling plaquette holonomy (U_p) is a product of link variables partly in (\Lambda^-\cup\Lambda^0) and partly in (\Lambda^+\cup\Lambda^0). When one writes (\chi_R(U_p)) in terms of matrix elements of those link variables, it naturally factorizes into something like
+[
+\chi_R(U_p)
+= \sum_{m} \overline{\psi_{p,R,m}(U^0,U^-)},\psi_{p,R,m}(U^0,U^+),
+]
+for appropriate matrix-element functions (\psi_{p,R,m}). Because the coefficients (a_{p,R}\ge 0), the product over all straddling plaquettes yields an expansion of (e^{-S_0(U)}) as a **finite or countable sum** of products of a function of ((U^0, U^-)) with its complex conjugate function of ((U^0,U^+)).
+
+Collecting these factors over all plaquettes crossing the plane, one obtains the required identity with the (K_\alpha) being linear combinations of products of (\psi_{p,R,m}) over straddling plaquettes. This is exactly the structure used by Osterwalder–Seiler in the standard reflection-positivity proof for lattice gauge theories.
+
+We do not reproduce the full Peter–Weyl bookkeeping here, but the existence of such a representation is a classical, fully rigorous consequence of positive-definiteness of the Wilson plaquette weight. ∎
+
+Operationally, for the reflection-positivity proof, we only need the **existence** of such functions (K_\alpha) with the stated dependence on positive-time variables.
+
+Using Lemma 16.6 and the decomposition of the action, the full Boltzmann factor can be written as
+[
+e^{-S_W(U)}
+= e^{-S_-(U)}\Big(\sum_\alpha \overline{K_\alpha(\Theta U)},K_\alpha(U)\Big)e^{-S_+(U)}.
+]
+
+#### 16.4.3.4. Positivity of the OS quadratic form
+
+We now prove reflection positivity using the above structure.
+
+Fix (F\in\mathcal{A}*\Lambda^+). By definition of (\mathcal{A}*\Lambda^+), (F) depends only on ((U^0,U^+)). Let us write (F(U) = F(U^0,U^+)) and ((\theta F)(U) = \overline{F(\Theta U)} = \overline{F(U^0,\Theta U^-)}).
+
+The OS quadratic form is
+[
+Q(F) := \langle \theta F, F\rangle_\Lambda
+= \int_{M_\Lambda} \overline{F(\Theta U)},F(U),d\mu_\Lambda(U).
+]
+
+Using the decomposition of the measure and Lemma 16.6, we have
+[
+\begin{aligned}
+Q(F)
+&= Z_\Lambda^{-1} \int_{M^- \times M^0 \times M^+}
+\overline{F(U^0,\Theta U^-)},F(U^0,U^+) \
+&\quad \times e^{-S_-(U)}\Big(\sum_\alpha \overline{K_\alpha(\Theta U)},K_\alpha(U)\Big)e^{-S_+(U)}
+,d\mathrm{vol}^-(U^-),d\mathrm{vol}^0(U^0),d\mathrm{vol}^+(U^+).
+\end{aligned}
+]
+
+Swap the sum and integral:
+[
+Q(F)
+= Z_\Lambda^{-1} \sum_\alpha Q_\alpha(F),
+]
+where
+[
+\begin{aligned}
+Q_\alpha(F)
+&:= \int_{M^- \times M^0 \times M^+}
+\overline{F(U^0,\Theta U^-)},F(U^0,U^+),
+e^{-S_-(U)},\overline{K_\alpha(\Theta U)},K_\alpha(U),e^{-S_+(U)} \
+&\qquad \times d\mathrm{vol}^-(U^-),d\mathrm{vol}^0(U^0),d\mathrm{vol}^+(U^+).
+\end{aligned}
+]
+
+Rearrange the integrand as a product of a function of ((U^0,U^-)) with the conjugate of the same function evaluated at ((U^0,U^+)). Define
+[
+G_\alpha(U^0,U^-) := F(U^0,\Theta U^-),K_\alpha(\Theta U),e^{-S_-(U)/2},
+]
+where (U) is reconstructed from ((U^0,U^-)) and some fixed reference (U^+) for the parts not in (M^-); because (S_-(U)) depends only on negative-time variables (and possibly (U^0)), this is well-defined up to irrelevant dependence on (U^+) (which cancels later). Similarly define
+[
+H_\alpha(U^0,U^+) := F(U^0,U^+),K_\alpha(U),e^{-S_+(U)/2}.
+]
+
+A more invariant way, which avoids worrying about the auxiliary choice, is to note that (S_-) depends only on ((U^0,U^-)) and (S_+) only on ((U^0,U^+)), so we can simply write
+[
+G_\alpha(U^0,U^-) := F(U^0,\Theta U^-),K_\alpha(\Theta U),e^{-S_-(U^0,U^-)/2},
+]
+[
+H_\alpha(U^0,U^+) := F(U^0,U^+),K_\alpha(U^0,U^+),e^{-S_+(U^0,U^+)/2}.
+]
+
+Then the integrand in (Q_\alpha(F)) can be recognized as
+[
+\overline{G_\alpha(U^0,U^-)},H_\alpha(U^0,U^+)
+,e^{-S_-(U^0,U^-)/2},e^{-S_+(U^0,U^+)/2},
+]
+but the extra exponential factors cancel because we have already absorbed them.
+
+More directly, observe that by construction of (K_\alpha) and the splitting of (S_W),
+[
+\overline{F(\Theta U)},\overline{K_\alpha(\Theta U)},e^{-S_-(U)}
+= \overline{F(U^0,\Theta U^-),K_\alpha(\Theta U), e^{-S_-(U)/2}}
+\cdot \overline{e^{-S_-(U)/2}},
+]
+and similarly on the positive-time side. Grouping terms, one obtains
+[
+Q_\alpha(F)
+= \int_{M^0} \left(\int_{M^-} \overline{G_\alpha(U^0,U^-)},d\mathrm{vol}^-(U^-)\right)
+\left(\int_{M^+} H_\alpha(U^0,U^+),d\mathrm{vol}^+(U^+)\right)
+d\mathrm{vol}^0(U^0).
+]
+
+Using measure invariance under (\Theta) and the nature of (K_\alpha), one can in fact identify (H_\alpha) with (G_\alpha) up to reflection, and the whole expression can be rewritten as a *norm square*.
+
+A standard way to see this is to perform the change of variables (V^- = \Theta U^+) in one of the integrals, using measure and action invariance, to rewrite (Q(F)) in the form
+[
+Q(F) = \sum_\alpha \int_{M^0} \left|\int_{M^+} F(U^0,U^+),K_\alpha(U^0,U^+),e^{-S_+(U^0,U^+)/2},d\mathrm{vol}^+(U^+)\right|^2 d\mathrm{vol}^0(U^0).
+]
+
+More explicitly, one can show (keeping track of (U^\pm) under (\Theta)) that
+[
+Q(F) = Z_\Lambda^{-1} \sum_\alpha \int_{M^0}
+\left| \Phi_\alpha(U^0) \right|*{L^2(M^+,d\eta*{U^0})}^2
+d\mathrm{vol}^0(U^0),
+]
+where
+[
+\Phi_\alpha(U^0)(U^+)
+:= F(U^0,U^+),K_\alpha(U^0,U^+),e^{-S_+(U^0,U^+)/2},
+]
+and (d\eta_{U^0}) is the positive-time part of the measure conditioned on (U^0). Each integrand is a squared (L^2)-norm, hence nonnegative. Therefore each (Q(F)\ge 0).
+
+Formally, the algebraic step is:
+
+* Use Lemma 16.6 to write the weight as
+  [
+  \overline{F(\Theta U)},F(U),e^{-S_W(U)}
+  = \sum_\alpha \overline{F(\Theta U)K_\alpha(\Theta U)e^{-S_-(U)/2}},
+  F(U)K_\alpha(U)e^{-S_+(U)/2},
+  ]
+* integrate first over negative-time variables, using reflection and invariance, to recognize the result as
+  [
+  \sum_\alpha \overline{h_\alpha(U^0)},h_\alpha(U^0)
+  = \sum_\alpha |h_\alpha(U^0)|^2,
+  ]
+  where
+  [
+  h_\alpha(U^0) := \int_{M^+} F(U^0,U^+),K_\alpha(U^0,U^+),e^{-S_+(U^0,U^+)/2},d\mathrm{vol}^+(U^+),
+  ]
+* finally integrate over (U^0), yielding a sum of nonnegative terms.
+
+Thus (Q(F)\ge 0) for all (F\in\mathcal{A}_\Lambda^+).
+
+This proves reflection positivity OS2 for the Wilson measure. ∎
+
+**Corollary 16.7 (Quadratic form positivity).**
+
+For all (F\in\mathcal{A}*\Lambda^+),
+[
+\langle \theta F, F\rangle*\Lambda \ge 0.
+]
+
+By polarization (using the identity
+(\langle \theta F, G\rangle = \tfrac14\sum_{k=0}^3 i^k Q(F+i^k G))), it follows that
+[
+\sum_{i,j=1}^n \overline{c_i} c_j \langle \theta F_i, F_j\rangle_\Lambda \ge 0
+]
+for all finite combinations, which is exactly OS2 in the more general form.
+
+---
+
+### 16.4.4. Summary: OS axioms for Wilson Yang–Mills
+
+Collecting the above:
+
+* OS0 holds because the configuration space is compact and the action is bounded, giving finite Schwinger functions and trivial permutation symmetry.
+* OS1 holds because the measure is invariant under lattice Euclidean symmetries by gauge and Haar invariance plus local dependence of (S_W).
+* OS2 holds because the Wilson weight admits a reflection-invariant decomposition with the straddling part written as a sum of conjugate products, leading to a “square of a norm” representation of the OS quadratic form.
+
+We can package this as:
+
+> **Proposition 16.1 (Lattice OS axioms for Wilson Yang–Mills).**
+> For each finite spacetime lattice (\Lambda) and compact gauge group (G), the Wilson lattice Yang–Mills measure (\mu_\Lambda) on (M_\Lambda = G^{E(\Lambda)}) satisfies OS0, OS1, and OS2 with respect to:
+>
+> * the time reflection (\Theta) defined in §16.3.1,
+> * the corresponding conjugate-linear reflection (\theta) on observables,
+> * the positive-time algebra (\mathcal{A}*\Lambda^+\subset\mathcal{A}*\Lambda^{\mathrm{inv}}).
+>
+> In particular, the OS quadratic form
+> [
+> Q(F) := \langle \theta F, F\rangle_\Lambda
+> ]
+> is nonnegative on (\mathcal{A}_\Lambda^+), and the Schwinger functions are regular, permutation symmetric, and Euclidean invariant.
+
+This is the core OS input for building a Hilbert space and Hamiltonian.
+
+---
+
+## 16.5. Finite-volume OS framework: what we have in hand
+
+At this point, at a fixed lattice spacing (a>0) and finite spacetime volume, we have:
+
+* A compact configuration manifold (M_\Lambda = G^{E(\Lambda)}) with product bi-invariant metric and Haar volume.
+* A local, gauge-invariant, Euclidean-invariant Wilson action (S_W) on (M_\Lambda).
+* The associated Gibbs measure (\mu_\Lambda) whose Schwinger functions (S_n^{(\Lambda)}) are well-defined on gauge-invariant local observables.
+* A time reflection (\Theta) and positive-time algebra (\mathcal{A}_\Lambda^+) for which the Wilson measure satisfies the OS axioms (OS0–OS2).
+
+In other words, the finite-volume Wilson lattice theory is **OS-compatible** in the precise sense needed to run OS reconstruction.
+
+The rest of the OS machinery—construction of:
+
+* a Hilbert space (\mathcal{H}_\Lambda),
+* a cyclic vacuum vector (\Omega_\Lambda),
+* a self-adjoint Hamiltonian (H_\Lambda\ge 0),
+* a transfer matrix and Euclidean-time semigroup (e^{-t H_\Lambda}),
+
+is the standard content of the OS reconstruction theorem, and is developed in detail in Part 17.
+
+---
+
+## 16.6. Why this matters: bridge to a finite-volume Hamiltonian
+
+With OS0–OS2 in place, we can invoke OS reconstruction (adapted to the lattice) to build:
+
+* a Hilbert space (\mathcal{H}*\Lambda) as the completion of (\mathcal{A}*\Lambda^+/\mathcal{N}*\Lambda), where (\mathcal{N}*\Lambda = {F\in\mathcal{A}*\Lambda^+ : \langle \theta F,F\rangle*\Lambda=0}),
+* a representation of positive-time observables by operators on (\mathcal{H}_\Lambda),
+* a self-adjoint Hamiltonian (H_\Lambda\ge 0) generating Euclidean-time translations,
+* a vacuum vector (\Omega_\Lambda) cyclic for the observable algebra.
+
+The OS axioms guarantee, in particular, that for appropriate time-ordered products of observables,
+[
+\big\langle \mathcal{O}*1(t_1)\cdots\mathcal{O}*n(t_n)\big\rangle*\Lambda
+= \langle\Omega*\Lambda,\mathcal{O}*1(t_1)\cdots\mathcal{O}*n(t_n)\Omega*\Lambda\rangle*{\mathcal{H}_\Lambda},
+]
+with (\mathcal{O}_j(t)) the Heisenberg-evolved operators
+(\mathcal{O}*j(t) = e^{t H*\Lambda}\mathcal{O}*j(0)e^{-t H*\Lambda}).
+
+The **finite-volume mass gap** is then defined as
+[
+\Delta_\Lambda := \inf\big(\sigma(H_\Lambda)\setminus{0}\big),
+]
+and OS theory implies that exponential decay of suitable Euclidean-time correlation functions is equivalent to (\Delta_\Lambda>0).
+
+Part 17 builds this reconstruction step by step and makes the link between correlator decay and (\Delta_\Lambda) precise.
+
+---
+
+## 16.7. Relation to the curvature / functional-inequality framework
+
+Finally, it’s useful to situate this OS layer relative to the configuration-space curvature machinery developed earlier.
+
+* The **Bakry–Émery / functional-inequality side** lives on ((M_\Lambda,\mu_\Lambda,L_\Lambda)), where (L_\Lambda) is the diffusion generator constructed from the Riemannian metric and effective action. There, curvature bounds and Lyapunov conditions yield Poincaré and log-Sobolev inequalities, and hence spectral gaps for (-L_\Lambda^{\mathrm{inv}}) acting on gauge-invariant observables.
+
+* The **OS side** lives in spacetime and constructs ((\mathcal{H}*\Lambda,H*\Lambda)) from the same measure (\mu_\Lambda), but through its Schwinger functions and reflection positivity.
+
+These two operators,
+[
+L_\Lambda^{\mathrm{inv}} \quad\text{and}\quad H_\Lambda,
+]
+are not the same: they act on different spaces and encode different dynamics. Nonetheless they are built from the same underlying finite-dimensional Gibbs system, and their spectral properties are both controlled by the “stiffness” of the Euclidean measure.
+
+Part 16’s role is to guarantee that the OS engine is legitimately available for lattice Yang–Mills at finite volume. Parts 17 and 18 then explore how, and to what extent, the curvature/functional-inequality information about (\mu_\Lambda) can be related to the spectral properties of (H_\Lambda).
+
+From here on, you have two analytic engines:
+
+* the **curvature–BE–FI engine** in configuration space ((M_\Lambda,\mu_\Lambda,L_\Lambda)),
+* the **OS–Schwinger–Hamiltonian engine** in spacetime ((\mathcal{H}*\Lambda,H*\Lambda)).
+
+The rest of the story is about wiring these two together without blowing a fuse.

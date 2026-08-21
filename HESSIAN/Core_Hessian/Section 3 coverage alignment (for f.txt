@@ -1,0 +1,755 @@
+**Section 3 coverage alignment (for fusion bookkeeping only; not part of the paper).**
+
+* **Stack A components used:** the configuration-manifold chapter establishing (i) Riemannian volume = Haar and its invariances, (ii) normal-coordinate Jacobian formula, (iii) normal-coordinate metric/volume expansions, (iv) Haar potential (S_H=-\log J) expansion and the vacuum Hessian constant (c_H=\kappa_G/3), (v) product factorization on (G^{E(\Lambda)}).   
+* **Stack B components used:** the covariance/HS notes only reuse the constant (c_H) and the identification “product Haar = Riemannian volume”; they do not supply the Jacobian/Hessian derivation. 
+
+---
+
+# Section 3 — Haar Measure Convexity and Hessian Bounds
+
+## 3.0. Interface
+
+**Input from Sections 1–2.**
+
+* A fixed finite lattice (\Lambda\subset \mathbb Z^4) with oriented edge set (E(\Lambda)).
+* A compact gauge group (G) (eventually (G=\mathrm{SU}(N))).
+* A fixed (\mathrm{Ad})-invariant inner product (\langle\cdot,\cdot\rangle_{\mathfrak g}) on the Lie algebra (\mathfrak g:=\mathrm{Lie}(G)), inducing a bi-invariant Riemannian metric (g_G) on (G).
+* The configuration manifold (M_\Lambda := G^{E(\Lambda)}) with product metric (g_\Lambda := \bigoplus_{e\in E(\Lambda)} g_G).
+* A coordinate radius (r_{\exp}>0) (chosen in Section 2) such that (\exp_G) is a diffeomorphism from the ball (B_{\mathfrak g}(0,r_{\exp})\subset\mathfrak g) onto its image in (G). (Any fixed choice (0<r_{\exp}\le \mathrm{inj}_G(e)) suffices.)
+
+**Output of this section.**
+
+* An exact coordinate formula for the product Haar measure in exponential coordinates near the trivial configuration (U^{(0)}), of the form
+  [
+  d\mu_{\mathrm{Haar}}^{\otimes E(\Lambda)}(U)
+  = e^{-S_{H,\Lambda}(X)},dX
+  \quad \text{for } U=\mathrm{Exp}*\Lambda(X),
+  ]
+  where (S*{H,\Lambda}) is the **Haar potential**. 
+* A **uniform convexity constant** (c_H>0) and a **uniform radius** (r_H>0), depending only on ((G,\langle\cdot,\cdot\rangle_{\mathfrak g})) (not on (\Lambda)), such that
+  [
+  \nabla^2 S_{H,\Lambda}(X)\ \ge\ c_H,\mathrm{Id}
+  \quad\text{for all }X \text{ with } |X|_{\ell^\infty(E(\Lambda))}\le r_H.
+  ]
+  At the vacuum, one may take (c_H=\kappa_G/3), where (\kappa_G) is a Ricci lower bound for ((G,g_G)). 
+
+All constants are introduced explicitly below.
+
+---
+
+## 3.1. Haar measure as Riemannian volume
+
+### 3.1.1. Riemannian volume on (G) is Haar for a bi-invariant metric
+
+Let ((G,g_G)) be a compact Lie group endowed with a **bi-invariant** Riemannian metric. Let (\mathrm{vol}_{g_G}) denote the associated Riemannian volume measure.
+
+**Lemma 3.1 (Isometries preserve volume).**
+If (\phi:G\to G) is an isometry of ((G,g_G)), then (\phi_*\mathrm{vol}*{g_G}=\mathrm{vol}*{g_G}). 
+
+*Proof.* In any local coordinate chart, the Riemannian volume form has density (\sqrt{\det(g_{ij})},dx). An isometry preserves the metric tensor (g) and hence preserves (\sqrt{\det(g_{ij})}); equivalently, (\phi) preserves orthonormal frames and thus the canonical top-degree form. Therefore (\phi) preserves (\mathrm{vol}_{g_G}).  ∎
+
+**Lemma 3.2 (Riemannian volume is Haar).**
+If (g_G) is bi-invariant, then (\mathrm{vol}*{g_G}) is both left- and right-invariant; after normalization (\mathrm{vol}*{g_G}(G)=1), it equals the normalized Haar probability measure (d\mathrm{Haar}_G). 
+
+*Proof.* For each (h\in G), left translation (L_h) and right translation (R_h) are isometries when the metric is bi-invariant. By Lemma 3.1, ((L_h)**\mathrm{vol}*{g_G}=\mathrm{vol}*{g_G}) and ((R_h)**\mathrm{vol}*{g_G}=\mathrm{vol}*{g_G}). Hence (\mathrm{vol}*{g_G}) is a bi-invariant (in particular left-invariant) measure. On a compact group, Haar measure is unique up to a scalar multiple; normalizing (\mathrm{vol}*{g_G}(G)=1) forces equality with the normalized Haar probability measure.  ∎
+
+### 3.1.2. Product Haar on (M_\Lambda)
+
+Let (M_\Lambda=G^{E(\Lambda)}) and (g_\Lambda=\bigoplus_{e\in E(\Lambda)} g_G). Denote (\mathrm{vol}*{g*\Lambda}) the Riemannian volume measure on ((M_\Lambda,g_\Lambda)).
+
+**Lemma 3.3 (Product volume factorization).**
+For a finite product manifold (M=\prod_{i=1}^n M_i) with product metric (g=\bigoplus_{i=1}^n g_i), one has (\mathrm{vol}*g = \bigotimes*{i=1}^n \mathrm{vol}_{g_i}). 
+
+*Proof.* In local product coordinates, the metric matrix is block-diagonal with blocks (g_i). Hence (\det g = \prod_i \det g_i) and thus (\sqrt{\det g}=\prod_i \sqrt{\det g_i}), yielding factorization of the volume form.  ∎
+
+Applying Lemma 3.3 with (M_i=G) and using Lemma 3.2 on each factor gives the exact identity
+[
+d\mathrm{vol}*{g*\Lambda}(U)=\prod_{e\in E(\Lambda)} d\mathrm{Haar}_G(U_e).
+\tag{3.1}
+]
+This is the reference “Haar (\times) Haar (\times\cdots)” measure used in the lattice Gibbs law. 
+
+---
+
+## 3.2. Exponential coordinates and the single-link Haar potential
+
+This subsection fixes a single copy of (G) and works in exponential/normal coordinates near the identity (e\in G). The configuration-space statements follow by product factorization in §3.5.
+
+### 3.2.1. Normal coordinates and exact Jacobian formula
+
+Fix an orthonormal basis ((E_1,\dots,E_n)) of ((\mathfrak g,\langle\cdot,\cdot\rangle_{\mathfrak g})), where (n:=\dim G). Identify (T_eG \cong \mathfrak g) via left translation.
+
+Let (\exp_e:T_eG\to G) be the Riemannian exponential map. For a bi-invariant metric, (\exp_e) coincides with the group exponential (\exp_G). 
+
+For (|X|<r_{\exp}), define the exponential coordinate chart
+[
+\Psi:\ B_{\mathfrak g}(0,r_{\exp})\to G,
+\qquad
+\Psi(X):=\exp_G(X).
+]
+
+Let (x^i) denote the Euclidean coordinates of (X) in the orthonormal basis.
+
+**Lemma 3.4 (Jacobian density in normal coordinates).**
+In the exponential chart (\Psi), the Riemannian volume measure satisfies
+[
+d\mathrm{vol}*{g_G}(\exp_G X)=J_G(X),dX,
+\quad\text{where}\quad
+J_G(X)=\sqrt{\det(g*{ij}(X))}.
+\tag{3.2}
+]
+Here (dX) is Lebesgue measure on (\mathfrak g\cong\mathbb R^n), and (g_{ij}(X)) are the metric coefficients in normal coordinates. 
+
+*Proof.* This is the definition of the Riemannian volume density in local coordinates: (d\mathrm{vol}*{g_G}=\sqrt{\det(g*{ij})},dx). In the chart (\Psi), (dx) is identified with (dX).  ∎
+
+Define the **single-link Haar potential**
+[
+S_H(X):=-\log J_G(X)
+\quad \text{for }|X|<r_{\exp}.
+\tag{3.3}
+]
+This is an exact identity on the coordinate domain, not an approximation. 
+
+---
+
+## 3.3. Normal-coordinate expansions up to cubic order
+
+This subsection proves the Taylor expansions near (X=0) that isolate the **quadratic** part of the Haar potential and identify its Hessian at the origin with (\frac13\mathrm{Ric}).
+
+### 3.3.1. Preliminaries: curvature and Christoffel symbols
+
+Let ((M,g)) be a smooth Riemannian (n)-manifold and (p\in M). In local coordinates ((x^1,\dots,x^n)), write (g_{ij}=g(\partial_i,\partial_j)). Define the Levi–Civita connection coefficients (\Gamma^k_{ij}) by (\nabla_{\partial_i}\partial_j = \Gamma^k_{ij}\partial_k).
+
+Define the Riemann curvature tensor (R) by
+[
+R(X,Y)Z:=\nabla_X\nabla_Y Z-\nabla_Y\nabla_X Z-\nabla_{[X,Y]}Z.
+]
+In coordinates, its components are
+[
+R^m{}_{ijk}
+===========
+
+\partial_i\Gamma^m_{jk}-\partial_j\Gamma^m_{ik}
++\Gamma^m_{i\ell}\Gamma^\ell_{jk}-\Gamma^m_{j\ell}\Gamma^\ell_{ik}.
+\tag{3.4}
+]
+The fully lowered curvature tensor is (R_{mijk}=g_{m\ell}R^\ell{}_{ijk}).
+
+The Ricci tensor is the trace
+[
+\mathrm{Ric}*{jk} = R^i{}*{jik}=g^{i\ell}R_{\ell jik}.
+\tag{3.5}
+]
+
+### 3.3.2. Metric expansion in normal coordinates
+
+Let ((x^1,\dots,x^n)) be normal coordinates around (p), i.e. obtained by pushing forward an orthonormal basis of (T_pM) by (\exp_p). In these coordinates, the coordinate origin corresponds to (p).
+
+We prove the expansion
+[
+g_{ij}(x)=\delta_{ij}-\frac13 R_{ikjl}(p),x^k x^l + O(|x|^3),
+\tag{3.6}
+]
+which appears in the project text as the normal-coordinate metric expansion. 
+
+**Lemma 3.5 (Normal-coordinate vanishing of first derivatives).**
+In normal coordinates centered at (p), one has
+[
+g_{ij}(0)=\delta_{ij},\qquad \partial_k g_{ij}(0)=0,\qquad \Gamma^k_{ij}(0)=0.
+\tag{3.7}
+]
+
+*Proof.* By construction, (\partial_i|*{0}) is an orthonormal basis of (T_pM), hence (g*{ij}(0)=\delta_{ij}). Along a radial geodesic (\gamma(t)=\exp_p(t v)), the coordinate vector field (\partial_i) agrees at (t=0) with the initial basis and the coordinate lines are geodesics; in normal coordinates the geodesic equation at the origin forces (\Gamma^k_{ij}(0)=0). Given (\Gamma^k_{ij}=\frac12 g^{k\ell}(\partial_i g_{j\ell}+\partial_j g_{i\ell}-\partial_\ell g_{ij})), plugging (g_{ij}(0)=\delta_{ij}) and (\Gamma^k_{ij}(0)=0) yields (\partial_k g_{ij}(0)=0). ∎
+
+The nontrivial content is the expression for second derivatives of (g_{ij}) at the origin.
+
+**Lemma 3.6 (Second derivatives of (g) in terms of curvature).**
+In normal coordinates centered at (p),
+[
+\partial_k\partial_l g_{ij}(0)
+==============================
+
+-\frac13\Big(R_{ikjl}(p)+R_{jkjl}(p)\Big).
+\tag{3.8}
+]
+Using the curvature symmetries (R_{ikjl}=R_{jlik}), this simplifies to
+[
+\partial_k\partial_l g_{ij}(0)
+==============================
+
+-\frac23,R_{ikjl}(p).
+\tag{3.9}
+]
+
+*Proof.* Start from the definition of Christoffel symbols in terms of metric derivatives:
+[
+\Gamma_{ijm}:=g_{m\ell}\Gamma^\ell_{ij}
+=\frac12\left(\partial_i g_{jm}+\partial_j g_{im}-\partial_m g_{ij}\right).
+\tag{3.10}
+]
+Differentiate (3.10) with respect to (x^l) and evaluate at (0). Using Lemma 3.5, (g_{m\ell}(0)=\delta_{m\ell}) and (\partial g(0)=0), hence at the origin raising/lowering indices does not change components. Therefore
+[
+\partial_l\Gamma_{ijm}(0)
+=========================
+
+\frac12\left(\partial_l\partial_i g_{jm}+\partial_l\partial_j g_{im}-\partial_l\partial_m g_{ij}\right)(0).
+\tag{3.11}
+]
+
+Next, write curvature in coordinates using (3.4). At the origin, Lemma 3.5 gives (\Gamma(0)=0), so the quadratic (\Gamma\Gamma) terms vanish, leaving
+[
+R^m{}*{ijk}(0)=\partial_i\Gamma^m*{jk}(0)-\partial_j\Gamma^m_{ik}(0).
+\tag{3.12}
+]
+Lower the index (m) at (0) (where (g=\delta)) to obtain
+[
+R_{mijk}(0)=\partial_i\Gamma_{jkm}(0)-\partial_j\Gamma_{ikm}(0).
+\tag{3.13}
+]
+
+Now exploit the defining property of normal coordinates: geodesics through (p) are straight lines in these coordinates. Equivalently, the symmetrized first derivatives of Christoffel symbols satisfy
+[
+\partial_i\Gamma_{jkm}(0)+\partial_j\Gamma_{ikm}(0)=0
+\quad\text{when }(i,j,k)\text{ is totally symmetric}.
+\tag{3.14}
+]
+A standard way to see (3.14) is: the geodesic equation in coordinates is (\ddot x^m + \Gamma^m_{ij}(x)\dot x^i\dot x^j=0). In normal coordinates, the geodesic (t\mapsto tv) must satisfy this with (\ddot x^m=0). Expanding (\Gamma^m_{ij}(tv)=t,(\partial_k\Gamma^m_{ij})(0),v^k+O(t^2)) and requiring the coefficient of (t) to vanish for all (v) yields the complete symmetrization condition (\partial_{(k}\Gamma^m_{ij)}(0)=0), which in lowered form gives (3.14).
+
+Combining (3.13) with the symmetrization identities allows one to solve for (\partial_l\Gamma_{ijm}(0)) in terms of curvature. The standard resolution is
+[
+\partial_l\Gamma_{ijm}(0)= -\frac13\left(R_{iljm}(0)+R_{jlim}(0)\right).
+\tag{3.15}
+]
+(Equation (3.15) is exactly the “core idea” recorded in the project text. )
+
+Finally, substitute (3.15) into (3.11) and compare coefficients to isolate (\partial_k\partial_l g_{ij}(0)). The resulting identity is (3.8). Using the curvature symmetries to identify the two terms yields (3.9). ∎
+
+**Proposition 3.7 (Metric expansion).**
+In normal coordinates at (p),
+[
+g_{ij}(x)=\delta_{ij}-\frac13 R_{ikjl}(p),x^k x^l + O(|x|^3).
+\tag{3.16}
+]
+
+*Proof.* Taylor expand (g_{ij}) around (0):
+[
+g_{ij}(x)=g_{ij}(0)+(\partial_k g_{ij})(0),x^k+\frac12(\partial_k\partial_l g_{ij})(0),x^k x^l+O(|x|^3).
+]
+Apply Lemma 3.5 and then Lemma 3.6 (in the simplified form (3.9)); the factor (\frac12\cdot \left(-\frac23\right)=-\frac13) yields (3.16). This matches (3.6).  ∎
+
+### 3.3.3. Jacobian and Haar potential expansion
+
+We now derive the Jacobian expansion
+[
+J_p(x)=\sqrt{\det(g_{ij}(x))}
+=============================
+
+1-\frac16\mathrm{Ric}_{kl}(p),x^k x^l+O(|x|^3),
+\tag{3.17}
+]
+and the Haar potential expansion
+[
+S_H(x)=-\log J_p(x)
+===================
+
+\frac16\mathrm{Ric}_{kl}(p),x^k x^l+O(|x|^3),
+\qquad
+\nabla^2 S_H(0)=\frac13,\mathrm{Ric}.
+\tag{3.18}
+]
+These are recorded explicitly in the project text. 
+
+**Lemma 3.8 (Determinant expansion for (g_{ij})).**
+Let (g(x)=I+A(x)) with (A(x)=O(|x|^2)). Then
+[
+\sqrt{\det(g(x))}
+=================
+
+1+\frac12\mathrm{tr}(A(x))+O(|x|^4).
+\tag{3.19}
+]
+
+*Proof.* Since (A=O(|x|^2)), one has (|A|^2=O(|x|^4)). Using the analytic expansion (\log\det(I+A)=\mathrm{tr}(A)+O(|A|^2)) for small (A), and exponentiating,
+[
+\sqrt{\det(I+A)}
+=\exp\left(\frac12\log\det(I+A)\right)
+=\exp\left(\frac12\mathrm{tr}(A)+O(|x|^4)\right)
+================================================
+
+1+\frac12\mathrm{tr}(A)+O(|x|^4).
+]
+This matches the computation recorded in the project text.  ∎
+
+**Proposition 3.9 (Jacobian expansion).**
+In normal coordinates centered at (p),
+[
+J_p(x)=\sqrt{\det(g_{ij}(x))}
+=============================
+
+1-\frac16\mathrm{Ric}_{kl}(p),x^k x^l+O(|x|^3).
+\tag{3.20}
+]
+
+*Proof.* From Proposition 3.7, write (g(x)=I+A(x)) with
+[
+A_{ij}(x) = -\frac13 R_{ikjl}(p),x^k x^l + O(|x|^3).
+\tag{3.21}
+]
+Taking the trace,
+[
+\mathrm{tr}(A)(x)=A_{ii}(x)
+===========================
+
+-\frac13 R_{ikil}(p),x^k x^l + O(|x|^3).
+\tag{3.22}
+]
+By definition of Ricci as the trace of curvature, (R_{ikil}=\mathrm{Ric}*{kl}) in normal coordinates at (p). Thus
+[
+\mathrm{tr}(A)(x)= -\frac13\mathrm{Ric}*{kl}(p),x^k x^l + O(|x|^3).
+\tag{3.23}
+]
+Substitute (3.23) into Lemma 3.8 to obtain
+[
+\sqrt{\det(g_{ij}(x))}
+======================
+
+# 1+\frac12\left(-\frac13\mathrm{Ric}_{kl}(p),x^k x^l\right)+O(|x|^3)
+
+1-\frac16\mathrm{Ric}_{kl}(p),x^k x^l+O(|x|^3),
+]
+which is (3.20). This is exactly the computation given in the project text.  ∎
+
+**Corollary 3.10 (Haar potential expansion and Hessian at the origin).**
+Define (S_H(x):=-\log J_p(x)). Then
+[
+S_H(x)=\frac16\mathrm{Ric}_{kl}(p),x^k x^l+O(|x|^3),
+\qquad
+\nabla^2 S_H(0)=\frac13,\mathrm{Ric}(p)
+\ \ \text{as bilinear forms}.
+\tag{3.24}
+]
+
+*Proof.* Write (J_p(x)=1+u(x)) with (u(x)=O(|x|^2)) by Proposition 3.9. Then (-\log(1+u)=-u+O(u^2)). Since (u^2=O(|x|^4)), this yields
+[
+S_H(x)=-\log J_p(x)
+===================
+
+\frac16\mathrm{Ric}*{kl}(p),x^k x^l+O(|x|^3).
+]
+Differentiating twice at (x=0) gives the Hessian:
+if (Q(x)=\frac16\mathrm{Ric}*{kl}(p),x^k x^l), then (\partial_i\partial_jQ(0)=\frac13\mathrm{Ric}_{ij}(p)). Hence (\nabla^2S_H(0)=\frac13\mathrm{Ric}(p)). This matches the recorded identities.  ∎
+
+In our application (M=G), (p=e), and (T_eG\simeq \mathfrak g). Thus (3.24) reads
+[
+S_H(X)=\frac16\mathrm{Ric}_G(X,X)+O(|X|^3),
+\qquad
+\nabla^2 S_H(0)=\frac13,\mathrm{Ric}_G.
+\tag{3.25}
+]
+
+
+---
+
+## 3.4. Ricci lower bounds on ((G,g_G)) and the constant (\kappa_G)
+
+The previous subsection reduces the convexity problem to obtaining a lower bound for the Ricci tensor at the identity. This subsection records a first-principles Ricci formula for bi-invariant metrics and isolates the parameter (\kappa_G).
+
+### 3.4.1. Ricci formula for bi-invariant metrics
+
+Let (g_G) be the bi-invariant metric induced by (\langle\cdot,\cdot\rangle_{\mathfrak g}). Identify (\mathfrak g) with left-invariant vector fields at the identity: for (X\in \mathfrak g), denote by (X^L) the corresponding left-invariant vector field.
+
+**Lemma 3.11 (Levi–Civita connection for bi-invariant metrics).**
+For left-invariant vector fields (X^L,Y^L), the Levi–Civita connection satisfies
+[
+\nabla_{X^L}Y^L = \frac12 [X,Y]^L.
+\tag{3.26}
+]
+
+*Proof.* Apply the Koszul formula
+[
+2\langle\nabla_U V, W\rangle
+============================
+
+U\langle V,W\rangle+V\langle U,W\rangle-W\langle U,V\rangle
++\langle[U,V],W\rangle-\langle[U,W],V\rangle-\langle[V,W],U\rangle.
+\tag{3.27}
+]
+When (U,V,W) are left-invariant, the metric is constant along their flows, so the derivative terms vanish. Using (\mathrm{Ad})-invariance of (\langle\cdot,\cdot\rangle_{\mathfrak g}), i.e. (\langle[X,Y],Z\rangle=\langle X,[Y,Z]\rangle), the Koszul formula simplifies to
+[
+2\langle\nabla_{X^L}Y^L, Z^L\rangle
+===================================
+
+# \langle[X,Y],Z\rangle-\langle[X,Z],Y\rangle-\langle[Y,Z],X\rangle
+
+\langle[X,Y],Z\rangle+\langle[X,Z],Y\rangle-\langle[Y,Z],X\rangle.
+]
+The (\mathrm{Ad})-invariance identities reduce this to (\langle[X,Y],Z\rangle), giving (3.26) by nondegeneracy. (This computation is standard and is used explicitly in the project’s curvature derivation preceding the Ricci computation.)  ∎
+
+**Lemma 3.12 (Curvature for bi-invariant metrics).**
+For (X,Y,Z\in\mathfrak g),
+[
+R(X^L,Y^L)Z^L
+=============
+
+-\frac14 [[X,Y],Z]^L.
+\tag{3.28}
+]
+
+*Proof.* Using Lemma 3.11 and the Jacobi identity:
+[
+\nabla_{X^L}\nabla_{Y^L}Z^L
+===========================
+
+# \nabla_{X^L}\left(\tfrac12[Y,Z]^L\right)
+
+# \tfrac12\cdot\tfrac12[X,[Y,Z]]^L
+
+\tfrac14[X,[Y,Z]]^L.
+]
+Similarly (\nabla_{Y^L}\nabla_{X^L}Z^L=\tfrac14[Y,[X,Z]]^L). Finally, ([X^L,Y^L]=[X,Y]^L), so
+[
+\nabla_{[X^L,Y^L]}Z^L
+=====================
+
+# \nabla_{[X,Y]^L}Z^L
+
+\tfrac12[[X,Y],Z]^L.
+]
+Combine:
+[
+R(X^L,Y^L)Z^L
+=============
+
+\tfrac14[X,[Y,Z]]^L-\tfrac14[Y,[X,Z]]^L-\tfrac12[[X,Y],Z]^L.
+]
+Using Jacobi, ( [X,[Y,Z]] - [Y,[X,Z]] = [[X,Y],Z]). Therefore
+[
+R(X^L,Y^L)Z^L
+=============
+
+# \tfrac14[[X,Y],Z]^L-\tfrac12[[X,Y],Z]^L
+
+-\tfrac14[[X,Y],Z]^L,
+]
+which is (3.28). This matches the project formula.  ∎
+
+**Proposition 3.13 (Ricci in terms of brackets).**
+Let ({e_i}_{i=1}^n) be an orthonormal basis of (\mathfrak g). Then
+[
+\mathrm{Ric}_G(X,X)
+===================
+
+\frac14\sum_{i=1}^n |[X,e_i]|_{\mathfrak g}^2
+\ \ge\ 0.
+\tag{3.29}
+]
+
+*Proof.* Extend (e_i) to left-invariant vector fields (e_i^L). Using (3.28),
+[
+\mathrm{Ric}_G(X,X)
+===================
+
+# \sum_i \big\langle R(X^L,e_i^L)e_i^L, X^L\big\rangle
+
+# \sum_i \left\langle -\tfrac14 [[X,e_i],e_i]^L, X^L\right\rangle
+
+-\tfrac14\sum_i \langle [[X,e_i],e_i], X\rangle.
+]
+Using (\mathrm{Ad})-invariance,
+[
+\langle [[X,e_i],e_i],X\rangle
+==============================
+
+# \langle [X,e_i],[e_i,X]\rangle
+
+# \langle [X,e_i],-[X,e_i]\rangle
+
+-|[X,e_i]|^2.
+]
+Therefore
+[
+\mathrm{Ric}_G(X,X)=\tfrac14\sum_i |[X,e_i]|^2\ge 0.
+]
+This is exactly the explicit calculation recorded in the project text.  ∎
+
+### 3.4.2. Positivity and the constant (\kappa_G)
+
+The bracket formula (3.29) shows that (\mathrm{Ric}_G) is positive semidefinite, and it is strictly positive definite precisely when there is no nonzero (X) commuting with all of (\mathfrak g), i.e. when (\mathfrak g) has no abelian direct summand.
+
+**Assumption 3.A (Semisimple gauge group).**
+The Lie algebra (\mathfrak g) is semisimple (equivalently, (G) has no nontrivial torus factor). In particular, (G=\mathrm{SU}(N)) satisfies this assumption.
+
+Under Assumption 3.A, (\mathrm{Ric}_G) is positive definite. Since (\mathrm{Ric}*G) is a symmetric bilinear form on the finite-dimensional inner product space ((\mathfrak g,\langle\cdot,\cdot\rangle*{\mathfrak g})), define
+[
+\kappa_G
+:=
+\inf{\mathrm{Ric}*G(X,X): |X|*{\mathfrak g}=1}
+\ \in (0,\infty).
+\tag{3.30}
+]
+Equivalently, (\mathrm{Ric}_G\ge \kappa_G,g_G) as quadratic forms at the identity.
+
+(When (G) is compact and simple, one in fact has the Einstein property (\mathrm{Ric}_G=\kappa_G g_G); the project notes mention this via the adjoint Casimir.  For the present section, only the lower bound (3.30) is used.)
+
+Combining (3.30) with Corollary 3.10 yields the vacuum convexity:
+
+**Corollary 3.14 (Single-link Hessian lower bound at the identity).**
+Assume (\mathrm{Ric}*G\ge \kappa_G g_G). Then
+[
+\nabla^2 S_H(0)\ \ge\ \frac{\kappa_G}{3},\mathrm{Id}*{\mathfrak g}.
+\tag{3.31}
+]
+
+
+---
+
+## 3.5. Uniform convexity on a fixed neighborhood
+
+The previous subsection gives a strictly positive Hessian at the origin. To avoid “pointwise-at-vacuum only” statements, one needs a neighborhood on which the Hessian remains uniformly positive, with constants independent of (\Lambda). This is a finite-dimensional smoothness argument once the coordinate domain is fixed.
+
+### 3.5.1. A radius and derivative bound
+
+Fix the exponential-coordinate radius (r_{\exp}>0) from Section 2 and restrict to the closed ball (\overline B_{\mathfrak g}(0,r_{\exp})). On this closed set, the coordinate expression (S_H(X)=-\log J_G(X)) is smooth and its derivatives up to any finite order are bounded, because:
+
+* (g_{ij}(X)) is smooth in normal coordinates,
+* (J_G(X)=\sqrt{\det g_{ij}(X)}) is smooth and strictly positive on (\overline B(0,r_{\exp})) (by choice of the coordinate domain),
+* the logarithm is smooth on ((0,\infty)).
+
+Define the third-derivative bound
+[
+M_H
+:=
+\sup_{|X|\le r_{\exp}}
+|\nabla^3 S_H(X)|*{\mathrm{op}}
+\ <\ \infty.
+\tag{3.32}
+]
+This constant depends only on ((G,\langle\cdot,\cdot\rangle*{\mathfrak g})) and the coordinate choice (r_{\exp}), not on (\Lambda).
+
+### 3.5.2. Hessian stability
+
+**Lemma 3.15 (Hessian Lipschitz bound).**
+For all (X\in \overline B_{\mathfrak g}(0,r_{\exp})),
+[
+\big|\nabla^2 S_H(X)-\nabla^2 S_H(0)\big|_{\mathrm{op}}
+\ \le\ M_H,|X|.
+\tag{3.33}
+]
+
+*Proof.* For any fixed unit vectors (u,v\in\mathfrak g), consider the scalar function
+[
+\phi_{u,v}(t):=\nabla^2 S_H(tX)(u,v),\qquad t\in[0,1].
+]
+By the fundamental theorem of calculus,
+[
+\nabla^2 S_H(X)(u,v)-\nabla^2 S_H(0)(u,v)
+=========================================
+
+\int_0^1 \phi'*{u,v}(t),dt.
+]
+Differentiate under the integral: (\phi'*{u,v}(t)=\nabla^3 S_H(tX)(X,u,v)). Hence
+[
+|\phi'*{u,v}(t)|
+\le
+|\nabla^3 S_H(tX)|*{\mathrm{op}},|X|,|u|,|v|
+\le
+M_H,|X|.
+]
+Integrating over (t\in[0,1]) gives
+[
+\big|\nabla^2 S_H(X)(u,v)-\nabla^2 S_H(0)(u,v)\big|
+\le
+M_H,|X|.
+]
+Taking the supremum over unit (u,v) yields (3.33). ∎
+
+### 3.5.3. Uniform lower bound on a ball
+
+Define
+[
+c_H^{(0)} := \frac{\kappa_G}{3}.
+\tag{3.34}
+]
+This is the vacuum Hessian constant from (3.31). 
+
+Choose the **Haar convexity radius**
+[
+r_H
+:=
+\min\left{
+r_{\exp},
+\frac{c_H^{(0)}}{2M_H}
+\right}.
+\tag{3.35}
+]
+Define the **uniform Haar convexity constant**
+[
+c_H
+:=
+\frac{c_H^{(0)}}{2}
+===================
+
+\frac{\kappa_G}{6}.
+\tag{3.36}
+]
+
+**Proposition 3.16 (Uniform single-link convexity on a neighborhood).**
+Assume (\mathrm{Ric}*G\ge \kappa_G g_G). Then for all (X\in \overline B*{\mathfrak g}(0,r_H)),
+[
+\nabla^2 S_H(X)\ \ge\ c_H,\mathrm{Id}_{\mathfrak g}.
+\tag{3.37}
+]
+
+*Proof.* Let (|X|\le r_H). By Lemma 3.15,
+[
+\nabla^2 S_H(X)
+\ge
+\nabla^2 S_H(0)-|\nabla^2 S_H(X)-\nabla^2 S_H(0)|_{\mathrm{op}},\mathrm{Id}
+\ge
+c_H^{(0)}\mathrm{Id}-M_H|X|\mathrm{Id}.
+]
+By the definition of (r_H), (M_H|X|\le M_H r_H \le c_H^{(0)}/2). Hence
+[
+\nabla^2 S_H(X)\ \ge\ \frac{c_H^{(0)}}{2}\mathrm{Id}=c_H\mathrm{Id}.
+]
+∎
+
+All constants ((M_H,r_H,c_H)) depend only on the single-group geometry, and not on lattice volume.
+
+---
+
+## 3.6. Product Haar potential on (M_\Lambda) and uniformity in (|\Lambda|)
+
+### 3.6.1. Exponential coordinates at the trivial configuration
+
+Define the **trivial configuration**
+[
+U^{(0)} := (e)*{e\in E(\Lambda)}\in M*\Lambda.
+\tag{3.38}
+]
+
+
+Identify (T_{U^{(0)}}M_\Lambda \cong \mathfrak g^{E(\Lambda)}) via product structure. Define the product exponential map
+[
+\mathrm{Exp}*\Lambda:\ \mathfrak g^{E(\Lambda)}\to M*\Lambda,
+\qquad
+\big(\mathrm{Exp}_\Lambda(X)\big)_e := \exp_G(X_e).
+\tag{3.39}
+]
+
+
+On the coordinate domain
+[
+B_{\Lambda,\infty}(r)
+:=
+\left{X=(X_e)\in\mathfrak g^{E(\Lambda)}:\ \max_{e\in E(\Lambda)}|X_e|*{\mathfrak g}< r\right},
+\tag{3.40}
+]
+with (0<r\le r*{\exp}), the map (\mathrm{Exp}_\Lambda) is a diffeomorphism onto a neighborhood of (U^{(0)}).
+
+### 3.6.2. Exact coordinate formula for product Haar and definition of (S_{H,\Lambda})
+
+By Lemma 3.4 on each factor and Lemma 3.3 (product factorization), the Riemannian volume (equivalently product Haar) satisfies the exact identity
+[
+d\mathrm{vol}*{g*\Lambda}(\mathrm{Exp}_\Lambda(X))
+==================================================
+
+# \prod_{e\in E(\Lambda)} J_G(X_e),dX_e
+
+\exp!\Big(-\sum_{e\in E(\Lambda)} S_H(X_e)\Big),dX,
+\tag{3.41}
+]
+where (dX=\prod_e dX_e). 
+
+Define the **configuration Haar potential**
+[
+S_{H,\Lambda}(X):=\sum_{e\in E(\Lambda)} S_H(X_e).
+\tag{3.42}
+]
+
+
+Then (3.41) becomes
+[
+d\mathrm{vol}*{g*\Lambda}(\mathrm{Exp}*\Lambda(X))=e^{-S*{H,\Lambda}(X)},dX.
+\tag{3.43}
+]
+
+
+This provides the required “exact formula for (-\log\mu_{\mathrm{Haar}})” in coordinates: it is precisely (S_{H,\Lambda}) on the exponential chart.
+
+### 3.6.3. Uniform Hessian lower bounds at the vacuum and on a neighborhood
+
+Because (S_{H,\Lambda}) is a sum of single-link potentials, its Hessian is block-diagonal in the product coordinates.
+
+**Lemma 3.17 (Vacuum Hessian bound, volume-uniform).**
+Assume (\mathrm{Ric}*G\ge \kappa_G g_G). Then at (X=0),
+[
+\nabla^2 S*{H,\Lambda}(0)\ \ge\ \frac{\kappa_G}{3},\mathrm{Id}_{\mathfrak g^{E(\Lambda)}},
+\tag{3.44}
+]
+with constant independent of (\Lambda). 
+
+*Proof.* For (X=(X_e)\in\mathfrak g^{E(\Lambda)}),
+[
+\nabla^2 S_{H,\Lambda}(0)(X,X)=\sum_{e\in E(\Lambda)} \nabla^2 S_H(0)(X_e,X_e).
+]
+If (\nabla^2 S_H(0)\ge c_H^{(0)}\mathrm{Id}*{\mathfrak g}) with (c_H^{(0)}=\kappa_G/3) (Corollary 3.14), then
+[
+\nabla^2 S*{H,\Lambda}(0)(X,X)
+\ge
+c_H^{(0)}\sum_e |X_e|^2
+=======================
+
+c_H^{(0)}|X|^2_{\mathfrak g^{E(\Lambda)}},
+]
+equivalently (3.44). This is the argument recorded in the project text.  ∎
+
+**Proposition 3.18 (Neighborhood Hessian bound, volume-uniform).**
+Assume (\mathrm{Ric}*G\ge \kappa_G g_G). Let (r_H,c_H) be the single-link constants from (3.35)–(3.36). Then for all (X\in B*{\Lambda,\infty}(r_H)),
+[
+\nabla^2 S_{H,\Lambda}(X)\ \ge\ c_H,\mathrm{Id}_{\mathfrak g^{E(\Lambda)}},
+\tag{3.45}
+]
+with constant independent of (\Lambda).
+
+*Proof.* Fix (X\in B_{\Lambda,\infty}(r_H)) and (V=(V_e)\in \mathfrak g^{E(\Lambda)}). By additivity of (S_{H,\Lambda}),
+[
+\nabla^2 S_{H,\Lambda}(X)(V,V)
+==============================
+
+\sum_{e\in E(\Lambda)} \nabla^2 S_H(X_e)(V_e,V_e).
+]
+Since (|X_e|\le r_H) for each (e) and Proposition 3.16 gives (\nabla^2 S_H(X_e)\ge c_H,\mathrm{Id}*{\mathfrak g}), we obtain
+[
+\nabla^2 S*{H,\Lambda}(X)(V,V)
+\ge
+c_H\sum_e |V_e|^2
+=================
+
+c_H|V|^2_{\mathfrak g^{E(\Lambda)}}.
+]
+This is equivalent to (3.45). ∎
+
+---
+
+## 3.7. Summary of quantitative constants (for later sections)
+
+Under Assumption 3.A (semisimple gauge group), the following constants are now fixed and depend only on ((G,\langle\cdot,\cdot\rangle_{\mathfrak g})) and the coordinate choice (r_{\exp}), not on (\Lambda):
+
+1. **Ricci lower bound** (\kappa_G>0) defined by (3.30).
+2. **Vacuum Haar convexity constant**
+   [
+   c_H^{(0)}=\kappa_G/3.
+   ]
+
+3. **Third-derivative bound** (M_H) defined by (3.32).
+4. **Uniform convexity neighborhood radius**
+   [
+   r_H=\min\left{r_{\exp},,\frac{c_H^{(0)}}{2M_H}\right}.
+   ]
+5. **Uniform neighborhood convexity constant**
+   [
+   c_H=\kappa_G/6.
+   ]
+
+These constants provide the promised “Haar measure convexity” contribution used later when combining the Haar potential with the Wilson action in a small-field region.

@@ -1,0 +1,348 @@
+12-20-25 PULSE
+
+
+
+Here’s a compact, technical gameplan to stress‑test (and possibly fix) the weakest link in a local‑to‑global argument—the measure‑concentration / convexity‑of‑transport step—aiming for a **uniform constant independent of local geometry**.
+
+---
+
+# Target
+
+Prove a **volume‑uniform Poincaré (or LSI/SPI) constant**
+[
+\mathrm{Var}*\mu(f);\le;\frac{1}{\rho}\int |\nabla f|^2,d\mu
+\quad(\text{or } \operatorname{Ent}*\mu(f^2)\le \tfrac{2}{\alpha}!\int|\nabla f|^2 d\mu)
+]
+with (\rho,\alpha>0) that do **not** degrade with:
+
+* the number of blocks / lattice size (|\Lambda|),
+* local anisotropy (non‑identical block Hessians),
+* mild boundary perturbations.
+
+This is the hinge that lets local curvature/convexity imply a global spectral gap.
+
+---
+
+# Minimal hypotheses you can actually check
+
+* (Hloc) **Blockwise λ‑convexity after a fixed conditioning map.** For each block (B): the conditional log‑density has Hessian (\nabla^2 \Phi_B \succeq \lambda I) on a **SAFE** region (K) (possibly after a deterministic gauge/coordinate projection). (\lambda) must be volume‑independent.
+* (Mix) **Finite‑range, bounded cross‑Hessians.** Cross terms satisfy (| \nabla^2_{B_i,B_j}\Phi |\le \varepsilon) if (B_i) and (B_j) interact; zero otherwise.
+* (Typ) **Typicality/cutoff.** (\mu(K^c)\le \delta) with (\delta) small enough to close the constants (you choose (\delta) below).
+
+All three should already be in your stack under various names (SAFE set, block Hessian ledger, finite‑range).
+
+---
+
+# One‑page inequality you want (transport‑convexity route)
+
+Let (T) be the block‑Gibbs map (one sweep). Show a **contractive coarse Ricci / Dobrushin‑type bound** on (W_2):
+[
+W_2(T_#\nu,T_#\nu') ;\le; q , W_2(\nu,\nu') \qquad (q<1\ \text{uniform}).
+]
+Sufficient condition (checkable with your Hessian ledger):
+[
+q ;\le; \underbrace{(1-\lambda/\Lambda_*)}*{\text{per‑block strong convexity gain}}
+;+; \underbrace{C*{\mathrm{graph}};\varepsilon/\Lambda_*}*{\text{cross‑Hessian leakage}},
+]
+where (\Lambda**) upper‑bounds local Lipschitz scales of the conditional updates and (C_{\mathrm{graph}}) depends only on block‑graph degree (not (|\Lambda|)). Pick (\varepsilon) and (\lambda) (via SAFE) so the RHS (<1). Then standard arguments give a uniform Poincaré/LSI with constant (\rho,\alpha \asymp (1-q)).
+
+**Why this is the right lever:** it trades global geometry for **one‑step contraction** verified on local conditionals + a sparse dependency graph.
+
+---
+
+# If you prefer Dirichlet‑form (Bakry–Émery) language
+
+Work with the block‑generator (\mathcal L=\sum_B \mathcal L_B) (either synchronous or block‑Glauber). Prove a **Γ(_2) curvature lower bound**:
+[
+\Gamma_2(f);\ge; \kappa,\Gamma(f)\qquad (\kappa>0\ \text{uniform}),
+]
+via the block‑diagonal positivity from (Hloc) minus a controlled cross‑block deficit from (Mix). The same λ–ε competition appears; graph degree caps the deficit. Then (\kappa) gives the LSI constant.
+
+---
+
+# What to calculate (no hand‑waving)
+
+1. **Local Hessian lower bound**: record (\lambda=\inf_{x\in K}\lambda_{\min}(\nabla^2\Phi_B(x))) for each block; take the global min across blocks.
+2. **Cross‑Hessian budget**: bound (\varepsilon=\sup_{x\in K}|\nabla^2_{B_i,B_j}\Phi(x)|). Tabulate by neighbor shell.
+3. **Graph factor**: compute (C_{\mathrm{graph}}) from the maximum block degree (e.g., (2d) on a cubic lattice).
+4. **SAFE mass**: verify (\mu(K^c)\le \delta) with a **numerical tail** (from your existing typicality step). Pick (\delta) so drift outside (K) or a truncation/mixture argument keeps the same (\rho) up to a factor (1-O(\delta)).
+
+Deliverables: a 10‑line “constants ledger” giving (q) and hence (\rho= c,(1-q)).
+
+---
+
+# Fallbacks if uniformity fails on first pass
+
+* **Stronger local convexification**: add a small, explicit, gauge‑invariant quadratic corrector on each block (analytic device only) that you subtract after the inequality; it raises (\lambda) without changing physics.
+* **Two‑color (checkerboard) update**: halves the effective graph degree in the contraction proof, improving the (C_{\mathrm{graph}}\varepsilon) term.
+* **SPI instead of LSI**: if Γ(_2) is marginal, prove a spectral‑gap (Poincaré) first; you still get exponential mixing and a mass gap downstream.
+
+---
+
+# Micro‑checklist (use this verbatim)
+
+* [ ] Fix block cover and dependency graph; compute max degree (d_{\max}).
+* [ ] Produce SAFE set (K) and number (\delta=\mu(K^c)).
+* [ ] Ledger: (\lambda) (min local Hessian on (K)), (\varepsilon) (max cross‑Hessian on (K)), (\Lambda_*) (Lipschitz of conditional map).
+* [ ] Choose update scheme (single‑site, block, two‑color).
+* [ ] Compute (q=(1-\lambda/\Lambda_*)+C_{\mathrm{graph}}\varepsilon/\Lambda_*).
+* [ ] Verify (q<1) and extract (\rho,\alpha \asymp (1-q)) with explicit constants.
+* [ ] Patch outside (K): truncation or drift‑minorization to keep uniformity with penalty (O(\delta)).
+* [ ] Record final constant: (\rho_{\text{global}}\ge c,[\lambda - C_{\mathrm{graph}}\varepsilon] / \Lambda_* - C,\delta).
+
+---
+
+# Why this meets the “independent of local geometry” bar
+
+Local heterogeneity only enters via **min** and **sup** over blocks on (K) and the **graph degree**, not via (|\Lambda|), shapes, or boundary roughness. As long as (\lambda - C_{\mathrm{graph}}\varepsilon) stays positive (your design lever), the constant is **uniform in volume**.
+
+If you want, I can turn this into a drop‑in “§ Local‑to‑Global via Contractive Transport” with the exact inequality and a constants table template.
+
+
+
+
+Here’s a tight, one‑page bridge note that links Maxwell–Calladine rigidity to your gauge‑theory curvature picture and makes “self‑stress = curvature” precise enough to cite.
+
+# Gauge–Rigidity Bridge: “Self‑Stress = Curvature”
+
+## 0. Setup (single cube; linearized near identity)
+
+* Lattice: one 3‑cube (c) with
+
+  * edges (E(c)={e_1,\dots,e_{12}}),
+  * faces (F(c)={f_1,\dots,f_6}).
+* Variables: link increments (X\in \mathfrak g^{E(c)}) (so (X_e\in\mathfrak g)); face curls (A\in \mathfrak g^{F(c)}).
+* Linear face map (discrete curl): (A = D,X), where (D:\mathfrak g^{E}\to \mathfrak g^{F}).
+* Cube Bianchi (compatibility): (C,A=0) with (C:\mathfrak g^{F}\to \mathfrak g^{c}\cong \mathfrak g).
+* Exactness on the single cube: (\operatorname{im} D=\ker C) and (C D=0).
+
+> Interpretation: (X) = “edge displacements”; (A) = “face strain/curvature”; (C) encodes the Bianchi cycle. This is the discrete de‑Rham ( \mathfrak g)-valued complex ( \mathfrak g^{E}\xrightarrow{D} \mathfrak g^{F}\xrightarrow{C} \mathfrak g).
+
+## 1. Maxwell–Calladine identity (linear count)
+
+Let (n_e=12), (n_f=6), and (r(D)=\mathrm{rank},D). Then
+[
+\underbrace{m}*{\text{mechanisms}}-\underbrace{s}*{\text{self‑stresses}}
+= n_e - r(D) - r(D^\top)
+= n_e - n_f
+\quad\Rightarrow\quad
+s = n_f - r(D) = \dim\ker D^\top .
+]
+On the cube, (n_e-n_f=6), so (m-s=6). Exactness at faces gives (\ker D^\top = (\operatorname{im} D)^\perp = (\ker C)^\perp = \operatorname{im} C^\top). Hence
+[
+\boxed{;\ker D^\top = \operatorname{im} C^\top;}
+]
+i.e. every self‑stress on faces is a Bianchi‑generated load.
+
+**Rigidity dictionary**
+
+* “Mechanisms” (m): edge‑space motions invisible to face strains (here, gauge‑like pure‑edge freedoms).
+* “Self‑stresses” (s): face loadings (W\in \mathfrak g^{F}) doing zero work on all compatible face strains (A=D X): ( \langle W, D X\rangle=0\ \forall X ).
+
+## 2. Self‑stress = curvature (precise statement)
+
+Let the inner products on (\mathfrak g^{E}), (\mathfrak g^{F}) be the standard ones induced by (-\mathrm{Tr}) on (\mathfrak g) and the combinatorial counting measure. Then:
+
+**Proposition (Bianchi‑induced self‑stress).**
+For the single cube,
+[
+\ker D^\top = \operatorname{im} C^\top.
+]
+Equivalently, a face loading (W) is a self‑stress iff there exists a “curvature potential” (Y\in \mathfrak g) such that
+[
+\boxed{;W = C^\top Y;}
+]
+and then ( \langle W, A\rangle = \langle C^\top Y, A\rangle = \langle Y, C A\rangle = 0) for every compatible (A=DX) by (C D=0).
+
+> Read this as: **self‑stress patterns are exactly the normal vectors to the Bianchi leaf**. They are curvature‑charges generated by the cube’s Bianchi constraint.
+
+## 3. Energy curvature (convexity) from redundancy
+
+Let a local gauge‑invariant energy be (S(X)=\tfrac{\alpha}{2}|D X|^2 + \text{(higher order)}) near the identity (Wilson‑type quadraticization). The Hessian at (X=0) is
+[
+\nabla^2 S(0)=\alpha, D^\top D .
+]
+Two immediate consequences:
+
+1. **Curved directions in face space.** On faces,
+   [
+   \delta^2 S = \alpha,|A|^2 \quad (A=D X)
+   ]
+   so any nonzero (W\in \ker D^\top) is **orthogonal** to all accessible (A) and represents a **redundant curvature constraint**. Redundancy means **excess constraints ⇒ positive curvature** in the accessible subspace.
+
+2. **Mass from Bianchi self‑stress.** The smallest nonzero eigenvalue of (D^\top D) is bounded below by how far accessible strains avoid the self‑stress subspace:
+   [
+   \lambda_{\min}(D^\top D)
+   = \min_{|X|=1}|D X|^2
+   = \operatorname{dist}^2(\operatorname{im} D,;0)
+   ;\ge; \operatorname{gap}^2(\operatorname{im} D,;\ker D^\top),
+   ]
+   and since (\ker D^\top=\operatorname{im} C^\top) is fixed by topology/orientation, **Bianchi‑generated self‑stress opens a spectral gap** in (D^\top D), hence in the quadraticized gauge energy. With coupling (\alpha), the local mass scale obeys
+   [
+   m_{\text{loc}}^2 ;\sim; \alpha;\lambda_{\min}(D^\top D) .
+   ]
+
+## 4. Summary (mechanical ↔ gauge)
+
+* Mechanical side: **self‑stress** (=\ker D^\top) (face loads doing zero work on compatible strains).
+* Gauge side: **curvature/Bianchi** gives (\operatorname{im} C^\top).
+* Bridge: (\ker D^\top = \operatorname{im} C^\top) ⇒ **self‑stress = (Bianchi‑generated) curvature**.
+* Consequence: Redundancy (exactness + Bianchi) enforces **positive Hessian** on edge variables, producing a **local mass scale** (m_{\text{loc}}^2 \sim \alpha,\lambda_{\min}(D^\top D)).
+
+## 5. Edge/face indexing & sign table (explicit)
+
+Choose cube with outward normals:
+[
+F(c)={x^\pm,y^\pm,z^\pm}.
+]
+Let (C:\mathfrak g^{F}\to \mathfrak g) be
+[
+C(A)= A_{x^+}+A_{y^+}+A_{z^+}-A_{x^-}-A_{y^-}-A_{z^-}.
+]
+Then (C^\top Y) is the face loading
+[
+W_{x^+}=Y,; W_{y^+}=Y,; W_{z^+}=Y,;
+W_{x^-}=-Y,; W_{y^-}=-Y,; W_{z^-}=-Y,
+]
+which is a basis vector of (\ker D^\top). The six such (C^\top Y) patterns generated by coordinate rotations span (\operatorname{im} C^\top).
+
+---
+
+**How to cite this in your mass‑gap manuscript.**
+Use the boxed identities and the proposition verbatim. Then point your “mass = curvature” preface to: (i) the Maxwell–Calladine count (s=\dim\ker D^\top), (ii) the exactness equality (\ker D^\top=\operatorname{im}C^\top), and (iii) the lower bound (m_{\text{loc}}^2\sim \alpha,\lambda_{\min}(D^\top D)). This makes the curvature‑induced gap an immediate algebraic corollary of discrete exactness plus Bianchi on the cube.
+
+
+
+
+
+
+Here’s a focused snapshot of what phase diffusion and arm‑path length fluctuations do in interferometry, *without* assuming you asked for it — because these effects quietly wreck fringe contrast even when there’s no usable which‑path information.
+
+Interferometers measure coherence as *fringe visibility* — the contrast between maxima and minima in an interference pattern — and it’s very sensitive to phase noise. Random fluctuations in the phase difference between the interferometer arms smear out this pattern, lowering visibility even if nothing in the environment records which path the particle or wave “took.” What matters is the *phase stability* of the arms, not whether there’s a physical trace of which path. ([Wikipedia][1])
+
+![Image](https://www.science.org/cms/10.1126/sciadv.adh5396/asset/5780b085-109c-49e6-9e47-5eaa9e7ee685/assets/images/large/sciadv.adh5396-f1.jpg)
+
+![Image](https://www.researchgate.net/publication/242333493/figure/fig3/AS%3A281400755408911%401444102576565/The-Mach-Zehnder-interferometer-and-its-output-signal-a-Schematic-of-the-atom-chip-a.png)
+
+![Image](https://i.sstatic.net/QTPxj.png)
+
+![Image](https://math_research.uct.ac.za/~siphelo/admin/interferometry/4_Visibility_Space/figures/fringes.svg)
+
+**Key points you’d want up front:**
+
+* **Phase diffusion kills contrast with no which‑path record.** Random phase fluctuations in one or both arms average out the interference pattern, reducing the fringe visibility regardless of whether any environment captures which‑path data. This is a classic *dephasing* effect: it looks like decoherence in the fringe contrast but doesn’t require an entangling or informational record of path choice. ([Wikipedia][1])
+
+* **Technical sources matter.** In real interferometers (optical, atom, or matter‑wave), mechanical vibrations, path length jitter, or environmental fluctuations introduce phase noise. These are often modeled as Gaussian random walks in phase and directly limit fringe contrast unless actively stabilized. ([Subaru Telescope][2])
+
+* **Locking suppresses it — but check the constraint.** Active stabilization techniques (e.g., cavity or path‑length locking such as Pound–Drever–Hall schemes) are used to hard‑lock phase or frequency references so that phase noise within the locked constraint doesn’t reduce contrast. Visibility then stays flat *as long as the locking constraint truly suppresses the fluctuations*. If you change the constraint (e.g., unlock or introduce a new noise source that isn’t suppressed), contrast quickly collapses. ([Wikipedia][3])
+
+* **Phase noise vs. decoherence distinction.** In quantum terms, *dephasing* (phase noise causing ensemble visibility loss) can be conceptually different from *decoherence* (information leakage to the environment). Phase noise degrades the *observed interference* without a which‑path record; decoherence proper would involve entanglement with external degrees of freedom. Many analyses treat phase noise as a classical stochastic process in the interferometer arms that leads to exponential visibility decay (e.g., visibility ∼ exp(−σ²) with σ the phase noise rms). ([Wikipedia][1])
+
+* **Metrology and quantum limits.** In precision setups (e.g., quantum metrology with squeezed states), phase diffusion sets practical limits on sensitivity — reducing the ability to beat the standard quantum limit unless mitigated by techniques like squeezing or correlated noise cancellation. ([MDPI][4])
+
+If you’re thinking of designing or diagnosing high‑precision interference experiments, this means the *mere presence of phase fluctuations* — even without any which‑path marker — is enough to collapse fringe contrast, so *active phase control and constraint verification* are not optional if you care about maintaining visibility.
+
+[1]: https://en.wikipedia.org/wiki/Interferometric_visibility?utm_source=chatgpt.com "Interferometric visibility"
+[2]: https://subarutelescope.org/staff/guyon/15teaching.web/00AstrOptics.web/AstrOpt_10interferometry.pdf?utm_source=chatgpt.com "Astronomical Optics 4.3. Phase correction in interferometers"
+[3]: https://en.wikipedia.org/wiki/Pound%E2%80%93Drever%E2%80%93Hall_technique?utm_source=chatgpt.com "Pound–Drever–Hall technique"
+[4]: https://www.mdpi.com/2073-8994/16/2/187?utm_source=chatgpt.com "Phase Diffusion Mitigation in the Truncated Mach–Zehnder ..."
+
+
+
+
+
+
+
+
+
+
+Here’s a focused snapshot of what phase diffusion and arm‑path length fluctuations do in interferometry, *without* assuming you asked for it — because these effects quietly wreck fringe contrast even when there’s no usable which‑path information.
+
+Interferometers measure coherence as *fringe visibility* — the contrast between maxima and minima in an interference pattern — and it’s very sensitive to phase noise. Random fluctuations in the phase difference between the interferometer arms smear out this pattern, lowering visibility even if nothing in the environment records which path the particle or wave “took.” What matters is the *phase stability* of the arms, not whether there’s a physical trace of which path. ([Wikipedia][1])
+
+![Image](https://www.science.org/cms/10.1126/sciadv.adh5396/asset/5780b085-109c-49e6-9e47-5eaa9e7ee685/assets/images/large/sciadv.adh5396-f1.jpg)
+
+![Image](https://www.researchgate.net/publication/242333493/figure/fig3/AS%3A281400755408911%401444102576565/The-Mach-Zehnder-interferometer-and-its-output-signal-a-Schematic-of-the-atom-chip-a.png)
+
+![Image](https://i.sstatic.net/QTPxj.png)
+
+![Image](https://math_research.uct.ac.za/~siphelo/admin/interferometry/4_Visibility_Space/figures/fringes.svg)
+
+**Key points you’d want up front:**
+
+* **Phase diffusion kills contrast with no which‑path record.** Random phase fluctuations in one or both arms average out the interference pattern, reducing the fringe visibility regardless of whether any environment captures which‑path data. This is a classic *dephasing* effect: it looks like decoherence in the fringe contrast but doesn’t require an entangling or informational record of path choice. ([Wikipedia][1])
+
+* **Technical sources matter.** In real interferometers (optical, atom, or matter‑wave), mechanical vibrations, path length jitter, or environmental fluctuations introduce phase noise. These are often modeled as Gaussian random walks in phase and directly limit fringe contrast unless actively stabilized. ([Subaru Telescope][2])
+
+* **Locking suppresses it — but check the constraint.** Active stabilization techniques (e.g., cavity or path‑length locking such as Pound–Drever–Hall schemes) are used to hard‑lock phase or frequency references so that phase noise within the locked constraint doesn’t reduce contrast. Visibility then stays flat *as long as the locking constraint truly suppresses the fluctuations*. If you change the constraint (e.g., unlock or introduce a new noise source that isn’t suppressed), contrast quickly collapses. ([Wikipedia][3])
+
+* **Phase noise vs. decoherence distinction.** In quantum terms, *dephasing* (phase noise causing ensemble visibility loss) can be conceptually different from *decoherence* (information leakage to the environment). Phase noise degrades the *observed interference* without a which‑path record; decoherence proper would involve entanglement with external degrees of freedom. Many analyses treat phase noise as a classical stochastic process in the interferometer arms that leads to exponential visibility decay (e.g., visibility ∼ exp(−σ²) with σ the phase noise rms). ([Wikipedia][1])
+
+* **Metrology and quantum limits.** In precision setups (e.g., quantum metrology with squeezed states), phase diffusion sets practical limits on sensitivity — reducing the ability to beat the standard quantum limit unless mitigated by techniques like squeezing or correlated noise cancellation. ([MDPI][4])
+
+If you’re thinking of designing or diagnosing high‑precision interference experiments, this means the *mere presence of phase fluctuations* — even without any which‑path marker — is enough to collapse fringe contrast, so *active phase control and constraint verification* are not optional if you care about maintaining visibility.
+
+[1]: https://en.wikipedia.org/wiki/Interferometric_visibility?utm_source=chatgpt.com "Interferometric visibility"
+[2]: https://subarutelescope.org/staff/guyon/15teaching.web/00AstrOptics.web/AstrOpt_10interferometry.pdf?utm_source=chatgpt.com "Astronomical Optics 4.3. Phase correction in interferometers"
+[3]: https://en.wikipedia.org/wiki/Pound%E2%80%93Drever%E2%80%93Hall_technique?utm_source=chatgpt.com "Pound–Drever–Hall technique"
+[4]: https://www.mdpi.com/2073-8994/16/2/187?utm_source=chatgpt.com "Phase Diffusion Mitigation in the Truncated Mach–Zehnder ..."
+
+
+
+
+Here’s a tight, first‑pass map of how “renormalized spectral data” shows up in QFT and what it actually means.
+
+---
+
+# 1) What “mass” means nonperturbatively
+
+* The physical mass (m_{\text{phys}}) of a stable particle is the **pole** of the exact two‑point (connected) momentum‑space correlator:
+  [
+  G_2(p)=\int d^dx,e^{ip\cdot x},\langle \phi(x)\phi(0)\rangle_c
+  \quad\Rightarrow\quad
+  G_2(p);\sim;\frac{Z}{p^2+m_{\text{phys}}^2-i0};+;\text{regular}.
+  ]
+  “Pole mass” = location of that simple pole. (Z) is the field‑strength residue.
+* The Poincaré algebra fixes the Casimir form (P^\mu P_\mu) but not its **numerical** eigenvalues. The theory (Lagrangian + dynamics + renormalization) sets the spectrum; symmetry only constrains the form.
+
+# 2) Renormalization group (RG) vs. observables
+
+* **Bare parameters** ((m_0,\lambda_0,\dots)) are cutoff‑dependent bookkeeping.
+* **Renormalized parameters** (m_R(\mu), \lambda_R(\mu)) **run** with scale (\mu) by beta/gamma functions.
+* **Observables** live in correlators. Pole locations and on‑shell S‑matrix elements are RG‑invariants: changing (\mu) reshuffles (m_R(\mu)) and (Z(\mu)) but leaves (m_{\text{phys}}) (the pole) unchanged.
+
+# 3) How to read “spectral data” from correlators
+
+* **Källén–Lehmann** (for a scalar, schematically):
+  [
+  G_2(p)=\int_{0}^{\infty}! d\mu^2;\frac{\rho(\mu^2)}{p^2+\mu^2-i0},
+  ]
+  with a positive spectral density (\rho).
+
+  * A **delta spike** in (\rho) at (\mu^2=m_{\text{phys}}^2) ↔ stable particle pole.
+  * A **continuum** part ↔ multiparticle states; thresholds set branch cuts.
+* **Mass gap**: the infimum of support of (\rho) above 0 (excluding a vacuum delta at 0 for currents) is (>0).
+
+# 4) Scheme dependence vs. scheme invariance
+
+* (m_R(\mu)), (Z(\mu)), couplings (g_R(\mu)) are **scheme/scale dependent**.
+* Pole positions, total cross‑sections, bound‑state energies are **scheme invariant** (once IR/finite‑volume issues are controlled).
+* Lattice/continuum constructive frameworks compute the **same** spectral numbers after continuum limit and renormalization, even though intermediate parameters differ.
+
+# 5) Practical extraction (continuum & lattice)
+
+* **Continuum**: locate poles/branch cuts of Fourier‑space 1PI two‑point function (\Gamma^{(2)}(p)); solve (\Gamma^{(2)}(-m_{\text{phys}}^2)=0).
+* **Euclidean lattice**: fit large‑time decay of two‑point functions
+  [
+  C(t)=\sum_{\vec x}\langle \mathcal O(\vec x,t)\mathcal O(0)\rangle
+  ;\sim; A,e^{-m_{\text{phys}} t}+\cdots,
+  ]
+  or the transfer‑matrix spectrum; then take (a\to0) with proper renormalization.
+
+# 6) Takeaways (what’s fixed vs. what flows)
+
+* **Fixed by symmetry**: dispersion form (E^2=\vec p^{,2}+m^2).
+* **Fixed by dynamics**: the **number** (m_{\text{phys}}) (pole), residues, and multi‑particle thresholds—read from correlators.
+* **Controlled by RG**: scale dependence of renormalized parameters used to **reach** (but not define) those physical spectral numbers.
+
+If you want, I can convert this into a short “Definitions & Lemmas” sheet (pole mass, spectral density, gap, scheme invariance) you can cite in your manuscript.

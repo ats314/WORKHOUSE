@@ -1,0 +1,300 @@
+Part 4 — Wilson plaquette action: second variation at the vacuum and the discrete Maxwell operator
+
+### 4.1. Lattice cells and configuration manifold
+
+Let (\Lambda\subset \mathbb{Z}^d) be a finite lattice region. Fix:
+
+* a set (E(\Lambda)) of **oriented edges** (links), written (\ell=(x,\mu)) for the oriented link from (x) to (x+\hat\mu);
+* a set (P(\Lambda)) of **oriented plaquettes**, written (p=(x;\mu,\nu)) with (\mu<\nu), oriented counterclockwise in the ((\mu,\nu))-plane.
+
+Let (G) be a compact Lie group and (\mathfrak g) its Lie algebra. Fix an (\mathrm{Ad})-invariant inner product (\langle\cdot,\cdot\rangle_{\mathfrak g}) on (\mathfrak g). (For (G=\mathrm{SU}(N)) we will specialize to (\langle A,B\rangle_\lambda:=\lambda(-\mathrm{Tr}(AB))) for some (\lambda>0).)
+
+Define the configuration manifold
+[
+M_\Lambda ;:=; G^{E(\Lambda)} ,
+]
+whose elements are link fields (U=(U_\ell)_{\ell\in E(\Lambda)}).
+
+For an oriented plaquette (p=(x;\mu,\nu)), define its **plaquette holonomy**
+[
+U_p ;:=; U_{x,\mu},U_{x+\hat\mu,\nu},U_{x+\hat\nu,\mu}^{-1},U_{x,\nu}^{-1}.
+\tag{4.1}
+]
+Define the vacuum configuration (U^{(0)}\in M_\Lambda) by
+[
+U^{(0)}_\ell = e \quad \forall \ell\in E(\Lambda).
+\tag{4.2}
+]
+
+We equip each (G) factor with the bi-invariant Riemannian metric induced by (\langle\cdot,\cdot\rangle_{\mathfrak g}), and (M_\Lambda) with the product metric. In particular, for any (X\in \mathfrak g), the curve (t\mapsto \exp(tX)) is a geodesic in (G) through (e).
+
+---
+
+### 4.2. Tangent identification at the vacuum
+
+Identify
+[
+T_{U^{(0)}}M_\Lambda ;\cong; \mathcal{C}^1(\Lambda;\mathfrak g)
+]
+by assigning to a tangent vector its linkwise components (X=(X_\ell)*{\ell\in E(\Lambda)}\in \mathfrak g^{E(\Lambda)}), and representing the corresponding geodesic through (U^{(0)}) by
+[
+U(t)=\exp(tX)\quad\text{meaning}\quad U*\ell(t)=\exp(tX_\ell)\quad(\ell\in E(\Lambda)).
+\tag{4.3}
+]
+
+We use the (\ell^2) inner products on cochains induced from (\langle\cdot,\cdot\rangle_{\mathfrak g}):
+[
+\langle X,Y\rangle_{\mathcal C^1}:=\sum_{\ell\in E(\Lambda)}\langle X_\ell,Y_\ell\rangle_{\mathfrak g},
+\qquad
+\langle \omega,\eta\rangle_{\mathcal C^2}:=\sum_{p\in P(\Lambda)}\langle \omega_p,\eta_p\rangle_{\mathfrak g}.
+\tag{4.4}
+]
+
+---
+
+### 4.3. The discrete curl (d_1)
+
+Define the coboundary operator
+[
+d_1:\mathcal C^1(\Lambda;\mathfrak g)\to \mathcal C^2(\Lambda;\mathfrak g)
+]
+by the signed sum around an oriented plaquette. For (p=(x;\mu,\nu)),
+[
+(d_1X)*p ;:=; X*{x,\mu} + X_{x+\hat\mu,\nu} - X_{x+\hat\nu,\mu} - X_{x,\nu}.
+\tag{4.5}
+]
+This is the discrete analogue of (\mathrm{curl}).
+
+Let (d_1^*) denote the adjoint of (d_1) with respect to the inner products (4.4), i.e.
+[
+\langle d_1X,\omega\rangle_{\mathcal C^2}=\langle X,d_1^*\omega\rangle_{\mathcal C^1}.
+\tag{4.6}
+]
+Then (d_1^*d_1:\mathcal C^1\to\mathcal C^1) is positive semidefinite.
+
+---
+
+### 4.4. Linearization of plaquette holonomy
+
+The first structural fact is: the plaquette holonomy linearizes to (d_1).
+
+**Lemma 4.1 (Plaquette holonomy linearization).**
+Let (X\in\mathcal C^1(\Lambda;\mathfrak g)) and (U(t)=\exp(tX)) as in (4.3). For each plaquette (p),
+[
+U_p(t) ;=; \exp!\Big(t(d_1X)*p ;+; t^2 R_p(t)\Big),
+\tag{4.7}
+]
+where (R_p(t)\in\mathfrak g) depends smoothly on (t) and satisfies a uniform bound
+[
+|R_p(t)|;\le; C,|X|*\infty^2
+\quad\text{for all }|t|\le t_0,
+\tag{4.8}
+]
+for some (t_0>0) and (C<\infty) depending only on (G) and the chosen norm on (\mathfrak g) (not on (\Lambda)).
+
+*Proof.* Fix a plaquette (p=(x;\mu,\nu)). Writing its oriented boundary links as ((e_1,e_2,e_3,e_4)) in order, we have
+[
+U_p(t)=\exp(tX_{e_1})\exp(tX_{e_2})\exp(-tX_{e_3})\exp(-tX_{e_4}).
+\tag{4.9}
+]
+Near the identity, the Baker–Campbell–Hausdorff formula gives a smooth map (\mathrm{BCH}(\cdot,\cdot)) with
+[
+\exp(A)\exp(B)=\exp(\mathrm{BCH}(A,B)),\qquad \mathrm{BCH}(A,B)=A+B+\mathcal O(|A||B|).
+\tag{4.10}
+]
+Apply this iteratively to the four factors in (4.9), with (A,B=\mathcal O(t|X|*\infty)). One obtains
+[
+U_p(t)=\exp!\Big(t(X*{e_1}+X_{e_2}-X_{e_3}-X_{e_4}) + t^2 R_p(t)\Big)
+]
+for a smooth remainder (R_p(t)) satisfying (4.8). The linear term is exactly ((d_1X)_p) by definition (4.5). ∎
+
+---
+
+### 4.5. Wilson plaquette action and its Taylor expansion at (e)
+
+From here on, specialize to (G=\mathrm{SU}(N)). Define the standard Wilson single-plaquette potential
+[
+\Phi(U);:=;\frac{\beta}{N},\mathrm{Re,Tr}(I-U),
+\qquad U\in \mathrm{SU}(N),
+\tag{4.11}
+]
+and the Wilson plaquette action
+[
+S_W(U);:=;\sum_{p\in P(\Lambda)} \Phi(U_p).
+\tag{4.12}
+]
+
+We now record the exact quadratic term of (\Phi(\exp Y)) at (Y=0).
+
+**Lemma 4.2 (Second order expansion of (\mathrm{Re,Tr}(I-\exp Y))).**
+Let (Y\in\mathfrak{su}(N)). Then as (Y\to 0),
+[
+\mathrm{Re,Tr}(I-e^Y);=; -\frac12,\mathrm{Tr}(Y^2);+;\mathcal O(|Y|^3).
+\tag{4.13}
+]
+Equivalently, if we use the inner product (\langle A,B\rangle_\lambda:=\lambda(-\mathrm{Tr}(AB))) and norm (|A|*\lambda^2=\langle A,A\rangle*\lambda), then
+[
+\mathrm{Re,Tr}(I-e^Y);=;\frac{1}{2\lambda},|Y|*\lambda^2;+;\mathcal O(|Y|*\lambda^3).
+\tag{4.14}
+]
+
+*Proof.* Use the power series (e^Y = I + Y + \tfrac12Y^2 + \tfrac16Y^3 + \cdots). Since (Y\in\mathfrak{su}(N)), (\mathrm{Tr}(Y)=0). Moreover (Y^2) is Hermitian and (\mathrm{Tr}(Y^2)\in\mathbb R). Thus
+[
+\mathrm{Re,Tr}(e^Y)=\mathrm{Tr}(I)+\frac12\mathrm{Tr}(Y^2)+\mathcal O(|Y|^3)
+= N+\frac12\mathrm{Tr}(Y^2)+\mathcal O(|Y|^3),
+]
+and subtracting from (N=\mathrm{Re,Tr}(I)) yields (4.13). Rewriting (-\mathrm{Tr}(Y^2)=|Y|_\lambda^2/\lambda) gives (4.14). ∎
+
+---
+
+### 4.6. Quadratic expansion of (S_W) at the vacuum
+
+Combine Lemma 4.1 and Lemma 4.2.
+
+**Proposition 4.3 (Second variation of (S_W) at (U^{(0)})).**
+Let (X\in \mathcal C^1(\Lambda;\mathfrak{su}(N))) and (U(t)=\exp(tX)). Then
+[
+S_W(U(t))
+=========
+
+S_W(U^{(0)})
++\frac{t^2}{2},\frac{\beta}{N},|d_1X|*{\mathcal C^2,\lambda}^2
++\mathcal O!\big(t^3|X|*\infty^3\big),
+\tag{4.15}
+]
+where (|\cdot|*{\mathcal C^2,\lambda}) is the (\ell^2)-norm induced from (\langle\cdot,\cdot\rangle*\lambda).
+
+In particular, the Riemannian Hessian at the vacuum satisfies, as a quadratic form,
+[
+\nabla^2 S_W(U^{(0)})(X,X)
+==========================
+
+# \frac{\beta}{N},|d_1X|_{\mathcal C^2,\lambda}^2
+
+\frac{\beta}{N},\langle X,d_1^*d_1X\rangle_{\mathcal C^1,\lambda}.
+\tag{4.16}
+]
+
+*Proof.* For each plaquette (p), Lemma 4.1 gives (U_p(t)=\exp(Y_p(t))) with
+[
+Y_p(t)=t(d_1X)_p+t^2R_p(t).
+]
+Insert into (\Phi(U_p(t))=\frac{\beta}{N}\mathrm{Re,Tr}(I-e^{Y_p(t)})) and apply Lemma 4.2:
+[
+\Phi(U_p(t))
+============
+
+\frac{\beta}{N}\left(\frac{1}{2\lambda}|Y_p(t)|*\lambda^2+\mathcal O(|Y_p(t)|*\lambda^3)\right).
+]
+Since (Y_p(t)=\mathcal O(t|X|*\infty)), we have (|Y_p(t)|*\lambda^3=\mathcal O(t^3|X|*\infty^3)). Also,
+[
+|Y_p(t)|*\lambda^2
+==================
+
+# \big|t(d_1X)*p+t^2R_p(t)\big|*\lambda^2
+
+t^2|(d_1X)*p|*\lambda^2 + \mathcal O(t^3|X|_\infty^3),
+]
+because the cross term is (2t^3\langle(d_1X)*p,R_p(t)\rangle=\mathcal O(t^3|X|*\infty^3)) using (4.8). Summing over plaquettes yields (4.15).
+
+Finally, on a Riemannian manifold, for a geodesic (\gamma(t)) with (\gamma(0)=U^{(0)}) and (\dot\gamma(0)=X),
+[
+\nabla^2 S_W(U^{(0)})(X,X)=\frac{d^2}{dt^2}S_W(\gamma(t))\Big|_{t=0}.
+]
+Here (\gamma(t)=\exp(tX)) is a geodesic (product of one-parameter subgroups), so the coefficient of (t^2/2) in (4.15) is exactly the Hessian value, giving (4.16). ∎
+
+---
+
+### 4.7. Operator identity and normalization map
+
+Equation (4.16) is already the “matrix statement”: (d_1^*d_1) is a **positive semidefinite, sparse** operator determined by the lattice incidence structure.
+
+If we want an operator identity (relative to the chosen inner product), we read (4.16) as:
+
+**Corollary 4.4 (Wilson Hessian = discrete Maxwell operator).**
+As an operator on (\mathcal C^1(\Lambda;\mathfrak{su}(N))) with respect to (\langle\cdot,\cdot\rangle_\lambda),
+[
+\nabla^2 S_W(U^{(0)}) ;=; \frac{\beta}{N\lambda},d_1^*d_1.
+\tag{4.17}
+]
+In the common lattice normalization (\lambda=1) (i.e. (\langle A,B\rangle=-\mathrm{Tr}(AB))),
+[
+\nabla^2 S_W(U^{(0)}) ;=; \frac{\beta}{N},d_1^*d_1.
+\tag{4.18}
+]
+In particular, for (N=3),
+[
+\nabla^2 S_W(U^{(0)}) ;=; \frac{\beta}{3},d_1^*d_1.
+\tag{4.19}
+]
+
+*Explanation of the (\lambda)-dependence.*
+The quadratic form (\nabla^2S_W(U^{(0)})(X,X)) is metric-independent as a number, but writing it as (\langle X,(\cdot)X\rangle_{\mathcal C^1,\lambda}) introduces the factor (1/\lambda), producing (4.17).
+
+---
+
+### 4.8. Kernel, gauge directions, and the horizontal sector
+
+Because (d_1^*d_1) is PSD,
+[
+\nabla^2 S_W(U^{(0)})(X,X)\ge 0\quad\forall X.
+\tag{4.20}
+]
+
+Moreover,
+[
+\ker\big(\nabla^2S_W(U^{(0)})\big)=\ker(d_1),
+\tag{4.21}
+]
+the space of discrete **closed 1-forms**.
+
+Let (d_0:\mathcal C^0(\Lambda;\mathfrak g)\to \mathcal C^1(\Lambda;\mathfrak g)) denote the discrete gradient/coboundary (introduced in your Part 3), so that (d_1 d_0=0). Then
+[
+\mathrm{im}(d_0)\subseteq \ker(d_1),
+\tag{4.22}
+]
+i.e. **infinitesimal gauge directions are always zero-modes** of the Wilson Hessian at the vacuum.
+
+Define the vertical and horizontal subspaces at the vacuum:
+[
+V_{U^{(0)}}:=\mathrm{im}(d_0),
+\qquad
+H_{U^{(0)}}:=V_{U^{(0)}}^\perp=\ker(d_0^*).
+\tag{4.23}
+]
+On (H_{U^{(0)}}), the operator (d_1^*d_1) is still PSD; any remaining kernel corresponds to harmonic 1-forms (topological/finite-size modes), depending on boundary conditions.
+
+---
+
+### 4.9. Why this must stay a matrix statement (and where “absolute values” would enter later)
+
+The identity (4.18) is the point where your later “PSD not adversarial” upgrade begins.
+
+* If you **keep** (\nabla^2S_W(U^{(0)})) as the PSD operator ((\beta/N)d_1^*d_1), then any later inequality of the form
+  [
+  \langle \nabla f,, \nabla^2S_W(U^{(0)}),\nabla f\rangle
+  ]
+  is automatically nonnegative and retains the sparse geometry of the lattice (the signed incidence structure).
+
+* The **only place absolute values appear** in the older scalar/Dobrushin-style route is when one replaces the signed matrix (\mathrm{Hess}*{\ell,\ell'}) by a uniform bound on magnitudes, schematically
+  [
+  \sum*{\ell'\neq \ell}\mathrm{Hess}*{\ell,\ell'},\xi*{\ell}\xi_{\ell'}
+  ;\ge;
+  -\sum_{\ell'\neq \ell}|\mathrm{Hess}*{\ell,\ell'}|,|\xi*\ell|,|\xi_{\ell'}|
+  ;\ge;
+  -J\sum_{\ell'\sim \ell}|\xi_\ell|,|\xi_{\ell'}|.
+  \tag{4.24}
+  ]
+  That step **destroys** the curl-structure and treats every cross-term as adversarial.
+
+Part 4’s message is: **don’t do (4.24) for the Wilson contribution**—it is already ((\beta/N)d_1^*d_1\succeq 0). The only cross-terms you will later need to control are the *perturbative* differences between (\mathrm{Hess},S_W(U)) and (\mathrm{Hess},S_W(U^{(0)})) when (U) is restricted to your small-field set (K_\Lambda) (defined later), and those are exactly where the “weights remain (\succeq I)” hinge proposition will live.
+
+---
+
+**End of Part 4.**
+
+If you want the next piece to snap in immediately: Part 5 should define your canonical set (K_\Lambda) and prove the localized hinge inequality on (H_{U^{(0)}}=\ker d_0^*),
+[
+\mathrm{Hess},S_\Lambda(U)\ \succeq\ \frac{c_H}{2}I+\frac{\beta}{3}d_1^*d_1\quad\text{for all }U\in K_\Lambda,
+]
+with the remainder term stated explicitly in whichever parameter defines (K_\Lambda) (small-ball radius (r), or averaged badness (\varepsilon)).

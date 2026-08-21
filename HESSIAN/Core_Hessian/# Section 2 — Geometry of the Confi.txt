@@ -1,0 +1,480 @@
+# Section 2 — Geometry of the Configuration Manifold
+
+This section fixes a canonical Riemannian structure on the finite-volume lattice configuration manifold (M_\Lambda=G^{E(\Lambda)}), proves basic invariances (including gauge isometries), constructs controlled exponential/log coordinate charts near the vacuum (U^{(0)}), and records uniform smoothness estimates needed later.
+
+Throughout, (G) is a compact Lie group (eventually (G=\mathrm{SU}(N))). The lattice data ((V(\Lambda),E(\Lambda),P(\Lambda))) and the gauge action are as in Section 1.
+
+---
+
+## 2.1. Lie algebra inner product and induced bi-invariant metric on (G)
+
+### Definition 2.1 (Ad-invariant inner product)
+
+Let (\mathfrak g=\mathrm{Lie}(G)=T_eG). Fix an (\mathrm{Ad})-invariant inner product (\langle\cdot,\cdot\rangle_{\mathfrak g}) on (\mathfrak g), i.e.
+[
+\langle \mathrm{Ad}*g X,\mathrm{Ad}*g Y\rangle*{\mathfrak g}=\langle X,Y\rangle*{\mathfrak g}\qquad\forall g\in G,\ X,Y\in\mathfrak g.
+]
+In the case (G=\mathrm{SU}(N)) we parameterize the normalization by
+[
+\langle X,Y\rangle_\lambda:=\lambda\bigl(-\mathrm{Tr}(XY)\bigr),\qquad \lambda>0,\quad X,Y\in\mathfrak{su}(N),
+]
+with (\mathrm{Tr}) in the defining representation. 
+Write (|X|*{\mathfrak g}:=\sqrt{\langle X,X\rangle*{\mathfrak g}}).
+
+### Definition 2.2 (Riemannian metric on (G))
+
+Define a Riemannian metric (g_G) on (G) by left translation from (\langle\cdot,\cdot\rangle_{\mathfrak g}): for (g\in G) and (v,w\in T_gG),
+[
+g_G(g)(v,w):=\Big\langle (dL_{g^{-1}})*g v,\ (dL*{g^{-1}})*g w\Big\rangle*{\mathfrak g},
+]
+where (L_h(k)=hk) denotes left translation.
+
+### Lemma 2.3 (Bi-invariance)
+
+The metric (g_G) is bi-invariant: left and right translations are isometries.
+
+**Proof.**
+Left invariance is immediate from the definition:
+[
+g_G(hg)\bigl((dL_h)*g v,(dL_h)*g w\bigr)
+=\Big\langle (dL*{(hg)^{-1}})*{hg} (dL_h)*g v,\ (dL*{(hg)^{-1}})*{hg}(dL_h)*g w\Big\rangle
+]
+and ((hg)^{-1}h=g^{-1}) gives ((dL*{(hg)^{-1}})*{hg}(dL_h)*g=(dL*{g^{-1}})_g), hence equality with (g_G(g)(v,w)).
+
+For right invariance, write (R_h(g)=gh). Then
+[
+(dL_{(gh)^{-1}})*{gh}(dR_h)*g
+=(dL*{h^{-1}g^{-1}})*{gh}(dR_h)*g.
+]
+Using (L*{h^{-1}g^{-1}}\circ R_h = C_{h^{-1}}\circ L_{g^{-1}}), where (C_{h^{-1}}(x)=h^{-1}xh) is conjugation, we get
+[
+(dL_{(gh)^{-1}})*{gh}(dR_h)*g
+=(dC*{h^{-1}})*e,(dL*{g^{-1}})*g=\mathrm{Ad}*{h^{-1}},(dL*{g^{-1}})*g.
+]
+Therefore,
+[
+g_G(gh)\bigl((dR_h)*g v,(dR_h)*g w\bigr)
+=\langle \mathrm{Ad}*{h^{-1}}(dL*{g^{-1}}v),\mathrm{Ad}*{h^{-1}}(dL_{g^{-1}}w)\rangle_{\mathfrak g}
+=g_G(g)(v,w)
+]
+by (\mathrm{Ad})-invariance of (\langle\cdot,\cdot\rangle_{\mathfrak g}). ∎
+
+### Definition 2.4 (Distance and balls in (G))
+
+Let (d_G) denote the Riemannian distance on ((G,g_G)). Write
+[
+B_r^G(g):={h\in G:\ d_G(h,g)<r}
+]
+for the open geodesic ball.
+
+---
+
+## 2.2. The configuration manifold (M_\Lambda) and its product geometry
+
+### Definition 2.5 (Configuration manifold)
+
+For a finite lattice (\Lambda), define
+[
+M_\Lambda := G^{E(\Lambda)}=\prod_{\ell\in E(\Lambda)} G.
+]
+A point (U\in M_\Lambda) is a collection (U=(U_\ell)*{\ell\in E(\Lambda)}), (U*\ell\in G). 
+
+### Definition 2.6 (Product Riemannian metric)
+
+Equip (M_\Lambda) with the product metric
+[
+g_\Lambda(U)(V,W):=\sum_{\ell\in E(\Lambda)} g_G(U_\ell)(V_\ell,W_\ell),
+]
+where (V=(V_\ell)*{\ell}) and (V*\ell\in T_{U_\ell}G), similarly (W). 
+
+### Definition 2.7 (Vacuum configuration)
+
+Define the vacuum (trivial configuration)
+[
+U^{(0)} := (e)*{\ell\in E(\Lambda)}\in M*\Lambda.
+]
+
+
+### Lemma 2.8 (Tangent identification and norms)
+
+For each (U\in M_\Lambda), right translation identifies (T_U M_\Lambda) with (\mathfrak g^{E(\Lambda)}) as follows:
+[
+T_U M_\Lambda \cong \bigoplus_{\ell\in E(\Lambda)} T_{U_\ell}G
+\cong \bigoplus_{\ell\in E(\Lambda)} \mathfrak g,
+]
+where (T_{U_\ell}G\cong \mathfrak g) via ((dR_{U_\ell^{-1}})*{U*\ell}). Under this identification,
+[
+|V|*{g*\Lambda}^2=\sum_{\ell\in E(\Lambda)} |V_\ell|_{\mathfrak g}^2.
+]
+
+**Proof.**
+The tangent of a product manifold is the product of tangents:
+[
+T_U\Big(\prod_{\ell} G\Big)=\prod_{\ell} T_{U_\ell}G,
+]
+which may be checked on product charts. Each (T_{U_\ell}G) is identified with (\mathfrak g) via right translation ((dR_{U_\ell^{-1}})*{U*\ell}). The norm identity follows from the product metric definition and the fact that (g_G) is right-invariant (Lemma 2.3), so
+[
+g_G(U_\ell)(V_\ell,V_\ell)=\langle (dR_{U_\ell^{-1}})V_\ell,(dR_{U_\ell^{-1}})V_\ell\rangle_{\mathfrak g}.
+]
+Summing over (\ell) gives the stated formula. ∎
+
+### Lemma 2.9 (Distance formula on the product)
+
+Let (d_\Lambda) denote the Riemannian distance on ((M_\Lambda,g_\Lambda)). Then for all (U,V\in M_\Lambda),
+[
+d_\Lambda(U,V)^2=\sum_{\ell\in E(\Lambda)} d_G(U_\ell,V_\ell)^2.
+]
+
+**Proof.**
+Let (\gamma:[0,1]\to M_\Lambda) be a (C^1) curve with (\gamma(0)=U), (\gamma(1)=V), and write (\gamma(t)=(\gamma_\ell(t))*{\ell}) with (\gamma*\ell:[0,1]\to G). Its speed satisfies
+[
+|\gamma'(t)|*{g*\Lambda}^2=\sum_{\ell}|\gamma_\ell'(t)|*{g_G}^2.
+]
+Hence the length
+[
+L(\gamma)=\int_0^1 \sqrt{\sum*\ell |\gamma_\ell'(t)|*{g_G}^2},dt.
+]
+Define (a*\ell:=\int_0^1 |\gamma_\ell'(t)|*{g_G},dt). Then (a*\ell\ge d_G(U_\ell,V_\ell)). By Cauchy–Schwarz in (\mathbb R^{E(\Lambda)}),
+[
+L(\gamma)\ \ge\ \sqrt{\sum_\ell \Big(\int_0^1 |\gamma_\ell'(t)|*{g_G},dt\Big)^2}
+=\sqrt{\sum*\ell a_\ell^2}
+\ \ge\ \sqrt{\sum_\ell d_G(U_\ell,V_\ell)^2}.
+]
+Taking the infimum over all (\gamma) yields
+[
+d_\Lambda(U,V)\ge \sqrt{\sum_\ell d_G(U_\ell,V_\ell)^2}.
+]
+
+For the reverse inequality, for each (\ell) choose a minimizing constant-speed geodesic (\gamma_\ell) in (G) from (U_\ell) to (V_\ell) with speed (|\gamma_\ell'|=d_G(U_\ell,V_\ell)). Define (\gamma(t)=(\gamma_\ell(t))*{\ell}). Then
+[
+|\gamma'(t)|*{g_\Lambda}^2=\sum_\ell d_G(U_\ell,V_\ell)^2
+]
+is constant, so
+[
+L(\gamma)=\sqrt{\sum_\ell d_G(U_\ell,V_\ell)^2}.
+]
+Hence (d_\Lambda(U,V)\le L(\gamma)), proving equality. ∎
+
+---
+
+## 2.3. Riemannian volume and Haar measure
+
+### Definition 2.10 (Product Haar volume)
+
+Let (d\mu_{\mathrm{Haar}}) denote Haar probability measure on (G). Define the product Haar probability measure on (M_\Lambda) by
+[
+d\mu_{\mathrm{Haar},\Lambda}(U):=\prod_{\ell\in E(\Lambda)} d\mu_{\mathrm{Haar}}(U_\ell).
+]
+The project notes identify this with the Riemannian volume induced by (g_\Lambda), normalized to total mass (1). 
+
+### Lemma 2.11 (Riemannian volume = Haar, factorwise)
+
+The Riemannian volume measure (d\mathrm{vol}*{g_G}) on ((G,g_G)) is a left-invariant Borel measure. Since (G) is compact, the normalized measure (d\mathrm{vol}*{g_G}/\mathrm{vol}*{g_G}(G)) equals Haar probability measure. Consequently, (d\mathrm{vol}*{g_\Lambda}) is the product Haar measure on (M_\Lambda) up to the global normalization constant, and after normalization it coincides with (d\mu_{\mathrm{Haar},\Lambda}).
+
+**Proof.**
+By Lemma 2.3, left translations (L_h) are isometries of ((G,g_G)). Isometries preserve the Riemannian volume form, hence (d\mathrm{vol}*{g_G}) is left-invariant:
+[
+(L_h)** d\mathrm{vol}*{g_G}=d\mathrm{vol}*{g_G}.
+]
+Haar measure is the unique (up to a multiplicative constant) left-invariant regular Borel measure on a compact group. Therefore (d\mathrm{vol}*{g_G}=c,d\mu*{\mathrm{Haar}}) for some (c>0). Normalizing gives the stated equality.
+
+On (M_\Lambda) with product metric, the Riemannian volume form is the product of the volume forms on each factor; this can be checked in product coordinates where the metric matrix is block diagonal. Hence (d\mathrm{vol}*{g*\Lambda}=\prod_\ell d\mathrm{vol}*{g_G}(U*\ell)=c^{|E(\Lambda)|}\prod_\ell d\mu_{\mathrm{Haar}}(U_\ell)), and normalization yields (d\mu_{\mathrm{Haar},\Lambda}). ∎
+
+---
+
+## 2.4. Gauge action as an isometric group action; vertical and horizontal bundles
+
+### Definition 2.12 (Gauge group and action)
+
+Let
+[
+\mathcal G_\Lambda := G^{V(\Lambda)}.
+]
+It acts on (M_\Lambda) by
+[
+(g\cdot U)*{x,\mu}:=g_x,U*{x,\mu},g_{x+\hat\mu}^{-1},
+\qquad g=(g_x)*{x\in V(\Lambda)},\ U=(U*{x,\mu})_{(x,\mu)\in E(\Lambda)}.
+]
+
+
+### Lemma 2.13 (Gauge action is smooth and isometric)
+
+The map (\mathcal G_\Lambda\times M_\Lambda\to M_\Lambda), ((g,U)\mapsto g\cdot U), is smooth. For each fixed (g\in\mathcal G_\Lambda), the map (U\mapsto g\cdot U) is an isometry of ((M_\Lambda,g_\Lambda)) and preserves (d\mu_{\mathrm{Haar},\Lambda}).
+
+**Proof.**
+Smoothness follows because the action is defined componentwise by group multiplication and inversion, which are smooth maps on the finite-dimensional Lie group (G), and finite products preserve smoothness.
+
+Fix (g\in\mathcal G_\Lambda). On each link (\ell=(x,\mu)), the action is (U_\ell\mapsto g_x U_\ell g_{x+\hat\mu}^{-1}), i.e. composition of left translation by (g_x) and right translation by (g_{x+\hat\mu}^{-1}). By Lemma 2.3, both left and right translations are isometries of ((G,g_G)). Hence each factor map is an isometry; the product map is an isometry for the product metric (g_\Lambda). Volume preservation follows from isometry invariance of Riemannian volume, and Lemma 2.11 identifies this with product Haar. ∎
+
+### Definition 2.14 (Vertical and horizontal subspaces)
+
+For (U\in M_\Lambda), define the vertical tangent space
+[
+V_U:=T_U(\mathcal G_\Lambda\cdot U)\subset T_U M_\Lambda,
+]
+and define the horizontal space as the orthogonal complement (with respect to (g_\Lambda))
+[
+H_U:=V_U^\perp\subset T_U M_\Lambda.
+]
+
+
+### Lemma 2.15 (Gauge invariance implies horizontal gradient)
+
+Let (F\in C^1(M_\Lambda)) be gauge-invariant: (F(g\cdot U)=F(U)) for all (g\in\mathcal G_\Lambda). Then for every (U\in M_\Lambda),
+[
+\nabla F(U)\in H_U.
+]
+
+
+**Proof.**
+Fix (U\in M_\Lambda) and (W\in V_U). By definition of (V_U), there exists a smooth curve (g(t)\in \mathcal G_\Lambda) with (g(0)=\mathbf 1) and (\frac{d}{dt}|*{t=0}(g(t)\cdot U)=W). Gauge invariance gives (F(g(t)\cdot U)=F(U)) for all (t), hence
+[
+dF(U)[W]=\frac{d}{dt}\Big|*{t=0}F(g(t)\cdot U)=0.
+]
+By definition of the Riemannian gradient, (dF(U)[W]=g_\Lambda(U)\bigl(\nabla F(U),W\bigr)). Thus (g_\Lambda(\nabla F(U),W)=0) for all (W\in V_U), so (\nabla F(U)\in V_U^\perp=H_U). ∎
+
+### Definition 2.16 (Linearized gauge directions at the vacuum)
+
+Define the space of (\mathfrak g)-valued 0-cochains (\mathcal C^0(\Lambda;\mathfrak g)=\mathfrak g^{V(\Lambda)}) and 1-cochains (\mathcal C^1(\Lambda;\mathfrak g)=\mathfrak g^{E(\Lambda)}). 
+Define the coboundary (d_0:\mathcal C^0\to\mathcal C^1) by
+[
+(d_0\phi)*{x,\mu}:=\phi*{x+\hat\mu}-\phi_x,\qquad \phi\in\mathcal C^0.
+]
+
+### Lemma 2.17 (Vertical tangent at the vacuum)
+
+Under the identification (T_{U^{(0)}}M_\Lambda\cong\mathcal C^1(\Lambda;\mathfrak g)), the vertical space (V_{U^{(0)}}) equals (\mathrm{im}(d_0)).
+
+**Proof.**
+Let (\phi\in\mathcal C^0(\Lambda;\mathfrak g)) and consider (g(t)=(\exp(t\phi_x))*{x\in V(\Lambda)}\in\mathcal G*\Lambda). Apply the gauge action to (U^{(0)}): for each link ((x,\mu)),
+[
+(g(t)\cdot U^{(0)})*{x,\mu}=\exp(t\phi_x),e,\exp(-t\phi*{x+\hat\mu}).
+]
+Differentiate at (t=0):
+[
+\frac{d}{dt}\Big|*{t=0}(g(t)\cdot U^{(0)})*{x,\mu}=\phi_x-\phi_{x+\hat\mu}=-(d_0\phi)*{x,\mu}.
+]
+Thus all vectors in (V*{U^{(0)}}) are in (\mathrm{im}(d_0)). Conversely, every ((d_0\phi)) arises from such a curve, hence (\mathrm{im}(d_0)\subset V_{U^{(0)}}). ∎
+
+---
+
+## 2.5. Linkwise differential operators, gradient, Laplacian, and carré du champ
+
+This subsection defines the basic differential operators used later for Dirichlet forms and (\Gamma_2)-calculus.
+
+### Definition 2.18 (Right-multiplication differential operators)
+
+Fix an orthonormal basis ({T^a}*{a=1}^{\dim\mathfrak g}) of ((\mathfrak g,\langle\cdot,\cdot\rangle*{\mathfrak g})). For each link (\ell\in E(\Lambda)) and each (a), define the first-order differential operator (X_\ell^a) on (C^1(M_\Lambda)) by
+[
+(X_\ell^a f)(U):=\left.\frac{d}{dt}\right|*{t=0} f\bigl(U^{(\ell,t,a)}\bigr),
+]
+where (U^{(\ell,t,a)}) is obtained from (U) by replacing the (\ell)-th component (U*\ell) by (U_\ell\exp(tT^a)) and leaving all other components unchanged. (Equivalently: (X_\ell^a) differentiates along right multiplication on the (\ell)-th factor.)
+
+### Definition 2.19 (Gradient and linkwise gradient)
+
+Define the linkwise gradient (\nabla_\ell f(U)\in\mathfrak g) by
+[
+\nabla_\ell f(U):=\sum_a (X_\ell^a f)(U),T^a,
+]
+and the full gradient (\nabla f(U)\in T_UM_\Lambda\cong \mathfrak g^{E(\Lambda)}) by (\nabla f=(\nabla_\ell f)*{\ell}). Then
+[
+|\nabla f(U)|*{g_\Lambda}^2=\sum_{\ell\in E(\Lambda)} |\nabla_\ell f(U)|*{\mathfrak g}^2
+=\sum*{\ell\in E(\Lambda)}\sum_a (X_\ell^a f(U))^2.
+]
+
+### Definition 2.20 (Laplacian)
+
+Define the (positive) Laplace–Beltrami operator (\Delta_{g_\Lambda}) on ((M_\Lambda,g_\Lambda)) by
+[
+\Delta_{g_\Lambda} f := \mathrm{div}*{g*\Lambda}(\nabla f).
+]
+On the group-product geometry used here, it admits the concrete representation
+[
+\Delta_{g_\Lambda} f(U)=\sum_{\ell\in E(\Lambda)}\sum_{a=1}^{\dim\mathfrak g} (X_\ell^a X_\ell^a f)(U).
+]
+This is the linkwise sum of Casimir operators; in the project notes it is the (\Delta_{g_\Lambda}) appearing in the reversible generator (L_\Lambda=\Delta_{g_\Lambda}-\langle\nabla S_\Lambda,\nabla\cdot\rangle). 
+
+**Proof of the sum-of-squares formula.**
+On (G) with bi-invariant metric, the vector fields generated by right multiplication by (\exp(tT^a)) form a global orthonormal frame: orthonormal at the identity by construction, and orthonormal everywhere by left invariance of (g_G). Their divergence vanishes because they are Killing fields (infinitesimal generators of isometries), hence (\mathrm{div}(X^a)=0). In any Riemannian manifold, for an orthonormal frame ({E_i}),
+[
+\Delta f=\sum_i \big(E_i(E_i f) - (\nabla_{E_i}E_i)f\big).
+]
+For a Killing orthonormal frame on a Lie group with bi-invariant metric, (\nabla_{E_i}E_i=0) for each (i) (a direct computation via the Koszul formula yields (\nabla_X X = \tfrac12 [X,X]=0) for invariant fields). Thus (\Delta f=\sum_i E_i^2 f). Applying this factorwise and summing over (\ell) yields the stated formula on (M_\Lambda). ∎
+
+### Definition 2.21 (Carré du champ)
+
+Define
+[
+\Gamma_\Lambda(f,g):=\frac12\Big(\Delta_{g_\Lambda}(fg)-f\Delta_{g_\Lambda}g-g\Delta_{g_\Lambda}f\Big),
+\qquad \Gamma_\Lambda(f):=\Gamma_\Lambda(f,f).
+]
+Then (\Gamma_\Lambda(f)=|\nabla f|*{g*\Lambda}^2).
+
+---
+
+## 2.6. Exponential/log coordinates and an injectivity-radius scale
+
+The later analysis requires a volume-uniform coordinate chart around the vacuum (U^{(0)}) and uniform control of smooth functions in those coordinates.
+
+### Definition 2.22 (Exponential map and injectivity radius scale)
+
+Let (\exp_G:\mathfrak g\to G) denote the Lie group exponential. For the bi-invariant metric, the Riemannian exponential (\exp_e:T_eG\to G) coincides with (\exp_G). 
+
+Define the injectivity radius at (e) by
+[
+\iota_G:=\sup{r>0:\ \exp_G\ \text{is a diffeomorphism from}\ B_r^{\mathfrak g}(0)\ \text{onto}\ B_r^G(e)}.
+]
+(Equivalently: the largest radius for which (\log_G) is a well-defined smooth inverse on (B_r^G(e)).)
+
+### Lemma 2.23 ((\iota_G>0))
+
+(\iota_G>0).
+
+**Proof.**
+The differential ((d\exp_G)_0:\mathfrak g\to T_eG\cong\mathfrak g) is the identity map. By the inverse function theorem, (\exp_G) is a diffeomorphism from some open neighborhood of (0\in\mathfrak g) onto an open neighborhood of (e\in G). Therefore there exists (r>0) such that (\exp_G) is a diffeomorphism on (B_r^{\mathfrak g}(0)). By definition of (\iota_G), (\iota_G\ge r>0). ∎
+
+### Definition 2.24 (Product exponential chart at the vacuum)
+
+Using (T_{U^{(0)}}M_\Lambda\cong \mathfrak g^{E(\Lambda)}), define the product exponential chart
+[
+\mathrm{Exp}*\Lambda:\mathfrak g^{E(\Lambda)}\to M*\Lambda,\qquad (\mathrm{Exp}*\Lambda(X))*\ell:=\exp_G(X_\ell).
+]
+
+
+For (r\in(0,\iota_G)) define the “linkwise sup-ball” and its image:
+[
+B^{\infty}*r:={X\in\mathfrak g^{E(\Lambda)}:\ |X|*\infty:=\max_{\ell}|X_\ell|*{\mathfrak g}<r},
+]
+[
+K*\Lambda(r):=\mathrm{Exp}*\Lambda(B_r^\infty)=\prod*{\ell\in E(\Lambda)} B_r^G(e)\ \subset M_\Lambda.
+]
+(Here the last equality is componentwise by definition.)
+
+### Lemma 2.25 (Coordinate diffeomorphism on (K_\Lambda(r)))
+
+For every (r\in(0,\iota_G)), (\mathrm{Exp}*\Lambda) restricts to a diffeomorphism
+[
+\mathrm{Exp}*\Lambda:\ B_r^\infty \ \xrightarrow{\ \sim\ }\ K_\Lambda(r),
+]
+with inverse (\mathrm{Log}*\Lambda:K*\Lambda(r)\to B_r^\infty) given by ((\mathrm{Log}*\Lambda(U))*\ell=\log_G(U_\ell)).
+
+**Proof.**
+For (r<\iota_G), the map (\exp_G) is a diffeomorphism from (B_r^{\mathfrak g}(0)) onto (B_r^G(e)). The product of finitely many diffeomorphisms is a diffeomorphism between the corresponding product domains, so the componentwise map (\mathrm{Exp}*\Lambda) is a diffeomorphism (B_r^\infty\to K*\Lambda(r)) with inverse given componentwise by (\log_G). ∎
+
+### Lemma 2.26 (Metric ball inclusion relations)
+
+Let
+[
+B_r^\Lambda(U^{(0)}):={U\in M_\Lambda:\ d_\Lambda(U,U^{(0)})<r}
+]
+be the geodesic ball in ((M_\Lambda,g_\Lambda)). Then for every (r>0),
+[
+B_r^\Lambda(U^{(0)}) \subset K_\Lambda(r)\subset B_{\sqrt{|E(\Lambda)|},r}^\Lambda(U^{(0)}).
+]
+
+**Proof.**
+If (U\in B_r^\Lambda(U^{(0)})), then by Lemma 2.9,
+[
+\sum_{\ell} d_G(U_\ell,e)^2=d_\Lambda(U,U^{(0)})^2<r^2,
+]
+hence each term (d_G(U_\ell,e)^2<r^2), so (d_G(U_\ell,e)<r) for all (\ell). Thus (U\in\prod_\ell B_r^G(e)=K_\Lambda(r)).
+
+Conversely, if (U\in K_\Lambda(r)), then (d_G(U_\ell,e)<r) for each (\ell), hence
+[
+d_\Lambda(U,U^{(0)})^2=\sum_\ell d_G(U_\ell,e)^2<|E(\Lambda)|,r^2,
+]
+so (U\in B_{\sqrt{|E(\Lambda)|}r}^\Lambda(U^{(0)})). ∎
+
+### Lemma 2.27 (Distance equals (\ell^2)-norm in exponential coordinates on (B_r^\infty))
+
+Fix (r\in(0,\iota_G)). For any (X\in B_r^\infty),
+[
+d_\Lambda\bigl(U^{(0)},\mathrm{Exp}*\Lambda(X)\bigr)^2=\sum*{\ell\in E(\Lambda)} |X_\ell|_{\mathfrak g}^2.
+]
+
+**Proof.**
+For each (\ell), the curve (\gamma_\ell(t)=\exp_G(tX_\ell)) is a unit-speed geodesic in (G) from (e) to (\exp_G(X_\ell)) with speed (|X_\ell|*{\mathfrak g}). Because (|X*\ell|<r<\iota_G), (\gamma_\ell) is the unique minimizing geodesic from (e) to (\exp_G(X_\ell)), hence
+[
+d_G(e,\exp_G(X_\ell))=|X_\ell|*{\mathfrak g}.
+]
+Applying Lemma 2.9 to (U^{(0)}=(e)*\ell) and (\mathrm{Exp}*\Lambda(X)=(\exp_G(X*\ell))_\ell) yields the stated identity. ∎
+
+---
+
+## 2.7. A globally smooth, conjugation-invariant “distance proxy” on (\mathrm{SU}(N))
+
+This subsection records a smooth class function used later to avoid the nonsmoothness of (g\mapsto d_G(g,e)^2) at the cut locus.
+
+### Definition 2.28 (Class function (\widetilde z))
+
+For (G=\mathrm{SU}(N)), define
+[
+\widetilde z(g):=1-\frac1N,\mathrm{ReTr}(g),\qquad g\in\mathrm{SU}(N).
+]
+Then (\widetilde z\in C^\infty(\mathrm{SU}(N))), (\widetilde z\ge 0), and (\widetilde z(hgh^{-1})=\widetilde z(g)) for all (h,g\in \mathrm{SU}(N)).
+
+**Proof.**
+Smoothness follows from smoothness of matrix multiplication and trace. Nonnegativity follows from (\mathrm{ReTr}(g)\le |\mathrm{Tr}(g)|\le N). Conjugation-invariance is immediate from cyclicity of trace: (\mathrm{Tr}(hgh^{-1})=\mathrm{Tr}(g)). ∎
+
+### Lemma 2.29 (Quadratic behavior near the identity)
+
+Let (G=\mathrm{SU}(N)) and normalize (\langle\cdot,\cdot\rangle_{\mathfrak g}) as in Definition 2.1. There exist constants (r_{\widetilde z}\in(0,\iota_G)) and (C_{\widetilde z}\in(0,\infty)), depending only on ((G,\langle\cdot,\cdot\rangle_{\mathfrak g})), such that for all (A\in\mathfrak{su}(N)) with (|A|*{\mathfrak g}\le r*{\widetilde z}),
+[
+\left|\widetilde z(\exp_G A)-\frac{1}{2\lambda N},|A|*\lambda^2\right|\le C*{\widetilde z},|A|*{\mathfrak g}^3.
+]
+Equivalently, after shrinking (r*{\widetilde z}) if needed, there exist (0<c_-(\widetilde z)\le c_+(\widetilde z)<\infty) such that
+[
+c_-(\widetilde z),|A|*{\mathfrak g}^2\ \le\ \widetilde z(\exp_G A)\ \le\ c*+(\widetilde z),|A|*{\mathfrak g}^2,\qquad |A|*{\mathfrak g}\le r_{\widetilde z}.
+]
+
+**Proof.**
+Using (\exp A=I+A+\tfrac12A^2+\tfrac16A^3+\cdots) and (\mathrm{Tr}(A)=0) for (A\in\mathfrak{su}(N)), one has
+[
+\mathrm{ReTr}(I-\exp A)=-\frac12\mathrm{Tr}(A^2)+O(|A|*{\mathfrak g}^3),
+]
+with the remainder controlled uniformly for (|A|) in a small ball. This is exactly the Taylor lemma recorded in the project notes. 
+Divide by (N) to convert (\mathrm{ReTr}(I-\exp A)) into (\widetilde z(\exp A)). If the (\lambda)-scaled inner product is used, then (-\mathrm{Tr}(A^2)=\frac1\lambda |A|*\lambda^2), yielding the stated quadratic leading term and cubic remainder.
+
+The two-sided quadratic comparability follows by choosing (r_{\widetilde z}) small enough that the cubic term is dominated by, say, (\tfrac12) of the quadratic term. ∎
+
+---
+
+## 2.8. Uniform smoothness bounds on the chart domain (K_\Lambda(r))
+
+Later sections require that “local” constants do not worsen with (|\Lambda|). The product structure makes this explicit.
+
+### Lemma 2.30 (Uniform (C^k) bounds for charted tensor fields)
+
+Fix (r\in(0,\iota_G)) and any integer (k\ge 0). Let (T) be any smooth tensor field on (G) (e.g. the metric coefficients in exponential coordinates, Christoffel symbols, etc.). Then the pullback tensor field on (K_\Lambda(r)) defined linkwise by (T_\ell(U):=T(U_\ell)) satisfies
+[
+\sup_{U\in K_\Lambda(r)} |T_\ell(U)|*{C^k} \le C*{T,k,r},
+]
+with a constant (C_{T,k,r}) depending only on (T,k,r) and ((G,g_G)), and **independent of** (\Lambda) and (\ell).
+
+**Proof.**
+The set (\overline{B_r^G(e)}\subset G) is compact. The (C^k) norm of a smooth tensor field (T) over a compact set is finite. Since (T_\ell(U)) depends only on (U_\ell\in \overline{B_r^G(e)}), the same bound holds uniformly over (\ell) and (\Lambda). ∎
+
+---
+
+## Interface: output of Section 2
+
+The following objects and constants are fixed for use in subsequent sections.
+
+1. **Geometry.** A product Riemannian manifold ((M_\Lambda,g_\Lambda)) with distance (d_\Lambda) satisfying the exact product formula (Lemma 2.9).
+
+2. **Reference measure.** The normalized Riemannian volume equals product Haar probability (d\mu_{\mathrm{Haar},\Lambda}) (Lemma 2.11). 
+
+3. **Gauge geometry.** Gauge action is smooth and isometric (Lemma 2.13). Vertical and horizontal subspaces (V_U,H_U) are defined (Definition 2.14), and gauge-invariant observables have horizontal gradients (Lemma 2.15). 
+   At the vacuum, (V_{U^{(0)}}=\mathrm{im}(d_0)) (Lemma 2.17).
+
+4. **Differential operators.** Linkwise operators (X_\ell^a), gradient (\nabla), Laplacian (\Delta_{g_\Lambda}), and carré du champ (\Gamma_\Lambda) are defined (Definitions 2.18–2.21). The Laplacian is a linkwise sum of squares and matches the operator used in the reversible generator (L_\Lambda). 
+
+5. **Controlled chart.** A radius (\iota_G>0) (Lemma 2.23) and for each (r<\iota_G) a product exponential/log chart
+   [
+   \mathrm{Exp}*\Lambda: B_r^\infty \xrightarrow{\sim} K*\Lambda(r)\subset M_\Lambda
+   ]
+   (Lemma 2.25), plus the distance–norm identity on (B_r^\infty) (Lemma 2.27).
+
+6. **Smooth class function on (\mathrm{SU}(N)).** (\widetilde z(g)=1-\tfrac1N\mathrm{ReTr}(g)) is globally smooth and conjugation-invariant, and it is quadratic in (\log g) near (e) with explicit cubic remainder (Lemma 2.29). 
+
+No curvature or Haar Jacobian/Hessian expansions are proved here; those are deferred to Section 3.

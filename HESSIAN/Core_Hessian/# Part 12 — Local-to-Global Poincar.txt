@@ -1,0 +1,711 @@
+# Part 12 — Local-to-Global Poincaré via Curvature and Lyapunov Conditions (Updated, Expanded)
+
+In earlier parts of the draft, two facts emerged:
+
+1. A **global** Bakry–Émery curvature lower bound (a CD-condition) immediately implies a **global** Poincaré inequality (hence a spectral gap) for the natural configuration-space diffusion.
+
+2. For lattice Yang–Mills (and even more so in the continuum) one rarely has a **global** curvature lower bound; at best one has a **local “small-field” region** where curvature/convexity is good, together with a hope that the dynamics/measure has a **Lyapunov drift** that pushes typical configurations back toward that region.
+
+This part is the analytic bridge:
+
+> **Local Poincaré on a “safe” region + Lyapunov drift back to it ⇒ Global Poincaré (spectral gap).**
+
+Curvature enters by providing a robust way to get **local** functional inequalities on the safe region, often uniformly in volume. But the core theorem in this part is “local inequality + drift ⇒ global inequality”.
+
+Everything below is written in a general finite-dimensional Gibbs setting; at the end I specialize the hypotheses into a lattice gauge configuration manifold template.
+
+---
+
+## 12.1. Weighted diffusion setup from first principles
+
+### 12.1.1. Geometry and measure
+
+Let ((M,g)) be a smooth, connected, complete (d)-dimensional Riemannian manifold with Riemannian volume measure (d\mathrm{vol}_g). Let (S\in C^2(M)) and define the probability measure
+[
+\mu(dx)=Z^{-1}e^{-S(x)},d\mathrm{vol}_g(x),
+\qquad
+Z:=\int_M e^{-S},d\mathrm{vol}_g\in(0,\infty).
+]
+Assume (Z<\infty) and (\mu) has full support (e.g. (S) finite everywhere).
+
+### 12.1.2. The reversible generator
+
+Define the (weighted) second-order operator
+[
+L f := \Delta f - \langle \nabla S,\nabla f\rangle,
+]
+initially on (C_c^\infty(M)) (or (C^\infty(M)) if (M) is compact). Here:
+
+* (\nabla f) is the Riemannian gradient;
+* (\Delta f := \mathrm{div}(\nabla f)) is the Laplace–Beltrami operator;
+* (\langle\cdot,\cdot\rangle) is the metric pairing.
+
+This is the standard generator of the overdamped Langevin diffusion with invariant law (\mu).
+
+### 12.1.3. Integration by parts and symmetry
+
+**Lemma 12.1 (Reversibility / Dirichlet form identity).**
+For (f,g\in C_c^\infty(M)),
+[
+\int_M f,Lg,d\mu = -\int_M \langle \nabla f,\nabla g\rangle,d\mu.
+]
+In particular (L) is symmetric on (L^2(\mu)) with core (C_c^\infty(M)), and the associated Dirichlet form is
+[
+\mathcal E(f,g):=\int_M \langle \nabla f,\nabla g\rangle,d\mu.
+]
+
+*Proof.* Start with
+[
+\int f,\Delta g,e^{-S},d\mathrm{vol}_g.
+]
+Using the divergence theorem (valid for compact support),
+[
+\int f,\Delta g,e^{-S},d\mathrm{vol}_g
+= -\int \langle \nabla(f e^{-S}),\nabla g\rangle,d\mathrm{vol}_g
+= -\int e^{-S}\langle \nabla f - f\nabla S,\nabla g\rangle,d\mathrm{vol}_g.
+]
+Therefore
+[
+\int f(\Delta g-\langle \nabla S,\nabla g\rangle)e^{-S},d\mathrm{vol}_g
+=======================================================================
+
+-\int e^{-S}\langle \nabla f,\nabla g\rangle,d\mathrm{vol}_g,
+]
+which is exactly the claim. ∎
+
+### 12.1.4. Carré du champ
+
+Define the carré du champ operator
+[
+\Gamma(f,g):=\langle \nabla f,\nabla g\rangle,
+\qquad
+\Gamma(f):=\Gamma(f,f)=|\nabla f|^2.
+]
+Then Lemma 12.1 says (\mathcal E(f,g)=\int \Gamma(f,g),d\mu).
+
+The diffusion chain rule holds: for (\Phi\in C^2(\mathbb R)),
+[
+L(\Phi(f)) = \Phi'(f),Lf + \Phi''(f),\Gamma(f).
+]
+This follows from standard calculus for (\Delta) and the Leibniz rule, plus (\Gamma(f)=|\nabla f|^2).
+
+---
+
+## 12.2. Poincaré inequality and spectral gap
+
+### 12.2.1. Poincaré inequality
+
+**Definition 12.2 (Poincaré inequality).**
+We say (\mu) satisfies a Poincaré inequality with constant (C_P\in(0,\infty)) if for all smooth (f) in the form domain,
+[
+\mathrm{Var}_\mu(f)
+:=
+\int_M \Bigl(f-\int f,d\mu\Bigr)^2,d\mu
+;\le;
+C_P\int_M \Gamma(f),d\mu.
+]
+
+### 12.2.2. Spectral gap equivalence (finite-dimensional reversible setting)
+
+Because (L) is symmetric and (\mu) is a probability measure, (-L) is nonnegative on (L^2(\mu)). The Poincaré inequality is equivalent to a uniform lower bound on (-L) on the orthogonal complement of constants.
+
+**Proposition 12.3 (Spectral gap ↔ Poincaré).**
+Let (L) be the symmetric generator above and assume it is essentially self-adjoint on (C_c^\infty(M)) (true e.g. for complete (M) under mild growth hypotheses; automatic if (M) is compact). Let (\lambda_1) be the best constant in the Rayleigh quotient
+[
+\lambda_1:=\inf\left{\frac{\int \Gamma(f),d\mu}{\int f^2,d\mu};:; f\in \mathrm{Dom}(\mathcal E),\ \int f,d\mu=0,\ f\not\equiv 0\right}.
+]
+Then (\lambda_1>0) iff (\mu) satisfies Poincaré, and the optimal constants satisfy
+[
+C_P=\frac{1}{\lambda_1}.
+]
+
+*Proof.* For centered (f), (\mathrm{Var}*\mu(f)=|f|*{L^2(\mu)}^2). The inequality (|f|_2^2\le C_P \mathcal E(f,f)) is exactly (\mathcal E(f,f)/|f|_2^2\ge 1/C_P). Taking the infimum over nonzero centered (f) yields (\lambda_1\ge 1/C_P). Conversely, if (\lambda_1>0), then (\mathcal E(f,f)\ge \lambda_1|f|_2^2) for all centered (f), i.e. Poincaré with (C_P=1/\lambda_1). ∎
+
+So in this finite-dimensional reversible world:
+
+> **Proving Poincaré is the same thing as proving a spectral gap for (-L).**
+
+---
+
+## 12.3. Bakry–Émery curvature and what it buys you (global case)
+
+Curvature is the “easy mode”: when it holds globally with positive constant, you get Poincaré with no Lyapunov work. Since Part 12 is about the local-to-global bridge, we record the global result for completeness and because we’ll use its *local* analogue as a source of “local Poincaré”.
+
+### 12.3.1. The (\Gamma_2) operator
+
+Define
+[
+\Gamma_2(f)
+:=
+\frac12\Bigl(L\Gamma(f)-2,\Gamma(f,Lf)\Bigr).
+]
+
+**Lemma 12.4 (Bochner–Bakry–Émery identity).**
+For (L=\Delta-\langle\nabla S,\nabla\cdot\rangle),
+[
+\Gamma_2(f)
+===========
+
+|\nabla^2 f|*{\mathrm{HS}}^2
++
+\bigl(\mathrm{Ric}+\nabla^2 S\bigr)(\nabla f,\nabla f),
+]
+where (\nabla^2 f) is the Riemannian Hessian (a symmetric (2)-tensor), (|\cdot|*{\mathrm{HS}}) its Hilbert–Schmidt norm, and (\mathrm{Ric}) the Ricci curvature tensor.
+
+*Proof.* The standard Bochner identity on ((M,g)) is
+[
+\frac12\Delta|\nabla f|^2 = |\nabla^2 f|_{\mathrm{HS}}^2 + \langle \nabla f,\nabla \Delta f\rangle + \mathrm{Ric}(\nabla f,\nabla f).
+]
+Apply (L=\Delta-\langle\nabla S,\nabla\cdot\rangle) to (|\nabla f|^2):
+[
+\frac12L|\nabla f|^2
+====================
+
+\frac12\Delta|\nabla f|^2
+-\frac12\langle\nabla S,\nabla|\nabla f|^2\rangle.
+]
+Also compute
+[
+\langle \nabla f,\nabla Lf\rangle
+=================================
+
+## \langle\nabla f,\nabla\Delta f\rangle
+
+\langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle.
+]
+But
+[
+\nabla\langle\nabla S,\nabla f\rangle
+=====================================
+
+\nabla^2 S(\nabla f,\cdot) + \nabla^2 f(\nabla S,\cdot),
+]
+so
+[
+\langle\nabla f,\nabla\langle\nabla S,\nabla f\rangle\rangle
+============================================================
+
+\nabla^2 S(\nabla f,\nabla f) + \nabla^2 f(\nabla S,\nabla f).
+]
+On the other hand,
+[
+\frac12\langle\nabla S,\nabla|\nabla f|^2\rangle
+================================================
+
+# \langle \nabla S,\nabla^2 f(\nabla f,\cdot)\rangle
+
+\nabla^2 f(\nabla S,\nabla f).
+]
+Combining these identities yields
+[
+\frac12L|\nabla f|^2 - \langle \nabla f,\nabla Lf\rangle
+========================================================
+
+|\nabla^2 f|_{\mathrm{HS}}^2 + (\mathrm{Ric}+\nabla^2 S)(\nabla f,\nabla f).
+]
+But for diffusion generators, one checks (\Gamma(f,Lf)=\langle\nabla f,\nabla Lf\rangle), and (L\Gamma(f)=L|\nabla f|^2). Therefore the left-hand side is exactly (\Gamma_2(f)). ∎
+
+### 12.3.2. Curvature–dimension condition
+
+**Definition 12.5 (CD((\rho,\infty))).**
+We say (L) satisfies the Bakry–Émery curvature–dimension condition CD((\rho,\infty)) for (\rho\in\mathbb R) if
+[
+\Gamma_2(f)\ge \rho,\Gamma(f)
+\quad\text{pointwise on }M,\ \text{for all smooth }f.
+]
+By Lemma 12.4, CD((\rho,\infty)) is equivalent to the tensor inequality
+[
+\mathrm{Ric}+\nabla^2 S ;\ge; \rho,g.
+]
+
+### 12.3.3. Global CD((\rho,\infty)) ⇒ global Poincaré with (C_P\le 1/\rho)
+
+**Theorem 12.6 (Bakry–Émery ⇒ Poincaré).**
+If CD((\rho,\infty)) holds globally with (\rho>0), then
+[
+\mathrm{Var}_\mu(f) \le \frac1\rho \int \Gamma(f),d\mu,
+]
+i.e. (C_P\le 1/\rho).
+
+*Proof (semigroup method, fully explicit).* Let ((P_t)_{t\ge 0}) be the Markov semigroup generated by (L) on (L^2(\mu)). Because (L) is symmetric and (\mu) is invariant, (P_t) is (\mu)-preserving: (\int P_t h,d\mu=\int h,d\mu).
+
+Take (f) with (\int f,d\mu=0). Set
+[
+\Phi(t):=\int (P_t f)^2,d\mu.
+]
+Then (\Phi(t)\to 0) as (t\to\infty) (ergodicity holds under CD((\rho,\infty)) with (\rho>0), but for the inequality it suffices that (P_t f\to 0) in (L^2); we can justify this via the spectral theorem once we prove the gap). Differentiate:
+[
+\Phi'(t)=2\int P_t f\cdot L P_t f,d\mu.
+]
+Using symmetry (Lemma 12.1),
+[
+\int P_t f\cdot L P_t f,d\mu
+============================
+
+-\int \Gamma(P_t f),d\mu,
+]
+hence
+[
+\Phi'(t)=-2\int \Gamma(P_t f),d\mu.
+]
+Now use the standard Bakry–Émery gradient estimate: under CD((\rho,\infty)),
+[
+\Gamma(P_t f)\le e^{-2\rho t},P_t(\Gamma(f)).
+\tag{12.1}
+]
+I prove (12.1) below.
+
+Assuming (12.1), integrate (-\Phi'(t)) from (0) to (\infty):
+[
+\Phi(0)-\lim_{t\to\infty}\Phi(t)=\int_0^\infty (-\Phi'(t)),dt
+=2\int_0^\infty\int \Gamma(P_t f),d\mu,dt.
+]
+Since (\Phi(0)=\int f^2 d\mu=\mathrm{Var}*\mu(f)) and (\Phi(\infty)=0),
+[
+\mathrm{Var}*\mu(f)=2\int_0^\infty\int \Gamma(P_t f),d\mu,dt.
+]
+Apply (12.1) and (\mu)-invariance:
+[
+\int \Gamma(P_t f),d\mu
+\le e^{-2\rho t} \int P_t(\Gamma(f)),d\mu
+= e^{-2\rho t}\int \Gamma(f),d\mu.
+]
+Thus
+[
+\mathrm{Var}_\mu(f)
+\le 2\left(\int_0^\infty e^{-2\rho t},dt\right)\int\Gamma(f),d\mu
+=\frac1\rho \int\Gamma(f),d\mu.
+]
+
+*Proof of the gradient estimate (12.1).*
+Fix (f) and define
+[
+H(t):=e^{2\rho t}\Gamma(P_t f).
+]
+Differentiate using (\partial_t P_t f = L P_t f) and diffusion calculus:
+[
+\frac{d}{dt}\Gamma(P_t f)=2,\Gamma(P_t f, L P_t f).
+]
+Also,
+[
+L\Gamma(P_t f) = 2\Gamma(P_t f, L P_t f) + 2\Gamma_2(P_t f),
+]
+which is just the definition of (\Gamma_2) rearranged. Therefore
+[
+\frac{d}{dt}\Gamma(P_t f)
+=========================
+
+L\Gamma(P_t f) - 2\Gamma_2(P_t f).
+]
+Hence
+[
+H'(t)=2\rho e^{2\rho t}\Gamma(P_t f) + e^{2\rho t}\left(L\Gamma(P_t f)-2\Gamma_2(P_t f)\right)
+=e^{2\rho t}\left(L\Gamma(P_t f)-2(\Gamma_2(P_t f)-\rho\Gamma(P_t f))\right).
+]
+Under CD((\rho,\infty)), the bracket satisfies (\Gamma_2-\rho\Gamma\ge 0), so
+[
+H'(t)\le e^{2\rho t} L\Gamma(P_t f).
+]
+Now consider (K(t):=P_t(\Gamma(f))). It satisfies (K'(t)=L P_t(\Gamma(f))=L K(t)). Meanwhile (H) satisfies (H'(t)\le L H(t)) (in the weak sense; pointwise if smooth). By the maximum principle for the parabolic equation, since (H(0)=\Gamma(f)=K(0)), we deduce (H(t)\le K(t)), i.e.
+[
+e^{2\rho t}\Gamma(P_t f)\le P_t(\Gamma(f)),
+]
+which is (12.1). ∎
+
+This is the clean global story. In Yang–Mills, you generally cannot keep CD((\rho,\infty)) for all fields, so we now develop the local-to-global patching mechanism.
+
+---
+
+## 12.4. Lyapunov drift: the mechanism that replaces global curvature
+
+The idea is to prove that **outside a controlled region (K)**, the diffusion has a **strict negative drift** for some coercive function (W), and then to use this drift to “pull” variance estimates from (K) to all of (M).
+
+### 12.4.1. Lyapunov condition
+
+**Definition 12.7 (Linear Foster–Lyapunov drift).**
+A function (W\in C^2(M)) is a Lyapunov function (for our purposes) if (W\ge 1) and there exist constants (\lambda>0), (b\ge 0), and a measurable set (K\subset M) (typically compact) such that
+[
+LW \le -\lambda W + b,\mathbf 1_K
+\quad\text{pointwise on }M.
+\tag{12.2}
+]
+Equivalently, on (K^c) one has (LW\le -\lambda W): outside (K), (W) is a strict “superharmonic” function for (L), encoding drift back toward (K).
+
+### 12.4.2. The key Lyapunov energy lemma (do not skip this; it is the engine)
+
+**Lemma 12.8 (Basic Lyapunov inequality).**
+Let (h\in C^2(M)) satisfy (h>0). Then for any smooth (f) in the form domain,
+[
+\int_M \left(-\frac{Lh}{h}\right) f^2,d\mu ;\le; \int_M \Gamma(f),d\mu.
+\tag{12.3}
+]
+
+*Proof.* By Lemma 12.1 (symmetry),
+[
+\int \left(-\frac{Lh}{h}\right) f^2,d\mu
+========================================
+
+\int \Gamma!\left(h,\frac{f^2}{h}\right),d\mu.
+]
+Compute using (\Gamma(h,u)=\langle\nabla h,\nabla u\rangle) and (\nabla(f^2/h)=(2f\nabla f)/h - (f^2 \nabla h)/h^2):
+[
+\Gamma!\left(h,\frac{f^2}{h}\right)
+===================================
+
+# \left\langle \nabla h,\frac{2f\nabla f}{h} - \frac{f^2\nabla h}{h^2}\right\rangle
+
+\frac{2f}{h}\Gamma(f,h) - \frac{f^2}{h^2}\Gamma(h).
+]
+Apply Cauchy–Schwarz to (\Gamma(f,h)=\langle\nabla f,\nabla h\rangle):
+[
+\frac{2f}{h}\Gamma(f,h)
+\le
+\frac{2|f|}{h},|\nabla f|,|\nabla h|
+\le
+|\nabla f|^2 + \frac{f^2}{h^2}|\nabla h|^2
+==========================================
+
+\Gamma(f) + \frac{f^2}{h^2}\Gamma(h).
+]
+Therefore
+[
+\Gamma!\left(h,\frac{f^2}{h}\right)\le \Gamma(f),
+]
+and integrating gives (12.3). ∎
+
+This lemma is the algebraic reason Lyapunov functions control variance: (-Lh/h) acts like a “weight” bounded by the Dirichlet form.
+
+---
+
+## 12.5. Local-to-global Poincaré: main theorem and complete proof
+
+We now state and prove the core result.
+
+### 12.5.1. Local Poincaré on a set
+
+There are a few equivalent ways to write a “local Poincaré inequality”. The cleanest for our proof is the mean-zero form on the set.
+
+**Definition 12.9 (Local Poincaré on (K)).**
+Given a measurable set (K\subset M) with (\mu(K)>0), we say (\mu) satisfies local Poincaré on (K) with constant (\kappa_K) if for all smooth (f),
+[
+\int_K \left(f-\mu_K(f)\right)^2,d\mu ;\le; \kappa_K \int_M \Gamma(f),d\mu,
+\tag{12.4}
+]
+where (\mu_K(f):=\mu(K)^{-1}\int_K f,d\mu).
+
+Remarks:
+
+* The gradient integral on the right can be taken over (K) as well (it is smaller), but writing (\int_M) makes later volume-uniform comparisons easier and does not weaken the statement.
+
+* Many texts write local Poincaré as
+  [
+  \int_K f^2,d\mu \le \kappa_K \int \Gamma(f),d\mu + \frac{1}{\mu(K)}\left(\int_K f,d\mu\right)^2,
+  ]
+  which is equivalent to (12.4) by expanding (f-\mu_K(f)).
+
+### 12.5.2. The theorem
+
+**Theorem 12.10 (Local-to-global Poincaré via Lyapunov drift).**
+Assume:
+
+1. (**Lyapunov drift**) There exist (W\in C^2(M)) with (W\ge 1), constants (\lambda>0), (b\ge 0), and a measurable set (K\subset M) with (\mu(K)>0) such that
+   [
+   LW \le -\lambda W + b,\mathbf 1_K.
+   \tag{12.5}
+   ]
+
+2. (**Local Poincaré on (K)**) There exists (\kappa_K<\infty) such that (12.4) holds.
+
+Then (\mu) satisfies the global Poincaré inequality
+[
+\mathrm{Var}_\mu(f)
+;\le;
+\frac{1+b\kappa_K}{\lambda}\int_M \Gamma(f),d\mu,
+\qquad \forall f.
+\tag{12.6}
+]
+In particular, (\mu) has a spectral gap at least (\lambda/(1+b\kappa_K)).
+
+### 12.5.3. Proof (step-by-step, no black boxes)
+
+Fix (f). By the definition of variance,
+[
+\mathrm{Var}*\mu(f)=\inf*{c\in\mathbb R}\int (f-c)^2,d\mu.
+]
+Choose the specific constant (c:=\mu_K(f)) (the average of (f) on (K)) and define
+[
+g := f - \mu_K(f).
+]
+Then
+[
+\mathrm{Var}_\mu(f)\le \int g^2,d\mu,
+\qquad
+\Gamma(g)=\Gamma(f)
+\quad\text{(since (g) differs from (f) by a constant)}.
+\tag{12.7}
+]
+
+Now use the Lyapunov drift. From (12.5),
+[
+-\frac{LW}{\lambda W}
+\ge 1 - \frac{b}{\lambda}\frac{\mathbf 1_K}{W}
+\ge 1 - \frac{b}{\lambda}\mathbf 1_K,
+]
+because (W\ge 1). Rearranging,
+[
+1 \le -\frac{LW}{\lambda W} + \frac{b}{\lambda}\mathbf 1_K.
+\tag{12.8}
+]
+Multiply (12.8) by (g^2) and integrate:
+[
+\int g^2,d\mu
+\le
+\frac{1}{\lambda}\int \left(-\frac{LW}{W}\right)g^2,d\mu
++
+\frac{b}{\lambda}\int_K g^2,d\mu.
+\tag{12.9}
+]
+Apply Lemma 12.8 to (h=W) and (f=g):
+[
+\int \left(-\frac{LW}{W}\right)g^2,d\mu \le \int \Gamma(g),d\mu = \int \Gamma(f),d\mu.
+\tag{12.10}
+]
+Apply the local Poincaré inequality (12.4) to (f) (or equivalently to (g)):
+
+Since (\mu_K(g)=\mu_K(f-\mu_K(f))=0), (12.4) gives
+[
+\int_K g^2,d\mu = \int_K (g-\mu_K(g))^2,d\mu \le \kappa_K \int \Gamma(g),d\mu = \kappa_K \int \Gamma(f),d\mu.
+\tag{12.11}
+]
+Insert (12.10)–(12.11) into (12.9):
+[
+\int g^2,d\mu
+\le
+\frac{1}{\lambda}\int \Gamma(f),d\mu
++
+\frac{b}{\lambda},\kappa_K\int \Gamma(f),d\mu
+=============================================
+
+\frac{1+b\kappa_K}{\lambda}\int \Gamma(f),d\mu.
+\tag{12.12}
+]
+Finally, combine (12.7) with (12.12) to obtain (12.6). ∎
+
+### 12.5.4. Interpretation
+
+The theorem is conceptually simple:
+
+* The Lyapunov condition says: **outside (K)**, the operator (L) has enough negative drift to penalize (f^2).
+
+* Lemma 12.8 converts “negative drift” into a **Dirichlet form bound**.
+
+* The only remaining missing piece is how to control the contribution **inside (K)**; local Poincaré provides that.
+
+The constant ((1+b\kappa_K)/\lambda) is explicit and is what you track when you need volume-uniform bounds.
+
+---
+
+## 12.6. Where curvature enters: producing the local Poincaré constant
+
+Theorem 12.10 only assumes a local Poincaré inequality on (K). In applications, you need (\kappa_K) to be **uniform** over a family of measures (e.g. over lattice volumes (\Lambda)). Curvature is one robust way to obtain such uniformity.
+
+I’ll record two “first-principles” routes.
+
+### 12.6.1. Route A: compactness alone gives local Poincaré (existence, not uniformity)
+
+**Lemma 12.11 (Existence of local Poincaré on compact sets).**
+Let (K\subset M) be compact with (\mu(K)>0). Suppose (S) is bounded on a neighborhood of (K) (so the density (e^{-S}) is bounded above/below there). Then there exists (\kappa_K<\infty) such that (12.4) holds.
+
+*Proof (spectral/compactness argument).* Consider the Hilbert space
+[
+H^1(K):={u\in L^2(K,\mu): \nabla u\in L^2(K,\mu)}
+]
+with norm (|u|*{H^1(K)}^2:=\int_K u^2,d\mu + \int_K |\nabla u|^2,d\mu). On a compact domain with reasonable boundary, the embedding (H^1(K)\hookrightarrow L^2(K)) is compact (Rellich–Kondrachov). Define the Rayleigh quotient
+[
+\lambda*{K,1}
+:=
+\inf\left{\frac{\int_K |\nabla u|^2,d\mu}{\int_K u^2,d\mu};:;u\in H^1(K),\ \int_K u,d\mu=0,\ u\neq 0\right}.
+]
+If (\lambda_{K,1}=0), there exists a sequence (u_n) with (\int_K u_n,d\mu=0), (\int_K u_n^2,d\mu=1), and (\int_K|\nabla u_n|^2,d\mu\to 0). The (H^1)-norms are bounded, so by compact embedding there is a subsequence converging strongly in (L^2(K)) to some (u) with (|u|*{L^2(K)}=1). Lower semicontinuity of the gradient norm forces (\nabla u=0) in (L^2), hence (u) is a.e. constant on each connected component. But (\int_K u,d\mu=0) forces (u\equiv 0), contradicting (|u|*2=1). Hence (\lambda*{K,1}>0), and setting (\kappa_K:=1/\lambda*{K,1}) gives (12.4). ∎
+
+This is fully rigorous and self-contained, but it does **not** automatically give bounds on (\kappa_K) uniform in a growing-dimensional family. For lattice Yang–Mills, uniformity is the game.
+
+### 12.6.2. Route B: curvature gives quantitative local Poincaré (and often uniformity)
+
+On a compact manifold without boundary, Theorem 12.6 provides (C_P\le 1/\rho) under CD((\rho,\infty)). On a domain (K) with boundary, one can obtain analogous bounds for the **Neumann** semigroup if the boundary is convex (so that integration by parts behaves well). The point here is not the sharp boundary theory, but the guiding principle:
+
+> A uniform positive lower bound on (\mathrm{Ric}+\nabla^2 S) on the safe region tends to give a uniform spectral gap for the reflected diffusion on that region.
+
+In lattice gauge settings, the safe region is usually chosen to be **geodesically convex** in the product manifold (or built from convex constraints on each edge/plaquette) specifically so that local curvature arguments can be applied cleanly.
+
+In practice, you can proceed in either of these ways:
+
+* Prove a **uniform CD((\rho,\infty))** bound on a neighborhood of (K) and use a reflected/conditioned version of Theorem 12.6 to get (\kappa_K\lesssim 1/\rho).
+
+* Or prove local Poincaré by a **tensorization/finite-range** argument (common in product manifolds): local constants depend only on finitely many degrees of freedom, hence are volume-uniform.
+
+Part 12’s theorem (12.10) is agnostic about how you get (\kappa_K). It only needs the constant once you have it.
+
+---
+
+## 12.7. Specialization template: finite-volume lattice gauge configuration spaces
+
+Now I translate the hypotheses into the lattice Yang–Mills setting in a way that you can reuse.
+
+### 12.7.1. Configuration manifold and metric
+
+Let (G) be a compact connected Lie group (e.g. (SU(N))) with a fixed bi-invariant Riemannian metric (\langle\cdot,\cdot\rangle_{\mathfrak g}) on its Lie algebra (\mathfrak g). Let (\Lambda) be a finite lattice (or a finite cell complex) with edge set (E(\Lambda)) and plaquette set (P(\Lambda)).
+
+Define the configuration manifold
+[
+M_\Lambda := G^{E(\Lambda)}
+]
+with product Riemannian metric (sum of metrics on each factor). This is compact.
+
+Let (dU) denote the product Haar measure, which coincides with the Riemannian volume for a bi-invariant metric up to a constant normalization.
+
+### 12.7.2. Gibbs measure and generator
+
+Let (S_\Lambda\in C^2(M_\Lambda)) be a gauge-invariant lattice action (Wilson, heat-kernel, or a flowed effective action). Define
+[
+\mu_\Lambda(dU) := Z_\Lambda^{-1} e^{-S_\Lambda(U)},dU.
+]
+
+Choose an orthonormal basis ({X_a}*{a=1}^{\dim G}) of (\mathfrak g). For each edge (e\in E(\Lambda)), let (L*{e,a}) be the left-invariant vector field acting on the (e)-th factor by (X_a) and trivially on others. Then the product Laplacian is
+[
+\Delta_\Lambda := \sum_{e\in E(\Lambda)}\sum_{a=1}^{\dim G} L_{e,a}^2.
+]
+Define the reversible generator
+[
+L_\Lambda f
+:=
+\Delta_\Lambda f
+----------------
+
+\sum_{e,a} (L_{e,a} S_\Lambda),(L_{e,a} f).
+\tag{12.13}
+]
+This is exactly the lattice analogue of (L=\Delta-\nabla S\cdot\nabla).
+
+The carré du champ is
+[
+\Gamma_\Lambda(f)
+=================
+
+\sum_{e,a} (L_{e,a} f)^2.
+\tag{12.14}
+]
+The Dirichlet form is (\mathcal E_\Lambda(f,f)=\int \Gamma_\Lambda(f),d\mu_\Lambda).
+
+A global Poincaré inequality on (M_\Lambda) is
+[
+\mathrm{Var}*{\mu*\Lambda}(f)
+\le
+C_{P,\Lambda}\int \Gamma_\Lambda(f),d\mu_\Lambda.
+\tag{12.15}
+]
+Uniformity means (C_{P,\Lambda}) bounded independently of (|\Lambda|).
+
+### 12.7.3. “Safe region” (K_\Lambda) (small-field)
+
+Pick a small-field region (K_\Lambda\subset M_\Lambda) defined by local constraints that enforce “plaquettes near identity”. A typical example:
+[
+K_\Lambda(\varepsilon):=\Bigl{U\in M_\Lambda:\ d_G(U_p,\mathbf 1)\le \varepsilon\ \text{for all }p\in P(\Lambda)\Bigr},
+]
+where (U_p) is the plaquette holonomy and (d_G) is the geodesic distance on (G).
+
+This (K_\Lambda(\varepsilon)) is compact, gauge-invariant, and defined in a way that is **uniform in volume** (same (\varepsilon), same local constraint per plaquette).
+
+### 12.7.4. The three hypotheses you must verify
+
+To apply Theorem 12.10 volume-uniformly, you want constants (\lambda,b,\kappa) **independent of (\Lambda)** such that:
+
+1. (**Lyapunov drift**) There exists (W_\Lambda\ge 1) with
+   [
+   L_\Lambda W_\Lambda \le -\lambda W_\Lambda + b,\mathbf 1_{K_\Lambda}.
+   \tag{12.16}
+   ]
+
+2. (**Local Poincaré on (K_\Lambda)**) For all (f),
+   [
+   \int_{K_\Lambda} (f-\mu_{K_\Lambda}(f))^2,d\mu_\Lambda
+   \le
+   \kappa \int \Gamma_\Lambda(f),d\mu_\Lambda,
+   \tag{12.17}
+   ]
+   with (\kappa) independent of (\Lambda).
+
+3. (**(Optional but typical) Local curvature on (K_\Lambda)**) On (K_\Lambda), the Bakry–Émery tensor satisfies
+   [
+   \mathrm{Ric}*{M*\Lambda} + \nabla^2 S_\Lambda \ge \rho,g_\Lambda
+   \quad\text{on }K_\Lambda,
+   \tag{12.18}
+   ]
+   with (\rho>0) independent of (\Lambda).
+   This is one common way to produce (12.17) with (\kappa\sim 1/\rho).
+
+Then Theorem 12.10 yields the global, volume-uniform Poincaré inequality
+[
+\mathrm{Var}*{\mu*\Lambda}(f)
+\le
+\frac{1+b\kappa}{\lambda}\int \Gamma_\Lambda(f),d\mu_\Lambda,
+]
+with constant independent of (\Lambda).
+
+### 12.7.5. A practical Lyapunov construction template
+
+A common and very effective choice is an exponential Lyapunov function
+[
+W_\Lambda = e^{\alpha V_\Lambda},
+]
+for some coercive (V_\Lambda\ge 0) (measuring “distance from the safe region”), such as:
+
+* (V_\Lambda(U)=\sum_{p\in P(\Lambda)} d_G(U_p,\mathbf 1)^2), or
+* (V_\Lambda(U)=\sum_{p} V_t(U_p)) where (V_t=-\log K_t) is a heat-kernel potential,
+* or a Wilson-flowed effective action piece that is manifestly coercive.
+
+Using the diffusion chain rule,
+[
+L_\Lambda W_\Lambda
+===================
+
+\alpha W_\Lambda,L_\Lambda V_\Lambda + \alpha^2 W_\Lambda,\Gamma_\Lambda(V_\Lambda),
+]
+so the drift condition (12.16) reduces to showing
+[
+\alpha L_\Lambda V_\Lambda + \alpha^2 \Gamma_\Lambda(V_\Lambda)
+\le
+-\lambda + b,\mathbf 1_{K_\Lambda}
+\quad\text{(pointwise)}.
+\tag{12.19}
+]
+Outside (K_\Lambda), one wants (L_\Lambda V_\Lambda) strongly negative and (\Gamma_\Lambda(V_\Lambda)) controlled so that choosing (\alpha>0) small makes the (\alpha^2) term harmless.
+
+This is exactly the “Lyapunov drift back to small-field” mechanism referenced in your Part 10–11 summaries.
+
+---
+
+## 12.8. Summary: what Part 12 actually *does* in the overall proof
+
+This part does **not** prove curvature or Lyapunov conditions for Yang–Mills by itself. It proves the analytic implication:
+
+> If you can exhibit (i) a small-field region with a local spectral-gap estimate, and (ii) a Lyapunov function proving drift back to that region, then you obtain a **global** Poincaré inequality with an explicit constant.
+
+More concretely:
+
+* Parts that establish **local curvature / convexity** (typically on a small-field region) are used to get the **local Poincaré constant** (\kappa).
+
+* Parts that construct **Lyapunov functions** (typically built from plaquette energies/distances) are used to get ((\lambda,b)).
+
+* Part 12 then converts ((\kappa,\lambda,b)) into a **global spectral gap**
+  [
+  \lambda_{\mathrm{gap}} ;\ge; \frac{\lambda}{1+b\kappa},
+  ]
+  uniformly in volume if the inputs are uniform.
+
+That’s the “analytic engine” you need before you can safely move to:
+
+* the local-to-global **log-Sobolev** upgrade (next part), and
+* later, the reconstruction/spectral arguments that interpret these gaps as mass gaps in the QFT sense.
+
+This completes the updated, fully expanded Part 12.

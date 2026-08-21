@@ -1,0 +1,347 @@
+Appendix B — Reflection positivity for the Wilson lattice gauge measure
+
+**File status:** Established (finite-volume OS2 via Osterwalder–Seiler SOS; relies on standard compact-group harmonic analysis at the Peter–Weyl level).
+
+**Scope.** Proves OS reflection positivity (OS2) for the **finite-volume** Wilson Gibbs measure on a periodic hypercubic lattice with **even** temporal extent.
+Does **not** prove OS reconstruction / transfer matrix existence.
+
+---
+
+## B.1 Reflection datum and OS sesquilinear form
+
+### B.1.1 Time reflection on the periodic lattice
+
+Let
+[
+\Lambda=(\mathbb Z/L_0\mathbb Z)\times(\mathbb Z/L_1\mathbb Z)\times(\mathbb Z/L_2\mathbb Z)\times(\mathbb Z/L_3\mathbb Z),
+]
+with (x_0) interpreted as Euclidean time.
+
+**Standing assumption (even temporal extent).** (L_0\in 2\mathbb N).
+
+Define the vertex reflection (mid-plane between time slices (x_0=0) and (x_0=1)):
+[
+\vartheta(x_0,\vec x):=(1-x_0,\vec x),
+]
+with arithmetic mod (L_0) in the time coordinate.
+
+Write time coordinates in ({0,1,\dots,L_0-1}) and define
+[
+T_+ := {1,2,\dots,L_0/2},\qquad T_-:=\vartheta(T_+)={0,L_0-1,\dots,L_0/2+1},
+]
+[
+\Lambda_+ := {x\in\Lambda:\ x_0\in T_+},\qquad \Lambda_-:={x\in\Lambda:\ x_0\in T_-}.
+]
+Then (\Lambda=\Lambda_+\sqcup\Lambda_-) and (\vartheta(\Lambda_+)=\Lambda_-).
+
+### B.1.2 Reflection on directed links and on configurations
+
+Let (\widetilde E(\Lambda)) be the set of **directed** nearest-neighbor links (b=(x\to y)). Let (b^{-1}:=(y\to x)).
+
+Define reflection on directed links by
+[
+\vartheta b := (\vartheta x \to \vartheta y),\qquad b=(x\to y)\in\widetilde E(\Lambda).
+]
+Then (\vartheta^2=\mathrm{Id}) and (\vartheta(b^{-1})=(\vartheta b)^{-1}).
+
+A configuration is a map (U:\widetilde E(\Lambda)\to G) satisfying the orientation constraint
+[
+U_{b^{-1}} = U_b^{-1}.
+]
+Equivalently, choose a reference orientation (E(\Lambda)\subset\widetilde E(\Lambda)) and identify configurations with
+[
+M_\Lambda:=G^{E(\Lambda)}.
+]
+
+Define the reflected configuration (\Theta U) by pullback along (\vartheta):
+[
+(\Theta U)*b := U*{\vartheta b},\qquad b\in\widetilde E(\Lambda),
+]
+with the convention (U_{b^{-1}}=U_b^{-1}) whenever (\vartheta b) lands in the inverse orientation.
+
+**Lemma B.1 (involution and orientation compatibility) (Status: Established).**
+(\Theta) is an involution on (M_\Lambda): (\Theta^2=\mathrm{Id}), and ((\Theta U)_{b^{-1}}=((\Theta U)_b)^{-1}).
+
+*Proof.* (\vartheta^2=\mathrm{Id}) on directed links and (\vartheta(b^{-1})=(\vartheta b)^{-1}); the orientation constraint is preserved under pullback. ∎
+
+**Lemma B.2 (product Haar is (\Theta)-invariant) (Status: Established).**
+Let (dU=\prod_{b\in E(\Lambda)} d\mathrm{Haar}(U_b)) be the product Haar probability measure on (M_\Lambda). Then for bounded measurable (F),
+[
+\int_{M_\Lambda} F(\Theta U),dU = \int_{M_\Lambda} F(U),dU.
+]
+
+*Proof.* (\Theta) acts as a permutation of coordinates composed with inversion on some coordinates (when (\vartheta b) lands as an inverse edge under the reference orientation). Product Haar is invariant under coordinate permutation, and Haar on (G) is invariant under inversion. ∎
+
+### B.1.3 Positive/negative/boundary link sets and the positive-time algebra
+
+Define (E_+,E_-,E_0\subset E(\Lambda)) by endpoints:
+[
+E_+ := {b\in E(\Lambda):\ \partial_-b,\partial_+b\in\Lambda_+},
+\qquad
+E_- := {b\in E(\Lambda):\ \partial_-b,\partial_+b\in\Lambda_-},
+]
+[
+E_0 := E(\Lambda)\setminus(E_+\cup E_-).
+]
+Then (E(\Lambda)=E_-\sqcup E_0\sqcup E_+), and (\vartheta) exchanges (E_+\leftrightarrow E_-) while preserving (E_0) setwise.
+
+Accordingly,
+[
+M_\Lambda \cong M_- \times M_0 \times M_+,
+\qquad M_\pm := G^{E_\pm},\ \ M_0:=G^{E_0},
+]
+and (dU=dU_-,dU_0,dU_+).
+
+Define the positive-time algebra (\mathcal A_+) to be the *-algebra of bounded **cylinder** observables depending only on finitely many link variables ({U_b:\ b\in E_+}) (continuous in those coordinates).
+
+Define the conjugate-linear involution on observables:
+[
+(\theta F)(U) := \overline{F(\Theta U)}.
+]
+
+Define the OS sesquilinear form for a probability measure (\mu) on (M_\Lambda):
+[
+\langle F,G\rangle_{\mathrm{OS}} := \int_{M_\Lambda} (\theta F)(U),G(U),\mu(dU)
+= \mu\big((\theta F)G\big).
+]
+
+---
+
+## B.2 Wilson measure and plaquette decomposition across the plane
+
+Fix a compact Lie group (G) and a unitary representation (\rho:G\to U(n)).
+
+Define the single-plaquette potential
+[
+\Phi_\beta(V):=\beta\Bigl(1-\frac{1}{n}\Re\mathrm{Tr}(\rho(V))\Bigr),\qquad V\in G,\ \beta\ge 0,
+]
+and the plaquette holonomy (U_p(U)\in G).
+
+The Wilson action is
+[
+S_{\Lambda,\beta}(U):=\sum_{p\in P(\Lambda)} \Phi_\beta\big(U_p(U)\big),
+]
+and the finite-volume Gibbs measure is
+[
+\mu_{\Lambda,\beta}(dU)=Z_{\Lambda,\beta}^{-1}e^{-S_{\Lambda,\beta}(U)},dU.
+]
+
+Define the plaquette weight
+[
+w_\beta(g):=\exp!\Big(\frac{\beta}{n}\Re\mathrm{Tr}(\rho(g))\Big).
+]
+Then (e^{-\Phi_\beta(g)}=e^{-\beta}w_\beta(g)), so (\prod_p e^{-\Phi_\beta(U_p)}\propto \prod_p w_\beta(U_p)).
+
+Partition plaquettes:
+
+* (P_+): plaquettes supported entirely in (\Lambda_+),
+* (P_-:=\vartheta(P_+)),
+* (P_0): “straddling” plaquettes crossing the reflection plane (equivalently involving at least one boundary link in (E_0)).
+
+---
+
+## B.3 Positive-definite class functions and SOS kernels (Peter–Weyl route)
+
+### B.3.1 Positive-definite class functions
+
+A continuous function (w:G\to\mathbb C) is **positive definite** if for all (g_1,\dots,g_m\in G) and (c_1,\dots,c_m\in\mathbb C),
+[
+\sum_{i,j=1}^m \overline{c_i},c_j, w(g_i^{-1}g_j)\ \ge\ 0.
+]
+
+### B.3.2 SOS expansion from nonnegative Fourier coefficients
+
+**Lemma B.3 (SOS expansion from nonnegative Peter–Weyl coefficients) (Status: Established; standard Peter–Weyl input).**
+Let (w:G\to\mathbb R) be continuous, conjugation invariant, and admit a Peter–Weyl character expansion
+[
+w(g)=\sum_{\pi\in\widehat G} a_\pi,\chi_\pi(g),\qquad a_\pi\ge 0,
+]
+with uniform convergence. Then for all (g,h\in G),
+[
+w(g^{-1}h)=\sum_{\pi\in\widehat G} a_\pi\sum_{i,j=1}^{d_\pi}\overline{\pi_{ij}(g)},\pi_{ij}(h)
+=\sum_\alpha \overline{f_\alpha(g)},f_\alpha(h),
+]
+for a family ({f_\alpha}\subset L^2(G)). In particular (w) is positive definite.
+
+*Proof.* For unitary (\pi),
+[
+\chi_\pi(g^{-1}h)=\mathrm{Tr}(\pi(g)^*\pi(h))=\sum_{i,j}\overline{\pi_{ij}(g)},\pi_{ij}(h).
+]
+Insert into the character expansion and set (f_{\pi,i,j}(g):=\sqrt{a_\pi},\pi_{ij}(g)). The kernel is a Gram kernel, hence PSD. ∎
+
+### B.3.3 The Wilson plaquette weight has nonnegative coefficients
+
+**Lemma B.4 (Wilson weight is positive definite) (Status: Established).**
+For unitary (\rho) and (\beta\ge 0),
+[
+w_\beta(g)=\exp!\Big(\frac{\beta}{n}\Re\mathrm{Tr}(\rho(g))\Big)
+]
+admits a Peter–Weyl character expansion with nonnegative coefficients. Hence (w_\beta) is positive definite.
+
+*Proof.* Write (\chi(g):=\mathrm{Tr}(\rho(g))). Unitarity gives (\overline{\chi(g)}=\chi(g^{-1})), so
+[
+\Re\chi(g)=\tfrac12\big(\chi(g)+\chi(g^{-1})\big).
+]
+Let (t:=\beta/n\ge 0). Then
+[
+w_\beta(g)=\exp!\Big(\frac{t}{2}\chi(g)\Big),\exp!\Big(\frac{t}{2}\chi(g^{-1})\Big).
+]
+Expand both exponentials and multiply:
+[
+w_\beta(g)=\sum_{m,n\ge 0}\frac{(t/2)^{m+n}}{m!,n!},\chi(g)^m,\chi(g^{-1})^n.
+]
+Now (\chi(g)^m) is the character of (\rho^{\otimes m}), and (\chi(g^{-1})^n) is the character of ((\rho^*)^{\otimes n}). Thus (\chi(g)^m\chi(g^{-1})^n) is the character of a finite-dimensional unitary representation (\rho^{\otimes m}\otimes(\rho^*)^{\otimes n}), which decomposes into irreducibles with nonnegative integer multiplicities. Since all scalar coefficients above are nonnegative, (w_\beta) is a nonnegative combination of irreducible characters. ∎
+
+**Corollary B.5 (SOS kernel for (w_\beta)) (Status: Established).**
+There exist functions ({f_\alpha:G\to\mathbb C}) such that for all (g,h\in G),
+[
+w_\beta(g^{-1}h)=\sum_\alpha \overline{f_\alpha(g)},f_\alpha(h),
+]
+in the sense provided by Lemma B.3.
+
+---
+
+## B.4 Osterwalder–Seiler factorization for straddling plaquettes
+
+### B.4.1 Half-plaquette holonomies
+
+**Lemma B.6 (crossing plaquette cut) (Status: Established).**
+For each straddling plaquette (p\in P_0), one can choose a cut of (\partial p) so that
+[
+U_p(U)= V_p^-(U)^{-1},V_p^+(U),
+]
+where:
+
+* (V_p^+(U)) depends only on ((U_+,U_0)),
+* (V_p^-(U)) depends only on ((U_-,U_0)),
+  and reflection maps the halves into each other (up to the natural identification of the cut):
+  [
+  V_p^-(U)=V_{\vartheta p}^+(\Theta U).
+  ]
+
+*Justification.* This is a locality/cut bookkeeping fact for plaquette holonomy plus the definition of (\Theta). No explicit closed form for (V_p^\pm) is used later.
+
+### B.4.2 SOS expansion for the straddling interaction
+
+Insert (g=V_p^-(U)), (h=V_p^+(U)) into Corollary B.5:
+[
+w_\beta(U_p(U))
+===============
+
+# w_\beta\big(V_p^-(U)^{-1}V_p^+(U)\big)
+
+\sum_\alpha \overline{f_\alpha(V_p^-(U))},f_\alpha(V_p^+(U)).
+]
+
+Taking the product over all (p\in P_0) yields a multi-index (\boldsymbol\alpha=(\alpha_p)*{p\in P_0}) such that
+[
+\prod*{p\in P_0} w_\beta(U_p(U))
+================================
+
+\sum_{\boldsymbol\alpha}\overline{F_{\boldsymbol\alpha}^-(U)};F_{\boldsymbol\alpha}^+(U),
+]
+where
+[
+F_{\boldsymbol\alpha}^+(U):=\prod_{p\in P_0} f_{\alpha_p}\big(V_p^+(U)\big),
+\qquad
+F_{\boldsymbol\alpha}^-(U):=\prod_{p\in P_0} f_{\alpha_p}\big(V_p^-(U)\big).
+]
+By construction (F_{\boldsymbol\alpha}^+) depends only on ((U_+,U_0)) and (F_{\boldsymbol\alpha}^-) only on ((U_-,U_0)).
+
+---
+
+## B.5 Reflection positivity for the Wilson measure
+
+**Theorem B.7 (OS2 for the Wilson lattice gauge measure) (Status: Established).**
+On the periodic lattice with even (L_0), the finite-volume Wilson measure (\mu_{\Lambda,\beta}) is reflection positive with respect to ((\Theta,\mathcal A_+)):
+[
+\mu_{\Lambda,\beta}\big((\theta F)F\big)\ \ge\ 0
+\qquad\forall,F\in\mathcal A_+.
+]
+
+*Proof.* Fix (F\in\mathcal A_+). Then
+[
+\mu_{\Lambda,\beta}\big((\theta F)F\big)
+========================================
+
+Z_{\Lambda,\beta}^{-1}
+\int_{M_\Lambda}\overline{F(\Theta U)},F(U),
+\prod_{p\in P(\Lambda)} e^{-\Phi_\beta(U_p(U))},dU.
+]
+Replace (\prod_p e^{-\Phi_\beta(U_p)}) by (\prod_p w_\beta(U_p)) (the global constant cancels with (Z_{\Lambda,\beta})).
+
+Use the plaquette split (P=P_+\sqcup P_0\sqcup P_-) and the SOS expansion of the straddling product:
+[
+\prod_{p\in P(\Lambda)} w_\beta(U_p)
+====================================
+
+\Big(\prod_{p\in P_+} w_\beta(U_p)\Big)\Big(\prod_{p\in P_-} w_\beta(U_p)\Big)
+\sum_{\boldsymbol\alpha}\overline{F_{\boldsymbol\alpha}^-(U)},F_{\boldsymbol\alpha}^+(U).
+]
+Thus
+[
+\mu_{\Lambda,\beta}\big((\theta F)F\big)
+\propto
+\sum_{\boldsymbol\alpha}
+\int
+\overline{F(\Theta U)},\overline{F_{\boldsymbol\alpha}^-(U)},
+F(U),F_{\boldsymbol\alpha}^+(U),
+\Big(\prod_{p\in P_+} w_\beta(U_p)\Big)\Big(\prod_{p\in P_-} w_\beta(U_p)\Big),dU.
+]
+
+Now write (U=(U_+,U_0,U_-)) and use (dU=dU_-,dU_0,dU_+). The integrand separates into a ((U_+,U_0)) factor times a ((U_-,U_0)) factor, so for each (\boldsymbol\alpha) we can define
+[
+G_{\boldsymbol\alpha}(U_0)
+:=
+\int_{M_+} F(U_+),F_{\boldsymbol\alpha}^+(U_+,U_0),
+\Big(\prod_{p\in P_+} w_\beta(U_p(U_+,U_0))\Big),dU_+,
+]
+[
+H_{\boldsymbol\alpha}(U_0)
+:=
+\int_{M_-} \overline{F(\Theta U)},\overline{F_{\boldsymbol\alpha}^-(U_-,U_0)},
+\Big(\prod_{p\in P_-} w_\beta(U_p(U_-,U_0))\Big),dU_-.
+]
+By reflection covariance of the plaquette holonomies and Haar invariance under (\Theta), the (U_-)-integral is the complex conjugate of the (U_+)-integral:
+[
+H_{\boldsymbol\alpha}(U_0)=\overline{G_{\boldsymbol\alpha}(U_0)}.
+]
+Therefore
+[
+\mu_{\Lambda,\beta}\big((\theta F)F\big)
+\propto
+\sum_{\boldsymbol\alpha}\int_{M_0} |G_{\boldsymbol\alpha}(U_0)|^2,dU_0\ \ge\ 0,
+]
+and dividing by the positive normalizing constant yields the stated inequality. ∎
+
+**Remark (Status: Established).** Gauge invariance of (F) is not used for OS2.
+
+---
+
+## B.6 Permanence lemmas (structural)
+
+### B.6.1 Pushforward under reflection-equivariant maps
+
+**Lemma B.8 (RP preserved under reflection-equivariant pushforward) (Status: Established).**
+Let ((\Omega,\mu)) be reflection positive w.r.t. ((\Theta,\mathcal A_+)). Let (\pi:\Omega\to\Omega') be measurable and suppose (\Theta') on (\Omega') satisfies (\pi\circ\Theta=\Theta'\circ\pi). Let (\mu':=\pi_*\mu). Then (\mu') is reflection positive w.r.t. ((\Theta',\mathcal A_+')) on observables pulled back from (\Omega').
+
+*Proof.* For (F'\in\mathcal A_+'), set (F:=F'\circ\pi\in\mathcal A_+). Then (\mu'((\theta'F')F')=\mu((\theta F)F)\ge 0). ∎
+
+### B.6.2 Closedness under weak limits (cylinder-continuous level)
+
+**Lemma B.9 (RP closed under weak convergence on compact spaces) (Status: Established).**
+Let (\Omega) be compact Hausdorff and (\mu_k\Rightarrow\mu) weakly. Suppose each (\mu_k) is reflection positive w.r.t. ((\Theta,\mathcal A_+)), where (\mathcal A_+) consists of bounded continuous cylinder observables. Then (\mu) is reflection positive.
+
+*Proof.* For (F\in\mathcal A_+), the function ((\theta F)F) is bounded continuous, hence (\mu((\theta F)F)=\lim_k \mu_k((\theta F)F)\ge 0). ∎
+
+---
+
+## Source material used (traceability)
+
+* `APPENDIX_B.md` (self-contained Osterwalder–Seiler proof; SOS via Peter–Weyl; permanence lemmas).
+* `### 4.1 OS reflection plane, induced involution on configurations, positive-time algebra.txt` (reflection datum; OS form; structural lemmas for (\Theta); OS2 proof skeleton).
+* `## 2. Lattice Yang–Mills setup and.txt` (Wilson measure setup and locality conventions as needed).
+
+---
+
+That version is consistent with the in-corpus proofs and removes the only materially risky overclaim (your Lemma B.7 convergence statement). The only remaining “not first principles” inputs are exactly the standard ones you can’t realistically avoid in this appendix: **Peter–Weyl / basic compact representation theory** (explicitly flagged in-file).

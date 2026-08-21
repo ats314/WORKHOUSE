@@ -1,0 +1,477 @@
+## Part 20 — The Clean Forward Engine
+
+### Curvature ⇒ LSI ⇒ Poincaré ⇒ Spectral Gap ⇒ OS Mass Gap
+
+*(with volume/continuum stability bookkeeping)*
+
+---
+
+### 20.0. What “cleaner forward engine” means here
+
+Your newer notes isolate a very clean “main pipeline”:
+
+[
+\boxed{\text{(local BE curvature on SAFE)}\ \Longrightarrow\ \text{(global LSI)}\ \Longrightarrow\ \text{(Poincaré / spectral gap)}\ \Longrightarrow\ \text{(OS transfer gap)}\ \Longrightarrow\ \text{mass gap}}
+]
+
+This is exactly the chain you flagged in your curvature→LSI→Poincaré checklist , and it aligns with the “Diffusion gap ↔ Transfer gap via OS time‑slice” lemma and the unit conventions warning in 12‑12‑25 PULSE .
+
+The “clean” part is not that it removes hard work; it **isolates the remaining hard work into one place**:
+
+* **Analytic engine (mostly done in your stack):** produce a **uniform** spectral gap for a *reversible* Markov structure attached to the Euclidean measure (via LSI/Poincaré).
+* **OS engine (structural):** identify the relevant “one‑step” operator with the **OS transfer** so the spectral gap becomes the **physical mass gap** with the correct factor of (a). 
+
+This Part 20 is self-contained: it spells out, from first principles, the operator-theoretic equivalences and the exact place where the OS identification enters—so the remainder of the project has one obvious bottleneck rather than a fog of them.
+
+---
+
+### 20.1. Finite-volume Euclidean lattice gauge set-up
+
+Fix:
+
+* A finite hypercubic lattice (\Lambda\subset (a\mathbb Z)^d) with a distinguished “time” coordinate (t\in a\mathbb Z). Write (\Lambda=\Lambda_t\times \Lambda_s), where (\Lambda_s\subset (a\mathbb Z)^{d-1}) are spatial sites.
+* Compact gauge group (G) (e.g. (SU(N))), with Haar probability measure (dU).
+* Edge set (E(\Lambda)) and plaquette set (P(\Lambda)).
+
+Configuration space is the compact manifold
+[
+\mathcal C_\Lambda := G^{E(\Lambda)}
+]
+with product Haar measure (d\mu_{\mathrm{Haar},\Lambda}).
+
+A standard Wilson-type Euclidean Gibbs measure has density
+[
+d\mu_\Lambda(U);=;Z_\Lambda^{-1},e^{-S_\Lambda(U)},d\mu_{\mathrm{Haar},\Lambda}(U),
+]
+where (S_\Lambda) is a local, gauge-invariant action (e.g. Wilson plaquette action).
+
+Because (\mathcal C_\Lambda) is compact, all integrals are finite and there are no “tails at infinity.” The only “bad region” is geometric/analytic: where local convexity (curvature/Hessian) degenerates and you cannot push a uniform functional inequality through without extra control.
+
+---
+
+### 20.2. Reflection positivity, OS inner product, and the transfer operator
+
+#### 20.2.1 Reflection and the positive-time algebra
+
+Let (\vartheta) be the reflection in Euclidean time across a reflection plane (typically between time slices), and let (\Theta) be the induced involution on observables:
+
+* spatial reflection of the underlying configuration,
+* orientation reversal of time-directed links crossing the plane,
+* complex conjugation.
+
+Let (\mathcal A^+_\Lambda) be the algebra of bounded cylinder observables that depend only on the “positive-time” half-lattice (i.e. supported strictly on one side of the reflection plane).
+
+#### 20.2.2 Reflection positivity
+
+A measure (\mu_\Lambda) is **reflection positive** (RP) if for every (F\in\mathcal A^+*\Lambda),
+[
+\langle F, F\rangle*{\mathrm{OS}} := \mathbb E_{\mu_\Lambda}!\big[\overline{\Theta F},F\big]\ \ge\ 0.
+]
+This is the RP axiom in its operational form. Your stress-test doc is aimed at verifying this numerically for small lattices and bases of observables .
+
+#### 20.2.3 OS Hilbert space
+
+Define a seminorm on (\mathcal A^+*\Lambda) by
+[
+|F|^2*{\mathcal H_\Lambda} := \mathbb E_{\mu_\Lambda}[\overline{\Theta F},F].
+]
+Let (\mathcal N := {F\in\mathcal A^+*\Lambda : |F|*{\mathcal H_\Lambda}=0}). Form the quotient (\mathcal A^+*\Lambda/\mathcal N) and complete it to obtain the OS Hilbert space (\mathcal H*\Lambda).
+
+Write ([F]) for the class of (F\in\mathcal A^+_\Lambda).
+
+#### 20.2.4 One-step time translation and the transfer operator
+
+Let (\tau_a) denote Euclidean time translation by one lattice spacing (a) (i.e. shift in the time coordinate). Define an operator on the dense subspace of classes ([F]) by
+[
+T_a [F] := [\tau_a F].
+]
+
+Under the standard RP assumptions (and mild locality/regularity), OS reconstruction implies:
+
+* (T_a) extends to a bounded **self-adjoint contraction** on (\mathcal H_\Lambda),
+* (0\le T_a\le I),
+* there exists a positive self-adjoint Hamiltonian (H_\Lambda\ge 0) such that
+  [
+  T_a = e^{-a H_\Lambda}.
+  ]
+
+These are the structural facts behind the spectral dictionary in your PULSE note .
+
+---
+
+### 20.3. Mass gap and the exact “(a)” bookkeeping
+
+Let ({\lambda_n}_{n\ge 0}) be the eigenvalues of (T_a) in non-increasing order:
+[
+1\ge \lambda_0 \ge \lambda_1 \ge \lambda_2 \ge \cdots \ge 0,
+]
+and define energy levels
+[
+E_n := -\frac{1}{a}\log \lambda_n.
+]
+This is exactly the eigenvalue–energy relation .
+
+If we normalize the vacuum so that (\lambda_0=1) (equivalently (E_0=0)), then the **mass gap** is
+[
+m(a) := E_1 - E_0 = E_1 = -\frac{1}{a}\log \lambda_1.
+]
+
+
+**Key warning (units):** A statement like “contraction by (e^{-\lambda})” is meaningless until you say whether (\lambda) is “per lattice step” or “per unit physical time.” Your 12‑12‑25 note makes this explicit and is correct: per-step gap divided by (a) gives the physical rate .
+
+---
+
+### 20.4. Spectral gap as a Poincaré inequality for the transfer Dirichlet form
+
+This section is pure functional analysis and is one of the “cleanest” pieces: it does not depend on gauge theory details.
+
+#### 20.4.1 Transfer Dirichlet form
+
+Define the quadratic form
+[
+\mathcal E_{T_a}(f,f) := \langle f,(I-T_a)f\rangle_{\mathcal H_\Lambda}
+]
+on (\mathcal H_\Lambda).
+
+Because (0\le T_a\le I), we have (\mathcal E_{T_a}(f,f)\ge 0).
+
+#### 20.4.2 Discrete-time Poincaré inequality for (T_a)
+
+Let (P) be the orthogonal projection onto the vacuum subspace (the eigenspace of (\lambda_0)). For (f\perp \mathrm{Ran}(P)), i.e. (\langle f,\Omega\rangle=0), the best constant (c) such that
+[
+|f|^2 \le c,\mathcal E_{T_a}(f,f)
+]
+is determined by the spectral gap of (T_a).
+
+**Proposition 20.1 (Transfer Poincaré = transfer spectral gap).**
+Assume (\lambda_0=1>\lambda_1). Then for all (f\perp \Omega),
+[
+|f|^2 \le \frac{1}{1-\lambda_1},\langle f,(I-T_a)f\rangle.
+]
+Moreover (1-\lambda_1) is the largest constant for which this holds.
+
+**Proof (first principles).**
+Since (T_a) is self-adjoint, the spectral theorem yields an orthonormal basis ({\psi_n}) with (T_a\psi_n=\lambda_n\psi_n). Write (f=\sum_{n\ge 1} c_n \psi_n) (no vacuum component). Then
+[
+|f|^2 = \sum_{n\ge 1} |c_n|^2,
+\qquad
+\langle f,(I-T_a)f\rangle
+= \sum_{n\ge 1} (1-\lambda_n)|c_n|^2
+\ge (1-\lambda_1)\sum_{n\ge 1}|c_n|^2.
+]
+Rearrange:
+[
+|f|^2 \le \frac{1}{1-\lambda_1}\langle f,(I-T_a)f\rangle.
+]
+Sharpness: take (f=\psi_1), giving equality. ∎
+
+So if you can lower bound (\langle f,(I-T_a)f\rangle) for mean-zero (f), you immediately get a quantitative control on (1-\lambda_1).
+
+#### 20.4.3 Continuous-time spectral gap is the mass gap
+
+Because (T_a=e^{-aH_\Lambda}), we have (\lambda_1 = e^{-aE_1}). So (E_1) (the spectral gap of (H_\Lambda)) is
+[
+E_1 = -\frac{1}{a}\log \lambda_1.
+]
+This is the mass gap definition already recorded .
+
+Thus, “proving a mass gap” in finite volume is **exactly**: prove (\lambda_1<1) with a quantitative bound of the form
+[
+\lambda_1 \le e^{-a m_0}\quad\text{for some }m_0>0.
+]
+
+---
+
+### 20.5. The clean OS bridge lemma (and what it really assumes)
+
+Your 12‑12‑25 note states the cleanest bridge formula:
+
+[
+m(a)=\frac{\lambda_P(a)}{a}
+]
+provided the “per-step contraction rate” (\lambda_P(a)) is computed for the operator that *is* the OS transfer on the physical subspace. 
+
+Let me restate and prove it in a fully explicit form (no “sketch”).
+
+#### 20.5.1 Abstract lemma: reversible Markov operator and its spectral gap
+
+Let ((X,\pi)) be a probability space, and (K) a Markov operator on (L^2(\pi)) (i.e. positivity-preserving, (K\mathbf 1=\mathbf 1)), which is **reversible**:
+[
+\langle f,Kg\rangle_{L^2(\pi)}=\langle Kf,g\rangle_{L^2(\pi)}.
+]
+So (K) is self-adjoint on (L^2(\pi)) and has spectrum in ([-1,1]), with (\lambda_0(K)=1).
+
+Define the **discrete-time spectral gap** by
+[
+\mathrm{gap}_{\mathrm{disc}}(K) := 1-\sup{\lambda\in\sigma(K):\lambda<1}
+=1-\lambda_1(K),
+]
+where (\lambda_1(K)) is the second-largest eigenvalue in absolute order if the spectrum is purely discrete (finite state space), or the top of the spectrum below (1) in general.
+
+Also define the **per-step exponential contraction rate**
+[
+\lambda_P := -\log \lambda_1(K)\quad\text{(so }\lambda_1(K)=e^{-\lambda_P}\text{)}.
+]
+
+These two are equivalent ways of encoding the same spectral information.
+
+#### 20.5.2 Lemma: “diffusion/Markov gap ↔ transfer gap” (precise version)
+
+**Lemma 20.2 (Per-step gap to OS mass gap).**
+Assume:
+
+1. OS reconstruction produces a transfer operator (T_a=e^{-aH}) on the physical Hilbert space (\mathcal H) with vacuum normalized so (\lambda_0(T_a)=1).
+2. There exists a reversible Markov operator (K_a) on the OS time-slice (or on an isomorphic (L^2(\pi))) such that **on the physical subspace** its action coincides with (T_a). (This is the identification hypothesis emphasized in your checklist. )
+3. The second eigenvalue of (K_a) satisfies (\lambda_1(K_a)=e^{-\lambda_P(a)}).
+
+Then
+[
+\lambda_1(T_a)=\lambda_1(K_a)=e^{-\lambda_P(a)},
+]
+and therefore
+[
+m(a)=E_1 = -\frac{1}{a}\log \lambda_1(T_a) = \frac{\lambda_P(a)}{a}.
+]
+
+**Proof.**
+Because (T_a) and (K_a) coincide on the same invariant physical subspace and both have top eigenvalue (1) with the same vacuum, their restrictions have the same spectrum, hence (\lambda_1(T_a)=\lambda_1(K_a)). By definition (\lambda_1(K_a)=e^{-\lambda_P(a)}), so (\lambda_1(T_a)=e^{-\lambda_P(a)}). Finally,
+[
+m(a)=-\frac{1}{a}\log \lambda_1(T_a) = -\frac{1}{a}\log(e^{-\lambda_P(a)}) = \frac{\lambda_P(a)}{a}.
+]
+∎
+
+This is exactly your PULSE lemma, just written as a clean theorem with a complete proof and the explicit “where identification enters.” 
+
+#### 20.5.3 What this lemma does **not** do
+
+It does not produce (\lambda_P(a)) for free. It says:
+
+* **If** the gap you computed by functional inequalities is the gap of the operator that is physically the one-step OS transfer (on the relevant subspace),
+* **then** the mass gap is that gap divided by (a).
+
+So the whole proof pipeline concentrates into: “compute a uniform lower bound on (\lambda_P(a))” and “verify the identification.”
+
+Your own notes list that identification as an explicit item to check. 
+
+---
+
+### 20.6. The “one-step OS/Dirichlet comparison” reduction
+
+Your updated Part 18 makes a very useful sharpening: instead of vaguely “compare diffusion gap and OS gap,” there is a **single concrete one-step inequality** whose verification would imply the OS mass gap by a short argument .
+
+Let me restate that reduction cleanly (again self-contained).
+
+#### 20.6.1 Configuration Dirichlet form
+
+On the full configuration space (\mathcal C_\Lambda) with Gibbs measure (\mu_\Lambda), define for sufficiently regular (F):
+[
+\mathcal E^{\mathrm{conf}}*\Lambda(F,F)
+:=\int*{\mathcal C_\Lambda} |\nabla F(U)|^2,d\mu_\Lambda(U).
+]
+This is the Dirichlet form of the canonical reversible diffusion generator (L_\Lambda=\Delta-\nabla S_\Lambda\cdot\nabla) (the standard Bakry–Émery diffusion on (\mathcal C_\Lambda)).
+
+#### 20.6.2 Poincaré inequality from your analytic engine
+
+Assume you have a Poincaré inequality for the same class of observables:
+[
+\mu_\Lambda(F)=0\quad\Longrightarrow\quad
+|F|^2_{L^2(\mu_\Lambda)} \le \frac{1}{\lambda_*},\mathcal E^{\mathrm{conf}}*\Lambda(F,F),
+]
+for some (\lambda**>0). In your program, (\lambda_*) comes from the curvature→LSI→Poincaré chain once SAFE+Lyapunov are verified (and the constants are made volume-stable). The point is: (\lambda_*) is an **analytic output**.
+
+#### 20.6.3 One-step OS/Dirichlet comparison hypothesis
+
+**Hypothesis (one-step OS/Dirichlet comparison).**
+There exists (c>0), independent of (\Lambda), such that for all (F\in\mathcal A^+*\Lambda) with (\mu*\Lambda(F)=0) and (|F|*{\mathcal H*\Lambda}=1),
+[
+\langle F,(I-T_a)F\rangle_{\mathcal H_\Lambda}
+\ \ge
+c,\mathcal E_\Lambda^{\mathrm{conf}}(F,F).
+\tag{20.(\star)}
+]
+This is exactly the “single missing inequality” formulation in your updated Part 18 .
+
+#### 20.6.4 Clean implication: ((20.\star)\Rightarrow) OS mass gap lower bound
+
+**Theorem 20.3 (One-step comparison (\Rightarrow) mass gap).**
+Assume:
+
+1. Poincaré: (|F|^2_{\mathcal H_\Lambda}\le \lambda_*^{-1}\mathcal E^{\mathrm{conf}}_\Lambda(F,F)) for mean-zero (F).
+2. One-step comparison ((20.\star)) holds with constant (c).
+3. (\lambda_0(T_a)=1) (vacuum normalized).
+
+Then the OS transfer satisfies
+[
+\lambda_1(T_a)\ \le\ 1-c\lambda_*.
+]
+Consequently the OS mass gap satisfies
+[
+m(a);=;-\frac{1}{a}\log \lambda_1(T_a)\ \ge\ -\frac{1}{a}\log(1-c\lambda_*).
+]
+
+**Proof.**
+Let (F\in\mathcal H_\Lambda) be orthogonal to the vacuum, normalized (|F|=1). By Poincaré, (\mathcal E^{\mathrm{conf}}*\Lambda(F,F)\ge \lambda**|F|^2=\lambda_*). Insert into ((20.\star)):
+[
+\langle F,(I-T_a)F\rangle \ge c,\mathcal E^{\mathrm{conf}}*\Lambda(F,F)\ge c\lambda**.
+]
+But (\langle F,(I-T_a)F\rangle = 1-\langle F,T_aF\rangle). Hence
+[
+1-\langle F,T_aF\rangle \ge c\lambda_* \quad\Rightarrow\quad
+\langle F,T_aF\rangle \le 1-c\lambda_*.
+]
+Taking the supremum over all unit (F\perp \Omega), the spectral theorem gives
+[
+\lambda_1(T_a)=\sup_{|F|=1,,F\perp\Omega}\langle F,T_aF\rangle \le 1-c\lambda_*.
+]
+Finally (m(a)=-a^{-1}\log \lambda_1(T_a)\ge -a^{-1}\log(1-c\lambda_*)). ∎
+
+This is the same clean implication proved in your updated Part 18, but now placed as the “closing link” of the forward engine. 
+
+**Interpretation:** all the heavy analytic work produces (\lambda_*). The entire OS conversion is reduced to verifying ((20.\star)) with some (c>0) that does not collapse with volume (and ideally has controlled (a)-dependence).
+
+---
+
+### 20.7. Volume-stable constant assembly (the “don’t accidentally divide by (e^{c|\Lambda|})” rule)
+
+Your 12‑12‑25 checklist identifies two classic failure modes in these programs:
+
+* don’t introduce an (\exp{c|\Lambda|}) in a denominator,
+* don’t define SAFE by a **max** over sites; use an averaged (or trimmed) quantity so (\mu_\Lambda(K_\Lambda^c)) is exponentially small. 
+
+I’ll formalize those into a “drop-in lemma skeleton” you can attach to the constants ledger.
+
+#### 20.7.1 SAFE sets should be defined by averaged local fields
+
+Let ({z_p}_{p\in P(\Lambda)}) be nonnegative gauge-invariant local “badness” indicators (plaquette curvature radius, commutator size, etc). Define
+
+* averaged badness:
+  [
+  \bar z(U) := \frac{1}{|P(\Lambda)|}\sum_{p\in P(\Lambda)} z_p(U),
+  ]
+* SAFE set:
+  [
+  K_\Lambda := {U:\ \bar z(U)\le R}.
+  ]
+
+This is exactly the “use averages, not maxima” advice .
+
+Because of locality and (once you have local functional inequalities) concentration estimates, it is plausible—and in many models provable—that
+[
+\mu_\Lambda(K_\Lambda^c)\le e^{-\gamma |P(\Lambda)|}
+]
+for some (\gamma>0) depending on (R) (a Chernoff/Hoeffding-type bound). This is explicitly the desired scaling in your PULSE note .
+
+#### 20.7.2 Overlap multiplicity must be (O(1))
+
+If you cover (\Lambda) by blocks (B_i) of fixed diameter (independent of (|\Lambda|)), then the number of blocks containing any fixed site is bounded by a constant depending only on dimension and the block shape. This is the “overlap graph bound” item you listed as a one-page lemma target .
+
+That single fact is what prevents exponential losses when you glue local inequalities.
+
+#### 20.7.3 Harmonic-mean style aggregation avoids exponential denominators
+
+Suppose you have inequalities on blocks (B_i) with constants (\rho_i). The safe aggregation is via **bounded overlap + convexity of entropy**, which typically yields a global constant controlled by something like a harmonic mean scaled by the overlap multiplicity (M):
+[
+\rho_{\mathrm{global}}\ \gtrsim\ \frac{1}{M},\Big(\sum_i \rho_i^{-1}\Big)^{-1}\times(\text{boundary corrections}).
+]
+The key point is: you never form a product of partition weights whose minimum is exponentially small; that’s exactly the failure mode you warned against. 
+
+I’m not pretending this paragraph is a complete proof; it is the **structural lemma statement** that your existing local-to-global machinery should be instantiated with. The practical takeaway is still the one in your note: “no (e^{c|\Lambda|}) in denominators, use bounded overlap.”
+
+---
+
+### 20.8. Where Riccati stabilization fits (why the engine isn’t destroyed by RG)
+
+Your 12‑10‑25 PULSE Part 2 notes and the Riccati comparison note propose an important robustness story:
+
+* local curvature on SAFE is solid,
+* coarse-graining can *increase* convexity via Schur complements,
+* a Riccati-type inequality controls the minimal eigenvalue and can stabilize it to a positive floor. 
+
+Concretely, you wrote the scalar comparison:
+[
+\partial_\ell \lambda_\ell \ge q_\ell - c_\ell \lambda_\ell - r_\ell \lambda_\ell^2
+]
+and deduced convergence to a positive fixed point under uniform lower bounds on (q_\ell) and upper bounds on (c_\ell,r_\ell). 
+
+This is valuable because it addresses the “true bottleneck” identified in the κ-source analysis: local curvature exists, the problem is extending it globally without losing it under flow/scale changes .
+
+I am not using Riccati stabilization here as a substitute for the LSI proof; I’m placing it correctly: **it is an a‑ and scale‑uniform way to keep the SAFE-region curvature source alive** while you build global control.
+
+---
+
+### 20.9. Two final stability lemmas (RP and limits), in the minimal form you need
+
+Because you ultimately want infinite volume and/or continuum, you need two structural facts.
+
+#### 20.9.1 RP is stable under reflection-commuting positive coarse-graining
+
+Your 12‑12‑25 note gives the right statement template: if a block map is positivity-preserving and commutes with reflection, RP is preserved under pushforward. 
+
+A clean abstract version:
+
+**Lemma 20.4 (RP preserved by reflection-commuting coarse-graining).**
+Let ((\Omega,\mathcal F,\mu)) be reflection positive w.r.t. (\Theta). Let (\Phi:\Omega\to\Omega') be measurable such that:
+
+1. (\Phi\circ\vartheta = \vartheta'\circ \Phi) (commutes with reflection),
+2. pullback preserves the positive-time algebra: (\Phi^*(\mathcal A'^+)\subseteq \mathcal A^+).
+
+Then the pushforward (\mu':=\Phi_*\mu) is RP w.r.t. (\Theta').
+
+**Proof.**
+Take (F'\in\mathcal A'^+). Then (F:=F'\circ\Phi\in\mathcal A^+). Using commutation, (\Theta F = (\Theta'F')\circ\Phi). Hence
+[
+\mathbb E_{\mu'}[\overline{\Theta'F'},F']
+=========================================
+
+\mathbb E_\mu[\overline{\Theta F},F]
+\ge 0
+]
+by RP of (\mu). ∎
+
+This is the formal justification of the “reflection-commuting block averaging keeps RP” claim. 
+
+#### 20.9.2 Exponential decay is stable under limits
+
+If your finite-volume correlators satisfy a uniform bound
+[
+0\le C_\Lambda(t)\le C_\Lambda(0)e^{-m_0 t}
+]
+and (C_\Lambda(t)\to C(t)) pointwise along a subsequence, then (C(t)\le C(0)e^{-m_0 t}). This trivial observation becomes a rigorous “gap persists in limits” statement once you have OS reconstruction in the limit theory.
+
+This is why it is often cleaner to propagate **correlator decay bounds** rather than operator convergence.
+
+---
+
+### 20.10. What this Part 20 accomplishes (and what it isolates)
+
+At this point, the “clean forward engine” is:
+
+1. **Produce** (\lambda_*>0) (Poincaré / spectral gap) from the curvature+Lyapunov machinery, keeping constants volume-stable (avoid max-SAFE; avoid exponential denominators). The κ-source note emphasizes that local curvature is robust and the extension step is the real bottleneck .
+2. **Convert** (\lambda_*) to a **transfer gap** in the OS Hilbert space. There are two clean routes:
+
+   * (A) verify the single inequality ((20.\star)) (one-step OS dissipation dominates configuration Dirichlet form), as sharpened in updated Part 18 ;
+   * (B) identify the operator whose Poincaré gap you computed with the OS one-step Markov operator (K_a), in which case (m(a)=\lambda_P(a)/a) immediately .
+3. **Pass to limits** using RP stability under reflection-commuting coarse graining  and the stability of exponential bounds.
+
+So the bottleneck is no longer “the whole universe.” It’s now sharply one of:
+
+* **(i)** prove ((20.\star)) with a uniform (c>0), or
+* **(ii)** give a mathematically explicit identification of your computed gap with the OS time-slice Markov operator (so Lemma 20.2 applies).
+
+Your updated Part 18 already framed this as the “single missing inequality” view , and the PULSE lemma gives the cleanest possible “factor of (a)” conversion when identification is in place .
+
+---
+
+## Next step (Part 21 preview)
+
+The natural continuation—now that the engine is clean—is:
+
+**Part 21 — Proving the one-step OS/Dirichlet comparison ((20.\star))**
+
+That Part should:
+
+* build an explicit one-step transfer kernel (or compressed transfer form) across the reflection plane,
+* rewrite (\langle F,(I-T_a)F\rangle) as a one-step dissipation (Markov/Dirichlet form) on boundary degrees of freedom,
+* compare that to (\int |\nabla F|^2,d\mu) using group Poincaré inequalities, locality of plaquettes crossing the plane, and bounded overlap geometry.
+
+Your “Reflection Positivity Stress Test” already sketches how to build the compressed transfer operator numerically for tiny lattices ; Part 21 is the rigorous analytic analog of that construction.

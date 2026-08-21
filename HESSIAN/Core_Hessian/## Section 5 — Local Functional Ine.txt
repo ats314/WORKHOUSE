@@ -1,0 +1,378 @@
+## Section 5 — Local Functional Inequalities
+
+### 5.1. Objects, domains, and the chosen analytic engine
+
+#### 5.1.1. Configuration manifold and Gibbs measure (recall)
+
+Let (\Lambda\subset\mathbb Z^4) be finite. Let (E(\Lambda)) be its oriented edge set. Fix a compact Lie group (G) with a bi-invariant Riemannian metric (g_G), and set
+[
+M_\Lambda := G^{E(\Lambda)}
+]
+with the product metric (g_\Lambda:=\bigoplus_{\ell\in E(\Lambda)} g_G) and Riemannian volume (\mathrm{vol}*{g*\Lambda}), which equals product Haar. 
+
+Let (S_\Lambda\in C^2(M_\Lambda)) be the lattice action defined in Sections 1–4 (Wilson plaquette action plus any explicitly specified gauge-invariant additive terms from the fused construction). The finite-volume Gibbs measure is
+[
+d\mu_\Lambda(U) = Z_\Lambda^{-1} e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U),\qquad
+Z_\Lambda:=\int_{M_\Lambda} e^{-S_\Lambda},d\mathrm{vol}*{g*\Lambda}\in(0,\infty).
+] 
+
+#### 5.1.2. Canonical small-field domain and conditioned measure
+
+Let (U^{(0)}\in M_\Lambda) denote the trivial configuration (U^{(0)}*\ell=e) for all (\ell\in E(\Lambda)). For (r>0), define the geodesic ball
+[
+\Omega*{\Lambda}(r)\ :=\ B_r(U^{(0)})\ =\ {U\in M_\Lambda:\ d_\Lambda(U,U^{(0)})<r}.
+] 
+
+Define the **conditioned measure** (“local measure”) on (\Omega_{\Lambda}(r)) by
+[
+\mu_{\Lambda,r}(A)\ :=\ \mu_\Lambda(A\cap \Omega_{\Lambda}(r))\big/\mu_\Lambda(\Omega_{\Lambda}(r)),
+\qquad A\subseteq M_\Lambda\ \text{measurable},
+]
+so (\mu_{\Lambda,r}) is a probability measure supported on (\Omega_{\Lambda}(r)).
+
+All functional inequalities in this section are for (\mu_{\Lambda,r}), with constants **independent of (|\Lambda|)** once (r) and a curvature lower bound are chosen uniformly.
+
+#### 5.1.3. Chosen engine
+
+The engine is the **Bakry–Émery (\Gamma_2) method**, i.e. a curvature–dimension bound (CD(\rho,\infty)) on (\Omega_{\Lambda}(r)), which yields **local** Poincaré and **local** log-Sobolev inequalities with constant (1/\rho) and (2/\rho), respectively. 
+
+---
+
+### 5.2. The reversible diffusion generator and carré du champ calculus
+
+#### 5.2.1. Generator in divergence form; symmetry
+
+Define the second-order operator
+[
+L_\Lambda f \ :=\ \Delta_{g_\Lambda} f\ -\ \langle \nabla S_\Lambda,\nabla f\rangle_{g_\Lambda},
+]
+initially on (C^\infty(M_\Lambda)). 
+
+Equivalently,
+[
+L_\Lambda f \ =\ e^{S_\Lambda},\mathrm{div}!\left(e^{-S_\Lambda}\nabla f\right),
+]
+so that (L_\Lambda) is symmetric in (L^2(\mu_\Lambda)) and (\mu_\Lambda) is invariant.  
+
+**Integration by parts (boundaryless case).** For (f,g\in C^\infty(M_\Lambda)),
+[
+\int_{M_\Lambda} f,(L_\Lambda g),d\mu_\Lambda\ =\ -\int_{M_\Lambda} \langle\nabla f,\nabla g\rangle,d\mu_\Lambda.
+]
+In particular, (\int L_\Lambda g,d\mu_\Lambda=0) and (L_\Lambda) is symmetric. 
+
+**Neumann realisation on (\Omega_{\Lambda}(r)).** On (\Omega_{\Lambda}(r)) (which has smooth boundary for small enough (r); see Section 2 constants), consider the Neumann (reflecting) realisation (L_{\Lambda,r}) of (L_\Lambda), i.e. the generator associated to the Dirichlet form
+[
+\mathcal E_{\Lambda,r}(f,g)\ :=\ \int_{\Omega_\Lambda(r)} \langle\nabla f,\nabla g\rangle,d\mu_{\Lambda,r},
+]
+with no boundary constraint on (f,g) at the level of the form domain (the corresponding generator has Neumann boundary condition). The formal integration by parts identity holds on (\Omega_\Lambda(r)) for the Neumann generator:
+[
+\int_{\Omega_\Lambda(r)} f,(L_{\Lambda,r} g),d\mu_{\Lambda,r}\ =\ -\int_{\Omega_\Lambda(r)} \langle\nabla f,\nabla g\rangle,d\mu_{\Lambda,r},
+]
+for all sufficiently smooth (f,g) in the generator domain (i.e. for which boundary terms vanish via Neumann). This is the reflected-boundary analogue of Proposition 15.1. 
+
+#### 5.2.2. Carré du champ (\Gamma), (\Gamma_2), and chain rules
+
+Define for smooth (f,g) on (\Omega_\Lambda(r)),
+[
+\Gamma(f,g)\ :=\ \frac12\Big(L_{\Lambda,r}(fg)-f,L_{\Lambda,r}g-g,L_{\Lambda,r}f\Big),
+\qquad
+\Gamma(f):=\Gamma(f,f).
+]
+For the operator (L_{\Lambda,r}=\Delta-\nabla S_\Lambda\cdot\nabla), one has
+[
+\Gamma(f,g)=\langle\nabla f,\nabla g\rangle,\qquad \Gamma(f)=|\nabla f|^2.
+] 
+
+Chain rules: for (\Phi\in C^2(\mathbb R)),
+[
+\Gamma(\Phi(f),g)=\Phi'(f)\Gamma(f,g),\qquad
+\Gamma(\Phi(f))=(\Phi'(f))^2\Gamma(f),
+]
+and
+[
+L_{\Lambda,r}(\Phi(f))=\Phi'(f)L_{\Lambda,r}f+\Phi''(f)\Gamma(f).
+] 
+
+Define
+[
+\Gamma_2(f,g)\ :=\ \frac12\Big(L_{\Lambda,r}\Gamma(f,g)-\Gamma(f,L_{\Lambda,r}g)-\Gamma(g,L_{\Lambda,r}f)\Big),
+\qquad
+\Gamma_2(f):=\Gamma_2(f,f).
+] 
+
+---
+
+### 5.3. Curvature input: Bochner identity and (CD(\rho,\infty))
+
+#### 5.3.1. Bakry–Émery tensor
+
+Define the Bakry–Émery tensor on (\Omega_\Lambda(r)):
+[
+\mathrm{Ric}*{\mu*\Lambda}\ :=\ \mathrm{Ric}*{g*\Lambda}\ +\ \mathrm{Hess}(S_\Lambda),
+]
+where (\mathrm{Ric}*{g*\Lambda}) is the Ricci curvature tensor of ((M_\Lambda,g_\Lambda)) and (\mathrm{Hess}(S_\Lambda)) is the Riemannian Hessian. 
+
+#### 5.3.2. Bochner–Bakry–Émery identity
+
+**Proposition 5.1 (Bochner identity for (L_{\Lambda,r})).**
+For (f\in C^\infty(\Omega_\Lambda(r))),
+[
+\Gamma_2(f)\ =\ |\nabla^2 f|*{\mathrm{HS}}^2\ +\ \mathrm{Ric}*{\mu_\Lambda}(\nabla f,\nabla f),
+]
+where (\nabla^2 f) is the covariant Hessian and (|\cdot|_{\mathrm{HS}}) is the Hilbert–Schmidt norm. 
+
+**Proof.** The classical Bochner formula on a Riemannian manifold gives
+[
+\frac12\Delta|\nabla f|^2 \ =\ |\nabla^2 f|*{\mathrm{HS}}^2 + \langle \nabla f,\nabla\Delta f\rangle + \mathrm{Ric}*{g_\Lambda}(\nabla f,\nabla f).
+]
+Writing (L_{\Lambda,r}=\Delta-\langle\nabla S_\Lambda,\nabla\cdot\rangle) and expanding (L|\nabla f|^2) and (\langle\nabla f,\nabla Lf\rangle), the drift contributions cancel except for (\mathrm{Hess}(S_\Lambda)(\nabla f,\nabla f)), yielding the identity.   ∎
+
+#### 5.3.3. Curvature–dimension condition
+
+**Definition 5.2.** The operator (L_{\Lambda,r}) satisfies (CD(\rho,\infty)) on (\Omega_\Lambda(r)) if
+[
+\Gamma_2(f)\ \ge\ \rho,\Gamma(f)\qquad\text{pointwise on }\Omega_\Lambda(r)\ \text{for all smooth }f.
+] 
+
+By Proposition 5.1, (CD(\rho,\infty)) holds if (\mathrm{Ric}*{\mu*\Lambda}\ge \rho,g_\Lambda) as quadratic forms (since (|\nabla^2 f|_{\mathrm{HS}}^2\ge 0)). 
+
+---
+
+### 5.4. Local curvature lower bound on the canonical region (input from Sections 2–4)
+
+This subsection records the quantitative input produced in Sections 2–4, and fixes the constants used in the inequalities.
+
+**Assumption 5.3 (Local Bakry–Émery curvature lower bound).**
+There exist constants (r_*>0) and (\rho_{\mathrm{loc}}>0), depending only on:
+
+* the compact Lie group (G) and the chosen bi-invariant metric (g_G),
+* the local plaquette potential class fixed in Section 4 (including any additive gauge-invariant stabilisation terms),
+* the fixed lattice dimension (d=4) and the uniform local incidence bound (\nu) (maximum number of plaquettes incident to a link),
+  but **not** on (|\Lambda|), such that for every finite (\Lambda) and every (r\in(0,r_*]),
+  [
+  \mathrm{Ric}*{\mu*\Lambda}(U)\ \ge\ \rho_{\mathrm{loc}}, g_\Lambda
+  \qquad\text{for all }U\in \Omega_\Lambda(r).
+  \tag{5.1}
+  ]
+
+This assumption is *not* free: it is explicitly established in the proof stack by a Lipschitz control of (\mathrm{Hess}(S_\Lambda)) on (\Omega_\Lambda(r)), together with a strictly positive Ricci lower bound coming from the Haar/product geometry. In particular, one obtains a choice of parameters
+[
+\rho_0 := \kappa_G - C_{\mathrm{add}}>0,\qquad
+r := \min\Big{r_*,,\frac{\rho_0}{2L_W}\Big},\qquad
+\rho_{\mathrm{loc}}:=\frac{\rho_0}{2},
+\tag{5.2}
+]
+so that (5.1) holds on (\Omega_\Lambda(r)). 
+
+*(Optional stronger structure recorded for later use.)* On the smaller canonical set (K_\Lambda(r)) (defined linkwise), one also has a **matrix** coercivity bound on the horizontal sector at (U^{(0)}),
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)\ \succeq\ \frac{c_H}{2}I\ +\ \frac{\beta}{3},d_1^*d_1,
+\qquad U\in K_\Lambda(r),
+\tag{5.3}
+]
+under an explicit smallness condition (r\lesssim \beta^{-1}). 
+This refinement is not used in the local LSI/Poincaré derivations below, but is structurally preserved and is intended for later Green’s function decay estimates.
+
+---
+
+### 5.5. Semigroup identities needed for functional inequalities
+
+Let ((P_t)*{t\ge 0}) denote the Markov semigroup generated by (L*{\Lambda,r}) on (L^2(\mu_{\Lambda,r})). On a compact domain with smooth coefficients, (P_t=e^{tL_{\Lambda,r}}) is well-defined, symmetric, and (\mu_{\Lambda,r})-invariant. 
+
+All calculations below are on (\Omega_\Lambda(r)) with respect to (\mu_{\Lambda,r}), and boundary terms vanish by construction of the Neumann realisation.
+
+#### 5.5.1. Energy dissipation identity
+
+Let (u_t:=P_t f). Then (\partial_t u_t=L_{\Lambda,r}u_t).
+
+**Lemma 5.4 (Variance/energy identity).** For (f\in C^\infty(\Omega_\Lambda(r))),
+[
+\frac{d}{dt}\int u_t^2,d\mu_{\Lambda,r}\ =\ 2\int u_t,L_{\Lambda,r}u_t,d\mu_{\Lambda,r}\ =\ -2\int \Gamma(u_t),d\mu_{\Lambda,r}.
+\tag{5.4}
+]
+**Proof.** Differentiate under the integral and use the integration by parts identity (\int u,Lu,d\mu=-\int \Gamma(u),d\mu).  ∎
+
+Since (\mu_{\Lambda,r}) is invariant and (P_t 1=1), the mean (\mu_{\Lambda,r}(u_t)) is constant in (t). Therefore (5.4) gives an identity for (\frac{d}{dt}\mathrm{Var}*{\mu*{\Lambda,r}}(u_t)) as well.
+
+#### 5.5.2. Fisher information and entropy dissipation identities
+
+For a strictly positive (C^2) function (h) define its entropy (with respect to (\mu_{\Lambda,r})) by
+[
+\mathrm{Ent}*{\mu*{\Lambda,r}}(h)\ :=\ \int h\log h,d\mu_{\Lambda,r}\ -\ \Big(\int h,d\mu_{\Lambda,r}\Big)\log\Big(\int h,d\mu_{\Lambda,r}\Big),
+\tag{5.5}
+]
+and its Fisher information by
+[
+\mathcal I_{\mu_{\Lambda,r}}(h)\ :=\ \int \frac{\Gamma(h)}{h},d\mu_{\Lambda,r}
+\ =\ \int h,\Gamma(\log h),d\mu_{\Lambda,r}.
+\tag{5.6}
+]
+
+Let (h_t:=P_t h) with (h>0). Then (\partial_t h_t=L_{\Lambda,r}h_t) and (\int h_t,d\mu_{\Lambda,r}) is constant.
+
+**Lemma 5.5 (Entropy dissipation).**
+[
+\frac{d}{dt}\mathrm{Ent}*{\mu*{\Lambda,r}}(h_t)\ =\ \int (L_{\Lambda,r}h_t),\log h_t,d\mu_{\Lambda,r}
+\ =\ -\int \Gamma(h_t,\log h_t),d\mu_{\Lambda,r}
+\ =\ -\mathcal I_{\mu_{\Lambda,r}}(h_t).
+\tag{5.7}
+]
+
+**Proof.** Differentiate (\int h_t\log h_t,d\mu); use (\partial_t(h\log h)=(\partial_t h)(1+\log h)); the (\int \partial_t h_t,d\mu) term vanishes by invariance. Then apply integration by parts:
+(\int (Lh)\phi,d\mu=-\int \Gamma(h,\phi),d\mu), and (\Gamma(h,\log h)=\Gamma(h)/h).   ∎
+
+**Lemma 5.6 (Information dissipation).** If (CD(\rho,\infty)) holds on (\Omega_\Lambda(r)), then
+[
+\frac{d}{dt}\mathcal I_{\mu_{\Lambda,r}}(h_t)
+\ \le\ -2\rho,\mathcal I_{\mu_{\Lambda,r}}(h_t)
+\qquad\text{for all }t\ge 0.
+\tag{5.8}
+]
+
+**Proof.** Using the chain rule for (L) and (\Gamma) and the definition of (\Gamma_2), one obtains the exact identity
+[
+\frac{d}{dt}\mathcal I_{\mu_{\Lambda,r}}(h_t)
+\ =\ -2\int h_t,\Gamma_2(\log h_t),d\mu_{\Lambda,r}.
+]
+Under (CD(\rho,\infty)), (\Gamma_2(\log h_t)\ge \rho,\Gamma(\log h_t)), so
+[
+\frac{d}{dt}\mathcal I(h_t)
+\le -2\rho\int h_t,\Gamma(\log h_t),d\mu
+=-2\rho,\mathcal I(h_t),
+]
+which is (5.8). This is the standard (\Gamma_2) entropy method in the project notes.  ∎
+
+---
+
+### 5.6. Local Poincaré inequality on (\Omega_\Lambda(r))
+
+Assume (CD(\rho_{\mathrm{loc}},\infty)) holds on (\Omega_\Lambda(r)), which is ensured by (5.1).
+
+**Theorem 5.7 (Local Poincaré inequality).**
+For all (f\in C^\infty(\Omega_\Lambda(r))),
+[
+\mathrm{Var}*{\mu*{\Lambda,r}}(f)\ \le\ \frac{1}{\rho_{\mathrm{loc}}}\int_{\Omega_\Lambda(r)} \Gamma(f),d\mu_{\Lambda,r}.
+\tag{5.9}
+]
+Equivalently, the Neumann realisation of (-L_{\Lambda,r}) on (L^2(\mu_{\Lambda,r})) has spectral gap at least (\rho_{\mathrm{loc}}).
+
+**Proof.** Let (\bar f:=f-\mu_{\Lambda,r}(f)), so (\mu_{\Lambda,r}(\bar f)=0). Set (u_t:=P_t\bar f). Then (\mu_{\Lambda,r}(u_t)=0) and (u_t\to 0) in (L^2(\mu_{\Lambda,r})) as (t\to\infty) (Neumann semigroup on connected compact domain has (0) as simple eigenvalue; see the semigroup discussion used in the project’s (CD\Rightarrow)PI proof).  
+
+By Lemma 5.4,
+[
+\frac{d}{dt}|u_t|*{L^2(\mu*{\Lambda,r})}^2\ =\ -2\int \Gamma(u_t),d\mu_{\Lambda,r}.
+]
+Integrate from (t=0) to (t=\infty) and use (|u_\infty|_2=0):
+[
+|\bar f|*2^2\ =\ 2\int_0^\infty \int \Gamma(u_t),d\mu*{\Lambda,r},dt.
+\tag{5.10}
+]
+
+Next, use the (CD(\rho_{\mathrm{loc}},\infty)) inequality in its semigroup form:
+[
+\int \Gamma(P_t g),d\mu_{\Lambda,r}\ \le\ e^{-2\rho_{\mathrm{loc}} t}\int \Gamma(g),d\mu_{\Lambda,r},
+\tag{5.11}
+]
+which follows by differentiating (t\mapsto \int \Gamma(P_t g)) and using (\Gamma_2\ge \rho_{\mathrm{loc}}\Gamma) (this is the integrated version of the standard Bakry–Émery decay). 
+
+Applying (5.11) to (g=\bar f) and inserting into (5.10),
+[
+|\bar f|*2^2
+\le 2\int_0^\infty e^{-2\rho*{\mathrm{loc}} t},dt \int \Gamma(\bar f),d\mu_{\Lambda,r}
+= \frac{1}{\rho_{\mathrm{loc}}}\int \Gamma(f),d\mu_{\Lambda,r},
+]
+since (\Gamma(\bar f)=\Gamma(f)). This is (5.9).  ∎
+
+---
+
+### 5.7. Local log-Sobolev inequality on (\Omega_\Lambda(r))
+
+**Theorem 5.8 (Local log-Sobolev inequality).**
+Assume (CD(\rho_{\mathrm{loc}},\infty)) on (\Omega_\Lambda(r)) with (\rho_{\mathrm{loc}}>0). Then for all (f\in C^\infty(\Omega_\Lambda(r))),
+[
+\mathrm{Ent}*{\mu*{\Lambda,r}}(f^2)\ \le\ \frac{2}{\rho_{\mathrm{loc}}}\int_{\Omega_\Lambda(r)} \Gamma(f),d\mu_{\Lambda,r}.
+\tag{5.12}
+]
+
+**Proof.** Let (h:=f^2\ge 0). If (\int h,d\mu_{\Lambda,r}=0), then (h=0) (\mu_{\Lambda,r})-a.e. and (5.12) is trivial. Otherwise, replace (h) by (\tilde h:=h/\int h,d\mu_{\Lambda,r}), so that (\int \tilde h,d\mu_{\Lambda,r}=1). Since (\mathrm{Ent}(c h)=c,\mathrm{Ent}(h)) for (c>0), it suffices to prove
+[
+\mathrm{Ent}*{\mu*{\Lambda,r}}(\tilde h)\ \le\ \frac{1}{2\rho_{\mathrm{loc}}},\mathcal I_{\mu_{\Lambda,r}}(\tilde h).
+\tag{5.13}
+]
+
+Let (\tilde h_t:=P_t \tilde h). Then (\int \tilde h_t,d\mu_{\Lambda,r}=1) for all (t\ge 0).
+
+1. **Entropy dissipation.** By Lemma 5.5,
+   [
+   \frac{d}{dt}\mathrm{Ent}(\tilde h_t)\ =\ -\mathcal I(\tilde h_t).
+   \tag{5.14}
+   ]
+
+2. **Information decay.** By Lemma 5.6 and (CD(\rho_{\mathrm{loc}},\infty)),
+   [
+   \mathcal I(\tilde h_t)\ \le\ e^{-2\rho_{\mathrm{loc}} t},\mathcal I(\tilde h_0)
+   = e^{-2\rho_{\mathrm{loc}} t},\mathcal I(\tilde h).
+   \tag{5.15}
+   ]
+
+3. **Limit entropy is (0).** From the local Poincaré inequality (Theorem 5.7) applied to (\tilde h_t-1) and the energy identity (Lemma 5.4), one obtains exponential (L^2(\mu_{\Lambda,r}))-convergence (\tilde h_t\to 1). Since (\Omega_\Lambda(r)) is compact and (\tilde h_t) is smooth for (t>0), dominated convergence yields (\mathrm{Ent}(\tilde h_t)\to \mathrm{Ent}(1)=0) as (t\to\infty). (This is the same closure step used in the project’s (CD\Rightarrow)LSI proof.) 
+
+Integrate (5.14) from (0) to (\infty):
+[
+\mathrm{Ent}(\tilde h)
+= \mathrm{Ent}(\tilde h_0)-\lim_{t\to\infty}\mathrm{Ent}(\tilde h_t)
+= \int_0^\infty \mathcal I(\tilde h_t),dt
+\le \int_0^\infty e^{-2\rho_{\mathrm{loc}} t},dt\ \mathcal I(\tilde h)
+= \frac{1}{2\rho_{\mathrm{loc}}}\mathcal I(\tilde h),
+]
+which is (5.13).
+
+Finally, apply (5.13) with (\tilde h=h/\int h) and note
+[
+\mathcal I(h)=\int \frac{\Gamma(h)}{h},d\mu_{\Lambda,r}
+=\int \frac{\Gamma(f^2)}{f^2},d\mu_{\Lambda,r}
+=\int \frac{4f^2\Gamma(f)}{f^2},d\mu_{\Lambda,r}
+=4\int \Gamma(f),d\mu_{\Lambda,r},
+]
+by the chain rule (\Gamma(f^2)=4f^2\Gamma(f)). 
+Thus (\mathrm{Ent}(f^2)\le \frac{2}{\rho_{\mathrm{loc}}}\int \Gamma(f)), i.e. (5.12). ∎
+
+---
+
+### 5.8. Gauge invariance and restriction to gauge-invariant observables
+
+Let (\mathcal G_\Lambda:=G^{V(\Lambda)}) act on (M_\Lambda) by lattice gauge transformations. Sections 1–4 define (S_\Lambda) to be gauge-invariant and (g_\Lambda) to be gauge-invariant (the action is by isometries). Consequently:
+
+* (\mu_\Lambda) and (\mu_{\Lambda,r}) are gauge-invariant;
+* (L_{\Lambda,r}) commutes with the gauge action;
+* (P_t) preserves the subspace of gauge-invariant functions. 
+
+Therefore, Theorems 5.7–5.8 hold in particular for all gauge-invariant (f) (Wilson loop functions, smeared plaquette observables, etc.), with the same constants.
+
+*(Remark on “horizontal” language.)* In the project’s gauge-covariant formulation, one often phrases curvature bounds on a horizontal sector to keep the Maxwell operator (d_1^*d_1) visible. For the log-Sobolev and Poincaré inequalities in this section, only the **scalar** curvature lower bound (\mathrm{Ric}*{\mu*\Lambda}\ge \rho_{\mathrm{loc}}g_\Lambda) on (\Omega_\Lambda(r)) is used. The stronger matrix lower bound (5.3) is reserved for later decay estimates via inverse operators on cochains.  
+
+---
+
+### 5.9. Output interface for Section 6
+
+**Theorem 5.9 (Local functional inequalities with uniform constants).**
+Fix (r\in(0,r_*]) and (\rho_{\mathrm{loc}}>0) as in Assumption 5.3. Then for every finite (\Lambda),
+
+1. (Local Poincaré on (\Omega_\Lambda(r)))
+   [
+   \mathrm{Var}*{\mu*{\Lambda,r}}(f)\ \le\ \frac{1}{\rho_{\mathrm{loc}}}\int_{\Omega_\Lambda(r)} |\nabla f|^2,d\mu_{\Lambda,r}
+   \quad\forall f\in C^\infty(\Omega_\Lambda(r)).
+   ]
+
+2. (Local log-Sobolev on (\Omega_\Lambda(r)))
+   [
+   \mathrm{Ent}*{\mu*{\Lambda,r}}(f^2)\ \le\ \frac{2}{\rho_{\mathrm{loc}}}\int_{\Omega_\Lambda(r)} |\nabla f|^2,d\mu_{\Lambda,r}
+   \quad\forall f\in C^\infty(\Omega_\Lambda(r)).
+   ]
+
+3. Both statements remain valid when restricted to gauge-invariant observables.
+
+The constants (r) and (\rho_{\mathrm{loc}}) depend only on the group/metric and the local action class fixed in Sections 1–4, and **do not depend on (|\Lambda|)**. 
+
+**Section 6 input:** the pair ((\Omega_\Lambda(r),\rho_{\mathrm{loc}})) and the local LSI (5.12).
+**Section 6 task:** upgrade local inequalities on (\Omega_\Lambda(r)) to global (full (\mu_\Lambda)) inequalities with volume-uniform constants, via the block/local-to-global mechanism and the Lyapunov drift device established later in the proof stack. 

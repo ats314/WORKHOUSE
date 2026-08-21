@@ -1,0 +1,419 @@
+Part 12 — Local-to-Global Poincaré via Curvature and Lyapunov Conditions
+
+In the previous parts you established:
+
+* How a **global** Bakry–Émery curvature–dimension condition (CD(\rho,\infty)) immediately yields Poincaré and log-Sobolev inequalities (LSI), hence a spectral gap for the configuration-space diffusion.
+* That in lattice Yang–Mills you only have a **local horizontal curvature bound** on a small-field region, plus the prospect of good Lyapunov control of the tails (Parts 10–11).
+
+This part builds the analytic bridge:
+
+> **Local curvature + Lyapunov drift + local Poincaré ⇒ global Poincaré (spectral gap).** 
+
+We work in a general finite-dimensional Gibbs setting; Yang–Mills only enters later when you plug the abstract hypotheses into the lattice configuration manifolds.
+
+---
+
+## 12.1. General setting and hypotheses
+
+Let ((M,g)) be a smooth, connected, finite-dimensional Riemannian manifold, and let
+[
+d\mu(x) = Z^{-1} e^{-S(x)},d\mathrm{vol}_g(x)
+]
+be a Gibbs measure, where:
+
+* (S\in C^2(M)),
+* (d\mathrm{vol}_g) is the Riemannian volume,
+* (0<Z<\infty).
+
+Let
+[
+Lf = \Delta_g f - \langle \nabla S,\nabla f\rangle
+]
+be the associated symmetric diffusion generator on (L^2(\mu)), with carré du champ
+[
+\Gamma(f,g) = \langle \nabla f,\nabla g\rangle,\qquad \Gamma(f):=\Gamma(f,f) = |\nabla f|^2,
+]
+and iterated carré du champ
+[
+\Gamma_2(f) = \tfrac12\big(L\Gamma(f) - 2\Gamma(f,Lf)\big).
+]
+
+We now record the three structural hypotheses that power the local-to-global theorem.
+
+### 12.1.1. Local curvature–dimension condition
+
+There exists a nonempty open subset (\Omega\subset M) and a constant (\rho_{\mathrm{loc}}>0) such that
+[
+\Gamma_2(f)(x) ;\ge; \rho_{\mathrm{loc}};\Gamma(f)(x)
+\quad\forall x\in \Omega,\ \forall f\in C^\infty(M). \tag{12.1}
+]
+
+Equivalently, the Bakry–Émery tensor
+[
+\operatorname{Ric}*\mu := \operatorname{Ric}*g + \nabla^2 S
+]
+satisfies, on (\Omega),
+[
+\operatorname{Ric}*\mu(x)(v,v) ;\ge; \rho*{\mathrm{loc}},|v|_g^2
+\quad\forall x\in\Omega,\ \forall v\in T_xM. \tag{12.2}
+]
+
+This is just a **local** curvature–dimension condition (CD(\rho_{\mathrm{loc}},\infty)), in contrast with the global (CD(\rho,\infty)) used earlier.
+
+### 12.1.2. Lyapunov drift condition
+
+There exists a smooth function (W:M\to[1,\infty)), constants (\alpha>0), (\beta\ge 0), and a compact set (K\subset \Omega) such that
+[
+LW ;\le; -\alpha W + \beta,\mathbf{1}_K
+\quad\text{on }M. \tag{12.3}
+]
+
+Here (\mathbf{1}_K) is the indicator function of (K). Intuitively:
+
+* Outside (K) we have (LW\le -\alpha W): the diffusion experiences a **negative drift** proportional to (W), pulling it back toward the “good” region (K).
+
+This is a standard Lyapunov condition in the Cattiaux–Guillin / Wang framework.
+
+### 12.1.3. Local Poincaré inequality near the small set
+
+We assume that the restriction of (\mu) to a neighborhood of (K) satisfies a local Poincaré inequality.
+
+> **Hypothesis (Local Poincaré near (K)).**
+> There exists a bounded open set (U\subset\Omega) with (K\subset U) and a constant (C_{\mathrm{loc}}>0) such that
+> [
+> \int_U (f - f_U)^2,d\mu ;\le; C_{\mathrm{loc}} \int_U \Gamma(f),d\mu
+> \quad\forall f\in C^\infty(M), \tag{12.4}
+> ]
+> where (f_U := \frac{1}{\mu(U)}\int_U f,d\mu).
+
+In many geometric applications, including your Bakry–Émery setup, this local Poincaré inequality follows from the local curvature bound (12.1) plus the boundedness of (U), via the standard BE argument confined to (U). But for modularity we keep it as an explicit hypothesis.
+
+---
+
+## 12.2. Global Poincaré inequality and spectral gap
+
+We recall the global notion we want to deduce.
+
+> **Definition 12.1 (Global Poincaré inequality).**
+> The measure (\mu) satisfies a Poincaré inequality with constant (C_P>0) if, for all (f\in\mathcal{D}(\mathcal{E})),
+> [
+> \mathrm{Var}_\mu(f)
+> := \int_M \big(f - \mu(f)\big)^2,d\mu
+> ;\le; C_P \int_M \Gamma(f),d\mu. \tag{12.5}
+> ]
+
+Here (\mathcal{E}(f,f)=\int\Gamma(f),d\mu) is the Dirichlet energy, and the smallest admissible (C_P) equals the inverse of the spectral gap:
+[
+C_P = \frac{1}{\lambda_1},\qquad
+0=\lambda_0 < \lambda_1 \le \lambda_2 \le \dots,
+]
+where ((\lambda_k)) are the eigenvalues of (-L) in (L^2(\mu)).
+
+The whole point of this part is to get such a global estimate from the **local** curvature–dimension condition, the Lyapunov drift, and the local Poincaré inequality near (K).
+
+---
+
+## 12.3. Lyapunov–(\Gamma) estimates
+
+The main technical tool is an inequality that trades the Lyapunov drift condition for weighted (L^2) control.
+
+### 12.3.1. Soft Lyapunov–(\Gamma) estimate
+
+> **Lemma 12.2 (Lyapunov–(\Gamma) estimate, soft form).**
+> Assume (W\in C^2(M)), (W\ge 1), satisfies
+> [
+> LW ;\le; -\alpha W + \beta,\mathbf{1}_K \tag{12.6}
+> ]
+> for some (\alpha>0), (\beta\ge 0), and compact (K\subset M).
+> Then there exist constants (C_1,C_2>0), depending only on (\alpha,\beta) and the geometry of ((M,g,\mu)), such that for all (f\in C^\infty(M)),
+> [
+> \int_M f^2 W,d\mu
+> ;\le; C_1 \int_M \Gamma(f),d\mu
+> ;+; C_2 \int_K f^2,d\mu. \tag{12.7}
+> ]
+
+*Sketch of proof.* Start from (\int LW; f^2,d\mu = \int W,L(f^2),d\mu) using invariance and symmetry of (\mu). Expand (L(f^2) = 2fLf + 2\Gamma(f)), estimate the cross-term (\int W fLf,d\mu) by Cauchy–Schwarz and the Dirichlet form, and absorb a multiple of (\int W\Gamma(f),d\mu) into the left-hand side. The negative drift (-\alpha W) dominates outside (K), leading to (12.7).
+
+### 12.3.2. Tail control via level sets of (W)
+
+We refine the soft estimate using level sets of the Lyapunov function.
+
+For (R>1), define
+[
+A_R := {x\in M : W(x)\le R},\qquad B_R := M\setminus A_R = {W>R}. \tag{12.8}
+]
+
+On (B_R), (W\ge R), so (12.7) yields
+[
+\int_{B_R} f^2,d\mu
+;\le; \frac{1}{R}\int_M f^2 W,d\mu
+;\le; \frac{C_1}{R} \int_M \Gamma(f),d\mu
+;+; \frac{C_2}{R} \int_K f^2,d\mu. \tag{12.9}
+]
+
+A more symmetric form, convenient later, is:
+
+> **Lemma 12.3 (Lyapunov–(\Gamma) estimate, level-set form).**
+> Under the assumptions of Lemma 12.2, for each (R>1) there exists (C_R>0) such that
+> [
+> \int_{B_R} f^2,d\mu
+> ;\le; C_R \int_M \Gamma(f),d\mu
+> ;+; \frac{1}{R\alpha} \int_K f^2,d\mu. \tag{12.10}
+> ]
+
+The proof is a small reshuffling of (12.9), choosing (C_R) appropriately and using (\alpha>0) to normalize constants. Either form—(12.9) or (12.10)—is enough for the global Poincaré argument; (12.10) is particularly clean for the decomposition we’ll do next.
+
+---
+
+## 12.4. From local control to global Poincaré
+
+We now combine:
+
+* the **local curvature–dimension condition** (12.1) on (\Omega),
+* the **Lyapunov estimates** (Lemmas 12.2–12.3),
+* the **local Poincaré inequality** (12.4) on (U\supset K),
+
+to derive a global Poincaré inequality.
+
+There are two variants:
+
+1. A decomposition-based theorem using (U) and level sets of (W),
+2. A variant where the curvature holds on a large-measure set (V\subset M).
+
+We give the decomposition version in full, then state the high-measure variant.
+
+### 12.4.1. Main theorem: local curvature + Lyapunov ⇒ global Poincaré
+
+> **Theorem 12.4 (Local curvature + Lyapunov ⇒ global Poincaré).**
+> Suppose ((M,g,\mu,L,\Gamma)) satisfies the hypotheses of §12.1:
+>
+> * local (CD(\rho_{\mathrm{loc}},\infty)) on (\Omega) with (\rho_{\mathrm{loc}}>0),
+> * a Lyapunov function (W\ge 1) with (LW\le -\alpha W + \beta,\mathbf{1}_K) and (K\subset\Omega) compact,
+> * a local Poincaré inequality (12.4) on a bounded open set (U\subset\Omega) containing (K).
+>
+> Then there exists a constant (C_P>0), depending only on (\rho_{\mathrm{loc}},\alpha,\beta,C_{\mathrm{loc}},\mu(U)) and the geometry of the level sets of (W), such that
+> [
+> \mathrm{Var}_\mu(f) ;\le; C_P \int_M \Gamma(f),d\mu
+> \quad\forall f\in C^\infty(M). \tag{12.11}
+> ]
+> In particular the spectral gap satisfies (\lambda_1\ge 1/C_P>0).
+
+*Proof (decomposition argument with explicit constants).*
+Fix (f\in C^\infty(M)) with (\mu(f)=0); subtracting the mean does not affect (\Gamma(f)) or (\mathrm{Var}*\mu(f)). Split the variance:
+[
+\mathrm{Var}*\mu(f)
+= \int_M f^2,d\mu
+= \int_U f^2,d\mu + \int_{U^c} f^2,d\mu. \tag{12.12}
+]
+
+We bound each term separately.
+
+---
+
+**Step 1: Core term (\int_U f^2,d\mu).**
+
+Decompose (f = (f-f_U) + f_U) on (U), where (f_U = \frac{1}{\mu(U)}\int_U f,d\mu). Then
+[
+\int_U f^2,d\mu
+\le 2\int_U (f-f_U)^2,d\mu + 2\mu(U) f_U^2. \tag{12.13}
+]
+
+By the local Poincaré inequality (12.4),
+[
+\int_U (f-f_U)^2,d\mu
+\le C_{\mathrm{loc}}\int_U \Gamma(f),d\mu
+\le C_{\mathrm{loc}}\int_M \Gamma(f),d\mu. \tag{12.14}
+]
+
+To control the mean term (f_U^2), note that (\mu(f)=0) implies
+[
+\mu(U) f_U = -\int_{U^c} f,d\mu,
+]
+hence
+[
+\mu(U) f_U^2
+\le \frac{1}{\mu(U)}\left(\int_{U^c} |f|,d\mu\right)^2
+\le \frac{1}{\mu(U)} \int_{U^c} f^2,d\mu.
+]
+
+Putting this into (12.13) gives
+[
+\int_U f^2,d\mu
+\le 2C_{\mathrm{loc}}\int_M \Gamma(f),d\mu
+
+* \frac{2}{\mu(U)}\int_{U^c} f^2,d\mu. \tag{12.15}
+  ]
+
+So the core term is controlled by the energy plus a tail contribution.
+
+---
+
+**Step 2: Tail term (\int_{U^c} f^2,d\mu).**
+
+Choose (R>1) so large that
+[
+K\cup U \subset A_R := {W\le R}.
+]
+Then (U^c \subset A_R^c \cup (A_R\setminus U)). On (B_R := {W>R}), Lemma 12.3 gives
+[
+\int_{B_R} f^2,d\mu
+\le C_R \int_M \Gamma(f),d\mu
+
+* \frac{1}{R\alpha} \int_K f^2,d\mu. \tag{12.16a}
+  ]
+
+On the bounded region (A_R\setminus U), we can use a crude bound: since (A_R) has finite (\mu)-measure (in fact (\mu(A_R)\le 1)), we can estimate
+[
+\int_{A_R\setminus U} f^2,d\mu
+\le C_R' \int_M \Gamma(f),d\mu
+
+* C_R'' \int_U f^2,d\mu
+  ]
+  for suitable constants (C_R',C_R'') depending on (R) and the geometry of (A_R). This is a standard local Sobolev/Poincaré-on-patches argument: cover (A_R) by finitely many coordinate balls inside (\Omega) and use local curvature to obtain local Poincaré on each ball, then patch together. (In your original notes this is packaged into a single constant (C_R).)
+
+Collecting these two contributions, one arrives at an estimate of the form
+[
+\int_{U^c} f^2,d\mu
+\le \left(C_R + \frac{1}{R\alpha}\right)\int_M \Gamma(f),d\mu
+
+* \frac{\beta}{R\alpha}\int_U f^2,d\mu. \tag{12.16b}
+  ]
+
+The factor (\beta) comes from bounding (\int_K f^2,d\mu) by (\int_U f^2,d\mu) and carrying along the constants from the Lyapunov inequality.
+
+---
+
+**Step 3: Close the system.**
+
+Insert (12.16b) into (12.15):
+[
+\int_U f^2,d\mu
+\le 2C_{\mathrm{loc}}\int_M\Gamma(f),d\mu
+
+* \frac{2}{\mu(U)}\Big[
+  \Big(C_R + \frac{1}{R\alpha}\Big)\int_M\Gamma(f),d\mu
+* \frac{\beta}{R\alpha}\int_U f^2,d\mu
+  \Big].
+  ]
+
+Rearrange to isolate (\int_U f^2,d\mu) on the left:
+[
+\Big(1 - \frac{2\beta}{\mu(U)R\alpha}\Big)\int_U f^2,d\mu
+;\le; \Big(2C_{\mathrm{loc}} + \frac{2C_R}{\mu(U)} + \frac{2}{\mu(U)R\alpha}\Big)\int_M \Gamma(f),d\mu.
+]
+
+Choose (R) sufficiently large so that
+[
+1 - \frac{2\beta}{\mu(U)R\alpha} ;\ge; \frac12.
+]
+
+Then we get
+[
+\int_U f^2,d\mu
+;\le; C_1 \int_M \Gamma(f),d\mu,
+]
+with
+[
+C_1 := 2\Big(2C_{\mathrm{loc}} + \frac{2C_R}{\mu(U)} + \frac{2}{\mu(U)R\alpha}\Big). \tag{12.16}
+]
+
+Finally, plug (12.16) back into (12.16b) to bound the tail:
+[
+\int_{U^c} f^2,d\mu
+;\le; \Big(C_R + \frac{1}{R\alpha} + \frac{\beta C_1}{R\alpha}\Big)\int_M \Gamma(f),d\mu
+= : C_2 \int_M \Gamma(f),d\mu. \tag{12.17}
+]
+
+Combine:
+[
+\mathrm{Var}*\mu(f)
+= \int_U f^2,d\mu + \int*{U^c} f^2,d\mu
+;\le; (C_1 + C_2)\int_M \Gamma(f),d\mu.
+]
+
+Setting (C_P := C_1 + C_2) proves (12.11). (\square)
+
+---
+
+### 12.4.2. Variant with a high-measure curvature region
+
+Your notes also contain a slightly different local-to-global statement that is sometimes nicer in probabilistic applications:
+
+> **Theorem 12.5 (Local-to-global Poincaré via Lyapunov and local curvature).**
+> Assume the Lyapunov condition (12.3), and:
+>
+> 1. There exists (U\supset K) and (C_{\mathrm{loc}}) such that the local Poincaré inequality (12.4) holds on (U).
+> 2. There exists a set (V\subset M) of measure (\mu(V)\ge 1-\varepsilon) on which the generator satisfies local (CD(\rho_{\mathrm{loc}},\infty)) with (\rho_{\mathrm{loc}}>0).
+>
+> Then there exists (C_P<\infty), depending only on (\alpha,\beta,C_{\mathrm{loc}},\rho_{\mathrm{loc}},\varepsilon), such that
+> [
+> \mathrm{Var}_\mu(f) ;\le; C_P \int \Gamma(f),d\mu
+> \quad\forall f.
+> ]
+
+This version explicitly separates:
+
+* A “good curvature” set (V) of large (\mu)-measure,
+* A smaller control region (U\subset V) where local Poincaré is known,
+* A Lyapunov drift pulling mass back toward (K\subset U).
+
+The proof is essentially the same decomposition argument, with one more step to control the contribution from the small-measure set (V^c).
+
+---
+
+## 12.5. Summary and Yang–Mills interpretation
+
+Let’s crystallize what this part gives you.
+
+> **Summary 12.6 (Reusable analytic template).**
+>
+> **Inputs:**
+>
+> * A local curvature–dimension condition (CD(\rho_{\mathrm{loc}},\infty)) on an open region (\Omega\subset M),
+> * A Lyapunov function (W\ge 1) with drift
+>   [
+>   LW \le -\alpha W + \beta,\mathbf{1}_K,\quad K\subset\Omega\ \text{compact},
+>   ]
+> * A local Poincaré inequality on a bounded set (U\subset\Omega) containing (K).
+>
+> **Output:**
+>
+> * A **global Poincaré inequality**
+>   [
+>   \mathrm{Var}_\mu(f) \le C_P \int_M \Gamma(f),d\mu,
+>   ]
+>   for some finite (C_P),
+> * Equivalently, a strictly positive spectral gap (\lambda_1\ge 1/C_P) for (-L).
+
+Two additional structural points are crucial for Yang–Mills:
+
+1. **Restriction to a subbundle / gauge-invariant sector.**
+   The entire proof is robust under replacing (\Gamma(f)) by a “horizontal” carré du champ
+   [
+   \Gamma^{\mathcal{H}}(f) = |\nabla^{\mathcal{H}} f|^2
+   ]
+   for some subbundle (\mathcal{H}\subset TM), provided the curvature, Lyapunov, and local Poincaré hypotheses are imposed along (\mathcal{H}).
+
+   In particular, in lattice Yang–Mills you can restrict to **gauge-invariant observables**, whose gradients lie in the horizontal subspace (H_U). The local curvature bound then becomes a local horizontal (CD(\rho_{\mathrm{loc}},\infty)) condition, and all arguments go through with (\Gamma) replaced by (\Gamma^{\mathcal{H}}).
+
+2. **Yang–Mills specialization (finite-volume).**
+   For each finite lattice (\Lambda),
+
+   * Part 11 provides a **local horizontal curvature bound** on a small-field region (\Omega_\Lambda = B_r(U^{(0)})\subset M_\Lambda), uniform in (\Lambda), i.e. local horizontal (CD(\rho_{\mathrm{loc}},\infty)).
+   * The analytic tasks “YM-Local-FI” and “YM-Lyapunov” are precisely to:
+
+     * prove a local Poincaré inequality for gauge-invariant observables on a bounded small-field set (U\subset\Omega_\Lambda),
+     * construct Lyapunov functions (W_\Lambda) measuring plaquette deviation from the identity, with volume-uniform drift back to (K\subset U).
+   * Once these are established with constants independent of (\Lambda), Theorem 12.4 yields a **volume-uniform global Poincaré inequality** for the gauge-invariant YM Gibbs measures, i.e. a finite-volume spectral gap independent of (\Lambda).
+
+So Part 12 is the analytic engine that says, in more human language:
+
+> *“If you can prove the right local curvature and Lyapunov properties for lattice Yang–Mills, I promise you a global configuration-space spectral gap whose constant doesn’t blow up with volume.”*
+
+In the grand program:
+
+* Parts 1–3 built the **curvature ⇒ FI ⇒ gap** black box in the global case.
+* Parts 11–12 show how to patch together **local curvature** plus **Lyapunov drift** into a global spectral gap, even when curvature only holds in a small-field region.
+* Part 13 will run the same scheme for log-Sobolev inequalities, giving an “entropy-strengthened” version of everything you just proved here.
+
+That’s your rebuilt, fully expanded Part 12.

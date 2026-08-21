@@ -1,0 +1,341 @@
+Part 14 — Application to Finite-Volume Lattice Yang–Mills: Structural Global Functional Inequalities
+
+In this part we explain how the abstract local-to-global machinery of Part III interacts with the **finite-volume lattice Yang–Mills** family ((M_\Lambda,\mu_\Lambda)) constructed in Part II.
+
+The goal is *structural* rather than fully proved:
+
+* Translate the geometric input from Part II (local horizontal Bakry–Émery curvature) into the hypotheses of the local-to-global Poincaré and LSI theorems of Part III.
+* Isolate the remaining analytic tasks, primarily Lyapunov estimates and local functional inequalities.
+* Record precisely what one would obtain for lattice Yang–Mills **if** those analytic hypotheses are verified with constants **uniform in the volume (\Lambda)**. 
+
+We keep the focus on **gauge-invariant observables** and their horizontal gradients, as set up in Part II.
+
+---
+
+## 14.1. Finite-volume Yang–Mills data
+
+Fix:
+
+* A compact, connected Lie group (G) (typically (SU(N))) with bi-invariant metric (g_G).
+* A finite hypercubic lattice (\Lambda\subset\mathbb{Z}^d) with oriented edge set (E(\Lambda)).
+* The configuration manifold
+  [
+  M_\Lambda := G^{E(\Lambda)},
+  ]
+  with product Riemannian metric (g_\Lambda) and product Haar volume (\mathrm{vol}*{g*\Lambda}).
+* An **effective action**
+  [
+  S_\Lambda = S_W + S_{\mathrm{add},\Lambda}
+  ]
+  satisfying the hypotheses of the core curvature theorem of Part II (Wilson + Haar + additional terms with globally bounded Hessian from below). 
+
+The corresponding Gibbs measure and diffusion generator are
+[
+d\mu_\Lambda(U) = Z_\Lambda^{-1} e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U),
+\qquad
+L_\Lambda = \Delta_{g_\Lambda} - \langle \nabla S_\Lambda,\nabla\cdot\rangle,
+]
+with carré du champ
+[
+\Gamma_\Lambda(f)(U) = |\nabla f(U)|*{g*\Lambda}^2.
+]
+
+The **gauge group** (\mathcal{G}*\Lambda = G^{V(\Lambda)}) acts on (M*\Lambda) by endpoint conjugation; this action is isometric and preserves (\mathrm{vol}*{g*\Lambda}) and (\mu_\Lambda). Gauge-invariant observables satisfy (\nabla f(U)\in H_U), where (H_U) is the horizontal (physical) subspace defined in Part II. 
+
+In this part we always restrict (\Gamma_\Lambda), (L_\Lambda), and all functional inequalities to the **gauge-invariant sector**
+[
+\mathcal{A}*\Lambda^{\mathrm{inv}} := { f\in C^\infty(M*\Lambda) : f(g\cdot U)=f(U)\ \forall g\in\mathcal{G}_\Lambda}.
+]
+
+---
+
+## 14.2. Small-field region and local horizontal curvature bound
+
+Part II proved a **local horizontal Bakry–Émery curvature bound**, uniform in (\Lambda). Concretely, there exist constants (\rho_{\mathrm{loc}}>0) and (r>0) such that for all finite lattices (\Lambda):
+
+* Define the **small-field region**
+  [
+  \Omega_\Lambda := B_r(U^{(0)}) = {U\in M_\Lambda : d_{g_\Lambda}(U,U^{(0)}) \le r},
+  ]
+  where (U^{(0)}) is the trivial configuration (all links (=e\in G)).
+* For all (U\in \Omega_\Lambda) and all horizontal vectors (v\in H_U),
+  [
+  \operatorname{Ric}*{\mu*\Lambda}(U)(v,v)
+  ;\ge; \rho_{\mathrm{loc}},|v|*{g*\Lambda}^2.
+  ]
+
+
+Equivalently, for every smooth gauge-invariant (f),
+[
+\Gamma_{2,\Lambda}(f)(U) ;\ge; \rho_{\mathrm{loc}},\Gamma_\Lambda(f)(U)
+\quad\text{for all }U\in\Omega_\Lambda,
+]
+where (\Gamma_{2,\Lambda}) is the iterated carré du champ for (L_\Lambda). 
+
+Thus, **restricted to gauge-invariant observables**, the generator (L_\Lambda) satisfies a local curvature–dimension condition
+[
+CD(\rho_{\mathrm{loc}},\infty)\quad\text{on }\Omega_\Lambda,
+]
+with constants independent of (\Lambda).
+
+This is the Yang–Mills incarnation of the abstract hypothesis (H(_{\mathrm{loc}})) of Part III. 
+
+---
+
+## 14.3. Local functional inequalities in the Yang–Mills small-field region
+
+The local Bakry–Émery bound immediately yields **local functional inequalities** on (\Omega_\Lambda), in the sense of Part I:
+
+* On any relatively compact open (U_\Lambda\subset \Omega_\Lambda) with (\mu_\Lambda(U_\Lambda)>0), classical BE theory implies:
+
+  * A **local Poincaré inequality**:
+    [
+    \int_{U_\Lambda} (f - f_{U_\Lambda})^2,d\mu_\Lambda
+    ;\le; C_{\mathrm{loc}}(\Lambda) \int_{U_\Lambda} \Gamma_\Lambda(f),d\mu_\Lambda
+    ]
+    for all smooth gauge-invariant (f), where
+    [
+    f_{U_\Lambda} := \frac{1}{\mu_\Lambda(U_\Lambda)}\int_{U_\Lambda} f,d\mu_\Lambda.
+    ]
+  * A **local logarithmic Sobolev inequality**:
+    [
+    \operatorname{Ent}*{\mu*\Lambda}\big(f^2 \mathbf{1}*{U*\Lambda}\big)
+    ;\le; C_{\mathrm{LS,loc}}(\Lambda)\int_{U_\Lambda} \Gamma_\Lambda(f),d\mu_\Lambda,
+    ]
+    whenever (\int_{U_\Lambda} f^2,d\mu_\Lambda = 1). 
+
+The constants (C_{\mathrm{loc}}(\Lambda)) and (C_{\mathrm{LS,loc}}(\Lambda)) can be controlled in terms of:
+
+* The local curvature lower bound (\rho_{\mathrm{loc}}),
+* The geometry and volume of (U_\Lambda\subset \Omega_\Lambda),
+* The local dimension and interaction structure.
+
+Because:
+
+* (\rho_{\mathrm{loc}}) is independent of (\Lambda),
+* (\Omega_\Lambda) is a ball of fixed radius (r) in the product metric,
+* The local geometry is **product-local** and the lattice has bounded coordination number,
+
+it is natural (and standard in finite-dimensional BE geometry) to expect that one can choose:
+
+* a canonical small-field region (U_\Lambda\subset\Omega_\Lambda) (e.g. a ball of radius (r/2) in geodesic or plaquette-angle norms),
+* and constants (C_{\mathrm{loc}},C_{\mathrm{LS,loc}}) independent of (\Lambda) for these sets. 
+
+Since we are not supplying the full geometric estimates here, we package this expectation as an explicit hypothesis:
+
+> **Assumption (YM-Local-FI).**
+> There exists a bounded, gauge-invariant region (U_\Lambda\subset\Omega_\Lambda) and constants (C_{\mathrm{loc}}, C_{\mathrm{LS,loc}} < \infty), **independent of (\Lambda)**, such that for all smooth gauge-invariant (f):
+> [
+> \int_{U_\Lambda} (f - f_{U_\Lambda})^2,d\mu_\Lambda
+> ;\le; C_{\mathrm{loc}} \int_{U_\Lambda} \Gamma_\Lambda(f),d\mu_\Lambda,
+> ]
+> and, whenever (\int_{U_\Lambda} f^2,d\mu_\Lambda = 1),
+> [
+> \operatorname{Ent}*{\mu*\Lambda}\big(f^2 \mathbf{1}*{U*\Lambda}\big)
+> ;\le; C_{\mathrm{LS,loc}} \int_{U_\Lambda} \Gamma_\Lambda(f),d\mu_\Lambda.
+> ] 
+
+This is exactly the “local functional inequality” hypothesis needed to invoke the local-to-global theorems of Part III.
+
+---
+
+## 14.4. Lyapunov functions for lattice Yang–Mills
+
+The local-to-global results of Part III also require **Lyapunov drift conditions** that force the process back towards the small-field region. Abstractly, one needs functions (W_\Lambda : M_\Lambda\to[1,\infty)) such that:
+
+[
+L_\Lambda W_\Lambda ;\le; -\alpha W_\Lambda + \beta,\mathbf{1}*{K*\Lambda}
+]
+for some constants (\alpha,\beta>0) and sets (K_\Lambda \subset U_\Lambda), with all of these bounds **independent of (\Lambda)**. 
+
+### 14.4.1. Structural form of (W_\Lambda)
+
+Heuristically, good candidates for (W_\Lambda) should grow with the **total field strength**, measured for example by plaquette angles. A typical ansatz is
+[
+W_\Lambda(U) := 1 + \sum_{p\in P(\Lambda)} \Phi\big(\operatorname{dist}_G(U_p(U),e)\big),
+]
+where:
+
+* (U_p(U)\in G) is the plaquette holonomy at plaquette (p),
+* (\operatorname{dist}_G(\cdot,e)) is the Riemannian distance on (G),
+* (\Phi : [0,\infty)\to[0,\infty)) is some convex, increasing function, e.g. (\Phi(r)=r^2) or a truncated power.
+
+Such a (W_\Lambda):
+
+* is gauge-invariant, since (U_p) is conjugation invariant under (\mathcal{G}_\Lambda),
+* measures “distance from the vacuum” in a way that is additive over plaquettes and hence well adapted to locality,
+* naturally grows large on configurations with many large plaquette angles.
+
+Other choices might incorporate link-based energies or norms of discrete field strengths, but the common theme is **locality plus growth with field strength**.
+
+### 14.4.2. Drift inequality and volume-uniformity
+
+The drift inequality
+[
+L_\Lambda W_\Lambda \le -\alpha W_\Lambda + \beta 1_{K_\Lambda}
+]
+should be understood as follows:
+
+* Outside a small set (K_\Lambda\subset U_\Lambda) (e.g. where all plaquettes are “small”), the generator (L_\Lambda) produces a **negative drift** in (W_\Lambda), pulling the process towards smaller total field strength.
+* On (K_\Lambda) the drift may be positive but is bounded (so the dynamics is not explosive there).
+
+The constants (\alpha,\beta) and a normalized description of (K_\Lambda) must be **independent of (\Lambda)** when expressed in lattice units. This is plausible because:
+
+* (S_\Lambda) is a finite sum of **local** terms (plaquettes and possible local regulators),
+* Each link participates in only finitely many plaquettes,
+* The generator (L_\Lambda) is built from local derivatives of (S_\Lambda) and the Laplace–Beltrami operator on a product manifold of bounded local geometry.
+
+The detailed verification of such Lyapunov inequalities is a separate analytic problem, involving careful control of large-field contributions. In the present part we encode this requirement as a second explicit hypothesis.
+
+> **Assumption (YM-Lyapunov).**
+> There exists a family of smooth, gauge-invariant Lyapunov functions (W_\Lambda : M_\Lambda\to[1,\infty)) and constants (\alpha,\beta>0), independent of (\Lambda), and compact sets (K_\Lambda \subset U_\Lambda\subset\Omega_\Lambda) such that:
+> [
+> L_\Lambda W_\Lambda(U) ;\le; -\alpha W_\Lambda(U) + \beta,\mathbf{1}*{K*\Lambda}(U)
+> \quad \text{for all }U\in M_\Lambda.
+> ]
+
+Assumptions (YM-Local-FI) and (YM-Lyapunov) are precisely the inputs that allow us to plug the YM family into the **local-to-global functional inequality** results of Part III.
+
+---
+
+## 14.5. Local-to-global theorems specialized to lattice Yang–Mills
+
+The local-to-global Poincaré and LSI theorems of Part III (Section 2 and Section 3) say, roughly:
+
+* Local curvature (\rho_{\mathrm{loc}}>0) on a region (\Omega),
+* Local Poincaré / super-Poincaré (or local LSI) on a smaller set (U\subset\Omega),
+* A Lyapunov drift condition back towards (U),
+
+together imply **global** Poincaré and LSI with explicit constants. 
+
+We now specialize these to the Yang–Mills family.
+
+### 14.5.1. Global Poincaré inequality for finite-volume Yang–Mills
+
+Let (\Lambda) be fixed and consider the YM measure (\mu_\Lambda) on (M_\Lambda). Assume:
+
+1. (**Local curvature**) The horizontal Bakry–Émery tensor satisfies
+   [
+   \operatorname{Ric}*{\mu*\Lambda}(U)(v,v) \ge \rho_{\mathrm{loc}},|v|^2
+   \quad\forall U\in\Omega_\Lambda,\ \forall v\in H_U,
+   ]
+   with (\rho_{\mathrm{loc}}>0) independent of (\Lambda), as in Part II. 
+
+2. (**Local functional inequalities**) Assumption (YM-Local-FI) holds on some (U_\Lambda\subset\Omega_\Lambda) with constants (C_{\mathrm{loc}},C_{\mathrm{LS,loc}}) independent of (\Lambda). 
+
+3. (**Lyapunov drift**) Assumption (YM-Lyapunov) holds with Lyapunov functions (W_\Lambda) and constants (\alpha,\beta>0) independent of (\Lambda).
+
+Then the Poincaré local-to-global theorem (Part III, §2) implies:
+
+> **Theorem 14.1 (Global Poincaré for finite-volume YM, structural).**
+> Under the hypotheses above, there exists a finite constant (C_P>0), depending only on (\rho_{\mathrm{loc}}, C_{\mathrm{loc}}, \alpha,\beta) and geometric data **but not on (\Lambda)**, such that for all smooth gauge-invariant observables (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}),
+> [
+> \operatorname{Var}*{\mu_\Lambda}(f)
+> ;\le; C_P \int_{M_\Lambda} \Gamma_\Lambda(f),d\mu_\Lambda.
+> ]
+
+Equivalently, the generator (L_\Lambda), restricted to (\mathcal{A}*\Lambda^{\mathrm{inv}}), has a spectral gap (\lambda*{1,\Lambda}^{\mathrm{inv}} \ge C_P^{-1} > 0) independent of (\Lambda).
+
+The proof is exactly the one in Part III §2, applied with:
+
+* (M = M_\Lambda),
+* (\mu = \mu_\Lambda),
+* (\Gamma = \Gamma_\Lambda),
+* local curvature set (V = \Omega_\Lambda),
+* small set (K_\Lambda\subset U_\Lambda\subset\Omega_\Lambda),
+* Lyapunov function (W_\Lambda). 
+
+The point is that **all constants entering the theorem’s conclusion are controlled uniformly in (\Lambda)** by our assumptions.
+
+### 14.5.2. Global log-Sobolev inequality for finite-volume Yang–Mills
+
+Similarly, the log-Sobolev local-to-global theorem of Part III §3 says that:
+
+* local curvature (CD(\rho_{\mathrm{loc}},\infty)) on (\Omega_\Lambda),
+* a local super-Poincaré or LSI on (U_\Lambda),
+* a Lyapunov drift condition with appropriate growth of (W_\Lambda),
+
+imply a global LSI for (\mu_\Lambda). Specializing this to the YM case (again under (YM-Local-FI) and (YM-Lyapunov)) yields:
+
+> **Theorem 14.2 (Global log-Sobolev for finite-volume YM, structural).**
+> Under the same hypotheses as Theorem 14.1, plus the local LSI part of (YM-Local-FI), there exists a finite constant (C_{\mathrm{LS}}>0), independent of (\Lambda), such that
+> [
+> \operatorname{Ent}*{\mu*\Lambda}(f^2)
+> ;\le; C_{\mathrm{LS}} \int_{M_\Lambda} \Gamma_\Lambda(f),d\mu_\Lambda
+> \quad \forall f\in\mathcal{A}_\Lambda^{\mathrm{inv}}.
+> ]
+
+Again, we do not repeat the proof: it is a direct application of the general theorem in Part III, with YM plugged into the abstract symbols. The crucial feature is that the **local curvature and drift data are volume-uniform**, so the resulting LSI constant (C_{\mathrm{LS}}) is also uniform.
+
+---
+
+## 14.6. Consequences for finite-volume spectral gaps and mixing
+
+Assuming Theorems 14.1 and 14.2 have been made rigorous by verifying (YM-Local-FI) and (YM-Lyapunov), we obtain the following consequences for the YM Langevin generator (L_\Lambda) and its semigroup (P_t^{(\Lambda)} = e^{tL_\Lambda}), restricted to the gauge-invariant sector.
+
+### 14.6.1. Spectral gap and exponential (L^2)-mixing
+
+The **global Poincaré inequality** implies that:
+
+* The operator (-L_\Lambda), acting on (L^2(\mu_\Lambda)) and restricted to (\mathcal{A}*\Lambda^{\mathrm{inv}}), has a spectral gap (\lambda*{1,\Lambda}^{\mathrm{inv}}\ge C_P^{-1}>0) independent of (\Lambda).
+* Consequently, for every (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}) with (\mu*\Lambda(f)=0),
+  [
+  |P_t^{(\Lambda)} f|*{L^2(\mu*\Lambda)}
+  ;\le; e^{-\lambda_{1,\Lambda}^{\mathrm{inv}} t} |f|*{L^2(\mu*\Lambda)},
+  ]
+  with (\lambda_{1,\Lambda}^{\mathrm{inv}}\ge C_P^{-1}) uniform in (\Lambda). 
+
+This is the **configuration-space analogue of a mass gap**: at fixed lattice spacing, the Langevin dynamics in field space relaxes exponentially fast to equilibrium with a rate bounded away from zero uniformly in the spatial volume.
+
+### 14.6.2. Entropy decay and hypercontractivity
+
+The global LSI strengthens this to control **entropy decay** and hypercontractivity:
+
+* For any (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}) with (\mu*\Lambda(f^2)=1),
+  [
+  \operatorname{Ent}*{\mu*\Lambda}\big( (P_t^{(\Lambda)} f)^2\big)
+  ;\le; e^{-2t/C_{\mathrm{LS}}},\operatorname{Ent}*{\mu*\Lambda}(f^2),
+  ]
+  with decay rate independent of (\Lambda).
+* The semigroup (P_t^{(\Lambda)}) is hypercontractive in the sense that it maps (L^2(\mu_\Lambda)) into (L^p(\mu_\Lambda)) with (p>2) for all (t>0), with (p-2) controlled by (t/C_{\mathrm{LS}}) uniformly in (\Lambda).
+
+These estimates are the configuration-space analogues of **finite-volume mass scales**: they constrain how correlations in field space can spread and make precise how curvature and Lyapunov control translate into strong mixing properties.
+
+---
+
+## 14.7. Summary and open analytic tasks
+
+Structurally, after Parts I–III and this chapter, the situation can be summarized as follows. 
+
+1. **Geometry (Part II):**
+   Haar geometry + Wilson action + gauge structure give a **local horizontal Bakry–Émery curvature bound** on a small-field region (\Omega_\Lambda), with curvature constant (\rho_{\mathrm{loc}}>0) and radius (r>0) independent of the finite volume (\Lambda). 
+
+2. **Analysis (Part III §2–3):**
+   Abstract local-to-global theorems show that:
+
+   * Local curvature + local Poincaré/LSI + Lyapunov drift (\Rightarrow) global Poincaré and LSI, with constants depending only on those local/Drift data.
+
+3. **Yang–Mills structural translation (this part):**
+   For lattice Yang–Mills, the abstract analytic hypotheses become the two concrete conditions:
+
+   * **(YM-Local-FI)**: local Poincaré and LSI on a bounded, gauge-invariant small-field region (U_\Lambda\subset\Omega_\Lambda) with constants independent of (\Lambda),
+   * **(YM-Lyapunov)**: existence of volume-uniform Lyapunov functions (W_\Lambda) encoding drift back to (U_\Lambda).
+
+4. **What one gets if (YM-Local-FI) and (YM-Lyapunov) hold:**
+   For each finite (\Lambda), in the gauge-invariant sector,
+
+   * a **global Poincaré inequality** with constant (C_P) independent of (\Lambda),
+   * a **global LSI** with constant (C_{\mathrm{LS}}) independent of (\Lambda),
+   * hence **volume-uniform spectral gaps** and strong mixing for the configuration-space dynamics. 
+
+These are exactly the analytic inputs needed in later parts to connect to:
+
+* **Spectral gaps of OS Hamiltonians** via reflection positivity and OS reconstruction, and
+* **Continuum mass gaps** via suitable scaling limits.
+
+The **hard analytic work that remains** is to actually prove (or at least provide convincing bounds for) the two Yang–Mills-specific hypotheses:
+
+* Local functional inequalities on a canonical small-field region with volume-uniform constants,
+* Volume-uniform Lyapunov drift estimates for interacting non-abelian gauge fields.
+
+The next part (Part 15) will turn this structural picture into a precise **checklist** of analytic tasks for the Yang–Mills mass-gap program, distinguishing clearly between what is already proved in this project and what is still conjectural.

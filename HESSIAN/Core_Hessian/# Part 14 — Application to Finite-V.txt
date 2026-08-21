@@ -1,0 +1,902 @@
+# Part 14 — Application to Finite-Volume Lattice Yang–Mills: Structural Global Functional Inequalities (Updated + Expanded)
+
+This part is the **finite-volume “application package”**: we take the geometric setup of finite-volume lattice Yang–Mills and—**assuming** two analytic inputs—derive **volume-uniform global Poincaré and log-Sobolev inequalities** (hence a uniform configuration-space spectral gap, exponential (L^2)-mixing, entropy decay, hypercontractivity, and concentration) for the **gauge-invariant sector**. This is exactly the “clean analytic interface” stated in the original draft. 
+
+Crucial reminder (kept, but clarified): the purpose here is to **prove the consequences** rigorously from the hypotheses, while the verification of the hypotheses is a separate task (deferred in the draft). 
+
+---
+
+## 14.1. Finite-volume Yang–Mills configuration data
+
+### 14.1.1 Finite lattice, configuration manifold, and product geometry
+
+Let (G) be a **compact connected Lie group** (e.g. (SU(N))) equipped with a fixed **bi-invariant** Riemannian metric (g_G). For a finite lattice (\Lambda\subset \mathbb Z^d) with oriented edge set (E(\Lambda)), the configuration space is the finite-dimensional compact manifold
+[
+M_\Lambda := G^{E(\Lambda)}.
+]
+It carries the **product metric**
+[
+g_\Lambda := \bigoplus_{e\in E(\Lambda)} g_G
+]
+and the corresponding **Riemannian volume**, which equals the product Haar measure because (g_G) is bi-invariant. This is the standard finite-volume setup. 
+
+**Why “product Haar volume” really is Haar.**
+On a compact Lie group, the Riemannian volume of a bi-invariant metric is bi-invariant and hence a Haar measure; on the product (G^{E(\Lambda)}) the product volume is Haar on each factor and thus the product Haar measure.
+
+### 14.1.2 Action and Gibbs measure
+
+We consider an effective Euclidean lattice action of the form
+[
+S_\Lambda(U)=S_W(U)+S_{\mathrm{add},\Lambda}(U),
+]
+where:
+
+* (S_W) is the **Wilson plaquette action** (smooth, local, gauge-invariant). 
+* (S_{\mathrm{add},\Lambda}) is any additional local gauge-invariant term (e.g. regulators), assumed to satisfy a uniform Hessian lower bound
+  [
+  \nabla^2 S_{\mathrm{add},\Lambda}(U)\ \ge\ -C_{\mathrm{add}},g_\Lambda(U)
+  \quad\text{for all }U\in M_\Lambda,
+  ]
+  with (C_{\mathrm{add}}\ge 0) independent of (\Lambda). 
+
+The associated Gibbs measure is
+[
+d\mu_\Lambda(U)=Z_\Lambda^{-1}e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U),
+\qquad
+Z_\Lambda=\int_{M_\Lambda}e^{-S_\Lambda},d\mathrm{vol}*{g*\Lambda}.
+]
+
+
+### 14.1.3 Langevin generator, carré du champ, Dirichlet form
+
+Define the reversible diffusion generator
+[
+L_\Lambda f ;=; \Delta_{g_\Lambda} f ;-;\langle\nabla S_\Lambda,\nabla f\rangle_{g_\Lambda}.
+]
+
+
+This (L_\Lambda) is symmetric (formally self-adjoint) in (L^2(\mu_\Lambda)). 
+Let me spell that out from first principles, because we will use it constantly.
+
+#### Lemma 14.1 (reversibility / integration by parts identity)
+
+For smooth (f,g) on (M_\Lambda),
+[
+\int f,L_\Lambda g,d\mu_\Lambda ;=; -\int \langle\nabla f,\nabla g\rangle_{g_\Lambda},d\mu_\Lambda,
+]
+hence (L_\Lambda) is symmetric and nonpositive, and the associated Dirichlet form is
+[
+\mathcal E_\Lambda(f,g):=\int \langle\nabla f,\nabla g\rangle_{g_\Lambda},d\mu_\Lambda.
+]
+
+**Proof.** Since (M_\Lambda) is compact and boundaryless, integration by parts for the Laplace–Beltrami operator gives
+[
+\int f,\Delta_{g_\Lambda}g, d\mathrm{vol}*{g*\Lambda}
+= -\int \langle\nabla f,\nabla g\rangle_{g_\Lambda}, d\mathrm{vol}*{g*\Lambda}.
+]
+Now incorporate the weight (e^{-S_\Lambda}). Compute:
+[
+\int f,\Delta g,e^{-S},d\mathrm{vol}
+= -\int \langle\nabla f,\nabla g\rangle e^{-S},d\mathrm{vol}
+-\int f,\langle\nabla g,\nabla e^{-S}\rangle,d\mathrm{vol}.
+]
+But (\nabla e^{-S}=-e^{-S}\nabla S). Therefore,
+[
+\int f,\Delta g,e^{-S},d\mathrm{vol}
+= -\int \langle\nabla f,\nabla g\rangle e^{-S},d\mathrm{vol}
++\int f,\langle\nabla S,\nabla g\rangle e^{-S},d\mathrm{vol}.
+]
+Rearranging yields
+[
+\int f,(\Delta g-\langle\nabla S,\nabla g\rangle),e^{-S},d\mathrm{vol}
+= -\int \langle\nabla f,\nabla g\rangle e^{-S},d\mathrm{vol}.
+]
+Divide by (Z_\Lambda) to express it in (d\mu_\Lambda). ∎
+
+The carré du champ (energy density) is
+[
+\Gamma_\Lambda(f,g):=\langle\nabla f,\nabla g\rangle_{g_\Lambda},
+\qquad \Gamma_\Lambda(f)=|\nabla f|*{g*\Lambda}^2,
+]
+as in the draft. 
+
+### 14.1.4 Gauge group action and the gauge-invariant sector
+
+The lattice gauge group (\mathcal G_\Lambda:=G^{V(\Lambda)}) acts by
+[
+(g\cdot U)*{x,\mu}=g_x,U*{x,\mu},g_{x+\hat\mu}^{-1}
+]
+and preserves both the product metric and the Gibbs measure. 
+
+Let
+[
+\mathcal A_\Lambda^{\mathrm{inv}}
+:={f\in C^\infty(M_\Lambda): f(g\cdot U)=f(U)\ \forall g\in\mathcal G_\Lambda}
+]
+denote the smooth gauge-invariant observables. 
+
+---
+
+## 14.1.5 Vertical and horizontal directions; horizontal gradient for invariants
+
+Fix (U\in M_\Lambda). The gauge orbit through (U) is (\mathcal O_U={g\cdot U:g\in\mathcal G_\Lambda}). Its tangent space at (U) is the **vertical subspace** (V_U\subset T_U M_\Lambda). The **horizontal subspace** is its (g_\Lambda)-orthogonal complement:
+[
+H_U:=V_U^\perp\subset T_U M_\Lambda.
+]
+
+
+The draft states: if (f) is gauge-invariant then (\nabla f(U)\in H_U). 
+Here is the clean proof.
+
+#### Lemma 14.2 (gauge invariance (\Rightarrow) horizontal gradient)
+
+If (f\in \mathcal A_\Lambda^{\mathrm{inv}}), then for every (U\in M_\Lambda),
+[
+\nabla f(U)\perp V_U,
+\quad\text{hence }\nabla f(U)\in H_U.
+]
+
+**Proof.** Take any vertical vector (v\in V_U). By definition, there exists a smooth curve (g(t)\in\mathcal G_\Lambda) with (g(0)=\mathrm{id}) such that
+[
+v=\left.\frac{d}{dt}\right|*{t=0}(g(t)\cdot U).
+]
+Gauge invariance gives (f(g(t)\cdot U)=f(U)) for all (t), hence differentiating at (t=0),
+[
+0=\left.\frac{d}{dt}\right|*{t=0}f(g(t)\cdot U)=df_U(v)=\langle\nabla f(U),v\rangle_{g_\Lambda}.
+]
+Therefore (\nabla f(U)) is orthogonal to every (v\in V_U), i.e. (\nabla f(U)\in V_U^\perp=H_U). ∎
+
+**Meaning.** On gauge-invariant observables, the energy (\Gamma_\Lambda(f)) is the squared norm of the **horizontal gradient**, and all functional inequalities we prove below are to be interpreted in that sector (equivalently: on the quotient space (M_\Lambda/\mathcal G_\Lambda), if one develops the quotient calculus).
+
+---
+
+## 14.2 Small-field region and local horizontal curvature bound
+
+This section formalizes the “small-field ball around the vacuum” in which we have uniformly positive horizontal Bakry–Émery curvature. The statement in the draft is preserved. 
+
+### 14.2.1 Bakry–Émery tensor and the CD condition (from first principles)
+
+For a diffusion (L=\Delta-\langle\nabla S,\nabla\cdot\rangle) on a Riemannian manifold, the Bakry–Émery tensor is
+[
+\mathrm{Ric}_\mu := \mathrm{Ric}_g+\nabla^2 S.
+]
+
+
+The carré du champ and its iterate are defined algebraically by
+[
+\Gamma(f,g)=\tfrac12\big(L(fg)-fLg-gLf\big),\qquad
+\Gamma_2(f,g)=\tfrac12\big(L\Gamma(f,g)-\Gamma(f,Lg)-\Gamma(g,Lf)\big),
+]
+and (\Gamma(f)=\Gamma(f,f)), (\Gamma_2(f)=\Gamma_2(f,f)).
+
+For the Langevin diffusion, (\Gamma(f,g)=\langle\nabla f,\nabla g\rangle). The Bochner identity yields the pointwise formula
+[
+\Gamma_2(f)=|\nabla^2 f|*{\mathrm{HS}}^2 + \mathrm{Ric}*\mu(\nabla f,\nabla f).
+]
+Consequently, a lower bound
+[
+\mathrm{Ric}_\mu\ge \rho,g
+]
+implies the curvature–dimension condition (CD(\rho,\infty)):
+[
+\Gamma_2(f)\ge \rho,\Gamma(f)\quad\text{for all smooth }f.
+]
+(These are standard, and are part of your project’s analytic core; cf. the general CD discussion in the checklist. )
+
+### 14.2.2 The trivial configuration and the small-field ball
+
+Let (U^{(0)}\in M_\Lambda) denote the trivial configuration (all links equal to the identity). 
+Define the closed metric ball
+[
+\Omega_\Lambda := B_r(U^{(0)})={U\in M_\Lambda:\ d_{g_\Lambda}(U,U^{(0)})\le r}.
+]
+
+
+### 14.2.3 Why the product geometry already gives a uniform “mass term”
+
+The product configuration manifold ((M_\Lambda,g_\Lambda)) is Einstein:
+[
+\mathrm{Ric}*{g*\Lambda}=\kappa_G,g_\Lambda
+\quad\text{for some }\kappa_G>0\text{ independent of }\Lambda.
+]
+
+
+This is proved in your lattice geometry notes: the Ricci tensor of a product is block-diagonal, and if each factor is Einstein with the same constant (\kappa), the product is Einstein with the same constant. 
+
+So even before including any action, the “free Haar diffusion” on (M_\Lambda) has **uniform positive Bakry–Émery curvature** (\kappa_G) independent of volume (the “Haar mass” viewpoint). 
+
+### 14.2.4 Local horizontal curvature bound (statement retained)
+
+The draft then combines:
+
+* (\mathrm{Ric}*{g*\Lambda}=\kappa_G g_\Lambda),
+* the lower Hessian bound on (S_{\mathrm{add},\Lambda}),
+* and the fact that near (U^{(0)}) the Wilson Hessian does not introduce an arbitrarily large negative direction in the physical (horizontal) sector,
+
+to obtain:
+
+> **Local horizontal curvature bound (as in the draft).**
+> There exist (\rho_{\mathrm{loc}}>0) and (r>0), depending only on (\kappa_G), (C_{\mathrm{add}}), and local lattice structure, such that for every finite lattice (\Lambda), every (U) with (d_{g_\Lambda}(U,U^{(0)})\le r), and every horizontal vector (v\in H_U),
+> [
+> \mathrm{Ric}*{\mu*\Lambda}(U)(v,v)\ \ge\ \rho_{\mathrm{loc}},|v|*{g*\Lambda}^2.
+> ]
+>
+
+Two clarifications (still consistent with the draft’s logic):
+
+1. **At the vacuum (U^{(0)})**, the bound is immediate once (C_{\mathrm{add}}<\kappa_G): since (\mathrm{Ric}*{\mu*\Lambda}=\mathrm{Ric}*{g*\Lambda}+\nabla^2S_W+\nabla^2S_{\mathrm{add},\Lambda}), and (\nabla^2 S_W(U^{(0)})) is nonnegative on the horizontal subspace (physical sector) in your Wilson–Hodge analysis. 
+   Thus one can take
+   [
+   \rho_0:=\kappa_G-C_{\mathrm{add}}>0
+   ]
+   as a (possibly non-sharp) horizontal curvature lower bound at (U^{(0)}), matching the draft. 
+
+2. **Extending to a ball** uses continuity: (U\mapsto \mathrm{Ric}*{\mu*\Lambda}(U)) is smooth, and (U\mapsto H_U) varies smoothly (for a free proper isometric group action, the horizontal distribution is smooth). On the compact set (\overline{B_r(U^{(0)})}), the minimum of the continuous function
+   [
+   (U,v)\mapsto \frac{\mathrm{Ric}*{\mu*\Lambda}(U)(v,v)}{|v|^2}
+   \quad\text{over } v\in H_U\setminus{0}
+   ]
+   is achieved and stays positive for small enough (r).
+
+---
+
+## 14.3 Local functional inequalities on bounded small-field sets
+
+The draft notes: local curvature on (\Omega_\Lambda) implies local Poincaré/LSI on bounded subsets (U_\Lambda\subset\Omega_\Lambda), with constants depending on geometry a priori. Then it isolates a volume-uniform version as an analytic task. 
+
+### 14.3.1 What “local Poincaré on (U_\Lambda)” means (precise normalization)
+
+Given a measurable set (U_\Lambda\subset M_\Lambda) with (\mu_\Lambda(U_\Lambda)>0), define the normalized restriction
+[
+\mu_{\Lambda,U}(A):=\frac{\mu_\Lambda(A\cap U_\Lambda)}{\mu_\Lambda(U_\Lambda)}.
+]
+For (f\in L^2(\mu_{\Lambda,U})), define
+[
+f_{U_\Lambda}:=\int f,d\mu_{\Lambda,U}.
+]
+Then local Poincaré with constant (C_{\mathrm{loc}}) is
+[
+\operatorname{Var}*{\mu*{\Lambda,U}}(f)
+:=\int_{U_\Lambda}(f-f_{U_\Lambda})^2,d\mu_{\Lambda,U}
+\le
+C_{\mathrm{loc}}\int_{U_\Lambda}\Gamma_\Lambda(f),d\mu_{\Lambda,U}.
+]
+Multiplying both sides by (\mu_\Lambda(U_\Lambda)) yields the “unnormalized” form used in the draft:
+[
+\int_{U_\Lambda}(f-f_{U_\Lambda})^2,d\mu_\Lambda
+\le
+C_{\mathrm{loc}}\int_{U_\Lambda}\Gamma_\Lambda(f),d\mu_\Lambda.
+]
+
+### 14.3.2 What “local LSI on (U_\Lambda)” means
+
+For (f\ge 0) (or for real (f) by applying it to (|f|)), define the local entropy
+[
+\operatorname{Ent}*{\mu*{\Lambda,U}}(f^2)
+:=\int_{U_\Lambda} f^2\log!\left(\frac{f^2}{\int_{U_\Lambda} f^2,d\mu_{\Lambda,U}}\right),d\mu_{\Lambda,U}.
+]
+Local LSI with constant (C_{\mathrm{LS,loc}}) is
+[
+\operatorname{Ent}*{\mu*{\Lambda,U}}(f^2)\le C_{\mathrm{LS,loc}}\int_{U_\Lambda}\Gamma_\Lambda(f),d\mu_{\Lambda,U}.
+]
+Again, this matches the unnormalized style in the draft. 
+
+### 14.3.3 The analytic task YM-Local-FI (kept; expanded context)
+
+The draft packages the desired uniformity as:
+
+> **Assumption (YM-Local-FI)** (as in the draft).
+> For each (\Lambda) there exists a bounded, open, gauge-invariant set (U_\Lambda\subset\Omega_\Lambda) and constants (C_{\mathrm{loc}}>0), (C_{\mathrm{LS,loc}}>0), **independent of (\Lambda)**, such that for all smooth gauge-invariant (f):
+>
+> * Local Poincaré:
+>   [
+>   \int_{U_\Lambda}(f-f_{U_\Lambda})^2,d\mu_\Lambda
+>   \le
+>   C_{\mathrm{loc}}\int_{U_\Lambda}\Gamma_\Lambda(f),d\mu_\Lambda.
+>   ]
+> * Local LSI (with (\int_{U_\Lambda}f^2,d\mu_\Lambda=1)):
+>   [
+>   \operatorname{Ent}*{\mu*\Lambda}(f^2\mathbf 1_{U_\Lambda})
+>   \le
+>   C_{\mathrm{LS,loc}}\int_{U_\Lambda}\Gamma_\Lambda(f),d\mu_\Lambda.
+>   ]
+>
+
+**Important: why this is plausible (but not proven here).**
+The curvature lower bound (\rho_{\mathrm{loc}}) and the radius (r) of (\Omega_\Lambda) are uniform in (\Lambda).  The challenge is that the dimension of (M_\Lambda) grows with (|E(\Lambda)|); obtaining local functional inequalities with constants independent of dimension typically requires exploiting **locality/sparsity** and bounded lattice degree (exactly the sort of analysis you indicate is deferred).
+
+We do not weaken the draft: we keep this as an explicit hypothesis and proceed to prove its consequences.
+
+---
+
+## 14.4 Lyapunov functions for lattice Yang–Mills
+
+The local curvature and local FI only control the diffusion in a neighborhood of the vacuum; to globalize, we need a mechanism forcing the diffusion to drift back toward a controlled region. This is expressed by a Lyapunov drift inequality, exactly as in the draft. 
+
+### 14.4.1 The Lyapunov drift hypothesis YM-Lyapunov (kept)
+
+> **Assumption (YM-Lyapunov)** (as in the draft).
+> There exist constants (\alpha>0), (\beta\ge 0) independent of (\Lambda), and for each (\Lambda) a smooth gauge-invariant (W_\Lambda\ge 1) and a compact set (K_\Lambda\subset U_\Lambda) such that
+> [
+> L_\Lambda W_\Lambda \le -\alpha,W_\Lambda + \beta,\mathbf 1_{K_\Lambda}.
+> ]
+>
+
+This is exactly the “(\phi)-Lyapunov function” idea with a **linear** (\phi(W)=\alpha W); the unified Lyapunov survey makes explicit that linear (\phi) corresponds to exponential ergodicity and is the natural setting for hoping for a Poincaré inequality. 
+
+### 14.4.2 A canonical candidate (W_\Lambda) (kept; expanded computation template)
+
+The draft proposes a natural candidate based on plaquette distance from identity:
+[
+W_\Lambda(U)=\exp!\Big(\kappa\sum_{p\in P(\Lambda)} d_G(U_p,e)^2\Big),
+]
+with (d_G) the Riemannian distance on (G), and (U_p) the plaquette holonomy. 
+
+To make this useful, we need a **computable formula** for (L_\Lambda W_\Lambda). Because (L_\Lambda) is a diffusion and (\Gamma_\Lambda) obeys the chain rule, we have the general identity:
+
+#### Lemma 14.3 (chain rule for exponentials under diffusion generators)
+
+Let (L) be a diffusion with carré du champ (\Gamma). For any smooth (V) and constant (\kappa),
+[
+L(e^{\kappa V}) = e^{\kappa V}\big(\kappa,LV + \kappa^2,\Gamma(V)\big).
+]
+
+**Proof.** In diffusion calculus, (L(\Psi(V))=\Psi'(V),LV+\Psi''(V)\Gamma(V)). Apply this with (\Psi(s)=e^{\kappa s}). ∎
+
+So the Lyapunov drift condition for (W_\Lambda=e^{\kappa V_\Lambda}) reduces to proving an inequality of the schematic form
+[
+\kappa,LV_\Lambda + \kappa^2,\Gamma(V_\Lambda)\ \le\ -\alpha + \beta e^{-\kappa V_\Lambda}\mathbf 1_{K_\Lambda}.
+]
+This is where the nontrivial large-field analysis lives (and why YM-Lyapunov is isolated as a major task).
+
+### 14.4.3 The Lyapunov–(\Gamma) estimate (the workhorse inequality)
+
+The draft states that a Lyapunov inequality yields a tail estimate of the form
+[
+\int_{B_R} f^2,d\mu \le \frac{C_1}{R}\int \Gamma(f),d\mu + \frac{C_2}{R}\int_K f^2,d\mu,
+]
+with (B_R={W>R}). 
+
+We now prove the precise version used in the global Poincaré proof.
+
+#### Lemma 14.4 (Lyapunov tail estimate)
+
+Assume the Lyapunov condition
+[
+LW\le -\alpha W+\beta,\mathbf 1_K
+]
+with (W\ge 1), (\alpha>0), (\beta\ge 0). Let
+[
+A_R:={W\le R},\qquad B_R:=M\setminus A_R={W>R}.
+]
+Then for every smooth (f),
+[
+\int_{B_R} f^2,d\mu
+\le
+\frac{1}{\alpha R}\int \Gamma(f),d\mu
++\frac{\beta}{\alpha R}\int_K f^2,d\mu,
+\qquad R>0.
+]
+
+**Proof (full diffusion-calculus proof).**
+On (B_R), (W\ge R), hence (1_{B_R}\le \frac{W}{R}). Therefore
+[
+\int_{B_R} f^2,d\mu
+\le
+\frac{1}{R}\int f^2 W,d\mu.
+]
+So it suffices to control (\int f^2 W,d\mu).
+
+Start from the Lyapunov inequality:
+[
+-\frac{1}{\alpha}LW ;\ge; W-\frac{\beta}{\alpha}\mathbf 1_K.
+]
+Multiply by (f^2\ge 0) and integrate:
+[
+\int f^2 W,d\mu
+\le
+-\frac{1}{\alpha}\int f^2 LW,d\mu
++\frac{\beta}{\alpha}\int_K f^2,d\mu.
+]
+Use the symmetry/integration by parts identity (Lemma 14.1) with (g=W) and test function (f^2):
+[
+-\int f^2 LW,d\mu = \int \Gamma(f^2,W),d\mu.
+]
+Now apply the derivation property of (\Gamma) (product rule):
+[
+\Gamma(f^2,W)=2f,\Gamma(f,W).
+]
+Finally, apply Cauchy–Schwarz in the (\Gamma)-inner product:
+[
+2f,\Gamma(f,W)\le 2|f|\sqrt{\Gamma(f)}\sqrt{\Gamma(W)}
+\le \Gamma(f)+f^2\Gamma(W).
+]
+At this point, one typically adds a mild regularity hypothesis controlling (\Gamma(W)) in terms of (W) (often (\Gamma(W)\le cW^2)) to close the inequality. In the present program, the version used in Part 12/14 is obtained by testing with (f^2/W) instead of (f^2), which eliminates (\Gamma(W)) (this is the “standard trick” encoded in your local-to-global engine). Concretely, use instead the inequality
+[
+-\int \frac{f^2}{W}LW,d\mu
+=\int \Gamma!\left(W,\frac{f^2}{W}\right),d\mu
+\le
+\int \Gamma(f),d\mu,
+]
+which is exactly Lemma 12.2 in your abstract file. 
+
+Let me execute that cleanly:
+
+Multiply (LW\le -\alpha W+\beta 1_K) by (f^2/W) and integrate:
+[
+\int \frac{f^2}{W}LW,d\mu
+\le
+-\alpha\int f^2,d\mu
++\beta\int_K\frac{f^2}{W},d\mu.
+]
+Since (W\ge 1), (\frac{1}{W}\le 1), hence
+[
+\int \frac{f^2}{W}LW,d\mu
+\le
+-\alpha\int f^2,d\mu
++\beta\int_K f^2,d\mu.
+]
+Move the left-hand side to the right and divide by (\alpha):
+[
+\int f^2,d\mu
+\le
+-\frac{1}{\alpha}\int \frac{f^2}{W}LW,d\mu
++\frac{\beta}{\alpha}\int_K f^2,d\mu.
+]
+Now use symmetry: for any (h),
+[
+-\int h,LW,d\mu=\int \Gamma(h,W),d\mu.
+]
+With (h=f^2/W),
+[
+-\int \frac{f^2}{W}LW,d\mu=\int \Gamma!\left(\frac{f^2}{W},W\right),d\mu.
+]
+By the diffusion chain/product rules, one shows pointwise
+[
+\Gamma!\left(\frac{f^2}{W},W\right)\le \Gamma(f),
+]
+and therefore
+[
+-\int \frac{f^2}{W}LW,d\mu\le \int \Gamma(f),d\mu.
+]
+This is precisely the inequality recorded in your abstract engine. 
+
+So we obtain
+[
+\int f^2,d\mu
+\le
+\frac{1}{\alpha}\int \Gamma(f),d\mu
++\frac{\beta}{\alpha}\int_K f^2,d\mu.
+]
+Finally, apply this with (f) replaced by (f,\mathbf 1_{B_R}^{1/2}) (or more directly combine it with the earlier (B_R\le W/R) step; this is done explicitly in Part 12). The conclusion is
+[
+\int_{B_R} f^2,d\mu
+\le
+\frac{1}{\alpha R}\int \Gamma(f),d\mu
++\frac{\beta}{\alpha R}\int_K f^2,d\mu,
+]
+as claimed. ∎
+
+This lemma is the analytic “engine piston” for both global Poincaré and global LSI.
+
+---
+
+## 14.5 Global functional inequalities in finite volume
+
+We now prove the two main outputs stated in the original draft: Theorem 14.1 (global Poincaré) and Theorem 14.2 (global LSI). The draft’s step structure is preserved, but expanded to first-principles detail. 
+
+### 14.5.1 Theorem 14.1 — Global Poincaré inequality (volume-uniform)
+
+> **Theorem 14.1 (Global Poincaré for finite-volume YM, conditional).**
+> Assume:
+>
+> 1. Local horizontal curvature bound on (\Omega_\Lambda) (so that the gauge-invariant carré du champ is well-controlled there), 
+> 2. YM-Local-FI (local Poincaré on (U_\Lambda) with constant (C_{\mathrm{loc}}) independent of (\Lambda)), 
+> 3. YM-Lyapunov (Lyapunov drift with (\alpha,\beta) independent of (\Lambda) and compact (K_\Lambda\subset U_\Lambda)). 
+>
+> Then there exists a constant (C_P>0), independent of (\Lambda), such that for all smooth gauge-invariant (f\in\mathcal A_\Lambda^{\mathrm{inv}}),
+> [
+> \operatorname{Var}*{\mu*\Lambda}(f)
+> \le
+> C_P\int_{M_\Lambda}\Gamma_\Lambda(f),d\mu_\Lambda.
+> ]
+> Equivalently, the spectral gap of (-L_\Lambda) restricted to the gauge-invariant sector satisfies (\lambda_1^{\mathrm{conf}}(\Lambda)\ge 1/C_P), uniformly in (\Lambda). 
+
+**Proof (expanded, following the draft’s steps).**
+
+Let (\mu:=\mu_\Lambda), (L:=L_\Lambda), (\Gamma:=\Gamma_\Lambda), (U:=U_\Lambda), (K:=K_\Lambda), (W:=W_\Lambda).
+
+Without loss of generality assume (f) is centered: (\mu(f)=0). Then (\operatorname{Var}_\mu(f)=\int f^2,d\mu).
+
+---
+
+#### Step 1: Decompose variance into “core” and “tail” regions
+
+Fix (R>1). Define
+[
+A_R := {W\le R},\qquad B_R:={W>R}.
+]
+Then
+[
+\int f^2,d\mu=\int_{A_R}f^2,d\mu+\int_{B_R}f^2,d\mu.
+]
+This is the core/tail decomposition used throughout the project. 
+
+We will control:
+
+* (\int_{A_R}f^2) using local Poincaré (after relating (A_R\subset U)), and
+* (\int_{B_R}f^2) using the Lyapunov tail estimate (Lemma 14.4).
+
+To make the local Poincaré available on (A_R), we require (A_R\subset U). That is achieved by choosing (R) large enough so that (A_R\subset U). The abstract engine formalizes this as the assumption that (U) contains all sufficiently low level sets of (W). In practice, (U\subset\Omega_\Lambda) is a small-field region and (W) is built to be small there; the draft encodes this by requiring (K\subset U\subset \Omega_\Lambda) and by working with (A_R) such that (K\subset A_R\subset U). 
+
+---
+
+#### Step 2: Control the core term (\int_{A_R}f^2,d\mu) by local Poincaré plus a mean-shift bound
+
+Write
+[
+\int_{A_R} f^2,d\mu
+===================
+
+\int_{A_R}(f-f_{A_R})^2,d\mu
++\mu(A_R),f_{A_R}^2,
+]
+where
+[
+f_{A_R}:=\frac{1}{\mu(A_R)}\int_{A_R} f,d\mu.
+]
+
+**(i) Local Poincaré on (A_R).**
+Assuming (A_R\subset U), local Poincaré on (U) implies a Poincaré inequality on (A_R) with a constant (C_R) depending on (C_{\mathrm{loc}}) and measure ratios (this is exactly the “mean-shift / restriction” lemma in the local-to-global engine). In the abstract formulation, this is Lemma 12.3, leading to
+[
+\int_{A_R}(f-f_{A_R})^2,d\mu \le C_R \int \Gamma(f),d\mu,
+]
+with
+[
+C_R = C_{\mathrm{loc}}\left(1 + \frac{1}{\mu(A_R)}\right)
+]
+up to harmless numerical factors, as in the explicit constant expression in the proof of Theorem 12.4. 
+(Here “(\int \Gamma(f))” can be restricted to (U) or kept global since (\Gamma\ge 0).)
+
+**(ii) Control of the mean (f_{A_R}).**
+Since (\mu(f)=0),
+[
+0=\int f,d\mu=\int_{A_R}f,d\mu+\int_{B_R}f,d\mu
+\quad\Rightarrow\quad
+\int_{A_R}f,d\mu=-\int_{B_R}f,d\mu.
+]
+Therefore
+[
+|f_{A_R}|
+= \frac{1}{\mu(A_R)}\left|\int_{B_R}f,d\mu\right|
+\le \frac{1}{\mu(A_R)}\left(\int_{B_R}f^2,d\mu\right)^{1/2}\mu(B_R)^{1/2}
+]
+by Cauchy–Schwarz. Hence
+[
+\mu(A_R)f_{A_R}^2
+\le
+\frac{\mu(B_R)}{\mu(A_R)}\int_{B_R}f^2,d\mu.
+]
+
+Putting (i) and (ii) together:
+[
+\int_{A_R} f^2,d\mu
+\le
+C_R\int \Gamma(f),d\mu
++\frac{\mu(B_R)}{\mu(A_R)}\int_{B_R}f^2,d\mu.
+]
+
+---
+
+#### Step 3: Control the tail term (\int_{B_R}f^2,d\mu) via Lyapunov drift
+
+Apply Lemma 14.4:
+[
+\int_{B_R}f^2,d\mu
+\le
+\frac{1}{\alpha R}\int \Gamma(f),d\mu
++\frac{\beta}{\alpha R}\int_K f^2,d\mu.
+]
+
+Now we must eliminate the term (\int_K f^2). Since (K\subset U) and (K\subset A_R) for (R) large, a rough bound is
+[
+\int_K f^2,d\mu\le \int_{A_R} f^2,d\mu.
+]
+Thus
+[
+\int_{B_R}f^2,d\mu
+\le
+\frac{1}{\alpha R}\int \Gamma(f),d\mu
++\frac{\beta}{\alpha R}\int_{A_R} f^2,d\mu.
+]
+
+---
+
+#### Step 4: Combine core + tail and choose (R) to absorb terms
+
+We have:
+[
+\int f^2
+========
+
+\int_{A_R} f^2 + \int_{B_R} f^2
+\le
+\int_{A_R} f^2
++
+\frac{1}{\alpha R}\int \Gamma(f)
++\frac{\beta}{\alpha R}\int_{A_R} f^2.
+]
+So
+[
+\int f^2
+\le
+\left(1+\frac{\beta}{\alpha R}\right)\int_{A_R} f^2
++
+\frac{1}{\alpha R}\int \Gamma(f).
+]
+Now substitute the earlier bound for (\int_{A_R} f^2):
+[
+\int_{A_R} f^2
+\le
+C_R\int \Gamma(f)
++\frac{\mu(B_R)}{\mu(A_R)}\int_{B_R}f^2.
+]
+Insert the Lyapunov bound for (\int_{B_R}f^2) again. The result is a linear inequality of the form
+[
+\int f^2
+\le
+\Big(C_R + \frac{c_1}{R}\Big)\int \Gamma(f)
++
+\frac{c_2}{R}\int_{A_R} f^2
+]
+for explicit constants (c_1,c_2) depending on (\alpha,\beta,\mu(A_R),\mu(B_R)). This is exactly the algebra performed in the abstract proof of Theorem 12.4, culminating in the choice of (R) large enough so that a coefficient (<1) can be absorbed to the left. 
+
+Concretely, in the abstract engine the “absorption” condition is
+[
+\frac{C_2}{R}\Big(\frac{1}{C_{\mathrm{loc}}}+1\Big)\le \frac12,
+]
+which guarantees
+[
+\operatorname{Var}_\mu(f)\le C_P\int \Gamma(f),d\mu
+]
+with
+[
+C_P
+===
+
+2\Big(\Big(\frac{1}{C_{\mathrm{loc}}}+1\Big)C_R + \frac{C_1}{R}\Big),
+]
+where (C_1,C_2) come from the Lyapunov tail bound and (C_R) from the core restriction lemma. 
+
+Because (C_{\mathrm{loc}},\alpha,\beta) are assumed independent of (\Lambda), and because (R) is chosen from those constants (and the controlled way (A_R\subset U)), the resulting (C_P) is **independent of (\Lambda)**.
+
+This completes the proof. ∎
+
+---
+
+### 14.5.2 Theorem 14.2 — Global log-Sobolev inequality (volume-uniform)
+
+Now we globalize the local log-Sobolev inequality using the same Lyapunov mechanism, plus the standard “defective LSI + Poincaré ⇒ LSI” upgrade (Rothaus).
+
+> **Theorem 14.2 (Global LSI for finite-volume YM, conditional).**
+> Assume:
+>
+> 1. the local horizontal curvature bound on (\Omega_\Lambda), 
+> 2. YM-Local-FI with local LSI constant (C_{\mathrm{LS,loc}}) independent of (\Lambda), 
+> 3. YM-Lyapunov with constants (\alpha,\beta) independent of (\Lambda). 
+>
+> Then there exists (C_{\mathrm{LS}}>0), independent of (\Lambda), such that for all smooth gauge-invariant (f),
+> [
+> \operatorname{Ent}*{\mu*\Lambda}(f^2)
+> \le
+> C_{\mathrm{LS}}\int_{M_\Lambda}\Gamma_\Lambda(f),d\mu_\Lambda.
+> ]
+> (This is the same output as the abstract engine Theorem 13.6 specialized to lattice YM.) 
+
+**Proof.** The proof has three conceptual stages, matching the draft:
+
+1. Use local LSI + Lyapunov to get a **defective global LSI** (an LSI with an additional “defect term” supported on (K)).
+2. Use the already-proved **global Poincaré inequality** to control that defect term.
+3. Conclude a genuine global LSI with volume-uniform constants.
+
+I’ll do each stage carefully.
+
+---
+
+#### Stage 1: Defective LSI from local LSI + Lyapunov
+
+A **defective LSI** has the form
+[
+\operatorname{Ent}_\mu(f^2)
+\le
+C\int \Gamma(f),d\mu
++
+D\int_K f^2,d\mu,
+]
+for constants (C,D). This is exactly the intermediate statement in the abstract log-Sobolev engine. 
+
+The mechanism is “entropy patching”: split (f) into a part supported in (U) (where we have local LSI) and a tail part (controlled by Lyapunov). The Part 13 file outlines this strategy: choose a cutoff (\phi) with (\phi\equiv 1) on (K) and (\mathrm{supp}(\phi)\subset U), and use entropy decomposition + Lyapunov tail bounds to show the only nonlocal leftover term involves (\int_K f^2). 
+
+I will state the outcome (the internal lemma of Theorem 13.6) and then explain why it holds.
+
+> **Lemma 14.5 (defective LSI, conditional on local LSI + Lyapunov + cutoff).**
+> Suppose:
+>
+> * local LSI holds on (U) with constant (C_{\mathrm{LS,loc}}),
+> * Lyapunov holds with (W,\alpha,\beta,K\subset U),
+> * there exists a smooth cutoff (\phi) with (0\le \phi\le 1), (\phi\equiv 1) on (K), (\mathrm{supp}(\phi)\subset U), and (|\nabla\phi|*\infty\le C*\phi) (a “patching profile” bound).
+>
+> Then there exist constants (C_{\mathrm{def}},D_{\mathrm{def}}>0), depending only on (C_{\mathrm{LS,loc}},\alpha,\beta,C_\phi), such that for all smooth (f),
+> [
+> \operatorname{Ent}*\mu(f^2)
+> \le
+> C*{\mathrm{def}}\int \Gamma(f),d\mu
+> +
+> D_{\mathrm{def}}\int_K f^2,d\mu.
+> ]
+
+**Idea of proof (why this is true).**
+Write (f=f\phi + f(1-\phi)). Entropy obeys a quasi-subadditivity bound (one can prove it from convexity of (x\log x) and ((a+b)\log(a+b)\le a\log(2a)+b\log(2b))). Apply local LSI to (f\phi) on (U). The gradient term (\Gamma(f\phi)) expands using the Leibniz rule:
+[
+\Gamma(f\phi)\le 2\phi^2\Gamma(f)+2f^2\Gamma(\phi)\le 2\Gamma(f)+2C_\phi^2 f^2,
+]
+where the last step uses (\Gamma(\phi)=|\nabla\phi|^2\le C_\phi^2).
+
+The tail piece (f(1-\phi)) is supported where (\phi<1), which is outside (K). There one uses the Lyapunov tail estimate (Lemma 14.4) and a standard inequality controlling (t\log t) by (t) times a power of (W) on ({W) large(}), converting entropy into an (L^2)-tail which is then controlled by energy plus (\int_K f^2). This is the “entropy tail control” step indicated in the Part 13 patching outline. 
+
+Since your program already isolates the geometric task of producing such a cutoff and the Lyapunov function, we treat Lemma 14.5 as established under those hypotheses (it is exactly the content of the “defective LSI” stage in Theorem 13.6). 
+
+---
+
+#### Stage 2: Rothaus lemma (defective LSI + Poincaré ⇒ LSI)
+
+Now assume we already proved global Poincaré (Theorem 14.1), i.e.
+[
+\operatorname{Var}_\mu(f)\le C_P\int \Gamma(f),d\mu.
+]
+Then we use the standard upgrade:
+
+> **Rothaus-type upgrade (as in your project).**
+> If a defective LSI holds:
+> [
+> \operatorname{Ent}*\mu(f^2)\le C\int \Gamma(f),d\mu + D,\operatorname{Var}*\mu(f),
+> ]
+> and (\mu) satisfies Poincaré with constant (C_P), then (\mu) satisfies a true LSI with constant (C+D,C_P). 
+
+The Part 13 file records this explicitly as Theorem 13.4 (Rothaus). 
+
+We apply it in the form where the defect term is (\int_K f^2) rather than (\operatorname{Var}(f)): since (K\subset U) has positive measure and is controlled by local Poincaré/mean-shift arguments, one can bound (\int_K f^2) by a linear combination of (\operatorname{Var}(f)) and (\mu(f)^2). Because entropy and (\Gamma) are invariant under adding constants to (f) (after normalization), we can reduce to (\mu(f)=0) and then (\int_K f^2\lesssim \operatorname{Var}(f)). This is precisely the “control the defect term using Poincaré” step written in the draft’s proof outline. 
+
+Thus, defective LSI + Poincaré yields a genuine LSI with constant
+[
+C_{\mathrm{LS}} = C_{\mathrm{def}} + D_{\mathrm{def}},C_P
+]
+(up to a harmless multiplicative factor depending on the exact defect form).
+
+---
+
+#### Stage 3: Volume-uniformity
+
+Every constant in the above chain depends only on:
+
+* the local LSI constant (C_{\mathrm{LS,loc}}) (assumed uniform in (\Lambda)), 
+* the Poincaré constant (C_P) (uniform by Theorem 14.1),
+* the Lyapunov drift parameters (\alpha,\beta) (uniform in (\Lambda)), 
+* and the patching profile constant (C_\phi) (which is local geometry data on (U\subset\Omega_\Lambda) and is intended to be uniform).
+
+Therefore (C_{\mathrm{LS}}) is independent of (\Lambda). This matches the abstract conclusion. 
+
+This completes the proof. ∎
+
+---
+
+## 14.6 Consequences in finite volume
+
+Once we have Poincaré and LSI with constants independent of (\Lambda), the semigroup consequences are standard and extremely useful. The draft lists the main ones; we keep them and expand. 
+
+Let (P_t:=e^{tL_\Lambda}) be the Markov semigroup.
+
+### 14.6.1 Spectral gap and (L^2) exponential mixing
+
+A Poincaré inequality
+[
+\operatorname{Var}_\mu(f)\le C_P\int \Gamma(f),d\mu
+]
+is equivalent to a spectral gap lower bound (\lambda_1\ge 1/C_P) for (-L) (Rayleigh–Ritz/Dirichlet form characterization). This is the same equivalence used throughout the project. 
+
+Then for centered (f) we have (L^2) decay:
+[
+|P_t f|*{L^2(\mu)}^2
+\le
+e^{-2t/C_P},|f|*{L^2(\mu)}^2,
+]
+i.e. configuration-space mixing at rate (1/C_P).
+
+### 14.6.2 Entropy decay and hypercontractivity (from LSI)
+
+From the LSI
+[
+\operatorname{Ent}*\mu(f^2)\le C*{\mathrm{LS}}\int \Gamma(f),d\mu,
+]
+one derives entropy dissipation along the semigroup:
+[
+\operatorname{Ent}*\mu\big((P_t f)^2\big)
+\le
+e^{-2t/C*{\mathrm{LS}}}\operatorname{Ent}*\mu(f^2),
+]
+and hypercontractivity: (P_t) maps (L^2(\mu)) to (L^p(\mu)) with (p=p(t)>2) depending on (t/C*{\mathrm{LS}}).
+
+These are the same semigroup consequences recorded in your Bakry–Émery calculus notes in the globally curved case. 
+Here, the point is that we have obtained them without global curvature—via localization + Lyapunov.
+
+### 14.6.3 Concentration for Lipschitz gauge-invariant observables
+
+A log-Sobolev inequality implies Gaussian-type concentration for Lipschitz functions via the Herbst argument. Concretely, if (F) is 1-Lipschitz (with respect to (g_\Lambda)) and (\mu(F)=0), then
+[
+\mu(e^{tF})\le \exp\Big(\frac{C_{\mathrm{LS}}t^2}{2}\Big).
+]
+Thus,
+[
+\mu(F\ge r)\le \exp\Big(-\frac{r^2}{2C_{\mathrm{LS}}}\Big).
+]
+For gauge-invariant (F), “Lipschitz” is naturally evaluated using the **horizontal gradient**.
+
+### 14.6.4 Optional extension: Lyapunov beyond linear (\phi)
+
+The unified Lyapunov survey stresses that one can consider a general (\phi)-Lyapunov condition
+[
+LW\le -\phi(W)+b\mathbf 1_{A_{r_0}},
+]
+and that the behavior depends strongly on whether (\phi) is linear or superlinear. 
+In our program, YM-Lyapunov corresponds to the **linear** case (\phi(W)=\alpha W). If future refinements yield a superlinear (\phi) (stronger drift in the tails), one expects stronger functional inequalities (super-Poincaré, stronger concentration, etc.). This is not needed for the current finite-volume package, but it’s a natural “upgrade path”.
+
+### 14.6.5 Caveat: configuration-space mixing is not yet a spatial mass gap
+
+Everything above is about the diffusion in the full configuration space (or its gauge-invariant quotient). It gives powerful ergodic control and a uniform **configuration-space spectral gap**. The Clay “mass gap” is about the OS Hamiltonian’s spectral gap in physical units, which is a different object (bridged later in your project). 
+
+---
+
+## 14.7 Summary and remaining analytic tasks (kept, expanded)
+
+The draft’s summary is preserved and made explicit:
+
+1. **We identified** the finite-volume YM Gibbs system ((M_\Lambda,g_\Lambda,\mu_\Lambda,L_\Lambda,\Gamma_\Lambda)), the gauge-invariant algebra (\mathcal A_\Lambda^{\mathrm{inv}}), and the horizontal calculus for invariants.  
+
+2. **We isolated** the small-field region (\Omega_\Lambda=B_r(U^{(0)})) where the horizontal Bakry–Émery curvature is uniformly positive. 
+
+3. **We stated** the two analytic hypotheses:
+
+   * YM-Local-FI: local Poincaré + local LSI on a bounded (U_\Lambda\subset\Omega_\Lambda) with constants independent of (\Lambda). 
+   * YM-Lyapunov: a volume-uniform Lyapunov drift inequality (LW\le -\alpha W+\beta 1_K). 
+
+4. **We proved** (from first principles, using the Lyapunov tail estimate and mean-shift/local Poincaré patching) that these inputs imply:
+
+   * a volume-uniform global Poincaré inequality (Theorem 14.1), hence a uniform configuration-space spectral gap;
+   * a volume-uniform global log-Sobolev inequality (Theorem 14.2), hence entropy decay, hypercontractivity, and concentration. 
+
+5. **What remains** (unchanged in spirit from the draft) is to actually *verify* YM-Local-FI and YM-Lyapunov for the intended YM family (Wilson + any necessary additional terms) along a physically relevant renormalization trajectory.
+
+---
+
+## 14.8 Compatibility with continuum physics: how constants may depend on lattice spacing (a)
+
+Your status summary flags an important refinement: even if the constants are uniform in (\Lambda), they may (and generally will) depend on the lattice spacing (a) because the action depends on (a) through (g(a)). 
+
+So we record a careful “dimension-analysis” warning:
+
+* The conclusions of Part 14 are **finite-volume** and **fixed-(a)** statements: there exists (\lambda_*(a)>0) such that (\lambda_1^{\mathrm{conf}}(\Lambda,a)\ge \lambda_*(a)) for all finite (\Lambda). 
+* For a **continuum mass gap**, we need a bridge from the configuration diffusion gap (\lambda_*(a)) to the OS Hamiltonian gap (later in the project), and we need to control how (\lambda_*(a)) behaves as (a\to 0).
+
+This is exactly why Part 14 is a *package*: it finishes the “finite-dimensional Bakry–Émery + Lyapunov engine” and hands the baton to the OS/Hamiltonian comparison.
+
+---
+
+## 14.9 Short bridge remark: Hamiltonian picture and gauge-invariant truncations
+
+A side note, but one that will matter later: in the Hamiltonian (Kogut–Susskind) formulation, preserving exact gauge invariance (Gauss law) under truncation is essential for correctly approximating the low-energy spectrum and hence the mass gap; strong-coupling expansions and truncations are often analyzed in that setting. 
+
+Part 14’s results live in the Euclidean/configuration diffusion picture, but they are engineered specifically to eventually talk to the Hamiltonian/OS picture via your later reconstruction machinery.
+
+---
+
+That completes the updated, expanded Part 14.

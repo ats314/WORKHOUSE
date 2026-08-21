@@ -1,0 +1,521 @@
+## Appendix J. A globally smooth plaquette “energy” and the missing uniform second–derivative bound
+
+This appendix supplies the technical estimate singled out as the Lyapunov–drift bottleneck in the analytic engine: in the plaquette-based Lyapunov ansatz (W_\Lambda=\exp(\eta\sum_p \Phi(z_p))), the drift computation is “clean except for the term (X^a_\ell X^a_\ell z_p), which must be bounded uniformly to close the inequality.” 
+
+The cure proposed in the main analytic note is to **replace the non-smooth plaquette distance-square (d_G(U_p,\mathbf 1)^2)** by a **globally smooth** conjugation-invariant proxy (z(g)). 
+Here we implement that replacement for (G=\mathrm{SU}(N)) using
+[
+z(g);:=;1-\frac1N\mathrm{Re},\mathrm{Tr}(g),
+\qquad z_p(U):=z!\big(U_p(U)\big),
+]
+and we prove the two uniform estimates needed to remove the obstruction:
+
+1. **Uniform bound on second derivatives:** (|X^a_\ell X^a_\ell z_p(U)|\le C) for all (\Lambda,p,\ell,U).
+2. **“No constant leakage” after choosing (\Phi'(0)=0):** for the canonical choice (\Phi(s)=s^2) (so (\Phi'(s)=2s)), the potentially dangerous term (\Phi'(z_p),X^a_\ell X^a_\ell z_p) is pointwise bounded by (C,z_p) and hence cannot contribute an (O(|P(\Lambda)|)) constant.
+
+The rest of the Lyapunov drift estimate (how the (-\langle\nabla S,\nabla\cdot\rangle) part of (L_\Lambda) yields a coercive negative term) is logically separate; Appendix J is only about the **global smoothness/second-derivative** obstruction that was explicitly identified as *the* missing estimate. 
+
+---
+
+### J.1. Lattice and configuration-space conventions
+
+Fix a finite lattice region (\Lambda\subset\mathbb Z^d) (in applications (d=4)). Let (E(\Lambda)) be the set of oriented nearest-neighbor links and (P(\Lambda)) the set of oriented plaquettes. The configuration manifold is
+[
+M_\Lambda := G^{E(\Lambda)}\cong \prod_{\ell\in E(\Lambda)}G,
+]
+as in the Wilson-action setup. 
+
+For an oriented plaquette (p=(x;\mu,\nu)) (with (\mu<\nu)), its holonomy is
+[
+U_p(U) := U_{x,\mu},U_{x+\hat\mu,\nu},U_{x+\hat\nu,\mu}^{-1},U_{x,\nu}^{-1}.
+\tag{J.1}
+]
+This is exactly the standard plaquette product. 
+
+We work with (G=\mathrm{SU}(N)) and an (\mathrm{Ad})-invariant inner product on (\mathfrak g=\mathfrak{su}(N)) of the form
+[
+\langle A,B\rangle_\lambda := \lambda,(-\mathrm{Tr}(AB)),
+\qquad \lambda>0,
+\tag{J.2}
+]
+as used in the project notes. 
+This induces a bi-invariant Riemannian metric on each group factor and the product metric on (M_\Lambda). 
+
+---
+
+### J.2. The smooth plaquette observable (z(g)=1-\frac1N\mathrm{ReTr}(g))
+
+Define for (g\in \mathrm{SU}(N)),
+[
+z(g):=1-\frac1N\mathrm{Re},\mathrm{Tr}(g).
+\tag{J.3}
+]
+This is smooth and conjugation-invariant. It vanishes at the identity and is bounded:
+[
+0\le z(g)\le 2.
+\tag{J.4}
+]
+(The upper bound comes from (\mathrm{ReTr}(g)\ge -|\mathrm{Tr}(g)|\ge -N) for unitary (g).)
+
+For each plaquette (p), define the plaquette energy
+[
+z_p(U):= z(U_p(U)).
+\tag{J.5}
+]
+
+A key algebraic identity relates (z(g)) to the Hilbert–Schmidt distance from (\mathbf 1).
+
+**Lemma J.1 (Hilbert–Schmidt form of (z)).**
+For (g\in \mathrm{SU}(N)),
+[
+z(g)=\frac{1}{2N},|g-\mathbf 1|*{\mathrm{HS}}^2,
+\tag{J.6}
+]
+where (|A|*{\mathrm{HS}}^2:=\mathrm{Tr}(A^\ast A)).
+
+*Proof.* Expand
+[
+|g-\mathbf 1|*{\mathrm{HS}}^2
+=\mathrm{Tr}\big((g-\mathbf 1)^\ast(g-\mathbf 1)\big)
+=\mathrm{Tr}(g^\ast g)-\mathrm{Tr}(g^\ast)-\mathrm{Tr}(g)+\mathrm{Tr}(\mathbf 1).
+]
+Since (g\in \mathrm{SU}(N)\subset U(N)), (g^\ast g=\mathbf 1) and (\mathrm{Tr}(g^\ast)=\overline{\mathrm{Tr}(g)}). Thus
+[
+|g-\mathbf 1|*{\mathrm{HS}}^2
+= N-\overline{\mathrm{Tr}(g)}-\mathrm{Tr}(g)+N
+=2N-2,\mathrm{Re},\mathrm{Tr}(g).
+]
+Divide by (2N) to get (J.6). ∎
+
+This identity is the reason (z(g)) behaves like a squared distance near (\mathbf 1) but stays **globally smooth** (no cut locus issues).
+
+---
+
+### J.3. Differential operators on (M_\Lambda) via right-invariant vector fields
+
+Following the standard right-translation trivialization (T_gG\simeq\mathfrak g), any tangent vector at (g) is written as ((dR_g)_eX) for a unique (X\in\mathfrak g). 
+
+Fix an orthonormal basis ({T^a}*{a=1}^{\dim\mathfrak g}) of ((\mathfrak g,\langle\cdot,\cdot\rangle*\lambda)). For each link (\ell\in E(\Lambda)) and each (a), define the right-invariant derivative in the (\ell)-coordinate by
+[
+(X_\ell^a f)(U)
+:=\left.\frac{d}{dt}\right|*{t=0} f\big(U^{(\ell,a)}(t)\big),
+\quad
+U^{(\ell,a)}(t)*{\ell'}=
+\begin{cases}
+U_\ell,\exp(tT^a), & \ell'=\ell,\
+U_{\ell'}, & \ell'\neq \ell.
+\end{cases}
+\tag{J.7}
+]
+
+On the product manifold with product bi-invariant metric, the linkwise Laplacian is the sum of squares,
+[
+\Delta_\Lambda f = \sum_{\ell\in E(\Lambda)}\sum_a X_\ell^aX_\ell^a f.
+\tag{J.8}
+]
+
+Given an effective action (S_\Lambda\in C^2(M_\Lambda)), the symmetric diffusion generator has the form
+[
+L_\Lambda f = \Delta_\Lambda f - \langle\nabla S_\Lambda,\nabla f\rangle,
+\tag{J.9}
+]
+as in the analytic engine. 
+In coordinates (using the orthonormal frame (X_\ell^a)), one may write equivalently
+[
+L_\Lambda f
+=\sum_{\ell,a}\Big(X_\ell^aX_\ell^a f - (X_\ell^a S_\Lambda),(X_\ell^a f)\Big).
+\tag{J.10}
+]
+
+The carré du champ is
+[
+\Gamma_\Lambda(f)=\sum_{\ell,a}(X_\ell^a f)^2 = |\nabla f|^2,
+\tag{J.11}
+]
+matching the general identity (\Gamma(f)=|\nabla f|^2) in Part 15. 
+
+---
+
+### J.4. Uniform derivative bounds for (z(g)) on (\mathrm{SU}(N))
+
+We first bound derivatives on the group itself; then we lift them to plaquettes.
+
+#### J.4.1 First derivative: ((Xz)^2 \lesssim z)
+
+For (X\in\mathfrak{su}(N)), define the right-invariant differential operator ((\widetilde X f)(g):=\frac{d}{dt}|_{0} f(g\exp(tX))).
+
+**Lemma J.2 (first-derivative bound).**
+For every (g\in\mathrm{SU}(N)) and (X\in\mathfrak{su}(N)),
+[
+|\widetilde X z(g)|;\le;\sqrt{\frac{2}{N\lambda}};|X|*\lambda;\sqrt{z(g)}.
+\tag{J.12}
+]
+In particular, if (|X|*\lambda=1) then ((\widetilde X z(g))^2\le \frac{2}{N\lambda}z(g)).
+
+*Proof.* Start from the definition (z(g)=1-\frac1N\mathrm{ReTr}(g)). Along (g(t)=g\exp(tX)),
+[
+\frac{d}{dt}\Big|*{0}\mathrm{Tr}(g\exp(tX))
+=\mathrm{Tr}(gX),
+]
+so
+[
+\widetilde X z(g)= -\frac1N \mathrm{ReTr}(gX).
+\tag{J.13}
+]
+Because (X\in\mathfrak{su}(N)) has (\mathrm{Tr}(X)=0), we may rewrite
+[
+\mathrm{Tr}(gX)=\mathrm{Tr}\big((g-\mathbf 1)X\big).
+\tag{J.14}
+]
+Thus
+[
+|\widetilde X z(g)|
+\le \frac1N,|\mathrm{Tr}((g-\mathbf 1)X)|
+\le \frac1N,|g-\mathbf 1|*{\mathrm{HS}};|X|_{\mathrm{HS}}
+\tag{J.15}
+]
+by the Cauchy–Schwarz inequality for the Hilbert–Schmidt inner product.
+
+Now use Lemma J.1: (|g-\mathbf 1|*{\mathrm{HS}}=\sqrt{2Nz(g)}). Also, for skew-Hermitian (X),
+[
+|X|*\lambda^2=\langle X,X\rangle_\lambda
+=\lambda,\mathrm{Tr}(X^\ast X)=\lambda,|X|*{\mathrm{HS}}^2
+\quad\Rightarrow\quad
+|X|*{\mathrm{HS}}=\frac{|X|_\lambda}{\sqrt\lambda}.
+\tag{J.16}
+]
+Substituting into (J.15) gives exactly (J.12). ∎
+
+Consequently, with an orthonormal basis ({T^a}),
+[
+\Gamma_G(z)(g):=\sum_a (\widetilde T^a z(g))^2
+;\le;\frac{2,\dim\mathfrak g}{N\lambda};z(g).
+\tag{J.17}
+]
+
+#### J.4.2 Second derivative: (|\widetilde X^2 z|\lesssim |X|^2)
+
+**Lemma J.3 (second-derivative bound).**
+For every (g\in\mathrm{SU}(N)) and (X\in\mathfrak{su}(N)),
+[
+|\widetilde X^2 z(g)|\le \frac{1}{\sqrt{N},\lambda},|X|*\lambda^2.
+\tag{J.18}
+]
+In particular, if (|X|*\lambda=1) then (|\widetilde X^2 z(g)|\le \frac{1}{\sqrt N,\lambda}) uniformly in (g).
+
+*Proof.* Differentiate (J.13) once more along (g(t)=g\exp(tX)):
+[
+\widetilde X^2 z(g)
+= -\frac1N,\mathrm{Re},\frac{d}{dt}\Big|*0 \mathrm{Tr}(g\exp(tX)X)
+= -\frac1N,\mathrm{Re},\mathrm{Tr}(gX^2).
+\tag{J.19}
+]
+Hence
+[
+|\widetilde X^2 z(g)|
+\le \frac1N,|\mathrm{Tr}(gX^2)|
+\le \frac1N,|g|*{\mathrm{HS}};|X^2|*{\mathrm{HS}}.
+\tag{J.20}
+]
+For unitary (g), (|g|*{\mathrm{HS}}=\sqrt{\mathrm{Tr}(g^\ast g)}=\sqrt N). Also,
+[
+|X^2|*{\mathrm{HS}}
+\le |X|*{\mathrm{op}};|X|*{\mathrm{HS}}
+\le |X|*{\mathrm{HS}}^2
+=\frac{|X|*\lambda^2}{\lambda},
+\tag{J.21}
+]
+where we used (|X|*{\mathrm{op}}\le |X|_{\mathrm{HS}}) and (J.16). Plugging into (J.20) yields (J.18). ∎
+
+A direct corollary is a uniform bound on (\Delta_G z):
+[
+|\Delta_G z(g)|
+=\left|\sum_a \widetilde T^a\widetilde T^a z(g)\right|
+\le \sum_a \frac{1}{\sqrt N,\lambda}
+=\frac{\dim\mathfrak g}{\sqrt N,\lambda}.
+\tag{J.22}
+]
+
+---
+
+### J.5. Lifting the derivative bounds to plaquettes: (z_p(U)=z(U_p(U)))
+
+Fix a plaquette (p). By construction (J.1), (U_p(U)) is a product of four link variables (or inverses). For any fixed link (\ell\in\partial p), we can factor the plaquette holonomy as
+[
+U_p(U)=A(U),U_\ell^{\sigma},B(U),
+\tag{J.23}
+]
+where:
+
+* (\sigma\in{+1,-1}) indicates whether (U_\ell) appears as (U_\ell) or (U_\ell^{-1}) in the oriented boundary product,
+* (A(U),B(U)\in G) are products of the **other three** link variables (and inverses) in the plaquette.
+
+This is just regrouping of the four-factor product (J.1). 
+
+We now compute (X_\ell^a z_p) and (X_\ell^aX_\ell^a z_p).
+
+#### J.5.1 First derivative bound: ((X_\ell^a z_p)^2 \lesssim z_p)
+
+**Lemma J.4 (first derivative of plaquette energy).**
+Fix (\ell\in\partial p) and (a). Then for all (U\in M_\Lambda),
+[
+|X_\ell^a z_p(U)|
+;\le;
+\sqrt{\frac{2}{N\lambda}};\sqrt{z_p(U)}.
+\tag{J.24}
+]
+Equivalently, ((X_\ell^a z_p(U))^2\le \frac{2}{N\lambda}z_p(U)).
+
+*Proof.* Consider the (t)-perturbed configuration (U^{(\ell,a)}(t)) from (J.7), so only (U_\ell) changes to (U_\ell\exp(tT^a)). We analyze separately (\sigma=+1) and (\sigma=-1) in (J.23).
+
+**Case 1: (\sigma=+1).** Then
+[
+U_p(t):=U_p(U^{(\ell,a)}(t)) = A,U_\ell e^{tT^a},B
+=(A,U_\ell,B),(B^{-1}e^{tT^a}B)
+=U_p(0),e^{t,\mathrm{Ad}*{B^{-1}}T^a}.
+\tag{J.25}
+]
+Hence (t\mapsto U_p(t)) is exactly a right-translation curve through (U_p(0)) with tangent (\mathrm{Ad}*{B^{-1}}T^a\in\mathfrak{su}(N)). Since the metric is (\mathrm{Ad})-invariant, (\mathrm{Ad}*{B^{-1}}T^a) has the same (\langle\cdot,\cdot\rangle*\lambda)-norm as (T^a), i.e. norm (1). 
+Therefore Lemma J.2 applied at (g=U_p(0)) with (X=\mathrm{Ad}_{B^{-1}}T^a) gives exactly (J.24).
+
+**Case 2: (\sigma=-1).** Then (U_\ell) appears as (U_\ell^{-1}). Under the perturbation (U_\ell(t)=U_\ell e^{tT^a}),
+[
+U_\ell(t)^{-1} = (U_\ell e^{tT^a})^{-1} = e^{-tT^a},U_\ell^{-1}.
+\tag{J.26}
+]
+Thus
+[
+U_p(t)=A,e^{-tT^a},U_\ell^{-1},B.
+\tag{J.27}
+]
+Differentiate (\mathrm{Tr}(U_p(t))) at (t=0):
+[
+\frac{d}{dt}\Big|_0 \mathrm{Tr}(U_p(t))
+=======================================
+
+-\mathrm{Tr}(A,T^a,U_\ell^{-1},B).
+\tag{J.28}
+]
+Rewrite the right-hand side by factoring out (U_p(0)=A U_\ell^{-1}B):
+[
+A,T^a,U_\ell^{-1},B
+=(A U_\ell^{-1}B),\big(B^{-1}U_\ell T^a U_\ell^{-1}B\big)
+=U_p(0),\mathrm{Ad}*{B^{-1}U*\ell}T^a.
+\tag{J.29}
+]
+Therefore
+[
+\frac{d}{dt}\Big|_0 \mathrm{Tr}(U_p(t))
+=======================================
+
+-\mathrm{Tr}\big(U_p(0),\mathrm{Ad}*{B^{-1}U*\ell}T^a\big),
+\tag{J.30}
+]
+and again (\mathrm{Ad}*{B^{-1}U*\ell}T^a) has norm (1). Applying Lemma J.2 to (g=U_p(0)) and (X=\mathrm{Ad}*{B^{-1}U*\ell}T^a) yields (J.24). ∎
+
+Summing (J.24) over (a) and then over the four links (\ell\in\partial p) gives a uniform “energy controls gradient” estimate on the configuration space:
+
+**Corollary J.5 (carré du champ bound for (z_p)).**
+There exists a constant (C_{\nabla}=C_{\nabla}(N,\lambda,d)) such that for all lattices (\Lambda), plaquettes (p\in P(\Lambda)), and configurations (U\in M_\Lambda),
+[
+\Gamma_\Lambda(z_p)(U)
+=\sum_{\ell\in E(\Lambda)}\sum_a (X_\ell^a z_p(U))^2
+;\le;C_{\nabla},z_p(U).
+\tag{J.31}
+]
+Moreover the sum over (\ell) actually only runs over (\ell\in\partial p) (four links), hence (C_{\nabla}) is independent of (|\Lambda|).
+
+*Proof.* If (\ell\notin\partial p) then (z_p) does not depend on (U_\ell), so (X_\ell^a z_p=0). For (\ell\in\partial p), apply (J.24) and sum over the finitely many (a)’s and links. ∎
+
+#### J.5.2 Second derivative bound: (|X_\ell^aX_\ell^a z_p|\lesssim 1)
+
+**Lemma J.6 (uniform second derivative of (z_p)).**
+There exists (C_2=C_2(N,\lambda)) such that for every lattice (\Lambda), plaquette (p), link (\ell\in E(\Lambda)), basis index (a), and configuration (U\in M_\Lambda),
+[
+|X_\ell^aX_\ell^a z_p(U)|\le C_2.
+\tag{J.32}
+]
+
+*Proof.* If (\ell\notin\partial p), the function (z_p) does not depend on (U_\ell) and the left-hand side is (0). So assume (\ell\in\partial p), and use the factorization (U_p(t)) as in Lemma J.4.
+
+* In the (\sigma=+1) case, (J.25) shows (U_p(t)=U_p(0)\exp(tY)) for (Y:=\mathrm{Ad}*{B^{-1}}T^a) of norm (1). Then (t\mapsto z(U_p(t))) is exactly the one-dimensional restriction (t\mapsto z(g\exp(tY))), and Lemma J.3 (with (|Y|*\lambda=1)) gives a bound (|\frac{d^2}{dt^2}|_0 z(U_p(t))|\le \frac{1}{\sqrt N,\lambda}).
+
+* In the (\sigma=-1) case, we can compute directly from (J.27):
+  [
+  U_p(t)=A,e^{-tT^a},U_\ell^{-1},B.
+  ]
+  Then
+  [
+  \frac{d^2}{dt^2}\Big|*0 \mathrm{Tr}(U_p(t))
+  =\mathrm{Tr}(A,(T^a)^2,U*\ell^{-1},B).
+  \tag{J.33}
+  ]
+  Hence
+  [
+  \left|\frac{d^2}{dt^2}\Big|*0 z(U_p(t))\right|
+  \le \frac1N,\left|\mathrm{Tr}(A,(T^a)^2,U*\ell^{-1},B)\right|
+  \le \frac1N,|A|*{\mathrm{HS}};|(T^a)^2|*{\mathrm{HS}};|U_\ell^{-1}B|*{\mathrm{HS}}.
+  \tag{J.34}
+  ]
+  Since all group factors are unitary, (|A|*{\mathrm{HS}}=|U_\ell^{-1}B|*{\mathrm{HS}}=\sqrt N). As in Lemma J.3, (|(T^a)^2|*{\mathrm{HS}}\le 1/\lambda) because (|T^a|_{\mathrm{HS}}^2=1/\lambda). Thus (J.34) is bounded by (1/\lambda).
+
+Combining the two cases gives a uniform constant (C_2) (e.g. (C_2=\max{1/(\sqrt N,\lambda),1/\lambda}=1/\lambda)). ∎
+
+This is precisely the uniform control that was missing when (z_p) was taken to be a geodesic distance square (which loses smoothness at the cut locus), and it is the control flagged as necessary in Part 15.10.2. 
+
+---
+
+### J.6. The “no (O(|P|)) leakage” mechanism when (\Phi'(0)=0)
+
+We now formalize the key bookkeeping point: if one uses the smooth (z_p) above and chooses (\Phi) with (\Phi'(0)=0) (e.g. (\Phi(s)=s^2)), then the second-derivative term in the Lyapunov drift cannot contribute a raw (|P(\Lambda)|) factor.
+
+Let (\Phi\in C^2([0,2])) satisfy
+
+* (\Phi(0)=0),
+* (\Phi'(0)=0),
+* and (\Phi') has linear growth near (0), i.e. there is (C_\Phi) such that
+  [
+  0\le \Phi'(s)\le C_\Phi,s\qquad \forall s\in[0,2].
+  \tag{J.35}
+  ]
+  For (\Phi(s)=s^2), (C_\Phi=2).
+
+Define the plaquette Lyapunov potential
+[
+V_\Lambda(U):=\sum_{p\in P(\Lambda)} \Phi(z_p(U)).
+\tag{J.36}
+]
+
+The dangerous piece in the drift computation is the Laplacian part (sum of linkwise second derivatives)
+[
+\sum_{\ell,a} X_\ell^a X_\ell^a V_\Lambda
+= \sum_{p\in P(\Lambda)}\sum_{\ell\in\partial p}\sum_a X_\ell^aX_\ell^a \Phi(z_p).
+\tag{J.37}
+]
+Using the one-variable chain rule with (\Phi\in C^2),
+[
+X_\ell^aX_\ell^a \Phi(z_p)
+= \Phi'(z_p),X_\ell^aX_\ell^a z_p + \Phi''(z_p),(X_\ell^a z_p)^2.
+\tag{J.38}
+]
+
+We bound the two terms separately.
+
+#### J.6.1 Bounding (\Phi'(z_p),X_\ell^aX_\ell^a z_p) without (|P|)
+
+By Lemma J.6, (|X_\ell^aX_\ell^a z_p|\le C_2) uniformly. Then by (J.35),
+[
+\big|\Phi'(z_p),X_\ell^aX_\ell^a z_p\big|
+\le C_2,\Phi'(z_p)
+\le C_2,C_\Phi,z_p.
+\tag{J.39}
+]
+Summing over (\ell\in\partial p) (four links) and over (a) (finitely many), we get
+[
+\sum_{\ell\in\partial p}\sum_a \big|\Phi'(z_p),X_\ell^aX_\ell^a z_p\big|
+\le C,z_p,
+\tag{J.40}
+]
+where (C) depends only on (N,\lambda) (through (C_2) and the basis size) and on the fixed plaquette combinatorics (four links), but **not** on (|\Lambda|).
+
+Crucially, the right-hand side is proportional to (z_p), not to (1). Thus summing (J.40) over all plaquettes yields a bound proportional to (\sum_p z_p), not (|P(\Lambda)|).
+
+This is exactly the bookkeeping fix described informally in Part 15.10.2: the obstruction was the inability to bound (X_\ell^aX_\ell^a z_p) uniformly (and hence to prevent a per-plaquette constant); with a smooth proxy, that uniform bound holds and (\Phi'(0)=0) ensures the resulting term is weighted by (z_p). 
+
+#### J.6.2 Bounding the carré-du-champ term (\Phi''(z_p)(X_\ell^a z_p)^2)
+
+Assume (\Phi'') is bounded on ([0,2]): (|\Phi''|_\infty<\infty). (For (\Phi(s)=s^2), (\Phi''\equiv 2).)
+
+Then by Lemma J.4,
+[
+\Phi''(z_p),(X_\ell^a z_p)^2
+\le |\Phi''|_\infty \cdot \frac{2}{N\lambda},z_p.
+\tag{J.41}
+]
+Again the right-hand side is proportional to (z_p), not to (1), so after summing over the finitely many (\ell\in\partial p) and (a), this contributes at most (C,z_p) per plaquette.
+
+---
+
+### J.7. Application to the Lyapunov candidate (W_\Lambda=\exp(\eta V_\Lambda))
+
+Define for (\eta>0),
+[
+W_\Lambda(U):=\exp(\eta V_\Lambda(U)),
+\qquad V_\Lambda(U):=\sum_{p\in P(\Lambda)}\Phi(z_p(U)).
+\tag{J.42}
+]
+
+A standard computation (and explicitly used throughout Part 15’s Lyapunov discussion) gives
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+= \eta,L_\Lambda V_\Lambda + \eta^2,\Gamma_\Lambda(V_\Lambda).
+\tag{J.43}
+]
+(One can check this directly from (L(e^{\eta V}) = e^{\eta V}(\eta LV + \eta^2\Gamma(V))) using the derivation property of (\Gamma); see the general Part 15 diffusion setup. )
+
+Now split (L_\Lambda V_\Lambda = \Delta_\Lambda V_\Lambda - \langle\nabla S_\Lambda,\nabla V_\Lambda\rangle). Using (J.37)–(J.41) and the fact that only links in (\partial p) contribute to derivatives of (z_p), we obtain:
+
+**Proposition J.7 (uniform control of the diffusion part of (L_\Lambda V_\Lambda)).**
+Let (z_p(U)=1-\frac1N\mathrm{ReTr}(U_p(U))) and let (\Phi) satisfy (J.35) with (|\Phi''|*\infty<\infty). Then there exists (C=C(N,\lambda,d,\Phi)) such that for all finite lattices (\Lambda) and all (U\in M*\Lambda),
+[
+\Delta_\Lambda V_\Lambda(U);\le;C,\sum_{p\in P(\Lambda)} z_p(U).
+\tag{J.44}
+]
+In particular, **no term of the form (C,|P(\Lambda)|)** appears on the right-hand side.
+
+*Proof.* Expand (\Delta_\Lambda V_\Lambda) as in (J.37)–(J.38). Bound the (\Phi'(z_p)X_\ell^aX_\ell^a z_p) term using (J.39)–(J.40) and the (\Phi''(z_p)(X_\ell^a z_p)^2) term using (J.41). All sums over (\ell\in\partial p) and (a) are finite with constants independent of (\Lambda). Summing over (p) yields (J.44). ∎
+
+This proposition is the formal version of the “(\Phi'(0)=0) prevents an (O(|P|)) leakage from the Laplacian/Hessian term” heuristic you wanted to install.
+
+Finally, combining (J.43) and (J.44) yields the explicit “fixed bottleneck” inequality:
+
+**Corollary J.8 (the former bottleneck term is now uniformly bounded).**
+With the same hypotheses,
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+;\le;
+\eta,C\sum_{p} z_p
+;-;\eta,\langle\nabla S_\Lambda,\nabla V_\Lambda\rangle
+;+;\eta^2,\Gamma_\Lambda(V_\Lambda),
+\tag{J.45}
+]
+where the constant (C) is independent of (\Lambda). In particular, the contribution coming from the second derivatives (X_\ell^aX_\ell^a z_p) is now uniformly controlled, exactly addressing the obstruction identified in Part 15.10.2. 
+
+*Proof.* Combine (J.43) with the estimate (\Delta_\Lambda V_\Lambda\le C\sum_p z_p). ∎
+
+---
+
+### J.8. Concrete choice (\Phi(s)=s^2)
+
+The choice explicitly suggested in your instruction is (\Phi(s)=s^2), for which (\Phi'(s)=2s) and (\Phi''(s)=2). Then (V_\Lambda=\sum_p z_p^2) and (J.44) becomes especially transparent:
+
+**Corollary J.9 (explicit bound for (\Phi(s)=s^2)).**
+Let (V_\Lambda(U):=\sum_{p} z_p(U)^2). Then there exists (C=C(N,\lambda,d)) such that
+[
+\Delta_\Lambda V_\Lambda(U)\le C,\sum_{p} z_p(U).
+\tag{J.46}
+]
+Equivalently, for each plaquette,
+[
+\Delta_\Lambda (z_p^2);\lesssim; z_p,
+\tag{J.47}
+]
+uniformly in (U) and (\Lambda).
+
+*Proof.* With (\Phi(s)=s^2), equation (J.38) reads
+[
+X_\ell^aX_\ell^a(z_p^2)=2z_p,X_\ell^aX_\ell^a z_p + 2(X_\ell^a z_p)^2.
+]
+Use Lemma J.6 to bound (|X_\ell^aX_\ell^a z_p|) uniformly and Lemma J.4 to bound ((X_\ell^a z_p)^2\le c,z_p). Summing over (\ell,a) and then over (p) yields (J.46). ∎
+
+This is exactly the mechanism you asked for: the “Laplacian/Hessian term” is automatically weighted by (z_p) because of the (2z_p) factor, and therefore it cannot produce an unweighted (|P(\Lambda)|) contribution.
+
+---
+
+### J.9. What Appendix J does—and does not—complete
+
+* **Completed here:** the uniform (C^2) control needed to remove the specific bottleneck term (X_\ell^aX_\ell^a z_p) in the plaquette-Lyapunov drift computation, by replacing (z_p=d_G(U_p,\mathbf 1)^2) with the globally smooth proxy (z_p=1-\frac1N\mathrm{ReTr}(U_p)). This is exactly the “replace (z_p=d^2) by a globally smooth proxy” step that Part 15.10.2 identifies as the sharp fix. 
+
+* **Not proved here (because it is not just a smoothness issue):** the final coercive negative drift inequality (whatever precise form you adopt) depends on estimating the remaining terms in (J.45), namely (-\langle\nabla S_\Lambda,\nabla V_\Lambda\rangle) and (+\Gamma_\Lambda(V_\Lambda)), in a way that yields the required global Lyapunov condition. Appendix J isolates and resolves the **global regularity/second-derivative** obstruction that was explicitly diagnosed as “the” missing bound in the project notes. 
+
+If you want Appendix K to follow naturally, the next fully mechanical step is to take your *specific* choice of effective action (S_\Lambda) (Wilson (S_W) alone, or (S_W+S_{\mathrm{add},\Lambda}) as in the core curvature theorem hypothesis ) and do the remaining inequality estimates starting from the identity (J.45), now that the only “geometric” obstruction is gone.

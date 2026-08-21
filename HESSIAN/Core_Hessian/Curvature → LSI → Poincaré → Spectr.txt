@@ -1,0 +1,131 @@
+**Curvature → LSI → Poincaré → Spectral Gap → Mass Gap**, with status flags and constants to pin:
+
+---
+
+# Checklist (status: ✅ proved | ⚠️ conditional | ❌ gap)
+
+## 0) Setup + Objects
+
+* Measure: ( \mu \propto e^{-V},dx ) (finite‑dimensional block or finite‑volume lattice field slice), generator (L=\Delta-\nabla V\cdot\nabla).
+* Curvature (Bakry–Émery): (\mathrm{Hess},V \succeq \kappa I) on SAFE set; Lyapunov drift (LW\le -\alpha W + b\mathbf{1}_K).
+* Constants ledger to track: ( \kappa,\ \alpha,\ b,\ \delta) (SAFE thickness), local LSI ( \rho_K), patching constants (C_{\mathrm{patch}}), coercivity loss (c_{\mathrm{loss}}), dimensionless Wilson/Haar bounds (C_{\mathrm{W}},C_{\mathrm{Haar}}).
+
+---
+
+## 1) Curvature ⇒ LSI (global)
+
+**Claim:** If (i) local LSI on SAFE region (K) with constant (\rho_K), (ii) BE lower bound (\mathrm{Hess},V \succeq \kappa I) on (K), and (iii) Lyapunov (LW\le -\alpha W + b\mathbf{1}*K), then global LSI holds:
+[
+\mathrm{Ent}*\mu(f^2)\ \le\ \tfrac{2}{\rho}\int |\nabla f|^2,d\mu,\quad
+\rho \ge \min{\rho_K,, c(\alpha,b,\delta) \cdot \kappa}/C_{\mathrm{patch}} .
+]
+
+* Status: ✅ (standard Lyapunov+local-LSI patching; constants explicit once (W), (K), and locality radii are fixed).
+* Constants to record:
+
+  * (\kappa) (SAFE BE curvature).
+  * (\alpha,b) (drift).
+  * (\rho_K) (local, uniform‑in‑volume).
+  * (C_{\mathrm{patch}}=C_{\mathrm{patch}}(\delta,|\nabla W/W|_\infty,\text{covering})).
+
+---
+
+## 2) LSI ⇒ Poincaré
+
+**Claim:** Global LSI with constant (\rho) implies Poincaré with constant (\lambda \ge \rho):
+[
+\mathrm{Var}_\mu(f) \le \tfrac{1}{\lambda}\int |\nabla f|^2,d\mu,\quad \lambda \ge \rho.
+]
+
+* Status: ✅ (classical: LSI ⇒ PI).
+* Constants to record: (\lambda := \rho) (or any standard factor convention you use).
+
+---
+
+## 3) Poincaré ⇔ Spectral Gap
+
+**Claim:** Poincaré constant (\lambda) equals the bottom nonzero eigenvalue (spectral gap) of (-L) in (L^2(\mu)).
+[
+\mathrm{gap}(-L)=\lambda .
+]
+
+* Status: ✅ (standard Dirichlet form theory).
+* Constants to record: (\mathrm{gap}=\lambda).
+
+---
+
+## 4) Spectral Gap ⇒ Mass Gap (Euclidean → OS → Hamiltonian)
+
+**Claim (Euclidean finite‑volume):** If the Markov generator associated to the Euclidean Gibbs measure has ( \mathrm{gap} \ge \lambda>0) uniformly in volume and the measure satisfies Reflection Positivity (RP) and OS axioms under the continuum/infinite‑volume limit construction, then Schwinger two‑point functions exhibit exponential decay and the physical Hamiltonian (H) has (m_{\mathrm{gap}}\ge c_{\mathrm{OS}}\sqrt{\lambda}) (model‑dependent constant (c_{\mathrm{OS}}), often (c_{\mathrm{OS}}=1) with matching normalizations).
+
+* Status: ⚠️ conditional (requires: RP for the interacting measure you pass to the limit; OS reconstruction; uniformity in volume and along scaling; identification of the Markov semigroup with Euclidean time transfer).
+* Constants to record:
+
+  * (c_{\mathrm{OS}}) (normalization bridge Euclidean generator ↔ physical (H)).
+  * Uniformity modulus (U(L)): verify ( \inf_{\text{vol}}\lambda(\text{vol})\ge \lambda_*>0).
+
+---
+
+## 5) Mass Gap uniformity under RG / Continuum
+
+**Claim:** If curvature/Lyapunov/LSI constants are stable under the RG map (or improve monotonically), and RP/OS hold at each scale with tightness to a limiting measure, then
+[
+m_{\mathrm{gap}}(a)\ \ge\ m_* > 0 \quad \text{uniformly as } a\to 0,
+]
+giving a nonzero continuum mass gap.
+
+* Status: ⚠️ conditional (needs: (i) explicit RG‑step contractivity preserving (\kappa,\rho); (ii) RP stability through blocking; (iii) control of Haar/Wilson Hessian constants (C_{\mathrm{Haar}},C_{\mathrm{W}}) so SAFE convexity persists; (iv) OS limit exists with matching normalizations).
+* Constants to record:
+
+  * RG contractivity factor (\theta\in(0,1)) for Hessian deficit.
+  * Scale‑wise (\kappa_\ell,\rho_\ell) with (\inf_\ell \rho_\ell\ge \rho_*>0).
+  * Wilson/Haar bounds (C_{\mathrm{W}},C_{\mathrm{Haar}}) used in SAFE certification per scale.
+
+---
+
+# Minimal actions to certify each arrow
+
+1. **Curvature ⇒ LSI:**
+
+   * Pin (W), verify (LW\le -\alpha W + b\mathbf{1}_K).
+   * Prove local‑uniform LSI on (K) with (\rho_K) (tensorization + SAFE convexity).
+   * Compute (C_{\mathrm{patch}}).
+   * Output: explicit (\rho).
+
+2. **LSI ⇒ Poincaré ⇒ Spectral Gap:**
+
+   * Immediate; set (\lambda:=\rho).
+
+3. **Spectral Gap ⇒ Mass Gap (physics):**
+
+   * Exhibit RP for your finite‑a interacting measure.
+   * OS reconstruction with time‑translation semigroup matching (-L).
+   * Identify (m_{\mathrm{gap}} = \mathrm{gap}(H)) and relate to (\lambda) (fix (c_{\mathrm{OS}})).
+
+4. **Uniformity to Continuum:**
+
+   * Prove RG step preserves/improves (\kappa,\rho) (contractive Hessian flow).
+   * Track (C_{\mathrm{W}},C_{\mathrm{Haar}}) so SAFE region survives blocking.
+   * Prove tightness + RP stability to (a\to0) limit; OS reconstruction at the limit.
+
+---
+
+# Constants Ledger (fill with your values)
+
+* **Geometry:** (\kappa) (SAFE BE curvature); SAFE thickness (\delta).
+* **Lyapunov:** (\alpha,b); growth norm (|\nabla W/W|_\infty).
+* **Local inequalities:** (\rho_K) (uniform‑in‑volume); (C_{\mathrm{patch}}).
+* **Global:** (\rho) (global LSI), (\lambda=\rho) (Poincaré/spectral gap).
+* **Physics bridge:** (c_{\mathrm{OS}}) (normalization), RP flag ✓/✗.
+* **RG stability:** (\theta) (convexity amplification), (\inf_\ell \rho_\ell=\rho_*), bounds (C_{\mathrm{W}},C_{\mathrm{Haar}}).
+
+---
+
+# Traffic‑light summary
+
+* **Curvature → LSI:** ✅ with explicit constants once (W,K) are fixed.
+* **LSI → Poincaré/Spectral gap:** ✅ tautological.
+* **Spectral gap → Mass gap (OS):** ⚠️ needs RP + OS identification + normalization constant.
+* **Uniform mass gap (a\to0):** ⚠️ needs RG‑stability of (\kappa,\rho) and RP stability.
+
+If you want, I can turn this into a one‑page LaTeX “Chain Certificate” (with blank slots for your numeric constants) and a second page listing the exact lemmas you already have for (C_{\mathrm{W}},C_{\mathrm{Haar}},\kappa,\rho_K).

@@ -1,0 +1,458 @@
+12-10-25 PULSE 
+
+
+Here’s a compact, first‑principles note on **reporting a lattice mass gap** and how to think about its continuum limit.
+
+---
+
+# Lattice mass gap in lattice units
+
+* On a hypercubic lattice with spacing (a>0), extract the lightest screening (or transfer‑matrix) mass (\Delta(a)) from exponential decay of a suitable two‑point function:
+  [
+  C(r;a);\sim;A(a),e^{-\Delta(a), r}\quad(r\to\infty).
+  ]
+* **Report it in lattice units** as the dimensionless number
+  [
+  a,\Delta(a).
+  ]
+  (Analogous to (am_{\text{PS}}), (am_V), etc.)
+
+# Continuum interpretation via (\liminf_{a\to 0} a,\Delta(a))
+
+* If the continuum theory has a **finite physical mass gap** (m_{\text{gap}}>0), then typically
+  [
+  \Delta(a);\sim; m_{\text{gap}} ;+; O(a^p)\quad\Rightarrow\quad a,\Delta(a)\to 0
+  ]
+  because the **dimensionless** lattice number carries one power of (a).
+
+* The quantity to quote for physics is therefore either:
+
+  * the **dimensionful** gap in physical units, (m_{\text{gap}}=\Delta(a)) after scale setting, or
+  * a **dimensionless ratio** (e.g., (\Delta(a)/\sqrt{\sigma(a)}), (\Delta(a)/r_0^{-1}(a))) that has a finite continuum limit.
+
+* The **(\liminf_{a\to 0} a,\Delta(a))** is a minimal‑accumulation statement:
+  [
+  \liminf_{a\to 0} a,\Delta(a)=0
+  ]
+  whenever the continuum gap is nonzero and finite. A **nonzero** (\liminf) would indicate (\Delta(a)) blowing up (\propto a^{-1}) (a lattice artifact), not a physical mass.
+
+# Practical reporting
+
+* Quote the measured **(a,\Delta(a))** at each (a).
+* Set a scale (e.g., (w_0,,t_0,,r_0,,\sqrt{\sigma})) to convert to physical units and **extrapolate (\Delta(a))** (or a dimensionless ratio) to (a\to 0).
+* For rigor, you can record:
+  [
+  \text{Mass gap (lattice units): } a,\Delta(a),\qquad
+  \text{Continuum indicator: } \liminf_{a\to 0} a,\Delta(a)=0.
+  ]
+
+# Minimal checklist (what to publish)
+
+* Tables/plots of (a,\Delta(a)) vs (a).
+* Continuum fits of (\Delta(a)) (or (\Delta/\sqrt{\sigma})) vs (a^2) (or Symanzik‑appropriate powers).
+* Stability under operator choices and volumes; transfer‑matrix/reflection‑positivity note if invoked.
+* Final continuum estimate of (m_{\text{gap}}) (or a trusted dimensionless ratio).
+
+
+//////////////////////////
+
+
+
+Here’s a quick, clean primer on lattice gauge theory symmetries and cutoff effects, tuned for continuum‑limit thinking:
+
+![Lattice to continuum schematic](attachment)
+
+* **Discrete translations survive at any lattice spacing (a).** Correlators are invariant under integer shifts of lattice sites; there’s no preferred origin.
+* **Rotations are reduced to the hypercubic group.** In (d=4), the continuum (SO(4)) is broken to permutations and (\pi/2) axis rotations (and reflections) that map the lattice to itself.
+* **Continuum limit restores full rotations.** As (a\to 0), operators can be organized into (SO(4)) irreps; hypercubic breaking terms are irrelevant and vanish in renormalized correlators.
+* **Wilson‑loop gauge actions are (O(a^2)) accurate.** With a local, gauge‑invariant action built from closed Wilson loops (e.g., plaquette), the Symanzik effective action has no (O(a)) terms if you respect the discrete symmetries, so leading discretization errors are (O(a^2)).
+
+One‑liner (what you can drop into a doc):
+**“Translation invariance (discrete) holds at any lattice spacing (a), while rotations are reduced to the hypercubic group; in the continuum limit (a\to 0), rotational invariance (SO(4)) is restored and, for gauge actions built from Wilson loops, leading discretization errors are (O(a^2)).”**
+
+Minimal technical sketch:
+
+* Lattice symmetries (\mathcal{G}_{\text{lat}}=\mathbb{Z}^4\rtimes H_4) (translations (\mathbb{Z}^4) and hypercubic (H_4)) forbid odd‑dimension local operators in the Symanzik expansion, eliminating (O(a)) terms for standard Wilson‑loop actions.
+* The Symanzik action (S_{\text{eff}} = S_{\text{cont}} + a^2 \sum_i c_i \mathcal{O}^{(6)}_i + O(a^4)) organizes all allowed corrections; (SO(4)) is recovered after renormalization as (a\to 0).
+* Practically: when fitting masses/LSI constants/gaps versus (a), use quadratic (or improved) extrapolations unless the action/observable breaks the conditions above; improvement (e.g., clover/Symanzik) targets those (O(a^2)) coefficients.
+
+
+
+
+//////////////////////////////////
+
+
+
+
+Here’s a compact, referee‑safe way to keep **reflection positivity (RP)** intact under coarse‑graining—and why it matters.
+
+![reflection planes over a lattice with symmetric block-averaging](https://images.unsplash.com/photo-1530338032473-cf1dfd03ba45?q=80\&w=1200)
+
+**Essence.** Use a **linear, reflection‑symmetric block‑average** (“block‑spin reflection positivity”) as your RG/coarse‑graining map. With an RP‑preserving microscopic measure (e.g., Wilson action), this sufficient condition propagates RP to the coarse scale, enabling OS reconstruction and positivity of the transfer matrix at every step. ([SpringerLink][1])
+
+### Minimal checklist (safe to cite)
+
+* **Start RP:** Lattice YM with **Wilson action** is RP (Menotti–Pelissetto ’87/’88); cite this as your base. ([SpringerLink][1])
+* **Blocks mirror‑symmetric:** Partition into blocks invariant under the OS reflection plane; average with a **linear** operator (P) satisfying ( \theta P = P \theta ) (commutes with reflection). This keeps the RP cone invariant under push‑forward. (General RP criteria via **reflection‑positive doubles** give a clean framework to phrase this.) ([arXiv][2])
+* **No odd cross‑terms:** Ensure the coarse action contains only reflection‑even couplings across the plane (classical FSS/“chessboard” hygiene). ([SpringerLink][3])
+* **Iterate:** Because the coarse map is linear and reflection‑equivariant, RP is preserved at each RG step; you can then apply OS reconstruction uniformly in scale. (Use Jaffe–Janssens RP‑double language to justify the closure of the RP class under such linear maps.) ([arXiv][2])
+
+### Two cites to keep handy (use in intros/lemmas)
+
+* **RP at the microscopic level (Wilson):** “General proof of OS positivity for the Wilson action.” Commun. Math. Phys. 113 (1987) 369–373; related 1988 follow‑up. ([SpringerLink][1])
+* **Abstract RP machinery:** Jaffe–Janssens, “Reflection Positive Doubles” (necessary/sufficient RP criteria; cone invariance tools that fit linear block‑maps). ([arXiv][2])
+
+### One‑liner you can drop in a proof
+
+> **Lemma (RP‑compatible coarse‑graining).** Let ((\Omega,\mu)) be RP w.r.t. (\theta). If (P:\Omega\to\Omega') is linear and (\theta)-equivariant, then the push‑forward (P_#\mu) is RP on (\Omega'). In particular, any **reflection‑symmetric block‑average** map preserves RP; hence, starting from the Wilson action, RP holds at every coarse scale.
+
+(Justify by mapping the RP cone through (P) and applying the reflection‑positive doubles criterion; cite Menotti–Pelissetto for the base case.) ([arXiv][2])
+
+If you want, I can turn this into a LaTeX lemma+proof block tailored to your Part II “RP → OS” section, citing the above papers verbatim.
+
+[1]: https://link.springer.com/content/pdf/10.1007/BF01221251.pdf?utm_source=chatgpt.com "General proof of Osterwalder-Schrader positivity for the ..."
+[2]: https://arxiv.org/abs/1607.07126?utm_source=chatgpt.com "Reflection Positive Doubles"
+[3]: https://link.springer.com/article/10.1007/BF01940327?utm_source=chatgpt.com "Phase transitions and reflection positivity. I. General theory ..."
+
+
+
+% Part II — Reflection Positivity and OS Reconstruction
+% Section 2.X — Stability of Reflection Positivity Under Coarse Graining
+
+\begin{lemma}[RP-compatible coarse graining]\label{lem:RP-coarse-graining}
+Let $(\Omega,\mathcal{F},\mu)$ and $(\Omega',\mathcal{F}',\mu')$ be probability spaces,
+and let $\theta:\Omega\to\Omega$, $\theta':\Omega'\to\Omega'$ be measurable involutions
+(i.e.\ $\theta^2 = \mathrm{id}$, $(\theta')^2 = \mathrm{id}$).
+Assume that:
+\begin{enumerate}
+    \item $(\Omega,\mathcal{F},\mu,\theta)$ is reflection positive in the Osterwalder--Schrader sense, i.e.
+    for every finite family of bounded measurable functions $F_1,\dots,F_n$ supported in the
+    ``positive half'' (the $\theta$-invariant sub-$\sigma$-algebra $\mathcal{F}_+$),
+    the matrix
+    \[
+      \Big(\,\langle F_i,\theta F_j\rangle_{L^2(\mu)}\,\Big)_{1\le i,j\le n}
+      \quad\text{with}\quad
+      \langle F,G\rangle_{L^2(\mu)} := \int_{\Omega} \overline{F}\,G\,\mathrm{d}\mu
+    \]
+    is positive semidefinite.
+    \item $P:\Omega\to\Omega'$ is a measurable map (the coarse-graining / block-spin map) such that
+    \begin{equation}\label{eq:theta-equivariance}
+      P\circ\theta = \theta'\circ P
+    \end{equation}
+    and $P$ maps the positive half $\Omega_+$ into the positive half $\Omega'_+$ associated to $\theta'$.
+    \item $\mu'$ is the push-forward of $\mu$ under $P$, i.e.\ $\mu' = P_{\#}\mu$, so that
+    \[
+      \int_{\Omega'} G(\omega')\,\mathrm{d}\mu'(\omega')
+      =
+      \int_{\Omega} G\!\big(P(\omega)\big)\,\mathrm{d}\mu(\omega)
+      \quad\text{for all bounded measurable }G:\Omega'\to\mathbb{C}.
+    \]
+\end{enumerate}
+Then $(\Omega',\mathcal{F}',\mu',\theta')$ is reflection positive. In particular, for every finite family of bounded measurable functions $G_1,\dots,G_n$ supported in the positive half $\Omega'_+$, the matrix
+\[
+  \Big(\,\langle G_i,\theta' G_j\rangle_{L^2(\mu')}\,\Big)_{1\le i,j\le n}
+\]
+is positive semidefinite.
+\end{lemma}
+
+\begin{proof}
+Let $G_1,\dots,G_n$ be bounded measurable functions on $\Omega'$ supported in the positive half $\Omega'_+$ with respect to $\theta'$.
+Define functions $F_i:\Omega\to\mathbb{C}$ by
+\[
+  F_i(\omega) := G_i\!\big(P(\omega)\big),\qquad \omega\in\Omega.
+\]
+By assumption, $P$ maps $\Omega_+$ into $\Omega'_+$, so each $F_i$ is supported in the positive half $\Omega_+$ of $\Omega$ associated to $\theta$.
+
+For $1\le i,j\le n$, compute the reflection-positive inner products on $(\Omega',\mu',\theta')$:
+\begin{align*}
+  \langle G_i,\theta' G_j\rangle_{L^2(\mu')}
+  &=
+  \int_{\Omega'} \overline{G_i(\omega')}\,(\theta' G_j)(\omega')\,\mathrm{d}\mu'(\omega')\\
+  &=
+  \int_{\Omega'} \overline{G_i(\omega')}\,G_j\!\big(\theta'(\omega')\big)\,\mathrm{d}\mu'(\omega').
+\end{align*}
+Using $\mu' = P_{\#}\mu$,
+\begin{align*}
+  \langle G_i,\theta' G_j\rangle_{L^2(\mu')}
+  &=
+  \int_{\Omega} \overline{G_i\!\big(P(\omega)\big)}\,G_j\!\big(\theta'(P(\omega))\big)\,\mathrm{d}\mu(\omega).
+\end{align*}
+By the equivariance condition \eqref{eq:theta-equivariance}, $\theta'(P(\omega)) = P(\theta(\omega))$, hence
+\begin{align*}
+  \langle G_i,\theta' G_j\rangle_{L^2(\mu')}
+  &=
+  \int_{\Omega} \overline{G_i\!\big(P(\omega)\big)}\,G_j\!\big(P(\theta(\omega))\big)\,\mathrm{d}\mu(\omega)\\
+  &=
+  \int_{\Omega} \overline{F_i(\omega)}\,F_j\!\big(\theta(\omega)\big)\,\mathrm{d}\mu(\omega)\\
+  &=
+  \langle F_i,\theta F_j\rangle_{L^2(\mu)}.
+\end{align*}
+Therefore the Gram matrix on the coarse space coincides with the Gram matrix on the fine space:
+\[
+  \Big(\,\langle G_i,\theta' G_j\rangle_{L^2(\mu')}\,\Big)_{1\le i,j\le n}
+  =
+  \Big(\,\langle F_i,\theta F_j\rangle_{L^2(\mu)}\,\Big)_{1\le i,j\le n}.
+\]
+By reflection positivity of $(\Omega,\mu,\theta)$, the right-hand side is positive semidefinite. Hence the left-hand side is positive semidefinite as well, which is precisely reflection positivity of $(\Omega',\mu',\theta')$.
+
+This gives the claim. Conceptually, this is the simplest instance of the permanence of reflection positivity under reflection-equivariant maps between RP-doubles, as developed abstractly in Jaffe--Janssens' theory of reflection-positive doubles~\cite{JaffeJanssensRPDouble}.
+\end{proof}
+
+\begin{corollary}[Reflection-positive block-spin RG for the Wilson action]\label{cor:RP-block-Wilson}
+Let $\Lambda\subset\mathbb{Z}^d$ be a hypercubic lattice with a reflection $\vartheta$ across a coordinate hyperplane,
+and let $\mu_{W,\Lambda}$ be the Wilson lattice Yang--Mills measure on $\Omega_\Lambda$ (link configurations)
+with gauge group $G = \mathrm{SU}(N)$ and coupling $\beta>0$.
+Equip $\Omega_\Lambda$ with the standard Osterwalder--Schrader reflection $\theta$ induced by $\vartheta$ on links.
+
+\begin{enumerate}
+    \item By Menotti--Pelissetto~\cite{MenottiPelissetto1987,MenottiPelissetto1988},
+    $(\Omega_\Lambda,\mu_{W,\Lambda},\theta)$ is reflection positive.
+    \item Let $\Lambda'$ be a coarser reflection-invariant lattice obtained by blocking $\Lambda$ into reflection-symmetric blocks.
+    Let $P:\Omega_\Lambda\to\Omega_{\Lambda'}$ be a (linear) block-spin / block-link coarse-graining map such that:
+    \begin{enumerate}
+        \item $P$ maps each block in the positive half of $\Lambda$ into a link configuration on the corresponding block in the positive half of $\Lambda'$.
+        \item $P$ is reflection-equivariant:
+        \[
+          P\circ\theta = \theta'\circ P,
+        \]
+        where $\theta'$ is the OS reflection on $\Omega_{\Lambda'}$ induced by the same hyperplane $\vartheta$.
+    \end{enumerate}
+    Let $\mu_{W,\Lambda'} := P_{\#}\mu_{W,\Lambda}$ be the renormalized (coarse-grained) measure on $\Omega_{\Lambda'}$.
+\end{enumerate}
+Then $(\Omega_{\Lambda'},\mu_{W,\Lambda'},\theta')$ is reflection positive. In particular, each such RG/coarse-graining step preserves reflection positivity of the Wilson measure.
+\end{corollary}
+
+\begin{proof}
+The Wilson lattice measure $\mu_{W,\Lambda}$ with gauge group $G=\mathrm{SU}(N)$ and standard Wilson plaquette action is known to be reflection positive with respect to OS reflections across coordinate hyperplanes; see Menotti--Pelissetto~\cite{MenottiPelissetto1987,MenottiPelissetto1988}.
+
+By construction, the block map $P$ is measurable, maps the positive half of $\Omega_\Lambda$ into the positive half of $\Omega_{\Lambda'}$, and is equivariant with respect to the OS reflections: $P\circ\theta = \theta'\circ P$. The renormalized measure is the push-forward $\mu_{W,\Lambda'} = P_{\#}\mu_{W,\Lambda}$.
+
+Therefore all hypotheses of Lemma~\ref{lem:RP-coarse-graining} are satisfied with
+\[
+  (\Omega,\mu,\theta) = (\Omega_\Lambda,\mu_{W,\Lambda},\theta),
+  \qquad
+  (\Omega',\mu',\theta') = (\Omega_{\Lambda'},\mu_{W,\Lambda'},\theta').
+\]
+By Lemma~\ref{lem:RP-coarse-graining}, the coarse-grained system $(\Omega_{\Lambda'},\mu_{W,\Lambda'},\theta')$ is reflection positive.
+
+Iterating the construction over a sequence of reflection-symmetric block maps $P_k$ at scales $\Lambda_k\to\Lambda_{k+1}$ yields reflection positivity at every RG scale, with each renormalized Wilson measure $\mu_{W,\Lambda_k}$ remaining in the reflection-positive class defined by Menotti--Pelissetto and by the abstract reflection-positive double framework of Jaffe--Janssens~\cite{JaffeJanssensRPDouble}.
+\end{proof}
+
+
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+
+
+Here’s a compact technical card that formalizes “Hessian scale‑evolution as a Riccati flow ⇒ monotone stabilization of convexity on SAFE sets.”
+
+---
+
+# Riccati view of convexity renormalization
+
+**Setup.** Let (S_\ell) be the effective action at scale (\ell) (block size or RG time), with generator (L_\ell=\Delta-\nabla S_\ell\cdot\nabla). Write the **physical Hessian** (H_\ell(x):=\nabla^2 S_\ell(x)) restricted to your gauge‑projected, symmetry‑reduced tangent. Assume a **SAFE region** (K_\ell\subset M) where (i) (H_\ell) is well‑defined and (ii) the coarse‑graining map (\mathcal R_{\ell\to \ell+d\ell}) is (C^1) and preserves (K_\ell\to K_{\ell+d\ell}).
+
+**Riccati evolution.** Under infinitesimal coarse‑graining, the physical Hessian obeys a matrix Riccati‑type inequality
+[
+\partial_\ell H_\ell ;\succeq; A_\ell^\top H_\ell + H_\ell A_\ell ;+; Q_\ell ;-; H_\ell R_\ell H_\ell,
+]
+with (R_\ell\succeq 0) (coming from Schur complements / integrating out fast modes), and (Q_\ell\succeq 0) capturing fresh convexity injected by the averaging/Jacobian sector. This holds pointwise on (K_\ell).
+
+**Minimal eigenvalue drift.** Let (\lambda_\ell:=\lambda_{\min}(H_\ell)). Using standard matrix Riccati comparison (via quadratic forms on unit eigenvectors),
+[
+\partial_\ell \lambda_\ell ;\ge; q_\ell ;-; r_\ell,\lambda_\ell^2 ;-; c_\ell,\lambda_\ell,
+]
+where (q_\ell:=\lambda_{\min}(Q_\ell)\ge0), (r_\ell:=\lambda_{\max}(R_\ell)\ge0), and (c_\ell:=2|A_\ell|_{\mathrm{op}}).
+
+---
+
+## Theorem (Monotone stabilization of convexity on SAFE region)
+
+Assume on (K_\ell):
+
+1. (q_\ell\ge q_0\ge0), (r_\ell\le r_0), (c_\ell\le c_0) uniformly for (\ell\in[\ell_0,\infty)).
+
+2. Initial convexity (\lambda_{\ell_0}\ge \lambda_0\ge 0).
+
+Then (\lambda_\ell) is a **subsolution‑dominated** trajectory of the scalar Riccati ODE
+[
+\dot y = q_0 - c_0 y - r_0 y^2,\qquad y(\ell_0)=\lambda_0,
+]
+and hence satisfies for all (\ell\ge \ell_0):
+[
+\lambda_\ell ;\ge; y(\ell) ;\nearrow; y_\star := \frac{-c_0+\sqrt{c_0^2+4 r_0 q_0}}{2 r_0}\quad(\text{with }y_\star=\tfrac{q_0}{c_0}\text{ if }r_0=0).
+]
+In particular, (\lambda_\ell) increases monotonically to a **strictly positive fixed point** (y_\star>0) whenever (q_0>0), yielding a **uniform convexity floor** on (K_\ell):
+[
+\inf_{\ell\ge \ell_1}\lambda_\ell ;\ge; \tfrac12 y_\star \quad \text{for some finite }\ell_1.
+]
+
+*Proof sketch.* The matrix inequality gives a scalar differential inequality on (\lambda_\ell) via Rayleigh–Ritz. Uniform bounds (1) give the comparison ODE. Riccati with (q_0>0) has a globally attracting positive root (y_\star); standard comparison yields (\lambda_\ell\ge y(\ell)) and monotone convergence. □
+
+---
+
+## Corollaries (drop‑in)
+
+1. **Finite‑time amplification.** For any target (0<\eta<y_\star), there exists (\Delta\ell=O!\left(\log\frac{y_\star-\lambda_0}{y_\star-\eta}\right)) such that (\lambda_{\ell_0+\Delta\ell}\ge \eta).
+
+2. **SAFE‑to‑global LSI bridge (local‑to‑global hook).** If on each block the SAFE set (K_\ell) supports a local LSI with constant (\rho_{\text{loc}}\gtrsim \lambda_\ell) (uniform in volume) and the Lyapunov drift holds outside (K_\ell), then after finite scale the convexity floor (\lambda_\ell\ge \tfrac12 y_\star) yields a uniform global LSI and hence a spectral gap, stable under further RG steps.
+
+---
+
+## How to instantiate in your stack
+
+* (Q_\ell): convexity injected by Haar/Bakry–Émery + block averaging.
+* (R_\ell): Schur‑complement term from eliminating fast modes; nonnegative.
+* (A_\ell): similarity/transport terms from reparametrization (bounded on SAFE).
+* Choose (K_\ell) so your existing Hessian and Jacobian bounds give uniform ((q_0,r_0,c_0)).
+
+**Net effect:** viewing (H_\ell) through this Riccati lens makes “convexity renormalizes upward” precise and quantifies the SAFE‑region’s **monotone stability** under RG.
+
+
+
+
+///////////////////////////////////////
+
+
+
+
+
+Here’s a compact, technical checklist for the chain
+**Curvature → LSI → Poincaré → Spectral Gap → Mass Gap**, with status flags and constants to pin:
+
+---
+
+# Checklist (status: ✅ proved | ⚠️ conditional | ❌ gap)
+
+## 0) Setup + Objects
+
+* Measure: ( \mu \propto e^{-V},dx ) (finite‑dimensional block or finite‑volume lattice field slice), generator (L=\Delta-\nabla V\cdot\nabla).
+* Curvature (Bakry–Émery): (\mathrm{Hess},V \succeq \kappa I) on SAFE set; Lyapunov drift (LW\le -\alpha W + b\mathbf{1}_K).
+* Constants ledger to track: ( \kappa,\ \alpha,\ b,\ \delta) (SAFE thickness), local LSI ( \rho_K), patching constants (C_{\mathrm{patch}}), coercivity loss (c_{\mathrm{loss}}), dimensionless Wilson/Haar bounds (C_{\mathrm{W}},C_{\mathrm{Haar}}).
+
+---
+
+## 1) Curvature ⇒ LSI (global)
+
+**Claim:** If (i) local LSI on SAFE region (K) with constant (\rho_K), (ii) BE lower bound (\mathrm{Hess},V \succeq \kappa I) on (K), and (iii) Lyapunov (LW\le -\alpha W + b\mathbf{1}*K), then global LSI holds:
+[
+\mathrm{Ent}*\mu(f^2)\ \le\ \tfrac{2}{\rho}\int |\nabla f|^2,d\mu,\quad
+\rho \ge \min{\rho_K,, c(\alpha,b,\delta) \cdot \kappa}/C_{\mathrm{patch}} .
+]
+
+* Status: ✅ (standard Lyapunov+local-LSI patching; constants explicit once (W), (K), and locality radii are fixed).
+* Constants to record:
+
+  * (\kappa) (SAFE BE curvature).
+  * (\alpha,b) (drift).
+  * (\rho_K) (local, uniform‑in‑volume).
+  * (C_{\mathrm{patch}}=C_{\mathrm{patch}}(\delta,|\nabla W/W|_\infty,\text{covering})).
+
+---
+
+## 2) LSI ⇒ Poincaré
+
+**Claim:** Global LSI with constant (\rho) implies Poincaré with constant (\lambda \ge \rho):
+[
+\mathrm{Var}_\mu(f) \le \tfrac{1}{\lambda}\int |\nabla f|^2,d\mu,\quad \lambda \ge \rho.
+]
+
+* Status: ✅ (classical: LSI ⇒ PI).
+* Constants to record: (\lambda := \rho) (or any standard factor convention you use).
+
+---
+
+## 3) Poincaré ⇔ Spectral Gap
+
+**Claim:** Poincaré constant (\lambda) equals the bottom nonzero eigenvalue (spectral gap) of (-L) in (L^2(\mu)).
+[
+\mathrm{gap}(-L)=\lambda .
+]
+
+* Status: ✅ (standard Dirichlet form theory).
+* Constants to record: (\mathrm{gap}=\lambda).
+
+---
+
+## 4) Spectral Gap ⇒ Mass Gap (Euclidean → OS → Hamiltonian)
+
+**Claim (Euclidean finite‑volume):** If the Markov generator associated to the Euclidean Gibbs measure has ( \mathrm{gap} \ge \lambda>0) uniformly in volume and the measure satisfies Reflection Positivity (RP) and OS axioms under the continuum/infinite‑volume limit construction, then Schwinger two‑point functions exhibit exponential decay and the physical Hamiltonian (H) has (m_{\mathrm{gap}}\ge c_{\mathrm{OS}}\sqrt{\lambda}) (model‑dependent constant (c_{\mathrm{OS}}), often (c_{\mathrm{OS}}=1) with matching normalizations).
+
+* Status: ⚠️ conditional (requires: RP for the interacting measure you pass to the limit; OS reconstruction; uniformity in volume and along scaling; identification of the Markov semigroup with Euclidean time transfer).
+* Constants to record:
+
+  * (c_{\mathrm{OS}}) (normalization bridge Euclidean generator ↔ physical (H)).
+  * Uniformity modulus (U(L)): verify ( \inf_{\text{vol}}\lambda(\text{vol})\ge \lambda_*>0).
+
+---
+
+## 5) Mass Gap uniformity under RG / Continuum
+
+**Claim:** If curvature/Lyapunov/LSI constants are stable under the RG map (or improve monotonically), and RP/OS hold at each scale with tightness to a limiting measure, then
+[
+m_{\mathrm{gap}}(a)\ \ge\ m_* > 0 \quad \text{uniformly as } a\to 0,
+]
+giving a nonzero continuum mass gap.
+
+* Status: ⚠️ conditional (needs: (i) explicit RG‑step contractivity preserving (\kappa,\rho); (ii) RP stability through blocking; (iii) control of Haar/Wilson Hessian constants (C_{\mathrm{Haar}},C_{\mathrm{W}}) so SAFE convexity persists; (iv) OS limit exists with matching normalizations).
+* Constants to record:
+
+  * RG contractivity factor (\theta\in(0,1)) for Hessian deficit.
+  * Scale‑wise (\kappa_\ell,\rho_\ell) with (\inf_\ell \rho_\ell\ge \rho_*>0).
+  * Wilson/Haar bounds (C_{\mathrm{W}},C_{\mathrm{Haar}}) used in SAFE certification per scale.
+
+---
+
+# Minimal actions to certify each arrow
+
+1. **Curvature ⇒ LSI:**
+
+   * Pin (W), verify (LW\le -\alpha W + b\mathbf{1}_K).
+   * Prove local‑uniform LSI on (K) with (\rho_K) (tensorization + SAFE convexity).
+   * Compute (C_{\mathrm{patch}}).
+   * Output: explicit (\rho).
+
+2. **LSI ⇒ Poincaré ⇒ Spectral Gap:**
+
+   * Immediate; set (\lambda:=\rho).
+
+3. **Spectral Gap ⇒ Mass Gap (physics):**
+
+   * Exhibit RP for your finite‑a interacting measure.
+   * OS reconstruction with time‑translation semigroup matching (-L).
+   * Identify (m_{\mathrm{gap}} = \mathrm{gap}(H)) and relate to (\lambda) (fix (c_{\mathrm{OS}})).
+
+4. **Uniformity to Continuum:**
+
+   * Prove RG step preserves/improves (\kappa,\rho) (contractive Hessian flow).
+   * Track (C_{\mathrm{W}},C_{\mathrm{Haar}}) so SAFE region survives blocking.
+   * Prove tightness + RP stability to (a\to0) limit; OS reconstruction at the limit.
+
+---
+
+# Constants Ledger (fill with your values)
+
+* **Geometry:** (\kappa) (SAFE BE curvature); SAFE thickness (\delta).
+* **Lyapunov:** (\alpha,b); growth norm (|\nabla W/W|_\infty).
+* **Local inequalities:** (\rho_K) (uniform‑in‑volume); (C_{\mathrm{patch}}).
+* **Global:** (\rho) (global LSI), (\lambda=\rho) (Poincaré/spectral gap).
+* **Physics bridge:** (c_{\mathrm{OS}}) (normalization), RP flag ✓/✗.
+* **RG stability:** (\theta) (convexity amplification), (\inf_\ell \rho_\ell=\rho_*), bounds (C_{\mathrm{W}},C_{\mathrm{Haar}}).
+
+---
+
+# Traffic‑light summary
+
+* **Curvature → LSI:** ✅ with explicit constants once (W,K) are fixed.
+* **LSI → Poincaré/Spectral gap:** ✅ tautological.
+* **Spectral gap → Mass gap (OS):** ⚠️ needs RP + OS identification + normalization constant.
+* **Uniform mass gap (a\to0):** ⚠️ needs RG‑stability of (\kappa,\rho) and RP stability.
+
+If you want, I can turn this into a one‑page LaTeX “Chain Certificate” (with blank slots for your numeric constants) and a second page listing the exact lemmas you already have for (C_{\mathrm{W}},C_{\mathrm{Haar}},\kappa,\rho_K).
+
+
+
+
+
+

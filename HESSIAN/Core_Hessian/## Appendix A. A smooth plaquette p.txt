@@ -1,0 +1,405 @@
+## Appendix A. A smooth plaquette proxy and the Lyapunov drift computation
+
+### A.1 Motivation: where the differentiability problem enters
+
+The Lyapunov candidates used in the drift mechanism (Parts 12–15) are exponential weights of a plaquette “energy” functional, e.g.
+[
+W_\Lambda(U)=\exp!\Big(\eta\sum_{p\in P(\Lambda)}\Phi(z_p(U))\Big),
+\qquad z_p(U)=\text{(plaquette energy)}.
+]
+In the drift computation for such a (W_\Lambda), one inevitably encounters second derivatives of (z_p) along link vector fields, schematically terms of the form ((X_\ell^aX_\ell^a z_p)) (one sees this explicitly in the “analytic hinge” discussion).  The issue is that the most geometric choice (z_p(U)=d_G(U_p(U),e)^2) fails to be globally (C^2) because of the cut locus, so those terms are not uniformly controlled. This is identified as the point where the drift computation “breaks.” 
+
+A remedy already suggested in the notes is to replace the distance-square plaquette energy by a **globally smooth, conjugation-invariant** proxy, with bounded derivatives, e.g.
+[
+\phi(g):=1-\frac1N \mathrm{ReTr}(g)\quad (g\in SU(N)),
+]
+and to define (z_p(U)=\phi(U_p(U))). 
+
+This appendix executes that replacement and re-runs the drift algebra at the level of pointwise estimates, with constants uniform in (\Lambda).
+
+---
+
+### A.2 The smooth plaquette observable and “small-field” sets
+
+We adopt the same canonical plaquette observable already fixed in the main text:
+[
+\phi(g)=1-\frac1N\mathrm{ReTr}(g),
+\qquad g\in SU(N),
+]
+and for a configuration (U\in M_\Lambda:=G^{E(\Lambda)}) we write
+[
+z_p(U):=\phi\big(U_p(U)\big)\ge 0 .
+]
+This is the same (\phi) used to define the canonical “good set” (K_\Lambda(\varepsilon)) and its max version:
+[
+K_\Lambda^{\mathrm{av}}(\varepsilon):=\Big{U:\frac1{|P(\Lambda)|}\sum_{p\in P(\Lambda)}\phi(U_p(U))\le \varepsilon\Big},
+\qquad
+K_\Lambda^{\max}(\varepsilon):={U:\phi(U_p(U))\le \varepsilon\ \forall p},
+]
+with (K_\Lambda^{\max}(\varepsilon)\subset K_\Lambda^{\mathrm{av}}(\varepsilon)). 
+
+This choice is also the Wilson plaquette energy density (up to the coupling (\beta)); the Wilson action is a sum over plaquettes of (\beta\phi(U_p)). 
+
+---
+
+### A.3 Generator, carré du champ, and the two chain rules we will use
+
+We work with the reversible diffusion generator on ((M_\Lambda,g_\Lambda)) with Gibbs measure (d\mu_\Lambda\propto e^{-S_\Lambda},d\mathrm{vol}*{g*\Lambda}):
+[
+L_\Lambda f=\Delta_{g_\Lambda}f-\langle \nabla S_\Lambda,\nabla f\rangle_{g_\Lambda},
+\qquad
+\Gamma_\Lambda(f)=|\nabla f|*{g*\Lambda}^2.
+
+]
+
+Two standard diffusion identities (already recorded in the notes) drive all computations:
+
+1. **Chain rule for (L)** (Lemma 2.6):
+   [
+   L(\Phi(f))=\Phi'(f),Lf+\Phi''(f),\Gamma(f).
+   \tag{A.1}
+   ]
+
+
+2. **Exponential chain rule** (Lemma 14.3):
+   [
+   L(e^{\kappa V})=e^{\kappa V}\big(\kappa,LV+\kappa^2,\Gamma(V)\big).
+   \tag{A.2}
+   ]
+
+
+---
+
+### A.4 Uniform (C^2) control for the plaquette proxy (z_p(U)=\phi(U_p(U)))
+
+The key point of replacing (d_G^2) by (\phi) is that (\phi) is globally smooth on the compact group, hence its derivatives of any fixed order are bounded.
+
+#### Lemma A.1 (Uniform derivative bounds for (\phi))
+
+Let (G=SU(N)) with a fixed bi-invariant Riemannian metric. Then there exist finite constants
+[
+M_1:=\sup_{g\in G}|\nabla\phi(g)|,\qquad
+M_2:=\sup_{g\in G}|\nabla^2\phi(g)|_{\mathrm{op}}<\infty,
+]
+depending only on ((G,\phi,g_G)).
+
+**Proof.** (\phi) is smooth and (G) is compact, so (\nabla\phi) and (\nabla^2\phi) are continuous and achieve maxima. (\square)
+
+We also need a “quadratic control” of (|\nabla\phi|^2) by (\phi) to prevent the (\Phi'')-term from producing an (O(|P(\Lambda)|)) leakage.
+
+#### Lemma A.2 (Global gradient-square control (|\nabla\phi|^2\lesssim \phi))
+
+There exists a constant (C_\phi<\infty) such that for all (g\in G),
+[
+|\nabla\phi(g)|^2\le C_\phi,\phi(g).
+\tag{A.3}
+]
+
+**Proof.**
+Step 1 (local estimate near the identity). Consider (g(t)=\exp(tX)) with (X\in\mathfrak{su}(N)). Using the Taylor expansion of the matrix exponential and the fact that (\mathrm{Tr}(X)=0), one has
+[
+\mathrm{ReTr}(e^{tX})=N+\frac{t^2}{2}\mathrm{ReTr}(X^2)+O(t^3).
+]
+For (X\in\mathfrak{su}(N)) (anti-Hermitian), (\mathrm{ReTr}(X^2)=\mathrm{Tr}(X^2)) is strictly negative unless (X=0), and (with the standard inner product normalization) (-\mathrm{Tr}(X^2)=|X|^2). Thus
+[
+\phi(e^{tX})
+=1-\frac1N\mathrm{ReTr}(e^{tX})
+=\frac{t^2}{2N}|X|^2+O(t^3),
+]
+so (\phi) has a nondegenerate minimum at (e), with positive-definite Hessian at (e). Standard Taylor remainder estimates in normal coordinates then imply: there exists a neighborhood (U\ni e) and constants (c_1,c_2>0) such that
+[
+\phi(g)\ge c_1,d_G(g,e)^2,\qquad
+|\nabla\phi(g)|\le c_2,d_G(g,e),
+\qquad g\in U.
+]
+Combining gives (|\nabla\phi(g)|^2\le (c_2^2/c_1)\phi(g)) on (U).
+
+Step 2 (global extension). On the compact set (G\setminus U), (\phi) is continuous and strictly positive (since (\phi(g)=0) forces (\mathrm{ReTr}(g)=N), i.e. all eigenvalues are (1), hence (g=e)). Let (m:=\inf_{G\setminus U}\phi>0) and (M:=\sup_G|\nabla\phi|^2<\infty). Then for (g\notin U),
+[
+|\nabla\phi(g)|^2\le M \le \frac{M}{m},\phi(g).
+]
+Taking (C_\phi:=\max{c_2^2/c_1,M/m}) yields (A.3) on all of (G). (\square)
+
+---
+
+### A.5 Lattice locality constants
+
+Two purely combinatorial locality facts are used to keep constants uniform in (\Lambda):
+
+* Each plaquette depends on exactly (4) links.
+* Each link belongs to at most (2(d-1)) plaquettes in dimension (d) (hence at most (6) plaquettes in (d=4)). 
+
+We denote
+[
+m:=4,\qquad \nu:=2(d-1)\quad(\nu=6\text{ in }d=4).
+\tag{A.4}
+]
+
+---
+
+### A.6 The modified Lyapunov candidate and its drift algebra
+
+We now implement the second modification: choose (\Phi) with (\Phi'(0)=0). A canonical choice is
+[
+\Phi(s)=s^2,\qquad \Phi'(s)=2s,\qquad \Phi''(s)=2.
+\tag{A.5}
+]
+Define
+[
+V_\Lambda(U):=\sum_{p\in P(\Lambda)} \Phi(z_p(U))=\sum_{p} z_p(U)^2,
+\qquad
+W_\Lambda(U):=e^{\eta V_\Lambda(U)},
+\tag{A.6}
+]
+and the “linear badness” functional
+[
+\mathcal D_\Lambda(U):=\sum_{p\in P(\Lambda)} z_p(U)=\sum_p \phi(U_p(U)).
+\tag{A.7}
+]
+
+By the exponential chain rule (A.2),
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+=\eta,L_\Lambda V_\Lambda+\eta^2,\Gamma_\Lambda(V_\Lambda).
+\tag{A.8}
+]
+
+
+So we need to control (L_\Lambda V_\Lambda) and (\Gamma_\Lambda(V_\Lambda)).
+
+---
+
+### A.7 Bounding (L_\Lambda V_\Lambda) without an (O(|P|)) leakage
+
+Apply the diffusion chain rule (A.1) to each term (z_p^2=\Phi(z_p)):
+[
+L_\Lambda(z_p^2)=\Phi'(z_p),L_\Lambda z_p+\Phi''(z_p),\Gamma_\Lambda(z_p)
+=2z_p,L_\Lambda z_p + 2,\Gamma_\Lambda(z_p).
+\tag{A.9}
+]
+
+
+Summing over plaquettes,
+[
+L_\Lambda V_\Lambda
+=2\sum_p z_p,L_\Lambda z_p + 2\sum_p \Gamma_\Lambda(z_p).
+\tag{A.10}
+]
+
+Now expand (L_\Lambda z_p=\Delta z_p - \langle\nabla S_\Lambda,\nabla z_p\rangle) using the generator definition.  This gives
+[
+L_\Lambda V_\Lambda
+=2\sum_p z_p,\Delta z_p
+-2\sum_p z_p,\langle\nabla S_\Lambda,\nabla z_p\rangle
++2\sum_p \Gamma_\Lambda(z_p).
+\tag{A.11}
+]
+
+We control the two “geometric” (non-drift) terms by (\mathcal D_\Lambda).
+
+#### Lemma A.3 (The Laplacian/Hessian term becomes (\mathcal D_\Lambda)-weighted)
+
+There exists a constant (C_{\Delta}) independent of (\Lambda) such that
+[
+2\sum_{p} z_p,\Delta z_p\ \le\ C_\Delta,\mathcal D_\Lambda.
+\tag{A.12}
+]
+
+**Proof.**
+Fix a plaquette (p). The map (U\mapsto z_p(U)=\phi(U_p(U))) is smooth and depends only on the (m=4) link variables around (p). The linkwise Laplacian (\Delta) on the product manifold is a sum of second derivatives along each link factor; by locality, only those (4) link factors contribute.
+
+Because (\phi) is (C^2) with globally bounded Hessian (Lemma A.1), and the plaquette word (U_p(\cdot)) has fixed length (4), there is a uniform bound
+[
+|\Delta z_p(U)|\le C_0
+\quad\text{for all }U\in M_\Lambda,
+\tag{A.13}
+]
+with (C_0) depending only on ((G,\phi,g_G)) and the plaquette word, not on (\Lambda). Therefore,
+[
+2\sum_p z_p,\Delta z_p
+\le 2C_0\sum_p z_p
+= 2C_0,\mathcal D_\Lambda.
+]
+Set (C_\Delta:=2C_0). (\square)
+
+This is exactly where (\Phi'(0)=0) matters: the potentially dangerous term (\Delta z_p) is multiplied by (z_p), so the sum scales like (\sum_p z_p=\mathcal D_\Lambda), not like (|P(\Lambda)|).
+
+#### Lemma A.4 (The (\Phi'')-term is also (\mathcal D_\Lambda)-weighted)
+
+There exists a constant (C_{\Gamma z}) independent of (\Lambda) such that
+[
+2\sum_p \Gamma_\Lambda(z_p)\ \le\ C_{\Gamma z},\mathcal D_\Lambda.
+\tag{A.14}
+]
+
+**Proof.**
+For each plaquette (p),
+[
+\Gamma_\Lambda(z_p)=|\nabla z_p|^2.
+]
+Since (z_p=\phi\circ U_p) and the plaquette word has fixed length, (|\nabla z_p|) is controlled by (|\nabla\phi|) up to a uniform multiplicative constant. Combining this with the global gradient-square control (|\nabla\phi|^2\le C_\phi,\phi) from Lemma A.2 yields
+[
+\Gamma_\Lambda(z_p)\le C_1,z_p,
+]
+with (C_1) independent of (\Lambda). Summing gives
+[
+2\sum_p \Gamma_\Lambda(z_p)\le 2C_1\sum_p z_p=2C_1,\mathcal D_\Lambda.
+]
+Set (C_{\Gamma z}:=2C_1). (\square)
+
+Putting Lemmas A.3–A.4 into (A.11) yields the uniform bound
+[
+L_\Lambda V_\Lambda
+\le
+C_V,\mathcal D_\Lambda
+----------------------
+
+2\sum_p z_p,\langle\nabla S_\Lambda,\nabla z_p\rangle,
+\qquad
+C_V:=C_\Delta+C_{\Gamma z}.
+\tag{A.15}
+]
+
+Up to this point, the only ingredient was that (z_p) is built from a globally smooth proxy (\phi) with bounded (C^2) norm—precisely the replacement recommended in the “analytic hinge” discussion. 
+
+---
+
+### A.8 Bounding (\Gamma_\Lambda(V_\Lambda)) by (\mathcal D_\Lambda) with uniform constants
+
+We now bound the quadratic term (\Gamma_\Lambda(V_\Lambda)=|\nabla V_\Lambda|^2).
+
+Write the edgewise gradient decomposition on a product manifold (one may decompose (\nabla=\bigoplus_{\ell\in E(\Lambda)}\nabla_\ell)), so
+[
+\Gamma_\Lambda(V_\Lambda)=\sum_{\ell\in E(\Lambda)}|\nabla_\ell V_\Lambda|^2.
+\tag{A.16}
+]
+(See the general “sum over edges” principle for product manifolds.) 
+
+For fixed (\ell), only plaquettes (p\ni \ell) contribute to (\nabla_\ell V_\Lambda). Using (V_\Lambda=\sum_p z_p^2),
+[
+\nabla_\ell V_\Lambda
+=\sum_{p\ni \ell} \nabla_\ell(z_p^2)
+=\sum_{p\ni\ell} 2z_p,\nabla_\ell z_p.
+\tag{A.17}
+]
+Hence, by Cauchy–Schwarz and the incidence bound (|{p:,p\ni\ell}|\le \nu) from (A.4),
+[
+|\nabla_\ell V_\Lambda|^2
+\le
+\Big(\sum_{p\ni\ell} 2z_p,|\nabla_\ell z_p|\Big)^2
+\le
+\nu\sum_{p\ni\ell} 4 z_p^2,|\nabla_\ell z_p|^2.
+\tag{A.18}
+]
+Summing over (\ell),
+[
+\Gamma_\Lambda(V_\Lambda)
+\le
+4\nu\sum_{\ell}\sum_{p\ni\ell} z_p^2,|\nabla_\ell z_p|^2.
+\tag{A.19}
+]
+Now use two uniform facts:
+
+1. (|\nabla_\ell z_p|^2\le|\nabla z_p|^2=\Gamma(z_p)\le C_1 z_p) from Lemma A.4’s proof.
+
+2. (0\le z_p\le 2), since (\mathrm{ReTr}(g)\in[-N,N]) implies (\phi(g)\in[0,2]).
+
+Thus (z_p^2|\nabla_\ell z_p|^2 \le C_1 z_p^3\le 2C_1 z_p^2\le 4C_1 z_p). Insert into (A.19):
+[
+\Gamma_\Lambda(V_\Lambda)
+\le
+4\nu\sum_{\ell}\sum_{p\ni\ell} (4C_1 z_p)
+=16C_1\nu\sum_{\ell}\sum_{p\ni\ell} z_p.
+\tag{A.20}
+]
+Each plaquette has exactly (m=4) links, so (\sum_{\ell}\sum_{p\ni\ell} z_p = m\sum_p z_p = 4\mathcal D_\Lambda). Therefore,
+[
+\Gamma_\Lambda(V_\Lambda)\le C_\Gamma,\mathcal D_\Lambda,
+\qquad
+C_\Gamma:=16C_1\nu m = 64 C_1\nu,
+\tag{A.21}
+]
+uniformly in (\Lambda) (and in (d=4), (\nu=6)).
+
+---
+
+### A.9 Final uniform drift inequality: what is fixed, and what remains action-dependent
+
+Combine (A.8), (A.15), and (A.21):
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+\le
+\eta,C_V,\mathcal D_\Lambda
+-,
+2\eta\sum_p z_p,\langle\nabla S_\Lambda,\nabla z_p\rangle
++\eta^2,C_\Gamma,\mathcal D_\Lambda.
+\tag{A.22}
+]
+Equivalently,
+[
+L_\Lambda W_\Lambda
+\le
+\Big(
+(\eta C_V+\eta^2 C_\Gamma),\mathcal D_\Lambda
+---------------------------------------------
+
+2\eta\sum_p z_p,\langle\nabla S_\Lambda,\nabla z_p\rangle
+\Big),W_\Lambda.
+\tag{A.23}
+]
+
+This achieves the specific technical goal stated in your two-point fix:
+
+* the previously uncontrolled “Hessian of (z_p)” contribution is now uniformly bounded (because (\phi) is globally (C^2)), and
+* choosing (\Phi'(0)=0) (here (\Phi(s)=s^2)) forces these second-derivative contributions to be weighted by (z_p), hence by (\mathcal D_\Lambda=\sum_p z_p), and **not** by (|P(\Lambda)|).
+
+This is precisely the obstruction and remedy highlighted in the Part 15.8.2–15.8.3 discussion. 
+
+#### Corollary A.5 (A clean “no (|P|)-leakage” statement)
+
+There exist constants (C_V,C_\Gamma<\infty), depending only on (G), the chosen metric, the dimension (d) via (\nu), and the choice (\Phi(s)=s^2), such that for all finite (\Lambda),
+[
+L_\Lambda W_\Lambda
+\le
+\Big(
+(\eta C_V+\eta^2 C_\Gamma),\mathcal D_\Lambda
+---------------------------------------------
+
+2\eta\sum_p z_p,\langle\nabla S_\Lambda,\nabla z_p\rangle
+\Big),W_\Lambda.
+\tag{A.24}
+]
+
+In particular, **every term other than the action-dependent drift pairing**
+[
+\sum_p z_p,\langle\nabla S_\Lambda,\nabla z_p\rangle
+\tag{A.25}
+]
+is already controlled with constants uniform in (\Lambda).
+
+---
+
+### A.10 How (A.24) closes a Lyapunov drift bound once the action supplies coercivity
+
+To obtain a Lyapunov drift inequality of the form targeted in the program (schematically (L_\Lambda W_\Lambda \le (-c,\mathcal D_\Lambda+b)W_\Lambda)), it suffices to verify a pointwise lower bound on the action-gradient pairing (A.25), e.g. an estimate of the form
+[
+2\sum_p z_p,\langle\nabla S_\Lambda,\nabla z_p\rangle
+\ \ge\
+\alpha,\mathcal D_\Lambda-\beta,
+\tag{A.26}
+]
+with constants (\alpha>0,\beta\ge 0) independent of (\Lambda). Plugging (A.26) into (A.24) gives
+[
+L_\Lambda W_\Lambda
+\le
+\Big(
+-(\eta\alpha-\eta C_V-\eta^2 C_\Gamma),\mathcal D_\Lambda
++\eta\beta
+\Big)W_\Lambda,
+\tag{A.27}
+]
+and choosing (\eta>0) small enough so that (\eta\alpha-\eta C_V-\eta^2 C_\Gamma>0) yields the desired drift with uniform constants.
+
+The key content of this appendix is that, after replacing (d_G^2) by (\phi(g)=1-\frac1N\mathrm{ReTr}(g)) and taking (\Phi'(0)=0), the drift computation has no hidden (|P(\Lambda)|)-scale leakage; all “geometric” contributions are uniformly (\mathcal D_\Lambda)-weighted, and the only remaining input is the coercivity (A.26), which is an action-specific estimate.
+
+---

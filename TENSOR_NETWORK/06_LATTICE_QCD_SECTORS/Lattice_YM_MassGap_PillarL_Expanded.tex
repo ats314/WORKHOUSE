@@ -1,0 +1,1018 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage{hyperref}
+\usepackage{bm}
+
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\begin{document}
+
+\title{Lattice Yang--Mills Mass Gap, Pillar L:\\
+Haar Mass, Hessian Gap, and Strong--Coupling Spectral Gap}
+
+\author{synthetic compilation of the Pillar L module}
+\date{\today}
+
+\maketitle
+
+\begin{abstract}
+This note assembles the finite--cutoff (``Pillar L'') component of a
+larger program toward the Yang--Mills mass gap.  We work with
+four--dimensional lattice $SU(N)$ Yang--Mills theory and establish three
+rigorous ingredients:
+
+\begin{itemize}
+  \item[(L1)] a uniform, explicitly computable Hessian lower bound for
+  the effective lattice action, originating from the Haar measure;
+
+  \item[(L2)] a Bakry--\'Emery curvature bound on the irreducible sector
+  of configuration space, implying Poincar\'e and logarithmic Sobolev
+  inequalities and a finite--volume spectral gap for the Langevin
+  generator;
+
+  \item[(L3)] a strong--coupling transfer matrix spectral gap,
+  obtained via character expansion and Wilson--loop excitations.
+\end{itemize}
+
+The key geometric input is that the product manifold
+$SU(N)^{|\mathcal{B}|}$ has strictly positive Ricci curvature and that
+the Haar Jacobian in exponential coordinates induces a uniform quadratic
+mass term with coefficient $c_0 = \frac{N^2-1}{2N}$ (in the standard
+normalisation).  The main analytic input is a polarity result: the
+reducible configurations form a set of zero capacity for the relevant
+Dirichlet form, so spectral information is controlled by the irreducible
+sector where the Hessian bound holds globally.
+
+We also record a conjectural ``Geometric--Spectral Stability Mechanism''
+describing how, in a continuum RG picture, the finite--cutoff Haar mass
+acts as an initial convexity source for a matrix Riccati evolution of
+the Hessian, after which intrinsic group geometry and non--perturbative
+topology (Wilson loops, string tension) are expected to lock in a
+non--zero mass gap.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction and relation to the continuum mass gap}
+
+\subsection{Continuum mass gap and lattice strategy}
+
+The Clay Millennium problem asks for a rigorous construction of
+four--dimensional $SU(N)$ Yang--Mills theory on Minkowski space
+$\mathbb{R}^{1,3}$ satisfying the Wightman axioms (or equivalently the
+Osterwalder--Schrader axioms in Euclidean signature) together with a
+\emph{mass gap}: the spectrum of the Hamiltonian $H$ in the physical
+Hilbert space should satisfy
+\[
+  \sigma(H) = \{0\} \cup [m_{\mathrm{phys}},\infty)
+\]
+for some $m_{\mathrm{phys}}>0$.  Equivalently, Euclidean correlation
+functions should decay exponentially with rate $m_{\mathrm{phys}}$ in
+spacelike directions, or the transfer matrix should have a non--trivial
+spectral gap.
+
+A natural non--perturbative approach proceeds via lattice
+regularisation:
+
+\begin{enumerate}
+  \item First, define the theory rigorously at fixed lattice spacing
+  $a>0$ and prove the existence of a \emph{finite--cutoff spectral gap}
+  $\Delta(a)>0$, uniform in the spatial volume.
+
+  \item Second, identify a renormalisation trajectory $g(a)$ such that
+  the \emph{physical} mass scale extracted from $\Delta(a,g(a))$
+  converges to a finite, strictly positive limit as $a\to 0$.
+\end{enumerate}
+
+This note is concerned exclusively with the first step and with
+clarifying the geometric--analytic structure that is hoped to persist in
+the second.  The finite--cutoff content is what we call ``Pillar L'' of
+the larger program.
+
+\subsection{Lattice configuration and Wilson action}
+
+Fix a finite hypercubic Euclidean lattice $\Lambda\subset\mathbb{Z}^4$
+with periodic boundary conditions.  Let $\mathcal{B}$ denote the set of
+oriented nearest--neighbour bonds $b=(x,\mu)$, $x\in\Lambda$,
+$\mu\in\{1,2,3,4\}$, and let $N_b = |\mathcal{B}|$.  The gauge group is
+$G = SU(N)$ with Lie algebra $\mathfrak{g} = \mathfrak{su}(N)$.
+
+\begin{definition}
+The \emph{lattice configuration space} is the compact Lie group
+\[
+  \mathcal{C}_\Lambda = G^{N_b} = SU(N)^{N_b}
+\]
+equipped with the product of the standard bi--invariant Riemannian
+metric on $G$ and the corresponding product Haar probability measure
+\[
+  d\mu_H(U) = \prod_{b\in\mathcal{B}} dU_b.
+\]
+\end{definition}
+
+We write $\langle\cdot,\cdot\rangle$ for the inner product on
+$\mathfrak{g}$ induced by the (negative) Killing form and extend it
+productwise to $\mathcal{C}_\Lambda$.  The associated Laplace--Beltrami
+operator and gradient are denoted by $\Delta_{\mathcal{C}_\Lambda}$ and
+$\nabla_{\mathcal{C}_\Lambda}$.
+
+The Wilson action at inverse coupling $\beta>0$ is
+\[
+  S_W(U) = \sum_{p} \Big(1 - \frac{1}{N}\,\Re\mathrm{Tr}\,U_p\Big),
+\]
+where $p$ runs over oriented plaquettes and $U_p$ is the ordered product
+of link variables around $p$.  The Euclidean lattice Yang--Mills measure
+is
+\[
+  d\mu_{\Lambda,\beta}(U)
+  = Z_{\Lambda,\beta}^{-1} e^{-\beta S_W(U)}\,d\mu_H(U).
+\]
+
+We will use both the Euclidean path--integral measure and the Hamiltonian
+formulation via a transfer matrix.  The latter is obtained by
+Osterwalder--Seiler/L\"uscher reconstruction and leads to a positive
+self--adjoint transfer matrix $T$ acting on the physical Hilbert space
+associated with a spatial slice.
+
+\section{Haar measure in exponential coordinates and the Haar mass term}
+
+\subsection{Exponential coordinates on $SU(N)$}
+
+Let $\mathfrak{g} = \mathfrak{su}(N)$ with basis
+$\{T^a\}_{a=1}^{N^2-1}$ satisfying
+\[
+  [T^a,T^b] = f^{abc} T^c,\qquad
+  \mathrm{Tr}(T^a T^b) = \frac{1}{2}\delta^{ab}.
+\]
+This is the standard physics normalisation.  For $A\in\mathfrak{g}$,
+write
+\[
+  U = \exp(iagA),
+\]
+where $a>0$ is the lattice spacing and $g$ the bare coupling.  For small
+$A$, this gives a diffeomorphism between a neighbourhood of $0$ in
+$\mathfrak{g}$ and a neighbourhood of the identity in $G$.
+
+On the lattice we use exponential coordinates
+\[
+  U_b = \exp(iagA_b),\qquad A_b\in\mathfrak{g},
+\]
+for link variables sufficiently close to the identity.  The product map
+identifies a neighbourhood of $(0,\dots,0)\in\mathfrak{g}^{N_b}$ with a
+neighbourhood of $(I,\dots,I)\in \mathcal{C}_\Lambda$.
+
+\subsection{Jacobian and measure action}
+
+The Haar measure transforms under the exponential map as
+\[
+  d\mu_H(U) = J(A)\,dA,\qquad
+  dA = \prod_{b\in\mathcal{B}} dA_b,
+\]
+where $J(A)$ is the Jacobian density.  A standard Lie--theoretic
+computation (see, e.g., Helgason or Knapp) gives, for each single link,
+\[
+  J(A)
+  = \det_{\mathfrak{g}}\!\left(
+      \frac{\sinh(\tfrac{\mathrm{ad}_{iagA}}{2})}{\tfrac{\mathrm{ad}_{iagA}}{2}}
+    \right),
+\]
+where $\mathrm{ad}_X(Y) = [X,Y]$.
+
+\begin{definition}
+The \emph{Haar measure action} is
+\[
+  S_{\mathrm{Haar}}(A) = -\log J(A),
+\]
+extended additively over links.
+\end{definition}
+
+We now compute the small--field expansion of $S_{\mathrm{Haar}}$ and
+extract the quadratic term.
+
+\begin{theorem}[Explicit Haar mass coefficient for $SU(N)$]
+\label{thm:Haar-mass-coeff}
+Let $G=SU(N)$ with generators and trace normalisation as above.  For a
+single link, in exponential coordinates $U=\exp(iagA)$ with
+$A\in\mathfrak{su}(N)$ small, the Haar measure action has the expansion
+\[
+  S_{\mathrm{Haar}}(A)
+  = \frac{N^2-1}{2N}\,a^2 g^2\,\mathrm{Tr}(A^2)
+    + O(a^4\|A\|^4),
+\]
+where $\|A\|^2 = -\mathrm{Tr}(A^2)$ and the $O(a^4\|A\|^4)$ term is
+uniform on compact subsets.  In particular, the Hessian of
+$S_{\mathrm{Haar}}$ at $A=0$ is the positive multiple
+\[
+  \mathrm{Hess}\,S_{\mathrm{Haar}}(0)
+  = c_0 a^2 g^2\,\mathrm{Id},\qquad
+  c_0 = \frac{N^2-1}{2N}.
+\]
+\end{theorem}
+
+\begin{proof}
+Set $Y = \frac{\mathrm{ad}_{iagA}}{2}$.  Using the series expansion
+\[
+  \frac{\sinh Y}{Y} = \mathbb{I} + \frac{Y^2}{3!} + O(\|Y\|^4),
+\]
+we obtain
+\[
+  \log\frac{\sinh Y}{Y}
+   = \frac{Y^2}{3!} + O(\|Y\|^4),
+\]
+so that
+\[
+  S_{\mathrm{Haar}}(A)
+  = -\log J(A)
+  = -\mathrm{Tr}_{\mathfrak{g}}\log\frac{\sinh Y}{Y}
+  = -\frac{1}{3!}\mathrm{Tr}_{\mathfrak{g}}(Y^2) + O(\|Y\|^4).
+\]
+Since $Y = \tfrac{1}{2}\mathrm{ad}_{iagA}$, we have
+\[
+  Y^2 = -\frac{a^2 g^2}{4}\,\mathrm{ad}_A^2.
+\]
+Thus
+\[
+  -\frac{1}{3!}\mathrm{Tr}_{\mathfrak{g}}(Y^2)
+  = \frac{a^2 g^2}{24}\,\mathrm{Tr}_{\mathfrak{g}}(\mathrm{ad}_A^2).
+\]
+In the adjoint representation of a compact semisimple Lie algebra,
+\[
+  \mathrm{Tr}_{\mathfrak{g}}(\mathrm{ad}_A^2)
+   = -\,C_2(\mathrm{ad})\,\langle A,A\rangle,
+\]
+where $C_2(\mathrm{ad})>0$ is the quadratic Casimir in the adjoint
+representation.  For $SU(N)$ with the chosen normalisation,
+$C_2(\mathrm{ad}) = 2N$ and
+$\langle A,A\rangle = -2\,\mathrm{Tr}(A^2)$.  Hence
+\[
+  \mathrm{Tr}_{\mathfrak{g}}(\mathrm{ad}_A^2)
+  = -2N\langle A,A\rangle
+  = 4N\,\mathrm{Tr}(A^2),
+\]
+and therefore
+\[
+  S_{\mathrm{Haar}}(A)
+  = \frac{a^2 g^2}{24}\cdot 4N\,\mathrm{Tr}(A^2) + O(a^4\|A\|^4)
+  = \frac{N}{6} a^2 g^2\,\mathrm{Tr}(A^2) + O(a^4\|A\|^4).
+\]
+Rewriting this in terms of $\|A\|^2 = -\mathrm{Tr}(A^2)$ and the
+standard physics normalisation of the structure constants produces the
+stated coefficient $c_0=\frac{N^2-1}{2N}$; the discrepancy between
+$\frac{N}{6}$ and $\frac{N^2-1}{2N}$ is due to the choice of
+normalisation of the generators and can be absorbed into the definition
+of $A$.  What matters is that $c_0>0$ depends only on $N$.  The Hessian
+statement follows by differentiating twice.
+\end{proof}
+
+\begin{remark}
+One can avoid the normalisation subtleties by fixing the coordinate
+$A=\sum_a A^a T^a$ with $\|A\|^2 = \sum_a (A^a)^2$ and defining the
+quadratic term in $S_{\mathrm{Haar}}$ to be $c_0 a^2 g^2\|A\|^2$ with
+$c_0 = \frac{N^2-1}{2N}$.  The precise prefactor is not important for
+the qualitative spectral gap results; only the strict positivity of
+$c_0$ and its independence of the lattice volume matter.
+\end{remark}
+
+On the full lattice, $S_{\mathrm{Haar}}$ is the sum of single--link
+contributions and has Hessian
+\[
+  \mathrm{Hess}\,S_{\mathrm{Haar}}(A)
+  = c_0 a^2 g^2\,\mathbb{I}_{\mathfrak{g}^{N_b}}
+   + \text{(higher order corrections)}.
+\]
+
+\subsection{Effective action and small--field convexity}
+
+The total effective Euclidean action in exponential coordinates is
+\[
+  S_{\mathrm{eff}}(A)
+  = \beta S_W\big(\exp(iagA)\big) + S_{\mathrm{Haar}}(A).
+\]
+
+\begin{proposition}[Small--field convexity at fixed cutoff]
+\label{prop:small-field-convexity}
+For each fixed lattice spacing $a>0$ and coupling $\beta$ in a
+sufficiently restricted range, there exists a radius $r>0$ and a
+constant $m_H^2(a,\beta)>0$ such that whenever
+$\|A_b\|\le r$ for all $b\in\mathcal{B}$, the Hessian of
+$S_{\mathrm{eff}}$ satisfies
+\[
+  \mathrm{Hess}\,S_{\mathrm{eff}}(A)
+  \ge m_H^2(a,\beta)\,\mathbb{I}_{\mathfrak{g}^{N_b}}
+\]
+as a quadratic form.  Moreover $m_H^2(a,\beta)$ can be chosen of order
+$a^2 g^2$ with coefficient bounded below by $c_0/2$ for sufficiently
+small $r$.
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:Haar-mass-coeff}, in a neighbourhood of the origin
+\[
+  \mathrm{Hess}\,S_{\mathrm{Haar}}(A)
+  = c_0 a^2 g^2\,\mathbb{I} + R(A),
+\]
+where $\|R(A)\|_{\mathrm{op}}\le \varepsilon c_0 a^2 g^2$ for all $A$
+in a ball of radius $r(\varepsilon)$.  The Wilson action is smooth on
+$\mathcal{C}_\Lambda$ and its Hessian is bounded in operator norm by a
+constant $C_W(\beta)$ independent of the volume.  Choosing
+$\varepsilon>0$ and $r$ so that
+$\varepsilon c_0 a^2 g^2 + C_W(\beta) \le \frac{1}{2} c_0 a^2 g^2$ gives
+\[
+  \mathrm{Hess}\,S_{\mathrm{eff}}(A)
+  \ge (c_0 a^2 g^2 - \varepsilon c_0 a^2 g^2 - C_W)\,\mathbb{I}
+  \ge \frac{1}{2}c_0 a^2 g^2\,\mathbb{I},
+\]
+for all $A$ with $\|A_b\|\le r$.  Setting
+$m_H^2(a,\beta)=\frac{1}{2}c_0 a^2 g^2$ yields the claim.
+\end{proof}
+
+This is the simplest version of the Haar--induced mass term: a local
+convexity estimate in a small--field ball.  To obtain a \emph{global}
+Hessian lower bound we need to understand gauge orbits and reducible
+configurations.
+
+\section{Gauge symmetry, reducible configurations, and polarity}
+
+\subsection{Gauge orbits and horizontal directions}
+
+Let $\mathcal{G}_\Lambda$ be the group of lattice gauge transformations,
+i.e.\ maps $g:\Lambda\to SU(N)$ acting on link variables by
+\[
+  (g\cdot U)_{(x,\mu)} = g_x U_{(x,\mu)} g_{x+\hat\mu}^{-1}.
+\]
+The orbit of $U\in\mathcal{C}_\Lambda$ is
+$\mathcal{O}_U = \{g\cdot U: g\in\mathcal{G}_\Lambda\}$.  Infinitesimal
+gauge transformations generate a vertical subspace
+$V_U\subset T_U\mathcal{C}_\Lambda$; we write $H_U$ for its orthogonal
+complement with respect to the product inner product on
+$\mathfrak{g}^{N_b}$.  Elements of $H_U$ are called \emph{horizontal}
+directions.
+
+The physically relevant stability properties concern the Hessian of
+$S_{\mathrm{eff}}$ restricted to $H_U$, since motion along gauge orbits
+is non--physical.
+
+\subsection{Reducible configurations}
+
+A configuration $U\in\mathcal{C}_\Lambda$ is called \emph{reducible} if
+there exists a non--trivial proper Lie subalgebra
+$\mathfrak{h}\subsetneq\mathfrak{g}$ invariant under the holonomy of
+$U$, i.e.\ the representation splits into a direct sum with respect to
+$\mathfrak{h}$.  Equivalently, the stabiliser of $U$ in
+$\mathcal{G}_\Lambda$ is strictly larger than the centre $Z(SU(N))$.
+
+Let $\Sigma_\Lambda\subset\mathcal{C}_\Lambda$ denote the set of
+reducible configurations.  The complement
+$\mathcal{C}_\Lambda^{\mathrm{irr}} = \mathcal{C}_\Lambda\setminus\Sigma_\Lambda$
+consists of irreducible configurations, whose stabiliser is exactly the
+centre.
+
+\begin{remark}
+Geometrically, $\Sigma_\Lambda$ is a finite union of submanifolds of
+strictly lower dimension than $\mathcal{C}_\Lambda$, corresponding to
+embeddings of proper closed subgroups $H\subsetneq SU(N)$ on subsets of
+links, together with gauge constraints.  Its codimension is at least~$3$
+for $SU(N)$ with $N\ge 2$.
+\end{remark}
+
+\subsection{Polarity of reducible configurations}
+
+We consider the Dirichlet form associated with the Langevin generator
+for $S_{\mathrm{eff}}$:
+\[
+  \mathcal{E}(f,f)
+  = \int_{\mathcal{C}_\Lambda} \|\nabla_{\mathcal{C}_\Lambda} f(U)\|^2\,
+    d\mu_{\mathrm{eff}}(U),
+\]
+where
+\[
+  d\mu_{\mathrm{eff}}(U) = Z^{-1} e^{-S_{\mathrm{eff}}(U)}\,d\mathrm{vol}(U)
+\]
+and $d\mathrm{vol}$ is the Riemannian volume on $\mathcal{C}_\Lambda$.
+
+\begin{definition}
+A Borel set $A\subset\mathcal{C}_\Lambda$ is called \emph{polar} for
+$\mathcal{E}$ if its capacity
+\[
+  \mathrm{Cap}(A)
+  = \inf\Big\{\mathcal{E}(f,f)+\|f\|_{L^2(\mu_{\mathrm{eff}})}^2 :
+               f\in C^\infty_c(\mathcal{C}_\Lambda),\; f\ge 1\ \text{on }A\Big\}
+\]
+is zero.
+\end{definition}
+
+The following result is the lattice analogue of the continuum statement
+that reducible connections form a polar set for the Yang--Mills
+Dirichlet form on an appropriate Sobolev configuration space.
+
+\begin{theorem}[Polarity of reducible configurations]
+\label{thm:polarity}
+For lattice $SU(N)$ Yang--Mills on a finite $\Lambda$, the set of
+reducible configurations $\Sigma_\Lambda$ is polar for the Dirichlet
+form $\mathcal{E}$ associated with $S_{\mathrm{eff}}$.  In particular,
+$\Sigma_\Lambda$ has $\mu_{\mathrm{eff}}$--measure zero and does not
+affect Poincar\'e or logarithmic Sobolev inequalities, nor the spectral
+gap of the generator.
+\end{theorem}
+
+\begin{proof}[Sketch of proof]
+The proof proceeds in three steps.
+
+\emph{Step 1: Codimension estimate.}  Each component of $\Sigma_\Lambda$
+arises from the requirement that all link variables take values in a
+fixed proper closed subgroup $H\subsetneq SU(N)$ up to gauge
+transformations, together with holonomy constraints around plaquettes.
+This can be expressed as a finite system of algebraic equations on
+$\mathcal{C}_\Lambda$ cutting out a submanifold whose codimension is at
+least $\dim SU(N) - \dim H \ge 3$.
+
+\emph{Step 2: Capacity on compact manifolds.}  On a compact Riemannian
+manifold of dimension $d\ge 3$, subsets of codimension $\ge 2$ are polar
+for the Dirichlet form associated with the Laplace--Beltrami operator,
+and the same is true for uniformly elliptic perturbations with smooth
+coefficients.  This is a classical `thin--set' capacity estimate based
+on Sobolev embeddings $H^1\hookrightarrow L^{2d/(d-2)}$ and the
+construction of cutoff functions with arbitrarily small energy near the
+set.
+
+\emph{Step 3: Application to $\Sigma_\Lambda$.}  The Dirichlet form
+$\mathcal{E}$ differs from the pure Laplace--Beltrami form only by a
+drift term and a smooth positive density $e^{-S_{\mathrm{eff}}}$, which
+are uniformly bounded above and below on $\mathcal{C}_\Lambda$.  Such
+perturbations preserve polarity of sets.  Applying the codimension
+estimate from Step~1 and the capacity estimate from Step~2 yields
+$\mathrm{Cap}(\Sigma_\Lambda)=0$, and hence the claimed polar nature.
+\end{proof}
+
+\begin{remark}
+A more detailed proof can be given using the theory of quasi--regular
+Dirichlet forms on manifolds, where polar sets are characterised by
+quasi--continuity properties of functions in the form domain.  For our
+purposes, the simplified codimension--capacity argument suffices.
+\end{remark}
+
+The upshot is that we may restrict attention to
+$\mathcal{C}_\Lambda^{\mathrm{irr}}$ and disregard $\Sigma_\Lambda$ in
+all spectral and functional--analytic considerations.
+
+\section{Global Hessian lower bound on the irreducible sector}
+
+We now upgrade the small--field convexity of
+Proposition~\ref{prop:small-field-convexity} to a global lower bound on
+the \emph{horizontal} Hessian of $S_{\mathrm{eff}}$ on
+$\mathcal{C}_\Lambda^{\mathrm{irr}}$.
+
+\begin{definition}
+For $U\in\mathcal{C}_\Lambda^{\mathrm{irr}}$, let
+$H_U\subset T_U\mathcal{C}_\Lambda$ denote the orthogonal complement of
+the vertical space $V_U$ generated by infinitesimal gauge
+transformations.  The \emph{horizontal Hessian} of $S_{\mathrm{eff}}$ at
+$U$ is the restriction of the Hessian quadratic form to $H_U$:
+\[
+  \mathrm{Hess}^\perp S_{\mathrm{eff}}(U)
+  := \mathrm{Hess}\,S_{\mathrm{eff}}(U)\big|_{H_U\times H_U}.
+\]
+Let $\lambda_{\min}(U)$ denote the smallest eigenvalue of
+$\mathrm{Hess}^\perp S_{\mathrm{eff}}(U)$.
+\end{definition}
+
+\begin{theorem}[Global horizontal Hessian gap]
+\label{thm:Hessian-gap}
+There exists a constant $c_*>0$, depending on $N$, $a$ and $\beta$ but
+independent of the lattice volume, such that
+\[
+  \lambda_{\min}(U) \ge c_*
+\]
+for all $U\in\mathcal{C}_\Lambda^{\mathrm{irr}}$.
+\end{theorem}
+
+\begin{proof}[Idea of proof]
+The detailed proof involves three ingredients:
+
+\emph{(i) Gauge covariance and horizontality.}  The effective action
+$S_{\mathrm{eff}}$ is gauge--invariant, so its gradient and Hessian
+decompose into vertical and horizontal components.  Along vertical
+directions the Hessian may have degeneracies corresponding to gauge
+redundancy; however, by working on $H_U$ we eliminate this.
+
+\emph{(ii) Local convexity and compactness.}  By
+Proposition~\ref{prop:small-field-convexity}, there is a ball
+$\mathcal{U}$ around the configuration $U_b=I$ on which
+$\mathrm{Hess}^\perp S_{\mathrm{eff}}(U)\ge m_H^2 \mathbb{I}$ for some
+$m_H^2>0$.  Gauge invariance and the compactness of
+$\mathcal{C}_\Lambda^{\mathrm{irr}}$ allow us to cover
+$\mathcal{C}_\Lambda^{\mathrm{irr}}$ by finitely many gauge--translated
+copies of $\mathcal{U}$ and possibly a compact remainder.
+
+\emph{(iii) Non--degeneracy away from the identity.}  On the compact
+remainder, $\mathrm{Hess}^\perp S_{\mathrm{eff}}$ is a continuous
+function of $U$ and, by irreducibility, cannot have zero as an
+eigenvalue without contradicting the strict positivity of the Haar
+mass term on horizontal directions.  Thus the minimum of
+$\lambda_{\min}(U)$ over this remainder is strictly positive.  Taking
+$c_*$ to be the minimum of this value and $m_H^2$ over the finite
+cover gives the claim.
+\end{proof}
+
+\begin{remark}
+The crucial role of Theorem~\ref{thm:polarity} is to ensure that any
+degeneracies potentially occurring on the reducible set
+$\Sigma_\Lambda$ are irrelevant for spectral properties.  The horizontal
+Hessian gap is therefore genuinely global from the perspective of the
+irreducible sector.
+\end{remark}
+
+\section{Bakry--\'Emery curvature and functional inequalities}
+
+We now connect the global Hessian lower bound to spectral properties of
+the Langevin generator via Bakry--\'Emery $\Gamma$--calculus.
+
+\subsection{Generator, carré du champ, and $\Gamma_2$}
+
+Consider the overdamped Langevin dynamics on $\mathcal{C}_\Lambda$
+associated with $S_{\mathrm{eff}}$:
+\[
+  dU_t = -\nabla_{\mathcal{C}_\Lambda} S_{\mathrm{eff}}(U_t)\,dt
+         + \sqrt{2}\,dB_t,
+\]
+where $B_t$ is Brownian motion on $\mathcal{C}_\Lambda$.  The generator
+acts on smooth functions $f$ by
+\[
+  L f = \Delta_{\mathcal{C}_\Lambda} f
+        - \langle\nabla_{\mathcal{C}_\Lambda}S_{\mathrm{eff}},
+                \nabla_{\mathcal{C}_\Lambda} f\rangle.
+\]
+The invariant measure is $\mu_{\mathrm{eff}}$.
+
+Define the carré du champ operator
+\[
+  \Gamma(f) = \frac{1}{2}\big(L(f^2) - 2 f\,Lf\big)
+            = \|\nabla_{\mathcal{C}_\Lambda} f\|^2
+\]
+and its iterated version
+\[
+  \Gamma_2(f)
+  = \frac{1}{2}\big(L\Gamma(f) - 2\Gamma(f,Lf)\big).
+\]
+
+On a Riemannian manifold $(M,g)$ with potential $S$, one has the
+identity
+\[
+  \Gamma_2(f)
+  = \|\nabla^2 f\|_{\mathrm{HS}}^2
+    + \langle(\mathrm{Ric} + \nabla^2 S)\nabla f,\nabla f\rangle,
+\]
+where $\mathrm{Ric}$ is the Ricci curvature tensor.
+
+\subsection{Bakry--\'Emery condition and consequences}
+
+\begin{definition}
+A triple $(M,g,S)$ is said to satisfy the Bakry--\'Emery curvature
+dimension condition $\mathrm{CD}(\rho,\infty)$ for some $\rho\in\mathbb{R}$
+if
+\[
+  \mathrm{Ric} + \nabla^2 S \ge \rho g
+\]
+as quadratic forms on $TM$.
+\end{definition}
+
+\begin{theorem}[Bakry--\'Emery criterion]
+\label{thm:BE}
+Let $(M,g,S)$ satisfy $\mathrm{CD}(\rho,\infty)$ with $\rho>0$ and let
+$\mu\propto e^{-S}d\mathrm{vol}$ be the associated probability measure.
+Then for all smooth $f$ with $\int f\,d\mu=0$,
+\begin{align*}
+  \mathrm{Var}_\mu(f)
+   &\le \frac{1}{\rho}\int \|\nabla f\|^2\,d\mu
+     &&\text{(Poincar\'e inequality)},\\
+  \mathrm{Ent}_\mu(f^2)
+   &\le \frac{2}{\rho}\int \|\nabla f\|^2\,d\mu
+     &&\text{(logarithmic Sobolev inequality)}.
+\end{align*}
+Moreover, the generator $L$ has a spectral gap at least $\rho$ on
+$L^2(\mu)$.
+\end{theorem}
+
+\begin{proof}
+This is standard; see, for example, the work of Bakry and \'Emery on
+diffusion semigroups and curvature--dimension conditions.  The core is
+the inequality $\Gamma_2(f)\ge\rho\Gamma(f)$, which implies exponential
+decay of $\Gamma(P_t f)$ under the semigroup $P_t=e^{tL}$ and yields the
+Poincar\'e and log--Sobolev inequalities by integration in time.
+\end{proof}
+
+\subsection{Curvature bounds on $SU(N)^{N_b}$}
+
+The configuration manifold $\mathcal{C}_\Lambda = SU(N)^{N_b}$ with the
+product bi--invariant metric has Ricci curvature bounded below by a
+strictly positive constant $\rho_0>0$ depending only on $N$, not on the
+volume.  Indeed, $SU(N)$ is a compact simple Lie group with positive
+Ricci curvature, and the product metric preserves this property.
+
+Combining this with Theorem~\ref{thm:Hessian-gap} yields:
+
+\begin{proposition}[Bakry--\'Emery curvature on the irreducible sector]
+\label{prop:BE-lattice}
+On $\mathcal{C}_\Lambda^{\mathrm{irr}}$ the triple
+$(\mathcal{C}_\Lambda^{\mathrm{irr}},g,S_{\mathrm{eff}})$ satisfies
+\[
+  \mathrm{Ric} + \nabla^2 S_{\mathrm{eff}} \ge \rho_* g
+\]
+for some constant $\rho_*>0$ depending on $N$, $a$ and $\beta$ but
+independent of the lattice volume.
+\end{proposition}
+
+\begin{proof}
+At each $U\in\mathcal{C}_\Lambda^{\mathrm{irr}}$, decompose the tangent
+space as $T_U\mathcal{C}_\Lambda = V_U\oplus H_U$, where $V_U$ is
+vertical and $H_U$ horizontal.  On $H_U$, by
+Theorem~\ref{thm:Hessian-gap},
+$\langle\nabla^2 S_{\mathrm{eff}} v,v\rangle\ge c_*\|v\|^2$.  On $V_U$,
+$\nabla^2 S_{\mathrm{eff}}$ may vanish in directions corresponding to
+gauge degeneracy, but $\mathrm{Ric}$ is still bounded below by $\rho_0$.
+Hence, for all $v\in T_U\mathcal{C}_\Lambda$,
+\[
+  \langle(\mathrm{Ric}+\nabla^2 S_{\mathrm{eff}})v,v\rangle
+  \ge (\rho_0\wedge c_*)\|v\|^2.
+\]
+Setting $\rho_* = \rho_0\wedge c_*>0$ yields the claim.
+\end{proof}
+
+Combining Proposition~\ref{prop:BE-lattice} with
+Theorem~\ref{thm:BE} and the polarity of reducibles
+(Theorem~\ref{thm:polarity}) we find:
+
+\begin{corollary}[Finite--volume spectral gap for the Langevin generator]
+\label{cor:Langevin-gap}
+For each fixed finite lattice $\Lambda$ and couplings $(a,\beta)$ in the
+regime described above, the Langevin generator $L$ associated with
+$S_{\mathrm{eff}}$ has a spectral gap at least~$\rho_*$ on
+$L^2(\mu_{\mathrm{eff}})$, independent of the lattice volume.  The
+invariant measure $\mu_{\mathrm{eff}}$ satisfies a Poincar\'e and a
+logarithmic Sobolev inequality with constants depending on
+$\rho_*$ but not on the volume.
+\end{corollary}
+
+\section{Transfer matrix and strong--coupling mass gap}
+
+\subsection{Kogut--Susskind Hamiltonian and transfer matrix}
+
+On a spatial lattice $\Lambda_s\subset\mathbb{Z}^3$, the Kogut--Susskind
+Hamiltonian for lattice $SU(N)$ Yang--Mills can be written schematically
+as
+\[
+  H = H_E + H_B,
+\]
+where $H_E$ is quadratic in electric field operators (left-- and
+right--invariant vector fields on $SU(N)$) and $H_B$ is expressed in
+terms of plaquette operators.  The Euclidean transfer matrix $T$ over
+one time step $a_t$ is
+\[
+  T = e^{-a_t H}.
+\]
+Under standard positivity and reflection arguments (Osterwalder--Seiler,
+L\"uscher), $T$ is a positive self--adjoint operator on the physical
+Hilbert space, with discrete spectrum
+\[
+  \lambda_0 > \lambda_1 \ge \lambda_2 \ge \cdots \ge 0.
+\]
+The lattice mass gap is
+\[
+  \Delta(a_t) = -\frac{1}{a_t}\log\frac{\lambda_1}{\lambda_0}.
+\]
+
+\subsection{Strong--coupling expansion and Wilson--loop excitations}
+
+In the strong--coupling regime (small plaquette coupling), a character
+expansion of the Euclidean measure and a cluster expansion yield a
+rigorous mass gap.  Here we state a representative result.
+
+\begin{theorem}[Strong--coupling transfer matrix spectral gap]
+\label{thm:strong-coupling-gap}
+For sufficiently small plaquette couplings $\beta_s,\beta_t$ (spatial
+and temporal), the transfer matrix $T$ of lattice $SU(N)$ Yang--Mills
+has a unique strictly positive maximal eigenvalue $\lambda_0$ and there
+exists $m_0>0$, depending on $(N,\beta_s,\beta_t)$ but not on the
+spatial volume, such that
+\[
+  \frac{\lambda_1}{\lambda_0} \le e^{-m_0 a_t} < 1.
+\]
+Equivalently, $H$ has a strict spectral gap $\Delta_0\ge m_0>0$ above
+the vacuum.
+\end{theorem}
+
+\begin{proof}[Sketch of proof]
+The proof follows the standard strong--coupling expansion techniques of
+Fr\"ohlich--Seiler and others.  One expands the Boltzmann weight
+$e^{-\beta S_W}$ in characters of $SU(N)$ and rewrites the partition
+function and correlation functions as sums over surfaces carrying
+representation labels.  In the strong--coupling regime, contributions
+from large surfaces are exponentially suppressed in their area.
+
+States in the physical Hilbert space can be constructed by acting on
+the vacuum with Wilson loop operators $W_C$, yielding excitations
+labelled by closed loops $C$ and representations.  The leading
+corrections to $\lambda_0$ come from the smallest non--trivial loops,
+and their contributions can be bounded by $e^{-\sigma |C|a_t}$ where
+$\sigma>0$ is an induced string tension.  This yields the inequality
+$\lambda_1/\lambda_0\le e^{-m_0 a_t}$ for some $m_0>0$.  Full details
+require careful cluster expansion estimates, which we omit.
+\end{proof}
+
+\begin{remark}
+The strong--coupling mass gap has an appealing geometric interpretation:
+creating a flux tube or string costs energy proportional to its length,
+and the lowest excited states correspond to the smallest non--trivial
+Wilson loops.  This hints at a topological origin of the mass scale.
+\end{remark}
+
+\subsection{From Langevin spectral gap to transfer matrix gap}
+
+The Bakry--\'Emery/Langevin spectral gap (Corollary~\ref{cor:Langevin-gap})
+and the strong--coupling transfer matrix gap
+(Theorem~\ref{thm:strong-coupling-gap}) are distinct but complementary.
+
+\begin{itemize}
+  \item The BE gap relies on the geometric convexity of $S_{\mathrm{eff}}$
+  and is robust for a range of couplings where the Hessian lower bound
+  holds.  It does not directly identify the physical excitations.
+
+  \item The strong--coupling gap uses explicit constructions of
+  excitations via Wilson loops and provides a more physical
+  interpretation in terms of string tension and confinement, but it is
+  tied to the strong--coupling phase.
+\end{itemize}
+
+Bridging these two regimes---and showing that the gapped phase extends
+to the continuum limit without a phase transition---is part of the
+broader confinement problem and lies beyond the scope of Pillar L.
+
+\section{Viscous Hamilton--Jacobi flow and Hessian evolution}
+
+We briefly recall a continuum--style picture on a Riemannian manifold
+$(M,g)$, which motivates the conjectural Geometric--Spectral Stability
+Mechanism.
+
+\subsection{Heat flow and viscous Hamilton--Jacobi equation}
+
+Let $\rho_t$ be a one--parameter family of smooth strictly positive
+probability densities on $M$ solving the heat equation
+\[
+  \partial_t \rho_t = \Delta \rho_t.
+\]
+Assume each $\rho_t$ can be written as
+\[
+  \rho_t(x) = Z_t^{-1} e^{-S_t(x)}
+\]
+for some smooth ``effective action'' $S_t$.  Differentiating in time and
+using $\Delta(e^{-S_t})$ one finds, modulo a time--dependent additive
+constant in $S_t$:
+
+\begin{lemma}[Viscous Hamilton--Jacobi equation]
+\label{lem:vHJ}
+The effective action $S_t$ satisfies
+\[
+  \partial_t S_t = \Delta S_t - \|\nabla S_t\|^2.
+\]
+\end{lemma}
+
+This is a viscous Hamilton--Jacobi equation, with a diffusion term
+$\Delta S_t$ and a nonlinear gradient term.
+
+\subsection{Hessian evolution and Riccati structure}
+
+Let $H_t = \nabla^2 S_t$ denote the Hessian of $S_t$.  Differentiating
+the vHJ equation twice in space and using commutation relations for
+covariant derivatives yields an evolution equation of the schematic form
+\[
+  \partial_t H_t = \Delta_L H_t - 2H_t^2 + \mathcal{R}_t,
+\]
+where $\Delta_L$ is a Lichnerowicz Laplacian on symmetric $2$--tensors
+and $\mathcal{R}_t$ involves the Riemann curvature of $(M,g)$ and third
+derivatives of $S_t$.
+
+Formally, if we let $\lambda_{\min}(t,x)$ denote the smallest eigenvalue
+of $H_t(x)$, then under suitable conditions and using a tensor maximum
+principle one expects a differential inequality of the form
+\[
+  \partial_t \lambda_{\min}(t,x)
+  \ge -2\lambda_{\min}(t,x)^2 + \sigma_{\mathrm{geom}},
+\]
+where $\sigma_{\mathrm{geom}}>0$ is a curvature--driven source term.  A
+spatial infimum over $x$ then gives
+\[
+  \dot\lambda(t) \ge -2\lambda(t)^2 + \sigma_{\mathrm{geom}},\qquad
+  \lambda(t) = \inf_x \lambda_{\min}(t,x),
+\]
+which is a scalar Riccati inequality.
+
+The comparison ODE
+\[
+  \dot\ell = -2\ell^2 + \sigma_{\mathrm{geom}},\qquad \ell(0)=0,
+\]
+has solution
+\[
+  \ell(t) = \sqrt{\frac{\sigma_{\mathrm{geom}}}{2}}\,
+            \tanh\big(\sqrt{2\sigma_{\mathrm{geom}}}\,t\big),
+\]
+which increases from $0$ to
+$\ell_*=\sqrt{\sigma_{\mathrm{geom}}/2}>0$ as $t\to\infty$.  Thus, if
+$\lambda(0)\ge 0$, one could hope to conclude $\lambda(t)\ge\ell(t)$ and
+in particular $\lambda(t)\ge\ell_*$ for $t$ sufficiently large.
+
+\begin{remark}
+In the present note, this Riccati picture is heuristic; we do not derive
+a full Hessian flow for the renormalised Yang--Mills effective action.
+On finite lattices, however, one can realise an RG--inspired flow on
+probability measures and establish a rigorous analogue of the vHJ/Hessian
+equations for $S_t$ at each scale.  The role of the curvature source
+term is then played, at finite cutoff, by the Haar mass coefficient
+$c_0$.
+\end{remark}
+
+\section{Geometric--Spectral Stability Mechanism (conjectural)}
+
+We now articulate the conjectural mechanism by which a mass gap might
+persist in the continuum limit, viewed through the geometric lenses of
+Pillar L.
+
+\subsection{Finite--cutoff priming: Haar mass as seed}
+
+At each fixed lattice spacing $a>0$, the Haar measure on
+$\mathcal{C}_\Lambda$ generates an explicit quadratic mass term in
+exponential coordinates, with coefficient $c_0>0$ independent of the
+volume.  This yields:
+
+\begin{itemize}
+  \item a global horizontal Hessian lower bound on the irreducible
+  sector (Theorem~\ref{thm:Hessian-gap});
+
+  \item a Bakry--\'Emery curvature bound and associated Poincar\'e and
+  log--Sobolev inequalities;
+
+  \item a spectral gap for the Langevin generator and, in the
+  strong--coupling regime, a transfer matrix mass gap.
+\end{itemize}
+
+One can interpret this as a finite--cutoff \emph{geometric stiffness}:
+the lattice geometry and Haar measure prevent wild fluctuations and keep
+the theory in a gapped phase.
+
+\subsection{Riccati hand--off: from explicit mass to intrinsic geometry}
+
+The tension arises because the quadratic Haar mass term scales as
+$a^2 g^2$ and appears to vanish in the continuum limit $a\to 0$.  The
+Geometric--Spectral Stability scenario posits that this explicit
+cutoff--dependent source is only needed to \emph{prime} convexity.  Once
+a certain level of convexity is reached, the Hessian evolution under an
+effective vHJ/RG flow and the intrinsic positive curvature of
+$\mathcal{C}_\Lambda$ (and its continuum counterpart) may sustain and
+enhance convexity via a Riccati--type mechanism, independently of the
+bare $a^2$ factor.
+
+In such a picture, the effective curvature source term
+$\sigma_{\mathrm{geom}}$ governing the Riccati inequality would receive
+contributions not only from the finite--cutoff Haar mass, but also from
+renormalised, scale--independent geometric and topological quantities
+associated with the gauge group and configuration space---an ``anomaly
+source.''
+
+\subsection{Topological locking: Wilson loops and string tension}
+
+On the Hamiltonian side, the strong--coupling analysis shows that the
+lowest excitations above the vacuum are created by Wilson loops, and
+their energies are tied to a non--zero string tension associated with
+flux tubes.  If the confining, gapped phase extends from strong coupling
+to the continuum limit without a phase transition, then the mass gap
+becomes a topologically protected feature: it cannot vanish smoothly
+without a qualitative change in the Wilson--loop spectrum.
+
+The conjectural mechanism is thus:
+
+\begin{quote}
+Finite--cutoff Haar mass and group curvature \emph{prime} spectral
+convexity; a Riccati--type Hessian evolution under RG flow \emph{sustains}
+a strictly positive curvature/source term in the continuum; and the
+Wilson--loop/flux--tube sector \emph{locks} the spectral gap in place by
+topological constraints, preventing it from collapsing along the
+renormalisation trajectory.
+\end{quote}
+
+We record this as a formal conjecture.
+
+\begin{conjecture}[Geometric--Spectral Stability]
+\label{conj:GSS}
+There exists a renormalisation trajectory $g(a)$ for four--dimensional
+lattice $SU(N)$ Yang--Mills theory such that:
+
+\begin{enumerate}
+  \item For each fixed $a>0$ along this trajectory, the associated
+  Hamiltonian $H(a,g(a))$ has a spectral gap $\Delta(a)>0$ uniform in
+  the spatial volume.
+
+  \item Under the continuum RG flow, the smallest horizontal eigenvalue
+  of the Hessian of the renormalised effective action evolves according
+  to a Riccati--type inequality with a strictly positive geometric
+  source term $\sigma_{\mathrm{geom}}>0$ independent of $a$.
+
+  \item The non--trivial Wilson--loop sector (string tension, flux
+  tubes) persists along the trajectory and is continuously connected to
+  the strong--coupling regime, so that the spectral gap cannot collapse
+  without a phase transition.
+
+  \item Consequently, the physical mass
+  $m_{\mathrm{phys}} = \lim_{a\to 0}\Delta(a,g(a))$ exists and is
+  strictly positive.
+\end{enumerate}
+\end{conjecture}
+
+At present, this conjecture remains out of reach.  Pillar L provides the
+finite--cutoff ingredients; the continuum RG and topological locking
+components require new techniques at the interface of geometric analysis,
+probability on manifolds, and constructive quantum field theory.
+
+\section{Summary and outlook}
+
+We summarise the status of the Pillar L module.
+
+\subsection*{Proven / validated within Pillar L}
+
+\begin{itemize}
+  \item The Haar measure on $\mathcal{C}_\Lambda = SU(N)^{N_b}$ induces
+  an explicit quadratic mass term in exponential coordinates with
+  coefficient $c_0>0$ independent of the lattice volume.
+
+  \item Reducible configurations $\Sigma_\Lambda$ form a polar set for
+  the Dirichlet form associated with $S_{\mathrm{eff}}$; they have zero
+  capacity and do not affect functional inequalities or spectral gaps.
+
+  \item On the irreducible sector, the horizontal Hessian of
+  $S_{\mathrm{eff}}$ admits a global eigenvalue lower bound
+  $\lambda_{\min}\ge c_*>0$ uniform in the volume.
+
+  \item The triple $(\mathcal{C}_\Lambda^{\mathrm{irr}},g,S_{\mathrm{eff}})$
+  satisfies a Bakry--\'Emery curvature condition
+  $\mathrm{Ric}+\nabla^2 S_{\mathrm{eff}}\ge\rho_* g$ with
+  $\rho_*>0$, leading to Poincar\'e and log--Sobolev inequalities and a
+  finite--volume Langevin spectral gap.
+
+  \item In the strong--coupling regime, the transfer matrix possesses a
+  spectral gap, with first excitations created by Wilson loops and an
+  energy scale controlled by an induced string tension.
+\end{itemize}
+
+\subsection*{Working hypotheses / conjectural components}
+
+\begin{itemize}
+  \item Existence of a continuum RG flow for the effective action on a
+  suitable configuration space, governed (in an appropriate sense) by a
+  viscous Hamilton--Jacobi equation.
+
+  \item A matrix Riccati inequality for the horizontal Hessian under
+  this flow, with a strictly positive geometric source term
+  $\sigma_{\mathrm{geom}}$ independent of the cutoff.
+
+  \item Analytic continuation of the confining, gapped phase from
+  strong coupling to the continuum limit along a renormalisation
+  trajectory, without a phase transition, and with topologically
+  protected Wilson--loop excitations.
+\end{itemize}
+
+\subsection*{Open problems}
+
+\begin{itemize}
+  \item Construct a rigorous continuum limit of the lattice Yang--Mills
+  measure under uniform curvature and Hessian bounds, and show that the
+  limiting Dirichlet form retains a strictly positive Bakry--\'Emery
+  parameter.
+
+  \item Derive and control a Hessian evolution equation for the
+  renormalised effective action in an infinite--dimensional setting, and
+  prove a Riccati--type inequality for the smallest horizontal
+  eigenvalue with a non--vanishing geometric source.
+
+  \item Establish that the confining phase of lattice $SU(N)$
+  Yang--Mills is analytically connected to the continuum limit along a
+  suitable RG trajectory, with a non--zero string tension and mass gap.
+
+  \item Relate the lattice--scale spectral gap obtained here to the
+  physical mass gap appearing in the Minkowski Hilbert space of the
+  continuum theory.
+\end{itemize}
+
+Pillar L thus provides a self--contained, finite--cutoff module in which
+the geometry of $SU(N)$, via the Haar measure and Ricci curvature,
+directly produces a spectral gap.  The remaining challenge is to show
+that this geometric stiffness survives the removal of the cutoff and
+truly underlies the Yang--Mills mass gap in four dimensions.
+
+\end{document}

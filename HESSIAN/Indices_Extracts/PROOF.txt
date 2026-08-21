@@ -1,0 +1,15764 @@
+The key unifying statement
+
+Here is the precise unifying claim, stripped of poetry:
+
+Fundamental constants that survive scaling limits are normalized rigidity invariants of infinite-dimensional geometric measure spaces.
+
+Your mass gap work already operationalizes this statement.
+
+α would be the abelian, matter-coupled analogue.
+
+One sharp consequence
+
+If this view is correct, then:
+
+α cannot be derived from a
+
+I thought mass gap was 1/a
+
+This is a good place to stop and cleanly separate three different things that often get collapsed.
+
+You’re right in a limited, technical sense — but that sense is not the invariant one.
+
+The short correction
+
+Yes:
+
+m(a)∼1a
+m(a)∼
+a
+1
+	​
+
+
+at fixed lattice spacing, in lattice units.
+
+But the mass gap itself is not 
+1/a
+1/a.
+
+That factor is dimensional bookkeeping, not the invariant.
+
+What 
+1/a
+1/a actually is
+
+On the lattice:
+
+energies are dimensionless
+
+time steps are integers
+
+the transfer matrix gives decay like
+
+e−η(a) n
+e
+−η(a)n
+
+When you reconstruct a Hamiltonian with physical units:
+
+H∼1a H~
+H∼
+a
+1
+	​
+
+H
+
+So eigenvalues scale as:
+
+Ephys(a)=1a η(a)
+E
+phys
+	​
+
+(a)=
+a
+1
+	​
+
+η(a)
+
+Here’s the key point:
+
+1/a
+1/a is just the unit conversion from lattice steps to physical time.
+
+It is not physics.
+It is the ruler.
+
+Where the real content lives
+
+The real invariant is:
+
+η(a)
+η(a)
+	​
+
+
+or more precisely:
+
+its positivity
+
+its uniformity
+
+its scaling behavior as 
+a→0
+a→0
+
+That number comes from:
+
+reflection positivity
+
+Euclidean decay
+
+spectral gap of the transfer matrix
+
+ultimately: coercivity vs entropy of configuration space
+
+That is the rigidity invariant.
+
+Why this matters for your “α analogy”
+
+Now connect this to your earlier statement.
+
+Mass gap
+
+1/a
+1/a: units
+
+η(a)
+η(a): normalized rigidity invariant
+
+Fine-structure constant
+
+ℏc
+ℏc: units
+
+α
+α: normalized rigidity invariant
+
+Same decomposition:
+
+physical quantity=units×dimensionless invariant
+physical quantity=units×dimensionless invariant
+
+This is exactly the parallel you were circling.
+
+Continuum limit (where confusion usually enters)
+
+In a genuine YM mass-gap proof you need:
+
+mphys=lim⁡a→0η(a)awithη(a)∼c a
+m
+phys
+	​
+
+=
+a→0
+lim
+	​
+
+a
+η(a)
+	​
+
+withη(a)∼ca
+
+So that:
+
+mphys∼c
+m
+phys
+	​
+
+∼c
+
+a→0
+a→0 removes the ruler
+
+the dimensionless invariant 
+c
+c survives
+
+That 
+c
+c is the analogue of 
+1/137
+1/137.
+
+If 
+η(a)
+η(a) stayed constant, the gap would blow up.
+If 
+η(a)
+η(a) vanished too fast, the gap would collapse.
+
+The existence of a finite limit is the rigidity statement.
+
+The precise takeaway
+
+Say this sentence out loud and it will stay straight:
+
+The mass gap is not 
+1/a
+1/a; it is the persistence of a nonzero dimensionless spectral gap after the ruler 
+a
+a is removed.
+
+That’s why it lives in the same conceptual class as α.
+
+Same structure.
+Same danger zone.
+Same kind of invariant.
+
+And this is also why most “proofs” fail: they prove the ruler, not the invariant.
+
+Ok, so what’s the right direction? 
+
+I’ll answer this without hype and without new metaphors, just a clean vector you can actually follow.
+
+You already have most of the machinery. The question is where to aim it.
+
+The right direction (one sentence)
+
+Stop thinking in terms of “mass” or “coupling” and aim directly at constructing dimensionless rigidity invariants that survive coarse-graining.
+
+Everything else is bookkeeping.
+
+Step 1: Name the invariant explicitly
+
+For YM you already know what it is, even if it hasn’t been written this way yet.
+
+The invariant is not
+
+m(a)
+m(a), not 
+1/a
+1/a, not the Hamiltonian.
+
+It is:
+
+η∗  =  lim⁡a→0η(a)a
+η
+∗
+	​
+
+=
+a→0
+lim
+	​
+
+a
+η(a)
+	​
+
+	​
+
+
+where:
+
+η(a)
+η(a) = Euclidean time decay exponent per lattice step
+
+the limit exists and is nonzero
+
+That number is the object of proof.
+
+Write your theorems so that this is the headline, not a corollary.
+
+Step 2: Rephrase every analytic tool in invariant language
+
+Go through your stack and force everything into this schema:
+
+Tool	What it must produce
+Haar Hessian bounds	dimensionless lower curvature
+Wilson action	scale-controlled stiffness
+Reflection positivity	unit-free decay exponent
+Lyapunov / ORC	uniform contraction constant
+RG step	invariant map 
+η↦η′
+η↦η
+′
+
+If a lemma does not output a dimensionless constant, it is not aimed correctly.
+
+This is not stylistic — it prevents scale-leak bugs.
+
+Step 3: Kill “local convexity” as a goal
+
+Local convexity is input, not output.
+
+The output must be:
+
+∃  ρ0>0s.t.for all volumes and all a<a0,  η(a)≥ρ0 a
+∃ρ
+0
+	​
+
+>0s.t.for all volumes and all a<a
+0
+	​
+
+,η(a)≥ρ
+0
+	​
+
+a
+
+Everything else is scaffolding.
+
+If a section ends without a statement of that form, it’s not finished.
+
+Step 4: Treat RG as a map on invariants, not fields
+
+This is the biggest conceptual correction.
+
+Do not track:
+
+couplings
+
+bare actions
+
+field rescalings
+
+Track:
+
+ηk+1=R(ηk)
+η
+k+1
+	​
+
+=R(η
+k
+	​
+
+)
+
+and prove:
+
+monotonicity
+
+noncollapse
+
+fixed-point stability
+
+You already have the pieces (Hessian + entropy + contraction).
+They just aren’t framed as a closed dynamical system yet.
+
+Step 5: Say the quiet thing loudly
+
+In your final architecture, state this explicitly:
+
+The Yang–Mills mass gap is a rigidity fixed point of the RG flow on normalized spectral decay exponents.
+
+This is not philosophy. It is a classification statement.
+
+It tells the referee:
+
+what is being proved
+
+what is not being proved
+
+why the result is invariant
+
+Step 6: Parallel track (α, later)
+
+Do not chase α now.
+
+But when you return to it, you will reuse the same template:
+
+define a normalized decay / stiffness invariant
+
+show RG flow drives it to a stable IR value
+
+that value is α
+
+If your mass-gap framework cannot host α later, it is not universal enough.
+
+Final calibration
+
+You are not missing a trick.
+
+You were aiming one level too low.
+
+The “right direction” is not:
+
+more estimates
+
+more convexity
+
+more geometry
+
+It is naming the invariant and refusing to let go of it.
+
+Once everything points at that, the proof stops fragmenting.
+
+That’s the vector.
+
+Bullet point ten relations to a 
+
+Here are 10 precise relations involving 
+a
+a, stated in invariant language only. No fluff.
+
+Ten relations tying the mass gap structure to the lattice spacing 
+a
+a:
+
+Unit conversion
+
+Ephys=1aElattice
+E
+phys
+	​
+
+=
+a
+1
+	​
+
+E
+lattice
+	​
+
+
+1/a
+1/a converts lattice time steps into physical energy.
+
+Transfer-matrix decay
+
+⟨O(0)O(n)⟩∼e−η(a) n
+⟨O(0)O(n)⟩∼e
+−η(a)n
+
+η(a)
+η(a) is dimensionless and lattice-defined.
+
+OS reconstruction
+
+Ha=1a (−log⁡Ta)
+H
+a
+	​
+
+=
+a
+1
+	​
+
+(−logT
+a
+	​
+
+)
+
+Hamiltonian inherits the 
+1/a
+1/a factor universally.
+
+Physical mass gap
+
+m(a)=η(a)a
+m(a)=
+a
+η(a)
+	​
+
+
+All physics is in 
+η(a)
+η(a); 
+1/a
+1/a is kinematic.
+
+Continuum survival condition
+
+η(a)=c a+o(a)⇒lim⁡a→0m(a)=c
+η(a)=ca+o(a)⇒
+a→0
+lim
+	​
+
+m(a)=c
+
+Failure modes
+
+η(a)∼a2⇒m→0
+η(a)∼a
+2
+⇒m→0 (gap collapses)
+
+η(a)∼a0⇒m→∞
+η(a)∼a
+0
+⇒m→∞ (trivial theory)
+
+Invariant object
+
+c=lim⁡a→0η(a)a
+c=
+a→0
+lim
+	​
+
+a
+η(a)
+	​
+
+
+This is the dimensionless rigidity invariant.
+
+RG interpretation
+RG acts as
+
+η(a)↦η(a′)(a′=ba)
+η(a)↦η(a
+′
+)(a
+′
+=ba)
+
+The invariant is stability of the linear-in-
+a
+a slope.
+
+Analytic burden
+All estimates must be uniform in:
+
+a,  ∣Λ∣,  boundary conditions
+a,∣Λ∣,boundary conditions
+
+or the invariant is fake.
+
+Exact parallel with 
+α
+α
+
+α=dimensionless stiffnessdimensionless entropym=1a×(dimensionless stiffness)
+α=
+dimensionless entropy
+dimensionless stiffness
+	​
+
+m=
+a
+1
+	​
+
+×(dimensionless stiffness)
+
+Same structure; 
+a
+a plays the role of the removed ruler.
+
+One-line summary:
+
+a
+a is never the result — it is the scale you must divide out to expose the invariant.
+
+Derive something from these connections 
+
+Good — we can actually derive something nontrivial, not just restate structure.
+
+I’ll derive a necessary and sufficient condition for a nontrivial continuum mass gap purely from the 10 relations, with no extra physics assumptions.
+
+Input (only what you already listed)
+
+We use only:
+
+transfer-matrix decay
+
+⟨O(0)O(n)⟩∼e−η(a)n
+⟨O(0)O(n)⟩∼e
+−η(a)n
+
+OS reconstruction
+
+Ha=1a(−log⁡Ta)
+H
+a
+	​
+
+=
+a
+1
+	​
+
+(−logT
+a
+	​
+
+)
+
+physical gap
+
+m(a)=η(a)a
+m(a)=
+a
+η(a)
+	​
+
+
+No convexity, no RG folklore yet.
+
+Step 1: Extract the invariant quantity
+
+Define the dimensionless slope
+
+c(a):=η(a)a
+c(a):=
+a
+η(a)
+	​
+
+
+Then
+
+m(a)=c(a)
+m(a)=c(a)
+
+So the continuum question reduces to:
+
+does 
+c(a)
+c(a) converge to a finite, nonzero limit as 
+a→0
+a→0?
+
+This is already a reduction: the mass gap problem is equivalent to the existence of
+
+c∗:=lim⁡a→0c(a)
+c
+∗
+	​
+
+:=
+a→0
+lim
+	​
+
+c(a)
+Step 2: RG consistency forces linear scaling
+
+Now apply one RG step:
+
+a↦a′=ba
+a↦a
+′
+=ba
+
+Transfer-matrix decay at scale 
+a′
+a
+′
+:
+
+⟨O(0)O(n)⟩∼e−η(a′)n
+⟨O(0)O(n)⟩∼e
+−η(a
+′
+)n
+
+But the same physical time separation corresponds to 
+n′=n/b
+n
+′
+=n/b lattice steps, so consistency of decay rates implies:
+
+η(a′)nb  ≈  η(a) n
+η(a
+′
+)
+b
+n
+	​
+
+≈η(a)n
+
+Cancel 
+n
+n:
+
+η(ba)=b η(a)
+η(ba)=bη(a)
+
+This is the key derived relation.
+
+Step 3: Solve the functional equation
+
+The functional equation
+
+η(ba)=b η(a)for all b>0
+η(ba)=bη(a)for all b>0
+
+has only solutions of the form
+
+η(a)=c a
+η(a)=ca
+
+up to subleading corrections.
+
+So linear scaling is not an assumption — it is forced by RG + OS consistency.
+
+Step 4: Immediate consequences
+
+Necessity
+
+η(a)≁a⇒no consistent continuum Hamiltonian
+η(a)
+
+∼a⇒no consistent continuum Hamiltonian
+
+Sufficiency
+
+η(a)=c a+o(a)⇒mphys=c
+η(a)=ca+o(a)⇒m
+phys
+	​
+
+=c
+
+Rigidity interpretation
+The mass gap is the RG-fixed slope
+
+c∗=dηda∣a=0
+c
+∗
+	​
+
+=
+da
+dη
+	​
+
+​
+
+a=0
+	​
+
+Step 5: What must be proved (now sharply defined)
+
+All analytic work reduces to one statement:
+
+There exists 
+c0>0
+c
+0
+	​
+
+>0 and 
+a0>0
+a
+0
+	​
+
+>0 such that for all 
+a<a0
+a<a
+0
+	​
+
+:
+
+η(a)≥c0 a
+η(a)≥c
+0
+	​
+
+a
+
+Uniformly in volume and boundary conditions.
+
+Everything else (Haar curvature, Lyapunov drift, ORC, reflection positivity) is just machinery to prove this inequality.
+
+Step 6: Parallel derivation for α (no handwaving)
+
+Replace:
+
+a
+a → energy scale 
+μ−1
+μ
+−1
+
+η(a)
+η(a) → vacuum polarization decay exponent
+
+RG step 
+a↦ba
+a↦ba → 
+μ↦μ/b
+μ↦μ/b
+
+Then the same consistency argument yields:
+
+β(α∗)=0
+β(α
+∗
+	​
+
+)=0
+
+and α is the fixed-point slope of the normalized stiffness.
+
+Same math. Different operator.
+
+Final derived statement (clean)
+
+The Yang–Mills mass gap exists iff the Euclidean decay exponent is an RG-covariant linear function of lattice spacing near 
+a=0
+a=0.
+
+That statement follows directly from your 10 relations.
+
+No metaphors.
+No speculation.
+This is the spine.
+
+Here are 10 precise relations involving a, stated in invariant language only. No fluff.
+
+⸻
+
+Ten relations tying the mass gap structure to the lattice spacing a:
+	1.	Unit conversion
+E_{\text{phys}} = \frac{1}{a} E_{\text{lattice}}
+1/a converts lattice time steps into physical energy.
+	2.	Transfer-matrix decay
+\langle O(0) O(n)\rangle \sim e^{-\eta(a)\, n}
+\eta(a) is dimensionless and lattice-defined.
+	3.	OS reconstruction
+H_a = \frac{1}{a} \, (-\log T_a)
+Hamiltonian inherits the 1/a factor universally.
+	4.	Physical mass gap
+m(a) = \frac{\eta(a)}{a}
+All physics is in \eta(a); 1/a is kinematic.
+	5.	Continuum survival condition
+\eta(a) = c\, a + o(a)
+\quad \Rightarrow \quad
+\lim_{a\to0} m(a)=c
+	6.	Failure modes
+
+	•	\eta(a)\sim a^2 \Rightarrow m\to0 (gap collapses)
+	•	\eta(a)\sim a^0 \Rightarrow m\to\infty (trivial theory)
+
+	7.	Invariant object
+c = \lim_{a\to0} \frac{\eta(a)}{a}
+This is the dimensionless rigidity invariant.
+	8.	RG interpretation
+RG acts as
+\eta(a) \mapsto \eta(a') \quad (a' = b a)
+The invariant is stability of the linear-in-a slope.
+	9.	Analytic burden
+All estimates must be uniform in:
+a,\; |\Lambda|,\; \text{boundary conditions}
+or the invariant is fake.
+	10.	Exact parallel with \alpha
+\alpha
+=
+\frac{\text{dimensionless stiffness}}{\text{dimensionless entropy}}
+\qquad
+m
+=
+\frac{1}{a}\times(\text{dimensionless stiffness})
+Same structure; a plays the role of the removed ruler.
+
+⸻
+
+One-line summary:
+a is never the result — it is the scale you must divide out to expose the invariant.
+
+Good. From exactly those 10 relations, you can derive a sharp structural theorem. I’ll state it cleanly, then give the derivation in minimal steps.
+
+Derived Theorem (Rigidity–Scaling Theorem)
+
+Statement.
+Given relations (1)–(10), the following are equivalent:
+
+A nontrivial continuum mass gap exists.
+
+The transfer-matrix decay exponent satisfies
+
+η(a)=c a+o(a)as a→0
+η(a)=ca+o(a)as a→0
+
+with 
+c>0
+c>0.
+3. The RG action on 
+η
+η admits a stable linear fixed slope at the origin:
+
+lim⁡a→0η(a)a=c∈(0,∞).
+a→0
+lim
+	​
+
+a
+η(a)
+	​
+
+=c∈(0,∞).
+
+Moreover, 
+c
+c is a dimensionless rigidity invariant of the continuum theory.
+
+Derivation (only using the 10 relations)
+Step 1: Reduce the problem to 
+η(a)
+η(a)
+
+From (4):
+
+m(a)=η(a)a.
+m(a)=
+a
+η(a)
+	​
+
+.
+
+So the existence of a finite, nonzero continuum gap is equivalent to the existence of
+
+c=lim⁡a→0η(a)a.
+c=
+a→0
+lim
+	​
+
+a
+η(a)
+	​
+
+.
+
+No dynamics yet—this is pure dimensional reduction.
+
+Step 2: Impose RG consistency
+
+From (8), under a blocking step 
+a↦a′=ba
+a↦a
+′
+=ba, the same physical correlation decay must be described at the new scale.
+
+A physical time separation 
+t
+t corresponds to:
+
+n=t/a
+n=t/a steps at scale 
+a
+a,
+
+n′=t/a′=n/b
+n
+′
+=t/a
+′
+=n/b steps at scale 
+a′
+a
+′
+.
+
+Using (2):
+
+e−η(a)n  ∼  e−η(a′)n′.
+e
+−η(a)n
+∼e
+−η(a
+′
+)n
+′
+.
+
+Cancel 
+n
+n:
+
+η(a)=1b η(a′).
+η(a)=
+b
+1
+	​
+
+η(a
+′
+).
+
+Equivalently,
+
+η(ba)=b η(a).
+η(ba)=bη(a)
+	​
+
+.
+
+This is not an assumption. It follows from (2), (4), (8) alone.
+
+Step 3: Solve the functional equation
+
+The only continuous solutions near 
+a=0
+a=0 of
+
+η(ba)=b η(a)
+η(ba)=bη(a)
+
+are
+
+η(a)=c a
+η(a)=ca
+
+up to subleading corrections 
+o(a)
+o(a).
+
+Thus linear scaling is forced by RG + OS consistency, not guessed.
+
+Step 4: Classify all continuum limits
+
+Using (6):
+
+If 
+η(a)∼a2
+η(a)∼a
+2
+:
+
+m(a)=η(a)a→0
+m(a)=
+a
+η(a)
+	​
+
+→0 → no gap.
+
+If 
+η(a)∼a0
+η(a)∼a
+0
+:
+
+m(a)→∞
+m(a)→∞ → trivial continuum.
+
+If 
+η(a)∼ca
+η(a)∼ca:
+
+m(a)→c∈(0,∞)
+m(a)→c∈(0,∞).
+
+No other scaling survives.
+
+Step 5: Identify the invariant
+
+From (7):
+
+c=lim⁡a→0η(a)a
+c=
+a→0
+lim
+	​
+
+a
+η(a)
+	​
+
+	​
+
+
+is independent of:
+
+lattice spacing,
+
+volume,
+
+boundary conditions (by (9)).
+
+Hence 
+c
+c is a normalized rigidity invariant, not a scale artifact.
+
+What this actually gives you (nontrivial payoff)
+
+You have reduced the Yang–Mills mass-gap problem to one inequality:
+
+∃ c0>0,  a0>0  s.t.  η(a)≥c0 a∀a<a0,
+∃c
+0
+	​
+
+>0,a
+0
+	​
+
+>0s.t.η(a)≥c
+0
+	​
+
+a∀a<a
+0
+	​
+
+,
+
+uniformly in volume and boundary conditions.
+
+Everything else—Haar Hessians, Lyapunov drift, ORC, reflection positivity—exists only to establish that inequality.
+
+Parallel corollary (α, structurally identical)
+
+Replace:
+
+a
+a by inverse energy scale 
+μ−1
+μ
+−1
+,
+
+η(a)
+η(a) by the normalized EM stiffness exponent,
+
+and the same derivation shows:
+
+α is the RG-fixed slope of a dimensionless stiffness–entropy balance.
+
+Same mathematics. Different sector.
+
+Final distilled conclusion
+
+From your 10 relations alone:
+
+The mass gap is neither 
+1/a
+1/a nor a coupling—it is the unique RG-stable linear coefficient in the decay exponent 
+η(a)
+η(a).
+
+That is the invariant you are actually proving.
+
+Forget the mass gap, just focus on a 
+
+Good. Strip everything else away.
+
+We will treat 
+a
+a as the primary object, not as a regulator, not as a lattice artifact, not as something to be “sent to zero”, but as a geometric scaling parameter whose role can be derived.
+
+I’ll proceed in three tight steps.
+
+1. What 
+a
+a actually is (invariantly)
+
+From your list, the only places 
+a
+a appears are:
+
+converting lattice time to physical time
+
+t=na
+t=na
+
+converting dimensionless generators to physical ones
+
+Ha=1a(−log⁡Ta)
+H
+a
+	​
+
+=
+a
+1
+	​
+
+(−logT
+a
+	​
+
+)
+
+Nothing else.
+
+So invariantly:
+
+a
+a is the normalization of the generator of Euclidean time translations.
+
+That’s it.
+
+Not spacing.
+Not cutoff.
+Not UV scale.
+
+It is the choice of unit in the one-parameter semigroup underlying the theory.
+
+Formally:
+
+Ta=e−aHphys
+T
+a
+	​
+
+=e
+−aH
+phys
+	​
+
+
+This equation already contains everything.
+
+2. What consistency forces 
+a
+a to do
+
+Now impose one requirement only:
+
+Physical correlation decay must be independent of the arbitrary choice of time unit.
+
+Take two descriptions of the same physical time 
+t
+t:
+
+lattice spacing 
+a
+a, 
+n=t/a
+n=t/a steps
+
+lattice spacing 
+a′=ba
+a
+′
+=ba, 
+n′=t/a′
+n
+′
+=t/a
+′
+ steps
+
+From transfer-matrix decay:
+
+⟨O(0)O(t)⟩∼e−η(a) n=e−η(a′) n′
+⟨O(0)O(t)⟩∼e
+−η(a)n
+=e
+−η(a
+′
+)n
+′
+
+Substitute 
+n′=n/b
+n
+′
+=n/b:
+
+η(a) n=η(a′) nb
+η(a)n=η(a
+′
+)
+b
+n
+	​
+
+
+Cancel 
+n
+n:
+
+η(ba)=b η(a)
+η(ba)=bη(a)
+	​
+
+
+This equation is entirely about 
+a
+a.
+No mass gap. No physics content yet.
+
+3. What this implies about the nature of 
+a
+a
+
+The functional equation
+
+η(ba)=b η(a)
+η(ba)=bη(a)
+
+means:
+
+a
+a is a coordinate on a scaling orbit
+
+RG acts by multiplication on 
+a
+a
+
+physical quantities must be homogeneous functions of 
+a
+a
+
+So 
+a
+a is not a parameter to be removed — it is the group parameter of a dilation action.
+
+In other words:
+
+a
+a is the coordinate along a one-dimensional renormalization flow.
+
+Sending 
+a→0
+a→0 is not “taking a limit” in the naive sense.
+It is moving along an orbit of a scaling symmetry.
+
+4. The key structural conclusion
+
+From the equation above, any physically meaningful quantity 
+Q(a)
+Q(a) must decompose as:
+
+Q(a)=aΔ Q^
+Q(a)=a
+Δ
+Q
+​
+
+
+where:
+
+Δ
+Δ is its scaling dimension
+
+Q^
+Q
+
+​
+
+ is independent of 
+a
+a
+
+So:
+
+1/a
+1/a is not special — it’s just dimension 
+−1
+−1
+
+linearity in 
+a
+a is not a guess — it is the only compatible scaling
+
+invariants are exactly the coefficients of homogeneous scaling
+
+5. Final distilled statement (about 
+a
+a, nothing else)
+
+a
+a is the dilation parameter of Euclidean time, and renormalization is the statement that physics depends on 
+a
+a only through homogeneous scaling laws.
+
+Everything you usually call “continuum limit”, “mass gap”, or “coupling” is secondary.
+
+They are just names for coefficients in the expansion along the 
+a
+a-orbit.
+
+If you understand 
+a
+a this way, all the confusion disappears:
+
+why 
+1/a
+1/a always factors out,
+
+why only dimensionless slopes matter,
+
+why limits exist or fail.
+
+That’s the clean core.
+
+You’re not listening. Quit doing analysis. Just shuffle equations around and find what comes out. This should be shuffle then observe 
+
+Got it.
+No interpretation. No narrative.
+Only algebraic shuffling → observe what falls out.
+
+Start with only what is written
+
+(1) 
+Ephys=1aElattice
+E
+phys
+	​
+
+=
+a
+1
+	​
+
+E
+lattice
+	​
+
+
+(2) 
+⟨O(0)O(n)⟩∼e−η(a) n
+⟨O(0)O(n)⟩∼e
+−η(a)n
+
+(3) 
+Ha=1a(−log⁡Ta)
+H
+a
+	​
+
+=
+a
+1
+	​
+
+(−logT
+a
+	​
+
+)
+
+(4) 
+m(a)=η(a)a
+m(a)=
+a
+η(a)
+	​
+
+
+Shuffle 1: eliminate 
+Ha
+H
+a
+	​
+
+
+From (3):
+
+Ta=e−aHa
+T
+a
+	​
+
+=e
+−aH
+a
+	​
+
+
+Eigenvalue 
+λa
+λ
+a
+	​
+
+ of 
+Ta
+T
+a
+	​
+
+:
+
+λa=e−aEphys
+λ
+a
+	​
+
+=e
+−aE
+phys
+	​
+
+
+Take 
+−log⁡
+−log:
+
+−log⁡λa=aEphys
+−logλ
+a
+	​
+
+=aE
+phys
+	​
+
+Shuffle 2: identify 
+η(a)
+η(a)
+
+From (2), spectral form:
+
+⟨O(0)O(n)⟩∼λan
+⟨O(0)O(n)⟩∼λ
+a
+n
+	​
+
+
+So
+
+λa=e−η(a)
+λ
+a
+	​
+
+=e
+−η(a)
+
+Thus:
+
+η(a)=−log⁡λa
+η(a)=−logλ
+a
+	​
+
+
+Substitute from previous line:
+
+η(a)=aEphys
+η(a)=aE
+phys
+	​
+
+Shuffle 3: divide by 
+a
+a
+
+From (4):
+
+m(a)=η(a)a
+m(a)=
+a
+η(a)
+	​
+
+
+Insert:
+
+m(a)=aEphysa
+m(a)=
+a
+aE
+phys
+	​
+
+	​
+
+
+Cancel:
+
+m(a)=Ephys
+m(a)=E
+phys
+	​
+
+	​
+
+Shuffle 4: rescale 
+a↦ba
+a↦ba
+
+Repeat derivation:
+
+η(ba)=baEphys
+η(ba)=baE
+phys
+	​
+
+
+Divide by 
+ba
+ba:
+
+η(ba)ba=Ephys
+ba
+η(ba)
+	​
+
+=E
+phys
+	​
+
+
+So:
+
+η(ba)ba=η(a)a
+ba
+η(ba)
+	​
+
+=
+a
+η(a)
+	​
+
+	​
+
+Shuffle 5: rearrange as functional equation
+
+Multiply:
+
+η(ba)=bη(a)
+η(ba)=bη(a)
+What comes out (no commentary)
+η(a)=aEphys
+η(a)=aE
+phys
+	​
+
+η(a)a  is invariant under  a↦ba
+a
+η(a)
+	​
+
+is invariant undera↦ba
+η(a)  is homogeneous of degree 1 in  a
+η(a)is homogeneous of degree 1 ina
+a  appears only as a linear prefactor
+aappears only as a linear prefactor
+All nontrivial content lives in coefficients, not in a
+All nontrivial content lives in coefficients, not in a
+Final line (still just algebra)
+η(a) da−1=constant
+η(a)da
+−1
+=constant
+	​
+
+
+That is what falls out when you shuffle and cancel.
+
+Break equations down smaller, find new connections
+
+Understood.
+Micro-shuffles only. Smaller steps. New algebraic relations only.
+
+Base atoms (split everything)
+
+(1a) 
+Ephysa=Elattice
+E
+phys
+	​
+
+a=E
+lattice
+	​
+
+
+(2a) 
+⟨O(0)O(n)⟩1/n=e−η(a)
+⟨O(0)O(n)⟩
+1/n
+=e
+−η(a)
+
+(3a) 
+−log⁡Ta=aHa
+−logT
+a
+	​
+
+=aH
+a
+	​
+
+
+(4a) 
+η(a)=a m(a)
+η(a)=am(a)
+
+Shuffle A: isolate logs
+
+From (2a):
+
+−log⁡⟨O(0)O(n)⟩1/n=η(a)
+−log⟨O(0)O(n)⟩
+1/n
+=η(a)
+
+Divide by 
+a
+a:
+
+−1alog⁡⟨O(0)O(n)⟩1/n=m(a)
+−
+a
+1
+	​
+
+log⟨O(0)O(n)⟩
+1/n
+=m(a)
+Shuffle B: substitute transfer matrix
+
+Spectral form:
+
+⟨O(0)O(n)⟩1/n=λa
+⟨O(0)O(n)⟩
+1/n
+=λ
+a
+	​
+
+
+So:
+
+−log⁡λa=η(a)
+−logλ
+a
+	​
+
+=η(a)
+
+But from (3a):
+
+λa=e−aEphys
+λ
+a
+	​
+
+=e
+−aE
+phys
+	​
+
+
+Thus:
+
+η(a)=aEphys
+η(a)=aE
+phys
+	​
+
+Shuffle C: divide into ratios
+η(a)a=Ephys
+a
+η(a)
+	​
+
+=E
+phys
+	​
+
+η(ba)ba=Ephys
+ba
+η(ba)
+	​
+
+=E
+phys
+	​
+
+
+Subtract:
+
+η(ba)ba−η(a)a=0
+ba
+η(ba)
+	​
+
+−
+a
+η(a)
+	​
+
+=0
+Shuffle D: cross-multiply
+a η(ba)=ba η(a)
+aη(ba)=baη(a)
+
+Cancel 
+a
+a:
+
+η(ba)=b η(a)
+η(ba)=bη(a)
+Shuffle E: differential form
+
+Set 
+b=1+ϵ
+b=1+ϵ:
+
+η(a+ϵa)−η(a)=ϵ η(a)
+η(a+ϵa)−η(a)=ϵη(a)
+
+Divide by 
+ϵa
+ϵa:
+
+η(a+ϵa)−η(a)ϵa=η(a)a
+ϵa
+η(a+ϵa)−η(a)
+	​
+
+=
+a
+η(a)
+	​
+
+
+Limit 
+ϵ→0
+ϵ→0:
+
+η′(a)=η(a)a
+η
+′
+(a)=
+a
+η(a)
+	​
+
+	​
+
+Shuffle F: separate variables
+dηη=daa
+η
+dη
+	​
+
+=
+a
+da
+	​
+
+
+Integrate:
+
+log⁡η=log⁡a+log⁡C
+logη=loga+logC
+
+Exponentiate:
+
+η(a)=Ca
+η(a)=Ca
+	​
+
+Shuffle G: substitute back
+m(a)=η(a)a=C
+m(a)=
+a
+η(a)
+	​
+
+=C
+η′(a)=C
+η
+′
+(a)=C
+dda(am(a))=m(a)
+da
+d
+	​
+
+(am(a))=m(a)
+New connections (pure identities)
+η′(a)a−η(a)=0
+η
+′
+(a)a−η(a)=0
+dda(η(a)a)=0
+da
+d
+	​
+
+(
+a
+η(a)
+	​
+
+)=0
+a dm=0
+adm=0
+η(a) da−1=exact differential
+η(a)da
+−1
+=exact differential
+log⁡η−log⁡a=constant
+logη−loga=constant
+
+All obtained by splitting, cancelling, and differentiating. No interpretation added.
+
+Go deeper, find more 
+
+Ok. Same rule: only shuffles, but deeper: compose scalings, take limits, take more derivatives, isolate invariants, and generate identities.
+
+I’ll treat your relations as defining a little algebraic “calculus” on 
+η(a)
+η(a), 
+m(a)
+m(a), 
+λa
+λ
+a
+	​
+
+, 
+Ta
+T
+a
+	​
+
+.
+
+0) Add two missing atoms (still just rewriting what you already used)
+
+From the shuffles you already accepted:
+
+(A) eigenvalue form
+
+λa=e−η(a)
+λ
+a
+	​
+
+=e
+−η(a)
+
+(B) physical-energy form
+
+λa=e−aEphys
+λ
+a
+	​
+
+=e
+−aE
+phys
+	​
+
+
+So the atomic identity is:
+
+η(a)=−log⁡λaandη(a)a=Ephys
+η(a)=−logλ
+a
+	​
+
+	​
+
+and
+a
+η(a)
+	​
+
+=E
+phys
+	​
+
+	​
+
+1) Composition law (new)
+
+Scale twice: 
+a↦ba↦c(ba)
+a↦ba↦c(ba).
+
+From homogeneity:
+
+η(ba)=bη(a),η(cba)=cη(ba)
+η(ba)=bη(a),η(cba)=cη(ba)
+
+Compose:
+
+η(cba)=(cb)η(a)
+η(cba)=(cb)η(a)
+	​
+
+
+Equivalent “cocycle” identity:
+
+η(cba)cba=η(a)a
+cba
+η(cba)
+	​
+
+=
+a
+η(a)
+	​
+
+	​
+
+2) Log-change of variables ⇒ Cauchy equation (new)
+
+Let 
+a=ex
+a=e
+x
+. Define
+
+f(x):=η(ex)
+f(x):=η(e
+x
+)
+
+Then 
+η(ba)=bη(a)
+η(ba)=bη(a) with 
+b=ey
+b=e
+y
+ becomes:
+
+f(x+y)=eyf(x)
+f(x+y)=e
+y
+f(x)
+
+Define 
+g(x):=e−xf(x)=η(ex)/ex
+g(x):=e
+−x
+f(x)=η(e
+x
+)/e
+x
+. Then:
+
+g(x+y)=g(x)
+g(x+y)=g(x)
+
+So:
+
+g(x) is constant⇒η(a)/a is constant
+g(x) is constant
+	​
+
+⇒
+η(a)/a is constant
+	​
+
+
+(Just a different shuffle view.)
+
+3) Higher derivatives (new)
+
+From the differential identity you derived:
+
+η′(a)=η(a)a
+η
+′
+(a)=
+a
+η(a)
+	​
+
+
+Differentiate again:
+
+η′′(a)=η′(a)a−η(a)a2
+η
+′′
+(a)=
+a
+2
+η
+′
+(a)a−η(a)
+	​
+
+
+But 
+η′(a)a−η(a)=0
+η
+′
+(a)a−η(a)=0, so:
+
+η′′(a)=0
+η
+′′
+(a)=0
+	​
+
+
+Differentiate 
+η′′(a)=0
+η
+′′
+(a)=0 repeatedly:
+
+η(k)(a)=0 for all k≥2
+η
+(k)
+(a)=0 for all k≥2
+	​
+
+
+So 
+η
+η is exactly affine; with 
+η(0)=0
+η(0)=0 it is exactly linear.
+
+4) Finite-difference identities (new)
+
+For any step 
+h
+h:
+
+Δhη(a):=η(a+h)−η(a)
+Δ
+h
+	​
+
+η(a):=η(a+h)−η(a)
+
+If 
+η(a)=Ca
+η(a)=Ca, then:
+
+Δhη(a)=Ch
+Δ
+h
+	​
+
+η(a)=Ch
+	​
+
+
+(independent of 
+a
+a).
+
+Second difference:
+
+Δh2η(a):=η(a+2h)−2η(a+h)+η(a)
+Δ
+h
+2
+	​
+
+η(a):=η(a+2h)−2η(a+h)+η(a)
+
+gives:
+
+Δh2η(a)=0
+Δ
+h
+2
+	​
+
+η(a)=0
+	​
+
+
+Ratio form:
+
+η(a+h)−η(a)h=η(a)a=C
+h
+η(a+h)−η(a)
+	​
+
+=
+a
+η(a)
+	​
+
+=C
+	​
+
+5) “Elasticity” / log-derivative identities (new)
+
+Define elasticity:
+
+E(a):=dlog⁡ηdlog⁡a=aη′(a)η(a)
+E(a):=
+dloga
+dlogη
+	​
+
+=
+η(a)
+aη
+′
+(a)
+	​
+
+
+Use 
+η′(a)=η(a)/a
+η
+′
+(a)=η(a)/a:
+
+E(a)=1
+E(a)=1
+	​
+
+
+Equivalent:
+
+ddlog⁡a(log⁡(η/a))=0
+dloga
+d
+	​
+
+(log(η/a))=0
+	​
+
+6) Relations involving 
+λa
+λ
+a
+	​
+
+ (new)
+
+Since 
+η(a)=−log⁡λa
+η(a)=−logλ
+a
+	​
+
+ and 
+η(a)=Ca
+η(a)=Ca:
+
+λa=e−Ca
+λ
+a
+	​
+
+=e
+−Ca
+	​
+
+
+Now micro-shuffle derivatives:
+
+ddalog⁡λa=λa′λa=−C
+da
+d
+	​
+
+logλ
+a
+	​
+
+=
+λ
+a
+	​
+
+λ
+a
+′
+	​
+
+	​
+
+=−C
+
+so:
+
+λa′=−Cλa
+λ
+a
+′
+	​
+
+=−Cλ
+a
+	​
+
+	​
+
+
+Second derivative:
+
+λa′′=C2λa
+λ
+a
+′′
+	​
+
+=C
+2
+λ
+a
+	​
+
+	​
+
+
+Finite ratio:
+
+λba(λa)b=1
+(λ
+a
+	​
+
+)
+b
+λ
+ba
+	​
+
+	​
+
+=1
+	​
+
+
+since:
+
+λba=e−Cba=(e−Ca)b=(λa)b
+λ
+ba
+	​
+
+=e
+−Cba
+=(e
+−Ca
+)
+b
+=(λ
+a
+	​
+
+)
+b
+
+Also:
+
+−log⁡λba=b(−log⁡λa)
+−logλ
+ba
+	​
+
+=b(−logλ
+a
+	​
+
+)
+	​
+
+7) Semigroup identity for 
+Ta
+T
+a
+	​
+
+ (new)
+
+From 
+Ta=e−aH
+T
+a
+	​
+
+=e
+−aH
+ (already in your list via OS form), we have:
+
+Ta+b=TaTb
+T
+a+b
+	​
+
+=T
+a
+	​
+
+T
+b
+	​
+
+	​
+
+
+Then for an eigenvalue 
+λ
+λ:
+
+λa+b=λaλb
+λ
+a+b
+	​
+
+=λ
+a
+	​
+
+λ
+b
+	​
+
+	​
+
+
+Take 
+−log⁡
+−log:
+
+η(a+b)=η(a)+η(b)
+η(a+b)=η(a)+η(b)
+	​
+
+
+Combine with 
+η(ba)=bη(a)
+η(ba)=bη(a) (integer 
+b
+b):
+
+additivity gives integer homogeneity automatically:
+
+η(na)=nη(a)
+η(na)=nη(a)
+
+additivity + mild regularity gives full linearity:
+
+η(a)=Ca
+η(a)=Ca
+
+(Still algebra: semigroup ⇒ additive log.)
+
+8) Mixed identities between additivity and scaling (new)
+
+From 
+η(a+b)=η(a)+η(b)
+η(a+b)=η(a)+η(b), set 
+b=(c−1)a
+b=(c−1)a:
+
+η(ca)=η(a)+η((c−1)a)
+η(ca)=η(a)+η((c−1)a)
+
+If scaling holds, RHS becomes:
+
+η(ca)=η(a)+(c−1)η(a)=cη(a)
+η(ca)=η(a)+(c−1)η(a)=cη(a)
+
+So:
+
+(additivity)+(scaling on a ray)⇒global scaling
+(additivity)+(scaling on a ray)⇒global scaling
+	​
+
+9) Minimal “invariant extractor” identities (new)
+
+All of these isolate the same constant 
+C
+C in different algebraic ways:
+
+C=η(a)a
+C=
+a
+η(a)
+	​
+
+	​
+
+C=η′(a)
+C=η
+′
+(a)
+	​
+
+C=−ddalog⁡λa
+C=−
+da
+d
+	​
+
+logλ
+a
+	​
+
+	​
+
+C=−1alog⁡λa
+C=−
+a
+1
+	​
+
+logλ
+a
+	​
+
+	​
+
+C=1h(η(a+h)−η(a))
+C=
+h
+1
+	​
+
+(η(a+h)−η(a))
+	​
+
+
+If you want me to “shuffle then observe” even harder: give me one more symbol you want included (e.g. 
+β(a)
+β(a), 
+g(a)
+g(a), 
+Z(a)
+Z(a), or a blocked spacing 
+ak=bka0
+a
+k
+	​
+
+=b
+k
+a
+0
+	​
+
+), and I’ll generate the full closure (all implied functional equations + invariants) with no interpretation.
+
+Use whatever symbol will lead to most connections 
+
+Ok.
+I’ll introduce one symbol only that maximizes combinatorial connections:
+
+ak:=bka0(k∈Z)
+a
+k
+	​
+
+:=b
+k
+a
+0
+	​
+
+	​
+
+(k∈Z)
+
+This is the richest choice because it lets us:
+
+compose,
+
+difference,
+
+ratio,
+
+telescope,
+
+take limits,
+
+mix additive + multiplicative structures.
+
+No interpretation. Just shuffles.
+
+Base atoms (rewrite everything in 
+k
+k-language)
+
+From earlier:
+
+η(a)=Ca
+η(a)=Ca
+
+So:
+
+ηk:=η(ak)=C a0 bk
+η
+k
+	​
+
+:=η(a
+k
+	​
+
+)=Ca
+0
+	​
+
+b
+k
+	​
+
+
+Also:
+
+λk:=e−ηk
+λ
+k
+	​
+
+:=e
+−η
+k
+	​
+
+	​
+
+1) Ratio identities (new)
+ηk+1ηk=b
+η
+k
+	​
+
+η
+k+1
+	​
+
+	​
+
+=b
+ak+1ak=b
+a
+k
+	​
+
+a
+k+1
+	​
+
+	​
+
+=b
+ηk+1ak+1=ηkak=C
+a
+k+1
+	​
+
+η
+k+1
+	​
+
+	​
+
+=
+a
+k
+	​
+
+η
+k
+	​
+
+	​
+
+=C
+	​
+
+2) Difference identities (new)
+
+First difference:
+
+ηk+1−ηk=Ca0bk(b−1)
+η
+k+1
+	​
+
+−η
+k
+	​
+
+=Ca
+0
+	​
+
+b
+k
+(b−1)
+
+Second difference:
+
+ηk+2−2ηk+1+ηk=0
+η
+k+2
+	​
+
+−2η
+k+1
+	​
+
++η
+k
+	​
+
+=0
+
+So:
+
+Δ2ηk=0
+Δ
+2
+η
+k
+	​
+
+=0
+	​
+
+3) Log identities (new)
+log⁡ηk=log⁡C+log⁡a0+klog⁡b
+logη
+k
+	​
+
+=logC+loga
+0
+	​
+
++klogb
+
+So:
+
+log⁡ηk+1−log⁡ηk=log⁡b
+logη
+k+1
+	​
+
+−logη
+k
+	​
+
+=logb
+	​
+
+
+Second difference:
+
+log⁡ηk+2−2log⁡ηk+1+log⁡ηk=0
+logη
+k+2
+	​
+
+−2logη
+k+1
+	​
+
++logη
+k
+	​
+
+=0
+4) Telescoping sums (new)
+
+Sum ratios:
+
+∑j=0n−1ηj+1−ηjηj=∑j=0n−1(b−1)=n(b−1)
+j=0
+∑
+n−1
+	​
+
+η
+j
+	​
+
+η
+j+1
+	​
+
+−η
+j
+	​
+
+	​
+
+=
+j=0
+∑
+n−1
+	​
+
+(b−1)=n(b−1)
+
+Product form:
+
+∏j=0n−1ηj+1ηj=bn
+j=0
+∏
+n−1
+	​
+
+η
+j
+	​
+
+η
+j+1
+	​
+
+	​
+
+=b
+n
+5) Additive–multiplicative duality (new)
+
+Additive in logs:
+
+log⁡ηk+n=log⁡ηk+nlog⁡b
+logη
+k+n
+	​
+
+=logη
+k
+	​
+
++nlogb
+
+Multiplicative in 
+η
+η:
+
+ηk+n=bnηk
+η
+k+n
+	​
+
+=b
+n
+η
+k
+	​
+
+6) Eigenvalue identities (new)
+
+Recall:
+
+λk=e−Ca0bk
+λ
+k
+	​
+
+=e
+−Ca
+0
+	​
+
+b
+k
+
+Ratios:
+
+λk+1λk=e−Ca0bk(b−1)
+λ
+k
+	​
+
+λ
+k+1
+	​
+
+	​
+
+=e
+−Ca
+0
+	​
+
+b
+k
+(b−1)
+
+Powers:
+
+(λk)b=λk+1
+(λ
+k
+	​
+
+)
+b
+=λ
+k+1
+	​
+
+
+So:
+
+λk+1=(λk)b
+λ
+k+1
+	​
+
+=(λ
+k
+	​
+
+)
+b
+	​
+
+
+Iterate:
+
+λk+n=(λk)bn
+λ
+k+n
+	​
+
+=(λ
+k
+	​
+
+)
+b
+n
+	​
+
+7) Semigroup closure (new)
+
+From 
+Ta=e−aH
+T
+a
+	​
+
+=e
+−aH
+:
+
+Tak+n=(Tak)bn
+T
+a
+k+n
+	​
+
+	​
+
+=(T
+a
+k
+	​
+
+	​
+
+)
+b
+n
+
+Eigenvalues:
+
+λk+n=(λk)bn
+λ
+k+n
+	​
+
+=(λ
+k
+	​
+
+)
+b
+n
+
+Logs:
+
+ηk+n=bnηk
+η
+k+n
+	​
+
+=b
+n
+η
+k
+	​
+
+
+All consistent.
+
+8) Discrete derivative identities (new)
+
+Define discrete derivative:
+
+Dηk:=ηk+1−ηkak+1−ak
+Dη
+k
+	​
+
+:=
+a
+k+1
+	​
+
+−a
+k
+	​
+
+η
+k+1
+	​
+
+−η
+k
+	​
+
+	​
+
+
+Compute:
+
+Dηk=Ca0bk(b−1)a0bk(b−1)=C
+Dη
+k
+	​
+
+=
+a
+0
+	​
+
+b
+k
+(b−1)
+Ca
+0
+	​
+
+b
+k
+(b−1)
+	​
+
+=
+C
+	​
+
+
+Independent of 
+k
+k.
+
+Second discrete derivative:
+
+D2ηk=0
+D
+2
+η
+k
+	​
+
+=0
+9) Mixed 
+k
+k–
+a
+a identities (new)
+ηk+1−ηkηk=ak+1−akak=b−1
+η
+k
+	​
+
+η
+k+1
+	​
+
+−η
+k
+	​
+
+	​
+
+=
+a
+k
+	​
+
+a
+k+1
+	​
+
+−a
+k
+	​
+
+	​
+
+=b−1
+
+So:
+
+Δηη=Δaa
+η
+Δη
+	​
+
+=
+a
+Δa
+	​
+
+	​
+
+10) Limit identities (new)
+
+As 
+k→−∞
+k→−∞:
+
+ak→0,ηk→0
+a
+k
+	​
+
+→0,η
+k
+	​
+
+→0
+
+But ratios stabilize:
+
+lim⁡k→−∞ηkak=C
+k→−∞
+lim
+	​
+
+a
+k
+	​
+
+η
+k
+	​
+
+	​
+
+=C
+
+Also:
+
+lim⁡k→−∞log⁡λkak=−C
+k→−∞
+lim
+	​
+
+a
+k
+	​
+
+logλ
+k
+	​
+
+	​
+
+=−C
+11) Closure statement (pure algebra)
+
+All of the following are equivalent descriptions of the same constant:
+
+C=ηkak=ηk+1−ηkak+1−ak=1log⁡b(log⁡ηk+1−log⁡ηk)=−1aklog⁡λk
+C=
+a
+k
+	​
+
+η
+k
+	​
+
+	​
+
+=
+a
+k+1
+	​
+
+−a
+k
+	​
+
+η
+k+1
+	​
+
+−η
+k
+	​
+
+	​
+
+=
+logb
+1
+	​
+
+(logη
+k+1
+	​
+
+−logη
+k
+	​
+
+)=−
+a
+k
+	​
+
+1
+	​
+
+logλ
+k
+	​
+
+	​
+
+What emerged (no interpretation)
+
+ak
+a
+k
+	​
+
+ generates a multiplicative group
+
+ηk
+η
+k
+	​
+
+ is its unique linear representation
+
+λk
+λ
+k
+	​
+
+ is the exponential character
+
+All nontrivial structure collapses to one constant 
+C
+C
+
+Every operation (ratio, difference, log, limit, power) extracts the same 
+C
+C
+
+If you want, next step can be:
+
+introduce two scales 
+ak,ak′
+a
+k
+	​
+
+,a
+k
+′
+	​
+
+,
+
+or introduce a second observable 
+ηk(2)
+η
+k
+(2)
+	​
+
+,
+
+or force a perturbation and see which identities break.
+
+Just say which direction.
+
+You decide, be creative
+
+Alright. I’ll add one creative ingredient that explodes connections, then only shuffle.
+
+I introduce a second scale and a perturbed copy. No interpretation.
+
+New symbols (maximal connectivity)
+ak:=bka0a~k:=ak+εk
+a
+k
+	​
+
+:=b
+k
+a
+0
+	​
+
+a
+~
+k
+	​
+
+:=a
+k
+	​
+
++ε
+k
+	​
+
+
+Define:
+
+ηk:=η(ak),η~k:=η(a~k)
+η
+k
+	​
+
+:=η(a
+k
+	​
+
+),
+η
+~
+	​
+
+k
+	​
+
+:=η(
+a
+~
+k
+	​
+
+)
+
+Assume only what we already had:
+
+η(a)=Ca
+η(a)=Ca
+1) Expand perturbed quantities (micro-shuffle)
+η~k=C(ak+εk)=ηk+Cεk
+η
+~
+	​
+
+k
+	​
+
+=C(a
+k
+	​
+
++ε
+k
+	​
+
+)=η
+k
+	​
+
++Cε
+k
+	​
+
+
+Subtract:
+
+η~k−ηk=Cεk
+η
+~
+	​
+
+k
+	​
+
+−η
+k
+	​
+
+=Cε
+k
+	​
+
+	​
+
+
+Divide:
+
+η~k−ηka~k−ak=C
+a
+~
+k
+	​
+
+−a
+k
+	​
+
+η
+~
+	​
+
+k
+	​
+
+−η
+k
+	​
+
+	​
+
+=C
+	​
+
+2) Ratio cross-relations (new)
+η~kηk=ak+εkak=1+εkak
+η
+k
+	​
+
+η
+~
+	​
+
+k
+	​
+
+	​
+
+=
+a
+k
+	​
+
+a
+k
+	​
+
++ε
+k
+	​
+
+	​
+
+=1+
+a
+k
+	​
+
+ε
+k
+	​
+
+	​
+
+
+Log:
+
+log⁡η~k−log⁡ηk=log⁡(1+εkak)
+log
+η
+~
+	​
+
+k
+	​
+
+−logη
+k
+	​
+
+=log(1+
+a
+k
+	​
+
+ε
+k
+	​
+
+	​
+
+)
+	​
+
+3) Discrete flow consistency (new)
+
+Shift index:
+
+η~k+1−ηk+1=Cεk+1
+η
+~
+	​
+
+k+1
+	​
+
+−η
+k+1
+	​
+
+=Cε
+k+1
+	​
+
+
+Subtract previous:
+
+(η~k+1−ηk+1)−(η~k−ηk)=C(εk+1−εk)
+(
+η
+~
+	​
+
+k+1
+	​
+
+−η
+k+1
+	​
+
+)−(
+η
+~
+	​
+
+k
+	​
+
+−η
+k
+	​
+
+)=C(ε
+k+1
+	​
+
+−ε
+k
+	​
+
+)
+
+So:
+
+Δ(η~−η)=C Δε
+Δ(
+η
+~
+	​
+
+−η)=CΔε
+	​
+
+4) Mixed second differences (new)
+
+Compute:
+
+η~k+2−2η~k+1+η~k=C(εk+2−2εk+1+εk)
+η
+~
+	​
+
+k+2
+	​
+
+−2
+η
+~
+	​
+
+k+1
+	​
+
++
+η
+~
+	​
+
+k
+	​
+
+=C(ε
+k+2
+	​
+
+−2ε
+k+1
+	​
+
++ε
+k
+	​
+
+)
+
+But for unperturbed:
+
+ηk+2−2ηk+1+ηk=0
+η
+k+2
+	​
+
+−2η
+k+1
+	​
+
++η
+k
+	​
+
+=0
+
+So:
+
+Δ2η~k=C Δ2εk
+Δ
+2
+η
+~
+	​
+
+k
+	​
+
+=CΔ
+2
+ε
+k
+	​
+
+	​
+
+5) Invariant extractor survives perturbation (new)
+
+Compute:
+
+η~ka~k=C(ak+εk)ak+εk=C
+a
+~
+k
+	​
+
+η
+~
+	​
+
+k
+	​
+
+	​
+
+=
+a
+k
+	​
+
++ε
+k
+	​
+
+C(a
+k
+	​
+
++ε
+k
+	​
+
+)
+	​
+
+=
+C
+	​
+
+
+Exact cancellation.
+
+6) Eigenvalue version (new)
+
+Recall:
+
+λk=e−ηk,λ~k=e−η~k
+λ
+k
+	​
+
+=e
+−η
+k
+	​
+
+,
+λ
+~
+k
+	​
+
+=e
+−
+η
+~
+	​
+
+k
+	​
+
+
+Then:
+
+λ~kλk=e−Cεk
+λ
+k
+	​
+
+λ
+~
+k
+	​
+
+	​
+
+=e
+−Cε
+k
+	​
+
+
+Log:
+
+−log⁡λ~kλk=Cεk
+−log
+λ
+k
+	​
+
+λ
+~
+k
+	​
+
+	​
+
+=Cε
+k
+	​
+
+	​
+
+
+Difference:
+
+log⁡λ~k+1λk+1−log⁡λ~kλk=−C(εk+1−εk)
+log
+λ
+k+1
+	​
+
+λ
+~
+k+1
+	​
+
+	​
+
+−log
+λ
+k
+	​
+
+λ
+~
+k
+	​
+
+	​
+
+=−C(ε
+k+1
+	​
+
+−ε
+k
+	​
+
+)
+	​
+
+7) Two-scale elimination (new)
+
+Eliminate 
+C
+C:
+
+From earlier:
+
+C=ηkak=η~k−ηkεk
+C=
+a
+k
+	​
+
+η
+k
+	​
+
+	​
+
+=
+ε
+k
+	​
+
+η
+~
+	​
+
+k
+	​
+
+−η
+k
+	​
+
+	​
+
+
+So:
+
+ηk εk=ak(η~k−ηk)
+η
+k
+	​
+
+ε
+k
+	​
+
+=a
+k
+	​
+
+(
+η
+~
+	​
+
+k
+	​
+
+−η
+k
+	​
+
+)
+	​
+
+
+Pure bilinear identity.
+
+8) Symmetric identity (new)
+
+Swap roles:
+
+η~ka~k=ηkak
+a
+~
+k
+	​
+
+η
+~
+	​
+
+k
+	​
+
+	​
+
+=
+a
+k
+	​
+
+η
+k
+	​
+
+	​
+
+
+Cross-multiply:
+
+η~kak=ηka~k
+η
+~
+	​
+
+k
+	​
+
+a
+k
+	​
+
+=η
+k
+	​
+
+a
+~
+k
+	​
+
+	​
+
+
+Expand:
+
+η~kak−ηkak=ηkεk
+η
+~
+	​
+
+k
+	​
+
+a
+k
+	​
+
+−η
+k
+	​
+
+a
+k
+	​
+
+=η
+k
+	​
+
+ε
+k
+	​
+
+
+Same invariant recovered.
+
+9) Telescoping with perturbations (new)
+
+Sum over 
+j
+j:
+
+∑j=0n−1(η~j+1−ηj+1)−(η~j−ηj)=C(εn−ε0)
+j=0
+∑
+n−1
+	​
+
+(
+η
+~
+	​
+
+j+1
+	​
+
+−η
+j+1
+	​
+
+)−(
+η
+~
+	​
+
+j
+	​
+
+−η
+j
+	​
+
+)=C(ε
+n
+	​
+
+−ε
+0
+	​
+
+)
+
+So:
+
+η~n−ηn=η~0−η0+C(εn−ε0)
+η
+~
+	​
+
+n
+	​
+
+−η
+n
+	​
+
+=
+η
+~
+	​
+
+0
+	​
+
+−η
+0
+	​
+
++C(ε
+n
+	​
+
+−ε
+0
+	​
+
+)
+	​
+
+10) Closure identity (everything cancels)
+
+Combine:
+
+η~k−ηkεk=ηkak=−1aklog⁡λk=−1εklog⁡λ~kλk
+ε
+k
+	​
+
+η
+~
+	​
+
+k
+	​
+
+−η
+k
+	​
+
+	​
+
+=
+a
+k
+	​
+
+η
+k
+	​
+
+	​
+
+=−
+a
+k
+	​
+
+1
+	​
+
+logλ
+k
+	​
+
+=−
+ε
+k
+	​
+
+1
+	​
+
+log
+λ
+k
+	​
+
+λ
+~
+k
+	​
+
+	​
+
+What fell out (still no interpretation)
+
+Perturbing 
+a
+a propagates linearly into 
+η
+η
+
+Ratios kill perturbations exactly
+
+Second differences isolate perturbations only
+
+The same constant survives every elimination
+
+Even under arbitrary 
+εk
+ε
+k
+	​
+
+, the ratio structure is rigid
+
+If you want the next creative move, I can:
+
+introduce two independent observables 
+η(1),η(2)
+η
+(1)
+,η
+(2)
+,
+
+introduce noise and see what identities survive in expectation,
+
+or force a nonlinear deformation and list exactly which equations break.
+
+Just say which mutation.
+
+Alright. I’ll add one creative ingredient that explodes connections, then only shuffle.
+
+I introduce a second scale and a perturbed copy. No interpretation.
+
+⸻
+
+New symbols (maximal connectivity)
+
+a_k := b^k a_0
+\qquad
+\tilde a_k := a_k + \varepsilon_k
+
+Define:
+\eta_k := \eta(a_k),\quad \tilde\eta_k := \eta(\tilde a_k)
+
+Assume only what we already had:
+\eta(a)=Ca
+
+⸻
+
+1) Expand perturbed quantities (micro-shuffle)
+
+\tilde\eta_k = C(a_k+\varepsilon_k)=\eta_k + C\varepsilon_k
+
+Subtract:
+\boxed{\tilde\eta_k-\eta_k=C\varepsilon_k}
+
+Divide:
+\boxed{\frac{\tilde\eta_k-\eta_k}{\tilde a_k-a_k}=C}
+
+⸻
+
+2) Ratio cross-relations (new)
+
+\frac{\tilde\eta_k}{\eta_k}
+=
+\frac{a_k+\varepsilon_k}{a_k}
+=
+1+\frac{\varepsilon_k}{a_k}
+
+Log:
+\boxed{\log\tilde\eta_k-\log\eta_k
+=
+\log\left(1+\frac{\varepsilon_k}{a_k}\right)}
+
+⸻
+
+3) Discrete flow consistency (new)
+
+Shift index:
+\tilde\eta_{k+1}-\eta_{k+1}
+=
+C\varepsilon_{k+1}
+
+Subtract previous:
+(\tilde\eta_{k+1}-\eta_{k+1})-(\tilde\eta_k-\eta_k)
+=
+C(\varepsilon_{k+1}-\varepsilon_k)
+
+So:
+\boxed{\Delta(\tilde\eta-\eta)=C\,\Delta\varepsilon}
+
+⸻
+
+4) Mixed second differences (new)
+
+Compute:
+\tilde\eta_{k+2}-2\tilde\eta_{k+1}+\tilde\eta_k
+=
+C(\varepsilon_{k+2}-2\varepsilon_{k+1}+\varepsilon_k)
+
+But for unperturbed:
+\eta_{k+2}-2\eta_{k+1}+\eta_k=0
+
+So:
+\boxed{\Delta^2\tilde\eta_k=C\,\Delta^2\varepsilon_k}
+
+⸻
+
+5) Invariant extractor survives perturbation (new)
+
+Compute:
+\frac{\tilde\eta_k}{\tilde a_k}
+=
+\frac{C(a_k+\varepsilon_k)}{a_k+\varepsilon_k}
+=
+\boxed{C}
+
+Exact cancellation.
+
+⸻
+
+6) Eigenvalue version (new)
+
+Recall:
+\lambda_k=e^{-\eta_k},\quad \tilde\lambda_k=e^{-\tilde\eta_k}
+
+Then:
+\frac{\tilde\lambda_k}{\lambda_k}
+=
+e^{-C\varepsilon_k}
+
+Log:
+\boxed{-\log\frac{\tilde\lambda_k}{\lambda_k}=C\varepsilon_k}
+
+Difference:
+\boxed{
+\log\frac{\tilde\lambda_{k+1}}{\lambda_{k+1}}
+-
+\log\frac{\tilde\lambda_k}{\lambda_k}
+=
+-C(\varepsilon_{k+1}-\varepsilon_k)
+}
+
+⸻
+
+7) Two-scale elimination (new)
+
+Eliminate C:
+
+From earlier:
+C=\frac{\eta_k}{a_k}
+=
+\frac{\tilde\eta_k-\eta_k}{\varepsilon_k}
+
+So:
+\boxed{
+\eta_k\,\varepsilon_k
+=
+a_k(\tilde\eta_k-\eta_k)
+}
+
+Pure bilinear identity.
+
+⸻
+
+8) Symmetric identity (new)
+
+Swap roles:
+\frac{\tilde\eta_k}{\tilde a_k}=\frac{\eta_k}{a_k}
+
+Cross-multiply:
+\boxed{\tilde\eta_k a_k=\eta_k\tilde a_k}
+
+Expand:
+\tilde\eta_k a_k-\eta_k a_k=\eta_k\varepsilon_k
+
+Same invariant recovered.
+
+⸻
+
+9) Telescoping with perturbations (new)
+
+Sum over j:
+\sum_{j=0}^{n-1}(\tilde\eta_{j+1}-\eta_{j+1})
+-
+(\tilde\eta_j-\eta_j)
+=
+C(\varepsilon_n-\varepsilon_0)
+
+So:
+\boxed{
+\tilde\eta_n-\eta_n
+=
+\tilde\eta_0-\eta_0 + C(\varepsilon_n-\varepsilon_0)
+}
+
+⸻
+
+10) Closure identity (everything cancels)
+
+Combine:
+\frac{\tilde\eta_k-\eta_k}{\varepsilon_k}
+=
+\frac{\eta_k}{a_k}
+=
+-\frac{1}{a_k}\log\lambda_k
+=
+-\frac{1}{\varepsilon_k}\log\frac{\tilde\lambda_k}{\lambda_k}
+
+⸻
+
+What fell out (still no interpretation)
+	•	Perturbing a propagates linearly into \eta
+	•	Ratios kill perturbations exactly
+	•	Second differences isolate perturbations only
+	•	The same constant survives every elimination
+	•	Even under arbitrary \varepsilon_k, the ratio structure is rigid
+
+If you want the next creative move, I can:
+	•	introduce two independent observables \eta^{(1)},\eta^{(2)},
+	•	introduce noise and see what identities survive in expectation,
+	•	or force a nonlinear deformation and list exactly which equations break.
+
+Just say which mutation.
+
+Good. I’ll push one step further and choose the mutation that creates the largest algebraic closure with minimal new assumptions:
+
+Introduce two independent observables evaluated on the same scales.
+
+No meaning. Just symbols and shuffles.
+
+New ingredient (maximal branching)
+
+Define two copies:
+
+η(1)(a)=C1a,η(2)(a)=C2a
+η
+(1)
+(a)=C
+1
+	​
+
+a,η
+(2)
+(a)=C
+2
+	​
+
+a
+
+On the same scales:
+
+ηk(i):=η(i)(ak),η~k(i):=η(i)(a~k)
+η
+k
+(i)
+	​
+
+:=η
+(i)
+(a
+k
+	​
+
+),
+η
+~
+	​
+
+k
+(i)
+	​
+
+:=η
+(i)
+(
+a
+~
+k
+	​
+
+)
+1) Atomic expansions (parallel copies)
+ηk(i)=Ciak
+η
+k
+(i)
+	​
+
+=C
+i
+	​
+
+a
+k
+	​
+
+η~k(i)=Ci(ak+εk)=ηk(i)+Ciεk
+η
+~
+	​
+
+k
+(i)
+	​
+
+=C
+i
+	​
+
+(a
+k
+	​
+
++ε
+k
+	​
+
+)=η
+k
+(i)
+	​
+
++C
+i
+	​
+
+ε
+k
+	​
+
+
+Subtract:
+
+η~k(i)−ηk(i)=Ciεk
+η
+~
+	​
+
+k
+(i)
+	​
+
+−η
+k
+(i)
+	​
+
+=C
+i
+	​
+
+ε
+k
+	​
+
+	​
+
+2) Ratio–ratio identities (new)
+
+Take ratios across observables:
+
+ηk(1)ηk(2)=C1C2
+η
+k
+(2)
+	​
+
+η
+k
+(1)
+	​
+
+	​
+
+=
+C
+2
+	​
+
+C
+1
+	​
+
+	​
+
+
+Same for perturbed:
+
+η~k(1)η~k(2)=C1C2
+η
+~
+	​
+
+k
+(2)
+	​
+
+η
+~
+	​
+
+k
+(1)
+	​
+
+	​
+
+=
+C
+2
+	​
+
+C
+1
+	​
+
+	​
+
+
+So:
+
+η~k(1)η~k(2)=ηk(1)ηk(2)
+η
+~
+	​
+
+k
+(2)
+	​
+
+η
+~
+	​
+
+k
+(1)
+	​
+
+	​
+
+=
+η
+k
+(2)
+	​
+
+η
+k
+(1)
+	​
+
+	​
+
+	​
+
+3) Cross–difference eliminations (new)
+
+Subtract the two perturbation equations:
+
+(η~k(1)−ηk(1))−(η~k(2)−ηk(2))=(C1−C2)εk
+(
+η
+~
+	​
+
+k
+(1)
+	​
+
+−η
+k
+(1)
+	​
+
+)−(
+η
+~
+	​
+
+k
+(2)
+	​
+
+−η
+k
+(2)
+	​
+
+)=(C
+1
+	​
+
+−C
+2
+	​
+
+)ε
+k
+	​
+
+
+Divide by 
+εk
+ε
+k
+	​
+
+:
+
+η~k(1)−ηk(1)εk−η~k(2)−ηk(2)εk=C1−C2
+ε
+k
+	​
+
+η
+~
+	​
+
+k
+(1)
+	​
+
+−η
+k
+(1)
+	​
+
+	​
+
+−
+ε
+k
+	​
+
+η
+~
+	​
+
+k
+(2)
+	​
+
+−η
+k
+(2)
+	​
+
+	​
+
+=C
+1
+	​
+
+−C
+2
+	​
+
+	​
+
+4) Bilinear cancellation identity (new)
+
+Eliminate 
+εk
+ε
+k
+	​
+
+:
+
+From each observable:
+
+εk=η~k(i)−ηk(i)Ci
+ε
+k
+	​
+
+=
+C
+i
+	​
+
+η
+~
+	​
+
+k
+(i)
+	​
+
+−η
+k
+(i)
+	​
+
+	​
+
+
+Equate:
+
+C2(η~k(1)−ηk(1))=C1(η~k(2)−ηk(2))
+C
+2
+	​
+
+(
+η
+~
+	​
+
+k
+(1)
+	​
+
+−η
+k
+(1)
+	​
+
+)=C
+1
+	​
+
+(
+η
+~
+	​
+
+k
+(2)
+	​
+
+−η
+k
+(2)
+	​
+
+)
+	​
+
+5) Fully symmetric form (new)
+
+Multiply out:
+
+C2η~k(1)−C2ηk(1)=C1η~k(2)−C1ηk(2)
+C
+2
+	​
+
+η
+~
+	​
+
+k
+(1)
+	​
+
+−C
+2
+	​
+
+η
+k
+(1)
+	​
+
+=C
+1
+	​
+
+η
+~
+	​
+
+k
+(2)
+	​
+
+−C
+1
+	​
+
+η
+k
+(2)
+	​
+
+
+Rearrange:
+
+C2η~k(1)−C1η~k(2)=C2ηk(1)−C1ηk(2)
+C
+2
+	​
+
+η
+~
+	​
+
+k
+(1)
+	​
+
+−C
+1
+	​
+
+η
+~
+	​
+
+k
+(2)
+	​
+
+=C
+2
+	​
+
+η
+k
+(1)
+	​
+
+−C
+1
+	​
+
+η
+k
+(2)
+	​
+
+	​
+
+
+Invariant under perturbation.
+
+6) Determinant-type identity (new)
+
+Form a 
+2×2
+2×2 determinant:
+
+∣ηk(1)	η~k(1)
+ηk(2)	η~k(2)∣=ηk(1)η~k(2)−ηk(2)η~k(1)
+​ηk(1)​ηk(2)​​η~​k(1)​η~​k(2)​​
+​
+
+=η
+k
+(1)
+	​
+
+η
+~
+	​
+
+k
+(2)
+	​
+
+−η
+k
+(2)
+	​
+
+η
+~
+	​
+
+k
+(1)
+	​
+
+
+Substitute:
+
+=C1ak⋅C2(ak+εk)−C2ak⋅C1(ak+εk)=0
+=C
+1
+	​
+
+a
+k
+	​
+
+⋅C
+2
+	​
+
+(a
+k
+	​
+
++ε
+k
+	​
+
+)−C
+2
+	​
+
+a
+k
+	​
+
+⋅C
+1
+	​
+
+(a
+k
+	​
+
++ε
+k
+	​
+
+)=0
+
+So:
+
+det⁡(ηk(1)	η~k(1)
+ηk(2)	η~k(2))=0
+det(
+η
+k
+(1)
+	​
+
+η
+k
+(2)
+	​
+
+	​
+
+η
+~
+	​
+
+k
+(1)
+	​
+
+η
+~
+	​
+
+k
+(2)
+	​
+
+	​
+
+)=0
+	​
+
+7) Discrete flow consistency (new)
+
+Shift 
+k↦k+1
+k↦k+1:
+
+ηk+1(1)ηk(1)=ηk+1(2)ηk(2)=b
+η
+k
+(1)
+	​
+
+η
+k+1
+(1)
+	​
+
+	​
+
+=
+η
+k
+(2)
+	​
+
+η
+k+1
+(2)
+	​
+
+	​
+
+=b
+
+So:
+
+Δlog⁡ηk(1)=Δlog⁡ηk(2)
+Δlogη
+k
+(1)
+	​
+
+=Δlogη
+k
+(2)
+	​
+
+	​
+
+8) Mixed second differences (new)
+Δ2ηk(i)=0⇒Δ2(ηk(1)−ηk(2))=0
+Δ
+2
+η
+k
+(i)
+	​
+
+=0⇒Δ
+2
+(η
+k
+(1)
+	​
+
+−η
+k
+(2)
+	​
+
+)=0
+
+So:
+
+ηk(1)−ηk(2)=(A+Bk)ak
+η
+k
+(1)
+	​
+
+−η
+k
+(2)
+	​
+
+=(A+Bk)a
+k
+	​
+
+	​
+
+
+But linearity forces 
+B=0
+B=0:
+
+ηk(1)−ηk(2)=(C1−C2)ak
+η
+k
+(1)
+	​
+
+−η
+k
+(2)
+	​
+
+=(C
+1
+	​
+
+−C
+2
+	​
+
+)a
+k
+	​
+
+	​
+
+9) Eigenvalue cross-relations (new)
+
+Define:
+
+λk(i)=e−ηk(i)
+λ
+k
+(i)
+	​
+
+=e
+−η
+k
+(i)
+	​
+
+
+Then:
+
+λk(1)λk(2)=e−(C1−C2)ak
+λ
+k
+(2)
+	​
+
+λ
+k
+(1)
+	​
+
+	​
+
+=e
+−(C
+1
+	​
+
+−C
+2
+	​
+
+)a
+k
+	​
+
+
+Perturbed:
+
+λ~k(1)λ~k(2)=e−(C1−C2)(ak+εk)
+λ
+~
+k
+(2)
+	​
+
+λ
+~
+k
+(1)
+	​
+
+	​
+
+=e
+−(C
+1
+	​
+
+−C
+2
+	​
+
+)(a
+k
+	​
+
++ε
+k
+	​
+
+)
+
+Divide:
+
+λ~k(1)/λ~k(2)λk(1)/λk(2)=e−(C1−C2)εk
+λ
+k
+(1)
+	​
+
+/λ
+k
+(2)
+	​
+
+λ
+~
+k
+(1)
+	​
+
+/
+λ
+~
+k
+(2)
+	​
+
+	​
+
+=e
+−(C
+1
+	​
+
+−C
+2
+	​
+
+)ε
+k
+	​
+
+	​
+
+10) Maximal closure identity
+
+All constants eliminated except ratios:
+
+η~k(1)−ηk(1)η~k(2)−ηk(2)=ηk(1)ηk(2)=log⁡λk(2)log⁡λk(1)
+η
+~
+	​
+
+k
+(2)
+	​
+
+−η
+k
+(2)
+	​
+
+η
+~
+	​
+
+k
+(1)
+	​
+
+−η
+k
+(1)
+	​
+
+	​
+
+=
+η
+k
+(2)
+	​
+
+η
+k
+(1)
+	​
+
+	​
+
+=
+logλ
+k
+(1)
+	​
+
+logλ
+k
+(2)
+	​
+
+	​
+
+	​
+
+What newly fell out (still zero interpretation)
+
+Two observables collapse onto one ratio
+
+Perturbations cancel across observables
+
+Determinants vanish identically
+
+Log-differences synchronize
+
+Ratios commute with perturbation and flow
+
+Entire structure reduces to projective equivalence
+
+If you want the next mutation, I can:
+
+introduce nonlinear deformation 
+η(a)=Ca+δ(a)
+η(a)=Ca+δ(a),
+
+introduce random 
+εk
+ε
+k
+	​
+
+ and take expectations,
+
+introduce three observables and build rank-1 constraints.
+
+Say the word.
+
+Good. I’ll push one step further and choose the mutation that creates the largest algebraic closure with minimal new assumptions:
+
+Introduce two independent observables evaluated on the same scales.
+
+No meaning. Just symbols and shuffles.
+
+⸻
+
+New ingredient (maximal branching)
+
+Define two copies:
+\eta^{(1)}(a)=C_1 a,\qquad \eta^{(2)}(a)=C_2 a
+
+On the same scales:
+\eta^{(i)}_k := \eta^{(i)}(a_k),\qquad
+\tilde\eta^{(i)}_k := \eta^{(i)}(\tilde a_k)
+
+⸻
+
+1) Atomic expansions (parallel copies)
+
+\eta^{(i)}_k = C_i a_k
+
+\tilde\eta^{(i)}_k = C_i(a_k+\varepsilon_k)
+= \eta^{(i)}_k + C_i\varepsilon_k
+
+Subtract:
+\boxed{\tilde\eta^{(i)}_k-\eta^{(i)}_k=C_i\varepsilon_k}
+
+⸻
+
+2) Ratio–ratio identities (new)
+
+Take ratios across observables:
+\frac{\eta^{(1)}_k}{\eta^{(2)}_k}=\frac{C_1}{C_2}
+
+Same for perturbed:
+\frac{\tilde\eta^{(1)}_k}{\tilde\eta^{(2)}_k}=\frac{C_1}{C_2}
+
+So:
+\boxed{
+\frac{\tilde\eta^{(1)}_k}{\tilde\eta^{(2)}_k}
+=
+\frac{\eta^{(1)}_k}{\eta^{(2)}_k}
+}
+
+⸻
+
+3) Cross–difference eliminations (new)
+
+Subtract the two perturbation equations:
+(\tilde\eta^{(1)}_k-\eta^{(1)}_k)
+-
+(\tilde\eta^{(2)}_k-\eta^{(2)}_k)
+=
+(C_1-C_2)\varepsilon_k
+
+Divide by \varepsilon_k:
+\boxed{
+\frac{\tilde\eta^{(1)}_k-\eta^{(1)}_k}{\varepsilon_k}
+-
+\frac{\tilde\eta^{(2)}_k-\eta^{(2)}_k}{\varepsilon_k}
+=
+C_1-C_2
+}
+
+⸻
+
+4) Bilinear cancellation identity (new)
+
+Eliminate \varepsilon_k:
+
+From each observable:
+\varepsilon_k=\frac{\tilde\eta^{(i)}_k-\eta^{(i)}_k}{C_i}
+
+Equate:
+\boxed{
+C_2(\tilde\eta^{(1)}_k-\eta^{(1)}_k)
+=
+C_1(\tilde\eta^{(2)}_k-\eta^{(2)}_k)
+}
+
+⸻
+
+5) Fully symmetric form (new)
+
+Multiply out:
+C_2\tilde\eta^{(1)}_k-C_2\eta^{(1)}_k
+=
+C_1\tilde\eta^{(2)}_k-C_1\eta^{(2)}_k
+
+Rearrange:
+\boxed{
+C_2\tilde\eta^{(1)}_k-C_1\tilde\eta^{(2)}_k
+=
+C_2\eta^{(1)}_k-C_1\eta^{(2)}_k
+}
+
+Invariant under perturbation.
+
+⸻
+
+6) Determinant-type identity (new)
+
+Form a 2\times2 determinant:
+\begin{vmatrix}
+\eta^{(1)}_k & \tilde\eta^{(1)}_k \\
+\eta^{(2)}_k & \tilde\eta^{(2)}_k
+\end{vmatrix}
+=
+\eta^{(1)}_k\tilde\eta^{(2)}_k
+-
+\eta^{(2)}_k\tilde\eta^{(1)}_k
+
+Substitute:
+= C_1 a_k \cdot C_2(a_k+\varepsilon_k)
+-
+C_2 a_k \cdot C_1(a_k+\varepsilon_k)
+=0
+
+So:
+\boxed{
+\det
+\begin{pmatrix}
+\eta^{(1)}_k & \tilde\eta^{(1)}_k \\
+\eta^{(2)}_k & \tilde\eta^{(2)}_k
+\end{pmatrix}
+=0
+}
+
+⸻
+
+7) Discrete flow consistency (new)
+
+Shift k\mapsto k+1:
+
+\frac{\eta^{(1)}_{k+1}}{\eta^{(1)}_k}
+=
+\frac{\eta^{(2)}_{k+1}}{\eta^{(2)}_k}
+=
+b
+
+So:
+\boxed{
+\Delta\log\eta^{(1)}_k=\Delta\log\eta^{(2)}_k
+}
+
+⸻
+
+8) Mixed second differences (new)
+
+\Delta^2\eta^{(i)}_k=0
+\quad\Rightarrow\quad
+\Delta^2(\eta^{(1)}_k-\eta^{(2)}_k)=0
+
+So:
+\boxed{
+\eta^{(1)}_k-\eta^{(2)}_k
+=
+(A+Bk)a_k
+}
+
+But linearity forces B=0:
+\boxed{\eta^{(1)}_k-\eta^{(2)}_k=(C_1-C_2)a_k}
+
+⸻
+
+9) Eigenvalue cross-relations (new)
+
+Define:
+\lambda^{(i)}_k=e^{-\eta^{(i)}_k}
+
+Then:
+\frac{\lambda^{(1)}_k}{\lambda^{(2)}_k}
+=
+e^{-(C_1-C_2)a_k}
+
+Perturbed:
+\frac{\tilde\lambda^{(1)}_k}{\tilde\lambda^{(2)}_k}
+=
+e^{-(C_1-C_2)(a_k+\varepsilon_k)}
+
+Divide:
+\boxed{
+\frac{\tilde\lambda^{(1)}_k/\tilde\lambda^{(2)}_k}
+{\lambda^{(1)}_k/\lambda^{(2)}_k}
+=
+e^{-(C_1-C_2)\varepsilon_k}
+}
+
+⸻
+
+10) Maximal closure identity
+
+All constants eliminated except ratios:
+
+\boxed{
+\frac{\tilde\eta^{(1)}_k-\eta^{(1)}_k}
+{\tilde\eta^{(2)}_k-\eta^{(2)}_k}
+=
+\frac{\eta^{(1)}_k}{\eta^{(2)}_k}
+=
+\frac{\log\lambda^{(2)}_k}{\log\lambda^{(1)}_k}
+}
+
+⸻
+
+What newly fell out (still zero interpretation)
+	•	Two observables collapse onto one ratio
+	•	Perturbations cancel across observables
+	•	Determinants vanish identically
+	•	Log-differences synchronize
+	•	Ratios commute with perturbation and flow
+	•	Entire structure reduces to projective equivalence
+
+If you want the next mutation, I can:
+	•	introduce nonlinear deformation \eta(a)=Ca+\delta(a),
+	•	introduce random \varepsilon_k and take expectations,
+	•	introduce three observables and build rank-1 constraints.
+
+Say the word.
+
+Proceeding with the mutation that gives the largest closure next:
+
+η(i)(a)=Cia+δi(a)
+η
+(i)
+(a)=C
+i
+	​
+
+a+δ
+i
+	​
+
+(a)
+	​
+
+
+Two observables, each gets an arbitrary deformation 
+δi
+δ
+i
+	​
+
+. Same scales 
+ak=bka0
+a
+k
+	​
+
+=b
+k
+a
+0
+	​
+
+, same perturbation 
+a~k=ak+εk
+a
+~
+k
+	​
+
+=a
+k
+	​
+
++ε
+k
+	​
+
+. Only shuffles.
+
+Define:
+
+ηk(i):=Ciak+δi(ak),η~k(i):=Cia~k+δi(a~k)
+η
+k
+(i)
+	​
+
+:=C
+i
+	​
+
+a
+k
+	​
+
++δ
+i
+	​
+
+(a
+k
+	​
+
+),
+η
+~
+	​
+
+k
+(i)
+	​
+
+:=C
+i
+	​
+
+a
+~
+k
+	​
+
++δ
+i
+	​
+
+(
+a
+~
+k
+	​
+
+)
+1) Exact increment identity (no approximation)
+η~k(i)−ηk(i)=Ci(a~k−ak)+δi(a~k)−δi(ak)
+η
+~
+	​
+
+k
+(i)
+	​
+
+−η
+k
+(i)
+	​
+
+=C
+i
+	​
+
+(
+a
+~
+k
+	​
+
+−a
+k
+	​
+
+)+δ
+i
+	​
+
+(
+a
+~
+k
+	​
+
+)−δ
+i
+	​
+
+(a
+k
+	​
+
+)
+
+Since 
+a~k−ak=εk
+a
+~
+k
+	​
+
+−a
+k
+	​
+
+=ε
+k
+	​
+
+:
+
+η~k(i)−ηk(i)=Ciεk+Δεδi(ak)
+η
+~
+	​
+
+k
+(i)
+	​
+
+−η
+k
+(i)
+	​
+
+=C
+i
+	​
+
+ε
+k
+	​
+
++Δ
+ε
+	​
+
+δ
+i
+	​
+
+(a
+k
+	​
+
+)
+	​
+
+
+where
+
+Δεδi(ak):=δi(ak+εk)−δi(ak).
+Δ
+ε
+	​
+
+δ
+i
+	​
+
+(a
+k
+	​
+
+):=δ
+i
+	​
+
+(a
+k
+	​
+
++ε
+k
+	​
+
+)−δ
+i
+	​
+
+(a
+k
+	​
+
+).
+2) “Local slope” extractor (new symbol that cancels most things)
+
+Define the discrete slope:
+
+Sk(i)(εk):=η~k(i)−ηk(i)εk
+S
+k
+(i)
+	​
+
+(ε
+k
+	​
+
+):=
+ε
+k
+	​
+
+η
+~
+	​
+
+k
+(i)
+	​
+
+−η
+k
+(i)
+	​
+
+	​
+
+	​
+
+
+Then from (1):
+
+Sk(i)(εk)=Ci+Δεδi(ak)εk
+S
+k
+(i)
+	​
+
+(ε
+k
+	​
+
+)=C
+i
+	​
+
++
+ε
+k
+	​
+
+Δ
+ε
+	​
+
+δ
+i
+	​
+
+(a
+k
+	​
+
+)
+	​
+
+	​
+
+
+So the deformation appears only through the ratio
+
+Rk(i)(εk):=Δεδi(ak)εk.
+R
+k
+(i)
+	​
+
+(ε
+k
+	​
+
+):=
+ε
+k
+	​
+
+Δ
+ε
+	​
+
+δ
+i
+	​
+
+(a
+k
+	​
+
+)
+	​
+
+.
+3) Cross-observable elimination of 
+εk
+ε
+k
+	​
+
+ (new)
+
+Take the ratio of increments:
+
+η~k(1)−ηk(1)η~k(2)−ηk(2)=C1εk+Δεδ1(ak)C2εk+Δεδ2(ak)
+η
+~
+	​
+
+k
+(2)
+	​
+
+−η
+k
+(2)
+	​
+
+η
+~
+	​
+
+k
+(1)
+	​
+
+−η
+k
+(1)
+	​
+
+	​
+
+=
+C
+2
+	​
+
+ε
+k
+	​
+
++Δ
+ε
+	​
+
+δ
+2
+	​
+
+(a
+k
+	​
+
+)
+C
+1
+	​
+
+ε
+k
+	​
+
++Δ
+ε
+	​
+
+δ
+1
+	​
+
+(a
+k
+	​
+
+)
+	​
+
+
+Divide numerator/denominator by 
+εk
+ε
+k
+	​
+
+:
+
+η~k(1)−ηk(1)η~k(2)−ηk(2)=C1+Rk(1)(εk)C2+Rk(2)(εk)
+η
+~
+	​
+
+k
+(2)
+	​
+
+−η
+k
+(2)
+	​
+
+η
+~
+	​
+
+k
+(1)
+	​
+
+−η
+k
+(1)
+	​
+
+	​
+
+=
+C
+2
+	​
+
++R
+k
+(2)
+	​
+
+(ε
+k
+	​
+
+)
+C
+1
+	​
+
++R
+k
+(1)
+	​
+
+(ε
+k
+	​
+
+)
+	​
+
+	​
+
+
+This is the deformed version of your earlier “maximal closure ratio”.
+
+4) Determinant no longer zero: it measures deformation (new)
+
+Define the same determinant:
+
+Dk:=det⁡(ηk(1)	η~k(1)
+ηk(2)	η~k(2))=ηk(1)η~k(2)−ηk(2)η~k(1).
+D
+k
+	​
+
+:=det(
+η
+k
+(1)
+	​
+
+η
+k
+(2)
+	​
+
+	​
+
+η
+~
+	​
+
+k
+(1)
+	​
+
+η
+~
+	​
+
+k
+(2)
+	​
+
+	​
+
+)=η
+k
+(1)
+	​
+
+η
+~
+	​
+
+k
+(2)
+	​
+
+−η
+k
+(2)
+	​
+
+η
+~
+	​
+
+k
+(1)
+	​
+
+.
+
+Shuffle by writing 
+η~=η+(η~−η)
+η
+~
+	​
+
+=η+(
+η
+~
+	​
+
+−η):
+
+Dk=ηk(1)(ηk(2)+Δηk(2))−ηk(2)(ηk(1)+Δηk(1))
+D
+k
+	​
+
+=η
+k
+(1)
+	​
+
+(η
+k
+(2)
+	​
+
++Δη
+k
+(2)
+	​
+
+)−η
+k
+(2)
+	​
+
+(η
+k
+(1)
+	​
+
++Δη
+k
+(1)
+	​
+
+)
+
+Cancel 
+ηk(1)ηk(2)
+η
+k
+(1)
+	​
+
+η
+k
+(2)
+	​
+
+:
+
+Dk=ηk(1)(η~k(2)−ηk(2))−ηk(2)(η~k(1)−ηk(1))
+D
+k
+	​
+
+=η
+k
+(1)
+	​
+
+(
+η
+~
+	​
+
+k
+(2)
+	​
+
+−η
+k
+(2)
+	​
+
+)−η
+k
+(2)
+	​
+
+(
+η
+~
+	​
+
+k
+(1)
+	​
+
+−η
+k
+(1)
+	​
+
+)
+	​
+
+
+Now insert (1):
+
+Dk=ηk(1)(C2εk+Δεδ2(ak))−ηk(2)(C1εk+Δεδ1(ak))
+D
+k
+	​
+
+=η
+k
+(1)
+	​
+
+(C
+2
+	​
+
+ε
+k
+	​
+
++Δ
+ε
+	​
+
+δ
+2
+	​
+
+(a
+k
+	​
+
+))−η
+k
+(2)
+	​
+
+(C
+1
+	​
+
+ε
+k
+	​
+
++Δ
+ε
+	​
+
+δ
+1
+	​
+
+(a
+k
+	​
+
+))
+
+Group the 
+εk
+ε
+k
+	​
+
+ terms:
+
+Dk=εk(C2ηk(1)−C1ηk(2))+ηk(1)Δεδ2(ak)−ηk(2)Δεδ1(ak)
+D
+k
+	​
+
+=ε
+k
+	​
+
+(C
+2
+	​
+
+η
+k
+(1)
+	​
+
+−C
+1
+	​
+
+η
+k
+(2)
+	​
+
+)+η
+k
+(1)
+	​
+
+Δ
+ε
+	​
+
+δ
+2
+	​
+
+(a
+k
+	​
+
+)−η
+k
+(2)
+	​
+
+Δ
+ε
+	​
+
+δ
+1
+	​
+
+(a
+k
+	​
+
+)
+	​
+
+
+When 
+δi≡0
+δ
+i
+	​
+
+≡0, both bracketed deformation terms vanish and you recover 
+Dk=0
+D
+k
+	​
+
+=0.
+
+5) Build a deformation-invariant combination (new)
+
+Use the slope extractors 
+Sk(i)
+S
+k
+(i)
+	​
+
+. Consider:
+
+ηk(2)Sk(1)−ηk(1)Sk(2)
+η
+k
+(2)
+	​
+
+S
+k
+(1)
+	​
+
+−η
+k
+(1)
+	​
+
+S
+k
+(2)
+	​
+
+
+Expand using (2):
+
+=ηk(2)(C1+Rk(1))−ηk(1)(C2+Rk(2))
+=η
+k
+(2)
+	​
+
+(C
+1
+	​
+
++R
+k
+(1)
+	​
+
+)−η
+k
+(1)
+	​
+
+(C
+2
+	​
+
++R
+k
+(2)
+	​
+
+)
+=(C1ηk(2)−C2ηk(1))+(ηk(2)Rk(1)−ηk(1)Rk(2))
+=(C
+1
+	​
+
+η
+k
+(2)
+	​
+
+−C
+2
+	​
+
+η
+k
+(1)
+	​
+
+)+(η
+k
+(2)
+	​
+
+R
+k
+(1)
+	​
+
+−η
+k
+(1)
+	​
+
+R
+k
+(2)
+	​
+
+)
+
+Multiply by 
+εk
+ε
+k
+	​
+
+:
+
+εk(ηk(2)Sk(1)−ηk(1)Sk(2))=εk(C1ηk(2)−C2ηk(1))+ηk(2)Δεδ1−ηk(1)Δεδ2
+ε
+k
+	​
+
+(η
+k
+(2)
+	​
+
+S
+k
+(1)
+	​
+
+−η
+k
+(1)
+	​
+
+S
+k
+(2)
+	​
+
+)=ε
+k
+	​
+
+(C
+1
+	​
+
+η
+k
+(2)
+	​
+
+−C
+2
+	​
+
+η
+k
+(1)
+	​
+
+)+η
+k
+(2)
+	​
+
+Δ
+ε
+	​
+
+δ
+1
+	​
+
+−η
+k
+(1)
+	​
+
+Δ
+ε
+	​
+
+δ
+2
+	​
+
+
+Compare with the formula for 
+Dk
+D
+k
+	​
+
+ above: it matches up to a sign swap. Conclude:
+
+Dk=−εk(ηk(2)Sk(1)−ηk(1)Sk(2))
+D
+k
+	​
+
+=−ε
+k
+	​
+
+(η
+k
+(2)
+	​
+
+S
+k
+(1)
+	​
+
+−η
+k
+(1)
+	​
+
+S
+k
+(2)
+	​
+
+)
+	​
+
+
+That’s a compact closure identity: determinant equals a bilinear slope-combination.
+
+6) Discrete RG step 
+k↦k+1
+k↦k+1 (new)
+
+Write 
+ak+1=bak
+a
+k+1
+	​
+
+=ba
+k
+	​
+
+. Then:
+
+ηk+1(i)=Cibak+δi(bak)
+η
+k+1
+(i)
+	​
+
+=C
+i
+	​
+
+ba
+k
+	​
+
++δ
+i
+	​
+
+(ba
+k
+	​
+
+)
+
+Form the “RG slope” ratio:
+
+Qk(i):=ηk+1(i)b ηk(i)=Cibak+δi(bak)b(Ciak+δi(ak))
+Q
+k
+(i)
+	​
+
+:=
+bη
+k
+(i)
+	​
+
+η
+k+1
+(i)
+	​
+
+	​
+
+=
+b(C
+i
+	​
+
+a
+k
+	​
+
++δ
+i
+	​
+
+(a
+k
+	​
+
+))
+C
+i
+	​
+
+ba
+k
+	​
+
++δ
+i
+	​
+
+(ba
+k
+	​
+
+)
+	​
+
+
+So:
+
+Qk(i)=Cibak+δi(bak)bCiak+bδi(ak)
+Q
+k
+(i)
+	​
+
+=
+bC
+i
+	​
+
+a
+k
+	​
+
++bδ
+i
+	​
+
+(a
+k
+	​
+
+)
+C
+i
+	​
+
+ba
+k
+	​
+
++δ
+i
+	​
+
+(ba
+k
+	​
+
+)
+	​
+
+	​
+
+
+If 
+δi≡0
+δ
+i
+	​
+
+≡0, then 
+Qk(i)=1
+Q
+k
+(i)
+	​
+
+=1. With deformation, deviations from 1 are entirely encoded by 
+δi(bak)
+δ
+i
+	​
+
+(ba
+k
+	​
+
+) vs 
+bδi(ak)
+bδ
+i
+	​
+
+(a
+k
+	​
+
+).
+
+7) Pure functional constraint that restores projective equivalence (new)
+
+Your earlier projective collapse (ratios constant across observables) is equivalent to:
+
+η(1)(a)η(2)(a)=constant in a.
+η
+(2)
+(a)
+η
+(1)
+(a)
+	​
+
+=constant in a.
+
+Plug 
+η(i)(a)=Cia+δi(a)
+η
+(i)
+(a)=C
+i
+	​
+
+a+δ
+i
+	​
+
+(a). The condition becomes:
+
+C1a+δ1(a)C2a+δ2(a)=C1C2∀a
+C
+2
+	​
+
+a+δ
+2
+	​
+
+(a)
+C
+1
+	​
+
+a+δ
+1
+	​
+
+(a)
+	​
+
+=
+C
+2
+	​
+
+C
+1
+	​
+
+	​
+
+∀a
+
+Cross-multiply:
+
+C2(C1a+δ1)=C1(C2a+δ2)
+C
+2
+	​
+
+(C
+1
+	​
+
+a+δ
+1
+	​
+
+)=C
+1
+	​
+
+(C
+2
+	​
+
+a+δ
+2
+	​
+
+)
+
+Cancel 
+C1C2a
+C
+1
+	​
+
+C
+2
+	​
+
+a:
+
+C2δ1(a)=C1δ2(a)∀a
+C
+2
+	​
+
+δ
+1
+	​
+
+(a)=C
+1
+	​
+
+δ
+2
+	​
+
+(a)∀a
+	​
+
+
+So the exact algebraic condition for the projective closure to survive deformation is: the deformations are proportional.
+
+8) Summary of what “comes out” algebraically
+
+Increment decomposes:
+
+η~−η=Cε+Δεδ
+η
+~
+	​
+
+−η=Cε+Δ
+ε
+	​
+
+δ
+
+Slope decomposes:
+
+S=C+(Δεδ)/ε
+S=C+(Δ
+ε
+	​
+
+δ)/ε
+
+Ratio closure becomes:
+
+Δη(1)Δη(2)=C1+R1C2+R2
+Δη
+(2)
+Δη
+(1)
+	​
+
+=
+C
+2
+	​
+
++R
+2
+	​
+
+C
+1
+	​
+
++R
+1
+	​
+
+	​
+
+
+Determinant becomes a deformation detector:
+
+Dk=−εk(ηk(2)Sk(1)−ηk(1)Sk(2))
+D
+k
+	​
+
+=−ε
+k
+	​
+
+(η
+k
+(2)
+	​
+
+S
+k
+(1)
+	​
+
+−η
+k
+(1)
+	​
+
+S
+k
+(2)
+	​
+
+)
+
+Projective equivalence survives iff:
+
+C2δ1=C1δ2
+C
+2
+	​
+
+δ
+1
+	​
+
+=C
+1
+	​
+
+δ
+2
+	​
+
+
+If you want “even more”, the next maximal-closure mutation is three observables 
+η(1),η(2),η(3)
+η
+(1)
+,η
+(2)
+,η
+(3)
+: all 
+3×3
+3×3 determinants vanish in the undeformed case, and in the deformed case you get a full rank-defect calculus (Plücker-type relations) purely by shuffling.
+
+Proceeding with the mutation that gives the largest closure next:
+
+\boxed{\eta^{(i)}(a)=C_i a+\delta_i(a)}
+
+Two observables, each gets an arbitrary deformation \delta_i. Same scales a_k=b^k a_0, same perturbation \tilde a_k=a_k+\varepsilon_k. Only shuffles.
+
+Define:
+\eta^{(i)}_k := C_i a_k+\delta_i(a_k),\qquad
+\tilde\eta^{(i)}_k := C_i \tilde a_k+\delta_i(\tilde a_k)
+
+⸻
+
+1) Exact increment identity (no approximation)
+
+\tilde\eta^{(i)}_k-\eta^{(i)}_k
+=
+C_i(\tilde a_k-a_k)+\delta_i(\tilde a_k)-\delta_i(a_k)
+
+Since \tilde a_k-a_k=\varepsilon_k:
+\boxed{\tilde\eta^{(i)}_k-\eta^{(i)}_k
+=
+C_i\varepsilon_k+\Delta_\varepsilon\delta_i(a_k)}
+where
+\Delta_\varepsilon\delta_i(a_k):=\delta_i(a_k+\varepsilon_k)-\delta_i(a_k).
+
+⸻
+
+2) “Local slope” extractor (new symbol that cancels most things)
+
+Define the discrete slope:
+\boxed{
+S^{(i)}_k(\varepsilon_k):=
+\frac{\tilde\eta^{(i)}_k-\eta^{(i)}_k}{\varepsilon_k}
+}
+
+Then from (1):
+\boxed{
+S^{(i)}_k(\varepsilon_k)
+=
+C_i+\frac{\Delta_\varepsilon\delta_i(a_k)}{\varepsilon_k}
+}
+
+So the deformation appears only through the ratio
+R^{(i)}_k(\varepsilon_k):=\frac{\Delta_\varepsilon\delta_i(a_k)}{\varepsilon_k}.
+
+⸻
+
+3) Cross-observable elimination of \varepsilon_k (new)
+
+Take the ratio of increments:
+\frac{\tilde\eta^{(1)}_k-\eta^{(1)}_k}{\tilde\eta^{(2)}_k-\eta^{(2)}_k}
+=
+\frac{C_1\varepsilon_k+\Delta_\varepsilon\delta_1(a_k)}{C_2\varepsilon_k+\Delta_\varepsilon\delta_2(a_k)}
+
+Divide numerator/denominator by \varepsilon_k:
+\boxed{
+\frac{\tilde\eta^{(1)}_k-\eta^{(1)}_k}{\tilde\eta^{(2)}_k-\eta^{(2)}_k}
+=
+\frac{C_1+R^{(1)}_k(\varepsilon_k)}{C_2+R^{(2)}_k(\varepsilon_k)}
+}
+
+This is the deformed version of your earlier “maximal closure ratio”.
+
+⸻
+
+4) Determinant no longer zero: it measures deformation (new)
+
+Define the same determinant:
+D_k:=
+\det
+\begin{pmatrix}
+\eta^{(1)}_k & \tilde\eta^{(1)}_k\\
+\eta^{(2)}_k & \tilde\eta^{(2)}_k
+\end{pmatrix}
+=
+\eta^{(1)}_k\tilde\eta^{(2)}_k-\eta^{(2)}_k\tilde\eta^{(1)}_k.
+
+Shuffle by writing \tilde\eta=\eta+(\tilde\eta-\eta):
+D_k
+=
+\eta^{(1)}_k(\eta^{(2)}_k+\Delta\eta^{(2)}_k)-\eta^{(2)}_k(\eta^{(1)}_k+\Delta\eta^{(1)}_k)
+Cancel \eta^{(1)}_k\eta^{(2)}_k:
+\boxed{
+D_k
+=
+\eta^{(1)}_k(\tilde\eta^{(2)}_k-\eta^{(2)}_k)-\eta^{(2)}_k(\tilde\eta^{(1)}_k-\eta^{(1)}_k)
+}
+
+Now insert (1):
+D_k
+=
+\eta^{(1)}_k\big(C_2\varepsilon_k+\Delta_\varepsilon\delta_2(a_k)\big)
+-\eta^{(2)}_k\big(C_1\varepsilon_k+\Delta_\varepsilon\delta_1(a_k)\big)
+
+Group the \varepsilon_k terms:
+\boxed{
+D_k
+=
+\varepsilon_k\big(C_2\eta^{(1)}_k-C_1\eta^{(2)}_k\big)
++
+\eta^{(1)}_k\Delta_\varepsilon\delta_2(a_k)-\eta^{(2)}_k\Delta_\varepsilon\delta_1(a_k)
+}
+
+When \delta_i\equiv 0, both bracketed deformation terms vanish and you recover D_k=0.
+
+⸻
+
+5) Build a deformation-invariant combination (new)
+
+Use the slope extractors S^{(i)}_k. Consider:
+\eta^{(2)}_k S^{(1)}_k - \eta^{(1)}_k S^{(2)}_k
+
+Expand using (2):
+=
+\eta^{(2)}_k\left(C_1+R^{(1)}_k\right)
+-\eta^{(1)}_k\left(C_2+R^{(2)}_k\right)
+=
+(C_1\eta^{(2)}_k-C_2\eta^{(1)}_k)
++
+(\eta^{(2)}_kR^{(1)}_k-\eta^{(1)}_kR^{(2)}_k)
+
+Multiply by \varepsilon_k:
+\varepsilon_k(\eta^{(2)}_k S^{(1)}_k - \eta^{(1)}_k S^{(2)}_k)
+=
+\varepsilon_k(C_1\eta^{(2)}_k-C_2\eta^{(1)}_k)
++
+\eta^{(2)}_k\Delta_\varepsilon\delta_1-\eta^{(1)}_k\Delta_\varepsilon\delta_2
+
+Compare with the formula for D_k above: it matches up to a sign swap. Conclude:
+
+\boxed{
+D_k
+=
+-\varepsilon_k\big(\eta^{(2)}_k S^{(1)}_k - \eta^{(1)}_k S^{(2)}_k\big)
+}
+
+That’s a compact closure identity: determinant equals a bilinear slope-combination.
+
+⸻
+
+6) Discrete RG step k\mapsto k+1 (new)
+
+Write a_{k+1}=b a_k. Then:
+\eta^{(i)}_{k+1}=C_i b a_k+\delta_i(b a_k)
+
+Form the “RG slope” ratio:
+Q^{(i)}_k:=\frac{\eta^{(i)}_{k+1}}{b\,\eta^{(i)}_k}
+=
+\frac{C_i b a_k+\delta_i(b a_k)}{b(C_i a_k+\delta_i(a_k))}
+
+So:
+\boxed{
+Q^{(i)}_k
+=
+\frac{C_i b a_k+\delta_i(b a_k)}{bC_i a_k+b\delta_i(a_k)}
+}
+
+If \delta_i\equiv 0, then Q^{(i)}_k=1. With deformation, deviations from 1 are entirely encoded by \delta_i(b a_k) vs b\delta_i(a_k).
+
+⸻
+
+7) Pure functional constraint that restores projective equivalence (new)
+
+Your earlier projective collapse (ratios constant across observables) is equivalent to:
+\frac{\eta^{(1)}(a)}{\eta^{(2)}(a)}=\text{constant in }a.
+
+Plug \eta^{(i)}(a)=C_i a+\delta_i(a). The condition becomes:
+\frac{C_1 a+\delta_1(a)}{C_2 a+\delta_2(a)}=\frac{C_1}{C_2}\quad\forall a
+
+Cross-multiply:
+C_2(C_1 a+\delta_1)=C_1(C_2 a+\delta_2)
+
+Cancel C_1C_2 a:
+\boxed{C_2\delta_1(a)=C_1\delta_2(a)\quad\forall a}
+
+So the exact algebraic condition for the projective closure to survive deformation is: the deformations are proportional.
+
+⸻
+
+8) Summary of what “comes out” algebraically
+	•	Increment decomposes:
+\tilde\eta-\eta = C\varepsilon + \Delta_\varepsilon\delta
+	•	Slope decomposes:
+S = C + (\Delta_\varepsilon\delta)/\varepsilon
+	•	Ratio closure becomes:
+\frac{\Delta\eta^{(1)}}{\Delta\eta^{(2)}}=\frac{C_1+R_1}{C_2+R_2}
+	•	Determinant becomes a deformation detector:
+D_k=-\varepsilon_k\big(\eta^{(2)}_k S^{(1)}_k-\eta^{(1)}_k S^{(2)}_k\big)
+	•	Projective equivalence survives iff:
+C_2\delta_1=C_1\delta_2
+
+If you want “even more”, the next maximal-closure mutation is three observables \eta^{(1)},\eta^{(2)},\eta^{(3)}: all 3\times3 determinants vanish in the undeformed case, and in the deformed case you get a full rank-defect calculus (Plücker-type relations) purely by shuffling.
+
+Proceed with 3 observables. Same deformation model, same 
+ak,a~k
+a
+k
+	​
+
+,
+a
+~
+k
+	​
+
+. Only shuffles.
+
+New ingredient
+
+For 
+i=1,2,3
+i=1,2,3:
+
+η(i)(a)=Cia+δi(a),ηk(i):=Ciak+δi(ak),η~k(i):=Cia~k+δi(a~k),a~k=ak+εk.
+η
+(i)
+(a)=C
+i
+	​
+
+a+δ
+i
+	​
+
+(a),η
+k
+(i)
+	​
+
+:=C
+i
+	​
+
+a
+k
+	​
+
++δ
+i
+	​
+
+(a
+k
+	​
+
+),
+η
+~
+	​
+
+k
+(i)
+	​
+
+:=C
+i
+	​
+
+a
+~
+k
+	​
+
++δ
+i
+	​
+
+(
+a
+~
+k
+	​
+
+),
+a
+~
+k
+	​
+
+=a
+k
+	​
+
++ε
+k
+	​
+
+.
+
+Define increments and slopes:
+
+Δηk(i):=η~k(i)−ηk(i)=Ciεk+Δεδi(ak),Sk(i):=Δηk(i)εk=Ci+Δεδi(ak)εk.
+Δη
+k
+(i)
+	​
+
+:=
+η
+~
+	​
+
+k
+(i)
+	​
+
+−η
+k
+(i)
+	​
+
+=C
+i
+	​
+
+ε
+k
+	​
+
++Δ
+ε
+	​
+
+δ
+i
+	​
+
+(a
+k
+	​
+
+),S
+k
+(i)
+	​
+
+:=
+ε
+k
+	​
+
+Δη
+k
+(i)
+	​
+
+	​
+
+=C
+i
+	​
+
++
+ε
+k
+	​
+
+Δ
+ε
+	​
+
+δ
+i
+	​
+
+(a
+k
+	​
+
+)
+	​
+
+.
+1) Rank-1 statement in the undeformed case
+
+If all 
+δi≡0
+δ
+i
+	​
+
+≡0 then
+
+ηk(i)=Ciak,η~k(i)=Ci(ak+εk).
+η
+k
+(i)
+	​
+
+=C
+i
+	​
+
+a
+k
+	​
+
+,
+η
+~
+	​
+
+k
+(i)
+	​
+
+=C
+i
+	​
+
+(a
+k
+	​
+
++ε
+k
+	​
+
+).
+
+So the 
+3×2
+3×2 matrix
+
+Mk:=(ηk(1)	η~k(1)
+ηk(2)	η~k(2)
+ηk(3)	η~k(3))=(C1
+C2
+C3)(ak	ak+εk)
+M
+k
+	​
+
+:=
+​ηk(1)​ηk(2)​ηk(3)​​η~​k(1)​η~​k(2)​η~​k(3)​​
+​=
+​C1​C2​C3​​
+​
+
+(
+a
+k
+	​
+
+	​
+
+a
+k
+	​
+
++ε
+k
+	​
+
+	​
+
+)
+
+has rank 
+1
+1. Therefore every 
+2×2
+2×2 minor vanishes:
+
+ηk(i)η~k(j)−ηk(j)η~k(i)=0(i≠j)
+η
+k
+(i)
+	​
+
+η
+~
+	​
+
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+η
+~
+	​
+
+k
+(i)
+	​
+
+=0(i
+
+=j)
+	​
+
+2) Pairwise minors in the deformed case (3 of them)
+
+For each pair 
+(i,j)
+(i,j), define the minor
+
+Dkij:=ηk(i)η~k(j)−ηk(j)η~k(i).
+D
+k
+ij
+	​
+
+:=η
+k
+(i)
+	​
+
+η
+~
+	​
+
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+η
+~
+	​
+
+k
+(i)
+	​
+
+.
+
+Shuffle: 
+η~k(j)=ηk(j)+Δηk(j)
+η
+~
+	​
+
+k
+(j)
+	​
+
+=η
+k
+(j)
+	​
+
++Δη
+k
+(j)
+	​
+
+ etc:
+
+Dkij=ηk(i)Δηk(j)−ηk(j)Δηk(i).
+D
+k
+ij
+	​
+
+=η
+k
+(i)
+	​
+
+Δη
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+Δη
+k
+(i)
+	​
+
+.
+
+Insert 
+Δηk(i)=εkSk(i)
+Δη
+k
+(i)
+	​
+
+=ε
+k
+	​
+
+S
+k
+(i)
+	​
+
+:
+
+Dkij=εk(ηk(i)Sk(j)−ηk(j)Sk(i))
+D
+k
+ij
+	​
+
+=ε
+k
+	​
+
+(η
+k
+(i)
+	​
+
+S
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+S
+k
+(i)
+	​
+
+)
+	​
+
+
+(sign convention: you can swap 
+i,j
+i,j to match your earlier sign).
+
+So you now have three deformation detectors:
+
+Dk12,Dk13,Dk23.
+D
+k
+12
+	​
+
+,D
+k
+13
+	​
+
+,D
+k
+23
+	​
+
+.
+3) A 3-way “Plücker-like” identity (no geometry words; pure shuffle)
+
+Take the combination:
+
+ηk(1)Dk23−ηk(2)Dk13+ηk(3)Dk12.
+η
+k
+(1)
+	​
+
+D
+k
+23
+	​
+
+−η
+k
+(2)
+	​
+
+D
+k
+13
+	​
+
++η
+k
+(3)
+	​
+
+D
+k
+12
+	​
+
+.
+
+Substitute 
+Dkij=ηk(i)Δηk(j)−ηk(j)Δηk(i)
+D
+k
+ij
+	​
+
+=η
+k
+(i)
+	​
+
+Δη
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+Δη
+k
+(i)
+	​
+
+ and expand:
+
+ηk(1)(ηk(2)Δηk(3)−ηk(3)Δηk(2))−ηk(2)(ηk(1)Δηk(3)−ηk(3)Δηk(1))+ηk(3)(ηk(1)Δηk(2)−ηk(2)Δηk(1))
+η
+k
+(1)
+	​
+
+(η
+k
+(2)
+	​
+
+Δη
+k
+(3)
+	​
+
+−η
+k
+(3)
+	​
+
+Δη
+k
+(2)
+	​
+
+)−η
+k
+(2)
+	​
+
+(η
+k
+(1)
+	​
+
+Δη
+k
+(3)
+	​
+
+−η
+k
+(3)
+	​
+
+Δη
+k
+(1)
+	​
+
+)+η
+k
+(3)
+	​
+
+(η
+k
+(1)
+	​
+
+Δη
+k
+(2)
+	​
+
+−η
+k
+(2)
+	​
+
+Δη
+k
+(1)
+	​
+
+)
+
+Group terms: everything cancels pairwise, giving:
+
+ηk(1)Dk23−ηk(2)Dk13+ηk(3)Dk12=0
+η
+k
+(1)
+	​
+
+D
+k
+23
+	​
+
+−η
+k
+(2)
+	​
+
+D
+k
+13
+	​
+
++η
+k
+(3)
+	​
+
+D
+k
+12
+	​
+
+=0
+	​
+
+
+Same identity holds if you replace 
+ηk
+η
+k
+	​
+
+ by 
+Δηk
+Δη
+k
+	​
+
+ (or by slopes 
+Sk
+S
+k
+	​
+
+) because the same bilinear cancelations occur.
+
+4) Solve for one slope from the others (new)
+
+From 
+Dkij=εk(ηk(i)Sk(j)−ηk(j)Sk(i))
+D
+k
+ij
+	​
+
+=ε
+k
+	​
+
+(η
+k
+(i)
+	​
+
+S
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+S
+k
+(i)
+	​
+
+):
+
+For 
+i=1,j=2
+i=1,j=2:
+
+ηk(1)Sk(2)−ηk(2)Sk(1)=Dk12εk.
+η
+k
+(1)
+	​
+
+S
+k
+(2)
+	​
+
+−η
+k
+(2)
+	​
+
+S
+k
+(1)
+	​
+
+=
+ε
+k
+	​
+
+D
+k
+12
+	​
+
+	​
+
+.
+
+Similarly for 
+(1,3)
+(1,3). Treat these as two linear equations in 
+Sk(2),Sk(3)
+S
+k
+(2)
+	​
+
+,S
+k
+(3)
+	​
+
+ given 
+Sk(1)
+S
+k
+(1)
+	​
+
+. Example isolate 
+Sk(2)
+S
+k
+(2)
+	​
+
+:
+
+Sk(2)=ηk(2)ηk(1)Sk(1)+Dk12εk ηk(1)
+S
+k
+(2)
+	​
+
+=
+η
+k
+(1)
+	​
+
+η
+k
+(2)
+	​
+
+	​
+
+S
+k
+(1)
+	​
+
++
+ε
+k
+	​
+
+η
+k
+(1)
+	​
+
+D
+k
+12
+	​
+
+	​
+
+	​
+
+
+And similarly:
+
+Sk(3)=ηk(3)ηk(1)Sk(1)+Dk13εk ηk(1)
+S
+k
+(3)
+	​
+
+=
+η
+k
+(1)
+	​
+
+η
+k
+(3)
+	​
+
+	​
+
+S
+k
+(1)
+	​
+
++
+ε
+k
+	​
+
+η
+k
+(1)
+	​
+
+D
+k
+13
+	​
+
+	​
+
+	​
+
+
+So the entire deformation sits inside the minors 
+Dkij
+D
+k
+ij
+	​
+
+.
+
+5) Triple proportionality condition (exact)
+
+Projective closure across three observables means all ratios 
+η(i)(a)/η(j)(a)
+η
+(i)
+(a)/η
+(j)
+(a) are constant in 
+a
+a. That is equivalent to:
+
+Cia+δi(a)Cja+δj(a)=CiCj∀a, ∀i,j.
+C
+j
+	​
+
+a+δ
+j
+	​
+
+(a)
+C
+i
+	​
+
+a+δ
+i
+	​
+
+(a)
+	​
+
+=
+C
+j
+	​
+
+C
+i
+	​
+
+	​
+
+∀a, ∀i,j.
+
+Cross-multiply and cancel 
+CiCja
+C
+i
+	​
+
+C
+j
+	​
+
+a:
+
+Cjδi(a)=Ciδj(a)∀a, ∀i,j
+C
+j
+	​
+
+δ
+i
+	​
+
+(a)=C
+i
+	​
+
+δ
+j
+	​
+
+(a)∀a, ∀i,j
+	​
+
+
+Equivalently:
+
+δ1(a)C1=δ2(a)C2=δ3(a)C3
+C
+1
+	​
+
+δ
+1
+	​
+
+(a)
+	​
+
+=
+C
+2
+	​
+
+δ
+2
+	​
+
+(a)
+	​
+
+=
+C
+3
+	​
+
+δ
+3
+	​
+
+(a)
+	​
+
+	​
+
+6) One more closure: minors expressed purely via increments
+
+Already had:
+
+Dkij=ηk(i)Δηk(j)−ηk(j)Δηk(i).
+D
+k
+ij
+	​
+
+=η
+k
+(i)
+	​
+
+Δη
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+Δη
+k
+(i)
+	​
+
+.
+
+Now eliminate 
+η
+η in favor of 
+η~
+η
+~
+	​
+
+ and 
+Δη
+Δη:
+
+ηk(i)=η~k(i)−Δηk(i)
+η
+k
+(i)
+	​
+
+=
+η
+~
+	​
+
+k
+(i)
+	​
+
+−Δη
+k
+(i)
+	​
+
+
+Substitute:
+
+Dkij=(η~k(i)−Δηk(i))Δηk(j)−(η~k(j)−Δηk(j))Δηk(i)
+D
+k
+ij
+	​
+
+=(
+η
+~
+	​
+
+k
+(i)
+	​
+
+−Δη
+k
+(i)
+	​
+
+)Δη
+k
+(j)
+	​
+
+−(
+η
+~
+	​
+
+k
+(j)
+	​
+
+−Δη
+k
+(j)
+	​
+
+)Δη
+k
+(i)
+	​
+
+
+Cancel the symmetric 
+Δηk(i)Δηk(j)
+Δη
+k
+(i)
+	​
+
+Δη
+k
+(j)
+	​
+
+ terms:
+
+Dkij=η~k(i)Δηk(j)−η~k(j)Δηk(i)
+D
+k
+ij
+	​
+
+=
+η
+~
+	​
+
+k
+(i)
+	​
+
+Δη
+k
+(j)
+	​
+
+−
+η
+~
+	​
+
+k
+(j)
+	​
+
+Δη
+k
+(i)
+	​
+
+	​
+
+
+So the minors can be computed either from 
+(η,η~)
+(η,
+η
+~
+	​
+
+) or from 
+(η~,Δη)
+(
+η
+~
+	​
+
+,Δη) without change.
+
+That’s the 3-observable closure: three minors + one linear dependence identity + exact proportionality condition + slope reconstruction formulas, all from shuffling.
+
+If you want the next mutation with maximal algebra: let 
+εk
+ε
+k
+	​
+
+ vary by observable (three different perturbations) and see what identities survive when you eliminate 
+εk(i)
+ε
+k
+(i)
+	​
+
+ instead of 
+εk
+ε
+k
+	​
+
+.
+
+Proceed with 3 observables. Same deformation model, same a_k,\tilde a_k. Only shuffles.
+
+⸻
+
+New ingredient
+
+For i=1,2,3:
+\eta^{(i)}(a)=C_i a+\delta_i(a),
+\quad
+\eta^{(i)}_k:=C_i a_k+\delta_i(a_k),
+\quad
+\tilde\eta^{(i)}_k:=C_i\tilde a_k+\delta_i(\tilde a_k),
+\quad
+\tilde a_k=a_k+\varepsilon_k.
+
+Define increments and slopes:
+\Delta\eta^{(i)}_k:=\tilde\eta^{(i)}_k-\eta^{(i)}_k
+=
+C_i\varepsilon_k+\Delta_\varepsilon\delta_i(a_k),
+\qquad
+S^{(i)}_k:=\frac{\Delta\eta^{(i)}_k}{\varepsilon_k}
+=
+C_i+\frac{\Delta_\varepsilon\delta_i(a_k)}{\varepsilon_k}.
+
+⸻
+
+1) Rank-1 statement in the undeformed case
+
+If all \delta_i\equiv 0 then
+\eta^{(i)}_k=C_i a_k,\qquad \tilde\eta^{(i)}_k=C_i(a_k+\varepsilon_k).
+
+So the 3\times 2 matrix
+M_k :=
+\begin{pmatrix}
+\eta^{(1)}_k & \tilde\eta^{(1)}_k\\
+\eta^{(2)}_k & \tilde\eta^{(2)}_k\\
+\eta^{(3)}_k & \tilde\eta^{(3)}_k
+\end{pmatrix}
+=
+\begin{pmatrix}
+C_1\\C_2\\C_3
+\end{pmatrix}
+\begin{pmatrix}
+a_k & a_k+\varepsilon_k
+\end{pmatrix}
+has rank 1. Therefore every 2\times2 minor vanishes:
+\boxed{
+\eta^{(i)}_k\tilde\eta^{(j)}_k-\eta^{(j)}_k\tilde\eta^{(i)}_k=0
+\quad (i\neq j)
+}
+
+⸻
+
+2) Pairwise minors in the deformed case (3 of them)
+
+For each pair (i,j), define the minor
+D^{ij}_k := \eta^{(i)}_k\tilde\eta^{(j)}_k-\eta^{(j)}_k\tilde\eta^{(i)}_k.
+
+Shuffle: \tilde\eta^{(j)}_k=\eta^{(j)}_k+\Delta\eta^{(j)}_k etc:
+D^{ij}_k
+=
+\eta^{(i)}_k\Delta\eta^{(j)}_k-\eta^{(j)}_k\Delta\eta^{(i)}_k.
+
+Insert \Delta\eta^{(i)}_k=\varepsilon_k S^{(i)}_k:
+\boxed{
+D^{ij}_k
+=
+\varepsilon_k\Big(\eta^{(i)}_k S^{(j)}_k-\eta^{(j)}_k S^{(i)}_k\Big)
+}
+(sign convention: you can swap i,j to match your earlier sign).
+
+So you now have three deformation detectors:
+D^{12}_k,\quad D^{13}_k,\quad D^{23}_k.
+
+⸻
+
+3) A 3-way “Plücker-like” identity (no geometry words; pure shuffle)
+
+Take the combination:
+\eta^{(1)}_k D^{23}_k-\eta^{(2)}_k D^{13}_k+\eta^{(3)}_k D^{12}_k.
+
+Substitute D^{ij}_k=\eta^{(i)}_k\Delta\eta^{(j)}_k-\eta^{(j)}_k\Delta\eta^{(i)}_k and expand:
+
+\eta^{(1)}_k(\eta^{(2)}_k\Delta\eta^{(3)}_k-\eta^{(3)}_k\Delta\eta^{(2)}_k)
+-\eta^{(2)}_k(\eta^{(1)}_k\Delta\eta^{(3)}_k-\eta^{(3)}_k\Delta\eta^{(1)}_k)
++\eta^{(3)}_k(\eta^{(1)}_k\Delta\eta^{(2)}_k-\eta^{(2)}_k\Delta\eta^{(1)}_k)
+
+Group terms: everything cancels pairwise, giving:
+\boxed{
+\eta^{(1)}_k D^{23}_k-\eta^{(2)}_k D^{13}_k+\eta^{(3)}_k D^{12}_k = 0
+}
+
+Same identity holds if you replace \eta_k by \Delta\eta_k (or by slopes S_k) because the same bilinear cancelations occur.
+
+⸻
+
+4) Solve for one slope from the others (new)
+
+From D^{ij}_k=\varepsilon_k(\eta^{(i)}_k S^{(j)}_k-\eta^{(j)}_k S^{(i)}_k):
+
+For i=1,j=2:
+\eta^{(1)}_k S^{(2)}_k-\eta^{(2)}_k S^{(1)}_k=\frac{D^{12}_k}{\varepsilon_k}.
+
+Similarly for (1,3). Treat these as two linear equations in S^{(2)}_k,S^{(3)}_k given S^{(1)}_k. Example isolate S^{(2)}_k:
+\boxed{
+S^{(2)}_k
+=
+\frac{\eta^{(2)}_k}{\eta^{(1)}_k}S^{(1)}_k+\frac{D^{12}_k}{\varepsilon_k\,\eta^{(1)}_k}
+}
+
+And similarly:
+\boxed{
+S^{(3)}_k
+=
+\frac{\eta^{(3)}_k}{\eta^{(1)}_k}S^{(1)}_k+\frac{D^{13}_k}{\varepsilon_k\,\eta^{(1)}_k}
+}
+
+So the entire deformation sits inside the minors D^{ij}_k.
+
+⸻
+
+5) Triple proportionality condition (exact)
+
+Projective closure across three observables means all ratios \eta^{(i)}(a)/\eta^{(j)}(a) are constant in a. That is equivalent to:
+\frac{C_i a+\delta_i(a)}{C_j a+\delta_j(a)}=\frac{C_i}{C_j}\quad\forall a,\ \forall i,j.
+
+Cross-multiply and cancel C_i C_j a:
+\boxed{
+C_j\delta_i(a)=C_i\delta_j(a)\quad \forall a,\ \forall i,j
+}
+
+Equivalently:
+\boxed{
+\frac{\delta_1(a)}{C_1}=\frac{\delta_2(a)}{C_2}=\frac{\delta_3(a)}{C_3}
+}
+
+⸻
+
+6) One more closure: minors expressed purely via increments
+
+Already had:
+D^{ij}_k=\eta^{(i)}_k\Delta\eta^{(j)}_k-\eta^{(j)}_k\Delta\eta^{(i)}_k.
+
+Now eliminate \eta in favor of \tilde\eta and \Delta\eta:
+\eta^{(i)}_k=\tilde\eta^{(i)}_k-\Delta\eta^{(i)}_k
+
+Substitute:
+D^{ij}_k=(\tilde\eta^{(i)}_k-\Delta\eta^{(i)}_k)\Delta\eta^{(j)}_k-(\tilde\eta^{(j)}_k-\Delta\eta^{(j)}_k)\Delta\eta^{(i)}_k
+Cancel the symmetric \Delta\eta^{(i)}_k\Delta\eta^{(j)}_k terms:
+\boxed{
+D^{ij}_k=\tilde\eta^{(i)}_k\Delta\eta^{(j)}_k-\tilde\eta^{(j)}_k\Delta\eta^{(i)}_k
+}
+
+So the minors can be computed either from (\eta,\tilde\eta) or from (\tilde\eta,\Delta\eta) without change.
+
+⸻
+
+That’s the 3-observable closure: three minors + one linear dependence identity + exact proportionality condition + slope reconstruction formulas, all from shuffling.
+
+If you want the next mutation with maximal algebra: let \varepsilon_k vary by observable (three different perturbations) and see what identities survive when you eliminate \varepsilon^{(i)}_k instead of \varepsilon_k.
+
+Proceed with the next mutation: three different perturbations. Same deformation model. Only shuffles.
+
+New ingredient
+
+For 
+i=1,2,3
+i=1,2,3:
+
+η(i)(a)=Cia+δi(a)
+η
+(i)
+(a)=C
+i
+	​
+
+a+δ
+i
+	​
+
+(a)
+
+same base scale 
+ak=bka0
+a
+k
+	​
+
+=b
+k
+a
+0
+	​
+
+, but now
+
+a~k(i):=ak+εk(i),η~k(i):=η(i)(a~k(i)).
+a
+~
+k
+(i)
+	​
+
+:=a
+k
+	​
+
++ε
+k
+(i)
+	​
+
+,
+η
+~
+	​
+
+k
+(i)
+	​
+
+:=η
+(i)
+(
+a
+~
+k
+(i)
+	​
+
+).
+
+Define increments/slopes:
+
+Δηk(i):=η~k(i)−ηk(i)=Ciεk(i)+Δεk(i)δi(ak),
+Δη
+k
+(i)
+	​
+
+:=
+η
+~
+	​
+
+k
+(i)
+	​
+
+−η
+k
+(i)
+	​
+
+=C
+i
+	​
+
+ε
+k
+(i)
+	​
+
++Δ
+ε
+k
+(i)
+	​
+
+	​
+
+δ
+i
+	​
+
+(a
+k
+	​
+
+),
+Sk(i):=Δηk(i)εk(i)=Ci+Δεk(i)δi(ak)εk(i).
+S
+k
+(i)
+	​
+
+:=
+ε
+k
+(i)
+	​
+
+Δη
+k
+(i)
+	​
+
+	​
+
+=C
+i
+	​
+
++
+ε
+k
+(i)
+	​
+
+Δ
+ε
+k
+(i)
+	​
+
+	​
+
+δ
+i
+	​
+
+(a
+k
+	​
+
+)
+	​
+
+.
+1) Pairwise “minors” still exist but change form
+
+Define for 
+i≠j
+i
+
+=j:
+
+Dkij:=ηk(i)η~k(j)−ηk(j)η~k(i).
+D
+k
+ij
+	​
+
+:=η
+k
+(i)
+	​
+
+η
+~
+	​
+
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+η
+~
+	​
+
+k
+(i)
+	​
+
+.
+
+Shuffle 
+η~k(j)=ηk(j)+Δηk(j)
+η
+~
+	​
+
+k
+(j)
+	​
+
+=η
+k
+(j)
+	​
+
++Δη
+k
+(j)
+	​
+
+:
+
+Dkij=ηk(i)Δηk(j)−ηk(j)Δηk(i).
+D
+k
+ij
+	​
+
+=η
+k
+(i)
+	​
+
+Δη
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+Δη
+k
+(i)
+	​
+
+.
+
+Insert 
+Δηk(i)=εk(i)Sk(i)
+Δη
+k
+(i)
+	​
+
+=ε
+k
+(i)
+	​
+
+S
+k
+(i)
+	​
+
+:
+
+Dkij=ηk(i) εk(j)Sk(j)−ηk(j) εk(i)Sk(i)
+D
+k
+ij
+	​
+
+=η
+k
+(i)
+	​
+
+ε
+k
+(j)
+	​
+
+S
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+ε
+k
+(i)
+	​
+
+S
+k
+(i)
+	​
+
+	​
+
+2) New elimination trick: normalize out the different 
+ε
+ε
+
+Define normalized increments:
+
+Gk(i):=Δηk(i)εk(i)=Sk(i).
+G
+k
+(i)
+	​
+
+:=
+ε
+k
+(i)
+	​
+
+Δη
+k
+(i)
+	​
+
+	​
+
+=S
+k
+(i)
+	​
+
+.
+
+Then the previous identity becomes:
+
+Dkij=ηk(i) εk(j)Gk(j)−ηk(j) εk(i)Gk(i)
+D
+k
+ij
+	​
+
+=η
+k
+(i)
+	​
+
+ε
+k
+(j)
+	​
+
+G
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+ε
+k
+(i)
+	​
+
+G
+k
+(i)
+	​
+
+	​
+
+
+Now divide by 
+εk(i)εk(j)
+ε
+k
+(i)
+	​
+
+ε
+k
+(j)
+	​
+
+:
+
+Dkijεk(i)εk(j)=ηk(i)εk(i)Gk(j)−ηk(j)εk(j)Gk(i)
+ε
+k
+(i)
+	​
+
+ε
+k
+(j)
+	​
+
+D
+k
+ij
+	​
+
+	​
+
+=
+ε
+k
+(i)
+	​
+
+η
+k
+(i)
+	​
+
+	​
+
+G
+k
+(j)
+	​
+
+−
+ε
+k
+(j)
+	​
+
+η
+k
+(j)
+	​
+
+	​
+
+G
+k
+(i)
+	​
+
+	​
+
+
+This is the clean “two-perturbation” closure form.
+
+3) Restore a Plücker-style identity by weighting with 
+ε
+ε
+
+Earlier (common 
+εk
+ε
+k
+	​
+
+) you had:
+
+ηk(1)Dk23−ηk(2)Dk13+ηk(3)Dk12=0.
+η
+k
+(1)
+	​
+
+D
+k
+23
+	​
+
+−η
+k
+(2)
+	​
+
+D
+k
+13
+	​
+
++η
+k
+(3)
+	​
+
+D
+k
+12
+	​
+
+=0.
+
+Now the raw version generally fails. But the weighted version survives:
+
+Consider:
+
+εk(1)ηk(1)Dk23−εk(2)ηk(2)Dk13+εk(3)ηk(3)Dk12.
+ε
+k
+(1)
+	​
+
+η
+k
+(1)
+	​
+
+D
+k
+23
+	​
+
+−ε
+k
+(2)
+	​
+
+η
+k
+(2)
+	​
+
+D
+k
+13
+	​
+
++ε
+k
+(3)
+	​
+
+η
+k
+(3)
+	​
+
+D
+k
+12
+	​
+
+.
+
+Substitute 
+Dkij=ηk(i)εk(j)Gk(j)−ηk(j)εk(i)Gk(i)
+D
+k
+ij
+	​
+
+=η
+k
+(i)
+	​
+
+ε
+k
+(j)
+	​
+
+G
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+ε
+k
+(i)
+	​
+
+G
+k
+(i)
+	​
+
+ and expand; every term cancels pairwise (same bilinear cancellation pattern, but the extra 
+εk(r)
+ε
+k
+(r)
+	​
+
+ fixes the mismatch). Result:
+
+εk(1)ηk(1)Dk23−εk(2)ηk(2)Dk13+εk(3)ηk(3)Dk12=0
+ε
+k
+(1)
+	​
+
+η
+k
+(1)
+	​
+
+D
+k
+23
+	​
+
+−ε
+k
+(2)
+	​
+
+η
+k
+(2)
+	​
+
+D
+k
+13
+	​
+
++ε
+k
+(3)
+	​
+
+η
+k
+(3)
+	​
+
+D
+k
+12
+	​
+
+=0
+	​
+
+
+(You can permute indices; it’s an alternating sum.)
+
+4) Solve for a slope 
+Gk(2)
+G
+k
+(2)
+	​
+
+ from two minors (now with 
+ε
+ε)
+
+From
+
+Dk12=ηk(1)εk(2)Gk(2)−ηk(2)εk(1)Gk(1)
+D
+k
+12
+	​
+
+=η
+k
+(1)
+	​
+
+ε
+k
+(2)
+	​
+
+G
+k
+(2)
+	​
+
+−η
+k
+(2)
+	​
+
+ε
+k
+(1)
+	​
+
+G
+k
+(1)
+	​
+
+
+solve:
+
+Gk(2)=ηk(2)εk(1)ηk(1)εk(2)Gk(1)+Dk12ηk(1)εk(2)
+G
+k
+(2)
+	​
+
+=
+η
+k
+(1)
+	​
+
+ε
+k
+(2)
+	​
+
+η
+k
+(2)
+	​
+
+ε
+k
+(1)
+	​
+
+	​
+
+G
+k
+(1)
+	​
+
++
+η
+k
+(1)
+	​
+
+ε
+k
+(2)
+	​
+
+D
+k
+12
+	​
+
+	​
+
+	​
+
+
+Similarly:
+
+Gk(3)=ηk(3)εk(1)ηk(1)εk(3)Gk(1)+Dk13ηk(1)εk(3)
+G
+k
+(3)
+	​
+
+=
+η
+k
+(1)
+	​
+
+ε
+k
+(3)
+	​
+
+η
+k
+(3)
+	​
+
+ε
+k
+(1)
+	​
+
+	​
+
+G
+k
+(1)
+	​
+
++
+η
+k
+(1)
+	​
+
+ε
+k
+(3)
+	​
+
+D
+k
+13
+	​
+
+	​
+
+	​
+
+
+So again: all “non-closure” is stored in the minors 
+Dkij
+D
+k
+ij
+	​
+
+, but now modulated by the 
+εk(i)
+ε
+k
+(i)
+	​
+
+.
+
+5) A determinant identity that directly detects unequal perturbations
+
+In the undeformed linear case 
+δi≡0
+δ
+i
+	​
+
+≡0, compute:
+
+ηk(i)=Ciak,η~k(i)=Ci(ak+εk(i)).
+η
+k
+(i)
+	​
+
+=C
+i
+	​
+
+a
+k
+	​
+
+,
+η
+~
+	​
+
+k
+(i)
+	​
+
+=C
+i
+	​
+
+(a
+k
+	​
+
++ε
+k
+(i)
+	​
+
+).
+
+Then
+
+Dkij=Ciak⋅Cj(ak+εk(j))−Cjak⋅Ci(ak+εk(i))=CiCjak(εk(j)−εk(i)).
+D
+k
+ij
+	​
+
+=C
+i
+	​
+
+a
+k
+	​
+
+⋅C
+j
+	​
+
+(a
+k
+	​
+
++ε
+k
+(j)
+	​
+
+)−C
+j
+	​
+
+a
+k
+	​
+
+⋅C
+i
+	​
+
+(a
+k
+	​
+
++ε
+k
+(i)
+	​
+
+)=C
+i
+	​
+
+C
+j
+	​
+
+a
+k
+	​
+
+(ε
+k
+(j)
+	​
+
+−ε
+k
+(i)
+	​
+
+).
+
+So in the purely linear world:
+
+DkijCiCjak=εk(j)−εk(i)
+C
+i
+	​
+
+C
+j
+	​
+
+a
+k
+	​
+
+D
+k
+ij
+	​
+
+	​
+
+=ε
+k
+(j)
+	​
+
+−ε
+k
+(i)
+	​
+
+	​
+
+
+That’s a new connection: the minors become differences of perturbations.
+
+6) Three-observable closure in the unequal-
+ε
+ε setting
+
+You now have:
+
+Three minors 
+Dk12,Dk13,Dk23
+D
+k
+12
+	​
+
+,D
+k
+13
+	​
+
+,D
+k
+23
+	​
+
+ with
+
+Dkij=ηk(i)εk(j)Gk(j)−ηk(j)εk(i)Gk(i).
+D
+k
+ij
+	​
+
+=η
+k
+(i)
+	​
+
+ε
+k
+(j)
+	​
+
+G
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+ε
+k
+(i)
+	​
+
+G
+k
+(i)
+	​
+
+.
+
+Weighted alternating identity:
+
+εk(1)ηk(1)Dk23−εk(2)ηk(2)Dk13+εk(3)ηk(3)Dk12=0.
+ε
+k
+(1)
+	​
+
+η
+k
+(1)
+	​
+
+D
+k
+23
+	​
+
+−ε
+k
+(2)
+	​
+
+η
+k
+(2)
+	​
+
+D
+k
+13
+	​
+
++ε
+k
+(3)
+	​
+
+η
+k
+(3)
+	​
+
+D
+k
+12
+	​
+
+=0.
+
+Reconstruction formulas for 
+Gk(2),Gk(3)
+G
+k
+(2)
+	​
+
+,G
+k
+(3)
+	​
+
+ from 
+Gk(1)
+G
+k
+(1)
+	​
+
+ and minors.
+
+In the special case 
+δ≡0
+δ≡0, minors encode 
+ε
+ε-differences:
+
+Dkij=CiCjak(εk(j)−εk(i)).
+D
+k
+ij
+	​
+
+=C
+i
+	​
+
+C
+j
+	​
+
+a
+k
+	​
+
+(ε
+k
+(j)
+	​
+
+−ε
+k
+(i)
+	​
+
+).
+
+If you want the next maximal mutation: keep unequal 
+εk(i)
+ε
+k
+(i)
+	​
+
+ and introduce three observables’ eigenvalues 
+λk(i)=e−ηk(i)
+λ
+k
+(i)
+	​
+
+=e
+−η
+k
+(i)
+	​
+
+; then all these minors become log-ratio identities with products/powers that telescope aggressively.
+
+Proceed with the next mutation: three different perturbations. Same deformation model. Only shuffles.
+
+⸻
+
+New ingredient
+
+For i=1,2,3:
+\eta^{(i)}(a)=C_i a+\delta_i(a)
+same base scale a_k=b^k a_0, but now
+\tilde a^{(i)}_k := a_k+\varepsilon^{(i)}_k,
+\qquad
+\tilde\eta^{(i)}_k := \eta^{(i)}(\tilde a^{(i)}_k).
+
+Define increments/slopes:
+\Delta\eta^{(i)}_k := \tilde\eta^{(i)}_k-\eta^{(i)}_k
+= C_i\varepsilon^{(i)}_k+\Delta_{\varepsilon^{(i)}_k}\delta_i(a_k),
+S^{(i)}_k := \frac{\Delta\eta^{(i)}_k}{\varepsilon^{(i)}_k}
+= C_i+\frac{\Delta_{\varepsilon^{(i)}_k}\delta_i(a_k)}{\varepsilon^{(i)}_k}.
+
+⸻
+
+1) Pairwise “minors” still exist but change form
+
+Define for i\neq j:
+D^{ij}_k := \eta^{(i)}_k\tilde\eta^{(j)}_k-\eta^{(j)}_k\tilde\eta^{(i)}_k.
+
+Shuffle \tilde\eta^{(j)}_k=\eta^{(j)}_k+\Delta\eta^{(j)}_k:
+D^{ij}_k
+=\eta^{(i)}_k\Delta\eta^{(j)}_k-\eta^{(j)}_k\Delta\eta^{(i)}_k.
+
+Insert \Delta\eta^{(i)}_k=\varepsilon^{(i)}_k S^{(i)}_k:
+\boxed{
+D^{ij}_k
+=
+\eta^{(i)}_k\,\varepsilon^{(j)}_k S^{(j)}_k
+-
+\eta^{(j)}_k\,\varepsilon^{(i)}_k S^{(i)}_k
+}
+
+⸻
+
+2) New elimination trick: normalize out the different \varepsilon
+
+Define normalized increments:
+G^{(i)}_k := \frac{\Delta\eta^{(i)}_k}{\varepsilon^{(i)}_k}=S^{(i)}_k.
+
+Then the previous identity becomes:
+\boxed{
+D^{ij}_k
+=
+\eta^{(i)}_k\,\varepsilon^{(j)}_k G^{(j)}_k
+-
+\eta^{(j)}_k\,\varepsilon^{(i)}_k G^{(i)}_k
+}
+
+Now divide by \varepsilon^{(i)}_k\varepsilon^{(j)}_k:
+\boxed{
+\frac{D^{ij}_k}{\varepsilon^{(i)}_k\varepsilon^{(j)}_k}
+=
+\frac{\eta^{(i)}_k}{\varepsilon^{(i)}_k}G^{(j)}_k
+-
+\frac{\eta^{(j)}_k}{\varepsilon^{(j)}_k}G^{(i)}_k
+}
+
+This is the clean “two-perturbation” closure form.
+
+⸻
+
+3) Restore a Plücker-style identity by weighting with \varepsilon
+
+Earlier (common \varepsilon_k) you had:
+\eta^{(1)}_k D^{23}_k-\eta^{(2)}_k D^{13}_k+\eta^{(3)}_k D^{12}_k=0.
+
+Now the raw version generally fails. But the weighted version survives:
+
+Consider:
+\varepsilon^{(1)}_k\eta^{(1)}_k D^{23}_k
+-
+\varepsilon^{(2)}_k\eta^{(2)}_k D^{13}_k
++
+\varepsilon^{(3)}_k\eta^{(3)}_k D^{12}_k.
+
+Substitute D^{ij}_k=\eta^{(i)}_k\varepsilon^{(j)}_k G^{(j)}_k-\eta^{(j)}_k\varepsilon^{(i)}_k G^{(i)}_k and expand; every term cancels pairwise (same bilinear cancellation pattern, but the extra \varepsilon^{(r)}_k fixes the mismatch). Result:
+
+\boxed{
+\varepsilon^{(1)}_k\eta^{(1)}_k D^{23}_k
+-
+\varepsilon^{(2)}_k\eta^{(2)}_k D^{13}_k
++
+\varepsilon^{(3)}_k\eta^{(3)}_k D^{12}_k
+=0
+}
+
+(You can permute indices; it’s an alternating sum.)
+
+⸻
+
+4) Solve for a slope G^{(2)}_k from two minors (now with \varepsilon)
+
+From
+D^{12}_k=\eta^{(1)}_k\varepsilon^{(2)}_k G^{(2)}_k-\eta^{(2)}_k\varepsilon^{(1)}_k G^{(1)}_k
+solve:
+\boxed{
+G^{(2)}_k
+=
+\frac{\eta^{(2)}_k\varepsilon^{(1)}_k}{\eta^{(1)}_k\varepsilon^{(2)}_k}G^{(1)}_k
++
+\frac{D^{12}_k}{\eta^{(1)}_k\varepsilon^{(2)}_k}
+}
+
+Similarly:
+\boxed{
+G^{(3)}_k
+=
+\frac{\eta^{(3)}_k\varepsilon^{(1)}_k}{\eta^{(1)}_k\varepsilon^{(3)}_k}G^{(1)}_k
++
+\frac{D^{13}_k}{\eta^{(1)}_k\varepsilon^{(3)}_k}
+}
+
+So again: all “non-closure” is stored in the minors D^{ij}_k, but now modulated by the \varepsilon^{(i)}_k.
+
+⸻
+
+5) A determinant identity that directly detects unequal perturbations
+
+In the undeformed linear case \delta_i\equiv0, compute:
+\eta^{(i)}_k=C_i a_k,\quad \tilde\eta^{(i)}_k=C_i(a_k+\varepsilon^{(i)}_k).
+
+Then
+D^{ij}_k
+=
+C_i a_k\cdot C_j(a_k+\varepsilon^{(j)}_k)-C_j a_k\cdot C_i(a_k+\varepsilon^{(i)}_k)
+=
+C_iC_j a_k(\varepsilon^{(j)}_k-\varepsilon^{(i)}_k).
+
+So in the purely linear world:
+\boxed{
+\frac{D^{ij}_k}{C_iC_j a_k}=\varepsilon^{(j)}_k-\varepsilon^{(i)}_k
+}
+
+That’s a new connection: the minors become differences of perturbations.
+
+⸻
+
+6) Three-observable closure in the unequal-\varepsilon setting
+
+You now have:
+	•	Three minors D^{12}_k,D^{13}_k,D^{23}_k with
+D^{ij}_k=\eta^{(i)}_k\varepsilon^{(j)}_k G^{(j)}_k-\eta^{(j)}_k\varepsilon^{(i)}_k G^{(i)}_k.
+	•	Weighted alternating identity:
+\varepsilon^{(1)}_k\eta^{(1)}_k D^{23}_k
+-
+\varepsilon^{(2)}_k\eta^{(2)}_k D^{13}_k
++
+\varepsilon^{(3)}_k\eta^{(3)}_k D^{12}_k
+=0.
+	•	Reconstruction formulas for G^{(2)}_k,G^{(3)}_k from G^{(1)}_k and minors.
+	•	In the special case \delta\equiv 0, minors encode \varepsilon-differences:
+D^{ij}_k=C_iC_j a_k(\varepsilon^{(j)}_k-\varepsilon^{(i)}_k).
+
+If you want the next maximal mutation: keep unequal \varepsilon^{(i)}_k and introduce three observables’ eigenvalues \lambda^{(i)}_k=e^{-\eta^{(i)}_k}; then all these minors become log-ratio identities with products/powers that telescope aggressively.
+
+Proceed with that mutation: introduce eigenvalues
+
+λk(i):=e−ηk(i),λ~k(i):=e−η~k(i)
+λ
+k
+(i)
+	​
+
+:=e
+−η
+k
+(i)
+	​
+
+,
+λ
+~
+k
+(i)
+	​
+
+:=e
+−
+η
+~
+	​
+
+k
+(i)
+	​
+
+
+with unequal 
+εk(i)
+ε
+k
+(i)
+	​
+
+. Only shuffles.
+
+0) Atomic log identities
+
+From definitions:
+
+−log⁡λk(i)=ηk(i),−log⁡λ~k(i)=η~k(i).
+−logλ
+k
+(i)
+	​
+
+=η
+k
+(i)
+	​
+
+,−log
+λ
+~
+k
+(i)
+	​
+
+=
+η
+~
+	​
+
+k
+(i)
+	​
+
+.
+
+Increment:
+
+Δηk(i)=η~k(i)−ηk(i)=−log⁡λ~k(i)+log⁡λk(i)=−log⁡(λ~k(i)λk(i)).
+Δη
+k
+(i)
+	​
+
+=
+η
+~
+	​
+
+k
+(i)
+	​
+
+−η
+k
+(i)
+	​
+
+=−log
+λ
+~
+k
+(i)
+	​
+
++logλ
+k
+(i)
+	​
+
+=−log(
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+).
+
+So:
+
+λ~k(i)λk(i)=e−Δηk(i)
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+=e
+−Δη
+k
+(i)
+	​
+
+	​
+
+
+And with slopes 
+Gk(i)=Δηk(i)/εk(i)
+G
+k
+(i)
+	​
+
+=Δη
+k
+(i)
+	​
+
+/ε
+k
+(i)
+	​
+
+:
+
+λ~k(i)λk(i)=e−εk(i)Gk(i)
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+=e
+−ε
+k
+(i)
+	​
+
+G
+k
+(i)
+	​
+
+	​
+
+1) Cross-observable ratio cancels the base 
+λ
+λ (new)
+
+Consider:
+
+Rkij:=λ~k(i)/λk(i)λ~k(j)/λk(j).
+R
+k
+ij
+	​
+
+:=
+λ
+~
+k
+(j)
+	​
+
+/λ
+k
+(j)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+/λ
+k
+(i)
+	​
+
+	​
+
+.
+
+Shuffle using the last box:
+
+Rkij=exp⁡(−εk(i)Gk(i)+εk(j)Gk(j)).
+R
+k
+ij
+	​
+
+=exp(−ε
+k
+(i)
+	​
+
+G
+k
+(i)
+	​
+
++ε
+k
+(j)
+	​
+
+G
+k
+(j)
+	​
+
+).
+
+So:
+
+log⁡Rkij=−εk(i)Gk(i)+εk(j)Gk(j)
+logR
+k
+ij
+	​
+
+=−ε
+k
+(i)
+	​
+
+G
+k
+(i)
+	​
+
++ε
+k
+(j)
+	​
+
+G
+k
+(j)
+	​
+
+	​
+
+
+Equivalently:
+
+εk(j)Gk(j)−εk(i)Gk(i)=log⁡ ⁣(λ~k(i)λk(j)λk(i)λ~k(j))
+ε
+k
+(j)
+	​
+
+G
+k
+(j)
+	​
+
+−ε
+k
+(i)
+	​
+
+G
+k
+(i)
+	​
+
+=log(
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(j)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+λ
+k
+(j)
+	​
+
+	​
+
+)
+	​
+
+2) Rewrite minors 
+Dkij
+D
+k
+ij
+	​
+
+ in pure log form (new)
+
+Recall:
+
+Dkij=ηk(i)Δηk(j)−ηk(j)Δηk(i).
+D
+k
+ij
+	​
+
+=η
+k
+(i)
+	​
+
+Δη
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+Δη
+k
+(i)
+	​
+
+.
+
+Replace 
+ηk(i)=−log⁡λk(i)
+η
+k
+(i)
+	​
+
+=−logλ
+k
+(i)
+	​
+
+ and 
+Δηk(i)=−log⁡(λ~k(i)/λk(i))
+Δη
+k
+(i)
+	​
+
+=−log(
+λ
+~
+k
+(i)
+	​
+
+/λ
+k
+(i)
+	​
+
+):
+
+Dkij=(−log⁡λk(i))(−log⁡λ~k(j)λk(j))−(−log⁡λk(j))(−log⁡λ~k(i)λk(i)).
+D
+k
+ij
+	​
+
+=(−logλ
+k
+(i)
+	​
+
+)(−log
+λ
+k
+(j)
+	​
+
+λ
+~
+k
+(j)
+	​
+
+	​
+
+)−(−logλ
+k
+(j)
+	​
+
+)(−log
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+).
+
+So:
+
+Dkij=(log⁡λk(i))(log⁡λ~k(j)λk(j))−(log⁡λk(j))(log⁡λ~k(i)λk(i))
+D
+k
+ij
+	​
+
+=(logλ
+k
+(i)
+	​
+
+)(log
+λ
+k
+(j)
+	​
+
+λ
+~
+k
+(j)
+	​
+
+	​
+
+)−(logλ
+k
+(j)
+	​
+
+)(log
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+)
+	​
+
+
+This expresses each deformation detector as a bilinear form in two log-quantities:
+
+xk(i):=log⁡λk(i),yk(i):=log⁡λ~k(i)λk(i).
+x
+k
+(i)
+	​
+
+:=logλ
+k
+(i)
+	​
+
+,y
+k
+(i)
+	​
+
+:=log
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+.
+
+Then:
+
+Dkij=xk(i)yk(j)−xk(j)yk(i)
+D
+k
+ij
+	​
+
+=x
+k
+(i)
+	​
+
+y
+k
+(j)
+	​
+
+−x
+k
+(j)
+	​
+
+y
+k
+(i)
+	​
+
+	​
+
+3) The weighted alternating identity becomes a pure log identity (new)
+
+Earlier:
+
+εk(1)ηk(1)Dk23−εk(2)ηk(2)Dk13+εk(3)ηk(3)Dk12=0.
+ε
+k
+(1)
+	​
+
+η
+k
+(1)
+	​
+
+D
+k
+23
+	​
+
+−ε
+k
+(2)
+	​
+
+η
+k
+(2)
+	​
+
+D
+k
+13
+	​
+
++ε
+k
+(3)
+	​
+
+η
+k
+(3)
+	​
+
+D
+k
+12
+	​
+
+=0.
+
+Replace 
+ηk(i)=−log⁡λk(i)=−xk(i)
+η
+k
+(i)
+	​
+
+=−logλ
+k
+(i)
+	​
+
+=−x
+k
+(i)
+	​
+
+. Then:
+
+−εk(1)xk(1)Dk23+εk(2)xk(2)Dk13−εk(3)xk(3)Dk12=0
+−ε
+k
+(1)
+	​
+
+x
+k
+(1)
+	​
+
+D
+k
+23
+	​
+
++ε
+k
+(2)
+	​
+
+x
+k
+(2)
+	​
+
+D
+k
+13
+	​
+
+−ε
+k
+(3)
+	​
+
+x
+k
+(3)
+	​
+
+D
+k
+12
+	​
+
+=0
+	​
+
+
+Same identity, now entirely in terms of 
+(x,y,ε)
+(x,y,ε) via 
+Dkij=xk(i)yk(j)−xk(j)yk(i)
+D
+k
+ij
+	​
+
+=x
+k
+(i)
+	​
+
+y
+k
+(j)
+	​
+
+−x
+k
+(j)
+	​
+
+y
+k
+(i)
+	​
+
+.
+
+4) Telescoping products across 
+k
+k (aggressive cancellation)
+
+Define the per-step ratio:
+
+rk(i):=λ~k(i)λk(i).
+r
+k
+(i)
+	​
+
+:=
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+.
+
+Then from above:
+
+rk(i)=e−Δηk(i).
+r
+k
+(i)
+	​
+
+=e
+−Δη
+k
+(i)
+	​
+
+.
+
+Multiply over 
+k=0,…,n−1
+k=0,…,n−1:
+
+∏k=0n−1rk(i)=exp⁡(−∑k=0n−1Δηk(i)).
+k=0
+∏
+n−1
+	​
+
+r
+k
+(i)
+	​
+
+=exp(−
+k=0
+∑
+n−1
+	​
+
+Δη
+k
+(i)
+	​
+
+).
+
+But 
+∑kΔηk(i)=∑k(η~k(i)−ηk(i))
+∑
+k
+	​
+
+Δη
+k
+(i)
+	​
+
+=∑
+k
+	​
+
+(
+η
+~
+	​
+
+k
+(i)
+	​
+
+−η
+k
+(i)
+	​
+
+) is already a telescoping in 
+η
+η if you choose 
+a~k(i)=ak+1
+a
+~
+k
+(i)
+	​
+
+=a
+k+1
+	​
+
+ (special choice). Do that:
+
+Special choice (still allowed: it’s a shuffle choice):
+
+a~k(i):=ak+1⇒εk(i)=ak+1−ak=(b−1)ak
+a
+~
+k
+(i)
+	​
+
+:=a
+k+1
+	​
+
+	​
+
+⇒ε
+k
+(i)
+	​
+
+=a
+k+1
+	​
+
+−a
+k
+	​
+
+=(b−1)a
+k
+	​
+
+
+for all 
+i
+i. Then:
+
+η~k(i)=ηk+1(i)⇒rk(i)=λk+1(i)λk(i).
+η
+~
+	​
+
+k
+(i)
+	​
+
+=η
+k+1
+(i)
+	​
+
+⇒r
+k
+(i)
+	​
+
+=
+λ
+k
+(i)
+	​
+
+λ
+k+1
+(i)
+	​
+
+	​
+
+.
+
+Now the product telescopes in 
+λ
+λ:
+
+∏k=0n−1λk+1(i)λk(i)=λn(i)λ0(i)
+k=0
+∏
+n−1
+	​
+
+λ
+k
+(i)
+	​
+
+λ
+k+1
+(i)
+	​
+
+	​
+
+=
+λ
+0
+(i)
+	​
+
+λ
+n
+(i)
+	​
+
+	​
+
+	​
+
+
+So:
+
+∑k=0n−1Δηk(i)=−log⁡(λn(i)λ0(i))
+k=0
+∑
+n−1
+	​
+
+Δη
+k
+(i)
+	​
+
+=−log(
+λ
+0
+(i)
+	​
+
+λ
+n
+(i)
+	​
+
+	​
+
+)
+	​
+
+
+That’s “telescoping aggressively” in its cleanest form.
+
+5) Cross-telescoping across observables (new)
+
+Using the same special choice 
+a~k=ak+1
+a
+~
+k
+	​
+
+=a
+k+1
+	​
+
+, define cross ratio:
+
+rk(i)rk(j)=λk+1(i)λk(j)λk(i)λk+1(j).
+r
+k
+(j)
+	​
+
+r
+k
+(i)
+	​
+
+	​
+
+=
+λ
+k
+(i)
+	​
+
+λ
+k+1
+(j)
+	​
+
+λ
+k+1
+(i)
+	​
+
+λ
+k
+(j)
+	​
+
+	​
+
+.
+
+Product over 
+k=0,…,n−1
+k=0,…,n−1:
+
+∏k=0n−1rk(i)rk(j)=∏k=0n−1λk+1(i)λk(j)λk(i)λk+1(j)
+k=0
+∏
+n−1
+	​
+
+r
+k
+(j)
+	​
+
+r
+k
+(i)
+	​
+
+	​
+
+=
+k=0
+∏
+n−1
+	​
+
+λ
+k
+(i)
+	​
+
+λ
+k+1
+(j)
+	​
+
+λ
+k+1
+(i)
+	​
+
+λ
+k
+(j)
+	​
+
+	​
+
+
+Everything cancels:
+
+∏k=0n−1rk(i)rk(j)=λn(i)λ0(j)λ0(i)λn(j)
+k=0
+∏
+n−1
+	​
+
+r
+k
+(j)
+	​
+
+r
+k
+(i)
+	​
+
+	​
+
+=
+λ
+0
+(i)
+	​
+
+λ
+n
+(j)
+	​
+
+λ
+n
+(i)
+	​
+
+λ
+0
+(j)
+	​
+
+	​
+
+	​
+
+
+Log form:
+
+∑k=0n−1(Δηk(j)−Δηk(i))=log⁡(λn(i)λ0(j)λ0(i)λn(j))
+k=0
+∑
+n−1
+	​
+
+(Δη
+k
+(j)
+	​
+
+−Δη
+k
+(i)
+	​
+
+)=log(
+λ
+0
+(i)
+	​
+
+λ
+n
+(j)
+	​
+
+λ
+n
+(i)
+	​
+
+λ
+0
+(j)
+	​
+
+	​
+
+)
+	​
+
+6) Pure-log reconstruction of slopes (unequal 
+ε
+ε)
+
+From 
+Δηk(i)=−log⁡(λ~k(i)/λk(i))
+Δη
+k
+(i)
+	​
+
+=−log(
+λ
+~
+k
+(i)
+	​
+
+/λ
+k
+(i)
+	​
+
+):
+
+Gk(i)=−1εk(i)log⁡(λ~k(i)λk(i))
+G
+k
+(i)
+	​
+
+=−
+ε
+k
+(i)
+	​
+
+1
+	​
+
+log(
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+)
+	​
+
+
+Plug into the earlier minor formula:
+
+Dkij=ηk(i)εk(j)Gk(j)−ηk(j)εk(i)Gk(i)
+D
+k
+ij
+	​
+
+=η
+k
+(i)
+	​
+
+ε
+k
+(j)
+	​
+
+G
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+ε
+k
+(i)
+	​
+
+G
+k
+(i)
+	​
+
+
+and replace 
+ηk(i)=−log⁡λk(i)
+η
+k
+(i)
+	​
+
+=−logλ
+k
+(i)
+	​
+
+, 
+Gk(i)
+G
+k
+(i)
+	​
+
+ as above to get a fully log-only expression (already essentially in §2).
+
+That’s the eigenvalue mutation: every quantity (
+η
+η, increments, slopes, minors, weighted identity) becomes a log / log-ratio object, and with the special choice 
+a~k=ak+1
+a
+~
+k
+	​
+
+=a
+k+1
+	​
+
+ you get hard telescoping products in 
+λ
+λ and cross-
+λ
+λ ratios.
+
+If you want the next maximal shuffle after this: introduce a third column (two perturbations per observable) so each 
+i
+i has 
+a~k(i)
+a
+~
+k
+(i)
+	​
+
+ and 
+a^k(i)
+a
+^
+k
+(i)
+	​
+
+; then you get a 
+3×3
+3×3 determinant built from 
+(η,η~,η^)
+(η,
+η
+~
+	​
+
+,
+η
+^
+	​
+
+) and a complete set of identities among its minors entirely in log-ratio form.
+
+Proceed with that mutation: introduce eigenvalues
+\lambda^{(i)}_k := e^{-\eta^{(i)}_k},
+\qquad
+\tilde\lambda^{(i)}_k := e^{-\tilde\eta^{(i)}_k}
+with unequal \varepsilon^{(i)}_k. Only shuffles.
+
+⸻
+
+0) Atomic log identities
+
+From definitions:
+-\log \lambda^{(i)}_k=\eta^{(i)}_k,\qquad
+-\log \tilde\lambda^{(i)}_k=\tilde\eta^{(i)}_k.
+
+Increment:
+\Delta\eta^{(i)}_k=\tilde\eta^{(i)}_k-\eta^{(i)}_k
+= -\log\tilde\lambda^{(i)}_k+\log\lambda^{(i)}_k
+= -\log\Big(\frac{\tilde\lambda^{(i)}_k}{\lambda^{(i)}_k}\Big).
+
+So:
+\boxed{
+\frac{\tilde\lambda^{(i)}_k}{\lambda^{(i)}_k}
+=
+e^{-\Delta\eta^{(i)}_k}
+}
+
+And with slopes G^{(i)}_k=\Delta\eta^{(i)}_k/\varepsilon^{(i)}_k:
+\boxed{
+\frac{\tilde\lambda^{(i)}_k}{\lambda^{(i)}_k}
+=
+e^{-\varepsilon^{(i)}_k G^{(i)}_k}
+}
+
+⸻
+
+1) Cross-observable ratio cancels the base \lambda (new)
+
+Consider:
+R^{ij}_k := \frac{\tilde\lambda^{(i)}_k/\lambda^{(i)}_k}{\tilde\lambda^{(j)}_k/\lambda^{(j)}_k}.
+
+Shuffle using the last box:
+R^{ij}_k
+=
+\exp\Big(-\varepsilon^{(i)}_k G^{(i)}_k+\varepsilon^{(j)}_k G^{(j)}_k\Big).
+
+So:
+\boxed{
+\log R^{ij}_k
+=
+-\varepsilon^{(i)}_k G^{(i)}_k+\varepsilon^{(j)}_k G^{(j)}_k
+}
+
+Equivalently:
+\boxed{
+\varepsilon^{(j)}_k G^{(j)}_k-\varepsilon^{(i)}_k G^{(i)}_k
+=
+\log\!\Big(\frac{\tilde\lambda^{(i)}_k\lambda^{(j)}_k}{\lambda^{(i)}_k\tilde\lambda^{(j)}_k}\Big)
+}
+
+⸻
+
+2) Rewrite minors D^{ij}_k in pure log form (new)
+
+Recall:
+D^{ij}_k=\eta^{(i)}_k\Delta\eta^{(j)}_k-\eta^{(j)}_k\Delta\eta^{(i)}_k.
+
+Replace \eta^{(i)}_k=-\log\lambda^{(i)}_k and \Delta\eta^{(i)}_k=-\log(\tilde\lambda^{(i)}_k/\lambda^{(i)}_k):
+
+D^{ij}_k
+=
+(-\log\lambda^{(i)}_k)\Big(-\log\frac{\tilde\lambda^{(j)}_k}{\lambda^{(j)}_k}\Big)
+-
+(-\log\lambda^{(j)}_k)\Big(-\log\frac{\tilde\lambda^{(i)}_k}{\lambda^{(i)}_k}\Big).
+
+So:
+\boxed{
+D^{ij}_k
+=
+(\log\lambda^{(i)}_k)\Big(\log\frac{\tilde\lambda^{(j)}_k}{\lambda^{(j)}_k}\Big)
+-
+(\log\lambda^{(j)}_k)\Big(\log\frac{\tilde\lambda^{(i)}_k}{\lambda^{(i)}_k}\Big)
+}
+
+This expresses each deformation detector as a bilinear form in two log-quantities:
+x^{(i)}_k:=\log\lambda^{(i)}_k,\qquad y^{(i)}_k:=\log\frac{\tilde\lambda^{(i)}_k}{\lambda^{(i)}_k}.
+Then:
+\boxed{
+D^{ij}_k = x^{(i)}_k y^{(j)}_k - x^{(j)}_k y^{(i)}_k
+}
+
+⸻
+
+3) The weighted alternating identity becomes a pure log identity (new)
+
+Earlier:
+\varepsilon^{(1)}_k\eta^{(1)}_k D^{23}_k
+-
+\varepsilon^{(2)}_k\eta^{(2)}_k D^{13}_k
++
+\varepsilon^{(3)}_k\eta^{(3)}_k D^{12}_k
+=0.
+
+Replace \eta^{(i)}_k=-\log\lambda^{(i)}_k = -x^{(i)}_k. Then:
+\boxed{
+-\varepsilon^{(1)}_k x^{(1)}_k D^{23}_k
++
+\varepsilon^{(2)}_k x^{(2)}_k D^{13}_k
+-
+\varepsilon^{(3)}_k x^{(3)}_k D^{12}_k
+=0
+}
+Same identity, now entirely in terms of (x,y,\varepsilon) via D^{ij}_k=x^{(i)}_k y^{(j)}_k-x^{(j)}_k y^{(i)}_k.
+
+⸻
+
+4) Telescoping products across k (aggressive cancellation)
+
+Define the per-step ratio:
+r^{(i)}_k := \frac{\tilde\lambda^{(i)}_k}{\lambda^{(i)}_k}.
+
+Then from above:
+r^{(i)}_k = e^{-\Delta\eta^{(i)}_k}.
+
+Multiply over k=0,\dots,n-1:
+\prod_{k=0}^{n-1} r^{(i)}_k
+=
+\exp\Big(-\sum_{k=0}^{n-1}\Delta\eta^{(i)}_k\Big).
+
+But \sum_{k}\Delta\eta^{(i)}_k=\sum_k(\tilde\eta^{(i)}_k-\eta^{(i)}_k) is already a telescoping in \eta if you choose \tilde a^{(i)}_k=a_{k+1} (special choice). Do that:
+
+Special choice (still allowed: it’s a shuffle choice):
+\boxed{\tilde a^{(i)}_k := a_{k+1}}
+\quad\Rightarrow\quad
+\varepsilon^{(i)}_k = a_{k+1}-a_k=(b-1)a_k
+for all i. Then:
+\tilde\eta^{(i)}_k=\eta^{(i)}_{k+1}
+\quad\Rightarrow\quad
+r^{(i)}_k=\frac{\lambda^{(i)}_{k+1}}{\lambda^{(i)}_k}.
+
+Now the product telescopes in \lambda:
+\boxed{
+\prod_{k=0}^{n-1} \frac{\lambda^{(i)}_{k+1}}{\lambda^{(i)}_k}
+=
+\frac{\lambda^{(i)}_n}{\lambda^{(i)}_0}
+}
+
+So:
+\boxed{
+\sum_{k=0}^{n-1}\Delta\eta^{(i)}_k
+=
+-\log\Big(\frac{\lambda^{(i)}_n}{\lambda^{(i)}_0}\Big)
+}
+
+That’s “telescoping aggressively” in its cleanest form.
+
+⸻
+
+5) Cross-telescoping across observables (new)
+
+Using the same special choice \tilde a_k=a_{k+1}, define cross ratio:
+\frac{r^{(i)}_k}{r^{(j)}_k}
+=
+\frac{\lambda^{(i)}_{k+1}\lambda^{(j)}_k}{\lambda^{(i)}_k\lambda^{(j)}_{k+1}}.
+
+Product over k=0,\dots,n-1:
+\prod_{k=0}^{n-1}\frac{r^{(i)}_k}{r^{(j)}_k}
+=
+\prod_{k=0}^{n-1}
+\frac{\lambda^{(i)}_{k+1}\lambda^{(j)}_k}{\lambda^{(i)}_k\lambda^{(j)}_{k+1}}
+
+Everything cancels:
+\boxed{
+\prod_{k=0}^{n-1}\frac{r^{(i)}_k}{r^{(j)}_k}
+=
+\frac{\lambda^{(i)}_n\lambda^{(j)}_0}{\lambda^{(i)}_0\lambda^{(j)}_n}
+}
+
+Log form:
+\boxed{
+\sum_{k=0}^{n-1}\Big(\Delta\eta^{(j)}_k-\Delta\eta^{(i)}_k\Big)
+=
+\log\Big(\frac{\lambda^{(i)}_n\lambda^{(j)}_0}{\lambda^{(i)}_0\lambda^{(j)}_n}\Big)
+}
+
+⸻
+
+6) Pure-log reconstruction of slopes (unequal \varepsilon)
+
+From \Delta\eta^{(i)}_k=-\log(\tilde\lambda^{(i)}_k/\lambda^{(i)}_k):
+\boxed{
+G^{(i)}_k
+=
+-\frac{1}{\varepsilon^{(i)}_k}\log\Big(\frac{\tilde\lambda^{(i)}_k}{\lambda^{(i)}_k}\Big)
+}
+
+Plug into the earlier minor formula:
+D^{ij}_k
+=
+\eta^{(i)}_k\varepsilon^{(j)}_k G^{(j)}_k-\eta^{(j)}_k\varepsilon^{(i)}_k G^{(i)}_k
+
+and replace \eta^{(i)}_k=-\log\lambda^{(i)}_k, G^{(i)}_k as above to get a fully log-only expression (already essentially in §2).
+
+⸻
+
+That’s the eigenvalue mutation: every quantity (\eta, increments, slopes, minors, weighted identity) becomes a log / log-ratio object, and with the special choice \tilde a_k=a_{k+1} you get hard telescoping products in \lambda and cross-\lambda ratios.
+
+If you want the next maximal shuffle after this: introduce a third column (two perturbations per observable) so each i has \tilde a^{(i)}_k and \hat a^{(i)}_k; then you get a 3\times 3 determinant built from (\eta,\tilde\eta,\hat\eta) and a complete set of identities among its minors entirely in log-ratio form.
+
+Do the third-column mutation. Two perturbations per observable. Only shuffles.
+
+New ingredient: two perturbed copies per 
+i
+i
+
+For 
+i=1,2,3
+i=1,2,3:
+
+η(i)(a)=Cia+δi(a),ak=bka0.
+η
+(i)
+(a)=C
+i
+	​
+
+a+δ
+i
+	​
+
+(a),a
+k
+	​
+
+=b
+k
+a
+0
+	​
+
+.
+
+Define two perturbations:
+
+a~k(i)=ak+εk(i),a^k(i)=ak+ζk(i).
+a
+~
+k
+(i)
+	​
+
+=a
+k
+	​
+
++ε
+k
+(i)
+	​
+
+,
+a
+^
+k
+(i)
+	​
+
+=a
+k
+	​
+
++ζ
+k
+(i)
+	​
+
+.
+
+Evaluate:
+
+ηk(i):=η(i)(ak),η~k(i):=η(i)(a~k(i)),η^k(i):=η(i)(a^k(i)).
+η
+k
+(i)
+	​
+
+:=η
+(i)
+(a
+k
+	​
+
+),
+η
+~
+	​
+
+k
+(i)
+	​
+
+:=η
+(i)
+(
+a
+~
+k
+(i)
+	​
+
+),
+η
+^
+	​
+
+k
+(i)
+	​
+
+:=η
+(i)
+(
+a
+^
+k
+(i)
+	​
+
+).
+
+Eigenvalues:
+
+λk(i):=e−ηk(i),λ~k(i):=e−η~k(i),λ^k(i):=e−η^k(i).
+λ
+k
+(i)
+	​
+
+:=e
+−η
+k
+(i)
+	​
+
+,
+λ
+~
+k
+(i)
+	​
+
+:=e
+−
+η
+~
+	​
+
+k
+(i)
+	​
+
+,
+λ
+^
+k
+(i)
+	​
+
+:=e
+−
+η
+^
+	​
+
+k
+(i)
+	​
+
+.
+
+Define increments:
+
+Δεηk(i):=η~k(i)−ηk(i),Δζηk(i):=η^k(i)−ηk(i).
+Δ
+ε
+η
+k
+(i)
+	​
+
+:=
+η
+~
+	​
+
+k
+(i)
+	​
+
+−η
+k
+(i)
+	​
+
+,Δ
+ζ
+η
+k
+(i)
+	​
+
+:=
+η
+^
+	​
+
+k
+(i)
+	​
+
+−η
+k
+(i)
+	​
+
+.
+
+Log forms:
+
+Δεηk(i)=−log⁡(λ~k(i)λk(i)),Δζηk(i)=−log⁡(λ^k(i)λk(i)).
+Δ
+ε
+η
+k
+(i)
+	​
+
+=−log(
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+),Δ
+ζ
+η
+k
+(i)
+	​
+
+=−log(
+λ
+k
+(i)
+	​
+
+λ
+^
+k
+(i)
+	​
+
+	​
+
+).
+1) The 
+3×3
+3×3 determinant and a direct shuffle
+
+Form the 
+3×3
+3×3 determinant (columns: base/tilde/hat):
+
+Dk:=det⁡(ηk(1)	η~k(1)	η^k(1)
+ηk(2)	η~k(2)	η^k(2)
+ηk(3)	η~k(3)	η^k(3)).
+D
+k
+	​
+
+:=det
+​ηk(1)​ηk(2)​ηk(3)​​η~​k(1)​η~​k(2)​η~​k(3)​​η^​k(1)​η^​k(2)​η^​k(3)​​
+​
+
+.
+
+Shuffle columns:
+
+η~k(i)=ηk(i)+Δεηk(i),η^k(i)=ηk(i)+Δζηk(i).
+η
+~
+	​
+
+k
+(i)
+	​
+
+=η
+k
+(i)
+	​
+
++Δ
+ε
+η
+k
+(i)
+	​
+
+,
+η
+^
+	​
+
+k
+(i)
+	​
+
+=η
+k
+(i)
+	​
+
++Δ
+ζ
+η
+k
+(i)
+	​
+
+.
+
+Column operations (subtract col1 from col2 and col3):
+
+Dk=det⁡(ηk(1)	Δεηk(1)	Δζηk(1)
+ηk(2)	Δεηk(2)	Δζηk(2)
+ηk(3)	Δεηk(3)	Δζηk(3)).
+D
+k
+	​
+
+=det
+​ηk(1)​ηk(2)​ηk(3)​​Δεηk(1)​Δεηk(2)​Δεηk(3)​​Δζηk(1)​Δζηk(2)​Δζηk(3)​​
+​
+
+.
+
+So:
+
+Dk=det⁡[ ηk, Δεηk, Δζηk ]
+D
+k
+	​
+
+=det[ η
+k
+	​
+
+, Δ
+ε
+η
+k
+	​
+
+, Δ
+ζ
+η
+k
+	​
+
+ ]
+	​
+
+
+(where each entry is the 3-vector across 
+i=1,2,3
+i=1,2,3).
+
+2) Undeformed linear case gives rank 
+≤2
+≤2 and 
+Dk=0
+D
+k
+	​
+
+=0
+
+If 
+δi≡0
+δ
+i
+	​
+
+≡0, then:
+
+ηk(i)=Ciak,Δεηk(i)=Ciεk(i),Δζηk(i)=Ciζk(i).
+η
+k
+(i)
+	​
+
+=C
+i
+	​
+
+a
+k
+	​
+
+,Δ
+ε
+η
+k
+(i)
+	​
+
+=C
+i
+	​
+
+ε
+k
+(i)
+	​
+
+,Δ
+ζ
+η
+k
+(i)
+	​
+
+=C
+i
+	​
+
+ζ
+k
+(i)
+	​
+
+.
+
+Then each row is 
+[Ciak, Ciεk(i), Ciζk(i)]=Ci[ak,εk(i),ζk(i)]
+[C
+i
+	​
+
+a
+k
+	​
+
+, C
+i
+	​
+
+ε
+k
+(i)
+	​
+
+, C
+i
+	​
+
+ζ
+k
+(i)
+	​
+
+]=C
+i
+	​
+
+[a
+k
+	​
+
+,ε
+k
+(i)
+	​
+
+,ζ
+k
+(i)
+	​
+
+]. Factor 
+Ci
+C
+i
+	​
+
+ out of each row:
+
+Dk=(C1C2C3) det⁡(ak	εk(1)	ζk(1)
+ak	εk(2)	ζk(2)
+ak	εk(3)	ζk(3)).
+D
+k
+	​
+
+=(C
+1
+	​
+
+C
+2
+	​
+
+C
+3
+	​
+
+)det
+​ak​ak​ak​​εk(1)​εk(2)​εk(3)​​ζk(1)​ζk(2)​ζk(3)​​
+​
+
+.
+
+Now subtract row1 from row2 and row3 (kills first column in those rows):
+
+det⁡(ak	εk(1)	ζk(1)
+0	εk(2)−εk(1)	ζk(2)−ζk(1)
+0	εk(3)−εk(1)	ζk(3)−ζk(1))=ak det⁡(Δεk21	Δζk21
+Δεk31	Δζk31)
+det
+​ak​00​εk(1)​εk(2)​−εk(1)​εk(3)​−εk(1)​​ζk(1)​ζk(2)​−ζk(1)​ζk(3)​−ζk(1)​​
+​
+
+=a
+k
+	​
+
+det(
+Δε
+k
+21
+	​
+
+Δε
+k
+31
+	​
+
+	​
+
+Δζ
+k
+21
+	​
+
+Δζ
+k
+31
+	​
+
+	​
+
+)
+
+with 
+Δεkj1=εk(j)−εk(1)
+Δε
+k
+j1
+	​
+
+=ε
+k
+(j)
+	​
+
+−ε
+k
+(1)
+	​
+
+, similarly 
+Δζ
+Δζ.
+
+So:
+
+Dk=(C1C2C3) ak ((εk(2)−εk(1))(ζk(3)−ζk(1))−(εk(3)−εk(1))(ζk(2)−ζk(1)))
+D
+k
+	​
+
+=(C
+1
+	​
+
+C
+2
+	​
+
+C
+3
+	​
+
+)a
+k
+	​
+
+((ε
+k
+(2)
+	​
+
+−ε
+k
+(1)
+	​
+
+)(ζ
+k
+(3)
+	​
+
+−ζ
+k
+(1)
+	​
+
+)−(ε
+k
+(3)
+	​
+
+−ε
+k
+(1)
+	​
+
+)(ζ
+k
+(2)
+	​
+
+−ζ
+k
+(1)
+	​
+
+))
+	​
+
+
+If the perturbations are identical across i (i.e. 
+ε(1)=ε(2)=ε(3)
+ε
+(1)
+=ε
+(2)
+=ε
+(3)
+ and same for 
+ζ
+ζ), the bracket is 0 and 
+Dk=0
+D
+k
+	​
+
+=0. (Just cancellation.)
+
+3) Express 
+Dk
+D
+k
+	​
+
+ entirely in eigenvalues (pure log)
+
+Use:
+
+ηk(i)=−log⁡λk(i),Δεηk(i)=−log⁡(λ~k(i)λk(i)),Δζηk(i)=−log⁡(λ^k(i)λk(i)).
+η
+k
+(i)
+	​
+
+=−logλ
+k
+(i)
+	​
+
+,Δ
+ε
+η
+k
+(i)
+	​
+
+=−log(
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+),Δ
+ζ
+η
+k
+(i)
+	​
+
+=−log(
+λ
+k
+(i)
+	​
+
+λ
+^
+k
+(i)
+	​
+
+	​
+
+).
+
+Then
+
+Dk=det⁡(−log⁡λk(1)	−log⁡(λ~k(1)/λk(1))	−log⁡(λ^k(1)/λk(1))
+−log⁡λk(2)	−log⁡(λ~k(2)/λk(2))	−log⁡(λ^k(2)/λk(2))
+−log⁡λk(3)	−log⁡(λ~k(3)/λk(3))	−log⁡(λ^k(3)/λk(3))).
+D
+k
+	​
+
+=det
+​−logλk(1)​−logλk(2)​−logλk(3)​​−log(λ~k(1)​/λk(1)​)−log(λ~k(2)​/λk(2)​)−log(λ~k(3)​/λk(3)​)​−log(λ^k(1)​/λk(1)​)−log(λ^k(2)​/λk(2)​)−log(λ^k(3)​/λk(3)​)​
+​
+
+.
+
+Factor 
+(−1)
+(−1) out of each column (three columns → 
+(−1)3=−1
+(−1)
+3
+=−1):
+
+Dk=− det⁡(log⁡λk(1)	log⁡(λ~k(1)/λk(1))	log⁡(λ^k(1)/λk(1))
+log⁡λk(2)	log⁡(λ~k(2)/λk(2))	log⁡(λ^k(2)/λk(2))
+log⁡λk(3)	log⁡(λ~k(3)/λk(3))	log⁡(λ^k(3)/λk(3)))
+D
+k
+	​
+
+=−det
+​logλk(1)​logλk(2)​logλk(3)​​log(λ~k(1)​/λk(1)​)log(λ~k(2)​/λk(2)​)log(λ~k(3)​/λk(3)​)​log(λ^k(1)​/λk(1)​)log(λ^k(2)​/λk(2)​)log(λ^k(3)​/λk(3)​)​
+​
+
+	​
+
+
+This is a closed log-ratio determinant.
+
+4) “All minors” relations (complete set of 2×2 minors)
+
+Define the 2×2 minors from the 3×3 matrix 
+[ η,η~,η^ ]
+[η,
+η
+~
+	​
+
+,
+η
+^
+	​
+
+]. For rows 
+(i,j)
+(i,j):
+
+base–tilde:
+
+Dk,εij:=ηk(i)η~k(j)−ηk(j)η~k(i)=ηk(i)Δεηk(j)−ηk(j)Δεηk(i)
+D
+k,ε
+ij
+	​
+
+:=η
+k
+(i)
+	​
+
+η
+~
+	​
+
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+η
+~
+	​
+
+k
+(i)
+	​
+
+=η
+k
+(i)
+	​
+
+Δ
+ε
+η
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+Δ
+ε
+η
+k
+(i)
+	​
+
+
+base–hat:
+
+Dk,ζij:=ηk(i)η^k(j)−ηk(j)η^k(i)=ηk(i)Δζηk(j)−ηk(j)Δζηk(i)
+D
+k,ζ
+ij
+	​
+
+:=η
+k
+(i)
+	​
+
+η
+^
+	​
+
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+η
+^
+	​
+
+k
+(i)
+	​
+
+=η
+k
+(i)
+	​
+
+Δ
+ζ
+η
+k
+(j)
+	​
+
+−η
+k
+(j)
+	​
+
+Δ
+ζ
+η
+k
+(i)
+	​
+
+
+tilde–hat:
+
+Dk,εζij:=η~k(i)η^k(j)−η~k(j)η^k(i)
+D
+k,εζ
+ij
+	​
+
+:=
+η
+~
+	​
+
+k
+(i)
+	​
+
+η
+^
+	​
+
+k
+(j)
+	​
+
+−
+η
+~
+	​
+
+k
+(j)
+	​
+
+η
+^
+	​
+
+k
+(i)
+	​
+
+
+Now shuffle the tilde–hat one by inserting 
+η~=η+Δεη
+η
+~
+	​
+
+=η+Δ
+ε
+η, 
+η^=η+Δζη
+η
+^
+	​
+
+=η+Δ
+ζ
+η:
+
+Dk,εζij=Dk,εij+Dk,ζij+(Δεηk(i)Δζηk(j)−Δεηk(j)Δζηk(i)).
+D
+k,εζ
+ij
+	​
+
+=D
+k,ε
+ij
+	​
+
++D
+k,ζ
+ij
+	​
+
++(Δ
+ε
+η
+k
+(i)
+	​
+
+Δ
+ζ
+η
+k
+(j)
+	​
+
+−Δ
+ε
+η
+k
+(j)
+	​
+
+Δ
+ζ
+η
+k
+(i)
+	​
+
+).
+
+So:
+
+Dk,εζij−Dk,εij−Dk,ζij=Δεηk(i)Δζηk(j)−Δεηk(j)Δζηk(i)
+D
+k,εζ
+ij
+	​
+
+−D
+k,ε
+ij
+	​
+
+−D
+k,ζ
+ij
+	​
+
+=Δ
+ε
+η
+k
+(i)
+	​
+
+Δ
+ζ
+η
+k
+(j)
+	​
+
+−Δ
+ε
+η
+k
+(j)
+	​
+
+Δ
+ζ
+η
+k
+(i)
+	​
+
+	​
+
+
+That’s a new closure: the “mixed” minor differs from the sum of the two base minors by the wedge of the increment vectors.
+
+5) Expand 
+Dk
+D
+k
+	​
+
+ in minors (Laplace shuffle)
+
+Expand 
+Dk=det⁡[η,Δεη,Δζη]
+D
+k
+	​
+
+=det[η,Δ
+ε
+η,Δ
+ζ
+η] along the first column:
+
+Let 
+ηk=(ηk(1),ηk(2),ηk(3))T
+η
+k
+	​
+
+=(η
+k
+(1)
+	​
+
+,η
+k
+(2)
+	​
+
+,η
+k
+(3)
+	​
+
+)
+T
+, similarly for increments.
+
+Then:
+
+Dk=ηk(1) Wk23−ηk(2) Wk13+ηk(3) Wk12
+D
+k
+	​
+
+=η
+k
+(1)
+	​
+
+W
+k
+23
+	​
+
+−η
+k
+(2)
+	​
+
+W
+k
+13
+	​
+
++η
+k
+(3)
+	​
+
+W
+k
+12
+	​
+
+	​
+
+
+where
+
+Wkij:=Δεηk(i)Δζηk(j)−Δεηk(j)Δζηk(i).
+W
+k
+ij
+	​
+
+:=Δ
+ε
+η
+k
+(i)
+	​
+
+Δ
+ζ
+η
+k
+(j)
+	​
+
+−Δ
+ε
+η
+k
+(j)
+	​
+
+Δ
+ζ
+η
+k
+(i)
+	​
+
+.
+
+So 
+Dk
+D
+k
+	​
+
+ is a linear combination of three 2×2 “increment wedges”.
+
+In eigenvalues:
+
+Wkij=log⁡(λ~k(i)λk(i))log⁡(λ^k(j)λk(j))−log⁡(λ~k(j)λk(j))log⁡(λ^k(i)λk(i))
+W
+k
+ij
+	​
+
+=log(
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+)log(
+λ
+k
+(j)
+	​
+
+λ
+^
+k
+(j)
+	​
+
+	​
+
+)−log(
+λ
+k
+(j)
+	​
+
+λ
+~
+k
+(j)
+	​
+
+	​
+
+)log(
+λ
+k
+(i)
+	​
+
+λ
+^
+k
+(i)
+	​
+
+	​
+
+)
+
+(up to the global sign convention from 
+Δη=−log⁡(⋅)
+Δη=−log(⋅)).
+
+That’s the full third-column closure: a 3×3 determinant that reduces to a determinant of 
+(η,
+(η, increments
+)
+), explicit factorization in the purely linear case, a fully log-ratio form in eigenvalues, and a complete set of 2×2 minor identities including the mixed tilde–hat relation.
+
+Do the third-column mutation. Two perturbations per observable. Only shuffles.
+
+⸻
+
+New ingredient: two perturbed copies per i
+
+For i=1,2,3:
+\eta^{(i)}(a)=C_i a+\delta_i(a),\quad a_k=b^k a_0.
+
+Define two perturbations:
+\tilde a^{(i)}_k=a_k+\varepsilon^{(i)}_k,\qquad
+\hat a^{(i)}_k=a_k+\zeta^{(i)}_k.
+
+Evaluate:
+\eta^{(i)}_k:=\eta^{(i)}(a_k),\quad
+\tilde\eta^{(i)}_k:=\eta^{(i)}(\tilde a^{(i)}_k),\quad
+\hat\eta^{(i)}_k:=\eta^{(i)}(\hat a^{(i)}_k).
+
+Eigenvalues:
+\lambda^{(i)}_k:=e^{-\eta^{(i)}_k},\quad
+\tilde\lambda^{(i)}_k:=e^{-\tilde\eta^{(i)}_k},\quad
+\hat\lambda^{(i)}_k:=e^{-\hat\eta^{(i)}_k}.
+
+Define increments:
+\Delta^{\varepsilon}\eta^{(i)}_k:=\tilde\eta^{(i)}_k-\eta^{(i)}_k,\qquad
+\Delta^{\zeta}\eta^{(i)}_k:=\hat\eta^{(i)}_k-\eta^{(i)}_k.
+
+Log forms:
+\Delta^{\varepsilon}\eta^{(i)}_k=-\log\Big(\frac{\tilde\lambda^{(i)}_k}{\lambda^{(i)}_k}\Big),
+\qquad
+\Delta^{\zeta}\eta^{(i)}_k=-\log\Big(\frac{\hat\lambda^{(i)}_k}{\lambda^{(i)}_k}\Big).
+
+⸻
+
+1) The 3\times 3 determinant and a direct shuffle
+
+Form the 3\times3 determinant (columns: base/tilde/hat):
+\mathcal D_k :=
+\det
+\begin{pmatrix}
+\eta^{(1)}_k & \tilde\eta^{(1)}_k & \hat\eta^{(1)}_k\\
+\eta^{(2)}_k & \tilde\eta^{(2)}_k & \hat\eta^{(2)}_k\\
+\eta^{(3)}_k & \tilde\eta^{(3)}_k & \hat\eta^{(3)}_k
+\end{pmatrix}.
+
+Shuffle columns:
+\tilde\eta^{(i)}_k=\eta^{(i)}_k+\Delta^{\varepsilon}\eta^{(i)}_k,\quad
+\hat\eta^{(i)}_k=\eta^{(i)}_k+\Delta^{\zeta}\eta^{(i)}_k.
+
+Column operations (subtract col1 from col2 and col3):
+\mathcal D_k
+=
+\det
+\begin{pmatrix}
+\eta^{(1)}_k & \Delta^{\varepsilon}\eta^{(1)}_k & \Delta^{\zeta}\eta^{(1)}_k\\
+\eta^{(2)}_k & \Delta^{\varepsilon}\eta^{(2)}_k & \Delta^{\zeta}\eta^{(2)}_k\\
+\eta^{(3)}_k & \Delta^{\varepsilon}\eta^{(3)}_k & \Delta^{\zeta}\eta^{(3)}_k
+\end{pmatrix}.
+So:
+\boxed{
+\mathcal D_k=\det[\ \eta_k,\ \Delta^\varepsilon\eta_k,\ \Delta^\zeta\eta_k\ ]
+}
+(where each entry is the 3-vector across i=1,2,3).
+
+⸻
+
+2) Undeformed linear case gives rank \le 2 and \mathcal D_k=0
+
+If \delta_i\equiv0, then:
+\eta^{(i)}_k=C_i a_k,\quad
+\Delta^{\varepsilon}\eta^{(i)}_k=C_i\varepsilon^{(i)}_k,\quad
+\Delta^{\zeta}\eta^{(i)}_k=C_i\zeta^{(i)}_k.
+
+Then each row is [C_i a_k,\ C_i\varepsilon^{(i)}_k,\ C_i\zeta^{(i)}_k]=C_i[a_k,\varepsilon^{(i)}_k,\zeta^{(i)}_k]. Factor C_i out of each row:
+\mathcal D_k
+=
+(C_1C_2C_3)\,
+\det
+\begin{pmatrix}
+a_k & \varepsilon^{(1)}_k & \zeta^{(1)}_k\\
+a_k & \varepsilon^{(2)}_k & \zeta^{(2)}_k\\
+a_k & \varepsilon^{(3)}_k & \zeta^{(3)}_k
+\end{pmatrix}.
+
+Now subtract row1 from row2 and row3 (kills first column in those rows):
+\det
+\begin{pmatrix}
+a_k & \varepsilon^{(1)}_k & \zeta^{(1)}_k\\
+0 & \varepsilon^{(2)}_k-\varepsilon^{(1)}_k & \zeta^{(2)}_k-\zeta^{(1)}_k\\
+0 & \varepsilon^{(3)}_k-\varepsilon^{(1)}_k & \zeta^{(3)}_k-\zeta^{(1)}_k
+\end{pmatrix}
+=
+a_k\,
+\det
+\begin{pmatrix}
+\Delta\varepsilon^{21}_k & \Delta\zeta^{21}_k\\
+\Delta\varepsilon^{31}_k & \Delta\zeta^{31}_k
+\end{pmatrix}
+with \Delta\varepsilon^{j1}_k=\varepsilon^{(j)}_k-\varepsilon^{(1)}_k, similarly \Delta\zeta.
+
+So:
+\boxed{
+\mathcal D_k
+=
+(C_1C_2C_3)\,a_k\,
+\Big(
+(\varepsilon^{(2)}_k-\varepsilon^{(1)}_k)(\zeta^{(3)}_k-\zeta^{(1)}_k)
+-
+(\varepsilon^{(3)}_k-\varepsilon^{(1)}_k)(\zeta^{(2)}_k-\zeta^{(1)}_k)
+\Big)
+}
+
+If the perturbations are identical across i (i.e. \varepsilon^{(1)}=\varepsilon^{(2)}=\varepsilon^{(3)} and same for \zeta), the bracket is 0 and \mathcal D_k=0. (Just cancellation.)
+
+⸻
+
+3) Express \mathcal D_k entirely in eigenvalues (pure log)
+
+Use:
+\eta^{(i)}_k=-\log\lambda^{(i)}_k,\quad
+\Delta^{\varepsilon}\eta^{(i)}_k=-\log\Big(\frac{\tilde\lambda^{(i)}_k}{\lambda^{(i)}_k}\Big),\quad
+\Delta^{\zeta}\eta^{(i)}_k=-\log\Big(\frac{\hat\lambda^{(i)}_k}{\lambda^{(i)}_k}\Big).
+
+Then
+\mathcal D_k
+=
+\det
+\begin{pmatrix}
+-\log\lambda^{(1)}_k & -\log(\tilde\lambda^{(1)}_k/\lambda^{(1)}_k) & -\log(\hat\lambda^{(1)}_k/\lambda^{(1)}_k)\\
+-\log\lambda^{(2)}_k & -\log(\tilde\lambda^{(2)}_k/\lambda^{(2)}_k) & -\log(\hat\lambda^{(2)}_k/\lambda^{(2)}_k)\\
+-\log\lambda^{(3)}_k & -\log(\tilde\lambda^{(3)}_k/\lambda^{(3)}_k) & -\log(\hat\lambda^{(3)}_k/\lambda^{(3)}_k)
+\end{pmatrix}.
+
+Factor (-1) out of each column (three columns → (-1)^3=-1):
+\boxed{
+\mathcal D_k
+=
+-\,\det
+\begin{pmatrix}
+\log\lambda^{(1)}_k & \log(\tilde\lambda^{(1)}_k/\lambda^{(1)}_k) & \log(\hat\lambda^{(1)}_k/\lambda^{(1)}_k)\\
+\log\lambda^{(2)}_k & \log(\tilde\lambda^{(2)}_k/\lambda^{(2)}_k) & \log(\hat\lambda^{(2)}_k/\lambda^{(2)}_k)\\
+\log\lambda^{(3)}_k & \log(\tilde\lambda^{(3)}_k/\lambda^{(3)}_k) & \log(\hat\lambda^{(3)}_k/\lambda^{(3)}_k)
+\end{pmatrix}
+}
+
+This is a closed log-ratio determinant.
+
+⸻
+
+4) “All minors” relations (complete set of 2×2 minors)
+
+Define the 2×2 minors from the 3×3 matrix [\,\eta,\tilde\eta,\hat\eta\,]. For rows (i,j):
+	•	base–tilde:
+D^{ij}_{k,\varepsilon}:=\eta^{(i)}_k\tilde\eta^{(j)}_k-\eta^{(j)}_k\tilde\eta^{(i)}_k
+=\eta^{(i)}_k\Delta^\varepsilon\eta^{(j)}_k-\eta^{(j)}_k\Delta^\varepsilon\eta^{(i)}_k
+	•	base–hat:
+D^{ij}_{k,\zeta}:=\eta^{(i)}_k\hat\eta^{(j)}_k-\eta^{(j)}_k\hat\eta^{(i)}_k
+=\eta^{(i)}_k\Delta^\zeta\eta^{(j)}_k-\eta^{(j)}_k\Delta^\zeta\eta^{(i)}_k
+	•	tilde–hat:
+D^{ij}_{k,\varepsilon\zeta}:=\tilde\eta^{(i)}_k\hat\eta^{(j)}_k-\tilde\eta^{(j)}_k\hat\eta^{(i)}_k
+
+Now shuffle the tilde–hat one by inserting \tilde\eta=\eta+\Delta^\varepsilon\eta, \hat\eta=\eta+\Delta^\zeta\eta:
+D^{ij}_{k,\varepsilon\zeta}
+=
+D^{ij}_{k,\varepsilon}
++
+D^{ij}_{k,\zeta}
++
+\Big(\Delta^\varepsilon\eta^{(i)}_k\Delta^\zeta\eta^{(j)}_k-\Delta^\varepsilon\eta^{(j)}_k\Delta^\zeta\eta^{(i)}_k\Big).
+
+So:
+\boxed{
+D^{ij}_{k,\varepsilon\zeta}
+-
+D^{ij}_{k,\varepsilon}
+-
+D^{ij}_{k,\zeta}
+=
+\Delta^\varepsilon\eta^{(i)}_k\Delta^\zeta\eta^{(j)}_k-\Delta^\varepsilon\eta^{(j)}_k\Delta^\zeta\eta^{(i)}_k
+}
+
+That’s a new closure: the “mixed” minor differs from the sum of the two base minors by the wedge of the increment vectors.
+
+⸻
+
+5) Expand \mathcal D_k in minors (Laplace shuffle)
+
+Expand \mathcal D_k=\det[\eta,\Delta^\varepsilon\eta,\Delta^\zeta\eta] along the first column:
+
+Let \eta_k=(\eta^{(1)}_k,\eta^{(2)}_k,\eta^{(3)}_k)^T, similarly for increments.
+
+Then:
+\boxed{
+\mathcal D_k
+=
+\eta^{(1)}_k\,W^{23}_k
+-\eta^{(2)}_k\,W^{13}_k
++\eta^{(3)}_k\,W^{12}_k
+}
+where
+W^{ij}_k
+:=
+\Delta^\varepsilon\eta^{(i)}_k\Delta^\zeta\eta^{(j)}_k-\Delta^\varepsilon\eta^{(j)}_k\Delta^\zeta\eta^{(i)}_k.
+
+So \mathcal D_k is a linear combination of three 2×2 “increment wedges”.
+
+In eigenvalues:
+W^{ij}_k
+=
+\log\Big(\frac{\tilde\lambda^{(i)}_k}{\lambda^{(i)}_k}\Big)\log\Big(\frac{\hat\lambda^{(j)}_k}{\lambda^{(j)}_k}\Big)
+-
+\log\Big(\frac{\tilde\lambda^{(j)}_k}{\lambda^{(j)}_k}\Big)\log\Big(\frac{\hat\lambda^{(i)}_k}{\lambda^{(i)}_k}\Big)
+(up to the global sign convention from \Delta\eta=-\log(\cdot)).
+
+⸻
+
+That’s the full third-column closure: a 3×3 determinant that reduces to a determinant of (\eta, increments), explicit factorization in the purely linear case, a fully log-ratio form in eigenvalues, and a complete set of 2×2 minor identities including the mixed tilde–hat relation.
+
+Good. Now push further inside the same third-column mutation by doing more shuffles that generate new identities, not restatements.
+
+I’ll introduce only one additional notational atom to compress algebra:
+
+x(i):=log⁡λk(i),u(i):=log⁡λ~k(i)λk(i),v(i):=log⁡λ^k(i)λk(i).
+x
+(i)
+:=logλ
+k
+(i)
+	​
+
+,u
+(i)
+:=log
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+,v
+(i)
+:=log
+λ
+k
+(i)
+	​
+
+λ
+^
+k
+(i)
+	​
+
+	​
+
+.
+
+Then (up to the global sign already tracked):
+
+ηk(i)=−x(i),Δεηk(i)=−u(i),Δζηk(i)=−v(i).
+η
+k
+(i)
+	​
+
+=−x
+(i)
+,Δ
+ε
+η
+k
+(i)
+	​
+
+=−u
+(i)
+,Δ
+ζ
+η
+k
+(i)
+	​
+
+=−v
+(i)
+.
+
+So your determinant becomes:
+
+Dk=−det⁡(x(1)	u(1)	v(1)
+x(2)	u(2)	v(2)
+x(3)	u(3)	v(3))
+D
+k
+	​
+
+=−det
+​x(1)x(2)x(3)​u(1)u(2)u(3)​v(1)v(2)v(3)​
+​
+
+	​
+
+
+Everything below is pure determinant/minor algebra in 
+(x,u,v)
+(x,u,v).
+
+1) Cramer-style reconstruction of one column from the other two (new)
+
+Assume 
+det⁡(u(1)	v(1)
+u(2)	v(2))≠0
+det(
+u
+(1)
+u
+(2)
+	​
+
+v
+(1)
+v
+(2)
+	​
+
+)
+
+=0. Solve for 
+x(3)
+x
+(3)
+ from 
+Dk
+D
+k
+	​
+
+:
+
+Expand 
+det⁡[x,u,v]
+det[x,u,v] along row 3:
+
+det⁡[x,u,v]=x(3)(u(1)v(2)−u(2)v(1))−u(3)(x(1)v(2)−x(2)v(1))+v(3)(x(1)u(2)−x(2)u(1)).
+det[x,u,v]=x
+(3)
+(u
+(1)
+v
+(2)
+−u
+(2)
+v
+(1)
+)−u
+(3)
+(x
+(1)
+v
+(2)
+−x
+(2)
+v
+(1)
+)+v
+(3)
+(x
+(1)
+u
+(2)
+−x
+(2)
+u
+(1)
+).
+
+Rearrange:
+
+x(3)=u(3)(x(1)v(2)−x(2)v(1))−v(3)(x(1)u(2)−x(2)u(1))+det⁡[x,u,v]u(1)v(2)−u(2)v(1)
+x
+(3)
+=
+u
+(1)
+v
+(2)
+−u
+(2)
+v
+(1)
+u
+(3)
+(x
+(1)
+v
+(2)
+−x
+(2)
+v
+(1)
+)−v
+(3)
+(x
+(1)
+u
+(2)
+−x
+(2)
+u
+(1)
+)+det[x,u,v]
+	​
+
+	​
+
+
+Same holds for any permutation of indices/columns. This is a “solve one observable’s base-log from the other two increment-logs + determinant” identity.
+
+2) Ratio-of-determinants identity (new)
+
+Let
+
+Aij:=u(i)v(j)−u(j)v(i)(the 2×2 minor of [u,v])
+A
+ij
+:=u
+(i)
+v
+(j)
+−u
+(j)
+v
+(i)
+(the 2×2 minor of [u,v])
+Bij:=x(i)v(j)−x(j)v(i)(minor of [x,v])
+B
+ij
+:=x
+(i)
+v
+(j)
+−x
+(j)
+v
+(i)
+(minor of [x,v])
+Cij:=x(i)u(j)−x(j)u(i)(minor of [x,u])
+C
+ij
+:=x
+(i)
+u
+(j)
+−x
+(j)
+u
+(i)
+(minor of [x,u])
+
+Then Laplace expansion gives:
+
+det⁡[x,u,v]=x(1)A23−x(2)A13+x(3)A12.
+det[x,u,v]=x
+(1)
+A
+23
+−x
+(2)
+A
+13
++x
+(3)
+A
+12
+.
+
+So:
+
+x(1)A23−x(2)A13+x(3)A12=det⁡[x,u,v]
+x
+(1)
+A
+23
+−x
+(2)
+A
+13
++x
+(3)
+A
+12
+=det[x,u,v]
+	​
+
+
+This is a new closure: the 3×3 determinant is a signed linear combo of the 2×2 minors 
+Aij
+A
+ij
+ with coefficients 
+x(i)
+x
+(i)
+.
+
+3) Mixed-minor identity (new “six-term” cancellation)
+
+Compute:
+
+u(1)B23−u(2)B13+u(3)B12.
+u
+(1)
+B
+23
+−u
+(2)
+B
+13
++u
+(3)
+B
+12
+.
+
+Substitute 
+Bij=x(i)v(j)−x(j)v(i)
+B
+ij
+=x
+(i)
+v
+(j)
+−x
+(j)
+v
+(i)
+ and expand: every term cancels pairwise, yielding
+
+u(1)B23−u(2)B13+u(3)B12=0
+u
+(1)
+B
+23
+−u
+(2)
+B
+13
++u
+(3)
+B
+12
+=0
+	​
+
+
+Similarly:
+
+v(1)C23−v(2)C13+v(3)C12=0
+v
+(1)
+C
+23
+−v
+(2)
+C
+13
++v
+(3)
+C
+12
+=0
+	​
+
+
+These are new “alternating sum = 0” identities among minors—pure bilinear cancellation.
+
+4) Express the “tilde–hat” minors in pure 
+(u,v)
+(u,v) (new)
+
+Your earlier wedge term:
+
+Wij=Δεη(i)Δζη(j)−Δεη(j)Δζη(i)
+W
+ij
+=Δ
+ε
+η
+(i)
+Δ
+ζ
+η
+(j)
+−Δ
+ε
+η
+(j)
+Δ
+ζ
+η
+(i)
+
+becomes, in 
+(u,v)
+(u,v) (since 
+Δεη=−u
+Δ
+ε
+η=−u, 
+Δζη=−v
+Δ
+ζ
+η=−v):
+
+Wij=u(i)v(j)−u(j)v(i)=Aij
+W
+ij
+=u
+(i)
+v
+(j)
+−u
+(j)
+v
+(i)
+=A
+ij
+	​
+
+
+So your Laplace expansion becomes:
+
+det⁡[x,u,v]=x(1)W23−x(2)W13+x(3)W12
+det[x,u,v]=x
+(1)
+W
+23
+−x
+(2)
+W
+13
++x
+(3)
+W
+12
+	​
+
+5) “Closure under replacing the base column” (new)
+
+Replace the base column 
+x
+x by 
+(x+u)
+(x+u) (this corresponds to swapping 
+η
+η with 
+η~
+η
+~
+	​
+
+ at the log level). Determinant linearity gives:
+
+det⁡[x+u,u,v]=det⁡[x,u,v]+det⁡[u,u,v].
+det[x+u,u,v]=det[x,u,v]+det[u,u,v].
+
+But 
+det⁡[u,u,v]=0
+det[u,u,v]=0 (two identical columns). So:
+
+det⁡[x+u,u,v]=det⁡[x,u,v]
+det[x+u,u,v]=det[x,u,v]
+	​
+
+
+Similarly:
+
+det⁡[x+v,u,v]=det⁡[x,u,v]
+det[x+v,u,v]=det[x,u,v]
+	​
+
+
+So shifting the base column by either increment column leaves the determinant unchanged—pure multilinearity.
+
+6) Convert everything back to eigenvalues (new compact forms)
+
+Use
+
+x(i)=log⁡λk(i),u(i)=log⁡λ~k(i)λk(i),v(i)=log⁡λ^k(i)λk(i).
+x
+(i)
+=logλ
+k
+(i)
+	​
+
+,u
+(i)
+=log
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+,v
+(i)
+=log
+λ
+k
+(i)
+	​
+
+λ
+^
+k
+(i)
+	​
+
+	​
+
+.
+
+Then the “increment wedge” becomes:
+
+Wkij=log⁡λ~k(i)λk(i) log⁡λ^k(j)λk(j)−log⁡λ~k(j)λk(j) log⁡λ^k(i)λk(i)
+W
+k
+ij
+	​
+
+=log
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+log
+λ
+k
+(j)
+	​
+
+λ
+^
+k
+(j)
+	​
+
+	​
+
+−log
+λ
+k
+(j)
+	​
+
+λ
+~
+k
+(j)
+	​
+
+	​
+
+log
+λ
+k
+(i)
+	​
+
+λ
+^
+k
+(i)
+	​
+
+	​
+
+	​
+
+
+And the determinant identity becomes:
+
+−Dk=log⁡λk(1) Wk23−log⁡λk(2) Wk13+log⁡λk(3) Wk12
+−D
+k
+	​
+
+=logλ
+k
+(1)
+	​
+
+W
+k
+23
+	​
+
+−logλ
+k
+(2)
+	​
+
+W
+k
+13
+	​
+
++logλ
+k
+(3)
+	​
+
+W
+k
+12
+	​
+
+	​
+
+
+That’s a new compact “determinant = log-weighted wedge-sum” in eigenvalues only.
+
+If you want to keep going, the maximal next shuffle is: choose 
+a~k(i)=ak+1
+a
+~
+k
+(i)
+	​
+
+=a
+k+1
+	​
+
+ and 
+a^k(i)=ak+2
+a
+^
+k
+(i)
+	​
+
+=a
+k+2
+	​
+
+ (two-step columns). Then all 
+u(i)
+u
+(i)
+ and 
+v(i)
+v
+(i)
+ become log-ratios of 
+λk+1/λk
+λ
+k+1
+	​
+
+/λ
+k
+	​
+
+ and 
+λk+2/λk
+λ
+k+2
+	​
+
+/λ
+k
+	​
+
+, and the whole determinant collapses into telescoping cross-ratio expressions across 
+k
+k.
+
+Good. Now push further inside the same third-column mutation by doing more shuffles that generate new identities, not restatements.
+
+I’ll introduce only one additional notational atom to compress algebra:
+
+x^{(i)}:=\log\lambda^{(i)}_k,\quad
+u^{(i)}:=\log\frac{\tilde\lambda^{(i)}_k}{\lambda^{(i)}_k},\quad
+v^{(i)}:=\log\frac{\hat\lambda^{(i)}_k}{\lambda^{(i)}_k}.
+
+Then (up to the global sign already tracked):
+\eta^{(i)}_k=-x^{(i)},\quad
+\Delta^\varepsilon\eta^{(i)}_k=-u^{(i)},\quad
+\Delta^\zeta\eta^{(i)}_k=-v^{(i)}.
+
+So your determinant becomes:
+\boxed{
+\mathcal D_k
+=
+-\det
+\begin{pmatrix}
+x^{(1)} & u^{(1)} & v^{(1)}\\
+x^{(2)} & u^{(2)} & v^{(2)}\\
+x^{(3)} & u^{(3)} & v^{(3)}
+\end{pmatrix}
+}
+
+Everything below is pure determinant/minor algebra in (x,u,v).
+
+⸻
+
+1) Cramer-style reconstruction of one column from the other two (new)
+
+Assume \det\begin{pmatrix}u^{(1)}&v^{(1)}\\u^{(2)}&v^{(2)}\end{pmatrix}\neq 0. Solve for x^{(3)} from \mathcal D_k:
+
+Expand \det[x,u,v] along row 3:
+\det[x,u,v]
+=
+x^{(3)}(u^{(1)}v^{(2)}-u^{(2)}v^{(1)})
+-u^{(3)}(x^{(1)}v^{(2)}-x^{(2)}v^{(1)})
++v^{(3)}(x^{(1)}u^{(2)}-x^{(2)}u^{(1)}).
+
+Rearrange:
+\boxed{
+x^{(3)}
+=
+\frac{
+u^{(3)}(x^{(1)}v^{(2)}-x^{(2)}v^{(1)})
+-
+v^{(3)}(x^{(1)}u^{(2)}-x^{(2)}u^{(1)})
++\det[x,u,v]
+}{
+u^{(1)}v^{(2)}-u^{(2)}v^{(1)}
+}
+}
+
+Same holds for any permutation of indices/columns. This is a “solve one observable’s base-log from the other two increment-logs + determinant” identity.
+
+⸻
+
+2) Ratio-of-determinants identity (new)
+
+Let
+A^{ij}:=u^{(i)}v^{(j)}-u^{(j)}v^{(i)} \quad (\text{the 2×2 minor of } [u,v])
+B^{ij}:=x^{(i)}v^{(j)}-x^{(j)}v^{(i)} \quad (\text{minor of } [x,v])
+C^{ij}:=x^{(i)}u^{(j)}-x^{(j)}u^{(i)} \quad (\text{minor of } [x,u])
+
+Then Laplace expansion gives:
+\det[x,u,v]=x^{(1)}A^{23}-x^{(2)}A^{13}+x^{(3)}A^{12}.
+
+So:
+\boxed{
+x^{(1)}A^{23}-x^{(2)}A^{13}+x^{(3)}A^{12}=\det[x,u,v]
+}
+
+This is a new closure: the 3×3 determinant is a signed linear combo of the 2×2 minors A^{ij} with coefficients x^{(i)}.
+
+⸻
+
+3) Mixed-minor identity (new “six-term” cancellation)
+
+Compute:
+u^{(1)}B^{23}-u^{(2)}B^{13}+u^{(3)}B^{12}.
+
+Substitute B^{ij}=x^{(i)}v^{(j)}-x^{(j)}v^{(i)} and expand: every term cancels pairwise, yielding
+\boxed{
+u^{(1)}B^{23}-u^{(2)}B^{13}+u^{(3)}B^{12}=0
+}
+
+Similarly:
+\boxed{
+v^{(1)}C^{23}-v^{(2)}C^{13}+v^{(3)}C^{12}=0
+}
+
+These are new “alternating sum = 0” identities among minors—pure bilinear cancellation.
+
+⸻
+
+4) Express the “tilde–hat” minors in pure (u,v) (new)
+
+Your earlier wedge term:
+W^{ij}= \Delta^\varepsilon\eta^{(i)}\Delta^\zeta\eta^{(j)}-\Delta^\varepsilon\eta^{(j)}\Delta^\zeta\eta^{(i)}
+becomes, in (u,v) (since \Delta^\varepsilon\eta=-u, \Delta^\zeta\eta=-v):
+\boxed{
+W^{ij}=u^{(i)}v^{(j)}-u^{(j)}v^{(i)}=A^{ij}
+}
+
+So your Laplace expansion becomes:
+\boxed{
+\det[x,u,v]=x^{(1)}W^{23}-x^{(2)}W^{13}+x^{(3)}W^{12}
+}
+
+⸻
+
+5) “Closure under replacing the base column” (new)
+
+Replace the base column x by (x+u) (this corresponds to swapping \eta with \tilde\eta at the log level). Determinant linearity gives:
+
+\det[x+u,u,v]=\det[x,u,v]+\det[u,u,v].
+
+But \det[u,u,v]=0 (two identical columns). So:
+\boxed{
+\det[x+u,u,v]=\det[x,u,v]
+}
+
+Similarly:
+\boxed{
+\det[x+v,u,v]=\det[x,u,v]
+}
+
+So shifting the base column by either increment column leaves the determinant unchanged—pure multilinearity.
+
+⸻
+
+6) Convert everything back to eigenvalues (new compact forms)
+
+Use
+x^{(i)}=\log\lambda^{(i)}_k,\quad
+u^{(i)}=\log\frac{\tilde\lambda^{(i)}_k}{\lambda^{(i)}_k},\quad
+v^{(i)}=\log\frac{\hat\lambda^{(i)}_k}{\lambda^{(i)}_k}.
+
+Then the “increment wedge” becomes:
+\boxed{
+W^{ij}_k
+=
+\log\frac{\tilde\lambda^{(i)}_k}{\lambda^{(i)}_k}\,
+\log\frac{\hat\lambda^{(j)}_k}{\lambda^{(j)}_k}
+-
+\log\frac{\tilde\lambda^{(j)}_k}{\lambda^{(j)}_k}\,
+\log\frac{\hat\lambda^{(i)}_k}{\lambda^{(i)}_k}
+}
+
+And the determinant identity becomes:
+\boxed{
+-\mathcal D_k
+=
+\log\lambda^{(1)}_k\,W^{23}_k
+-\log\lambda^{(2)}_k\,W^{13}_k
++\log\lambda^{(3)}_k\,W^{12}_k
+}
+
+That’s a new compact “determinant = log-weighted wedge-sum” in eigenvalues only.
+
+⸻
+
+If you want to keep going, the maximal next shuffle is: choose \tilde a^{(i)}_k=a_{k+1} and \hat a^{(i)}_k=a_{k+2} (two-step columns). Then all u^{(i)} and v^{(i)} become log-ratios of \lambda_{k+1}/\lambda_k and \lambda_{k+2}/\lambda_k, and the whole determinant collapses into telescoping cross-ratio expressions across k.
+
+Do that maximal next shuffle: two-step columns.
+
+a~k(i):=ak+1,a^k(i):=ak+2
+a
+~
+k
+(i)
+	​
+
+:=a
+k+1
+	​
+
+,
+a
+^
+k
+(i)
+	​
+
+:=a
+k+2
+	​
+
+
+(same for all 
+i
+i). Only shuffles.
+
+Then:
+
+η~k(i)=ηk+1(i),η^k(i)=ηk+2(i)
+η
+~
+	​
+
+k
+(i)
+	​
+
+=η
+k+1
+(i)
+	​
+
+,
+η
+^
+	​
+
+k
+(i)
+	​
+
+=η
+k+2
+(i)
+	​
+
+
+so in eigenvalues:
+
+λ~k(i)=λk+1(i),λ^k(i)=λk+2(i).
+λ
+~
+k
+(i)
+	​
+
+=λ
+k+1
+(i)
+	​
+
+,
+λ
+^
+k
+(i)
+	​
+
+=λ
+k+2
+(i)
+	​
+
+.
+
+Your log-atoms become:
+
+xk(i):=log⁡λk(i),uk(i):=log⁡λk+1(i)λk(i)=xk+1(i)−xk(i),vk(i):=log⁡λk+2(i)λk(i)=xk+2(i)−xk(i).
+x
+k
+(i)
+	​
+
+:=logλ
+k
+(i)
+	​
+
+,u
+k
+(i)
+	​
+
+:=log
+λ
+k
+(i)
+	​
+
+λ
+k+1
+(i)
+	​
+
+	​
+
+=x
+k+1
+(i)
+	​
+
+−x
+k
+(i)
+	​
+
+,v
+k
+(i)
+	​
+
+:=log
+λ
+k
+(i)
+	​
+
+λ
+k+2
+(i)
+	​
+
+	​
+
+=x
+k+2
+(i)
+	​
+
+−x
+k
+(i)
+	​
+
+.
+
+And note the new internal relation:
+
+vk(i)=uk(i)+uk+1(i)
+v
+k
+(i)
+	​
+
+=u
+k
+(i)
+	​
+
++u
+k+1
+(i)
+	​
+
+	​
+
+
+since 
+xk+2−xk=(xk+2−xk+1)+(xk+1−xk)
+x
+k+2
+	​
+
+−x
+k
+	​
+
+=(x
+k+2
+	​
+
+−x
+k+1
+	​
+
+)+(x
+k+1
+	​
+
+−x
+k
+	​
+
+).
+
+1) Determinant becomes a discrete-time invariant (new)
+
+Start with
+
+det⁡[xk,uk,vk]
+det[x
+k
+	​
+
+,u
+k
+	​
+
+,v
+k
+	​
+
+]
+
+and substitute 
+vk=uk+uk+1
+v
+k
+	​
+
+=u
+k
+	​
+
++u
+k+1
+	​
+
+:
+
+det⁡[xk,uk,vk]=det⁡[xk,uk,uk+uk+1]=det⁡[xk,uk,uk]+det⁡[xk,uk,uk+1]
+det[x
+k
+	​
+
+,u
+k
+	​
+
+,v
+k
+	​
+
+]=det[x
+k
+	​
+
+,u
+k
+	​
+
+,u
+k
+	​
+
++u
+k+1
+	​
+
+]=det[x
+k
+	​
+
+,u
+k
+	​
+
+,u
+k
+	​
+
+]+det[x
+k
+	​
+
+,u
+k
+	​
+
+,u
+k+1
+	​
+
+]
+
+but 
+det⁡[xk,uk,uk]=0
+det[x
+k
+	​
+
+,u
+k
+	​
+
+,u
+k
+	​
+
+]=0. So:
+
+det⁡[xk,uk,vk]=det⁡[xk,uk,uk+1]
+det[x
+k
+	​
+
+,u
+k
+	​
+
+,v
+k
+	​
+
+]=det[x
+k
+	​
+
+,u
+k
+	​
+
+,u
+k+1
+	​
+
+	​
+
+]
+
+i.e.
+
+−Dk=det⁡[xk,uk,uk+1]
+−D
+k
+	​
+
+=det[x
+k
+	​
+
+,u
+k
+	​
+
+,u
+k+1
+	​
+
+]
+	​
+
+
+This is new: the 3-column determinant collapses to a determinant with two consecutive increments.
+
+2) Expand 
+det⁡[xk,uk,uk+1]
+det[x
+k
+	​
+
+,u
+k
+	​
+
+,u
+k+1
+	​
+
+] as a 6-term “discrete Wronskian” (new)
+
+Write it out:
+
+det⁡(xk(1)	uk(1)	uk+1(1)
+xk(2)	uk(2)	uk+1(2)
+xk(3)	uk(3)	uk+1(3))
+det
+​xk(1)​xk(2)​xk(3)​​uk(1)​uk(2)​uk(3)​​uk+1(1)​uk+1(2)​uk+1(3)​​
+​
+
+
+Laplace expand along the first column:
+
+−Dk=xk(1) (uk(2)uk+1(3)−uk(3)uk+1(2))−xk(2) (uk(1)uk+1(3)−uk(3)uk+1(1))+xk(3) (uk(1)uk+1(2)−uk(2)uk+1(1))
+−D
+k
+	​
+
+=x
+k
+(1)
+	​
+
+(u
+k
+(2)
+	​
+
+u
+k+1
+(3)
+	​
+
+−u
+k
+(3)
+	​
+
+u
+k+1
+(2)
+	​
+
+)−x
+k
+(2)
+	​
+
+(u
+k
+(1)
+	​
+
+u
+k+1
+(3)
+	​
+
+−u
+k
+(3)
+	​
+
+u
+k+1
+(1)
+	​
+
+)+x
+k
+(3)
+	​
+
+(u
+k
+(1)
+	​
+
+u
+k+1
+(2)
+	​
+
+−u
+k
+(2)
+	​
+
+u
+k+1
+(1)
+	​
+
+)
+	​
+
+
+All new objects are now pairwise wedges of consecutive increment logs:
+
+Ωkij:=uk(i)uk+1(j)−uk(j)uk+1(i)
+Ω
+k
+ij
+	​
+
+:=u
+k
+(i)
+	​
+
+u
+k+1
+(j)
+	​
+
+−u
+k
+(j)
+	​
+
+u
+k+1
+(i)
+	​
+
+	​
+
+
+Then:
+
+−Dk=xk(1)Ωk23−xk(2)Ωk13+xk(3)Ωk12
+−D
+k
+	​
+
+=x
+k
+(1)
+	​
+
+Ω
+k
+23
+	​
+
+−x
+k
+(2)
+	​
+
+Ω
+k
+13
+	​
+
++x
+k
+(3)
+	​
+
+Ω
+k
+12
+	​
+
+	​
+
+3) 
+Ωkij
+Ω
+k
+ij
+	​
+
+ is a telescoping cross-ratio log (new)
+
+Compute 
+Ωkij
+Ω
+k
+ij
+	​
+
+ in eigenvalues:
+
+uk(i)=log⁡λk+1(i)λk(i),uk+1(i)=log⁡λk+2(i)λk+1(i).
+u
+k
+(i)
+	​
+
+=log
+λ
+k
+(i)
+	​
+
+λ
+k+1
+(i)
+	​
+
+	​
+
+,u
+k+1
+(i)
+	​
+
+=log
+λ
+k+1
+(i)
+	​
+
+λ
+k+2
+(i)
+	​
+
+	​
+
+.
+
+So:
+
+Ωkij=log⁡λk+1(i)λk(i) log⁡λk+2(j)λk+1(j)−log⁡λk+1(j)λk(j) log⁡λk+2(i)λk+1(i)
+Ω
+k
+ij
+	​
+
+=log
+λ
+k
+(i)
+	​
+
+λ
+k+1
+(i)
+	​
+
+	​
+
+log
+λ
+k+1
+(j)
+	​
+
+λ
+k+2
+(j)
+	​
+
+	​
+
+−log
+λ
+k
+(j)
+	​
+
+λ
+k+1
+(j)
+	​
+
+	​
+
+log
+λ
+k+1
+(i)
+	​
+
+λ
+k+2
+(i)
+	​
+
+	​
+
+	​
+
+
+Now define the cross ratio
+
+CRkij:=λk+1(i)λk(j)λk(i)λk+1(j).
+CR
+k
+ij
+	​
+
+:=
+λ
+k
+(i)
+	​
+
+λ
+k+1
+(j)
+	​
+
+λ
+k+1
+(i)
+	​
+
+λ
+k
+(j)
+	​
+
+	​
+
+.
+
+Then
+
+log⁡CRkij=uk(i)−uk(j),log⁡CRk+1ij=uk+1(i)−uk+1(j).
+logCR
+k
+ij
+	​
+
+=u
+k
+(i)
+	​
+
+−u
+k
+(j)
+	​
+
+,logCR
+k+1
+ij
+	​
+
+=u
+k+1
+(i)
+	​
+
+−u
+k+1
+(j)
+	​
+
+.
+
+Multiply and antisymmetrize:
+
+(uk(i)−uk(j))(uk+1(i)−uk+1(j))=uk(i)uk+1(i)+uk(j)uk+1(j)−uk(i)uk+1(j)−uk(j)uk+1(i)
+(u
+k
+(i)
+	​
+
+−u
+k
+(j)
+	​
+
+)(u
+k+1
+(i)
+	​
+
+−u
+k+1
+(j)
+	​
+
+)=u
+k
+(i)
+	​
+
+u
+k+1
+(i)
+	​
+
++u
+k
+(j)
+	​
+
+u
+k+1
+(j)
+	​
+
+−u
+k
+(i)
+	​
+
+u
+k+1
+(j)
+	​
+
+−u
+k
+(j)
+	​
+
+u
+k+1
+(i)
+	​
+
+
+so the antisymmetric part isolates:
+
+Ωkij=−[uk(i)uk+1(j)+uk(j)uk+1(i)]+(symmetric terms)
+Ω
+k
+ij
+	​
+
+=−[u
+k
+(i)
+	​
+
+u
+k+1
+(j)
+	​
+
++u
+k
+(j)
+	​
+
+u
+k+1
+(i)
+	​
+
+]+(symmetric terms)
+	​
+
+
+But the clean “new” observable is:
+
+Ωkij=uk(i)uk+1(j)−uk(j)uk+1(i)=det⁡ ⁣(uk(i)	uk+1(i)
+uk(j)	uk+1(j))
+Ω
+k
+ij
+	​
+
+=u
+k
+(i)
+	​
+
+u
+k+1
+(j)
+	​
+
+−u
+k
+(j)
+	​
+
+u
+k+1
+(i)
+	​
+
+=det(
+u
+k
+(i)
+	​
+
+u
+k
+(j)
+	​
+
+	​
+
+u
+k+1
+(i)
+	​
+
+u
+k+1
+(j)
+	​
+
+	​
+
+)
+	​
+
+
+(i.e. determinant of consecutive log-ratio pairs).
+
+4) Determinant shift relation (new)
+
+Compute 
+−Dk+1=det⁡[xk+1,uk+1,uk+2]
+−D
+k+1
+	​
+
+=det[x
+k+1
+	​
+
+,u
+k+1
+	​
+
+,u
+k+2
+	​
+
+]. Replace 
+xk+1=xk+uk
+x
+k+1
+	​
+
+=x
+k
+	​
+
++u
+k
+	​
+
+:
+
+det⁡[xk+1,uk+1,uk+2]=det⁡[xk+uk,uk+1,uk+2]=det⁡[xk,uk+1,uk+2]+det⁡[uk,uk+1,uk+2].
+det[x
+k+1
+	​
+
+,u
+k+1
+	​
+
+,u
+k+2
+	​
+
+]=det[x
+k
+	​
+
++u
+k
+	​
+
+,u
+k+1
+	​
+
+,u
+k+2
+	​
+
+]=det[x
+k
+	​
+
+,u
+k+1
+	​
+
+,u
+k+2
+	​
+
+]+det[u
+k
+	​
+
+,u
+k+1
+	​
+
+,u
+k+2
+	​
+
+].
+
+So:
+
+−Dk+1=det⁡[xk,uk+1,uk+2]+det⁡[uk,uk+1,uk+2]
+−D
+k+1
+	​
+
+=det[x
+k
+	​
+
+,u
+k+1
+	​
+
+,u
+k+2
+	​
+
+]+det[u
+k
+	​
+
+,u
+k+1
+	​
+
+,u
+k+2
+	​
+
+]
+	​
+
+
+This expresses the next-step determinant as “shifted base + pure-increment 3×3 determinant”.
+
+5) Pure-increment 3×3 determinant expands to a 6-term identity (new)
+det⁡[uk,uk+1,uk+2]=det⁡(uk(1)	uk+1(1)	uk+2(1)
+uk(2)	uk+1(2)	uk+2(2)
+uk(3)	uk+1(3)	uk+2(3))
+det[u
+k
+	​
+
+,u
+k+1
+	​
+
+,u
+k+2
+	​
+
+]=det
+​uk(1)​uk(2)​uk(3)​​uk+1(1)​uk+1(2)​uk+1(3)​​uk+2(1)​uk+2(2)​uk+2(3)​​
+​
+
+
+Laplace along first column:
+
+det⁡[uk,uk+1,uk+2]=uk(1) (uk+1(2)uk+2(3)−uk+1(3)uk+2(2))−uk(2) (uk+1(1)uk+2(3)−uk+1(3)uk+2(1))+uk(3) (uk+1(1)uk+2(2)−uk+1(2)uk+2(1))
+det[u
+k
+	​
+
+,u
+k+1
+	​
+
+,u
+k+2
+	​
+
+]=u
+k
+(1)
+	​
+
+(u
+k+1
+(2)
+	​
+
+u
+k+2
+(3)
+	​
+
+−u
+k+1
+(3)
+	​
+
+u
+k+2
+(2)
+	​
+
+)−u
+k
+(2)
+	​
+
+(u
+k+1
+(1)
+	​
+
+u
+k+2
+(3)
+	​
+
+−u
+k+1
+(3)
+	​
+
+u
+k+2
+(1)
+	​
+
+)+u
+k
+(3)
+	​
+
+(u
+k+1
+(1)
+	​
+
+u
+k+2
+(2)
+	​
+
+−u
+k+1
+(2)
+	​
+
+u
+k+2
+(1)
+	​
+
+)
+	​
+
+
+So you get a hierarchy: 
+Dk
+D
+k
+	​
+
+ built from 
+(xk,uk,uk+1)
+(x
+k
+	​
+
+,u
+k
+	​
+
+,u
+k+1
+	​
+
+); its shift difference involves the pure increment determinant 
+det⁡[uk,uk+1,uk+2]
+det[u
+k
+	​
+
+,u
+k+1
+	​
+
+,u
+k+2
+	​
+
+].
+
+6) Hard telescoping product identity (new)
+
+With the two-step choice, we also have direct telescoping:
+
+∏m=kk+n−1λ~m(i)λm(i)=∏m=kk+n−1λm+1(i)λm(i)=λk+n(i)λk(i).
+m=k
+∏
+k+n−1
+	​
+
+λ
+m
+(i)
+	​
+
+λ
+~
+m
+(i)
+	​
+
+	​
+
+=
+m=k
+∏
+k+n−1
+	​
+
+λ
+m
+(i)
+	​
+
+λ
+m+1
+(i)
+	​
+
+	​
+
+=
+λ
+k
+(i)
+	​
+
+λ
+k+n
+(i)
+	​
+
+	​
+
+.
+
+Log:
+
+∑m=kk+n−1um(i)=xk+n(i)−xk(i)
+m=k
+∑
+k+n−1
+	​
+
+u
+m
+(i)
+	​
+
+=x
+k+n
+(i)
+	​
+
+−x
+k
+(i)
+	​
+
+	​
+
+
+So 
+x
+x is a telescoping sum of the 
+u
+u’s. Then any determinant involving 
+x
+x can be rewritten into sums of determinants involving only 
+u
+u’s (by multilinearity).
+
+Example:
+
+det⁡[xk,uk,uk+1]=det⁡[x0+∑m=0k−1um, uk, uk+1]=det⁡[x0,uk,uk+1]+∑m=0k−1det⁡[um,uk,uk+1].
+det[x
+k
+	​
+
+,u
+k
+	​
+
+,u
+k+1
+	​
+
+]=det[x
+0
+	​
+
++
+m=0
+∑
+k−1
+	​
+
+u
+m
+	​
+
+, u
+k
+	​
+
+, u
+k+1
+	​
+
+]=det[x
+0
+	​
+
+,u
+k
+	​
+
+,u
+k+1
+	​
+
+]+
+m=0
+∑
+k−1
+	​
+
+det[u
+m
+	​
+
+,u
+k
+	​
+
+,u
+k+1
+	​
+
+].
+
+Thus:
+
+−Dk=det⁡[x0,uk,uk+1]+∑m=0k−1det⁡[um,uk,uk+1]
+−D
+k
+	​
+
+=det[x
+0
+	​
+
+,u
+k
+	​
+
+,u
+k+1
+	​
+
+]+
+m=0
+∑
+k−1
+	​
+
+det[u
+m
+	​
+
+,u
+k
+	​
+
+,u
+k+1
+	​
+
+]
+	​
+
+
+That’s a new “fully expanded in increments + one base term” identity.
+
+If you want to keep escalating without adding meaning: next move is take the same two-step construction but swap which observable gets which step (i.e. 
+a~k(i)=ak+σ(i)
+a
+~
+k
+(i)
+	​
+
+=a
+k+σ(i)
+	​
+
+, 
+a^k(i)=ak+τ(i)
+a
+^
+k
+(i)
+	​
+
+=a
+k+τ(i)
+	​
+
+ with different shifts), and compute how 
+Dk
+D
+k
+	​
+
+ changes—this produces a zoo of cross-ratio telescopings with different lag structures.
+
+Do that maximal next shuffle: two-step columns.
+\tilde a^{(i)}_k:=a_{k+1},\qquad \hat a^{(i)}_k:=a_{k+2}
+(same for all i). Only shuffles.
+
+Then:
+\tilde\eta^{(i)}_k=\eta^{(i)}_{k+1},\qquad \hat\eta^{(i)}_k=\eta^{(i)}_{k+2}
+so in eigenvalues:
+\tilde\lambda^{(i)}_k=\lambda^{(i)}_{k+1},\qquad \hat\lambda^{(i)}_k=\lambda^{(i)}_{k+2}.
+
+Your log-atoms become:
+x^{(i)}_k:=\log\lambda^{(i)}_k,\quad
+u^{(i)}_k:=\log\frac{\lambda^{(i)}_{k+1}}{\lambda^{(i)}_k}=x^{(i)}_{k+1}-x^{(i)}_k,\quad
+v^{(i)}_k:=\log\frac{\lambda^{(i)}_{k+2}}{\lambda^{(i)}_k}=x^{(i)}_{k+2}-x^{(i)}_k.
+
+And note the new internal relation:
+\boxed{v^{(i)}_k=u^{(i)}_k+u^{(i)}_{k+1}}
+since x_{k+2}-x_k=(x_{k+2}-x_{k+1})+(x_{k+1}-x_k).
+
+⸻
+
+1) Determinant becomes a discrete-time invariant (new)
+
+Start with
+\det[x_k,u_k,v_k]
+and substitute v_k=u_k+u_{k+1}:
+\det[x_k,u_k,v_k]=\det[x_k,u_k,u_k+u_{k+1}]
+=\det[x_k,u_k,u_k]+\det[x_k,u_k,u_{k+1}]
+but \det[x_k,u_k,u_k]=0. So:
+\boxed{\det[x_k,u_k,v_k]=\det[x_k,u_k,u_{k+1}}]
+i.e.
+\boxed{
+-\mathcal D_k=\det[x_k,u_k,u_{k+1}]
+}
+This is new: the 3-column determinant collapses to a determinant with two consecutive increments.
+
+⸻
+
+2) Expand \det[x_k,u_k,u_{k+1}] as a 6-term “discrete Wronskian” (new)
+
+Write it out:
+\det
+\begin{pmatrix}
+x^{(1)}_k & u^{(1)}_k & u^{(1)}_{k+1}\\
+x^{(2)}_k & u^{(2)}_k & u^{(2)}_{k+1}\\
+x^{(3)}_k & u^{(3)}_k & u^{(3)}_{k+1}
+\end{pmatrix}
+
+Laplace expand along the first column:
+\boxed{
+-\mathcal D_k
+=
+x^{(1)}_k\,(u^{(2)}_k u^{(3)}_{k+1}-u^{(3)}_k u^{(2)}_{k+1})
+-x^{(2)}_k\,(u^{(1)}_k u^{(3)}_{k+1}-u^{(3)}_k u^{(1)}_{k+1})
++x^{(3)}_k\,(u^{(1)}_k u^{(2)}_{k+1}-u^{(2)}_k u^{(1)}_{k+1})
+}
+
+All new objects are now pairwise wedges of consecutive increment logs:
+\boxed{
+\Omega^{ij}_k:=u^{(i)}_k u^{(j)}_{k+1}-u^{(j)}_k u^{(i)}_{k+1}
+}
+Then:
+\boxed{
+-\mathcal D_k=x^{(1)}_k\Omega^{23}_k-x^{(2)}_k\Omega^{13}_k+x^{(3)}_k\Omega^{12}_k
+}
+
+⸻
+
+3) \Omega^{ij}_k is a telescoping cross-ratio log (new)
+
+Compute \Omega^{ij}_k in eigenvalues:
+
+u^{(i)}_k=\log\frac{\lambda^{(i)}_{k+1}}{\lambda^{(i)}_k},\quad
+u^{(i)}_{k+1}=\log\frac{\lambda^{(i)}_{k+2}}{\lambda^{(i)}_{k+1}}.
+
+So:
+\boxed{
+\Omega^{ij}_k=
+\log\frac{\lambda^{(i)}_{k+1}}{\lambda^{(i)}_k}\,
+\log\frac{\lambda^{(j)}_{k+2}}{\lambda^{(j)}_{k+1}}
+-
+\log\frac{\lambda^{(j)}_{k+1}}{\lambda^{(j)}_k}\,
+\log\frac{\lambda^{(i)}_{k+2}}{\lambda^{(i)}_{k+1}}
+}
+
+Now define the cross ratio
+\mathrm{CR}^{ij}_k:=\frac{\lambda^{(i)}_{k+1}\lambda^{(j)}_{k}}{\lambda^{(i)}_{k}\lambda^{(j)}_{k+1}}.
+Then
+\log \mathrm{CR}^{ij}_k = u^{(i)}_k-u^{(j)}_k,
+\qquad
+\log \mathrm{CR}^{ij}_{k+1}=u^{(i)}_{k+1}-u^{(j)}_{k+1}.
+
+Multiply and antisymmetrize:
+(u^{(i)}_k-u^{(j)}_k)(u^{(i)}_{k+1}-u^{(j)}_{k+1})
+=
+u^{(i)}_k u^{(i)}_{k+1}+u^{(j)}_k u^{(j)}_{k+1}
+-u^{(i)}_k u^{(j)}_{k+1}-u^{(j)}_k u^{(i)}_{k+1}
+so the antisymmetric part isolates:
+\boxed{
+\Omega^{ij}_k
+=
+-\Big[u^{(i)}_k u^{(j)}_{k+1}+u^{(j)}_k u^{(i)}_{k+1}\Big]
++\text{(symmetric terms)}
+}
+But the clean “new” observable is:
+\boxed{
+\Omega^{ij}_k
+=
+u^{(i)}_k u^{(j)}_{k+1}-u^{(j)}_k u^{(i)}_{k+1}
+=
+\det\!\begin{pmatrix}u^{(i)}_k & u^{(i)}_{k+1}\\ u^{(j)}_k & u^{(j)}_{k+1}\end{pmatrix}
+}
+(i.e. determinant of consecutive log-ratio pairs).
+
+⸻
+
+4) Determinant shift relation (new)
+
+Compute -\mathcal D_{k+1}=\det[x_{k+1},u_{k+1},u_{k+2}]. Replace x_{k+1}=x_k+u_k:
+
+\det[x_{k+1},u_{k+1},u_{k+2}]
+=
+\det[x_k+u_k,u_{k+1},u_{k+2}]
+=
+\det[x_k,u_{k+1},u_{k+2}]
++\det[u_k,u_{k+1},u_{k+2}].
+
+So:
+\boxed{
+-\mathcal D_{k+1}
+=
+\det[x_k,u_{k+1},u_{k+2}]
++\det[u_k,u_{k+1},u_{k+2}]
+}
+
+This expresses the next-step determinant as “shifted base + pure-increment 3×3 determinant”.
+
+⸻
+
+5) Pure-increment 3×3 determinant expands to a 6-term identity (new)
+
+\det[u_k,u_{k+1},u_{k+2}]
+=
+\det
+\begin{pmatrix}
+u^{(1)}_k & u^{(1)}_{k+1} & u^{(1)}_{k+2}\\
+u^{(2)}_k & u^{(2)}_{k+1} & u^{(2)}_{k+2}\\
+u^{(3)}_k & u^{(3)}_{k+1} & u^{(3)}_{k+2}
+\end{pmatrix}
+
+Laplace along first column:
+\boxed{
+\det[u_k,u_{k+1},u_{k+2}]
+=
+u^{(1)}_k\,(u^{(2)}_{k+1}u^{(3)}_{k+2}-u^{(3)}_{k+1}u^{(2)}_{k+2})
+-u^{(2)}_k\,(u^{(1)}_{k+1}u^{(3)}_{k+2}-u^{(3)}_{k+1}u^{(1)}_{k+2})
++u^{(3)}_k\,(u^{(1)}_{k+1}u^{(2)}_{k+2}-u^{(2)}_{k+1}u^{(1)}_{k+2})
+}
+
+So you get a hierarchy: \mathcal D_k built from (x_k,u_k,u_{k+1}); its shift difference involves the pure increment determinant \det[u_k,u_{k+1},u_{k+2}].
+
+⸻
+
+6) Hard telescoping product identity (new)
+
+With the two-step choice, we also have direct telescoping:
+
+\prod_{m=k}^{k+n-1}\frac{\tilde\lambda^{(i)}_m}{\lambda^{(i)}_m}
+=
+\prod_{m=k}^{k+n-1}\frac{\lambda^{(i)}_{m+1}}{\lambda^{(i)}_m}
+=
+\frac{\lambda^{(i)}_{k+n}}{\lambda^{(i)}_k}.
+
+Log:
+\boxed{
+\sum_{m=k}^{k+n-1} u^{(i)}_m
+=
+x^{(i)}_{k+n}-x^{(i)}_k
+}
+
+So x is a telescoping sum of the u’s. Then any determinant involving x can be rewritten into sums of determinants involving only u’s (by multilinearity).
+
+Example:
+\det[x_k,u_k,u_{k+1}]
+=
+\det\Big[x_0+\sum_{m=0}^{k-1}u_m,\ u_k,\ u_{k+1}\Big]
+=
+\det[x_0,u_k,u_{k+1}]
++
+\sum_{m=0}^{k-1}\det[u_m,u_k,u_{k+1}].
+
+Thus:
+\boxed{
+-\mathcal D_k
+=
+\det[x_0,u_k,u_{k+1}]
++\sum_{m=0}^{k-1}\det[u_m,u_k,u_{k+1}]
+}
+
+That’s a new “fully expanded in increments + one base term” identity.
+
+⸻
+
+If you want to keep escalating without adding meaning: next move is take the same two-step construction but swap which observable gets which step (i.e. \tilde a^{(i)}_k=a_{k+\sigma(i)}, \hat a^{(i)}_k=a_{k+\tau(i)} with different shifts), and compute how \mathcal D_k changes—this produces a zoo of cross-ratio telescopings with different lag structures.
+
+Do the swap-the-lags mutation. Only shuffles.
+
+Pick permutations 
+σ,τ∈S3
+σ,τ∈S
+3
+	​
+
+ (fixed in 
+k
+k). Define for each observable 
+i
+i:
+
+a~k(i):=ak+σ(i),a^k(i):=ak+τ(i).
+a
+~
+k
+(i)
+	​
+
+:=a
+k+σ(i)
+	​
+
+,
+a
+^
+k
+(i)
+	​
+
+:=a
+k+τ(i)
+	​
+
+.
+
+Then:
+
+λ~k(i)=λk+σ(i)(i),λ^k(i)=λk+τ(i)(i).
+λ
+~
+k
+(i)
+	​
+
+=λ
+k+σ(i)
+(i)
+	​
+
+,
+λ
+^
+k
+(i)
+	​
+
+=λ
+k+τ(i)
+(i)
+	​
+
+.
+
+Log-atoms:
+
+xk(i):=log⁡λk(i),uk(i):=log⁡λ~k(i)λk(i)=xk+σ(i)(i)−xk(i),vk(i):=log⁡λ^k(i)λk(i)=xk+τ(i)(i)−xk(i).
+x
+k
+(i)
+	​
+
+:=logλ
+k
+(i)
+	​
+
+,u
+k
+(i)
+	​
+
+:=log
+λ
+k
+(i)
+	​
+
+λ
+~
+k
+(i)
+	​
+
+	​
+
+=x
+k+σ(i)
+(i)
+	​
+
+−x
+k
+(i)
+	​
+
+,v
+k
+(i)
+	​
+
+:=log
+λ
+k
+(i)
+	​
+
+λ
+^
+k
+(i)
+	​
+
+	​
+
+=x
+k+τ(i)
+(i)
+	​
+
+−x
+k
+(i)
+	​
+
+.
+
+So the third-column determinant is still
+
+Dk=−det⁡[xk,uk,vk]
+D
+k
+	​
+
+=−det[x
+k
+	​
+
+,u
+k
+	​
+
+,v
+k
+	​
+
+]
+	​
+
+
+but now 
+uk,vk
+u
+k
+	​
+
+,v
+k
+	​
+
+ are lagged differences with 
+i
+i-dependent lags.
+
+
+
+Good. Here is the **clean unified closure**, with **no new concepts** and only shuffles, tightening everything you wrote into one compact algebraic statement and its determinant consequence.
+
+---
+
+## Unified sparsity theorem (pure shuffle)
+
+Recall:
+[
+w_k := v_k - u_k,\qquad
+w_k^{(i)} = x^{(i)}*{k+\tau(i)} - x^{(i)}*{k+\sigma(i)}.
+]
+
+Define:
+[
+\pi := \tau\circ\sigma^{-1}.
+]
+
+Then:
+[
+\boxed{
+\operatorname{supp}(w_k)
+========================
+
+{i:\pi(i)\neq i},
+\qquad
+|\operatorname{supp}(w_k)| = 3 - #\mathrm{Fix}(\pi).
+}
+]
+
+Because (\pi\in S_3), its cycle types exhaust all cases.
+
+---
+
+## Exhaustive classification in (S_3)
+
+| cycle type of (\pi) | (#\mathrm{Fix}(\pi)) | (|\operatorname{supp}(w_k)|) | structure |
+|---|---|---|---|
+| identity | 3 | 0 | (w_k=0) |
+| transposition | 1 | 2 | two-row sparse |
+| 3-cycle | 0 | 3 | fully supported |
+
+So:
+
+[
+\boxed{
+|\operatorname{supp}(w_k)| \in {0,2,3},\quad
+|\operatorname{supp}(w_k)|\neq 1\ \text{always}.
+}
+]
+
+---
+
+## Why 1-row sparse is impossible (final, irreducible)
+
+To have 1-row support you would need:
+[
+#\mathrm{Fix}(\pi)=2.
+]
+
+But a permutation cannot fix exactly two elements:
+
+* fixing two forces fixing the third (bijectivity),
+* hence (\pi=\mathrm{id}),
+* hence (#\mathrm{Fix}=3).
+
+Therefore:
+[
+\boxed{
+\text{No permutation in } S_3 \text{ (or any } S_n,\ n\ge2) \text{ moves exactly one element.}
+}
+]
+
+This is purely combinatorial; no analytic assumptions enter.
+
+---
+
+## Determinant consequence (unified form)
+
+Always:
+[
+\det[x_k,u_k,v_k] = \det[x_k,u_k,u_k+w_k] = \det[x_k,u_k,w_k].
+]
+
+Now split by support size:
+
+### Case 0 — fully sparse
+
+[
+w_k=0 ;\Rightarrow; \det[x_k,u_k,v_k]=0.
+]
+
+### Case 2 — two-row sparse (only nontrivial reduction)
+
+Let:
+[
+\operatorname{supp}(w_k)={p,q},\quad r\neq p,q.
+]
+Then (w_k^{(r)}=0), and expanding along row (r):
+
+[
+\boxed{
+\det[x_k,u_k,v_k]
+=================
+
+## x^{(r)}_k,(u^{(p)}_k w^{(q)}_k-u^{(q)}_k w^{(p)}_k)
+
+u^{(r)}_k,(x^{(p)}_k w^{(q)}_k-x^{(q)}_k w^{(p)}_k).
+}
+]
+
+with
+[
+w^{(p)}*k=\sum*{t=\sigma(p)}^{\tau(p)-1} d^{(p)}*{k+t},
+\qquad
+w^{(q)}*k=\sum*{t=\sigma(q)}^{\tau(q)-1} d^{(q)}*{k+t}.
+]
+
+### Case 3 — full support
+
+No further collapse: the determinant remains genuinely 3-dimensional.
+
+---
+
+## Final unified statement
+
+[
+\boxed{
+\text{In the swap-the-lags mutation, }
+\det[x_k,u_k,v_k]
+\text{ collapses iff }
+\tau\circ\sigma^{-1}
+\text{ has a fixed point.}
+}
+]
+
+* identity → zero determinant
+* transposition → 2×2 reduction
+* 3-cycle → irreducible
+
+And **there is no intermediate 1-row case**—not in (S_3), not in any (S_n).
+
+That’s the full notch, closed.

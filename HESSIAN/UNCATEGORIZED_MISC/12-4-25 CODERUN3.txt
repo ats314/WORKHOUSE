@@ -1,0 +1,105 @@
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+jax.config.update("jax_enable_x64", True)
+
+# ... (Insert your previous SU3/Wilson Action setup code here: generators, build_links, etc.) ...
+# RE-DEFINE for safety if copy-pasting:
+def su3_generators():
+    lam = [jnp.array([[0,1,0],[1,0,0],[0,0,0]], jnp.complex128),
+           jnp.array([[0,-1j,0],[1j,0,0],[0,0,0]], jnp.complex128),
+           jnp.array([[1,0,0],[0,-1,0],[0,0,0]], jnp.complex128),
+           jnp.array([[0,0,1],[0,0,0],[1,0,0]], jnp.complex128),
+           jnp.array([[0,0,-1j],[0,0,0],[1j,0,0]], jnp.complex128),
+           jnp.array([[0,0,0],[0,0,1],[0,1,0]], jnp.complex128),
+           jnp.array([[0,0,0],[0,0,-1j],[0,1j,0]], jnp.complex128),
+           jnp.array([[1,0,0],[0,1,0],[0,0,-2]], jnp.complex128)/jnp.sqrt(3)]
+    return 1j * jnp.stack(lam) / 2
+T = su3_generators()
+def su3_alg_from_vec(a): return jnp.einsum("...a,aij->...ij", a, T)
+def su3_exp(A): return jax.scipy.linalg.expm(A)
+def build_links(theta, L):
+    flat = theta.reshape(-1, 8)
+    A = jax.vmap(su3_alg_from_vec)(flat)
+    U = jax.vmap(su3_exp)(A)
+    return U.reshape(L, L, L, L, 4, 3, 3)
+def wilson_action(theta, L):
+    U = build_links(theta, L)
+    S = 0.0
+    for mu in range(4):
+        for nu in range(mu+1, 4):
+            U1 = U[..., mu, :, :]
+            U2 = jnp.roll(U[..., nu, :, :], -1, axis=mu)
+            U3 = jnp.swapaxes(jnp.conjugate(jnp.roll(U[..., mu, :, :], -1, axis=nu)), -1, -2)
+            U4 = jnp.swapaxes(jnp.conjugate(U[..., nu, :, :]), -1, -2)
+            tr = jnp.real(jnp.einsum("...ii->...", U1 @ U2 @ U3 @ U4))
+            S += jnp.sum(1.0 - tr/3.0)
+    return S
+
+# ----- FULL HESSIAN CONSTRUCTION -----
+def get_full_spectrum(L, theta_amp=0.0):
+    print(f"--- Computing Full Spectrum for L={L}, Theta={theta_amp} ---")
+    n_params = (L**4) * 4 * 8
+    
+    # Define action wrapper
+    def action_wrapper(theta):
+        return wilson_action(theta, L)
+
+    # Hessian is Jacobian of Gradient
+    hessian_fn = jax.jacfwd(jax.grad(action_wrapper))
+    
+    # 1. Create Perturbation
+    key = jax.random.PRNGKey(42)
+    dir_vec = jax.random.normal(key, (n_params,))
+    dir_vec = dir_vec / jnp.linalg.norm(dir_vec)
+    theta = theta_amp * dir_vec
+    
+    # 2. Compute Dense Hessian (512x512 for L=2)
+    # This fits easily in GPU memory for L=2
+    print("Computing dense Hessian...")
+    H = hessian_fn(theta)
+    
+    # 3. Diagonalize
+    print("Diagonalizing...")
+    eigs = jnp.linalg.eigvalsh(H)
+    return eigs
+
+# ----- RUN DIAGNOSTIC -----
+L = 2
+eigs_vac = get_full_spectrum(L, theta_amp=0.0)
+eigs_pert = get_full_spectrum(L, theta_amp=0.02)
+
+# ----- VISUALIZATION -----
+plt.figure(figsize=(10, 6))
+# Plot only the first 200 eigenvalues to see the transition
+indices = np.arange(len(eigs_vac))
+
+plt.plot(indices[:200], eigs_vac[:200], 'o-', label=r'$\theta=0.0$ (Vacuum)', markersize=3, alpha=0.7)
+plt.plot(indices[:200], eigs_pert[:200], 'x-', label=r'$\theta=0.02$ (Perturbed)', markersize=3, alpha=0.7)
+
+plt.axhline(0, color='k', linewidth=0.5)
+plt.xlabel("Eigenvalue Index")
+plt.ylabel("Eigenvalue $\lambda$")
+plt.title(f"Full Hessian Spectrum (First 200 modes) - L={L}")
+plt.legend()
+plt.grid(True, alpha=0.3)
+
+# Highlight the Gap
+gauge_dof = (L**4) * 8 # Number of gauge modes (approx)
+# Actually it is (L^4 - 1)*8 due to global symmetry, but roughly 128
+plt.axvline(gauge_dof, color='r', linestyle='--', label='Theoretical Gauge Mode Count')
+
+plt.show()
+
+# Precise Gap Check
+print("\n===== GAP ANALYSIS =====")
+print(f"Total DOFs: {len(eigs_vac)}")
+print(f"Theoretical Gauge Modes: {gauge_dof}")
+print(f"Vacuum Gap (Index {gauge_dof}): {eigs_vac[gauge_dof]:.6f}")
+print(f"Perturbed Gap (Index {gauge_dof}): {eigs_pert[gauge_dof]:.6f}")
+print(f"Lowest Perturbed Value: {eigs_pert[0]:.6f}")
+
+
+

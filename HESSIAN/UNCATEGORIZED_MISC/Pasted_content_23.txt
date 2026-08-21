@@ -1,0 +1,241 @@
+1. Setup and Statement
+
+Let V be a real Hilbert space of finite dimension m (this is the fixed projected mode space for the PBH flow). Let \mathrm{Sym}(V) denote the space of self-adjoint (symmetric) linear operators on V.
+
+The projected Bochner–Hessian (PBH) flow is an operator-valued ODE
+\frac{d}{dt} h_t = -h_t^2 + \mathcal{R}(h_t) + \mathcal{K}_t,
+\qquad t \ge 0,
+\tag{1}
+where for each t:
+	•	h_t \in \mathrm{Sym}(V) is the projected Hessian operator;
+	•	\mathcal{R} : \mathrm{Sym}(V) \to \mathrm{Sym}(V) is a fixed linear “curvature operator” coming from the Bochner identity on the gauge orbit space;
+	•	\mathcal{K}_t \in \mathrm{Sym}(V) is the anomaly source term (positive perturbation coming from the running coupling, etc.).
+
+We assume:
+	1.	Finite rank / projection. The projection defining the PBH flow is onto a fixed m-dimensional subspace, so each h_t is an m \times m self-adjoint matrix. In particular, all traces and operator norms are finite.
+	2.	Positivity of the Hessian.
+For all t \ge 0, h_t is positive semidefinite:
+h_t \ge 0 \quad\text{(all eigenvalues nonnegative)}.
+\tag{A1}
+This encodes the fact that we are following the Hessian of a convex effective action (projected to a fixed mode space) along the PBH flow.
+	3.	Uniform bound on the curvature operator.
+\mathcal{R} is linear and bounded as a map \mathrm{Sym}(V)\to \mathrm{Sym}(V); let
+C_{\mathcal{R}} := \sup_{H \neq 0} \frac{\|\mathcal{R}(H)\|_{\mathrm{op}}}{\|H\|_{\mathrm{op}}} < \infty.
+\tag{A2}
+In the Yang–Mills application, \mathcal{R} is built algebraically from the Riemann curvature of the gauge orbit space, and the sectional curvature bound |K_{\mathcal{M}}|\le C_0 g^2 implies C_{\mathcal{R}} \lesssim C_0 g^2, but we only need finiteness and independence of t.
+	4.	Uniform bound on the anomaly source.
+The anomaly source operators are positive semidefinite and uniformly bounded in trace:
+\mathcal{K}_t \ge 0,
+\qquad \operatorname{Tr}(\mathcal{K}_t) \le K_{\max} < \infty
+\quad\text{for all } t \ge 0.
+\tag{A3}
+	5.	Finite initial trace.
+\operatorname{Tr}(h_0) < \infty.
+\tag{A4}
+
+We now prove:
+
+Theorem (Uniform Trace Bound for PBH Flow).
+Under assumptions (A1)–(A4), the solution h_t to (1) satisfies
+\operatorname{Tr}(h_t) \;\le\; H_{\mathrm{Tr}} \quad\text{for all } t \ge 0,
+for some finite constant H_{\mathrm{Tr}} < \infty that is independent of t (but may depend on m, C_{\mathcal{R}}, K_{\max}, and \operatorname{Tr}(h_0)).
+
+⸻
+
+2. Operator and Trace Preliminaries
+
+Let A \in \mathrm{Sym}(V) be self-adjoint with eigenvalues \lambda_1,\dots,\lambda_m \in \mathbb{R}. Standard facts:
+	1.	Trace and Hilbert–Schmidt norms:
+\operatorname{Tr}(A) = \sum_{i=1}^m \lambda_i,
+\qquad
+\operatorname{Tr}(A^2) = \sum_{i=1}^m \lambda_i^2.
+	2.	Quadratic vs linear trace inequality.
+By Cauchy–Schwarz,
+\left(\sum_{i=1}^m \lambda_i\right)^2
+\le m \sum_{i=1}^m \lambda_i^2
+\quad\Rightarrow\quad
+\operatorname{Tr}(A^2) \;\ge\; \frac{1}{m}\,\operatorname{Tr}(A)^2.
+\tag{2}
+This holds regardless of the signs of the eigenvalues.
+	3.	Max eigenvalue vs trace for positive operators.
+If A \ge 0 (all \lambda_i \ge 0), then
+\|A\|_{\mathrm{op}} = \max_i \lambda_i \;\le\; \sum_{i=1}^m \lambda_i = \operatorname{Tr}(A).
+\tag{3}
+
+These will be used for A = h_t.
+
+⸻
+
+3. Bounds on the Curvature Term and Anomaly Source
+
+3.1 Curvature operator \mathcal{R}
+
+By (A2), \mathcal{R} is bounded:
+\|\mathcal{R}(H)\|_{\mathrm{op}} \;\le\; C_{\mathcal{R}}\,\|H\|_{\mathrm{op}}
+\quad\text{for all } H \in \mathrm{Sym}(V).
+\tag{4}
+
+For positive semidefinite H, combining (3) and (4) gives
+\|\mathcal{R}(H)\|_{\mathrm{op}} \;\le\; C_{\mathcal{R}}\,\|H\|_{\mathrm{op}}
+\;\le\; C_{\mathcal{R}}\,\operatorname{Tr}(H).
+\tag{5}
+
+Since \mathcal{R}(H) is self-adjoint with eigenvalues \mu_1,\dots,\mu_m, we can bound its trace in absolute value by
+|\operatorname{Tr}(\mathcal{R}(H))|
+= \left|\sum_{i=1}^m \mu_i\right|
+\le \sum_{i=1}^m |\mu_i|
+\le m\,\|\mathcal{R}(H)\|_{\mathrm{op}}.
+Hence for positive H,
+\operatorname{Tr}(\mathcal{R}(H))
+\;\le\; |\operatorname{Tr}(\mathcal{R}(H))|
+\;\le\; m\,\|\mathcal{R}(H)\|_{\mathrm{op}}
+\;\le\; m\, C_{\mathcal{R}}\,\operatorname{Tr}(H).
+\tag{6}
+
+So we have the linear trace bound
+\operatorname{Tr}(\mathcal{R}(H))\;\le\; c_R\,\operatorname{Tr}(H),
+\qquad c_R := m C_{\mathcal{R}},
+\tag{7}
+for all positive semidefinite H.
+
+In the Yang–Mills context, \mathcal{R} arises from contracting the Riemann tensor of the orbit space with h, and the bound on sectional curvature |K_{\mathcal{M}}|\le C_0 g^2 implies C_{\mathcal{R}}\lesssim C_0 g^2, hence c_R \lesssim m C_0 g^2. The only thing used in the proof is that c_R is finite and independent of t.
+
+3.2 Anomaly source \mathcal{K}_t
+
+By (A3), \mathcal{K}_t \ge 0 and
+0 \le \operatorname{Tr}(\mathcal{K}_t) \le K_{\max}
+\quad\text{for all } t\ge 0.
+\tag{8}
+
+No further structure on \mathcal{K}_t is needed for the upper trace bound.
+
+⸻
+
+4. Differential Inequality for \operatorname{Tr}(h_t)
+
+Define
+y(t) := \operatorname{Tr}(h_t).
+
+Since h_t is C^1 as a map t\mapsto \mathrm{Sym}(V) and finite-dimensional, its trace is differentiable and
+y'(t)
+= \operatorname{Tr}\big(\dot{h}_t\big)
+= \operatorname{Tr}\big(-h_t^2 + \mathcal{R}(h_t) + \mathcal{K}_t\big)
+= -\operatorname{Tr}(h_t^2) + \operatorname{Tr}(\mathcal{R}(h_t)) + \operatorname{Tr}(\mathcal{K}_t).
+\tag{9}
+
+Using the inequalities:
+	•	From (2), with A = h_t:
+\operatorname{Tr}(h_t^2) \;\ge\; \frac{1}{m}\,y(t)^2.
+\tag{10}
+	•	From (7), with H = h_t (and (A1) h_t\ge 0):
+\operatorname{Tr}(\mathcal{R}(h_t)) \;\le\; c_R\,y(t).
+\tag{11}
+	•	From (8):
+\operatorname{Tr}(\mathcal{K}_t) \;\le\; K_{\max}.
+\tag{12}
+
+Substitute into (9):
+\begin{aligned}
+y'(t)
+&= -\operatorname{Tr}(h_t^2)
++ \operatorname{Tr}(\mathcal{R}(h_t))
++ \operatorname{Tr}(\mathcal{K}_t) \\
+&\le -\frac{1}{m} y(t)^2 + c_R\,y(t) + K_{\max}.
+\end{aligned}
+\tag{13}
+
+So y(t) satisfies the scalar Riccati-type differential inequality
+y'(t) \;\le\; -\alpha y(t)^2 + \beta y(t) + \gamma,
+\quad\text{with}\quad
+\alpha = \frac{1}{m} > 0,\;
+\beta = c_R,\;
+\gamma = K_{\max}.
+\tag{14}
+
+⸻
+
+5. Scalar Comparison and Uniform Bound
+
+Consider the scalar function
+f(y) := -\alpha y^2 + \beta y + \gamma.
+This is a concave quadratic polynomial in y. Let y_+ denote the larger root of the quadratic equation
+\alpha y^2 - \beta y - \gamma = 0.
+\tag{15}
+Explicitly,
+y_+
+= \frac{\beta + \sqrt{\beta^2 + 4\alpha\gamma}}{2\alpha}.
+\tag{16}
+
+Note that \alpha>0, \gamma \ge 0, so y_+ \ge 0 and y_+ is finite (depends only on \alpha,\beta,\gamma, hence on m, c_R, K_{\max}).
+
+From (15),
+\alpha y_+^2 - \beta y_+ - \gamma = 0
+\quad\Rightarrow\quad
+f(y_+) = -\alpha y_+^2 + \beta y_+ + \gamma = 0.
+\tag{17}
+
+Moreover, for all y > y_+, we have
+\alpha y^2 - \beta y - \gamma > 0
+\quad\Rightarrow\quad
+f(y) = -(\alpha y^2 - \beta y - \gamma) < 0.
+\tag{18}
+
+Now define
+H_{\mathrm{Tr}} := \max\{ y(0),\; y_+ \}.
+\tag{19}
+
+We claim that
+y(t) \le H_{\mathrm{Tr}} \quad\text{for all } t \ge 0.
+
+Proof of the claim.
+
+Assume, for contradiction, that there exists t_0 \ge 0 such that y(t_0) > H_{\mathrm{Tr}}. Then
+y(t_0) > H_{\mathrm{Tr}} \ge y_+ \quad\Rightarrow\quad y(t_0) > y_+.
+
+By (18), f(y(t_0)) < 0. By continuity, there exists \varepsilon > 0 such that for all t \in [t_0, t_0+\varepsilon],
+y(t) > y_+ \quad\Rightarrow\quad f(y(t)) < 0.
+
+From (14), we have y'(t) \le f(y(t)) < 0 on this interval, so y(t) is strictly decreasing on [t_0, t_0+\varepsilon]. In particular,
+y(t) < y(t_0) \quad\text{for all } t \in (t_0, t_0+\varepsilon],
+and hence y(t) cannot cross upward above y(t_0).
+
+But at the same time, since y(t_0) > H_{\mathrm{Tr}} and y is continuous, there must be a first time t^* \ge 0 such that y(t^*) = H_{\mathrm{Tr}} and y(t) > H_{\mathrm{Tr}} for some t>t^*. This contradicts the fact that once y is above y_+ its derivative is strictly negative and it cannot increase past its previous value.
+
+Therefore, such a t_0 cannot exist, and we must have
+y(t) \le H_{\mathrm{Tr}} \quad\text{for all } t \ge 0.
+
+This proves the uniform trace bound.
+
+⸻
+
+6. Conclusion and Interpretation for PBH Flow
+
+We have shown:
+	•	Under the structural assumptions that:
+	•	the projected Hessian h_t remains positive semidefinite,
+	•	the curvature operator \mathcal{R} is linear and uniformly bounded,
+	•	the anomaly sources \mathcal{K}_t are positive and uniformly bounded in trace,
+	•	the trace y(t) = \operatorname{Tr}(h_t) satisfies a scalar Riccati inequality (14) whose coefficients are time-independent.
+	•	The larger root y_+ of the associated quadratic determines a universal ceiling for the trace; together with \operatorname{Tr}(h_0), it yields
+H_{\mathrm{Tr}} = \max\Big\{
+\operatorname{Tr}(h_0),\;
+\frac{\beta + \sqrt{\beta^2 + 4\alpha\gamma}}{2\alpha}
+\Big\}
+< \infty,
+with \alpha = 1/m, \beta = c_R, \gamma = K_{\max}.
+
+Thus:
+
+\boxed{
+\operatorname{Tr}(h_t) \;\le\; H_{\mathrm{Tr}}
+\quad\text{for all } t \ge 0,
+}
+where H_{\mathrm{Tr}} depends only on:
+	•	the fixed dimension m of the projected space,
+	•	the curvature-bound constant c_R (ultimately controlled by the gauge-group–dependent curvature bound |K_{\mathcal{M}}|\le C_0 g^2),
+	•	the uniform anomaly bound K_{\max},
+	•	and the initial trace \operatorname{Tr}(h_0),
+
+and is independent of the RG time t.
+
+This is the claimed uniform trace bound for the PBH flow.

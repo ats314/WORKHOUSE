@@ -1,0 +1,53 @@
+
+\section{Hessian Bounds for the Wilson Action}
+
+We now bound the operator norm of the Hessian of the Wilson action.
+Let
+\[
+  S_W(U) = \sum_{p} S_p(U_p),
+  \qquad
+  S_p(U_p) = 1 - \frac{1}{N}\Re\mathrm{Tr}\,U_p,
+\]
+where $p$ runs over elementary plaquettes and $U_p$ is the ordered
+product of link variables around $p$.
+
+\subsection{One-Plaquette Estimate}
+
+Fix a plaquette $p$ and $U\in SU(N)$. Let $X\in\mathfrak{su}(N)$ and
+consider the curve $U(\varepsilon) = e^{\varepsilon X} U$.
+Define $f(\varepsilon) = S_p(U(\varepsilon))$.
+
+\begin{lemma}[One-Plaquette Hessian Bound]
+  For all $U\in SU(N)$ and $X\in\mathfrak{su}(N)$,
+  \[
+    \bigl|f''(0)\bigr|
+    = \Bigl|
+        \big\langle X, \mathrm{Hess}\,S_p(U)\,X\big\rangle
+      \Bigr|
+    \le \frac{1}{N}\,\|X\|^2.
+  \]
+\end{lemma}
+
+\subsection{Global Wilson Hessian Bound in 4D}
+
+Let $A = (A_b)_{b\in B(\Lambda)}$ be a tangent vector in
+$T_U\mathcal{C}$, identified with an element of
+$\mathfrak{su}(N)^{B(\Lambda)}$. For each plaquette $p$, denote by
+$A^{(p)}$ the restriction of $A$ to its four boundary links.
+
+The Hessian quadratic form of $S_W$ can be written as
+\[
+  \langle A, \mathrm{Hess}\,S_W(U)\,A\rangle
+  = \sum_p \mathrm{Hess}\,S_p(U_p)\bigl(A^{(p)},A^{(p)}\bigr).
+\]
+
+\begin{theorem}[Wilson Hessian Bound in $d=4$]
+  In four dimensions, there exists a constant $C_V(N) = 6/N$ such that
+  for all configurations $U$ and all tangent vectors
+  $A \in T_U\mathcal{C}$,
+  \[
+    \bigl|\langle A, \mathrm{Hess}\,S_W(U)\,A\rangle\bigr|
+    \le C_V(N)\,\|A\|^2,
+    \qquad C_V(N) = \frac{6}{N}.
+  \]
+\end{theorem}

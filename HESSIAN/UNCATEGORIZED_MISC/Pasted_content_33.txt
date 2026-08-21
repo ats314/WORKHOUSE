@@ -1,0 +1,327 @@
+You’ve basically built exactly the right toy model. The core logic is sound: strong uniform convexity ⇒ BE(ρ,∞) ⇒ uniform LSI / Poincaré ⇒ uniform Gaussian tails ⇒ tightness ⇒ preservation of the same LSI (and, under extra assumptions, BE(ρ,∞)) in the limit.
+
+What I’ll do is:
+	1.	Turn your writeup into a clean theorem/lemma package you can drop into the stack.
+	2.	Flag the only places that are assumption-heavy or need a bit of care (mostly the infinite-dimensional limit / BE vs LSI issue).
+
+⸻
+
+1. Setup: finite-dimensional truncated, gauge-fixed YM model
+
+We keep your setting almost verbatim, but crystallize the assumptions.
+
+1.1 Configuration space and truncation
+
+Let T^4 = (\mathbb{R}/L\mathbb{Z})^4 with normalized Fourier basis
+e_k(x) = L^{-2} e^{i 2\pi k\cdot x/L}, \quad k\in\mathbb{Z}^4,
+so that \{e_k\} is orthonormal in L^2(T^4).
+
+Fix a cutoff \Lambda>0 and define
+K_\Lambda := \{k\in\mathbb{Z}^4 : |k|\le\Lambda\}.
+
+A truncated gauge field is given by coefficients
+A_\mu^a(k),\quad \mu=1,\dots,4,\quad a=1,\dots,N^2-1,\quad k\in K_\Lambda,
+so we set
+V_\Lambda := \Bigl\{A = (A_\mu^a(k))_{\mu,a,k\in K_\Lambda}\Bigr\} \cong \mathbb{R}^{M_\Lambda},
+\quad M_\Lambda = 4(N^2-1)\,\#K_\Lambda.
+
+Equip V_\Lambda with the Euclidean inner product
+\langle A,B\rangle_\Lambda = \sum_{\mu,a}\sum_{k\in K_\Lambda} A_\mu^a(k)\,B_\mu^a(k),\quad
+\|A\|_\Lambda^2 := \langle A,A\rangle_\Lambda.
+
+We assume a global linear gauge fixing has been imposed (e.g. Fourier Coulomb gauge k_\mu A_\mu^a(k)=0 for all k\neq 0), and that the Faddeev–Popov sector produces a strictly convex quadratic contribution
+S_{\mathrm{FP},\Lambda}(A) = \frac{\rho}{2}\,\|A\|_\Lambda^2,
+with \rho>0 a fixed constant independent of \Lambda.
+
+Let S_{W,\Lambda}:V_\Lambda\to\mathbb{R} denote the truncated Wilson–type action (gauge-invariant part), assumed:
+	•	S_{W,\Lambda}\in C^2(V_\Lambda),
+	•	(Convexity hypothesis)
+\mathrm{Hess}\,S_{W,\Lambda}(A)\ge 0 as a quadratic form for all A\in V_\Lambda.
+
+This is the main idealization: we are replacing “convex in a small-field region plus control of large fields” by global convexity.
+
+Define the effective potential
+S_{\mathrm{eff},\Lambda}(A)
+:= S_{W,\Lambda}(A) + S_{\mathrm{FP},\Lambda}(A)
+= S_{W,\Lambda}(A) + \tfrac{\rho}{2}\,\|A\|_\Lambda^2.
+
+Then for all A,
+\mathrm{Hess}\,S_{\mathrm{eff},\Lambda}(A)
+= \mathrm{Hess}\,S_{W,\Lambda}(A) + \rho I
+\;\ge\; \rho I.
+\tag{1.1}
+
+This uniform convexity with constant \rho is the key structural input.
+
+1.2 Gibbs measure and diffusion generator
+
+Define the Gibbs measure
+\mu_\Lambda(dA)
+:= Z_\Lambda^{-1} \exp\big(-S_{\mathrm{eff},\Lambda}(A)\big)\, dA,
+where dA is Lebesgue measure on \mathbb{R}^{M_\Lambda} and
+Z_\Lambda = \int e^{-S_{\mathrm{eff},\Lambda}} dA < \infty (obvious from the quadratic term).
+
+On L^2(\mu_\Lambda), define:
+	•	Gradient \nabla f(A)\in V_\Lambda.
+	•	Laplacian \Delta f(A) = \sum_{i=1}^{M_\Lambda} \partial_{A_i}^2 f(A).
+	•	Generator
+L_\Lambda f(A)
+:= \Delta f(A) - \langle \nabla S_{\mathrm{eff},\Lambda}(A),\nabla f(A)\rangle_\Lambda.
+
+L_\Lambda is the standard reversible diffusion with invariant measure \mu_\Lambda.
+
+Dirichlet form:
+\mathcal{E}_\Lambda(f,f)
+:= \int \|\nabla f(A)\|_\Lambda^2\,\mu_\Lambda(dA),
+initially on smooth compactly supported functions and then closed.
+
+Carré du champ:
+\Gamma_\Lambda(f,g)(A)
+:= \tfrac12\big(L_\Lambda(fg) - fL_\Lambda g - gL_\Lambda f\big)
+= \langle \nabla f(A),\nabla g(A)\rangle_\Lambda,
+\Gamma_\Lambda(f):=\Gamma_\Lambda(f,f) = \|\nabla f\|_\Lambda^2.
+
+Iterated carré du champ:
+\Gamma_{2,\Lambda}(f,g)
+:= \tfrac12\big(L_\Lambda\Gamma_\Lambda(f,g) - \Gamma_\Lambda(f,L_\Lambda g) - \Gamma_\Lambda(g,L_\Lambda f)\big),
+\quad
+\Gamma_{2,\Lambda}(f):=\Gamma_{2,\Lambda}(f,f).
+
+⸻
+
+2. Bakry–Émery curvature bound BE(\rho,\infty)
+
+Lemma 2.1 (Bochner formula in the finite-dimensional model)
+
+For smooth f:V_\Lambda\to\mathbb{R},
+\Gamma_{2,\Lambda}(f)(A)
+= \|\nabla^2 f(A)\|_{\mathrm{HS}}^2
++ \langle \mathrm{Hess}\,S_{\mathrm{eff},\Lambda}(A)\,\nabla f(A),\nabla f(A)\rangle_\Lambda,
+where \nabla^2 f is the matrix of second derivatives and \|\cdot\|_{\mathrm{HS}} the Hilbert–Schmidt norm.
+
+Proof sketch. This is the standard Bakry–Émery computation for
+L = \Delta - \nabla V\cdot\nabla on \mathbb{R}^d. Expanding the definitions of L, \Gamma, \Gamma_2 in coordinates gives the formula. The Hessian of V here is \mathrm{Hess}\,S_{\mathrm{eff},\Lambda}. ∎
+
+Lemma 2.2 (CD/BE(\rho,\infty) with \rho independent of \Lambda)
+
+Assume (1.1). Then for all smooth f,
+\Gamma_{2,\Lambda}(f) \;\ge\; \rho\,\Gamma_\Lambda(f),
+i.e. the pair (L_\Lambda,\Gamma_\Lambda) satisfies the curvature–dimension condition BE(\rho,\infty), with the same \rho>0 for all \Lambda.
+
+Proof. By Lemma 2.1,
+\Gamma_{2,\Lambda}(f)
+= \|\nabla^2 f\|_{\mathrm{HS}}^2
++ \langle \mathrm{Hess}\,S_{\mathrm{eff},\Lambda}\,\nabla f,\nabla f\rangle_\Lambda.
+Using (1.1),
+\langle \mathrm{Hess}\,S_{\mathrm{eff},\Lambda}\,\nabla f,\nabla f\rangle_\Lambda
+\ge \rho\,\|\nabla f\|_\Lambda^2 = \rho\,\Gamma_\Lambda(f),
+and \|\nabla^2 f\|_{\mathrm{HS}}^2\ge 0. ∎
+
+So you’ve fully nailed the “uniform curvature” part: BE(\rho,\infty) with a constant \rho that does not depend on the cutoff \Lambda.
+
+⸻
+
+3. Dimension-free functional inequalities and concentration
+
+From BE(\rho,\infty), you get the standard Bakry–Émery package.
+
+Proposition 3.1 (Uniform Poincaré and log-Sobolev inequalities)
+
+Under the hypotheses above, for each \Lambda and all smooth f:V_\Lambda\to\mathbb{R},
+	1.	Poincaré (spectral gap):
+\int f^2\,d\mu_\Lambda - \Bigl(\int f\,d\mu_\Lambda\Bigr)^2
+\le \frac{1}{\rho}\int \|\nabla f\|_\Lambda^2\,d\mu_\Lambda.
+	2.	Log-Sobolev:
+\int f^2\log\frac{f^2}{\int f^2 d\mu_\Lambda} \, d\mu_\Lambda
+\le \frac{2}{\rho} \int \|\nabla f\|_\Lambda^2\,d\mu_\Lambda.
+
+The constants 1/\rho, 2/\rho are independent of \Lambda.
+
+Proof. This is exactly the Bakry–Émery theorem: BE(\rho,\infty) implies Poincaré and LSI with constants 1/\rho and 2/\rho, respectively, and the constants depend only on \rho. Lemma 2.2 provides BE(\rho,\infty) with \rho independent of \Lambda. ∎
+
+Corollary 3.2 (Uniform Gaussian concentration)
+
+Let F:V_\Lambda\to\mathbb{R} be 1-Lipschitz with respect to \|\cdot\|_\Lambda. Then, after centering F so that \int F\,d\mu_\Lambda = 0,
+\int e^{\lambda F} d\mu_\Lambda \le \exp\!\left(\frac{\lambda^2}{2\rho}\right)
+\quad\text{for all }\lambda\in\mathbb{R},
+and thus, for all R>0,
+\mu_\Lambda(|F|>R) \le 2\exp\!\left(-\frac{\rho R^2}{2}\right).
+
+The constants on the right are uniform in \Lambda.
+
+Proof. Standard Herbst argument from LSI (3.1); BE(\rho,\infty) gives LSI with constant 2/\rho independent of \Lambda. ∎
+
+This is the “dimension-free concentration” you want: no dependence on M_\Lambda.
+
+⸻
+
+4. Tightness as \Lambda\to\infty
+
+We now embed all truncated spaces into a common Hilbert space.
+
+4.1 Embedding into a fixed Hilbert space
+
+Let H := \ell^2(\mathbb{N}) with canonical orthonormal basis \{e_i\}. For each \Lambda, fix an orthonormal identification V_\Lambda\cong\mathbb{R}^{M_\Lambda} and define
+J_\Lambda : V_\Lambda \hookrightarrow H,\quad
+J_\Lambda(A)_i =
+\begin{cases}
+A_i,& i\le M_\Lambda,\\
+0,& i>M_\Lambda.
+\end{cases}
+
+Define the pushforward measures
+\tilde\mu_\Lambda := (J_\Lambda)_\# \mu_\Lambda
+on H. For notational simplicity, write \mu_\Lambda for \tilde\mu_\Lambda and view each A as an element of H.
+
+The Hilbert norm \|\cdot\|_H restricted to V_\Lambda coincides with \|\cdot\|_\Lambda.
+
+The function
+F(A) := \|A\|_H
+is 1-Lipschitz on H, hence 1-Lipschitz on each V_\Lambda.
+
+4.2 Uniform bounds on \|A\| and tightness
+
+By Corollary 3.2 applied to F after centering, we get for each \Lambda and R>0,
+\mu_\Lambda\Big(\|A\|_H - \mathbb{E}_{\mu_\Lambda}\|A\|_H > R\Big)
+\le 2\exp\!\left(-\frac{\rho R^2}{2}\right).
+
+It remains to bound \mathbb{E}_{\mu_\Lambda}\|A\|_H uniformly in \Lambda. Because the potential satisfies
+S_{\mathrm{eff},\Lambda}(A)
+\ge \tfrac{\rho}{2}\|A\|_H^2,
+and S_{W,\Lambda}\ge 0, we can compare \mu_\Lambda to a centered Gaussian N(0,\rho^{-1}I) on V_\Lambda. Standard log-concave measure estimates yield
+\mathbb{E}_{\mu_\Lambda}\|A\|_H \le C_0
+for a constant C_0 depending only on \rho (and mild structure of S_{W,\Lambda} near 0), not on \Lambda.
+
+Thus, for R\ge C_0,
+\mu_\Lambda(\|A\|_H > R)
+\le 2\exp\!\left(-\frac{\rho (R-C_0)^2}{2}\right)
+=: \varepsilon(R),
+with \varepsilon(R)\to 0 as R\to\infty, uniformly in \Lambda.
+
+For any \varepsilon>0, choose R large so that \varepsilon(R)<\varepsilon. Then
+\mu_\Lambda(B_R) \ge 1-\varepsilon
+\quad\text{for all }\Lambda,
+where B_R:=\{A\in H:\|A\|_H\le R\}.
+
+Since closed balls are weakly compact in H, this shows that \{\mu_\Lambda\} is tight on (H,\text{weak topology}).
+
+By Prokhorov, any sequence \mu_{\Lambda_n} with \Lambda_n\to\infty has a weakly convergent subsequence, say
+\mu_{\Lambda_{n_k}} \Rightarrow \mu
+for some probability measure \mu on H.
+
+So you get exactly what you wanted: tightness and existence of subsequential limits.
+
+⸻
+
+5. Stability of functional inequalities / BE in the limit
+
+The last step is the subtle one. There are two levels:
+	1.	The “safe” level: LSI and spectral gap survive in the limit with the same constant.
+	2.	The stronger level: the BE(\rho,\infty) curvature bound survives for the limiting semigroup.
+
+You should be careful how you state the second, but the first is robust.
+
+5.1 LSI and spectral gap in the limit
+
+Assume:
+	•	\mu_{\Lambda_n}\Rightarrow\mu weakly on H.
+	•	The Dirichlet forms \mathcal{E}_{\Lambda_n} converge in the Mosco sense to a Dirichlet form (\mathcal{E},\mathcal{D}) on L^2(H,\mu).
+	•	Cylinder functions (depending on finitely many coordinates) lie in \mathcal{D} and are dense in \mathcal{D} for the \mathcal{E}^{1/2}-norm.
+
+Then for a bounded cylinder function f,
+	•	Entropy is lower semicontinuous under weak convergence:
+\liminf_{n\to\infty}
+\int f^2 \log\frac{f^2}{\int f^2 d\mu_{\Lambda_n}}\,d\mu_{\Lambda_n}
+\ge
+\int f^2 \log\frac{f^2}{\int f^2 d\mu}\,d\mu.
+	•	Mosco convergence implies
+\lim_{n\to\infty}
+\int \|\nabla (f|_{V_{\Lambda_n}})\|^2\,d\mu_{\Lambda_n}
+= \int \|\nabla f\|^2\,d\mu,
+where \nabla is the gradient on H.
+
+From the log-Sobolev inequality (with constant 2/\rho) for each \mu_{\Lambda_n},
+\int f^2\log\frac{f^2}{\int f^2 d\mu_{\Lambda_n}} \, d\mu_{\Lambda_n}
+\le \frac{2}{\rho}\int\|\nabla(f|_{V_{\Lambda_n}})\|^2\,d\mu_{\Lambda_n},
+taking \limsup on the right and \liminf on the left yields
+\int f^2\log\frac{f^2}{\int f^2 d\mu} \, d\mu
+\le \frac{2}{\rho}\int\|\nabla f\|^2\,d\mu
+for cylinder f. By density, this extends to all f\in\mathcal{D}.
+
+Proposition 5.1 (Limit LSI and spectral gap)
+
+Under the assumptions above, the limiting measure \mu and Dirichlet form \mathcal{E} satisfy:
+	•	Log-Sobolev inequality
+\int f^2\log\frac{f^2}{\int f^2 d\mu} \, d\mu
+\le \frac{2}{\rho}\int\|\nabla f\|^2\,d\mu,
+for all f\in\mathcal{D}.
+	•	Poincaré inequality
+\int f^2\,d\mu - \Bigl(\int f\,d\mu\Bigr)^2
+\le \frac{1}{\rho}\int\|\nabla f\|^2\,d\mu.
+
+So the spectral gap and LSI constants are at least \rho and 2/\rho in the limit.
+
+This is already very strong: for your MFIP / mass-gap purposes, uniform Poincaré/LSI in the continuum cutoff is more or less the thing you need.
+
+5.2 BE(\rho,\infty) for the limiting semigroup (caveat)
+
+Whether you can honestly say “the limiting form satisfies BE(\rho,\infty)” depends on how much regularity you assume on the limiting generator:
+	•	In finite dimensions, for diffusions of the form L = \Delta - \nabla V\cdot\nabla, BE(\rho,\infty) is equivalent to \mathrm{Hess}\,V\ge\rho I and this is stable under smooth convergence of V.
+	•	In infinite dimensions on a Hilbert space, there is an established notion of CD/BE for Dirichlet forms, and under sufficient regularity (gradient flow structure, nice carré du champ), uniform BE(\rho,\infty) for approximations plus Mosco convergence can imply BE(\rho,\infty) in the limit — but this is more technical and you’d want to cite specific results (e.g. work by Röckner–Wang, Ambrosio–Gigli–Savaré type CD theory).
+
+Safe way to phrase it in your writeup:
+	•	Hard fact: BE(\rho,\infty) for all \Lambda ⇒ uniform LSI/PI ⇒ LSI/PI survive in the limit with the same constants.
+	•	Additional assumption: If the limiting object is itself a gradient diffusion with smooth enough potential S_{\mathrm{eff}} on a Hilbert space, then BE(\rho,\infty) is equivalent to \mathrm{Hess}\,S_{\mathrm{eff}}\ge\rho I, and this structure is stable under the truncations.
+
+That keeps you fully rigorous in what you actually prove, and clearly labels where you’re assuming smoothness / structure on the limiting model.
+
+⸻
+
+6. Clean theorem you can drop into the program
+
+Here is a concise “Theorem + Corollary” version that encapsulates what your toy model proves.
+
+Theorem (Fourier cutoff YM toy model: uniform BE(\rho,\infty) and tightness).
+Let \{V_\Lambda\} be the finite-dimensional Fourier truncated configuration spaces defined above, with effective potentials
+> S_{\mathrm{eff},\Lambda}(A)
+> := S_{W,\Lambda}(A) + \tfrac{\rho}{2}\|A\|_\Lambda^2,
+>
+where:
+	1.	S_{W,\Lambda}\in C^2(V_\Lambda) and \mathrm{Hess}\,S_{W,\Lambda}(A)\ge 0 for all A,\Lambda;
+	2.	\rho>0 is independent of \Lambda.
+
+Let \mu_\Lambda\propto e^{-S_{\mathrm{eff},\Lambda}} dA be the corresponding Gibbs measures, and L_\Lambda = \Delta - \nabla S_{\mathrm{eff},\Lambda}\cdot\nabla their generators.
+
+Then:
+
+(i) For each \Lambda, (L_\Lambda,\mu_\Lambda) satisfies the Bakry–Émery curvature–dimension condition BE(\rho,\infty) with the same constant \rho.
+
+(ii) Consequently, for each \Lambda, \mu_\Lambda satisfies Poincaré and log-Sobolev inequalities with constants 1/\rho and 2/\rho, respectively, independent of \Lambda, and exhibits Gaussian concentration with variance scale 1/\rho, independent of \Lambda.
+
+(iii) Viewing V_\Lambda as a subspace of a common Hilbert space H via orthogonal embeddings, the family \{\mu_\Lambda\} is tight on H, hence admits weakly convergent subsequences.
+
+Corollary (Limit LSI and spectral gap).
+Let \mu_{\Lambda_n}\Rightarrow\mu and suppose the Dirichlet forms \mathcal{E}_{\Lambda_n} converge in the Mosco sense to a Dirichlet form (\mathcal{E},\mathcal{D}) on L^2(H,\mu) with carré du champ \Gamma(f)=\|\nabla f\|^2. Then:
+	•	\mu satisfies a log-Sobolev inequality with constant 2/\rho,
+	•	\mu satisfies a Poincaré inequality with constant 1/\rho.
+
+In particular, the limiting generator has a spectral gap \ge \rho and the limiting semigroup is exponentially mixing with rate \rho, uniformly inherited from the finite-dimensional truncations.
+
+You can then add:
+	•	A remark saying that, under additional smoothness assumptions on the limiting potential, the BE(\rho,\infty) curvature bound also passes to the limit.
+
+⸻
+
+7. How this plugs into the full YM story
+
+In terms of your broader program:
+	•	V_\Lambda here plays the role of “UV-regularized / Fourier truncated gauge-fixed configuration space”.
+	•	The uniform BE(\rho,\infty) is exactly the kind of curvature lower bound you argued for from the FP term + small-field Wilson convexity in continuum / lattice Hessian language.
+	•	The tightness + limit LSI is the bridging mechanism: you can non-perturbatively pass to an infinite-dimensional limit while keeping a strictly positive LSI / Poincaré constant.
+
+The jump from this toy model to real 4D YM is then:
+	•	Replace global convexity of S_{W,\Lambda} by “convex plus controlled nonconvex corrections”.
+	•	Make \rho scale correctly with the gauge coupling and renormalization.
+	•	Do the same type of BE/LSI/tightness analysis in a Sobolev space of fields rather than a bare \ell^2.
+
+But structurally, what you wrote is correct, and packaged as above, it’s already a solid intermediate result you can cite as “Theorem [Toy-CD]” in your notes.

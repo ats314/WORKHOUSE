@@ -1,0 +1,364 @@
+Part 5 — Abstract Interface to Gauge–Invariant Theories
+
+Up to now we have built:
+
+* A curvature-based analytic engine for finite-dimensional Gibbs measures ((M,g,S,\mu)): Bakry–Émery curvature ⇒ (CD(\rho,\infty)) ⇒ Poincaré and log–Sobolev inequalities with constants (1/\rho) and (2/\rho).
+* A scalar lattice prototype where a uniform convexity bound on the potential yields a volume-independent spectral gap and LSI.
+
+The goal of this part is to package these ideas in a form suitable for **gauge theories**—in particular lattice Yang–Mills—but in an **abstract, model-agnostic** way. We want a clean interface:
+
+* Input: a family of finite-volume configuration manifolds ((M_\Lambda,g_\Lambda,S_\Lambda,\mu_\Lambda)) with a gauge group acting by isometries and leaving the Gibbs measures invariant, plus a curvature lower bound in **physical directions**.
+* Output: Poincaré and log–Sobolev inequalities, and hence spectral gaps, for **gauge-invariant observables**, with constants **independent of (\Lambda)**.
+
+This is the module that Part II will instantiate with actual lattice Yang–Mills geometry.
+
+---
+
+## 5.1. Abstract finite-volume configuration family
+
+We fix a family of finite index sets (\Lambda) (typically finite subsets of (\mathbb{Z}^d) or spacetime slabs). For each (\Lambda) we assume:
+
+1. A smooth, connected, finite-dimensional Riemannian manifold ((M_\Lambda,g_\Lambda)).
+2. A potential (S_\Lambda\in C^2(M_\Lambda)), bounded below, such that
+   [
+   Z_\Lambda := \int_{M_\Lambda} e^{-S_\Lambda(x)},d\mathrm{vol}*{g*\Lambda}(x) < \infty.
+   ]
+3. The Gibbs measure
+   [
+   d\mu_\Lambda(x)
+   = Z_\Lambda^{-1} e^{-S_\Lambda(x)},d\mathrm{vol}*{g*\Lambda}(x).
+   ]
+
+We define the usual diffusion generator, carré du champ and Dirichlet form:
+
+* Generator on smooth (f):
+  [
+  L_\Lambda f
+  = \Delta_{g_\Lambda} f - \langle \nabla S_\Lambda,\nabla f\rangle_{g_\Lambda}.
+  ]
+* Carré du champ:
+  [
+  \Gamma_\Lambda(f,g) = \langle\nabla f,\nabla g\rangle_{g_\Lambda},\qquad
+  \Gamma_\Lambda(f) = |\nabla f|*{g*\Lambda}^2.
+  ]
+* Dirichlet form:
+  [
+  \mathcal{E}*\Lambda(f,g)
+  = \int*{M_\Lambda} \Gamma_\Lambda(f,g),d\mu_\Lambda.
+  ]
+
+The Bakry–Émery Ricci tensor is
+[
+\operatorname{Ric}*{\mu*\Lambda}
+:= \operatorname{Ric}*{g*\Lambda} + \nabla^2 S_\Lambda,
+]
+viewed as a symmetric bilinear form on each tangent space (T_xM_\Lambda).
+
+The (\Gamma_2)-operator is
+[
+\Gamma_{2,\Lambda}(f)
+:= \frac12 L_\Lambda \Gamma_\Lambda(f) - \Gamma_\Lambda(f,L_\Lambda f),
+]
+and the Bochner–Bakry–Émery identity reads, pointwise,
+[
+\Gamma_{2,\Lambda}(f)
+= |\nabla^2 f|_{\mathrm{HS}}^2
+
+* \operatorname{Ric}*{\mu*\Lambda}(\nabla f,\nabla f).
+  ]
+
+For a scalar model (no gauge symmetry), a global lower bound
+(
+\operatorname{Ric}*{\mu*\Lambda} \ge \rho,g_\Lambda
+)
+would immediately yield (CD(\rho,\infty)) and hence Poincaré/LSI. The twist now is that gauge theories have **degenerate directions**: moving along gauge orbits doesn’t change physical observables, so we only care about curvature in directions transverse to those orbits.
+
+---
+
+## 5.2. Gauge symmetry and physical subspaces
+
+We now abstract the notion of a gauge symmetry and its associated decomposition of tangent spaces into “pure gauge” and “physical” directions.
+
+### 5.2.1. Gauge group action
+
+For each finite (\Lambda), we assume a compact Lie group (\mathcal{G}*\Lambda) acts smoothly on (M*\Lambda):
+[
+\mathcal{G}*\Lambda \times M*\Lambda \to M_\Lambda,\quad (g,x)\mapsto g\cdot x.
+]
+
+Hypotheses:
+
+1. **Isometric action.** For every (g\in\mathcal{G}*\Lambda), the map (x\mapsto g\cdot x) is an isometry of ((M*\Lambda,g_\Lambda)).
+2. **Gauge-invariant potential.** For all (g\in\mathcal{G}*\Lambda) and (x\in M*\Lambda),
+   [
+   S_\Lambda(g\cdot x) = S_\Lambda(x).
+   ]
+
+Consequences:
+
+* The volume form (d\mathrm{vol}*{g*\Lambda}) is invariant under the action.
+* The Gibbs measure (\mu_\Lambda) is (\mathcal{G}_\Lambda)-invariant.
+* The generator (L_\Lambda) commutes with the action: (L_\Lambda(f\circ g) = (L_\Lambda f)\circ g).
+
+This abstractly encodes the basic lattice gauge symmetry: (\mathcal{G}_\Lambda) is the product of copies of the structure group (G) at each site, acting on link variables by endpoint conjugation. 
+
+### 5.2.2. Vertical subspaces: gauge directions
+
+For each (x\in M_\Lambda), the **gauge orbit** is
+[
+\mathcal{O}*x := {g\cdot x : g\in\mathcal{G}*\Lambda}.
+]
+
+Its tangent space at (x) is the **vertical subspace**
+[
+V_x := T_x \mathcal{O}*x \subset T_xM*\Lambda.
+]
+
+Concretely, if (\mathfrak{g}*\Lambda) is the Lie algebra of (\mathcal{G}*\Lambda), then for each (X\in\mathfrak{g}*\Lambda) the one-parameter subgroup (\exp(tX)) generates a vector field
+[
+X^\sharp(x) := \left.\frac{d}{dt}\right|*{t=0} \big(\exp(tX)\cdot x\big),
+]
+and
+[
+V_x = { X^\sharp(x) : X\in\mathfrak{g}_\Lambda}.
+]
+
+On a dense open set of “regular” points, (\dim V_x) is constant and the orbits form a smooth foliation.
+
+Intuitively, (V_x) consists of **pure gauge variations**: moving along (V_x) changes the representative of the gauge-equivalence class but not the physical configuration.
+
+### 5.2.3. Horizontal subspaces: physical directions
+
+We choose a smooth assignment of **horizontal subspaces** (H_x\subset T_xM_\Lambda) such that
+[
+T_xM_\Lambda = H_x \oplus V_x
+]
+and (H_x) is the orthogonal complement of (V_x) with respect to (g_\Lambda):
+[
+H_x = V_x^\perp.
+]
+
+We regard (H_x) as the space of **physical directions** at (x). Properties:
+
+* Since the action is isometric, the decomposition is (\mathcal{G}_\Lambda)-equivariant:
+  [
+  d(g\cdot)*x(H_x) = H*{g\cdot x},\qquad
+  d(g\cdot)*x(V_x) = V*{g\cdot x}.
+  ]
+* In lattice YM, (H_x) is exactly the orthogonal complement to the infinitesimal gauge transformations in the product group metric.
+
+### 5.2.4. Gauge-invariant observables and horizontal gradients
+
+Let (\mathcal{A}*\Lambda^{\mathrm{inv}}) be the algebra of smooth, gauge-invariant observables:
+[
+\mathcal{A}*\Lambda^{\mathrm{inv}}
+:= { f\in C^\infty(M_\Lambda) : f(g\cdot x) = f(x)\ \forall g\in\mathcal{G}*\Lambda,\ \forall x\in M*\Lambda}.
+]
+
+Typical examples in YM are Wilson loops and gauge-invariant polynomials in plaquette holonomies.
+
+If (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}) and (X\in\mathfrak{g}*\Lambda), then
+[
+f(\exp(tX)\cdot x) = f(x)\quad\forall t,
+]
+so differentiating at (t=0),
+[
+df_x(X^\sharp(x)) = 0 \quad \forall X.
+]
+Thus
+[
+df_x(v) = 0 \quad \forall v\in V_x,
+]
+and hence
+[
+g_\Lambda(x)\big(\nabla f(x),v\big) = 0\quad\forall v\in V_x.
+]
+Therefore:
+
+> **Proposition 5.1 (Horizontal gradients of gauge-invariant observables).**
+> For every (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}) and every (x\in M*\Lambda),
+> [
+> \nabla f(x)\in H_x.
+> ]
+
+Equivalently, for gauge-invariant observables the carré du champ is purely horizontal:
+[
+\Gamma_\Lambda(f)(x) = |\nabla f(x)|*{g*\Lambda}^2
+= |\nabla^H f(x)|*{g*\Lambda}^2,\qquad \nabla^H f := \text{projection of }\nabla f\text{ to }H.
+]
+
+This is the key structural point: **only the horizontal curvature matters** for gauge-invariant functions.
+
+---
+
+## 5.3. Horizontal Bakry–Émery curvature hypothesis
+
+The Bochner–Bakry–Émery identity gives, for any smooth (f),
+[
+\Gamma_{2,\Lambda}(f)
+= |\nabla^2 f|_{\mathrm{HS}}^2
+
+* \operatorname{Ric}*{\mu*\Lambda}(\nabla f,\nabla f).
+  ]
+
+If (f) is gauge invariant, then (\nabla f(x)\in H_x). This motivates a curvature hypothesis restricted to (H_x).
+
+### 5.3.1. Horizontal curvature lower bound
+
+We formulate an **abstract** horizontal Bakry–Émery bound:
+
+> **Hypothesis (H_{\mathrm{curv}}) (global horizontal curvature).**
+> There exists a constant (\rho_* > 0), **independent of (\Lambda)**, such that for every finite (\Lambda), every (x\in M_\Lambda), and every (v\in H_x),
+> [
+> \operatorname{Ric}*{\mu*\Lambda}(x)(v,v)
+> = \big(\operatorname{Ric}*{g*\Lambda} + \nabla^2 S_\Lambda\big)(x)(v,v)
+> ;\ge; \rho_*,|v|*{g*\Lambda}^2.
+> ]
+
+Remarks:
+
+* This is a curvature lower bound only in the physical directions (H_x); we do not require any control on the vertical directions (V_x).
+* (\rho_*) must not deteriorate with (\Lambda); this is the “thermodynamic-limit-friendly” part.
+
+In lattice YM, Part II constructs a **local** version of this bound (near the trivial configuration) by combining Haar (Ricci) curvature and the Wilson Hessian. 
+
+### 5.3.2. (CD(\rho_*,\infty)) on gauge-invariant observables
+
+Let (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}). At any (x\in M*\Lambda),
+[
+\nabla f(x)\in H_x,
+]
+so Hypothesis (H_{\mathrm{curv}}) implies
+[
+\operatorname{Ric}*{\mu*\Lambda}(x)(\nabla f(x),\nabla f(x))
+;\ge; \rho_*,|\nabla f(x)|*{g*\Lambda}^2
+= \rho_*,\Gamma_\Lambda(f)(x).
+]
+
+Therefore
+[
+\Gamma_{2,\Lambda}(f)(x)
+= |\nabla^2 f(x)|_{\mathrm{HS}}^2
+
+* \operatorname{Ric}*{\mu*\Lambda}(x)(\nabla f(x),\nabla f(x))
+  ;\ge; \rho_*,\Gamma_\Lambda(f)(x).
+  ]
+
+In other words, for gauge-invariant observables we have the curvature–dimension condition
+[
+\Gamma_{2,\Lambda}(f)\ge \rho_*,\Gamma_\Lambda(f)
+\quad\forall f\in\mathcal{A}_\Lambda^{\mathrm{inv}}.
+]
+
+If we view (\mathcal{A}*\Lambda^{\mathrm{inv}}) as the algebra of smooth functions on the **quotient manifold** (M*\Lambda/\mathcal{G}*\Lambda), then this is precisely a (CD(\rho**,\infty)) bound on the quotient geometry. 
+
+---
+
+## 5.4. Product structure and uniformity in volume
+
+One of the perks of Bakry–Émery curvature is its good behavior under products. That is essential if we want constants that do not blow up with the lattice volume.
+
+### 5.4.1. Product curvature for ungauged systems
+
+Suppose we have a “local degree of freedom” ((M_{\mathrm{loc}},g_{\mathrm{loc}},S_{\mathrm{loc}},\mu_{\mathrm{loc}})) with
+[
+\operatorname{Ric}*{\mu*{\mathrm{loc}}} \ge \rho_{\mathrm{loc}},g_{\mathrm{loc}}.
+]
+
+For a product of (n) independent copies,
+[
+M = M_{\mathrm{loc}}^n,\qquad g = \bigoplus_{i=1}^n g_{\mathrm{loc}}^{(i)},\qquad S = \sum_{i=1}^n S_{\mathrm{loc}}^{(i)},
+]
+the product curvature identity gives
+[
+\operatorname{Ric}*\mu \ge \rho*{\mathrm{loc}},g
+]
+with the **same** constant (\rho_{\mathrm{loc}}), independent of (n). This is standard and is exactly what we used in the scalar prototype: convexity plus positive Ricci at a single site gives a volume-independent spectral gap on the whole lattice. 
+
+### 5.4.2. Gauge symmetry and quotient geometry
+
+In a gauge theory, (M_\Lambda) is typically a product of groups (one copy per edge), but we then impose a huge redundancy via the gauge group (\mathcal{G}_\Lambda).
+
+Analytically, you can think of two equivalent pictures:
+
+1. Work on the full product manifold (M_\Lambda) with the product curvature bound and then **restrict to gauge-invariant observables**, which see only the horizontal directions; or
+2. Work directly on the quotient manifold (or orbifold) (M_\Lambda/\mathcal{G}_\Lambda), where the vertical gauge directions have been modded out.
+
+In either view, the key point is that **local curvature information** on a fixed number of neighboring degrees of freedom can be propagated uniformly in (|\Lambda|) thanks to the product structure. Horizontal curvature bounds at the level of a unit cell then feed into a **volume-uniform (\rho_*)** under Hypothesis (H_{\mathrm{curv}}).
+
+In actual YM, Part II shows that:
+
+* The product Haar metric has Ricci (\operatorname{Ric}*{g*\Lambda} = \kappa_G,g_\Lambda) independent of (\Lambda), and
+* The Hessian of the Wilson + additional local terms is bounded below in the horizontal directions near the vacuum, giving a local horizontal (\rho_{\mathrm{loc}}>0) independent of (\Lambda).
+
+The global (H_{\mathrm{curv}}) is then a **target**; in practice we will use a local version plus Lyapunov arguments (Part 3 of the 20-part plan) to get global functional inequalities.
+
+---
+
+## 5.5. Consequences for gauge-invariant observables
+
+Assume Hypothesis (H_{\mathrm{curv}}) for some (\rho_* > 0) independent of (\Lambda). Then the restriction of (L_\Lambda) and (\Gamma_\Lambda) to (\mathcal{A}*\Lambda^{\mathrm{inv}}) satisfies a bona fide (CD(\rho**,\infty)) condition.
+
+Applying the results of Part 3 (CD ⇒ Poincaré/LSI) in this restricted setting, we immediately obtain:
+
+### 5.5.1. Uniform Poincaré inequality in the gauge-invariant sector
+
+For each finite (\Lambda) and every (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}) in the form domain,
+[
+\operatorname{Var}*{\mu_\Lambda}(f)
+\le \frac{1}{\rho_*} \int_{M_\Lambda} \Gamma_\Lambda(f),d\mu_\Lambda.
+]
+
+Equivalently, if we let (-L_\Lambda^{\mathrm{inv}}) be the self-adjoint operator generated by (\mathcal{E}*\Lambda) on the closed subspace (L^2(\mu*\Lambda))-closure of (\mathcal{A}*\Lambda^{\mathrm{inv}}), its spectral gap satisfies
+[
+\lambda*{1}^{\mathrm{inv}}(\Lambda) \ge \rho_*,
+]
+with a lower bound **independent of (\Lambda)**.
+
+In words: gauge-invariant observables decorrelate on a timescale (\mathcal{O}(1/\rho_*)) under the configuration-space diffusion, uniformly in lattice size.
+
+### 5.5.2. Uniform log–Sobolev inequality in the gauge-invariant sector
+
+Similarly, the log–Sobolev inequality holds for all smooth (f\in\mathcal{A}*\Lambda^{\mathrm{inv}}):
+[
+\operatorname{Ent}*{\mu_\Lambda}(f^2)
+\le \frac{2}{\rho_*} \int_{M_\Lambda} \Gamma_\Lambda(f),d\mu_\Lambda.
+]
+
+This yields:
+
+* Exponential decay of relative entropy for the Langevin semigroup restricted to gauge-invariant observables.
+* Concentration inequalities for gauge-invariant functionals, with constants that do not depend on (|\Lambda|).
+
+These are exactly the kinds of bounds one wants for thermodynamic-limit questions and for controlling correlation lengths.
+
+---
+
+## 5.6. Summary and role of Part 5 in the overall program
+
+This part isolates the **abstract analytic interface** between curvature geometry and gauge-invariant observables:
+
+* Data:
+
+  * A family ((M_\Lambda,g_\Lambda,S_\Lambda,\mu_\Lambda)) of finite-volume Gibbs systems.
+  * A gauge group (\mathcal{G}*\Lambda) acting isometrically and leaving (\mu*\Lambda) invariant.
+  * The associated vertical subspaces (V_x) and horizontal (physical) subspaces (H_x=V_x^\perp).
+  * The algebra (\mathcal{A}_\Lambda^{\mathrm{inv}}) of gauge-invariant observables, with (\nabla f\in H_x).
+
+* Hypothesis:
+
+  * A **horizontal Bakry–Émery curvature lower bound** (H_{\mathrm{curv}}) with constant (\rho_*>0) independent of (\Lambda).
+
+* Output:
+
+  * Uniform Poincaré and log–Sobolev inequalities for gauge-invariant observables.
+  * A spectral gap (\lambda_{1}^{\mathrm{inv}}(\Lambda)\ge\rho_*) for the configuration-space diffusion restricted to the gauge-invariant sector.
+
+In the broader 20-part structure:
+
+* **Part 2–3** developed the curvature ⇒ FI machinery in a general setting.
+* **Part 4** gave a scalar example where (H_{\mathrm{curv}}) holds with (\rho_*) explicitly computable from the potential.
+* **Part 5 (this part)** shows how to phrase the same mechanism in the presence of gauge symmetry.
+* **Part 6–11** will show that lattice Yang–Mills provides concrete ((M_\Lambda,g_\Lambda,S_\Lambda)) and (\mathcal{G}*\Lambda) for which we can prove a **local** version of (H*{\mathrm{curv}}) (near the trivial connection), with constants independent of volume.
+
+To go from this local curvature to global, volume-uniform Poincaré/LSI, we will need Lyapunov and local-to-global arguments, which are the subject of the next block of parts (12–15 in the 20-part outline, corresponding to your original Part III).

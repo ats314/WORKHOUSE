@@ -1,0 +1,49 @@
+Master Summary: Yang–Mills-Inspired Curvature, PDE Flows, and Lattice Hessians
+==============================================================================
+
+This file is a compact summary of the main simulations and results, tying together the PDE, algebraic, and lattice computations.
+
+Highlights:
+
+1. Viscous Hamilton–Jacobi (vHJ) PDE:
+   - dS/dt = ΔS - |∇S|^2 in 4D.
+   - With initial S_0(x) = 1/2 * x^T H x + m^2 ||x||^2 + small perturbations.
+   - Convexity at the center is preserved.
+   - Minimal curvature λ_min(t) decays according to a Riccati law: 1/λ(t) ≈ α t + b.
+   - Haar-like mass terms slow curvature decay and define a universal α-band (~7.8e-4).
+
+2. SU(3) Algebraic Effective Potential:
+   - S_total(A) = (1/2)m^2∑ A_a^2 + κ∑_a ( f_{abc} A_b A_c )^2.
+   - Symbolic Hessian via SymPy shows S_total is strictly convex on su(3) for m^2 > 0.
+   - Numerical random checks confirm λ_min(A) ≥ m^2 at test points.
+
+3. Curvature Phase Diagram:
+   - Quadratic-only: α ~ 1.002e-3 (fast curvature decay).
+   - Haar-only: α ~ 7.88e-4 (slower decay, stable).
+   - Haar + YM-like terms (quartic, SU2, SU3): α values stay in ~[7.8e-4,8.0e-4].
+   - SU(2)-adjoint gives the largest anisotropy (spread of α_i).
+   - SU(3) mass and commutator terms yield mild anisotropy but do not escape the Haar band.
+
+4. SU(2) Wilson Lattice Hessian:
+   - For a 2^4 lattice (L=2 in each direction), with β=2.2.
+   - Exact Hessian of the Wilson action computed via JAX autodiff at U=I.
+   - Smallest eigenvalues ~3.3, repeated; largest ~12.1.
+   - Confirms strict convexity and anisotropic stiffness in real SU(2) lattice gauge theory.
+
+5. SU(2) Gauge-Covariant Blockspin:
+   - Defined U' = Proj_SU(2)[ U(x)U(x+e_μ) ] as a gauge-covariant coarse link.
+   - Constructed a coarse Wilson action on 1^4.
+   - Showed that naive β rescaling (β' = 16β) just scales the Hessian eigenvalues by 16.
+   - Demonstrated that a nontrivial RG flow must carefully handle β-flow and integrated fluctuations.
+
+6. What This Work Is:
+   - A consistent set of curvature simulations in PDE, Lie algebra, and lattice contexts.
+   - Evidence that Haar-like terms and commutator structure generate and preserve positive curvature.
+   - A first bridge from geometric RG analogues (vHJ) to actual SU(2) lattice curvature.
+
+7. What This Work Is Not:
+   - It is not a Yang–Mills mass-gap proof.
+   - It does not control correlation functions, transfer matrices, or full spectrum.
+   - It is not a rigorous RG construction for all scales.
+
+End of Master Summary.

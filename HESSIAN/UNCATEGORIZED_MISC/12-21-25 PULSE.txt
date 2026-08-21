@@ -1,0 +1,774 @@
+Here’s the missing hinge, built from the ground up and stated bluntly.
+
+# Finite‑range Hessian control ⇒ uniform measure concentration (block‑to‑global)
+
+**Goal.** From strictly local convex control of the energy (a blockwise Hessian bound with finite interaction range), deduce a **volume‑uniform** spectral/functional inequality (Poincaré or LSI) for the full Gibbs measure. This is the step that lets your local curvature → global gap pipeline actually close.
+
+## Setup (minimal, checkable)
+
+* Configuration space: product manifold (\mathcal X=\prod_{i\in\Lambda}\mathcal X_i) (links, faces, or coarse blocks). Metric uses product norm from a fixed inner product on each (\mathcal X_i).
+* Energy (S:\mathcal X\to\mathbb R) is (C^2) and (\mu\propto e^{-S},d\mathrm{vol}).
+* **Finite‑range Hessian control:** there exists (R<\infty) and (\kappa>0) such that for every block (B\subset\Lambda) (chosen from a fixed R‑overlapping cover), the block‑restricted Hessian satisfies
+  [
+  \nabla^2_{B,B} S(x);\succeq;\kappa, I_{B}\quad\text{for all }x,
+  ]
+  and cross‑Hessians (\nabla^2_{B,B'} S) vanish if (\mathrm{dist}(B,B')>R) (or are bounded by a small (\varepsilon) you can track).
+* Regularity: (S) has at most quadratic growth at infinity on each block coordinate (automatic on tori; otherwise impose a mild coercivity).
+
+## What “uniform measure concentration” means here
+
+* **Poincaré (spectral‑gap) inequality**
+  [
+  \mathrm{Var}_\mu(f);\le;\frac{1}{\rho}\int |\nabla f|^2,d\mu,
+  ]
+  with (\rho>0) **independent of (|\Lambda|)** and the arrangement of blocks.
+* Optionally, **log‑Sobolev** with constant (\alpha>0) likewise uniform (gives sub‑Gaussian concentration and mixing).
+
+## Mechanism (why this is true)
+
+1. **Local convexity ⇒ local contraction.** For the Glauber/Langevin update that refreshes a block (B) conditioned on its (R)-neighborhood, the conditional law (\mu(\cdot\mid x_{B^c})\propto e^{-S_B(\cdot;x_{B^c})}) is (\kappa)-strongly log‑concave on (\mathcal X_B). That gives a blockwise Poincaré constant (\rho_B\ge\kappa) and (for LSI) (\alpha_B\gtrsim \kappa).
+2. **Finite overlap ⇒ Dobrushin‑type propagation.** Because blocks only interact within range (R), the influence matrix of one block’s update on another decays off‑diagonal and has operator norm (<1) once you choose a partition with bounded overlap. This gives a **contractive block Gibbs sampler** in (L^2(\mu)) (or in Wasserstein for LSI).
+3. **From sampler contraction to global inequalities.** A standard equivalence: an (L^2)‑contractive Markov kernel with spectral radius (<1) yields a global Poincaré constant; likewise, a uniform Wasserstein/entropy contraction yields an LSI. Constants depend on (\kappa) and on a finite combinatorial overlap factor (C_\mathrm{ov}(R,d)), **not on (|\Lambda|)**.
+
+## Clean statement you can cite
+
+**Theorem (Uniform Poincaré from finite‑range Hessian control).**
+Let ({B_j}) be a block cover of (\Lambda) with overlap number (m=m(R,d)). Assume:
+
+* (H1) For each (j) and all (x), (\nabla^2_{B_j,B_j} S(x)\succeq \kappa I).
+* (H2) (\nabla^2_{B_i,B_j}S\equiv 0) whenever (\mathrm{dist}(B_i,B_j)>R) (or (|\nabla^2_{B_i,B_j}S|\le \varepsilon) with (\varepsilon) small relative to (\kappa)).
+  Then the Gibbs measure (\mu\propto e^{-S}) satisfies
+  [
+  \mathrm{Var}*\mu(f);\le;\frac{C,m}{\kappa}\int |\nabla f|^2,d\mu\quad\text{for all smooth }f,
+  ]
+  with a universal numerical (C) depending only on the block update scheme (random‑scan, systematic) and, in the (\varepsilon\neq0) case, on ((\kappa-\tilde C,\varepsilon)*+).
+  If, additionally, each conditional (\mu(\cdot\mid x_{B^c})) is (\kappa)-log‑concave in the sense of Bakry–Émery, then
+  [
+  \operatorname{Ent}_\mu(f^2);\le;\frac{C' m}{\kappa}\int |\nabla f|^2,d\mu.
+  ]
+
+*Notes.*
+
+* For gauge models: take blocks as **gauge‑projected** variables (local Coulomb slice or edge‑face splitting). The Hessian lower bound is then on the physical (projected) directions; pure‑gauge directions are killed by the projection and do not spoil (\kappa).
+* Coefficients can be tracked explicitly: (C, C') are small (single‑digit) for random‑scan with bounded degree and (m=O(1)).
+
+## Where this sits in your stack
+
+* Upstream: your **finite‑range, gauge‑projected Hessian lower bounds** (already derived in the SAFE/“local curvature” files—even if you dislike the label).
+* This hinge converts those **local second‑variation bounds** into a **global, volume‑uniform spectral gap / LSI**.
+* Downstream: transfer‑matrix/OS reconstruction and exponential clustering follow using standard spectral‑gap → correlation‑decay steps.
+
+## What still needs a proof (non‑numerical)
+
+* A precise **influence bound**: show the block‑conditional mean map has Jacobian norm (\le \theta<1) across the cover (depends on (R), overlap graph degree, and (\kappa)).
+* Gauge‑projection **commutation** with block updates: the conditional strongly‑convex slice is measurable and preserves the contraction; write it once for the chosen slice.
+
+## Quick checklist (to make it referee‑safe)
+
+* Fix a concrete block cover with overlap (m=m(R,d)) and list it.
+* State the projected Hessian bound (\nabla^2 S|_{\mathrm{phys}}\succeq \kappa I) with the exact projector you use.
+* Prove the local Poincaré/LSI on each block conditional (one‑page Bakry–Émery argument).
+* Prove sampler contraction via a Dobrushin/Weitz‑style influence matrix or a coupling in Wasserstein.
+* Conclude global Poincaré/LSI by standard equivalences; record the final constant (\rho\asymp \kappa/m).
+
+If you want, I can draft this as a compact appendix (“Uniform concentration from finite‑range Hessian control”) with explicit constants and a gauge‑projection paragraph.
+
+
+
+
+
+
+
+
+Here’s a clean, first‑pass map of how to handle coercivity/Poincaré‑type estimates in gauge theory without tripping over gauge redundancy.
+
+# Two equivalent framings (pick one and stay in it)
+
+**1) Intrinsic (quotient) picture.**
+Work on the configuration space modulo gauge: (\mathcal{A}/\mathcal{G}). Norms, gradients, and inequalities are defined on gauge‑equivalence classes. A Poincaré (or LSI) inequality looks like
+[
+\mathrm{Var}*{\mu}(f);\le;\frac{1}{\rho}\int*{\mathcal{A}/\mathcal{G}} |\nabla f|^2,d\mu,
+]
+with (\nabla) the horizontal (gauge‑invariant) gradient. No gauge slice, no ghosts, no Faddeev–Popov—everything is intrinsic. Pro: fully geometric, constants are “physical”. Con: analytically heavier (you must construct the horizontal calculus and volume element on the quotient).
+
+**2) Slice (gauge‑fixed) picture.**
+Fix a gauge, usually **Coulomb** (\nabla\cdot A=0), and work on a concrete linear slice (\mathcal{S}={A:\nabla!\cdot A=0}\subset\mathcal{A}). Every (A) decomposes orthogonally (in (L^2)) as
+[
+A ;=; A_\perp ;+; \nabla \phi,\qquad \nabla!\cdot A_\perp=0,
+]
+so the **transverse projector** (P_\perp) is the (L^2)‑orthogonal projector onto divergence‑free fields. The measure picks up the **Faddeev–Popov (FP)** determinant: in non‑Abelian Coulomb gauge, the FP operator is
+[
+\mathcal{M}(A) ;=; -,\nabla\cdot D(A),
+]
+and (d\mu_{\text{g.f.}}\propto e^{-S(A_\perp)},\det\mathcal{M}(A_\perp),dA_\perp.
+]
+Pro: concrete Hilbert space estimates with standard elliptic tools and Fourier methods. Con: you must track (\det\mathcal{M}) (Gribov issues, positivity windows, etc.).
+
+# Don’t mix constants across pictures
+
+* If you prove a coercivity bound on the quotient
+  [
+  \langle v,,\mathcal{H}_{\text{phys}},v\rangle;\ge;\rho,|v|^2\quad (v\ \text{horizontal}),
+  ]
+  keep (\rho) tagged as **quotient‑level**.
+* If you prove it on the Coulomb slice
+  [
+  \langle A_\perp,,\mathcal{H}*{\perp}(A*\perp),A_\perp\rangle;\ge;\rho_{\text{Coul}}|A_\perp|^2,
+  ]
+  then (\rho_{\text{Coul}}) is a **slice‑level** constant and any translation to the quotient must account for the FP weight (and its spectral control).
+
+# Minimal, practical recipe (Coulomb slice)
+
+1. **Project**: (A\mapsto A_\perp=P_\perp A) with (P_\perp=I-\nabla\Delta^{-1}\nabla!\cdot) (on the torus, zero‑mode handled separately).
+2. **Quadratic control**: for actions with leading quadratic form ( \langle A_\perp, (m^2-\Delta)A_\perp\rangle ) (after gauge fixing), you get the base Poincaré gap (\rho_0 = m^2) (or (\sim c/L^2) if massless but on finite torus).
+3. **Nonlinear terms**: treat via smallness/convexity on the slice; constants track through (P_\perp) (orthogonal) so no spurious gauge directions contaminate the gap.
+4. **FP control**: establish a spectral window ( \mathcal{M}(A_\perp)\ge \lambda_{\mathrm{FP}}>0 ) on your admissible region; this keeps the weighted measure tame and lets slice‑level LSI/Poincaré lift to physical statements.
+
+# Minimal, practical recipe (intrinsic)
+
+1. **Horizontal calculus**: define the Levi form (or metric) on (\mathcal{A}/\mathcal{G}) via the (L^2) metric with vertical directions quotiented out; horizontal gradient = (P_\perp\nabla) intrinsically.
+2. **Coercivity**: show the physical Hessian is positive on horizontals; this is the same inequality as Coulomb‑transverse but now no FP bookkeeping.
+3. **Measure**: use the pushforward of (e^{-S(A)}) and verify log‑concavity/curvature conditions directly on the quotient.
+
+# What to fix early in your stack
+
+* **Choose one framework and stick to it per lemma.** If the lemma is Coulomb‑slice, write its assumptions and constants in slice language (with (\mathcal{M})). If intrinsic, never mention (\mathcal{M}) or gauges.
+* **Name constants by layer**: e.g., (\rho_{\text{phys}}) (quotient), (\rho_{\text{Coul}}) (slice), (\lambda_{\mathrm{FP}}) (FP), (\rho_{\text{box}}) (finite‑volume box).
+* **State projection once**: (P_\perp) is (L^2)‑orthogonal, so (|A|^2=|A_\perp|^2+|\nabla\phi|^2). This prevents “gauge energy” from faking coercivity.
+
+# A compact lemma you can drop in
+
+**Lemma (Transverse Poincaré on the torus, gauge‑fixed).**
+Let (A) be a (\mathfrak{g})‑valued 1‑form on (\mathbb{T}^d) with mean‑zero components, and let (A_\perp=P_\perp A). Then for any (m^2\ge 0),
+[
+\langle A_\perp,(m^2-\Delta)A_\perp\rangle ;\ge;
+\begin{cases}
+m^2,|A_\perp|*{L^2}^2, & m^2>0,[2pt]
+c_d L^{-2},|A*\perp|*{L^2}^2, & m^2=0 \text{ on a box of side }L,
+\end{cases}
+]
+with (c_d>0) the Poincaré constant of the torus. Consequently any gauge‑fixed action with leading quadratic part ((m^2-\Delta)) has a slice‑level spectral gap (\rho*{\text{Coul}}\ge \min{m^2,c_d L^{-2}}) on divergence‑free fields.
+
+**Remark (FP interface).** If in addition the FP operator obeys (\mathcal{M}(A_\perp)\ge \lambda_{\mathrm{FP}}>0) on an admissible region, then the Coulomb‑weighted measure inherits a Poincaré/LSI with constants controlled by (\rho_{\text{Coul}}) and (\lambda_{\mathrm{FP}}) (standard Holley–Stroock/Perturbation‑of‑convexity arguments).
+
+---
+
+If you want, I can turn this into a tight appendix section with your house style (explicit assumptions, constants ledger, and a one‑page proof of the lemma).
+
+
+
+
+
+
+
+
+
+
+Here’s a compact audit plan for the continuum limit that **simultaneously preserves reflection positivity (OS2) and a uniform Poincaré constant**, without trading one for the other.
+
+---
+
+# Goal (what you must certify)
+
+Given lattice spacing (a\to0), finite‑volume Wilson‑type measures (\mu_a) on a hypercubic lattice (\Lambda_a) (even temporal extent), and reconstructed continuum measure (\mu):
+
+1. **OS reflection positivity (OS2)**:
+   For the time‑reflection (\theta), the OS form (\langle F,!F\rangle_{\text{OS},a}=\int \overline{F^\theta},F,d\mu_a) is positive for all cylinder (F) supported in (t\ge0); this positivity **survives** (a\to0).
+
+2. **Uniform Poincaré (spectral‑gap) constant**:
+   There exists (\rho>0) independent of (a) and (|\Lambda_a|) such that
+   [
+   \operatorname{Var}_{\mu_a}(f);\le;\frac{1}{\rho}\int |\nabla f|^2,d\mu_a
+   \quad\text{for all local } f,
+   ]
+   and the same (or a non‑worse) constant holds in the continuum limit (\mu).
+
+No trade‑off: both must hold with constants that do **not** degenerate along the scaling map.
+
+---
+
+# Minimal hypothesis set (explicit, checkable)
+
+* (H1) **Local convexity / Hessian control on blocks**: each plaquette block’s conditional log‑density has Hessian (\nabla^2 V_a \succeq \kappa_{\text{loc}}>0), uniformly in (a) (after gauge projection to physical directions).
+* (H2) **Finite‑range, reflection‑respecting coupling**: interactions couple only finitely many time‑slices and are (\theta)-invariant; gauge‑fix or use reflection domains that keep gauge averaging inside (t\ge0).
+* (H3) **OS factorization**: the action decomposes as (S_a=S_a^+ + \theta S_a^+ + S_a^0) with the standard link/plaquette pairing at the reflection hyperplane (no cross‑sign defects).
+* (H4) **Stable coarse‑graining map** (C_a:) block‑spin or heat‑kernel embedding that (i) is Markov (pushes mass forward), (ii) preserves positivity of positive definite kernels, and (iii) has operator norm (\le1) on the OS cone.
+* (H5) **Contractive conditional dynamics**: single‑site (or block) Gibbs samplers have Dobrushin matrix norm (<1) uniformly in (a) once restricted to physical (gauge‑orthogonal) subspace.
+
+---
+
+# Audit pipeline (do these in order)
+
+**A. Fix the reflection datum exactly.**
+
+* Choose the time‑slice boundary, list the link/plaquette pairs crossing it, and write the explicit (S_a=S_a^+ + \theta S_a^+ + S_a^0) decomposition.
+* Verify the kernel (K_a(U,\theta U')) is positive‑type on the group via the standard compact‑group positive‑definite class (characters / heat kernel).
+  **Outcome:** OS2 holds at each (a).
+
+**B. Lock the spectral gap uniformly at the lattice scale.**
+
+* Prove a block Poincaré (or LSI) on each conditional (\mu_a(,\cdot,| \text{outside})) with constant (\ge \kappa_{\text{loc}}).
+* Use a **contractive block‑Gibbs / Dobrushin–Shlosman** argument to lift to global Poincaré with constant (\rho \ge c(\kappa_{\text{loc}},\text{range},\text{degree})) independent of volume and (a).
+  **Outcome:** (\rho) uniform in (a).
+
+**C. Show these two structures are stable under the same coarse‑graining.**
+
+* Prove (C_a) maps OS‑positive cones into OS‑positive cones (kernel positivity is preserved by Markov integration and tensoring).
+* Prove Poincaré constants **do not worsen** under (C_a): for Markov maps,
+  [
+  \operatorname{Var}*{C**\mu}(g)\le \operatorname{Var}*\mu(g!\circ!C)\le \frac{1}{\rho}!\int |\nabla(g!\circ!C)|^2 d\mu;;\Rightarrow;;\rho*{\text{coarse}}\ge \rho.
+  ]
+
+**D. Take (a\to0) along a tightness + cylinder‑function core.**
+
+* Establish tightness and convergence of finite‑dimensional distributions.
+* OS positivity passes to the limit because the OS cone is closed under (L^2(\mu)) limits of cylinder functions.
+* Poincaré passes via Mosco/Γ‑convergence of Dirichlet forms: show the discrete Dirichlet forms (\mathcal E_a) converge to (\mathcal E) and spectral gaps satisfy (\liminf \lambda_1(\mathcal E_a)\ge \lambda_1(\mathcal E)\ge \rho).
+
+---
+
+# Where it can fail (put red flags here)
+
+* **Gauge projection mismatch at the reflection plane** (violates OS factorization).
+* **Non‑uniform local curvature** when (a\to0) (Hessian along physical directions collapses).
+* **Long‑range tails introduced by gauge‑fixing** (breaks Dobrushin bound).
+* **Non‑Markov coarse‑graining** that smears reflection planes or creates negative‑type kernels.
+
+---
+
+# Concrete artifacts you should produce (short and checkable)
+
+1. **OS ledger (one page):** explicit reflection pair list + (S_a^+,\theta S_a^+,S_a^0).
+2. **Block LSI/Poincaré proof (two pages):** gauge‑projected Hessian bound (\kappa_{\text{loc}}) with constants.
+3. **Global gap via block Gibbs (two pages):** Dobrushin matrix bound (|D|<1) ⇒ (\rho\ge \kappa_{\text{loc}}(1-|D|)).
+4. **Coarse‑graining positivity note (one page):** (C_a) preserves PD kernels and does not worsen (\rho).
+5. **Dirichlet‑form limit note (two pages):** Mosco convergence (\mathcal E_a\to \mathcal E), (\liminf \lambda_1\ge\rho).
+
+---
+
+# Delicate lemma (the one to isolate and prove cleanly)
+
+**Lemma (No‑trade‑off stability).**
+Let ((\mu_a,\mathcal E_a)) be OS‑positive measures with Poincaré constant (\rho>0) independent of (a). Suppose (C_a) are Markov, reflection‑compatible coarse‑grainers with (\mathcal E_a[g!\circ!C_a]\le \mathcal E_a[g]). If (\mu_a\Rightarrow\mu) and (\mathcal E_a\to\mathcal E) in the Mosco sense, then the limit ((\mu,\mathcal E)) is OS‑positive and has Poincaré constant (\ge \rho).
+
+*Proof sketch to write down:* (i) OS: positivity of kernels is closed under weak convergence of measures on cylinder algebras; (ii) Gap: Mosco + lower semicontinuity of (\lambda_1) for closed forms yields (\liminf \lambda_1(\mathcal E_a)\ge \lambda_1(\mathcal E)); combine with uniform lower bound (\rho).
+
+---
+
+# Exactly what to check in your stack now
+
+* Your Appendix B (finite‑volume OS2) already covers **A**.
+* Pull your **SAFE/“Hessian control”** notes into **B** (rename to “Gauge‑projected local Hessian bound” and pin constants).
+* Use your block‑Gibbs/contractivity draft for **B→Global** (Dobrushin matrix with explicit range/degree).
+* Your coarse‑graining (heat‑kernel / block‑spin) memo supplies **C**; add the one‑page PD‑kernel argument.
+* Write the 2‑page Dirichlet‑form Mosco note for **D** (this is the main “delicate part” to make referee‑safe).
+
+If you want, I can draft any of the five artifacts above now—say, start with the “No‑trade‑off stability” lemma as a paste‑ready appendix page.
+
+
+
+
+
+
+
+
+
+Here’s a tight, referee‑style sketch of how your finite‑volume OS2 result (proved for Wilson on even‑L₀ tori) extends to the continuum/thermodynamic setting via monotone limits, with a constructive route and a flag where a genuinely new lemma is needed.
+
+# Goal
+
+Extend OS2 (reflection positivity) from finite periodic lattices to the infinite‑volume Euclidean theory and then to the continuum theory obtained by lattice spacing (a\downarrow0).
+
+# Standing setup
+
+* Lattice: ( \Lambda_{a,L} = (a\mathbb Z/L_0\mathbb Z)\times\cdots\times(a\mathbb Z/L_3\mathbb Z) ), (L_0) even.
+* Measure: Wilson Gibbs measure ( \mu_{a,L} ) on link variables with your established finite‑volume OS2.
+* Time reflection ( \theta ) acts by (x_0\mapsto -x_0) and edge reversal; “positive half‑space” algebra ( \mathcal A_+^{a,L} ) generated by cylindrical functions supported on ({x_0\ge 0}).
+
+# Theorem (OS2 passes to the infinite‑volume limit)
+
+Assume:
+
+1. **Specification consistency**: the finite‑volume family ({\mu_{a,L}}) is a DLR specification with reflection‑compatible boundary conditions (your periodic setup is fine).
+2. **Tightness/uniform integrability**: for each fixed lattice spacing (a>0), along any van Hove sequence (L\to\infty) the family ({\mu_{a,L}}) is tight and has uniformly bounded exponential plaquette moments in a (\theta)‑stable neighborhood (standard Wilson bounds).
+3. **Local weak limits**: every cylinder event on a finite window admits a limit of its probabilities as (L\to\infty), defining a Gibbs measure (\mu_a) on the infinite lattice.
+
+Then for all (F\in \mathcal A_+^{a}) (cylinder functions supported in (x_0\ge 0)) one has
+[
+\langle F, F\rangle_{\mathrm{OS}} := \int \overline{(\Theta F)},F , d\mu_a ;\ge;0,
+]
+i.e., (\mu_a) satisfies OS2.
+
+### Proof sketch (constructive, monotone projective limit)
+
+1. **Directed net of volumes.** Fix (a). Let ({\Lambda_{a,L}}) be a van Hove net with even (L_0). For a fixed (F\in\mathcal A_+^{a}), choose (L) large so (\operatorname{supp} F\subset \Lambda_{a,L}^+).
+2. **Finite‑volume positivity.** By your Appendix B, ( \int \overline{(\Theta F)} F, d\mu_{a,L} \ge 0).
+3. **Projective consistency.** The restriction maps ( \pi_{L'\to L}) (conditioning to the smaller window and integrating out the exterior) satisfy
+   [
+   \int \overline{(\Theta F)} F , d\mu_{a,L'} ;=; \int \overline{(\Theta F)} F , d\big(\mu_{a,L'}!\circ!\pi_{L'\to L}^{-1}\big),
+   ]
+   and your DLR/periodic setup gives ( \mu_{a,L'}!\circ!\pi_{L'\to L}^{-1} \Rightarrow \mu_{a,L}) on that window as (L'\uparrow\infty).
+4. **Monotone‑class closure.** The class of (F) for which OS2 holds is a vector space closed under bounded monotone limits; cylinder functions generate (\sigma\big(\mathcal A_+^{a}\big)). Tightness + local weak convergence ⇒
+   [
+   \int \overline{(\Theta F)} F , d\mu_{a} ;=; \lim_{L'\to\infty} \int \overline{(\Theta F)} F , d\mu_{a,L'} ;\ge;0.
+   ]
+   Thus OS2 holds for (\mu_a).
+
+# Constructive by‑products (what you can actually build)
+
+* **Canonical OS pre‑Hilbert space** ( \mathcal H^{(a)}*{\mathrm{pre}} = \mathcal A*+^{a} / \mathcal N_a), (\mathcal N_a={F:\langle F,F\rangle_{\mathrm{OS}}=0}), with inner product from (\mu_a).
+* **Semigroup on (\mathcal H^{(a)})**: the time‑shift ( \tau_t ) on fields induces a contraction (T_t) for (t\ge0) via OS positivity; standard closure yields a positive self‑adjoint (H_a) (transfer “Hamiltonian”) by Hille–Yosida/GNS.
+
+# Continuum ( (a\downarrow0) ) extension of OS2
+
+Assume, in addition, along a scale (a_n\downarrow0):
+
+4. **Uniform window‑tightness across scales**: for each fixed physical window (W\subset\mathbb R^4) and each (F) depending on links inside (W), the pushforwards of (\mu_{a_n}) under piecewise‑constant interpolation are tight in a Polish field space (e.g., gauge‑invariant tempered distributions modulo gauge).
+5. **Reflection‑compatible renormalization**: bare coupling (g(a)) chosen so the limit Schwinger functionals on cylinders exist and respect time reflection (no counterterm breaks (\theta)).
+
+Then any subsequential continuum limit (\mu) satisfies OS2 by the same cylinder‑approximation + monotone‑class argument:
+[
+\int \overline{(\Theta F)} F , d\mu ;=; \lim_{n\to\infty} \int \overline{(\Theta F_{a_n})} F_{a_n} , d\mu_{a_n};\ge;0.
+]
+
+# Where a **new analytic lemma** is actually needed
+
+**Lemma (Uniform reflection‑stable tightness).**
+There exist (c_1,c_2>0) and a family of gauge‑invariant coercive local functionals (\Phi_W) on the interpolated fields such that for all (a\le a_0),
+[
+\mathbb E_{\mu_{a}}!\big[\exp{c_1 \Phi_W}\big] ;\le; c_2
+\quad\text{and}\quad
+\Phi_W(\Theta A)=\Phi_W(A),
+]
+uniformly in windows (W) that are reflection‑symmetric about (x_0=0).
+
+* This is the single nontrivial step that lifts your finite‑volume OS2 to a **constructive** continuum OS2: it gives Prokhorov tightness in a reflection‑invariant way and licenses the cylinder‑limit swap needed above.
+* In Yang–Mills this typically comes from exponential bounds on local field strength (plaquette) tails plus a gauge‑fixing‑robust modulus of continuity estimate. Your existing exponential plaquette controls are the right starting point; what’s missing is a short, explicit proof that they are stable under (\theta) and uniform in (a) after interpolation.
+
+# Checklist you can drop into Appendix C (ready‑to‑write)
+
+* C.1 Directed system and restriction maps ( \pi_{L'\to L}); definition of (\mathcal A_+^{a}).
+* C.2 Cylinder‑wise OS2 and net convergence (finite‑volume → infinite‑volume at fixed (a)).
+* C.3 Construction of ( \mathcal H^{(a)} ) and (H_a) from (\mu_a).
+* C.4 Interpolation scheme and field space for (a\downarrow0).
+* C.5 **New Lemma:** reflection‑stable tightness (state precisely; proof uses exponential plaquette tails, local Sobolev/modulus bound, and gauge projection commuting with (\theta)).
+* C.6 Passage of OS2 to (\mu) by cylinder approximation + monotone class.
+* C.7 Remarks on OS1/OS0 and OS reconstruction (deferred to transfer‑matrix appendix).
+
+# Why this is “projective/monotone”
+
+* “Projective”: expectations of cylinder functionals are consistent under restriction; limits are taken along the projective system of volumes and then along scales.
+* “Monotone”: positivity holds on simple nonnegative cylinders and extends by the monotone‑class theorem to the generated (\sigma)‑algebra; no delicate algebra beyond your finite‑volume OS2 is required.
+
+# Fully constructive knobs (what to compute/check)
+
+* Explicit window‑wise moment bounds (\mathbb E_{\mu_{a,L}}[\exp{\lambda\sum_{p\subset W} |1-U_p|}] ) uniform in (L) (you already measured these numerically; formalize as a lemma).
+* Verify (\theta) commutes with: (i) restriction ( \pi_{L'\to L}); (ii) interpolation; (iii) gauge projection used to define the field space.
+* Produce a one‑page proof that the OS null‑space is closed under the (L\to\infty) and (a\downarrow0) limits for cylinders (straight from dominated convergence once tightness is in place).
+
+If you want, I can write Appendix C in paste‑ready LaTeX with the exact statements above, and a stubbed proof of the new tightness lemma highlighting which exponential estimates from your Wilson action 
+
+suffice.
+
+
+
+
+Here’s a compact way to extend your Appendix B (OS2 via Osterwalder–Seiler) so it directly interfaces with your Hessian world and the simulation checks.
+
+# Goal (one sentence)
+
+Embed **gauge‑projected Hessians** into the OS reflection‑positivity factorization so that:
+(i) the OS2 proof stays analytic (SOS factorization), and
+(ii) the **same quadratic forms** you compute in code appear **inside** the RP argument—no translation layer.
+
+# Minimal background (just enough)
+
+* **OS2 (reflection positivity)**: write the action as (S=S_+ + \theta S_+ + S_0) under time‑reflection (\theta), with (S_0) supported on the reflection plane. Then (\langle F, F\rangle_{\text{OS}}:=\mathbb E[\overline{F\circ\theta},F]\ge 0) holds if (e^{-S}) factorizes as a positive kernel under that splitting (Osterwalder–Seiler SOS).
+* **Hessian world**: you linearize around a background (U^\star) and study the quadratic form (\frac12\langle \delta U, H,\delta U\rangle). For gauge theory, the physical quadratic form is the **gauge‑projected** one: (H_{\text{phys}}:=P_{\text{g}}^\top H P_{\text{g}}) where (P_{\text{g}}=I - \nabla(\Delta)^{-1}\nabla^\dagger) (lattice Coulomb/Landau‑type projector), with lattice (\nabla,\nabla^\dagger,\Delta) in your incidence‑matrix notation.
+
+# Extension: RP with embedded gauge‑projected Hessians
+
+**B’.1 Reflection datum with gauge split.**
+Keep your Appendix B reflection (\theta) (time‑slice bisector). Decompose links and plaquettes into (+), (-), and (0) (on the mirror). Fix background (U^\star) that is (\theta)-symmetric on the mirror set (or average it; this is standard).
+
+**B’.2 SOS factorization at the quadratic (Hessian) level.**
+Expand Wilson action to second order around (U^\star):
+[
+S(U^\star e^{A}) = S(U^\star) + \tfrac12\langle A, H A\rangle + R[A],
+]
+with cubic remainder (R[A]=O(|A|^3)). Under the standard OS split,
+[
+\langle A, H A\rangle = \langle A_+, H_{++}A_+\rangle + 2\Re\langle A_+, H_{+0}A_0\rangle + \langle A_0, H_{00}A_0\rangle + \langle A_-, H_{--}A_-\rangle,
+]
+and (H_{--}=\theta H_{++}\theta), etc.
+
+**B’.3 Gauge projection commutes with reflection (up to plane terms).**
+Define (P_{\text{g}}:=I-\nabla\Delta^{-1}\nabla^\dagger) using **time‑periodic** boundary conditions with even temporal extent (your Appendix B setup). Then
+[
+\theta P_{\text{g}}\theta = P_{\text{g}} \quad\text{and}\quad P_{\text{g}} = \operatorname{diag}(P_{+},P_{0},P_{-}) + \text{(finite‑range plane couplings)}.
+]
+The plane couplings are supported within one step of the mirror (coming from (\Delta^{-1})). This preserves the SOS structure because the kernel built from (H_{\text{phys}}:=P_{\text{g}}^\top H P_{\text{g}}) still admits a (+)/(-) factorization with a reflection‑plane correction absorbed into (S_0).
+
+**B’.4 Positive kernel after projection.**
+Consider the Gaussian kernel
+[
+K(A_-,A_+,A_0);=;\exp!\Big(-\tfrac12\langle A,;H_{\text{phys}},A\rangle\Big).
+]
+Because (P_{\text{g}}) is an **orthogonal projection** in the OS inner product (your incidence‑matrix formalism makes this explicit: (P_{\text{g}}^\top=P_{\text{g}}), (P_{\text{g}}^2=P_{\text{g}})), the Schur complement on the minus/plus split yields a **positive semi‑definite** block kernel (K(A_-,A_+,|,A_0)) with the standard SOS factorization:
+[
+K = \exp!\Big(-\tfrac12\langle A_0, H^{(0)}*{\text{phys}} A_0\rangle\Big)\cdot
+\exp!\Big(-\tfrac12\langle A*+, Q A_+\rangle\Big)\cdot
+\exp!\Big(-\tfrac12\langle A_-, \theta Q \theta, A_-\rangle\Big),
+]
+for some (Q\succeq 0) depending on (H_{\text{phys}}) and the plane couplings. This is the analytic RP step **with the gauge projection inside**.
+
+**B’.5 Interfacing simulations (your “Hessian world”).**
+The objects your code already computes coincide with the pieces above:
+
+* (B), (\nabla), (\nabla^\dagger), (\Delta) ⇒ you can assemble (P_{\text{g}}) (you already did this in the U(1) FFT projector and in the SU(3) Hessian notebooks).
+* Block structure across the mirror ⇒ via your incidence indexing, you can materialize (H_{++}), (H_{--}), (H_{+0}), (H_{00}) and then form (H_{\text{phys}}).
+* **Numerical RP check**: for random (F(A_+)), verify (\mathbb E[\overline{F\circ\theta},F]\ge 0) by Monte Carlo with the Gaussian kernel from (H_{\text{phys}}) (exact for the quadratic piece), and then with full Wilson weight to see positivity stability at small amplitudes (remainder control below).
+
+# What’s new vs your current Appendix B
+
+1. RP is proven **after** gauge projection (not before), matching your measured quadratic forms.
+2. The reflection‑plane correction is handled explicitly via the (\Delta^{-1}) tails; it stays within (S_0).
+3. This gives a **single causal chain**: Wilson → Hessian (H) → gauge projection (P_{\text{g}}) → SOS factorization → OS inner product positivity, identical to the simulation pipeline.
+
+# Precise lemma pack to drop into the appendix
+
+* **Lemma B’.1 (Projector/reflection compatibility).** On the even‑extent torus, with the standard (\theta), the lattice Coulomb projector (P_{\text{g}}=I-\nabla\Delta^{-1}\nabla^\dagger) satisfies (\theta P_{\text{g}}\theta=P_{\text{g}}). Moreover, (P_{\text{g}}) maps (+) fields to (+) plus a reflection‑plane‑supported correction (and symmetrically for (-)).
+* **Lemma B’.2 (Block positivity after projection).** Let (H\succeq 0) be the Wilson Hessian at a (\theta)-symmetric background. Then (H_{\text{phys}}:=P_{\text{g}}^\top H P_{\text{g}}) admits an SOS factorization whose plus/minus Schur block (Q) is positive semidefinite.
+* **Lemma B’.3 (Stability beyond quadratic).** For (|A|\le r), the Wilson remainder (R[A]) obeys (|R[A]-R[\theta A]|\le c,|A|^3) with (c) volume‑uniform (finite range). Hence, for small‑fluctuation Gibbs measures (or after local Gaussian domination), the OS inner product stays non‑negative up to a controllable (O(r^3)) error, removable in the standard infrared/volume limits.
+
+# Exact place the **first new analytic lemma** is needed
+
+**Lemma B’.1** is standard once you write (\nabla,\nabla^\dagger,\Delta) in your incidence basis (you effectively proved the discrete Hodge relations already).
+**Lemma B’.2** is mostly linear algebra given Lemma B’.1 and symmetry of (H).
+**Lemma B’.3** is the **first genuinely new step** you must justify to go beyond “quadratic numerics”: a **uniform, reflection‑compatible cubic remainder bound** that is stable under gauge projection and independent of volume (finite range + locality of the Wilson action should make this doable, but it needs a written proof with constants).
+
+# Implementation hook (what to compute now)
+
+* Construct (P_{\text{g}}) with your (B)/incidence operators (you already have this for U(1); for SU(2/3) use the linearized Lie‑algebra block).
+* Build (H) blockwise across the mirror at a (\theta)-symmetric background; form (H_{\text{phys}}).
+* Compute numeric Schur (Q) and verify (Q\succeq 0) to machine precision over random subspaces (this is your RP “unit test”).
+* Record constants for Lemma B’.3: locality radius, cubic Lipschitz constants per plaquette, and the exact support of (\Delta^{-1}) tails intersecting the plane.
+
+If you want, I can draft **Appendix B’** (drop‑in LaTeX) with the three lemmas and the mirrored‑block indexing using your (B,\nabla,\Delta) notation.
+
+
+
+
+
+Here’s a tight, referee‑style sketch of how your finite‑volume OS2 result (proved for Wilson on even‑L₀ tori) extends to the continuum/thermodynamic setting via monotone limits, with a constructive route and a flag where a genuinely new lemma is needed.
+
+# Goal
+
+Extend OS2 (reflection positivity) from finite periodic lattices to the infinite‑volume Euclidean theory and then to the continuum theory obtained by lattice spacing (a\downarrow0).
+
+# Standing setup
+
+* Lattice: ( \Lambda_{a,L} = (a\mathbb Z/L_0\mathbb Z)\times\cdots\times(a\mathbb Z/L_3\mathbb Z) ), (L_0) even.
+* Measure: Wilson Gibbs measure ( \mu_{a,L} ) on link variables with your established finite‑volume OS2.
+* Time reflection ( \theta ) acts by (x_0\mapsto -x_0) and edge reversal; “positive half‑space” algebra ( \mathcal A_+^{a,L} ) generated by cylindrical functions supported on ({x_0\ge 0}).
+
+# Theorem (OS2 passes to the infinite‑volume limit)
+
+Assume:
+
+1. **Specification consistency**: the finite‑volume family ({\mu_{a,L}}) is a DLR specification with reflection‑compatible boundary conditions (your periodic setup is fine).
+2. **Tightness/uniform integrability**: for each fixed lattice spacing (a>0), along any van Hove sequence (L\to\infty) the family ({\mu_{a,L}}) is tight and has uniformly bounded exponential plaquette moments in a (\theta)‑stable neighborhood (standard Wilson bounds).
+3. **Local weak limits**: every cylinder event on a finite window admits a limit of its probabilities as (L\to\infty), defining a Gibbs measure (\mu_a) on the infinite lattice.
+
+Then for all (F\in \mathcal A_+^{a}) (cylinder functions supported in (x_0\ge 0)) one has
+[
+\langle F, F\rangle_{\mathrm{OS}} := \int \overline{(\Theta F)},F , d\mu_a ;\ge;0,
+]
+i.e., (\mu_a) satisfies OS2.
+
+### Proof sketch (constructive, monotone projective limit)
+
+1. **Directed net of volumes.** Fix (a). Let ({\Lambda_{a,L}}) be a van Hove net with even (L_0). For a fixed (F\in\mathcal A_+^{a}), choose (L) large so (\operatorname{supp} F\subset \Lambda_{a,L}^+).
+2. **Finite‑volume positivity.** By your Appendix B, ( \int \overline{(\Theta F)} F, d\mu_{a,L} \ge 0).
+3. **Projective consistency.** The restriction maps ( \pi_{L'\to L}) (conditioning to the smaller window and integrating out the exterior) satisfy
+   [
+   \int \overline{(\Theta F)} F , d\mu_{a,L'} ;=; \int \overline{(\Theta F)} F , d\big(\mu_{a,L'}!\circ!\pi_{L'\to L}^{-1}\big),
+   ]
+   and your DLR/periodic setup gives ( \mu_{a,L'}!\circ!\pi_{L'\to L}^{-1} \Rightarrow \mu_{a,L}) on that window as (L'\uparrow\infty).
+4. **Monotone‑class closure.** The class of (F) for which OS2 holds is a vector space closed under bounded monotone limits; cylinder functions generate (\sigma\big(\mathcal A_+^{a}\big)). Tightness + local weak convergence ⇒
+   [
+   \int \overline{(\Theta F)} F , d\mu_{a} ;=; \lim_{L'\to\infty} \int \overline{(\Theta F)} F , d\mu_{a,L'} ;\ge;0.
+   ]
+   Thus OS2 holds for (\mu_a).
+
+# Constructive by‑products (what you can actually build)
+
+* **Canonical OS pre‑Hilbert space** ( \mathcal H^{(a)}*{\mathrm{pre}} = \mathcal A*+^{a} / \mathcal N_a), (\mathcal N_a={F:\langle F,F\rangle_{\mathrm{OS}}=0}), with inner product from (\mu_a).
+* **Semigroup on (\mathcal H^{(a)})**: the time‑shift ( \tau_t ) on fields induces a contraction (T_t) for (t\ge0) via OS positivity; standard closure yields a positive self‑adjoint (H_a) (transfer “Hamiltonian”) by Hille–Yosida/GNS.
+
+# Continuum ( (a\downarrow0) ) extension of OS2
+
+Assume, in addition, along a scale (a_n\downarrow0):
+
+4. **Uniform window‑tightness across scales**: for each fixed physical window (W\subset\mathbb R^4) and each (F) depending on links inside (W), the pushforwards of (\mu_{a_n}) under piecewise‑constant interpolation are tight in a Polish field space (e.g., gauge‑invariant tempered distributions modulo gauge).
+5. **Reflection‑compatible renormalization**: bare coupling (g(a)) chosen so the limit Schwinger functionals on cylinders exist and respect time reflection (no counterterm breaks (\theta)).
+
+Then any subsequential continuum limit (\mu) satisfies OS2 by the same cylinder‑approximation + monotone‑class argument:
+[
+\int \overline{(\Theta F)} F , d\mu ;=; \lim_{n\to\infty} \int \overline{(\Theta F_{a_n})} F_{a_n} , d\mu_{a_n};\ge;0.
+]
+
+# Where a **new analytic lemma** is actually needed
+
+**Lemma (Uniform reflection‑stable tightness).**
+There exist (c_1,c_2>0) and a family of gauge‑invariant coercive local functionals (\Phi_W) on the interpolated fields such that for all (a\le a_0),
+[
+\mathbb E_{\mu_{a}}!\big[\exp{c_1 \Phi_W}\big] ;\le; c_2
+\quad\text{and}\quad
+\Phi_W(\Theta A)=\Phi_W(A),
+]
+uniformly in windows (W) that are reflection‑symmetric about (x_0=0).
+
+* This is the single nontrivial step that lifts your finite‑volume OS2 to a **constructive** continuum OS2: it gives Prokhorov tightness in a reflection‑invariant way and licenses the cylinder‑limit swap needed above.
+* In Yang–Mills this typically comes from exponential bounds on local field strength (plaquette) tails plus a gauge‑fixing‑robust modulus of continuity estimate. Your existing exponential plaquette controls are the right starting point; what’s missing is a short, explicit proof that they are stable under (\theta) and uniform in (a) after interpolation.
+
+# Checklist you can drop into Appendix C (ready‑to‑write)
+
+* C.1 Directed system and restriction maps ( \pi_{L'\to L}); definition of (\mathcal A_+^{a}).
+* C.2 Cylinder‑wise OS2 and net convergence (finite‑volume → infinite‑volume at fixed (a)).
+* C.3 Construction of ( \mathcal H^{(a)} ) and (H_a) from (\mu_a).
+* C.4 Interpolation scheme and field space for (a\downarrow0).
+* C.5 **New Lemma:** reflection‑stable tightness (state precisely; proof uses exponential plaquette tails, local Sobolev/modulus bound, and gauge projection commuting with (\theta)).
+* C.6 Passage of OS2 to (\mu) by cylinder approximation + monotone class.
+* C.7 Remarks on OS1/OS0 and OS reconstruction (deferred to transfer‑matrix appendix).
+
+# Why this is “projective/monotone”
+
+* “Projective”: expectations of cylinder functionals are consistent under restriction; limits are taken along the projective system of volumes and then along scales.
+* “Monotone”: positivity holds on simple nonnegative cylinders and extends by the monotone‑class theorem to the generated (\sigma)‑algebra; no delicate algebra beyond your finite‑volume OS2 is required.
+
+# Fully constructive knobs (what to compute/check)
+
+* Explicit window‑wise moment bounds (\mathbb E_{\mu_{a,L}}[\exp{\lambda\sum_{p\subset W} |1-U_p|}] ) uniform in (L) (you already measured these numerically; formalize as a lemma).
+* Verify (\theta) commutes with: (i) restriction ( \pi_{L'\to L}); (ii) interpolation; (iii) gauge projection used to define the field space.
+* Produce a one‑page proof that the OS null‑space is closed under the (L\to\infty) and (a\downarrow0) limits for cylinders (straight from dominated convergence once tightness is in place).
+
+If you want, I can write Appendix C in paste‑ready LaTeX with the exact statements above, and a stubbed proof of the new tightness lemma highlighting which exponential estimates from your Wilson action suffice.
+
+
+
+
+Here’s a compact way to extend your Appendix B (OS2 via Osterwalder–Seiler) so it directly interfaces with your Hessian world and the simulation checks.
+
+# Goal (one sentence)
+
+Embed **gauge‑projected Hessians** into the OS reflection‑positivity factorization so that:
+(i) the OS2 proof stays analytic (SOS factorization), and
+(ii) the **same quadratic forms** you compute in code appear **inside** the RP argument—no translation layer.
+
+# Minimal background (just enough)
+
+* **OS2 (reflection positivity)**: write the action as (S=S_+ + \theta S_+ + S_0) under time‑reflection (\theta), with (S_0) supported on the reflection plane. Then (\langle F, F\rangle_{\text{OS}}:=\mathbb E[\overline{F\circ\theta},F]\ge 0) holds if (e^{-S}) factorizes as a positive kernel under that splitting (Osterwalder–Seiler SOS).
+* **Hessian world**: you linearize around a background (U^\star) and study the quadratic form (\frac12\langle \delta U, H,\delta U\rangle). For gauge theory, the physical quadratic form is the **gauge‑projected** one: (H_{\text{phys}}:=P_{\text{g}}^\top H P_{\text{g}}) where (P_{\text{g}}=I - \nabla(\Delta)^{-1}\nabla^\dagger) (lattice Coulomb/Landau‑type projector), with lattice (\nabla,\nabla^\dagger,\Delta) in your incidence‑matrix notation.
+
+# Extension: RP with embedded gauge‑projected Hessians
+
+**B’.1 Reflection datum with gauge split.**
+Keep your Appendix B reflection (\theta) (time‑slice bisector). Decompose links and plaquettes into (+), (-), and (0) (on the mirror). Fix background (U^\star) that is (\theta)-symmetric on the mirror set (or average it; this is standard).
+
+**B’.2 SOS factorization at the quadratic (Hessian) level.**
+Expand Wilson action to second order around (U^\star):
+[
+S(U^\star e^{A}) = S(U^\star) + \tfrac12\langle A, H A\rangle + R[A],
+]
+with cubic remainder (R[A]=O(|A|^3)). Under the standard OS split,
+[
+\langle A, H A\rangle = \langle A_+, H_{++}A_+\rangle + 2\Re\langle A_+, H_{+0}A_0\rangle + \langle A_0, H_{00}A_0\rangle + \langle A_-, H_{--}A_-\rangle,
+]
+and (H_{--}=\theta H_{++}\theta), etc.
+
+**B’.3 Gauge projection commutes with reflection (up to plane terms).**
+Define (P_{\text{g}}:=I-\nabla\Delta^{-1}\nabla^\dagger) using **time‑periodic** boundary conditions with even temporal extent (your Appendix B setup). Then
+[
+\theta P_{\text{g}}\theta = P_{\text{g}} \quad\text{and}\quad P_{\text{g}} = \operatorname{diag}(P_{+},P_{0},P_{-}) + \text{(finite‑range plane couplings)}.
+]
+The plane couplings are supported within one step of the mirror (coming from (\Delta^{-1})). This preserves the SOS structure because the kernel built from (H_{\text{phys}}:=P_{\text{g}}^\top H P_{\text{g}}) still admits a (+)/(-) factorization with a reflection‑plane correction absorbed into (S_0).
+
+**B’.4 Positive kernel after projection.**
+Consider the Gaussian kernel
+[
+K(A_-,A_+,A_0);=;\exp!\Big(-\tfrac12\langle A,;H_{\text{phys}},A\rangle\Big).
+]
+Because (P_{\text{g}}) is an **orthogonal projection** in the OS inner product (your incidence‑matrix formalism makes this explicit: (P_{\text{g}}^\top=P_{\text{g}}), (P_{\text{g}}^2=P_{\text{g}})), the Schur complement on the minus/plus split yields a **positive semi‑definite** block kernel (K(A_-,A_+,|,A_0)) with the standard SOS factorization:
+[
+K = \exp!\Big(-\tfrac12\langle A_0, H^{(0)}*{\text{phys}} A_0\rangle\Big)\cdot
+\exp!\Big(-\tfrac12\langle A*+, Q A_+\rangle\Big)\cdot
+\exp!\Big(-\tfrac12\langle A_-, \theta Q \theta, A_-\rangle\Big),
+]
+for some (Q\succeq 0) depending on (H_{\text{phys}}) and the plane couplings. This is the analytic RP step **with the gauge projection inside**.
+
+**B’.5 Interfacing simulations (your “Hessian world”).**
+The objects your code already computes coincide with the pieces above:
+
+* (B), (\nabla), (\nabla^\dagger), (\Delta) ⇒ you can assemble (P_{\text{g}}) (you already did this in the U(1) FFT projector and in the SU(3) Hessian notebooks).
+* Block structure across the mirror ⇒ via your incidence indexing, you can materialize (H_{++}), (H_{--}), (H_{+0}), (H_{00}) and then form (H_{\text{phys}}).
+* **Numerical RP check**: for random (F(A_+)), verify (\mathbb E[\overline{F\circ\theta},F]\ge 0) by Monte Carlo with the Gaussian kernel from (H_{\text{phys}}) (exact for the quadratic piece), and then with full Wilson weight to see positivity stability at small amplitudes (remainder control below).
+
+# What’s new vs your current Appendix B
+
+1. RP is proven **after** gauge projection (not before), matching your measured quadratic forms.
+2. The reflection‑plane correction is handled explicitly via the (\Delta^{-1}) tails; it stays within (S_0).
+3. This gives a **single causal chain**: Wilson → Hessian (H) → gauge projection (P_{\text{g}}) → SOS factorization → OS inner product positivity, identical to the simulation pipeline.
+
+# Precise lemma pack to drop into the appendix
+
+* **Lemma B’.1 (Projector/reflection compatibility).** On the even‑extent torus, with the standard (\theta), the lattice Coulomb projector (P_{\text{g}}=I-\nabla\Delta^{-1}\nabla^\dagger) satisfies (\theta P_{\text{g}}\theta=P_{\text{g}}). Moreover, (P_{\text{g}}) maps (+) fields to (+) plus a reflection‑plane‑supported correction (and symmetrically for (-)).
+* **Lemma B’.2 (Block positivity after projection).** Let (H\succeq 0) be the Wilson Hessian at a (\theta)-symmetric background. Then (H_{\text{phys}}:=P_{\text{g}}^\top H P_{\text{g}}) admits an SOS factorization whose plus/minus Schur block (Q) is positive semidefinite.
+* **Lemma B’.3 (Stability beyond quadratic).** For (|A|\le r), the Wilson remainder (R[A]) obeys (|R[A]-R[\theta A]|\le c,|A|^3) with (c) volume‑uniform (finite range). Hence, for small‑fluctuation Gibbs measures (or after local Gaussian domination), the OS inner product stays non‑negative up to a controllable (O(r^3)) error, removable in the standard infrared/volume limits.
+
+# Exact place the **first new analytic lemma** is needed
+
+**Lemma B’.1** is standard once you write (\nabla,\nabla^\dagger,\Delta) in your incidence basis (you effectively proved the discrete Hodge relations already).
+**Lemma B’.2** is mostly linear algebra given Lemma B’.1 and symmetry of (H).
+**Lemma B’.3** is the **first genuinely new step** you must justify to go beyond “quadratic numerics”: a **uniform, reflection‑compatible cubic remainder bound** that is stable under gauge projection and independent of volume (finite range + locality of the Wilson action should make this doable, but it needs a written proof with constants).
+
+# Implementation hook (what to compute now)
+
+* Construct (P_{\text{g}}) with your (B)/incidence operators (you already have this for U(1); for SU(2/3) use the linearized Lie‑algebra block).
+* Build (H) blockwise across the mirror at a (\theta)-symmetric background; form (H_{\text{phys}}).
+* Compute numeric Schur (Q) and verify (Q\succeq 0) to machine precision over random subspaces (this is your RP “unit test”).
+* Record constants for Lemma B’.3: locality radius, cubic Lipschitz constants per plaquette, and the exact support of (\Delta^{-1}) tails intersecting the plane.
+
+If you want, I can draft **Appendix B’** (drop‑in LaTeX) with the three lemmas and the mirrored‑block indexing using your (B,\nabla,\Delta) notation.
+
+
+
+
+
+
+
+
+Here’s a tight, proof-adjacent experiment you can run to check whether curvature positivity survives gauge reduction: compare the Hessian spectrum **before vs. after gauge projection**.
+
+---
+
+# What this tests (in plain terms)
+
+* You have a lattice action (S(U)). Linearize around a configuration (usually near identity or a measured equilibrium) to get a quadratic form (H) on link variables (1‑forms).
+* Some directions are pure gauge (longitudinal). Physical curvature lives on the **transverse/gauge‑invariant** subspace.
+* If the **projected Hessian** (H_{\mathrm{phys}}) (i.e., (H) restricted to the transverse subspace) has its low‑end spectrum **stable** (eigenvalues don’t dip toward 0 or negative when you vary (L), (\beta), or do mild perturbations), that’s strong evidence that your local convexity/curvature mechanism survives gauge reduction.
+
+---
+
+# Minimal setup (Abelian to start, then non‑Abelian)
+
+1. Lattice: (d=4), size (L).
+2. Field: start with U(1) link angles (a_\mu(x)) (small‑angle for linearization), then repeat at SU(2)/SU(3) using Lie‑algebra coordinates.
+3. Base point: identity or a thermalized snapshot (freeze, then linearize).
+4. Hessian:
+
+   * U(1) Wilson: (H = \alpha, d_1^{!*} d_1 + m^2 I) (Maxwell + optional mass regulator).
+   * Non‑Abelian (near identity): same **structure** at quadratic order on (\mathfrak g)-valued 1‑forms, plus group‑metric weights.
+
+---
+
+# Gauge projection operator (Fourier‑clean, periodic box)
+
+Let (\mathrm{grad}: C^0 \to C^1), (\mathrm{div}=\mathrm{grad}^{!*}), and (\Delta = -,\mathrm{div},\mathrm{grad}) on 0‑forms.
+
+* **Physical (transverse) projector**: (P_T = I - \mathrm{grad},\Delta^{-1},\mathrm{div}).
+* **Gauge (longitudinal) projector**: (P_L = \mathrm{grad},\Delta^{-1},\mathrm{div}).
+* Use FFT to implement (\Delta^{-1}) on the zero‑mean subspace (set the (k=0) mode to 0).
+  (Common bug you already hit: a silent sign flip turns (P_T) into (I+\mathrm{grad},\Delta^{-1}\mathrm{div}). The correct projector **subtracts** the longitudinal part.)
+
+Then define:
+
+* Raw Hessian: (H).
+* **Projected/physical Hessian**: (H_{\mathrm{phys}} = P_T^{!*} H P_T) restricted to (\operatorname{im} P_T).
+* **Gauge‑block** (sanity): (H_{\mathrm{gauge}} = P_L^{!*} H P_L).
+
+---
+
+# Diagnostics to record (what “stability” means)
+
+* (\lambda_{\min}(H)), (\lambda_{\min}(H_{\mathrm{phys}})) across:
+
+  * (L \in {8,12,16,24}),
+  * (\beta) sweep (e.g., (5.6 \to 6.4) in SU(3); choose your usual grid),
+  * a few background snapshots (Haar‑near, smooth, thermalized).
+* Condition numbers (\kappa(H_{\mathrm{phys}})).
+* **Invariance checks**:
+
+  * Inject a small gauge transform (a \mapsto a + \mathrm{grad},\phi). Verify spectra of (H_{\mathrm{phys}}) unchanged to machine precision.
+  * Verify (H_{\mathrm{gauge}}) collapses exactly to the Laplacian structure expected from the Faddeev–Popov picture in the linearized limit.
+
+Target pattern (what would be compelling):
+
+* Raw (H) shows near‑zero modes that shrink with (L).
+* After projection, (\lambda_{\min}(H_{\mathrm{phys}})) **plateaus** (bounded away from 0) across (L), with mild spread across snapshots. That’s your “curvature survives gauge reduction” signature.
+
+---
+
+# Skeleton code (single‑shot; replace your kernels as needed)
+
+```python
+# Pseudocode: minimal moving parts, FFT-based Δ^{-1}, safe signs
+
+A = sample_linearized_links(L, d=4, group="U1_or_Lie_alg")   # or zeros for identity
+H = build_hessian_quadratic_form(A, model="Wilson_quad")     # as a linear operator on 1-forms
+
+# Operators
+grad = make_grad_operator(L, d=4)        # C^0 -> C^1
+div  = grad.T                            # C^1 -> C^0
+lap0 = - div @ grad                      # C^0 -> C^0  (nonnegative spectrum)
+
+def solve_lap0(rhs):                     # zero-mean solver via FFT
+    rhs0 = remove_constant_mode(rhs)
+    return fft_solve_positive_laplacian(rhs0)  # divides by +|k|^2; k=0 set to 0
+
+# Projectors
+P_L = lambda v: grad @ solve_lap0(div @ v)
+P_T = lambda v: v - P_L(v)
+
+# Projected Hessians (as linear maps)
+H_phys  = lambda v: P_T( H( P_T(v) ) )
+H_gauge = lambda v: P_L( H( P_L(v) ) )
+
+# Spectra (use Lanczos on operators to avoid dense builds)
+lam_raw_min   = lanczos_min_eig(H, space="C1")
+lam_phys_min  = lanczos_min_eig(H_phys, space="im_PT")
+lam_gaugemin  = lanczos_min_eig(H_gauge, space="im_PL")
+
+# Sweeps over L, beta, snapshots; log plateaus of lam_phys_min
+```
+
+---
+
+# SU(2)/SU(3) notes (what changes)
+
+* Replace U(1) angles with (\mathfrak{su}(N))-valued 1‑forms; inner products use the Killing form or (\operatorname{Tr}) in fundamental rep.
+* Quadraticization of Wilson action around identity yields the same (d_1^{!*} d_1) skeleton per color; coupling mixes only via block‑diagonal copies at quadratic order (nonlinear terms appear beyond this test).
+* The **projector is geometry-only** (doesn’t depend on the group), so the same (P_T) applies componentwise.
+
+---
+
+# What a positive result buys you (and what it doesn’t)
+
+* **Buys:** A concrete, volume‑uniform lower bound candidate for the physical quadratic form; strong evidence your local curvature mechanism isn’t an artifact of gauge modes.
+* **Doesn’t:** Prove a nonperturbative mass gap. You still need transfer to the interacting (nonlinear) regime, control of renormalization/continuum limit, and OS reconstruction pieces. But this gives a crisp, testable lemma your later steps can key off.
+
+---
+
+If you want, I can output a single, runnable script (your preferred format) that:
+
+1. builds (H) from your existing incidence matrices,
+2. applies the FFT projector with the correct sign,
+3. runs a small ((L,\beta)) sweep, and
+4. prints a compact table of (\lambda_{\min}) before/after projection.
+
+
+
+
+
+
+

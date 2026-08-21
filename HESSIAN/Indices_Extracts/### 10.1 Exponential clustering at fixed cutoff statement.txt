@@ -1,0 +1,697 @@
+### 10.1 Exponential clustering at fixed cutoff: statement 
+
+Parts 6–9 provide all of the analytic ingredients needed for fixed-cutoff clustering:
+
+* on a “good” event (K), Helffer–Sjöstrand plus the matrix hinge gives a **matrix Brascamp–Lieb bound** for covariances in terms of (M_H^{-1});
+* Part 9 gives **exponential off-diagonal decay** for the kernel of (M_H^{-1});
+* Part 8 upgrades a bound under (\mu(\cdot\mid K)) to one under (\mu) with an explicit error proportional to (\mu(K^c)).
+
+This subsection records the resulting **clustering statement** in a form designed to be uniform in the volume and compatible with OS reconstruction later.
+
+---
+
+#### 10.1.1 Setup and notation
+
+Let (\Lambda) be the finite periodic (4)-dimensional lattice from §2.1, with configuration manifold
+[
+M_\Lambda = G^{E(\Lambda)}
+]
+equipped with the product bi-invariant metric (g_\Lambda). Let (\mu=\mu_{\Lambda,\beta}) be the Wilson Gibbs measure
+[
+d\mu(U) ;=; Z_{\Lambda,\beta}^{-1},e^{-S_W(U)},d\mathrm{vol}*{g*\Lambda}(U).
+]
+
+For an observable (F:M_\Lambda\to\mathbb R), we use the link-support notion from §6.5.4:
+[
+\mathrm{supp}_E(F)\subseteq E(\Lambda),
+\qquad
+b\notin\mathrm{supp}_E(F)\ \Longleftrightarrow\ \nabla_b F\equiv 0.
+]
+We measure separation using the link adjacency graph distance (\mathrm{dist}_E) (Definition 6.19), and for link sets (A,B\subseteq E(\Lambda)),
+[
+\mathrm{dist}_E(A,B):=\min{\mathrm{dist}_E(b,b'):\ b\in A,\ b'\in B}.
+]
+
+We also fix the “gradient size” seminorm
+[
+|\nabla F|*{\infty,2}
+;:=;
+\sup*{U\in M_\Lambda}\ |\nabla F(U)|*{g*\Lambda}
+================================================
+
+\sup_{U\in M_\Lambda}\Big(\sum_{b\in E(\Lambda)}|\nabla_bF(U)|_{\mathfrak g}^2\Big)^{1/2}.
+\tag{10.1}
+]
+For local (F), this is finite and depends only on finitely many link-derivative components.
+
+---
+
+#### 10.1.2 The “good set” input and the massive Maxwell decay input
+
+Let (K\subset M_\Lambda) be a measurable event with (0<\mu(K)<1), and write (\mu_K:=\mu(\cdot\mid K)).
+
+Assume that on (K) the conditional HS machinery yields the matrix covariance bound in terms of the massive Maxwell inverse on horizontals (as in §6.4–§6.5): there exists a fixed self-adjoint operator (M_H\succ0) on (H^{(0)}=\ker(d_0^*)\subset \mathcal C^1(\Lambda;\mathfrak g)) such that for all (C^1) observables (F,G) with (\mu_K(G)=0),
+[
+\mathrm{Cov}*{\mu_K}(F,G)
+;\le;
+\int_K \big\langle \nabla_H F,\ M_H^{-1}\nabla_H G\big\rangle*{\mathcal C^1},d\mu_K.
+\tag{10.2}
+]
+(When (F,G) are gauge invariant, (\nabla F,\nabla G) are horizontal, so (\nabla_H) may be replaced by (\nabla) without change.)
+
+Assume further that Part 9 provides an exponential kernel bound for (M_H^{-1}) in the link distance:
+[
+\big|\big(M_H^{-1}\big)*{b,b'}\big|*{\mathrm{op}}
+\ \le
+C_M,e^{-\eta_M,\mathrm{dist}*E(b,b')},
+\qquad b,b'\in E(\Lambda),
+\tag{10.3}
+]
+with constants (C_M,\eta_M>0) depending only on the parameters ((m^2,\alpha)) (equivalently on ((c_H,\beta,n,\lambda*\rho))) and the dimension, but **not** on (|\Lambda|).
+
+---
+
+#### 10.1.3 Fixed-cutoff clustering with explicit localization error
+
+The first statement keeps the localization error visible; it is the version that is most robust to whatever typicality mechanism is eventually used in §8.3.
+
+**Theorem 10.1 (fixed-cutoff clustering with an explicit good-set error).**
+Assume (10.2) and (10.3) hold for some event (K) and constants (C_M,\eta_M). Then for all bounded (C^1) observables (F,G),
+[
+\big|\mathrm{Cov}*{\mu}(F,G)\big|
+\ \le
+C*{\mathrm{good}}(F,G),e^{-\eta_M,\mathrm{dist}*E(\mathrm{supp}*E(F),\mathrm{supp}*E(G))}
+;+;
+8,|F|*\infty,|G|*\infty,\mu(K^c),
+\tag{10.4}
+]
+where one may take
+[
+C*{\mathrm{good}}(F,G)
+;:=;
+C_M,|\nabla F|*{\infty,2},|\nabla G|*{\infty,2},
+\sqrt{|\mathrm{supp}_E(F)|,|\mathrm{supp}_E(G)|}.
+\tag{10.5}
+]
+
+*Remarks.*
+
+1. The key feature is that (C_M,\eta_M) are **volume-uniform**: the only volume sensitivity in (10.4) sits in (\mu(K^c)), which is exactly what §8.3 is tasked to control.
+2. For fixed local observables (F,G), the support sizes (|\mathrm{supp}_E(F)|,|\mathrm{supp}*E(G)|) are (O(1)), so (C*{\mathrm{good}}(F,G)) is (O(1)) as (|\Lambda|\to\infty).
+
+---
+
+#### 10.1.4 Pure exponential clustering under a typicality hypothesis
+
+To turn (10.4) into the canonical “single exponential” clustering statement, we assume a typicality bound ensuring (\mu(K^c)) is superexponentially small in the graph diameter, or at least exponentially small in (|P(\Lambda)|) (which is more than enough on a bounded-degree periodic lattice).
+
+**Assumption 10.2 (typicality at volume scale).**
+There exist constants (c_{\mathrm{typ}}>0) and (\Lambda_0) such that for all periodic (\Lambda) with (|\Lambda|\ge |\Lambda_0|),
+[
+\mu(K^c)\ \le\ e^{-c_{\mathrm{typ}},|P(\Lambda)|}.
+\tag{10.6}
+]
+(In the intended application, (K=K_\Lambda(\varepsilon)) from §8.2, and (10.6) is the “missing lemma” isolated in §8.3.)
+
+Since (\mathrm{dist}*E(\cdot,\cdot)) is a graph distance on the finite set (E(\Lambda)), we always have
+[
+\mathrm{dist}*E(A,B)\ \le\ |E(\Lambda)|\ \le\ C*{E/P},|P(\Lambda)|
+\tag{10.7}
+]
+for a dimension-dependent constant (C*{E/P}<\infty) (uniform in (\Lambda)). Hence (10.6) implies
+[
+\mu(K^c)\ \le\ \exp!\Big(-\frac{c_{\mathrm{typ}}}{C_{E/P}}\ \mathrm{dist}_E(A,B)\Big)
+\qquad\text{for all }A,B\subseteq E(\Lambda)\text{ with }\mathrm{dist}_E(A,B)\ge 1.
+\tag{10.8}
+]
+
+Combining (10.4) with (10.8) yields the clean clustering statement.
+
+**Corollary 10.3 (pure exponential clustering at fixed cutoff, conditional on typicality).**
+Assume (10.2)–(10.3) and Assumption 10.2. Then there exist constants (\eta>0) and (C(F,G)<\infty) such that for all sufficiently large (\Lambda),
+[
+\big|\mathrm{Cov}*{\mu*{\Lambda,\beta}}(F,G)\big|
+\ \le
+C(F,G),\exp!\Big(-\eta,\mathrm{dist}*E(\mathrm{supp}*E(F),\mathrm{supp}*E(G))\Big),
+\tag{10.9}
+]
+with
+[
+\eta
+:=\min\Big{\eta_M,\ \frac{c*{\mathrm{typ}}}{C*{E/P}}\Big},
+\qquad
+C(F,G):=2C*{\mathrm{good}}(F,G)+16|F|*\infty|G|*\infty.
+\tag{10.10}
+]
+All constants are uniform in the volume.
+
+---
+
+This completes the fixed-cutoff clustering statement. In §10.2 we prove Theorem 10.1 by inserting the Part 9 kernel decay into the HS bound on (K) and then applying the covariance decomposition from §8.1; §10.3 records the dependence of (\eta) on (\beta) (and on the lattice spacing (a), when we restore physical units).
+
+
+
+
+## 10.2 Haar mass and group Ricci 
+
+This section is where the phrase **“Haar mass”** gets cashed out into an actual geometric statement: **positive Ricci curvature of the compact gauge group** (with a bi-invariant metric) produces a **universal quadratic confinement near the identity**, and that confinement shows up either as a **Ricci term** in Bakry–Émery *or* as a **strictly convex Jacobian potential** in exponential coordinates.
+
+---
+
+### 10.2.1 Two equivalent viewpoints
+
+There are two ways to see the same effect.
+
+**(A) Riemannian reference-measure picture.**
+You keep the reference measure as the product Riemannian/Haar volume:
+[
+d\mu_\Lambda(U)=Z_\Lambda^{-1}e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U).
+]
+Then the Bakry–Émery tensor is
+[
+\mathrm{Ric}*{\mu*\Lambda}=\mathrm{Ric}*{g*\Lambda}+\nabla^2 S_\Lambda,
+]
+and the “Haar mass” contribution is literally (\mathrm{Ric}*{g*\Lambda}).
+
+**(B) Flat-coordinate picture near the identity.**
+You write each link variable as
+[
+U_\ell=\exp(X_\ell),
+]
+pull back the volume form to Lebesgue measure (dX), and the **Jacobian** becomes an extra potential:
+[
+d\mathrm{vol}*{g*\Lambda}(U)=\Big(\prod_{\ell}J_G(X_\ell)\Big),dX
+=\exp!\Big(-\sum_{\ell}S_H(X_\ell)\Big),dX,
+\quad S_H:=-\log J_G.
+]
+Then the “Haar mass” is the **quadratic term in (S_H)** near (0).
+
+Both pictures encode the same geometry; you just choose whichever makes the later estimate cleaner.
+
+---
+
+### 10.2.2 Ricci curvature of a compact Lie group with bi-invariant metric
+
+#### When do you get a *strictly positive* lower bound?
+
+A bi-invariant metric always gives (\mathrm{Ric}_G\ge 0). But to get a *uniform positive* constant
+[
+\mathrm{Ric}_G \ge \kappa_G, g_G\quad\text{with }\kappa_G>0,
+]
+you must exclude flat directions—equivalently: **no torus factor in the identity component** (e.g. compact semisimple (G)). So we assume:
+
+**Assumption 10.2 (Positive Ricci group).**
+[
+\mathrm{Ric}_G \ge \kappa_G, g_G\quad\text{for some }\kappa_G>0.
+]
+
+For compact simple (G) with the usual normalization (metric proportional to (-)Killing form), you even get the stronger “Einstein” identity (\mathrm{Ric}_G=\kappa_G g_G).
+
+#### Levi–Civita connection for bi-invariant metrics
+
+Let (\langle\cdot,\cdot\rangle) be the inner product on (\mathfrak g=T_eG) induced by (g_G), and let (X^L) denote the left-invariant vector field from (X\in\mathfrak g).
+
+For a bi-invariant metric, the Levi–Civita connection satisfies:
+[
+\nabla_{X^L}Y^L=\tfrac12 [X,Y]^L.
+]
+
+**Idea of proof:** use the Koszul formula, note that metric pairings of left-invariant fields are constant (so derivative terms vanish), and use Ad-invariance to simplify the bracket terms.
+
+#### Curvature and Ricci formula
+
+Define curvature by
+[
+R(A,B)C = \nabla_A\nabla_B C - \nabla_B\nabla_A C - \nabla_{[A,B]}C.
+]
+With the connection above, one gets:
+[
+R(X^L,Y^L)Z^L = -\tfrac14 [[X,Y],Z]^L.
+]
+
+Now take an orthonormal basis ({e_i}) of (\mathfrak g). Then:
+[
+\mathrm{Ric}_G(X,X)
+=\sum_i \langle R(X^L,e_i^L)e_i^L, X^L\rangle
+= \tfrac14\sum_i |[X,e_i]|^2 \ge 0.
+]
+
+That formula makes the “no flat directions” condition totally transparent:
+
+* If (X) commutes with everything (an abelian direction), then ([X,e_i]=0) for all (i), and (\mathrm{Ric}_G(X,X)=0).
+* If (G) is semisimple, there are no such nontrivial commuting directions, so (\mathrm{Ric}_G) is strictly positive on the unit sphere, hence admits a positive minimum (\kappa_G).
+
+---
+
+### 10.2.3 Ricci of the product configuration manifold
+
+On the lattice configuration manifold
+[
+M_\Lambda = G^{E(\Lambda)},\qquad g_\Lambda=\bigoplus_{\ell\in E(\Lambda)} g_G,
+]
+the Ricci tensor is block-diagonal across factors. If (v=(v_\ell)*\ell), then
+[
+\mathrm{Ric}*{g_\Lambda}(v,v)=\sum_{\ell\in E(\Lambda)} \mathrm{Ric}*G(v*\ell,v_\ell).
+]
+So if (\mathrm{Ric}*G\ge \kappa_G g_G), then
+[
+\mathrm{Ric}*{g_\Lambda}(v,v)\ge \kappa_G\sum_\ell g_G(v_\ell,v_\ell)
+=\kappa_G, g_\Lambda(v,v).
+]
+
+**Key point:** the same (\kappa_G) works for every (\Lambda).
+That’s the “uniform in volume” backbone you want later.
+
+---
+
+### 10.2.4 Haar Jacobian and the effective Haar potential in exponential coordinates
+
+Now for the “Haar mass” in its most concrete form: the Jacobian of the exponential map.
+
+Let (U=\exp_G(X)) near (e), with (X\in\mathfrak g). In these coordinates,
+[
+d\mathrm{vol}*{g_G}(U)=J_G(X),dX,\qquad J_G(0)=1.
+]
+Define the **Haar/Jacobian potential**
+[
+S_H(X):=-\log J_G(X),
+]
+so the volume form becomes (d\mathrm{vol}*{g_G}=e^{-S_H(X)}dX).
+
+#### Normal-coordinate expansion
+
+A standard Riemannian fact in geodesic normal coordinates at a point (p):
+[
+\sqrt{\det(g_{ij}(x))}
+=1-\tfrac16,\mathrm{Ric}_{kl}(p),x^k x^l + O(|x|^3).
+]
+Hence, for (G) at (e),
+[
+J_G(X)=1-\tfrac16,\mathrm{Ric}_G(X,X) + O(|X|^3).
+]
+Taking (-\log) gives
+[
+S_H(X)=\tfrac16,\mathrm{Ric}_G(X,X)+O(|X|^3),
+]
+and differentiating twice at (0):
+[
+\nabla^2 S_H(0)(X,X)=\tfrac13,\mathrm{Ric}_G(X,X).
+]
+So if (\mathrm{Ric}_G\ge \kappa_G g_G), then
+[
+\nabla^2 S_H(0)\ \ge\ \tfrac13\kappa_G,\mathrm{Id}.
+]
+
+That (\tfrac13\kappa_G) is the “mass-like” quadratic convexity you’re harvesting.
+
+#### Product Haar potential
+
+For the lattice product manifold, near the vacuum (U^{(0)}) you write (U_\ell=\exp(X_\ell)). Then
+[
+d\mathrm{vol}*{g*\Lambda}(U)=\prod_{\ell}J_G(X_\ell),dX
+=\exp!\Big(-\sum_{\ell}S_H(X_\ell)\Big),dX.
+]
+Define
+[
+S_{H,\Lambda}(X):=\sum_{\ell\in E(\Lambda)} S_H(X_\ell).
+]
+Its Hessian at (0) is block-diagonal with the same (\tfrac13\kappa_G) bound per block, hence again **uniform in (\Lambda)**.
+
+#### Conceptual warning (important)
+
+This quadratic term is **not** a gauge-fixing Proca mass you inserted by hand. It’s the Jacobian from using invariant measure in non-flat coordinates—so it preserves gauge invariance rather than breaking it.
+
+---
+
+### Tiny “why we care” punchline
+
+This entire §10.2 is the geometric reason you later get to say:
+
+* “Even before I touch the action, the configuration manifold already has a built-in positive curvature contribution (Haar/Ricci).”
+* “So as long as the action’s Hessian isn’t too negative, the Bakry–Émery tensor stays positive—at least locally near the vacuum—and that feeds directly into local CD((\rho,\infty)) and then into local functional inequalities.”
+
+On to §10.3, the gauge-orbit/horizontal machinery, where the Wilson Hessian’s kernel starts behaving like a mischievous imp.
+
+
+
+
+## 10.3 Gauge orbits, horizontal subspaces, and the Wilson Hessian at the vacuum 
+
+This section explains why the curvature estimate in Part 10 is fundamentally **horizontal**: gauge-invariant observables “live” in directions orthogonal to gauge orbits, and the Wilson action’s quadratic form has a large kernel tied to gauge freedom (and, on a torus, topology).
+
+We re-derive:
+
+1. the vertical/horizontal splitting from the gauge action;
+2. the discrete cochain model at the vacuum;
+3. the quadratic expansion (Hessian) of the Wilson action and its relation to discrete Hodge operators.
+
+---
+
+### 10.3.1 Gauge group action and vertical tangent space
+
+The lattice gauge group is
+[
+\mathcal G_\Lambda := G^{V(\Lambda)}.
+]
+For (g=(g_x)*{x\in V(\Lambda)}\in\mathcal G*\Lambda) and (U=(U_{x\to y})*{(x\to y)\in E(\Lambda)}\in M*\Lambda), the standard endpoint-conjugation action is
+[
+(g\cdot U)*{x\to y} := g_x,U*{x\to y},g_y^{-1}.
+]
+
+**Isometry.** Because the metric (g_G) on (G) is **bi-invariant**, both left and right multiplications are isometries of ((G,g_G)). Hence each coordinate map
+[
+U_{x\to y}\mapsto g_x U_{x\to y} g_y^{-1}
+]
+is an isometry, and so the product action is an isometry of ((M_\Lambda,g_\Lambda)). In particular it preserves (d\mathrm{vol}*{g*\Lambda}) (product Haar/Riemannian volume).
+
+---
+
+### 10.3.2 Infinitesimal gauge action and horizontal gradients for gauge-invariant observables
+
+Let (\xi=(\xi_x)*{x\in V(\Lambda)}\in\mathfrak g^{V(\Lambda)}). Consider the one-parameter gauge transformation (g(t)\in\mathcal G*\Lambda) with
+[
+g_x(t)=\exp(t\xi_x).
+]
+Define the **infinitesimal gauge vector field** at configuration (U) by
+[
+\mathcal V_\xi(U):=\left.\frac{d}{dt}\right|*{t=0}(g(t)\cdot U)\in T_U M*\Lambda.
+]
+
+On a single link (\ell=(x\to y)), differentiating gives
+[
+\left.\frac{d}{dt}\right|*{0}\Big(\exp(t\xi_x),U*\ell,\exp(-t\xi_y)\Big)
+= (\xi_x)^L(U_\ell)-(\xi_y)^R(U_\ell),
+]
+where ((\xi)^L,(\xi)^R) are the left-/right-invariant vector fields generated by (\xi).
+
+Define the **vertical subspace**
+[
+\mathrm{Vert}*U:={\mathcal V*\xi(U):\xi\in\mathfrak g^{V(\Lambda)}}\subset T_U M_\Lambda,
+]
+and the **horizontal subspace** as the orthogonal complement
+[
+\mathrm{Hor}_U:=\mathrm{Vert}*U^\perp
+\qquad(\text{orthogonal w.r.t. }g*\Lambda).
+]
+
+**Lemma (gauge invariance (\Rightarrow) horizontal gradient).**
+If (f\in C^1(M_\Lambda)) is gauge-invariant, (f(g\cdot U)=f(U)) for all (g\in\mathcal G_\Lambda), then
+[
+\nabla f(U)\in \mathrm{Hor}_U\quad\text{for every }U.
+]
+
+*Proof.* Gauge invariance implies
+[
+0=\left.\frac{d}{dt}\right|*{0} f(g(t)\cdot U)=df(U)[\mathcal V*\xi(U)].
+]
+But (df(U)[w]=g_\Lambda(\nabla f(U),w)), so (g_\Lambda(\nabla f(U),\mathcal V_\xi(U))=0) for all (\xi), i.e. (\nabla f(U)\perp \mathrm{Vert}_U). ∎
+
+This is why all curvature/functional-inequality statements ultimately need to be interpreted on horizontals (or, equivalently, on the quotient (M_\Lambda/\mathcal G_\Lambda), if one develops that calculus).
+
+---
+
+### 10.3.3 Tangent identification at the vacuum and discrete cochains
+
+Let (U^{(0)}\in M_\Lambda) be the trivial configuration (U^{(0)}_\ell=e) for all links (\ell).
+
+At (U^{(0)}), using translation to identify (T_eG\cong\mathfrak g), we have
+[
+T_{U^{(0)}} M_\Lambda \cong \bigoplus_{\ell\in E(\Lambda)} \mathfrak g
+=: \mathcal C^1(\Lambda;\mathfrak g),
+]
+the space of (\mathfrak g)-valued 1-cochains.
+
+Equip cochains with the product inner products
+[
+\langle X,Y\rangle_{\mathcal C^1}:=\sum_{\ell\in E(\Lambda)}\langle X_\ell,Y_\ell\rangle_G,\qquad
+\langle F,G\rangle_{\mathcal C^2}:=\sum_{p\in P(\Lambda)}\langle F_p,G_p\rangle_G,
+]
+etc.
+
+---
+
+### 10.3.4 Discrete exterior derivative (d_1) and linearized curvature
+
+Define the coboundary (discrete exterior derivative)
+[
+d_1:\mathcal C^1(\Lambda;\mathfrak g)\to \mathcal C^2(\Lambda;\mathfrak g)
+]
+by oriented summation around plaquettes. For a plaquette (p=(x;\mu,\nu)) with standard orientation,
+[
+(d_1X)*p := X*{x,\mu}+X_{x+\hat\mu,\nu}-X_{x+\hat\nu,\mu}-X_{x,\nu}.
+]
+
+Now parameterize configurations near the vacuum by exponential coordinates:
+[
+U_\ell=\exp_G(X_\ell)\qquad (X_\ell \text{ small}).
+]
+The plaquette holonomy is an ordered product of these exponentials, and a Baker–Campbell–Hausdorff expansion yields the key linearization:
+[
+U_p(U)=\exp_G\big((d_1X)_p+\mathcal O(|X|^2)\big),
+]
+uniformly for plaquettes in a sufficiently small neighborhood of (X=0).
+
+This is the lattice analogue of (F=dA+A\wedge A): at quadratic order, the leading term is the “curl” (d_1X).
+
+---
+
+### 10.3.5 Quadratic expansion of the Wilson action and its Hessian
+
+Take the Wilson plaquette action (standard normalization)
+[
+S_W(U)=\frac{\beta}{N}\sum_{p\in P(\Lambda)} \mathrm{Re},\mathrm{Tr}(I-U_p(U)),
+\qquad \beta=\frac{2N}{g_0^2}.
+]
+
+Expanding (S_W(\exp(X))) around (X=0), using:
+
+1. (U_p=\exp((d_1X)_p+\mathcal O(|X|^2))), and
+2. Taylor expansion of the class function (U\mapsto \mathrm{Re,Tr}(I-U)) near (e),
+
+one obtains
+[
+S_W(U)=S_W(U^{(0)})+S_W^{(2)}(X)+\mathcal O(|X|^3),
+]
+where the quadratic term has the form
+[
+S_W^{(2)}(X)=\frac{\beta,c_{HS}}{N}\sum_{p\in P(\Lambda)} |(d_1X)*p|*G^2
+=\frac{\beta,c*{HS}}{N},|d_1X|*{\mathcal C^2}^2,
+]
+for some constant (c_{HS}>0) depending only on the normalization conventions.
+
+Hence the Hessian at the vacuum (as an operator on (\mathcal C^1(\Lambda;\mathfrak g))) is
+[
+\nabla^2 S_W(U^{(0)})=2,\frac{\beta,c_{HS}}{N},d_1^*d_1,
+]
+and in particular
+[
+\nabla^2 S_W(U^{(0)})(X,X)=2,\frac{\beta,c_{HS}}{N},|d_1X|_{\mathcal C^2}^2\ge 0.
+]
+
+So the Wilson action is **positive semidefinite to second order** at the vacuum.
+
+---
+
+### 10.3.6 Kernel structure and discrete Hodge decomposition at the vacuum
+
+Because (d_1^*d_1) is positive semidefinite, its kernel is
+[
+\ker(d_1^*d_1)=\ker(d_1),
+]
+the closed 1-cochains (zero discrete curl). This kernel includes:
+
+* **Exact 1-forms** (pure gauge directions): (\mathrm{im}(d_0)), coming from infinitesimal gauge transformations.
+* **Harmonic 1-forms**, depending on topology (e.g. on a torus): (\ker(d_1)\cap \ker(d_0^*)).
+
+Define
+[
+d_0:\mathcal C^0(\Lambda;\mathfrak g)\to\mathcal C^1(\Lambda;\mathfrak g),
+\qquad (d_0\phi)_{x\to y}:=\phi_y-\phi_x,
+]
+and its adjoint (d_0^*) (negative divergence under the counting/product inner products). The 1-cochain Hodge Laplacian is
+[
+\Delta_1:=d_0d_0^*+d_1^*d_1.
+]
+Finite-dimensional Hodge theory (pure linear algebra) gives the orthogonal decomposition
+[
+\mathcal C^1
+=\mathrm{im}(d_0)\ \oplus\ \ker(\Delta_1)\ \oplus\ \mathrm{im}(d_1^*),
+\qquad
+\ker(\Delta_1)=\ker(d_0^*)\cap\ker(d_1).
+]
+
+Now relate this to vertical/horizontal at the vacuum:
+
+* At (U^{(0)}), the infinitesimal gauge action is exactly (d_0\phi), so
+  [
+  \mathrm{Vert}_{U^{(0)}}=\mathrm{im}(d_0).
+  ]
+* Therefore
+  [
+  \mathrm{Hor}_{U^{(0)}}=(\mathrm{im}(d_0))^\perp=\ker(d_0^*)
+  =\ker(\Delta_1)\ \oplus\ \mathrm{im}(d_1^*).
+  ]
+
+So: on horizontal directions at the vacuum, the Wilson Hessian is nonnegative, and it vanishes precisely on the harmonic 1-forms (which exist only if the lattice topology allows them).
+
+---
+
+That’s the whole 10.3 block. The next step (10.4) is where this structure is used to give a clean lower bound for (\nabla^2 S_\Lambda) on horizontals at (U^{(0)}), which then plugs into the Bakry–Émery tensor estimate.
+
+
+
+### 10.4 Euclidean-time decay and the fixed-cutoff OS mass parameter (bridge to Part 11)
+
+Section 10.1–10.3 establishes an **exponential clustering bound at fixed lattice spacing** of the schematic form
+[
+\big|\mathrm{Cov}*{\mu*{\Lambda,a}}(F,G)\big|
+\ \le\
+C(F,G),e^{-\eta(a),\mathrm{dist}(\mathrm{supp}F,\mathrm{supp}G)}
+\ +\ \text{(localization error)},
+]
+with constants uniform in the volume and a distance exponent (\eta(a)>0) coming from the massive-Maxwell inverse (Part 9).  
+
+The purpose of this subsection is to record the **standard conversion of Euclidean-time exponential decay into a Hamiltonian mass gap**, in the fixed-cutoff (finite lattice spacing) setting. This conversion is logically simple—spectral theorem plus OS reconstruction—but it is the step that translates a geometric/functional-inequality estimate into a physical “mass parameter.” It is also exactly the interface later used in Part 11 (thermodynamic limit + OS permanence). 
+
+---
+
+#### 10.4.1 From link-distance clustering to Euclidean-time exponential decay
+
+Fix a distinguished Euclidean time direction on the periodic lattice (\Lambda), with lattice spacing (a>0). Let (\tau_{na}) denote translation by (n\in\mathbb N) time steps (so physical time separation is (t=na)). Let (F,G) be local observables supported in time slabs of uniformly bounded thickness (independent of (\Lambda)).
+
+Because the interaction range of the relevant “massive Maxwell” operator is finite in the link-adjacency metric, the link-distance separation of supports grows linearly with time translation: there exist constants (c_0\ge 0) and (c_1>0), depending only on the slab thickness conventions (not on (\Lambda)), such that
+[
+\mathrm{dist}\big(\mathrm{supp}_E(F),\mathrm{supp}*E(\tau*{na}G)\big)
+\ \ge\
+c_1 n - c_0.
+\tag{10.19}
+]
+(In the cleanest convention one may take (c_1=1); an additive shift (c_0) is harmless since it only modifies the prefactor.)
+
+Inserting (10.19) into the clustering bound gives
+[
+\big|\mathrm{Cov}*{\mu*{\Lambda,a}}(F,\tau_{na}G)\big|
+\ \le\
+C(F,G),e^{\eta(a)c_0},e^{-\eta(a)c_1,n}
+\ +\ \text{(localization error)}.
+\tag{10.20}
+]
+Equivalently, in physical time (t=na),
+[
+\big|\mathrm{Cov}*{\mu*{\Lambda,a}}(F,\tau_{t}G)\big|
+\ \le\
+C'(F,G),\exp!\Big(-m_{\mathrm{Euc}}(a),t\Big)
+\ +\ \text{(localization error)},
+\tag{10.21}
+]
+where we define the **Euclidean-time decay rate**
+[
+m_{\mathrm{Euc}}(a)\ :=\ \frac{\eta(a)c_1}{a}.
+\tag{10.22}
+]
+This is the “mass parameter” that will later be compared to the OS Hamiltonian gap.
+
+---
+
+#### 10.4.2 OS reconstruction input and the transfer-semigroup representation
+
+We now invoke the OS reconstruction framework set up earlier (reflection positivity + time translation structure). Concretely, OS reconstruction provides:
+
+* a Hilbert space (\mathcal H_\Lambda),
+* a cyclic vacuum vector (\Omega_\Lambda),
+* a self-adjoint Hamiltonian (H_\Lambda\ge 0),
+* and a map (F\mapsto [F]\in\mathcal H_\Lambda) from positive-time observables,
+
+such that the Euclidean two-point function along time translations is represented by the semigroup (e^{-tH_\Lambda}) (for (t\ge 0)):
+[
+\big\langle [F],,e^{-tH_\Lambda}[G]\big\rangle_{\mathcal H_\Lambda}
+;=;
+\mathbb E_{\mu_{\Lambda,a}}!\big[,\theta F\cdot \tau_t G,\big].
+\tag{10.23}
+]
+Here (\theta) denotes time reflection (about the OS reflection plane). This representation is the only OS input we will use in the “Euclidean decay (\Rightarrow) gap” step. 
+
+---
+
+#### 10.4.3 Spectral-theorem lemma: Euclidean exponential decay implies a Hamiltonian gap
+
+We state the standard lemma in a form tailored to our application.
+
+**Lemma 10.4 (Euclidean exponential decay implies an OS Hamiltonian gap).**
+Assume OS reconstruction holds so that (10.23) is available. Suppose there exists (m>0) such that for every positive-time local observable (F) with (\mu_{\Lambda,a}(F)=0),
+[
+\Big|\mathbb E_{\mu_{\Lambda,a}}\big[\theta F\cdot\tau_t F\big]\Big|
+\ \le\
+C(F),e^{-mt}
+\qquad\forall t\ge 0.
+\tag{10.24}
+]
+Then the spectrum of (H_\Lambda) restricted to (\Omega_\Lambda^\perp) is contained in ([m,\infty)). Equivalently,
+[
+\mathrm{gap}(H_\Lambda)\ \ge\ m.
+\tag{10.25}
+]
+
+*Proof.*
+Let (\psi_F:=[F]\in\mathcal H_\Lambda). The condition (\mu_{\Lambda,a}(F)=0) implies (\psi_F\perp \Omega_\Lambda) (the vacuum component corresponds to the constant observable). By OS,
+[
+\langle \psi_F, e^{-tH_\Lambda}\psi_F\rangle
+============================================
+
+\mathbb E_{\mu_{\Lambda,a}}\big[\theta F\cdot\tau_t F\big],
+]
+so (10.24) gives
+[
+\langle \psi_F, e^{-tH_\Lambda}\psi_F\rangle \le C(F)e^{-mt}.
+]
+By the spectral theorem, (\langle \psi_F, e^{-tH_\Lambda}\psi_F\rangle) is the Laplace transform of the spectral measure (\nu_F) of (H_\Lambda) associated to (\psi_F):
+[
+\langle \psi_F, e^{-tH_\Lambda}\psi_F\rangle=\int_{[0,\infty)} e^{-t\lambda},d\nu_F(\lambda).
+]
+If (\nu_F) had any mass on ([0,m)), then the Laplace transform would decay strictly slower than (e^{-mt}), contradicting (10.24) for large (t). Hence (\mathrm{supp}(\nu_F)\subset[m,\infty)) for all such (\psi_F). Since OS-cylindrical vectors span a dense subspace of (\Omega_\Lambda^\perp), it follows that (\sigma(H_\Lambda)\cap(0,m)=\emptyset), i.e. (\mathrm{gap}(H_\Lambda)\ge m). (\square)
+
+This is the “spectral theorem implication” flagged in the dependency ledger. 
+
+---
+
+#### 10.4.4 Consequence: a fixed-cutoff OS gap bound from (\eta(a))
+
+Combining §10.4.1–§10.4.3 with the time-direction clustering bound from §10.1–§10.3 gives the following packaging statement.
+
+**Proposition 10.5 (fixed-cutoff OS gap lower bound; finite volume).**
+Assume OS reconstruction and suppose the localization error in (10.21) is either negligible (e.g. exponentially small in (|\Lambda|)) or has been eliminated by working with a genuinely global clustering bound. Then the OS Hamiltonian (H_\Lambda) has a strictly positive spectral gap bounded below by
+[
+\mathrm{gap}(H_\Lambda)\ \ge\ m_{\mathrm{Euc}}(a)\ =\ \frac{\eta(a)c_1}{a}.
+\tag{10.26}
+]
+In particular, under the Combes–Thomas bound for the massive Maxwell inverse (Part 9), one has an explicit formula of the form
+[
+\eta(a)\ =\ \frac1R\log!\Big(1+\frac{a_0}{2B}\Big),
+\qquad
+m_{\mathrm{Euc}}(a)=\frac{\eta(a)}{a},
+\tag{10.27}
+]
+with (a_0=m^2) (the curvature “mass” from the hinge) and (B) controlled by the finite-range off-diagonal row-sum of the Maxwell part; in the link-adjacency metric one typically has (R=1) and (B\lesssim \alpha D), where (D) is the bounded-degree constant for the link graph.
+
+A representative specialization appearing in earlier notes is
+[
+m_{\mathrm{OS}}(\Lambda)\ \ge\ \frac{1}{a}\log\Big(1+\frac{m^2}{2\alpha D}\Big),
+\tag{10.28}
+]
+and in the (d=4) SU(3) Wilson normalization ((\alpha=\beta/3), (m^2=c_H/2), (D=18)),
+[
+m_{\mathrm{OS}}(\Lambda)\ \ge\ \frac{1}{a}\log\Big(1+\frac{c_H}{72\beta}\Big).
+\tag{10.29}
+]
+
+
+---
+
+#### 10.4.5 What this section is (and is not) claiming
+
+* The quantitative content of Part 10 remains what the outline promises: **fixed-cutoff exponential clustering with constants uniform in (|\Lambda|)**. 
+* Section 10.4 records the purely functional-analytic bridge: **Euclidean-time decay (\Rightarrow) OS Hamiltonian gap**, which is later deployed systematically in Part 11 where the thermodynamic limit and OS permanence are handled. 
+
+Reference outline file: [Outline.txt](sandbox:/mnt/data/Outline.txt).
+
+

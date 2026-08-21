@@ -1,0 +1,193 @@
+## Proposed unified manuscript outline
+
+### Front matter
+
+* **Title**
+* **Abstract**
+* **Contents**
+* **Notation, conventions, and standing constants**
+
+---
+
+### 1. Introduction and main results
+
+1.1 **Target notion of mass gap.** The mass gap is formulated as the **OS Hamiltonian mass gap** obtained from Osterwalder–Schrader reconstruction. 
+1.2 **Main theorem (continuum, conditional).** Statement in the form “(C1)–(C3) ⇒ continuum OS Hamiltonian has a strictly positive gap.” 
+1.3 **Fixed-cutoff theorem (unconditional at the finite-dimensional level).** Exponential clustering on the lattice at fixed lattice spacing, with constants uniform in volume; conversion to a fixed-cutoff OS gap. 
+1.4 **Logical spine and dependency ledger.** The analytic engine is organized around
+Curvature ⇒ LSI ⇒ Poincaré ⇒ spectral gap ⇒ mass gap. 
+1.5 **Explicit isolation of remaining global/continuum inputs.** The only continuum-level gaps are the RG/reflection architecture, the continuum Hamiltonian comparison framework, and a uniform physical lower bound along the scaling trajectory. 
+
+---
+
+### 2. Lattice Yang–Mills setup and Euclidean measure
+
+2.1 **Spacetime lattice, edges, plaquettes, orientation conventions**
+2.2 **Configuration space and gauge group action**
+2.3 **Plaquette holonomy and Wilson action** 
+2.4 **Euclidean Gibbs measure (Haar × Wilson)** 
+2.5 **Local observables, supports, covariances, and time translations**
+
+---
+
+### 3. Geometry of the configuration manifold and the cochain calculus
+
+3.1 **Product Lie-group manifold and right-invariant trivialization**
+3.2 **Lattice cochains and operators**: (d_0:\mathcal C^0\to\mathcal C^1), (d_1:\mathcal C^1\to\mathcal C^2), adjoints and (\ell^2) geometry
+3.3 **Gauge directions vs horizontal directions; vacuum horizontal space** (H_{U^{(0)}}=\ker d_0^*) 
+3.4 **Discrete Maxwell operator and combinatorial overlap constants**
+3.5 **Riemannian gradient/Laplacian, carré du champ, Dirichlet form**
+
+---
+
+### 4. Reflection positivity and the lattice OS axioms
+
+4.1 **OS reflection plane, induced involution on configurations, positive-time algebra**
+4.2 **Reflection positivity for Wilson lattice gauge theory** (Osterwalder–Seiler SOS factorization framework as the structural mechanism) 
+4.3 **Time translation invariance** (finite periodic lattices; permanence under limits) 
+4.4 **OS reconstruction as an external theorem** (stated precisely, deferred proof) 
+
+---
+
+### 5. Wilson action Hessian: vacuum structure and localized coercivity
+
+5.1 **Vacuum configuration and linearization**
+5.2 **Hessian at vacuum = discrete Maxwell operator.** (\nabla^2 S_W(U^{(0)})=(\beta/N),d_1^*d_1). 
+5.3 **Canonical “small field” region** (K_\Lambda(r)) (linkwise geodesic ball control) 
+5.4 **Localized “matrix hinge” inequality.** On (K_\Lambda(r)), the Bakry–Émery curvature matrix satisfies a structured operator lower bound of the form
+[
+\mathrm{Ric}*{\mu*\Lambda}(U)\ \succeq\ \frac{c_H}{2}I+\frac{\beta}{3}d_1^*d_1
+\quad (U\in K_\Lambda(r)),
+]
+(and restricted to the horizontal sector, as required). 
+5.5 **Why the proof is matrix-based rather than scalar-based.** The PSD structure of (d_1^*d_1) is preserved rather than destroyed by absolute values, and the only scalarized remainder is the explicit perturbation (R_W(r)I). 
+
+---
+
+### 6. Local functional inequalities and Helffer–Sjöstrand covariance control
+
+6.1 **Bochner/Γ(_2) identity with drift and Bakry–Émery curvature matrix** 
+6.2 **Local curvature ⇒ local LSI and local Poincaré** (on (K_\Lambda(r)), with reflecting boundary or equivalent localization device)
+6.3 **Helffer–Sjöstrand representation** of covariance and its matrix inequality form
+6.4 **Conditional covariance bound** on (K_\Lambda(r)) in terms of the inverse of a “massive Maxwell” operator
+6.5 **Definition of the operator (M)** (built from (c_H) and (d_1^*d_1)) that will drive exponential decay
+
+---
+
+### 7. Lyapunov drift and uniform-in-volume functional inequalities
+
+7.1 **Smooth plaquette proxy** (z_p=\phi(U_p)), and Lyapunov candidate (W_\Lambda=\exp(\kappa V_\Lambda)) with (V_\Lambda=\sum_p z_p^2) (or equivalent)
+7.2 **Uniform derivative bounds for the proxy** (first and second derivatives controlled uniformly in volume)
+7.3 **Drift computation and uniform-constant closure**
+7.4 **Local-to-global theorem**: Lyapunov drift + local inequality ⇒ global Poincaré (and, when required, global LSI) with constants uniform in (|\Lambda|)
+
+* **(Gap)** The remaining step for the drift package is the action-dependent coercive lower bound needed to control the pairing term
+  (\sum_p z_p\langle\nabla S_\Lambda,\nabla z_p\rangle).
+  The notes explicitly isolate this as the missing inequality: “show term II dominates term I to force drift negative.” 
+  Appendix J removes the *second-derivative obstruction* and makes all constants uniform, but does not itself supply the coercive pairing lower bound. 
+  (Plan: prove a uniform coercivity inequality tying (\langle\nabla S,\nabla z_p\rangle) to (\sum z_p) using strict convexity of the plaquette potential on a suitable neighborhood and a discrete geometric inequality relating plaquette gradients to link gradients; if that fails, replace measure-small localization by capacity/Lyapunov-controlled localization with an error that is subexponential in separation.)
+
+---
+
+### 8. Localization: upgrading “good-set” bounds to full-measure bounds
+
+8.1 **Covariance decomposition across an event (K)** (exact identity, with explicit error terms)
+8.2 **Choice of canonical set.** Use an averaged plaquette “badness”
+[
+\mathcal B_\Lambda(U)=\frac1{|P(\Lambda)|}\sum_{p}\vartheta(U_p),
+\qquad
+K_\Lambda(\varepsilon)={\mathcal B_\Lambda\le\varepsilon}.
+]
+
+8.3 **Typicality / concentration estimate**: show (\mu_\Lambda(K_\Lambda(\varepsilon)^c)) is sufficiently small to prevent the localization error from spoiling the distance exponent.
+
+* **(Gap)** A missing lemma is recorded explicitly: “uniform typicality/localization of (K_\Lambda)” is not yet established in the current chain. 
+* **(Gap)** The current route seeks Gaussian concentration via a global LSI, but the conversion “super-Poincaré ⇒ LSI” is explicitly flagged as missing. 
+  (Plan: either supply the missing SPI→LSI conversion theorem with the exact hypotheses satisfied here, or redesign the localization step to use drift/capacity control so that only Poincaré (not LSI) is required, while keeping the localization error subexponential in separation.)
+
+---
+
+### 9. Green’s function decay for the massive Maxwell operator
+
+9.1 **Abstract finite-range inverse decay lemma** (Combes–Thomas type conjugation method)
+9.2 **Exponential kernel bound for (M^{-1})** with explicit exponent
+[
+|(M^{-1})_{xy}|\ \le\ \frac{2}{a_0},e^{-\eta,\mathrm{dist}(x,y)},
+\qquad
+\eta=\frac1R\log!\Bigl(1+\frac{a_0}{2B}\Bigr).
+]
+
+9.3 **Uniformity in volume and boundary conditions**
+9.4 **Insertion into Helffer–Sjöstrand covariance inequality**
+
+---
+
+### 10. Exponential clustering at fixed cutoff
+
+10.1 **Statement of clustering**: for local (F,G),
+[
+|\mathrm{Cov}*{\mu*{\Lambda,a}}(F,G)|\ \le\ C(F,G),e^{-\eta(a),\mathrm{dist}(\mathrm{supp}F,\mathrm{supp}G)}.
+]
+10.2 **Proof**: conditional HS bound on (K_\Lambda) + Green’s function decay + localization error control
+10.3 **Time-direction clustering exponent (\eta(a))** and its dependence on (\beta) and (a)
+
+---
+
+### 11. Thermodynamic limit and the fixed-cutoff OS Hamiltonian mass gap
+
+11.1 **Thermodynamic limit** (\Lambda\uparrow\mathbb Z^4) at fixed (a): existence of limit points and permanence of OS structure
+11.2 **Uniform-in-volume clustering implies clustering in the infinite-volume limit**
+11.3 **OS reconstruction as external input** and **Euclidean time decay ⇒ Hamiltonian gap** with scaling (m(a)\ge \eta(a)/a). 
+11.4 **Optional alternative bridge**: one-step OS dissipation comparison (kept as an appendix or alternative route). 
+
+---
+
+### 12. Continuum limit and final theorem
+
+12.1 **Reflection positivity permanence under reflection-equivariant coarse graining** and under projective limits on cylinder observables 
+12.2 **Monotone quadratic-form continuum limit ⇒ persistence of a uniform gap** (functional-analytic permanence lemma) 
+12.3 **Continuum trajectory and physical units**: the required condition is (\eta(a_n)\ge m_0 a_n) along (a_n\downarrow0). 
+12.4 **Final theorem (conditional)**: (C1)–(C3) imply continuum OS mass gap. 
+
+* **(Gap)** The remaining continuum-level inputs are isolated in Part 11: RG/projective architecture, continuum Hamiltonian comparison framework, and a uniform lower bound in physical units along the scaling trajectory. 
+
+---
+
+## Project file map
+
+### Core manuscript sources (primary inputs to assemble the new draft)
+
+* **V1 % Global Strategy + Geomet.txt** — global strategy + analytic scaffold + Euclidean→Hamiltonian roadmap. 
+* **## Section 1 — Model and Configuration Space.txt** (and the duplicate “Configurat” file) — Wilson action, Gibbs measure, OS mass-gap notion. 
+* **# Section 2 — Geometry of the Confi.txt** — configuration manifold geometry.
+* **V2 and 3… Discrete cochain operators…** — (d_0,d_1), horizontal sector, Maxwell structure.
+* **# Section 4 — Wilson Action Local G.txt** — locality, gauge invariance, smooth proxy remarks. 
+* **V5 — The canonical set (K_\Lambda)…** — canonical good set + matrix hinge inequality. 
+* **## Section 5 — Local Functional Inequalities.txt** — Γ(_2), local inequalities, HS machinery.
+* **## Section 6 — Local-to-Global Assembly.txt** — Lyapunov/globalization; contains the SPI→LSI missing-conversion flag. 
+* **V7 — Localization removing t.md** — localization framework + explicit “missing lemma” note. 
+* **V6 — Helffer–Sjöstrand covar.txt** — HS covariance representation.
+* **V8 — Green’s function decay.md** (and **V13 — Green’s function decay.txt**) — Combes–Thomas exponential inverse decay lemma. 
+* **## Section 7 — Spectral Gap and Lattice Mass Gap.txt** — packaging into lattice OS mass gap.
+* **## Section 8 — Infinite-Volume Limit.txt** + **V9 — Uniformity and thermody.txt** — thermodynamic limit uniformity.
+* **V10 — OS reconstruction as a.txt** — OS reconstruction (external) + time-decay ⇒ mass gap argument. 
+* **# Section 9 — Continuum Limit Passage.txt** + **V11 — Continuum limit what m.txt** — continuum permanence lemmas + isolated continuum gaps. 
+* **V12 — Final theorem and the.txt** — clean final theorem statement in terms of (C1)–(C3), plus optional alternative bridge. 
+
+### Technical appendices to consolidate (select a single final “smooth proxy + drift” package)
+
+* **Appendix J** — removes the second-derivative obstruction and makes constants uniform; explicitly states what remains open for drift closure. 
+* **Appendix I** — records the remaining open coercive inequality (pairing term domination). 
+* **Appendices A/E/G/H/K/L** — smooth plaquette proxy constructions and Lyapunov computations (choose one coherent pipeline and discard duplicates).
+* **Appendices B/D** — reflection positivity proofs.
+* **Appendix C** — OS axioms / reconstruction supporting material.
+
+---
+
+## Suggested “guidance-file” stubs to add (to keep the rewrite referee-trackable)
+
+* **DEPENDENCY_LEDGER.md** — a one-page DAG listing lemmas → propositions → theorems, with the three flagged gaps living in a dedicated “Open Inputs” box (drift coercivity, typicality/localization, continuum existence/physical scaling).
+* **NOTATION_AND_CONSTANTS.md** — all constants (c_H,\nu,R_W(r),\eta(a)), and exactly where they enter the quantitative bounds.
+* **EXTERNAL_INPUTS.md** — explicit statements of which theorems are taken as external inputs (OS reconstruction, any SPI→LSI conversion theorem if used, DLR existence if invoked), and the precise hypotheses needed.
+
+This completes the outline and file map needed to begin section-by-section assembly into a single referee-facing draft.

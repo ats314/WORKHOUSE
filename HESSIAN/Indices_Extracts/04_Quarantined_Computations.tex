@@ -1,0 +1,77 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\newtheorem{remark}{Remark}
+
+\title{Quarantined Computational Material (Non-Proofs): Hessian Spectra, Projectors, HOTRG Jacobians}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Status}
+
+This document collects computational outputs and code-level constructions from the project directory.
+Everything here is \emph{evidence only}.  None of it is treated as a proof of any analytic statement.
+
+\section{Finite-volume Hessian spectra at vacuum}
+
+\subsection{Wilson Hessian on $L=2$ (projected physical sector)}
+
+A JAX-based Hessian construction with an explicit gauge+toron projector reports, at $U\equiv I$ and $\beta=1$:
+\begin{itemize}[leftmargin=*]
+\item $\lambda_{\max}(H_0)\approx 2.6666667=8/3$,
+\item $\lambda_{\min}(H_0|\_{\mathrm{phys}})\approx 0.6666667=2/3$.
+\end{itemize}
+
+These values are consistent with the analytic identity $H_0=(1/6)\Delta_1$ from Document~02 when the discrete $1$-form Laplacian has smallest positive eigenvalue $4$ on $L=2$.
+
+\subsection{Discrete $1$-form Laplacian on $L=2$}
+
+A separate construction of the coboundary matrix $d$ (links $\to$ plaquettes) and $\Delta_1=d^\top d$ on an $L=2$ periodic $4$D lattice reports:
+\begin{itemize}[leftmargin=*]
+\item total dimension $|E_L|\cdot \dim(\mathfrak{su}(3)) = 64\cdot 8 = 512$ (per color suppressed in the Laplacian-only test),
+\item $\dim\ker(\Delta_1)=1040$ in the scalarized test (counting gauge+toron structure in the chosen representation),
+\item smallest strictly positive eigenvalue in the projected sector is $4$.
+\end{itemize}
+
+\section{Scaling with $L$ (projected Lanczos at vacuum)}
+
+A projected Lanczos scan at vacuum (with a Fourier-space transverse projector) reports:
+\begin{itemize}[leftmargin=*]
+\item for $L=2$: $\lambda_{\min}\approx 0.66667$,
+\item for $L=3$: $\lambda_{\min}\approx 0.50000$,
+\end{itemize}
+again consistent with Document~02, where $\lambda_{\min}(H_0|\_{\mathrm{phys}})=\frac{1}{6}\,4\sin^2(\pi/L)$.
+
+\section{Perturbed configurations}
+
+The same projected Lanczos code reports that for a small random perturbation around vacuum (e.g.\ amplitude $10^{-2}$), the lowest projected eigenvalue can become slightly negative, on the scale of $10^{-7}$--$10^{-6}$ in the reported runs.
+
+\begin{remark}
+This numerical negativity may be:
+(i) a real curvature/nonlinearity effect away from the exact vacuum linearization,
+(ii) leakage due to using a vacuum-defined transverse projector at non-vacuum field,
+or (iii) numerical error / Lanczos truncation error.
+No inference is justified without a controlled analytic comparison.
+\end{remark}
+
+\section{Hessian scans ``on GPU''}
+
+A separate GPU/Lanczos script scans the smallest eigenvalue of the \emph{full} Hessian (not gauge-projected) along random directions at amplitudes in $[10^{-2}, 2.5\times 10^{-2}]$ and reports negative values of size $\sim 10^{-3}$.
+Because gauge directions are not removed, these numbers cannot be interpreted as physical convexity constants.
+
+\section{HOTRG Jacobian sketches}
+
+The directory contains a sketch implementation of a HOTRG-style contraction + SVD truncation map $T\mapsto T'$ and a plan to compute its Jacobian by automatic differentiation (JAX).
+
+\begin{remark}
+Differentiating through SVD/truncation is not a mathematically clean operation at singular-value degeneracies; the Jacobian may be ill-defined or discontinuous there.
+Any theorem using a Jacobian norm bound for HOTRG must explicitly address this nondifferentiability.
+\end{remark}
+
+\end{document}

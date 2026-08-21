@@ -1,0 +1,126 @@
+Here’s a tight, technical checklist to explicitly verify how **lattice convexity ⇒ continuum positivity** in your Theorem IR as (a\to0), and to track which constants survive vs. collapse. This is written to drop straight into your proof stack.
+
+---
+
+# IR Theorem: lattice → continuum transfer of convexity/positivity
+
+## 0) Setup and scalings (fix conventions once)
+
+* Lattice box (\Lambda_a=(a\mathbb{Z}/L\mathbb{Z})^4), links (U_{x,\mu}\in SU(N)), right‑invariant coordinates (U=\exp(a A_\mu(x))) with (A_\mu(x)\in\mathfrak{su}(N)) sampled at sites.
+* Wilson + Haar action:
+  [
+  S_a(U)=\beta\sum_p\Big(1-\tfrac1N \Re\mathrm{Tr},U_p\Big);+;S_{\mathrm{Haar}}(U).
+  ]
+* Match to continuum coupling via (\beta=\tfrac{2N}{g_0^2(a)}). Keep track of any scheme constants with names (don’t absorb into (O(1))): (c_W(N)), (c_H(N)), etc.
+
+## 1) Small‑field chart and Hessian extraction
+
+Work in a uniform small‑field chart (|aA|\le R_0) (your SAFE region). Expand each plaquette:
+[
+\Re\mathrm{Tr},U_p ;=; N - \tfrac{a^4}{2}|F_{\mu\nu}(x)|^2 ;+; O(a^6|A|^3+\dots).
+]
+Second variation (right‑invariant) at a configuration in the SAFE region:
+[
+\nabla^2 S_a ;=; \beta,a^4,\mathcal{H}*W ;+; \mathcal{H}*{\mathrm{Haar}} ;+; \mathcal{R}_a,
+]
+with a remainder bound (|\mathcal{R}_a|\le C_R,a^6) on SAFE. Here (\mathcal{H}*W) is the discrete YM quadratic form, (\mathcal{H}*{\mathrm{Haar}}) the on‑site Haar Hessian (block‑diagonal in links).
+
+**Constants bookkeeping**
+
+* Let (\lambda_{\min}(\mathcal{H}_{\mathrm{Haar}})\ge c_H>0) on SAFE (your computed 8×8 SU(3) blocks — record the exact numeric lower bound).
+* Let (\mathcal{H}*W \simeq Q_a^*,(-\Delta_a),Q_a + \text{gauge‑nulls}) after gauge projection (P_a). Denote the gauge‑projected minimal eigenvalue on the orthogonal complement of gauge orbits by (\lambda*{\min}^{\perp}(\mathcal{H}_W)\ge c_W a^{-2}) (discrete Poincaré on the torus; the (a^{-2}) scaling is explicit).
+
+## 2) Gauge projection and positivity window
+
+Apply the physical projector (P_a) (right‑invariant; same side as your RG/HOTRG). On ( \mathrm{Ran}(P_a)):
+[
+\nabla^2 S_a\big|*{\mathrm{phys}}
+;\simeq; \beta a^4,\mathcal{H}*W^{\perp} ;+; \mathcal{H}*{\mathrm{Haar}} ;+; \mathcal{R}*a.
+]
+Spectral lower bound on SAFE:
+[
+\nabla^2 S_a\big|*{\mathrm{phys}} ;\succeq;
+\underbrace{\beta a^4 \cdot (c_W a^{-2})}*{\text{= }(\beta c_W) a^{2}}
+;+; c_H ;-; C_R a^6.
+]
+Define the **finite‑(a) convexity modulus** (Bakry–Émery parameter) on SAFE:
+[
+\kappa(a);:=; c_H ;+; (\beta c_W),a^2 ;-; C_R a^6.
+]
+
+**Survival vs collapse**
+
+* (c_H) (Haar block lower bound) is **(a)-independent** ⇒ **survives** (a\to0).
+* ((\beta c_W)a^2) **collapses** as (a\to0) for any AF‑compatible (\beta\sim g_0^{-2}(a)) with (g_0(a)\to0) sub‑log. (Even if (\beta\to\infty) logarithmically, (a^2) wins.)
+* (C_R a^6) collapses.
+  Thus
+  [
+  \liminf_{a\to0}\kappa(a);=; c_H \quad(\text{uniform on SAFE}).
+  ]
+
+## 3) From convexity to functional inequalities (finite‑(a))
+
+On each finite lattice, on SAFE:
+[
+\Gamma_2 \ge \kappa(a),\Gamma \quad\Rightarrow\quad \text{LSI}(C_{LS}(a))\ \text{and}\ \text{PI}(C_P(a)),
+]
+with explicit (C_{LS}(a)\le \kappa(a)^{-1}\cdot \Theta_{\mathrm{geom}}) and similarly for (C_P(a)). Keep the geometric factor (\Theta_{\mathrm{geom}}) (chart/Jacobian constants, SAFE‑thickness) **(a)-independent** by construction.
+
+**Conclusion at fixed (a):** spectral gap (\Delta_{\mathrm{lat}}(a)\ge c_{\mathrm{gap}}(a)\simeq \kappa(a)) up to universal comparability. Hence
+[
+\Delta_{\mathrm{lat}}(a)\ \ge\ c_H - o(1)\quad (a\to0).
+]
+
+## 4) Tightness + projective consistency to the continuum
+
+* Use your UV/IR locality and holonomy approximation to show tightness of the pushforward measures (\mu_a) (in (H^{-s}), (s>2)) and projective consistency of Wilson loops. This yields a continuum limit (\mu) along a vanishing‑(a) subnet.
+* The SAFE‑mass bound must be **uniformly integrable**. You’ve already organized SAFE to capture (\mu_a)-probability (\ge 1-\epsilon) with (\epsilon(C)\to0) as the SAFE radius (R_0) (in Lie coordinates) increases. Record the precise tail inequality (log‑Sobolev or Herbst from (\kappa(a))) giving(\ \mu_a(\mathrm{SAFE}^c)\le \epsilon(R_0)) with constants independent of (a).
+
+## 5) Transfer of positivity (core step)
+
+Let (L_a) be the generator on the lattice (Dirichlet form (\mathcal{E}*a)), restricted to gauge‑invariant cylinder observables (\mathcal{F}) that have a continuum interpretation. For (f\in\mathcal{F}),
+[
+\mathrm{Var}*{\mu_a}(f)\ \le\ C_P(a),\mathcal{E}*a(f,f),
+\qquad C_P(a)\ \le\ \frac{\Theta*{\mathrm{geom}}}{\kappa(a)}.
+]
+The discrete carré‑du‑champ (\Gamma_a) Mosco‑converges to the continuum (\Gamma) on (\mathcal{F}) (this is where your holonomy approximation + gauge projection are used). Therefore, along the convergent subnet,
+[
+\mathrm{Var}*{\mu}(f)\ \le\ \liminf*{a\to0} C_P(a),\mathcal{E}(f,f)
+\ \le\ \frac{\Theta_{\mathrm{geom}}}{c_H},\mathcal{E}(f,f).
+]
+Thus the **continuum Poincaré inequality** holds with constant (C_P\le \Theta_{\mathrm{geom}}/c_H). If you want LSI: the same argument runs with (\mathrm{Ent}_\mu(f^2)) by stability of BE((\kappa)) under Mosco limits on (\mathcal{F}).
+
+**Decisive point:** only (c_H) survives the (a\to0) scaling; the Wilson‑quadratic (a^2)-term dies. Hence the continuum positivity is inherited from the **Haar curvature mass**.
+
+## 6) Mass gap emergence (physical, not just lattice)
+
+* From PI/LSI for (\mu) on gauge‑invariant fields, obtain a **continuum spectral gap** (\Delta_{\mathrm{cont}}\ge c_H/\Theta'_{\mathrm{geom}}) (precise form depends on your chosen generator closure on the continuum configuration space).
+* Two‑point function decay: for any gauge‑invariant local observable (O),
+  [
+  \mathrm{Cov}*\mu\big(O(0),O(x)\big)\ \lesssim\ e^{-\sqrt{\Delta*{\mathrm{cont}}},|x|}.
+  ]
+* Record the exact constant chain:
+  [
+  c_H \ \xrightarrow{\text{BE}}\ \kappa_* \ \xrightarrow{\text{PI/LSI}}\ C_P, C_{LS} \ \xrightarrow{\text{spectral}}\ \Delta_{\mathrm{cont}}\ \xrightarrow{\text{Clustering}}\ m_{\mathrm{phys}}.
+  ]
+  Every arrow must cite the precise inequality with your (\Theta)-factors (chart, projection, locality), all (a)-independent.
+
+## 7) What to **numerically/logically pin down** (no hand‑waving)
+
+1. **Block constant (c_H) (SU(3), right‑inv):** give the explicit (8\times8) minimal eigenvalue bound on SAFE; fix (R_0) and the associated Jacobian distortion (J(R_0)).
+2. **Discrete Poincaré constant:** (c_W a^{-2}) with (c_W) geometry‑only; you’ve shown it **collapses** ⇒ only for intermediate (a) it helps; it does not survive.
+3. **Remainder control:** explicit (|\mathcal{R}_a|\le C_R a^6) on SAFE with (C_R(R_0)) tabulated.
+4. **SAFE probability:** uniform tail bound (\mu_a(\mathrm{SAFE}^c)\le \epsilon(R_0)) with (\epsilon\to0) as (R_0\to\infty), and constants independent of (a).
+5. **Mosco convergence:** cite/instantiate the discrete‑to‑continuum Dirichlet form convergence for gauge‑invariant cylinder functions (your holonomy approximation lemma + UV locality; write it as an explicit lemma with domain and constants).
+
+## 8) One‑line executive summary (for the front matter)
+
+On SAFE charts, the lattice Bakry–Émery curvature lower bound
+[
+\kappa(a)=c_H + (\beta c_W)a^2 - C_R a^6
+]
+is **uniformly** bounded below by (c_H/2) for all sufficiently small (a). Projective tightness and Mosco convergence carry BE((\kappa)) to the continuum gauge‑invariant sector, yielding a continuum PI/LSI with constant controlled by (c_H) alone. Therefore the **mass gap is a continuum feature** sourced by the **Haar curvature mass**; the Wilson quadratic contributes at finite (a) but **collapses** as (a\to0).
+
+---
+
+If you want, I can turn this into a drop‑in `IR_transfer.md` with your symbol conventions and placeholders for the five constants ((c_H,c_W,C_R,\Theta_{\mathrm{geom}},\Theta'_{\mathrm{geom}})).
