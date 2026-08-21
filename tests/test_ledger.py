@@ -60,3 +60,82 @@ def test_g3_protocol_has_all_eleven_items():
     g3 = next(g for g in led.gaps if g["id"] == "G3")
     assert len(g3["protocol"]) == 11, "the adjudication protocol is an 11-item freeze"
     assert "inventory_trap" in g3, "the 3895-vs-3850 inventory warning must travel with G3"
+
+
+def test_governing_register_is_complete():
+    led = L.load()
+    assert led.register_ids == {f"R{i}" for i in range(1, 24)}
+
+
+def test_the_register_transcription_is_verbatim():
+    """The ledger must quote the governing document, not retell it.
+
+    A paraphrase is how a register drifts: each retelling is defensible on its
+    own and the sequence ends somewhere the corpus never said. Re-extract §14
+    and compare, so drift is a build failure rather than a slow rewrite.
+    """
+    import sys
+    from pathlib import Path
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+    from transcribe_register import DOCUMENT, items
+
+    led = L.load()
+    extracted = items(DOCUMENT)
+    assert len(extracted) == len(led.register)
+    for (title, text), entry in zip(extracted, led.register, strict=True):
+        assert entry["title"] == title
+        assert entry["text"].strip() == text, f"{entry['id']} is not verbatim"
+
+
+def test_the_crosswalk_is_pinned():
+    """Sameness is asserted by hand, so growing it must be a reviewed edit.
+
+    No test can check that two prose items state the *same* claim rather than a
+    related one. What a test can do is refuse to let the crosswalk grow
+    silently: a new pair has to be added here as well, which is the point where
+    someone has to defend it.
+    """
+    led = L.load()
+    pairs = {(r["id"], c) for r in led.register for c in r["contradictions"]}
+    assert pairs == {
+        ("R1", "C4"),  # the Y label erratum
+        ("R4", "C1"),  # anchoring, not a dispute
+        ("R5", "C2"),  # the off-axis coefficient
+        ("R6", "C22"),  # the target-derived August shift
+        ("R8", "C12"),  # radial directional curvature
+        ("R10", "C6"),  # the mobility promotion
+        ("R12", "C21"),  # Monte Carlo language
+        ("R13", "C9"),  # SU(4) flat-branch identity
+        ("R14", "C5"),  # sigma sign convention
+        ("R21", "C8"),  # the physical pentagonal manifold
+        ("R23", "C3"),  # scope
+    }
+    # Eleven of twenty-two. The other eleven C-ids have no verbatim counterpart
+    # in the governing register, and the crosswalk says so by staying empty.
+    unmapped = led.contradiction_ids - {c for _, c in pairs}
+    assert len(unmapped) == 11
+
+
+def test_every_open_contradiction_is_visible_in_the_governing_register():
+    """An open C-id with no governing counterpart would be unaccounted for."""
+    led = L.load()
+    for c in led.open_contradictions:
+        assert led.governing(c["id"]), f"{c['id']} is open but the register does not carry it"
+
+
+def test_the_nine_items_v4_3_added_are_present():
+    """v3 ended at 14; v4.3 has 23. The additions are the reason to promote it."""
+    led = L.load()
+    added = {r["title"] for r in led.register if int(r["id"][1:]) in range(14, 23)}
+    assert added == {
+        "String signs",
+        "Sixth-order scope",
+        "Registry lag",
+        "Cap geometry",
+        "Atomic shell-six source",
+        "OP1 enclosure",
+        "Pentagonal provenance",
+        "Pentagonal Hamiltonian firewall",
+        "Pentagonal fifth-order scope",
+    }
