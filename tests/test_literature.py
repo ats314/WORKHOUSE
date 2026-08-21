@@ -84,9 +84,17 @@ def test_wanted_entries_say_what_they_would_settle():
 
 
 def test_a_target_query_finds_the_weingarten_edge():
+    """CS_2006 is C7's load-bearing edge and must stay findable and verified.
+
+    This test once pinned the bearing list to exactly [CS_2006]; that froze a
+    curation snapshot, and the 2026-08-21 surface-sum curation legitimately
+    added CAO_2023 and LEMOINE_2026 beside it. The rule worth keeping is that
+    the promoted Weingarten edge itself never silently vanishes or degrades.
+    """
     rows = L.load().bearing_on("C7")
-    assert [p["id"] for p, _e in rows] == ["CS_2006"]
-    assert rows[0][1]["status"] == "verified"
+    by_id = {p["id"]: e for p, e in rows}
+    assert "CS_2006" in by_id
+    assert by_id["CS_2006"]["status"] == "verified"
 
 
 def test_a_scope_firewall_forbids_supplying_values():

@@ -1295,6 +1295,180 @@ papers:
           the scaling window" has a contemporary Euclidean echo, not a
           refutation.
 
+  - id: CAO_2023
+    title: Random surfaces and lattice Yang-Mills
+    authors:
+      - Sky Cao
+      - Minjae Park
+      - Scott Sheffield
+    venue: Commun. Amer. Math. Soc. 5 (2025) 774-896
+    year: 2023
+    arxiv: "2307.06790"
+    inspire_recid: 2676759
+    inspire_citations:
+      count: 23
+      as_of: 2026-08-21
+    licence: cc-by-nc-sa
+    fulltext: fulltext/2307.06790v4.pdf
+    source_sha256: 0cdabf5d4c2a36422d40eb6db4b73de7557c520e32b01a0fd7bbe54bebe2fba6
+    note: >
+      The parent of the modern rigorous surface-sum line, read in full from
+      the stored v4 (arXiv licence CC BY-NC-SA 4.0; INSPIRE carries no
+      journal record -- the published venue is transcribed from the printed
+      bibliographies of BORGA_2024 and LEMOINE_2026, which both cite it as
+      Commun. Amer. Math. Soc. 5:774-896, 2025). Exact at every finite
+      N >= 1 and every beta -- it is NOT a strong-coupling series -- for
+      U(N), O(N), Sp(N/2), and, with "flexible" embeddings and an
+      explicitly weaker toolkit, SU(N) and SO(N). Proves no area law and
+      no mass gap: both are its Open Problems 1-2, and its Open Problem 7
+      records the intuition that the signed surfaces "cancel each other
+      out" without proof. Its only acknowledged surface-representation
+      precedent is Brydges-Giffen-Durhuus-Frohlich 1986; O'Brien-Zuber
+      1985 is uncited, Weingarten's own 1978 paper is cited, and no
+      Hamiltonian work of any kind appears (the word does not occur).
+      Convention trap recorded: its beta differs from Chatterjee/Shen
+      et al by a factor of 2 (Remark 1.1), and Wilson loops use the
+      normalized trace.
+    cites:
+      - WILSON_1974
+      - WEINGARTEN_1978
+      - CS_2006
+    bears_on:
+      - target: G5
+        relation: supplies-comparison
+        status: verified
+        detail: >
+          The published home of the signed-Catalan Weingarten asymptotic
+          the completion family must be distinguished from, read from the
+          stored copy: Remark 3.2 (citing CS_2006 Cor. 2.7) gives
+          Wgbar_N(pi) = Mob(pi) + O(N^-2) with Mob(pi) = prod over cycles
+          (-1)^(C_i - 1) Cat(C_i - 1) -- the per-cycle signed Catalans.
+          That is the same signed sequence as the cap family's
+          (-1)^(n-1) C(2n-2,n-1) = n Cat(n-1) DIVIDED BY n, attached to a
+          different object (Weingarten cycles, not insertion-ordered cap
+          histories), and the central-binomial form appears nowhere in the
+          paper ("binomial": zero hits). Recording the distinction is the
+          point: the nearest modern structure to the T1-checked cap
+          identity differs by exactly the factor n, and nothing here
+          contains or supersedes the completion family.
+      - target: C7
+        relation: supplies-comparison
+        status: verified
+        detail: >
+          Section 6.2 states, in print: "The Weingarten calculus for SU(N)
+          and SO(N) is far less developed than for U(N), O(N), and
+          Sp(N/2). The only formula we have seen for the SU(N) Weingarten
+          function is in the physics literature [BVC20, Equation (20)]."
+          Independent, current confirmation that exact finite-N SU(N)
+          Weingarten values are scarce in the literature -- context for
+          C7's symbolic-in-N re-derivation of the SU(3) values from the
+          n = 2 Gram matrix, and a marker of where that re-derivation
+          stands relative to the state of the art.
+
+  - id: BORGA_2024
+    title: Surface sums for lattice Yang-Mills in the large-N limit
+    authors:
+      - Jacopo Borga
+      - Sky Cao
+      - Jasper Shogren-Knaak
+    venue: arXiv:2411.11676 [math.PR]
+    year: 2024
+    arxiv: "2411.11676"
+    inspire_recid: 2849723
+    inspire_citations:
+      count: 10
+      as_of: 2026-08-21
+    licence: cc-by
+    fulltext: fulltext/2411.11676v2.pdf
+    source_sha256: a1d2499ed48af9135546472d09f4078e3aa3e046914e2d450c262862a119fd0b
+    note: >
+      Read in full from the stored v2 (arXiv CC BY 4.0; no journal record
+      on INSPIRE). Strong-coupling large-N limit of CAO_2023's expansion:
+      U(N) Wilson loops as sums over non-separable planar embedded maps
+      with weight w_infty(M) = prod over blue faces (-1)^(i-1) Cat(i-1),
+      i = deg/2 -- pure signed Catalans, one factor per edge-face, valid
+      for |beta| <= beta_0(d). Its physics anchor is Kostov 1984, not
+      O'Brien-Zuber (uncited); Weingarten enters via CS_2006 asymptotics;
+      "mass gap", "area law", "confinement": zero occurrences. Open
+      problem 2 records that their natural guess for extending the
+      signed-Catalan weights to a 1/N expansion "seems to be incorrect"
+      -- the finite-N structure this program works at is exactly where
+      their weights stop being simple.
+    cites:
+      - CAO_2023
+      - CS_2006
+    bears_on:
+      - target: G5
+        relation: supplies-comparison
+        status: verified
+        detail: >
+          The sharpest published neighbor of the cap identity, and not the
+          same object: eq. (3.1) puts weight (-1)^(i-1) Cat(i-1) on each
+          blue face of half-degree i, and Remark A.1 proves these signed
+          Catalans are the UNIQUE per-degree weights satisfying their
+          pinching cancellation (4.1) -- a uniqueness statement with the
+          same flavor as the run-length Catalan factorization, derived
+          from a different cancellation on a different object. The cap
+          family's n Cat(n-1) = C(2n-2,n-1) appears nowhere ("binomial",
+          "n times Catalan": zero hits), so the T1-checked identity
+          remains unabsorbed by the modern surface-sum line; what this
+          paper supplies is the precise statement of what that line DOES
+          contain, so the difference (the factor n, and cap histories vs
+          Weingarten cycles) is recorded rather than blurred.
+
+  - id: LEMOINE_2026
+    title: Universal dualities for Wilson loops in lattice Yang-Mills
+    authors:
+      - Thibaut Lemoine
+    venue: arXiv:2604.16252 [math-ph]
+    year: 2026
+    arxiv: "2604.16252"
+    inspire_recid: 3146690
+    inspire_citations:
+      count: 3
+      as_of: 2026-08-21
+    licence: cc-by
+    fulltext: fulltext/2604.16252v2.pdf
+    source_sha256: 1f90e3a0c5df95d7cd4f416b67d6dc4a3165041fa851090b4e2aee73c433f556
+    note: >
+      Read in full from the stored v2 (arXiv CC BY 4.0). Exact finite-N
+      state-sum dualities -- surface sums, spin foams, and a coefficientwise
+      master loop equation as three faces of one structure -- for U(N) with
+      arbitrary smooth central plaquette actions, any d >= 2, any N >= 1,
+      including below the stable range. "Universal" means universal over
+      actions and dimensions, NOT over gauge groups: SU(N) lives only in
+      the programmatic Appendix A ("We leave that group-specific
+      verification to future work"), so nothing proved here applies to
+      SU(3) as stated -- recorded to prevent exactly that overclaim.
+      Catalan and central-binomial content: zero (it never takes the
+      large-N limit where CAO_2023's signed Catalans appear). No numeric
+      table anywhere -- finite-N machinery, no finite-N values.
+      Weingarten's own 1978 paper is uncited (the calculus is attributed
+      to Collins and Collins-Sniady); no Hamiltonian strong-coupling
+      literature appears -- the split now measured in all three papers of
+      this cluster.
+    cites:
+      - WILSON_1974
+      - CS_2006
+      - CAO_2023
+      - BORGA_2024
+    bears_on:
+      - target: C7
+        relation: supplies-comparison
+        status: verified
+        detail: >
+          Works with exactly the finite-N object C7 re-derives: Definition
+          2.10 takes the unitary Weingarten function as the Moore-Penrose
+          pseudoinverse of the Gram matrix G_N(sigma,tau) = N^#(sigma^-1
+          tau), valid at every N including below the stable range n <= N,
+          with the stable-range invertibility stated separately -- the
+          same Gram-matrix construction C7's symbolic SU(3) re-derivation
+          rests on, deployed here as the engine of exact finite-N surface
+          sums. The paper uses Wg symbolically throughout and tabulates no
+          values, so it corroborates the construction, not the numbers;
+          and its proved theorems are U(N)-only, so C7's SU(3) content
+          stays outside its scope by the paper's own Appendix A statement.
+
 # Papers the web cites that are not themselves indexed: id, verified metadata,
 # and why the edge earns its place. A stub is a node, not an evidence entry --
 # it carries no bears_on and can promote nothing. validate() rejects a stub

@@ -181,8 +181,12 @@ published. A paper is T3 until something checks it, same as any document.
 | `CHEN_2006` | `G18` | supplies-comparison | verified |
 | `MORNINGSTAR_2025` | `G18` | supplies-comparison | verified |
 | `FLPS_2026` | `G19` | supplies-comparison | verified |
+| `CAO_2023` | `G5` | supplies-comparison | verified |
+| `CAO_2023` | `C7` | supplies-comparison | verified |
+| `BORGA_2024` | `G5` | supplies-comparison | verified |
+| `LEMOINE_2026` | `C7` | supplies-comparison | verified |
 
-**8 of 37 edges rest on a source nobody here has read
+**8 of 41 edges rest on a source nobody here has read
 or pinned.** Obtaining and digest-pinning a primary source upgrades its
 edges from assertion to verification — the Hamer 1989 table did exactly
 that for the program's strongest external agreement.
@@ -196,7 +200,7 @@ different things: **in-web** is how many indexed papers cite this one
 | Paper | In-web | INSPIRE (as of) | Standing |
 |---|---|---|---|
 | `KS_1975` | 10 | 2815 (2026-08-21) | **not yet obtained** |
-| `WILSON_1974` | 7 | 7208 (2026-08-21) | stub |
+| `WILSON_1974` | 9 | 7208 (2026-08-21) | stub |
 | `KSS_1976` | 6 | 225 (2026-08-21) | **not yet obtained** |
 | `MP_1999` | 5 | 1233 (2026-08-21) | pinned |
 | `MT_1989` | 5 | 202 (2026-08-21) | stub |
@@ -204,7 +208,9 @@ different things: **in-web** is how many indexed papers cite this one
 | `MUNSTER_1981_VORTICES` | 4 | 112 (2026-08-21) | stub |
 | `MUNSTER_1981` | 4 | 105 (2026-08-21) | **not yet obtained** |
 | `HIP_1986` | 4 | 15 (2026-08-21) | **not yet obtained** |
+| `CS_2006` | 3 | 518 (2026-08-21) | **not yet obtained** |
 | `HAMER_1989` | 3 | 10 (2026-08-21) | pinned |
+| `WEINGARTEN_1978` | 2 | 196 (2026-08-21) | stub |
 | `AT_2020_SU3` | 2 | 184 (2026-08-21) | pinned |
 | `DFSST_1985_STRING` | 2 | 174 (2026-08-21) | stub |
 | `KPS_PRL_1979` | 2 | 170 (2026-08-21) | stub |
@@ -214,25 +220,26 @@ different things: **in-web** is how many indexed papers cite this one
 | `IH_1984` | 2 | 33 (2026-08-21) | **not yet obtained** |
 | `SMIT_1982` | 2 | 33 (2026-08-21) | stub |
 | `MICHAEL_1987` | 2 | 31 (2026-08-21) | stub |
+| `CAO_2023` | 2 | 23 (2026-08-21) | pinned |
 | `CHEN_2006` | 1 | 762 (2026-08-21) | pinned |
 | `DZ_1983` | 1 | 345 (2026-08-21) | stub |
 | `CKS_2021` | 1 | 285 (2026-08-21) | pinned |
-| `WEINGARTEN_1978` | 1 | 196 (2026-08-21) | stub |
 | `KAZAKOV_1983` | 1 | 45 (2026-08-21) | stub |
 | `KPS_1981` | 1 | 45 (2026-08-21) | pinned |
 | `SZH_1997` | 1 | 30 (2026-08-21) | pinned |
 | `SEO_1982` | 1 | 28 (2026-08-21) | **not yet obtained** |
 | `OBZ_1984` | 1 | 13 (2026-08-21) | stub |
 | `MUNSTER_PLB_1983` | 1 | 11 (2026-08-21) | stub |
+| `BORGA_2024` | 1 | 10 (2026-08-21) | pinned |
 | `HSB_2000` | 1 | 9 (2026-08-21) | pinned |
 | `SEO_UKAWA_1982` | 1 | 3 (2026-08-21) | stub |
-| `CS_2006` | 0 | 518 (2026-08-21) | **not yet obtained** |
 | `AT_2021_SUN` | 0 | 115 (2026-08-21) | pinned |
 | `KRS_2023` | 0 | 67 (2026-08-21) | pinned |
 | `LLL_2006` | 0 | 62 (2026-08-21) | pinned |
 | `OBZ_1985` | 0 | 36 (2026-08-21) | pinned |
 | `MORNINGSTAR_2025` | 0 | 17 (2026-08-21) | pinned |
 | `SCHIERHOLZ_1988` | 0 | 5 (2026-08-21) | pinned |
+| `LEMOINE_2026` | 0 | 3 (2026-08-21) | pinned |
 | `MUNSTER_1985_TM` | 0 | 2 (2026-08-21) | pinned |
 | `CM_2003` | 0 | 1 (2026-08-21) | pinned |
 | `FLPS_2026` | 0 | 0 (2026-08-21) | pinned |
