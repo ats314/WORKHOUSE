@@ -23,6 +23,7 @@ Two disciplines this module exists to keep:
 
 from __future__ import annotations
 
+import hashlib
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -56,6 +57,13 @@ EDGE_STATUSES = frozenset({"verified", "transcription-unverified", "not-yet-obta
 REDISTRIBUTABLE = frozenset(
     {"cc-by", "cc-by-sa", "cc-by-nc-sa", "cc0", "public-domain", "arxiv-cc-by-4.0"}
 )
+
+#: Licences that permit redistribution only of an UNMODIFIED copy. The
+#: NoDerivatives clause is the whole difference: the file may be stored, but not
+#: reformatted, excerpted into the repository, or shipped as extracted text. So
+#: a fulltext under one of these must hash to the recorded ``source_sha256``,
+#: which is checked rather than promised.
+VERBATIM_ONLY = frozenset({"cc-by-nc-nd", "cc-by-nd"})
 
 LEDGER_ID = re.compile(r"^[CGRU]\d+$")
 
@@ -122,15 +130,43 @@ def validate(lit: Literature | None = None) -> list[str]:
         licence = str(paper.get("licence", "")).lower()
         fulltext = paper.get("fulltext")
         if fulltext:
-            if licence not in REDISTRIBUTABLE:
+            path = LITERATURE_DIR / fulltext
+            if licence not in REDISTRIBUTABLE | VERBATIM_ONLY:
                 problems.append(
                     f"{pid}: stores fulltext under licence {licence!r}, which does not "
                     "permit redistribution"
                 )
-            elif not (LITERATURE_DIR / fulltext).is_file():
+            elif not path.is_file():
                 problems.append(f"{pid}: fulltext {fulltext} is missing")
+            elif licence in VERBATIM_ONLY:
+                # NoDerivatives: prove the stored bytes are the ones read.
+                if not digest:
+                    problems.append(
+                        f"{pid}: {licence} permits only a verbatim copy, so "
+                        "source_sha256 is required to show the file is unmodified"
+                    )
+                else:
+                    actual = hashlib.sha256(path.read_bytes()).hexdigest()
+                    if actual != digest:
+                        problems.append(
+                            f"{pid}: stored fulltext does not match source_sha256 "
+                            f"({actual} != {digest}); {licence} forbids derivatives"
+                        )
 
+        # A scope firewall is only worth writing down if it binds. A paper from
+        # a different regime -- other dimension, other field content -- may be
+        # compared against or borrowed from methodologically, but its NUMBERS
+        # must never enter. Corpus section 12 forbids exactly that crossing.
+        firewall = str(paper.get("scope_firewall", "")).strip()
         edges = paper.get("bears_on", [])
+        if firewall:
+            supplying = [e["target"] for e in edges if e["relation"] == "supplies-value"]
+            if supplying:
+                problems.append(
+                    f"{pid} declares a scope firewall but supplies values to "
+                    f"{supplying}; a cross-regime number is exactly what the "
+                    "firewall forbids"
+                )
         if not edges:
             problems.append(f"{pid}: bears on nothing — a citation attached to no claim")
         for edge in edges:

@@ -222,6 +222,63 @@ papers:
           power law, which is why the smeared basis is structural rather than a
           convenience, and why G19 cannot be reached by better statistics alone.
 
+  - id: KRS_2023
+    title: Loop-string-hadron formulation of an SU(3) gauge theory with dynamical quarks
+    authors: [Saurabh V. Kadam, Indrakshi Raychowdhury, Jesse R. Stryker]
+    venue: Phys. Rev. D 107, 094513
+    year: 2023
+    doi: 10.1103/PhysRevD.107.094513
+    arxiv: 2212.04490v2
+    licence: cc-by-nc-nd
+    # The first indexed paper whose licence permits redistribution at all, and
+    # even then only verbatim: NoDerivatives means the stored file must be the
+    # unmodified original, which validate() checks against source_sha256.
+    fulltext: fulltext/2212.04490v2.pdf
+    source_sha256: aa8e8e08147e8e5899e2c09926524d89ceaadeb481936e14dcfd563122756724
+    scope_firewall: >
+      1+1 dimensions, with dynamical staggered quarks. This program is 3+1
+      dimensional and pure gauge, and its chain complex C_3 -> C_2 -> C_1 does
+      not exist below three spatial dimensions. NOTHING numerical transfers.
+      Corpus section 12 forbids exactly this kind of crossing, and the entry is
+      written to be read as comparison, never as input.
+    bears_on:
+      - target: U1
+        relation: supplies-comparison
+        status: verified
+        detail: >
+          An independent, modern solution to the same underlying problem U1 is
+          about: constructing the gauge-invariant Hilbert space of the SU(3)
+          Kogut-Susskind Hamiltonian and keeping the dynamics inside it. Its
+          conclusion states that benefit in those words. The route is completely
+          different -- irreducible Schwinger bosons and prepotentials, giving
+          site-local SU(3) singlets (two bosonic fluxes, three quark modes) --
+          where U1 claims the structure follows from the chain complex. Two
+          constructions of the same object by unrelated means is what would make
+          U1 a mechanism rather than an observation, and what a promotion of U1
+          would have to engage with.
+      - target: R2
+        relation: supplies-method
+        status: verified
+        detail: >
+          Section III.A states the SU(3) Kogut-Susskind operator conventions
+          this program assumes and rarely writes down: chromoelectric fields E_a
+          with adjoint index a = 1..8, link operators U as unitary 3x3 matrices,
+          T^a = lambda^a/2 with the Gell-Mann matrices, structure constants
+          f_abc, and left/right fields related by parallel transport
+          E_a(R,r) T^a = -U^dagger(r) E_b(L,r) T^b U(r). It does NOT state the
+          coupling normalization: u = beta_N/(2N) appears nowhere in it, and
+          this edge would be an overstatement if it claimed otherwise. What it
+          supplies is a citable modern statement of the operator framework R2's
+          coordinate is defined relative to.
+    note: >
+      Worth knowing for a novelty check: LSH reaches d <= 3 for SU(2) but the
+      SU(3) formulation here is d = 1, and the paper says the gauge-fixed
+      comparison Hamiltonian "does not generalize to either periodic boundary
+      conditions or to d > 1". This program works with SU(3) in d = 3 on a
+      periodic torus. That is a real difference in reach, and it cuts both ways:
+      it is not evidence this program is correct, only that the two are not
+      solving the identical problem.
+
 # Papers the program needs and does not have. Each says what it would settle,
 # so this is a work list rather than a wish list. Moving one into `papers`
 # requires verified metadata -- an unverified citation is the same failure mode

@@ -1202,3 +1202,57 @@ def _():
         "38 years earlier, and it makes the smeared basis structural rather than "
         "a convenience — better statistics cannot recover a power law"
     )
+
+
+@published.check("a cross-regime paper never supplies a value", "KRS_2023 / §12")
+def _():
+    # The firewall that corpus §12 states in prose, made binding. KRS_2023 is
+    # 1+1 dimensional with dynamical quarks; this program is 3+1 and pure gauge,
+    # and the chain complex C_3 -> C_2 -> C_1 does not exist below three spatial
+    # dimensions. So the paper is comparable and citable and its numbers are not
+    # admissible, and `literature.validate` refuses any entry that mixes the two.
+    from . import literature as lit_mod
+
+    lit = lit_mod.load()
+    walled = [p for p in lit.papers if str(p.get("scope_firewall", "")).strip()]
+    offenders = [
+        (p["id"], e["target"])
+        for p in walled
+        for e in p["bears_on"]
+        if e["relation"] == "supplies-value"
+    ]
+    return bool(walled) and not offenders, (
+        f"{len(walled)} indexed paper(s) declare a scope firewall and none supplies "
+        f"a value: {[p['id'] for p in walled]}. The rule is enforced in "
+        "literature.validate, not just recorded in the entry"
+    )
+
+
+@published.check("stored full text is verbatim, and the licence is checked", "KRS_2023")
+def _():
+    # Storing a paper is republishing it. One indexed paper is openly licensed
+    # enough to store (CC BY-NC-ND); NoDerivatives means the bytes must be the
+    # original, so the stored file is hashed against the digest of the copy that
+    # was read rather than trusted to be unmodified.
+    import hashlib
+
+    from . import literature as lit_mod
+
+    lit = lit_mod.load()
+    stored = [p for p in lit.papers if p.get("fulltext")]
+    verified = []
+    for paper in stored:
+        path = lit_mod.LITERATURE_DIR / paper["fulltext"]
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        licence = str(paper["licence"]).lower()
+        ok = digest == paper["source_sha256"] and licence in (
+            lit_mod.REDISTRIBUTABLE | lit_mod.VERBATIM_ONLY
+        )
+        verified.append(ok)
+    unstored = len(lit.papers) - len(stored)
+    return bool(stored) and all(verified), (
+        f"{len(stored)} of {len(lit.papers)} papers are stored, each hash-verified "
+        f"against the copy that was read; the other {unstored} are under publisher "
+        "copyright or the arXiv assumed-1991-2003 licence and are pinned by digest "
+        "without being redistributed"
+    )

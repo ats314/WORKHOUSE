@@ -15,16 +15,30 @@ published results that are not written down anywhere a reader can follow.
 
 ## What is here
 
-Six papers, eight edges, and three named gaps. Six of the eight edges rest on a
-source nobody here has read — the index prints that count rather than hiding it.
+Eight papers and twelve edges. The index prints how many rest on a source nobody
+here has read, rather than hiding it.
 
-The one verified edge is `CS_2006 → C7`: the Weingarten calculus that falsified
-the stranded-flux zero backend, now re-derived from the general formula in the
-`published comparisons` invariant suite rather than quoted from a transcript.
+Three edges are verified against a paper actually read:
 
-## What is not here
+- `CS_2006 → C7` — the Weingarten calculus that falsified the stranded-flux zero
+  backend, now re-derived from the general formula rather than quoted from a
+  transcript.
+- `SCHIERHOLZ_1988 → G18` — an independent 1988 measurement of the same
+  few-percent bare-operator overlap, *and* the scaling `a^5` that makes the
+  smeared basis structural rather than a convenience.
+- `KRS_2023 → U1` — a modern, unrelated construction of the gauge-invariant
+  SU(3) Kogut–Susskind Hilbert space, by prepotentials rather than by a chain
+  complex. Two routes to the same object is what would turn U1 from an
+  observation into a mechanism.
 
-Full text. Every indexed paper is under publisher copyright or arXiv's
-assumed-1991-2003 licence, neither of which permits redistribution. The licence
-gate in `literature.py` is enforced by a test, so this stays true by
-construction rather than by memory.
+## What is stored, and what is not
+
+One paper. `KRS_2023` is CC BY-NC-ND, which permits a verbatim copy, so the
+unmodified PDF is here and its bytes are hashed against the digest of the copy
+that was read. Everything else is under publisher copyright or arXiv's
+assumed-1991-2003 licence, neither of which permits redistribution; those are
+pinned by `source_sha256` so the reading stays identifiable without the file
+being republished.
+
+The gate is enforced in `literature.py` and exercised by tests that mutate an
+entry to confirm it fires — not remembered.
