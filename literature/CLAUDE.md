@@ -27,11 +27,24 @@ The counter is printed at the bottom of `workhouse lit` on purpose.
 ## Never store a paper you do not have the right to store
 
 `validate()` refuses a `fulltext` path under any licence not in
-`REDISTRIBUTABLE`. Note what is deliberately *absent* from that list:
+`REDISTRIBUTABLE` or `VERBATIM_ONLY`. Note what is deliberately *absent*:
 `arxiv-assumed-1991-2003`, which covers most pre-2004 arXiv papers. That licence
 grants **arXiv** the right to distribute; it grants this repository nothing.
-Every paper currently indexed falls under it or under publisher copyright, which
-is why `fulltext` is `null` everywhere.
+
+`VERBATIM_ONLY` holds the NoDerivatives licences. They permit storing the file
+and forbid changing it, so an entry using one must record `source_sha256` and
+the stored bytes are hashed against it — extracted text, a reformat, or an
+excerpt would all be derivatives. One paper qualifies (`KRS_2023`, CC BY-NC-ND);
+the rest are pinned by digest and not stored.
+
+## A scope firewall binds
+
+`scope_firewall` is not a caveat, it is a rule. A paper from another regime —
+different dimension, different field content — may be compared against and
+borrowed from methodologically, and its **numbers may never enter**.
+`validate()` rejects any firewalled entry carrying a `supplies-value` edge, and
+a test mutates one to confirm the rule fires. This is corpus §12 made
+executable.
 
 This matters more than usual here: the repository's own `NOTICE` reserves all
 rights over its contents, and a repository that guards its own copyright while
