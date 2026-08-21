@@ -130,9 +130,12 @@ def test_intake_flags_different_bytes_under_a_pinned_id(tmp_path):
 
 
 def test_intake_tells_a_stub_to_be_promoted_first(tmp_path):
-    (tmp_path / "MUNSTER_1981.pdf").write_bytes(b"%PDF-1.4 x")
+    # WEINGARTEN_1978 rather than a Munster id: the Munster stubs keep getting
+    # promoted to full entries as their documents arrive, which is the system
+    # working — this test just needs any node that is still a stub.
+    (tmp_path / "WEINGARTEN_1978.pdf").write_bytes(b"%PDF-1.4 x")
     reports = A.intake(tmp_path, LIT)
-    assert reports[0].matched == "MUNSTER_1981"
+    assert reports[0].matched == "WEINGARTEN_1978"
     assert any("promote it to a full entry" in line for line in reports[0].advice)
 
 

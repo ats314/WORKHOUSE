@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 118/118 checks pass.
+**T1/T2 — re-derived here.** 120/120 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -29,7 +29,7 @@ it cannot drift from what the repository actually checks.
 | tier collapse (G14) | 6/6 |
 | isotropic pentagonal cap band (v4.3 §9.3) | 9/9 |
 | native string tension through fifth order (v4.3 §11.2) | 7/7 |
-| published comparisons (literature/index.yaml) | 14/14 |
+| published comparisons (literature/index.yaml) | 16/16 |
 | restored payloads (G1) | 11/11 |
 | coupling erratum (C4/G2) | 2/2 |
 | tetrahedral Haar-resolvent coefficient (G5) | 11/11 |
@@ -149,9 +149,12 @@ published. A paper is T3 until something checks it, same as any document.
 | `KSS_1976` | `M_GAMMA_4_NUM` | contradicts | not-yet-obtained |
 | `KPS_1981` | `G7` | supplies-value | verified |
 | `KPS_1981` | `R14` | corroborates | verified |
+| `MUNSTER_1981` | `G5` | supplies-comparison | not-yet-obtained |
 | `SEO_1982` | `G5` | supplies-comparison | not-yet-obtained |
 | `IH_1984` | `HAMER_A4_NUM` | supplies-method | not-yet-obtained |
 | `OBZ_1985` | `G5` | supplies-comparison | verified |
+| `MUNSTER_1985_TM` | `G3` | supplies-method | verified |
+| `MUNSTER_1985_TM` | `C2` | supplies-comparison | verified |
 | `HIP_1986` | `G7` | supplies-value | not-yet-obtained |
 | `HIP_1986` | `R14` | supplies-method | not-yet-obtained |
 | `HAMER_1989` | `HAMER_A4_NUM` | supplies-value | verified |
@@ -171,7 +174,7 @@ published. A paper is T3 until something checks it, same as any document.
 | `KRS_2023` | `U1` | supplies-comparison | verified |
 | `KRS_2023` | `R2` | supplies-method | verified |
 
-**7 of 26 edges rest on a source nobody here has read
+**8 of 29 edges rest on a source nobody here has read
 or pinned.** Obtaining and digest-pinning a primary source upgrades its
 edges from assertion to verification — the Hamer 1989 table did exactly
 that for the program's strongest external agreement.
@@ -184,12 +187,12 @@ different things: **in-web** is how many indexed papers cite this one
 
 | Paper | In-web | INSPIRE (as of) | Standing |
 |---|---|---|---|
-| `KS_1975` | 7 | 2815 (2026-08-21) | **not yet obtained** |
-| `KSS_1976` | 4 | 225 (2026-08-21) | **not yet obtained** |
+| `KS_1975` | 8 | 2815 (2026-08-21) | **not yet obtained** |
+| `KSS_1976` | 6 | 225 (2026-08-21) | **not yet obtained** |
+| `WILSON_1974` | 4 | 7208 (2026-08-21) | stub |
+| `MUNSTER_1981_VORTICES` | 4 | 112 (2026-08-21) | stub |
+| `MUNSTER_1981` | 4 | 105 (2026-08-21) | **not yet obtained** |
 | `HIP_1986` | 4 | 15 (2026-08-21) | **not yet obtained** |
-| `WILSON_1974` | 3 | 7208 (2026-08-21) | stub |
-| `MUNSTER_1981_VORTICES` | 3 | 112 (2026-08-21) | stub |
-| `MUNSTER_1981` | 3 | 105 (2026-08-21) | stub |
 | `HAMER_1989` | 3 | 10 (2026-08-21) | pinned |
 | `BB_1983` | 2 | 207 (2026-08-21) | stub |
 | `MT_1989` | 2 | 202 (2026-08-21) | stub |
@@ -206,6 +209,7 @@ different things: **in-web** is how many indexed papers cite this one
 | `KAZAKOV_1983` | 1 | 45 (2026-08-21) | stub |
 | `KPS_1981` | 1 | 45 (2026-08-21) | pinned |
 | `SZH_1997` | 1 | 30 (2026-08-21) | pinned |
+| `SEO_1982` | 1 | 28 (2026-08-21) | **not yet obtained** |
 | `OBZ_1984` | 1 | 13 (2026-08-21) | stub |
 | `HSB_2000` | 1 | 9 (2026-08-21) | pinned |
 | `SEO_UKAWA_1982` | 1 | 3 (2026-08-21) | stub |
@@ -213,11 +217,11 @@ different things: **in-web** is how many indexed papers cite this one
 | `KRS_2023` | 0 | 67 (2026-08-21) | pinned |
 | `LLL_2006` | 0 | 62 (2026-08-21) | pinned |
 | `OBZ_1985` | 0 | 36 (2026-08-21) | pinned |
-| `SEO_1982` | 0 | 28 (2026-08-21) | **not yet obtained** |
 | `SCHIERHOLZ_1988` | 0 | 5 (2026-08-21) | pinned |
+| `MUNSTER_1985_TM` | 0 | 2 (2026-08-21) | pinned |
 | `CM_2003` | 0 | 1 (2026-08-21) | pinned |
 
-**Next acquisition target, computed: `KS_1975`** — 7 in-web
+**Next acquisition target, computed: `KS_1975`** — 8 in-web
 citations and nobody here has read or pinned it. The ranking surfaces
 this automatically; obtaining the paper re-ranks it.
 

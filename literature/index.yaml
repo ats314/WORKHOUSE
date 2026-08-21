@@ -185,6 +185,50 @@ papers:
           An independent 1980 publication printing the physical signs is
           what the R14 statement predicts.
 
+  - id: MUNSTER_1981
+    title: Strong coupling expansions for the mass gap in lattice gauge theories
+    authors: [G. Munster]
+    venue: Nucl. Phys. B190, 439
+    year: 1981
+    doi: 10.1016/0550-3213(81)90570-8
+    arxiv: null
+    inspire_recid: 164289
+    inspire_citations: {count: 105, as_of: 2026-08-21}
+    licence: publisher-copyright
+    fulltext: null
+    note: >
+      Promoted from a stub 2026-08-21 when its ERRATA were obtained
+      (maintainer-supplied) and read; the main NPB 190 paper itself remains
+      unread. The history the errata document: the erratum-and-addendum
+      Nucl. Phys. B200 (1982) 536 (sha256
+      31c8dd9661bb2edaf013587682c9b30a55b3541f42fc2364e4996e4534693e4a)
+      reports two overlooked graphs, SU(3) correction 12(3-2e)u^7 -
+      18(75-74e)u^8; the second erratum Nucl. Phys. B205 (1982) 648 (sha256
+      bbf14f724c9ba201cc0166b435da2716edda3a02b807ba51a6cad63c76f5a273)
+      fixes the 8th order AGAIN ("in accordance with Murphy's sixth law"),
+      prints the definitive corrected table for all gauge groups, gives m =
+      315 Lambda_L for SU(3), and thanks Ukawa and Seo for locating the
+      error. The definitive SU(3) scalar row is registered as
+      MUNSTER_ERR_MS and proved identical to Smit's open reprint
+      (SMIT_EUC_MS) in the published-comparisons suite. Euclidean
+      throughout: nothing here compares to the certified Hamiltonian
+      series. Cited by HAMER_1989, HIP_1986 and SEO_1982.
+    # INSPIRE reference list of recid 164289, retrieved 2026-08-21.
+    cites: [KS_1975, KSS_1976, WILSON_1974]
+    bears_on:
+      - target: G5
+        relation: supplies-comparison
+        status: not-yet-obtained
+        detail: >
+          The completion-family novelty search's other priority table,
+          beside SEO_1982. What the errata settle: the family does NOT
+          appear among the FINAL corrected coefficients of any channel
+          (denominators are 2^a 5^b and 2^a 7^b forms, not (N^2-1) powers;
+          verified against the erratum table itself). What stays open, and
+          keeps this edge not-yet-obtained: NPB 190's per-diagram weights —
+          Tables 1-2 internals, where a cube-completion coefficient would
+          sit before summation. Reading the main paper settles that half.
+
   - id: SEO_1982
     title: Glueball mass estimate by strong coupling expansion in lattice gauge theories
     authors: [K. Seo]
@@ -301,6 +345,70 @@ papers:
           different dynamics. A derivation of the finite-N completion
           coefficients from these cumulant weights would make the family a
           rediscovery and STRENGTHEN the anchor table; none is known.
+
+  - id: MUNSTER_1985_TM
+    title: Effective transfer matrix for low-lying glueball states in lattice gauge theory
+    authors: [G. Munster]
+    venue: Nucl. Phys. B256, 67-76
+    year: 1985
+    doi: 10.1016/0550-3213(85)90385-2
+    arxiv: null
+    inspire_recid: 213016
+    inspire_citations: {count: 2, as_of: 2026-08-21}
+    licence: publisher-copyright
+    fulltext: null
+    # Maintainer-supplied copy of the DESY 85-007 preprint printing, read in
+    # full 2026-08-21; publisher copyright, pinned, not stored.
+    source_sha256: 443ddb7501b80790dedbb7bedccae7f15fba6f4f624ca19f7c34b5fd3daa19cf
+    note: >
+      Two INSPIRE citations, and for this program arguably the most
+      structurally relevant Euclidean paper in the web: it constructs an
+      effective transfer matrix acting on the degenerate
+      plaquette-orientation triplet (0++ plus 2++; the C-odd 1+- triplet is
+      noted as the same construction), with the projector obtained EXACTLY
+      to all orders by the moment-cumulant transformation, to eight
+      nontrivial orders — the published Euclidean twin of the degenerate
+      Feshbach/effective-Hamiltonian machinery this corpus builds, down to
+      the dispersion decomposition E(p) = m + f p^2 + g (cubic harmonic) +
+      h (p^2)^2 whose g series occupies the same role as the disputed
+      off-axis shape coefficient. Registered: MUNSTER_TM_MS/F/G/H8. Its
+      Table 1 also produced a FINDING (see the published suite): the mass
+      row disagrees with the 1982 erratum at exactly eighth order.
+      Completion-family check: absent here too — the per-order matrix
+      pieces are integer combinations of the momentum matrices A, B with
+      2^a 5^b denominators.
+    # Own printed reference list, read from the pinned copy: [2] = KSS_1976,
+    # [3] = MUNSTER_1981 (+ its B205 erratum), [5] = SEO_1982,
+    # [17] = MUNSTER_1981_VORTICES.
+    cites: [KSS_1976, MUNSTER_1981, SEO_1982, MUNSTER_1981_VORTICES]
+    bears_on:
+      - target: G3
+        relation: supplies-method
+        status: verified
+        detail: >
+          A published construction of exactly the object class G3's
+          marked-cluster engine must build: an effective operator on the
+          lowest-order degenerate eigenspace whose eigenvalues equal the
+          full transfer matrix's to all orders, with the projector supplied
+          exactly by the moment-cumulant (linked-cluster) transformation.
+          Euclidean rather than Hamiltonian, so its numbers are
+          inadmissible; what it supplies is the method precedent and a
+          worked example of the subtraction bookkeeping, from 1985, with no
+          knowledge of this program.
+      - target: C2
+        relation: supplies-comparison
+        status: verified
+        detail: >
+          The paper diagonalizes its effective matrix into the dispersion
+          E(p) = m + f p^2 + g ((p^2)^2 - 3 sum p_i^4) + h (p^2)^2 and
+          publishes the cubic-harmonic (shape) series g_4..g_8 for SU(3) —
+          the Euclidean counterpart of the role C_shp plays in the
+          Hamiltonian band, computed for the same degenerate plaquette
+          triplet. Nothing numerical transfers across the regime boundary
+          and neither side of C2 is touched; the comparison is structural:
+          an independent published precedent that the shape channel is
+          computable order by order from a degenerate-sector effective
+          operator, which is what G3 must do on the Hamiltonian side.
 
   - id: HIP_1986
     title: >
@@ -816,24 +924,6 @@ stubs:
       not with whatever this letter prints. Also cited by HIP_1986. Recorded
       so nobody validates against the superseded value.
 
-  - id: MUNSTER_1981
-    title: Strong coupling expansions for the mass gap in lattice gauge theories
-    authors: [G. Munster]
-    venue: Nucl. Phys. B190, 439
-    year: 1981
-    doi: 10.1016/0550-3213(81)90570-8
-    inspire_recid: 164289
-    inspire_citations: {count: 105, as_of: 2026-08-21}
-    note: >
-      The Euclidean strong-coupling glueball series, cited by HAMER_1989,
-      HIP_1986 and SEO_1982, with a delicate errata history: addendum Nucl.
-      Phys. B200, 536 and erratum B205, 648 (INSPIRE folds them into one
-      record), resolved in cross-checks with Seo. The corrected 8th-order
-      SU(3) on-axis series is openly readable in Smit's KEK-scanned
-      ITFA-82-3 Table 1 (see SMIT_1982). A named target of the
-      completion-family novelty search: its diagrams fill closed surfaces
-      with plaquettes.
-
   - id: MUNSTER_1981_VORTICES
     title: High temperature expansions for the free energy of vortices and the string tension in lattice gauge theories
     authors: [G. Munster]
@@ -884,8 +974,12 @@ stubs:
       Munster-Seo Euclidean SU(3) on-axis series (0++, 1+-, 2++), credited
       to "G. Munster, private communication" and "K. Seo, EFI preprint
       (4/82)" -- the only openly downloadable copy of the corrected
-      Euclidean coefficients found. Euclidean regime: comparison only,
-      nothing numerical transfers.
+      Euclidean coefficients found. That claim is now MECHANICAL: the
+      scalar column, registered as SMIT_EUC_MS, is proved identical to the
+      definitive NPB 205 (1982) 648 erratum row (MUNSTER_ERR_MS, from a
+      maintainer-supplied copy) in the published-comparisons suite; the
+      1+- and 2++ columns (SMIT_EUC_MA/MT) rest on this table alone.
+      Euclidean regime: comparison only, nothing numerical transfers.
 
   - id: BBV_1986
     title: The 0++ 2++ glueball mass ratio in nonabelian gauge theories
