@@ -122,10 +122,13 @@ def _certified(write: bool) -> int:
     return 0
 
 
-def _lit(target: str | None) -> int:
+def _lit(target: str | None, holes: bool = False) -> int:
     lit = literature_mod.load()
     problems = literature_mod.validate(lit)
-    print(literature_mod.format_index(lit, target=target))
+    if holes:
+        print(literature_mod.format_holes(lit))
+    else:
+        print(literature_mod.format_index(lit, target=target))
     if problems:
         print("\n\033[31mLiterature index problems\033[0m")
         for p in problems:
@@ -260,6 +263,12 @@ def main(argv: list[str] | None = None) -> int:
         metavar="ID",
         help="show only work bearing on this claim (C2, G18, R14, U3, or a constant)",
     )
+    li.add_argument(
+        "--holes",
+        action="store_true",
+        help="the missing-link report: papers on one claim with no citation path, "
+        "and papers skipping their claim's most-cited source",
+    )
 
     ce = sub.add_parser(
         "certified", help="what is certified, ranked by tier, with how to re-check each claim"
@@ -285,7 +294,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "atlas":
         return _atlas(args.out)
     if args.command == "lit":
-        return _lit(args.target)
+        return _lit(args.target, args.holes)
     if args.command == "certified":
         return _certified(args.write)
     if args.command == "frontier":

@@ -56,6 +56,32 @@ def test_the_ledger_edges_survive_the_round_trip():
     assert ("U3", "ADR:0005", "supported_by") in TRIPLES
 
 
+def test_the_citation_web_is_in_the_graph():
+    """Curated cites edges run between paper-level LIT nodes, one per curated
+    entry, and the conflation this layer untangled stays untangled: Hamer 1989
+    cites BOTH Kogut-Susskind 1975 and Kogut-Sinclair-Susskind 1976."""
+    assert ("LIT:HAMER_1989", "LIT:KS_1975", "cites") in TRIPLES
+    assert ("LIT:HAMER_1989", "LIT:KSS_1976", "cites") in TRIPLES
+    assert ("LIT:HAMER_1989", "LIT:HIP_1986", "cites") in TRIPLES
+    assert ("LIT:CS_2006", "LIT:WEINGARTEN_1978", "cites") in TRIPLES
+    assert ("LIT:LLL_2006", "LIT:HAMER_1989", "cites") in TRIPLES
+    curated_cites = [e for e in GRAPH.edges if e.type == "cites" and e.how == "curated"]
+    assert all(e.src.startswith("LIT:") and e.dst.startswith("LIT:") for e in curated_cites)
+    from workhouse import literature
+
+    assert len(curated_cites) == len(set(literature.load().cites()))
+
+
+def test_paper_level_nodes_exist_beside_the_edge_records():
+    """LIT:<id> is the paper; LIT:<id>:<target> is one bearing claim of it."""
+    ids = {c.id for c in CATALOGUE}
+    assert "LIT:HAMER_1989" in ids
+    assert "LIT:HAMER_1989:C1" in ids
+    assert "LIT:WEINGARTEN_1978" in ids  # stubs are nodes too
+    stub = next(c for c in CATALOGUE if c.id == "LIT:WEINGARTEN_1978")
+    assert "stub" in stub.status
+
+
 def test_checks_cite_the_ids_buried_in_their_free_text():
     """The load-bearing derived join: section strings, check names, suite names."""
     tier_collapse_cites = {

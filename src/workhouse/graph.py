@@ -56,11 +56,16 @@ CURATED_TYPES = frozenset(
         "claims",  # symbols.yaml
         "code_names",  # symbols.yaml
         "bears_on",  # literature/index.yaml
+        "cites",  # literature/index.yaml: the curated citation web, LIT -> LIT
         "formalizes",  # theorems.yaml
         "promotes",  # theorems.yaml: the T1/T2 check a theorem lifts to T0
         "originates",  # provenance.yaml: the corpus document a value comes from
     }
 )
+#: "cites" appears on both sides deliberately: the DERIVED kind is an id
+#: parsed out of a check's free text (CHK -> ledger id), the CURATED kind is
+#: the verbatim ``cites`` field of literature/index.yaml (LIT -> LIT). The
+#: ``how`` field on each edge keeps them distinguishable.
 DERIVED_TYPES = frozenset({"cites", "mentions", "amends", "retracts"})
 TYPES = CURATED_TYPES | DERIVED_TYPES
 
@@ -146,11 +151,17 @@ def build(
             if name.isupper():
                 add(sid, f"CONST:{name}", "code_names", "curated", "ledger/symbols.yaml")
 
-    for paper in literature_mod.load().papers:
+    lit = literature_mod.load()
+    for paper in lit.papers:
         for edge in paper.get("bears_on", []):
             target = edge["target"]
             dst = target if LEDGER_ID.fullmatch(target) else f"CONST:{target}"
             add(f"LIT:{paper['id']}:{target}", dst, "bears_on", "curated", "literature/index.yaml")
+    # The citation web: curated per-paper cites lists, emitted between the
+    # paper-level LIT nodes. Bibliography, not endorsement — these edges can
+    # rank and connect papers and can promote nothing.
+    for src, dst in lit.cites():
+        add(f"LIT:{src}", f"LIT:{dst}", "cites", "curated", "literature/index.yaml")
 
     # Checks cite claims only inside free text: the section string, the check
     # name, or the suite name ("tier collapse (G14)"). Parse all three. Static

@@ -38,7 +38,7 @@ def _resolve(query: str, node_ids: set[str]) -> str | None:
     if ":" in q:
         prefix, rest = q.split(":", 1)
         candidates += [f"{prefix.upper()}:{rest}", f"{prefix.upper()}:{rest.lower()}"]
-    candidates += [f"CONST:{q}", f"LEAN:{q}", f"SYM:{q.lower()}"]
+    candidates += [f"CONST:{q}", f"LEAN:{q}", f"SYM:{q.lower()}", f"LIT:{q}", f"LIT:{q.upper()}"]
     for candidate in candidates:
         if candidate in node_ids:
             return candidate

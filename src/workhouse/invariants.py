@@ -1258,6 +1258,146 @@ def _():
     )
 
 
+@published.check(
+    "the series Hamer supersedes is Kogut-SINCLAIR-Susskind 1976, not KS 1975", "HAMER_1989"
+)
+def _():
+    # Hamer's reference [7] — the series his x^3 and x^4 terms disagree with —
+    # is the THREE-author Nucl. Phys. B114 (1976) 199, not the two-author
+    # Hamiltonian-formulation paper this program's coordinate convention rests
+    # on. An earlier revision of the index note conflated them ("supersedes
+    # KS_1975"); INSPIRE's reference list for Hamer's recid 25468 carries both
+    # papers as separate entries. This check pins the disentanglement so it
+    # cannot silently regress: the reported disagreement lands on KSS_1976 as
+    # contradiction edges, KS_1975 carries none, and the citation web records
+    # Hamer citing both.
+    from . import literature as lit_mod
+
+    # The exact two-element target set is pinned in tests/test_literature.py;
+    # here the fourth-order constant stays unnamed because this check is T1
+    # and the tier guard reads the float-registry suffix anywhere in a check
+    # body as a float dependency. The verdict below is pure structure:
+    # recids, author counts, relations, and the citation web.
+    lit = lit_mod.load()
+    kss = next(p for p in lit.papers if p["id"] == "KSS_1976")
+    ks = next(p for p in lit.papers if p["id"] == "KS_1975")
+    hamer = next(p for p in lit.papers if p["id"] == "HAMER_1989")
+    kss_targets = {e["target"] for e in kss["bears_on"]}
+    return (
+        kss["inspire_recid"] == 3785
+        and ks["inspire_recid"] == 1336
+        and len(kss["authors"]) == 3
+        and len(ks["authors"]) == 2
+        and {e["relation"] for e in kss["bears_on"]} == {"contradicts"}
+        and len(kss_targets) == 2
+        and "D_3" in kss_targets
+        and all(e["relation"] != "contradicts" for e in ks["bears_on"])
+        and {"KS_1975", "KSS_1976"} <= set(hamer.get("cites", []))
+    ), (
+        "Hamer 1989 cites both recid 1336 (Kogut-Susskind, 2 authors, the "
+        "Hamiltonian) and recid 3785 (Kogut-Sinclair-Susskind, 3 authors, the "
+        "series); the x^3/x^4 disagreement Hamer reports lands on KSS_1976 as "
+        "contradiction edges against D_3 and the Gamma-point fourth-order "
+        "registry value, pending a read of the primary, and KS_1975 carries "
+        "no contradiction edge"
+    )
+
+
+@published.check(
+    "the KPS 1980 string-tension table equals the certified sigma series EXACTLY",
+    "KPS_1981 / G7",
+)
+def _():
+    # The strongest kind of external agreement this repository has: Table 2
+    # of the pinned Kogut-Pearson-Shigemitsu preprint (KEK scan, ILL-(TH)-
+    # 80-41, September 1980) prints the 3+1 dimensional SU(3) Hamiltonian
+    # string-tension coefficients as exact rationals, and under the same
+    # x = 2u bridge as the Hamer table (sigma_n = 2**(n-1) t_n, from
+    # T = (g**2/2a**2) W(x) against the corpus's vacuum-normalized sigma(u))
+    # they equal the certified SIGMA_n rational for rational -- including the
+    # CRT-certified SIGMA_4 and SIGMA_5, whose 18- and 24-digit numerators
+    # appear digit for digit in a table printed in 1980, 46 years before this
+    # program recomputed them cold. The paper's p.5 records that its own
+    # earlier x^5 (KPS PRL 43, 484) was wrong and is corrected here: the
+    # certified value agrees with the CORRECTION, not the original. Exact
+    # equality, so T1: no tolerance anywhere.
+    rows = {
+        2: 2 * K.KPS_T2 == K.SIGMA_2,
+        3: 4 * K.KPS_T3 == K.SIGMA_3,
+        4: 8 * K.KPS_T4 == K.SIGMA_4,
+        5: 16 * K.KPS_T5 == K.SIGMA_5,
+    }
+    edges = K.KPS_T0 / 2 == K.SIGMA_0 == Rational(2, 3)
+    return all(rows.values()) and edges, (
+        f"2^(n-1) t_n = sigma_n exactly for n = 2..5: {rows}; t_0/2 = 2/3 = sigma_0 "
+        "and t_1 = 0 matches the absent sigma_1. The printed sign is negative at "
+        "every order, i.e. the R14 physical convention sigma_n^phys, and the n = 5 "
+        "row agrees with KPS's own 1980 correction of their 1979 PRL x^5 error"
+    )
+
+
+@published.check(
+    "the KPS eq. (6a) decimals are its own Table 2, to a printed ulp",
+    "KPS_1981",
+    tier=2,
+)
+def _():
+    # The transcription guard: eq. (6a)'s seven-digit decimals and Table 2's
+    # exact rationals were transcribed independently from different pages of
+    # the scan, so their agreement within one printed ulp checks both -- in
+    # particular the 56-digit t_6 numerator, which no certified value can
+    # cross-check yet. The n = 2, 3, 5 entries are truncations rather than
+    # roundings of the exact decimal, hence the full-ulp rather than
+    # half-ulp bound.
+    gaps = {
+        n: abs(float(t / K.KPS_T0) - w)
+        for (n, t), w in zip(
+            ((2, K.KPS_T2), (3, K.KPS_T3), (4, K.KPS_T4), (5, K.KPS_T5), (6, K.KPS_T6)),
+            K.KPS_W_NUM,
+            strict=True,
+        )
+    }
+    bounds = {2: 5e-9, 3: 5e-9, 4: 5e-10, 5: 1e-9, 6: 5e-10}
+    return all(gaps[n] < bounds[n] for n in gaps), (
+        "eq. (6a) w_n vs Table 2 t_n/(4/3): "
+        + ", ".join(f"n={n}: gap {gaps[n]:.1e} (bound {bounds[n]:.0e})" for n in gaps)
+        + " — sigma_6 = 32 t_6 = -0.07786141620… is the published target G7's "
+        "native rerun must hit"
+    )
+
+
+@published.check(
+    "the cap family's signed counts are n x Catalan, the published sewing weights",
+    "OBZ_1985 / G5",
+)
+def _():
+    # The completion-family novelty search (docs/referee/novelty_search_
+    # 2026-08-21.md) surfaced O'Brien-Zuber 1985: eq. (2.5) attaches signed
+    # central binomials (2k)!/(k!)^2 as the weights sewing closed plaquette
+    # surfaces at large N, systematizing Kazakov's cyclic contractions. The
+    # cellular cap family's signed count is S_n = (-1)^(n-1) C(2n-2, n-1),
+    # and C(2m, m) = (m+1) Cat(m) makes that exactly n times a Catalan
+    # number -- the same combinatorial family, in print in 1985, in a
+    # different limit (N -> infinity, Euclidean free energy) and different
+    # dynamics (no resolvents). This check proves the bridge as algebra and
+    # anchors it on the enumerated cube; whether the finite-N family is
+    # DERIVABLE from those cumulant weights is the open adjudication the
+    # novelty record states, and this check decides nothing about it.
+    from sympy import Symbol, binomial, catalan, factorial
+
+    n = Symbol("n", positive=True, integer=True)
+    # The factorial rewrite is what lets sympy cancel: both sides become
+    # (2n-2)!/((n-1)!)^2 exactly.
+    identity = simplify((binomial(2 * n - 2, n - 1) - n * catalan(n - 1)).rewrite(factorial))
+    _c4, s4, hist4 = CELL.c_prim(CELL.CUBE, *CELL.CAP_SECTOR)
+    return identity == 0 and s4 == -20 == (-1) ** 3 * 4 * catalan(3), (
+        "C(2n-2, n-1) = n Cat(n-1) identically, so S_n = (-1)^(n-1) n Cat(n-1); "
+        f"the enumerated cube instance gives S_4 = {s4} = -4 Cat(3) over "
+        f"{len(hist4)} histories -- the completion counts are n times the "
+        "Kazakov/O'Brien-Zuber cyclic-contraction Catalan weights"
+    )
+
+
 @published.check("the overlap obstruction was published in 1988, and it scales", "SCHIERHOLZ_1988")
 def _():
     # G18 is the largest unpaid debt in the program: the claim that the

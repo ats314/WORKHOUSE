@@ -56,6 +56,8 @@ class Frontier:
     headline: str
     unifying: list[dict[str, Any]]
     external: list[tuple[str, str, str, str]]
+    web: list[dict[str, Any]]
+    acquisition: list[dict[str, Any]]
 
 
 def _lean_counts() -> tuple[int, int]:
@@ -165,6 +167,7 @@ def compute() -> Frontier:
         passed += ok
         total += len(results)
     theorems, sorries = _lean_counts()
+    lit = literature_mod.load()
     return Frontier(
         checks_passed=passed,
         checks_total=total,
@@ -183,8 +186,10 @@ def compute() -> Frontier:
         unifying=led.unifying_candidates,
         external=[
             (paper["id"], edge["target"], edge["relation"], edge["status"])
-            for paper, edge in literature_mod.load().edges()
+            for paper, edge in lit.edges()
         ],
+        web=literature_mod.relevance(lit),
+        acquisition=literature_mod.acquisition_targets(lit),
     )
 
 
@@ -342,6 +347,33 @@ def render(f: Frontier) -> str:
     else:
         w(f"All {len(f.external)} edges rest on read, pinned sources.")
     w("")
+
+    w("The citation web, ranked. Two weights, kept apart because they mean")
+    w("different things: **in-web** is how many indexed papers cite this one")
+    w("(local — load-bearing for THIS program, computed at generation time),")
+    w("**INSPIRE** is the field's global count, recorded with its date.")
+    w("`workhouse lit --holes` prints the missing-link report over the same data.")
+    w("")
+    w("| Paper | In-web | INSPIRE (as of) | Standing |")
+    w("|---|---|---|---|")
+    for row in f.web:
+        if row["in_web"] == 0 and row["stub"]:
+            continue
+        inspire = f"{row['inspire']} ({row['as_of']})" if row["inspire"] is not None else "—"
+        if row["stub"]:
+            standing = "stub"
+        elif row["obtained"]:
+            standing = "pinned"
+        else:
+            standing = "**not yet obtained**"
+        w(f"| `{row['id']}` | {row['in_web']} | {inspire} | {standing} |")
+    w("")
+    if f.acquisition:
+        top = f.acquisition[0]
+        w(f"**Next acquisition target, computed: `{top['id']}`** — {top['in_web']} in-web")
+        w("citations and nobody here has read or pinned it. The ranking surfaces")
+        w("this automatically; obtaining the paper re-ranks it.")
+        w("")
 
     w("## 8. What might unify the established results")
     w("")
