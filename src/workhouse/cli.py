@@ -6,6 +6,7 @@ import argparse
 import sys
 
 from . import ledger as ledger_mod
+from . import triage as triage_mod
 from .invariants import SUITES
 
 
@@ -64,6 +65,18 @@ def _status() -> int:
     return 0
 
 
+def _triage(directory: str, limit: int) -> int:
+    from pathlib import Path
+
+    try:
+        report = triage_mod.scan(Path(directory))
+    except NotADirectoryError as exc:
+        print(f"not a directory: {exc}")
+        return 1
+    print(triage_mod.format_report(report, limit=limit))
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="workhouse", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -73,9 +86,18 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("status", help="print the contradiction and gap registers")
 
+    t = sub.add_parser(
+        "triage",
+        help="survey an unpinned archive against what this repository already knows",
+    )
+    t.add_argument("directory", help="path to the archive (read-only; nothing is copied)")
+    t.add_argument("--limit", type=int, default=25, help="rows per section (default 25)")
+
     args = parser.parse_args(argv)
     if args.command == "verify":
         return _verify(args.verbose)
+    if args.command == "triage":
+        return _triage(args.directory, args.limit)
     return _status()
 
 
