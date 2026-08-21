@@ -1,0 +1,9 @@
+# F025 — Alex upload trio: the rooted projected-capacity doc layer (identification intake)
+
+**Date:** 2026-06-12 · **Trigger:** three .docx uploaded mid-session; secured immediately (uploads are session-temporary) to `programs/rooted_capacity_program/` with MD5s + pandoc conversions.
+
+**Identification (their own words; no adjudication):** (1) *Logical Status and Theorem Map* — three-layer organization (local SU(3) class spectrum / finite Wick certificates / **conditional** projected-capacity global route); opens with "The results are not presented as a proof of the four-dimensional Yang–Mills mass gap"; principle: "local class asymptotics ⟹ finite algebraic certificates ⟹ conditional global mechanism." (2) *Rooted Projected-Capacity Source Stability* — deterministic projected-capacity layer + conditional hard-defect Peierls ⟹ rooted source-stability criterion, "conditional on the Wilson free-energy stability input and on a deterministic projected-capacity envelope"; works with the rooted capacity of the connected defect island (rejects the global top norm at fixed density — same move as the OP-12/M2 rooted thread). (3) *SU(3) Three-Term Local Gap* — class-sector gap through O(β^(−1/2)), finite Weyl-invariant computation ≤ degree 6, discriminant-weighted inner product.
+
+**Connections:** rooted-capacity object ≡ the F015/F019 "OP-1 feeder" notebooks' subject; "source stability" = M3a/Theorem-Z.B vocabulary; projected-capacity layer continues 13_PMBSF; the SU(3) local-gap computations match the Weyl-discriminant authoring notebooks found in C:\SIMULATIONS (F023 §3 "discrimin" hits — now identified as this document's traces, closing that loose end).
+
+**Routing:** deep read = ledger #47b (theorem-by-theorem status table; conditional-input map vs UNIF_OP1_CLOSURE_PLAN M3a and the PMBSF capacity layer). Whether the rooted criterion advances (S)/M3a is **Alex's** determination. Deposits: program dir + README; ledger #47/#47b; STATE; SESSION_LOG.

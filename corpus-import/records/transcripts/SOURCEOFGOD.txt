@@ -1,0 +1,3709 @@
+
+/
+Claude finished the response
+
+Validated experimental results against thresholds and recommended campaign continuation
+Validated experimental results against thresholds and recommended campaign continuation
+Every pre-registered threshold hit — 23/23 hard gates, zero warnings. Verifying the arithmetic and recomputing the campaign table with the measured throughput before writing the verdict:
+
+
+Ran a command, created a file, read a file
+Ran a command, created a file, read a file
+This is the run everything was staged for, and it delivered on all six pre-registered thresholds — 23/23 hard gates, zero warnings. Full scoring in the file; the three numbers that matter:
+
+The headline: your stack measures physics correctly. aM(T₁⁺⁻) = 1.6897 ± 0.121 against Athenodorou–Teper's 1.591(18) on the identical volume and coupling — pull +0.82, with the error beating the target (10.8× shrink from the pilot; the conditioning fix landed at 7.97×10³ exactly under its 10⁴ spec, the positivity gate opened as projected). String scale agrees at +0.71σ. First like-for-like attempt, first agreement.
+
+The scientifically loaded one: the raw fraction is measurably small. 0.0072 ± 0.0165 — the raw ImTr plaquette carries < 4% (2σ) of the physical glueball, not the ≥ 97% the one-plaquette Z_odd shows in its own Hilbert space. That's not a failure — it's your scope firewall converting from precaution to measured fact: the physical T₁⁺⁻ state is extended (the smeared basis couples at amplitude 0.80), and the one-plaquette bridge is an operator identity whose physical completion runs through smearing. I'd argue this number belongs in §8 — it's the honest quantification of exactly the gap your claim ledger always refused to paper over. Cheap follow-up: measure the fraction versus APE level to see the overlap flow.
+
+The decision: campaign is green-lit, staged. Measured throughput 7.1×10⁵ site-sweeps/s (5.1× over pilot) puts the full table at 22.6 flat / realistically 12–18 A100-days. Recommended: the three next-coarsest ensembles first (~3 days, giving a four-point continuum fit with the ⅓ of row 1 already banked), re-anchor at 26³, then split the two monsters across sessions via combine.
+
+A genuinely good day: lattice validated like-for-like, an honest new physical bound, and the analytic track (structure theorem, certified EPs, both Bergman ranks closed) advanced in parallel. Say the word on stage 1 and I'll cut the staged-campaign profiles.
+
+
+Next14 analysis
+Document · MD 
+Yes. The strongest genuinely new result is a rank threshold in the (C)-odd Wilson operator.
+
+## Rank-four cubic lock / rank-five transition
+
+Let (U=e^{iX}\in SU(N)), (P_k=\operatorname{Tr}X^k), and (\operatorname{sinc}z=\sin z/z).
+
+For (SU(3)),
+
+[
+\operatorname{ImTr}U
+=-\frac{P_3}{6}
+\prod_{j=1}^3\operatorname{sinc}!\left(\frac{\theta_j}{2}\right).
+]
+
+Unexpectedly, (SU(4)) has an analogous exact identity. With (\theta_4=-(\theta_1+\theta_2+\theta_3)),
+
+[
+\boxed{
+\operatorname{ImTr}U
+=-\frac{P_3}{6}
+\prod_{{ij}={12,13,23}}
+\operatorname{sinc}!\left(\frac{\theta_i+\theta_j}{2}\right)
+}
+]
+
+because
+
+[
+\sum_{j=1}^4\sin\theta_j
+========================
+
+4\sin\frac{\theta_1+\theta_2}{2}
+\sin\frac{\theta_1+\theta_3}{2}
+\sin\frac{\theta_2+\theta_3}{2},
+]
+
+and
+
+[
+P_3=-3(\theta_1+\theta_2)(\theta_1+\theta_3)(\theta_2+\theta_3).
+]
+
+The form factor is positive inside the (SU(4)) alcove. Therefore (SU(3)) and (SU(4)) are exactly cubic-locked: (\operatorname{ImTr}U) and (-P_3) have the same sign and interior nodal set.
+
+That property fails starting at (SU(5)). Newton’s identities give
+
+[
+P_5=\frac56P_2P_3+5e_5,
+]
+
+where (e_5) is the fifth elementary invariant. Hence
+
+[
+\boxed{
+\operatorname{ImTr}e^{iX}
+=========================
+
+-\frac{P_3}{6}\left(1-\frac{P_2}{24}\right)
++\frac{e_5}{24}
++O(|X|^7)
+}
+]
+
+and (e_5) is an independent (C)-odd direction precisely when (N\ge5).
+
+An explicit counterexample is
+
+[
+(\theta_1,\ldots,\theta_5)
+=t\left(-10,-7,9,\frac{17}{2},-\frac12\right).
+]
+
+It satisfies
+
+[
+P_1=P_3=0,\qquad P_5=-\frac{26775}{2}t^5\neq0,
+]
+
+so (\operatorname{ImTr}e^{iX}\neq0) for sufficiently small (t), despite (P_3=0).
+
+This establishes an exact odd-Casimir staircase:
+
+[
+\begin{array}{c|c}
+\text{Rank} & \text{primitive odd directions}\
+\hline
+SU(3),SU(4) & e_3\
+SU(5),SU(6) & e_3,e_5\
+SU(7),SU(8) & e_3,e_5,e_7\
+\vdots & \vdots
+\end{array}
+]
+
+The exact Gram calculations independently show the extra degree-five channel appearing at (N=5) and the degree-seven channel at (N=7).
+
+## New lattice operators
+
+This theory produces two branch-free, gauge-invariant observables. Define
+
+[
+A(U)=\operatorname{ImTr}U,\qquad
+B(U)=\operatorname{ImTr}U^2,\qquad
+E(U)=N-\operatorname{ReTr}U.
+]
+
+An improved cubic source is
+
+[
+\boxed{
+\mathcal O_3^{\mathrm{imp}}(U)
+=\frac{32A(U)-B(U)}{24}
+=-\frac{P_3}{6}+\frac{P_7}{1260}+O(|X|^9).
+}
+]
+
+It cancels the entire quintic contamination.
+
+The new primitive rank-five source is
+
+[
+\boxed{
+\mathcal O_5^{\mathrm{prim}}(U)
+=B(U)-8A(U)+2E(U)A(U)
+=e_5(X)+O(|X|^7).
+}
+]
+
+For (SU(5)), (e_5(X)=\det X). Thus an (SU(5)) glueball GEVP using ({\mathcal O_3^{\mathrm{imp}},\mathcal O_5^{\mathrm{prim}}}) directly tests whether the newly available fifth-order invariant carries independent (T_1^{+-}) spectral weight. Standard lattice work uses imaginary Wilson-loop traces for (C=-), but I found no obvious prior formulation of this rank-five operator transition in a narrow arXiv search. [Standard glueball operator construction](https://arxiv.org/pdf/2106.00364)
+
+## New polarity-excess law
+
+Combining the certified even and odd local gaps gives another exact asymptotic corollary:
+
+[
+\boxed{
+\Delta_-^{(N)}
+-\frac32\Delta_+^{(N)}
+======================
+
+\frac{9}{32N}
++
+\frac{\sqrt2(-2N^4+172N^2-791)}
+{6144N^{3/2}}\beta^{-1/2}
++O_N(\beta^{-1}).
+}
+]
+
+Therefore, for every fixed (N),
+
+[
+\boxed{
+\frac{\Delta_-^{(N)}}{\Delta_+^{(N)}}
+=====================================
+
+\frac32+
+\frac{9}{32\sqrt{2N\beta}}
++O_N(\beta^{-1}),
+}
+]
+
+so the odd/even gap ratio approaches the harmonic (3/2) value from above. The next coefficient is positive for (3\le N\le9) and negative for (N\ge10).
+
+Balancing the rank growth selects a unique candidate joint scaling:
+
+[
+\boxed{\beta=N^3\tau.}
+]
+
+The (\beta\sim N^2) scaling proposed in the Gemini draft is uncontrolled because its nominally subleading quartic term overtakes the harmonic term. Under the coefficientwise (N^3\tau) scaling,
+
+[
+\frac{\Delta_+}{N}
+\sim
+\sqrt{2\tau}-\frac18-\frac{3\sqrt2}{512\sqrt\tau},
+]
+
+[
+\frac{\Delta_-}{N}
+\sim
+3\sqrt{\frac{\tau}{2}}-\frac3{16}
+-\frac{7\sqrt2}{768\sqrt\tau}.
+]
+
+Formally, the planar ratio then approaches from the opposite side:
+
+[
+\frac{\Delta_-}{\Delta_+}
+\sim\frac32-\frac{1}{3072\tau}.
+]
+
+That limit-order inversion is a prediction; proving it requires uniform control of the (O_N(\beta^{-1})) remainder.
+
+For the current (SU(3)) run, the consequence is sharp: failure cannot be blamed on a mismatch between the raw imaginary plaquette and the cubic source—they are exactly locked. It would instead indicate insufficient statistics, spatial operator overlap, or many-plaquette dynamics. The next code revision should record (\operatorname{ImTr}W^2) so the improved cubic operator can be reconstructed.
+
+Show more
+
+Systematically verified mathematical identities and lattice operator constructions
+Systematically verified mathematical identities and lattice operator constructions
+This is a substantial claim set — an exact staircase theorem, two new operators, and a general-N asymptotic law. Treating it the house way: machine-verify every claim in exact arithmetic, patch the MC to record the new observable, and run the novelty check properly. First, pulling your certified general-N weak coefficients from the project corpus to test the polarity law symbolically:
+
+
+Orchestrated comprehensive code refactoring integrating correlator computations and bootstrap analysis
+Orchestrated comprehensive code refactoring integrating correlator computations and bootstrap analysis
+All confirmed — applying the eight-edit patch and smoke-validating in one pass:
+
+
+Synthesized mathematical results and prepared computational validation framework
+Synthesized mathematical results and prepared computational validation framework
+
+Something went wrong
+1785620353049_image.png
+wtf happened to you?
+
+
+Orchestrating targeted novelty searches on quantum lattice operators
+Orchestrating targeted novelty searches on quantum lattice operators
+Deliverables restored above. Now the novelty questions with the tools that do work — three targeted probes on the sharpest claims:
+
+
+Excavated mathematical literature, distinguished classical theory from novel applications
+Excavated mathematical literature, distinguished classical theory from novel applications
+Suggested research
+
+Multi-source novelty sweep across lattice-operator, invariant-tensor, and large-N scaling literature with per-claim citations
+(5–10 minutes)
+Start the research
+
+
+Lead Researcher
+Novelty check: SU(N) C-odd glueball operators
+
+259 sources and counting...
+268 sources and counting...
+•
+4m 35s
+
+
+
+
+
+Claude is AI and can make mistakes. Please double-check responses.
+
+
+
+
+
+
+
+268 sources and counting...
+
+sum of sines four angles summing to zero product identity
+8 results
+
+
+Sum-to-Product Identities (All 4 Formulas + Examples)
+
+mathwords.com
+
+
+
+9.4 Sum-to-Product and Product-to-Sum Formulas - Algebra and Trigonometry 2e | OpenStax
+
+openstax.org
+
+
+
+7.4 Sum-to-Product and Product-to-Sum Formulas - Precalculus 2e | OpenStax
+
+openstax.org
+
+
+6.4: Sum and Difference Identities - Mathematics LibreTexts
+
+libretexts.org
+
+
+
+Sum to Product Formulas — Trig Identities, Proof
+
+bhanzu.com
+
+
+
+Sum-to-Product and Product-to-Sum Formulas | Algebra and Trigonometry
+
+lumenlearning.com
+
+
+Product‐Sum and Sum‐Product Identities - Trigonometry
+
+cliffsnotes.com
+
+
+Product-to-Sum and Sum-to-Product Identities
+
+alamo.edu
+
+
+Teper SU(N) gauge theories 2+1 dimensions C-odd glueball imaginary Wilson loop
+9 results
+
+
+
+[1609.03873] SU(N) gauge theories in 2+1 dimensions: glueball spectra and k-string tensions
+
+arxiv.org
+
+
+
+SU(N) gauge theories in 2+1 dimensions: glueball spectra and k-string tensions
+
+arxiv.org
+
+
+
+SO(4), SO(3) and SU(2) gauge theories in 2+1 dimensions: comparing glueball spectra and string tensions
+
+arxiv.org
+
+
+
+SO(N) gauge theories in 2 + 1 dimensions: glueball spectra and confinement | Journal of High Energy Physics | Springer Nature Link
+
+springer.com
+
+
+
+String models of glueballs and the spectrum of SU(N) gauge theories in 2+1 dimensions
+
+arxiv.org
+
+
+
+Strong to weak coupling transitions of SU(N) gauge theories in 2+1 dimensions
+
+arxiv.org
+
+
+
+Closed flux tubes in D = 2 + 1 SU(N ) gauge theories: dynamics and effective string description | Journal of High Energy Physics
+
+springer.com
+
+
+
+Spinorial flux tubes in SO(N) gauge theories in 2+1 dimensions
+
+arxiv.org
+
+
+
+SO(2N) and SU(N) gauge theories in 2 + 1 dimensions | Journal of High Energy Physics | Springer Nature Link
+
+springer.com
+
+
+sin a + sin b - sin(a+b) = 4 sin(a/2) sin(b/2) sin((a+b)/2) identity
+8 results
+
+
+
+Trignometrical Formulae sin(A + B) = sin A cos B + cos A sin B
+
+hw.ac.uk
+
+
+
+How do you prove sin (A + B) × sin (A - B) = sin^2 A - sin^2 B ? [Solved]
+
+cuemath.com
+
+
+
+Sin A + Sin B Formula | Trigonometric Identities%%page%% %%sep%% %%sitename%% - GeeksforGeeks
+
+geeksforgeeks.org
+
+
+
+Complete the identity by finding the right side of the equation. \sin(a + B) + \sin(a - B) = ? A. - brainly.com
+
+brainly.com
+
+
+ 4.4 Trigonometrical Identities Introduction
+
+mathcentre.ac.uk
+
+
+
+Trigonometric and Geometric Conversions, Sin(A + B), Sin(A - B), Sin(AB)
+
+math10.com
+
+
+
+2sinAsinB Formula - GeeksforGeeks
+
+geeksforgeeks.org
+
+
+
+question sin a sinab is equal to
+
+careers360.com
+
+
+sin A + sin B + sin C = 4 cos(A/2)cos(B/2)cos(C/2) triangle A+B+C=pi identity
+10 results
+
+
+sin A - sin B + sin C = 4 sin (A/2) cos (B/2) sin (C/2) | Free Math Help Forum
+
+freemathhelp.com
+
+
+
+If A + B + C = π2, prove the following sin 2A + sin 2B + sin 2C = 4 cos A cos B cos C - Mathematics | Shaalaa.com
+
+shaalaa.com
+
+
+
+In ΔABC, A + B + C =π show that sin A + sin B + sin C = 4cos A2 cos B2 cos C2 - Mathematics and Statistics | Shaalaa.com
+
+shaalaa.com
+
+
+
+Trigonometric Identities - JEE Trigonometric Series Formula
+
+askiitians.com
+
+
+
+Trigonometric Identities
+
+byjus.com
+
+
+
+If 𝐴+𝐵+𝐶=π then prove that sinA+sinB+sinC = 4cosA/2×cosB/2×cosC/2
+
+byjus.com
+
+
+
+Get Answers to all your Questions
+
+careers360.com
+
+
+
+Get Answers to all your Questions
+
+careers360.com
+
+
+
+if a b c 4s then sin 2s a sin 2s b sin 2s c sin 2s 69c51ce46444d9f6893d4bd1
+
+collegedunia.com
+
+
+
+in triangle abc if 3 sin a 4 cos b 6 and 4 sin b 3 682b377439da4ac570da7da4
+
+collegedunia.com
+
+
+Morningstar Peardon efficient glueball operators lattice hep-lat/9901004
+9 results
+
+
+
+Stanford
+
+stanford.edu
+
+
+
+Construction of general N-body lattice operators with arbitrary momenta | Journal of High Energy Physics | Springer Nature Link
+
+springer.com
+
+
+
+On the glueball spectrum in O(a)-improved lattice QCD
+
+arxiv.org
+
+
+
+arXiv:hep-lat/9901004v2 24 May 1999 UCSD/PTH/98-36 HLRZ1998/62
+
+arxiv.org
+
+
+
+Towards the glueball spectrum from unquenched lattice ...
+
+arxiv.org
+
+
+
+(PDF) Glueball spectrum from an anisotropic lattice study
+
+researchgate.net
+
+
+The Glueball spectrum from novel improved actions - INSPIRE
+
+inspirehep.net
+
+
+
+A novel approach for computing glueball masses and matrix elements in Yang-Mills theories on the lattice | Journal of High Energy Physics | Springer Nature Link
+
+springer.com
+
+
+
+Efficient glueball simulations on anisotropic lattices
+
+arxiv.org
+
+
+Athenodorou Teper 2021 SU(N) glueball spectra 3+1 dimensions arXiv 2106.00364
+10 results
+
+
+
+Spectrum of large N glueballs: holography vs lattice | Journal of High Energy Physics | Springer Nature Link
+
+springer.com
+
+
+
+[2106.00364] SU(N) gauge theories in 3+1 dimensions: glueball spectrum, string tensions and topology
+
+arxiv.org
+
+
+
+[2106.00364v3] SU(N) gauge theories in 3+1 dimensions: glueball spectrum, string tensions and topology
+
+arxiv.org
+
+
+
+Thermal evolution of dark matter and gravitational-wave production in the early universe from a symplectic glueball model
+
+arxiv.org
+
+
+
+An updated review of the new hadron states
+
+arxiv.org
+
+
+
+Lattice evidence that scalar glueballs are small
+
+arxiv.org
+
+
+
+A review on Glueball hunting
+
+arxiv.org
+
+
+
+Casimir scaling in glueballs in SU(𝑁) and Sp(2⁢𝑁) gauge theories: hints from constituent approaches
+
+arxiv.org
+
+
+JHEP12(2021)082 Published for SISSA by Springer Received: August 1, 2021
+
+d-nb.info
+
+
+
+[PDF] SU(N) gauge theories in 3+1 dimensions: glueball spectrum, string tensions and topology | Semantic Scholar
+
+semanticscholar.org
+
+
+de Azcarraga Macfarlane invariant tensors simple groups higher order Casimir d symbols
+10 results
+
+
+
+Invariant tensors and Casimir operators for simple compact ...
+
+arxiv.org
+
+
+
+Invariant tensors and Casimir operators for simple compact Lie groups | Journal of Mathematical Physics | AIP Publishing
+
+aip.org
+
+
+Invariant tensors for simple groups - INSPIRE
+
+inspirehep.net
+
+
+
+Compilation of relations for the antisymmetric tensors defined by the Lie algebra cocycles of $su(n)$
+
+arxiv.org
+
+
+
+[physics/9706006] Invariant tensors for simple groups
+
+arxiv.org
+
+
+
+Invariant tensors for simple groups - ScienceDirect
+
+sciencedirect.com
+
+
+
+Invariant tensors for simple groups
+
+arxiv.org
+
+
+
+Reduction of su(N) loop tensors to trees
+
+arxiv.org
+
+
+
+An introduction to some novel applications of Lie algebra cohomology and physics
+
+arxiv.org
+
+
+On characteristic equations, trace identities and Casimir operators of simple Lie algebras - INSPIRE
+
+inspirehep.net
+
+
+Kogut Susskind Hamiltonian lattice gauge theory strong coupling glueball spectrum one plaquette
+9 results
+
+
+
+Entanglement Entropy of (𝟐+𝟏)-Dimensional SU(2) Lattice Gauge Theory on Plaquette Chains
+
+arxiv.org
+
+
+
+Strong coupling expansion for scattering phases in hamiltonian lattice field theories - II. SU(2) gauge theory in (2+1) dimensions
+
+arxiv.org
+
+
+
+Integrable Spin Chains from large-$N$ QCD at strong coupling
+
+arxiv.org
+
+
+
+Simulating Fully Gauge-Fixed SU(2) Hamiltonian Dynamics on Digital Quantum Computers
+
+arxiv.org
+
+
+
+Multi-vortex solution in the Sutherland model
+
+arxiv.org
+
+
+
+Generic Hilbert Space Fragmentation in Kogut–Susskind Lattice Gauge Theories
+
+arxiv.org
+
+
+
+Asymptotic freedom and massive glueballs in a qubit-regularized SU(2) gauge theory | Phys. Rev. D
+
+aps.org
+
+
+
+(PDF) Strong-coupling calculations of lattice gauge theories: (1 + 1)-dimensional exercises
+
+researchgate.net
+
+
+
+Generic Hilbert Space Fragmentation in Kogut--Susskind ...
+
+osti.gov
+
+
+Gross Witten Wadia one plaquette unitary matrix model third order phase transition scaling beta N^2
+10 results
+
+
+
+Non-Perturbative Large N Trans-series for the Gross-Witten-Wadia Beta Function
+
+arxiv.org
+
+
+
+Dynamical quantum phase transitions from random matrix theory
+
+arxiv.org
+
+
+
+Introductory Lectures on Resurgence: CERN Summer School 2024
+
+arxiv.org
+
+
+
+Transmutation of a Trans-series: The Gross-Witten-Wadia Phase Transition
+
+arxiv.org
+
+
+
+Gross-Witten-Wadia phase transition in induced QCD on the graph | Phys. Rev. D
+
+aps.org
+
+
+
+(PDF) Multiple phases in a generalized Gross-Witten-Wadia matrix model
+
+researchgate.net
+
+
+
+Configurational Temperature in Matrix Models and Random Matrix Ensembles
+
+arxiv.org
+
+
+
+Quantum Topology Change and Large N Gauge Theories
+
+arxiv.org
+
+
+
+Gross-Witten-Wadia Phase Transition in Induced QCD on the Graph
+
+arxiv.org
+
+
+
+Phases of unitary matrix models and lattice | Phys. Rev. D
+
+aps.org
+
+
+quintic Casimir d abcde gluonic operator gauge invariant SU(5) fifth order invariant
+10 results
+
+
+
+Unitarity constraints on large multiplets of arbitrary gauge groups
+
+arxiv.org
+
+
+
+Nonabelian Gauge Theories: The Causal Approach
+
+arxiv.org
+
+
+
+Vacuum misalignment and pattern of scalar masses in the SU(5)/SO(5) composite Higgs model
+
+arxiv.org
+
+
+
+Flavour Non-Singlet Splitting Functions at Four Loops in QCD -- The Fermionic Contributions
+
+arxiv.org
+
+
+
+Gauge coupling unification and doublet-triplet splitting via GUT dynamical breaking
+
+arxiv.org
+
+
+
+Fermionic realisations of simple Lie algebras
+
+arxiv.org
+
+
+
+Lie algebra and invariant tensor technology for g2
+
+arxiv.org
+
+
+
+Invariant tensors and Casimir operators for simple compact ...
+
+arxiv.org
+
+
+
+gauge invariant operators: Topics by Science.gov
+
+science.gov
+
+
+
+Scattering Amplitudes in Quantum Field Theory
+
+arxiv.org
+
+
+C-odd glueball operator imaginary part Wilson loop construction SU(3) Teper Michael
+10 results
+
+
+
+A New Approach to Construct the Operator on Lattice for the Calculation of Glueball Masses
+
+arxiv.org
+
+
+
+Glueball spectroscopy in lattice QCD using gradient flow
+
+arxiv.org
+
+
+
+Charmonium-Glueball spectroscopy with improved hadron creation operators
+
+arxiv.org
+
+
+
+The Glueball content of $\eta_c$
+
+arxiv.org
+
+
+
+Lattice evidence that scalar glueballs are small
+
+arxiv.org
+
+
+
+SU(N) gauge theories in 2+1 dimensions
+
+arxiv.org
+
+
+
+Update on Glueballs
+
+arxiv.org
+
+
+
+(PDF) Towards the glueball spectrum from unquenched lattice QCD
+
+researchgate.net
+
+
+
+Prepared for submission to JHEP Towards the glueball spectrum from unquenched
+
+arxiv.org
+
+
+
+Spectrum of digitized QCD: Glueballs in a gauge theory | Phys. Rev. D
+
+aps.org
+
+
+Chen glueball spectrum matrix elements anisotropic lattices C=-1 operators hep-lat/0510074
+10 results
+
+
+
+(PDF) Glueball spectrum and matrix elements on anisotropic lattices
+
+researchgate.net
+
+
+
+Towards the glueball spectrum from unquenched lattice QCD | Journal of High Energy Physics | Springer Nature Link
+
+springer.com
+
+
+
+Hadron spectroscopy at STCF
+
+arxiv.org
+
+
+
+The glueball spectrum of SU(3) gauge theory in 3 + 1 dimensions | Journal of High Energy Physics | Springer Nature Link
+
+springer.com
+
+
+
+Glueball spectrum and matrix elements on anisotropic lattices - Wikidata
+
+wikidata.org
+
+
+
+Glueballs as gravitons in holographic approaches
+
+arxiv.org
+
+
+
+SU(N) gauge theories in 3+1 dimensions: glueball spectrum, string tensions and topology | Journal of High Energy Physics | Springer Nature Link
+
+springer.com
+
+
+
+(PDF) Glueball spectrum and matrix elements on anisotropic lattices
+
+academia.edu
+
+
+
+A novel approach for computing glueball masses and matrix elements in Yang-Mills theories on the lattice | Journal of High Energy Physics | Springer Nature Link
+
+springer.com
+
+
+
+Spectrum of large N glueballs: holography vs lattice | Journal of High Energy Physics | Springer Nature Link
+
+springer.com
+
+
+doubly wound Wilson loop multiply wound trace glueball operator higher winding lattice
+10 results
+
+
+
+An Exact Prediction of N=4 SUSYM Theory for String Theory
+
+arxiv.org
+
+
+
+A note on multiply wound BPS Wilson loops in ABJM
+
+arxiv.org
+
+
+
+High spin glueballs from the lattice - ScienceDirect
+
+sciencedirect.com
+
+
+
+[1605.01025] A note on multiply wound BPS Wilson loops in ABJM
+
+arxiv.org
+
+
+
+A note on multiply wound BPS Wilson loops in ABJM - ADS
+
+harvard.edu
+
+
+
+Wilson loop in general representation and RG flow in 1d defect QFT
+
+arxiv.org
+
+
+
+A note on multiply wound BPS Wilson loops in ABJM | Journal of High Energy Physics | Springer Nature Link
+
+springer.com
+
+
+
+Investigating quark confinement from the viewpoint of lattice gauge-scalar models
+
+arxiv.org
+
+
+
+How to extract the "Abelian" part of double-winding Wilson loop
+
+arxiv.org
+
+
+
+Lattice study of area law for double-winding Wilson loops
+
+epj-conferences.org
+
+
+single plaquette SU(3) Hamiltonian spectrum electric energy excited states variational strong coupling
+9 results
+
+
+
+Preparation of the SU(3) Lattice Yang-Mills Vacuum with Variational Quantum Methods
+
+arxiv.org
+
+
+
+Simulating Fully Gauge-Fixed SU(2) Hamiltonian Dynamics on Digital Quantum Computers
+
+arxiv.org
+
+
+
+Perturbation theory, irrep truncations, and state preparation methods for quantum simulations of SU(3) lattice gauge theory
+
+arxiv.org
+
+
+
+A new basis for Hamiltonian SU(2) simulations
+
+arxiv.org
+
+
+
+Simple Hamiltonian for quantum simulation of strongly coupled ( 2 + 1 ) D SU(2) lattice gauge theory on a honeycomb lattice
+
+researchgate.net
+
+
+
+An Analytic Variational Study of the Mass Spectrum in 2+1 Dimensional SU(3) Hamiltonian Lattice Gauge Theory
+
+arxiv.org
+
+
+
+Spontaneous plaquette formation in the SU(4) Spin-Orbital ladder
+
+arxiv.org
+
+
+
+Extended degeneracy and order by disorder in the square lattice J$_1$-J$_2$-J$_3$ model
+
+arxiv.org
+
+
+
+A Trailhead for Quantum Simulation of SU(3) Yang-Mills Lattice Gauge Theory in the Local Multiplet Basis
+
+arxiv.org
+
+
+Robson Webber one plaquette Hamiltonian gauge theory eigenvalues character expansion
+10 results
+
+
+
+Resurrecting the coherent state variational algorithm for large $N$ gauge theories
+
+arxiv.org
+
+
+
+Towards a Many-Body Treatment of Hamiltonian Lattice SU(N) Gauge Theory
+
+arxiv.org
+
+
+
+Gauge covariance in lattice field theories | Zeitschrift für Physik C Particles and Fields | Springer Nature Link
+
+springer.com
+
+
+
+Gauge-invariant rotor Hamiltonian from dual variables of 3D U(1) gauge theory
+
+aps.org
+
+
+
+Reaching the continuum limit in lattice gauge theory - without a computer
+
+arxiv.org
+
+
+
+Induced QCD I: Theory
+
+arxiv.org
+
+
+
+SU(2) non-Abelian gauge field theory in one dimension on ...
+
+osti.gov
+
+
+
+Reflection-Positive Construction of a Four-Dimensional SU(N) Yang-Mills Theory with Mass Gap and Confinement
+
+arxiv.org
+
+
+
+Character Expansion, Zeros of Partition Function and $\theta$-term in U(1) Gauge Theory
+
+arxiv.org
+
+
+
+A Gauge Model for Quantum Mechanics on a Stratified Space | Communications in Mathematical Physics | Springer Nature Link
+
+springer.com
+
+
+imaginary part trace SU(N) unitary matrix product sines eigenvalue Weyl denominator character expansion
+10 results
+
+
+
+Special unitary group - Wikipedia
+
+wikipedia.org
+
+
+
+Breaking classical Lie groups to finite subgroups - an automated approach
+
+arxiv.org
+
+
+
+254A, Notes 3a: Eigenvalues and sums of Hermitian matrices | What's new
+
+wordpress.com
+
+
+
+Product decomposition of periodic functions in quantum signal processing
+
+uspto.gov
+
+
+
+Characterization of SU(N)
+
+rochester.edu
+
+
+
+The Hilbert Space of large $N$ Chern-Simons matter theories
+
+arxiv.org
+
+
+
+Eigenvalue density of Wilson loops in 2D SU(N) YM
+
+arxiv.org
+
+
+
+Character Expansions, Itzykson-Zuber Integrals, and the QCD Partition Function
+
+arxiv.org
+
+
+
+Stationary Kernels and Gaussian Processes on Lie Groups and their Homogeneous Spaces I: the compact case
+
+arxiv.org
+
+
+
+The Special Unitary Group, Birdtracks, and Applications in QCD
+
+uni-tuebingen.de
+
+
+oddball C-odd glueball SU(N) N dependence baryonic operator det plaquette large N
+9 results
+
+
+
+(PDF) Spectrum of large N glueballs: holography vs lattice
+
+researchgate.net
+
+
+
+Towards glueball masses of large-$N~\mathrm{SU}(N)$ Yang-Mills theories without topological freezing via parallel tempering on boundary conditions
+
+arxiv.org
+
+
+
+The large-N expansion of unitary-matrix models
+
+arxiv.org
+
+
+
+Towards glueball masses of large-$N$ $\mathrm{SU}(N)$ pure-gauge theories without topological freezing
+
+arxiv.org
+
+
+
+Color dependence of the topological susceptibility in Yang-Mills theories
+
+arxiv.org
+
+
+
+SU(N) gauge theories in the presence of a topological term
+
+arxiv.org
+
+
+
+(PDF) Glueball masses in the large N limit
+
+researchgate.net
+
+
+
+Baryonium, tetra-quark state and glue-ball in large N_c QCD
+
+arxiv.org
+
+
+
+Universal Features of Chiral Symmetry Breaking in Large-$N$ QCD
+
+arxiv.org
+
+
+Eguchi-Kawai reduced model coupling scaling spectrum N^3 twisted large N
+10 results
+
+
+
+Twisted Eguchi-Kawai Reduced Chiral Models - IOPscience
+
+iop.org
+
+
+
+Adjoint fermions at large-N on the lattice
+
+arxiv.org
+
+
+
+The $SU(\infty)$ twisted gradient flow running coupling
+
+arxiv.org
+
+
+
+Twisted-Eguchi-Kawai model: A reduced model for large-$N$ lattice gauge theory
+
+aps.org
+
+
+
+Perturbative study of large N principal chiral model with twisted reduction
+
+researchgate.net
+
+
+
+Large $N$ reduction with the Twisted Eguchi-Kawai model
+
+arxiv.org
+
+
+
+Large-N Gauge Theories
+
+arxiv.org
+
+
+
+Twisted reduction in large $N$ QCD with adjoint Wilson fermions
+
+arxiv.org
+
+
+
+Prospects for large N gauge theories on the lattice
+
+arxiv.org
+
+
+
+Structure and properties of the vacuum of the Twisted Eguchi-Kawai model
+
+arxiv.org
+
+
+E
+
+web_search_exa
+JSON
+
+Response
+
+Title: On Yang-Mills Stability Bounds and Plaquette Field Generating Function
+URL: https://arxiv.org/html/2205.07376
+Published: 2022-05-15T00:00:00.000Z
+Author: Paulo A. Faria da Veiga, Michael O’Carroll
+Highlights:
+SU(N). For each lattice bond there is a bond variable U which is an element of the gauge group G . The fields are elements of the Lie algebra. Also, by the spectral theorem, as U is unitary, there exists a unitary V which diagonalizes U, i.e. V −1UV = diag(e iλ1, . . . , e iλN ), λj ∈ (− π, π]. The λj are called the angular eigenvalues of U. A plaquette is a minimal square of the lattice and the action is a sum of plaquette actions. Each plaquette action involves the ordered product of the four bond variables comprising the sides of the plaquette. The partition function is an integral over the Boltzmann factor (exponential of minus the action), with a product measure of U(N) Haar measures, one measure for each bond. Each plaquette action has a prefactor a d−4/g 2, where we take g 2 ∈ (0, g 2 0], 0 < g0 < ∞ . Our results hold for g 2 in this range! Therefore, they are not restricted to small g 2. The hypercubic lattice Λ ⊂ aZd, d = 2, 3, 4, with spacing a ∈ (0, 1] has L ∈
+...
+N sites on each side, L even. In [14], the finite lattice partition function with free b.c. is denoted by ZΛ,a. These results were extended also to periodic b.c. by considering the partition function Z B Λ,a, where B is left blank, for free b.c., and B = P, for periodic b.c. A complete description of the Wilson action model is given in section II. We emphasize that the formal continuum limit (a ց 0) of our Wilson action gives the well known YM classical continuum action. It is also worth noticing that the fixing of the enhanced temporal gauge is instrumental in this work. In this gauge, the temporal bond variables in Λ are set to the identity, as well as certain specified bond variables on the boundary ∂Λ of Λ. The upper and lower stability bounds we obtain have an interesting structure. They are both products of single plaquette, single-bond variable partition functions. A new, global quadratic upper bound in the gluon fields, for the Wilson plaquette action, is proved. This bound gives rise to the factorized lower bound on the partition function. We denote by zu (zℓ) the single-bond Haar integral partition functions describing the single-plaquette partition function for the upper (lower) stability bound on the partition function with periodic b.c. The integrands of zu and zℓ are both class functions of the single variable U, where we recall that a class function f(U) on the gauge group G satisfies the property f(U) = f(V UV −1), for all V ∈ G . Thus, by Weyl’s integration formula [16–18], the N 2-dimensional (for G = U(N)) Haar integration over the group is reduced to an N-dimensional integration over the angular eigenvalues of U. The probability density of the circular unitary ensemble(CUE) occurs and in the bounds on zu and zℓ the probability density for the Gausssian unitary ensemble (GUE) of random matrix theory appears in a natural way (see Refs. [19, 20]). Associated with these classical statistical mechanical model partition functions and its gauge-invariant correlations, there is a lattice quantum field theory. The Osterwalder-Seiler construction provides, via a Feynman-Kac formula, a quantum mechanical Hilbert space, self-adjoint mutually commuting spatial momentum operators and a positive energy operator. A key property in the construction is Osterwalder-Seiler reflection positivity, which is ensured here by choosing L to be even! (see Ref. [7]). It is to be emphasized that the work of Ref. [14] concentrated only on the existence of a finite normalized free energy for the model, in the (subsequential) thermodynamic and continuum limits, respectively, Λ ր aZd and a ց 0. No other property of the model was considered. It is also worth noticing that the techniques and methods used in Ref. [14], combined with the results of Refs. [21–23] could be used to prove the existence of a normalized free energy for a bosonic lattice QCD model, with the (anti)quark fields replaced with spin zero, multicomponent complex or real scalar fields. This is the content of Ref. [24]. In this paper, we also consider correlations of gauge invariant physical plaquette fields. As mentioned above, the continuum limit a ց 0 of these fields are the usual continuum fields associated with the formal continuum limit of the Wilson YM action. To analyze these plaquette field correlations, we pass to globally scaled plaquette correlations where the scaled fields are related to the physical fields by a multiplicative factor which depends on the lattice spacing a but not on the position of the plaquette. The scaled field plaquette correlations are proved to be bounded, uniformly in a ∈ (0, 1]. These bounds imply bounds on the singular behavior, in a, of the physical plaquette correlations. For example, the bound implies that the physical plaquette-plaquette correlation has a singularity of at most a −d, when a ց 0. It is important to remark that the exponential decay of physical field correlations is the same as that of scaled field correlations. Hence, the associated energy-momentum spectrum is also the same. Rather than bound the scaled plaquette correlations directly, we bound the generating function of r− scaled (r ∈ N) field plaquette correlations using the multi-reflection method (see Ref. [4]). Using periodic b.c., based on the work of Ref. [25], we define a normalized generating function for the correlation of r ∈ N gauge invariant scaled plaquette fields. The numerator is the periodic b.c. partition function with r additional source factors of strengths Jj , j = 1, . . . , r; the denominator is the periodic b.c. partition function Z P Λ,a. Starting with the model with periodic b.c. which allows us to apply the multireflection method, in Theorem 4 below, we prove that this normalized generating function is absolutely bounded, with a bound that is independent of L, a, g, and the location and orientation of the r external plaquette fields. The generating function bound also has an interesting structure. The bound has only a product of single-plaquette, single bond-variable partition function zu(J) with a source strength field J in the numerator; in the denominator only a product of zℓ (the same as in the preceding case!) occurs. In the bound for zu(J) the probability density for the Gausssian symplectic ensemble appears (see [20]). The generating function is jointly analytic, entire function in the source strengths J1, ..., Jr of the r plaquette fields. The r-plaquette field correlations admit a Cauchy integral representation and are bounded by Cauchy bounds. In particular, the coincident point plaquette-plaquette physical field correlation is bounded by const a −d. The a −d factor at small a behavior is the same as that of the physical or unscaled real derivative scalar free field two-point correlation (the physical free field correlation has a singular behavior a −(d−2)). For the free field, these singular behaviors are a measure of ultraviolet asymptotic freedom, in the context of the lattice approximation to a continuum QFT. In this way, we conclude that the singular behavior of the plaquette correlations is bounded by the singular behavior of the free derivative scalar field correlations in d = 2, 3, 4. For the physically relevant d = 4 case, we can say more. The coincident plaquette, physical plaquette-plaquette correlation is exactly a −d h(g), for some function h(g) which is bounded. For the free physical scalar field, locally scaled field correlations are bounded uniformly in a ∈ (0, 1], such as no smearing of the fields is needed to achieve boundedness. The two-point correlation of physical fields for coincident points has an a 2−d singular behavior, for d = 3, 4. If we consider correlations of physical derivative scalar fields, then the singular behavior is different. The two-point correlation of physical derivative scalar fields, at coincident points, has an a −d, a ց 0 singularity, for d = 2, 3, 4; for
+
+---
+
+Title: Dualization of non-abelian lattice gauge theory with Abelian Color Cycles (ACC)
+URL: https://pos.sissa.it/256/034/pdf
+Published: N/A
+Author: N/A
+Highlights:
+have to obey constraints
+...
+give rise to an
+...
+dual variables: The gauge field degrees
+...
+by surfaces that can either be
+...
+fields (see, e.g
+...
+[1,
+...
+geometrical structure of
+...
+for U(1
+...
+For SU(3), we follow the same procedure as in SU(2). Starting from the Wilson action:
+...
+SG[U] = −
+...
+β 3 ∑ x,µ<ν ReTr Ux,µ Ux+µˆ ,ν U † x+νˆ,µ U † x,ν , (3.1)
+...
+we explicitly write the trace and matrix multiplications as color sums,
+...
+SG[U] = − β 6 ∑ x,µ<ν
+...
+3 ∑ a,b,c,d=1h U ab x,µU bc x+µˆ ,νU dc ? x+νˆ,µU ad ? x,ν +U ab ? x,µ U bc ? x+µˆ ,νU dc x+νˆ,µU ad x,νi . (3.2)
+...
+As in the SU(2) case we refer to the products of link matrix elements as ACCs. Note that for SU(3) we explicitly have an ACC and its complex conjugate, while in SU(2) there is no such pairing due to the pseudo-reality of SU(2). Again we write the Boltzmann factor e− SG[U] as a product over plaquette coordinates (x,µ < ν) and color indices (a,b, c,d) and for each combination of indices obtain two Boltzmann factors for the ACC and its complex conjugate. Both are expanded, giving rise to two sets of expansion indices nabcd x,µν ∈ N0 and ¯nabcd x,µν ∈ N0. After reorganizing the products over link matrix elements we find the representation that corresponds to (2.3) in the SU(2) case,
+...
+Z = ∑ { n,n¯}"∏ x,µ<ν ∏ a,b,c,d
+...
+(β/6)
+...
+nabcd x,µν+n¯abcd x,µν
+...
+nabcd x,µν ! ¯nabcd x,µν !#∏ x,µZ dUx,µ ∏ a,b U ab x,µ Nab x,µ U ab ? x,µ N ab x,µ , (3.3)
+...
+N abcd x,µ = ∑ ν
+...
+µ<ν n abss x,µν +n¯ ssba x
+...
+νˆ,µν
+...
+¯ assb
+...
+sabs x
+...
+(3.
+...
+N abcd x
+...
+µ = ∑ ν
+...
+µ<ν n¯ abss x
+...
+n ssba x
+...
+For integrating out the SU(3) gauge links Ux,µ we choose the parametrization [6]:
+...
+Ux,µ =
+
+c1c2 eiφ1 s1 eiφ3 c1s2 eiφ4 s2s3 e− iφ4− iφ5 − s1c2c3 eiφ1+iφ2− iφ3 c1c3 eiφ2 − c2s3 e− iφ1− iφ5 − s1s2c3 eiφ2− iφ3+iφ4 − s2c3 e− iφ2− iφ4 − s1c2s3 eiφ1− iφ2+iφ5 c1s3 eiφ5 c2c3 e− iφ1− iφ2
+...
+− s1s2s3 e− iφ3+iφ4+iφ5
+
+,
+
+(3.6)
+
+where ci = cosθ (i) 
+x,µ , si = sinθ (i) 
+x,µ , with θ (i) 
+x,µ ∈ [0,π/2], and φi = φ (i) x,µ , with φ (i) x,µ ∈ [0,2π], and Haar 
+measure dUx,µ = (2π 5)− 1 dθ1c3 1s1 dθ2c2s2 dθ3c3s3 dφ1 dφ2 dφ3 dφ4 dφ5. In the following, it will 
+prove convenient to perform the change of variables: 
+
+n abcd x,µν − n¯ abcd x,µν = p abcd x,µν , p abcd x,µν ∈ Z, (3.7) n abcd x,µν +n¯ abcd x,µν = | p abcd x,µν | +2l abcd x,µν , l abcd x,µν ∈ N0 , (3.8)
+...
+and to introduce the fluxes Jab x,µ = Nab x,µ − N ab x,µ and Sab x,µ = Nab x,µ +N ab x,µ given explicitly by
+...
+J ab x,µ = ∑ ν:µ<ν [ p abss x,µν − p ssba x− νˆ,µν ]− ∑ ρ:µ>ρ [ p assb x,ρµ − p sabs x− ρˆ,ρµ ] , (3.9)
+...
+S ab 
+x,µ = ∑ ν:µ<ν [| p abss x,µν | +| p ssba 
+x− νˆ,µν | +2(l abss x,µν +l ssba 
+x− νˆ,µν )] + ∑ ρ:µ>ρ [| p assb x,ρµ | −| p sabs 
+x− ρˆ,ρµ | +2(l assb x,ρµ − l sabs 
+x− ρˆ,ρµ )]. 
+The geometrical interpretation of the Jab 
+x,µ is the same as for SU(2), i.e., they represent the total flux 
+from color a on site x to color b on site x+ µˆ , where now the color indices can be 1,2 or 3.
+...
+To obtain the final result for the partition sum we substitute the parametrization (3.6) and the 
+Haar measure in (3.3). An additional step is still required in order to be able to perform the Haar 
+measure integration, because some of the elements Uab 
+x,µ of the matrix (3.6) are not in the simple 
+
+form Uab x,µ = rab x,µe iϕ ab x,µ , but are sums Uab x,µ = ρ ab x,µe iα ab x,µ +ω ab x,µe iβ ab x,µ . For the latter we make use of the
+...
+In this paper we have presented a new method for finding a dual representation for non-abelian lattice gauge theories, based on strong coupling expansion. The key ingredient for the success of the dualization is a decomposition of the gauge action in terms of abelian color cycles (ACC) which are loops in color space around plaquettes. The ACCs are abelian in nature, i.e., they commute, and the dualization proceeds as in the abelian case. The link integration can be performed explicitly and all expansion coefficients are known in closed form – they are simple combinatorial factors
+...
+For the case of SU(2), in [5] we
+...
+extension of the dualization with ACCs
+...
+including staggered fermions
+...
+remarkable fact is
+...
+minus signs cancel such that in
+...
+dual simulation is possible without
+...
+aforementioned resummation
+...
+exploratory results presented here
+...
+SU(3
+...
+aim at a first assessment
+...
+constraints to be expected
+...
+interesting open question is whether
+...
+dualization strategy based on ACCs allows
+...
+sense that new gauge fields are introduced on
+...
+dual lattice such that
+...
+constraints are automatically fulfilled
+...
+While for U(1)
+...
+field theory such a dualization is well known (see, e.g., the review [7]), the non-abelian case is less understood
+...
+Maybe the ACC strategy,
+...
+patterned after the abelian approach
+...
+leads to progress
+...
+such a full dualization
+
+---
+
+Title: Real-time lattice gauge theory actions: Unitarity, convergence, and path integral contour deformations
+URL: https://doi.org/10.1103/physrevd.104.014513
+Published: 2021-07-30T00:00:00.000Z
+Author: Gurtej Kanwar, Michael L. Wagman
+Highlights:
+bare coupling g
+...
+x;μ ¼
+...
+taking the a
+...
+Yang-Mills action
+...
+A μ ðxÞ ∈ g with
+...
+same gauge coupling g
+...
+the case of G ¼
+...
+ð1Þ, the rescaled coupling e ¼ g= ffiffi ffi 2 p has the correct normalization for
+...
+naive continuum limit of Eq. ( 32 ) to match the continuum Uð1Þ gauge action with gauge coupling e
+...
+eigenvalues of the "plaquette" P x;μν can be represented
+...
+e iϕ A
+...
+The quantum rotator discussed in Sec. II A is, in fact, equivalent to Uð1Þ LGT using the Wilson action in (1 þ 1) D, and the arguments in that section explicitly demonstrate that TM is nonunitary in this case. As discussed in Ref. [10] and reviewed here, character expansion methods can be used to demonstrate nonunitarity of the Wilson gauge action more generally for G ¼ Uð1Þ or G ¼ SUðNÞ in arbitrary spacetime dimensions. A similar check for (non) unitarity can be applied to any LGT action that only depends locally on the P x;μν in a way that can be decomposed into a kinetic energy piece that is a function of "timelike plaquettes" P x;0k on each time slice and a potential energy piece that is a function of "spacelike plaquettes" P x;ij on each time slice. Since timelike plaquettes are given in temporal gauge by U x;k U † xþa 0;k , the corresponding kinetic-energy evolution operator RM ðU; U 0 Þ only depends on the products U 0 ⃗ x;k U † ⃗ x;k . The kinetic-energy evolution operator associated with any plaquette LGT action can therefore be represented using a character expansion of the form
+...
+RM ðU; U 0 Þ ¼ Y ⃗ x;k X r d r c M r ðg 2 Þχ r ðU 0 ⃗ x;k U † ⃗ x;k Þ ; ð34Þ
+...
+where r labels the
+...
+G, d r denotes the
+...
+ðg 2 Þ
+...
+ðUÞ ≡ Q ⃗ x;k χ r ⃗ x;k ðU ⃗ x;k Þ can be
+...
+to be eigenfunctions of RM , RM jχ r ðUÞi ¼ Z DU 0 DU RM ðU 0 ; UÞ Y ⃗ x;k χ r ⃗ x;k ðU ⃗ x;k ÞjU 0 ⃗ x;k i ¼ Y ⃗ x;k c M r ⃗ x;k ðg 2 Þ Z dU 0 ⃗ x;k χ r ⃗ x;k ðU 0 ⃗ x;k ÞjU 0 ⃗ x;k i ¼ Y ⃗ x;k c M r ⃗ x;k ðg 2 Þ jχ r ðUÞi
+...
+ð37Þ
+...
+Analogous explicit results can be obtained for SUð2Þ gauge theory, where the irreps are labeled by half-integers j or equivalently integers r ¼ 2j and have dimension d r ¼ r þ 1. Denoting the eigenvalues of group elements U by e iϕ and e -iϕ , the Weyl character formula gives χ r ðUÞ ¼ sinððr þ 1ÞϕÞ= sinðϕÞ. For functions of the eigenvalues, the Haar measure corresponds to dϕ π sin 2 ðϕÞ, and the character expansion coefficients are therefore given by c M;W;SUð2Þ r
+...
+ðg 2 Þ ¼ 1 r þ 1 Z π -π dϕ π sinðϕÞ sin ððr þ
+...
+1ÞϕÞe -4i g 2 cosð
+...
+Þ e 4i
+...
+1 I r - 4i g 2 -I rþ2 -
+...
+2 e
+...
+i g 2
+...
+ig 2 2
+...
+rþ1 - 4i g 2 e 4i g
+...
+2 : ð
+...
+Explicit results for the SUðNÞ character expansion coefficients for the imaginary-time Wilson action are known [73] and can be used to derive analogous results for the general SUðNÞ real-time Wilson action. For
+...
+imaginary-time Wilson action, the kinetic-energy evolution operator RE;W has a character expansion given by The coefficients of this expansion are given analogously to Eq. ( 38 ) by
+...
+RE;W ðU; U 0 Þ ¼ Y ⃗ x;k e 2 g 2 ReTrð1-U 0 ⃗ x;k U † ⃗ x;k Þ ¼ Y
+...
+⃗ x;k X r d r c E;W r
+...
+g 2 Þχ r
+...
+U 0
+...
+x;k U † ⃗ x;k Þ :
+...
+c E;W r ðg
+...
+2 Þ ¼ Z DU Y ⃗ x;k 1
+...
+r χ r ðU ⃗ x;k Þ Ã RE ð
+...
+; UÞ 1=N L ¼ 1 d r Z dUχ r ðUÞ Ã e 2 g 2 ReTrð1-UÞ :
+
+---
+
+Title: arXiv:hep-th/9912268v2  13 Jan 2000
+URL: https://export.arxiv.org/pdf/hep-th/9912268v2.pdf
+Published: N/A
+Author: N/A
+Highlights:
+Though our objective is the continuum theory we start by formulating the SU(Nc) gauge
+theory on a cubic lattice. The partition function can be written as an integral over all link
+variables being SU(Nc) unitary matrices U with the action being a sum over plaquettes,
+...
+β (Tr Uplaq + c.c.)
+...
+where β is the dimensionless inverse coupling. The unitary matrix Uplaq is a product of four
+link unitary matrices closing a plaquette.
+...
+b = δab/2, and expands Tr Uplaq in the lattice spacing a. As a
+...
+result one gets for a plaquette lying in the (12) plane:
+...
+where Fµν = ∂µAν − ∂νAµ − i[AµAν] is the Yang–Mills field strength. Summing over all
+plaquettes one obtains the partition function of the continuum theory,
+...
+In this paper we concentrate on the Euclidean SU(2) Yang–Mills theory in d =
+...
+3 dimensions. In this case eq. (4)
+...
+The continuum limit of the
+...
+The general idea is to integrate over link variables Ulink in eq. (1) and to make a Fourier
+transformation in the plaquette variables Uplaq. This will be made in several steps, one for
+a subsection.
+...
+First of all, one needs to introduce explicitly integration over unitary matrices ascribed to
+the plaquettes, Uplaq. This is done by inserting a unity for each plaquette into the partition
+function (1):
+...
+Integrating over plaquette unitary matrices Uplaq becomes now very simple. For each plaquette of the lattice one has factorized integrals of the type
+...
+The quantity TJ (β) is the ‘Fourier transform’ of the Wilson action; since in the lattice
+...
+formulation the dynamical variables have the meaning of Euler angles and are therefore
+...
+compact, the Fourier transform depends on discrete values J
+...
+0, 1/2, 1, 3/2, .... However,
+...
+plaquette angular
+...
+We get,
+...
+, for the partition function:
+...
+The difficulty in performing integration over link variables in eq. (12) is due to the fact
+...
+any link enters
+...
+every link is shared by
+...
+In d = 3 dimensions every link is shared by four plaquettes, hence the integral over link
+
+---
+
+Title: [hep-lat/0204028] 1 Plaquette formulation
+URL: https://ar5iv.labs.arxiv.org/html/hep-lat/0204028
+Published: N/A
+Author: N/A
+Highlights:
+nonabelian groups
+...
+]. A closely related approach is
+...
+called plaquette representation
+...
+Halpern [5] and extended to the
+...
+[6]. In
+...
+quette matrices play
+...
+identities. Both dual and plaquette formulations are
+...
+the case of nonabelian models, probably due to their complexity. In the nonabelian
+...
+above mentioned constraints appear to
+...
+highly-nonlocal and
+...
+plaquette formulation
+...
+and simpler in
+...
+plaquette formulation.
+...
+main advantage of this formulation lies in its
+...
+p}$ be
+...
+)$ LGT. The rigorous
+...
+] asserts that the
+...
+V_{p})\
+...
+$\prod_{p\in(A,B)}$ means an appropriately ordered product over three plaquettes of the cube attached to the vertex $A$ or $B$ . The matrix $C$ defines a parallel transport of vertex $B$ into vertex $A$ and is called connector. The connector $C$ plays a crucial role in the nonabelian Bianchi identity. Its path can, in principle be chosen in an arbitrary way but the possible choices of $\prod_{p\in A}$ , $\prod_{p\in B}$ and $C$ must fit together. We choose the structure of connectors as shown in Fig.1.
+...
+| ---
+...
+x)+2
+...
+In this section we give the dual form of $SU(2)$ LGT which can be obtained from the plaquette formulation. Let $x$ be a site dual to the cube of the original lattice and $l$ be a link dual to the plaquette of the original lattice. Then it follows from (7), (8) and from the expression for the Jacobian that in the case of the $SU(2)$ gauge group the partition function on the dual lattice can be written in the following form
+...
+| $$Z=\sum_{r_{x}=0,\frac{1}{2},1,...}^{\infty}\prod_{x}\left[(2r_{x}+1)\sum_{m_{i}(x)=-r_{x}}^{r_{x}}\right]\prod_{l}\Xi_{l}\ .$$ | (19) |
+| --- | --- |
+...
+The summation over $r_{x}$ corresponds to the summation over all irreducible representations of the $SU(2)$ group. The sums over magnetic numbers $m_{i}(x)$ correspond to the calculation of $SU(2)$ traces. The index $i$ may run from $6$ to $6+3L$ depending on the position of the original cube, $L$ is the linear extent of the lattice. The link integral $\Xi_{l}$ is given by
+...
+| $$\Xi_{l}=\int dVe^{\beta{\rm Tr}V}\ V_{r_{x}}^{m_{1}n_{1}}V_{r_{x+n}}^{\dagger\ m_{2}n_{2}}\prod_{i=1}^{M(x)}\left(V_{r_{i}}^{k_{i}k_{i+1}}V_{r_{i}}^{\dagger\ p_{i}p_{i+1}}\right)\ ,$$ | (20) |
+| --- | --- |
+...
+where $V_{r}^{mn}$ is a matrix element of $r$ -th representation. The integer number $M(x)$ depends on the position of the plaquette on the lattice and shows how many times a dual link serves as connector in
+...
+Bianchi identities.
+...
+Consider now the t’ Hooft line
+...
+in $3D$ consists of a string $S_{xy}$ of
+...
+links between sites $x$ and $y$ on the dual lattice. With the set $T$ of plaquettes dual to the string $S_{xy}$ we define the action
+...
+}\exp[\
+...
+| $$\langle D_{z}(S_{xy})\rangle=\frac{Z(z;S_{xy})}{Z(1;S_{xy})}=\langle
+...
+exp[2i\pi(r_{x}-r_{
+...
+\ .$$ |
+...
+23) |
+| --- | --- |
+...
+Comparing this expression with the partition function (13) and remembering that $r_{x}$ is just the radial component of the auxiliary field $\alpha_{k}(x)$ we conclude that introducing sources like $r_{x}-r_{y}$ amounts to a simple shift in the corresponding sites for the integers $m_{x}$ in (13). Therefore, we may interpret the summation over $m_{x}$ as summation over monopole configurations which appear due to the periodicity of $SU(2)$ delta-function (in close analogy with $U(1)$ model). Indeed, expressed in terms of elements of algebra the Bianchi identity reads $(\sum_{k}\omega_{k}^{2}(x))^{1/2}=2\pi m_{x}$ . Configurations $m_{x}\neq 0$ we term monopoles of the maximal axial gauge. Investigation of these configurations and their contribution to the Wilson loops will be presented in a separate publication.
+
+---
+
+Title: Prepotential formulation of SU(3) lattice gauge theory - IOPscience
+URL: https://beta.iopscience.iop.org/article/10.1088/1751-8113/43/3/035403
+Published: 2009-12-18T14:21:08.000Z
+Author: N/A
+Highlights:
+The SU(3) lattice gauge theory is reformulated in terms of SU(3) prepotential harmonic oscillators. This reformulation has enlarged SU(3)⊗U(1)⊗U(1) gauge invariance under which the prepotential operators transform like matter fields. The Hilbert space of SU(3) lattice gauge theory is shown to be equivalent to the Hilbert space of the prepotential formulation satisfying certain color invariant Sp(2, R) constraints. The SU(3) irreducible prepotential operators which solve these Sp(2, R) constraints are used to construct SU(3) gauge invariant Hilbert spaces at every lattice site in terms of SU(3) gauge invariant vertex operators. The electric fields and the link operators are reconstructed in terms of these SU(3) irreducible prepotential operators. We show that all the SU(3) Mandelstam constraints become local and take a very simple form within this approach. We also discuss the construction of all possible linearly independent SU(3) loop states which solve the Mandelstam constraints. The techniques can be easily generalized to SU(N).
+
+E
+
+web_search_exa
+JSON
+
+Response
+
+Title: SU(N) glueball masses in (2+1)-dimensions - INSPIRE
+URL: https://inspirehep.net/literature/615639
+Published: 2003-03-25T20:27:36.000Z
+Author: N/A
+Highlights:
+We calculate the masses of the lowest lying eigenstates of improved SU(2), SU(3), SU(4) and SU(5) Hamiltonian lattice gauge theory (LGT) in 2+1 dimensions using an analytic variational approach. The ground state is approximated by a one plaquette trial state and mass gaps are calculated in the symmetric and antisymmetric sectors by minimising over a suitable basis of rectangular states. Analytic techniques are developed to handle the group integrals arising in the calculation.
+
+---
+
+Title: An Analytic variational study of the mass spectrum in (2+1)-dimensional SU(3) Hamiltonian lattice gauge theory - INSPIRE
+URL: https://inspirehep.net/literature/591400
+Published: 2002-07-29T19:19:53.000Z
+Author: N/A
+Highlights:
+We calculate the masses of the lowest lying eigenstates of improved SU(2) and SU(3) lattice gauge theory in 2+1 dimensions using an analytic variational approach. The ground state is approximated by a one plaquette trial state and mass gaps are calculated in the symmetric and antisymmetric sectors by minimising over a suitable basis of rectangular states.
+...
+#### Glueball spectrum of SU(3) lattice gauge theory by plaquette expansion
+...
+approximation of the 0++ glue
+...
+mass of (2+1)-dimensional SU(3) lattice gauge theory
+
+---
+
+Title: Series analysis of U(1) and SU(2) lattice gauge theory in 2+1 dimensions
+URL: https://doi.org/10.1103/physrevd.45.4652
+Published: 1992-06-15T00:00:00.000Z
+Author: Clive Hamer, J. Oitmaa, Zheng Weihong
+Highlights:
+Extended strong-coupling perturbation series are calculated for the vacuum energy and mass gaps of the U(1) and SU(2) lattice gauge theories in 2+1 dimensions. Extrapolating these series to the weak-coupling region, we estimate the scaling behavior for the antisymmetric mass gap of the U(1) model as ${M}_{A}^{2}{a}^{2}=5.29(30)\ifmmode imes\else exttimes\fi{}{10}^{2}{g}^{\ensuremath{-}2}\mathrm{exp}[\frac{\ensuremath{-}5.42(6)}{{g}^{2}}]$, and the ratio of the symmetric mass gap (${M}_{S}$) to the antisymmetric mass gap (${M}_{A}$) is $\frac{{M}_{S}}{{M}_{A}}=2.2(3)$. For the SU(2) model, the scaling behavior of the symmetric mass gap is ${M}_{S}a=2.22(5){g}^{2}\ensuremath{-}0.38(4){g}^{4}$. These results are in good agreement with theoretical expectations.
+
+---
+
+Title: Analytic variational study of the mass spectrum in (2+1)-dimensional SU(3) Hamiltonian lattice gauge theory
+URL: https://doi.org/10.1103/physrevd.67.114509
+Published: 2003-06-26T00:00:00.000Z
+Author: Jesse Carlsson, John A.L. McIntosh, Bruce H. J. McKellar, Lloyd C. L. Hollenberg
+Highlights:
+We calculate the masses of the lowest lying eigenstates of improved SU(2) and SU(3) lattice gauge theory in 2+1 dimensions using an analytic variational approach. The ground state is approximated by a one plaquette trial state and mass gaps are calculated in the symmetric and antisymmetric sectors by minimising over a suitable basis of rectangular states.
+...
+results of the
+...
+Here [k] denotes the integer part of k. In order to calculate excited state energies we minimise the mass gap (the difference between the excited state and ground state energy) over the basis defined by a particular order Lmax. To do this we again follow Arisue [20] and define the matrices
+...
+Extending the calculation to the general improved Hamiltonian H˜ (κ, u0) and making use of eqns(56—59) from the appendix gives
+...
+Nll ′ = − g 2 2aX i,xX x′( (1 − κ) E α i (x), W † l (x ′ ) i [E α i (x), Wl ′(0)] E + κ u 2 0Dh E α i (x), W † l (x ′ ) i h E˜α i (x + ai), Wl ′(0) iE ) . (22)
+...
+3.2 Calculating Matrix Elements Having described the
+...
+detail the calculation of
+...
+matrix elements Nll ′ and Dll ′. Our aim is
+...
+reduce Nll ′ and Dll ′ to polynomials of one plaquette matrix elements.
+...
+, again has been
+...
+case of SU(2) by Arisue [20]. Here we re
+...
+his calculations for the case of SU(3)
+...
+extend them to incorporate improved Hamiltonians
+...
+Taking elementary plaquettes as our independent variables, it is easy to show that the only non-zero contributions to Dll ′ occur when the rectangles l and l ′ overlap. As an example of a contribution to Dll ′, consider ∆Dll ′; the case where Nl∩l ′ plaquettes are contained by both rectangles (these are the overlap plaquettes) and Nl plaquettes are contained by the rectangle l. In order to calculate such matrix elements we rely heavily on the orthogonality properties of SU(N) characters. We are interested in calculating SU(N) integrals of the form
+...
+)χr(
+...
+) = X
+...
+cr ′χr ′(
+...
+This result allows us to integrate
+...
+done using Weyl
+...
+character formula [
+...
+few representations are given by: χ10
+...
+U) = TrU d10 = 3 χ11(U) = 1
+...
+For the case of 2+1 dimensions we expect ∆m/g 2 to become constant in the scaling region. The convergence of the massgaps with Lmax for the cases of SU(2) and SU(3) is illustrated in figs 6(a) and 6(b). We notice that for the case of SU(3) only small improvements to scaling are gained by extending the calculation beyond order 8. This suggests that a more complicated basis (including, for example, loops covered more than once) is required to simulate SU(3) excited states than for the case of SU(2).
+...
+The results for the SU(3) symmetric massgap (in units of g 2) are to be compared to calcu lations by Luo and Chen 2.15±0.0
+...
+[23], Samuel 1.84±0.4
+...
+[24] and Teper
+...
+2.40±0.02 [25]. It should be stressed that although our result of 3.26520 ± 0.00009 is considerably higher, it provides a precise upper upper-bound on the exact result. By including more compli cated loops in the expansion basis one would expect to reduce this upper bound. This is emphasised by the fact that when using only square basis states the result is considerably higher.
+...
+When compared to equivalent unimproved calculations, the improved and tadpole im proved massgaps approach scaling faster as β is increased. This is evident in figs 6 and 7 and is expected since, for an improved calculation one is closer to the continuum limit when working at a given coupling. However, for each improved calculation the scaling behaviour is not as precise as the equivalent unimproved calculation. This is clear from tables 1—3. A possible reason for this is that the one plaquette trial state used here does not allow for direct contributions from the improvement term in the kinetic Hamiltonian. For this term to contribute directly one would need a trial state which includes Wilson loops extending at least two links in at least one direction.
+...
+We can also calculate massgap ratios. For example the antisymmetric-symmetric massgap ratio for SU(3) is given by
+...
+case of SU(3
+...
+scaling is achieved
+...
+range of couplings
+...
+sectors. Our results use a one pla
+...
+basis of rectangular states
+...
+excited state energies
+...
+both SU(2
+...
+SU(3). Our results provide upper bounds
+...
+Here {X}AB denote the colour indices of the matrix X and an implicit sum over repeated colour indices is understood. These results follow simply from the commutation relations of eqns (45) and (54), and the following SU(
+...
+) formula:
+...
+λ α ABλ α CD = 1
+
+---
+
+Title: Glueball Spectrum of SU(3) Lattice Gauge Theory by Plaquette Expansion
+URL: https://doi.org/10.1071/p96122
+Published: 1998-02-10T00:00:00.000Z
+Author: Lloyd C. L. Hollenberg, Mark P. Wilson
+Highlights:
+Analytic techniques have also been applied to the problem. Hamiltonian strong coupling expansions for various glueball masses were intially carried out by Kogut et al . (1976) , and later extended by Hamer (1989) . There is however a need to extrapolate the perturbative results obtained in the strong coupling region into the weak coupling region by various approximants. The t expansion method (Horn and Lana 1991) provides nonperturbative expressions for the glueball masses in terms of analytically calculated Hamiltonian moments with respect to a well chosen trial state. The computation is in the infinite lattice limit, but still requires an extrapolation of results, this time in the t → ∞ limit.
+...
+method (Hollenberg 1993) , upon which this work is based, is a non-perturbative technique which has previously been applied to various lattice spin systems (Tomlinson and Hollenberg 1994) and lattice gauge theories (Hollenberg 1994a (Hollenberg , 1994b;; Hollenberg and Witte 1994) , including the first order (analytic) application to the vacuum properties of SU(3) and the calculation of the particle spectrum of full QCD. In this paper the expansion in the vacuum sector is taken beyond the first order calculation performed previously. Also calculations for the string tension and the lowest lying
+...
+It is now known (Hollenberg 1993 ) that progress can be made for lattice systems, if the terms of the matrix are initially rewritten in terms of connected Hamiltonian moments (Horn and Weinstein 1984) , which depend simply upon the number of plaquettes of the lattice, N p . In particular, for the Kogut-Susskind (1975) lattice Hamiltonian of the SU(3) pure gauge theory in 3+1 dimensions, given by
+...
+The plaquette expansion, anticipating the N p → ∞ limit, now involves expanding the α and β in 1/N p . This was originally performed (Hollenberg 1993) for the case where the connected moments are purely extensive (b n = 0). A pattern is seen to develop for the smaller values of n, from which general expressions for the elements of the matrix can be written down. The same procedure can be performed for the more general moments (4) leading to the general expansions:
+...
+α n = [c 1 N p + b 1 ] + (n -1) c 3 c 2 N p + b 3 c 2 -c 3 b 2 c 2 2 1 N p + • • • , β 2 n = n c 2 N p + b 2 + 1 2 n(n -1) c 2 c 4 -c 2 3 c 2 2 N p + c 2 2 b 4 -2c 2 c 3 b 3 + 2c 2 3 b 2 -c 2 c 4 b 2 c 3 2 1 N p + • • • . (5)
+...
+The general procedure now for handling T l is to expand each of the elements out to order 1/N r p for some set r and diagonalising the matrix for the lower eigenvalues. If the moments are purely extensive and only the first two terms in each of the expansions in (5) are kept (the r = 0 calculation), an analytic expression for the lowest eigenvalue E 0 in the infinite lattice limit has been obtained (Witte and Hollenberg 1994) :
+...
+α n = 3yN p + (n -1) 16 3y - y 2 + 1 2 (n -1)(n -2) 4 3y + y 4 1 N p + (n -1)(n -2) 1 6y + y 32 + (n -3) - 2192 243y 5 + 92 81y 3 - 106 729y - 293y 2592 1 N 2 p + • • • , β 2 n = n y 2 2 N p + 1 2 n(n -1) - y 2 4 + 1 6 n(n -1)(n -2) 161y 2 432 + 2 3 + 40 3y 2 1 N p + n(n -1)(n -2) 53y 2 10368 -1 12 + 7 27y 2 + (n -3) 931y 2 20736 + 185 972 + 10030 6561y 2 - 1000 243y 4 + 10972 729y 6 1 N 2 p + • • • . (7)
+...
+We plot M S versus y in Fig. 4 to determine if the results from the plaquette expansion match onto this weak coupling form beyond the transition region. Again, the plaquette expansion converges quickly in the strong coupling region, before the results start to diverge as the transition region is approached. As the order of the calculation is increased there is a decrease in the value of M S , with the r = 0 and r = 1 expansions consistent with one another well into the weak coupling region. They do not however show any sign of turning over onto the scaling form. By including the next terms, the r = 2 calculation, it is seen that these curves are already different from the lower orders well before the transition region and continue to diverge beyond this point. Although there is no extended region in which these curves approximate the scaling form (9) they may be matched onto the scaling form at a point within the weak coupling region at y = 1•65 corresponding to a value of C M S = 257. The quantity σ 1 2 also has the dimensions of mass and thus is also expected to match onto the weak coupling form (9) with a corresponding value for C σ 1 2 . A ratio such as M S /σ 1 2 should then become independent of the coupling constant in the continuum limit. This ratio is plotted in Fig. 5 for the various orders. Again there is no clear monotonic behaviour of the ratio as the order is increased, and the r = 2 calculation varies significantly from the lower orders in the weak coupling region. There is also no clear sign of the ratios levelling out to a constant value, but at the start of the transition region, y = 1•5, the M S /σ 1 2 ratio decreases from 3 • 3 for the r = 1 calculation to a value of 3 • 0 for the r = 2. Having obtained this value for the ratio it is possible to use the string tension to renormalise the theory as its value, σ = (420 MeV) 2 , can be determined from slopes of Regge trajectories. This gives an approximant range of 1260 MeV to 1400 MeV for the mass of the lowest scalar glueball. These values may now be compared to other recent analyses. Within the transition region the t expansion estimate for M S reaches a value of about 3σ 1 2 (Horn and Lana 1991) , whilst the various curves obtained by extrapolating the strong coupling expansion series by Hamer (1989) give a value of 2 • 4 ± 0 • 5 for the M S /σ 1 2 ratio. The most recent Monte Carlo calculation by Bali et al . 1993 produces a slightly higher value of 1550 ± 50 MeV for the scalar mass. Finally, in order to obtain estimates for the glueball mass ratios, the ratios M T /σ 1 2 and M A /σ 1 2 are plotted in Figs 6 and 7 respectively. For the tensor case the ratio at the transition region increases as the order of the calculation is increased, from a value of 3 • 2 for r = 0 to 3•9 for r = 2 at y = 1•5. The spread in the axial ratio over the various orders, 4• 75 to 4 • 85, is less than either of the other two glueball mass ratios, as can be seen in Fig. 7 , with all M A /σ 1 2 ratios reaching a minimum close to the start of the transition region.
+...
+With these estimates the various glueball mass ratios can now be estimated. The M T /M S and M A /M S ratios start off from 1 at y = 0 as all trial states are made from single plaquette wave functions. The M T /M S ratio remains very close to 1 throughout the strong coupling region, with the tensor and scalar glueballs degenerate over the entire range at order r = 0 as the connected moments required at this order are the same for both. The ratio starts to rise as the transition region is approached reaching values in the range 1• 05 to 1 • 3 for the various orders, these numbers having being obtained from the corresponding string tension curves, which provide estimates that are consistent with other works. The t expansion (Horn and Lana 1991) provides an estimate of 1 • 06 < M T /M S < 1 • 3, whilst the strong coupling expansion curves (Hamer 1989) rise from about 1 • 2 at y = 1•5 to a value of approximately 1 • 5 at y = 2. The ratio of Chin et al . (1988) rises more slowly over this range reaching a value of 1 • 2 at y = 2, whilst Bali et al . (1993) give a value of about 1 • 46. The M A /M S ratio is greater than 1 even within the strong coupling region and rises to a greater value at the transition region. The various curves give an estimate in the range 1 • 4 to 1•65. These may once more be compared to the results for the t expansion which give 1 • 4 < M A /M S < 1 • 8, the strong coupling expansion results, 1 • 5 at y = 1•5 and 2 at y = 2 for M A /M S , and the numerical calculations of Bali et al . (1993) , M A /M S = 1•9.
+
+---
+
+Title: arXiv:hep-lat/0111061v1  30 Nov 2001
+URL: https://export.arxiv.org/pdf/hep-lat/0111061v1.pdf
+Published: N/A
+Author: N/A
+Highlights:
+The scaling slope of the anti-symmetric mass gapM of compact U(1)2+1 lattice gauge theory
+...
+is obtained analytically in the Hamiltonian formalism using the plaquette expansion. Based on the
+...
+first four moments of the Hamiltonian with respect to a one-plaquette mean field state the results
+...
+demonstrate clear scaling ofM at and beyond the transition from strong to weak coupling. The
+...
+The Kogut-Susskind Hamiltonian for U(1)2+1 on a lattice of N plaquettes is given by [4]: H = g22 Xl Eˆ2l + 12g2 Xp h2 − (Uˆp + Uˆ †p )i , (2)
+...
+The strong-coupling limit is defined byg → ∞ and the
+...
+weak-coupling limit byg→ 0. For the U(1) model,Eˆ
+...
+the following plaquette expansions in 1/N [5]:
+...
+one plaquette
+...
+In this context, the benefit of choosing the one-plaquette
+...
+state as the trial state rather than the strong-coupling
+...
+vacuum becomes more apparent on investigation of the
+...
+strong (β →0) and weak-coupling (β →∞) limits of hHi.
+...
+For the strong-coupling limit, one finds for the energy
+...
+density: ε0(1) = hHi/N ∼ β − β
+...
+Similarly, for the weak-coupling limit, one finds: ε0(1) ∼
+...
+A−A2/(8β)+O1/β2
+...
+, with A = 1. This agrees exactly
+...
+with weak-coupling perturbation theory for the Mathieu
+...
+problem to the order shown. Exact U(1)2+1 has a similar
+...
+weak-coupling expansion [18,19] with A = 0.9581. With
+...
+Mathieu results
+...
+behaviour in both limits
+...
+the plaquette expansion to systematically obtain results
+...
+out the range of β.
+...
+FIG. 1. Mass gap results applying one
+...
+), three and four one
+...
+the four order moments
+...
+Using a diagrammatic method (details to be presented
+...
+elsewhere) we were able to derive the first four oneplaquette connected moments for both the vacuum and
+...
+anti-symmetric state. These moments immediately give
+...
+analytic approximates for vacuum energy and the mass
+...
+Since the expected scaling behaviour for compact
+...
+U(1)2+1 is of the form (1), the one-plaquette state results
+...
+for the plaquette expansion to first order are presented
+...
+as a ln M2/βversus β plot in Figure 1. The results using one, three and four moments appear to be converging
+...
+towards the scaling slope. Clearly scaling is evident for
+...
+inverse-coupling values β = 0.7 to 1.5, passing the transition point at β = 1. The scaling form we find is given by
+...
+M2 = β exp (−4.34β + 5.34), and agrees well with other
+...
+estimates (as summarized in [2]).
+...
+It should be noted that the minimization of hHi is the
+...
+only strictly numerical procedure
+...
+A totally analytic estimation (keeping in line
+...
+title of this paper) is possible when one writes
+...
+the function λ(β) which minimizes hHi as a series expan-
+...
+sion: λ = β
+...
+2/2−β6/16+. . .. Keeping the first five terms
+...
+of the expansion (for which the resulting values have converged), scaling is observed from β = 0.8 to 1.2 (Figure 2). The series breaks down at larger β values. The
+...
+scaling form is given by M2 = β exp (−4.42β + 5.41), and
+...
+again agrees well with the numerical estimates available.
+...
+In summary, applying the plaquette expansion we were
+...
+able to identify scaling of the anti-symmetric (or photon) mass gap in the weak-coupling regime of compact
+...
+U(1)2+1 lattice gauge theory via a completely analytic
+...
+calculation utilizing only four one-plaquette state Hamiltonian moments. Furthermore, although we have presented results for only the first four moments (for which
+...
+the calculation is entirely analytic) it should in principle
+...
+be possible to derive higher moments with respect to this
+...
+state. Indeed we have preliminary results for the vacuum
+...
+order [2] giving high accuracy over
+...
+a large range of couplings.
+
+Carlsson McIntosh McKellar Hollenberg Analytic Variational Mass Spectrum 2+1 SU(3) Hamiltonian Lattice Gauge Theory
+9 results
+
+
+
+An Analytic Variational Study of the Mass Spectrum in 2+1 Dimensional SU(3) Hamiltonian Lattice Gauge Theory
+
+arxiv.org
+
+
+COUPLED CLUSTER METHODS FOR LATTICE GAUGE THEORIES | International Journal of Modern Physics B
+
+worldscientific.com
+
+
+
+Analytic variational study of the mass spectrum in (2+1)-dimensional SU(3) Hamiltonian lattice gauge theory | Phys. Rev. D
+
+aps.org
+
+
+
+Lattice renormalization of quantum simulations | Phys. Rev. D
+
+aps.org
+
+
+
+Improved Hamiltonian Lattice Gauge Theory – arXiv Vanity
+
+arxiv-vanity.com
+
+
+
+SU(N) Glueball Masses in 2+1 Dimensions
+
+arxiv.org
+
+
+
+SU(N) Lattice Gauge Theory on a Single Cube
+
+arxiv.org
+
+
+
+Improved Hamiltonian lattice gauge theory : Find an Expert : The University of Melbourne
+
+unimelb.edu.au
+
+
+
+Lloyd C.L. Hollenberg | ScienceDirect
+
+sciencedirect.com
+
+
+Carlsson SU(N) glueball masses 2+1 dimensions one-plaquette variational
+7 results
+
+
+
+SU(N) Glueball Masses in 2+1 Dimensions
+
+arxiv.org
+
+
+
+Asymptotic freedom and massive glueballs in a qubit-regularized SU(2) gauge theory | Phys. Rev. D
+
+aps.org
+
+
+
+SU(N) Lattice Gauge Theory on a Single Cube
+
+arxiv.org
+
+
+
+(PDF) Glueball masses in SU(3) lattice gauge theory
+
+academia.edu
+
+
+
+SU(N) gauge theories in 3+1 dimensions: glueball spectrum, string tensions and topology | Journal of High Energy Physics | Springer Nature Link
+
+springer.com
+
+
+
+Jesse Carlsson
+
+grokipedia.com
+
+
+
+SU(N𝑁N) Glueball Masses in 2+1 Dimensions
+
+arxiv.org
+
+
+E
+
+web_fetch_exa
+JSON
+
+Response
+
+# Analytic variational study of the mass spectrum in (2+1)-dimensional SU(3) Hamiltonian lattice gauge theory
+URL: https://arxiv.org/abs/hep-lat/0207019
+Published: 2003-06-26
+Author: Jesse Carlsson, John A.L. McIntosh, Bruce H. J. McKellar, Lloyd C. L. Hollenberg
+
+# Analytic variational study of the mass spectrum in (2+1)-dimensional SU(3) Hamiltonian lattice gauge theory
+
+Physical review. D. Particles, fields, gravitation, and cosmology/Physical review. D. Particles and fields. Published: 2003-06-26. 3 citations.
+
+## Authors
+
+- Jesse Carlsson (The University of Melbourne): h-index 3; 38 citations
+- John A.L. McIntosh (The University of Melbourne): h-index 3; 86 citations
+- Bruce H. J. McKellar (The University of Melbourne): h-index 30; 4,509 citations
+- Lloyd C. L. Hollenberg (The University of Melbourne): h-index 69; 20,666 citations
+
+## Topics
+
+- Quantum Chromodynamics and Particle Interactions
+- High-Energy Particle Collisions Research
+- Particle physics theoretical and experimental studies
+
+---
+
+# arXiv:hep-lat/0207019v1  26 Jul 2002
+
+Jesse Carlsson ∗, John A. L. McIntosh †, Bruce H. J. McKellar ‡ and Lloyd C. L. Hollenberg §
+
+School of Physics, The University of Melbourne
+
+November 14, 2018
+
+## Abstract
+
+We calculate the masses of the lowest lying eigenstates of improved SU(2) and SU(3) lattice gauge theory in 2+1 dimensions using an analytic variational approach. The ground state is approximated by a one plaquette trial state and mass gaps are calculated in the symmetric and antisymmetric sectors by minimising over a suitable basis of rectangular states.
+
+## 1. Introduction
+
+Lattice gauge theory (LGT) [1] is a non-perturbative technique used to regulate the ul traviolet divergences of non-abelian gauge theories. There are two standard formulations of LGT: the Lagrangian formulation and the Hamiltonian formulation.
+
+To date most work on LGT has been carried out in the Lagrangian formulation for which Monte Carlo techniques are readily applicable. This approach involves replacing infinite and continuous space and time by a finite and discrete lattice of points. The Hamiltonian formulation developed by Kogut and Susskind [2] differs by leaving time continuous. In this framework the problem of gauge theory reduces to a many body problem and one is interested in calculating ground state and excited state configurations of the field defined on the lattice. The relation to continuum physics is realised in the limit in which the lattice spacing vanishes and the extent of the lattice becomes infinite.
+
+Many body techniques, in particular plaquette expansion [3, 4, 5, 6] and the coupled clus ter method [7, 8, 9, 10], have been applied to Hamiltonian LGT for a number of years. Not only do such calculations serve as a check on the more common Monte Carlo tech niques of the Lagrangian approach, they also provide more immediate access to excited
+
+∗ e-mail:j.carlsson@physics.unimelb.edu.au † e-mail:jam@physics.unimelb.EDU.AU ‡ e-mail:b.mckellar@physics.unimelb.edu.au § e-mail:L.Hollenberg@physics.unimelb.edu.au
+
+states [11]. In addition, the problem of finite density QCD may be more easily handled in the Hamiltonian approach [12].
+
+In recent years an improvement program has been undertaken in the Lagrangian approach. The aim has been to systematically correct the discretisation errors arising in the lattice Lagrangian and hence decrease the computational cost of lattice calculations [13]. More recently this improvement program has moved to the Hamiltonian formulation [14]. In a recent paper we demonstrated how improved Hamiltonians can be constructed [15]. In this paper we explore the use of improved Hamiltonians in variational calculations of SU(2) and SU(3) vacuum energy densities, specific heats and exited state energies on a 2+1 dimensional lattice. A key development in this paper is the application of analytic techniques to SU(3) LGT.
+
+The outline of this paper is as follows. In section 2 we introduce a generating function for SU(3) which allows us perform analytic calculations of energy densities and specific heats. In section 3 we calculate the energies of the lowest lying eigenstates of SU(2) and SU(3) pure gauge theory in 2+1 dimensions and compare the results of unimproved and improved calculations. Section 4 contains our conclusions.
+
+## 2. Vacuum Energy Density and Specific Heat
+
+2.1 Introduction In this section we calculate vacuum energy densities and specific heats for the Kogut Susskind, improved and tadpole improved Hamiltonians. Improved Hamiltonians are eas ily constructed by adding appropriately weighted gauge invariant terms to the Kogut Susskind Hamiltonian [15]. For SU(N) pure gauge theory with coupling g 2 on a lattice with spacing a, we define a class of Hamiltonians in terms of the link variables Uj (x) and electric fields Ei(x) (which are themselves defined in the appendix), and two parameters κ and u0 which define the particular Hamiltonian in question:
+
+H˜ (κ, u0) = g 2 aX x,i Tr (1 − κ)Ei(x) 2 + κ u 2 0 Ei(x)Ui(x)Ei(x + ai)U † i(x) + 2N ag2X x,i<j (1 + 4κ)Pij (x) − κ 2 [Rij (x) + Rji(x)] , (1)
+
+where
+
+Pij ( x) = 1 1 N u 4 0 ReTr h Ui( x)Uj ( x + ia)U y i ( x + ja)U y j ( x)i 1 N u 4 0 Re - 6 ? !
+
+(2) and
+
+Rij ( x) = 1 1 N u 6 0 Re - - 6 ? ! (3)
+
+are the plaquette and rectangle operators respectively. The Kogut-Susskind and O(a 2) classically improved Hamiltonians are given by HKS = H˜ (0, 1) and HI = H˜ (1/6, 1) re spectively. The tadpole improved Hamiltonian is given by HT I = H˜ (1/6, u0), where u0 is now the mean link, defined by
+
+u 4 0 = 1 N* - 6 ? + : (4)
+
+and evaluated self-consistently, as a function of g 2. Details of the mean link calculation are given in section 2.3.
+
+We approximate the ground, or (perturbed) vacuum, state, with energy E0, with the one plaquette trial state, first suggested by Greensite [16],
+
+|φ0i = exp " c 2X p (Zp + Z¯p)# |0i. (5)
+
+Here, |0i is the strong coupling vacuum defined by E α i (x)|0i = 0 for all i, x and α = 1, 2, . . . , N 2 − 1. The p-sum extends over all plaquettes on the lattice and
+
+Zp = Tr h Ui(x)Uj (x + ia)U † i(x + ja)U † j(x) i
+
+, (6) denotes the plaquette labelled by p which joins the lattice sites x, x + ia, x + (i + j)a and x + ja. Z¯p is the trace of the link operators in t
+
+Hamer strong coupling series glueball mass 2+1 dimensions SU(2) SU(3) Hamiltonian antisymmetric symmetric
+7 results
+
+
+
+Strong coupling expansion for scattering phases in hamiltonian lattice field theories - II. SU(2) gauge theory in (2+1) dimensions
+
+arxiv.org
+
+
+
+SU(N) Glueball Masses in 2+1 Dimensions
+
+arxiv.org
+
+
+
+Strong coupling series for glueball masses in (2+1) dimensional PQED - ScienceDirect
+
+sciencedirect.com
+
+
+
+Hamiltonian SU(N) Lattice Gauge Theories With Exact Vacuum States In 2+1 Dimensions
+
+arxiv.org
+
+
+
+Simple Hamiltonian for Quantum Simulation of Strongly Coupled 2+1D SU(2) Lattice Gauge Theory on a Honeycomb Lattice
+
+researchgate.net
+
+
+
+Lattice Hamiltonian for adjoint QCD 2
+
+springer.com
+
+
+
+(PDF) MONTE CARLO STUDY OF GLUEBALL MASSES IN THE HAMILTONIAN LIMIT OF SU(3) LATTICE GAUGE THEORY
+
+researchgate.net
+
+
+Kogut Sinclair Susskind strong coupling calculations Hamiltonian lattice gauge theory glueball spectrum ratio
+9 results
+
+
+
+Glueball spectroscopy in strongly coupled lattice gauge theories | Communications in Mathematical Physics
+
+springer.com
+
+
+
+Strong coupling expansion for scattering phases in hamiltonian lattice field theories - II. SU(2) gauge theory in (2+1) dimensions
+
+arxiv.org
+
+
+
+Lattice gauge theory calculations in 1 + 1 dimensions and the approach to the continuum limit | Phys. Rev. D
+
+aps.org
+
+
+
+Recent Advances in Hamiltonian Lattice Gauge Theory
+
+arxiv.org
+
+
+
+Lattice gauge theories with Kogut-Susskind fermions in the strong coupling region
+
+iaea.org
+
+
+
+Three Lectures on Lattice Gauge Theory | Springer Nature Link
+
+springer.com
+
+
+
+Canonical quantization of 1+1-dimensional Yang-Mills theory: An operator-algebraic approach
+
+arxiv.org
+
+
+
+(PDF) Strong-coupling calculations of lattice gauge theories: (1 + 1)-dimensional exercises
+
+researchgate.net
+
+
+
+(PDF) Hamiltonian formulation of Wilson's lattice gauge theories
+
+researchgate.net
+
+
+E
+
+web_fetch_exa
+JSON
+
+Response
+
+# Analytic variational study of the mass spectrum in (2+1)-dimensional SU(3) Hamiltonian lattice gauge theory
+URL: https://arxiv.org/pdf/hep-lat/0207019
+Published: 2003-06-26
+Author: Jesse Carlsson, John A.L. McIntosh, Bruce H. J. McKellar, Lloyd C. L. Hollenberg
+
+# Analytic variational study of the mass spectrum in (2+1)-dimensional SU(3) Hamiltonian lattice gauge theory
+
+Physical review. D. Particles, fields, gravitation, and cosmology/Physical review. D. Particles and fields. Published: 2003-06-26. 3 citations.
+
+## Authors
+
+- Jesse Carlsson (The University of Melbourne): h-index 3; 38 citations
+- John A.L. McIntosh (The University of Melbourne): h-index 3; 86 citations
+- Bruce H. J. McKellar (The University of Melbourne): h-index 30; 4,509 citations
+- Lloyd C. L. Hollenberg (The University of Melbourne): h-index 69; 20,666 citations
+
+## Topics
+
+- Quantum Chromodynamics and Particle Interactions
+- High-Energy Particle Collisions Research
+- Particle physics theoretical and experimental studies
+
+---
+
+# arXiv:hep-lat/0207019v1  26 Jul 2002
+
+Jesse Carlsson ∗, John A. L. McIntosh †, Bruce H. J. McKellar ‡ and Lloyd C. L. Hollenberg §
+
+School of Physics, The University of Melbourne
+
+November 14, 2018
+
+## Abstract
+
+We calculate the masses of the lowest lying eigenstates of improved SU(2) and SU(3) lattice gauge theory in 2+1 dimensions using an analytic variational approach. The ground state is approximated by a one plaquette trial state and mass gaps are calculated in the symmetric and antisymmetric sectors by minimising over a suitable basis of rectangular states.
+
+## 1. Introduction
+
+Lattice gauge theory (LGT) [1] is a non-perturbative technique used to regulate the ul traviolet divergences of non-abelian gauge theories. There are two standard formulations of LGT: the Lagrangian formulation and the Hamiltonian formulation.
+
+To date most work on LGT has been carried out in the Lagrangian formulation for which Monte Carlo techniques are readily applicable. This approach involves replacing infinite and continuous space and time by a finite and discrete lattice of points. The Hamiltonian formulation developed by Kogut and Susskind [2] differs by leaving time continuous. In this framework the problem of gauge theory reduces to a many body problem and one is interested in calculating ground state and excited state configurations of the field defined on the lattice. The relation to continuum physics is realised in the limit in which the lattice spacing vanishes and the extent of the lattice becomes infinite.
+
+Many body techniques, in particular plaquette expansion [3, 4, 5, 6] and the coupled clus ter method [7, 8, 9, 10], have been applied to Hamiltonian LGT for a number of years. Not only do such calculations serve as a check on the more common Monte Carlo tech niques of the Lagrangian approach, they also provide more immediate access to excited
+
+∗ e-mail:j.carlsson@physics.unimelb.edu.au † e-mail:jam@physics.unimelb.EDU.AU ‡ e-mail:b.mckellar@physics.unimelb.edu.au § e-mail:L.Hollenberg@physics.unimelb.edu.au
+
+states [11]. In addition, the problem of finite density QCD may be more easily handled in the Hamiltonian approach [12].
+
+In recent years an improvement program has been undertaken in the Lagrangian approach. The aim has been to systematically correct the discretisation errors arising in the lattice Lagrangian and hence decrease the computational cost of lattice calculations [13]. More recently this improvement program has moved to the Hamiltonian formulation [14]. In a recent paper we demonstrated how improved Hamiltonians can be constructed [15]. In this paper we explore the use of improved Hamiltonians in variational calculations of SU(2) and SU(3) vacuum energy densities, specific heats and exited state energies on a 2+1 dimensional lattice. A key development in this paper is the application of analytic techniques to SU(3) LGT.
+
+The outline of this paper is as follows. In section 2 we introduce a generating function for SU(3) which allows us perform analytic calculations of energy densities and specific heats. In section 3 we calculate the energies of the lowest lying eigenstates of SU(2) and SU(3) pure gauge theory in 2+1 dimensions and compare the results of unimproved and improved calculations. Section 4 contains our conclusions.
+
+## 2. Vacuum Energy Density and Specific Heat
+
+2.1 Introduction In this section we calculate vacuum energy densities and specific heats for the Kogut Susskind, improved and tadpole improved Hamiltonians. Improved Hamiltonians are eas ily constructed by adding appropriately weighted gauge invariant terms to the Kogut Susskind Hamiltonian [15]. For SU(N) pure gauge theory with coupling g 2 on a lattice with spacing a, we define a class of Hamiltonians in terms of the link variables Uj (x) and electric fields Ei(x) (which are themselves defined in the appendix), and two parameters κ and u0 which define the particular Hamiltonian in question:
+
+H˜ (κ, u0) = g 2 aX x,i Tr (1 − κ)Ei(x) 2 + κ u 2 0 Ei(x)Ui(x)Ei(x + ai)U † i(x) + 2N ag2X x,i<j (1 + 4κ)Pij (x) − κ 2 [Rij (x) + Rji(x)] , (1)
+
+where
+
+Pij ( x) = 1 1 N u 4 0 ReTr h Ui( x)Uj ( x + ia)U y i ( x + ja)U y j ( x)i 1 N u 4 0 Re - 6 ? !
+
+(2) and
+
+Rij ( x) = 1 1 N u 6 0 Re - - 6 ? ! (3)
+
+are the plaquette and rectangle operators respectively. The Kogut-Susskind and O(a 2) classically improved Hamiltonians are given by HKS = H˜ (0, 1) and HI = H˜ (1/6, 1) re spectively. The tadpole improved Hamiltonian is given by HT I = H˜ (1/6, u0), where u0 is now the mean link, defined by
+
+u 4 0 = 1 N* - 6 ? + : (4)
+
+and evaluated self-consistently, as a function of g 2. Details of the mean link calculation are given in section 2.3.
+
+We approximate the ground, or (perturbed) vacuum, state, with energy E0, with the one plaquette trial state, first suggested by Greensite [16],
+
+|φ0i = exp " c 2X p (Zp + Z¯p)# |0i. (5)
+
+Here, |0i is the strong coupling vacuum defined by E α i (x)|0i = 0 for all i, x and α = 1, 2, . . . , N 2 − 1. The p-sum extends over all plaquettes on the lattice and
+
+Zp = Tr h Ui(x)Uj (x + ia)U † i(x + ja)U † j(x) i
+
+, (6) denotes the plaquette labelled by p which joins the lattice sites x, x + ia, x + (i + j)a and x + ja. Z¯p is the trace of the link operators in the opposite direction. For a given coupling the variational parameter c is fixed by minimising the vacuum energy density, which, after some algebra making use of eqn(47) and eqns(55—59) from the appendix, can be expressed in terms of the expectation values of plaquettes and rectangles as follows:
+
+0 =
+
+a N p hH~i
+
+= " (1 ) N 2 1 2 ! 2 (1 + 4 ) N u 4 0 # * - 6 ? + + 2 N u 6 0* - - 6 ? + : (7)
+
+Here Np is the number of plaquettes on the lattice and β = N/g 2 is the inverse coupling.
+
+2.2 Analytic Techniques for SU(2) and SU(3) The expression for the SU(N) vaccuum energy density given by eqn(7) allows us, in prin ciple, to fix the variational parameter c for a given β in any number of dimensions. The difficulty lies in the calculation of the plaquette and rectangle expectation values. Monte Carlo simulations can be used to calculate these expectation values in any number of dimensions. However, for the special case of 2+1 dimensions, the calculation can be car ried out analytically. This is because the change of variables from links to plaquettes has unit Jacobian [17]. Consequently, the plaquettes on the two dimensional lattice are independent variables, which leads to:
+
+* - 6 ? + = R Ql dUlZ0Qp e (Z p+Z p) R Ql dUlQp e (Z p+Z p) = R dV TrV e Tr(V +V y) R dV e Tr(V +V y) (8)
+
+and
+
+* - - 6 ? + = 1 N* - 6 ? +
+
+: (9)
+
+Eqn(9) makes use of the independence of plaquettes and eqn(29). For the case of SU(2), analytic expressions for the plaquette expectation value in terms of modified Bessel func tions (In) have been used in variational calculations for the last 20 years:
+
+* - 6 ? + = 2I2(4 ) I1(4 ) : (10)
+
+We derived the corresponding SU(3) result, which has not been used, to our knowledge, in the Hamiltonian approach, and then discovered that it follows simply from a paper of Eriksson et al [18], in which the SU(3) integral,
+
+Z dUe Tr(UM †+U †M), (11)
+
+is calculated for arbitrary 3 × 3 matrices M. Following their analysis, but treating M and M † as independent variables, with M = c1l and M † = d1l, leads to an expression for the SU(3) generating function:
+
+Y(c, d) = Z dUe Tr(cU+dU †) = i πI Γ dz e −(c 3 +d 3 )/z z(z − cd)3/2J1 2 z (z − cd) 3/2 . (12)
+
+Here J1 is the first Bessel function and Γ is a closed contour in the complex plane including the pole at z = 0 but excluding the pole at z = cd. To evaluate this contour integral we expand the integrand in power series about the pole at z = 0 and use Cauchy’s integral theorem to eventually obtain,
+
+Y(c, d) = 2 X ∞ k=0
+
+1
+
+(k + 1)!(k + 2)!X k l=0 3k + 3 k − l!
+
+1 l!
+
+(cd) k−l(c 3 + d 3) l. (13)
+
+This generating functional is extremely useful for Hamiltonian lattice calculations 1. In principle, it allows us to investigate 2+1 dimensional pure SU(3) gauge theory analytically. The calculation of various matrix elements for all couplings, reduces to a exercise in differentiation. For example:
+
+hZ pi * - 6 ? + = 1 Y Y d= ; hZ pZ pi * -6 - ?6 ? + =" 1 Y 1 Y m+n Y m d n#d= :
+
+(14)
+
+The SU(N) generalisation of this result, which we have recently obtained, will be reported in a future publication.
+
+Figure 1: Analytic and Monte Carlo calculations of the SU(3) vacuum energy density in 2+1 dimensions for β = 4.0. It should be noted that the errors in the Monte Carlo calculation are smaller than the plot points.
+
+As a check on this series we calculate the strong coupling limit (c = 0) of hZ m p Z¯n pi. By differentiating eqn(13), we observe that the only non-zero strong coupling matrix elements occur when n + 2m ≡ 0 mod 3. For this case we have, hZ m p
+
+Z¯n pic=0 = X k 3k+3 n+m+3! 2n!m! (k + 1)!(k + 2)! n+2m 3 −k ! m+2n 3 −k !
+
+. (15)
+
+Here the sum runs over all integers n+m 3 ≤ k ≤ min n+2m 3 , m+2n 3 . This strong coupling result has an equivalent combinatoric interpretation as the number of times the singlet representation appears in the direct product of m 3 and n ¯3 representations [19]. A simple Mathematica code verifies the agreement of the two approaches.
+
+A demonstration of the accuracy of the series away from the strong coupling limit is provided by a Monte Carlo calculation of the vacuum energy density at various couplings. The example of β = 4.0 is shown in fig 1 and indicates close agreement between the Monte Carlo and analytic calculations.
+
+2.3 Results To calculate the energy density and variational parameter as functions of β we proceed as follows. For the Kogut-Susskind and classically improved cases, we simply minimise ǫ0 for a given value of β. The value of c at which ǫ0 takes its minimum defines c as a function of β.
+
+The tadpole improved calculation is more complicated. This is because the mean pla quette, from which u0 is calculated, depends on the variational state |φ0i. To complicate matters, the variational state in turn depends on the energy density and hence u0. Such interdependence suggests the use of the following iterative approach. For a given β and
+
+(a) SU(2) (b) SU(3)
+
+Figure 2: Analytic calculation of the unimproved, improved and tadpole improved vacuum energy density in 2+1 dimensions for SU(2) and SU(3).
+
+initial approximation of u0 we minimise the energy density to fix the variational state |φ0i. Using this trial state, we update u0 for use in the next iteration. This process is iterated until convergence is achieved, typically after only a few iterations.
+
+The results of the Kogut-Susskind, classically improved and tadpole improved SU(2) and SU(3) vacuum energy density calculations are shown in fig 2. The corresponding varia tional parameters c(β) are shown in fig 3. The correct strong and weak coupling behavior is observed in each case. The differing gradients in the weak coupling limit highlight the fact that when using an improved Hamiltonian one is using a different renormalisation scheme to the unimproved case.
+
+In practice the SU(3) generating function is truncated. The dependence of the variational parameter on various truncations of the k-sum in eqn(13) is shown in fig 4. We see that convergence is achieved up to β ≈ 13 when keeping 20 terms. Further calculations show that when keeping 50 terms convergence up to β ≈ 30 is achieved.
+
+In addition to the vacuum energy density we can also calculate the specific heat:
+
+CV = − ∂ 2ǫ0 ∂β2 . (16)
+
+The results are shown in fig 5. We note that the location of the peak indicates the region of transition from strong to weak coupling. For an improved calculation one would expect the peak to be located at a smaller β (corresponding to a larger coupling) than for the equivalent unimproved calculation. We see that this is indeed the case for both SU(2) and SU(3), with the tadpole improved Hamiltonian demonstrating the largest degree of improvement.
+
+(a) SU(2) (b) SU(3)
+
+Figure 3: Analytic calculation of the unimproved, improved and tadpole improved varia tional parameter in 2+1 dimensions for SU(2) and SU(3).
+
+Figure 4: Analytic calculation of the unimproved SU(3) variational parameter in 2+1 dimensions, truncating the k-sum of Y(c, d) at k = kmax.
+
+(a) SU(2) (b) SU(3)
+
+Figure 5: The unimproved, improved and tadpole improved specific heat in 2+1 dimensions for SU(2) and SU(3).
+
+## 3. Mass Gaps
+
+3.1 Introduction Having fixed the chosen trial vacuum |φ0i, in this section we turn to investigating excited states. Our aim is to calculate the lowest lying energy eigenstates of the Hamiltonians described by eqn(1) for both SU(2) and SU(3). We follow Arisue [20] and expand the excited state |φ1i in the basis consisting of all rectangular Wilson loops {|li} Lmax l=1 that fit in a given square whose side length Lmax defines the order of the calculation. In order to ensure the orthogonality of |φ0i and |φ1i we parameterise the excited state as follows
+
+|φ1i = L X max n,m=1 sl|n, mi = L 2 X max l=1
+
+sl|li, (17) with,
+
+|li = X x [Wl(x) − hWl(x)i] |φ0i. (18)
+
+Here hWl(x)i is the expectation value of Wl(x) with respect to the ground state |φ0i and the convenient label l = (n − 1)Lmax + m has been defined to label the n × m rectangular state. We define the particular form of Wl(x) to reflect the symmetry of the sector we wish to consider. For SU(3) we take Wl(x) = Tr[wl(x) ± w
+
+† l(x)] for the symmetric sector and antisymmetric sector. To avoid over-decorated equations, the particular Wl(x) in use is to be deduced from the context. Here wl(x) is the rectangular Wilson loop joining the
+
+lattice sites x, x + nai, x + nai + maj and x + naj, with n = l − 1 Lmax + 1 and m = l − Lmax l − 1 Lmax
+
+. (19)
+
+Here [k] denotes the integer part of k. In order to calculate excited state energies we minimise the mass gap (the difference between the excited state and ground state energy) over the basis defined by a particular order Lmax. To do this we again follow Arisue [20] and define the matrices
+
+Nll ′ =
+
+1 Np
+
+hl|H˜ − E0|l ′
+
+i (20) and
+
+Dll ′ =
+
+1 Np
+
+hl|l ′i = † l (x)Wl ′(0)i − hWl(x)i ∗hWl ′(0)i i
+
+. (21)
+
+Extending the calculation to the general improved Hamiltonian H˜ (κ, u0) and making use of eqns(56—59) from the appendix gives
+
+Nll ′ = − g 2 2aX i,xX x′( (1 − κ) E α i (x), W † l (x ′ ) i [E α i (x), Wl ′(0)] E + κ u 2 0Dh E α i (x), W † l (x ′ ) i h E˜α i (x + ai), Wl ′(0) iE ) . (22)
+
+To minimise the mass gap over a basis of a given order we make use of following diago nalisation technique [21]. We first diagonalise D, with
+
+S †
+
+DS = V 2, (23)
+
+where V is diagonal. The n-th lowest eigenvalue of the modified Hamiltonian
+
+H ′ = V S †NSV, (24)
+
+then gives an upper bound for the mass gap corresponding to the n-th lowest eigenvalue of the Hamiltonian, ∆mn.
+
+3.2 Calculating Matrix Elements Having described the minimisation process we now detail the calculation of the matrix elements Nll ′ and Dll ′. Our aim is to reduce Nll ′ and Dll ′ to polynomials of one plaquette matrix elements. This, again has been done for the case of SU(2) by Arisue [20]. Here we retrace his calculations for the case of SU(3) and extend them to incorporate improved Hamiltonians. We start with Dll ′.
+
+Taking elementary plaquettes as our independent variables, it is easy to show that the only non-zero contributions to Dll ′ occur when the rectangles l and l ′ overlap. As an example of a contribution to Dll ′, consider ∆Dll ′; the case where Nl∩l ′ plaquettes are contained by both rectangles (these are the overlap plaquettes) and Nl plaquettes are contained by the rectangle l. In order to calculate such matrix elements we rely heavily on the orthogonality properties of SU(N) characters. We are interested in calculating SU(N) integrals of the form
+
+Z dUpe S(Up)χr(UpV ), (25)
+
+where Up is a SU(N) plaquette variable and V is a product of any number of plaquettes not including Up. Here χr(U) denotes the character corresponding to the representation r. For SU(2), r = 0, 1/2, 3/2, . . . and for SU(3), r = (λ, µ) where λ denotes the number of boxes in the first row of the Young’s Tableaux describing the representation and µ is the number of boxes in the second row. Similarly, for SU(N), r = (r1, r2, . . . , rN−1).
+
+Performing a character expansion of the exponent in eq. 25 gives:
+
+Z dUpe S(Up)χr(UpV ) = X r ′Z dUpcr ′χr ′(Up)χr(UpV ). (26)
+
+This is simply a generalisation of a Fourier expansion. Here, the coefficient cr ′ is given by:
+
+cr ′ =Z dUpχr ′(Up)e S(Up). (27) Now using the orthogonality relation, Z dUpχr ′(UpV )χr(Up) = 1
+
+dr
+
+δr ′rχr(V ), (28) where dr is the dimension of the representation r, we obtain: Z dUpe S(Up)χr(UpV ) = 1
+
+dr
+
+χr(V )Z dUpχr(Up)e S(Up). (29)
+
+This result allows us to integrate out a single plaquette from an extended Wilson loop in a given representation r. To complete the calculation we need to relate characters to traces of group elements. This can be done using Weyl’s character formula [22]. For SU(3) the dimensions and characters corresponding to the first few representations are given by: χ10(U) = TrU d10 = 3 χ11(U) = 1
+
+(TrU) 2 − Tr(U 2) i = TrU † d11 = 3 χ20(U) =
+
+1
+
+(TrU) 2 + Tr(U 2) i = (TrU) 2 − TrU † d20 = 6 χ21(U) =
+
+1
+
+(TrU) 3 − Tr(U 3) i = TrUTrU † − 1 d21 = 8
+
+(30)
+
+Here we hav
+
+E
+
+web_fetch_exa
+JSON
+
+Response
+
+# SU(N)glueball masses in 2+1 dimensions
+URL: https://arxiv.org/pdf/hep-lat/0303016
+Published: 2003-10-23
+Author: Jesse Carlsson, Bruce H. J. McKellar
+
+# SU(N)glueball masses in 2+1 dimensions
+
+Physical review. D. Particles, fields, gravitation, and cosmology/Physical review. D. Particles and fields. Published: 2003-10-23. 7 citations.
+
+## Authors
+
+- Jesse Carlsson (The University of Melbourne): h-index 3; 38 citations
+- Bruce H. J. McKellar (The University of Melbourne): h-index 30; 4,509 citations
+
+## Topics
+
+- Quantum Chromodynamics and Particle Interactions
+- High-Energy Particle Collisions Research
+- Particle physics theoretical and experimental studies
+
+---
+
+# SU(N) Glueball Masses in 2+1 Dimensions
+
+Jesse Carlsson ∗ and Bruce H. J. McKellar †
+
+School of Physics, The University of Melbourne (Dated: October 26, 2018)
+
+## Abstract
+
+We calculate the masses of the lowest lying eigenstates of improved SU(2), SU(3), SU(4) and SU(5) Hamiltonian lattice gauge theory (LGT) in 2+1 dimensions using an analytic variational approach. The ground state is approximated by a one plaquette trial state and mass gaps are calculated in the symmetric and antisymmetric sectors by minimising over a suitable basis of rectangular states. Analytic techniques are developed to handle the group integrals arising in the calculation.
+
+∗Electronic address: j.carlsson@physics.unimelb.edu.au †Electronic address: b.mckellar@physics.unimelb.edu.au
+
+## INTRODUCTION
+
+In this paper we calculate the lowest lying glueball masses for SU(N) LGT in 2+1 di mensions, with N = 2, 3, 4 and 5, extending an earlier paper which considered N = 2 and 3 [1]. We use Kogut-Susskind [2], classically improved and tadpole improved Hamil tonians [3] in their calculation and develop analytic techniques for the calculation of the required expectation values. The outline of this paper is as follows. In Section II we develop analytic techniques for use in the calculation of certain group integrals for general SU(N). When used as generating functions these integrals allow an analytic treatment of the matrix elements appearing in later sections. After defining our notation in Section III we fix the variational vacuum wave function in Section IV. Following that we calculate lattice specific heats in Section V before studying SU(N) glueball masses in Section VI. Section VIII contains our conclusions and a discussion of further work.
+
+## ANALYTIC TECHNIQUES FOR SU(N)
+
+A. The special cases of SU(2) and SU(3)
+
+In this section we recall two results which are useful in the calculation of group integrals for the special cases of SU(2) and SU(3). For further details we refer the reader to Ref.
+
+## 1. Before
+
+presenting these results the concept of group integration needs to be introduced. For this purpose we introduce the one plaquette trial state, which we will use to simulate the ground, or (perturbed) vacuum, state with energy E0, (1)
+
+Here, | 0i is the strong coupling vacuum defined by E α i (x)| 0i = 0 for all i, x and α = 1, 2, . . . , N 2 − 1. E
+
+α i (x) is the lattice chromoelectric field on the directed link running from the lattice site labelled by x to the site labelled by x + ai. The directed square denotes the traced ordered product of link operators, Ui(x), around an elementary square, or plaquette, of the lattice, where a is the lattice spacing. With this notation understood, we can write the expectation value of a plaquette as an SU(N) group integral as follows (3)
+
+Here the products over l and l ′ extend over all links on the lattice, while the products over p and p ′ extend over all plaquettes on the lattice. In Eq. (3) we introduced the notation Z1(p) to denote the trace of plaquette p. For each integral in Eq. (3) the integration measure is given by the Haar measure (also called the invariant measure and less commonly the Hurwitz measure) [4, 5]. For any compact group G, the Haar measure is the unique measure dU on G which is left and right invariant,
+
+Z G dUf(U) = Z G dUf(V U) = Z G dUf(UV ) ∀ V ∈ G (4)
+
+and normalised,
+
+Z G dU = 1. (5)
+
+In Eq. (4) f is an arbitrary function over G. In 2+1 dimensions the variables in Eq. (3) can be changed from links to plaquettes with unit Jacobian [6]. The plaquettes then become independent variables allowing the cancellation of all but one group integral in Eq. (3). All that remains is (6)
+
+Here, V is a plaquette variable with TrV = Z1(0). For the case of SU(2), analytic expressions for the plaquette expectation value in terms of modified Bessel functions have been used in variational calculations for almost 20 years. A key result [7] is
+
+Z SU(2) dUe cTrU = 1 c I1(2c). (7)
+
+Here In is the n-th order modified Bessel function of the first kind defined, for all integers n, by
+
+In(2x) = ∞ k=0 x 2k+n k!(k + n)!
+
+In an earlier paper, we showed that the corresponding SU(3) result follows simply from a paper of Eriksson, Svartholm and Skagerstam [8], with the result:
+
+Z SU(3) dUe cTrU+dTrU † = 2 ∞ k=0 (k + 1)!(k + 2)!X k l=0  3k + 3 k − l 
+
+1 l!
+
+(cd) k−l(c 3 + d 3) l. (9)
+
+In the next section we derive the general SU(N) result as well as a selection of other useful SU(N) group integrals.
+
+B. The generalisation to SU(N)
+
+## 1. Introduction
+
+Much work has been carried out on the topic of integration over the classical compact groups. The subject has been studied in great depth in the context of random matrices and combinatorics. Many analytic results in terms of determinants are available for integrals of various functions over unitary, orthogonal and symplectic groups [9]. Unfortunately similar results for SU(N) are not to our knowledge available. Their primary use has been in the study of Ulam’s problem concerning the distribution of the length of the longest increasing subsequence in permutation groups [10, 11]. Connections between random permutations and Young tableaux [12] allow an interesting approach to combinatorial problems involv ing Young tableaux. A problem of particular interest is the counting of Young tableaux of bounded height [13] which is closely related to the problem of counting singlets in prod uct representations mentioned in Section II A. Group integrals similar to those needed in this paper have also appeared in studies of the distributions of the eigenvalues of random matrices [14, 15]. In the context of LGT not much has work been done in the last 20 years on the subject of group integration. The last significant development was due to Creutz who developed a diagrammatic technique for calculating specific SU(N) integrals [16] using link variables. This technique allows strong coupling matrix elements to be calculated for SU(N) [17] and has more recently been used in the loop formulation of quantum gravity where spin networks are of interest [18, 19, 20]. In Sections II B 2 and II B 3 we extend the results of Section II A to calculate two im portant SU(N) integrals. As generating functions these integrals allow the evaluation of all expectation values appearing in variational calculations of SU(N) glueball masses in 2+1 dimensions. To calculate these generating functions we work with plaquette variables and make use of techniques which have become standard practice in the fields of random matri ces and combinatorics. In Section II B 2 we derive a generating function which allows the calculation of integrals of the form
+
+Z SU(N) dU(TrU) m(TrU) n e c(TrU+TrU †). (10)
+
+The work in Section II B 3 generalises the generating function of Section II B 2 allowing the calculation of more complicated integrals of the form
+
+Z SU(N) dU Tr(U l) m e c(TrU+TrU †). (11)
+
+For each integral considered the approach is the same and proceeds as follows. We start with a calculation of a U(N) integral. For example in Section II B 2 we calculate
+
+GU(N)(c, d) = Z U(N) dUe cTrU+dTrU † . (12)
+
+This is a generalisation of GU(N)(c, c), an integral first calculated by Kogut, Snow and Stone [21]. We then make use of a result of Brower, Rossi and Tan [22] to extend the U(N) integral to SU(N) by building the restriction, det U = 1 for all U ∈ SU(N), into the integration measure. In this way SU(N) generating functions can be obtained as sums of determinants whose entries are modified Bessel functions of the first kind.
+
+2. A simple integral
+
+In this section we introduce a useful technique for performing SU(N) integrals. We start with the U(N) integral of Eq. (12) and calculate it using a technique which has become standard practice in the study of random matrices and combinatorics. Since the Haar measure is left and right invariant (see Eq. (4)) we can diagonalise U inside the integral as
+
+U = V
+
+ e
+
+iφ0 0 · · · 0 0 e iφ1 ... ... ... 0 · · · e iφN
+
+ 
+
+†
+
+In terms of the set of variables { φk}
+
+N k=1 the Haar measure factors as dU = dµ(φ)dV [21]. Since the integrand is independent of V , the V integral can be carried out trivially using the normalisation of the Haar measure given by Eq. (5). Making use of the Weyl parameterisation for U(N) [23],
+
+dµ(φ) = Y N i=1 dφi 2π| ∆(φ)| 2, (14)
+
+where ∆(φ) is the Vandermonde determinant, with implicit sums over repeated indices understood,
+
+∆(φ) = 1 √N! εi1i2···iNe iφ1(N−i1)e iφ2(N−i2) · · · e iφN (N−iN ), (15)
+
+we can express the U(N) generating function as follows
+
+GU(N)(c, d) = Z 2π
+
+0
+
+dφ1 2π · · · Z 2π
+
+0
+
+dφN 2π exp "X N i=1 (ce iφi + de −iφi)#| ∆(φ)| 2. (16)
+
+In Eq. (15), εi1...in is the totally antisymmetric Levi-Civita tensor defined to be 1 if { i1, . . . , in} is an even permutation of { 1, 2, . . . , n} , − 1 if it is an odd permutation and 0 otherwise (i.e. if an index is repeated). Substituting Eq. (15) in Eq. (16) gives,
+
+GU(N)(c, d) =
+
+1 N!
+
+εi1i2...iNεj1j2...jN Y N k=1Z 2π
+
+0
+
+dφk 2π exp i(jk − ik)φk + ce iφk + de −iφk . (17)
+
+To simplify this further we need an expression for the integral,
+
+gn(c, d) = Z 2π
+
+0
+
+dx 2π exp(inx + ce
+
+ix
+
++ de −ix
+
+), (18) which is easily handled by expanding the integrand in Taylor series in c and d,
+
+gn(c, d) = X ∞ k=0X ∞ l=0 c kd l k!l!Z dx 2π e ix(k−l+n) = ∞ k=0 c kd k+n k!(k + n)! = d c n/2 In 2√cd . (19)
+
+Making use of Eq. (19) in Eq. (17) gives an expression for GU(N)(c, d) as a Toeplitz deter
+
+minant (a determinant of a matrix whose (i, j)-th entry depends only on j − i), GU(N)(c, d) =
+
+1 N!
+
+εi1i2...iNεj1j2...jN Y N k=1 gjk−ik(c, d) =
+
+1 N!
+
+εi1i2...iNεj1j2...jN d c P N l=0(il−jl)/2 Y N k=1 Ijk−ik 2√cd = det h Ij−i 2√cdi 1≤i,j≤N . (20)
+
+Here the quantities inside the determinant are to be interpreted as the (i, j)-th entry of an N × N matrix. Now to calculate the corresponding SU(N) result the restriction det U = 1, which is equivalent to
+
+P
+
+N k=1 φk = 0 mod 2π in terms of the φk variables, must be built into the integration measure. To do this we follow Brower, Rossi and Tan [22] and incorporate the following delta function in the integrand of Eq. (16):
+
+2πδ X N k=1 φk − 0 mod 2π! = X ∞ m=−∞ 2πδ X N k=1 φk − 2πm! . (21)
+
+This is most conveniently introduced into the integral via its Fourier transform,
+
+X ∞ m=−∞ exp im X N k=1 φk! . (22)
+
+To obtain the SU(N) integral from the corresponding U(N) result the modification is there fore trivial. Including Eq. (22) in the integrand of Eq. (16) leads to the general SU(N) result,
+
+GSU(N)(c, d) = Z SU(N) dUe cTrU+dTrU † = X ∞ m=−∞ det [gm+j−i(c, d)]1≤i,j≤N. (23)
+
+This expression can be manipulated to factor the d/c dependence out of the determinant as follows, det "
+
+d c (l+j−i)/2 Il+j−i 2√cd#1≤i,j≤N =
+
+1 N!
+
+εi1i2...iNεj1j2...jN d c lN/2+ P k(jk−ik)/2 ×Y N m=1 Il+jm−im 2√cd = d c lN/2 det h Il+j−i 2√cdi 1≤i,j≤N . (24)
+
+Making use of this result in Eq. (23) leads to the SU(N) generating function
+
+GSU(N)(c, d) = ∞ d c lN/2 det h Il+j−i 2√cdi i≤i,j≤N . (25)
+
+For the case of SU(2) we can show that this reduces to the standard result of Arisue given by Eq. (7). To do this we need the recurrence relation for modified Bessel functions of the first kind,
+
+In−1(x) − In+1(x) = 2n x
+
+In(x). (26)
+
+Recall that for SU(2) the Mandelstam constraint is TrU = TrU †, so the case GSU(2)(c, c) can be considered without loss of generality;
+
+GSU(2)(c, c) = X ∞ l=−∞ Il(2c) 2 − Il−1(2c)Il+1(2c) = I0(4c) − I2(4c). (27)
+
+Here we have used the standard addition formula [24] for modified Bessel functions. Em ploying the recurrence relation of Eq. (26) gives
+
+GSU(2)(c, c) = 1
+2c
+
+I1(4c), (28) which is the standard result of Arisue given by Eq. (7). With an analytic form for SU(N) in hand we can attempt to find simpler expressions for GSU(N)(c, d) analogous to Eq. (28). To our knowledge no general formulas are available for the simplification of the determinants appearing in Eq. (25). Without such formulas we can resort to the crude method of analysing series expansions and comparing them with known expansions of closed form expressions. Since the determinants appearing in the generating function are nothing more than products of modified Bessel functions we expect that if a closed form expression for the general SU(N) generating function exists, it will involve the generalised hypergeometric function. With this approach we have limited success. The SU(3) result of Eq. (9) is recovered numerically but the SU(4) result does simplify analytically. When analysing the series expansion of GSU(4)(c, c) we notice that it takes the form of a generalised hypergeometric function. In particular we find the following result:
+
+GSU(4)(c, c) = 2F3  3 2, 5
+2
+3, 4, 5
+; 16c 2
+
+
+Here the generalised hypergeometric function is defined by
+
+
+
+a1, a2, . . . , ap b1, b2, . . . , bq ; x 
+
+= X ∞ k=0 (a1)k(a2)k . . .(ap)k (b1)k(b2)k . . .(bq)k
+
+x k k!
+
+, (30) where (x)k = x(x + 1). . .(x + k − 1) is the rising factorial or Pochhammer symbol. In addition to Eq. (29) we find the following results for matrix elements derived from the SU(4) generating function:
+
+h Z1i = c 2F3  5 2, 7
+2
+4, 5, 6
+; 16c 2
+
+
+2F3 
+
+3 2, 5
+2
+3, 4, 5
+; 16c 2
+
+
+, (31)
+
+h Z 2 1i = 3 2c 2 2F3  5 2, 7
+2
+5, 6, 7
+; 16c 2
+ + 2 3c 4 2F3  7 2, 9
+2
+6, 7, 8
+; 16c 2
+ + 1 15 c 6 2F3  9 2, 11
+2
+7, 8, 9
+; 16c 2
+
+
+2F3 
+
+3 2, 5
+2
+3, 4, 5
+; 16c 2
+
+
+(32) and
+
+h Z1Z¯1i = 2F3  3 2, 5
+2
+3, 5, 6
+; 16c 2
+ + 4 3c 2 2F3  5 2, 7
+2
+4, 6, 7
+; 16c 2
+ + 4 9c 4 2F3  7 2, 9
+2
+5, 7, 8
+; 16c 2
+
+
+2F3 
+
+3 2, 5
+2
+3, 4, 5
+; 16c 2
+
+
+. (33)
+
+We stress that these results are nothing more than observations based on series expansions. Despite some effort analogous expressions for N > 4 have not been found. The generating functions, GSU(N)(c, d) and GU(N)(c, d), are not only of interest in Hamil tonian LGT. By differentiating Eq. (25) appropriately with respect to c and d and afterwards setting c and d to zero, we obtain the number of singlets in a given product representation of SU(N). This was discussed for the special case of SU(3) in Section II A. We now consider the general case in the calculation of Tk(n); the number of singlets in the SU(k) product representation, (k ⊗ k¯) ⊗ · · · ⊗ (k ⊗ k¯)
+
+| {z } n
+
+As a group integral Tk(n) is given by Tk(n) = Z SU(k) dU(| TrU| 2) n. (35)
+
+Integrals of this kind are studied in combinatorics, in particular the study of increasing subsequences of permutations. An increasing subsequence is a sequence i1 < i2 < · · · < im such that π(i1) < π(i2) < · · · < π(im), where π is a permutation of { 1, 2, . . . , k} . It has been shown that the number of permutations π of { 1, 2, . . . , k} such that π has no increasing subsequence of length greater than n is Tk(n) [10]. In addition it is possible to prove that Tk(n) is the number of pairs of Young tableaux of size k and maximum height n via the Schensted correspondence [10, 25]. Making use of Eq. (25) we see that only the l = 0 term contributes to Tk(n). Letting x = cd we have:
+
+Tk(n) = (∂c∂d) ndet h Ij−i(2√cd)i 1≤i,j≤k c=d=0 = n! d n dx n det Ij−i(2√x) 1≤i,j≤k x=0
+
+. (36)
+
+Hence the generating function for Tk(n) is given by
+
+X ∞ n=0 Tk(n)x n n! 2 = det Ij−i(2√x) 1≤i,j≤k, (37)
+
+a result first deduced by Gessel [13]. The first few Tk(n) sequences are available as A072131, A072132, A072133 and A072167 in Sloane’s on-line encyclopedia of integer sequences [26].
+
+3. A more complicated integral
+
+We now move on to the more complicated integral
+
+Hm(c, d) = Z SU(N) dU exp c(TrU + TrU † ) + dTr(U m ) ∀ m ∈ Z+ . (38)
+
+This integral is of interest as a generating function for the calculation of integrals such as
+
+Z SU(N) dUTr(U m)e c(TrU+TrU †). (39) For the simple case of SU(3) we can use the Mandelstam constraint, Tr(U 2) = (TrU) 2
+
+− 2TrU †, to reduce such integrals to those obtainable from GSU(N)(c, d) . However for higher dimensional gauge groups not all trace variables can be written in terms of TrU and TrU †. For these gauge groups one must introduce the generating function, Hm(c, d), to calculate integrals similar to Eq. (39). To calculate Hm(c, d) we start with the corresponding U(N) generating function hm(c, d) and follow the procedure of Section II B 2 to obtain
+
+hm(c, d) = Z U(N) dU exp c(TrU + TrU † ) + dTr(U m) =
+
+1 N!
+
+εi1...iNεj1...jN Y N k=1Z 2π
+
+0
+
+dφk 2π exp i(jk − ik)φk + 2c cos φk + de miφk . (40)
+
+To proceed we need the following integral,
+
+Z 2π
+
+0
+
+dx 2π exp(inx + a cos x + be imx) = X ∞ k=0 b k 2π
+
+0
+
+dx 2π e i(n+mk)x+a cos x = X ∞ k=0 b k k! In+mk(a). (41)
+
+Making use of Eq. (41) in Eq. (40) leads to the following expression for the U(N) generating function,
+
+hm(c, d) = det [λm;j−i(c, d)]1≤i,j≤N, (42)
+
+with
+
+λm;n(c, d) = X ∞ k=0 d k k! In+mk(2c). (43)
+
+Extending to SU(N) following the prescription of Section II B 2, we arrive at the correspond ing SU(N) generating function,
+
+Hm(c, d) = X ∞ l=−∞ det [λm;l+j−i(c, d)]1≤i,j≤N. (44)
+
+An example of an SU(N) integral derived from this generating function is the following:
+
+Z SU(N) dUTr(U m)e c(TrU+TrU †) = ∂Hm(c, d) ∂d d=0 = ∂ ∞ det [Il+j−i(2c) + dIl+j−i+m(2c)] d=0
+
+. (45)
+
+Only two terms need to be kept in the k-sum of Eq. (43) here because higher order powers of d vanish when the derivative with respect to d is taken and d set to zero.
+
+## Preliminaries
+
+In this section we make use of the analytic results of Section II in variational calculations of glueball masses. The steps we take are as follows. We first fix the v
+
+E
+
+web_fetch_exa
+JSON
+
+Response
+
+# [hep-lat/0303016] SU(𝑁) Glueball Masses in 2+1 Dimensions
+URL: https://ar5iv.labs.arxiv.org/html/hep-lat/0303016
+
+[hep-lat/0303016] SU(𝑁) Glueball Masses in 2+1 Dimensions
+
+# SU( $N$ ) Glueball Masses in 2+1 Dimensions
+
+Jesse Carlsson j.carlsson@physics.unimelb.edu.au Bruce H. J. McKellar b.mckellar@physics.unimelb.edu.au School of Physics, The University of Melbourne
+
+###### Abstract
+
+We calculate the masses of the lowest lying eigenstates of improved SU(2), SU(3), SU(4) and SU(5) Hamiltonian lattice gauge theory (LGT) in 2+1 dimensions using an analytic variational approach. The ground state is approximated by a one plaquette trial state and mass gaps are calculated in the symmetric and antisymmetric sectors by minimising over a suitable basis of rectangular states. Analytic techniques are developed to handle the group integrals arising in the calculation.
+
+## I Introduction
+
+In this paper we calculate the lowest lying glueball masses for SU( $N$ ) LGT in 2+1 dimensions, with $N=2$ , 3, 4 and 5, extending an earlier paper which considered $N=2$ and 3 Carlsson et al. (2002). We use Kogut-Susskind Kogut and Susskind (1975), classically improved and tadpole improved Hamiltonians Carlsson and McKellar (2001) in their calculation and develop analytic techniques for the calculation of the required expectation values.
+
+The outline of this paper is as follows. In Section II we develop analytic techniques for use in the calculation of certain group integrals for general SU( $N$ ). When used as generating functions these integrals allow an analytic treatment of the matrix elements appearing in later sections. After defining our notation in Section III we fix the variational vacuum wave function in Section IV. Following that we calculate lattice specific heats in Section V before studying SU( $N$ ) glueball masses in Section VI. Section VIII contains our conclusions and a discussion of further work.
+
+## II Analytic techniques for SU( $N$ )
+
+### II.1 The special cases of SU(2) and SU(3)
+
+In this section we recall two results which are useful in the calculation of group integrals for the special cases of SU(2) and SU(3). For further details we refer the reader to Ref. Carlsson et al., 2002. Before presenting these results the concept of group integration needs to be introduced. For this purpose we introduce the one plaquette trial state, which we will use to simulate the ground, or (perturbed) vacuum, state with energy $E_{0}$ ,
+
+| $$\begin{array}[]{c}\includegraphics{thesis-paper1-eqn1.eps}\end{array}$$ | (1) |
+| --- | --- |
+
+Here, $|0\rangle$ is the strong coupling vacuum defined by ${\cal E}^{\alpha}_{i}(\bm{x})|0\rangle=0$ for all $i$ , $\bm{x}$ and $\alpha=1,2,\ldots,N^{2}-1$ . ${\cal E}^{\alpha}_{i}(\bm{x})$ is the lattice chromoelectric field on the directed link running from the lattice site labelled by $\bm{x}$ to the site labelled by $\bm{x}+a\bm{i}$ . The directed square denotes the traced ordered product of link operators, $U_{i}(\bm{x})$ , around an elementary square, or plaquette, of the lattice,
+
+| $$\begin{array}[]{c}\includegraphics{thesis-paper1-eqn2.eps}\end{array}$$ | (2) |
+| --- | --- |
+
+where $a$ is the lattice spacing. With this notation understood, we can write the expectation value of a plaquette as an SU( $N$ ) group integral as follows
+
+| $$\begin{array}[]{c}\includegraphics{thesis-paper1-eqn3.eps}\end{array}$$ | (3) |
+| --- | --- |
+
+Here the products over $l$ and $l^{\prime}$ extend over all links on the lattice, while the products over $p$ and $p^{\prime}$ extend over all plaquettes on the lattice. In Eq. (3) we introduced the notation $Z_{1}(p)$ to denote the trace of plaquette $p$ . For each integral in Eq. (3) the integration measure is given by the Haar measure (also called the invariant measure and less commonly the Hurwitz measure) Montvay and Münster (1994); Creutz (1983). For any compact group $G$ , the Haar measure is the unique measure $dU$ on $G$ which is left and right invariant,
+
+| $$\int_{G}dUf(U)=\int_{G}dUf(VU)=\int_{G}dUf(UV)\hskip 28.45274pt\forall V\in G$$ | (4) |
+| --- | --- |
+
+and normalised,
+
+| $\displaystyle\int_{G}dU=1.$ | (5) |
+| --- | --- |
+
+In Eq. (4) $f$ is an arbitrary function over $G$ .
+
+In 2+1 dimensions the variables in Eq. (3) can be changed from links to plaquettes with unit Jacobian Batrouni and Halpern (1984). The plaquettes then become independent variables allowing the cancellation of all but one group integral in Eq. (3). All that remains is
+
+| $$\begin{array}[]{c}\includegraphics{thesis-paper1-eqn6.eps}\end{array}$$ | (6) |
+| --- | --- |
+
+Here, $V$ is a plaquette variable with ${\rm Tr}V=Z_{1}(0)$ . For the case of SU(2), analytic expressions for the plaquette expectation value in terms of modified Bessel functions have been used in variational calculations for almost 20 years. A key result Arisue et al. (1983) is
+
+| $\displaystyle\int_{{\rm SU}(2)}dUe^{c{\rm Tr}U}=\frac{1}{c}I_{1}(2c).$ | (7) |
+| --- | --- |
+
+Here $I_{n}$ is the $n$ -th order modified Bessel function of the first kind defined, for all integers $n$ , by
+
+| $\displaystyle I_{n}(2x)=\sum_{k=0}^{\infty}\frac{x^{2k+n}}{k!(k+n)!}.$ | (8) |
+| --- | --- |
+
+In an earlier paper, we showed that the corresponding SU(3) result follows simply from a paper of Eriksson, Svartholm and Skagerstam Eriksson et al. (1981), with the result:
+
+| $\displaystyle\int_{{\rm SU}(3)}dUe^{c{\rm Tr}U+d{\rm Tr}U^{\dagger}}$ | $\displaystyle=$ | $\displaystyle 2\sum_{k=0}^{\infty}\frac{1}{(k+1)!(k+2)!}\sum_{l=0}^{k}\left(\!\begin{array}[]{c}3k+3\\ k-l\end{array}\!\right)\frac{1}{l!}(cd)^{k-l}(c^{3}+d^{3})^{l}.$ | (11) |
+| --- | --- | --- | --- |
+
+In the next section we derive the general SU( $N$ ) result as well as a selection of other useful SU( $N$ ) group integrals.
+
+### II.2 The generalisation to SU( $N$ )
+
+#### II.2.1 Introduction
+
+Much work has been carried out on the topic of integration over the classical compact groups. The subject has been studied in great depth in the context of random matrices and combinatorics. Many analytic results in terms of determinants are available for integrals of various functions over unitary, orthogonal and symplectic groups Baik and Rains (2001). Unfortunately similar results for SU( $N$ ) are not to our knowledge available. Their primary use has been in the study of Ulam’s problem concerning the distribution of the length of the longest increasing subsequence in permutation groups Rains (1998); Widom et al. (2001). Connections between random permutations and Young tableaux Regev (1981) allow an interesting approach to combinatorial problems involving Young tableaux. A problem of particular interest is the counting of Young tableaux of bounded height Gessel (1990) which is closely related to the problem of counting singlets in product representations mentioned in Section II.1. Group integrals similar to those needed in this paper have also appeared in studies of the distributions of the eigenvalues of random matrices Diaconis and Shahshahani (1994); Widom and Tracy (1999).
+
+In the context of LGT not much has work been done in the last 20 years on the subject of group integration. The last significant development was due to Creutz who developed a diagrammatic technique for calculating specific SU( $N$ ) integrals Creutz (1978) using link variables. This technique allows strong coupling matrix elements to be calculated for SU( $N$ ) Leonard (2001) and has more recently been used in the loop formulation of quantum gravity where spin networks are of interest De Pietri (1997); Rovelli and Smolin (1995); Ezawa (1997).
+
+In Sections II.2.2 and II.2.3 we extend the results of Section II.1 to calculate two important SU( $N$ ) integrals. As generating functions these integrals allow the evaluation of all expectation values appearing in variational calculations of SU( $N$ ) glueball masses in 2+1 dimensions. To calculate these generating functions we work with plaquette variables and make use of techniques which have become standard practice in the fields of random matrices and combinatorics. In Section II.2.2 we derive a generating function which allows the calculation of integrals of the form
+
+| $\displaystyle\int_{{\rm SU}(N)}dU({\rm Tr}U)^{m}\overline{({\rm Tr}U)}^{n}e^{c({\rm Tr}U+{\rm Tr}U^{\dagger})}.$ | (12) |
+| --- | --- |
+
+The work in Section II.2.3 generalises the generating function of Section II.2.2 allowing the calculation of more complicated integrals of the form
+
+| $\displaystyle\int_{{\rm SU}(N)}dU\left[{\rm Tr}(U^{l})\right]^{m}e^{c({\rm Tr}U+{\rm Tr}U^{\dagger})}.$ | (13) |
+| --- | --- |
+
+For each integral considered the approach is the same and proceeds as follows. We start with a calculation of a U( $N$ ) integral. For example in Section II.2.2 we calculate
+
+| $\displaystyle G_{{\rm U}(N)}(c,d)$ | $\displaystyle=$ | $\displaystyle\int_{{\rm U}(N)}dUe^{c{\rm Tr}U+d{\rm Tr}U^{\dagger}}.$ | (14) |
+| --- | --- | --- | --- |
+
+This is a generalisation of $G_{{\rm U}(N)}(c,c)$ , an integral first calculated by Kogut, Snow and Stone Kogut et al. (1982). We then make use of a result of Brower, Rossi and Tan Brower et al. (1981) to extend the U( $N$ ) integral to SU( $N$ ) by building the restriction, $\det U=1$ for all $U\in$ SU( $N$ ), into the integration measure. In this way SU( $N$ ) generating functions can be obtained as sums of determinants whose entries are modified Bessel functions of the first kind.
+
+#### II.2.2 A simple integral
+
+In this section we introduce a useful technique for performing SU( $N$ ) integrals. We start with the U( $N$ ) integral of Eq. (14) and calculate it using a technique which has become standard practice in the study of random matrices and combinatorics.
+
+Since the Haar measure is left and right invariant (see Eq. (4)) we can diagonalise $U$ inside the integral as
+
+| $\displaystyle U=V\left(\begin{array}[]{cccc}e^{i\phi_{0}}&0&\cdots&0\\ 0&e^{i\phi_{1}}&&\vdots\\ \vdots&&\ddots&\\ 0&\cdots&&e^{i\phi_{N}}\end{array}\right)V^{\dagger}.$ | (19) |
+| --- | --- |
+
+In terms of the set of variables $\{\phi_{k}\}_{k=1}^{N}$ the Haar measure factors as $dU=d\mu(\phi)dV$ Kogut et al. (1982). Since the integrand is independent of $V$ , the $V$ integral can be carried out trivially using the normalisation of the Haar measure given by Eq. (5).
+
+Making use of the Weyl parameterisation for U( $N$ ) Weyl (1946),
+
+| $\displaystyle d\mu(\phi)$ | $\displaystyle=$ | $\displaystyle\prod_{i=1}^{N}\frac{d\phi_{i}}{2\pi}|\Delta(\phi)|^{2},$ | (20) |
+| --- | --- | --- | --- |
+
+where $\Delta(\phi)$ is the Vandermonde determinant, with implicit sums over repeated indices understood,
+
+| $\displaystyle\Delta(\phi)$ | $\displaystyle=$ | $\displaystyle\frac{1}{\sqrt{N!}}\varepsilon_{i_{1}i_{2}\cdots i_{N}}e^{i\phi_{1}(N-i_{1})}e^{i\phi_{2}(N-i_{2})}\cdots e^{i\phi_{N}(N-i_{N})},$ | (21) |
+| --- | --- | --- | --- |
+
+we can express the U( $N$ ) generating function as follows
+
+| $\displaystyle G_{{\rm U}(N)}(c,d)$ | $\displaystyle=$ | $\displaystyle\int_{0}^{2\pi}\frac{d\phi_{1}}{2\pi}\cdots\int_{0}^{2\pi}\frac{d\phi_{N}}{2\pi}\exp\left[\sum_{i=1}^{N}(ce^{i\phi_{i}}+de^{-i\phi_{i}})\right]|\Delta(\phi)|^{2}.$ | (22) |
+| --- | --- | --- | --- |
+
+In Eq. (21), $\varepsilon_{i_{1}\ldots i_{n}}$ is the totally antisymmetric Levi-Civita tensor defined to be 1 if $\{i_{1},\ldots,i_{n}\}$ is an even permutation of $\{1,2,\ldots,n\}$ , $-1$ if it is an odd permutation and 0 otherwise (i.e. if an index is repeated). Substituting Eq. (21) in Eq. (22) gives,
+
+| $\displaystyle G_{{\rm U}(N)}(c,d)$ | $\displaystyle=$ | $\displaystyle\frac{1}{N!}\varepsilon_{i_{1}i_{2}\ldots i_{N}}\varepsilon_{j_{1}j_{2}\ldots j_{N}}\prod_{k=1}^{N}\int_{0}^{2\pi}\frac{d\phi_{k}}{2\pi}\exp\left[i(j_{k}-i_{k})\phi_{k}+ce^{i\phi_{k}}+de^{-i\phi_{k}}\right].$ | (23) |
+| --- | --- | --- | --- |
+
+To simplify this further we need an expression for the integral,
+
+| $\displaystyle g_{n}(c,d)$ | $\displaystyle=$ | $\displaystyle\int_{0}^{2\pi}\frac{dx}{2\pi}\exp(inx+ce^{ix}+de^{-ix}),$ | (24) |
+| --- | --- | --- | --- |
+
+which is easily handled by expanding the integrand in Taylor series i
+
+Carlsson McKellar antisymmetric symmetric mass gap ratio 3/2 harmonic oscillator one plaquette glueball
+9 results
+
+
+
+Lattice Gauge Theories | Request PDF
+
+researchgate.net
+
+
+
+SU(N) Glueball Masses in 2+1 Dimensions
+
+arxiv.org
+
+
+
+On Charge Conjugation, Correlations, Elitzur's Theorem and the Mass Gap Problem in Lattice $SU(N)$ Yang-Mills Models in $d=4$ Dimensions
+
+arxiv.org
+
+
+
+Energy-momentum tensor in QCD: nucleon mass decomposition and mechanical equilibrium
+
+arxiv.org
+
+
+
+Monte Carlo calculation of SU(2) glueball states with Symanzik's tree-level improved action - ScienceDirect
+
+sciencedirect.com
+
+
+
+Hamiltonian Study of Improved $U(1$ Lattice Gauge Theory in Three Dimensions
+
+arxiv.org
+
+
+
+Path Integral Monte Carlo Approach to the U(1) Lattice Gauge Theory in (2+1) Dimensions
+
+arxiv.org
+
+
+
+SU(N𝑁N) Glueball Masses in 2+1 Dimensions
+
+arxiv.org
+
+
+
+web3.arxiv.org
+
+arxiv.org
+
+
+Carlsson thesis Improvement Analytic Techniques Hamiltonian lattice gauge theory antisymmetric symmetric mass gap ratio 1.5 large N
+7 results
+
+
+
+Improvement and Analytic Techniques in Hamiltonian Lattice Gauge Theory
+
+arxiv.org
+
+
+
+Hamiltonian study of improved $U(1)$ lattice gauge theory in three dimensions
+
+doi.org
+
+
+
+Hamiltonian Study of Improved $U(1$ Lattice Gauge Theory in Three Dimensions
+
+arxiv.org
+
+
+
+SU(N) Glueball Masses in 2+1 Dimensions
+
+arxiv.org
+
+
+
+An Analytic Variational Study of the Mass Spectrum in 2+1 Dimensional SU(3) Hamiltonian Lattice Gauge Theory
+
+arxiv.org
+
+
+
+Improved Hamiltonian Lattice Gauge Theory
+
+arxiv.org
+
+
+
+(PDF) . Hamiltonian Lattice Gauge Theory
+
+researchgate.net
+
+
+Hamer Oitmaa Weihong SU(3) glueball 2+1 dimensions Hamiltonian series 0++ 0-- mass ratio
+9 results
+
+
+
+SU(N) Glueball Masses in 2+1 Dimensions
+
+arxiv.org
+
+
+
+Series expansions for three-dimensional QED - ADS
+
+harvard.edu
+
+
+
+(PDF) Hamiltonian study of improved U (1) lattice gauge theory in three dimensions
+
+researchgate.net
+
+
+
+(PDF) Hamiltonian approach to Yang-Mills theories in 2+1 dimensions: glueball and meson mass spectra
+
+researchgate.net
+
+
+
+The Large N Glueball Mass Spectrum in 2+1 Dimensions
+
+arxiv.org
+
+
+
+The 0++ glueball mass in SU(3) lattice gauge theory: Towards definitive results - ScienceDirect
+
+sciencedirect.com
+
+
+
+The glueball spectrum and scaling in SU(3) lattice gauge theory - ScienceDirect
+
+sciencedirect.com
+
+
+
+Improvement and Analytic Techniques in Hamiltonian Lattice Gauge Theory
+
+arxiv.org
+
+
+
+The glueball spectrum of SU(3) gauge theory in 3 + 1 dimensions | Journal of High Energy Physics | Springer Nature Link
+
+springer.com
+
+
+E
+
+web_fetch_exa
+JSON
+
+Response
+
+# The Large N Glueball Mass Spectrum in 2+1 Dimensions
+URL: https://arxiv.org/pdf/hep-lat/0303018
+Published: 2003-03-25
+Author: Jesse Carlsson, Bruce H. J. McKellar
+
+# The Large N Glueball Mass Spectrum in 2+1 Dimensions
+
+arXiv (Cornell University). Published: 2003-03-25. Preprint. 1 citation.
+
+## Authors
+
+- Jesse Carlsson: h-index 3; 38 citations
+- Bruce H. J. McKellar: h-index 30; 4,509 citations
+
+## Topics
+
+- Dark Matter and Cosmic Phenomena
+- Particle physics theoretical and experimental studies
+- Nuclear physics research studies
+
+---
+
+# arXiv:hep-lat/0303018v1  25 Mar 2003
+
+The Large N Glueball Mass Spectrum in 2+1 Dimensions
+
+Jesse Carlsson ∗ and Bruce H. J. McKellar †
+
+School of Physics, The University of Melbourne (Dated: November 21, 2018)
+
+## Abstract
+
+In this paper we explore the large N limit of the glueball mass spectrum for 2+1 dimensional pure gauge theory. We employ Hamiltonian lattice gauge theory (LGT) and analytic variational techniques to calculate glueball masses for finite values of N≤ 25. The results are then accurately extrapolated to infiniteN. An empirical observation is discussed which links the infinite N glueball spectrum to a simple oscillator model.
+
+∗Electronic address: j.carlsson@physics.unimelb.edu.au †Electronic address: b.mckellar@physics.unimelb.edu.au
+
+## INTRODUCTION
+
+In this paper we study the glueball mass spectrum for large N pure gauge theory (no quarks) in 2+1 dimensions using Hamiltonian LGT. Our primary motivation lies in recent developments in string theory where a direct connection between pure gauge theory in the large N limit and certain string theories has been conjectured. An independent test of this conjecture is provided by large N calculations of the glueball mass spectrum in LGT. Impressive Monte Carlo calculations by Teper [1] and Lucini and Teper [2, 3] have progressed to the stage where accurate values of glueball masses have been calculated up to N = 6 in 2+1 dimensions. This has allowed an extrapolation to the N → ∞ limit. With the analytic techniques of the Hamiltonian approach [4] it is possible to extend these calculations to much larger N, allowing a more reliable N → ∞ extrapolation. The outline of this paper is as follows. We start in Section II with a historical background, where the original motivations for large N physics are discussed and the recent developments in string theory introduced. In Section III we use the analytic variational approach discussed in Ref. 4 to calculate glueball masses at finite values of N up to N = 25 in some cases. These results are then extrapolated to explore the large N limit of the 2+1 dimensional glueball mass spectrum. The N → ∞ limits obtained here are compared to the results of the analogous Monte Carlo studies in the Lagrangian approach.
+
+## BACKGROUND
+
+The nonperturbative region of quantum chromodynamics (QCD) has been examined predominantly with numerical techniques. While the numerical Monte Carlo simulations of Lagrangian LGT have made significant progress, there have been few developments in analytic techniques. One analytic technique which has received considerable attention in recent years is the large N limit. In 1974 ’t Hooft proposed a study of SU(N) gauge theories in the large N limit rather than the physically interesting N = 3 case [5]. It was hoped that the SU(N) theory could be solved analytically and would be, in some sense, close to SU(3). Indeed it was shown that the large N theory simplifies drastically [5] but still captures at least some of the complexity of the SU(3) theory [6, 7]. Motivated by the fact that the QCD coupling constant g 2 is a poor expansion parameter because its value depends on the energy scale of the process under consideration, t’ Hooft considered an expansion in another dimensionless parameter of SU(N) QCD, 1/N. Based on an ingenious organisation of Feynman diagrams, ’t Hooft was able to show that in the large N limit, keeping the ’t Hooft coupling g 2N fixed, only planar diagrams remain. While the remaining planar theory can be solved exactly in two dimensions, the three and four dimensional theories have not yet been solved. Recent developments in string theories have attempted to address this problem. In 1997 Maldacena conjectured a correspondence, in the duality sense, between superconformal field theories and string theory propagating in a non-trivial geometry [8]. The idea behind du ality is that a single theory may have two (or more) descriptions with the property that when one is strongly coupled the other is weakly coupled. A technique for breaking the conformal invariance and supersymmetry constraints of Maldacena’s original proposal was later developed by Witten [9]. This led to the hope that nonperturbative pure SU(N) gauge theories could be described analytically in 3+1 dimensions by their string theory dual. To develop this hope into a concrete solution would require perturbative expansions within the dual string theory. Such developments would seem to be some way off. In order to test the viability of using string theories to probe nonperturbative QCD independent tests are needed. The glueball mass spectrum of QCD provides a perfect laboratory. Recent Monte Carlo calculations have provided stable estimates of glueball masses up to N = 6 [1, 3] in 2+1 dimensions and up to N = 5 [3] in 3+1 dimensions. From these estimates an N → ∞ limit can be extrapolated in each case. Convincing evidence of O (1/N 2) finite N corrections have been demonstrated in 2+1 dimensions, verifying a specific prediction of ’t Hooft’s 1/N expansion in the quarkless case. From the string theory side, present calculations require a strong coupling limit (N, g 2N → ∞ ) to be taken. In this limit the string theory reduces to classical supergravity and the calculation of glueball masses, m(J P C), is straightforward. In this limit the glueball is represented by a dilaton field whose mass can be extracted by solving the dilaton wave equation [10–12]. Despite the extreme approximations required surprising quantitative agreement with the weak coupling results from LGT were obtained. Later it was realised that, in 2+1 dimensions, lower mass states can be constructed from the graviton field [13]. With this approach the quantitative
+
+agreement with LGT is lost but qualitative agreement in the form of the prediction m(0 ++) < m(2 ++) < m(1 −+) (1)
+
+still holds. The qualitative agreement between string theories and LGT persists in 3+1 dimensions [14] with
+
+m(0 ++) < m(2 ++) < m(0 −+), (2)
+
+for both theories. It appears that the identification of glueball states remains a problem. A serious difficulty is the removal of unwanted states which have masses of the same magnitude as the glueballs. Recipes for removing these unwanted states have been proposed [15, 16] but new parameters need to be introduced. The exploration of large N gauge theories outside of string theory has not been restricted to traditional Monte Carlo methods. Recent studies using the light-front Hamiltonian of transverse LGT have shown agreement with the Monte Carlo calculations of Teper [17]. In this approach explicit calculations at N → ∞ are possible without the need for extrapola tion. Continuum calculations, without the use of string theory, have also commenced. An impressive series of papers [18–20] has led to specific predictions for the string tension for all N in 2+1 dimensions [20]. These predictions lie within 3% of lattice calculations up to N = 6 beyond which LGT results are not available. A recent review is available in Ref. 21.
+
+## Introduction
+
+It this section we calculate 2+1 dimensional SU(N) glueball masses for various N using the analytic variational technique of Ref.
+
+## 4. Our
+
+intention is to explore the large N limit of glueball mass spectrum by extrapolating the results obtained to their N → ∞ limit. Employing analytic methods we can extend the calculation of the lowest energy massgaps to SU(25) on a desktop computer. This should be compared to current results in the Lagrangian approach which are limited, at present, to SU(6). With large values of N available a more reliable extrapolation to the N → ∞ limit is possible. To simulate the ground, or (perturbed) vacuum, state with energy E0, we use the one plaquette trial state, (3)
+
+Here, | 0i is the strong coupling vacuum defined by E α i (x)| 0i = 0 for all i, x and α = 1, 2, . . . , N 2 − 1. E
+
+α i (x) is the lattice chromoelectric field on the directed link running from the lattice site labelled by x to that labelled by x + aˆi. Here ˆi is a unit vector in the i direction. The directed square denotes the traced ordered product of link operators, Ui(x), around an elementary square, or plaquette, of the lattice, (4) where a is the lattice spacing. As discussed in Ref. 4, the precise form of c(β), where β = N/g 2, is unimportant in a scaling region. As it turns out, to calculate variational wave functions, by minimising the vacuum energy density, for large dimension gauge groups is cumbersome. Numerical preci sion becomes a factor in the minimisation of the energy density. This problem is magnified in the calculation of tadpole improved results using the iterative procedure employed in Ref. 4. We thus abandon the use of variational wave functions here. Instead we make use of the one plaquette wave function of Eq. (3) and define a simple dependence of c(β). Here we choose c(β) = β. Many Hamiltonians are available for LGT calculations [22]. In Ref. 4 we used Kogut Susskind [23], improved and tadpole improved Hamiltonians to calculate glueball masses for N ≤ 5. Here we employ the simplest of these, the Kogut-Susskind Hamiltonian, which is defined for pure SU(N) gauge theory with coupling g 2 on a lattice with spacing a by H = g 2 2aX x,i E α i (x) 2 + 2N ag 2X x,i<j Pij (x), (5) where the plaquette operator is given by (6)
+
+To evaluate the matrix elements appearing in the glueball mass calculation we use the
+
+SU(N) generating functions derived in Ref. 4, GSU(N)(c, d) = Z SU(N) dUe cTrU+dTrU † = ∞ l=−∞ d c lN/2 det h Il+j−i 2√cd i i≤i,j≤N (7)
+
+and
+
+Hm(c, d) = Z SU(N) dU exp c(TrU + TrU † ) + dTr(U m) = X ∞ l=−∞ det "X ∞ k=0 d k k! Il+j−i+mk(2c)#1≤i,j≤N . (8)
+
+Here the quantities inside the determinant are to be interpreted as the (i, j)-th entry of an N × N matrix. For the minimisation process, we use the same basis of rectangular states as in Ref.
+
+## 4. With
+
+this basis the states J ++ and J −−, with J = 0 or 2, are accessible. The J = 2 states require the use of a minimisation basis that contains no square states so that the excited states are invariant under rotations by π but not π/2. The dependence of the massgaps on the coupling does not change significantly as N is increased. We do however observe the appearance of what could possibly be additional low β scaling regions as N is increased.
+
+## Convergence with lmax
+
+In Ref. 4 the dependence of the variational parameter on the truncation of the l-sum in Eq. (7) was considered. The calculation of the variational parameter depends only on the plaquette expectation value. The dependence of the massgaps on the truncation should also be explored as their calculation incorporates additional matrix elements. We find that fast convergence is achieved as lmax is increased for the 0 ++ massgaps. A typical example is shown in Fig. 1(a), where the massgaps are almost indistinguishable up to β = 80 on the scale of the plot. For 0 −− the convergence is not as fast. A typical example is shown in Fig. 1(b). We find that in order to obtain convergence of the antisymmetric massgaps up to 1/g 2 ≈ 350 for SU(25) we need a truncation of lmax = 30.
+
+(a) SU(4) ∆M ++ . (b) SU(3) ∆M −−.
+
+FIG. 1: Example spin 0 massgaps in units of g 2/a demonstrating different convergence properties when truncating the l-sum of Eq. (7) at l = ± lmax.
+
+C. The small β minima
+
+The massgaps for N ≥ 2, in units of Ng 2/a do not differ significantly as functions of 1/g 2. The lowest lying 0 ++ glueball masses have the characteristic form shown in Fig. 1(a) for each N. We observe a minimum at small β and a scaling plateau at large β. In this section we examine the minima occurring in the lowest 0 ++ and 0 −− glueball masses and consider the possibility that they may correspond to a scaling region. It appears that for SU(3) this region has been interpreted as a scaling region by some authors [24– 26]. From the scaling arguments of Ref. 4, by changing the functional dependence of the parameter appearing in the vacuum state the scaling region can be modified. In this way it is possible to choose the variational parameter’s dependence on β such that the region in which the mass gap takes its minimum is stretched over a large β interval. In the same way, the scaling plateaux occurring for large β may be compressed. With this in mind, it is unclear which scaling region we should take to be the correct one. For this reason we analyse both potential scaling regions. We start, in this section, with the small β minima and consider the large β plateaux in the next section. Fig. 2 shows the lowest lying SU(N) 0 ++ glueball masses in 2+1 dimensions in units of g 2N/a as functions of 1/g 2 for various N ∈ [3, 25]. It is apparent that the minima depend only weakly on N. We see that the minima appear to approach a finite limit from below as N → ∞ . On the scale of Fig. 2 the minima corresponding to N = 15 and N = 25 are barely distinguishable. Let us denote the minima in Fig. 2 by a∆M c/(Ng 2) and consider them as a functions of N. Fitting a∆M c/(Ng 2) to the model a∆M c Ng 2 = γ1 +
+
+γ2 N 2γ3 (9) for N ≥ 8 gives best fit parameters γ1 = 0.83262 ± 0.00022 γ2 = − 0.97 ± 0.13 γ3 = 0.990 ± 0.035. (10)
+
+We fit on the data N ≥ 8 to minimise pollution from next to leading order corrections. If we assert that the power of the leading order correction for finite N must be an integer power of 1/N, then from Eq. (10) that order must be 2 in agreement with the predictions of large N QCD. Fitting to a model with 1/N 2 corrections for N ≥ 8 gives
+
+µ1(N 2 ) = 0.83256 ± 0.00007 − 0.9753 ± 0.0072 N 2 . (11)
+
+We can go further and attempt to find the next to leading order corrections by fitting to the model
+
+a∆M c Ng 2 = γ1 + γ2 N 2 + γ3 N 2γ4. (12)
+
+The best fit parameters when fit on the whole data set are γ1 = 0.83287 ± 0.00011 (13) γ2 = − 1.116 ± 0.028 (14) γ3 = 1.715 ± 0.085 (15) γ4 = 1.627 ± 0.050 (16) which is in disagreement with integer power next to leading order corrections. A good fit however is achieved to the model with 1/N 4 next to leading order corrections:
+
+µ2(N 2) = 0.83233 ± 0.00018 − 0.986 ± 0.010 N 2 + 2.772 ± 0.090 N 4 . (17)
+
+The precise locations of the minima, a∆M c/(Ng 2), are plotted as a funtion of 1/N 2 in Fig. 4 along with the fitted models of Eqs. (11) and (17).
+
+From Eq. (11), our best fit result for the N → ∞ limit of a∆M c/(Ng 2) is 0.83256 ± 0.00007. The error here is purely statistical. We should, as always, expect a significant systematic error attributable to our choice of ground state and minimisation basis. This result may be compared to the Monte Carlo calculation of Lucini and Teper who obtain the N → ∞ limit of the lowest 0 ++ glueball mass as 0.8116 ± 0.0036 [2]. This is comparable to the result presented here. The result of Lucini and Teper is based on a linear extrapolation to the N → ∞ limit of 2 ≤ N ≤ 6 data. Their result differs significantly from the one presented here at the leading order finite N corrections. The correction term obtained by Lucini and Teper, − (0.090 ± 0.028)/N 2, has the same sign but is significantly smaller than the one presented here. When our data is fit on the range 3 ≤ N ≤ 6 (we don’t obtain a small β minimum for SU(2)) our slope is halved but is still significantly larger than that of Lucini and Teper. It should be pointed out that Lucini and Teper’s calculation was performed in the Lagrangian approach in which the coupling is the so called Euclidean coupling gE. The Euclidean coupling and the Hamiltonian coupling, g 2, are equal up to order g 2 E corrections.
+
+The precise relation between the couplings is only known for small g 2 E [27], a case which does not apply for the small β minima. It appears that our simple calculation induces a level crossing whereby the lowest mass glueball state switches to a higher mass state beyond the small β minimum. Although we do not have an explanation for this, presumably, by including additional states in the minimisation basis or implementing a more complicated vacuum state, the level crossing would no longer appear and the small β minima would extend into large β scaling regions. This should be checked in further studies. A glueball mass extracted from a large β scaling region can be confidently compared to a corresponding Lagrangian calculation, for in that region of couplings the ratio of g 2 E to g 2 is unity. We obtain small β minima for the 0 −− massgaps but only for N ≥ 5. Plots of these massgaps with N ≥ 5 are shown in Fig. 3. The behaviour is significantly different to that observed for the symmetric massgap. By N = 25 the minima do not appear close to convergence. Indeed if convergence is occurring at all, it is significantly slower than was observed for the 0 ++ state. To explore this further, in Fig. 5 we plot the minima of Fig. 3, which we again denote by a∆M c/(Ng 2), as a function of 1/√N. We observe linear behaviour
+
+in the large N limit. Fitting the N ≥ 9 data to the model a∆M c Ng 2 = γ1 + γ2 N γ3/2, (18)
+
+gives best fit parameters
+
+γ1 = 0.41 ± 0.01 γ2 = 1.25 ± 0.02 γ3 = 0.98 ± 0.04, (19)
+
+which is consistent with γ3 = 1. Fitting the N ≥ 9 data to a model with leading order finite N corrections starting at 1/√N gives ν1(N) = 0.41390 ± 0.00007 + 1.255 ± 0.003 √N . (20)
+
+As was done for the symmetric case we can attempt to go further and find the form of the next to leading order finite N corrections. Fitting the N ≥ 5 data to the model
+
+ν2(N) = γ1 + γ2 √N + γ3 N γ4/2. (21)
+
+gives best fit parameters
+
+γ1 = 0.410 ± 0.001 (22) γ2 = 1.2718 ± 0.0045 (23) γ3 = − 76 ± 23 (24) γ4 = 9.5 ± 0.4 (25)
+
+indicating vanishingly small next to leading order corrections for N ≥ 5. The models ν1 and ν2 are plotted against the N ≥ 5 data in Fig. 5. The small β minima appear to converge to a non-zero N → ∞ limit. The convergence is significantly slower than for the small β minima in the symmetric case. It is also clear that the leading order finite N corrections are not the expected O (1/N 2) but rather O (1/√N). The N → ∞ limit of 0.41 ± 0.01 is approximately half the corresponding 0 ++ result. Such a state does not appear in the calculation of Teper. It is possible that the small β minima are spurious. Dimensional analysis gives the expected scaling form but does not allow us to decide which scaling region is preferable, or 10 FIG. 2: Lmax = 4 SU(N) lowest mass symmetric massgaps in 2+1 dimensions in units of g 2N/a as functions of 1/g 2. The l-sum of Eqs. (7) and (8) truncated at lmax = 5.
+
+if one is a lattice artifact. However, based on lattice calculations to date, we expect the 0 ++ glueball to be lighter than the 0 −− in the continuum limit. Spurious scaling regions have been observed in other lattice calculations [28]. It is clear that additional analysis is needed here. Again, an important step will be to include additional non-rectangular states in the minimisation basis.
+
+D. The large β plateaux
+
+Having considered the small β minima as possible scaling regions we now move on to the large β plateaux. This scaling region appears for all N and for all states considered and so its interpretation as a genuine scaling region is less dubious. Furthermore, the glueball mass results extracted from these scaling regions may be confidently compared to the corresponding Lagrangian calculations since the ratio of the Hamiltonian to Euclidian coupling is unity up to small O (g 2 E) corrections. We start with the 0 ++ state for which the best scaling behaviour is obtained. We calculate the five lowest lying massgaps corresponding to the five lowest glueball masses accessible
+
+FIG. 3: Lmax = 6 SU(N) lowest mass anti-symmetric massgaps in
+
+one plaquette Hamiltonian spectrum harmonic oscillator antisymmetric symmetric ratio 3/2 large beta 1/N correction glueball
+8 results
+
+
+
+Improvement and Analytic Techniques in Hamiltonian Lattice Gauge Theory
+
+arxiv.org
+
+
+
+Resurrecting the coherent state variational algorithm for large $N$ gauge theories
+
+arxiv.org
+
+
+
+Path Integral Monte Carlo Approach to the U(1) Lattice Gauge Theory in (2+1) Dimensions
+
+arxiv.org
+
+
+
+On Charge Conjugation, Correlations, Elitzur's Theorem and the Mass Gap Problem in Lattice $SU(N)$ Yang-Mills Models in $d=4$ Dimensions
+
+arxiv.org
+
+
+
+QCD hamiltonian approach for the glueball spectrum - ScienceDirect
+
+sciencedirect.com
+
+
+
+Harmonic Oscillators and Coherent States
+
+berkeley.edu
+
+
+
+Simple Harmonic Oscillator
+
+dur.ac.uk
+
+
+
+Glueball spectrum from an effective hamiltonian | The European Physical Journal C | Springer Nature Link
+
+springer.com
+
+
+E
+
+web_fetch_exa
+JSON
+
+Response
+
+# The Large N Glueball Mass Spectrum in 2+1 Dimensions
+URL: https://arxiv.org/pdf/hep-lat/0303018
+Published: 2003-03-25
+Author: Jesse Carlsson, Bruce H. J. McKellar
+
+# The Large N Glueball Mass Spectrum in 2+1 Dimensions
+
+arXiv (Cornell University). Published: 2003-03-25. Preprint. 1 citation.
+
+## Authors
+
+- Jesse Carlsson: h-index 3; 38 citations
+- Bruce H. J. McKellar: h-index 30; 4,509 citations
+
+## Topics
+
+- Dark Matter and Cosmic Phenomena
+- Particle physics theoretical and experimental studies
+- Nuclear physics research studies
+
+---
+
+# arXiv:hep-lat/0303018v1  25 Mar 2003
+
+The Large N Glueball Mass Spectrum in 2+1 Dimensions
+
+Jesse Carlsson ∗ and Bruce H. J. McKellar †
+
+School of Physics, The University of Melbourne (Dated: November 21, 2018)
+
+## Abstract
+
+In this paper we explore the large N limit of the glueball mass spectrum for 2+1 dimensional pure gauge theory. We employ Hamiltonian lattice gauge theory (LGT) and analytic variational techniques to calculate glueball masses for finite values of N≤ 25. The results are then accurately extrapolated to infiniteN. An empirical observation is discussed which links the infinite N glueball spectrum to a simple oscillator model.
+
+∗Electronic address: j.carlsson@physics.unimelb.edu.au †Electronic address: b.mckellar@physics.unimelb.edu.au
+
+## INTRODUCTION
+
+In this paper we study the glueball mass spectrum for large N pure gauge theory (no quarks) in 2+1 dimensions using Hamiltonian LGT. Our primary motivation lies in recent developments in string theory where a direct connection between pure gauge theory in the large N limit and certain string theories has been conjectured. An independent test of this conjecture is provided by large N calculations of the glueball mass spectrum in LGT. Impressive Monte Carlo calculations by Teper [1] and Lucini and Teper [2, 3] have progressed to the stage where accurate values of glueball masses have been calculated up to N = 6 in 2+1 dimensions. This has allowed an extrapolation to the N → ∞ limit. With the analytic techniques of the Hamiltonian approach [4] it is possible to extend these calculations to much larger N, allowing a more reliable N → ∞ extrapolation. The outline of this paper is as follows. We start in Section II with a historical background, where the original motivations for large N physics are discussed and the recent developments in string theory introduced. In Section III we use the analytic variational approach discussed in Ref. 4 to calculate glueball masses at finite values of N up to N = 25 in some cases. These results are then extrapolated to explore the large N limit of the 2+1 dimensional glueball mass spectrum. The N → ∞ limits obtained here are compared to the results of the analogous Monte Carlo studies in the Lagrangian approach.
+
+## BACKGROUND
+
+The nonperturbative region of quantum chromodynamics (QCD) has been examined predominantly with numerical techniques. While the numerical Monte Carlo simulations of Lagrangian LGT have made significant progress, there have been few developments in analytic techniques. One analytic technique which has received considerable attention in recent years is the large N limit. In 1974 ’t Hooft proposed a study of SU(N) gauge theories in the large N limit rather than the physically interesting N = 3 case [5]. It was hoped that the SU(N) theory could be solved analytically and would be, in some sense, close to SU(3). Indeed it was shown that the large N theory simplifies drastically [5] but still captures at least some of the complexity of the SU(3) theory [6, 7]. Motivated by the fact that the QCD coupling constant g 2 is a poor expansion parameter because its value depends on the energy scale of the process under consideration, t’ Hooft considered an expansion in another dimensionless parameter of SU(N) QCD, 1/N. Based on an ingenious organisation of Feynman diagrams, ’t Hooft was able to show that in the large N limit, keeping the ’t Hooft coupling g 2N fixed, only planar diagrams remain. While the remaining planar theory can be solved exactly in two dimensions, the three and four dimensional theories have not yet been solved. Recent developments in string theories have attempted to address this problem. In 1997 Maldacena conjectured a correspondence, in the duality sense, between superconformal field theories and string theory propagating in a non-trivial geometry [8]. The idea behind du ality is that a single theory may have two (or more) descriptions with the property that when one is strongly coupled the other is weakly coupled. A technique for breaking the conformal invariance and supersymmetry constraints of Maldacena’s original proposal was later developed by Witten [9]. This led to the hope that nonperturbative pure SU(N) gauge theories could be described analytically in 3+1 dimensions by their string theory dual. To develop this hope into a concrete solution would require perturbative expansions within the dual string theory. Such developments would seem to be some way off. In order to test the viability of using string theories to probe nonperturbative QCD independent tests are needed. The glueball mass spectrum of QCD provides a perfect laboratory. Recent Monte Carlo calculations have provided stable estimates of glueball masses up to N = 6 [1, 3] in 2+1 dimensions and up to N = 5 [3] in 3+1 dimensions. From these estimates an N → ∞ limit can be extrapolated in each case. Convincing evidence of O (1/N 2) finite N corrections have been demonstrated in 2+1 dimensions, verifying a specific prediction of ’t Hooft’s 1/N expansion in the quarkless case. From the string theory side, present calculations require a strong coupling limit (N, g 2N → ∞ ) to be taken. In this limit the string theory reduces to classical supergravity and the calculation of glueball masses, m(J P C), is straightforward. In this limit the glueball is represented by a dilaton field whose mass can be extracted by solving the dilaton wave equation [10–12]. Despite the extreme approximations required surprising quantitative agreement with the weak coupling results from LGT were obtained. Later it was realised that, in 2+1 dimensions, lower mass states can be constructed from the graviton field [13]. With this approach the quantitative
+
+agreement with LGT is lost but qualitative agreement in the form of the prediction m(0 ++) < m(2 ++) < m(1 −+) (1)
+
+still holds. The qualitative agreement between string theories and LGT persists in 3+1 dimensions [14] with
+
+m(0 ++) < m(2 ++) < m(0 −+), (2)
+
+for both theories. It appears that the identification of glueball states remains a problem. A serious difficulty is the removal of unwanted states which have masses of the same magnitude as the glueballs. Recipes for removing these unwanted states have been proposed [15, 16] but new parameters need to be introduced. The exploration of large N gauge theories outside of string theory has not been restricted to traditional Monte Carlo methods. Recent studies using the light-front Hamiltonian of transverse LGT have shown agreement with the Monte Carlo calculations of Teper [17]. In this approach explicit calculations at N → ∞ are possible without the need for extrapola tion. Continuum calculations, without the use of string theory, have also commenced. An impressive series of papers [18–20] has led to specific predictions for the string tension for all N in 2+1 dimensions [20]. These predictions lie within 3% of lattice calculations up to N = 6 beyond which LGT results are not available. A recent review is available in Ref. 21.
+
+## Introduction
+
+It this section we calculate 2+1 dimensional SU(N) glueball masses for various N using the analytic variational technique of Ref.
+
+## 4. Our
+
+intention is to explore the large N limit of glueball mass spectrum by extrapolating the results obtained to their N → ∞ limit. Employing analytic methods we can extend the calculation of the lowest energy massgaps to SU(25) on a desktop computer. This should be compared to current results in the Lagrangian approach which are limited, at present, to SU(6). With large values of N available a more reliable extrapolation to the N → ∞ limit is possible. To simulate the ground, or (perturbed) vacuum, state with energy E0, we use the one plaquette trial state, (3)
+
+Here, | 0i is the strong coupling vacuum defined by E α i (x)| 0i = 0 for all i, x and α = 1, 2, . . . , N 2 − 1. E
+
+α i (x) is the lattice chromoelectric field on the directed link running from the lattice site labelled by x to that labelled by x + aˆi. Here ˆi is a unit vector in the i direction. The directed square denotes the traced ordered product of link operators, Ui(x), around an elementary square, or plaquette, of the lattice, (4) where a is the lattice spacing. As discussed in Ref. 4, the precise form of c(β), where β = N/g 2, is unimportant in a scaling region. As it turns out, to calculate variational wave functions, by minimising the vacuum energy density, for large dimension gauge groups is cumbersome. Numerical preci sion becomes a factor in the minimisation of the energy density. This problem is magnified in the calculation of tadpole improved results using the iterative procedure employed in Ref. 4. We thus abandon the use of variational wave functions here. Instead we make use of the one plaquette wave function of Eq. (3) and define a simple dependence of c(β). Here we choose c(β) = β. Many Hamiltonians are available for LGT calculations [22]. In Ref. 4 we used Kogut Susskind [23], improved and tadpole improved Hamiltonians to calculate glueball masses for N ≤ 5. Here we employ the simplest of these, the Kogut-Susskind Hamiltonian, which is defined for pure SU(N) gauge theory with coupling g 2 on a lattice with spacing a by H = g 2 2aX x,i E α i (x) 2 + 2N ag 2X x,i<j Pij (x), (5) where the plaquette operator is given by (6)
+
+To evaluate the matrix elements appearing in the glueball mass calculation we use the
+
+SU(N) generating functions derived in Ref. 4, GSU(N)(c, d) = Z SU(N) dUe cTrU+dTrU † = ∞ l=−∞ d c lN/2 det h Il+j−i 2√cd i i≤i,j≤N (7)
+
+and
+
+Hm(c, d) = Z SU(N) dU exp c(TrU + TrU † ) + dTr(U m) = X ∞ l=−∞ de
+
+Carlsson 2+1 SU(3) glueball 0++ 0-- mass gap value units e^2 antisymmetric symmetric scaling region result
+7 results
+
+
+
+SU(2) mass gap calculation on a 164 lattive - ScienceDirect
+
+sciencedirect.com
+
+
+
+SU(N) Glueball Masses in 2+1 Dimensions
+
+arxiv.org
+
+
+
+The 0++ glueball mass in SU(3) lattice gauge theory: Towards definitive results - ScienceDirect
+
+sciencedirect.com
+
+
+
+(PDF) The glueball spectrum of SU(3) gauge theory in 3 + 1 dimensions
+
+researchgate.net
+
+
+
+PNUTP-17/A04 Casimir scaling and Yang-Mills glueballs
+
+arxiv.org
+
+
+
+The glueball spectrum and scaling in SU(3) lattice gauge theory - ScienceDirect
+
+sciencedirect.com
+
+
+
+(PDF) A comprehensive lattice study of SU(3) glueballs
+
+researchgate.net
+
+Response
+
+{'knowledge': None, 'web_search_result': None, 'type': 'text', 'text': {'error_type': 'invalid_tool_input', 'success': False, 'tool_name': 'mcp__Exa__web_fetch_exa', 'error': True, 'error_message': 'ERROR: Invalid input provided for tool \'mcp__Exa__web_fetch_exa\'.\nDetails: input validation or parsing failed: schema validation failed: [(root): Additional property query is not allowed (type: additional_property_not_allowed, constraint: )]\n\nWARNING: The tool may have already caused some side effects before this error occurred. The state of the system might be partially changed. Consider this when deciding on next actions.\n\nExpected schema:\n{"additionalProperties":false,"properties":{"maxCharacters":{"description":"Maximum characters to extract per page (default: 3000)","minimum":1,"type":"number"},"urls":{"description":"URLs to read. Batch multiple URLs in one call.","items":{"type":"string"},"type":"array"}},"required":["urls"],"type":"object"}\n'}}
+
+Carlsson large N glueball 2+1 oscillator model spin quantum number 0++ 2++ mass ratio table N infinity extrapolation antisymmetric
+5 results
+
+
+
+Precision study of large-N Yang-Mills theory in 2+1 dimensions
+
+arxiv.org
+
+
+
+PNUTP-17/A04 Casimir scaling and Yang-Mills glueballs
+
+arxiv.org
+
+
+
+SO(N) gauge theories in 2+1 dimensions: glueball spectra and confinement
+
+arxiv.org
+
+
+
+The Large N𝑁N Glueball Mass Spectrum in 2+1 Dimensions
+
+arxiv.org
+
+
+
+www.arxiv.org
+
+arxiv.org
+
+
+Carlsson thesis oscillator model glueball spectrum 2+1 spin ordering ratio table SU(N) N infinity 0++ 0-- 2++ e^2 units
+8 results
+
+
+
+The glueball spectrum and scaling in SU(3) lattice gauge theory - ScienceDirect
+
+sciencedirect.com
+
+
+
+String models of glueballs and the spectrum of $\mathrm{SU}(N)$ gauge theories in $2+1$ dimensions
+
+aps.org
+
+
+
+SU(N) gauge theories in 2+1 dimensions
+
+arxiv.org
+
+
+
+Glueballs, gluerings and gluestars in the d=2+1 SU(N) gauge theory
+
+arxiv.org
+
+
+
+Glueball spectrum in a (1+1)-dimensional model for QCD
+
+arxiv.org
+
+
+
+The Large N Glueball Mass Spectrum in 2+1 Dimensions
+
+arxiv.org
+
+
+
+Gluelump spectrum in the QCD string model
+
+arxiv.org
+
+
+
+Spectrum of large N glueballs: holography vs lattice | Journal of High Energy Physics | Springer Nature Link
+
+springe

@@ -1,0 +1,10 @@
+# MANIFEST — lattice_glueball_data (updated 2026-06-13, +synthesis & band structure)
+
+84063bfa8ef9166ba01f50e372e0bda0  DATA_FLUX_glueball_lattice_v2.xlsx
+a870eb64f677b89a8bf439303f23291a  NOTE_Y4_synthesis_band_vs_lattice.md
+9b071d1807c86935d176a9d363817b9d  DATA_Y4_1pm_band_structure.png
+97f2d131b5e5f5bf4636498373fb9f1a  ENGINE_Y4_band_structure.py
+3139ac4cf12c62b31b42daea0cca15c4  DATA_FLUX_at_continuum_spectrum.csv
+df9d0f2ca5615cb9fbc3bd071f20772e  DATA_FLUX_glueball_masses.csv
+fc5ef911da3a7274a2d24468bf6745e8  CERT_FLUX_glueball_masses.json
+b98126424a764d11813dd8f39da0a64f  README.md

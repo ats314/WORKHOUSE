@@ -1,0 +1,27 @@
+# F001 — scalar_cluster_recovery core docs (Pass 1)
+
+**Date:** June 12, 2026 | **Unit:** ledger #1 | **Read fully:** WILSON 31/32 + Synthesis_04 (structure + ch.7/12/13), COLAB local_coercivity / drift_inequality / green_function_decay, Synthesis_01 (chapter map + ch.13), Jan PROJECT_STATUS (status/strategy sections). **Not read:** remaining 18 COLAB writeups, HAAR ACADEMIC_RESEARCH summaries, audit reports → moved to ledger unit #2.
+**Source paths:** `E:\YANG\ORGANIZED\11_PROOF_WORKSPACE\scalar_cluster_recovery\` (working copies of WILSON docs: `THEORY/programs/op1_defect_sparsity/defect_gas_docs/`).
+
+## Headline: the January layer is the ancestry of the live OP-1 campaign
+
+1. **`NOTE_OP1_32_defect_gas.md` (38 lines, Jan)** — the defect-gas heuristic in its original form: defects = negative-curvature sites; energy(Wilson) vs entropy(Haar) balance gives single-defect probability **p ~ e^{−β}**; Peierls ⇒ no percolation at large β; "vacuum = solid with rare liquid bubbles." This is precisely the intuition that the live sparsity lemma (S) must make rigorous — *the 38-line heuristic vs. the quantified targets in UNIF_OP1_CLOSURE_PLAN §3 is a clean before/after of four months.* Useful to Alex for M3 framing: the p ~ e^{−β} form is the ρ₁ that the M2 W(r)/ρ₂-weighted kernel interface consumes.
+
+2. **`NOTE_OP1_synthesis_04_lattice_gauge_theory.md` (810 lines, Jan)** — era-distillation of the lattice framework. Ch.7 states the **fixed-cutoff pipeline "Poincaré on SAFE → HS → CT → OS"** — exactly the OP-7 chain whose CT step the June 11 K-chain ledger measured as the source of ~3×10⁵ slack (and replaced with exact kernel computation). Historical value: the chain's *architecture* was settled in January; the June work didn't change it, it re-based its quantitative step. Ch.12 **"Why This Cannot Be the Continuum Mass Gap"** — the era already recorded the AF obstruction honestly (haar-mass ∝ a² vs continuum scaling); consistent with current scope discipline. Ch.13 lists explicit constants and a second "rigidity route" pipeline — the ancestor of the gap-protection-by-factorization theme (`NOTE_OP1_unif_gap_protection_factorization.md`).
+
+3. **COLAB verification writeups (Jan 14, all "✅ VERIFIED" = numerical checks, not proofs):**
+   - `local_coercivity_certificate` — 16⁴ SU(2), β=6.0, >10⁶ sites: Lyapunov drift zero-crossing at **E_crit ≈ 0.38** (stable basin below, "melting" above). Connection: OP-12's percolation onset (δ=0.35 percolates, δ≥0.9 sparse, SU(3) plaquette convention) is the same phenomenon from the defect-set side; conventions differ — do not equate numerically, but the probe's δ-calibration and this E_crit deserve a one-page reconciliation when M3 is drafted.
+   - `drift_inequality_check` — SU(3) (small L): 𝓛V ≤ −λV + b verified with λ = 10.66 (Casimir), healthy slack. The drift-condition side of the same coercivity story.
+   - `green_function_decay` — L=16, FFT-exact Green function vs BFS graph distance: decay bound with **η ≈ 2 sinh⁻¹(m/2√(αC₀))** verified, Maxwell vs Feynman-gauge compared. *This is the CT decay constant the K-chain ledger later showed is ~10⁵ too conservative as a kernel-mass estimate* — the era verified the decay's validity, never its sharpness. Supports the campaign's re-basing decision.
+
+4. **`Synthesis_01_Haar_Geometry_Foundation.md` (2,765 lines, Jan)** — the Haar-geometric master doc: curvature floor, Γ₂ calculus, Core Curvature Theorem, SAFE-region BCH bounds (SU(3)), SU(2) worked example, critical-coupling non-convex annulus toy (ch.9 — the convexity-window story), explicit c₀ (ch.10), HS/Brascamp–Lieb covariance (ch.12), **Obstruction Principle + Rigidity Theorem (ch.13)**. Two timestamped contradiction-audit reports exist for this doc (unit #2). Likely the best single-document onboarding to the geometric mechanism outside the current proven chain; candidate for a `theory/` pointer note after unit #2 confirms the audits' verdicts.
+
+5. **`STARTUP/00_PROJECT_STATUS.md` (2,707 lines, Jan 23)** — full project snapshot at the January layer: overall "~70%", bottlenecks then = **"Bridge Inequality" (50%) and "Entropic Spark" (40%)**; "Polarity of Reducibles ✅, Strong Coupling Gap ✅" (consistent with the current proven list). Name-mapping value: January's "Bridge Inequality" evolved into the calibration/★-coercivity complex (≈ OP-2), and "Entropic Spark" into the spark-conjecture documents (the YANG_ANTI tex `04_3d_compact_qed_spark`, `05_4d_ym_spark_conjecture` are same-era). ⚠ **Caveat for all future passes: January completion percentages ("Step 2: 85% ✅") are era-internal estimates and must never be quoted as current status** — current truth is `STATE.md`'s conditional-on-CONJ_B formulation.
+
+## Contradictions found
+None against the live chain. The only tension is rhetorical: era docs use confident completion percentages that the later review pipeline walked back; flagged above as a quoting hazard, not a mathematical conflict.
+
+## Actionables
+- **For Alex/M3:** `32_Defect_Gas` + Synthesis_04 ch.8 give the original free-energy balance; the (S) lemma is its rigorization. Worth one read before drafting M3.
+- **For the probe calibration:** reconcile E_crit ≈ 0.38 (SU(2) drift) with the Peierls probe's δ thresholds (SU(3) plaquette) — small note, agent-executable.
+- **Unit #2 next:** the 13 timestamped audit reports on Synthesis_01 (do the era's own contradiction checks change item 4's assessment?), remaining 18 COLAB writeups, ~30 arXiv summaries.

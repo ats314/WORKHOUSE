@@ -1,0 +1,40 @@
+{
+  "title": "Native sigma5/sigma6 and m6 extension attempt — verified intermediate results",
+  "date": "2026-06-14",
+  "fabricated_values": "NONE — no sigma5, sigma6, or m6 value is asserted",
+  "verified_progress": {
+    "generic_PT_history_core": {
+      "status": "BUILT + VALIDATED",
+      "test": "reproduces certified 4th-order local_channel_histories on all 729 feasible 6-event signatures",
+      "result": "729/729 exact, 0 mismatches",
+      "exercised": {"n4_history_len": 3, "n5_history_len": 4, "n6_history_len": 5}
+    },
+    "generic_folded_coefficient": {
+      "status": "VALIDATED",
+      "test": "matches sigma4 folding on 3 denominators incl all degeneracies; preflight-validated through order 6",
+      "result": "exact agreement"
+    },
+    "generic_adjoint_sector_engine": {
+      "status": "BUILT + PARTIALLY VALIDATED",
+      "sigma2_reduced": "-22/153",
+      "sigma2_matches_native": true,
+      "sigma2_length_independent": true,
+      "sigma3_reduced_computed": "0",
+      "sigma3_expected": "61/408",
+      "sigma3_matches": false,
+      "reason_for_sigma3_miss": "walled-Brauer core enforces per-link count(+1)==count(-1) (adjoint sector); the 3rd-order string tension is PURELY the determinant/triality sector (n-ality 3, three coincident same-sign insertions closing via epsilon), which this core returns 0 for"
+    }
+  },
+  "blocker_characterized": {
+    "finding": "Native odd-order string tension lives in the determinant/triality (epsilon) sector, handled in the native code by separate local fusion-tree tensors (stage3b/stage3g), NOT by the reusable walled-Brauer adjoint machinery.",
+    "consequence": "sigma5 (and the determinant part of sigma6) require extending the determinant-sector fusion-tree contraction to 5th/6th order and combining it with the adjoint sector across multiple plaquettes.",
+    "adjoint_sector": "reproduced exactly by the generic engine (sigma2 verified; sigma4 is pure-adjoint)",
+    "determinant_sector": "NOT implemented in the reusable core; extension is the genuine remaining research-engineering task"
+  },
+  "m6_status": {
+    "local_algebra": "DONE (prior session): all nine 6th-order sectors + double-determinant edge tensors verified",
+    "global_contraction": "NOT attempted — HPC-scale (6th-order connected-support census exceeds 5th order's 6.6M supports; global contraction at Gamma)",
+    "value": "NOT produced, NOT fabricated"
+  },
+  "sigma_sign_convention": "settled earlier this session: sigma(u)=W(2u)/2, sigma5(u)=-137767222189182735950309/2009803206414863779920000 (negative), via native-engine reconciliation — unchanged here"
+}

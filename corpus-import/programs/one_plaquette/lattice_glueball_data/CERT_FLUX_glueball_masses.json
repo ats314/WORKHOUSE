@@ -1,0 +1,48 @@
+{
+  "title": "Curated SU(3) glueball masses relevant to the O(y^4) C-odd flat-band work",
+  "curated": "2026-06-13",
+  "relevance": "The work computes the C-odd T1^{+-} (=1^{+-}) one-flux band in the Kogut-Susskind strong-coupling Hamiltonian and finds it flat through O(y^3), lifting at O(y^4). The 1^{+-} row below is the physical glueball that band describes; the 0^{++}/2^{++} rows set the scale and cross-check the formalism.",
+  "scale_setting_Athenodorou_Teper": {
+    "r0_fm": "0.472(5)",
+    "inv_r0_MeV": "418(5)",
+    "sqrt_sigma_MeV": "485(6)",
+    "sqrt_sigma_eq": "sqrt(sigma) = 1.160(6)/r0 = 485(6) MeV",
+    "note": "Authors also mention the traditional Regge value sqrt(sigma) ~ 440 MeV, but adopt 485(6) MeV via r0."
+  },
+  "states": [
+    {
+      "JPC": "0++", "cubic_rep": "A1++",
+      "m_over_sqrtsigma": "3.405(21)", "value_kind": "verbatim",
+      "mass_MeV_derived": "1651(23)", "derivation": "3.405(21) x 485(6) MeV, errors added in quadrature",
+      "method": "Euclidean lattice, continuum-extrapolated", "source": "arXiv:2007.06422 (Athenodorou-Teper), sec 5.1"
+    },
+    {
+      "JPC": "0++", "cubic_rep": "A1++",
+      "mass_MeV": "1654(83)", "value_kind": "verbatim",
+      "method": "Monte Carlo in the Kogut-Susskind Hamiltonian limit (a_t->0)", "source": "arXiv:hep-lat/0503038"
+    },
+    {
+      "JPC": "2++", "cubic_rep": "E++/T2++",
+      "mass_MeV": "2272(115)", "value_kind": "verbatim",
+      "method": "Monte Carlo in the Kogut-Susskind Hamiltonian limit", "source": "arXiv:hep-lat/0503038"
+    },
+    {
+      "JPC": "1+-", "cubic_rep": "T1+-", "C_parity": "-1",
+      "mass_MeV": "2940(165)", "value_kind": "verbatim",
+      "comment": "THE C-odd state the flat-band work describes. m/sqrt(sigma) ~ 2940/485 = 6.06.",
+      "method": "Monte Carlo in the Kogut-Susskind Hamiltonian limit", "source": "arXiv:hep-lat/0503038"
+    }
+  ],
+  "cross_check": "Hamiltonian-limit 0++ = 1654(83) MeV vs AT continuum 0++ = 1651(23) MeV: agree within errors, validating cross-formalism comparison.",
+  "JPC_to_cubic_assignment_Athenodorou_Teper": {
+    "note": "From sec 5.3 prose (mass rows for non-0++ states are in PDF Tables 14/15/17/18, beyond the web-fetch truncation and NOT reproduced here to avoid fabrication).",
+    "0++": "two lightest A1++",
+    "2++": "lightest E++ and T2++ (degenerate)",
+    "1+-": "lightest T1+- (ground state)",
+    "3+-": "A2+- + T2+- + first-excited T1+-",
+    "2+-": "E+- + first-excited T2+-",
+    "1--": "lightest T1-- (ground state)",
+    "2--": "E-- + T2--"
+  },
+  "not_extracted": "Full AT continuum tables (Table 14 = M/sqrt(sigma) all states; Table 15 = GeV; Tables 17/18 = J^{PC}) are on PDF pages past the fetch limit; retrieve from arXiv:2007.06422 PDF or JHEP 11(2020)172 if the full table is needed."
+}

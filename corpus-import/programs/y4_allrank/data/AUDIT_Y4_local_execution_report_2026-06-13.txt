@@ -1,0 +1,47 @@
+Y4 LOCAL EXECUTION REPORT
+Date: 2026-06-13
+Working directory: /mnt/data
+
+1. Kernel search
+Command:
+  find / -type f ( DATA_Y4_full_real_space_h4_kernel.json.gz or Y4_FINAL_ARCHIVE_2026-06-13.zip )
+Result:
+  No matching file found.
+
+2. Curvature/Bloch convention audit
+Command:
+  python /mnt/data/y4_band_curvature_audit_v2.py
+Result:
+  FAIL kernel exists DATA_Y4_full_real_space_h4_kernel.json.gz
+  AssertionError: kernel exists: DATA_Y4_full_real_space_h4_kernel.json.gz
+
+3. Global band-edge certificate
+Command:
+  python /mnt/data/ENGINE_Y4_global_band_edge_certificate.py
+Result:
+  FileNotFoundError: Could not find DATA_Y4_full_real_space_h4_kernel.json.gz.
+  The uploaded notebook contains recovery code but not the 189 records.
+
+4. Notebook extraction audit
+File inspected:
+  /mnt/data/NB_Y4_endgame_autobundle_alt2.ipynb
+Findings:
+  - 7 cells.
+  - No gzip magic bytes embedded.
+  - No ZIP/base64 archive payload containing the kernel.
+  - Notebook contains recovery/certification source and prior stdout from a Colab runtime.
+  - Prior stdout references /content/Y4_FINAL_ARCHIVE_2026-06-13.zip and the extracted kernel,
+    but neither artifact is embedded in the notebook.
+
+5. O(y^5) folded-coefficient derivation
+Command:
+  python '/mnt/data/folded5_derivation (1).py'
+Result:
+  4x4 system rank = 4
+  coefficients = -1/2, 1/3, 1/3, -1/4
+  all 14 independent validation cases pass.
+
+Conclusion:
+The two O(y^4) scripts were executed but cannot reach the mathematical calculation without the
+189-record exact kernel. The notebook cannot reconstruct it locally because it preserves only code
+and prior textual output, not the exact rational records. The O(y^5) validation script runs and passes.
