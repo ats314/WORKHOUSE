@@ -43,3 +43,4 @@ third, add an explicit `FINDING:` check that *asserts* the discrepancy.
 - `corpus_registry.py` — near-miss, multiple, and coverage sweeps over the whole corpus
 - `tier_collapse.py`, `near_gamma.py`, `settlement.py`, `payloads.py` — one investigation each
 - `triage.py` — read-only survey of an unpinned archive
+- `notes.py` — the notes register: archive inventories, review verdicts, intake rules

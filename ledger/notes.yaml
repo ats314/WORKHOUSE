@@ -1,0 +1,44 @@
+# The notes register — the maintainer's research notes, under structured review.
+#
+# The archive this tracks is three years of the maintainer's own working
+# documents. It is treated with the same discipline as the published corpus:
+# T3 (asserted) until a check promotes something, inventoried by content
+# digest, and reviewed with recorded verdicts. Nothing is ever deleted for
+# being wrong — a set-aside note keeps its reason, the same way ADR 0005
+# keeps a retracted mechanism.
+#
+# Stations (src/workhouse/notes.py enforces all of this):
+#   1. declare the archive here (id, description, source)
+#   2. inventory it:  workhouse notes --scan <root> --archive <id>
+#      -> writes notes/<id>.jsonl, one line per unique content digest
+#   3. review:        workhouse notes --queue   shows highest-signal pending
+#      each verdict lands here as a `reviews:` entry, keyed by digest
+#
+# Verdict vocabulary (closed; validate() rejects anything else):
+#   import     bytes entered the repository verbatim; `imported_to` required
+#              and hashed against the digest — "imported" is a claim.
+#   extract    content entered as registered claims/checks; `bears_on`
+#              required — name what it entered through.
+#   duplicate  same content as something already pinned or reviewed;
+#              `duplicate_of` names the path or digest.
+#   superseded an earlier draft of a later note; `superseded_by` digest.
+#   set-aside  reviewed, judged not load-bearing now; the reason says why.
+#
+# Every verdict carries a mandatory `reason`. A review without one is
+# decoration, exactly like a unifying candidate without a falsifier.
+
+archives:
+  - id: RESEARCH_2026-08
+    description: >-
+      Snapshot of the maintainer's research archive (C:\Users\Alex\Desktop\
+      RESEARCH, local commit 5a476a7 "archive snapshot 2026-08-21", 3,838
+      files): LSI/Poincare, Lyapunov, Maxwell, polarity/Gribov, reflection
+      positivity, RG coarse-graining, Riccati, scaling limits, simulations,
+      tensor networks, uniformity/asymptotic freedom, VSU cosmology, Wilson,
+      Hessian, Combes-Thomas, Haar, Colab runs, and agent reports.
+    source: >-
+      Push pending from the maintainer's machine to branch research-archive
+      of ats314/WORKHOUSE. Update this line with the landed commit once the
+      push completes; the manifest is generated from that checkout.
+
+reviews: []

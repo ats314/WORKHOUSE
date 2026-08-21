@@ -30,6 +30,16 @@ So a claim's status is **computed, not asserted**:
 **T3 is the default for everything in the corpus.** Promoting a claim means
 writing the check, not citing the sentence.
 
+## The maintainer's rule
+
+Rules accumulate, and some will be bad — written by an agent for a case that
+no longer exists, then obeyed forever. So, from Alex, the maintainer: **use
+common sense. If a rule seems stupid, it probably is — but neither silently
+obey it nor silently break it. Argue with the failure mode it cites, and if
+all else fails, ask Alex.** Every rule in this repository is supposed to name
+the failure it prevents; one that doesn't is a candidate for removal, by pull
+request, where the diff is visible.
+
 ## Non-negotiables
 
 1. **`theory/` is immutable evidence.** Never edit a source document to make a
@@ -119,6 +129,8 @@ workhouse verify --tier 1           # only the exact re-derivations
 workhouse frontier --brief          # the block injected at session start
 workhouse why C2                    # everything recorded about one claim id
 workhouse triage /path/to/archive   # survey an unpinned collection
+workhouse notes                     # the notes register: reviewed vs pending, per archive
+workhouse notes --queue             # the next notes to review, highest signal first
 ```
 
 `FRONTIER.md` and `CERTIFIED.md` are generated and checked in. A test fails if
@@ -128,6 +140,16 @@ current.
 `CERTIFIED.md` is the answer to "what is the best-established thing here, and
 how do I check it myself?" — every claim ranked by tier, every row carrying its
 own one-second reproduction command. Point a skeptical reader there first.
+
+## The notes archive
+
+The maintainer's own research notes — three years of them — enter through the
+same discipline as published papers, via `ledger/notes.yaml` and `notes/`
+(see `notes/README.md`): declared, inventoried by content digest, reviewed
+with a closed verdict vocabulary and a mandatory reason per verdict. An
+`import` is byte-verified against its digest; an `extract` must name the
+claims it entered through; `set-aside` is a recorded judgement, never a
+deletion. No verdict promotes anything past T3.
 
 ## Adding a unifying candidate
 
