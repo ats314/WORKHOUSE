@@ -1,4 +1,4 @@
-.PHONY: help bootstrap check lint test verify status fmt manifest lock clean
+.PHONY: help bootstrap check lint test verify status fmt manifest corpus-manifest lean index lock clean
 
 help:            ## Show this help
 	@grep -hE '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk -F':.*?## ' '{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -26,6 +26,23 @@ fmt:             ## Auto-format
 
 manifest:        ## Regenerate theory/SHA256SUMS after a deliberate corpus change
 	@cd theory && sha256sum *.md > SHA256SUMS && echo "theory/SHA256SUMS regenerated:" && cat SHA256SUMS
+
+lean:            ## T0: proof-check the Lean core (needs elan on PATH)
+	@cd lean && lake build && echo "Lean core: proof-checked, no sorries"
+
+corpus-manifest: ## Regenerate corpus-import/SHA256SUMS after a deliberate corpus change
+	@.venv/bin/python -c "import hashlib,subprocess,pathlib; \
+	 root=pathlib.Path('corpus-import'); \
+	 ns=[n for n in subprocess.run(['git','ls-files','-z','corpus-import/'],capture_output=True,text=True).stdout.split(chr(0)) if n and not n.endswith('SHA256SUMS')]; \
+	 ls=[f'{hashlib.sha256(pathlib.Path(n).read_bytes()).hexdigest()}  {pathlib.Path(n).relative_to(root)}' for n in sorted(ns) if pathlib.Path(n).is_file()]; \
+	 (root/'SHA256SUMS').write_text(chr(10).join(ls)+chr(10)); \
+	 print(f'corpus-import/SHA256SUMS: {len(ls)} files')"
+
+index:           ## Index exact rationals across corpus code, certificates and notebooks
+	@.venv/bin/python -c "from workhouse import corpus_index as X; \
+	 c=X.scan(); p=X.scan(exts=X.PROSE_EXTS); \
+	 print('coverage', X.coverage()); \
+	 [print(' ', f) for f in X.rational_multiples(c,p)]"
 
 lock:            ## Refresh uv.lock from pyproject.toml
 	@uv lock && echo "uv.lock refreshed"

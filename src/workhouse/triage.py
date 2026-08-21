@@ -161,10 +161,13 @@ def _pinned() -> dict[str, str]:
     for directory in (root / "theory", S.SETTLEMENT_DIR):
         if not directory.is_dir():
             continue
-        for path in directory.iterdir():
+        # rglob, not iterdir: theory/superseded/ holds archived documents that
+        # must still be recognised when an archive copy turns up.
+        for path in directory.rglob("*"):
             if path.is_file() and path.name != "SHA256SUMS":
                 digest = hashlib.sha256(path.read_bytes()).hexdigest()
-                out[digest] = f"{directory.name}/{path.name}"
+                rel = path.relative_to(directory)
+                out[digest] = f"{directory.name}/{rel}"
     return out
 
 
