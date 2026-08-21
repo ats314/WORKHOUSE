@@ -832,6 +832,219 @@ papers:
           (pinned copy, p. 12). Qualitative -- the ordering, not a
           coefficient -- and from a group with no connection to this program.
 
+  - id: AT_2020_SU3
+    title: The glueball spectrum of SU(3) gauge theory in 3+1 dimensions
+    authors: [Andreas Athenodorou, Michael Teper]
+    venue: JHEP 11 (2020) 172
+    year: 2020
+    doi: 10.1007/JHEP11(2020)172
+    arxiv: 2007.06422
+    inspire_recid: 1806671
+    inspire_citations: {count: 184, as_of: 2026-08-21}
+    # JHEP publishes under CC BY 4.0 (the stored PDF itself carries the
+    # creativecommons.org/licenses/by/4.0 URI), so the PUBLISHED file is
+    # stored. The copy first read was the arXiv v2 preprint (sha256
+    # f0eb6406bf49a00d376c0be25917173426c826050046a1bf0f32987895de23d0),
+    # whose arXiv licence is nonexclusive-distrib only; the headline numbers
+    # below were verified in BOTH copies, and the digest recorded here is the
+    # stored published PDF's.
+    licence: cc-by
+    fulltext: fulltext/JHEP11-2020-172.pdf
+    source_sha256: af40f084cf4f4624224af726d0bb4822e449b161b03ce38972077023cbd0ca7c
+    note: >
+      Found by the 2020-2026 anchor sweep (see
+      docs/referee/modern_anchor_sweep_2026-08-21.md) as the modern successor
+      to MP_1999: the same SU(3) continuum glueball spectrum, twenty years of
+      lattice technology later, with MP_1999 as its reference [4] and MT_1989
+      as [5]. Its 74-entry bibliography contains NO Hamiltonian
+      strong-coupling work -- not KS_1975, not KSS_1976, not HAMER_1989 --
+      the cleanest evidence of the bibliographic split the sweep documents.
+      Euclidean anisotropic-free Monte Carlo: comparison only, nothing
+      numerical transfers into any Hamiltonian claim.
+    # INSPIRE reference list of recid 1806671, retrieved 2026-08-21; brackets
+    # verified in the pinned copy (MP_1999 is [4], MT_1989 is [5]).
+    cites: [MP_1999, MT_1989]
+    bears_on:
+      - target: G18
+        relation: supplies-comparison
+        status: verified
+        detail: >
+          The current best SU(3) target for the spectral bridge, read from
+          the stored copy: Table 17 gives the 1+- ground state at
+          M/sqrt(sigma) = 6.065(40) -- "unambiguous" spin identification --
+          with 0++ at 3.405(21) and 2++ at 4.894(22); Table 18 converts to
+          2.944(42) GeV via r0 = 0.472(5) fm, and r0 sqrt(sigma) = 1.160(6)
+          is printed beside Table 17. Computed here from those printed
+          numbers: r0 m(1+-) = 6.065(40) x 1.160(6) = 7.04(6), against
+          MP_1999's r0 m = 7.18(4)(7) -- agreement at the 1.4 sigma level
+          between the two generations, so the two G18 targets are mutually
+          consistent and this one is the sharper.
+
+  - id: CKS_2021
+    title: >
+      Trailhead for quantum simulation of SU(3) Yang-Mills lattice gauge
+      theory in the local multiplet basis
+    authors: [Anthony Ciavarella, Natalie Klco, Martin J. Savage]
+    venue: Phys. Rev. D 103, 094501
+    year: 2021
+    doi: 10.1103/PhysRevD.103.094501
+    arxiv: 2101.10227
+    inspire_recid: 1842617
+    inspire_citations: {count: 285, as_of: 2026-08-21}
+    # The arXiv copy itself is licensed CC BY 4.0 (the abs page links
+    # creativecommons.org/licenses/by/4.0), so the copy read is stored.
+    licence: arxiv-cc-by-4.0
+    fulltext: fulltext/2101.10227v2.pdf
+    source_sha256: 589fac6dd8179fbce26ec59ccf4b514986598f341171b55193fb573966023ec7
+    note: >
+      The most-cited paper the 2020-2026 anchor sweep surfaced (285 INSPIRE
+      citations): quantum simulation of SU(3) Yang-Mills in a local multiplet
+      basis -- irrep (p,q) registers per link after Byrnes-Yamamoto (its
+      ref [13], PRA 73, 022328), vertex Clebsch-Gordans integrated into
+      controlled-plaquette operators via 9-R-symbols -- run on one and two
+      plaquettes, including on IBM's Athens processor. Everything is in g^2
+      Kogut-Susskind conventions; there is NO strong-coupling series
+      anywhere in it (g is a plot parameter), and no series literature in
+      its 140 references: the quantum-simulation line stands on KS_1975
+      directly and skips the 1976-89 series program entirely. Its truncation
+      analysis (electric-basis convergence g-dependent, Gaussian in irrep
+      space, percent-level at Lambda_p <= 10 for g >= 0.3) is the modern
+      restatement of why strong coupling is the tractable regime.
+    # INSPIRE reference list of recid 1842617, retrieved 2026-08-21; brackets
+    # verified in the stored copy (KS_1975 is [58], WILSON_1974 is [4]);
+    # DRS_2021 confirmed in the INSPIRE reference list (concurrent
+    # preprints, the two cite each other).
+    cites: [KS_1975, WILSON_1974, DRS_2021]
+    bears_on:
+      - target: U1
+        relation: supplies-comparison
+        status: verified
+        detail: >
+          A third independent modern construction of the gauge-invariant
+          Hilbert space of the SU(3) Kogut-Susskind Hamiltonian, beside
+          KRS_2023's Schwinger bosons and SZH_1997's D-function basis:
+          per-link irrep registers with Gauss's law enforced through vertex
+          Clebsch-Gordan contractions, in 2+1 and 3+1 dimensional geometry
+          (point-split vertices), pure gauge -- structurally the closest of
+          the three to what U1 is about. Read from the stored copy: the
+          physical-state count under truncation grows polynomially
+          (bounded Lambda_p^12..16 for the plaquette sectors) and the
+          plaquette operator makes only nearest-neighbor irrep transitions,
+          a "surface- rather than volume-type" sparsity -- the same
+          locality-in-flux-space U1 attributes to the chain complex. A
+          promotion of U1 now has three unrelated constructions to engage
+          with, one of them running on hardware.
+
+  - id: DRS_2021
+    title: >
+      Search for efficient formulations for Hamiltonian simulation of
+      non-Abelian lattice gauge theories
+    authors: [Zohreh Davoudi, Indrakshi Raychowdhury, Andrew Shaw]
+    venue: Phys. Rev. D 104, 074505
+    year: 2021
+    doi: 10.1103/PhysRevD.104.074505
+    arxiv: 2009.11802
+    inspire_recid: 1818824
+    inspire_citations: {count: 163, as_of: 2026-08-21}
+    # arXiv nonexclusive-distrib licence: the v1 copy read 2026-08-21 is
+    # pinned, not stored.
+    licence: arxiv-nonexclusive-2004
+    fulltext: null
+    source_sha256: 85e5b153eddcb9bba0e14b46446d80bb2fa4b2772940b07f712afb34847848f9
+    scope_firewall: >
+      1+1 dimensions, SU(2), with dynamical staggered matter. This program is
+      3+1 dimensional, SU(3), pure gauge, and its chain complex does not
+      exist below three spatial dimensions. NOTHING numerical transfers; the
+      entry exists for its formulation-cost comparison, never as input.
+    note: >
+      The formulation shoot-out of the quantum-simulation line, found by the
+      2020-2026 anchor sweep: angular-momentum basis, prepotential/Schwinger
+      boson, and loop-string-hadron (LSH) formulations of SU(2) with matter
+      are costed head-to-head for Hamiltonian simulation, and LSH wins --
+      the abstract's phrasing is that it "implements non-Abelian Gauss's
+      laws a priori", removing the unphysical space instead of penalizing
+      it. KRS_2023 is this framework carried to SU(3), and cites this paper;
+      the two entries bracket the LSH line's SU(2)-with-matter and
+      SU(3)-with-quarks endpoints. Its reference list stands on KS_1975 and
+      WILSON_1974 and contains no strong-coupling series work -- the same
+      bibliographic split as CKS_2021.
+    # INSPIRE reference list of recid 1818824, retrieved 2026-08-21;
+    # CKS_2021 confirmed in it (concurrent preprints, mutual citation).
+    cites: [KS_1975, WILSON_1974, CKS_2021]
+    bears_on:
+      - target: U1
+        relation: supplies-comparison
+        status: verified
+        detail: >
+          The published cost-comparison among the competing constructions of
+          the gauge-invariant Hilbert space -- exactly the question a
+          promotion of U1 would raise for the chain-complex route: not
+          whether it spans the space but what it costs to keep dynamics
+          inside it. Its verdict (LSH's a-priori Gauss-law solution beats
+          penalty and projection approaches, in 1+1D SU(2) with matter)
+          is regime-locked by the firewall above; what transfers is the
+          comparison framework, and the fact that "which basis makes
+          gauge invariance free" is now a measured question in the
+          modern literature, not a rhetorical one.
+
+  - id: AT_2021_SUN
+    title: "SU(N) gauge theories in 3+1 dimensions: glueball spectrum, string tensions and topology"
+    authors: [Andreas Athenodorou, Michael Teper]
+    venue: JHEP 12 (2021) 082
+    year: 2021
+    doi: 10.1007/JHEP12(2021)082
+    arxiv: 2106.00364
+    inspire_recid: 1866413
+    inspire_citations: {count: 115, as_of: 2026-08-21}
+    # The arXiv v3 copy read 2026-08-21 is itself licensed CC BY 4.0 (abs
+    # page links creativecommons.org/licenses/by/4.0), so the copy read is
+    # stored verbatim.
+    licence: arxiv-cc-by-4.0
+    fulltext: fulltext/2106.00364v3.pdf
+    source_sha256: db804eb9c28465fd2bf3294ac041558fcfc12f25af2424aa2aba075f3e0e214f
+    note: >
+      FILLS THE WANTED SLOT "a modern continuum SU(N) glueball spectrum at
+      several N" -- the reason the sweep ran. Continuum glueball spectra,
+      string tensions (k-strings) and topology for N = 2, 3, 4, 5, 6, 8,
+      10, 12 with SU(infinity) extrapolations; AT_2020_SU3 is its SU(3)
+      column (cited as its ref [11]). Also read from the stored copy:
+      Lambda_MSbar = 263(4)[9] MeV for SU(3) [eq. above its section 4.2
+      conclusion], chi_t^(1/4)/sqrt(sigma) -> 0.3681(28) at N = infinity,
+      and NO Hamiltonian strong-coupling reference in its 74-entry
+      bibliography. Euclidean Monte Carlo throughout: comparison targets
+      only, nothing numerical enters any Hamiltonian claim.
+    # INSPIRE reference list of recid 1866413, retrieved 2026-08-21
+    # (MP_1999, MT_1989, and AT_2020_SU3 = its [11] all confirmed).
+    cites: [MP_1999, MT_1989, AT_2020_SU3]
+    bears_on:
+      - target: G19
+        relation: supplies-comparison
+        status: verified
+        detail: >
+          What the wanted slot asked for: the continuum shadow the all-rank
+          family alpha_N, beta_N would have to meet if the finite-order
+          results could ever be pushed to the scaling window. Read from
+          Tables 34-35 of the stored copy, the 1+- ground state in
+          sqrt(sigma) units across N = 3, 4, 5, 6, 8, 10, 12:
+          6.065(40), 5.956(42), 5.915(45), 5.847(43), 5.801(38), 5.776(41),
+          5.741(60), extrapolating to 5.760(25) at N = infinity (0++:
+          3.072(14); 2++: 4.599(14)). The N-dependence is weak and smooth
+          in 1/N^2 -- a five-percent drop from SU(3) to SU(infinity) -- so
+          the continuum end of the rank axis is now mapped at every N the
+          corpus's fixed-rank certificates touch.
+      - target: G6
+        relation: supplies-comparison
+        status: verified
+        detail: >
+          The published fixed-rank sweep G6's holdout ledger can be placed
+          against: where CM_2003 gave graphical single-cube variational
+          masses for N = 4..7, this gives continuum-extrapolated spectra
+          with errors through N = 12, overlapping the holdout window
+          N = 7..18 at its lower half. Same caveat as every Euclidean
+          entry: ratios of masses to sqrt(sigma) in the continuum limit,
+          never coefficients, so it can corroborate or embarrass a
+          large-N trend but supplies no number to any series claim.
+
   - id: KRS_2023
     title: Loop-string-hadron formulation of an SU(3) gauge theory with dynamical quarks
     authors: [Saurabh V. Kadam, Indrakshi Raychowdhury, Jesse R. Stryker]
@@ -854,8 +1067,11 @@ papers:
       Corpus section 12 forbids exactly this kind of crossing, and the entry is
       written to be read as comparison, never as input.
     # INSPIRE reference list of recid 2612878, retrieved 2026-08-21: 80
-    # references, exactly one of which lands in this web.
-    cites: [KS_1975]
+    # references. On first curation exactly one landed in this web (KS_1975);
+    # DRS_2021 -- the SU(2)-with-matter LSH cost comparison this paper
+    # carries to SU(3) -- joined the web in the 2020-2026 sweep and its
+    # citation here is confirmed in the same INSPIRE list.
+    cites: [KS_1975, DRS_2021]
     bears_on:
       - target: U1
         relation: supplies-comparison
@@ -1154,13 +1370,10 @@ stubs:
 # so this is a work list rather than a wish list. Moving one into `papers`
 # requires verified metadata -- an unverified citation is the same failure mode
 # as an unverified coefficient. (KPS_1981_string moved to `papers` 2026-08-21
-# with INSPIRE-verified metadata.)
+# with INSPIRE-verified metadata. "A modern continuum SU(N) glueball spectrum
+# at several N" was filled 2026-08-21 by AT_2021_SUN, found by the anchor
+# sweep and stored under its arXiv CC BY 4.0 licence.)
 wanted:
-  - what: A modern continuum SU(N) glueball spectrum at several N
-    would_settle: >
-      Whether the all-rank family alpha_N, beta_N has any continuum shadow.
-      Currently nothing in the corpus reaches the scaling window (G19), so this
-      would bound how far the finite-order results can be pushed.
   - what: A review of Schrieffer-Wolff / Feshbach projection error control
     would_settle: >
       U3 conjectures that both vanishings in this corpus are properties of the
