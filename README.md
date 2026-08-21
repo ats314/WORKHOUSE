@@ -103,6 +103,28 @@ make bootstrap     # create .venv and install
 make verify        # re-derive every exact claim
 make status        # print the contradiction and gap registers
 make check         # lint + full test suite
+
+workhouse triage /path/to/archive   # survey an unpinned collection
+```
+
+## Surveying an archive
+
+`workhouse triage` reads a directory of loose theory files and reports only what
+needs a decision: which files are byte-identical to something already pinned,
+which are duplicated within the archive, which carry the disputed fourth-order
+coefficients, and which carry the `Y = 2β/3 = 4u` erratum — meaning their
+printed coefficients are *already* in canonical `u` and must never be rescaled
+by `4**r`.
+
+It is strictly read-only. It never copies, moves, or promotes anything;
+deciding what belongs in `theory/` stays a human judgement.
+
+Attaching an archive to a local session (the cloud sessions cannot reach local
+folders):
+
+```bash
+claude --add-dir /path/to/archive     # CLI
+# or, in the desktop app's Code tab: Local -> Select folder, then + -> Add folder
 ```
 
 ## Layout
