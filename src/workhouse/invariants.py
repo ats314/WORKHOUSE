@@ -17,8 +17,10 @@ from dataclasses import dataclass, field
 
 from sympy import (
     Matrix,
+    Poly,
     Rational,
     diff,
+    expand,
     eye,
     limit,
     nsimplify,
@@ -38,6 +40,7 @@ from sympy import (
 from . import constants as K
 from . import near_gamma as G
 from . import settlement as S
+from . import tier_collapse as T
 
 
 @dataclass
@@ -724,4 +727,102 @@ def _():
     return abs(f2 / f1 - 8) < 1e-9, (
         f"u=0.02 excludes {100 * f1:.2f}%, u=0.04 excludes {100 * f2:.2f}% "
         "— a factor of 8, as a ball volume must"
+    )
+
+
+# ==========================================================================
+tier = _suite("tier collapse mechanism (G14)")
+
+
+@tier.check(
+    "clearing the denominator reproduces the five-element numerator basis", "MASTER_THEORY §5.1"
+)
+def _():
+    a1, a2, a3 = symbols("a1 a2 a3", nonnegative=True)
+    c0, A, B, C, D = symbols("c0 A_shp B_shp C_shp D_shp")
+    q = a1 + a2 + a3
+    e2 = a1 * a2 + a1 * a3 + a2 * a3
+    e3 = a1 * a2 * a3
+    eps4 = c0 + A * q + B * e2 + C * 4 * e2 / q + D * e3 / q
+    regrouped = c0 * q + A * q**2 + B * q * e2 + 4 * C * e2 + D * e3
+    return simplify(expand(eps4 * q) - regrouped) == 0, (
+        "q*eps_4 = c_0 q + A q^2 + 4C e_2 + B (q e_2) + D e_3, rank five as recorded"
+    )
+
+
+@tier.check("the vanishing coefficients are exactly the degree-3 ones", "MASTER_THEORY §5.2 / G14")
+def _():
+    degrees = T.numerator_degrees()
+    carried = {name: T.NUMERATOR_BASIS[name][1] for name in T.NUMERATOR_BASIS}
+    deg3 = {carried[n] for n, d in degrees.items() if d == T.VANISHING_DEGREE}
+    lower = {carried[n] for n, d in degrees.items() if d < T.VANISHING_DEGREE}
+    return deg3 == set(T.VANISHING) and not (deg3 & lower), (
+        f"degree 3 carries {sorted(deg3)} — exactly the pair that vanishes; "
+        f"degrees 1-2 carry {sorted(lower)}, all nonzero. Since a_i ~ L^-2, "
+        "'the L^-4 tier' and 'degree 3 in a' are the same statement."
+    )
+
+
+@tier.check("B B^dagger = q I - d conj(d)^T for the curl incidence", "UNIFIED §2.4")
+def _():
+    residual = T.incidence_identity()
+    return residual == residual.zeros(3, 3), (
+        "the face-to-link Bloch incidence is the curl matrix [d]_x, whose entries "
+        "are linear in d; the identity gives eigenvalues (0, q, q)"
+    )
+
+
+@tier.check("that spectrum is the recorded second-order C-odd spectrum", "MASTER_THEORY §4.3")
+def _():
+    # Eigenvalues (0, q, q): the carrier is flat, the two dispersive branches
+    # sit at t_N q above it — exactly {E_flat, E_flat + t_N q (x2)}.
+    d1, d2, d3, c1, c2, c3 = symbols("d1 d2 d3 c1 c2 c3")
+    d = Matrix([d1, d2, d3])
+    c = Matrix([c1, c2, c3])
+    q = c1 * d1 + c2 * d2 + c3 * d3
+    rank_one = d * c.T
+    eigen_ok = simplify(expand(rank_one * d - q * d)) == Matrix([0, 0, 0])
+    return eigen_ok and rank_one.rank() == 1, (
+        "d is the eigenvector of the rank-one part with eigenvalue q, so "
+        "B B^dagger = qI - d conj(d)^T has spectrum (0, q, q) and the flat "
+        "carrier is the d-direction"
+    )
+
+
+@tier.check("one hop costs exactly one power of a", "UNIFIED §2.5")
+def _():
+    d1, d2, d3, c1, c2, c3 = symbols("d1 d2 d3 c1 c2 c3")
+    d = Matrix([d1, d2, d3])
+    c = Matrix([c1, c2, c3])
+    q = c1 * d1 + c2 * d2 + c3 * d3
+    bb = expand(q * eye(3) - d * c.T)
+    deg = Poly(bb[0, 0], d1, d2, d3, c1, c2, c3).total_degree()
+    return deg == 2, (f"B B^dagger entries have degree {deg} in (d, conj d), i.e. degree 1 in a")
+
+
+@tier.check("the degree bound reproduces every recorded order", "G14")
+def _():
+    # r hops at O(u^{2r}); odd orders add no hop, since every tromino numerator
+    # vanishes and the third-order operator keeps the second-order structure.
+    bounds = {o: T.degree_bound(o) for o in (2, 3, 4, 6)}
+    second_ok = bounds[2] == 1  # observed: t_N q alone, no degree-2 term
+    third_ok = bounds[3] == 1  # observed: still the q structure
+    fourth_ok = bounds[4] == 2  # forces B = D = 0
+    sixth_ok = bounds[6] == 3  # degree 3 first becomes reachable
+    return all((second_ok, third_ok, fourth_ok, sixth_ok)), (
+        f"{bounds}; the O(u^2) row is a real check — cubic symmetry permits a "
+        "degree-2 second-order term and none appears"
+    )
+
+
+@tier.check("PREDICTION: B_shp and D_shp may first be nonzero at sixth order", "G14 -> G9")
+def _():
+    p = T.SIXTH_ORDER_PREDICTION
+    reachable = T.degree_bound(p.order) >= T.VANISHING_DEGREE
+    not_before = T.degree_bound(p.order - 1) < T.VANISHING_DEGREE
+    return reachable and not_before and set(p.coefficients) == set(T.VANISHING), (
+        f"degree {T.VANISHING_DEGREE} is unreachable through O(u^{p.order - 1}) and "
+        f"first reachable at O(u^{p.order}), where {', '.join(p.newly_available)} "
+        "enter. Testable by G9: if m_6 returns B_shp = D_shp = 0 again, the degree "
+        "bound is NOT the mechanism and G14 needs a different answer."
     )

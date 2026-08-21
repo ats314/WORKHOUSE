@@ -189,7 +189,41 @@ gaps:
   - id: G14
     tier: 3
     title: Mechanism of the tier collapse B_shp = D_shp = 0
+    status: mechanism proposed, prediction pending
     detail: "Accident, selection rule, or boundary-ideal remnant? And does the L^-4 tier appear at fifth or sixth order?"
+    proposed_mechanism:
+      claim: "a degree bound, not a dynamical selection rule"
+      reformulation: >
+        Clearing the denominator, q*eps_4 = c_0 q + A q^2 + 4C e_2 + B (q e_2)
+        + D e_3. The basis stratifies by total degree in the a_i: degree 1 is
+        c_0, degree 2 is {A_shp, C_shp}, degree 3 is {B_shp, D_shp}. Since
+        a_i ~ L^-2, degree 3 IS the L^-4 tier — so "the tier is not selected"
+        and "the numerator has no degree-3 part" are the same statement.
+      structural_input: >
+        The face-to-link Bloch incidence is the curl matrix [d]_x with entries
+        linear in d, satisfying B B^dagger = q I - d conj(d)^T with eigenvalues
+        (0, q, q). That reproduces the recorded second-order C-odd spectrum
+        exactly, with the flat carrier as the d-direction. Each entry is
+        bilinear in (d, conj d): one hop costs one power of a.
+      bound: "order u^(2r) -> 2r vertices -> numerator degree <= r in the a_i"
+      consistency:
+        - "r=1, O(u^2): degree <= 1 -> q only. Observed t_N q, with no degree-2 term that cubic symmetry would have permitted. A real check."
+        - "r=2, O(u^4): degree <= 2 -> {q, q^2, e_2}. Forces B_shp = D_shp = 0."
+        - "r=3, O(u^6): degree <= 3 -> adds {q e_2, e_3}."
+      assumptions:
+        - "every vertex is linear in d or conj(d) — true of the incidence entries, but the full amplitude also carries colour factors and resolvents"
+        - "energy denominators are k-independent — true at the one-plaquette level, where the unperturbed flux energies do not disperse"
+      status: conjectured mechanism, not a theorem
+      recorded_in: docs/decisions/0004-tier-collapse-as-a-degree-bound.md
+    prediction:
+      statement: "the L^-4 tier appears at SIXTH order, not fifth; odd orders add no hop"
+      falsified_by: "m_6 returning B_shp = D_shp = 0 again"
+      tested_by: G9
+      note: >
+        This is the point of recording the mechanism now: it converts a dormant
+        "why" question into a prediction that an already-planned computation
+        settles either way.
+    depends_on: [G9]
 
   - id: G15
     tier: 3
