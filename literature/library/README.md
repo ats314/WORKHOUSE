@@ -27,3 +27,15 @@ Two facts established at intake (2026-08-21):
 
 The relative `papers/...` links inside the human indexes refer to the
 maintainer's local library layout, not to paths in this repository.
+
+`volume2/` holds the second collection (2026-08-21, same day): 161 further
+PDFs discovered by citation-trail crawling from Volume 1's anchors, with a
+`discovery_path` column recording which seed's citation graph surfaced each
+paper. Verified at intake: zero digest overlap with Volume 1 (the audit is
+held as a test), and zero overlap with the papers already in `index.yaml`.
+Its distinctive slices: 41 Hamiltonian/gauge-invariant-formulation PDFs
+(including a 14-paper Kogut–Susskind trail), 36 effective-string PDFs, the
+perturbative-gadget/Feshbach–Schur effective-Hamiltonian line, and compact
+localized states / line-graph flat-band papers. Notably absent, verified by
+sweep: any Combes–Thomas / Helffer–Sjöstrand material — that territory
+remains covered only by the maintainer's own notes archive.
