@@ -95,6 +95,48 @@ documents:
         near_line: 485
         quote: '((-1)**(n-1)) * 2**(n-1) * sy.binomial(2*n-2, n-1)'
 
+  - id: kernel-historical-189
+    path: programs/one_plaquette/y4_o3_flatband_verification/y4_full_real_space_H4_kernel.json/CERT_Y4_full_real_space_h4_kernel.json
+    sha256: d2a4121a9798b2c364a52f7845fd7014ce2463563642470102cb080336a9fd51
+    role: certificate
+    meaning: >
+      The plain-JSON copy of the 189-record fourth-order kernel — the
+      originating computation behind C2's HISTORICAL side. C_shp (historical)
+      = (beta - 2 alpha)/16 is re-derived exactly from these records by the
+      restored-payloads suite, so the value's origin is this kernel, not any
+      document quoting it. Two gzipped copies ship beside it; the meta blocks
+      name distinct upstream Stage-3I hashes, making the copies independent
+      builds of one content.
+    originates:
+      - target: "CONST:C_shp (historical)"
+        what: the records from which the historical C_shp derives exactly
+        near_line: 1
+        quote: '"stage3i_sha256":"854a02e981098de7fcfd1a14dd5c9703aff0c36a2a81ea5589ddf4ff8c321bd0"'
+      - target: C2
+        what: the historical side of the off-axis dispute
+        near_line: 1
+        quote: '"stage3i_sha256":"854a02e981098de7fcfd1a14dd5c9703aff0c36a2a81ea5589ddf4ff8c321bd0"'
+
+  - id: nb-hodge-v10a26-alt2
+    path: programs/hodge_o4_adjudication/notebooks/NB_O4_hodge_v10a26_factor52complete_exactsw_rootedoracle_a100_alt2.ipynb
+    sha256: 5a80afcfe98283c0cc5145f2440632bff9c415477bc90cacd743acb22e0046b2
+    role: notebook
+    meaning: >
+      The v10a.26 folded run — the originating computation behind C2's NEW
+      side: the cold folded C_shape = -0.020213328886166577 that disagrees
+      with the historical kernel's off-axis coefficient by Delta_C. Float
+      output only; no exact rational for this side exists anywhere, which is
+      why the new side is *_NUM in the registry.
+    originates:
+      - target: "CONST:C_SHP_NEW_NUM"
+        what: the cold folded C_shape printout, the only source of the value
+        near_line: 2912
+        quote: cold folded C_shape
+      - target: C2
+        what: the v10a.26 side of the off-axis dispute
+        near_line: 2912
+        quote: cold folded C_shape
+
   - id: transcript-818
     path: records/transcripts/818.txt
     sha256: f4348a6e5bfa0402238556fef2bf46c928f034d761879f8e9b24f08d55a17e9e
