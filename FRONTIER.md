@@ -211,6 +211,7 @@ different things: **in-web** is how many indexed papers cite this one
 | `SZH_1997` | 1 | 30 (2026-08-21) | pinned |
 | `SEO_1982` | 1 | 28 (2026-08-21) | **not yet obtained** |
 | `OBZ_1984` | 1 | 13 (2026-08-21) | stub |
+| `MUNSTER_PLB_1983` | 1 | 11 (2026-08-21) | stub |
 | `HSB_2000` | 1 | 9 (2026-08-21) | pinned |
 | `SEO_UKAWA_1982` | 1 | 3 (2026-08-21) | stub |
 | `CS_2006` | 0 | 518 (2026-08-21) | **not yet obtained** |

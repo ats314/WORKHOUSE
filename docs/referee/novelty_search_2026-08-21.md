@@ -76,6 +76,14 @@ any of these is directly useful** — the Hamer 1989 pass proved that works.
    (`−34, −164, −546`) is integer. What remains unread, and the only place
    the family could still hide in this line: NPB 190's per-diagram weights
    (Tables 1–2 internals, before summation).
+   *(Further update, same day: the eighth orders kept moving after the
+   errata. Münster's own NPB 256 (1985) Table 1 shifts several of them —
+   SU(3) by exactly −96 — and the Drouffe–Zuber 1983 review's Table 10,
+   attributed to Seo NPB 209 and Münster PLB 121, already carries the
+   shifted SU(3) value in 1983 while keeping the erratum's SU(∞) and
+   U(1)-Wilson entries. A FINDING check in the published suite records
+   the full sequence; Langelage–Münster–Philipsen 2007 reprints every
+   channel through u⁷ only.)*
 2. **Seo, Nucl. Phys. B209 (1982) 200** (recid 184480, 28 citations;
    preprint EFI-82-10, no KEK scan recorded) — extends and cross-checks
    Munster's series, off-axis included; tabulates cluster-by-cluster
