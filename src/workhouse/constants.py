@@ -404,6 +404,25 @@ MUNSTER_TM_G = (
 )
 MUNSTER_TM_H8 = Rational(-25, 18)
 
+#: The sibling-group entries the eighth-order FINDING names, registered so
+#: the check certifies every shift it asserts rather than only SU(3)'s.
+#: Order: (Z3 m_8, SU(infinity) m_8, U(1)-Wilson m_6, U(1)-Wilson m_8);
+#: _ERR_ rows from the NPB 205 (1982) 648 erratum table, _TM_ rows from the
+#: NPB 256 (1985) Table 1, both read at 200 dpi from the pinned copies.
+#: Euclidean, comparison-only, like everything in this block.
+MUNSTER_ERR_SIB = (
+    Rational(-8207, 8),
+    Rational(-546),
+    Rational(-445, 6),
+    Rational(-1659829, 2880),
+)
+MUNSTER_TM_SIB = (
+    Rational(-8463, 8),
+    Rational(-564),
+    Rational(-1783, 24),
+    Rational(-1660309, 2880),
+)
+
 #: Rejected by both sides; recorded so it is never silently resurrected.
 QUARANTINED_SCALAR = Rational(-160506019419340168451, 14501180577204921600)
 RAW_FOLDED_AXIAL_GAMMA_NUM = -11.9485781794007

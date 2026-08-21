@@ -391,6 +391,36 @@ def _inspire_extras(recid: int) -> tuple[list[str], list[str]]:
     return documents, kekscan
 
 
+#: Hosts whose bot walls this module refuses to automate against, wherever
+#: the URL comes from. OpenAlex's best_oa_location sometimes points at the
+#: publisher's own copy rather than a repository; those stay browser links.
+WALLED_HOSTS = (
+    "sciencedirect.com",
+    "elsevier.com",
+    "linkinghub.elsevier.com",
+    "aps.org",
+    "journals.aps.org",
+    "link.aps.org",
+    "doi.org",  # a resolver, not a copy: it lands on the publisher
+)
+
+
+def automation_welcome(url: str) -> bool:
+    """Whether a dynamically discovered URL may be fetched by automation.
+
+    The manifest's browser links and the static plan already encode the
+    boundary; this guards the one path where a URL arrives at runtime
+    (OpenAlex locations), so a publisher-hosted "open" copy cannot slip
+    past the stated rule that walled hosts are for a person.
+    """
+    from urllib.parse import urlparse
+
+    host = (urlparse(url).hostname or "").lower()
+    return bool(host) and not any(
+        host == walled or host.endswith("." + walled) for walled in WALLED_HOSTS
+    )
+
+
 def _openalex_pdf(doi: str) -> str | None:
     body = _fetch(f"https://api.openalex.org/works/doi:{doi}")
     if body is None:
@@ -403,14 +433,38 @@ def _openalex_pdf(doi: str) -> str | None:
     return url if isinstance(url, str) and url else None
 
 
-def resolve(node_id: str, lit: lit_mod.Literature | None = None) -> Resolution:
+def resolve(
+    node_id: str,
+    lit: lit_mod.Literature | None = None,
+    inbox: Path | None = None,
+) -> Resolution:
     """Try the automation-welcome sources for one paper, download the first
-    hit into the inbox, and report every attempt either way."""
+    hit into the inbox, and report every attempt either way. Never overwrites
+    a copy already sitting there, and never fetches a publisher-walled URL
+    however it arrives — the walls stay browser links for a person."""
     lit = lit or lit_mod.load()
     record = lit.entry(node_id) or lit.entry(node_id.upper())
     if record is None:
         return Resolution(node_id=node_id, tried=[("index", node_id, "no such id")])
     result = Resolution(node_id=record["id"])
+
+    # A copy already in the inbox is someone's working copy — possibly a
+    # manually supplied scan whose digest the intake flow is about to pin.
+    # Overwriting it silently would destroy exactly what the loop preserves,
+    # so an existing file stops the resolver before any network request.
+    inbox = inbox or INBOX
+    target = inbox / f"{record['id']}.pdf"
+    if target.exists():
+        digest = hashlib.sha256(target.read_bytes()).hexdigest()
+        result.tried.append(
+            (
+                "inbox",
+                str(target),
+                f"already present (sha256 {digest[:16]}…) — run --intake, or remove "
+                "the file to re-resolve",
+            )
+        )
+        return result
 
     candidates: list[tuple[str, str]] = list(resolve_plan(record))
     recid = record.get("inspire_recid")
@@ -425,10 +479,14 @@ def resolve(node_id: str, lit: lit_mod.Literature | None = None) -> Resolution:
                 result.tried.append(("kek-scan", scan, "id pattern not recognized"))
     if record.get("doi"):
         oa = _openalex_pdf(str(record["doi"]))
-        if oa:
+        if oa is None:
+            result.tried.append(("openalex-oa", str(record["doi"]), "no open location listed"))
+        elif automation_welcome(oa):
             candidates.append(("openalex-oa", oa))
         else:
-            result.tried.append(("openalex-oa", str(record["doi"]), "no open location listed"))
+            result.tried.append(
+                ("openalex-oa", oa, "publisher-hosted location skipped — a browser link, not ours")
+            )
 
     for source, url in candidates:
         body = _fetch(url)
@@ -438,8 +496,7 @@ def resolve(node_id: str, lit: lit_mod.Literature | None = None) -> Resolution:
         if not body.startswith(b"%PDF"):
             result.tried.append((source, url, "served something that is not a PDF"))
             continue
-        INBOX.mkdir(parents=True, exist_ok=True)
-        target = INBOX / f"{record['id']}.pdf"
+        inbox.mkdir(parents=True, exist_ok=True)
         target.write_bytes(body)
         result.saved = target
         result.sha256 = hashlib.sha256(body).hexdigest()

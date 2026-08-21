@@ -1425,15 +1425,26 @@ def _():
     # touched either way.
     agree_low = K.MUNSTER_TM_MS[:7] == K.MUNSTER_ERR_MS[:7]
     shift = K.MUNSTER_TM_MS[7] - K.MUNSTER_ERR_MS[7]
-    return agree_low and shift == -96, (
+    sibling_shifts = tuple(
+        tm - err for tm, err in zip(K.MUNSTER_TM_SIB, K.MUNSTER_ERR_SIB, strict=True)
+    )
+    expected_siblings = (
+        Rational(-32),  # Z3 m_8
+        Rational(-18),  # SU(infinity) m_8
+        Rational(-1, 8),  # U(1)-Wilson m_6
+        Rational(-1, 6),  # U(1)-Wilson m_8
+    )
+    return agree_low and shift == -96 and sibling_shifts == expected_siblings, (
         "SU(3): 1985 Table 1 equals the 1982 erratum row for k = 1..7 and differs "
         f"at k = 8 by {shift} exactly (-183140613/40960 vs -179208453/40960) — a "
         "fourth correction already in print by 1983 (DZ Phys. Rep. 102 Table 10, "
         "citing Seo NPB 209 and Munster PLB 121) that no erratum records; the "
-        "1985-only shifts Z3 -32, SU(inf) -18, U(1)-Wilson -1/8 at u^6 and -1/6 "
-        "at u^8 rest on a single printing (DZ 1983 still carries the erratum "
-        "values there); SU(2), Z2, U(1)-Villain identical everywhere. Recorded, "
-        "not adjudicated: every printing shares Munster/Seo provenance"
+        "registered sibling shifts are asserted too: Z3 m_8 by -32, SU(inf) m_8 "
+        "by -18, U(1)-Wilson by -1/8 at u^6 and -1/6 at u^8, all 1985-only (DZ "
+        "1983 still carries the erratum values there). The SU(2), Z2 and "
+        "U(1)-Villain rows were read as identical in both tables but are not "
+        "registered, so this check does not certify them. Recorded, not "
+        "adjudicated: every printing shares Munster/Seo provenance"
     )
 
 

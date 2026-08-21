@@ -55,6 +55,32 @@ def test_browser_links_carry_the_walled_archive_for_a_human():
     assert labels["doi"].startswith("https://doi.org/10.1016/")
 
 
+def test_walled_hosts_are_refused_wherever_the_url_comes_from():
+    """OpenAlex sometimes lists the publisher's own copy as 'open'. The
+    boundary is per-host, not per-code-path: walled hosts stay browser links
+    even when a URL arrives dynamically."""
+    assert not A.automation_welcome("https://www.sciencedirect.com/science/article/pii/x.pdf")
+    assert not A.automation_welcome("https://linkinghub.elsevier.com/retrieve/pii/x")
+    assert not A.automation_welcome("https://journals.aps.org/prd/pdf/10.1103/x")
+    assert not A.automation_welcome("https://doi.org/10.1016/whatever")
+    assert not A.automation_welcome("not a url")
+    assert A.automation_welcome("https://arxiv.org/pdf/hep-lat/9901004")
+    assert A.automation_welcome("https://lib-extopc.kek.jp/preprints/PDF/1980/8010/8010101.pdf")
+    assert A.automation_welcome("https://ecommons.cornell.edu/bitstream/x.pdf")
+
+
+def test_resolve_refuses_to_overwrite_an_inbox_copy(tmp_path):
+    """A file already in the inbox may be a manually supplied scan awaiting
+    intake; the resolver must stop before any network request, not clobber it."""
+    body = b"%PDF-1.4 a working copy someone supplied"
+    (tmp_path / "KS_1975.pdf").write_bytes(body)
+    resolution = A.resolve("KS_1975", LIT, inbox=tmp_path)
+    assert resolution.saved is None
+    assert (tmp_path / "KS_1975.pdf").read_bytes() == body
+    assert any("already present" in outcome for _s, _u, outcome in resolution.tried)
+    assert all(source == "inbox" for source, _u, _o in resolution.tried)  # no fetch attempted
+
+
 # -- the manifest -------------------------------------------------------------
 
 
