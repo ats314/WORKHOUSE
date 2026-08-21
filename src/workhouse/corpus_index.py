@@ -64,6 +64,9 @@ class Occurrence:
     path: Path
     line: int
     raw: str
+    #: The whole source line. Symbol attribution needs the context around the
+    #: match, not just the matched digits.
+    text: str = ""
 
 
 @dataclass
@@ -112,7 +115,12 @@ def _extract(text: str, path: Path) -> list[tuple[Fraction, Occurrence]]:
                     # A long numerator over a short denominator is likely a
                     # timestamp or an id, not a corpus rational.
                     continue
-                found.append((Fraction(num, den), Occurrence(path, lineno, m.group(0))))
+                found.append(
+                    (
+                        Fraction(num, den),
+                        Occurrence(path, lineno, m.group(0), line[:400]),
+                    )
+                )
     return found
 
 
