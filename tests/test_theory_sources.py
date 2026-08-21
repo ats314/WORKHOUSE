@@ -16,8 +16,10 @@ CURRENT = {
     "GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md",
     "GLUEBALL_SOURCE_CONSOLIDATION_GUIDE_2026-08-20_v4_3.md",
     "GLUEBALL_CANONICAL_SOURCE_MANIFEST_2026-08-20_v4_3.csv",
-    "README.md",
 }
+#: Written by this repository, not by the corpus. Pinned all the same -- every
+#: byte under theory/ is -- but never citable as evidence.
+REPO_AUTHORED = {"README.md", "CLAUDE.md"}
 #: Upstream's own map of the tree this corpus was extracted from. It names
 #: directories that do not exist here; it is kept so a cited path resolves.
 GOVERNANCE = {
@@ -31,7 +33,7 @@ SUPERSEDED = {
     "superseded/GLUEBALL_SOURCE_CONSOLIDATION_GUIDE_2026-08-20_v3.md",
     "superseded/GLUEBALL_CANONICAL_SOURCE_MANIFEST_2026-08-20_v3.csv",
 }
-EXPECTED = CURRENT | GOVERNANCE | SUPERSEDED
+EXPECTED = CURRENT | REPO_AUTHORED | GOVERNANCE | SUPERSEDED
 
 MASTER = THEORY / "MASTER_THEORY_UNIFIED_2026-08-20_v4_3.md"
 MASTER_V3 = THEORY / "superseded" / "MASTER_THEORY_UNIFIED_2026-08-20_v3.md"
@@ -56,7 +58,7 @@ def _register(document: Path) -> list[str]:
 
 def test_current_stack_present():
     names = {p.name for p in THEORY.glob("*.md")} | {p.name for p in THEORY.glob("*.csv")}
-    assert names == CURRENT
+    assert names == CURRENT | REPO_AUTHORED
 
 
 def test_superseded_documents_are_quarantined_not_deleted():
@@ -106,7 +108,7 @@ def test_v4_3_register_extends_v3_without_retracting_anything():
 
 def test_documents_are_non_trivial():
     for p in THEORY.glob("*.md"):
-        if p.name == "README.md":
+        if p.name in REPO_AUTHORED:
             continue
         assert p.stat().st_size > 5000, f"{p.name} looks truncated"
 

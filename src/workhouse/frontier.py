@@ -76,9 +76,10 @@ def _retracted() -> list[tuple[str, str]]:
     if not DECISIONS.exists():
         return out
     for path in sorted(DECISIONS.glob("*.md"), reverse=True):
-        head = path.read_text()[:2000]
-        if re.search(r"\bretract|\bsupersed|\bwithdraw", head, re.IGNORECASE):
-            title = head.splitlines()[0].lstrip("# ").strip()
+        title = path.read_text().splitlines()[0].lstrip("# ").strip()
+        # The title only. Scanning the body matches any ADR that merely mentions
+        # a superseded document, which is most of them.
+        if re.search(r"\bretract\w*|\bsupersed\w*|\bwithdraw\w*", title, re.IGNORECASE):
             out.append((path.stem, title))
     return out
 
