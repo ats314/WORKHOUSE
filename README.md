@@ -78,10 +78,23 @@ retrieves `109151/249696` from a natural-language query, and `5/48` alone lives
 in 44 code files that the prose index cannot see.
 
 ```bash
-grep -rn '109151/249696' corpus-import/            # by value
-grep -rln 'h_4\^\?side\|h4_side' corpus-import/    # by symbol, all spellings
-make index                                          # coverage + cross-index multiples
-python -c "from workhouse import corpus_index as X; print(X.scan()['5/48'])"
+workhouse search 109151/249696       # by exact value — matches -10/96 to -5/48
+workhouse search -- -0.88009871      # by decimal prefix — finds both sides of C20
+workhouse search C_shape             # by corpus spelling — repo calls it C_shp
+workhouse search C2                  # by claim id, and what it routes to
+workhouse search 5/48 --corpus       # …and where it occurs in the 928 files
+```
+
+`search` resolves a query four ways at once and knows two things a grep cannot:
+which names are **forbidden** (searching `m_4` returns both correct names and
+why), and which are **coined here** (searching `Phi_C` says the corpus writes
+`4e_2/q_a` instead, so finding nothing is not absence).
+
+Underneath, for a raw sweep:
+
+```bash
+grep -rn '109151/249696' corpus-import/   # by value
+make corpus-index                          # coverage + cross-index multiples
 ```
 
 `corpus_index` records file, line, and source text for every exact rational, so
@@ -97,12 +110,14 @@ make status       # the contradiction and gap registers
 make frontier     # regenerate FRONTIER.md
 make certified    # regenerate CERTIFIED.md
 make lit          # published work, and which claim each paper bears on
+make catalogue    # regenerate index/claims.jsonl and index/symbols.jsonl
 make lean         # T0: proof-check the Lean core (needs elan)
 make manifest     # re-pin theory/ after a deliberate, reviewed corpus change
 
 workhouse verify --only TEXT     # one claim, with its numbers and source line
 workhouse verify --tier 1        # only the exact re-derivations
 workhouse frontier --brief       # the block the SessionStart hook injects
+workhouse search QUERY           # value, decimal, symbol, alias, or claim id
 workhouse lit --for C7           # published work bearing on one claim
 workhouse triage /path/to/dir    # survey an unpinned archive, read-only
 ```
@@ -190,6 +205,7 @@ src/workhouse/ constants registry, invariant suites, frontier, CLI
 lean/          T0 — the proof-checked core
 tests/         every invariant as its own test case
 literature/    published work, indexed by the claim each paper bears on
+index/         generated — claims.jsonl and symbols.jsonl
 settlement/    received cold-run transcripts and the adjudication harness
 corpus-import/ 928 files of research history — targeted access only
 docs/decisions/ ADRs, including the ones this repository retracted

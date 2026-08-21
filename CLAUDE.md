@@ -95,6 +95,12 @@ The second exists because the first cannot see the sealed core: `5/48`, `5/12`,
 `5/612`, `11/306`, `7/102` have no entry in it, and `5/48` alone lives in 44
 code files.
 
+`workhouse search` is the front door to both, plus the claim catalogue and the
+curated aliases in `ledger/symbols.yaml`. It matches by *value* rather than
+spelling (`-10/96` finds `-5/48`), and it carries two warnings a grep cannot:
+forbidden names (`m_4`) and names coined here that the corpus never uses
+(`Phi_C`, which the corpus writes as `4e_2/q_a`).
+
 ## Commands
 
 ```bash
@@ -102,6 +108,7 @@ make verify    # re-derive every exact claim (T1/T2)
 make status    # contradiction and gap registers
 make frontier  # regenerate FRONTIER.md — established / disputed / refuted / next
 make certified # regenerate CERTIFIED.md — every checked claim, ranked by tier
+make catalogue # regenerate index/claims.jsonl and index/symbols.jsonl
 make lit       # published work, and which claim each paper bears on
 make check     # ruff + pytest, what CI runs
 make lean      # T0: proof-check the Lean core (needs elan; see lean/README.md)

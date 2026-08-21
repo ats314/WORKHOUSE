@@ -85,7 +85,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 64
+## T1 — re-derived exactly — 65
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -243,6 +243,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the fourth moment integral |U_11|^4 = 1/6 at N = 3`
   - src/workhouse/invariants.py:1114 · CS_2006 / C7
   - `workhouse verify --only 'the fourth moment integral |U_11|^4 = 1/6 at N = 3'`
+- `the overlap obstruction was published in 1988, and it scales`
+  - src/workhouse/invariants.py:1175 · SCHIERHOLZ_1988
+  - `workhouse verify --only 'the overlap obstruction was published in 1988, and it scales'`
 **second order, all ranks**
 
 - `N^3 t_N increases monotonically to 1/4`

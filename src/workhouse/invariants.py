@@ -1170,3 +1170,35 @@ def _():
         "transcription-unverified: the primary Phys. Lett. B 224 table has never been "
         "pinned and hashed, so this agreement rests on a local transcription"
     )
+
+
+@published.check("the overlap obstruction was published in 1988, and it scales", "SCHIERHOLZ_1988")
+def _():
+    # G18 is the largest unpaid debt in the program: the claim that the
+    # protected carrier is the glueball. Its own statement records the bare
+    # operator carrying under 4% of the physical state -- as a fixed number.
+    # Schierholz 1988 measured the same few-percent overlap independently and
+    # showed it falls like a^5 for a local dimension-4 operator, which is the
+    # class the bare T_1^{+-} operator belongs to. A power law, not a constant:
+    # it degrades toward the continuum, so the smeared basis is structural.
+    #
+    # This check exists so the connection cannot quietly fall out of the ledger.
+    from . import ledger as led_mod
+    from . import literature as lit_mod
+
+    edges = lit_mod.load().bearing_on("G18")
+    schierholz = [e for p, e in edges if p["id"] == "SCHIERHOLZ_1988"]
+    g18 = next(g for g in led_mod.load().gaps if g["id"] == "G18")
+    sharpening = str(g18.get("external_sharpening", ""))
+    return (
+        len(schierholz) == 1
+        and schierholz[0]["status"] == "verified"
+        and "a^5" in sharpening
+        and g18.get("load_bearing") is True
+    ), (
+        "G18 records the bare operator at <4% (2 sigma) as a fixed number; "
+        "Schierholz 1988 §2 measures 'a couple of percent' at beta = 5.9 AND "
+        "gives the scaling a^5 for a local dimension-4 operator. Independent, "
+        "38 years earlier, and it makes the smeared basis structural rather than "
+        "a convenience — better statistics cannot recover a power law"
+    )

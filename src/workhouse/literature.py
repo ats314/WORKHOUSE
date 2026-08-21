@@ -10,6 +10,10 @@ Two disciplines this module exists to keep:
   checks it, exactly like a corpus document. What makes an external result
   valuable is independence -- it was produced without knowledge of this program
   -- not its being published.
+* **A paper can be pinned without being stored.** ``source_sha256`` records
+  the digest of the copy that was actually read, so the reading is
+  identifiable and re-checkable by anyone holding the same file, while the
+  file itself stays out of the repository.
 * **Full text is stored only where the licence permits redistribution.** Most
   of the load-bearing literature here predates 2004 and carries the arXiv
   assumed-1991-2003 licence, which grants arXiv distribution rights and grants
@@ -110,6 +114,10 @@ def validate(lit: Literature | None = None) -> list[str]:
 
         if not paper.get("doi") and not paper.get("arxiv"):
             problems.append(f"{pid}: no DOI and no arXiv id — the citation is unpinnable")
+
+        digest = str(paper.get("source_sha256", ""))
+        if digest and len(digest) != 64:
+            problems.append(f"{pid}: source_sha256 is not a SHA-256 digest")
 
         licence = str(paper.get("licence", "")).lower()
         fulltext = paper.get("fulltext")

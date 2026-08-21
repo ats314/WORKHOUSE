@@ -6,9 +6,11 @@ import argparse
 import sys
 
 from . import certified as certified_mod
+from . import claims as claims_mod
 from . import frontier as frontier_mod
 from . import ledger as ledger_mod
 from . import literature as literature_mod
+from . import search as search_mod
 from . import triage as triage_mod
 from .invariants import SUITES
 
@@ -123,6 +125,25 @@ def _lit(target: str | None) -> int:
     return 0
 
 
+def _search(query: str, corpus: bool, limit: int) -> int:
+    hits, symbols = search_mod.search(query)
+    occurrences = search_mod.corpus_occurrences(query) if corpus else None
+    print(search_mod.format_results(query, hits, symbols, occurrences, limit=limit))
+    return 0 if (hits or symbols) else 1
+
+
+def _index(write: bool) -> int:
+    if write:
+        claims_path, symbols_path = claims_mod.write()
+        for path in (claims_path, symbols_path):
+            rows = len(path.read_text().splitlines())
+            print(f"wrote {path.relative_to(claims_mod.ROOT)}: {rows} records")
+        return 0
+    for claim in claims_mod.collect():
+        print(f"{claim.id}\t{claim.kind}\t{claim.statement}")
+    return 0
+
+
 def _triage(directory: str, limit: int) -> int:
     from pathlib import Path
 
@@ -152,6 +173,21 @@ def main(argv: list[str] | None = None) -> int:
         "-b", "--brief", action="store_true", help="the short form injected at session start"
     )
 
+    se = sub.add_parser(
+        "search",
+        help="find a claim by exact rational, decimal, symbol, alias, or claim id",
+    )
+    se.add_argument("query", help="109151/249696 | -0.88009871 | q_old | C_shape | C2")
+    se.add_argument(
+        "--corpus",
+        action="store_true",
+        help="also scan the 928-file corpus for that exact value (slow)",
+    )
+    se.add_argument("--limit", type=int, default=20, help="claims to show (default 20)")
+
+    ix = sub.add_parser("index", help="the claim and symbol catalogues")
+    ix.add_argument("-w", "--write", action="store_true", help="regenerate index/*.jsonl")
+
     li = sub.add_parser("lit", help="published work, and which claim each paper bears on")
     li.add_argument(
         "--for",
@@ -175,6 +211,10 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.command == "verify":
         return _verify(args.verbose, args.only, args.tier)
+    if args.command == "search":
+        return _search(args.query, args.corpus, args.limit)
+    if args.command == "index":
+        return _index(args.write)
     if args.command == "lit":
         return _lit(args.target)
     if args.command == "certified":

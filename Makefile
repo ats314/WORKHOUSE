@@ -1,4 +1,4 @@
-.PHONY: help bootstrap check lint test verify status frontier certified lit fmt manifest corpus-manifest lean index lock clean
+.PHONY: help bootstrap check lint test verify status frontier certified lit catalogue fmt manifest corpus-manifest lean corpus-index lock clean
 
 help:            ## Show this help
 	@grep -hE '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk -F':.*?## ' '{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -20,6 +20,9 @@ verify:          ## Re-derive every exact claim in the corpus
 
 status:          ## Print the contradiction and gap registers
 	@.venv/bin/workhouse status
+
+catalogue:       ## Regenerate index/claims.jsonl and index/symbols.jsonl
+	@.venv/bin/workhouse index --write
 
 lit:             ## Published work, and which claim each paper bears on
 	@.venv/bin/workhouse lit
@@ -53,7 +56,7 @@ corpus-manifest: ## Regenerate corpus-import/SHA256SUMS after a deliberate corpu
 	 (root/'SHA256SUMS').write_text(chr(10).join(ls)+chr(10)); \
 	 print(f'corpus-import/SHA256SUMS: {len(ls)} files')"
 
-index:           ## Index exact rationals across corpus code, certificates and notebooks
+corpus-index:    ## Scan exact rationals across corpus code, certificates and notebooks
 	@.venv/bin/python -c "from workhouse import corpus_index as X; \
 	 c=X.scan(); p=X.scan(exts=X.PROSE_EXTS); \
 	 print('coverage', X.coverage()); \
