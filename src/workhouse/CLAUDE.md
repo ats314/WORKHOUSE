@@ -42,5 +42,6 @@ third, add an explicit `FINDING:` check that *asserts* the discrepancy.
 - `corpus_index.py` — exact rationals in code, certificates, notebooks
 - `corpus_registry.py` — near-miss, multiple, and coverage sweeps over the whole corpus
 - `tier_collapse.py`, `near_gamma.py`, `settlement.py`, `payloads.py` — one investigation each
+- `rigor.py` — certified Arb enclosures for T2 comparisons (ADR 0010); the only sanctioned route to arb
 - `triage.py` — read-only survey of an unpinned archive
 - `notes.py` — the notes register: archive inventories, review verdicts, intake rules

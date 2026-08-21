@@ -316,17 +316,23 @@ def _():
 
 @dispute.check("FINDING: the printed Delta_Gamma is one ulp low", "MASTER_THEORY §5.5", tier=2)
 def _():
-    from sympy import Float
+    from . import rigor
 
-    exact = (Float(repr(K.M_GAMMA_4_NUM), 25) - K.Q_BAND_4).evalf(25)
-    # Rounding q_band^(4) to a double before subtracting loses the last digit.
-    correct = abs(float(exact) - K.DELTA_GAMMA_NUM) < 1e-16
-    printed_is_low = K.DELTA_GAMMA_AS_PRINTED_NUM < K.DELTA_GAMMA_NUM
+    # Certified enclosure (ADR 0010): the double M_GAMMA_4_NUM enters exactly,
+    # the rational q_band^(4) enters as a 128-bit ball, and the comparisons
+    # below are True only if provable from disjoint enclosures — this replaces
+    # the earlier "evalf(25) is surely enough" with a machine guarantee.
+    exact = rigor.ball(K.M_GAMMA_4_NUM) - rigor.ball(K.Q_BAND_4)
+    printed_low = rigor.certified_lt(rigor.ball(K.DELTA_GAMMA_AS_PRINTED_NUM), exact)
+    recorded_closer = rigor.certified_closer(
+        exact, rigor.ball(K.DELTA_GAMMA_NUM), rigor.ball(K.DELTA_GAMMA_AS_PRINTED_NUM)
+    )
     gap = K.DELTA_GAMMA_NUM - K.DELTA_GAMMA_AS_PRINTED_NUM
-    return correct and printed_is_low, (
-        f"high precision {exact} rounds to {K.DELTA_GAMMA_NUM!r}; corpus prints "
-        f"{K.DELTA_GAMMA_AS_PRINTED_NUM!r}, low by {gap:.3e} (1 ulp). Cosmetic, but "
-        "the printed digit is not the correctly rounded one."
+    return printed_low and recorded_closer, (
+        f"certified: true Delta_Gamma = {rigor.describe(exact)}; the corpus's printed "
+        f"{K.DELTA_GAMMA_AS_PRINTED_NUM!r} lies provably below it, and "
+        f"{K.DELTA_GAMMA_NUM!r} is provably the closer double (gap {gap:.3e} = 1 ulp). "
+        "Cosmetic, but the printed digit is not the correctly rounded one."
     )
 
 
