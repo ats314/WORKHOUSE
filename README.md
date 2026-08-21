@@ -140,7 +140,7 @@ scripts/    stack detection, bootstrap, check — one source of truth for CI and
 
 ## What the verifier found
 
-65 invariants currently re-derive cleanly. Six are recorded as **findings**.
+64 invariants currently re-derive cleanly. Six are recorded as **findings**.
 Three are places where the corpus's own wording is slightly tighter than its
 numbers:
 
@@ -219,31 +219,32 @@ constant, and it says nothing about the ball's interior. G11 is partially
 discharged, not closed. See
 [ADR 0003](docs/decisions/0003-near-gamma-exclusion-radius.md).
 
-## A mechanism, offered for refutation
+## A mechanism, offered for refutation — and refuted
 
-`G14` asks why `B_shp = D_shp = 0` at every solved rank — the `L⁻⁴` tier that
-cubic symmetry allows but the microscopic contraction never populates. The
-corpus calls it *"a dynamical selection rule with no proved mechanism."*
+`G14` asks why `B_shp = D_shp = 0` at every solved rank. Two things came out of
+attacking it, and they should be read separately.
 
-The proposal is that it is kinematics, not dynamics. Clearing the denominator,
-the numerator basis stratifies by total degree in the `aᵢ`, and the vanishing
-pair `{B_shp, D_shp}` is **exactly** the degree-3 part. Since `aᵢ ~ L⁻²`, "the
-`L⁻⁴` tier" and "degree 3" are the same set.
+**An exact reformulation, which stands.** Clearing the denominator, the
+numerator basis stratifies by total degree in the `aᵢ`, and the vanishing pair
+`{B_shp, D_shp}` is **exactly** the degree-3 part. Since `aᵢ ~ L⁻²`, "the `L⁻⁴`
+tier" and "degree 3" are the same set. Along the way: the carrier is the
+`d`-direction with `d†d = q`, which is where the `1/q` in the ansatz comes from,
+and `B B† = q·I − d·conj(d)ᵀ` has eigenvalues `(0, q, q)`, reproducing the
+recorded second-order spectrum.
 
-The face-to-link incidence is the curl matrix `[d]_×`, linear in `d`, obeying
-`B B† = q·I − d·conj(d)ᵀ` with eigenvalues `(0, q, q)` — which reproduces the
-recorded second-order spectrum exactly. One hop costs one power of `a`, so
-`O(u^{2r})` admits numerator degree at most `r`. Degree 3 is unreachable at
-fourth order, and `B_shp = D_shp = 0` follows without any dynamical input.
+**A mechanism, which does not.** The proposal was that `2r` vertices bound the
+numerator at degree `r`, making degree 3 unreachable at fourth order. That
+misses the carrier projection: the numerator is `d†H₄d`, and `d†(·)d` adds one
+more power of `a`. Four vertices bound `H₄` at degree 2 and the numerator at
+**3** — precisely the degree it was supposed to forbid. `MASTER_THEORY §5.1`
+had already recorded the two-hop enumeration producing a rank-five span
+including those terms, which is a dynamical vanishing, not a kinematic one.
 
-The `O(u²)` row is a genuine check: cubic symmetry permits a degree-2
-second-order term and none appears.
-
-**The prediction:** the `L⁻⁴` tier appears at **sixth** order, not fifth. G9
-computes `m₆` and settles it — if `B_shp = D_shp = 0` comes back again, the
-degree bound is not the mechanism. Recorded as a conjecture with its
-assumptions stated, in
-[ADR 0004](docs/decisions/0004-tier-collapse-as-a-degree-bound.md).
+Retracted in
+[ADR 0005](docs/decisions/0005-retracting-the-degree-bound.md), which supersedes
+[ADR 0004](docs/decisions/0004-tier-collapse-as-a-degree-bound.md). G14 is open
+again — better posed, no closer to answered. The failed attempt is kept rather
+than deleted: how it failed is evidence about the problem.
 
 ## Status
 

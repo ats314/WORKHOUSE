@@ -1,4 +1,8 @@
-"""G14: why B_shp and D_shp vanish, proposed as a degree bound.
+"""G14: the tier collapse. A reformulation that holds, and a mechanism that did not.
+
+The degree-bound mechanism proposed here was RETRACTED after stress-testing.
+See ADR 0005. What survives is the reformulation in Step 1, which is exact and
+independent of any mechanism; Steps 2-3 are kept only to document the failure.
 
 The corpus records the vanishing as an observation without a reason:
 
@@ -46,18 +50,44 @@ power of d or conj(d). So the numerator has degree at most r in the a_i:
 The r = 1 row is a genuine check, not a restatement: cubic symmetry would
 permit a degree-2 second-order term and none appears.
 
-Status
-------
-A conjectured mechanism, not a theorem. It rests on two assumptions, both
-stated so they can be attacked:
+Why the bound fails
+-------------------
+The count above is wrong, and the error is one step, not a subtlety.
 
-1. every perturbative vertex is linear in d or conj(d) — true of the incidence
-   entries, but the full amplitude also carries colour factors and resolvents;
-2. the energy denominators are k-independent — true at the one-plaquette level,
-   where the unperturbed flux energies do not disperse.
+The numerator is not H_4 itself. The carrier is the d-direction, so
 
-If either fails the count shifts. The prediction below is what makes this worth
-recording rather than speculating about.
+    eps_4 = (d^dagger H_4 d) / (d^dagger d),      d^dagger d = q,
+
+which is where the 1/q in the ansatz comes from. The numerator is therefore
+``d^dagger H_4 d``, and the projection ``d^dagger (.) d`` adds one further d and
+one further conj(d) — one more power of a — on top of whatever H_4 carries.
+
+So four vertices give H_4 entries of degree <= 2, and the numerator degree <= 3.
+Degree 3 is exactly {q e_2, e_3}: the B_shp/D_shp pair. The count permits them.
+
+A concrete witness: ``diag(a_i**2)`` is a legal degree-2 entry structure, and
+
+    d^dagger diag(a_i**2) d = sum a_i**3 = q**3 - 3 q e_2 + 3 e_3,
+
+which carries a nonzero e_3 component.
+
+The corpus said as much already. MASTER_THEORY 5.1 records that the enumeration
+of 144 ordered two-hop sequences *gives* the rank-five span including q e_2 and
+e_3 — the sequences produce those terms and the dynamics then sets their
+coefficients to zero. That is a dynamical statement, not a kinematic exclusion,
+and it was available before the mechanism was proposed.
+
+The sixth-order prediction derived from the bound is retracted with it.
+
+What still stands
+-----------------
+Step 1 is an exact identity and needs no mechanism: the vanishing pair IS the
+degree-3 part of the numerator, and since a_i ~ L^-2 that is the same set as the
+L^-4 tier. G14 is better posed for it, and no closer to answered.
+
+The incidence identity in Step 2 also stands on its own — it reproduces the
+recorded second-order spectrum and explains the 1/q — it simply does not bound
+what the fourth order can reach.
 """
 
 from __future__ import annotations
@@ -106,8 +136,8 @@ def incidence_identity():
     return expand(bb - (q * eye(3) - d * c.T))
 
 
-def degree_bound(order: int) -> int:
-    """Maximum numerator degree in the a_i available at O(u**order).
+def operator_degree_bound(order: int) -> int:
+    """Maximum a-degree of the H_(2r) matrix entries at O(u**order).
 
     Odd orders add no hop: the third-order operator retains the second-order
     incidence structure because every tromino numerator vanishes.
@@ -117,6 +147,17 @@ def degree_bound(order: int) -> int:
     return order // 2
 
 
+def numerator_degree_bound(order: int) -> int:
+    """Maximum a-degree of d^dagger H d, the quantity that actually spans.
+
+    One greater than the operator bound: the carrier projection contributes an
+    extra d and conj(d). Missing this term is what refuted the mechanism —
+    at fourth order it is the difference between forbidding {B_shp, D_shp} and
+    permitting them.
+    """
+    return operator_degree_bound(order) + 1
+
+
 @dataclass(frozen=True)
 class Prediction:
     order: int
@@ -124,12 +165,11 @@ class Prediction:
     coefficients: tuple[str, ...]
 
 
-#: The falsifiable consequence. Sixth order is the first place a three-hop
-#: process can reach degree 3, so it is the first place B_shp and D_shp may be
-#: nonzero. This is testable by G9, which is already a planned computation:
-#: if m_6 comes back with B_shp = D_shp = 0 again, the degree bound is not the
-#: mechanism and G14 needs a different answer.
-SIXTH_ORDER_PREDICTION = Prediction(
+#: RETRACTED. This claimed sixth order was the first place degree 3 becomes
+#: reachable. With the projection counted, degree 3 is already reachable at
+#: fourth order, so the prediction has no basis. Kept as a record of the
+#: retraction rather than deleted; ADR 0005 explains why.
+RETRACTED_SIXTH_ORDER_PREDICTION = Prediction(
     order=6,
     newly_available=("q*e_2", "e_3"),
     coefficients=("B_shp", "D_shp"),
