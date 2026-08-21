@@ -4,7 +4,9 @@
 set -uo pipefail
 
 root="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
-cd "$root"
+# No `set -e` here (checks are collected, not fatal), so guard the cd explicitly:
+# without this a failed cd would silently run every check in the wrong tree.
+cd "$root" || exit 1
 stacks="$(bash scripts/detect-stack.sh "$root")"
 status=0
 
@@ -24,6 +26,7 @@ for s in $stacks; do
       done
       ;;
     python)
+      # shellcheck disable=SC1091  # generated at bootstrap time, absent when linting
       [ -d .venv ] && . .venv/bin/activate
       command -v ruff   >/dev/null 2>&1 && { run ruff check .; run ruff format --check .; }
       # Gate on opt-in config, not on the binary merely being present: an
