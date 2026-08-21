@@ -1,0 +1,202 @@
+# Contradiction register — MASTER_THEORY §8, verbatim in structure.
+# A contradiction is recorded with BOTH numbers. Nothing here is promoted.
+# status: open | resolved | falsified | superseded | unresolved-in-corpus
+schema: contradictions/v1
+source: theory/MASTER_THEORY.md §8
+
+contradictions:
+  - id: C1
+    title: Fourth-order rest scalar
+    status: open
+    section: "§5.5"
+    verdict: "do not promote either ([RUN15]; GLUEBALL §17)"
+    sides:
+      - label: historical 189-record kernel
+        value: "-20721577909065127111/7250590288602460800"
+        decimal: -2.857915988114559
+        kind: exact-rational
+        source: "[T1PM]/[GCSG]"
+      - label: v10a.26 folded run + linked-cluster oracle
+        value: -0.7751458630189173
+        kind: float
+        source: "[RUN15]/[GLUE3]"
+      - label: quarantined shortcut
+        value: "-160506019419340168451/14501180577204921600"
+        decimal: -11.068479463778765
+        kind: exact-rational
+        status: rejected-by-both
+    delta: 2.0827701250956414
+    notes: >
+      Re-anchoring is a same-kernel identity. "old kernel = new kernel + scalar"
+      is NOT established, and the run's applied +11.17343231638178 shift was
+      target-derived. One reconciliation hypothesis is queued: is Delta_Gamma a
+      fourth-order vacuum term, q_band^(4) - E_0^(4) =? m_Gamma^(4)?
+    blocks: [G3]
+
+  - id: C2
+    title: Fourth-order off-axis coefficient C_shp
+    status: open
+    section: "§5.5"
+    sides:
+      - label: historical
+        value: "-211835444920651/4405310420659200"
+        decimal: -0.04808638318135875
+        kind: exact-rational
+      - label: v10a.26
+        value: -0.020213328886166577
+        kind: float
+    delta: 0.027873054295192174
+    notes: >
+      A diagonal shift cannot reconcile this. Axial cuts (including X) agree
+      exactly; the disagreement lives in one planar mixed-gradient direction,
+      giving 8*Delta_C at M and 16*Delta_C at R. This is the finite-order
+      bottleneck of the whole program.
+    blocks: [G3]
+
+  - id: C3
+    title: Status of the fourth-order "theorem"
+    status: resolved
+    section: "§5.5"
+    resolution: >
+      Newest status controls. The §5.2 values are sealed; everything else is
+      C1/C2. "Proved" (T1PM §13) is downgraded to "exact-arithmetic
+      computational ledger — audit pending", then "do not promote".
+
+  - id: C4
+    title: Coupling conventions
+    status: resolved
+    section: "§1.1"
+    resolution: >
+      The archived Y = 2*beta/3 = 4u line is a definition/label error, not a
+      rescaling rule. Printed coefficients were already in u = beta_lat/6.
+      Never apply 4**n factors to them.
+
+  - id: C5
+    title: String-tension sign at O(u^3)
+    status: superseded
+    resolution: "-61/408 (the earlier +61/408 was an odd-order convention error)"
+
+  - id: C6
+    title: "F-2 mobility rule"
+    status: falsified
+    resolution: >
+      The promotion r_physical = w_min - 2 is falsified by the pentagonal
+      isotropic cap hop at r=4 with w_min-2=5. The scoped bound r >= w_min - 2
+      survives, with survival gates.
+
+  - id: C7
+    title: Stranded-flux zero backend
+    status: falsified
+    resolution: "Claimed Haar zero for all 20 pentagonal histories refuted by exact Weingarten/network contractions (8/8)"
+
+  - id: C8
+    title: Pentagonal degenerate space
+    status: resolved
+    resolution: "E_cap = 10/3 != E_side = 8/3; choose the physical degenerate eigenspace first"
+
+  - id: C9
+    title: SU(4) exceptional correction
+    status: resolved
+    resolution: "Only the flat-branch eigenvalue identity holds, not scalarity of the matrix"
+
+  - id: C10
+    title: Determinant sectors shift only q_N
+    status: resolved
+    resolution: >
+      True for N>=4, false at SU(3): Delta_beta_3 = -25/64 and
+      Delta_q_3 = -16863189551/76406976000.
+
+  - id: C11
+    title: Compact-gap constants
+    status: superseded
+    resolution: >
+      Corrections: c_0 = -3(N^2-3)/(16N); radial moment difference 3N^2+1;
+      dilation eps^4 = N/(2*beta); radial target -0.2569486231...N;
+      odd beta^-1 coefficient -53/864.
+
+  - id: C12
+    title: Curvature misreads
+    status: superseded
+    resolution: >
+      Two-stage. The kappa values are RADIAL DIRECTIONAL curvatures, not Hessian
+      entries at Gamma; a genuine Hessian needs beta = 2*alpha, violated by the
+      historical kernel. At R the Hessian is isotropic, -(alpha+beta)/6 I.
+      Numerical values unchanged; the "Hessian" label is superseded.
+
+  - id: C13
+    title: C-even second-order hopping
+    status: resolved
+    resolution: "-481/612 superseded by -11/306 (the vacuum-mediated route was omitted)"
+
+  - id: C14
+    title: Betti "+2"
+    status: resolved
+    resolution: "Reinterpreted as b_2 - b_3; the open box has no extra states"
+
+  - id: C15
+    title: Tetrahedral local coefficient
+    status: unresolved-in-corpus
+    resolution: "Artifact absent; treat as record-backed"
+    blocks: [G5]
+
+  - id: C16
+    title: SU(5)/SU(6) fourth-order completeness
+    status: unresolved-in-corpus
+    resolution: "Later document controls, but machine-readable payloads are absent -> record-backed"
+    blocks: [G1]
+
+  - id: C17
+    title: Fixed-rank holdout overclaim
+    status: resolved
+    resolution: >
+      Corrected: q_N matches stored values for N=7..18, but full kernels only at
+      N=7,8; the A/B sample ledger remains open.
+    blocks: [G6]
+
+  - id: C18
+    title: "Center-only circuits are dynamically dark"
+    status: falsified
+    resolution: "Refuted by the exact fifth-order determinant correction delta c_5,det != 0"
+
+  - id: C19
+    title: Global fixed-window firewall
+    status: falsified
+    resolution: "Disproved by the Bernoulli no-go; replaced by the rooted conditional calculus"
+
+  - id: C20
+    title: RUN15 internal display artifact
+    status: resolved
+    section: "§8"
+    sides:
+      - label: gate value (intended, exact)
+        value: "-1474623/1675520"
+        decimal: -0.8800987156226127
+        kind: exact-rational
+      - label: printed float-reconstruction
+        value: "-521965902/593076541"
+        decimal: -0.8800987156226097
+        kind: float-reconstruction
+    resolution: "Cosmetic; the gate value is the intended exact one"
+    machine_finding: >
+      The register states both "equal -0.88009871562... to float precision".
+      They do not: the two differ by 3.0e-15, about 31 ulps, agreeing to ~14
+      significant digits only. The decimal printed throughout the corpus
+      (-0.8800987156226097) is the ARTIFACT's value; the exact gate value is
+      -0.8800987156226127. Still cosmetic, but the wording overstates agreement.
+
+  - id: C21
+    title: Monte Carlo gate integrity
+    status: resolved
+    resolution: >
+      next14.json's "23/23 gates" is downgraded: one gate is a literal truth
+      value, the JSON is not source-hash bound (non-RFC NaN tokens), and no raw
+      ensemble exists. Numbers stand as structured numerical evidence; the
+      certificate claim does not.
+
+  - id: C22
+    title: Gate-85 equality
+    status: resolved
+    resolution: >
+      Not a numerical contradiction but a status correction: the final diagonal
+      shift was chosen to produce exactly that equality, so gate 85 certifies
+      internal bookkeeping, not independent agreement.
