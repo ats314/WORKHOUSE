@@ -308,6 +308,46 @@ EXCEPTIONAL_RANKS = (3, 4, 5, 6)
 
 
 # --------------------------------------------------------------------------
+# Primitive cell-completion family (G5 / C15)
+# --------------------------------------------------------------------------
+# The corpus's restricted primitive color law (transcript
+# #-Final-unified-theory.txt ~148-173; GLUEBALL v3_1 ~1174, unsigned form):
+#
+#     c_{r,prim}(N) = S_r/(N^r C_F^(r-1)) = 2^(r-1) S_r/(N (N^2-1)^(r-1)),
+#
+# printed table: tetrahedron r=2, triangular prism (square sector) r=3, cube
+# (opposite faces) r=4, pentagonal prism (cap sector) r=5. The tetrahedral row
+# is asserted with NO artifact and NO reference SHA anywhere in the corpus
+# (C15; the restored-payloads FINDING pins the absence) — its corpus evidence
+# level is prose-only, and it is certified only because workhouse.cellular
+# re-derives it (G5, T1). These are PRIMITIVE simple-loop-channel values:
+# folded/linked terms, Fierz side channels, and determinant sectors are outside
+# the law by its own statement (the SU(3) fifth-order determinant dressing
+# corrects the pentagonal row's physical value — C18).
+_C_PRIM_NUMERATORS = {2: Rational(-8), 3: Rational(64), 4: Rational(-160), 5: Rational(1120)}
+
+
+def c_prim_printed(r, n=N):
+    """The corpus's printed primitive completion coefficient at order r."""
+    n = sympify(n)
+    return _C_PRIM_NUMERATORS[r] / (n * (n**2 - 1) ** (r - 1))
+
+
+#: SU(3) values of the printed rows. The cube row's is CUBE_COMPLETION_4 above.
+TETRA_COMPLETION_2_SU3 = Rational(-1, 3)
+PRISM_COMPLETION_3_SU3 = Rational(1, 3)
+PENT_COMPLETION_5_SU3 = Rational(35, 384)
+#: The shipped notebook's CAP-sector value for the triangular prism
+#: (NB_HAAR_prismatic_minimal_cell_escape_test.ipynb, 24/24 gates). NOT a rival
+#: of PRISM_COMPLETION_3_SU3: same cell, different endpoint sector (caps vs the
+#: retained vertical squares). 818.txt ~3402 records the supersession of 24 by
+#: 64 as the choice of physical sector, not an arithmetic correction.
+PRISM_CAP_COMPLETION_3_SU3 = Rational(1, 8)
+#: Printed third-order prism bandwidth: 6 * c_3(3) (THM_FLUX §3.2).
+PRISM_BANDWIDTH_3_SU3 = Rational(2)
+
+
+# --------------------------------------------------------------------------
 # Homology / finite volume
 # --------------------------------------------------------------------------
 def dim_z2(extent=L):
@@ -395,6 +435,15 @@ REGISTRY: tuple[Constant, ...] = (
         "record-backed",
         "MASTER_THEORY §5.5",
         "rejected by both sides",
+    ),
+    Constant(
+        "c_2^tet (primitive)",
+        c_prim_printed(2),
+        "conditional",
+        "prose-only",
+        "transcript #-Final-unified-theory ~170; THM_FLUX mobility theorem §5",
+        "asserted with no artifact or reference SHA (C15); re-derived at T1 by "
+        "workhouse.cellular (G5) — conditional on the primitive-channel scope",
     ),
 )
 

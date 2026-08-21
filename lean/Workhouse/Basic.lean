@@ -137,4 +137,58 @@ theorem extraction_D (A B C D : ℚ) :
 /-- The cycle count on the three-torus: cube boundaries plus the harmonic triplet. -/
 theorem dim_Z₂ (L : ℤ) : (L ^ 3 - 1) + 3 = L ^ 3 + 2 := by ring
 
+/-! ## The primitive cell-completion family (G5)
+
+The enumeration that produces each signed count `S_r` — temporal orderings,
+merge hypotheses, resolvent denominators — lives in `workhouse.cellular` at
+T1. What is provable here is the rational-algebra layer: the law's two printed
+forms agree, the counts produce the printed rows, and the rows take their
+recorded SU(3) values. -/
+
+/-- The primitive completion law in its Casimir form, at the target order
+r = 2: one resolvent, so a single factor of `C_F = (n² − 1)/(2n)`. -/
+noncomputable def cPrimTwo (S n : ℚ) : ℚ := S / (n ^ 2 * ((n ^ 2 - 1) / (2 * n)))
+
+/-- The four printed rows of the family. -/
+noncomputable def tetraCompletion (n : ℚ) : ℚ := -8 / (n * (n ^ 2 - 1))
+
+noncomputable def prismCompletion (n : ℚ) : ℚ := 64 / (n * (n ^ 2 - 1) ^ 2)
+
+noncomputable def cubeCompletion (n : ℚ) : ℚ := -160 / (n * (n ^ 2 - 1) ^ 3)
+
+noncomputable def pentCompletion (n : ℚ) : ℚ := 1120 / (n * (n ^ 2 - 1) ^ 4)
+
+/-- The law's two printed forms are one identity at the target order: the
+Casimir form with count `S` is the `2^(r−1) S / (N(N²−1)^(r−1))` form. -/
+theorem cPrimTwo_forms (S n : ℚ) (h0 : n ≠ 0) (h1 : n ^ 2 - 1 ≠ 0) :
+    cPrimTwo S n = 2 * S / (n * (n ^ 2 - 1)) := by
+  unfold cPrimTwo; field_simp
+
+/-- The tetrahedral count `S₂ = −4` produces the asserted row `−8/(N(N²−1))`. -/
+theorem tetra_from_count (n : ℚ) (h0 : n ≠ 0) (h1 : n ^ 2 - 1 ≠ 0) :
+    cPrimTwo (-4) n = tetraCompletion n := by
+  unfold tetraCompletion
+  rw [cPrimTwo_forms (-4) n h0 h1]; ring
+
+/-- The SU(3) tetrahedral value. -/
+theorem tetraCompletion_three : tetraCompletion 3 = -1 / 3 := by
+  unfold tetraCompletion; norm_num
+
+/-- The SU(3) prism (square-sector) value. -/
+theorem prismCompletion_three : prismCompletion 3 = 1 / 3 := by
+  unfold prismCompletion; norm_num
+
+/-- The SU(3) cube value is minus the sealed shape coefficient. -/
+theorem cubeCompletion_three : cubeCompletion 3 = -A_shp := by
+  unfold cubeCompletion A_shp; norm_num
+
+/-- The SU(3) pentagonal (cap-sector) value. -/
+theorem pentCompletion_three : pentCompletion 3 = 35 / 384 := by
+  unfold pentCompletion; norm_num
+
+/-- The axial law is −4 times the cube row, at every rank — the bridge between
+the completion family and the sealed core's `alphaPen`. -/
+theorem alphaPen_eq_neg_four_cube (n : ℚ) : alphaPen n = -4 * cubeCompletion n := by
+  unfold alphaPen cubeCompletion; ring
+
 end Workhouse
