@@ -206,30 +206,37 @@ C_SHP_NEW_NUM = -0.020213328886166577
 #: is 2.082770125095641678..., which correctly rounds to ...417. The corpus
 #: prints ...414, one ulp low, because it rounds q_band^(4) to a double before
 #: subtracting. Benign, but the printed digit is not the correctly rounded one.
-DELTA_GAMMA = 2.0827701250956417
-DELTA_GAMMA_AS_PRINTED = 2.0827701250956414
+DELTA_GAMMA_NUM = 2.0827701250956417
+DELTA_GAMMA_AS_PRINTED_NUM = 2.0827701250956414
 #: The residual off-axis discrepancy, C_new - C_old. This one is real.
-DELTA_C = 0.027873054295192174
+DELTA_C_NUM = 0.027873054295192174
+#: Corpus-recorded off-axis band splits at M and R (8*Delta_C and 16*Delta_C)
+#: and the recorded new-kernel diagonal beta_new = 8A + 16*C_new. Registered so
+#: search-by-value reaches them and the two suites that quote them cannot
+#: drift apart via independently edited inline literals.
+M_SPLIT_RECORDED_NUM = 0.2229844343615374
+R_SPLIT_RECORDED_NUM = 0.4459688687230748
+BETA_PEN_NEW_NUM = 0.5099200711546681
 
-W4_HISTORICAL = 0.48061786909826
+W4_HISTORICAL_NUM = 0.48061786909826
 W4_NEW_NUM = 0.9265867378213348
 
 #: Hamer-convention cross-check. a_4 is a notebook transcription that has NOT
 #: been pinned to a hashed primary table (GLUEBALL §2.3) — a local normalization
 #: check, not primary-source verification.
-HAMER_A4 = -0.0968932328773
+HAMER_A4_NUM = -0.0968932328773
 HAMER_TOLERANCE = 5.3e-13
 
 #: Rejected by both sides; recorded so it is never silently resurrected.
 QUARANTINED_SCALAR = Rational(-160506019419340168451, 14501180577204921600)
-RAW_FOLDED_AXIAL_GAMMA = -11.9485781794007
+RAW_FOLDED_AXIAL_GAMMA_NUM = -11.9485781794007
 #: Exact gate value for the linked vacuum O(u**4) subtraction around the mark.
 LINKED_VACUUM_4 = Rational(-1474623, 1675520)
 #: The float-reconstruction that RUN15 printed instead (C20).
 LINKED_VACUUM_4_ARTIFACT = Rational(-521965902, 593076541)
 #: Diagonal shift actually applied in the 15-hour run. Target-derived, NOT
-#: DELTA_GAMMA, and disclosed as such (GLUEBALL §9.2; C22).
-RUN15_APPLIED_SHIFT = 11.17343231638178
+#: DELTA_GAMMA_NUM, and disclosed as such (GLUEBALL §9.2; C22).
+RUN15_APPLIED_SHIFT_NUM = 11.17343231638178
 
 #: Cross-coefficient of the historical fourth-order sum-of-squares numerator.
 Q4_CROSS = Rational(17607806155349, 1101327605164800)  # = BETA_PEN_3 / 4
@@ -241,8 +248,23 @@ Q4_CROSS = Rational(17607806155349, 1101327605164800)  # = BETA_PEN_3 / 4
 # Standard isotropic Kogut-Susskind electric Hamiltonian H_0 = (1/2) sum_e E_e^2.
 # The two face energies differ, which is what forces the choice of physical
 # degenerate eigenspace before anything else (C8, R21).
-E_CAP = Rational(10, 3)
-E_SIDE = Rational(8, 3)
+
+
+def electric_energy(length, n=N):
+    """Rest energy of a simple fundamental-flux loop of `length` links.
+
+    THE electric convention, in one place: H_0 = (1/2) sum_e E_e^2, so each
+    excited link costs C_F/2 with C_F = (N**2-1)/(2N). E_CAP and E_SIDE below
+    are its length-5 and length-4 SU(3) values, and workhouse.cellular's
+    resolvent denominators (E_0 - E_j)/C_F = (l_0 - l_j)/2 are the same
+    convention in C_F units — the cellular suite checks the coincidence.
+    """
+    n = sympify(n)
+    return sympify(length) * (n**2 - 1) / (4 * n)
+
+
+E_CAP = electric_energy(5, 3)  # = 10/3, the pentagonal cap face
+E_SIDE = electric_energy(4, 3)  # = 8/3, a square face; also e_flat(0)
 
 #: Endpoint subtotals over the 48 fixed-side histories; their difference IS the
 #: coefficient, derived by two independent backends without embedding the target.
@@ -422,7 +444,7 @@ REGISTRY: tuple[Constant, ...] = (
     ),
     Constant(
         "Hamer a_4",
-        HAMER_A4,
+        HAMER_A4_NUM,
         "conditional",
         "record-backed",
         "GLUEBALL §2.3",
@@ -451,6 +473,23 @@ REGISTRY: tuple[Constant, ...] = (
 # --------------------------------------------------------------------------
 # The old-to-new crosswalk
 # --------------------------------------------------------------------------
+def cubic_invariants(k):
+    """The Bloch scalars (q, e_2, e_3) of a_i = 4 sin^2(k_i/2).
+
+    The single home of the cubic-invariant basis (U2's claim is that every
+    fourth-order shape coefficient is a symmetric function of exactly these).
+    Built here once so phi_c, the extraction ansatz, and the tier-collapse
+    analysis cannot drift into three separately edited copies.
+    """
+    from sympy import sin as _sin
+
+    a = [4 * _sin(sympify(ki) / 2) ** 2 for ki in k]
+    q = a[0] + a[1] + a[2]
+    e2 = a[0] * a[1] + a[0] * a[2] + a[1] * a[2]
+    e3 = a[0] * a[1] * a[2]
+    return q, e2, e3
+
+
 def phi_c(k):
     """Off-axis shape function Phi_C(k) = 4*e_2(k)/Q(k).
 
@@ -459,11 +498,7 @@ def phi_c(k):
     exactly why a Gamma-point scalar can pin the anchoring offset while leaving
     the off-axis kernel wholly unconstrained.
     """
-    from sympy import sin as _sin
-
-    a = [4 * _sin(sympify(ki) / 2) ** 2 for ki in k]
-    q = a[0] + a[1] + a[2]
-    e2 = a[0] * a[1] + a[0] * a[2] + a[1] * a[2]
+    q, e2, _e3 = cubic_invariants(k)
     return 4 * e2 / q
 
 
@@ -471,8 +506,8 @@ def crosswalk(c_old, k):
     """c_4_new(k) = c_4_old(k) + Delta_Gamma + Delta_C * Phi_C(k).
 
     The scalar term re-anchors and moves nothing observable. Only the Phi_C
-    term can change the dispersion, so bandwidth is preserved only if DELTA_C
+    term can change the dispersion, so bandwidth is preserved only if DELTA_C_NUM
     vanishes or is absorbed by an exact operator identity. Neither is
     established.
     """
-    return c_old + DELTA_GAMMA + DELTA_C * phi_c(k)
+    return c_old + DELTA_GAMMA_NUM + DELTA_C_NUM * phi_c(k)

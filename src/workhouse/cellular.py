@@ -92,6 +92,17 @@ def weingarten_1():
     return Matrix([[N]]).inv()[0, 0]
 
 
+def weingarten_2():
+    """The order-2 Weingarten pair (Wg(e), Wg((12))), from the Gram inverse.
+
+    The Gram matrix on S_2 is G[s,t] = N**cycles(s·t^-1): cycles(e) = 2,
+    cycles((12)) = 1. One home for the matrix the published-comparisons suite
+    previously built inline three times.
+    """
+    wg = Matrix([[N**2, N], [N, N**2]]).inv()
+    return simplify(wg[0, 0]), simplify(wg[0, 1])
+
+
 def _rotate_to_last(word, pos):
     return word[pos + 1 :] + word[: pos + 1]
 
@@ -318,6 +329,15 @@ TETRAHEDRON = Cell("tetrahedron", ((1, 2, 3), (1, 3, 4), (1, 4, 2), (2, 4, 3)))
 TRIANGULAR_PRISM = prism(3)
 CUBE = prism(4)
 PENTAGONAL_PRISM = prism(5)
+
+#: Endpoint sectors, BY NAME. The 24-vs-64 pair is exactly a sector mixup
+#: waiting to happen: a printed completion coefficient is (cell, sector), not
+#: a number. CAP_SECTOR is the two n-gon caps of a prism — for the cube, the
+#: opposite-face pair of the retained xy sector. SQUARE_SECTOR is two vertical
+#: squares — the triangular-prism program's retained space, whose printed row
+#: is 64, not the cap sector's 24.
+CAP_SECTOR = (0, 1)
+SQUARE_SECTOR = (2, 3)
 
 
 def catalan_cap_coefficient(sides):

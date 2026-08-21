@@ -1,0 +1,85 @@
+# Citation aliases: the document names check `section` strings actually use,
+# mapped to the file each one names — with its STANDING, because citing a
+# superseded document as if current is exactly how a wrong section number
+# starts reading as authority.
+#
+# Observed, not invented: an alias earns a `path` only when the file was
+# verified to carry the cited content, and an alias whose referent has not
+# been identified is recorded with `unresolved: true` rather than guessed —
+# a recorded unknown beats a plausible wrong mapping. tests/test_documents.py
+# checks every path exists, every standing is in the closed set, and every
+# check's citation resolves to something: an alias here, a ledger/ADR id, or
+# a repository path. A NEW unlegended alias is a test failure.
+#
+# Standing vocabulary:
+#   current     — the governing v4.3 stack in theory/
+#   superseded  — theory/superseded/: audit trail, never current
+#   quarantined — upstream's own path index marks it quarantine_only
+#   corpus      — corpus-import/: evidence, T3 like everything there
+#   repo        — this repository's own files
+schema: documents/v1
+
+aliases:
+  - alias: UNIFIED
+    path: theory/MASTER_THEORY_UNIFIED_2026-08-20_v4_3.md
+    standing: current
+    note: the governing document; "v4.3" cites resolve here too
+  - alias: v4.3
+    path: theory/MASTER_THEORY_UNIFIED_2026-08-20_v4_3.md
+    standing: current
+  - alias: MASTER_THEORY
+    path: theory/superseded/MASTER_THEORY.md
+    standing: superseded
+    note: >
+      the historical register whose §-numbering C1-C22 and most check cites
+      carry. Its sections are stable and citable as HISTORY; the governing
+      treatment of any claim lives in UNIFIED, and theory/CLAUDE.md forbids
+      reading this file as current.
+  - alias: GLUEBALL
+    path: theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md
+    standing: current
+    note: >
+      upstream documents cite it as GLUEBALL_DETAILED_FORMULA_DOCUMENT_
+      2026-08-20_v3_1.md — same content, local filename drift.
+  - alias: PAPER
+    path: corpus-import/papers/flat_band/PAPER_FLUX_glueball_flat_band_v1_1.tex
+    standing: corpus
+    note: "'PAPER eq. 7' / 'PAPER App. B' — carries the SU(3) second-order ledger"
+  - alias: GCSG
+    path: corpus-import/papers/gauge_constrained_spectral_geometry/PAPER_FLUX_gauge_constrained_spectral_geometry_unified_v1_4_2026-08-08.md
+    standing: corpus
+    note: "'GCSG (Aug 8)' — carries the SU(6) determinant correction 6/343"
+  - alias: THM_FLUX
+    path: corpus-import/theory/notes/THM_FLUX_hodge_cellular_circuit_mobility_theorem.md
+    standing: corpus
+    note: the cellular mobility theorem; provenance.yaml pins it with quotes
+  - alias: transcript
+    path: "corpus-import/records/transcripts/#-Final-unified-theory.txt"
+    standing: corpus
+    note: "'transcript ~170' style cites; provenance.yaml pins it with quotes"
+  - alias: "818"
+    path: corpus-import/records/transcripts/818.txt
+    standing: corpus
+    note: "'818 ~3963' style cites; provenance.yaml pins it with quotes"
+  - alias: quarantined master v3
+    path: corpus-import/corpus/MASTER_THEORY_UNIFIED_2026-08-20_v3.md
+    standing: quarantined
+    note: >
+      upstream's own path index marks it quarantine_only; cite only as a
+      historical claim, and never let its erratum list override the checks.
+  - alias: CANON
+    unresolved: true
+    note: >
+      'CANON §10.2/§10.5' (the N^3 t_N monotonicity cite). The referent has
+      NOT been identified: v4.3 §10.2 is the Monte Carlo record, not the
+      monotonicity statement, so CANON is some other canonical document.
+      Recorded as unknown rather than guessed — resolving it means finding
+      the file whose §10.2/§10.5 actually carry the claim.
+  - alias: MOB
+    unresolved: true
+    note: >
+      'MOB §4' (the alpha_3 = 4|c_4^square| cite). Candidate:
+      corpus-import/theory/theorems/THM_O4_universal_fourth_order_mobility_
+      theorem_v2_2026-08-08.md, which carries alpha_3 = 5/12 — but its §4 has
+      not been verified to state the cited identity, so the mapping stays
+      unresolved until someone checks.

@@ -58,3 +58,33 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
           shellcheck scripts/*.sh .claude/hooks/*.sh
+
+  # The T0 tier means "Lean 4 compiles it, no sorry" — which is only true if
+  # something actually compiles it. The session brief counts theorems by
+  # regex; this job is what makes a green run mean the proofs check.
+  lean:
+    name: Lean (T0)
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+      - name: Cache elan and mathlib
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.elan
+            lean/.lake
+          key: lean-${{ hashFiles('lean/lean-toolchain', 'lean/lake-manifest.json') }}
+      - name: Install elan
+        run: |
+          if [ ! -x "$HOME/.elan/bin/elan" ]; then
+            curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              | sh -s -- -y --default-toolchain none
+          fi
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch mathlib cache and build
+        working-directory: lean
+        run: |
+          lake exe cache get
+          lake build
+          echo "Lean core: proof-checked, no sorries"

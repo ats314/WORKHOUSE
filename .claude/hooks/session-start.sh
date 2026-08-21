@@ -46,4 +46,11 @@ print(json.dumps({
     }
 }))
 PY
+else
+  # A degraded session is the one that needs orientation most. Emit a static
+  # minimal brief instead of silence: where authority lives, that the
+  # environment is broken, and the traps that do not need a working venv.
+  cat <<'JSON'
+{"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": "WORKHOUSE — verification layer over a research corpus. The computed frontier brief is UNAVAILABLE (no venv or the package failed to import): run `make bootstrap`, then `workhouse frontier --brief`. Until then: read FRONTIER.md, AGENTS.md, CLAUDE.md before changing anything. Standing traps: never edit theory/ or corpus-import/; never promote either side of C2; exact rationals stay sympy.Rational and floats carry _NUM; never apply a 4**r rescaling; never widen a tolerance."}}
+JSON
 fi

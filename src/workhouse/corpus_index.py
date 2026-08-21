@@ -145,6 +145,50 @@ def scan(root: Path | None = None, exts: set[str] | None = None) -> dict[Fractio
     return table
 
 
+def scan_cached(
+    root: Path | None = None, exts: set[str] | None = None
+) -> dict[Fraction, ConstantRecord]:
+    """`scan`, memoised on disk across invocations.
+
+    The corpus is pinned and effectively immutable, so one full build (a few
+    seconds over 928 files) can be amortised across a whole session of
+    `workhouse search --corpus` calls. The key is a fingerprint over the file
+    list, sizes, and mtimes; any corpus change silently misses and rebuilds.
+    The cache lives outside the repository so it can never dirty the tree.
+    """
+    import hashlib
+    import os
+    import pickle
+    import tempfile
+
+    root = root or CORPUS_DIR
+    exts = exts if exts is not None else (CODE_EXTS | PROSE_EXTS)
+    files = sorted(_iter_files(root, exts))
+    hasher = hashlib.sha256()
+    for path in files:
+        try:
+            st = path.stat()
+        except OSError:
+            continue
+        hasher.update(f"{path}|{st.st_size}|{st.st_mtime_ns}\n".encode())
+    cache_dir = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "workhouse"
+    cache = cache_dir / f"corpus-scan-{hasher.hexdigest()[:24]}.pkl"
+    if cache.exists():
+        try:
+            return pickle.loads(cache.read_bytes())
+        except Exception:
+            pass  # corrupt cache: rebuild below
+    table = scan(root, exts)
+    try:
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        with tempfile.NamedTemporaryFile(dir=cache_dir, delete=False) as tmp:
+            tmp.write(pickle.dumps(table))
+        Path(tmp.name).replace(cache)
+    except OSError:
+        pass  # caching is a convenience, never a requirement
+    return table
+
+
 def unvouched(code_table, prose_table, min_files: int = 2) -> list[ConstantRecord]:
     """Constants that live in code but that no prose file carries.
 

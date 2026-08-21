@@ -50,7 +50,7 @@ def test_the_hamer_edge_stays_marked_as_a_transcription():
     upgrades this edge to `verified`, they must have actually obtained the
     paper — this test is the place that forces the question.
     """
-    edges = L.load().bearing_on("HAMER_A4")
+    edges = L.load().bearing_on("HAMER_A4_NUM")
     supplies = [e for _p, e in edges if e["relation"] == "supplies-value"]
     assert len(supplies) == 1
     assert supplies[0]["status"] == "transcription-unverified", (

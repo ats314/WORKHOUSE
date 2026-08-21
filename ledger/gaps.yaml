@@ -7,6 +7,7 @@ source: theory/MASTER_THEORY.md §9
 gaps:
   - id: G1
     tier: 0
+    state: partial
     title: Ship or restore machine-readable payloads that are only record-backed
     status: >
       largely discharged 2026-08-21 — three of five families were shipped all
@@ -26,6 +27,7 @@ gaps:
 
   - id: G2
     tier: 0
+    state: discharged
     title: Regenerate all displayed tables in canonical u
     status: >
       discharged 2026-08-21 — the conversion statement is now arithmetic
@@ -37,6 +39,7 @@ gaps:
 
   - id: G3
     tier: 1
+    state: open
     title: Fourth-order adjudication — run the marked-cluster engine target-blind
     detail: >
       The 11-item frozen protocol of GLUEBALL §18.1. This is the load-bearing
@@ -47,6 +50,10 @@ gaps:
       structurally incapable of constraining Delta_C.
     resolves: [C2, C3, C22]
     unblocks: [G9]
+    leads:
+      - settlement/mce_adjudication_harness.py
+      - settlement/README.md
+      - theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md
     protocol:
       - erratum-fixed canonical u normalization
       - exact order-four occurrence schedule
@@ -99,8 +106,15 @@ gaps:
 
   - id: G4
     tier: 1
+    state: partial
     title: Pentagonal O(u^4) closure in-corpus
+    status: >
+      partial — the raw history Gram/Haar frontier is closed (8/8 gates, cold
+      rerun in settlement/); the Fierz closure, physical quotient, and summed
+      resolvent compression remain (see progress.remaining).
     detail: "Fierz closure of the 20-history cut spaces, Gram quotient, physical resolvents, summed compression."
+    leads:
+      - settlement/cold_rerun_pentagonal_frontier.txt
     progress:
       artifact: settlement/cold_rerun_pentagonal_frontier.txt
       gates: 8/8
@@ -125,6 +139,7 @@ gaps:
 
   - id: G5
     tier: 1
+    state: discharged
     title: Tetrahedral local Haar-resolvent coefficient
     status: >
       discharged 2026-08-21 — the r = 2 instance of the primitive completion
@@ -138,36 +153,49 @@ gaps:
       weight at every rank. Physical survival after compression/Q-projection
       remains U3's question and is not asserted.
     detail: "Cheap falsification test of circuit-allowance versus survival."
+    leads:
+      - src/workhouse/cellular.py
+      - docs/decisions/0008-the-tetrahedral-coefficient-closes-by-re-derivation.md
     resolves: [C15]
 
   - id: G6
     tier: 1
+    state: open
     title: B_N fixed-rank holdout ledger for N = 7..18
+    leads:
+      - corpus-import/numerics/certificates/CERT_MISC_q_numerator_newton_coefficients.json
+      - corpus-import/numerics/certificates/CERT_MISC_b_newton_coefficients.json
+      - src/workhouse/payloads.py
     resolves: [C17]
 
   - id: G7
     tier: 1
+    state: open
     title: Native torelon reruns of sigma_5 and sigma_6
     detail: "Replace the KPS historical targets."
 
   - id: G8
     tier: 1
+    state: open
     title: Cold one-shot regeneration of the all-rank fourth-order bundle
     detail: "Promotes output-certified to cold-certified."
 
   - id: G9
     tier: 2
+    state: open
     title: "m_6: global sixth-order geometry census"
     detail: "Contraction with external-memory sharding; folded weights and carrier census pre-cleared."
     depends_on: [G3]
 
   - id: G10
     tier: 2
+    state: open
     title: Full fifth-order pentagonal coefficient
     detail: "Support-resolved folds for the 572 return histories before rooted subtraction."
 
   - id: G11
     tier: 2
+    state: partial
     title: Interval rigor and near-Gamma touching gates
     status: partially discharged
     detail: >
@@ -200,11 +228,13 @@ gaps:
 
   - id: G12
     tier: 2
+    state: open
     title: Hyperhoneycomb O(u) candidate
     detail: "Tests the framework beyond cubic cells."
 
   - id: G13
     tier: 3
+    state: open
     title: Classification theorem for shortest physical temporal histories
     detail: >
       Determine r_escape from the energy-decorated incidence/Feshbach graph
@@ -214,6 +244,7 @@ gaps:
 
   - id: G14
     tier: 3
+    state: open
     title: Mechanism of the tier collapse B_shp = D_shp = 0
     status: open — better posed, one mechanism tried and retracted
     detail: >
@@ -254,16 +285,19 @@ gaps:
 
   - id: G15
     tier: 3
+    state: open
     title: Symbolic-N Gram transcript
     detail: "Promotes c_1, c_2 to unrestricted fixed-N theorems; one more order of the equivariant harmonic-well lemma."
 
   - id: G16
     tier: 3
+    state: open
     title: Rank-uniform control in tau = beta/N^3
     detail: "Neither fixed-regime series supplies an overlap theorem."
 
   - id: G17
     tier: 3
+    state: open
     title: "PC-2 free-energy stability and the source-radius reduction"
     detail: >
       The two named hypotheses gating EVERY infinite-volume statement:
@@ -273,6 +307,7 @@ gaps:
 
   - id: G18
     tier: 3
+    state: open
     title: The spectral bridge
     detail: >
       Volume-uniform overlap of a smeared/dressed T_1^{+-} operator built on the
@@ -292,6 +327,7 @@ gaps:
 
   - id: G19
     tier: 3
+    state: open
     title: Continuum limit
     detail: "Nothing in the corpus reaches the scaling window; Borel-Pade is consistent, not controlled."
 

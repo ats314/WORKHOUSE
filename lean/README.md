@@ -15,8 +15,8 @@ reproducible even though `lakefile.toml` tracks mathlib's `master`.
 ## Scope, stated honestly
 
 `Workhouse/Basic.lean` formalises the **exact-rational and polynomial-identity
-layer** — 21 theorems, no `sorry`, standard axioms only
-(`propext`, `Classical.choice`, `Quot.sound`).
+layer** — no `sorry`, standard axioms only (`propext`, `Classical.choice`,
+`Quot.sound`). The live theorem count is in `FRONTIER.md` §1.
 
 That layer is real and it is now machine-checked. It is **not** the physics.
 No perturbative derivation, no operator theory, and nothing touching the

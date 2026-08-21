@@ -134,13 +134,32 @@ def explain(
     gap = next((g for g in led.gaps if g["id"] == node), None)
     if gap:
         cost = frontier_mod.TIER_COST.get(gap["tier"], "")
+        state = gap.get("state", "open")
         w("")
-        w(f"\033[1mGap standing\033[0m  tier {gap['tier']} — {cost}")
-        open_prerequisites = sorted(set(gap.get("depends_on", [])) & led.gap_ids)
+        w(f"\033[1mGap standing\033[0m  {state} · cost tier {gap['tier']} — {cost}")
+        if state != "open" and gap.get("status"):
+            w(f"  {' '.join(str(gap['status']).split())}")
+        open_prerequisites = sorted(set(gap.get("depends_on", [])) & led.open_gap_ids)
         if open_prerequisites:
             w(f"  blocked behind: {', '.join(open_prerequisites)}")
         if gap.get("protocol"):
             w(f"  frozen protocol: {len(gap['protocol'])} items in ledger/gaps.yaml")
+        for key in ("inventory_trap", "note", "external_sharpening"):
+            if gap.get(key):
+                w(f"  {key}: {' '.join(str(gap[key]).split())}")
+        if gap.get("leads"):
+            w("  leads:")
+            for lead in gap["leads"]:
+                w(f"    {lead}")
+        # Structured sub-blocks are too big to print; say they exist and where.
+        elided = [
+            key
+            for key, value in gap.items()
+            if isinstance(value, dict | list)
+            and key not in ("resolves", "unblocks", "depends_on", "protocol", "leads")
+        ]
+        if elided:
+            w(f"  \033[2malso in ledger/gaps.yaml: {', '.join(sorted(elided))}\033[0m")
         row = next((r for r in frontier_mod._downstream(led) if r[0] == node), None)
         if row and row[1]:
             w(f"  gates {row[1]} downstream: {', '.join(row[2])}")

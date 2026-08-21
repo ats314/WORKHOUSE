@@ -49,6 +49,7 @@ class Frontier:
     refuted: list[dict[str, Any]]
     retracted: list[tuple[str, str]]
     open_gaps: list[dict[str, Any]]
+    discharged_gaps: list[dict[str, Any]]
     downstream: list[tuple[str, int, list[str]]]
     cheapest: list[dict[str, Any]]
     spine: list[str]
@@ -122,8 +123,10 @@ def _downstream(led: ledger_mod.Ledgers) -> list[tuple[str, int, list[str]]]:
         return seen
 
     ranked = []
-    for g in led.gaps:
-        reached = sorted(closure(g["id"]))
+    for g in led.open_gaps:
+        # A discharged gap gates nothing: its work is done, whatever still
+        # cites it. Reached ids that are themselves discharged drop out too.
+        reached = sorted(closure(g["id"]) & led.open_gap_ids)
         resolves = sorted(c for c in g.get("resolves", []) if c not in settled)
         ranked.append((g["id"], len(reached) + len(resolves), reached + resolves))
     ranked.sort(key=lambda row: (-row[1], row[0]))
@@ -142,8 +145,8 @@ def _cheapest(led: ledger_mod.Ledgers) -> list[dict[str, Any]]:
     contradiction whose status is already resolved.
     """
     settled = {c["id"] for c in led.contradictions if c["status"] == "resolved"}
-    unresolved = led.gap_ids
-    ready = [g for g in led.gaps if not (set(g.get("depends_on", [])) & unresolved)]
+    unresolved = led.open_gap_ids
+    ready = [g for g in led.open_gaps if not (set(g.get("depends_on", [])) & unresolved)]
     decisive = []
     for g in ready:
         still_open = [c for c in g.get("resolves", []) if c not in settled]
@@ -171,7 +174,8 @@ def compute() -> Frontier:
         disputed=led.open_contradictions,
         refuted=[c for c in led.contradictions if c["status"] == "falsified"],
         retracted=_retracted(),
-        open_gaps=led.gaps,
+        open_gaps=led.open_gaps,
+        discharged_gaps=led.discharged_gaps,
         downstream=_downstream(led),
         cheapest=_cheapest(led),
         spine=led.dependency_spine,
@@ -270,7 +274,17 @@ def render(f: Frontier) -> str:
         w("")
         for g in rows:
             bearing = " **[load-bearing]**" if g.get("load_bearing") else ""
-            w(f"- `{g['id']}` {g['title']}{bearing}")
+            partial = (
+                " *(partial — see its status in the ledger)*" if g.get("state") == "partial" else ""
+            )
+            w(f"- `{g['id']}` {g['title']}{bearing}{partial}")
+        w("")
+    if f.discharged_gaps:
+        w("**Discharged** — finished work stays recorded, not re-queued:")
+        w("")
+        for g in f.discharged_gaps:
+            first = " ".join(str(g.get("status", "")).split()).split(" — ")[0]
+            w(f"- `{g['id']}` {g['title']} — {first}")
         w("")
 
     w("## 6. What blocks the most downstream theory")
@@ -280,9 +294,12 @@ def render(f: Frontier) -> str:
     w("")
     w("| Gap | Gates | What cannot move until it does |")
     w("|---|---|---|")
-    for gid, weight, reached in f.downstream[:6]:
+    gated = [row for row in f.downstream if row[1]]
+    for gid, weight, reached in gated[:6]:
         title = next(g["title"] for g in f.open_gaps if g["id"] == gid)
-        w(f"| `{gid}` {title} | {weight} | {', '.join(reached) or '—'} |")
+        w(f"| `{gid}` {title} | {weight} | {', '.join(reached)} |")
+    if not gated:
+        w("| — | 0 | nothing currently gates anything |")
     w("")
     for line in f.spine:
         w(f"- {line}")
@@ -354,7 +371,8 @@ def brief() -> str:
         "",
         f"State: {f.checks_passed}/{f.checks_total} checks pass, "
         f"{f.lean_theorems} Lean theorems with {f.lean_sorries} sorry. "
-        f"{len(f.disputed)} open contradiction, {len(f.open_gaps)} gaps.",
+        f"{len(f.disputed)} open contradiction, {len(f.open_gaps)} open gaps "
+        f"({len(f.discharged_gaps)} discharged).",
         "",
         "Strongest work first: CERTIFIED.md ranks every checked claim by tier "
         "(T0 Lean, T1 exact, T2 numerical) and gives each one a re-check "
@@ -382,7 +400,9 @@ def brief() -> str:
         "corpus-import/ is 950 files and ~61 context windows — target it, never "
         "read it recursively. Exact rationals are the join keys, not concepts.",
         "",
-        "Commands: workhouse frontier | verify | status; make check.",
+        "Commands: workhouse search <value|symbol|id> | why <id> | verify | "
+        "frontier | status; make check. Search first: the measured failure "
+        "mode is re-deriving what exists under different notation.",
     ]
     return "\n".join(lines)
 

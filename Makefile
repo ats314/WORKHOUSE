@@ -1,4 +1,4 @@
-.PHONY: help bootstrap check lint test verify status frontier certified lit catalogue atlas fmt manifest corpus-manifest lean corpus-index lock clean
+.PHONY: help bootstrap check quick lint test verify status frontier certified lit catalogue atlas fmt manifest corpus-manifest lean corpus-index lock clean
 
 help:            ## Show this help
 	@grep -hE '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk -F':.*?## ' '{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -6,8 +6,12 @@ help:            ## Show this help
 bootstrap:       ## Install dependencies for whatever stacks this repo contains
 	@bash scripts/bootstrap.sh
 
-check:           ## Everything CI runs: lint + tests
+check:           ## Everything CI runs: lint + tests (~2.5 min)
 	@bash scripts/check.sh
+
+quick:           ## The fast inner loop while iterating (~10 s): lint + the invariant tests
+	@.venv/bin/ruff check . && .venv/bin/ruff format --check . \
+		&& .venv/bin/pytest -q tests/test_invariants.py tests/test_constants.py
 
 lint:            ## Lint only
 	@.venv/bin/ruff check . && .venv/bin/ruff format --check .

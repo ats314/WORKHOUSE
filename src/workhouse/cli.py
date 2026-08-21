@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 
 from . import atlas as atlas_mod
@@ -31,11 +32,16 @@ def _verify(verbose: bool, only: str | None = None, tier: int | None = None) -> 
     total = 0
     needle = only.lower() if only else None
     for suite in SUITES:
-        results = [
-            r
-            for r in suite.run()
-            if (needle is None or needle in r.name.lower()) and (tier is None or r.tier == tier)
+        # Filter BEFORE running: `--only` promises one claim in about a
+        # second, which post-filtering a full 100+-check run cannot keep.
+        wanted = [
+            name
+            for name, _section, check_tier, _fn in suite.checks
+            if (needle is None or needle in name.lower()) and (tier is None or check_tier == tier)
         ]
+        if not wanted:
+            continue
+        results = [r for r in suite.run(names=set(wanted))]
         if not results:
             continue
         print(f"\n\033[1m{suite.name}\033[0m")
@@ -129,10 +135,12 @@ def _lit(target: str | None) -> int:
 
 
 def _search(query: str, corpus: bool, limit: int) -> int:
-    hits, symbols = search_mod.search(query)
-    occurrences = search_mod.corpus_occurrences(query) if corpus else None
+    catalogue = claims_mod.load_catalogue()
+    hits, symbols = search_mod.search(query, catalogue=catalogue)
+    occurrences = search_mod.corpus_occurrences(query, limit=limit) if corpus else None
     print(search_mod.format_results(query, hits, symbols, occurrences, limit=limit))
-    return 0 if (hits or symbols) else 1
+    found_in_corpus = occurrences is not None and occurrences.total_occurrences > 0
+    return 0 if (hits or symbols or found_in_corpus) else 1
 
 
 def _index(write: bool) -> int:
@@ -185,7 +193,24 @@ def _triage(directory: str, limit: int) -> int:
     return 0
 
 
+def _rescue_negative_query(argv: list[str]) -> list[str]:
+    """Let `workhouse search -5/48` work without the `--` incantation.
+
+    argparse reads a leading-minus token as an option, and the flagship search
+    examples are negative values. When the token after the subcommand looks
+    like a value rather than a flag, insert the `--` separator on the caller's
+    behalf instead of dying with "query is required".
+    """
+    valueish = re.compile(r"^-\d+(/\d+)?$|^-\d*\.\d+([eE][-+]?\d+)?$")
+    out = list(argv)
+    for i, token in enumerate(out[:-1]):
+        if token in ("search", "why") and valueish.match(out[i + 1]) and "--" not in out:
+            return out[: i + 1] + ["--"] + out[i + 1 :]
+    return out
+
+
 def main(argv: list[str] | None = None) -> int:
+    argv = _rescue_negative_query(sys.argv[1:] if argv is None else argv)
     parser = argparse.ArgumentParser(prog="workhouse", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
 
