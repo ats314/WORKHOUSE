@@ -95,7 +95,9 @@ not by picking the better-looking number.
 `README.md` has the retrieval order and the search mechanics; do not re-derive
 them here. The one thing worth repeating, because it is the thing agents get
 wrong: the corpus is about 61 context windows, so reading it is not a plan, and
-the join keys are **exact rationals, not concepts**. Search by value first.
+the join keys are **exact rationals, not concepts**. Search by value first —
+`workhouse search` does that, and knows which names this repository coined and
+which are forbidden.
 
 ## Prefer decisive calculations
 

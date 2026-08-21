@@ -1,0 +1,227 @@
+# Symbol aliases, curated by hand and checked against the corpus.
+#
+# This file exists because the names this repository uses are frequently NOT
+# the names the corpus uses, and a search that does not know that returns
+# nothing and reads as absence. Measured examples:
+#
+#   this repo   corpus                          corpus hits for the repo name
+#   C_shp       C_shape, C_{\mathrm{old}}        0
+#   Delta_Gamma \Delta_\Gamma                    0
+#   Phi_C       (unnamed; written 4e_2/q_a)      0   <- coined here
+#
+# `corpus_spellings` are OBSERVED, not invented: tests/test_symbols.py greps the
+# corpus for each one and fails if it has gone. A spelling that cannot be found
+# is either a typo here or a document that moved, and both are worth knowing.
+#
+# `coined_here: true` marks a name this repository invented. An agent searching
+# the corpus for it will find nothing, and that is not evidence the concept is
+# absent.
+schema: symbols/v1
+
+symbols:
+  - id: q_band_4
+    canonical: q_band^(4)
+    meaning: >
+      Fourth-order rest scalar in the band-kernel anchoring. NOT a competing
+      estimate of m_Gamma^(4) -- a differently anchored coordinate.
+    code_names: [Q_BAND_4]
+    corpus_spellings:
+      - 'q_{\mathrm{band}}^{(4)}'
+      - 'q_{\mathrm{old}}^{(4)}'
+      - 'q_old'
+    values:
+      - "-20721577909065127111/7250590288602460800"
+      - "-2.857915988114559"
+    claims: [C1, R4]
+    forbidden:
+      - text: m_4
+        why: >
+          Calling this and m_Gamma^(4) both "m_4" regenerates a contradiction
+          that does not exist. The register says so at R4 and ADR 0002 records
+          why. Use the anchored names.
+
+  - id: m_gamma_4
+    canonical: m_Gamma^(4)
+    meaning: >
+      Vacuum-subtracted physical Gamma-point fourth-order coefficient. Blind
+      match to Hamer's a_4 through m_n = 2**(n-1) a_n.
+    code_names: [M_GAMMA_4_NUM]
+    corpus_spellings:
+      - 'm_\Gamma^{(4)}'
+    values: ["-0.7751458630189173"]
+    claims: [C1, R4]
+    forbidden:
+      - text: m_4
+        why: same collision as q_band^(4); see ADR 0002.
+
+  - id: c_shp
+    canonical: C_shp
+    meaning: >
+      Off-axis fourth-order shape coefficient. The one genuinely open
+      contradiction: two irreconcilable values, neither promoted.
+    code_names: [C_SHP_HISTORICAL, C_SHP_NEW_NUM]
+    corpus_spellings:
+      - 'C_shape'
+      - 'C_{\mathrm{old}}'
+      - 'C_{\mathrm{new}}'
+      - 'C^{(4)}'
+    values:
+      - "-211835444920651/4405310420659200"
+      - "-0.04808638318135875"
+      - "-0.020213328886166577"
+    claims: [C2, R5, G3]
+    note: >
+      The repo name C_shp appears nowhere in the corpus. Search for C_shape.
+
+  - id: delta_gamma
+    canonical: Delta_Gamma
+    meaning: Scalar shift m_Gamma^(4) - q_band^(4). Fixed by Gamma-point data.
+    code_names: [DELTA_GAMMA, DELTA_GAMMA_AS_PRINTED]
+    corpus_spellings:
+      - '\Delta_\Gamma'
+    values: ["2.0827701250956417", "2.0827701250956414"]
+    claims: [C1, R6]
+    note: >
+      The corpus prints ...414; the correctly rounded value is ...417. One ulp,
+      recorded as a FINDING rather than corrected in the document.
+
+  - id: delta_c
+    canonical: Delta_C
+    meaning: >
+      Off-axis shift C_new - C_old. Gamma-point data cannot constrain it,
+      because the kernel it multiplies vanishes at Gamma.
+    code_names: [DELTA_C]
+    corpus_spellings:
+      - 'Delta_C'
+      - '\Delta_C'
+    values: ["0.027873054295192174"]
+    claims: [C2, G3]
+
+  - id: phi_c
+    canonical: Phi_C
+    coined_here: true
+    meaning: >
+      The crosswalk kernel 4 e_2(k) / q_a(k). Phi_C(0) = 0, which is why the
+      Gamma-point scalar places no constraint on Delta_C -- the structural
+      reason C2 cannot be closed by re-anchoring.
+    code_names: [phi_c]
+    corpus_spellings:
+      - '\frac{4e_2}{q_a}'
+      - '4e_2/q'
+    values: []
+    claims: [C2, G3]
+    note: >
+      The corpus never names this object. It writes the expression inline. An
+      agent grepping for Phi_C finds nothing, and that is not absence.
+
+  - id: h4_side
+    canonical: h_4^side
+    meaning: >
+      Isotropic pentagonal-prism fourth-order side coefficient, A_+ - A_-.
+      Separate geometry; does not bear on the cubic kernel.
+    code_names: [H4_SIDE]
+    corpus_spellings:
+      - 'h4_side'
+      - 'h_4^{\mathrm{side}}'
+    values: ["-2861009/84387303000"]
+    claims: [R20, R21, G4]
+
+  - id: tau_4
+    canonical: tau_4
+    meaning: >
+      Pentagonal cap hopping coefficient, h_4^side times 5 by exact D_5
+      covariance. The symbol is 2 tau_4 cos k.
+    code_names: [TAU_4]
+    corpus_spellings:
+      - '\tau_4'
+      - 'tau_4'
+    values: ["-2861009/16877460600"]
+    claims: [R21, G4]
+
+  - id: a_shp_3
+    canonical: A_shp
+    meaning: >
+      Sealed fourth-order shape coefficient 5/48. Both disputed kernels agree
+      on it, which is what "sealed core" means.
+    code_names: [A_SHP_3, A_SHP_3_NUM]
+    corpus_spellings:
+      - '5/48'
+      - 'A_{\mathrm{old}}'
+    values: ["5/48", "0.104166666666728"]
+    claims: [R7, G14]
+    note: >
+      5/48 lives in 44 code files that the prose index cannot see. It is the
+      clearest case for searching by value rather than by name.
+
+  - id: t_n
+    canonical: t_N
+    meaning: All-rank second-order hopping, B_N - A_N. t_2 = 0, t_3 = 5/612.
+    code_names: [T_MINUS_2, hopping]
+    corpus_spellings:
+      - 't_N'
+      - 't_-'
+    values: ["5/612"]
+    claims: [R2]
+
+  - id: sigma_series
+    canonical: sigma(u)
+    meaning: >
+      Native string tension through fifth order. Odd physical coefficients
+      carry (-1)**n relative to the raw unit-insertion magnitudes.
+    code_names: [SIGMA_0, SIGMA_2, SIGMA_3, SIGMA_4, SIGMA_5, SIGMA_5_RAW]
+    corpus_spellings:
+      - '\sigma_n'
+      - 'sigma_5'
+    values:
+      - "-61/408"
+      - "-22/153"
+      - "-137767222189182735950309/2009803206414863779920000"
+    claims: [C5, R14, G7]
+
+  - id: bloch_scalars
+    canonical: q_a, e_2, e_3
+    meaning: >
+      Elementary symmetric functions of a_i = 4 sin^2(k_i/2). Every fourth-order
+      shape coefficient is a symmetric function of these -- that is U2.
+    code_names: []
+    corpus_spellings:
+      - 'q_a'
+      - 'e_2'
+      - 'e_3'
+    values: []
+    claims: [U2, G14]
+
+  - id: lambda_pencil
+    canonical: lambda_X, lambda_M, lambda_R
+    meaning: >
+      Generalized Hodge pencil eigenvalues. lambda_R = 2 lambda_M - lambda_X is
+      the blind holdout used to test an extraction without fitting to it.
+    code_names: []
+    corpus_spellings:
+      - 'lambda_R'
+      - '\lambda_R'
+    values: []
+    claims: [G3]
+
+  - id: w4
+    canonical: W_4
+    meaning: >
+      Fourth-order bandwidth. Enters the near-Gamma crossover constant only
+      through sqrt(W_4), which is why the G11 criterion survives C2.
+    code_names: [W4_HISTORICAL, W4_NEW_NUM]
+    corpus_spellings:
+      - 'W_4'
+    values: ["0.48061786909826", "0.9265867378213348"]
+    claims: [C2, G11]
+
+  - id: m6
+    canonical: m_6
+    meaning: >
+      Exact sixth-order coefficient. Belongs to the branch whose fourth-order
+      scalar is q_band^(4); not a uniquely matched physical linked coefficient
+      while the kernel dispute stands.
+    code_names: []
+    corpus_spellings:
+      - 'm_6'
+    values: []
+    claims: [R15, G9]

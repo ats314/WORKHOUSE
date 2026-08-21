@@ -181,6 +181,47 @@ papers:
           2/(N(N+1)). See the "published comparisons" invariant suite. This is
           the one edge in this file that has been promoted from prose to T1.
 
+  - id: SCHIERHOLZ_1988
+    title: Glueball masses in SU(3) lattice gauge theory
+    authors: [G. Schierholz]
+    venue: Nucl. Phys. B (Proc. Suppl.) 4, 11-20
+    year: 1988
+    doi: 10.1016/0920-5632(88)90079-9
+    arxiv: null
+    licence: publisher-copyright
+    fulltext: null
+    # The PDF is not stored -- publisher copyright, same gate as every other
+    # entry. Pinned by hash instead, so the copy that was read is identifiable
+    # without being redistributed.
+    source_sha256: f5a385dfdd98d8b1a0c59fde9cd5e48e7b257252847bbb7a52f4d85dc00d6cb6
+    bears_on:
+      - target: G18
+        relation: corroborates
+        status: verified
+        detail: >
+          Section 2 is an independent, published statement of exactly the
+          obstruction G18 names, from 1988 and with no knowledge of this
+          program. A local colour-singlet operator of dimension 4 -- the
+          plaquette, which is the class the corpus's bare T_1^{+-} operator
+          belongs to -- has projection onto the lowest glueball state falling
+          like the FIFTH POWER of the lattice spacing, and Schierholz measures
+          it at "of the order of a couple of percent" at beta = 5.9. The
+          corpus's own Monte Carlo independently finds the bare operator
+          carrying under 4 percent (2 sigma). Two measurements, 38 years apart,
+          of the same few-percent overlap.
+      - target: G19
+        relation: supplies-method
+        status: verified
+        detail: >
+          The remedy is the sharpening. Schierholz does not treat the small
+          overlap as a constant to be lived with: it scales as a^5, so it gets
+          WORSE toward the continuum, and the fix is to build operators of lower
+          dimension, necessarily nonlocal -- here d = 2 operators from the
+          inverse spatial covariant Dirac operator (d_i + m)^{-1}. G18 as the
+          ledger states it treats the overlap as a fixed small number. It is a
+          power law, which is why the smeared basis is structural rather than a
+          convenience, and why G19 cannot be reached by better statistics alone.
+
 # Papers the program needs and does not have. Each says what it would settle,
 # so this is a work list rather than a wish list. Moving one into `papers`
 # requires verified metadata -- an unverified citation is the same failure mode
