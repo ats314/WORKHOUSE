@@ -14,9 +14,38 @@ def test_registry_vocabularies_are_closed():
 
 def test_disputed_entries_record_both_sides():
     disputed = {c.name for c in K.REGISTRY if c.status == "disputed"}
-    # Neither fourth-order kernel may appear without its rival.
-    assert "q_3 (historical)" in disputed and "m_Gamma_4 (v10a.26)" in disputed
+    # C_shp is the one genuinely open pair; neither side may appear alone.
     assert "C_shp (historical)" in disputed and "C_shp (v10a.26)" in disputed
+
+
+def test_the_anchor_pair_is_recorded_but_not_disputed():
+    """C1 dissolved: these are differently anchored coordinates, not rivals."""
+    names = {c.name: c for c in K.REGISTRY}
+    assert "q_band^(4)" in names and "m_Gamma^(4)" in names
+    assert names["q_band^(4)"].status != "disputed"
+    assert names["m_Gamma^(4)"].status != "disputed"
+    # The old collision name must not come back.
+    assert not any(c.name.startswith("m_Gamma_4") for c in K.REGISTRY)
+
+
+def test_scalar_shift_leaves_the_centered_operator_alone():
+    """The whole reason C1 is not a dispute."""
+    from sympy import Matrix, Symbol, eye, simplify, symbols, zeros
+
+    h = Matrix(3, 3, symbols("h1:10"))
+    dg, q = Symbol("dg"), Symbol("q")
+    assert simplify((h + dg * eye(3)) - (q + dg) * eye(3) - (h - q * eye(3))) == zeros(3, 3)
+
+
+def test_phi_c_vanishes_at_gamma_so_gamma_data_cannot_fix_delta_c():
+    from sympy import Rational, limit, pi, symbols
+
+    t, n1, n2, n3 = symbols("t n1 n2 n3", positive=True)
+    assert limit(K.phi_c((t * n1, t * n2, t * n3)), t, 0) == 0
+    assert K.phi_c((pi, 0, 0)) == 0  # axial cuts agree exactly
+    assert K.phi_c((pi, pi, 0)) == 8  # M splits by 8*Delta_C
+    assert K.phi_c((pi, pi, pi)) == 16  # R splits by 16*Delta_C
+    assert K.phi_c((pi, pi / 2, 0)) == Rational(16, 3)
 
 
 def test_exact_values_stay_exact_for_integer_ranks():
@@ -42,6 +71,7 @@ def test_float_only_values_are_named_num():
         "W4_HISTORICAL",
         "W4_NEW_NUM",
         "DELTA_GAMMA",
+        "DELTA_GAMMA_AS_PRINTED",
         "DELTA_C",
         "SEALED_CORE_TOLERANCE",
         "HAMER_TOLERANCE",

@@ -161,22 +161,45 @@ def alpha_pen(n=N):
 
 
 # --------------------------------------------------------------------------
-# Fourth order — THE DISPUTE (MASTER_THEORY §5.5; C1, C2). Neither is promoted.
+# Fourth order — anchoring and the residual dispute (MASTER_THEORY §5.5)
+#
+# TERMINOLOGY. These are NOT two competing estimates of one scalar. Calling
+# them "two m_4 values" manufactures a contradiction that does not exist:
+#
+#   Q_BAND_4       q_band^(4)  — a band-kernel anchor
+#   M_GAMMA_4_NUM  m_Gamma^(4) — a vacuum-subtracted physical Gamma-point coefficient
+#
+# They are differently anchored coordinates related by a translation-local
+# scalar shift, which cannot change the centered operator, its eigenvectors,
+# the SOS factorization, the mobility coefficients, or the bandwidth. C1 is an
+# anchoring distinction, not a dispute.
+#
+# What remains genuinely open is C2, the off-axis shape coefficient. See the
+# crosswalk at the foot of this module for why a Gamma-point match is
+# structurally incapable of settling it.
 # --------------------------------------------------------------------------
-#: Historical 189-record kernel: rest scalar at Gamma (exact rational).
-Q_3_HISTORICAL = Rational(-20721577909065127111, 7250590288602460800)
+#: Band-kernel anchor from the historical 189-record kernel (exact rational).
+Q_BAND_4 = Rational(-20721577909065127111, 7250590288602460800)
 #: Historical off-axis shape coefficient (exact rational) = (BETA_PEN_3 - 2*alpha)/16.
 C_SHP_HISTORICAL = Rational(-211835444920651, 4405310420659200)
 #: Historical diagonal coefficient.
 BETA_PEN_3 = Rational(17607806155349, 275331901291200)
 
-#: v10a.26 folded run + linked-cluster oracle (float only).
+#: Vacuum-subtracted physical Gamma-point coefficient, from the blind
+#: finite-cluster/rooted oracle (float only). Reproduces Hamer's a_4 through the
+#: bridge m_n = 2**(n-1) * a_n with no historical target in its data flow, which
+#: makes it substantive external validation rather than internal bookkeeping.
 M_GAMMA_4_NUM = -0.7751458630189173
 C_SHP_NEW_NUM = -0.020213328886166577
 
-#: The two discrepancies. Signs follow the corpus: new minus historical.
-DELTA_GAMMA = 2.0827701250956414  # M_GAMMA_4_NUM - Q_3_HISTORICAL
-DELTA_C = 0.027873054295192174  # C_SHP_NEW_NUM - C_SHP_HISTORICAL
+#: Anchoring offset, m_Gamma^(4) - q_band^(4). In high precision the difference
+#: is 2.082770125095641678..., which correctly rounds to ...417. The corpus
+#: prints ...414, one ulp low, because it rounds q_band^(4) to a double before
+#: subtracting. Benign, but the printed digit is not the correctly rounded one.
+DELTA_GAMMA = 2.0827701250956417
+DELTA_GAMMA_AS_PRINTED = 2.0827701250956414
+#: The residual off-axis discrepancy, C_new - C_old. This one is real.
+DELTA_C = 0.027873054295192174
 
 W4_HISTORICAL = 0.48061786909826
 W4_NEW_NUM = 0.9265867378213348
@@ -254,20 +277,20 @@ REGISTRY: tuple[Constant, ...] = (
         "conditional on the historical kernel family",
     ),
     Constant(
-        "q_3 (historical)",
-        Q_3_HISTORICAL,
-        "disputed",
+        "q_band^(4)",
+        Q_BAND_4,
+        "proven",
         "output-certified",
         "MASTER_THEORY §5.5",
-        "C1 — do not promote",
+        "band-kernel anchor; not a competing estimate of m_Gamma^(4)",
     ),
     Constant(
-        "m_Gamma_4 (v10a.26)",
+        "m_Gamma^(4)",
         M_GAMMA_4_NUM,
-        "disputed",
+        "conditional",
         "numerical",
         "MASTER_THEORY §5.5",
-        "C1 — do not promote",
+        "vacuum-subtracted Gamma-point coefficient; blind match to Hamer a_4",
     ),
     Constant(
         "C_shp (historical)",
@@ -275,7 +298,7 @@ REGISTRY: tuple[Constant, ...] = (
         "disputed",
         "output-certified",
         "MASTER_THEORY §5.5",
-        "C2 — scalar re-anchoring cannot reconcile",
+        "C2 — the one genuinely open fourth-order coefficient",
     ),
     Constant(
         "C_shp (v10a.26)",
@@ -283,7 +306,7 @@ REGISTRY: tuple[Constant, ...] = (
         "disputed",
         "numerical",
         "MASTER_THEORY §5.5",
-        "C2 — scalar re-anchoring cannot reconcile",
+        "C2 — the one genuinely open fourth-order coefficient",
     ),
     Constant(
         "Hamer a_4",
@@ -302,3 +325,33 @@ REGISTRY: tuple[Constant, ...] = (
         "rejected by both sides",
     ),
 )
+
+
+# --------------------------------------------------------------------------
+# The old-to-new crosswalk
+# --------------------------------------------------------------------------
+def phi_c(k):
+    """Off-axis shape function Phi_C(k) = 4*e_2(k)/Q(k).
+
+    Since e_2 = O(|k|**4) and Q = O(|k|**2), Phi_C = O(|k|**2), so its
+    continuous extension satisfies Phi_C(0) = 0 along every direction. That is
+    exactly why a Gamma-point scalar can pin the anchoring offset while leaving
+    the off-axis kernel wholly unconstrained.
+    """
+    from sympy import sin as _sin
+
+    a = [4 * _sin(sympify(ki) / 2) ** 2 for ki in k]
+    q = a[0] + a[1] + a[2]
+    e2 = a[0] * a[1] + a[0] * a[2] + a[1] * a[2]
+    return 4 * e2 / q
+
+
+def crosswalk(c_old, k):
+    """c_4_new(k) = c_4_old(k) + Delta_Gamma + Delta_C * Phi_C(k).
+
+    The scalar term re-anchors and moves nothing observable. Only the Phi_C
+    term can change the dispersion, so bandwidth is preserved only if DELTA_C
+    vanishes or is absorbed by an exact operator identity. Neither is
+    established.
+    """
+    return c_old + DELTA_GAMMA + DELTA_C * phi_c(k)

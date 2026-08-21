@@ -6,17 +6,30 @@ source: theory/MASTER_THEORY.md §8
 
 contradictions:
   - id: C1
-    title: Fourth-order rest scalar
-    status: open
+    title: Fourth-order rest scalar — dissolved, an anchoring distinction
+    status: resolved
     section: "§5.5"
-    verdict: "do not promote either ([RUN15]; GLUEBALL §17)"
-    sides:
-      - label: historical 189-record kernel
+    resolution: >
+      NOT a contradiction. q_band^(4) and m_Gamma^(4) are not two competing
+      estimates of the same scalar coordinate: the first is a band-kernel
+      anchor, the second a vacuum-subtracted physical Gamma-point coefficient.
+      They are differently anchored coordinates related by a translation-local
+      scalar shift, and such a shift cannot change the centered operator, its
+      eigenvectors, the SOS factorization, the mobility coefficients, or the
+      bandwidth. The apparent conflict was a terminology collision.
+    terminology:
+      correct: ["q_band^(4)", "m_Gamma^(4)"]
+      forbidden: "two m_4 values"
+      why: >
+        Naming both "m_4" regenerates the false contradiction every time the
+        register is re-read. Use the anchored names.
+    quantities:
+      - label: q_band^(4) — band-kernel anchor
         value: "-20721577909065127111/7250590288602460800"
         decimal: -2.857915988114559
         kind: exact-rational
         source: "[T1PM]/[GCSG]"
-      - label: v10a.26 folded run + linked-cluster oracle
+      - label: m_Gamma^(4) — vacuum-subtracted physical Gamma-point coefficient
         value: -0.7751458630189173
         kind: float
         source: "[RUN15]/[GLUE3]"
@@ -25,16 +38,30 @@ contradictions:
         decimal: -11.068479463778765
         kind: exact-rational
         status: rejected-by-both
-    delta: 2.0827701250956414
-    notes: >
-      Re-anchoring is a same-kernel identity. "old kernel = new kernel + scalar"
-      is NOT established, and the run's applied +11.17343231638178 shift was
-      target-derived. One reconciliation hypothesis is queued: is Delta_Gamma a
-      fourth-order vacuum term, q_band^(4) - E_0^(4) =? m_Gamma^(4)?
-    blocks: [G3]
+    delta_gamma: 2.0827701250956417
+    delta_gamma_as_printed: 2.0827701250956414
+    machine_finding: >
+      The register prints Delta_Gamma as 2.0827701250956414. Evaluated in high
+      precision the difference is 2.082770125095641678..., which correctly
+      rounds to ...417. The printed value is one ulp low because q_band^(4) is
+      rounded to a double before the subtraction. Cosmetic, but the printed
+      digit is not the correctly rounded one.
+    external_validation: >
+      m_Gamma^(4) reproduces Hamer's axial fourth-order coefficient through the
+      bridge m_n = 2**(n-1) * a_n: 8 * a_4 = -0.7751458630184, agreeing to
+      5.2e-13. The oracle was generated with the historical target disabled and
+      recovered m_1, m_2, m_3 first, so this is substantive external validation,
+      not internal bookkeeping.
+    by_construction_caveat: >
+      Distinguish two statements. (1) The oracle value itself is an independent
+      blind reconstruction — substantive. (2) The final assembled mass-kernel
+      rest value is FORCED to equal the oracle, because the source computes
+      local_shift = M4_ORACLE - ax_rest and adds it to the diagonal. That
+      equality is true by construction and validates neither the off-axis C-row
+      nor the complete 189-entry ledger. See C22.
 
   - id: C2
-    title: Fourth-order off-axis coefficient C_shp
+    title: Fourth-order off-axis coefficient C_shp — the one genuinely open item
     status: open
     section: "§5.5"
     sides:
@@ -47,10 +74,18 @@ contradictions:
         kind: float
     delta: 0.027873054295192174
     notes: >
-      A diagonal shift cannot reconcile this. Axial cuts (including X) agree
-      exactly; the disagreement lives in one planar mixed-gradient direction,
-      giving 8*Delta_C at M and 16*Delta_C at R. This is the finite-order
-      bottleneck of the whole program.
+      A diagonal shift cannot reconcile this, and the reason is structural.
+      The full crosswalk is
+        c_4_new(k) = c_4_old(k) + Delta_Gamma + Delta_C * Phi_C(k),
+        Phi_C(k) = 4*e_2(k)/Q(k).
+      Since e_2 = O(|k|^4) and Q = O(|k|^2), Phi_C = O(|k|^2) and Phi_C(0) = 0.
+      So Hamer's Gamma-point scalar pins Delta_Gamma and places NO constraint on
+      Delta_C. Phi_C also vanishes on every axial cut, which is why axial data
+      agree exactly while M and R split by 8*Delta_C and 16*Delta_C. Scalar
+      re-anchoring alone leaves the centered structure unchanged; only the
+      Delta_C*Phi_C term can move the dispersion, so the crosswalk preserves
+      bandwidth only if Delta_C vanishes or is absorbed by an exact operator
+      identity. This is the finite-order bottleneck of the whole program.
     blocks: [G3]
 
   - id: C3

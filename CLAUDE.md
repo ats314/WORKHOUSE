@@ -10,10 +10,14 @@ software instinct — make the failing check pass — is frequently **wrong** he
    something: record it, do not silence it. `theory/SHA256SUMS` pins the
    contents; changing it is a deliberate, reviewed event.
 
-2. **Never promote a disputed value.** The fourth-order kernel dispute (C1, C2)
-   is unresolved. Both sides are recorded side by side, and code must not pick
-   one, average them, or quietly prefer the exact rational because it looks
-   more authoritative. `MASTER_THEORY §5.5` is explicit: *do not promote either*.
+2. **Never promote a disputed value.** The off-axis coefficient (C2) is
+   unresolved. Both sides are recorded side by side, and code must not pick one,
+   average them, or quietly prefer the exact rational because it looks more
+   authoritative.
+
+   C1 is *not* in that category: `q_band^(4)` and `m_Gamma^(4)` are differently
+   anchored coordinates, not rival estimates. Use those names — writing "two
+   `m_4` values" regenerates a contradiction that does not exist. See ADR 0002.
 
 3. **Exact stays exact.** Corpus rationals are `sympy.Rational`. Values the
    corpus records only as floats are Python floats and carry a `_NUM` suffix.
