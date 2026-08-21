@@ -127,6 +127,9 @@ workhouse why ID                 # everything recorded about one claim: edges,
 workhouse atlas                  # the same graph as an interactive HTML page
 workhouse lit --for C7           # published work bearing on one claim
 workhouse lit --holes            # the citation web's missing links, as leads
+workhouse lit --acquire          # unobtained papers, ranked, with browser links
+workhouse lit --resolve KS_1975  # try the open sources; a hit lands in the inbox
+workhouse lit --intake           # identify inbox PDFs and print pinning advice
 workhouse triage /path/to/dir    # survey an unpinned archive, read-only
 ```
 

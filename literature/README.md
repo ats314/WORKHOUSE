@@ -68,6 +68,26 @@ x³ and x⁴ terms disagree with, is the three-author Kogut–**Sinclair**–Sus
 holes report surfaced that KRS_2023 constructs the same Hilbert space as
 SZH_1997 with no citation link between the two lines.
 
+## Getting the unobtained
+
+The web computes what to fetch; the acquisition loop makes fetching it a
+two-minute task instead of an archaeology session:
+
+```bash
+workhouse lit --acquire        # every unobtained paper, ranked, with links
+workhouse lit --resolve ID     # arXiv / INSPIRE documents / KEK scans / OpenAlex
+workhouse lit --intake         # identify inbox PDFs, print the digest to pin
+```
+
+`--resolve` touches only sources that welcome automation — a hit lands in the
+gitignored `inbox/` with its digest printed. The walled-but-free archives
+(ScienceDirect's open archive, APS) appear in `--acquire` as browser links: a
+person fetches those in seconds, drops the file in `inbox/`, and `--intake`
+does everything after the click except the curation itself, which stays a
+judgement recorded in `index.yaml` after the paper is read. The KPS pass —
+scan found, pinned, exact Table 2 promoted to checks the same day — is the
+loop this tooling encodes.
+
 ## What is stored, and what is not
 
 One paper. `KRS_2023` is CC BY-NC-ND, which permits a verbatim copy, so the

@@ -1367,6 +1367,88 @@ def _():
 
 
 @published.check(
+    "the errata-resolved Euclidean series is doubly sourced, transcription for transcription",
+    "MUNSTER_1981 / SMIT_1982",
+)
+def _():
+    # The corrected Munster-Seo Euclidean SU(3) glueball series had a messy
+    # history: NPB 190 (1981), an erratum-and-addendum (NPB 200), then a
+    # second erratum (NPB 205 648) fixing the 8th order again — "Murphy's
+    # sixth law", thanking Ukawa and Seo. Two primary sources for the final
+    # coefficients were obtained and read on 2026-08-21: the definitive NPB
+    # 205 erratum itself (maintainer-supplied) and Smit's ITFA-82-3 Table 1
+    # (open KEK scan), which reprints all three channels crediting Munster
+    # and Seo. The scalar rows were transcribed independently from the two
+    # documents; this check asserts the transcriptions agree exactly, and
+    # pins Smit's own stated structure that the tensor channel's first three
+    # coefficients equal the scalar's. EUCLIDEAN throughout: nothing here
+    # touches the certified Hamiltonian series, by corpus section 12.
+    same = K.SMIT_EUC_MS == K.MUNSTER_ERR_MS
+    tensor_head = K.SMIT_EUC_MT[:3] == K.SMIT_EUC_MS[:3]
+    lengths = len(K.SMIT_EUC_MS) == len(K.SMIT_EUC_MA) == len(K.SMIT_EUC_MT) == 8
+    return same and tensor_head and lengths, (
+        "the NPB 205 (1982) 648 erratum's SU(3) row and Smit's Table 1 scalar "
+        "column agree rational for rational through u^8 (m_8 = -179208453/40960); "
+        "the tensor channel's first three coefficients equal the scalar's, as "
+        "Smit states; Euclidean record only — no Hamiltonian comparison exists "
+        "or is permitted"
+    )
+
+
+@published.check(
+    "FINDING: Munster's 1985 table shifts his 1982 erratum at eighth order",
+    "MUNSTER_1985_TM / MUNSTER_1981",
+)
+def _():
+    # Both documents were obtained (maintainer-supplied) and read on
+    # 2026-08-21, both tables re-read at 200 dpi before transcription. The
+    # 1985 effective-transfer-matrix recomputation reproduces the 1982
+    # erratum's SU(3) row through u^7 and then shifts m_8 by EXACTLY -96
+    # (-3932160/40960); the same table shifts Z3 by -32, SU(infinity) by
+    # -18, and U(1)-Wilson by -1/8 at u^6 and -1/6 at u^8, while SU(2), Z2
+    # and U(1)-Villain are untouched.
+    #
+    # The history was then reconstructed from the record (same day): the
+    # SU(3) shift is a FOURTH correction round that no erratum ever
+    # recorded — Drouffe-Zuber's 1983 review (Phys. Rep. 102, Table 10)
+    # already prints -183140613/40960, attributing its table to Seo NPB 209
+    # (1982) 200 and Munster PLB 121 (1983) 53, and the 1985 paper agrees;
+    # the NPB 205 erratum value is orphaned in the later literature. The
+    # SU(infinity), U(1)-Wilson and Z3 shifts are different: DZ 1983 still
+    # carries the ERRATUM values there (-546, -445/6, -1659829/2880), so
+    # those corrections first appear in 1985 and rest on a single printing.
+    # Langelage-Munster-Philipsen 2007 reprints every channel through u^7
+    # only. This check asserts the discrepancy so it stays visible; it
+    # promotes neither value — every source in the chain shares
+    # Munster/Seo provenance, and only an independent recomputation would
+    # close it. Euclidean throughout: no certified Hamiltonian quantity is
+    # touched either way.
+    agree_low = K.MUNSTER_TM_MS[:7] == K.MUNSTER_ERR_MS[:7]
+    shift = K.MUNSTER_TM_MS[7] - K.MUNSTER_ERR_MS[7]
+    sibling_shifts = tuple(
+        tm - err for tm, err in zip(K.MUNSTER_TM_SIB, K.MUNSTER_ERR_SIB, strict=True)
+    )
+    expected_siblings = (
+        Rational(-32),  # Z3 m_8
+        Rational(-18),  # SU(infinity) m_8
+        Rational(-1, 8),  # U(1)-Wilson m_6
+        Rational(-1, 6),  # U(1)-Wilson m_8
+    )
+    return agree_low and shift == -96 and sibling_shifts == expected_siblings, (
+        "SU(3): 1985 Table 1 equals the 1982 erratum row for k = 1..7 and differs "
+        f"at k = 8 by {shift} exactly (-183140613/40960 vs -179208453/40960) — a "
+        "fourth correction already in print by 1983 (DZ Phys. Rep. 102 Table 10, "
+        "citing Seo NPB 209 and Munster PLB 121) that no erratum records; the "
+        "registered sibling shifts are asserted too: Z3 m_8 by -32, SU(inf) m_8 "
+        "by -18, U(1)-Wilson by -1/8 at u^6 and -1/6 at u^8, all 1985-only (DZ "
+        "1983 still carries the erratum values there). The SU(2), Z2 and "
+        "U(1)-Villain rows were read as identical in both tables but are not "
+        "registered, so this check does not certify them. Recorded, not "
+        "adjudicated: every printing shares Munster/Seo provenance"
+    )
+
+
+@published.check(
     "the cap family's signed counts are n x Catalan, the published sewing weights",
     "OBZ_1985 / G5",
 )

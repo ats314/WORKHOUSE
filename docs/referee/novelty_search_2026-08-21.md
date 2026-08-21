@@ -59,15 +59,31 @@ environment's proxy hit Elsevier's bot-block (HTTP 403), and the ScienceDirect
 open archive serves these free to a browser. **A maintainer-supplied PDF of
 any of these is directly useful** — the Hamer 1989 pass proved that works.
 
-1. **Munster, Nucl. Phys. B190 (1981) 439** (+ addendum B200 536, erratum
-   B205 648; recid 164289; preprint BUTP-2/81 Bern, no KEK scan) — the
-   canonical Euclidean strong-coupling mass-gap expansion. Its diagrams are
-   tubes of plaquettes capped into closed surfaces with character/Haar
-   weights; the addendum/erratum history shows the coefficient bookkeeping
-   was delicate. Highest-priority place the family could already live. Its
-   corrected final 8th-order SU(3) on-axis series is at least *readable* in
-   the open Smit scan's Table 1, but the per-diagram weights — where the
-   family would sit — are only in the paper itself.
+1. **Munster, Nucl. Phys. B190 (1981) 439** (recid 164289; preprint
+   BUTP-2/81 Bern, no KEK scan) — the canonical Euclidean strong-coupling
+   mass-gap expansion. Its diagrams are tubes of plaquettes capped into
+   closed surfaces with character/Haar weights. *Update, later on
+   2026-08-21: both errata were maintainer-supplied and read* — the
+   erratum-and-addendum NPB 200 (1982) 536 (two overlooked graphs, SU(3)
+   correction `12(3−2ε)u⁷ − 18(75−74ε)u⁸`) and the definitive second
+   erratum NPB 205 (1982) 648 ("Murphy's sixth law"; thanks Ukawa and Seo),
+   whose final table for every gauge group is now registered
+   (`MUNSTER_ERR_MS`) and proved identical to Smit's open reprint in the
+   published-comparisons suite. **Family check on the final corrected
+   coefficients of all three channels: ABSENT** — SU(3) denominators are
+   `2ᵃ·5ᵇ` and `2ᵃ·7ᵇ` forms (10240, 71680, 40960, 1280, 448), not
+   `(N²−1)` powers, and no central binomials appear; the SU(∞) row
+   (`−34, −164, −546`) is integer. What remains unread, and the only place
+   the family could still hide in this line: NPB 190's per-diagram weights
+   (Tables 1–2 internals, before summation).
+   *(Further update, same day: the eighth orders kept moving after the
+   errata. Münster's own NPB 256 (1985) Table 1 shifts several of them —
+   SU(3) by exactly −96 — and the Drouffe–Zuber 1983 review's Table 10,
+   attributed to Seo NPB 209 and Münster PLB 121, already carries the
+   shifted SU(3) value in 1983 while keeping the erratum's SU(∞) and
+   U(1)-Wilson entries. A FINDING check in the published suite records
+   the full sequence; Langelage–Münster–Philipsen 2007 reprints every
+   channel through u⁷ only.)*
 2. **Seo, Nucl. Phys. B209 (1982) 200** (recid 184480, 28 citations;
    preprint EFI-82-10, no KEK scan recorded) — extends and cross-checks
    Munster's series, off-axis included; tabulates cluster-by-cluster
@@ -82,12 +98,17 @@ any of these is directly useful** — the Hamer 1989 pass proved that works.
 4. **Hamer–Irving–Preece, Nucl. Phys. B270 (1986) 553** and
    **Irving–Hamer, Nucl. Phys. B230 (1984) 361** — the ELCE line; the linked
    subtraction G3's protocol names.
-5. **Munster, Nucl. Phys. B180 (1981) 23** (DESY 80/44, recid 153653) and
-   **Munster, Nucl. Phys. B256 (1985) 67** (DESY 85-007, recid 213016; an
-   effective transfer matrix on the degenerate glueball eigenspace to eighth
-   order — the same Bloch/Rayleigh–Schrödinger effective-Hamiltonian class
-   as this program's projection machinery) — the machinery papers on either
-   side of the mass-gap expansion.
+5. **Munster, Nucl. Phys. B180 (1981) 23** (DESY 80/44, recid 153653) —
+   the cluster-machinery paper behind the mass-gap expansion, still unread.
+   *(Its 1985 sibling NPB 256 (1985) 67 — the effective transfer matrix on
+   the degenerate glueball eigenspace — was maintainer-supplied later on
+   2026-08-21 and read in full: the completion family is ABSENT from its
+   per-order effective-matrix pieces too (integer combinations of the
+   momentum matrices A, B; 2ᵃ·5ᵇ scalar denominators), and its Table 1
+   produced a bonus FINDING — it shifts the 1982 erratum's eighth orders by
+   exact amounts (−96 for SU(3)) that no further erratum records. See
+   `MUNSTER_1985_TM` in the index and the FINDING check in the published
+   suite.)*
 
 (Smit NPB 206 (1982) 309 stood on this list until its KEK preprint scan was
 found, read, and recorded as clean — see the table above.)

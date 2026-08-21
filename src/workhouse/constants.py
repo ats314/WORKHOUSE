@@ -301,6 +301,128 @@ KPS_W_NUM = (
     -0.001824877,
 )
 
+#: The errata-resolved EUCLIDEAN strong-coupling glueball series of the
+#: Munster-Seo line, SU(3), 4 dimensions: am = -4 ln u + sum_k m_k u**k with
+#: u the fundamental-character coefficient (Wilson action). EUCLIDEAN, not
+#: Hamiltonian: corpus section 12 forbids comparing these against the
+#: certified Gamma-point series — they are recorded as the corrected
+#: published record and for the completion-family novelty scope, nothing
+#: else. Two independent primary sources, both read 2026-08-21: Smit's
+#: ITFA-82-3 Table 1 (KEK scan, sha256 in the SMIT_1982 stub), which credits
+#: "G. Munster, private communication" and "K. Seo, EFI preprint (4/82)",
+#: and — for the scalar channel — the definitive erratum Nucl. Phys. B205
+#: (1982) 648 itself (maintainer-supplied copy, sha256 in the MUNSTER_1981
+#: entry). The published-comparisons suite asserts the two transcriptions
+#: agree exactly; the A and T channels rest on Smit's table alone.
+SMIT_EUC_MS = (  # 0++ (S), k = 1..8
+    Rational(-3),
+    Rational(9),
+    Rational(-27, 2),
+    Rational(-7),
+    Rational(-297, 2),
+    Rational(858827, 10240),
+    Rational(47641149, 71680),
+    Rational(-179208453, 40960),
+)
+SMIT_EUC_MA = (  # 1+- (A), k = 1..8
+    Rational(3),
+    Rational(0),
+    Rational(9, 2),
+    Rational(-99, 4),
+    Rational(33, 4),
+    Rational(-36771, 1280),
+    Rational(117897, 448),
+    Rational(-1559, 2),
+)
+SMIT_EUC_MT = (  # 2++ (T), k = 1..8
+    Rational(-3),
+    Rational(9),
+    Rational(-27, 2),
+    Rational(17),
+    Rational(-153, 2),
+    Rational(1104587, 10240),
+    Rational(29577789, 71680),
+    Rational(-92578053, 40960),
+)
+#: The SU(3) row of the Nucl. Phys. B205 (1982) 648 erratum table itself —
+#: transcribed independently of the Smit column above, so their exact
+#: equality is a check on both transcriptions and on the claim that Smit's
+#: openly scanned table IS the errata-resolved series.
+MUNSTER_ERR_MS = (
+    Rational(-3),
+    Rational(9),
+    Rational(-27, 2),
+    Rational(-7),
+    Rational(-297, 2),
+    Rational(858827, 10240),
+    Rational(47641149, 71680),
+    Rational(-179208453, 40960),
+)
+
+#: Munster's 1985 effective-transfer-matrix paper (Nucl. Phys. B256 (1985)
+#: 67, MUNSTER_1985_TM in the literature index; maintainer-supplied DESY
+#: 85-007 copy, sha256 in the index entry) recomputes the same Euclidean
+#: SU(3) mass series by an independent method — an effective matrix on the
+#: degenerate plaquette-orientation triplet — and its Table 1 DISAGREES
+#: with the 1982 erratum at exactly eighth order: m_8 shifts by -96 for
+#: SU(3) (and by -32, -18, -1/6 for Z3, SU(infinity), U(1)-Wilson, whose
+#: u^6 also shifts by -1/8), while SU(2), Z2, U(1)-Villain and every lower
+#: order agree. A FINDING check in the published suite asserts the shift;
+#: neither side is promoted — this repository records the discrepancy in
+#: Munster's own corrected line, it does not adjudicate it. Euclidean, as
+#: above: no Hamiltonian comparison exists or is permitted.
+MUNSTER_TM_MS = (
+    Rational(-3),
+    Rational(9),
+    Rational(-27, 2),
+    Rational(-7),
+    Rational(-297, 2),
+    Rational(858827, 10240),
+    Rational(47641149, 71680),
+    Rational(-183140613, 40960),
+)
+#: The same paper's dispersion decomposition for the SU(3) scalar glueball,
+#: E(p) = m + f p^2 + g ((p^2)^2 - 3 sum p_i^4) + h (p^2)^2 + O(p^6):
+#: f_k for k = 4..8, g_k for k = 4..8, and h_8. The g series is the
+#: CUBIC-HARMONIC (shape) channel — the Euclidean counterpart of the role
+#: the disputed off-axis coefficient C_shp plays in the Hamiltonian band —
+#: which is why it is recorded; its values transfer nothing across the
+#: regime boundary.
+MUNSTER_TM_F = (
+    Rational(7, 3),
+    Rational(7),
+    Rational(3, 2),
+    Rational(-25),
+    Rational(1771, 8),
+)
+MUNSTER_TM_G = (
+    Rational(-1, 27),
+    Rational(-1, 9),
+    Rational(7, 108),
+    Rational(5, 12),
+    Rational(533, 216),
+)
+MUNSTER_TM_H8 = Rational(-25, 18)
+
+#: The sibling-group entries the eighth-order FINDING names, registered so
+#: the check certifies every shift it asserts rather than only SU(3)'s.
+#: Order: (Z3 m_8, SU(infinity) m_8, U(1)-Wilson m_6, U(1)-Wilson m_8);
+#: _ERR_ rows from the NPB 205 (1982) 648 erratum table, _TM_ rows from the
+#: NPB 256 (1985) Table 1, both read at 200 dpi from the pinned copies.
+#: Euclidean, comparison-only, like everything in this block.
+MUNSTER_ERR_SIB = (
+    Rational(-8207, 8),
+    Rational(-546),
+    Rational(-445, 6),
+    Rational(-1659829, 2880),
+)
+MUNSTER_TM_SIB = (
+    Rational(-8463, 8),
+    Rational(-564),
+    Rational(-1783, 24),
+    Rational(-1660309, 2880),
+)
+
 #: Rejected by both sides; recorded so it is never silently resurrected.
 QUARANTINED_SCALAR = Rational(-160506019419340168451, 14501180577204921600)
 RAW_FOLDED_AXIAL_GAMMA_NUM = -11.9485781794007
