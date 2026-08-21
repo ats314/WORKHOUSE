@@ -18,6 +18,8 @@ from sympy import (
     Matrix,
     Rational,
     diff,
+    eye,
+    limit,
     numer,
     pi,
     series,
@@ -27,6 +29,7 @@ from sympy import (
     symbols,
     sympify,
     together,
+    zeros,
 )
 
 from . import constants as K
@@ -246,12 +249,12 @@ def _():
 
 
 # ==========================================================================
-dispute = _suite("fourth order, the dispute (C1/C2)")
+dispute = _suite("fourth order, anchoring and the residual dispute")
 
 
 @dispute.check("historical q_3 decimal expansion", "MASTER_THEORY §5.5")
 def _():
-    d = abs(float(K.Q_3_HISTORICAL) - (-2.857915988114559))
+    d = abs(float(K.Q_BAND_4) - (-2.857915988114559))
     return d < 1e-15, f"|diff| = {d:.2e}"
 
 
@@ -261,14 +264,50 @@ def _():
     return v == K.C_SHP_HISTORICAL, f"= {v}"
 
 
-@dispute.check("Delta_Gamma = m_Gamma - q_3", "MASTER_THEORY §5.5 / C1")
+@dispute.check("Delta_Gamma = m_Gamma^(4) - q_band^(4)", "MASTER_THEORY §5.5 / C1")
 def _():
-    v = K.M_GAMMA_4_NUM - float(K.Q_3_HISTORICAL)
-    d = abs(v - K.DELTA_GAMMA)
-    return d < 1e-15, f"{v!r} vs recorded {K.DELTA_GAMMA!r} (|diff| {d:.1e})"
+    v = K.M_GAMMA_4_NUM - float(K.Q_BAND_4)
+    # Double-precision evaluation lands one ulp below the correctly rounded
+    # value; both are recorded, so accept either.
+    ok = min(abs(v - K.DELTA_GAMMA), abs(v - K.DELTA_GAMMA_AS_PRINTED)) < 1e-15
+    return ok, f"double eval {v!r}; exact rounds to {K.DELTA_GAMMA!r}"
 
 
-@dispute.check("Delta_C = C_new - C_old > 0", "MASTER_THEORY §5.5 / C2")
+@dispute.check("FINDING: the printed Delta_Gamma is one ulp low", "MASTER_THEORY §5.5")
+def _():
+    from sympy import Float
+
+    exact = (Float(repr(K.M_GAMMA_4_NUM), 25) - K.Q_BAND_4).evalf(25)
+    # Rounding q_band^(4) to a double before subtracting loses the last digit.
+    correct = abs(float(exact) - K.DELTA_GAMMA) < 1e-16
+    printed_is_low = K.DELTA_GAMMA_AS_PRINTED < K.DELTA_GAMMA
+    gap = K.DELTA_GAMMA - K.DELTA_GAMMA_AS_PRINTED
+    return correct and printed_is_low, (
+        f"high precision {exact} rounds to {K.DELTA_GAMMA!r}; corpus prints "
+        f"{K.DELTA_GAMMA_AS_PRINTED!r}, low by {gap:.3e} (1 ulp). Cosmetic, but "
+        "the printed digit is not the correctly rounded one."
+    )
+
+
+@dispute.check(
+    "a translation-local scalar shift changes nothing observable",
+    "MASTER_THEORY §5.5 / C1",
+)
+def _():
+    # H_mass = H_band + Delta_Gamma*I  =>  centered forms coincide identically.
+    h = Matrix(3, 3, symbols("h1:10"))
+    dg, q = symbols("dg q")
+    centered_mass = (h + dg * eye(3)) - (q + dg) * eye(3)
+    centered_band = h - q * eye(3)
+    same = simplify(centered_mass - centered_band) == zeros(3, 3)
+    return same, (
+        "centered operator, eigenvectors, SOS factorization, mobility "
+        "coefficients and bandwidth are all invariant under the anchoring shift, "
+        "so q_band^(4) and m_Gamma^(4) are not competing estimates"
+    )
+
+
+@dispute.check("Delta_C = C_new - C_old > 0 (the real discrepancy)", "MASTER_THEORY §5.5 / C2")
 def _():
     v = K.C_SHP_NEW_NUM - float(K.C_SHP_HISTORICAL)
     d = abs(v - K.DELTA_C)
@@ -335,6 +374,65 @@ def _():
         abs(K.RUN15_APPLIED_SHIFT - K.DELTA_GAMMA) > 1.0,
         f"applied {K.RUN15_APPLIED_SHIFT} vs Delta_Gamma {K.DELTA_GAMMA} "
         "— target-derived, so gate 85 is not an independent scalar verification",
+    )
+
+
+# ==========================================================================
+crosswalk = _suite("old-to-new crosswalk")
+
+
+@crosswalk.check("Phi_C vanishes at Gamma along every direction", "MASTER_THEORY §5.5")
+def _():
+    t, n1, n2, n3 = symbols("t n1 n2 n3", positive=True)
+    radial = K.phi_c((t * n1, t * n2, t * n3))
+    lead = simplify(series(radial, t, 0, 4).removeO())
+    vanishes = limit(radial, t, 0) == 0
+    return vanishes, (
+        f"Phi_C = {lead} = O(|k|^2), since e_2 = O(|k|^4) and Q = O(|k|^2). "
+        "A Gamma-point scalar therefore constrains Delta_Gamma but places no "
+        "constraint whatsoever on Delta_C."
+    )
+
+
+@crosswalk.check("Phi_C at the high-symmetry points", "MASTER_THEORY §5.1")
+def _():
+    got = {
+        "X": K.phi_c((pi, 0, 0)),
+        "M": K.phi_c((pi, pi, 0)),
+        "P": K.phi_c((pi, pi / 2, 0)),
+        "R": K.phi_c((pi, pi, pi)),
+    }
+    want = {"X": 0, "M": 8, "P": Rational(16, 3), "R": 16}
+    return got == want, f"{ {k: str(v) for k, v in got.items()} }"
+
+
+@crosswalk.check("crosswalk reproduces the recorded off-axis band splits", "MASTER_THEORY §5.5")
+def _():
+    # c_4_new(k) - c_4_old(k) - Delta_Gamma == Delta_C * Phi_C(k)
+    m = K.DELTA_C * float(K.phi_c((pi, pi, 0)))
+    r = K.DELTA_C * float(K.phi_c((pi, pi, pi)))
+    ok = abs(m - 0.2229844343615374) < 1e-15 and abs(r - 0.4459688687230748) < 1e-15
+    return ok, f"M -> {m!r}, R -> {r!r}; independently recorded as 8*Delta_C and 16*Delta_C"
+
+
+@crosswalk.check("the crosswalk is exactly scalar on the momentum axes", "MASTER_THEORY §5.5")
+def _():
+    axial = [K.phi_c(kv) for kv in ((pi, 0, 0), (pi / 2, 0, 0), (pi / 3, 0, 0))]
+    return all(a == 0 for a in axial), (
+        "Phi_C vanishes on every axial cut, so axial data cannot distinguish the "
+        "two kernels — the whole residual disagreement lives off-axis"
+    )
+
+
+@crosswalk.check("bandwidth is preserved only if Delta_C vanishes", "MASTER_THEORY §5.5")
+def _():
+    # The scalar term drops out of any difference of band values; only Phi_C survives.
+    spread = K.DELTA_C * (float(K.phi_c((pi, pi, pi))) - float(K.phi_c((pi, 0, 0))))
+    return abs(spread) > 1e-3, (
+        f"scalar re-anchoring alone leaves the centered structure unchanged, but the "
+        f"additional Delta_C*Phi_C term spreads R against X by {spread:.6f}. Bandwidth "
+        "survives the crosswalk only if Delta_C is shown to vanish or is absorbed by an "
+        "exact operator identity; neither is established."
     )
 
 

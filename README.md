@@ -47,20 +47,54 @@ Because `B(k)†ψ(k) = 0`, the carrier energy is independent of `k` through
 > The corpus proves protection and computes coefficients; it assumes, and
 > nowhere proves, that the protected object is the glueball.
 
-## The live dispute
+## Anchoring vs. the real dispute
 
-Two independent computations of the physical SU(3) `O(u⁴)` kernel exist. They
-agree exactly on the sealed core (`A_shp = 5/48`, `B_shp = D_shp = 0`,
-`α_pen = 5/12`) and disagree on two invariants. **Neither is promoted.**
+Two independent computations of the SU(3) `O(u⁴)` kernel exist. They agree
+exactly on the sealed core (`A_shp = 5/48`, `B_shp = D_shp = 0`,
+`α_pen = 5/12`). Where they appear to differ splits into two very different
+situations.
 
-| | historical 189-record kernel | v10a.26 folded run |
+**The scalar is not a dispute.** `q_band⁽⁴⁾` and `m_Γ⁽⁴⁾` are *not* two
+competing estimates of one coordinate:
+
+| | | |
 |---|---|---|
-| rest scalar at Γ | `−20721577909065127111/7250590288602460800` (exact) | `−0.7751458630189173` (float) |
-| off-axis shape `C_shp` | `−211835444920651/4405310420659200` (exact) | `−0.020213328886166577` (float) |
+| `q_band⁽⁴⁾` | `−20721577909065127111/7250590288602460800` | band-kernel anchor (exact) |
+| `m_Γ⁽⁴⁾` | `−0.7751458630189173` | vacuum-subtracted physical Γ-point coefficient |
 
-`Δ_Γ = 2.0827701250956414`, `Δ_C = 0.027873054295192174`. A scalar re-anchoring
-**cannot** reconcile `C_shp`: axial cuts agree exactly, so the entire unresolved
-fourth-order problem is compressed into **one planar mixed-gradient direction**.
+They are differently anchored coordinates related by a translation-local scalar
+shift `Δ_Γ = 2.0827701250956417`. Since
+`H_mass − m_Γ⁽⁴⁾·I ≡ H_band − q_band⁽⁴⁾·I`, that shift cannot change the
+centered operator, its eigenvectors, the SOS factorization, the mobility
+coefficients, or the bandwidth. **Never call these "two `m_4` values"** — that
+phrasing is what manufactured the contradiction, and a test enforces the
+register keeps saying so.
+
+`m_Γ⁽⁴⁾` reproduces Hamer's axial coefficient through `mₙ = 2ⁿ⁻¹·aₙ`
+(`8·a₄ = −0.7751458630184`, agreeing to `5.2e-13`) from a run with the
+historical target disabled — substantive external validation. Note the separate
+caveat: the final assembled rest value is *forced* to equal that oracle by
+`local_shift = M4_ORACLE − ax_rest`, which is true by construction and
+validates neither the off-axis C-row nor the 189-entry ledger.
+
+**The off-axis coefficient is the real dispute**, and structurally so:
+
+```
+c₄_new(k) = c₄_old(k) + Δ_Γ + Δ_C·Φ_C(k),    Φ_C(k) = 4e₂(k)/Q(k)
+```
+
+With `e₂ = O(|k|⁴)` and `Q = O(|k|²)`, `Φ_C = O(|k|²)` and `Φ_C(0) = 0`. So a
+Γ-point scalar pins `Δ_Γ` and constrains `Δ_C` **not at all** — which is exactly
+why the scalar match can be right while the off-axis kernel stays unresolved.
+`Φ_C` vanishes on every axial cut too, so axial data agree exactly while
+`Φ_C(M) = 8` and `Φ_C(R) = 16` split those points by `8Δ_C` and `16Δ_C`, with
+`C_old = −0.04808638318135875` against `C_new = −0.020213328886166577` and
+`Δ_C = 0.027873054295192174`.
+
+Scalar re-anchoring alone leaves the centered structure unchanged; only the
+`Δ_C·Φ_C` term can move the dispersion. The crosswalk preserves bandwidth only
+if `Δ_C` vanishes or is absorbed by an exact operator identity, and neither is
+established.
 
 ## Quickstart
 
@@ -83,7 +117,7 @@ scripts/    stack detection, bootstrap, check — one source of truth for CI and
 
 ## What the verifier found
 
-38 invariants currently re-derive cleanly. Two are recorded as **findings** —
+45 invariants currently re-derive cleanly. Three are recorded as **findings** —
 places where the corpus's own wording is slightly tighter than its numbers:
 
 - **C20 agreement is overstated.** The register says the exact gate value
@@ -101,7 +135,13 @@ places where the corpus's own wording is slightly tighter than its numbers:
   `D` (`2.23e-13`). The sealed core itself is unaffected: `α_new` and `4·A_new`
   agree to `2.0e-15`.
 
-Neither changes any physics. Both are exactly the class of drift that a prose
+- **`Δ_Γ` is printed one ulp low.** The register gives `2.0827701250956414`.
+  In high precision the difference is `2.082770125095641678…`, which correctly
+  rounds to `…417`; the printed value comes from rounding `q_band⁽⁴⁾` to a
+  double *before* subtracting. Cosmetic, but the printed digit is not the
+  correctly rounded one.
+
+None changes any physics. All three are exactly the class of drift that a prose
 corpus cannot catch on its own.
 
 ## Status
@@ -111,4 +151,6 @@ third-order ledgers, the fourth-order sealed core and axial law, the dispute
 arithmetic, the generalized Hodge pencil, checkpoint extraction, and the
 homology count. The fourth-order adjudication itself (gap **G3**) is not
 implemented — see [`ledger/gaps.yaml`](ledger/gaps.yaml) for the 11-item frozen
-protocol it must follow.
+protocol it must follow. Its scope narrowed once C1 was dissolved: what G3 must
+settle is `C_shp`, since `Φ_C(0) = 0` makes Γ-point data structurally incapable
+of constraining `Δ_C`.

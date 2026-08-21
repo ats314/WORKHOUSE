@@ -18,8 +18,12 @@ working agreement — it applies to humans equally.
 - Every new invariant cites the corpus section it re-derives.
 - Every change to a number in `src/workhouse/constants.py` cites its source
   document and section, and states its status and evidence level.
-- Changes to `theory/` require regenerating `theory/SHA256SUMS` and saying in
-  the PR body why the evidence changed.
+- Changes to `theory/` require regenerating `theory/SHA256SUMS` (`make manifest`)
+  and saying in the PR body why the evidence changed.
+- Dependency changes go through `make lock` so `uv.lock` stays in step with
+  `pyproject.toml`. The lockfile is what makes a result reproducible rather than
+  merely recorded — the same distinction the corpus draws between
+  *cold-reproduced* and *record-backed* evidence.
 - `make check` passes locally before you push.
 
 ## Commit style

@@ -1,4 +1,4 @@
-.PHONY: help bootstrap check lint test verify status fmt clean
+.PHONY: help bootstrap check lint test verify status fmt manifest lock clean
 
 help:            ## Show this help
 	@grep -hE '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk -F':.*?## ' '{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -23,6 +23,12 @@ status:          ## Print the contradiction and gap registers
 
 fmt:             ## Auto-format
 	@.venv/bin/ruff check --fix . && .venv/bin/ruff format .
+
+manifest:        ## Regenerate theory/SHA256SUMS after a deliberate corpus change
+	@cd theory && sha256sum *.md > SHA256SUMS && echo "theory/SHA256SUMS regenerated:" && cat SHA256SUMS
+
+lock:            ## Refresh uv.lock from pyproject.toml
+	@uv lock && echo "uv.lock refreshed"
 
 clean:           ## Remove build and cache artifacts
 	@rm -rf .pytest_cache .ruff_cache **/__pycache__ dist build *.egg-info

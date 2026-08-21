@@ -7,3 +7,14 @@ updates:
     groups:
       actions:
         patterns: ["*"]
+
+  # The verification suite's results depend on the exact sympy it runs against,
+  # so a silent drift in the solver is a correctness risk here, not just a
+  # maintenance one. Watch the Python dependencies too.
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+    groups:
+      python:
+        patterns: ["*"]
