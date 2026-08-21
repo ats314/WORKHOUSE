@@ -60,8 +60,12 @@ class Claim:
     passing: bool = True
 
 
-def _lean_claims() -> list[Claim]:
-    """Theorem names from the Lean tree, with the file and line each sits on."""
+def lean_claims() -> list[Claim]:
+    """Theorem names from the Lean tree, with the file and line each sits on.
+
+    Public because it is the single scrape of the T0 layer: ``claims.py`` reuses
+    it to give every theorem a catalogue record.
+    """
     out: list[Claim] = []
     if not LEAN_DIR.exists():
         return out
@@ -103,7 +107,7 @@ def _check_claims() -> list[Claim]:
 
 def collect() -> list[Claim]:
     """Every certified claim, strongest tier first."""
-    claims = _lean_claims() + _check_claims()
+    claims = lean_claims() + _check_claims()
     return sorted(claims, key=lambda c: (c.tier, c.suite, c.name))
 
 

@@ -180,9 +180,10 @@ The goal is compression, not accumulation:
 950 files  →  ~100 real results  →  ~20 structural principles  →  a few theorems
 ```
 
-Progress is measurable. Today: 80 machine checks, 21 Lean theorems, 23 governing
-register items, 22 contradictions, 19 gaps, one genuinely open contradiction
-(C2), and three findings this repository raised against the corpus. Every
+Progress is measurable. Today: 100 machine checks, 21 Lean theorems, 23
+governing register items, 22 contradictions (one genuinely open: C2), 19 gaps
+of which two are discharged (G1 largely, G2 fully — see their `status` fields),
+and seven FINDING checks this repository holds against the corpus. Every
 session should move at least one claim from T3 toward T1, or record why it
 cannot be moved.
 

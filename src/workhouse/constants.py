@@ -118,6 +118,16 @@ BAND_ODD_FLAT = Rational(11, 306)
 BAND_ODD_TOP = Rational(41, 306)
 BAND_ODD_WIDTH = Rational(5, 51)
 
+# One-plaquette bridge tower coefficients as functions of beta/4
+# (PAPER_FLUX_glueball_flat_band_v1_1.tex; UNIFIED §2.1). These pin the
+# canonical coordinate: written in u = beta/6 they reproduce the printed
+# u-towers verbatim, and under the archived Y = 4u reading they would be
+# off by 4**r — the C4/G2 conversion statement, checkable.
+TOWER_B2_PLUS = Rational(13, 180)  # C-even, order (beta/4)**2
+TOWER_B3_PLUS = Rational(101, 2700)  # C-even, order (beta/4)**3
+TOWER_B2_MINUS = Rational(1, 18)  # C-odd, order (beta/4)**2
+TOWER_B3_MINUS = Rational(7, 432)  # C-odd, order (beta/4)**3
+
 # --------------------------------------------------------------------------
 # Third order, SU(3)  (MASTER_THEORY §4.4, COLD-CERTIFIED)
 # --------------------------------------------------------------------------

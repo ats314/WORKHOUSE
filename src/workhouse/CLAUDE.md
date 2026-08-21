@@ -36,7 +36,10 @@ third, add an explicit `FINDING:` check that *asserts* the discrepancy.
 - `invariants.py` — every T1/T2 check, grouped in suites
 - `frontier.py` — computes `FRONTIER.md`; do not hand-write what it derives
 - `ledger.py` — loads and structurally validates the three registers
+- `graph.py` — computes `index/graph.jsonl`, every recorded edge between claims
+- `navigator.py` — `workhouse why`: one id's whole evidence neighborhood
+- `atlas.py` — the graph as one self-contained HTML page; a view, never checked in
 - `corpus_index.py` — exact rationals in code, certificates, notebooks
 - `corpus_registry.py` — near-miss, multiple, and coverage sweeps over the whole corpus
-- `tier_collapse.py`, `near_gamma.py`, `settlement.py` — one investigation each
+- `tier_collapse.py`, `near_gamma.py`, `settlement.py`, `payloads.py` — one investigation each
 - `triage.py` — read-only survey of an unpinned archive

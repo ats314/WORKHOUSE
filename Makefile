@@ -1,4 +1,4 @@
-.PHONY: help bootstrap check lint test verify status frontier certified lit catalogue fmt manifest corpus-manifest lean corpus-index lock clean
+.PHONY: help bootstrap check lint test verify status frontier certified lit catalogue atlas fmt manifest corpus-manifest lean corpus-index lock clean
 
 help:            ## Show this help
 	@grep -hE '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk -F':.*?## ' '{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -21,8 +21,11 @@ verify:          ## Re-derive every exact claim in the corpus
 status:          ## Print the contradiction and gap registers
 	@.venv/bin/workhouse status
 
-catalogue:       ## Regenerate index/claims.jsonl and index/symbols.jsonl
+catalogue:       ## Regenerate the index/ catalogues: claims, symbols, graph
 	@.venv/bin/workhouse index --write
+
+atlas:           ## Render the theory graph to atlas.html (a view; never checked in)
+	@.venv/bin/workhouse atlas
 
 lit:             ## Published work, and which claim each paper bears on
 	@.venv/bin/workhouse lit

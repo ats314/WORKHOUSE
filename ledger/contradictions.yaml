@@ -190,13 +190,25 @@ contradictions:
   - id: C15
     title: Tetrahedral local coefficient
     status: unresolved-in-corpus
-    resolution: "Artifact absent; treat as record-backed"
+    resolution: >
+      Artifact absent AND no reference SHA recorded anywhere in the corpus
+      (machine-checked: a FINDING in the restored-payloads suite pins the
+      absence), so shipping cannot close this — only the G5 re-derivation of
+      the claimed -8/(N(N^2-1)) can. Treat as record-backed.
     blocks: [G5]
 
   - id: C16
     title: SU(5)/SU(6) fourth-order completeness
-    status: unresolved-in-corpus
-    resolution: "Later document controls, but machine-readable payloads are absent -> record-backed"
+    status: resolved
+    resolution: >
+      The payloads were shipped after all, and are now machine-checked
+      (restored-payloads suite, 2026-08-21): the SU(6) determinant
+      certificate re-derives Delta q_6 = 6/343 exactly, momentum-independent
+      with A, B, and the bandwidth unchanged, and the SU(5) stage-1 summary
+      pins the 895,524-pair scan with zero determinant sectors. Two upstream
+      word manifests remain absent (their SHAs are recorded in the
+      certificates), so the evidence level is output-certified, not
+      cold-reproduced.
     blocks: [G1]
 
   - id: C17
