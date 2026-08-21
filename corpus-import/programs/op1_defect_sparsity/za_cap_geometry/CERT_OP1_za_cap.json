@@ -1,0 +1,58 @@
+{
+ "gates": "G-ZA1,G-ZA2,G-ZA3,G-ZA3b,G-ZA4,G-ZA5 PASS",
+ "part1_curvature": {
+  "proved_case": "k=0 bare target cap",
+  "G-ZA1": "Delta_p >= chi0^2/2 (k=0); min ratio 0.50000 (bound TIGHT at 0.5)",
+  "G-ZA2": "Delta_p = 1-(c0*a+sqrt((1-c0^2)(1-a^2))) exact; worst dev 1.33e-15",
+  "leading_const": "Delta_p/chi0^2 -> 1/(2(1-c0^2)); asym-regime dev 1.59e-02 (n=165)",
+  "n_good": 22475,
+  "k0_n": 4554,
+  "incident_n": 16553,
+  "solver_invalid_dropped": 0,
+  "incident_min_ratio_valid": 0.006942193120082956,
+  "incident_violation_rate_valid": 0.11949495559717271,
+  "G-ZA5_counterexample": {
+   "chi0": 0.1919901063135564,
+   "Dp_solver": 0.00025589063324760186,
+   "Dp_sampled": 0.0024710219108783904,
+   "chi0_sq_over_2": 0.018430100461145345,
+   "k": 3,
+   "violates_sampled": true
+  },
+  "finding": "incident caps (k>=1) GENUINELY violate Delta_p>=chi0^2/2 (valid-config rate 0.12; counterexample independently sampling-verified): LCI-reduction Sec.9 (9.4)-(9.5) chi0-at-u_A criterion is INSUFFICIENT for incident subsets. Fix: parametrize the good event by the true height-drop Delta_p (which is exactly the rate the cap-ratio law (8.4) supplies)."
+ },
+ "part2_capratio": {
+  "geometry": {
+   "c0": 0.8,
+   "a": 0.5,
+   "chi0": 0.30000000000000004,
+   "Delta_p_rate": 0.08038475772933684
+  },
+  "kappas": [
+   60.0,
+   90.0,
+   130.0,
+   180.0,
+   250.0,
+   350.0,
+   500.0,
+   700.0
+  ],
+  "neglog_nu": [
+   6.34886766758148,
+   8.948231489617703,
+   12.336052160046197,
+   16.50832286890632,
+   22.28844044875642,
+   30.47946215470025,
+   42.687789043073636,
+   58.88545430724287
+  ],
+  "rate_2pt_slope": 0.08098832632084615,
+  "rate_3param": 0.08020550659085106,
+  "M_prefactor": -0.49429313562776,
+  "logC_geom": 0.49217956651996525,
+  "law_max_residual": 0.005377190501292262,
+  "note": "nu(C_p) ~ C_geom kappa^{-M} e^{-kappa Delta_p}; RATE=Delta_p certified; M~-0.49 (corner-Laplace, density vanishes at the dominant point)"
+ }
+}

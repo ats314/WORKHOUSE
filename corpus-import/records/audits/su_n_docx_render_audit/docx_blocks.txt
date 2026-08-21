@@ -1,0 +1,438 @@
+P001 [Title] Homological Flat Bands and Rank-Cubic Spectral Geometry in SU(N) Lattice Gauge Theory
+P002 [Subtitle] An expanded theorem program built from one-plaquette Weyl analysis and strong-coupling plaquette dynamics
+P003 [Author] Prepared from the supplied SU(N)/Weyl-gap manuscript suite
+P004 [Date] July 23, 2026
+P005 [heading 1] Contents
+P006 [Compact] Core theorem: Sections 2–5 derive the corrected bridge, exact $SU(N)$ channel coefficient, homological band spectrum, and $(N)^(−3)$ mobility.
+P007 [Compact] Special-rank and local theory: Sections 6–8 recover the $SU(3)$ result, state the source-certified third-order extension, and organize the Weyl-local gap theorems.
+P008 [Compact] Research program: Sections 9–13 define the Weyl–Hodge synthesis, status ledger, publication architecture, and verification gates.
+P009 [Compact] Audit trail: Appendices A–C record the exact algebra, certificate coverage, and source provenance.
+P010 [heading 1] Abstract
+P011 [First Paragraph] This manuscript develops a larger theory from two bodies of supplied work: the compact one-plaquette class Hamiltonian at large potential strength and the strong-coupling one-plaquette glueball band on the three-dimensional cubic lattice. Its new proved core is a fixed-rank $SU(N)$ extension of the charge-odd flat-band mechanism. At second order in the magnetic coupling, the orientation-sensitive hopping coefficient is
+P012 [Body Text] $(t)_(N)=((2N((N)^(2)−4))/(((N)^(2)−1)(2(N)^(2)−1)(4(N)^(2)−9))),  N≥3.$
+P013 [First Paragraph] It is positive, reduces to $5/612$ at $N=3$, and obeys $(N)^(3)(t)_(N)→1/4$. The spatial matrix multiplying $(t)_(N)$ is the signed face-adjacency operator
+P014 [Body Text] $S()+4I=over(N,~)()over(N,~)(())^(†),$
+P015 [First Paragraph] where $over(N,~)$ is the Bloch face-to-edge boundary matrix. Because $(∂)_(2)(∂)_(3)=0$, $S()$ has an exactly flat eigenvalue $−4$ for every momentum. In fact its full spectrum is
+P016 [Body Text] $specS()={−4, q()−4, q()−4},  q()=4underover(∑,j=1,3)(sin)^(2)​(((k)_(j))/(2)).$
+P017 [First Paragraph] Consequently the lowest $C$-odd branch is dispersionless through $O((y)^(2))$ for every $SU(N≥3)$, the full one-plaquette $C$-odd manifold has width
+P018 [Body Text] $(W)_(N)^((−))(y)=12(t)_(N)(y)^(2)+O((y)^(3))=((24N((N)^(2)−4))/(((N)^(2)−1)(2(N)^(2)−1)(4(N)^(2)−9))) (y)^(2)+O((y)^(3)),$
+P019 [First Paragraph] and $(W)_(N)^((−))∼3(y)^(2)/(N)^(3)$ at fixed strong-coupling normalization. On an $(L)^(3)$ torus the flat eigenspace has exact dimension $(L)^(3)+2$.
+P020 [Body Text] The second half of the manuscript organizes the supplied local spectral results into a “Weyl–Hodge” program. The internal axis is controlled by Weyl-invariant degree and yields the exact $SU(3)$ three-term local gap. The spatial axis is controlled by the cellular boundary complex and yields the homological flat band. A second rank-cubic scale appears on the local side: the fixed-$N$, large-$β$ class-gap expansions are uniform only in the regime $β≫(N)^(3)$. The common exponent three is a structural clue, not yet a theorem connecting the two asymptotic regimes.
+P021 [Body Text] The manuscript distinguishes four statuses throughout: proved here; inherited exact result from the supplied derivations; source-certified but not independently rerun; and conjectural/open. It makes no claim about the continuum Yang–Mills mass gap.
+P022 [heading 1] Reader’s guide and status vocabulary
+P023 [First Paragraph] The goal is not to concatenate the supplied documents. It is to extract one stronger paper and one credible research program.
+P024 [Body Text] The status labels used below are:
+TABLE 1
+T1R1: Label | Meaning
+T1R2: Proved here | A complete algebraic or geometric derivation appears in this manuscript and is checked by the accompanying exact-arithmetic certificate.
+T1R3: Inherited exact | The result is proved in the supplied manuscript suite and its formulas agree across the relevant source files.
+T1R4: Source-certified | The supplied derivation names exact-arithmetic certificates, but those certificate files were not among the attachments and were not rerun here.
+T1R5: Conjectural/open | The statement is a proposed scaling law, structural interpretation, or unresolved analytic target.
+P025 [Block Text] Main result. Under the standard second-order linked-cluster reduction of the one-plaquette $C$-odd manifold, the signed nearest-neighbor coefficient is the exact positive rational function $(t)_(N)$ displayed above. The signed adjacency is a shifted boundary Laplacian, so the lowest branch is flat for every $SU(N≥3)$. The group dependence and the spatial topology factor completely at this order.
+P026 [First Paragraph] The paper’s central factorization is therefore
+P027 [Body Text] $second-order C-odd dynamics=rank coefficient (t)_(N)×cubical boundary geometry S$
+P028 [First Paragraph] up to a momentum-independent scalar.
+P029 [heading 1] 1. Scope and result hierarchy
+P030 [First Paragraph] The supplied work naturally separates into three layers.
+P031 [Normal] Local compact spectral theory. The class Hamiltonian
+P032 [Body Text] $(H)_(β)=((1)/(2))(C)_(2)+β(1−((1)/(N))ReTrg)$
+P033 [Normal] is analyzed at fixed rank as $β→∞$. For $SU(3)$, Weyl geometry gives a three-term local class gap with an exact nonradial correction.
+P034 [Normal] Strong-coupling spatial dynamics. A one-plaquette excitation of the Kogut–Susskind Hamiltonian hops among plaquettes. In the $C$-odd sector the hop carries the orientation sign of the shared edge. The corresponding Bloch operator is a shifted face-boundary Laplacian and has a homological flat band.
+P035 [Normal] Global Wilson geometry. The supplied Peierls and projected-capacity documents propose a route from local defects to Wilson-loop control. That route remains conditional. It is not upgraded merely by strengthening the local spectral layer.
+P036 [First Paragraph] This manuscript enlarges layers 1 and 2 and keeps layer 3 separate. The strongest publishable unit is the rank-universal flat-band theorem, with the $SU(3)$ local gap and third-order analysis serving as deep special-rank companions.
+P037 [heading 1] 2. Strong-coupling Hamiltonian and the corrected bridge
+P038 [heading 2] 2.1 Kogut–Susskind normalization
+P039 [First Paragraph] On the spatial cubic lattice, use
+P040 [Body Text] $H=under(∑,ℓ)((1)/(2))(C)_(2)(ℓ)−yunder(∑,p)((χ)_(p)+(over(χ,¯))_(p)),$
+P041 [First Paragraph] where $(χ)_(p)=Tr(U)_(p)$ is the fundamental plaquette character and $y>0$ is the strong-coupling expansion parameter. A single fundamental loop places $F$ on four links, hence its unperturbed energy is
+P042 [Body Text] $(E)_(F,N)=4⋅((1)/(2))(C)_(F)=2(C)_(F)=(((N)^(2)−1)/(N)),  (C)_(F)=(((N)^(2)−1)/(2N)).$
+P043 [First Paragraph] For $N≥3$, the two oriented loops $(χ)_(p)|0⟩$ and $(over(χ,¯))_(p)|0⟩$ are distinct. Their charge eigenstates are
+P044 [Body Text] $|(e)_(p)⟩=(((χ)_(p)+(over(χ,¯))_(p))/(sqrt(2)))|0⟩,  |(o)_(p)⟩=(((χ)_(p)−(over(χ,¯))_(p))/(sqrt(2)))|0⟩.$
+P045 [First Paragraph] For $SU(2)$, the fundamental is pseudoreal and this distinct fundamental $C$-odd sector is absent. The algebraic formula below vanishes at $N=2$, as it should.
+P046 [heading 2] 2.2 Exact bridge theorem for every rank
+P047 [First Paragraph] Restrict the lattice Hamiltonian to the flux tower of one plaquette. A character $(χ)_(R)(g)$ puts the representation $R$ on all four boundary links, so the electric energy is $2(C)_(2)(R)$. The restricted operator is
+P048 [Body Text] $(h)_(loop)=2(C)_(2)−2y ReTrg.$
+P049 [First Paragraph] On the other hand,
+P050 [Body Text] $4(H)_(β)−4β=2(C)_(2)−((4β)/(N))ReTrg.$
+P051 [First Paragraph] Matching the magnetic terms gives $β=Ny/2$.
+P052 [Block Text] Theorem 2.1 — Corrected fixed-rank bridge (proved here).
+P053 [Block Text] $(h)_(loop)=([4(H)_(β)−4β])_(β=Ny/2),  (m)_(±)^(restricted)(y)=4(Δ)_(N)^(±)​(((Ny)/(2))).$
+P054 [Block Text] The first equality is an exact operator identity on the one-plaquette flux tower; the second is its gap consequence.
+P055 [First Paragraph] This corrects a harmless additive-constant typo in the supplied flat-band manuscript, which wrote $4(H)_(β)−β$. The gap map used there remains correct because scalar shifts cancel in gaps, but the exact operator identity requires $4(H)_(β)−4β$.
+P056 [Body Text] For $SU(3)$, the determinant tensor permits a first-order charge splitting:
+P057 [Body Text] $(m)_(+)(y)=((8)/(3))−y+O((y)^(2)),  (m)_(−)(y)=((8)/(3))+y+O((y)^(2)).$
+P058 [First Paragraph] For $N>3$, $N$-ality forbids this particular first-order matrix element. The rank-universal theorem below concerns the spatial dispersion at second order and does not require a universal formula for the momentum-independent on-site coefficient.
+P059 [heading 1] 3. Exact fixed-rank channel algebra
+P060 [heading 2] 3.1 Why only four channels occur
+P061 [First Paragraph] Two plaquettes sharing one edge produce two possible fused representations on that edge:
+P062 [Body Text] $F⊗over(F,¯)=1⊕Adj.$
+P063 [First Paragraph] $F⊗F=(Λ)^(2)F⊕(Sym)^(2)F.$
+P064 [First Paragraph] The relevant dimensions and Casimirs are:
+TABLE 2
+T2R1: Channel R | d(R) | C₂(R)
+T2R2: Singlet | 1 | 0
+T2R3: Adj | N² − 1 | N
+T2R4: Λ²F | N(N − 1)/2 | (N + 1)(N − 2)/N
+T2R5: Sym²F | N(N + 1)/2 | (N − 1)(N + 2)/N
+P065 [Body Text] After the six nonshared links are integrated, the squared norm of channel $R$ is $(d)_(R)/(N)^(2)$. Relative to the one-plaquette energy, the two-plaquette intermediate has denominator
+P066 [Body Text] $δ(E)_(R)=(C)_(F)+((1)/(2))(C)_(2)(R).$
+P067 [First Paragraph] Second-order perturbation contributes the negative inverse of this positive excitation energy.
+P068 [heading 2] 3.2 Antiparallel channel sum
+P069 [First Paragraph] For $F⊗over(F,¯)$, define
+P070 [Body Text] $(A)_(N)=−[((1)/((N)^(2)))((1)/((C)_(F)))+(((N)^(2)−1)/((N)^(2)))((1)/((C)_(F)+N/2))].$
+P071 [First Paragraph] Using $(C)_(F)=((N)^(2)−1)/(2N)$,
+P072 [Body Text] $(A)_(N)=−((2(N)^(3))/(((N)^(2)−1)(2(N)^(2)−1))).$
+P073 [First Paragraph] At $N=3$, this gives $(A)_(3)=−27/68$, the combined singlet-plus-adjoint part of the supplied $SU(3)$ channel sum.
+P074 [heading 2] 3.3 Parallel channel sum
+P075 [First Paragraph] For $F⊗F$, define
+P076 [Body Text] $(B)_(N)=−[((N−1)/(2N))((1)/((C)_(F)+((1)/(2))(C)_((Λ)^(2)F)))+((N+1)/(2N))((1)/((C)_(F)+((1)/(2))(C)_((Sym)^(2)F)))].$
+P077 [First Paragraph] The denominators factor as
+P078 [Body Text] $(C)_(F)+((1)/(2))(C)_((Λ)^(2)F)=(((N+1)(2N−3))/(2N)),$
+P079 [First Paragraph] $(C)_(F)+((1)/(2))(C)_((Sym)^(2)F)=(((N−1)(2N+3))/(2N)).$
+P080 [First Paragraph] Therefore
+P081 [Body Text] $(B)_(N)=−((4N((N)^(2)−2))/(((N)^(2)−1)(4(N)^(2)−9))).$
+P082 [First Paragraph] At $N=3$, $(B)_(3)=−7/18$. Hence
+P083 [Body Text] $(A)_(3)+(B)_(3)=−((481)/(612)),$
+P084 [First Paragraph] exactly recovering the supplied $SU(3)$ two-flux channel sum.
+P085 [heading 2] 3.4 Charge-odd residue and common leakage
+P086 [First Paragraph] The $C$-odd combination subtracts the two orientation classes. Its signed nearest-neighbor coefficient is
+P087 [Body Text] $(t)_(N)=(B)_(N)−(A)_(N).$
+P088 [First Paragraph] Putting the two rational functions over a common denominator gives
+P089 [Body Text] $(t)_(N)=((2N((N)^(2)−4))/(((N)^(2)−1)(2(N)^(2)−1)(4(N)^(2)−9))).$
+P090 [First Paragraph] The numerator makes the rank dependence transparent:
+P091 [Body Text] $(t)_(2)=0,  (t)_(N)>0 (N≥3).$
+P092 [First Paragraph] The diagonal leakage relative to the vacuum includes the vacuum subtraction $1/(C)_(F)=2N/((N)^(2)−1)$:
+P093 [Body Text] $(ℓ)_(N)=(A)_(N)+(B)_(N)+((1)/((C)_(F)))=((2N(5−3(N)^(2)))/(((N)^(2)−1)(2(N)^(2)−1)(4(N)^(2)−9))).$
+P094 [First Paragraph] At $N=3$,
+P095 [Body Text] $(t)_(3)=((5)/(612)),  (ℓ)_(3)=−((11)/(306)),$
+P096 [First Paragraph] which are the exact hopping and per-neighbor leakage coefficients in the supplied $SU(3)$ derivation.
+P097 [Body Text] The algebra above is checked as a formal rational identity in $N$, not merely rank by rank, by the accompanying standard-library certificate.
+P098 [heading 1] 4. The fixed-rank homological flat-band theorem
+P099 [heading 2] 4.1 The signed face adjacency
+P100 [First Paragraph] Choose the three plaquette orbitals
+P101 [Body Text] $a=(12),  b=(13),  c=(23)$
+P102 [First Paragraph] in each cubic unit cell, with their standard oriented boundaries. Let
+P103 [Body Text] $(u)_(j)=1−(e)^(i(k)_(j)).$
+P104 [First Paragraph] The Bloch face-to-edge boundary matrix is
+P105 [Body Text] $over(N,~)()=([((u)_(2), −(u)_(1), 0); ((u)_(3), 0, −(u)_(1)); (0, (u)_(3), −(u)_(2))]).$
+P106 [First Paragraph] The signed shared-edge adjacency satisfies
+P107 [Body Text] $S()+4I=over(N,~)()over(N,~)(())^(†).$
+P108 [First Paragraph] The shift by four is the boundary norm of one oriented plaquette. The off-diagonal terms are precisely the signed sums over shared edges.
+P109 [heading 2] 4.2 Exact spectrum, not only one flat eigenvalue
+P110 [First Paragraph] The determinant vanishes identically:
+P111 [Body Text] $detover(N,~)()=0.$
+P112 [First Paragraph] More strongly, after row signs and a row permutation, $over(N,~)$ is the cross-product matrix of the vector $u=((u)_(1),(u)_(2),(u)_(3))$. Hence
+P113 [Body Text] $(over(N,~))^(†)over(N,~)∼qI−u (u)^(†),  q=underover(∑,j=1,3)(|(u)_(j)|)^(2).$
+P114 [First Paragraph] The nonzero singular values are therefore both $sqrt(q)$, and
+P115 [Body Text] $q()=underover(∑,j=1,3)(|1−(e)^(i(k)_(j))|)^(2)=4underover(∑,j=1,3)(sin)^(2)​(((k)_(j))/(2)).$
+P116 [First Paragraph] This gives the complete spectrum:
+P117 [Body Text] $specS()={−4, q()−4, q()−4}.$
+P118 [First Paragraph] The flat eigenvector may be taken as
+P119 [Body Text] $w()=((over(u,¯))_(3),−(over(u,¯))_(2),(over(u,¯))_(1)).$
+P120 [First Paragraph] At $=0$, all $(u)_(j)$ vanish and the whole triplet sits at $−4$.
+P121 [heading 2] 4.3 Separation of group theory and geometry
+P122 [First Paragraph] At second order, the $C$-odd one-plaquette effective Hamiltonian has the form
+P123 [Body Text] $(H)_(−,N)^((2))()=(a)_(N,−)I+(t)_(N)S(),$
+P124 [First Paragraph] where $(a)_(N,−)$ contains the within-plaquette coefficient and momentum-independent leakage. The entire momentum dependence is carried by the same signed matrix $S$ for every rank.
+P125 [Body Text] Thus the three second-order coefficients are
+P126 [Body Text] $(a)_(N,−)−4(t)_(N),  (a)_(N,−)+(q()−4)(t)_(N) (twice).$
+P127 [First Paragraph] Because $(t)_(N)>0$ and $q≥0$, the flat branch is the lowest branch.
+P128 [Block Text] Theorem 4.1 — Fixed-rank $SU(N)$ homological flat band (proved here).
+For every $N≥3$, the lowest fundamental $C$-odd one-plaquette branch of the three-dimensional cubic Kogut–Susskind Hamiltonian is exactly dispersionless through $O((y)^(2))$. Its two companion branches are degenerate and disperse through $q()$. The result is independent of the momentum-independent on-site coefficient.
+P129 [First Paragraph] In a full mass notation,
+P130 [Body Text] $(m)_(−,flat)(y)=(E)_(F,N)+(c)_(N,−)^((1))y+((a)_(N,−)−4(t)_(N))(y)^(2)+O((y)^(3)),$
+P131 [First Paragraph] $(m)_(−,disp)(,y)=(E)_(F,N)+(c)_(N,−)^((1))y+[(a)_(N,−)+(q()−4)(t)_(N)](y)^(2)+O((y)^(3)),$
+P132 [First Paragraph] with multiplicity two in the dispersive line. Here $(c)_(3,−)^((1))=1$ in the supplied normalization, while the analogous first-order splitting vanishes for $N>3$ by $N$-ality.
+P133 [heading 2] 4.4 Bandwidth and curvature
+P134 [First Paragraph] Since $0≤q≤12$, the signed-adjacency spectrum ranges from $−4$ to $8$. The full $C$-odd one-plaquette manifold therefore has width
+P135 [Body Text] $(W)_(N)^((−))(y)=12(t)_(N)(y)^(2)+O((y)^(3))=((24N((N)^(2)−4))/(((N)^(2)−1)(2(N)^(2)−1)(4(N)^(2)−9)))(y)^(2)+O((y)^(3)).$
+P136 [First Paragraph] Near $=0$,
+P137 [Body Text] $q()=(||)^(2)+O((||)^(4)),$
+P138 [First Paragraph] so each dispersive companion has isotropic curvature $(t)_(N)(y)^(2)$. The flat branch has zero curvature at this order.
+P139 [heading 2] 4.5 Position-space topology and exact degeneracy
+P140 [First Paragraph] Let
+P141 [Body Text] $(C)_(3)over(→,(∂)_(3))(C)_(2)over(→,(∂)_(2))(C)_(1)$
+P142 [First Paragraph] be the cubical cellular chain complex. The matrix $over(N,~)$ is the Bloch form of $(∂)_(2)$. Every elementary cube boundary is a closed two-chain:
+P143 [Body Text] $(∂)_(2)((∂)_(3) cube)=0.$
+P144 [First Paragraph] Therefore the six signed faces of one cube form a compactly localized eigenstate of $S$ at eigenvalue $−4$.
+P145 [Body Text] More generally,
+P146 [Body Text] $dimker(∂)_(2)=rank(∂)_(3)+(b)_(2).$
+P147 [First Paragraph] On the periodic $(L)^(3)$ cubic lattice, $(b)_(2)((T)^(3))=3$ and $rank(∂)_(3)=(L)^(3)−1$. Hence
+P148 [Body Text] $dim(E)_(−4)(S)=(L)^(3)+2.$
+P149 [First Paragraph] This is one flat state for every momentum, plus two extra states at the three-band touching point $=0$.
+P150 [heading 1] 5. Rank-cubic mobility
+P151 [First Paragraph] The exact coefficient has the large-rank expansion
+P152 [Body Text] $(t)_(N)=((1)/(4(N)^(3)))+O((N)^(−5)),$
+P153 [First Paragraph] and therefore
+P154 [Body Text] $(W)_(N)^((−))(y)=((3(y)^(2))/((N)^(3)))+O((N)^(−5)(y)^(2))+O((y)^(3)).$
+P155 [First Paragraph] At fixed strong-coupling normalization, the spatial mobility of the fundamental $C$-odd excitation is suppressed by $(N)^(−3)$, not merely $(N)^(−1)$.
+TABLE 3
+T3R1: N | t(N) | 12t(N) | N³t(N)
+T3R2: 3 | 5/612 | 5/51 | 0.220588
+T3R3: 4 | 32/8525 | 384/8525 | 0.240235
+T3R4: 5 | 5/2548 | 15/637 | 0.245290
+T3R5: 6 | 128/111825 | 512/37275 | 0.247243
+T3R6: 7 | 105/145112 | 315/36278 | 0.248188
+T3R7: 8 | 320/658749 | 1280/219583 | 0.248714
+T3R8: ∞ | ∼1/(4N³) | ∼3/N³ | 1/4
+P156 [Body Text] The cancellation producing this scale is visible before asymptotics:
+P157 [Body Text] $(A)_(N)∼−((1)/(N)),  (B)_(N)∼−((1)/(N)),  (B)_(N)−(A)_(N)∼((1)/(4(N)^(3))).$
+P158 [First Paragraph] Thus the $C$-odd mobility is a subleading residue between two order-$(N)^(−1)$ fusion channels.
+P159 [heading 1] 6. The $SU(3)$ gate and third-order persistence
+P160 [heading 2] 6.1 Complete second-order recovery
+P161 [First Paragraph] For $SU(3)$, the supplied within-plaquette $C$-odd coefficient is $1/2$. The twelve-neighbor diagonal leakage is
+P162 [Body Text] $12(ℓ)_(3)=−((22)/(51)),$
+P163 [First Paragraph] so
+P164 [Body Text] $(a)_(3,−)=((1)/(2))−((22)/(51))=((7)/(102)).$
+P165 [First Paragraph] The flat shift is
+P166 [Body Text] $(a)_(3,−)−4(t)_(3)=((7)/(102))−4⋅((5)/(612))=((11)/(306)),$
+P167 [First Paragraph] and the top of the dispersive doublet is
+P168 [Body Text] $(a)_(3,−)+8(t)_(3)=((41)/(306)).$
+P169 [First Paragraph] Therefore
+P170 [Body Text] $(m)_(−,flat)^(SU(3))(y)=((8)/(3))+y+((11)/(306))(y)^(2)+O((y)^(3)),$
+P171 [First Paragraph] while the full $C$-odd manifold width is $5(y)^(2)/51+O((y)^(3))$. These are exact regressions against the supplied manuscript.
+P172 [heading 2] 6.2 What is known at third order
+P173 [First Paragraph] The supplied flat-band derivation states that the $SU(3)$ flat branch persists through third order:
+P174 [Body Text] $(m)_(−,flat)^(SU(3))(y)=((8)/(3))+y+((11)/(306))(y)^(2)−((109151)/(249696))(y)^(3)+O((y)^(4)).$
+P175 [First Paragraph] Its mechanism has two parts:
+P176 [Compact] every three-distinct-plaquette tromino numerator vanishes by the bare-link lemma; and
+P177 [Compact] the remaining third-order hopping is proportional to the same signed adjacency $S$.
+P178 [First Paragraph] This result is source-certified, not independently rerun here. The manuscript names exact-arithmetic files for the domino resolvent, Haar moments, tromino classification, and regression web, but those files were not included in the attachment set. The coefficient should remain in a submission only after those certificate files are recovered and executed in a clean environment.
+P179 [heading 2] 6.3 The first generic lifting order
+P180 [First Paragraph] The bare-link argument also identifies the first order at which a generic three-plaquette lifter can become nonzero: $O((y)^(4))$. The decisive test is whether the three geometric lifter classes acquire equal weights. Equality preserves the flat line; inequality produces a computable fourth-order bandwidth.
+P181 [Body Text] This is a sharp binary target, not an invitation to fit a dispersion numerically. The exact weight difference is the scientifically useful output in either case.
+P182 [heading 1] 7. The internal Weyl spectral layer
+P183 [First Paragraph] The strong-coupling flat band concerns motion among spatial plaquettes. The supplied class-gap results concern localization inside the group manifold. They are different spectral problems, but both reduce complexity by exposing the correct geometry.
+P184 [heading 2] 7.1 $SU(3)$ Cartan invariants
+P185 [First Paragraph] For the local Hamiltonian
+P186 [Body Text] $(H)_(β)=((1)/(2))(C)_(2)+β(1−((1)/(3))Re(χ)_((1,0))(g)),$
+P187 [First Paragraph] choose orthonormal Cartan coordinates $(x,y)$ and define
+P188 [Body Text] $(p)_(2)=(x)^(2)+(y)^(2),  (p)_(3)=((sqrt(6))/(6))y(3(x)^(2)−(y)^(2)).$
+P189 [First Paragraph] The Weyl discriminant is
+P190 [Body Text] $(Δ)_(W)^(2)=((1)/(2))(p)_(2)^(3)−3(p)_(3)^(2).$
+P191 [First Paragraph] Newton identities give
+P192 [Body Text] $(P)_(4)=((1)/(2))(p)_(2)^(2),  (P)_(6)=((1)/(4))(p)_(2)^(3)+((1)/(3))(p)_(3)^(2).$
+P193 [First Paragraph] After the $(β)^(−1/4)$ localization scaling,
+P194 [Body Text] $(H)_(β)=(β)^(1/2)(H)_(0)+(H)_(1)+(β)^(−1/2)(H)_(2)+O((β)^(−1)),$
+P195 [First Paragraph] with
+P196 [Body Text] $(H)_(1)=−(((p)_(2)^(2))/(96)),$
+P197 [First Paragraph] $(H)_(2)=sqrt(6)((((p)_(2)^(3))/(11520))+(((p)_(3)^(2))/(8640))).$
+P198 [First Paragraph] The first explicitly angular Weyl-invariant term is $(p)_(3)^(2)$, of total degree six. This is why the radial approximation survives one correction and first fails at the $(β)^(−1/2)$ coefficient.
+P199 [heading 2] 7.2 Exact three-term $SU(3)$ local gap
+P200 [First Paragraph] The supplied invariant-basis calculation gives:
+P201 [Body Text] $(Δ)_(SU(3))(β)=sqrt(((2β)/(3)))−((5)/(16))−((311sqrt(6))/(9216))(β)^(−1/2)+O((β)^(−1)).$
+P202 [First Paragraph] The radial foil has coefficient
+P203 [Body Text] $−((327sqrt(6))/(9216)),$
+P204 [First Paragraph] so the exact rank-two angular correction is
+P205 [Body Text] $((sqrt(6))/(576)) (β)^(−1/2).$
+P206 [First Paragraph] This shift is the direct $(p)_(3)^(2)$ matrix element. The resolvent correction from $(H)_(1)$ is handled in a finite invariant oscillator basis, and the supplied coefficient tables close the calculation exactly. This result is inherited exact.
+P207 [Body Text] It is a local class-function gap. It is not a glueball mass, a lattice mass gap, or a continuum Yang–Mills gap.
+P208 [heading 2] 7.3 Fixed-rank $SU(N)$ local class gaps
+P209 [First Paragraph] The supplied fixed-rank Wick certificates give
+P210 [Body Text] $(Δ)_(N)^(+)(β)=sqrt(((2β)/(N)))−((2(N)^(2)−3)/(16N))−((sqrt(2)(6(N)^(4)−24(N)^(2)+41))/(1024(N)^(3/2)))(β)^(−1/2)+(O)_(N)((β)^(−1))$
+P211 [First Paragraph] and
+P212 [Body Text] $(Δ)_(N)^(−)(β)=sqrt(((9β)/(2N)))−((3((N)^(2)−3))/(16N))−((sqrt(2)(14(N)^(4)−97(N)^(2)+290))/(1536(N)^(3/2)))(β)^(−1/2)+(O)_(N)((β)^(−1)).$
+P213 [First Paragraph] The $C$-odd constant term is
+P214 [Body Text] $−((3((N)^(2)−3))/(16N)).$
+P215 [First Paragraph] An older alternative,
+P216 [Body Text] $−((3(2(N)^(2)+1))/(16N)),$
+P217 [First Paragraph] is superseded and should not reappear.
+P218 [Body Text] These fixed-rank formulas are inherited exact. Their remainders are not uniform in $N$.
+P219 [heading 1] 8. The second rank-cubic scale
+P220 [heading 2] 8.1 Why the fixed-rank expansion requires $β≫(N)^(3)$
+P221 [First Paragraph] In either local class gap, the displayed $(β)^(−1/2)$ coefficient grows like $(N)^(5/2)$, while the leading oscillator gap grows like $sqrt(β/N)$. Their relative size is therefore
+P222 [Body Text] $(((N)^(5/2)(β)^(−1/2))/(sqrt(β/N)))≍(((N)^(3))/(β)).$
+P223 [First Paragraph] Thus the fixed-rank series is asymptotically ordered only when
+P224 [Body Text] $β≫(N)^(3).$
+P225 [First Paragraph] A formal ’t Hooft substitution $β∝(N)^(2)$ lies outside this uniformity regime and cannot be used to infer a controlled large-$N$ local gap.
+P226 [heading 2] 8.2 Formal double scaling at $β=(N)^(3)τ$
+P227 [First Paragraph] If one nevertheless substitutes
+P228 [Body Text] $β=(N)^(3)τ$
+P229 [First Paragraph] into the displayed coefficients and divides by $N$, the formal outer expressions become
+P230 [Body Text] $(((Δ)_(N)^(+)((N)^(3)τ))/(N))∼sqrt(2τ)−((1)/(8))−((3sqrt(2))/(512sqrt(τ)))+⋯,$
+P231 [First Paragraph] $(((Δ)_(N)^(−)((N)^(3)τ))/(N))∼3sqrt(((τ)/(2)))−((3)/(16))−((7sqrt(2))/(768sqrt(τ)))+⋯.$
+P232 [First Paragraph] These are conjectural scaling targets, not asymptotic theorems, because the $N$-dependence of the $(O)_(N)((β)^(−1))$ remainder is uncontrolled.
+P233 [Body Text] The correct next theorem would be a uniform estimate of the form
+P234 [Body Text] $|(((Δ)_(N)^(±)((N)^(3)τ))/(N))−(F)_(±)^((K))(τ)|≤(ε)_(N,K)(τ),$
+P235 [First Paragraph] with a domain $τ≥(τ)_(0)>0$ and $(ε)_(N,K)→0$ as $N→∞$. No such estimate is presently established.
+P236 [heading 2] 8.3 The rank-cubic observation
+P237 [First Paragraph] The two regimes now display the same exponent:
+TABLE 4
+T4R1: Regime | Rank-cubic quantity | Meaning
+T4R2: Strong coupling, spatial motion | N³t(N) → 1/4 | The C-odd hopping is a 1/N³ residue.
+T4R3: Large-β, internal localization | β/N³ | The fixed-rank class-gap series becomes uniformly ordered only beyond the N³ scale.
+P238 [Body Text] This is the rank-cubic observation. It is not yet a duality, matching relation, or common limit theorem. The bridge $β=Ny/2$ maps $β∼(N)^(3)$ to $y∼(N)^(2)$, far outside the small-$y$ expansion. The exponent may reflect a shared cancellation structure in low tensor moments, but that explanation remains open.
+P239 [heading 1] 9. Weyl–Hodge spectral geometry
+P240 [First Paragraph] The enlarged program has two independent “barcodes.”
+P241 [heading 2] 9.1 Internal Weyl barcode
+P242 [First Paragraph] The internal barcode records the first invariant degree capable of changing the gap beyond radial data.
+TABLE 5
+T5R1: Rank/type | First relevant invariant structure | Spectral consequence
+T5R2: SU(2) | only the quadratic invariant locally | genuinely radial local geometry
+T5R3: SU(3) | cubic invariant p₃, entering the even potential as p₃² at degree six | first angular shift at β⁻¹ᐟ²
+T5R4: SU(N ≥ 4) | independent higher trace invariants occur earlier at the operator level | energy shifts must still be determined by oscillator selection rules
+P243 [Body Text] The last distinction matters: the degree at which a nonradial operator appears is not automatically the degree at which a selected gap responds. Operator barcode and gap-response barcode must be tracked separately.
+P244 [heading 2] 9.2 Spatial Hodge barcode
+P245 [First Paragraph] The spatial barcode records the first cluster operator not reduced to the boundary complex.
+TABLE 6
+T6R1: Order | Spatial structure | Status
+T6R2: y² | signed nearest-neighbor face adjacency S = ∂₂†∂₂ − 4I in Bloch form | flat by ∂₂∂₃ = 0
+T6R3: y³, SU(3) | bare-link selection removes three-distinct-plaquette lifters; remaining term is affine in S | source-certified flatness
+T6R4: y⁴ | dressed tromino classes can survive | first generic lifting test
+P246 [Body Text] This barcode is topological at second order, selection-rule protected at third order in the supplied $SU(3)$ analysis, and generically dynamical at fourth order.
+P247 [heading 2] 9.3 A careful $SU(3)$ resonance
+P248 [First Paragraph] $SU(3)$ is special on both axes.
+P249 [Compact] Internally, the determinant constraint leaves the cubic Weyl invariant $(p)_(3)$, whose square creates the first nonradial local gap shift.
+P250 [Compact] In strong coupling, the rank-three determinant tensor implies $F⊗F⊃over(F,¯)$, producing the first-order charge splitting and unusually early baryonic contractions.
+P251 [First Paragraph] Both phenomena are consequences of rank-three invariant tensor structure. They are not the same matrix element, and no equality between their coefficients is claimed. The meaningful statement is structural: the determinant tensor controls the first departure from a simpler radial or mesonic description in both local and plaquette sectors.
+P252 [heading 1] 10. Theorem and claim ledger
+TABLE 7
+T7R1: Claim | Status | Evidence in this manuscript | Submission gate
+T7R2: Correct bridge with subtraction 4β | Proved here | direct operator matching | none
+T7R3: Closed channel sums A(N), B(N) | Proved here | representation dimensions, Casimirs, exact rational reduction | exact script passes
+T7R4: Closed C-odd hopping t(N) | Proved here | B(N) − A(N) | independent two-plaquette audit at N = 4, 5 recommended
+T7R5: Complete signed spectrum {−4, q − 4, q − 4} | Proved here | cross-product incidence identity | exact Laurent check passes
+T7R6: Flat band for every SU(N ≥ 3) through O(y²) | Proved here within the standard second-order reduction | positivity of t(N), boundary factorization | independent perturbative convention audit
+T7R7: Torus degeneracy L³ + 2 | Proved here | rank(∂₃) + b₂ | exact L = 2, 3 rank gates pass
+T7R8: SU(3) coefficient 11/306 at y² | Inherited exact and regressed | exact recovery from a(3,−) and t(3) | none
+T7R9: SU(3) third-order coefficient −109151/249696 | Source-certified | supplied derivation only | recover and rerun named certificates
+T7R10: SU(3) local class gap through β⁻¹ᐟ² | Inherited exact | invariant basis and coefficient tables agree | optional independent CAS rerun
+T7R11: Fixed-rank SU(N) local C± gaps | Inherited exact | finite Wick certificates in source suite | preserve corrected odd constant
+T7R12: Uniform β = N³τ local limit | Conjectural/open | formal coefficient matching only | prove a rank-uniform remainder
+T7R13: O(y⁴) survival of flatness | Open | equal-lifter criterion identified | compute exact fourth-order weights
+T7R14: Global Wilson-area or mass-gap conclusion | Not established | local results do not supply global polymer control | separate global theorem required
+P253 [heading 1] 11. What the larger paper should be
+P254 [heading 2] 11.1 Submission-sized core
+P255 [First Paragraph] The most defensible first paper is:
+P256 [Body Text] Homological $C$-odd Flat Bands in Strong-Coupling $SU(N)$ Lattice Gauge Theory
+P257 [Body Text] Its core sections would be:
+P258 [Compact] fixed-rank bridge and perturbative normalization;
+P259 [Compact] exact channel sums $(A)_(N),(B)_(N)$;
+P260 [Compact] the closed hopping formula $(t)_(N)$;
+P261 [Compact] incidence factorization and complete Bloch spectrum;
+P262 [Compact] compact cube states and torus degeneracy;
+P263 [Compact] $(N)^(−3)$ mobility;
+P264 [Compact] $SU(3)$ second-order regression;
+P265 [Compact] optional $SU(3)$ third-order section after certificate recovery.
+P266 [First Paragraph] This paper has a single message: representation theory supplies one scalar, homology supplies the band.
+P267 [heading 2] 11.2 Companion local-spectral paper
+P268 [First Paragraph] The local class-gap material supports a separate paper:
+P269 [Body Text] Weyl-Invariant Perturbation Theory for Fixed-Rank $SU(N)$ One-Plaquette Gaps
+P270 [Body Text] Its strongest theorem is the exact $SU(3)$ three-term gap, followed by the fixed-rank $(C)^(±)$ Wick certificates and the explicit nonuniformity theorem. The rank-cubic double-scaling problem belongs in its outlook, not its theorem statement.
+P271 [heading 2] 11.3 Why the global Wilson program should remain separate
+P272 [First Paragraph] The current projected-capacity layer does not create a stronger local theorem. Under the normalization used in the supplied source suite, the projected multiplier already satisfies the contraction bound
+P273 [Body Text] $∥P(χ)_(Γ)P∥≤1.$
+P274 [First Paragraph] The genuinely difficult global inputs are free-energy subtraction, connected polymer control, and conversion of local class penalties into contour weights. Those are not consequences of either the local class gap or the homological flat band.
+P275 [Body Text] Combining all three layers into one paper would weaken the logical message. The local and spatial results can be cross-referenced, but the global Wilson chain should remain a clearly conditional sequel.
+P276 [heading 1] 12. Verification and falsification program
+P277 [First Paragraph] Before submission, the following gates should be run in order.
+P278 [heading 2] Gate A — fixed-rank channel audit
+P279 [Compact] Construct the exact two-plaquette character basis at $N=4$ and $N=5$.
+P280 [Compact] Compute the second-order $C$-odd hopping directly.
+P281 [Compact] Verify $(t)_(4)=32/8525$ and $(t)_(5)=5/2548$.
+P282 [Compact] Check that no rank-specific epsilon block adds a second spatial matrix at this order.
+P283 [First Paragraph] The attached certificate proves the rational channel algebra. Gate A checks that the perturbative identification of those channel sums with the $C$-odd hopping has no hidden convention mismatch.
+P284 [heading 2] Gate B — finite-lattice geometry
+P285 [Compact] Build $(∂)_(2)$ exactly on $L=2,3,4$ periodic cubic lattices.
+P286 [Compact] Verify $S=(∂)_(2)^(𝗆𝗇)(∂)_(2)−4I$ in the chosen face convention.
+P287 [Compact] Confirm $dim(E)_(−4)=(L)^(3)+2$.
+P288 [Compact] Fourier-transform and compare against ${−4,q−4,q−4}$.
+P289 [First Paragraph] The accompanying certificate completes this gate for the incidence identities and exact ranks at $L=2,3$.
+P290 [heading 2] Gate C — recover the $SU(3)$ third-order certificates
+P291 [First Paragraph] The supplied manuscript names:
+P292 [Compact] ENGINE_FLUX_glueball_band_certificate.py;
+P293 [Compact] ENGINE_TROM_tromino_contract_independent_check.py;
+P294 [Compact] ENGINE_TROM_tromino_weight_constraint_certificate.py;
+P295 [Compact] ENGINE_FLUX_su3_moments_ext.py;
+P296 [Compact] ENGINE_FLUX_su3_domino_d3.py;
+P297 [Compact] ENGINE_FLUX_master_v2_regression_certificate.py.
+P298 [First Paragraph] They should be recovered, hashed, and rerun in a clean environment. Until then, the third-order coefficient is not part of the independently audited core.
+P299 [heading 2] Gate D — fourth-order binary test
+P300 [First Paragraph] Compute the three activated lifter weights
+P301 [Body Text] $W((path)^(+)),  W((path)^(−)),  W(corner).$
+P302 [First Paragraph] Test equality before inspecting any fitted band. If equal, seek a structural identity. If unequal, contract the exact differences with the known geometric class matrices to obtain the first nonzero flat-band width.
+P303 [heading 2] Gate E — rank-uniform local gap
+P304 [First Paragraph] Bound the omitted local terms in the scaled operator uniformly when $β=(N)^(3)τ$. A successful theorem must specify:
+P305 [Compact] the $τ$-domain;
+P306 [Compact] the rank dependence of the resolvent bounds;
+P307 [Compact] the number of retained invariant oscillator sectors;
+P308 [Compact] the norm in which the remainder is controlled.
+P309 [heading 1] 13. Claims explicitly excluded
+P310 [First Paragraph] The enlarged theory does not establish any of the following:
+P311 [Compact] a continuum Yang–Mills mass gap;
+P312 [Compact] a continuum glueball mass;
+P313 [Compact] a Wilson area law from the local class gap alone;
+P314 [Compact] a uniform ’t Hooft-limit expansion obtained by substituting $β∝(N)^(2)$;
+P315 [Compact] all-order flatness of the $C$-odd band;
+P316 [Compact] a theorem equating the internal cubic invariant with the spatial cube-boundary mode;
+P317 [Compact] a formal priority or novelty claim against the full literature.
+P318 [First Paragraph] The statements proved here are fixed-lattice, fixed-order, and normalization-specific. Their value is that they are exact within that scope.
+P319 [heading 1] 14. Positioning relative to current work
+P320 [First Paragraph] The compact one-plaquette problem sits within a long line of matrix-model and integrable-system work. Finite-$N$ one-plaquette unitary matrix models have been studied explicitly, and the $(A)_(n)$ trigonometric Calogero–Sutherland system provides a broader integrable background for Weyl-symmetric spectral constructions. More recently, Hamiltonian quantum-simulation work has made exact plaquette operator dictionaries and economical local bases practically relevant.
+P321 [Body Text] This manuscript’s distinctive target is narrower: the exact emergence, from $SU(N)$ fusion channels, of a signed cubical boundary operator in the fundamental $C$-odd one-plaquette sector. General incidence-matrix flat-band mechanisms are familiar in spectral graph theory; the nontrivial gauge-theory content is the coefficient $(t)_(N)$, its positivity, and its $(N)^(−3)$ cancellation.
+P322 [Body Text] A formal novelty search should still be completed before submission.
+P323 [heading 1] 15. Conclusion
+P324 [First Paragraph] The supplied program becomes materially larger when it is organized around a factorization rather than a chain of increasingly global claims.
+P325 [Body Text] On the strong-coupling side,
+P326 [Body Text] $group theory→(t)_(N),  cubical homology→specS,$
+P327 [First Paragraph] and the product gives an exactly flat lowest $C$-odd branch for every $SU(N≥3)$ through second order. The flatness is universal; the mobility scale is rank dependent; the $(N)^(−3)$ suppression is an exact cancellation.
+P328 [Body Text] On the local side,
+P329 [Body Text] $Weyl invariant degree→first angular correction,$
+P330 [First Paragraph] and the $SU(3)$ cubic invariant produces a precisely quantified departure from the radial approximation.
+P331 [Body Text] Together these results motivate a Weyl–Hodge spectral program with two honest frontiers:
+P332 [Compact] determine the first dynamical violation of homological flatness at $O((y)^(4))$; and
+P333 [Compact] construct a rank-uniform one-plaquette limit at $β=(N)^(3)τ$.
+P334 [First Paragraph] That is a bigger theory without blurring the boundary between local spectral facts, lattice band geometry, and global gauge-theory claims.
+P335 [heading 1] Appendix A. Exact algebra in compact form
+P336 [First Paragraph] Let
+P337 [Body Text] $(D)_(N)=((N)^(2)−1)(2(N)^(2)−1)(4(N)^(2)−9).$
+P338 [First Paragraph] Then
+P339 [Body Text] $(A)_(N)=−((2(N)^(3)(4(N)^(2)−9))/((D)_(N))),$
+P340 [First Paragraph] $(B)_(N)=−((4N((N)^(2)−2)(2(N)^(2)−1))/((D)_(N))),$
+P341 [First Paragraph] $(t)_(N)=(B)_(N)−(A)_(N)=((2N((N)^(2)−4))/((D)_(N))),$
+P342 [First Paragraph] $(ℓ)_(N)=(A)_(N)+(B)_(N)+((2N)/((N)^(2)−1))=((2N(5−3(N)^(2)))/((D)_(N))).$
+P343 [First Paragraph] The key numerator cancellations are
+P344 [Body Text] $(N)^(2)(4(N)^(2)−9)−2((N)^(2)−2)(2(N)^(2)−1)=(N)^(2)−4,$
+P345 [First Paragraph] and
+P346 [Body Text] $((N)^(2)−1)(4(N)^(2)−9)−2((N)^(2)−2)(2(N)^(2)−1)=5−3(N)^(2).$
+P347 [First Paragraph] For $N=3$,
+P348 [Body Text] $(A)_(3)=−((27)/(68)),  (B)_(3)=−((7)/(18)),$
+P349 [First Paragraph] $(A)_(3)+(B)_(3)=−((481)/(612)),  (B)_(3)−(A)_(3)=((5)/(612)).$
+P350 [heading 1] Appendix B. Certificate coverage
+P351 [First Paragraph] The accompanying file suN_homological_flat_band_certificate.py uses only Python’s standard library. It checks:
+P352 [Compact] the channel formulas as formal rational identities in $N$;
+P353 [Compact] $(t)_(2)=0$, $(t)_(N)>0$ for $3≤N≤128$, and the $SU(3)$ regression values;
+P354 [Compact] the leading coefficients
+P355 [Compact] $(N)^(3)(t)_(N)→((1)/(4)),  (N)^(3)(ℓ)_(N)→−((3)/(4)),  12(N)^(3)(t)_(N)→3;$
+P356 [Compact] $detover(N,~)=0$ as a Laurent-polynomial identity;
+P357 [Compact] the cross-product Gram identity and flat kernel;
+P358 [Compact] exact rational ranks of the periodic $(∂)_(2)$ matrices at $L=2,3$.
+P359 [First Paragraph] It intentionally does not certify the source-only $SU(3)$ third-order number.
+P360 [heading 1] Appendix C. Source-provenance map
+TABLE 8
+T8R1: Source file | Role in the enlarged manuscript
+T8R2: Non-Uniformity in N and Formal t Hooft Rescaling.docx | β ≫ N³ and formal β = N³τ scaling
+T8R3: SU(3) Weyl Geometry and Local Hamiltonian.docx | Cartan invariants, discriminant, scaled operator
+T8R4: Wilson Hard-Defect Peierls Bound.docx | conditional global layer only
+T8R5: From Local Class Gaps to Global Wilson Geometry.docx | logical separation of local and global claims
+T8R6: Rooted Projected-Capacity Source Stability.docx | projected-capacity status and limitations
+T8R7: Compact Character-Basis Numerical Audit.docx | numerical local diagnostics
+T8R8: Finite Leakage Matrix and Radial Tail Obstruction.docx | finite truncation diagnostic; not a polymer theorem
+T8R9: Theorem Ledger and Open Analytic Targets.docx | status discipline
+T8R10: SU(3) Three-Term Local Gap.docx | exact local gap theorem
+T8R11: duplicate SU(3) Weyl Geometry… file | byte-identical duplicate; not double-counted
+T8R12: Logical Status and Theorem Map (1).docx | corrected fixed-rank formulas and status map
+T8R13: Numerical Projected-Capacity Audits.docx | numerical global diagnostics
+T8R14: Finite Wick Certificate for the SU(N) C-odd Local Gap.docx | fixed-rank odd-sector certificate
+T8R15: SU(3) Coefficient Tables and Matrix Elements.docx | exact finite basis and matrix elements
+T8R16: Fixed-Rank SU(N) Local Class Gaps.docx | fixed-rank C± theorems
+T8R17: Sun report .md | project-level synthesis
+T8R18: flat band full derivations.tex | SU(3) strong-coupling band, topology, third-order source claim
+P361 [heading 1] References
+P362 [Normal] J. Kogut and L. Susskind, “Hamiltonian formulation of Wilson’s lattice gauge theories,” Physical Review D 11, 395 (1975). doi:10.1103/PhysRevD.11.395
+P363 [Normal] A. M. Perelomov, “A simple construction of basic polynomials invariant under the Weyl group of the simple finite-dimensional complex Lie algebra,” Communications in Mathematics 28, 301–305 (2020). doi:10.2478/cm-2020-0024
+P364 [Normal] W. Garcia Fuertes, M. Lorente, and A. Perelomov, “An elementary construction of lowering and raising operators for the trigonometric Calogero–Sutherland model,” Journal of Physics A 34, 10963–10973 (2001). arXiv:math-ph/0110038
+P365 [Normal] R. G. Jha, “Finite $N$ unitary matrix model” (2020). arXiv:2003.00341
+P366 [Normal] P. Balaji et al., “Quantum Circuits for SU(3) Lattice Gauge Theory” (2025). arXiv:2503.08866
+P367 [Normal] T. Jakobs et al., “A Comprehensive Stress Test of Truncated Hilbert Space Bases against Green’s function Monte Carlo in U(1) Lattice Gauge Theory” (2025). arXiv:2510.27611
+P368 [Normal] V. Kazakov and Z. Zheng, “Bootstrap for Finite $N$ Lattice Yang–Mills Theory” (2024). arXiv:2404.16925

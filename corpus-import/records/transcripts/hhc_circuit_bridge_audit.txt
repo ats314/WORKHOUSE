@@ -1,0 +1,39 @@
+HHC CIRCUIT -> PHYSICAL-P-SPACE BRIDGE AUDIT
+Paper: Illa, Savage, Yao, arXiv:2503.09688v2
+
+Loop-edge matrix shape: (53, 12), rank=10, nullity=2
+Primitive support circuits:
+  -1*10f +1*10h +1*12c = 0
+  -1*10e +1*10g +1*12d = 0
+
+Electric weights from paper Eq. (39), in common C_F-proportional units:
+  10e: 14/3
+  10f: 14/3
+  10g: 14/3
+  10h: 14/3
+  12c: 6
+  12d: 6
+
+10f = 10h + 12c as oriented 1-chains: True
+  endpoint electric weights: 10f=14/3, 10h=14/3 (degenerate=True)
+  insertion weight: 12c=6
+  target/insertion shared edges=6, opposite=6, same=0
+  shared support components=[(7, 6, [1, 1, 2, 2, 2, 2, 2])]
+  connected opposite-oriented shared path of length 6: True
+10e = 10g + 12d as oriented 1-chains: True
+  endpoint electric weights: 10e=14/3, 10g=14/3 (degenerate=True)
+  insertion weight: 12d=6
+  target/insertion shared edges=6, opposite=6, same=0
+  shared support components=[(7, 6, [1, 1, 2, 2, 2, 2, 2])]
+  connected opposite-oriented shared path of length 6: True
+
+CONSEQUENCE UNDER THE ATTACHED CONNECTED-PATH DEFORMATION LEMMA
+For a normalized fundamental loop C and plaquette/loop insertion p sharing one connected
+oppositely oriented path, the attached project lemma gives <C'|chi_p|C> = 1/N,
+independent of shared-path length. The two circuits above satisfy the support hypotheses.
+Thus they are concrete candidate O(u^1) off-diagonal transfers inside a degenerate 10-loop sector.
+
+FIREWALL
+This audit proves the geometry, electric-weight degeneracy, and shared-path condition.
+It does not by itself establish the full periodic Bloch/cycle-compressed mobility operator,
+nor replace a direct SU(N) Haar normalization check in the HHC conventions.

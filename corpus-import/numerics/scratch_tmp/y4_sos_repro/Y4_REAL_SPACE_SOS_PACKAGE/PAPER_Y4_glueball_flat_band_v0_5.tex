@@ -1,0 +1,1308 @@
+% =============================================================================
+% PAPER_Y4_glueball_flat_band_v0_5.tex   --   draft v0.5, June 14, 2026
+% Preserves the certified SU(3) derivation and exact fourth-order band theorem.
+% Adds the exact real-space sum-of-squares operator identity and 25-point
+% cube-amplitude stencil, together with the stable-rank SU(N>=7) reduction.
+% =============================================================================
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{booktabs}
+\usepackage{xurl}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\Nt}{\widetilde N}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+
+\title{Gauss-law protection and exact fourth-order lifting of a
+$T_1^{+-}$ glueball band in strongly coupled $SU(3)$ lattice gauge theory:\\
+compact localized states, a real-space sum of squares, global band edges,
+and universal $SU(N)$ second-order flatness}
+\author{Alexander Smith\thanks{Independent Researcher. Draft v0.5. All displayed
+strong-coupling constants and exact enumeration counts are machine-certified;
+see Appendix~\ref{app:verification}.}}
+\date{June 14, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We determine the one-excitation band structure of strongly coupled $SU(3)$
+Hamiltonian lattice gauge theory in $3{+}1$ dimensions in exact rational
+arithmetic, and resolve the first order at which the lowest
+charge-conjugation-odd band becomes mobile. At second order the lowest
+$C$-odd branch is exactly flat over the Brillouin zone. Its flat subspace is
+$\ker B(k)^\dagger$, where the signed hopping symbol factors as
+$\widetilde N(k)+4I=B(k)B(k)^\dagger$; compact localized states are the
+consistently oriented boundaries of elementary cubes, and flatness is the
+chain-complex identity $\partial_2\partial_3=0$. All third-order tromino
+processes vanish by a bare-link lemma, so the band remains rigid through
+$O(y^3)$:
+\[
+m_-(k,y)=\frac83+y+\frac{11}{306}y^2
+-\frac{109151}{249696}y^3+O(y^4).
+\]
+Using the complete Hermitian 189-record fourth-order real-space kernel, we
+show that this protection fails at the next order in a fully controlled way.
+For $X_i=1-\cos k_i$ and the cell-gauge flat vector
+$\psi=(e^{ik_2}-1,-(e^{ik_1}-1),e^{ik_0}-1)^T$, the projected coefficient
+factorizes exactly as
+\[
+\psi^\dagger[H_4(k)-qI]\psi
+=\frac5{12}\sum_iX_i^2
++\frac{17607806155349}{275331901291200}
+ \sum_{i<j}X_iX_j,
+\]
+where $\|\psi\|^2=2\sum_iX_i$ and
+\[
+q=-\frac{20721577909065127111}{7250590288602460800}.
+\]
+This momentum-space factorization lifts exactly to a local real-space
+sum-of-squares theorem. If $C=\partial_3$ is the oriented cube-boundary map,
+$T_i$ translates cube amplitudes, and
+$L_i=(T_i-I)^\dagger(T_i-I)$, then
+\[
+C^\dagger(H_4-qI)C
+=\frac{5}{48}\sum_iL_i^2
++\frac{17607806155349}{1101327605164800}
+ \sum_{i<j}(\nabla_i\nabla_j)^\dagger(\nabla_i\nabla_j).
+\]
+Thus the fourth-order mobility is carried by axial three-cube second
+differences and planar four-cube checkerboard differences. Positivity proves that $\Gamma$ is the unique global minimum; elementary
+cube inequalities prove that $R=(\pi,\pi,\pi)$ is the unique global
+maximum. The fourth-order bandwidth is $\Delta W_4\approx0.4806178691$,
+with its exact rational value given below. The lift near $\Gamma$ is quadratic but
+direction-dependent, so no ordinary effective-mass Hessian exists there;
+near $R$ the curvature is isotropic and negative. Thus the Gauss-law band is
+exactly immobile through third order and acquires its first nonzero,
+parameter-free dispersion at fourth order. Independently, the shared-link
+calculus extends to every $SU(N)$ with integer $N\geq3$: in the reduced
+normalization fixed by the $SU(3)$ domino,
+\[
+t_N=\frac{2N(N^2-4)}{(N^2-1)(4N^2-9)(2N^2-1)}>0,
+\qquad t_N\sim\frac{1}{4N^3},
+\]
+and the group-independent incidence kernel gives a universally flat
+closed-surface branch at second order. At fourth order the complete $SU(3)$
+source chain is now recovered from Stage 0 through the folded des-Cloizeaux
+Stage 3I and final kernel assembly Stage 3J. For every integer $N\geq7$, the
+maximum local tensor degree six forces exact fundamental--antifundamental
+balance, eliminating all determinant/epsilon sectors. An exact stable-rank
+certificate reduces the full local problem to the $(1,1)$, $(2,2)$, and
+$(3,3)$ Haar families, 140 balanced token signatures, and 94 nonvanishing
+denominator polynomials. Thus the stable-rank geometry and denominator layers
+are complete; the remaining load-bearing step is the symbolic walled-Brauer
+contraction producing $q_N,A_N,B_N$. The $C$-even band and the $T_1^{+-}$
+quantum-number assignment are also given exactly. No continuum or all-orders
+claim is made.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+Flat bands --- single-particle dispersions that are exactly constant over the
+Brillouin zone --- arise from destructive interference encoded in lattice
+geometry and are spanned by compact localized states (CLS)
+\cite{Sutherland1986,Lieb1989,Mielke1991,Tasaki1992,BergmanWuBalents2008,
+LeykamAndreanovFlach2018}. They are usually discussed in engineered
+condensed-matter, photonic, and cold-atom systems. Here the same structure
+appears without geometric engineering in strongly coupled $SU(3)$
+Hamiltonian lattice gauge theory \cite{KogutSusskind1975}.
+
+In the strong-coupling regime the elementary one-flux excitations are single
+plaquettes of chromoelectric flux. Degenerate perturbation theory turns the
+three plaquette orientations into a $3\times3$ Bloch problem. The main
+results are:
+
+\begin{itemize}
+\item[(A)] At second order the lowest $C$-odd band is exactly flat, with
+coefficient $11/306$ at every momentum (Theorem~\ref{thm:flatband}).
+\item[(B)] The flat subspace is a lattice Gauss-law kernel. The signed
+adjacency factors through the plaquette-boundary incidence map, and the
+compact localized states are oriented boundaries of elementary cubes
+(Theorems~\ref{thm:gausslaw} and \ref{thm:cls}).
+\item[(C)] Every third-order tromino amplitude vanishes by a bare-link
+argument. The flat band therefore shifts rigidly by the exact coefficient
+$-109151/249696$ (Theorem~\ref{thm:thirdorder}).
+\item[(D)] The complete fourth-order kernel breaks the flatness. Its
+projection onto the lower-order flat branch factorizes into two positive
+cubic invariants in $X_i=1-\cos k_i$ (Theorem~\ref{thm:y4factor}).
+\item[(E)] The projected operator has an exact local real-space
+sum-of-squares representation. Its two elementary deformations are an axial
+three-cube second difference and a planar four-cube checkerboard difference
+(Theorem~\ref{thm:y4sos}).
+\item[(F)] The factorization gives an analytic global theorem: $\Gamma$ is
+the unique band minimum, $R$ the unique band maximum, and the exact
+fourth-order bandwidth is $\Delta W_4=A+B$
+(Theorem~\ref{thm:y4edges}).
+\item[(G)] The rest-point lift is direction-dependent. The $\Gamma$ band
+coefficient is continuous and differentiable but has no ordinary Hessian;
+the $R$ curvature is isotropic and negative
+(Proposition~\ref{prop:y4curvature}).
+\item[(H)] The rest-frame $C$-odd triplet transforms as $T_1^{+-}$, while
+the $C$-even sector splits as $A_1^{++}\oplus E^{++}$ and disperses normally
+(Theorems~\ref{thm:flatband} and \ref{thm:ceven}).
+\item[(I)] The signed shared-link hopping is positive for every $SU(N)$,
+$N\geq3$, with exact rational coefficient $t_N$ and large-$N$ behavior
+$t_N\sim1/(4N^3)$. Since the incidence kernel is group-independent, the
+closed-surface second-order branch is universally flat
+(Theorem~\ref{thm:suniversal}).
+\item[(J)] At fourth order, every $SU(N)$ with $N\geq7$ lies in a stable-rank
+regime: local degree is at most six, determinant/epsilon sectors disappear,
+and the complete geometry, balanced Haar families, representation channels,
+and electric denominators reduce to exact rational functions of $N$
+(Theorem~\ref{thm:sunstable}).
+\end{itemize}
+
+The physical statement is therefore finite-order and sharp. A closed-surface
+$T_1^{+-}$ excitation cannot propagate through the link-mediated channels
+that occur through $O(y^3)$: every boundary-link amplitude cancels exactly.
+At $O(y^4)$, site-mediated geometries activate and the cancellation no longer
+protects the projected branch. The resulting mobility is not inferred from a
+scan; it is fixed by an exact positive rational factorization.
+
+The second-order calculation also corrects the $C$-even nearest-neighbor hop
+quoted in the companion manuscript \cite{companion}. The missing
+vacuum-mediated route changes it to
+$t_+=-481/612+3/4=-11/306$, independently adjudicated by exact
+two-plaquette diagonalization. The corresponding per-bond ratio
+$|t_-|/|t_+|=5/22$ does not itself explain immobility; the incidence kernel
+does.
+
+Strong-coupling expansions of Hamiltonian lattice gauge theory have a long
+history \cite{KogutSusskind1975,Banksetal1977,KogutSinclairSusskind1976,
+Creutz1983}, and the continuum glueball spectrum is accurately known from
+Euclidean Monte Carlo \cite{MorningstarPeardon1999,AthenodorouTeper2020}.
+The present statements are exact order-by-order results in the
+strong-coupling Hamiltonian expansion. They do not predict a continuum mass,
+do not establish convergence of the series, and do not claim all-orders
+flatness.
+
+Section~\ref{sec:setting} fixes conventions. Sections~\ref{sec:towers} and
+\ref{sec:leakage} derive the one-plaquette and shared-link constants.
+Section~\ref{sec:band} proves the second-order band structure and compact
+localized states. Section~\ref{sec:thirdorder} proves third-order rigidity.
+Section~\ref{sec:robust} gives the link-channel robustness theorem, solves the
+$SU(3)$ fourth-order band analytically, derives its exact real-space SOS
+operator, and proves the stable-rank
+$SU(N\geq7)$ geometry and denominator reduction. Section~\ref{sec:numbers}
+summarizes the exact data and physical consequences; Section~\ref{sec:outlook}
+lists the remaining problems.
+
+\section{Setting}
+\label{sec:setting}
+
+We work with the Kogut--Susskind Hamiltonian \cite{KogutSusskind1975} for
+$SU(3)$ on a cubic spatial lattice ($d=3$),
+\begin{equation}
+H_\beta \;=\; \frac12\sum_{\ell} C_2(\ell)\;+\;\beta\sum_{p}
+\Bigl(1-\tfrac1N\,\mathrm{Re}\,\Tr U_p\Bigr),\qquad N=3,
+\label{eq:H}
+\end{equation}
+in units of the electric coupling; $C_2(\ell)$ is the quadratic Casimir on
+link $\ell$ and $U_p$ the oriented plaquette holonomy. We use the natural
+strong-coupling variable
+\begin{equation}
+y \;=\; \tfrac{2\beta}{3}, \qquad \beta=\tfrac{3y}{2},
+\end{equation}
+in which the one-plaquette energy scale is $8/3$ and the perturbation per
+plaquette carries one power of $y$. The strong-coupling vacuum is the
+electric ground state $\ket{0}$ (all links in the trivial representation);
+the elementary excitations are single-plaquette flux states. With
+$\chi_p=\Tr U_p$ the fundamental character on plaquette $p$, the normalized
+one-flux states of definite charge conjugation are
+\begin{equation}
+\ket{p,\pm}=\frac{\chi_p\pm\bar\chi_p}{\sqrt2}\,\ket{0},
+\qquad C\ket{p,\pm}=\pm\ket{p,\pm},
+\end{equation}
+with unperturbed energy $8/3$ (four links in the fundamental representation:
+$4\times\tfrac12\cdot\tfrac43=\tfrac83$; we keep the conventions of
+\cite{companion} throughout). On the cubic lattice plaquettes carry three
+orientations $(\mu\nu)\in\{xy,yz,zx\}$, so each momentum sector is a
+$3\times3$ problem.
+
+Degenerate strong-coupling perturbation theory in the one-flux manifold
+produces, order by order in $y$, an effective hopping Hamiltonian
+$H_{\mathrm{eff}}(k)$ per charge sector. Two structural facts organize the
+computation: (i) within-plaquette processes renormalize the diagonal and are
+captured exactly by the one-plaquette towers of Section~\ref{sec:towers};
+(ii) the leading inter-plaquette processes are mediated by \emph{shared
+links} --- each plaquette has exactly $4(2d-3)=12$ shared-link neighbors in
+$d=3$ (four coplanar, eight transverse) --- and reduce to balanced Haar
+moments on the shared link \cite{companion}. We use the linked-cluster
+bookkeeping of \cite{companion} (its Assumption~6.5); all finite-system
+counting is verified non-perturbatively by exact diagonalization on the
+two-plaquette ``domino'' (Section~\ref{sec:leakage}).
+
+\section{One-plaquette towers and the bridge}
+\label{sec:towers}
+
+The $SU(3)$ one-plaquette class Hamiltonian
+$h_\beta=\tfrac12 C_2+\beta(1-\tfrac13\mathrm{Re}\Tr g)$ restricted to class
+functions has charge-even and charge-odd gaps $\Delta_\pm(\beta)$ with exact
+strong-coupling towers \cite{companion}
+\begin{equation}
+\Delta_\pm(\beta)=\tfrac23 \mp \tfrac{\beta}{6}
++ b_2^\pm\beta^2 + b_3^\pm\beta^3 + O(\beta^4),
+\qquad
+b_2^+=\tfrac{13}{180},\; b_3^+=\tfrac{101}{2700},\;
+b_2^-=\tfrac{1}{18},\; b_3^-=\tfrac{7}{432}.
+\end{equation}
+The bridge to the lattice one-flux sector is the substitution
+$\beta=3y/2$ with an overall factor $4$: the \emph{within-plaquette} part of
+the effective one-flux energy is $4\Delta_\pm(3y/2)$, i.e.
+\begin{equation}
+\underbrace{\tfrac83 \mp y + \tfrac{13}{20}y^2 + \tfrac{101}{200}y^3}_{C\text{-even}},
+\qquad
+\underbrace{\tfrac83 + y + \tfrac12 y^2 + \tfrac{7}{32}y^3}_{C\text{-odd}},
+\label{eq:towers}
+\end{equation}
+to the orders needed here. Everything beyond \eqref{eq:towers} is
+inter-plaquette leakage, computed in the next two sections.
+
+\section{Second order: exact leakage and the corrected $C$-even hop}
+\label{sec:leakage}
+
+At $O(y^2)$ the only inter-plaquette geometry is the shared-link pair.
+Integrating the six free links of the pair by the fusion identity
+$\int dB\,\Tr(XB)\Tr(YB^\dagger)=\Tr(XY^\dagger)/3$ reduces every required
+quantity to balanced $(2,2)$ Haar moments on the shared link, resolved into
+the irreducible channels $\{1,8,\bar3,6\}$ of the fused link representation,
+with dimension-weighted norms $N_R=d_R/9$. The corresponding intermediate
+energies are $\{4,\tfrac{11}{2},\tfrac{14}{3},\tfrac{17}{3}\}$, to be used
+in the denominators $E_0-E_R$ with $E_0=8/3$ \cite{companion}.
+
+\begin{lemma}[Channel sums]\label{lem:channels}
+Per shared-link neighbor, the fused-channel second-order sum is
+\begin{equation}
+\Sigma_{\mathrm{chan}}
+=-\frac{1}{12}-\frac{16}{51}-\frac16-\frac29=-\frac{481}{612},
+\end{equation}
+independent of the relative link orientation, and equal for the self-energy
+and hopping networks (the operator identity
+$\bra{G_{p'}}W_p=\bra{G_p}W_{p'}$ of \cite{companion}). The diagonal carries
+in addition the vacuum subtraction $+3/4$ per neighbor.
+\end{lemma}
+
+The companion manuscript identified $\Sigma_{\mathrm{chan}}$ with the full
+hop. It is not: the hop has one more intermediate state.
+
+\begin{lemma}[Vacuum-mediated route]\label{lem:vacroute}
+For $C$-even one-flux states the second-order effective Hamiltonian contains
+the vacuum-intermediate route
+\begin{equation}
+\bra{e_r}W\,R\,W\ket{e_i}\;\supset\;
+\frac{\bra{e_r}W\ket{0}\bra{0}W\ket{e_i}}{8/3-0}
+=(\sqrt2)(\sqrt2)\,\frac38=+\frac34
+\end{equation}
+for \emph{every} ordered pair $(i,r)$, adjacent or distant. It is absent in
+the $C$-odd sector ($\bra{o}W\ket{0}=0$ by parity). For distant pairs it
+exactly cancels the free two-flux channel sum $2/(8/3-16/3)=-3/4$,
+recovering the vanishing of distant hops; for shared-link neighbors the
+cancellation against Lemma~\ref{lem:channels} is partial.
+\end{lemma}
+
+\begin{theorem}[Second-order leakage, both sectors]\label{thm:leakage}
+Per shared-link neighbor:
+\begin{align}
+&C\text{-even:}\quad
+\text{self-energy}=-\tfrac{481}{612},\quad
+\text{vacuum subtraction}=+\tfrac34,\quad
+t_+=-\tfrac{481}{612}+\tfrac34=-\tfrac{11}{306};
+\label{eq:tplus}\\[2pt]
+&C\text{-odd:}\quad
+\text{self-energy}=-\tfrac{481}{612}\ (C\text{-independent}),\quad
+t_-(s)=\tfrac{5s}{612},
+\end{align}
+where $s=\pm1$ is the relative orientation of the shared link in the two
+plaquette boundaries (the incidence product), and the $C$-odd hop has no
+vacuum route. The $C$-odd channel-family split is
+$N_{\mathrm{mixed}}=-\tfrac{27}{68}$ (channels $1,8$),
+$N_{\mathrm{like}}=-\tfrac{7}{18}$ (channels $\bar3,6$), with sum
+$-\tfrac{481}{612}$ and difference $\tfrac{5}{612}$.
+\end{theorem}
+
+\begin{remark}[Adjudication]\label{rem:domino}
+Equation~\eqref{eq:tplus} corrects eq.~(22) of \cite{companion}
+($-9397/1020\to-217/1020$ after assembly; see Theorem~\ref{thm:ceven}).
+The correction is adjudicated by the companion's own exact rational
+diagonalization of \eqref{eq:H} on the two-plaquette domino, performed
+\emph{blind} to the perturbative assembly: the $C$-even one-flux levels are
+$\{\tfrac{1769}{3060},\tfrac{13}{20}\}$ at the relevant order, i.e.
+$\mathrm{diag}\pm|t_+|$ with $\mathrm{diag}=\tfrac{1879}{3060}$, forcing
+$|t_+|=\tfrac{110}{3060}=\tfrac{11}{306}$; the $C$-odd pair
+$\{\tfrac{31}{68},\tfrac{17}{36}\}$ gives mean $\tfrac{71}{153}
+=\tfrac12-\tfrac{11}{306}$ and half-splitting exactly $\tfrac{5}{612}$.
+Every constant in this section is additionally certified by a 251-gate
+exact-arithmetic computer proof (Appendix~\ref{app:verification}).
+\end{remark}
+
+\section{The exact band structure at second order}
+\label{sec:band}
+
+Assemble the one-flux sector at momentum $k$: a $3\times3$ Bloch problem over
+plaquette orientations. Let $A(k)$ and $\Nt(k)$ denote the unsigned and
+signed Bloch matrices of the 12-regular shared-link adjacency (signs
+$s=\sigma_p(b)\sigma_{p'}(b)$, the incidence product on the shared link).
+Then through $O(y^2)$
+\begin{align}
+H^{(+)}_{\mathrm{eff}}(k) &= \Bigl[\tfrac83-y+\tfrac{13}{20}y^2\Bigr] I
++ y^2\Bigl[12\bigl(-\tfrac{481}{612}+\tfrac34\bigr) I + t_+ A(k)\Bigr]
+\;=\;\Bigl[\tfrac83-y\Bigr]I + y^2\Bigl[\tfrac{223}{1020}I
+-\tfrac{11}{306}A(k)\Bigr],
+\label{eq:Heven}\\
+H^{(-)}_{\mathrm{eff}}(k) &= \Bigl[\tfrac83+y\Bigr] I
++ y^2\Bigl[\tfrac{7}{102}\,I+\tfrac{5}{612}\,\Nt(k)\Bigr].
+\label{eq:Hodd}
+\end{align}
+
+\begin{theorem}[Incidence factorization; Gauss law]\label{thm:gausslaw}
+Let $N(k)$ and $B(k)$ be the unsigned and signed $3\times3$ Bloch incidence
+symbols of the oriented plaquette-boundary map (each plaquette feeds its four
+boundary links with incidence signs). With $u_j=1-e^{ik_j}$,
+$v_j=1+e^{ik_j}$,
+\begin{equation}
+A(k)+4I=N(k)N(k)^\dagger,\quad \det N(k)=-2v_1v_2v_3;
+\qquad
+\Nt(k)+4I=B(k)B(k)^\dagger,\quad \det B(k)\equiv0 .
+\end{equation}
+Hence $\lambda(k)\in[-4,12]$ and $\mu(k)\in[-4,8]$ for the spectra of $A$
+and $\Nt$, and the $C$-odd spectrum contains $\mu=-4$ \emph{at every} $k$:
+the lowest $C$-odd band is the kernel of $B(k)^\dagger$, the states with zero
+net signed amplitude into every link --- a lattice Gauss law.
+\end{theorem}
+
+\begin{proof}
+$B$ is the boundary symbol: row $(\mu\nu)$ has entries
+$e^{-ik_\nu/2}-e^{ik_\nu/2}$ and $e^{ik_\mu/2}-e^{-ik_\mu/2}$ in the link
+channels $\mu,\nu$ (plaquette-center gauge) and $0$ in the transverse
+channel; $BB^\dagger$ reproduces, entry by entry, the signed adjacency plus
+$4I$ (each plaquette has four boundary links), which is verified symbolically.
+Each row of $B$ is a linear combination of two link channels, and the three
+rows involve the three channels cyclically with proportional weights; the
+$3\times3$ determinant cancels identically (a two-term cancellation
+$\propto \sin\tfrac{k_0}{2}\sin\tfrac{k_1}{2}\sin\tfrac{k_2}{2}$). The unsigned statement is the
+same computation without signs.
+\end{proof}
+
+\begin{theorem}[$SU(N)$ shared-link universality]\label{thm:suniversal}
+For every integer $N\geq3$, let $F$ denote the fundamental representation,
+$C_F=(N^2-1)/(2N)$, and use the reduced shared-link normalization in which
+the $SU(3)$ signed hop is $5/612$. The mixed-orientation fusion
+$F\otimes\bar F=1\oplus\mathrm{Adj}$ and the like-orientation fusion
+$F\otimes F=A_2\oplus S_2$ give
+\begin{align}
+w_1&=-\frac{2}{N(N-1)(N+1)},&
+w_{\mathrm{Adj}}&=-\frac{2(N-1)(N+1)}{N(2N^2-1)},\notag\\
+w_{A_2}&=-\frac{N-1}{(N+1)(2N-3)},&
+w_{S_2}&=-\frac{N+1}{(N-1)(2N+3)}.
+\label{eq:sunweights}
+\end{align}
+Consequently
+\begin{align}
+W_{\mathrm{mixed}}&=-\frac{2N^3}{(N^2-1)(2N^2-1)},\notag\\
+W_{\mathrm{like}}&=-\frac{4N(N^2-2)}{(N^2-1)(4N^2-9)},\notag\\
+\Sigma_N:=W_{\mathrm{like}}+W_{\mathrm{mixed}}
+&=-\frac{2N(8N^4-19N^2+4)}{(N^2-1)(4N^2-9)(2N^2-1)},\notag\\
+t_N:=W_{\mathrm{like}}-W_{\mathrm{mixed}}
+&=\frac{2N(N^2-4)}{(N^2-1)(4N^2-9)(2N^2-1)}>0.
+\label{eq:suntn}
+\end{align}
+The second-order $C$-odd operator therefore has the form
+$H_{2,N}(k)=d_NI+t_N\Nt(k)$ for a scalar $d_N$. Since
+$\Nt(k)$ has the exact eigenvalue $-4$ at every momentum, every $SU(N)$,
+$N\geq3$, has a momentum-independent closed-surface eigenvalue
+$d_N-4t_N$ at second order. Moreover,
+\[
+\Sigma_3=-\frac{481}{612},\qquad t_3=\frac5{612},\qquad
+t_N=\frac{1}{4N^3}-\frac{1}{16N^5}+O(N^{-7}).
+\]
+\end{theorem}
+
+\begin{proof}
+After the six free-link integrations, the normalized shared-link tensor is
+isotropic on the $N^2$-dimensional product space. If $P_R$ is the orthogonal
+projector onto an irreducible channel $R$, its squared channel norm is
+$\Tr P_R/N^2=d_R/N^2$. The six nonshared fundamental links contribute
+$3C_F$ to the intermediate electric energy, while the fused shared link
+contributes $C_R/2$; hence
+\[
+E_0=2C_F,\qquad E_R=3C_F+\frac{C_R}{2},\qquad
+w_R=-\frac{d_R/N^2}{C_F+C_R/2}.
+\]
+Using
+\[
+d_1=1,\ C_1=0;\quad d_{\mathrm{Adj}}=N^2-1,\ C_{\mathrm{Adj}}=N;
+\]
+\[
+d_{A_2}=\frac{N(N-1)}2,\ C_{A_2}=\frac{(N+1)(N-2)}N;\quad
+ d_{S_2}=\frac{N(N+1)}2,\ C_{S_2}=\frac{(N-1)(N+2)}N
+\]
+gives \eqref{eq:sunweights}. Summing the two orientation families and
+subtracting them gives \eqref{eq:suntn}. Every displayed factor in its
+numerator and denominator is positive for $N\geq3$. The flat eigenvalue then
+follows from Theorem~\ref{thm:gausslaw}; the asymptotic expansion is direct.
+\end{proof}
+
+\begin{theorem}[Exactly flat $T_1^{+-}$ band; compact localized states]
+\label{thm:flatband}
+The lowest $C$-odd band is exactly flat:
+\begin{equation}
+m_-(k,y)=\frac83+y+\frac{11}{306}\,y^2+O(y^3)
+\qquad\text{for every }k\in\mathrm{BZ},
+\end{equation}
+since $\tfrac{7}{102}+\tfrac{5}{612}\,(-4)=\tfrac{11}{306}$. The dispersive
+$C$-odd partners span coefficients $[\tfrac{11}{306},\tfrac{41}{306}]$,
+touching the flat band quadratically at $k=0$. At rest the $C$-odd triplet
+transforms as $T_1^{+-}$ of the cubic group with $C=-$ (axial-vector-like):
+\emph{the $C$-odd one-plaquette sector contains no scalar at rest}.
+\end{theorem}
+
+\begin{theorem}[CLS, completeness, and $\partial\partial=0$]\label{thm:cls}
+The consistently (Levi--Civita) oriented boundary of a single elementary
+cube --- six faces with amplitudes $\pm1$ --- is an exact real-space
+eigenvector of the signed adjacency at $\mu=-4$ with zero leakage onto any
+plaquette off the cube. Its Bloch symbol $u(k)$ has
+$|u(k)|^2=\sum_a\sin^2(k_a/2)$ and spans $\ker B(k)^\dagger$ for all
+$k\neq0$. Flatness is the chain-complex identity
+$\partial_2\partial_3=0$: every edge of the cube is shared by exactly two
+faces with opposite induced orientation, so the signed face amplitudes cancel
+on all twelve edges. Exactly, on an $L^3$ torus,
+\begin{equation}
+\dim\ker(\Nt+4I)\;=\;L^3+2\;=\;
+\underbrace{\bigl(L^3\ \text{cube states},\ \text{rank }L^3-1\bigr)}_{
+\text{one global relation }\sum_{\mathrm{cubes}}\psi=0}
+\;\oplus\;
+\underbrace{\bigl(3\ \text{rest states}\bigr)}_{\Nt(0)=-4I}.
+\end{equation}
+\end{theorem}
+
+\begin{theorem}[The $C$-even band]\label{thm:ceven}
+With the corrected hop \eqref{eq:tplus},
+\begin{equation}
+E_+(k,y)=\frac83-y+y^2\Bigl[\frac{223}{1020}-\frac{11}{306}\,\lambda(k)\Bigr],
+\qquad \lambda(k)\in[-4,12],
+\end{equation}
+with band bottom $-\tfrac{217}{1020}$ at $k=0$ (the $A_1^{++}$, $0^{++}$
+state), where $\lambda(k)=12-\tfrac43|k|^2+O(k^4)$ isotropically, hence
+curvature $+\tfrac{22}{459}|k|^2y^2$ and effective mass $m^*=459/(44\,y^2)$;
+band top $\tfrac{1109}{3060}$ at the zone faces; bandwidth
+$16|t_+|=\tfrac{88}{153}$. At rest the triplet decomposes as
+$A_1^{++}\oplus E^{++}$, with the $E^{++}$ doublet at the exact,
+hop-independent coefficient $\tfrac{223}{1020}$ (it sits at $\lambda=0$).
+\end{theorem}
+
+\begin{remark}[An exactly immobile excitation]\label{rem:immobile}
+The per-bond ratio is
+\[
+\frac{|t_-|}{|t_+|}=\frac{5/612}{11/306}=\frac5{22},
+\]
+and carries no immobility claim (this corrects Remark~6.4 of \cite{companion}, whose ratio
+$5/481$ used the uncorrected hop). The immobility statement holds in exact
+form: the lowest $C$-odd branch has bandwidth zero, while the full $C$-odd
+manifold has width $\tfrac{5}{51}$ against the $C$-even bandwidth
+$\tfrac{88}{153}$ (manifold-width ratio $15/88$). Both sectors factorize
+through the link channel; the qualitative asymmetry is that
+$\det N=-2v_1v_2v_3$ vanishes only on the zone faces $k_j=\pi$, while
+$\det B\equiv0$ everywhere --- the $C$-even kernel is measure-zero, the
+$C$-odd kernel is a whole band.
+\end{remark}
+
+\section{Third order: tromino vanishing and a rigid flat band}
+\label{sec:thirdorder}
+
+At $O(y^3)$ the new lattice geometry is the tromino: three plaquettes
+pairwise sharing links.
+
+\begin{lemma}[Bare-link lemma]\label{lem:barelink}
+Every $O(y^3)$ tromino amplitude vanishes: each candidate three-plaquette
+process leaves at least one boundary link in a nontrivial representation
+unmatched (``bare''), and the corresponding Haar integral over that link is
+zero. Trominoes first activate at $O(y^4)$.
+\end{lemma}
+
+Consequently the third-order effective Hamiltonian retains the second-order
+(signed-adjacency, link-mediated) structure. The $C$-odd hopping is odd in the
+shared-link orientation,
+\[
+T_3(s)=-T_3(-s),
+\]
+and the per-neighbor constants are computable on the abstract domino.
+
+\begin{theorem}[Rigid flat band at third order]\label{thm:thirdorder}
+The flat band of Theorem~\ref{thm:flatband} is rigid at $O(y^3)$:
+\begin{equation}
+m_-(k,y)=\frac83+y+\frac{11}{306}\,y^2-\frac{109151}{249696}\,y^3+O(y^4)
+\qquad\text{for every }k,
+\end{equation}
+with
+\begin{equation}
+d_3=\frac{7}{32}+12\,\mathrm{leak}_3-4\,b_3=-\frac{109151}{249696},
+\qquad
+b_3=\frac{1975}{124848},\quad
+\mathrm{leak}_3=-\frac{12331}{249696},
+\end{equation}
+where $\tfrac{7}{32}$ is the within-plaquette tower term \eqref{eq:towers},
+$b_3$ the third-order $C$-odd hop and $\mathrm{leak}_3$ the per-neighbor
+diagonal leakage; the dispersive $C$-odd top has cubic coefficient
+$-\tfrac{61751}{249696}$. In the $C$-even sector,
+\begin{equation}
+m_+(0,y)=\frac83-y-\frac{217}{1020}\,y^2-\frac{54049}{520200}\,y^3+O(y^4),
+\end{equation}
+the band-top cubic coefficient is $\tfrac{471353}{1560600}$, and the diagonal
+and hopping corrections obey the exact identity
+$\mathrm{leak}^{\mathrm e}_n=T^{\mathrm e}_n$ at $n=2,3$ (two distinct
+``$+3/4$'' mechanisms of equal value), so the $A_1^{++}$ correction at $k=0$
+is (tower) $+\,24\,T^{\mathrm e}_n$ per order. From the certified band form,
+the $E^{++}$ level acquires the cubic coefficient
+$\tfrac{101}{200}+12\,T_3^{\mathrm e}=\tfrac{52163}{260100}$ and the
+$C$-even curvature the correction
+$+\tfrac43|T_3^{\mathrm e}|\,y^3=\tfrac{6335}{187272}\,y^3$.
+\end{theorem}
+
+\section{Robustness and exact fourth-order lifting}
+\label{sec:robust}
+
+\begin{theorem}[Link-mediated robustness]\label{thm:robust}
+Let $H_{\mathrm{corr}}(k)=B(k)M(k)B(k)^\dagger$ be any correction whose
+symbol factors through the link channel, with $M(k)$ an arbitrary Hermitian
+symbol. Then $H_{\mathrm{corr}}$ annihilates the flat subspace:
+\[
+H_{\mathrm{corr}}(k)u(k)
+=B(k)M(k)\bigl(B(k)^\dagger u(k)\bigr)=0.
+\]
+Consequently every link-mediated correction preserves the flat branch. A
+separate $k$-independent scalar multiple of the identity may shift its energy
+without producing dispersion. This explains the exact
+second- and third-order rigidity.
+\end{theorem}
+
+\begin{theorem}[Sharpness]\label{thm:sharp}
+The minimal corner-sharing, site-mediated symbol
+\[
+H_{\mathrm{corner}}(k)=\operatorname{diag}
+\bigl(2\cos(k_0{+}k_1),2\cos(k_1{+}k_2),2\cos(k_0{+}k_2)\bigr)
+\]
+does not preserve the lower-order flat subspace:
+$P_{\mathrm{flat}}H_{\mathrm{corner}}P_\perp\neq0$. Geometry alone does
+not protect the band after site-mediated processes activate.
+\end{theorem}
+
+\subsection{The complete fourth-order kernel}
+
+Let the exact translation-invariant fourth-order kernel be
+$K_4(r)_{ba}$, where $a,b\in\{01,02,12\}$ label plaquette orientations and
+$r\in\mathbb Z^3$ is the relative cell displacement. The recovered kernel
+contains 189 nonzero rational records and obeys exact real-space
+Hermiticity,
+\[
+K_4(r)_{ba}=K_4(-r)_{ab}.
+\]
+Its Bloch matrix is
+\[
+H_4(k)=\sum_rK_4(r)e^{ik\cdot r}.
+\]
+At zero momentum the full matrix is scalar,
+\begin{equation}
+H_4(0)=qI_3,
+\qquad
+q=-\frac{20721577909065127111}{7250590288602460800}.
+\label{eq:qexact}
+\end{equation}
+This is both an exact kernel sum and the cubic-symmetry requirement on the
+rest-frame $T_1^{+-}$ triplet.
+
+For $k\neq0$ modulo reciprocal-lattice periodicity, use the cell/origin-gauge
+flat vector
+\begin{equation}
+\psi(k)=
+\begin{pmatrix}
+e^{ik_2}-1\\
+-(e^{ik_1}-1)\\
+e^{ik_0}-1
+\end{pmatrix},
+\qquad
+\|\psi(k)\|^2=2\sum_{i=0}^2X_i,
+\qquad X_i=1-\cos k_i.
+\label{eq:psicell}
+\end{equation}
+It spans the one-dimensional lower-order flat eigenspace away from the
+threefold band touching at $\Gamma$.
+
+\begin{theorem}[Exact fourth-order factorization]\label{thm:y4factor}
+Define
+\[
+D(k)=\psi(k)^\dagger[H_4(k)-qI]\psi(k).
+\]
+The complete 189-record kernel gives the identity
+\begin{equation}
+D(k)=A\sum_iX_i^2+B\sum_{i<j}X_iX_j,
+\qquad
+A=\frac5{12},
+\qquad
+B=\frac{17607806155349}{275331901291200}.
+\label{eq:Dfactor}
+\end{equation}
+Therefore the fourth-order coefficient of the branch that is flat through
+third order is
+\begin{equation}
+c_4(k)=q+
+\frac{A\sum_iX_i^2+B\sum_{i<j}X_iX_j}
+{2\sum_iX_i},
+\qquad k\neq\Gamma,
+\label{eq:c4closed}
+\end{equation}
+with continuous value $c_4(\Gamma)=q$.
+\end{theorem}
+
+\begin{proof}
+Contracting the exact Laurent-polynomial kernel with \eqref{eq:psicell}
+leaves 25 nonzero frequencies. Hermiticity and cubic symmetry reduce them to
+three cosine orbits: unit-axis frequencies, double-axis frequencies, and the
+six pair frequencies. Thus
+\[
+D=C+a\sum_i\cos k_i+d\sum_i\cos2k_i
++b\sum_{i<j}\{\cos(k_i+k_j)+\cos(k_i-k_j)\}.
+\]
+The exact kernel coefficients satisfy
+\[
+C+3a+3d+6b=0,
+\qquad 2d=\frac5{12},
+\qquad 2b=B,
+\qquad -a-4d-4b=0.
+\]
+The first identity is $D(0)=0$; the last is the cancellation of the term
+linear in $X_i=1-\cos k_i$, equivalently the continuity of
+$D(k)/(2\sum_iX_i)$ with value zero at $\Gamma$. Substitution of
+$\cos2k_i=1-4X_i+2X_i^2$ and
+$\cos(k_i+k_j)+\cos(k_i-k_j)=2(1-X_i)(1-X_j)$ gives
+\eqref{eq:Dfactor}. Equation~\eqref{eq:c4closed} follows from
+$\|\psi\|^2=2\sum_iX_i$. At $\Gamma$, \eqref{eq:qexact} gives the
+continuous value directly.
+\end{proof}
+
+The complete strong-coupling branch through fourth order is consequently
+\begin{equation}
+m_-(k,y)=\frac83+y+\frac{11}{306}y^2
+-\frac{109151}{249696}y^3+c_4(k)y^4+O(y^5).
+\label{eq:branch4}
+\end{equation}
+
+\begin{theorem}[Exact real-space sum of squares]\label{thm:y4sos}
+Let $C=\partial_3$ map scalar cube amplitudes to their consistently oriented
+plaquette boundaries in the cell/origin gauge, so its Fourier symbol is
+$\psi(k)$ in \eqref{eq:psicell}. Let $T_i$ translate cube amplitudes by one
+cell and define
+\[
+\nabla_i=T_i-I,
+\qquad
+L_i=\nabla_i^\dagger\nabla_i=2I-T_i-T_i^{-1}.
+\]
+Then the complete fourth-order kernel obeys the exact local operator identity
+\begin{equation}
+\boxed{
+C^\dagger(H_4-qI)C
+=\frac{A}{4}\sum_iL_i^2
++\frac{B}{4}\sum_{i<j}L_iL_j
+}
+\label{eq:sosoperator}
+\end{equation}
+with $A,B$ from \eqref{eq:Dfactor}. Equivalently,
+\begin{equation}
+C^\dagger(H_4-qI)C
+=\frac5{48}\sum_iL_i^2
++\frac{17607806155349}{1101327605164800}
+\sum_{i<j}(\nabla_i\nabla_j)^\dagger
+               (\nabla_i\nabla_j).
+\label{eq:sosexplicit}
+\end{equation}
+The scalar numerator operator $Q=C^\dagger(H_4-qI)C$ is the 25-point stencil
+\begin{align}
+(Q\phi)_x={}&w_0\phi_x
++w_1\sum_i(\phi_{x+e_i}+\phi_{x-e_i})
++w_2\sum_i(\phi_{x+2e_i}+\phi_{x-2e_i})\notag\\
+&+w_d\sum_{i<j}\sum_{\sigma,\tau=\pm1}
+\phi_{x+\sigma e_i+\tau e_j},
+\label{eq:sosstencil}
+\end{align}
+where
+\begin{equation}
+\begin{split}
+w_0&=\frac{189690244462349}{91777300430400},\\
+w_1&=-\frac{132329431693349}{275331901291200},\\
+w_2&=\frac5{48},\qquad
+w_d=\frac{17607806155349}{1101327605164800},
+\end{split}
+\label{eq:sosweights}
+\end{equation}
+and $w_0+6w_1+6w_2+12w_d=0$.
+
+The cube-boundary states have Gram operator
+\begin{equation}
+G=C^\dagger C=\sum_iL_i.
+\label{eq:cubegram}
+\end{equation}
+Consequently the physical lift is the generalized eigenproblem
+\begin{equation}
+Q\phi=\lambda G\phi,
+\qquad
+\lambda(k)=c_4(k)-q
+=\frac{A\sum_iX_i^2+B\sum_{i<j}X_iX_j}
+       {2\sum_iX_i}.
+\label{eq:sosgeneralized}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The symbol of $L_i$ is
+$|e^{ik_i}-1|^2=2X_i$. Hence the Fourier symbol of the right side of
+\eqref{eq:sosoperator} is
+\[
+\frac A4\sum_i(2X_i)^2
++\frac B4\sum_{i<j}(2X_i)(2X_j)
+=A\sum_iX_i^2+B\sum_{i<j}X_iX_j,
+\]
+which equals the exact contracted symbol $D(k)$ by
+Theorem~\ref{thm:y4factor}. Since both sides are finite-range
+translation-invariant operators, equality of their Laurent symbols proves the
+real-space identity. Expanding $L_i^2$ and $L_iL_j$ gives
+\eqref{eq:sosstencil}--\eqref{eq:sosweights}. Equation~\eqref{eq:cubegram}
+follows from the definition of $C$, and division by its symbol
+$2\sum_iX_i$ gives \eqref{eq:sosgeneralized}. The exact certificate also
+contracts the 189-record kernel directly and obtains the same 25 rational
+coefficients with zero residual.
+\end{proof}
+
+\begin{remark}[Geometric carriers of fourth-order mobility]
+For a localized cube amplitude, $L_i$ creates the axial three-cube pattern
+$(-1,2,-1)$, while $\nabla_i\nabla_j$ creates a planar four-cube
+checkerboard $(+1,-1,-1,+1)$. Equation~\eqref{eq:sosexplicit} states that the
+first mobility of the closed-surface excitation is exactly the positive
+weighted norm of these two local deformations.
+\end{remark}
+
+\begin{theorem}[Exact global band edges]\label{thm:y4edges}
+Modulo reciprocal-lattice periodicity, $\Gamma=(0,0,0)$ is the unique global
+minimum of $c_4(k)$ and $R=(\pi,\pi,\pi)$ is the unique global maximum.
+The exact fourth-order bandwidth is
+\begin{equation}
+\Delta W_4=c_4(R)-c_4(\Gamma)
+=A+B
+=\frac{132329431693349}{275331901291200}.
+\label{eq:bandwidth4}
+\end{equation}
+\end{theorem}
+
+
+
+\begin{proof}
+For $k\neq\Gamma$, the variables satisfy $X_i\in[0,2]$ and
+$S=\sum_iX_i>0$. Since $A>0$, $B>0$, and
+$\sum_iX_i^2>0$, equation~\eqref{eq:Dfactor} gives $D(k)>0$. Hence
+$c_4(k)>q=c_4(\Gamma)$.
+
+For the upper edge, write
+$Q=\sum_iX_i^2$ and $R_2=\sum_{i<j}X_iX_j$. On the cube
+$0\leq X_i\leq2$,
+\[
+Q\leq2S,
+\qquad R_2\leq2S.
+\]
+For the second inequality set $x_i=X_i/2$; then
+\[
+(x_0+x_1+x_2)-(x_0x_1+x_0x_2+x_1x_2)
+=x_0(1-x_1)+x_1(1-x_2)+x_2(1-x_0)\geq0.
+\]
+Therefore $c_4(k)-q\leq A+B$. Equality away from $\Gamma$ requires
+$x_0=x_1=x_2=1$, hence $X_0=X_1=X_2=2$, which is precisely
+$R=(\pi,\pi,\pi)$ modulo $2\pi$.
+\end{proof}
+
+\begin{proposition}[Kinematic generic-$N$ factorization]
+\label{prop:sunh4conditional}
+Fix an integer $N\geq3$ and define
+\[
+D_N(k)=\psi(k)^\dagger[H_{4,N}(k)-q_NI]\psi(k).
+\]
+Suppose the exact rank-$N$ kernel passes the group-independent gates of
+Hermiticity, cubic covariance, independent-reflection symmetry, the same final
+displacement support as the $SU(3)$ kernel, and
+$H_{4,N}(0)=q_NI$. Then
+\[
+D_N(k)=A_N\sum_iX_i^2+B_N\sum_{i<j}X_iX_j.
+\]
+Writing $q_N,c_X,c_M,c_R$ for the exact fourth-order branch coefficients at
+$\Gamma,X,M,R$, respectively,
+\[
+A_N=c_X-q_N,
+\qquad
+B_N=2(c_M-c_X)=c_R-c_X,
+\qquad
+c_R=2c_M-c_X.
+\]
+The last equality is a hard consistency gate on any generic-$N$ computation.
+This proposition does not assert that the symbolic contraction already passes
+the listed kernel gates, nor does it assert the signs of $A_N,B_N$ beyond the
+certified $SU(3)$ case.
+\end{proposition}
+
+\begin{proof}
+The final displacement support and cubic/reflection symmetries restrict $D_N$
+to a constant, a term proportional to $S=\sum_iX_i$, and the two quadratic
+cubic invariants $Q=\sum_iX_i^2$ and
+$R_2=\sum_{i<j}X_iX_j$. Since $\psi(k)=O(k)$ and
+$H_{4,N}(k)-q_NI=O(k)$, analyticity gives $D_N(k)=O(|k|^3)$.
+Independent reflections make $D_N$ even, hence in fact
+$D_N(k)=O(|k|^4)$. The constant and quadratic Taylor terms therefore vanish,
+leaving $A_NQ+B_NR_2$. Evaluating $(A_NQ+B_NR_2)/(2S)$ at $X$, $M$, and $R$
+gives $A_N$, $A_N+B_N/2$, and $A_N+B_N$, respectively, yielding the stated
+reconstruction identities.
+\end{proof}
+
+The high-symmetry values are
+\begin{align}
+c_4(\Gamma)&=-\frac{20721577909065127111}{7250590288602460800},\notag\\
+c_4(X)&=-\frac{17700498622147435111}{7250590288602460800},\notag\\
+c_4(M)&=-\frac{4367164159624988707}{1812647572150615200},\notag\\
+c_4(R)&=-\frac{3447362930970494909}{1450118057720492160}.
+\label{eq:bandpoints4}
+\end{align}
+
+\begin{proposition}[Band-edge regularity and curvature]\label{prop:y4curvature}
+For $k=tn$ with $|n|=1$,
+\begin{equation}
+c_4(tn)-q
+=\frac{t^2}{4}
+\left[A\sum_i n_i^4+B\sum_{i<j}n_i^2n_j^2\right]+O(t^4).
+\label{eq:gammacurv}
+\end{equation}
+The directional coefficient ranges from
+\[
+\kappa_{\mathrm{diag}}=\frac{A+B}{12}
+=\frac{132329431693349}{3303982815494400}
+\]
+on a body diagonal to
+\[
+\kappa_{\mathrm{axis}}=\frac{A}{4}=\frac5{48}
+\]
+on a coordinate axis. Thus the $\Gamma$ lift is quadratic but not the
+restriction of a single Hessian. At the upper edge,
+\begin{equation}
+c_4(R+\delta)=c_4(R)
+-\frac{132329431693349}{3303982815494400}|\delta|^2
++O(|\delta|^4),
+\label{eq:Rcurv}
+\end{equation}
+so the $R$ curvature is isotropic and negative.
+\end{proposition}
+
+\begin{proof}
+Near $\Gamma$, $X_i=t^2n_i^2/2+O(t^4)$; insertion into
+\eqref{eq:c4closed} gives \eqref{eq:gammacurv}. Since
+$\sum_i n_i^4\in[1/3,1]$,
+$\sum_{i<j}n_i^2n_j^2=(1-\sum_i n_i^4)/2$, and $A-B/2>0$, the stated
+extrema follow.
+If a Hessian existed at $\Gamma$, cubic symmetry would force it to be a
+scalar multiple of the identity, contradicting the two distinct directional
+coefficients. Near $R$, $X_i=2-\delta_i^2/2+O(\delta_i^4)$; expanding the
+ratio in \eqref{eq:c4closed} gives \eqref{eq:Rcurv}.
+\end{proof}
+
+
+\subsection{Stable-rank $SU(N\geq7)$ fourth-order reduction}
+\label{subsec:sunstable}
+
+\begin{theorem}[Stable-rank local-invariant and denominator theorem]
+\label{thm:sunstable}
+For the complete connected fourth-order geometry, the maximum local tensor
+degree is six. For every integer $N\geq7$, all local $SU(N)$ singlets are
+therefore exactly balanced in fundamental and antifundamental degree; no
+independent determinant/epsilon sectors occur. The local Haar integrations
+reduce to the three balanced families $(1,1)$, $(2,2)$, and $(3,3)$, with
+\[
+\operatorname{Wg}_1(e)=\frac1N,
+\]
+\[
+\operatorname{Wg}_2(e)=\frac1{N^2-1},\qquad
+\operatorname{Wg}_2((12))=-\frac1{N(N^2-1)},
+\]
+and
+\[
+\operatorname{Wg}_3(e)=\frac{N^2-2}{N(N^2-1)(N^2-4)},
+\]
+\[
+\operatorname{Wg}_3((12))=-\frac1{(N^2-1)(N^2-4)},\qquad
+\operatorname{Wg}_3((123))=\frac2{N(N^2-1)(N^2-4)}.
+\]
+The stable mixed-tensor irreducible channels are indexed by bipartitions
+$(\lambda,\mu)$, with
+\[
+C_2(\lambda,\mu)=
+\frac{N^2(|\lambda|+|\mu|)
++N[\kappa(\lambda)+\kappa(\mu)]
+-(|\lambda|-|\mu|)^2}{2N},
+\qquad
+\kappa(\lambda)=\sum_i\lambda_i(\lambda_i+1-2i).
+\]
+Consequently every electric denominator is an explicit rational function of
+$N$. Exact enumeration yields the counts in Table~\ref{tab:sunstable}; there
+are 94 distinct denominator polynomials and none has an accidental integer
+root for $N\geq7$. Evaluating the stable bipartition engine at $N=3$ agrees
+with the existing $SU(3)$ Dynkin-label engine on all 140 balanced token
+signatures.
+\end{theorem}
+
+\begin{proof}
+A local invariant with $n_f$ fundamental and $n_{\bar f}$ antifundamental
+indices requires
+$n_f-n_{\bar f}\equiv0\pmod N$. The verified local degree bound gives
+$|n_f-n_{\bar f}|\leq6$; for $N\geq7$ this congruence is equivalent to
+$n_f=n_{\bar f}$. The Weingarten coefficients are the exact inverses of the
+permutation Gram matrices through degree three. Stable mixed-tensor branching
+then gives the displayed bipartition Casimir. The geometry counts,
+denominator classification, absence of integer roots, and 140-signature
+regression are exact integer and symbolic gates in the certificate described
+in Appendix~\ref{app:verification}.
+\end{proof}
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lr@{\qquad}lr}
+\toprule
+quantity & count & quantity & count \\
+\midrule
+connected supports & 182440 & candidate support/output pairs & 895524 \\
+stable support/output classes & 439 & canonical ordered words & 4171 \\
+exact-balance sign assignments & 33500 & charge-conjugation orbits & 16750 \\
+unique balanced signatures & 140 & symbolic energy signatures & 37500 \\
+resonant signatures & 17073 & nonresonant signatures & 20427 \\
+distinct denominator polynomials & 94 & accidental roots, $N\geq7$ & 0 \\
+\bottomrule
+\end{tabular}
+\caption{Exact stable-rank fourth-order geometry and denominator counts.}
+\label{tab:sunstable}
+\end{table}
+
+\begin{remark}[Remaining stable-rank contraction]
+Theorem~\ref{thm:sunstable} completes the geometry, local Haar, channel, and
+denominator layers for $N\geq7$. The remaining load-bearing step is to replace
+the $SU(3)$-specific carrier/projector contractions in Stages 3C and 3G by
+symbolic walled-Brauer diagram tensors. The required final outputs are only
+$q_N,A_N,B_N$, together with the kernel gates in
+Proposition~\ref{prop:sunh4conditional} and positivity of $A_N,B_N$.
+The ranks $N=4,5,6$ require finite determinant-sector calculations; $SU(2)$
+is separate because pseudoreality changes charge conjugation.
+\end{remark}
+
+\section{Numerical summary and discussion}
+\label{sec:numbers}
+
+Table~\ref{tab:lowerbands} collects the exact lower-order data. These entries
+are unchanged from the third-order certificate chain.
+
+\begin{table}[ht]
+\centering
+\scriptsize
+\begin{tabular}{lll}
+\toprule
+quantity & exact & decimal \\
+\midrule
+$C$-odd flat branch, $O(y)$ / $O(y^2)$ / $O(y^3)$ &
+$+1$; $+11/306$; $-109151/249696$ &
+$1$; $0.0359477$; $-0.4371356$ \\
+$C$-odd dispersive top, $O(y^2)$ / $O(y^3)$ &
+$41/306$; $-61751/249696$ & $0.1339869$; $-0.2473048$ \\
+$C$-odd manifold width ($y^2$) & $5/51$ & $0.0980392$ \\
+$A_1^{++}$ bottom, $O(y)$ / $O(y^2)$ / $O(y^3)$ &
+$-1$; $-217/1020$; $-54049/520200$ &
+$-1$; $-0.2127451$; $-0.1039004$ \\
+$E^{++}$ level, $O(y^2)$ / $O(y^3)$ &
+$223/1020$; $52163/260100$ & $0.2186275$; $0.2005498$ \\
+$C$-even bandwidth ($y^2$) & $88/153$ & $0.5751634$ \\
+$C$-even effective mass & $459/(44y^2)$ & $10.43182/y^2$ \\
+per-bond ratio $|t_-|/|t_+|$ & $5/22$ & $0.2272727$ \\
+\bottomrule
+\end{tabular}
+\caption{Exact one-flux data through third order. The lowest $C$-odd branch
+is flat at every momentum through the displayed orders.}
+\label{tab:lowerbands}
+\end{table}
+
+The new fourth-order data are summarized in Table~\ref{tab:y4band}.
+
+\begin{table}[ht]
+\centering
+\scriptsize
+\begin{tabular}{lll}
+\toprule
+quantity & exact & decimal \\
+\midrule
+$c_4(\Gamma)$ &
+$-20721577909065127111/7250590288602460800$ & $-2.857915988115$ \\
+$c_4(X)$ &
+$-17700498622147435111/7250590288602460800$ & $-2.441249321448$ \\
+$c_4(M)$ &
+$-4367164159624988707/1812647572150615200$ & $-2.409273720232$ \\
+$c_4(R)$ &
+$-3447362930970494909/1450118057720492160$ & $-2.377298119016$ \\
+$\Delta W_4$ &
+$132329431693349/275331901291200$ & $0.480617869098$ \\
+$\Gamma$ body-diagonal coefficient &
+$132329431693349/3303982815494400$ & $0.040051489092$ \\
+$\Gamma$ axis coefficient & $5/48$ & $0.104166666667$ \\
+$R$ isotropic coefficient &
+$-132329431693349/3303982815494400$ & $-0.040051489092$ \\
+\bottomrule
+\end{tabular}
+\caption{Exact projected $O(y^4)$ band data. The signs in the last row refer
+to the coefficient multiplying $|\delta|^2$ in the expansion about $R$.}
+\label{tab:y4band}
+\end{table}
+
+Several consequences follow.
+
+First, the Gauss-law mechanism is exact but order-limited. The elementary-cube
+CLS annihilate all link-mediated leakage through third order. Fourth-order
+site-mediated processes do not merely perturb this conclusion numerically:
+they produce the strictly positive form \eqref{eq:Dfactor}. The first
+nonzero bandwidth of the lowest $T_1^{+-}$ branch is therefore
+\[
+W(y)=\Delta W_4y^4+O(y^5).
+\]
+The excitation is parametrically low-mobility at strong coupling, not
+all-orders immobile.
+
+Second, the global band geometry is fixed without interval arithmetic. The
+minimum is at zero momentum and the maximum is at the Brillouin-zone corner.
+The rest-point degeneracy leaves a nonstandard signature: although
+$c_4(k)-c_4(\Gamma)=O(|k|^2)$, the coefficient depends on the approach
+direction. A conventional scalar effective mass at $\Gamma$ is therefore
+not defined at this order. The upper edge at $R$ has an ordinary isotropic
+negative curvature.
+
+Third, the exact rest-frame series is
+\begin{equation}
+m_-(\Gamma,y)=\frac83+y+\frac{11}{306}y^2
+-\frac{109151}{249696}y^3
+-\frac{20721577909065127111}{7250590288602460800}y^4+O(y^5).
+\label{eq:restseries4}
+\end{equation}
+The magnitude of the fourth-order coefficient is already large, so naive
+polynomial extrapolation to moderate coupling is not controlled. A
+quantitative comparison with the continuum $1^{+-}$ mass additionally
+requires the string tension in the same Hamiltonian normalization.
+
+Fourth, the quantum numbers remain useful for spectroscopy. The lowest
+$C$-odd one-flux excitation is $T_1^{+-}$, hence $1^{+-}$-like at rest, not
+a scalar. The lower-order ordering $0^{++}<2^{++}<1^{+-}$ agrees
+qualitatively with continuum lattice spectroscopy
+\cite{MorningstarPeardon1999,AthenodorouTeper2020}, but the present series
+does not predict the continuum mass.
+
+Finally, the result provides both momentum- and real-space benchmarks for
+Hamiltonian lattice simulations and quantum hardware \cite{Baueretal2023}.
+At small $y$, a correct implementation should reproduce zero dispersion
+through $O(y^3)$, followed by a bandwidth $\Delta W_4y^4$, with the exact
+$\Gamma$, $X$, $M$, and $R$ coefficients in Table~\ref{tab:y4band}. In real
+space, sandwiching the full 189-record kernel between cube-boundary maps must
+collapse to the 25-point stencil \eqref{eq:sosstencil}. This paired test is
+substantially more discriminating than a single rest-mass comparison.
+
+\section{Outlook}
+\label{sec:outlook}
+
+The fourth-order flatness and projected real-space geometry questions are now
+closed. Theorem~\ref{thm:y4sos} identifies the mobility operator as a local
+sum of squares of axial second differences and planar checkerboard
+differences. A remaining geometric refinement is to decompose the
+\emph{unprojected} plaquette-space residual into boundary, co-boundary, and
+orthogonal sectors, clarifying which site-mediated processes mix the
+closed-surface subspace before projection.
+
+The primary next direction is gauge-group dependence. The second-order part is closed:
+Theorem~\ref{thm:suniversal} proves positive signed hopping and a universal
+closed-surface flat branch for every $SU(N)$, $N\geq3$. At fourth order,
+Theorem~\ref{thm:sunstable} closes the geometry, balanced Haar, representation
+channel, resonance, and denominator layers for the stable range $N\geq7$.
+The single remaining stable-rank calculation is the symbolic walled-Brauer
+contraction replacing the $SU(3)$-specific Stages 3C and 3G. It must produce
+$q_N,A_N,B_N$, pass the final kernel gates in
+Proposition~\ref{prop:sunh4conditional}, and prove $A_N,B_N>0$ for all
+integers $N\geq7$. The exceptional ranks $N=4,5,6$ require finite
+rank-specific determinant-sector extensions, while $SU(2)$ requires a
+separate treatment because of pseudoreality and the resulting degeneration of
+charge conjugation.
+
+For contact with continuum spectroscopy, the next high-value calculation is
+the Hamiltonian strong-coupling series for the string tension in the same
+normalization. Only the consistently expanded ratio
+$m_{1^{+-}}(y)/\sqrt{\sigma(y)}$ can support a controlled comparison with
+the continuum lattice value. Higher mass orders, beginning with $O(y^5)$,
+are useful after that denominator is available; the fifth-order folded
+coefficient is known, but the full connected-geometry contraction remains a
+substantial computation.
+
+Finally, the interaction of two or more compact closed-surface excitations is
+open. Flat-band systems are often dominated by interaction effects; here the
+relevant question is whether the lower-order incidence protection produces
+bound states, constrained kinetics, or new collective sectors before the
+single-particle $O(y^4)$ mobility becomes important.
+
+\appendix
+\section{Verification chain}
+\label{app:verification}
+
+Every lower-order constant and structural claim retained from draft v0.1 is
+certified by the exact-arithmetic chain described there:
+\path{ENGINE_FLUX_su3_moments_ext.py}, \path{ENGINE_FLUX_su3_domino_d3.py},
+\path{ENGINE_FLUX_glueball_band_certificate_v2.py}, the two independent tromino checks,
+\path{ENGINE_FLUX_cls_flat_band_certificate_v1_1.py}, and the
+document-level regression. That chain reported 387 hard gates and was rerun
+cold on June 13, 2026.
+
+The complete from-scratch $SU(3)$ source chain has now been recovered and
+frozen from Stage 0 through Stages 1, 2, 3B, 3C, 3E, 3G, the folded
+des-Cloizeaux Stage 3I, and the final real-space assembly Stage 3J. Stage 3I
+is no longer a provenance gap; its recovered source has SHA-256
+\begin{center}
+\texttt{7662066c5516533ba531c414fc057c0f5c6e0d8bd1fe860a9c083fa8b2907abf}.
+\end{center}
+Stage 3J records the folded-word source hash in the 189-record kernel metadata.
+
+The fourth-order analytic update is certified independently by
+\path{ENGINE_Y4_exact_analytic_factorization_certificate.py}. It reads the
+complete 189-record real-space kernel in the same cell/origin gauge as
+\eqref{eq:psicell} and adds 26 exact gates. These verify:
+\begin{enumerate}
+\item the kernel record count, orientation ordering, and real-space
+Hermiticity;
+\item $H_4(0)=qI_3$ and the exact value \eqref{eq:qexact};
+\item the 25-term Laurent support, inversion symmetry, and reduction to the
+$3+3+6$ cubic frequency orbits;
+\item cancellation of the term linear in $X_i$ and the exact coefficients
+\[
+A=\frac5{12},\qquad
+B=\frac{17607806155349}{275331901291200};
+\]
+\item the exact $\Gamma$, $X$, $M$, and $R$ anchors;
+\item the global-minimum and global-maximum hypotheses, bandwidth, and both
+band-edge curvature formulas.
+\end{enumerate}
+The certificate status is \texttt{PASS}.
+
+The real-space operator theorem is independently certified by
+\path{ENGINE_Y4_exact_real_space_sos_certificate.py}. In exact Fraction arithmetic
+it forms $C^\dagger(H_4-qI)C$ directly from all 189 kernel records, derives
+its 25 Laurent coefficients, and proves equality with
+\eqref{eq:sosoperator}. Its gates include exact Hermiticity, the scalar
+$H_4(0)$ value, the four stencil weights in \eqref{eq:sosweights}, zero row
+sum, a finite-torus convolution regression, the $X/M/R$ generalized
+eigenvalues, and the exact bandwidth. The canonical semantic SHA-256 of the
+189 sorted kernel records is
+\begin{center}
+\texttt{48a422a517c7c1e70b84fd88a0773943f81ae3f9bfafadbe2304f8eb7d2e9b77}.
+\end{center}
+A separate single-block PyTorch script,
+\path{ENGINE_Y4_sos_a100_validation.py}, applies both the full plaquette kernel and
+the 25-point scalar stencil on a periodic lattice and FFT-checks the numerator,
+Gram metric, generalized ratio, and parity-point lifts. This GPU run is an
+independent floating-point regression, not part of the exact proof.
+
+The all-rank second-order extension is independently certified by
+\path{ENGINE_SUN_closed_surface_band_stage1_certificate.py}, with 34 exact symbolic
+gates. It verifies the four channel weights, the closed form and positivity
+of $t_N$, the $SU(3)$ anchors, the incidence-kernel flat eigenvalue, and the
+high-symmetry reconstruction identities.
+
+The stable-rank fourth-order extension is certified separately by
+\path{y4_sun_stable_rank_stage1.py}. Starting from the exact 182440-support
+Stage-0 geometry, it recomputes every sign mask after canonicalization and
+proves the counts in Table~\ref{tab:sunstable}. It verifies the balanced
+Weingarten families through degree three, 37500 symbolic energy signatures,
+94 distinct denominator polynomials, absence of accidental integer roots for
+$N\geq7$, and an exact 140/140 regression against the $SU(3)$ balanced-channel
+engine. A cold rerun regenerated the Stage-0 support file with SHA-256
+\begin{center}
+\texttt{5b3621cba76d4ac34b6ee89302399f07415db144735b07bbc926d0b370c4acdf}
+\end{center}
+and reproduced every stable-rank gate. This certificate does not yet perform
+the symbolic walled-Brauer contractions needed for $q_N,A_N,B_N$.
+
+The kernel SHA-256 frozen with the fourth-order $SU(3)$ certificate is
+\begin{center}
+\texttt{d2a4121a9798b2c364a52f7845fd7014ce2463563642470102cb080336a9fd51}.
+\end{center}
+The earlier interval subdivision, which resolved 3248 boxes with no
+unresolved leaves, remains an independent numerical cross-check but is not
+needed for the analytic global theorem.
+
+\section{Domino benchmark}
+\label{app:domino}
+
+For a minimal exact benchmark (two plaquettes sharing one link, seven
+links): through the order considered, the one-flux levels of \eqref{eq:H}
+are, in $y^2$ units above $8/3\mp y$,
+\begin{equation}
+C\text{-even: }\Bigl\{\tfrac{1769}{3060},\ \tfrac{13}{20}\Bigr\},
+\qquad
+C\text{-odd: }\Bigl\{\tfrac{31}{68},\ \tfrac{17}{36}\Bigr\},
+\end{equation}
+i.e.\ $\mathrm{diag}\pm|t|$ with
+$(\mathrm{diag},|t|)=(\tfrac{1879}{3060},\tfrac{11}{306})$ and
+$(\tfrac{71}{153},\tfrac{5}{612})$ respectively. The upper $C$-even level
+sits exactly at the within-plaquette tower value $\tfrac{13}{20}$: in that
+combination the neighbor leakage cancels identically.
+
+\begin{thebibliography}{99}
+% Bibliography verified June 13, 2026 (THEORY): all entries confirmed against journal
+% records; two titles corrected to match their verified refs (Banks et al.; Athenodorou-Teper).
+\bibitem{KogutSusskind1975} J.~Kogut and L.~Susskind,
+\emph{Hamiltonian formulation of Wilson's lattice gauge theories},
+Phys.\ Rev.\ D \textbf{11} (1975) 395.
+\bibitem{Banksetal1977} T.~Banks, S.~Raby, L.~Susskind, J.~Kogut,
+D.~R.~T.~Jones, P.~N.~Scharbach and D.~K.~Sinclair,
+\emph{Strong-coupling calculations of the hadron spectrum of quantum
+chromodynamics}, Phys.\ Rev.\ D \textbf{15} (1977) 1111.
+\bibitem{KogutSinclairSusskind1976} J.~Kogut, D.~K.~Sinclair and
+L.~Susskind, \emph{A quantitative approach to low-energy quantum
+chromodynamics}, Nucl.\ Phys.\ B \textbf{114} (1976) 199.
+\bibitem{Creutz1983} M.~Creutz, \emph{Quarks, Gluons and Lattices},
+Cambridge University Press (1983).
+\bibitem{MorningstarPeardon1999} C.~J.~Morningstar and M.~Peardon,
+\emph{The glueball spectrum from an anisotropic lattice study},
+Phys.\ Rev.\ D \textbf{60} (1999) 034509.
+\bibitem{AthenodorouTeper2020} A.~Athenodorou and M.~Teper,
+\emph{The glueball spectrum of $SU(3)$ gauge theory in $3+1$ dimensions},
+JHEP \textbf{11} (2020) 172.
+\bibitem{Sutherland1986} B.~Sutherland, \emph{Localization of electronic
+wave functions due to local topology}, Phys.\ Rev.\ B \textbf{34} (1986)
+5208.
+\bibitem{Lieb1989} E.~H.~Lieb, \emph{Two theorems on the Hubbard model},
+Phys.\ Rev.\ Lett.\ \textbf{62} (1989) 1201.
+\bibitem{Mielke1991} A.~Mielke, \emph{Ferromagnetic ground states for the
+Hubbard model on line graphs}, J.\ Phys.\ A \textbf{24} (1991) L73.
+\bibitem{Tasaki1992} H.~Tasaki, \emph{Ferromagnetism in the Hubbard models
+with degenerate single-electron ground states}, Phys.\ Rev.\ Lett.\
+\textbf{69} (1992) 1608.
+\bibitem{BergmanWuBalents2008} D.~L.~Bergman, C.~Wu and L.~Balents,
+\emph{Band touching from real-space topology in frustrated hopping models},
+Phys.\ Rev.\ B \textbf{78} (2008) 125104.
+\bibitem{LeykamAndreanovFlach2018} D.~Leykam, A.~Andreanov and S.~Flach,
+\emph{Artificial flat band systems: from lattice models to experiments},
+Adv.\ Phys.\ X \textbf{3} (2018) 1473052.
+\bibitem{Baueretal2023} C.~W.~Bauer et al., \emph{Quantum simulation for
+high-energy physics}, PRX Quantum \textbf{4} (2023) 027001.
+\bibitem{companion} A.~Smith, \emph{Two-sided spectral control of Wilson
+one-plaquette class gaps and an exactly verified strong-coupling bridge to
+the $SU(3)$ glueball channels}, companion manuscript (2026), with the
+Section~6 correction patch of June 11, 2026.
+\end{thebibliography}
+
+\end{document}

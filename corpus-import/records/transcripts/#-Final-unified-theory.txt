@@ -1,0 +1,650 @@
+# Final unified theory
+
+After reconciling the older synthesis with the newer pentagonal certificates, the strongest defensible theory is an upgraded form of the project’s existing framework:
+
+[
+\boxed{\textbf{Nested-Quotient Temporal-Circuit–Hodge Gauge Spectral Theory}}
+]
+
+The word **temporal** is the essential upgrade. The newest results show that a static cellular circuit is not enough to determine when a gauge excitation can move. The effective Hamiltonian remembers the *ordered sequence of virtual states* through its electric resolvents. This is the point that unifies the cube theorem, the pentagonal (O(u^4)) result, the fifth-order determinant correction, the mixed-cell test, and the Hodge flat-band results without contradiction.
+
+## 1. The master object
+
+Start with
+
+[
+H=H_0+uV
+]
+
+and first choose the **actual degenerate eigenspace of (H_0)** relevant to the excitation. Call its projector (P_E), with
+
+[
+Q_E=1-P_E.
+]
+
+This step has to precede topology or Hodge compression. The new pentagonal result proves why: in the isotropic pentagonal prism,
+
+[
+E_{\rm cap}=\frac{10}{3},
+\qquad
+E_{\rm side}=\frac83,
+]
+
+so caps and side faces cannot be treated as one physical degenerate Hodge space. The physical one-face band is the cap band. The older cap-plus-side Bloch compression is a valid geometric identity, but corresponds to a different, anisotropically tuned Hamiltonian. 
+
+For a temporal history
+
+[
+h=(f_1,\sigma_1;\ldots;f_r,\sigma_r),
+]
+
+define its intermediate flux sequence
+
+[
+q_j=q_0+\sum_{m=1}^{j}\sigma_m B_2e_{f_m}.
+]
+
+The important object is not merely the final chain (q_r-q_0), but the full path
+
+[
+\boxed{q_0\rightarrow q_1\rightarrow\cdots\rightarrow q_r.}
+]
+
+Its physical weight is obtained only after exact Haar/Gram reduction and electric propagation:
+
+[
+A_N[h]
+======
+
+\langle q_{\rm out}|
+V R_{r-1}V\cdots R_2VR_1V
+|q_{\rm in}\rangle,
+]
+
+with
+
+[
+R_j
+===
+
+Q_E(E_0-H_0)^{-1}Q_E
+]
+
+on the appropriate physical representation block.
+
+The effective operator is therefore
+
+[
+\boxed{
+H_{\rm eff}^{(r)}
+=================
+
+\sum_{[h]\in\mathscr H_r^{\rm phys}}
+A_N[h],T_h
++
+F_r,
+}
+]
+
+where (F_r) denotes the energy-dependent folded terms and (\mathscr H_r^{\rm phys}) is obtained only after quotienting Gram-null directions, disconnected pieces, intermediate (P)-returns, symmetry redundancies, and rooted linked-cluster subtractions. This is the underlying structure already present in the Nested-Quotient synthesis; the newer calculations show that the history must be retained as an ordered object rather than replaced too early by its static cellular boundary. 
+
+## 2. The actual escape criterion
+
+For any retained physical band (P), define traceless compression
+
+[
+\boxed{
+\mathfrak M_P(A)
+================
+
+PAP-
+\frac{\operatorname{tr}_P(PAP)}
+{\dim P},P.
+}
+]
+
+Then the first physical dispersion/hopping order is
+
+[
+\boxed{
+r_{\rm hop}
+===========
+
+\min\left{
+r:
+\mathfrak M_P(H_{\rm eff}^{(r)})\neq0
+\right}.
+}
+]
+
+When the retained band is a Hodge cycle sector,
+
+[
+P=P_Z,\qquad Z=\ker B,
+]
+
+this reduces to the earlier Hodge criterion. But Hodge compression is now recognized as a **special case of the physical (P)-space quotient**, not the first step in every regulator.
+
+That resolves the pentagonal problem cleanly.
+
+---
+
+# 3. What survives from the cellular theory
+
+The cellular circuit result is still real, but its scope has to be stated correctly.
+
+For a primitive, square-free, integral cell-completion history with (r) insertions, every insertion merging a fundamental loop along a connected oppositely oriented path contributes
+
+[
+\frac1N,
+]
+
+independently of the length of that common path. The intermediate simple-loop energies supply (r-1) resolvents. Therefore
+
+[
+\boxed{
+c_{r,\rm prim}(N)
+=================
+
+# \frac{S_r}{N^r C_F^{,r-1}}
+
+\frac{2^{r-1}S_r}
+{N(N^2-1)^{r-1}},
+\qquad
+C_F=\frac{N^2-1}{2N}.
+}
+]
+
+Thus
+
+[
+\boxed{
+c_{r,\rm prim}(N)\sim N^{-(2r-1)}.
+}
+]
+
+This is exactly reproduced by the certified sequence
+
+| geometry/channel            | (r) | coefficient         |
+| --------------------------- | --: | ------------------- |
+| tetrahedral completion      |   2 | (-8/[N(N^2-1)])     |
+| triangular-prism completion |   3 | (64/[N(N^2-1)^2])   |
+| elementary cube             |   4 | (-160/[N(N^2-1)^3]) |
+| primitive pentagonal prism  |   5 | (1120/[N(N^2-1)^4]) |
+
+I reran the independent geometry test: it again returns minimum primitive insertion orders (2,3,4) for tetrahedron, triangular prism and cube. The mixed tetrahedron–octahedron certificate also reruns at 12/12 gates and leaves a non-scalar tetrahedral (O(u^2)) residue with exact eigenvalue separation (32/31). The pentagonal primitive script again gives 120 histories, (S_5=70), and (c_{5,\rm prim}(3)=35/384). The cubic coefficient is stronger still: its symbolic all-(N) derivation gives the temporal amplitudes (-8,-8,-4) in common units and therefore
+
+[
+\boxed{
+c_N^\square=-\frac{160}{N(N^2-1)^3},
+\qquad
+\alpha_N=\frac{640}{N(N^2-1)^3}.
+}
+]
+
+ 
+
+The elementary-cube localization theorem remains one of the strongest closed pieces in the entire project:
+
+[
+K_{\rm r2}^{(4)}
+=x_NT+c_N^\square H_\square,
+]
+
+with
+
+[
+\boxed{
+T=(2q-16)I+2H_\square
++(8-q)\widetilde N\widetilde N^\dagger.
+}
+]
+
+The last term is boundary-exact and annihilates the flat fiber, forcing
+
+[
+B_N^{\rm shp}=D_N^{\rm shp}=0,
+\qquad
+\alpha_N=-4c_N^\square.
+]
+
+That is a genuine geometry-to-mobility operator theorem, rather than merely a fitted strong-coupling coefficient. 
+
+---
+
+# 4. The crucial new result: static circuit weight does **not** determine first hopping
+
+This is the largest conceptual change produced by the full review.
+
+The pentagonal cell has primitive integer relation
+
+[
+-c_0+c_1+s_0+s_1+s_2+s_3+s_4=0,
+]
+
+of (\ell_1)-weight seven, so the primitive cell-completion channel indeed requires
+
+[
+7-2=5
+]
+
+insertions.
+
+But the isotropic physical cap band moves already at fourth order.
+
+Three independent exact microscopic implementations now reproduce
+
+[
+\boxed{
+h_4^{\rm side}
+=-\frac{2861009}{84387303000},
+}
+]
+
+and five equivalent side supports give
+
+[
+\boxed{
+\tau_4
+=-\frac{2861009}{16877460600}.
+}
+]
+
+No offsite cap transfer exists at orders (1,2,3). At fourth order the complete connected operator is
+
+[
+\boxed{
+H_{\rm eff,cap}^{(4),\rm conn}
+==============================
+
+u^4\tau_4
+\sum_z
+\left(
+|a_z,-\rangle\langle a_{z+1},-|
++\mathrm{h.c.}
+\right),
+}
+]
+
+so
+
+[
+\boxed{
+\delta E^{(4)}_{\rm cap}(k)
+===========================
+
+-\frac{2861009}{8438730300}
+u^4\cos k,
+\qquad
+r_{\rm hop}^{\rm iso,cap}=4.
+}
+]
+
+The three cold implementations agree on the microscopic coefficient, the 28 proper-return histories vanish, the required folds vanish, and the periodic operator audit agrees.  
+
+Why does this not violate the old circuit theorem? Because these histories are **temporally nontrivial but statically reducible**. Their insertion multisets contain repeated/conjugate support, such as a neutral side pair. When one collapses the whole history into one final signed 2-chain, much of it cancels. But it cannot be cancelled *inside the resolvent chain* without destroying the intermediate states.
+
+Schematically,
+
+[
+\pi(h)
+======
+
+\sum_j\sigma_j e_{f_j}
+]
+
+does not retain enough information to determine
+
+[
+A_N[h].
+]
+
+In general,
+
+[
+\boxed{
+A_N[h]\neq A_N[\pi(h)].
+}
+]
+
+The energy denominators depend upon the intermediate representation sequence.
+
+This means the old statement
+
+[
+r\ge w_{\min}-2
+]
+
+remains valid for the reduced **nontrivial integral circuit** to which it was proved to apply. What fails is the stronger interpretation
+
+[
+r_{\rm physical}=w_{\min}-2.
+]
+
+The pentagonal prism is now an explicit counterexample to that promotion.
+
+---
+
+# 5. This is not an SU(3) determinant accident
+
+This was another important surprise in the latest files.
+
+The generic exact backend was rerun independently for
+
+[
+N=3,\ldots,12,
+]
+
+and every rank has a nonzero fourth-order fixed-side coefficient with the same sign. The (N=3) result exactly matches the independent full-link SU(3) implementation. A blind (N=13) run is also nonzero and passes 20/20 gates.  
+
+I fitted those exact (N=7,\ldots,13) values independently. The log-log slope is
+
+[
+\boxed{-7.0021}.
+]
+
+Thus
+
+[
+h_4^{\rm side}(N)\sim-\kappa N^{-7},
+]
+
+to high numerical accuracy.
+
+That is exactly the large-(N) power predicted by an order-four process,
+
+[
+N^{-r}C_F^{-(r-1)}
+\sim N^{-(2r-1)}
+=N^{-7}.
+]
+
+So the deeper universal statement is not
+
+[
+\text{number of cell faces}\rightarrow N\text{-power}.
+]
+
+It is
+
+[
+\boxed{
+\text{actual surviving temporal order }r
+\quad\Longrightarrow\quad
+N^{-(2r-1)}
+}
+]
+
+for this class of fundamental-flux histories.
+
+The primitive pentagonal (O(u^5)) channel still exists and scales as (N^{-9}), but it is not the leading isotropic cap transport channel.
+
+---
+
+# 6. Representation theory is a second, independent filter
+
+The fifth-order SU(3) calculation establishes something different.
+
+The exhaustive local census gives
+
+[
+14^5=537,824
+\longrightarrow
+1030
+====
+
+120_{\mathbb Z}+910_{\mathbb Z_3\setminus\mathbb Z}.
+]
+
+The 910 modular histories collapse to only 14 oriented-face lifts, and then to
+
+[
+\boxed{
+910=338_{\rm direct}+572_{\rm folded/return}.
+}
+]
+
+I reran both of those combinatorial certificates; the oriented-face theorem again passes 19/19 gates. 
+
+The decisive representation-resolved calculation then finds that 110 direct triple-side determinant histories contribute
+
+[
+\boxed{
+\delta c_{5,\det}^{SU(3)}
+=========================
+
+\frac{235424477177}
+{407461473619200}
+\approx5.77783\times10^{-4}.
+}
+]
+
+Hence the direct fifth-order coefficient becomes
+
+[
+\boxed{
+c_{5,\rm direct}^{SU(3)}
+========================
+
+0.0917236167372\ldots,
+}
+]
+
+rather than the primitive
+
+[
+\frac{35}{384}
+==============
+
+0.0911458333333\ldots.
+]
+
+So raw Haar cancellation is not enough: unequal electric denominators can destroy that cancellation. 
+
+This gives a clean separation of mechanisms:
+
+[
+\boxed{
+\begin{aligned}
+\text{temporal geometry} &\rightarrow \text{which virtual paths exist},\
+\text{Haar/representation theory} &\rightarrow \text{which paths are physical},\
+\text{electric resolvents} &\rightarrow \text{their unequal weights},\
+\text{compression} &\rightarrow \text{whether they generate shape},\
+\text{rooted subtraction} &\rightarrow \text{the scalar/rest term}.
+\end{aligned}
+}
+]
+
+The full fifth-order coefficient is still open because the 572 return histories require the complete support-resolved Feshbach fold formula before rooted incidence subtraction. The project already has the correct fifth-order formula and explicitly warns that support products must be convolved before recursive subtraction. 
+
+---
+
+# 7. The strongest general principle
+
+The most defensible unified principle is therefore:
+
+[
+\boxed{
+\begin{gathered}
+\textbf{A gauge excitation is perturbatively protected while every}\
+\textbf{physical temporal history acts as a scalar or annihilator on its}\
+\textbf{degenerate retained sector. Mobility begins at the shortest}\
+\textbf{Gram-nonnull, resolvent-nonzero, symmetry-allowed temporal}\
+\textbf{history class whose fully folded sum has nonzero traceless compression.}
+\end{gathered}
+}
+]
+
+Equivalently,
+
+[
+\boxed{
+r_{\rm escape}
+==============
+
+\min_r
+\left{
+r:
+\mathfrak M_{P_E}
+\left[
+\sum_{[h]\in\mathscr H_r^{\rm phys}}
+A_N[h]T_h+F_r
+\right]
+\neq0
+\right}.
+}
+]
+
+This is stronger than either “topology controls mobility” or “group theory controls mobility.”
+
+Topology is a **constraint and organizing quotient**. It is not by itself the Hamiltonian.
+
+The electric spectrum converts topology into dynamics.
+
+---
+
+# 8. Hodge protection remains a major special case
+
+Where
+
+[
+S+zI=B^\dagger B,
+]
+
+the cycle sector (\ker B) is exactly flat under that term. More generally, anything of the form
+
+[
+cI+B^\dagger X B
+]
+
+is scalar/zero after compression to the Hodge-flat sector.
+
+That is why the triangular-prism shared-edge term is scalar through second order, why the cube tree operator collapses modulo the boundary ideal, and why the first independent cubic axial residue can be localized onto the cube boundary.
+
+The theory therefore retains the elegant Hodge statement:
+
+[
+\boxed{
+\text{down-Hodge processes protect;}
+\qquad
+\text{an escaping operator produces dispersion.}
+}
+]
+
+What changes is that the escaping operator need not always be the primitive 3-cell completion.
+
+---
+
+# 9. Same-source spectral bridge
+
+The other major component of the project remains compatible with this theory.
+
+The gauge-invariant source
+
+[
+\boxed{
+B_i^-(x)=\operatorname{ImTr}U_{jk}(x)
+}
+]
+
+creates the charge-odd one-plaquette strong-coupling state. Near the identity,
+
+[
+\boxed{
+B_i^-
+=====
+
+-\frac16\operatorname{Tr}X^3
++\frac1{120}\operatorname{Tr}X^5+\cdots .
+}
+]
+
+Thus the spatial Hodge/temporal-circuit state and the odd Weyl (P_3) oscillator are two limits of the spectral measure of the **same gauge-invariant operator**. At finite volume, its overlap with the isolated strong-coupling branch is nonzero and analytically persists for sufficiently small coupling. 
+
+This is the cleanest bridge from the structural theory to an eventual (T_1^{+-}) glueball calculation. It does not yet prove continuation to the continuum.
+
+---
+
+# 10. Novelty relative to published theory
+
+Strong-coupling effective Hamiltonians themselves are not novel. Münster constructed effective transfer matrices inside degenerate glueball eigenspaces and extracted dispersion relations in 1985; Hamer and collaborators subsequently computed high-order Hamiltonian strong-coupling glueball series. Linked-cluster methods are also established. ([ScienceDirect][1])
+
+What I did **not** find in the targeted literature search is the particular combination established here: a Hodge/boundary-ideal flat-band quotient, exact localization of a mobility coefficient onto an elementary 3-cell boundary, the symbolic all-(N) law (640/[N(N^2-1)^3]), and the distinction between static cellular circuits and resolvent-weighted temporal circuits.
+
+The recent Illa–Savage–Yao hyperhoneycomb work constructs improved Kogut–Susskind Hamiltonians on noncubic tessellations, but its stated goal is regulator improvement/quantum simulation rather than this spectral escape classification. ([arXiv][2])
+
+Likewise, Bao's August 2026 work connects higher-form codes, topological sectors, strong-coupling center sheets and transfer-matrix masses, which is conceptually nearby, but it does not state the temporal-circuit/Hodge/Feshbach mobility theorem found here. ([arXiv][3])
+
+So the strongest reasonable novelty claim is:
+
+[
+\boxed{
+\textbf{The novel content is the quotient-and-escape mechanism and its exact}
+\atop
+\textbf{cellular/operator realizations—not strong-coupling perturbation theory itself.}
+}
+]
+
+A publication should still include a dedicated historical literature review before claiming absolute priority.
+
+---
+
+# 11. A new external prediction
+
+The newest hyperhoneycomb audit is particularly interesting.
+
+Using the loop set in Illa–Savage–Yao, the reconstructed loop-edge incidence matrix has
+
+[
+\operatorname{rank}B=10,\qquad
+\dim\ker B=2,
+]
+
+with primitive relations
+
+[
+-10f+10h+12c=0,
+\qquad
+-10e+10g+12d=0.
+]
+
+The relevant 10-link endpoints are electrically degenerate, and the 12-link insertion shares a single connected oppositely oriented path of length six. By the same connected-path deformation lemma used in the cube proof, this is a concrete candidate for an **(O(u)) transition in a degenerate Wilson-loop sector**.  
+
+That is not yet proved dynamically—the direct Haar normalization, complete retained sector and periodic compressed operator still need calculation—but it is precisely the kind of prediction the unified theory should make.
+
+If that survives, it would show that the framework extends beyond literal cell faces to an arbitrary **degenerate Wilson-loop incidence complex**.
+
+---
+
+# 12. Canonical final theorem
+
+The version I would now use as the project’s top-level statement is:
+
+> **Nested-Quotient Temporal-Circuit–Hodge Spectral Theorem/Principle.**
+> For a Kogut–Susskind lattice gauge Hamiltonian, first choose a degenerate gauge-invariant eigenspace (P_E) of the electric Hamiltonian. Perturbative transfer inside this sector is generated by ordered magnetic histories in the Gram-quotiented Feshbach state graph, not solely by their final cellular boundary. Each history is weighted by exact Haar/Peter–Weyl contractions and representation-dependent electric resolvents; proper retained-space returns are incorporated through support-resolved folded terms. The first dispersive order is the smallest (r) for which the fully assembled order-(r) operator has nonzero traceless compression on the retained sector. Cellular incidence and Hodge ideals provide exact protection and identify distinguished primitive cell-completion channels. For square-free fundamental cell completions their coefficients factor as (S_r/[N^rC_F^{r-1}]\sim N^{-(2r-1)}). However, temporally nontrivial histories with statically cancelling insertions can produce earlier physical transfer, as proved by the isotropic pentagonal-prism (O(u^4)) cap hop despite its primitive seven-face (O(u^5)) circuit. Finite-rank determinant sectors provide a further representation-theoretic dressing and cannot be eliminated before resolvent evaluation. Scalar/rest energies require a separate rooted linked-cluster quotient.
+
+That is, in my assessment, **stronger and more accurate than the August 19 Nested-Quotient theory** because it incorporates the result that actually falsifies its most ambitious simplification.
+
+The project now has a coherent hierarchy:
+
+[
+\boxed{
+\text{degenerate sector}
+\rightarrow
+\text{temporal support paths}
+\rightarrow
+\text{Haar/Gram quotient}
+\rightarrow
+\text{electric resolvents}
+\rightarrow
+\text{folded/rooted reduction}
+\rightarrow
+\text{traceless spectral escape}.
+}
+]
+
+The most important unresolved mathematical target is no longer “prove (F-2).” That formulation is too strong. The useful next theorem is a **classification theorem for shortest physical temporal histories**—a way to determine (r_{\rm escape}) directly from the energy-decorated incidence/Feshbach graph without enumerating exponentially many words. If that can be proved, the tetrahedron, prism, cube, pentagonal (O(u^4)), pentagonal (O(u^5)), and potentially hyperhoneycomb (O(u)) results become examples of one general theorem rather than separate certificates.
+
+[1]: https://www.sciencedirect.com/science/article/pii/0550321385903852 "https://www.sciencedirect.com/science/article/pii/0550321385903852"
+[2]: https://arxiv.org/abs/2503.09688 "https://arxiv.org/abs/2503.09688"
+[3]: https://arxiv.org/abs/2608.02452 "https://arxiv.org/abs/2608.02452"

@@ -1,0 +1,344 @@
+% =============================================================================
+% PAPER_FLUX_manuscript_section6_patch.tex
+%
+% Paste-ready patch for the manuscript
+%   "Two-Sided Spectral Control of Wilson One-Plaquette Class Gaps and an
+%    Exactly Verified Strong-Coupling Bridge to the SU(3) Glueball Channels"
+% implementing master-document items SS6.9 (Theorem 6.2 correction) and SS6.10
+% (Theorem 6.3' and the O(y^3) extension), plus the v2.2 ratio corrections and
+% the quantum-number relabeling.
+%
+% Every constant below is drawn from the certified set:
+%   ENGINE_FLUX_su3_domino_d3.py (251 gates) / RUN_TROM_d3_results.json   -- t_+, leakage, d_3, all
+%       order-2 and order-3 constants;
+%   ENGINE_FLUX_glueball_band_certificate_v2.py (36 gates)       -- band structure, flat
+%       band, curvature, quantum numbers, corrected C-even block;
+%   ENGINE_TROM_tromino_contract_independent_check.py (19 gates),
+%   ENGINE_TROM_tromino_candidate_closed_form_check.py           -- O(y^3) tromino sector;
+%   ENGINE_FLUX_su3_moments_ext.py (27 gates)                    -- Haar moment engine;
+%   ENGINE_FLUX_master_v2_regression_certificate.py (40 gates)   -- assembly arithmetic.
+%
+% This file compiles standalone (pdflatex) so the blocks can be proofread in
+% rendered form; each block is delimited by PATCH comments stating exactly
+% where it goes in the manuscript source.
+% =============================================================================
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{remark}[theorem]{Remark}
+\setcounter{section}{6}
+\newcommand{\Tr}{\operatorname{Tr}}
+\title{Section 6 patch: corrected leakage constants, the exact band structure,
+and the $O(y^3)$ extension}
+\author{Patch note compiled against the June 11 certificate chain}
+\date{June 11, 2026}
+\begin{document}
+\maketitle
+
+\noindent\textbf{Summary of changes.}
+(i) The C-even hopping of Theorem~6.2 omits a vacuum-mediated second-order
+route present for every C-even pair; the corrected per-neighbor hop is
+$t_+=-\tfrac{481}{612}+\tfrac34=-\tfrac{11}{306}$, and the $k=0$ coefficient
+$-\tfrac{9397}{1020}$ becomes $-\tfrac{217}{1020}$. The manuscript's own
+Section~7 domino data adjudicate the correction. (ii) The open signed-band
+problem of Theorem~6.3 is solved: the lowest C-odd branch is \emph{exactly
+flat} at $O(y^2)$, with coefficient $\tfrac{11}{306}$, and remains exactly
+flat at $O(y^3)$ with cubic coefficient $-\tfrac{109151}{249696}$.
+(iii) Remark~6.4's per-bond ratio $5/481$ does not survive the correction
+(the corrected ratio is $5/22$); the immobility statement survives in the
+stronger flat-band form. (iv) The C-odd channel is $T_1^{+-}$
+(axial-vector-like), not scalar; the C-even rest-frame content is
+$A_1^{++}\oplus E^{++}$ with the new $E^{++}$ coefficient $\tfrac{223}{1020}$.
+
+% =============================================================================
+% PATCH 1 of 7  [SS6.9]
+% LOCATION: immediately after Lemma 6.1 (after eq. (19) and the channel-energy
+% sentence), before Theorem 6.2.
+% ACTION: insert the following lemma verbatim.
+% =============================================================================
+\medskip\hrule\medskip
+\noindent\textbf{PATCH 1 --- insert after Lemma 6.1:}
+
+\begin{lemma}[Vacuum-mediated route; $6.1'$]\label{lem:vacroute}
+For C-even single-flux states the second-order effective Hamiltonian contains
+the vacuum-intermediate route
+\begin{equation}
+\langle e_r|\,W\,R\,W\,|e_i\rangle \;\supset\;
+\frac{\langle e_r|W|0\rangle\,\langle 0|W|e_i\rangle}{\,8/3-0\,}
+=\bigl(\sqrt2\bigr)\bigl(\sqrt2\bigr)\tfrac38=+\tfrac34
+\tag{$19'$}
+\end{equation}
+for \emph{every} ordered pair $(i,r)$, adjacent or distant, with the same
+normalization as the operator identity displayed in Theorem~6.2
+($\langle G_{p'}|W_p=(\chi_p+\bar\chi_p)(\chi_{p'}+\bar\chi_{p'})\langle
+0|/\sqrt2$). It is absent in the C-odd sector, where
+$\langle o|W|0\rangle=0$ by parity. For a \emph{distant} pair the route
+exactly cancels the free two-flux channel sum
+$2/(8/3-16/3)=-\tfrac34$, recovering the vanishing of distant hops; for
+shared-link neighbors the two-flux sum is the fused-channel value
+$-\tfrac{481}{612}$ of Theorem~6.2 and the cancellation is partial.
+\end{lemma}
+
+\begin{proof}
+The amplitude $\langle e_r|W|0\rangle=\sqrt2$ per flux state follows from the
+displayed identity; the intermediate vacuum sits at energy $0$ below the
+single-flux manifold at $8/3$, giving the denominator factor $3/8$. For a
+distant pair the only other intermediates are the free two-flux states at
+$16/3$, whose summed squared amplitude is $2$; the two routes cancel. The
+mechanism, both cancellations, and the adjacent-pair value are
+machine-certified (su3\_domino\_d3.py, 251 exact-rational gates), and the
+Section~7 exact diagonalization adjudicates independently: the C-even domino
+levels $\{1769/3060,\,13/20\}$ are
+$\text{diag}\pm|t_+|$ with $\text{diag}=1879/3060$, forcing
+$|t_+|=110/3060=11/306$, not $481/612$.
+\end{proof}
+
+% =============================================================================
+% PATCH 2 of 7  [SS6.9]
+% LOCATION: Theorem 6.2, equations (20)-(22).
+% ACTION: replace the statement of Theorem 6.2 in full by the following.
+% The channel split, the orientation independence, the operator identity, the
+% vacuum subtraction, and the neighbor count are unchanged; only the hopping
+% and the assembled constants change.
+% =============================================================================
+\medskip\hrule\medskip
+\noindent\textbf{PATCH 2 --- replace Theorem 6.2 (eqs.\ (20)--(22)) with:}
+
+\begin{theorem}[C-even leakage; corrected]\label{thm:62corr}
+Per shared-link neighbor, in the C-even sector:
+\begin{equation}
+\text{self-energy}=-\frac{481}{612}
+\qquad\Bigl(\text{channel split: }
+1:-\tfrac1{12},\;8:-\tfrac{16}{51},\;\bar3:-\tfrac16,\;6:-\tfrac29\Bigr),
+\tag{20}
+\end{equation}
+independent of the relative link orientation, with vacuum subtraction $+3/4$
+per neighbor on the diagonal. The hopping is the fused-channel sum
+\emph{completed by the vacuum-mediated route of Lemma~$6.1'$}:
+\begin{equation}
+t_+=-\frac{481}{612}+\frac34=-\frac{11}{306}.
+\tag{$20'$}
+\end{equation}
+The operator identity
+$\langle G_{p'}|W_p=\langle G_p|W_{p'}$ equates the \emph{channel sums} of
+hopping and self-energy; the full hop differs from the self-energy by the
+$|0\rangle$ route, which contributes off-diagonally but is removed from the
+diagonal by the vacuum subtraction. Assembling at $k=0$ in the uniform
+$A_1^{++}$ projection with neighbor count $4(2d-3)$ in $d$ spatial
+dimensions,
+\begin{equation}
+m_+(y)=4\,\Delta_+\!\Bigl(\tfrac{3y}{2}\Bigr)+y^2 L(d)+O(y^3),
+\qquad
+L(d)=4(2d-3)\Bigl(-\frac{11}{153}\Bigr),
+\tag{21}
+\end{equation}
+and in particular, for $d=3$,
+\begin{equation}
+m_+(y)=\frac83-y-\frac{217}{1020}\,y^2+O(y^3),
+\qquad \frac{217}{1020}=0.2127\ldots
+\tag{22}
+\end{equation}
+\end{theorem}
+
+\noindent\emph{[Optional one-line addition to Assumption 6.5, after ``the
+vacuum path contributing $+3/4$ exactly once'':] ``; its off-diagonal
+counterpart is the route of Lemma~$6.1'$.''}
+
+% =============================================================================
+% PATCH 3 of 7  [SS6.10]
+% LOCATION: immediately after Theorem 6.3 (after eq. (23) and the paragraph
+% ending "...fixes the coefficient to [-3/102, 17/102]").
+% ACTION: insert the following theorem. It SOLVES the band problem Theorem 6.3
+% leaves open; the final sentence of Theorem 6.3's trailing paragraph
+% ("...is left open; the bound above already fixes...") should be amended to
+% "...is solved in Theorem 6.3'; the bound above already fixes...".
+% =============================================================================
+\medskip\hrule\medskip
+\noindent\textbf{PATCH 3 --- insert after Theorem 6.3:}
+
+\begin{theorem}[Exact $O(y^2)$ band structure; flat C-odd band; $6.3'$]
+\label{thm:63prime}
+Plaquettes of the cubic lattice carry three orientations, so the
+one-excitation effective Hamiltonian at $O(y^2)$ is a $3\times3$ Bloch
+problem at each $k$. Let $A(k)$ and $S(k)$ be the unsigned and signed Bloch
+matrices of the shared-link adjacency (12-regular; signs from the relative
+orientation $s=\pm1$ of Theorem~6.3), and let $N(k),\widetilde N(k)$ be the
+Bloch incidence matrices of the oriented boundary chains, with
+$u_j=1-e^{ik_j}$, $v_j=1+e^{ik_j}$. Then
+\begin{equation}
+A(k)+4I=N(k)N(k)^\dagger,\quad \det N(k)=-2\,v_1v_2v_3;
+\qquad
+S(k)+4I=\widetilde N(k)\widetilde N(k)^\dagger,\quad
+\det \widetilde N(k)\equiv 0,
+\tag{$23'$}
+\end{equation}
+so $\lambda(k)\in[-4,12]$, $\mu(k)\in[-4,8]$, and the C-odd spectrum contains
+$\mu=-4$ at every $k$, with kernel vector
+$w(k)=(\bar u_3,-\bar u_2,\bar u_1)$: the lowest C-odd branch is
+\emph{exactly flat},
+\begin{equation}
+m_-(k,y)=\frac83+y+\frac{11}{306}\,y^2+O(y^3)
+\qquad\text{for every }k,
+\tag{$23''$}
+\end{equation}
+replacing the interval $[-\tfrac3{102},\tfrac{17}{102}]$ of Theorem~6.3 by
+the exact value $\tfrac{11}{306}=\tfrac{7}{102}-\tfrac{20}{612}$. The flat
+band is spanned by compactly localized elementary-cube $2$-chains
+($\partial_2\partial_3=0$); on an $L^3$ torus the $\mu=-4$ eigenspace has
+dimension $L^3+2$. The dispersive C-odd partner branches span
+$\mu\in[-4,8]$, i.e.\ coefficients $[\tfrac{11}{306},\tfrac{41}{306}]$, with
+$\mu=-4+|k|^2+O(k^3)$ (doubly degenerate) near rest. In the C-even sector,
+with the corrected hop of Theorem~6.2,
+\begin{equation}
+E_+(k)=\frac83-y+y^2\Bigl[\frac{223}{1020}-\frac{11}{306}\,\lambda(k)\Bigr],
+\qquad \lambda(k)\in[-4,12],
+\tag{$23'''$}
+\end{equation}
+with band bottom $-\tfrac{217}{1020}$ at $k=0$ ($\lambda=12$,
+$\lambda(k)=12-\tfrac43|k|^2+O(k^4)$ isotropically, hence curvature
+$+\tfrac{22}{459}|k|^2y^2$ and effective mass $m^*=459/(44\,y^2)$), band top
+$\tfrac{1109}{3060}$ ($\lambda=-4$), and bandwidth
+$16|t_+|=\tfrac{88}{153}$. At rest the C-even triplet decomposes as
+$A_1^{++}\oplus E^{++}$: the $A_1^{++}$ ($0^{++}$) state is the band bottom,
+and the $E^{++}$ doublet ($2^{++}$-like) sits at $\lambda=0$ with exact,
+hop-independent coefficient $\tfrac{223}{1020}$. The C-odd rest triplet is
+$T_1^{+-}$ ($1^{+-}$-like): \emph{the C-odd one-plaquette sector contains no
+scalar at rest.}
+\end{theorem}
+
+% =============================================================================
+% PATCH 4 of 7  [SS6.10]
+% LOCATION: immediately after Theorem 6.3' (Patch 3).
+% ACTION: insert the following theorem (the O(y^3) extension).
+% =============================================================================
+\medskip\hrule\medskip
+\noindent\textbf{PATCH 4 --- insert after Theorem $6.3'$:}
+
+\begin{theorem}[Third order: tromino vanishing and the rigid flat band;
+$6.3''$]\label{thm:63dprime}
+At $O(y^3)$ the only new lattice geometry is the tromino (three plaquettes
+pairwise sharing links). \emph{Every $O(y^3)$ tromino weight vanishes}
+(bare-link lemma): each candidate three-plaquette process leaves at least one
+boundary link bare, and the corresponding Haar integral vanishes; trominoes
+first activate at $O(y^4)$. Consequently the third-order effective
+Hamiltonian retains the second-order signed-adjacency structure, with C-odd
+hopping odd in $s$ ($T_3(s)=-T_3(-s)$), and the flat band of
+Theorem~$6.3'$ is rigid at third order:
+\begin{equation}
+m_-(k,y)=\frac83+y+\frac{11}{306}\,y^2-\frac{109151}{249696}\,y^3+O(y^4)
+\qquad\text{for every }k,
+\tag{$23''''$}
+\end{equation}
+with $d_3=\tfrac{7}{32}+12\,\mathrm{leak}_3-4\,b_3=-\tfrac{109151}{249696}
+\approx-0.437135$, where $b_3=\tfrac{1975}{124848}$ is the third-order C-odd
+hop and $\mathrm{leak}_3=-\tfrac{12331}{249696}$ the per-neighbor diagonal
+leakage; the C-odd dispersive top has cubic coefficient
+$-\tfrac{61751}{249696}$. In the C-even sector at rest,
+\begin{equation}
+m_+(0,y)=\frac83-y-\frac{217}{1020}\,y^2-\frac{54049}{520200}\,y^3+O(y^4),
+\tag{$23'''''$}
+\end{equation}
+and at the band top ($\lambda=-4$) the cubic coefficient is
+$\tfrac{471353}{1560600}$. The diagonal and hopping corrections obey the
+exact identity $\mathrm{leak}^{\mathrm e}_n=T^{\mathrm e}_n$ at $n=2,3$ (two
+distinct $+3/4$ mechanisms of equal value), so the $A_1^{++}$ correction at
+$k=0$ is (within-tower) $+\,24\,T^{\mathrm e}_n$ per order.
+\end{theorem}
+
+% =============================================================================
+% PATCH 5 of 7  [SS6.9 + v2.2 ratios]
+% LOCATION: Remark 6.4.
+% ACTION: replace Remark 6.4 in full by the following.
+% =============================================================================
+\medskip\hrule\medskip
+\noindent\textbf{PATCH 5 --- replace Remark 6.4 with:}
+
+\begin{remark}[An exactly immobile excitation; corrected]\label{rem:64corr}
+With the corrected hop the per-bond ratio is
+$|t_-|/|t_+|=(5/612)/(11/306)=5/22$, so the ratio no longer carries an
+immobility claim. The claim holds in a stronger, exact form
+(Theorems~$6.3'$--$6.3''$): the lowest C-odd branch is \emph{exactly
+dispersionless} through $O(y^3)$ --- bandwidth $0$, infinite effective mass
+at these orders --- while the full C-odd three-branch manifold has width
+$\tfrac{5}{51}$ in $y^2$ units against the C-even bandwidth
+$\tfrac{88}{153}$ (manifold-width ratio
+$(5/51)/(88/153)=15/88$). The flatness is structural
+($\partial_2\partial_3=0$ on the signed incidence complex), not a
+small-parameter accident. This is, to our knowledge, a new structural
+observation about the strong-coupling $T_1^{+-}$ sector.
+\end{remark}
+
+% =============================================================================
+% PATCH 6 of 7  [global relabeling]
+% ACTION: global edits (search-and-replace with judgment):
+%   (a) "C-odd scalar channel" / "strong-coupling scalar sector" (where the
+%       C-odd channel is meant, e.g. old Remark 6.4) -> "C-odd T_1^{+-}
+%       channel" / "strong-coupling T_1^{+-} sector". The assembled C-odd
+%       mass is the mass of the degenerate T_1^{+-} triplet, consistent with
+%       the lightest C-odd glueball being 1^{+-} in strong coupling.
+%   (b) Abstract and Section 1: "C-even hopping -481/612" ->
+%       "C-even hopping -11/306 (the fused-channel sum -481/612 completed by
+%       a universal vacuum-mediated route +3/4)"; add after the leakage
+%       sentence: "the C-odd band is exactly flat through O(y^3)".
+%   (c) Everywhere "-9397/1020" -> "-217/1020"; "L(d) = 4(2d-3)(-503/612)"
+%       -> "L(d) = 4(2d-3)(-11/153)"; curvature "481/459" -> "22/459";
+%       bandwidth "1924/153" -> "88/153"; ratio "5/481 ~ 1/96" -> "5/22".
+%   (d) Section 7's table and prose are UNCHANGED (they were correct and are
+%       the adjudicator); add one sentence at the end of Section 7: "The
+%       C-even level pair {1769/3060, 13/20} is diag +- |t_+| with
+%       diag = 1879/3060, which forces |t_+| = 11/306 and adjudicates the
+%       correction of Theorem 6.2."
+% =============================================================================
+
+% =============================================================================
+% PATCH 7 of 7  [Appendix A additions]
+% LOCATION: Appendix A certificate list.
+% ACTION: append the following items.
+% =============================================================================
+\medskip\hrule\medskip
+\noindent\textbf{PATCH 7 --- append to the Appendix A certificate list:}
+
+\begin{itemize}
+\item \texttt{su3\_moments\_ext.py} (27 gates) --- extended exact SU(3) Haar
+moment engine: Weingarten $p=q\le3$, charge-$\pm3$ $\varepsilon$-projector
+blocks, independent Weyl-torus oracle.
+\item \texttt{su3\_domino\_d3.py} (251 gates) --- abstract-domino des
+Cloizeaux calculus to $O(y^3)$: the vacuum-route lemma, $t_+=-11/306$, the
+Section~7 levels as exact gates, $b_3$, $\mathrm{leak}_3$,
+$d_3=-109151/249696$, and the C-even cubic constants.
+\item \texttt{glueball\_band\_certificate\_v2.py} (36 gates) --- the
+$O(y^2)$ band structure of Theorem~$6.3'$: incidence factorizations,
+$\det\widetilde N\equiv0$, cube $2$-chains and the $L^3+2$ multiplicity,
+corrected C-even block, $O_h$ quantum numbers; the as-written
+$-9397/1020$ is retained as a provenance gate.
+\item \texttt{tromino\_contract\_independent\_check.py} (19 gates) and
+\texttt{tromino\_candidate\_closed\_form\_check.py} --- the $O(y^3)$
+tromino-vanishing sector of Theorem~$6.3''$.
+\end{itemize}
+
+\bigskip\hrule\bigskip
+\section*{Constant provenance table}
+\noindent Every constant in the patches, with its certificate:
+\begin{center}
+\begin{tabular}{lll}
+constant & value & certificate \\\hline
+$t_+$ & $-11/306$ & su3\_domino\_d3.py; \S7 adjudication \\
+$A_1^{++}$ at $k=0$, $O(y^2)$ & $-217/1020$ & d3\_results.json; band v2 \\
+band top, $O(y^2)$ & $1109/3060$ & d3\_results.json; band v2 \\
+$E^{++}$ at $k=0$ & $223/1020$ & band v1 and v2 ($t$-independent) \\
+curvature & $22/459$ & band v2; Bloch derivation (master \S3.15) \\
+bandwidth & $88/153$ & band v2 \\
+flat band, $O(y^2)$ & $11/306$ & band v1/v2; su3\_domino\_d3.py \\
+$b_3$ & $1975/124848$ & su3\_domino\_d3.py \\
+$\mathrm{leak}_3$ (C-odd) & $-12331/249696$ & su3\_domino\_d3.py \\
+$d_3$ & $-109151/249696$ & su3\_domino\_d3.py \\
+C-odd dispersive top, $O(y^3)$ & $-61751/249696$ & su3\_domino\_d3.py \\
+$m_+(0)$ cubic & $-54049/520200$ & su3\_domino\_d3.py \\
+C-even band-top cubic & $471353/1560600$ & su3\_domino\_d3.py \\
+per-bond ratio & $5/22$ & band v2 \\
+manifold-width ratio & $15/88$ & band v2 \\
+\end{tabular}
+\end{center}
+\end{document}

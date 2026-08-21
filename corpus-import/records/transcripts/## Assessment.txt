@@ -1,0 +1,922 @@
+## Assessment
+
+Your synthesis is close to the strongest defensible statement. The central reduction to a scalar-quotiented fourth-order operator is correct, and the formula
+
+[
+\mathcal Q_4^{\rm new}-\mathcal Q_4^{\rm old}
+=============================================
+
+4\Delta C\sum_{i<j}L_iL_j
+]
+
+is the sharpest description of what remains unresolved.
+
+Two corrections are required:
+
+1. The centered-kernel equality can compare two scalar anchorings of the **same** kernel, but it cannot equate the historical kernel with the new blind kernel because their (C_{\rm shp}) values differ.
+2. The displayed transformations of (c_5,c_6,c_7) follow only after fixing all higher terms in the coupling-coordinate map, not from a map stated merely as (u_{\rm band}=u_{\rm mass}+\delta u_{\rm mass}^4+O(u_{\rm mass}^5)).
+
+Your message ends at “The literature sup…”, so this assessment is restricted to the archived calculations.
+
+---
+
+# 1. The canonical object is a Γ-centered Hodge pencil
+
+Assume the zero-momentum block is scalar,
+
+[
+H_4(0)=s_4I_3.
+]
+
+Define
+
+[
+K_4:=H_4-s_4I,
+\qquad
+G:=\partial_3^\dagger\partial_3=\sum_iL_i,
+\qquad
+\mathcal Q_4:=\partial_3^\dagger K_4\partial_3 .
+]
+
+The most invariant formulation is actually the equivalence class
+
+[
+\boxed{
+\left(\partial_3^\dagger H_4\partial_3,G\right)
+\quad \bmod\quad
+(Q,G)\sim(Q+\delta G,G),
+}
+]
+
+with (\mathcal Q_4) as its Γ-centered representative. This makes explicit that a scalar shift of (H_4) appears as a shift by (\delta G) before centering.
+
+Using notation that avoids collision between the run’s shape coefficients and the archived (A,B), set
+
+[
+a_4:=4A_{\rm shp},
+\qquad
+b_4:=8A_{\rm shp}+16C_{\rm shp}.
+]
+
+Then
+
+[
+\boxed{
+\mathcal Q_4
+============
+
+\frac{a_4}{4}\sum_iL_i^2
++
+\frac{b_4}{4}\sum_{i<j}L_iL_j.
+}
+]
+
+The historical theorem record gives precisely this pullback identity and separately records
+
+[
+G=\sum_iL_i,
+]
+
+so the physical centered branch is obtained from the generalized eigenproblem (\mathcal Q_4\phi=\lambda G\phi), not from (\mathcal Q_4) as an ordinary eigenproblem.  
+
+The SOS claim is manifest because translations commute:
+
+[
+L_i^2=L_i^\dagger L_i,
+\qquad
+L_iL_j
+======
+
+(\nabla_i\nabla_j)^\dagger(\nabla_i\nabla_j).
+]
+
+Thus positivity means
+
+[
+\mathcal Q_4\succeq0
+]
+
+on the cube-amplitude space, equivalently on the compact cycle sector reached by (\partial_3). It does not by itself prove that (K_4\succeq0) on the entire one-plaquette Hilbert space, including sectors outside (\operatorname{im}\partial_3).
+
+The corresponding centered branch is
+
+[
+\boxed{
+\lambda_4(k)
+============
+
+\frac{
+a_4\sum_iX_i^2+
+b_4\sum_{i<j}X_iX_j
+}{
+2\sum_iX_i
+},
+\qquad
+X_i=1-\cos k_i.
+}
+]
+
+This generalized Rayleigh quotient is the quantity whose nonconstancy measures dispersion.
+
+---
+
+# 2. The scalar identity must use the same kernel on both sides
+
+Let (\widehat H_4^{\rm new}) denote the genuinely blind folded kernel and define its blind Γ anchor by
+
+[
+\widehat s_{\rm new}
+:=
+\frac13\operatorname{tr}\widehat H_4^{\rm new}(0).
+]
+
+The later mass-anchored kernel is
+
+[
+H_4^{\rm new,mass}
+==================
+
+\widehat H_4^{\rm new}
++
+\left(m_\Gamma^{(4)}-\widehat s_{\rm new}\right)I.
+]
+
+Then the valid identity is
+
+[
+\boxed{
+H_4^{\rm new,mass}-m_\Gamma^{(4)}I
+==================================
+
+\widehat H_4^{\rm new}-\widehat s_{\rm new}I.
+}
+]
+
+That equality proves that the **new centered shape was not altered** by the later Γ anchoring.
+
+This matches the actual dataflow. Before unblinding, the run had already obtained
+
+[
+A_{\rm shp}=0.104166666666722\approx\frac5{48},
+]
+
+[
+C_{\rm shp}^{\rm new}
+=-0.0202133288861666,
+\qquad
+B_{\rm shp},D_{\rm shp}\approx0.
+]
+
+Only afterward did it load (M4_{\rm ORACLE}), the historical (q), and the historical (C_{\rm shp}). 
+
+The code then explicitly executed
+
+[
+\texttt{local_shift=M4_ORACLE-ax_rest}
+]
+
+and inserted that number into the diagonal anchored records before testing equality at Γ. Therefore the final Γ match was a constructed scalar anchoring, not an independent recovery of Γ from the folded band kernel. 
+
+Consequently, this equation is **not established**:
+
+[
+H_4^{\rm new,mass}-m_\Gamma I
+\stackrel{\not\equiv}{=}
+H_4^{\rm old}-q_{\rm old}I.
+]
+
+The correct old-versus-new relation is instead
+
+[
+\boxed{
+\partial_3^\dagger
+\left[
+\left(H_4^{\rm new,mass}-m_\Gamma I\right)
+------------------------------------------
+
+\left(H_4^{\rm old}-q_{\rm old}I\right)
+\right]
+\partial_3
+==========
+
+4\Delta C\sum_{i<j}L_iL_j.
+}
+]
+
+This is consistent with the run’s own final verdict: the scalar oracle returned a third value, the folded matrix did not recover the historical (C_{\rm shp}), and neither complete fourth-order claim was to be promoted from that run alone. 
+
+So the appropriate wording is:
+
+> The Γ discrepancy is confined to the scalar-identity sector and is invisible to the centered Hodge shape. It admits a formal coordinate or anchoring representation. It has not yet been proved to arise from a physical coupling counterterm.
+
+That is narrower than saying the discrepancy **is** a scalar-coordinate issue.
+
+---
+
+# 3. The unresolved shape direction is exactly planar and positive
+
+For the historical 189-record kernel,
+
+[
+q_{\rm old}
+===========
+
+-\frac{20721577909065127111}
+{7250590288602460800}
+=====================
+
+-2.857915988114559\ldots,
+]
+
+[
+a_{\rm old}=\frac5{12},
+\qquad
+b_{\rm old}
+===========
+
+# \frac{17607806155349}{275331901291200}
+
+0.0639512024315933\ldots .
+]
+
+These values and the corresponding bandwidth are exact properties of the archived rational kernel. 
+
+The new numerical shape gives
+
+[
+a_{\rm new}=\frac5{12},
+]
+
+[
+b_{\rm new}
+===========
+
+8\left(\frac5{48}\right)
++
+16(-0.020213328886166577)
+=========================
+
+0.509920071154668\ldots .
+]
+
+Hence
+
+[
+\Delta b
+========
+
+# b_{\rm new}-b_{\rm old}
+
+# 16\Delta C
+
+0.4459688687230748\ldots,
+]
+
+and
+
+[
+\boxed{
+\mathcal Q_4^{\rm new}
+----------------------
+
+# \mathcal Q_4^{\rm old}
+
+0.1114922171807687\ldots
+\sum_{i<j}
+(\nabla_i\nabla_j)^\dagger
+(\nabla_i\nabla_j)
+\succeq0.
+}
+]
+
+This produces a stronger conclusion than simply saying both candidates are positive:
+
+[
+\boxed{
+\mathcal Q_4^{\rm new}\succeq\mathcal Q_4^{\rm old}.
+}
+]
+
+The disagreement affects only the planar four-cube checkerboard carrier. The axial three-cube second-difference carrier is identical in the two calculations. Those are exactly the two elementary real-space carriers identified by the archived SOS theorem. 
+
+For (k\neq\Gamma), the centered branch difference is
+
+[
+\boxed{
+\lambda_{\rm new}(k)-\lambda_{\rm old}(k)
+=========================================
+
+8\Delta C,
+\frac{\sum_{i<j}X_iX_j}{\sum_iX_i}
+\ge0.
+}
+]
+
+It vanishes on the three coordinate axes and is strictly positive whenever at least two momentum components are nonzero. Thus the two calculations agree exactly on axial mobility and disagree only on multiaxial or diagonal stiffness.
+
+The high-symmetry consequences are:
+
+| Centered lift | Historical kernel |  New candidate |     Difference |
+| ------------- | ----------------: | -------------: | -------------: |
+| (X)           |    (0.4166666667) | (0.4166666667) |            (0) |
+| (M)           |    (0.4486422679) | (0.6716267022) | (0.2229844344) |
+| (R)           |    (0.4806178691) | (0.9265867378) | (0.4459688687) |
+
+The archived exact (X,M,R) values are (a), (a+b/2), and (a+b), respectively. 
+
+This also identifies the most efficient target-free adjudication:
+
+[
+a_4=\lambda_X,
+]
+
+[
+b_4=2(\lambda_M-\lambda_X),
+]
+
+while
+
+[
+\lambda_R\stackrel{\rm holdout}{=}
+2\lambda_M-\lambda_X.
+]
+
+The general extraction identities are part of the archived two-invariant factorization. 
+
+The shape disagreement is therefore not a small fit artifact. It changes the fourth-order bandwidth from approximately
+
+[
+0.4806178691
+]
+
+to
+
+[
+0.9265867378.
+]
+
+A scalar shift or a fourth-order coupling redefinition cannot remove this difference.
+
+---
+
+# 4. Correct form of the coupling-coordinate transformation
+
+Given (PVP=I), a formal redefinition
+
+[
+u_{\rm band}
+============
+
+u_{\rm mass}
++
+\delta u_{\rm mass}^4+\cdots
+]
+
+does generate
+
+[
+H_4^{\rm mass}=H_4^{\rm band}+\delta I.
+]
+
+Thus the fourth-order scalar difference has a legitimate formal coordinate realization.
+
+However, the statement
+
+[
+u_{\rm band}
+============
+
+u_{\rm mass}
++
+\delta u_{\rm mass}^4
++
+O(u_{\rm mass}^5)
+]
+
+does **not** determine the transformations of (c_5,c_6,c_7). Write the general map as
+
+[
+u_{\rm band}
+============
+
+u+\delta u^4+a_5u^5+a_6u^6+a_7u^7+O(u^8).
+]
+
+For
+
+[
+E(u_{\rm band})=\sum_{n\ge0}c_nu_{\rm band}^n,
+]
+
+the transformed coefficients are
+
+[
+\boxed{c'_4=c_4+\delta c_1,}
+]
+
+[
+\boxed{c'_5=c_5+2\delta c_2+a_5c_1,}
+]
+
+[
+\boxed{c'_6=c_6+3\delta c_3+2a_5c_2+a_6c_1,}
+]
+
+[
+\boxed{
+c'_7
+====
+
+c_7+4\delta c_4+3a_5c_3+2a_6c_2+a_7c_1.
+}
+]
+
+Since (c_1=1), the unknown coordinate coefficients (a_5,a_6,a_7) enter directly.
+
+Your formulas
+
+[
+c'_5=c_5+2\delta c_2,\qquad
+c'_6=c_6+3\delta c_3,\qquad
+c'_7=c_7+4\delta c_4
+]
+
+are valid only after declaring the **minimal coordinate gauge**
+
+[
+a_5=a_6=a_7=0.
+]
+
+At operator level, the same issue is more consequential:
+
+[
+H'_4=H_4+\delta I,
+]
+
+[
+H'_5=H_5+2\delta H_2+a_5I,
+]
+
+[
+H'_6=H_6+3\delta H_3+2a_5H_2+a_6I,
+]
+
+[
+H'_7
+====
+
+H_7+4\delta H_4+3a_5H_3+2a_6H_2+a_7I.
+]
+
+Therefore a coordinate change can mix lower-order **dispersion operators** into (H_5,H_6,H_7), not merely alter rest-mass coefficients. One coupling coordinate must be frozen before any (M5)–(M7) comparison.
+
+---
+
+# 5. Correct proof-status hierarchy
+
+## Exact algebraic theorem
+
+The historical 189-record kernel has an exact Γ scalar, exact Hermiticity, exact two-invariant factorization, exact 25-point stencil, and exact positive SOS pullback. The portable verifier was rerun and passed the listed record, hash, Hermiticity, scalar-Γ, SOS, stencil, positivity, generalized (X/M/R), and bandwidth gates. 
+
+What is exact here is:
+
+> Given the archived 189-record rational kernel, its centered Hodge pullback is the stated positive SOS operator.
+
+The disputed point is now the stronger provenance claim:
+
+> The archived kernel is the complete physical fourth-order effective Hamiltonian in the same convention as the new linked-cluster calculation.
+
+Those are different propositions.
+
+## Blind numerical fourth-order candidate
+
+The finite-cluster oracle independently recovered the protected first-, second-, and third-order coefficients and produced
+
+[
+m_\Gamma^{(4)}
+==============
+
+-0.7751458630189173.
+]
+
+It also produced the new blind (C_{\rm shp}) before loading the disputed historical literals. That is meaningful independence. But the final mass-kernel Γ equality was imposed afterward by the local scalar shift. The appropriate status is therefore:
+
+* (m_\Gamma^{(4)}): strong blind numerical candidate;
+* (C_{\rm shp}^{\rm new}): strong blind numerical shape candidate;
+* final Γ equality: constructed anchoring, not an independent gate;
+* physical equivalence to the historical kernel: unresolved.
+
+## Stable-rank branch
+
+The archive records a 4,171-word contraction, 35,130 fusion paths, fixed-rank checks from (N=7) through (N=18), and an (N=18) holdout.   
+
+Your cautious status is appropriate: the rational expressions are strongly artifact- and output-certified, but a compact, self-contained symbolic generator that regenerates the complete family from the primitive corpus remains the stronger reproducibility standard. The theorem record itself distinguishes freshly rerun verifiers from preserved logs and artifacts. 
+
+Also keep the two topology counts separate:
+
+* **3,895**: the proposed complete Stage-3H regression census;
+* **3,850**: the stable-rank trace-topology census associated with the 35,130 fusion paths.
+
+They refer to different organizational layers and should not be substituted for one another.  
+
+## Pentagonal cap theorem
+
+The pentagonal isotropic cap-sector result is currently cleaner:
+
+[
+\boxed{
+\delta E_{\rm cap}^{(4)}(k)
+===========================
+
+-\frac{2861009}{8438730300}u^4\cos k,
+\qquad
+r_{\rm hop}=4.
+}
+]
+
+The archive supplies two independent exact microscopic backends, agreement on all per-history amplitudes, and separate periodic-operator audits.  
+
+It remains rigorously separate from both the cubic (T_1^{+-}) kernel and the tuned cap-plus-side Hodge model. The cap theorem explicitly blocks reuse of the isotropic coefficient in the tuned anisotropic Hamiltonian without a fresh microscopic calculation. 
+
+---
+
+# 6. Refined definitions of escape, hopping, and mobility
+
+A single “nonzero traceless compression” criterion conflates three phenomena. The draft should use separate orders:
+
+[
+r_{\rm split}
+:=
+\min\left{
+r:
+H_{\rm eff}^{(r)}(0)
+\text{ produces a non-scalar internal splitting}
+\right},
+]
+
+[
+r_{\rm off}
+:=
+\min\left{
+r:
+H_{\rm eff}^{(r)}(R)\neq0
+\text{ for some cell displacement }R\neq0
+\right},
+]
+
+[
+\boxed{
+r_{\rm mob}
+:=
+\min\left{
+r:
+\operatorname{spec}H_{\rm eff}^{(\le r)}(k)
+\text{ is nonconstant in }k
+\right}.
+}
+]
+
+In general,
+
+[
+r_{\rm off}\le r_{\rm mob},
+]
+
+because off-cell matrix elements may still cancel into a flat band. Onsite splitting can give finite (r_{\rm split}) with no hopping or mobility.
+
+For the pentagonal cap theorem, the explicit (\cos k) term establishes both off-cell hopping and genuine spectral mobility at order four. This is stronger than a merely non-scalar compression.
+
+---
+
+# 7. Decisive closure sequence
+
+The scalar and shape disagreements should now be treated as two independent workstreams.
+
+### Scalar workstream
+
+Run the authenticated exact marked-cluster calculation with no fourth-order target in memory. It must emit:
+
+[
+m_1,\ m_2,\ m_3,\ m_4
+]
+
+as exact rationals, support-resolved Möbius ledgers, source hash, result hash, and a separate post-run comparator. Until then, (-0.7751458630189173) remains numerical.
+
+I did not locate the specifically named 609-row source under that filename in the accessible library, so its status should not be upgraded beyond your description.
+
+### Shape workstream
+
+Cold-run the full 3,895-topology Stage-3H calculation and emit the unshifted 189 records before loading either (q_{\rm old}), (m_\Gamma), or (C_{\rm old}).
+
+Then use:
+
+[
+X\longrightarrow a_4,
+\qquad
+M\longrightarrow b_4,
+\qquad
+R\longrightarrow\text{blind holdout}.
+]
+
+Finally verify the exact Laurent identity over the entire symbol, or equivalently reconstruct every real-space record. Fitting a few modes is not sufficient.
+
+### Combination firewall
+
+Only after both workstreams are sealed should one form a mass-anchored physical kernel. The combined artifact should contain separate fields for:
+
+[
+\texttt{scalar_anchor},
+\quad
+\texttt{centered_kernel_hash},
+\quad
+\texttt{coupling_coordinate},
+\quad
+\texttt{coordinate_map_through_order_7}.
+]
+
+This prevents a correct shape from acquiring an imposed scalar and then being described as a single independently derived result.
+
+---
+
+# Publication-ready central statement
+
+A cleaner authority statement is:
+
+> The fourth-order one-flux calculation decomposes canonically into a scalar Γ anchor and an identity-shift-invariant Hodge shape. For any fourth-order kernel whose Γ block is scalar, define
+> [
+> K_4=H_4-s_4I,\qquad
+> G=\partial_3^\dagger\partial_3,
+> \qquad
+> \mathcal Q_4=\partial_3^\dagger K_4\partial_3.
+> ]
+> On the compact cube-boundary sector,
+> [
+> \mathcal Q_4
+> ============
+>
+> \frac{a_4}{4}\sum_iL_i^2+
+> \frac{b_4}{4}\sum_{i<j}L_iL_j,
+> \qquad
+> L_i=\nabla_i^\dagger\nabla_i,
+> ]
+> and the physical centered branch is the generalized spectrum of ((\mathcal Q_4,G)). This formulation is invariant under simultaneous scalar re-anchoring (H_4\mapsto H_4+\delta I), (s_4\mapsto s_4+\delta).
+>
+> The historical exact kernel has
+> [
+> a_4=\frac5{12},\qquad
+> b_4=\frac{17607806155349}{275331901291200},
+> ]
+> while the new blind folded calculation retains (a_4=5/12) but gives the numerical candidate (b_4\approx0.509920071154668). Conditional on exact collapse of the other shape tiers,
+> [
+> \mathcal Q_4^{\rm new}-\mathcal Q_4^{\rm old}
+> =============================================
+>
+> 4(C_{\rm new}-C_{\rm old})
+> \sum_{i<j}
+> (\nabla_i\nabla_j)^\dagger
+> (\nabla_i\nabla_j)
+> \succeq0.
+> ]
+> Thus the unresolved fourth-order discrepancy is neither a general kernel ambiguity nor an axial hopping ambiguity. It is one positive planar mixed-gradient coefficient. Separately, the difference between the historical Γ anchor and the linked-cluster numerical Γ value lies entirely in the scalar sector and admits a formal coupling-coordinate realization, but no physical matching theorem presently selects that realization.
+
+That is the strongest defensible synthesis: **the scalar ambiguity and the shape ambiguity decouple; the shape ambiguity has collapsed to one positive planar SOS direction.**
+I checked the pasted assessment against the project evidence and independently recomputed its key numerical identities. **I would accept it as the current authority statement for the cubic fourth-order dispute.** 
+
+The central correction is important: there are **two distinct fourth-order uncertainties**, and they cannot be reconciled by the same maneuver.
+
+[
+\boxed{\text{scalar-anchor ambiguity};\oplus;\text{planar-shape ambiguity}}
+]
+
+The scalar issue is the difference between the historical (\Gamma) coefficient and the newer linked-cluster/oracle value. A simultaneous transformation
+
+[
+H_4\mapsto H_4+\delta I,\qquad s_4\mapsto s_4+\delta
+]
+
+leaves
+
+[
+K_4=H_4-s_4I
+]
+
+unchanged. So scalar re-anchoring really is invisible to the centered problem. But the project-wide synthesis itself already warns that the latest full-(T_1) calculation returned a different (m_4) **and** a different folded (C_{\rm shp}), with the explicit verdict not to promote either complete fourth-order kernel. 
+
+The shape disagreement is different and cannot be removed this way. Using
+
+[
+a_4=4A_{\rm shp},\qquad
+b_4=8A_{\rm shp}+16C_{\rm shp},
+]
+
+both calculations have
+
+[
+\boxed{a_4=\frac5{12}},
+]
+
+but
+
+[
+b_{\rm old}
+===========
+
+# \frac{17607806155349}{275331901291200}
+
+0.06395120243159332\ldots
+]
+
+whereas the blind folded candidate gives
+
+[
+b_{\rm new}
+===========
+
+8\left(\frac5{48}\right)
++16(-0.020213328886166577)
+==========================
+
+0.5099200711546681\ldots .
+]
+
+I independently recomputed
+
+[
+\boxed{\Delta b=0.4459688687230748\ldots}
+]
+
+and therefore
+
+[
+\boxed{
+\mathcal Q_4^{\rm new}-\mathcal Q_4^{\rm old}
+=============================================
+
+0.1114922171807687\ldots
+\sum_{i<j}L_iL_j .
+}
+]
+
+Since
+
+[
+L_iL_j
+======
+
+(\nabla_i\nabla_j)^\dagger(\nabla_i\nabla_j)\succeq0,
+]
+
+the ordering
+
+[
+\boxed{\mathcal Q_4^{\rm new}\succeq\mathcal Q_4^{\rm old}}
+]
+
+really does follow for these two candidates. This is consistent with the exact SOS/Hodge structure established by the cube-localization work; the axial coefficient is separately protected and has an exact all-(N) microscopic origin.  
+
+The high-symmetry check is especially decisive. I reproduce:
+
+| Point |   historical | new candidate |   difference |
+| ----- | -----------: | ------------: | -----------: |
+| (X)   | 0.4166666667 |  0.4166666667 |            0 |
+| (M)   | 0.4486422679 |  0.6716267022 | 0.2229844344 |
+| (R)   | 0.4806178691 |  0.9265867378 | 0.4459688687 |
+
+So this is not an abstract decomposition. It says exactly where to look experimentally/computationally:
+
+[
+\boxed{
+X\text{ cannot distinguish the kernels;}
+\quad
+M\text{ determines the disputed coefficient;}
+\quad
+R\text{ is the blind consistency test.}
+}
+]
+
+Indeed,
+
+[
+a_4=\lambda_X,\qquad
+b_4=2(\lambda_M-\lambda_X),
+]
+
+followed by the parameter-free holdout
+
+[
+\boxed{\lambda_R=2\lambda_M-\lambda_X}.
+]
+
+That is probably the cleanest possible adjudication of the cubic shape question.
+
+There is also a deeper interpretation. The exact elementary-cube theorem already proves that
+
+[
+c_N^\square=-\frac{160}{N(N^2-1)^3},
+\qquad
+\alpha_N^{\rm pen}
+=\frac{640}{N(N^2-1)^3},
+]
+
+with (B_N^{\rm shp}=D_N^{\rm shp}=0) in the certified shape sector.  The microscopic shape-gate calculation independently reproduces this structure through (N=3,\ldots,12), while explicitly leaving the full (C_N^{\rm shp}) and rest-energy sector open. 
+
+That means the current conflict has become remarkably low-dimensional:
+
+[
+\boxed{
+\text{the cube-controlled axial mobility is solved;}
+\qquad
+\text{the remaining cubic shape conflict is one mixed-gradient coefficient.}
+}
+]
+
+This is stronger than saying “the fourth-order calculation disagrees.”
+
+The coupling-coordinate correction in the pasted assessment is also correct. If
+
+[
+u_{\rm band}
+============
+
+u+\delta u^4+a_5u^5+a_6u^6+a_7u^7+O(u^8),
+]
+
+then direct series composition gives
+
+[
+c'_4=c_4+\delta c_1,
+]
+
+[
+c'_5=c_5+2\delta c_2+a_5c_1,
+]
+
+[
+c'_6=c_6+3\delta c_3+2a_5c_2+a_6c_1,
+]
+
+[
+c'_7
+====
+
+c_7+4\delta c_4+3a_5c_3+2a_6c_2+a_7c_1.
+]
+
+So any claim about transformed (m_5,m_6,m_7) made from only
+
+[
+u_{\rm band}=u+\delta u^4+O(u^5)
+]
+
+is underdetermined. The higher-order coordinate gauge has to be specified first. More importantly, at operator level the transformation can inject (H_2,H_3,H_4) shape terms into later orders. This means a coupling-coordinate ambiguity is potentially much more serious at (O(u^5)) and beyond than it is at (O(u^4)).
+
+One distinction in the assessment is particularly worth preserving:
+
+[
+r_{\rm split},\qquad r_{\rm off},\qquad r_{\rm mob}
+]
+
+should not be merged into a single “escape order.” That becomes unavoidable after the pentagonal work. The pentagonal periodic theorem has an explicitly nonconstant compressed Bloch component,
+
+[
+\mu(k)=
+\frac{4\cos k(1-\cos k)}{7-2\cos k},
+]
+
+with a nonzero imported exact coefficient, so that support class is genuinely non-scalar at all volume.  The independent operator audit verifies the chain-space and Bloch identities through (L=64), while explicitly preserving the cancellation firewall for the *complete* (H_{\rm eff}^{(4)}). 
+
+There is one wording change I would make to the pasted document. Instead of:
+
+> “The (\Gamma) discrepancy is confined to the scalar-identity sector…”
+
+I would write:
+
+> **The difference between the two quoted (\Gamma) anchors is a scalar-identity difference. Independently, the two candidate centered kernels disagree in one planar mixed-gradient direction. No present result proves that the scalar difference is generated by a physical coupling redefinition.**
+
+That wording makes it impossible to misread “(\Gamma) discrepancy is scalar” as “the two fourth-order calculations differ only by a scalar.”
+
+So the current cubic (O(u^4)) status can be compressed to one equation:
+
+[
+\boxed{
+H_4
+===
+
+s_4I
++
+\underbrace{H_{4,\rm axial}^{\rm exact}}*{\alpha_3=5/12}
++
+\underbrace{C_4,H*{4,\rm planar}}_{\text{one unresolved shape scalar}}
+}
+]
+
+with the understanding that (s_4) and (C_4) are presently **separate adjudication problems**.
+
+That is a substantial improvement in the theory. The old question was effectively “which enormous fourth-order kernel is right?” The new question is only:
+
+[
+\boxed{\text{What is the exact scalar anchor }s_4,\quad
+\text{and what is the exact planar coefficient }C_4?}
+]
+
+Everything else in the fourth-order mobility structure is already much more tightly constrained. 

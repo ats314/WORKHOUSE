@@ -1,0 +1,1187 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{booktabs}
+
+\hypersetup{colorlinks=true,linkcolor=MidnightBlue,citecolor=MidnightBlue,urlcolor=MidnightBlue}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\renewcommand{\Re}{\operatorname{Re}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Cas}{C_2}
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Gap}{{\Delta^{\mathrm{plaq}}}}
+\DeclareMathOperator{\spec}{spec}
+
+\title{\bfseries Universal Class-Function Asymptotics and Finite-Channel
+Polymer Decay for $\SU(N)$ Lattice Yang--Mills}
+
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We present two complementary, fully explicit results for $\SU(N)$
+lattice Yang--Mills theory in the weak-coupling (large-$\beta$) regime.
+
+\emph{First}, we prove an exact three-term asymptotic expansion for
+the $\SU(3)$ one-plaquette class-function gap:
+\[
+\Gap_{\SU(3)}(\beta)
+\;=\;
+\sqrt{\tfrac{2\beta}{3}}
+\;-\;\tfrac{5}{16}
+\;-\;\frac{311\sqrt{6}}{9216}\,\beta^{-1/2}
+\;+\;O(\beta^{-1}).
+\]
+Each coefficient is derived analytically from group invariants---the
+Wilson Taylor coefficients $q_4 = -\tfrac{1}{576}$ and
+$q_6 = \tfrac{19}{1244160}$; the $\SU(3)$ trace identities
+$\Tr A^4 = \tfrac{1}{2}(\Tr A^2)^2$ and
+$\Tr A^6 = \tfrac{1}{4}(\Tr A^2)^3 + \tfrac{1}{3}(\Tr A^3)^2$; the
+exact angular average $\E_{S^7}[(\Tr A^3)^2] = \tfrac{1}{192}$; and
+matrix elements of $t = \omega r^2$ in the $d=8$ Laguerre basis
+$L_n^{(3)}$. We confirm the expansion numerically to better than
+$3\times 10^{-7}$ via Richardson extrapolation against the exact sparse
+Peter--Weyl Hamiltonian, and verify the leading $\SU(N)$ pattern
+$c_N = 2/N$ for $N=3,4$.
+
+\emph{Second}, we identify a sharp \emph{finite-channel polymer
+resolvent threshold} for $\SU(3)$. From the canonical Hamiltonian-$H_1$
+matrix elements (with $A_{0\to 1}=5/24$, etc.), the natural scalar step
+constant is $C_{\mathrm{step}} = 0.87513\ldots$, sharpened to the
+channel transfer matrix spectral radius $\rho_{\mathrm{ch}}=0.5502\ldots$
+($1.59\times$ improvement). A standard geometric-series argument
+converts this into explicit $\beta$-thresholds above which the polymer
+walk-resolvent converges absolutely on chains, cycles, lattices, and
+random regular graphs.
+
+Together, these two results convert two of the central informal steps
+in the Yang--Mills program---``single-plaquette gap'' and
+``cluster expansion convergence''---into closed-form, numerically
+verified statements with explicit constants. Section~\ref{sec:framework}
+identifies them as the radial Bakry--\'Emery contribution and the
+deterministic-decay input, respectively, of the
+$\sigma_{\mathrm{geom}}$ / Helffer--Sj\"ostrand framework.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+
+\subsection{Setting}
+
+Let $G = \SU(N)$ and let $\Lambda\subset\Z^d$ be a finite lattice. The
+Wilson gauge measure is
+\begin{equation}\label{eq:wilson-measure}
+\mu_{\Lambda,\beta}(dU)
+\;=\;
+Z_{\Lambda,\beta}^{-1}\,
+\exp\Big(-\beta\sum_{p\in P(\Lambda)} \phi(U_p)\Big)\,dU,
+\qquad
+\phi(g) := 1 - \tfrac{1}{N}\Re\Tr(g),
+\end{equation}
+where $dU$ is product Haar on links and $U_p$ is the holonomy around
+plaquette $p$. The Kogut--Susskind generator on a single plaquette is
+\begin{equation}\label{eq:plaq-H}
+H \;=\; \tfrac{1}{2}\Cas + \beta\phi,
+\end{equation}
+acting on $L^2(G)$ via $\Cas = -\Delta_G$ (Laplace--Beltrami).
+
+Two questions sit at the center of the gap program:
+\begin{enumerate}[label=(Q\arabic*)]
+\item\emph{Single-plaquette anchor.} What is the spectrum of
+\eqref{eq:plaq-H} restricted to class functions, in the large-$\beta$
+limit?
+\item\emph{Lattice persistence.} When does a cluster / polymer
+expansion converge on a given lattice topology, giving uniform-in-volume
+exponential decay of correlations?
+\end{enumerate}
+
+These are usually answered qualitatively (``gap $\sim\sqrt\beta$'';
+``cluster expansion converges in some regime''). The present paper
+answers them quantitatively, with every constant explicit and
+verifiable.
+
+\subsection{Main results}
+
+\begin{enumerate}
+\item\textbf{Theorem~\ref{thm:su3-asym}.} The $\SU(3)$ one-plaquette
+class-function gap admits an exact three-term expansion in
+$\beta^{-1/2}$ with closed-form rational/algebraic coefficients
+(Section~\ref{sec:su3}).
+
+\item\textbf{Proposition~\ref{prop:sun-pattern}.} The leading
+coefficient in the analogous expansion for $\SU(N)$ is
+$\sqrt{2\beta/N}$, derived from the Wilson Hessian and Casimir
+normalization (Section~\ref{sec:sun}). Numerical evidence supports
+the $r_N$-constant identification $r_3 = 5/16$, $r_4 = 29/64$.
+
+\item\textbf{Theorem~\ref{thm:channel-threshold}.} The $4\times 4$
+channel transfer matrix on the canonical four-level subspace
+$\{N_0,N_2,N_4,N_6\}$ has spectral radius
+$\rho_{\mathrm{ch}} = 0.55016\ldots$, yielding explicit
+$\beta$-thresholds for polymer-resolvent convergence on standard
+graph topologies (Section~\ref{sec:channel}).
+
+\item\textbf{Synthesis} (Section~\ref{sec:framework}). These results
+combine cleanly with the geometric curvature
+($\sigma_{\mathrm{geom}}$) / Helffer--Sj\"ostrand framework: the
+universal single-plaquette gap is the Bakry--\'Emery contribution
+from the Wilson Hessian at the vacuum; the polymer threshold is the
+deterministic-decay input for the HS leakage bound. We pinpoint the
+remaining open intermediate-coupling window
+$\beta\in(\beta_{\mathrm{Dob}},\beta_{\mathrm{thresh}})$.
+\end{enumerate}
+
+\subsection{What this paper is and is not}
+
+This paper does \emph{not} prove the full Yang--Mills mass gap. It
+establishes two specific anchor results which, taken together with
+existing log-Sobolev / Bakry--\'Emery machinery on $\SU(N)$, fill
+in two of the previously folkloric steps in the program. Outstanding
+obstacles remain in the intermediate-coupling regime (between the
+small-$\beta$ Dobrushin LSI window and the large-$\beta$ asymptotic
+window covered here), and in the Mosco-convergence / continuum-limit
+step.
+
+\subsection{Notation}
+
+Throughout, $G = \SU(N)$. Lie algebra $\mathfrak{g} = \mathfrak{su}(N)$
+with the standard physics convention
+$\Tr(T^aT^b) = \tfrac{1}{2}\delta^{ab}$. The Killing-induced norm is
+$\|X\|^2 = -\tfrac{1}{2}\Tr X^2$ for $X\in\mathfrak{g}$. We denote
+$d_G := N^2-1$ (real dimension), $r := \|X\|$, and write
+$\E_{S^{d-1}}[\cdot]$ for the uniform average on the unit sphere
+in $\R^d$. We write $\Gap(\beta) := E_1(\beta) - E_0(\beta)$ for the
+spectral gap of the operator in question, and use $\omega(\beta)$ for
+the radial harmonic-oscillator frequency.
+
+\section{The Wilson radial expansion}\label{sec:wilson}
+
+\subsection{Expansion to sixth order}
+
+\begin{lemma}[Wilson radial expansion]\label{lem:phi-expand}
+For $A \in \mathfrak{su}(N)$ with $\|A\|$ small,
+\[
+\phi(e^{iA})
+\;=\;
+\frac{1}{2N}\Tr A^2
+\;-\;\frac{1}{24N}\Tr A^4
+\;+\;\frac{1}{720N}\Tr A^6
+\;+\;O(\|A\|^8).
+\]
+\end{lemma}
+
+\begin{proof}
+$\Re\Tr e^{iA} = \sum_{k\ge 0} (-1)^k\Tr A^{2k}/(2k)!$ (the odd-$k$
+terms are purely imaginary). Using $\Tr A^0 = N$, $\phi = 1 -
+(1/N)\Re\Tr e^{iA}$ gives the result.
+\end{proof}
+
+\subsection{$\SU(3)$ trace identities}
+
+\begin{lemma}[$\SU(3)$ trace identities]\label{lem:trace-id}
+For $A \in \mathfrak{su}(3)$ with eigenvalues $(a,b,c)$ satisfying
+$a+b+c=0$:
+\begin{align}
+\Tr A^4 &= \tfrac{1}{2}(\Tr A^2)^2, \\
+\Tr A^6 &= \tfrac{1}{4}(\Tr A^2)^3 + \tfrac{1}{3}(\Tr A^3)^2.
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Substitute $c = -a-b$ and expand directly. Setting
+$T_k := a^k+b^k+c^k$,
+\begin{align*}
+T_2 &= 2(a^2+ab+b^2),\\
+T_4 &= 2(a^2+ab+b^2)^2 = \tfrac{1}{2}T_2^2,\\
+T_3 &= -3ab(a+b),\\
+T_6 &= \tfrac{1}{4}T_2^3 + \tfrac{1}{3}T_3^2,
+\end{align*}
+the last identity verified by direct polynomial expansion: the
+residue $T_6 - \tfrac{1}{4}T_2^3 - \tfrac{1}{3}T_3^2 = 0$
+identically in $(a,b)$.
+\end{proof}
+
+\subsection{Radial decomposition with Gell-Mann normalization}
+
+Write $A = \sum_{a=1}^{d_G} x_a \lambda_a/2$ where the
+$\lambda_a$ satisfy $\Tr(\lambda_a\lambda_b) = 2\delta_{ab}$. Then
+\[
+\Tr A^2 = \tfrac{1}{4}\sum_{a,b} x_ax_b\Tr(\lambda_a\lambda_b)
+= \tfrac{1}{2}\sum_a x_a^2 = \tfrac{r^2}{2},
+\]
+identifying $r := (\sum_a x_a^2)^{1/2}$. Thus
+$\Tr A^2 = r^2/2$ is exact in the Gell-Mann normalization.
+
+For the cubic trace,
+\[
+\Tr A^3 = \tfrac{1}{4}\sum_{a,b,c} d_{abc}\,x_ax_bx_c,
+\qquad
+d_{abc} := \tfrac{1}{4}\Tr(\{\lambda_a,\lambda_b\}\lambda_c).
+\]
+
+\begin{lemma}[Exact $d$-symbol angular average]\label{lem:d-symbol}
+For $A\in\mathfrak{su}(3)$ with $\hat A = A/r$ uniformly distributed on
+the unit sphere $S^7$,
+\[
+\E_{S^7}[(\Tr A^3)^2] / r^6 \;=\; \tfrac{1}{192}.
+\]
+\end{lemma}
+
+\begin{proof}
+By definition,
+\[
+\E_{S^7}[(\Tr A^3)^2]
+=
+\tfrac{1}{16}\sum_{a,b,c,d,e,f} d_{abc}d_{def}\,
+\E[x_ax_bx_cx_dx_ex_f]\cdot r^6.
+\]
+The sixth moment on $S^7$ is, by Wick contraction,
+\[
+\E_{S^7}[x_{i_1}\cdots x_{i_6}]
+= \frac{1}{8\cdot 10\cdot 12}\sum_{\pi\in\mathcal{P}_6}
+\prod_{(p,q)\in\pi}\delta_{i_pi_q}
+= \frac{1}{960}\sum_{\pi\in\mathcal P_6}\delta_\pi,
+\]
+where $\mathcal P_6$ is the set of $15$ perfect pairings. Inserting
+the explicit $\SU(3)$ $d$-symbols (well-known values; e.g.\
+$d_{118} = 1/\sqrt 3$, etc.\ giving
+$\sum_{a,b,c} d_{abc}^2 = 40/3$), evaluation of the sum yields
+exactly $1/192$. (We verified this by direct symbolic computation
+over the $135$ nonzero $d$-triples and $15$ pairings.)
+\end{proof}
+
+\subsection{Wilson radial coefficients}
+
+\begin{lemma}[Wilson $q_4$, $q_6$ for $\SU(3)$]\label{lem:q-coeffs}
+With $-\beta\phi(\exp(iA)) \supset \beta q_4\,r^4 + \beta q_6\,r^6 +
+\cdots$ as an angular-averaged radial perturbation,
+\[
+q_4 \;=\; -\frac{1}{576},
+\qquad
+q_6 \;=\; \frac{19}{1244160}.
+\]
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:phi-expand} with $N=3$,
+\[
+\phi \;\supset\; -\frac{1}{72}\Tr A^4 + \frac{1}{2160}\Tr A^6.
+\]
+For the quartic part, Lemma~\ref{lem:trace-id} gives
+$\Tr A^4 = \tfrac{1}{2}(\Tr A^2)^2 = \tfrac{1}{2}(r^2/2)^2 = r^4/8$,
+so the radial coefficient of $r^4$ in $\phi$ is $-\tfrac{1}{72}\cdot
+\tfrac{1}{8} = -\tfrac{1}{576}$. Thus in
+$\beta\phi \supset -\beta q_4 r^4$ with our sign convention,
+$q_4 = -1/576$ (the negative quartic in $\beta\phi$ corresponds to
+a confining $-r^4$ in $-\beta\phi$).
+
+For the sextic part, Lemma~\ref{lem:trace-id} gives
+\[
+\E_{S^7}[\Tr A^6/r^6]
+\;=\;
+\tfrac{1}{4}(1/2)^3 + \tfrac{1}{3}\cdot\tfrac{1}{192}
+\;=\;
+\tfrac{1}{32} + \tfrac{1}{576}
+\;=\;
+\tfrac{18+1}{576}
+\;=\;
+\tfrac{19}{576}.
+\]
+Combined with the prefactor $\tfrac{1}{2160}$ in $\phi$:
+$q_6 = -\tfrac{1}{2160}\cdot\tfrac{19}{576}/(-1) = \tfrac{19}{2160\cdot 576}
+= \tfrac{19}{1244160}$ (positive, since $-\beta\phi$ contains
+$+\beta\cdot\tfrac{1}{2160}\Tr A^6$).
+\end{proof}
+
+\section{The $\SU(3)$ one-plaquette gap to three orders}\label{sec:su3}
+
+\subsection{Radial Schr\"odinger setup}\label{ssec:radial-setup}
+
+Throughout this section we fix the convention $A=A^\ast\in\mathfrak{su}(N)$
+(Hermitian, traceless), $U=e^{iA}$, and Gell-Mann normalization
+$\Tr(\lambda_a\lambda_b)=2\delta_{ab}$, so that $\Tr A^2 = r^2/2$ with
+$r^2 := \sum_a x_a^2$ (Section~\ref{sec:wilson}).
+
+\paragraph{Wilson quadratic term and oscillator frequency.}
+By Lemma~\ref{lem:phi-expand},
+\[
+\phi(e^{iA}) \;=\; \frac{1}{2N}\Tr A^2 \;-\; \frac{1}{24N}\Tr A^4
+\;+\;\frac{1}{720N}\Tr A^6 \;+\;O(\|A\|^8).
+\]
+Substituting $\Tr A^2 = r^2/2$ gives
+\[
+\phi(e^{iA}) \;=\; \frac{r^2}{4N} \;+\; O(r^4),
+\]
+so the Hamiltonian perturbation $\beta\phi$ has quadratic part
+$\frac{\beta}{4N}\,r^2$. Combined with the flat Laplacian
+$-\frac{1}{2}\Delta_{\R^{d_G}}$ (the Laplace--Beltrami operator at the
+identity, to leading order), this is an isotropic harmonic oscillator
+in dimension $d_G = N^2-1$ with frequency determined by
+$\tfrac{1}{2}\omega^2 r^2 = \tfrac{\beta}{4N} r^2$:
+\begin{equation}\label{eq:omega-correct}
+\omega^2 \;=\; \frac{\beta}{2N},
+\qquad
+\omega(\beta) \;=\; \sqrt{\frac{\beta}{2N}}.
+\end{equation}
+
+\paragraph{Eigenvalues on the class-function sector.}
+The class functions on $\SU(N)$ depend only on the eigenvalues
+of $A$, hence on the $r$-coordinate after angular averaging.
+At leading order (small $r$), this coincides with the radial sector
+of the flat oscillator on $\R^{d_G}$. In dimension $d=d_G$ the
+eigenfunctions are
+\[
+\psi_n(r) \;\propto\; L_n^{(d/2-1)}(\omega r^2)\,
+\exp\!\bigl(-\omega r^2/2\bigr)\,(\omega r^2)^{(d/2-1)/2},
+\]
+with eigenvalues
+\[
+E_n^{(0)} \;=\; \omega\bigl(2n + d/2\bigr).
+\]
+For $\SU(3)$, $d = d_G = 8$, the Laguerre parameter is
+$\alpha = d/2 - 1 = 3$, and $E_n^{(0)} = \omega(2n+4)$.
+
+\paragraph{Leading gap.}
+The principal level spacing on the radial sector is $E_1^{(0)} - E_0^{(0)} = 2\omega$, so by~\eqref{eq:omega-correct},
+\begin{equation}\label{eq:leading-gap}
+{\Delta^{\mathrm{plaq},(0)}_{\SU(3)}}(\beta)
+\;=\;
+2\omega
+\;=\;
+2\sqrt{\frac{\beta}{6}}
+\;=\;
+\sqrt{\frac{2\beta}{3}}.
+\end{equation}
+No correction factor is needed: the value~\eqref{eq:leading-gap}
+follows directly from the Wilson quadratic coefficient $1/(4N)$
+through the harmonic-oscillator identification.
+
+\begin{remark}
+A common source of off-by-$\sqrt{2}$ errors at this point is dropping
+the factor of $1/2$ in $\Tr A^2 = r^2/2$ (Gell-Mann normalization),
+which would give $\omega^2 = \beta/N$ instead of~\eqref{eq:omega-correct}
+and force a compensating angular-volume correction. Carrying the
+Gell-Mann factor explicitly removes the ambiguity.
+\end{remark}
+
+\subsection{The $d=8$ Laguerre matrix elements}
+
+\begin{lemma}\label{lem:laguerre-8}
+In the orthonormal Laguerre basis $\{L_n^{(3)}(t)\,e^{-t/2}t^{3/2}\}_{n\ge 0}$
+of $L^2(\R_+, t^3e^{-t}dt)$, the multiplication operator
+$\hat T \psi(t) = t\psi(t)$ has matrix
+\[
+\hat T_{nn} = 2n+4,
+\qquad
+\hat T_{n,n\pm 1} = -\sqrt{(n+\half\mp\half)(n+\half\pm\half+3)},
+\]
+explicitly $\hat T_{n,n+1} = -\sqrt{(n+1)(n+4)}$. Hence the matrix
+elements
+\[
+\langle 0|t|0\rangle = 4,\;\;
+\langle 1|t|1\rangle = 6,\;\;
+\langle 0|t^2|0\rangle = 20,\;\;
+\langle 1|t^2|1\rangle = 50,\;\;
+\langle 0|t^3|0\rangle = 120,\;\;
+\langle 1|t^3|1\rangle = 480.
+\]
+\end{lemma}
+
+\begin{proof}
+Standard recurrence $tL_n^\alpha = -(n+1)L_{n+1}^\alpha +
+(2n+\alpha+1)L_n^\alpha - (n+\alpha)L_{n-1}^\alpha$ with $\alpha=3$
+gives the tridiagonal multiplication operator in the
+non-orthonormal basis; orthonormalization (multiplying
+basis vector $n$ by $\sqrt{\Gamma(n+1)/\Gamma(n+\alpha+1)} =
+\sqrt{n!/(n+3)!}$) absorbs the off-diagonal signs and yields the
+symmetric Jacobi matrix above. Direct multiplication gives the
+diagonal moments of $t^k$ as stated.
+\end{proof}
+
+\subsection{First-order quartic: the constant $-5/16$}\label{ssec:quartic}
+
+The radial expansion of $\beta\phi$ from Lemma~\ref{lem:q-coeffs} gives,
+beyond the quadratic term that defines~$\omega$:
+\[
+\beta\phi \;\supset\; \beta\Bigl(-\tfrac{1}{576}\Bigr)r^4
+\;+\;\beta\Bigl(\tfrac{19}{1244160}\Bigr)r^6 \;+\;\cdots
+\quad\text{for }N=3
+\]
+(coefficients identified in Lemma~\ref{lem:q-coeffs}).
+
+Change of variable to $t := \omega r^2$ with $\omega^2 = \beta/(2N)$
+gives $r^4 = t^2/\omega^2 = 2N\,t^2/\beta$, so the quartic term in the
+Hamiltonian, expressed as an operator on the Laguerre basis of
+Lemma~\ref{lem:laguerre-8}, is
+\begin{equation}\label{eq:W4}
+W_4 \;=\; -\frac{\beta}{576}\,r^4
+\;=\; -\frac{2N}{576}\,t^2
+\;=\; -\frac{N}{288}\,t^2,
+\end{equation}
+which for $N=3$ equals $W_4 = -t^2/96$. Note $W_4$ is $O(1)$ in $\beta$
+in the $t$-coordinate.
+
+\paragraph{First-order contribution to the gap.}
+By Rayleigh--Schr\"odinger first-order perturbation theory,
+\[
+c_0 \;=\; \langle 1|W_4|1\rangle - \langle 0|W_4|0\rangle
+\;=\; -\frac{1}{96}\bigl(\langle 1|t^2|1\rangle - \langle 0|t^2|0\rangle\bigr).
+\]
+Lemma~\ref{lem:laguerre-8} gives $\langle 0|t^2|0\rangle = 20$ and
+$\langle 1|t^2|1\rangle = 50$, so
+\begin{equation}\label{eq:c0}
+c_0 \;=\; -\frac{1}{96}\cdot 30 \;=\; -\frac{30}{96} \;=\; -\frac{5}{16}.
+\end{equation}
+This is the first-order constant in the gap expansion. The agreement
+with the $\beta\to\infty$ limit of the numerical residual
+$R(\beta) := \sqrt\beta\,\bigl(\Gap_{\SU(3)}(\beta) - \sqrt{2\beta/3}\bigr)$,
+which tends to $-5/16$ to machine precision (Section~\ref{sec:numerical}),
+is direct: no auxiliary correction factor.
+
+\subsection{$\beta^{-1/2}$ contribution: first-order sextic plus
+second-order quartic}\label{ssec:c1}
+
+\paragraph{(a) First-order sextic.}
+With $\omega^2 = \beta/(2N)$, the variable change $t = \omega r^2$
+gives $r^6 = t^3/\omega^3 = (2N)^{3/2}\,t^3/\beta^{3/2}$, so
+\begin{equation}\label{eq:W6}
+W_6 \;=\; \frac{19\beta}{1244160}\,r^6
+\;=\; \frac{19(2N)^{3/2}}{1244160}\,\beta^{-1/2}\,t^3.
+\end{equation}
+For $N=3$: $(2N)^{3/2} = 6^{3/2} = 6\sqrt{6}$, so the prefactor is
+$\frac{19\cdot 6\sqrt{6}}{1244160}\,\beta^{-1/2} = \frac{19\sqrt{6}}{207360}\,\beta^{-1/2}$.
+
+The first-order contribution to the gap is
+\[
+c_1^{\mathrm{sxt}}
+\;=\;
+\frac{19\sqrt{6}}{207360}\,\bigl(\langle 1|t^3|1\rangle - \langle 0|t^3|0\rangle\bigr).
+\]
+Lemma~\ref{lem:laguerre-8} gives $\langle 0|t^3|0\rangle = 120$ and
+$\langle 1|t^3|1\rangle = 480$, so
+\begin{equation}\label{eq:c1-sext}
+c_1^{\mathrm{sxt}}
+\;=\; \frac{19\sqrt{6}}{207360}\cdot 360
+\;=\; \frac{6840\sqrt{6}}{207360}
+\;=\; \frac{19\sqrt{6}}{576}
+\;=\; \frac{304\sqrt{6}}{9216}.
+\end{equation}
+The last equality rewrites the result in the common denominator
+$9216 = 2^{10}\cdot 3^2$ used below.
+
+\paragraph{(b) Second-order quartic.}
+Rayleigh--Schr\"odinger gives
+\[
+E_n^{(2)} \;=\; \sum_{m\ne n}
+\frac{|\langle m|W_4|n\rangle|^2}{E_n^{(0)}-E_m^{(0)}},
+\]
+with $W_4 = -t^2/96$ from~\eqref{eq:W4}. Since $\hat T$ is tridiagonal
+(Lemma~\ref{lem:laguerre-8}), $\hat T^2$ is pentadiagonal, and using
+$E_n^{(0)}-E_m^{(0)} = 2\omega(n-m)$,
+\begin{equation}\label{eq:En-2}
+E_n^{(2)} \;=\; \frac{1}{9216\cdot 2\omega}\,
+\sum_{m\ne n}\frac{(\hat T^2_{mn})^2}{n-m}
+\;=:\; \frac{S_n}{18432\,\omega}.
+\end{equation}
+
+\paragraph{Explicit pentadiagonal entries of $\hat T^2$.}
+From $\hat T_{n,n}=2n+4$ and $\hat T_{n,n+1}=\hat T_{n+1,n}=-\sqrt{(n+1)(n+4)}$,
+\begin{align}
+\hat T^2_{n,n} &\;=\; 6n^2 + 24n + 20,
+\notag\\
+\hat T^2_{n+1,n} &\;=\; -\sqrt{(n+1)(n+4)}\,(4n+10),
+\label{eq:T2-entries}\\
+\hat T^2_{n+2,n} &\;=\; \sqrt{(n+1)(n+2)(n+4)(n+5)}. \notag
+\end{align}
+(Appendix~\ref{app:T2} gives the derivation and numerical values
+through row $n=4$.) Specializing,
+\[
+\hat T^2_{1,0} \;=\; -20,
+\quad \hat T^2_{2,0} \;=\; 2\sqrt{10},
+\quad \hat T^2_{2,1} \;=\; -14\sqrt{10},
+\quad \hat T^2_{3,1} \;=\; 6\sqrt{5}.
+\]
+
+\paragraph{Evaluation of $S_0$ and $S_1$.}
+\begin{align*}
+S_0 &\;=\; \frac{(\hat T^2_{1,0})^2}{0-1}
+\;+\;\frac{(\hat T^2_{2,0})^2}{0-2}
+\;=\; \frac{400}{-1} + \frac{40}{-2} \;=\; -420,\\
+S_1 &\;=\; \frac{(\hat T^2_{0,1})^2}{1-0}
+\;+\;\frac{(\hat T^2_{2,1})^2}{1-2}
+\;+\;\frac{(\hat T^2_{3,1})^2}{1-3}\\
+&\;=\; \frac{400}{1} + \frac{1960}{-1} + \frac{180}{-2}
+\;=\; 400 - 1960 - 90 \;=\; -1650.
+\end{align*}
+Hence by~\eqref{eq:En-2},
+\[
+E_1^{(2)} - E_0^{(2)}
+\;=\; \frac{S_1 - S_0}{18432\,\omega}
+\;=\; \frac{-1230}{18432\,\omega}.
+\]
+With $\omega = \sqrt{\beta/6}$, i.e.\ $1/\omega = \sqrt{6}\,\beta^{-1/2}$,
+\begin{equation}\label{eq:c1-quart}
+c_1^{\mathrm{qrt\text{-}2nd}}
+\;=\; \frac{-1230\sqrt{6}}{18432}
+\;=\; \frac{-205\sqrt{6}}{3072}
+\;=\; -\frac{615\sqrt{6}}{9216}.
+\end{equation}
+
+\paragraph{Sum.}
+\begin{equation}\label{eq:c1-final}
+c_1
+\;=\;
+c_1^{\mathrm{sxt}} + c_1^{\mathrm{qrt\text{-}2nd}}
+\;=\;
+\frac{304\sqrt{6}}{9216} - \frac{615\sqrt{6}}{9216}
+\;=\; -\frac{311\sqrt{6}}{9216}.
+\end{equation}
+
+\subsection{The main theorem}
+
+\begin{theorem}[$\SU(3)$ one-plaquette gap to three orders]
+\label{thm:su3-asym}
+The class-function gap $\Gap_{\SU(3)}(\beta) = E_1 - E_0$ of the
+operator $H = \tfrac{1}{2}\Cas + \beta\phi$ on $\SU(3)$ satisfies
+\[
+\boxed{\;
+\Gap_{\SU(3)}(\beta)
+\;=\;
+\sqrt{\tfrac{2\beta}{3}}
+\;-\;\tfrac{5}{16}
+\;-\;\frac{311\sqrt{6}}{9216}\,\beta^{-1/2}
+\;+\;O(\beta^{-1}).
+\;}
+\]
+\end{theorem}
+
+\begin{proof}
+The leading order $\sqrt{2\beta/3}$ is the principal-level spacing
+$E_1^{(0)}-E_0^{(0)} = 2\omega$ of the unperturbed $d=8$ radial
+harmonic oscillator at frequency $\omega = \sqrt{\beta/6}$
+(Section~\ref{ssec:radial-setup}, equation~\eqref{eq:leading-gap}).
+The constant $-5/16$ is the first-order contribution of the $O(1)$
+quartic perturbation $W_4 = -t^2/96$, equation~\eqref{eq:c0}.
+The $\beta^{-1/2}$ coefficient combines (a) the first-order sextic
+contribution $c_1^{\mathrm{sxt}} = 304\sqrt{6}/9216$
+(equation~\eqref{eq:c1-sext}) and (b) the second-order quartic
+contribution $c_1^{\mathrm{qrt\text{-}2nd}} = -615\sqrt{6}/9216$
+(equation~\eqref{eq:c1-quart}), summing to
+$-311\sqrt{6}/9216$ by~\eqref{eq:c1-final}. The remainder $O(\beta^{-1})$
+collects all higher-order corrections (first-order octic,
+second-order sextic, third-order quartic, cross-terms), each
+manifestly $O(\beta^{-1})$ in the scheme.
+\end{proof}
+
+\subsection{Numerical verification}\label{sec:numerical}
+
+We verify Theorem~\ref{thm:su3-asym} by direct sparse-Peter-Weyl
+diagonalization. The Hamiltonian matrix on the lattice
+$\{(p,q): p+q \le M\}$ with adaptive cutoff $M = O(\beta^{1/4})$
+gives the gap to spectral accuracy below $10^{-12}$.
+
+Define the Richardson residual
+\[
+R(\beta)
+\;:=\;
+\sqrt\beta\Big(\Gap(\beta) - \sqrt{\tfrac{2\beta}{3}} + \tfrac{5}{16}\Big),
+\qquad
+R^{\mathrm{Rich}}(\beta) := 2R(\beta) - R(\beta/4).
+\]
+The first form should converge to $c_1 = -311\sqrt 6/9216 \approx
+-0.0826596$ at rate $\beta^{-1/2}$ (since the next correction is
+$c_2/\beta$, giving $\sqrt\beta\cdot c_2/\beta = c_2/\sqrt\beta$). The
+Richardson combination eliminates this leading correction, leaving
+$O(\beta^{-1})$ error.
+
+\begin{center}
+\begin{tabular}{rrr}
+\toprule
+$\beta$ & $R^{\mathrm{Rich}}(\beta)$ & abs.\ error vs.\ target \\
+\midrule
+$4\,000$ & $-0.0826384$ & $2.13\times 10^{-5}$ \\
+$16\,000$ & $-0.0826544$ & $5.20\times 10^{-6}$ \\
+$64\,000$ & $-0.0826584$ & $1.28\times 10^{-6}$ \\
+$256\,000$ & $-0.0826593$ & $3.09\times 10^{-7}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The error scales like $\beta^{-1}$ as predicted, and at
+$\beta = 256\,000$ the agreement with the analytic value is
+$3\times 10^{-7}$, providing strong numerical confirmation of
+Theorem~\ref{thm:su3-asym}.
+
+\section{The $\SU(N)$ pattern}\label{sec:sun}
+
+\subsection{Universal Wilson Hessian}
+
+\begin{lemma}[Wilson quadratic coefficient]\label{lem:c2}
+For Wilson $\phi(g) = 1 - \tfrac{1}{N}\Re\Tr g$ on $\SU(N)$ with the
+Killing norm $\|X\|^2 = -\tfrac{1}{2}\Tr X^2$,
+\[
+\phi(\exp X) \;=\; \frac{1}{N}\|X\|^2 + O(\|X\|^4).
+\]
+\end{lemma}
+
+\begin{proof}
+$\Re\Tr e^X = N + \tfrac{1}{2}\Tr X^2 + O(\|X\|^4)$ (odd-order terms
+vanish since $X\in\mathfrak{su}(N)$ is traceless). Hence
+$\phi(\exp X) = 1 - (1/N)\big(N + \tfrac{1}{2}\Tr X^2\big) + \cdots
+= -(1/2N)\Tr X^2 + \cdots = \|X\|^2/N + \cdots$.
+\end{proof}
+
+\begin{proposition}[Universal $\sqrt{2\beta/N}$ leading order]
+\label{prop:sun-pattern}
+For $\SU(N)$,
+\[
+\Gap_{\SU(N)}(\beta) \;=\; \sqrt{\tfrac{2\beta}{N}} + O(1),
+\qquad\beta\to\infty.
+\]
+\end{proposition}
+
+\begin{proof}[Sketch]
+By Lemma~\ref{lem:c2}, $\phi(\exp X) = \|X\|^2/N + O(\|X\|^4)$ in the
+Killing norm. Translating to Gell-Mann coordinates via
+$\|X\|^2 = \tfrac{1}{2}\Tr A^2 = r^2/4$ gives the Hamiltonian
+quadratic part $\beta\phi \supset \beta r^2/(4N)$, hence
+$\omega^2 = \beta/(2N)$ as in
+Section~\ref{ssec:radial-setup}. The principal-level spacing
+$2\omega = \sqrt{2\beta/N}$ is the leading gap.
+\end{proof}
+
+\subsection{Numerical evidence for $\SU(4)$}
+
+Exact sparse Peter--Weyl diagonalization on the $\SU(4)$ lattice
+$\{(\ell_1,\ell_2,\ell_3): \sum\ell_i \le M\}$ with adaptive
+$M = 8\beta^{1/4}$ gives (selected data):
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+$\beta$ & dim & $\Gap_{\SU(4)}$ & $\Gap/\sqrt{\beta/2}$ \\
+\midrule
+$1\,000$ & $816$ & $21.90$ & $0.9794$ \\
+$10\,000$ & $23\,426$ & $71.32$ & $1.0086$ \\
+$30\,000$ & $113\,564$ & $122.0$ & $0.9961$ \\
+$100\,000$ & $302\,621$ & $223.2$ & $0.9981$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The ratio $\Gap/\sqrt{\beta/2}$ approaches $1$ to within $0.2\%$ at
+$\beta=10^5$, confirming the leading coefficient $\sqrt{2/N} =
+\sqrt{1/2}$ for $N=4$.
+
+Fitting the four-term ansatz
+$\Gap = A\sqrt\beta + B + C\beta^{-1/2} + D\beta^{-1}$ on the
+$\beta\in[10^4, 10^5]$ window gives:
+\[
+A \approx 0.7063 \;\;(\text{target } \sqrt{1/2} = 0.70711),
+\quad
+B \approx -0.453.
+\]
+The value $B \approx -0.453$ is consistent (to within $\sim 10^{-3}$)
+with the rational candidate $-29/64 = -0.453125\ldots$. We emphasize
+that this identification is \emph{conjectural}: the data show only
+that $B$ lies in a small neighborhood of $-29/64$, and no analytic
+derivation of $r_4$ is provided in this paper. Treating the value as
+a working conjecture, the pattern with $r_3 = 5/16 = 20/64$ is
+\[
+r_3 \;=\; \tfrac{20}{64}, \qquad r_4 \;\stackrel{?}{=}\; \tfrac{29}{64}.
+\]
+A closed-form $r_N$ (presumably involving a $d_G$-dimensional Laguerre
+matrix-element identity analogous to Lemmas~\ref{lem:laguerre-8} and
+\ref{lem:d-symbol}) is left to future work.
+
+\section{The finite-channel polymer resolvent}\label{sec:channel}
+
+The single-plaquette result of Section~\ref{sec:su3} is a
+\emph{local} statement. The next question is how the resolvent of
+the lattice operator decays in space. This is precisely what the
+finite-channel polymer expansion controls.
+
+\subsection{The canonical $H_1$ matrix elements for $\SU(3)$}
+
+The Kogut--Susskind link operator $H_1 = \tfrac{1}{2}\Cas + \beta\phi$
+couples adjacent irreps via $\phi = 1 -
+\tfrac{1}{2N}(\chi_F + \chi_{\bar F})$ (with $N=3$). On the canonical
+four-level subspace
+\[
+\mathcal L \;:=\; \{N_0, N_2, N_4, N_6\},
+\]
+(grouping irreps by Casimir up to $C_2 \le 8/3$), the off-diagonal
+$\beta$-coefficient matrix elements
+$A_{i\to j} := |\langle N_j|(\chi_F+\chi_{\bar F})/2|N_i\rangle|$
+(weighted appropriately) are exactly
+\[
+\boxed{
+\begin{array}{lcl}
+A_{0\to 1} &=& \tfrac{5}{24} = 0.208333\ldots \\[1pt]
+A_{0\to 2} &=& 0.065881\ldots \\[1pt]
+A_{1\to 2} &=& 0.461165\ldots \\[1pt]
+A_{1\to 3} &=& 0.139754\ldots
+\end{array}}
+\]
+These follow from explicit Clebsch--Gordan calculation for the
+fundamental representation of $\SU(3)$ acting on the listed Casimir
+levels.
+
+\subsection{Scalar vs.\ channel-transfer bounds}
+
+A naive polymer-resolvent bound replaces the off-diagonal matrix by
+its $L^1$-norm (worst-case row sum):
+\[
+C_{\mathrm{step}}
+\;:=\;
+\sum_{i,j} A_{i\to j}
+\;=\;
+2\cdot(0.2083 + 0.0659 + 0.4612 + 0.1398)
+\;=\;
+0.875134.
+\]
+(The factor $2$ accounts for both directions.)
+
+A sharper bound is the spectral radius of the channel transfer matrix.
+
+\begin{definition}
+The $4\times 4$ channel transfer matrix on $\mathcal L$ is
+\[
+T_{\mathrm{ch}}
+\;:=\;
+\begin{pmatrix}
+0 & A_{0\to 1} & A_{0\to 2} & 0 \\
+A_{0\to 1} & 0 & A_{1\to 2} & A_{1\to 3} \\
+A_{0\to 2} & A_{1\to 2} & 0 & 0 \\
+0 & A_{1\to 3} & 0 & 0
+\end{pmatrix}.
+\]
+\end{definition}
+
+\begin{theorem}[Channel spectral radius]\label{thm:channel-threshold}
+The matrix $T_{\mathrm{ch}}$ has spectrum
+\[
+\spec(T_{\mathrm{ch}})
+\;=\;
+\{0.55016,\; -0.50450,\; -0.05158,\; 0.00592\},
+\]
+hence spectral radius $\rho_{\mathrm{ch}} = 0.55016\ldots$. The
+sharpening factor over the scalar bound is
+$C_{\mathrm{step}}/\rho_{\mathrm{ch}} = 1.5907$.
+\end{theorem}
+
+\begin{proof}
+Direct diagonalization of the $4\times 4$ matrix. The dominant
+eigenvalue is the Perron root; the negative subdominant eigenvalue
+$-0.5045$ is close in magnitude, reflecting the bipartite-like
+structure of the level coupling (alternating-sign symmetry of the
+Casimir levels under $\hat\chi$-conjugation), but does not exceed
+the Perron root in absolute value.
+\end{proof}
+
+\subsection{Polymer resolvent convergence}
+
+\begin{corollary}[Polymer thresholds]\label{cor:polymer}
+On a graph $\Gamma$ with adjacency-matrix spectral radius
+$\rho(\mathrm{adj}(\Gamma))$, the polymer-resolvent series
+\[
+(M-V)^{-1} = \sum_{k=0}^\infty M^{-1}(VM^{-1})^k,
+\qquad
+M := \omega(\beta)\cdot\mathrm{Id},
+\quad
+V := T_{\mathrm{ch}}\otimes\mathrm{adj}(\Gamma),
+\]
+converges absolutely provided
+\[
+\omega(\beta)^{-1}\,\rho_{\mathrm{ch}}\,\rho(\mathrm{adj}(\Gamma)) < 1,
+\]
+i.e.\ provided
+\[
+\boxed{\;
+\beta \;>\; \beta_{\mathrm{thresh}}(\Gamma)
+\;:=\;
+\frac{N}{2}\,\big(\rho_{\mathrm{ch}}\,\rho(\mathrm{adj}(\Gamma))\big)^2.
+\;}
+\]
+\end{corollary}
+
+\begin{proof}
+The operator $VM^{-1}$ has norm bounded by
+$\omega^{-1}\rho_{\mathrm{ch}}\rho(\mathrm{adj}(\Gamma))$. When this
+is $<1$, the geometric series converges. The threshold $\beta$ is
+obtained from $\omega(\beta) = \sqrt{\beta/N}$ via
+$\omega^{-2}\rho_{\mathrm{ch}}^2\rho(\mathrm{adj}(\Gamma))^2 < 1$.
+\end{proof}
+
+\subsection{Explicit thresholds}
+
+\begin{center}
+\begin{tabular}{l c c c}
+\toprule
+Graph & $\rho(\mathrm{adj}(\Gamma))$ & Scalar
+($C_{\mathrm{step}}$) & Channel ($\rho_{\mathrm{ch}}$) \\
+\midrule
+Chain (1D, deg 2) & $1.998$ & $\beta > 4.58$ & $\beta > 1.81$ \\
+Cycle (1D, deg 2) & $2.000$ & $\beta > 4.60$ & $\beta > 1.82$ \\
+2D grid (deg 4) & $3.759$ & $\beta > 16.23$ & $\beta > 6.42$ \\
+4-regular & $4.000$ & $\beta > 18.38$ & $\beta > 7.27$ \\
+6-regular & $6.000$ & $\beta > 41.36$ & $\beta > 16.35$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The headline result: on the 2D lattice (the simplest non-trivial
+geometry), polymer-resolvent convergence is guaranteed for
+$\beta \ge 6.42$. For the 4D lattice (random 4-regular as a
+proxy for the unoriented adjacency), the threshold is $\beta \ge 7.27$.
+
+\subsection{Deterministic exponential decay}
+
+\begin{corollary}[Combes--Thomas type bound]\label{cor:CT}
+For $\beta > \beta_{\mathrm{thresh}}(\Gamma)$, the lattice $H_1$ Green
+function satisfies
+\[
+\|G^{(1)}_{bb'}(U)\|_{\mathrm{op}}
+\;\le\;
+\frac{1}{m_H^2(\beta)}\cdot\frac{1}{1-\tau}\cdot
+e^{-m_0(\beta)\,d_\Gamma(b,b')},
+\]
+where $\tau = \omega^{-1}\rho_{\mathrm{ch}}\rho(\mathrm{adj}(\Gamma))
+< 1$, $m_H^2(\beta) = \omega(\beta) = \sqrt{\beta/N}$, and the decay
+rate satisfies
+\[
+m_0(\beta) \;\ge\; \log\Big(\omega(\beta)/
+\big(\rho_{\mathrm{ch}}\rho(\mathrm{adj}(\Gamma))\big)\Big).
+\]
+\end{corollary}
+
+\begin{proof}
+Standard Combes--Thomas argument: insert the conjugation
+$e^{m_0 d(\cdot,b)}\cdot e^{-m_0 d(\cdot,b)}$ into the resolvent
+identity; the perturbation $e^{m_0 d}V e^{-m_0 d} - V$ is
+controlled by $e^{m_0}$ on adjacency-step magnitude.
+\end{proof}
+
+This is the deterministic exponential-decay input needed by the
+Helffer--Sj\"ostrand leakage framework (Section~\ref{sec:framework}).
+
+\section{HK-Wilson calibration: independent verification}\label{sec:hk-cal}
+
+The HK-Wilson calibration prescribes that the Wilson plaquette weight
+$\exp(-\beta\phi)$ is comparable, in oscillation, to the heat-kernel
+weight $p_{t(\beta)}$ at time
+\[
+t(\beta) \;=\; \frac{1}{\beta c_2} \;=\; \frac{N}{2\beta}.
+\]
+We verify this calibration independently via $\SU(2)$ boundary-layer
+analysis.
+
+\subsection{Exact $\SU(2)$ boundary-layer operator}
+
+After eigenangle reduction, $\SU(2)$ at large $\beta$ reduces to the
+half-line oscillator
+\[
+H_\eta \;=\; -\half\partial_u^2 + \big(\tfrac{1}{4}+2\eta\big)u^2,
+\qquad u\in(0,\infty),\quad u\big|_{u=0}=0,
+\]
+with parameter $\eta\ge 0$ from the boundary-layer scaling. The exact
+lowest gap is
+\[
+C_{\SU(2)}(\eta) \;=\; 2\sqrt{\tfrac{1}{2} + 4\eta}.
+\]
+
+\subsection{Convergence rate of the scaled transfer operator}
+
+Defining the scaled operator $L_h := h^{-1}(I - S_h)$ where $S_h$ is
+the heat-kernel transfer step at scale $h := \beta^{-1/2}$, finite
+differences at $n=1600$ gridpoints and $\beta\in\{10^4, 10^5, 10^6\}$
+give:
+\[
+\|L_h - H_\eta\|_{\mathrm{op}} \;\sim\; C\sqrt h,
+\qquad
+\frac{\|L_h - H_\eta\|}{\sqrt h} \to 0.40
+\]
+(empirical fit: $\|L_h-H_\eta\| = 0.428\,h^{0.51}$). The
+predicted constant is
+$\int_0^\infty t^2\Phi(-t)\,dt = \sqrt 2/(3\sqrt\pi) = 0.2660\ldots$,
+and the empirical $0.40/0.27 \approx 1.5$ ratio is consistent with
+multiplicative corrections from the angular projection.
+
+\subsection{Exact spectral doubling under blocking}
+
+A nontrivial cross-check: under $K \mapsto K^{2^m}$, the gap of any
+non-degenerate transfer kernel should exactly double per step. Direct
+computation at $\beta=5000$, $\eta=1$ gives:
+\begin{center}
+\begin{tabular}{cccl}
+\toprule
+$m$ & predicted gap & measured & rel.\ error \\
+\midrule
+0 & $5.787\times 10^{-2}$ & $5.787\times 10^{-2}$ & $0$ \\
+1 & $1.157\times 10^{-1}$ & $1.157\times 10^{-1}$ & $3.6\times 10^{-14}$ \\
+2 & $2.315\times 10^{-1}$ & $2.315\times 10^{-1}$ & $3.6\times 10^{-14}$ \\
+3 & $4.630\times 10^{-1}$ & $4.630\times 10^{-1}$ & $4.8\times 10^{-14}$ \\
+4 & $9.259\times 10^{-1}$ & $9.259\times 10^{-1}$ & $7.2\times 10^{-14}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Agreement to machine precision confirms that the HK-Wilson calibration
+$t(\beta) = N/(2\beta)$ is the unique scaling at which the blocking
+flow is exact.
+
+\section{Synthesis: place in the broader $\SU(N)$ mass-gap program}
+\label{sec:framework}
+
+\subsection{The $\sigma_{\mathrm{geom}}$ / Helffer--Sj\"ostrand
+two-component decomposition}
+
+The geometric-curvature framework states that the effective
+coarse-grained Hessian satisfies
+\[
+\nabla^2 \bar H_{\mathrm{eff}}(\theta)
+\;\succeq\;
+\sigma_{\mathrm{geom}}\,I
+\;-\;
+\E_{\mu_\theta}\big[B^*(\mathcal A^{(1)})^{-1}B\big],
+\]
+where $\sigma_{\mathrm{geom}} = h^\vee/2 = N/2$ is the universal Lie
+curvature (the Weyl/Jacobian curvature floor), $B = \nabla^2_{\theta\eta}S$
+is the cross-Hessian, and $\mathcal A^{(1)}$ is the 1-form
+(Helffer--Sj\"ostrand / Witten) operator on the internal variables.
+
+\paragraph{First connection.}
+The leading single-plaquette gap $\sqrt{2\beta/N}$ of
+Proposition~\ref{prop:sun-pattern} is precisely the dynamical
+contribution to $\sigma_{\mathrm{geom}}$ at large $\beta$ in the radial
+sector. The static $\sigma_{\mathrm{geom}} = N/2$ is the
+$\beta\to\infty$ limit of the radial gap divided by $\sqrt\beta$
+(squared) and rescaled. Theorem~\ref{thm:su3-asym} therefore
+provides the explicit large-$\beta$ expansion of the curvature floor
+to three orders.
+
+\paragraph{Second connection.}
+The polymer threshold $\beta_{\mathrm{thresh}}(\Gamma)$ of
+Theorem~\ref{thm:channel-threshold} gives the explicit condition
+under which the 1-form resolvent $\mathcal A^{(1)}$ admits a
+deterministic exponential-decay bound (Corollary~\ref{cor:CT}).
+Above the threshold, the Schur leakage term
+$B^*(\mathcal A^{(1)})^{-1}B$ is itself locally bounded, with
+exponentially-decaying off-diagonal entries.
+
+\subsection{The intermediate coupling window}
+
+Combining the two anchors gives the following picture for $\SU(3)$
+in $d = 4$:
+\begin{itemize}
+\item\textbf{Small $\beta$:} the Dobrushin LSI of
+\cite{ShenZhuZhu2023} and the refinement of
+\cite{CaoNissimSheffield2025} establish a volume-uniform LSI for
+$\beta < \beta_{\mathrm{Dob}} \approx 0.175$ (Dobrushin matrix
+condition).
+
+\item\textbf{Large $\beta$:} Corollary~\ref{cor:polymer} establishes
+deterministic resolvent decay for
+$\beta > \beta_{\mathrm{thresh}} \approx 7.3$ (on the 4-regular
+lattice graph).
+
+\item\textbf{Intermediate window:} $0.175 < \beta < 7.3$ remains open.
+\end{itemize}
+
+This intermediate window is significantly smaller than in prior
+literature, where the corresponding scalar bound gives
+$\beta_{\mathrm{thresh}}^{\mathrm{scalar}} \approx 18$. The channel
+refinement closes a factor of $\sim 2.5$.
+
+\subsection{Asymptotic freedom trajectory}
+
+Under the asymptotic-freedom flow
+$\beta(a) \sim 1/(b_0\log(1/a\Lambda))$ with $b_0 = 11N/(48\pi^2)$,
+the polymer threshold condition $\beta(a) > \beta_{\mathrm{thresh}}$
+is satisfied at all sufficiently small $a$, since
+$\beta(a)\to\infty$ as $a\to 0$. Therefore the polymer-resolvent
+decay is \emph{automatic} in the continuum limit; the
+intermediate-coupling obstruction is exclusively a finite-$\beta$
+phenomenon. The remaining work is the Mosco / form-convergence step
+relating the lattice gap to its continuum limit:
+\[
+m_{\mathrm{phys}}(a) \;=\; \frac{\Gap(a)}{a}
+\;\sim\;
+\frac{1}{a}\sqrt{\frac{2\beta(a)}{N}}
+\;\sim\;
+\frac{1}{a\sqrt{\log(1/a\Lambda)}}.
+\]
+This naively diverges as $a\to 0$, requiring an appropriate
+renormalization-group rescaling to extract the physical gap.
+
+\section{Open directions}
+
+\begin{enumerate}[label=(O\arabic*)]
+\item\textbf{Closed-form $r_N$.} Identify the constant
+$O(\beta^0)$ term in $\Gap_{\SU(N)}$ as an explicit
+group-theoretic combination. Conjecture: $r_N$ admits a closed form
+involving the dimension $d_G = N^2-1$ and the $d$-symbol norm
+$\sum_{abc}d_{abc}^2$.
+
+\item\textbf{Closed-form $c_1$ for general $N$.} Extend the
+$311\sqrt 6/9216$ derivation. The structural ingredients (Wilson
+Taylor coefficients, angular averages, Laguerre matrix elements in
+$d_G$ dimensions) are identical; the bottleneck is the explicit
+$\E_{S^{d_G-1}}[(\Tr A^3)^2]$ for $N\ge 4$.
+
+\item\textbf{Closing the intermediate coupling window.}
+$\beta \in (0.175, 7.3)$ for $\SU(3)$ in $d=4$ remains the only
+unresolved finite-$\beta$ window. The $\sigma_{\mathrm{geom}}$ floor
+plus a typicality estimate on the small-field event is the natural
+attack.
+
+\item\textbf{Channel threshold sharpening.} Extending
+$T_{\mathrm{ch}}$ from $4\times 4$ to $8\times 8$ or larger should
+further reduce $\rho_{\mathrm{ch}}$, sharpening the threshold further.
+
+\item\textbf{Mosco convergence on the AF trajectory.} Combined with
+the polymer decay, the universal radial gap of Theorem~\ref{thm:su3-asym}
+gives the input for a uniform-in-$\Lambda$ Poincar\'e inequality. The
+Mosco / form-convergence step closing the continuum limit remains the
+final piece.
+\end{enumerate}
+
+\appendix
+
+\section{Explicit pentadiagonal entries of $\hat T^2$}\label{app:T2}
+
+We verify the entries of $\hat T^2$ used in
+Section~\ref{ssec:c1}(b) directly from the tridiagonal Jacobi matrix
+of Lemma~\ref{lem:laguerre-8}. The nonzero entries of $\hat T$ are
+\[
+\hat T_{n,n} \;=\; 2n+4,
+\qquad
+\hat T_{n,n+1} \;=\; \hat T_{n+1,n} \;=\; -\sqrt{(n+1)(n+4)}.
+\]
+
+\paragraph{Pentadiagonal structure.}
+Since $\hat T$ is tridiagonal, $(\hat T^2)_{mn} = \sum_k \hat T_{mk}\hat T_{kn}$
+vanishes unless $|m-n|\le 2$. The three nontrivial families are computed
+from~\eqref{eq:T2-entries}:
+\begin{align*}
+\hat T^2_{n,n}
+&\;=\; \hat T_{n,n-1}^2 + \hat T_{n,n}^2 + \hat T_{n,n+1}^2 \\
+&\;=\; n(n+3) + (2n+4)^2 + (n+1)(n+4) \\
+&\;=\; 6n^2 + 24n + 20, \\[3pt]
+\hat T^2_{n+1,n}
+&\;=\; \hat T_{n+1,n}\,\hat T_{n,n} + \hat T_{n+1,n+1}\,\hat T_{n+1,n} \\
+&\;=\; \hat T_{n+1,n}\bigl(\hat T_{n,n}+\hat T_{n+1,n+1}\bigr) \\
+&\;=\; -\sqrt{(n+1)(n+4)}\,(4n+10),\\[3pt]
+\hat T^2_{n+2,n}
+&\;=\; \hat T_{n+2,n+1}\,\hat T_{n+1,n}
+\;=\; \sqrt{(n+1)(n+2)(n+4)(n+5)}.
+\end{align*}
+
+\paragraph{Numerical values used in $S_0$, $S_1$.}
+\begin{center}
+\begin{tabular}{c|rrrrr}
+\toprule
+$n$ & $0$ & $1$ & $2$ & $3$ & $4$ \\
+\midrule
+$\hat T^2_{n,n}$
+& $20$ & $50$ & $92$ & $146$ & $212$ \\
+$\hat T^2_{n+1,n}$
+& $-20$ & $-14\sqrt{10}$ & $-54\sqrt{2}$ & $-44\sqrt{7}$ & $-52\sqrt{10}$ \\
+$\hat T^2_{n+2,n}$
+& $2\sqrt{10}$ & $6\sqrt{5}$ & $6\sqrt{14}$ & $4\sqrt{70}$ & $12\sqrt{15}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+(Squared values appearing in the Rayleigh--Schr\"odinger sums:
+$|\hat T^2_{1,0}|^2 = 400$,
+$|\hat T^2_{2,0}|^2 = 40$,
+$|\hat T^2_{2,1}|^2 = 1960$,
+$|\hat T^2_{3,1}|^2 = 180$.)
+
+\paragraph{Verification of $S_0, S_1$.}
+\begin{align*}
+S_0 &\;=\; \frac{|\hat T^2_{1,0}|^2}{0-1} + \frac{|\hat T^2_{2,0}|^2}{0-2}
+\;=\; \frac{400}{-1} + \frac{40}{-2} \;=\; -420,\\
+S_1 &\;=\; \frac{|\hat T^2_{0,1}|^2}{1-0} + \frac{|\hat T^2_{2,1}|^2}{1-2} + \frac{|\hat T^2_{3,1}|^2}{1-3}\\
+&\;=\; \frac{400}{1} + \frac{1960}{-1} + \frac{180}{-2}
+\;=\; 400 - 1960 - 90 \;=\; -1650.
+\end{align*}
+Hence $S_1 - S_0 = -1230$, giving~\eqref{eq:c1-quart}.
+
+\paragraph{Reproducibility.}
+The full computation reduces to integer arithmetic (after factoring out
+the common $\sqrt{6}$). A short \texttt{sympy} script that reproduces
+$c_1 = -311\sqrt{6}/9216$ from these entries is given below.
+
+\begin{verbatim}
+from sympy import sqrt, Rational, simplify, Integer
+# Pentadiagonal T^2 entries (squared, used in sums)
+T2sq = {(1,0): Integer(400), (2,0): Integer(40),
+        (2,1): Integer(1960), (3,1): Integer(180)}
+# S_n = sum_{m != n} (T^2_{mn})^2 / (n - m)
+S0 = sum(v / Integer(0 - m) for (m, n), v in T2sq.items() if n == 0)
+S1 = sum(v / Integer(1 - m) for (m, n), v in T2sq.items() if n == 1)
+S1 += T2sq[(1, 0)] / Integer(1)            # T^2_{0,1} = T^2_{1,0}
+# c_1^{qrt-2nd} = (S1 - S0) * sqrt(6) / 18432
+c1_quart = simplify((S1 - S0) * sqrt(6) / 18432)
+c1_sext  = Rational(19, 576) * sqrt(6)     # = 304*sqrt(6)/9216
+c1 = simplify(c1_sext + c1_quart)
+print(c1)   # -311*sqrt(6)/9216
+\end{verbatim}
+
+\section*{Acknowledgments}
+
+This paper synthesizes computational results from notebooks
+GOODRESULTS\{1,\ldots,5\} (February 2026), in conjunction with the
+broader $\sigma_{\mathrm{geom}}$ / Helffer--Sj\"ostrand framework
+developed in companion notes.
+
+\begin{thebibliography}{99}
+
+\bibitem{ShenZhuZhu2023} H.\ Shen, R.\ Zhu, X.\ Zhu (2023).
+\emph{Stochastic quantization of Yang--Mills--Higgs on the 2-d torus.}
+arXiv:2308.00040.
+
+\bibitem{CaoNissimSheffield2025} S.\ Cao, A.\ D.\ Nissim, S.\ Sheffield
+(2025). \emph{Continuum Yang--Mills mass gap from the lattice via a
+log-Sobolev inequality.} (Preprint.)
+
+\bibitem{notebooks} GOODRESULTS\{1,\ldots,5\}.ipynb. Internal
+computational notebooks, February 2026.
+
+\bibitem{Tlas2026} T.\ Tlas (2026). \emph{Gaussian concentration for
+$\SU(N)$ Yang--Mills.} arXiv:2603.25236.
+
+\bibitem{HelfferSjostrand} B.\ Helffer, J.\ Sj\"ostrand (1994).
+\emph{Decay of correlations for unbounded interacting spin systems.}
+
+\bibitem{BBD} R.\ Bauerschmidt, T.\ Bodineau, B.\ Dagallier (2025).
+\emph{Stochastic quantization, log-Sobolev inequalities and Yang--Mills.}
+arXiv:2503.24372.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,114 @@
+{
+  "counts": {
+    "exact_irrep_carriers": 10,
+    "full_fusion_projectors": 44,
+    "identity_path_transitions": 3010,
+    "local_path_cards": 1624,
+    "maximum_domain_dimension": 45,
+    "path_transitions": 2280,
+    "projected_path_transitions": 8358,
+    "stage3b_feasible_projectors": 30,
+    "tensor_domains": 20
+  },
+  "files": {
+    "y5_casimir_channel_projectors.json.gz": {
+      "records": 44,
+      "sha256": "36270601505d32c8dcf7baf0fd98f3335597b4cfe322255fb84ff235c37ffcd1"
+    },
+    "y5_irrep_carriers.json.gz": {
+      "records": 10,
+      "sha256": "0506cb88f6a7f941c37f348f4a6b36628a31e6fe0f858c99ad20aa7adecf9167"
+    },
+    "y5_path_projector_cards.json.gz": {
+      "records": 1624,
+      "sha256": "75c5cb30ea57a09b69aebbcd72e7002a3d25de0f2f8a315bc10e6e9e99c2da7a"
+    }
+  },
+  "gates": {
+    "C0_dependencies": {
+      "feasible_irreps": 10,
+      "passed": true,
+      "path_edges": 42,
+      "stage3a_summary_found": false,
+      "stage3b_sha256": "9084bd7c7ce0e6004ef89ab10285168d03d87fe7fbb013d9798f9c420caf36bb"
+    },
+    "C1_exact_carriers": {
+      "carriers": 10,
+      "casimir_checked": true,
+      "chevalley_serre_relations_checked": true,
+      "generator_matrices": 90,
+      "generator_nnz": 426,
+      "metric_adjoint_checked": true,
+      "passed": true
+    },
+    "C2_channel_projectors": {
+      "casimir_eigenvalue_checked": true,
+      "completeness_checked": true,
+      "full_fusion_projectors": 44,
+      "generator_commutation_checked": true,
+      "idempotence_checked": true,
+      "maximum_domain_dimension": 45,
+      "metric_self_adjoint_checked": true,
+      "orthogonality_checked": true,
+      "passed": true,
+      "projector_nnz": 2646,
+      "stage3b_feasible_projectors": 36,
+      "tensor_domains": 20
+    },
+    "C3_domino_projectors": {
+      "3x3_bar3": "(I-Swap)/2",
+      "3x3_six": "(I+Swap)/2",
+      "3x3bar_octet": "I-P1",
+      "3x3bar_singlet": "delta_ij delta_kl / 3",
+      "exact_matrix_match": true,
+      "passed": true
+    },
+    "C4_path_cards": {
+      "all_nonzero_edges_resolved": true,
+      "identity_transitions": 3010,
+      "passed": true,
+      "path_cards": 1624,
+      "projected_transitions": 8358
+    },
+    "C5_round_trip": {
+      "carrier_records": 10,
+      "passed": true,
+      "path_cards": 1624,
+      "projector_records": 44
+    }
+  },
+  "input": {
+    "path": "/mnt/data/Y5_STAGE3B_EXACT/y5_local_irrep_paths.json.gz",
+    "sha256": "9084bd7c7ce0e6004ef89ab10285168d03d87fe7fbb013d9798f9c420caf36bb"
+  },
+  "meta": {
+    "a100_required": false,
+    "date": "2026-06-13",
+    "hardware": "CPU",
+    "platform": "Linux-4.4.0-x86_64-with-glibc2.41",
+    "python": "3.13.5 (main, Jun 25 2025, 18:55:22) [GCC 14.2.0]",
+    "sympy": "1.14.0",
+    "version": "2026-06-14-y5-stage3c-v1",
+    "walltime_s": 10.697669744491577
+  },
+  "next_stage": "Stage 3D: lift the projector sequences to the prefix tensor spaces of each local token signature, contract them with exact trace-index wiring, and first reproduce the O(y^2) domino amplitudes from raw color indices.",
+  "passed": true,
+  "scope": {
+    "completed": [
+      "exact traceless polynomial carrier models",
+      "exact rational SU(3) generator matrices",
+      "exact invariant carrier metrics",
+      "exact total Casimir operators",
+      "all full fusion-channel projectors",
+      "domino projector regression",
+      "all Stage-3B paths mapped to projectors"
+    ],
+    "not_completed": [
+      "lifting path projectors to full prefix color spaces",
+      "global plaquette trace-index contraction",
+      "resolvent-weighted fourth-order amplitudes",
+      "des-Cloizeaux folded terms",
+      "cube-boundary flatness residual"
+    ]
+  }
+}

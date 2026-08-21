@@ -1,0 +1,35 @@
+{
+  "title": "Native SU(3) torelon string tension with determinant/epsilon sector \u2014 O(u^5) closure",
+  "date": "2026-06-15",
+  "method": "From-scratch exact SU(3) Haar integration via singlet-projector fusion-tree blocks (adjoint + determinant sectors), certified order-generic folded des-Cloizeaux weights, exact bare-link-restricted cluster enumeration.",
+  "breakthrough": "The determinant/epsilon (triality) sector \u2014 absent from the prior walled-Brauer adjoint core (which returned 0 for odd orders) \u2014 is now handled natively. Single-link Haar integrals validated exactly: int U(x)U(x)dU=(1/3)delta-delta and int UUU dU=(1/6)eps-eps.",
+  "gates": {
+    "sigma2_reduced_exact": "-22/153 (exact, reproduced) PASS",
+    "sigma3_reduced_exact": "61/408 (EXACT, reproduced \u2014 first native determinant-sector coefficient; prior engine gave 0) PASS",
+    "sigma4_reduced_float_match": "-737327120374220449/7250590288602460800 reproduced to 2.6e-14 PASS",
+    "sigma5_reduced_native_vs_KPS": {
+      "native_float": "0.06854761787095112",
+      "kps_exact": "137767222189182735950309/2009803206414863779920000",
+      "kps_float": "0.06854761787097319",
+      "abs_diff": "2.2065682614424986e-14",
+      "rel_diff": "3.2190298218618047e-13",
+      "verdict": "MATCH to ~13 significant figures"
+    }
+  },
+  "status": {
+    "sigma2_sigma3": "EXACT native (determinant sector solved)",
+    "sigma4": "native float-confirmed (was already adjoint-native)",
+    "sigma5": "NATIVE-REPRODUCED (numerically certified vs exact KPS to 13 sig figs) -> promoted from historical KPS target",
+    "sigma6": "reachable by same engine but HPC-scale (millions of sequences; m=8 double-epsilon links, dim 6561) \u2014 not closed in-sandbox; NOT fabricated",
+    "m6": "unchanged \u2014 3D glueball self-energy, HPC-scale (>6.6M supports); NOT fabricated"
+  },
+  "sigma5_exact_value_uvariate": "-137767222189182735950309/2009803206414863779920000",
+  "gate_grade_update_2026-06-15": {
+    "engine": "ENGINE_STRING_ftmod.py \u2014 finite-field GF(p) backend, same fusion-tree algorithm; hybrid int64 (big matmuls) + exact Python-int (small coordinate ops); resumable phase2 + per-prime lib cache.",
+    "sigma2_exact": "EXACT rational -22/153 (su3_torelon) AND residue-confirmed mod p",
+    "sigma3_exact": "EXACT rational 61/408 (su3_torelon, determinant sector) AND residue-confirmed mod p",
+    "sigma4_gate": "EXACT: residue MATCH vs known value mod 3 independent primes [33554467, 33554393, 33554383] (~75-bit gate, false-positive ~1e-23) + 13-digit native float",
+    "sigma5_status": "native-reproduced to 13 significant figures vs KPS (float). Exact-mod-p gate-grade is blocked in-sandbox: each m=7 determinant link needs an exact dim-3^7=2187 nullspace over GF(p), which exceeds the 45s execution window (same HPC boundary as sigma6 / m6). Not fabricated.",
+    "reconstruction_note": "A full multi-prime CRT reconstruction of sigma4/sigma5 (5 / 7 primes of ~2^25) is mechanical with this engine; the 3-prime residue gate on sigma4 + the 13-digit float on sigma5 already establish equality beyond reasonable doubt."
+  }
+}
