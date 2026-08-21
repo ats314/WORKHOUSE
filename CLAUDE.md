@@ -108,7 +108,7 @@ make verify    # re-derive every exact claim (T1/T2)
 make status    # contradiction and gap registers
 make frontier  # regenerate FRONTIER.md — established / disputed / refuted / next
 make certified # regenerate CERTIFIED.md — every checked claim, ranked by tier
-make catalogue # regenerate index/claims.jsonl and index/symbols.jsonl
+make catalogue # regenerate index/ — claims.jsonl, symbols.jsonl, graph.jsonl
 make lit       # published work, and which claim each paper bears on
 make check     # ruff + pytest, what CI runs
 make lean      # T0: proof-check the Lean core (needs elan; see lean/README.md)
@@ -117,6 +117,7 @@ make manifest  # re-pin theory/ after a deliberate, reviewed corpus change
 workhouse verify --only 'h_4^side'  # re-establish ONE claim, with its numbers
 workhouse verify --tier 1           # only the exact re-derivations
 workhouse frontier --brief          # the block injected at session start
+workhouse why C2                    # everything recorded about one claim id
 workhouse triage /path/to/archive   # survey an unpinned collection
 ```
 

@@ -8,8 +8,10 @@ import sys
 from . import certified as certified_mod
 from . import claims as claims_mod
 from . import frontier as frontier_mod
+from . import graph as graph_mod
 from . import ledger as ledger_mod
 from . import literature as literature_mod
+from . import navigator as navigator_mod
 from . import search as search_mod
 from . import triage as triage_mod
 from .invariants import SUITES
@@ -135,13 +137,26 @@ def _search(query: str, corpus: bool, limit: int) -> int:
 def _index(write: bool) -> int:
     if write:
         claims_path, symbols_path = claims_mod.write()
-        for path in (claims_path, symbols_path):
+        graph_path = graph_mod.write()
+        for path in (claims_path, symbols_path, graph_path):
             rows = len(path.read_text().splitlines())
             print(f"wrote {path.relative_to(claims_mod.ROOT)}: {rows} records")
+        problems = graph_mod.validate()
+        if problems:
+            print("\n\033[31mGraph problems\033[0m")
+            for p in problems:
+                print(f"  - {p}")
+            return 1
         return 0
     for claim in claims_mod.collect():
         print(f"{claim.id}\t{claim.kind}\t{claim.statement}")
     return 0
+
+
+def _why(node_id: str) -> int:
+    text, found = navigator_mod.explain(node_id)
+    print(text)
+    return 0 if found else 1
 
 
 def _triage(directory: str, limit: int) -> int:
@@ -185,8 +200,14 @@ def main(argv: list[str] | None = None) -> int:
     )
     se.add_argument("--limit", type=int, default=20, help="claims to show (default 20)")
 
-    ix = sub.add_parser("index", help="the claim and symbol catalogues")
+    ix = sub.add_parser("index", help="the claim, symbol, and graph catalogues")
     ix.add_argument("-w", "--write", action="store_true", help="regenerate index/*.jsonl")
+
+    wy = sub.add_parser("why", help="everything the repository records about one claim")
+    wy.add_argument(
+        "id",
+        help="C2 | G14 | R5 | U3 | CONST:t_N | LEAN:newton_three | ADR:0005 | SYM:c_shp",
+    )
 
     li = sub.add_parser("lit", help="published work, and which claim each paper bears on")
     li.add_argument(
@@ -215,6 +236,8 @@ def main(argv: list[str] | None = None) -> int:
         return _search(args.query, args.corpus, args.limit)
     if args.command == "index":
         return _index(args.write)
+    if args.command == "why":
+        return _why(args.id)
     if args.command == "lit":
         return _lit(args.target)
     if args.command == "certified":

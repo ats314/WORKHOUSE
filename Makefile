@@ -21,7 +21,7 @@ verify:          ## Re-derive every exact claim in the corpus
 status:          ## Print the contradiction and gap registers
 	@.venv/bin/workhouse status
 
-catalogue:       ## Regenerate index/claims.jsonl and index/symbols.jsonl
+catalogue:       ## Regenerate the index/ catalogues: claims, symbols, graph
 	@.venv/bin/workhouse index --write
 
 lit:             ## Published work, and which claim each paper bears on
