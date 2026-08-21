@@ -28,7 +28,10 @@ for s in $stacks; do
         [ -d .venv ] || uv venv
         # shellcheck disable=SC1091
         . .venv/bin/activate
-        if   [ -f uv.lock ];           then uv sync
+        # --all-extras: a bare `uv sync` installs only the main dependencies, so
+        # ruff and pytest would be missing and check.sh would silently fall back
+        # to a system pytest that cannot import the package.
+        if   [ -f uv.lock ];           then uv sync --all-extras
         elif [ -f pyproject.toml ];    then uv pip install -e ".[dev]" || uv pip install -e .
         elif [ -f requirements.txt ];  then uv pip install -r requirements.txt
         fi
