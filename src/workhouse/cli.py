@@ -213,6 +213,36 @@ def _triage(directory: str, limit: int) -> int:
     return 0
 
 
+def _notes(scan: str | None, archive: str | None, queue_n: int | None) -> int:
+    from pathlib import Path
+
+    from . import notes as notes_mod
+
+    registry = notes_mod.load()
+    if scan is not None:
+        if not archive:
+            print("--scan needs --archive <id>; declare the id in ledger/notes.yaml first")
+            return 1
+        try:
+            target = notes_mod.write_manifest(Path(scan), archive, registry)
+        except (KeyError, NotADirectoryError) as exc:
+            print(str(exc))
+            return 1
+        registry = notes_mod.load()
+        rows = registry.manifests.get(archive, [])
+        print(f"wrote {target.relative_to(notes_mod.ROOT)}: {len(rows)} unique documents")
+        print(notes_mod.format_status(registry))
+        return 0
+    if queue_n is not None:
+        print(notes_mod.format_queue(registry, queue_n))
+        return 0
+    print(notes_mod.format_status(registry))
+    problems = notes_mod.validate(registry)
+    for problem in problems:
+        print(f"PROBLEM: {problem}")
+    return 1 if problems else 0
+
+
 def _rescue_negative_query(argv: list[str]) -> list[str]:
     """Let `workhouse search -5/48` work without the `--` incantation.
 
@@ -319,6 +349,29 @@ def main(argv: list[str] | None = None) -> int:
     t.add_argument("directory", help="path to the archive (read-only; nothing is copied)")
     t.add_argument("--limit", type=int, default=25, help="rows per section (default 25)")
 
+    no = sub.add_parser(
+        "notes",
+        help="the notes register: archive inventories, review queue, verdict status",
+    )
+    no.add_argument(
+        "--scan",
+        metavar="DIR",
+        help="inventory a mounted archive into notes/<archive-id>.jsonl (read-only)",
+    )
+    no.add_argument(
+        "--archive",
+        metavar="ID",
+        help="which declared archive --scan is inventorying",
+    )
+    no.add_argument(
+        "--queue",
+        type=int,
+        nargs="?",
+        const=20,
+        metavar="N",
+        help="the next documents to review, highest signal first (default 20)",
+    )
+
     args = parser.parse_args(argv)
     if args.command == "verify":
         return _verify(args.verbose, args.only, args.tier)
@@ -338,6 +391,8 @@ def main(argv: list[str] | None = None) -> int:
         return _frontier(args.write, args.brief)
     if args.command == "triage":
         return _triage(args.directory, args.limit)
+    if args.command == "notes":
+        return _notes(args.scan, args.archive, args.queue)
     return _status()
 
 
