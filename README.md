@@ -30,14 +30,14 @@ with 928 files and heavy copying, a value in forty files may have one origin.
 | Tier | Meaning | Count |
 |---|---|---|
 | **T0** | Lean 4 compiles it, no `sorry`, standard axioms only | 21 |
-| **T1** | re-derived symbolically from stated definitions, in exact rationals | 61 |
-| **T2** | float agreement within a tolerance printed in the check's detail line | 19 |
+| **T1** | re-derived symbolically from stated definitions, in exact rationals | 80 |
+| **T2** | float agreement within a tolerance printed in the check's detail line | 20 |
 | **T3** | a document says so and nothing checks it | everything else |
 
 **T3 is the default.** Promoting a claim means writing the check, not citing the
 sentence.
 
-`CERTIFIED.md` lists all 101 certified claims individually, ranked by tier, each
+`CERTIFIED.md` lists all 121 certified claims individually, ranked by tier, each
 with the command that re-establishes it alone:
 
 ```bash
