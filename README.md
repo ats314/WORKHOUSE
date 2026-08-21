@@ -140,7 +140,7 @@ scripts/    stack detection, bootstrap, check — one source of truth for CI and
 
 ## What the verifier found
 
-58 invariants currently re-derive cleanly. Six are recorded as **findings**.
+65 invariants currently re-derive cleanly. Six are recorded as **findings**.
 Three are places where the corpus's own wording is slightly tighter than its
 numbers:
 
@@ -218,6 +218,32 @@ This is a sufficient criterion from a conservative bound, not the sharp
 constant, and it says nothing about the ball's interior. G11 is partially
 discharged, not closed. See
 [ADR 0003](docs/decisions/0003-near-gamma-exclusion-radius.md).
+
+## A mechanism, offered for refutation
+
+`G14` asks why `B_shp = D_shp = 0` at every solved rank — the `L⁻⁴` tier that
+cubic symmetry allows but the microscopic contraction never populates. The
+corpus calls it *"a dynamical selection rule with no proved mechanism."*
+
+The proposal is that it is kinematics, not dynamics. Clearing the denominator,
+the numerator basis stratifies by total degree in the `aᵢ`, and the vanishing
+pair `{B_shp, D_shp}` is **exactly** the degree-3 part. Since `aᵢ ~ L⁻²`, "the
+`L⁻⁴` tier" and "degree 3" are the same set.
+
+The face-to-link incidence is the curl matrix `[d]_×`, linear in `d`, obeying
+`B B† = q·I − d·conj(d)ᵀ` with eigenvalues `(0, q, q)` — which reproduces the
+recorded second-order spectrum exactly. One hop costs one power of `a`, so
+`O(u^{2r})` admits numerator degree at most `r`. Degree 3 is unreachable at
+fourth order, and `B_shp = D_shp = 0` follows without any dynamical input.
+
+The `O(u²)` row is a genuine check: cubic symmetry permits a degree-2
+second-order term and none appears.
+
+**The prediction:** the `L⁻⁴` tier appears at **sixth** order, not fifth. G9
+computes `m₆` and settles it — if `B_shp = D_shp = 0` comes back again, the
+degree bound is not the mechanism. Recorded as a conjecture with its
+assumptions stated, in
+[ADR 0004](docs/decisions/0004-tier-collapse-as-a-degree-bound.md).
 
 ## Status
 
