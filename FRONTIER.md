@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 122/122 checks pass.
+**T1/T2 — re-derived here.** 128/128 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -33,6 +33,7 @@ it cannot drift from what the repository actually checks.
 | restored payloads (G1) | 11/11 |
 | coupling erratum (C4/G2) | 2/2 |
 | tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
+| notes program: SAFE, Davies, coercivity (G20-G23) | 6/6 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -102,6 +103,10 @@ Claims this repository made and withdrew:
 - `G17` PC-2 free-energy stability and the source-radius reduction **[load-bearing]**
 - `G18` The spectral bridge **[load-bearing]**
 - `G19` Continuum limit
+- `G20` SAFE-region curvature certificate
+- `G21` Davies/Combes-Thomas O(m) decay for the massive Maxwell 1-form kernel
+- `G22` Coercivity via Cartan alignment
+- `G23` The OS bridge with uniform constants
 
 **Discharged** — finished work stays recorded, not re-queued:
 

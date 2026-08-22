@@ -347,6 +347,99 @@ gaps:
     title: Continuum limit
     detail: "Nothing in the corpus reaches the scaling window; Borel-Pade is consistent, not controlled."
 
+  # ------------------------------------------------------------------
+  # G20-G23: the analysis-side program (the maintainer's notes archive,
+  # RESEARCH_2026-08), scaffolded 2026-08-22 after the first review pass
+  # (docs/referee/notes_review_core_theory_2026-08-22.md). A deliberate
+  # charter extension: the repository now tracks two programs. These
+  # gaps enter at T3 like everything else; the review's findings are
+  # part of each entry because a gap that hides its own refutations is
+  # how a register rots.
+
+  - id: G20
+    tier: 3
+    state: open
+    title: SAFE-region curvature certificate
+    detail: >
+      The notes program's quantitative core: a certified lower bound on
+      the projected physical Hessian H_phys over a SAFE ball around the
+      identity (claimed constants kappa* = 0.25, delta = 0.006, headline
+      min eigenvalue 0.248), feeding curvature -> LSI -> gap. As
+      reviewed, the headline is UNREPRODUCED: the sole source table is
+      contradicted by the archive's own scans and independent
+      recomputation (single-link Haar profile is flat at 1/4), the
+      operator's code has never been executed, and no lattice size is
+      stated anywhere. What discharging requires: run the imported
+      H_phys definition (notes/imported/RESEARCH_2026-08/) on a declared
+      cluster and produce a reproducible number with stated convention
+      -- or record the refutation. The only well-defined constant so
+      far, V_Haar Hessian = I/4 at the identity, is machine-checked in
+      the notes-program suite. The alpha = 0.976 RG-degradation story is
+      refuted as stated (its own one-step bound is subtractive; see the
+      FINDING check) and the honest mechanism is G23's.
+
+  - id: G21
+    tier: 3
+    state: open
+    title: Davies/Combes-Thomas O(m) decay for the massive Maxwell 1-form kernel
+    detail: >
+      The strongest technical result in the notes archive: |G(b,b')| <=
+      (2/m^2) exp(-eta dist) for G = (m^2 + alpha d1* d1)^-1 on lattice
+      1-forms, with eta = arcosh(1 + m^2/(2 alpha D_E)) = 2 arsinh(m /
+      (2 sqrt(alpha D_E))) -- an O(m) exponent where naive resolvent
+      bounds give O(m^2), plus a boundary-local row-sum refinement.
+      Canonical proof source is the archive's MAXWELL Appendix H (the
+      one-page streamline carries a spurious factor 2 that voids its
+      prefactor derivation as sketched); verified numerically at review
+      on a periodic lattice with margin <= 0.31, and the exponent
+      identity is a registered check. Open work: review Appendix H in
+      full, promote the lattice verification to a standing T2 check at
+      several (m, alpha), and record the C_partial name collision (the
+      streamline and Appendix H use the same symbol for different
+      constants) in the symbols ledger.
+
+  - id: G22
+    tier: 3
+    state: open
+    title: Coercivity via Cartan alignment
+    detail: >
+      The notes program's crux conjecture: on the rough set (average
+      plaquette energy >= eps), configurations far from Cartan alignment
+      have force norm bounded below, volume-uniformly. The original
+      6-constraints-vs-3-DOF counting argument is refuted (stationarity
+      at a link is 3 equations, and three orthogonal antipodal pairs sum
+      to zero with no common Cartan direction -- a registered FINDING
+      check), so whatever truth the conjecture has must come from the
+      gauge-coupled structure across links. Falsifier, required by this
+      register's own discipline: exhibit a configuration with
+      B_avg >= eps, alignment bounded away from 1, and per-link force
+      below any fixed floor -- by constrained minimization, not random
+      sampling (the archive's 64k-sample "hunt" has no falsifying
+      power and is set aside in the notes register).
+
+  - id: G23
+    tier: 3
+    state: open
+    title: The OS bridge with uniform constants
+    detail: >
+      The notes program's spine as a conditional chain: local curvature
+      -> LSI -> diffusion gap -> exponential clustering -> OS
+      reconstruction -> Hamiltonian mass gap, with two named holes that
+      no archive document closes. (1) Uniformity: every implication
+      holds at fixed cutoff and volume once a curvature floor rho_0 is
+      granted; nothing supplies rho_0 uniform in a and volume. (2) The
+      time splice: the chain proves decay in Langevin/diffusion time
+      but the OS antecedent needs decay in Euclidean physical time --
+      different variables, and the bridge (Stroock-Zegarlinski-type
+      equivalences) is a different theorem with different hypotheses,
+      never stated in the archive. The sound supporting pieces are
+      recorded by extraction: the Schur-complement marginalization
+      mechanism (alpha = 1, classical), the RP-pushforward permanence
+      lemma, and the Mosco/tightness program. The proved no-go in the
+      archive (RICCATI 04_no_go section 2) marks where the clean
+      mechanism cannot apply to gauge RG; the stronger "forces
+      commutativity" no-go is unproved and set aside.
+
 # The corpus's own summary of what gates what.
 dependency_spine:
   - "G3 -> G9 and the mass ratio at orders 4-6"

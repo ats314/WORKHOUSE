@@ -106,7 +106,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 97
+## T1 — re-derived exactly — 102
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -247,6 +247,23 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `t(u) >= t_3 u^2 for u > 0, so the gap bound is safe`
   - src/workhouse/invariants.py:732 · MASTER_THEORY §4.4
   - `workhouse verify --only 't(u) >= t_3 u^2 for u > 0, so the gap bound is safe'`
+**notes program: SAFE, Davies, coercivity (G20-G23)**
+
+- `FINDING: six bounded vectors in R^3 refute the 6-vs-3 Cartan counting`
+  - src/workhouse/invariants.py:2388 · notes review 2026-08-22 / G22
+  - `workhouse verify --only 'FINDING: six bounded vectors in R^3 refute the 6-vs-3 Cartan counting'`
+- `FINDING: the alpha^n RG iteration contradicts its own one-step bound`
+  - src/workhouse/invariants.py:2365 · notes review 2026-08-22 / G20
+  - `workhouse verify --only 'FINDING: the alpha^n RG iteration contradicts its own one-step bound'`
+- `G21 exponent identity: arcosh(1 + 2x^2) = 2 arsinh(x)`
+  - src/workhouse/invariants.py:2291 · notes review 2026-08-22 / G21
+  - `workhouse verify --only 'G21 exponent identity: arcosh(1 + 2x^2) = 2 arsinh(x)'`
+- `V_Haar Hessian at the identity is exactly I/4 (adjoint Casimir 3)`
+  - src/workhouse/invariants.py:2312 · notes review 2026-08-22 / G20
+  - `workhouse verify --only 'V_Haar Hessian at the identity is exactly I/4 (adjoint Casimir 3)'`
+- `center elements are critical points of Re Tr, with exact heights`
+  - src/workhouse/invariants.py:2407 · notes review 2026-08-22 / G20
+  - `workhouse verify --only 'center elements are critical points of Re Tr, with exact heights'`
 **old-to-new crosswalk**
 
 - `Phi_C at the high-symmetry points`
@@ -436,7 +453,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:812 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
-## T2 — float agreement within a stated tolerance — 25
+## T2 — float agreement within a stated tolerance — 26
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -502,6 +519,11 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `the statement is non-vacuous only below an explicit coupling`
   - src/workhouse/invariants.py:765 · GLUEBALL §18.3
   - `workhouse verify --only 'the statement is non-vacuous only below an explicit coupling'`
+**notes program: SAFE, Davies, coercivity (G20-G23)**
+
+- `G21 Davies bound verified on the 3x3 periodic 2D lattice, arb-certified`
+  - src/workhouse/invariants.py:2438 · notes review 2026-08-22 / G21
+  - `workhouse verify --only 'G21 Davies bound verified on the 3x3 periodic 2D lattice, arb-certified'`
 **old-to-new crosswalk**
 
 - `bandwidth is preserved only if Delta_C vanishes`

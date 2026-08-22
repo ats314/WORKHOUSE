@@ -10,9 +10,16 @@ def test_ledgers_load_and_validate():
 
 
 def test_registers_are_complete():
+    """C1-C22 is closed (a verbatim transcription of the corpus's own
+    register, which cannot grow); the gap register is the open-work list and
+    grew deliberately on 2026-08-22 when G20-G23 scaffolded the analysis-side
+    notes program (docs/referee/notes_review_core_theory_2026-08-22.md). The
+    rule kept: gaps are contiguous from G1 with no holes, so a deleted or
+    renumbered gap cannot pass silently."""
     led = L.load()
     assert led.contradiction_ids == {f"C{i}" for i in range(1, 23)}
-    assert led.gap_ids == {f"G{i}" for i in range(1, 20)}
+    assert led.gap_ids == {f"G{i}" for i in range(1, len(led.gap_ids) + 1)}
+    assert led.gap_ids >= {f"G{i}" for i in range(1, 24)}
 
 
 def test_only_the_off_axis_coefficient_remains_open():

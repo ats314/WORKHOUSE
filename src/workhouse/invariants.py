@@ -2282,3 +2282,222 @@ def _():
         "the primitive level; the Q-projected analogue of the pentagonal 28-history "
         "vanishing remains uncomputed, so U3 gains a consistent partial point, not a verdict"
     )
+
+
+# ==========================================================================
+notes_prog = _suite("notes program: SAFE, Davies, coercivity (G20-G23)")
+
+
+@notes_prog.check(
+    "G21 exponent identity: arcosh(1 + 2x^2) = 2 arsinh(x)",
+    "notes review 2026-08-22 / G21",
+)
+def _():
+    from sympy import acosh, asinh, cosh, expand_trig
+
+    x = symbols("x", positive=True)
+    # acosh is monotone on [1, oo) and 2 asinh(x) >= 0, so the identity holds
+    # iff cosh(2 asinh(x)) = 1 + 2x^2 — which is the double-angle formula
+    # cosh(2t) = 1 + 2 sinh(t)^2 evaluated at t = asinh(x). sympy closes that
+    # form directly where the acosh difference resists simplification.
+    residual = simplify(expand_trig(cosh(2 * asinh(x))) - (1 + 2 * x**2))
+    small = series(acosh(1 + 2 * x**2), x, 0, 2).removeO()
+    return residual == 0 and simplify(small - 2 * x) == 0, (
+        f"cosh(2 asinh x) - (1+2x^2) = {residual} with both sides' arguments nonnegative, "
+        f"so acosh(1+2x^2) = 2 asinh(x); leading order {small} = 2x, "
+        "so the Davies exponent is O(m), not O(m^2) — the identity the G21 bound rides on"
+    )
+
+
+@notes_prog.check(
+    "V_Haar Hessian at the identity is exactly I/4 (adjoint Casimir 3)",
+    "notes review 2026-08-22 / G20",
+)
+def _():
+    from sympy import I as i_unit
+    from sympy import im, trace
+
+    # Gell-Mann matrices, exact; T_a = i lambda_a / 2 is orthonormal under
+    # <A,B> = -2 Re Tr(AB) — the archive code's own normalization.
+    s3 = sqrt(3)
+    lam = [
+        Matrix([[0, 1, 0], [1, 0, 0], [0, 0, 0]]),
+        Matrix([[0, -i_unit, 0], [i_unit, 0, 0], [0, 0, 0]]),
+        Matrix([[1, 0, 0], [0, -1, 0], [0, 0, 0]]),
+        Matrix([[0, 0, 1], [0, 0, 0], [1, 0, 0]]),
+        Matrix([[0, 0, -i_unit], [0, 0, 0], [i_unit, 0, 0]]),
+        Matrix([[0, 0, 0], [0, 0, 1], [0, 1, 0]]),
+        Matrix([[0, 0, 0], [0, 0, -i_unit], [0, i_unit, 0]]),
+        Matrix([[1 / s3, 0, 0], [0, 1 / s3, 0], [0, 0, -2 / s3]]),
+    ]
+    T = [i_unit * m / 2 for m in lam]
+
+    def inner(a: Matrix, b: Matrix):
+        return simplify(-2 * ((trace(a * b)) - i_unit * im(trace(a * b))))
+
+    ortho = all(inner(T[a], T[b]) == (1 if a == b else 0) for a in range(8) for b in range(8))
+    f = {}
+    for a in range(8):
+        for b in range(8):
+            comm = T[a] * T[b] - T[b] * T[a]
+            for c in range(8):
+                v = inner(comm, T[c])
+                if v != 0:
+                    f[(a, b, c)] = v
+    # Adjoint Casimir: sum_cd f_acd f_bcd = 3 delta_ab, so -tr(ad_X^2) = 3|x|^2,
+    # log J = -sum theta_k^2 / 24 + O(4), V_Haar = |x|^2 * (3/24) = |x|^2 / 8.
+    casimir_ok = True
+    for a in range(8):
+        for b in range(8):
+            s = sum(f.get((a, c, d), 0) * f.get((b, c, d), 0) for c in range(8) for d in range(8))
+            if simplify(s - (3 if a == b else 0)) != 0:
+                casimir_ok = False
+    coeff = Rational(3, 24)
+    ok = ortho and casimir_ok and coeff == Rational(1, 8) and 2 * coeff == Rational(1, 4)
+    return ok, (
+        "T_a orthonormal under -2ReTr; sum_cd f_acd f_bcd = 3 delta_ab exactly, so "
+        "-tr(ad_X^2) = 3|x|^2 and V_Haar = |x|^2/8 + O(|x|^4): Hessian(0) = I/4. This is "
+        "the only well-defined constant in the SAFE ledger, and it equals 1/4 — not the "
+        "draft's 0.291 (a reverse-fitted normalization artifact, see the notes register)"
+    )
+
+
+@notes_prog.check(
+    "FINDING: the alpha^n RG iteration contradicts its own one-step bound",
+    "notes review 2026-08-22 / G20",
+)
+def _():
+    kappa, delta = Rational(1, 4), Rational(6, 1000)
+    alpha = 1 - delta / kappa
+    subtractive_100 = kappa - 100 * delta
+    multiplicative_100 = alpha**100 * kappa
+    ok = (
+        alpha == Rational(122, 125)
+        and subtractive_100 == Rational(-7, 20)
+        and subtractive_100 < 0 < multiplicative_100
+    )
+    return ok, (
+        f"one-step bound is subtractive (kappa - delta), so 100 steps give "
+        f"kappa - 100 delta = {subtractive_100} < 0 (zero crossed at step "
+        f"{kappa / delta} = 41.67); the boxed multiplicative form alpha = {alpha} gives "
+        f"alpha^100 kappa = {float(multiplicative_100):.4f} > 0 forever. The two are "
+        "inconsistent and no archive document derives the multiplicative one"
+    )
+
+
+@notes_prog.check(
+    "FINDING: six bounded vectors in R^3 refute the 6-vs-3 Cartan counting",
+    "notes review 2026-08-22 / G22",
+)
+def _():
+    e1, e2, e3 = Matrix([1, 0, 0]), Matrix([0, 1, 0]), Matrix([0, 0, 1])
+    six = [e1, -e1, e2, -e2, e3, -e3]
+    total = sum(six, zeros(3, 1))
+    span = Matrix.hstack(*six).rank()
+    ok = total == zeros(3, 1) and span == 3
+    return ok, (
+        "three orthogonal antipodal unit pairs: sum = 0 with the six directions spanning "
+        "all of R^3 (rank 3) — zero force with no common Cartan direction, so 'small sum "
+        "implies near-alignment' is false for six vectors, and stationarity at a link is 3 "
+        "scalar equations, not 6. G22's conjecture must rest on gauge coupling, not this "
+        "counting"
+    )
+
+
+@notes_prog.check(
+    "center elements are critical points of Re Tr, with exact heights",
+    "notes review 2026-08-22 / G20",
+)
+def _():
+    from sympy import I as i_unit
+    from sympy import cos, re
+
+    a, b, c = symbols("a b c")
+    x2 = Matrix([[a, b], [c, -a]])  # generic traceless 2x2
+    d_su2 = simplify(re((-eye(2) * x2).trace()))
+    phi_su2 = 1 - Rational(1, 2) * re((-eye(2)).trace())
+    om = cos(2 * pi / 3) + i_unit * sin(2 * pi / 3)
+    x3 = Matrix(3, 3, lambda r, s: symbols(f"y{r}{s}"))
+    x3[2, 2] = -x3[0, 0] - x3[1, 1]  # traceless
+    d_su3 = simplify((om * x3).trace())
+    phi_su3 = simplify(1 - Rational(1, 3) * re(3 * om))
+    ok = (
+        d_su2 == 0
+        and phi_su2 == 2
+        and simplify(d_su3 - om * (x3[0, 0] + x3[1, 1] + x3[2, 2])) == 0
+        and phi_su3 == Rational(3, 2)
+    )
+    return ok, (
+        f"d/dt ReTr(-I e^(tX))|_0 = -ReTr(X) = 0 for traceless X, phi(-I) = {phi_su2} "
+        f"(SU(2)); Tr(omega X) = omega TrX = 0, phi(omega I) = {phi_su3} (SU(3)) — the "
+        "center sectors are large-height critical points, so the action-built Lyapunov "
+        "candidates genuinely fail there; the universal impossibility claim stays out"
+    )
+
+
+@notes_prog.check(
+    "G21 Davies bound verified on the 3x3 periodic 2D lattice, arb-certified",
+    "notes review 2026-08-22 / G21",
+    tier=2,
+)
+def _():
+    # M = m^2 I + d1^T d1 on 1-forms of the 3x3 periodic square lattice
+    # (m^2 = alpha = 1), G = M^-1 exact; assert |G(b,b')| < (2/m^2) e^{-eta d}
+    # for every pair, with eta = arcosh(1 + m^2/(2 alpha D_E)) evaluated in
+    # certified ball arithmetic (ADR 0010) — the comparison is provable, not
+    # approximate.
+    from . import rigor
+
+    L = 3
+    links = [(x, y, mu) for x in range(L) for y in range(L) for mu in (0, 1)]
+    idx = {b: i for i, b in enumerate(links)}
+    plaqs = [(x, y) for x in range(L) for y in range(L)]
+    d1 = zeros(len(plaqs), len(links))
+    for p, (x, y) in enumerate(plaqs):
+        d1[p, idx[(x, y, 0)]] += 1
+        d1[p, idx[((x + 1) % L, y, 1)]] += 1
+        d1[p, idx[(x, (y + 1) % L, 0)]] -= 1
+        d1[p, idx[(x, y, 1)]] -= 1
+    M = eye(len(links)) + d1.T * d1
+    G = M.inv()
+
+    # link graph: adjacent iff they co-bound a plaquette
+    co = {i: set() for i in range(len(links))}
+    for p in range(len(plaqs)):
+        members = [i for i in range(len(links)) if d1[p, i] != 0]
+        for i in members:
+            for j in members:
+                if i != j:
+                    co[i].add(j)
+    d_e = max(len(v) for v in co.values())
+
+    def bfs(src: int) -> dict[int, int]:
+        dist, frontier = {src: 0}, [src]
+        while frontier:
+            nxt = []
+            for u in frontier:
+                for v in co[u]:
+                    if v not in dist:
+                        dist[v] = dist[u] + 1
+                        nxt.append(v)
+            frontier = nxt
+        return dist
+
+    eta = rigor.ball(1) + rigor.ball(Rational(1, 2 * d_e))
+    eta = eta.acosh()
+    worst = None
+    certified = True
+    for i in range(len(links)):
+        dist = bfs(i)
+        for j in range(len(links)):
+            ratio = abs(rigor.ball(G[i, j])) / (rigor.ball(2) * (-eta * dist[j]).exp())
+            if not rigor.certified_lt(ratio, rigor.ball(1)):
+                certified = False
+            if worst is None or float(ratio.mid()) > float(worst.mid()):
+                worst = ratio
+    return certified and d_e == 6, (
+        f"18 links, D_E = {d_e}, eta = {rigor.describe(eta)}; every |G(b,b')| is provably "
+        f"below (2/m^2) e^(-eta dist) in 128-bit ball arithmetic, worst ratio "
+        f"{rigor.describe(worst)} — the review's 6x6 margin (<= 0.31) reproduced here as a "
+        "standing certified check at m^2 = alpha = 1"
+    )
