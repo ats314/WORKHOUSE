@@ -106,7 +106,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 102
+## T1 — re-derived exactly — 103
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -264,6 +264,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `center elements are critical points of Re Tr, with exact heights`
   - src/workhouse/invariants.py:2407 · notes review 2026-08-22 / G20
   - `workhouse verify --only 'center elements are critical points of Re Tr, with exact heights'`
+- `one-step bridge spectral lemma: inf over the orthocomplement is 1 - lambda_1`
+  - src/workhouse/invariants.py:2506 · notes review 2026-08-22 / G23 (Exciting_03 Lemma 3.1)
+  - `workhouse verify --only 'one-step bridge spectral lemma: inf over the orthocomplement is 1 - lambda_1'`
 **old-to-new crosswalk**
 
 - `Phi_C at the high-symmetry points`
@@ -453,7 +456,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:812 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
-## T2 — float agreement within a stated tolerance — 26
+## T2 — float agreement within a stated tolerance — 28
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -521,6 +524,12 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
   - `workhouse verify --only 'the statement is non-vacuous only below an explicit coupling'`
 **notes program: SAFE, Davies, coercivity (G20-G23)**
 
+- `FINDING: the localization error is n-independent, so the boxed gap does not follow`
+  - src/workhouse/invariants.py:2556 · notes review 2026-08-22 / G23 (iter2 8.2 -> 9.3)
+  - `workhouse verify --only 'FINDING: the localization error is n-independent, so the boxed gap does not follow'`
+- `FINDING: the naive diffusion-to-OS bridge fails in the Gaussian model`
+  - src/workhouse/invariants.py:2529 · notes review 2026-08-22 / G23 (06_toy)
+  - `workhouse verify --only 'FINDING: the naive diffusion-to-OS bridge fails in the Gaussian model'`
 - `G21 Davies bound verified on the 3x3 periodic 2D lattice, arb-certified`
   - src/workhouse/invariants.py:2438 · notes review 2026-08-22 / G21
   - `workhouse verify --only 'G21 Davies bound verified on the 3x3 periodic 2D lattice, arb-certified'`

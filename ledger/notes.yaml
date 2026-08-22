@@ -363,3 +363,537 @@ reviews:
       4 correctly documents that any alpha < 1 must enter through gauge
       structure, not marginalization, which is exactly where the proved
       no-go marks the boundary.
+
+  # Second review pass: REFLECTION_POSITIVITY (2026-08-22) — two reading
+  # agents over 01_OS_RECONSTRUCTION (the G23 splice hunt) and
+  # 04_GAP_BRIDGES + 05_TRANSFER_MATRIX. Evidence:
+  # docs/referee/notes_review_reflection_positivity_2026-08-22.md.
+  # Headline: the archive DIAGNOSED its own time splice — ten documents
+  # name it, the Gaussian toy refutes the naive bridge quantitatively,
+  # and the scale-a family states the corrected open target. G23's
+  # wording is updated accordingly in the same commit.
+
+  - digest: ece7f9b60bb0a627a161db4a68a401dbff86957306914ff9fab7072ad53f768f
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/D_OS_time_decay_to_mass_gap.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The fully proved clean half of the chain: OS axioms + Euclidean
+      covariance decay at rate eta imply gap(H) >= eta/a, with the
+      discrete-time spectral criterion (Lemma 3.1) verified line by line
+      at review. Consumes Euclidean decay by hypothesis and never
+      touches Langevin time — the honest interface, not the splice.
+
+  - digest: 34e1e922fe3883ad86d5876b9c171d248b79757e504f8e3b701f2c7535da1878
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/Diffusion_vs_OS_gap_comparison_program.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      Names G23's hole (2) as its title question: "diffusion time !=
+      Euclidean time ... the missing analytic step", with a five-step
+      rigorous program and nothing asserted as proved. Direct evidence
+      the program diagnosed its own splice. Caveat recorded: its section
+      2 punchline Delta >= lambda* is wrong in scaling (the Gaussian toy
+      gives Delta = sqrt(lambda)); the note never claims to prove it.
+
+  - digest: 84ebd64d8e28c3550ec48e9dbe6d6941562daaa342e274b5890aa0171ec56377
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/06_OS_mass_gap_reductions.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The directory's sharpest document: the proved decay=>gap half, the
+      boundedness obstruction (no c with E_K >= c integral |grad f|^2
+      for all H^1 — verified: Markov dissipation bounded, gradient form
+      unbounded), and the corrected target (3.5) against the scale-a
+      form. Crux caveat recorded: its compression isometry premise needs
+      nu to be the TRUE slice marginal; the identity is asserted via "a
+      Markov property", and in the Gaussian model the wrong measure is
+      exactly the sqrt-scaling error.
+
+  - digest: f406c5329929e8151a7e7a7a7a54b212bad8a3a8e574c18c53f102dae0392e99
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/06_toy_os_dirichlet_hinge_gaussian.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The archive's only machine-checkable falsification of the naive
+      bridge: in the free Gaussian field the exact relation is
+      Delta = sqrt(lambda_diff), not Delta >= lambda_diff — verified at
+      review (exact lattice transfer gap omega = arccosh(1 + m^2/2)),
+      and now a registered FINDING check. Review also ran the corrected
+      scale-a comparison on this model — it passes with uniform c ~ 1/2
+      against the true slice marginal — a check the archive never ran.
+
+  - digest: 00819376ba3c1a5195b09fad6d8c9f4beb1ffb34128c3fbf6a31a680d787117d
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/06_one_step_os_dirichlet_scale_a.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The corrected formulation: names the "recurring trap" (bounded
+      left side vs unbounded right side), states the scale-a comparison
+      against the bounded object, and its gradient representation of
+      E^(a) is verified. The boxed statement is a recipe, not a proof —
+      recorded as target.
+
+  - digest: 320f4fcdb7b6207fd407074ce3544ce29fa7c6a1f714965abe3b5b551d9b831d
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/J_one_step_OS_scale_a_comparison.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The most advanced attack on G23's hole, extracted WITH ITS STATUS
+      DEMOTED: the "Theorem 5.1" label overstates — Step C
+      (local-to-global gluing) and the compression-isometry premise are
+      unproven, and the sibling PROJECT_HIGHLIGHTS_E labels the same
+      statement "target form", which is the accurate one. Step B
+      (smoothing) verified.
+
+  - digest: d325d9198cf8e03f661f98b13818f6887236d88af5ad958100a13de3670cf617
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/PROJECT_HIGHLIGHTS_E_OS_Bridge_and_OneStep.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The authoritative status map of the whole interface: why the
+      original target needed the scale-a fix, the failure mode if the
+      strip compression creates undominated long-range slice
+      dependencies, and the two exits (correlation decay vs the sharper
+      form comparison). Its "target form" label corrects the sibling's
+      "Theorem".
+
+  - digest: 7d077505c4c308c322ecce2a8f5cd139d8ddd220377b832fbb6898a03983ea32
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/SYNTH_CONJ_D_spectral_to_mass.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The most explicit statement anywhere in the archive that the
+      Langevin-to-Euclidean link "is not presently known in the
+      literature"; splits Conjecture D into the provable OS layer and
+      the open link, expects Delta >= c sqrt(lambda). One direction slip
+      recorded: it displays U K U^-1 >= c H^2 where the mass-gap LOWER
+      bound needs K <= C H^2 — the free field satisfies the needed
+      direction and refutes the displayed one on multi-particle states.
+
+  - digest: 02c2e70795733c98c64735936b95455f9cd6d7641ed53486885205a1145b6cd4
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/04_os_configuration_bridge.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      Lemma C.3 (error absorption via Poincare) is proved and verified;
+      Lemma C.2 stays exactly what it says it is — "proposed (not
+      claimed proved)" — with its likely failure mode recorded: the
+      transfer generator is not the Langevin generator of the slice
+      Gibbs measure, and the Gaussian toy gives leading rate ~ 2
+      sqrt(lambda) for the marginal, so C.2 is false unless E is read
+      as the marginal-measure form; the document does not fix the
+      measure.
+
+  - digest: af2363294d3e2cacb5a5f58ca01b26e1c108643b8f27126e04a57ee8a8add2db
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/04_reflection_positivity_os_dirichlet_bridge.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      Section 4's RP-permanence lemmas (pushforward and projective-limit
+      stability) are correct and extracted. Section 3 is NOT extracted:
+      its bridge inequality (3.1) has the inequality direction reversed
+      (an upper bound on the OS dissipation cannot lower-bound the
+      transfer gap), so its conclusion is a non sequitur as written — a
+      drafting slip of exactly the kind the working agreement warns
+      about, recorded here so it cannot be cited.
+
+  - digest: c9fa94de4255e2da4a610225e7bef199db13968a1f93a0542ba44a4fba8f06f4
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/rp_os_gap_extraction.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      Disciplined fixed-cutoff RP -> OS -> gap module on the
+      Euclidean-decay input side; no splice, content-consistent with the
+      proved D_OS interface.
+
+  - digest: 5f48e741a6d467bbd0f0a2c1ec8191f0dc41487aaf7292ed5cd856a8a7f8702a
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/Appendix_L__OS_Reconstruction_and_Gap_Extraction(1).md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The ledgered appendix version of the RP -> OS -> gap module; the
+      only surviving copy carries the "(1)" name — no base file exists,
+      recorded so nobody hunts for one.
+
+  - digest: e1d0ef76536f98b906afb9ae6360f6b46b6587018010c9316c395621ad1357fe
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/Core_3__OS_Framework_at_Fixed_Cutoff(1).md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      Fixed-cutoff OS framework module, Euclidean-decay side; only copy
+      is the "(1)" file.
+
+  - digest: bf887615a0e662403e7cede8a5489c3932c5a9baba245b941085cd4923912916
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/01_reflection_positive_rg_and_gap_persistence.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      RP persistence under RG maps — adjacent module; no splice and no
+      error found on reading; deeper spot-checks belong to a later pass
+      and this verdict does not certify its proofs.
+
+  - digest: 9b254c0fbae899c50aeb4fb0facb2518b95ac0b4a72e8e563059bfa48b932f41
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/Extract_04_Typicality_ReflectionPositivity_OS_Gap.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      Typicality/RP module on the decay-input side; same standing as the
+      RG-persistence note — extracted as a claim record, proofs not
+      certified by this pass.
+
+  - digest: 115baf36e92c49cc7d2152ef300f81ec05c63662ec64880b929ffe42fd394e23
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/SELECTED_05_Dichotomy_and_OS_Reconstruction.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The massive-iff-uniform-lattice-gap dichotomy statement; names the
+      generator-vs-transfer-matrix bridge as the missing theorem, which
+      is G23's hole stated as a reduction.
+
+  - digest: 7d76d7a02d620b44c3e5b8e8b7e70d7b009007ade25181d3bb80efbdd1f836b7
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/05_one_step_bridge_diffusion_to_OS_gap.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: 320f4fcdb7b6207fd407074ce3544ce29fa7c6a1f714965abe3b5b551d9b831d
+    reason: >-
+      Its raw-gradient hypothesis (18.*) is refuted by the archive's own
+      boundedness obstruction (bounded left side vs unbounded Dirichlet
+      form); the scale-a family replaces it. Its Lemma 2.1 / Theorem 4.1
+      skeleton is correct and survives inside the successors.
+
+  - digest: b23656fad183f7d4ea9b7e191cf7b99f45c1ebff296858076855637798eb4187
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/BEST_03_diffusion_to_OS_bridge.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: 320f4fcdb7b6207fd407074ce3544ce29fa7c6a1f714965abe3b5b551d9b831d
+    reason: >-
+      Its (H3) compares a bounded form with the unbounded raw Dirichlet
+      form over all of Dom(L) — unsatisfiable as stated by the
+      boundedness obstruction; the (H1)-(H3) architecture survives in
+      the corrected scale-a target.
+
+  - digest: fa5da47377a05d9f9b9558d88d8f8da66172b2e4d1fe18985bcc0700ae662faa
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/Selection_F_OS_Reconstruction_vs_Configuration_Diffusion_The_Bridge_Inequality.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: 320f4fcdb7b6207fd407074ce3544ce29fa7c6a1f714965abe3b5b551d9b831d
+    reason: >-
+      Pre-obstruction formulation of the bridge inequality; correctly
+      separates the two gaps ("often conflated") but its (star) target
+      falls to the same boundedness obstruction.
+
+  - digest: fe26645a635589c095f20e1444f93a8396f17396dc64d4224c34a650667819ef
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/INEQ_CALC_06_diffusion_to_os_bridge_inequality.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: 320f4fcdb7b6207fd407074ce3544ce29fa7c6a1f714965abe3b5b551d9b831d
+    reason: >-
+      Dated after Selection_F yet still states the refuted raw-gradient
+      target with no mention of the obstruction the scale-a documents
+      prove; superseded by them.
+
+  - digest: 068b2a992087112a7d68d16ceebe37c127568fdfadf275b40c2bb8a112cd0b36
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/DOC_01_LSI_to_OS_MassGap.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: 7d077505c4c308c322ecce2a8f5cd139d8ddd220377b832fbb6898a03983ea32
+    reason: >-
+      The five-arrow chain with the splice performed "schematically"
+      while flagged ("A rigorous version should be spelled out");
+      SYNTH_CONJ_D treats the identical chain with the splice fully
+      articulated and the clean half proved.
+
+  - digest: 3e30c375a924ea3070992c354e5f5ba4c7e8ff4c39d1df3d338d92e31826293a
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/05_os_bridge_mass_gap.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: 00819376ba3c1a5195b09fad6d8c9f4beb1ffb34128c3fbf6a31a680d787117d
+    reason: >-
+      Earlier formulation of the same interface — correctly warns "L is
+      not the OS transfer generator. They live on different spaces" —
+      subsumed by the scale-a statement.
+
+  - digest: faed375937cb2344c37ebec93962041b32d56c125f7f32a0a4f0ed518483bbf7
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/03_os_bridge_euclidean_decay_to_gap.md
+    archive: RESEARCH_2026-08
+    verdict: duplicate
+    duplicate_of: ece7f9b60bb0a627a161db4a68a401dbff86957306914ff9fab7072ad53f768f
+    reason: >-
+      Same decay=>gap interface as D_OS_time_decay_to_mass_gap.md with
+      the same lemma and theorem, weaker write-up (proof sketched there,
+      complete in the retained copy).
+
+  - digest: cba4b5ab38b97b7bbc8cd155bbc7edfc14516e8634713cc2ca169a59e7caab5d
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/05_os_bridge_time_decay_to_gap.md
+    archive: RESEARCH_2026-08
+    verdict: duplicate
+    duplicate_of: ece7f9b60bb0a627a161db4a68a401dbff86957306914ff9fab7072ad53f768f
+    reason: Content-duplicate of the retained decay=>gap module.
+
+  - digest: b73beff44af250eddebb979b4cccf5aecc4324eb046e7af292ea932ae121527b
+    path: REFLECTION_POSITIVITY/01_OS_RECONSTRUCTION/EXTRACT_05_CONJ_D_Spectral_to_Mass_OS.md
+    archive: RESEARCH_2026-08
+    verdict: duplicate
+    duplicate_of: 7d077505c4c308c322ecce2a8f5cd139d8ddd220377b832fbb6898a03983ea32
+    reason: >-
+      Faithful condensation of SYNTH_CONJ_D (Conjecture D' with the
+      sqrt(lambda) expectation); kept as a pointer, reviewed through the
+      full version.
+
+  - digest: 6ca90f34ed6790091098dd7d4ea1744f8e9d9331f265f4eb0e2c731e14de6aca
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/03_Conditional_MassGap_Pipeline.tex
+    archive: RESEARCH_2026-08
+    verdict: import
+    imported_to: notes/imported/RESEARCH_2026-08/03_Conditional_MassGap_Pipeline.tex
+    reason: >-
+      Manuscript-grade and epistemically exemplary: quarantines every
+      external input, states "No part of this chain is proved inside
+      the project corpus", and records the internal obstruction that
+      kills the uniform-convexity mechanism — the vacuum Hessian is
+      (beta/6) Delta_1, so the physical finite-volume floor scales as
+      c beta L^-2 and no L-uniform bound near the vacuum can hold
+      without extra structure. The archive's own refutation of its own
+      strongest-sounding mechanism, preserved as negative evidence.
+
+  - digest: 74b7ab6c483aea97582a5ac2f455d121384e61fe186a9d71a97db2a54e386c32
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/07_strong_coupling_transfer_matrix_mass_gap(1).md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G18, G23]
+    reason: >-
+      The closest thing in the archive to a strong-coupling
+      transfer-matrix gap derivation, and a sketch, not a proof — with
+      the hidden hypotheses recorded: it ASSUMES the operator-state
+      overlap c_1 != 0 as an unexamined bullet (exactly G18's content,
+      assumed rather than proved — the sharpest evidence that G18 is
+      untouched by the archive); the correlator bound used is the
+      static-source area-law channel, not the vacuum-sector glueball
+      channel; and the strong-coupling bound has no convergent-expansion
+      control. The rigorous counterpart is the Osterwalder-Seiler-era
+      literature and MUNSTER_1985_TM.
+
+  - digest: 81408e3c70c93b1328d7698c9c7aa99e23826837ade4870e8b87c65feb54bc37
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/iter2_YM_fixed_cutoff_gap_pipeline.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The strongest technical spine in the gap-bridges corpus, extracted
+      with two review-verified defects attached: (1) the localization
+      error in (8.2) is n-independent, so the unconditional decay
+      plateaus at 8 ||F|| ||G|| mu(K^c) and the boxed gap extraction
+      (9.3) does not follow as written — now a registered FINDING
+      check; (2) the hinge needs a bounded-beta window while typicality
+      needs large beta, and no document exhibits a common regime — a
+      candidate fatal gap for the pipeline family. The vacuum
+      Hessian-equals-Maxwell identity (4.1) is separately sound.
+
+  - digest: 812d51950728fb6a4314df8f9949b299b82c4dfff970ede0b04c162c2fa52fe4
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/Exciting_03_One_Step_Gap_Bridge.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The soundest self-contained mathematics in the set: the spectral
+      lemma inf over Psi perp Omega of <Psi,(I-T)Psi> = 1 - e^(-a
+      Delta) and the conditional bottleneck theorem, both verified
+      (functional calculus plus 200 random finite spectra at review);
+      reduces G23's bridge to one named inequality (4.3). Now a
+      registered check.
+
+  - digest: 9e0034ac8998a90acaa473bbb95589dd26883b301040fab537501e48a0c59ef3
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/Exciting_04_Localization_Typicality_Bridge.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The one estimate with genuinely explicit constants: the typicality
+      formula c_typ = beta(eps - L_theta m_bdy r) - c_EP chi_G(r)
+      reconstructs exactly from the free-energy argument (verified),
+      and its section 5 honestly names the alignment problem between
+      the hinge's uniform small-field set and typicality's
+      average-energy set. Note: c_typ > 0 forces large beta — the other
+      jaw of the regime misalignment recorded on iter2.
+
+  - digest: 4869bd02c52df192c7fae399fa81458eebaf690d5d6a8941a01c5746aa981aab
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/3_fixed_cutoff_mass_gap_su2.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The cleanest conditional theorem in the family: SU(2), fixed
+      cutoff, volume-uniform under (H-GOOD)/(H-BAD)/(H-GLUE), all
+      quarantined as hypotheses; the Combes-Thomas exponent it uses is
+      checkable.
+
+  - digest: c469498b8d908798bd6a9df0b370cc1a920f11e279ec2758e1578cc0e2bb467f
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/EXTRACT_06_Uniform_Spectral_Gap_Dichotomy.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      Honest reduction statement (massive iff lattice gap uniform under
+      continuum scaling) whose section 6 names the generator-to-
+      transfer-matrix bridge as the missing theorem — G23's hole,
+      stated as an organizing principle.
+
+  - digest: d1cc025d53069d89891b375454686a9d6e94e8c9a5f77293bef33ec7e4f4b42f
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/02_gap_preservation_under_conditioning_refactor(1).md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      Extracted NARROWLY: the two lemmas are true (lambda_min concavity
+      under conditional expectation — verified over 2000 random convex
+      combinations; kernel-quotient floor preservation) and Lean-able.
+      The section 5 template is NOT extracted: it preserves the spectral
+      floor, not the gap above the vacuum; its OS-seam application is
+      vacuous (no pre-quotient Hamiltonian exists); and it silently
+      assumes each proof step is a form-sense conditional expectation.
+
+  - digest: b7189af82986b5180f12ed0de8cbdfb0bacb0251fca730ec5af8cef7fd4196ca
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/1_transfer_matrix_mass_gap.txt
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Chat export of textbook transfer-matrix identities that itself
+      says "Nothing here is a new result"; correct, honest, nothing
+      promotable.
+
+  - digest: 47be2d7ea00a3070621acb50edbbda739d16326b541f829d142d075702e0343a
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/MG_Constructive_Mass_Gap_Pipeline.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Status inflation: stamps "proved component" on LSI/hinge/
+      typicality items that the imported 03_Conditional_MassGap_Pipeline
+      .tex ("No part of this chain is proved") and iter2 list as
+      external inputs — a live status contradiction over the same
+      material, resolved in favor of the .tex. Must not be cited for
+      status claims.
+
+  - digest: 2bf045105a3ed3ba7e02663b32047a5bf91892575cc50f59c78f355dc5b00b9b
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/spectral_gap_pipeline(1).md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Pure index of Appendices F-N with an external-input ledger; useful
+      as a dependency map, carries no claims of its own.
+
+  - digest: fa9ce7e0b4de3fffbf98fb756aa8694430527049165e2aa3f42886dc8a3a13f1
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/04_constructive_lattice_gauge_gap_pipeline.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Curated summary redundant with iter2 and the pipeline index;
+      nothing new to check.
+
+  - digest: 3eadc5c251986b78f1d66a90ff54bc2b8e3034493da7682d62dbdcf0154abb5c
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/4_rg_iteration_physical_mass_gap_scaling.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      The dyadic recursion algebra is fine but both load-bearing inputs
+      are assumed — the (RG) inequality and the scaling ansatz eta(a) ~
+      1/sqrt(C_P), which is precisely tuned so the a-dependence cancels;
+      the "UV cancels" conclusion is engineered, not derived.
+
+  - digest: 85c540d05277580659b16dab14cc68894ee34faf13050ed825f47f46f947d75a
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/A_channel_first_mass_gap_program.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Honest, explicitly speculative QLSI/quantum-channel reframing with
+      no claims; its section 5.1 SU(2) pilot protocol could seed future
+      numerics and is noted for that.
+
+  - digest: 84ae5d7feb9b52b78908f4f9cab024539149f2fdc2e9bf51a284e5ca46cf135c
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/YANG3_05_qRacah_Doob_and_q6j_toy_massgap.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Reproducible toy numerics (q-Racah Doob gap fit nu ~ 0.9668; q-6j
+      error law with C_global ~ 0.183) with no registered claim target:
+      the toy is not Yang-Mills and no q-deformed transfer claim exists
+      in the ledger to bear on. Revisit as extract if one enters; the
+      numbers are re-runnable then.
+
+  - digest: 525860ff14bb7570879da4e07e54aea38ed400ec12da21ed01460cd3794b79e7
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/YM_MassGap_Synthesis_CoreArchitecture.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      The "Haar mass" uniform floor lambda_min >= c_0 is refuted twice
+      over: internally by the imported .tex's c beta L^-2 obstruction,
+      and at review by direct computation — under the document's own
+      stated SU(2) convention the quadratic coefficient computes to 1/3,
+      not the claimed 3/4, which is the fundamental Casimir (N^2-1)/2N
+      pattern-matched into the wrong slot (reviewer's computation; a
+      repo check awaits an independent convention re-derivation). Must
+      not be cited by anything promoted.
+
+  - digest: 2a28047e061a1c6cafdea6a91cfdf5e91263c6259fd77130c803a0a8fee152bf
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/YM_MassGap_Dynamic_BakryEmery_Riccati.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      The Riccati comparison ODE is standard; the physical curvature
+      inequality is self-labeled "proposed" with sigma_eff never
+      derived, and it inherits the refuted Haar floor as input.
+
+  - digest: dda58c9e1534b2e0a0f94191877923af0639220defbe98ee70aefcd7291f51dd
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/DOC_02_LSI_Gribov_FP_GaugeIndependence.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      The core implication (uniform LSI => measure supported where the
+      action is strongly convex => FP valid where it matters) is not a
+      theorem — LSI gives concentration, not support localization, and
+      no quantitative Gribov statement is derived. Mechanism sketch
+      only.
+
+  - digest: 9ffa88e85053a7f1075fe8630837ec876469190dd2316dde225a48572001e179
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/Emergent_Vacuum_Stiffness_from_a_Gapped_Vacuum_A_Working_Hypothesis.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Self-declared speculative bridge from a gapped vacuum to
+      modified-gravity scales; out of scope for every registered claim.
+
+  - digest: 953b530afb22421989dbcb8601de03b2e6e3da42b6fd0f71e1326d0e69f910c1
+    path: REFLECTION_POSITIVITY/04_GAP_BRIDGES/3_mass_gap_proof_blueprint.txt
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Chat-export roadmap, self-declared non-progress; its section 6
+      Kogut-Susskind coercivity target is the right statement of what
+      G18's Hamiltonian side needs and is cross-referenced from the
+      referee document, but the file itself carries no claims.
+
+  - digest: dab352c51de93209a5721693fa6cfa8d4d319e178534e885107d3b638bff52eb
+    path: REFLECTION_POSITIVITY/05_TRANSFER_MATRIX/04_composite_transfer_operator_wilson_loops.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Self-declared prototype with placeholder kernels; the reported
+      "gap" |mu_0|-|mu_1| ~ 3.06 on a non-normalized composite reflects
+      rank collapse from Gaussian smearing, not physics — the document
+      itself says not to over-interpret it. Honest; nothing checkable
+      until the kernels are actual intertwiners.
