@@ -1,0 +1,35 @@
+Launching sealed physical sweep (resumable; interrupt freely, re-run to resume).
+  new resume credentials -> RESUME_SECRET.json (chmod 600; keep to resume)
+  $ /home/user/WORKHOUSE/.venv/bin/python3 /proc/self/fd/5 --run-phase3-physical --output HODGE_SU3_EXACT_MARKED_CLUSTER_M4_CERTIFICATE.json --checkpoint HODGE_SU3_EXACT_MARKED_CLUSTER_M4_CHECKPOINT.sqlite --authorized-cluster-evaluations 609 --authorized-candidate-certificate-sha256 4e7f5acfd5610a2bd434e88f94c6ba2ba12a258e618a1249f49472f76c5dbd73
+[FAIL] production did not seal (see harness_production.log tail below). If it was interrupted, re-run this stage; the sqlite checkpoint resumes.
+istory
+    r2 = schedule.second_resolvent(w2)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 6242, in second_resolvent
+    return R2(self._r2_on_w2(stage.payload))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 2825, in <lambda>
+    lambda value: apply_resolvent_action_labelled(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 2778, in apply_resolvent_action_labelled
+    return {
+           ^
+  File "/proc/self/fd/5", line 2781, in <dictcomp>
+    if (resolved := exact_resolvent_vector(
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 1730, in exact_resolvent_vector
+    for resolved_state, resolved_coefficient in _resolved_seed_cached(
+                                                ^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 1713, in _resolved_seed_cached
+    resolved, _metadata = reduced_resolvent_on_state(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 1216, in reduced_resolvent_on_state
+    basis, _action, gram, pivots, physical_gram, physical_h0 = closure_matrices(
+                                                               ^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 1183, in closure_matrices
+    basis = closure(seed_state)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 1169, in closure
+    raise ExactEngineError("unexpectedly large H0 closure")
+ExactEngineError: unexpectedly large H0 closure
+
