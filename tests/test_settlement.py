@@ -74,3 +74,36 @@ def test_hamer_form_is_not_covered_by_the_oracle_form():
     assert hamer not in oracle
     assert oracle[:12] == hamer[:12]  # identical for twelve digits
     assert oracle[12] != hamer[12]  # then they part
+
+
+def test_engine_is_present_under_the_import_rename():
+    """The received README records the engine absent; the rename manifest
+    shows it arrived as Hodge_SU3_... and was renamed to DATA_SU3_..."""
+    assert S.ENGINE.exists()
+    rename = S.engine_rename_record()
+    assert rename is not None
+    assert rename.source.endswith(S.ENGINE_PRE_RENAME)
+    assert rename.destination.endswith(S.ENGINE.name)
+    assert rename.size == S.ENGINE.stat().st_size
+
+
+def test_engine_clean_under_both_scan_lists():
+    assert S.engine_scan_hits(extended=False) == []
+    assert S.engine_scan_hits(extended=True) == []
+
+
+def test_extended_strings_actually_extend_the_harness_list():
+    """Guards the extension against silently collapsing into the harness list
+    (each extension string must be new, not a substring-covered duplicate)."""
+    harness = S.audit_contamination_scan().strings
+    for extra in S.EXTENDED_CONTAMINATION_STRINGS:
+        assert all(h not in extra for h in harness), extra
+
+
+def test_engine_imports_are_stdlib_only():
+    assert S.engine_import_roots() <= S.ENGINE_ALLOWED_IMPORTS
+
+
+def test_engine_closure_cap_is_the_shipped_value():
+    """The value the first production cluster exceeded on 2026-08-22."""
+    assert S.engine_closure_cap() == 100

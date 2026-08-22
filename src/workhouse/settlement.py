@@ -1,9 +1,14 @@
-"""Static reading of the settlement package.
+"""Static reading of the settlement package, and location of its engine.
 
 The package in ``settlement/`` is received evidence: two cold-rerun transcripts
-and the frozen-protocol harness that would decide C2. The engine the harness
-drives is not in this repository, so nothing here executes it. Everything below
-is static analysis of the received text.
+and the frozen-protocol harness that would decide C2. The package's own README
+records the engine it drives as absent from this repository. That record is
+stale: the corpus-import rename manifest shows
+``programs/hodge_o4_adjudication/src/Hodge_SU3_Exact_MarkedCluster_m4_Colab.py``
+was renamed to ``DATA_SU3_Exact_MarkedCluster_m4_Colab.py`` during the
+2026-08-20 import, so the engine has been in ``corpus-import/`` all along under
+the import pipeline's prefix convention. The functions below locate it, chain
+its provenance, and scan it; the received package itself is never edited.
 
 The harness's central claim is that the engine is *target-blind* — that no
 comparison target reaches the process that computes the answer. It enforces
@@ -23,6 +28,32 @@ from pathlib import Path
 
 SETTLEMENT_DIR = Path(__file__).resolve().parents[2] / "settlement"
 HARNESS = SETTLEMENT_DIR / "mce_adjudication_harness.py"
+
+_REPO = Path(__file__).resolve().parents[2]
+
+#: The marked-cluster engine, present in corpus-import under the import
+#: pipeline's rename (the harness expects the pre-rename filename).
+ENGINE = (
+    _REPO
+    / "corpus-import/programs/hodge_o4_adjudication/src"
+    / "DATA_SU3_Exact_MarkedCluster_m4_Colab.py"
+)
+ENGINE_PRE_RENAME = "Hodge_SU3_Exact_MarkedCluster_m4_Colab.py"
+RENAME_MANIFEST = _REPO / "corpus-import/records/RENAME_MANIFEST_2026-08-20.tsv"
+
+#: Digit strings the harness's own scan misses (the FINDING in invariants.py):
+#: m_Gamma = q_band + Delta_Gamma exactly and Hamer's 8*a_4 is the scalar to 13
+#: digits, so an engine carrying any of these is seeded with the answer even
+#: though the harness scan passes it. Both roundings of Hamer's value are here.
+EXTENDED_CONTAMINATION_STRINGS = (
+    "0827701250956414",  # Delta_Gamma as printed
+    "2082770125095641",  # Delta_Gamma with its integer part
+    "7751458630184",  # Hamer 8*a_4 as printed
+    "7751458630417",  # Hamer 8*a_4 correctly rounded
+    "160506019419340168451",  # quarantined shortcut numerator
+    "7250590288602460800",  # q_old denominator
+    "4405310420659200",  # C_old denominator
+)
 
 #: Targets from which the disputed Gamma-point scalar can be recovered exactly.
 #: m_Gamma = q_band + Delta_Gamma, and Hamer's 8*a_4 IS the scalar to 13 digits,
@@ -114,6 +145,136 @@ def verdict_can_be_complete(path: Path | None = None) -> bool:
 def harness_delta_gamma(path: Path | None = None) -> float:
     src = (path or HARNESS).read_text()
     return float(re.search(r'"delta_gamma": ([0-9.]+)', src).group(1))
+
+
+@dataclass(frozen=True)
+class EngineRename:
+    source: str
+    destination: str
+    size: int
+
+
+def engine_rename_record(path: Path | None = None) -> EngineRename | None:
+    """The corpus-import rename manifest row that maps the harness's expected
+    engine filename onto the file actually on disk."""
+    manifest = path or RENAME_MANIFEST
+    for line in manifest.read_text().splitlines():
+        parts = line.split("\t")
+        if len(parts) >= 4 and parts[0].endswith(ENGINE_PRE_RENAME):
+            return EngineRename(parts[0], parts[1], int(parts[2]))
+    return None
+
+
+def engine_scan_hits(extended: bool = True) -> list[str]:
+    """Target digit strings present in the engine source: harness list plus,
+    when ``extended``, the strings the harness's own scan misses."""
+    audit = audit_contamination_scan()
+    strings = list(audit.strings)
+    if extended:
+        strings += [s for s in EXTENDED_CONTAMINATION_STRINGS if s not in strings]
+    src = ENGINE.read_text(errors="ignore")
+    return [s for s in strings if s in src]
+
+
+#: Everything the engine imports is stdlib; sympy is optional and vendored by
+#: the runtime. A single-file engine with no third-party or sibling imports is
+#: exactly the case where the harness's single-file scan is sufficient.
+ENGINE_ALLOWED_IMPORTS = frozenset(
+    {
+        "__future__",
+        "argparse",
+        "base64",
+        "collections",
+        "dataclasses",
+        "enum",
+        "errno",
+        "fractions",
+        "functools",
+        "gzip",
+        "hashlib",
+        "hmac",
+        "itertools",
+        "json",
+        "os",
+        "pathlib",
+        "secrets",
+        "shutil",
+        "sqlite3",
+        "stat",
+        "sys",
+        "tempfile",
+        "time",
+        "tracemalloc",
+        "types",
+        "typing",
+        "sympy",
+    }
+)
+
+
+def engine_import_roots() -> frozenset[str]:
+    src = ENGINE.read_text(errors="ignore")
+    names = re.findall(r"^(?:from|import)\s+([A-Za-z_][\w.]*)", src, re.M)
+    return frozenset(name.split(".")[0] for name in names)
+
+
+RUNS_DIR = _REPO / "runs" / "mce_freeze_and_first_run_2026-08-22"
+
+
+def read_freeze() -> dict:
+    """The vendored FREEZE.json from the 2026-08-22 in-repo freeze stage."""
+    import json
+
+    return json.loads((RUNS_DIR / "FREEZE.json").read_text())
+
+
+def harness_preflight_pins() -> tuple[str, str]:
+    """(AUTH_COVERAGE_SHA, EXPECT_PREFLIGHT_SHA) as pinned in the harness."""
+    src = HARNESS.read_text()
+    coverage = re.search(r'AUTH_COVERAGE_SHA = "([0-9a-f]{64})"', src)
+    preflight = re.search(r'EXPECT_PREFLIGHT_SHA = "([0-9a-f]{64})"', src)
+    if not coverage or not preflight:
+        raise ValueError("harness no longer pins the preflight hashes")
+    return coverage.group(1), preflight.group(1)
+
+
+def first_run_probe() -> dict:
+    """Measured closure demand from the diagnostic probe transcript.
+
+    The probe (engine unmodified, module-global ``closure`` wrapped with a
+    10^6 cap) was terminated at session budget before completing the full
+    first-cluster evaluation; the measurement that matters — the first
+    oversize orbit — was flushed to the transcript before termination.
+    """
+    text = (RUNS_DIR / "probe_console.log").read_text(errors="ignore")
+    size = re.search(r"closure size (\d+) exceeds the shipped cap (\d+)", text)
+    support = re.search(r"first support size (\d+)", text)
+    if not size or not support:
+        raise ValueError("probe transcript no longer carries the measurements")
+    return {
+        "max_measured_closure": int(size.group(1)),
+        "cap_in_transcript": int(size.group(2)),
+        "first_support_size": int(support.group(1)),
+        "complete_cluster": "[PROBE] DONE" in text,
+    }
+
+
+def first_run_error() -> str:
+    """The run-stage failure line from the vendored production log."""
+    text = (RUNS_DIR / "harness_production.log").read_text(errors="ignore")
+    m = re.search(r"^ExactEngineError: .*$", text, re.M)
+    return m.group(0) if m else ""
+
+
+def engine_closure_cap() -> int:
+    """The shipped H0-closure BFS cap. The guard never truncates — it either
+    returns the complete finite orbit or aborts the run — so the cap's only
+    effect is operational: too small and the sweep cannot start."""
+    src = ENGINE.read_text(errors="ignore")
+    m = re.search(r"def closure\(seed_state: State, max_states: int = (\d+)\)", src)
+    if not m:
+        raise ValueError("engine no longer exposes the closure cap in its signature")
+    return int(m.group(1))
 
 
 @dataclass(frozen=True)
