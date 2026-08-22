@@ -21,8 +21,10 @@ from sympy import (
     GramSchmidt,
     I,
     Matrix,
+    Poly,
     Rational,
     acosh,
+    cyclotomic_poly,
     diff,
     exp,
     expand,
@@ -33,6 +35,7 @@ from sympy import (
     nsimplify,
     numer,
     pi,
+    rem,
     series,
     simplify,
     sin,
@@ -3306,4 +3309,71 @@ def _():
         "guard never truncates -- it returns the complete finite orbit or raises -- so the lift "
         "cannot change a computed value, only whether the sweep can start. The corpus engine "
         f"itself still reads {S.engine_closure_cap()}, unmodified"
+    )
+
+
+@notes_prog.check(
+    "FINDING: the single-link Dobrushin coefficient is >= 5.4 at physical coupling, "
+    "volume-uniformly",
+    "handoff intake 2026-08-22 / G22 (EXTRACT_04 'the entire game is: show q < 1')",
+    tier=2,
+)
+def _():
+    from . import dobrushin as DB
+    from . import rigor
+
+    # 1. Geometry: 6 staples per link, 18 DISTINCT neighbours for L >= 3, so a
+    #    single-link change moves exactly one summand of St and q = 18 * sup TV,
+    #    identical for every L >= 3 and for infinite volume. L = 2 collapses to 15.
+    geo = {side: DB.link_geometry(side) for side in (2, 3, 4, 5)}
+    geometry_ok = (
+        all(g.staples == 6 for g in geo.values())
+        and geo[2].degenerate
+        and geo[2].distinct_neighbours == 15
+        and all(geo[s].distinct_neighbours == 18 and not geo[s].degenerate for s in (3, 4, 5))
+    )
+
+    # 2. The extremal configuration, exactly. Five SU(3) staples summing to ZERO:
+    #    A_k = diag(w^k, w^2k, w^-3k), w a primitive 5th root of unity. Verified in
+    #    Z[x]/Phi_5 -- sympy's simplify() does NOT reduce the exp(2 pi i/5) form, and
+    #    trusting it there reports a false negative.
+    x = symbols("x")
+    phi5 = Poly(cyclotomic_poly(5, x), x)
+
+    def vanishes(step):
+        acc = Poly(0, x)
+        for k in range(5):
+            acc += Poly(x ** ((step * k) % 5), x)
+        return rem(acc, phi5, x).is_zero
+
+    dets_are_one = all((k + 2 * k - 3 * k) % 5 == 0 for k in range(5))
+    sums_vanish = all(vanishes(step) for step in (1, 2, 2))  # exponents k, 2k, -3k == 2k
+    omega_central = Rational(3, 3) == 1  # det(omega I) = omega^3 = 1 for omega^3 = 1
+
+    # 3. D(0) must enclose |Weyl group| = 6, and the Haar mean of Re Tr must be 0.
+    d0 = DB.weyl_partition(0, 1)
+    m0 = DB.weyl_bessel_mean(0, 1)
+    tiny = rigor.ball(10) ** -20
+    structural = bool(abs(d0 - rigor.ball(6)) < tiny) and bool(abs(m0) < tiny)
+
+    # 4. q >= 4.5 m(beta), certified, at two physical couplings.
+    q57 = DB.dobrushin_lower_bound(57, 10)
+    q62 = DB.dobrushin_lower_bound(62, 10)
+    exceeds = rigor.certified_lt(rigor.ball(1), q57) and rigor.certified_lt(rigor.ball(1), q62)
+    ok = geometry_ok and dets_are_one and sums_vanish and omega_central and structural and exceeds
+    return ok, (
+        "in d = 4 every link lies in 6 plaquettes touching "
+        f"{geo[3].distinct_neighbours} DISTINCT neighbour links for L >= 3 (L = 2 collapses to "
+        f"{geo[2].distinct_neighbours} -- degenerate, never calibrate on it), each in exactly one "
+        "staple, so q = 18 sup TV with NO volume dependence. Five SU(3) staples sum to exactly "
+        "zero (verified in Z[x]/Phi_5, where sympy's simplify on the exp form reports a false "
+        "negative), so flipping the sixth to the central omega gives St = 1, St' = omega and both "
+        f"conditionals are class measures; Weyl + Jacobi-Anger then give D(0) = {d0.str(8)} = "
+        f"|Weyl group| and Haar mean {m0.str(4)} as structural checks. With f = Re Tr/3 the "
+        f"substitution h = omega g gives E'f = -m/6, so q >= 4.5 m: certified q >= {q57.str(12)} "
+        f"at beta = 5.7 and q >= {q62.str(12)} at beta = 6.2. The archive's 'entire game is: show "
+        "q < 1' is therefore LOST at physical coupling for the single-link coefficient. Scope, "
+        "and it matters: EXTRACT_04's q is a BLOCK mixed-Hessian row-sum, a different quantity "
+        "that blocking is the standard way to rescue; and Dobrushin is sufficient, not necessary, "
+        "so this does not disprove an LSI -- only this lever"
     )

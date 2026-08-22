@@ -61,3 +61,16 @@ def certified_closer(x: arb, near: arb, far: arb) -> bool:
 def describe(x: arb) -> str:
     """Midpoint and radius, for detail lines a reader can argue with."""
     return x.str(20, radius=True)
+
+
+def bessel_i(order: int, x: arb) -> arb:
+    """Enclosure of the modified Bessel function ``I_order(x)``.
+
+    Lives here rather than at the call site because ``src/workhouse/CLAUDE.md``
+    makes this module the only sanctioned route to Arb: a second import of
+    ``flint`` is a second place where the working precision could be set, and
+    the whole point of the enclosure discipline is that there is exactly one.
+
+    ``I_{-n} = I_n`` for integer order, so the sign of ``order`` is ignored.
+    """
+    return x.bessel_i(abs(order))
