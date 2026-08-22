@@ -2501,3 +2501,77 @@ def _():
         f"{rigor.describe(worst)} — the review's 6x6 margin (<= 0.31) reproduced here as a "
         "standing certified check at m^2 = alpha = 1"
     )
+
+
+@notes_prog.check(
+    "one-step bridge spectral lemma: inf over the orthocomplement is 1 - lambda_1",
+    "notes review 2026-08-22 / G23 (Exciting_03 Lemma 3.1)",
+)
+def _():
+    # T = e^{-aH} on a finite spectrum, exactly: with T = diag(1, t1, t2),
+    # 1 > t1 >= t2 > 0 and Omega the first basis vector, the constrained
+    # infimum of <psi,(I-T)psi> over psi perp Omega, |psi| = 1, is 1 - t1.
+    t1, t2 = Rational(3, 4), Rational(1, 5)
+    a, b = symbols("a b", real=True)
+    psi = Matrix([0, a, b])
+    q = expand((psi.T * (eye(3) - Matrix.diag(1, t1, t2)) * psi)[0, 0])
+    # q = (1-t1) a^2 + (1-t2) b^2 with a^2 + b^2 = 1: minimum at b = 0.
+    at_min = q.subs({a: 1, b: 0})
+    general = expand(q - ((1 - t1) * (a**2 + b**2) + ((1 - t2) - (1 - t1)) * b**2))
+    ok = at_min == 1 - t1 and general == 0 and (1 - t2) - (1 - t1) > 0
+    return ok, (
+        f"q = (1-t1)(a^2+b^2) + (t1-t2) b^2 exactly, so inf = 1 - t1 = {1 - t1} at the "
+        "second eigenvector -- the verified spectral lemma that reduces G23's bridge to "
+        "the single bottleneck inequality (4.3)"
+    )
+
+
+@notes_prog.check(
+    "FINDING: the naive diffusion-to-OS bridge fails in the Gaussian model",
+    "notes review 2026-08-22 / G23 (06_toy)",
+    tier=2,
+)
+def _():
+    from . import rigor
+
+    # 1D Gaussian chain: lambda_diff = m^2, exact transfer gap
+    # omega = arccosh(1 + m^2/2). Naive bridge claims Delta >= lambda_diff.
+    # At m^2 = 4: omega = arccosh(3) < 4 -- certified strict violation.
+    # At m^2 = 1/4: omega/lambda ~ 1.98 -- the ratio is not constant, and
+    # omega tracks sqrt(lambda) (continuum dispersion), the toy's point.
+    om4 = rigor.ball(3).acosh()
+    om_quarter = (rigor.ball(1) + rigor.ball(Rational(1, 8))).acosh()
+    violated = rigor.certified_lt(om4, rigor.ball(4))
+    also_below_sqrt = rigor.certified_lt(om4, rigor.ball(2))
+    ratio_small_m = om_quarter / rigor.ball(Rational(1, 4))
+    near_two = rigor.certified_lt(abs(ratio_small_m - 2), rigor.ball(Rational(3, 100)))
+    return violated and also_below_sqrt and near_two, (
+        f"at m^2 = 4 the exact transfer gap arccosh(3) = {rigor.describe(om4)} is provably "
+        f"below lambda_diff = 4 (and below sqrt = 2); at m^2 = 1/4 the ratio omega/lambda = "
+        f"{rigor.describe(ratio_small_m)} ~ 2, not 1 -- Delta >= lambda_diff is false and "
+        "the true scaling is the square root, exactly as the archive's toy note states"
+    )
+
+
+@notes_prog.check(
+    "FINDING: the localization error is n-independent, so the boxed gap does not follow",
+    "notes review 2026-08-22 / G23 (iter2 8.2 -> 9.3)",
+    tier=2,
+)
+def _():
+    from . import rigor
+
+    # iter2's unconditional covariance bound is e^{-eta n} + 8|F||G| mu(K^c).
+    # The second term does not decay in n: with mu(K^c) = 10^-6, eta = 1/2,
+    # unit norms, the bound plateaus at 8e-6 while pure decay at n = 50 is
+    # e^{-25} -- certified orders below the plateau. Hence (9.3)'s
+    # "for all n >= n_0" extraction fails as written.
+    plateau = rigor.ball(Rational(8, 10**6))
+    decay_50 = (-rigor.ball(25)).exp()
+    ok = rigor.certified_lt(decay_50, plateau)
+    return ok, (
+        f"e^-25 = {rigor.describe(decay_50)} is provably below the n-independent plateau "
+        f"8 mu(K^c) = {rigor.describe(plateau)}: from n ~ 28 the localization error "
+        "dominates, so exponential decay in n -- and with it the boxed gap(H) >= eta/a -- "
+        "does not follow from (8.2); only 'spectral mass below eta/a is O(mu(K^c))' does"
+    )

@@ -1,0 +1,117 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\newtheorem{hypothesis}{Hypothesis}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+
+\title{Conditional Pipeline: (Gauge Reduction) $\Rightarrow$ (LSI) $\Rightarrow$ (RG Stability) $\Rightarrow$ (OS Mass Gap)}
+\date{}
+
+\begin{document}
+\maketitle
+
+\paragraph{Dependency.}
+This document depends on \emph{Document~01} (gauge generator/projector) and \emph{Document~02} (vacuum Hessian and spectrum) for notation and the finite-volume linearization facts.
+
+\section{Scope and status}
+
+This document records the intended ``mass gap pipeline'' as a sequence of \emph{conditional} implications.
+No part of this chain is proved inside the project corpus; the required analytic inputs are listed explicitly as external.
+
+\section{External inputs (black boxes)}
+
+\begin{itemize}[leftmargin=*]
+\item[\textbf{EI1}] (\emph{Bakry--\'Emery log-Sobolev criterion, Riemannian diffusion case})
+For a diffusion generator $L=\Delta-\nabla V\cdot\nabla$ symmetric w.r.t.\ $\mu\propto e^{-V}\,d\mathrm{vol}$, a uniform lower bound $\nabla^2 V\succeq \kappa I$ (plus the standard curvature term bookkeeping) implies a log-Sobolev inequality with constant $\kappa$ and a Poincar\'e/spectral-gap inequality with constant $\kappa$.
+
+\item[\textbf{EI2}] (\emph{LSI $\Rightarrow$ spectral gap for the same generator})
+A log-Sobolev inequality for $\mu$ implies a Poincar\'e inequality (spectral gap) for the associated symmetric diffusion generator.
+
+\item[\textbf{EI3}] (\emph{Lipschitz pushforward stability})
+If $T$ is $L$-Lipschitz between metric measure spaces and $\mu$ satisfies an LSI with constant $\kappa$, then $T_\#\mu$ satisfies an LSI with constant at least $\kappa/L^2$ (under the standard regularity hypotheses in the literature).
+
+\item[\textbf{EI4}] (\emph{Osterwalder--Schrader/transfer-matrix reconstruction})
+For a reflection-positive Euclidean measure with sufficient regularity and locality, exponential decay of Euclidean correlations implies a strictly positive spectral gap of the reconstructed Hamiltonian.
+
+\end{itemize}
+
+\section{Required hypotheses for a noncircular argument}
+
+The project notes introduce a \emph{gauge-projected} Hessian lower bound and then treat it as a Bakry--\'Emery curvature bound for a projected generator.
+As written, this is not justified without a gauge-reduction construction.
+The minimum hypothesis set needed to state a mathematically meaningful chain is:
+
+\begin{hypothesis}[Gauge reduction to a genuine diffusion]\label{H:gauge}
+There exists a smooth finite-dimensional manifold $Q_L$ and a smooth surjection $\pi:\mathcal M_L\to Q_L$ such that:
+\begin{enumerate}[leftmargin=*]
+\item $\pi$ is constant on gauge orbits (so it factors the gauge quotient on the regular part).
+\item The Wilson action factors: $S_W = \bar S_L\circ \pi$ for some $\bar S_L:Q_L\to\mathbb R$.
+\item There exists a Riemannian metric on $Q_L$ and a diffusion generator
+\[
+\bar L_L = \Delta_{Q_L} - \nabla \bar S_L\cdot \nabla
+\]
+which is symmetric with respect to the induced Gibbs measure $\bar\mu_L\propto e^{-\bar S_L}\,d\mathrm{vol}_{Q_L}$.
+\end{enumerate}
+\end{hypothesis}
+
+\begin{hypothesis}[Uniform convexity on $Q_L$]\label{H:convex}
+There exists $\kappa>0$ independent of $L$ such that
+\[
+\nabla^2 \bar S_L \succeq \kappa I \qquad \text{everywhere on } Q_L.
+\]
+\end{hypothesis}
+
+\begin{hypothesis}[RG map as a Lipschitz pushforward]\label{H:rg}
+There exists a coarse-graining map $T_L:Q_L\to Q_{L'}$ (e.g.\ a block map with $L'=L/b$) such that $\bar\mu_{L'} = (T_L)_\#\bar\mu_L$, and $T_L$ is $L_{\mathrm{RG}}$-Lipschitz with $L_{\mathrm{RG}}$ uniformly bounded across the steps under consideration.
+\end{hypothesis}
+
+\begin{hypothesis}[Reflection positivity / OS compatibility]\label{H:os}
+The family $\{\bar\mu_L\}$ admits an Osterwalder--Schrader reconstruction with a transfer matrix/Hamiltonian whose spectral gap is controlled by the Euclidean correlation decay constants derived from the LSI/spectral-gap bounds.
+\end{hypothesis}
+
+\section{Conditional theorems (what the pipeline would yield)}
+
+\begin{theorem}[Conditional LSI and Markov spectral gap]\label{thm:lsi}
+Assume Hypotheses~\ref{H:gauge} and~\ref{H:convex}, and accept External Inputs EI1--EI2.
+Then each $\bar\mu_L$ satisfies a log-Sobolev inequality with constant $\kappa$ and the corresponding generator $\bar L_L$ has spectral gap at least $\kappa$.
+\end{theorem}
+
+\begin{theorem}[Conditional RG stability of LSI]\label{thm:rg}
+Assume Hypotheses~\ref{H:gauge}--\ref{H:rg}, and accept External Input EI3.
+If $\bar\mu_L$ satisfies LSI$(\kappa)$ then $\bar\mu_{L'}$ satisfies LSI$(\kappa/L_{\mathrm{RG}}^2)$.
+In particular, if $L_{\mathrm{RG}}\le 1$ then the LSI constant does not deteriorate under this coarse-graining step.
+\end{theorem}
+
+\begin{theorem}[Conditional OS mass gap]\label{thm:osgap}
+Assume Hypotheses~\ref{H:gauge}, \ref{H:rg}, \ref{H:os}, accept EI4, and assume that the RG-stable LSI bounds imply exponential decay of Euclidean correlations with rate bounded below uniformly in $L$.
+Then the reconstructed Hamiltonian has a strictly positive mass gap bounded below by a constant independent of $L$.
+\end{theorem}
+
+\section{Internal obstruction already present in the corpus}
+
+Document~02 proves that at the vacuum $U\equiv I$ the Wilson Hessian equals $(\beta/6)\Delta_1$ and that the strictly physical finite-volume gap behaves like
+\[
+\lambda_{\min}(H_0|\_{\mathrm{phys}})\sim c\,\beta\,L^{-2}.
+\]
+Therefore, any hypothesis asserting an $L$-uniform positive lower bound for the Wilson Hessian on a fixed neighborhood of $U\equiv I$ cannot hold in the vacuum linearization unless additional structure is introduced (e.g.\ an explicit local mass term, a neighborhood shrinking with $L$, or a different projection that excludes small-momentum modes).
+
+\section{What the project notes currently do (and why it is not yet a theorem)}
+
+The notes define a pointwise projector $P_L(U)$ (depending on $U$) and then define a \emph{projected} generator of the schematic form
+\[
+\tilde L f = \mathrm{div}\!\big(P_L(U)\nabla f\big)-\langle P_L(U)\nabla S_W, P_L(U)\nabla f\rangle.
+\]
+Without Hypothesis~\ref{H:gauge} (or an equivalent gauge-fixing/quotient construction), it is not established that:
+\begin{itemize}[leftmargin=*]
+\item $\tilde L$ is the generator of a Markov diffusion;
+\item $\tilde L$ is symmetric w.r.t.\ the intended Gibbs measure;
+\item the Bakry--\'Emery $\Gamma_2$ computation closes without additional terms coming from $\nabla P_L(U)$.
+\end{itemize}
+Hence any log-Sobolev or mass-gap statement derived from $\tilde L$ is, at present, conjectural.
+
+\end{document}
