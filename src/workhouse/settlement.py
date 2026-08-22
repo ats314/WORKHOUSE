@@ -277,6 +277,63 @@ def engine_closure_cap() -> int:
     return int(m.group(1))
 
 
+#: The Y4 production engine that owns protocol item 7 of GLUEBALL Section 18.1
+#: -- the cold 3,895-topology Stage-3H generation of an unshifted 189-record
+#: kernel. It is the only file in the corpus that mentions Stage-3H in code.
+STAGE3H_ENGINE = (
+    _REPO
+    / "corpus-import/programs/hodge_o4_adjudication/src"
+    / "ENGINE_Y4_hodge_canonical_o4_production_colab.py"
+)
+
+#: The sentinel whose ABSENCE the production engine demands before it will
+#: certify a run. Its name is the whole story.
+STAGE3H_SENTINEL = "_SEALED_NO_STAGE3H_INPUT.json.gz"
+
+
+@dataclass(frozen=True)
+class Stage3HStatus:
+    """What the corpus actually contains for the Stage-3H leg of G3."""
+
+    exclusion_guard: str  # the function that enforces the exclusion
+    sentinel: str  # the file whose absence is required
+    gate_keys: tuple[str, ...]  # the certificate keys that record the exclusion
+    implementations: tuple[str, ...]  # any `def` that COMPUTES Stage-3H
+    regression_map_size: int  # records a Stage-3H input would need to carry
+    declared_next_stage: str  # Stage 3G's own words about what comes next
+
+
+def stage3h_status(path: Path | None = None) -> Stage3HStatus:
+    """Scope protocol item 7 by reading the engine that would have to run it.
+
+    The distinction this function exists to make: a stage that is *unrun* can
+    be run, and a stage that is *unimplemented* has to be written first. The
+    corpus reads as the former and is the latter.
+    """
+    src = (path or STAGE3H_ENGINE).read_text(errors="ignore")
+    defs = tuple(sorted(set(re.findall(r"def\s+([a-z_]*stage_?3h[a-z_]*)\s*\(", src, re.I))))
+    guard = "_require_stage3h_sealed_out"
+    gates = tuple(
+        sorted(
+            {
+                key
+                for key in ("stage3h_regression_topologies", "stage3h_topologies_regressed")
+                if key in src
+            }
+        )
+    )
+    m = re.search(r"assert len\(stage3h_map\) == (\d+)", src)
+    n = re.search(r"Stage 3H: contract the ([\d,]+) nonresonant multi-path orbits", src)
+    return Stage3HStatus(
+        exclusion_guard=guard if guard in src else "",
+        sentinel=STAGE3H_SENTINEL if STAGE3H_SENTINEL in src else "",
+        gate_keys=gates,
+        implementations=tuple(d for d in defs if d != guard),
+        regression_map_size=int(m.group(1)) if m else -1,
+        declared_next_stage=n.group(1) if n else "",
+    )
+
+
 @dataclass(frozen=True)
 class ColdRun:
     name: str

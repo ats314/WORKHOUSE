@@ -48,6 +48,34 @@ gaps:
       off-axis coefficient C_shp, since the Gamma-point scalar is externally
       validated against Hamer and Phi_C(0) = 0 makes Gamma-point data
       structurally incapable of constraining Delta_C.
+      Cap lift blessed 2026-08-22 (Alex): the run stage fail-closed because
+      the engine's H0-closure BFS carries an operational cap
+      (max_states=100) that the first production cluster exceeds at 216
+      states. The guard never truncates -- it returns the complete finite
+      orbit or raises -- so raising it cannot change a computed value,
+      only whether the sweep can start. The revision (100 -> 100000,
+      sha256 9af3708e81a4a246...) passes the full freeze stage here:
+      contamination scan clean, self-test 47/47, geometry preflight 609
+      evaluations with both SHA pins matching. It is REGENERATED from the
+      pinned original, never vendored, and pinned by a check.
+      Scoping item 7 changed the picture more than the cap lift did.
+      The Stage-3H leg is not an unrun stage that hardware would clear:
+      it is an UNWRITTEN one. The only Stage-3H-aware code in the corpus
+      is _require_stage3h_sealed_out(), which refuses to certify a run
+      unless Stage-3H was excluded -- it demands the sentinel
+      _SEALED_NO_STAGE3H_INPUT.json.gz be absent and both certificate
+      counters be zero, and the certificate then records
+      "stage3h_exclusion: passed". Stage-I accepts an OPTIONAL Stage-3H
+      topology map of 1478 records; nothing anywhere produces one, and
+      Stage 3G's own summary lists "global multi-path orbit contraction"
+      as NOT completed with next_stage naming the 3,776 nonresonant
+      multi-path orbits still to contract. Registered as a FINDING.
+      Consequence for the sweep: item 3's 609 marked-cluster evaluations
+      yield a scalar-only (m4) certificate. C_shp -- and so C2 -- needs
+      item 7 as well, which would have to be written before it could be
+      run. Per-cluster cost is being measured under the lifted cap
+      (see runs/mce_cap_lift_2026-08-22/) precisely because the sweep's
+      affordability is now a separate question from its sufficiency.
     resolves: [C2, C3, C22]
     unblocks: [G9]
     leads:

@@ -12,6 +12,7 @@ each side reports, and the exact size of the disagreement between them.
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -3177,4 +3178,132 @@ def _():
         "under the Haar-only potential the curvature RISES away from the origin, matching the "
         "run's 0.250000 -> 0.250008 over r = 0..0.05, and the refuted 0.248 decline is excluded "
         "along every ray. (This bounds the RADIAL curvature, not lambda_min of the full Hessian.)"
+    )
+
+
+@adjudication.check(
+    "FINDING: G3 protocol item 7 has no implementation — only a guard that seals Stage-3H OUT",
+    "GLUEBALL Section 18.1 item 7 vs ENGINE_Y4_hodge_canonical_o4_production_colab.py",
+    tier=1,
+)
+def _():
+    # Item 7 of the frozen protocol asks for "a cold 3,895-topology Stage-3H
+    # generation of an unshifted 189-record kernel". Scoping it (Alex's call,
+    # 2026-08-22) turns up the opposite of an unrun stage: the only Stage-3H-aware
+    # code anywhere in the corpus REFUSES to certify a run that included it.
+    st = S.stage3h_status()
+    ok = (
+        st.exclusion_guard == "_require_stage3h_sealed_out"
+        and st.sentinel == "_SEALED_NO_STAGE3H_INPUT.json.gz"
+        and len(st.gate_keys) == 2
+        and st.implementations == ()  # nothing COMPUTES Stage-3H
+        and st.regression_map_size == 1478
+        and st.declared_next_stage == "3,776"
+    )
+    return ok, (
+        f"the Y4 production engine defines {st.exclusion_guard}(), which raises unless the "
+        f"sentinel {st.sentinel} is ABSENT and both certificate counters "
+        f"{', '.join(st.gate_keys)} are zero — the certificate then records "
+        f"'stage3h_exclusion: passed'. Stage-I accepts an OPTIONAL Stage-3H topology map "
+        f"of exactly {st.regression_map_size} records, and Stage 3G's own summary lists "
+        f"'global multi-path orbit contraction' as NOT completed with next_stage = contract "
+        f"the {st.declared_next_stage} nonresonant multi-path orbits. No function anywhere in "
+        "the file computes Stage-3H: implementations found = "
+        f"{list(st.implementations)}. So item 7 is not an unrun stage that hardware would "
+        "clear — it is an unwritten one, and the 609-cluster sweep (item 3) yields a "
+        "scalar-only certificate that cannot reach C_shp on its own. C2 stays open"
+    )
+
+
+@notes_prog.check(
+    "FINDING: G22's two routes are disjoint documents — the drift manuscript has no q",
+    "handoff intake 2026-08-22 / G22 (Section 7 vs EXTRACT_04 pulse-door template)",
+)
+def _():
+    # The session prompt said to "extract q's definition from the imported
+    # Section-7 drift manuscript". It is not there, and never was: the register
+    # already separates the two routes, and this check pins the separation so the
+    # conflation cannot be reintroduced. Dobrushin lives in a document whose
+    # verdict is `extract` -- its bytes are deliberately NOT in the repository.
+    from . import notes as NOTES
+
+    src = (
+        NOTES.NOTES_DIR
+        / "imported"
+        / "RESEARCH_2026-08"
+        / ("Section7_Lyapunov_drift_uniform_volume.txt")
+    )
+    raw = src.read_bytes()
+    digest = hashlib.sha256(raw).hexdigest()
+    text = raw.decode("utf-8", errors="ignore").lower()
+    absent = {
+        term: text.count(term)
+        for term in ("dobrushin", "zegarlinski", "interdependence", "total variation")
+    }
+    reg = NOTES.load()
+    rows = {r["digest"]: r for r in reg.reviews}
+    drift = rows.get(digest)
+    pulse_digest = "f28a016a6d531cade8e720a3de9d74377a853e5ae5b403154d18e6f57047a780"
+    pulse = rows.get(pulse_digest)
+    open_input = "assumption 7.38 (coercive pairing inequality; open input)" in text
+    ok = (
+        drift is not None
+        and drift.get("verdict") == "import"
+        and all(n == 0 for n in absent.values())
+        and open_input
+        and pulse is not None
+        and pulse.get("verdict") == "extract"
+        and "G22" in (pulse.get("bears_on") or [])
+    )
+    return ok, (
+        f"the imported Section-7 drift manuscript byte-verifies to {digest[:16]}... and contains "
+        f"{absent} — zero occurrences of every Dobrushin-route term. Its sole open input is "
+        "Assumption 7.38, the coercive pairing inequality, named as the only remaining "
+        "obstruction three separate times. The Dobrushin route is a DIFFERENT document, "
+        f"EXTRACT_04_pulse_door_block_lsi_template.md ({pulse_digest[:16]}...), whose verdict is "
+        "'extract' — its bytes are deliberately not in this repository, so no q can be read out "
+        "of anything here. Registering this because the handoff prompt asked for q 'from the "
+        "imported Section-7 manuscript': the two G22 attacks are disjoint documents and "
+        "conflating them is how a well-posed future check turns into a search for a symbol "
+        "that was never there"
+    )
+
+
+@adjudication.check(
+    "the blessed cap-lift revision reproduces byte-for-byte from the pinned engine",
+    "runs/mce_cap_lift_2026-08-22/make_revision.py (Alex's decision, 2026-08-22)",
+)
+def _():
+    # Alex blessed the cap lift on 2026-08-22, so the engine hash the harness
+    # freezes changes deliberately. The revision is regenerated, never vendored:
+    # a 288 KB near-duplicate of an immutable corpus file is how a fork quietly
+    # becomes a second source of truth. This check is the pin.
+    original = S.ENGINE.read_bytes()
+    original_sha = hashlib.sha256(original).hexdigest()
+    old = b"def closure(seed_state: State, max_states: int = 100) -> list[State]:"
+    new = b"def closure(seed_state: State, max_states: int = 100000) -> list[State]:"
+    occurrences = original.count(old)
+    revision = original.replace(old, new, 1)
+    revision_sha = hashlib.sha256(revision).hexdigest()
+    freeze = json.loads((S._REPO / "runs/mce_cap_lift_2026-08-22/FREEZE.json").read_text())
+    ok = (
+        original_sha == "be9d77f5b245715ed6e4fe6dc9178a56ddfa5c68efe697eaa7cf4bb6adae27ad"
+        and occurrences == 1
+        and revision_sha == "9af3708e81a4a246130e50614dbe305341a3aaf3d726877a18205bb1ad1b11c0"
+        and len(revision) - len(original) == 3
+        and freeze["engine_sha256"] == revision_sha
+        and freeze["self_test"].startswith("47/47")
+        and freeze["contamination_scan"] == "clean"
+        and freeze["preflight"]["total_exact_cluster_evaluations"] == 609
+        and S.engine_closure_cap() == 100
+    )
+    return ok, (
+        f"pinned engine {original_sha[:16]}... carries the closure cap exactly once; raising it "
+        f"100 -> 100000 adds {len(revision) - len(original)} bytes and gives "
+        f"{revision_sha[:16]}..., the hash the 2026-08-22 freeze recorded "
+        f"(self-test {freeze['self_test']}, contamination scan {freeze['contamination_scan']}, "
+        f"{freeze['preflight']['total_exact_cluster_evaluations']} preflight evaluations). The "
+        "guard never truncates -- it returns the complete finite orbit or raises -- so the lift "
+        "cannot change a computed value, only whether the sweep can start. The corpus engine "
+        f"itself still reads {S.engine_closure_cap()}, unmodified"
     )

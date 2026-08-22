@@ -91,3 +91,12 @@ __pycache__/
 lean/.lake/
 lean/.cache/
 *.olean
+
+# The cap-lifted MCE engine revision is REGENERATED, never vendored:
+# runs/mce_cap_lift_2026-08-22/make_revision.py reproduces it byte-for-byte
+# from the pinned original and verifies both hashes. A 288 KB near-duplicate
+# of an immutable corpus file is how a fork becomes a second source of truth.
+# It lands under build/ (already ignored above) rather than inside the run
+# directory, because tests/test_runs.py pins every entry of a run dir by
+# digest and a nested directory has no digest.
+build/mce_cap_lift/
