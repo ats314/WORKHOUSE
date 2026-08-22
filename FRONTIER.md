@@ -104,7 +104,7 @@ Claims this repository made and withdrew:
 - `G18` The spectral bridge **[load-bearing]**
 - `G19` Continuum limit
 - `G20` SAFE-region curvature certificate
-- `G21` Davies/Combes-Thomas O(m) decay for the massive Maxwell 1-form kernel
+- `G21` Davies/Combes-Thomas O(m) decay for the massive Maxwell 1-form kernel *(partial — see its status in the ledger)*
 - `G22` Coercivity via Cartan alignment
 - `G23` The OS bridge with uniform constants
 

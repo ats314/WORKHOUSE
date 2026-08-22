@@ -380,23 +380,42 @@ gaps:
 
   - id: G21
     tier: 3
-    state: open
+    state: partial
+    status: >-
+      Appendix H audited in full 2026-08-22, proposition by proposition:
+      the proof is sound end to end, and the no-factor-2 perturbation
+      bound (Lemma H.3.3) is correctly derived and numerically confirmed
+      with near-tight margin (<= 0.97). Remaining open: the standing T2
+      sweep at several (m, alpha), the H.3.3 mechanism check, the
+      arsinh-form float guard, and the deferred upstream Prop A.9.5.
     title: Davies/Combes-Thomas O(m) decay for the massive Maxwell 1-form kernel
     detail: >
-      The strongest technical result in the notes archive: |G(b,b')| <=
-      (2/m^2) exp(-eta dist) for G = (m^2 + alpha d1* d1)^-1 on lattice
-      1-forms, with eta = arcosh(1 + m^2/(2 alpha D_E)) = 2 arsinh(m /
-      (2 sqrt(alpha D_E))) -- an O(m) exponent where naive resolvent
-      bounds give O(m^2), plus a boundary-local row-sum refinement.
-      Canonical proof source is the archive's MAXWELL Appendix H (the
-      one-page streamline carries a spurious factor 2 that voids its
-      prefactor derivation as sketched); verified numerically at review
-      on a periodic lattice with margin <= 0.31, and the exponent
-      identity is a registered check. Open work: review Appendix H in
-      full, promote the lattice verification to a standing T2 check at
-      several (m, alpha), and record the C_partial name collision (the
-      streamline and Appendix H use the same symbol for different
-      constants) in the symbols ledger.
+      The strongest result in the notes archive, and the first to survive
+      a full-proof audit: |G(b,b')| <= (2/m^2) exp(-eta dist) for
+      G = (m^2 + alpha d1* d1)^-1 on lattice 1-forms of a finite
+      periodic lattice, with eta = arcosh(1 + m^2/(2 alpha C)) =
+      2 arsinh(m/(2 sqrt(alpha C))) -- an O(m) exponent where naive
+      resolvent bounds give O(m^2). RE-ANCHORED after the audit: the
+      canonical constant C is the WEIGHT-PROFILE row-sum C_bdy(M_1) of
+      Def A.9.4 (Appendix H, Prop H.4.3); the proved crude chain is
+      C_bdy <= C_0 <= 3 nu_P (B.4.6, verified tight on tori), and the
+      D_E form rests on Prop A.9.5 whose proof is marked deferred --
+      the one unproved upstream link. Recorded flaws, neither voiding
+      anything: H.4.4 asserts an equality where only <= holds
+      (conclusion survives via H.4.1), and the one-page COMBES_THOMAS
+      streamline's factor-2 sketch does not derive its own stated pair
+      (Appendix H does). Name collision settled: bare C_bdy = the
+      A.9.4 weight-profile constant; the region-based homonyms always
+      carry a region argument and are aliases. Kernel bound verified at
+      six (m^2, alpha) points, margins 0.187-0.314; on
+      translation-invariant tori C_bdy = C_0 exactly, so the refinement
+      buys sharpness only off lattice symmetry. Float guard queued: eta
+      must be evaluated in the arsinh form (the arcosh form loses 6082
+      ulps at m/sqrt(alpha C) = 0.01). Checks registered: the exponent
+      identity (T1) and the 3x3 certified kernel bound (T2); queued:
+      the (m, alpha) sweep and the H.3.3 mechanism check, which
+      localizes exactly the step where the streamline's spurious factor
+      lived.
 
   - id: G22
     tier: 3

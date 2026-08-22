@@ -1324,3 +1324,196 @@ reviews:
       in the imported SIM note and .tex. The blow-up adjudication is now
       a registered FINDING check. The known AI confident-inflation
       pattern, in its purest form yet.
+
+  # Fifth review pass: the Appendix H full-proof audit (2026-08-22) --
+  # G21's canonical proof source, audited proposition by proposition, plus
+  # the disposition of the whole Decay_Estimates family. Evidence:
+  # docs/referee/notes_review_appendix_h_2026-08-22.md. Headline: the
+  # proof is sound end to end; the archive's strongest result survives.
+
+  - digest: a2f8c3b2d35beda342700eea98ec8765f15d5c9fe848d275731189f004fbee74
+    path: MAXWELL/Decay_Estimates/Appendix_H__Davies_Type_Decay_Massive_Maxwell_Green_Kernel(1).md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G21]
+    reason: >-
+      Full proposition-by-proposition audit PASSED. The no-factor-2
+      perturbation bound (Lemma H.3.3) is correctly derived -- exact
+      cosh symmetrization, range-1 restriction, row-sum via the
+      self-adjoint block Schur bound -- and numerically confirmed with
+      near-tight margin (ratio <= 0.97). H.4.3 delivers exactly the
+      registered pair: prefactor 2/m^2, exponent arcosh(1 + m^2/(2
+      alpha C_bdy(M_1))) with the WEIGHT-PROFILE constant of Def A.9.4.
+      Two flaws recorded, neither voiding anything: H.4.4's proof
+      asserts the equality (H.4.9) where only <= holds (conclusion
+      survives via H.4.1 directly), and the D_E form of the exponent
+      chains through Prop A.9.5 whose proof is marked deferred -- the
+      proved route is C_bdy <= C_0 <= 3 nu_P. Kernel bound verified at
+      six (m^2, alpha) points, worst margin 0.3135, reproducing the
+      registered check. The archive's strongest single result, now
+      audited.
+
+  - digest: 8e78fd19dc23b8f14c37ac7d6744e081612d602582a01ebec4976c133ad94d25
+    path: COMBES_THOMAS/DUPLICATES/Appendix_A__Notation_and_Constants(1).md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G21]
+    reason: >-
+      The constants registry Appendix H binds to: A.9.3 (C_0), A.9.4
+      (the weight-profile C_bdy -- the canonical bearer of the name; the
+      region-based homonyms elsewhere always carry a region argument and
+      can be renamed without loss), A.2.9/A.2.10. One open item: Prop
+      A.9.5 (C_0 <= D_E) is stated with "Proof deferred" -- the one
+      unproved link if G21's exponent is read in D_E form.
+
+  - digest: 123048e3dbd9ee13335f712299aa756e7f7a16e7111fee22ae9f2e70c3dc64a1
+    path: TENSOR_NETWORK/06_LATTICE_QCD_SECTORS/Appendix_B__Lattice_Cell_Complex_and_Cochains.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G21]
+    reason: >-
+      Supplies exactly the inputs Appendix H cites -- B.4.1 (positivity),
+      B.4.5 (range one), B.4.6 (C_0 <= 3 nu_P, verified TIGHT on 2D and
+      3D tori at review), B.4.7, B.4.8 (horizontal invariance) -- all
+      present as cited.
+
+  - digest: 59fce1726173876bec36a1b623fd69d6aef6574029058e5673d79fe255110188
+    path: COMBES_THOMAS/COMBES_THOMAS_BOUNDS/Appendix_G__Combes_Thomas_Finite_Range_Inverse_Decay(1).md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G21]
+    reason: >-
+      The block Schur bound (G.2.1, self-adjoint case) Appendix H's
+      row-sum-to-norm step rests on, used correctly there; also the
+      canonical CT-side mechanism that supersedes the folder's several
+      CT streamline variants.
+
+  - digest: e863222a36e6b2101e70977112e04ac51088d8a4ed9afa04c0bcbc6948850799
+    path: MAXWELL/Decay_Estimates/Exciting_06_Sanity_Check_Numerics_Maxwell_Decay.md
+    archive: RESEARCH_2026-08
+    verdict: import
+    imported_to: notes/imported/RESEARCH_2026-08/Exciting_06_Sanity_Check_Numerics_Maxwell_Decay.md
+    reason: >-
+      Numeric record reproduced BIT-FOR-BIT at review (nu = 6, eta_bound
+      = 0.154151, fitted slope -0.832613, all 13 rows of the L = 12
+      distance table). One label typo recorded: prints log(1+m/nu) but
+      computes log(1+m^2/nu) (coincides at m = 1).
+
+  - digest: 05baf8166d04acd2d85a89446f584209c93f053928918906a520894fd0eef1f0
+    path: MAXWELL/Decay_Estimates/sanity_check_maxwell_decay.py
+    archive: RESEARCH_2026-08
+    verdict: import
+    imported_to: notes/imported/RESEARCH_2026-08/sanity_check_maxwell_decay.py
+    reason: The generating script for the imported numeric record; outputs verified.
+
+  - digest: 7b3928cd2187c859803b327a3a83dc9bb067264f498b93353a32febc3897e303
+    path: MAXWELL/Decay_Estimates/Extract_03_Massive_Maxwell_GreenKernel_Decay.md
+    archive: RESEARCH_2026-08
+    verdict: duplicate
+    duplicate_of: a2f8c3b2d35beda342700eea98ec8765f15d5c9fe848d275731189f004fbee74
+    reason: Faithful digest of Appendix H, identical constants, no deviations.
+
+  - digest: 4f8dbe6a1d183698e0c9cd3d1d88fe76d3b85e1c56bf7c4cd71734719482ce19
+    path: MAXWELL/Decay_Estimates/02_davies_decay_maxwell_boundary_rowsum.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: a2f8c3b2d35beda342700eea98ec8765f15d5c9fe848d275731189f004fbee74
+    reason: >-
+      The CORRECT one-page streamline (no factor 2, consistent
+      half-depletion, A.9.4-flavor constant) -- prefer citing this over
+      the flawed COMBES_THOMAS streamline when a short form is wanted;
+      fully contained in Appendix H.
+
+  - digest: 297d530390fe2b587be2cbf7dbd4accb28fecf7e494c241c0d306c3a82c329bd
+    path: MAXWELL/Decay_Estimates/02_davies_decay_massive_maxwell.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: a2f8c3b2d35beda342700eea98ec8765f15d5c9fe848d275731189f004fbee74
+    reason: Correct abstract-graph predecessor (C_0 version), contained in H + A.9.
+
+  - digest: 92ec987c00030573ab8ceb285350f7e0ee7dc1bf3486aaf12088dbcab14e66ad
+    path: MAXWELL/Decay_Estimates/02_davies_combes_thomas_maxwell.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: a2f8c3b2d35beda342700eea98ec8765f15d5c9fe848d275731189f004fbee74
+    reason: >-
+      CT-vs-Davies comparison at C_0, contained in H; its coherence-sweep
+      numbers are unverified and duplicated by better numeric notes.
+
+  - digest: 5d34c3b8c26477b85d9c1a97fdb83c8de6ab77a2cb1122d0572abab97f6cd7df
+    path: MAXWELL/Decay_Estimates/02_davies_decay_row_sum_constants.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: a2f8c3b2d35beda342700eea98ec8765f15d5c9fe848d275731189f004fbee74
+    reason: Portable row-sum device, contained in H + A.9.3/A.9.4.
+
+  - digest: 371960807a8aaf0655ebbbdf0a0073c2693312028556f47faa8d31504125c3c1
+    path: MAXWELL/Decay_Estimates/davies_decay_massive_maxwell.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: a2f8c3b2d35beda342700eea98ec8765f15d5c9fe848d275731189f004fbee74
+    reason: >-
+      Correct quadratic-form variant (D_E constant); carries the third
+      C_bdy homonym (region-subset Def 5.1), recorded in the collision
+      note in G21.
+
+  - digest: 79c81ab73852a087e620de781c5f770a208a775fe1fdd439c4388410c17ba106
+    path: MAXWELL/Decay_Estimates/doc04_davies_combes_thomas_maxwell.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: a2f8c3b2d35beda342700eea98ec8765f15d5c9fe848d275731189f004fbee74
+    reason: Part-9 collection pointing at internal predecessors of H.
+
+  - digest: 388b7a66705bf4e9ba91c6da2516f43b80c5c050792bc1ea7d331efafa30774a
+    path: COMBES_THOMAS/COMBES_THOMAS_BOUNDS/EXCITING_03_COMBES_THOMAS_MAXWELL_DECAY.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: 59fce1726173876bec36a1b623fd69d6aef6574029058e5673d79fe255110188
+    reason: CT-side streamline (triplicated), contained in Appendix G.
+
+  - digest: 61e8f044364d17432bcf3779c878bf468a93add12e1209bd2a5f2464ca626a56
+    path: COMBES_THOMAS/COMBES_THOMAS_BOUNDS/03_combes_thomas_inverse_decay.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: 59fce1726173876bec36a1b623fd69d6aef6574029058e5673d79fe255110188
+    reason: Contained in Appendix G.
+
+  - digest: 304fdb1871df20e133284ae231f04624703798497ffef424dc59116409afe8ca
+    path: MAXWELL/Decay_Estimates/03_combes_thomas_massive_maxwell_decay.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: 59fce1726173876bec36a1b623fd69d6aef6574029058e5673d79fe255110188
+    reason: Contained in Appendix G (log-form exponent variant).
+
+  - digest: 00a5c58942fa0a3174018ce93f451e942072dafc5dc87143be0dfbd480de4f9c
+    path: COMBES_THOMAS/COMBES_THOMAS_BOUNDS/06_combes_thomas_inverse_decay.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: 59fce1726173876bec36a1b623fd69d6aef6574029058e5673d79fe255110188
+    reason: Drop-in CT lemma extract, contained in Appendix G.
+
+  - digest: 17eb113ad815a031978a27e3ec88b7b295b690bbc46277bc422ba612d77f1dbb
+    path: MAXWELL/Decay_Estimates/03_greens_decay_combes_thomas.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Unverified numeric experiments (envelope slopes vs CT exponent);
+      its "bound safe but loose" conclusion is consistent with the
+      audited margins but its own numbers were not re-run. Revisit in a
+      numeric-family pass if one is commissioned.
+
+  - digest: 595a869761ee24005e3f13b44476018f34a95c0b3c353e5a0b7bb70f92bc71f2
+    path: MAXWELL/Decay_Estimates/03_maxwell_C0_decay_and_kappa_plateau.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: Kappa-plateau estimator numerics, unverified; same revisit condition.
+
+  - digest: 118ba2dc8d61ec65702c76150c0c50fbca20ef914d164d76fa63eb587345f862
+    path: MAXWELL/Decay_Estimates/kernel_decay_ct_davies(1).md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Consolidation of G + H plus a unique unproved "Riccati-flux"
+      alternative derivation; the consolidation is redundant with the
+      audited sources and the alternative deserves its own review before
+      any stronger verdict. Recorded sketch, nothing more.
