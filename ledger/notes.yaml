@@ -1123,3 +1123,204 @@ reviews:
       needs -- so the honest bottleneck count is three (EI.1,
       typicality, local-to-global transfer), and the "one missing brick"
       framing must not harden into fact.
+
+  # Fourth review pass: the analysis spine's supports -- LSI_POINCARE,
+  # LYAPUNOV, RICCATI (2026-08-22). Evidence:
+  # docs/referee/notes_review_analysis_spine_2026-08-22.md. Headline: the
+  # mature drift manuscript (Section 7, algebra verified) is imported as
+  # the standard against which the folder's inflated summaries are
+  # measured, and the review's first document-vs-document adjudication is
+  # settled by recomputation -- the honest SIM note wins, digit for digit.
+
+  - digest: e255a80d55e45b334dd522a90ed86b929a1b9f24c515bf4f2ad2b95c5b9bdfa4
+    path: "LYAPUNOV/Core_Drift_Lyapunov/## 7. Lyapunov drift and uniform-in-volume functional inequalities.txt"
+    archive: RESEARCH_2026-08
+    verdict: import
+    imported_to: notes/imported/RESEARCH_2026-08/Section7_Lyapunov_drift_uniform_volume.txt
+    reason: >-
+      The mature, referee-auditable form of the entire drift program
+      (Lemmas 7.1-7.41 with proofs): smooth proxy replacing the
+      cut-locus-broken d_G^2, exact drift identity, uniform closure with
+      explicit constants C_V = 8C_Delta + 8C_grad and C_Gamma = 64 nu
+      C_grad, and the single open input honestly quarantined as
+      Assumption 7.38 (pairing coercivity = G22). The Prop 7.39
+      kappa-arithmetic was recomputed by hand at review and is correct.
+      This is the standard against which the folder's overstated
+      summaries are measured.
+
+  - digest: 4e6640dbd29ff32168da3d236fc5f0ec64d47d4685f048ea54f437eb2acbd4cc
+    path: LYAPUNOV/Core_Drift_Lyapunov/PART_III_SECTION_3_Local_to_Global_LSI_via_Lyapunov_and_Curvature.md
+    archive: RESEARCH_2026-08
+    verdict: import
+    imported_to: notes/imported/RESEARCH_2026-08/PART_III_SECTION_3_Local_to_Global_LSI_via_Lyapunov_and_Curvature.md
+    reason: >-
+      The correct form of the local-to-global LSI assembly: Lyapunov
+      drift plus local LSI gives a DEFECTIVE global LSI, upgraded to
+      tight only via global Poincare + Rothaus -- in contrast to the
+      superseded 09_Local_to_Global note's unconditional tight-LSI
+      formula. Explicitly leaves the Lyapunov construction open. One
+      unverified citation flagged (the Cattiaux-Guillin AIHP volume),
+      recorded as unverified, not as an error.
+
+  - digest: 47f966dc076c98736b6a8e75becdb0b2153f19885d12d733afe81e81c4165ad1
+    path: RICCATI/01_riccati_flow/SIM_Riccati_ODE_Verification.md
+    archive: RESEARCH_2026-08
+    verdict: import
+    imported_to: notes/imported/RESEARCH_2026-08/SIM_Riccati_ODE_Verification.md
+    reason: >-
+      The only document in the batch whose recorded outputs are
+      bit-faithful to its own code: every printed digit of both output
+      tables reproduced verbatim at review (12 digits on the
+      constant-sigma column). Its "Important correction/nuance"
+      paragraph -- convergence only for lambda_0 > -sqrt(sigma/2),
+      finite-time blow-up below -- is precisely what refutes the
+      set-aside "10/10 rigor" proof document's false global-existence
+      theorem. The archive's own honest instrument, imported.
+
+  - digest: 4a3235840d7db4cbf29e1b1f419bbb3eb6cc5bd64454aec568d80f500f1d1b83
+    path: RICCATI/04_misc_docs/Dynamic_Hessian_Riccati_Flow.tex
+    archive: RESEARCH_2026-08
+    verdict: import
+    imported_to: notes/imported/RESEARCH_2026-08/Dynamic_Hessian_Riccati_Flow.tex
+    reason: >-
+      The mathematically sound core of the Riccati/PBH mechanism: the
+      vHJ equation, gradient and Hessian flows (all three re-derived by
+      hand at review, including the -2h^2 term), and the minimal-
+      eigenvalue Riccati inequality with the correct perturbation-theory
+      sign structure -- correctly scoped ("formal, yet standard"),
+      correctly restricted to l(0) > 0, with the uniform-source lift
+      flagged as unproved rather than claimed.
+
+  - digest: 242dd668e28c9127192b527c74bf07a4cda589553947df8127e6a8f8aa9e54ce
+    path: LSI_POINCARE/03_log_sobolev/09_Local_to_Global_LSI.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: e255a80d55e45b334dd522a90ed86b929a1b9f24c515bf4f2ad2b95c5b9bdfa4
+    reason: >-
+      Same local-to-global content as the imported Section 7 manuscript,
+      but treats the open drift input as proved, builds its Lyapunov
+      function from d_G^2 -- which the manuscript explicitly rejects
+      (not globally C^2 past the cut locus; the stated reason the smooth
+      proxy exists) -- and concludes an unconditional O(1) gap that the
+      mature treatment obtains only conditionally. Its quoted
+      local-to-global constant also does not match the cited
+      Cattiaux-Guillin-Wu statement (which is defective-LSI-plus-
+      Rothaus, as the imported PART III section correctly has it).
+
+  - digest: 464c4369a9f819cbaf2b128e6ed9cead436bd8784fce67ca53d37a1fbeaa7214
+    path: LSI_POINCARE/02_spectral_gap/DOC4_Explicit_LSI_and_Spectral_Gap_from_Haar_Mass.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G20, G22]
+    reason: >-
+      The canonical statement of the "explicit LSI constant" claim
+      (4 copies, cited downstream as a theorem): Ent <= (2/c_0) energy
+      with c_0 = (N^2-1)/(2N) -- which is exactly the fundamental
+      quadratic Casimir (verified: SU(2) 3/4, SU(3) 4/3), now a
+      registered check. Enters with TWO recorded conflicts: the leap
+      from Haar geometry to Ric_mu >= c_0 for the interacting measure is
+      unsupported and contradicts the c beta L^-2 vacuum-floor
+      obstruction; and a factor-4 normalization trap (the archive's own
+      SU(2) simulations use the convention where the eigenvalue is 3,
+      not 3/4) that any registry join must pin.
+
+  - digest: ac717426ab206a38bd9d1a04f8512a636538c346bfb03958c503fa70fa538b38
+    path: LSI_POINCARE/synthesis/model_creation/Synthesis_02_Analysis_LSI.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G21, G22, G23]
+    reason: >-
+      The best single structured inventory of the analysis spine --
+      drift certificates with internally consistent ratios
+      (lambda_0/beta = 1.79 across beta = 4, 6, 10), the Holley-Stroock
+      blow-up arithmetic (e^6.06 = 428, checks), the Davies row-sum
+      exponent, and an honest Ch. 18 open-problem register -- extracted
+      WITH its internal contradiction recorded: Ch. 15.2 lists "drift ->
+      global LSI" as proved at fixed cutoff while Ch. 18 declares the
+      pairing coercivity that drift requires the main OPEN problem; the
+      Ch. 18 register agrees with the imported manuscript, Ch. 15.2 is
+      the inflation. Provenance recorded: AI-generated synthesis, "3/51
+      files analyzed". Its "volume-stable" SU(3) lambda_min table is in
+      tension with the c beta L^-2 floor (the s = 0.05 amplitude
+      constraint may reconcile it -- constrained tube vs full vacuum --
+      recorded as tension, not resolved).
+
+  - digest: f28a016a6d531cade8e720a3de9d74377a853e5ae5b403154d18e6f57047a780
+    path: LSI_POINCARE/03_log_sobolev/EXTRACT_04_pulse_door_block_lsi_template.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G22]
+    reason: >-
+      The batch's most-duplicated document (7 copies) and the only one
+      engaging the Dobrushin/Zegarlinski route non-trivially: uniform
+      block conditional LSI plus interaction-matrix contraction q < 1
+      gives global LSI with (1-q) loss -- the standard playbook,
+      correctly stated, honestly conditional, and "the entire game is:
+      show q < 1" is a genuinely different attack on G22 than the drift
+      route. No q has ever been computed in the archive; that
+      computation is a well-posed future check.
+
+  - digest: 4336cb824b3fdaf0fa18a04833267aff08829fe8260906c3c6f888a58616fae9
+    path: LYAPUNOV/Core_Drift_Lyapunov/5_explicit_drift_computation_wilson_action.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G22]
+    reason: >-
+      Cleanest single-page reduction of the drift condition to one named
+      local inequality, with all arithmetic verified at review: the
+      exact pairing identity <grad S_W, grad B> = beta |P| |grad B|^2,
+      the rough-plaquette counting |R| >= eps|P|/(4-eps), and the
+      beta-cancellation making the strip constant beta-independent. Its
+      remaining input (T_tau local transversality) is exactly G22's
+      Cartan-alignment problem under another name.
+
+  - digest: e0b440fbca39923db54796d331ae7b263104f46f202a61a2a666423c5c22051d
+    path: LYAPUNOV/Core_Drift_Lyapunov/G_drift_full_algebra.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G22]
+    reason: >-
+      Supplies the volume-uniform drift constants independently of the
+      Section 7 manuscript, and the two agree exactly (C_1 specializes
+      to C_V = 8C_Delta + 8C_grad, C_2 = C_Gamma = 64 nu C_grad for
+      Phi = s^2; K_Phi <= 8 verified) -- two independently written
+      derivations of the G22 reduction pinning each other, now a
+      registered consistency check.
+
+  - digest: 580e855913740f038babb07d6fbab9817570db468667a135941db33fe4806a1b
+    path: RICCATI/01_riccati_flow/riccati_curvature_flow_and_dynamic_mass_generation.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G20]
+    reason: >-
+      The cleanest standalone statement of the curvature re-amplification
+      claim: ASSUMING the matrix flow with uniform source Phi(H) >=
+      kappa_0 I, the tanh comparison bound follows (verified exact). It
+      enters as T3 with the assumption boundary explicit -- nothing
+      connects the source condition to Yang-Mills, the arctanh domain
+      restriction |lambda(0)| < sqrt(kappa_0) is unstated, and its
+      -lambda^2 normalization differs from the spine's -2 lambda^2 (a
+      join trap for a value-keyed registry). If ever promoted to a
+      unifying candidate it needs the falsifier the gaps register
+      demands: exhibit a coarse-graining step where the effective source
+      fails the uniform floor -- which the c beta L^-2 finding already
+      threatens.
+
+  - digest: c6408704bbcaf79b2964759523cf2a4f4a1001046aeb4c4e08b5b2571c2a177d
+    path: RICCATI/01_riccati_flow/Riccati_Equation_Analysis_Proof.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Self-graded "Rigor level: 10/10 -- Publication-Ready" and refuted
+      by recomputation on four counts: Theorem 2.2's global existence
+      for all initial data is FALSE (its Case 2 asserts dlambda/dt > 0
+      for lambda < 0, a sign error; lambda_0 = -1.0 blows down past
+      -2.7e6 by t = 0.62); the section 7.1 table row claiming
+      lambda_0 = -1.0 -> 0.706 is fabricated and contradicts the
+      document's own Remark 3.4; the section 7.2 oscillatory table does
+      not reproduce (true lambda(2) = 0.856303 vs printed 0.65); and
+      Corollary 6.2's m ~ 0.13g is 20% off its own formula (0.1077g).
+      The correct parts (fixed points, rate, explicit solution) survive
+      in the imported SIM note and .tex. The blow-up adjudication is now
+      a registered FINDING check. The known AI confident-inflation
+      pattern, in its purest form yet.

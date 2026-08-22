@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 132/132 checks pass.
+**T1/T2 — re-derived here.** 135/135 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -33,7 +33,7 @@ it cannot drift from what the repository actually checks.
 | restored payloads (G1) | 11/11 |
 | coupling erratum (C4/G2) | 2/2 |
 | tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
-| notes program: SAFE, Davies, coercivity (G20-G23) | 10/10 |
+| notes program: SAFE, Davies, coercivity (G20-G23) | 13/13 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:

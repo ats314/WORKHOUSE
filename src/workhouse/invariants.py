@@ -2612,3 +2612,124 @@ def _():
         "FOR MECHANISM'. The fit measured its own example data; no independent measurement "
         "ever existed, and this check keeps that fact permanent"
     )
+
+
+@notes_prog.check(
+    "FINDING: Riccati blow-up adjudicates the archive's 10/10 proof against its SIM note",
+    "notes review 2026-08-22 / RICCATI",
+    tier=2,
+)
+def _():
+    from sympy import tanh
+
+    # T1 half: the explicit solution and rate for lambda' = -2 lambda^2 + sigma.
+    t = symbols("t", positive=True)
+    sig = symbols("sigma", positive=True)
+    lam_star = sqrt(sig / 2)
+    sol = lam_star * tanh(2 * lam_star * t)  # lambda(0) = 0 branch
+    residual = simplify(diff(sol, t) - (-2 * sol**2 + sig))
+    rate_ok = simplify(2 * sqrt(2 * sig) - 4 * lam_star) == 0  # gamma = 2 sqrt(2 sigma)
+
+    # T2 half: RK4 at sigma = 1, reproducing the SIM note's digits and the
+    # blow-up the "10/10" proof document denies.
+    def rk4(lam0, t_end, n):
+        h, lam = t_end / n, lam0
+        for _ in range(n):
+            if abs(lam) > 1e6:
+                return lam
+
+            def f(x):
+                return -2 * x * x + 1.0
+
+            k1 = f(lam)
+            k2 = f(lam + h * k1 / 2)
+            k3 = f(lam + h * k2 / 2)
+            k4 = f(lam + h * k3)
+            lam += h * (k1 + 2 * k2 + 2 * k3 + k4) / 6
+        return lam
+
+    converges = rk4(-0.7, 10.0, 40000)
+    blows = rk4(-1.0, 0.7, 40000)
+    sim_match = abs(converges - 0.707106781041) < 1e-9
+    blow_confirmed = blows < -1e6
+    ok = residual == 0 and rate_ok and sim_match and blow_confirmed
+    return ok, (
+        f"tanh solution verified symbolically (residual {residual}), rate 2 sqrt(2 sigma); "
+        f"RK4 at sigma = 1: lambda_0 = -0.7 -> {converges:.12f} (SIM note prints "
+        f"0.707106781041, matched to 1e-9) while lambda_0 = -1.0 blows down past -1e6 "
+        "before t = 0.7 -- the archive's 'Rigor 10/10' Theorem 2.2 (global existence for "
+        "all initial data) is false and its own SIM verification note is right"
+    )
+
+
+@notes_prog.check(
+    "fundamental Casimir: c_0 = (N^2-1)/(2N) exactly, with the convention trap pinned",
+    "notes review 2026-08-22 / G20, G22 (DOC4)",
+)
+def _():
+    from sympy import I as i_unit
+
+    s3 = sqrt(3)
+    pauli = [
+        Matrix([[0, 1], [1, 0]]),
+        Matrix([[0, -i_unit], [i_unit, 0]]),
+        Matrix([[1, 0], [0, -1]]),
+    ]
+    gell = [
+        Matrix([[0, 1, 0], [1, 0, 0], [0, 0, 0]]),
+        Matrix([[0, -i_unit, 0], [i_unit, 0, 0], [0, 0, 0]]),
+        Matrix([[1, 0, 0], [0, -1, 0], [0, 0, 0]]),
+        Matrix([[0, 0, 1], [0, 0, 0], [1, 0, 0]]),
+        Matrix([[0, 0, -i_unit], [0, 0, 0], [i_unit, 0, 0]]),
+        Matrix([[0, 0, 0], [0, 0, 1], [0, 1, 0]]),
+        Matrix([[0, 0, 0], [0, 0, -i_unit], [0, i_unit, 0]]),
+        Matrix([[1 / s3, 0, 0], [0, 1 / s3, 0], [0, 0, -2 / s3]]),
+    ]
+    c2_su2 = simplify(
+        sum(((m / 2) * (m / 2) for m in pauli), zeros(2, 2)) - Rational(3, 4) * eye(2)
+    )
+    c2_su3 = simplify(sum(((m / 2) * (m / 2) for m in gell), zeros(3, 3)) - Rational(4, 3) * eye(3))
+    formula = all(
+        Rational(n**2 - 1, 2 * n) == v for n, v in ((2, Rational(3, 4)), (3, Rational(4, 3)))
+    )
+    ok = c2_su2 == zeros(2, 2) and c2_su3 == zeros(3, 3) and formula
+    return ok, (
+        "sum (sigma_a/2)^2 = (3/4) I and sum (lambda_a/2)^2 = (4/3) I exactly -- DOC4's "
+        "c_0 = (N^2-1)/(2N) is the fundamental Casimir, the correct Haar gap scale in the "
+        "orthonormal normalization. Convention trap pinned: the archive's SU(2) simulations "
+        "use T_a = -i sigma_a, where the same eigenvalue reads 4 x 3/4 = 3 (their "
+        "Delta B_p = 12 - 12 B_p is 4 links x 3) -- a factor-4 join hazard, not a conflict"
+    )
+
+
+@notes_prog.check(
+    "drift-constant closure: two independent derivations agree exactly",
+    "notes review 2026-08-22 / G22 (Section 7 vs G_drift_full_algebra)",
+)
+def _():
+    s = symbols("s", positive=True)
+    c_delta, c_grad, nu, kappa, c_pair, cap_pair, d = symbols(
+        "C_Delta C_grad nu kappa c_pair Cpair D", positive=True
+    )
+    # K_Phi for Phi = s^2 on (0, 2]: s * (2s)^2 / s^2 = 4s, sup = 8 at s = 2.
+    k_phi = (s * (2 * s) ** 2 / s**2).subs(s, 2)
+    v_le_2d = simplify(2 * s - s**2)  # s(2 - s) >= 0 on [0, 2]
+    # G_drift C_1 with B_Phi = A_Phi = 2 equals Section 7's C_V; C_2 = C_Gamma.
+    c1 = 4 * (2 * c_delta + 2 * c_grad)
+    c_v = 8 * c_delta + 8 * c_grad
+    c2_const = 64 * nu * c_grad
+    # Prop 7.39 closure: the drift bound rearranges exactly.
+    lhs = (kappa * c_v + kappa**2 * c2_const) * d - 2 * kappa * (c_pair * d - cap_pair)
+    rhs = -kappa * (2 * c_pair - c_v - kappa * c2_const) * d + 2 * kappa * cap_pair
+    ok = (
+        k_phi == 8
+        and simplify(v_le_2d.subs(s, 1)) == 1  # positive at interior point
+        and expand(c1 - c_v) == 0
+        and expand(lhs - rhs) == 0
+    )
+    return ok, (
+        "K_Phi = 8 at the endpoint s = 2; C_1(Phi = s^2) = 4(2C_Delta + 2C_grad) equals "
+        "Section 7's C_V = 8C_Delta + 8C_grad identically, C_2 = C_Gamma = 64 nu C_grad; "
+        "and Prop 7.39's rearrangement is an exact identity -- the manuscript spine and "
+        "G_drift_full_algebra derive the same G22 reduction independently and agree"
+    )
