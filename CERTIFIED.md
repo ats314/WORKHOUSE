@@ -106,7 +106,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 103
+## T1 — re-derived exactly — 104
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -255,6 +255,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `FINDING: the alpha^n RG iteration contradicts its own one-step bound`
   - src/workhouse/invariants.py:2365 · notes review 2026-08-22 / G20
   - `workhouse verify --only 'FINDING: the alpha^n RG iteration contradicts its own one-step bound'`
+- `FINDING: the curvature-mass fit is the placeholder dataset fitted to itself`
+  - src/workhouse/invariants.py:2580 · notes review 2026-08-22 / TENSOR_NETWORK contamination chain
+  - `workhouse verify --only 'FINDING: the curvature-mass fit is the placeholder dataset fitted to itself'`
 - `G21 exponent identity: arcosh(1 + 2x^2) = 2 arsinh(x)`
   - src/workhouse/invariants.py:2291 · notes review 2026-08-22 / G21
   - `workhouse verify --only 'G21 exponent identity: arcosh(1 + 2x^2) = 2 arsinh(x)'`

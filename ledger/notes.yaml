@@ -897,3 +897,229 @@ reviews:
       rank collapse from Gaussian smearing, not physics — the document
       itself says not to over-interpret it. Honest; nothing checkable
       until the kernels are actual intertwiners.
+
+  # Third review pass: TENSOR_NETWORK (2026-08-22). Evidence:
+  # docs/referee/notes_review_tensor_network_2026-08-22.md. Headline: the
+  # curvature-mass contamination chain is fully reconstructed (the phantom
+  # EVIDENCE_01 found inside best_of_bundle_v2.zip), the toy exponent
+  # nu ~ 0.9668 is re-graded as a finite-window estimate of an exactly
+  # derivable 1, and the batch surfaces the archive's first genuinely
+  # G18-relevant material.
+
+  - digest: 5bff9c64af3711b8853d595f10c04769c4fe0133846a22b33dbf6341de58901e
+    path: TENSOR_NETWORK/13_qRacah_Spectral_Gap.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      The folder guide's flagship, and its sole original quantitative
+      claim -- the section 4.3 gap formula Delta = b_0 - a_0
+      sqrt(c_1/a_0) -- is underived, carries no hypotheses, mismatches
+      the standard Jacobi edge estimate, and is internally inconsistent
+      with the document's own conventions (a factor-2 clash between its
+      Boltzmann normalization and its printed Wilson decay e^-(3/4)A).
+      The textbook material around it is transcribed correctly. The
+      folder's real gap content lives in 01_QRACAH_DOOB_GAP, reviewed
+      separately.
+
+  - digest: 11a3453aff7f597c02d0a0a2c0266b1a96cdd01cf216fb201fdfc9863eda2cb8
+    path: TENSOR_NETWORK/14_Tensor_Network_HOTRG.md
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Generic methodology overview whose one concrete number -- "for pure
+      SU(2): chi_top ~ (180 MeV)^4 ... matches lattice Monte Carlo to
+      within 10%" -- is self-refuted two pages later ("the 4D non-Abelian
+      case has not been fully solved with HOTRG"), uses the quenched
+      SU(3) Witten-Veneziano ballpark for a theory with no MeV scale,
+      and cites nothing. Must not be quoted.
+
+  - digest: 096960f0bf5ad082312c4ac91c9601d8bdbc3a75456af46fa0c39dde38c7e95a
+    path: TENSOR_NETWORK/01_QRACAH_DOOB_GAP/05_qracah_doob_massgap_toy_model.md
+    archive: RESEARCH_2026-08
+    verdict: duplicate
+    duplicate_of: 767258774a018803644afff0bef71543a238ffcd3ed16fa43393044aa0c95ea4
+    reason: >-
+      Content-redundant retelling of the Doob/q-Racah toy (same anchor
+      numbers m_q ~ 0.0851, nu ~ 0.9668); the canonical statement is
+      02_doob_qracah_spectral_gap_mass_gap.md, whose spectrum reproduces
+      exactly from the companion code.
+
+  - digest: 767258774a018803644afff0bef71543a238ffcd3ed16fa43393044aa0c95ea4
+    path: TENSOR_NETWORK/01_QRACAH_DOOB_GAP/02_doob_qracah_spectral_gap_mass_gap.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G18]
+    reason: >-
+      Canonical, exactly-reproducing statement of the Doob/q-Racah toy:
+      the printed 5x5 Doob transform and spectrum rebuilt at review to
+      1.1e-8 (gap 0.08511763, all digits matching), provably the output
+      of the archive's own transfer-operator code. Enters through G18 as
+      a solvable toy isomorph of the uniformity question via its crisp
+      conjecture inf_N m(N,q) > 0 for fixed q -- a well-posed
+      machine-check target.
+
+  - digest: 30abaac4abe22aa4a208369319b7694130d5d0f2ed5328beb5a406ff7d990f7e
+    path: TENSOR_NETWORK/01_QRACAH_DOOB_GAP/05_doob_qracah_analytic_bounds.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G18]
+    reason: >-
+      The strongest analytic document in the batch: birth-death
+      reversibility, exact 1D Cheeger form, localization route to a
+      uniform-in-N gap, and the key result that nu = 1 exactly as q -> 1
+      (off-diagonals O(eps), diagonal O(eps^2)) -- verified at review by
+      window-tightening fits (0.9691 -> 0.9919 at N=5). Re-grades the
+      archive's empirical nu ~ 0.9668 as a finite-window estimate of an
+      exact exponent, not an independent critical number. T1
+      re-derivation queued.
+
+  - digest: 5a5e344a963cfcaadc7e29bfe2545fc541d5081cdd499e09a9499f1e7c27f08c
+    path: TENSOR_NETWORK/01_QRACAH_DOOB_GAP/06_Tq_nonplaceholder_kernels_qracah.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The direct answer to the composite-operator set-aside's recorded
+      reason ("placeholder kernels"): exact spectral-transform bulk,
+      unitary q-6j F-move kernel (unitarity verified to 3e-15), and a
+      fusion-ring Wilson insertion. One slip recorded: section 5's norm
+      bound assumes Lambda is an isometry in the flat inner product,
+      but Lambda = D^-1 U is an isometry only in the psi_0^2-weighted
+      norm -- the bound survives only when restated there.
+
+  - digest: b3dc41a401bd400043558b31bc83e83e5fea20db49f6c5e23c7382b3ee743620
+    path: TENSOR_NETWORK/05_TRANSFER_OPERATOR/10_casimir_caught_in_act_numeric_test.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G18]
+    reason: >-
+      Two things worth keeping: the quantum-6j recoupling unitarity
+      identity (Lambda^T Lambda = I, verified to 2.8e-15 across three
+      boundaries with a classical-limit cross-check) -- a genuine
+      T1-anchorable identity -- and a NEGATIVE outcome the archive
+      recorded only as a protocol: at the default toy parameters the
+      Doob bulk is NOT the intermediate-Casimir representation (best-fit
+      kernel error 18%, linear-spaced vs Casimir-spaced spectra), which
+      materially reframes the toy's interpretation.
+
+  - digest: 4907c40e99f2712fae69fd4ea925552018ac47e9c4015b28497cb72187258357
+    path: TENSOR_NETWORK/05_TRANSFER_OPERATOR/q_transfer_operator_upgrade.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      Clean, verified (1e-12) q-Racah orthogonality identity P^T W P = H
+      as the invariant replacement for a flagged placeholder kernel;
+      exact rational algebra for rational q, T1-promotable. Missing
+      hypothesis recorded: the "orthogonal U" claim needs the
+      weight-positivity region, which the note never delimits (positive
+      regimes exist -- one was exhibited at review -- but generic
+      parameters give wildly alternating weights).
+
+  - digest: 9a338a8739bf98afc305903b136812c0b72b6f0385745cd8d89ea2cc72f6275b
+    path: TENSOR_NETWORK/06_LATTICE_QCD_SECTORS/TESTING GEOMETRY AGAINST LATTICE MASS GAPS.txt
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      The origin of the curvature-mass contamination, now closed: the
+      chat-export template's arrays are labeled "(EDIT)" placeholders,
+      and running the script on those placeholders reproduces every
+      digit of the "results you reported" (k = 0.962363, R^2 = 0.998237,
+      RMS 0.00396962, all five residuals) -- the fit is the placeholder
+      dataset fitted to itself, and no independent data ever existed.
+      Registered as a permanent FINDING check (exact rationals
+      k = 9333/9698, R^2 = 21627127/21665332).
+
+  - digest: ef68d1ba1c751ec3c6c00c046229e36472c2df1d5df0e17ebfe933d274bb6fc5
+    path: TENSOR_NETWORK/06_LATTICE_QCD_SECTORS/best_of_bundle_v2.zip
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Contains the phantom EVIDENCE_01_Curvature_Mass_Fit.md itself
+      (header "Source: TESTING GEOMETRY AGAINST LATTICE MASS GAPS.txt",
+      body "What This PROVES ... STRONG EVIDENCE FOR MECHANISM") plus
+      the downstream fit and stress-test files -- the complete
+      laundering chain from placeholder template to "best of" bundle in
+      one artifact. Kept intact as the audit trail of exactly the
+      failure mode the notes register exists to catch.
+
+  - digest: 18d38160fa058924b2eeedf59a73165b83da7f3eb66d56a21567905ab26b0dc6
+    path: TENSOR_NETWORK/06_LATTICE_QCD_SECTORS/clean_docset.zip
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      The counter-artifact: a 2025-12-27 self-critical LaTeX bundle
+      ("Referee Report and Salvage Map", "Quarantined Computations ...
+      evidence only") with no contamination hits -- the maintainer
+      later imposed exactly the discipline the EVIDENCE file violated.
+      Set aside only because zip contents are outside the per-digest
+      review flow; its documents surface individually elsewhere.
+
+  - digest: e62ba3218e6917f5616d6104da8b0ce62eeeb98aace47bf5c12df75863cc9ffa
+    path: TENSOR_NETWORK/06_LATTICE_QCD_SECTORS/lattice.py
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: >-
+      Verbatim copy of networkx's generators/lattice.py (grid graph
+      generators) -- misfiled third-party library code, no relation to
+      lattice QCD.
+
+  - digest: 89807617b8f542ddd00079211a718a720891341d46abd331b44df5e765dd4bf0
+    path: TENSOR_NETWORK/06_LATTICE_QCD_SECTORS/test_lattice.py
+    archive: RESEARCH_2026-08
+    verdict: set-aside
+    reason: Verbatim networkx unit-test file accompanying the misfiled module.
+
+  - digest: d283cd465298c29abb7cc7d563d225df9450c48b9ce5d9a4cdefb92f126287dc
+    path: TENSOR_NETWORK/06_LATTICE_QCD_SECTORS/NOVEL_02_Dichotomy_Uniform_Lattice_Gap.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G18, G23]
+    reason: >-
+      Cleanly-stated conditional dichotomy (continuum gap iff
+      spacing-uniform lattice generator gap), with exemplary hedging --
+      both interfaces explicitly listed as unproven, including the
+      lambda_lat ~ a Delta scaling relation named as an interface rather
+      than asserted. The spacing-uniform axis complements G18's
+      volume-uniform question.
+
+  - digest: 5a229acb155b707c11f438adea0070d48625f5ad68a4b8f0213b9e7f77230d36
+    path: TENSOR_NETWORK/06_LATTICE_QCD_SECTORS/03_SU3_Lattice_Hessian_Convexity_Lanczos_v2.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G18]
+    reason: >-
+      The archive's only SU(3)-specific, volume-scanned spectral data:
+      Wilson-Hessian lambda_min(beta, scale, L) tables for L = 4, 6, 8.
+      Passed an independent consistency check at review -- regressing
+      the scale-0.05 tables gives intercepts 0.1257 (L=4) and 0.1247
+      (L=8) against the analytic Haar floor c_0 = 0.125 -- so the
+      numbers are genuine code output. The G18-relevant observation:
+      lambda_min mildly INCREASES with L at every probed beta, i.e. no
+      volume collapse of the convexity window in range. Euclidean
+      Hessian, evidence-grade, honest caveats (Pade drift,
+      coordinate-dependence) in its own second pass.
+
+  - digest: c77953c93e8a27475d4dd4db1896b6035b8fb69c5c682f9e57df1f85a41aca05
+    path: TENSOR_NETWORK/06_LATTICE_QCD_SECTORS/03_SU3_Lattice_Hessian_Convexity_Lanczos.md
+    archive: RESEARCH_2026-08
+    verdict: superseded
+    superseded_by: 5a229acb155b707c11f438adea0070d48625f5ad68a4b8f0213b9e7f77230d36
+    reason: v2 is v1 plus the second-pass caveats; same data, better hedging.
+
+  - digest: 228c69bef26a04a540ba27f40088a472dc7e02dc0b16fb934f3ee130c980913e
+    path: TENSOR_NETWORK/06_LATTICE_QCD_SECTORS/BEST_05_Lattice_Mass_Gap_Pipeline_from_Hinge_to_OS.md
+    archive: RESEARCH_2026-08
+    verdict: extract
+    bears_on: [G23]
+    reason: >-
+      The sharpest G23-relevant architecture in the batch, beyond the RP
+      review's scope: the hinge -> Helffer-Sjostrand -> Combes-Thomas ->
+      clustering -> OS chain reduced to the named finite-range
+      inequality Core-5.EI.1, with the standard OS interface lemma. The
+      review's audit adds a THIRD missing brick the document does not
+      acknowledge: typicality does not convert the good-set-local
+      curvature bound into the global operator inequality the HS step
+      needs -- so the honest bottleneck count is three (EI.1,
+      typicality, local-to-global transfer), and the "one missing brick"
+      framing must not harden into fact.

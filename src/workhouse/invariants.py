@@ -2575,3 +2575,40 @@ def _():
         "dominates, so exponential decay in n -- and with it the boxed gap(H) >= eta/a -- "
         "does not follow from (8.2); only 'spectral mass below eta/a is O(mu(K^c))' does"
     )
+
+
+@notes_prog.check(
+    "FINDING: the curvature-mass fit is the placeholder dataset fitted to itself",
+    "notes review 2026-08-22 / TENSOR_NETWORK contamination chain",
+)
+def _():
+    # The template's "(EDIT)" placeholder arrays, transcribed exactly; the
+    # "results you reported" downstream are the template run on these very
+    # numbers. Exact rational least squares through the origin pins it.
+    mu = [
+        Rational(92, 100),
+        Rational(81, 100),
+        Rational(74, 100),
+        Rational(68, 100),
+        Rational(63, 100),
+    ]
+    m = [
+        Rational(88, 100),
+        Rational(78, 100),
+        Rational(71, 100),
+        Rational(66, 100),
+        Rational(61, 100),
+    ]
+    k = sum(a * b for a, b in zip(mu, m, strict=True)) / sum(a * a for a in mu)
+    mean = sum(m) / 5
+    ss_res = sum((b - k * a) ** 2 for a, b in zip(mu, m, strict=True))
+    ss_tot = sum((b - mean) ** 2 for b in m)
+    r2 = 1 - ss_res / ss_tot
+    ok = k == Rational(9333, 9698) and r2 == Rational(21627127, 21665332)
+    return ok, (
+        f"through-origin fit of the (EDIT) placeholders gives exactly k = {k} = "
+        f"{float(k):.6f} and R^2 = {r2} = {float(r2):.6f} -- digit-for-digit the numbers "
+        "the EVIDENCE document (inside best_of_bundle_v2.zip) presents as 'STRONG EVIDENCE "
+        "FOR MECHANISM'. The fit measured its own example data; no independent measurement "
+        "ever existed, and this check keeps that fact permanent"
+    )
