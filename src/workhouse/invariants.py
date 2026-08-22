@@ -2952,7 +2952,14 @@ def _():
         f"theta in [0.01, 4], smallest enclosure {worst:.3e} at theta = {worst_at}; and "
         f"lim_(a->0) c_1 = {lim_c1} exactly, so the infimum is 1/2 and is never attained -- "
         "the handoff sweep's 'inf 0.512' is only its smallest sampled spacing (a = 0.05), "
-        "not the infimum"
+        "not the infimum. Two cautions worth carrying: the analytic argument is load-bearing "
+        "and the scan cannot replace it -- F has a double zero at theta = 0, so no finite ball "
+        "cover reaches a neighbourhood of the origin (the dependency problem swamps the "
+        "O(theta^2) cancellation); and the value 1/2 is a CONVENTION of the stated Dirichlet "
+        "form E(f) = int nu |f'|^2, being exactly the factor 2 between Delta_OS -> m and "
+        "gap(-L) -> 2m as a -> 0. Under E(f) = (1/2) int nu |f'|^2 the same derivation gives "
+        "c_n = (1-e^-n.theta)/(1-e^(-n sinh theta)) and the infimum is 1, not 1/2 -- so 'c ~ 1/2' "
+        "is a normalisation, not a deep constant"
     )
 
 
@@ -3375,5 +3382,10 @@ def _():
         "q < 1' is therefore LOST at physical coupling for the single-link coefficient. Scope, "
         "and it matters: EXTRACT_04's q is a BLOCK mixed-Hessian row-sum, a different quantity "
         "that blocking is the standard way to rescue; and Dobrushin is sufficient, not necessary, "
-        "so this does not disprove an LSI -- only this lever"
+        "so this does not disprove an LSI -- only this lever. The bound is also a FLOOR, not the "
+        "value: Re Tr/3 is not the optimal test function, and uncertified 2-D Weyl quadrature puts "
+        "the actual 18 sup TV near 15.0 at beta = 5.7. Run on SU(2), where the exact answer is "
+        "known, this same test function returns the crossing at beta 0.223 instead of 0.131 -- a "
+        "factor 1.7 loss. Certifying the true supremum needs a certified global optimisation over "
+        "configurations, which is not done here"
     )

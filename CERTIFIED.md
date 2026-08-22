@@ -250,10 +250,10 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **notes program: SAFE, Davies, coercivity (G20-G23)**
 
 - `FINDING: G22's two routes are disjoint documents — the drift manuscript has no q`
-  - src/workhouse/invariants.py:3221 · handoff intake 2026-08-22 / G22 (Section 7 vs EXTRACT_04 pulse-door template)
+  - src/workhouse/invariants.py:3228 · handoff intake 2026-08-22 / G22 (Section 7 vs EXTRACT_04 pulse-door template)
   - `workhouse verify --only 'FINDING: G22'"'"'s two routes are disjoint documents — the drift manuscript has no q'`
 - `FINDING: Markovizing the archive's own strip operator forces nu_true, never e^(-S_sp)`
-  - src/workhouse/invariants.py:2959 · handoff intake 2026-08-22 / G23 (06_OS_mass_gap_reductions, J_..._comparison)
+  - src/workhouse/invariants.py:2966 · handoff intake 2026-08-22 / G23 (06_OS_mass_gap_reductions, J_..._comparison)
   - `workhouse verify --only 'FINDING: Markovizing the archive'"'"'s own strip operator forces nu_true, never e^(-S_sp)'`
 - `FINDING: six bounded vectors in R^3 refute the 6-vs-3 Cartan counting`
   - src/workhouse/invariants.py:2513 · notes review 2026-08-22 / G22
@@ -265,13 +265,13 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:2705 · notes review 2026-08-22 / TENSOR_NETWORK contamination chain
   - `workhouse verify --only 'FINDING: the curvature-mass fit is the placeholder dataset fitted to itself'`
 - `G20 pinned convention: the su(3) adjoint Casimir is exactly 3, so ||ad_x||^2 = 3|x|^2`
-  - src/workhouse/invariants.py:3041 · handoff intake 2026-08-22 / G20 (h_phys_tools.py, safe_scan_tracked_v2.py)
+  - src/workhouse/invariants.py:3048 · handoff intake 2026-08-22 / G20 (h_phys_tools.py, safe_scan_tracked_v2.py)
   - `workhouse verify --only 'G20 pinned convention: the su(3) adjoint Casimir is exactly 3, so ||ad_x||^2 = 3|x|^2'`
 - `G20: Hess V_Haar(0) = I/4 exactly, so H_phys(0) = I/4 for every cluster`
-  - src/workhouse/invariants.py:3070 · handoff intake 2026-08-22 / G20 (H_phys_spec.md sections 3-4)
+  - src/workhouse/invariants.py:3077 · handoff intake 2026-08-22 / G20 (H_phys_spec.md sections 3-4)
   - `workhouse verify --only 'G20: Hess V_Haar(0) = I/4 exactly, so H_phys(0) = I/4 for every cluster'`
 - `G20: V_Haar has the Weyl form with all-positive coefficients, so radial curvature only rises`
-  - src/workhouse/invariants.py:3140 · handoff intake 2026-08-22 / G20 (SAFE radius table)
+  - src/workhouse/invariants.py:3147 · handoff intake 2026-08-22 / G20 (SAFE radius table)
   - `workhouse verify --only 'G20: V_Haar has the Weyl form with all-positive coefficients, so radial curvature only rises'`
 - `G21 exponent identity: arcosh(1 + 2x^2) = 2 arsinh(x)`
   - src/workhouse/invariants.py:2416 · notes review 2026-08-22 / G21
@@ -404,7 +404,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **settlement package and adjudication harness**
 
 - `FINDING: G3 protocol item 7 has no implementation — only a guard that seals Stage-3H OUT`
-  - src/workhouse/invariants.py:3187 · GLUEBALL Section 18.1 item 7 vs ENGINE_Y4_hodge_canonical_o4_production_colab.py
+  - src/workhouse/invariants.py:3194 · GLUEBALL Section 18.1 item 7 vs ENGINE_Y4_hodge_canonical_o4_production_colab.py
   - `workhouse verify --only 'FINDING: G3 protocol item 7 has no implementation — only a guard that seals Stage-3H OUT'`
 - `FINDING: the contamination scan reads only the engine file`
   - src/workhouse/invariants.py:664 · settlement/mce_adjudication_harness.py
@@ -431,7 +431,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:631 · MASTER_THEORY C7
   - `workhouse verify --only 'stranded-flux zero backend stays falsified (C7)'`
 - `the blessed cap-lift revision reproduces byte-for-byte from the pinned engine`
-  - src/workhouse/invariants.py:3275 · runs/mce_cap_lift_2026-08-22/make_revision.py (Alex's decision, 2026-08-22)
+  - src/workhouse/invariants.py:3282 · runs/mce_cap_lift_2026-08-22/make_revision.py (Alex's decision, 2026-08-22)
   - `workhouse verify --only 'the blessed cap-lift revision reproduces byte-for-byte from the pinned engine'`
 - `the engine imports stdlib only, so the single-file scan bounds it`
   - src/workhouse/invariants.py:765 · settlement/mce_adjudication_harness.py + corpus engine source
@@ -582,7 +582,7 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
   - src/workhouse/invariants.py:2654 · notes review 2026-08-22 / G23 (06_toy)
   - `workhouse verify --only 'FINDING: the naive diffusion-to-OS bridge fails in the Gaussian model'`
 - `FINDING: the single-link Dobrushin coefficient is >= 5.4 at physical coupling, volume-uniformly`
-  - src/workhouse/invariants.py:3315 · handoff intake 2026-08-22 / G22 (EXTRACT_04 'the entire game is: show q < 1')
+  - src/workhouse/invariants.py:3322 · handoff intake 2026-08-22 / G22 (EXTRACT_04 'the entire game is: show q < 1')
   - `workhouse verify --only 'FINDING: the single-link Dobrushin coefficient is >= 5.4 at physical coupling, volume-uniformly'`
 - `G21 Davies bound verified on the 3x3 periodic 2D lattice, arb-certified`
   - src/workhouse/invariants.py:2563 · notes review 2026-08-22 / G21
