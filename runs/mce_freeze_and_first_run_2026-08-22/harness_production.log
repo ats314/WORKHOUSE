@@ -1,0 +1,50 @@
+[PHASE3] T1 input polarization 0: 203 exact rooted clusters
+Traceback (most recent call last):
+  File "/proc/self/fd/5", line 6782, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/proc/self/fd/5", line 6760, in main
+    _result, seal = run_exact_phase3_physical(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 5791, in run_exact_phase3_physical
+    ).evaluate()
+      ^^^^^^^^^^
+  File "/proc/self/fd/5", line 5454, in evaluate
+    evaluation = evaluate_exact_endpoint_marked_vacuum_cluster(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 3861, in evaluate_exact_endpoint_marked_vacuum_cluster
+    histories = {
+                ^
+  File "/proc/self/fd/5", line 3862, in <dictcomp>
+    face: build_exact_decorated_half_history(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 2833, in build_exact_decorated_half_history
+    r2 = schedule.second_resolvent(w2)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 6242, in second_resolvent
+    return R2(self._r2_on_w2(stage.payload))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 2825, in <lambda>
+    lambda value: apply_resolvent_action_labelled(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 2778, in apply_resolvent_action_labelled
+    return {
+           ^
+  File "/proc/self/fd/5", line 2781, in <dictcomp>
+    if (resolved := exact_resolvent_vector(
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 1730, in exact_resolvent_vector
+    for resolved_state, resolved_coefficient in _resolved_seed_cached(
+                                                ^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 1713, in _resolved_seed_cached
+    resolved, _metadata = reduced_resolvent_on_state(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 1216, in reduced_resolvent_on_state
+    basis, _action, gram, pivots, physical_gram, physical_h0 = closure_matrices(
+                                                               ^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 1183, in closure_matrices
+    basis = closure(seed_state)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/proc/self/fd/5", line 1169, in closure
+    raise ExactEngineError("unexpectedly large H0 closure")
+ExactEngineError: unexpectedly large H0 closure

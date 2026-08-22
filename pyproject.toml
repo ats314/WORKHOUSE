@@ -41,7 +41,10 @@ src = ["src", "tests"]
 # notes/imported/ holds verbatim imports from the notes archive, each
 # hash-verified against its register digest by validate(); formatting one
 # is a validation failure by construction.
-extend-exclude = ["settlement", "corpus-import", "lean", "notes/imported"]
+# runs/ and docs/handoff/ are transcripts of executions (runs/ pinned by
+# per-run SHA256SUMS; handoff scripts preserved verbatim from session
+# agents) — reformatting a transcript corrupts it.
+extend-exclude = ["settlement", "corpus-import", "lean", "notes/imported", "runs", "docs/handoff"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]

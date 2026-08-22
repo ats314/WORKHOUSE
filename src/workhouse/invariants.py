@@ -11,6 +11,7 @@ each side reports, and the exact size of the disagreement between them.
 
 from __future__ import annotations
 
+import hashlib
 import re
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -706,6 +707,119 @@ def _():
         f"{len(audit.targets)} targets held module-local; engine env carries only "
         "HODGE_SU3_M4_SEALED_SOURCE_FD. Quarantine architecture is sound — the gap "
         "is in detecting a target already present in the engine."
+    )
+
+
+@adjudication.check(
+    "the engine the harness drives IS in the repository, renamed by the import",
+    "corpus-import/records/RENAME_MANIFEST_2026-08-20.tsv via settlement.py",
+)
+def _():
+    rename = S.engine_rename_record()
+    on_disk = S.ENGINE.stat().st_size if S.ENGINE.exists() else -1
+    first_line = S.ENGINE.read_text(errors="ignore").splitlines()[0]
+    ok = (
+        rename is not None
+        and rename.source.endswith("Hodge_SU3_Exact_MarkedCluster_m4_Colab.py")
+        and rename.destination.endswith("DATA_SU3_Exact_MarkedCluster_m4_Colab.py")
+        and rename.size == on_disk
+        and "marked-cluster fourth-order engine" in first_line
+    )
+    sha = hashlib.sha256(S.ENGINE.read_bytes()).hexdigest()
+    return ok, (
+        f"rename manifest: {rename.source.split('/')[-1]} -> "
+        f"{rename.destination.split('/')[-1]}, {rename.size} bytes = on-disk size; "
+        f"sha256 {sha[:16]}...; the settlement package's received README records "
+        "this engine as absent — that record described the filename, not the corpus"
+    )
+
+
+@adjudication.check(
+    "the engine is clean under the harness scan AND the extended scan",
+    "settlement/mce_adjudication_harness.py + the scan-gap FINDING above",
+)
+def _():
+    hits = S.engine_scan_hits(extended=True)
+    # The FINDING above stands: the harness's own list misses two
+    # scalar-determining targets. This check closes the question it left open —
+    # whether the engine actually carries one of the missed constants. It does
+    # not: blind under both lists.
+    return hits == [], (
+        f"harness strings ({len(S.audit_contamination_scan().strings)}) plus "
+        f"extension strings ({len(S.EXTENDED_CONTAMINATION_STRINGS)}) all absent "
+        f"from the engine source; hits = {hits!r}"
+    )
+
+
+@adjudication.check(
+    "the engine imports stdlib only, so the single-file scan bounds it",
+    "settlement/mce_adjudication_harness.py + corpus engine source",
+)
+def _():
+    roots = S.engine_import_roots()
+    extras = roots - S.ENGINE_ALLOWED_IMPORTS
+    # The single-file-scan FINDING above stands as a property of the harness.
+    # For THIS engine the exposure is bounded: no helper module, no third-party
+    # import, so nothing rides in past the scan at import time.
+    return not extras, (
+        f"{len(roots)} import roots, all in the allowed stdlib+sympy set; "
+        f"unexpected = {sorted(extras)!r}"
+    )
+
+
+@adjudication.check(
+    "freeze passes here: the corpus engine is behaviorally the verified one",
+    "runs/mce_freeze_and_first_run_2026-08-22/FREEZE.json",
+)
+def _():
+    fz = S.read_freeze()
+    coverage_pin, preflight_pin = S.harness_preflight_pins()
+    engine_sha = hashlib.sha256(S.ENGINE.read_bytes()).hexdigest()
+    ok = (
+        fz["contamination_scan"] == "clean"
+        and fz["self_test"].startswith("47/47")
+        and fz["engine_sha256"] == engine_sha
+        and fz["preflight"]["candidate_coverage_certificate_sha256"] == coverage_pin
+        and fz["preflight"]["preflight_sha256"] == preflight_pin
+        and fz["preflight"]["total_exact_cluster_evaluations"] == 609
+    )
+    return ok, (
+        f"self-test {fz['self_test']}; preflight coverage and output SHA256 both "
+        "match the harness pins, so the imported engine reproduces the sealed "
+        "geometry layer of the upstream-verified engine exactly; engine sha256 "
+        f"{engine_sha[:16]}... recorded in FREEZE.json. Reproduce: harness freeze, "
+        "~5 s"
+    )
+
+
+@adjudication.check(
+    "FINDING: the run stage fail-closes on cluster 1 of 609 — the shipped "
+    "closure cap is below the first cluster's own demand",
+    "runs/mce_freeze_and_first_run_2026-08-22/README.md",
+)
+def _():
+    cap = S.engine_closure_cap()
+    error = S.first_run_error()
+    probe = S.first_run_probe()
+    ok = (
+        cap == 100
+        and error == "ExactEngineError: unexpectedly large H0 closure"
+        and probe["cap_in_transcript"] == cap
+        and probe["max_measured_closure"] > cap
+        and probe["first_support_size"] == 1
+    )
+    return ok, (
+        f"first production cluster (support size {probe['first_support_size']}) "
+        f"demands an H0 orbit of {probe['max_measured_closure']} states against "
+        f"the shipped cap of {cap}, inherited from the electric-resolvent "
+        "lineage; the guard aborts rather than truncates, so the frozen protocol "
+        "as received cannot start on any hardware. No pre-production path "
+        "exercises it: the self-test contracts no real half-history, the "
+        "preflight runs zero physics, and the upstream sandbox only *started* "
+        "cluster 1. The orbit is finite and barely 2x the cap — an operational "
+        "miscalibration, not an explosion — but even the 1-face cluster (the "
+        "smallest of 609; 474 are 3-face) exceeded 13 CPU-minutes without "
+        "completing, so run-stage feasibility is a cost question upstream too"
     )
 
 

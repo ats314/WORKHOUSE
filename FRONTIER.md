@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 135/135 checks pass.
+**T1/T2 — re-derived here.** 140/140 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -24,7 +24,7 @@ it cannot drift from what the repository actually checks.
 | fourth-order generalized Hodge pencil | 3/3 |
 | fourth-order checkpoint extraction | 3/3 |
 | homology and finite volume | 2/2 |
-| settlement package and adjudication harness | 7/7 |
+| settlement package and adjudication harness | 12/12 |
 | near-Gamma uniformity (G11) | 6/6 |
 | tier collapse (G14) | 6/6 |
 | isotropic pentagonal cap band (v4.3 §9.3) | 9/9 |

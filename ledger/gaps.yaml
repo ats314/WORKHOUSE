@@ -73,17 +73,43 @@ gaps:
       DIFFERENT inventories and must never be interchanged.
     harness:
       artifact: settlement/mce_adjudication_harness.py
-      status: built and verified upstream through preflight; `run` stage outstanding
+      status: >
+        freeze re-verified in this repository 2026-08-22 (self-test 47/47,
+        both preflight SHA pins match); `run` executed for the first time
+        anywhere and fail-closed on cluster 1 of 609. See
+        runs/mce_freeze_and_first_run_2026-08-22/.
       verified_upstream:
         - contamination scan (engine source clean of the listed constants)
         - engine self-test 47/47
         - geometry preflight, 609 evaluations, coverage SHA match, zero physics
         - sealed-memfd authenticated launch, checkpoint write, interrupt and resume
-      remaining: "the `run` stage on production hardware (Linux; the A100 box)"
-      engine_absent: >
-        Hodge_SU3_Exact_MarkedCluster_m4_Colab.py is not in this repository, so
-        no stage can be executed here. The repository's checks are static
-        analysis of the harness source only.
+      remaining: >
+        an upstream engine revision raising the H0-closure cap (the guard
+        aborts rather than truncates, so no computed value depends on it),
+        then the `run` stage — feasibility now a measured question, not a
+        hardware one; see the run record.
+      engine_located: >
+        The received package records Hodge_SU3_Exact_MarkedCluster_m4_Colab.py
+        as absent. Stale: the 2026-08-20 rename manifest
+        (corpus-import/records/RENAME_MANIFEST_2026-08-20.tsv) shows it was
+        imported and renamed to corpus-import/programs/hodge_o4_adjudication/
+        src/DATA_SU3_Exact_MarkedCluster_m4_Colab.py. Behavioral identity with
+        the upstream-verified engine is checked, not assumed: both preflight
+        SHA pins reproduce here (freeze check in invariants.py).
+      run_2026_08_22: >
+        First execution of the run stage: fail-closed on the first cluster of
+        polarization 0 (support size 1) with "ExactEngineError: unexpectedly
+        large H0 closure" — closure(max_states=100), inherited unchanged from
+        the electric-resolvent lineage (hodge_haar_krylov v06c), is exceeded
+        during the R2 resolvent of the fourth-order half-history. Deterministic
+        exact arithmetic over the engine's own sealed inventory: the identical
+        failure occurs on any hardware, so the settlement package's "needs the
+        production box" was never the blocker. No pre-production path
+        exercises the guard at production size (self-test contracts no real
+        half-history; preflight runs zero physics; the upstream sandbox only
+        started cluster 1). The engine itself stays unmodified in the corpus;
+        the fix belongs upstream and changes the pinned engine hash
+        deliberately.
       audit_findings:
         - >
           The target-blindness scan misses two scalar-determining targets. Since
