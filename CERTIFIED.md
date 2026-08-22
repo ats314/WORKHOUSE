@@ -106,7 +106,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 104
+## T1 — re-derived exactly — 106
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -267,6 +267,12 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `center elements are critical points of Re Tr, with exact heights`
   - src/workhouse/invariants.py:2407 · notes review 2026-08-22 / G20
   - `workhouse verify --only 'center elements are critical points of Re Tr, with exact heights'`
+- `drift-constant closure: two independent derivations agree exactly`
+  - src/workhouse/invariants.py:2705 · notes review 2026-08-22 / G22 (Section 7 vs G_drift_full_algebra)
+  - `workhouse verify --only 'drift-constant closure: two independent derivations agree exactly'`
+- `fundamental Casimir: c_0 = (N^2-1)/(2N) exactly, with the convention trap pinned`
+  - src/workhouse/invariants.py:2665 · notes review 2026-08-22 / G20, G22 (DOC4)
+  - `workhouse verify --only 'fundamental Casimir: c_0 = (N^2-1)/(2N) exactly, with the convention trap pinned'`
 - `one-step bridge spectral lemma: inf over the orthocomplement is 1 - lambda_1`
   - src/workhouse/invariants.py:2506 · notes review 2026-08-22 / G23 (Exciting_03 Lemma 3.1)
   - `workhouse verify --only 'one-step bridge spectral lemma: inf over the orthocomplement is 1 - lambda_1'`
@@ -459,7 +465,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:812 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
-## T2 — float agreement within a stated tolerance — 28
+## T2 — float agreement within a stated tolerance — 29
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -527,6 +533,9 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
   - `workhouse verify --only 'the statement is non-vacuous only below an explicit coupling'`
 **notes program: SAFE, Davies, coercivity (G20-G23)**
 
+- `FINDING: Riccati blow-up adjudicates the archive's 10/10 proof against its SIM note`
+  - src/workhouse/invariants.py:2617 · notes review 2026-08-22 / RICCATI
+  - `workhouse verify --only 'FINDING: Riccati blow-up adjudicates the archive'"'"'s 10/10 proof against its SIM note'`
 - `FINDING: the localization error is n-independent, so the boxed gap does not follow`
   - src/workhouse/invariants.py:2556 · notes review 2026-08-22 / G23 (iter2 8.2 -> 9.3)
   - `workhouse verify --only 'FINDING: the localization error is n-independent, so the boxed gap does not follow'`

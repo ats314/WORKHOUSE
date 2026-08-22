@@ -1,0 +1,252 @@
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage[a4paper,margin=1in]{geometry}
+
+\title{Viscous Hamilton--Jacobi Flow, Hessian Evolution, and Riccati Bounds}
+\author{Synthetic Compilation of Established Results}
+\date{\today}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We derive in a finite--dimensional setting the viscous
+Hamilton--Jacobi (vHJ) equation for an effective action evolving under
+heat flow, the associated matrix--valued Hessian reaction--diffusion
+equation, and a Riccati--type inequality for the smallest eigenvalue of
+the Hessian. These structures underpin the curvature--flow mechanism
+for mass generation in the Yang--Mills mass gap program.
+\end{abstract}
+
+\section{vHJ Flow for Densities Solving the Heat Equation}
+
+Let $\rho_t:\mathbb{R}^n\to(0,\infty)$ be a smooth family of probability
+densities solving the heat equation
+\begin{equation}
+  \partial_t\rho_t = \Delta\rho_t,
+  \qquad \int_{\mathbb{R}^n}\rho_t(x)\,dx = 1.
+\end{equation}
+
+\begin{definition}
+Assume there exist smooth functions $S_t:\mathbb{R}^n\to\mathbb{R}$ and
+normalisation constants $Z_t>0$ such that
+\begin{equation}
+  \rho_t(x) = Z_t^{-1}e^{-S_t(x)}.
+\end{equation}
+We call $S_t$ the \emph{effective action} at time $t$.
+\end{definition}
+
+\begin{proposition}[Viscous Hamilton--Jacobi equation]
+Up to an additive function of $t$ only, the effective action satisfies
+\begin{equation}
+  \partial_t S_t = \Delta S_t - |\nabla S_t|^2.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Differentiate $\rho_t$:
+\begin{equation}
+  \partial_t\rho_t
+  = -Z_t^{-1}(\partial_t S_t)e^{-S_t} - Z_t^{-2}(\partial_t Z_t)e^{-S_t}
+  = -(\partial_t S_t + \partial_t\log Z_t)\rho_t.
+\end{equation}
+On the other hand,
+\begin{equation}
+  \Delta\rho_t
+  = \Delta(e^{-S_t})
+  = e^{-S_t}\big(-\Delta S_t + |\nabla S_t|^2\big)
+  = \rho_t\big(-\Delta S_t + |\nabla S_t|^2\big).
+\end{equation}
+Equating $\partial_t\rho_t$ and $\Delta\rho_t$ and dividing by $\rho_t$
+gives
+\begin{equation}
+  -\partial_t S_t - \partial_t\log Z_t
+  = -\Delta S_t + |\nabla S_t|^2.
+\end{equation}
+The term $\partial_t\log Z_t$ depends only on $t$; absorbing it into
+$S_t$ by redefining $\tilde S_t = S_t + \log Z_t$ leaves $\rho_t$ unchanged
+and yields
+\begin{equation}
+  \partial_t \tilde S_t = \Delta \tilde S_t - |\nabla\tilde S_t|^2.
+\end{equation}
+Dropping the tilde gives the claim.
+\end{proof}
+
+\section{Hessian Flow and Reaction--Diffusion Structure}
+
+Let $b_t = \nabla S_t$ and $h_t = \nabla^2 S_t$ denote the gradient and
+Hessian of $S_t$. Differentiating the vHJ equation gives evolution
+equations for $b_t$ and $h_t$.
+
+\begin{proposition}[Gradient evolution]
+The gradient evolves according to
+\begin{equation}
+  \partial_t b_t = \Delta b_t - 2(\nabla S_t\cdot\nabla)b_t.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Differentiate $\partial_t S_t = \Delta S_t - |b_t|^2$:
+\begin{align}
+  \partial_t b_{t,i}
+  &= \partial_i\partial_t S_t
+   = \partial_i\Delta S_t - \partial_i\big(|b_t|^2\big) \nonumber\\
+  &= \Delta b_{t,i} - 2\sum_j b_{t,j}\partial_i b_{t,j}
+   = \Delta b_{t,i} - 2(\nabla S_t\cdot\nabla)b_{t,i}.
+\end{align}
+\end{proof}
+
+\begin{proposition}[Hessian evolution]
+The Hessian evolves according to
+\begin{equation}
+  \partial_t h_t
+  = \Delta h_t - 2(\nabla S_t\cdot\nabla)h_t - 2h_t^2,
+\end{equation}
+where $(h_t^2)_{ik} = \sum_j h_{t,ij}h_{t,jk}$.
+\end{proposition}
+
+\begin{proof}
+Differentiate the gradient equation:
+\begin{align}
+  \partial_t h_{t,ik}
+  &= \partial_k\partial_t b_{t,i}
+   = \partial_k\Delta b_{t,i}
+     - 2\partial_k\Big(\sum_j b_{t,j}\partial_i b_{t,j}\Big) \nonumber\\
+  &= \Delta h_{t,ik}
+     - 2\sum_j\big[(\partial_k b_{t,j})(\partial_i b_{t,j})
+                    + b_{t,j}\partial_i\partial_k b_{t,j}\big].
+\end{align}
+Now $\partial_k b_{t,j} = h_{t,jk}$ and
+$\partial_i\partial_k b_{t,j} = \partial_i h_{t,jk}$, so
+\begin{equation}
+  \partial_t h_{t,ik}
+  = \Delta h_{t,ik}
+     - 2\sum_j\big(h_{t,jk}h_{t,ij} + b_{t,j}\partial_i h_{t,jk}\big).
+\end{equation}
+In matrix notation the first term inside the sum is $(h_t^2)_{ik}$ and
+the second term is $(\nabla S_t\cdot\nabla h_t)_{ik}$. This yields
+\begin{equation}
+  \partial_t h_t
+  = \Delta h_t - 2(\nabla S_t\cdot\nabla)h_t - 2h_t^2.
+\end{equation}
+\end{proof}
+
+Thus each eigenvalue of the Hessian evolves under a combination of
+diffusion, advection along the gradient flow, and a local quadratic
+reaction term $-2\lambda^2$ that tends to drive curvature towards zero.
+
+\section{Riccati Inequality for the Smallest Eigenvalue}
+
+Let $\lambda(t,x)$ denote the smallest eigenvalue of $h_t(x)$ at the
+point $x\in\mathbb{R}^n$. We give a local differential inequality for
+$\lambda$ that has Riccati form. For simplicity we ignore geometric
+subtleties and state the result in a formal, yet standard, way.
+
+\begin{theorem}[Riccati inequality]
+Assume $S_t$ and its derivatives are smooth and globally bounded so that
+all the above operations are justified. Then at any point where $\lambda$
+is attained by a simple eigenvalue with unit eigenvector $v$, one has
+\begin{equation}
+  \partial_t\lambda \ge \Delta\lambda - 2(\nabla S_t\cdot\nabla)\lambda
+    - 2\lambda^2.
+\end{equation}
+Formally, $\lambda$ therefore satisfies the scalar parabolic inequality
+\begin{equation}
+  \partial_t\lambda \;\gtrsim\; \mathcal{L}_t\lambda - 2\lambda^2,
+\end{equation}
+where $\mathcal{L}_t = \Delta - 2\nabla S_t\cdot\nabla$ is the generator
+of the Langevin diffusion associated with $S_t$.
+\end{theorem}
+
+\begin{proof}[Sketch]
+Let $v$ be a normalised eigenvector of $h_t(x)$ with eigenvalue
+$\lambda$. Differentiating the Rayleigh quotient
+$\lambda = \langle v,h_tv\rangle$ in time and using the evolution
+equation for $h_t$, together with suitable choice of local coordinates,
+yields
+\begin{equation}
+  \partial_t\lambda
+  = \langle v,\partial_t h_t v\rangle
+  = \langle v,\Delta h_t v\rangle - 2\langle v,h_t^2 v\rangle
+    - 2\langle v,(\nabla S_t\cdot\nabla h_t)v\rangle.
+\end{equation}
+The diffusion term $\langle v,\Delta h_t v\rangle$ can be written as
+$\Delta\lambda$ plus non--negative contributions coming from variations
+of $v$; similarly, the advection term produces $-2(\nabla S_t\cdot\nabla)
+\lambda$ plus higher--order corrections. The quadratic term is
+$\langle v,h_t^2 v\rangle = \lambda^2$ plus a non--negative remainder.
+Collecting terms and discarding the non--negative remainders yields the
+inequality.
+\end{proof}
+
+If we now \emph{drop} the diffusion and advection terms (which can only
+help $\lambda$ grow, heuristically) we obtain the purely temporal
+Riccati ODE
+\begin{equation}
+  \frac{d\ell}{dt} = -2\ell^2 + \sigma(t),
+\end{equation}
+where $\sigma(t)$ represents any additional positive source term (for
+instance from intrinsic curvature or anomaly contributions in a more
+general setting).
+
+\begin{lemma}[Riccati lower bound]
+Suppose $\ell$ solves
+\begin{equation}
+  \dot\ell = -2\ell^2 + \sigma_*,\qquad \ell(0)\ge \ell_0>0,
+\end{equation}
+with a constant $\sigma_*>0$. Then $\ell(t)$ remains bounded away from
+zero and converges monotonically to the fixed point
+$\ell_* = \sqrt{\sigma_*/2}$ as $t\to\infty$.
+\end{lemma}
+
+\begin{proof}
+The ODE is explicitly solvable, but monotonicity and convergence can be
+seen directly. The right--hand side is positive whenever
+$\ell^2 < \sigma_*/2$ and negative when $\ell^2>\sigma_*/2$. Thus
+$\ell(t)$ is driven towards the interval $[-\sqrt{\sigma_*/2},
+\sqrt{\sigma_*/2}]$. Since we start with $\ell(0)>0$, the solution is
+monotonically increasing up to $\sqrt{\sigma_*/2}$ if $\ell(0)$ is
+smaller, or decreasing down to it if larger. Standard comparison
+arguments show convergence.
+\end{proof}
+
+\section{Interpretation for Curvature--Driven Mass Generation}
+
+In applications to field theory, $S_t$ is an effective action on an
+(infinite--dimensional) configuration space, $\lambda(t)$ is the
+smallest \emph{horizontal} eigenvalue of the Hessian of $S_t$, and
+$\sigma(t)$ is supplied by a positive anomaly source (for example, the
+trace anomaly). The parabolic comparison principle suggests that
+$\lambda(t)$ is bounded below by the solution of a Riccati equation with
+a strictly positive source:
+\begin{equation}
+  \dot\lambda_{\min}(t) \gtrsim -\alpha\lambda_{\min}(t)^2 + \sigma_*,
+\end{equation}
+with $\alpha>0$ capturing geometric constants. The lemma then shows that
+$\lambda_{\min}(t)$ cannot decay to zero, but rather stabilises to a
+strictly positive value of order $\sqrt{\sigma_*/\alpha}$.
+
+Via the Bakry--\'Emery theory, a uniform positive lower bound on the
+Hessian implies positive curvature in the sense of $\Gamma_2$ and hence
+Poincar\'e and log--Sobolev inequalities with positive constants. These
+translate into a spectral gap for the associated Langevin generator and
+hence, in a suitable OS reconstruction, into a physical mass gap.
+
+\begin{remark}
+On a lattice configuration space $SU(N)^{|\mathcal{B}|}$, the Haar
+measure provides a time--independent, strictly positive contribution to
+$\sigma_*$, while the Wilson action and renormalisation effects contribute
+through $\alpha$ and additional corrections to $\sigma(t)$. The finite--dimensional
+derivations here can be lifted to that setting with only geometric
+modifications (Lichnerowicz Laplacians and curvature tensors).
+\end{remark}
+
+\end{document}
