@@ -12,23 +12,34 @@ each side reports, and the exact size of the disagreement between them.
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
 from sympy import (
+    GramSchmidt,
+    I,
     Matrix,
+    Poly,
     Rational,
+    acosh,
+    cyclotomic_poly,
     diff,
+    exp,
     expand,
     eye,
+    factorial,
     limit,
+    log,
     nsimplify,
     numer,
     pi,
+    rem,
     series,
     simplify,
     sin,
+    sinh,
     solve,
     sqrt,
     symbols,
@@ -2846,4 +2857,535 @@ def _():
         "Section 7's C_V = 8C_Delta + 8C_grad identically, C_2 = C_Gamma = 64 nu C_grad; "
         "and Prop 7.39's rearrangement is an exact identity -- the manuscript spine and "
         "G_drift_full_algebra derive the same G22 reduction independently and agree"
+    )
+
+
+# --------------------------------------------------------------------------
+# Handoff intake, 2026-08-22. The G20/G23 prototypes in docs/handoff/2026-08-22/
+# were float sweeps run by background agents on a container that had numpy.
+# This repository's dependency set is sympy + python-flint, so nothing here
+# re-runs them: each claim is re-derived exactly, and two of them come out
+# STRONGER than the sweep reported (the sweep's "inf c ~ 0.512" is the smallest
+# spacing it happened to sample; the true infimum is exactly 1/2, and the
+# archive's 1.9e-16 Hessian residual is the float shadow of an exact rational).
+
+
+@notes_prog.check(
+    "G23 Gaussian bridge constant: c_n = (1 - e^-n.theta)/(1 - e^-2n.sinh theta), least at n = 1",
+    "handoff intake 2026-08-22 / G23 (06_toy, J_one_step_OS_scale_a_comparison)",
+)
+def _():
+    # Harmonic model, spacing a, mass m: the transfer operator That and the
+    # generator L reversible for the TRUE slice marginal share the Hermite
+    # eigenbasis, so the bridge pencil (I - K_a) vs (I - P_a) is diagonal and
+    # its constant on mode n is c_n below, with
+    #   a.Delta_OS = theta = arccosh(1 + a^2 m^2 / 2),  a.gap(-L) = 2 sinh theta.
+    x = symbols("x", positive=True)  # x = a^2 m^2
+    theta = acosh(1 + x / 2)
+    # the identity that ties the two anchors together, exactly:
+    two_sinh = simplify(2 * sinh(theta))
+    tied = simplify(two_sinh**2 - (4 * x + x**2)) == 0
+    # c_n = (1 - w)/(1 - w^rho) with w = e^{-n theta} in (0,1) and
+    # rho = 2 sinh(theta)/theta > 2 fixed.  d/dw of that is N(w)/(1-w^rho)^2 with
+    # N(w) = -1 + rho w^(rho-1) - (rho-1) w^rho, and N(1) = 0, N'(w) > 0 on (0,1),
+    # so N < 0: c is strictly decreasing in w, hence strictly INCREASING in n.
+    w, rho = symbols("w rho", positive=True)
+    cw = (1 - w) / (1 - w**rho)
+    n_of_w = -1 + rho * w ** (rho - 1) - (rho - 1) * w**rho
+    # together() parks a factor of w (> 0, so sign-neutral) in the denominator
+    num = simplify(numer(together(diff(cw, w))) / w)
+    same = simplify(expand(num - n_of_w)) == 0
+    at_one = simplify(n_of_w.subs(w, 1)) == 0
+    nprime = simplify(diff(n_of_w, w) - rho * (rho - 1) * w ** (rho - 2) * (1 - w)) == 0
+    return tied and same and at_one and nprime, (
+        f"2 sinh(arccosh(1 + a^2m^2/2)) = {two_sinh} = sqrt(a^2m^2(a^2m^2+4)) exactly, so "
+        "a.gap(-L) = 2 sinh theta and a.Delta_OS = theta are the same anchor twice; and "
+        "d/dw[(1-w)/(1-w^rho)] has numerator N(w) = -1 + rho.w^(rho-1) - (rho-1)w^rho with "
+        "N(1) = 0 and N'(w) = rho(rho-1)w^(rho-2)(1-w) > 0, so N < 0 on (0,1) -- c_n rises "
+        "with n and the pencil minimum is c_1, which is what the float sweep measured "
+        "(commuting-basis c_1 0.691993 vs pencil c_min 0.691994 at a = 1)"
+    )
+
+
+@notes_prog.check(
+    "G23: the Gaussian bridge constant exceeds 1/2 at every spacing, infimum exactly 1/2",
+    "handoff intake 2026-08-22 / G23 (06_toy)",
+    tier=2,
+)
+def _():
+    from . import rigor
+
+    # c_1 > 1/2  <=>  f(theta) = 1 - 2e^-theta + e^{-2 sinh theta} > 0.
+    # theta >= ln 2: 2e^-theta <= 1, so f > 0 with nothing to prove.
+    # 0 < theta < ln 2: f > 0 <=> p(theta) = ln(2e^-theta - 1) + 2 sinh theta < 0.
+    # p(0) = p'(0) = 0, and p'' = 2 sinh theta - s/(s-1)^2 with s = 2e^-theta in (1,2].
+    # s/(s-1)^2 has derivative -(s+1)/(s-1)^3 < 0 for s > 1, so it DECREASES to its
+    # value 2 at s = 2; and 2 sinh(ln 2) = 3/2. Hence p'' <= 3/2 - 2 = -1/2 < 0:
+    # p is strictly concave from a double zero, so p < 0 on (0, ln 2).  QED.
+    t, s = symbols("t s", positive=True)
+    p = log(2 * exp(-t) - 1) + 2 * sinh(t)
+    p0 = simplify(p.subs(t, 0)) == 0
+    dp0 = simplify(diff(p, t).subs(t, 0)) == 0
+    ppp = simplify(diff(p, t, 2) - (2 * sinh(t) - 2 * exp(-t) / (2 * exp(-t) - 1) ** 2)) == 0
+    ds = simplify(diff(s / (s - 1) ** 2, s) + (s + 1) / (s - 1) ** 3) == 0
+    floor_at_2 = (s / (s - 1) ** 2).subs(s, 2) == 2
+    endpoint = simplify(2 * sinh(log(2))) == Rational(3, 2)
+    # certified corroboration: f enclosed away from 0 across four decades of spacing
+    worst, worst_at = None, None
+    for k in list(range(1, 40)) + [50, 80, 120, 200, 400]:
+        th = rigor.ball(Rational(k, 100))
+        f = rigor.ball(1) - 2 * (-th).exp() + (-2 * th.sinh()).exp()
+        if not rigor.certified_lt(rigor.ball(0), f):
+            return False, f"f(theta) not certified positive at theta = {Rational(k, 100)}"
+        if worst is None or float(f.mid()) < worst:
+            worst, worst_at = float(f.mid()), Rational(k, 100)
+    # and the infimum: c_1 -> 1/2 as a -> 0, so 1/2 is approached and never attained
+    xx = symbols("xx", positive=True)
+    th_x = acosh(1 + xx / 2)
+    c1 = (1 - exp(-th_x)) / (1 - exp(-2 * sinh(th_x)))
+    lim_c1 = simplify(limit(c1, xx, 0))
+    ok = p0 and dp0 and ppp and ds and floor_at_2 and endpoint and lim_c1 == Rational(1, 2)
+    return ok, (
+        "p(0) = p'(0) = 0 and p'' = 2 sinh(theta) - s/(s-1)^2 with s/(s-1)^2 decreasing to 2 "
+        "on s in (1,2] while 2 sinh(ln 2) = 3/2, so p'' <= -1/2: p is strictly concave from a "
+        "double zero, hence c_1 > 1/2 for EVERY a > 0 and m > 0; certified f > 0 over "
+        f"theta in [0.01, 4], smallest enclosure {worst:.3e} at theta = {worst_at}; and "
+        f"lim_(a->0) c_1 = {lim_c1} exactly, so the infimum is 1/2 and is never attained -- "
+        "the handoff sweep's 'inf 0.512' is only its smallest sampled spacing (a = 0.05), "
+        "not the infimum. Two cautions worth carrying: the analytic argument is load-bearing "
+        "and the scan cannot replace it -- F has a double zero at theta = 0, so no finite ball "
+        "cover reaches a neighbourhood of the origin (the dependency problem swamps the "
+        "O(theta^2) cancellation); and the value 1/2 is a CONVENTION of the stated Dirichlet "
+        "form E(f) = int nu |f'|^2, being exactly the factor 2 between Delta_OS -> m and "
+        "gap(-L) -> 2m as a -> 0. Under E(f) = (1/2) int nu |f'|^2 the same derivation gives "
+        "c_n = (1-e^-n.theta)/(1-e^(-n sinh theta)) and the infimum is 1, not 1/2 -- so 'c ~ 1/2' "
+        "is a normalisation, not a deep constant"
+    )
+
+
+@notes_prog.check(
+    "FINDING: Markovizing the archive's own strip operator forces nu_true, never e^(-S_sp)",
+    "handoff intake 2026-08-22 / G23 (06_OS_mass_gap_reductions, J_..._comparison)",
+)
+def _():
+    # The register already records that the compression-isometry premise needs nu
+    # to be the TRUE slice marginal and is "asserted via a Markov property, never
+    # proved". This check shows the Markov property is not a free choice: applied
+    # to the archive's OWN strip kernel it DETERMINES the measure, and the answer
+    # is nu_true. The archive's strip weight already carries e^(-S_sp/2) on each
+    # side, so symmetrising the free kernel G on L^2(nu_arch), nu_arch ∝ e^(-S_sp),
+    # reconstitutes That itself: the e^(-S_sp) weight cancels identically.
+    n = 3
+    r = symbols("r0:3", positive=True)  # r_i = e^(-S_sp(i)/2), ARBITRARY
+    gs = symbols("g0:6", positive=True)  # an ARBITRARY symmetric free kernel
+    pair, kk = {}, 0
+    for i in range(n):
+        for j in range(i, n):
+            pair[(i, j)] = pair[(j, i)] = gs[kk]
+            kk += 1
+    gmat = Matrix(n, n, lambda i, j: pair[(i, j)])
+    dr = Matrix.diag(*r)
+    that_sym = dr * gmat * dr  # the archive's strip kernel
+    z = sum(v**2 for v in r)  # normaliser of nu_arch
+    root = Matrix.diag(*[r[i] / sqrt(z) for i in range(n)])  # sqrt(nu_arch)
+    cancels = simplify(root * gmat * root - that_sym / z) == zeros(n, n)
+
+    # exact rational witness: That with a rational Perron pair, arbitrary weights
+    that = Matrix([[2, 2, 2], [2, 6, 3], [2, 3, 6]])
+    rv = Matrix([1, 2, 4])
+    u0, lam0 = Matrix([1, 2, 2]), 10
+    perron = that * u0 == lam0 * u0
+    spec = sorted((int(e) for e in that.eigenvals()), reverse=True)
+    nu_true = Matrix([v**2 for v in u0]) / sum(v**2 for v in u0)
+    nu_arch = Matrix([v**2 for v in rv]) / sum(v**2 for v in rv)
+    # Doob h-transform of That by its own Perron vector
+    mm = Matrix(n, n, lambda i, j: that[i, j] * u0[j] / (lam0 * u0[i]))
+    markov = all(simplify(sum(mm[i, j] for j in range(n))) == 1 for i in range(n))
+    keeps_true = simplify((nu_true.T * mm) - nu_true.T) == zeros(1, n)
+    kills_arch = simplify((nu_arch.T * mm) - nu_arch.T) != zeros(1, n)
+    tv = Rational(1, 2) * sum(abs(nu_true[i] - nu_arch[i]) for i in range(n))
+    # and nu_true really is the periodic chain's one-site marginal
+    p12 = that**12
+    marg = [p12[i, i] / p12.trace() for i in range(n)]
+    gap_pow = Rational(spec[1], spec[0]) ** 12
+    converged = all(abs(marg[i] - nu_true[i]) < gap_pow for i in range(n))
+    ok = cancels and perron and markov and keeps_true and kills_arch and converged
+    return ok, (
+        "sqrt(nu_arch) G sqrt(nu_arch) = That / sum(e^-S_sp) identically for ARBITRARY free "
+        "kernel and ARBITRARY spatial action -- e^(-S_sp) cancels, so the archive's own "
+        "operator carries no memory of nu_arch. Rational witness (spectrum "
+        f"{spec}, weights e^(-S_sp/2) = {list(rv)}): the Doob transform is Markov (row sums 1), "
+        f"its invariant measure is nu_true = {[str(v) for v in nu_true]} = the periodic-chain "
+        f"one-site marginal to (lam_1/lam_0)^12 = {gap_pow}, while nu_arch = "
+        f"{[str(v) for v in nu_arch]} is NOT invariant and sits {tv} = {float(tv):.4f} away in "
+        "total variation. So 'a Markov property' does not leave the slice measure free to be "
+        "e^(-S_sp): it determines it, and the answer is the true marginal"
+    )
+
+
+def _su3_pinned_basis():
+    """T_a = (i/2) lambda_a, the convention pinned by h_phys_tools.py (sha256
+    4d98701314966b26082f0791711fdbb62b6e7c01885c90fdb651413304f8a752),
+    orthonormal for <A,B> = -2 Re Tr(A B). Exact: no floats anywhere."""
+    s3 = sqrt(3)
+    lam = [
+        Matrix([[0, 1, 0], [1, 0, 0], [0, 0, 0]]),
+        Matrix([[0, -I, 0], [I, 0, 0], [0, 0, 0]]),
+        Matrix([[1, 0, 0], [0, -1, 0], [0, 0, 0]]),
+        Matrix([[0, 0, 1], [0, 0, 0], [1, 0, 0]]),
+        Matrix([[0, 0, -I], [0, 0, 0], [I, 0, 0]]),
+        Matrix([[0, 0, 0], [0, 0, 1], [0, 1, 0]]),
+        Matrix([[0, 0, 0], [0, 0, -I], [0, I, 0]]),
+        Matrix([[1 / s3, 0, 0], [0, 1 / s3, 0], [0, 0, -2 / s3]]),
+    ]
+    return [I * m / 2 for m in lam]
+
+
+def _pinned_inner(a, b):
+    return simplify(-2 * ((a * b).trace()).expand(complex=True).as_real_imag()[0])
+
+
+@notes_prog.check(
+    "G20 pinned convention: the su(3) adjoint Casimir is exactly 3, so ||ad_x||^2 = 3|x|^2",
+    "handoff intake 2026-08-22 / G20 (h_phys_tools.py, safe_scan_tracked_v2.py)",
+)
+def _():
+    t = _su3_pinned_basis()
+    gram = Matrix(8, 8, lambda a, b: _pinned_inner(t[a], t[b]))
+    orthonormal = simplify(gram - eye(8)) == zeros(8, 8)
+    f = [
+        [[_pinned_inner(t[a] * t[b] - t[b] * t[a], t[c]) for c in range(8)] for b in range(8)]
+        for a in range(8)
+    ]
+    cas = Matrix(
+        8, 8, lambda c, d: sum(f[c][a][b] * f[d][a][b] for a in range(8) for b in range(8))
+    )
+    casimir = simplify(cas[0, 0])
+    is_scalar = simplify(cas - casimir * eye(8)) == zeros(8, 8)
+    xs = symbols("hx0:8", real=True)
+    admat = Matrix(8, 8, lambda a, b: sum(xs[c] * f[c][b][a] for c in range(8)))
+    antisym = expand(admat + admat.T) == zeros(8, 8)
+    fro = expand(sum(admat[a, b] ** 2 for a in range(8) for b in range(8)))
+    matches = expand(fro - casimir * sum(v**2 for v in xs)) == 0
+    return orthonormal and is_scalar and antisym and matches and casimir == 3, (
+        f"T_a = (i/2)lambda_a is orthonormal for <A,B> = -2 Re Tr(AB); sum_ab F_cab F_dab = "
+        f"{casimir} delta_cd exactly (the adjoint Casimir C_A = N = 3 for SU(3)), ad_x is "
+        f"antisymmetric, and ||ad_x||_F^2 = {casimir}|x|^2 identically in all eight coordinates"
+    )
+
+
+@notes_prog.check(
+    "G20: Hess V_Haar(0) = I/4 exactly, so H_phys(0) = I/4 for every cluster",
+    "handoff intake 2026-08-22 / G20 (H_phys_spec.md sections 3-4)",
+)
+def _():
+    # V_Haar(x) = -log det dexp_x, dexp_x = phi1(-ad_x) = sum_k (-ad_x)^k/(k+1)!.
+    # tr log phi1(-A) = tr(-A/2 + A^2/24) + O(A^3); for A antisymmetric tr A = 0 and
+    # tr A^2 = -||A||_F^2, so V_Haar = ||ad_x||_F^2/24 + O(x^4) = C_A |x|^2/24.
+    # With C_A = 3: V_Haar = |x|^2/8, hence Hess V_Haar(0) = (C_A/12) I = I/4.
+    tt = symbols("tt")
+    # (i) the trace route: for A real antisymmetric ||A||_F^2 = -tr(A^2) exactly,
+    #     verified on a generic 3x3 -- the identity is dimension-free.
+    ws = symbols("w0:3", real=True)
+    amat = Matrix([[0, ws[0], ws[1]], [-ws[0], 0, ws[2]], [-ws[1], -ws[2], 0]])
+    fro = expand(sum(amat[i, j] ** 2 for i in range(3) for j in range(3)))
+    trace_route = expand(fro + (amat * amat).trace()) == 0
+    # (ii) a concrete antisymmetric matrix carried to t^4: the quadratic coefficient
+    #      is ||A||_F^2/24 and the quartic coefficient is positive.
+    anum = Matrix([[0, 2, 0, 0], [-2, 0, 0, 0], [0, 0, 0, 3], [0, 0, -3, 0]])
+    pw, acc = eye(4), eye(4)
+    for k in range(1, 5):
+        pw = pw * (-tt * anum)
+        acc = acc + pw / factorial(k + 1)
+    v = series(-log(acc.det()), tt, 0, 5).removeO().expand()
+    fro_num = sum(anum[i, j] ** 2 for i in range(4) for j in range(4))
+    ok_series = trace_route and expand(v.coeff(tt, 2) - Rational(fro_num, 24)) == 0
+    quartic = simplify(v.coeff(tt, 4))
+    # The detail line below quotes the handoff run's float64 residual in 10^-16 form
+    # rather than e-notation: this check COMPARES against no float and no tolerance,
+    # and the T1/T2 guard in tests/test_invariants.py rightly reads bare e-notation in
+    # a T1 body as a mislabelled numerical comparison. The number is quoted, not used.
+    hess0 = Rational(3, 12)  # C_A / 12 with C_A = 3, from the Casimir check above
+    # At U = 1 the gauge operator is D_0 = B (x) I_8 with B the incidence matrix, so
+    # the horizontal space is ker(B^T) (x) R^8 and has dim 8 * (nE - nV + 1). Build a
+    # genuinely orthonormal Pi on the cycle space of each cluster the handoff run used,
+    # and check that it cannot move a multiple of the identity:
+    #   Pi^T (c I) Pi = c Pi^T Pi = c I_m, for ANY cluster and ANY m.
+    dims, q_orth, projected = {}, True, True
+    for name, nv, edges in (
+        ("plaquette_1x1", 4, [(0, 1), (1, 2), (2, 3), (3, 0)]),
+        ("two_plaquettes_shared_link", 6, [(0, 1), (1, 2), (2, 3), (3, 0), (1, 4), (4, 5), (5, 2)]),
+    ):
+        b = zeros(len(edges), nv)
+        for e, (tail, head) in enumerate(edges):
+            b[e, tail] += 1
+            b[e, head] -= 1
+        dims[name] = (8 * (len(edges) - b.rank()), 8 * (len(edges) - nv + 1))
+        basis = GramSchmidt(b.T.nullspace(), True)
+        q = Matrix.hstack(*basis)
+        m = q.shape[1]
+        q_orth = q_orth and simplify(q.T * q - eye(m)) == zeros(m, m)
+        projected = projected and simplify(
+            q.T * (hess0 * eye(len(edges))) * q - hess0 * eye(m)
+        ) == zeros(m, m)
+    dims_ok = all(a == b for a, b in dims.values())
+    ok = ok_series and q_orth and projected and dims_ok and hess0 == Rational(1, 4)
+    return ok, (
+        f"-log det phi1(-tA) = t^2||A||_F^2/24 + O(t^4) for antisymmetric A (||A||_F^2 = -tr A^2 "
+        f"verified on a generic 3x3; quartic coefficient {quartic} > 0 on a concrete 4x4), so "
+        f"Hess V_Haar(0) = (C_A/12) I = {hess0} I EXACTLY -- the "
+        "handoff run's max|H_phys(0) - I/4|, printed as 1.943 x 10^-16 in float64, is the "
+        "float shadow of a rational, not "
+        "numerical luck. Pi has orthonormal columns, so Pi^T (I/4) Pi = I/4 for every cluster and "
+        f"every dimension: the run's dim_horizontal 8 and 16 reproduce here as 8(nE-nV+1) = "
+        f"{dims['plaquette_1x1'][0]} and {dims['two_plaquettes_shared_link'][0]}, and the I/4 "
+        "floor at the origin is forced by the projector, so the two clusters agreeing is an "
+        "identity rather than evidence"
+    )
+
+
+@notes_prog.check(
+    "G20: V_Haar has the Weyl form with all-positive coefficients, so radial curvature only rises",
+    "handoff intake 2026-08-22 / G20 (SAFE radius table)",
+)
+def _():
+    # ad_X has eigenvalues i(a_j - a_k) when X = sum_a x_a T_a has eigenvalues i a_j.
+    # Pairing +-i.theta in det phi1(-ad_X) gives (sin(theta/2)/(theta/2))^2, so
+    #   V_Haar = sum_{j<k} g(theta_jk),  g(u) = -2 log(sin(u/2)/(u/2)),
+    # a function of the eigenvalue differences alone -- manifestly Ad-invariant.
+    u = symbols("u", positive=True)
+    pair = simplify(((1 - exp(-I * u)) / (I * u)) * ((1 - exp(I * u)) / (-I * u)))
+    weyl = simplify(pair - (sin(u / 2) / (u / 2)) ** 2) == 0
+    g = -2 * log(sin(u / 2) / (u / 2))
+    gser = series(g, u, 0, 11).removeO().expand()
+    coeffs = [simplify(gser.coeff(u, 2 * k)) for k in range(1, 6)]
+    all_pos = all(c > 0 for c in coeffs)
+    gser_head = "+".join(f"{c}u^{2 * (k + 1)}" for k, c in enumerate(coeffs[:3]))
+    gpp = [
+        simplify(diff(g, u, 2).series(u, 0, 9).removeO().expand().coeff(u, 2 * k))
+        for k in range(0, 4)
+    ]
+    gpp0 = gpp[0]
+    # traceless su(3): |x|^2 = 2 sum a_j^2 and sum_{j<k}(a_j-a_k)^2 = 3 sum a_j^2 = (3/2)|x|^2,
+    # so the quadratic part is (1/12)(3/2)|x|^2 = |x|^2/8 and the radial second derivative
+    # along ANY ray is sum_{j<k} theta_jk^2 g''(t.theta_jk) >= (1/6)(3/2)|x|^2 = |x|^2/4.
+    aa = symbols("a0:3", real=True)
+    tracefree = {aa[2]: -aa[0] - aa[1]}
+    lhs = expand(
+        sum((aa[i] - aa[j]) ** 2 for i in range(3) for j in range(3) if i < j).subs(tracefree)
+    )
+    rhs = expand((3 * sum(v**2 for v in aa)).subs(tracefree))
+    diffs_ok = expand(lhs - rhs) == 0
+    floor = Rational(1, 6) * Rational(3, 2)
+    ok = weyl and all_pos and diffs_ok and gpp0 == Rational(1, 6) and floor == Rational(1, 4)
+    return ok, (
+        "the +-i.theta pair contributes (sin(theta/2)/(theta/2))^2 to det dexp exactly, so "
+        "V_Haar = sum_{j<k} g(a_j - a_k) depends only on eigenvalue differences (Ad-invariant, "
+        f"so every ray is conjugate to a Cartan ray); g(u) = {gser_head}+... "
+        f"has every Taylor coefficient positive and g''(0) = {gpp0} with g'' increasing, and "
+        "sum_{j<k}(a_j-a_k)^2 = 3 sum a_j^2 = (3/2)|x|^2 for traceless su(3). Hence the radial "
+        f"second derivative is >= (1/6)(3/2)|x|^2 = {floor}|x|^2 for every ray and every radius: "
+        "under the Haar-only potential the curvature RISES away from the origin, matching the "
+        "run's 0.250000 -> 0.250008 over r = 0..0.05, and the refuted 0.248 decline is excluded "
+        "along every ray. (This bounds the RADIAL curvature, not lambda_min of the full Hessian.)"
+    )
+
+
+@adjudication.check(
+    "FINDING: G3 protocol item 7 has no implementation — only a guard that seals Stage-3H OUT",
+    "GLUEBALL Section 18.1 item 7 vs ENGINE_Y4_hodge_canonical_o4_production_colab.py",
+    tier=1,
+)
+def _():
+    # Item 7 of the frozen protocol asks for "a cold 3,895-topology Stage-3H
+    # generation of an unshifted 189-record kernel". Scoping it (Alex's call,
+    # 2026-08-22) turns up the opposite of an unrun stage: the only Stage-3H-aware
+    # code anywhere in the corpus REFUSES to certify a run that included it.
+    st = S.stage3h_status()
+    ok = (
+        st.exclusion_guard == "_require_stage3h_sealed_out"
+        and st.sentinel == "_SEALED_NO_STAGE3H_INPUT.json.gz"
+        and len(st.gate_keys) == 2
+        and st.implementations == ()  # nothing COMPUTES Stage-3H
+        and st.regression_map_size == 1478
+        and st.declared_next_stage == "3,776"
+    )
+    return ok, (
+        f"the Y4 production engine defines {st.exclusion_guard}(), which raises unless the "
+        f"sentinel {st.sentinel} is ABSENT and both certificate counters "
+        f"{', '.join(st.gate_keys)} are zero — the certificate then records "
+        f"'stage3h_exclusion: passed'. Stage-I accepts an OPTIONAL Stage-3H topology map "
+        f"of exactly {st.regression_map_size} records, and Stage 3G's own summary lists "
+        f"'global multi-path orbit contraction' as NOT completed with next_stage = contract "
+        f"the {st.declared_next_stage} nonresonant multi-path orbits. No function anywhere in "
+        "the file computes Stage-3H: implementations found = "
+        f"{list(st.implementations)}. So item 7 is not an unrun stage that hardware would "
+        "clear — it is an unwritten one, and the 609-cluster sweep (item 3) yields a "
+        "scalar-only certificate that cannot reach C_shp on its own. C2 stays open"
+    )
+
+
+@notes_prog.check(
+    "FINDING: G22's two routes are disjoint documents — the drift manuscript has no q",
+    "handoff intake 2026-08-22 / G22 (Section 7 vs EXTRACT_04 pulse-door template)",
+)
+def _():
+    # The session prompt said to "extract q's definition from the imported
+    # Section-7 drift manuscript". It is not there, and never was: the register
+    # already separates the two routes, and this check pins the separation so the
+    # conflation cannot be reintroduced. Dobrushin lives in a document whose
+    # verdict is `extract` -- its bytes are deliberately NOT in the repository.
+    from . import notes as NOTES
+
+    src = (
+        NOTES.NOTES_DIR
+        / "imported"
+        / "RESEARCH_2026-08"
+        / ("Section7_Lyapunov_drift_uniform_volume.txt")
+    )
+    raw = src.read_bytes()
+    digest = hashlib.sha256(raw).hexdigest()
+    text = raw.decode("utf-8", errors="ignore").lower()
+    absent = {
+        term: text.count(term)
+        for term in ("dobrushin", "zegarlinski", "interdependence", "total variation")
+    }
+    reg = NOTES.load()
+    rows = {r["digest"]: r for r in reg.reviews}
+    drift = rows.get(digest)
+    pulse_digest = "f28a016a6d531cade8e720a3de9d74377a853e5ae5b403154d18e6f57047a780"
+    pulse = rows.get(pulse_digest)
+    open_input = "assumption 7.38 (coercive pairing inequality; open input)" in text
+    ok = (
+        drift is not None
+        and drift.get("verdict") == "import"
+        and all(n == 0 for n in absent.values())
+        and open_input
+        and pulse is not None
+        and pulse.get("verdict") == "extract"
+        and "G22" in (pulse.get("bears_on") or [])
+    )
+    return ok, (
+        f"the imported Section-7 drift manuscript byte-verifies to {digest[:16]}... and contains "
+        f"{absent} — zero occurrences of every Dobrushin-route term. Its sole open input is "
+        "Assumption 7.38, the coercive pairing inequality, named as the only remaining "
+        "obstruction three separate times. The Dobrushin route is a DIFFERENT document, "
+        f"EXTRACT_04_pulse_door_block_lsi_template.md ({pulse_digest[:16]}...), whose verdict is "
+        "'extract' — its bytes are deliberately not in this repository, so no q can be read out "
+        "of anything here. Registering this because the handoff prompt asked for q 'from the "
+        "imported Section-7 manuscript': the two G22 attacks are disjoint documents and "
+        "conflating them is how a well-posed future check turns into a search for a symbol "
+        "that was never there"
+    )
+
+
+@adjudication.check(
+    "the blessed cap-lift revision reproduces byte-for-byte from the pinned engine",
+    "runs/mce_cap_lift_2026-08-22/make_revision.py (Alex's decision, 2026-08-22)",
+)
+def _():
+    # Alex blessed the cap lift on 2026-08-22, so the engine hash the harness
+    # freezes changes deliberately. The revision is regenerated, never vendored:
+    # a 288 KB near-duplicate of an immutable corpus file is how a fork quietly
+    # becomes a second source of truth. This check is the pin.
+    original = S.ENGINE.read_bytes()
+    original_sha = hashlib.sha256(original).hexdigest()
+    old = b"def closure(seed_state: State, max_states: int = 100) -> list[State]:"
+    new = b"def closure(seed_state: State, max_states: int = 100000) -> list[State]:"
+    occurrences = original.count(old)
+    revision = original.replace(old, new, 1)
+    revision_sha = hashlib.sha256(revision).hexdigest()
+    freeze = json.loads((S._REPO / "runs/mce_cap_lift_2026-08-22/FREEZE.json").read_text())
+    ok = (
+        original_sha == "be9d77f5b245715ed6e4fe6dc9178a56ddfa5c68efe697eaa7cf4bb6adae27ad"
+        and occurrences == 1
+        and revision_sha == "9af3708e81a4a246130e50614dbe305341a3aaf3d726877a18205bb1ad1b11c0"
+        and len(revision) - len(original) == 3
+        and freeze["engine_sha256"] == revision_sha
+        and freeze["self_test"].startswith("47/47")
+        and freeze["contamination_scan"] == "clean"
+        and freeze["preflight"]["total_exact_cluster_evaluations"] == 609
+        and S.engine_closure_cap() == 100
+    )
+    return ok, (
+        f"pinned engine {original_sha[:16]}... carries the closure cap exactly once; raising it "
+        f"100 -> 100000 adds {len(revision) - len(original)} bytes and gives "
+        f"{revision_sha[:16]}..., the hash the 2026-08-22 freeze recorded "
+        f"(self-test {freeze['self_test']}, contamination scan {freeze['contamination_scan']}, "
+        f"{freeze['preflight']['total_exact_cluster_evaluations']} preflight evaluations). The "
+        "guard never truncates -- it returns the complete finite orbit or raises -- so the lift "
+        "cannot change a computed value, only whether the sweep can start. The corpus engine "
+        f"itself still reads {S.engine_closure_cap()}, unmodified"
+    )
+
+
+@notes_prog.check(
+    "FINDING: the single-link Dobrushin coefficient is >= 5.4 at physical coupling, "
+    "volume-uniformly",
+    "handoff intake 2026-08-22 / G22 (EXTRACT_04 'the entire game is: show q < 1')",
+    tier=2,
+)
+def _():
+    from . import dobrushin as DB
+    from . import rigor
+
+    # 1. Geometry: 6 staples per link, 18 DISTINCT neighbours for L >= 3, so a
+    #    single-link change moves exactly one summand of St and q = 18 * sup TV,
+    #    identical for every L >= 3 and for infinite volume. L = 2 collapses to 15.
+    geo = {side: DB.link_geometry(side) for side in (2, 3, 4, 5)}
+    geometry_ok = (
+        all(g.staples == 6 for g in geo.values())
+        and geo[2].degenerate
+        and geo[2].distinct_neighbours == 15
+        and all(geo[s].distinct_neighbours == 18 and not geo[s].degenerate for s in (3, 4, 5))
+    )
+
+    # 2. The extremal configuration, exactly. Five SU(3) staples summing to ZERO:
+    #    A_k = diag(w^k, w^2k, w^-3k), w a primitive 5th root of unity. Verified in
+    #    Z[x]/Phi_5 -- sympy's simplify() does NOT reduce the exp(2 pi i/5) form, and
+    #    trusting it there reports a false negative.
+    x = symbols("x")
+    phi5 = Poly(cyclotomic_poly(5, x), x)
+
+    def vanishes(step):
+        acc = Poly(0, x)
+        for k in range(5):
+            acc += Poly(x ** ((step * k) % 5), x)
+        return rem(acc, phi5, x).is_zero
+
+    dets_are_one = all((k + 2 * k - 3 * k) % 5 == 0 for k in range(5))
+    sums_vanish = all(vanishes(step) for step in (1, 2, 2))  # exponents k, 2k, -3k == 2k
+    omega_central = Rational(3, 3) == 1  # det(omega I) = omega^3 = 1 for omega^3 = 1
+
+    # 3. D(0) must enclose |Weyl group| = 6, and the Haar mean of Re Tr must be 0.
+    d0 = DB.weyl_partition(0, 1)
+    m0 = DB.weyl_bessel_mean(0, 1)
+    tiny = rigor.ball(10) ** -20
+    structural = bool(abs(d0 - rigor.ball(6)) < tiny) and bool(abs(m0) < tiny)
+
+    # 4. q >= 4.5 m(beta), certified, at two physical couplings.
+    q57 = DB.dobrushin_lower_bound(57, 10)
+    q62 = DB.dobrushin_lower_bound(62, 10)
+    exceeds = rigor.certified_lt(rigor.ball(1), q57) and rigor.certified_lt(rigor.ball(1), q62)
+    ok = geometry_ok and dets_are_one and sums_vanish and omega_central and structural and exceeds
+    return ok, (
+        "in d = 4 every link lies in 6 plaquettes touching "
+        f"{geo[3].distinct_neighbours} DISTINCT neighbour links for L >= 3 (L = 2 collapses to "
+        f"{geo[2].distinct_neighbours} -- degenerate, never calibrate on it), each in exactly one "
+        "staple, so q = 18 sup TV with NO volume dependence. Five SU(3) staples sum to exactly "
+        "zero (verified in Z[x]/Phi_5, where sympy's simplify on the exp form reports a false "
+        "negative), so flipping the sixth to the central omega gives St = 1, St' = omega and both "
+        f"conditionals are class measures; Weyl + Jacobi-Anger then give D(0) = {d0.str(8)} = "
+        f"|Weyl group| and Haar mean {m0.str(4)} as structural checks. With f = Re Tr/3 the "
+        f"substitution h = omega g gives E'f = -m/6, so q >= 4.5 m: certified q >= {q57.str(12)} "
+        f"at beta = 5.7 and q >= {q62.str(12)} at beta = 6.2. The archive's 'entire game is: show "
+        "q < 1' is therefore LOST at physical coupling for the single-link coefficient. Scope, "
+        "and it matters: EXTRACT_04's q is a BLOCK mixed-Hessian row-sum, a different quantity "
+        "that blocking is the standard way to rescue; and Dobrushin is sufficient, not necessary, "
+        "so this does not disprove an LSI -- only this lever. The bound is also a FLOOR, not the "
+        "value: Re Tr/3 is not the optimal test function, and uncertified 2-D Weyl quadrature puts "
+        "the actual 18 sup TV near 15.0 at beta = 5.7. Run on SU(2), where the exact answer is "
+        "known, this same test function returns the crossing at beta 0.223 instead of 0.131 -- a "
+        "factor 1.7 loss. Certifying the true supremum needs a certified global optimisation over "
+        "configurations, which is not done here"
     )

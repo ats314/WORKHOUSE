@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 140/140 checks pass.
+**T1/T2 — re-derived here.** 150/150 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -24,7 +24,7 @@ it cannot drift from what the repository actually checks.
 | fourth-order generalized Hodge pencil | 3/3 |
 | fourth-order checkpoint extraction | 3/3 |
 | homology and finite volume | 2/2 |
-| settlement package and adjudication harness | 12/12 |
+| settlement package and adjudication harness | 14/14 |
 | near-Gamma uniformity (G11) | 6/6 |
 | tier collapse (G14) | 6/6 |
 | isotropic pentagonal cap band (v4.3 §9.3) | 9/9 |
@@ -33,7 +33,7 @@ it cannot drift from what the repository actually checks.
 | restored payloads (G1) | 11/11 |
 | coupling erratum (C4/G2) | 2/2 |
 | tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
-| notes program: SAFE, Davies, coercivity (G20-G23) | 13/13 |
+| notes program: SAFE, Davies, coercivity (G20-G23) | 21/21 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -134,7 +134,7 @@ unblocks another gap, or is load-bearing. Cheapest first. Bookkeeping that
 settles nothing is excluded however cheap it looks.
 
 - `G3` (weeks) Fourth-order adjudication — run the marked-cluster engine target-blind — settles C2, G9
-  - The 11-item frozen protocol of GLUEBALL §18.1. This is the load-bearing finite computation of the entire program. Scope narrowed once C1 was dissolved as an anchoring distinction: what G3 must now settle is the off-axis coefficient C_shp, since the Gamma-point scalar is externally validated against Hamer and Phi_C(0) = 0 makes Gamma-point data structurally incapable of constraining Delta_C.
+  - The 11-item frozen protocol of GLUEBALL §18.1. This is the load-bearing finite computation of the entire program. Scope narrowed once C1 was dissolved as an anchoring distinction: what G3 must now settle is the off-axis coefficient C_shp, since the Gamma-point scalar is externally validated against Hamer and Phi_C(0) = 0 makes Gamma-point data structurally incapable of constraining Delta_C. Cap lift blessed 2026-08-22 (Alex): the run stage fail-closed because the engine's H0-closure BFS carries an operational cap (max_states=100) that the first production cluster exceeds at 216 states. The guard never truncates -- it returns the complete finite orbit or raises -- so raising it cannot change a computed value, only whether the sweep can start. The revision (100 -> 100000, sha256 9af3708e81a4a246...) passes the full freeze stage here: contamination scan clean, self-test 47/47, geometry preflight 609 evaluations with both SHA pins matching. It is REGENERATED from the pinned original, never vendored, and pinned by a check. Scoping item 7 changed the picture more than the cap lift did. The Stage-3H leg is not an unrun stage that hardware would clear: it is an UNWRITTEN one. The only Stage-3H-aware code in the corpus is _require_stage3h_sealed_out(), which refuses to certify a run unless Stage-3H was excluded -- it demands the sentinel _SEALED_NO_STAGE3H_INPUT.json.gz be absent and both certificate counters be zero, and the certificate then records "stage3h_exclusion: passed". Stage-I accepts an OPTIONAL Stage-3H topology map of 1478 records; nothing anywhere produces one, and Stage 3G's own summary lists "global multi-path orbit contraction" as NOT completed with next_stage naming the 3,776 nonresonant multi-path orbits still to contract. Registered as a FINDING. Consequence for the sweep: item 3's 609 marked-cluster evaluations yield a scalar-only (m4) certificate. C_shp -- and so C2 -- needs item 7 as well, which would have to be written before it could be run. Per-cluster cost is being measured under the lifted cap (see runs/mce_cap_lift_2026-08-22/) precisely because the sweep's affordability is now a separate question from its sufficiency.
 - `G17` (unbounded) PC-2 free-energy stability and the source-radius reduction — settles load-bearing
   - The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction.
 - `G18` (unbounded) The spectral bridge — settles load-bearing

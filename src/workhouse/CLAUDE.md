@@ -43,5 +43,7 @@ third, add an explicit `FINDING:` check that *asserts* the discrepancy.
 - `corpus_registry.py` — near-miss, multiple, and coverage sweeps over the whole corpus
 - `tier_collapse.py`, `near_gamma.py`, `settlement.py`, `payloads.py` — one investigation each
 - `rigor.py` — certified Arb enclosures for T2 comparisons (ADR 0010); the only sanctioned route to arb
+- `dobrushin.py` — the single-link Dobrushin coefficient of the Wilson action (G22),
+  exact lattice combinatorics plus a certified Weyl/Bessel series; goes through `rigor`
 - `triage.py` — read-only survey of an unpinned archive
 - `notes.py` — the notes register: archive inventories, review verdicts, intake rules
