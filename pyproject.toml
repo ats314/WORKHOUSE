@@ -12,6 +12,7 @@ license = { text = "All rights reserved — unpublished private research. See NO
 dependencies = [
   "sympy>=1.12",
   "PyYAML>=6.0",
+  "python-flint>=0.9",
 ]
 
 [project.optional-dependencies]
@@ -37,7 +38,10 @@ src = ["src", "tests"]
 # Formatting them would change their hashes and destroy the provenance record.
 # Received evidence. Formatting it rewrites the corpus: a first run silently
 # modified 296 files under corpus-import/ before this line existed.
-extend-exclude = ["settlement", "corpus-import", "lean"]
+# notes/imported/ holds verbatim imports from the notes archive, each
+# hash-verified against its register digest by validate(); formatting one
+# is a validation failure by construction.
+extend-exclude = ["settlement", "corpus-import", "lean", "notes/imported"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
