@@ -72,6 +72,29 @@ def test_the_citation_web_is_in_the_graph():
     assert len(curated_cites) == len(set(literature.load().cites()))
 
 
+def test_the_notes_register_is_in_the_graph():
+    """ADR 0013: an extract's mandatory bears_on becomes a curated edge, so
+    `why G21` shows which reviewed notes entered it. Every review is a NOTE
+    record — set-asides too, because their reasons are recorded judgements
+    search must reach — and no recorded bears_on target is silently dropped."""
+    from workhouse import notes
+
+    assert ("NOTE:8b7ef71fe8e3", "G21", "bears_on") in TRIPLES  # Davies/Maxwell-Green decay
+    assert ("NOTE:f514acb44a5b", "G20", "bears_on") in TRIPLES  # block-convexity engine
+    assert ("NOTE:f514acb44a5b", "G23", "bears_on") in TRIPLES
+    reviews = notes.load().reviews
+    records = {c.id: c for c in CATALOGUE if c.kind == "note"}
+    assert len(records) == len(reviews)
+    assert all(c.tier == 3 for c in records.values())
+    note_edges = [e for e in GRAPH.edges if e.src.startswith("NOTE:")]
+    assert len(note_edges) == sum(len(r.get("bears_on", [])) for r in reviews)
+    assert all(e.type == "bears_on" and e.how == "curated" for e in note_edges)
+    # A set-aside carries no edge but stays a record: the reason is the point.
+    rp_no_go = records["NOTE:0f2a75dafd97"]
+    assert rp_no_go.status == "set-aside"
+    assert "no-go" in rp_no_go.detail
+
+
 def test_paper_level_nodes_exist_beside_the_edge_records():
     """LIT:<id> is the paper; LIT:<id>:<target> is one bearing claim of it."""
     ids = {c.id for c in CATALOGUE}
@@ -174,6 +197,7 @@ def test_why_resolves_forgiving_spellings():
         "q_band_4",
         "sym:c_shp",
         "lean:newton_three",
+        "note:8b7ef71fe8e3",
     )
     for query in queries:
         _text, found = navigator.explain(query, CATALOGUE, SYMBOLS, GRAPH)
