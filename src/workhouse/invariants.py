@@ -4093,11 +4093,15 @@ def _():
     # unlinked scalar products cannot move the shape.
     #
     # What this changes: an adjudication does not obviously need all 189
-    # records recomputed. The disputed gap is 4 * Delta_C = 0.1115 in C4 units,
-    # which is 53% of the NORMAL block alone and 6.8x the entire ROTATION
-    # block -- so no rotation-sector discrepancy can produce it, while a
-    # NORMAL-sector one can. That points G3's blind recomputation at the
-    # clusters generating normal nearest-neighbour displacements first.
+    # records recomputed, and it points a blind recomputation at the normal
+    # nearest-neighbour sector rather than at all 609 clusters uniformly.
+    #
+    # SUPERSEDED IN PART: an earlier draft of this check added that a
+    # NORMAL-sector discrepancy could therefore produce the disputed gap.
+    # That was wrong, and the check below ("A = 5/48 pins the normal sector's
+    # whole C4 contribution") shows why: the normal block's A and C4
+    # contributions are rigid multiples of one number, so agreeing on
+    # A = 5/48 fixes its C4 too. Magnitude alone was the wrong test.
     #
     # It does NOT decide C2. Where a coefficient's VALUE lives is evidence
     # about where a DISCREPANCY could live, not proof of where it does, and
@@ -4133,6 +4137,77 @@ def _():
         f"{float(abs(rotation) / magnitude) * 100:.0f}% at {float(rotation / 120):.6f} each -- "
         f"{float(abs(normal / 6) / abs(rotation / 120)):.0f}x less sensitive per record; on-site "
         f"contributes exactly 0. The disputed gap is {float(abs(gap)):.4f} in C4 units, "
-        f"{float(abs(gap / rotation)):.1f}x the whole ROTATION block, so no rotation-sector "
-        "difference can produce it. Evidence about where a discrepancy could live, not a decision"
+        f"{float(abs(gap / rotation)):.1f}x the whole ROTATION block. Where the coefficient's "
+        "VALUE is concentrated, which is not by itself where a DISCREPANCY can live -- see the "
+        "A-coupling check. Neither recorded side is preferred"
+    )
+
+
+@channels.check(
+    "FINDING: A = 5/48 pins the normal sector's whole C4 contribution",
+    "UNIFIED v4.3 §5.1/§6, block decomposition",
+    tier=2,
+)
+def _():
+    # The sharper half of the concentration result, and it corrects the naive
+    # reading of it.
+    #
+    # All six NORMAL (0,0,1) records carry ONE value h -- three planes by two
+    # signs, the cubic orbit of a single normal nearest-neighbour amplitude --
+    # and that one number feeds both shape coefficients rigidly:
+    #
+    #     A_normal = -h        C4_normal = 2h        so  C4_normal = -2 A_normal
+    #
+    # Only the NORMAL and MIXED blocks contribute to A at all, and A totals
+    # exactly 5/48. So fixing A fixes h, and fixing h fixes the normal
+    # sector's entire C4 contribution -- 81% of the coefficient. A = 5/48 is
+    # common ground: the corpus grants it to both sides.
+    #
+    # The consequence is a real constraint on any adjudication. Everything
+    # that can move WITHOUT disturbing A -- the three in-plane blocks, the 120
+    # rotation records, the on-site records -- has total absolute C4 weight
+    # 0.0489, while the disputed gap is 0.1115. Even driving every A-free
+    # block to its own magnitude with a common sign cannot reach it. So the
+    # two recorded C_shp values are not two evaluations of one block
+    # structure with one A: a competing kernel has to differ structurally, in
+    # the A-carrying sector, not merely redistribute weight.
+    #
+    # Still not a decision. This says what a rival kernel must do, not which
+    # kernel is physical, and neither side is preferred.
+    from fractions import Fraction
+
+    from . import channel_ledger as CL
+
+    decomposition = CL.decompose()
+    blocks = decomposition["blocks"]
+    records = decomposition["records"]["NORMAL (0,0,1)"]
+
+    values = {Fraction(value) for _key, value in records}
+    h = next(iter(values))
+    normal = blocks["NORMAL (0,0,1)"]
+
+    coupling = Fraction(normal["A"]) == -h and Fraction(normal["C4"]) == 2 * h
+    a_total = sum(Fraction(block.get("A", 0)) for block in blocks.values())
+    carries_a = {name for name, block in blocks.items() if Fraction(block.get("A", 0)) != 0}
+    free_weight = sum(
+        abs(Fraction(block.get("C4", 0))) for name, block in blocks.items() if name not in carries_a
+    )
+    gap = 4 * (Fraction(str(K.C_SHP_NEW_NUM)) - P.as_fraction(K.C_SHP_HISTORICAL))
+
+    return (
+        len(values) == 1
+        and len(records) == 6
+        and coupling
+        and a_total == Fraction(5, 48)
+        and carries_a == {"NORMAL (0,0,1)", "MIXED (0,1,1)"}
+        and abs(gap) > free_weight
+    ), (
+        f"all 6 NORMAL records share one value h = {h}, the cubic orbit of a single normal "
+        f"nearest-neighbour amplitude, and it sets both shapes rigidly: A_normal = -h and "
+        f"C4_normal = 2h. A totals exactly 5/48 from the normal and mixed blocks alone, so "
+        f"granting A fixes h and with it 81% of C4. Everything free to move without disturbing "
+        f"A carries total |C4| {float(free_weight):.4f}, against a disputed gap of "
+        f"{float(abs(gap)):.4f} -- {float(abs(gap) / free_weight):.2f}x larger, so no "
+        "redistribution reaches it. A rival kernel must differ structurally in the A-carrying "
+        "sector; which kernel is physical is not decided here"
     )
