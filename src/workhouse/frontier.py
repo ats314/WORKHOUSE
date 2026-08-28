@@ -60,12 +60,46 @@ class Frontier:
     acquisition: list[dict[str, Any]]
 
 
+def strip_lean_comments(body: str) -> str:
+    """Blank out `/- ... -/` blocks (nested; doc comments included) and `--` tails.
+
+    Newlines survive, so line numbers are stable for callers that scan
+    per-line. The counters must see only code: a module header that *says*
+    "no `sorry`" would otherwise count as one, so adding six documented
+    modules would report six sorries that do not exist.
+    """
+    out: list[str] = []
+    i, depth = 0, 0
+    while i < len(body):
+        ch = body[i]
+        two = body[i : i + 2]
+        if two == "/-":
+            depth += 1
+            i += 2
+        elif two == "-/" and depth:
+            depth -= 1
+            i += 2
+        elif depth:
+            if ch == "\n":
+                out.append("\n")
+            i += 1
+        elif two == "--":
+            end = body.find("\n", i)
+            if end == -1:
+                break
+            i = end
+        else:
+            out.append(ch)
+            i += 1
+    return "".join(out)
+
+
 def _lean_counts() -> tuple[int, int]:
     theorems = sorries = 0
     if not LEAN.exists():
         return 0, 0
     for path in LEAN.rglob("*.lean"):
-        body = path.read_text()
+        body = strip_lean_comments(path.read_text())
         theorems += len(re.findall(r"^\s*(?:theorem|lemma)\s", body, re.MULTILINE))
         sorries += len(re.findall(r"\bsorry\b", body))
     return theorems, sorries

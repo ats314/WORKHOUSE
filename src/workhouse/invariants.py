@@ -2847,3 +2847,271 @@ def _():
         "and Prop 7.39's rearrangement is an exact identity -- the manuscript spine and "
         "G_drift_full_algebra derive the same G22 reduction independently and agree"
     )
+
+
+# ==========================================================================
+# The historical kernel, decomposed channel by channel over the whole zone.
+# The repository's earlier kernel checks see the 189-record artifact at the
+# four parity points; these see it identically in k, so the tier collapse
+# B = D = 0 becomes two exact integer cancellations at record level (G14)
+# and the C2 dispute's geography — which channels carry it — is a checked
+# statement instead of prose. Source claims: the maintainer's off-axis
+# ledger (WORK_SINCE_2026-08, 2026-08-22), adversarially recomputed here.
+# Nothing in this suite adjudicates C2 or prefers a side.
+channels = _suite("off-axis channel ledger (C2 geography, G14)")
+
+
+@channels.check(
+    "the 189-record kernel decomposes in the shape basis over the whole zone",
+    "UNIFIED v4.3 §5.1/§6",
+)
+def _():
+    from fractions import Fraction
+
+    from . import channel_ledger as CL
+
+    d = CL.decompose()
+    t = d["totals"]
+    counts_ok = d["counts"] == {
+        "on-site (0,0,0)": 3,
+        "NORMAL (0,0,1)": 6,
+        "IN-PLANE (0,0,1)": 12,
+        "IN-PLANE (0,0,2)": 12,
+        "IN-PLANE (0,1,1)": 12,
+        "MIXED (0,1,1)": 24,
+        "ROTATION": 120,
+    }
+    ok = (
+        d["n_records"] == 189
+        and counts_ok
+        and t["E"] == 0
+        and t["F"] == 0
+        and t["c0"] == P.as_fraction(K.Q_BAND_4)
+        and t["A"] == Fraction(5, 48)
+        and t["B"] == 0
+        and t["D"] == 0
+        and t["C4"] / 4 == P.as_fraction(K.C_SHP_HISTORICAL)
+    )
+    return ok, (
+        "psi^dagger H_4 psi lies exactly in span{q, q^2, e_2, q e_2, e_3} with "
+        "constant and q^3 coefficients ZERO (so unlinked scalar products cannot "
+        "move the shape), and the totals are c_0 = q_band^(4), A = 5/48, "
+        "B = D = 0, C = C_shp^historical exactly -- the parity-point kernel "
+        "identity, promoted to the whole zone; blocks (3,6,12,12,12,24,120)"
+    )
+
+
+@channels.check(
+    "FINDING: the tier collapse is two integer cancellations at record level",
+    "MASTER_THEORY §5.2 / G14",
+)
+def _():
+    from . import channel_ledger as CL
+
+    d = CL.decompose()
+    x = CL.X_QUANTUM
+    b_int = {b: d["blocks"][b]["B"] / x for b in CL.BLOCKS}
+    d_int = {b: d["blocks"][b]["D"] / x for b in CL.BLOCKS}
+    weights_b = [b_int["IN-PLANE (0,0,2)"], b_int["MIXED (0,1,1)"], b_int["ROTATION"]]
+    weights_d = [
+        d_int["IN-PLANE (0,0,2)"],
+        d_int["IN-PLANE (0,1,1)"],
+        d_int["MIXED (0,1,1)"],
+    ]
+    x_is_weight = any(w == x for (_key, w) in P.kernel_records())
+    ok = (
+        all(v.denominator == 1 for v in list(b_int.values()) + list(d_int.values()))
+        and weights_b == [1, 1, -2]
+        and sum(weights_b) == 0
+        and weights_d == [-3, 6, -3]
+        and sum(weights_d) == 0
+        and x_is_weight
+    )
+    return ok, (
+        "every block's q*e_2 and e_3 amplitude is an integer multiple of "
+        "x = 360421351/40327601932800 (itself a raw record weight); "
+        "B = 0 is (+1,+1,-2)*x over {IN-PLANE(0,0,2), MIXED, ROTATION} and "
+        "D = 0 is (-3,+6,-3)*x over {IN-PLANE(0,0,2), IN-PLANE(0,1,1), MIXED} "
+        "-- the kernel DOES carry B,D-generating displacement shells; they "
+        "cancel, so 'forced by the symmetry and displacement gates' is at "
+        "best imprecise (the finding G14 must explain)"
+    )
+
+
+@channels.check(
+    "C_normal = -A_normal/2: the agreed axial coefficient pins the normal channel",
+    "UNIFIED v4.3 §6",
+)
+def _():
+    from fractions import Fraction
+
+    from . import channel_ledger as CL
+
+    d = CL.decompose()
+    x = CL.X_QUANTUM
+    a_n = d["blocks"]["NORMAL (0,0,1)"]["A"]
+    c_n = d["blocks"]["NORMAL (0,0,1)"]["C4"] / 4
+    a_mixed = d["blocks"]["MIXED (0,1,1)"]["A"]
+    ok = (
+        c_n == -a_n / 2
+        and c_n == Fraction(-1050558388351, 20163800966400)
+        and a_n == Fraction(5, 48) + 4 * x
+        and a_mixed == -4 * x
+    )
+    return ok, (
+        "on the six NORMAL records C = -A/2 = -1050558388351/20163800966400 "
+        "exactly, with A_normal = 5/48 + 4x and MIXED carrying exactly -4x -- "
+        "so the primitive cube-completion hop accounts for A = 5/48, and the "
+        "coefficient the sealed suite shows both kernels share pins the "
+        "normal sector; everything disputed lives in the non-normal remainder"
+    )
+
+
+@channels.check(
+    "the shipped displacement support is exactly six shells",
+    "off-axis ledger falsifier gate",
+)
+def _():
+    from . import channel_ledger as CL
+
+    census = CL.support_census()
+    ok = census == {
+        (0, 0, 0): 9,
+        (0, 0, 1): 54,
+        (0, 0, 2): 24,
+        (0, 1, 1): 78,
+        (0, 1, 2): 12,
+        (1, 1, 1): 12,
+    }
+    return ok, (
+        "sorted-|d| shells with multiplicities: (0,0,0)x9, (0,0,1)x54, "
+        "(0,0,2)x24, (0,1,1)x78, (0,1,2)x12, (1,1,1)x12 -- the channel "
+        "ledger's block structure assumes this support is complete, and a "
+        "record outside it falsifies the classification"
+    )
+
+
+@channels.check(
+    "rotation decomposes only as a sum, and the ket convention is load-bearing",
+    "UNIFIED v4.3 §3.2 (carrier), tier_collapse convention",
+)
+def _():
+    from . import channel_ledger as CL
+
+    shells = CL.rotation_shells_in_span()
+    ok = (
+        len(shells) == 6
+        and not any(shells.values())
+        and CL.solve_span(CL.numerator(CL.decompose()["records"]["ROTATION"])) is not None
+        and not CL.conjugated_ket_rotation_in_span()
+    )
+    return ok, (
+        "each of the six rotation displacement shells is individually OUTSIDE "
+        "the shape span; the 120-record sum is inside -- so no per-shell "
+        "re-derivation can be compared channel-wise -- and with the ket "
+        "conjugated (psi-bar instead of the d-direction) the rotation block "
+        "leaves the span entirely: the two conventions coincide at the four "
+        "parity points, so only a whole-zone check can catch the trap a "
+        "re-implementation would fall into"
+    )
+
+
+@channels.check(
+    "the pinned structured B_N expression IS P17(N^2)/(N R20(N^2))",
+    "GLUEBALL_DETAILED_FORMULA v3.1 §11 + App. A",
+)
+def _():
+    from . import channel_ledger as CL
+
+    agree = [CL.b_note(n) == CL.beta_formula(n) for n in range(3, 21)]
+    r20_at_9 = int(CL.R20.eval(9))
+    ok = all(agree) and r20_at_9 != 0
+    return ok, (
+        "the walled-Brauer structured expression (pinned note, 74 terms) and "
+        "the boxed all-rank formula agree exactly at N = 3..20, N = 3 "
+        "included -- the corpus states the formula for N >= 4 and cautions "
+        "against substituting at N = 3, but every R20 factor is nonzero at "
+        "z = 9, so the continuation exists and equals the pinned expression; "
+        "what the balanced value MEANS at N = 3 stays a claim, not a check"
+    )
+
+
+@channels.check(
+    "the N=3 continuation shift is exactly 25/64, with two exact corollaries",
+    "ledger C10; GLUEBALL_DETAILED_FORMULA v3.1 §8/§11",
+)
+def _():
+    from fractions import Fraction
+    from math import gcd
+
+    from . import channel_ledger as CL
+
+    a_shp = Fraction(5, 48)
+    c_hist = P.as_fraction(K.C_SHP_HISTORICAL)
+    beta_hist = 8 * a_shp + 16 * c_hist
+    beta_bal = CL.beta_formula(3)
+    c_bal = (beta_bal - 8 * a_shp) / 16
+    alpha3 = P.as_fraction(K.ALPHA_PEN_3)
+    kc = P.kernel_constants()
+    ok = (
+        kc["beta"] == beta_hist
+        and kc["alpha"] == alpha3
+        and beta_bal - beta_hist == Fraction(25, 64)
+        and beta_hist - beta_bal == -Fraction(15, 16) * alpha3
+        and (c_hist - c_bal) / (a_shp / 2) == -Fraction(15, 32)
+        and gcd(107551523941875, 275331901291200) == 4302060957675
+    )
+    return ok, (
+        "beta_3^bal - beta_3^hist = 25/64 exactly (raw numerator "
+        "-107551523941875 over 275331901291200 reduces by the factor "
+        "4302060957675), matching C10's recorded Delta_beta_3 = -25/64; "
+        "corollaries never before recorded: Delta_beta_3 = -(15/16)*alpha_3 "
+        "and Delta_C_3/(A/2) = -15/32. A relation among recorded quantities "
+        "-- whether the shift was derived or defined as the difference is "
+        "open (off-axis ledger §7), and no side of C2 is preferred here"
+    )
+
+
+@channels.check(
+    "scalar vs shape continuation: poles where the corpus forbids, regular where it allows",
+    "GLUEBALL_DETAILED_FORMULA v3.1; THM_SUN unified v2; THM_SU6",
+)
+def _():
+    from fractions import Fraction
+
+    from sympy import Rational as R
+    from sympy import factor_list
+
+    from . import channel_ledger as CL
+
+    zz, q32, d34 = P.q_polynomials()
+    facs = {str(b): e for b, e in factor_list(d34)[1]}
+    root_max = max(CL.R20.real_roots())
+
+    def q_formula(n: int) -> Fraction:
+        return Fraction(-2, 3 * n) * Fraction(int(q32.eval(n * n)), int(d34.subs(zz, n * n)))
+
+    q5_recorded = Fraction(-781009569168365268247626732239, 6484474594581730088957376233472)
+    q6_bal_recorded = Fraction(
+        -102586479919344400197896189360827281727,
+        2665788121217129017242143775195086906250,
+    )
+    ok = (
+        facs.get("z - 4") == 1
+        and facs.get("z - 9") == 3
+        and facs.get("z - 16") == 1
+        and root_max == R(25, 9)
+        and q_formula(5) == q5_recorded
+        and q_formula(6) == q6_bal_recorded
+    )
+    return ok, (
+        "D34 carries (z-4)(z-9)^3(z-16), so the scalar continuation is "
+        "singular at exactly N = 2,3,4 -- it fails loudly where an "
+        "epsilon-sector exists -- while R20's largest real root is 25/9 "
+        "(N = 5/3), so the shape continuation is regular at every integer "
+        "rank; below its stated N >= 7 scope the scalar formula reproduces "
+        "the recorded q_5 exactly (SU(5): no determinant sector) and the "
+        "recorded q_6^bal exactly (THM_SU6 line 86, Delta_q_6 = 6/343 "
+        "checked elsewhere): the blanket N = 3 prohibition is a scalar-"
+        "family fact, not a shape-family one"
+    )

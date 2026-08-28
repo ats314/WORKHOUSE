@@ -199,6 +199,12 @@ Q_BAND_4 = Rational(-20721577909065127111, 7250590288602460800)
 C_SHP_HISTORICAL = Rational(-211835444920651, 4405310420659200)
 #: Historical diagonal coefficient.
 BETA_PEN_3 = Rational(17607806155349, 275331901291200)
+#: The degree-3 record quantum of the historical kernel: every block's q*e_2
+#: and e_3 channel amplitude is an integer multiple of this, itself a raw
+#: record weight; the tier collapse is (+1,+1,-2)*x and (-3,+6,-3)*x exactly
+#: (suite "off-axis channel ledger"; source: the maintainer's off-axis
+#: ledger, WORK_SINCE_2026-08).
+X_QUANTUM = Rational(360421351, 40327601932800)
 
 #: Vacuum-subtracted physical Gamma-point coefficient, from the blind
 #: finite-cluster/rooted oracle (float only). Reproduces Hamer's a_4 through the

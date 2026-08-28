@@ -68,23 +68,48 @@ jobs:
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v7
+      # The restore repeatedly died MID-STEP and took the job with it —
+      # continue-on-error could not catch it (the abort is runner-level,
+      # not a step failure): runs 33133472692, 33134685713, 33134902449,
+      # 33135625325 all died inside this step, while the cache-free jobs
+      # stayed green and githubstatus reported no incident. The cache key
+      # had been identical since before 2026-08-24 (toolchain unchanged)
+      # and worked until then, so the standing diagnosis is a corrupted
+      # entry under the old key: the v2- prefix abandons it. A miss only
+      # costs a cold elan install plus `lake exe cache get`, both well
+      # inside the job budget, so restore trouble must degrade, not fail.
       - name: Cache elan and mathlib
         uses: actions/cache@v5
+        continue-on-error: true
+        timeout-minutes: 8
         with:
           path: |
             ~/.elan
             lean/.lake
-          key: lean-${{ hashFiles('lean/lean-toolchain', 'lean/lake-manifest.json') }}
+          key: lean-v2-${{ hashFiles('lean/lean-toolchain', 'lean/lake-manifest.json') }}
+      # The two network steps below get the same treatment for their own
+      # transient failures: retry, but still fail closed — the proof check
+      # itself is never skipped.
       - name: Install elan
         run: |
-          if [ ! -x "$HOME/.elan/bin/elan" ]; then
+          for i in 1 2 3; do
+            if [ -x "$HOME/.elan/bin/elan" ]; then break; fi
             curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
-              | sh -s -- -y --default-toolchain none
-          fi
+              | sh -s -- -y --default-toolchain none && break
+            echo "elan install attempt $i failed; retrying in $((i * 10))s" >&2
+            sleep $((i * 10))
+          done
+          [ -x "$HOME/.elan/bin/elan" ]
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Fetch mathlib cache and build
         working-directory: lean
         run: |
-          lake exe cache get
+          got_cache=""
+          for i in 1 2 3; do
+            if lake exe cache get; then got_cache=1; break; fi
+            echo "lake exe cache get attempt $i failed; retrying in $((i * 10))s" >&2
+            sleep $((i * 10))
+          done
+          [ -n "$got_cache" ]
           lake build
           echo "Lean core: proof-checked, no sorries"
