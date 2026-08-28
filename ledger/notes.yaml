@@ -214,6 +214,26 @@ archives:
       the earlier review stands and this archive carries only what it did not
       cover.
 
+  - id: UPLOADS_2026-08-28e
+    description: >-
+      The finite-N SU(3) truncation bridge: a claim that the published
+      Ciavarella-Burbano-Bauer finite-rank plaquette matrix element implies
+      this repository's four shared-link channel weights, and that its
+      charge-odd second-order Schur complement is exactly t_N B B-dagger.
+      Two prose documents, an executable standard-library certificate, and
+      the certificate's JSON output.
+    source: >-
+      Uploaded directly to the session on 2026-08-28. The inventory fact that
+      decided how to treat it: the derivation chain it presents is ALREADY
+      T1-checked here, in the "second order, all ranks" suite -- channel
+      weights from dimension and Casimir, gaps C_F + C_R/2, A_N and B_N as
+      channel sums, t_N = B_N - A_N. So the bridge is not new mathematics for
+      this repository. What is new is provenance and consequence: the same
+      weights are forced by a published external matrix element rather than
+      only by the corpus's own appendix, and the documents derive
+      finite-volume spectra and a truncation diagnostic that appear nowhere
+      in the registry.
+
 reviews:
 # Third review pass: the 2026-08-28 second batch, reviewed on arrival. The
 # master derivation is imported to paper/ and its new content entered as four
@@ -2481,3 +2501,68 @@ reviews:
       the 15-hour transcript interleaves with its output, kept separately
       so the construction code can be read (and a record-dump rerun
       prepared) without parsing a 682KB mixed transcript.
+
+  - digest: a567316ab629a87f6fb8e7799bcbe4383c056cec85de651e07ec181bd9260d71
+    path: CBB_FINITE_N_SU3_TN_BBDAGGER_BRIDGE_20260828.md
+    archive: UPLOADS_2026-08-28e
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-08-28e/CBB_FINITE_N_SU3_TN_BBDAGGER_BRIDGE_20260828.md
+    bears_on: [R2]
+    reason: >-
+      The primary-source dictionary: which published Hamiltonian, which
+      truncation, which equation number. Its load-bearing content for this
+      repository is the coupling normalization u = 1/(2 g^4) after H/g^2 for
+      Ciavarella-Burbano-Bauer, and the identification of the published
+      dimension-ratio matrix element |M_rho|^2 = d_rho/N^2 with the weight
+      formula the all-ranks suite already uses. Two cautions on reading it.
+      Its central derivation is not new here -- "second order, all ranks"
+      checks the whole chain already, from the corpus's own appendix -- so
+      what it supplies is external provenance, not a new result. And its
+      transcription has LaTeX slips (",qquad" for "\qquad" in the amplitude
+      display); they are cosmetic, and the amplitudes are correct, but the
+      file is pinned as received rather than repaired.
+
+  - digest: 00718c2efcf9db38a600bc293ddfceb13f17e44f63959a6c0b1e3845f5ad04a7
+    path: FINITE_N_SU3_TRUNCATION_CAPABILITY_RESULT_20260828.md
+    archive: UPLOADS_2026-08-28e
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-08-28e/FINITE_N_SU3_TRUNCATION_CAPABILITY_RESULT_20260828.md
+    bears_on: [R2]
+    reason: >-
+      The consequence document, and the one carrying content the registry did
+      not have: the T1 = {1, 3, 3bar} link cutoff omits the 8 and 6 channels
+      and gives t_3 = -1/12, opposite in sign to the channel-complete
+      +5/612, with the exact completion w_6 - w_8 = 14/153; and the
+      finite-volume charge-odd fingerprints on one open cube and the periodic
+      3^3 torus. It states its own claim boundary in terms -- exact through
+      second order in the charge-odd one-plaquette sector, not a
+      finite-coupling or continuum result -- and names the full-Hamiltonian
+      diagonalization it has NOT done. Read section 5.1 before using it: the
+      counterterm to add to a published T1 Hamiltonian is 14/153, not 5/612,
+      because T1 already carries the singlet and 3bar routes.
+
+  - digest: 194cef2b55d0263c9647bf09bf953eefbf0425006710e8791cbbfb87775bc592
+    path: verify_cbb_tn_bridge.py
+    archive: UPLOADS_2026-08-28e
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-08-28e/verify_cbb_tn_bridge.py
+    bears_on: [R2]
+    reason: >-
+      The executable half, and the reason the documents could be assessed
+      rather than believed: standard library only, exact Fraction arithmetic,
+      no WORKHOUSE import, and it rebuilds the channel weights from
+      dimensions and Casimirs and the cubical boundary matrices from oriented
+      cell boundaries. Run unmodified in this session: 18/18. Pinned so the
+      checks registered against it can cite an artifact a reader can execute.
+
+  - digest: 8094af537eb80877bc48083c0f21d9ce52b831f36c04cf1c42729d03e5a1e18d
+    path: su3_finite_n_bridge_certificate.json
+    archive: UPLOADS_2026-08-28e
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-08-28e/su3_finite_n_bridge_certificate.json
+    bears_on: [R2]
+    reason: >-
+      The machine-readable output of the verifier above, reproduced
+      byte-for-byte by re-running it here. Pinned as the certificate the
+      bridge checks read, so they compare against a recorded artifact rather
+      than re-deriving inside the check and testing themselves.

@@ -5069,6 +5069,18 @@ def _():
         "CONST:SIGMA_5_CRT_PRIMES",
         "CONST:SIGMA_5_TOPOLOGIES",
         "CONST:T_3_EVEN",
+        # Papers in the index whose bare node has no citation edge, because
+        # the citation web is populated ONLY from primary sources -- an
+        # INSPIRE reference list or the pinned PDF's bibliography -- and
+        # these three are not-yet-obtained. Their bears_on edges exist
+        # (LIT:<paper>:R2 nodes carry those); it is the paper node itself
+        # that is unreachable. Inventing a cites list from memory to tidy
+        # the census is exactly what literature/index.yaml forbids, so they
+        # strand until someone obtains them. That makes this a live
+        # acquisition signal rather than a blemish.
+        "LIT:BALAJI_2026",
+        "LIT:CBB_2026",
+        "LIT:CB_2024",
         # ledger entries with empty curated cross-reference fields
         "C11",
         "C14",
@@ -5118,4 +5130,179 @@ def _():
         "DELTA_BETA_3 among them, so the balanced side of C2 is registered and checked by "
         f"nothing. {len(connected)} previously-stranded nodes have since gained an edge"
         + (f": {connected}" if connected else "")
+    )
+
+
+# ==========================================================================
+bridge = _suite("finite-rank truncation bridge (published SU(3) truncations)")
+
+
+@bridge.check(
+    "the published dimension-ratio matrix element is this registry's weight formula",
+    "R2; Ciavarella-Burbano-Bauer arXiv:2503.11888v5 Eq. (D1); notes UPLOADS_2026-08-28e",
+)
+def _():
+    # The all-ranks suite already derives the four shared-link channel
+    # weights, A_N, B_N and t_N = B_N - A_N, exactly and at symbolic N. None
+    # of that is re-derived here, and the bridge documents do not add to it.
+    #
+    # What they add is PROVENANCE. The repository's weight formula
+    # w_rho = -(d_rho/N^2)/(C_F + C_rho/2) takes its numerator from the
+    # corpus's own appendix. Ciavarella, Burbano and Bauer publish a
+    # finite-rank plaquette matrix element |M_rho| = sqrt(dim rho / (dim A
+    # dim R)), and for two fundamental factors dim A = dim R = N, so
+    # |M_rho|^2 = d_rho/N^2 -- the same numerator, from a source that was
+    # written without knowledge of this program.
+    #
+    # This check is that specialization and nothing more: the published
+    # general form, evaluated at the fundamental-times-fundamental case,
+    # equals the numerator the registry uses, identically in N. It buys a
+    # citation, not a new number. The physics premise -- that this is the
+    # right matrix element to feed the second-order resolvent, and that the
+    # four channels exhaust the shared-link routes in the charge-odd
+    # one-plaquette sector -- is argued in prose in the imported documents
+    # and stays T3.
+    n, d = symbols("n d", positive=True)
+
+    # the published form, with both factors fundamental
+    published = sqrt(d / (n * n)) ** 2
+    registry = d / n**2
+
+    same = simplify(published - registry) == 0
+    # and the all-rank law the two together produce, against hopping()
+    law = 2 * n * (n**2 - 4) / ((n**2 - 1) * (2 * n**2 - 1) * (4 * n**2 - 9))
+    agrees = all(simplify(law.subs(n, r) - K.hopping(r)) == 0 for r in (3, 4, 5, 7, 12))
+
+    return same and agrees, (
+        f"|M_rho|^2 = dim rho/(dim A dim R) with dim A = dim R = N is {registry}, identically the "
+        "numerator the all-ranks suite already uses, so the published finite-rank matrix element "
+        "and this registry's channel weights are the same statement. The closed law it yields, "
+        "2N(N^2-4)/((N^2-1)(2N^2-1)(4N^2-9)), reproduces hopping(N) at N = 3, 4, 5, 7, 12. This "
+        "is external provenance for a chain already checked here, not a new derivation, and it "
+        "does not check the premise that four channels exhaust the sector"
+    )
+
+
+@bridge.check(
+    "FINDING: the T1 link cutoff reverses the sign of t_3, and 14/153 is what it omits",
+    "R2; notes UPLOADS_2026-08-28e §5; runs/cbb_finite_n_bridge_2026-08-28",
+)
+def _():
+    # The registry carries t_3 = 5/612 and the four channel weights. It did
+    # not carry what happens when a truncation keeps only some of them, and
+    # that turns out to be the sharpest thing in these documents.
+    #
+    # The p+q <= 1 link cutoff -- T1 = {1, 3, 3bar} in the published
+    # nomenclature, the truncation used for the published one-cube exact
+    # diagonalization -- retains the singlet and the 3bar routes and drops
+    # the 8 and the 6. Its projected second-order hopping is
+    #
+    #     t_3^T1 = w_3bar - w_1 = -1/6 + 1/12 = -1/12,
+    #
+    # against the channel-complete +5/612. Opposite in sign and 10.2 times
+    # larger in magnitude. The omitted channels are not a correction to this;
+    # they reverse it, and the exact completion is w_6 - w_8 = 14/153.
+    #
+    # One trap worth naming, because `workhouse search -1/12` walks straight
+    # into it: -1/12 is ALSO the singlet weight w_1. The two are different
+    # quantities that happen to coincide, and the cutoff value is a
+    # difference of two weights, not a weight.
+    #
+    # The consequence recorded in the documents is that a counterterm added
+    # to a published T1 Hamiltonian must be 14/153, never 5/612, since T1
+    # already carries the singlet and 3bar routes. Nothing here promotes a
+    # value: t_3 = 5/612 is the registry's, and the rest is arithmetic about
+    # what a truncation drops.
+    weights = {
+        "1": -Rational(1, 12),
+        "8": -Rational(16, 51),
+        "3bar": -Rational(1, 6),
+        "6": -Rational(2, 9),
+    }
+    t3 = K.hopping(3)
+    cutoff = weights["3bar"] - weights["1"]
+    completion = weights["6"] - weights["8"]
+
+    closes = cutoff + completion == t3
+    reversed_sign = cutoff * t3 < 0
+    collision = cutoff == weights["1"]
+    ratio = abs(cutoff / t3)
+
+    return (closes and reversed_sign and collision and completion == Rational(14, 153)), (
+        f"the p+q<=1 cutoff keeps the singlet and 3bar and drops the 8 and 6, giving "
+        f"t_3^T1 = w_3bar - w_1 = {cutoff}, opposite in sign to the channel-complete {t3} and "
+        f"{float(ratio):.1f}x larger in magnitude; the omitted pair completes it exactly, "
+        f"w_6 - w_8 = {completion}, and {cutoff} + {completion} = {t3}. So a counterterm for a "
+        "published T1 Hamiltonian is 14/153, not 5/612, which would double-count the two routes "
+        f"T1 already has. Note the collision: {cutoff} is also the singlet weight w_1 itself "
+        "-- a coincidence of value between a weight and a difference of weights"
+    )
+
+
+@bridge.check(
+    "the certificate's finite-volume fingerprints, and 29 = L^3 + 2 is the Lean cycle count",
+    "R2; notes UPLOADS_2026-08-28e §6-7; runs/cbb_finite_n_bridge_2026-08-28",
+)
+def _():
+    # The two spectral fingerprints are the documents' concrete predictions,
+    # and both are pure topology times one registered number, so they are
+    # checkable here without re-running anything: the incidence spectrum of
+    # the cubical complex, scaled by t_3.
+    #
+    # This check reads the PINNED certificate rather than recomputing the
+    # boundary matrices, because the certificate is the artifact the run
+    # record pins and a check that re-derives its own expectation tests
+    # nothing. The recomputation is the certificate's job and it is
+    # reproduced in runs/cbb_finite_n_bridge_2026-08-28.
+    #
+    # The detail worth having in the registry is the last line. The periodic
+    # 3^3 torus has 29 zero modes, and 29 = 3^3 + 2 is exactly the cycle
+    # count this repository already proves in Lean as dim_Z_2:
+    # (L^3 - 1) + 3 = L^3 + 2, cube boundaries plus the harmonic triplet. So
+    # the bridge's most discriminating multiplicity is a T0 statement here,
+    # arrived at independently, and the zero modes are not an artifact of the
+    # truncation but the homology of the three-torus.
+    import json
+
+    certificate = json.loads(
+        (
+            ROOT
+            / "runs"
+            / "cbb_finite_n_bridge_2026-08-28"
+            / "su3_finite_n_bridge_certificate.json"
+        ).read_text(encoding="utf-8")
+    )
+    t3 = K.hopping(3)
+
+    cube = {
+        int(k): v for k, v in certificate["open_cube"]["BBdagger_eigenvalue_multiplicities"].items()
+    }
+    torus = {
+        int(k): v
+        for k, v in certificate["periodic_L3"]["BBdagger_eigenvalue_multiplicities"].items()
+    }
+
+    cube_ok = cube == {0: 1, 4: 3, 6: 2}
+    torus_ok = torus == {0: 29, 3: 12, 6: 24, 9: 16}
+    exhausts = sum(torus.values()) == 3 * 3**3
+
+    scaled_cube = {Rational(lam) * t3: m for lam, m in cube.items()}
+    scaled_torus = {Rational(lam) * t3: m for lam, m in torus.items()}
+    cube_pred = scaled_cube == {Rational(0): 1, Rational(5, 153): 3, Rational(5, 102): 2}
+    torus_pred = scaled_torus == {
+        Rational(0): 29,
+        Rational(5, 204): 12,
+        Rational(5, 102): 24,
+        Rational(5, 68): 16,
+    }
+    cycles = torus[0] == 3**3 + 2
+
+    return (cube_ok and torus_ok and exhausts and cube_pred and torus_pred and cycles), (
+        f"the pinned certificate's incidence spectra are {cube} on one open cube and {torus} on "
+        f"the periodic 3^3 torus, the latter exhausting all 3L^3 = {3 * 3**3} face modes. Scaling "
+        f"by the registry's t_3 = {t3} gives the predicted charge-odd shells "
+        "{0, (5/153)^3, (5/102)^2} and {0^29, (5/204)^12, (5/102)^24, (5/68)^16}. The 29 zero "
+        f"modes are {3**3} + 2 = L^3 + 2, which this repository proves in Lean as dim_Z_2 -- so "
+        "the most discriminating multiplicity in the fingerprint is the homology of the "
+        "three-torus, not a feature of the truncation"
     )

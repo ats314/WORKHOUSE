@@ -130,7 +130,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 152
+## T1 — re-derived exactly — 155
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -180,6 +180,17 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the printed towers are canonical-u: 4*Delta(3u/2) reproduces them verbatim`
   - src/workhouse/invariants.py:2632 · UNIFIED §2.1 / C4
   - `workhouse verify --only 'the printed towers are canonical-u: 4*Delta(3u/2) reproduces them verbatim'`
+**finite-rank truncation bridge (published SU(3) truncations)**
+
+- `FINDING: the T1 link cutoff reverses the sign of t_3, and 14/153 is what it omits`
+  - src/workhouse/invariants.py:5186 · R2; notes UPLOADS_2026-08-28e §5; runs/cbb_finite_n_bridge_2026-08-28
+  - `workhouse verify --only 'FINDING: the T1 link cutoff reverses the sign of t_3, and 14/153 is what it omits'`
+- `the certificate's finite-volume fingerprints, and 29 = L^3 + 2 is the Lean cycle count`
+  - src/workhouse/invariants.py:5242 · R2; notes UPLOADS_2026-08-28e §6-7; runs/cbb_finite_n_bridge_2026-08-28
+  - `workhouse verify --only 'the certificate'"'"'s finite-volume fingerprints, and 29 = L^3 + 2 is the Lean cycle count'`
+- `the published dimension-ratio matrix element is this registry's weight formula`
+  - src/workhouse/invariants.py:5140 · R2; Ciavarella-Burbano-Bauer arXiv:2503.11888v5 Eq. (D1); notes UPLOADS_2026-08-28e
+  - `workhouse verify --only 'the published dimension-ratio matrix element is this registry'"'"'s weight formula'`
 **fourth order, anchoring and the residual dispute**
 
 - `C_old = (beta_pen_3 - 2*alpha_3)/16`
