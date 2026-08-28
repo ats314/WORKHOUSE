@@ -1,19 +1,16 @@
 """``workhouse export``: the whole graph as one versioned JSON envelope.
 
-The agent experience notes recommend feeding this repository's deterministic
-graph into external semantic projections (the registered ``research-map``
-service among them) rather than letting those systems re-derive relationships
-from prose. That ingestion needs a stable contract, not a scrape of
-``index/*.jsonl`` — so this emits one self-describing object carrying the
-claims, symbols, and edges together with the fields the notes name as
-non-negotiable to preserve: ``how`` (curated vs derived), evidence tier,
+Any external consumer of this repository's graph — a search index, a
+notebook, another agent's tooling — needs a stable contract, not a scrape of
+``index/*.jsonl`` whose layout may change. This emits one self-describing
+object carrying the claims, symbols, and edges together with the fields that
+must survive any re-projection: ``how`` (curated vs derived), evidence tier,
 lifecycle status, and the reproduce command that routes final inspection back
 through executable verification.
 
 The envelope promotes nothing: every record keeps the tier and status the
 repository computed, and consumers are expected to route claim adjudication
-back through ``workhouse why`` and ``workhouse verify``, exactly as the notes
-prescribe.
+back through ``workhouse why`` and ``workhouse verify``.
 """
 
 from __future__ import annotations
