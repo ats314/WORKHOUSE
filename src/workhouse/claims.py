@@ -140,22 +140,22 @@ def load_runs(path: Path | None = None) -> list[dict[str, Any]]:
     path = path or ROOT / "runs" / "index.yaml"
     if not path.exists():
         return []
-    return yaml.safe_load(path.read_text())["runs"]
+    return yaml.safe_load(path.read_text(encoding="utf-8"))["runs"]
 
 
 def load_theorems(path: Path | None = None) -> list[dict[str, Any]]:
-    return yaml.safe_load((path or THEOREM_SOURCE).read_text())["theorems"]
+    return yaml.safe_load((path or THEOREM_SOURCE).read_text(encoding="utf-8"))["theorems"]
 
 
 def load_document_aliases(path: Path | None = None) -> list[dict[str, Any]]:
     """The citation-alias register (ledger/documents.yaml)."""
     source = path or ROOT / "ledger" / "documents.yaml"
-    return yaml.safe_load(source.read_text())["aliases"]
+    return yaml.safe_load(source.read_text(encoding="utf-8"))["aliases"]
 
 
 def load_provenance(path: Path | None = None) -> list[dict[str, Any]]:
     """The curated originating-document register (ledger/provenance.yaml)."""
-    return yaml.safe_load((path or PROVENANCE_SOURCE).read_text())["documents"]
+    return yaml.safe_load((path or PROVENANCE_SOURCE).read_text(encoding="utf-8"))["documents"]
 
 
 def _adr_status(text: str) -> str:
@@ -175,7 +175,7 @@ def decisions() -> list[dict[str, Any]]:
     """
     out: list[dict[str, Any]] = []
     for path in sorted(DECISIONS_DIR.glob("*.md")):
-        text = path.read_text()
+        text = path.read_text(encoding="utf-8")
         lines = text.splitlines()
         title = lines[0].lstrip("#").strip() if lines else path.stem
         status = _adr_status(text)
@@ -187,7 +187,7 @@ def decisions() -> list[dict[str, Any]]:
         out.append(
             {
                 "id": own_id,
-                "where": str(path.relative_to(ROOT)),
+                "where": path.relative_to(ROOT).as_posix(),
                 "title": title,
                 "status": status,
                 "mentions": sorted(mentions),
@@ -570,11 +570,15 @@ def load_catalogue(path: Path | None = None) -> list[Claim]:
     target = path or CLAIMS
     if not target.exists():
         return collect()
-    return [Claim(**json.loads(line)) for line in target.read_text().splitlines() if line]
+    return [
+        Claim(**json.loads(line))
+        for line in target.read_text(encoding="utf-8").splitlines()
+        if line
+    ]
 
 
 def load_symbols(path: Path | None = None) -> list[dict[str, Any]]:
-    return yaml.safe_load((path or SYMBOL_SOURCE).read_text())["symbols"]
+    return yaml.safe_load((path or SYMBOL_SOURCE).read_text(encoding="utf-8"))["symbols"]
 
 
 def symbol_records(claims: list[Claim] | None = None) -> list[dict[str, Any]]:
@@ -608,9 +612,11 @@ def write(directory: Path | None = None) -> tuple[Path, Path]:
     target.mkdir(parents=True, exist_ok=True)
     claims = collect()
     (target / "claims.jsonl").write_text(
-        "".join(json.dumps(asdict(c), sort_keys=True) + "\n" for c in claims)
+        "".join(json.dumps(asdict(c), sort_keys=True) + "\n" for c in claims),
+        encoding="utf-8",
     )
     (target / "symbols.jsonl").write_text(
-        "".join(json.dumps(s, sort_keys=True) + "\n" for s in symbol_records(claims))
+        "".join(json.dumps(s, sort_keys=True) + "\n" for s in symbol_records(claims)),
+        encoding="utf-8",
     )
     return target / "claims.jsonl", target / "symbols.jsonl"

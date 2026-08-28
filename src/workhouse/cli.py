@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import argparse
+import json
+import os
 import re
 import sys
 
@@ -18,8 +20,34 @@ from . import search as search_mod
 from . import triage as triage_mod
 from .invariants import SUITES
 
+ANSI = re.compile(r"\033\[[0-9;]*m")
 
-def _verify(verbose: bool, only: str | None = None, tier: int | None = None) -> int:
+
+def _plain_stdout_wanted(no_color: bool) -> bool:
+    """ANSI is for terminals. Piped output — an agent, a file, CI — gets plain
+    text unless the caller says otherwise, and NO_COLOR is honored as spec'd."""
+    if no_color or os.environ.get("NO_COLOR"):
+        return True
+    return not sys.stdout.isatty()
+
+
+class _AnsiStrippingStdout:
+    """A stdout proxy that drops escape codes so every subcommand inherits the
+    policy without threading a flag through each format function."""
+
+    def __init__(self, wrapped):
+        self._wrapped = wrapped
+
+    def write(self, text: str) -> int:
+        return self._wrapped.write(ANSI.sub("", text))
+
+    def __getattr__(self, name):
+        return getattr(self._wrapped, name)
+
+
+def _verify(
+    verbose: bool, only: str | None = None, tier: int | None = None, as_json: bool = False
+) -> int:
     """Run the checks, or one of them.
 
     ``--only`` exists so a single claim can be re-established on its own, in
@@ -30,6 +58,7 @@ def _verify(verbose: bool, only: str | None = None, tier: int | None = None) -> 
     """
     failures = 0
     total = 0
+    records: list[dict] = []
     needle = only.lower() if only else None
     for suite in SUITES:
         # Filter BEFORE running: `--only` promises one claim in about a
@@ -44,6 +73,23 @@ def _verify(verbose: bool, only: str | None = None, tier: int | None = None) -> 
         results = [r for r in suite.run(names=set(wanted))]
         if not results:
             continue
+        if as_json:
+            for r in results:
+                total += 1
+                if not r.passed:
+                    failures += 1
+                records.append(
+                    {
+                        "suite": suite.name,
+                        "name": r.name,
+                        "tier": r.tier,
+                        "passed": r.passed,
+                        "detail": r.detail,
+                        "where": f"src/workhouse/invariants.py:{r.line}",
+                        "reproduce": f"workhouse verify --only {r.name!r}",
+                    }
+                )
+            continue
         print(f"\n\033[1m{suite.name}\033[0m")
         for r in results:
             total += 1
@@ -57,6 +103,14 @@ def _verify(verbose: bool, only: str | None = None, tier: int | None = None) -> 
                 print(f"        \033[2msrc/workhouse/invariants.py:{r.line}\033[0m")
             if not r.passed:
                 failures += 1
+    if as_json:
+        print(
+            json.dumps(
+                {"checks": records, "total": total, "passed": total - failures},
+                sort_keys=True,
+            )
+        )
+        return 1 if (failures or total == 0) else 0
     if total == 0:
         print(f"no check matches {only!r}" if only else f"no check at tier {tier}")
         return 1
@@ -154,11 +208,31 @@ def _lit(
     return 0
 
 
-def _search(query: str, corpus: bool, limit: int) -> int:
+def _search(query: str, corpus: bool, limit: int, as_json: bool = False) -> int:
+    from dataclasses import asdict
+
     catalogue = claims_mod.load_catalogue()
     hits, symbols = search_mod.search(query, catalogue=catalogue)
     occurrences = search_mod.corpus_occurrences(query, limit=limit) if corpus else None
-    print(search_mod.format_results(query, hits, symbols, occurrences, limit=limit))
+    if as_json:
+        payload = {
+            "query": query,
+            "hits": [{"how": h.how, **asdict(h.claim)} for h in hits[:limit]],
+            "total_hits": len(hits),
+            "symbols": symbols,
+            "corpus": None
+            if occurrences is None
+            else {
+                "total_occurrences": occurrences.total_occurrences,
+                "files": [
+                    {"path": p, "count": n, "first_line": line, "sample": text}
+                    for p, n, line, text in occurrences.files
+                ],
+            },
+        }
+        print(json.dumps(payload, sort_keys=True))
+    else:
+        print(search_mod.format_results(query, hits, symbols, occurrences, limit=limit))
     found_in_corpus = occurrences is not None and occurrences.total_occurrences > 0
     return 0 if (hits or symbols or found_in_corpus) else 1
 
@@ -168,7 +242,7 @@ def _index(write: bool) -> int:
         claims_path, symbols_path = claims_mod.write()
         graph_path = graph_mod.write()
         for path in (claims_path, symbols_path, graph_path):
-            rows = len(path.read_text().splitlines())
+            rows = len(path.read_text(encoding="utf-8").splitlines())
             print(f"wrote {path.relative_to(claims_mod.ROOT)}: {rows} records")
         problems = graph_mod.validate()
         if problems:
@@ -182,7 +256,11 @@ def _index(write: bool) -> int:
     return 0
 
 
-def _why(node_id: str) -> int:
+def _why(node_id: str, as_json: bool = False) -> int:
+    if as_json:
+        data, found = navigator_mod.neighborhood(node_id)
+        print(json.dumps(data, sort_keys=True))
+        return 0 if found else 1
     text, found = navigator_mod.explain(node_id)
     print(text)
     return 0 if found else 1
@@ -250,24 +328,36 @@ def _rescue_negative_query(argv: list[str]) -> list[str]:
     examples are negative values. When the token after the subcommand looks
     like a value rather than a flag, insert the `--` separator on the caller's
     behalf instead of dying with "query is required".
+
+    The value is moved to the END of the argv, after ``--``, rather than the
+    separator being inserted in place: everything after ``--`` is positional,
+    so an in-place separator silently turned trailing options
+    (`search -5/48 --corpus --limit 12`) into unrecognized arguments.
     """
     valueish = re.compile(r"^-\d+(/\d+)?$|^-\d*\.\d+([eE][-+]?\d+)?$")
     out = list(argv)
     for i, token in enumerate(out[:-1]):
         if token in ("search", "why") and valueish.match(out[i + 1]) and "--" not in out:
-            return out[: i + 1] + ["--"] + out[i + 1 :]
+            value = out[i + 1]
+            return out[: i + 1] + out[i + 2 :] + ["--", value]
     return out
 
 
 def main(argv: list[str] | None = None) -> int:
     argv = _rescue_negative_query(sys.argv[1:] if argv is None else argv)
     parser = argparse.ArgumentParser(prog="workhouse", description=__doc__)
+    parser.add_argument(
+        "--no-color",
+        action="store_true",
+        help="never emit ANSI codes (also implied by a non-terminal stdout or NO_COLOR)",
+    )
     sub = parser.add_subparsers(dest="command", required=True)
 
     v = sub.add_parser("verify", help="re-derive the corpus's exact claims")
     v.add_argument("-v", "--verbose", action="store_true", help="show detail for passes too")
     v.add_argument("--only", metavar="TEXT", help="run just the checks whose name contains TEXT")
     v.add_argument("--tier", type=int, choices=(1, 2), help="run only T1 or only T2 checks")
+    v.add_argument("--json", action="store_true", help="machine-readable results, one JSON object")
 
     sub.add_parser("status", help="print the contradiction and gap registers")
 
@@ -288,6 +378,7 @@ def main(argv: list[str] | None = None) -> int:
         help="also scan the 928-file corpus for that exact value (slow)",
     )
     se.add_argument("--limit", type=int, default=20, help="claims to show (default 20)")
+    se.add_argument("--json", action="store_true", help="machine-readable results, one JSON object")
 
     ix = sub.add_parser("index", help="the claim, symbol, and graph catalogues")
     ix.add_argument("-w", "--write", action="store_true", help="regenerate index/*.jsonl")
@@ -296,6 +387,9 @@ def main(argv: list[str] | None = None) -> int:
     wy.add_argument(
         "id",
         help="C2 | G14 | R5 | U3 | CONST:t_N | LEAN:newton_three | ADR:0005 | SYM:c_shp",
+    )
+    wy.add_argument(
+        "--json", action="store_true", help="the record and every edge, one JSON object"
     )
 
     at = sub.add_parser("atlas", help="render the theory graph to one self-contained HTML page")
@@ -373,14 +467,16 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     args = parser.parse_args(argv)
+    if _plain_stdout_wanted(args.no_color):
+        sys.stdout = _AnsiStrippingStdout(sys.stdout)
     if args.command == "verify":
-        return _verify(args.verbose, args.only, args.tier)
+        return _verify(args.verbose, args.only, args.tier, args.json)
     if args.command == "search":
-        return _search(args.query, args.corpus, args.limit)
+        return _search(args.query, args.corpus, args.limit, args.json)
     if args.command == "index":
         return _index(args.write)
     if args.command == "why":
-        return _why(args.id)
+        return _why(args.id, args.json)
     if args.command == "atlas":
         return _atlas(args.out)
     if args.command == "lit":

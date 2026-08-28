@@ -178,7 +178,7 @@ def corpus_occurrences(query: str, limit: int = 10) -> CorpusPresence | None:
         return CorpusPresence(0, [])
     seen: dict[str, list] = {}
     for o in record.occurrences:
-        rel = str(o.path.relative_to(corpus_index.CORPUS_DIR))
+        rel = o.path.relative_to(corpus_index.CORPUS_DIR).as_posix()
         seen.setdefault(rel, []).append(o)
     files = []
     for rel in sorted(seen, key=lambda r: (-len(seen[r]), r))[:limit]:
