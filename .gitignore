@@ -67,6 +67,12 @@ vendor/
 # republishing it: nothing here may ever be committed except the README.
 literature/inbox/*
 !literature/inbox/README.md
+
+# The OEIS dump: 32 MB, regenerated daily upstream, and redistributing the
+# OEIS is the maintainers' call rather than ours. `workhouse oeis --fetch`
+# gets it; the snapshot digest and the scan's verdicts live in
+# ledger/sequences.yaml, so a check never needs the file or the network.
+literature/oeis/*.gz
 # Large inputs/outputs belong outside git (or in LFS). Keep small fixtures in
 # tests/fixtures/ and check them in deliberately.
 data/raw/

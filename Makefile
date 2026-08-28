@@ -1,4 +1,4 @@
-.PHONY: help bootstrap check quick lint test verify status frontier certified lit catalogue atlas fmt manifest corpus-manifest lean corpus-index lock clean paper
+.PHONY: help bootstrap check quick lint test verify status frontier certified lit oeis oeis-scan catalogue atlas fmt manifest corpus-manifest lean corpus-index lock clean paper
 
 help:            ## Show this help
 	@grep -hE '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk -F':.*?## ' '{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -59,6 +59,12 @@ paper:           ## Build the master paper PDF and run both stdlib core verifier
 
 lit:             ## Published work, and which claim each paper bears on
 	@.venv/bin/workhouse lit
+
+oeis:            ## The sequence register and what the OEIS says about it (offline)
+	@.venv/bin/workhouse oeis
+
+oeis-scan:       ## Re-match the register against a local oeis.org/stripped.gz snapshot
+	@.venv/bin/workhouse oeis --scan
 
 certified:       ## Regenerate CERTIFIED.md — every checked claim, ranked by tier
 	@.venv/bin/workhouse certified --write

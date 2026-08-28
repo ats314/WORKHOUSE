@@ -39,6 +39,10 @@ def _resolve(query: str, node_ids: set[str]) -> str | None:
         prefix, rest = q.split(":", 1)
         candidates += [f"{prefix.upper()}:{rest}", f"{prefix.upper()}:{rest.lower()}"]
     candidates += [f"CONST:{q}", f"LEAN:{q}", f"SYM:{q.lower()}", f"LIT:{q}", f"LIT:{q.upper()}"]
+    # A registered sequence by its bare register id, and an OEIS entry by its
+    # bare A-number: `why ORDER4_DEN` and `why A000108` both work without the
+    # namespace, which is how anyone actually types them.
+    candidates += [f"SEQ:{q.upper()}", f"OEIS:{q.upper()}"]
     for candidate in candidates:
         if candidate in node_ids:
             return candidate

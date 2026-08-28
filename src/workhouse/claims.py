@@ -36,6 +36,7 @@ from . import constants as K
 from . import ledger as ledger_mod
 from . import literature as literature_mod
 from . import notes as notes_mod
+from . import oeis as oeis_mod
 from .invariants import SUITES
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -59,6 +60,8 @@ KINDS = (
     "decision",
     "document",
     "citation",
+    "sequence",
+    "oeis",
 )
 
 #: A ledger id anywhere in free text. Case-sensitive on purpose: `u4` in
@@ -123,7 +126,9 @@ def _ident(text: str) -> str:
     """A slug that cannot collide by truncation.
 
     ``_slug`` caps at 40 characters, and check names here are long and
-    formulaic -- 158 of 193 hit that cap, as do 7 of 20 suite names. Two names
+    formulaic -- most of them hit that cap, as do most suite names (175 of 210
+    and 8 of 21 on 2026-08-28; the figures move every session, which is why
+    they are dated rather than stated). Two names
     agreeing in their first 40 characters would therefore produce ONE id, and
     a graph keyed on ids would silently merge two distinct checks into a node
     carrying both their edges. Nothing would fail; the graph would just be
@@ -181,11 +186,21 @@ def load_provenance(path: Path | None = None) -> list[dict[str, Any]]:
 
 
 def _adr_status(text: str) -> str:
-    """The status paragraph of an ADR, in either of the two formats in use."""
+    """The status paragraph of an ADR, in any of the three formats in use.
+
+    The third — a plain ``Date: ... Status: accepted.`` header line — is what
+    every ADR since 0010 has used, and it was reaching the catalogue as an
+    empty status. Five records said nothing about their own standing while
+    looking complete, which is the failure mode a generated index is worst at
+    showing.
+    """
     m = re.search(r"^## Status\s*\n+(.*?)(?:\n##|\Z)", text, re.S | re.M)
     if m:
         return " ".join(m.group(1).split())
     m = re.search(r"\*\*Status:\*\*\s*(.+)", text)
+    if m:
+        return " ".join(m.group(1).split())
+    m = re.search(r"^Date:[^\n]*?\bStatus:\s*([^\n]+)", text, re.M)
     return " ".join(m.group(1).split()) if m else ""
 
 
@@ -574,6 +589,68 @@ def collect() -> list[Claim]:
                 status="pinned run record",
                 detail=" ".join(str(run.get("detail", "")).split()),
                 related=sorted(run.get("bears_on", [])),
+            )
+        )
+
+    # The sequence register. One node per integer sequence this repository can
+    # honestly put to the OEIS, carrying the scan's own verdict. A registered
+    # sequence is T3 like every other document node: what it establishes is the
+    # checks' business.
+    #
+    # An `OEIS:` node exists for every A-number a scan actually matched,
+    # WHATEVER the verdict -- a `not-evidence` match is still a match, and
+    # suppressing it because the gate refuses to call it evidence would be
+    # hiding the data rather than judging it. The judgement travels on the node
+    # as its status. What is not emitted is a node for a sequence that matched
+    # nothing: that would be a strand with no edge, and inventing one to tidy
+    # the census is what ledger/theorems.yaml's own rule forbids.
+    sequences = oeis_mod.load()
+    for seq in sequences:
+        scan = seq.scan or {}
+        terms = seq.terms
+        out.append(
+            Claim(
+                id=f"SEQ:{seq.id}",
+                kind="sequence",
+                statement=" ".join(str(seq.title).split()),
+                tier=3,
+                where="ledger/sequences.yaml",
+                cites=oeis_mod.SNAPSHOT_URL,
+                status=str(scan.get("verdict", "unscanned")),
+                detail=(
+                    f"{len(terms)} terms, largest |term| {max(abs(t) for t in terms)}; "
+                    f"generated_by {seq.generated_by}; "
+                    f"{' '.join(str(scan.get('reason', 'not yet scanned')).split())}"
+                ),
+                related=sorted(seq.bears_on),
+            )
+        )
+    # Grouped by A-number, not by sequence: two registered families matching the
+    # same entry are one OEIS node with two edges, and emitting it twice would
+    # be a duplicate catalogue id.
+    hits: dict[str, list[str]] = {}
+    verdicts: dict[str, set[str]] = {}
+    for seq in sequences:
+        scan = seq.scan or {}
+        for aid in scan.get("hits", ()):
+            hits.setdefault(aid, []).append(seq.id)
+            verdicts.setdefault(aid, set()).add(str(scan.get("verdict", "")))
+    for aid in sorted(hits):
+        matched = sorted(hits[aid])
+        out.append(
+            Claim(
+                id=f"OEIS:{aid}",
+                kind="oeis",
+                statement=f"OEIS {aid} contains the terms of {', '.join(matched)}",
+                tier=3,
+                where="ledger/sequences.yaml",
+                cites=f"https://oeis.org/{aid}",
+                status=", ".join(sorted(verdicts[aid])),
+                detail=(
+                    f"matched by {len(matched)} registered "
+                    f"{'sequence' if len(matched) == 1 else 'sequences'}: {', '.join(matched)}"
+                ),
+                related=[f"SEQ:{sid}" for sid in matched],
             )
         )
 

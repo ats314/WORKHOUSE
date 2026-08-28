@@ -106,7 +106,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 152
+## T1 — re-derived exactly — 156
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -156,6 +156,20 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the printed towers are canonical-u: 4*Delta(3u/2) reproduces them verbatim`
   - src/workhouse/invariants.py:2632 · UNIFIED §2.1 / C4
   - `workhouse verify --only 'the printed towers are canonical-u: 4*Delta(3u/2) reproduces them verbatim'`
+**exact-form identification and external witness (C2, G3)**
+
+- `above the saturation denominator every denominator admits a match`
+  - src/workhouse/invariants.py:5158 · C2 / src/workhouse/identify.py
+  - `workhouse verify --only 'above the saturation denominator every denominator admits a match'`
+- `the Stern-Brocot enumerator agrees with trial division, exactly`
+  - src/workhouse/invariants.py:5130 · src/workhouse/identify.py
+  - `workhouse verify --only 'the Stern-Brocot enumerator agrees with trial division, exactly'`
+- `the historical record quantum splits the 189 records 144/45, exactly`
+  - src/workhouse/invariants.py:5392 · C2 / G14 / src/workhouse/kernel_comparison.py
+  - `workhouse verify --only 'the historical record quantum splits the 189 records 144/45, exactly'`
+- `the sequence register rebuilds its own terms and resolves its own targets`
+  - src/workhouse/invariants.py:5488 · ledger/sequences.yaml
+  - `workhouse verify --only 'the sequence register rebuilds its own terms and resolves its own targets'`
 **fourth order, anchoring and the residual dispute**
 
 - `C_old = (beta_pen_3 - 2*alpha_3)/16`
@@ -607,10 +621,48 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:1620 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
-## T2 — float agreement within a stated tolerance — 42
+## T2 — float agreement within a stated tolerance — 54
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
+**exact-form identification and external witness (C2, G3)**
+
+- `FINDING: no disputed amplitude is identifiable from the recorded doubles either`
+  - src/workhouse/invariants.py:5751 · C2 / G3 / src/workhouse/identify.py
+  - `workhouse verify --only 'FINDING: no disputed amplitude is identifiable from the recorded doubles either'`
+- `FINDING: the two kernels diverge on exactly the non-quantised sector`
+  - src/workhouse/invariants.py:5446 · C2 / G3 / runs/g3_kernel_record_dump_2026-08-28
+  - `workhouse verify --only 'FINDING: the two kernels diverge on exactly the non-quantised sector'`
+- `FINDING: the v10a.26 C_shp cannot be identified, and 31 digits would be needed`
+  - src/workhouse/invariants.py:5191 · C2 / G3 / GLUEBALL §10
+  - `workhouse verify --only 'FINDING: the v10a.26 C_shp cannot be identified, and 31 digits would be needed'`
+- `FINDING: the v10a.26 shape fit is shift-invariant only to 4.6e-15`
+  - src/workhouse/invariants.py:5591 · C2 / G3 / notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt
+  - `workhouse verify --only 'FINDING: the v10a.26 shape fit is shift-invariant only to 4.6e-15'`
+- `FINDING: the v10a.26 side of C2 is one recorded number, not five`
+  - src/workhouse/invariants.py:5358 · C2 / G3 / MASTER_THEORY §5.5
+  - `workhouse verify --only 'FINDING: the v10a.26 side of C2 is one recorded number, not five'`
+- `FINDING: with A = 5/48 agreed, the C2 dispute is one scalar, not three amplitudes`
+  - src/workhouse/invariants.py:5700 · C2 / G3 / runs/g3_kernel_record_dump_2026-08-28
+  - `workhouse verify --only 'FINDING: with A = 5/48 agreed, the C2 dispute is one scalar, not three amplitudes'`
+- `every recorded OEIS verdict is what the gate returns from the recorded evidence`
+  - src/workhouse/invariants.py:5522 · ledger/sequences.yaml
+  - `workhouse verify --only 'every recorded OEIS verdict is what the gate returns from the recorded evidence'`
+- `flint's exact LLL and mpmath's PSLQ find the same planted relation`
+  - src/workhouse/invariants.py:5319 · src/workhouse/identify.py
+  - `workhouse verify --only 'flint'"'"'s exact LLL and mpmath'"'"'s PSLQ find the same planted relation'`
+- `the OEIS chance model is corrected past the worst case it was measured against`
+  - src/workhouse/invariants.py:5559 · ledger/sequences.yaml
+  - `workhouse verify --only 'the OEIS chance model is corrected past the worst case it was measured against'`
+- `the identifier recovers A = 5/48 uniquely from the same run's float`
+  - src/workhouse/invariants.py:5241 · GLUEBALL §10 / src/workhouse/identify.py
+  - `workhouse verify --only 'the identifier recovers A = 5/48 uniquely from the same run'"'"'s float'`
+- `the integer-relation false-positive law H ~ 10^(p/n), measured`
+  - src/workhouse/invariants.py:5275 · src/workhouse/identify.py
+  - `workhouse verify --only 'the integer-relation false-positive law H ~ 10^(p/n), measured'`
+- `the shape fit's amplitude sensitivities are exact algebraic numbers`
+  - src/workhouse/invariants.py:5642 · C2 / G3 / src/workhouse/kernel_comparison.py
+  - `workhouse verify --only 'the shape fit'"'"'s amplitude sensitivities are exact algebraic numbers'`
 **fourth order, anchoring and the residual dispute**
 
 - `C20: exact gate value vs printed float-reconstruction`

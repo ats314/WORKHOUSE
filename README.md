@@ -87,6 +87,20 @@ workhouse search C2                  # by claim id, and what it routes to
 workhouse search 5/48 --corpus       # …and where it occurs in the 928 files
 ```
 
+When a value has no exact form on record, `workhouse identify` says what it
+could have — and, more usefully, what it cannot:
+
+```bash
+workhouse identify --claim C_shp     # the open side of C2, with its digit budget
+workhouse identify --claim A_shp     # the control: 5/48, uniquely, from the same run
+```
+
+It enumerates every rational the value's window admits (exactly, not by
+search), prices every integer relation against the digits the value actually
+carries, and says how many digits a recomputation would need to decide. A
+relation that costs more digits than the value holds is a pigeonhole certainty
+and is labelled one — see ADR 0015 and the C20 scar it exists to avoid.
+
 `search` resolves a query four ways at once and knows two things a grep cannot:
 which names are **forbidden** (searching `m_4` returns both correct names and
 why), and which are **coined here** (searching `Phi_C` says the corpus writes
@@ -113,6 +127,7 @@ make status       # the contradiction and gap registers
 make frontier     # regenerate FRONTIER.md
 make certified    # regenerate CERTIFIED.md
 make lit          # published work, and which claim each paper bears on
+make oeis         # the sequence register, and what the OEIS says about it
 make catalogue    # regenerate index/ — claims.jsonl, symbols.jsonl, graph.jsonl
 make atlas        # render the theory graph to atlas.html (a view; not checked in)
 make lean         # T0: proof-check the Lean core (needs elan)

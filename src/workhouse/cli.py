@@ -259,6 +259,166 @@ def _rescue_negative_query(argv: list[str]) -> list[str]:
     return out
 
 
+def _identify(
+    value: str | None, claim: str | None, halfwidth: float | None, ulp: bool, qmax: int
+) -> int:
+    """Ask what exact form a recorded float could have -- and what it cannot.
+
+    The output is in four parts because the question has four honest answers,
+    and the last two are the ones that get skipped: what the number knows about
+    itself, which rationals it admits, which relations clear their own digit
+    budget, and what precision a recomputation would need to decide.
+    """
+    from . import identify as ident
+
+    registered = ident.targets()
+    if claim:
+        if claim not in registered:
+            print(f"unknown target {claim!r}; registered: {', '.join(sorted(registered))}")
+            return 1
+        window = registered[claim]
+        label = claim
+    else:
+        v = float(value)
+        if ulp and halfwidth is None:
+            # The transcription window: every real that rounds to this double.
+            # Correct only for a value whose exact form was rounded once on the
+            # way in -- a table entry, a printed rational -- and wrong for
+            # anything a computation produced.
+            window = ident.Window.half_ulp(v, "half-ulp of the double, as given")
+            label = repr(v)
+            halfwidth = window.halfwidth
+        elif halfwidth is None:
+            print(
+                "--halfwidth is required for a bare value, and that is deliberate.\n"
+                "The half-ulp of a double is the accuracy of the TRANSCRIPTION, not of\n"
+                "the computation behind it, and the identification ceiling goes as its\n"
+                "square root -- so defaulting it is how a spurious identification gets\n"
+                "published. Pass the uncertainty you can defend, or use --claim for a\n"
+                "target whose window this repository has sourced:\n"
+                f"  {', '.join(sorted(registered))}"
+            )
+            return 1
+        if not ulp:
+            window = ident.Window(v, halfwidth, "given on the command line")
+            label = repr(v)
+
+    print(f"\033[1m{label}\033[0m = {window.value!r}")
+    print(f"  window   +-{window.halfwidth:.3e}  ({window.provenance})")
+    print(f"  digits   {window.digits:.1f} reliable of {ident.DOUBLE_DIGITS:.1f} a double can hold")
+    sat = ident.saturation_denominator(window)
+    ceiling = ident.identification_ceiling(window)
+    print(f"  ceiling  no denominator past {ceiling:.3e} can be singled out")
+    print(f"  saturation  every denominator at or above {sat:,} admits a match, exactly")
+
+    print("\n\033[1mrationals the window admits\033[0m")
+    for q in (10**3, 10**6, qmax):
+        found, truncated = ident.admissible_rationals(window, q)
+        est = ident.farey_count(window, q)
+        shown = ", ".join(str(f) for f in found[:4]) or "none"
+        more = f" (+{len(found) - 4} more)" if len(found) > 4 else ""
+        cap = "+" if truncated else ""
+        print(f"  q <= {q:>12,}: {len(found)}{cap} admissible, ~{est:.3g} expected  {shown}{more}")
+
+    print("\n\033[1minteger relations, and whether they would have happened anyway\033[0m")
+    scale = ident.scale_digits(window)
+    for name, basis in ident.bases().items():
+        print(f"  basis {name}: {', '.join(basis)}  (lattice at {scale} digits)")
+        for r in ident.sweep(window, basis, limit=2):
+            print(f"    {r}")
+        # The second engine, reported either way: a completed PSLQ search that
+        # returns nothing is an exclusion with a number on it, and one that
+        # returns something says the two engines agree about the regime.
+        second = ident.pslq_relation(
+            [window.value, *(float(v) for v in basis.values())], scale, maxcoeff=10**6
+        )
+        if second["relation"] is not None:
+            print(f"    PSLQ agrees a relation exists here: {second['relation']}")
+        elif second["exhausted"]:
+            print("    PSLQ ran out of steps -- no exclusion claimed")
+        else:
+            print(
+                f"    PSLQ completes with nothing: no relation of norm below "
+                f"{second['norm_bound']:.6g} exists at {scale} digits"
+            )
+
+    print("\n\033[1mwhat would decide it\033[0m")
+    for q in (10**6, 4405310420659200):
+        need = ident.digits_required(window.value, q)
+        verdict = (
+            "already carried"
+            if need <= window.digits
+            else f"{need - window.digits:.1f} more needed"
+        )
+        print(f"  q <= {q:>22,}: {need:.1f} significant digits -- {verdict}")
+    return 0
+
+
+def _oeis(scan: bool, fetch: bool, only: str | None) -> int:
+    """The sequence register, and what the OEIS says about it."""
+    from . import oeis as oeis_mod
+
+    if fetch:
+        print(f"fetching {oeis_mod.SNAPSHOT_URL} (32 MB, the maintainers' own dump)")
+        path = oeis_mod.fetch()
+        print(f"  {path}  sha256 {oeis_mod.snapshot_digest()}")
+
+    sequences = oeis_mod.load()
+    problems = oeis_mod.validate(sequences)
+    if problems:
+        for p in problems:
+            print(f"\033[31m{p}\033[0m")
+        return 1
+    if only:
+        sequences = [s for s in sequences if s.id == only]
+        if not sequences:
+            print(f"no registered sequence {only!r}")
+            return 1
+
+    if scan:
+        if not oeis_mod.SNAPSHOT.exists():
+            print(f"no snapshot at {oeis_mod.SNAPSHOT}; run `workhouse oeis --fetch` first")
+            return 1
+        snapshot = oeis_mod.load_snapshot()
+        print(f"snapshot: {len(snapshot):,} sequences, sha256 {oeis_mod.snapshot_digest()[:16]}...")
+        result = oeis_mod.scan(sequences, snapshot)
+        drift = []
+        for s in sequences:
+            live, recorded = result[s.id], s.scan
+            if recorded and live["verdict"] != recorded.get("verdict"):
+                drift.append(f"{s.id}: recorded {recorded.get('verdict')} -> now {live['verdict']}")
+        print("\n\033[1mcontrols (the correlation correction, re-measured)\033[0m")
+        for name, c in oeis_mod.measure_controls(snapshot).items():
+            ratio = f"{c['ratio']:.2e}" if c["ratio"] else "exact"
+            print(
+                f"  {name:>12}  observed {c['observed']:>5}  "
+                f"predicted {c['predicted']:.2e}  under by {ratio}"
+            )
+    else:
+        result = {s.id: s.scan for s in sequences}
+
+    print("\n\033[1msequence register\033[0m")
+    for s in sequences:
+        r = result.get(s.id) or {}
+        mark = {
+            "hit": "\033[32mHIT\033[0m ",
+            "no-hit": "none",
+            "not-evidence": "\033[2mn/e\033[0m ",
+        }
+        print(f"  {mark.get(r.get('verdict'), '?   ')} {s.id:<16} {s.title}")
+        print(
+            f"        {len(s.terms)} terms, {s.generated_by}; {r.get('reason', 'not yet scanned')}"
+        )
+        if r.get("hits"):
+            print(f"        {', '.join('https://oeis.org/' + a for a in r['hits'])}")
+    if scan and drift:
+        print("\n\033[31mthe snapshot has moved under the register:\033[0m")
+        for d in drift:
+            print(f"  {d}")
+        return 1
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     argv = _rescue_negative_query(sys.argv[1:] if argv is None else argv)
     parser = argparse.ArgumentParser(prog="workhouse", description=__doc__)
@@ -372,6 +532,54 @@ def main(argv: list[str] | None = None) -> int:
         help="the next documents to review, highest signal first (default 20)",
     )
 
+    idf = sub.add_parser(
+        "identify",
+        help="what exact form a recorded float could have -- and what it cannot",
+    )
+    idf.add_argument("value", nargs="?", help="the float, e.g. -0.020213328886166577")
+    idf.add_argument(
+        "--claim",
+        metavar="NAME",
+        help="a registered target whose uncertainty this repository has sourced "
+        "(C_shp, A_shp, alpha_pen, m_Gamma)",
+    )
+    idf.add_argument(
+        "--halfwidth",
+        type=float,
+        metavar="H",
+        help="the value's honest uncertainty; required for a bare value, because "
+        "the half-ulp of a double is the accuracy of the transcription and not "
+        "of the computation",
+    )
+    idf.add_argument(
+        "--ulp",
+        action="store_true",
+        help="take the window as the double's half-ulp; correct ONLY for a value "
+        "whose exact form was rounded once on the way in, such as a printed "
+        "table entry, and wrong for anything a computation produced",
+    )
+    idf.add_argument(
+        "--qmax", type=int, default=10**9, help="largest denominator to enumerate (default 1e9)"
+    )
+
+    oe = sub.add_parser(
+        "oeis",
+        help="the sequence register, and what the OEIS says about it",
+    )
+    oe.add_argument(
+        "--scan",
+        action="store_true",
+        help="re-run the match against the local snapshot and report any drift "
+        "from the recorded verdicts",
+    )
+    oe.add_argument(
+        "--fetch",
+        action="store_true",
+        help="download oeis.org/stripped.gz, the maintainers' own dump; the "
+        "search endpoint is never queried, robots.txt disallows it",
+    )
+    oe.add_argument("--only", metavar="ID", help="one registered sequence")
+
     args = parser.parse_args(argv)
     if args.command == "verify":
         return _verify(args.verbose, args.only, args.tier)
@@ -393,6 +601,13 @@ def main(argv: list[str] | None = None) -> int:
         return _triage(args.directory, args.limit)
     if args.command == "notes":
         return _notes(args.scan, args.archive, args.queue)
+    if args.command == "identify":
+        if not args.value and not args.claim:
+            print("give a value or --claim NAME")
+            return 1
+        return _identify(args.value, args.claim, args.halfwidth, args.ulp, args.qmax)
+    if args.command == "oeis":
+        return _oeis(args.scan, args.fetch, args.only)
     return _status()
 
 
