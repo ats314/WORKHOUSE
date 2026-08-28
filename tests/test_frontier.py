@@ -83,3 +83,31 @@ def test_cli_frontier_runs():
         check=True,
     )
     assert "WORKHOUSE" in proc.stdout
+
+
+def test_lean_counters_ignore_comments():
+    """A module header that SAYS "no `sorry`" must not count as a sorry.
+
+    PR #30's six new modules each carry such a header; the raw \\bsorry\\b
+    count would report six sorries that do not exist, and a doc comment
+    quoting a `theorem` line would inflate the theorem count the same way.
+    """
+    body = (
+        "/-\nStatus: builds clean, no `sorry`; see `theorem demo` below.\n-/\n"
+        "-- sorry is only mentioned in this comment\n"
+        "theorem real_one : 1 = 1 := rfl\n"
+        "/- nested /- block -/ still a comment: sorry -/\n"
+        "lemma real_two : 2 = 2 := rfl -- trailing note: sorry\n"
+    )
+    stripped = F.strip_lean_comments(body)
+    assert "sorry" not in stripped
+    assert len(stripped.splitlines()) == len(body.splitlines())
+    import re as _re
+
+    assert len(_re.findall(r"^\s*(?:theorem|lemma)\s", stripped, _re.MULTILINE)) == 2
+
+
+def test_current_lean_tree_has_no_sorries():
+    theorems, sorries = F._lean_counts()
+    assert sorries == 0, "a sorry entered the Lean tree (or the counter regressed)"
+    assert theorems >= 28
