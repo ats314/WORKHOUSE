@@ -253,13 +253,13 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:1556 · §9.3 / C6
   - `workhouse verify --only 'hop range 4 refutes the r = w_min - 2 promotion'`
 - `the fifth-order record is arithmetically self-consistent`
-  - src/workhouse/invariants.py:3908 · master edition 2026-08-28 §15
+  - src/workhouse/invariants.py:3944 · master edition 2026-08-28 §15
   - `workhouse verify --only 'the fifth-order record is arithmetically self-consistent'`
 - `the h_4^side -> tau_4 factor is exactly 5`
   - src/workhouse/invariants.py:1509 · §9.3
   - `workhouse verify --only 'the h_4^side -> tau_4 factor is exactly 5'`
 - `the target-blind backend cold-reproduces A_+, A_- and h_4^side`
-  - src/workhouse/invariants.py:3809 · runs/blind_pentagonal_o4_2026-08-28
+  - src/workhouse/invariants.py:3838 · runs/blind_pentagonal_o4_2026-08-28
   - `workhouse verify --only 'the target-blind backend cold-reproduces A_+, A_- and h_4^side'`
 - `the tau_4 -> Delta E_cap factor is exactly 2`
   - src/workhouse/invariants.py:1521 · §9.3
@@ -336,7 +336,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:3431 · UNIFIED v4.3 §6
   - `workhouse verify --only 'C_normal = -A_normal/2: the agreed axial coefficient pins the normal channel'`
 - `FINDING: an explicit second witness C_alt exhibits the C2 non-identifiability`
-  - src/workhouse/invariants.py:3865 · COMPLETE_UNIFIED_MASTER_CLOSED §15.3.2
+  - src/workhouse/invariants.py:3894 · COMPLETE_UNIFIED_MASTER_CLOSED §15.3.2
   - `workhouse verify --only 'FINDING: an explicit second witness C_alt exhibits the C2 non-identifiability'`
 - `FINDING: the retained Gamma/axis data cannot identify C_shp`
   - src/workhouse/invariants.py:3610 · MASTER paper Thm. 13 / C2 / G3
@@ -566,16 +566,16 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **the flat-band manuscript**
 
 - `every \chk in the united paper names a check that exists and passes`
-  - src/workhouse/invariants.py:3682 · MASTER paper, every displayed result
+  - src/workhouse/invariants.py:3711 · MASTER paper, every displayed result
   - `workhouse verify --only 'every \chk in the united paper names a check that exists and passes'`
 - `every declared note document is a graph node with an edge`
-  - src/workhouse/invariants.py:3714 · ledger/notes.yaml + notes/*.jsonl
+  - src/workhouse/invariants.py:3743 · ledger/notes.yaml + notes/*.jsonl
   - `workhouse verify --only 'every declared note document is a graph node with an edge'`
 - `no fourth-order coefficient enters the manuscript`
-  - src/workhouse/invariants.py:3768 · PAPER_FLATBAND §6
+  - src/workhouse/invariants.py:3797 · PAPER_FLATBAND §6
   - `workhouse verify --only 'no fourth-order coefficient enters the manuscript'`
 - `q at the four high-symmetry points is 0, 4, 8, 12`
-  - src/workhouse/invariants.py:3790 · MASTER_DOC Fig. 2
+  - src/workhouse/invariants.py:3819 · MASTER_DOC Fig. 2
   - `workhouse verify --only 'q at the four high-symmetry points is 0, 4, 8, 12'`
 **tier collapse (G14)**
 

@@ -3668,6 +3668,35 @@ manuscript = _suite("the flat-band manuscript")
 
 ROOT = Path(__file__).resolve().parents[2]
 PAPER_DIR = ROOT / "paper"
+
+#: The 2026-08-28 unified master edition, pinned verbatim in the notes archive.
+#: Two checks below quote exact values out of it; without the bytes in the tree
+#: those checks would verify a transcription against itself, which a review bot
+#: caught on PR #38 and was right about.
+MASTER_EDITION = (
+    ROOT
+    / "notes"
+    / "imported"
+    / "UPLOADS_2026-08-28c"
+    / "NESTED_QUOTIENT_GAUGE_SPECTRAL_THEORY_COMPLETE_UNIFIED_MASTER_CLOSED_20260828.docx"
+)
+
+
+def _master_edition_text() -> str:
+    """The pinned edition's document text, digits preserved.
+
+    A .docx is a zip of XML, so the text is extracted the same way every time
+    and the check reads the same bytes the register pinned. Tags are stripped
+    rather than parsed: these checks look for exact digit strings, and a
+    numerator split across XML runs would otherwise be invisible.
+    """
+    import zipfile
+
+    with zipfile.ZipFile(MASTER_EDITION) as archive:
+        xml = archive.read("word/document.xml").decode("utf-8", "replace")
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", xml))
+
+
 #: The pinned manuscripts, by the text extracted from each. The flat-band paper
 #: is the one that cites this repository by commit; the master document unites
 #: it with the nested-quotient circuit theory. The UNITED edition is
@@ -3886,6 +3915,12 @@ def _():
     c_old = Rational(-211835444920651, 4405310420659200)
     c_alt = Rational(-13035490122347, 550663802582400)
     shift = c_alt - c_old
+    # Read the witness out of the PINNED source rather than trusting that it
+    # was transcribed correctly. Without this the arithmetic below would verify
+    # one hand's transcription against itself -- caught on PR #38 by a review
+    # bot, and it was right.
+    source = _master_edition_text()
+    quoted = all(str(abs(part)) in source for part in (c_alt.p, c_alt.q, c_old.p, c_old.q))
 
     separations = {}
     for label, cut in (("X", (1, 0, 0)), ("M", (1, 1, 0)), ("R", (1, 1, 1))):
@@ -3895,10 +3930,11 @@ def _():
         separations[label] = shift * Rational(4 * e_2, q_a)
 
     expected = {"X": Rational(0), "M": Rational(25, 128), "R": Rational(25, 64)}
-    ok = shift == Rational(25, 1024) and separations == expected
+    ok = shift == Rational(25, 1024) and separations == expected and quoted
     return ok, (
         f"C_alt - C_old = {shift} exactly, and the induced separations are "
-        f"X {separations['X']}, M {separations['M']}, R {separations['R']}: identical on every "
+        f"X {separations['X']}, M {separations['M']}, R {separations['R']}; both witnesses appear "
+        f"verbatim in the pinned edition ({MASTER_EDITION.name}). Identical on every "
         "retained datum, distinct off-axis. Non-identifiability is exhibited by construction, "
         "not argued from a difference. Neither C_shp side is preferred, and C2 stays open -- the "
         "source document's own section is titled 'Why the exact rooted scalar remains open'"
@@ -3929,10 +3965,21 @@ def _():
     total = K.C5_DIRECT + K.C5_FOLDED
     denominators_agree = K.C5_PENT.q == lcm(K.C5_DIRECT.q, K.C5_FOLDED.q)
     tau_tie = K.TAU_4 == K.D5_COVARIANCE_FACTOR * K.H4_SIDE
-    return total == K.C5_PENT and denominators_agree and tau_tie, (
+    # All three constants were entered here by one hand from one document. Sum
+    # and lcm alone would therefore certify a self-consistent transcription of
+    # the WRONG numbers, so read them back out of the pinned edition.
+    source = _master_edition_text()
+    quoted = all(
+        str(value) in source
+        for rational in (K.C5_DIRECT, K.C5_FOLDED, K.C5_PENT, K.TAU_4)
+        for value in (abs(rational.p), rational.q)
+    )
+    return total == K.C5_PENT and denominators_agree and tau_tie and quoted, (
         f"direct + folded = {total} exactly, and its denominator is exactly "
         f"lcm({K.C5_DIRECT.q}, {K.C5_FOLDED.q}), so nothing cancelled silently; the same "
-        f"section's tau_4 is {K.D5_COVARIANCE_FACTOR} x h_4^side, and h_4^side is the value the "
+        f"section's tau_4 is {K.D5_COVARIANCE_FACTOR} x h_4^side, and every numerator and "
+        f"denominator here appears verbatim in the pinned edition ({MASTER_EDITION.name}); "
+        "h_4^side is the value the "
         "target-blind backend reproduced cold. The 796 direct and 572 folded histories are NOT "
         "re-run here: the fifth-order coefficient stays T3, asserted by the edition"
     )
