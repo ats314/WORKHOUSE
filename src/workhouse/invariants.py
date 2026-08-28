@@ -14,6 +14,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import sys
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -3982,4 +3983,82 @@ def _():
         "h_4^side is the value the "
         "target-blind backend reproduced cold. The 796 direct and 572 folded histories are NOT "
         "re-run here: the fifth-order coefficient stays T3, asserted by the edition"
+    )
+
+
+@adjudication.check(
+    "FINDING: the closure cap is a third-order scaffold and fourth order needs 160",
+    "engine closure(), max_states=100",
+)
+def _():
+    # G3's run stage fail-closes on cluster 1 of 609 with
+    # ExactEngineError("unexpectedly large H0 closure"). The registered finding
+    # said the shipped cap is below the first cluster's own demand. It did not
+    # say by how much, and "raise it" and "this needs a cheaper contraction"
+    # are opposite conclusions, so the number matters.
+    #
+    # Measured here: the H0 closure grows geometrically with insertion depth,
+    # 1, 2, 8, 32, 160. Fourth order IS depth four, so the demand is 160
+    # against a cap of 100 -- short by a factor of 1.6, not by orders of
+    # magnitude. The cap has every appearance of having been calibrated at
+    # depth three, where 32 leaves threefold headroom, and then being hit the
+    # moment the engine went to fourth order.
+    #
+    # The whole walk costs well under a second, which rules the closure out as
+    # the reason the sweep is slow: whatever makes a full cluster expensive is
+    # downstream of here, in the Haar contractions and resolvent inversions.
+    #
+    # The engine is NOT modified. This reimplements the same breadth-first walk
+    # over the engine's own h0_action, without the cap, and produces no
+    # certificate. Nothing here adjudicates C2 or licenses raising the cap in a
+    # sealed run; it says what the cap would have to be.
+    from collections import deque
+    from importlib.util import module_from_spec, spec_from_file_location
+
+    path = (
+        ROOT
+        / "corpus-import"
+        / "programs"
+        / "hodge_o4_adjudication"
+        / "src"
+        / "DATA_SU3_Exact_MarkedCluster_m4_Colab.py"
+    )
+    spec = spec_from_file_location("mce_engine_probe", path)
+    engine = module_from_spec(spec)
+    sys.modules["mce_engine_probe"] = engine
+    spec.loader.exec_module(engine)
+
+    def closure_size(state):
+        factor, seed = engine.simplify_unitarity(state)
+        if factor != 1:
+            return None
+        seen = {seed}
+        queue = deque((seed,))
+        while queue:
+            for candidate in engine.h0_action(queue.popleft()):
+                if candidate not in seen:
+                    seen.add(candidate)
+                    queue.append(candidate)
+        return len(seen)
+
+    patch, roots, _coverages, _candidate = engine.build_o4_triality_candidate_full_t1_coverage()
+    builder = engine.ExactFaceInsertionBuilder(patch)
+    root = roots[sorted(roots)[0]]
+    vector = builder.source_axial(root)
+    chain = sorted(patch.adjacency[root])[:4]
+
+    curve = []
+    for depth in range(5):
+        if depth:
+            vector = builder.insert_face(vector, chain[depth - 1], +1)
+        sizes = [s for s in (closure_size(st) for st in vector) if s is not None]
+        curve.append(max(sizes))
+
+    cap = 100
+    return curve == [1, 2, 8, 32, 160] and curve[4] > cap, (
+        f"H0 closure by insertion depth: {curve}, a clean geometric growth. Fourth order is "
+        f"depth 4, so the demand is {curve[4]} against the engine's shipped cap of {cap} -- "
+        f"short by a factor of {curve[4] / cap:.1f}, not by orders of magnitude, and consistent "
+        "with a cap calibrated at depth 3 where 32 leaves threefold headroom. The walk costs "
+        "under a second, so the closure is not why the 609-cluster sweep is slow"
     )
