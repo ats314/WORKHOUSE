@@ -2,14 +2,19 @@
 
 The entities already have machine-readable records — ``index/claims.jsonl``
 plus the symbols in ``index/symbols.jsonl`` — but the relationships between
-them were siloed in six formats: ledger edge fields, the symbol records'
+them were siloed in seven formats: ledger edge fields, the symbol records'
 ``claims``/``code_names`` lists, free-text section strings on checks,
-literature ``bears_on`` edges, ADR prose, and (until ``ledger/theorems.yaml``)
-nothing at all for the Lean layer. ``ledger/provenance.yaml`` extends the
+literature ``bears_on`` edges, ADR prose, the notes register's review
+verdicts, and (until ``ledger/theorems.yaml``) nothing at all for the Lean
+layer. ``ledger/provenance.yaml`` extends the
 reach into the corpus itself: pinned originating documents, with
-``originates`` edges to the claims their values come from. This module reads
-each of those sources and emits ``index/graph.jsonl``: one JSON record per
-edge, ``{src, dst, type, how, source}``.
+``originates`` edges to the claims their values come from, and
+``ledger/notes.yaml`` plus ``notes/*.jsonl`` extend it into the maintainer's
+own archives -- every inventoried document, the archive that contains it, what
+its review says it bears on, and which registered coefficients its bytes
+carry. This module reads each of those sources and emits
+``index/graph.jsonl``: one JSON record per edge,
+``{src, dst, type, how, source}``.
 
 Two rules keep the graph honest:
 
@@ -31,13 +36,17 @@ Two rules keep the graph honest:
 
 from __future__ import annotations
 
+import inspect
 import json
+import re
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from . import claims as claims_mod
 from . import ledger as ledger_mod
 from . import literature as literature_mod
+from . import notes as notes_mod
+from . import triage as triage_mod
 from .claims import ADR_REF, LEDGER_ID
 from .invariants import SUITES
 
@@ -60,13 +69,17 @@ CURATED_TYPES = frozenset(
         "formalizes",  # theorems.yaml
         "promotes",  # theorems.yaml: the T1/T2 check a theorem lifts to T0
         "originates",  # provenance.yaml: the corpus document a value comes from
+        "uses",  # a check body reads a registered constant (K.NAME)
+        "contains",  # notes.yaml: the archive a note document was inventoried in
+        "duplicate_of",  # notes.yaml reviews
+        "superseded_by",  # notes.yaml reviews
     }
 )
 #: "cites" appears on both sides deliberately: the DERIVED kind is an id
 #: parsed out of a check's free text (CHK -> ledger id), the CURATED kind is
 #: the verbatim ``cites`` field of literature/index.yaml (LIT -> LIT). The
 #: ``how`` field on each edge keeps them distinguishable.
-DERIVED_TYPES = frozenset({"cites", "mentions", "amends", "retracts"})
+DERIVED_TYPES = frozenset({"cites", "mentions", "amends", "retracts", "uses", "carries"})
 TYPES = CURATED_TYPES | DERIVED_TYPES
 
 
@@ -88,6 +101,35 @@ class Graph:
     #: (unresolved id, "src -> dst", source) for every reference that resolved
     #: to no catalogue record. Empty in a sound tree; a test pins that.
     dangling: list[tuple[str, str, str]]
+
+
+def _coefficient_targets(catalogue: list[claims_mod.Claim]) -> dict[str, tuple[str, ...]]:
+    """Coefficient name -> the catalogue constants whose digits it matches.
+
+    ``triage.SIGNATURES`` stores each coefficient as the digit strings of its
+    exact numerator and denominator (or, for the float-only ones, of its
+    decimal). A constant whose own value contains every one of those digit
+    groups is carrying that coefficient. This is the same value-first join the
+    rest of the repository uses -- the exact rationals are the keys, not the
+    names -- so the edge survives a document spelling a quantity differently
+    from the registry.
+    """
+
+    def digits(value: object) -> str:
+        return "".join(ch for ch in str(value) if ch.isdigit())
+
+    constants = [c for c in catalogue if c.id.startswith("CONST:")]
+    haystacks = {
+        c.id: digits(c.value or "") + "|" + (digits(c.decimal) if c.decimal is not None else "")
+        for c in constants
+    }
+    out: dict[str, tuple[str, ...]] = {}
+    for name, signature in triage_mod.SIGNATURES.items():
+        wanted = [group for part in signature for group in part]
+        out[name] = tuple(
+            sorted(cid for cid, hay in haystacks.items() if all(w in hay for w in wanted))
+        )
+    return out
 
 
 def _adr_id(text: str) -> str | None:
@@ -163,6 +205,48 @@ def build(
     for src, dst in lit.cites():
         add(f"LIT:{src}", f"LIT:{dst}", "cites", "curated", "literature/index.yaml")
 
+    # The notes archives. `contains` is the archive a document was inventoried
+    # in; `bears_on`, `duplicate_of` and `superseded_by` are the verbatim
+    # review fields. `carries` is the one derived edge here, and it is derived
+    # by VALUE: triage records which coefficient signatures a document's bytes
+    # contain, and a signature is the digit string of a registry constant's own
+    # exact numerator and denominator. Matching those digits against the
+    # catalogue's values links a document to a constant it demonstrably
+    # carries, rather than to one a name map here decided it was about. No
+    # edge promotes anything -- every note node is T3 whatever its verdict.
+    notes = notes_mod.load()
+    reviews = {r["digest"]: r for r in notes.reviews}
+    note_ids = {
+        (archive["id"], row["digest"]): claims_mod.note_id(archive["id"], row)
+        for archive in notes.archives
+        for row in notes.manifests.get(archive["id"], [])
+    }
+    signature_targets = _coefficient_targets(catalogue)
+    for archive in notes.archives:
+        aid = archive["id"]
+        for row in notes.manifests.get(aid, []):
+            nid = note_ids[(aid, row["digest"])]
+            add(f"ARCHIVE:{aid}", nid, "contains", "curated", f"notes/{aid}.jsonl")
+            for name in row.get("coefficients") or []:
+                for target in signature_targets.get(name, ()):
+                    add(nid, target, "carries", "derived", f"notes/{aid}.jsonl")
+            review = reviews.get(row["digest"])
+            if not review:
+                continue
+            for target in review.get("bears_on", []):
+                # Same id-space rule the literature edges use: a bears_on
+                # target is either a ledger id (C2, G14) or a bare constant
+                # name, which is a CONST record.
+                dst = target if LEDGER_ID.fullmatch(target) else f"CONST:{target}"
+                add(nid, dst, "bears_on", "curated", "ledger/notes.yaml")
+            for field_, type_ in (
+                ("duplicate_of", "duplicate_of"),
+                ("superseded_by", "superseded_by"),
+            ):
+                other = review.get(field_)
+                if other and (aid, other) in note_ids:
+                    add(nid, note_ids[(aid, other)], type_, "curated", "ledger/notes.yaml")
+
     # Checks cite claims only inside free text: the section string, the check
     # name, or the suite name ("tier collapse (G14)"). Parse all three. Static
     # registration data only — nothing here runs a check.
@@ -205,6 +289,51 @@ def build(
                 "curated",
                 "ledger/provenance.yaml",
             )
+
+    # A check that reads a registered constant depends on it. The graph had no
+    # such edge, so 85 registered constants sat in the catalogue unreachable
+    # from any claim that uses them -- and `why CONST:B_3` could not answer
+    # "which checks rest on this?". The check body is the honest source: a
+    # constant referenced as K.NAME is used, and one that only appears in a
+    # comment is not (comments are stripped first, for the same reason the Lean
+    # counters strip them).
+    known_constants = {c.id for c in catalogue if c.kind == "constant"}
+    for suite in SUITES:
+        for name, _section, _tier, fn in suite.checks:
+            try:
+                body = inspect.getsource(fn)
+            except OSError:  # pragma: no cover - source always available in-tree
+                continue
+            body = re.sub(r"#[^\n]*", "", body)
+            for const in sorted(set(re.findall(r"\bK\.([A-Z][A-Z0-9_]*)\b", body))):
+                if f"CONST:{const}" in known_constants:
+                    add(
+                        claims_mod.check_id(suite.name, name),
+                        f"CONST:{const}",
+                        "uses",
+                        "derived",
+                        f"src/workhouse/invariants.py:{fn.__code__.co_firstlineno}",
+                    )
+
+    # Every check cites its source by alias; the alias is now a node, so the
+    # citation becomes an edge. Matched on a word boundary so PAPER_FLATBAND
+    # does not also fire the PAPER alias it contains -- the two are different
+    # documents, and a substring match would point readers at the wrong one.
+    aliases = [a for a in claims_mod.load_document_aliases() if not a.get("unresolved")]
+    for suite in SUITES:
+        for name, section, _tier, fn in suite.checks:
+            if not section:
+                continue
+            for alias in aliases:
+                token = re.escape(alias["alias"])
+                if re.search(rf"(?<![A-Za-z0-9_.]){token}(?![A-Za-z0-9_.])", section):
+                    add(
+                        claims_mod.check_id(suite.name, name),
+                        f"CITE:{alias['alias']}",
+                        "cites",
+                        "derived",
+                        f"src/workhouse/invariants.py:{fn.__code__.co_firstlineno}",
+                    )
 
     return Graph(edges=sorted(edges), dangling=sorted(dangling))
 

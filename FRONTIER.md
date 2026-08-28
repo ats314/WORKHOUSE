@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 171/171 checks pass.
+**T1/T2 — re-derived here.** 176/176 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -27,7 +27,7 @@ it cannot drift from what the repository actually checks.
 | settlement package and adjudication harness | 12/12 |
 | near-Gamma uniformity (G11) | 6/6 |
 | tier collapse (G14) | 6/6 |
-| isotropic pentagonal cap band (v4.3 §9.3) | 9/9 |
+| isotropic pentagonal cap band (v4.3 §9.3) | 10/10 |
 | native string tension through fifth order (v4.3 §11.2) | 7/7 |
 | published comparisons (literature/index.yaml) | 16/16 |
 | restored payloads (G1) | 11/11 |
@@ -35,6 +35,7 @@ it cannot drift from what the repository actually checks.
 | tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
 | notes program: SAFE, Davies, coercivity (G20-G23) | 13/13 |
 | off-axis channel ledger (C2 geography, G14) | 10/10 |
+| the flat-band manuscript | 4/4 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -113,6 +114,7 @@ Claims this repository made and withdrew:
 
 - `G2` Regenerate all displayed tables in canonical u — discharged 2026-08-21
 - `G5` Tetrahedral local Haar-resolvent coefficient — discharged 2026-08-21
+- `G24` Derive the shared-link isotropy premise, the one unproved input of the second-order chain — discharged 2026-08-28, the day it was opened. The premise is not an assumption: it follows from the order-2 Weingarten values. Two steps. The six nonshared links collapse, because each plaquette contributes a product of three independent Haar links and a product of independent Haar matrices is Haar -- so the two-plaquette amplitude is Tr(A U) Tr(B U^(+-1)) with A and B independent Haar, and integrating them leaves a pure degree-(2,2) moment of the shared link. Two such moments settle both families: M_direct = N^2 and M_cross = N, so the like family splits as (N+1)/(2N) and (N-1)/(2N), and the mixed family's singlet component of U_ij conj(U_lk) is delta_il delta_jk/N of squared norm 1, giving 1/N^2. All four are exactly d_R/N^2. Registered as `the shared-link weights are Weingarten, not an isotropy assumption` (T1), which imports nothing from the corpus -- the Weingarten pair is the inverse of the S_2 Gram matrix and the index sums are explicit. A_N, B_N and t_N therefore rest on representation theory alone.
 
 ## 6. What blocks the most downstream theory
 

@@ -92,9 +92,10 @@ oriented edge--face Gram operator in the charge-odd one-plaquette sector.
 Representation theory fixes its coefficient and the cubical chain complex
 fixes its kernel and spectrum. The separation is exact,
 \[
-  \text{colour dynamics}\longrightarrow t_N,
-  \qquad
-  \text{cellular geometry}\longrightarrow BB\dg .
+  \begin{aligned}
+    \text{colour dynamics}&\longrightarrow t_N,\\
+    \text{cellular geometry}&\longrightarrow BB\dg .
+  \end{aligned}
 \]
 
 \subsection*{What is proved, and what is conditional}
@@ -125,7 +126,9 @@ reproductions.
 \begin{enumerate}\setcounter{enumi}{4}\itemsep2pt
 \item For $SU(3)$, supplied ledgers report that all candidate third-order
   lifter classes vanish and report the scalar and shared-link coefficients of
-  Section~\ref{sec:su3}. If that census is exhaustive and the linked ledger
+  Section~\ref{sec:su3}. The census is three lifter classes evaluated over
+  $32$ five-trace numerator patterns each, $96$ contractions in total, and
+  nothing here checks any of them. If it is exhaustive and the linked ledger
   complete, the effective Hamiltonian stays in the incidence algebra through
   order $u^3$.
 \item Supplied ledgers report the all-rank cube formula
@@ -375,9 +378,10 @@ $\mathrm{Wg}((12))=-1/(N(N^2-1))$ --- the inverse of the $S_2$ Gram matrix
 $\bigl(\begin{smallmatrix}N^2&N\\N&N^2\end{smallmatrix}\bigr)$ --- the index
 sums give
 \begin{equation}\label{eq:moments}
-  M_{\mathrm{direct}}=\!\!\sum_{ijkl}\!\bigl\langle|U_{ij}|^2|U_{kl}|^2\bigr\rangle=N^2,
-  \quad
-  M_{\mathrm{cross}}=\!\!\sum_{ijkl}\!\bigl\langle U_{ij}U_{kl}\bar U_{il}\bar U_{kj}\bigr\rangle=N .
+  \begin{aligned}
+    M_{\mathrm{direct}}&=\sum_{ijkl}\bigl\langle|U_{ij}|^2|U_{kl}|^2\bigr\rangle=N^2,\\
+    M_{\mathrm{cross}}&=\sum_{ijkl}\bigl\langle U_{ij}U_{kl}\bar U_{il}\bar U_{kj}\bigr\rangle=N .
+  \end{aligned}
 \end{equation}
 For the like family, $\operatorname{Tr}(AU)\operatorname{Tr}(BU)$ decomposes
 into $\mathrm{Sym}^2\oplus\Lambda^2$ by symmetrising the two index pairs
@@ -539,9 +543,10 @@ If the lifter census is exhaustive and the linked ledger complete, then
   H_{\mathrm{eff},-}(k,u)=E_{\mathrm{flat}}(u)I+\tau(u)B(k)B(k)\dg+O(u^4),
 \]
 \[
-  E_{\mathrm{flat}}(u)=\tfrac83+u+\tfrac{11}{306}u^2-\tfrac{109151}{249696}u^3,
-  \quad
-  \tau(u)=\tfrac5{612}u^2+\tfrac{1975}{124848}u^3 .
+  \begin{aligned}
+    E_{\mathrm{flat}}(u)&=\tfrac83+u+\tfrac{11}{306}u^2-\tfrac{109151}{249696}u^3,\\
+    \tau(u)&=\tfrac5{612}u^2+\tfrac{1975}{124848}u^3 .
+  \end{aligned}
 \]
 \end{conditional}
 \chk{E\_flat and t(u) carry the ledger coefficients}
@@ -672,12 +677,14 @@ Section~\ref{sec:fourth} stops where it does.
 \section{Channel weights in closed form}\label{app:closed}
 
 Substituting \eqref{eq:table} into \eqref{eq:w},
+\begingroup\small
 \begin{align*}
-  w_{\mathbf 1}&=-\frac{2}{N(N-1)(N+1)}, &
-  w_{\mathrm{Adj}}&=-\frac{2(N-1)(N+1)}{N(2N^2-1)},\\
-  w_{\Lambda^2F}&=-\frac{N-1}{(N+1)(2N-3)}, &
+  w_{\mathbf 1}&=-\frac{2}{N(N^2-1)}, &
+  w_{\Lambda^2F}&=-\frac{N-1}{(N+1)(2N-3)},\\
+  w_{\mathrm{Adj}}&=-\frac{2(N^2-1)}{N(2N^2-1)}, &
   w_{\mathrm{Sym}^2F}&=-\frac{N+1}{(N-1)(2N+3)} .
 \end{align*}
+\endgroup
 Their family sums are \eqref{eq:AN} and \eqref{eq:BN}, and the difference has
 numerator $2N(N^2-4)$, which is the $SU(2)$ zero and the positivity for
 $N\ge3$ at once.
@@ -687,9 +694,12 @@ $N\ge3$ at once.
 With $\mathrm{Wg}(e)=1/(N^2-1)$ and $\mathrm{Wg}((12))=-1/(N(N^2-1))$, and
 $\sigma,\tau$ running over $S_2$,
 \[
-  \bigl\langle U_{i_1j_1}U_{i_2j_2}\bar U_{i'_1j'_1}\bar U_{i'_2j'_2}\bigr\rangle
-  =\sum_{\sigma,\tau}\mathrm{Wg}(\sigma\tau^{-1})
-  \prod_a \delta_{i_ai'_{\sigma(a)}}\delta_{j_aj'_{\tau(a)}} .
+  \begin{aligned}
+    &\bigl\langle U_{i_1j_1}U_{i_2j_2}
+       \bar U_{i'_1j'_1}\bar U_{i'_2j'_2}\bigr\rangle\\
+    &\qquad=\sum_{\sigma,\tau}\mathrm{Wg}(\sigma\tau^{-1})
+      \prod_a \delta_{i_ai'_{\sigma(a)}}\delta_{j_aj'_{\tau(a)}} .
+  \end{aligned}
 \]
 Summing the delta products over all $N^4$ index quadruples,
 \[

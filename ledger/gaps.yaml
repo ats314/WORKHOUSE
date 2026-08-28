@@ -517,6 +517,50 @@ gaps:
       commutativity" no-go is unproved and set aside.
 
 # The corpus's own summary of what gates what.
+  - id: G24
+    tier: 1
+    state: discharged
+    status: >
+      discharged 2026-08-28, the day it was opened. The premise is not an
+      assumption: it follows from the order-2 Weingarten values. Two steps.
+      The six nonshared links collapse, because each plaquette contributes a
+      product of three independent Haar links and a product of independent
+      Haar matrices is Haar -- so the two-plaquette amplitude is
+      Tr(A U) Tr(B U^(+-1)) with A and B independent Haar, and integrating them
+      leaves a pure degree-(2,2) moment of the shared link. Two such moments
+      settle both families: M_direct = N^2 and M_cross = N, so the like family
+      splits as (N+1)/(2N) and (N-1)/(2N), and the mixed family's singlet
+      component of U_ij conj(U_lk) is delta_il delta_jk/N of squared norm 1,
+      giving 1/N^2. All four are exactly d_R/N^2. Registered as
+      `the shared-link weights are Weingarten, not an isotropy assumption`
+      (T1), which imports nothing from the corpus -- the Weingarten pair is the
+      inverse of the S_2 Gram matrix and the index sums are explicit.
+      A_N, B_N and t_N therefore rest on representation theory alone.
+    title: Derive the shared-link isotropy premise, the one unproved input of the second-order chain
+    detail: >
+      Every all-rank second-order statement in this program -- A_N, B_N, t_N,
+      the flat branch, the whole "color dynamics -> t_N, cellular geometry ->
+      BB*" separation -- rests on one sentence: that after the six free-link
+      Haar integrations the normalized shared-link tensor is isotropic, so the
+      channel projector carries squared norm d_R/N^2. The arithmetic
+      consequence is exact and now checked (the weights sum to one per family,
+      and each channel gap is C_F + C_R/2). The premise itself is asserted.
+      The corpus states the clause that earns it
+      (corpus-import/papers/flat_band/PAPER_FLUX_glueball_flat_band_v1_1.tex);
+      the 2026-08-28 manuscript compresses it to the word "isotropy" and its
+      §9 claims the proof is self-contained. Independent support exists at
+      N = 3 only, through the corpus's two-plaquette exact diagonalization,
+      which pins A_3 = -27/68 and B_3 = -7/18 given B_3 - A_3 = 5/612.
+      What would close it: an orientation-resolved Weingarten evaluation of the
+      second-order two-plaquette element at N = 3 and N = 4, returning A_N and
+      B_N SEPARATELY, compared against the registered closed forms. Agreement
+      at two ranks moves the manuscript's central input from T3 to T1.
+      The ingredients are already here and import nothing from the corpus:
+      invariants.py carries Wg(e), Wg((12)) and the N = 3 fourth moment
+      |U_11|^4 = 1/6, and the published-comparisons suite already establishes
+      that the Weingarten route is corpus-independent.
+    depends_on: []
+
 dependency_spine:
   - "G3 -> G9 and the mass ratio at orders 4-6"
   - "nothing further without G17 + G18"

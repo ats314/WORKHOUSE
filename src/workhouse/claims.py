@@ -34,6 +34,7 @@ from . import certified as certified_mod
 from . import constants as K
 from . import ledger as ledger_mod
 from . import literature as literature_mod
+from . import notes as notes_mod
 from .invariants import SUITES
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -56,6 +57,7 @@ KINDS = (
     "theorem",
     "decision",
     "document",
+    "citation",
 )
 
 #: A ledger id anywhere in free text. Case-sensitive on purpose: `u4` in
@@ -121,8 +123,26 @@ def check_id(suite_name: str, check_name: str) -> str:
     return f"CHK:{_slug(suite_name)}:{_slug(check_name)}"
 
 
+def note_id(archive_id: str, row: dict[str, Any]) -> str:
+    """The catalogue id of one archived note document.
+
+    Keyed on the path so a reader can search for the filename they remember,
+    with a short digest suffix because slugs truncate at 40 characters and 24
+    of these archives' paths collide once truncated ("00_INDEX.md" appears in
+    many folders). Substring search still finds the filename.
+    """
+    stem = row["paths"][0].rsplit("/", 1)[-1]
+    return f"NOTE:{archive_id}:{_slug(stem)}-{row['digest'][:6]}"
+
+
 def load_theorems(path: Path | None = None) -> list[dict[str, Any]]:
     return yaml.safe_load((path or THEOREM_SOURCE).read_text())["theorems"]
+
+
+def load_document_aliases(path: Path | None = None) -> list[dict[str, Any]]:
+    """The citation-alias register (ledger/documents.yaml)."""
+    source = path or ROOT / "ledger" / "documents.yaml"
+    return yaml.safe_load(source.read_text())["aliases"]
 
 
 def load_provenance(path: Path | None = None) -> list[dict[str, Any]]:
@@ -402,6 +422,29 @@ def collect() -> list[Claim]:
             )
         )
 
+    # Citation aliases. A check cites its source by the alias
+    # ledger/documents.yaml legends -- "MASTER_THEORY §4.3", "UNIFIED §0.1" --
+    # and until those aliases were catalogue records there was nothing for the
+    # citation to point AT, so most checks sat in the graph with no edge at
+    # all. The alias is the node; the standing is the status, because citing a
+    # superseded document as if current is the failure this register exists to
+    # prevent.
+    for alias in load_document_aliases():
+        if alias.get("unresolved"):
+            continue
+        out.append(
+            Claim(
+                id=f"CITE:{alias['alias']}",
+                kind="citation",
+                statement=alias["alias"],
+                tier=3,
+                where=str(alias.get("path", "")),
+                cites="ledger/documents.yaml",
+                status=alias["standing"],
+                detail=" ".join(str(alias.get("note", "")).split()),
+            )
+        )
+
     # Originating corpus documents. Still T3 — the register machine-checks the
     # provenance (pin, quote, line), never the truth of what the document says.
     for doc in load_provenance():
@@ -420,6 +463,69 @@ def collect() -> list[Claim]:
                 related=sorted({o["target"] for o in doc["originates"]}),
             )
         )
+
+    # The notes archives, and the documents inside them. Until now the
+    # maintainer's own research notes were declared in ledger/notes.yaml and
+    # inventoried in notes/*.jsonl, and reached the graph nowhere -- 1,689
+    # documents with no node, so nothing a review said a document bears on was
+    # an edge, and "which notes touch C2" had no answer the graph could give.
+    #
+    # Two rules keep this from becoming a promotion mechanism. Every node is
+    # T3, whatever its verdict, because a verdict records a JUDGEMENT about a
+    # document and never the truth of what it says. And the coefficient edges
+    # are matched by VALUE -- the triage signature digits against the
+    # registry's own exact numerators -- not by a name map written here, so a
+    # document is linked to a constant only when it demonstrably carries that
+    # constant's digits.
+    notes = notes_mod.load()
+    reviews = {r["digest"]: r for r in notes.reviews}
+    for archive in notes.archives:
+        aid = archive["id"]
+        rows = notes.manifests.get(aid, [])
+        reviewed = sum(1 for row in rows if row["digest"] in reviews)
+        out.append(
+            Claim(
+                id=f"ARCHIVE:{aid}",
+                kind="archive",
+                statement=" ".join(str(archive["description"]).split()),
+                tier=3,
+                where=f"notes/{aid}.jsonl",
+                cites="ledger/notes.yaml",
+                status=(
+                    f"{len(rows)} documents, {reviewed} reviewed, {len(rows) - reviewed} pending"
+                ),
+                detail=" ".join(str(archive.get("source", "")).split()),
+            )
+        )
+        for row in rows:
+            review = reviews.get(row["digest"])
+            coefficients = row.get("coefficients") or []
+            # A pending document with no coefficients is an inventory row and
+            # nothing more; it still gets a node, because the archive edge is a
+            # real relationship and a document invisible to the graph is a
+            # document nobody will remember to review.
+            out.append(
+                Claim(
+                    id=note_id(aid, row),
+                    kind="note",
+                    statement=(
+                        " ".join(str(review["reason"]).split())
+                        if review
+                        else f"{row['paths'][0]} — inventoried, not yet reviewed"
+                    ),
+                    tier=3,
+                    where=f"{aid}/{row['paths'][0]}",
+                    cites="ledger/notes.yaml" if review else f"notes/{aid}.jsonl",
+                    status=review["verdict"] if review else "pending",
+                    evidence=review.get("imported_to", "") if review else "",
+                    detail=(
+                        f"sha256 {row['digest'][:12]}, {row['size']} bytes"
+                        + (f"; carries {', '.join(coefficients)}" if coefficients else "")
+                        + ("; erratum signature" if row.get("has_erratum") else "")
+                    ),
+                    related=sorted(review.get("bears_on", [])) if review else [],
+                )
+            )
 
     return out
 
