@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 175/175 checks pass.
+**T1/T2 — re-derived here.** 176/176 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -27,7 +27,7 @@ it cannot drift from what the repository actually checks.
 | settlement package and adjudication harness | 12/12 |
 | near-Gamma uniformity (G11) | 6/6 |
 | tier collapse (G14) | 6/6 |
-| isotropic pentagonal cap band (v4.3 §9.3) | 9/9 |
+| isotropic pentagonal cap band (v4.3 §9.3) | 10/10 |
 | native string tension through fifth order (v4.3 §11.2) | 7/7 |
 | published comparisons (literature/index.yaml) | 16/16 |
 | restored payloads (G1) | 11/11 |

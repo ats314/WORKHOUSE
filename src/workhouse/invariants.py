@@ -3725,11 +3725,21 @@ def _():
     # is the kind of thing that regresses silently the next time an archive is
     # declared and nobody regenerates, so assert it rather than trust it.
     #
-    # Read the GENERATED indexes rather than rebuilding: collect() runs every
+    # Read the GENERATED graph rather than rebuilding: collect() runs every
     # suite, so calling it from inside a check makes verify quadratic (the
-    # first draft of this check took over ten minutes). test_search and
-    # test_graph already fail when either index is stale, so reading them here
-    # is not a weaker statement -- it is the same statement, once.
+    # first draft of this check took over ten minutes). test_graph already
+    # fails when index/graph.jsonl is stale, so reading it here is not a
+    # weaker statement -- it is the same statement, once.
+    #
+    # Read the GRAPH and not the claim catalogue, which the first draft did
+    # and which was wrong: this check's own detail line is written INTO
+    # index/claims.jsonl, so a check that counts catalogue nodes changes the
+    # file it counts and never reaches a fixpoint -- `make catalogue` left the
+    # index stale however many times it ran. The graph carries edges only,
+    # never check details, so nothing here depends on its own output.
+    # Membership is not weakened by the change: graph.build() emits an edge
+    # only when both endpoints resolve to catalogue records, so a note id
+    # appearing in an edge IS a catalogue node.
     #
     # This checks reachability, not truth. Every note node is T3 whatever its
     # verdict, and no edge here promotes anything.
@@ -3742,7 +3752,6 @@ def _():
         for archive in notes.archives
         for row in notes.manifests.get(archive["id"], [])
     }
-    nodes = {c.id for c in claims_mod.load_catalogue()}
     graph_path = PAPER_DIR.parent / "index" / "graph.jsonl"
     touched: set[str] = set()
     for line in graph_path.read_text(encoding="utf-8").splitlines():
@@ -3750,10 +3759,65 @@ def _():
             edge = json.loads(line)
             touched.add(edge["src"])
             touched.add(edge["dst"])
-    missing = declared - nodes
     stranded = declared - touched
-    return not missing and not stranded, (
+    return not stranded, (
         f"{len(declared)} declared note documents across {len(notes.archives)} archives, "
-        f"every one a catalogue node with at least one edge; {len(missing)} without a node, "
-        f"{len(stranded)} without an edge"
+        f"every one carrying at least one graph edge and so a catalogue node; "
+        f"{len(stranded)} stranded"
+    )
+
+
+@pentagonal.check(
+    "the target-blind backend cold-reproduces A_+, A_- and h_4^side",
+    "runs/blind_pentagonal_o4_2026-08-28",
+)
+def _():
+    # h_4^side was registered and checked as A_+ - A_-, but A_+ and A_- were
+    # themselves transcriptions: nothing here derived them. On 2026-08-28 a
+    # cold pentagonal-prism backend reached this session -- one that had been
+    # missing from every notes inventory -- and was run unmodified. It
+    # enumerates all 48 fixed-side endpoint histories from oriented geometry,
+    # exact Wilson trace-word algebra, the SU(N) Fierz identity and exact
+    # SU(3) Haar projectors, and returns BOTH amplitudes, not just the gap.
+    #
+    # The blindness is measured, not accepted on the engine's word: the
+    # coefficient-signature scanner finds no registered coefficient in the
+    # pinned source, so the engine cannot have been fitted to a value it does
+    # not contain. That is asserted below alongside the arithmetic.
+    #
+    # SCOPE: this is the pentagonal SIDE coefficient. It does not adjudicate
+    # C2 -- the disputed off-axis C_shp lives in the cubic kernel, a separate
+    # geometry, which the neighbouring denominator-structure check pins. G3
+    # still wants a blind run of the marked-cluster CUBIC engine.
+    run = PAPER_DIR.parent / "runs" / "blind_pentagonal_o4_2026-08-28"
+    result = json.loads((run / "blind_result.json").read_text(encoding="utf-8"))
+    source = (
+        PAPER_DIR.parent
+        / "notes"
+        / "imported"
+        / "UPLOADS_2026-08-28c"
+        / "backend_full_link_balanced_control.py"
+    )
+    scanned = TRIAGE.scan(source.parent)
+    carried = set(next(f for f in scanned.files if f.path.name == source.name).coefficients)
+
+    subtotals = result["endpoint_direct_subtotals"]
+    cold_plus = Rational(subtotals["+cap1"])
+    cold_minus = -Rational(subtotals["-cap1_signed"])
+    cold_h4 = Rational(result["h4_side"])
+    gates = result["gates"]
+
+    agrees = (
+        cold_plus == K.PENT_A_PLUS
+        and cold_minus == K.PENT_A_MINUS
+        and cold_h4 == K.H4_SIDE
+        and cold_h4 == cold_plus - cold_minus
+    )
+    return agrees and not carried and gates["all_pass"] and result["cold_run"], (
+        f"cold A_+ = {cold_plus} and A_- = {cold_minus} reproduce the registry exactly, and their "
+        f"difference is h_4^side = {cold_h4}; {gates['passed']}/{gates['total']} engine gates pass "
+        f"and the pinned source carries {len(carried)} registered coefficient signatures, so the "
+        "run was blind by measurement. Both amplitudes were transcriptions until this run; the "
+        "pentagonal side geometry is separate from the cubic kernel, and this adjudicates "
+        "no C_shp side"
     )
