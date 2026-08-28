@@ -68,12 +68,16 @@ jobs:
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v7
-      # The restore has died mid-step and taken the job with it (~164s stuck
-      # in restore, later steps never ran — PR #32 run 33134685713; same
-      # fast-fail signature on PR #31 2026-08-26 and two earlier PR #32
-      # runs). A lost cache only costs a cold elan install plus
-      # `lake exe cache get`, both well inside the job budget, so a cache
-      # outage must degrade, not fail: bound the step and continue.
+      # The restore repeatedly died MID-STEP and took the job with it —
+      # continue-on-error could not catch it (the abort is runner-level,
+      # not a step failure): runs 33133472692, 33134685713, 33134902449,
+      # 33135625325 all died inside this step, while the cache-free jobs
+      # stayed green and githubstatus reported no incident. The cache key
+      # had been identical since before 2026-08-24 (toolchain unchanged)
+      # and worked until then, so the standing diagnosis is a corrupted
+      # entry under the old key: the v2- prefix abandons it. A miss only
+      # costs a cold elan install plus `lake exe cache get`, both well
+      # inside the job budget, so restore trouble must degrade, not fail.
       - name: Cache elan and mathlib
         uses: actions/cache@v5
         continue-on-error: true
@@ -82,7 +86,7 @@ jobs:
           path: |
             ~/.elan
             lean/.lake
-          key: lean-${{ hashFiles('lean/lean-toolchain', 'lean/lake-manifest.json') }}
+          key: lean-v2-${{ hashFiles('lean/lean-toolchain', 'lean/lake-manifest.json') }}
       # The two network steps below get the same treatment for their own
       # transient failures: retry, but still fail closed — the proof check
       # itself is never skipped.
