@@ -214,11 +214,7 @@ def test_run_register_matches_runs_directory():
 
     root = Path(claims.ROOT)
     registered = {run["id"]: run for run in claims.load_runs()}
-    on_disk = {
-        p.name
-        for p in (root / "runs").iterdir()
-        if p.is_dir()
-    }
+    on_disk = {p.name for p in (root / "runs").iterdir() if p.is_dir()}
     assert set(registered) == on_disk, (
         f"register vs runs/: only in register {sorted(set(registered) - on_disk)}, "
         f"only on disk {sorted(on_disk - set(registered))}"
