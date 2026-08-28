@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 33 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 197/197 checks pass.
+**T1/T2 — re-derived here.** 200/200 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -36,7 +36,7 @@ it cannot drift from what the repository actually checks.
 | notes program: SAFE, Davies, coercivity (G20-G23) | 13/13 |
 | off-axis channel ledger (C2 geography, G14) | 22/22 |
 | the flat-band manuscript | 5/5 |
-| finite-rank truncation bridge (published SU(3) truncations) | 3/3 |
+| finite-rank truncation bridge (published SU(3) truncations) | 6/6 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -195,10 +195,11 @@ published. A paper is T3 until something checks it, same as any document.
 | `BORGA_2024` | `G5` | supplies-comparison | verified |
 | `LEMOINE_2026` | `C7` | supplies-comparison | verified |
 | `CB_2024` | `R2` | supplies-comparison | not-yet-obtained |
-| `CBB_2026` | `R2` | corroborates | not-yet-obtained |
-| `BALAJI_2026` | `R2` | supplies-comparison | not-yet-obtained |
+| `CBB_2026` | `R2` | corroborates | verified |
+| `BALAJI_2026` | `R2` | supplies-comparison | verified |
+| `HAZRA_2026` | `G14` | supplies-comparison | verified |
 
-**11 of 44 edges rest on a source nobody here has read
+**9 of 45 edges rest on a source nobody here has read
 or pinned.** Obtaining and digest-pinning a primary source upgrades its
 edges from assertion to verification — the Hamer 1989 table did exactly
 that for the program's strongest external agreement.
@@ -258,6 +259,7 @@ different things: **in-web** is how many indexed papers cite this one
 | `CBB_2026` | 0 | — | **not yet obtained** |
 | `CB_2024` | 0 | — | **not yet obtained** |
 | `FLPS_2026` | 0 | 0 (2026-08-21) | pinned |
+| `HAZRA_2026` | 0 | — | **not yet obtained** |
 
 **Next acquisition target, computed: `KS_1975`** — 10 in-web
 citations and nobody here has read or pinned it. The ranking surfaces

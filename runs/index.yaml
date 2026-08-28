@@ -94,3 +94,28 @@ runs:
       T1-checked here from the corpus's own appendix; what this run adds is
       an independent implementation of it, plus the T1-cutoff diagnostic and
       the finite-volume fingerprints the registry did not carry.
+
+  - id: balaji_open_cube_b4_t1_2026-08-28
+    dir: runs/balaji_open_cube_b4_t1_2026-08-28
+    title: >-
+      The T1 = B = 4 open cube diagonalised: the reversed charge-odd shell
+      confirmed in a full Hamiltonian, from the authors' own plaquette data
+    bears_on: [R2]
+    detail: >-
+      The full-Hamiltonian one-cube test the finite-N bridge named as its
+      remaining decisive test, done for the T1 branch. The local coefficients
+      are the authors' public ymcirc d=3, B=4 oriented table (blob 1808849c,
+      sha256 4cad9538), embedded on six faces and cut to a 243-state physical
+      block by Gauss' law. Re-diagonalised in this session rather than taken
+      from the shipped script: charge conjugation commutes with both terms,
+      the charge-odd sector is 121 of 243, and tracking the six single-face
+      states by overlap (minimum 1.0000 at u = 0.005) gives
+      (E - E_max)/u^2 -> {-1/2 x2, -1/3 x3, 0 x1} with an O(u^3) residual.
+      That is the REVERSED T1 ordering, opposite to the channel-complete
+      {0, (5/153)^3, (5/102)^2}. The certificate's second-order gap matrix
+      equals (37/12)I - (1/12)G to 4.3e-11, so t_3^T1 = -1/12 appears as the
+      off-diagonal element and the eigenvalues are exactly the T1 absolute
+      coefficients the separate CBB bridge certificate predicted. Establishes
+      the T1 branch only; the channel-complete +5/612 needs a B = 6 cube that
+      nobody has run. Not an independent-group replication -- shared author
+      and code lineage, and the open-cube assembly is the reconstructor's.

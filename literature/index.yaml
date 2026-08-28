@@ -1524,24 +1524,42 @@ papers:
       all ranks" suite already uses. So the four shared-link channel weights,
       A_N, B_N and t_N = B_N - A_N have an external provenance, from a source
       written without knowledge of this program. The (1,2,2) truncation is
-      the first published one retaining all four shared-link irreps. Not
-      obtained; the equation numbers come from the imported bridge documents.
-      The specialization is checked here, the physics premise is not.
+      the first published one retaining all four shared-link irreps.
+      OBTAINED and read (v5, dated 17 Feb 2026, sha256
+      55f47cd77126e296d8dbd91d1a18ca2b66a80afa9dd20bc78c56c88a56113c5c). Not
+      stored: its redistribution licence was not established, so the
+      transcription is curated here and its consequences are checked rather
+      than the file re-read. Two things only the paper says. Eq. (D1) is not
+      original to it -- the text credits "the supplemental material of Ref.
+      [48]" and extends it using the commutativity of neighbouring plaquette
+      operators, so the provenance runs one step further back than the bridge
+      documents suggest. And Appendix C DOES carry the adjoint row
+      (1,0,...,0,1) -> dimension N^2-1, Casimir N, so all four channels the
+      weights need are tabulated; a partial reading of that table earlier in
+      this session concluded otherwise and was wrong.
     bears_on:
       - target: R2
         relation: corroborates
-        status: not-yet-obtained
+        status: verified
         detail: >
           Supplies the published matrix element from which this repository's
-          channel weights follow. The check "the published dimension-ratio
-          matrix element is this registry's weight formula" verifies the
-          specialization dim A = dim R = N algebraically and confirms the
-          resulting closed law reproduces hopping(N) at five ranks. What it
-          does NOT verify -- because it needs the paper -- is that Eq. (D1)
-          is transcribed correctly and that the four channels exhaust the
-          second-order shared-link routes in the charge-odd one-plaquette
-          sector. Obtaining this paper is the acquisition that would move
-          the edge from corroborates/not-yet-obtained to verified.
+          channel weights follow, and the paper has now been read. Verified
+          against it: Eq. (1) is
+          H = (g^2/2) sum E^2 - (1/2g^2) sum (Box + Box-dagger), so
+          u = 1/(2g^4) after H/g^2; Eq. (D1) is
+          sqrt(dim(B)/(dim(A) dim(R))) with B in R (x) A, which for two
+          fundamental factors is d_rho/N^2, the numerator this registry
+          already uses; Fig. 6 derives the three nontrivial (1,2,2)
+          amplitudes from (D1) exactly as the bridge documents report; and
+          Appendix C tabulates all four dimensions and Casimirs, adjoint row
+          included. Feeding those closed forms through the weight formula
+          reproduces every channel weight the pinned certificate used.
+          One transcription error found and registered rather than repaired:
+          an imported document cites "Eq. (265)" where the paper labels it
+          (D1). Still NOT verified, and not verifiable from this paper: that
+          the four channels exhaust the second-order shared-link routes in
+          the charge-odd one-plaquette sector. That premise is the bridge's,
+          not the paper's, and it stays T3.
 
   - id: BALAJI_2026
     title: >
@@ -1567,14 +1585,63 @@ papers:
     bears_on:
       - target: R2
         relation: supplies-comparison
-        status: not-yet-obtained
+        status: verified
         detail: >
-          The published truncation against which the registered T1 finding
-          is stated. The finding itself is arithmetic about which channels a
-          cutoff keeps and is checked here; what needs the paper is the
-          claim that this is the cutoff its one-cube diagonalization
-          actually used, and the factor-of-two coupling dictionary. Both are
-          transcription from the imported documents until the paper is read.
+          The published truncation against which the registered T1 finding is
+          stated, and the finding has now been checked in a full Hamiltonian
+          rather than only in second-order algebra. An author-data-derived
+          reconstruction of the B = 4 open cube -- built from this group's own
+          public ymcirc d=3, B=4 plaquette table -- was re-diagonalised in
+          runs/balaji_open_cube_b4_t1_2026-08-28: the charge-odd shell comes
+          out {-1/2 x2, -1/3 x3, 0 x1} relative to the signed cube boundary,
+          the reversed ordering, and the second-order gap matrix is
+          (37/12)I - (1/12)G to 4.3e-11, so t_3^T1 = -1/12 is a matrix element
+          of published data. Three caveats kept: the paper itself was not
+          obtained, so the T1 = B = 4 statement and the factor-of-two coupling
+          dictionary are still transcription from the imported documents; the
+          reconstruction is not an independent-group replication, sharing an
+          author and code lineage; and it settles the truncated branch only,
+          not the channel-complete +5/612, which needs a B = 6 cube nobody has
+          run.
+
+  - id: HAZRA_2026
+    title: >
+      New class of exactly flat topological bands - compact localised states
+      protected by local graph topology
+    authors: [Tamaghna Hazra]
+    venue: SciPost Physics (submission)
+    year: 2026
+    arxiv: 2607.22831
+    note: >
+      An independent condensed-matter construction of exactly flat bands from
+      H = t B^T B on the FACES of an arbitrary graph, with the extensive null
+      space proved topologically protected by a discrete Atiyah-Singer index
+      theorem, dim ker(B^T B) - dim ker(B B^T) = |F| - |V|. The form is this
+      repository's face operator and the cubic lattice is its first worked
+      example, which is why it is indexed. The mechanism is NOT the same, and
+      the registered check says so precisely: Hazra's B is the UNORIENTED
+      face-vertex incidence -- his own footnote states it -- giving
+      |F| - |V| = 2L^3 flat bands on the cubic lattice by rank-nullity alone,
+      where this repository's B is the SIGNED face-edge boundary with
+      |F| = |E| = 3L^3, index exactly 0, and L^3 + 2 zero modes that are the
+      cycle space of the three-torus. Source tarball obtained (sha256
+      77c001247025f669610d6a432833e2618077d9e8c136956e7629683b48a54b99); not
+      stored, since the submission says "License information to appear upon
+      publication".
+    bears_on:
+      - target: G14
+        relation: supplies-comparison
+        status: verified
+        detail: >
+          A published framework in which macroscopic face-graph degeneracy is
+          topologically protected, arrived at with no knowledge of this
+          program. Verified here on this repository's own operator: the index
+          is 0 at L = 2, 3, 4 and both kernels equal L^3 + 2, matching the T0
+          theorem dim_Z_2. The value of the comparison is the DISTINCTION it
+          forces -- extensive degeneracy from counting there, from homology
+          here -- recorded as a difference rather than a unifying candidate,
+          because an identification of the two has no falsifier and would be
+          an analogy.
 
 stubs:
   - id: WILSON_1974

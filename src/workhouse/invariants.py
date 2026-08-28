@@ -5081,6 +5081,7 @@ def _():
         "LIT:BALAJI_2026",
         "LIT:CBB_2026",
         "LIT:CB_2024",
+        "LIT:HAZRA_2026",
         # ledger entries with empty curated cross-reference fields
         "C11",
         "C14",
@@ -5305,4 +5306,249 @@ def _():
         f"modes are {3**3} + 2 = L^3 + 2, which this repository proves in Lean as dim_Z_2 -- so "
         "the most discriminating multiplicity in the fingerprint is the homology of the "
         "three-torus, not a feature of the truncation"
+    )
+
+
+@bridge.check(
+    "FINDING: the bridge documents match the obtained paper, except one equation number",
+    "R2; arXiv:2503.11888v5 Eqs. (1), (D1), Fig. 6, App. C; notes UPLOADS_2026-08-28e",
+)
+def _():
+    # The paper was registered not-yet-obtained, with the note that obtaining
+    # it is what would move the edge to verified. It has been obtained
+    # (arXiv:2503.11888v5, dated 17 Feb 2026,
+    # sha256 55f47cd77126e296d8dbd91d1a18ca2b66a80afa9dd20bc78c56c88a56113c5c)
+    # and read. Everything the bridge documents rest on checks out:
+    #
+    #   Eq. (1)   H = (g^2/2) sum_l E_l^2 - (1/2g^2) sum_p (Box_p + Box_p^dag)
+    #             -- so u = 1/(2 g^4) after dividing by g^2, as claimed.
+    #   Eq. (D1)  <...|Box|...> = sqrt(dim(B)/(dim(A) dim(R))), with B in
+    #             R (x) A. With both factors fundamental this is d_rho/N^2,
+    #             the numerator this registry already uses.
+    #   Fig. 6    derives the three nontrivial (1,2,2) amplitudes FROM (D1):
+    #             sqrt(1 - 1/N^2), sqrt((1+1/N)/2), sqrt((1-1/N)/2).
+    #   App. C    tabulates every dimension and Casimir the weights need,
+    #             INCLUDING the adjoint row (1,0,...,0,1) -> N^2-1, N.
+    #
+    # One transcription error, and it is worth recording rather than
+    # silently repairing: FINITE_N_SU3_TRUNCATION_CAPABILITY_RESULT section 4
+    # cites "Appendix D, Eq. (265)". The paper's main text numbering stops at
+    # (25) and the equation is labelled (D1). The companion document
+    # CBB_FINITE_N_SU3_TN_BBDAGGER_BRIDGE has it right. So the two imported
+    # documents disagree with each other, and the one that is wrong is wrong
+    # about a pointer, not about the physics.
+    #
+    # This check asserts the Appendix C closed forms as read from the paper
+    # against the values the pinned certificate actually used. It does not
+    # read the PDF: the paper is not stored here, because its redistribution
+    # licence was not established, so the transcription is curated in
+    # literature/index.yaml and its consequences are checked here.
+    from sympy import Integer
+
+    n = symbols("n", positive=True)
+
+    # Appendix C, general-N column, transcribed from the obtained paper
+    paper = {
+        "1": (Integer(1), Integer(0)),
+        "8": (n**2 - 1, n),
+        "3bar": (n * (n - 1) / 2, (n**2 - n - 2) / n),
+        "6": (n * (n + 1) / 2, (n**2 + n - 2) / n),
+    }
+    c_f = (n**2 - 1) / (2 * n)
+
+    # what runs/cbb_finite_n_bridge_2026-08-28 actually used, at N = 3
+    certificate = {
+        "1": (1, Rational(0), -Rational(1, 12)),
+        "8": (8, Rational(3), -Rational(16, 51)),
+        "3bar": (3, Rational(4, 3), -Rational(1, 6)),
+        "6": (6, Rational(10, 3), -Rational(2, 9)),
+    }
+
+    agree = []
+    for rho, (dim_form, cas_form) in paper.items():
+        dim3, cas3, weight = certificate[rho]
+        agree.append(simplify(dim_form.subs(n, 3) - dim3) == 0)
+        agree.append(simplify(cas_form.subs(n, 3) - cas3) == 0)
+        # and the weight the paper's own inputs force
+        forced = -(dim_form / n**2) / (c_f + cas_form / 2)
+        agree.append(simplify(forced.subs(n, 3) - weight) == 0)
+
+    return all(agree), (
+        "the obtained paper's Eq. (1) fixes u = 1/(2g^4), its Eq. (D1) gives "
+        "|M|^2 = dim(B)/(dim(A)dim(R)) = d_rho/N^2 for two fundamental factors, its Fig. 6 "
+        "derives the three nontrivial (1,2,2) amplitudes from (D1), and its Appendix C tabulates "
+        "all four dimensions and Casimirs INCLUDING the adjoint row (1,0,...,0,1) -> (N^2-1, N). "
+        "Feeding those closed forms through the registry's weight formula reproduces every "
+        "channel weight the pinned certificate used, at N = 3. The one error found: "
+        "FINITE_N_SU3_TRUNCATION_CAPABILITY_RESULT section 4 cites 'Eq. (265)'; the paper "
+        "numbers its main text to (25) and labels this equation (D1), which its companion "
+        "document gets right. A wrong pointer, not wrong physics"
+    )
+
+
+@bridge.check(
+    "the discrete index theorem gives 0 on the signed face-edge operator, bounding nothing",
+    "R2; G14; arXiv:2607.22831v1 (Hazra) §6 Eq. for ind_a(D)",
+    tier=2,
+)
+def _():
+    # A published face-graph flat-band framework arrived alongside the CBB
+    # paper: an infinite family of Hamiltonians H = t B^T B supported on the
+    # FACES of an arbitrary graph, with the null space proved extensive by a
+    # discrete Atiyah-Singer index theorem,
+    #
+    #     dim ker(B^T B) - dim ker(B B^T) = |F| - |V|,   hence  >= |F| - |V|.
+    #
+    # The shape is this repository's face operator, and the temptation is to
+    # call it the same mechanism. It is not, and the difference is exactly
+    # checkable, so it is recorded here before it becomes an analogy.
+    #
+    # Hazra's B is the UNORIENTED face-vertex incidence -- his own footnote
+    # says so, B_vf = 1 if vertex v lies on the face's cycle. On the cubic
+    # lattice |V| = L^3 and |F| = 3L^3, so his bound is 2L^3 flat bands, and
+    # it is forced by rank-nullity alone: more faces than vertices.
+    #
+    # This repository's B is the SIGNED face-edge boundary d_2, where
+    # |F| = |E| = 3L^3. So the index is ZERO, the theorem gives no lower
+    # bound at all, and the L^3 + 2 zero modes are not a rank-nullity
+    # artifact -- they are the cycle space of the three-torus, which the T0
+    # layer proves as dim_Z_2. This check verifies both halves: index 0, and
+    # both kernels equal to L^3 + 2, at three volumes.
+    #
+    # So the honest relation is agreement of FORM with a different mechanism:
+    # extensive degeneracy from counting there, from homology here. Recorded
+    # as a distinction rather than a unifying candidate, which would need a
+    # falsifier and does not have one.
+    from . import torus
+
+    rows = []
+    for ell in (2, 3, 4):
+        d2 = torus.d2_matrix(ell)
+        rank = d2.rank()
+        faces, edges = d2.ncols(), d2.nrows()
+        ker_face, ker_edge = faces - rank, edges - rank
+        rows.append((ell, faces, edges, ker_face, ker_edge, ell**3 + 2))
+
+    index_zero = all(kf - ke == 0 and f == e for _, f, e, kf, ke, _ in rows)
+    homology = all(kf == cyc and ke == cyc for _, _, _, kf, ke, cyc in rows)
+    hazra_bound = {ell: 3 * ell**3 - ell**3 for ell, *_ in rows}
+
+    return index_zero and homology, (
+        "on the signed face-edge boundary d_2 the index dim ker(B^T B) - dim ker(B B^T) is 0 at "
+        f"L = 2, 3, 4 because |F| = |E| = 3L^3, and both kernels equal L^3 + 2 = "
+        f"{[r[5] for r in rows]} -- the cycle space the T0 layer proves as dim_Z_2. The published "
+        "face-graph theorem bounds dim ker(B^T B) >= |F| - |V| for the UNORIENTED face-vertex "
+        f"incidence, which on this lattice is {hazra_bound}, a different operator with a "
+        "different count. Same form, different mechanism: rank-nullity counting there, homology "
+        "here, and the index bounds nothing on the operator this repository uses. A distinction, "
+        "not a unifying candidate -- there is no falsifier for an identification of the two"
+    )
+
+
+@bridge.check(
+    "FINDING: a full T1 = B = 4 cube Hamiltonian reproduces -1/12 and the reversed shell",
+    "R2; runs/balaji_open_cube_b4_t1_2026-08-28; notes UPLOADS_2026-08-28g",
+    tier=2,
+)
+def _():
+    # The bridge documents named one test they had not done: diagonalise the
+    # authors' complete one-cube Hamiltonian at small u and see whether the
+    # 1+3+2 charge-odd shell comes out in the predicted order. For the T1
+    # branch that test has now been done, from the authors' own published
+    # ymcirc plaquette table rather than from the bridge's algebra, and it
+    # passes.
+    #
+    # The sharpest form of the agreement is not the eigenvalues, it is the
+    # MATRIX. The reconstruction's second-order gap matrix on the six
+    # charge-odd single-face states equals
+    #
+    #     (37/12) I - (1/12) G,        G = B^T B the cube's face Gram,
+    #
+    # to 4.3e-11. So t_3^T1 = -1/12 is not fitted from a spectrum; it appears
+    # directly as the off-diagonal element of a matrix built from published
+    # data, and the identity coefficient 37/12 is the one the separate CBB
+    # certificate derived. Two independently produced certificates agree, and
+    # this one did not go through the second-order Schur algebra at all.
+    #
+    # Scope, and it is narrow. This confirms the TRUNCATED branch: the cutoff
+    # that omits the 8 and 6 really does give the reversed ordering. It says
+    # nothing about the channel-complete +5/612, which needs a B = 6 cube
+    # carrying all four shared-link channels, and none has been run. It is
+    # also not an independent-group replication -- the table and the cube
+    # paper share an author and code lineage, and the open-cube assembly is
+    # the reconstructor's, not the authors'.
+    #
+    # G is rebuilt here from oriented cell boundaries rather than read, so
+    # the check does not take the certificate's own Gram on trust.
+    import json
+    from fractions import Fraction
+
+    record = json.loads(
+        (
+            ROOT
+            / "runs"
+            / "balaji_open_cube_b4_t1_2026-08-28"
+            / "balaji_open_cube_B4_T1_certificate.json"
+        ).read_text(encoding="utf-8")
+    )
+    gap = record["perturbative_result"]["gap_second_order_matrix"]
+
+    # G rebuilt from oriented cell boundaries, in the certificate's own face
+    # order (xy@z=0, xy@z=1, xz@y=0, xz@y=1, yz@x=0, yz@x=1) -- so the
+    # certificate's Gram is not taken on trust.
+    edges, faces = [], []
+    for a in range(3):
+        for x0 in (0, 1):
+            for x1 in (0, 1):
+                x = [0, 0, 0]
+                rest = [i for i in range(3) if i != a]
+                x[rest[0]], x[rest[1]] = x0, x1
+                edges.append((tuple(x), a))
+    edge_id = {e: i for i, e in enumerate(edges)}
+    for a in range(3):
+        for b in range(a + 1, 3):
+            c = next(i for i in range(3) if i not in (a, b))
+            for side in (0, 1):
+                x = [0, 0, 0]
+                x[c] = side
+                faces.append((tuple(x), a, b))
+
+    def step(x, a):
+        y = list(x)
+        y[a] += 1
+        return tuple(y)
+
+    boundary = [[0] * len(faces) for _ in edges]
+    for j, (x, a, b) in enumerate(faces):
+        for e, sign in (((x, a), 1), ((step(x, a), b), 1), ((step(x, b), a), -1), ((x, b), -1)):
+            boundary[edge_id[e]][j] += sign
+    built = [
+        [sum(boundary[e][i] * boundary[e][j] for e in range(len(edges))) for j in range(6)]
+        for i in range(6)
+    ]
+
+    predicted = [
+        [float(Fraction(37, 12)) * (i == j) - Fraction(1, 12) * built[i][j] for j in range(6)]
+        for i in range(6)
+    ]
+    worst = max(abs(gap[i][j] - predicted[i][j]) for i in range(6) for j in range(6))
+
+    groups = record["perturbative_result"]["gap_second_order_groups"]
+    seen = sorted((round(g["value"], 9), g["multiplicity"]) for g in groups)
+    want = sorted(
+        [
+            (round(float(Fraction(31, 12)), 9), 2),
+            (round(float(Fraction(11, 4)), 9), 3),
+            (round(float(Fraction(37, 12)), 9), 1),
+        ]
+    )
+
+    return (worst < 1e-9 and seen == want and record["status"] == "PASS"), (
+        f"the reconstructed second-order gap matrix equals (37/12)I - (1/12)G to {worst:.1e}, with "
+        "G rebuilt here from oriented cell boundaries -- so t_3^T1 = -1/12 is the off-diagonal "
+        f"element of a matrix assembled from the authors' published plaquette table. Its spectrum "
+        f"{seen} is {want}: the T1 absolute coefficients the independent CBB certificate "
+        "predicted, doublet lowest and the signed cube boundary highest, the REVERSE of the "
+        "channel-complete ordering. This confirms the truncated branch only; the +5/612 branch "
+        "needs a B = 6 cube nobody has run, and this is not an independent-group replication"
     )

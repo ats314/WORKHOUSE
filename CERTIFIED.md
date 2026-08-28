@@ -130,7 +130,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 155
+## T1 — re-derived exactly — 156
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -183,13 +183,16 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **finite-rank truncation bridge (published SU(3) truncations)**
 
 - `FINDING: the T1 link cutoff reverses the sign of t_3, and 14/153 is what it omits`
-  - src/workhouse/invariants.py:5186 · R2; notes UPLOADS_2026-08-28e §5; runs/cbb_finite_n_bridge_2026-08-28
+  - src/workhouse/invariants.py:5187 · R2; notes UPLOADS_2026-08-28e §5; runs/cbb_finite_n_bridge_2026-08-28
   - `workhouse verify --only 'FINDING: the T1 link cutoff reverses the sign of t_3, and 14/153 is what it omits'`
+- `FINDING: the bridge documents match the obtained paper, except one equation number`
+  - src/workhouse/invariants.py:5312 · R2; arXiv:2503.11888v5 Eqs. (1), (D1), Fig. 6, App. C; notes UPLOADS_2026-08-28e
+  - `workhouse verify --only 'FINDING: the bridge documents match the obtained paper, except one equation number'`
 - `the certificate's finite-volume fingerprints, and 29 = L^3 + 2 is the Lean cycle count`
-  - src/workhouse/invariants.py:5242 · R2; notes UPLOADS_2026-08-28e §6-7; runs/cbb_finite_n_bridge_2026-08-28
+  - src/workhouse/invariants.py:5243 · R2; notes UPLOADS_2026-08-28e §6-7; runs/cbb_finite_n_bridge_2026-08-28
   - `workhouse verify --only 'the certificate'"'"'s finite-volume fingerprints, and 29 = L^3 + 2 is the Lean cycle count'`
 - `the published dimension-ratio matrix element is this registry's weight formula`
-  - src/workhouse/invariants.py:5140 · R2; Ciavarella-Burbano-Bauer arXiv:2503.11888v5 Eq. (D1); notes UPLOADS_2026-08-28e
+  - src/workhouse/invariants.py:5141 · R2; Ciavarella-Burbano-Bauer arXiv:2503.11888v5 Eq. (D1); notes UPLOADS_2026-08-28e
   - `workhouse verify --only 'the published dimension-ratio matrix element is this registry'"'"'s weight formula'`
 **fourth order, anchoring and the residual dispute**
 
@@ -642,10 +645,18 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:1620 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
-## T2 — float agreement within a stated tolerance — 42
+## T2 — float agreement within a stated tolerance — 44
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
+**finite-rank truncation bridge (published SU(3) truncations)**
+
+- `FINDING: a full T1 = B = 4 cube Hamiltonian reproduces -1/12 and the reversed shell`
+  - src/workhouse/invariants.py:5448 · R2; runs/balaji_open_cube_b4_t1_2026-08-28; notes UPLOADS_2026-08-28g
+  - `workhouse verify --only 'FINDING: a full T1 = B = 4 cube Hamiltonian reproduces -1/12 and the reversed shell'`
+- `the discrete index theorem gives 0 on the signed face-edge operator, bounding nothing`
+  - src/workhouse/invariants.py:5389 · R2; G14; arXiv:2607.22831v1 (Hazra) §6 Eq. for ind_a(D)
+  - `workhouse verify --only 'the discrete index theorem gives 0 on the signed face-edge operator, bounding nothing'`
 **fourth order, anchoring and the residual dispute**
 
 - `C20: exact gate value vs printed float-reconstruction`

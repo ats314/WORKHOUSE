@@ -234,6 +234,39 @@ archives:
       finite-volume spectra and a truncation diagnostic that appear nowhere
       in the registry.
 
+  - id: UPLOADS_2026-08-28f
+    description: >-
+      The two primary sources themselves, handed over after the bridge was
+      ingested against documents alone: the Ciavarella-Burbano-Bauer paper
+      (arXiv:2503.11888v5) that the finite-N bridge turns on, and the source
+      tarball of an independent face-graph flat-band paper (arXiv:2607.22831v1,
+      Hazra) whose H = t B^T B construction has the same form as this
+      repository's face operator.
+    source: >-
+      Uploaded directly to the session on 2026-08-28. Both were read in full
+      and both moved a literature edge from not-yet-obtained to verified.
+      Neither is stored in the repository: the CBB paper's redistribution
+      licence was not established, and the Hazra submission states in its own
+      front matter that "License information to appear upon publication". So
+      the register carries the digests and the reading, and the checks carry
+      the consequences -- the discipline literature/index.yaml already applies
+      to fulltext.
+
+  - id: UPLOADS_2026-08-28g
+    description: >-
+      The Balaji open-cube T1 = B = 4 certificate bundle: an author-data-derived
+      reconstruction of the published one-cube Hamiltonian, its charge-odd
+      shell validation, a padding audit, the 243-state matrix, and the
+      reconstruction script.
+    source: >-
+      Uploaded directly to the session on 2026-08-28, while the finite-N
+      bridge ingest was still being written. It closes the T1 half of the test
+      that bridge named as remaining: the full one-cube Hamiltonian really
+      does give the reversed charge-odd ordering. Contents pinned to
+      runs/balaji_open_cube_b4_t1_2026-08-28 and re-diagonalised there rather
+      than accepted from the shipped script, which needs an upstream ymcirc
+      file that did not travel with the bundle.
+
 reviews:
 # Third review pass: the 2026-08-28 second batch, reviewed on arrival. The
 # master derivation is imported to paper/ and its new content entered as four
@@ -2566,3 +2599,67 @@ reviews:
       byte-for-byte by re-running it here. Pinned as the certificate the
       bridge checks read, so they compare against a recorded artifact rather
       than re-deriving inside the check and testing themselves.
+
+  - digest: 55f47cd77126e296d8dbd91d1a18ca2b66a80afa9dd20bc78c56c88a56113c5c
+    path: Efficient_Truncations_of_SUNc_Lattice_Gauge_Theory_for_Quantum_Simulation.pdf
+    archive: UPLOADS_2026-08-28f
+    verdict: set-aside
+    bears_on: [R2]
+    reason: >-
+      arXiv:2503.11888v5, 17 Feb 2026 -- the paper the finite-N bridge turns
+      on, indexed as LIT:CBB_2026 and read in full here. Set aside rather than
+      imported because its redistribution licence was not established; the
+      register carries the digest so a reader can confirm they hold the same
+      file. What the reading settled, and could not be settled without it:
+      Eq. (1) is H = (g^2/2) sum E^2 - (1/2g^2) sum (Box + Box-dagger), fixing
+      u = 1/(2g^4); Eq. (D1) is sqrt(dim(B)/(dim(A) dim(R))) with B in R (x) A;
+      Fig. 6 derives the three nontrivial (1,2,2) amplitudes from it; and
+      Appendix C tabulates all four dimensions and Casimirs, adjoint row
+      included. It also shows Eq. (D1) is credited to Ref. [48]'s supplemental
+      material, so it is not original to this paper. The one error the reading
+      found is registered as a check: an imported bridge document cites
+      "Eq. (265)" for what the paper labels (D1). What the paper does NOT
+      settle is the bridge's own premise, that four channels exhaust the
+      second-order shared-link routes in the charge-odd sector.
+
+  - digest: 77c001247025f669610d6a432833e2618077d9e8c136956e7629683b48a54b99
+    path: arXiv2607.22831v1.tar.gz
+    archive: UPLOADS_2026-08-28f
+    verdict: set-aside
+    bears_on: [G14]
+    reason: >-
+      The LaTeX source of Hazra, "New class of exactly flat topological bands",
+      indexed as LIT:HAZRA_2026. Set aside rather than imported because the
+      submission's own front matter says "License information to appear upon
+      publication". Read in full. It builds exactly flat bands from
+      H = t B^T B on the faces of an arbitrary graph and proves the extensive
+      null space topologically protected by a discrete Atiyah-Singer index
+      theorem. The reading's load-bearing detail is a footnote and a
+      definition: its B is the UNORIENTED face-vertex incidence, B_vf = 1 when
+      vertex v lies on the face's cycle, so on the cubic lattice |V| = L^3,
+      |F| = 3L^3 and the bound is 2L^3 by rank-nullity. This repository's face
+      operator is the SIGNED face-edge boundary with |F| = |E|, index 0, and
+      L^3 + 2 zero modes from homology. Same form, different mechanism -- the
+      registered check states the distinction so the resemblance is not
+      absorbed as a unifying candidate it could not falsify.
+
+  - digest: b6bbec6f699194ae99ef71eadbfe5b617de4ad93aab7cedd1a2a16a7a713feb2
+    path: balaji_open_cube_B4_T1_certificate.zip
+    archive: UPLOADS_2026-08-28g
+    verdict: extract
+    bears_on: [R2]
+    reason: >-
+      The container; its five files are extracted to
+      runs/balaji_open_cube_b4_t1_2026-08-28 rather than imported as a zip,
+      because the run register is where an executed artifact belongs and a
+      pinned archive nobody can read is not evidence. What it establishes,
+      re-verified in this session rather than accepted: the charge-odd sector
+      of the reconstructed 243-state cube gives
+      (E - E_max)/u^2 -> {-1/2 x2, -1/3 x3, 0 x1} with an O(u^3) residual,
+      and its second-order gap matrix is (37/12)I - (1/12)G to 4.3e-11 with G
+      rebuilt from oriented cell boundaries. So the T1 branch of the bridge's
+      remaining decisive test passes, and t_3^T1 = -1/12 appears as a matrix
+      element of published author data rather than as the output of the
+      bridge's own Schur algebra. Two limits stated by the bundle itself and
+      kept here: it is the truncated branch only, and it is not an
+      independent-group replication.
