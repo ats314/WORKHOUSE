@@ -1497,11 +1497,15 @@ def _():
             ("diag2", "cross"): 6,
         }
     )
+    # the divergent cross sector is ONE number: a single cold/hist
+    # multiplier across all 24 records, and the 96 remaining cross records
+    # ride the bulk scale exactly.
+    cross_one_number = r["cross_ratios"] == {-10.688697232} and r["small_cross_ratios"] == {1.0}
     anchor_inert = abs(r["swaps"][("onsite", "same")]) < 1e-10
     total = sum(r["swaps"].values())
     actual = sc["C"] - r["c_base"]
     linear = abs(total - actual) < 1e-9
-    ok = validated and structure and anchor_inert and linear
+    ok = validated and structure and cross_one_number and anchor_inert and linear
     return ok, (
         f"extractor validated on both sides: hist C = {sh['C']:.12f} "
         f"(= C_shp historical), hist rest = {sh['rest']:.12f} (= q_old), "
@@ -1511,6 +1515,9 @@ def _():
         f"spread {r['bulk_spread']:.1e}; divergent classes "
         f"{divergent_classes}; on-site anchor swap dC = "
         f"{r['swaps'][('onsite', 'same')]:.1e} (shape-inert, ADR 0002); "
+        f"divergent cross sector is one number — cold/hist = "
+        f"{sorted(r['cross_ratios'])} uniform across all 24 records, and the "
+        f"96 remaining cross records ride the bulk scale exactly; "
         f"class swaps sum {total:+.12f} vs measured {actual:+.12f}. The "
         "dispute is three amplitudes in the A-carrying sector; the "
         "rotation bulk is structurally shared. Neither kernel preferred"
