@@ -178,9 +178,26 @@ def compare() -> dict:
         for k in keys:
             hybrid[k] = cold[k]
         swaps[cls] = extract_shape(hybrid)["C"] - c_base
+    # the divergent cross sector, resolved to its own structure: the 24
+    # divergent cross records are ONE amplitude in each kernel (a single
+    # cold/hist multiplier across all of them), and the other 96 cross
+    # records ride the bulk scale exactly.
+    big_x = Fraction(238714892212171339, 29002361154409843200)
+    cross_ratios = set()
+    small_cross_ratios = set()
+    for k, r in ratios.items():
+        d, ip, op = k
+        if ip == op:
+            continue
+        if abs(abs(hist[k]) - float(big_x)) < 1e-15:
+            cross_ratios.add(round(r, 9))
+        else:
+            small_cross_ratios.add(round(r / s, 9))
     return {
         "support_hist": set(hist),
         "support_cold": set(cold),
+        "cross_ratios": cross_ratios,
+        "small_cross_ratios": small_cross_ratios,
         "scale": s,
         "bulk_count": len(bulk),
         "bulk_spread": max(bulk) - min(bulk),

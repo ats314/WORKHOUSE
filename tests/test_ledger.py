@@ -92,8 +92,9 @@ def test_g3_rewrite_keeps_the_protocol_and_the_traps():
     assert steps == [
         "block-structure comparison",
         "targeted kernel-bearing recomputation",
+        "independent cross-amplitude computation",
         "sealed scalar sweep (demoted, optional)",
-    ], "the rewritten route's three steps, cheapest first"
+    ], "the rewritten route's steps: the executed pair, the live one, the demoted sweep"
     assert "inventory_trap" in g3, "the 3895-vs-3850 inventory warning must travel with G3"
 
 
