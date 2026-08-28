@@ -4270,3 +4270,153 @@ def _():
         f"{float(abs(gap) / free_weight):.2f}x too large. The pair is over-determined: v10a.26's "
         "A, its C, or the shared decomposition must give. Which one is not decided here"
     )
+
+
+@channels.check(
+    "FINDING: the v10a.26 notebook carries a per-class ledger and attests its own blindness",
+    "provenance nb-hodge-v10a26-alt2",
+    tier=2,
+)
+def _():
+    # The neighbouring check says the disputed side supplies no BLOCK
+    # structure, which is true of the displacement-shell decomposition the
+    # historical kernel uses. It is not the whole story, and the difference
+    # matters for how this dispute gets settled.
+    #
+    # The pinned notebook's stored output carries a per-CLASS ledger: 32
+    # "shape DONE" rows, each with its cluster size and its own c4, covering
+    # 202 of 203 concrete embeddings, with cumulative timing that ends at
+    # 61095 s -- so the run that produced the disputed value took about 17
+    # hours and FINISHED. That is a decomposition, on a different axis from
+    # the historical one (cluster class, not displacement shell), which is why
+    # the two cannot be diffed row against row.
+    #
+    # Two things in that output are worth recording precisely because the
+    # registry carries this side as a bare float. The run attests its own
+    # blindness four times -- "historical m4 target: NOT LOADED", "disputed
+    # q/rest targets: NOT LOADED", "historical C-shape target: NOT LOADED",
+    # "disputed fourth-order values: STILL NOT LOADED" -- and it computes
+    # C_direct twice, by routes agreeing to 5e-15.
+    #
+    # This does NOT promote the v10a.26 side and does not prefer it. Attested
+    # blindness and internal agreement are evidence about how a number was
+    # produced, never that it is the physical one, and C2 stays open with both
+    # sides recorded. What it changes is the shape of the remaining work: the
+    # disputed value came from a 17-hour run that completed, not from an
+    # unfinishable sweep, and its intermediates survive in the pinned bytes.
+    import json
+
+    notebook = (
+        ROOT
+        / "corpus-import"
+        / "programs"
+        / "hodge_o4_adjudication"
+        / "notebooks"
+        / "NB_O4_hodge_v10a26_factor52complete_exactsw_rootedoracle_a100_alt2.ipynb"
+    )
+    text = ""
+    for cell in json.loads(notebook.read_text(encoding="utf-8"))["cells"]:
+        for output in cell.get("outputs") or []:
+            text += "".join(output.get("text") or [])
+            text += "".join(output.get("data", {}).get("text/plain") or [])
+
+    rows = re.findall(
+        r"shape DONE\s+(\d+)/\s*(\d+)\s+\|C\|=(\d+).*?c4=([-+][\d.e-]+).*?elapsed=([\d.]+)s", text
+    )
+    blind = [
+        "historical m4 target            : NOT LOADED",
+        "historical C-shape target        : NOT LOADED",
+        "disputed fourth-order values     : STILL NOT LOADED",
+    ]
+    attested = sum(1 for line in blind if line in text)
+    direct = sorted({float(v) for v in re.findall(r"C_direct\s+=\s+([-\d.]+)", text)})
+    spread = abs(direct[-1] - direct[0]) if len(direct) > 1 else None
+    elapsed = float(rows[-1][4]) if rows else 0.0
+
+    return (
+        len(rows) == 32
+        and attested == len(blind)
+        and len(direct) == 2
+        and spread < 1e-13
+        and elapsed > 60000
+    ), (
+        f"{len(rows)} per-class shape rows recovered from the pinned notebook (sizes "
+        f"{sorted({int(r[2]) for r in rows})}), covering 202/203 concrete embeddings, with the run "
+        f"finishing at {elapsed / 3600:.1f} h. It states its own blindness in {attested} separate "
+        f"lines and computes C_direct twice, the two routes agreeing to {spread:.1e}. Evidence "
+        "about how the disputed number was produced, not that it is the physical one -- C2 stays "
+        "open and neither side is preferred"
+    )
+
+
+@channels.check(
+    "FINDING: the v10a.26 run gates on known values before it unblinds",
+    "provenance nb-hodge-v10a26-alt2, cell 17",
+    tier=2,
+)
+def _():
+    # The registry carries the disputed side as a bare float and the
+    # provenance calls it "the cold folded C_shape printout, the only source
+    # of the value". True as far as it goes, and it undersells how the number
+    # was produced -- which matters, because how a disputed value was produced
+    # is exactly what an adjudication weighs.
+    #
+    # The pinned notebook implements a hard blind protocol, in its own source:
+    # every gate of the preceding layer must pass "before disputed values
+    # enter memory", and failure raises "v10a.23 pre-unblind gate failure; no
+    # fourth-order verdict permitted" under the banner "STOPPED BEFORE
+    # FOURTH-ORDER UNBLIND". Only then does section 17, "FINAL UNBLIND --
+    # disputed constants first appear here", load the historical rationals and
+    # print the comparison, recovering the registered gap 0.0278730543.
+    #
+    # The gates it must clear first are the AGREED lower orders: the
+    # independent finite-cluster oracle has to recover m1 = 1, m2 = 11/306 and
+    # m3 = -109151/249696 -- coefficients this repository establishes by other
+    # routes entirely. Those gates carry loose numerical tolerances (2e-5,
+    # 2e-4, 8e-4), so they are sanity gates on an approximate oracle, NOT
+    # exact reproductions, and they say nothing about the precision of the
+    # 16-digit C_direct that comes from the exact folded route.
+    #
+    # This does not promote the v10a.26 side, does not prefer it, and does not
+    # settle C2. A disciplined protocol can still produce a wrong number, and
+    # the historical kernel may have an equally good provenance story. What is
+    # recorded here is that the disputed value is not a bare printout: it is
+    # the output of a run that gated itself on agreed physics before it was
+    # allowed to see the quantity in dispute.
+    import json
+
+    notebook = (
+        ROOT
+        / "corpus-import"
+        / "programs"
+        / "hodge_o4_adjudication"
+        / "notebooks"
+        / "NB_O4_hodge_v10a26_factor52complete_exactsw_rootedoracle_a100_alt2.ipynb"
+    )
+    whole = ""
+    for cell in json.loads(notebook.read_text(encoding="utf-8"))["cells"]:
+        whole += "".join(cell.get("source") or [])
+        for output in cell.get("outputs") or []:
+            whole += "".join(output.get("text") or [])
+            whole += "".join(output.get("data", {}).get("text/plain") or [])
+
+    protocol = [
+        "before disputed values enter memory",
+        "no fourth-order verdict permitted",
+        "STOPPED BEFORE FOURTH-ORDER UNBLIND",
+        "FINAL UNBLIND",
+    ]
+    gated_on = ["m1=1", "m2=11/306", "m3=-109151/249696"]
+    present = sum(1 for marker in protocol if marker in whole)
+    gates = sum(1 for marker in gated_on if marker in whole)
+    # the unblind prints the historical rational and the resulting gap
+    unblinds = "-211835444920651" in whole and "historical C_shape" in whole
+
+    return present == len(protocol) and gates == len(gated_on) and unblinds, (
+        f"all {present} blind-protocol markers are in the pinned bytes, and the run gates on "
+        f"{gates} agreed lower-order coefficients (m1 = 1, m2 = 11/306, m3 = -109151/249696) "
+        "before section 17 loads the historical rationals and prints the comparison. Those gates "
+        "are loose numerical sanity checks (2e-5 to 8e-4) on an approximate oracle, not exact "
+        "reproductions. Evidence about protocol, not about which value is physical -- C2 stays "
+        "open and neither side is preferred"
+    )
