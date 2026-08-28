@@ -607,7 +607,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:1620 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
-## T2 — float agreement within a stated tolerance — 41
+## T2 — float agreement within a stated tolerance — 42
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -752,6 +752,11 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel`
   - src/workhouse/invariants.py:1372 · notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt §[17]
   - `workhouse verify --only 'the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel'`
+**the flat-band manuscript**
+
+- `every node the theory graph strands is stranded for a stated reason`
+  - src/workhouse/invariants.py:4997 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
+  - `workhouse verify --only 'every node the theory graph strands is stranded for a stated reason'`
 
 ## What is not here
 

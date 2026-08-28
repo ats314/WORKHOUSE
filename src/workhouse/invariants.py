@@ -4992,3 +4992,130 @@ def _():
         "condition. Both retractions are kept in place rather than deleted, per the repository's "
         "own rule, and neither touches the §5 channel ledger or prefers a side of C2",
     )
+
+
+@manuscript.check(
+    "every node the theory graph strands is stranded for a stated reason",
+    "index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml",
+    tier=2,
+)
+def _():
+    # Declared T2, and that UNDERSTATES it: the census is exact integer
+    # arithmetic and no float enters the verdict. The tier guard matches
+    # `_NUM` anywhere in the body, and this body names two constant IDS that
+    # happen to end in it -- CONST:HAMER_MT_NUM and
+    # CONST:RAW_FOLDED_AXIAL_GAMMA_NUM. Loosening the guard to fit one new
+    # check is the "make the failing check pass" instinct this repository
+    # exists to resist, and the guard's crudeness is what makes it hard to
+    # evade. Understating a tier cannot cause a false promotion, which is the
+    # failure the tier system is for, so the label stands as T2 and this
+    # comment is the record of why.
+    #
+    # The graph has 2,299 nodes and 3,003 edges, and the interesting number is
+    # neither of those: it is 32, the nodes with no edge at all. A stranded
+    # node is invisible to `workhouse why`, so it is evidence nobody can
+    # traverse to, and a graph that quietly accumulates them looks complete
+    # while going hollow.
+    #
+    # The fix is NOT to connect them. Every one below is stranded for a reason
+    # the repository can state, and inventing an edge to tidy the census would
+    # be the exact failure ledger/theorems.yaml warns about in its own header:
+    # "an honest gap beats an invented edge". Four reasons, all different:
+    #
+    #   LEAN:extraction_A..D, stencil_zero_mode -- generic algebra over free
+    #     rationals. `promotes` is barred by the theorems schema, which admits
+    #     it only when the theorem proves a check's WHOLE statement; these
+    #     prove the inversion algebra but not that the checkpoint deltas
+    #     follow from the trigonometric ansatz, and their own doc comments say
+    #     so. `formalizes` would have to name a constant they do not mention.
+    #
+    #   14 constants -- registered, and read by no check body. That is not a
+    #     graph defect, it is the graph reporting a real T3 hole: DELTA_BETA_3
+    #     carries the whole balanced side of C2 and no invariant touches it.
+    #     These strand until someone writes the check, which is the point.
+    #
+    #   C11/C14/C19, G8/G12/G16, R3/R9/R11/R16/R17, ADR:0006 -- ledger entries
+    #     whose curated cross-reference fields are empty. Some are honestly
+    #     isolated: R16 is about upstream registry files that are not in this
+    #     repository at all, so there is nothing here for it to point at.
+    #
+    #   the two coverage checks -- this one and the note-coverage check next
+    #     door. Both cite generated files rather than claim ids, so neither
+    #     appears in its own census. Recorded rather than papered over.
+    #
+    # The guard is one-directional on purpose: stranded must stay a SUBSET of
+    # what is accounted for, so a new orphan fails and a connected one merely
+    # shrinks the list. Reading index/graph.jsonl rather than rebuilding keeps
+    # verify linear and keeps this check off its own output -- graph.jsonl
+    # carries edges only, never check details.
+    import collections
+
+    accounted = {
+        # coverage checks: cite generated files, not claim ids
+        "CHK:the-flat-band-manuscript:every-declared-note-document-is-a-graph--a77304",
+        "CHK:the-flat-band-manuscript:every-node-the-theory-graph-strands-is-s-57688c",
+        # registered constants no check body reads -- a real T3 hole, shown
+        "CONST:D3_EVEN",
+        "CONST:DELTA_BETA_3",
+        "CONST:DELTA_Q_3",
+        "CONST:HAMER_MT_NUM",
+        "CONST:LEAK_2",
+        "CONST:LEAK_2_EVEN",
+        "CONST:LEAK_3_EVEN",
+        "CONST:MUNSTER_TM_F",
+        "CONST:MUNSTER_TM_G",
+        "CONST:MUNSTER_TM_H8",
+        "CONST:RAW_FOLDED_AXIAL_GAMMA_NUM",
+        "CONST:SIGMA_5_CRT_PRIMES",
+        "CONST:SIGMA_5_TOPOLOGIES",
+        "CONST:T_3_EVEN",
+        # ledger entries with empty curated cross-reference fields
+        "C11",
+        "C14",
+        "C19",
+        "ADR:0006",
+        "G12",
+        "G16",
+        "G8",
+        "R11",
+        "R16",
+        "R17",
+        "R3",
+        "R9",
+        # T0 theorems whose only honest edge would be an invented one
+        "LEAN:extraction_A",
+        "LEAN:extraction_B",
+        "LEAN:extraction_C",
+        "LEAN:extraction_D",
+        "LEAN:stencil_zero_mode",
+    }
+
+    index_dir = PAPER_DIR.parent / "index"
+    ids = {
+        json.loads(line)["id"]
+        for line in (index_dir / "claims.jsonl").read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    }
+    degree: collections.Counter[str] = collections.Counter()
+    for line in (index_dir / "graph.jsonl").read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        edge = json.loads(line)
+        degree[edge["src"]] += 1
+        degree[edge["dst"]] += 1
+
+    stranded = {i for i in ids if degree[i] == 0}
+    unaccounted = sorted(stranded - accounted)
+    connected = sorted(accounted - stranded)
+    kinds = collections.Counter(
+        i.split(":")[0] if ":" in i else i.rstrip("0123456789") for i in stranded
+    )
+
+    return not unaccounted, (
+        f"{len(ids)} catalogue nodes, {sum(degree.values()) // 2} edges, {len(stranded)} stranded "
+        f"and every one accounted for ({dict(sorted(kinds.items()))}). {len(unaccounted)} "
+        f"unaccounted: {unaccounted}. The 14 stranded constants are the honest headline -- "
+        "DELTA_BETA_3 among them, so the balanced side of C2 is registered and checked by "
+        f"nothing. {len(connected)} previously-stranded nodes have since gained an edge"
+        + (f": {connected}" if connected else "")
+    )
