@@ -149,6 +149,18 @@ workhouse verify --only '<check name>'
 
 Recorded because a claim-to-check map that hides its gaps is worse than none.
 
+This list is against the **two pinned originals**, which are immutable evidence
+and stay as they are. The united edition is ours to write, so it carries six of
+these corrected: eq. (18)'s isotropy is now proved (§4, Thm 4); Theorem 3's
+missing clause is stated as the vacuum route (§4, Prop 2); the `L >= 3` caveat
+is confined to the Bloch adjacency (§3, remark); the `u^1` row is labelled
+`SU(3)`-only (App. C); the lifter census is given as three classes over 32
+patterns each, 96 in total, with "nothing here checks any of them" said out
+loud (§1, item 5); and the sheets are called cycles, never harmonic (§3).
+Lemma 4's imprecise "unmatched" is moot there — the lemma is gone, replaced by
+the Weingarten proof that made it unnecessary. The remaining items below are
+open against the united edition too.
+
 - **eq. (18)'s "isotropy" is the single unproved physical input of the whole
   second-order chain.** The arithmetic consequence is exact — `d_R/N^2` sums to
   1 per family, and that is checked — but the premise that the six free-link
