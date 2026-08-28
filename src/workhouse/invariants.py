@@ -1314,6 +1314,63 @@ def _():
     )
 
 
+@adjudication.check(
+    "FINDING: the marked-cluster engine emits the Gamma scalar only — a "
+    "completed 609-sweep cannot decide C_shp",
+    "engine certificate assembly + harness adjudicate stage",
+)
+def _():
+    # G3's narrowed scope (ledger/gaps.yaml) is C_shp, because the Gamma-point
+    # scalar is externally validated and Phi_C(0) = 0 makes Gamma-point data
+    # structurally incapable of constraining Delta_C — that incapacity is
+    # already a registered T1 finding in the off-axis channel suite. This
+    # check establishes the same incapacity for G3's own lead engine, by
+    # static scan (text only; the pinned corpus file is never imported):
+    # every coefficient the sealed sweep assembles flows through
+    # _exact_gamma_scalar, and the source contains no shape, kernel,
+    # band-point, or Stage-3H output of any kind. The harness knows: its
+    # adjudicate stage reports items 7/8 OPEN and says the run "adjudicates
+    # the SCALAR only" when the certificate carries no kernel block — which,
+    # for this engine, is always.
+    #
+    # Consequence, recorded not asserted: completing the 609-evaluation
+    # sealed sweep — at ANY cost, on any hardware — leaves C2 exactly as
+    # open as it is now. What can decide C_shp is a kernel-bearing
+    # (Stage-3H lineage) recomputation, or a structural comparison of the
+    # two sides' recorded block decompositions. The sweep's remaining value
+    # is a blind confirmation of the already-validated scalar, and its cost
+    # must be weighed against that, not against C2.
+    src = S.ENGINE.read_text(errors="ignore")
+    harness = (ROOT / "settlement" / "mce_adjudication_harness.py").read_text(
+        errors="ignore"
+    )
+    scalar_only = (
+        src.count("_exact_gamma_scalar") >= 2
+        and '"m4": coefficients[3]' in src
+    )
+    # bare "kernel" appears once, in a docstring about translating an
+    # anchored resolvent kernel — not an output; the output-shaped tokens are
+    # what the harness's shape adjudicator would need to find.
+    no_kernel_output = not any(
+        token in src
+        for token in ("shape", "band_point", "kernel_shape", "Stage-3H", "stage_3h", "3895")
+    ) and src.count("kernel") == 1
+    harness_knows = "adjudicates the SCALAR only" in harness
+    ok = scalar_only and no_kernel_output and harness_knows
+    return ok, (
+        "engine source: coefficients assembled via _exact_gamma_scalar "
+        f"({src.count('_exact_gamma_scalar')} occurrences), certificate m4 is "
+        "coefficients[3] of that Gamma ledger, and the tokens shape / "
+        "band_point / kernel_shape / Stage-3H / 3895 appear nowhere in "
+        f"{len(src.splitlines())} lines; the harness's own adjudicate stage "
+        "reports items 7/8 OPEN without a kernel block. With the registered "
+        "Phi_C(0) = 0 finding (Gamma data cannot identify C_shp), the sealed "
+        "609-sweep is structurally incapable of deciding C2 — G3's decisive "
+        "path is a kernel-bearing recomputation or a block-structure "
+        "comparison, not this sweep"
+    )
+
+
 # ==========================================================================
 near_gamma = _suite("near-Gamma uniformity (G11)")
 
