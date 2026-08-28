@@ -23,7 +23,9 @@ Two rules keep the graph honest:
   ``bears_on``, ``formalizes``, ...); a *derived* edge names its extraction
   (``cites`` — an id parsed out of a check's registered name, section, or
   suite name; ``mentions`` — an id appearing in an ADR body; ``amends`` and
-  ``retracts`` — from an ADR status paragraph). There are **no inferred
+  ``retracts`` — from an ADR status paragraph; ``same_value`` — two CONST
+  records whose recorded exact values are byte-identical, which asserts the
+  equality of digits and nothing more). There are **no inferred
   edges**: where no source records a relationship, the graph stays silent.
   In particular, ``blocks`` keeps the ledger's own direction — ``C2 blocks
   G3`` names the gap whose completion would resolve C2 (see
@@ -80,7 +82,9 @@ CURATED_TYPES = frozenset(
 #: parsed out of a check's free text (CHK -> ledger id), the CURATED kind is
 #: the verbatim ``cites`` field of literature/index.yaml (LIT -> LIT). The
 #: ``how`` field on each edge keeps them distinguishable.
-DERIVED_TYPES = frozenset({"cites", "mentions", "amends", "retracts", "uses", "carries"})
+DERIVED_TYPES = frozenset(
+    {"cites", "mentions", "amends", "retracts", "uses", "carries", "same_value"}
+)
 TYPES = CURATED_TYPES | DERIVED_TYPES
 
 
@@ -375,6 +379,27 @@ def build(
                         "derived",
                         f"src/workhouse/invariants.py:{fn.__code__.co_firstlineno}",
                     )
+
+    # Constants registered under two names -- a registry name and a corpus
+    # display name, usually -- are separate catalogue records, and their edges
+    # land on different nodes: the Lean `formalizes` and provenance
+    # `originates` edges cite one spelling while the `uses` and `bears_on`
+    # edges cite the other. Without a joining edge, `why` on either node shows
+    # half the evidence for the value. The join is the repository's own
+    # value-first rule made into an edge: two CONST records whose recorded
+    # exact values are byte-identical are linked `same_value`, derived from
+    # the catalogue and asserting nothing beyond that equality. In particular
+    # it says "same digits", never "same quantity" -- B_SHP_3 and D_SHP_3 are
+    # distinct quantities that happen to coincide, and the rival C2 records
+    # differ in value, so no edge can ever join a disputed pair.
+    values: dict[str, list[str]] = {}
+    for c in catalogue:
+        if c.id.startswith("CONST:") and c.value is not None:
+            values.setdefault(str(c.value), []).append(c.id)
+    for group in values.values():
+        for i, a in enumerate(sorted(group)):
+            for b in sorted(group)[i + 1 :]:
+                add(a, b, "same_value", "derived", "index/claims.jsonl")
 
     # Every check cites its source by alias; the alias is now a node, so the
     # citation becomes an edge. Matched on a word boundary so PAPER_FLATBAND

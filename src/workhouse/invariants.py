@@ -5029,10 +5029,16 @@ def _():
     #     follow from the trigonometric ansatz, and their own doc comments say
     #     so. `formalizes` would have to name a constant they do not mention.
     #
-    #   14 constants -- registered, and read by no check body. That is not a
-    #     graph defect, it is the graph reporting a real T3 hole: DELTA_BETA_3
-    #     carries the whole balanced side of C2 and no invariant touches it.
-    #     These strand until someone writes the check, which is the point.
+    #   the stranded constants -- registered, and read by no check body. That
+    #     is not a graph defect, it is the graph reporting a real T3 hole:
+    #     DELTA_BETA_3 carries the whole balanced side of C2 and no invariant
+    #     touches it. These strand until someone writes the check, which is
+    #     the point. A few (D3_EVEN, the LEAK family) have since gained a
+    #     derived `same_value` edge to a value-identical twin, which moves
+    #     them off the stranded list without discharging the hole: a
+    #     same-digits edge is traversable evidence, not a check that reads
+    #     the constant. The hole stays visible as the absence of any `uses`
+    #     edge.
     #
     #   C11/C14/C19, G8/G12/G16, R3/R9/R11/R16/R17, ADR:0006 -- ledger entries
     #     whose curated cross-reference fields are empty. Some are honestly
@@ -5114,8 +5120,9 @@ def _():
     return not unaccounted, (
         f"{len(ids)} catalogue nodes, {sum(degree.values()) // 2} edges, {len(stranded)} stranded "
         f"and every one accounted for ({dict(sorted(kinds.items()))}). {len(unaccounted)} "
-        f"unaccounted: {unaccounted}. The 14 stranded constants are the honest headline -- "
-        "DELTA_BETA_3 among them, so the balanced side of C2 is registered and checked by "
-        f"nothing. {len(connected)} previously-stranded nodes have since gained an edge"
+        f"unaccounted: {unaccounted}. The {kinds.get('CONST', 0)} stranded constants are the "
+        "honest headline -- DELTA_BETA_3 among them, so the balanced side of C2 is registered "
+        f"and checked by nothing. {len(connected)} previously-stranded nodes have since gained "
+        "an edge"
         + (f": {connected}" if connected else "")
     )

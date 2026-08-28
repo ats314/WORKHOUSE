@@ -224,3 +224,41 @@ def test_run_register_matches_runs_directory():
         assert rdir.is_dir(), f"{rid}: {run['dir']} is not a directory"
         assert (rdir / "SHA256SUMS").is_file(), f"{rid}: no SHA256SUMS pin"
         assert run.get("bears_on"), f"{rid}: a run with no bears_on is invisible"
+
+
+def test_same_value_joins_the_split_constant_records():
+    """A value registered under two names is one value; `why` on either
+    spelling must reach the other's evidence. The join is byte-equality of
+    the recorded exact value -- the repository's value-first rule as an edge.
+    """
+    for a, b in [
+        ("CONST:C_SHP_HISTORICAL", "CONST:C_shp (historical)"),
+        ("CONST:Q_BAND_4", "CONST:q_band^(4)"),
+        ("CONST:A_SHP_3", "CONST:A_shp_3"),
+        ("CONST:M_GAMMA_4_NUM", "CONST:m_Gamma^(4)"),
+    ]:
+        src, dst = sorted((a, b))
+        assert (src, dst, "same_value") in TRIPLES, (a, b)
+    for e in GRAPH.edges:
+        if e.type == "same_value":
+            assert e.how == "derived"
+            assert e.src < e.dst, "one canonical direction per pair"
+            assert e.src.startswith("CONST:") and e.dst.startswith("CONST:")
+
+
+def test_same_value_never_joins_the_disputed_pair():
+    """The two C_shp records are rivals with different values; an edge
+    between them would be exactly the promotion-by-association C2 forbids.
+    """
+    rivals = {"CONST:C_SHP_HISTORICAL", "CONST:C_shp (historical)"}
+    others = {"CONST:C_SHP_NEW_NUM", "CONST:C_shp (v10a.26)"}
+    for e in GRAPH.edges:
+        if e.type == "same_value":
+            assert not ({e.src, e.dst} & rivals and {e.src, e.dst} & others), e
+
+
+def test_same_value_is_exact_equality_of_the_recorded_value():
+    by_id = {c.id: c for c in CATALOGUE}
+    for e in GRAPH.edges:
+        if e.type == "same_value":
+            assert str(by_id[e.src].value) == str(by_id[e.dst].value), e
