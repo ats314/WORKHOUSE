@@ -14,6 +14,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import sys
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -27,6 +28,7 @@ from sympy import (
     exp,
     expand,
     eye,
+    lcm,
     limit,
     nsimplify,
     numer,
@@ -1095,7 +1097,7 @@ def run_all() -> list[Result]:
 
 
 # ==========================================================================
-adjudication = _suite("settlement package and adjudication harness")
+adjudication = _suite("settlement package and adjudication harness (G3)")
 
 
 @adjudication.check("cold reruns re-certify both in-corpus audits", "SETTLEMENT.md §2")
@@ -3667,6 +3669,35 @@ manuscript = _suite("the flat-band manuscript")
 
 ROOT = Path(__file__).resolve().parents[2]
 PAPER_DIR = ROOT / "paper"
+
+#: The 2026-08-28 unified master edition, pinned verbatim in the notes archive.
+#: Two checks below quote exact values out of it; without the bytes in the tree
+#: those checks would verify a transcription against itself, which a review bot
+#: caught on PR #38 and was right about.
+MASTER_EDITION = (
+    ROOT
+    / "notes"
+    / "imported"
+    / "UPLOADS_2026-08-28c"
+    / "NESTED_QUOTIENT_GAUGE_SPECTRAL_THEORY_COMPLETE_UNIFIED_MASTER_CLOSED_20260828.docx"
+)
+
+
+def _master_edition_text() -> str:
+    """The pinned edition's document text, digits preserved.
+
+    A .docx is a zip of XML, so the text is extracted the same way every time
+    and the check reads the same bytes the register pinned. Tags are stripped
+    rather than parsed: these checks look for exact digit strings, and a
+    numerator split across XML runs would otherwise be invisible.
+    """
+    import zipfile
+
+    with zipfile.ZipFile(MASTER_EDITION) as archive:
+        xml = archive.read("word/document.xml").decode("utf-8", "replace")
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", xml))
+
+
 #: The pinned manuscripts, by the text extracted from each. The flat-band paper
 #: is the one that cites this repository by commit; the master document unites
 #: it with the nested-quotient circuit theory. The UNITED edition is
@@ -3680,7 +3711,7 @@ PAPER_TEXTS = (
 
 @manuscript.check(
     "every \\chk in the united paper names a check that exists and passes",
-    "PAPER_MASTER, every displayed result",
+    "MASTER paper, every displayed result",
 )
 def _():
     # The united paper's one device is that each displayed result carries the
@@ -3858,4 +3889,185 @@ def _():
         "run was blind by measurement. Both amplitudes were transcriptions until this run; the "
         "pentagonal side geometry is separate from the cubic kernel, and this adjudicates "
         "no C_shp side"
+    )
+
+
+@channels.check(
+    "FINDING: an explicit second witness C_alt exhibits the C2 non-identifiability",
+    "COMPLETE_UNIFIED_MASTER_CLOSED §15.3.2",
+)
+def _():
+    # The registered obstruction says the two recorded C_shp sides differ by
+    # 4 Delta_C e_2, and e_2 is the zero polynomial on an axial cut. That is an
+    # argument about a difference. The 2026-08-28 master edition sharpens it
+    # into a CONSTRUCTION: it exhibits a second exact rational witness,
+    # C_alt = C_old + 25/1024, and every member of that family reproduces the
+    # retained Gamma and axial data identically while separating off-axis.
+    #
+    # Re-derived here rather than transcribed. With the shape term C(4 e_2/q_a)
+    # and a_i = 4 sin^2(k_i/2), the zone corners give a = (4,0,0), (4,4,0),
+    # (4,4,4), so the induced band separations are Delta_C * 4 e_2 / q_a.
+    #
+    # This DECIDES NOTHING about which C is physical. It is the opposite: a
+    # constructive proof that the retained corpus cannot decide, which is why
+    # G3's target-blind off-axis contraction is the only route. Note also that
+    # the document naming this witness is the one titled "...CLOSED", and its
+    # own section heading is "Why the exact rooted scalar remains open".
+    c_old = Rational(-211835444920651, 4405310420659200)
+    c_alt = Rational(-13035490122347, 550663802582400)
+    shift = c_alt - c_old
+    # Read the witness out of the PINNED source rather than trusting that it
+    # was transcribed correctly. Without this the arithmetic below would verify
+    # one hand's transcription against itself -- caught on PR #38 by a review
+    # bot, and it was right.
+    source = _master_edition_text()
+    quoted = all(str(abs(part)) in source for part in (c_alt.p, c_alt.q, c_old.p, c_old.q))
+
+    separations = {}
+    for label, cut in (("X", (1, 0, 0)), ("M", (1, 1, 0)), ("R", (1, 1, 1))):
+        a = [4 if x else 0 for x in cut]
+        q_a = sum(a)
+        e_2 = a[0] * a[1] + a[0] * a[2] + a[1] * a[2]
+        separations[label] = shift * Rational(4 * e_2, q_a)
+
+    expected = {"X": Rational(0), "M": Rational(25, 128), "R": Rational(25, 64)}
+    ok = shift == Rational(25, 1024) and separations == expected and quoted
+    return ok, (
+        f"C_alt - C_old = {shift} exactly, and the induced separations are "
+        f"X {separations['X']}, M {separations['M']}, R {separations['R']}; both witnesses appear "
+        f"verbatim in the pinned edition ({MASTER_EDITION.name}). Identical on every "
+        "retained datum, distinct off-axis. Non-identifiability is exhibited by construction, "
+        "not argued from a difference. Neither C_shp side is preferred, and C2 stays open -- the "
+        "source document's own section is titled 'Why the exact rooted scalar remains open'"
+    )
+
+
+@pentagonal.check(
+    "the fifth-order record is arithmetically self-consistent",
+    "master edition 2026-08-28 §15",
+)
+def _():
+    # The pentagonal fifth-order coefficient is ASSERTED by the master edition
+    # -- two target-blind direct routes over 796 histories and a second ledger
+    # over 572 canonical returns. Nothing here re-runs those histories, so the
+    # physics stays T3 and this check does not promote it.
+    #
+    # What is checkable is the record's own internal arithmetic, and it is
+    # worth checking for the reason this repository already has a one-ulp
+    # transcription on file: a printed decomposition that does not sum to its
+    # printed total is a transcription error, and nothing else would catch it.
+    # The denominator test is the sharper half -- if the stated total had been
+    # copied from a different computation, the odds of it landing exactly on
+    # lcm(direct, folded) are negligible.
+    #
+    # The tau_4 tie is the link to evidence that IS checked here: the same
+    # section prints tau_4 = -2861009/16877460600, which the target-blind
+    # backend reproduced cold in runs/blind_pentagonal_o4_2026-08-28.
+    total = K.C5_DIRECT + K.C5_FOLDED
+    denominators_agree = K.C5_PENT.q == lcm(K.C5_DIRECT.q, K.C5_FOLDED.q)
+    tau_tie = K.TAU_4 == K.D5_COVARIANCE_FACTOR * K.H4_SIDE
+    # All three constants were entered here by one hand from one document. Sum
+    # and lcm alone would therefore certify a self-consistent transcription of
+    # the WRONG numbers, so read them back out of the pinned edition.
+    source = _master_edition_text()
+    quoted = all(
+        str(value) in source
+        for rational in (K.C5_DIRECT, K.C5_FOLDED, K.C5_PENT, K.TAU_4)
+        for value in (abs(rational.p), rational.q)
+    )
+    return total == K.C5_PENT and denominators_agree and tau_tie and quoted, (
+        f"direct + folded = {total} exactly, and its denominator is exactly "
+        f"lcm({K.C5_DIRECT.q}, {K.C5_FOLDED.q}), so nothing cancelled silently; the same "
+        f"section's tau_4 is {K.D5_COVARIANCE_FACTOR} x h_4^side, and every numerator and "
+        f"denominator here appears verbatim in the pinned edition ({MASTER_EDITION.name}); "
+        "h_4^side is the value the "
+        "target-blind backend reproduced cold. The 796 direct and 572 folded histories are NOT "
+        "re-run here: the fifth-order coefficient stays T3, asserted by the edition"
+    )
+
+
+@adjudication.check(
+    "FINDING: the closure cap is a third-order scaffold and fourth order needs 160",
+    "engine closure(), max_states=100",
+)
+def _():
+    # G3's run stage fail-closes on cluster 1 of 609 with
+    # ExactEngineError("unexpectedly large H0 closure"). The registered finding
+    # said the shipped cap is below the first cluster's own demand. It did not
+    # say by how much, and "raise it" and "this needs a cheaper contraction"
+    # are opposite conclusions, so the number matters.
+    #
+    # Measured here: the H0 closure grows geometrically with insertion depth,
+    # 1, 2, 8, 32, 160. Fourth order IS depth four, so the demand is 160
+    # against a cap of 100 -- short by a factor of 1.6, not by orders of
+    # magnitude. The cap has every appearance of having been calibrated at
+    # depth three, where 32 leaves threefold headroom, and then being hit the
+    # moment the engine went to fourth order.
+    #
+    # The whole walk costs well under a second, which rules the closure out as
+    # the reason the sweep is slow: whatever makes a full cluster expensive is
+    # downstream of here, in the Haar contractions and resolvent inversions.
+    #
+    # The engine is NOT modified. This reimplements the same breadth-first walk
+    # over the engine's own h0_action, without the cap, and produces no
+    # certificate. Nothing here adjudicates C2 or licenses raising the cap in a
+    # sealed run; it says what the cap would have to be.
+    from collections import deque
+    from importlib.util import module_from_spec, spec_from_file_location
+
+    path = (
+        ROOT
+        / "corpus-import"
+        / "programs"
+        / "hodge_o4_adjudication"
+        / "src"
+        / "DATA_SU3_Exact_MarkedCluster_m4_Colab.py"
+    )
+    spec = spec_from_file_location("mce_engine_probe", path)
+    engine = module_from_spec(spec)
+    sys.modules["mce_engine_probe"] = engine
+    # Importing writes __pycache__ NEXT TO the source, which here is inside
+    # pinned corpus -- and an unpinned .pyc appearing in corpus-import/ fails
+    # test_corpus_integrity. Running a check must not modify the corpus it
+    # reads, so suppress bytecode for the duration of the import.
+    previously = sys.dont_write_bytecode
+    sys.dont_write_bytecode = True
+    try:
+        spec.loader.exec_module(engine)
+    finally:
+        sys.dont_write_bytecode = previously
+
+    def closure_size(state):
+        factor, seed = engine.simplify_unitarity(state)
+        if factor != 1:
+            return None
+        seen = {seed}
+        queue = deque((seed,))
+        while queue:
+            for candidate in engine.h0_action(queue.popleft()):
+                if candidate not in seen:
+                    seen.add(candidate)
+                    queue.append(candidate)
+        return len(seen)
+
+    patch, roots, _coverages, _candidate = engine.build_o4_triality_candidate_full_t1_coverage()
+    builder = engine.ExactFaceInsertionBuilder(patch)
+    root = roots[sorted(roots)[0]]
+    vector = builder.source_axial(root)
+    chain = sorted(patch.adjacency[root])[:4]
+
+    curve = []
+    for depth in range(5):
+        if depth:
+            vector = builder.insert_face(vector, chain[depth - 1], +1)
+        sizes = [s for s in (closure_size(st) for st in vector) if s is not None]
+        curve.append(max(sizes))
+
+    cap = 100
+    return curve == [1, 2, 8, 32, 160] and curve[4] > cap, (
+        f"H0 closure by insertion depth: {curve}, a clean geometric growth. Fourth order is "
+        f"depth 4, so the demand is {curve[4]} against the engine's shipped cap of {cap} -- "
+        f"short by a factor of {curve[4] / cap:.1f}, not by orders of magnitude, and consistent "
+        "with a cap calibrated at depth 3 where 32 leaves threefold headroom. The walk costs "
+        "under a second, so the closure is not why the 609-cluster sweep is slow"
     )

@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 176/176 checks pass.
+**T1/T2 — re-derived here.** 179/179 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -24,17 +24,17 @@ it cannot drift from what the repository actually checks.
 | fourth-order generalized Hodge pencil | 3/3 |
 | fourth-order checkpoint extraction | 3/3 |
 | homology and finite volume | 12/12 |
-| settlement package and adjudication harness | 12/12 |
+| settlement package and adjudication harness (G3) | 13/13 |
 | near-Gamma uniformity (G11) | 6/6 |
 | tier collapse (G14) | 6/6 |
-| isotropic pentagonal cap band (v4.3 §9.3) | 10/10 |
+| isotropic pentagonal cap band (v4.3 §9.3) | 11/11 |
 | native string tension through fifth order (v4.3 §11.2) | 7/7 |
 | published comparisons (literature/index.yaml) | 16/16 |
 | restored payloads (G1) | 11/11 |
 | coupling erratum (C4/G2) | 2/2 |
 | tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
 | notes program: SAFE, Davies, coercivity (G20-G23) | 13/13 |
-| off-axis channel ledger (C2 geography, G14) | 10/10 |
+| off-axis channel ledger (C2 geography, G14) | 11/11 |
 | the flat-band manuscript | 4/4 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
