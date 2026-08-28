@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 28
+## T0 — proof-checked — 36
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -25,7 +25,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:97
   - `make lean`
 - `alphaPen_eq_neg_four_cube`
-  - lean/Workhouse/Basic.lean:191
+  - lean/Workhouse/Basic.lean:194
   - `make lean`
 - `alphaPen_five`
   - lean/Workhouse/Basic.lean:69
@@ -42,6 +42,15 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `alphaPen_three_eq_four_A`
   - lean/Workhouse/Basic.lean:73
   - `make lean`
+- `bandVar_pi`
+  - lean/Workhouse/Basic.lean:217
+  - `make lean`
+- `bandVar_pi_div_two`
+  - lean/Workhouse/Basic.lean:220
+  - `make lean`
+- `bandVar_zero`
+  - lean/Workhouse/Basic.lean:214
+  - `make lean`
 - `beta_from_A_and_C`
   - lean/Workhouse/Basic.lean:105
   - `make lean`
@@ -49,28 +58,40 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:83
   - `make lean`
 - `cPrimTwo_forms`
-  - lean/Workhouse/Basic.lean:163
+  - lean/Workhouse/Basic.lean:166
   - `make lean`
 - `cubeCompletion_three`
-  - lean/Workhouse/Basic.lean:182
+  - lean/Workhouse/Basic.lean:185
+  - `make lean`
+- `delta_M`
+  - lean/Workhouse/Basic.lean:253
+  - `make lean`
+- `delta_P`
+  - lean/Workhouse/Basic.lean:259
+  - `make lean`
+- `delta_R`
+  - lean/Workhouse/Basic.lean:267
+  - `make lean`
+- `delta_X`
+  - lean/Workhouse/Basic.lean:248
   - `make lean`
 - `dim_Z₂`
-  - lean/Workhouse/Basic.lean:138
+  - lean/Workhouse/Basic.lean:141
   - `make lean`
 - `d₃_ledger`
   - lean/Workhouse/Basic.lean:59
   - `make lean`
 - `extraction_A`
-  - lean/Workhouse/Basic.lean:120
+  - lean/Workhouse/Basic.lean:123
   - `make lean`
 - `extraction_B`
-  - lean/Workhouse/Basic.lean:122
+  - lean/Workhouse/Basic.lean:125
   - `make lean`
 - `extraction_C`
-  - lean/Workhouse/Basic.lean:126
+  - lean/Workhouse/Basic.lean:129
   - `make lean`
 - `extraction_D`
-  - lean/Workhouse/Basic.lean:130
+  - lean/Workhouse/Basic.lean:133
   - `make lean`
 - `hopping_deficit_numerator`
   - lean/Workhouse/Basic.lean:48
@@ -85,10 +106,13 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:113
   - `make lean`
 - `pentCompletion_three`
-  - lean/Workhouse/Basic.lean:186
+  - lean/Workhouse/Basic.lean:189
   - `make lean`
 - `prismCompletion_three`
-  - lean/Workhouse/Basic.lean:178
+  - lean/Workhouse/Basic.lean:181
+  - `make lean`
+- `q_at_checkpoints`
+  - lean/Workhouse/Basic.lean:239
   - `make lean`
 - `rank_law_numerator`
   - lean/Workhouse/Basic.lean:36
@@ -97,16 +121,16 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:87
   - `make lean`
 - `tetraCompletion_three`
-  - lean/Workhouse/Basic.lean:174
+  - lean/Workhouse/Basic.lean:177
   - `make lean`
 - `tetra_from_count`
-  - lean/Workhouse/Basic.lean:168
+  - lean/Workhouse/Basic.lean:171
   - `make lean`
 - `width_eq_alpha_add_beta`
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 160
+## T1 — re-derived exactly — 165
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -159,31 +183,48 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **dual-engine witness for the T1 layer (ADR 0010, R2, R14)**
 
 - `every registry value with a stated formula recomputes bit for bit in fmpq`
-  - src/workhouse/invariants.py:5884 · C2 / C13 / R14 / src/workhouse/cross_check.py
+  - src/workhouse/invariants.py:6427 · C2 / C13 / R14 / src/workhouse/cross_check.py
   - `workhouse verify --only 'every registry value with a stated formula recomputes bit for bit in fmpq'`
 - `the all-rank laws agree between sympy and flint, as rational functions`
-  - src/workhouse/invariants.py:5832 · MASTER_THEORY §4.3 / R2 / src/workhouse/cross_check.py
+  - src/workhouse/invariants.py:6375 · MASTER_THEORY §4.3 / R2 / src/workhouse/cross_check.py
   - `workhouse verify --only 'the all-rank laws agree between sympy and flint, as rational functions'`
 - `the monotonicity cubic is an exact factor of d/dN (N**3 t_N) in flint too`
-  - src/workhouse/invariants.py:5861 · MASTER_THEORY §4.3 / src/workhouse/cross_check.py
+  - src/workhouse/invariants.py:6404 · MASTER_THEORY §4.3 / src/workhouse/cross_check.py
   - `workhouse verify --only 'the monotonicity cubic is an exact factor of d/dN (N**3 t_N) in flint too'`
 - `the witness can fail: a planted error is caught, a planted identity is not`
-  - src/workhouse/invariants.py:5910 · src/workhouse/cross_check.py
+  - src/workhouse/invariants.py:6453 · src/workhouse/cross_check.py
   - `workhouse verify --only 'the witness can fail: a planted error is caught, a planted identity is not'`
 **exact-form identification and external witness (C2, G3)**
 
 - `above the saturation denominator every denominator admits a match`
-  - src/workhouse/invariants.py:5165 · C2 / src/workhouse/identify.py
+  - src/workhouse/invariants.py:5708 · C2 / src/workhouse/identify.py
   - `workhouse verify --only 'above the saturation denominator every denominator admits a match'`
 - `the Stern-Brocot enumerator agrees with trial division, exactly`
-  - src/workhouse/invariants.py:5137 · src/workhouse/identify.py
+  - src/workhouse/invariants.py:5680 · src/workhouse/identify.py
   - `workhouse verify --only 'the Stern-Brocot enumerator agrees with trial division, exactly'`
 - `the historical record quantum splits the 189 records 144/45, exactly`
-  - src/workhouse/invariants.py:5413 · C2 / G14 / src/workhouse/kernel_comparison.py
+  - src/workhouse/invariants.py:5956 · C2 / G14 / src/workhouse/kernel_comparison.py
   - `workhouse verify --only 'the historical record quantum splits the 189 records 144/45, exactly'`
 - `the sequence register rebuilds its own terms and resolves its own targets`
-  - src/workhouse/invariants.py:5509 · ledger/sequences.yaml
+  - src/workhouse/invariants.py:6052 · ledger/sequences.yaml
   - `workhouse verify --only 'the sequence register rebuilds its own terms and resolves its own targets'`
+**finite-rank truncation bridge (published SU(3) truncations)**
+
+- `FINDING: the T1 link cutoff reverses the sign of t_3, and 14/153 is what it omits`
+  - src/workhouse/invariants.py:5194 · R2; notes UPLOADS_2026-08-28e §5; runs/cbb_finite_n_bridge_2026-08-28
+  - `workhouse verify --only 'FINDING: the T1 link cutoff reverses the sign of t_3, and 14/153 is what it omits'`
+- `FINDING: the bridge documents match the obtained paper, except one equation number`
+  - src/workhouse/invariants.py:5319 · R2; arXiv:2503.11888v5 Eqs. (1), (D1), Fig. 6, App. C; notes UPLOADS_2026-08-28e
+  - `workhouse verify --only 'FINDING: the bridge documents match the obtained paper, except one equation number'`
+- `the B = 6 scalar misses the bridge's by exactly the same-face sextet route`
+  - src/workhouse/invariants.py:5633 · R2; runs/b6_open_cube_channel_complete_2026-08-28; notes UPLOADS_2026-08-28e §5.1
+  - `workhouse verify --only 'the B = 6 scalar misses the bridge'"'"'s by exactly the same-face sextet route'`
+- `the certificate's finite-volume fingerprints, and 29 = L^3 + 2 is the Lean cycle count`
+  - src/workhouse/invariants.py:5250 · R2; notes UPLOADS_2026-08-28e §6-7; runs/cbb_finite_n_bridge_2026-08-28
+  - `workhouse verify --only 'the certificate'"'"'s finite-volume fingerprints, and 29 = L^3 + 2 is the Lean cycle count'`
+- `the published dimension-ratio matrix element is this registry's weight formula`
+  - src/workhouse/invariants.py:5148 · R2; Ciavarella-Burbano-Bauer arXiv:2503.11888v5 Eq. (D1); notes UPLOADS_2026-08-28e
+  - `workhouse verify --only 'the published dimension-ratio matrix element is this registry'"'"'s weight formula'`
 **fourth order, anchoring and the residual dispute**
 
 - `C_old = (beta_pen_3 - 2*alpha_3)/16`
@@ -635,48 +676,59 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:1627 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
-## T2 — float agreement within a stated tolerance — 54
+## T2 — float agreement within a stated tolerance — 57
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
 **exact-form identification and external witness (C2, G3)**
 
 - `FINDING: no disputed amplitude is identifiable from the recorded doubles either`
-  - src/workhouse/invariants.py:5772 · C2 / G3 / src/workhouse/identify.py
+  - src/workhouse/invariants.py:6315 · C2 / G3 / src/workhouse/identify.py
   - `workhouse verify --only 'FINDING: no disputed amplitude is identifiable from the recorded doubles either'`
 - `FINDING: the two kernels diverge on exactly the non-quantised sector`
-  - src/workhouse/invariants.py:5467 · C2 / G3 / runs/g3_kernel_record_dump_2026-08-28
+  - src/workhouse/invariants.py:6010 · C2 / G3 / runs/g3_kernel_record_dump_2026-08-28
   - `workhouse verify --only 'FINDING: the two kernels diverge on exactly the non-quantised sector'`
 - `FINDING: the v10a.26 C_shp cannot be identified, and 31 digits would be needed`
-  - src/workhouse/invariants.py:5198 · C2 / G3 / GLUEBALL §10
+  - src/workhouse/invariants.py:5741 · C2 / G3 / GLUEBALL §10
   - `workhouse verify --only 'FINDING: the v10a.26 C_shp cannot be identified, and 31 digits would be needed'`
 - `FINDING: the v10a.26 shape fit is shift-invariant only to 4.6e-15`
-  - src/workhouse/invariants.py:5612 · C2 / G3 / notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt
+  - src/workhouse/invariants.py:6155 · C2 / G3 / notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt
   - `workhouse verify --only 'FINDING: the v10a.26 shape fit is shift-invariant only to 4.6e-15'`
 - `FINDING: the v10a.26 side of C2 is one recorded number, not five`
-  - src/workhouse/invariants.py:5379 · C2 / G3 / MASTER_THEORY §5.5
+  - src/workhouse/invariants.py:5922 · C2 / G3 / MASTER_THEORY §5.5
   - `workhouse verify --only 'FINDING: the v10a.26 side of C2 is one recorded number, not five'`
 - `FINDING: with A = 5/48 agreed, the C2 dispute is one scalar, not three amplitudes`
-  - src/workhouse/invariants.py:5721 · C2 / G3 / runs/g3_kernel_record_dump_2026-08-28
+  - src/workhouse/invariants.py:6264 · C2 / G3 / runs/g3_kernel_record_dump_2026-08-28
   - `workhouse verify --only 'FINDING: with A = 5/48 agreed, the C2 dispute is one scalar, not three amplitudes'`
 - `every recorded OEIS verdict is what the gate returns from the recorded evidence`
-  - src/workhouse/invariants.py:5543 · ledger/sequences.yaml
+  - src/workhouse/invariants.py:6086 · ledger/sequences.yaml
   - `workhouse verify --only 'every recorded OEIS verdict is what the gate returns from the recorded evidence'`
 - `flint's exact LLL and mpmath's PSLQ find the same planted relation`
-  - src/workhouse/invariants.py:5326 · src/workhouse/identify.py
+  - src/workhouse/invariants.py:5869 · src/workhouse/identify.py
   - `workhouse verify --only 'flint'"'"'s exact LLL and mpmath'"'"'s PSLQ find the same planted relation'`
 - `the OEIS chance model is corrected past the worst case it was measured against`
-  - src/workhouse/invariants.py:5580 · ledger/sequences.yaml
+  - src/workhouse/invariants.py:6123 · ledger/sequences.yaml
   - `workhouse verify --only 'the OEIS chance model is corrected past the worst case it was measured against'`
 - `the identifier recovers A = 5/48 uniquely from the same run's float`
-  - src/workhouse/invariants.py:5248 · GLUEBALL §10 / src/workhouse/identify.py
+  - src/workhouse/invariants.py:5791 · GLUEBALL §10 / src/workhouse/identify.py
   - `workhouse verify --only 'the identifier recovers A = 5/48 uniquely from the same run'"'"'s float'`
 - `the integer-relation false-positive law H ~ 10^(p/n), measured`
-  - src/workhouse/invariants.py:5282 · src/workhouse/identify.py
+  - src/workhouse/invariants.py:5825 · src/workhouse/identify.py
   - `workhouse verify --only 'the integer-relation false-positive law H ~ 10^(p/n), measured'`
 - `the shape fit's amplitude sensitivities are exact algebraic numbers`
-  - src/workhouse/invariants.py:5663 · C2 / G3 / src/workhouse/kernel_comparison.py
+  - src/workhouse/invariants.py:6206 · C2 / G3 / src/workhouse/kernel_comparison.py
   - `workhouse verify --only 'the shape fit'"'"'s amplitude sensitivities are exact algebraic numbers'`
+**finite-rank truncation bridge (published SU(3) truncations)**
+
+- `FINDING: a full T1 = B = 4 cube Hamiltonian reproduces -1/12 and the reversed shell`
+  - src/workhouse/invariants.py:5455 · R2; runs/balaji_open_cube_b4_t1_2026-08-28; notes UPLOADS_2026-08-28g
+  - `workhouse verify --only 'FINDING: a full T1 = B = 4 cube Hamiltonian reproduces -1/12 and the reversed shell'`
+- `FINDING: the B = 6 cube flips the sign back to +5/612, closing the decisive test`
+  - src/workhouse/invariants.py:5564 · R2; runs/b6_open_cube_channel_complete_2026-08-28
+  - `workhouse verify --only 'FINDING: the B = 6 cube flips the sign back to +5/612, closing the decisive test'`
+- `the discrete index theorem gives 0 on the signed face-edge operator, bounding nothing`
+  - src/workhouse/invariants.py:5396 · R2; G14; arXiv:2607.22831v1 (Hazra) §6 Eq. for ind_a(D)
+  - `workhouse verify --only 'the discrete index theorem gives 0 on the signed face-edge operator, bounding nothing'`
 **fourth order, anchoring and the residual dispute**
 
 - `C20: exact gate value vs printed float-reconstruction`

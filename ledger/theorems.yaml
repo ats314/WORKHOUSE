@@ -150,35 +150,39 @@ theorems:
   - name: extraction_A
     statement: >
       Checkpoint-extraction formula A, inverting the cubic-invariant ansatz
-      on the checkpoint deltas: dX/4 recovers A. The T1 extraction check also
-      derives the deltas from the trigonometric ansatz, which this pure
-      algebra does not cover.
-    formalizes: []
-    promotes: []
+      on the checkpoint deltas: dX/4 recovers A. The delta forms it assumes
+      are proved from the ansatz by delta_X..delta_R, so the two groups
+      together cover the T1 extraction check whole.
+    formalizes: [SYM:bloch_scalars]
+    promotes:
+      - "the four extraction formulas invert the ansatz"
 
   - name: extraction_B
     statement: >
       Checkpoint-extraction formula B, inverting the cubic-invariant ansatz
-      on the checkpoint deltas dX, dM, dP, dR. Pure inversion algebra; the T1
-      check's ansatz-evaluation half is not covered.
-    formalizes: []
-    promotes: []
+      on the checkpoint deltas dX, dM, dP, dR. The inversion half; the
+      ansatz-evaluation half is delta_X..delta_R, proved alongside it.
+    formalizes: [SYM:bloch_scalars]
+    promotes:
+      - "the four extraction formulas invert the ansatz"
 
   - name: extraction_C
     statement: >
       Checkpoint-extraction formula C, inverting the cubic-invariant ansatz
-      on the checkpoint deltas dX, dM, dP, dR. Pure inversion algebra; the T1
-      check's ansatz-evaluation half is not covered.
-    formalizes: []
-    promotes: []
+      on the checkpoint deltas dX, dM, dP, dR. The inversion half; the
+      ansatz-evaluation half is delta_X..delta_R, proved alongside it.
+    formalizes: [SYM:bloch_scalars]
+    promotes:
+      - "the four extraction formulas invert the ansatz"
 
   - name: extraction_D
     statement: >
       Checkpoint-extraction formula D, inverting the cubic-invariant ansatz
-      on the checkpoint deltas dX, dM, dP, dR. Pure inversion algebra; the T1
-      check's ansatz-evaluation half is not covered.
-    formalizes: []
-    promotes: []
+      on the checkpoint deltas dX, dM, dP, dR. The inversion half; the
+      ansatz-evaluation half is delta_X..delta_R, proved alongside it.
+    formalizes: [SYM:bloch_scalars]
+    promotes:
+      - "the four extraction formulas invert the ansatz"
 
   - name: "dim_Z₂"
     statement: >
@@ -240,3 +244,71 @@ theorems:
       sealed core's axial law and the completion family's cube row.
     formalizes: ["CONST:alpha_pen_N", "CONST:CUBE_COMPLETION_4"]
     promotes: []
+
+  - name: bandVar_zero
+    statement: >
+      The band variable vanishes at zero momentum: a(0) = 0, with
+      a(k) = 4 sin^2(k/2).
+    formalizes: [SYM:bloch_scalars]
+    promotes: []
+
+  - name: bandVar_pi
+    statement: >
+      The band variable at the zone boundary: a(pi) = 4. This is the value
+      that makes every checkpoint invariant rational.
+    formalizes: [SYM:bloch_scalars]
+    promotes: []
+
+  - name: bandVar_pi_div_two
+    statement: >
+      The band variable at half the zone boundary: a(pi/2) = 2. The only
+      checkpoint value needing the surd, since sin(pi/4) = sqrt 2 / 2.
+    formalizes: [SYM:bloch_scalars]
+    promotes: []
+
+  - name: q_at_checkpoints
+    statement: >
+      q at the four high-symmetry points is 0, 4, 8, 12 at Gamma, X, M, R.
+      The corpus figure plots this spectrum and asserts it; this derives it.
+    formalizes: [SYM:bloch_scalars]
+    promotes:
+      - "q at the four high-symmetry points is 0, 4, 8, 12"
+
+  - name: delta_X
+    statement: >
+      The checkpoint delta at X = (pi, 0, 0) is 4A, derived from the
+      cubic-invariant ansatz including the trigonometric step. X carries no
+      B, C or D, which is why it fixes A alone.
+    formalizes: [SYM:bloch_scalars]
+    promotes:
+      - "checkpoint values at X, M, P, R"
+      - "the four extraction formulas invert the ansatz"
+      - "X is blind to B, C, D — it fixes A alone"
+
+  - name: delta_M
+    statement: >
+      The checkpoint delta at M = (pi, pi, 0) is 8A + 16B + 8C, derived from
+      the ansatz.
+    formalizes: [SYM:bloch_scalars]
+    promotes:
+      - "checkpoint values at X, M, P, R"
+      - "the four extraction formulas invert the ansatz"
+
+  - name: delta_P
+    statement: >
+      The checkpoint delta at P = (pi, pi/2, 0) is 6A + 8B + 16C/3, derived
+      from the ansatz.
+    formalizes: [SYM:bloch_scalars]
+    promotes:
+      - "checkpoint values at X, M, P, R"
+      - "the four extraction formulas invert the ansatz"
+
+  - name: delta_R
+    statement: >
+      The checkpoint delta at R = (pi, pi, pi) is 12A + 48B + 16C + 16D/3,
+      derived from the ansatz. R is the only checkpoint that sees D, because
+      it is the only one where e_3 does not vanish.
+    formalizes: [SYM:bloch_scalars]
+    promotes:
+      - "checkpoint values at X, M, P, R"
+      - "the four extraction formulas invert the ansatz"

@@ -74,3 +74,70 @@ runs:
       scalar anchor (whose swap moves C by exactly zero) — and the
       class-by-class Delta_C attribution sums exactly to the measured
       difference. Neither side promoted.
+
+  - id: cbb_finite_n_bridge_2026-08-28
+    dir: runs/cbb_finite_n_bridge_2026-08-28
+    title: >-
+      The finite-N SU(3) truncation bridge certificate, re-run: 18/18, and
+      the received certificate reproduced byte for byte
+    bears_on: [R2]
+    detail: >-
+      verify_cbb_tn_bridge.py run unmodified. Standard library only, exact
+      Fraction arithmetic, no WORKHOUSE import: it rebuilds the four SU(3)
+      channel weights from dimensions and Casimirs and both cubical boundary
+      matrices from oriented cell boundaries. 18/18 gates, and the JSON it
+      writes is identical to the certificate that arrived with the documents.
+      Establishes the arithmetic, not the physics premise -- that the
+      published Ciavarella-Burbano-Bauer matrix element is the right input
+      and that four channels exhaust the second-order shared-link routes is
+      argued in prose and stays T3. The derivation chain itself is already
+      T1-checked here from the corpus's own appendix; what this run adds is
+      an independent implementation of it, plus the T1-cutoff diagnostic and
+      the finite-volume fingerprints the registry did not carry.
+
+  - id: balaji_open_cube_b4_t1_2026-08-28
+    dir: runs/balaji_open_cube_b4_t1_2026-08-28
+    title: >-
+      The T1 = B = 4 open cube diagonalised: the reversed charge-odd shell
+      confirmed in a full Hamiltonian, from the authors' own plaquette data
+    bears_on: [R2]
+    detail: >-
+      The full-Hamiltonian one-cube test the finite-N bridge named as its
+      remaining decisive test, done for the T1 branch. The local coefficients
+      are the authors' public ymcirc d=3, B=4 oriented table (blob 1808849c,
+      sha256 4cad9538), embedded on six faces and cut to a 243-state physical
+      block by Gauss' law. Re-diagonalised in this session rather than taken
+      from the shipped script: charge conjugation commutes with both terms,
+      the charge-odd sector is 121 of 243, and tracking the six single-face
+      states by overlap (minimum 1.0000 at u = 0.005) gives
+      (E - E_max)/u^2 -> {-1/2 x2, -1/3 x3, 0 x1} with an O(u^3) residual.
+      That is the REVERSED T1 ordering, opposite to the channel-complete
+      {0, (5/153)^3, (5/102)^2}. The certificate's second-order gap matrix
+      equals (37/12)I - (1/12)G to 4.3e-11, so t_3^T1 = -1/12 appears as the
+      off-diagonal element and the eigenvalues are exactly the T1 absolute
+      coefficients the separate CBB bridge certificate predicted. Establishes
+      the T1 branch only; the channel-complete +5/612 needs a B = 6 cube that
+      nobody has run. Not an independent-group replication -- shared author
+      and code lineage, and the open-cube assembly is the reconstructor's.
+
+  - id: b6_open_cube_channel_complete_2026-08-28
+    dir: runs/b6_open_cube_channel_complete_2026-08-28
+    title: >-
+      The B = 6 open cube: the sign flips back to +5/612, and the scalar
+      disagreement is exactly the same-face sextet route
+    bears_on: [R2]
+    detail: >-
+      The second and last branch of the test the finite-N bridge named as
+      remaining. Restoring the 6 and 8 shared-link channels reverses the B = 4
+      truncated sign: t goes -1/12 -> +5/612, and the charge-odd shell ordering
+      inverts, the signed cube boundary becoming lowest. Audited here for
+      arithmetic rather than re-run -- the generator needs pyclebsch and an
+      adapter that did not travel: the gap matrix is (39/68)I + (5/612)G to
+      8.4e-15, the relative shell is {0, (5/153)^3, (5/102)^2}, and the
+      channel census 1/12 - 1/6 - 2/9 + 16/51 sums to 5/612 exactly. The
+      scalar disagreed with the bridge's predicted 11/34 by exactly 1/4, and
+      39/68 - 1/4 = 11/34: the bridge's section 5.1 names a local same-face
+      sextet route of -1/4 and this certificate independently reports that
+      route first entering at cutoff 7, so B = 6 is channel-complete for the
+      hopping and not for the on-site scalar. Second order only, and the
+      global B = 6 basis was deliberately not enumerated.

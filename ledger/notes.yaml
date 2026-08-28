@@ -214,6 +214,74 @@ archives:
       the earlier review stands and this archive carries only what it did not
       cover.
 
+  - id: UPLOADS_2026-08-28e
+    description: >-
+      The finite-N SU(3) truncation bridge: a claim that the published
+      Ciavarella-Burbano-Bauer finite-rank plaquette matrix element implies
+      this repository's four shared-link channel weights, and that its
+      charge-odd second-order Schur complement is exactly t_N B B-dagger.
+      Two prose documents, an executable standard-library certificate, and
+      the certificate's JSON output.
+    source: >-
+      Uploaded directly to the session on 2026-08-28. The inventory fact that
+      decided how to treat it: the derivation chain it presents is ALREADY
+      T1-checked here, in the "second order, all ranks" suite -- channel
+      weights from dimension and Casimir, gaps C_F + C_R/2, A_N and B_N as
+      channel sums, t_N = B_N - A_N. So the bridge is not new mathematics for
+      this repository. What is new is provenance and consequence: the same
+      weights are forced by a published external matrix element rather than
+      only by the corpus's own appendix, and the documents derive
+      finite-volume spectra and a truncation diagnostic that appear nowhere
+      in the registry.
+
+  - id: UPLOADS_2026-08-28f
+    description: >-
+      The two primary sources themselves, handed over after the bridge was
+      ingested against documents alone: the Ciavarella-Burbano-Bauer paper
+      (arXiv:2503.11888v5) that the finite-N bridge turns on, and the source
+      tarball of an independent face-graph flat-band paper (arXiv:2607.22831v1,
+      Hazra) whose H = t B^T B construction has the same form as this
+      repository's face operator.
+    source: >-
+      Uploaded directly to the session on 2026-08-28. Both were read in full
+      and both moved a literature edge from not-yet-obtained to verified.
+      Neither is stored in the repository: the CBB paper's redistribution
+      licence was not established, and the Hazra submission states in its own
+      front matter that "License information to appear upon publication". So
+      the register carries the digests and the reading, and the checks carry
+      the consequences -- the discipline literature/index.yaml already applies
+      to fulltext.
+
+  - id: UPLOADS_2026-08-28g
+    description: >-
+      The Balaji open-cube T1 = B = 4 certificate bundle: an author-data-derived
+      reconstruction of the published one-cube Hamiltonian, its charge-odd
+      shell validation, a padding audit, the 243-state matrix, and the
+      reconstruction script.
+    source: >-
+      Uploaded directly to the session on 2026-08-28, while the finite-N
+      bridge ingest was still being written. It closes the T1 half of the test
+      that bridge named as remaining: the full one-cube Hamiltonian really
+      does give the reversed charge-odd ordering. Contents pinned to
+      runs/balaji_open_cube_b4_t1_2026-08-28 and re-diagonalised there rather
+      than accepted from the shipped script, which needs an upstream ymcirc
+      file that did not travel with the bundle.
+
+  - id: UPLOADS_2026-08-28h
+    description: >-
+      The B = 6 channel-complete open cube: a sign-reversal validation, a
+      public-source and generator audit, a representation-theoretic validation
+      route, the reduced second-order instrument, and its certificate.
+    source: >-
+      Uploaded directly to the session on 2026-08-28, minutes after the B = 4
+      bundle. Together they close both branches of the test the finite-N
+      bridge named as remaining. Extracted to
+      runs/b6_open_cube_channel_complete_2026-08-28 and audited for arithmetic
+      there. The source audit is the item to read first: it establishes that
+      no public B6_dim(3) artifact exists, that the tempting B6_dim(3_2) name
+      means d = 3/2, and it pins the exact upstream commits and blob hashes the generation
+      rests on.
+
 reviews:
 # Third review pass: the 2026-08-28 second batch, reviewed on arrival. The
 # master derivation is imported to paper/ and its new content entered as four
@@ -2481,3 +2549,173 @@ reviews:
       the 15-hour transcript interleaves with its output, kept separately
       so the construction code can be read (and a record-dump rerun
       prepared) without parsing a 682KB mixed transcript.
+
+  - digest: a567316ab629a87f6fb8e7799bcbe4383c056cec85de651e07ec181bd9260d71
+    path: CBB_FINITE_N_SU3_TN_BBDAGGER_BRIDGE_20260828.md
+    archive: UPLOADS_2026-08-28e
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-08-28e/CBB_FINITE_N_SU3_TN_BBDAGGER_BRIDGE_20260828.md
+    bears_on: [R2]
+    reason: >-
+      The primary-source dictionary: which published Hamiltonian, which
+      truncation, which equation number. Its load-bearing content for this
+      repository is the coupling normalization u = 1/(2 g^4) after H/g^2 for
+      Ciavarella-Burbano-Bauer, and the identification of the published
+      dimension-ratio matrix element |M_rho|^2 = d_rho/N^2 with the weight
+      formula the all-ranks suite already uses. Two cautions on reading it.
+      Its central derivation is not new here -- "second order, all ranks"
+      checks the whole chain already, from the corpus's own appendix -- so
+      what it supplies is external provenance, not a new result. And its
+      transcription has LaTeX slips (",qquad" for "\qquad" in the amplitude
+      display); they are cosmetic, and the amplitudes are correct, but the
+      file is pinned as received rather than repaired.
+
+  - digest: 00718c2efcf9db38a600bc293ddfceb13f17e44f63959a6c0b1e3845f5ad04a7
+    path: FINITE_N_SU3_TRUNCATION_CAPABILITY_RESULT_20260828.md
+    archive: UPLOADS_2026-08-28e
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-08-28e/FINITE_N_SU3_TRUNCATION_CAPABILITY_RESULT_20260828.md
+    bears_on: [R2]
+    reason: >-
+      The consequence document, and the one carrying content the registry did
+      not have: the T1 = {1, 3, 3bar} link cutoff omits the 8 and 6 channels
+      and gives t_3 = -1/12, opposite in sign to the channel-complete
+      +5/612, with the exact completion w_6 - w_8 = 14/153; and the
+      finite-volume charge-odd fingerprints on one open cube and the periodic
+      3^3 torus. It states its own claim boundary in terms -- exact through
+      second order in the charge-odd one-plaquette sector, not a
+      finite-coupling or continuum result -- and names the full-Hamiltonian
+      diagonalization it has NOT done. Read section 5.1 before using it: the
+      counterterm to add to a published T1 Hamiltonian is 14/153, not 5/612,
+      because T1 already carries the singlet and 3bar routes.
+
+  - digest: 194cef2b55d0263c9647bf09bf953eefbf0425006710e8791cbbfb87775bc592
+    path: verify_cbb_tn_bridge.py
+    archive: UPLOADS_2026-08-28e
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-08-28e/verify_cbb_tn_bridge.py
+    bears_on: [R2]
+    reason: >-
+      The executable half, and the reason the documents could be assessed
+      rather than believed: standard library only, exact Fraction arithmetic,
+      no WORKHOUSE import, and it rebuilds the channel weights from
+      dimensions and Casimirs and the cubical boundary matrices from oriented
+      cell boundaries. Run unmodified in this session: 18/18. Pinned so the
+      checks registered against it can cite an artifact a reader can execute.
+
+  - digest: 8094af537eb80877bc48083c0f21d9ce52b831f36c04cf1c42729d03e5a1e18d
+    path: su3_finite_n_bridge_certificate.json
+    archive: UPLOADS_2026-08-28e
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-08-28e/su3_finite_n_bridge_certificate.json
+    bears_on: [R2]
+    reason: >-
+      The machine-readable output of the verifier above, reproduced
+      byte-for-byte by re-running it here. Pinned as the certificate the
+      bridge checks read, so they compare against a recorded artifact rather
+      than re-deriving inside the check and testing themselves.
+
+  - digest: 55f47cd77126e296d8dbd91d1a18ca2b66a80afa9dd20bc78c56c88a56113c5c
+    path: Efficient_Truncations_of_SUNc_Lattice_Gauge_Theory_for_Quantum_Simulation.pdf
+    archive: UPLOADS_2026-08-28f
+    verdict: set-aside
+    bears_on: [R2]
+    reason: >-
+      arXiv:2503.11888v5, 17 Feb 2026 -- the paper the finite-N bridge turns
+      on, indexed as LIT:CBB_2026 and read in full here. Set aside rather than
+      imported because its redistribution licence was not established; the
+      register carries the digest so a reader can confirm they hold the same
+      file. What the reading settled, and could not be settled without it:
+      Eq. (1) is H = (g^2/2) sum E^2 - (1/2g^2) sum (Box + Box-dagger), fixing
+      u = 1/(2g^4); Eq. (D1) is sqrt(dim(B)/(dim(A) dim(R))) with B in R (x) A;
+      Fig. 6 derives the three nontrivial (1,2,2) amplitudes from it; and
+      Appendix C tabulates all four dimensions and Casimirs, adjoint row
+      included. It also shows Eq. (D1) is credited to Ref. [48]'s supplemental
+      material, so it is not original to this paper. The one error the reading
+      found is registered as a check: an imported bridge document cites
+      "Eq. (265)" for what the paper labels (D1). What the paper does NOT
+      settle is the bridge's own premise, that four channels exhaust the
+      second-order shared-link routes in the charge-odd sector.
+
+  - digest: 77c001247025f669610d6a432833e2618077d9e8c136956e7629683b48a54b99
+    path: arXiv2607.22831v1.tar.gz
+    archive: UPLOADS_2026-08-28f
+    verdict: set-aside
+    bears_on: [G14]
+    reason: >-
+      The LaTeX source of Hazra, "New class of exactly flat topological bands",
+      indexed as LIT:HAZRA_2026. Set aside rather than imported because the
+      submission's own front matter says "License information to appear upon
+      publication". Read in full. It builds exactly flat bands from
+      H = t B^T B on the faces of an arbitrary graph and proves the extensive
+      null space topologically protected by a discrete Atiyah-Singer index
+      theorem. The reading's load-bearing detail is a footnote and a
+      definition: its B is the UNORIENTED face-vertex incidence, B_vf = 1 when
+      vertex v lies on the face's cycle, so on the cubic lattice |V| = L^3,
+      |F| = 3L^3 and the bound is 2L^3 by rank-nullity. This repository's face
+      operator is the SIGNED face-edge boundary with |F| = |E|, index 0, and
+      L^3 + 2 zero modes from homology. Same form, different mechanism -- the
+      registered check states the distinction so the resemblance is not
+      absorbed as a unifying candidate it could not falsify.
+
+  - digest: b6bbec6f699194ae99ef71eadbfe5b617de4ad93aab7cedd1a2a16a7a713feb2
+    path: balaji_open_cube_B4_T1_certificate.zip
+    archive: UPLOADS_2026-08-28g
+    verdict: extract
+    bears_on: [R2]
+    reason: >-
+      The container; its five files are extracted to
+      runs/balaji_open_cube_b4_t1_2026-08-28 rather than imported as a zip,
+      because the run register is where an executed artifact belongs and a
+      pinned archive nobody can read is not evidence. What it establishes,
+      re-verified in this session rather than accepted: the charge-odd sector
+      of the reconstructed 243-state cube gives
+      (E - E_max)/u^2 -> {-1/2 x2, -1/3 x3, 0 x1} with an O(u^3) residual,
+      and its second-order gap matrix is (37/12)I - (1/12)G to 4.3e-11 with G
+      rebuilt from oriented cell boundaries. So the T1 branch of the bridge's
+      remaining decisive test passes, and t_3^T1 = -1/12 appears as a matrix
+      element of published author data rather than as the output of the
+      bridge's own Schur algebra. Two limits stated by the bundle itself and
+      kept here: it is the truncated branch only, and it is not an
+      independent-group replication.
+
+  - digest: 1689159a934a877c7ecb5c00518c90e548bc6a19bb4248e5cf6c33df50b55ab0
+    path: B6_OPEN_CUBE_SIGN_REVERSAL_VALIDATION_20260828.md
+    archive: UPLOADS_2026-08-28h
+    verdict: import
+    imported_to: runs/b6_open_cube_channel_complete_2026-08-28/B6_OPEN_CUBE_SIGN_REVERSAL_VALIDATION_20260828.md
+    bears_on: [R2]
+    reason: >-
+      The headline: restoring the 6 and 8 shared-link channels flips t from -1/12 to +5/612 and inverts the charge-odd shell ordering, so the signed cube boundary becomes lowest. Its gap operator (39/68)I + (5/612)G, its shell {0, (5/153)^3, (5/102)^2} and its channel census summing to 5/612 were all re-verified arithmetically in the run record. Read with the source audit beside it: this is a reduced second-order calculation, not a finite-coupling diagonalisation, and it says so.
+  - digest: 92cd12751575e3429c8447d0927943fb3dc4f940cef478d784f5d692701670d8
+    path: B6_SOURCE_AND_GENERATOR_AUDIT_20260828.md
+    archive: UPLOADS_2026-08-28h
+    verdict: import
+    imported_to: runs/b6_open_cube_channel_complete_2026-08-28/B6_SOURCE_AND_GENERATOR_AUDIT_20260828.md
+    bears_on: [R2]
+    reason: >-
+      Read this one first. It establishes that no public B6_dim(3) coefficient artifact exists, that the tempting B6_dim(3_2) name means spatial dimension d = 3/2 rather than a three-dimensional cube, and it pins the exact upstream commits and blob hashes the generation rests on. It also states the constraint this repository has to act on: both ymcirc and pyclebsch report license: null and carry no licence file, so public visibility permits inspection and reproducibility work but is not a redistribution licence. Flagged in the run README rather than decided.
+  - digest: 194188b6165fe875b2f1f0547ee3d3d7d3cc8f4213ca3283bdf32137350f88cf
+    path: BALAJI_B6_REPRESENTATION_THEORETIC_VALIDATION_ROUTE_20260828.md
+    archive: UPLOADS_2026-08-28h
+    verdict: import
+    imported_to: runs/b6_open_cube_channel_complete_2026-08-28/BALAJI_B6_REPRESENTATION_THEORETIC_VALIDATION_ROUTE_20260828.md
+    bears_on: [R2]
+    reason: >-
+      The route document: how to get a channel-complete cube out of public sources without generating the universal [4,4,4] table, which it argues is the wrong first experiment. Method, not result; its result is the sign-reversal validation and the certificate.
+  - digest: 2aab926a1387a143aa56440fc563d95b2566b79f1b4d24fc9826be599d54a6a1
+    path: b6_cube_reduced_certificate.json
+    archive: UPLOADS_2026-08-28h
+    verdict: import
+    imported_to: runs/b6_open_cube_channel_complete_2026-08-28/b6_cube_reduced_certificate.json
+    bears_on: [R2]
+    reason: >-
+      The machine-readable result, and the artifact the registered checks read. Carries the face Gram, the gap matrix, the per-pair channel audit, and -- the field that mattered most -- the B6_vs_B7 boundary note recording that the same-face sextet first enters at cutoff 7. That is what reconciles its scalar 39/68 with the bridge's predicted 11/34: the difference is exactly the 1/4 local sextet route, identified independently from both sides.
+  - digest: fb79dd04e532b54d1a7136da039b421d55d22b841bbe3f7db581558d8cab4575
+    path: reduced_b6_cube_second_order.py
+    archive: UPLOADS_2026-08-28h
+    verdict: import
+    imported_to: runs/b6_open_cube_channel_complete_2026-08-28/reduced_b6_cube_second_order.py
+    bears_on: [R2]
+    reason: >-
+      The instrument. Deliberately does not enumerate the global B = 6 basis: through second order only the states reached by one action of M are needed. Pinned for inspection, not re-run here -- it imports a prior adapter and the pyclebsch package, neither of which travelled with the bundle, so the run record audits its certificate's arithmetic instead and says so.
