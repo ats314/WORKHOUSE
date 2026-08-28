@@ -1096,7 +1096,7 @@ def run_all() -> list[Result]:
 
 
 # ==========================================================================
-adjudication = _suite("settlement package and adjudication harness")
+adjudication = _suite("settlement package and adjudication harness (G3)")
 
 
 @adjudication.check("cold reruns re-certify both in-corpus audits", "SETTLEMENT.md §2")
@@ -3681,7 +3681,7 @@ PAPER_TEXTS = (
 
 @manuscript.check(
     "every \\chk in the united paper names a check that exists and passes",
-    "PAPER_MASTER, every displayed result",
+    "MASTER paper, every displayed result",
 )
 def _():
     # The united paper's one device is that each displayed result carries the

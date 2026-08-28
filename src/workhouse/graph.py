@@ -103,6 +103,57 @@ class Graph:
     dangling: list[tuple[str, str, str]]
 
 
+def _module_helpers() -> dict[str, str]:
+    """Module-level helpers in invariants.py, by name, comments stripped.
+
+    Not every constant a check reads appears in the check's own body. Several
+    checks delegate to a module-level helper -- ``_sealed_gaps``,
+    ``_bridge_towers`` and friends -- and the constants those helpers read were
+    invisible to the ``uses`` scan, which left registered constants orphaned in
+    the graph while a check demonstrably rested on them.
+    """
+    import inspect as _inspect
+
+    from . import invariants as inv_mod
+
+    out: dict[str, str] = {}
+    for name, obj in vars(inv_mod).items():
+        # The checks themselves are all named `_` and are reached through the
+        # suites, never by name; only named helpers are call targets.
+        if name == "_" or not callable(obj) or not hasattr(obj, "__code__"):
+            continue
+        if getattr(obj, "__module__", None) != inv_mod.__name__:
+            continue
+        try:
+            out[name] = re.sub(r"#[^\n]*", "", _inspect.getsource(obj))
+        except OSError:  # pragma: no cover - source always available in-tree
+            continue
+    return out
+
+
+def _with_helper_bodies(body: str, helpers: dict[str, str]) -> str:
+    """A check's body plus the bodies of every module helper it reaches.
+
+    Transitive, because helpers call helpers. Still computed and still honest:
+    this is the source that actually runs when the check runs, so a constant
+    found here IS read by the check. Comments are stripped throughout, for the
+    same reason the Lean counters strip them -- a name in a comment is not a
+    use.
+    """
+    body = re.sub(r"#[^\n]*", "", body)
+    seen: set[str] = set()
+    frontier = [body]
+    collected = [body]
+    while frontier:
+        current = frontier.pop()
+        for call in set(re.findall(r"\b([A-Za-z_][A-Za-z0-9_]*)\s*\(", current)):
+            if call in helpers and call not in seen:
+                seen.add(call)
+                collected.append(helpers[call])
+                frontier.append(helpers[call])
+    return "\n".join(collected)
+
+
 def _coefficient_targets(catalogue: list[claims_mod.Claim]) -> dict[str, tuple[str, ...]]:
     """Coefficient name -> the catalogue constants whose digits it matches.
 
@@ -298,13 +349,14 @@ def build(
     # comment is not (comments are stripped first, for the same reason the Lean
     # counters strip them).
     known_constants = {c.id for c in catalogue if c.kind == "constant"}
+    helpers = _module_helpers()
     for suite in SUITES:
         for name, _section, _tier, fn in suite.checks:
             try:
                 body = inspect.getsource(fn)
             except OSError:  # pragma: no cover - source always available in-tree
                 continue
-            body = re.sub(r"#[^\n]*", "", body)
+            body = _with_helper_bodies(body, helpers)
             for const in sorted(set(re.findall(r"\bK\.([A-Z][A-Z0-9_]*)\b", body))):
                 if f"CONST:{const}" in known_constants:
                     add(
@@ -330,6 +382,31 @@ def build(
                     add(
                         claims_mod.check_id(suite.name, name),
                         f"CITE:{alias['alias']}",
+                        "cites",
+                        "derived",
+                        f"src/workhouse/invariants.py:{fn.__code__.co_firstlineno}",
+                    )
+
+    # A check that compares against a published result cites the paper by its
+    # literature id ("HAMER_1989", "SCHIERHOLZ_1988"), and those ids are
+    # already LIT: nodes. Until this resolved them, the published-comparisons
+    # suite -- the whole external-corroboration layer -- sat orphaned in the
+    # graph, so "which checks rest on Hamer?" had no answer. Same word-boundary
+    # rule as the aliases above, and the same derivation: an id parsed out of
+    # the check's own registered section string.
+    paper_ids = {c.id[len("LIT:") :] for c in catalogue if c.id.startswith("LIT:")}
+    for suite in SUITES:
+        for name, section, _tier, fn in suite.checks:
+            if not section:
+                continue
+            for paper in sorted(paper_ids):
+                if ":" in paper:  # the per-edge LIT:<paper>:<target> records
+                    continue
+                token = re.escape(paper)
+                if re.search(rf"(?<![A-Za-z0-9_.]){token}(?![A-Za-z0-9_.])", section):
+                    add(
+                        claims_mod.check_id(suite.name, name),
+                        f"LIT:{paper}",
                         "cites",
                         "derived",
                         f"src/workhouse/invariants.py:{fn.__code__.co_firstlineno}",

@@ -487,7 +487,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the shared-link weights are Weingarten, not an isotropy assumption`
   - src/workhouse/invariants.py:238 · MASTER paper Thm. 5 / App. B
   - `workhouse verify --only 'the shared-link weights are Weingarten, not an isotropy assumption'`
-**settlement package and adjudication harness**
+**settlement package and adjudication harness (G3)**
 
 - `FINDING: the contamination scan reads only the engine file`
   - src/workhouse/invariants.py:1143 · settlement/mce_adjudication_harness.py
@@ -566,7 +566,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **the flat-band manuscript**
 
 - `every \chk in the united paper names a check that exists and passes`
-  - src/workhouse/invariants.py:3682 · PAPER_MASTER, every displayed result
+  - src/workhouse/invariants.py:3682 · MASTER paper, every displayed result
   - `workhouse verify --only 'every \chk in the united paper names a check that exists and passes'`
 - `every declared note document is a graph node with an edge`
   - src/workhouse/invariants.py:3714 · ledger/notes.yaml + notes/*.jsonl
@@ -700,7 +700,7 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `the KPS eq. (6a) decimals are its own Table 2, to a printed ulp`
   - src/workhouse/invariants.py:1949 · KPS_1981
   - `workhouse verify --only 'the KPS eq. (6a) decimals are its own Table 2, to a printed ulp'`
-**settlement package and adjudication harness**
+**settlement package and adjudication harness (G3)**
 
 - `the harness carries the printed Delta_Gamma, not the rounded one`
   - src/workhouse/invariants.py:1171 · settlement/mce_adjudication_harness.py
