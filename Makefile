@@ -52,6 +52,9 @@ certified:       ## Regenerate CERTIFIED.md — every checked claim, ranked by t
 frontier:        ## Regenerate FRONTIER.md from the ledgers and the suites
 	@.venv/bin/workhouse frontier --write
 
+regen: frontier certified catalogue  ## Every generated file, in one order — the staleness tests stop tripping on partial regens
+	@echo "regenerated: FRONTIER.md CERTIFIED.md index/"
+
 fmt:             ## Auto-format
 	@.venv/bin/ruff check --fix . && .venv/bin/ruff format .
 

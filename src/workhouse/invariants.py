@@ -1314,6 +1314,132 @@ def _():
     )
 
 
+@adjudication.check(
+    "FINDING: the marked-cluster engine emits the Gamma scalar only — a "
+    "completed 609-sweep cannot decide C_shp",
+    "engine certificate assembly + harness adjudicate stage",
+)
+def _():
+    # G3's narrowed scope (ledger/gaps.yaml) is C_shp, because the Gamma-point
+    # scalar is externally validated and Phi_C(0) = 0 makes Gamma-point data
+    # structurally incapable of constraining Delta_C — that incapacity is
+    # already a registered T1 finding in the off-axis channel suite. This
+    # check establishes the same incapacity for G3's own lead engine, by
+    # static scan (text only; the pinned corpus file is never imported):
+    # every coefficient the sealed sweep assembles flows through
+    # _exact_gamma_scalar, and the source contains no shape, kernel,
+    # band-point, or Stage-3H output of any kind. The harness knows: its
+    # adjudicate stage reports items 7/8 OPEN and says the run "adjudicates
+    # the SCALAR only" when the certificate carries no kernel block — which,
+    # for this engine, is always.
+    #
+    # Consequence, recorded not asserted: completing the 609-evaluation
+    # sealed sweep — at ANY cost, on any hardware — leaves C2 exactly as
+    # open as it is now. What can decide C_shp is a kernel-bearing
+    # (Stage-3H lineage) recomputation, or a structural comparison of the
+    # two sides' recorded block decompositions. The sweep's remaining value
+    # is a blind confirmation of the already-validated scalar, and its cost
+    # must be weighed against that, not against C2.
+    src = S.ENGINE.read_text(errors="ignore")
+    harness = (ROOT / "settlement" / "mce_adjudication_harness.py").read_text(errors="ignore")
+    scalar_only = src.count("_exact_gamma_scalar") >= 2 and '"m4": coefficients[3]' in src
+    # bare "kernel" appears once, in a docstring about translating an
+    # anchored resolvent kernel — not an output; the output-shaped tokens are
+    # what the harness's shape adjudicator would need to find.
+    no_kernel_output = (
+        not any(
+            token in src
+            for token in ("shape", "band_point", "kernel_shape", "Stage-3H", "stage_3h", "3895")
+        )
+        and src.count("kernel") == 1
+    )
+    harness_knows = "adjudicates the SCALAR only" in harness
+    ok = scalar_only and no_kernel_output and harness_knows
+    return ok, (
+        "engine source: coefficients assembled via _exact_gamma_scalar "
+        f"({src.count('_exact_gamma_scalar')} occurrences), certificate m4 is "
+        "coefficients[3] of that Gamma ledger, and the tokens shape / "
+        "band_point / kernel_shape / Stage-3H / 3895 appear nowhere in "
+        f"{len(src.splitlines())} lines; the harness's own adjudicate stage "
+        "reports items 7/8 OPEN without a kernel block. With the registered "
+        "Phi_C(0) = 0 finding (Gamma data cannot identify C_shp), the sealed "
+        "609-sweep is structurally incapable of deciding C2 — G3's decisive "
+        "path is a kernel-bearing recomputation or a block-structure "
+        "comparison, not this sweep"
+    )
+
+
+@adjudication.check(
+    "the v10a.26 cold kernel shares every protected shape parameter and "
+    "differs only in C — and records no per-record kernel",
+    "notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt §[17]",
+    tier=2,
+)
+def _():
+    # The rewritten G3's first question — does the v10a.26 side have a
+    # recorded block structure? — answered from the primary source: the
+    # 15-hour dual-cold-oracle transcript, imported byte-verified from the
+    # maintainer's HODGE RUNS archive. Its final unblind block prints the
+    # cold kernel's full shape fit next to the historical values. Parsed
+    # here, not quoted: A agrees with 5/48 at 6e-14 (the registered
+    # A_SHP_3_NUM is this transcript's own printed value), B and D sit at
+    # fit noise, alpha is 4A, C is exactly the registered float
+    # C_SHP_NEW_NUM, and the kernel carries the canonical 189 anchored
+    # records. So the two rival kernels agree on every symmetry-protected
+    # parameter and differ ONLY in C — which, with the registered
+    # A-pins-the-normal-block result, forces any structural divergence
+    # into the A-carrying sector.
+    #
+    # The second half is an absence, asserted as one: nothing in the
+    # transcript prints a displacement-resolved record (the scan pattern
+    # below), so the 189 per-record values existed only in the dead A100
+    # process's memory. K4_mass_cols was computed, counted, fitted — and
+    # never dumped. That is why G3 step 2 is a rerun of the kernel leg
+    # instrumented to dump records, and why this check is T2: every
+    # quantity here is a printed float, not an exact rational.
+    import re
+
+    path = ROOT / "notes" / "imported" / "HODGE_RUNS_2026-08-28" / "15_hour_RUN.txt"
+    text = path.read_text(errors="ignore")
+    # rfind, not index: the transcript interleaves the script with its
+    # output, and the first occurrence is the print statement's own source.
+    block = text[text.rfind("final mass-kernel shape:") :][:800]
+
+    def printed(name):
+        m = re.search(rf"{name}\s*=\s*([+-][\d.e-]+)", block)
+        return float(m.group(1)) if m else None
+
+    a, b, c, d = printed("A"), printed("B"), printed("C_direct"), printed("D")
+    alpha = printed("alpha")
+    a_gap = abs(a - float(K.A_SHP_3))
+    records = "final mass-kernel anchored records= 189" in text
+    per_record_dump = re.findall(
+        r"\(\s*-?\d\s*,\s*-?\d\s*,\s*-?\d\s*\)[^\n]{0,120}?-?\d+\s*/\s*\d+", text
+    )
+    ok = (
+        a == K.A_SHP_3_NUM
+        and a_gap < 1e-12
+        and abs(b) < 1e-12
+        and abs(d) < 1e-11
+        and abs(alpha - 4 * a) < 1e-12
+        and abs(c - K.C_SHP_NEW_NUM) < 1e-14
+        and records
+        and not per_record_dump
+        and "MIXED/THIRD RESULT" in text
+    )
+    return ok, (
+        f"printed cold shape: A = {a!r} (|A - 5/48| = {a_gap:.1e}, and equal to "
+        f"the registered A_SHP_3_NUM), B = {b:.1e}, D = {d:.1e}, alpha - 4A = "
+        f"{alpha - 4 * a:.1e}, C_direct = {c!r} (|C - C_SHP_NEW_NUM| = "
+        f"{abs(c - K.C_SHP_NEW_NUM):.1e}); 189 anchored records confirmed; "
+        f"displacement-resolved record lines in 682KB of transcript: "
+        f"{len(per_record_dump)}; verdict line MIXED/THIRD RESULT present. "
+        "Both sides recorded, neither promoted: this check establishes where "
+        "the kernels AGREE, and that the cold per-record values are absent "
+        "from every recorded artifact"
+    )
+
+
 # ==========================================================================
 near_gamma = _suite("near-Gamma uniformity (G11)")
 

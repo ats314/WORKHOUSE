@@ -71,6 +71,7 @@ CURATED_TYPES = frozenset(
         "originates",  # provenance.yaml: the corpus document a value comes from
         "uses",  # a check body reads a registered constant (K.NAME)
         "contains",  # notes.yaml: the archive a note document was inventoried in
+        "evidences",  # runs/index.yaml: a pinned run record bears on a ledger item
         "duplicate_of",  # notes.yaml reviews
         "superseded_by",  # notes.yaml reviews
     }
@@ -243,6 +244,14 @@ def build(
             # have no catalogue record to point at.
             if name.isupper():
                 add(sid, f"CONST:{name}", "code_names", "curated", "ledger/symbols.yaml")
+
+    # The run register: evidences edges from each pinned run record to the
+    # ledger items its entry names. Curated in runs/index.yaml; an edge says
+    # "this executed run is evidence someone weighing that item should read",
+    # and promotes nothing.
+    for run in claims_mod.load_runs():
+        for target in run.get("bears_on", []):
+            add(f"RUN:{run['id']}", target, "evidences", "curated", "runs/index.yaml")
 
     lit = literature_mod.load()
     for paper in lit.papers:

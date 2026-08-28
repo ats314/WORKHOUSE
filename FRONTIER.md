@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 179/179 checks pass.
+**T1/T2 — re-derived here.** 181/181 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -24,7 +24,7 @@ it cannot drift from what the repository actually checks.
 | fourth-order generalized Hodge pencil | 3/3 |
 | fourth-order checkpoint extraction | 3/3 |
 | homology and finite volume | 12/12 |
-| settlement package and adjudication harness (G3) | 13/13 |
+| settlement package and adjudication harness (G3) | 15/15 |
 | near-Gamma uniformity (G11) | 6/6 |
 | tier collapse (G14) | 6/6 |
 | isotropic pentagonal cap band (v4.3 §9.3) | 11/11 |
@@ -83,7 +83,7 @@ Claims this repository made and withdrew:
 
 **Tier 1 — weeks**
 
-- `G3` Fourth-order adjudication — run the marked-cluster engine target-blind
+- `G3` Fourth-order adjudication — decide C_shp where it actually lives
 - `G4` Pentagonal O(u^4) closure in-corpus *(partial — see its status in the ledger)*
 - `G6` B_N fixed-rank holdout ledger for N = 7..18
 - `G7` Native torelon reruns of sigma_5 and sigma_6
@@ -123,7 +123,7 @@ Transitive closure over the ledger's own `unblocks`, `depends_on`, and
 
 | Gap | Gates | What cannot move until it does |
 |---|---|---|
-| `G3` Fourth-order adjudication — run the marked-cluster engine target-blind | 2 | G9, C2 |
+| `G3` Fourth-order adjudication — decide C_shp where it actually lives | 2 | G9, C2 |
 
 - G3 -> G9 and the mass ratio at orders 4-6
 - nothing further without G17 + G18
@@ -136,8 +136,8 @@ Ready — no open prerequisite — and decisive: it resolves a contradiction,
 unblocks another gap, or is load-bearing. Cheapest first. Bookkeeping that
 settles nothing is excluded however cheap it looks.
 
-- `G3` (weeks) Fourth-order adjudication — run the marked-cluster engine target-blind — settles C2, G9
-  - The 11-item frozen protocol of GLUEBALL §18.1. This is the load-bearing finite computation of the entire program. Scope narrowed once C1 was dissolved as an anchoring distinction: what G3 must now settle is the off-axis coefficient C_shp, since the Gamma-point scalar is externally validated against Hamer and Phi_C(0) = 0 makes Gamma-point data structurally incapable of constraining Delta_C.
+- `G3` (weeks) Fourth-order adjudication — decide C_shp where it actually lives — settles C2, G9
+  - REWRITTEN 2026-08-28, at the maintainer's standing instruction, after the sweep-cannot-decide-C2 finding below. The original G3 ("run the marked-cluster engine target-blind", the 11-item GLUEBALL §18.1 protocol) directed every session at a sealed 609-evaluation sweep that is now established — by T1 static scan, not by fatigue — to emit the Gamma-point scalar only, a quantity externally validated and structurally incapable of constraining Delta_C (Phi_C(0) = 0). Four sessions dead-ended on that path (absent engine, closure cap, cost, and finally the structural incapacity); the register, not the next agent, now carries that knowledge. What G3 must settle is unchanged: the off-axis coefficient C_shp (C2). The route is replaced by the two paths that can actually reach it, cheapest first.
 - `G17` (unbounded) PC-2 free-energy stability and the source-radius reduction — settles load-bearing
   - The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction.
 - `G18` (unbounded) The spectral bridge — settles load-bearing
