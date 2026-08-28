@@ -641,6 +641,22 @@ H4_SIDE = Rational(-2861009, 84387303000)
 #: printed coefficients is indistinguishable from a transcription error.
 D5_COVARIANCE_FACTOR = 5
 TAU_4 = Rational(-2861009, 16877460600)
+
+# --------------------------------------------------------------------------
+# Pentagonal FIFTH order (2026-08-28 master edition, section 15)
+# --------------------------------------------------------------------------
+# Asserted by the master edition, not derived here: two target-blind direct
+# routes across all 796 histories, plus a second ledger over all 572 canonical
+# returns matching the dual-backend derivative fold. T3 until something here
+# recomputes the histories. What IS checked is the record's internal
+# arithmetic -- see "the fifth-order record is arithmetically self-consistent".
+#
+# SIGN CONVENTION, recorded because it is the whole difference between the two
+# printed forms: these are for H = H_0 + u W. For H = H_0 - u W the coefficient
+# reverses sign. An unrecorded convention is how a sign erratum is born.
+C5_DIRECT = Rational(37373840041427, 407461473619200)  # 796 direct histories
+C5_FOLDED = Rational(110572494623989, 1898991175363682400)  # 572 canonical returns
+C5_PENT = Rational(4183029870024709967, 45575788208728377600)  # their sum, H = H_0 + uW
 #: Coefficient of u^4 cos k in Delta E_cap^(4). The factor 2 is the two terms
 #: of the Hermitian hop |z><z+1| + |z+1><z|, not a second convention.
 HOP_HERMITIAN_FACTOR = 2

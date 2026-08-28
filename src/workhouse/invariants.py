@@ -27,6 +27,7 @@ from sympy import (
     exp,
     expand,
     eye,
+    lcm,
     limit,
     nsimplify,
     numer,
@@ -3901,4 +3902,37 @@ def _():
         "retained datum, distinct off-axis. Non-identifiability is exhibited by construction, "
         "not argued from a difference. Neither C_shp side is preferred, and C2 stays open -- the "
         "source document's own section is titled 'Why the exact rooted scalar remains open'"
+    )
+
+
+@pentagonal.check(
+    "the fifth-order record is arithmetically self-consistent",
+    "master edition 2026-08-28 §15",
+)
+def _():
+    # The pentagonal fifth-order coefficient is ASSERTED by the master edition
+    # -- two target-blind direct routes over 796 histories and a second ledger
+    # over 572 canonical returns. Nothing here re-runs those histories, so the
+    # physics stays T3 and this check does not promote it.
+    #
+    # What is checkable is the record's own internal arithmetic, and it is
+    # worth checking for the reason this repository already has a one-ulp
+    # transcription on file: a printed decomposition that does not sum to its
+    # printed total is a transcription error, and nothing else would catch it.
+    # The denominator test is the sharper half -- if the stated total had been
+    # copied from a different computation, the odds of it landing exactly on
+    # lcm(direct, folded) are negligible.
+    #
+    # The tau_4 tie is the link to evidence that IS checked here: the same
+    # section prints tau_4 = -2861009/16877460600, which the target-blind
+    # backend reproduced cold in runs/blind_pentagonal_o4_2026-08-28.
+    total = K.C5_DIRECT + K.C5_FOLDED
+    denominators_agree = K.C5_PENT.q == lcm(K.C5_DIRECT.q, K.C5_FOLDED.q)
+    tau_tie = K.TAU_4 == K.D5_COVARIANCE_FACTOR * K.H4_SIDE
+    return total == K.C5_PENT and denominators_agree and tau_tie, (
+        f"direct + folded = {total} exactly, and its denominator is exactly "
+        f"lcm({K.C5_DIRECT.q}, {K.C5_FOLDED.q}), so nothing cancelled silently; the same "
+        f"section's tau_4 is {K.D5_COVARIANCE_FACTOR} x h_4^side, and h_4^side is the value the "
+        "target-blind backend reproduced cold. The 796 direct and 572 folded histories are NOT "
+        "re-run here: the fifth-order coefficient stays T3, asserted by the edition"
     )
