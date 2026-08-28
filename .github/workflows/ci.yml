@@ -75,16 +75,29 @@ jobs:
             ~/.elan
             lean/.lake
           key: lean-${{ hashFiles('lean/lean-toolchain', 'lean/lake-manifest.json') }}
+      # Both network steps below have failed transiently (~90-120s runs on
+      # commits whose lean/ tree was byte-identical to a green run — PR #31
+      # 2026-08-26, PR #32 2026-08-28). Retry them; still fail closed.
       - name: Install elan
         run: |
-          if [ ! -x "$HOME/.elan/bin/elan" ]; then
+          for i in 1 2 3; do
+            if [ -x "$HOME/.elan/bin/elan" ]; then break; fi
             curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
-              | sh -s -- -y --default-toolchain none
-          fi
+              | sh -s -- -y --default-toolchain none && break
+            echo "elan install attempt $i failed; retrying in $((i * 10))s" >&2
+            sleep $((i * 10))
+          done
+          [ -x "$HOME/.elan/bin/elan" ]
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Fetch mathlib cache and build
         working-directory: lean
         run: |
-          lake exe cache get
+          got_cache=""
+          for i in 1 2 3; do
+            if lake exe cache get; then got_cache=1; break; fi
+            echo "lake exe cache get attempt $i failed; retrying in $((i * 10))s" >&2
+            sleep $((i * 10))
+          done
+          [ -n "$got_cache" ]
           lake build
           echo "Lean core: proof-checked, no sorries"
