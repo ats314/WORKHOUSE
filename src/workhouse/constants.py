@@ -15,7 +15,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from sympy import Rational, Symbol, sympify
+from sympy import Integer, Rational, Symbol, sympify
 
 N = Symbol("N", positive=True)  # gauge rank
 L = Symbol("L", positive=True)  # torus extent
@@ -76,6 +76,87 @@ def parallel_sum(n=N):
     """Channel sum B_N over the parallel pairing."""
     n = sympify(n)
     return -4 * n * (n**2 - 2) / ((n**2 - 1) * (4 * n**2 - 9))
+
+
+# --------------------------------------------------------------------------
+# The shared-link fusion channels that A_N and B_N are built from
+# --------------------------------------------------------------------------
+# A_N and B_N above were registered as printed closed forms. These are the
+# representation-theoretic inputs, so the two sums can be *derived* rather than
+# transcribed:
+#
+#   F (x) Fbar = 1 + Adj              the mixed (antiparallel) family -> A_N
+#   F (x) F    = Lambda^2 + Sym^2     the like (parallel) family      -> B_N
+#
+# The resolvent denominator: six nonshared half-links cost 3 C_F, the fused
+# link costs C_R/2, and the external one-plaquette state sits at 2 C_F, so the
+# gap is (3 C_F + C_R/2) - 2 C_F = C_F + C_R/2. The numerator weight d_R/N**2
+# is the manuscript's "isotropy of the normalized shared-link tensor" — the one
+# input of the chain this repository does NOT derive, recorded here so the
+# boundary is visible at the definition rather than buried in a check.
+
+CHANNELS = ("1", "Adj", "Lambda2", "Sym2")
+
+#: Which family each channel belongs to, and hence which sum it feeds.
+CHANNEL_FAMILY = {"1": "mixed", "Adj": "mixed", "Lambda2": "like", "Sym2": "like"}
+
+
+def channel_data(rank=N):
+    """``(d_R, C_2(R))`` for the four shared-link fusion channels."""
+    n = sympify(rank)
+    return {
+        "1": (Integer(1), Integer(0)),
+        "Adj": (n**2 - 1, n),
+        "Lambda2": (n * (n - 1) / 2, (n + 1) * (n - 2) / n),
+        "Sym2": (n * (n + 1) / 2, (n - 1) * (n + 2) / n),
+    }
+
+
+def casimir_fundamental(rank=N):
+    """``C_F = (N**2 - 1)/(2N)``."""
+    n = sympify(rank)
+    return (n**2 - 1) / (2 * n)
+
+
+def plaquette_energy(rank=N):
+    """The unperturbed one-plaquette energy, ``4 * (C_F/2) = 2 C_F``."""
+    return 2 * casimir_fundamental(rank)
+
+
+def channel_gap(channel, rank=N):
+    """``E_intermediate - E_external`` for one channel: ``C_F + C_R/2``."""
+    _, casimir = channel_data(rank)[channel]
+    return 3 * casimir_fundamental(rank) + casimir / 2 - plaquette_energy(rank)
+
+
+def channel_weight(channel, rank=N):
+    """``w_R = -(d_R/N**2) / (C_F + C_R/2)``, the resolvent weight."""
+    dim, _ = channel_data(rank)[channel]
+    return -(dim / sympify(rank) ** 2) / channel_gap(channel, rank)
+
+
+def channel_weight_printed(channel, rank=N):
+    """The closed forms the corpus prints for the four weights."""
+    n = sympify(rank)
+    return {
+        "1": -2 / (n * (n - 1) * (n + 1)),
+        "Adj": -2 * (n - 1) * (n + 1) / (n * (2 * n**2 - 1)),
+        "Lambda2": -(n - 1) / ((2 * n - 3) * (n + 1)),
+        "Sym2": -(n + 1) / ((2 * n + 3) * (n - 1)),
+    }[channel]
+
+
+def even_hopping(rank=N):
+    """``ell_N``, the all-rank C-even second-order hopping.
+
+    Printed in the corpus (``records/audits/03-prism-selection-shape.md``) and
+    gated inside ``NB_O2_prism_square_second_order_falsification.ipynb`` as
+    ``factor(Wmix + Wlike + 1/CF)`` — never checked here until now. The
+    ``1/C_F`` is the vacuum-mediated route, which is exactly what C13 records
+    as having been omitted.
+    """
+    n = sympify(rank)
+    return -2 * n * (3 * n**2 - 5) / ((n**2 - 1) * (2 * n**2 - 1) * (4 * n**2 - 9))
 
 
 def hopping(n=N):
@@ -139,6 +220,76 @@ D_3 = Rational(-109151, 249696)  # = 7/32 + 12*LEAK_3 - 4*B_3
 #: independently re-derived here; registered because Hamer's 1989 table
 #: corroborates it externally (published-comparisons suite).
 M3_EVEN_K0 = Rational(-54049, 520200)
+
+# --------------------------------------------------------------------------
+# The domino ledger  (RUN_TROM_d3_results.json; CERT_FLUX_d3_certificate_results.md)
+# --------------------------------------------------------------------------
+# The repository already carried the band VALUES these assemble into, and
+# checked them by subtracting one from another. These are the ingredients they
+# are assembled FROM, in both charge sectors and at both orders, from the
+# abstract-domino engine's 251-gate run.
+
+LEAK_2 = Rational(-11, 306)  # second-order per-neighbour leakage, C-odd
+LEAK_2_EVEN = Rational(-11, 306)  # ... and C-even. The same rational; see below.
+T_3_EVEN = Rational(-6335, 249696)  # C-even third-order hopping
+LEAK_3_EVEN = Rational(-6335, 249696)  # ... and its leakage. Equal again.
+D3_ODD = Rational(-24541, 62424)  # domino C-odd diagonal
+D3_EVEN = Rational(-517313, 6242400)  # ... and C-even
+E_VAC3_DOMINO = Rational(-9, 16)  # = 2*(-9/32); no connected third-order vacuum piece
+D_3_TOP = Rational(-61751, 249696)  # C-odd dispersive top, at lambda = 8
+M3_EVEN_BANDMIN = Rational(471353, 1560600)  # C-even at lambda = -4
+
+# Recorded, not explained: leak_r = t_r in the C-even sector at BOTH orders,
+# and at second order the C-odd leakage equals them too. Three labels on
+# -11/306, two on -6335/249696. Nothing here shows why, and a mechanism must
+# not be read off a coincidence of values -- ADR 0005 is what happens when one
+# is.
+
+#: The adjacency eigenvalues the band assembly is evaluated at. The C-odd
+#: sector sees the SIGNED incidence, spec S = {-4, q-4, q-4} with q in [0, 12],
+#: so its carrier sits at -4 and its dispersive top at +8. The C-even sector
+#: sees the UNSIGNED incidence, spec {12, 0, 0} at Gamma and {-4,-4,-4} at the
+#: corner. The two spans, 12 and 16, are the two bandwidths.
+BAND_LAMBDA = {"odd": (-4, 8), "even": (12, -4)}
+
+
+def band_tower(sector, order):
+    """The within-plaquette tower coefficient in canonical u, at this order.
+
+    Not a new input: this is the certified coupling conversion
+    ``tower(u) = 4 * Delta(3u/2)`` applied to the registered (beta/4) towers --
+    the same statement the coupling-erratum suite checks. Writing it here is
+    what lets ``band_assembly`` take no unregistered ingredient.
+    """
+    printed = {
+        ("odd", 2): TOWER_B2_MINUS,
+        ("odd", 3): TOWER_B3_MINUS,
+        ("even", 2): TOWER_B2_PLUS,
+        ("even", 3): TOWER_B3_PLUS,
+    }[(sector, order)]
+    return 4 * Rational(3, 2) ** order * printed
+
+
+def band_assembly(sector, order, lam):
+    """The band coefficient at adjacency eigenvalue ``lam``.
+
+        E_s(lambda, r) = tower_{r,s} + 12 * leak_{r,s} + lambda * t_{r,s}
+
+    Twelve neighbours, one leakage each; the hop enters through the adjacency.
+    """
+    leak = {
+        ("odd", 2): LEAK_2,
+        ("odd", 3): LEAK_3,
+        ("even", 2): LEAK_2_EVEN,
+        ("even", 3): LEAK_3_EVEN,
+    }[(sector, order)]
+    hop = {
+        ("odd", 2): T_MINUS_2,
+        ("odd", 3): B_3,
+        ("even", 2): T_PLUS_2,
+        ("even", 3): T_3_EVEN,
+    }[(sector, order)]
+    return band_tower(sector, order) + 12 * leak + lam * hop
 
 
 def e_flat(coupling=u):

@@ -15,16 +15,21 @@ import hashlib
 import re
 from collections.abc import Callable
 from dataclasses import dataclass, field
+from itertools import product
+from pathlib import Path
 
 from sympy import (
+    I,
     Matrix,
     Rational,
     diff,
+    exp,
     expand,
     eye,
     limit,
     nsimplify,
     numer,
+    oo,
     pi,
     series,
     simplify,
@@ -43,6 +48,8 @@ from . import near_gamma as G
 from . import payloads as P
 from . import settlement as S
 from . import tier_collapse as T
+from . import torus as TOR
+from . import triage as TRIAGE
 
 
 @dataclass
@@ -170,6 +177,91 @@ def _():
 
 
 # ==========================================================================
+@rank_law.check(
+    "the four channel weights follow from dimension and Casimir",
+    "PAPER_FLATBAND eq. (18)-(19), App. A",
+)
+def _():
+    bad = [
+        c for c in K.CHANNELS if simplify(K.channel_weight(c) - K.channel_weight_printed(c)) != 0
+    ]
+    at3 = {c: K.channel_weight(c, 3) for c in K.CHANNELS}
+    return not bad, (
+        "w_R = -(d_R/N^2)/(C_F + C_R/2) reproduces all four printed closed forms as identities "
+        f"in N; at N = 3 they are {at3}"
+    )
+
+
+@rank_law.check(
+    "each channel gap is C_F + C_R/2, and the weights sum to one", "PAPER_FLATBAND eq. (4), (18)"
+)
+def _():
+    # The energy bookkeeping the weight rests on: six nonshared half-links at
+    # 3 C_F, the fused link at C_R/2, against an external one-plaquette state
+    # at 2 C_F. And the numerator weights are a probability distribution per
+    # family -- which is what makes "isotropy" a normalization rather than a
+    # free constant. That premise itself is NOT derived here; it is the one
+    # unproved physical input of the whole second-order chain.
+    gaps = all(
+        simplify(K.channel_gap(c) - (K.casimir_fundamental() + K.channel_data()[c][1] / 2)) == 0
+        for c in K.CHANNELS
+    )
+    families = {}
+    for fam in ("mixed", "like"):
+        members = [c for c in K.CHANNELS if K.CHANNEL_FAMILY[c] == fam]
+        families[fam] = simplify(sum(K.channel_data()[c][0] for c in members) / K.N**2)
+    energy = simplify(K.plaquette_energy() - (K.N**2 - 1) / K.N) == 0
+    return gaps and set(families.values()) == {1} and energy, (
+        f"gaps are C_F + C_R/2 for all four channels; sum of d_R/N^2 is {families} per family, "
+        "exactly 1; and the external energy is 2 C_F = (N^2-1)/N, which is 8/3 at N = 3. The "
+        "isotropy premise that makes d_R/N^2 the numerator is asserted by the corpus, not derived"
+    )
+
+
+@rank_law.check(
+    "A_N and B_N are the channel sums, not transcriptions", "PAPER_FLATBAND eq. (20)-(21)"
+)
+def _():
+    mixed = K.channel_weight("1") + K.channel_weight("Adj")
+    like = K.channel_weight("Lambda2") + K.channel_weight("Sym2")
+    ok = simplify(mixed - K.antiparallel_sum()) == 0 and simplify(like - K.parallel_sum()) == 0
+    return ok, (
+        "A_N = w_1 + w_Adj over F (x) Fbar and B_N = w_L2 + w_S2 over F (x) F, so the registered "
+        f"closed forms follow from (d_R, C_R); at N = 3, A = {K.antiparallel_sum(3)}, "
+        f"B = {K.parallel_sum(3)}"
+    )
+
+
+@rank_law.check(
+    "ell_N = A_N + B_N + 1/C_F, the vacuum-mediated route at every rank",
+    "03-prism-selection-shape ~93 / C13",
+)
+def _():
+    # The corpus prints the all-rank C-even hopping and gates it inside
+    # NB_O2_prism_square_second_order_falsification.ipynb as
+    # factor(Wmix + Wlike + 1/CF). Nothing here checked it.
+    #
+    # It earns registration because of what the 1/C_F term is. C13 records
+    # -481/612 as superseded by -11/306 "because the vacuum-mediated route was
+    # omitted" -- and A_3 + B_3 is EXACTLY -481/612, with 1/C_F(3) = 3/4 the
+    # omitted route. A one-rank ledger note becomes a formula. The C-odd
+    # difference B_N - A_N never sees the route at all, because <0|V|p,-> = 0
+    # by charge conjugation: that is why t_N carries no such term, and it is
+    # the clause the manuscript's Theorem 3 proof leaves unstated.
+    identity = (
+        simplify(
+            K.antiparallel_sum() + K.parallel_sum() + 1 / K.casimir_fundamental() - K.even_hopping()
+        )
+        == 0
+    )
+    superseded = K.antiparallel_sum(3) + K.parallel_sum(3)
+    return identity and superseded == Rational(-481, 612) and K.even_hopping(3) == K.T_PLUS_2, (
+        f"identity in N; at N = 3, A_3 + B_3 = {superseded} (C13's superseded value) plus "
+        f"1/C_F = {1 / K.casimir_fundamental(3)} gives {K.even_hopping(3)} = T_PLUS_2"
+    )
+
+
+# ==========================================================================
 su3_series = _suite("SU(3) second and third order")
 
 
@@ -214,6 +306,98 @@ def _():
         and t.coeff(K.u, 3) == K.B_3
     )
     return ok, "E_flat = 8/3 + u + 11/306 u^2 - 109151/249696 u^3"
+
+
+# ==========================================================================
+@su3_series.check("d_- = 1/2 + 12*leak_2, and leak_2 = -11/306", "PAPER_FLATBAND eq. (28)")
+def _():
+    # The second-order assembly: the within-plaquette tower's u^2 term, plus
+    # twelve neighbours' leakage, is the C-odd diagonal; the -4 t_- shift then
+    # produces the flat scalar. Recorded with what it collides with, not with
+    # an explanation of it: leak_2 = T_PLUS_2 = ell_3 = -11/306, three labels
+    # on one rational, and nothing here shows they are one object.
+    diagonal = Rational(1, 2) + 12 * K.LEAK_2
+    flat = diagonal - 4 * K.T_MINUS_2
+    return diagonal == K.D_MINUS_2 and flat == K.BAND_ODD_FLAT, (
+        f"1/2 + 12*({K.LEAK_2}) = {diagonal} = d_-, and d_- - 4 t_- = {flat} = the flat scalar. "
+        f"leak_2 equals T_PLUS_2 = {K.T_PLUS_2} (the C-even hopping) and equals -(flat scalar); "
+        "the collision is equivalent to 13*(11/306) = 1/2 - 4 t_-, which is arithmetic"
+    )
+
+
+@su3_series.check(
+    "leak_3 is assembled from the domino diagonal and the vacuum piece",
+    "corpus-import/numerics/results/CERT_FLUX_d3_certificate_results.md",
+)
+def _():
+    assembled = (K.D3_ODD - K.E_VAC3_DOMINO) - Rational(7, 32)
+    return assembled == K.LEAK_3, (
+        f"({K.D3_ODD} - ({K.E_VAC3_DOMINO})) - 7/32 = {assembled} = leak_3; the vacuum piece is "
+        "-9/16 = 2*(-9/32), the certificate's 'no connected third-order vacuum piece'. leak_3 was "
+        "registered as a bare number; this is where it comes from"
+    )
+
+
+@su3_series.check(
+    "one assembly formula gives every registered band value",
+    "corpus-import/numerics/results/CERT_FLUX_d3_certificate_results.md / PAPER App. B",
+)
+def _():
+    # E_s(lambda, r) = tower_{r,s} + 12 leak_{r,s} + lambda t_{r,s}, with
+    # lambda the adjacency eigenvalue. Eight independently registered
+    # rationals, and the tower term is the certified coupling conversion
+    # 4*Delta(3u/2), so nothing unregistered enters. What this joins: the
+    # C-odd third-order assembly was one instance of a formula with four more;
+    # the C-even band values were checked only by subtracting one from
+    # another; and the coupling erratum and the band ledger were unconnected
+    # parts of this repository. They are the same statement.
+    expected = {
+        ("odd", 2, -4): K.BAND_ODD_FLAT,
+        ("odd", 2, 8): K.BAND_ODD_TOP,
+        ("odd", 3, -4): K.D_3,
+        ("odd", 3, 8): K.D_3_TOP,
+        ("even", 2, 12): K.BAND_EVEN_BOTTOM,
+        ("even", 2, -4): K.BAND_EVEN_TOP,
+        ("even", 3, 12): K.M3_EVEN_K0,
+        ("even", 3, -4): K.M3_EVEN_BANDMIN,
+    }
+    bad = {k: K.band_assembly(*k) for k in expected if K.band_assembly(*k) != expected[k]}
+    towers = {
+        (sector, order): K.band_tower(sector, order)
+        for sector in ("odd", "even")
+        for order in (2, 3)
+    }
+    return not bad, (
+        f"8/8 exact across both charge sectors and both orders; recovered towers {towers}"
+        + (f"; MISMATCH {bad}" if bad else "")
+    )
+
+
+@su3_series.check(
+    "FINDING: no Gamma-point datum can constrain the hopping", "PAPER_FLATBAND Table 1 / HAMER_1989"
+)
+def _():
+    # tau(u) enters the spectrum only as tau(u) q(k), and q(0) = 0, so every
+    # rest-frame series -- E_flat, Hamer's 1+- table, the whole Gamma-point
+    # comparison -- is blind to the hopping. A one-parameter family moves both
+    # third-order coefficients and leaves d_3, hence the Hamer agreement,
+    # exactly invariant. The band top is what separates them, at lambda = 8.
+    #
+    # Recorded so that the Hamer agreement -- which is real, and which the
+    # published-comparisons suite measures -- is never read as validating the
+    # dispersive half. It does not weaken b_3, which the abstract-domino
+    # engine computes directly.
+    eps = symbols("epsilon")
+    shifted = Rational(7, 32) + 12 * (K.LEAK_3 + eps / 3) - 4 * (K.B_3 + eps)
+    invariant = simplify(shifted - K.D_3) == 0
+    q_at_gamma = 4 * sum(sin(0 / 2) ** 2 for _ in range(3))
+    separated = (K.D_3_TOP - K.D_3) / 12 == K.B_3
+    return invariant and q_at_gamma == 0 and separated, (
+        "q(0) = 0, so the Gamma-point spectrum is E_flat with multiplicity 3 and carries no "
+        "trace of tau; (b_3 + e, leak_3 + e/3) leaves d_3 identically unchanged, so Hamer pins "
+        f"12 leak_3 - 4 b_3 = {12 * K.LEAK_3 - 4 * K.B_3} and neither coefficient alone. The "
+        f"lambda = 8 band top separates them: (d_3^top - d_3)/12 = {(K.D_3_TOP - K.D_3) / 12} = b_3"
+    )
 
 
 # ==========================================================================
@@ -598,6 +782,87 @@ def _():
 def _():
     vals = {n: K.dim_z2(n) for n in (3, 4, 5)}
     return vals == {3: 29, 4: 66, 5: 127}, f"{vals}"
+
+
+@homology.check("d_2 d_3 = 0 on the built complex", "PAPER_FLATBAND eq. (6), App. B")
+def _():
+    sizes = (1, 2, 3, 4)
+    bad = [n for n in sizes if not TOR.chain_condition(n)]
+    return not bad, (
+        f"exact over Z at L = {sizes}, from the printed face and cube boundary formulas: the "
+        "composite links-by-cubes matrix is identically zero"
+    )
+
+
+@homology.check("rank d_3 = L^3 - 1 on the built complex", "PAPER_FLATBAND eq. (14), App. B")
+def _():
+    got = {n: TOR.ranks(n)["rank_d3"] for n in (1, 2, 3, 4, 5)}
+    return got == {n: n**3 - 1 for n in got}, (
+        f"{got}; the single relation among translated cube boundaries is the oriented sum over "
+        "all cubes, and both primes agree at every size"
+    )
+
+
+@homology.check(
+    "dim Z_2 = L^3 + 2 by rank, not by re-arranging the formula", "PAPER_FLATBAND eq. (15)"
+)
+def _():
+    got = {n: TOR.ranks(n)["dim_ker_d2"] for n in (1, 2, 3, 4, 5)}
+    return got == {n: n**3 + 2 for n in got}, (
+        f"{got} = L^3 + 2 at L = 1..5, from rank(d_2) on the built complex. This is the check the "
+        "suite did not have: the two above it simplify (L^3-1)+3 to L^3+2 and evaluate that "
+        "formula, which is arithmetic, not homology"
+    )
+
+
+@homology.check("cube boundaries and three wrapping sheets SPAN Z_2", "PAPER_FLATBAND Thm. 2")
+def _():
+    rows = {
+        n: (TOR.ranks(n)["span_generators"], TOR.ranks(n)["dim_ker_d2"]) for n in (1, 2, 3, 4, 5)
+    }
+    ok = all(a == b for a, b in rows.values()) and all(TOR.sheets_are_cycles(n) for n in rows)
+    return ok, (
+        f"rank[d_3 | sheets] vs dim ker d_2: {rows}. Each sheet is a cycle over Z and the two "
+        "bounds meet, so Z_2 = im d_3 (+) H_2 with an explicit basis rather than a dimension count"
+    )
+
+
+@homology.check(
+    "the L^3+2 count is chain-level, not the Bloch convention", "PAPER_FLATBAND Thm. 2 remark"
+)
+def _():
+    # The manuscript's abstract attaches "L >= 3" to the count, and its Thm. 2
+    # does not. The caveat belongs to the twelve-neighbour Bloch adjacency,
+    # where x+e and x-e coincide at L = 2; the chain complex has no such
+    # problem. Pinned so the small cases are never "fixed".
+    small = {n: TOR.ranks(n)["dim_ker_d2"] for n in (1, 2)}
+    return small == {1: 3, 2: 10}, (
+        f"{small} = L^3+2 at L = 1, 2. At L = 1 every boundary formula degenerates and d_2 = 0, "
+        "so all three faces are cycles; at L = 2 the multigraph caveat bites S, not d_2"
+    )
+
+
+@homology.check(
+    "FINDING: the wrapping sheets are cycles but NOT harmonic", "PAPER_FLATBAND §6 vs Thm. 2"
+)
+def _():
+    # The manuscript uses H_2 in two senses four pages apart. In Theorem 2 it
+    # is the quotient ker d_2 / im d_3, which the wrapping sheets span. In §6
+    # it is the harmonic subspace ker d_2 ^ ker d_3*, on which a term
+    # proportional to L_up = d_3 d_3* is said to act trivially -- "leaving the
+    # three harmonic sheets pinned". The only generators the paper exhibits
+    # belong to the first sense: they are cycles, but d_3* does not kill them,
+    # and L_up moves them by the same Rayleigh quotient at every size.
+    #
+    # Nothing downstream breaks: Proposition 7 rests on B* w = 0, which covers
+    # all of ker d_2. It is §6's real-space restatement that does not cover the
+    # objects Theorem 2 constructs.
+    ratios = {n: TOR.sheet_up_laplacian_ratio(n) for n in (2, 3, 4)}
+    cycles = all(TOR.sheets_are_cycles(n) for n in (2, 3, 4))
+    return cycles and all(a == 2 * b for a, b in ratios.values()), (
+        f"<s, L_up s> vs ||s||^2: {ratios} -- the Rayleigh quotient is exactly 2 at every L >= 2, "
+        "while d_2 s = 0 exactly. The sheets represent the three H_2 classes and are not harmonic"
+    )
 
 
 def run_all() -> list[Result]:
@@ -3114,4 +3379,150 @@ def _():
         "recorded q_6^bal exactly (THM_SU6 line 86, Delta_q_6 = 6/343 "
         "checked elsewhere): the blanket N = 3 prohibition is a scalar-"
         "family fact, not a shape-family one"
+    )
+
+
+# ==========================================================================
+manuscript = _suite("the flat-band manuscript")
+
+PAPER_DIR = Path(__file__).resolve().parents[2] / "paper"
+PAPER_TEXT = "homological_flat_bands_2026-08-28.txt"
+
+
+@manuscript.check("no fourth-order coefficient enters the manuscript", "PAPER_FLATBAND §6")
+def _():
+    # §6 makes a claim about the manuscript itself: "no fourth-order band,
+    # bandwidth, or derived higher-order quantity is used in this paper. This
+    # is a scientific boundary, not merely a choice of presentation." That is a
+    # statement about a document, so it is checkable against the document --
+    # with the same coefficient-signature scanner `workhouse triage` points at
+    # any unpinned archive. A future revision that crosses the firewall fails
+    # here rather than passing unread.
+    report = TRIAGE.scan(PAPER_DIR)
+    text = next(f for f in report.files if f.path.name == PAPER_TEXT)
+    carried = set(text.coefficients)
+    return carried == {"d_3", "b_3", "leak_3"}, (
+        f"the pinned manuscript text carries exactly {sorted(carried)} and no fourth-order "
+        "signature: not q_band^(4), not m_Gamma^(4), not either C_shp side, not the quarantined "
+        "scalar. The firewall is measured, not taken on the word of §6"
+    )
+
+
+@manuscript.check(
+    "the manuscript's SU(3) ledger is this registry, value by value", "PAPER_FLATBAND Table 2"
+)
+def _():
+    printed = {
+        "u^0 electric plaquette": (Rational(8, 3), K.e_flat(0)),
+        "u^1 scalar": (Rational(1), K.e_flat().coeff(K.u, 1)),
+        "u^2 BB* coefficient": (Rational(5, 612), K.T_MINUS_2),
+        "u^2 flat scalar": (Rational(11, 306), K.BAND_ODD_FLAT),
+        "u^3 BB* coefficient": (Rational(1975, 124848), K.B_3),
+        "u^3 per-neighbour leakage": (Rational(-12331, 249696), K.LEAK_3),
+        "u^3 flat scalar": (Rational(-109151, 249696), K.D_3),
+    }
+    bad = [k for k, (paper, repo) in printed.items() if paper != repo]
+    return not bad, (
+        f"all {len(printed)} rows of Table 2 are the registry's values exactly. Scope worth "
+        "stating: six rows are SU(3) specialisations of all-rank statements, but the u^1 row is "
+        "SU(3)-ONLY -- it is -<p,-|V|p,-> = 1, which needs the epsilon channel and vanishes at "
+        "N >= 4" + (f"; MISMATCH at {bad}" if bad else "")
+    )
+
+
+@manuscript.check(
+    "the Bloch and chain routes to the carrier agree", "PAPER_FLATBAND Thm. 1 + Thm. 2"
+)
+def _():
+    # The manuscript's only two structural theorems are never joined. Theorem 1
+    # is a 3x3 statement; Theorem 2 counts an (L^3+2)-dimensional carrier.
+    # Summing the Bloch nullity over the allowed momenta is the bridge, and the
+    # two decompositions produce the same two numbers from DIFFERENT objects:
+    # the 3 is B(0) = 0's triple degeneracy, not b_2(T^3), and the L^3 - 1 is
+    # the count of non-Gamma momenta, not a count of cubes.
+    rows = {}
+    for size in (2, 3, 4):
+        profile = TOR.bloch_nullities(size)
+        rows[size] = (profile, sum(k * v for k, v in profile.items()))
+    ok = all(
+        profile == {3: 1, 1: size**3 - 1} and total == size**3 + 2
+        for size, (profile, total) in rows.items()
+    )
+    return ok, (
+        f"nullity profiles { ({s: p for s, (p, _) in rows.items()}) }: 3 at Gamma exactly once and "
+        "1 at each of the other L^3 - 1 momenta, summing to L^3 + 2 -- the same count the chain "
+        "complex gives, from different objects"
+    )
+
+
+@manuscript.check("q_min on the L-torus grid is 4 sin^2(pi/L)", "PAPER_FLATBAND eq. (16)")
+def _():
+    sizes = range(2, 7)
+    for size in sizes:
+        values = {
+            sum(4 * sin(pi * n / size) ** 2 for n in t) for t in product(range(size), repeat=3)
+        }
+        nonzero = sorted((v for v in values if simplify(v) != 0), key=float)
+        if simplify(nonzero[0] - 4 * sin(pi / size) ** 2) != 0:
+            return False, f"grid minimum at L = {size} is {nonzero[0]}, not 4 sin^2(pi/L)"
+    return True, (
+        f"exhaustive over the whole momentum grid at L = {list(sizes)}: the smallest nonzero q "
+        "puts one unit of momentum in a single direction, because sin^2(pi n/L) over n = 1..L-1 "
+        "is smallest at n = 1 and n = L-1"
+    )
+
+
+@manuscript.check(
+    "Delta_L = 4 tau(u) sin^2(pi/L) is positive and falls as L^-2", "PAPER_FLATBAND eq. (35)"
+)
+def _():
+    tau = K.t_series()
+    positive = tau.coeff(K.u, 2) > 0 and tau.coeff(K.u, 3) > 0
+    scaled = limit(K.L**2 * (4 * tau * sin(pi / K.L) ** 2), K.L, oo)
+    return positive and simplify(scaled - 4 * pi**2 * tau) == 0, (
+        f"tau(u) = {tau} has both coefficients positive, so Delta_L > 0 for every u > 0 and "
+        f"L >= 2; and L^2 Delta_L -> {scaled}, the L^-2 decay that is exactly why the manuscript "
+        "does not claim volume-uniform isolation"
+    )
+
+
+@manuscript.check(
+    "the two band spans ARE the two incidence spectra", "PAPER_FLATBAND §4 / PAPER App. B"
+)
+def _():
+    # The manuscript introduces the unsigned incidence as a control: strip the
+    # orientation signs and the adjacency has spectrum {12,0,0} at Gamma and
+    # {-4,-4,-4} at the corner, disjoint, so nothing can be momentum
+    # independent. That control is not hypothetical -- it is the C-even sector,
+    # and both spans are certified corpus numbers. The difference between 12
+    # and 16 is exactly the orientation sign §4 says is doing the work.
+    def spectrum(momenta, signed):
+        d = [exp(I * k) - 1 if signed else exp(I * k) + 1 for k in momenta]
+        rows = (
+            Matrix([[d[1], -d[0], 0], [d[2], 0, -d[0]], [0, d[2], -d[1]]])
+            if signed
+            else Matrix([[d[1], d[0], 0], [d[2], 0, d[0]], [0, d[2], d[1]]])
+        )
+        adjacency = simplify(rows * rows.H - 4 * eye(3))
+        return sorted(int(simplify(e)) for e in adjacency.eigenvals(multiple=True))
+
+    unsigned = (spectrum([0, 0, 0], False), spectrum([pi, pi, pi], False))
+    signed = (spectrum([0, 0, 0], True), spectrum([pi, pi, pi], True))
+    spectra_ok = (
+        unsigned == ([0, 0, 12], [-4, -4, -4])
+        and signed == ([-4, -4, -4], [-4, 8, 8])
+        and not (set(unsigned[0]) & set(unsigned[1]))
+        and set(signed[0]) & set(signed[1]) == {-4}
+    )
+    odd = K.BAND_ODD_TOP - K.BAND_ODD_FLAT
+    even = K.BAND_EVEN_TOP - K.BAND_EVEN_BOTTOM
+    widths_ok = (
+        odd == 12 * K.T_MINUS_2 == K.BAND_ODD_WIDTH
+        and even == 16 * abs(K.T_PLUS_2) == K.BAND_EVEN_WIDTH
+    )
+    return spectra_ok and widths_ok, (
+        f"unsigned {unsigned[0]} at Gamma and {unsigned[1]} at R, disjoint; signed {signed[0]} "
+        f"and {signed[1]}, sharing exactly -4 -- the flat branch. The spans are 16 and 12, and "
+        f"they are the two bandwidths: C-even 16|t_+| = {even}, C-odd 12 t_- = {odd}. The "
+        "certificate's own key for the first is 'corrected_Ceven_bandwidth_16|t|'"
     )

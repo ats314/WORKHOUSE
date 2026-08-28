@@ -12,18 +12,18 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 148/148 checks pass.
+**T1/T2 — re-derived here.** 168/168 checks pass.
 
 | Suite | Passing |
 |---|---|
-| second order, all ranks | 7/7 |
-| SU(3) second and third order | 6/6 |
+| second order, all ranks | 11/11 |
+| SU(3) second and third order | 10/10 |
 | fourth order, sealed core | 6/6 |
 | fourth order, anchoring and the residual dispute | 13/13 |
 | old-to-new crosswalk | 5/5 |
 | fourth-order generalized Hodge pencil | 3/3 |
 | fourth-order checkpoint extraction | 3/3 |
-| homology and finite volume | 2/2 |
+| homology and finite volume | 8/8 |
 | settlement package and adjudication harness | 12/12 |
 | near-Gamma uniformity (G11) | 6/6 |
 | tier collapse (G14) | 6/6 |
@@ -35,6 +35,7 @@ it cannot drift from what the repository actually checks.
 | tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
 | notes program: SAFE, Davies, coercivity (G20-G23) | 13/13 |
 | off-axis channel ledger (C2 geography, G14) | 8/8 |
+| the flat-band manuscript | 6/6 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -87,6 +88,7 @@ Claims this repository made and withdrew:
 - `G6` B_N fixed-rank holdout ledger for N = 7..18
 - `G7` Native torelon reruns of sigma_5 and sigma_6
 - `G8` Cold one-shot regeneration of the all-rank fourth-order bundle
+- `G24` Derive the shared-link isotropy premise, the one unproved input of the second-order chain
 
 **Tier 2 — months**
 

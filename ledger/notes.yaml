@@ -79,6 +79,28 @@ archives:
       sidebar and the Tabletop patent docx is marked confidential -- both
       flagged for removal from the branch, neither enters the tree.
 
+  - id: UPLOADS_2026-08-28
+    description: >-
+      Five documents handed to the session on 2026-08-28: the manuscript
+      "Homological flat bands in strongly coupled SU(N) Hamiltonian lattice
+      gauge theory" (the first outward-facing paper of the program, and the
+      first artifact to cite this repository by commit), and four synthesis
+      documents around it -- the 19-August Nested-Quotient cellular synthesis,
+      its "Proven Derivations" edition, the 28-August seven-source
+      "PROOF-HARDENED MASTER EDITION" that supersedes both, and the GLUEBALL /
+      Hodge-Wilson master research document.
+    source: >-
+      Uploaded directly to the session, not pushed to a branch. Digests below
+      are of the uploaded bytes. Inventory facts worth keeping: none is
+      byte-identical to anything this repository already pins; the manuscript
+      carries the coefficient signature {d_3, b_3, leak_3} and NO fourth-order
+      signature at all, which is the machine-checked form of its own §6
+      firewall; the other four all carry C_shp v10a.26 and m_Gamma^(4). The
+      Master edition declares SHA-256 digests for the seven artifacts it
+      integrates -- the three that were uploaded byte-match exactly, and the
+      other four, including BOTH executed backends, are declared and not
+      delivered.
+
 # First review pass: the COMBES_THOMAS curated core (2026-08-22), three
 # reading agents with spot-check duties over the best-of package; the full
 # evidence is docs/referee/notes_review_core_theory_2026-08-22.md. Verdicts
@@ -86,6 +108,91 @@ archives:
 # program's claims exist in the ledger to extract into — see the referee
 # document's scaffolding proposal. Nothing here promotes anything.
 reviews:
+# Second review pass: the 2026-08-28 uploads, reviewed in the session they
+# arrived. The manuscript is imported to paper/ and its displayed statements
+# entered as twenty new checks (see docs/decisions/0013 and the claim-to-check
+# map in paper/README.md). Nothing here promotes anything.
+  - digest: dba6455bb417a2ed5194e9b28afc3e5a7046134afa8662ceb59ed188ced6d12a
+    path: WORKHOUSE_Final_Paper.pdf
+    archive: UPLOADS_2026-08-28
+    verdict: import
+    imported_to: paper/homological_flat_bands_2026-08-28.pdf
+    reason: >-
+      The manuscript of record: the first outward-facing paper of the program,
+      and the first artifact to cite this repository by commit
+      (ca3d440a7f93c17569e12d0511847505b6b72c5a). Imported verbatim and pinned
+      by paper/SHA256SUMS, because the twenty checks written against it refer
+      to these bytes. All four counters its §9 reports for that commit were
+      re-measured and hold (119 T1, 29 T2, 349 tests, 28 Lean theorems with no
+      sorry). One thing §9 promised that did not exist at that commit,
+      verify_core.py, was written; it now runs from the repository root, exact
+      and standard-library only. Its §6 fourth-order firewall is machine-checked
+      rather than taken on its word.
+
+  - digest: 6a28460a6d2d7fabc954015faafb080b55df025c23e1b550676fcc149bbe76ba
+    path: Nested_Quotient_Circuit_Hodge_Gauge_Spectral_Theory_Master.docx
+    archive: UPLOADS_2026-08-28
+    verdict: extract
+    bears_on: [D3_ODD, E_VAC3_DOMINO, D_3_TOP, M3_EVEN_BANDMIN, LEAK_3, B_3]
+    reason: >-
+      The seven-source PROOF-HARDENED MASTER EDITION. What entered was its
+      audit of the cubic resolvent backend (§22), which states that the engine
+      "does not compute the direct depth-three determinant-resolvent chain [but]
+      hard-codes the recorded full coefficient". Following that into this
+      repository's own copy of the lineage
+      (NB_HAAR_hodge_electric_resolvent_v06c.ipynb) confirmed it -- gate 20's
+      detail line says the target is "inferred from independent full record",
+      and the three v0.7 cells that try to close it stored a FAIL (0 histories),
+      a crash, and a truncation. That is a true fact about that lineage ONLY:
+      the abstract-domino engine computes b_3 directly, and chasing its
+      certificate produced the three checks above. Its §26 manifest is honest:
+      the three declared artifacts that were delivered byte-match, and the four
+      that were not include both executed backends.
+
+  - digest: f30bc5866b524d4257e2702ab9d9684f30cd297a231a18c17fc3ee7e0e728a34
+    path: Nested_Quotient_Gauge_Spectral_Theory_Proven_Derivations.docx
+    archive: UPLOADS_2026-08-28
+    superseded_by: 6a28460a6d2d7fabc954015faafb080b55df025c23e1b550676fcc149bbe76ba
+    verdict: superseded
+    reason: >-
+      The Master edition's own §26 lists this as its "integrated baseline,
+      audited and corrected here", by matching SHA-256. Worth recording before
+      it is set aside: it prints Delta_Gamma = 2.0827701250956417..., the
+      correctly rounded value, where the corpus had 2.0827701250956414 -- the
+      one-ulp erratum this repository found and recorded as a FINDING is fixed
+      in it. It also states the anchoring relation correctly, as a
+      scalar-coordinate crosswalk that "preserves the centered operator" and
+      does not prove the uncentered kernels equal, which is ADR 0002's
+      distinction in the corpus's own words.
+
+  - digest: d5971c903ffa70e1711f644e91bdef672cdfc74fa27cd362203b74eed955ce9d
+    path: NestedQuotient_Circuit_Hodge_Gauge_Spectral_Theory.txt
+    archive: UPLOADS_2026-08-28
+    superseded_by: 6a28460a6d2d7fabc954015faafb080b55df025c23e1b550676fcc149bbe76ba
+    verdict: superseded
+    reason: >-
+      The 19-August canonical synthesis, listed in the Master edition's §26 by
+      matching SHA-256 as "original cellular synthesis; superseded where the
+      folded correction narrows its claims". Its appendix already records the
+      fact that mattered most this session -- that the v0.7 direct third-order
+      cells of the electric-resolvent notebook "failed or remained incomplete".
+
+  - digest: 67b45541bfe951a680301a98b2fe79e8f96a4086de49b4662289fcea96008647
+    path: GLUEBALL_HODGE_MASTER_RESEARCH_DOCUMENT_20260828.docx
+    archive: UPLOADS_2026-08-28
+    verdict: set-aside
+    reason: >-
+      Reopens a contradiction this repository records as dissolved, in the
+      framing C1 and ADR 0002 forbid. Its §1, §7.4, §7.5 and §11 name
+      q_band^(4) and m_Gamma^(4) as "competing m4 objects" with "unequal m4
+      labels", and make "a typed source-to-model, operator, and normalization
+      map" the next controlling deliverable -- while never using the anchored
+      names and never mentioning Delta_Gamma, the translation-local scalar
+      shift that IS the relation between them and that this repository has
+      machine-checked. Set aside as evidence, not deleted: it is otherwise
+      careful, quotes the v10a26 run's own DO-NOT-PROMOTE verdict verbatim, and
+      grades the m4 promotion "Not promotable". The defect is vocabulary, and
+      the register is where that gets recorded rather than argued.
   - digest: f0cb2be21ba1d393217b5404d02490d1c3de3bdc2f835746d3f9ac2a92d9e42f
     path: HESSIAN/Indices_Extracts/From Local to Global LSI with Drift and TIghten the LSI Spectral Gap Chain.txt
     archive: RESEARCH_2026-08

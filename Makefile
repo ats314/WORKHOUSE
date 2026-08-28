@@ -1,4 +1,4 @@
-.PHONY: help bootstrap check quick lint test verify status frontier certified lit catalogue atlas fmt manifest corpus-manifest lean corpus-index lock clean
+.PHONY: help bootstrap check quick lint test verify status frontier certified lit catalogue atlas fmt manifest corpus-manifest lean corpus-index lock clean paper
 
 help:            ## Show this help
 	@grep -hE '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk -F':.*?## ' '{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -51,6 +51,9 @@ manifest:        ## Regenerate theory/SHA256SUMS after a deliberate corpus chang
 	 (root/'SHA256SUMS').write_text(''.join( \
 	     f'{hashlib.sha256((root/n).read_bytes()).hexdigest()}  {n}' + chr(10) for n in ns)); \
 	 print(f'theory/SHA256SUMS: {len(ns)} files')"
+
+paper:           ## The manuscript's own portable verifier: exact, stdlib only, no floats
+	@python3 verify_core.py
 
 lean:            ## T0: proof-check the Lean core (needs elan on PATH)
 	@cd lean && lake build && echo "Lean core: proof-checked, no sorries"
