@@ -15,8 +15,6 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-**1 checks are failing.** They are marked below.
-
 ## T0 — proof-checked — 28
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
@@ -576,7 +574,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `every \chk in the united paper names a check that exists and passes`
   - src/workhouse/invariants.py:3838 · MASTER paper, every displayed result
   - `workhouse verify --only 'every \chk in the united paper names a check that exists and passes'`
-- `every declared note document is a graph node with an edge` **[FAILING]**
+- `every declared note document is a graph node with an edge`
   - src/workhouse/invariants.py:3870 · ledger/notes.yaml + notes/*.jsonl
   - `workhouse verify --only 'every declared note document is a graph node with an edge'`
 - `no fourth-order coefficient enters the manuscript`

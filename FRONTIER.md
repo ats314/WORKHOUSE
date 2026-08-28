@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 180/181 checks pass.
+**T1/T2 — re-derived here.** 181/181 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -35,7 +35,7 @@ it cannot drift from what the repository actually checks.
 | tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
 | notes program: SAFE, Davies, coercivity (G20-G23) | 13/13 |
 | off-axis channel ledger (C2 geography, G14) | 11/11 |
-| the flat-band manuscript | 3/4 |
+| the flat-band manuscript | 4/4 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
