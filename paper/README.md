@@ -11,7 +11,9 @@ any of them moves.
 
 | File | What it is |
 |---|---|
-| `homological_flat_bands_2026-08-28.pdf` | the manuscript. **This is the artifact.** |
+| `homological_flat_bands_2026-08-28.pdf` | the flat-band manuscript, the one that cites this repository by commit. |
+| `nested_quotient_master_2026-08-28.pdf` | the master derivation, uniting it with the nested-quotient circuit theory. **The current artifact of record.** |
+| `nested_quotient_master_2026-08-28.txt` | its extracted text, same provenance and standing as the line below. |
 | `homological_flat_bands_2026-08-28.txt` | its text, extracted once with `pypdf` 6.16.2 so checks can read it. Derived, never authority — where the two differ the PDF wins. |
 | `../verify_core.py` | the portable verifier §9 promises. Root-level so the manuscript's printed `python3 verify_core.py` is true as printed. |
 
@@ -34,7 +36,11 @@ never meant to be — this session's own work moves them, which is what pinning 
 commit is for. The current counts are in `FRONTIER.md` §1.
 
 One thing §9 promised that did not exist at that commit: `verify_core.py`.
-It exists now.
+It exists now — and it proves more than either manuscript claims for it (below).
+
+The master document states the same counters and adds the right qualification
+itself: "the counts are provenance information rather than independent evidence
+here". That is correct, and it is what this directory exists to fix.
 
 ## The claim-to-check map
 
@@ -70,6 +76,11 @@ workhouse verify --only '<check name>'
 | §6 the fourth-order firewall | `no fourth-order coefficient enters the manuscript` | T1 |
 | Table 2, the SU(3) ledger | `the manuscript's SU(3) ledger is this registry, value by value` | T1 |
 | Table 1, evidence map | see **What is not checked**, below | — |
+| MASTER eq. (18) the isotropy premise | `the shared-link weights are Weingarten, not an isotropy assumption` | T1 |
+| MASTER eq. (34) `q_max(L)` parity | `the zone maximum of q is 12 only at even L` | T1 |
+| MASTER Fig. 2 | `q at the four high-symmetry points is 0, 4, 8, 12` | T1 |
+| MASTER §9 eq. (60)–(64) axial datum | `on an axial cut the mixed invariants vanish and the norm divides` | T1 |
+| MASTER closure audit, the C2 obstruction | `FINDING: the retained Gamma/axis data cannot identify C_shp` | T1 |
 
 ## What is not checked, and what a referee should press on
 
@@ -151,6 +162,11 @@ Two of its checks are stronger than the manuscript claims for them:
   manuscript's own proof, `ker d_2 = im d_3 (+) H_2`, carried out rather than
   cited.
 
-What it does not do, said plainly: it does not re-derive the Haar integrals
-behind the channel weights, it does not enumerate the third-order lifter
-classes, and it decides nothing about the disputed fourth-order coefficient.
+It now also **derives the manuscripts' central input**: the shared-link channel
+weights follow from the order-2 Weingarten values, computed from the `S_2` Gram
+inverse in exact `Fraction` arithmetic with explicit index sums. A referee who
+installs nothing can check that eq. (18)'s one asserted word is a theorem.
+
+What it does not do, said plainly: it does not enumerate the third-order lifter
+classes, it does not sum the cube histories or reproduce the microscopic axial
+sweep, and it decides nothing about the disputed fourth-order coefficient.

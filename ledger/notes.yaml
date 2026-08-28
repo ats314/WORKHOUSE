@@ -101,6 +101,26 @@ archives:
       other four, including BOTH executed backends, are declared and not
       delivered.
 
+  - id: UPLOADS_2026-08-28b
+    description: >-
+      A second batch, handed to the session hours after the first, once the
+      referee report on the flat-band manuscript had been read: the master
+      derivation that unites the flat-band paper with the nested-quotient
+      circuit theory, a closure-audited revision of the Master edition, a
+      cross-source UNIFIED MASTER, a rebuild of the manuscript PDF, and this
+      repository's own referee document handed back.
+    source: >-
+      Uploaded directly to the session. Inventory facts worth keeping: the
+      master derivation has absorbed the referee report -- it labels its
+      computational conclusions "Reported computational result" and
+      "Conditional corollary", says which artifacts its bundle does not
+      contain, and states in its own words that the cold resolvent engine
+      "imports the complete third-order coefficient as a regression target;
+      it is not an independent cold computation of the direct third-order
+      chain". The zip is a rebuild of the already-pinned manuscript: different
+      bytes, identical extracted text. The .md is byte-identical to
+      docs/referee/final_paper_2026-08-28.md.
+
 # First review pass: the COMBES_THOMAS curated core (2026-08-22), three
 # reading agents with spot-check duties over the best-of package; the full
 # evidence is docs/referee/notes_review_core_theory_2026-08-22.md. Verdicts
@@ -108,6 +128,89 @@ archives:
 # program's claims exist in the ledger to extract into — see the referee
 # document's scaffolding proposal. Nothing here promotes anything.
 reviews:
+# Third review pass: the 2026-08-28 second batch, reviewed on arrival. The
+# master derivation is imported to paper/ and its new content entered as four
+# checks; the closure audit's C2 obstruction certificate entered as a FINDING.
+  - digest: a4da893f56ef49266571443918f77f158d7238492c56e1c865b54eabea51b792
+    path: WORKHOUSE_Master_Document.pdf
+    archive: UPLOADS_2026-08-28b
+    verdict: import
+    imported_to: paper/nested_quotient_master_2026-08-28.pdf
+    reason: >-
+      The master derivation, uniting the flat-band manuscript with the
+      nested-quotient circuit theory, and the document that answers this
+      repository's referee report. It states its own evidence boundary
+      unusually well: items 1-3 derived in the manuscript, items 4-5 labelled
+      conditional computational conclusions, and an explicit note that the
+      cold resolvent engine "imports the complete third-order coefficient as a
+      regression target; it is not an independent cold computation of the
+      direct third-order chain" -- the b_3 provenance point this session first
+      overstated and then retracted, stated correctly. Imported verbatim,
+      pinned by paper/SHA256SUMS, and covered by the same firewall check as
+      the flat-band paper: it too carries only {d_3, b_3, leak_3}. Its new
+      content entered as four checks (the q_max parity law of eq. (34), the
+      four high-symmetry points, the axial norm division, and the C2
+      obstruction certificate).
+
+  - digest: 2c5503906c779270bf7c0668b4827535f7bbbe779492df5f5b140a34db810628
+    path: Nested_Quotient_Circuit_Hodge_Gauge_Spectral_Theory_Master_closure_audited.docx
+    archive: UPLOADS_2026-08-28b
+    verdict: extract
+    bears_on: [C2, G3, C_SHP_HISTORICAL, C_SHP_NEW_NUM]
+    reason: >-
+      The PROOF-HARDENED CLOSURE-AUDITED EDITION, a revision of the Master
+      edition adding a supplemental exact closure audit of four fourth- and
+      fifth-order obligations. What entered is its C2 obstruction certificate:
+      "the retained Gamma/axis data are non-identifying: two exact rational
+      carrier-energy witnesses agree on every retained datum and differ at M
+      and R." That checks, and is stronger than a statement about sampled
+      points -- the two recorded sides differ by 4 Delta_C e_2, and e_2 is the
+      ZERO POLYNOMIAL on a one-dimensional axial cut, so no Gamma or axial
+      datum separates them at any precision. Registered as the FINDING
+      `the retained Gamma/axis data cannot identify C_shp`, which prefers
+      neither side. Its companion claim that the 609-row candidate keyset is
+      complete while "the corpus stores zero physics contractions" corroborates
+      last session's G3 fail-closed result from the other direction. Its
+      claimed full-SU(3) pentagonal cap closure is NOT extracted: it rests on
+      a tensor-scope audit whose artifact is not in the bundle.
+
+  - digest: 71650416d5788daac6e82117306a18bd20086d4fad2c9126de7f829affa1b8db
+    path: NESTED_QUOTIENT_GAUGE_SPECTRAL_THEORY_UNIFIED_MASTER_20260828.docx
+    archive: UPLOADS_2026-08-28b
+    verdict: set-aside
+    reason: >-
+      A cross-source synthesis reconciling four artifacts into one
+      authority-aware narrative. It is careful -- it names its authority order
+      explicitly, keeps the conflicting fourth-order scalars "as distinct
+      coordinates, not averaged or promoted into one coefficient", and carries
+      a scope firewall -- but every load-bearing statement in it is controlled
+      by the two documents already pinned in paper/, which it says itself
+      ("strongest claims controlled by PAPER and DERIVATIONS"). Set aside as
+      synthesis: repetition is not independence, and nothing here originates.
+
+  - digest: 42bc3bb96aa5f3b93a02642828074040421c820515a0f74931851cfbf21f1c47
+    path: WORKHOUSE_Final_Paper.zip
+    archive: UPLOADS_2026-08-28b
+    verdict: duplicate
+    duplicate_of: paper/homological_flat_bands_2026-08-28.pdf
+    reason: >-
+      Contains one file, a rebuild of the already-pinned manuscript. Different
+      bytes (the archive's PDF hashes to b57f70ed..., the pinned one to
+      dba6455b...), identical extracted text, verified by diff. A rebuild, not
+      a revision, so the pin stands and nothing is re-pinned. Recorded because
+      "the digest changed" and "the paper changed" are different facts and only
+      the second would matter.
+
+  - digest: 7c15d85a5e849788a3a5993a413133705da79ced2fc0740260ee1e47374de6b8
+    path: final_paper_20260828.md
+    archive: UPLOADS_2026-08-28b
+    verdict: duplicate
+    duplicate_of: docs/referee/final_paper_2026-08-28.md
+    reason: >-
+      This repository's own referee document, handed back unchanged --
+      byte-identical to the file already in the tree. Recorded rather than
+      silently skipped: a round trip that changes nothing is worth being able
+      to see, and the digest proves it changed nothing.
 # Second review pass: the 2026-08-28 uploads, reviewed in the session they
 # arrived. The manuscript is imported to paper/ and its displayed statements
 # entered as twenty new checks (see docs/decisions/0014 and the claim-to-check

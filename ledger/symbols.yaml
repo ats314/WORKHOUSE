@@ -19,6 +19,44 @@
 schema: symbols/v1
 
 symbols:
+  - id: ell_n
+    canonical: ell_N
+    meaning: >
+      All-rank C-even second-order hopping. Printed in the corpus and gated in
+      a notebook as factor(Wmix + Wlike + 1/CF), unregistered here until
+      2026-08-28. The 1/C_F is the vacuum-mediated route p -> |0> -> q, which
+      is exactly what C13 records as having been omitted: A_3 + B_3 = -481/612
+      is the superseded value and 1/C_F(3) = 3/4 the correction. The route is
+      absent from the C-odd sector because <0|V|p,-> = 0 by charge
+      conjugation, which is why t_N = B_N - A_N carries no such term.
+    code_names: [even_hopping, T_PLUS_2]
+    corpus_spellings:
+      - 'ell_N'
+      - '-2*N*(3*N**2 - 5)'
+    values:
+      - "-11/306"
+    claims: [C13, R2]
+
+  - id: shared_link_weights
+    canonical: w_R
+    meaning: >
+      The resolvent weight of one shared-link fusion channel,
+      -(d_R/N^2)/(C_F + C_R/2), summing to A_N over F (x) Fbar and B_N over
+      F (x) F. The numerator d_R/N^2 is the manuscripts' "isotropy" sentence:
+      asserted there, and derived here from the order-2 Weingarten values --
+      the six nonshared links collapse to two independent Haar matrices, and
+      two degree-(2,2) moments (N^2 and N) settle both families. G24.
+    code_names: [channel_weight, channel_data, shared_link_weights]
+    corpus_spellings:
+      - 'w_R'
+      - 'W_mix'
+      - 'Wlike'
+    claims: [G24, R2]
+    note: >
+      The corpus writes the two family SUMS as W_mix and W_like and the
+      per-channel weight as w_R. Registered here because the derivation of the
+      numerator d_R/N^2 -- the manuscripts' one asserted word -- is new (G24),
+      not the name.
   - id: q_band_4
     canonical: q_band^(4)
     meaning: >

@@ -20,8 +20,10 @@ from pathlib import Path
 
 from sympy import (
     I,
+    Integer,
     Matrix,
     Rational,
+    cos,
     diff,
     exp,
     expand,
@@ -215,6 +217,41 @@ def _():
         f"gaps are C_F + C_R/2 for all four channels; sum of d_R/N^2 is {families} per family, "
         "exactly 1; and the external energy is 2 C_F = (N^2-1)/N, which is 8/3 at N = 3. The "
         "isotropy premise that makes d_R/N^2 the numerator is asserted by the corpus, not derived"
+    )
+
+
+@rank_law.check(
+    "the shared-link weights are Weingarten, not an isotropy assumption",
+    "PAPER_FLATBAND eq. (18) / G24",
+)
+def _():
+    # The one sentence the whole second-order chain rested on: "Isotropy of the
+    # normalized shared-link tensor assigns squared norm d_R/N^2 to the channel
+    # projector." It is not an assumption. It follows from the order-2
+    # Weingarten values in two steps.
+    #
+    # The six nonshared links collapse first: each plaquette contributes a
+    # product of three independent Haar links, and a product of independent
+    # Haar matrices is Haar, so the amplitude is Tr(A U) Tr(B U^(+-1)) with A
+    # and B independent Haar. What survives is a pure degree-(2,2) moment of
+    # the shared link, and two of those settle both families.
+    #
+    # This is the check G24 asked for. It imports nothing from the corpus: the
+    # Weingarten pair is the inverse of the S_2 Gram matrix and the index sums
+    # are explicit, which is why agreement here moves the manuscript's central
+    # input from asserted to derived.
+    rows, ok = {}, True
+    for rank in (3, 4, 5):
+        derived = CELL.shared_link_weights(rank)
+        for channel, weight in derived.items():
+            claimed = Rational(K.channel_data(rank)[channel][0]) / rank**2
+            ok = ok and Rational(weight.numerator, weight.denominator) == claimed
+        rows[rank] = tuple(str(m) for m in CELL.shared_link_moments(rank))
+    return ok, (
+        f"(M_direct, M_cross) = {rows}, i.e. (N^2, N) at every rank, so the like family "
+        "splits as (N+1)/(2N) and (N-1)/(2N) and the mixed family's singlet weight is 1/N^2 -- "
+        "all four exactly d_R/N^2, from the S_2 Gram inverse and explicit index sums. The "
+        "manuscript asserts this in one word; nothing in the corpus derived it"
     )
 
 
@@ -3386,7 +3423,13 @@ def _():
 manuscript = _suite("the flat-band manuscript")
 
 PAPER_DIR = Path(__file__).resolve().parents[2] / "paper"
-PAPER_TEXT = "homological_flat_bands_2026-08-28.txt"
+#: The pinned manuscripts, by the text extracted from each. The flat-band paper
+#: is the one that cites this repository by commit; the master document unites
+#: it with the nested-quotient circuit theory.
+PAPER_TEXTS = (
+    "homological_flat_bands_2026-08-28.txt",
+    "nested_quotient_master_2026-08-28.txt",
+)
 
 
 @manuscript.check("no fourth-order coefficient enters the manuscript", "PAPER_FLATBAND §6")
@@ -3399,10 +3442,13 @@ def _():
     # any unpinned archive. A future revision that crosses the firewall fails
     # here rather than passing unread.
     report = TRIAGE.scan(PAPER_DIR)
-    text = next(f for f in report.files if f.path.name == PAPER_TEXT)
-    carried = set(text.coefficients)
-    return carried == {"d_3", "b_3", "leak_3"}, (
-        f"the pinned manuscript text carries exactly {sorted(carried)} and no fourth-order "
+    carried = {
+        name: set(next(f for f in report.files if f.path.name == name).coefficients)
+        for name in PAPER_TEXTS
+    }
+    third_order = {"d_3", "b_3", "leak_3"}
+    return all(v == third_order for v in carried.values()), (
+        f"both pinned manuscripts carry exactly {sorted(third_order)} and no fourth-order "
         "signature: not q_band^(4), not m_Gamma^(4), not either C_shp side, not the quarantined "
         "scalar. The firewall is measured, not taken on the word of §6"
     )
@@ -3525,4 +3571,114 @@ def _():
         f"and {signed[1]}, sharing exactly -4 -- the flat branch. The spans are 16 and 12, and "
         f"they are the two bandwidths: C-even 16|t_+| = {even}, C-odd 12 t_- = {odd}. The "
         "certificate's own key for the first is 'corrected_Ceven_bandwidth_16|t|'"
+    )
+
+
+@manuscript.check("the zone maximum of q is 12 only at even L", "MASTER_DOC eq. (34)")
+def _():
+    # The master document refines the flat-band paper's flat "12". On the
+    # periodic L^3 momentum grid the largest sampled q is 12 only when L is
+    # even, because only then does some k_j reach pi exactly; at odd L the
+    # closest allowed momentum is pi(L-1)/L and the maximum is 12 cos^2(pi/2L).
+    # The manifold width W = q_max(L) t_N u^2 inherits the parity.
+    rows = {}
+    for size in range(2, 10):
+        values = {
+            sum(4 * sin(pi * n / size) ** 2 for n in t) for t in product(range(size), repeat=3)
+        }
+        attained = max(values, key=float)
+        claimed = Integer(12) if size % 2 == 0 else 12 * cos(pi / (2 * size)) ** 2
+        if simplify(attained - claimed) != 0:
+            return False, f"q_max at L = {size} is {attained}, not {claimed}"
+        rows[size] = attained
+    return True, (
+        f"exhaustive over the whole grid at L = 2..9: { ({k: str(v) for k, v in rows.items()}) }. "
+        "The 12 the flat-band paper prints is the even-L and thermodynamic value; the width "
+        "W = q_max(L) t_N u^2 is smaller at every odd L"
+    )
+
+
+@manuscript.check("q at the four high-symmetry points is 0, 4, 8, 12", "MASTER_DOC Fig. 2")
+def _():
+    # Figure 2 plots the incidence spectrum along Gamma-X-M-R-Gamma and is
+    # asserted rather than generated. Its four corners are arithmetic, and the
+    # branch set at each is {0, q, q} by the factorization theorem -- so the
+    # figure is reproducible from two checked statements rather than trusted.
+    points = {
+        "Gamma": (0, 0, 0),
+        "X": (pi, 0, 0),
+        "M": (pi, pi, 0),
+        "R": (pi, pi, pi),
+    }
+    got = {name: simplify(sum(4 * sin(k / 2) ** 2 for k in ks)) for name, ks in points.items()}
+    return got == {"Gamma": 0, "X": 4, "M": 8, "R": 12}, (
+        f"{got}; the plotted branch set at each point is {{0, q, q}}, and R attains the zone "
+        "maximum 12 that sets the full-manifold width"
+    )
+
+
+@manuscript.check(
+    "on an axial cut the mixed invariants vanish and the norm divides",
+    "MASTER_DOC §9, eq. (60)-(64)",
+)
+def _():
+    # Why the axial datum is decidable while the off-axis one is not, one order
+    # below C2's usual statement. On k = (k, 0, 0) the Bloch invariants collapse
+    # to q = L(k) with e_2 = e_3 = 0, so every mixed invariant is blind there --
+    # which is exactly why an axial measurement cannot determine C_shp, and why
+    # both disputed kernels agree on alpha.
+    #
+    # The second half is the norm division the master document's Conditional
+    # corollary 12 turns on: the raw cube-boundary numerator is (alpha/4)L^2
+    # while ||w||^2 = q = L, so the carrier eigenvalue carries a single power
+    # of L and its coefficient is alpha_3/4 = 5/48 = A_shp.
+    k = symbols("k", real=True)
+    axis = [k, 0, 0]
+    a = [4 * sin(component / 2) ** 2 for component in axis]
+    q = simplify(sum(a))
+    e2 = simplify(a[0] * a[1] + a[0] * a[2] + a[1] * a[2])
+    e3 = simplify(a[0] * a[1] * a[2])
+    lk = 4 * sin(k / 2) ** 2
+    collapse = simplify(q - lk) == 0 and e2 == 0 and e3 == 0
+    divided = simplify((K.ALPHA_PEN_3 / 4) * lk**2 / lk - (K.ALPHA_PEN_3 / 4) * lk) == 0
+    coefficient = K.ALPHA_PEN_3 / 4 == K.A_SHP_3
+    return collapse and divided and coefficient, (
+        f"on k = (k,0,0): q = L(k) = {lk}, e_2 = {e2}, e_3 = {e3}. Dividing the raw numerator "
+        f"(alpha/4)L^2 by ||w||^2 = q = L leaves one power of L with coefficient "
+        f"alpha_3/4 = {K.ALPHA_PEN_3 / 4} = A_shp. The mixed invariants are zero on the whole "
+        "axis, which is why the axial datum both kernels share cannot determine C_shp"
+    )
+
+
+@manuscript.check(
+    "FINDING: the retained Gamma/axis data cannot identify C_shp", "MASTER_DOC closure audit / C2"
+)
+def _():
+    # The closure-audited synthesis states an "exact obstruction certificate":
+    # two exact rational carrier-energy witnesses agree on every retained
+    # Gamma/axis datum and differ at M and R. It holds, and it is stronger than
+    # a statement about sampled points.
+    #
+    # The two recorded C_shp sides differ on the mixed-gradient ray alone, so
+    # their shape difference is 4 Delta_C e_2. On a one-dimensional axial cut
+    # two of the three a_i vanish, so e_2 vanishes IDENTICALLY in the remaining
+    # momentum -- not at sampled points, as a polynomial. No amount of Gamma or
+    # axial data can therefore separate the two kernels, whatever its precision.
+    #
+    # This is why G3 is the decider and why no re-anchoring closes C2. It
+    # decides nothing about which side is right, and must not be read as
+    # preferring either.
+    momenta = symbols("k1 k2 k3", real=True)
+    a = [4 * sin(k / 2) ** 2 for k in momenta]
+    e2 = a[0] * a[1] + a[0] * a[2] + a[1] * a[2]
+    delta = symbols("Delta_C")
+    difference = 4 * delta * e2
+    axis = simplify(difference.subs({momenta[1]: 0, momenta[2]: 0}))
+    corner = simplify(difference.subs(dict(zip(momenta, (pi, pi, pi), strict=True))))
+    face = simplify(difference.subs(dict(zip(momenta, (pi, pi, 0), strict=True))))
+    return axis == 0 and face != 0 and corner != 0, (
+        f"4 Delta_C e_2 vanishes identically on every axial cut ({axis}), and is {face} at M and "
+        f"{corner} at R. The vanishing is polynomial, not numerical: two of the three a_i are "
+        "zero on an axis, so e_2 is the zero polynomial there. The retained corpus is "
+        "non-identifying for C_shp by construction, and neither side is preferred here"
     )

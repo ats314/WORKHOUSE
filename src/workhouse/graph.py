@@ -31,7 +31,9 @@ Two rules keep the graph honest:
 
 from __future__ import annotations
 
+import inspect
 import json
+import re
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -60,13 +62,14 @@ CURATED_TYPES = frozenset(
         "formalizes",  # theorems.yaml
         "promotes",  # theorems.yaml: the T1/T2 check a theorem lifts to T0
         "originates",  # provenance.yaml: the corpus document a value comes from
+        "uses",  # a check body reads a registered constant (K.NAME)
     }
 )
 #: "cites" appears on both sides deliberately: the DERIVED kind is an id
 #: parsed out of a check's free text (CHK -> ledger id), the CURATED kind is
 #: the verbatim ``cites`` field of literature/index.yaml (LIT -> LIT). The
 #: ``how`` field on each edge keeps them distinguishable.
-DERIVED_TYPES = frozenset({"cites", "mentions", "amends", "retracts"})
+DERIVED_TYPES = frozenset({"cites", "mentions", "amends", "retracts", "uses"})
 TYPES = CURATED_TYPES | DERIVED_TYPES
 
 
@@ -205,6 +208,51 @@ def build(
                 "curated",
                 "ledger/provenance.yaml",
             )
+
+    # A check that reads a registered constant depends on it. The graph had no
+    # such edge, so 85 registered constants sat in the catalogue unreachable
+    # from any claim that uses them -- and `why CONST:B_3` could not answer
+    # "which checks rest on this?". The check body is the honest source: a
+    # constant referenced as K.NAME is used, and one that only appears in a
+    # comment is not (comments are stripped first, for the same reason the Lean
+    # counters strip them).
+    known_constants = {c.id for c in catalogue if c.kind == "constant"}
+    for suite in SUITES:
+        for name, _section, _tier, fn in suite.checks:
+            try:
+                body = inspect.getsource(fn)
+            except OSError:  # pragma: no cover - source always available in-tree
+                continue
+            body = re.sub(r"#[^\n]*", "", body)
+            for const in sorted(set(re.findall(r"\bK\.([A-Z][A-Z0-9_]*)\b", body))):
+                if f"CONST:{const}" in known_constants:
+                    add(
+                        claims_mod.check_id(suite.name, name),
+                        f"CONST:{const}",
+                        "uses",
+                        "derived",
+                        f"src/workhouse/invariants.py:{fn.__code__.co_firstlineno}",
+                    )
+
+    # Every check cites its source by alias; the alias is now a node, so the
+    # citation becomes an edge. Matched on a word boundary so PAPER_FLATBAND
+    # does not also fire the PAPER alias it contains -- the two are different
+    # documents, and a substring match would point readers at the wrong one.
+    aliases = [a for a in claims_mod.load_document_aliases() if not a.get("unresolved")]
+    for suite in SUITES:
+        for name, section, _tier, fn in suite.checks:
+            if not section:
+                continue
+            for alias in aliases:
+                token = re.escape(alias["alias"])
+                if re.search(rf"(?<![A-Za-z0-9_.]){token}(?![A-Za-z0-9_.])", section):
+                    add(
+                        claims_mod.check_id(suite.name, name),
+                        f"CITE:{alias['alias']}",
+                        "cites",
+                        "derived",
+                        f"src/workhouse/invariants.py:{fn.__code__.co_firstlineno}",
+                    )
 
     return Graph(edges=sorted(edges), dangling=sorted(dangling))
 

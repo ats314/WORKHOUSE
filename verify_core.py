@@ -27,7 +27,6 @@ What it checks, and in what sense:
 
 What it does NOT do, said plainly because this repository's rule is that a
 check certifies algebra relative to stated definitions and nothing more:
-it does not re-derive the Haar integrals that produce the channel weights,
 it does not enumerate the third-order lifter classes, and it decides nothing
 about the disputed fourth-order off-axis coefficient -- which is exactly why
 the manuscript's theorems stop at O(u^3).
@@ -584,6 +583,69 @@ def _():
         "unsigned: {12,0,0} at Gamma and {-4,-4,-4} at the corner, disjoint, so no level "
         "survives both. Signed: {-4,-4,-4} and {-4,8,8}, sharing -4 -- the flat branch. "
         "Three face orbitals and cubic symmetry are not enough on their own"
+    )
+
+
+@check("the shared-link channel weights are Weingarten, not an assumption", "eq. (18)")
+def _():
+    # The manuscripts' second-order chain rests on one asserted sentence --
+    # "Isotropy of the normalized shared-link tensor assigns squared norm
+    # d_R/N^2 to the channel projector" -- and everything in Section 4 follows
+    # from it. It is a theorem.
+    #
+    # The six nonshared links collapse first: each plaquette contributes a
+    # product of three independent Haar links, and a product of independent
+    # Haar matrices is Haar, so the amplitude is Tr(A U) Tr(B U^(+-1)) with A
+    # and B independent Haar. Integrating them leaves a pure degree-(2,2)
+    # moment of the shared link, and two of those settle both families.
+    #
+    # Order-2 Weingarten from the S_2 Gram inverse, in exact Fractions:
+    #     G = [[N^2, N], [N, N^2]]  ->  Wg(e) = 1/(N^2-1), Wg((12)) = -1/(N(N^2-1))
+    rows = {}
+    for n in (3, 4, 5):
+        same = F(1, n * n - 1)
+        diff = F(-1, n * (n * n - 1))
+
+        def moment(rows_, cols, rows_c, cols_c, same=same, diff=diff):
+            total = F(0)
+            for sigma in ((0, 1), (1, 0)):
+                if any(rows_[a] != rows_c[sigma[a]] for a in (0, 1)):
+                    continue
+                for tau in ((0, 1), (1, 0)):
+                    if any(cols[a] != cols_c[tau[a]] for a in (0, 1)):
+                        continue
+                    total += same if sigma == tau else diff
+            return total
+
+        direct = cross = F(0)
+        span = range(n)
+        for i in span:
+            for j in span:
+                for k in span:
+                    for lo in span:
+                        direct += moment((i, k), (j, lo), (i, k), (j, lo))
+                        cross += moment((i, k), (j, lo), (i, k), (lo, j))
+        if direct != n * n or cross != n:
+            return False, f"moments at N={n} are ({direct}, {cross}), not ({n * n}, {n})"
+        derived = {
+            "1": F(1) / direct,
+            "Adj": 1 - F(1) / direct,
+            "Lambda2": (direct - cross) / (2 * direct),
+            "Sym2": (direct + cross) / (2 * direct),
+        }
+        claimed = {
+            "1": F(1, n * n),
+            "Adj": F(n * n - 1, n * n),
+            "Lambda2": F(n * (n - 1) // 2, n * n),
+            "Sym2": F(n * (n + 1) // 2, n * n),
+        }
+        if derived != claimed:
+            return False, f"weights at N={n}: {derived} != {claimed}"
+        rows[n] = (direct, cross)
+    return True, (
+        f"(M_direct, M_cross) = { ({n: (str(a), str(b)) for n, (a, b) in rows.items()}) }, i.e. "
+        "(N^2, N); the like family splits as (N+1)/(2N) and (N-1)/(2N) and the mixed family's "
+        "singlet weight is 1/N^2 -- all four exactly d_R/N^2, from the S_2 Gram inverse alone"
     )
 
 

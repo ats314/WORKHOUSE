@@ -56,6 +56,7 @@ KINDS = (
     "theorem",
     "decision",
     "document",
+    "citation",
 )
 
 #: A ledger id anywhere in free text. Case-sensitive on purpose: `u4` in
@@ -123,6 +124,12 @@ def check_id(suite_name: str, check_name: str) -> str:
 
 def load_theorems(path: Path | None = None) -> list[dict[str, Any]]:
     return yaml.safe_load((path or THEOREM_SOURCE).read_text())["theorems"]
+
+
+def load_document_aliases(path: Path | None = None) -> list[dict[str, Any]]:
+    """The citation-alias register (ledger/documents.yaml)."""
+    source = path or ROOT / "ledger" / "documents.yaml"
+    return yaml.safe_load(source.read_text())["aliases"]
 
 
 def load_provenance(path: Path | None = None) -> list[dict[str, Any]]:
@@ -399,6 +406,29 @@ def collect() -> list[Claim]:
                 status=first_sentence,
                 detail=adr["status"],
                 related=sorted({*adr["mentions"], *adr["amends"], *adr["retracts"]}),
+            )
+        )
+
+    # Citation aliases. A check cites its source by the alias
+    # ledger/documents.yaml legends -- "MASTER_THEORY §4.3", "UNIFIED §0.1" --
+    # and until those aliases were catalogue records there was nothing for the
+    # citation to point AT, so most checks sat in the graph with no edge at
+    # all. The alias is the node; the standing is the status, because citing a
+    # superseded document as if current is the failure this register exists to
+    # prevent.
+    for alias in load_document_aliases():
+        if alias.get("unresolved"):
+            continue
+        out.append(
+            Claim(
+                id=f"CITE:{alias['alias']}",
+                kind="citation",
+                statement=alias["alias"],
+                tier=3,
+                where=str(alias.get("path", "")),
+                cites="ledger/documents.yaml",
+                status=alias["standing"],
+                detail=" ".join(str(alias.get("note", "")).split()),
             )
         )
 

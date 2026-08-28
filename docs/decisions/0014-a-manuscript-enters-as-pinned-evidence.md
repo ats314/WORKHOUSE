@@ -64,6 +64,19 @@ Four rules come with it.
    ledger to `constants.py`, because two verifiers that drift apart certify two
    different papers.
 
+## What it bought, in the first day
+
+The map's *What is not checked* section named eq. (18)'s isotropy premise as
+the single unproved physical input of the whole second-order chain, and opened
+G24 for it. G24 closed the same day: the premise follows from the order-2
+Weingarten values, and the derivation is now both a repository check and part
+of the portable verifier. A gap register that names the right gap is worth more
+than one that lists many.
+
+The second manuscript arrived hours later having absorbed the map's other
+findings, which is the loop this directory exists to close: the map says what
+is not checked, the author reads it, and the next revision says so itself.
+
 ## Consequences
 
 - The evidence vocabulary is unchanged and no tier is added. A manuscript is a

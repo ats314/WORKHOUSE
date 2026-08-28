@@ -117,13 +117,57 @@ Hamer's rest-frame series pins `12 leak_3 - 4 b_3` and neither coefficient
 alone, because `q(0) = 0`. What separates them is the `lambda = 8` band top,
 and the corpus already had it.
 
+## Second round: the master derivation, and G24 closed
+
+Hours later a second batch arrived, after this report had been read. The master
+derivation (`paper/nested_quotient_master_2026-08-28.pdf`) unites the flat-band
+manuscript with the nested-quotient circuit theory and has absorbed most of what
+is above: it labels its computational conclusions "Reported computational
+result" and "Conditional corollary", separates the three self-contained items
+from the two ledger-dependent ones, says which artifacts its bundle does not
+contain, adds the sector qualification that excludes the L = 4 straight wrapping
+loop, and states in its own words that the cold resolvent engine "imports the
+complete third-order coefficient as a regression target; it is not an
+independent cold computation of the direct third-order chain" — the b_3
+provenance point this session first overstated and then retracted, stated
+correctly.
+
+Theorem 3's proof is unchanged, so item 2 above still stands.
+
+Four things in it were new and are now checked: the `q_max(L)` parity law of
+eq. (34) (the flat 12 is the even-L and thermodynamic value; at odd L the
+maximum is `12 cos^2(pi/2L)`), the four high-symmetry points behind Figure 2,
+the axial norm division that turns `(alpha/4)L^2` into `(alpha/4)L`, and the
+closure audit's C2 obstruction certificate. That last one is the sharpest: the
+two recorded `C_shp` sides differ by `4 Delta_C e_2`, and `e_2` is the ZERO
+POLYNOMIAL on a one-dimensional axial cut — so no Gamma or axial datum
+separates them at any precision. Non-identifiability, not a limit of the data
+in hand.
+
+**And G24 closed the day it opened.** The isotropy premise is not an
+assumption. The six nonshared links collapse, because each plaquette
+contributes a product of three independent Haar links and a product of
+independent Haar matrices is Haar; the amplitude is `Tr(A U) Tr(B U^±1)` with
+`A`, `B` independent Haar, and integrating them leaves a pure degree-(2,2)
+moment. Two such moments settle both families: `M_direct = N^2`,
+`M_cross = N`. The like family splits as `(N±1)/(2N)`; the mixed family's
+singlet component `delta_il delta_jk / N` has squared norm 1, giving `1/N^2`.
+All four are exactly `d_R/N^2`. It imports nothing from the corpus — the
+Weingarten pair is the inverse of the `S_2` Gram matrix — and it is in
+`verify_core.py`, so a referee who installs nothing can check it in a fifth of
+a second.
+
+With that, the manuscripts' "self-contained through second order" is true as
+written: the one word it leaned on is a theorem.
+
 ## The decisive next test
 
-From the coverage the review leaves behind: an orientation-resolved Weingarten
-evaluation at N = 3 and N = 4 returning `A_N` and `B_N` **separately**. It is
-the only way to move eq. (18)'s isotropy premise — the single unproved physical
-input of the entire second-order chain, and the thing every other statement in
-Section 4 rests on — from asserted to derived. The ingredients are already
-here: `invariants.py` carries `Wg(e)`, `Wg((12))` and the N = 3 fourth moment
-`|U_11|^4 = 1/6`, and the published-comparisons suite already establishes that
-the Weingarten route imports nothing from the corpus.
+~~An orientation-resolved Weingarten evaluation returning `A_N` and `B_N`
+separately.~~ Done, above.
+
+What is left is what the manuscripts themselves say is left, and it has not
+moved: the third-order lifter census (three classes over 32 numerator patterns,
+96 in total — no artifact here), the cube history sum, the microscopic axial
+sweep, and the off-axis fourth-order coefficient. The obstruction certificate
+now makes the last one precise: it cannot be closed by any Gamma or axial
+datum, so G3 remains the decider and no re-anchoring will substitute.
