@@ -29,14 +29,16 @@ from functools import lru_cache
 
 from sympy import Poly, Symbol
 
+from . import constants as K
 from . import payloads as P
 
 Monomial = tuple[int, int, int]
 Laurent = dict[Monomial, Fraction]
 
 #: Every degree-3 channel amplitude is an integer multiple of this — itself a
-#: raw record weight (96 of the 120 rotation records carry +-x).
-X_QUANTUM = Fraction(360421351, 40327601932800)
+#: raw record weight (96 of the 120 rotation records carry +-x). Registered
+#: in the constants registry; kept exact here as a Fraction.
+X_QUANTUM = Fraction(int(K.X_QUANTUM.p), int(K.X_QUANTUM.q))
 
 BLOCKS = (
     "on-site (0,0,0)",
