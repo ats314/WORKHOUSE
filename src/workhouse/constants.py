@@ -242,19 +242,48 @@ D3_TOP = Rational(-61751, 249696)  # C-odd dispersive top (lambda = 8) at order 
 
 LEAK_2 = Rational(-11, 306)  # second-order per-neighbour leakage, C-odd
 LEAK_2_EVEN = Rational(-11, 306)  # ... and C-even. The same rational; see below.
-T_3_EVEN = Rational(-6335, 249696)  # C-even third-order hopping
-LEAK_3_EVEN = Rational(-6335, 249696)  # ... and its leakage. Equal again.
-D3_ODD = Rational(-24541, 62424)  # domino C-odd diagonal
-D3_EVEN = Rational(-517313, 6242400)  # ... and C-even
-E_VAC3_DOMINO = Rational(-9, 16)  # = 2*(-9/32); no connected third-order vacuum piece
-D_3_TOP = Rational(-61751, 249696)  # C-odd dispersive top, at lambda = 8
+LEAK_3_EVEN = Rational(-6335, 249696)  # ... and its leakage, = T3_EVEN. Again.
 M3_EVEN_BANDMIN = Rational(471353, 1560600)  # C-even at lambda = -4
 
+# This block once re-registered five values the certificate-lock block above
+# already carried, under names differing by an underscore or a suffix:
+# T_3_EVEN, D3_ODD, D3_EVEN, E_VAC3_DOMINO and D_3_TOP duplicated T3_EVEN,
+# D3_ODD_DOMINO, D3_EVEN_DOMINO, VAC3_DOMINO and D3_TOP. Every one of the
+# duplicates was read by nothing, and the harm was not hypothetical: a note
+# review's bears_on pointed at three of the dead names, so following it
+# reached a constant no check uses.
+#
+# The give-away was this comment's own census. It used to read "three labels
+# on -11/306, two on -6335/249696" -- and the second count was wrong, because
+# T_3_EVEN was a third label nobody had noticed. A file that miscounts its own
+# coincidences is exactly the state DECLARED_COINCIDENCES now prevents.
+#
 # Recorded, not explained: leak_r = t_r in the C-even sector at BOTH orders,
 # and at second order the C-odd leakage equals them too. Three labels on
 # -11/306, two on -6335/249696. Nothing here shows why, and a mechanism must
 # not be read off a coincidence of values -- ADR 0005 is what happens when one
 # is.
+
+#: Values this registry deliberately carries under more than one name, and why.
+#: Distinct physical quantities may of course be equal -- a hopping and a
+#: leakage in the same sector are different objects that happen to coincide,
+#: and recording both is the point. What must NOT happen is the same quantity
+#: registered twice under near-identical names, because the join keys here are
+#: exact rationals: `workhouse search` then returns two "different" constants
+#: and a reader can cite them as independent corroboration of each other.
+#: `tests/test_constants.py` fails on any shared value not declared here.
+DECLARED_COINCIDENCES: dict[str, tuple[tuple[str, ...], str]] = {
+    "-11/306": (
+        ("LEAK_2", "LEAK_2_EVEN", "T_PLUS_2"),
+        "second-order per-neighbour leakage in both charge sectors, and the "
+        "C-even hopping: three distinct quantities, one rational, unexplained",
+    ),
+    "-6335/249696": (
+        ("T3_EVEN", "LEAK_3_EVEN"),
+        "the engine's structural identity leak_{r,+} = t_{r,+} at third order; "
+        "hopping and leakage are different objects that this run finds equal",
+    ),
+}
 
 #: The adjacency eigenvalues the band assembly is evaluated at. The C-odd
 #: sector sees the SIGNED incidence, spec S = {-4, q-4, q-4} with q in [0, 12],
@@ -298,7 +327,7 @@ def band_assembly(sector, order, lam):
         ("odd", 2): T_MINUS_2,
         ("odd", 3): B_3,
         ("even", 2): T_PLUS_2,
-        ("even", 3): T_3_EVEN,
+        ("even", 3): T3_EVEN,
     }[(sector, order)]
     return band_tower(sector, order) + 12 * leak + lam * hop
 
