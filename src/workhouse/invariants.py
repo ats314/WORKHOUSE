@@ -4071,3 +4071,68 @@ def _():
         "with a cap calibrated at depth 3 where 32 leaves threefold headroom. The walk costs "
         "under a second, so the closure is not why the 609-cluster sweep is slow"
     )
+
+
+@channels.check(
+    "FINDING: C_shp is carried by 6 of 189 records, not spread across the kernel",
+    "UNIFIED v4.3 §5.1/§6, block decomposition",
+    tier=2,
+)
+def _():
+    # G3 is scoped as a 609-cluster sweep producing a whole independent
+    # kernel, and that sweep is currently infeasible. This asks a cheaper
+    # question: within the kernel this repository already has, WHERE does
+    # C_shp actually come from?
+    #
+    # Not evenly. The shape coefficient is concentrated in the six
+    # nearest-neighbour NORMAL (0,0,1) records, which carry 81% of the total
+    # |C4| weight at -0.0347 per record. The ROTATION block is 120 records --
+    # 63% of the kernel -- and contributes 6%, at -0.000136 each, a factor of
+    # 255 less sensitive per record. The three on-site records contribute
+    # exactly nothing, which is the same statement as the registered fact that
+    # unlinked scalar products cannot move the shape.
+    #
+    # What this changes: an adjudication does not obviously need all 189
+    # records recomputed. The disputed gap is 4 * Delta_C = 0.1115 in C4 units,
+    # which is 53% of the NORMAL block alone and 6.8x the entire ROTATION
+    # block -- so no rotation-sector discrepancy can produce it, while a
+    # NORMAL-sector one can. That points G3's blind recomputation at the
+    # clusters generating normal nearest-neighbour displacements first.
+    #
+    # It does NOT decide C2. Where a coefficient's VALUE lives is evidence
+    # about where a DISCREPANCY could live, not proof of where it does, and
+    # neither recorded side is preferred here.
+    #
+    # T2, not T1, and the tier guard was right to insist: the block
+    # decomposition is exact rational arithmetic throughout, but the gap
+    # comparison reaches C_SHP_NEW_NUM, which the corpus records only as a
+    # float. One float-dependent clause makes the whole verdict T2, however
+    # exact the rest of it looks.
+    from fractions import Fraction
+
+    from . import channel_ledger as CL
+
+    decomposition = CL.decompose()
+    blocks = {name: Fraction(block.get("C4", 0)) for name, block in decomposition["blocks"].items()}
+    counts = decomposition["counts"]
+    normal = blocks["NORMAL (0,0,1)"]
+    rotation = blocks["ROTATION"]
+    magnitude = sum(abs(value) for value in blocks.values())
+    gap = 4 * (P.as_fraction(K.C_SHP_HISTORICAL) - Fraction(str(K.C_SHP_NEW_NUM)))
+
+    return (
+        blocks["on-site (0,0,0)"] == 0
+        and abs(normal) > magnitude * Fraction(3, 4)
+        and counts["NORMAL (0,0,1)"] == 6
+        and counts["ROTATION"] == 120
+        and abs(normal / counts["NORMAL (0,0,1)"]) > 100 * abs(rotation / counts["ROTATION"])
+        and abs(gap) > abs(rotation)
+    ), (
+        f"the 6 NORMAL (0,0,1) records carry {float(abs(normal) / magnitude) * 100:.0f}% of the "
+        f"total |C4| weight at {float(normal / 6):.6f} each, while the 120 ROTATION records carry "
+        f"{float(abs(rotation) / magnitude) * 100:.0f}% at {float(rotation / 120):.6f} each -- "
+        f"{float(abs(normal / 6) / abs(rotation / 120)):.0f}x less sensitive per record; on-site "
+        f"contributes exactly 0. The disputed gap is {float(abs(gap)):.4f} in C4 units, "
+        f"{float(abs(gap / rotation)):.1f}x the whole ROTATION block, so no rotation-sector "
+        "difference can produce it. Evidence about where a discrepancy could live, not a decision"
+    )

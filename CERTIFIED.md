@@ -601,7 +601,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:1417 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
-## T2 — float agreement within a stated tolerance — 29
+## T2 — float agreement within a stated tolerance — 30
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -681,6 +681,11 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `G21 Davies bound verified on the 3x3 periodic 2D lattice, arb-certified`
   - src/workhouse/invariants.py:3043 · notes review 2026-08-22 / G21
   - `workhouse verify --only 'G21 Davies bound verified on the 3x3 periodic 2D lattice, arb-certified'`
+**off-axis channel ledger (C2 geography, G14)**
+
+- `FINDING: C_shp is carried by 6 of 189 records, not spread across the kernel`
+  - src/workhouse/invariants.py:4076 · UNIFIED v4.3 §5.1/§6, block decomposition
+  - `workhouse verify --only 'FINDING: C_shp is carried by 6 of 189 records, not spread across the kernel'`
 **old-to-new crosswalk**
 
 - `bandwidth is preserved only if Delta_C vanishes`
