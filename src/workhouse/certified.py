@@ -17,6 +17,7 @@ import shlex
 from dataclasses import dataclass
 from pathlib import Path
 
+from .frontier import strip_lean_comments
 from .invariants import SUITES
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -71,7 +72,7 @@ def lean_claims() -> list[Claim]:
         return out
     for path in sorted(LEAN_DIR.rglob("*.lean")):
         rel = path.relative_to(ROOT)
-        for n, line in enumerate(path.read_text().splitlines(), 1):
+        for n, line in enumerate(strip_lean_comments(path.read_text()).splitlines(), 1):
             m = re.match(r"\s*(?:theorem|lemma)\s+([A-Za-z_][\w'.]*)", line)
             if m:
                 out.append(
