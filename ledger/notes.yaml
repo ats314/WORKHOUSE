@@ -21,7 +21,8 @@
 #              required — name what it entered through.
 #   duplicate  same content as something already pinned or reviewed;
 #              `duplicate_of` names the path or digest.
-#   superseded an earlier draft of a later note; `superseded_by` digest.
+#   superseded an earlier draft of a later note; `superseded_by` names the
+#              successor, as a manifest digest or a path this repository pins.
 #   set-aside  reviewed, judged not load-bearing now; the reason says why.
 #
 # Every verdict carries a mandatory `reason`. A review without one is
@@ -2753,12 +2754,13 @@ reviews:
 # Twelfth review pass: the theory-graph atlas bundle, 2026-08-28. Mostly a
 # re-delivery -- 22 of 31 files are byte-identical to artifacts already pinned,
 # which is why this pass is dominated by `duplicate`. The eight that were new
-# split three ways: two paper drafts and an earlier build set aside in favour of
-# the pinned artifact of record, a generated atlas set aside because it is a
-# stale view of this repository rather than evidence about it, and three
-# documents imported -- the full finite-order derivation, an agent bug report
-# against this repository's own CLI, and a LATER edition of the finite-N
-# capability result than the one already pinned.
+# split three ways: two drafts of the master paper superseded by the pinned
+# artifact of record, a generated atlas and an unprovenanced figure set aside,
+# and three documents imported -- the full finite-order derivation, an agent bug
+# report against this repository's own CLI, and a LATER edition of the finite-N
+# capability result than the one already pinned. The atlas is set aside rather
+# than superseded because it is not a draft of anything: it is this repository's
+# own graph, rendered, and `workhouse atlas` regenerates it.
 
   - digest: 1689159a934a877c7ecb5c00518c90e548bc6a19bb4248e5cf6c33df50b55ab0
     path: B6_OPEN_CUBE_SIGN_REVERSAL_VALIDATION_2026-08-28.md
@@ -2996,26 +2998,25 @@ reviews:
   - digest: 63e9c5e3c10962ecfb8553381483885d499bce9f2fd0a88a13e08102233b720e
     path: Claudepaper 8-28.txt
     archive: UPLOADS_2026-08-28i
-    verdict: set-aside
+    verdict: superseded
+    superseded_by: paper/master_paper_2026-08-28.tex
     reason: 'A predecessor draft of the artifact of record, not a note: 51 of its 750 lines differ from
       the pinned paper/master_paper_2026-08-28.tex, and the differences are editorial and structural
       rather than numerical -- an aligned environment split into a display, a reordered rank argument
       in the chain appendix, and \chk labels written `\^3` where the pinned edition writes `\^{}3`.
       It carries the same 30 \chk lines, so the draft already had the device that ties each displayed
-      result to a machine check. Set aside rather than superseded only because the register''s superseded_by
-      must name a digest in some manifest, and the successor here is a pinned repository file: paper/master_paper_2026
-      -08-28.tex, sha256 603e9f2efcbd874666ccdc813b79802f04a1487dba9369cf7b812c9e4060471e, guarded by
-      paper/SHA256SUMS and tests/test_paper.py. That asymmetry with duplicate_of, which does accept
-      a repository path, is worth fixing separately.'
+      result to a machine check. Its sibling FABLEFINALDRAFT.txt differs from the same successor in
+      44 of 743 lines: two drafts of one paper, not a chain. The successor is pinned at sha256 603e9f2efcbd874666ccdc813b79802f04a1487dba9369cf7b812c9e4060471e,
+      recorded in paper/SHA256SUMS and guarded by tests/test_paper.py.'
   - digest: 66cbff785d3fd85a18e08a9fe7582f4be88425c7f9ebdfe1a9ff61e52c1e6e09
     path: master_paper_20260828.pdf
     archive: UPLOADS_2026-08-28i
-    verdict: set-aside
+    verdict: superseded
+    superseded_by: paper/master_paper_2026-08-28.pdf
     reason: An earlier build of the master paper, 313,719 bytes against the pinned paper/master_paper_2026-08-28.pdf's
       357,456. The pinned PDF is the one that is byte-reproducible under SOURCE_DATE_EPOCH and that
       paper/SHA256SUMS records, and its .tex source is pinned beside it, so this build adds no evidence
-      and no provenance. Set aside for the same reason as the Claude draft above, and with the same
-      successor.
+      and no provenance. Same successor as the Claude draft above, in its built form.
   - digest: a4398a6b780c72c8b7068a211771cc4263b4c57578a6da7de9e60035c1a5ea3f
     path: cube_VQE_Energies.pdf
     archive: UPLOADS_2026-08-28i
