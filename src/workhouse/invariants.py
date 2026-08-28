@@ -12,6 +12,7 @@ each side reports, and the exact size of the disagreement between them.
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -3709,4 +3710,50 @@ def _():
         f"{len(cited)} \\chk labels across {len(set(cited))} distinct checks, every one of them "
         f"a registered check name; {len(unresolved)} unresolved. Each displayed result in the "
         "paper is reproducible by the command printed beneath it"
+    )
+
+
+@manuscript.check(
+    "every declared note document is a graph node with an edge",
+    "ledger/notes.yaml + notes/*.jsonl",
+)
+def _():
+    # The maintainer's archives were declared and inventoried long before they
+    # reached the graph, and for that whole period "which notes bear on C2?"
+    # had no answer the graph could give -- 1,689 documents, no node, so every
+    # bears_on a review recorded was a sentence nobody could traverse. Coverage
+    # is the kind of thing that regresses silently the next time an archive is
+    # declared and nobody regenerates, so assert it rather than trust it.
+    #
+    # Read the GENERATED indexes rather than rebuilding: collect() runs every
+    # suite, so calling it from inside a check makes verify quadratic (the
+    # first draft of this check took over ten minutes). test_search and
+    # test_graph already fail when either index is stale, so reading them here
+    # is not a weaker statement -- it is the same statement, once.
+    #
+    # This checks reachability, not truth. Every note node is T3 whatever its
+    # verdict, and no edge here promotes anything.
+    from . import claims as claims_mod
+    from . import notes as notes_mod
+
+    notes = notes_mod.load()
+    declared = {
+        claims_mod.note_id(archive["id"], row)
+        for archive in notes.archives
+        for row in notes.manifests.get(archive["id"], [])
+    }
+    nodes = {c.id for c in claims_mod.load_catalogue()}
+    graph_path = PAPER_DIR.parent / "index" / "graph.jsonl"
+    touched: set[str] = set()
+    for line in graph_path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            edge = json.loads(line)
+            touched.add(edge["src"])
+            touched.add(edge["dst"])
+    missing = declared - nodes
+    stranded = declared - touched
+    return not missing and not stranded, (
+        f"{len(declared)} declared note documents across {len(notes.archives)} archives, "
+        f"every one a catalogue node with at least one edge; {len(missing)} without a node, "
+        f"{len(stranded)} without an edge"
     )

@@ -34,6 +34,7 @@ from . import certified as certified_mod
 from . import constants as K
 from . import ledger as ledger_mod
 from . import literature as literature_mod
+from . import notes as notes_mod
 from .invariants import SUITES
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -120,6 +121,18 @@ def _slug(text: str) -> str:
 def check_id(suite_name: str, check_name: str) -> str:
     """The catalogue id of one registered check. The single place the format lives."""
     return f"CHK:{_slug(suite_name)}:{_slug(check_name)}"
+
+
+def note_id(archive_id: str, row: dict[str, Any]) -> str:
+    """The catalogue id of one archived note document.
+
+    Keyed on the path so a reader can search for the filename they remember,
+    with a short digest suffix because slugs truncate at 40 characters and 24
+    of these archives' paths collide once truncated ("00_INDEX.md" appears in
+    many folders). Substring search still finds the filename.
+    """
+    stem = row["paths"][0].rsplit("/", 1)[-1]
+    return f"NOTE:{archive_id}:{_slug(stem)}-{row['digest'][:6]}"
 
 
 def load_theorems(path: Path | None = None) -> list[dict[str, Any]]:
@@ -450,6 +463,69 @@ def collect() -> list[Claim]:
                 related=sorted({o["target"] for o in doc["originates"]}),
             )
         )
+
+    # The notes archives, and the documents inside them. Until now the
+    # maintainer's own research notes were declared in ledger/notes.yaml and
+    # inventoried in notes/*.jsonl, and reached the graph nowhere -- 1,689
+    # documents with no node, so nothing a review said a document bears on was
+    # an edge, and "which notes touch C2" had no answer the graph could give.
+    #
+    # Two rules keep this from becoming a promotion mechanism. Every node is
+    # T3, whatever its verdict, because a verdict records a JUDGEMENT about a
+    # document and never the truth of what it says. And the coefficient edges
+    # are matched by VALUE -- the triage signature digits against the
+    # registry's own exact numerators -- not by a name map written here, so a
+    # document is linked to a constant only when it demonstrably carries that
+    # constant's digits.
+    notes = notes_mod.load()
+    reviews = {r["digest"]: r for r in notes.reviews}
+    for archive in notes.archives:
+        aid = archive["id"]
+        rows = notes.manifests.get(aid, [])
+        reviewed = sum(1 for row in rows if row["digest"] in reviews)
+        out.append(
+            Claim(
+                id=f"ARCHIVE:{aid}",
+                kind="archive",
+                statement=" ".join(str(archive["description"]).split()),
+                tier=3,
+                where=f"notes/{aid}.jsonl",
+                cites="ledger/notes.yaml",
+                status=(
+                    f"{len(rows)} documents, {reviewed} reviewed, {len(rows) - reviewed} pending"
+                ),
+                detail=" ".join(str(archive.get("source", "")).split()),
+            )
+        )
+        for row in rows:
+            review = reviews.get(row["digest"])
+            coefficients = row.get("coefficients") or []
+            # A pending document with no coefficients is an inventory row and
+            # nothing more; it still gets a node, because the archive edge is a
+            # real relationship and a document invisible to the graph is a
+            # document nobody will remember to review.
+            out.append(
+                Claim(
+                    id=note_id(aid, row),
+                    kind="note",
+                    statement=(
+                        " ".join(str(review["reason"]).split())
+                        if review
+                        else f"{row['paths'][0]} — inventoried, not yet reviewed"
+                    ),
+                    tier=3,
+                    where=f"{aid}/{row['paths'][0]}",
+                    cites="ledger/notes.yaml" if review else f"notes/{aid}.jsonl",
+                    status=review["verdict"] if review else "pending",
+                    evidence=review.get("imported_to", "") if review else "",
+                    detail=(
+                        f"sha256 {row['digest'][:12]}, {row['size']} bytes"
+                        + (f"; carries {', '.join(coefficients)}" if coefficients else "")
+                        + ("; erratum signature" if row.get("has_erratum") else "")
+                    ),
+                    related=sorted(review.get("bears_on", [])) if review else [],
+                )
+            )
 
     return out
 
