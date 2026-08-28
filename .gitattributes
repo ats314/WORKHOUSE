@@ -23,6 +23,13 @@
 **/generated/** linguist-generated
 *.lock         linguist-generated -diff
 
-# Notes imports are byte-verified against ledger/notes.yaml digests —
-# normalizing line endings would break the digest. Bytes as received.
-notes/imported/** -text
+# Byte-pinned evidence: never normalize. These trees are verified against
+# recorded digests -- theory/SHA256SUMS, the notes register's per-import
+# digest, each run's SHA256SUMS -- so an eol=lf rewrite on checkout changes
+# the bytes the digest was taken over and the verification fails in a fresh
+# clone while passing in the working tree it was written in. This repository
+# caught exactly that on a CRLF import.
+theory/**             -text
+notes/imported/**     -text
+runs/**               -text
+corpus-import/**      -text

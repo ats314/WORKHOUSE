@@ -106,7 +106,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 151
+## T1 — re-derived exactly — 152
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -362,6 +362,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the pinned structured B_N expression IS P17(N^2)/(N R20(N^2))`
   - src/workhouse/invariants.py:3713 · GLUEBALL_DETAILED_FORMULA v3.1 §11 + App. A
   - `workhouse verify --only 'the pinned structured B_N expression IS P17(N^2)/(N R20(N^2))'`
+- `the shape fit's C row sums to zero, so no Gamma-anchor error can move C_shp at all`
+  - src/workhouse/invariants.py:4753 · provenance nb-hodge-v10a26-alt2, _v10a3_extract_shape; UNIFIED v4.3 §5.1
+  - `workhouse verify --only 'the shape fit'"'"'s C row sums to zero, so no Gamma-anchor error can move C_shp at all'`
 - `the shipped displacement support is exactly six shells`
   - src/workhouse/invariants.py:3664 · off-axis ledger falsifier gate
   - `workhouse verify --only 'the shipped displacement support is exactly six shells'`
@@ -604,7 +607,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:1620 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
-## T2 — float agreement within a stated tolerance — 31
+## T2 — float agreement within a stated tolerance — 41
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -684,6 +687,38 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `G21 Davies bound verified on the 3x3 periodic 2D lattice, arb-certified`
   - src/workhouse/invariants.py:3246 · notes review 2026-08-22 / G21
   - `workhouse verify --only 'G21 Davies bound verified on the 3x3 periodic 2D lattice, arb-certified'`
+**off-axis channel ledger (C2 geography, G14)**
+
+- `FINDING: A = 5/48 pins the normal sector's whole C4 contribution`
+  - src/workhouse/invariants.py:4349 · UNIFIED v4.3 §5.1/§6, block decomposition
+  - `workhouse verify --only 'FINDING: A = 5/48 pins the normal sector'"'"'s whole C4 contribution'`
+- `FINDING: C_shp is carried by 6 of 189 records, not spread across the kernel`
+  - src/workhouse/invariants.py:4279 · UNIFIED v4.3 §5.1/§6, block decomposition
+  - `workhouse verify --only 'FINDING: C_shp is carried by 6 of 189 records, not spread across the kernel'`
+- `FINDING: the adjudicator's THIRD-VALUE scalar verdict is a C1 anchoring artifact`
+  - src/workhouse/invariants.py:4628 · provenance nb-hodge-v10a26-alt2, section 17
+  - `workhouse verify --only 'FINDING: the adjudicator'"'"'s THIRD-VALUE scalar verdict is a C1 anchoring artifact'`
+- `FINDING: the off-axis ledger carries two claims its own author later retracted`
+  - src/workhouse/invariants.py:4939 · notes UPLOADS_2026-08-28d OFF_AXIS_LEDGER §6/§7, corrected by the C2 status note
+  - `workhouse verify --only 'FINDING: the off-axis ledger carries two claims its own author later retracted'`
+- `FINDING: the run's own re-anchor moved C_shp by 4.6e-15, as the zero row sum requires`
+  - src/workhouse/invariants.py:4816 · provenance nb-hodge-v10a26-alt2, sections 13 and 17
+  - `workhouse verify --only 'FINDING: the run'"'"'s own re-anchor moved C_shp by 4.6e-15, as the zero row sum requires'`
+- `FINDING: the v10a.26 cluster ledger is exhausted by supports <= 2 until fourth order`
+  - src/workhouse/invariants.py:4864 · provenance nb-hodge-v10a26-alt2, section 16 rooted incidence transform
+  - `workhouse verify --only 'FINDING: the v10a.26 cluster ledger is exhausted by supports <= 2 until fourth order'`
+- `FINDING: the v10a.26 notebook carries a per-class ledger and attests its own blindness`
+  - src/workhouse/invariants.py:4478 · provenance nb-hodge-v10a26-alt2
+  - `workhouse verify --only 'FINDING: the v10a.26 notebook carries a per-class ledger and attests its own blindness'`
+- `FINDING: the v10a.26 run gates on known values before it unblinds`
+  - src/workhouse/invariants.py:4555 · provenance nb-hodge-v10a26-alt2, cell 17
+  - `workhouse verify --only 'FINDING: the v10a.26 run gates on known values before it unblinds'`
+- `FINDING: the v10a.26 side supplies A, B, D but no block structure, and its C fights its own A`
+  - src/workhouse/invariants.py:4419 · provenance nb-hodge-v10a26-alt2 / GLUEBALL §10
+  - `workhouse verify --only 'FINDING: the v10a.26 side supplies A, B, D but no block structure, and its C fights its own A'`
+- `the C_alt witness IS the balanced eps-free continuation, and Delta_C/(A/2) = 15/32`
+  - src/workhouse/invariants.py:4699 · OFF AXIS LEDGER 2026-08-22 §2, UNIFIED v4.3 §5.1
+  - `workhouse verify --only 'the C_alt witness IS the balanced eps-free continuation, and Delta_C/(A/2) = 15/32'`
 **old-to-new crosswalk**
 
 - `bandwidth is preserved only if Delta_C vanishes`

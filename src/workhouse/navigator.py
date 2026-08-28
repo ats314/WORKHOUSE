@@ -188,13 +188,22 @@ def explain(
             # RETRACTED and FINDING checks must survive the display cap: losing
             # a retraction to alphabetical truncation is how a withdrawn claim
             # quietly starts reading as merely absent.
+            #
+            # RETRACTED outranks FINDING, and that ordering is load-bearing
+            # rather than cosmetic. Findings accumulate -- the C2 geography
+            # suite alone added four in one pass -- and when they shared a
+            # priority band with retractions they pushed G14's retraction past
+            # the cap by nothing more than alphabetical order. A neighbourhood
+            # that grows must not be able to hide a withdrawal.
             claim = by_id.get(getattr(edge, other_end))
-            flagged = (
-                claim is not None
-                and claim.kind == "check"
-                and claim.statement.startswith(("RETRACTED", "FINDING"))
-            )
-            return (0 if flagged else 1, edge.src, edge.dst)
+            statement = claim.statement if claim is not None and claim.kind == "check" else ""
+            if statement.startswith("RETRACTED"):
+                priority = 0
+            elif statement.startswith("FINDING"):
+                priority = 1
+            else:
+                priority = 2
+            return (priority, edge.src, edge.dst)
 
         for type_ in sorted(groups):
             edges = sorted(groups[type_], key=rank)
