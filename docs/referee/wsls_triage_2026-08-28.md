@@ -252,3 +252,34 @@ route into the PR #30 review).
    Route B checkpoint, and the h0_*.py verification scripts.
 2. **Branch hygiene:** remove `gemini chat.txt` (or redact the sidebar) and
    the patent docx from `work-since-last-session`.
+
+## Addendum (2026-08-28, after maintainer confirmation)
+
+The maintainer confirms the pushed folder is the **complete** delivery of
+the work-since-last-session material. That converts the "absent from the
+snapshot" observations above into a recorded finding:
+
+**FINDING — cited, never delivered.** The carrier campaign's own manifest
+(`WORKHOUSE_FIXED_SPACING_PROOF_CHAIN_2026-08-22.sha256`, now imported)
+pins eight documents; four are delivered and byte-match, and four —
+the electric-shell theorem proof (`DDB426…`), the Yarotsky import note
+(`E5137E…`), and both CMP(1) documents (`3F4A65…`, `B120FC…`) — exist
+nowhere in the snapshot, either notes inventory (searched by digest and
+name), any remote branch, or the repository. The further citation-only
+documents (the CMP4 THEOREM, the reopened-RG-route note, the exact
+transfer-entry theorem, the projective pole lemma, two continuum audits,
+`SYNTH_P11_continuum_limit.md`) and the NATIVE_PQ certificate zips are
+likewise undelivered, and the `h0_*.py` scripts are self-declared as held
+in an external scratchpad. Consequently every "Proved" row of the master
+chain resting on F1–F3, O3–O5, T1, or M3 is a citation to absent
+evidence — claim-only — the same failure class PR #31 recorded for the
+rank3/order4 upload. Two earlier asks are withdrawn as overstated: the
+PMBSF corpus is extensively present in `corpus-import/programs/pmbsf/`
+(the cited *filename* does not exist; a naming crosswalk is needed), and
+the SYNTH_P series partially exists in RESEARCH_2026-08 (P09/P14/P18 —
+P11 specifically does not).
+
+Eleven documents of the carrier cluster were imported verbatim into
+`notes/imported/WORK_SINCE_2026-08/` (byte-verified against inventory
+digests), including the manifest itself as the finding's primary
+evidence and the misnamed C2 status note under a corrected filename.
