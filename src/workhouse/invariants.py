@@ -1369,6 +1369,77 @@ def _():
     )
 
 
+@adjudication.check(
+    "the v10a.26 cold kernel shares every protected shape parameter and "
+    "differs only in C — and records no per-record kernel",
+    "notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt §[17]",
+    tier=2,
+)
+def _():
+    # The rewritten G3's first question — does the v10a.26 side have a
+    # recorded block structure? — answered from the primary source: the
+    # 15-hour dual-cold-oracle transcript, imported byte-verified from the
+    # maintainer's HODGE RUNS archive. Its final unblind block prints the
+    # cold kernel's full shape fit next to the historical values. Parsed
+    # here, not quoted: A agrees with 5/48 at 6e-14 (the registered
+    # A_SHP_3_NUM is this transcript's own printed value), B and D sit at
+    # fit noise, alpha is 4A, C is exactly the registered float
+    # C_SHP_NEW_NUM, and the kernel carries the canonical 189 anchored
+    # records. So the two rival kernels agree on every symmetry-protected
+    # parameter and differ ONLY in C — which, with the registered
+    # A-pins-the-normal-block result, forces any structural divergence
+    # into the A-carrying sector.
+    #
+    # The second half is an absence, asserted as one: nothing in the
+    # transcript prints a displacement-resolved record (the scan pattern
+    # below), so the 189 per-record values existed only in the dead A100
+    # process's memory. K4_mass_cols was computed, counted, fitted — and
+    # never dumped. That is why G3 step 2 is a rerun of the kernel leg
+    # instrumented to dump records, and why this check is T2: every
+    # quantity here is a printed float, not an exact rational.
+    import re
+
+    path = ROOT / "notes" / "imported" / "HODGE_RUNS_2026-08-28" / "15_hour_RUN.txt"
+    text = path.read_text(errors="ignore")
+    # rfind, not index: the transcript interleaves the script with its
+    # output, and the first occurrence is the print statement's own source.
+    block = text[text.rfind("final mass-kernel shape:") :][:800]
+
+    def printed(name):
+        m = re.search(rf"{name}\s*=\s*([+-][\d.e-]+)", block)
+        return float(m.group(1)) if m else None
+
+    a, b, c, d = printed("A"), printed("B"), printed("C_direct"), printed("D")
+    alpha = printed("alpha")
+    a_gap = abs(a - float(K.A_SHP_3))
+    records = "final mass-kernel anchored records= 189" in text
+    per_record_dump = re.findall(
+        r"\(\s*-?\d\s*,\s*-?\d\s*,\s*-?\d\s*\)[^\n]{0,120}?-?\d+\s*/\s*\d+", text
+    )
+    ok = (
+        a == K.A_SHP_3_NUM
+        and a_gap < 1e-12
+        and abs(b) < 1e-12
+        and abs(d) < 1e-11
+        and abs(alpha - 4 * a) < 1e-12
+        and abs(c - K.C_SHP_NEW_NUM) < 1e-14
+        and records
+        and not per_record_dump
+        and "MIXED/THIRD RESULT" in text
+    )
+    return ok, (
+        f"printed cold shape: A = {a!r} (|A - 5/48| = {a_gap:.1e}, and equal to "
+        f"the registered A_SHP_3_NUM), B = {b:.1e}, D = {d:.1e}, alpha - 4A = "
+        f"{alpha - 4 * a:.1e}, C_direct = {c!r} (|C - C_SHP_NEW_NUM| = "
+        f"{abs(c - K.C_SHP_NEW_NUM):.1e}); 189 anchored records confirmed; "
+        f"displacement-resolved record lines in 682KB of transcript: "
+        f"{len(per_record_dump)}; verdict line MIXED/THIRD RESULT present. "
+        "Both sides recorded, neither promoted: this check establishes where "
+        "the kernels AGREE, and that the cold per-record values are absent "
+        "from every recorded artifact"
+    )
+
+
 # ==========================================================================
 near_gamma = _suite("near-Gamma uniformity (G11)")
 
