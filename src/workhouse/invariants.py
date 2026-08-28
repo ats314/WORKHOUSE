@@ -5082,11 +5082,11 @@ def _():
         "R17",
         "R3",
         "R9",
-        # T0 theorems whose only honest edge would be an invented one
-        "LEAN:extraction_A",
-        "LEAN:extraction_B",
-        "LEAN:extraction_C",
-        "LEAN:extraction_D",
+        # T0 theorem whose only honest edge would be an invented one.
+        # extraction_A..D used to sit here too; they came off the list when
+        # delta_X..delta_R proved the half they were missing, which is what
+        # this census is for -- it shrinks when the work is done, and the
+        # entries are removed so a regression strands them again loudly.
         "LEAN:stencil_zero_mode",
     }
 

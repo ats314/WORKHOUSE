@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 28
+## T0 — proof-checked — 36
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -25,7 +25,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:97
   - `make lean`
 - `alphaPen_eq_neg_four_cube`
-  - lean/Workhouse/Basic.lean:191
+  - lean/Workhouse/Basic.lean:194
   - `make lean`
 - `alphaPen_five`
   - lean/Workhouse/Basic.lean:69
@@ -42,6 +42,15 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `alphaPen_three_eq_four_A`
   - lean/Workhouse/Basic.lean:73
   - `make lean`
+- `bandVar_pi`
+  - lean/Workhouse/Basic.lean:217
+  - `make lean`
+- `bandVar_pi_div_two`
+  - lean/Workhouse/Basic.lean:220
+  - `make lean`
+- `bandVar_zero`
+  - lean/Workhouse/Basic.lean:214
+  - `make lean`
 - `beta_from_A_and_C`
   - lean/Workhouse/Basic.lean:105
   - `make lean`
@@ -49,28 +58,40 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:83
   - `make lean`
 - `cPrimTwo_forms`
-  - lean/Workhouse/Basic.lean:163
+  - lean/Workhouse/Basic.lean:166
   - `make lean`
 - `cubeCompletion_three`
-  - lean/Workhouse/Basic.lean:182
+  - lean/Workhouse/Basic.lean:185
+  - `make lean`
+- `delta_M`
+  - lean/Workhouse/Basic.lean:253
+  - `make lean`
+- `delta_P`
+  - lean/Workhouse/Basic.lean:259
+  - `make lean`
+- `delta_R`
+  - lean/Workhouse/Basic.lean:267
+  - `make lean`
+- `delta_X`
+  - lean/Workhouse/Basic.lean:248
   - `make lean`
 - `dim_Z₂`
-  - lean/Workhouse/Basic.lean:138
+  - lean/Workhouse/Basic.lean:141
   - `make lean`
 - `d₃_ledger`
   - lean/Workhouse/Basic.lean:59
   - `make lean`
 - `extraction_A`
-  - lean/Workhouse/Basic.lean:120
+  - lean/Workhouse/Basic.lean:123
   - `make lean`
 - `extraction_B`
-  - lean/Workhouse/Basic.lean:122
+  - lean/Workhouse/Basic.lean:125
   - `make lean`
 - `extraction_C`
-  - lean/Workhouse/Basic.lean:126
+  - lean/Workhouse/Basic.lean:129
   - `make lean`
 - `extraction_D`
-  - lean/Workhouse/Basic.lean:130
+  - lean/Workhouse/Basic.lean:133
   - `make lean`
 - `hopping_deficit_numerator`
   - lean/Workhouse/Basic.lean:48
@@ -85,10 +106,13 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:113
   - `make lean`
 - `pentCompletion_three`
-  - lean/Workhouse/Basic.lean:186
+  - lean/Workhouse/Basic.lean:189
   - `make lean`
 - `prismCompletion_three`
-  - lean/Workhouse/Basic.lean:178
+  - lean/Workhouse/Basic.lean:181
+  - `make lean`
+- `q_at_checkpoints`
+  - lean/Workhouse/Basic.lean:239
   - `make lean`
 - `rank_law_numerator`
   - lean/Workhouse/Basic.lean:36
@@ -97,10 +121,10 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:87
   - `make lean`
 - `tetraCompletion_three`
-  - lean/Workhouse/Basic.lean:174
+  - lean/Workhouse/Basic.lean:177
   - `make lean`
 - `tetra_from_count`
-  - lean/Workhouse/Basic.lean:168
+  - lean/Workhouse/Basic.lean:171
   - `make lean`
 - `width_eq_alpha_add_beta`
   - lean/Workhouse/Basic.lean:101
