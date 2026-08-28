@@ -538,16 +538,18 @@ def _():
 
 # ==========================================================================
 # The charge-even sector had five checks naming it and no check body reading
-# its registered constants: D3_EVEN, LEAK_2_EVEN, LEAK_3_EVEN, T_3_EVEN and
-# the lambda = -4 cubic were registered and inert. The C-odd side, meanwhile,
+# its registered constants: LEAK_2, LEAK_2_EVEN, LEAK_3_EVEN and the
+# lambda = -4 cubic were registered and inert. The C-odd side, meanwhile,
 # has a closed-form spectrum, a Lean theorem and two dozen checks. That
 # asymmetry is not physics -- both sectors are spectra of the same incidence
 # matrix -- so it is an artifact of where the verification effort went, and it
 # is the largest coherent T3 hole after C2 itself.
 #
-# What the corpus supplies for the C-even sector is a range and two sample
-# points: `lambda in [-4, 12]`, gated by a dense numerical scan, plus the
-# Gamma and R matrices. This suite replaces the scan with the closed form
+# What the corpus supplies for the C-even sector is a range and an expansion:
+# `lambda in [-4, 12]`, argued from positivity below and 12-regularity above
+# and reported by a dense zone scan, plus `lambda = 12 - (4/3)|k|^2` near
+# Gamma. On this side the only C-even geometry ever checked was two
+# hand-written matrices. This suite supplies the closed form
 # `mu(mu - p)^2 = 4 a_1 a_2 a_3`, and then uses it: the band edges, the
 # multiplicity structure at the floor, the Gamma curvature, and the two orders
 # of the band ledger all follow from that one cubic.
@@ -835,7 +837,7 @@ def _():
     ]
     collapsed = all(
         K.band_assembly("even", r, lam) == K.band_tower("even", r) + (12 + lam) * hop
-        for r, hop in ((2, K.T_PLUS_2), (3, K.T_3_EVEN))
+        for r, hop in ((2, K.T_PLUS_2), (3, K.T3_EVEN))
         for lam in (bottom, 0, top)
     )
     ok = all(got == want for got, want in targets) and collapsed
@@ -891,7 +893,7 @@ def _():
     )
     edges_ordered = (
         K.T_PLUS_2 < 0
-        and K.T_3_EVEN < 0
+        and K.T3_EVEN < 0
         and K.BAND_EVEN_TOP > K.BAND_EVEN_BOTTOM
         and K.M3_EVEN_BANDTOP > K.M3_EVEN_K0
     )
@@ -926,7 +928,7 @@ def _():
         2: K.band_assembly("even", 2, 12) - K.band_assembly("even", 2, 0),
         3: K.band_assembly("even", 3, 12) - K.band_assembly("even", 3, 0),
     }
-    hops = {2: K.T_PLUS_2, 3: K.T_3_EVEN}
+    hops = {2: K.T_PLUS_2, 3: K.T3_EVEN}
     exact = all(splitting[r] == 12 * hops[r] for r in (2, 3))
     gamma_even = EVEN.even_lambdas(EVEN.HIGH_SYMMETRY["Gamma"])
     gamma_odd = EVEN.odd_lambdas(EVEN.HIGH_SYMMETRY["Gamma"])
@@ -957,7 +959,7 @@ def _():
     isotropic = set(directional) == {Rational(-4, 3)}
     curvatures = {
         2: Rational(4, 3) * abs(K.T_PLUS_2),
-        3: Rational(4, 3) * abs(K.T_3_EVEN),
+        3: Rational(4, 3) * abs(K.T3_EVEN),
     }
     ok = (
         isotropic
@@ -995,7 +997,7 @@ def _():
         and odd_span == 12
         and widths[2] == K.BAND_EVEN_WIDTH
         and widths[2] == 16 * abs(K.T_PLUS_2)
-        and widths[3] == 16 * abs(K.T_3_EVEN)
+        and widths[3] == 16 * abs(K.T3_EVEN)
         and 12 * K.T_MINUS_2 == K.BAND_ODD_WIDTH
         and Rational(15, 88) == K.BAND_ODD_WIDTH / K.BAND_EVEN_WIDTH
     )
@@ -1009,30 +1011,49 @@ def _():
 
 
 @even_band.check(
-    "the second-order leakage is ell_N in both sectors: three labels, one all-rank object",
+    "both declared coincidences, checked: one is ell_N at all ranks, the other is bare",
     "ENGINE_FLUX_su3_domino_d3.py / MASTER paper Prop. 8",
 )
 def _():
-    # LEAK_2 and LEAK_2_EVEN were registered and read by nothing, with a
-    # comment saying "three labels on -11/306, recorded, not explained". The
-    # explanation is already in this file one suite up: -11/306 is ell_3, the
-    # vacuum-route-inclusive channel sum, and the engine computes the second-
-    # order leakage as exactly that assembly -- shared-link sum -481/612 plus
-    # the vacuum route 3/4. So the coincidence is one object under three
-    # names, and the object generalizes: ell_N is an all-rank closed form.
+    # constants.DECLARED_COINCIDENCES names two rationals this registry
+    # deliberately carries under several names. A declaration is a statement
+    # about intent, not about mathematics: it says the duplication is not an
+    # accident, and nothing in it establishes that the values agree for a
+    # reason. This check does what the declaration cannot.
+    #
+    # -11/306 is now explained. It is ell_3, the vacuum-route-inclusive
+    # channel sum -481/612 + 3/4, which the engine also computes as the
+    # second-order per-neighbour leakage in BOTH sectors -- and ell_N is an
+    # all-rank closed form, so the three labels are one object at every rank,
+    # not a numerical accident at N = 3.
+    #
+    # -6335/249696 is NOT explained, and this check does not pretend
+    # otherwise: it verifies the equality and stops. The mechanism is
+    # registered as the unifying candidate U4, with a falsifier, because
+    # ADR 0005 is what happens when one is read off a coincidence here.
     ell_3 = K.antiparallel_sum(3) + K.parallel_sum(3) + 1 / K.casimir_fundamental(3)
-    same = K.LEAK_2 == K.LEAK_2_EVEN == K.T_PLUS_2 == ell_3 == K.even_hopping(3)
+    second_order = K.LEAK_2 == K.LEAK_2_EVEN == K.T_PLUS_2 == ell_3 == K.even_hopping(3)
     all_rank = simplify(
         K.even_hopping() - (K.antiparallel_sum() + K.parallel_sum() + 1 / K.casimir_fundamental())
     )
+    third_order = K.LEAK_3_EVEN == K.T3_EVEN
+    # the declarations and the values must not drift apart
+    declared = {
+        str(K.T_PLUS_2): ("LEAK_2", "LEAK_2_EVEN", "T_PLUS_2"),
+        str(K.T3_EVEN): ("T3_EVEN", "LEAK_3_EVEN"),
+    }
+    matches_registry = {v: names for v, (names, _) in K.DECLARED_COINCIDENCES.items()} == declared
     distinct = K.T_MINUS_2 != K.LEAK_2 and K.LEAK_3 != K.B_3
-    return same and all_rank == 0 and distinct, (
+    ok = second_order and all_rank == 0 and third_order and matches_registry and distinct
+    return ok, (
         f"leak_2- = leak_2+ = t_2+ = ell_3 = {K.T_PLUS_2} = -481/612 + 3/4, and "
-        "ell_N = A_N + B_N + 1/C_F holds at symbolic N, so the three second-order "
-        "labels are one all-rank object rather than a numerical coincidence. Only the "
-        f"C-odd hop stands apart ({K.T_MINUS_2}), because the vacuum route cannot reach "
-        "it; at third order the C-odd leakage separates from the C-odd hop as well, "
-        "while the C-even identity leak_3+ = t_3+ survives"
+        "ell_N = A_N + B_N + 1/C_F holds at symbolic N — so the first declared "
+        "coincidence is one all-rank object under three names, derived rather than "
+        f"observed. Only the C-odd hop stands apart ({K.T_MINUS_2}), because the vacuum "
+        "route cannot reach it. The second, leak_3+ = t_3+ = "
+        f"{K.T3_EVEN}, is verified and unexplained: at third order the C-odd leakage "
+        "separates from the C-odd hop while the C-even identity survives, which is why "
+        "it is U4 with a falsifier and not a mechanism"
     )
 
 
@@ -1070,37 +1091,6 @@ def _():
         "N = 3, decreasing monotonically to 4 — so the C-even band is the wider one "
         "always, and the flat-band program's asymmetry is a channel statement rather "
         "than a geometric one"
-    )
-
-
-@even_band.check(
-    "the domino ledger and the engine locks are the same six numbers, transcribed twice",
-    "RUN_TROM_d3_results.json / CERT_FLUX_d3_certificate_results.md",
-)
-def _():
-    # constants.py registers the third-order domino numbers under two sets of
-    # names -- the engine-lock names that the su3_series suite reads, and the
-    # ledger names that nothing read. Two independent transcriptions of one
-    # certificate are worth keeping (a slip in either is caught here), but only
-    # if something compares them; until now nothing did, so the pair could
-    # have drifted silently.
-    pairs = {
-        "D3_EVEN": (K.D3_EVEN, K.D3_EVEN_DOMINO),
-        "T_3_EVEN": (K.T_3_EVEN, K.T3_EVEN),
-        "LEAK_3_EVEN": (K.LEAK_3_EVEN, K.T3_EVEN),
-        "E_VAC3_DOMINO": (K.E_VAC3_DOMINO, K.VAC3_DOMINO),
-        "D3_ODD": (K.D3_ODD, K.D3_ODD_DOMINO),
-        "D_3_TOP": (K.D_3_TOP, K.D3_TOP),
-    }
-    drifted = sorted(name for name, (left, right) in pairs.items() if left != right)
-    # and the identity that makes two of those names the same number
-    vacuum_route = K.LEAK_3_EVEN == K.T_3_EVEN and K.LEAK_2_EVEN == K.T_PLUS_2
-    return not drifted and vacuum_route, (
-        f"{len(pairs)} registered pairs, no drift: {sorted(pairs)} each equal their "
-        "engine-lock twin. Two of the ledger names are the same rational because "
-        "leak_{r,+} = t_{r,+} at r = 2 and 3 — the vacuum-route identity, which is "
-        "recorded and still unexplained; ADR 0005 is why this suite does not read a "
-        "mechanism off it"
     )
 
 
@@ -5632,11 +5622,14 @@ def _():
         "CHK:the-flat-band-manuscript:every-declared-note-document-is-a-graph--a77304",
         "CHK:the-flat-band-manuscript:every-node-the-theory-graph-strands-is-s-57688c",
         # registered constants no check body reads -- a real T3 hole, shown
-        # D3_EVEN, LEAK_2, LEAK_2_EVEN, LEAK_3_EVEN and T_3_EVEN used to sit
-        # here: the C-even half of this list. They came off when the
-        # charge-even suite started reading them, which is what the census is
-        # for -- it shrinks when the work is done, and removing the entries
-        # means a regression strands them loudly instead of quietly.
+        # The C-even half of this list is gone, for two different reasons.
+        # D3_EVEN and T_3_EVEN were deleted outright: they were undeclared
+        # aliases of D3_EVEN_DOMINO and T3_EVEN, so the honest fix was to stop
+        # registering them twice rather than to check them. LEAK_2,
+        # LEAK_2_EVEN and LEAK_3_EVEN are real and came off because the
+        # charge-even suite reads them. That is what the census is for -- it
+        # shrinks when the work is done, and removing the entries means a
+        # regression strands them loudly instead of quietly.
         "CONST:DELTA_BETA_3",
         "CONST:DELTA_Q_3",
         "CONST:HAMER_MT_NUM",
