@@ -4026,7 +4026,16 @@ def _():
     spec = spec_from_file_location("mce_engine_probe", path)
     engine = module_from_spec(spec)
     sys.modules["mce_engine_probe"] = engine
-    spec.loader.exec_module(engine)
+    # Importing writes __pycache__ NEXT TO the source, which here is inside
+    # pinned corpus -- and an unpinned .pyc appearing in corpus-import/ fails
+    # test_corpus_integrity. Running a check must not modify the corpus it
+    # reads, so suppress bytecode for the duration of the import.
+    previously = sys.dont_write_bytecode
+    sys.dont_write_bytecode = True
+    try:
+        spec.loader.exec_module(engine)
+    finally:
+        sys.dont_write_bytecode = previously
 
     def closure_size(state):
         factor, seed = engine.simplify_unitarity(state)

@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """Parallel G3 cluster sweep, for running on a real desktop.
 
+It lives in scripts/ and not in settlement/ deliberately: settlement/ is
+received evidence, pinned by its own manifest, and tests/test_settlement.py
+holds it to an exact file list. This is repo-authored tooling, so putting it
+there would have misclassified a diagnostic as evidence -- which is precisely
+what that test caught.
+
 WHAT THIS IS NOT
 ----------------
 This is **not** the sealed adjudication path and it does not produce a G3
@@ -34,9 +40,9 @@ a partial run still tells you the shape of the cost curve.
 
 USAGE
 -----
-    python3 settlement/g3_local_sweep.py --workers 8
-    python3 settlement/g3_local_sweep.py --workers 8 --max-support 3
-    python3 settlement/g3_local_sweep.py --resume        # skips completed rows
+    python3 scripts/g3_local_sweep.py --workers 8
+    python3 scripts/g3_local_sweep.py --workers 8 --max-support 3
+    python3 scripts/g3_local_sweep.py --resume        # skips completed rows
 
 Results append to ``g3_sweep_results.jsonl`` one row per cluster, so the run is
 resumable and survives being interrupted.
@@ -79,7 +85,14 @@ def _engine():
         spec = importlib.util.spec_from_file_location("mce_engine", ENGINE)
         engine = importlib.util.module_from_spec(spec)
         sys.modules["mce_engine"] = engine
-        spec.loader.exec_module(engine)
+        # The engine lives in pinned corpus, and importing would write a
+        # __pycache__ beside it that no manifest covers.
+        previously = sys.dont_write_bytecode
+        sys.dont_write_bytecode = True
+        try:
+            spec.loader.exec_module(engine)
+        finally:
+            sys.dont_write_bytecode = previously
         original = engine.closure
         engine.closure = lambda seed, max_states=CLOSURE_CAP: original(seed, max_states)
         _ENGINE = engine
