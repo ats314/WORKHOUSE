@@ -2939,7 +2939,7 @@ def _():
 
 
 @channels.check(
-    "C_normal = -A_normal/2: the agreed axial coefficient pins the normal channel",
+    "C_normal = -A_normal/2 inside the historical kernel's decomposition",
     "UNIFIED v4.3 §6",
 )
 def _():
@@ -2960,10 +2960,14 @@ def _():
     )
     return ok, (
         "on the six NORMAL records C = -A/2 = -1050558388351/20163800966400 "
-        "exactly, with A_normal = 5/48 + 4x and MIXED carrying exactly -4x -- "
-        "so the primitive cube-completion hop accounts for A = 5/48, and the "
-        "coefficient the sealed suite shows both kernels share pins the "
-        "normal sector; everything disputed lives in the non-normal remainder"
+        "exactly, with A_normal = 5/48 + 4x and MIXED carrying exactly -4x, "
+        "so the primitive cube-completion hop accounts for A = 5/48. Scope: "
+        "a structural fact of the HISTORICAL kernel's decomposition only -- "
+        "v10a.26 ships a scalar total with no channel split, so its normal "
+        "and mixed contributions are unobserved and could differ while "
+        "canceling; that missing arbiter for the non-axial channels is "
+        "exactly the gap the off-axis ledger's §7 names, and no C2 side "
+        "is preferred here"
     )
 
 
@@ -3023,16 +3027,25 @@ def _():
 def _():
     from . import channel_ledger as CL
 
-    agree = [CL.b_note(n) == CL.beta_formula(n) for n in range(3, 21)]
+    # Both sides are rational functions of N, so sampling alone proves
+    # nothing; the structural degree bound makes it decisive. The
+    # difference's numerator has degree at most bound, so exact agreement
+    # at MORE than bound distinct ranks forces the identity.
+    bound = CL.b_note_identity_bound()
+    points = bound + 2
+    agree = all(CL.b_note(n) == CL.beta_formula(n) for n in range(3, 3 + points))
     r20_at_9 = int(CL.R20.eval(9))
-    ok = all(agree) and r20_at_9 != 0
+    ok = agree and r20_at_9 != 0
     return ok, (
-        "the walled-Brauer structured expression (pinned note, 74 terms) and "
-        "the boxed all-rank formula agree exactly at N = 3..20, N = 3 "
-        "included -- the corpus states the formula for N >= 4 and cautions "
-        "against substituting at N = 3, but every R20 factor is nonzero at "
-        "z = 9, so the continuation exists and equals the pinned expression; "
-        "what the balanced value MEANS at N = 3 stays a claim, not a check"
+        f"the walled-Brauer structured expression (pinned note) and the "
+        f"boxed all-rank formula agree exactly at {points} consecutive "
+        f"ranks N = 3..{2 + points}, while the difference's numerator has "
+        f"structural degree at most {bound} -- so the two are the SAME "
+        f"rational function, N = 3 included. The corpus states the formula "
+        f"for N >= 4 and cautions against substituting at N = 3, but every "
+        f"R20 factor is nonzero at z = 9, so the continuation exists and "
+        f"equals the pinned expression; what the balanced value MEANS at "
+        f"N = 3 stays a claim, not a check"
     )
 
 

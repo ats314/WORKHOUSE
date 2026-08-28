@@ -61,19 +61,32 @@ class Frontier:
 
 
 def strip_lean_comments(body: str) -> str:
-    """Blank out `/- ... -/` blocks (nested; doc comments included) and `--` tails.
+    """Blank `/- ... -/` blocks (nested), `--` tails, and string contents.
 
     Newlines survive, so line numbers are stable for callers that scan
-    per-line. The counters must see only code: a module header that *says*
-    "no `sorry`" would otherwise count as one, so adding six documented
-    modules would report six sorries that do not exist.
+    per-line. The counters must see only code, in both directions: a module
+    header that *says* "no `sorry`" must not count as one, and a string
+    literal containing "/-" must not open a phantom comment that hides a
+    real `sorry` until some later `-/`. Double-quoted strings are tracked
+    with backslash escapes and their contents blanked (a `sorry` inside a
+    string is data, not a proof hole).
     """
     out: list[str] = []
     i, depth = 0, 0
+    in_string = False
     while i < len(body):
         ch = body[i]
         two = body[i : i + 2]
-        if two == "/-":
+        if in_string:
+            if ch == "\\":
+                i += 2
+                continue
+            if ch == '"':
+                in_string = False
+            elif ch == "\n":
+                out.append("\n")
+            i += 1
+        elif two == "/-":
             depth += 1
             i += 2
         elif two == "-/" and depth:
@@ -88,6 +101,9 @@ def strip_lean_comments(body: str) -> str:
             if end == -1:
                 break
             i = end
+        elif ch == '"':
+            in_string = True
+            i += 1
         else:
             out.append(ch)
             i += 1

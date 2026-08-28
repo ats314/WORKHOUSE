@@ -278,29 +278,29 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'one-step bridge spectral lemma: inf over the orthocomplement is 1 - lambda_1'`
 **off-axis channel ledger (C2 geography, G14)**
 
-- `C_normal = -A_normal/2: the agreed axial coefficient pins the normal channel`
+- `C_normal = -A_normal/2 inside the historical kernel's decomposition`
   - src/workhouse/invariants.py:2941 · UNIFIED v4.3 §6
-  - `workhouse verify --only 'C_normal = -A_normal/2: the agreed axial coefficient pins the normal channel'`
+  - `workhouse verify --only 'C_normal = -A_normal/2 inside the historical kernel'"'"'s decomposition'`
 - `FINDING: the tier collapse is two integer cancellations at record level`
   - src/workhouse/invariants.py:2904 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'FINDING: the tier collapse is two integer cancellations at record level'`
 - `rotation decomposes only as a sum, and the ket convention is load-bearing`
-  - src/workhouse/invariants.py:2994 · UNIFIED v4.3 §3.2 (carrier), tier_collapse convention
+  - src/workhouse/invariants.py:2998 · UNIFIED v4.3 §3.2 (carrier), tier_collapse convention
   - `workhouse verify --only 'rotation decomposes only as a sum, and the ket convention is load-bearing'`
 - `scalar vs shape continuation: poles where the corpus forbids, regular where it allows`
-  - src/workhouse/invariants.py:3075 · GLUEBALL_DETAILED_FORMULA v3.1; THM_SUN unified v2; THM_SU6
+  - src/workhouse/invariants.py:3088 · GLUEBALL_DETAILED_FORMULA v3.1; THM_SUN unified v2; THM_SU6
   - `workhouse verify --only 'scalar vs shape continuation: poles where the corpus forbids, regular where it allows'`
 - `the 189-record kernel decomposes in the shape basis over the whole zone`
   - src/workhouse/invariants.py:2864 · UNIFIED v4.3 §5.1/§6
   - `workhouse verify --only 'the 189-record kernel decomposes in the shape basis over the whole zone'`
 - `the N=3 continuation shift is exactly 25/64, with two exact corollaries`
-  - src/workhouse/invariants.py:3039 · ledger C10; GLUEBALL_DETAILED_FORMULA v3.1 §8/§11
+  - src/workhouse/invariants.py:3052 · ledger C10; GLUEBALL_DETAILED_FORMULA v3.1 §8/§11
   - `workhouse verify --only 'the N=3 continuation shift is exactly 25/64, with two exact corollaries'`
 - `the pinned structured B_N expression IS P17(N^2)/(N R20(N^2))`
-  - src/workhouse/invariants.py:3019 · GLUEBALL_DETAILED_FORMULA v3.1 §11 + App. A
+  - src/workhouse/invariants.py:3023 · GLUEBALL_DETAILED_FORMULA v3.1 §11 + App. A
   - `workhouse verify --only 'the pinned structured B_N expression IS P17(N^2)/(N R20(N^2))'`
 - `the shipped displacement support is exactly six shells`
-  - src/workhouse/invariants.py:2970 · off-axis ledger falsifier gate
+  - src/workhouse/invariants.py:2974 · off-axis ledger falsifier gate
   - `workhouse verify --only 'the shipped displacement support is exactly six shells'`
 **old-to-new crosswalk**
 
