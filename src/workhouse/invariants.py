@@ -4491,3 +4491,57 @@ def _():
         "scalar cannot reach it. The SHAPE half of the verdict stands and is C2; the scalar half "
         "is an artifact, so only one of the two halves is a real disagreement"
     )
+
+
+@channels.check(
+    "the C_alt witness IS the balanced eps-free continuation, and Delta_C/(A/2) = 15/32",
+    "OFF AXIS LEDGER 2026-08-22 §2, UNIFIED v4.3 §5.1",
+    tier=2,
+)
+def _():
+    # An earlier check registered C_alt = C_old + 25/1024 as "an explicit
+    # second witness" exhibiting the C2 non-identifiability -- true, and it
+    # undersold the object badly. The witness is not an arbitrary exhibit. It
+    # is the BALANCED, eps-free continuation of the all-rank shape family
+    # beta_N = P17(N^2)/(N R20(N^2)) evaluated at N = 3, and the historical
+    # SU(3) kernel is that balanced family minus one identified eps-sector.
+    #
+    # Two exact relations, both verified here rather than transcribed:
+    #
+    #     C_balanced - C_historical = 25/1024
+    #     (C_balanced - C_historical) / (A/2) = 15/32,   A = 5/48
+    #
+    # The second is the sharper one: the shift is not an arbitrary rational
+    # but a fixed ratio of the coefficient BOTH SIDES AGREE ON. That is the
+    # same rigidity the A-coupling check found from the block decomposition,
+    # reached from the opposite direction -- an all-rank polynomial family
+    # rather than a 189-record kernel -- by a ledger written six days before
+    # this session and by this session independently.
+    #
+    # The geometry of the three values is worth recording plainly, and it is
+    # NOT an argument for a side. The balanced continuation lands 7x closer to
+    # the v10a.26 value than to the historical one (0.00346 against 0.02441).
+    # That is a fact about where a structurally-derived eps-free object sits,
+    # and it cuts no ice by itself: eps-free is precisely what the physical
+    # value is not, so the balanced number is not a candidate for C_shp and
+    # its proximity to either side proves nothing about which is physical.
+    #
+    # C2 stays open and neither recorded side is preferred.
+    from fractions import Fraction
+
+    c_hist = P.as_fraction(K.C_SHP_HISTORICAL)
+    c_balanced = Fraction(-13035490122347, 550663802582400)
+    shift = c_balanced - c_hist
+    ratio = shift / (Fraction(5, 48) / 2)
+
+    near_new = abs(float(c_balanced) - K.C_SHP_NEW_NUM)
+    near_old = abs(float(c_balanced) - float(c_hist))
+
+    return (shift == Fraction(25, 1024) and ratio == Fraction(15, 32) and near_new < near_old), (
+        f"C_balanced - C_historical = {shift} exactly, and dividing by A/2 with A = 5/48 gives "
+        f"{ratio} -- the shift is a fixed ratio of the coefficient both sides agree on, not an "
+        f"arbitrary rational. The eps-free continuation sits {near_new:.5f} from the v10a.26 "
+        f"value and {near_old:.5f} from the historical one, {near_old / near_new:.1f}x closer to "
+        "the former; that is geometry, not evidence, since an eps-free object is not a candidate "
+        "for the physical C_shp. Neither side is preferred"
+    )

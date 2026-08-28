@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 185/185 checks pass.
+**T1/T2 — re-derived here.** 186/186 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -34,7 +34,7 @@ it cannot drift from what the repository actually checks.
 | coupling erratum (C4/G2) | 2/2 |
 | tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
 | notes program: SAFE, Davies, coercivity (G20-G23) | 13/13 |
-| off-axis channel ledger (C2 geography, G14) | 17/17 |
+| off-axis channel ledger (C2 geography, G14) | 18/18 |
 | the flat-band manuscript | 4/4 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by

@@ -601,7 +601,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:1417 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
-## T2 — float agreement within a stated tolerance — 35
+## T2 — float agreement within a stated tolerance — 36
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -701,6 +701,9 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `FINDING: the v10a.26 side supplies A, B, D but no block structure, and its C fights its own A`
   - src/workhouse/invariants.py:4216 · provenance nb-hodge-v10a26-alt2 / GLUEBALL §10
   - `workhouse verify --only 'FINDING: the v10a.26 side supplies A, B, D but no block structure, and its C fights its own A'`
+- `the C_alt witness IS the balanced eps-free continuation, and Delta_C/(A/2) = 15/32`
+  - src/workhouse/invariants.py:4496 · OFF AXIS LEDGER 2026-08-22 §2, UNIFIED v4.3 §5.1
+  - `workhouse verify --only 'the C_alt witness IS the balanced eps-free continuation, and Delta_C/(A/2) = 15/32'`
 **old-to-new crosswalk**
 
 - `bandwidth is preserved only if Delta_C vanishes`
