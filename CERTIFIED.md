@@ -106,7 +106,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 147
+## T1 — re-derived exactly — 148
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -332,6 +332,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `C_normal = -A_normal/2: the agreed axial coefficient pins the normal channel`
   - src/workhouse/invariants.py:3430 · UNIFIED v4.3 §6
   - `workhouse verify --only 'C_normal = -A_normal/2: the agreed axial coefficient pins the normal channel'`
+- `FINDING: an explicit second witness C_alt exhibits the C2 non-identifiability`
+  - src/workhouse/invariants.py:3864 · COMPLETE_UNIFIED_MASTER_CLOSED §15.3.2
+  - `workhouse verify --only 'FINDING: an explicit second witness C_alt exhibits the C2 non-identifiability'`
 - `FINDING: the retained Gamma/axis data cannot identify C_shp`
   - src/workhouse/invariants.py:3609 · MASTER paper Thm. 13 / C2 / G3
   - `workhouse verify --only 'FINDING: the retained Gamma/axis data cannot identify C_shp'`

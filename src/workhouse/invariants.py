@@ -3859,3 +3859,46 @@ def _():
         "pentagonal side geometry is separate from the cubic kernel, and this adjudicates "
         "no C_shp side"
     )
+
+
+@channels.check(
+    "FINDING: an explicit second witness C_alt exhibits the C2 non-identifiability",
+    "COMPLETE_UNIFIED_MASTER_CLOSED §15.3.2",
+)
+def _():
+    # The registered obstruction says the two recorded C_shp sides differ by
+    # 4 Delta_C e_2, and e_2 is the zero polynomial on an axial cut. That is an
+    # argument about a difference. The 2026-08-28 master edition sharpens it
+    # into a CONSTRUCTION: it exhibits a second exact rational witness,
+    # C_alt = C_old + 25/1024, and every member of that family reproduces the
+    # retained Gamma and axial data identically while separating off-axis.
+    #
+    # Re-derived here rather than transcribed. With the shape term C(4 e_2/q_a)
+    # and a_i = 4 sin^2(k_i/2), the zone corners give a = (4,0,0), (4,4,0),
+    # (4,4,4), so the induced band separations are Delta_C * 4 e_2 / q_a.
+    #
+    # This DECIDES NOTHING about which C is physical. It is the opposite: a
+    # constructive proof that the retained corpus cannot decide, which is why
+    # G3's target-blind off-axis contraction is the only route. Note also that
+    # the document naming this witness is the one titled "...CLOSED", and its
+    # own section heading is "Why the exact rooted scalar remains open".
+    c_old = Rational(-211835444920651, 4405310420659200)
+    c_alt = Rational(-13035490122347, 550663802582400)
+    shift = c_alt - c_old
+
+    separations = {}
+    for label, cut in (("X", (1, 0, 0)), ("M", (1, 1, 0)), ("R", (1, 1, 1))):
+        a = [4 if x else 0 for x in cut]
+        q_a = sum(a)
+        e_2 = a[0] * a[1] + a[0] * a[2] + a[1] * a[2]
+        separations[label] = shift * Rational(4 * e_2, q_a)
+
+    expected = {"X": Rational(0), "M": Rational(25, 128), "R": Rational(25, 64)}
+    ok = shift == Rational(25, 1024) and separations == expected
+    return ok, (
+        f"C_alt - C_old = {shift} exactly, and the induced separations are "
+        f"X {separations['X']}, M {separations['M']}, R {separations['R']}: identical on every "
+        "retained datum, distinct off-axis. Non-identifiability is exhibited by construction, "
+        "not argued from a difference. Neither C_shp side is preferred, and C2 stays open -- the "
+        "source document's own section is titled 'Why the exact rooted scalar remains open'"
+    )
