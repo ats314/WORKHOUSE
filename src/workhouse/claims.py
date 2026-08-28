@@ -135,6 +135,14 @@ def note_id(archive_id: str, row: dict[str, Any]) -> str:
     return f"NOTE:{archive_id}:{_slug(stem)}-{row['digest'][:6]}"
 
 
+def load_runs(path: Path | None = None) -> list[dict[str, Any]]:
+    """The run register: one entry per pinned run record in runs/."""
+    path = path or ROOT / "runs" / "index.yaml"
+    if not path.exists():
+        return []
+    return yaml.safe_load(path.read_text())["runs"]
+
+
 def load_theorems(path: Path | None = None) -> list[dict[str, Any]]:
     return yaml.safe_load((path or THEOREM_SOURCE).read_text())["theorems"]
 
@@ -526,6 +534,26 @@ def collect() -> list[Claim]:
                     related=sorted(review.get("bears_on", [])) if review else [],
                 )
             )
+
+    # The run register. A pinned run record is evidence that a computation was
+    # executed and what it printed -- until 2026-08-28 the three of them were
+    # cited by checks only as file-path strings, so "which runs bear on G3"
+    # had no answer the graph could give. Every RUN node is T3: what a run
+    # established is the citing checks' business, never the node's.
+    for run in load_runs():
+        out.append(
+            Claim(
+                id=f"RUN:{run['id']}",
+                kind="run",
+                statement=" ".join(str(run["title"]).split()),
+                tier=3,
+                where=run["dir"],
+                cites="runs/index.yaml",
+                status="pinned run record",
+                detail=" ".join(str(run.get("detail", "")).split()),
+                related=sorted(run.get("bears_on", [])),
+            )
+        )
 
     return out
 

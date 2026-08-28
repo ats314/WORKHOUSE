@@ -40,34 +40,99 @@ gaps:
   - id: G3
     tier: 1
     state: open
-    title: Fourth-order adjudication — run the marked-cluster engine target-blind
+    title: Fourth-order adjudication — decide C_shp where it actually lives
     detail: >
-      The 11-item frozen protocol of GLUEBALL §18.1. This is the load-bearing
-      finite computation of the entire program. Scope narrowed once C1 was
-      dissolved as an anchoring distinction: what G3 must now settle is the
-      off-axis coefficient C_shp, since the Gamma-point scalar is externally
-      validated against Hamer and Phi_C(0) = 0 makes Gamma-point data
-      structurally incapable of constraining Delta_C.
-    resolves: [C2, C3, C22]
+      REWRITTEN 2026-08-28, at the maintainer's standing instruction, after
+      the sweep-cannot-decide-C2 finding below. The original G3 ("run the
+      marked-cluster engine target-blind", the 11-item GLUEBALL §18.1
+      protocol) directed every session at a sealed 609-evaluation sweep
+      that is now established — by T1 static scan, not by fatigue — to
+      emit the Gamma-point scalar only, a quantity externally validated
+      and structurally incapable of constraining Delta_C (Phi_C(0) = 0).
+      Four sessions dead-ended on that path (absent engine, closure cap,
+      cost, and finally the structural incapacity); the register, not the
+      next agent, now carries that knowledge. What G3 must settle is
+      unchanged: the off-axis coefficient C_shp (C2). The route is
+      replaced by the two paths that can actually reach it, cheapest
+      first.
+    resolves: [C2]
     unblocks: [G9]
+    plan:
+      - step: block-structure comparison
+        status: >
+          answered 2026-08-28, HODGE_RUNS intake: NO recorded per-record
+          v10a.26 kernel exists — the 15-hour transcript prints the cold
+          shape fit (A = 5/48 shared to 6e-14, B, D at noise, alpha = 5/12,
+          C = C_SHP_NEW_NUM, 189 records) but K4_mass_cols was never
+          dumped; see the cold-kernel-shares-every-protected-parameter
+          check. The comparison therefore cannot be completed from
+          recorded evidence and step 2 is the live route.
+        what: >
+          The historical 189-record kernel decomposes into displacement
+          blocks; A = 5/48 pins the entire NORMAL block (81% of C_shp) and
+          the A-free blocks cannot span the disputed gap (2.28x too small).
+          If the v10a.26 side has a recorded per-record kernel or block
+          decomposition anywhere in corpus-import/, comparing the two
+          structures directly adjudicates WITHOUT running anything: the
+          divergence must sit in the A-carrying sector, and whichever side
+          is inconsistent with its own A is self-refuting. First task:
+          establish whether that v10a.26 structure exists in the corpus.
+      - step: targeted kernel-bearing recomputation
+        status: >
+          executed 2026-08-28 (runs/g3_kernel_record_dump_2026-08-28): the
+          cold kernel's 189 records reproduced on CPU in 12.3 minutes and
+          compared record-by-record against the historical certificate.
+          The dispute is now THREE amplitudes, not two kernels: the
+          cross-plane amplitude (one value per kernel, opposite sign),
+          the nn same-plane NORMAL/IN-PLANE amplitudes, and the on-site
+          anchor (shape-inert, ADR 0002). One scale factor explains the
+          other 144 records to 2e-12 — the rotation bulk is structurally
+          shared. See the kernels-agree-except-three-amplitudes check.
+          What now decides C2: an independent exact computation of ANY of
+          the three divergent amplitudes — each is a single number with
+          cubic-symmetry multiplicity, and the A = 5/48 identity plus the
+          shared bulk over-determine the rest.
+        what: >
+          If no recorded v10a.26 structure exists, recompute blind ONLY the
+          A-carrying sector (normal nearest-neighbour displacements) through
+          the Stage-3H kernel lineage (the v10a26 notebook lead), not 609
+          uniform clusters. The A = 5/48 identity doubles as the built-in
+          holdout: a recomputation whose normal block disagrees with the
+          agreed A refutes itself. The HODGE_RUNS intake bounds the cost:
+          the 15-hour transcript's kernel leg (H4_ax_cols, the C-bearing
+          object) is hours by its own progress lines — the 15 hours were
+          the rooted scalar oracle leg, which the kernel question does not
+          need. The construction code is imported verbatim
+          (HODGE_v10a26_factor52_comp_script.txt); instrument it to dump
+          the 189 records and run both kernels through one block
+          decomposition.
+      - step: sealed scalar sweep (demoted, optional)
+        status: priced out
+        what: >
+          The GLUEBALL §18.1 sealed sweep remains the only path to a blind
+          scalar confirmation and to protocol items 1-6/9, but it decides
+          nothing about C2 and costs months (measured: 45+ min for the
+          smallest of 609 clusters, cap-lifted, without completing). Run it
+          only if a blind scalar confirmation is ever worth that price.
     leads:
       - settlement/mce_adjudication_harness.py
       - settlement/README.md
       - theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md
       - corpus-import/programs/one_plaquette/y4_o3_flatband_verification/y4_full_real_space_H4_kernel.json/CERT_Y4_full_real_space_h4_kernel.json
       - corpus-import/programs/hodge_o4_adjudication/notebooks/NB_O4_hodge_v10a26_factor52complete_exactsw_rootedoracle_a100_alt2.ipynb
-    protocol:
-      - erratum-fixed canonical u normalization
-      - exact order-four occurrence schedule
-      - 203*3 = 609 exact rational marked-cluster evaluations plus a rooted Mobius ledger
-      - linked subtraction applied to the vacuum-subtracted object
-      - checkpoint hashes; comparison targets loaded only after sealing
-      - no historical target anywhere in the scalar or shape data flow
-      - cold 3895-topology Stage-3H run producing an unshifted 189-record kernel
-      - direct X/M extraction with lambda_R = 2*lambda_M - lambda_X as blind holdout
-      - independent scalar ledger testing q_band^(4) - E_0^(4) =? m_Gamma^(4)
-      - W_22 order-schedule toggle across all 33 rooted classes
-      - both m_Gamma^(4) and C^(4) from the same run
+    superseded_protocol: >
+      The 11-item GLUEBALL §18.1 frozen protocol (canonical u; occurrence
+      schedule; 609 evaluations + rooted Mobius ledger; linked subtraction;
+      sealed hashes; no targets in the data flow; cold 3895-topology
+      Stage-3H 189-record kernel; X/M fit with lambda_R = 2*lambda_M -
+      lambda_X blind holdout; scalar ledger q_band^(4) - E_0^(4) =?
+      m_Gamma^(4); W_22 toggle; m_Gamma^(4) and C^(4) from one run) is
+      retained verbatim in the harness docstring and in
+      theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md. Its
+      target-blindness discipline — quarantined comparison constants,
+      contamination scan, seal-before-unblind — carries over to any step-2
+      recomputation. Items 7/8/10/11 were never dischargeable by the
+      marked-cluster engine at all.
     inventory_trap: >
       The 3895 Stage-3H topologies and the 3850 stable-rank trace topologies are
       DIFFERENT inventories and must never be interchanged.
@@ -88,14 +153,35 @@ gaps:
         aborts rather than truncates, so no computed value depends on it),
         then the `run` stage — feasibility now a measured question, not a
         hardware one; see the run record.
-      engine_located: >
-        The received package records Hodge_SU3_Exact_MarkedCluster_m4_Colab.py
-        as absent. Stale: the 2026-08-20 rename manifest
-        (corpus-import/records/RENAME_MANIFEST_2026-08-20.tsv) shows it was
-        imported and renamed to corpus-import/programs/hodge_o4_adjudication/
-        src/DATA_SU3_Exact_MarkedCluster_m4_Colab.py. Behavioral identity with
-        the upstream-verified engine is checked, not assumed: both preflight
-        SHA pins reproduce here (freeze check in invariants.py).
+    sweep_cannot_decide_c2: >
+      Established 2026-08-28 (FINDING, adjudication suite): the marked-cluster
+      engine assembles every certificate coefficient through
+      _exact_gamma_scalar and carries no shape, band-point, or Stage-3H
+      output anywhere in its 6,782 lines, so a completed 609-evaluation
+      sealed sweep adjudicates the Gamma scalar ONLY — the quantity already
+      externally validated and already proved incapable of constraining
+      Delta_C (Phi_C(0) = 0). Protocol items 7/8/10/11 cannot be discharged
+      by this engine on any hardware at any cost. The decisive paths for C2
+      are (a) a kernel-bearing Stage-3H-lineage recomputation (the v10a26
+      notebook lead), or (b) the block-structure comparison of the two
+      recorded kernels (the A-pins-the-normal-block result). Measured cost
+      of the sweep, for the record: with the cap lifted (the one-line fork,
+      sha256 9af3708e81a4a246..., freeze PASS including self-test 47/47),
+      the sealed run's cluster 1 of 609 — the single support-size-1
+      cluster, smallest of all — exceeded 45 wall-minutes on this
+      container without completing; 474 of the 609 are 3-face. A
+      memoization fork of the exact Haar contraction (self-test 47/47,
+      exact agreement on sampled inner products) did not change the
+      complexity class. The sweep's residual value is a blind scalar
+      confirmation, priced accordingly.
+    engine_located: >
+      The received package records Hodge_SU3_Exact_MarkedCluster_m4_Colab.py
+      as absent. Stale: the 2026-08-20 rename manifest
+      (corpus-import/records/RENAME_MANIFEST_2026-08-20.tsv) shows it was
+      imported and renamed to corpus-import/programs/hodge_o4_adjudication/
+      src/DATA_SU3_Exact_MarkedCluster_m4_Colab.py. Behavioral identity with
+      the upstream-verified engine is checked, not assumed: both preflight
+      SHA pins reproduce here (freeze check in invariants.py).
       run_2026_08_22: >
         First execution of the run stage: fail-closed on the first cluster of
         polarization 0 (support size 1) with "ExactEngineError: unexpectedly

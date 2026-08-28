@@ -1,0 +1,76 @@
+# The run register: one entry per pinned run record in runs/.
+#
+# Judgement lives here (what each run bears on); the join is derived
+# (claims.py emits a RUN: node per entry, graph.py emits the evidences
+# edges); the validation is mechanical (tests/test_graph.py rejects an
+# entry whose directory or SHA256SUMS is missing, and a runs/ directory
+# with no entry). The failure this register prevents: a run record that
+# checks cite only as a file-path string, invisible to `workhouse why` —
+# the same hole the notes archives had before they got nodes.
+#
+# No entry promotes anything. A run record is evidence that a computation
+# was executed and what it printed — tier is the checks' business.
+schema: runs/v1
+
+runs:
+  - id: mce_freeze_and_first_run_2026-08-22
+    dir: runs/mce_freeze_and_first_run_2026-08-22
+    title: >-
+      MCE frozen-protocol attempt: freeze passes, run fail-closes on
+      cluster 1 of 609
+    bears_on: [G3, C2]
+    detail: >-
+      First execution of the settlement harness's freeze and run stages
+      anywhere. Freeze PASS (self-test 47/47, both preflight pins); run
+      fail-closed on the shipped closure cap (max_states=100) during the
+      R2 stage of the first, smallest cluster. Established that the frozen
+      protocol as received cannot start on any hardware, and measured the
+      first oversize orbit at 216 states.
+
+  - id: blind_pentagonal_o4_2026-08-28
+    dir: runs/blind_pentagonal_o4_2026-08-28
+    title: >-
+      Target-blind pentagonal fourth-order run: both amplitudes of
+      h_4^side cold-reproduced
+    bears_on: [C2]
+    detail: >-
+      backend_full_link_balanced_control.py run unmodified, 24/24 internal
+      gates. Derives A_+ and A_- independently from oriented prism
+      geometry; exact agreement on both amplitudes. Does NOT adjudicate
+      C2: h_4^side is pentagonal-prism geometry, separate from the cubic
+      kernel where C_shp lives.
+
+  - id: mce_caplifted_freeze_and_run_2026-08-28
+    dir: runs/mce_caplifted_freeze_and_run_2026-08-28
+    title: >-
+      Cap-lifted MCE sealed run: freeze passes, cluster 1 of 609 exceeds
+      45 minutes, and the sweep is priced out
+    bears_on: [G3, C2]
+    detail: >-
+      The cap-lifted fork (sha256 9af3708e...) driven by the pinned
+      harness: freeze PASS, sealed run terminated by hand at 45:27 with
+      the smallest cluster still incomplete. Killed because the
+      scalar-only finding registered the same day makes completing it
+      pointless for C2. Also records the memoization-fork experiment
+      (self-test 47/47, exact agreement on sampled inner products, still
+      inside cluster 1 at 12:14) and the py-spy attribution of the cost
+      to the pure-Python union-find under the exact Haar contraction.
+
+  - id: g3_kernel_record_dump_2026-08-28
+    dir: runs/g3_kernel_record_dump_2026-08-28
+    title: >-
+      The v10a.26 kernel records written down, and the two kernels compared
+      record by record
+    bears_on: [G3, C2]
+    detail: >-
+      The cold kernel's 189 per-record values, reproduced on CPU in 12.3
+      minutes from the pinned v10a.26 script (kernel leg only) with every
+      gate passing and C bit-identical to the registered C_SHP_NEW_NUM.
+      The comparison against the pinned historical certificate: identical
+      189-record support; one scale factor s = 4.1327437 explains 144
+      records to 2e-12 (the whole rotation-type bulk); the divergence is
+      three amplitudes — the cross-plane value (opposite sign between
+      kernels), the nn same-plane NORMAL/IN-PLANE values, and the on-site
+      scalar anchor (whose swap moves C by exactly zero) — and the
+      class-by-class Delta_C attribution sums exactly to the measured
+      difference. Neither side promoted.
