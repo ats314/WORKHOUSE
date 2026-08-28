@@ -20,6 +20,8 @@
   --k-symbol: #e87ba4;
   --k-paper: #008300;
   --k-decision: #4a3aa7;
+  --k-document: #0d98ba;
+  --k-note: #8d5db6;
   --open: #d03b3b;
   --chip-ink: #ffffff;
 }
@@ -42,6 +44,8 @@
     --k-symbol: #d55181;
     --k-paper: #008300;
     --k-decision: #9085e9;
+    --k-document: #22a3c4;
+    --k-note: #8f5cb8;
     --open: #d03b3b;
     --chip-ink: #0b0b0b;
   }
@@ -64,6 +68,8 @@
   --k-symbol: #d55181;
   --k-paper: #008300;
   --k-decision: #9085e9;
+  --k-document: #22a3c4;
+  --k-note: #8f5cb8;
   --open: #d03b3b;
   --chip-ink: #0b0b0b;
 }
@@ -276,7 +282,9 @@ const GROUP_OF = k => (
   k === "theorem" ? "theorem" :
   k === "symbol" ? "symbol" :
   k === "paper" ? "paper" :
-  k === "decision" ? "decision" : "ledger");
+  k === "decision" ? "decision" :
+  k === "document" ? "document" :
+  k === "note" ? "note" : "ledger");
 const GROUPS = [
   ["check", "checks", "--k-check"],
   ["ledger", "ledger claims", "--k-ledger"],
@@ -285,6 +293,8 @@ const GROUPS = [
   ["symbol", "symbols", "--k-symbol"],
   ["paper", "papers", "--k-paper"],
   ["decision", "decisions", "--k-decision"],
+  ["document", "corpus documents", "--k-document"],
+  ["note", "notes", "--k-note"],
 ];
 
 const nodes = DATA.nodes.map(n => ({ ...n, g: GROUP_OF(n.kind), x: 0, y: 0, vx: 0, vy: 0, deg: 0 }));
@@ -298,7 +308,7 @@ const label = n => n.g === "ledger" || n.id === "C2" || n.deg >= 10 || n.kind ==
 const radius = n => Math.max(3.5, Math.min(11, 3 + Math.sqrt(n.deg) * 1.6)) * (n.g === "ledger" ? 1.25 : 1);
 
 // deterministic initial layout: kind-cluster seeds + golden-angle scatter
-const seeds = { check: [-0.30, -0.05], constant: [0.34, 0.22], theorem: [-0.05, 0.33], ledger: [0.02, -0.02], symbol: [0.25, -0.28], paper: [-0.36, 0.28], decision: [-0.22, -0.34] };
+const seeds = { check: [-0.30, -0.05], constant: [0.34, 0.22], theorem: [-0.05, 0.33], ledger: [0.02, -0.02], symbol: [0.25, -0.28], paper: [-0.36, 0.28], decision: [-0.22, -0.34], document: [0.38, -0.02], note: [0.02, -0.38] };
 nodes.forEach((n, i) => {
   const [sx, sy] = seeds[n.g];
   const a = i * 2.39996, r = 0.05 + 0.012 * Math.sqrt(i);

@@ -4,7 +4,8 @@ Two files, both generated into ``index/``:
 
 * ``claims.jsonl`` -- one record per claim this repository can point at: every
   invariant check, every registered constant, every ledger entry, every
-  literature edge, every Lean theorem, every ADR.
+  literature edge, every Lean theorem, every ADR, every pinned originating
+  document, every reviewed note.
 * ``symbols.jsonl`` -- the curated aliases from ``ledger/symbols.yaml``, joined
   to the claims that mention them.
 
@@ -34,6 +35,7 @@ from . import certified as certified_mod
 from . import constants as K
 from . import ledger as ledger_mod
 from . import literature as literature_mod
+from . import notes as notes_mod
 from .invariants import SUITES
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -56,6 +58,7 @@ KINDS = (
     "theorem",
     "decision",
     "document",
+    "note",
 )
 
 #: A ledger id anywhere in free text. Case-sensitive on purpose: `u4` in
@@ -421,6 +424,26 @@ def collect() -> list[Claim]:
             )
         )
 
+    # Reviewed notes. One record per verdict in ledger/notes.yaml — the review
+    # is the claim ("this archived document was judged X, because Y"), and it
+    # is T3 like every document: no verdict promotes anything. The note's
+    # bytes stay in the archive; only an `import` has a repository path.
+    for review in notes_mod.load().reviews:
+        digest = str(review.get("digest", ""))
+        out.append(
+            Claim(
+                id=f"NOTE:{digest[:12]}",
+                kind="note",
+                statement=str(review.get("path") or digest),
+                tier=3,
+                where=str(review.get("imported_to") or "ledger/notes.yaml"),
+                cites=f"{review.get('archive', '')} {digest}".strip(),
+                status=str(review.get("verdict", "")),
+                detail=" ".join(str(review.get("reason", "")).split()),
+                related=sorted(str(t) for t in review.get("bears_on", [])),
+            )
+        )
+
     return out
 
 
@@ -469,10 +492,10 @@ def symbol_records(claims: list[Claim] | None = None) -> list[dict[str, Any]]:
     return records
 
 
-def write(directory: Path | None = None) -> tuple[Path, Path]:
+def write(directory: Path | None = None, catalogue: list[Claim] | None = None) -> tuple[Path, Path]:
     target = directory or INDEX_DIR
     target.mkdir(parents=True, exist_ok=True)
-    claims = collect()
+    claims = catalogue if catalogue is not None else collect()
     (target / "claims.jsonl").write_text(
         "".join(json.dumps(asdict(c), sort_keys=True) + "\n" for c in claims)
     )

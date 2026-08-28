@@ -7,9 +7,12 @@ them were siloed in six formats: ledger edge fields, the symbol records'
 literature ``bears_on`` edges, ADR prose, and (until ``ledger/theorems.yaml``)
 nothing at all for the Lean layer. ``ledger/provenance.yaml`` extends the
 reach into the corpus itself: pinned originating documents, with
-``originates`` edges to the claims their values come from. This module reads
-each of those sources and emits ``index/graph.jsonl``: one JSON record per
-edge, ``{src, dst, type, how, source}``.
+``originates`` edges to the claims their values come from.
+``ledger/notes.yaml`` extends it into the maintainer's archive: a reviewed
+note's ``bears_on`` names the claims its content entered through (mandatory
+for the ``extract`` verdict). This module reads each of those sources and
+emits ``index/graph.jsonl``: one JSON record per edge,
+``{src, dst, type, how, source}``.
 
 Two rules keep the graph honest:
 
@@ -26,7 +29,10 @@ Two rules keep the graph honest:
 * **Both endpoints must resolve.** An edge is emitted only when ``src`` and
   ``dst`` are ids in the claim catalogue (or ``SYM:`` ids from the symbol
   records). Everything else lands in the dangling report instead of becoming
-  an invented node.
+  an invented node. This is also why the notes register's note-to-note
+  fields (``duplicate_of``, ``superseded_by``) stay in the register: their
+  far end is usually an unreviewed manifest row, which is an inventory line,
+  not a catalogue record, and the graph invents no nodes (ADR 0013).
 """
 
 from __future__ import annotations
@@ -38,6 +44,7 @@ from pathlib import Path
 from . import claims as claims_mod
 from . import ledger as ledger_mod
 from . import literature as literature_mod
+from . import notes as notes_mod
 from .claims import ADR_REF, LEDGER_ID
 from .invariants import SUITES
 
@@ -55,7 +62,7 @@ CURATED_TYPES = frozenset(
         "supported_by",  # gaps.yaml unifying_candidates (id-shaped entries only)
         "claims",  # symbols.yaml
         "code_names",  # symbols.yaml
-        "bears_on",  # literature/index.yaml
+        "bears_on",  # literature/index.yaml; ledger/notes.yaml (extract verdicts)
         "cites",  # literature/index.yaml: the curated citation web, LIT -> LIT
         "formalizes",  # theorems.yaml
         "promotes",  # theorems.yaml: the T1/T2 check a theorem lifts to T0
@@ -206,6 +213,16 @@ def build(
                 "ledger/provenance.yaml",
             )
 
+    # The notes register: a review's bears_on names the claims the note's
+    # content entered through. Targets are ledger ids or registered constant
+    # names, the same target space literature bears_on uses.
+    for review in notes_mod.load().reviews:
+        nid = f"NOTE:{str(review.get('digest', ''))[:12]}"
+        for target in review.get("bears_on", []):
+            target = str(target)
+            dst = target if LEDGER_ID.fullmatch(target) else f"CONST:{target}"
+            add(nid, dst, "bears_on", "curated", "ledger/notes.yaml")
+
     return Graph(edges=sorted(edges), dangling=sorted(dangling))
 
 
@@ -228,7 +245,7 @@ def render(graph: Graph | None = None) -> str:
     return "".join(json.dumps(asdict(e), sort_keys=True) + "\n" for e in graph.edges)
 
 
-def write(path: Path | None = None) -> Path:
+def write(path: Path | None = None, graph: Graph | None = None) -> Path:
     target = path or GRAPH
-    target.write_text(render())
+    target.write_text(render(graph))
     return target

@@ -165,12 +165,16 @@ def _search(query: str, corpus: bool, limit: int) -> int:
 
 def _index(write: bool) -> int:
     if write:
-        claims_path, symbols_path = claims_mod.write()
-        graph_path = graph_mod.write()
+        # One collect() feeds all three files: running the whole check suite
+        # once per artifact tripled the cost of `make catalogue` for no gain.
+        catalogue = claims_mod.collect()
+        claims_path, symbols_path = claims_mod.write(catalogue=catalogue)
+        graph = graph_mod.build(catalogue, claims_mod.load_symbols())
+        graph_path = graph_mod.write(graph=graph)
         for path in (claims_path, symbols_path, graph_path):
             rows = len(path.read_text().splitlines())
             print(f"wrote {path.relative_to(claims_mod.ROOT)}: {rows} records")
-        problems = graph_mod.validate()
+        problems = graph_mod.validate(graph)
         if problems:
             print("\n\033[31mGraph problems\033[0m")
             for p in problems:
