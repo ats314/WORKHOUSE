@@ -183,19 +183,19 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **finite-rank truncation bridge (published SU(3) truncations)**
 
 - `FINDING: the T1 link cutoff reverses the sign of t_3, and 14/153 is what it omits`
-  - src/workhouse/invariants.py:5194 · R2; notes UPLOADS_2026-08-28e §5; runs/cbb_finite_n_bridge_2026-08-28
+  - src/workhouse/invariants.py:5192 · R2; notes UPLOADS_2026-08-28e §5; runs/cbb_finite_n_bridge_2026-08-28
   - `workhouse verify --only 'FINDING: the T1 link cutoff reverses the sign of t_3, and 14/153 is what it omits'`
 - `FINDING: the bridge documents match the obtained paper, except one equation number`
-  - src/workhouse/invariants.py:5319 · R2; arXiv:2503.11888v5 Eqs. (1), (D1), Fig. 6, App. C; notes UPLOADS_2026-08-28e
+  - src/workhouse/invariants.py:5317 · R2; arXiv:2503.11888v5 Eqs. (1), (D1), Fig. 6, App. C; notes UPLOADS_2026-08-28e
   - `workhouse verify --only 'FINDING: the bridge documents match the obtained paper, except one equation number'`
 - `the B = 6 scalar misses the bridge's by exactly the same-face sextet route`
-  - src/workhouse/invariants.py:5633 · R2; runs/b6_open_cube_channel_complete_2026-08-28; notes UPLOADS_2026-08-28e §5.1
+  - src/workhouse/invariants.py:5631 · R2; runs/b6_open_cube_channel_complete_2026-08-28; notes UPLOADS_2026-08-28e §5.1
   - `workhouse verify --only 'the B = 6 scalar misses the bridge'"'"'s by exactly the same-face sextet route'`
 - `the certificate's finite-volume fingerprints, and 29 = L^3 + 2 is the Lean cycle count`
-  - src/workhouse/invariants.py:5250 · R2; notes UPLOADS_2026-08-28e §6-7; runs/cbb_finite_n_bridge_2026-08-28
+  - src/workhouse/invariants.py:5248 · R2; notes UPLOADS_2026-08-28e §6-7; runs/cbb_finite_n_bridge_2026-08-28
   - `workhouse verify --only 'the certificate'"'"'s finite-volume fingerprints, and 29 = L^3 + 2 is the Lean cycle count'`
 - `the published dimension-ratio matrix element is this registry's weight formula`
-  - src/workhouse/invariants.py:5148 · R2; Ciavarella-Burbano-Bauer arXiv:2503.11888v5 Eq. (D1); notes UPLOADS_2026-08-28e
+  - src/workhouse/invariants.py:5146 · R2; Ciavarella-Burbano-Bauer arXiv:2503.11888v5 Eq. (D1); notes UPLOADS_2026-08-28e
   - `workhouse verify --only 'the published dimension-ratio matrix element is this registry'"'"'s weight formula'`
 **fourth order, anchoring and the residual dispute**
 
@@ -655,13 +655,13 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **finite-rank truncation bridge (published SU(3) truncations)**
 
 - `FINDING: a full T1 = B = 4 cube Hamiltonian reproduces -1/12 and the reversed shell`
-  - src/workhouse/invariants.py:5455 · R2; runs/balaji_open_cube_b4_t1_2026-08-28; notes UPLOADS_2026-08-28g
+  - src/workhouse/invariants.py:5453 · R2; runs/balaji_open_cube_b4_t1_2026-08-28; notes UPLOADS_2026-08-28g
   - `workhouse verify --only 'FINDING: a full T1 = B = 4 cube Hamiltonian reproduces -1/12 and the reversed shell'`
 - `FINDING: the B = 6 cube flips the sign back to +5/612, closing the decisive test`
-  - src/workhouse/invariants.py:5564 · R2; runs/b6_open_cube_channel_complete_2026-08-28
+  - src/workhouse/invariants.py:5562 · R2; runs/b6_open_cube_channel_complete_2026-08-28
   - `workhouse verify --only 'FINDING: the B = 6 cube flips the sign back to +5/612, closing the decisive test'`
 - `the discrete index theorem gives 0 on the signed face-edge operator, bounding nothing`
-  - src/workhouse/invariants.py:5396 · R2; G14; arXiv:2607.22831v1 (Hazra) §6 Eq. for ind_a(D)
+  - src/workhouse/invariants.py:5394 · R2; G14; arXiv:2607.22831v1 (Hazra) §6 Eq. for ind_a(D)
   - `workhouse verify --only 'the discrete index theorem gives 0 on the signed face-edge operator, bounding nothing'`
 **fourth order, anchoring and the residual dispute**
 
