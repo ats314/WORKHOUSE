@@ -248,13 +248,35 @@ D3_ODD = Rational(-24541, 62424)  # domino C-odd diagonal
 D3_EVEN = Rational(-517313, 6242400)  # ... and C-even
 E_VAC3_DOMINO = Rational(-9, 16)  # = 2*(-9/32); no connected third-order vacuum piece
 D_3_TOP = Rational(-61751, 249696)  # C-odd dispersive top, at lambda = 8
-M3_EVEN_BANDMIN = Rational(471353, 1560600)  # C-even at lambda = -4
+#: The C-even band edge at lambda = -4, order 3. The certificate key is
+#: "m3_even_bandmin (lambda=-4)" and that key name is wrong: t_{3,+} < 0, so
+#: lambda = -4 is the band TOP, which is what PAPER's third-order theorem, the
+#: manuscript patch's constant table and the master program note all call it.
+#: Renamed here to stop the registry contradicting BAND_EVEN_TOP, which is the
+#: same edge one order down; the FINDING check keeps the discrepancy visible.
+M3_EVEN_BANDTOP = Rational(471353, 1560600)  # C-even at lambda = -4, the TOP
+
+#: The E++ doublet at lambda = 0, order 3. PAPER derives it from the certified
+#: band form ("101/200 + 12 T_3^e = 52163/260100") and flags it as following
+#: from that form rather than computed independently -- so it is exactly the
+#: kind of value that is worth re-deriving here rather than transcribing.
+M3_EVEN_EPP = Rational(52163, 260100)
+
+#: The C-even A1++ curvature coefficients, PAPER's "curvature +22/459 |k|^2 y^2"
+#: and its third-order correction. Both are (4/3)|t_{r,+}|; the 4/3 is the
+#: Gamma expansion of the unsigned adjacency, not a convention.
+CEVEN_CURVATURE_2 = Rational(22, 459)
+CEVEN_CURVATURE_3 = Rational(6335, 187272)
 
 # Recorded, not explained: leak_r = t_r in the C-even sector at BOTH orders,
 # and at second order the C-odd leakage equals them too. Three labels on
 # -11/306, two on -6335/249696. Nothing here shows why, and a mechanism must
 # not be read off a coincidence of values -- ADR 0005 is what happens when one
-# is.
+# is. The -11/306 coincidence is now half explained: all three second-order
+# labels are ell_N = A_N + B_N + 1/C_F, an all-rank closed form, so at that
+# order it is one object rather than three (charge-even suite). The C-even
+# identity one order up is still bare, and is registered as the unifying
+# candidate U4 -- with a falsifier -- rather than as a result.
 
 #: The adjacency eigenvalues the band assembly is evaluated at. The C-odd
 #: sector sees the SIGNED incidence, spec S = {-4, q-4, q-4} with q in [0, 12],
