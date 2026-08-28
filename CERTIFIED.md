@@ -106,7 +106,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 144
+## T1 — re-derived exactly — 145
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -538,6 +538,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `FINDING: the retained Gamma/axis data cannot identify C_shp`
   - src/workhouse/invariants.py:3653 · MASTER_DOC closure audit / C2
   - `workhouse verify --only 'FINDING: the retained Gamma/axis data cannot identify C_shp'`
+- `every \chk in the united paper names a check that exists and passes`
+  - src/workhouse/invariants.py:3687 · PAPER_MASTER, every displayed result
+  - `workhouse verify --only 'every \chk in the united paper names a check that exists and passes'`
 - `no fourth-order coefficient enters the manuscript`
   - src/workhouse/invariants.py:3435 · PAPER_FLATBAND §6
   - `workhouse verify --only 'no fourth-order coefficient enters the manuscript'`

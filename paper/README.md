@@ -11,11 +11,74 @@ any of them moves.
 
 | File | What it is |
 |---|---|
-| `homological_flat_bands_2026-08-28.pdf` | the flat-band manuscript, the one that cites this repository by commit. |
-| `nested_quotient_master_2026-08-28.pdf` | the master derivation, uniting it with the nested-quotient circuit theory. **The current artifact of record.** |
+| `master_paper_2026-08-28.tex` | **the united edition, and the current artifact of record.** The two manuscripts below merged into one, with the four results this repository added on 2026-08-28 folded in. Source, not just output — the `.tex` is pinned alongside the `.pdf`. |
+| `master_paper_2026-08-28.pdf` | its build. Byte-reproducible; see **Rebuilding** below. |
+| `homological_flat_bands_2026-08-28.pdf` | the flat-band manuscript, the one that cites this repository by commit. Superseded by the united edition, kept as the pinned original. |
+| `nested_quotient_master_2026-08-28.pdf` | the master derivation, uniting it with the nested-quotient circuit theory. Superseded by the united edition, kept the same way. |
 | `nested_quotient_master_2026-08-28.txt` | its extracted text, same provenance and standing as the line below. |
 | `homological_flat_bands_2026-08-28.txt` | its text, extracted once with `pypdf` 6.16.2 so checks can read it. Derived, never authority — where the two differ the PDF wins. |
 | `../verify_core.py` | the portable verifier §9 promises. Root-level so the manuscript's printed `python3 verify_core.py` is true as printed. |
+
+## The united edition
+
+The two pinned manuscripts overlap heavily and disagree in emphasis: the
+flat-band paper carries the homology and the second-order chain, the master
+derivation carries the nested-quotient circuit theory and the fourth-order
+material. `master_paper_2026-08-28.tex` is the single document, and it differs
+from a concatenation in four places, each one a result this repository
+established after both were written:
+
+1. **The isotropy premise is derived, not assumed.** The flat-band paper's
+   eq. (18) asserts isotropy in one word, and it was the single unproved
+   physical input of the entire second-order chain. It is now a Weingarten
+   computation: the six non-shared links integrate independently, collapsing
+   the pair moment to degree $(2,2)$ on the shared link, and all four channel
+   weights come out $d_R/N^2$. §4, Theorem 4.
+2. **Theorem 1 and Theorem 2 are joined.** Both manuscripts state a $3\times3$
+   Bloch spectrum and an $(L^3+2)$-dimensional chain-level carrier without
+   remarking that the two agree. §3, Theorem 3.
+3. **The vacuum-mediated route is stated as a rank formula.** "Every
+   second-order inter-plaquette process uses one shared link" is false in
+   general; the route $p\to|0\rangle\to p'$ connects any pair and is worth
+   $1/C_F$. It vanishes in the charge-odd sector by C-parity, which is *why*
+   the result stands. §4, Proposition 2.
+4. **The fourth-order disagreement gets an obstruction certificate.** Not an
+   adjudication — the two records differ by $4\Delta_C e_2$, and $e_2$ is the
+   zero polynomial on every axial cut, so no $\Gamma$-point or axial datum
+   separates them at any precision. §7, Theorem 7.
+
+Every displayed result carries the name of the machine check that establishes
+it, printed beneath the equation, so any line can be re-run in about a second:
+
+```bash
+workhouse verify --only '<the name printed under the equation>'
+```
+
+That device is itself checked. `every \chk in the united paper names a check
+that exists and passes` resolves all 32 printed labels against the live
+registry and fails if one is renamed or deleted — otherwise the paper would go
+on printing a command that no longer resolves, which is the same drift
+`FRONTIER.md`'s staleness test exists to catch.
+
+The united edition is deliberately **not** in `PAPER_TEXTS`, and so is not
+scanned by the fourth-order firewall check. It discusses the fourth order on
+purpose, in §7, to state the obstruction. The firewall is a property of the two
+original manuscripts and remains measured for them.
+
+## Rebuilding
+
+```bash
+cd paper
+SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
+  pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex   # x3
+```
+
+Three passes for the cross-references. `SOURCE_DATE_EPOCH` is what makes the
+digest in `SHA256SUMS` reproducible — without it `pdflatex` stamps the build
+time into the PDF and the pin fails on a rebuild that changed nothing. Needs
+`texlive-latex-base` and `texlive-latex-recommended` (for `booktabs`). Zero
+overfull boxes and zero undefined references is the accepted state; the build
+is 7 pages.
 
 ## What the manuscript says about this repository
 

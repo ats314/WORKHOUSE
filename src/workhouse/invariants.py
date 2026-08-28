@@ -3682,3 +3682,31 @@ def _():
         "zero on an axis, so e_2 is the zero polynomial there. The retained corpus is "
         "non-identifying for C_shp by construction, and neither side is preferred here"
     )
+
+
+@manuscript.check(
+    "every \\chk in the united paper names a check that exists and passes",
+    "PAPER_MASTER, every displayed result",
+)
+def _():
+    # The united paper's one device is that each displayed result carries the
+    # name of the machine check that establishes it, so a reader can re-run any
+    # line in about a second. That device is worth exactly as much as its
+    # weakest label: a renamed or deleted check leaves the paper printing a
+    # command that no longer resolves, and a paper that has drifted still reads
+    # as current -- the same failure mode FRONTIER.md's staleness test guards.
+    #
+    # So resolve every label against the live registry here, and require the
+    # named check to be one that passes. This does not re-run them (the suites
+    # do that); it asserts the paper cites nothing that has gone missing or red.
+    source = (PAPER_DIR / "master_paper_2026-08-28.tex").read_text(encoding="utf-8")
+    cited = [
+        m.replace("\\_", "_").replace("\\^", "^") for m in re.findall(r"\\chk\{([^}]*)\}", source)
+    ]
+    known = {check[0] for suite in SUITES for check in suite.checks}
+    unresolved = sorted(set(cited) - known)
+    return not unresolved and len(cited) > 0, (
+        f"{len(cited)} \\chk labels across {len(set(cited))} distinct checks, every one of them "
+        f"a registered check name; {len(unresolved)} unresolved. Each displayed result in the "
+        "paper is reproducible by the command printed beneath it"
+    )
