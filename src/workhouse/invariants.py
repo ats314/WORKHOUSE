@@ -4211,3 +4211,62 @@ def _():
         "redistribution reaches it. A rival kernel must differ structurally in the A-carrying "
         "sector; which kernel is physical is not decided here"
     )
+
+
+@channels.check(
+    "FINDING: the v10a.26 side supplies A, B, D but no block structure, and its C fights its own A",
+    "provenance nb-hodge-v10a26-alt2 / GLUEBALL §10",
+    tier=2,
+)
+def _():
+    # Asked directly: does the disputed side have a recorded block structure
+    # to compare against the historical kernel's? It does not, and the
+    # provenance register says so in terms -- "Float output only; no exact
+    # rational for this side exists anywhere". What v10a.26 emits for the
+    # shape is one printout, the cold folded C_shape at notebook line 2912.
+    # There is no 189-record decomposition, no displacement blocks, nothing to
+    # diff. So a structural adjudication cannot be done by comparison.
+    #
+    # The absence is informative anyway, because of what the run DOES supply.
+    # Its A, B and D match the sealed exact rationals closely -- A to 6.1e-14
+    # against 5/48, B to 3.6e-16 and D to 2.2e-13 against zero. So the two
+    # sides agree on A to thirteen digits.
+    #
+    # Agreement on A is not free. The neighbouring check establishes that the
+    # six NORMAL records are one number h with A_normal = -h and
+    # C4_normal = 2h, so granting A pins the normal sector's whole C4
+    # contribution, and everything still free to move carries total |C4|
+    # weight 0.0489 against a required gap of 0.1115.
+    #
+    # So the two sides cannot BOTH be evaluations of the recorded block
+    # structure: something has to give, and there are exactly three
+    # candidates -- v10a.26's A, v10a.26's C, or the shared decomposition
+    # itself. This check does not say which, and prefers neither side. It says
+    # the pair is over-determined, which is a far better lead than "recompute
+    # 609 clusters" and is the reason to want the v10a.26 run's intermediate
+    # ledger rather than another sweep.
+    from fractions import Fraction
+
+    from . import channel_ledger as CL
+
+    blocks = CL.decompose()["blocks"]
+    carries_a = {name for name, b in blocks.items() if Fraction(b.get("A", 0)) != 0}
+    free_weight = sum(
+        abs(Fraction(b.get("C4", 0))) for name, b in blocks.items() if name not in carries_a
+    )
+    gap = 4 * (Fraction(str(K.C_SHP_NEW_NUM)) - P.as_fraction(K.C_SHP_HISTORICAL))
+
+    a_gap = abs(K.A_SHP_3_NUM - float(Fraction(5, 48)))
+    agrees_on_a = a_gap <= K.SEALED_CORE_TOLERANCE
+    b_d_agree = abs(K.B_SHP_3_NUM) <= K.SEALED_CORE_TOLERANCE
+    b_d_agree = b_d_agree and abs(K.D_SHP_3_NUM) <= K.SEALED_CORE_TOLERANCE
+
+    return agrees_on_a and b_d_agree and abs(gap) > free_weight, (
+        f"v10a.26 supplies A, B, D as floats agreeing with the sealed rationals (A to {a_gap:.1e} "
+        f"of 5/48, B to {abs(K.B_SHP_3_NUM):.1e} and D to {abs(K.D_SHP_3_NUM):.1e} of zero) and "
+        "supplies NO block decomposition at all -- its shape is one cold folded C_shape printout, "
+        "so there is no structure to diff. But agreeing on A pins the normal sector's C4, leaving "
+        f"only {float(free_weight):.4f} of |C4| free against a gap of {float(abs(gap)):.4f}, "
+        f"{float(abs(gap) / free_weight):.2f}x too large. The pair is over-determined: v10a.26's "
+        "A, its C, or the shared decomposition must give. Which one is not decided here"
+    )
