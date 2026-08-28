@@ -221,6 +221,17 @@ D_3 = Rational(-109151, 249696)  # = 7/32 + 12*LEAK_3 - 4*B_3
 #: corroborates it externally (published-comparisons suite).
 M3_EVEN_K0 = Rational(-54049, 520200)
 
+#: Domino-engine certificate locks (ENGINE_FLUX_su3_domino_d3.py, 251 gates;
+#: conditional on that engine's census, same lineage as B_3/LEAK_3/D_3).
+#: The engine's structural identity leak_{r,+} = t_{r,+} — the vacuum-route
+#: mechanism — holds at both computed orders; T3_EVEN is therefore both the
+#: C-even third-order hopping and the C-even third-order per-neighbour leakage.
+T3_EVEN = Rational(-6335, 249696)  # C-even third-order hopping, engine lock
+D3_ODD_DOMINO = Rational(-24541, 62424)  # domino C-odd diagonal at order 3
+D3_EVEN_DOMINO = Rational(-517313, 6242400)  # domino C-even diagonal at order 3
+VAC3_DOMINO = Rational(-9, 16)  # two-plaquette vacuum piece = 2 x (-9/32)
+D3_TOP = Rational(-61751, 249696)  # C-odd dispersive top (lambda = 8) at order 3
+
 # --------------------------------------------------------------------------
 # The domino ledger  (RUN_TROM_d3_results.json; CERT_FLUX_d3_certificate_results.md)
 # --------------------------------------------------------------------------

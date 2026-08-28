@@ -17,13 +17,13 @@ it cannot drift from what the repository actually checks.
 | Suite | Passing |
 |---|---|
 | second order, all ranks | 12/12 |
-| SU(3) second and third order | 10/10 |
+| SU(3) second and third order | 12/12 |
 | fourth order, sealed core | 6/6 |
 | fourth order, anchoring and the residual dispute | 13/13 |
 | old-to-new crosswalk | 5/5 |
 | fourth-order generalized Hodge pencil | 3/3 |
 | fourth-order checkpoint extraction | 3/3 |
-| homology and finite volume | 8/8 |
+| homology and finite volume | 12/12 |
 | settlement package and adjudication harness | 12/12 |
 | near-Gamma uniformity (G11) | 6/6 |
 | tier collapse (G14) | 6/6 |
@@ -34,8 +34,8 @@ it cannot drift from what the repository actually checks.
 | coupling erratum (C4/G2) | 2/2 |
 | tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
 | notes program: SAFE, Davies, coercivity (G20-G23) | 13/13 |
-| off-axis channel ledger (C2 geography, G14) | 8/8 |
-| the flat-band manuscript | 12/12 |
+| off-axis channel ledger (C2 geography, G14) | 10/10 |
+| the flat-band manuscript | 4/4 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:

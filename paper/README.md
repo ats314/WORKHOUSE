@@ -17,7 +17,23 @@ any of them moves.
 | `nested_quotient_master_2026-08-28.pdf` | the master derivation, uniting it with the nested-quotient circuit theory. Superseded by the united edition, kept the same way. |
 | `nested_quotient_master_2026-08-28.txt` | its extracted text, same provenance and standing as the line below. |
 | `homological_flat_bands_2026-08-28.txt` | its text, extracted once with `pypdf` 6.16.2 so checks can read it. Derived, never authority — where the two differ the PDF wins. |
-| `../verify_core.py` | the portable verifier §9 promises. Root-level so the manuscript's printed `python3 verify_core.py` is true as printed. |
+| `verify_core.py` | the master paper's portable verifier: 12 checks, standard library only, matching its Reproducibility section. |
+| `../verify_core.py` | the flat-band manuscript's, 16 checks. Root-level so *that* manuscript's printed `python3 verify_core.py` is true as printed. |
+
+Two verifiers because there are two papers. They overlap on the ledger and
+diverge where the documents do: the root one follows the flat-band
+manuscript's equation numbers, the one here follows the master paper's
+Reproducibility section and adds the assembly formula, the band spans and the
+torus ranks with a spanning cycle basis. Both are exact, stdlib-only, and
+carry no floats.
+
+```bash
+make paper      # both verifiers, then three reproducible pdflatex passes
+```
+
+The review that drove the united edition is
+`docs/referee/final_paper_review_2026-08-28.md`; this repository's own referee
+document on the flat-band manuscript is `docs/referee/final_paper_2026-08-28.md`.
 
 ## The united edition
 
@@ -53,6 +69,10 @@ it, printed beneath the equation, so any line can be re-run in about a second:
 ```bash
 workhouse verify --only '<the name printed under the equation>'
 ```
+
+`ledger/documents.yaml` legends the paper as `MASTER paper`, so a check's
+`section` string can cite it and `tests/test_documents.py` keeps the reference
+resolvable — the citation runs both ways.
 
 That device is itself checked. `every \chk in the united paper names a check
 that exists and passes` resolves all 32 printed labels against the live

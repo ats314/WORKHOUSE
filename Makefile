@@ -31,6 +31,18 @@ catalogue:       ## Regenerate the index/ catalogues: claims, symbols, graph
 atlas:           ## Render the theory graph to atlas.html (a view; never checked in)
 	@.venv/bin/workhouse atlas
 
+paper:           ## Build the master paper PDF and run both stdlib core verifiers
+	@python3 verify_core.py
+	@cd paper && python3 verify_core.py \
+		&& SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
+		   pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null \
+		&& SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
+		   pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null \
+		&& SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
+		   pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null \
+		&& echo "paper/master_paper_2026-08-28.pdf"
+
+
 lit:             ## Published work, and which claim each paper bears on
 	@.venv/bin/workhouse lit
 
@@ -51,9 +63,6 @@ manifest:        ## Regenerate theory/SHA256SUMS after a deliberate corpus chang
 	 (root/'SHA256SUMS').write_text(''.join( \
 	     f'{hashlib.sha256((root/n).read_bytes()).hexdigest()}  {n}' + chr(10) for n in ns)); \
 	 print(f'theory/SHA256SUMS: {len(ns)} files')"
-
-paper:           ## The manuscript's own portable verifier: exact, stdlib only, no floats
-	@python3 verify_core.py
 
 lean:            ## T0: proof-check the Lean core (needs elan on PATH)
 	@cd lean && lake build && echo "Lean core: proof-checked, no sorries"
