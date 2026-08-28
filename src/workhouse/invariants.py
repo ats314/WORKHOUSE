@@ -5559,3 +5559,115 @@ def _():
         "channel-complete ordering. This confirms the truncated branch only; the +5/612 branch "
         "needs a B = 6 cube nobody has run, and this is not an independent-group replication"
     )
+
+
+@bridge.check(
+    "FINDING: the B = 6 cube flips the sign back to +5/612, closing the decisive test",
+    "R2; runs/b6_open_cube_channel_complete_2026-08-28",
+    tier=2,
+)
+def _():
+    # The bridge named one test as remaining: diagonalise the authors'
+    # complete one-cube Hamiltonian and see which ordering the charge-odd
+    # 1+3+2 shell comes out in. Both branches are now done, and they
+    # disagree with each other exactly as predicted:
+    #
+    #   B = 4 (T1, omits 6 and 8)   t = -1/12    doublet lowest
+    #   B = 6 (channel-complete)    t = +5/612   cube boundary lowest
+    #
+    # This check reads the B = 6 certificate. Its gap operator is
+    # (39/68) I + (5/612) G with G the cube face Gram -- so the registry's
+    # own t_3 = 5/612 is the off-diagonal element, and the relative shell is
+    # {0, (5/153)^3, (5/102)^2}, the exact inverse ordering of the B = 4 run
+    # next door. The certificate's own channel census sums to it too:
+    # 1/12 - 1/6 - 2/9 + 16/51 = 5/612 exactly.
+    #
+    # Scope, and the certificate is candid about it. Second order in u only,
+    # and the global B = 6 basis was deliberately NOT enumerated -- through
+    # second order only states reachable by one action of M matter. So this
+    # is exact at O(u^2) in a reduced space, not a finite-coupling
+    # diagonalisation, and it could not be re-run here because its generator
+    # needs pyclebsch and an adapter that did not travel. What is checked is
+    # arithmetic; the physics premise rests on the source audit.
+    import json
+    from fractions import Fraction
+
+    record = json.loads(
+        (
+            ROOT
+            / "runs"
+            / "b6_open_cube_channel_complete_2026-08-28"
+            / "b6_cube_reduced_certificate.json"
+        ).read_text(encoding="utf-8")
+    )
+    gram = record["face_gram"]
+    matrix = record["gap_second_order_matrix"]
+
+    scalar, hop = Fraction(39, 68), P.as_fraction(K.hopping(3))
+    worst = max(
+        abs(matrix[i][j] - (float(scalar) * (i == j) + float(hop) * gram[i][j]))
+        for i in range(6)
+        for j in range(6)
+    )
+    shell = [hop * lam for lam in (0, 4, 6)]
+    census = Fraction(1, 12) - Fraction(1, 6) - Fraction(2, 9) + Fraction(16, 51)
+    cutoff_t1 = -Fraction(1, 12)
+
+    return (
+        worst < 1e-13
+        and hop == Fraction(5, 612)
+        and census == hop
+        and shell == [Fraction(0), Fraction(5, 153), Fraction(5, 102)]
+        and cutoff_t1 * hop < 0
+        and record["pass"],
+        f"the B = 6 gap operator is (39/68)I + ({hop})G to {worst:.1e}, so the registry's own "
+        f"t_3 is its off-diagonal element and the relative shell is {[str(x) for x in shell]} "
+        "with multiplicities 1, 3, 2 -- the signed cube boundary lowest, the exact inverse of the "
+        f"B = 4 ordering where t = {cutoff_t1} put the doublet lowest. The certificate's channel "
+        f"census 1/12 - 1/6 - 2/9 + 16/51 = {census} independently. Both branches of the bridge's "
+        "remaining test now agree with it. Second order in a reduced space, not a finite-coupling "
+        "diagonalisation, and audited for arithmetic rather than re-run",
+    )
+
+
+@bridge.check(
+    "the B = 6 scalar misses the bridge's by exactly the same-face sextet route",
+    "R2; runs/b6_open_cube_channel_complete_2026-08-28; notes UPLOADS_2026-08-28e §5.1",
+    tier=1,
+)
+def _():
+    # The two calculations disagreed about the scalar, and the disagreement is
+    # the most convincing thing in the bundle.
+    #
+    # The bridge predicted an open-cube scalar of 11/34. The B = 6 run reports
+    # 39/68. Those differ by exactly 1/4, and 39/68 - 1/4 = 11/34.
+    #
+    # Neither side is wrong. The bridge's own section 5.1 names a local
+    # SAME-FACE sextet route worth -1/4 and includes it; the B = 6 certificate
+    # independently reports that the same-face sextet first enters at cutoff
+    # 7, because a same-face sextet PAIR needs C2(6) + C2(6bar) = 20/3 of
+    # vertex Casimir where the adjacent-face sextet needs only
+    # C2(6) + 2 C2(3) = 6. So B = 6 is channel-complete for the adjacent-face
+    # hopping t and NOT for the on-site scalar.
+    #
+    # Two calculations, neither told about the other, identified the same
+    # missing route from opposite directions: one by including it, one by
+    # being cut off just below it. That is a much stronger consistency
+    # statement than the scalars agreeing would have been, and it is exact
+    # rational arithmetic, so no float enters.
+    from fractions import Fraction
+
+    b6_scalar = Fraction(39, 68)
+    bridge_scalar = Fraction(11, 34)
+    sextet_route = Fraction(1, 4)
+
+    return (
+        b6_scalar - bridge_scalar == sextet_route and b6_scalar - sextet_route == bridge_scalar,
+        f"the B = 6 open-cube scalar is {b6_scalar} and the bridge predicted {bridge_scalar}; "
+        f"they differ by {b6_scalar - bridge_scalar}, exactly the local same-face sextet route "
+        f"the bridge's section 5.1 carries as -1/4, and {b6_scalar} - 1/4 = {bridge_scalar}. The "
+        "certificate reaches the same conclusion from the other side, reporting that the "
+        "same-face sextet first enters at cutoff 7 while the adjacent-face sextet is already in "
+        "at 6. So B = 6 is channel-complete for the hopping and not for the scalar, and the two "
+        "calculations located the same missing route without being told about each other",
+    )

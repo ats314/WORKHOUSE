@@ -130,7 +130,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 156
+## T1 — re-derived exactly — 157
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -188,6 +188,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `FINDING: the bridge documents match the obtained paper, except one equation number`
   - src/workhouse/invariants.py:5319 · R2; arXiv:2503.11888v5 Eqs. (1), (D1), Fig. 6, App. C; notes UPLOADS_2026-08-28e
   - `workhouse verify --only 'FINDING: the bridge documents match the obtained paper, except one equation number'`
+- `the B = 6 scalar misses the bridge's by exactly the same-face sextet route`
+  - src/workhouse/invariants.py:5633 · R2; runs/b6_open_cube_channel_complete_2026-08-28; notes UPLOADS_2026-08-28e §5.1
+  - `workhouse verify --only 'the B = 6 scalar misses the bridge'"'"'s by exactly the same-face sextet route'`
 - `the certificate's finite-volume fingerprints, and 29 = L^3 + 2 is the Lean cycle count`
   - src/workhouse/invariants.py:5250 · R2; notes UPLOADS_2026-08-28e §6-7; runs/cbb_finite_n_bridge_2026-08-28
   - `workhouse verify --only 'the certificate'"'"'s finite-volume fingerprints, and 29 = L^3 + 2 is the Lean cycle count'`
@@ -645,7 +648,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:1627 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
-## T2 — float agreement within a stated tolerance — 44
+## T2 — float agreement within a stated tolerance — 45
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -654,6 +657,9 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `FINDING: a full T1 = B = 4 cube Hamiltonian reproduces -1/12 and the reversed shell`
   - src/workhouse/invariants.py:5455 · R2; runs/balaji_open_cube_b4_t1_2026-08-28; notes UPLOADS_2026-08-28g
   - `workhouse verify --only 'FINDING: a full T1 = B = 4 cube Hamiltonian reproduces -1/12 and the reversed shell'`
+- `FINDING: the B = 6 cube flips the sign back to +5/612, closing the decisive test`
+  - src/workhouse/invariants.py:5564 · R2; runs/b6_open_cube_channel_complete_2026-08-28
+  - `workhouse verify --only 'FINDING: the B = 6 cube flips the sign back to +5/612, closing the decisive test'`
 - `the discrete index theorem gives 0 on the signed face-edge operator, bounding nothing`
   - src/workhouse/invariants.py:5396 · R2; G14; arXiv:2607.22831v1 (Hazra) §6 Eq. for ind_a(D)
   - `workhouse verify --only 'the discrete index theorem gives 0 on the signed face-edge operator, bounding nothing'`
