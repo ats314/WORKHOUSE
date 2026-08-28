@@ -1,0 +1,31 @@
+The adversarial verification pass is still running (11 of 12 sweep tracks done, verifiers just starting). Here's where the work stands.
+
+## What I found
+
+**The dispute is about the operator, not the arithmetic.** Three whole classes of explanation are now closed:
+
+- **Extraction method.** I applied v10a.26's *own* procedure — L=5, θ=2π/5, its four fit momenta, its 4×4 solve — to the historical 189-record kernel. It returns `A = 5/48`, `B = 0`, `C = C_old`, `D = 0`, each to ~10⁻⁶¹, held-out residuals ~10⁻⁶⁰. The procedure is exact and unbiased.
+- **Scalar re-anchoring.** The C-row of M⁻¹ is `[−1/2, (1+√5)/4, (1−√5)/4, 0]`, summing to exactly zero — C is invariant under any uniform band shift. That's why the `+11.17343231638178` re-anchor moved C by 4.6×10⁻¹⁵.
+- **Linked-cluster bookkeeping.** Everything through third order acts on the carrier as a scalar, so products of them do too; unlinked terms can only move `c₀`. The raw kernel confirms it — the numerator's `q³` and constant coefficients are exactly zero.
+
+**The central provenance result.** Both sides of C2 are *single computations*, and they are not independent: the marked-cluster engine names the y4 Stage-0 geometry compiler as its own authority, SHA-pinned, with the whole y4 Stage-1/2 chain embedded inside it. Independent contraction layers over shared, SU(3)-hardwired geometry. The disagreement can't be blamed on geometry — but a Stage-0 error would be invisible to it.
+
+**And the historical side's rank-embedding rests on a subtraction.** `β₃ = β₃^bal − 25/64` is obtained everywhere by subtracting two numbers from two different computations. Nobody has ever enumerated the SU(3) ν=±3,±6 histories and summed them. The engine that would (`y4_sun_walled_brauer_fixed_rank.py`) isn't in the tree.
+
+## The decisive test
+
+Not G3. **Contract the 42 exceptional signatures.** The census is recorded and I verified it from source: 182 token signatures = 140 balanced + 42 exceptional, and 140 is exactly the stable-rank balanced count. Gram inverses are recorded. The prediction is sharp: `Δw₍₁,₁,₀₎ = −25/256`, `Δw₍₂,₀,₀₎ = 0`. The value `25/256` appears nowhere in the repository — this has never been exhibited.
+
+## Two of my own claims died
+
+The "v10a.26 omitted the ε-sector" hypothesis was my most economical explanation. It's refuted — `C_new` was computed under the nine-family allowlist, ε-sectors included. And I wrote that v10a.26 reproduces the `λ_R = 2λ_M − λ_X` holdout; it doesn't and can't, since L=5 contains no R. Both are recorded in §9 rather than deleted.
+
+## Things you may want to act on
+
+- **`THM_SUN_unified_nality_theorem_corrected` (the *citable* one) describes Δq₃ as relative to "the balanced continuation" — which doesn't exist at N=3.** D₃₄ carries a factor `(z−9)³`. The audited version adds that caveat but names only N=4, and the corpus cites the earlier file because a *filename regex* routed it into the citable tree.
+- **`DELTA_BETA_3 = Rational(-25, 64)` is referenced by no invariant**, `β₃^bal` isn't in `constants.py`, and `workhouse search 15644916262153` returns nothing. The whole balanced side of C2 is T3 here.
+- The SU(5) emptiness parity argument has a gap — `(5,0)` satisfies the mod-5 rule at `p+q=5 ≤ 6` and is never addressed; the obvious repair fails because SU(3)'s `(0,3)` has odd degree 3.
+
+Full derivation, with every exact rational and the channel ledger: **https://claude.ai/code/artifact/3a49a2bd-965d-4f39-ac26-9ad922911e3c**
+
+Want me to wait for the verification pass and report what it overturns, or push on one of the open threads — the 42-signature contraction being the one that would actually settle C2?

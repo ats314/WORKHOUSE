@@ -1,0 +1,308 @@
+WORKHOUSE · theory mode
+read-only session
+2026-08-22
+The Carrier Persistence Problem
+The finite-spacing half is a real lemma sequence, and it is shorter than it looks. The continuum half is one estimate about one operator — not a source-carrying RG trajectory — once charge conjugation is used properly. The machinery the route asks for is already in the corpus, under a name the ledger does not carry. Written under adversarial audit: two of the five reductions below were corrected by it, and one was refuted by a corpus document that nothing cites.
+
+I
+What this session found
+II
+The finite-spacing half, as twelve lemmas
+III
+Five reductions
+IV
+The continuum theorem, restated
+V
+Where the machinery already is
+VI
+Three obstructions the corpus over-reads
+VII
+Falsifiers, and the cheap moves
+I · What this session found
+Three things, in descending order of how much they change the route.
+
+Finding 1 — the decisive unknown is smaller than stated
+
+The dossier's open theorem demands that an RG trajectory carry three uniformities to the continuum: a nonzero mass in physical units, an isolation gap, and a nonzero source residue. Using charge conjugation as a superselection label, and one elementary inequality, those collapse. The residue is not independent of the gap. The mass lower bound and the isolation are both consequences of the Yang–Mills mass gap. What is left that is genuinely new is a single statement about a single operator:
+
+the normalized lattice correlator of a fixed-physical-radius carrier source,
+at one fixed physical Euclidean separation, does not tend to zero as a → 0.
+No renormalization constant appears in it — it is a ratio. No trajectory appears in it. It is not a theorem about the RG at all.
+
+Finding 2 — the corpus already contains a source-aware RG program
+
+corpus-import/programs/pmbsf/ — 30 files, 14 MB — is a Bałaban/Dimock constructive gauge-RG attack whose Open Theorem C is titled "source-weighted Bałaban expansion" and whose referee ledger states, verbatim: "Bałaban/Dimock provide the unmarked constructive gauge-RG backbone. The source-weighted marked upgrade remains an open analytic task." Its literature map is blunter still: "I found no primary source that already proves a Bałaban/Dimock RG with activities multiplied by arbitrary marked/source weights." That is the route's decisive unknown, already named and already reduced to four subtasks. The repository's ledger tracks none of it — a repo-wide grep for PMBSF, Lemma Q, Bałaban or Dimock across src/, lean/, tests/, ledger/, CERTIFIED.md and FRONTIER.md returns zero machine checks.
+
+Three qualifications the first reading missed, all of which matter. PMBSF's headline Theorem FNG is for Q₈, a finite group, and its own document says it does not extend to SU(2), naming three obstructions (spin-wave dominance, no analogue of its covariance hypothesis, and a β-threshold mismatch of six decades). PMBSF explicitly places "reconstruction of the Hilbert space; identification of a physical mass gap; continuum scaling limit; uniformity of constants" outside its scope (§14.11) — it stops at finite-lattice projected coercivity. And the two programs are firewalled by design: the one-plaquette master records PMBSF as "Program B", "logically independent of every theorem in the manuscript", and its §C.7 forbids citing PMBSF at all. What transfers is mathematics, not evidence.
+
+Finding 3 — the continuum notes are inventoried and unread
+
+The maintainer's notes archive carries 238 unique documents with a path under RG_COARSE, SCALING_LIMIT, or UNIFORMITY_ASYMPTOTIC_FREEDOM — about 1.97 MB, digest-pinned. 34 are reviewed; 204 are not, and the 34 all came in through other directories (Reflection Positivity, Maxwell, LSI). Titles in the unreviewed set include Theorem_Uniqueness_Scaling_Limit_Wilson_Loops, Gradient_Flow_as_Geometric_RG_for_Lattice_YM, Synthesis_13_Scaling_Limit (107 KB) and Unified_03_Program_WhitePaper_Roadmap (318 KB). Meanwhile workhouse notes --queue ranks twenty Colab notebooks above every one of them.
+
+II · The finite-spacing half, as twelve lemmas
+Stated so each rung carries its own evidence tier rather than its rhetorical confidence. Rungs L1–L6 are the electric-shell theorem; L7–L11 are the volume-uniform patch; L12 is what actually remains at fixed spacing.
+
+Three arithmetic facts underneath everything were re-derived independently in this session, in exact rationals, and agree: the SU(3) Casimir numerators below 18 are exactly {0, 4, 9, 10, 16}; the fundamental plaquette sits at E_F = 4·(2/3) = 8/3; and the additive semigroup of one-link numerators takes the values 14, 16, 17 consecutively around 16 — 15 is not attainable, which is what makes the separation ratio come out at 1/33 rather than 1/15.
+
+L1
+Casimir ladder and shell energies
+T1 · checkable
+e(p,q) = (p²+q²+pq+3p+3q)/6. Smallest nonzero value 2/3, attained only by 3 and 3̄; every other nontrivial irrep costs ≥ 3/2. Hence E_F = 8/3, the 1×2 rectangle costs 6·(2/3) = 4, and the candidate gap is 4/3. Pure rational arithmetic — this is Lean-reachable.
+
+L2
+Support classification below energy 4
+T1 · enumerable
+Energy < 4 forces ≤ 5 occupied edges. Gauss's law forbids a degree-one vertex (Inv(V_λ) is trivial for nontrivial λ), so every component has minimum degree ≥ 2. The dossier's "theta graph needs ≥ 6 edges" argument is loose; the MASTER_PROOF_STATE's exhaustive enumeration for L = 3…7 is the honest version and returns zero branched supports at every L.
+
+L3
+Schur propagation around a cycle
+T1
+At a degree-two vertex Inv(V_λ ⊗ V_μ) ≅ Hom(V_λ*, V_μ), so one irrep propagates consistently. A non-fundamental irrep costs ≥ 3/2 per edge, and the shortest winding cycle then costs ≥ 9/2 > 4. Every sub-4 state is a fundamental simple cycle of length ≤ 5.
+
+L4
+Triality kills winding — unconditionally for L ≥ 6
+T1
+Edge trialities form a ℤ₃-valued 1-cycle whose class is the one-form center charge; a ≤5-edge path cannot achieve displacement 3L ≥ 9. The sharper form matters: a winding cycle needs ≥ L edges, so for L ≥ 6 the classification holds with no center-charge restriction at all. The ℤ₃ block buys uniformity only at L = 3,4,5 — and the chain wants L → ∞. The block is not load-bearing where the route needs it.
+
+L5
+Bipartite ⇒ the cycle is a plaquette
+T1
+The lifted cycle closes in ℤ³, which is bipartite, so it is even; length ≤ 5 and even and ≥ 4 means exactly 4, and every 4-cycle in the cubic lattice bounds an elementary plaquette. Its charge-odd combination is |p,−⟩ = (|p,3⟩ − |p,3̄⟩)/√2.
+
+L6
+Sharpness
+T1
+The 1×2 rectangle is neutral, charge-odd, outside the shell, and sits exactly at 4. So the threshold 4 and the gap 4/3 are attained, not merely bounded.
+
+L7
+Yarotsky hypotheses and the cell regrouping
+T3 · imported
+Yarotsky's Theorem 1 admits infinite-dimensional site spaces and unbounded non-negative onsite terms with gap ≥ 1 — the compass artifact in corpus-import/literature/ asserts the opposite ("stated for finite-dimensional sites") and dropped the route on that basis. Group the three outgoing links per vertex, rescale by 3/2, and ε(u) ≤ 27u. Still missing: the periodic-torus adaptation, which the paper notes but does not prove.
+
+L8
+The separation ratio θ_F = 1/33
+T1 · re-derived here
+In units of 1/6 the attainable totals around 16 are 14 and 17. So θ_F = min(2/30, 1/33) = 1/33, attained on the 17 side. Verified independently in this session over the full additive semigroup.
+
+L9
+Riesz contour and resolvent bound
+T1 · re-derived here
+With ρ = (1−λ)/12: the distance to the 16-patch is (1−λ)/12 − 32λ/12 and to the 17-patch is 1/6 − 17λ/6 − (1−λ)/12; both equal (1−33λ)/12, so ‖(H̃ − z)⁻¹‖ ≤ 12/(1−33λ) and the condition is exactly λ < 1/33. The 14-side distance is (3−27λ)/12, strictly larger. Arithmetic confirmed.
+
+L10
+Symmetry commutation ⇒ block restriction
+T1
+Gauge, charge conjugation, translations and the ℤ₃ one-form charge all commute with H(u) exactly (each V_i is a product of central single-link multiplications), so the Riesz projection restricts and its rank splits sector by sector.
+
+L11
+Rank constancy along the segment
+missing paragraph
+Rank 3L³ follows from L7–L10 plus one unwritten step: rank-constancy in u along t ↦ tu, together with mult_block(8/3) = 3L³ at u = 0. This is a completion, not an error — but it is not written anywhere.
+
+L12
+The domain is at the wrong end of the coupling axis
+structural
+u = β_N/(2N) = β₃/6 = 1/g_H⁴, so the continuum is g_H → 0, i.e. u → ∞. The necessary condition for the patch is u < 8/99 ≈ 0.081; a sufficient estimate gives u < 1/(891 c₂) ≈ 10⁻³. The near-Γ exclusion radius (ADR 0003) is non-vacuous only for u < 0.133. Every fixed-spacing statement in the program lives at small u; the continuum is at infinite u. Nothing connects them, and nothing in the finite-spacing half can.
+
+What this half actually delivers
+
+A complete, sharp classification of the charge-odd spectrum below 4 at zero coupling, and a conditional volume-uniform isolation of the whole 8/3 patch in a strong-coupling domain. That is real. It is also, by L12, disjoint from the continuum question rather than a step toward it. The finite-spacing half tells you which object to follow; it cannot follow it.
+
+III · Five reductions
+Each of these is elementary. That is the point: they are elementary statements that remove non-elementary hypotheses from the open theorem. Every one was checked computationally in this session; the checks are listed with each.
+
+R1 · A finite mass follows from one correlator ratio
+Let C(t) = ⟨ψ, e^{−tH}ψ⟩ = ∫ e^{−tE} dρ(E) with ρ ≥ 0 finite and M = inf supp ρ. Then C(t) ≤ C(0)e^{−Mt}, so
+
+M  ≤  (1/t₁) · log( C(0) / C(t₁) )     for every t₁ > 0.
+Because log C is convex (Hölder), the right side is non-increasing in t₁ and tends to M: larger separations give sharper bounds, and any single separation already gives a valid one. Verified on 20,000 random positive spectral measures in continuous time and 20,000 in discrete transfer-matrix time — zero violations of either monotonicity or the bound.
+
+The consequence is the whole reduction. The ratio C(t₁)/C(0) is invariant under multiplicative renormalization of the source: Z cancels. So a uniform-in-a upper bound on the carrier mass in physical units follows from a uniform lower bound on a ratio of bare lattice numbers at one fixed physical separation. No renormalized operator, no continuum field, no trajectory.
+
+This derives G18's own external sharpening
+
+If the source's overlap degrades like a^p — Schierholz 1988 measured a⁵ for a local dimension-4 operator, and the corpus records it as G18's external_sharpening — then the bound reads M ≤ (p/t₁)·log(1/a) and diverges logarithmically. It never becomes false; it becomes vacuous. A source at fixed physical radius is the only kind that keeps it finite. That is exactly the gap entry's conclusion — "the smeared basis is structural, not a convenience" — now with a one-line derivation instead of a citation.
+
+R2 · The residue is not an independent unknown
+With separated-time normalized sources ψ(t₀) = e^{−t₀H/2}O†Ω, let w_I be the weight at the bottom of the source's spectral support, Δ the gap above it within that support, and r₀ = W_rest/w_I = 1/z(0) − 1 the bare weight ratio. Then
+
+z(t₀)  ≥  1 / ( 1 + r₀ · e^{−t₀Δ} ).
+Verified on 20,000 random configurations — zero violations. The matrix form is free: T₁ is absolutely irreducible with real character, so its real commutant is ℝ and ν(B) = c(B)·I₃ for every Borel set. The z_G I₃ structure the dossier derives from covariance is bookkeeping, not evidence.
+
+So the residue hypothesis ν(I) ⪰ z_* I₃ is not a spectral statement. Given the gap, it is a statement about the bare source alone: r₀(a) bounded. And if one is willing to let t₀ grow like (p/Δ)·log(1/a), a merely polynomial degradation suffices. The exponent p enters only as a multiplicative constant on a logarithm — getting it wrong by a factor of three changes t₀ by a factor of three and changes nothing else.
+
+The corpus's own Monte Carlo (§10.2, β = 5.8941, L = 14, N_t = 16, 2000 configurations) is the only data on r₀ anywhere in the program, and it will not carry the weight one would like:
+
+source	z(0)	r₀ = 1/z(0) − 1	what it supports
+raw plaquette (APE level 0, 1×1)	0.00724 ± 0.01647	not bounded	The measurement is 0.44σ from zero; the 2σ interval is [−2.57%, +4.02%]. It does not establish that the bare source has any overlap, or that the overlap is positive. r₀ has no finite upper bound at 2σ.
+variational (GEVP, 7 of 12 retained)	0.7997	0.25	No error bar recorded, and §10.2 itself warns the cosh amplitude "is not automatically a normalized overlap probability."
+Two corrections to how this number is carried. The ledger and FRONTIER.md both say the bare operator carries "<4% (2σ)"; the arithmetic is 0.007236 + 2(0.016469) = 4.0175%, which is not < 4%. And the engine gate named "raw plaquette spectral fraction" passes iff −2σ ≤ frac ≤ 1 + 2σ — a range sanity check that would pass just as happily at 0.9. Nothing in the program tests the smallness that G18's statement rests on.
+
+The APE basis is also smeared at fixed lattice levels (0, 4, 12, 24), not at fixed physical radius, so the 0.7997 is not a measurement of the quantity R1 and R2 need — its smearing radius shrinks with a, which is precisely the Schierholz failure mode. The honest position: the a-dependence of r₀ for a fixed-physical-radius source is unmeasured, and the existing run cannot be reinterpreted to supply it. That is a run to design, not a number to look up.
+
+R3 · Charge conjugation supplies the isolation
+C commutes with H at every coupling, and the vacuum is C-even. So define
+
+M(a)  :=  inf spec( H_a | C-odd, P = 0 )  −  E₀.
+This is a sector bottom — a variational quantity — not an interior isolated eigenvalue. Four things follow at once:
+
+Lower bound. M(a) ≥ the full mass gap, so any positive lower bound in physical units is implied by (and strictly weaker than) the Clay statement.
+No decay channel. C is multiplicative on multiparticle states, so an n-glueball state has C = ∏C_i; a C-odd state needs at least one C-odd constituent. The lightest C-odd threshold is therefore M + m(0^{++}), strictly above M. Stability is automatic.
+Isolation. The C-odd continuum starts at M + m(0^{++}), so the mass shell is isolated with gap m(0^{++}) — given no accumulation of discrete C-odd masses at M, which is a mild hypothesis, not a theorem.
+No vacuum subtraction. A C-odd source has ⟨O⟩ = 0 identically. The disconnected piece never appears.
+And the numbers are not marginal. From AT_2020_SU3 Table 17, as pinned in literature/index.yaml: m(1^{+−})/√σ = 6.065(40), m(0^{++})/√σ = 3.405(21). So the two-glueball threshold is 6.810 — the 1^{+−} sits below it — and the C-odd isolation gap is 3.405√σ ≈ 1.65 GeV, about 56% of the mass itself.
+
+An unregistered agreement
+
+The corpus records its own Monte Carlo as aM(T₁^{+−}) = 1.6897(1206) and a√σ = 0.26283(232) (§10.2), and separately records AT_2020's 6.065(40) as "the current best SU(3) target for the spectral bridge". It never forms the ratio. Computed here: M/√σ = 6.429 ± 0.462 against 6.065 ± 0.040 — agreement at 0.78σ. That is the program's own carrier source, measured in its own run, landing on the modern continuum spectrum. It is a one-line T2 check that does not exist.
+
+R4 · The Γ charge is a fragile hedgehog — and the corpus already knew
+This one I got wrong, and the way it went wrong is worth more than the result.
+
+Using the governing document's own conventions (§2.5, §3.2): d_i = e^{ik_i} − 1, ψ(k) = (d̄₃, −d̄₂, d̄₁), S(k) + 4I = B(k)B(k)†. Since d_i = 2i·sin(k_i/2)·e^{ik_i/2}, the gauge V(k) = diag(e^{ik₃/2}, e^{ik₂/2}, e^{ik₁/2}) makes the carrier real:
+
+V(k)ψ(k) = −2i·( s₃, −s₂, s₁ ),      s_i = sin(k_i/2).
+So the carrier line is the complexification of a real line and its projective class lies in ℝP² ⊂ ℂP². I computed the first Chern class by Fukui–Hatsugai–Suzuki on a 200×200 mesh and it vanishes on every generator of H₂(T³ ∖ {Γ}) = ℤ³: spheres about Γ at radii 0.02 / 0.20 / 1.00 / 2.00 / 3.00, and the coordinate 2-tori k₁ = π, k₂ = π, k₃ = π — all 0.000000. (Checked first that B†ψ = 0, Sψ = −4ψ, ‖ψ‖² = q_a to residual 0 and 3.6×10⁻¹⁵ over 2,000 random momenta.)
+
+I concluded the Γ singularity was metric rather than topological. That conclusion is wrong, and the corpus says so in a document nothing cites:
+
+corpus-import/records/audits/FLATBAND_PAPER_EXPANSION_AUDIT_2026-07-25.md
+
+"Do not substitute a Chern number: the singular flat line is not an isolated complex band, and its ordinary Chern number is not the relevant invariant." The audit names the right one — a π₂ charge from the flattened chiral matrix on a small S² — and records its value: "Since det R = +1, the linearized texture has degree +1."
+
+A second document reaches the same place independently. In what it calls the centered gauge — M(k) = 2·[[s₂,−s₁,0],[s₃,0,−s₁],[0,s₃,−s₂]], real — it finds ker M = span{s} and concludes: "On a sphere around Γ, ŝ = s/|s| gives a unit embedded map S² → ℝP². Since adding one trivial real orbital changes the target to ℝP³ with π₂(ℝP³) = 0, the correct topology is a fragile unit Hodge hedgehog, not stable BDI protection."
+
+Both statements are true and they are not in conflict: the line bundle is trivial on T³∖{Γ} (my c₁ = 0), while the direction field ŝ : S² → ℝP² has π₂ degree +1, and that degree is what obstructs continuous extension to Γ. What my computation does establish is the negative half: there is no Chern/monopole charge, so that class of obstruction is closed off. What it does not establish is what I said it did.
+
+The corpus's own verdict is sharper than either: the charge is fragile. One extra trivial real orbital changes the target from ℝP² to ℝP³, where π₂ = 0, and it dies. So the Γ texture is not symmetry-protected, and any argument that leans on it as protection is leaning on nothing.
+
+Two things follow for method, both uncomfortable. My "centered gauge" was the corpus's, rederived under a different name — the exact failure mode AGENTS.md names as measured ("re-deriving something that already exists under different notation"), committed while holding the file that warns against it. And the audit that holds the right invariant is cited by nothing in src/, ledger/, tests/, or any root document, so no search of the verification layer would have surfaced it. Both invariants — c₁ = 0 and the π₂ degree — are computed nowhere in the repository.
+
+R5 · The spin split is exactly 3/5 : 2/5
+The corpus gives the operator identity itself (§10.1): Im Tr e^{iX} = −P₃/6 + P₅/120 − …, so the leading continuum term of the carrier source is Tr(F_jk)³ = d^{abc}B_n^a B_n^b B_n^c — the diagonal component S_nnn of a symmetric rank-3 spatial tensor. That is dimension six, not four, and it is not an axial vector. Working out the consequences exactly:
+
+statement	exact result
+rep carried by the diagonal triple {S₁₁₁, S₂₂₂, S₃₃₃} under O	T₁ (character identical to the vector rep)
+D¹ ↓ O	T₁
+D³ ↓ O	A₂ ⊕ T₁ ⊕ T₂
+T₁ multiplicity in D^J ↓ O, J = 0…12	0,1,0,1,1,2,1,2,2,3,2,3,3
+J = 1 fraction of ‖S_iii‖²	3/5 = 0.600000
+J = 3 fraction of ‖S_iii‖²	2/5 = 0.400000
+Gram of the J=1 projections of the three sources	(3/5)·I₃ — full rank
+The MASTER_PROOF_STATE reads this as "the carrier couples to J = 3 at leading order", which is true and is the correct correction to the dossier's axial-vector premise. But it is half the statement. The carrier couples to J = 1 with the larger share, and the J=1 projection is non-degenerate. The problem is contamination, not decoupling.
+
+The pure J=1 combination is the trace V_i = Σ_l S_ill, which needs off-diagonal components and is therefore not in the span of the one-plaquette carrier operators — the carrier cannot be purified within its own sector. And since T₁ ⊗ A₁ contains neither A₂ nor T₂, the carrier has identically zero overlap with its own J=3 partners. It is structurally blind to its own falsifier. Spin identification therefore requires auxiliary A₂^{+−} and T₂^{+−} sources — which is exactly how the published spectra do it, and why AT_2020 can call the 1^{+−} assignment "unambiguous" while this program cannot.
+
+IV · The continuum theorem, restated
+Assemble R1–R3. Write O^{(ρ)} for the carrier source smeared to a fixed physical radius ρ (gradient flow on a time slice), and C_a(t) = ⟨O^{(ρ)}(t)O^{(ρ)}(0)⟩ at zero spatial momentum.
+
+Carrier Persistence — the target, as small as it goes
+
+Hypotheses.
+
+(C) SU(3) Yang–Mills on ℝ⁴ exists as an OS theory with mass gap Δ > 0. This is Clay.
+(S) Charge conjugation survives as an exact symmetry of the limit, vacuum C-even.
+(O) liminf_{a→0} C_a(t₁)/C_a(0) = c > 0 at one fixed physical t₁, and the bottom of the source's spectral support is the C-odd sector bottom.
+(D) No accumulation of discrete C-odd masses at that bottom.
+Conclusion. M = inf spec(mass | C-odd) satisfies Δ ≤ M ≤ (1/t₁)log(1/c) < ∞; it is an isolated point of the C-odd mass spectrum with gap m(0^{++}); its shell is stable, since no C-odd decay channel exists below M + m(0^{++}); the carrier residue is bounded below by R2; and the spin is J = 1 iff the A₂^{+−} and T₂^{+−} channels carry no degenerate partner.
+
+What changed. The dossier's open theorem asked for an RG trajectory carrying a nonzero pole, its mass, and its isolation. In this form:
+
+dossier's demand	where it now comes from
+M_a ≥ m₋ > 0 uniformly	implied by (C); strictly weaker than (C)
+M_a ≤ m₊ < ∞ uniformly	(O) — one correlator ratio, via R1
+Δ_a ≥ Δ_* > 0 uniformly	C-superselection + (C), via R3
+z_a ≥ z_* > 0 uniformly	not independent — gap + (O), via R2
+stable, no decay	automatic in the C-odd sector, via R3
+spin 1	still open; needs auxiliary channels, via R5
+What this does not do
+
+It assumes Clay rather than approaching it, and it should be read as a restructuring, not as progress on the mass gap. The corpus already says this in its own voice — §12.1: "No formula in this document is a proof of the Yang–Mills mass gap"; dependency_spine: "G17 + G18 are the ONLY path from 'lattice theorem package' to any statement containing the words 'mass gap'." The value of the restructuring is negative information: it says which non-Clay work is worth doing, and that list is now short.
+
+V · Where the machinery already is
+The route's phrase "a source-aware renormalization theorem" has an exact referent in the corpus, in a program the ledger does not name. corpus-import/programs/pmbsf/ — Projected Maxwell Birman–Schwinger Firewall — is a Bałaban/Dimock constructive gauge-RG attack in 4D Euclidean Wilson formulation. Its conditional interface, verbatim from PAPER_PMBSF_su2_section_14_remaining_analytic_tasks.md:
+
+LCI_good + BFS_far  ⟹  TOS+J  ⟹  Z_A(ρ/q_η) ≤ e^{K|A|}  ⟹  Lemma Q       (14.1)
+
+Lemma Q + SWB + BBG + PTO + BS  ⟹  PMBSF firewall closure                 (14.2)
+
+Four load-bearing open inputs:
+   A : LCI_good typicality with rooted complement
+   B : BFS_far under positive source tilts
+   C : SWB — source-weighted Bałaban expansion            ← the one that matters here
+   D : BBG boundary-band gate as η → 0
+Open Theorem C is stated as: Lemma Q + Bałaban/Dimock locality ⟹ source-marked polymer activities with q_η^{|M|} weights, with marked activities |w_s(Γ)| ≤ A(Γ)·ρ^{|M(Γ)|}, a Kotecký–Preiss criterion carrying the marks, and — this is the load-bearing one — an anchored decay estimate
+
+Σ_{Γ ∈ 𝒞(p,r)}  |w_s(Γ)| e^{a(Γ)}   ≤   C_J · e^{−m_J·d_C(p,r)}      (14.37)
+and four subtasks C1–C4: a marked-activity ledger through all seven expansion operations; KP convergence with marks; large-field compatibility; and gauge covariance at block boundaries.
+
+The identification, and the asymmetry that favours the carrier
+
+(14.37) is an exponential-clustering estimate for a two-point function with rate m_J. Run the same expansion with the carrier operator as the mark rather than a rare-event defect indicator, and it is the carrier correlator's decay rate — a mass. C1–C4 are shared machinery.
+
+And the accounting differs in the carrier's favour, sharply. PMBSF's mark is a discontinuous hard indicator Y_p(t) = 1{1 − ½Re tr U_p ≥ t}, and its literature map records the consequence: "the constructive bounds are proved for smooth analytic observables and the partition function, while Y_p(t) is discontinuous; the smoothing bridge requires constants uniform in ε and 'is not standard'." That single fact generates most of PMBSF's difficulty — the pinned hard-indicator form (without which its KP series formally diverges, C_*e^{−m_*}J_{m_*} ≈ 117 > 1), Open Theorem D's boundary-band gate, the smoothing bridge estimated at "1–2 months of genuine analysis", and the top-p-versus-threshold problem.
+
+The carrier source is Im Tr U_p — a character, real-analytic on the group, and analytic in the links after gradient-flow smearing. It is exactly the observable class for which the constructive bounds already exist. So of PMBSF's four open theorems, the carrier route inherits only C: Lemma Q and open inputs A and B are rare-event accounting it does not need, and D is a smoothing problem it does not have. Conversely PMBSF supplies nothing about the residue, because a rare-event indicator has none. The two programs need the same expansion and opposite halves of the bookkeeping. (This asymmetry is my inference from the two programs' statements, not a claim either of them makes.)
+
+The gate nobody has asked about
+
+Every step above assumes an RG that preserves reflection positivity — R1 and R3 are OS statements, and an OS-incompatible blocking destroys the spectral representation they rest on. Searched three ways across the whole repository: no statement anywhere connects a Bałaban blocking transformation to reflection positivity. The adjacent material is all weaker or damaged. OP-5 asks the Mosco-limit version and calls it "the hardest step in the OS reconstruction", with "gauge orbits are not reflected simply" as the obstruction. PROOF_15 Theorem 15.1 asserts the generic block-spin version and is quarantined and structurally refuted (F005). The substantive archive documents on RP permanence under coarse-graining are inventoried by digest and their bytes are not in the repository.
+
+The concrete question, which appears to be unasked rather than hard: for Bałaban's gauge-covariant block averaging (CMP 98 (1985) 17–51) applied to a reflection-positive Wilson measure on an even torus with time reflection Θ, is the blocked effective measure again reflection positive — i.e. is the averaging kernel Θ-equivariant, and does the block-spin constraint avoid coupling across the reflection plane? On an even torus with blocks aligned to the plane this looks tractable. Nobody has written it down.
+
+Three further facts from the review record change how blocked this looks:
+
+Three further facts from the review record change how blocked this looks:
+
+The RG no-go is not proved and must not be cited. The notes register's verdict on 02_Reflection_Positivity_and_RG_NoGo.md: the "exact nonabelian Markov coarse-graining forces commutativity" claim is "asserted in at least nine archive files and proved in none", its key step is wrong (conditional expectation is linear, not multiplicative), and the register records explicitly that "a no-go believed without proof forecloses research avenues; this one must not be cited as a constraint." The only proved obstruction (RICCATI 04_no_go §2) holds for all nontrivial compact groups including abelian ones, so it cannot source the dichotomy.
+RP permanence under RG maps has a correct lemma in the same document, held for extraction. The reflection-positivity-survives-blocking question — the crux for any OS-compatible RG — is not open in the way one would assume.
+The naive version is correctly dead. 4_rg_iteration_physical_mass_gap_scaling.md is set aside because both load-bearing inputs are assumed and the scaling ansatz η(a) ~ 1/√C_P is "precisely tuned so the a-dependence cancels; the 'UV cancels' conclusion is engineered, not derived." That is the right verdict, and it is worth knowing before re-deriving it.
+G17, audited
+G17 is one of the two gaps the dependency spine calls the only path to any statement containing the words "mass gap". Its ledger entry is six YAML lines with no attack, falsifier, protocol, lead, or citation — and it does not survive being read closely.
+
+Its wording is a near-verbatim copy of one line in theory/superseded/MASTER_THEORY.md:689 — a file CLAUDE.md forbids reading as current. The gap's own text descends from a retired document.
+PC-2 has exactly one formal statement in the pinned corpus (§12.1, Z_{β,α,Γ,L}/Z_{β,L} ≤ K_α^{|Γ|}), and that display does not carry the label. The only place it is derived rather than quoted is PMBSF's SU(N) merged draft §9.4, which also supplies the explicit condition that the ledger's phrase "useful log K_α" refers to. The PC-n labels appear on two lines in the whole repository; PC-5 has zero occurrences, though the numbering runs to PC-6.
+The source-radius reduction — G17's second named hypothesis — has no formal statement anywhere on that route. Every occurrence is a bare noun phrase in prose. No equation, no constants, no hypotheses. It is unstated, not merely unproved. The one formally stated "source-radius" object in the corpus, PMBSF's Z_A(ρ/q_η) ≤ exp(ρ C e^{J_*}|A|), is on a different route, is a different object, and is listed as proved — and nothing connects the two.
+The document that would say what PC-2 buys is content-lost: NOTE_RCAP_rooted_projected_capacity_source_stability_alt.md had every display equation stripped by a chat-to-docx export, and the repository records that a fresh download was byte-identical.
+G18 has six indexed papers bearing on it. G17 has zero.
+So the honest standing of the corpus's own load-bearing infinite-volume gap: half of it is stated once and derived only inside a program the ledger does not reference, and the other half has never been written as mathematics at all.
+
+The bridge my own reductions need
+R1 and R3 are Euclidean/OS statements — spectral representation, log-convexity, superselection in a reconstructed theory. The carrier program is Hamiltonian: Kogut–Susskind on a spatial T³, with §2.2's series relation H_project = W/2, x = 2u as the only recorded connection, which is a series bridge, not an operator one. R1 in fact needs less than OS — log-convexity of ⟨ψ, e^{−tH}ψ⟩ is immediate from the spectral theorem for a self-adjoint H ≥ 0, no reflection positivity required. R3 needs more: superselection, a mass spectrum, and Haag–Ruelle.
+
+The corpus's own compass artifact proposes exactly this bridge and says it is missing from the field, not just from here: "Because Osterwalder–Seiler (1978) and Borgs (1988) already give a strong-coupling mass gap on the transfer-matrix / continuous-time side, a rigorous time-continuum-limit argument connecting the anisotropic Wilson transfer matrix to H_KS would provide a second, independent proof of a gap … Publishing that reduction explicitly would itself be a contribution, since it appears to be missing from the rigorous literature." Meanwhile Haag–Ruelle returns zero hits in the entire repository, and Lüscher returns one — for the two-loop beta-function coefficient.
+
+VI · Three obstructions the corpus over-reads
+1. The L⁻² collapse is the dispersion relation
+§12.1 records that "the finite-volume incidence isolation scales as L⁻² and collapses as L → ∞", and the MASTER_PROOF_STATE takes this as defeating volume-uniform transport of the b₂-fold level. The quantity is Δ^{(2)} = 4t_N u² sin²(π/L) — the gap from the flat carrier band to the dispersing branches at the smallest available nonzero momentum. Its vanishing as L → ∞ is the statement that E(k) → E(0) as k → 0. That is continuity of a dispersion curve, not a pathology.
+
+And b₂ = dim H₂(T³) = 3: the "b₂-fold protected level" is the Γ-point triplet, which is the three polarizations of a spin-1 state at rest and is required by cubic symmetry to be exactly threefold degenerate. A rank-one contour around one sheet is not merely unjustified — it would be wrong. Isolation for a particle is isolation of a mass shell in the joint energy–momentum spectrum, fiberwise in k, and the external gap that supports it is uniform. The obstruction is real for the object the corpus names and absent for the object a particle theorem needs.
+
+2. The near-Γ exclusion radius excludes the physical region
+ADR 0003 gives |k| ≥ K·u, K = 23.66 at θ = 1/2, below which the O(u⁴) spread meets the O(u²)|k|² splitting and the fixed-order ordering fails. Inside that ball the three sheets are not resolvable at fixed order. For a spin-1 triplet they are supposed to be degenerate there. What the exclusion radius costs is the fixed-order splitting formula, not the particle — and the ADR's own honesty ("says nothing about behaviour inside the ball") is the right reading. The radius is a statement about perturbation theory's domain, and it should not be carried into the continuum discussion as an obstruction to the object.
+
+3. The T0 layer contains nothing about the electric spectrum
+All 28 Lean theorems are rational-arithmetic identities; sorry count is 0. Notably dim_Z₂ is proved as (L³ − 1) + 3 = L³ + 2 — arithmetic, with the homological inputs rank ∂₃ = L³ − 1 and dim H₂ = 3 supplied, not derived. And a search of invariants.py finds the electric convention E(L) = L·C_F/2 and the value 8/3 registered, but no check that the shell exhausts the spectrum below 4. The MASTER_PROOF_STATE's claim that Theorem 1′ would be "the repository's first T1 statement about the electric spectrum" is correct. L1–L6 above are the cheapest available promotion in the whole program: exact, enumerable, and load-bearing for §11.4's retained-space truncation as a by-product.
+
+VII · Falsifiers, and the cheap moves
+The reductions above are falsifiable in the register's own sense. Each fails on a specific exhibit:
+
+reduction	falsified by
+R1 mass bound	A carrier correlator whose normalized ratio at fixed physical t₁ vanishes faster than any power of a even for a fixed-physical-radius source — then the bound is unusable, not wrong.
+R2 residue	r₀(a) growing like e^{c/a} rather than a power. Then t₀ ~ 1/a and the decoupling fails.
+R3 isolation	A C-odd state below the 1^{+−}, or an accumulation of discrete C-odd masses at M. Also fails if C is not exact in the limit.
+R4 topology	Already partly refuted — see R4. What survives is c₁ = 0 on all four generators, which a different sign convention for d_i cannot change (the real-gauge argument is convention-independent). It would be falsified by a nonzero c₁; it does not imply the absence of a topological charge, and the corpus records a fragile π₂ degree of +1.
+R5 spin	A measured A₂^{+−} or T₂^{+−} level degenerate with the T₁^{+−} as a → 0 — which would make the island J = 3.
+The cheapest moves, in order
+Correct the compass artifact's Yarotsky assessment. corpus-import/literature/LIT_SU3_compass_artifact_*.md states four separate times that the theorems are "stated for finite-dimensional sites", concluding "the one hypothesis that fails is finite-dimensionality of the site space." Yarotsky's Theorem 1 explicitly admits "a Hilbert space H_x (possibly infinite-dimensional)" and unbounded non-negative onsite terms. The corpus found this route, rejected it on a false premise, and dropped it — and its own Recommendation 2 already proposed it. The artifact appears in none of the repository's registers.
+Register the M/√σ comparison. Two numbers already in the repository, one ratio, one T2 check: 6.429 ± 0.462 against 6.065 ± 0.040, 0.78σ. The first quantitative agreement between the program's own carrier measurement and the modern continuum spectrum, currently recorded nowhere.
+Fix what G18's "<4%" rests on. The figure is arithmetically 4.017%, the measurement is 0.44σ from zero, and the gate that supposedly tests it is a range check that would pass at 0.9. The gap statement should say what the run actually supports: the bare-source overlap is unmeasured, consistent with zero, and its a-dependence is untested. That is a stronger motivation for the smeared basis than a small number would be, not a weaker one.
+Compute the two Γ invariants. Neither c₁ nor the π₂ degree is computed anywhere in the repository; the audit that names the right one is cited by nothing. Both are cheap. Registering them would also give the flat-band audit a first inbound edge.
+Register L1–L6 as a T1 check. The electric-shell classification is exact and enumerable, would be the repository's first T1 statement about the electric spectrum, and retro-justifies the §11.4 truncation.
+Ask the RP-under-blocking question. One paragraph, aimed at Bałaban CMP 98 (1985). It gates every OS-compatible RG in the program and nobody has posed it.
+Re-rank the notes queue by the gap it bears on. 204 unreviewed documents on RG coarse-graining, scaling limits, and uniformity — including a 318 KB program roadmap and a 107 KB scaling-limit synthesis — currently sit below twenty Colab notebooks.
+One sentence
+
+The route's finite-spacing half is a genuine lemma sequence that lives at u < 0.081 while the continuum lives at u = ∞; the continuum half, once charge conjugation is used as a superselection label, is not a source-carrying RG trajectory theorem but a single non-collapse estimate on a single smooth operator, conditional on Clay; the expansion machinery that estimate would be proved with is already in the corpus as PMBSF's Open Theorem C, where the carrier's smoothness removes most of what makes it hard there; and the one question that gates the whole construction — whether Bałaban blocking preserves reflection positivity — has never been asked.
+
+Read-only session over the WORKHOUSE clone; no repository file was created, modified, or deleted. Every numerical statement above was computed in this session in a scratch directory outside the repository, in exact rationals where exactness was claimed. Quotations carry their file. Nothing here promotes any claim past T3, and the C2 standing rule is untouched: neither side of the off-axis coefficient is preferred, averaged, or used as a premise — R1–R5 are independent of it, since Φ_C = 4e₂/q_a vanishes at Γ and on every axial cut.

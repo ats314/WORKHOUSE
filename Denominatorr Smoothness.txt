@@ -1,0 +1,131 @@
+Provenance invariant · SU(N) flux-band corpus
+
+Denominator Smoothness
+A perturbative coefficient's denominator is physically determined. A rough one — a large prime where only small primes belong — is nearly a proof that the number is a float wearing exact clothing. This is what that claim survives as after the machine checks it.
+
+derived
+observed
+fitted
+artifact / rough
+Verdict
+The invariant is real, and reproduced against the corpus. But it is not one bound — it is a rank-and-order-indexed ceiling, and it is a forensic screen, not a proof. "37-smooth" is a fitted constant that the corpus's own sixth-order coefficient already exceeds.
+
+Its correct home is not physics but provenance: it catches the failure CLAUDE.md calls the single most dangerous bug — an exact-looking Rational that is really a reconstructed float — with one number and no tolerance, where the two existing guards each need a partner or a type mismatch.
+
+01
+The ladder is real, monotone, and taller than "37"
+Within one homogeneous series — the native string tension σn and the published Kogut–Pearson–Shigemitsu tn — only the perturbative order changes. The largest prime in the reduced denominator climbs with it and never falls. Every factorization below was reproduced with sympy.factorint on workhouse.constants.
+
+order r	series (SU3)	denominator Pmax	new primes at this order	status
+0	σ₀, t₀	3	2, 3	derived
+2	σ₂, t₂	17	5, 17	derived
+3	σ₃, t₃	17	—	derived
+4	σ₄, t₄	37	7, 11, 13, 19, 29, 31, 37	observed
+5	σ₅, t₅	37	—	observed
+6	t₆ (KPS)	61	23, 43, 47, 53, 59, 61	observed
+Pmax(r) = largest prime factor of the reduced denominator. "37-smooth" is exactly Pmax(r ≤ 5); order 6 reaches 61. KPS t₆ is the second rough denominator in the registry — not a violation, the ladder continuing.
+Among the program's 57 internal named rationals, exactly one carries a denominator prime above the ladder — and it is the one already named ARTIFACT.
+
+02
+Two sources — and only the first is derived
+The primes do not come from one place, and separating them is the whole game.
+
+derived  The structural floor, orders 0–3
+The fixed, rank-independent SU(3) hopping denominator (n²−1)(2n²−1)(4n²−9) — the resolvent structure formalized in Basic.lean — evaluates at n=3 to 8·17·27 = 3672 = 2³·3³·17. Its largest prime, 17 = 2n²−1, is the ceiling through third order. This is a genuine polynomial derivation: the same polynomial holds for every rank, not a fit to three points.
+
+observed  The energy-gap staircase, orders ≥ 4
+Higher primes enter as an LCM over Kogut–Susskind resolvent products — electric energy gaps E(L)=L·CF/2, one factor per intermediate state. The fingerprint is unmistakable and is the LCM's signature:
+
+coefficient	denominator factorization	reading
+SIGMA_4	2⁷·3⁶·5²·7·11·13·17³·19·29·31·37	small primes high powers
+KPS_T6	2¹⁸·3¹⁰·5⁶·7⁴·17⁵ · (23·43·47·53·59·61)	large primes to first power
+The primitive Haar-resolvent channel (cellular.py) is ≤5-smooth on its own; the large primes arrive only with the full band-kernel sum.
+But the ceiling value (37, then 61) is read off three transcribed coefficients, not predicted from an independent state count. That is the honest line between derived and fitted — and it is exactly the ADR-0005 hazard: a counting bound that looks clean until the next order.
+
+The prime-gap puzzle — the sharpest open question. The present primes are almost every prime below the ceiling, with pointed exceptions: 23 is absent at orders 4–5 though the larger 29, 31, 37 are present, and first appears at order 6; 41 is absent even at order 6. So the reachable set is not a magnitude cutoff — it is a genuine reachability predicate: p appears at order r iff some order-r intermediate state has electric energy divisible by p. Predicting these gaps from the state enumeration is what would turn the screen into a theorem.
+
+03
+The ceiling is rank and order — the correction the notes missed
+The corpus's own CERT_SUN_closed_surface_stage1 certificate writes the second-order denominator in closed form: ∝ 1/((N−1)(N+1)(2N−3)(2N+3)(2N²−1)). The largest prime is a value of 2N²−1, which grows like O(N²) — so a legitimate coefficient is rough the moment the rank is large enough, at second order:
+
+rank N	order	denominator	Pmax	source
+8	2	282321 = 3²·13·19·127	127	2N²−1 = 127
+10	2	…·199	199	2N²−1 = 199
+11	2	2289500 = 2²·5³·19·241	241	2N²−1 = 241
+An order-only ceiling of 37 false-positives every one of these. (And 4N²−9 = 391 = 17·23 at N=10 — the same 23 that is "missing" at SU(3) until order 6 is simply a rank-polynomial factor at another rank.)
+So the robust, parameter-free discriminant is not smoothness — it is denominator shape. A legitimate rough denominator is either an LCM (small primes to high powers, large primes to first power) or equals another coefficient's numerator (a ratio of coefficients). An artifact is a single generic large prime with no LCM structure, no rank-polynomial factor, and no numerator twin — decidable without knowing the order or the rank.
+
+04
+The one artifact, and why roughness sees it
+The sole rough denominator among the program's own constants is contradiction C20, "RUN15 internal display artifact" — resolved, but instructive.
+
+LINKED_VACUUM_4  (intended, exact)
+
+−1474623 / 1675520
+
+1675520 = 2⁸·5·7·11·17
+
+smooth
+
+LINKED_VACUUM_4_ARTIFACT  (RUN15 print)
+
+−521965902 / 593076541
+
+593076541 = one 9-digit prime
+
+rough
+
+The two agree to relative 3.4×10⁻¹⁵ — about 27 ulps, ~14 significant digits. That is well inside where a near-miss detector must trust its 1e-9 threshold and needs both values present. Roughness needs neither: continued-fraction reconstruction of a printed float produces a generic denominator, and a generic denominator is rough with probability ≈ 1. The exact value's is 2⁸·5·7·11·17; the reconstruction's is a lone prime.
+
+05
+Honest calibration — a two-sided-error screen
+Dickman's ρ supplies the false-positive rate the corpus check otherwise lacks: for a 9-digit denominator to be 37-smooth by chance is a ρ(5.7) ≈ 7×10⁻⁵ event. So a rough denominator is nearly a proof of a float — but "nearly", with named leaks:
+
+channel	behavior	why
+CF reconstruction (the C20 class)	caught	generic denom, rough; miss rate ~7e-5
+decimal print, den = 10ᵏ	missed	2ᵃ5ᵇ is trivially smooth → needs a power-of-10 check
+ratio of two coefficients	false-positive	denom = another coefficient's numerator; exempt it
+legitimate SU(N ≥ 8)	false-positive	rank-polynomial primes ~ O(N²); index by N
+A flag is a suspicion requiring the isolate-and-quantify follow-up the corpus mandates — never an automatic rejection.
+A new artifact class surfaced in the sweep. Of the 23 corpus-wide rough denominators with q > 10⁹, several are display truncations — e.g. SIGMA_5's numerator recorded over four different truncated copies of its denominator — a distinct failure from C20's continued-fraction reconstruction, living in DOC_FLUX_constants_index.
+
+06
+Where it sits — and a real pedigree
+Non-negotiable #3 is guarded today by two checks that are each half-blind. Smoothness fills the exact gap between them.
+
+near_miss_pairs is relational — needs two values adjacent and agreeing within 1e-9. It catches C20 only because the twin happens to be recorded.
+The type guard is type-based — isinstance(value, float) only. It is structurally blind to Rational(521965902, 593076541), which is a Rational.
+Smoothness is intrinsic — one value, no tolerance, no partner. It fires on an orphan reconstruction with no recorded twin. (Honest caveat: no such live orphan exists in the corpus today; the advantage is argued, shown only under counterfactual twin-deletion.)
+Von Staudt–Clausen is the rigorous precedent of the right shape. The theorem fixes the denominator of the Bernoulli number B2n — itself a perturbative/generating-function coefficient — as a product of small primes with the largest growing with order. Verified here: B₁₆ = −3617/510, and 510 = 2·3·5·17 — literally the corpus's own low-order support. The corpus fingerprint is a hybrid: a von-Staudt-like large-prime skeleton plus an LCM small-prime part. What is novel is not that perturbative denominators are smooth — it is inverting that fact into a friability-quantified forensic for float artifacts.
+
+07
+The candidate, and the test that would settle it
+Stated in the ledger's shape — a claim with a falsifier, because a candidate without one is an analogy:
+
+# unifying_candidates (draft — provenance, not physics)
+- id: U4
+  claim: A primitive perturbative coefficient (not a ratio of two
+    coefficients) has a reduced denominator whose largest prime factor is
+    bounded by a monotone ceiling P_max(order, N), = the largest prime
+    factor of the SU(N) rank polynomials LCM'd over resolvent depth. It
+    carries the LCM fingerprint: {2,3,5,17} to high powers, large primes
+    to first power. A Rational stored as exact that violates it, with no
+    ratio-of-coefficients origin, is a float reconstruction.
+  falsified_by: one primitive coefficient re-derived exactly from the
+    stated SU(N) definitions whose denominator prime exceeds P_max at its
+    order and rank and is neither a rank-polynomial factor nor another
+    coefficient's numerator; OR a proven float artifact reconstructing
+    to a smooth denominator within the ceiling.
+  status: conjectured  # derived for r≤3; fitted for r≥4
+The decisive next computation. Enumerate the Kogut–Susskind order-7 intermediate states and their energy-gap products; predict the KPS_T7 denominator's prime set — including which primes between 61 and the new ceiling are present versus absent — before obtaining the transcribed value. Match ⇒ P_max is derived and the gaps become predictions; miss ⇒ the r ≥ 4 law is confirmed a fit, and the tempting r²/2 + 7r + 1 quadratic (17, 37, 61, 89 …) is refuted. Either way it settles the one thing that matters.
+
+08
+Corrections to the original notes
+The notes were about 90% right against the machine. Three points needed sharpening — each strengthens the invariant rather than weakening it:
+
+"One violation in the entire table" → precisely, unique among the program's 57 internal constants. A second rough denominator exists — KPS_T6, max prime 61 — but it is an external sixth-order transcription whose roughness is the ladder continuing.
+"37 is the ceiling" → 37 is P_max(r ≤ 5). The ceiling is rank-and-order-indexed and reaches 61 by order 6; at high rank a legitimate coefficient is rough at second order.
+The reconstruction mechanism is "print to ~15 digits, then continued-fraction reconstruct," not limit_denominator of the exact double (which recovers the smooth value). And 33554467/33554393 is a ratio of two primes near 2²⁵ (CRT moduli) — a rough denominator the screen correctly flags, not a false-negative.
+Method. Every factorization, count, and rate above was reproduced this session with sympy over workhouse.constants and corpus_registry.combined_table(), read-only. Corpus-wide census: 247 rough of ~1446 denominators; gated to q>10⁹, 23 rough / 90 smooth. Claims that could not be machine-verified are marked observed or fitted, never derived.
+
+No document is authority; only a machine check is. This page is a report on checks — not one of them.

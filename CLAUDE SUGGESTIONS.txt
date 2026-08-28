@@ -1,0 +1,33 @@
+Let me check two things so I describe your own tooling accurately rather than from memory.
+
+Yes — five things, ordered by how much they'd actually change what I can do. The first two are the real ones.
+
+**1. An expression index, alongside the value index.**
+
+This is the big one. Your central design decision — *the join keys are exact rationals, not concepts* — is right, and `corpus_index.py` says exactly why. But it solves retrieval for **constants**, and derived results are usually **identities**. I could confirm in one command that `-0.0641151776` was new. I could not confirm that the *form* `4e₂/q_a²` was new; I had to grep for `q**2` across the source and hope I'd guessed the spelling. `index/` has claims, symbols, and graph — all keyed on statement text, value, and name. Nothing is keyed on structure.
+
+The named failure mode is *re-deriving what already exists under different notation*, and notation-invariance is precisely what a canonical-form index gives you that a text search cannot. Concretely: a normalized `sympy.srepr` (or a canonical rational-function form) of every identity in `invariants.py` and every boxed equation in `theory/`, so `workhouse search` accepts an expression the way it accepts a value. `λ₄/q_a = A + C·Ψ` would then answer "already here?" in a second instead of an hour of grepping.
+
+**2. A negative-results log.**
+
+The most expensive work I did this session was establishing that things were **not** already present — the sweeps for "alias", "fiber", "isolation gap", the value searches that came back empty, the grep for a normalized crosswalk. All of that evaporates when the session ends, and the next agent pays for it again.
+
+ADR 0005 preserves a *refuted* claim, which is the same instinct — you already know negative information is worth keeping. What's missing is the cheaper, more common case: "I looked for X, here is the exact query, nothing was there." Given that re-derivation is the measured failure mode, a log of what has already been searched for would repay itself faster than almost anything else, and it's close to free — it's a JSONL append.
+
+**3. A fast path for zone sweeps.**
+
+I hit 120-second timeouts twice today doing exhaustive minimization over lattice momenta at L=7,8 in exact `sympy`, and had to restructure both times. I reached for `numpy` as a fallback and it isn't in the venv. Meanwhile `python-flint` **is** a dependency and is fast — but `cubic_invariants`, `phi_c`, and the pencil evaluators all route through `sympy`. Anything that sweeps the Brillouin zone runs ~100× slower than it needs to, and a lot of the interesting fourth-order questions are zone sweeps. This is pure friction removal, no epistemics involved.
+
+**4. Index the summary sections as claims.**
+
+My concrete failure this session: R2's load-bearing falsifier — does the C=− projection keep the harmonic sector — is answered in MASTER_THEORY's **opening paragraph**. I had read §3.2, §3.4, §5.1 and §5.2 exhaustively and never went back to the abstract. Summaries state what the body assumes, and claims are indexed with `cites: §x.y`, so abstract-level statements have no section number and no natural home in the catalogue. Cheap fix, and it would have saved me from shipping a document that said "I could not settle this."
+
+**5. A declared home for session output.**
+
+This session produced two documents with real findings — a coefficient transplant traced across three artifacts, an error in a resolvent bound, R4. `documents.yaml` covers corpus documents; `notes.yaml` covers the maintainer's archive. There's no slot for *"an agent audited an external artifact and found X."* So it's gone tomorrow. Your `ledger/` is the institutional memory that substitutes for my not having any, and it has no inbox.
+
+---
+
+Two things that aren't requests. `make lean` needs `elan`, which isn't here, so I audited five Lean files by reading rather than compiling — worth knowing when you weigh how much my Lean findings are worth. And `workhouse notes` reports **1481 of 1597 documents pending**. That is by far the largest unexamined surface in the project, and on priors it's where undiscovered structure actually is.
+
+**What I'd change nothing about:** the strictness. Not one rule. The tier vocabulary, the refusal to promote either side of C2, the immutability of `theory/`, the requirement that every unifying candidate carry a falsifier, the staleness test on generated files. Those read like friction and they are the opposite — they're what let me propose R4 at all, because contradicting a belief stated in five places in your own repo cost one command to check instead of a reputation to risk. If anything on that list ever gets relaxed to make a session go smoother, the thing that made this session good goes with it.
