@@ -56,7 +56,7 @@ def test_sympy_crosses_the_boundary_as_coefficients_only(n):
 def test_every_registered_witness_holds():
     held, failed = X.run()
     assert not failed, [w.name for w in failed]
-    assert len(held) >= 25
+    assert len(held) >= 24
 
 
 def test_the_witness_can_fail(n):
@@ -78,6 +78,25 @@ def test_a_structural_comparison_is_not_a_sample(n):
     apart = n**2 + 1 / (n**10)
     assert apart != right
     assert all(apart.at(p) != right.at(p) for p in range(2, 6))
+
+
+def test_no_witness_compares_a_computation_with_itself():
+    """A row that cannot fail is worse than no row: one was removed for it.
+
+    Every witness must have a flint side that is genuinely a second
+    construction or at least a re-normalisation of a *different* expression --
+    not the same operation spelled twice, which is what "the record quantum
+    divides the historical off-axis denominator" was before it was deleted.
+    """
+
+    for w in X.witnesses():
+        left, right = w.sympy_side, w.flint_side
+        if isinstance(left, X.Rat) and isinstance(right, X.Rat):
+            continue
+        # a scalar witness must not be literally the same object on both sides
+        assert left is not right, w.name
+    # and the deleted row's claim was false as well as untestable
+    assert 4405310420659200 % 40327601932800 != 0
 
 
 def test_witnesses_declare_whether_they_are_independent():

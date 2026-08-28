@@ -400,13 +400,6 @@ def registered_rationals() -> list[Witness]:
             -q(K.SIGMA_5),
             independent=False,
         ),
-        Witness(
-            "the record quantum divides the historical off-axis denominator",
-            "C2 / G14",
-            q(K.C_SHP_HISTORICAL.q % K.X_QUANTUM.q),
-            fmpq(int(K.C_SHP_HISTORICAL.q) % int(K.X_QUANTUM.q)),
-            independent=False,
-        ),
     ]
 
 
