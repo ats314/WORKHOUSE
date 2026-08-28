@@ -689,9 +689,9 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `FINDING: C_shp is carried by 6 of 189 records, not spread across the kernel`
   - src/workhouse/invariants.py:4076 · UNIFIED v4.3 §5.1/§6, block decomposition
   - `workhouse verify --only 'FINDING: C_shp is carried by 6 of 189 records, not spread across the kernel'`
-- `FINDING: the v10a.26 adjudicator ran and returned a THIRD scalar, endorsing neither side`
+- `FINDING: the adjudicator's THIRD-VALUE scalar verdict is a C1 anchoring artifact`
   - src/workhouse/invariants.py:4425 · provenance nb-hodge-v10a26-alt2, section 17
-  - `workhouse verify --only 'FINDING: the v10a.26 adjudicator ran and returned a THIRD scalar, endorsing neither side'`
+  - `workhouse verify --only 'FINDING: the adjudicator'"'"'s THIRD-VALUE scalar verdict is a C1 anchoring artifact'`
 - `FINDING: the v10a.26 notebook carries a per-class ledger and attests its own blindness`
   - src/workhouse/invariants.py:4275 · provenance nb-hodge-v10a26-alt2
   - `workhouse verify --only 'FINDING: the v10a.26 notebook carries a per-class ledger and attests its own blindness'`

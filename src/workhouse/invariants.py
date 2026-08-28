@@ -4423,36 +4423,38 @@ def _():
 
 
 @channels.check(
-    "FINDING: the v10a.26 adjudicator ran and returned a THIRD scalar, endorsing neither side",
+    "FINDING: the adjudicator's THIRD-VALUE scalar verdict is a C1 anchoring artifact",
     "provenance nb-hodge-v10a26-alt2, section 17",
     tier=2,
 )
 def _():
-    # The most consequential thing in the pinned notebook, and it was never
-    # extracted into the registry: the run does not merely produce a disputed
-    # C. It carries a three-way ADJUDICATOR, and that adjudicator fired.
+    # The pinned run carries a three-way adjudicator, and it fired the
+    # fallback: "SCALAR ORACLE RETURNS THIRD VALUE" / "FOLDED MATRIX DOES NOT
+    # RECOVER HISTORICAL C_shape" / "MIXED/THIRD RESULT". Both endorsing
+    # branches were reachable in its source; neither fired.
     #
-    # Its own source offers three outcomes -- "DUAL COLD ORACLES SUPPORT THE
-    # HISTORICAL 189-RECORD SU(3) O4 KERNEL", "... SUPPORT THE MODERN SHORTCUT
-    # BRANCH", and a fallback. Both endorsing branches were available. Neither
-    # fired. What it printed at section 17 is:
+    # The scalar half of that verdict does not survive inspection, and this
+    # check exists to say so. The oracle's "independent linked m4" is
+    # -0.7751458630189173, which is BIT-FOR-BIT the registered m_Gamma^(4),
+    # and its distance from the historical 189-kernel q_band^(4) is
+    # 2.0827701250956414 -- the registered Delta_Gamma, to 4.4e-16.
     #
-    #   SCALAR VERDICT: SCALAR ORACLE RETURNS THIRD VALUE
-    #   SHAPE VERDICT : FOLDED MATRIX DOES NOT RECOVER HISTORICAL C_shape
-    #   FINAL VERDICT : MIXED/THIRD RESULT
+    # So the oracle did not return a third value. It reproduced a constant
+    # this repository already carries, exactly, and was then compared against
+    # q_band-anchored candidates it could never match. This is precisely the
+    # trap CLAUDE.md names: q_band^(4) and m_Gamma^(4) are differently
+    # anchored coordinates, not rival estimates, and C1 records that the
+    # apparent scalar dispute dissolved into an anchoring distinction. The
+    # engine's endorsing branch tests scalar_verdict.endswith("HISTORICAL
+    # q3"), so an m_Gamma-anchored result makes that branch unreachable no
+    # matter how right it is.
     #
-    # The scalar result is the striking part. Its independent linked m4 is
-    # -0.7751458630189173, against the historical 189-kernel q3 at -2.8579
-    # (gap 2.08) and the quarantined shortcut at -11.0685 (gap 10.29). Those
-    # are not near misses between two rival estimates; the oracle lands
-    # somewhere else entirely, and the gaps are larger than the values.
+    # The SHAPE half of the verdict is untouched and stands: the folded matrix
+    # genuinely does not recover the historical C_shape, which is C2. What
+    # falls is the implication that a second, scalar disagreement corroborates
+    # it. Only one of the two verdict halves is a real disagreement.
     #
-    # This is a measured outcome of the maintainer's own engine, not a
-    # recommendation from anyone: the branch that fired is the one its author
-    # wrote for the case where the evidence supports neither candidate. It is
-    # recorded here because a registry that carried the disputed C without
-    # carrying the verdict of the run that produced it would be showing half
-    # the evidence.
+    # Neither C_shp side is preferred here, and C2 stays open.
     import json
 
     notebook = (
@@ -4470,30 +4472,22 @@ def _():
             whole += "".join(output.get("text") or [])
             whole += "".join(output.get("data", {}).get("text/plain") or [])
 
-    fired = "MIXED/THIRD RESULT" in whole
-    third_scalar = "SCALAR ORACLE RETURNS THIRD VALUE" in whole
+    oracle = -0.7751458630189173
+    fired = "MIXED/THIRD RESULT" in whole and "SCALAR ORACLE RETURNS THIRD VALUE" in whole
     shape_missed = "FOLDED MATRIX DOES NOT RECOVER HISTORICAL C_shape" in whole
-    # both endorsing branches exist in the source, so the outcome was not forced
-    could_endorse = "DUAL COLD ORACLES SUPPORT THE HISTORICAL" in whole
-    could_endorse = could_endorse and "SUPPORT THE MODERN SHORTCUT BRANCH" in whole
+    # the endorsing branch keys on the q_band-anchored name, which an
+    # m_Gamma-anchored scalar cannot satisfy
+    keyed_on_q3 = "HISTORICAL q3" in whole
+    is_m_gamma = oracle == K.M_GAMMA_4_NUM
+    shift = abs(oracle - float(P.as_fraction(K.Q_BAND_4)))
+    is_delta_gamma = abs(shift - K.DELTA_GAMMA_NUM) < 1e-12
 
-    oracle_m4 = -0.7751458630189173
-    hist_q3 = float(P.as_fraction(K.Q_BAND_4))
-    shortcut = float(P.as_fraction(K.QUARANTINED_SCALAR))
-    gaps = (abs(oracle_m4 - hist_q3), abs(oracle_m4 - shortcut))
-
-    return (
-        fired
-        and third_scalar
-        and shape_missed
-        and could_endorse
-        and str(oracle_m4) in whole
-        and min(gaps) > 1.0
-    ), (
-        f"the adjudicator's endorsing branches both exist in the source and neither fired; it "
-        f"printed a THIRD-VALUE scalar verdict and a shape verdict that the folded matrix does "
-        f"not recover the historical C_shape. Its independent linked m4 = {oracle_m4} sits "
-        f"{gaps[0]:.3f} from the historical 189-kernel q3 and {gaps[1]:.3f} from the quarantined "
-        "shortcut -- gaps larger than the quantities. The run that produced the disputed C ended "
-        "by endorsing neither candidate, and that outcome was computed, not chosen"
+    return (fired and shape_missed and keyed_on_q3 and is_m_gamma and is_delta_gamma), (
+        f"the oracle's 'independent linked m4' {oracle} is bit-for-bit the registered "
+        f"m_Gamma^(4), and its distance from q_band^(4) is {shift} = Delta_Gamma to "
+        f"{abs(shift - K.DELTA_GAMMA_NUM):.1e}. It returned no third value: it reproduced a "
+        "registered constant and was compared against a differently anchored one, which is the "
+        "C1 distinction. The endorsing branch keys on 'HISTORICAL q3', so an m_Gamma-anchored "
+        "scalar cannot reach it. The SHAPE half of the verdict stands and is C2; the scalar half "
+        "is an artifact, so only one of the two halves is a real disagreement"
     )
