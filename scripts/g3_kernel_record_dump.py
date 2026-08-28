@@ -41,11 +41,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = (
-    ROOT
-    / "notes"
-    / "imported"
-    / "HODGE_RUNS_2026-08-28"
-    / "HODGE_v10a26_factor52_comp_script.txt"
+    ROOT / "notes" / "imported" / "HODGE_RUNS_2026-08-28" / "HODGE_v10a26_factor52_comp_script.txt"
 )
 #: ledger/notes.yaml digest for the imported script — refuse to run drift.
 SCRIPT_SHA256 = "c123287ae7a38a327275557825d6f750bd15f38734a213d10c55842f7939819d"
@@ -75,8 +71,11 @@ def main() -> int:
 
     sys.dont_write_bytecode = True  # the source lives in a pinned import dir
 
-    print(f"[DUMP] executing kernel leg: {len(body.splitlines()):,} of "
-          f"{len(text.splitlines()):,} lines, cut before the oracle leg", flush=True)
+    print(
+        f"[DUMP] executing kernel leg: {len(body.splitlines()):,} of "
+        f"{len(text.splitlines()):,} lines, cut before the oracle leg",
+        flush=True,
+    )
     started = time.time()
     namespace: dict = {"__name__": "__main__", "__file__": str(SCRIPT)}
     exec(compile(body, str(SCRIPT), "exec"), namespace)  # noqa: S102 - pinned source
@@ -112,8 +111,11 @@ def main() -> int:
         "cut_marker": CUT_MARKER,
         "record_tol": tol,
         "record_count": len(records),
-        "shape": {k: (float(vv) if isinstance(vv, (int, float)) else str(vv))
-                  for k, vv in shape.items() if not isinstance(vv, (tuple, list))},
+        "shape": {
+            k: (float(vv) if isinstance(vv, (int, float)) else str(vv))
+            for k, vv in shape.items()
+            if not isinstance(vv, (tuple, list))
+        },
         "elapsed_minutes": elapsed / 60,
         "records": records,
     }
