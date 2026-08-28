@@ -23,7 +23,7 @@ So a claim's status is **computed, not asserted**:
 | Tier | Meaning | Where it lives |
 |---|---|---|
 | **T0 proved** | Lean 4 compiles it, no `sorry`, standard axioms only | `lean/Workhouse/` |
-| **T1 derived** | re-derived symbolically from stated definitions, exactly | `src/workhouse/invariants.py` |
+| **T1 derived** | re-derived symbolically from stated definitions, exactly — witnessed by a second engine (ADR 0016) | `src/workhouse/invariants.py` |
 | **T2 numerical** | float agreement within a stated tolerance | same, tolerance in the detail line |
 | **T3 asserted** | a document says so and nothing checks it | `theory/`, the ledgers |
 
@@ -124,6 +124,7 @@ forbidden names (`m_4`) and names coined here that the corpus never uses
 
 ```bash
 make verify    # re-derive every exact claim (T1/T2)
+make cross-check # ... and recompute the exact layer in python-flint too
 make status    # contradiction and gap registers
 make frontier  # regenerate FRONTIER.md — established / disputed / refuted / next
 make certified # regenerate CERTIFIED.md — every checked claim, ranked by tier

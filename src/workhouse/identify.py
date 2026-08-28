@@ -423,7 +423,9 @@ def lll_relations(
     return out[:limit]
 
 
-def pslq_relation(values: list[float], digits: int, maxcoeff: int = 10**9) -> dict:
+def pslq_relation(
+    values: list[float], digits: int, maxcoeff: int = 10**9, maxsteps: int = 5000
+) -> dict:
     """The same question put to mpmath's PSLQ, as an independent engine.
 
     Returns ``{"relation": tuple|None, "norm_bound": float|None, "exhausted": bool}``.
@@ -435,10 +437,13 @@ def pslq_relation(values: list[float], digits: int, maxcoeff: int = 10**9) -> di
     * ``maxsteps`` defaults to 100, and at that budget PSLQ returns ``None`` on
       a six-element vector in 24 of 25 cases where a relation exists. A ``None``
       then means "ran out of steps", not "there is no relation" -- opposite
-      epistemic states. This passes a real budget and reports which one
-      happened, reading the proved norm bound out of the verbose trace: a
-      completed search establishes that no relation of norm below that bound
-      exists at this tolerance, which is an exclusion worth having.
+      epistemic states, and mpmath prints its "Norm bound:" line on BOTH exits,
+      so the line's presence does not tell them apart. The discriminator is the
+      bound itself: mpmath breaks out early precisely when its proved lower
+      bound on any relation's norm reaches ``maxcoeff``, so ``norm >= maxcoeff``
+      is the completed search and anything less is exhaustion. Only the former
+      establishes that no relation of norm below the bound exists at this
+      tolerance, and only the former is reported as an exclusion here.
     """
     import contextlib
     import io
@@ -455,17 +460,21 @@ def pslq_relation(values: list[float], digits: int, maxcoeff: int = 10**9) -> di
                 [mp.mpf(v) for v in values],
                 tol=mp.mpf(10) ** (-digits),
                 maxcoeff=maxcoeff,
-                maxsteps=5000,
+                maxsteps=maxsteps,
                 verbose=True,
             )
     finally:
         mp.dps = old_dps
     trace = buffer.getvalue()
-    bound = _re.search(r"Norm bound:\s*([\d.eE+-]+)", trace)
+    match = _re.search(r"Norm bound:\s*([\d.eE+-]+)", trace)
+    bound = float(match.group(1)) if match else None
     return {
         "relation": tuple(int(c) for c in found) if found else None,
-        "norm_bound": float(bound.group(1)) if bound else None,
-        "exhausted": found is None and bound is None,
+        "norm_bound": bound,
+        # An exclusion only where mpmath's proved lower bound actually reached
+        # the coefficient ceiling. Below it, the search stopped because it ran
+        # out of steps and has proved nothing.
+        "exhausted": found is None and not (bound is not None and bound >= maxcoeff),
     }
 
 

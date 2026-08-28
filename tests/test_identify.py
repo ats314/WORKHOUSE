@@ -75,11 +75,20 @@ def test_the_relation_search_finds_a_planted_relation():
 
 
 def test_pslq_reports_an_exclusion_rather_than_a_silence():
-    """A None must say which None it is: no relation, or out of steps."""
-    result = ident.pslq_relation([ident.targets()["C_shp"].value, math.pi, math.e], 16, 10**5)
-    assert result["relation"] is None
-    assert not result["exhausted"]
-    assert result["norm_bound"] and result["norm_bound"] > 1000
+    """A None must say which None it is: no relation, or out of steps.
+
+    mpmath prints its "Norm bound:" line on both exits, so the line's presence
+    is not the discriminator -- the bound reaching maxcoeff is.
+    """
+    values = [ident.targets()["C_shp"].value, math.pi, math.e]
+    completed = ident.pslq_relation(values, 16, maxcoeff=10**5)
+    assert completed["relation"] is None
+    assert not completed["exhausted"]
+    assert completed["norm_bound"] >= 10**5
+
+    starved = ident.pslq_relation(values, 16, maxcoeff=10**5, maxsteps=2)
+    assert starved["relation"] is None
+    assert starved["exhausted"], "a two-step budget must not read as an exclusion"
 
 
 def test_a_genuine_relation_is_a_candidate_under_the_calibrated_budget():

@@ -259,6 +259,39 @@ def _rescue_negative_query(argv: list[str]) -> list[str]:
     return out
 
 
+def _cross_check() -> int:
+    """Every T1 quantity, computed twice, by two libraries that share no code.
+
+    The table is the point: a reader who does not trust "T1" can see which
+    quantity was recomputed, in which engine, and whether the two agreed --
+    and can see the scope line saying what the agreement does not cover.
+    """
+    from . import cross_check as X
+
+    held, failed = X.run()
+    rows = X.witnesses()
+    print("\033[1mdual-engine witness for the T1 layer\033[0m")
+    print(
+        "\033[2msympy against python-flint. Witnesses the arithmetic, not the "
+        "derivation:\n  a wrong formula would be computed identically wrong by "
+        "both engines.\033[0m\n"
+    )
+    for w in rows:
+        mark = "\033[32mAGREE\033[0m" if w.holds() else "\033[31mDIFFER\033[0m"
+        kind = "independent" if w.independent else "\033[2mre-normalised\033[0m"
+        print(f"  {mark}  {w.name}")
+        print(f"         \033[2m{w.section} · {kind}\033[0m")
+        if not w.holds():
+            print(f"         sympy: {w.sympy_side}")
+            print(f"         flint: {w.flint_side}")
+    independent = sum(1 for w in rows if w.independent)
+    print(
+        f"\n{len(held)}/{len(rows)} agree; {independent} of them are second "
+        "constructions rather than re-normalisations of sympy's own answer"
+    )
+    return 1 if failed else 0
+
+
 def _identify(
     value: str | None, claim: str | None, halfwidth: float | None, ulp: bool, qmax: int
 ) -> int:
@@ -428,6 +461,13 @@ def main(argv: list[str] | None = None) -> int:
     v.add_argument("-v", "--verbose", action="store_true", help="show detail for passes too")
     v.add_argument("--only", metavar="TEXT", help="run just the checks whose name contains TEXT")
     v.add_argument("--tier", type=int, choices=(1, 2), help="run only T1 or only T2 checks")
+    v.add_argument(
+        "--cross-check",
+        action="store_true",
+        dest="cross_check",
+        help="recompute the T1 layer's exact values in python-flint and show "
+        "where the two engines agree; T1 otherwise means 'sympy says'",
+    )
 
     sub.add_parser("status", help="print the contradiction and gap registers")
 
@@ -582,6 +622,8 @@ def main(argv: list[str] | None = None) -> int:
 
     args = parser.parse_args(argv)
     if args.command == "verify":
+        if args.cross_check:
+            return _cross_check()
         return _verify(args.verbose, args.only, args.tier)
     if args.command == "search":
         return _search(args.query, args.corpus, args.limit)

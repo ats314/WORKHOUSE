@@ -30,7 +30,7 @@ with 928 files and heavy copying, a value in forty files may have one origin.
 | Tier | Meaning |
 |---|---|
 | **T0** | Lean 4 compiles it, no `sorry`, standard axioms only |
-| **T1** | re-derived symbolically from stated definitions, in exact rationals |
+| **T1** | re-derived symbolically from stated definitions, in exact rationals — and, since ADR 0016, witnessed by a second engine: `workhouse verify --cross-check` recomputes the exact layer in python-flint, because T1 otherwise means "sympy says" |
 | **T2** | float agreement within a tolerance printed in the check's detail line |
 | **T3** | a document says so and nothing checks it |
 
@@ -121,6 +121,7 @@ you can tell forty derivations from one number pasted forty times.
 ```bash
 make bootstrap    # create .venv and install
 make verify       # re-derive every exact claim (T1/T2), a few seconds
+make cross-check  # ... and recompute the exact layer in a second engine
 make check        # ruff + pytest — what CI runs (~2.5 min)
 make quick        # the fast inner loop while iterating (~10 s)
 make status       # the contradiction and gap registers

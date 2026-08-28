@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 210/210 checks pass.
+**T1/T2 — re-derived here.** 214/214 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -37,6 +37,7 @@ it cannot drift from what the repository actually checks.
 | off-axis channel ledger (C2 geography, G14) | 22/22 |
 | the flat-band manuscript | 5/5 |
 | exact-form identification and external witness (C2, G3) | 16/16 |
+| dual-engine witness for the T1 layer (ADR 0010, R2, R14) | 4/4 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
