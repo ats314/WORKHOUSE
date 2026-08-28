@@ -106,404 +106,473 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 119
+## T1 — re-derived exactly — 142
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
 **SU(3) second and third order**
 
 - `C-even bandwidth = top - bottom = 88/153`
-  - src/workhouse/invariants.py:187 · PAPER App. B
+  - src/workhouse/invariants.py:349 · PAPER App. B
   - `workhouse verify --only 'C-even bandwidth = top - bottom = 88/153'`
 - `C-odd manifold width = 5/51`
-  - src/workhouse/invariants.py:193 · PAPER App. B
+  - src/workhouse/invariants.py:355 · PAPER App. B
   - `workhouse verify --only 'C-odd manifold width = 5/51'`
 - `E_flat and t(u) carry the ledger coefficients`
-  - src/workhouse/invariants.py:205 · MASTER_THEORY §4.4
+  - src/workhouse/invariants.py:367 · MASTER_THEORY §4.4
   - `workhouse verify --only 'E_flat and t(u) carry the ledger coefficients'`
+- `FINDING: no Gamma-point datum can constrain the hopping`
+  - src/workhouse/invariants.py:489 · MASTER paper Rmk. 12 / HAMER_1989
+  - `workhouse verify --only 'FINDING: no Gamma-point datum can constrain the hopping'`
 - `d_- - 4 t_- = 11/306`
-  - src/workhouse/invariants.py:176 · PAPER eq. (7)
+  - src/workhouse/invariants.py:338 · PAPER eq. (7)
   - `workhouse verify --only 'd_- - 4 t_- = 11/306'`
+- `d_- = 1/2 + 12*leak_2, and leak_2 = -11/306`
+  - src/workhouse/invariants.py:381 · ENGINE_FLUX_su3_domino_d3.py / MASTER paper §5
+  - `workhouse verify --only 'd_- = 1/2 + 12*leak_2, and leak_2 = -11/306'`
 - `d_3 = 7/32 + 12*leak_3 - 4*b_3`
-  - src/workhouse/invariants.py:199 · MASTER_THEORY §4.4
+  - src/workhouse/invariants.py:361 · MASTER_THEORY §4.4
   - `workhouse verify --only 'd_3 = 7/32 + 12*leak_3 - 4*b_3'`
+- `leak_3 is assembled from the domino diagonal and the vacuum piece`
+  - src/workhouse/invariants.py:395 · ENGINE_FLUX_su3_domino_d3.py locks
+  - `workhouse verify --only 'leak_3 is assembled from the domino diagonal and the vacuum piece'`
+- `one assembly formula gives every registered band value`
+  - src/workhouse/invariants.py:411 · ENGINE_FLUX_su3_domino_d3.py / MASTER paper eq. (30)
+  - `workhouse verify --only 'one assembly formula gives every registered band value'`
 - `t_- equals the rank law at N = 3`
-  - src/workhouse/invariants.py:182 · MASTER_THEORY §4.3
+  - src/workhouse/invariants.py:344 · MASTER_THEORY §4.3
   - `workhouse verify --only 't_- equals the rank law at N = 3'`
+- `the manuscript's SU(3) ledger is this registry, value by value`
+  - src/workhouse/invariants.py:510 · MASTER paper App. C
+  - `workhouse verify --only 'the manuscript'"'"'s SU(3) ledger is this registry, value by value'`
+- `the two band spans ARE the two incidence spectra`
+  - src/workhouse/invariants.py:460 · MASTER paper §4.5 / ENGINE_FLUX_su3_domino_d3.py key corrected_Ceven_bandwidth_16|t|
+  - `workhouse verify --only 'the two band spans ARE the two incidence spectra'`
 **coupling erratum (C4/G2)**
 
 - `the 4**r rescaling breaks the bridge: order 2 off by 16, order 3 by 64`
-  - src/workhouse/invariants.py:1955 · UNIFIED §2.1 / C4 / G2
+  - src/workhouse/invariants.py:2441 · UNIFIED §2.1 / C4 / G2
   - `workhouse verify --only 'the 4**r rescaling breaks the bridge: order 2 off by 16, order 3 by 64'`
 - `the printed towers are canonical-u: 4*Delta(3u/2) reproduces them verbatim`
-  - src/workhouse/invariants.py:1938 · UNIFIED §2.1 / C4
+  - src/workhouse/invariants.py:2424 · UNIFIED §2.1 / C4
   - `workhouse verify --only 'the printed towers are canonical-u: 4*Delta(3u/2) reproduces them verbatim'`
 **fourth order, anchoring and the residual dispute**
 
 - `C_old = (beta_pen_3 - 2*alpha_3)/16`
-  - src/workhouse/invariants.py:303 · MASTER_THEORY §5.5
+  - src/workhouse/invariants.py:616 · MASTER_THEORY §5.5
   - `workhouse verify --only 'C_old = (beta_pen_3 - 2*alpha_3)/16'`
 - `a translation-local scalar shift changes nothing observable`
-  - src/workhouse/invariants.py:340 · MASTER_THEORY §5.5 / C1
+  - src/workhouse/invariants.py:653 · MASTER_THEORY §5.5 / C1
   - `workhouse verify --only 'a translation-local scalar shift changes nothing observable'`
 **fourth order, sealed core**
 
 - `alpha_3 = 4*A_shp = 5/12`
-  - src/workhouse/invariants.py:223 · MASTER_THEORY §5.2
+  - src/workhouse/invariants.py:536 · MASTER_THEORY §5.2
   - `workhouse verify --only 'alpha_3 = 4*A_shp = 5/12'`
 - `alpha_3 = 4*|c_4^square(3)|`
-  - src/workhouse/invariants.py:236 · MOB §4
+  - src/workhouse/invariants.py:549 · MOB §4
   - `workhouse verify --only 'alpha_3 = 4*|c_4^square(3)|'`
 - `axial law reproduces alpha_4, alpha_5, alpha_6`
-  - src/workhouse/invariants.py:229 · MASTER_THEORY §5.3
+  - src/workhouse/invariants.py:542 · MASTER_THEORY §5.3
   - `workhouse verify --only 'axial law reproduces alpha_4, alpha_5, alpha_6'`
 - `exceptional ranks are exactly {3,4,5,6}`
-  - src/workhouse/invariants.py:285 · MASTER_THEORY §5.3
+  - src/workhouse/invariants.py:598 · MASTER_THEORY §5.3
   - `workhouse verify --only 'exceptional ranks are exactly {3,4,5,6}'`
 **fourth-order checkpoint extraction**
 
 - `X is blind to B, C, D — it fixes A alone`
-  - src/workhouse/invariants.py:580 · MASTER_THEORY §5.1
+  - src/workhouse/invariants.py:893 · MASTER_THEORY §5.1
   - `workhouse verify --only 'X is blind to B, C, D — it fixes A alone'`
 - `checkpoint values at X, M, P, R`
-  - src/workhouse/invariants.py:556 · MASTER_THEORY §5.1
+  - src/workhouse/invariants.py:869 · MASTER_THEORY §5.1
   - `workhouse verify --only 'checkpoint values at X, M, P, R'`
 - `the four extraction formulas invert the ansatz`
-  - src/workhouse/invariants.py:568 · MASTER_THEORY §5.1
+  - src/workhouse/invariants.py:881 · MASTER_THEORY §5.1
   - `workhouse verify --only 'the four extraction formulas invert the ansatz'`
 **fourth-order generalized Hodge pencil**
 
 - `Q4 cross coefficient = beta_pen_3 / 4`
-  - src/workhouse/invariants.py:499 · GLUEBALL §8
+  - src/workhouse/invariants.py:812 · GLUEBALL §8
   - `workhouse verify --only 'Q4 cross coefficient = beta_pen_3 / 4'`
 - `historical Q4 numerator is positive definite`
-  - src/workhouse/invariants.py:504 · UNIFIED §0.1
+  - src/workhouse/invariants.py:817 · UNIFIED §0.1
   - `workhouse verify --only 'historical Q4 numerator is positive definite'`
 **homology and finite volume**
 
+- `Delta_L = 4 tau(u) sin^2(pi/L) is positive and falls as L^-2`
+  - src/workhouse/invariants.py:1074 · MASTER paper §8
+  - `workhouse verify --only 'Delta_L = 4 tau(u) sin^2(pi/L) is positive and falls as L^-2'`
+- `FINDING: the wrapping sheets are cycles but NOT harmonic`
+  - src/workhouse/invariants.py:1023 · MASTER paper §3.1
+  - `workhouse verify --only 'FINDING: the wrapping sheets are cycles but NOT harmonic'`
+- `cube boundaries and three wrapping sheets SPAN Z_2`
+  - src/workhouse/invariants.py:962 · MASTER paper Thm. 2
+  - `workhouse verify --only 'cube boundaries and three wrapping sheets SPAN Z_2'`
+- `d_2 d_3 = 0 on the built complex`
+  - src/workhouse/invariants.py:925 · MASTER paper App. E
+  - `workhouse verify --only 'd_2 d_3 = 0 on the built complex'`
 - `dim Z_2 = (L^3 - 1) + 3 = L^3 + 2`
-  - src/workhouse/invariants.py:591 · UNIFIED §0.1
+  - src/workhouse/invariants.py:904 · UNIFIED §0.1
   - `workhouse verify --only 'dim Z_2 = (L^3 - 1) + 3 = L^3 + 2'`
+- `dim Z_2 = L^3 + 2 by rank, not by re-arranging the formula`
+  - src/workhouse/invariants.py:944 · MASTER paper Thm. 2
+  - `workhouse verify --only 'dim Z_2 = L^3 + 2 by rank, not by re-arranging the formula'`
 - `dim Z_2 at L = 3, 4, 5`
-  - src/workhouse/invariants.py:597 · UNIFIED §0.1
+  - src/workhouse/invariants.py:910 · UNIFIED §0.1
   - `workhouse verify --only 'dim Z_2 at L = 3, 4, 5'`
+- `q_min on the L-torus grid is 4 sin^2(pi/L)`
+  - src/workhouse/invariants.py:1061 · MASTER paper §4.4
+  - `workhouse verify --only 'q_min on the L-torus grid is 4 sin^2(pi/L)'`
+- `rank d_3 = L^3 - 1 on the built complex`
+  - src/workhouse/invariants.py:934 · MASTER paper App. E
+  - `workhouse verify --only 'rank d_3 = L^3 - 1 on the built complex'`
+- `the Bloch and chain routes to the carrier agree`
+  - src/workhouse/invariants.py:997 · MASTER paper Thm. 4
+  - `workhouse verify --only 'the Bloch and chain routes to the carrier agree'`
+- `the L^3+2 count is chain-level, not the Bloch convention`
+  - src/workhouse/invariants.py:983 · MASTER paper Rmk. 3
+  - `workhouse verify --only 'the L^3+2 count is chain-level, not the Bloch convention'`
+- `the zone maximum of q is 12 only at even L`
+  - src/workhouse/invariants.py:1045 · MASTER paper eq. (24)
+  - `workhouse verify --only 'the zone maximum of q is 12 only at even L'`
 **isotropic pentagonal cap band (v4.3 §9.3)**
 
 - `240 = 5 x 48 histories per adjacent direction`
-  - src/workhouse/invariants.py:1057 · §9.3
+  - src/workhouse/invariants.py:1543 · §9.3
   - `workhouse verify --only '240 = 5 x 48 histories per adjacent direction'`
 - `bandwidth = 4|tau_4| and the band minimum sits at k = 0`
-  - src/workhouse/invariants.py:1042 · §9.3
+  - src/workhouse/invariants.py:1528 · §9.3
   - `workhouse verify --only 'bandwidth = 4|tau_4| and the band minimum sits at k = 0'`
 - `h_4^side = A_+ - A_- exactly`
-  - src/workhouse/invariants.py:1010 · §9.3
+  - src/workhouse/invariants.py:1496 · §9.3
   - `workhouse verify --only 'h_4^side = A_+ - A_- exactly'`
 - `h_4^side and the cubic kernel share no denominator structure`
-  - src/workhouse/invariants.py:1094 · §9.3
+  - src/workhouse/invariants.py:1580 · §9.3
   - `workhouse verify --only 'h_4^side and the cubic kernel share no denominator structure'`
 - `hop range 4 refutes the r = w_min - 2 promotion`
-  - src/workhouse/invariants.py:1066 · §9.3 / C6
+  - src/workhouse/invariants.py:1552 · §9.3 / C6
   - `workhouse verify --only 'hop range 4 refutes the r = w_min - 2 promotion'`
 - `the h_4^side -> tau_4 factor is exactly 5`
-  - src/workhouse/invariants.py:1019 · §9.3
+  - src/workhouse/invariants.py:1505 · §9.3
   - `workhouse verify --only 'the h_4^side -> tau_4 factor is exactly 5'`
 - `the tau_4 -> Delta E_cap factor is exactly 2`
-  - src/workhouse/invariants.py:1031 · §9.3
+  - src/workhouse/invariants.py:1517 · §9.3
   - `workhouse verify --only 'the tau_4 -> Delta E_cap factor is exactly 2'`
 - `the tuned cap-plus-side symbol is a different Hamiltonian`
-  - src/workhouse/invariants.py:1078 · §9.3 / R21
+  - src/workhouse/invariants.py:1564 · §9.3 / R21
   - `workhouse verify --only 'the tuned cap-plus-side symbol is a different Hamiltonian'`
 - `the two face energies differ, so the eigenspace must be chosen`
-  - src/workhouse/invariants.py:997 · §9.3 / C8
+  - src/workhouse/invariants.py:1483 · §9.3 / C8
   - `workhouse verify --only 'the two face energies differ, so the eigenspace must be chosen'`
 **native string tension through fifth order (v4.3 §11.2)**
 
 - `m_{1+-}(0) = 8/3 follows from sigma(0) = 2/3 alone`
-  - src/workhouse/invariants.py:1197 · §11.2
+  - src/workhouse/invariants.py:1683 · §11.2
   - `workhouse verify --only 'm_{1+-}(0) = 8/3 follows from sigma(0) = 2/3 alone'`
 - `sigma_4 shares the historical-branch denominator`
-  - src/workhouse/invariants.py:1140 · §11.2 / §6
+  - src/workhouse/invariants.py:1626 · §11.2 / §6
   - `workhouse verify --only 'sigma_4 shares the historical-branch denominator'`
 - `sigma_n^phys = (-1)^n sigma_n^raw, and C5 is the n = 3 case`
-  - src/workhouse/invariants.py:1110 · §11.2 / C5
+  - src/workhouse/invariants.py:1596 · §11.2 / C5
   - `workhouse verify --only 'sigma_n^phys = (-1)^n sigma_n^raw, and C5 is the n = 3 case'`
 - `the even coefficients are not sign-flipped`
-  - src/workhouse/invariants.py:1129 · §11.2
+  - src/workhouse/invariants.py:1615 · §11.2
   - `workhouse verify --only 'the even coefficients are not sign-flipped'`
 - `the ratio and sigma series reproduce E_flat exactly`
-  - src/workhouse/invariants.py:1169 · §11.2 vs §4.4
+  - src/workhouse/invariants.py:1655 · §11.2 vs §4.4
   - `workhouse verify --only 'the ratio and sigma series reproduce E_flat exactly'`
 - `the ratio series stops before the disputed order`
-  - src/workhouse/invariants.py:1209 · §11.2 / C2
+  - src/workhouse/invariants.py:1695 · §11.2 / C2
   - `workhouse verify --only 'the ratio series stops before the disputed order'`
 - `the seven-prime CRT reconstruction clears its uniqueness bound`
-  - src/workhouse/invariants.py:1152 · §11.2
+  - src/workhouse/invariants.py:1638 · §11.2
   - `workhouse verify --only 'the seven-prime CRT reconstruction clears its uniqueness bound'`
 **near-Gamma uniformity (G11)**
 
 - `Jordan bound q(k) >= (4/pi^2)|k|^2 holds on the whole zone`
-  - src/workhouse/invariants.py:830 · GLUEBALL §18.3
+  - src/workhouse/invariants.py:1316 · GLUEBALL §18.3
   - `workhouse verify --only 'Jordan bound q(k) >= (4/pi^2)|k|^2 holds on the whole zone'`
 - `t(u) >= t_3 u^2 for u > 0, so the gap bound is safe`
-  - src/workhouse/invariants.py:846 · MASTER_THEORY §4.4
+  - src/workhouse/invariants.py:1332 · MASTER_THEORY §4.4
   - `workhouse verify --only 't(u) >= t_3 u^2 for u > 0, so the gap bound is safe'`
 **notes program: SAFE, Davies, coercivity (G20-G23)**
 
 - `FINDING: six bounded vectors in R^3 refute the 6-vs-3 Cartan counting`
-  - src/workhouse/invariants.py:2502 · notes review 2026-08-22 / G22
+  - src/workhouse/invariants.py:2988 · notes review 2026-08-22 / G22
   - `workhouse verify --only 'FINDING: six bounded vectors in R^3 refute the 6-vs-3 Cartan counting'`
 - `FINDING: the alpha^n RG iteration contradicts its own one-step bound`
-  - src/workhouse/invariants.py:2479 · notes review 2026-08-22 / G20
+  - src/workhouse/invariants.py:2965 · notes review 2026-08-22 / G20
   - `workhouse verify --only 'FINDING: the alpha^n RG iteration contradicts its own one-step bound'`
 - `FINDING: the curvature-mass fit is the placeholder dataset fitted to itself`
-  - src/workhouse/invariants.py:2694 · notes review 2026-08-22 / TENSOR_NETWORK contamination chain
+  - src/workhouse/invariants.py:3180 · notes review 2026-08-22 / TENSOR_NETWORK contamination chain
   - `workhouse verify --only 'FINDING: the curvature-mass fit is the placeholder dataset fitted to itself'`
 - `G21 exponent identity: arcosh(1 + 2x^2) = 2 arsinh(x)`
-  - src/workhouse/invariants.py:2405 · notes review 2026-08-22 / G21
+  - src/workhouse/invariants.py:2891 · notes review 2026-08-22 / G21
   - `workhouse verify --only 'G21 exponent identity: arcosh(1 + 2x^2) = 2 arsinh(x)'`
 - `V_Haar Hessian at the identity is exactly I/4 (adjoint Casimir 3)`
-  - src/workhouse/invariants.py:2426 · notes review 2026-08-22 / G20
+  - src/workhouse/invariants.py:2912 · notes review 2026-08-22 / G20
   - `workhouse verify --only 'V_Haar Hessian at the identity is exactly I/4 (adjoint Casimir 3)'`
 - `center elements are critical points of Re Tr, with exact heights`
-  - src/workhouse/invariants.py:2521 · notes review 2026-08-22 / G20
+  - src/workhouse/invariants.py:3007 · notes review 2026-08-22 / G20
   - `workhouse verify --only 'center elements are critical points of Re Tr, with exact heights'`
 - `drift-constant closure: two independent derivations agree exactly`
-  - src/workhouse/invariants.py:2819 · notes review 2026-08-22 / G22 (Section 7 vs G_drift_full_algebra)
+  - src/workhouse/invariants.py:3305 · notes review 2026-08-22 / G22 (Section 7 vs G_drift_full_algebra)
   - `workhouse verify --only 'drift-constant closure: two independent derivations agree exactly'`
 - `fundamental Casimir: c_0 = (N^2-1)/(2N) exactly, with the convention trap pinned`
-  - src/workhouse/invariants.py:2779 · notes review 2026-08-22 / G20, G22 (DOC4)
+  - src/workhouse/invariants.py:3265 · notes review 2026-08-22 / G20, G22 (DOC4)
   - `workhouse verify --only 'fundamental Casimir: c_0 = (N^2-1)/(2N) exactly, with the convention trap pinned'`
 - `one-step bridge spectral lemma: inf over the orthocomplement is 1 - lambda_1`
-  - src/workhouse/invariants.py:2620 · notes review 2026-08-22 / G23 (Exciting_03 Lemma 3.1)
+  - src/workhouse/invariants.py:3106 · notes review 2026-08-22 / G23 (Exciting_03 Lemma 3.1)
   - `workhouse verify --only 'one-step bridge spectral lemma: inf over the orthocomplement is 1 - lambda_1'`
 **off-axis channel ledger (C2 geography, G14)**
 
 - `C_normal = -A_normal/2: the agreed axial coefficient pins the normal channel`
-  - src/workhouse/invariants.py:2941 · UNIFIED v4.3 §6
+  - src/workhouse/invariants.py:3427 · UNIFIED v4.3 §6
   - `workhouse verify --only 'C_normal = -A_normal/2: the agreed axial coefficient pins the normal channel'`
+- `FINDING: the retained Gamma/axis data cannot identify C_shp`
+  - src/workhouse/invariants.py:3606 · MASTER paper Thm. 13 / C2 / G3
+  - `workhouse verify --only 'FINDING: the retained Gamma/axis data cannot identify C_shp'`
 - `FINDING: the tier collapse is two integer cancellations at record level`
-  - src/workhouse/invariants.py:2904 · MASTER_THEORY §5.2 / G14
+  - src/workhouse/invariants.py:3390 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'FINDING: the tier collapse is two integer cancellations at record level'`
+- `on an axial cut the mixed invariants vanish and the norm divides`
+  - src/workhouse/invariants.py:3633 · MASTER paper §7
+  - `workhouse verify --only 'on an axial cut the mixed invariants vanish and the norm divides'`
 - `rotation decomposes only as a sum, and the ket convention is load-bearing`
-  - src/workhouse/invariants.py:2994 · UNIFIED v4.3 §3.2 (carrier), tier_collapse convention
+  - src/workhouse/invariants.py:3480 · UNIFIED v4.3 §3.2 (carrier), tier_collapse convention
   - `workhouse verify --only 'rotation decomposes only as a sum, and the ket convention is load-bearing'`
 - `scalar vs shape continuation: poles where the corpus forbids, regular where it allows`
-  - src/workhouse/invariants.py:3075 · GLUEBALL_DETAILED_FORMULA v3.1; THM_SUN unified v2; THM_SU6
+  - src/workhouse/invariants.py:3561 · GLUEBALL_DETAILED_FORMULA v3.1; THM_SUN unified v2; THM_SU6
   - `workhouse verify --only 'scalar vs shape continuation: poles where the corpus forbids, regular where it allows'`
 - `the 189-record kernel decomposes in the shape basis over the whole zone`
-  - src/workhouse/invariants.py:2864 · UNIFIED v4.3 §5.1/§6
+  - src/workhouse/invariants.py:3350 · UNIFIED v4.3 §5.1/§6
   - `workhouse verify --only 'the 189-record kernel decomposes in the shape basis over the whole zone'`
 - `the N=3 continuation shift is exactly 25/64, with two exact corollaries`
-  - src/workhouse/invariants.py:3039 · ledger C10; GLUEBALL_DETAILED_FORMULA v3.1 §8/§11
+  - src/workhouse/invariants.py:3525 · ledger C10; GLUEBALL_DETAILED_FORMULA v3.1 §8/§11
   - `workhouse verify --only 'the N=3 continuation shift is exactly 25/64, with two exact corollaries'`
 - `the pinned structured B_N expression IS P17(N^2)/(N R20(N^2))`
-  - src/workhouse/invariants.py:3019 · GLUEBALL_DETAILED_FORMULA v3.1 §11 + App. A
+  - src/workhouse/invariants.py:3505 · GLUEBALL_DETAILED_FORMULA v3.1 §11 + App. A
   - `workhouse verify --only 'the pinned structured B_N expression IS P17(N^2)/(N R20(N^2))'`
 - `the shipped displacement support is exactly six shells`
-  - src/workhouse/invariants.py:2970 · off-axis ledger falsifier gate
+  - src/workhouse/invariants.py:3456 · off-axis ledger falsifier gate
   - `workhouse verify --only 'the shipped displacement support is exactly six shells'`
 **old-to-new crosswalk**
 
 - `Phi_C at the high-symmetry points`
-  - src/workhouse/invariants.py:449 · MASTER_THEORY §5.1
+  - src/workhouse/invariants.py:762 · MASTER_THEORY §5.1
   - `workhouse verify --only 'Phi_C at the high-symmetry points'`
 - `Phi_C vanishes at Gamma along every direction`
-  - src/workhouse/invariants.py:436 · MASTER_THEORY §5.5
+  - src/workhouse/invariants.py:749 · MASTER_THEORY §5.5
   - `workhouse verify --only 'Phi_C vanishes at Gamma along every direction'`
 - `the crosswalk is exactly scalar on the momentum axes`
-  - src/workhouse/invariants.py:474 · MASTER_THEORY §5.5
+  - src/workhouse/invariants.py:787 · MASTER_THEORY §5.5
   - `workhouse verify --only 'the crosswalk is exactly scalar on the momentum axes'`
 **published comparisons (literature/index.yaml)**
 
 - `FINDING: Munster's 1985 table shifts his 1982 erratum at eighth order`
-  - src/workhouse/invariants.py:1518 · MUNSTER_1985_TM / MUNSTER_1981
+  - src/workhouse/invariants.py:2004 · MUNSTER_1985_TM / MUNSTER_1981
   - `workhouse verify --only 'FINDING: Munster'"'"'s 1985 table shifts his 1982 erratum at eighth order'`
 - `SU(3) Weingarten values follow from the general formula`
-  - src/workhouse/invariants.py:1227 · CS_2006 / C7
+  - src/workhouse/invariants.py:1713 · CS_2006 / C7
   - `workhouse verify --only 'SU(3) Weingarten values follow from the general formula'`
 - `a cross-regime paper never supplies a value`
-  - src/workhouse/invariants.py:1635 · KRS_2023 / §12
+  - src/workhouse/invariants.py:2121 · KRS_2023 / §12
   - `workhouse verify --only 'a cross-regime paper never supplies a value'`
 - `stored full text is verbatim, and the licence is checked`
-  - src/workhouse/invariants.py:1659 · KRS_2023
+  - src/workhouse/invariants.py:2145 · KRS_2023
   - `workhouse verify --only 'stored full text is verbatim, and the licence is checked'`
 - `the KPS 1980 string-tension table equals the certified sigma series EXACTLY`
-  - src/workhouse/invariants.py:1426 · KPS_1981 / G7
+  - src/workhouse/invariants.py:1912 · KPS_1981 / G7
   - `workhouse verify --only 'the KPS 1980 string-tension table equals the certified sigma series EXACTLY'`
 - `the Weingarten route is independent of the corpus`
-  - src/workhouse/invariants.py:1264 · CS_2006 / C7
+  - src/workhouse/invariants.py:1750 · CS_2006 / C7
   - `workhouse verify --only 'the Weingarten route is independent of the corpus'`
 - `the cap family's signed counts are n x Catalan, the published sewing weights`
-  - src/workhouse/invariants.py:1571 · OBZ_1985 / G5
+  - src/workhouse/invariants.py:2057 · OBZ_1985 / G5
   - `workhouse verify --only 'the cap family'"'"'s signed counts are n x Catalan, the published sewing weights'`
 - `the errata-resolved Euclidean series is doubly sourced, transcription for transcription`
-  - src/workhouse/invariants.py:1489 · MUNSTER_1981 / SMIT_1982
+  - src/workhouse/invariants.py:1975 · MUNSTER_1981 / SMIT_1982
   - `workhouse verify --only 'the errata-resolved Euclidean series is doubly sourced, transcription for transcription'`
 - `the fourth moment integral |U_11|^4 = 1/6 at N = 3`
-  - src/workhouse/invariants.py:1249 · CS_2006 / C7
+  - src/workhouse/invariants.py:1735 · CS_2006 / C7
   - `workhouse verify --only 'the fourth moment integral |U_11|^4 = 1/6 at N = 3'`
 - `the m_n = 2^(n-1) a_n bridge is the x = 2u conversion`
-  - src/workhouse/invariants.py:1365 · HAMER_1989
+  - src/workhouse/invariants.py:1851 · HAMER_1989
   - `workhouse verify --only 'the m_n = 2^(n-1) a_n bridge is the x = 2u conversion'`
 - `the overlap obstruction was published in 1988, and it scales`
-  - src/workhouse/invariants.py:1603 · SCHIERHOLZ_1988
+  - src/workhouse/invariants.py:2089 · SCHIERHOLZ_1988
   - `workhouse verify --only 'the overlap obstruction was published in 1988, and it scales'`
 - `the series Hamer supersedes is Kogut-SINCLAIR-Susskind 1976, not KS 1975`
-  - src/workhouse/invariants.py:1381 · HAMER_1989
+  - src/workhouse/invariants.py:1867 · HAMER_1989
   - `workhouse verify --only 'the series Hamer supersedes is Kogut-SINCLAIR-Susskind 1976, not KS 1975'`
 **restored payloads (G1)**
 
 - `FINDING: manifest row A60 names the pentagonal dual-cold bundle, and the tree lacks it`
-  - src/workhouse/invariants.py:1877 · UNIFIED §9.3 / G1
+  - src/workhouse/invariants.py:2363 · UNIFIED §9.3 / G1
   - `workhouse verify --only 'FINDING: manifest row A60 names the pentagonal dual-cold bundle, and the tree lacks it'`
 - `FINDING: no tetrahedral certificate exists, and no reference SHA is recorded for one`
-  - src/workhouse/invariants.py:1903 · corpus THM_FLUX_hodge_cellular_circuit_mobility_theorem.md / C15
+  - src/workhouse/invariants.py:2389 · corpus THM_FLUX_hodge_cellular_circuit_mobility_theorem.md / C15
   - `workhouse verify --only 'FINDING: no tetrahedral certificate exists, and no reference SHA is recorded for one'`
 - `q_N < 0 and beta_pen_N > 0 for every integer N >= 7 follow from the ledgers`
-  - src/workhouse/invariants.py:1797 · UNIFIED §8 / G1
+  - src/workhouse/invariants.py:2283 · UNIFIED §8 / G1
   - `workhouse verify --only 'q_N < 0 and beta_pen_N > 0 for every integer N >= 7 follow from the ledgers'`
 - `the 189-record kernel is shipped and carries both reference SHAs`
-  - src/workhouse/invariants.py:1702 · UNIFIED §6 / G1
+  - src/workhouse/invariants.py:2188 · UNIFIED §6 / G1
   - `workhouse verify --only 'the 189-record kernel is shipped and carries both reference SHAs'`
 - `the P_402 ledger is the Newton transcript of B_N * D_409`
-  - src/workhouse/invariants.py:1778 · UNIFIED §8 / G1
+  - src/workhouse/invariants.py:2264 · UNIFIED §8 / G1
   - `workhouse verify --only 'the P_402 ledger is the Newton transcript of B_N * D_409'`
 - `the Q_32 ledger is the Newton transcript of the compact q law`
-  - src/workhouse/invariants.py:1761 · UNIFIED §8 / G1
+  - src/workhouse/invariants.py:2247 · UNIFIED §8 / G1
   - `workhouse verify --only 'the Q_32 ledger is the Newton transcript of the compact q law'`
 - `the SU(5) stage-1 scan is shipped: 895,524 pairs, zero determinant sectors`
-  - src/workhouse/invariants.py:1857 · GCSG (Aug 8) / C16
+  - src/workhouse/invariants.py:2343 · GCSG (Aug 8) / C16
   - `workhouse verify --only 'the SU(5) stage-1 scan is shipped: 895,524 pairs, zero determinant sectors'`
 - `the SU(6) determinant correction is exactly 6/343 and momentum-independent`
-  - src/workhouse/invariants.py:1833 · GCSG (Aug 8) / C16
+  - src/workhouse/invariants.py:2319 · GCSG (Aug 8) / C16
   - `workhouse verify --only 'the SU(6) determinant correction is exactly 6/343 and momentum-independent'`
 - `the kernel re-derives q, alpha, beta, and the historical C_shp exactly`
-  - src/workhouse/invariants.py:1725 · UNIFIED §6 / G1
+  - src/workhouse/invariants.py:2211 · UNIFIED §6 / G1
   - `workhouse verify --only 'the kernel re-derives q, alpha, beta, and the historical C_shp exactly'`
 - `the stored fixed-rank q samples N = 7..18 match the compact law exactly`
-  - src/workhouse/invariants.py:1821 · UNIFIED §8 / C17
+  - src/workhouse/invariants.py:2307 · UNIFIED §8 / C17
   - `workhouse verify --only 'the stored fixed-rank q samples N = 7..18 match the compact law exactly'`
 - `three kernel copies agree record-for-record, from two independent builds`
-  - src/workhouse/invariants.py:1747 · UNIFIED §6 / G1
+  - src/workhouse/invariants.py:2233 · UNIFIED §6 / G1
   - `workhouse verify --only 'three kernel copies agree record-for-record, from two independent builds'`
 **second order, all ranks**
 
+- `A_N and B_N are the channel sums, not transcriptions`
+  - src/workhouse/invariants.py:302 · MASTER paper eqs. (21)-(22)
+  - `workhouse verify --only 'A_N and B_N are the channel sums, not transcriptions'`
 - `N^3 t_N increases monotonically to 1/4`
-  - src/workhouse/invariants.py:156 · CANON §10.2/§10.5
+  - src/workhouse/invariants.py:161 · CANON §10.2/§10.5
   - `workhouse verify --only 'N^3 t_N increases monotonically to 1/4'`
 - `deficit identity 1/4 - N^3 t_N`
-  - src/workhouse/invariants.py:136 · MASTER_THEORY §4.3
+  - src/workhouse/invariants.py:141 · MASTER_THEORY §4.3
   - `workhouse verify --only 'deficit identity 1/4 - N^3 t_N'`
 - `deficit positive at N = 3, 5, 9`
-  - src/workhouse/invariants.py:142 · MASTER_THEORY §4.3
+  - src/workhouse/invariants.py:147 · MASTER_THEORY §4.3
   - `workhouse verify --only 'deficit positive at N = 3, 5, 9'`
+- `each channel gap is C_F + C_R/2, and the weights sum to one`
+  - src/workhouse/invariants.py:257 · MASTER paper §4.1
+  - `workhouse verify --only 'each channel gap is C_F + C_R/2, and the weights sum to one'`
+- `ell_N = A_N + B_N + 1/C_F, the vacuum-mediated route at every rank`
+  - src/workhouse/invariants.py:317 · MASTER paper Prop. 8 / C13
+  - `workhouse verify --only 'ell_N = A_N + B_N + 1/C_F, the vacuum-mediated route at every rank'`
 - `large-N expansion of t_N through 1/N^9`
-  - src/workhouse/invariants.py:148 · GLUEBALL §4
+  - src/workhouse/invariants.py:153 · GLUEBALL §4
   - `workhouse verify --only 'large-N expansion of t_N through 1/N^9'`
 - `t_2 = 0 and t_3 = 5/612`
-  - src/workhouse/invariants.py:124 · MASTER_THEORY §4.3
+  - src/workhouse/invariants.py:129 · MASTER_THEORY §4.3
   - `workhouse verify --only 't_2 = 0 and t_3 = 5/612'`
 - `t_N = B_N - A_N`
-  - src/workhouse/invariants.py:118 · MASTER_THEORY §4.3
+  - src/workhouse/invariants.py:123 · MASTER_THEORY §4.3
   - `workhouse verify --only 't_N = B_N - A_N'`
 - `t_N > 0 for N >= 3`
-  - src/workhouse/invariants.py:130 · MASTER_THEORY §4.3
+  - src/workhouse/invariants.py:135 · MASTER_THEORY §4.3
   - `workhouse verify --only 't_N > 0 for N >= 3'`
+- `the four channel weights follow from dimension and Casimir`
+  - src/workhouse/invariants.py:283 · MASTER paper eq. (20) / App. A
+  - `workhouse verify --only 'the four channel weights follow from dimension and Casimir'`
+- `the shared-link weights are Weingarten, not an isotropy assumption`
+  - src/workhouse/invariants.py:234 · MASTER paper Thm. 5 / App. B
+  - `workhouse verify --only 'the shared-link weights are Weingarten, not an isotropy assumption'`
 **settlement package and adjudication harness**
 
 - `FINDING: the contamination scan reads only the engine file`
-  - src/workhouse/invariants.py:653 · settlement/mce_adjudication_harness.py
+  - src/workhouse/invariants.py:1139 · settlement/mce_adjudication_harness.py
   - `workhouse verify --only 'FINDING: the contamination scan reads only the engine file'`
 - `FINDING: the harness can never report COMPLETE`
-  - src/workhouse/invariants.py:665 · settlement/mce_adjudication_harness.py
+  - src/workhouse/invariants.py:1151 · settlement/mce_adjudication_harness.py
   - `workhouse verify --only 'FINDING: the harness can never report COMPLETE'`
 - `FINDING: the run stage fail-closes on cluster 1 of 609 — the shipped closure cap is below the first cluster's own demand`
-  - src/workhouse/invariants.py:795 · runs/mce_freeze_and_first_run_2026-08-22/README.md
+  - src/workhouse/invariants.py:1281 · runs/mce_freeze_and_first_run_2026-08-22/README.md
   - `workhouse verify --only 'FINDING: the run stage fail-closes on cluster 1 of 609 — the shipped closure cap is below the first cluster'"'"'s own demand'`
 - `FINDING: the target-blindness scan cannot see two scalar-determining targets`
-  - src/workhouse/invariants.py:631 · settlement/mce_adjudication_harness.py
+  - src/workhouse/invariants.py:1117 · settlement/mce_adjudication_harness.py
   - `workhouse verify --only 'FINDING: the target-blindness scan cannot see two scalar-determining targets'`
 - `cold reruns re-certify both in-corpus audits`
-  - src/workhouse/invariants.py:612 · SETTLEMENT.md §2
+  - src/workhouse/invariants.py:1098 · SETTLEMENT.md §2
   - `workhouse verify --only 'cold reruns re-certify both in-corpus audits'`
 - `freeze passes here: the corpus engine is behaviorally the verified one`
-  - src/workhouse/invariants.py:770 · runs/mce_freeze_and_first_run_2026-08-22/FREEZE.json
+  - src/workhouse/invariants.py:1256 · runs/mce_freeze_and_first_run_2026-08-22/FREEZE.json
   - `workhouse verify --only 'freeze passes here: the corpus engine is behaviorally the verified one'`
 - `quarantined targets never reach the engine process`
-  - src/workhouse/invariants.py:697 · GLUEBALL §18.1 item 6
+  - src/workhouse/invariants.py:1183 · GLUEBALL §18.1 item 6
   - `workhouse verify --only 'quarantined targets never reach the engine process'`
 - `stranded-flux zero backend stays falsified (C7)`
-  - src/workhouse/invariants.py:620 · MASTER_THEORY C7
+  - src/workhouse/invariants.py:1106 · MASTER_THEORY C7
   - `workhouse verify --only 'stranded-flux zero backend stays falsified (C7)'`
 - `the engine imports stdlib only, so the single-file scan bounds it`
-  - src/workhouse/invariants.py:754 · settlement/mce_adjudication_harness.py + corpus engine source
+  - src/workhouse/invariants.py:1240 · settlement/mce_adjudication_harness.py + corpus engine source
   - `workhouse verify --only 'the engine imports stdlib only, so the single-file scan bounds it'`
 - `the engine is clean under the harness scan AND the extended scan`
-  - src/workhouse/invariants.py:737 · settlement/mce_adjudication_harness.py + the scan-gap FINDING above
+  - src/workhouse/invariants.py:1223 · settlement/mce_adjudication_harness.py + the scan-gap FINDING above
   - `workhouse verify --only 'the engine is clean under the harness scan AND the extended scan'`
 - `the engine the harness drives IS in the repository, renamed by the import`
-  - src/workhouse/invariants.py:713 · corpus-import/records/RENAME_MANIFEST_2026-08-20.tsv via settlement.py
+  - src/workhouse/invariants.py:1199 · corpus-import/records/RENAME_MANIFEST_2026-08-20.tsv via settlement.py
   - `workhouse verify --only 'the engine the harness drives IS in the repository, renamed by the import'`
 **tetrahedral Haar-resolvent coefficient (G5)**
 
 - `24 and 64 are different endpoint sectors of one prism, not rivals`
-  - src/workhouse/invariants.py:2102 · 818 ~3402
+  - src/workhouse/invariants.py:2588 · 818 ~3402
   - `workhouse verify --only '24 and 64 are different endpoint sectors of one prism, not rivals'`
 - `G5: the tetrahedral coefficient is exactly -8/(N(N^2-1))`
-  - src/workhouse/invariants.py:2313 · transcript ~170 / C15
+  - src/workhouse/invariants.py:2799 · transcript ~170 / C15
   - `workhouse verify --only 'G5: the tetrahedral coefficient is exactly -8/(N(N^2-1))'`
 - `Theorem 2's closed form holds through n = 9, past the engine's exhaustive range`
-  - src/workhouse/invariants.py:2242 · cellular brief, appendix A
+  - src/workhouse/invariants.py:2728 · cellular brief, appendix A
   - `workhouse verify --only 'Theorem 2'"'"'s closed form holds through n = 9, past the engine'"'"'s exhaustive range'`
 - `a merge contributes exactly 1/N at every shared-path length`
-  - src/workhouse/invariants.py:2006 · transcript ~136
+  - src/workhouse/invariants.py:2492 · transcript ~136
   - `workhouse verify --only 'a merge contributes exactly 1/N at every shared-path length'`
 - `primitive proper returns are scalar on the tetrahedral face space`
-  - src/workhouse/invariants.py:2365 · U3 (partial)
+  - src/workhouse/invariants.py:2851 · U3 (partial)
   - `workhouse verify --only 'primitive proper returns are scalar on the tetrahedral face space'`
 - `the cube instance re-derives the sealed core, temporal classes included`
-  - src/workhouse/invariants.py:2054 · 818 ~3963
+  - src/workhouse/invariants.py:2540 · 818 ~3963
   - `workhouse verify --only 'the cube instance re-derives the sealed core, temporal classes included'`
 - `the law's two printed forms are one identity, scaling N^-(2r-1)`
-  - src/workhouse/invariants.py:1990 · transcript ~148
+  - src/workhouse/invariants.py:2476 · transcript ~148
   - `workhouse verify --only 'the law'"'"'s two printed forms are one identity, scaling N^-(2r-1)'`
 - `the n-gonal cap family is Catalan; the pentagonal row is n = 5`
-  - src/workhouse/invariants.py:2127 · transcript ~175
+  - src/workhouse/invariants.py:2613 · transcript ~175
   - `workhouse verify --only 'the n-gonal cap family is Catalan; the pentagonal row is n = 5'`
 - `the primitive sign is the resolvent parity`
-  - src/workhouse/invariants.py:2283 · quarantined master v3 erratum 9
+  - src/workhouse/invariants.py:2769 · quarantined master v3 erratum 9
   - `workhouse verify --only 'the primitive sign is the resolvent parity'`
 - `the prism square sector re-derives the printed 64/(N(N^2-1)^2)`
-  - src/workhouse/invariants.py:2078 · THM_FLUX §3.2
+  - src/workhouse/invariants.py:2564 · THM_FLUX §3.2
   - `workhouse verify --only 'the prism square sector re-derives the printed 64/(N(N^2-1)^2)'`
 - `the resolvent unit is the certified electric convention`
-  - src/workhouse/invariants.py:2029 · v4.3 §9.3 / §4.4
+  - src/workhouse/invariants.py:2515 · v4.3 §9.3 / §4.4
   - `workhouse verify --only 'the resolvent unit is the certified electric convention'`
 - `the run-length Catalan factorization holds for every proper subset through n = 7`
-  - src/workhouse/invariants.py:2154 · cellular brief, appendix A
+  - src/workhouse/invariants.py:2640 · cellular brief, appendix A
   - `workhouse verify --only 'the run-length Catalan factorization holds for every proper subset through n = 7'`
 - `the tetrahedral circuit attains its bound with nonzero weight`
-  - src/workhouse/invariants.py:2339 · THM_FLUX §2 / C6
+  - src/workhouse/invariants.py:2825 · THM_FLUX §2 / C6
   - `workhouse verify --only 'the tetrahedral circuit attains its bound with nonzero weight'`
 **tier collapse (G14)**
 
 - `B B^dagger = q I - d conj(d)^T for the curl incidence`
-  - src/workhouse/invariants.py:940 · UNIFIED §2.4
+  - src/workhouse/invariants.py:1426 · UNIFIED §2.4
   - `workhouse verify --only 'B B^dagger = q I - d conj(d)^T for the curl incidence'`
 - `RETRACTED: the vertex count does NOT forbid B_shp and D_shp`
-  - src/workhouse/invariants.py:962 · G14 / ADR 0005
+  - src/workhouse/invariants.py:1448 · G14 / ADR 0005
   - `workhouse verify --only 'RETRACTED: the vertex count does NOT forbid B_shp and D_shp'`
 - `clearing the denominator reproduces the five-element numerator basis`
-  - src/workhouse/invariants.py:910 · MASTER_THEORY §5.1
+  - src/workhouse/invariants.py:1396 · MASTER_THEORY §5.1
   - `workhouse verify --only 'clearing the denominator reproduces the five-element numerator basis'`
 - `the carrier projection is where the 1/q comes from`
-  - src/workhouse/invariants.py:950 · MASTER_THEORY §5.1
+  - src/workhouse/invariants.py:1436 · MASTER_THEORY §5.1
   - `workhouse verify --only 'the carrier projection is where the 1/q comes from'`
 - `the sixth-order prediction is withdrawn, not merely unproven`
-  - src/workhouse/invariants.py:980 · ADR 0005
+  - src/workhouse/invariants.py:1466 · ADR 0005
   - `workhouse verify --only 'the sixth-order prediction is withdrawn, not merely unproven'`
 - `the vanishing coefficients are exactly the degree-3 ones`
-  - src/workhouse/invariants.py:926 · MASTER_THEORY §5.2 / G14
+  - src/workhouse/invariants.py:1412 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
 ## T2 — float agreement within a stated tolerance — 29
@@ -513,105 +582,105 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **fourth order, anchoring and the residual dispute**
 
 - `C20: exact gate value vs printed float-reconstruction`
-  - src/workhouse/invariants.py:403 · MASTER_THEORY C20
+  - src/workhouse/invariants.py:716 · MASTER_THEORY C20
   - `workhouse verify --only 'C20: exact gate value vs printed float-reconstruction'`
 - `Delta_C = C_new - C_old > 0 (the real discrepancy)`
-  - src/workhouse/invariants.py:358 · MASTER_THEORY §5.5 / C2
+  - src/workhouse/invariants.py:671 · MASTER_THEORY §5.5 / C2
   - `workhouse verify --only 'Delta_C = C_new - C_old > 0 (the real discrepancy)'`
 - `Delta_Gamma = m_Gamma^(4) - q_band^(4)`
-  - src/workhouse/invariants.py:309 · MASTER_THEORY §5.5 / C1
+  - src/workhouse/invariants.py:622 · MASTER_THEORY §5.5 / C1
   - `workhouse verify --only 'Delta_Gamma = m_Gamma^(4) - q_band^(4)'`
 - `FINDING: the printed Delta_Gamma is one ulp low`
-  - src/workhouse/invariants.py:318 · MASTER_THEORY §5.5
+  - src/workhouse/invariants.py:631 · MASTER_THEORY §5.5
   - `workhouse verify --only 'FINDING: the printed Delta_Gamma is one ulp low'`
 - `Hamer 8*a_4 matches m_Gamma to ~5.2e-13`
-  - src/workhouse/invariants.py:388 · GLUEBALL §2.3
+  - src/workhouse/invariants.py:701 · GLUEBALL §2.3
   - `workhouse verify --only 'Hamer 8*a_4 matches m_Gamma to ~5.2e-13'`
 - `bandwidth ratio W4_new / W4_old ~ 1.93`
-  - src/workhouse/invariants.py:382 · MASTER_THEORY §5.5
+  - src/workhouse/invariants.py:695 · MASTER_THEORY §5.5
   - `workhouse verify --only 'bandwidth ratio W4_new / W4_old ~ 1.93'`
 - `beta_new = 8A + 16*C_new`
-  - src/workhouse/invariants.py:369 · MASTER_THEORY §5.5
+  - src/workhouse/invariants.py:682 · MASTER_THEORY §5.5
   - `workhouse verify --only 'beta_new = 8A + 16*C_new'`
 - `historical q_3 decimal expansion`
-  - src/workhouse/invariants.py:297 · MASTER_THEORY §5.5
+  - src/workhouse/invariants.py:610 · MASTER_THEORY §5.5
   - `workhouse verify --only 'historical q_3 decimal expansion'`
 - `off-axis band splits are 8*Delta_C and 16*Delta_C`
-  - src/workhouse/invariants.py:375 · MASTER_THEORY §5.5
+  - src/workhouse/invariants.py:688 · MASTER_THEORY §5.5
   - `workhouse verify --only 'off-axis band splits are 8*Delta_C and 16*Delta_C'`
 - `quarantined scalar decimal`
-  - src/workhouse/invariants.py:397 · MASTER_THEORY §5.5
+  - src/workhouse/invariants.py:710 · MASTER_THEORY §5.5
   - `workhouse verify --only 'quarantined scalar decimal'`
 - `run's applied shift is not Delta_Gamma`
-  - src/workhouse/invariants.py:421 · GLUEBALL §9.2 / C22
+  - src/workhouse/invariants.py:734 · GLUEBALL §9.2 / C22
   - `workhouse verify --only 'run'"'"'s applied shift is not Delta_Gamma'`
 **fourth order, sealed core**
 
 - `FINDING: alpha_new falls outside the corpus's own 2.3e-13 bound`
-  - src/workhouse/invariants.py:264 · GLUEBALL §10
+  - src/workhouse/invariants.py:577 · GLUEBALL §10
   - `workhouse verify --only 'FINDING: alpha_new falls outside the corpus'"'"'s own 2.3e-13 bound'`
 - `v10a.26 A, B, D match the sealed rationals within 2.3e-13`
-  - src/workhouse/invariants.py:256 · GLUEBALL §10
+  - src/workhouse/invariants.py:569 · GLUEBALL §10
   - `workhouse verify --only 'v10a.26 A, B, D match the sealed rationals within 2.3e-13'`
 **fourth-order generalized Hodge pencil**
 
 - `centered kernel difference is PSD (vanishes on axes)`
-  - src/workhouse/invariants.py:515 · MASTER_THEORY §5.5
+  - src/workhouse/invariants.py:828 · MASTER_THEORY §5.5
   - `workhouse verify --only 'centered kernel difference is PSD (vanishes on axes)'`
 **near-Gamma uniformity (G11)**
 
 - `crossover constant K = (pi/2) sqrt(W_4 / (theta t_3))`
-  - src/workhouse/invariants.py:852 · GLUEBALL §18.3
+  - src/workhouse/invariants.py:1338 · GLUEBALL §18.3
   - `workhouse verify --only 'crossover constant K = (pi/2) sqrt(W_4 / (theta t_3))'`
 - `excluded zone fraction grows as u^3`
-  - src/workhouse/invariants.py:896 · GLUEBALL §18.3
+  - src/workhouse/invariants.py:1382 · GLUEBALL §18.3
   - `workhouse verify --only 'excluded zone fraction grows as u^3'`
 - `the criterion survives C2: K depends on the kernel only through sqrt(W_4)`
-  - src/workhouse/invariants.py:860 · MASTER_THEORY §5.5 / C2
+  - src/workhouse/invariants.py:1346 · MASTER_THEORY §5.5 / C2
   - `workhouse verify --only 'the criterion survives C2: K depends on the kernel only through sqrt(W_4)'`
 - `the statement is non-vacuous only below an explicit coupling`
-  - src/workhouse/invariants.py:879 · GLUEBALL §18.3
+  - src/workhouse/invariants.py:1365 · GLUEBALL §18.3
   - `workhouse verify --only 'the statement is non-vacuous only below an explicit coupling'`
 **notes program: SAFE, Davies, coercivity (G20-G23)**
 
 - `FINDING: Riccati blow-up adjudicates the archive's 10/10 proof against its SIM note`
-  - src/workhouse/invariants.py:2731 · notes review 2026-08-22 / RICCATI
+  - src/workhouse/invariants.py:3217 · notes review 2026-08-22 / RICCATI
   - `workhouse verify --only 'FINDING: Riccati blow-up adjudicates the archive'"'"'s 10/10 proof against its SIM note'`
 - `FINDING: the localization error is n-independent, so the boxed gap does not follow`
-  - src/workhouse/invariants.py:2670 · notes review 2026-08-22 / G23 (iter2 8.2 -> 9.3)
+  - src/workhouse/invariants.py:3156 · notes review 2026-08-22 / G23 (iter2 8.2 -> 9.3)
   - `workhouse verify --only 'FINDING: the localization error is n-independent, so the boxed gap does not follow'`
 - `FINDING: the naive diffusion-to-OS bridge fails in the Gaussian model`
-  - src/workhouse/invariants.py:2643 · notes review 2026-08-22 / G23 (06_toy)
+  - src/workhouse/invariants.py:3129 · notes review 2026-08-22 / G23 (06_toy)
   - `workhouse verify --only 'FINDING: the naive diffusion-to-OS bridge fails in the Gaussian model'`
 - `G21 Davies bound verified on the 3x3 periodic 2D lattice, arb-certified`
-  - src/workhouse/invariants.py:2552 · notes review 2026-08-22 / G21
+  - src/workhouse/invariants.py:3038 · notes review 2026-08-22 / G21
   - `workhouse verify --only 'G21 Davies bound verified on the 3x3 periodic 2D lattice, arb-certified'`
 **old-to-new crosswalk**
 
 - `bandwidth is preserved only if Delta_C vanishes`
-  - src/workhouse/invariants.py:483 · MASTER_THEORY §5.5
+  - src/workhouse/invariants.py:796 · MASTER_THEORY §5.5
   - `workhouse verify --only 'bandwidth is preserved only if Delta_C vanishes'`
 - `crosswalk reproduces the recorded off-axis band splits`
-  - src/workhouse/invariants.py:461 · MASTER_THEORY §5.5
+  - src/workhouse/invariants.py:774 · MASTER_THEORY §5.5
   - `workhouse verify --only 'crosswalk reproduces the recorded off-axis band splits'`
 **published comparisons (literature/index.yaml)**
 
 - `Hamer's 0++ series matches the C-even Gamma-point coefficients through x^3`
-  - src/workhouse/invariants.py:1342 · HAMER_1989
+  - src/workhouse/invariants.py:1828 · HAMER_1989
   - `workhouse verify --only 'Hamer'"'"'s 0++ series matches the C-even Gamma-point coefficients through x^3'`
 - `Hamer's 1+- series matches the C-odd Gamma-point coefficients through x^3`
-  - src/workhouse/invariants.py:1317 · HAMER_1989 / C1
+  - src/workhouse/invariants.py:1803 · HAMER_1989 / C1
   - `workhouse verify --only 'Hamer'"'"'s 1+- series matches the C-odd Gamma-point coefficients through x^3'`
 - `the Hamer table is pinned, and the a_4 agreement is primary-source`
-  - src/workhouse/invariants.py:1279 · HAMER_1989
+  - src/workhouse/invariants.py:1765 · HAMER_1989
   - `workhouse verify --only 'the Hamer table is pinned, and the a_4 agreement is primary-source'`
 - `the KPS eq. (6a) decimals are its own Table 2, to a printed ulp`
-  - src/workhouse/invariants.py:1459 · KPS_1981
+  - src/workhouse/invariants.py:1945 · KPS_1981
   - `workhouse verify --only 'the KPS eq. (6a) decimals are its own Table 2, to a printed ulp'`
 **settlement package and adjudication harness**
 
 - `the harness carries the printed Delta_Gamma, not the rounded one`
-  - src/workhouse/invariants.py:681 · settlement/mce_adjudication_harness.py
+  - src/workhouse/invariants.py:1167 · settlement/mce_adjudication_harness.py
   - `workhouse verify --only 'the harness carries the printed Delta_Gamma, not the rounded one'`
 
 ## What is not here

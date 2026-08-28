@@ -183,8 +183,21 @@ def explain(
         w("")
         w(f"\033[1m{title}\033[0m")
         arrow = "→" if other_end == "dst" else "←"
+
+        def rank(edge):
+            # RETRACTED and FINDING checks must survive the display cap: losing
+            # a retraction to alphabetical truncation is how a withdrawn claim
+            # quietly starts reading as merely absent.
+            claim = by_id.get(getattr(edge, other_end))
+            flagged = (
+                claim is not None
+                and claim.kind == "check"
+                and claim.statement.startswith(("RETRACTED", "FINDING"))
+            )
+            return (0 if flagged else 1, edge.src, edge.dst)
+
         for type_ in sorted(groups):
-            edges = sorted(groups[type_], key=lambda e: (e.src, e.dst))
+            edges = sorted(groups[type_], key=rank)
             shown = edges[:12]
             for edge in shown:
                 w(f"  {type_} {arrow} {describe(getattr(edge, other_end))}")

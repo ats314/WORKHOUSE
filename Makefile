@@ -1,4 +1,4 @@
-.PHONY: help bootstrap check quick lint test verify status frontier certified lit catalogue atlas fmt manifest corpus-manifest lean corpus-index lock clean
+.PHONY: help bootstrap check quick lint test verify status frontier certified lit catalogue atlas fmt manifest corpus-manifest lean corpus-index lock clean paper
 
 help:            ## Show this help
 	@grep -hE '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk -F':.*?## ' '{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -30,6 +30,13 @@ catalogue:       ## Regenerate the index/ catalogues: claims, symbols, graph
 
 atlas:           ## Render the theory graph to atlas.html (a view; never checked in)
 	@.venv/bin/workhouse atlas
+
+paper:           ## Build the master paper PDF and run its stdlib core verifier
+	@cd paper && python3 verify_core.py \
+		&& pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null \
+		&& pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null \
+		&& echo "paper/master_paper_2026-08-28.pdf"
+
 
 lit:             ## Published work, and which claim each paper bears on
 	@.venv/bin/workhouse lit
