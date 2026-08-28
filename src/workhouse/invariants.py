@@ -4420,3 +4420,80 @@ def _():
         "reproductions. Evidence about protocol, not about which value is physical -- C2 stays "
         "open and neither side is preferred"
     )
+
+
+@channels.check(
+    "FINDING: the v10a.26 adjudicator ran and returned a THIRD scalar, endorsing neither side",
+    "provenance nb-hodge-v10a26-alt2, section 17",
+    tier=2,
+)
+def _():
+    # The most consequential thing in the pinned notebook, and it was never
+    # extracted into the registry: the run does not merely produce a disputed
+    # C. It carries a three-way ADJUDICATOR, and that adjudicator fired.
+    #
+    # Its own source offers three outcomes -- "DUAL COLD ORACLES SUPPORT THE
+    # HISTORICAL 189-RECORD SU(3) O4 KERNEL", "... SUPPORT THE MODERN SHORTCUT
+    # BRANCH", and a fallback. Both endorsing branches were available. Neither
+    # fired. What it printed at section 17 is:
+    #
+    #   SCALAR VERDICT: SCALAR ORACLE RETURNS THIRD VALUE
+    #   SHAPE VERDICT : FOLDED MATRIX DOES NOT RECOVER HISTORICAL C_shape
+    #   FINAL VERDICT : MIXED/THIRD RESULT
+    #
+    # The scalar result is the striking part. Its independent linked m4 is
+    # -0.7751458630189173, against the historical 189-kernel q3 at -2.8579
+    # (gap 2.08) and the quarantined shortcut at -11.0685 (gap 10.29). Those
+    # are not near misses between two rival estimates; the oracle lands
+    # somewhere else entirely, and the gaps are larger than the values.
+    #
+    # This is a measured outcome of the maintainer's own engine, not a
+    # recommendation from anyone: the branch that fired is the one its author
+    # wrote for the case where the evidence supports neither candidate. It is
+    # recorded here because a registry that carried the disputed C without
+    # carrying the verdict of the run that produced it would be showing half
+    # the evidence.
+    import json
+
+    notebook = (
+        ROOT
+        / "corpus-import"
+        / "programs"
+        / "hodge_o4_adjudication"
+        / "notebooks"
+        / "NB_O4_hodge_v10a26_factor52complete_exactsw_rootedoracle_a100_alt2.ipynb"
+    )
+    whole = ""
+    for cell in json.loads(notebook.read_text(encoding="utf-8"))["cells"]:
+        whole += "".join(cell.get("source") or [])
+        for output in cell.get("outputs") or []:
+            whole += "".join(output.get("text") or [])
+            whole += "".join(output.get("data", {}).get("text/plain") or [])
+
+    fired = "MIXED/THIRD RESULT" in whole
+    third_scalar = "SCALAR ORACLE RETURNS THIRD VALUE" in whole
+    shape_missed = "FOLDED MATRIX DOES NOT RECOVER HISTORICAL C_shape" in whole
+    # both endorsing branches exist in the source, so the outcome was not forced
+    could_endorse = "DUAL COLD ORACLES SUPPORT THE HISTORICAL" in whole
+    could_endorse = could_endorse and "SUPPORT THE MODERN SHORTCUT BRANCH" in whole
+
+    oracle_m4 = -0.7751458630189173
+    hist_q3 = float(P.as_fraction(K.Q_BAND_4))
+    shortcut = float(P.as_fraction(K.QUARANTINED_SCALAR))
+    gaps = (abs(oracle_m4 - hist_q3), abs(oracle_m4 - shortcut))
+
+    return (
+        fired
+        and third_scalar
+        and shape_missed
+        and could_endorse
+        and str(oracle_m4) in whole
+        and min(gaps) > 1.0
+    ), (
+        f"the adjudicator's endorsing branches both exist in the source and neither fired; it "
+        f"printed a THIRD-VALUE scalar verdict and a shape verdict that the folded matrix does "
+        f"not recover the historical C_shape. Its independent linked m4 = {oracle_m4} sits "
+        f"{gaps[0]:.3f} from the historical 189-kernel q3 and {gaps[1]:.3f} from the quarantined "
+        "shortcut -- gaps larger than the quantities. The run that produced the disputed C ended "
+        "by endorsing neither candidate, and that outcome was computed, not chosen"
+    )
