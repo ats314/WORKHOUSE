@@ -1,4 +1,4 @@
-# 13. A manuscript that cites this repository enters as pinned evidence
+# 14. A manuscript that cites this repository enters as pinned evidence
 
 Date: 2026-08-28. Status: accepted.
 
