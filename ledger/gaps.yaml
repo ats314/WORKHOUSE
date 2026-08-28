@@ -92,6 +92,33 @@ gaps:
           the three divergent amplitudes — each is a single number with
           cubic-symmetry multiplicity, and the A = 5/48 identity plus the
           shared bulk over-determine the rest.
+      - step: independent cross-amplitude computation
+        status: >
+          attempted 2026-08-28, blocked on the measured exact-arithmetic
+          wall, with the target now fully specified. Sharpened first: the
+          24 divergent cross records are ONE amplitude in each kernel
+          (cold/hist = -10.688697232 uniform across all 24; the 96
+          remaining cross records ride the bulk scale exactly), so the
+          cross question is a single number. The bounded computation that
+          decides it: rooted Moebius assembly of the engine's exact
+          face-resolved H4 ledger over the 30 clusters containing one
+          adjacent perpendicular pair (support census 1x2 + 18x3 + 6x4 +
+          4x5 + 1x6, a 20-face neighborhood, 948 flux-conserving
+          4-insertion histories of which 392 are proper), taken as a
+          normalization-free ratio against one shared-bulk reference
+          element. Measured bound: a single 2-face exact half-history ran
+          1h51m on this container, still inside its FIRST Haar Gram
+          (py-spy: merge_classes under contract_link_partition), against
+          12.3 minutes for the float engine's ENTIRE kernel leg. The
+          pentagonal-backend route converges on the same resolvent
+          machinery and does not dodge the wall, and the fold terms
+          (-A(C1+C1t) - {K2,N}/2 + A^2 J) are nonzero for this pair (the
+          agreed t3 hopping is its second-order element), so no
+          fold-free shortcut exists. What unblocks it: an upstream engine
+          revision replacing the pure-Python union-find/canon hot loop in
+          the exact Haar contraction with a compiled core (C or flint) —
+          the measured 50%+ self-time there implies 10-100x, which turns
+          the 30-cluster assembly into hours. Engineering, not physics.
         what: >
           If no recorded v10a.26 structure exists, recompute blind ONLY the
           A-carrying sector (normal nearest-neighbour displacements) through
