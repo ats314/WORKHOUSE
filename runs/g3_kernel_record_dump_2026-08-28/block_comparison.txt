@@ -1,0 +1,25 @@
+support: identical, 189 records
+
+global scale s = 4.132743700859206  explains 144/189 records (spread 2.21e-12)
+
+divergent classes (cold != s * hist):
+  ('diag2', 'cross'): 6 records; hist values [-0.0082308779, 0.0082308779]; cold values [-0.0879773614, 0.0879773614]
+  ('nn', 'cross'): 12 records; hist values [-0.0082308779, 0.0082308779]; cold values [-0.0879773614, 0.0879773614]
+  ('nn', 'same'): 18 records; hist values [-0.104202416, -0.0162426528]; cold values [-0.1043144096, 0.024163481]
+  ('onsite', 'cross'): 6 records; hist values [-0.0082308779, 0.0082308779]; cold values [-0.0879773614, 0.0879773614]
+  ('onsite', 'same'): 3 records; hist values [-2.5847192915]; cold values [-11.8373419988]
+
+hist    : A=+0.104166666667 B=-1.01e-15 C=-0.048086383181 D=+3.05e-15
+
+s*hist  : A=+0.430494135506 B=-3.97e-16 C=-0.198728697190 D=-1.25e-14
+
+cold    : A=+0.104166666667 B=+5.29e-15 C=-0.020213328886 D=+1.99e-13
+
+ΔC attribution (swap one divergent class of s*hist to cold values):
+  ('diag2', 'cross'): ΔC = +0.071416221246
+  ('nn', 'cross'): ΔC = -0.081835707503
+  ('nn', 'same'): ΔC = +0.117518633316
+  ('onsite', 'cross'): ΔC = +0.071416221246
+  ('onsite', 'same'): ΔC = -0.000000000000
+  sum of class swaps  = +0.178515368304
+  actual C_cold - C_s*hist = +0.178515368304
