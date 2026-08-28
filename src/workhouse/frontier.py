@@ -478,5 +478,5 @@ def brief() -> str:
 
 def write(path: Path | None = None) -> Path:
     target = path or (ROOT / "FRONTIER.md")
-    target.write_text(render(compute()), encoding="utf-8")
+    target.write_text(render(compute()), encoding="utf-8", newline="\n")
     return target

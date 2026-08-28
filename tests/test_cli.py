@@ -136,3 +136,104 @@ def test_no_locale_dependent_text_reads(module_name):
         and not line.strip().startswith(("#", '"', "'"))
     ]
     assert not bare, f"locale-dependent reads/writes in {module_name}: {bare}"
+
+
+class TestDerive:
+    def test_multi_root_markdown_export(self, capsys):
+        rc = cli_mod.main(["derive", "C2", "G3"])
+        out = capsys.readouterr().out
+        assert rc == 0
+        assert "## C2" in out and "## G3" in out
+        # The disagreement is preserved whole: both branches, never a winner.
+        assert "-211835444920651/4405310420659200" in out
+        assert "-0.020213328886166577" in out
+        assert "Both sides, neither promoted" in out
+        # Every included node carries the registered edge that brought it in,
+        # and the export says out loud that it never infers.
+        assert "edge: `" in out
+        assert "not a proof" in out
+
+    def test_checks_carry_verdict_and_reproduce(self, capsys):
+        cli_mod.main(["derive", "C2"])
+        out = capsys.readouterr().out
+        assert "**PASS**" in out
+        assert "reproduce: `workhouse verify --only" in out
+
+    def test_unknown_root_fails_but_renders_the_rest(self, capsys):
+        rc = cli_mod.main(["derive", "NOPE", "G3"])
+        out = capsys.readouterr().out
+        assert rc == 1
+        assert "no record with this id" in out
+        assert "## G3" in out
+
+
+class TestBranches:
+    def test_c2_shows_both_sides_and_the_missing_comparison(self, capsys):
+        rc = cli_mod.main(["branches", "C2"])
+        out = capsys.readouterr().out
+        assert rc == 0
+        assert "historical" in out and "v10a.26" in out
+        assert "missing comparison (G3)" in out
+        assert "originating documents" in out
+
+    def test_no_sides_id_is_a_clean_failure(self, capsys):
+        rc = cli_mod.main(["branches", "C999"])
+        assert rc == 1
+        assert "no contradiction" in capsys.readouterr().out
+
+
+class TestExport:
+    def test_envelope_shape_and_vocabularies(self, capsys):
+        rc = cli_mod.main(["export"])
+        data = json.loads(capsys.readouterr().out)
+        assert rc == 0
+        assert data["schema_version"]
+        assert set(data["tier_vocabulary"]) == {"0", "1", "2", "3"}
+        assert set(data["edge_how_vocabulary"]) == {"curated", "derived"}
+        assert len(data["claims"]) > 2000
+        assert len(data["edges"]) > 2500
+        edge = data["edges"][0]
+        assert {"src", "dst", "type", "how", "source"} == set(edge)
+        # T3 stays T3 in export: nothing is promoted on the way out.
+        c2 = next(c for c in data["claims"] if c["id"] == "C2")
+        assert c2["tier"] == 3
+
+
+class TestNearestValue:
+    def test_miss_reports_nearest_registered_value(self, capsys):
+        # One digit off the C20 gate value: close enough that silence would be
+        # the confident-false-negative failure mode, far enough to be a miss.
+        rc = cli_mod.main(["search", "-1474623/1675521"])
+        out = capsys.readouterr().out
+        assert rc == 1
+        assert "nearest registered value" in out
+        # Both C20 branches sit ~6e-7 away (they differ from each other by only
+        # 3e-15); either is a correct nearest answer, and the test must not
+        # promote one of them.
+        assert "-1474623/1675520" in out or "-521965902/593076541" in out
+        assert "Proximity is not identity" in out
+
+    def test_hit_path_stays_silent_about_proximity(self, capsys):
+        cli_mod.main(["search", "-5/48", "--limit", "2"])
+        assert "nearest registered value" not in capsys.readouterr().out
+
+    def test_json_carries_the_nearest_object(self, capsys):
+        cli_mod.main(["search", "--json", "--", "-1474623/1675521"])
+        data = json.loads(capsys.readouterr().out)
+        assert data["nearest"]["value"] in ("-1474623/1675520", "-521965902/593076541")
+        assert 0 < data["nearest"]["relative_distance"] < 1e-5
+
+
+def test_generated_files_pin_lf_newlines():
+    """Path.write_text translates \\n to the platform newline unless told not
+    to, so an unpinned writer makes every generated file CRLF on Windows and
+    the byte-determinism the manifest depends on is gone."""
+    import inspect
+    from importlib import import_module
+
+    for module_name in ["claims", "graph", "certified", "frontier", "notes", "atlas"]:
+        src = inspect.getsource(import_module(f"workhouse.{module_name}"))
+        for i, line in enumerate(src.splitlines()):
+            if ".write_text(" in line and not line.strip().startswith("#"):
+                window = "\n".join(src.splitlines()[i : i + 4])
+                assert 'newline="\\n"' in window, f"{module_name}: unpinned newline: {line.strip()}"

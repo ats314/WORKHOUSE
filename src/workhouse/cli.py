@@ -214,12 +214,21 @@ def _search(query: str, corpus: bool, limit: int, as_json: bool = False) -> int:
     catalogue = claims_mod.load_catalogue()
     hits, symbols = search_mod.search(query, catalogue=catalogue)
     occurrences = search_mod.corpus_occurrences(query, limit=limit) if corpus else None
+    nearest = None if hits else search_mod.nearest_value(query, catalogue)
     if as_json:
         payload = {
             "query": query,
             "hits": [{"how": h.how, **asdict(h.claim)} for h in hits[:limit]],
             "total_hits": len(hits),
             "symbols": symbols,
+            "nearest": None
+            if nearest is None
+            else {
+                "id": nearest[0].id,
+                "value": nearest[0].value,
+                "relative_distance": nearest[1],
+                "note": "proximity, not identity",
+            },
             "corpus": None
             if occurrences is None
             else {
@@ -232,7 +241,11 @@ def _search(query: str, corpus: bool, limit: int, as_json: bool = False) -> int:
         }
         print(json.dumps(payload, sort_keys=True))
     else:
-        print(search_mod.format_results(query, hits, symbols, occurrences, limit=limit))
+        print(
+            search_mod.format_results(
+                query, hits, symbols, occurrences, limit=limit, nearest=nearest
+            )
+        )
     found_in_corpus = occurrences is not None and occurrences.total_occurrences > 0
     return 0 if (hits or symbols or found_in_corpus) else 1
 
@@ -264,6 +277,40 @@ def _why(node_id: str, as_json: bool = False) -> int:
     text, found = navigator_mod.explain(node_id)
     print(text)
     return 0 if found else 1
+
+
+def _derive(ids: list[str], out: str | None) -> int:
+    from pathlib import Path
+
+    from . import derive as derive_mod
+
+    text, ok = derive_mod.render(ids)
+    if out:
+        Path(out).write_text(text + "\n", encoding="utf-8", newline="\n")
+        print(f"wrote {out}")
+    else:
+        print(text)
+    return 0 if ok else 1
+
+
+def _branches(target: str | None) -> int:
+    text, ok = navigator_mod.branchwise(target)
+    print(text)
+    return 0 if ok else 1
+
+
+def _export(out: str | None) -> int:
+    from pathlib import Path
+
+    from . import export as export_mod
+
+    text = export_mod.render()
+    if out:
+        Path(out).write_text(text, encoding="utf-8", newline="\n")
+        print(f"wrote {out}")
+    else:
+        print(text, end="")
+    return 0
 
 
 def _atlas(out: str | None) -> int:
@@ -392,6 +439,25 @@ def main(argv: list[str] | None = None) -> int:
         "--json", action="store_true", help="the record and every edge, one JSON object"
     )
 
+    de = sub.add_parser(
+        "derive",
+        help="export one or more claims' evidence chains as Markdown (registered edges only)",
+    )
+    de.add_argument("ids", nargs="+", help="root claim ids, e.g. C2 G3 G10")
+    de.add_argument("-o", "--out", metavar="PATH", help="write to a file instead of stdout")
+
+    br = sub.add_parser(
+        "branches",
+        help="the branchwise view: every conflicting value, both branches side by side",
+    )
+    br.add_argument("id", nargs="?", help="one contradiction id (default: all with sides)")
+
+    ex = sub.add_parser(
+        "export",
+        help="the whole graph as one versioned JSON envelope, for external ingestion",
+    )
+    ex.add_argument("-o", "--out", metavar="PATH", help="write to a file instead of stdout")
+
     at = sub.add_parser("atlas", help="render the theory graph to one self-contained HTML page")
     at.add_argument(
         "-o", "--out", metavar="PATH", help="output file (default: atlas.html, not checked in)"
@@ -477,6 +543,12 @@ def main(argv: list[str] | None = None) -> int:
         return _index(args.write)
     if args.command == "why":
         return _why(args.id, args.json)
+    if args.command == "derive":
+        return _derive(args.ids, args.out)
+    if args.command == "branches":
+        return _branches(args.id)
+    if args.command == "export":
+        return _export(args.out)
     if args.command == "atlas":
         return _atlas(args.out)
     if args.command == "lit":

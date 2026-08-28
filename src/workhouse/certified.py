@@ -178,5 +178,5 @@ def render(claims: list[Claim] | None = None) -> str:
 
 def write(path: Path | None = None) -> Path:
     target = path or (ROOT / "CERTIFIED.md")
-    target.write_text(render(), encoding="utf-8")
+    target.write_text(render(), encoding="utf-8", newline="\n")
     return target

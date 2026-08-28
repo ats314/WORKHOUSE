@@ -144,7 +144,9 @@ def write_manifest(
     notes_dir.mkdir(parents=True, exist_ok=True)
     target = notes_dir / f"{archive_id}.jsonl"
     target.write_text(
-        "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows), encoding="utf-8"
+        "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows),
+        encoding="utf-8",
+        newline="\n",
     )
     return target
 

@@ -614,9 +614,11 @@ def write(directory: Path | None = None) -> tuple[Path, Path]:
     (target / "claims.jsonl").write_text(
         "".join(json.dumps(asdict(c), sort_keys=True) + "\n" for c in claims),
         encoding="utf-8",
+        newline="\n",
     )
     (target / "symbols.jsonl").write_text(
         "".join(json.dumps(s, sort_keys=True) + "\n" for s in symbol_records(claims)),
         encoding="utf-8",
+        newline="\n",
     )
     return target / "claims.jsonl", target / "symbols.jsonl"

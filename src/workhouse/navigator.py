@@ -45,6 +45,89 @@ def _resolve(query: str, node_ids: set[str]) -> str | None:
     return None
 
 
+def branchwise(
+    target: str | None = None,
+    catalogue: list[claims_mod.Claim] | None = None,
+    graph: graph_mod.Graph | None = None,
+) -> tuple[str, bool]:
+    """The branchwise-result view: every conflicting value, both branches whole.
+
+    For each contradiction with recorded sides (or one, by id), print per
+    branch its value and kind, the pinned documents that originate the claim,
+    the checks and claims that depend on it, and — from the ledger's own
+    ``blocks`` edge — the adjudication gap whose completion would unify the
+    branches. Everything is read from curated fields; no branch is ranked,
+    preferred, or averaged, and the "missing comparison" is the gap's own
+    statement, not a synthesis.
+    """
+    catalogue = catalogue if catalogue is not None else claims_mod.collect()
+    graph = graph if graph is not None else graph_mod.build(catalogue)
+    by_id = {c.id: c for c in catalogue}
+    led = ledger_mod.load()
+
+    entries = [c for c in led.contradictions if c.get("sides")]
+    if target is not None:
+        wanted = target.strip().upper()
+        entries = [c for c in entries if c["id"] == wanted]
+        if not entries:
+            return (
+                f"no contradiction with recorded sides has id {target!r}.\n"
+                "Branchwise view covers ledger contradictions carrying a `sides`"
+                " field; try `workhouse branches` for all of them.",
+                False,
+            )
+
+    lines: list[str] = []
+    w = lines.append
+    for n, entry in enumerate(entries):
+        if n:
+            w("")
+        w(f"\033[1m{entry['id']}\033[0m — {entry['title']}  \033[2m[{entry['status']}]\033[0m")
+        for side in entry["sides"]:
+            w(f"  \033[1m{side['label']}\033[0m: {side['value']}  \033[2m({side['kind']})\033[0m")
+            if side.get("decimal") is not None:
+                w(f"    decimal: {side['decimal']!r}")
+        if entry.get("delta") is not None:
+            w(f"  gap between branches: {entry['delta']}")
+
+        origins = sorted(
+            e.src for e in graph.edges if e.dst == entry["id"] and e.type == "originates"
+        )
+        if origins:
+            w("  originating documents (pinned):")
+            for doc in origins:
+                claim = by_id.get(doc)
+                w(f"    {doc}" + (f" — {_clip(claim.statement, 70)}" if claim else ""))
+
+        dependents = sorted(
+            {e.src for e in graph.edges if e.dst == entry["id"] and e.type != "originates"}
+            | {e.dst for e in graph.edges if e.src == entry["id"]}
+        )
+        checks = [d for d in dependents if d in by_id and by_id[d].kind == "check"]
+        others = [d for d in dependents if d not in checks]
+        if checks:
+            w(f"  checks in the neighborhood ({len(checks)}):")
+            for chk in checks[:8]:
+                claim = by_id[chk]
+                verdict = "PASS" if claim.status == "passing" else "FAIL"
+                w(f"    [{verdict}] {_clip(claim.statement, 70)}")
+            if len(checks) > 8:
+                w(f"    … {len(checks) - 8} more (workhouse why {entry['id']})")
+        if others:
+            w(f"  \033[2mother recorded neighbors: {', '.join(others[:12])}\033[0m")
+
+        for gap_id in entry.get("blocks", []):
+            gap = next((g for g in led.gaps if g["id"] == gap_id), None)
+            if gap:
+                w(f"  \033[1mmissing comparison\033[0m ({gap_id}): {gap['title']}")
+                if gap.get("leads"):
+                    for lead in gap["leads"][:3]:
+                        w(f"    lead: {_clip(lead, 90)}")
+    if not entries:
+        w("no contradiction in the ledger carries a `sides` field.")
+    return "\n".join(lines), bool(entries)
+
+
 def neighborhood(
     query: str,
     catalogue: list[claims_mod.Claim] | None = None,

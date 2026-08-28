@@ -148,6 +148,33 @@ def search(
     return ranked, matched_symbols
 
 
+def nearest_value(
+    query: str, catalogue: list[claims_mod.Claim] | None = None
+) -> tuple[claims_mod.Claim, float] | None:
+    """The registered value closest to a value query, with its relative gap.
+
+    Exists for the miss path only: a confident "no claim matches" for a query
+    one transcription slip away from a registered value is the same failure
+    mode as the prose index's false negatives — proximity converted to
+    silence. This reports the nearest claim and the measured gap, labeled as
+    proximity, never as identity: a near miss is a lead to quantify, not a
+    match.
+    """
+    wanted = _as_fraction(query)
+    if wanted is None or wanted == 0:
+        return None
+    catalogue = catalogue if catalogue is not None else claims_mod.collect()
+    best: tuple[claims_mod.Claim, float] | None = None
+    for claim in catalogue:
+        value = _claim_value(claim)
+        if value is None or value == 0:
+            continue
+        rel = abs(float((value - wanted) / wanted))
+        if best is None or rel < best[1]:
+            best = (claim, rel)
+    return best
+
+
 @dataclass
 class CorpusPresence:
     """Where an exact value lives in the corpus, shaped for independence
@@ -193,6 +220,7 @@ def format_results(
     symbols: list[dict[str, Any]],
     occurrences: CorpusPresence | None = None,
     limit: int = 20,
+    nearest: tuple[claims_mod.Claim, float] | None = None,
 ) -> str:
     out: list[str] = []
     w = out.append
@@ -218,6 +246,14 @@ def format_results(
 
     if not hits:
         w(f"no claim matches {query!r}.")
+        near = nearest
+        if near is not None:
+            claim, rel = near
+            w(
+                f"  nearest registered value: {claim.value} ({claim.id}) at relative "
+                f"distance {rel:.3g}. Proximity is not identity — quantify before "
+                "reading anything into it."
+            )
         w("")
         w("Try an exact rational (109151/249696), a decimal prefix (-0.88009871),")
         w("a claim id (C2, G3, R14, U3), or a symbol (q_old, C_shape, h4_side).")
