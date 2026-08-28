@@ -92,9 +92,9 @@ class Ledgers:
 
 def load(directory: Path | None = None) -> Ledgers:
     d = directory or LEDGER_DIR
-    contradictions = yaml.safe_load((d / "contradictions.yaml").read_text())
-    gaps = yaml.safe_load((d / "gaps.yaml").read_text())
-    register = yaml.safe_load((d / "governing_register.yaml").read_text())
+    contradictions = yaml.safe_load((d / "contradictions.yaml").read_text(encoding="utf-8"))
+    gaps = yaml.safe_load((d / "gaps.yaml").read_text(encoding="utf-8"))
+    register = yaml.safe_load((d / "governing_register.yaml").read_text(encoding="utf-8"))
     return Ledgers(
         contradictions=contradictions["contradictions"],
         gaps=gaps["gaps"],

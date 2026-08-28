@@ -130,7 +130,7 @@ def scan(root: Path | None = None, exts: set[str] | None = None) -> dict[Fractio
     table: dict[Fraction, ConstantRecord] = {}
     for path in _iter_files(root, exts or CODE_EXTS):
         try:
-            text = path.read_text(errors="ignore")
+            text = path.read_text(encoding="utf-8", errors="ignore")
         except OSError:
             continue
         if path.suffix.lower() == ".ipynb":
@@ -300,4 +300,4 @@ def classifier_entries(path: Path | None = None) -> set[str]:
     )
     if not path.exists():
         return set()
-    return set(json.loads(path.read_text()))
+    return set(json.loads(path.read_text(encoding="utf-8")))

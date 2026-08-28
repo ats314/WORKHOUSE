@@ -72,7 +72,9 @@ def lean_claims() -> list[Claim]:
         return out
     for path in sorted(LEAN_DIR.rglob("*.lean")):
         rel = path.relative_to(ROOT)
-        for n, line in enumerate(strip_lean_comments(path.read_text()).splitlines(), 1):
+        for n, line in enumerate(
+            strip_lean_comments(path.read_text(encoding="utf-8")).splitlines(), 1
+        ):
             # Attributes and `private` sit BEFORE the keyword, and the first
             # draft of this regex did not allow them -- so an
             # `@[simp] theorem` was invisible to the T0 scrape, escaping both
@@ -187,5 +189,5 @@ def render(claims: list[Claim] | None = None) -> str:
 
 def write(path: Path | None = None) -> Path:
     target = path or (ROOT / "CERTIFIED.md")
-    target.write_text(render())
+    target.write_text(render(), encoding="utf-8")
     return target

@@ -168,7 +168,7 @@ def _index(write: bool) -> int:
         claims_path, symbols_path = claims_mod.write()
         graph_path = graph_mod.write()
         for path in (claims_path, symbols_path, graph_path):
-            rows = len(path.read_text().splitlines())
+            rows = len(path.read_text(encoding="utf-8").splitlines())
             print(f"wrote {path.relative_to(claims_mod.ROOT)}: {rows} records")
         problems = graph_mod.validate()
         if problems:
@@ -244,18 +244,28 @@ def _notes(scan: str | None, archive: str | None, queue_n: int | None) -> int:
 
 
 def _rescue_negative_query(argv: list[str]) -> list[str]:
-    """Let `workhouse search -5/48` work without the `--` incantation.
+    """Let `workhouse search -5/48 --corpus` work without the `--` incantation.
 
     argparse reads a leading-minus token as an option, and the flagship search
     examples are negative values. When the token after the subcommand looks
-    like a value rather than a flag, insert the `--` separator on the caller's
-    behalf instead of dying with "query is required".
+    like a value rather than a flag, move it behind a `--` separator at the end
+    of the line instead of dying with "query is required".
+
+    Moving it to the end rather than inserting `--` in place is the whole point:
+    `--` makes argparse treat *everything* after it as positional, so the
+    in-place form turned the perfectly natural
+
+        workhouse search -211835444920651/4405310420659200 --corpus --limit 12
+
+    into "unrecognized arguments: --corpus --limit 12". The trailing form keeps
+    the options as options and still shields the negative value.
     """
     valueish = re.compile(r"^-\d+(/\d+)?$|^-\d*\.\d+([eE][-+]?\d+)?$")
     out = list(argv)
     for i, token in enumerate(out[:-1]):
         if token in ("search", "why") and valueish.match(out[i + 1]) and "--" not in out:
-            return out[: i + 1] + ["--"] + out[i + 1 :]
+            value = out[i + 1]
+            return out[: i + 1] + out[i + 2 :] + ["--", value]
     return out
 
 

@@ -99,7 +99,7 @@ def _lean_counts() -> tuple[int, int]:
     if not LEAN.exists():
         return 0, 0
     for path in LEAN.rglob("*.lean"):
-        body = strip_lean_comments(path.read_text())
+        body = strip_lean_comments(path.read_text(encoding="utf-8"))
         theorems += len(re.findall(r"^\s*(?:theorem|lemma)\s", body, re.MULTILINE))
         sorries += len(re.findall(r"\bsorry\b", body))
     return theorems, sorries
@@ -115,7 +115,7 @@ def _retracted() -> list[tuple[str, str]]:
     if not DECISIONS.exists():
         return out
     for path in sorted(DECISIONS.glob("*.md"), reverse=True):
-        title = path.read_text().splitlines()[0].lstrip("# ").strip()
+        title = path.read_text(encoding="utf-8").splitlines()[0].lstrip("# ").strip()
         # The title only. Scanning the body matches any ADR that merely mentions
         # a superseded document, which is most of them.
         if re.search(r"\bretract\w*|\bsupersed\w*|\bwithdraw\w*", title, re.IGNORECASE):
@@ -478,5 +478,5 @@ def brief() -> str:
 
 def write(path: Path | None = None) -> Path:
     target = path or (ROOT / "FRONTIER.md")
-    target.write_text(render(compute()))
+    target.write_text(render(compute()), encoding="utf-8")
     return target

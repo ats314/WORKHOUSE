@@ -149,7 +149,7 @@ class Literature:
 
 
 def load(path: Path | None = None) -> Literature:
-    data = yaml.safe_load((path or INDEX).read_text())
+    data = yaml.safe_load((path or INDEX).read_text(encoding="utf-8"))
     return Literature(
         papers=data.get("papers", []),
         stubs=data.get("stubs", []),
