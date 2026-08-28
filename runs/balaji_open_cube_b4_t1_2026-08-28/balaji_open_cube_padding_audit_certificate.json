@@ -1,0 +1,113 @@
+{
+  "schema": "balaji-open-cube-padding-audit-certificate-v1",
+  "created_at": "2026-08-28T16:50:39-04:00",
+  "scope": "B=4 d=3 open one-cube directed plaquette matrix elements",
+  "claim": "Padding each absent open-boundary control half-link with the tensor-unit irrep reproduces the direct open-boundary generator exactly for this cube.",
+  "captured_stdout": {
+    "all_486_directed_elements_match": true,
+    "comparisons": 486,
+    "maximum_absolute_difference": 0.0,
+    "missing": 0,
+    "rounded_difference_counts": {
+      "0.0": 486
+    },
+    "method": "For each cube-face vertex, retain its one physical control irrep; insert (0,0,0) at each of the other three full-signature control directions; leave active irreps and singlet multiplicity indices unchanged.",
+    "per_face": {
+      "((0, 0, 0), (1, 2))": {
+        "direct_count": 81,
+        "matched_count": 81
+      },
+      "((0, 0, 0), (1, 3))": {
+        "direct_count": 81,
+        "matched_count": 81
+      },
+      "((0, 0, 0), (2, 3))": {
+        "direct_count": 81,
+        "matched_count": 81
+      },
+      "((0, 0, 1), (1, 2))": {
+        "direct_count": 81,
+        "matched_count": 81
+      },
+      "((0, 1, 0), (1, 3))": {
+        "direct_count": 81,
+        "matched_count": 81
+      },
+      "((1, 0, 0), (2, 3))": {
+        "direct_count": 81,
+        "matched_count": 81
+      }
+    },
+    "table_metadata": {
+      "dim": "d=3",
+      "truncation_mode": "B",
+      "cutoff": 4,
+      "num_sites": [3, 3, 3],
+      "PBCs": [true, true, true],
+      "planes": ["(1, 2)", "(1, 3)", "(2, 3)"],
+      "site_coords_for_comp": [[0, 0, 0]],
+      "f_order": [1, 2, 3, -1, -2, -3]
+    }
+  },
+  "independent_open_boundary_result": {
+    "gauss_projected_basis_dimension": 243,
+    "directed_box_nnz": 1458,
+    "magnetic_nnz": 2916,
+    "charge_odd_dimension": 121,
+    "charge_commutator_max_error": 0.0,
+    "vacuum_second_order_coefficient": -4.5,
+    "charge_odd_raw_second_order_coefficients": [
+      {"value": -1.9166666666666667, "exact": "-23/12", "multiplicity": 2},
+      {"value": -1.75, "exact": "-7/4", "multiplicity": 3},
+      {"value": -1.4166666666666667, "exact": "-17/12", "multiplicity": 1}
+    ],
+    "charge_odd_gap_second_order_coefficients": [
+      {"value": 2.5833333333333335, "exact": "31/12", "multiplicity": 2},
+      {"value": 2.75, "exact": "11/4", "multiplicity": 3},
+      {"value": 3.0833333333333335, "exact": "37/12", "multiplicity": 1}
+    ],
+    "relative_to_singleton": [
+      {"value": -0.5, "exact": "-1/2", "multiplicity": 2},
+      {"value": -0.3333333333333333, "exact": "-1/3", "multiplicity": 3},
+      {"value": 0.0, "exact": "0", "multiplicity": 1}
+    ]
+  },
+  "source_provenance": {
+    "pyclebsch_public_branch": "https://github.com/hepqis-uiuc/pyclebsch/tree/feature/OBC-and-mixed-BC-ymcirc",
+    "pyclebsch_public_pr": "https://github.com/hepqis-uiuc/pyclebsch/pull/15",
+    "ymcirc_public_repository": "https://github.com/hepqis-uiuc/ymcirc",
+    "source_hashes_sha256": {
+      ".scratch/literature/pyclebsch-feature-obc.zip": "6D16EE0FA055B143D8373EFA8D57E4F5A745B362BCAB6EB12318A9C09922111B",
+      ".scratch/literature/ymcirc-feature-obc.zip": "63D65A3030E36D399CA236FC802B786B02E10E44D7EAFFE2261D6D4FF7D4BD19",
+      ".scratch/literature/ymcirc-feature-obc/ymcirc-feature-OBC-mixed-BC/ymcirc/_ymcirc_data/magnetic-hamiltonian-box-term-matrix-elements/B4_dim(3)_PBC_magnetic_hamiltonian.json.gz": "4CAD9538681C10E88270EF60045FB91B7F2DE22B42F97621812667B492BA9A1A",
+      ".scratch/literature/pyclebsch-feature-obc/pyclebsch-feature-OBC-and-mixed-BC-ymcirc/pyclebsch/matrix_elements/lattice_data.py": "0EEBD22D10D7BDEAD992F625C49879F6BCBF148E4859645DFE4C2B13B6D5A41B",
+      ".scratch/literature/pyclebsch-feature-obc/pyclebsch-feature-OBC-and-mixed-BC-ymcirc/pyclebsch/matrix_elements/plaquette_matrix_elements.py": "3D35EB1614BD6BF36432F6345BC16D45A51A6C68AB387A33DBFD47C77C045C45",
+      ".scratch/literature/pyclebsch-feature-obc/pyclebsch-feature-OBC-and-mixed-BC-ymcirc/pyclebsch/cgc.py": "79192A2BFC0FAE06269C93214F004FEE16EE71EA4C6443DB17A0A485507F7953",
+      ".scratch/cube_matrix_reconstruction_balaji_20260828.py": "3E56B6F4D42D432A0100415848619DF66858299AD2FFCDC7A5D73F35712C6785",
+      ".scratch/cube_pbc_padding_audit_20260828.py": "6EDCFA44C0DD21A5A1FC6EDD8E2233E39A4E4DAEB1136A3F7CA8D76549A09F65",
+      ".scratch/balaji_open_cube_T1_matrix_20260828.npz": "1421BA45240B7CBD57528E338901FA8B13E9F7E43A9106B99A091791471CF5E3"
+    },
+    "cached_cgc_tree": {
+      "path": ".scratch/literature/pyclebsch-cgc-cache",
+      "files": 15,
+      "bytes": 2854,
+      "manifest_algorithm": "Sort relative POSIX-style paths, append TAB plus each uppercase SHA256, join with LF, then SHA256 the UTF-8 bytes without BOM.",
+      "manifest_sha256": "240B776090DDBE1A56E92D10FE9A43EDB75B38B9CEE80E85F5917A66105680B2"
+    }
+  },
+  "execution_provenance": {
+    "initial_successful_command": "uv run --python 'C:\\Users\\Alex\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe' --with numpy --with scipy --with more-itertools --with tqdm python .scratch/cube_pbc_padding_audit_20260828.py",
+    "base_interpreter": "C:\\Users\\Alex\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "uv_resolved_interpreter_observed_during_provenance_capture": "C:\\Users\\Alex\\AppData\\Local\\uv\\cache\\builds-v0\\.tmp0eqMpj\\Scripts\\python.exe",
+    "uv_archive_site_packages_observed_during_provenance_capture": "C:\\Users\\Alex\\AppData\\Local\\uv\\cache\\archive-v0\\EfVkuxovYBcKICXrF4xJT\\Lib\\site-packages",
+    "dependency_versions": {
+      "numpy": "2.3.5",
+      "scipy": "1.18.1",
+      "more-itertools": "11.1.0",
+      "tqdm": "4.70.0"
+    },
+    "why_scipy_was_available": "This subtask received approval for uv to create an isolated environment and download scipy 1.18.1 into uv's per-user cache. SciPy was not present in the bundled base interpreter, and another task's sandbox need not be able to read that per-user uv cache.",
+    "safe_replay_command": "& 'C:\\Users\\Alex\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe' .scratch/cube_pbc_padding_audit_20260828.py",
+    "safe_replay_note": "The current reconstruction script supplies minimal import fallbacks for scipy, more-itertools, and tqdm and uses only the hashed local CGC cache. It fails closed if pyclebsch attempts an uncached sparse solve. The safe replay completed with the same 486 matches and maximum absolute difference 0.0."
+  }
+}

@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 28
+## T0 — proof-checked — 36
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -25,7 +25,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:97
   - `make lean`
 - `alphaPen_eq_neg_four_cube`
-  - lean/Workhouse/Basic.lean:191
+  - lean/Workhouse/Basic.lean:194
   - `make lean`
 - `alphaPen_five`
   - lean/Workhouse/Basic.lean:69
@@ -42,6 +42,15 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `alphaPen_three_eq_four_A`
   - lean/Workhouse/Basic.lean:73
   - `make lean`
+- `bandVar_pi`
+  - lean/Workhouse/Basic.lean:217
+  - `make lean`
+- `bandVar_pi_div_two`
+  - lean/Workhouse/Basic.lean:220
+  - `make lean`
+- `bandVar_zero`
+  - lean/Workhouse/Basic.lean:214
+  - `make lean`
 - `beta_from_A_and_C`
   - lean/Workhouse/Basic.lean:105
   - `make lean`
@@ -49,28 +58,40 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:83
   - `make lean`
 - `cPrimTwo_forms`
-  - lean/Workhouse/Basic.lean:163
+  - lean/Workhouse/Basic.lean:166
   - `make lean`
 - `cubeCompletion_three`
-  - lean/Workhouse/Basic.lean:182
+  - lean/Workhouse/Basic.lean:185
+  - `make lean`
+- `delta_M`
+  - lean/Workhouse/Basic.lean:253
+  - `make lean`
+- `delta_P`
+  - lean/Workhouse/Basic.lean:259
+  - `make lean`
+- `delta_R`
+  - lean/Workhouse/Basic.lean:267
+  - `make lean`
+- `delta_X`
+  - lean/Workhouse/Basic.lean:248
   - `make lean`
 - `dim_Z₂`
-  - lean/Workhouse/Basic.lean:138
+  - lean/Workhouse/Basic.lean:141
   - `make lean`
 - `d₃_ledger`
   - lean/Workhouse/Basic.lean:59
   - `make lean`
 - `extraction_A`
-  - lean/Workhouse/Basic.lean:120
+  - lean/Workhouse/Basic.lean:123
   - `make lean`
 - `extraction_B`
-  - lean/Workhouse/Basic.lean:122
+  - lean/Workhouse/Basic.lean:125
   - `make lean`
 - `extraction_C`
-  - lean/Workhouse/Basic.lean:126
+  - lean/Workhouse/Basic.lean:129
   - `make lean`
 - `extraction_D`
-  - lean/Workhouse/Basic.lean:130
+  - lean/Workhouse/Basic.lean:133
   - `make lean`
 - `hopping_deficit_numerator`
   - lean/Workhouse/Basic.lean:48
@@ -85,10 +106,13 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:113
   - `make lean`
 - `pentCompletion_three`
-  - lean/Workhouse/Basic.lean:186
+  - lean/Workhouse/Basic.lean:189
   - `make lean`
 - `prismCompletion_three`
-  - lean/Workhouse/Basic.lean:178
+  - lean/Workhouse/Basic.lean:181
+  - `make lean`
+- `q_at_checkpoints`
+  - lean/Workhouse/Basic.lean:239
   - `make lean`
 - `rank_law_numerator`
   - lean/Workhouse/Basic.lean:36
@@ -97,16 +121,16 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:87
   - `make lean`
 - `tetraCompletion_three`
-  - lean/Workhouse/Basic.lean:174
+  - lean/Workhouse/Basic.lean:177
   - `make lean`
 - `tetra_from_count`
-  - lean/Workhouse/Basic.lean:168
+  - lean/Workhouse/Basic.lean:171
   - `make lean`
 - `width_eq_alpha_add_beta`
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 152
+## T1 — re-derived exactly — 157
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -156,6 +180,23 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the printed towers are canonical-u: 4*Delta(3u/2) reproduces them verbatim`
   - src/workhouse/invariants.py:2639 · UNIFIED §2.1 / C4
   - `workhouse verify --only 'the printed towers are canonical-u: 4*Delta(3u/2) reproduces them verbatim'`
+**finite-rank truncation bridge (published SU(3) truncations)**
+
+- `FINDING: the T1 link cutoff reverses the sign of t_3, and 14/153 is what it omits`
+  - src/workhouse/invariants.py:5194 · R2; notes UPLOADS_2026-08-28e §5; runs/cbb_finite_n_bridge_2026-08-28
+  - `workhouse verify --only 'FINDING: the T1 link cutoff reverses the sign of t_3, and 14/153 is what it omits'`
+- `FINDING: the bridge documents match the obtained paper, except one equation number`
+  - src/workhouse/invariants.py:5319 · R2; arXiv:2503.11888v5 Eqs. (1), (D1), Fig. 6, App. C; notes UPLOADS_2026-08-28e
+  - `workhouse verify --only 'FINDING: the bridge documents match the obtained paper, except one equation number'`
+- `the B = 6 scalar misses the bridge's by exactly the same-face sextet route`
+  - src/workhouse/invariants.py:5633 · R2; runs/b6_open_cube_channel_complete_2026-08-28; notes UPLOADS_2026-08-28e §5.1
+  - `workhouse verify --only 'the B = 6 scalar misses the bridge'"'"'s by exactly the same-face sextet route'`
+- `the certificate's finite-volume fingerprints, and 29 = L^3 + 2 is the Lean cycle count`
+  - src/workhouse/invariants.py:5250 · R2; notes UPLOADS_2026-08-28e §6-7; runs/cbb_finite_n_bridge_2026-08-28
+  - `workhouse verify --only 'the certificate'"'"'s finite-volume fingerprints, and 29 = L^3 + 2 is the Lean cycle count'`
+- `the published dimension-ratio matrix element is this registry's weight formula`
+  - src/workhouse/invariants.py:5148 · R2; Ciavarella-Burbano-Bauer arXiv:2503.11888v5 Eq. (D1); notes UPLOADS_2026-08-28e
+  - `workhouse verify --only 'the published dimension-ratio matrix element is this registry'"'"'s weight formula'`
 **fourth order, anchoring and the residual dispute**
 
 - `C_old = (beta_pen_3 - 2*alpha_3)/16`
@@ -607,10 +648,21 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:1627 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
-## T2 — float agreement within a stated tolerance — 42
+## T2 — float agreement within a stated tolerance — 45
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
+**finite-rank truncation bridge (published SU(3) truncations)**
+
+- `FINDING: a full T1 = B = 4 cube Hamiltonian reproduces -1/12 and the reversed shell`
+  - src/workhouse/invariants.py:5455 · R2; runs/balaji_open_cube_b4_t1_2026-08-28; notes UPLOADS_2026-08-28g
+  - `workhouse verify --only 'FINDING: a full T1 = B = 4 cube Hamiltonian reproduces -1/12 and the reversed shell'`
+- `FINDING: the B = 6 cube flips the sign back to +5/612, closing the decisive test`
+  - src/workhouse/invariants.py:5564 · R2; runs/b6_open_cube_channel_complete_2026-08-28
+  - `workhouse verify --only 'FINDING: the B = 6 cube flips the sign back to +5/612, closing the decisive test'`
+- `the discrete index theorem gives 0 on the signed face-edge operator, bounding nothing`
+  - src/workhouse/invariants.py:5396 · R2; G14; arXiv:2607.22831v1 (Hazra) §6 Eq. for ind_a(D)
+  - `workhouse verify --only 'the discrete index theorem gives 0 on the signed face-edge operator, bounding nothing'`
 **fourth order, anchoring and the residual dispute**
 
 - `C20: exact gate value vs printed float-reconstruction`
