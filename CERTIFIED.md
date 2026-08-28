@@ -106,7 +106,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 150
+## T1 — re-derived exactly — 151
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -362,6 +362,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the pinned structured B_N expression IS P17(N^2)/(N R20(N^2))`
   - src/workhouse/invariants.py:3510 · GLUEBALL_DETAILED_FORMULA v3.1 §11 + App. A
   - `workhouse verify --only 'the pinned structured B_N expression IS P17(N^2)/(N R20(N^2))'`
+- `the shape fit's C row sums to zero, so no Gamma-anchor error can move C_shp at all`
+  - src/workhouse/invariants.py:4550 · provenance nb-hodge-v10a26-alt2, _v10a3_extract_shape; UNIFIED v4.3 §5.1
+  - `workhouse verify --only 'the shape fit'"'"'s C row sums to zero, so no Gamma-anchor error can move C_shp at all'`
 - `the shipped displacement support is exactly six shells`
   - src/workhouse/invariants.py:3461 · off-axis ledger falsifier gate
   - `workhouse verify --only 'the shipped displacement support is exactly six shells'`
@@ -601,7 +604,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants.py:1417 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
 
-## T2 — float agreement within a stated tolerance — 36
+## T2 — float agreement within a stated tolerance — 39
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -692,6 +695,15 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `FINDING: the adjudicator's THIRD-VALUE scalar verdict is a C1 anchoring artifact`
   - src/workhouse/invariants.py:4425 · provenance nb-hodge-v10a26-alt2, section 17
   - `workhouse verify --only 'FINDING: the adjudicator'"'"'s THIRD-VALUE scalar verdict is a C1 anchoring artifact'`
+- `FINDING: the off-axis ledger carries two claims its own author later retracted`
+  - src/workhouse/invariants.py:4736 · notes UPLOADS_2026-08-28d OFF_AXIS_LEDGER §6/§7, corrected by the C2 status note
+  - `workhouse verify --only 'FINDING: the off-axis ledger carries two claims its own author later retracted'`
+- `FINDING: the run's own re-anchor moved C_shp by 4.6e-15, as the zero row sum requires`
+  - src/workhouse/invariants.py:4613 · provenance nb-hodge-v10a26-alt2, sections 13 and 17
+  - `workhouse verify --only 'FINDING: the run'"'"'s own re-anchor moved C_shp by 4.6e-15, as the zero row sum requires'`
+- `FINDING: the v10a.26 cluster ledger is exhausted by supports <= 2 until fourth order`
+  - src/workhouse/invariants.py:4661 · provenance nb-hodge-v10a26-alt2, section 16 rooted incidence transform
+  - `workhouse verify --only 'FINDING: the v10a.26 cluster ledger is exhausted by supports <= 2 until fourth order'`
 - `FINDING: the v10a.26 notebook carries a per-class ledger and attests its own blindness`
   - src/workhouse/invariants.py:4275 · provenance nb-hodge-v10a26-alt2
   - `workhouse verify --only 'FINDING: the v10a.26 notebook carries a per-class ledger and attests its own blindness'`

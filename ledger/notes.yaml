@@ -164,6 +164,29 @@ archives:
 # recommending `extract` are HELD as pending until the analysis-side
 # program's claims exist in the ledger to extract into — see the referee
 # document's scaffolding proposal. Nothing here promotes anything.
+  - id: UPLOADS_2026-08-28d
+    description: >-
+      The v10a.26 run itself, handed over in four forms after the session
+      spent a pass reasoning about it at one remove: the executed notebook
+      with its stored 2,992-line output, an output-stripped copy, a plain-text
+      export of the same cell, and a 15-hour run transcript. With them, the
+      off-axis channel ledger that the channel_ledger module implements, a
+      LaTeX draft of the paper, a CRLF re-upload of the C2 status note, and
+      the HODGE RUNS archive as a single container.
+    source: >-
+      Uploaded directly to the session on 2026-08-28, while a second agent was
+      absorbing the same folder. The inventory fact that mattered: the
+      executed notebook hashes to 5a80afcf..., byte-identical to the copy
+      already pinned at corpus-import/programs/hodge_o4_adjudication/
+      notebooks/NB_O4_hodge_v10a26_factor52complete_exactsw_rootedoracle_
+      a100_alt2.ipynb -- so the run was never lost, it was under-read. Its
+      section 16 carries a support-size decomposition of the scalar moments
+      that no check had touched, and reading it produced three new invariants.
+      The off-axis ledger is the document behind channel_ledger.py, and it
+      carries two claims its own author later retracted in the C2 status note;
+      it is pinned with those retractions named so it is never read as
+      current.
+
 reviews:
 # Third review pass: the 2026-08-28 second batch, reviewed on arrival. The
 # master derivation is imported to paper/ and its new content entered as four
@@ -2299,3 +2322,127 @@ reviews:
       -- the explicit second witness C_alt = C_old + 25/1024 -- and the
       pentagonal fifth-order record, neither of which was in the registry. The
       word CLOSED in the filename is not about C2.
+
+  - digest: 5a80afcfe98283c0cc5145f2440632bff9c415477bc90cacd743acb22e0046b2
+    path: Hodge_v10a26_Factor52Complete_ExactSW_RootedOracle_A100_2.ipynb
+    archive: UPLOADS_2026-08-28d
+    verdict: duplicate
+    duplicate_of: >-
+      corpus-import/programs/hodge_o4_adjudication/notebooks/NB_O4_hodge_v10a26_factor52complete_exactsw_rootedoracle_a100_alt2.ipynb
+    reason: >-
+      The executed v10a.26 notebook, with the 2,992-line stored output of the
+      61,095-second run. Byte-identical to the copy already pinned in the
+      corpus, which is the point worth recording: the run was never lost, it
+      was under-read. Its section 16 -- ROOTED INCIDENCE TRANSFORM -- prints a
+      support-size decomposition of the scalar moments that no check had
+      touched, and reading it produced three new invariants: orders 2 and 3
+      are exhausted by supports of size at most two EXACTLY, the size-2
+      third-order row is this registry's own 12*LEAK_3 - 4*B_3, and fourth
+      order recruits sizes 3 and 6 while leaving 4 and 5 empty. Anyone
+      returning to this run should read the stored output, not the source.
+
+  - digest: 96e3263bca6534e6e598fec07f2310eaf88eb48266c0b7eae17cbec26d0dc9ca
+    path: Hodge_v10a26_Factor52Complete_ExactSW_RootedOracle_A100.ipynb
+    archive: UPLOADS_2026-08-28d
+    verdict: set-aside
+    reason: >-
+      The same notebook with its outputs stripped -- same single code cell,
+      null execution count, no stored output. For this run the output IS the
+      evidence: the source alone states what would be computed, not what was.
+      Set aside in favour of the executed copy, and recorded here because an
+      output-stripped notebook reads exactly like an executed one in a
+      directory listing, which is how v10a20-v10a24c came to be cited as
+      evidence in the first place.
+
+  - digest: 3846a022b4bd6874e332e8b16f4ed13a5706af1be855cc059763533d721d309e
+    path: 15_hour_RUN.txt
+    archive: UPLOADS_2026-08-28d
+    verdict: set-aside
+    reason: >-
+      A complete plain-text transcript of the same run -- same 61,095 s
+      elapsed, same blind C_direct -0.0202133288861666 and final
+      -0.0202133288861712, same 86/86 gates, same MIXED/THIRD verdict. Easier
+      to grep than the notebook JSON, but every byte of it is already in the
+      repository inside the pinned notebook's stored output, and a 693 KB
+      second copy is a thing that drifts. To read the transcript, take the
+      pinned notebook's single code cell and join its outputs' text fields;
+      the three section-16 checks in the channel suite do exactly that.
+
+  - digest: c123287ae7a38a327275557825d6f750bd15f38734a213d10c55842f7939819d
+    path: HODGE_v10a.26___Factor52_Comp.txt
+    archive: UPLOADS_2026-08-28d
+    verdict: set-aside
+    reason: >-
+      The same transcript captured while the run was still going: it stops
+      mid-basis-sweep at elapsed 913.7 s, carries 104 gate lines against the
+      complete run's 86 final ones, and never reaches sections 16 or 17. A
+      partial capture of a run whose complete capture is pinned. Recorded
+      rather than dropped because its head reads like a finished document and
+      its tail is the only thing that says otherwise.
+
+  - digest: 7a19a833bb5acba526f75bd4d68890c50c9d13fb6f228037a022eabb1a968219
+    path: Carrier_Persistence_Problem.txt
+    archive: UPLOADS_2026-08-28d
+    verdict: duplicate
+    duplicate_of: >-
+      notes/imported/WORK_SINCE_2026-08/C2_status_note_misfiled_as_carrier_persistence.txt
+    reason: >-
+      The same C2 status note re-uploaded with CRLF line endings, so it hashes
+      differently while every line is character-for-character the copy already
+      imported. Its checkable claims are no longer pending: the C-row result
+      is now a T1 invariant over Q(sqrt 5) and its numerical witness a T2 one,
+      and the audit items are confirmed -- DELTA_BETA_3 is in constants.py and
+      referenced by no invariant, beta_3^bal is absent, 25/256 appears nowhere
+      outside this note and the referee triage. One correction: the note says
+      "workhouse search 15644916262153 returns nothing", which is true of the
+      claim catalogue but not of the corpus, where the value is in
+      THM_SUN_unified_nality_theorem_audited_v2 and DOC_FLUX_constants_index.
+
+  - digest: 01d188dd7521cf11cbf86c92a28efc74896e12807b4123e4a8207d97cf6ad206
+    path: OFF_AXIS_LEDGER.txt
+    archive: UPLOADS_2026-08-28d
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-08-28d/OFF_AXIS_LEDGER.txt
+    reason: >-
+      The document behind channel_ledger.py: the structure dictionary mapping
+      operator content to shape coefficients, the 189-record channel ledger,
+      and the two exact integer cancellations that make the tier collapse
+      B = D = 0 a record-level identity rather than a parity-point
+      observation. Section 5 is implemented and T1-checked in the repository;
+      sections 4, 6 and 8 are not.
+      READ WITH ITS CORRECTOR. Two of its claims were retracted by its own
+      author in the later C2 status note, and this file does not say so:
+      section 6's "most economical single hypothesis is that v10a.26 is
+      missing the nu = +-3 epsilon-sector" is refuted -- C_new was computed
+      under the nine-family allowlist with epsilon-sectors included -- and
+      section 7's "it independently reproduces ... the blind holdout
+      lambda_R = 2 lambda_M - lambda_X" is refuted, since L = 5 contains no R.
+      Pinned so the ledger is available; neither retracted claim may be cited
+      from it.
+
+  - digest: 4afb495db60dcd670d1d96ca44c96087f7224ac4293d0858684bdad31a87c396
+    path: FABLEFINALDRAFT.txt
+    archive: UPLOADS_2026-08-28d
+    verdict: set-aside
+    reason: >-
+      An earlier LaTeX draft of the united master paper. The checked-in
+      paper/master_paper_2026-08-28.tex is strictly ahead of it: it names the
+      lifter census as three classes over 32 five-trace numerator patterns,
+      96 contractions, "and nothing here checks any of them", where this draft
+      asserts the census and moves on, and it fixes the display boxes this
+      draft overfills. Set aside rather than imported so a superseded edition
+      of the paper does not sit beside the current one.
+
+  - digest: 004725846972462d317cdd53d974003a66e70ec1e64e4bbfe434cb837846e539
+    path: HODGE_RUNS.7z
+    archive: UPLOADS_2026-08-28d
+    verdict: set-aside
+    reason: >-
+      The HODGE RUNS folder as one container -- the 48-file adjudicator chain,
+      handed over while a second agent was absorbing the same folder. Its
+      contents are already in the repository file by file, under
+      corpus-import/programs/hodge_o4_adjudication/notebooks/ with the
+      execution forensics written up in corpus-import/records/audits/. The
+      finding that matters from the survey is recorded there and not repeated
+      here: the v10a20-v10a24c artifacts have null execution metadata and no
+      stored outputs, so their presence promotes nothing.

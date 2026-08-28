@@ -1,0 +1,145 @@
+WORKHOUSE · contradiction C2 · theory-mode session
+The Off-Axis Ledger
+The one genuinely open dispute in the corpus, taken apart channel by channel from the raw 189-record kernel — and localised to two amplitudes that a far smaller computation than G3 could settle.
+
+read-only · no repository changes
+all arithmetic exact (Fraction / Rational)
+2026-08-22
+What this changes
+C2 is currently routed to G3 — a 609-cluster marked-cluster run that has never been executable, fail-closes on cluster 1, and costs >13 CPU-minutes for even its smallest cluster. This session did not run it. Instead it decomposed the historical kernel into physical transfer channels and found that 99.9% of the disputed coefficient is carried by three range-1 amplitudes, one of which is already pinned by the coefficient both sides agree on.
+
+Nothing here promotes either side. The repository's rule stands.
+
+§1
+The dispute, restated exactly
+The fourth-order carrier dispersion is ε₄(k) = ψ†H₄ψ / q_a, where ψ = (d̄₃, −d̄₂, d̄₁) is the cube-boundary direction and q_a = |ψ|². Cubic symmetry admits four shapes beyond the scalar anchor:
+
+ε₄ = c₀ + A·qa + B·e₂ + C·(4e₂/qa) + D·(e₃/qa)
+Only C is disputed. A is sealed; B and D vanish (the "tier collapse").
+The dispute cannot be closed by re-anchoring, and the reason is structural: the crosswalk kernel Φ_C = 4e₂/q_a is O(|k|²) and vanishes on every axial cut. Γ-point and axial data are therefore blind to Δ_C by construction — which is why the externally-validated Γ-point scalar cannot help.
+
+The three values in play, in both coordinates
+Kernel	β₃ = 8A + 16C	Cshp	β/α
+balanced (ε-free)	15644916262153/34416487661400	−0.023672320681	1.09098
+historical	17607806155349/275331901291200	−0.048086383181	0.15348
+v10a.26	0.5099200712	−0.020213328886	1.22381
+§2
+The historical value is not a standalone number
+It sits inside a rank-complete family. The all-rank shape formula β_N = P₁₇(N²)/(N·R₂₀(N²)) is stated only for N ≥ 4, and the technical appendix says flatly: "The compact β_N formula is not to be substituted at N = 3." But every factor of R₂₀ is non-zero at z = 9, so the continuation exists. Evaluating it:
+
+P₁₇(9) / (3·R₂₀(9)) − β₃historical = 25/64, exactly
+and 25/64 is precisely the independently recorded SU(3) ε-sector shift Δβ₃
+So the prohibition is a warning about the physical value needing its ε-correction, not a statement that the continuation is ill-defined. The historical SU(3) kernel is the all-rank balanced family minus one identified sector.
+
+This is verified twice over, by artifacts that do not quote each other: my transcription of P₁₇/R₂₀ from theory/, and the repository's own pinned 80-term walled-Brauer structured expression (payloads.b_evaluator), agree at ten consecutive ranks. Two further clean relations fall out, neither recorded anywhere:
+
+Δβ₃ = −(15/16)·α₃   ·   ΔC₃ / (A/2) = −15/32
+How surprising is that?
+The two sides have 14-digit denominators. Their raw difference is −107551523941875 / 275331901291200, which reduces by a factor of 4 302 060 957 675. For a numerator with no structural relationship, landing on a denominator dividing 64 has probability ≈ 1 in 4.3 × 10⁹. The balanced continuation is not a formal manipulation; it carries physical content at N = 3.
+
+§3
+The method validates independently, on a different polynomial family
+Evaluating a stable-rank balanced formula below its declared scope is exactly the step a sceptic should attack. It is testable — on the scalar offset, whose balanced form q_N = −(2/3N)·Q₃₂(N²)/D₃₄(N²) is a completely different family (degrees 32/34, not 17/20), and whose ε-corrections at N = 4, 5, 6 are independently recorded.
+
+Stable-rank scalar formula evaluated below its N ≥ 7 scope
+N	ε-sector	Balanced continuation vs. (q_N − Δq_N)
+5	none occurs	exact match — nothing to subtract, and it agrees
+6	Δq₆ = 6/343	exact match — correctly predicts the balanced part
+4	Δq₄ ≠ 0	singular: D₃₄ has a factor (z − 16)
+3	Δq₃ ≠ 0	singular: D₃₄ has a factor (z − 9)³
+The method works where it is defined and fails loudly where it is not — a pole, never a wrong number. And the decisive asymmetry:
+
+D₃₄ carries explicit factors (z−4), (z−9)³, (z−16) — the scalar continuation genuinely cannot be evaluated at N = 2, 3, 4.
+R₂₀'s largest root is z = 25/9, i.e. N = 5/3 < 2 — the shape continuation is regular at every integer rank.
+The blanket prohibition conflates the two. It is correct for q_N and unnecessary for β_N, and that conflation has hidden a well-defined and highly informative quantity.
+
+§4
+A structure dictionary, then the kernel itself
+Classify a fourth-order plaquette kernel by its records (input plane, output plane, displacement). For range-1 structures the shape coefficients follow exactly:
+
+Operator structure → shape coefficient (exact, verified in polynomial algebra)
+Structure	A	B	C	D
+scalar I, and link-factorised BB†	0	0	0	0
+normal translation, g⊥·cos k_n	−g⊥/2	0	+g⊥/4	0
+in-plane translation, g∥·(cos k_i + cos k_j)	0	0	−g∥/4	0
+orbital rotation, f·d̄_n d_m	0	0	−f/2	0
+range-2 (cos 2k) and mixed structures	≠0	≠0	≠0	≠0
+Two consequences, both exact. A is generated only by translations with a normal component — in-plane translation and orbital rotation give A = 0 identically. And every range-1 structure gives B = D = 0 automatically: the tier collapse is what range-1 looks like.
+
+The repository already checks, at symbolic N, that 4|c₄,prim(N)| = α_N — the axial coefficient is the primitive cube-completion amplitude, with S₄ = −20 derived from 24 temporal orderings rather than fitted. The dictionary supplies the operator content behind that check: the primitive cube completion is a normal nearest-neighbour hop of amplitude 2·c₄,prim, and the factor 2 is the Hermitian ± of the hop.
+
+The primitive channel is link-balanced — a simple closed flux loop puts one U and one U† on every link, so ν_ℓ = 0. Balanced means ε-blind. That is why ΔA_N = 0 at every rank is explained rather than coincidental, and why the whole dispute is confined to the non-axial tier.
+
+§5
+The 189 records, decomposed
+Applying the dictionary to the raw kernel — three shipped copies, two distinct upstream Stage-3I hashes, semantic SHA matching its pinned reference. Every block below was tested for membership in the four-shape span in exact Gaussian-rational arithmetic before being reported; the rotation shells are genuinely outside it individually and enter only as a sum.
+
+Channel ledger of the historical kernel · x = 360421351/40327601932800
+Block	records	A/x	B/x	D/x	contribution to C
+on-site (0,0,0)	3	0	0	0	0
+NORMAL (0,0,1)	6	large	0	0	−0.052101208006
+IN-PLANE (0,0,1)	12	0	0	0	+0.008121326417
+IN-PLANE (0,0,2)	12	0	+1	−3	−0.000017874673
+IN-PLANE (0,1,1)	12	0	0	+6	−0.000017874673
+MIXED (0,1,1)	24	−4	+1	−3	+0.000008937337
+ROTATION (all)	120	0	−2	0	−0.004079689582
+total	189	A = 5/48	B = 0	D = 0	−0.048086383181
+A by-product: the tier collapse, at record level
+Every degree-3 contribution in the kernel is an integer multiple of a single amplitude x, and the tier collapse is two exact integer cancellations:
+
+D = 0 :  IN-PLANE(0,0,2)·(−3) + IN-PLANE(0,1,1)·(+6) + MIXED(0,1,1)·(−3) = 0
+         — a pure translation-sector identity, weights 3·(−1, +2, −1)
+
+B = 0 :  IN-PLANE(0,0,2)·(+1) + MIXED(0,1,1)·(+1) + ROTATION·(−2)        = 0
+         — couples the translation sector to the orbital-rotation sector
+G14 asks "why does the degree-3 part of d†H₄d vanish when the two-hop enumeration produces it." This does not answer that — but it replaces a question about the whole kernel with a question about three specific record groups and two small-integer weight vectors. The band-shape certificate asserts the two-invariant form is "forced by the symmetry and displacement gates"; the ledger shows that is at best imprecise, since the kernel does carry (0,0,2) and (0,1,1) displacements that individually produce B, D ≠ 0. They cancel. T1 — verified over the whole zone, not at four parity points.
+
+§6
+Where the dispute actually lives
+The normal channel obeys C_normal = −A_normal/2 exactly — verified on the raw records. Since both sides agree on A = 5/48 to 6.1 × 10⁻¹⁴, that channel is pinned. Everything in dispute is the remainder:
+
+The non-normal sector — the entire content of C2
+Kernel	C − Cnormal	× historical
+historical	+0.004014824825	1.000
+balanced (ε-free)	+0.028428887325	7.081
+v10a.26	+0.031887879120	7.943
+Two things follow immediately.
+
+C_new is not reachable by re-weighting the historical channels. Zeroing the entire 120-record rotation sector recovers only 14.6% of the required shift. Zeroing every range-≥2 block recovers 0.10%. With the rotation sector intact, the in-plane nearest-neighbour transfer would have to be 4.43× its historical value. This is not a small correction anywhere; it is a different in-plane amplitude.
+
+The most economical single hypothesis is that v10a.26 is missing the ν = ±3 ε-sector. That would put it at the balanced value, 7.081× — it sits at 7.943×. So the hypothesis explains 86% of the discrepancy and overshoots by 14.2% of the ε-sector's own magnitude. That residual, +0.003458991795, has no simple rational form (tested to denominator 10¹⁰) and is 3 × 10¹⁰ times the run's own noise floor. It is the hypothesis's unpaid debt, and I could not close it.
+
+One class of explanation is closed off
+Through third order every effective operator has the form a_r I + b_r S(k) + B M B†, and each acts on the carrier as a scalar: H_r ψ = (a_r − 4b_r)ψ. Any product of such operators is therefore also scalar on ψ. So every unlinked/disconnected fourth-order term contributes to c₀ alone and cannot move A, B, C or D. The raw kernel confirms the prediction: the numerator's q³ and constant coefficients are exactly zero. Linked-cluster bookkeeping cannot explain C2.
+
+§7
+What I could not establish
+OPEN
+Are the 189-record kernel and the all-rank family one pipeline? The walled-Brauer certificate's N = 7 anchor also has "189 real-space entries" — the same structure, suggesting shared code lineage. If so, the 25/64 agreement is internal coherence of one computation, not two independent ones. That weakens the independence claim while sharpening what it does show: 25/64 is that pipeline's measured ε-sector contribution.
+OPEN
+Is Δβ₃ = −25/64 derived, or defined as the difference? The theorem says "evaluating the balanced walled-Brauer contraction at N = 3" — ambiguous between re-running the contraction and substituting into its closed form. If the latter, the relation is bookkeeping, and only the 1-in-4.3 × 10⁹ reduction argues it is more.
+OPEN
+No independent rerun exists at N = 3. The independent-rerun bundle covers N = 7…18 only. The SU(3) shape value has no second implementation anywhere in the corpus.
+FAIR
+v10a.26 passes real structural tests. It independently reproduces B ≈ 0, D ≈ 0, and the blind holdout λ_R = 2λ_M − λ_X — two genuinely independent conditions on its four measured values. Its disagreement is coherent, not a single bad number.
+The honest asymmetry: an independent arbiter exists for the axial channel — the repository's own cellular re-derivation, at symbolic N, from Haar moments and the electric convention — and no independent arbiter exists for the non-axial channels. That, precisely, is the gap.
+
+§8
+The proposed decisive test
+Not G3. Extend workhouse.cellular — which already re-derives the axial channel independently at symbolic N, and is T1-checked — to the two channels that carry the dispute:
+
+Self-test first. The normal (cube-completion) channel, against the agreed A = 5/48. Not a target — a validation that the machinery is sound before it is trusted on anything disputed.
+Then the in-plane nearest-neighbour transfer — two coplanar edge-sharing plaquettes, 12 records, carrying +0.008121 of C.
+Then the orbital-rotation sector — carrying −0.004080 of C.
+Those three fix C to within 2.7 × 10⁻⁵ — 0.10% of the disputed gap. The remaining range-≥2 blocks are negligible against a dispute of 0.0279.
+
+This is engine-free, target-blind by construction (the self-test uses a value both sides already agree on), and it attacks exactly the quantity in dispute rather than recomputing the entire fourth order. Compare with the current route: 609 clusters, >13 CPU-minutes each for the smallest, 474 of them larger, behind an upstream engine revision that has not happened.
+
+What would refute the reading here
+A cellular re-derivation of the in-plane channel landing near 4.43× the historical value — that would vindicate v10a.26 and refute the historical kernel's non-axial sector.
+Evidence that B₃^bal was obtained by substitution and that the ε-correction was defined as the difference — that would make §2's agreement circular, leaving only the reduction-factor argument.
+An N ≥ 5 run of the v10a/marked-cluster lineage disagreeing with P₁₇/R₂₀, which would indict the engine; or agreeing, which would indict the historical SU(3) sector.
+A fourth-order kernel record with a displacement shell not in {(0,0,0), (0,0,1), (0,0,2), (0,1,1), (0,1,2), (1,1,1)} — the ledger's block structure assumes the shipped support is complete.
+Reproduction. Every number above is exact and machine-derived. The channel ledger comes from workhouse.payloads.kernel_records() with an independent Gaussian-rational shape decomposition; B₃^bal from workhouse.payloads.b_evaluator() cross-checked against P₁₇/R₂₀ transcribed from theory/; the scalar continuation from workhouse.payloads.q_polynomials(). No repository file was modified.
+
+Standing rule, unaffected. Neither side of C2 is promoted, averaged, or preferred here. The structural evidence favours the historical value; that is a reading, not a check, and it stays a reading until an independent arbiter for the non-axial channels exists.

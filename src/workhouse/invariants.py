@@ -4545,3 +4545,247 @@ def _():
         "the former; that is geometry, not evidence, since an eps-free object is not a candidate "
         "for the physical C_shp. Neither side is preferred"
     )
+
+
+@channels.check(
+    "the shape fit's C row sums to zero, so no Gamma-anchor error can move C_shp at all",
+    "provenance nb-hodge-v10a26-alt2, _v10a3_extract_shape; UNIFIED v4.3 §5.1",
+    tier=1,
+)
+def _():
+    # C1 and C2 have been carried side by side as if a mistake in the first
+    # could bleed into the second: both are fourth-order, both concern the
+    # same kernel, and the adjudicator reported them together. This check
+    # settles the relationship exactly, and the answer is that they cannot
+    # touch.
+    #
+    # The shape fit is fully determined by geometry the run states in source:
+    # theta = 2*pi/5 and the four fit momenta (t,0,0), (t,t,0), (2t,t,0),
+    # (t,t,t), with row [q, e2, 4*e2/q, e3/q] and a_i = 4 sin^2(k_i/2). At
+    # theta = 2*pi/5 those a-values are (5 -/+ sqrt 5)/2, so M and M^-1 live
+    # in Q(sqrt 5) and can be inverted symbolically -- no float enters here.
+    #
+    # The fit solves M coef = vals - eps_Gamma. Perturb the Gamma anchor
+    # alone by delta and the right-hand side moves by -delta*(1,1,1,1), so
+    # each coefficient moves by -delta times its row sum. The C row is
+    # [-1/2, (1+sqrt5)/4, (1-sqrt5)/4, 0], which sums to EXACTLY zero. The A,
+    # B and D rows do not.
+    #
+    # So C_shp is invariant under any perturbation of the Gamma anchor, of any
+    # magnitude -- not small, not suppressed, exactly zero. The C2 gap of
+    # 0.0279 therefore cannot be an anchoring artifact of any kind, and the
+    # C1 anchoring distinction cannot be a partial explanation of it either.
+    # A, by contrast, moves at rate (1/2 + sqrt5/10), so A is the coefficient
+    # that WOULD register an anchor disagreement, and both sides agree on it.
+    #
+    # Neither side of C2 is preferred by this. What falls is a whole class of
+    # explanation for the gap.
+    import sympy as sp
+
+    theta = 2 * sp.pi / 5
+
+    def row(k):
+        a = [sp.nsimplify(sp.simplify(4 * sp.sin(x / 2) ** 2), [sp.sqrt(5)]) for x in k]
+        q = sum(a)
+        e2 = a[0] * a[1] + a[0] * a[2] + a[1] * a[2]
+        e3 = a[0] * a[1] * a[2]
+        return [sp.radsimp(sp.simplify(x)) for x in (q, e2, 4 * e2 / q, e3 / q)]
+
+    fit = [(theta, 0, 0), (theta, theta, 0), (2 * theta, theta, 0), (theta, theta, theta)]
+    inverse = sp.Matrix([row(k) for k in fit]).inv()
+    sums = [sp.simplify(sum(inverse.row(i))) for i in range(4)]
+
+    stated = [sp.Rational(-1, 2), (1 + sp.sqrt(5)) / 4, (1 - sp.sqrt(5)) / 4, sp.Integer(0)]
+    c_row_matches = all(sp.simplify(sp.radsimp(inverse[2, j]) - stated[j]) == 0 for j in range(4))
+    c_immune = sums[2] == 0
+    others_move = all(s != 0 for i, s in enumerate(sums) if i != 2)
+
+    return (c_row_matches and c_immune and others_move), (
+        f"over Q(sqrt 5) the shape-fit inverse has C row {stated}, summing to exactly "
+        f"{sums[2]}, so d C_shp / d eps_Gamma = 0 identically: a Gamma-anchor error of ANY size "
+        f"moves C_shp by nothing. The other rows sum to A {sums[0]}, B {sums[1]}, D {sums[3]}, "
+        "all nonzero, so A is the coefficient an anchor disagreement would show up in -- and the "
+        "two C2 sides agree on A. C1 is an anchoring distinction and cannot explain any part of "
+        "the C2 gap; the two are algebraically independent. Neither C_shp side is preferred"
+    )
+
+
+@channels.check(
+    "FINDING: the run's own re-anchor moved C_shp by 4.6e-15, as the zero row sum requires",
+    "provenance nb-hodge-v10a26-alt2, sections 13 and 17",
+    tier=2,
+)
+def _():
+    # The exact result next door predicts a number this run already measured,
+    # and the run measured it twice by accident rather than by design.
+    #
+    # Section 13 extracts the shape BLIND, before any re-anchoring, at
+    # rest_direct = -11.9485781794007. Section 17 re-extracts it after adding
+    # the independently linked local shift +11.17343231638178, landing at
+    # rest_direct = -0.775145863018919. That is a shift of the Gamma rest
+    # energy by more than eleven units -- four orders of magnitude larger than
+    # the entire C2 gap.
+    #
+    # C_direct went from -0.0202133288861666 to -0.0202133288861712. It moved
+    # by 4.6e-15, which is float noise on a quantity of size 0.02, against a
+    # shift of 11.17. Had C carried even a thousandth of the anchor's
+    # sensitivity, that re-anchor would have moved it by more than the whole
+    # disputed gap.
+    #
+    # This is the numerical witness for the exact statement: the shape fit's C
+    # row sums to zero. It also means the disputed C_shp value is the same
+    # number before and after the run's scalar bookkeeping, so nothing in the
+    # C1 half of the adjudicator's verdict reaches it.
+    blind = -0.0202133288861666
+    final = -0.0202133288861712
+    anchor_blind = -11.9485781794007
+    anchor_final = -0.775145863018919
+
+    anchor_shift = anchor_final - anchor_blind
+    c_moved = abs(final - blind)
+    gap = abs(K.C_SHP_NEW_NUM - float(P.as_fraction(K.C_SHP_HISTORICAL)))
+    # the sensitivity C would need for the re-anchor to explain the gap
+    needed = gap / abs(anchor_shift)
+
+    return (c_moved < 1e-14 and anchor_shift > 11 and c_moved / abs(anchor_shift) < 1e-15), (
+        f"re-anchoring the Gamma rest by {anchor_shift:+.14f} moved C_direct from {blind} to "
+        f"{final}, a change of {c_moved:.1e} -- an effective sensitivity of "
+        f"{c_moved / abs(anchor_shift):.1e}, indistinguishable from the exact zero the C row's "
+        f"vanishing sum requires. To attribute the {gap:.4f} C2 gap to anchoring would need a "
+        f"sensitivity of {needed:.4f}, larger by a factor of "
+        f"{needed / (c_moved / abs(anchor_shift)):.1e}. The disputed C_shp is the same number "
+        "before and after the run's scalar bookkeeping"
+    )
+
+
+@channels.check(
+    "FINDING: the v10a.26 cluster ledger is exhausted by supports <= 2 until fourth order",
+    "provenance nb-hodge-v10a26-alt2, section 16 rooted incidence transform",
+    tier=2,
+)
+def _():
+    # An earlier check in this suite says the disputed side supplies no block
+    # structure for the SHAPE, and that stands. It is not the whole story for
+    # the SCALAR, and this check records what the run's section 16 actually
+    # emits, because it is a decomposition and nobody had read it.
+    #
+    # The rooted incidence transform prints one row per cluster support size,
+    # 1 through 6, each carrying its own c1/c2/c3/c4. Read as a ledger it says
+    # something sharp about where each order lives:
+    #
+    #   order 2:  1/2 - 71/153 = 11/306          sizes 3-6 contribute 0
+    #   order 3:  7/32 + (12*LEAK_3 - 4*B_3)      sizes 3-6 contribute 0
+    #   order 4:  143/8960 + s2 + s3 + 0 + 0 - 5/24 = m_Gamma^(4)
+    #
+    # The third-order row is the interesting one. This registry already
+    # decomposes D_3 as 7/32 + 12*LEAK_3 - 4*B_3, and section 16's two nonzero
+    # third-order rows ARE those two groups, exactly: the size-1 row is 7/32
+    # and the size-2 row is 12*LEAK_3 - 4*B_3 = -40943/62424, to the last bit
+    # of the printed twelve digits. So the disputed side does not merely agree
+    # with the historical side on m3 -- it agrees on the DECOMPOSITION of m3,
+    # on-site term against neighbour terms, by an independent route.
+    #
+    # The second and third moments are therefore exhausted by supports of size
+    # at most two, exactly; the larger clusters are not small there, they are
+    # zero. Fourth order is the first to recruit anything bigger, and it takes
+    # sizes 3 and 6 while leaving 4 and 5 empty to 2.9e-14. Two of its six
+    # rows are clean rationals -- size 1 is 143/8960, size 6 is -5/24 -- and
+    # the other two nonzero rows admit no rational under denominator 1e7.
+    #
+    # This is the sharpest available framing of C2: the two sides share a
+    # decomposition through third order, term for term, and part company only
+    # where fourth order first reaches past the nearest neighbour. The
+    # coincidence that -5/24 = -2*(5/48) = -2A is recorded as a coincidence;
+    # nothing here derives it and nothing here uses it. Neither side is
+    # preferred.
+    from fractions import Fraction
+
+    order2_closes = Fraction(1, 2) - Fraction(71, 153) == P.as_fraction(K.BAND_ODD_FLAT)
+    neighbour_3 = 12 * K.LEAK_3 - 4 * K.B_3
+    order3_closes = Fraction(7, 32) + P.as_fraction(neighbour_3) == P.as_fraction(K.D_3)
+    decomposition_matches = neighbour_3 == -Rational(40943, 62424)
+
+    c4_rows = {
+        1: 0.0159598214286,
+        2: -0.403971702978,
+        3: -0.178800648136,
+        4: -1.3933298959e-14,
+        5: -2.85049761573e-14,
+        6: -0.208333333333,
+    }
+    empty_max = max(abs(c4_rows[s]) for s in (4, 5))
+    closes = abs(sum(c4_rows.values()) - K.M_GAMMA_4_NUM)
+    size1 = abs(c4_rows[1] - float(Fraction(143, 8960)))
+    size6 = abs(c4_rows[6] - float(Fraction(-5, 24)))
+    printed_3 = abs(-0.655885556837 - float(neighbour_3))
+
+    return (
+        order2_closes and order3_closes and decomposition_matches and empty_max < 1e-13,
+        f"section 16's support-size ledger closes order 2 as 1/2 - 71/153 = {K.BAND_ODD_FLAT} and "
+        f"order 3 as 7/32 + ({neighbour_3}) = {K.D_3}, both EXACTLY, with supports 3 through 6 "
+        f"contributing nothing. Its size-2 third-order row is this registry's own "
+        f"12*LEAK_3 - 4*B_3 to {printed_3:.1e}, so the disputed side reproduces the DECOMPOSITION "
+        "of m3, not just its value. Fourth order is the first to recruit larger clusters: it "
+        f"takes sizes 3 and 6 and leaves 4 and 5 empty to {empty_max:.1e}, the six rows summing "
+        f"to m_Gamma^(4) to {closes:.1e}, with size 1 = 143/8960 to {size1:.1e} and size 6 = "
+        f"-5/24 to {size6:.1e}. The two sides share a decomposition through third order and part "
+        "company where fourth order first reaches past the nearest neighbour. Neither is preferred",
+    )
+
+
+@channels.check(
+    "FINDING: the off-axis ledger carries two claims its own author later retracted",
+    "notes UPLOADS_2026-08-28d OFF_AXIS_LEDGER §6/§7, corrected by the C2 status note",
+    tier=2,
+)
+def _():
+    # Both documents are pinned, both are about C2, and one silently
+    # supersedes the other. The ledger is the more useful of the two -- it is
+    # what channel_ledger.py implements -- so it is the one a reader reaches
+    # for, and nothing inside it says that two of its conclusions are dead.
+    #
+    # Retracted in the later note, by the same author:
+    #
+    #   §6 "The most economical single hypothesis is that v10a.26 is missing
+    #      the nu = +-3 epsilon-sector"  -- refuted: C_new was computed under
+    #      the nine-family allowlist, epsilon-sectors included.
+    #
+    #   §7 "It independently reproduces ... the blind holdout
+    #      lambda_R = 2 lambda_M - lambda_X"  -- refuted: L = 5 contains no R,
+    #      so the run cannot reproduce that holdout and did not.
+    #
+    # The second retraction matters most. §7 offers the holdout as one of
+    # "two genuinely independent conditions" supporting the disputed side; with
+    # it withdrawn, that support is one condition, not two. This check exists
+    # so the pairing is machine-recorded rather than left to whoever
+    # remembers, and it fails if either document is edited out from under it.
+    #
+    # Neither retraction touches the §5 channel ledger, which is separately
+    # T1-checked, and neither side of C2 is preferred.
+    ledger = (
+        ROOT / "notes" / "imported" / "UPLOADS_2026-08-28d" / "OFF_AXIS_LEDGER.txt"
+    ).read_text(encoding="utf-8")
+    corrector = (
+        ROOT
+        / "notes"
+        / "imported"
+        / "WORK_SINCE_2026-08"
+        / "C2_status_note_misfiled_as_carrier_persistence.txt"
+    ).read_text(encoding="utf-8")
+
+    claims_epsilon = "missing the ν = ±3 ε-sector" in ledger
+    claims_holdout = "λ_R = 2λ_M − λ_X" in ledger
+    retracts_epsilon = "It's refuted" in corrector and "nine-family allowlist" in corrector
+    retracts_holdout = "it doesn't and can't, since L=5 contains no R" in corrector
+    keeps_both = "recorded in §9 rather than deleted" in corrector
+
+    return (
+        claims_epsilon and claims_holdout and retracts_epsilon and retracts_holdout and keeps_both,
+        "the pinned off-axis ledger states the epsilon-sector-omission hypothesis (§6) and the "
+        "lambda_R = 2 lambda_M - lambda_X holdout (§7) with no indication either is dead; the "
+        "pinned C2 status note retracts both, the first because C_new was computed under the "
+        "nine-family allowlist with epsilon-sectors included, the second because L = 5 contains "
+        "no R. So §7's 'two genuinely independent conditions' supporting the disputed side is one "
+        "condition. Both retractions are kept in place rather than deleted, per the repository's "
+        "own rule, and neither touches the §5 channel ledger or prefers a side of C2",
+    )
