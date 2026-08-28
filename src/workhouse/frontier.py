@@ -74,6 +74,27 @@ def strip_lean_comments(body: str) -> str:
     out: list[str] = []
     i, depth = 0, 0
     in_string = False
+    ident = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'!?")
+
+    def char_literal_end(pos: int) -> int:
+        """End index past a character literal at ``pos``, or ``pos`` if none.
+
+        A quote after an identifier character is a prime (h'), never a
+        literal; a literal is exactly '<char>' or '<backslash-escape>'.
+        Without this, Char := '"' would open phantom string mode and blank
+        every later theorem and sorry in the file.
+        """
+        if body[pos] != "'" or (pos > 0 and body[pos - 1] in ident):
+            return pos
+        j = pos + 1
+        if j < len(body) and body[j] == "\\":
+            j += 2
+        elif j < len(body) and body[j] not in ("'", "\n"):
+            j += 1
+        else:
+            return pos
+        return j + 1 if j < len(body) and body[j] == "'" else pos
+
     while i < len(body):
         ch = body[i]
         two = body[i : i + 2]
@@ -100,6 +121,8 @@ def strip_lean_comments(body: str) -> str:
             end = body.find("\n", i)
             if end == -1:
                 break
+            i = end
+        elif ch == "'" and (end := char_literal_end(i)) != i:
             i = end
         elif ch == '"':
             in_string = True
