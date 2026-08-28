@@ -1440,6 +1440,83 @@ def _():
     )
 
 
+@adjudication.check(
+    "the two 189-record kernels agree everywhere except three amplitudes, "
+    "and the on-site anchor swap moves C by exactly zero",
+    "runs/g3_kernel_record_dump_2026-08-28 + the historical certificate",
+    tier=2,
+)
+def _():
+    # G3 step 2, executed: the cold kernel's 189 records (never previously
+    # written down; reproduced on CPU in 12.3 minutes from the pinned
+    # v10a.26 script, kernel leg only) against the pinned historical
+    # certificate, both through ONE stdlib reimplementation of the
+    # transcript's 4-point Bloch shape fit (kernel_comparison.py).
+    #
+    # The extractor is validated on both sides before anything structural
+    # is claimed: it must return each kernel's own registered fingerprints
+    # — historical C_shp and q_old (exact rationals, compared as floats),
+    # the cold C_SHP_NEW_NUM, and A = 5/48 for BOTH kernels.
+    #
+    # The structural findings, neither side promoted:
+    #   * identical 189-record support;
+    #   * one scale factor s explains 144 of 189 records to ~2e-12 — the
+    #     entire rotation-type bulk has identical relative structure;
+    #   * the divergence is confined to the A-carrying sector the
+    #     registered block result predicted: the cross-plane amplitude
+    #     (24 records, ONE value per kernel, opposite sign), the nn
+    #     same-plane NORMAL/IN-PLANE amplitudes (18 records), and the
+    #     on-site scalar (the q_band-vs-m_Gamma anchor, ADR 0002);
+    #   * the anchor difference is shape-inert: swapping the on-site
+    #     diagonal alone moves C by exactly zero;
+    #   * the class-swap Delta_C contributions are linear and sum to the
+    #     measured C difference.
+    from . import kernel_comparison as KCMP
+
+    r = KCMP.compare()
+    sh, sc = r["shape_hist"], r["shape_cold"]
+    validated = (
+        r["support_hist"] == r["support_cold"]
+        and len(r["support_hist"]) == 189
+        and abs(sh["C"] - float(K.C_SHP_HISTORICAL)) < 1e-12
+        and abs(sh["rest"] - float(K.Q_BAND_4)) < 1e-11
+        and abs(sc["C"] - K.C_SHP_NEW_NUM) < 1e-12
+        and abs(sh["A"] - float(K.A_SHP_3)) < 1e-11
+        and abs(sc["A"] - float(K.A_SHP_3)) < 1e-11
+    )
+    divergent_classes = {cls: len(keys) for cls, keys in r["divergent"].items()}
+    structure = (
+        r["bulk_count"] == 144
+        and r["bulk_spread"] < 1e-9
+        and divergent_classes
+        == {
+            ("nn", "same"): 18,
+            ("onsite", "same"): 3,
+            ("nn", "cross"): 12,
+            ("onsite", "cross"): 6,
+            ("diag2", "cross"): 6,
+        }
+    )
+    anchor_inert = abs(r["swaps"][("onsite", "same")]) < 1e-10
+    total = sum(r["swaps"].values())
+    actual = sc["C"] - r["c_base"]
+    linear = abs(total - actual) < 1e-9
+    ok = validated and structure and anchor_inert and linear
+    return ok, (
+        f"extractor validated on both sides: hist C = {sh['C']:.12f} "
+        f"(= C_shp historical), hist rest = {sh['rest']:.12f} (= q_old), "
+        f"cold C = {sc['C']:.15g} (= C_SHP_NEW_NUM), A = 5/48 both "
+        f"(|dA| < 1e-11); support identical, 189 records; scale s = "
+        f"{r['scale']:.12f} explains {r['bulk_count']}/189 records with "
+        f"spread {r['bulk_spread']:.1e}; divergent classes "
+        f"{divergent_classes}; on-site anchor swap dC = "
+        f"{r['swaps'][('onsite', 'same')]:.1e} (shape-inert, ADR 0002); "
+        f"class swaps sum {total:+.12f} vs measured {actual:+.12f}. The "
+        "dispute is three amplitudes in the A-carrying sector; the "
+        "rotation bulk is structurally shared. Neither kernel preferred"
+    )
+
+
 # ==========================================================================
 near_gamma = _suite("near-Gamma uniformity (G11)")
 
