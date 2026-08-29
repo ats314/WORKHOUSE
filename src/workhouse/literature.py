@@ -183,7 +183,7 @@ def validate(lit: Literature | None = None) -> list[str]:
     if fulltext_dir.is_dir():
         declared = {str(p.get("fulltext", "")) for p in lit.papers}
         for stored in sorted(fulltext_dir.iterdir()):
-            rel = str(stored.relative_to(LITERATURE_DIR))
+            rel = stored.relative_to(LITERATURE_DIR).as_posix()
             if stored.is_file() and rel not in declared:
                 problems.append(f"orphan stored file with no licence record: {rel}")
 

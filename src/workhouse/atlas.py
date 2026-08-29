@@ -112,5 +112,5 @@ def render(data: dict[str, Any] | None = None) -> str:
 
 def write(path: Path | None = None, data: dict[str, Any] | None = None) -> Path:
     target = path or DEFAULT_OUT
-    target.write_text(render(data), encoding="utf-8")
+    target.write_text(render(data), encoding="utf-8", newline="\n")
     return target

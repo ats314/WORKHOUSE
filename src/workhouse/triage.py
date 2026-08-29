@@ -167,7 +167,7 @@ def _pinned() -> dict[str, str]:
             if path.is_file() and path.name != "SHA256SUMS":
                 digest = hashlib.sha256(path.read_bytes()).hexdigest()
                 rel = path.relative_to(directory)
-                out[digest] = f"{directory.name}/{rel}"
+                out[digest] = f"{directory.name}/{rel.as_posix()}"
     return out
 
 
