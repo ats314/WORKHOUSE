@@ -206,7 +206,13 @@ def _():
     ]
     ok = all(printed == registered for printed, registered in ledger)
     return ok, (
-        "all seven table rows match the registry exactly; the u^1 row is "
-        "SU(3)-only (the epsilon channel, vanishing for N >= 4), the other six "
-        "specialise all-rank statements"
+        "all seven table rows match the registry exactly. Their SCOPE is not "
+        "uniform, and saying 'the other six specialise all-rank statements' "
+        "was wrong: the u^0 row and the u^2 BB^dagger coefficient are the "
+        "all-rank 2 C_F and t_N; the u^1 row is SU(3)-only (the epsilon "
+        "channel, vanishing for N >= 4); the u^2 flat scalar inherits the "
+        "SU(3) tower term through the assembly formula; and the three u^3 rows "
+        "are SU(3)-only AND conditional on the supplied domino ledger. A "
+        "ledger table whose rows carry different statuses under one heading is "
+        "how a conditional value gets read as an all-rank one"
     )

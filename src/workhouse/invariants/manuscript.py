@@ -36,7 +36,10 @@ PAPER_TEXTS = (
 #: is the thing to extend when an edition lands; the failure it prevents is
 #: the one a review caught on the 08-29 draft, where the guard read only the
 #: older file and an unresolvable label passed unnoticed.
-CHK_EDITIONS = ("master_paper_2026-08-28.tex",)
+CHK_EDITIONS = (
+    "master_paper_2026-08-28.tex",
+    "master_paper_2026-08-29.tex",
+)
 
 
 @manuscript.check(

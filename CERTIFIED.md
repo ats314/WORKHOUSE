@@ -684,16 +684,16 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **the flat-band manuscript**
 
 - `every \chk in the pinned editions names a check that exists and passes`
-  - src/workhouse/invariants/manuscript.py:42 · MASTER paper, every displayed result
+  - src/workhouse/invariants/manuscript.py:45 · MASTER paper, every displayed result
   - `workhouse verify --only 'every \chk in the pinned editions names a check that exists and passes'`
 - `every declared note document is a graph node with an edge`
-  - src/workhouse/invariants/manuscript.py:86 · ledger/notes.yaml + notes/*.jsonl
+  - src/workhouse/invariants/manuscript.py:89 · ledger/notes.yaml + notes/*.jsonl
   - `workhouse verify --only 'every declared note document is a graph node with an edge'`
 - `no fourth-order coefficient enters the manuscript`
-  - src/workhouse/invariants/manuscript.py:140 · PAPER_FLATBAND §6
+  - src/workhouse/invariants/manuscript.py:143 · PAPER_FLATBAND §6
   - `workhouse verify --only 'no fourth-order coefficient enters the manuscript'`
 - `q at the four high-symmetry points is 0, 4, 8, 12`
-  - src/workhouse/invariants/manuscript.py:162 · MASTER_DOC Fig. 2
+  - src/workhouse/invariants/manuscript.py:165 · MASTER_DOC Fig. 2
   - `workhouse verify --only 'q at the four high-symmetry points is 0, 4, 8, 12'`
 **tier collapse (G14)**
 
@@ -901,7 +901,7 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **the flat-band manuscript**
 
 - `every node the theory graph strands is stranded for a stated reason`
-  - src/workhouse/invariants/manuscript.py:181 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
+  - src/workhouse/invariants/manuscript.py:184 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
   - `workhouse verify --only 'every node the theory graph strands is stranded for a stated reason'`
 **two-cube charge-odd second-order closure (B=4 and B=6)**
 
