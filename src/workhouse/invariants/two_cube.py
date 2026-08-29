@@ -308,3 +308,118 @@ def _():
         f"ratio >= {hv['heldout_small_u']['minimum_wrong_to_correct_error_ratio']:.0f}. Read "
         "from the sealed certificate; the 1,590,462-state builder was not re-run here"
     )
+
+
+@two_cube.check(
+    "FINDING: the two-cube six-channel census IS this registry's t_N = B_N - A_N",
+    "R2; runs/two_cube_codd_o2_2026-08-29 §7",
+)
+def _():
+    # The suite above establishes that the six channels sum to 5/612. This
+    # check is about what the six channels ARE, which is a different and
+    # sharper statement, and it is the reason this release matters beyond
+    # confirming a number the registry already carried.
+    #
+    # The all-ranks suite has always carried four weights, conjugates merged:
+    # w_1 = -1/12, w_8 = -16/51 summing to the mixed-orientation A_N, and
+    # w_3bar = -1/6, w_6 = -2/9 summing to the like-orientation B_N, with
+    # t_N = B_N - A_N. That subtraction is written abstractly; nothing said
+    # what performs it.
+    #
+    # The two-cube release reports six coefficients with conjugates resolved
+    # and the charge-odd projection already applied to each. They line up:
+    #
+    #     3 + 3bar = -1/6  = w_3bar          1 = +1/12  = -w_1
+    #     6 + 6bar = -2/9  = w_6             8 = +16/51 = -w_8
+    #
+    # so the like-orientation channels sum to B_3 and the mixed-orientation
+    # ones to MINUS A_3. The subtraction in the rank law is the sign the
+    # charge-odd projection puts on the mixed-orientation channels, on an
+    # actual face-sharing Hilbert space. An abstract identity in constants.py
+    # turns out to name a mechanism.
+    #
+    # C2 is untouched: this is second-order hopping, not C_shp.
+    certificate = json.loads(
+        (
+            ROOT
+            / "runs"
+            / "two_cube_codd_o2_2026-08-29"
+            / "two_cube_b6_codd_o2_connected_kernel_certificate.json"
+        ).read_text(encoding="utf-8")
+    )
+    channels = {
+        key.split(":")[1]: Fraction(value["rational"])
+        for key, value in certificate["graph"]["channel_coefficients"].items()
+    }
+
+    w_1, w_8 = Fraction(-1, 12), Fraction(-16, 51)
+    w_3bar, w_6 = Fraction(-1, 6), Fraction(-2, 9)
+    a3, b3 = w_1 + w_8, w_3bar + w_6
+
+    like = channels["3"] + channels["bar3"] + channels["6"] + channels["bar6"]
+    mixed = channels["1"] + channels["8"]
+
+    resolves = (
+        channels["3"] + channels["bar3"] == w_3bar
+        and channels["6"] + channels["bar6"] == w_6
+        and channels["1"] == -w_1
+        and channels["8"] == -w_8
+    )
+
+    return (resolves and like == b3 and mixed == -a3 and like + mixed == b3 - a3), (
+        f"the six target-blind channels resolve into the registry's four: 3 + 3bar = "
+        f"{channels['3'] + channels['bar3']} = w_3bar, 6 + 6bar = "
+        f"{channels['6'] + channels['bar6']} = w_6, 1 = {channels['1']} = -w_1, "
+        f"8 = {channels['8']} = -w_8. So the like-orientation "
+        f"channels sum to B_3 = {b3} and the mixed to -A_3 = {-a3}, making the census B_3 - A_3. "
+        "The subtraction the rank law writes between two families is the sign the charge-odd "
+        "projection puts on the mixed channels -- an abstract identity shown to name a mechanism "
+        "on a real two-cube space. Second-order hopping; C2 untouched"
+    )
+
+
+@two_cube.check(
+    "FINDING: the two-cube restored channels reproduce the bridge's 14/153 completion",
+    "R2; runs/two_cube_codd_o2_2026-08-29 §10; runs/cbb_finite_n_bridge_2026-08-28",
+)
+def _():
+    # The one-cube bridge registered w_6 - w_8 = 14/153 as the exact
+    # completion the p+q<=1 cutoff omits. That came from four merged channel
+    # weights fed through a second-order Schur complement on ONE cube, and it
+    # was recorded before any two-cube calculation existed.
+    #
+    # The two-cube release reaches the same number from the other direction:
+    # its restored 6, 6bar and 8 channels, resolved separately on a
+    # 1,590,462-state face-sharing space, sum to 14/153. The legacy channels
+    # sum to -1/12, the B4 coefficient, and the two add to 5/612.
+    #
+    # So the completion is not an artifact of merging conjugates, nor of the
+    # one-cube Schur route. Two constructions sharing no geometry agree on
+    # which channels are missing and by how much.
+    certificate = json.loads(
+        (
+            ROOT
+            / "runs"
+            / "two_cube_codd_o2_2026-08-29"
+            / "two_cube_b6_codd_o2_connected_kernel_certificate.json"
+        ).read_text(encoding="utf-8")
+    )
+    channels = {
+        key.split(":")[1]: Fraction(value["rational"])
+        for key, value in certificate["graph"]["channel_coefficients"].items()
+    }
+
+    legacy = channels["1"] + channels["3"] + channels["bar3"]
+    restored = channels["6"] + channels["bar6"] + channels["8"]
+    bridge_completion = Fraction(-2, 9) - Fraction(-16, 51)  # w_6 - w_8, as registered
+
+    return (
+        legacy == Fraction(-1, 12)
+        and restored == bridge_completion
+        and legacy + restored == Fraction(5, 612),
+        f"the two-cube legacy channels 1, 3, 3bar sum to {legacy}, the B4 coefficient; the "
+        f"restored 6, 6bar, 8 sum to {restored}, which is exactly the w_6 - w_8 = "
+        f"{bridge_completion} completion registered from the one-cube bridge before any two-cube "
+        f"calculation existed. Together {legacy + restored}. Two constructions sharing no "
+        "geometry agree on which channels are missing and by how much",
+    )

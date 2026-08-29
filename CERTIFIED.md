@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 178
+## T1 — re-derived exactly — 180
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -714,6 +714,12 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `B=6 retains every adjacent shared-link channel; B=4 provably cannot`
   - src/workhouse/invariants/two_cube.py:237 · R2; G3; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'B=6 retains every adjacent shared-link channel; B=4 provably cannot'`
+- `FINDING: the two-cube restored channels reproduce the bridge's 14/153 completion`
+  - src/workhouse/invariants/two_cube.py:381 · R2; runs/two_cube_codd_o2_2026-08-29 §10; runs/cbb_finite_n_bridge_2026-08-28
+  - `workhouse verify --only 'FINDING: the two-cube restored channels reproduce the bridge'"'"'s 14/153 completion'`
+- `FINDING: the two-cube six-channel census IS this registry's t_N = B_N - A_N`
+  - src/workhouse/invariants/two_cube.py:313 · R2; runs/two_cube_codd_o2_2026-08-29 §7
+  - `workhouse verify --only 'FINDING: the two-cube six-channel census IS this registry'"'"'s t_N = B_N - A_N'`
 - `the B=4 comparator on the same geometry gives -1/12 with the reversed spectrum`
   - src/workhouse/invariants/two_cube.py:204 · R2; runs/two_cube_codd_o2_2026-08-29, B4 note §4
   - `workhouse verify --only 'the B=4 comparator on the same geometry gives -1/12 with the reversed spectrum'`
