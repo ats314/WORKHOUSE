@@ -128,6 +128,10 @@ workhouse verify --only 'h_4^side'  # re-establish ONE claim, with its numbers
 workhouse verify --tier 1           # only the exact re-derivations
 workhouse frontier --brief          # the block injected at session start
 workhouse why C2                    # everything recorded about one claim id
+workhouse why C2 --evidence --json  # …with its pins and quotes, as machine-readable data
+workhouse branches                  # every unresolved disagreement, both sides, neither picked
+workhouse derive C2 G10             # the recorded support for a claim, as Markdown
+workhouse drift                     # whether index/ still says what a live run says
 workhouse triage /path/to/archive   # survey an unpinned collection
 workhouse notes                     # the notes register: reviewed vs pending, per archive
 workhouse notes --queue             # the next notes to review, highest signal first

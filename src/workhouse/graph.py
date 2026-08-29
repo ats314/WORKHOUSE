@@ -437,6 +437,28 @@ def build(
     return Graph(edges=sorted(edges), dangling=sorted(dangling))
 
 
+def load(path: Path | None = None) -> Graph:
+    """The checked-in edge list, rehydrated without rebuilding it.
+
+    ``build()`` walks every ledger, every ADR body, every check source and the
+    whole notes register; on this corpus that is seconds, and it needs the
+    scientific stack importable. ``index/graph.jsonl`` is staleness-tested, so
+    at every commit it says the same thing far more cheaply -- which is what a
+    read-only consumer (`why --checked-index`) actually wants.
+
+    The dangling report is not stored in the file and is not reconstructed
+    here: an empty list means "not computed", never "computed and clean". Only
+    ``build()`` can say the second, and ``validate()`` is what asks it.
+    """
+    target = path or GRAPH
+    if not target.exists():
+        return build()
+    edges = [
+        Edge(**json.loads(line)) for line in target.read_text(encoding="utf-8").splitlines() if line
+    ]
+    return Graph(edges=edges, dangling=[])
+
+
 def validate(graph: Graph | None = None) -> list[str]:
     """Structural problems, in the ledger.validate() style. Empty means sound."""
     graph = graph or build()

@@ -39,7 +39,12 @@ third, add an explicit `FINDING:` check that *asserts* the discrepancy.
 - `frontier.py` — computes `FRONTIER.md`; do not hand-write what it derives
 - `ledger.py` — loads and structurally validates the three registers
 - `graph.py` — computes `index/graph.jsonl`, every recorded edge between claims
-- `navigator.py` — `workhouse why`: one id's whole evidence neighborhood
+- `navigator.py` — `workhouse why`: one id's whole evidence neighborhood,
+  its traversal, and the replay-status axis (orthogonal to tier and status)
+- `render.py` — the colour decision and the JSON boundary, in one place
+- `branches.py` — `workhouse branches`: each disagreement's sides, side by side
+- `derive.py` — `workhouse derive`: recorded support, dependency-ordered
+- `snapshot.py` — `workhouse drift`: live run versus the checked-in `index/`
 - `atlas.py` — the graph as one self-contained HTML page; a view, never checked in
 - `corpus_index.py` — exact rationals in code, certificates, notebooks
 - `corpus_registry.py` — near-miss, multiple, and coverage sweeps over the whole corpus

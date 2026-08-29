@@ -124,6 +124,12 @@ workhouse frontier --brief       # the block the SessionStart hook injects
 workhouse search QUERY           # value, decimal, symbol, alias, or claim id
 workhouse why ID                 # everything recorded about one claim: edges,
                                  #   checks with live verdicts, theorems, ADRs
+workhouse why C2 --evidence      # …plus the pinned document, SHA-256 and quote
+workhouse why C2 --depth 2       # …two hops out; reaching is not relating
+workhouse why C2 --relations blocks,resolves   # one kind of edge only
+workhouse branches               # every unresolved disagreement, side by side
+workhouse derive C2 G10          # recorded support, dependency-ordered, as Markdown
+workhouse drift                  # has the checked-in index/ drifted from a live run?
 workhouse atlas                  # the same graph as an interactive HTML page
 workhouse lit --for C7           # published work bearing on one claim
 workhouse lit --holes            # the citation web's missing links, as leads
@@ -132,6 +138,14 @@ workhouse lit --resolve KS_1975  # try the open sources; a hit lands in the inbo
 workhouse lit --intake           # identify inbox PDFs and print pinning advice
 workhouse triage /path/to/dir    # survey an unpinned archive, read-only
 ```
+
+Every command above takes `--json` where it has something structured to say
+(`verify`, `search`, `status`, `why`, `branches`, `derive`, `drift`), and none
+of them emit ANSI into a pipe. `why` and `derive` also take `--checked-index`,
+which reads the generated `index/*.jsonl` instead of running the suites:
+milliseconds instead of seconds, at the cost of the *generating commit's*
+verdicts rather than live ones — which is why the output says which it read,
+and why `workhouse drift` exists to tell you whether the two still agree.
 
 `make help` lists the rest (`fmt`, `lock`, `clean`, …). Two are easy to
 conflate: `make manifest` re-pins `theory/` and `make corpus-manifest` re-pins
