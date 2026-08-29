@@ -22,7 +22,10 @@ restored = _suite("restored payloads (G1)")
 )
 def _():
     pins = P.corpus_pins()
-    rel = str(P.KERNEL.relative_to(P.CORPUS))
+    # as_posix, not str: the pin manifest keys use forward slashes, and on
+    # Windows str() yields backslashes — the lookup missed and this check
+    # failed there while every value it compares was identical.
+    rel = P.KERNEL.relative_to(P.CORPUS).as_posix()
     actual = P.sha256_of(P.KERNEL)
     semantic = P.semantic_sha()
     row = P.canonical_rows().get("A20K", {})
