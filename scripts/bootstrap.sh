@@ -49,7 +49,32 @@ for s in $stacks; do
     rust)  echo "bootstrap: rust";  cargo fetch ;;
     go)    echo "bootstrap: go";    go mod download ;;
     ruby)  echo "bootstrap: ruby";  bundle install ;;
-    tex|notebooks) : ;;   # no install step
+    tex)
+      echo "bootstrap: tex"
+      if ! command -v pdflatex >/dev/null 2>&1; then
+        DEBIAN_FRONTEND=noninteractive apt-get update -qq
+        DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+          texlive-latex-base texlive-latex-recommended texlive-latex-extra \
+          texlive-fonts-recommended texlive-science texlive-bibtex-extra \
+          texlive-extra-utils texlive-pictures latexmk biber \
+          poppler-utils latexdiff chktex >/dev/null
+      fi
+      ;;
+    lean)
+      echo "bootstrap: lean"
+      if ! command -v elan >/dev/null 2>&1; then
+        curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+          | sh -s -- -y --default-toolchain none >/dev/null 2>&1
+        export PATH="$HOME/.elan/bin:$PATH"
+      fi
+      # Build in the lean/ subdir if it has a lakefile.
+      lean_dir=$(find "$root" -maxdepth 2 -name 'lean-toolchain' -print -quit 2>/dev/null)
+      if [ -n "$lean_dir" ]; then
+        lean_dir=$(dirname "$lean_dir")
+        (cd "$lean_dir" && lake exe cache get && lake build) >&2
+      fi
+      ;;
+    notebooks) : ;;   # no install step
   esac
 done
 

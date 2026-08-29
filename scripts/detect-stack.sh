@@ -21,6 +21,7 @@ has Cargo.toml                                     && echo rust
 has go.mod                                         && echo go
 has Gemfile                                        && echo ruby
 any_file '*.tex'                                   && echo tex
+any_file 'lean-toolchain'                            && echo lean
 any_file '*.ipynb'                                 && echo notebooks
 
 exit 0
