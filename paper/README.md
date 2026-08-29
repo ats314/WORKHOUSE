@@ -1,96 +1,365 @@
 # The manuscript of record
 
-*Homological flat bands in strongly coupled SU(N) Hamiltonian lattice gauge
-theory*, Alexander Smith, 28 August 2026 — the first piece of this program
-written for outside readers, and the first artifact that cites this repository
-by commit.
+*Nested-quotient temporal histories and homological flat bands in
+strong-coupling SU(N) Hamiltonian lattice gauge theory*, Alexander Smith —
+the outward-facing statement of this program, and the artifact that cites this
+repository by commit.
 
-It is pinned here for the same reason `runs/` is pinned: the checks below refer
-to *these bytes*. `SHA256SUMS` records them and `tests/test_paper.py` fails if
-any of them moves.
+Manuscripts are pinned here for the same reason `runs/` is pinned: the checks
+below refer to *these bytes*. `SHA256SUMS` records them and `tests/test_paper.py`
+fails if any of them moves.
 
 | File | What it is |
 |---|---|
-| `master_paper_2026-08-28.tex` | **the united edition, and the current artifact of record.** The two manuscripts below merged into one, with the four results this repository added on 2026-08-28 folded in. Source, not just output — the `.tex` is pinned alongside the `.pdf`. |
-| `master_paper_2026-08-28.pdf` | its build. Byte-reproducible; see **Rebuilding** below. |
-| `homological_flat_bands_2026-08-28.pdf` | the flat-band manuscript, the one that cites this repository by commit. Superseded by the united edition, kept as the pinned original. |
-| `nested_quotient_master_2026-08-28.pdf` | the master derivation, uniting it with the nested-quotient circuit theory. Superseded by the united edition, kept the same way. |
-| `nested_quotient_master_2026-08-28.txt` | its extracted text, same provenance and standing as the line below. |
-| `homological_flat_bands_2026-08-28.txt` | its text, extracted once with `pypdf` 6.16.2 so checks can read it. Derived, never authority — where the two differ the PDF wins. |
-| `verify_core.py` | the master paper's portable verifier: 12 checks, standard library only, matching its Reproducibility section. |
+| `master_paper_2026-08-29.tex` | **the final edition, and the current artifact of record.** Source, pinned alongside its build. |
+| `master_paper_2026-08-29.pdf` | its build. Byte-reproducible; see **Rebuilding**. 16 pages, zero overfull boxes, zero undefined references. |
+| `master_paper_2026-08-28.tex` | the united edition. Superseded by the line above, kept as pinned evidence. |
+| `master_paper_2026-08-28.pdf` | its build. |
+| `homological_flat_bands_2026-08-28.pdf` | the flat-band manuscript, the first artifact to cite this repository by commit. Superseded, kept as the pinned original. |
+| `nested_quotient_master_2026-08-28.pdf` | the master derivation, uniting it with the nested-quotient circuit theory. Same standing. |
+| `*_2026-08-28.txt` | their extracted text, extracted once with `pypdf` 6.16.2 so checks can read them. Derived, never authority — where the two differ the PDF wins. |
+| `verify_core.py` | the portable verifier: 29 checks, standard library only, no float constructed anywhere, matching the final edition's Reproducibility section. |
 | `../verify_core.py` | the flat-band manuscript's, 16 checks. Root-level so *that* manuscript's printed `python3 verify_core.py` is true as printed. |
-
-Two verifiers because there are two papers. They overlap on the ledger and
-diverge where the documents do: the root one follows the flat-band
-manuscript's equation numbers, the one here follows the master paper's
-Reproducibility section and adds the assembly formula, the band spans and the
-torus ranks with a spanning cycle basis. Both are exact, stdlib-only, and
-carry no floats.
 
 ```bash
 make paper      # both verifiers, then three reproducible pdflatex passes
 ```
 
-The review that drove the united edition is
-`docs/referee/final_paper_review_2026-08-28.md`; this repository's own referee
-document on the flat-band manuscript is `docs/referee/final_paper_2026-08-28.md`.
+## What the final edition adds
 
-## The united edition
+The 28 August united edition's four self-contained statements are unchanged in
+substance: the Weingarten derivation of the channel weights, the all-rank
+second-order law, the Bloch–chain bridge, and the fourth-order obstruction
+certificate. Four things are new, and each carries its own check.
 
-The two pinned manuscripts overlap heavily and disagree in emphasis: the
-flat-band paper carries the homology and the second-order chain, the master
-derivation carries the nested-quotient circuit theory and the fourth-order
-material. `master_paper_2026-08-28.tex` is the single document, and it differs
-from a concatenation in four places, each one a result this repository
-established after both were written:
+1. **What a link cutoff drops, exactly.** Retaining only the singlet and
+   `Lambda2 F` routes projects the hopping to `w_Lambda2 - w_1 = -1/12` —
+   opposite in sign to `t_3` and 10.2x larger — and what is dropped is
+   `w_Sym2 - w_Adj = 14/153`, the two summing to `5/612`. This is arithmetic on
+   the Weingarten weights alone, so a counterterm for a published `T1`
+   Hamiltonian is `14/153` and never `5/612`. §5, Corollary 14.
+2. **The two-cube census IS that ledger, channel by channel.** The
+   1,590,462-state face-sharing `(3,2,2)` prism recovers `t_3 = 5/612`
+   target-blind, and its six link-irrep coefficients are the four Weingarten
+   fusion weights individually: `c_1 = -w_1`, `c_8 = -w_Adj`, and each
+   like-family weight split evenly between an irrep and its conjugate. Summing
+   to the right number is weak evidence; agreeing channel by channel is not.
+   Reported rather than proved: the six coefficients are rational
+   reconstructions of finite-precision contractions (residual 2.1e-14), the
+   certificate declares `symbolic_exact_local_amplitudes: false`, and the build
+   was not reproduced here. §5, Reported result 12.
+3. **The charge-even sector gets a closed form.** Its Bloch spectrum is the
+   cubic `mu(mu - p)^2 = 4 â1 â2 â3` with `p + q = 12`, so one zone function
+   runs both sectors; the range `[-4, 12]` is exact, the top attained only at Γ
+   and the floor on the three planes `k_j = pi` (triple only at R); and the
+   charge-even Γ splitting is `12 t_(r,+)` exactly — which pins the
+   charge-even hopping where the charge-odd rest frame has no analogue. §6.
+4. **The open fourth-order coefficient gets a geography, not a verdict.** An
+   explicit second witness `C_alt` exhibits the non-identifiability by
+   construction; the shape fit's `C` row sums to zero, so no Γ-anchoring error
+   can move `C_shp` at all; six of 189 records carry 81% of it; and the sealed
+   609-cluster sweep is shown, by reading its engine, to be structurally
+   incapable of deciding it. §9.
 
-1. **The isotropy premise is derived, not assumed.** The flat-band paper's
-   eq. (18) asserts isotropy in one word, and it was the single unproved
-   physical input of the entire second-order chain. It is now a Weingarten
-   computation: the six non-shared links integrate independently, collapsing
-   the pair moment to degree $(2,2)$ on the shared link, and all four channel
-   weights come out $d_R/N^2$. §4, Theorem 4.
-2. **Theorem 1 and Theorem 2 are joined.** Both manuscripts state a $3\times3$
-   Bloch spectrum and an $(L^3+2)$-dimensional chain-level carrier without
-   remarking that the two agree. §3, Theorem 3.
-3. **The vacuum-mediated route is stated as a rank formula.** "Every
-   second-order inter-plaquette process uses one shared link" is false in
-   general; the route $p\to|0\rangle\to p'$ connects any pair and is worth
-   $1/C_F$. It vanishes in the charge-odd sector by C-parity, which is *why*
-   the result stands. §4, Proposition 2.
-4. **The fourth-order disagreement gets an obstruction certificate.** Not an
-   adjudication — the two records differ by $4\Delta_C e_2$, and $e_2$ is the
-   zero polynomial on every axial cut, so no $\Gamma$-point or axial datum
-   separates them at any precision. §7, Theorem 7.
+`C_shp` stays open. Nothing in the edition prefers a side, and
+`verify_core.py` assumes no value for it.
 
-Every displayed result carries the name of the machine check that establishes
-it, printed beneath the equation, so any line can be re-run in about a second:
+## Every displayed result names its check
+
+That is the edition's one device: 105 `\chk` labels over 98 distinct checks,
+each printed beneath the equation it establishes, so any line re-runs in about
+a second:
 
 ```bash
 workhouse verify --only '<the name printed under the equation>'
 ```
 
-`ledger/documents.yaml` legends the paper as `MASTER paper`, so a check's
-`section` string can cite it and `tests/test_documents.py` keeps the reference
-resolvable — the citation runs both ways.
+The device is itself checked. `every \chk in every pinned edition names a check
+that exists and passes` scans **every** `.tex` in this directory — not one
+named file — and resolves all 137 printed labels across both editions against
+the live registry. The first draft of that check hard-coded the 2026-08-28
+edition, which would have left the successor's labels unverified; a device that
+verifies only the edition nobody is editing any more is worse than none.
 
-That device is itself checked. `every \chk in the united paper names a check
-that exists and passes` resolves all 32 printed labels against the live
-registry and fails if one is renamed or deleted — otherwise the paper would go
-on printing a command that no longer resolves, which is the same drift
-`FRONTIER.md`'s staleness test exists to catch.
+`ledger/documents.yaml` legends both editions, so a check's `section` string
+can cite either and `tests/test_documents.py` keeps the reference resolvable —
+the citation runs both ways.
 
-The united edition is deliberately **not** in `PAPER_TEXTS`, and so is not
-scanned by the fourth-order firewall check. It discusses the fourth order on
-purpose, in §7, to state the obstruction. The firewall is a property of the two
-original manuscripts and remains measured for them.
+Neither edition is in `PAPER_TEXTS`, so neither is scanned by the fourth-order
+firewall check. Both discuss the fourth order on purpose, to state the
+obstruction. The firewall is a property of the two original manuscripts and
+remains measured for them.
+
+## The claim-to-check map
+
+Every displayed statement in the final edition, in printed order, with its
+tier. Generated from the `.tex` against a live `workhouse verify`, so it cannot
+disagree with the paper.
+
+**Hamiltonian and projected sector**
+
+- T1 `the printed towers are canonical-u: 4*Delta(3u/2) reproduces them verbatim`
+- T1 `the 4**r rescaling breaks the bridge: order 2 off by 16, order 3 by 64`
+- T1 `each channel gap is C_F + C_R/2, and the weights sum to one`
+- T1 `at N = 2 the C-odd hopping vanishes and the C-even one does not`
+
+**Oriented incidence and the exact carrier**
+
+- T1 `B B^dagger = q I - d conj(d)^T for the curl incidence`
+- T1 `dim Z_2 = L^3 + 2 by rank, not by re-arranging the formula`
+- T1 `cube boundaries and three wrapping sheets SPAN Z_2`
+- T1 `the L^3+2 count is chain-level, not the Bloch convention`
+- T1 `the Bloch and chain routes to the carrier agree`
+
+**The wrapping sheets are cycles, not harmonic**
+
+- T1 `FINDING: the wrapping sheets are cycles but NOT harmonic`
+
+**Exact all-rank dynamics at second order**
+
+- (again) `each channel gap is C_F + C_R/2, and the weights sum to one`
+
+**The channel weights are a theorem**
+
+- T1 `the shared-link weights are Weingarten, not an isotropy assumption`
+- T1 `the Weingarten route is independent of the corpus`
+- T1 `the published dimension-ratio matrix element is this registry's weight formula`
+- T1 `the four channel weights follow from dimension and Casimir`
+- T1 `A_N and B_N are the channel sums, not transcriptions`
+
+**The shared-link law**
+
+- T1 `t_N = B_N - A_N`
+- T1 `t_N > 0 for N >= 3`
+- T1 `t_2 = 0 and t_3 = 5/612`
+- T1 `large-N expansion of t_N through 1/N^9`
+
+**The vacuum-mediated route**
+
+- T1 `ell_N = A_N + B_N + 1/C_F, the vacuum-mediated route at every rank`
+
+**Finite-volume width**
+
+- T1 `the zone maximum of q is 12 only at even L`
+- T1 `q_min on the L-torus grid is 4 sin^2(pi/L)`
+
+**The orientation signs are essential**
+
+- T1 `the two band spans ARE the two incidence spectra`
+
+**The second-order coefficient on a two-cube space**
+
+- T1 `the connected two-cube geometry has exactly four cross-cell pairs, each -1`
+- T1 `the B=6 connected kernel is (5/612) G_conn + diag, with the certified spectrum`
+- T2 `the certificate's own gates pass, target-blind, with the wrong-sign control rejected`
+- T1 `the B=6 six-channel census sums to the registry's own t_3 = 5/612`
+- T1 `the B=6 six-channel census IS the Weingarten four-channel ledger, channel by channel`
+
+**One truncation, two constructions**
+
+- T1 `B=6 retains every adjacent shared-link channel; B=4 provably cannot`
+- (again) `the B=6 six-channel census IS the Weingarten four-channel ledger, channel by channel`
+- T1 `FINDING: the T1 link cutoff reverses the sign of t_3, and 14/153 is what it omits`
+- T2 `FINDING: a full T1 = B = 4 cube Hamiltonian reproduces -1/12 and the reversed shell`
+- T2 `FINDING: the B = 6 cube flips the sign back to +5/612, closing the decisive test`
+- T1 `the B = 6 scalar misses the bridge's by exactly the same-face sextet route`
+- T1 `the certificate's finite-volume fingerprints, and 29 = L^3 + 2 is the Lean cycle count`
+
+**The charge-even sector in closed form**
+
+- T1 `the C-even characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3`
+- T1 `p + q = 12: one zone function runs both sectors`
+- T1 `the Bloch cubic IS the finite L = 3 and L = 4 plaquette spectrum, exactly`
+- T1 `the C-even range is exact; the top is attained only at Gamma, the floor on three planes`
+- T1 `the C-even band touches its floor exactly on the three planes k_j = pi`
+- (again) `the C-even band touches its floor exactly on the three planes k_j = pi`
+- T1 `the C-even spectra at the four high-symmetry momenta`
+
+**One assembly, both sectors, both orders**
+
+- T1 `one assembly formula gives every registered band value`
+- T1 `one assembly formula gives every C-even value at both orders`
+- T1 `the plaquette graph is 12-regular and two faces share at most one link`
+- T1 `both declared coincidences, checked: one is ell_N at all ranks, the other is bare`
+
+**Where the rest frame is not blind**
+
+- T1 `the C-even Gamma point pins t_+, exactly where no C-odd Gamma datum can`
+- T1 `the C-even curvature is (4/3)|t_+| at both orders, and isotropic`
+- T1 `the C-even bandwidth is 16|t_+| at every order; the C-odd manifold width is 12|t_-|`
+
+**SU(3) through third order**
+
+- T1 `d_3 = 7/32 + 12*leak_3 - 4*b_3`
+- T1 `leak_3 is assembled from the domino diagonal and the vacuum piece`
+- T1 `E_flat and t(u) carry the ledger coefficients`
+- T1 `d_- = 1/2 + 12*leak_2, and leak_2 = -11/306`
+- T1 `FINDING: no Gamma-point datum can constrain the hopping`
+
+**What the homology protects**
+
+- (again) `B B^dagger = q I - d conj(d)^T for the curl incidence`
+- T1 `the carrier projection is where the 1/q comes from`
+- T1 `clearing the denominator reproduces the five-element numerator basis`
+
+**The fourth-order boundary**
+
+- T2 `v10a.26 A, B, D match the sealed rationals within 2.3e-13`
+- T2 `FINDING: alpha_new falls outside the corpus's own 2.3e-13 bound`
+
+**The obstruction is polynomial**
+
+- T1 `FINDING: the retained Gamma/axis data cannot identify C_shp`
+- T1 `Phi_C vanishes at Gamma along every direction`
+- T1 `the crosswalk is exactly scalar on the momentum axes`
+- T1 `on an axial cut the mixed invariants vanish and the norm divides`
+
+**A second witness**
+
+- T1 `FINDING: an explicit second witness C_alt exhibits the C2 non-identifiability`
+- T2 `the C_alt witness IS the balanced eps-free continuation, and Delta_C/(A/2) = 15/32`
+
+**Where the coefficient lives**
+
+- T1 `checkpoint values at X, M, P, R`
+- T1 `the four extraction formulas invert the ansatz`
+- T1 `X is blind to B, C, D — it fixes A alone`
+- T1 `the shape fit's C row sums to zero, so no Gamma-anchor error can move C_shp at all`
+- T1 `a translation-local scalar shift changes nothing observable`
+- T2 `FINDING: C_shp is carried by 6 of 189 records, not spread across the kernel`
+- T2 `FINDING: A = 5/48 pins the normal sector's whole C4 contribution`
+- T1 `C_normal = -A_normal/2: the agreed axial coefficient pins the normal channel`
+- T2 `the two 189-record kernels agree everywhere except three amplitudes, and the on-site anchor swap moves C by exactly zero`
+
+**What cannot decide it**
+
+- T1 `FINDING: the marked-cluster engine emits the Gamma scalar only — a completed 609-sweep cannot decide C_shp`
+
+**The tier collapse, as two integers**
+
+- T1 `RETRACTED: the vertex count does NOT forbid B_shp and D_shp`
+- T1 `FINDING: the tier collapse is two integer cancellations at record level`
+- T1 `the vanishing coefficients are exactly the degree-3 ones`
+
+**A near- statement that survives the dispute**
+
+- T1 `Jordan bound q(k) >= (4/pi^2)|k|^2 holds on the whole zone`
+- T2 `the criterion survives C2: K depends on the kernel only through sqrt(W_4)`
+- T2 `the statement is non-vacuous only below an explicit coupling`
+
+**External comparisons**
+
+- T2 `Hamer's 1+- series matches the C-odd Gamma-point coefficients through x^3`
+- T2 `Hamer's 0++ series matches the C-even Gamma-point coefficients through x^3`
+- T1 `the m_n = 2^(n-1) a_n bridge is the x = 2u conversion`
+- T2 `the Hamer table is pinned, and the a_4 agreement is primary-source`
+- T1 `the KPS 1980 string-tension table equals the certified sigma series EXACTLY`
+- T1 `sigma_n^phys = (-1)^n sigma_n^raw, and C5 is the n = 3 case`
+- T1 `the ratio and sigma series reproduce E_flat exactly`
+- T1 `the errata-resolved Euclidean series is doubly sourced, transcription for transcription`
+- T1 `FINDING: Munster's 1985 table shifts his 1982 erratum at eighth order`
+- T1 `the overlap obstruction was published in 1988, and it scales`
+- T1 `a cross-regime paper never supplies a value`
+
+**Scope**
+
+- T1 `Delta_L = 4 tau(u) sin^2(pi/L) is positive and falls as L^-2`
+
+**Channel weights in closed form**
+
+- (again) `the four channel weights follow from dimension and Casimir`
+
+**The Weingarten index sums**
+
+- (again) `the shared-link weights are Weingarten, not an isotropy assumption`
+- T1 `SU(3) Weingarten values follow from the general formula`
+- T1 `the fourth moment integral |U_11|^4 = 1/6 at N = 3`
+
+**The SU(3) coefficient ledger**
+
+- T1 `the manuscript's SU(3) ledger is this registry, value by value`
+
+**The charge-even ledger**
+
+- (again) `one assembly formula gives every C-even value at both orders`
+- T1 `FINDING: the certificate key 'bandmin' holds the band MAXIMUM, at both orders`
+
+**Finite-volume chain calculation**
+
+- T1 `d_2 d_3 = 0 on the built complex`
+- T1 `rank d_3 = L^3 - 1 on the built complex`
+
+**The two-cube geometry**
+
+- T1 `the B=4 comparator on the same geometry gives -1/12 with the reversed spectrum`
+
+## What is not checked, and what a referee should press on
+
+Recorded because a claim-to-check map that hides its gaps is worse than none.
+
+**Closed since the 28 August edition**, each by a named check:
+
+- *eq. (18)'s isotropy premise*, which was the single unproved physical input
+  of the whole second-order chain, is a theorem — `the shared-link weights are
+  Weingarten, not an isotropy assumption` — and the derivation imports nothing
+  from the corpus, which `the Weingarten route is independent of the corpus`
+  measures.
+- *"three harmonic sheets"* is corrected: the sheets are cycles and are not
+  harmonic, with Rayleigh quotient exactly 2. `FINDING: the wrapping sheets are
+  cycles but NOT harmonic`.
+- *Theorem 3's missing clause* is stated as the vacuum-mediated route, as an
+  all-rank formula rather than a one-rank erratum.
+- *The `L >= 3` caveat* is confined to the twelve-neighbour Bloch adjacency.
+- *Table 2's `u^1` row* is labelled `SU(3)`-only.
+- *The unsigned-incidence "control"* is no longer a paragraph: it is §6.
+
+**Still open against the final edition:**
+
+- **The third-order lifter census is unchecked.** Three lifter classes over 32
+  five-trace numerator patterns each, 96 contractions in total. Nothing in
+  `src/`, `ledger/`, `lean/` or `tests/` checks any of them, and the edition
+  says so in §1 item 7. Everything in §7 beyond second order rests on it.
+- **`b_3`, `leak_3` and `d_3` are supplied-ledger values.** What is checked is
+  the *assembly* — `d_3 = 7/32 + 12 leak_3 - 4 b_3` — not the contraction that
+  produced the inputs.
+- **There is no all-rank formula for `E_flat,N`.** The scalar is known only as
+  "momentum independent"; the SU(3) expression is a specialization of nothing.
+- **The two-cube construction was not re-run here.** Its builder needs
+  `pyclebsch` and sealed NPZ inputs that did not travel, so the checks audit the
+  delivered certificate's arithmetic against geometry rebuilt locally. Its
+  diagonal `D_B6` is B6-truncated and not proved cutoff-stable, its finite-`u`
+  validation is a 66-dimensional star rather than the full Hamiltonian, and no
+  external group has reproduced the release.
+- **Conjecture 13 (the all-rank even split) is a conjecture.** The channel
+  identification of Reported result 12 is at `N = 3` only. Falsifying the
+  conjecture needs a link-resolved census at some `N >= 4` in a truncation that
+  still retains every adjacent shared-link channel; at `N = 4` the endpoint
+  budgets make that `B >= 33/4`, and no such construction has been run.
+- **Two premises are prose, not results, and both are load-bearing.** That the
+  range of `P_-` is exactly the charge-odd one-plaquette span for `L >= 3`, and
+  that the four fusion channels exhaust the second-order shared-link routes.
+  The Weingarten theorem fixes each channel's weight; it does not establish
+  that the list is complete. §11 now says so.
+- **The two one-cube reconstructions are not an independent replication.** Both
+  read the same pinned plaquette-matrix-element source, and the published
+  table's `|M_rho|^2 = d_rho/N^2` is the very numerator of the weight formula.
+  A cross-check of assembly, not a third confirmation of `t_3`.
+- **The sector setup is asserted.** That the range of `P_-` is the charge-odd
+  one-plaquette span for `L >= 3`, and that the four channels exhaust the
+  shared-link routes, are arguments in prose. The published finite-rank matrix
+  element corroborates the *weights*, not that premise.
+- **C2 is open, and this edition does not narrow the interval.** It maps where
+  the coefficient lives and rules out whole classes of instrument. The decisive
+  move remains an off-axis contraction.
+- **Nothing here crosses a regime boundary.** Infinite volume, the spectral
+  bridge and the continuum limit are named in §11 as the unpaid debts they are.
 
 ## Rebuilding
 
 ```bash
 cd paper
-SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
-  pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex   # x3
+SOURCE_DATE_EPOCH=1787961600 FORCE_SOURCE_DATE=1 \
+  pdflatex -interaction=nonstopmode master_paper_2026-08-29.tex   # x3
 ```
 
 Three passes for the cross-references. `SOURCE_DATE_EPOCH` is what makes the
@@ -98,170 +367,85 @@ digest in `SHA256SUMS` reproducible — without it `pdflatex` stamps the build
 time into the PDF and the pin fails on a rebuild that changed nothing. Needs
 `texlive-latex-base` and `texlive-latex-recommended` (for `booktabs`). Zero
 overfull boxes and zero undefined references is the accepted state; the build
-is 7 pages.
+is 16 pages.
 
-## What the manuscript says about this repository
-
-§9 pins commit `ca3d440a7f93c17569e12d0511847505b6b72c5a` and reports four
-counters for it. All four were re-measured at that commit, before anything in
-this directory existed:
-
-| §9 says | measured at `ca3d440` |
-|---|---|
-| 119 exact-rational checks | 119 T1 checks |
-| 29 numerical cross-checks | 29 T2 checks |
-| 349 repository tests | 349 collected, 349 passed |
-| 28 Lean theorems, no omitted proofs | 28 theorems, 0 `sorry` |
-
-Those numbers describe `ca3d440` and stay true there; `git checkout ca3d440 &&
-make verify` reproduces them. They are **not** a description of HEAD and were
-never meant to be — this session's own work moves them, which is what pinning a
-commit is for. The current counts are in `FRONTIER.md` §1.
-
-One thing §9 promised that did not exist at that commit: `verify_core.py`.
-It exists now — and it proves more than either manuscript claims for it (below).
-
-The master document states the same counters and adds the right qualification
-itself: "the counts are provenance information rather than independent evidence
-here". That is correct, and it is what this directory exists to fix.
-
-## The claim-to-check map
-
-Every displayed statement, and the command that re-establishes it here in about
-a second. A reader who does not believe a line should not have to read code to
-find out who checks it.
+`1787961600` is 2026-08-29 00:00 UTC, so the PDF's internal creation date
+matches the date on its title page. The 28 August editions use `1756339200`,
+which is 2025-08-28 — one year early. Their bytes are pinned evidence and stay
+as they are; the discrepancy is recorded here rather than corrected, and the
+new edition simply does not repeat it. Rebuilding *those* still needs their own
+epoch:
 
 ```bash
-workhouse verify --only '<check name>'
+SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
+  pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex   # x3
 ```
 
-| Manuscript | Check | Tier |
-|---|---|---|
-| eq. (4) `E_F,N = 2 C_F` | `each channel gap is C_F + C_R/2, and the weights sum to one` | T1 |
-| eq. (7)–(12) Thm 1, factorization and spectrum | `B B^dagger = q I - d conj(d)^T for the curl incidence` | T1 |
-| eq. (13)–(15) Thm 2, the carrier | `dim Z_2 = L^3 + 2 by rank, not by re-arranging the formula` · `rank d_3 = L^3 - 1 on the built complex` · `cube boundaries and three wrapping sheets SPAN Z_2` | T1 |
-| eq. (6), App. B, `d_2 d_3 = 0` | `d_2 d_3 = 0 on the built complex` | T1 |
-| Thm 1 ↔ Thm 2, the missing bridge | `the Bloch and chain routes to the carrier agree` | T1 |
-| eq. (16) `q_min = 4 sin^2(pi/L)` | `q_min on the L-torus grid is 4 sin^2(pi/L)` | T1 |
-| eq. (17)–(19) fusion, dimensions, Casimirs | `the four channel weights follow from dimension and Casimir` | T1 |
-| eq. (18) the resolvent weight | `each channel gap is C_F + C_R/2, and the weights sum to one` | T1 |
-| eq. (20)–(21), App. A eq. (40) | `A_N and B_N are the channel sums, not transcriptions` | T1 |
-| eq. (23) Thm 3, `t_N` | `t_N = B_N - A_N` · `t_2 = 0 and t_3 = 5/612` · `t_N > 0 for N >= 3` | T1 |
-| eq. (25) large-N expansion | `large-N expansion of t_N through 1/N^9` | T1 |
-| eq. (26) `W_N = 12 t_N u^2` | `the two band spans ARE the two incidence spectra` | T1 |
-| §4 unsigned-incidence control | `the two band spans ARE the two incidence spectra` | T1 |
-| eq. (27)–(28) the second-order assembly | `d_- = 1/2 + 12*leak_2, and leak_2 = -11/306` · `d_- - 4 t_- = 11/306` | T1 |
-| eq. (29)–(30) `b_3`, `leak_3`, `d_3` | `d_3 = 7/32 + 12*leak_3 - 4*b_3` · `leak_3 is assembled from the domino diagonal and the vacuum piece` | T1 |
-| eq. (31)–(34) Thm 6 | `E_flat and t(u) carry the ledger coefficients` · `one assembly formula gives every registered band value` | T1 |
-| eq. (35) `Delta_L` | `Delta_L = 4 tau(u) sin^2(pi/L) is positive and falls as L^-2` | T1 |
-| eq. (39) the fourth-order shape basis | `Phi_C vanishes at Gamma along every direction` · `the carrier projection is where the 1/q comes from` | T1 |
-| §5 Hamer cross-check | `Hamer's 1+- series matches the C-odd Gamma-point coefficients through x^3` | T2 |
-| §6 the fourth-order firewall | `no fourth-order coefficient enters the manuscript` | T1 |
-| Table 2, the SU(3) ledger | `the manuscript's SU(3) ledger is this registry, value by value` | T1 |
-| Table 1, evidence map | see **What is not checked**, below | — |
-| MASTER eq. (18) the isotropy premise | `the shared-link weights are Weingarten, not an isotropy assumption` | T1 |
-| MASTER eq. (34) `q_max(L)` parity | `the zone maximum of q is 12 only at even L` | T1 |
-| MASTER Fig. 2 | `q at the four high-symmetry points is 0, 4, 8, 12` | T1 |
-| MASTER §9 eq. (60)–(64) axial datum | `on an axial cut the mixed invariants vanish and the norm divides` | T1 |
-| MASTER closure audit, the C2 obstruction | `FINDING: the retained Gamma/axis data cannot identify C_shp` | T1 |
+## What the manuscripts say about this repository
 
-## What is not checked, and what a referee should press on
+The flat-band manuscript's §9 pins commit
+`ca3d440a7f93c17569e12d0511847505b6b72c5a` and reports four counters for it:
+119 exact-rational checks, 29 numerical cross-checks, 349 repository tests, 28
+Lean theorems with no omitted proofs. All four were re-measured at that commit
+and are correct there. They are **not** a description of HEAD and were never
+meant to be — that is what pinning a commit is for.
 
-Recorded because a claim-to-check map that hides its gaps is worse than none.
+The final edition pins commit `f25328f8d6658af63588fb3d30dbd3b7f6ede9c0` —
+the commit immediately before this one, which carries every check the
+edition names and none of the edition's own bytes — and reports its counters
+there. `git checkout f25328f && make verify` reproduces them:
 
-This list is against the **two pinned originals**, which are immutable evidence
-and stay as they are. The united edition is ours to write, so it carries six of
-these corrected: eq. (18)'s isotropy is now proved (§4, Thm 4); Theorem 3's
-missing clause is stated as the vacuum route (§4, Prop 2); the `L >= 3` caveat
-is confined to the Bloch adjacency (§3, remark); the `u^1` row is labelled
-`SU(3)`-only (App. C); the lifter census is given as three classes over 32
-patterns each, 96 in total, with "nothing here checks any of them" said out
-loud (§1, item 5); and the sheets are called cycles, never harmonic (§3).
-Lemma 4's imprecise "unmatched" is moot there — the lemma is gone, replaced by
-the Weingarten proof that made it unnecessary. The remaining items below are
-open against the united edition too.
+| Layer | Count |
+|---|---|
+| T0 — Lean 4 theorems, no `sorry` | 40 |
+| T1 — exact re-derivations | 179 |
+| T2 — numerical, within a stated tolerance | 46 |
+| Repository tests | 472 |
 
-- **eq. (18)'s "isotropy" is the single unproved physical input of the whole
-  second-order chain.** The arithmetic consequence is exact — `d_R/N^2` sums to
-  1 per family, and that is checked — but the premise that the six free-link
-  Haar integrations leave the shared-link tensor maximally mixed is asserted in
-  one word. The corpus source states the clause that earns it
-  (`corpus-import/papers/flat_band/PAPER_FLUX_glueball_flat_band_v1_1.tex`);
-  the manuscript compresses it. Independent support exists at N = 3 only.
-  The decisive and cheap test: an orientation-resolved Weingarten evaluation at
-  N = 3 and N = 4 returning `A_N` and `B_N` separately.
-- **Theorem 3's proof needs one more clause.** "Every second-order
-  inter-plaquette process uses one shared link" is false in general and true in
-  the charge-odd sector only, because `V` is C-even and `<0|V|p,-> = 0`. This
-  repository's C13 is the record of what omitting that costs: `A_3 + B_3 =
-  -481/612` is exactly the superseded C-even value. The check
-  `ell_N = A_N + B_N + 1/C_F, the vacuum-mediated route at every rank` pins
-  the size of the omitted route at every rank.
-- **Lemma 4's "unmatched" must mean multiplicity exactly one.** A link carrying
-  three fundamental indices does *not* integrate to zero for SU(3) — the
-  manuscript's own `+u` in eq. (32) is that epsilon channel. The corpus engine
-  states the correct hypothesis ("at least 2 links private to it"); an
-  independent re-derivation of the geometry gives minimum 2, so the paper's
-  "at least one" is true and understated.
-- **Table 1 row 5's "32 lifter classes" misdescribes its source.** The
-  enumeration has three lifter classes evaluated over 32 five-trace numerator
-  patterns each, 96 in total. Nothing in `src/`, `ledger/`, `lean/` or `tests/`
-  checks any of it.
-- **§9's "The analytic proof in this paper is self-contained"** is jointly
-  refuted by the three items above: eq. (18) is asserted, Lemma 4 carries no
-  proof environment, and Remark 5's enumeration was performed elsewhere.
-- **The abstract attaches "For L >= 3" to the carrier count; Theorem 2 does
-  not, and does not need it.** The caveat belongs to the twelve-neighbour Bloch
-  adjacency. `the L^3+2 count is chain-level, not the Bloch convention` pins
-  L = 1 and L = 2.
-- **§6's "three harmonic sheets" are not harmonic.** The sheets Theorem 2
-  exhibits are cycles but are not in `ker d_3*`; `L_up` moves them with
-  Rayleigh quotient exactly 2 at every size. Nothing downstream breaks —
-  Proposition 7 rests on `B* w = 0`, which covers all of `ker d_2` — but §6's
-  real-space restatement does not cover the objects Theorem 2 constructs.
-  Recorded as `FINDING: the wrapping sheets are cycles but NOT harmonic`.
-- **There is no all-rank formula for `E_flat,N`.** Theorem 3 gives the scalar
-  only as "momentum independent"; eq. (32) is SU(3). So "exact all-rank
-  coefficient" covers `t_N` alone, and there is no all-rank analogue of
-  eq. (35).
-- **Table 2's `u^1` row is SU(3)-only**, not an SU(3) specialization: it is
-  `-<p,-|V|p,-> = 1`, which needs the epsilon channel and vanishes at N >= 4.
-  Table 2 carries no scope column saying so.
-- **Hamer cannot see the hopping.** `q(0) = 0`, so no rest-frame series
-  constrains `tau(u)`; the agreement pins `12 leak_3 - 4 b_3` and neither
-  coefficient alone. Recorded as `FINDING: no Gamma-point datum can constrain
-  the hopping`. This does not weaken `b_3`, which the abstract-domino engine
-  computes directly and which the `lambda = 8` band top separates.
+All 40 T0 theorems were confirmed by `#print axioms` against the built oleans:
+39 depend on `[propext, Classical.choice, Quot.sound]` and one, `dim_Z₂`, on
+`[propext]` alone. Nothing else.
+
+Those counters are provenance, not independent evidence, and the edition says
+so. The live counts are in `FRONTIER.md` §1.
 
 ## verify_core.py
 
 ```bash
-python3 verify_core.py        # or: make paper
+python3 paper/verify_core.py    # 29 checks, ~0.5 s
+python3 verify_core.py          # the flat-band manuscript's 16
 ```
 
-Standard library only, no arguments, no floats, about a fifth of a second. It
-exists so a referee who will install nothing can still check the arithmetic,
-and so §9's reproducibility sentence names something real.
+Standard library only, no arguments, no floats. It exists so a referee who will
+install nothing can still check the arithmetic. Nine claim groups now, matching
+the final edition's Reproducibility section: the coefficient ledger; the
+Weingarten derivation by explicit index summation; the incidence identity,
+*decided* in exact Gaussian-rational arithmetic at rational torus points rather
+than checked to a residual; the chain condition and finite-torus ranks with an
+explicit kernel basis; the sheets' Rayleigh quotient; the two-cube geometry,
+spectra and channel identification; the charge-even cubic; the fourth-order
+checkpoint algebra and the obstruction; and the coupling convention.
 
-Two of its checks are stronger than the manuscript claims for them:
-
-- **the incidence identity is exact, not residual.** §9 promises a check "at
-  deterministic generic momenta", which in floating point means a small
-  residual. A torus point with rational `tan(k_j/2)` has `exp(i k_j)` a
-  Gaussian rational, so `B B* = q I - w w*`, `B* w = 0` and the characteristic
-  polynomial `x (x - q)^2` are all *decided* in exact arithmetic at five
-  hard-coded points.
-- **the torus ranks come with a basis.** Rank over `F_p` bounds the kernel from
-  below; the exhibited cycles — every elementary cube boundary plus the three
-  wrapping sheets — bound it from above. The two bounds meeting is the
-  manuscript's own proof, `ker d_2 = im d_3 (+) H_2`, carried out rather than
-  cited.
-
-It now also **derives the manuscripts' central input**: the shared-link channel
-weights follow from the order-2 Weingarten values, computed from the `S_2` Gram
-inverse in exact `Fraction` arithmetic with explicit index sums. A referee who
-installs nothing can check that eq. (18)'s one asserted word is a theorem.
+Every value in it is a `Fraction`. No float is constructed anywhere in the file,
+so "agreement" there always means equality, never proximity — and
+`tests/test_portability.py` and `tests/test_paper.py` join its hard-coded
+ledger to `constants.py`, because two verifiers that drift apart certify two
+different papers.
 
 What it does not do, said plainly: it does not enumerate the third-order lifter
 classes, it does not sum the cube histories or reproduce the microscopic axial
-sweep, and it decides nothing about the disputed fourth-order coefficient.
+sweep, it does not re-run the 1,590,462-state two-cube construction, and it
+decides nothing about the disputed fourth-order coefficient. Its fourth-order
+group is the *obstruction* as arithmetic — the extraction formulas, the
+blindness of `X`, and the identical vanishing of `e_2` on every axial cut.
+
+## The referee trail
+
+- `docs/referee/final_paper_review_2026-08-28.md` — the review that drove the
+  united edition.
+- `docs/referee/final_paper_2026-08-28.md` — this repository's own referee
+  document on the flat-band manuscript.
+- `docs/decisions/0014-a-manuscript-enters-as-pinned-evidence.md` — why `paper/`
+  exists and the four rules that come with it. A future revision is a new pinned
+  artifact plus a regenerated map, in one visible diff; this directory is the
+  second time that has happened.

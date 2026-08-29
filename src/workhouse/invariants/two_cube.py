@@ -312,7 +312,7 @@ def _():
 
 @two_cube.check(
     "the B=6 six-channel census IS the Weingarten four-channel ledger, channel by channel",
-    "R2; runs/two_cube_codd_o2_2026-08-29 §7; MASTER paper Thm. 6",
+    "R2; runs/two_cube_codd_o2_2026-08-29 §7; FINAL paper Thm. 12",
 )
 def _():
     # The census check next door establishes that the six coefficients SUM to

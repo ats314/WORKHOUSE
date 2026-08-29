@@ -45,16 +45,23 @@ catalogue:       ## Regenerate the index/ catalogues: claims, symbols, graph
 atlas:           ## Render the theory graph to atlas.html (a view; never checked in)
 	@.venv/bin/workhouse atlas
 
-paper:           ## Build the master paper PDF and run both stdlib core verifiers
+paper:           ## Build the final-edition PDF and run both stdlib core verifiers
+# Each edition carries its OWN SOURCE_DATE_EPOCH, because the digest in
+# paper/SHA256SUMS is only reproducible if pdflatex stamps the same time it
+# stamped when the pin was taken. 1787961600 is 2026-08-29 00:00 UTC, so the
+# final edition's internal creation date matches the date on its title page;
+# the 2026-08-28 editions were built with 1756339200, which is 2025-08-28 --
+# one year early. Their bytes are pinned evidence and stay as they are, so
+# rebuilding them needs their own epoch (see paper/README.md).
 	@python3 verify_core.py
 	@cd paper && python3 verify_core.py \
-		&& SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
-		   pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null \
-		&& SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
-		   pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null \
-		&& SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
-		   pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null \
-		&& echo "paper/master_paper_2026-08-28.pdf"
+		&& SOURCE_DATE_EPOCH=1787961600 FORCE_SOURCE_DATE=1 \
+		   pdflatex -interaction=nonstopmode master_paper_2026-08-29.tex >/dev/null \
+		&& SOURCE_DATE_EPOCH=1787961600 FORCE_SOURCE_DATE=1 \
+		   pdflatex -interaction=nonstopmode master_paper_2026-08-29.tex >/dev/null \
+		&& SOURCE_DATE_EPOCH=1787961600 FORCE_SOURCE_DATE=1 \
+		   pdflatex -interaction=nonstopmode master_paper_2026-08-29.tex >/dev/null \
+		&& echo "paper/master_paper_2026-08-29.pdf"
 
 
 lit:             ## Published work, and which claim each paper bears on

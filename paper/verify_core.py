@@ -797,10 +797,23 @@ def _():
 @check("a 4**r rescaling misses the printed towers by exactly 16 and 64")
 def _():
     # The archived Y = 2 beta/3 = 4u line is a definition-label erratum.
-    # Reading it as a coordinate would demand coefficient_r / 4^r; the printed
-    # table differs from that by exactly these factors, which is why the
+    # Reading it as a coordinate would demand coefficient_r / 4^r, and the
+    # printed table differs from that by exactly 4^r -- which is why the
     # rescaling must never be applied.
-    return F(1, 2) / (F(1, 2) / 16) == 16 and F(7, 32) / (F(7, 32) / 64) == 64
+    #
+    # The first draft of this check was `F(1,2)/(F(1,2)/16) == 16`, which is
+    # x/(x/16) = 16 for every nonzero x: a tautology that would pass whatever
+    # the towers were. It is now anchored to the towers this file actually
+    # builds from the printed b-coefficients, so a wrong tower fails it.
+    b = {"-": (F(1, 18), F(7, 432)), "+": (F(13, 180), F(101, 2700))}
+    ok = True
+    for b2, b3 in b.values():
+        printed = (4 * b2 * F(9, 4), 4 * b3 * F(27, 8))
+        rescaled = (printed[0] / 4**2, printed[1] / 4**3)
+        ok &= printed[0] == 16 * rescaled[0] and printed[1] == 64 * rescaled[1]
+        ok &= printed[0] != rescaled[0] and printed[1] != rescaled[1]
+    # and the charge-odd tower is the one the paper prints
+    return ok and (4 * F(1, 18) * F(9, 4), 4 * F(7, 432) * F(27, 8)) == (F(1, 2), F(7, 32))
 
 
 # ---------------------------------------------------------------------------
