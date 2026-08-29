@@ -106,7 +106,7 @@ def _check_claims() -> list[Claim]:
                 Claim(
                     tier=r.tier,
                     name=r.name,
-                    where=f"src/workhouse/invariants.py:{r.line}",
+                    where=r.source,
                     reproduce=f"workhouse verify --only {shlex.quote(r.name)}",
                     section=r.section,
                     suite=suite.name,

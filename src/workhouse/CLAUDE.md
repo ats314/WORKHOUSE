@@ -16,7 +16,8 @@ shipped once.
 
 ## Adding an invariant
 
-Register it on a suite in `invariants.py`, cite the corpus section *and the
+Register it on a suite in the module for its subject under `invariants/`,
+cite the corpus section *and the
 document*, and return `(passed, detail)` where `detail` carries the numbers a
 reader needs to argue with you. `tests/test_invariants.py` picks it up with no
 separate test to write.
@@ -33,7 +34,8 @@ third, add an explicit `FINDING:` check that *asserts* the discrepancy.
 ## Files
 
 - `constants.py` — the curated registry, with provenance and corpus status
-- `invariants.py` — every T1/T2 check, grouped in suites
+- `invariants/` — every T1/T2 check, one module per subject; `__init__` fixes
+  the order the suites register in, `_core` holds the plumbing
 - `frontier.py` — computes `FRONTIER.md`; do not hand-write what it derives
 - `ledger.py` — loads and structurally validates the three registers
 - `graph.py` — computes `index/graph.jsonl`, every recorded edge between claims
