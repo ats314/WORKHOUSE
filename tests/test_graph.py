@@ -224,3 +224,23 @@ def test_run_register_matches_runs_directory():
         assert rdir.is_dir(), f"{rid}: {run['dir']} is not a directory"
         assert (rdir / "SHA256SUMS").is_file(), f"{rid}: no SHA256SUMS pin"
         assert run.get("bears_on"), f"{rid}: a run with no bears_on is invisible"
+
+
+def test_cached_load_is_the_same_graph():
+    """load() rehydrates the checked-in edges byte-for-byte.
+
+    The failure this prevents: `--cached` navigation quietly answering from a
+    different edge set than a live build would.
+    """
+    assert G.render(G.load()) == G.render(GRAPH)
+
+
+def test_unreferenced_is_exactly_the_edgeless_records():
+    orphans = G.unreferenced(GRAPH, CATALOGUE, SYMBOLS)
+    touched = {e.src for e in GRAPH.edges} | {e.dst for e in GRAPH.edges}
+    assert orphans == sorted(orphans)
+    for node in orphans:
+        assert node not in touched
+    # The load-bearing neighborhoods must never appear here.
+    for node in ("C2", "G3", "R5", "SYM:c_shp"):
+        assert node not in orphans

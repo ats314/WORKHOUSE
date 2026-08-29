@@ -111,3 +111,12 @@ def test_current_lean_tree_has_no_sorries():
     theorems, sorries = F._lean_counts()
     assert sorries == 0, "a sorry entered the Lean tree (or the counter regressed)"
     assert theorems >= 28
+
+
+def test_the_brief_routes_arriving_tasks_away_from_the_standing_state():
+    """The measured failure mode: every agent adopting the one open
+    contradiction as its task. The brief must say the open items are state,
+    not an assignment, and route a document-bearing session to triage."""
+    text = F.brief()
+    assert "not your assignment" in text
+    assert "workhouse triage" in text

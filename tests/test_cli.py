@@ -237,3 +237,65 @@ def test_generated_files_pin_lf_newlines():
             if ".write_text(" in line and not line.strip().startswith("#"):
                 window = "\n".join(src.splitlines()[i : i + 4])
                 assert 'newline="\\n"' in window, f"{module_name}: unpinned newline: {line.strip()}"
+
+
+class TestCachedNavigation:
+    """--cached answers from index/*.jsonl and says so out loud."""
+
+    def test_cached_why_matches_live_neighborhood(self, capsys):
+        rc = cli_mod.main(["why", "C2", "--json", "--cached"])
+        cached = json.loads(capsys.readouterr().out)
+        assert rc == 0
+        rc = cli_mod.main(["why", "C2", "--json"])
+        live = json.loads(capsys.readouterr().out)
+        assert rc == 0
+        # Same record, same edges: the cached index is staleness-tested, so
+        # anything but equality means load()/load_catalogue() drifted.
+        assert cached["record"] == live["record"]
+        assert cached["outgoing"] == live["outgoing"]
+        assert cached["incoming"] == live["incoming"]
+
+    def test_cached_mode_announces_itself_on_stderr(self, capsys):
+        cli_mod.main(["why", "C2", "--cached"])
+        err = capsys.readouterr().err
+        assert "cached index" in err and "drop --cached" in err
+
+    def test_live_mode_stays_silent_on_stderr(self, capsys):
+        cli_mod.main(["branches", "C2"])
+        assert "cached index" not in capsys.readouterr().err
+
+
+class TestDeriveFilters:
+    def test_relations_filter_elides_and_says_so(self, capsys):
+        rc = cli_mod.main(["derive", "C2", "--cached", "--relations", "blocks,resolves"])
+        out = capsys.readouterr().out
+        assert rc == 0
+        assert "Restricted to edge types" in out
+        assert "elided, not absent" in out
+        assert "G3" in out  # blocks/resolves neighborhood survives
+        assert "carries" not in out  # the note-document noise does not
+
+    def test_unknown_relation_is_a_loud_failure(self, capsys):
+        rc = cli_mod.main(["derive", "C2", "--cached", "--relations", "implies"])
+        out = capsys.readouterr().out
+        assert rc == 2
+        assert "unknown edge type" in out
+        assert "registered types" in out
+
+    def test_depth_one_is_a_subset_of_depth_two(self, capsys):
+        cli_mod.main(["derive", "C2", "--cached", "--json", "--depth", "1"])
+        shallow = json.loads(capsys.readouterr().out)
+        cli_mod.main(["derive", "C2", "--cached", "--json", "--depth", "2"])
+        deep = json.loads(capsys.readouterr().out)
+        near = set(shallow["roots"]["C2"]["neighbors"])
+        far = set(deep["roots"]["C2"]["neighbors"])
+        assert near and near <= far and near != far
+
+    def test_json_form_keeps_the_non_inferential_provenance(self, capsys):
+        rc = cli_mod.main(["derive", "C2", "--cached", "--json"])
+        data = json.loads(capsys.readouterr().out)
+        assert rc == 0
+        neighbors = data["roots"]["C2"]["neighbors"]
+        assert neighbors
+        for record in neighbors.values():
+            assert record["via"], "a node with no registered edge got in"

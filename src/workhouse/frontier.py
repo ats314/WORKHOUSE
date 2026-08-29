@@ -458,6 +458,16 @@ def brief() -> str:
     if f.cheapest:
         g = f.cheapest[0]
         lines.append(f"Cheapest decisive next step: {g['id']} — {g['title']}.")
+    if f.disputed or f.cheapest:
+        # Standing state reads as an assignment to a session that arrived with
+        # a different task — the measured failure mode is every agent turning
+        # to the one open contradiction regardless of what it was asked.
+        lines.append(
+            "The items above are standing state, not your assignment: work the "
+            "task you were given, and touch them only where it does. Handed a "
+            "document or paper? Start with `workhouse triage <dir>`, then "
+            "`workhouse search` by value."
+        )
     lines += [
         "",
         "Traps: q_band^(4) and m_Gamma^(4) are differently anchored coordinates, "

@@ -194,6 +194,14 @@ def _coefficient_targets(catalogue: list[claims_mod.Claim]) -> dict[str, tuple[s
         out[name] = tuple(
             sorted(cid for cid, hay in haystacks.items() if all(w in hay for w in wanted))
         )
+    # The literal labels ARE registry constant names, generated from each
+    # constant's own numerator and denominator — still a value-first join,
+    # because the label exists only where the document carried that exact
+    # fraction.
+    for name in triage_mod.EXACT_LITERALS:
+        cid = f"CONST:{name}"
+        if cid in haystacks:
+            out.setdefault(name, (cid,))
     return out
 
 
@@ -435,6 +443,45 @@ def build(
                     )
 
     return Graph(edges=sorted(edges), dangling=sorted(dangling))
+
+
+def load(path: Path | None = None) -> Graph:
+    """The checked-in graph, rehydrated without rebuilding a single edge.
+
+    ``index/graph.jsonl`` is staleness-tested, so it is current at every
+    commit; a navigation call (``why --cached``, ``derive --cached``) can read
+    it in milliseconds instead of re-running every suite to rebuild what is
+    already on disk. The dangling report is empty by construction — a graph
+    with dangling references never gets written. Falls back to a live
+    ``build()`` when the index has not been generated yet.
+    """
+    target = path or GRAPH
+    if not target.exists():
+        return build()
+    edges = [
+        Edge(**json.loads(line)) for line in target.read_text(encoding="utf-8").splitlines() if line
+    ]
+    return Graph(edges=edges, dangling=[])
+
+
+def unreferenced(
+    graph: Graph | None = None,
+    catalogue: list[claims_mod.Claim] | None = None,
+    symbols: list[dict] | None = None,
+) -> list[str]:
+    """Catalogue records that no edge touches, sorted.
+
+    A node with no edges is invisible to ``why``, ``derive``, and the atlas
+    traversal — an unlinked Lean theorem or literature record is evidence the
+    graph cannot surface. This list is the curation debt; ``workhouse status``
+    prints it so it cannot grow silently.
+    """
+    graph = graph if graph is not None else build()
+    catalogue = catalogue if catalogue is not None else claims_mod.collect()
+    symbols = symbols if symbols is not None else claims_mod.load_symbols()
+    nodes = {c.id for c in catalogue} | {f"SYM:{s['id']}" for s in symbols}
+    touched = {e.src for e in graph.edges} | {e.dst for e in graph.edges}
+    return sorted(nodes - touched)
 
 
 def validate(graph: Graph | None = None) -> list[str]:

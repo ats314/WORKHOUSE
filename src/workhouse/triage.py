@@ -32,6 +32,26 @@ TEXTLIKE = {".md", ".txt", ".tex", ".py", ".json", ".csv", ".yaml", ".yml", ".or
 MIN_SIGNATURE_DIGITS = 8
 
 
+#: The hand-labeled headline coefficients, digit-matched. Shared with
+#: ``_exact_literals`` so a value never carries two labels.
+_NAMED: dict[str, object] = {
+    "q_band^(4)": K.Q_BAND_4,
+    "C_shp historical": K.C_SHP_HISTORICAL,
+    "beta_pen_3": K.BETA_PEN_3,
+    "Q4 cross": K.Q4_CROSS,
+    "quarantined scalar": K.QUARANTINED_SCALAR,
+    "Delta_q_3": K.DELTA_Q_3,
+    "d_3": K.D_3,
+    "b_3": K.B_3,
+    "leak_3": K.LEAK_3,
+    "linked vacuum": K.LINKED_VACUUM_4,
+    "m_Gamma^(4)": K.M_GAMMA_4_NUM,
+    "C_shp v10a.26": K.C_SHP_NEW_NUM,
+    "Hamer a_4": K.HAMER_A4_NUM,
+    "Delta_Gamma": K.DELTA_GAMMA_AS_PRINTED_NUM,
+}
+
+
 def _signatures() -> dict[str, list[list[str]]]:
     """Digit patterns identifying each coefficient, drawn from the registry.
 
@@ -40,24 +60,8 @@ def _signatures() -> dict[str, list[list[str]]]:
     numerator and denominator must co-occur — "249696" by itself is noise,
     while "109151" together with it is d_3 and nothing else.
     """
-    named: dict[str, object] = {
-        "q_band^(4)": K.Q_BAND_4,
-        "C_shp historical": K.C_SHP_HISTORICAL,
-        "beta_pen_3": K.BETA_PEN_3,
-        "Q4 cross": K.Q4_CROSS,
-        "quarantined scalar": K.QUARANTINED_SCALAR,
-        "Delta_q_3": K.DELTA_Q_3,
-        "d_3": K.D_3,
-        "b_3": K.B_3,
-        "leak_3": K.LEAK_3,
-        "linked vacuum": K.LINKED_VACUUM_4,
-        "m_Gamma^(4)": K.M_GAMMA_4_NUM,
-        "C_shp v10a.26": K.C_SHP_NEW_NUM,
-        "Hamer a_4": K.HAMER_A4_NUM,
-        "Delta_Gamma": K.DELTA_GAMMA_AS_PRINTED_NUM,
-    }
     out: dict[str, list[list[str]]] = {}
-    for label, value in named.items():
+    for label, value in _NAMED.items():
         alternatives: list[list[str]] = []
         if isinstance(value, Rational):
             num, den = str(abs(value.p)), str(abs(value.q))
@@ -76,6 +80,49 @@ def _signatures() -> dict[str, list[list[str]]]:
 
 
 SIGNATURES = _signatures()
+
+#: A fraction this short (8/3, 5/12) is everyday arithmetic and would fire on
+#: any document; four digits (5/612, 11/306, 7/102) are already distinctive
+#: once guarded on both sides.
+MIN_LITERAL_DIGITS = 4
+
+
+def _exact_literals() -> dict[str, re.Pattern]:
+    """Registered rationals matched as verbatim ``p/q`` text, digit-guarded.
+
+    The digit signatures above carry an 8-digit floor, so the short registered
+    rationals reported nothing even when a document printed them verbatim —
+    surveying the pinned master paper, which demonstrably carries 5/612,
+    11/306 and 109151/249696, flagged only three coefficients. A literal
+    fraction is unambiguous at any length when nothing digit-like touches
+    either side, so these are generated from every registered exact value
+    (curated and module-level) rather than hand-listed: the label exists only
+    because the constant's own numerator and denominator do.
+    """
+    covered = {abs(v) for v in _NAMED.values() if isinstance(v, Rational)}
+    candidates: dict[Rational, str] = {}
+    for const in K.REGISTRY:
+        if isinstance(const.value, Rational):
+            candidates.setdefault(abs(const.value), const.name)
+    for name in sorted(n for n in dir(K) if n.isupper() and not n.startswith("_")):
+        value = getattr(K, name)
+        if isinstance(value, Rational):
+            candidates.setdefault(abs(value), name)
+    out: dict[str, re.Pattern] = {}
+    for value, label in candidates.items():
+        if value in covered or value.q == 1:
+            continue
+        num, den = str(value.p), str(value.q)
+        if len(num) + len(den) < MIN_LITERAL_DIGITS:
+            continue
+        # Guards: no digit, slash, or decimal point before; no digit, slash,
+        # or decimal-continuation after — "15/612", "5/6120" and "0.5/612"
+        # must not read as 5/612, while a sentence-final "5/612." must.
+        out[label] = re.compile(rf"(?<![0-9./])-?{num}\s*/\s*{den}(?!\d|/|\.\d)")
+    return out
+
+
+EXACT_LITERALS = _exact_literals()
 
 #: The Y = 2*beta/3 = 4u definition-label erratum (C4). Coefficients printed in
 #: a file carrying this line were already in canonical u and must never be
@@ -205,6 +252,9 @@ def scan(root: Path, max_scan_bytes: int = MAX_SCAN_BYTES) -> Report:
             digits = re.sub(r"[^\d]", "", text)
             for label, alternatives in SIGNATURES.items():
                 if any(all(part in digits for part in alt) for alt in alternatives):
+                    rep.coefficients.append(label)
+            for label, pattern in EXACT_LITERALS.items():
+                if pattern.search(text):
                     rep.coefficients.append(label)
             rep.has_erratum = any(p.search(text) for p in ERRATUM_PATTERNS)
         reports.append(rep)

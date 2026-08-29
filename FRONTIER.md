@@ -60,7 +60,7 @@ argument exists and the artifact does not.
 
 ## 3. What remains disputed
 
-**C2 — Fourth-order off-axis coefficient C_shp — the one genuinely open item**
+**C2 — Fourth-order off-axis coefficient C_shp — two branch values, unadjudicated**
 
 - historical: `-211835444920651/4405310420659200` = -0.04808638318135875
 - v10a.26: `-0.020213328886166577`

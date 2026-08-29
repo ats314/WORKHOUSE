@@ -124,6 +124,8 @@ workhouse frontier --brief       # the block the SessionStart hook injects
 workhouse search QUERY           # value, decimal, symbol, alias, or claim id
 workhouse why ID                 # everything recorded about one claim: edges,
                                  #   checks with live verdicts, theorems, ADRs
+workhouse why ID --cached        # same, from index/*.jsonl in ~0.5s — verdicts
+                                 #   as checked in, not re-run (why/derive/branches)
 workhouse atlas                  # the same graph as an interactive HTML page
 workhouse lit --for C7           # published work bearing on one claim
 workhouse lit --holes            # the citation web's missing links, as leads

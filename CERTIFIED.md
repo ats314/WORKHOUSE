@@ -687,7 +687,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/manuscript.py:118 · PAPER_FLATBAND §6
   - `workhouse verify --only 'no fourth-order coefficient enters the manuscript'`
 - `q at the four high-symmetry points is 0, 4, 8, 12`
-  - src/workhouse/invariants/manuscript.py:140 · MASTER_DOC Fig. 2
+  - src/workhouse/invariants/manuscript.py:159 · MASTER_DOC Fig. 2
   - `workhouse verify --only 'q at the four high-symmetry points is 0, 4, 8, 12'`
 **tier collapse (G14)**
 
@@ -886,7 +886,7 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **the flat-band manuscript**
 
 - `every node the theory graph strands is stranded for a stated reason`
-  - src/workhouse/invariants/manuscript.py:159 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
+  - src/workhouse/invariants/manuscript.py:178 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
   - `workhouse verify --only 'every node the theory graph strands is stranded for a stated reason'`
 **two-cube charge-odd second-order closure (B=4 and B=6)**
 

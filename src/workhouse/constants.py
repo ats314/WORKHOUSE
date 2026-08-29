@@ -866,7 +866,7 @@ REGISTRY: tuple[Constant, ...] = (
         "disputed",
         "output-certified",
         "MASTER_THEORY §5.5",
-        "C2 — the one genuinely open fourth-order coefficient",
+        "C2, historical branch — disputed; never promote either side",
     ),
     Constant(
         "C_shp (v10a.26)",
@@ -874,7 +874,7 @@ REGISTRY: tuple[Constant, ...] = (
         "disputed",
         "numerical",
         "MASTER_THEORY §5.5",
-        "C2 — the one genuinely open fourth-order coefficient",
+        "C2, v10a.26 branch — disputed; never promote either side",
     ),
     Constant(
         "Hamer a_4",

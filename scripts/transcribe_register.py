@@ -38,7 +38,7 @@ CROSSWALK: dict[str, tuple[list[str], list[str], str]] = {
         [],
         "Same claim: q_band^(4) and m_Gamma^(4) are differently anchored coordinates.",
     ),
-    "R5": (["C2"], ["G3"], "Same claim, and the one genuinely open contradiction."),
+    "R5": (["C2"], ["G3"], "Same claim; the open off-axis contradiction."),
     "R6": (
         ["C22"],
         [],
