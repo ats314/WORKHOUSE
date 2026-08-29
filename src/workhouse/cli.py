@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
 import os
 import re
@@ -29,6 +30,28 @@ def _plain_stdout_wanted(no_color: bool) -> bool:
     if no_color or os.environ.get("NO_COLOR"):
         return True
     return not sys.stdout.isatty()
+
+
+def _force_utf8_streams() -> None:
+    """Make stdout able to carry the corpus's own alphabet.
+
+    The registry prints ``\u2192``, ``\u0393``, ``\u03b5``, ``\u03b2`` in nearly every
+    subcommand. Windows still opens stdout as cp1252, which can encode none of
+    them, so ``why C2`` died with ``UnicodeEncodeError`` before printing a
+    single edge -- a crash that says nothing about the claim it was asked
+    about. Ask for UTF-8 explicitly rather than relying on the platform
+    default; if the stream refuses to be reconfigured, at least stop it from
+    raising, so a wrong glyph beats no output.
+    """
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is None:  # pytest's capture object, a StringIO, a pipe proxy
+            continue
+        try:
+            reconfigure(encoding="utf-8", errors="backslashreplace")
+        except (ValueError, OSError):
+            with contextlib.suppress(ValueError, OSError):
+                reconfigure(errors="backslashreplace")
 
 
 class _AnsiStrippingStdout:
@@ -537,6 +560,7 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     args = parser.parse_args(argv)
+    _force_utf8_streams()
     if _plain_stdout_wanted(args.no_color):
         sys.stdout = _AnsiStrippingStdout(sys.stdout)
     if args.command == "verify":
