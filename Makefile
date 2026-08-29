@@ -1,4 +1,4 @@
-.PHONY: help bootstrap check quick lint test verify status frontier certified lit catalogue atlas fmt manifest corpus-manifest lean corpus-index lock clean
+.PHONY: help bootstrap check quick lint test verify status frontier certified lit catalogue atlas fmt manifest corpus-manifest lean corpus-index lock clean paper
 
 help:            ## Show this help
 	@grep -hE '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk -F':.*?## ' '{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -26,10 +26,36 @@ status:          ## Print the contradiction and gap registers
 	@.venv/bin/workhouse status
 
 catalogue:       ## Regenerate the index/ catalogues: claims, symbols, graph
-	@.venv/bin/workhouse index --write
+# One pass is not always enough, and the shortfall is silent. Some checks READ
+# a generated index -- note coverage reads index/graph.jsonl -- so on the pass
+# that first adds a node they still see the previous generation, and their
+# detail line lands in claims.jsonl one generation stale. The files look
+# written, `make check` then fails with "stale; run `make catalogue`", and the
+# obvious reading of that message is that the command was never run. Loop to a
+# fixpoint instead: the second pass is skipped entirely when nothing moved.
+	@n=0; prev=""; \
+	while [ $$n -lt 4 ]; do \
+		.venv/bin/workhouse index --write; \
+		now=`cat index/claims.jsonl index/symbols.jsonl index/graph.jsonl | sha256sum`; \
+		[ "$$now" = "$$prev" ] && break; \
+		prev=$$now; n=`expr $$n + 1`; \
+	done; \
+	if [ $$n -ge 4 ]; then echo "catalogue did not converge in 4 passes"; exit 1; fi
 
 atlas:           ## Render the theory graph to atlas.html (a view; never checked in)
 	@.venv/bin/workhouse atlas
+
+paper:           ## Build the master paper PDF and run both stdlib core verifiers
+	@python3 verify_core.py
+	@cd paper && python3 verify_core.py \
+		&& SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
+		   pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null \
+		&& SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
+		   pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null \
+		&& SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
+		   pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null \
+		&& echo "paper/master_paper_2026-08-28.pdf"
+
 
 lit:             ## Published work, and which claim each paper bears on
 	@.venv/bin/workhouse lit
@@ -39,6 +65,9 @@ certified:       ## Regenerate CERTIFIED.md — every checked claim, ranked by t
 
 frontier:        ## Regenerate FRONTIER.md from the ledgers and the suites
 	@.venv/bin/workhouse frontier --write
+
+regen: frontier certified catalogue  ## Every generated file, in one order — the staleness tests stop tripping on partial regens
+	@echo "regenerated: FRONTIER.md CERTIFIED.md index/"
 
 fmt:             ## Auto-format
 	@.venv/bin/ruff check --fix . && .venv/bin/ruff format .

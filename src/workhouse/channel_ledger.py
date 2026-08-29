@@ -327,8 +327,55 @@ def b_note_identity_bound() -> int:
     from sympy import sympify
 
     n_sym = SSymbol("N")
-    expr = sympify(P.B_NOTE.read_text().strip(), locals={"N": n_sym})
+    expr = sympify(P.B_NOTE.read_text(encoding="utf-8").strip(), locals={"N": n_sym})
     n1, d1 = _degree_bound(expr)
     n2 = 2 * P17.degree()  # P17(N^2)
     d2 = 1 + 2 * R20.degree()  # N * R20(N^2)
     return max(n1 + d2, n2 + d1)
+
+
+def _eps_coefficients(poly, n0: int) -> list[Fraction]:
+    """Coefficients of ``poly(z)`` re-expanded in ``eps`` with ``z = (n0+eps)**2``."""
+    shifted = Poly(poly.as_expr().subs(_z, (n0 + Symbol("eps")) ** 2), Symbol("eps"))
+    table = shifted.as_dict()
+    return [Fraction(int(table.get((k,), 0))) for k in range(shifted.degree() + 1)]
+
+
+def _series_divide(num: list[Fraction], den: list[Fraction], order: int) -> list[Fraction]:
+    """``num/den`` as a power series in eps, to ``order``. Requires ``den[0] != 0``."""
+    out: list[Fraction] = []
+    for k in range(order + 1):
+        acc = num[k] if k < len(num) else Fraction(0)
+        for j in range(1, k + 1):
+            if j < len(den):
+                acc -= den[j] * out[k - j]
+        out.append(acc / den[0])
+    return out
+
+
+def scalar_continuation_laurent(n0: int, order: int = 0) -> dict[int, Fraction]:
+    """Laurent coefficients of the stable scalar law at ``N = n0``, exactly.
+
+    The stable-rank scalar formula ``q_N = -(2/3N) Q32(N^2)/D34(N^2)`` is
+    stated for ``N >= 7`` and is singular at ``N = 2, 3, 4``, because ``D34``
+    carries ``(z-4)(z-9)^3(z-16)``. The corpus warns, in the unified nality
+    theorem itself, that ``q_N^bal`` at an exceptional rank means the direct
+    fixed-rank contraction and *not* this continuation. That warning is a
+    statement about method with no number attached; this function attaches
+    one, by expanding the continuation about the forbidden rank in exact
+    rational arithmetic.
+
+    Returns ``{power: coefficient}`` from the leading pole through ``order``.
+    Power ``0`` is the Hadamard finite part.
+    """
+    _, q32, d34 = P.q_polynomials()
+    numerator_coeffs = [-Fraction(2, 3) * c for c in _eps_coefficients(q32, n0)]
+    # the 1/N factor rides with the denominator: D(eps) = (n0+eps) * D34((n0+eps)^2)
+    d34_coeffs = _eps_coefficients(d34, n0)
+    denominator_coeffs = [Fraction(0)] * (len(d34_coeffs) + 1)
+    for k, c in enumerate(d34_coeffs):
+        denominator_coeffs[k] += Fraction(n0) * c
+        denominator_coeffs[k + 1] += c
+    pole = next(k for k, c in enumerate(denominator_coeffs) if c != 0)
+    series = _series_divide(numerator_coeffs, denominator_coeffs[pole:], pole + order)
+    return {k - pole: series[k] for k in range(pole + order + 1)}

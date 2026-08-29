@@ -1,0 +1,167 @@
+# The run register: one entry per pinned run record in runs/.
+#
+# Judgement lives here (what each run bears on); the join is derived
+# (claims.py emits a RUN: node per entry, graph.py emits the evidences
+# edges); the validation is mechanical (tests/test_graph.py rejects an
+# entry whose directory or SHA256SUMS is missing, and a runs/ directory
+# with no entry). The failure this register prevents: a run record that
+# checks cite only as a file-path string, invisible to `workhouse why` —
+# the same hole the notes archives had before they got nodes.
+#
+# No entry promotes anything. A run record is evidence that a computation
+# was executed and what it printed — tier is the checks' business.
+schema: runs/v1
+
+runs:
+  - id: mce_freeze_and_first_run_2026-08-22
+    dir: runs/mce_freeze_and_first_run_2026-08-22
+    title: >-
+      MCE frozen-protocol attempt: freeze passes, run fail-closes on
+      cluster 1 of 609
+    bears_on: [G3, C2]
+    detail: >-
+      First execution of the settlement harness's freeze and run stages
+      anywhere. Freeze PASS (self-test 47/47, both preflight pins); run
+      fail-closed on the shipped closure cap (max_states=100) during the
+      R2 stage of the first, smallest cluster. Established that the frozen
+      protocol as received cannot start on any hardware, and measured the
+      first oversize orbit at 216 states.
+
+  - id: blind_pentagonal_o4_2026-08-28
+    dir: runs/blind_pentagonal_o4_2026-08-28
+    title: >-
+      Target-blind pentagonal fourth-order run: both amplitudes of
+      h_4^side cold-reproduced
+    bears_on: [C2]
+    detail: >-
+      backend_full_link_balanced_control.py run unmodified, 24/24 internal
+      gates. Derives A_+ and A_- independently from oriented prism
+      geometry; exact agreement on both amplitudes. Does NOT adjudicate
+      C2: h_4^side is pentagonal-prism geometry, separate from the cubic
+      kernel where C_shp lives.
+
+  - id: mce_caplifted_freeze_and_run_2026-08-28
+    dir: runs/mce_caplifted_freeze_and_run_2026-08-28
+    title: >-
+      Cap-lifted MCE sealed run: freeze passes, cluster 1 of 609 exceeds
+      45 minutes, and the sweep is priced out
+    bears_on: [G3, C2]
+    detail: >-
+      The cap-lifted fork (sha256 9af3708e...) driven by the pinned
+      harness: freeze PASS, sealed run terminated by hand at 45:27 with
+      the smallest cluster still incomplete. Killed because the
+      scalar-only finding registered the same day makes completing it
+      pointless for C2. Also records the memoization-fork experiment
+      (self-test 47/47, exact agreement on sampled inner products, still
+      inside cluster 1 at 12:14) and the py-spy attribution of the cost
+      to the pure-Python union-find under the exact Haar contraction.
+
+  - id: g3_kernel_record_dump_2026-08-28
+    dir: runs/g3_kernel_record_dump_2026-08-28
+    title: >-
+      The v10a.26 kernel records written down, and the two kernels compared
+      record by record
+    bears_on: [G3, C2]
+    detail: >-
+      The cold kernel's 189 per-record values, reproduced on CPU in 12.3
+      minutes from the pinned v10a.26 script (kernel leg only) with every
+      gate passing and C bit-identical to the registered C_SHP_NEW_NUM.
+      The comparison against the pinned historical certificate: identical
+      189-record support; one scale factor s = 4.1327437 explains 144
+      records to 2e-12 (the whole rotation-type bulk); the divergence is
+      three amplitudes — the cross-plane value (opposite sign between
+      kernels), the nn same-plane NORMAL/IN-PLANE values, and the on-site
+      scalar anchor (whose swap moves C by exactly zero) — and the
+      class-by-class Delta_C attribution sums exactly to the measured
+      difference. Neither side promoted.
+
+  - id: cbb_finite_n_bridge_2026-08-28
+    dir: runs/cbb_finite_n_bridge_2026-08-28
+    title: >-
+      The finite-N SU(3) truncation bridge certificate, re-run: 18/18, and
+      the received certificate reproduced byte for byte
+    bears_on: [R2]
+    detail: >-
+      verify_cbb_tn_bridge.py run unmodified. Standard library only, exact
+      Fraction arithmetic, no WORKHOUSE import: it rebuilds the four SU(3)
+      channel weights from dimensions and Casimirs and both cubical boundary
+      matrices from oriented cell boundaries. 18/18 gates, and the JSON it
+      writes is identical to the certificate that arrived with the documents.
+      Establishes the arithmetic, not the physics premise -- that the
+      published Ciavarella-Burbano-Bauer matrix element is the right input
+      and that four channels exhaust the second-order shared-link routes is
+      argued in prose and stays T3. The derivation chain itself is already
+      T1-checked here from the corpus's own appendix; what this run adds is
+      an independent implementation of it, plus the T1-cutoff diagnostic and
+      the finite-volume fingerprints the registry did not carry.
+
+  - id: balaji_open_cube_b4_t1_2026-08-28
+    dir: runs/balaji_open_cube_b4_t1_2026-08-28
+    title: >-
+      The T1 = B = 4 open cube diagonalised: the reversed charge-odd shell
+      confirmed in a full Hamiltonian, from the authors' own plaquette data
+    bears_on: [R2]
+    detail: >-
+      The full-Hamiltonian one-cube test the finite-N bridge named as its
+      remaining decisive test, done for the T1 branch. The local coefficients
+      are the authors' public ymcirc d=3, B=4 oriented table (blob 1808849c,
+      sha256 4cad9538), embedded on six faces and cut to a 243-state physical
+      block by Gauss' law. Re-diagonalised in this session rather than taken
+      from the shipped script: charge conjugation commutes with both terms,
+      the charge-odd sector is 121 of 243, and tracking the six single-face
+      states by overlap (minimum 1.0000 at u = 0.005) gives
+      (E - E_max)/u^2 -> {-1/2 x2, -1/3 x3, 0 x1} with an O(u^3) residual.
+      That is the REVERSED T1 ordering, opposite to the channel-complete
+      {0, (5/153)^3, (5/102)^2}. The certificate's second-order gap matrix
+      equals (37/12)I - (1/12)G to 4.3e-11, so t_3^T1 = -1/12 appears as the
+      off-diagonal element and the eigenvalues are exactly the T1 absolute
+      coefficients the separate CBB bridge certificate predicted. Establishes
+      the T1 branch only; the channel-complete +5/612 needs a B = 6 cube that
+      nobody has run. Not an independent-group replication -- shared author
+      and code lineage, and the open-cube assembly is the reconstructor's.
+
+  - id: b6_open_cube_channel_complete_2026-08-28
+    dir: runs/b6_open_cube_channel_complete_2026-08-28
+    title: >-
+      The B = 6 open cube: the sign flips back to +5/612, and the scalar
+      disagreement is exactly the same-face sextet route
+    bears_on: [R2]
+    detail: >-
+      The second and last branch of the test the finite-N bridge named as
+      remaining. Restoring the 6 and 8 shared-link channels reverses the B = 4
+      truncated sign: t goes -1/12 -> +5/612, and the charge-odd shell ordering
+      inverts, the signed cube boundary becoming lowest. Audited here for
+      arithmetic rather than re-run -- the generator needs pyclebsch and an
+      adapter that did not travel: the gap matrix is (39/68)I + (5/612)G to
+      8.4e-15, the relative shell is {0, (5/153)^3, (5/102)^2}, and the
+      channel census 1/12 - 1/6 - 2/9 + 16/51 sums to 5/612 exactly. The
+      scalar disagreed with the bridge's predicted 11/34 by exactly 1/4, and
+      39/68 - 1/4 = 11/34: the bridge's section 5.1 names a local same-face
+      sextet route of -1/4 and this certificate independently reports that
+      route first entering at cutoff 7, so B = 6 is channel-complete for the
+      hopping and not for the on-site scalar. Second order only, and the
+      global B = 6 basis was deliberately not enumerated.
+
+  - id: two_cube_codd_o2_2026-08-29
+    dir: runs/two_cube_codd_o2_2026-08-29
+    title: >-
+      Two-cube charge-odd second-order closure: -1/12 (B=4) and +5/612
+      (B=6) recovered target-blind on a genuine face-sharing space
+    bears_on: [R2, G3]
+    detail: >-
+      First multi-cube operator result in the corpus. The connected
+      adjacent-hopping coefficient is derived on an actual open
+      face-sharing (3,2,2) two-cube SU(3) Hilbert space (1,590,462
+      states at B=6) with literal operator-level Moebius subtraction of
+      the left-cube, right-cube and shared-face contributions, target
+      blind. B=4 gives -(1/12)G_conn + D; B=6 gives +(5/612)G_conn + D
+      -- the registry's own t_3 -- with the six shared-link channels
+      separately contracted: legacy -51/612, restored 6+bar6+8 +56/612.
+      The channel list is provably closed at B=6 at this order (endpoint
+      Casimir budgets 6 and 17/3). Audited here for arithmetic rather
+      than re-run: the NPZ artifacts, ledgers, builders and pyclebsch
+      archive did not travel, but the delivered subset is byte-consistent
+      with its own detached manifest chain. Second order only; the
+      delivery itself states no fourth-order claim changes, so C2 stays
+      open -- what this retires is the one-cube-only objection, and it
+      demonstrates the target-blind operator-level machinery G3 needs.

@@ -201,3 +201,26 @@ def test_cli_why_runs_and_exits_nonzero_on_a_miss():
         cwd=ROOT,
     )
     assert miss.returncode == 1
+
+
+def test_run_register_matches_runs_directory():
+    """Every pinned run directory has a register entry and vice versa.
+
+    The failure this prevents: a run record cited by checks only as a
+    file-path string, invisible to `workhouse why` — or a register entry
+    whose directory (or SHA256SUMS pin) quietly disappeared.
+    """
+    from workhouse import claims
+
+    root = Path(claims.ROOT)
+    registered = {run["id"]: run for run in claims.load_runs()}
+    on_disk = {p.name for p in (root / "runs").iterdir() if p.is_dir()}
+    assert set(registered) == on_disk, (
+        f"register vs runs/: only in register {sorted(set(registered) - on_disk)}, "
+        f"only on disk {sorted(on_disk - set(registered))}"
+    )
+    for rid, run in registered.items():
+        rdir = root / run["dir"]
+        assert rdir.is_dir(), f"{rid}: {run['dir']} is not a directory"
+        assert (rdir / "SHA256SUMS").is_file(), f"{rid}: no SHA256SUMS pin"
+        assert run.get("bears_on"), f"{rid}: a run with no bears_on is invisible"

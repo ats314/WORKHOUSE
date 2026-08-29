@@ -179,3 +179,54 @@ def test_cli_search_runs_and_exits_nonzero_on_a_miss():
         cwd=ROOT,
     )
     assert miss.returncode == 1
+
+
+def test_negative_query_keeps_its_trailing_options():
+    """`search -5/48 --corpus --limit 12` must not lose the options.
+
+    The rescue that lets a negative value through argparse used to insert the
+    `--` separator in place, which makes argparse read every later token as
+    positional: the natural command died with "unrecognized arguments: --corpus
+    --limit 12". Reported against this repository in
+    notes/imported/UPLOADS_2026-08-28i/THEORY_GRAPH_AGENT_EXPERIENCE_NOTES_20260828.md
+    and reproduced exactly as described, so it is pinned here.
+    """
+    from workhouse.cli import _rescue_negative_query
+
+    assert _rescue_negative_query(["search", "-5/48", "--corpus", "--limit", "12"]) == [
+        "search",
+        "--corpus",
+        "--limit",
+        "12",
+        "--",
+        "-5/48",
+    ]
+    # The bare form, and an already-separated line, are both left alone.
+    assert _rescue_negative_query(["search", "-5/48"]) == ["search", "--", "-5/48"]
+    assert _rescue_negative_query(["search", "--", "-5/48"]) == ["search", "--", "-5/48"]
+    # A positive value never needed rescuing.
+    assert _rescue_negative_query(["search", "5/612", "--limit", "3"]) == [
+        "search",
+        "5/612",
+        "--limit",
+        "3",
+    ]
+
+    run = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "workhouse.cli",
+            "search",
+            "-211835444920651/4405310420659200",
+            "--corpus",
+            "--limit",
+            "4",
+        ],
+        capture_output=True,
+        text=True,
+        cwd=ROOT,
+    )
+    assert run.returncode == 0, run.stderr
+    assert "unrecognized arguments" not in run.stderr
+    assert "C_shp" in run.stdout

@@ -149,7 +149,7 @@ class Literature:
 
 
 def load(path: Path | None = None) -> Literature:
-    data = yaml.safe_load((path or INDEX).read_text())
+    data = yaml.safe_load((path or INDEX).read_text(encoding="utf-8"))
     return Literature(
         papers=data.get("papers", []),
         stubs=data.get("stubs", []),
@@ -183,7 +183,7 @@ def validate(lit: Literature | None = None) -> list[str]:
     if fulltext_dir.is_dir():
         declared = {str(p.get("fulltext", "")) for p in lit.papers}
         for stored in sorted(fulltext_dir.iterdir()):
-            rel = str(stored.relative_to(LITERATURE_DIR))
+            rel = stored.relative_to(LITERATURE_DIR).as_posix()
             if stored.is_file() and rel not in declared:
                 problems.append(f"orphan stored file with no licence record: {rel}")
 

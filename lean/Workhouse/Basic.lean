@@ -105,6 +105,46 @@ theorem width_eq_alpha_add_beta : W₄_old = alphaPen 3 + βPenOld := by
 theorem beta_from_A_and_C : βPenOld = 8 * A_shp + 16 * C_shp_old := by
   unfold βPenOld A_shp C_shp_old; norm_num
 
+/-! ## The charge-even band -/
+
+/-- The charge-even characteristic polynomial, in the Gram variable `μ = λ + 4`,
+with `aᵢ = 2 + 2 cos kᵢ` and `p = a + b + c`. The corpus records this sector's
+range and its Γ expansion but no closed form; this one is derived in
+`src/workhouse/even_sector.py` and checked there against the integer
+characteristic polynomial of the finite `L = 3` and `L = 4` plaquette
+adjacencies. -/
+def evenCubic (m a b c : ℚ) : ℚ :=
+  m ^ 3 - 2 * (a + b + c) * m ^ 2 + (a + b + c) ^ 2 * m - 4 * a * b * c
+
+/-- Why the linear coefficient is `p²`. The three principal 2×2 minors of the
+unsigned Gram matrix are `a·p`, `b·p` and `c·p`: each off-diagonal
+modulus-squared (`bc`, `ac`, `ab`) cancels the cross term of its minor exactly,
+and the three then sum to `p²`. This is the step that makes the cubic depend on
+`a, b, c` only through `p` and `abc`. -/
+theorem even_gram_minors (a b c : ℚ) :
+    ((b + a) * (c + a) - b * c) + ((b + a) * (c + b) - a * c)
+        + ((c + a) * (c + b) - a * b)
+      = (a + b + c) ^ 2 := by ring
+
+/-- The band floor. `μ = 0`, that is `λ = -4`, is a root exactly when `abc = 0`,
+which is exactly the union of the three zone-boundary planes `kⱼ = π`. -/
+theorem even_cubic_at_zero (a b c : ℚ) : evenCubic 0 a b c = -(4 * (a * b * c)) := by
+  unfold evenCubic; ring
+
+/-- The band ceiling, in the form that carries the bound: at `μ = 16` the cubic
+is `16(16-p)² - 4abc`. Each `aᵢ ∈ [0,4]`, so `p ≤ 12` and `abc ≤ 64`, hence
+`16(16-p)² ≥ 256 ≥ 4abc` and the value is nonnegative. -/
+theorem even_cubic_at_sixteen (a b c : ℚ) :
+    evenCubic 16 a b c = 16 * (16 - (a + b + c)) ^ 2 - 4 * (a * b * c) := by
+  unfold evenCubic; ring
+
+/-- Above `p` the cubic is strictly increasing, because its derivative factors
+as `(3μ - p)(μ - p)`. With the previous lemma this is the upper-edge argument:
+no root exceeds `16`, so `λ ≤ 12`. -/
+theorem even_cubic_derivative_factors (m a b c : ℚ) :
+    3 * m ^ 2 - 4 * (a + b + c) * m + (a + b + c) ^ 2
+      = (3 * m - (a + b + c)) * (m - (a + b + c)) := by ring
+
 /-! ## Symmetric-function identities used by the fourth-order shape analysis -/
 
 /-- Newton's identity in three variables. This is what lets a degree-3 numerator
@@ -116,7 +156,10 @@ theorem newton_three (a b c : ℚ) :
   ring
 
 /-- The four checkpoint-extraction formulas invert the cubic-invariant ansatz.
-Stated on the checkpoint deltas `dX, dM, dP, dR` as they arise from the ansatz. -/
+Stated on the checkpoint deltas `dX, dM, dP, dR`, whose forms are proved from
+the ansatz by `delta_X`, `delta_M`, `delta_P` and `delta_R` below. Together the
+eight cover the T1 extraction check whole: these four the inversion, those four
+the derivation of the deltas including the trigonometric step. -/
 theorem extraction_A (A : ℚ) : (4 * A) / 4 = A := by ring
 
 theorem extraction_B (A B C : ℚ) :
@@ -190,5 +233,80 @@ theorem pentCompletion_three : pentCompletion 3 = 35 / 384 := by
 the completion family and the sealed core's `alphaPen`. -/
 theorem alphaPen_eq_neg_four_cube (n : ℚ) : alphaPen n = -4 * cubeCompletion n := by
   unfold alphaPen cubeCompletion; ring
+
+/-! ## The checkpoint deltas, from the ansatz
+
+The four `extraction_*` theorems above invert the cubic-invariant ansatz on the
+deltas `dX, dM, dP, dR`, but they *assume* those deltas already have the forms
+`4A`, `8A+16B+8C`, `6A+8B+16C/3`, `12A+48B+16C+16D/3`. Their doc comment says
+so, and the gap was real: nothing machine-checked showed those forms follow
+from the ansatz, so the T1 check `checkpoint values at X, M, P, R` had no T0
+counterpart and the extraction theorems formalized only half a statement.
+
+This section closes it, over `ℝ` rather than `ℚ` because the step is
+trigonometric: the band variable is `a(k) = 4 sin²(k/2)`, and the checkpoints
+are the momenta where it takes rational values.
+-/
+
+/-- The band variable. `a(k) = 4 sin²(k/2)`, the standard lattice dispersion. -/
+noncomputable def bandVar (k : ℝ) : ℝ := 4 * Real.sin (k / 2) ^ 2
+
+@[simp] theorem bandVar_zero : bandVar 0 = 0 := by
+  unfold bandVar; simp
+
+@[simp] theorem bandVar_pi : bandVar Real.pi = 4 := by
+  unfold bandVar; rw [show Real.pi / 2 = Real.pi / 2 from rfl, Real.sin_pi_div_two]; norm_num
+
+@[simp] theorem bandVar_pi_div_two : bandVar (Real.pi / 2) = 2 := by
+  unfold bandVar
+  rw [show Real.pi / 2 / 2 = Real.pi / 4 by ring, Real.sin_pi_div_four]
+  rw [div_pow, Real.sq_sqrt (by norm_num : (2:ℝ) ≥ 0)]
+  norm_num
+
+/-- The cubic invariants of the three band variables. -/
+noncomputable def qInv (a b c : ℝ) : ℝ := a + b + c
+noncomputable def e2Inv (a b c : ℝ) : ℝ := a * b + a * c + b * c
+noncomputable def e3Inv (a b c : ℝ) : ℝ := a * b * c
+
+/-- The fourth-order cubic-invariant ansatz on the flat fiber:
+`eps4 = c0 + A q + B e2 + C (4 e2 / q) + D (e3 / q)`. -/
+noncomputable def eps4 (c0 A B C D a b c : ℝ) : ℝ :=
+  c0 + A * qInv a b c + B * e2Inv a b c
+    + C * (4 * e2Inv a b c / qInv a b c) + D * (e3Inv a b c / qInv a b c)
+
+/-- `q` at the four high-symmetry points: `0, 4, 8, 12` at `Γ, X, M, R`. The
+corpus figure plots this spectrum and asserts it; here it is derived. -/
+theorem q_at_checkpoints :
+    qInv (bandVar 0) (bandVar 0) (bandVar 0) = 0 ∧
+    qInv (bandVar Real.pi) (bandVar 0) (bandVar 0) = 4 ∧
+    qInv (bandVar Real.pi) (bandVar Real.pi) (bandVar 0) = 8 ∧
+    qInv (bandVar Real.pi) (bandVar Real.pi) (bandVar Real.pi) = 12 := by
+  unfold qInv; norm_num
+
+/-- The checkpoint delta at `X = (π, 0, 0)`: `dX = 4A`. `X` is blind to `B`, `C`
+and `D`, which is what makes it fix `A` alone. -/
+theorem delta_X (c0 A B C D : ℝ) :
+    eps4 c0 A B C D (bandVar Real.pi) (bandVar 0) (bandVar 0) - c0 = 4 * A := by
+  unfold eps4 qInv e2Inv e3Inv; simp; ring
+
+/-- The checkpoint delta at `M = (π, π, 0)`: `dM = 8A + 16B + 8C`. -/
+theorem delta_M (c0 A B C D : ℝ) :
+    eps4 c0 A B C D (bandVar Real.pi) (bandVar Real.pi) (bandVar 0) - c0
+      = 8 * A + 16 * B + 8 * C := by
+  unfold eps4 qInv e2Inv e3Inv; simp; ring
+
+/-- The checkpoint delta at `P = (π, π/2, 0)`: `dP = 6A + 8B + 16C/3`. -/
+theorem delta_P (c0 A B C D : ℝ) :
+    eps4 c0 A B C D (bandVar Real.pi) (bandVar (Real.pi / 2)) (bandVar 0) - c0
+      = 6 * A + 8 * B + 16 / 3 * C := by
+  unfold eps4 qInv e2Inv e3Inv; simp; ring
+
+/-- The checkpoint delta at `R = (π, π, π)`: `dR = 12A + 48B + 16C + 16D/3`.
+`R` is the only checkpoint that sees `D`, because it is the only one where all
+three band variables are nonzero and so `e3` does not vanish. -/
+theorem delta_R (c0 A B C D : ℝ) :
+    eps4 c0 A B C D (bandVar Real.pi) (bandVar Real.pi) (bandVar Real.pi) - c0
+      = 12 * A + 48 * B + 16 * C + 16 / 3 * D := by
+  unfold eps4 qInv e2Inv e3Inv; simp; ring
 
 end Workhouse

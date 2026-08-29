@@ -15,7 +15,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from sympy import Rational, Symbol, sympify
+from sympy import Integer, Rational, Symbol, sympify
 
 N = Symbol("N", positive=True)  # gauge rank
 L = Symbol("L", positive=True)  # torus extent
@@ -76,6 +76,87 @@ def parallel_sum(n=N):
     """Channel sum B_N over the parallel pairing."""
     n = sympify(n)
     return -4 * n * (n**2 - 2) / ((n**2 - 1) * (4 * n**2 - 9))
+
+
+# --------------------------------------------------------------------------
+# The shared-link fusion channels that A_N and B_N are built from
+# --------------------------------------------------------------------------
+# A_N and B_N above were registered as printed closed forms. These are the
+# representation-theoretic inputs, so the two sums can be *derived* rather than
+# transcribed:
+#
+#   F (x) Fbar = 1 + Adj              the mixed (antiparallel) family -> A_N
+#   F (x) F    = Lambda^2 + Sym^2     the like (parallel) family      -> B_N
+#
+# The resolvent denominator: six nonshared half-links cost 3 C_F, the fused
+# link costs C_R/2, and the external one-plaquette state sits at 2 C_F, so the
+# gap is (3 C_F + C_R/2) - 2 C_F = C_F + C_R/2. The numerator weight d_R/N**2
+# is the manuscript's "isotropy of the normalized shared-link tensor" — the one
+# input of the chain this repository does NOT derive, recorded here so the
+# boundary is visible at the definition rather than buried in a check.
+
+CHANNELS = ("1", "Adj", "Lambda2", "Sym2")
+
+#: Which family each channel belongs to, and hence which sum it feeds.
+CHANNEL_FAMILY = {"1": "mixed", "Adj": "mixed", "Lambda2": "like", "Sym2": "like"}
+
+
+def channel_data(rank=N):
+    """``(d_R, C_2(R))`` for the four shared-link fusion channels."""
+    n = sympify(rank)
+    return {
+        "1": (Integer(1), Integer(0)),
+        "Adj": (n**2 - 1, n),
+        "Lambda2": (n * (n - 1) / 2, (n + 1) * (n - 2) / n),
+        "Sym2": (n * (n + 1) / 2, (n - 1) * (n + 2) / n),
+    }
+
+
+def casimir_fundamental(rank=N):
+    """``C_F = (N**2 - 1)/(2N)``."""
+    n = sympify(rank)
+    return (n**2 - 1) / (2 * n)
+
+
+def plaquette_energy(rank=N):
+    """The unperturbed one-plaquette energy, ``4 * (C_F/2) = 2 C_F``."""
+    return 2 * casimir_fundamental(rank)
+
+
+def channel_gap(channel, rank=N):
+    """``E_intermediate - E_external`` for one channel: ``C_F + C_R/2``."""
+    _, casimir = channel_data(rank)[channel]
+    return 3 * casimir_fundamental(rank) + casimir / 2 - plaquette_energy(rank)
+
+
+def channel_weight(channel, rank=N):
+    """``w_R = -(d_R/N**2) / (C_F + C_R/2)``, the resolvent weight."""
+    dim, _ = channel_data(rank)[channel]
+    return -(dim / sympify(rank) ** 2) / channel_gap(channel, rank)
+
+
+def channel_weight_printed(channel, rank=N):
+    """The closed forms the corpus prints for the four weights."""
+    n = sympify(rank)
+    return {
+        "1": -2 / (n * (n - 1) * (n + 1)),
+        "Adj": -2 * (n - 1) * (n + 1) / (n * (2 * n**2 - 1)),
+        "Lambda2": -(n - 1) / ((2 * n - 3) * (n + 1)),
+        "Sym2": -(n + 1) / ((2 * n + 3) * (n - 1)),
+    }[channel]
+
+
+def even_hopping(rank=N):
+    """``ell_N``, the all-rank C-even second-order hopping.
+
+    Printed in the corpus (``records/audits/03-prism-selection-shape.md``) and
+    gated inside ``NB_O2_prism_square_second_order_falsification.ipynb`` as
+    ``factor(Wmix + Wlike + 1/CF)`` — never checked here until now. The
+    ``1/C_F`` is the vacuum-mediated route, which is exactly what C13 records
+    as having been omitted.
+    """
+    n = sympify(rank)
+    return -2 * n * (3 * n**2 - 5) / ((n**2 - 1) * (2 * n**2 - 1) * (4 * n**2 - 9))
 
 
 def hopping(n=N):
@@ -139,6 +220,141 @@ D_3 = Rational(-109151, 249696)  # = 7/32 + 12*LEAK_3 - 4*B_3
 #: independently re-derived here; registered because Hamer's 1989 table
 #: corroborates it externally (published-comparisons suite).
 M3_EVEN_K0 = Rational(-54049, 520200)
+
+#: Domino-engine certificate locks (ENGINE_FLUX_su3_domino_d3.py, 251 gates;
+#: conditional on that engine's census, same lineage as B_3/LEAK_3/D_3).
+#: The engine's structural identity leak_{r,+} = t_{r,+} — the vacuum-route
+#: mechanism — holds at both computed orders; T3_EVEN is therefore both the
+#: C-even third-order hopping and the C-even third-order per-neighbour leakage.
+T3_EVEN = Rational(-6335, 249696)  # C-even third-order hopping, engine lock
+D3_ODD_DOMINO = Rational(-24541, 62424)  # domino C-odd diagonal at order 3
+D3_EVEN_DOMINO = Rational(-517313, 6242400)  # domino C-even diagonal at order 3
+VAC3_DOMINO = Rational(-9, 16)  # two-plaquette vacuum piece = 2 x (-9/32)
+D3_TOP = Rational(-61751, 249696)  # C-odd dispersive top (lambda = 8) at order 3
+
+# --------------------------------------------------------------------------
+# The domino ledger  (RUN_TROM_d3_results.json; CERT_FLUX_d3_certificate_results.md)
+# --------------------------------------------------------------------------
+# The repository already carried the band VALUES these assemble into, and
+# checked them by subtracting one from another. These are the ingredients they
+# are assembled FROM, in both charge sectors and at both orders, from the
+# abstract-domino engine's 251-gate run.
+
+LEAK_2 = Rational(-11, 306)  # second-order per-neighbour leakage, C-odd
+LEAK_2_EVEN = Rational(-11, 306)  # ... and C-even. The same rational; see below.
+LEAK_3_EVEN = Rational(-6335, 249696)  # ... and its leakage, = T3_EVEN. Again.
+
+#: The C-even band edge at lambda = -4, order 3. The certificate key is
+#: "m3_even_bandmin (lambda=-4)" and that key name is wrong: t_{3,+} < 0, so
+#: lambda = -4 is the band TOP, which is what PAPER's third-order theorem, the
+#: manuscript patch's constant table and the master program note all call it.
+#: Renamed here to stop the registry contradicting BAND_EVEN_TOP, which is the
+#: same edge one order down; the FINDING check keeps the discrepancy visible.
+M3_EVEN_BANDTOP = Rational(471353, 1560600)  # C-even at lambda = -4, the TOP
+
+#: The E++ doublet at lambda = 0, order 3. PAPER derives it from the certified
+#: band form ("101/200 + 12 T_3^e = 52163/260100") and flags it as following
+#: from that form rather than computed independently -- so it is exactly the
+#: kind of value that is worth re-deriving here rather than transcribing.
+M3_EVEN_EPP = Rational(52163, 260100)
+
+#: The C-even A1++ curvature coefficients, PAPER's "curvature +22/459 |k|^2 y^2"
+#: and its third-order correction. Both are (4/3)|t_{r,+}|; the 4/3 is the
+#: Gamma expansion of the unsigned adjacency, not a convention.
+CEVEN_CURVATURE_2 = Rational(22, 459)
+CEVEN_CURVATURE_3 = Rational(6335, 187272)
+
+# This block once re-registered five values the certificate-lock block above
+# already carried, under names differing by an underscore or a suffix:
+# T_3_EVEN, D3_ODD, D3_EVEN, E_VAC3_DOMINO and D_3_TOP duplicated T3_EVEN,
+# D3_ODD_DOMINO, D3_EVEN_DOMINO, VAC3_DOMINO and D3_TOP. Every one of the
+# duplicates was read by nothing, and the harm was not hypothetical: a note
+# review's bears_on pointed at three of the dead names, so following it
+# reached a constant no check uses.
+#
+# The give-away was this comment's own census. It used to read "three labels
+# on -11/306, two on -6335/249696" -- and the second count was wrong, because
+# T_3_EVEN was a third label nobody had noticed. A file that miscounts its own
+# coincidences is exactly the state DECLARED_COINCIDENCES now prevents.
+#
+# Recorded, not explained: leak_r = t_r in the C-even sector at BOTH orders,
+# and at second order the C-odd leakage equals them too. Three labels on
+# -11/306, two on -6335/249696. Nothing here shows why, and a mechanism must
+# not be read off a coincidence of values -- ADR 0005 is what happens when one
+# is. The -11/306 coincidence is now half explained: all three second-order
+# labels are ell_N = A_N + B_N + 1/C_F, an all-rank closed form, so at that
+# order it is one object rather than three (charge-even suite). The C-even
+# identity one order up is still bare, and is registered as the unifying
+# candidate U4 -- with a falsifier -- rather than as a result.
+
+#: Values this registry deliberately carries under more than one name, and why.
+#: Distinct physical quantities may of course be equal -- a hopping and a
+#: leakage in the same sector are different objects that happen to coincide,
+#: and recording both is the point. What must NOT happen is the same quantity
+#: registered twice under near-identical names, because the join keys here are
+#: exact rationals: `workhouse search` then returns two "different" constants
+#: and a reader can cite them as independent corroboration of each other.
+#: `tests/test_constants.py` fails on any shared value not declared here.
+DECLARED_COINCIDENCES: dict[str, tuple[tuple[str, ...], str]] = {
+    "-11/306": (
+        ("LEAK_2", "LEAK_2_EVEN", "T_PLUS_2"),
+        "second-order per-neighbour leakage in both charge sectors, and the "
+        "C-even hopping: three distinct quantities, and one object -- all "
+        "three are ell_N = A_N + B_N + 1/C_F at N = 3, checked at symbolic N "
+        "by the charge-even suite, so the coincidence is derived not observed",
+    ),
+    "-6335/249696": (
+        ("T3_EVEN", "LEAK_3_EVEN"),
+        "the engine's structural identity leak_{r,+} = t_{r,+} at third order; "
+        "hopping and leakage are different objects that this run finds equal",
+    ),
+}
+
+#: The adjacency eigenvalues the band assembly is evaluated at. The C-odd
+#: sector sees the SIGNED incidence, spec S = {-4, q-4, q-4} with q in [0, 12],
+#: so its carrier sits at -4 and its dispersive top at +8. The C-even sector
+#: sees the UNSIGNED incidence, spec {12, 0, 0} at Gamma and {-4,-4,-4} at the
+#: corner. The two spans, 12 and 16, are the two bandwidths.
+BAND_LAMBDA = {"odd": (-4, 8), "even": (12, -4)}
+
+
+def band_tower(sector, order):
+    """The within-plaquette tower coefficient in canonical u, at this order.
+
+    Not a new input: this is the certified coupling conversion
+    ``tower(u) = 4 * Delta(3u/2)`` applied to the registered (beta/4) towers --
+    the same statement the coupling-erratum suite checks. Writing it here is
+    what lets ``band_assembly`` take no unregistered ingredient.
+    """
+    printed = {
+        ("odd", 2): TOWER_B2_MINUS,
+        ("odd", 3): TOWER_B3_MINUS,
+        ("even", 2): TOWER_B2_PLUS,
+        ("even", 3): TOWER_B3_PLUS,
+    }[(sector, order)]
+    return 4 * Rational(3, 2) ** order * printed
+
+
+def band_assembly(sector, order, lam):
+    """The band coefficient at adjacency eigenvalue ``lam``.
+
+        E_s(lambda, r) = tower_{r,s} + 12 * leak_{r,s} + lambda * t_{r,s}
+
+    Twelve neighbours, one leakage each; the hop enters through the adjacency.
+    """
+    leak = {
+        ("odd", 2): LEAK_2,
+        ("odd", 3): LEAK_3,
+        ("even", 2): LEAK_2_EVEN,
+        ("even", 3): LEAK_3_EVEN,
+    }[(sector, order)]
+    hop = {
+        ("odd", 2): T_MINUS_2,
+        ("odd", 3): B_3,
+        ("even", 2): T_PLUS_2,
+        ("even", 3): T3_EVEN,
+    }[(sector, order)]
+    return band_tower(sector, order) + 12 * leak + lam * hop
 
 
 def e_flat(coupling=u):
@@ -479,6 +695,22 @@ H4_SIDE = Rational(-2861009, 84387303000)
 #: printed coefficients is indistinguishable from a transcription error.
 D5_COVARIANCE_FACTOR = 5
 TAU_4 = Rational(-2861009, 16877460600)
+
+# --------------------------------------------------------------------------
+# Pentagonal FIFTH order (2026-08-28 master edition, section 15)
+# --------------------------------------------------------------------------
+# Asserted by the master edition, not derived here: two target-blind direct
+# routes across all 796 histories, plus a second ledger over all 572 canonical
+# returns matching the dual-backend derivative fold. T3 until something here
+# recomputes the histories. What IS checked is the record's internal
+# arithmetic -- see "the fifth-order record is arithmetically self-consistent".
+#
+# SIGN CONVENTION, recorded because it is the whole difference between the two
+# printed forms: these are for H = H_0 + u W. For H = H_0 - u W the coefficient
+# reverses sign. An unrecorded convention is how a sign erratum is born.
+C5_DIRECT = Rational(37373840041427, 407461473619200)  # 796 direct histories
+C5_FOLDED = Rational(110572494623989, 1898991175363682400)  # 572 canonical returns
+C5_PENT = Rational(4183029870024709967, 45575788208728377600)  # their sum, H = H_0 + uW
 #: Coefficient of u^4 cos k in Delta E_cap^(4). The factor 2 is the two terms
 #: of the Hermitian hop |z><z+1| + |z+1><z|, not a second convention.
 HOP_HERMITIAN_FACTOR = 2

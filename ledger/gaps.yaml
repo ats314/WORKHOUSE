@@ -19,10 +19,27 @@ gaps:
       exists anywhere — that one was G5's to close, not this gap's, and G5
       closed it by re-derivation on 2026-08-21 (the artifact itself remains
       absent).
+      A third absent artifact was pinned down on 2026-08-29: the direct SU(3)
+      fixed-rank balanced contraction behind Delta q_3. Its SU(6) counterpart
+      IS shipped, and the off-axis suite now checks that at N = 6 the stable
+      continuation and the direct contraction agree exactly. Scope, corrected
+      after a review bot caught the overclaim on PR #52: N = 6 is the only
+      rank where this repository holds both routes, so that is one instance
+      and not a general identification of the two methods -- what it rules out
+      is a difference of method THERE. The SU(3) case is closed to the
+      continuation by an order-3 pole of D34 at z = 9, which is a fact about
+      the formula and not evidence about the contraction. Until that
+      contraction is here,
+      Delta q_3 = -16863189551/76406976000 is a definition in this repository
+      rather than a check, and it is the whole of the balanced side of C2 at
+      N = 3. The Hadamard finite part of the pole is not a substitute: it
+      misses q_3^bal by 67307265071/305627904000 and q_3 by
+      48497711/101875968000, both measured.
     detail: >
       SU(3) 189-record kernel with reference SHA; Q_32 and P_402 ledgers;
       SU(5)/SU(6) exceptional certificates; pentagonal h_4 run artifacts;
-      tetrahedral-coefficient certificate.
+      tetrahedral-coefficient certificate; the direct SU(3) fixed-rank
+      balanced contraction that would turn Delta q_3 into a check.
     resolves: [C16]
 
   - id: G2
@@ -40,34 +57,126 @@ gaps:
   - id: G3
     tier: 1
     state: open
-    title: Fourth-order adjudication — run the marked-cluster engine target-blind
+    title: Fourth-order adjudication — decide C_shp where it actually lives
     detail: >
-      The 11-item frozen protocol of GLUEBALL §18.1. This is the load-bearing
-      finite computation of the entire program. Scope narrowed once C1 was
-      dissolved as an anchoring distinction: what G3 must now settle is the
-      off-axis coefficient C_shp, since the Gamma-point scalar is externally
-      validated against Hamer and Phi_C(0) = 0 makes Gamma-point data
-      structurally incapable of constraining Delta_C.
-    resolves: [C2, C3, C22]
+      REWRITTEN 2026-08-28, at the maintainer's standing instruction, after
+      the sweep-cannot-decide-C2 finding below. The original G3 ("run the
+      marked-cluster engine target-blind", the 11-item GLUEBALL §18.1
+      protocol) directed every session at a sealed 609-evaluation sweep
+      that is now established — by T1 static scan, not by fatigue — to
+      emit the Gamma-point scalar only, a quantity externally validated
+      and structurally incapable of constraining Delta_C (Phi_C(0) = 0).
+      Four sessions dead-ended on that path (absent engine, closure cap,
+      cost, and finally the structural incapacity); the register, not the
+      next agent, now carries that knowledge. What G3 must settle is
+      unchanged: the off-axis coefficient C_shp (C2). The route is
+      replaced by the two paths that can actually reach it, cheapest
+      first.
+    resolves: [C2]
     unblocks: [G9]
+    plan:
+      - step: block-structure comparison
+        status: >
+          answered 2026-08-28, HODGE_RUNS intake: NO recorded per-record
+          v10a.26 kernel exists — the 15-hour transcript prints the cold
+          shape fit (A = 5/48 shared to 6e-14, B, D at noise, alpha = 5/12,
+          C = C_SHP_NEW_NUM, 189 records) but K4_mass_cols was never
+          dumped; see the cold-kernel-shares-every-protected-parameter
+          check. The comparison therefore cannot be completed from
+          recorded evidence and step 2 is the live route.
+        what: >
+          The historical 189-record kernel decomposes into displacement
+          blocks; A = 5/48 pins the entire NORMAL block (81% of C_shp) and
+          the A-free blocks cannot span the disputed gap (2.28x too small).
+          If the v10a.26 side has a recorded per-record kernel or block
+          decomposition anywhere in corpus-import/, comparing the two
+          structures directly adjudicates WITHOUT running anything: the
+          divergence must sit in the A-carrying sector, and whichever side
+          is inconsistent with its own A is self-refuting. First task:
+          establish whether that v10a.26 structure exists in the corpus.
+      - step: targeted kernel-bearing recomputation
+        status: >
+          executed 2026-08-28 (runs/g3_kernel_record_dump_2026-08-28): the
+          cold kernel's 189 records reproduced on CPU in 12.3 minutes and
+          compared record-by-record against the historical certificate.
+          The dispute is now THREE amplitudes, not two kernels: the
+          cross-plane amplitude (one value per kernel, opposite sign),
+          the nn same-plane NORMAL/IN-PLANE amplitudes, and the on-site
+          anchor (shape-inert, ADR 0002). One scale factor explains the
+          other 144 records to 2e-12 — the rotation bulk is structurally
+          shared. See the kernels-agree-except-three-amplitudes check.
+          What now decides C2: an independent exact computation of ANY of
+          the three divergent amplitudes — each is a single number with
+          cubic-symmetry multiplicity, and the A = 5/48 identity plus the
+          shared bulk over-determine the rest.
+      - step: independent cross-amplitude computation
+        status: >
+          attempted 2026-08-28, blocked on the measured exact-arithmetic
+          wall, with the target now fully specified. Sharpened first: the
+          24 divergent cross records are ONE amplitude in each kernel
+          (cold/hist = -10.688697232 uniform across all 24; the 96
+          remaining cross records ride the bulk scale exactly), so the
+          cross question is a single number. The bounded computation that
+          decides it: rooted Moebius assembly of the engine's exact
+          face-resolved H4 ledger over the 30 clusters containing one
+          adjacent perpendicular pair (support census 1x2 + 18x3 + 6x4 +
+          4x5 + 1x6, a 20-face neighborhood, 948 flux-conserving
+          4-insertion histories of which 392 are proper), taken as a
+          normalization-free ratio against one shared-bulk reference
+          element. Measured bound: a single 2-face exact half-history ran
+          1h51m on this container, still inside its FIRST Haar Gram
+          (py-spy: merge_classes under contract_link_partition), against
+          12.3 minutes for the float engine's ENTIRE kernel leg. The
+          pentagonal-backend route converges on the same resolvent
+          machinery and does not dodge the wall, and the fold terms
+          (-A(C1+C1t) - {K2,N}/2 + A^2 J) are nonzero for this pair (the
+          agreed t3 hopping is its second-order element), so no
+          fold-free shortcut exists. What unblocks it: an upstream engine
+          revision replacing the pure-Python union-find/canon hot loop in
+          the exact Haar contraction with a compiled core (C or flint) —
+          the measured 50%+ self-time there implies 10-100x, which turns
+          the 30-cluster assembly into hours. Engineering, not physics.
+        what: >
+          If no recorded v10a.26 structure exists, recompute blind ONLY the
+          A-carrying sector (normal nearest-neighbour displacements) through
+          the Stage-3H kernel lineage (the v10a26 notebook lead), not 609
+          uniform clusters. The A = 5/48 identity doubles as the built-in
+          holdout: a recomputation whose normal block disagrees with the
+          agreed A refutes itself. The HODGE_RUNS intake bounds the cost:
+          the 15-hour transcript's kernel leg (H4_ax_cols, the C-bearing
+          object) is hours by its own progress lines — the 15 hours were
+          the rooted scalar oracle leg, which the kernel question does not
+          need. The construction code is imported verbatim
+          (HODGE_v10a26_factor52_comp_script.txt); instrument it to dump
+          the 189 records and run both kernels through one block
+          decomposition.
+      - step: sealed scalar sweep (demoted, optional)
+        status: priced out
+        what: >
+          The GLUEBALL §18.1 sealed sweep remains the only path to a blind
+          scalar confirmation and to protocol items 1-6/9, but it decides
+          nothing about C2 and costs months (measured: 45+ min for the
+          smallest of 609 clusters, cap-lifted, without completing). Run it
+          only if a blind scalar confirmation is ever worth that price.
     leads:
       - settlement/mce_adjudication_harness.py
       - settlement/README.md
       - theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md
       - corpus-import/programs/one_plaquette/y4_o3_flatband_verification/y4_full_real_space_H4_kernel.json/CERT_Y4_full_real_space_h4_kernel.json
       - corpus-import/programs/hodge_o4_adjudication/notebooks/NB_O4_hodge_v10a26_factor52complete_exactsw_rootedoracle_a100_alt2.ipynb
-    protocol:
-      - erratum-fixed canonical u normalization
-      - exact order-four occurrence schedule
-      - 203*3 = 609 exact rational marked-cluster evaluations plus a rooted Mobius ledger
-      - linked subtraction applied to the vacuum-subtracted object
-      - checkpoint hashes; comparison targets loaded only after sealing
-      - no historical target anywhere in the scalar or shape data flow
-      - cold 3895-topology Stage-3H run producing an unshifted 189-record kernel
-      - direct X/M extraction with lambda_R = 2*lambda_M - lambda_X as blind holdout
-      - independent scalar ledger testing q_band^(4) - E_0^(4) =? m_Gamma^(4)
-      - W_22 order-schedule toggle across all 33 rooted classes
-      - both m_Gamma^(4) and C^(4) from the same run
+    superseded_protocol: >
+      The 11-item GLUEBALL §18.1 frozen protocol (canonical u; occurrence
+      schedule; 609 evaluations + rooted Mobius ledger; linked subtraction;
+      sealed hashes; no targets in the data flow; cold 3895-topology
+      Stage-3H 189-record kernel; X/M fit with lambda_R = 2*lambda_M -
+      lambda_X blind holdout; scalar ledger q_band^(4) - E_0^(4) =?
+      m_Gamma^(4); W_22 toggle; m_Gamma^(4) and C^(4) from one run) is
+      retained verbatim in the harness docstring and in
+      theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md. Its
+      target-blindness discipline — quarantined comparison constants,
+      contamination scan, seal-before-unblind — carries over to any step-2
+      recomputation. Items 7/8/10/11 were never dischargeable by the
+      marked-cluster engine at all.
     inventory_trap: >
       The 3895 Stage-3H topologies and the 3850 stable-rank trace topologies are
       DIFFERENT inventories and must never be interchanged.
@@ -88,14 +197,35 @@ gaps:
         aborts rather than truncates, so no computed value depends on it),
         then the `run` stage — feasibility now a measured question, not a
         hardware one; see the run record.
-      engine_located: >
-        The received package records Hodge_SU3_Exact_MarkedCluster_m4_Colab.py
-        as absent. Stale: the 2026-08-20 rename manifest
-        (corpus-import/records/RENAME_MANIFEST_2026-08-20.tsv) shows it was
-        imported and renamed to corpus-import/programs/hodge_o4_adjudication/
-        src/DATA_SU3_Exact_MarkedCluster_m4_Colab.py. Behavioral identity with
-        the upstream-verified engine is checked, not assumed: both preflight
-        SHA pins reproduce here (freeze check in invariants.py).
+    sweep_cannot_decide_c2: >
+      Established 2026-08-28 (FINDING, adjudication suite): the marked-cluster
+      engine assembles every certificate coefficient through
+      _exact_gamma_scalar and carries no shape, band-point, or Stage-3H
+      output anywhere in its 6,782 lines, so a completed 609-evaluation
+      sealed sweep adjudicates the Gamma scalar ONLY — the quantity already
+      externally validated and already proved incapable of constraining
+      Delta_C (Phi_C(0) = 0). Protocol items 7/8/10/11 cannot be discharged
+      by this engine on any hardware at any cost. The decisive paths for C2
+      are (a) a kernel-bearing Stage-3H-lineage recomputation (the v10a26
+      notebook lead), or (b) the block-structure comparison of the two
+      recorded kernels (the A-pins-the-normal-block result). Measured cost
+      of the sweep, for the record: with the cap lifted (the one-line fork,
+      sha256 9af3708e81a4a246..., freeze PASS including self-test 47/47),
+      the sealed run's cluster 1 of 609 — the single support-size-1
+      cluster, smallest of all — exceeded 45 wall-minutes on this
+      container without completing; 474 of the 609 are 3-face. A
+      memoization fork of the exact Haar contraction (self-test 47/47,
+      exact agreement on sampled inner products) did not change the
+      complexity class. The sweep's residual value is a blind scalar
+      confirmation, priced accordingly.
+    engine_located: >
+      The received package records Hodge_SU3_Exact_MarkedCluster_m4_Colab.py
+      as absent. Stale: the 2026-08-20 rename manifest
+      (corpus-import/records/RENAME_MANIFEST_2026-08-20.tsv) shows it was
+      imported and renamed to corpus-import/programs/hodge_o4_adjudication/
+      src/DATA_SU3_Exact_MarkedCluster_m4_Colab.py. Behavioral identity with
+      the upstream-verified engine is checked, not assumed: both preflight
+      SHA pins reproduce here (freeze check in invariants.py).
       run_2026_08_22: >
         First execution of the run stage: fail-closed on the first cluster of
         polarization 0 (support size 1) with "ExactEngineError: unexpectedly
@@ -517,6 +647,107 @@ gaps:
       commutativity" no-go is unproved and set aside.
 
 # The corpus's own summary of what gates what.
+  - id: G24
+    tier: 1
+    state: discharged
+    status: >
+      discharged 2026-08-28, the day it was opened. The premise is not an
+      assumption: it follows from the order-2 Weingarten values. Two steps.
+      The six nonshared links collapse, because each plaquette contributes a
+      product of three independent Haar links and a product of independent
+      Haar matrices is Haar -- so the two-plaquette amplitude is
+      Tr(A U) Tr(B U^(+-1)) with A and B independent Haar, and integrating them
+      leaves a pure degree-(2,2) moment of the shared link. Two such moments
+      settle both families: M_direct = N^2 and M_cross = N, so the like family
+      splits as (N+1)/(2N) and (N-1)/(2N), and the mixed family's singlet
+      component of U_ij conj(U_lk) is delta_il delta_jk/N of squared norm 1,
+      giving 1/N^2. All four are exactly d_R/N^2. Registered as
+      `the shared-link weights are Weingarten, not an isotropy assumption`
+      (T1), which imports nothing from the corpus -- the Weingarten pair is the
+      inverse of the S_2 Gram matrix and the index sums are explicit.
+      A_N, B_N and t_N therefore rest on representation theory alone.
+    title: Derive the shared-link isotropy premise, the one unproved input of the second-order chain
+    detail: >
+      Every all-rank second-order statement in this program -- A_N, B_N, t_N,
+      the flat branch, the whole "color dynamics -> t_N, cellular geometry ->
+      BB*" separation -- rests on one sentence: that after the six free-link
+      Haar integrations the normalized shared-link tensor is isotropic, so the
+      channel projector carries squared norm d_R/N^2. The arithmetic
+      consequence is exact and now checked (the weights sum to one per family,
+      and each channel gap is C_F + C_R/2). The premise itself is asserted.
+      The corpus states the clause that earns it
+      (corpus-import/papers/flat_band/PAPER_FLUX_glueball_flat_band_v1_1.tex);
+      the 2026-08-28 manuscript compresses it to the word "isotropy" and its
+      §9 claims the proof is self-contained. Independent support exists at
+      N = 3 only, through the corpus's two-plaquette exact diagonalization,
+      which pins A_3 = -27/68 and B_3 = -7/18 given B_3 - A_3 = 5/612.
+      What would close it: an orientation-resolved Weingarten evaluation of the
+      second-order two-plaquette element at N = 3 and N = 4, returning A_N and
+      B_N SEPARATELY, compared against the registered closed forms. Agreement
+      at two ranks moves the manuscript's central input from T3 to T1.
+      The ingredients are already here and import nothing from the corpus:
+      invariants.py carries Wg(e), Wg((12)) and the N = 3 fourth moment
+      |U_11|^4 = 1/6, and the published-comparisons suite already establishes
+      that the Weingarten route is corpus-independent.
+    depends_on: []
+
+  - id: G25
+    tier: 1
+    state: partial
+    status: >
+      opened and largely discharged 2026-08-28. The C-even sector was
+      registered and inert: LEAK_2, LEAK_2_EVEN and LEAK_3_EVEN were read by
+      no check body, band_assembly() was dead code, and the only C-even
+      geometry the repository checked was two hand-written matrices at Gamma
+      and R. The `charge-even band, exactly` suite (15 checks, all T1) closes
+      the second- and third-order half. Both entries of
+      constants.DECLARED_COINCIDENCES are now checked rather than only
+      declared: -11/306 is ell_N at all ranks, so its three labels are one
+      object; -6335/249696 is verified and stays unexplained, as U4. The load-bearing
+      new object is a closed form: with a_m = 2 + 2 cos k_m and p = sum a_m,
+      the unsigned Bloch Gram has characteristic polynomial
+      mu^3 - 2p mu^2 + p^2 mu - 4 a_1 a_2 a_3 and lambda = mu - 4, exactly, at
+      every k -- the C-even counterpart of the C-odd {-4, q-4, q-4}. The
+      one-plaquette program and the flat-band papers carry no such formula;
+      what they record for this sector is the range, the Gamma expansion, and
+      a dense zone scan. From the cubic: lambda in [-4, 12] with each edge
+      attained at exactly ONE momentum, Gamma and R, which a scan cannot
+      report; the floor attained exactly on the three planes k_j = pi, simple
+      there and triple only at R; the isotropic Gamma expansion
+      lambda = 12 - (4/3)|k|^2 that yields the corpus's curvature 22/459 and
+      6335/187272; and the 12-regularity of the plaquette graph -- the 12 in
+      the assembly's `12 leak`, gated in the corpus but never counted inside
+      this verification layer. The Bloch cubic is checked complete against the
+      integer characteristic polynomial of the finite L = 3 and L = 4
+      plaquette adjacencies.
+      One draft claim was retracted before landing: that the corpus argues the
+      upper band edge nowhere. It does, in the band certificate's neighbour
+      gate and the results note's prose; the retraction is recorded in the
+      check body rather than deleted. Also derived:
+      p + q = 12, so both sectors run on one zone function; the C-even Gamma
+      splitting A1++ - E++ = 12 t_+, so the rest-frame blindness the C-odd
+      FINDING records does NOT extend to the C-even sector; and the C-even
+      band is the wider one at every rank, by 4(3N^2 - 5)/(3(N^2 - 4)), still
+      dispersing at N = 2 where t_2 = 0. One FINDING recorded: the certificate
+      key "m3_even_bandmin (lambda=-4)" holds the band MAXIMUM, which PAPER,
+      the section-6 patch and the master program note all call the band top;
+      the registry now reads M3_EVEN_BANDTOP.
+    title: The charge-even sector is registered and unchecked
+    detail: >
+      What remains. The suite reaches orders 2 and 3, which is where the
+      corpus's C-even ledger stops. Fourth order is untouched on this side:
+      the pre-registered O(u^4) criterion in the corpus is a statement about
+      C-odd flatness, and no C-even fourth-order coefficient is registered
+      here at all, so the sector's fourth order is not T3 -- it is absent.
+      Closing that needs the O(u^4) weight cards the same way G3 does, and it
+      is downstream of them rather than independent work.
+      The second open item is a mechanism, not a number: leak_(r,+) = t_(r,+)
+      holds at r = 2 and r = 3 and nothing here explains it. It is registered
+      as U4 with a falsifier rather than as a result, because reading a
+      mechanism off two coincident values is exactly what ADR 0005 records
+      going wrong.
+    depends_on: [G3]
+
 dependency_spine:
   - "G3 -> G9 and the mass ratio at orders 4-6"
   - "nothing further without G17 + G18"
@@ -581,3 +812,33 @@ unifying_candidates:
       Stated as an analogy that has not yet been reduced to a derivation. What
       would promote it is a single statement about Q P Q on the charge-odd
       sector that specializes to both. G14 is the cubic half.
+
+  - id: U4
+    statement: >
+      The C-even leakage and the C-even hopping are one object, at every order.
+      The domino engine computes them independently and they agree exactly at
+      both computed orders: leak_(2,+) = t_(2,+) = -11/306 and
+      leak_(3,+) = t_(3,+) = -6335/249696. The corpus names two distinct
+      mechanisms of equal value ("the diagonal's +3/4 is vacuum-energy
+      bookkeeping, the hop's +3/4 is the |0> route"); the candidate is that
+      they are not two mechanisms but one vacuum-mediated route entering both,
+      in which case the identity holds at every order and the whole C-even
+      band collapses to tower_r + (12 + lambda) t_(r,+), which is what the
+      engine's own regression gates 101/200 + 24 T3e and 101/200 + 8 T3e are.
+      At second order the C-odd leakage joins them, since leak_(2,-) is the
+      same ell_N = A_N + B_N + 1/C_F; at third order it separates, so whatever
+      the mechanism is, it is not sector-blind.
+    supported_by: [ENGINE_FLUX_su3_domino_d3.py, "PAPER §third order", G25]
+    falsifier: >
+      An order r at which the C-even per-neighbour leakage and the C-even
+      hopping are computed independently and differ. Fourth order is the first
+      untested one and is reachable from the same weight cards G3 needs.
+      Equally fatal in the other direction: a derivation showing the two
+      quantities are equal for a reason that does not involve the vacuum route
+      would refute the identification while leaving the equality standing.
+    status: conjectured
+    note: >
+      Recorded as a candidate and nothing more. Two equal values are two equal
+      values; ADR 0005 is what happens when a clean mechanism is read off a
+      coincidence in this corpus, and the charge-even suite deliberately checks
+      the identity without asserting a cause for it.

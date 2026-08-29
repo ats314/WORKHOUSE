@@ -10,31 +10,35 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 28 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 148/148 checks pass.
+**T1/T2 — re-derived here.** 224/224 checks pass.
 
 | Suite | Passing |
 |---|---|
-| second order, all ranks | 7/7 |
-| SU(3) second and third order | 6/6 |
+| second order, all ranks | 12/12 |
+| SU(3) second and third order | 12/12 |
+| the charge-even band, exactly | 15/15 |
 | fourth order, sealed core | 6/6 |
 | fourth order, anchoring and the residual dispute | 13/13 |
 | old-to-new crosswalk | 5/5 |
 | fourth-order generalized Hodge pencil | 3/3 |
 | fourth-order checkpoint extraction | 3/3 |
-| homology and finite volume | 2/2 |
-| settlement package and adjudication harness | 12/12 |
+| homology and finite volume | 12/12 |
+| settlement package and adjudication harness (G3) | 16/16 |
 | near-Gamma uniformity (G11) | 6/6 |
 | tier collapse (G14) | 6/6 |
-| isotropic pentagonal cap band (v4.3 §9.3) | 9/9 |
+| isotropic pentagonal cap band (v4.3 §9.3) | 11/11 |
 | native string tension through fifth order (v4.3 §11.2) | 7/7 |
 | published comparisons (literature/index.yaml) | 16/16 |
 | restored payloads (G1) | 11/11 |
 | coupling erratum (C4/G2) | 2/2 |
 | tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
 | notes program: SAFE, Davies, coercivity (G20-G23) | 13/13 |
-| off-axis channel ledger (C2 geography, G14) | 8/8 |
+| off-axis channel ledger (C2 geography, G14) | 23/23 |
+| the flat-band manuscript | 5/5 |
+| finite-rank truncation bridge (published SU(3) truncations) | 8/8 |
+| two-cube charge-odd second-order closure (B=4 and B=6) | 6/6 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -82,11 +86,12 @@ Claims this repository made and withdrew:
 
 **Tier 1 — weeks**
 
-- `G3` Fourth-order adjudication — run the marked-cluster engine target-blind
+- `G3` Fourth-order adjudication — decide C_shp where it actually lives
 - `G4` Pentagonal O(u^4) closure in-corpus *(partial — see its status in the ledger)*
 - `G6` B_N fixed-rank holdout ledger for N = 7..18
 - `G7` Native torelon reruns of sigma_5 and sigma_6
 - `G8` Cold one-shot regeneration of the all-rank fourth-order bundle
+- `G25` The charge-even sector is registered and unchecked *(partial — see its status in the ledger)*
 
 **Tier 2 — months**
 
@@ -113,6 +118,7 @@ Claims this repository made and withdrew:
 
 - `G2` Regenerate all displayed tables in canonical u — discharged 2026-08-21
 - `G5` Tetrahedral local Haar-resolvent coefficient — discharged 2026-08-21
+- `G24` Derive the shared-link isotropy premise, the one unproved input of the second-order chain — discharged 2026-08-28, the day it was opened. The premise is not an assumption: it follows from the order-2 Weingarten values. Two steps. The six nonshared links collapse, because each plaquette contributes a product of three independent Haar links and a product of independent Haar matrices is Haar -- so the two-plaquette amplitude is Tr(A U) Tr(B U^(+-1)) with A and B independent Haar, and integrating them leaves a pure degree-(2,2) moment of the shared link. Two such moments settle both families: M_direct = N^2 and M_cross = N, so the like family splits as (N+1)/(2N) and (N-1)/(2N), and the mixed family's singlet component of U_ij conj(U_lk) is delta_il delta_jk/N of squared norm 1, giving 1/N^2. All four are exactly d_R/N^2. Registered as `the shared-link weights are Weingarten, not an isotropy assumption` (T1), which imports nothing from the corpus -- the Weingarten pair is the inverse of the S_2 Gram matrix and the index sums are explicit. A_N, B_N and t_N therefore rest on representation theory alone.
 
 ## 6. What blocks the most downstream theory
 
@@ -121,7 +127,7 @@ Transitive closure over the ledger's own `unblocks`, `depends_on`, and
 
 | Gap | Gates | What cannot move until it does |
 |---|---|---|
-| `G3` Fourth-order adjudication — run the marked-cluster engine target-blind | 2 | G9, C2 |
+| `G3` Fourth-order adjudication — decide C_shp where it actually lives | 3 | G25, G9, C2 |
 
 - G3 -> G9 and the mass ratio at orders 4-6
 - nothing further without G17 + G18
@@ -134,8 +140,8 @@ Ready — no open prerequisite — and decisive: it resolves a contradiction,
 unblocks another gap, or is load-bearing. Cheapest first. Bookkeeping that
 settles nothing is excluded however cheap it looks.
 
-- `G3` (weeks) Fourth-order adjudication — run the marked-cluster engine target-blind — settles C2, G9
-  - The 11-item frozen protocol of GLUEBALL §18.1. This is the load-bearing finite computation of the entire program. Scope narrowed once C1 was dissolved as an anchoring distinction: what G3 must now settle is the off-axis coefficient C_shp, since the Gamma-point scalar is externally validated against Hamer and Phi_C(0) = 0 makes Gamma-point data structurally incapable of constraining Delta_C.
+- `G3` (weeks) Fourth-order adjudication — decide C_shp where it actually lives — settles C2, G9
+  - REWRITTEN 2026-08-28, at the maintainer's standing instruction, after the sweep-cannot-decide-C2 finding below. The original G3 ("run the marked-cluster engine target-blind", the 11-item GLUEBALL §18.1 protocol) directed every session at a sealed 609-evaluation sweep that is now established — by T1 static scan, not by fatigue — to emit the Gamma-point scalar only, a quantity externally validated and structurally incapable of constraining Delta_C (Phi_C(0) = 0). Four sessions dead-ended on that path (absent engine, closure cap, cost, and finally the structural incapacity); the register, not the next agent, now carries that knowledge. What G3 must settle is unchanged: the off-axis coefficient C_shp (C2). The route is replaced by the two paths that can actually reach it, cheapest first.
 - `G17` (unbounded) PC-2 free-energy stability and the source-radius reduction — settles load-bearing
   - The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction.
 - `G18` (unbounded) The spectral bridge — settles load-bearing
@@ -191,8 +197,12 @@ published. A paper is T3 until something checks it, same as any document.
 | `CAO_2023` | `C7` | supplies-comparison | verified |
 | `BORGA_2024` | `G5` | supplies-comparison | verified |
 | `LEMOINE_2026` | `C7` | supplies-comparison | verified |
+| `CB_2024` | `R2` | supplies-comparison | not-yet-obtained |
+| `CBB_2026` | `R2` | corroborates | verified |
+| `BALAJI_2026` | `R2` | supplies-comparison | verified |
+| `HAZRA_2026` | `G14` | supplies-comparison | verified |
 
-**8 of 41 edges rest on a source nobody here has read
+**9 of 45 edges rest on a source nobody here has read
 or pinned.** Obtaining and digest-pinning a primary source upgrades its
 edges from assertion to verification — the Hamer 1989 table did exactly
 that for the program's strongest external agreement.
@@ -248,7 +258,11 @@ different things: **in-web** is how many indexed papers cite this one
 | `LEMOINE_2026` | 0 | 3 (2026-08-21) | pinned |
 | `MUNSTER_1985_TM` | 0 | 2 (2026-08-21) | pinned |
 | `CM_2003` | 0 | 1 (2026-08-21) | pinned |
+| `BALAJI_2026` | 0 | — | **not yet obtained** |
+| `CBB_2026` | 0 | — | **not yet obtained** |
+| `CB_2024` | 0 | — | **not yet obtained** |
 | `FLPS_2026` | 0 | 0 (2026-08-21) | pinned |
+| `HAZRA_2026` | 0 | — | **not yet obtained** |
 
 **Next acquisition target, computed: `KS_1975`** — 10 in-web
 citations and nobody here has read or pinned it. The ranking surfaces
@@ -276,5 +290,11 @@ falsifier is an analogy, and analogies do not belong on this list.
 
 - supported by: UNIFIED §5.1, UNIFIED §9.3, G14, ADR 0005
 - would be falsified by: A geometry where the Q-projected proper-return contributions vanish while the shape tier does NOT collapse, or the reverse. If the two are one mechanism they must stand or fall together; exhibiting one without the other refutes the identification and leaves two coincidences.
+- status: conjectured
+
+**U4 — The C-even leakage and the C-even hopping are one object, at every order. The domino engine computes them independently and they agree exactly at both computed orders: leak_(2,+) = t_(2,+) = -11/306 and leak_(3,+) = t_(3,+) = -6335/249696. The corpus names two distinct mechanisms of equal value ("the diagonal's +3/4 is vacuum-energy bookkeeping, the hop's +3/4 is the |0> route"); the candidate is that they are not two mechanisms but one vacuum-mediated route entering both, in which case the identity holds at every order and the whole C-even band collapses to tower_r + (12 + lambda) t_(r,+), which is what the engine's own regression gates 101/200 + 24 T3e and 101/200 + 8 T3e are. At second order the C-odd leakage joins them, since leak_(2,-) is the same ell_N = A_N + B_N + 1/C_F; at third order it separates, so whatever the mechanism is, it is not sector-blind.**
+
+- supported by: ENGINE_FLUX_su3_domino_d3.py, PAPER §third order, G25
+- would be falsified by: An order r at which the C-even per-neighbour leakage and the C-even hopping are computed independently and differ. Fourth order is the first untested one and is reachable from the same weight cards G3 needs. Equally fatal in the other direction: a derivation showing the two quantities are equal for a reason that does not involve the vacuum route would refute the identification while leaving the equality standing.
 - status: conjectured
 

@@ -72,6 +72,7 @@ from __future__ import annotations
 
 from collections import Counter
 from dataclasses import dataclass
+from fractions import Fraction
 from itertools import permutations
 
 from sympy import Matrix, Rational, Symbol, binomial, simplify, sympify
@@ -358,3 +359,91 @@ def integer_kernel(cell):
         g = gcd(w)
         vecs.append(tuple(x / g for x in w))
     return vecs
+
+
+# ==========================================================================
+# The shared-link channel weights, derived rather than assumed (G24)
+# ==========================================================================
+# The manuscript's second-order chain rests on one asserted sentence:
+# "Isotropy of the normalized shared-link tensor assigns squared norm d_R/N^2
+# to the channel projector." Everything in its Section 4 -- A_N, B_N, t_N, the
+# flat branch, the whole color/geometry separation -- follows from it, and it
+# was the single unproved physical input.
+#
+# It follows from the order-2 Weingarten values, in two steps.
+#
+# 1. The six nonshared links collapse. Each plaquette contributes a product of
+#    three independent Haar links, and a product of independent Haar matrices
+#    is Haar, so the two-plaquette amplitude is Tr(A U) Tr(B U^(+-1)) with A
+#    and B independent Haar. Integrating them contributes delta/N each and
+#    leaves a pure degree-(2,2) moment of the shared link U.
+#
+# 2. Two moments settle both families:
+#        M_direct = sum_ijkl <|U_ij|^2 |U_kl|^2>                = N^2
+#        M_cross  = sum_ijkl <U_ij U_kl conj(U_il) conj(U_kj)>  = N
+#    The like family splits as (M_direct +- M_cross)/(2 M_direct), giving
+#    (N+1)/(2N) and (N-1)/(2N); the mixed family's singlet component of
+#    U_ij conj(U_lk) is delta_il delta_jk / N, of squared norm 1, giving
+#    1/N^2 and 1 - 1/N^2. All four are exactly d_R/N^2.
+
+
+def shared_link_moments(rank: int):
+    """``(M_direct, M_cross)`` at integer ``rank``, by explicit index summation.
+
+    No hand algebra: every one of the ``N**4`` index quadruples is summed
+    against the order-2 Weingarten delta products,
+
+        <U[r0,c0] U[r1,c1] conj(U[q0,d0]) conj(U[q1,d1])>
+            = sum over (sigma, tau) in S_2 x S_2 of Wg(sigma tau^-1)
+              * prod_a delta[r_a, q_sigma(a)] delta[c_a, d_tau(a)],
+
+    written out rather than table-driven, because the index bookkeeping is the
+    whole content of the claim. The Weingarten pair is evaluated once and the
+    sums run in exact ``Fraction`` arithmetic -- substituting into a sympy
+    expression inside an ``N**4`` loop costs a minute for no added rigour.
+    """
+    identity, transposition = weingarten_2()
+    same = Fraction(int(identity.subs(N, rank).p), int(identity.subs(N, rank).q))
+    diff = Fraction(int(transposition.subs(N, rank).p), int(transposition.subs(N, rank).q))
+    span = range(rank)
+    direct = cross = Fraction(0)
+    for i in span:
+        for j in span:
+            for k in span:
+                for lo in span:
+                    rows, rows_conj = (i, k), (i, k)
+                    # direct: conj indices (i,j),(k,l) -- columns (j,l)
+                    # cross:  conj indices (i,l),(k,j) -- columns (l,j)
+                    for cols, cols_conj, bucket in (
+                        ((j, lo), (j, lo), "direct"),
+                        ((j, lo), (lo, j), "cross"),
+                    ):
+                        total = Fraction(0)
+                        for sigma in ((0, 1), (1, 0)):
+                            if any(rows[a] != rows_conj[sigma[a]] for a in (0, 1)):
+                                continue
+                            for tau in ((0, 1), (1, 0)):
+                                if any(cols[a] != cols_conj[tau[a]] for a in (0, 1)):
+                                    continue
+                                total += same if sigma == tau else diff
+                        if bucket == "direct":
+                            direct += total
+                        else:
+                            cross += total
+    return direct, cross
+
+
+def shared_link_weights(rank: int):
+    """The four channel weights at integer ``rank``, derived from the moments.
+
+    The like family splits by ``(M_direct +- M_cross)/(2 M_direct)``; the mixed
+    family's singlet component of ``U_ij conj(U_lk)`` is ``delta_il delta_jk/N``,
+    of squared norm 1 against ``M_direct``.
+    """
+    direct, cross = shared_link_moments(rank)
+    return {
+        "1": Fraction(1) / direct,
+        "Adj": 1 - Fraction(1) / direct,
+        "Lambda2": (direct - cross) / (2 * direct),
+        "Sym2": (direct + cross) / (2 * direct),
+    }

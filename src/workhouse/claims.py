@@ -21,6 +21,7 @@ like an index rather than like a guess.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from dataclasses import asdict, dataclass, field
@@ -34,6 +35,7 @@ from . import certified as certified_mod
 from . import constants as K
 from . import ledger as ledger_mod
 from . import literature as literature_mod
+from . import notes as notes_mod
 from .invariants import SUITES
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -56,6 +58,7 @@ KINDS = (
     "theorem",
     "decision",
     "document",
+    "citation",
 )
 
 #: A ledger id anywhere in free text. Case-sensitive on purpose: `u4` in
@@ -116,18 +119,65 @@ def _slug(text: str) -> str:
     return "".join(keep).strip("-").replace("--", "-")[:40]
 
 
+def _ident(text: str) -> str:
+    """A slug that cannot collide by truncation.
+
+    ``_slug`` caps at 40 characters, and check names here are long and
+    formulaic -- 158 of 193 hit that cap, as do 7 of 20 suite names. Two names
+    agreeing in their first 40 characters would therefore produce ONE id, and
+    a graph keyed on ids would silently merge two distinct checks into a node
+    carrying both their edges. Nothing would fail; the graph would just be
+    wrong. ``note_id`` already learned this on 24 colliding archive paths and
+    fixed it with a digest suffix; this is the same fix for the other half of
+    the catalogue.
+
+    Untruncated names keep a clean, readable id -- the suffix appears only
+    where the cap actually bit, so it marks exactly the ids that needed it.
+    """
+    slug = _slug(text)
+    if len(slug) < 40:
+        return slug
+    return f"{slug}-{hashlib.sha256(text.encode('utf-8')).hexdigest()[:6]}"
+
+
 def check_id(suite_name: str, check_name: str) -> str:
     """The catalogue id of one registered check. The single place the format lives."""
-    return f"CHK:{_slug(suite_name)}:{_slug(check_name)}"
+    return f"CHK:{_ident(suite_name)}:{_ident(check_name)}"
+
+
+def note_id(archive_id: str, row: dict[str, Any]) -> str:
+    """The catalogue id of one archived note document.
+
+    Keyed on the path so a reader can search for the filename they remember,
+    with a short digest suffix because slugs truncate at 40 characters and 24
+    of these archives' paths collide once truncated ("00_INDEX.md" appears in
+    many folders). Substring search still finds the filename.
+    """
+    stem = row["paths"][0].rsplit("/", 1)[-1]
+    return f"NOTE:{archive_id}:{_slug(stem)}-{row['digest'][:6]}"
+
+
+def load_runs(path: Path | None = None) -> list[dict[str, Any]]:
+    """The run register: one entry per pinned run record in runs/."""
+    path = path or ROOT / "runs" / "index.yaml"
+    if not path.exists():
+        return []
+    return yaml.safe_load(path.read_text(encoding="utf-8"))["runs"]
 
 
 def load_theorems(path: Path | None = None) -> list[dict[str, Any]]:
-    return yaml.safe_load((path or THEOREM_SOURCE).read_text())["theorems"]
+    return yaml.safe_load((path or THEOREM_SOURCE).read_text(encoding="utf-8"))["theorems"]
+
+
+def load_document_aliases(path: Path | None = None) -> list[dict[str, Any]]:
+    """The citation-alias register (ledger/documents.yaml)."""
+    source = path or ROOT / "ledger" / "documents.yaml"
+    return yaml.safe_load(source.read_text(encoding="utf-8"))["aliases"]
 
 
 def load_provenance(path: Path | None = None) -> list[dict[str, Any]]:
     """The curated originating-document register (ledger/provenance.yaml)."""
-    return yaml.safe_load((path or PROVENANCE_SOURCE).read_text())["documents"]
+    return yaml.safe_load((path or PROVENANCE_SOURCE).read_text(encoding="utf-8"))["documents"]
 
 
 def _adr_status(text: str) -> str:
@@ -147,7 +197,7 @@ def decisions() -> list[dict[str, Any]]:
     """
     out: list[dict[str, Any]] = []
     for path in sorted(DECISIONS_DIR.glob("*.md")):
-        text = path.read_text()
+        text = path.read_text(encoding="utf-8")
         lines = text.splitlines()
         title = lines[0].lstrip("#").strip() if lines else path.stem
         status = _adr_status(text)
@@ -159,7 +209,7 @@ def decisions() -> list[dict[str, Any]]:
         out.append(
             {
                 "id": own_id,
-                "where": str(path.relative_to(ROOT)),
+                "where": path.relative_to(ROOT).as_posix(),
                 "title": title,
                 "status": status,
                 "mentions": sorted(mentions),
@@ -181,7 +231,7 @@ def collect() -> list[Claim]:
                     kind="check",
                     statement=result.name,
                     tier=result.tier,
-                    where=f"src/workhouse/invariants.py:{result.line}",
+                    where=result.source,
                     cites=result.section,
                     reproduce=f"workhouse verify --only {result.name!r}",
                     detail=result.detail,
@@ -402,6 +452,29 @@ def collect() -> list[Claim]:
             )
         )
 
+    # Citation aliases. A check cites its source by the alias
+    # ledger/documents.yaml legends -- "MASTER_THEORY §4.3", "UNIFIED §0.1" --
+    # and until those aliases were catalogue records there was nothing for the
+    # citation to point AT, so most checks sat in the graph with no edge at
+    # all. The alias is the node; the standing is the status, because citing a
+    # superseded document as if current is the failure this register exists to
+    # prevent.
+    for alias in load_document_aliases():
+        if alias.get("unresolved"):
+            continue
+        out.append(
+            Claim(
+                id=f"CITE:{alias['alias']}",
+                kind="citation",
+                statement=alias["alias"],
+                tier=3,
+                where=str(alias.get("path", "")),
+                cites="ledger/documents.yaml",
+                status=alias["standing"],
+                detail=" ".join(str(alias.get("note", "")).split()),
+            )
+        )
+
     # Originating corpus documents. Still T3 — the register machine-checks the
     # provenance (pin, quote, line), never the truth of what the document says.
     for doc in load_provenance():
@@ -421,6 +494,89 @@ def collect() -> list[Claim]:
             )
         )
 
+    # The notes archives, and the documents inside them. Until now the
+    # maintainer's own research notes were declared in ledger/notes.yaml and
+    # inventoried in notes/*.jsonl, and reached the graph nowhere -- 1,689
+    # documents with no node, so nothing a review said a document bears on was
+    # an edge, and "which notes touch C2" had no answer the graph could give.
+    #
+    # Two rules keep this from becoming a promotion mechanism. Every node is
+    # T3, whatever its verdict, because a verdict records a JUDGEMENT about a
+    # document and never the truth of what it says. And the coefficient edges
+    # are matched by VALUE -- the triage signature digits against the
+    # registry's own exact numerators -- not by a name map written here, so a
+    # document is linked to a constant only when it demonstrably carries that
+    # constant's digits.
+    notes = notes_mod.load()
+    reviews = {r["digest"]: r for r in notes.reviews}
+    for archive in notes.archives:
+        aid = archive["id"]
+        rows = notes.manifests.get(aid, [])
+        reviewed = sum(1 for row in rows if row["digest"] in reviews)
+        out.append(
+            Claim(
+                id=f"ARCHIVE:{aid}",
+                kind="archive",
+                statement=" ".join(str(archive["description"]).split()),
+                tier=3,
+                where=f"notes/{aid}.jsonl",
+                cites="ledger/notes.yaml",
+                status=(
+                    f"{len(rows)} documents, {reviewed} reviewed, {len(rows) - reviewed} pending"
+                ),
+                detail=" ".join(str(archive.get("source", "")).split()),
+            )
+        )
+        for row in rows:
+            review = reviews.get(row["digest"])
+            coefficients = row.get("coefficients") or []
+            # A pending document with no coefficients is an inventory row and
+            # nothing more; it still gets a node, because the archive edge is a
+            # real relationship and a document invisible to the graph is a
+            # document nobody will remember to review.
+            out.append(
+                Claim(
+                    id=note_id(aid, row),
+                    kind="note",
+                    statement=(
+                        " ".join(str(review["reason"]).split())
+                        if review
+                        else f"{row['paths'][0]} — inventoried, not yet reviewed"
+                    ),
+                    tier=3,
+                    where=f"{aid}/{row['paths'][0]}",
+                    cites="ledger/notes.yaml" if review else f"notes/{aid}.jsonl",
+                    status=review["verdict"] if review else "pending",
+                    evidence=review.get("imported_to", "") if review else "",
+                    detail=(
+                        f"sha256 {row['digest'][:12]}, {row['size']} bytes"
+                        + (f"; carries {', '.join(coefficients)}" if coefficients else "")
+                        + ("; erratum signature" if row.get("has_erratum") else "")
+                    ),
+                    related=sorted(review.get("bears_on", [])) if review else [],
+                )
+            )
+
+    # The run register. A pinned run record is evidence that a computation was
+    # executed and what it printed -- until 2026-08-28 the three of them were
+    # cited by checks only as file-path strings, so "which runs bear on G3"
+    # had no answer the graph could give. Every RUN node is T3: what a run
+    # established is the citing checks' business, never the node's.
+    for run in load_runs():
+        out.append(
+            Claim(
+                id=f"RUN:{run['id']}",
+                kind="run",
+                statement=" ".join(str(run["title"]).split()),
+                tier=3,
+                where=run["dir"],
+                cites="runs/index.yaml",
+                status="pinned run record",
+                detail=" ".join(str(run.get("detail", "")).split()),
+                related=sorted(run.get("bears_on", [])),
+            )
+        )
+
     return out
 
 
@@ -436,11 +592,15 @@ def load_catalogue(path: Path | None = None) -> list[Claim]:
     target = path or CLAIMS
     if not target.exists():
         return collect()
-    return [Claim(**json.loads(line)) for line in target.read_text().splitlines() if line]
+    return [
+        Claim(**json.loads(line))
+        for line in target.read_text(encoding="utf-8").splitlines()
+        if line
+    ]
 
 
 def load_symbols(path: Path | None = None) -> list[dict[str, Any]]:
-    return yaml.safe_load((path or SYMBOL_SOURCE).read_text())["symbols"]
+    return yaml.safe_load((path or SYMBOL_SOURCE).read_text(encoding="utf-8"))["symbols"]
 
 
 def symbol_records(claims: list[Claim] | None = None) -> list[dict[str, Any]]:
@@ -474,9 +634,13 @@ def write(directory: Path | None = None) -> tuple[Path, Path]:
     target.mkdir(parents=True, exist_ok=True)
     claims = collect()
     (target / "claims.jsonl").write_text(
-        "".join(json.dumps(asdict(c), sort_keys=True) + "\n" for c in claims)
+        "".join(json.dumps(asdict(c), sort_keys=True) + "\n" for c in claims),
+        encoding="utf-8",
+        newline="\n",
     )
     (target / "symbols.jsonl").write_text(
-        "".join(json.dumps(s, sort_keys=True) + "\n" for s in symbol_records(claims))
+        "".join(json.dumps(s, sort_keys=True) + "\n" for s in symbol_records(claims)),
+        encoding="utf-8",
+        newline="\n",
     )
     return target / "claims.jsonl", target / "symbols.jsonl"

@@ -62,10 +62,39 @@ def test_load_bearing_gaps_are_the_bridge_and_the_free_energy_bound():
     assert {g["id"] for g in led.load_bearing_gaps} == {"G17", "G18"}
 
 
-def test_g3_protocol_has_all_eleven_items():
+def test_g3_rewrite_keeps_the_protocol_and_the_traps():
+    """G3 was rewritten 2026-08-28 (maintainer's instruction): the sealed
+    sweep cannot decide C_shp, so the route changed. The failure this test
+    now prevents: the rewrite silently shedding the 11-item freeze (whose
+    target-blindness discipline carries over to the new route) or the
+    inventory warning. The protocol is retained as prose, so pin its
+    load-bearing phrases rather than a list length."""
     led = L.load()
     g3 = next(g for g in led.gaps if g["id"] == "G3")
-    assert len(g3["protocol"]) == 11, "the adjudication protocol is an 11-item freeze"
+    superseded = g3["superseded_protocol"]
+    for phrase in (
+        "canonical u",
+        "occurrence",
+        "609",
+        "Mobius",
+        "linked subtraction",
+        "sealed hashes",
+        "no targets",
+        "3895",
+        "189-record",
+        "lambda_R = 2*lambda_M",
+        "q_band^(4) - E_0^(4)",
+        "W_22",
+        "from one run",
+    ):
+        assert phrase in superseded, f"superseded protocol lost: {phrase}"
+    steps = [step["step"] for step in g3["plan"]]
+    assert steps == [
+        "block-structure comparison",
+        "targeted kernel-bearing recomputation",
+        "independent cross-amplitude computation",
+        "sealed scalar sweep (demoted, optional)",
+    ], "the rewritten route's steps: the executed pair, the live one, the demoted sweep"
     assert "inventory_trap" in g3, "the 3895-vs-3850 inventory warning must travel with G3"
 
 

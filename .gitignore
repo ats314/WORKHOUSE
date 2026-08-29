@@ -91,3 +91,18 @@ __pycache__/
 lean/.lake/
 lean/.cache/
 *.olean
+
+# ---- LaTeX build artifacts (paper/) ----
+*.aux
+*.log
+*.out
+*.toc
+paper/*.synctex.gz
+
+# ---- runs/ is pinned evidence and is never ignored ----
+# The rules above are extension-global, so a run's own console log matched
+# *.log and was silently dropped from the tree while staying in that run's
+# SHA256SUMS -- pinned bytes that were not there. tests/test_runs.py caught it.
+# Unignoring runs/ is safe precisely because that test requires every file in
+# a run directory to be pinned, so nothing can drift in unnoticed.
+!runs/**

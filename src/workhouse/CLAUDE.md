@@ -16,7 +16,8 @@ shipped once.
 
 ## Adding an invariant
 
-Register it on a suite in `invariants.py`, cite the corpus section *and the
+Register it on a suite in the module for its subject under `invariants/`,
+cite the corpus section *and the
 document*, and return `(passed, detail)` where `detail` carries the numbers a
 reader needs to argue with you. `tests/test_invariants.py` picks it up with no
 separate test to write.
@@ -33,7 +34,8 @@ third, add an explicit `FINDING:` check that *asserts* the discrepancy.
 ## Files
 
 - `constants.py` — the curated registry, with provenance and corpus status
-- `invariants.py` — every T1/T2 check, grouped in suites
+- `invariants/` — every T1/T2 check, one module per subject; `__init__` fixes
+  the order the suites register in, `_core` holds the plumbing
 - `frontier.py` — computes `FRONTIER.md`; do not hand-write what it derives
 - `ledger.py` — loads and structurally validates the three registers
 - `graph.py` — computes `index/graph.jsonl`, every recorded edge between claims
@@ -42,6 +44,7 @@ third, add an explicit `FINDING:` check that *asserts* the discrepancy.
 - `corpus_index.py` — exact rationals in code, certificates, notebooks
 - `corpus_registry.py` — near-miss, multiple, and coverage sweeps over the whole corpus
 - `tier_collapse.py`, `near_gamma.py`, `settlement.py`, `payloads.py` — one investigation each
+- `even_sector.py` — the charge-even Bloch cubic, and the finite lattice it is checked against
 - `rigor.py` — certified Arb enclosures for T2 comparisons (ADR 0010); the only sanctioned route to arb
 - `triage.py` — read-only survey of an unpinned archive
 - `notes.py` — the notes register: archive inventories, review verdicts, intake rules
