@@ -54,7 +54,7 @@ def _verify(verbose: bool, only: str | None = None, tier: int | None = None) -> 
             if r.detail and (verbose or needle or not r.passed):
                 print(f"        {r.detail}")
             if r.detail and needle:
-                print(f"        \033[2msrc/workhouse/invariants.py:{r.line}\033[0m")
+                print(f"        \033[2m{r.source}\033[0m")
             if not r.passed:
                 failures += 1
     if total == 0:

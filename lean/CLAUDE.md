@@ -9,7 +9,7 @@ repository has that standing.
 ## What belongs here
 
 Pure rational and polynomial algebra — the rank law, the deficit identity, the
-sealed-core arithmetic. If an invariant in `src/workhouse/invariants.py` is
+sealed-core arithmetic. If an invariant in `src/workhouse/invariants/` is
 exactly that, prefer promoting it rather than leaving it at T1.
 
 ## What does not

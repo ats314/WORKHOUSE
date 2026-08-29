@@ -47,7 +47,7 @@ workhouse verify --only 'h_4^side = A_+'
 #   PASS  T1  h_4^side = A_+ - A_- exactly
 #         A_+ = 6482621/21879000, A_- = 9714969/32784500,
 #         A_+ - A_- = -2861009/84387303000 = h_4^side
-#         src/workhouse/invariants.py:860
+#         src/workhouse/invariants/pentagonal.py:40
 ```
 
 That third line is the point. A certification nobody can cheaply reproduce is
@@ -65,7 +65,7 @@ a plan. Go in this order and stop when the question is answered.
 3. **`ledger/`** — `governing_register.yaml` (R1–R23, **the authority**),
    `contradictions.yaml` (C1–C22, older numbering), `gaps.yaml` (G1–G19 plus
    `unifying_candidates`).
-4. **`src/workhouse/invariants.py`** — if a claim is checked, the check is a
+4. **`src/workhouse/invariants/`** — if a claim is checked, the check is a
    better source than the prose that states it.
 5. **`theory/`** — the governing document, for definitions and cited sections.
 6. **`corpus-import/`** — targeted only. See below.
@@ -144,7 +144,8 @@ current.
 
 ## How to add a check
 
-Register it on a suite in `src/workhouse/invariants.py`. Cite the corpus section
+Register it on a suite in the matching module under `src/workhouse/invariants/`.
+Cite the corpus section
 *and the document* — section numbers are not interchangeable across documents.
 Return `(passed, detail)` where `detail` carries the numbers a reader needs to
 argue with you.

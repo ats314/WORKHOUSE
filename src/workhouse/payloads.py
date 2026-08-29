@@ -10,7 +10,8 @@ at all: no reference SHA for a tetrahedral certificate exists anywhere in the
 corpus, so only the G5 re-derivation can ever close C15.
 
 This module does the loading and exact re-derivation; the checks registered
-in ``invariants.py`` (suite ``restored payloads (G1)``) assert the results.
+in ``invariants/restored.py`` (suite ``restored payloads (G1)``) assert the
+results.
 Everything is exact ``Fraction`` arithmetic over pinned files; nothing here
 writes, and nothing trusts a document's number without recomputing it.
 

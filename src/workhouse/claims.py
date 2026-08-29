@@ -231,7 +231,7 @@ def collect() -> list[Claim]:
                     kind="check",
                     statement=result.name,
                     tier=result.tier,
-                    where=f"src/workhouse/invariants.py:{result.line}",
+                    where=result.source,
                     cites=result.section,
                     reproduce=f"workhouse verify --only {result.name!r}",
                     detail=result.detail,
