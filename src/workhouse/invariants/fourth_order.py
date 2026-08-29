@@ -1,0 +1,383 @@
+from __future__ import annotations
+
+from sympy import (
+    Matrix,
+    Rational,
+    eye,
+    limit,
+    pi,
+    series,
+    simplify,
+    symbols,
+    zeros,
+)
+
+from .. import constants as K
+from ._core import _suite
+
+# ==========================================================================
+sealed = _suite("fourth order, sealed core")
+
+
+@sealed.check("alpha_3 = 4*A_shp = 5/12", "MASTER_THEORY §5.2")
+def _():
+    ok = K.alpha_pen(3) == 4 * K.A_SHP_3 == K.ALPHA_PEN_3
+    return ok, f"alpha_3 = {K.alpha_pen(3)}"
+
+
+@sealed.check("axial law reproduces alpha_4, alpha_5, alpha_6", "MASTER_THEORY §5.3")
+def _():
+    want = {4: Rational(32, 675), 5: Rational(1, 108), 6: Rational(64, 25725)}
+    got = {n: K.alpha_pen(n) for n in want}
+    return got == want, f"{ {k: str(v) for k, v in got.items()} }"
+
+
+@sealed.check("alpha_3 = 4*|c_4^square(3)|", "MOB §4")
+def _():
+    # Exact: both sides are Rational. A second, independent route to alpha_3 --
+    # the cube-completion coefficient rather than the shape coefficient A.
+    route = 4 * abs(K.CUBE_COMPLETION_4)
+    return route == K.ALPHA_PEN_3, (
+        f"4*|c_4^square(3)| = 4*|{K.CUBE_COMPLETION_4}| = {route} = alpha_3, the "
+        f"same value the shape route gives as 4*A_shp = 4*{K.A_SHP_3}"
+    )
+
+
+def _sealed_gaps():
+    return {
+        "A": abs(K.A_SHP_3_NUM - float(K.A_SHP_3)),
+        "B": abs(K.B_SHP_3_NUM - float(K.B_SHP_3)),
+        "D": abs(K.D_SHP_3_NUM - float(K.D_SHP_3)),
+        "alpha": abs(K.ALPHA_PEN_3_NUM - float(K.ALPHA_PEN_3)),
+    }
+
+
+@sealed.check("v10a.26 A, B, D match the sealed rationals within 2.3e-13", "GLUEBALL §10", tier=2)
+def _():
+    gaps = _sealed_gaps()
+    subset = {k: gaps[k] for k in ("A", "B", "D")}
+    ok = all(g <= K.SEALED_CORE_TOLERANCE for g in subset.values())
+    return ok, "; ".join(f"{k} {v:.3e}" for k, v in subset.items())
+
+
+@sealed.check(
+    "FINDING: alpha_new falls outside the corpus's own 2.3e-13 bound",
+    "GLUEBALL §10",
+    tier=2,
+)
+def _():
+    gaps = _sealed_gaps()
+    # alpha = 4A, so it inherits four times A's deviation. The corpus's stated
+    # aggregate bound (2.3e-13) tracks D_new (2.23e-13) and does not cover alpha.
+    # This is a bookkeeping slip in the quoted tolerance, not a discrepancy in
+    # the sealed core itself: the run's own alpha and A stay mutually consistent.
+    exceeds = gaps["alpha"] > K.SEALED_CORE_TOLERANCE
+    consistent = abs(K.ALPHA_PEN_3_NUM - 4 * K.A_SHP_3_NUM) < 1e-14
+    return exceeds and consistent, (
+        f"alpha gap {gaps['alpha']:.4e} > stated {K.SEALED_CORE_TOLERANCE:.1e} "
+        f"(= 4x the A gap {gaps['A']:.4e}); alpha_new vs 4*A_new agree to "
+        f"{abs(K.ALPHA_PEN_3_NUM - 4 * K.A_SHP_3_NUM):.1e}, so the sealed core holds "
+        "and only the quoted bound is too tight"
+    )
+
+
+@sealed.check("exceptional ranks are exactly {3,4,5,6}", "MASTER_THEORY §5.3")
+def _():
+    # A fourth-order word carries at most 6 character factors, so a determinant
+    # channel needs |p-q| = N <= 6; and N >= 3 for the sector to exist at all.
+    derived = tuple(n for n in range(2, 12) if 3 <= n <= 6)
+    return derived == K.EXCEPTIONAL_RANKS, f"{derived}"
+
+
+# ==========================================================================
+dispute = _suite("fourth order, anchoring and the residual dispute")
+
+
+@dispute.check("historical q_3 decimal expansion", "MASTER_THEORY §5.5", tier=2)
+def _():
+    d = abs(float(K.Q_BAND_4) - (-2.857915988114559))
+    return d < 1e-15, f"|diff| = {d:.2e}"
+
+
+@dispute.check("C_old = (beta_pen_3 - 2*alpha_3)/16", "MASTER_THEORY §5.5")
+def _():
+    v = (K.BETA_PEN_3 - 2 * K.ALPHA_PEN_3) / 16
+    return v == K.C_SHP_HISTORICAL, f"= {v}"
+
+
+@dispute.check("Delta_Gamma = m_Gamma^(4) - q_band^(4)", "MASTER_THEORY §5.5 / C1", tier=2)
+def _():
+    v = K.M_GAMMA_4_NUM - float(K.Q_BAND_4)
+    # Double-precision evaluation lands one ulp below the correctly rounded
+    # value; both are recorded, so accept either.
+    ok = min(abs(v - K.DELTA_GAMMA_NUM), abs(v - K.DELTA_GAMMA_AS_PRINTED_NUM)) < 1e-15
+    return ok, f"double eval {v!r}; exact rounds to {K.DELTA_GAMMA_NUM!r}"
+
+
+@dispute.check("FINDING: the printed Delta_Gamma is one ulp low", "MASTER_THEORY §5.5", tier=2)
+def _():
+    from .. import rigor
+
+    # Certified enclosure (ADR 0010): the double M_GAMMA_4_NUM enters exactly,
+    # the rational q_band^(4) enters as a 128-bit ball, and the comparisons
+    # below are True only if provable from disjoint enclosures — this replaces
+    # the earlier "evalf(25) is surely enough" with a machine guarantee.
+    exact = rigor.ball(K.M_GAMMA_4_NUM) - rigor.ball(K.Q_BAND_4)
+    printed_low = rigor.certified_lt(rigor.ball(K.DELTA_GAMMA_AS_PRINTED_NUM), exact)
+    recorded_closer = rigor.certified_closer(
+        exact, rigor.ball(K.DELTA_GAMMA_NUM), rigor.ball(K.DELTA_GAMMA_AS_PRINTED_NUM)
+    )
+    gap = K.DELTA_GAMMA_NUM - K.DELTA_GAMMA_AS_PRINTED_NUM
+    return printed_low and recorded_closer, (
+        f"certified: true Delta_Gamma = {rigor.describe(exact)}; the corpus's printed "
+        f"{K.DELTA_GAMMA_AS_PRINTED_NUM!r} lies provably below it, and "
+        f"{K.DELTA_GAMMA_NUM!r} is provably the closer double (gap {gap:.3e} = 1 ulp). "
+        "Cosmetic, but the printed digit is not the correctly rounded one."
+    )
+
+
+@dispute.check(
+    "a translation-local scalar shift changes nothing observable",
+    "MASTER_THEORY §5.5 / C1",
+)
+def _():
+    # H_mass = H_band + Delta_Gamma*I  =>  centered forms coincide identically.
+    h = Matrix(3, 3, symbols("h1:10"))
+    dg, q = symbols("dg q")
+    centered_mass = (h + dg * eye(3)) - (q + dg) * eye(3)
+    centered_band = h - q * eye(3)
+    same = simplify(centered_mass - centered_band) == zeros(3, 3)
+    return same, (
+        "centered operator, eigenvectors, SOS factorization, mobility "
+        "coefficients and bandwidth are all invariant under the anchoring shift, "
+        "so q_band^(4) and m_Gamma^(4) are not competing estimates"
+    )
+
+
+@dispute.check(
+    "Delta_C = C_new - C_old > 0 (the real discrepancy)",
+    "MASTER_THEORY §5.5 / C2",
+    tier=2,
+)
+def _():
+    v = K.C_SHP_NEW_NUM - float(K.C_SHP_HISTORICAL)
+    d = abs(v - K.DELTA_C_NUM)
+    return d < 1e-16 and v > 0, f"{v!r} vs recorded {K.DELTA_C_NUM!r} (|diff| {d:.1e})"
+
+
+@dispute.check("beta_new = 8A + 16*C_new", "MASTER_THEORY §5.5", tier=2)
+def _():
+    v = 8 * float(K.A_SHP_3) + 16 * K.C_SHP_NEW_NUM
+    return abs(v - K.BETA_PEN_NEW_NUM) < 1e-15, f"= {v!r}"
+
+
+@dispute.check("off-axis band splits are 8*Delta_C and 16*Delta_C", "MASTER_THEORY §5.5", tier=2)
+def _():
+    m, r = 8 * K.DELTA_C_NUM, 16 * K.DELTA_C_NUM
+    ok = abs(m - K.M_SPLIT_RECORDED_NUM) < 1e-15 and abs(r - K.R_SPLIT_RECORDED_NUM) < 1e-15
+    return ok, f"M: {m!r}, R: {r!r}; axial cuts agree exactly"
+
+
+@dispute.check("bandwidth ratio W4_new / W4_old ~ 1.93", "MASTER_THEORY §5.5", tier=2)
+def _():
+    ratio = K.W4_NEW_NUM / K.W4_HISTORICAL_NUM
+    return abs(ratio - 1.93) < 5e-3, f"= {ratio:.6f}"
+
+
+@dispute.check("Hamer 8*a_4 matches m_Gamma to ~5.2e-13", "GLUEBALL §2.3", tier=2)
+def _():
+    d = abs(8 * K.HAMER_A4_NUM - K.M_GAMMA_4_NUM)
+    return d < K.HAMER_TOLERANCE, (
+        f"|diff| = {d:.2e}; a_4 is an unverified notebook transcription, "
+        "so this is a normalization cross-check, not primary-source proof"
+    )
+
+
+@dispute.check("quarantined scalar decimal", "MASTER_THEORY §5.5", tier=2)
+def _():
+    d = abs(float(K.QUARANTINED_SCALAR) - (-11.068479463778765))
+    return d < 1e-14, f"|diff| = {d:.2e}; rejected by both sides"
+
+
+@dispute.check("C20: exact gate value vs printed float-reconstruction", "MASTER_THEORY C20", tier=2)
+def _():
+    exact = float(K.LINKED_VACUUM_4)
+    artifact = float(K.LINKED_VACUUM_4_ARTIFACT)
+    gap = abs(exact - artifact)
+    ulp = 2.0**-53 * abs(exact)
+    # C20 records these as agreeing "to float precision". They do not: the gap is
+    # ~31 ulps, and the decimal printed throughout the corpus (-0.8800987156226097)
+    # is the artifact's value, not the exact gate value (-0.8800987156226127).
+    agree_to_float = gap <= 2 * ulp
+    return (
+        not agree_to_float,
+        f"exact {exact!r} vs artifact {artifact!r}; gap {gap:.2e} = {gap / ulp:.0f} ulps. "
+        f"They agree to ~14 significant digits, NOT to float precision as C20 states; "
+        f"the corpus's printed decimal tracks the artifact.",
+    )
+
+
+@dispute.check("run's applied shift is not Delta_Gamma", "GLUEBALL §9.2 / C22", tier=2)
+def _():
+    # Gate 85's equality was produced by construction with this shift, so it
+    # certifies internal bookkeeping rather than independent agreement.
+    return (
+        abs(K.RUN15_APPLIED_SHIFT_NUM - K.DELTA_GAMMA_NUM) > 1.0,
+        f"applied {K.RUN15_APPLIED_SHIFT_NUM} vs Delta_Gamma {K.DELTA_GAMMA_NUM} "
+        "— target-derived, so gate 85 is not an independent scalar verification",
+    )
+
+
+# ==========================================================================
+crosswalk = _suite("old-to-new crosswalk")
+
+
+@crosswalk.check("Phi_C vanishes at Gamma along every direction", "MASTER_THEORY §5.5")
+def _():
+    t, n1, n2, n3 = symbols("t n1 n2 n3", positive=True)
+    radial = K.phi_c((t * n1, t * n2, t * n3))
+    lead = simplify(series(radial, t, 0, 4).removeO())
+    vanishes = limit(radial, t, 0) == 0
+    return vanishes, (
+        f"Phi_C = {lead} = O(|k|^2), since e_2 = O(|k|^4) and Q = O(|k|^2). "
+        "A Gamma-point scalar therefore constrains Delta_Gamma but places no "
+        "constraint whatsoever on Delta_C."
+    )
+
+
+@crosswalk.check("Phi_C at the high-symmetry points", "MASTER_THEORY §5.1")
+def _():
+    got = {
+        "X": K.phi_c((pi, 0, 0)),
+        "M": K.phi_c((pi, pi, 0)),
+        "P": K.phi_c((pi, pi / 2, 0)),
+        "R": K.phi_c((pi, pi, pi)),
+    }
+    want = {"X": 0, "M": 8, "P": Rational(16, 3), "R": 16}
+    return got == want, f"{ {k: str(v) for k, v in got.items()} }"
+
+
+@crosswalk.check(
+    "crosswalk reproduces the recorded off-axis band splits",
+    "MASTER_THEORY §5.5",
+    tier=2,
+)
+def _():
+    # c_4_new(k) - c_4_old(k) - Delta_Gamma == Delta_C * Phi_C(k)
+    m = K.DELTA_C_NUM * float(K.phi_c((pi, pi, 0)))
+    r = K.DELTA_C_NUM * float(K.phi_c((pi, pi, pi)))
+    ok = abs(m - K.M_SPLIT_RECORDED_NUM) < 1e-15 and abs(r - K.R_SPLIT_RECORDED_NUM) < 1e-15
+    return ok, f"M -> {m!r}, R -> {r!r}; independently recorded as 8*Delta_C and 16*Delta_C"
+
+
+@crosswalk.check("the crosswalk is exactly scalar on the momentum axes", "MASTER_THEORY §5.5")
+def _():
+    axial = [K.phi_c(kv) for kv in ((pi, 0, 0), (pi / 2, 0, 0), (pi / 3, 0, 0))]
+    return all(a == 0 for a in axial), (
+        "Phi_C vanishes on every axial cut, so axial data cannot distinguish the "
+        "two kernels — the whole residual disagreement lives off-axis"
+    )
+
+
+@crosswalk.check("bandwidth is preserved only if Delta_C vanishes", "MASTER_THEORY §5.5", tier=2)
+def _():
+    # The scalar term drops out of any difference of band values; only Phi_C survives.
+    spread = K.DELTA_C_NUM * (float(K.phi_c((pi, pi, pi))) - float(K.phi_c((pi, 0, 0))))
+    return abs(spread) > 1e-3, (
+        f"scalar re-anchoring alone leaves the centered structure unchanged, but the "
+        f"additional Delta_C*Phi_C term spreads R against X by {spread:.6f}. Bandwidth "
+        "survives the crosswalk only if Delta_C is shown to vanish or is absorbed by an "
+        "exact operator identity; neither is established."
+    )
+
+
+# ==========================================================================
+pencil = _suite("fourth-order generalized Hodge pencil")
+
+
+@pencil.check("Q4 cross coefficient = beta_pen_3 / 4", "GLUEBALL §8")
+def _():
+    return K.Q4_CROSS == K.BETA_PEN_3 / 4, f"= {K.Q4_CROSS}"
+
+
+@pencil.check("historical Q4 numerator is positive definite", "UNIFIED §0.1")
+def _():
+    m = Matrix(3, 3, lambda i, j: K.A_SHP_3 if i == j else K.Q4_CROSS / 2)
+    eig = m.eigenvals()
+    ok = all(e > 0 for e in eig) and set(eig) == {
+        K.A_SHP_3 + K.Q4_CROSS,
+        K.A_SHP_3 - K.Q4_CROSS / 2,
+    }
+    return ok, f"eigenvalues {sorted(str(e) for e in eig)} — PSD, in fact PD"
+
+
+@pencil.check("centered kernel difference is PSD (vanishes on axes)", "MASTER_THEORY §5.5", tier=2)
+def _():
+    # C^dagger[(H4_new - s_new) - (H4_old - q_old)]C = 4*Delta_C*sum_{i<j} L_i L_j.
+    # The eigenstructure is exact algebra on a symbolic Delta_C — the matrix
+    # 2d(J - I) has eigenvalues 4d, -2d, -2d — and only the SIGN of Delta_C
+    # is a float fact, because C_new exists only as the v10a.26 float. That
+    # sign is the whole verdict, so the check is T2, not T1.
+    d = symbols("d", positive=True)
+    m = Matrix(3, 3, lambda i, j: 0 if i == j else 2 * d)
+    eig = {simplify(e): mult for e, mult in m.eigenvals().items()}
+    structure_ok = eig == {4 * d: 1, -2 * d: 2}
+    return structure_ok and K.DELTA_C_NUM > 0, (
+        f"form eigenvalues exactly {{4d: 1, -2d: 2}} for symbolic d; with Delta_C = "
+        f"{K.DELTA_C_NUM:.6e} > 0 (float — C_new exists only as v10a.26 output) the form is "
+        "indefinite as a free quadratic form, PSD on the cube-amplitude sector where "
+        "the pencil is scoped"
+    )
+
+
+# ==========================================================================
+extraction = _suite("fourth-order checkpoint extraction")
+
+_As, _Bs, _Cs, _Ds, _c0 = symbols("A_shp B_shp C_shp D_shp c0")
+
+
+def _eps4(k):
+    """Generic cubic-invariant fourth-order correction on the flat fiber."""
+    q, e2, e3 = K.cubic_invariants(k)
+    return simplify(_c0 + _As * q + _Bs * e2 + _Cs * 4 * e2 / q + _Ds * e3 / q)
+
+
+def _deltas():
+    g = _c0  # epsilon_4(Gamma) = c0
+    return (
+        simplify(_eps4([pi, 0, 0]) - g),
+        simplify(_eps4([pi, pi, 0]) - g),
+        simplify(_eps4([pi, pi / 2, 0]) - g),
+        simplify(_eps4([pi, pi, pi]) - g),
+    )
+
+
+@extraction.check("checkpoint values at X, M, P, R", "MASTER_THEORY §5.1")
+def _():
+    dX, dM, dP, dR = _deltas()
+    ok = (
+        simplify(dX - 4 * _As) == 0
+        and simplify(dM - (8 * _As + 16 * _Bs + 8 * _Cs)) == 0
+        and simplify(dP - (6 * _As + 8 * _Bs + Rational(16, 3) * _Cs)) == 0
+        and simplify(dR - (12 * _As + 48 * _Bs + 16 * _Cs + Rational(16, 3) * _Ds)) == 0
+    )
+    return ok, f"dX={dX}, dM={dM}, dP={dP}, dR={dR}"
+
+
+@extraction.check("the four extraction formulas invert the ansatz", "MASTER_THEORY §5.1")
+def _():
+    dX, dM, dP, dR = _deltas()
+    ok = (
+        simplify(dX / 4 - _As) == 0
+        and simplify((dX + 4 * dM - 6 * dP) / 16 - _Bs) == 0
+        and simplify(3 * (2 * dP - dM - dX) / 8 - _Cs) == 0
+        and simplify(3 * (dR - 6 * dM + 6 * dP) / 16 - _Ds) == 0
+    )
+    return ok, "A, B, C, D each recovered exactly from the checkpoint deltas"
+
+
+@extraction.check("X is blind to B, C, D — it fixes A alone", "MASTER_THEORY §5.1")
+def _():
+    dX, *_ = _deltas()
+    free = {s for s in dX.free_symbols if s in {_Bs, _Cs, _Ds}}
+    return not free, "Delta_X = 4*A_shp exactly, which is why the axial cuts agree"

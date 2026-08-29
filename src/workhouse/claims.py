@@ -21,6 +21,7 @@ like an index rather than like a guess.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from dataclasses import asdict, dataclass, field
@@ -118,9 +119,30 @@ def _slug(text: str) -> str:
     return "".join(keep).strip("-").replace("--", "-")[:40]
 
 
+def _ident(text: str) -> str:
+    """A slug that cannot collide by truncation.
+
+    ``_slug`` caps at 40 characters, and check names here are long and
+    formulaic -- 158 of 193 hit that cap, as do 7 of 20 suite names. Two names
+    agreeing in their first 40 characters would therefore produce ONE id, and
+    a graph keyed on ids would silently merge two distinct checks into a node
+    carrying both their edges. Nothing would fail; the graph would just be
+    wrong. ``note_id`` already learned this on 24 colliding archive paths and
+    fixed it with a digest suffix; this is the same fix for the other half of
+    the catalogue.
+
+    Untruncated names keep a clean, readable id -- the suffix appears only
+    where the cap actually bit, so it marks exactly the ids that needed it.
+    """
+    slug = _slug(text)
+    if len(slug) < 40:
+        return slug
+    return f"{slug}-{hashlib.sha256(text.encode('utf-8')).hexdigest()[:6]}"
+
+
 def check_id(suite_name: str, check_name: str) -> str:
     """The catalogue id of one registered check. The single place the format lives."""
-    return f"CHK:{_slug(suite_name)}:{_slug(check_name)}"
+    return f"CHK:{_ident(suite_name)}:{_ident(check_name)}"
 
 
 def note_id(archive_id: str, row: dict[str, Any]) -> str:
@@ -209,7 +231,7 @@ def collect() -> list[Claim]:
                     kind="check",
                     statement=result.name,
                     tier=result.tier,
-                    where=f"src/workhouse/invariants.py:{result.line}",
+                    where=result.source,
                     cites=result.section,
                     reproduce=f"workhouse verify --only {result.name!r}",
                     detail=result.detail,

@@ -233,11 +233,21 @@ def validate(notes: Notes | None = None, root: Path | None = None) -> list[str]:
             elif _is_digest(dup) and dup not in manifest_digests:
                 problems.append(f"{label}: duplicate_of digest is in no manifest")
 
+        # Same shape as duplicate_of above, and for the same reason: a
+        # successor is often another inventoried note, but it can equally be a
+        # file this repository already pins -- a draft superseded by the
+        # manuscript of record, say. Requiring a manifest digest there would
+        # force the weaker `set-aside` on a document whose successor is MORE
+        # locatable than any manifest entry, not less.
         if verdict == "superseded":
             sup = str(review.get("superseded_by", ""))
-            if not _is_digest(sup):
-                problems.append(f"{label}: superseded_by must be the successor's digest")
-            elif sup not in manifest_digests:
+            if not sup:
+                problems.append(f"{label}: superseded names no superseded_by")
+            elif not _is_digest(sup) and not (root / sup).is_file():
+                problems.append(
+                    f"{label}: superseded_by {sup!r} is neither a digest nor a repository file"
+                )
+            elif _is_digest(sup) and sup not in manifest_digests:
                 problems.append(f"{label}: superseded_by digest is in no manifest")
 
         for target in review.get("bears_on", []):

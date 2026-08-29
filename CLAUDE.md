@@ -23,7 +23,7 @@ So a claim's status is **computed, not asserted**:
 | Tier | Meaning | Where it lives |
 |---|---|---|
 | **T0 proved** | Lean 4 compiles it, no `sorry`, standard axioms only | `lean/Workhouse/` |
-| **T1 derived** | re-derived symbolically from stated definitions, exactly | `src/workhouse/invariants.py` |
+| **T1 derived** | re-derived symbolically from stated definitions, exactly | `src/workhouse/invariants/` |
 | **T2 numerical** | float agreement within a stated tolerance | same, tolerance in the detail line |
 | **T3 asserted** | a document says so and nothing checks it | `theory/`, the ledgers |
 
@@ -164,7 +164,7 @@ analogy, and analogies accumulate without ever being wrong.
 
 ## Adding an invariant
 
-Register it on a suite in `src/workhouse/invariants.py`, cite the corpus
+Register it on a suite in `src/workhouse/invariants/`, cite the corpus
 section, and return `(passed, detail)` where `detail` carries the numbers a
 reader needs to argue with you. `tests/test_invariants.py` picks it up
 automatically. If the statement is pure rational or polynomial algebra, prefer

@@ -75,7 +75,18 @@ def lean_claims() -> list[Claim]:
         for n, line in enumerate(
             strip_lean_comments(path.read_text(encoding="utf-8")).splitlines(), 1
         ):
-            m = re.match(r"\s*(?:theorem|lemma)\s+([A-Za-z_][\w'.]*)", line)
+            # Attributes and `private` sit BEFORE the keyword, and the first
+            # draft of this regex did not allow them -- so an
+            # `@[simp] theorem` was invisible to the T0 scrape, escaping both
+            # the catalogue and the "every Lean theorem has a curated entry"
+            # rule in tests/test_graph.py. A theorem that no ledger has to
+            # account for is exactly the hole the T0 layer is supposed to
+            # close, so the prefix is matched rather than assumed absent.
+            m = re.match(
+                r"\s*(?:@\[[^\]]*\]\s*)*(?:private\s+|protected\s+|nonrec\s+)*"
+                r"(?:theorem|lemma)\s+([A-Za-z_][\w'.]*)",
+                line,
+            )
             if m:
                 out.append(
                     Claim(
@@ -97,7 +108,7 @@ def _check_claims() -> list[Claim]:
                 Claim(
                     tier=r.tier,
                     name=r.name,
-                    where=f"src/workhouse/invariants.py:{r.line}",
+                    where=r.source,
                     reproduce=f"workhouse verify --only {shlex.quote(r.name)}",
                     section=r.section,
                     suite=suite.name,

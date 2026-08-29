@@ -100,7 +100,7 @@ def _verify(
             if r.detail and (verbose or needle or not r.passed):
                 print(f"        {r.detail}")
             if r.detail and needle:
-                print(f"        \033[2msrc/workhouse/invariants.py:{r.line}\033[0m")
+                print(f"        \033[2m{r.source}\033[0m")
             if not r.passed:
                 failures += 1
     if as_json:
@@ -369,17 +369,21 @@ def _notes(scan: str | None, archive: str | None, queue_n: int | None) -> int:
 
 
 def _rescue_negative_query(argv: list[str]) -> list[str]:
-    """Let `workhouse search -5/48` work without the `--` incantation.
+    """Let `workhouse search -5/48 --corpus` work without the `--` incantation.
 
     argparse reads a leading-minus token as an option, and the flagship search
     examples are negative values. When the token after the subcommand looks
-    like a value rather than a flag, insert the `--` separator on the caller's
-    behalf instead of dying with "query is required".
+    like a value rather than a flag, move it behind a `--` separator at the end
+    of the line instead of dying with "query is required".
 
-    The value is moved to the END of the argv, after ``--``, rather than the
-    separator being inserted in place: everything after ``--`` is positional,
-    so an in-place separator silently turned trailing options
-    (`search -5/48 --corpus --limit 12`) into unrecognized arguments.
+    Moving it to the end rather than inserting `--` in place is the whole point:
+    `--` makes argparse treat *everything* after it as positional, so the
+    in-place form turned the perfectly natural
+
+        workhouse search -211835444920651/4405310420659200 --corpus --limit 12
+
+    into "unrecognized arguments: --corpus --limit 12". The trailing form keeps
+    the options as options and still shields the negative value.
     """
     valueish = re.compile(r"^-\d+(/\d+)?$|^-\d*\.\d+([eE][-+]?\d+)?$")
     out = list(argv)

@@ -465,7 +465,7 @@ def brief() -> str:
         "rescaling; exact rationals stay sympy.Rational and floats carry _NUM; "
         "never edit theory/; never widen a tolerance to clear a finding.",
         "",
-        "Orientation: FRONTIER.md, then ledger/, then invariants.py. "
+        "Orientation: FRONTIER.md, then ledger/, then invariants/. "
         "corpus-import/ is 950 files and ~61 context windows — target it, never "
         "read it recursively. Exact rationals are the join keys, not concepts.",
         "",
