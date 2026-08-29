@@ -299,3 +299,20 @@ class TestDeriveFilters:
         assert neighbors
         for record in neighbors.values():
             assert record["via"], "a node with no registered edge got in"
+
+
+class TestNarrowConsole:
+    def test_why_survives_a_cp1252_stdout(self):
+        """The Windows smoke's failure, reproduced on any OS: a console that
+        cannot encode the edge arrows gets escapes, never a crash."""
+        import os
+        import subprocess
+        import sys
+
+        proc = subprocess.run(
+            [sys.executable, "-m", "workhouse.cli", "why", "C2", "--cached"],
+            env={**os.environ, "PYTHONIOENCODING": "cp1252", "PYTHONUTF8": "0"},
+            capture_output=True,
+        )
+        assert proc.returncode == 0, proc.stderr.decode(errors="replace")
+        assert b"\\u2192" in proc.stdout  # the arrow, escaped rather than fatal

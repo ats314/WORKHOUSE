@@ -624,6 +624,14 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     args = parser.parse_args(argv)
+    # A Windows console without UTF-8 mode encodes stdout as cp1252, which
+    # cannot carry the edge arrows — so `why C2` crashed mid-print on the
+    # exact machine the 2026-08-28 notes reported. Escaping the unencodable
+    # character beats dying on it; on a UTF-8 stream every character encodes
+    # and this never fires. Output only: reads stay strict utf-8 everywhere.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="backslashreplace")
     if _plain_stdout_wanted(args.no_color):
         sys.stdout = _AnsiStrippingStdout(sys.stdout)
     if args.command == "verify":
