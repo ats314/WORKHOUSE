@@ -180,7 +180,7 @@ def forward_differences(values: list[int]) -> list[int]:
 def q_polynomials():
     """Q32 and D34 from the compact-formula note, as sympy polynomials in z."""
     z = Symbol("z")
-    lines = Q_NOTE.read_text().splitlines()
+    lines = Q_NOTE.read_text(encoding="utf-8").splitlines()
     q32 = sympify(next(line for line in lines if line.startswith("Q32(z) =")).split("=", 1)[1])
     d34 = sympify(next(line for line in lines if line.startswith("D34(z) =")).split("=", 1)[1])
     return z, Poly(q32, z), d34
@@ -198,7 +198,7 @@ def b_evaluator():
     immutable, hash-bound to the walled-Brauer certificate); settlement.py set
     the precedent of executing literals extracted from pinned artifacts.
     """
-    return compile(B_NOTE.read_text().strip(), str(B_NOTE), "eval")
+    return compile(B_NOTE.read_text(encoding="utf-8").strip(), str(B_NOTE), "eval")
 
 
 @cache
@@ -236,7 +236,7 @@ STAGE1_CERT = CORPUS / "programs/y4_allrank/data/CERT_Y4_sun_stable_stage1_summa
 @cache
 def corpus_pins() -> dict[str, str]:
     pins = {}
-    for line in CORPUS_MANIFEST.read_text().splitlines():
+    for line in CORPUS_MANIFEST.read_text(encoding="utf-8").splitlines():
         parts = line.split("  ", 1)
         if len(parts) == 2:
             pins[parts[1]] = parts[0]
@@ -247,7 +247,7 @@ def corpus_pins() -> dict[str, str]:
 def canonical_rows() -> dict[str, dict[str, str]]:
     """The theory-side canonical source manifest, keyed by row id (A20K, A60...)."""
     rows = {}
-    with CANONICAL_MANIFEST.open() as fh:
+    with CANONICAL_MANIFEST.open(encoding="utf-8") as fh:
         for row in csv.reader(fh):
             if row and row[0] and row[0] != "id":
                 rows[row[0]] = {

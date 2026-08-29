@@ -47,6 +47,7 @@ _MODULES = (
     "bridge",
     "identification",
     "dual_engine",
+    "two_cube",
 )
 
 for _name in _MODULES:

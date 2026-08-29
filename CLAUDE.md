@@ -139,6 +139,9 @@ workhouse verify --only 'h_4^side'  # re-establish ONE claim, with its numbers
 workhouse verify --tier 1           # only the exact re-derivations
 workhouse frontier --brief          # the block injected at session start
 workhouse why C2                    # everything recorded about one claim id
+workhouse derive C2 G3 --out f.md   # evidence chains as Markdown, registered edges only
+workhouse branches C2               # every conflicting value, both branches side by side
+workhouse export -o graph.json      # claims+symbols+edges as one versioned JSON envelope
 workhouse triage /path/to/archive   # survey an unpinned collection
 workhouse notes                     # the notes register: reviewed vs pending, per archive
 workhouse notes --queue             # the next notes to review, highest signal first

@@ -147,14 +147,35 @@ def test_bears_on_must_resolve(registry):
     assert not any("'G14'" in p for p in problems)
 
 
-def test_superseded_needs_its_successor_in_a_manifest(registry):
+def test_superseded_needs_a_successor_that_can_be_found(registry, tmp_path):
+    """A digest in a manifest, or a file this repository pins — same rule as duplicate_of.
+
+    A successor is usually another inventoried note, but a draft is often
+    superseded by the manuscript of record instead. Demanding a manifest digest
+    there forced the weaker `set-aside` on the better-evidenced case, since a
+    file under paper/ is pinned by SHA256SUMS and guarded by a test — more
+    locatable than any manifest entry, not less.
+    """
     problems = _review(registry, verdict="superseded", superseded_by="cd" * 32)
     assert any("in no manifest" in p for p in problems)
+
+    registry.reviews.clear()
+    problems = _review(registry, verdict="superseded", superseded_by="")
+    assert any("names no superseded_by" in p for p in problems)
+
+    registry.reviews.clear()
+    problems = _review(registry, verdict="superseded", superseded_by="paper/no_such_file.tex")
+    assert any("neither a digest nor a repository file" in p for p in problems)
 
     registry.reviews.clear()
     successor = _digest_of(registry, "inert")
     _review(registry, verdict="superseded", superseded_by=successor)
     assert notes.validate(registry) == []
+
+    registry.reviews.clear()
+    (tmp_path / "manuscript_of_record.tex").write_text("the successor\n", encoding="utf-8")
+    _review(registry, verdict="superseded", superseded_by="manuscript_of_record.tex")
+    assert notes.validate(registry, root=tmp_path) == []
 
 
 def test_a_review_against_an_uninventoried_archive_is_premature(registry):

@@ -94,7 +94,7 @@ def _digit_forms(value) -> set[str]:
 
 def audit_contamination_scan(path: Path | None = None) -> ScanAudit:
     """Does the harness's own scan list cover the harness's own quarantine list?"""
-    src = (path or HARNESS).read_text()
+    src = (path or HARNESS).read_text(encoding="utf-8")
     namespace: dict[str, object] = {"Fraction": Fraction}
     q_block = re.search(r"^Q = \{.*?^\}", src, re.S | re.M)
     c_block = re.search(r"^CONTAMINATION_STRINGS = \[.*?^\]", src, re.S | re.M)
@@ -121,7 +121,7 @@ def scans_a_single_file(path: Path | None = None) -> bool:
     An engine that imports a helper module, loads a data file, or restores from
     the sqlite checkpoint carries that content past a single-file scan.
     """
-    src = (path or HARNESS).read_text()
+    src = (path or HARNESS).read_text(encoding="utf-8")
     return bool(re.search(r"src = open\(engine[^)]*\)\.read\(\)", src))
 
 
@@ -134,7 +134,7 @@ def verdict_can_be_complete(path: Path | None = None) -> bool:
     toggle. Reporting PARTIAL forever is honest; it is not the same as being
     able to discharge the protocol.
     """
-    src = (path or HARNESS).read_text()
+    src = (path or HARNESS).read_text(encoding="utf-8")
     unconditional_open = bool(
         re.search(r'verdict\["protocol"\]\["item10_W22_toggle"\] = "OPEN', src)
     )
@@ -143,7 +143,7 @@ def verdict_can_be_complete(path: Path | None = None) -> bool:
 
 
 def harness_delta_gamma(path: Path | None = None) -> float:
-    src = (path or HARNESS).read_text()
+    src = (path or HARNESS).read_text(encoding="utf-8")
     return float(re.search(r'"delta_gamma": ([0-9.]+)', src).group(1))
 
 
@@ -158,7 +158,7 @@ def engine_rename_record(path: Path | None = None) -> EngineRename | None:
     """The corpus-import rename manifest row that maps the harness's expected
     engine filename onto the file actually on disk."""
     manifest = path or RENAME_MANIFEST
-    for line in manifest.read_text().splitlines():
+    for line in manifest.read_text(encoding="utf-8").splitlines():
         parts = line.split("\t")
         if len(parts) >= 4 and parts[0].endswith(ENGINE_PRE_RENAME):
             return EngineRename(parts[0], parts[1], int(parts[2]))
@@ -172,7 +172,7 @@ def engine_scan_hits(extended: bool = True) -> list[str]:
     strings = list(audit.strings)
     if extended:
         strings += [s for s in EXTENDED_CONTAMINATION_STRINGS if s not in strings]
-    src = ENGINE.read_text(errors="ignore")
+    src = ENGINE.read_text(encoding="utf-8", errors="ignore")
     return [s for s in strings if s in src]
 
 
@@ -213,7 +213,7 @@ ENGINE_ALLOWED_IMPORTS = frozenset(
 
 
 def engine_import_roots() -> frozenset[str]:
-    src = ENGINE.read_text(errors="ignore")
+    src = ENGINE.read_text(encoding="utf-8", errors="ignore")
     names = re.findall(r"^(?:from|import)\s+([A-Za-z_][\w.]*)", src, re.M)
     return frozenset(name.split(".")[0] for name in names)
 
@@ -225,12 +225,12 @@ def read_freeze() -> dict:
     """The vendored FREEZE.json from the 2026-08-22 in-repo freeze stage."""
     import json
 
-    return json.loads((RUNS_DIR / "FREEZE.json").read_text())
+    return json.loads((RUNS_DIR / "FREEZE.json").read_text(encoding="utf-8"))
 
 
 def harness_preflight_pins() -> tuple[str, str]:
     """(AUTH_COVERAGE_SHA, EXPECT_PREFLIGHT_SHA) as pinned in the harness."""
-    src = HARNESS.read_text()
+    src = HARNESS.read_text(encoding="utf-8")
     coverage = re.search(r'AUTH_COVERAGE_SHA = "([0-9a-f]{64})"', src)
     preflight = re.search(r'EXPECT_PREFLIGHT_SHA = "([0-9a-f]{64})"', src)
     if not coverage or not preflight:
@@ -246,7 +246,7 @@ def first_run_probe() -> dict:
     first-cluster evaluation; the measurement that matters — the first
     oversize orbit — was flushed to the transcript before termination.
     """
-    text = (RUNS_DIR / "probe_console.log").read_text(errors="ignore")
+    text = (RUNS_DIR / "probe_console.log").read_text(encoding="utf-8", errors="ignore")
     size = re.search(r"closure size (\d+) exceeds the shipped cap (\d+)", text)
     support = re.search(r"first support size (\d+)", text)
     if not size or not support:
@@ -261,7 +261,7 @@ def first_run_probe() -> dict:
 
 def first_run_error() -> str:
     """The run-stage failure line from the vendored production log."""
-    text = (RUNS_DIR / "harness_production.log").read_text(errors="ignore")
+    text = (RUNS_DIR / "harness_production.log").read_text(encoding="utf-8", errors="ignore")
     m = re.search(r"^ExactEngineError: .*$", text, re.M)
     return m.group(0) if m else ""
 
@@ -270,7 +270,7 @@ def engine_closure_cap() -> int:
     """The shipped H0-closure BFS cap. The guard never truncates — it either
     returns the complete finite orbit or aborts the run — so the cap's only
     effect is operational: too small and the sweep cannot start."""
-    src = ENGINE.read_text(errors="ignore")
+    src = ENGINE.read_text(encoding="utf-8", errors="ignore")
     m = re.search(r"def closure\(seed_state: State, max_states: int = (\d+)\)", src)
     if not m:
         raise ValueError("engine no longer exposes the closure cap in its signature")
@@ -295,7 +295,7 @@ def read_cold_runs(directory: Path | None = None) -> list[ColdRun]:
     """
     out = []
     for path in sorted((directory or SETTLEMENT_DIR).glob("cold_rerun_*.txt")):
-        text = path.read_text()
+        text = path.read_text(encoding="utf-8")
         tally = re.search(r"(\d+)/(\d+)\s+(?:gates|checks) pass", text)
         verdict = re.search(r"VERDICT:\s*(\S+)", text)
         sha = re.search(r"SOURCE_SHA256:\s*([0-9a-f]{64})", text)

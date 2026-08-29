@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 181
+## T1 — re-derived exactly — 186
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -417,22 +417,25 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/channels.py:109 · UNIFIED v4.3 §6
   - `workhouse verify --only 'C_normal = -A_normal/2: the agreed axial coefficient pins the normal channel'`
 - `FINDING: an explicit second witness C_alt exhibits the C2 non-identifiability`
-  - src/workhouse/invariants/channels.py:441 · COMPLETE_UNIFIED_MASTER_CLOSED §15.3.2
+  - src/workhouse/invariants/channels.py:466 · COMPLETE_UNIFIED_MASTER_CLOSED §15.3.2
   - `workhouse verify --only 'FINDING: an explicit second witness C_alt exhibits the C2 non-identifiability'`
 - `FINDING: the retained Gamma/axis data cannot identify C_shp`
-  - src/workhouse/invariants/channels.py:387 · MASTER paper Thm. 13 / C2 / G3
+  - src/workhouse/invariants/channels.py:412 · MASTER paper Thm. 13 / C2 / G3
   - `workhouse verify --only 'FINDING: the retained Gamma/axis data cannot identify C_shp'`
 - `FINDING: the tier collapse is two integer cancellations at record level`
   - src/workhouse/invariants/channels.py:72 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'FINDING: the tier collapse is two integer cancellations at record level'`
+- `at N = 6, the one rank carrying both routes here, they agree; N = 3 is closed`
+  - src/workhouse/invariants/channels.py:244 · THM_SUN unified nality v2 §5; ledger C10; GCSG SU(6) certificate
+  - `workhouse verify --only 'at N = 6, the one rank carrying both routes here, they agree; N = 3 is closed'`
 - `on an axial cut the mixed invariants vanish and the norm divides`
-  - src/workhouse/invariants/channels.py:414 · MASTER paper §7
+  - src/workhouse/invariants/channels.py:439 · MASTER paper §7
   - `workhouse verify --only 'on an axial cut the mixed invariants vanish and the norm divides'`
 - `rotation decomposes only as a sum, and the ket convention is load-bearing`
   - src/workhouse/invariants/channels.py:162 · UNIFIED v4.3 §3.2 (carrier), tier_collapse convention
   - `workhouse verify --only 'rotation decomposes only as a sum, and the ket convention is load-bearing'`
 - `scalar vs shape continuation: poles where the corpus forbids, regular where it allows`
-  - src/workhouse/invariants/channels.py:342 · GLUEBALL_DETAILED_FORMULA v3.1; THM_SUN unified v2; THM_SU6
+  - src/workhouse/invariants/channels.py:367 · GLUEBALL_DETAILED_FORMULA v3.1; THM_SUN unified v2; THM_SU6
   - `workhouse verify --only 'scalar vs shape continuation: poles where the corpus forbids, regular where it allows'`
 - `the 189-record kernel decomposes in the shape basis over the whole zone`
   - src/workhouse/invariants/channels.py:32 · UNIFIED v4.3 §5.1/§6
@@ -444,14 +447,11 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/channels.py:187 · GLUEBALL_DETAILED_FORMULA v3.1 §11 + App. A
   - `workhouse verify --only 'the pinned structured B_N expression IS P17(N^2)/(N R20(N^2))'`
 - `the shape fit's C row sums to zero, so no Gamma-anchor error can move C_shp at all`
-  - src/workhouse/invariants/channels.py:962 · provenance nb-hodge-v10a26-alt2, _v10a3_extract_shape; UNIFIED v4.3 §5.1
+  - src/workhouse/invariants/channels.py:987 · provenance nb-hodge-v10a26-alt2, _v10a3_extract_shape; UNIFIED v4.3 §5.1
   - `workhouse verify --only 'the shape fit'"'"'s C row sums to zero, so no Gamma-anchor error can move C_shp at all'`
 - `the shipped displacement support is exactly six shells`
   - src/workhouse/invariants/channels.py:138 · off-axis ledger falsifier gate
   - `workhouse verify --only 'the shipped displacement support is exactly six shells'`
-- `where both routes exist they agree, and at N = 3 the checkable one is closed`
-  - src/workhouse/invariants/channels.py:244 · THM_SUN unified nality v2 §5; ledger C10; GCSG SU(6) certificate
-  - `workhouse verify --only 'where both routes exist they agree, and at N = 3 the checkable one is closed'`
 **old-to-new crosswalk**
 
 - `Phi_C at the high-symmetry points`
@@ -577,7 +577,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **settlement package and adjudication harness (G3)**
 
 - `FINDING: the closure cap is a third-order scaffold and fourth order needs 160`
-  - src/workhouse/invariants/adjudication.py:439 · engine closure(), max_states=100
+  - src/workhouse/invariants/adjudication.py:441 · engine closure(), max_states=100
   - `workhouse verify --only 'FINDING: the closure cap is a third-order scaffold and fourth order needs 160'`
 - `FINDING: the contamination scan reads only the engine file`
   - src/workhouse/invariants/adjudication.py:56 · settlement/mce_adjudication_harness.py
@@ -737,8 +737,25 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the vanishing coefficients are exactly the degree-3 ones`
   - src/workhouse/invariants/tier.py:33 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
+**two-cube charge-odd second-order closure (B=4 and B=6)**
 
-## T2 — float agreement within a stated tolerance — 57
+- `B=6 retains every adjacent shared-link channel; B=4 provably cannot`
+  - src/workhouse/invariants/two_cube.py:237 · R2; G3; runs/two_cube_codd_o2_2026-08-29 §6.4
+  - `workhouse verify --only 'B=6 retains every adjacent shared-link channel; B=4 provably cannot'`
+- `the B=4 comparator on the same geometry gives -1/12 with the reversed spectrum`
+  - src/workhouse/invariants/two_cube.py:204 · R2; runs/two_cube_codd_o2_2026-08-29, B4 note §4
+  - `workhouse verify --only 'the B=4 comparator on the same geometry gives -1/12 with the reversed spectrum'`
+- `the B=6 connected kernel is (5/612) G_conn + diag, with the certified spectrum`
+  - src/workhouse/invariants/two_cube.py:174 · R2; runs/two_cube_codd_o2_2026-08-29 §7.4
+  - `workhouse verify --only 'the B=6 connected kernel is (5/612) G_conn + diag, with the certified spectrum'`
+- `the B=6 six-channel census sums to the registry's own t_3 = 5/612`
+  - src/workhouse/invariants/two_cube.py:141 · R2; runs/two_cube_codd_o2_2026-08-29 §7
+  - `workhouse verify --only 'the B=6 six-channel census sums to the registry'"'"'s own t_3 = 5/612'`
+- `the connected two-cube geometry has exactly four cross-cell pairs, each -1`
+  - src/workhouse/invariants/two_cube.py:118 · R2; runs/two_cube_codd_o2_2026-08-29 §1
+  - `workhouse verify --only 'the connected two-cube geometry has exactly four cross-cell pairs, each -1'`
+
+## T2 — float agreement within a stated tolerance — 58
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -870,34 +887,34 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **off-axis channel ledger (C2 geography, G14)**
 
 - `FINDING: A = 5/48 pins the normal sector's whole C4 contribution`
-  - src/workhouse/invariants/channels.py:561 · UNIFIED v4.3 §5.1/§6, block decomposition
+  - src/workhouse/invariants/channels.py:586 · UNIFIED v4.3 §5.1/§6, block decomposition
   - `workhouse verify --only 'FINDING: A = 5/48 pins the normal sector'"'"'s whole C4 contribution'`
 - `FINDING: C_shp is carried by 6 of 189 records, not spread across the kernel`
-  - src/workhouse/invariants/channels.py:491 · UNIFIED v4.3 §5.1/§6, block decomposition
+  - src/workhouse/invariants/channels.py:516 · UNIFIED v4.3 §5.1/§6, block decomposition
   - `workhouse verify --only 'FINDING: C_shp is carried by 6 of 189 records, not spread across the kernel'`
 - `FINDING: the adjudicator's THIRD-VALUE scalar verdict is a C1 anchoring artifact`
-  - src/workhouse/invariants/channels.py:838 · provenance nb-hodge-v10a26-alt2, section 17
+  - src/workhouse/invariants/channels.py:863 · provenance nb-hodge-v10a26-alt2, section 17
   - `workhouse verify --only 'FINDING: the adjudicator'"'"'s THIRD-VALUE scalar verdict is a C1 anchoring artifact'`
 - `FINDING: the off-axis ledger carries two claims its own author later retracted`
-  - src/workhouse/invariants/channels.py:1148 · notes UPLOADS_2026-08-28d OFF_AXIS_LEDGER §6/§7, corrected by the C2 status note
+  - src/workhouse/invariants/channels.py:1173 · notes UPLOADS_2026-08-28d OFF_AXIS_LEDGER §6/§7, corrected by the C2 status note
   - `workhouse verify --only 'FINDING: the off-axis ledger carries two claims its own author later retracted'`
 - `FINDING: the run's own re-anchor moved C_shp by 4.6e-15, as the zero row sum requires`
-  - src/workhouse/invariants/channels.py:1025 · provenance nb-hodge-v10a26-alt2, sections 13 and 17
+  - src/workhouse/invariants/channels.py:1050 · provenance nb-hodge-v10a26-alt2, sections 13 and 17
   - `workhouse verify --only 'FINDING: the run'"'"'s own re-anchor moved C_shp by 4.6e-15, as the zero row sum requires'`
 - `FINDING: the v10a.26 cluster ledger is exhausted by supports <= 2 until fourth order`
-  - src/workhouse/invariants/channels.py:1073 · provenance nb-hodge-v10a26-alt2, section 16 rooted incidence transform
+  - src/workhouse/invariants/channels.py:1098 · provenance nb-hodge-v10a26-alt2, section 16 rooted incidence transform
   - `workhouse verify --only 'FINDING: the v10a.26 cluster ledger is exhausted by supports <= 2 until fourth order'`
 - `FINDING: the v10a.26 notebook carries a per-class ledger and attests its own blindness`
-  - src/workhouse/invariants/channels.py:690 · provenance nb-hodge-v10a26-alt2
+  - src/workhouse/invariants/channels.py:715 · provenance nb-hodge-v10a26-alt2
   - `workhouse verify --only 'FINDING: the v10a.26 notebook carries a per-class ledger and attests its own blindness'`
 - `FINDING: the v10a.26 run gates on known values before it unblinds`
-  - src/workhouse/invariants/channels.py:766 · provenance nb-hodge-v10a26-alt2, cell 17
+  - src/workhouse/invariants/channels.py:791 · provenance nb-hodge-v10a26-alt2, cell 17
   - `workhouse verify --only 'FINDING: the v10a.26 run gates on known values before it unblinds'`
 - `FINDING: the v10a.26 side supplies A, B, D but no block structure, and its C fights its own A`
-  - src/workhouse/invariants/channels.py:631 · provenance nb-hodge-v10a26-alt2 / GLUEBALL §10
+  - src/workhouse/invariants/channels.py:656 · provenance nb-hodge-v10a26-alt2 / GLUEBALL §10
   - `workhouse verify --only 'FINDING: the v10a.26 side supplies A, B, D but no block structure, and its C fights its own A'`
 - `the C_alt witness IS the balanced eps-free continuation, and Delta_C/(A/2) = 15/32`
-  - src/workhouse/invariants/channels.py:908 · OFF AXIS LEDGER 2026-08-22 §2, UNIFIED v4.3 §5.1
+  - src/workhouse/invariants/channels.py:933 · OFF AXIS LEDGER 2026-08-22 §2, UNIFIED v4.3 §5.1
   - `workhouse verify --only 'the C_alt witness IS the balanced eps-free continuation, and Delta_C/(A/2) = 15/32'`
 **old-to-new crosswalk**
 
@@ -927,16 +944,21 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
   - src/workhouse/invariants/adjudication.py:84 · settlement/mce_adjudication_harness.py
   - `workhouse verify --only 'the harness carries the printed Delta_Gamma, not the rounded one'`
 - `the two 189-record kernels agree everywhere except three amplitudes, and the on-site anchor swap moves C by exactly zero`
-  - src/workhouse/invariants/adjudication.py:355 · runs/g3_kernel_record_dump_2026-08-28 + the historical certificate
+  - src/workhouse/invariants/adjudication.py:357 · runs/g3_kernel_record_dump_2026-08-28 + the historical certificate
   - `workhouse verify --only 'the two 189-record kernels agree everywhere except three amplitudes, and the on-site anchor swap moves C by exactly zero'`
 - `the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel`
-  - src/workhouse/invariants/adjudication.py:284 · notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt §[17]
+  - src/workhouse/invariants/adjudication.py:286 · notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt §[17]
   - `workhouse verify --only 'the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel'`
 **the flat-band manuscript**
 
 - `every node the theory graph strands is stranded for a stated reason`
   - src/workhouse/invariants/manuscript.py:159 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
   - `workhouse verify --only 'every node the theory graph strands is stranded for a stated reason'`
+**two-cube charge-odd second-order closure (B=4 and B=6)**
+
+- `the certificate's own gates pass, target-blind, with the wrong-sign control rejected`
+  - src/workhouse/invariants/two_cube.py:278 · R2; runs/two_cube_codd_o2_2026-08-29 heldout_validation
+  - `workhouse verify --only 'the certificate'"'"'s own gates pass, target-blind, with the wrong-sign control rejected'`
 
 ## What is not here
 

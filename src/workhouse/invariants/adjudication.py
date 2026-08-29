@@ -100,7 +100,7 @@ def _():
 @adjudication.check("quarantined targets never reach the engine process", "GLUEBALL §18.1 item 6")
 def _():
     audit = S.audit_contamination_scan()
-    src = S.HARNESS.read_text()
+    src = S.HARNESS.read_text(encoding="utf-8")
     # The architecture itself is sound: Q is module-local and the engine is
     # launched with a plain env, so no target is exported. The weakness audited
     # above is detection of a target already inside the engine, not leakage.
@@ -120,7 +120,7 @@ def _():
 def _():
     rename = S.engine_rename_record()
     on_disk = S.ENGINE.stat().st_size if S.ENGINE.exists() else -1
-    first_line = S.ENGINE.read_text(errors="ignore").splitlines()[0]
+    first_line = S.ENGINE.read_text(encoding="utf-8", errors="ignore").splitlines()[0]
     ok = (
         rename is not None
         and rename.source.endswith("Hodge_SU3_Exact_MarkedCluster_m4_Colab.py")
@@ -252,8 +252,10 @@ def _():
     # two sides' recorded block decompositions. The sweep's remaining value
     # is a blind confirmation of the already-validated scalar, and its cost
     # must be weighed against that, not against C2.
-    src = S.ENGINE.read_text(errors="ignore")
-    harness = (ROOT / "settlement" / "mce_adjudication_harness.py").read_text(errors="ignore")
+    src = S.ENGINE.read_text(encoding="utf-8", errors="ignore")
+    harness = (ROOT / "settlement" / "mce_adjudication_harness.py").read_text(
+        encoding="utf-8", errors="ignore"
+    )
     scalar_only = src.count("_exact_gamma_scalar") >= 2 and '"m4": coefficients[3]' in src
     # bare "kernel" appears once, in a docstring about translating an
     # anchored resolvent kernel — not an output; the output-shaped tokens are
@@ -312,7 +314,7 @@ def _():
     import re
 
     path = ROOT / "notes" / "imported" / "HODGE_RUNS_2026-08-28" / "15_hour_RUN.txt"
-    text = path.read_text(errors="ignore")
+    text = path.read_text(encoding="utf-8", errors="ignore")
     # rfind, not index: the transcript interleaves the script with its
     # output, and the first occurrence is the print statement's own source.
     block = text[text.rfind("final mass-kernel shape:") :][:800]

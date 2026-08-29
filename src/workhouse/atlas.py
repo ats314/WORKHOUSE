@@ -104,7 +104,7 @@ def collect_data(
 def render(data: dict[str, Any] | None = None) -> str:
     data = data if data is not None else collect_data()
     payload = json.dumps(data, sort_keys=True, separators=(",", ":"))
-    template = TEMPLATE.read_text()
+    template = TEMPLATE.read_text(encoding="utf-8")
     if MARKER not in template:
         raise ValueError(f"atlas template lacks the {MARKER} marker")
     return template.replace(MARKER, payload)
@@ -112,5 +112,5 @@ def render(data: dict[str, Any] | None = None) -> str:
 
 def write(path: Path | None = None, data: dict[str, Any] | None = None) -> Path:
     target = path or DEFAULT_OUT
-    target.write_text(render(data))
+    target.write_text(render(data), encoding="utf-8", newline="\n")
     return target
