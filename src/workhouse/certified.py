@@ -71,7 +71,7 @@ def lean_claims() -> list[Claim]:
     if not LEAN_DIR.exists():
         return out
     for path in sorted(LEAN_DIR.rglob("*.lean")):
-        rel = path.relative_to(ROOT)
+        rel = path.relative_to(ROOT).as_posix()
         for n, line in enumerate(
             strip_lean_comments(path.read_text(encoding="utf-8")).splitlines(), 1
         ):
@@ -189,5 +189,5 @@ def render(claims: list[Claim] | None = None) -> str:
 
 def write(path: Path | None = None) -> Path:
     target = path or (ROOT / "CERTIFIED.md")
-    target.write_text(render(), encoding="utf-8")
+    target.write_text(render(), encoding="utf-8", newline="\n")
     return target
