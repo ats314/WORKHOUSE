@@ -477,7 +477,10 @@ def _identify(
     sat = ident.saturation_denominator(window)
     ceiling = ident.identification_ceiling(window)
     print(f"  ceiling  no denominator past {ceiling:.3e} can be singled out")
-    print(f"  saturation  every denominator at or above {sat:,} admits a match, exactly")
+    print(
+        f"  saturation  every denominator at or above {sat:,} admits an integer "
+        "numerator, exactly (reduced-denominator claims need a coprime witness)"
+    )
 
     print("\n\033[1mrationals the window admits\033[0m")
     for q in (10**3, 10**6, qmax):
@@ -747,7 +750,11 @@ def main(argv: list[str] | None = None) -> int:
         help="a registered target whose uncertainty this repository has sourced "
         "(C_shp, A_shp, alpha_pen, m_Gamma)",
     )
-    idf.add_argument(
+    # Mutually exclusive: the two options are rival answers to "what is the
+    # window", and accepting both used to leave the window unassigned and die
+    # with UnboundLocalError instead of an argument error.
+    idf_window = idf.add_mutually_exclusive_group()
+    idf_window.add_argument(
         "--halfwidth",
         type=float,
         metavar="H",
@@ -755,7 +762,7 @@ def main(argv: list[str] | None = None) -> int:
         "the half-ulp of a double is the accuracy of the transcription and not "
         "of the computation",
     )
-    idf.add_argument(
+    idf_window.add_argument(
         "--ulp",
         action="store_true",
         help="take the window as the double's half-ulp; correct ONLY for a value "

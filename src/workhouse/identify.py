@@ -193,11 +193,37 @@ def saturation_denominator(window: Window) -> int:
     denominator at or above ``ceil(1/(2h))`` admits at least one matching
     fraction. No search, however clever, can exclude a single candidate there.
 
+    One care in the statement: the guaranteed numerator ``p`` need not be
+    coprime to ``q``, so this bound promises a fraction *representable over*
+    denominator ``q``, not one whose reduced denominator is exactly ``q`` --
+    the window ``[-1/4, 1/4]`` saturates at 2, yet its only numerator at
+    ``q = 2`` is 0, which reduces to denominator 1. A claim about one specific
+    reduced denominator goes through :func:`reduced_match_exists` instead.
+
     The corollary is the one that decides C2: the historical ``C_shp`` has
     denominator 4405310420659200, and the v10a.26 record saturates at 6.6e14.
-    The recorded float rules out nothing at that scale.
+    The recorded float rules out nothing at that scale -- and
+    :func:`reduced_match_exists` confirms the coprime witness at the
+    historical denominator itself.
     """
     return math.ceil(1.0 / (2.0 * window.halfwidth))
+
+
+def reduced_match_exists(window: Window, q: int) -> bool:
+    """Does the window admit a fraction with reduced denominator exactly ``q``?
+
+    Exact and elementary: the admissible numerators are the integers in
+    ``[q(x-h), q(x+h)]``, and the fraction has reduced denominator ``q`` iff
+    one of them is coprime to ``q``. The saturation bound alone cannot supply
+    this -- consecutive integers need not contain one coprime to ``q`` -- so
+    exclusion claims about a named denominator check it here rather than
+    inferring it from interval length. Cost is the number of admissible
+    numerators, so keep ``2h*q`` modest.
+    """
+    lo, hi = window.interval()
+    first = math.ceil(lo * q)
+    last = math.floor(hi * q)
+    return any(math.gcd(p, q) == 1 for p in range(first, last + 1))
 
 
 def brute_force_count(window: Window, qmax: int) -> int:

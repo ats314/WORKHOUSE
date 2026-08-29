@@ -70,10 +70,17 @@ def _():
 
     above = all(has_match(q) for q in (sat, sat + 1, sat + 7, 2 * sat, 10 * sat))
     below = sum(1 for q in range(1, 1000) if has_match(q))
-    return above and below == 0, (
+    # And the bound's own limit, demonstrated: an integer numerator is not a
+    # coprime one. The window [-1/4, 1/4] saturates at 2, but its only
+    # numerator at q = 2 is 0, which reduces to denominator 1 -- so a claim
+    # about one specific reduced denominator needs reduced_match_exists.
+    quarter = ident.Window(0.0, 0.25, "reduction counterexample")
+    reduction_gap = not ident.reduced_match_exists(quarter, 2)
+    return above and below == 0 and reduction_gap, (
         f"halfwidth 1/{half.denominator}, saturation denominator {sat:,}: every q in "
-        f"{{sat, sat+1, sat+7, 2 sat, 10 sat}} admits a numerator, and {below} of the "
-        "999 denominators below 1000 do"
+        f"{{sat, sat+1, sat+7, 2 sat, 10 sat}} admits an integer numerator, and {below} of "
+        "the 999 denominators below 1000 do; and the [-1/4,1/4] counterexample shows the "
+        "numerator need not be coprime, so reduced-denominator claims are checked separately"
     )
 
 
@@ -107,17 +114,21 @@ def _():
         key=lambda r: r.margin,
         default=None,
     )
+    hist_witness = ident.reduced_match_exists(w, hist_q)
     ok = (
         not small
         and hist_q > sat
+        and hist_witness
         and need > w.digits
         and all(r.verdict != "candidate" for rels in relations.values() for r in rels)
     )
     return ok, (
         f"window +-{w.halfwidth:.1e} ({w.provenance}) = {w.digits:.1f} reliable digits; "
         f"no rational with denominator <= 1e6 lies in it, {len(mid)} lie below 1e8, and "
-        f"every denominator at or above {sat:,} admits one. The historical C_shp "
-        f"denominator {hist_q} is {hist_q / sat:.1f}x past that saturation point, so the "
+        f"every denominator at or above {sat:,} admits an integer numerator. The historical "
+        f"C_shp denominator {hist_q} is {hist_q / sat:.1f}x past that saturation point, and "
+        f"a numerator coprime to it lies in the window (checked exactly, since interval "
+        f"length alone cannot promise a reduced match), so the "
         f"recorded float excludes no candidate there. Identifying a rational of that "
         f"denominator needs {need:.1f} significant digits against {w.digits:.1f} recorded "
         f"({need - w.digits:.1f} short). Over the {len(relations)} registered bases no "
@@ -310,7 +321,7 @@ def _():
     from .. import kernel_comparison as KCMP
 
     quantum = Fraction(int(K.X_QUANTUM.p), int(K.X_QUANTUM.q))
-    kernel = json.loads(KCMP.HIST_CERT.read_text())["kernel"]
+    kernel = json.loads(KCMP.HIST_CERT.read_text(encoding="utf-8"))["kernel"]
     quantised, ragged = {}, collections.Counter()
     for rec in kernel:
         key = (
@@ -374,7 +385,7 @@ def _():
             tuple(r["input_plane"]),
             tuple(r["output_plane"]),
         )
-        for r in json.loads(KCMP.HIST_CERT.read_text())["kernel"]
+        for r in json.loads(KCMP.HIST_CERT.read_text(encoding="utf-8"))["kernel"]
         if (Fraction(r["weight"]) / quantum).denominator != 1
     }
     comparison = KCMP.compare()
@@ -516,7 +527,7 @@ def _():
     import re
 
     path = ROOT / "notes" / "imported" / "HODGE_RUNS_2026-08-28" / "15_hour_RUN.txt"
-    text = path.read_text(errors="ignore")
+    text = path.read_text(encoding="utf-8", errors="ignore")
 
     def field(marker, name):
         block = text[text.rfind(marker) :][:700]
@@ -682,7 +693,7 @@ def _():
             tuple(r["input_plane"]),
             tuple(r["output_plane"]),
         ): Fraction(r["weight"])
-        for r in json.loads(KCMP.HIST_CERT.read_text())["kernel"]
+        for r in json.loads(KCMP.HIST_CERT.read_text(encoding="utf-8"))["kernel"]
     }
     parts = KCMP.attribution()["parts"]
     rows = []

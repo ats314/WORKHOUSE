@@ -72,6 +72,18 @@ def test_a_census_hit_needs_the_corrected_chance_count(sequences):
     assert bad == "not-evidence"
 
 
+def test_multiple_matches_are_not_evidence_even_inside_the_chance_gate(sequences):
+    """The gate prices ONE independent match; OEIS entries are correlated, so
+    a multi-match is unpriced evidence and stays outside, however low the
+    corrected expectation."""
+    census = next(s for s in sequences if s.generated_by == "census-output")
+    got, reason = oeis_mod.verdict(
+        census, ["A000001", "A000002"], oeis_mod.MAX_EXPECTED / oeis_mod.CORRELATION_FACTOR / 10
+    )
+    assert got == "not-evidence"
+    assert "unique match" in reason
+
+
 def test_absence_is_reported_before_the_evidence_gate(sequences):
     """No hit is no hit, whatever the sequence's length or provenance."""
     for s in sequences:

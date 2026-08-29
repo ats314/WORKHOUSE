@@ -501,6 +501,16 @@ def verdict(seq: Sequence, hits: list[str], expected: float) -> tuple[str, str]:
             f"expected by chance {expected:.2e} x {CORRELATION_FACTOR:.0e} correlation "
             f"correction = {corrected:.2e} > {MAX_EXPECTED:.0e}"
         )
+    if len(hits) > 1:
+        # The gate's evidence model prices ONE independent match. Multiple
+        # entries are routinely duplicate or derived presentations of the same
+        # object, not independent computations, so a multi-match is not
+        # cheaper evidence -- it is unpriced evidence, and it stays outside.
+        return "not-evidence", (
+            f"{len(hits)} matches ({', '.join(sorted(hits)[:5])}): the gate prices a "
+            "unique match, and OEIS entries are correlated, so multiplicity is not "
+            "established as independent provenance"
+        )
     return "hit", (
         f"{len(hits)} match, chance count {corrected:.2e} after the "
         f"{CORRELATION_FACTOR:.0e} correlation correction"

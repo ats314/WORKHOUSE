@@ -215,10 +215,10 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/identification.py:19 · src/workhouse/identify.py
   - `workhouse verify --only 'the Stern-Brocot enumerator agrees with trial division, exactly'`
 - `the historical record quantum splits the 189 records 144/45, exactly`
-  - src/workhouse/invariants/identification.py:295 · C2 / G14 / src/workhouse/kernel_comparison.py
+  - src/workhouse/invariants/identification.py:306 · C2 / G14 / src/workhouse/kernel_comparison.py
   - `workhouse verify --only 'the historical record quantum splits the 189 records 144/45, exactly'`
 - `the sequence register rebuilds its own terms and resolves its own targets`
-  - src/workhouse/invariants/identification.py:391 · ledger/sequences.yaml
+  - src/workhouse/invariants/identification.py:402 · ledger/sequences.yaml
   - `workhouse verify --only 'the sequence register rebuilds its own terms and resolves its own targets'`
 **finite-rank truncation bridge (published SU(3) truncations)**
 
@@ -762,40 +762,40 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **exact-form identification and external witness (C2, G3)**
 
 - `FINDING: no disputed amplitude is identifiable from the recorded doubles either`
-  - src/workhouse/invariants/identification.py:654 · C2 / G3 / src/workhouse/identify.py
+  - src/workhouse/invariants/identification.py:665 · C2 / G3 / src/workhouse/identify.py
   - `workhouse verify --only 'FINDING: no disputed amplitude is identifiable from the recorded doubles either'`
 - `FINDING: the two kernels diverge on exactly the non-quantised sector`
-  - src/workhouse/invariants/identification.py:349 · C2 / G3 / runs/g3_kernel_record_dump_2026-08-28
+  - src/workhouse/invariants/identification.py:360 · C2 / G3 / runs/g3_kernel_record_dump_2026-08-28
   - `workhouse verify --only 'FINDING: the two kernels diverge on exactly the non-quantised sector'`
 - `FINDING: the v10a.26 C_shp cannot be identified, and 31 digits would be needed`
-  - src/workhouse/invariants/identification.py:80 · C2 / G3 / GLUEBALL §10
+  - src/workhouse/invariants/identification.py:87 · C2 / G3 / GLUEBALL §10
   - `workhouse verify --only 'FINDING: the v10a.26 C_shp cannot be identified, and 31 digits would be needed'`
 - `FINDING: the v10a.26 shape fit is shift-invariant only to 4.6e-15`
-  - src/workhouse/invariants/identification.py:494 · C2 / G3 / notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt
+  - src/workhouse/invariants/identification.py:505 · C2 / G3 / notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt
   - `workhouse verify --only 'FINDING: the v10a.26 shape fit is shift-invariant only to 4.6e-15'`
 - `FINDING: the v10a.26 side of C2 is one recorded number, not five`
-  - src/workhouse/invariants/identification.py:261 · C2 / G3 / MASTER_THEORY §5.5
+  - src/workhouse/invariants/identification.py:272 · C2 / G3 / MASTER_THEORY §5.5
   - `workhouse verify --only 'FINDING: the v10a.26 side of C2 is one recorded number, not five'`
 - `FINDING: with A = 5/48 agreed, the C2 dispute is one scalar, not three amplitudes`
-  - src/workhouse/invariants/identification.py:603 · C2 / G3 / runs/g3_kernel_record_dump_2026-08-28
+  - src/workhouse/invariants/identification.py:614 · C2 / G3 / runs/g3_kernel_record_dump_2026-08-28
   - `workhouse verify --only 'FINDING: with A = 5/48 agreed, the C2 dispute is one scalar, not three amplitudes'`
 - `every recorded OEIS verdict is what the gate returns from the recorded evidence`
-  - src/workhouse/invariants/identification.py:425 · ledger/sequences.yaml
+  - src/workhouse/invariants/identification.py:436 · ledger/sequences.yaml
   - `workhouse verify --only 'every recorded OEIS verdict is what the gate returns from the recorded evidence'`
 - `flint's exact LLL and mpmath's PSLQ find the same planted relation`
-  - src/workhouse/invariants/identification.py:208 · src/workhouse/identify.py
+  - src/workhouse/invariants/identification.py:219 · src/workhouse/identify.py
   - `workhouse verify --only 'flint'"'"'s exact LLL and mpmath'"'"'s PSLQ find the same planted relation'`
 - `the OEIS chance model is corrected past the worst case it was measured against`
-  - src/workhouse/invariants/identification.py:462 · ledger/sequences.yaml
+  - src/workhouse/invariants/identification.py:473 · ledger/sequences.yaml
   - `workhouse verify --only 'the OEIS chance model is corrected past the worst case it was measured against'`
 - `the identifier recovers A = 5/48 uniquely from the same run's float`
-  - src/workhouse/invariants/identification.py:130 · GLUEBALL §10 / src/workhouse/identify.py
+  - src/workhouse/invariants/identification.py:141 · GLUEBALL §10 / src/workhouse/identify.py
   - `workhouse verify --only 'the identifier recovers A = 5/48 uniquely from the same run'"'"'s float'`
 - `the integer-relation false-positive law H ~ 10^(p/n), measured`
-  - src/workhouse/invariants/identification.py:164 · src/workhouse/identify.py
+  - src/workhouse/invariants/identification.py:175 · src/workhouse/identify.py
   - `workhouse verify --only 'the integer-relation false-positive law H ~ 10^(p/n), measured'`
 - `the shape fit's amplitude sensitivities are exact algebraic numbers`
-  - src/workhouse/invariants/identification.py:545 · C2 / G3 / src/workhouse/kernel_comparison.py
+  - src/workhouse/invariants/identification.py:556 · C2 / G3 / src/workhouse/kernel_comparison.py
   - `workhouse verify --only 'the shape fit'"'"'s amplitude sensitivities are exact algebraic numbers'`
 **finite-rank truncation bridge (published SU(3) truncations)**
 
