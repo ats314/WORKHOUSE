@@ -242,7 +242,7 @@ def _():
 
 
 @channels.check(
-    "where both routes exist they agree, and at N = 3 the checkable one is closed",
+    "at N = 6, the one rank carrying both routes here, they agree; N = 3 is closed",
     "THM_SUN unified nality v2 §5; ledger C10; GCSG SU(6) certificate",
 )
 def _():
@@ -256,12 +256,26 @@ def _():
     # stable formula. That is a warning about method with no number attached,
     # and it leaves two things unestablished that this check settles.
     #
-    # First: where both routes exist, do they agree? They do. At N = 6 the
-    # shipped SU(6) certificate carries a direct fixed-rank balanced
-    # contraction, and it equals the stable continuation exactly -- so the
-    # warning is about VALIDITY, not about the two routes computing different
-    # objects. At N = 5 the continuation is regular and the corpus records no
-    # exceptional assignment, so the law reads Delta q_5 = 0 there.
+    # First: where both routes exist, do they agree? At N = 6 they do, exactly:
+    # the shipped SU(6) certificate carries a direct fixed-rank balanced
+    # contraction and it equals the stable continuation. That is ONE rank, and
+    # the scope matters enough to be checked rather than described. An earlier
+    # version of this detail line generalised it to "wherever both are
+    # defined", which a single instance cannot establish -- another rank could
+    # have a different direct contraction and this check would still pass. The
+    # sweeping form reached CERTIFIED.md and the G1 ledger before a review bot
+    # caught it on PR #52; the claim is now scoped to the rank it rests on.
+    #
+    # N = 6 is the only rank where both routes are here, and that is asserted
+    # nowhere: the SU(6) certificate carries q for both the balanced and full
+    # kernels, and the SU(5) stage-1 payload -- the only other shipped
+    # exceptional-rank artifact -- carries a word and channel census with no
+    # fixed-rank q at all. Both are read below.
+    #
+    # At N = 5 the continuation is regular and the corpus records no
+    # exceptional assignment, so the law reads Delta q_5 = 0 there. That is a
+    # statement about the continuation alone; it is not a second instance of
+    # the two routes agreeing, because no direct N = 5 contraction is here.
     #
     # Second: what exactly closes the route at N = 3? D34 carries (z-9)^3
     # with Q32(9) nonzero, so the continuation has a pole of order exactly
@@ -300,6 +314,12 @@ def _():
     # N = 5: exceptional by the |p-q| = N <= 6 count, but carrying no assignment
     five_is_exceptional = 5 in K.EXCEPTIONAL_RANKS
     regular_at_five = d34.subs(zz, 25) != 0
+    # the scope of the agreement claim, checked: SU(6) ships q on both kernels,
+    # SU(5) ships no fixed-rank q, so N = 6 is the only rank with both routes
+    six_ships_both = "q" in certificate["balanced_N6"] and "q" in certificate["full_SU6"]
+    five_ships_no_q = not any(
+        "q" in section for section in P.stage1().values() if isinstance(section, dict)
+    )
 
     # N = 3: the pole, exactly
     laurent = CL.scalar_continuation_laurent(3, order=0)
@@ -312,6 +332,8 @@ def _():
     ok = (
         agree_at_six
         and shift_at_six
+        and six_ships_both
+        and five_ships_no_q
         and five_is_exceptional
         and regular_at_five
         and factors.get("z - 9") == 3
@@ -326,9 +348,12 @@ def _():
     )
     return ok, (
         "at N = 6 the stable continuation equals the shipped direct fixed-rank balanced "
-        f"contraction exactly, and the full value exceeds it by {K.DELTA_Q_6} — so the two "
-        "routes compute one object wherever both are defined, and the corpus's warning is "
-        "about validity. At N = 3 the continuation route is closed: D34 carries (z-9)^3 "
+        f"contraction exactly, and the full value exceeds it by {K.DELTA_Q_6}. Scope, because "
+        "one instance is not a law: N = 6 is the ONLY rank where this repository holds both "
+        "routes — the SU(6) certificate ships q on both kernels, the SU(5) stage-1 payload "
+        "ships none — so what is established is that the continuation is not a different "
+        "object from the direct contraction THERE, not that the two coincide at every "
+        "exceptional rank. At N = 3 the continuation route is closed: D34 carries (z-9)^3 "
         f"with Q32(9) nonzero, a pole of order exactly {pole_order}, leading coefficient "
         f"{laurent[-3]}. So Delta q_3 = {K.DELTA_Q_3} is a DEFINITION in this repository, "
         f"not a check; it fixes q_3^bal = {q3_balanced}, a value recorded nowhere here. The "
