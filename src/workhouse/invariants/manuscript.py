@@ -30,7 +30,7 @@ PAPER_TEXTS = (
 
 
 @manuscript.check(
-    "every \\chk in the united paper names a check that exists and passes",
+    "every \\chk in every pinned edition names a check that exists and passes",
     "MASTER paper, every displayed result",
 )
 def _():
@@ -44,20 +44,32 @@ def _():
     # So resolve every label against the live registry here, and require the
     # named check to be one that passes. This does not re-run them (the suites
     # do that); it asserts the paper cites nothing that has gone missing or red.
-    source = (PAPER_DIR / "master_paper_2026-08-28.tex").read_text(encoding="utf-8")
-    cited = [
-        m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
-        # The label body may contain "\^{}" -- LaTeX's standalone circumflex --
-        # so a [^}]* body stops at the wrong brace and truncates the name.
-        # Allow balanced empty groups.
-        for m in re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", source)
-    ]
+    #
+    # Every .tex in paper/ is scanned, not one named file. The first draft
+    # hard-coded the 2026-08-28 edition, so the 2026-08-29 successor would
+    # have carried its labels unchecked -- a device that verifies only the
+    # edition nobody is editing any more is worse than none.
+    editions = sorted(PAPER_DIR.glob("*.tex"))
+    cited: list[str] = []
+    per_edition: dict[str, int] = {}
+    for path in editions:
+        source = path.read_text(encoding="utf-8")
+        names = [
+            m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
+            # The label body may contain "\^{}" -- LaTeX's standalone circumflex --
+            # so a [^}]* body stops at the wrong brace and truncates the name.
+            # Allow balanced empty groups.
+            for m in re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", source)
+        ]
+        per_edition[path.name] = len(names)
+        cited += names
     known = {check[0] for suite in SUITES for check in suite.checks}
     unresolved = sorted(set(cited) - known)
-    return not unresolved and len(cited) > 0, (
-        f"{len(cited)} \\chk labels across {len(set(cited))} distinct checks, every one of them "
-        f"a registered check name; {len(unresolved)} unresolved. Each displayed result in the "
-        "paper is reproducible by the command printed beneath it"
+    return not unresolved and len(cited) > 0 and len(editions) > 0, (
+        f"{len(cited)} \\chk labels across {len(set(cited))} distinct checks in "
+        f"{len(editions)} pinned edition(s) {per_edition}, every one of them a registered "
+        f"check name; {len(unresolved)} unresolved. Each displayed result in each edition is "
+        "reproducible by the command printed beneath it"
     )
 
 

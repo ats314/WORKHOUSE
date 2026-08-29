@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 178
+## T1 — re-derived exactly — 179
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -677,17 +677,17 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'the two Bloch incidence symbols, and the determinant asymmetry between them'`
 **the flat-band manuscript**
 
-- `every \chk in the united paper names a check that exists and passes`
+- `every \chk in every pinned edition names a check that exists and passes`
   - src/workhouse/invariants/manuscript.py:32 · MASTER paper, every displayed result
-  - `workhouse verify --only 'every \chk in the united paper names a check that exists and passes'`
+  - `workhouse verify --only 'every \chk in every pinned edition names a check that exists and passes'`
 - `every declared note document is a graph node with an edge`
-  - src/workhouse/invariants/manuscript.py:64 · ledger/notes.yaml + notes/*.jsonl
+  - src/workhouse/invariants/manuscript.py:76 · ledger/notes.yaml + notes/*.jsonl
   - `workhouse verify --only 'every declared note document is a graph node with an edge'`
 - `no fourth-order coefficient enters the manuscript`
-  - src/workhouse/invariants/manuscript.py:118 · PAPER_FLATBAND §6
+  - src/workhouse/invariants/manuscript.py:130 · PAPER_FLATBAND §6
   - `workhouse verify --only 'no fourth-order coefficient enters the manuscript'`
 - `q at the four high-symmetry points is 0, 4, 8, 12`
-  - src/workhouse/invariants/manuscript.py:140 · MASTER_DOC Fig. 2
+  - src/workhouse/invariants/manuscript.py:152 · MASTER_DOC Fig. 2
   - `workhouse verify --only 'q at the four high-symmetry points is 0, 4, 8, 12'`
 **tier collapse (G14)**
 
@@ -720,6 +720,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the B=6 connected kernel is (5/612) G_conn + diag, with the certified spectrum`
   - src/workhouse/invariants/two_cube.py:174 · R2; runs/two_cube_codd_o2_2026-08-29 §7.4
   - `workhouse verify --only 'the B=6 connected kernel is (5/612) G_conn + diag, with the certified spectrum'`
+- `the B=6 six-channel census IS the Weingarten four-channel ledger, channel by channel`
+  - src/workhouse/invariants/two_cube.py:313 · R2; runs/two_cube_codd_o2_2026-08-29 §7; MASTER paper Thm. 6
+  - `workhouse verify --only 'the B=6 six-channel census IS the Weingarten four-channel ledger, channel by channel'`
 - `the B=6 six-channel census sums to the registry's own t_3 = 5/612`
   - src/workhouse/invariants/two_cube.py:141 · R2; runs/two_cube_codd_o2_2026-08-29 §7
   - `workhouse verify --only 'the B=6 six-channel census sums to the registry'"'"'s own t_3 = 5/612'`
@@ -886,7 +889,7 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **the flat-band manuscript**
 
 - `every node the theory graph strands is stranded for a stated reason`
-  - src/workhouse/invariants/manuscript.py:159 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
+  - src/workhouse/invariants/manuscript.py:171 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
   - `workhouse verify --only 'every node the theory graph strands is stranded for a stated reason'`
 **two-cube charge-odd second-order closure (B=4 and B=6)**
 
