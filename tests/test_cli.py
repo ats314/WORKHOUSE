@@ -237,3 +237,49 @@ def test_generated_files_pin_lf_newlines():
             if ".write_text(" in line and not line.strip().startswith("#"):
                 window = "\n".join(src.splitlines()[i : i + 4])
                 assert 'newline="\\n"' in window, f"{module_name}: unpinned newline: {line.strip()}"
+
+
+class TestLegacyEncodingStdout:
+    """A cp1252 stdout must not be able to kill a subcommand.
+
+    The recorded failure: the `Windows smoke` job ran `workhouse why C2` and
+    got `UnicodeEncodeError: 'charmap' codec can't encode character '→'`
+    before a single edge was printed. Windows opens stdout as cp1252, and the
+    registry's own alphabet -- the arrow between claim ids, `Γ`, `ε`, `β` --
+    lies outside it. These run on every platform, so the Linux `check` job
+    catches a regression without waiting for the Windows runner.
+    """
+
+    @pytest.mark.parametrize(
+        "argv",
+        [
+            ["why", "C2"],
+            ["frontier", "--brief"],
+            ["search", "--", "-5/48"],
+        ],
+    )
+    def test_subcommand_survives_a_cp1252_stdout(self, argv, capsysbinary, monkeypatch):
+        import io
+        import sys
+
+        # A real cp1252 text stream over a byte sink: the same object Windows
+        # hands the process, not a mock of one.
+        raw = io.BytesIO()
+        stream = io.TextIOWrapper(raw, encoding="cp1252", newline="\n")
+        monkeypatch.setattr(sys, "stdout", stream)
+        assert cli_mod.main(argv) == 0
+        sys.stdout.flush()
+        assert raw.getvalue(), "the subcommand printed nothing"
+
+    def test_the_arrow_survives_as_itself(self, monkeypatch):
+        import io
+        import sys
+
+        raw = io.BytesIO()
+        stream = io.TextIOWrapper(raw, encoding="cp1252", newline="\n")
+        monkeypatch.setattr(sys, "stdout", stream)
+        assert cli_mod.main(["why", "C2"]) == 0
+        sys.stdout.flush()
+        # Not merely "did not crash": the arrow is reconfigured to UTF-8, so it
+        # arrives as its own bytes rather than a backslash escape.
+        assert "→".encode() in raw.getvalue()
