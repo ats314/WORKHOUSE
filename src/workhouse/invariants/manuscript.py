@@ -129,11 +129,30 @@ def _():
         name: set(next(f for f in report.files if f.path.name == name).coefficients)
         for name in PAPER_TEXTS
     }
-    third_order = {"d_3", "b_3", "leak_3"}
-    return all(v == third_order for v in carried.values()), (
-        f"both pinned manuscripts carry exactly {sorted(third_order)} and no fourth-order "
-        "signature: not q_band^(4), not m_Gamma^(4), not either C_shp side, not the quarantined "
-        "scalar. The firewall is measured, not taken on the word of §6"
+    # The full expected set is pinned, not just the absences: when the scanner
+    # vocabulary grows (the literal-fraction signatures did exactly that), a
+    # new label in a manuscript fails here and gets classified by a human
+    # instead of passing unread. Everything below the trio is second-order
+    # sector arithmetic — 5/612 (t_3), 7/102 (C-odd diagonal), 11/306 and
+    # 88/153 (band edges at u^2) — which §6 permits; the firewall is about
+    # order four and above.
+    expected = {"d_3", "b_3", "leak_3", "T_MINUS_2", "D_MINUS_2", "BAND_ODD_FLAT"}
+    fourth_order = {
+        "q_band^(4)",
+        "m_Gamma^(4)",
+        "C_shp historical",
+        "C_shp v10a.26",
+        "quarantined scalar",
+        "Delta_Gamma",
+        "Hamer a_4",
+        "Q4 cross",
+        "linked vacuum",
+    }
+    return all(v == expected and not (v & fourth_order) for v in carried.values()), (
+        f"both pinned manuscripts carry exactly {sorted(expected)} — the third-order trio plus "
+        "second-order sector values — and no fourth-order signature: not q_band^(4), not "
+        "m_Gamma^(4), not either C_shp side, not the quarantined scalar. The firewall is "
+        "measured, not taken on the word of §6"
     )
 
 

@@ -128,7 +128,10 @@ workhouse verify --only 'h_4^side'  # re-establish ONE claim, with its numbers
 workhouse verify --tier 1           # only the exact re-derivations
 workhouse frontier --brief          # the block injected at session start
 workhouse why C2                    # everything recorded about one claim id
+workhouse why C2 --cached           # same in ~0.5s from index/ (also derive, branches);
+                                    #   verdicts as checked in, not re-run
 workhouse derive C2 G3 --out f.md   # evidence chains as Markdown, registered edges only
+workhouse derive C2 --relations blocks,resolves --depth 1  # elide, never infer
 workhouse branches C2               # every conflicting value, both branches side by side
 workhouse export -o graph.json      # claims+symbols+edges as one versioned JSON envelope
 workhouse triage /path/to/archive   # survey an unpinned collection

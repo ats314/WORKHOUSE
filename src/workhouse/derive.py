@@ -66,16 +66,26 @@ class Neighbor:
     via: list[str]
 
 
-def _walk(root: str, graph: graph_mod.Graph, depth: int = _MAX_DEPTH) -> dict[str, Neighbor]:
+def _walk(
+    root: str,
+    graph: graph_mod.Graph,
+    depth: int = _MAX_DEPTH,
+    relations: frozenset[str] | None = None,
+) -> dict[str, Neighbor]:
     """Breadth-first over registered edges, both directions, depth-capped.
 
     Deterministic: neighbors are visited in sorted order and each node keeps
     the sorted list of edges that reached it. Nothing about the walk implies
     logical dependency; it only bounds which recorded facts the export shows.
+    ``relations`` restricts the walk to those edge types — a filter over what
+    is shown, never a new inference: an edge outside the set is elided, not
+    contradicted.
     """
     by_src: dict[str, list[graph_mod.Edge]] = {}
     by_dst: dict[str, list[graph_mod.Edge]] = {}
     for edge in graph.edges:
+        if relations is not None and edge.type not in relations:
+            continue
         by_src.setdefault(edge.src, []).append(edge)
         by_dst.setdefault(edge.dst, []).append(edge)
 
@@ -104,11 +114,71 @@ def _walk(root: str, graph: graph_mod.Graph, depth: int = _MAX_DEPTH) -> dict[st
     return out
 
 
+def data(
+    roots: list[str],
+    catalogue: list[claims_mod.Claim] | None = None,
+    symbols: list[dict] | None = None,
+    graph: graph_mod.Graph | None = None,
+    depth: int = _MAX_DEPTH,
+    relations: frozenset[str] | None = None,
+) -> tuple[dict, bool]:
+    """The same chains as ``render``, as one JSON-ready object.
+
+    Exists so an agent can consume a multi-root neighborhood without parsing
+    Markdown. Nothing is included that ``render`` would not print, and the
+    same non-inferential rules hold: registered edges only, ``via`` is each
+    node's provenance for being here, and reachability is not derivation.
+    """
+    from dataclasses import asdict
+
+    catalogue = catalogue if catalogue is not None else claims_mod.collect()
+    symbols = symbols if symbols is not None else claims_mod.load_symbols()
+    graph = graph if graph is not None else graph_mod.build(catalogue, symbols)
+    by_id = {c.id: c for c in catalogue}
+    sym_by_id = {f"SYM:{s['id']}": s for s in symbols}
+    node_ids = set(by_id) | set(sym_by_id)
+
+    ok = True
+    out: dict = {"roots": {}, "depth": depth}
+    if relations is not None:
+        out["relations"] = sorted(relations)
+    for query in roots:
+        root = navigator_mod._resolve(query, node_ids)
+        if root is None:
+            out["roots"][query] = {"error": f"no record with id {query!r}"}
+            ok = False
+            continue
+        record = asdict(by_id[root]) if root in by_id else sym_by_id[root]
+        neighbors = {}
+        for neighbor in _walk(root, graph, depth, relations).values():
+            claim = by_id.get(neighbor.id)
+            neighbors[neighbor.id] = {
+                "depth": neighbor.depth,
+                "via": neighbor.via,
+                **(
+                    {
+                        "kind": claim.kind,
+                        "statement": claim.statement,
+                        "tier": claim.tier,
+                        "status": claim.status,
+                        "value": claim.value,
+                        "reproduce": claim.reproduce,
+                    }
+                    if claim is not None
+                    else {"kind": "symbol"}
+                ),
+            }
+        out["roots"][root] = {"record": record, "neighbors": neighbors}
+    return out, ok
+
+
 def render(
     roots: list[str],
     catalogue: list[claims_mod.Claim] | None = None,
     symbols: list[dict] | None = None,
     graph: graph_mod.Graph | None = None,
+    depth: int = _MAX_DEPTH,
+    relations: frozenset[str] | None = None,
 ) -> tuple[str, bool]:
     catalogue = catalogue if catalogue is not None else claims_mod.collect()
     symbols = symbols if symbols is not None else claims_mod.load_symbols()
@@ -128,6 +198,9 @@ def render(
     w("> the absence of an edge means no relationship is recorded, and the")
     w("> ordering below is a reading order, not a proof. Statuses are computed")
     w("> at generation time. Nothing in this file is authored.")
+    if relations is not None:
+        w(f"> Restricted to edge types: {', '.join(sorted(relations))} — other")
+        w("> recorded edges exist and are elided, not absent.")
 
     for query in roots:
         root = navigator_mod._resolve(query, node_ids)
@@ -179,7 +252,7 @@ def render(
                 if gap:
                     w(f"Adjudication lives in {gap_id}: {gap['title']}.")
 
-        neighbors = _walk(root, graph)
+        neighbors = _walk(root, graph, depth, relations)
         by_rank: dict[int, list[Neighbor]] = {}
         for neighbor in neighbors.values():
             kind = by_id[neighbor.id].kind if neighbor.id in by_id else None
@@ -201,6 +274,11 @@ def render(
                         verdict = " — **PASS**" if claim.status == "passing" else " — **FAIL**"
                     tier = f" (T{claim.tier})" if claim.tier is not None else ""
                     statement = " ".join(claim.statement.split())
+                    # A citation alias's statement IS the alias ("GCSG"), which
+                    # tells a reader nothing; its curated note does. Same for
+                    # any node whose statement is only its own id tail.
+                    if claim.detail and statement == neighbor.id.split(":", 1)[-1]:
+                        statement = f"{statement} — {' '.join(claim.detail.split())}"
                     w(f"- **{neighbor.id}**{tier}{verdict} — {statement}")
                     if claim.value is not None:
                         w(f"  - value: `{claim.value}`")

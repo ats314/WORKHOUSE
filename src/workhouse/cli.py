@@ -118,6 +118,27 @@ def _verify(
     return 1 if failures else 0
 
 
+def _cached_context() -> dict:
+    """The navigation sources read from ``index/*.jsonl`` instead of live.
+
+    The index files are staleness-tested, so at any commit this is the same
+    graph in milliseconds instead of a full 224-check run per call — the cost
+    that made iterating with ``why``/``derive`` slow. The one honest
+    difference is that check verdicts are as-generated, not re-run, so the
+    mode announces itself on stderr rather than passing as live.
+    """
+    print(
+        "cached index: statuses as checked in under index/ "
+        "(regenerate: workhouse index -w; live verdicts: drop --cached)",
+        file=sys.stderr,
+    )
+    return {
+        "catalogue": claims_mod.load_catalogue(),
+        "symbols": claims_mod.load_symbols(),
+        "graph": graph_mod.load(),
+    }
+
+
 def _status() -> int:
     led = ledger_mod.load()
     problems = ledger_mod.validate(led)
@@ -145,6 +166,19 @@ def _status() -> int:
         print(f"  - {line}")
 
     print(f"\n\033[1mHeadline\033[0m\n  {led.headline}")
+
+    # Nodes no edge touches are invisible to `why`, `derive`, and the atlas —
+    # an unlinked theorem or paper is evidence the graph cannot surface, and
+    # a list nobody prints only ever grows. Read from the checked-in index:
+    # orphanhood depends on edges alone, and the index is staleness-tested.
+    orphans = graph_mod.unreferenced(
+        graph_mod.load(), claims_mod.load_catalogue(), claims_mod.load_symbols()
+    )
+    print(f"\n\033[1mGraph coverage\033[0m — {len(orphans)} records with no recorded edge")
+    for node in orphans:
+        print(f"  {node}")
+    if orphans:
+        print("  (each is unreachable from every claim; curate an edge in ledger/*.yaml)")
 
     if problems:
         print("\n\033[31mLedger problems\033[0m")
@@ -269,22 +303,43 @@ def _index(write: bool) -> int:
     return 0
 
 
-def _why(node_id: str, as_json: bool = False) -> int:
+def _why(node_id: str, as_json: bool = False, cached: bool = False) -> int:
+    kwargs = _cached_context() if cached else {}
     if as_json:
-        data, found = navigator_mod.neighborhood(node_id)
+        data, found = navigator_mod.neighborhood(node_id, **kwargs)
         print(json.dumps(data, sort_keys=True))
         return 0 if found else 1
-    text, found = navigator_mod.explain(node_id)
+    text, found = navigator_mod.explain(node_id, **kwargs)
     print(text)
     return 0 if found else 1
 
 
-def _derive(ids: list[str], out: str | None) -> int:
+def _derive(
+    ids: list[str],
+    out: str | None,
+    depth: int = 2,
+    relations: str | None = None,
+    as_json: bool = False,
+    cached: bool = False,
+) -> int:
     from pathlib import Path
 
     from . import derive as derive_mod
 
-    text, ok = derive_mod.render(ids)
+    wanted = None
+    if relations is not None:
+        wanted = frozenset(r.strip() for r in relations.split(",") if r.strip())
+        unknown = sorted(wanted - graph_mod.TYPES)
+        if unknown:
+            print(f"unknown edge type(s): {', '.join(unknown)}")
+            print(f"registered types: {', '.join(sorted(graph_mod.TYPES))}")
+            return 2
+    kwargs = _cached_context() if cached else {}
+    if as_json:
+        data, ok = derive_mod.data(ids, depth=depth, relations=wanted, **kwargs)
+        text = json.dumps(data, sort_keys=True)
+    else:
+        text, ok = derive_mod.render(ids, depth=depth, relations=wanted, **kwargs)
     if out:
         Path(out).write_text(text + "\n", encoding="utf-8", newline="\n")
         print(f"wrote {out}")
@@ -293,8 +348,12 @@ def _derive(ids: list[str], out: str | None) -> int:
     return 0 if ok else 1
 
 
-def _branches(target: str | None) -> int:
-    text, ok = navigator_mod.branchwise(target)
+def _branches(target: str | None, cached: bool = False) -> int:
+    kwargs = {}
+    if cached:
+        context = _cached_context()
+        kwargs = {"catalogue": context["catalogue"], "graph": context["graph"]}
+    text, ok = navigator_mod.branchwise(target, **kwargs)
     print(text)
     return 0 if ok else 1
 
@@ -442,6 +501,12 @@ def main(argv: list[str] | None = None) -> int:
     wy.add_argument(
         "--json", action="store_true", help="the record and every edge, one JSON object"
     )
+    wy.add_argument(
+        "--cached",
+        action="store_true",
+        help="read index/*.jsonl instead of re-running every check (fast; "
+        "verdicts as checked in, not live)",
+    )
 
     de = sub.add_parser(
         "derive",
@@ -449,12 +514,34 @@ def main(argv: list[str] | None = None) -> int:
     )
     de.add_argument("ids", nargs="+", help="root claim ids, e.g. C2 G3 G10")
     de.add_argument("-o", "--out", metavar="PATH", help="write to a file instead of stdout")
+    de.add_argument("--depth", type=int, default=2, help="how many edges out to walk (default 2)")
+    de.add_argument(
+        "--relations",
+        metavar="TYPE,TYPE",
+        help="walk only these edge types (e.g. blocks,resolves,uses); "
+        "elides the rest, infers nothing",
+    )
+    de.add_argument(
+        "--json", action="store_true", help="the chains as one JSON object instead of Markdown"
+    )
+    de.add_argument(
+        "--cached",
+        action="store_true",
+        help="read index/*.jsonl instead of re-running every check (fast; "
+        "verdicts as checked in, not live)",
+    )
 
     br = sub.add_parser(
         "branches",
         help="the branchwise view: every conflicting value, both branches side by side",
     )
     br.add_argument("id", nargs="?", help="one contradiction id (default: all with sides)")
+    br.add_argument(
+        "--cached",
+        action="store_true",
+        help="read index/*.jsonl instead of re-running every check (fast; "
+        "verdicts as checked in, not live)",
+    )
 
     ex = sub.add_parser(
         "export",
@@ -537,6 +624,14 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     args = parser.parse_args(argv)
+    # A Windows console without UTF-8 mode encodes stdout as cp1252, which
+    # cannot carry the edge arrows — so `why C2` crashed mid-print on the
+    # exact machine the 2026-08-28 notes reported. Escaping the unencodable
+    # character beats dying on it; on a UTF-8 stream every character encodes
+    # and this never fires. Output only: reads stay strict utf-8 everywhere.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="backslashreplace")
     if _plain_stdout_wanted(args.no_color):
         sys.stdout = _AnsiStrippingStdout(sys.stdout)
     if args.command == "verify":
@@ -546,11 +641,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "index":
         return _index(args.write)
     if args.command == "why":
-        return _why(args.id, args.json)
+        return _why(args.id, args.json, args.cached)
     if args.command == "derive":
-        return _derive(args.ids, args.out)
+        return _derive(args.ids, args.out, args.depth, args.relations, args.json, args.cached)
     if args.command == "branches":
-        return _branches(args.id)
+        return _branches(args.id, args.cached)
     if args.command == "export":
         return _export(args.out)
     if args.command == "atlas":

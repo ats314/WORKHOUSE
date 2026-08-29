@@ -95,3 +95,44 @@ def test_every_signature_is_specific_enough():
 def test_report_formats_without_error(archive):
     text = triage.format_report(triage.scan(archive))
     assert "ALREADY PINNED" in text and "COEFFICIENT CENSUS" in text
+
+
+def test_literal_signatures_catch_short_registered_rationals(tmp_path):
+    """5/612 and 11/306 are below the digit floor yet unambiguous verbatim.
+
+    The failure this prevents: a survey of the pinned master paper — which
+    demonstrably prints the sealed-core fractions — reporting three
+    coefficients, so a new paper's overlap with the registry went unseen.
+    """
+    root = tmp_path / "arch"
+    root.mkdir()
+    (root / "paper.md").write_text(
+        "the hopping is t_3 = 5/612 and the flat coefficient 11/306\n", encoding="utf-8"
+    )
+    (root / "near_miss.md").write_text(
+        "15/612 and 5/6120 and 0.5/612 and 115/3060 must not read as the value\n",
+        encoding="utf-8",
+    )
+    report = triage.scan(root)
+    carried = {str(f.path): set(f.coefficients) for f in report.files}
+    assert {"T_MINUS_2", "BAND_ODD_FLAT"} <= carried["paper.md"]
+    assert carried["near_miss.md"] == set()
+
+
+def test_literal_signatures_are_generated_not_hand_listed():
+    """Every registered rational above the floor gets a literal pattern."""
+    from sympy import Rational
+
+    from workhouse import constants as K
+
+    assert triage.EXACT_LITERALS, "generation produced nothing"
+    named_values = {abs(v) for v in triage._NAMED.values() if isinstance(v, Rational)}
+    for label, pattern in triage.EXACT_LITERALS.items():
+        value = getattr(K, label, None)
+        if value is None:  # a curated REGISTRY name, not a module attribute
+            value = next(c.value for c in K.REGISTRY if c.name == label)
+        assert isinstance(value, Rational) and value.q != 1
+        assert abs(value) not in named_values, f"{label} double-labels a digit signature"
+        assert pattern.search(f" {abs(value).p}/{abs(value).q} ")
+        digits = len(str(abs(value).p)) + len(str(value.q))
+        assert digits >= triage.MIN_LITERAL_DIGITS, f"{label}: too short to be safe"
