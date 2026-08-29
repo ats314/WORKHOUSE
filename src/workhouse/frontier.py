@@ -100,7 +100,12 @@ def _lean_counts() -> tuple[int, int]:
         return 0, 0
     for path in LEAN.rglob("*.lean"):
         body = strip_lean_comments(path.read_text(encoding="utf-8"))
-        theorems += len(re.findall(r"^\s*(?:theorem|lemma)\s", body, re.MULTILINE))
+        theorems += len(re.findall(
+            r"^\s*(?:@\[[^\]]*\]\s*)*(?:private\s+|protected\s+|nonrec\s+)*"
+            r"(?:theorem|lemma)\s",
+            body,
+            re.MULTILINE,
+        ))
         sorries += len(re.findall(r"\bsorry\b", body))
     return theorems, sorries
 
