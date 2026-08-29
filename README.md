@@ -229,7 +229,7 @@ CLAUDE.md      the non-negotiables
 theory/        the governing corpus stack (v4.3), pinned, immutable
   superseded/    kept for the audit trail, never current
   governance/    upstream's tree map, so cited paths resolve
-ledger/        R1–R23 (authority), C1–C22, G1–G19, unifying candidates
+ledger/        the governing register, contradictions, gaps, unifying candidates
 src/workhouse/ constants registry, invariant suites, frontier, CLI
 lean/          T0 — the proof-checked core
 tests/         every invariant as its own test case

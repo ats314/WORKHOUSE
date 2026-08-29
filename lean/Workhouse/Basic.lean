@@ -105,6 +105,46 @@ theorem width_eq_alpha_add_beta : W₄_old = alphaPen 3 + βPenOld := by
 theorem beta_from_A_and_C : βPenOld = 8 * A_shp + 16 * C_shp_old := by
   unfold βPenOld A_shp C_shp_old; norm_num
 
+/-! ## The charge-even band -/
+
+/-- The charge-even characteristic polynomial, in the Gram variable `μ = λ + 4`,
+with `aᵢ = 2 + 2 cos kᵢ` and `p = a + b + c`. The corpus records this sector's
+range and its Γ expansion but no closed form; this one is derived in
+`src/workhouse/even_sector.py` and checked there against the integer
+characteristic polynomial of the finite `L = 3` and `L = 4` plaquette
+adjacencies. -/
+def evenCubic (m a b c : ℚ) : ℚ :=
+  m ^ 3 - 2 * (a + b + c) * m ^ 2 + (a + b + c) ^ 2 * m - 4 * a * b * c
+
+/-- Why the linear coefficient is `p²`. The three principal 2×2 minors of the
+unsigned Gram matrix are `a·p`, `b·p` and `c·p`: each off-diagonal
+modulus-squared (`bc`, `ac`, `ab`) cancels the cross term of its minor exactly,
+and the three then sum to `p²`. This is the step that makes the cubic depend on
+`a, b, c` only through `p` and `abc`. -/
+theorem even_gram_minors (a b c : ℚ) :
+    ((b + a) * (c + a) - b * c) + ((b + a) * (c + b) - a * c)
+        + ((c + a) * (c + b) - a * b)
+      = (a + b + c) ^ 2 := by ring
+
+/-- The band floor. `μ = 0`, that is `λ = -4`, is a root exactly when `abc = 0`,
+which is exactly the union of the three zone-boundary planes `kⱼ = π`. -/
+theorem even_cubic_at_zero (a b c : ℚ) : evenCubic 0 a b c = -(4 * (a * b * c)) := by
+  unfold evenCubic; ring
+
+/-- The band ceiling, in the form that carries the bound: at `μ = 16` the cubic
+is `16(16-p)² - 4abc`. Each `aᵢ ∈ [0,4]`, so `p ≤ 12` and `abc ≤ 64`, hence
+`16(16-p)² ≥ 256 ≥ 4abc` and the value is nonnegative. -/
+theorem even_cubic_at_sixteen (a b c : ℚ) :
+    evenCubic 16 a b c = 16 * (16 - (a + b + c)) ^ 2 - 4 * (a * b * c) := by
+  unfold evenCubic; ring
+
+/-- Above `p` the cubic is strictly increasing, because its derivative factors
+as `(3μ - p)(μ - p)`. With the previous lemma this is the upper-edge argument:
+no root exceeds `16`, so `λ ≤ 12`. -/
+theorem even_cubic_derivative_factors (m a b c : ℚ) :
+    3 * m ^ 2 - 4 * (a + b + c) * m + (a + b + c) ^ 2
+      = (3 * m - (a + b + c)) * (m - (a + b + c)) := by ring
+
 /-! ## Symmetric-function identities used by the fourth-order shape analysis -/
 
 /-- Newton's identity in three variables. This is what lets a degree-3 numerator
