@@ -141,3 +141,28 @@ runs:
       route first entering at cutoff 7, so B = 6 is channel-complete for the
       hopping and not for the on-site scalar. Second order only, and the
       global B = 6 basis was deliberately not enumerated.
+
+  - id: two_cube_b4_b6_codd_o2_2026-08-29
+    dir: runs/two_cube_b4_b6_codd_o2_2026-08-29
+    title: >-
+      The two-cube connected kernel: the first adjacent-hopping coefficient in
+      this corpus not read off a single cell
+    bears_on: [R2]
+    detail: >-
+      Every prior cube result here lives on one cube, with the adjacent-face
+      coefficient inferred from one cell plus a graph ansatz. This release does
+      it on a genuine face-sharing prism -- 8,361 states at B4, 1,590,462 at B6
+      -- with the connected part from literal operator-level Moebius
+      subtraction rather than a fitted scalar: K_conn = -1/12 G_conn + D_B4 and
+      +5/612 G_conn + D_B6. Verified here for seals and arithmetic, not
+      re-executed (the builder needs pyclebsch and NPZ artifacts that did not
+      travel). The finding worth having is not 5/612, which the registry
+      already carries: it is that the six target-blind channels resolve
+      exactly into this registry's four, with 3+3bar = w_3bar, 6+6bar = w_6,
+      1 = -w_1, 8 = -w_8, so like-orientation sums to B_3 and mixed to -A_3.
+      The rank law t_N = B_N - A_N, abstract in constants.py, is here the sign
+      the charge-odd projection puts on the mixed channels. The restored
+      6+6bar+8 = 14/153 also reproduces the one-cube bridge's w_6 - w_8
+      completion by a route sharing no geometry. Second order, finite volume,
+      D_B6 not proved cutoff-stable, replay is same-builder, and "exact" means
+      rational reconstruction from finite-precision CGCs.

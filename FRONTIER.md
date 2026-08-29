@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 218/218 checks pass.
+**T1/T2 — re-derived here.** 222/222 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -38,6 +38,7 @@ it cannot drift from what the repository actually checks.
 | off-axis channel ledger (C2 geography, G14) | 23/23 |
 | the flat-band manuscript | 5/5 |
 | finite-rank truncation bridge (published SU(3) truncations) | 8/8 |
+| two-cube connected kernel (B4 and B6) | 4/4 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:

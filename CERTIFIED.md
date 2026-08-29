@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 173
+## T1 — re-derived exactly — 177
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -709,6 +709,20 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the vanishing coefficients are exactly the degree-3 ones`
   - src/workhouse/invariants/tier.py:33 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
+**two-cube connected kernel (B4 and B6)**
+
+- `FINDING: the two-cube restored channels reproduce the bridge's 14/153 completion`
+  - src/workhouse/invariants/two_cube.py:169 · R2; runs/two_cube_b4_b6_codd_o2_2026-08-29 §10; runs/cbb_finite_n_bridge_2026-08-28
+  - `workhouse verify --only 'FINDING: the two-cube restored channels reproduce the bridge'"'"'s 14/153 completion'`
+- `the connected kernel is t_3 G_conn plus a diagonal, at B6 and B4, with the stated spectra`
+  - src/workhouse/invariants/two_cube.py:111 · R2; runs/two_cube_b4_b6_codd_o2_2026-08-29 §6
+  - `workhouse verify --only 'the connected kernel is t_3 G_conn plus a diagonal, at B6 and B4, with the stated spectra'`
+- `the pinned two-cube bytes are the sealed release bytes, manifest root included`
+  - src/workhouse/invariants/two_cube.py:204 · R2; runs/two_cube_b4_b6_codd_o2_2026-08-29; notes UPLOADS_2026-08-29a
+  - `workhouse verify --only 'the pinned two-cube bytes are the sealed release bytes, manifest root included'`
+- `the two-cube six-channel census IS this registry's t_N = B_N - A_N`
+  - src/workhouse/invariants/two_cube.py:53 · R2; runs/two_cube_b4_b6_codd_o2_2026-08-29 §7; notes UPLOADS_2026-08-29a
+  - `workhouse verify --only 'the two-cube six-channel census IS this registry'"'"'s t_N = B_N - A_N'`
 
 ## T2 — float agreement within a stated tolerance — 45
 
