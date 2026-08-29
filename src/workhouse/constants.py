@@ -243,7 +243,26 @@ D3_TOP = Rational(-61751, 249696)  # C-odd dispersive top (lambda = 8) at order 
 LEAK_2 = Rational(-11, 306)  # second-order per-neighbour leakage, C-odd
 LEAK_2_EVEN = Rational(-11, 306)  # ... and C-even. The same rational; see below.
 LEAK_3_EVEN = Rational(-6335, 249696)  # ... and its leakage, = T3_EVEN. Again.
-M3_EVEN_BANDMIN = Rational(471353, 1560600)  # C-even at lambda = -4
+
+#: The C-even band edge at lambda = -4, order 3. The certificate key is
+#: "m3_even_bandmin (lambda=-4)" and that key name is wrong: t_{3,+} < 0, so
+#: lambda = -4 is the band TOP, which is what PAPER's third-order theorem, the
+#: manuscript patch's constant table and the master program note all call it.
+#: Renamed here to stop the registry contradicting BAND_EVEN_TOP, which is the
+#: same edge one order down; the FINDING check keeps the discrepancy visible.
+M3_EVEN_BANDTOP = Rational(471353, 1560600)  # C-even at lambda = -4, the TOP
+
+#: The E++ doublet at lambda = 0, order 3. PAPER derives it from the certified
+#: band form ("101/200 + 12 T_3^e = 52163/260100") and flags it as following
+#: from that form rather than computed independently -- so it is exactly the
+#: kind of value that is worth re-deriving here rather than transcribing.
+M3_EVEN_EPP = Rational(52163, 260100)
+
+#: The C-even A1++ curvature coefficients, PAPER's "curvature +22/459 |k|^2 y^2"
+#: and its third-order correction. Both are (4/3)|t_{r,+}|; the 4/3 is the
+#: Gamma expansion of the unsigned adjacency, not a convention.
+CEVEN_CURVATURE_2 = Rational(22, 459)
+CEVEN_CURVATURE_3 = Rational(6335, 187272)
 
 # This block once re-registered five values the certificate-lock block above
 # already carried, under names differing by an underscore or a suffix:
@@ -262,7 +281,11 @@ M3_EVEN_BANDMIN = Rational(471353, 1560600)  # C-even at lambda = -4
 # and at second order the C-odd leakage equals them too. Three labels on
 # -11/306, two on -6335/249696. Nothing here shows why, and a mechanism must
 # not be read off a coincidence of values -- ADR 0005 is what happens when one
-# is.
+# is. The -11/306 coincidence is now half explained: all three second-order
+# labels are ell_N = A_N + B_N + 1/C_F, an all-rank closed form, so at that
+# order it is one object rather than three (charge-even suite). The C-even
+# identity one order up is still bare, and is registered as the unifying
+# candidate U4 -- with a falsifier -- rather than as a result.
 
 #: Values this registry deliberately carries under more than one name, and why.
 #: Distinct physical quantities may of course be equal -- a hopping and a
@@ -276,7 +299,9 @@ DECLARED_COINCIDENCES: dict[str, tuple[tuple[str, ...], str]] = {
     "-11/306": (
         ("LEAK_2", "LEAK_2_EVEN", "T_PLUS_2"),
         "second-order per-neighbour leakage in both charge sectors, and the "
-        "C-even hopping: three distinct quantities, one rational, unexplained",
+        "C-even hopping: three distinct quantities, and one object -- all "
+        "three are ell_N = A_N + B_N + 1/C_F at N = 3, checked at symbolic N "
+        "by the charge-even suite, so the coincidence is derived not observed",
     ),
     "-6335/249696": (
         ("T3_EVEN", "LEAK_3_EVEN"),
