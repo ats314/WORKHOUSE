@@ -49,7 +49,7 @@ from . import notes as notes_mod
 from . import oeis as oeis_mod
 from . import triage as triage_mod
 from .claims import ADR_REF, LEDGER_ID
-from .invariants import SUITES
+from .invariants import SUITES, source_path
 
 ROOT = Path(__file__).resolve().parents[2]
 GRAPH = ROOT / "index" / "graph.jsonl"
@@ -131,30 +131,43 @@ class Graph:
 
 
 def _module_helpers() -> dict[str, str]:
-    """Module-level helpers in invariants.py, by name, comments stripped.
+    """Module-level helpers across the invariant package, comments stripped.
 
     Not every constant a check reads appears in the check's own body. Several
     checks delegate to a module-level helper -- ``_sealed_gaps``,
     ``_bridge_towers`` and friends -- and the constants those helpers read were
     invisible to the ``uses`` scan, which left registered constants orphaned in
     the graph while a check demonstrably rested on them.
-    """
-    import inspect as _inspect
 
-    from . import invariants as inv_mod
+    Every submodule is walked, not just the package root. When ``invariants``
+    was one file this was a single ``vars()`` sweep; after the split a helper
+    lives beside the suite that uses it, so scanning only the package would
+    have found none of them -- reintroducing precisely the orphaned-constant
+    bug this function exists to prevent.
+    """
+    import importlib
+    import inspect as _inspect
+    import pkgutil
+
+    from . import invariants as package
+
+    modules = [package]
+    for info in pkgutil.iter_modules(package.__path__):
+        modules.append(importlib.import_module(f"{package.__name__}.{info.name}"))
 
     out: dict[str, str] = {}
-    for name, obj in vars(inv_mod).items():
-        # The checks themselves are all named `_` and are reached through the
-        # suites, never by name; only named helpers are call targets.
-        if name == "_" or not callable(obj) or not hasattr(obj, "__code__"):
-            continue
-        if getattr(obj, "__module__", None) != inv_mod.__name__:
-            continue
-        try:
-            out[name] = re.sub(r"#[^\n]*", "", _inspect.getsource(obj))
-        except OSError:  # pragma: no cover - source always available in-tree
-            continue
+    for module in modules:
+        for name, obj in vars(module).items():
+            # The checks themselves are all named `_` and are reached through
+            # the suites, never by name; only named helpers are call targets.
+            if name == "_" or not callable(obj) or not hasattr(obj, "__code__"):
+                continue
+            if getattr(obj, "__module__", None) != module.__name__:
+                continue
+            try:
+                out[name] = re.sub(r"#[^\n]*", "", _inspect.getsource(obj))
+            except OSError:  # pragma: no cover - source always available in-tree
+                continue
     return out
 
 
@@ -354,7 +367,7 @@ def build(
     for suite in SUITES:
         for name, section, _tier, fn in suite.checks:
             chk = claims_mod.check_id(suite.name, name)
-            where = f"src/workhouse/invariants.py:{fn.__code__.co_firstlineno}"
+            where = source_path(fn)
             text = f"{name} | {section} | {suite.name}"
             for target in set(LEDGER_ID.findall(text)):
                 add(chk, target, "cites", "derived", where)
@@ -414,7 +427,7 @@ def build(
                         f"CONST:{const}",
                         "uses",
                         "derived",
-                        f"src/workhouse/invariants.py:{fn.__code__.co_firstlineno}",
+                        source_path(fn),
                     )
 
     # Every check cites its source by alias; the alias is now a node, so the
@@ -434,7 +447,7 @@ def build(
                         f"CITE:{alias['alias']}",
                         "cites",
                         "derived",
-                        f"src/workhouse/invariants.py:{fn.__code__.co_firstlineno}",
+                        source_path(fn),
                     )
 
     # A check that compares against a published result cites the paper by its
@@ -459,7 +472,7 @@ def build(
                         f"LIT:{paper}",
                         "cites",
                         "derived",
-                        f"src/workhouse/invariants.py:{fn.__code__.co_firstlineno}",
+                        source_path(fn),
                     )
 
     return Graph(edges=sorted(edges), dangling=sorted(dangling))

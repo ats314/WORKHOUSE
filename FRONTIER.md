@@ -10,14 +10,15 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 33 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 222/222 checks pass.
+**T1/T2 — re-derived here.** 238/238 checks pass.
 
 | Suite | Passing |
 |---|---|
 | second order, all ranks | 12/12 |
 | SU(3) second and third order | 12/12 |
+| the charge-even band, exactly | 15/15 |
 | fourth order, sealed core | 6/6 |
 | fourth order, anchoring and the residual dispute | 13/13 |
 | old-to-new crosswalk | 5/5 |
@@ -34,7 +35,7 @@ it cannot drift from what the repository actually checks.
 | coupling erratum (C4/G2) | 2/2 |
 | tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
 | notes program: SAFE, Davies, coercivity (G20-G23) | 13/13 |
-| off-axis channel ledger (C2 geography, G14) | 22/22 |
+| off-axis channel ledger (C2 geography, G14) | 23/23 |
 | the flat-band manuscript | 5/5 |
 | finite-rank truncation bridge (published SU(3) truncations) | 8/8 |
 | exact-form identification and external witness (C2, G3) | 16/16 |
@@ -91,6 +92,7 @@ Claims this repository made and withdrew:
 - `G6` B_N fixed-rank holdout ledger for N = 7..18
 - `G7` Native torelon reruns of sigma_5 and sigma_6
 - `G8` Cold one-shot regeneration of the all-rank fourth-order bundle
+- `G25` The charge-even sector is registered and unchecked *(partial — see its status in the ledger)*
 
 **Tier 2 — months**
 
@@ -126,7 +128,7 @@ Transitive closure over the ledger's own `unblocks`, `depends_on`, and
 
 | Gap | Gates | What cannot move until it does |
 |---|---|---|
-| `G3` Fourth-order adjudication — decide C_shp where it actually lives | 2 | G9, C2 |
+| `G3` Fourth-order adjudication — decide C_shp where it actually lives | 3 | G25, G9, C2 |
 
 - G3 -> G9 and the mass ratio at orders 4-6
 - nothing further without G17 + G18
@@ -289,5 +291,11 @@ falsifier is an analogy, and analogies do not belong on this list.
 
 - supported by: UNIFIED §5.1, UNIFIED §9.3, G14, ADR 0005
 - would be falsified by: A geometry where the Q-projected proper-return contributions vanish while the shape tier does NOT collapse, or the reverse. If the two are one mechanism they must stand or fall together; exhibiting one without the other refutes the identification and leaves two coincidences.
+- status: conjectured
+
+**U4 — The C-even leakage and the C-even hopping are one object, at every order. The domino engine computes them independently and they agree exactly at both computed orders: leak_(2,+) = t_(2,+) = -11/306 and leak_(3,+) = t_(3,+) = -6335/249696. The corpus names two distinct mechanisms of equal value ("the diagonal's +3/4 is vacuum-energy bookkeeping, the hop's +3/4 is the |0> route"); the candidate is that they are not two mechanisms but one vacuum-mediated route entering both, in which case the identity holds at every order and the whole C-even band collapses to tower_r + (12 + lambda) t_(r,+), which is what the engine's own regression gates 101/200 + 24 T3e and 101/200 + 8 T3e are. At second order the C-odd leakage joins them, since leak_(2,-) is the same ell_N = A_N + B_N + 1/C_F; at third order it separates, so whatever the mechanism is, it is not sector-blind.**
+
+- supported by: ENGINE_FLUX_su3_domino_d3.py, PAPER §third order, G25
+- would be falsified by: An order r at which the C-even per-neighbour leakage and the C-even hopping are computed independently and differ. Fourth order is the first untested one and is reachable from the same weight cards G3 needs. Equally fatal in the other direction: a derivation showing the two quantities are equal for a reason that does not involve the vacuum route would refute the identification while leaving the equality standing.
 - status: conjectured
 

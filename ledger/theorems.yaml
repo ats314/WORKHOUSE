@@ -312,3 +312,32 @@ theorems:
     promotes:
       - "checkpoint values at X, M, P, R"
       - "the four extraction formulas invert the ansatz"
+
+  - name: even_gram_minors
+    statement: >
+      The three principal 2x2 minors of the charge-even Gram matrix are a*p,
+      b*p and c*p, and sum to p^2 -- which is why the C-even characteristic
+      polynomial depends on the three zone variables only through p and abc.
+    formalizes: [G25]
+    promotes: []
+
+  - name: even_cubic_at_zero
+    statement: >
+      The C-even cubic at mu = 0 is -4abc, so lambda = -4 is a root exactly
+      where some a_j vanishes: the three zone-boundary planes k_j = pi.
+    formalizes: [G25, "CONST:BAND_EVEN_TOP", "CONST:M3_EVEN_BANDTOP"]
+    promotes: []
+
+  - name: even_cubic_at_sixteen
+    statement: >
+      The C-even cubic at mu = 16 is 16(16-p)^2 - 4abc, the form that carries
+      the upper band edge: p <= 12 and abc <= 64 make it nonnegative.
+    formalizes: [G25, "CONST:BAND_EVEN_BOTTOM", "CONST:M3_EVEN_K0"]
+    promotes: []
+
+  - name: even_cubic_derivative_factors
+    statement: >
+      The C-even cubic's derivative factors as (3mu - p)(mu - p), so the cubic
+      increases above mu = p and no root exceeds 16, i.e. lambda <= 12.
+    formalizes: [G25]
+    promotes: []

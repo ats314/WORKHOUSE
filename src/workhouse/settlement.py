@@ -41,7 +41,7 @@ ENGINE = (
 ENGINE_PRE_RENAME = "Hodge_SU3_Exact_MarkedCluster_m4_Colab.py"
 RENAME_MANIFEST = _REPO / "corpus-import/records/RENAME_MANIFEST_2026-08-20.tsv"
 
-#: Digit strings the harness's own scan misses (the FINDING in invariants.py):
+#: Digit strings the harness's own scan misses (the FINDING in invariants/):
 #: m_Gamma = q_band + Delta_Gamma exactly and Hamer's 8*a_4 is the scalar to 13
 #: digits, so an engine carrying any of these is seeded with the answer even
 #: though the harness scan passes it. Both roundings of Hamer's value are here.
