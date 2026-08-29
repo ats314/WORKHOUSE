@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 173
+## T1 — re-derived exactly — 178
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -709,8 +709,25 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the vanishing coefficients are exactly the degree-3 ones`
   - src/workhouse/invariants/tier.py:33 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'the vanishing coefficients are exactly the degree-3 ones'`
+**two-cube charge-odd second-order closure (B=4 and B=6)**
 
-## T2 — float agreement within a stated tolerance — 45
+- `B=6 retains every adjacent shared-link channel; B=4 provably cannot`
+  - src/workhouse/invariants/two_cube.py:237 · R2; G3; runs/two_cube_codd_o2_2026-08-29 §6.4
+  - `workhouse verify --only 'B=6 retains every adjacent shared-link channel; B=4 provably cannot'`
+- `the B=4 comparator on the same geometry gives -1/12 with the reversed spectrum`
+  - src/workhouse/invariants/two_cube.py:204 · R2; runs/two_cube_codd_o2_2026-08-29, B4 note §4
+  - `workhouse verify --only 'the B=4 comparator on the same geometry gives -1/12 with the reversed spectrum'`
+- `the B=6 connected kernel is (5/612) G_conn + diag, with the certified spectrum`
+  - src/workhouse/invariants/two_cube.py:174 · R2; runs/two_cube_codd_o2_2026-08-29 §7.4
+  - `workhouse verify --only 'the B=6 connected kernel is (5/612) G_conn + diag, with the certified spectrum'`
+- `the B=6 six-channel census sums to the registry's own t_3 = 5/612`
+  - src/workhouse/invariants/two_cube.py:141 · R2; runs/two_cube_codd_o2_2026-08-29 §7
+  - `workhouse verify --only 'the B=6 six-channel census sums to the registry'"'"'s own t_3 = 5/612'`
+- `the connected two-cube geometry has exactly four cross-cell pairs, each -1`
+  - src/workhouse/invariants/two_cube.py:118 · R2; runs/two_cube_codd_o2_2026-08-29 §1
+  - `workhouse verify --only 'the connected two-cube geometry has exactly four cross-cell pairs, each -1'`
+
+## T2 — float agreement within a stated tolerance — 46
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -871,6 +888,11 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `every node the theory graph strands is stranded for a stated reason`
   - src/workhouse/invariants/manuscript.py:159 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
   - `workhouse verify --only 'every node the theory graph strands is stranded for a stated reason'`
+**two-cube charge-odd second-order closure (B=4 and B=6)**
+
+- `the certificate's own gates pass, target-blind, with the wrong-sign control rejected`
+  - src/workhouse/invariants/two_cube.py:278 · R2; runs/two_cube_codd_o2_2026-08-29 heldout_validation
+  - `workhouse verify --only 'the certificate'"'"'s own gates pass, target-blind, with the wrong-sign control rejected'`
 
 ## What is not here
 
