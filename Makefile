@@ -1,4 +1,4 @@
-.PHONY: help bootstrap check quick lint test verify status frontier certified lit catalogue atlas fmt manifest corpus-manifest lean corpus-index lock clean paper
+.PHONY: help bootstrap check quick lint test verify status frontier certified lit catalogue atlas fmt manifest corpus-manifest lean lean-setup corpus-index lock clean paper
 
 help:            ## Show this help
 	@grep -hE '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk -F':.*?## ' '{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -81,8 +81,31 @@ manifest:        ## Regenerate theory/SHA256SUMS after a deliberate corpus chang
 	     f'{hashlib.sha256((root/n).read_bytes()).hexdigest()}  {n}' + chr(10) for n in ns)); \
 	 print(f'theory/SHA256SUMS: {len(ns)} files')"
 
-lean:            ## T0: proof-check the Lean core (needs elan on PATH)
-	@cd lean && lake build && echo "Lean core: proof-checked, no sorries"
+lean-setup:      ## Install the T0 toolchain: elan, pinned Lean, mathlib cache (~3 GB)
+	@bash scripts/bootstrap-lean.sh
+
+# --wfail because a bare `lake build` EXITS 0 ON A SORRY -- Lean logs
+# "declaration uses `sorry`" as a warning, so the line this target prints would
+# have gone on asserting "no sorries" while the sorry sat there. That is the
+# repository's own failure mode: a claim asserted by a document (here, a
+# Makefile echo) rather than computed. Verified by temporarily importing a
+# `theorem p : (2:Q) = 2 := by sorry` module: plain build 0, --wfail 1.
+# The flag fails on any warning, not just sorry, so it can only over-fail,
+# never under-pass -- the safe direction for a tier that means "nothing here
+# was left unproved". Python's regex sorry-counter in frontier.py reads the
+# source; this reads the elaborator.
+#
+# A fresh container has no elan, and there `lake build` dies with a bare
+# "lake: command not found" -- which reads as a broken Makefile rather than a
+# missing toolchain, and has already been reported back as "T0 could not be
+# re-run locally". Name the remedy instead. The PATH prefix picks up an
+# elan-managed lake without an explicit export, because installing the
+# toolchain and then still being told it is absent is the same wrong signal one
+# step later.
+lean:            ## T0: proof-check the Lean core (needs elan; `make lean-setup` installs it)
+	@command -v lake >/dev/null 2>&1 || [ -x "$$HOME/.elan/bin/lake" ] || { \
+		echo "make lean: elan is not installed -- run \`make lean-setup\` first" >&2; exit 1; }
+	@cd lean && PATH="$$HOME/.elan/bin:$$PATH" lake build --wfail && echo "Lean core: proof-checked, no sorries"
 
 corpus-manifest: ## Regenerate corpus-import/SHA256SUMS after a deliberate corpus change
 	@.venv/bin/python -c "import hashlib,subprocess,pathlib; \
