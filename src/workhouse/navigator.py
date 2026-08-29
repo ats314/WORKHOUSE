@@ -45,6 +45,137 @@ def _resolve(query: str, node_ids: set[str]) -> str | None:
     return None
 
 
+def branchwise(
+    target: str | None = None,
+    catalogue: list[claims_mod.Claim] | None = None,
+    graph: graph_mod.Graph | None = None,
+) -> tuple[str, bool]:
+    """The branchwise-result view: every conflicting value, both branches whole.
+
+    For each contradiction with recorded sides (or one, by id), print per
+    branch its value and kind, the pinned documents that originate the claim,
+    the checks and claims that depend on it, and — from the ledger's own
+    ``blocks`` edge — the adjudication gap whose completion would unify the
+    branches. Everything is read from curated fields; no branch is ranked,
+    preferred, or averaged, and the "missing comparison" is the gap's own
+    statement, not a synthesis.
+    """
+    catalogue = catalogue if catalogue is not None else claims_mod.collect()
+    graph = graph if graph is not None else graph_mod.build(catalogue)
+    by_id = {c.id: c for c in catalogue}
+    led = ledger_mod.load()
+
+    entries = [c for c in led.contradictions if c.get("sides")]
+    if target is not None:
+        wanted = target.strip().upper()
+        entries = [c for c in entries if c["id"] == wanted]
+        if not entries:
+            return (
+                f"no contradiction with recorded sides has id {target!r}.\n"
+                "Branchwise view covers ledger contradictions carrying a `sides`"
+                " field; try `workhouse branches` for all of them.",
+                False,
+            )
+
+    lines: list[str] = []
+    w = lines.append
+    for n, entry in enumerate(entries):
+        if n:
+            w("")
+        w(f"\033[1m{entry['id']}\033[0m — {entry['title']}  \033[2m[{entry['status']}]\033[0m")
+        for side in entry["sides"]:
+            w(f"  \033[1m{side['label']}\033[0m: {side['value']}  \033[2m({side['kind']})\033[0m")
+            if side.get("decimal") is not None:
+                w(f"    decimal: {side['decimal']!r}")
+        if entry.get("delta") is not None:
+            w(f"  gap between branches: {entry['delta']}")
+
+        origins = sorted(
+            e.src for e in graph.edges if e.dst == entry["id"] and e.type == "originates"
+        )
+        if origins:
+            w("  originating documents (pinned):")
+            for doc in origins:
+                claim = by_id.get(doc)
+                w(f"    {doc}" + (f" — {_clip(claim.statement, 70)}" if claim else ""))
+
+        dependents = sorted(
+            {e.src for e in graph.edges if e.dst == entry["id"] and e.type != "originates"}
+            | {e.dst for e in graph.edges if e.src == entry["id"]}
+        )
+        checks = [d for d in dependents if d in by_id and by_id[d].kind == "check"]
+        others = [d for d in dependents if d not in checks]
+        if checks:
+            w(f"  checks in the neighborhood ({len(checks)}):")
+            for chk in checks[:8]:
+                claim = by_id[chk]
+                verdict = "PASS" if claim.status == "passing" else "FAIL"
+                w(f"    [{verdict}] {_clip(claim.statement, 70)}")
+            if len(checks) > 8:
+                w(f"    … {len(checks) - 8} more (workhouse why {entry['id']})")
+        if others:
+            w(f"  \033[2mother recorded neighbors: {', '.join(others[:12])}\033[0m")
+
+        for gap_id in entry.get("blocks", []):
+            gap = next((g for g in led.gaps if g["id"] == gap_id), None)
+            if gap:
+                w(f"  \033[1mmissing comparison\033[0m ({gap_id}): {gap['title']}")
+                if gap.get("leads"):
+                    for lead in gap["leads"][:3]:
+                        w(f"    lead: {_clip(lead, 90)}")
+    if not entries:
+        w("no contradiction in the ledger carries a `sides` field.")
+    return "\n".join(lines), bool(entries)
+
+
+def neighborhood(
+    query: str,
+    catalogue: list[claims_mod.Claim] | None = None,
+    symbols: list[dict] | None = None,
+    graph: graph_mod.Graph | None = None,
+) -> tuple[dict, bool]:
+    """The `why` neighborhood as data: the record, every edge, no prose.
+
+    Same sources and same non-inferential traversal as ``explain``; this exists
+    so an agent can consume the neighborhood without parsing ANSI-decorated
+    text. Nothing is included that ``explain`` would not print.
+    """
+    from dataclasses import asdict
+
+    catalogue = catalogue if catalogue is not None else claims_mod.collect()
+    symbols = symbols if symbols is not None else claims_mod.load_symbols()
+    graph = graph if graph is not None else graph_mod.build(catalogue, symbols)
+
+    by_id = {c.id: c for c in catalogue}
+    sym_by_id = {f"SYM:{s['id']}": s for s in symbols}
+    node = _resolve(query, set(by_id) | set(sym_by_id))
+    if node is None:
+        return {"query": query, "error": f"no record with id {query!r}"}, False
+
+    record = asdict(by_id[node]) if node in by_id else sym_by_id[node]
+    outgoing = [asdict(e) for e in graph.edges if e.src == node]
+    incoming = [asdict(e) for e in graph.edges if e.dst == node]
+    neighbors = {}
+    for edge in outgoing + incoming:
+        for end in (edge["src"], edge["dst"]):
+            if end != node and end in by_id and end not in neighbors:
+                claim = by_id[end]
+                neighbors[end] = {
+                    "kind": claim.kind,
+                    "statement": claim.statement,
+                    "tier": claim.tier,
+                    "status": claim.status,
+                    "reproduce": claim.reproduce,
+                }
+    return {
+        "id": node,
+        "record": record,
+        "outgoing": outgoing,
+        "incoming": incoming,
+        "neighbors": neighbors,
+    }, True
+
+
 def explain(
     query: str,
     catalogue: list[claims_mod.Claim] | None = None,
@@ -220,5 +351,30 @@ def explain(
         w("")
         w("  no recorded edges. If a relationship exists, its home is a curated")
         w("  field: ledger/*.yaml, ledger/theorems.yaml, or literature/index.yaml.")
+
+    # -- next actions: the neighboring checks, as runnable commands ---------
+    # A neighborhood that ends in a bibliography leaves the reader to invent
+    # their next step; one that ends in verifier commands does not. Only
+    # registered checks appear here — nothing is suggested that is not
+    # already an edge.
+    neighbor_ids = {e.src for e in graph.edges if e.dst == node} | {
+        e.dst for e in graph.edges if e.src == node
+    }
+    commands = sorted(
+        {
+            by_id[n].reproduce
+            for n in neighbor_ids
+            if n in by_id and by_id[n].kind == "check" and by_id[n].reproduce
+        }
+    )
+    if node in by_id and by_id[node].kind == "check" and by_id[node].reproduce:
+        commands = [by_id[node].reproduce] + [c for c in commands if c != by_id[node].reproduce]
+    if commands:
+        w("")
+        w("\033[1mRe-check it yourself\033[0m")
+        for command in commands[:6]:
+            w(f"  {command}")
+        if len(commands) > 6:
+            w(f"  … {len(commands) - 6} more neighboring checks")
 
     return "\n".join(lines), True

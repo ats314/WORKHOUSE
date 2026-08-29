@@ -209,7 +209,7 @@ def decisions() -> list[dict[str, Any]]:
         out.append(
             {
                 "id": own_id,
-                "where": str(path.relative_to(ROOT)),
+                "where": path.relative_to(ROOT).as_posix(),
                 "title": title,
                 "status": status,
                 "mentions": sorted(mentions),
@@ -634,10 +634,13 @@ def write(directory: Path | None = None) -> tuple[Path, Path]:
     target.mkdir(parents=True, exist_ok=True)
     claims = collect()
     (target / "claims.jsonl").write_text(
-        "".join(json.dumps(asdict(c), sort_keys=True) + "\n" for c in claims), encoding="utf-8"
+        "".join(json.dumps(asdict(c), sort_keys=True) + "\n" for c in claims),
+        encoding="utf-8",
+        newline="\n",
     )
     (target / "symbols.jsonl").write_text(
         "".join(json.dumps(s, sort_keys=True) + "\n" for s in symbol_records(claims)),
         encoding="utf-8",
+        newline="\n",
     )
     return target / "claims.jsonl", target / "symbols.jsonl"
