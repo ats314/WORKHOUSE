@@ -1,0 +1,366 @@
+# The sequence register — this corpus's integer sequences, asked of the OEIS.
+#
+# The OEIS is the one external index joinable to this corpus by VALUE rather
+# than by concept, which is the join key everything here already uses. A match
+# would tie a coefficient computed in this program to combinatorics computed by
+# people who never heard of it — independent in the sense AGENTS.md means.
+#
+# Discipline (src/workhouse/oeis.py enforces it):
+#
+#   terms are BUILT, never transcribed. `builder` names a function that
+#   recomputes the sequence from the registered constants, so a sequence here
+#   cannot drift away from the numbers it came from. A `terms:` field
+#   copied by hand would be a fourth place for a transcription slip to hide.
+#
+#   `generated_by` is declared, and it decides what a hit can mean:
+#     closed-form-in-N   a rational function of the rank or the order. The
+#                        OEIS holds polynomial families without number, so a
+#                        hit identifies a NORMALISATION, not a mechanism, and
+#                        its verdict is fixed at not-evidence however striking.
+#     census-output      terms that fell out of an enumeration nobody could
+#                        have written down in advance. Only these can carry a
+#                        hit that means anything.
+#
+#   `what_a_hit_would_mean` is mandatory, and it is this register's falsifier
+#   field: a sequence whose owner cannot say what a match would establish is a
+#   fishing expedition, exactly like a unifying candidate with no falsifier.
+#
+#   the scan is OFFLINE. oeis.org/robots.txt says `Disallow: /search`, so the
+#   search API is never called. `workhouse oeis --fetch` takes the maintainers'
+#   own published dump (oeis.org/stripped.gz) once; the scan runs against it
+#   locally and records the EXACT number of matching sequences among all
+#   ~400,000 — which the ten-result search API could not report anyway.
+#
+#   `scan:` is the reviewed result, and it is what the checks read, so CI never
+#   needs the 32 MB dump or the network. `prefix_hits` is the discriminating
+#   power made visible: how the match count collapses as terms are added.
+#   `expected_by_chance` is the unigram null model built from the dump itself.
+#
+# No verdict here promotes anything past T3. A match becomes an OEIS:A######
+# node with a `matches` edge to the sequence; the sequence's own `bears_on`
+# edges are what reach the claims. An OEIS entry is a document like any other,
+# and its verdict rides on the node rather than deciding whether it exists --
+# a not-evidence match is still a match, and hiding it would be worse.
+
+schema: sequences/v1
+
+snapshot:
+  source: https://oeis.org/stripped.gz
+  # The dump is regenerated daily, so this digest pins WHICH snapshot the
+  # recorded scan was taken against, not a value that is supposed to be stable.
+  # A rescan against a newer dump that changes a verdict is a finding, not a
+  # failure — that is what an external witness moving looks like.
+  sha256: ceb8f5e6b6a4ed03f220036dd811e4aa3b00d1569b2d10eb6f46033a957ac432
+  last_modified: 'August 28 04:52 UTC 2026'
+  scanned: '2026-08-28'
+  sequences_in_snapshot: 398735
+  term_slots: 17721438
+
+
+# The measurement behind oeis.CORRELATION_FACTOR: how far the unigram null
+# model under-counts on sequences the OEIS really contains. Seven positives
+# and two irregular decoys. Re-measure with `workhouse oeis --scan`.
+null_model_controls:
+  - name: catalan
+    terms: [1, 1, 2, 5, 14]
+    observed: 273
+    predicted: 8.828573e-01
+    ratio: 3.092232e+02
+  - name: catalan8
+    terms: [1, 1, 2, 5, 14, 42, 132, 429]
+    observed: 23
+    predicted: 2.287975e-10
+    ratio: 1.005256e+11
+  - name: factorial
+    terms: [1, 2, 6, 24, 120]
+    observed: 434
+    predicted: 1.064857e-02
+    ratio: 4.075663e+04
+  - name: primes
+    terms: [2, 3, 5, 7, 11, 13]
+    observed: 597
+    predicted: 6.781540e-04
+    ratio: 8.803310e+05
+  - name: squares
+    terms: [1, 4, 9, 16, 25, 36]
+    observed: 142
+    predicted: 5.331992e-05
+    ratio: 2.663170e+06
+  - name: fibonacci
+    terms: [1, 1, 2, 3, 5, 8, 13, 21]
+    observed: 104
+    predicted: 2.960887e-06
+    ratio: 3.512461e+07
+  - name: partitions
+    terms: [1, 1, 2, 3, 5, 7, 11, 15]
+    observed: 149
+    predicted: 4.822152e-06
+    ratio: 3.089907e+07
+  - name: decoy4
+    terms: [7, 41, 313, 2179]
+    observed: 0
+    predicted: 8.268724e-06
+    ratio: null
+  - name: decoy6
+    terms: [7, 41, 313, 2179, 15451, 99991]
+    observed: 0
+    predicted: 9.857719e-17
+    ratio: null
+sequences:
+  - id: T_N_NUM
+    title: Numerators of the all-rank C-odd hopping t_N = B_N - A_N, N = 2..14
+    builder: t_n_numerators
+    generated_by: closed-form-in-N
+    bears_on: [R2, C13, T_MINUS_2]
+    what_a_hit_would_mean: >
+      t_N = 2N(N^2-4)/((N^2-1)(2N^2-1)(4N^2-9)) is a rational function of the
+      rank, so the numerators after gcd reduction look irregular without being
+      so. A hit would name the reduction pattern and nothing more; the rank law
+      itself is already T1. Registered because the reduced numerators are the
+      one part of the family that is NOT obviously a polynomial, and a negative
+      result costs one pass over the dump.
+    scan:
+      snapshot: '2026-08-28'
+      terms: [0, 5, 32, 5, 128, 105, 320, 11, 640, 429, 160, 715, 1792]
+      prefix_hits: {3: 14, 4: 1, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0}
+      hits: []
+      expected_by_chance: 1.826582e-31
+      verdict: no-hit
+      reason: no OEIS sequence contains these 13 terms (largest |term| 1792)
+  - id: T_N_DEN
+    title: Denominators of the all-rank C-odd hopping t_N, N = 2..14
+    builder: t_n_denominators
+    generated_by: closed-form-in-N
+    bears_on: [R2, T_MINUS_2]
+    what_a_hit_would_mean: >
+      Same standing as T_N_NUM. The denominators carry the three quadratic
+      factors of the resolvent gap; a hit would identify the product family.
+    scan:
+      snapshot: '2026-08-28'
+      terms: [1, 612, 8525, 2548, 111825, 145112, 658749, 32200, 2567697, 2289500, 1108107, 6293812, 19696625]
+      prefix_hits: {3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0}
+      hits: []
+      expected_by_chance: 1.502497e-72
+      verdict: no-hit
+      reason: no OEIS sequence contains these 13 terms (largest |term| 19696625)
+  - id: A_N_DEN
+    title: Denominators of the antiparallel channel sum A_N, N = 2..14
+    builder: a_n_denominators
+    generated_by: closed-form-in-N
+    bears_on: [R2, G24]
+    what_a_hit_would_mean: >
+      (N^2-1)(2N^2-1) reduced against 2N^3. A hit identifies the normalisation
+      of the mixed fusion family, which G24 established rests on the order-2
+      Weingarten values alone.
+    scan:
+      snapshot: '2026-08-28'
+      terms: [21, 68, 465, 588, 2485, 2328, 8001, 6440, 19701, 14460, 41041, 28308, 76245]
+      prefix_hits: {3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0}
+      hits: []
+      expected_by_chance: 5.225018e-56
+      verdict: no-hit
+      reason: no OEIS sequence contains these 13 terms (largest |term| 76245)
+  - id: B_N_DEN
+    title: Denominators of the parallel channel sum B_N, N = 2..14
+    builder: b_n_denominators
+    generated_by: closed-form-in-N
+    bears_on: [R2, G24]
+    what_a_hit_would_mean: >
+      As A_N_DEN, for the like family (Lambda^2 + Sym^2). The pair is
+      registered together because A_N and B_N are the two halves of one
+      Weingarten computation and a hit on one but not the other would be
+      informative about which half the OEIS already knows.
+    scan:
+      snapshot: '2026-08-28'
+      terms: [21, 18, 825, 546, 1575, 2244, 15561, 700, 38709, 14250, 27027, 28014, 151125]
+      prefix_hits: {3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0}
+      hits: []
+      expected_by_chance: 4.427273e-56
+      verdict: no-hit
+      reason: no OEIS sequence contains these 13 terms (largest |term| 151125)
+  - id: ALPHA_PEN_DEN
+    title: Denominators of the all-rank axial law alpha_N = 640/(N(N^2-1)^3), N = 2..14
+    builder: alpha_pen_denominators
+    generated_by: closed-form-in-N
+    bears_on: [R14]
+    what_a_hit_would_mean: >
+      N(N^2-1)^3 reduced against 640. The cube makes the reduction pattern
+      depend on N mod small primes, so the reduced denominators are the least
+      predictable of the closed-form families. Still a closed form, so still
+      not-evidence by construction.
+    scan:
+      snapshot: '2026-08-28'
+      terms: [27, 12, 675, 108, 25725, 6048, 250047, 7200, 970299, 29700, 8772621, 481572, 10380825]
+      prefix_hits: {3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0}
+      hits: []
+      expected_by_chance: 9.513259e-59
+      verdict: no-hit
+      reason: no OEIS sequence contains these 13 terms (largest |term| 10380825)
+  - id: SIGMA_NUM
+    title: Numerators of the native string tension sigma_n, n = 0, 2, 3, 4, 5
+    builder: sigma_numerators
+    generated_by: census-output
+    bears_on: [R14, C5, G7, SIGMA_4, SIGMA_5]
+    what_a_hit_would_mean: >
+      sigma_4 and sigma_5 are enumeration outputs — sigma_5 over 22,820
+      topologies, reconstructed by CRT across seven primes to a 189-bit
+      modulus. Nothing about them is a closed form in n. An OEIS entry
+      containing this run would be an INDEPENDENT computation of the same
+      strong-coupling series, which is the strongest external join this
+      program could get for the string tension: it would corroborate G7's
+      native torelon reruns before they are run. Absence establishes nothing.
+    scan:
+      snapshot: '2026-08-28'
+      terms: [2, -22, -61, -737327120374220449, -137767222189182735950309]
+      prefix_hits: {3: 0, 4: 0, 5: 0}
+      hits: []
+      expected_by_chance: 1.641368e-14
+      verdict: no-hit
+      reason: no OEIS sequence contains these 5 terms (largest |term| 137767222189182735950309)
+  - id: SIGMA_DEN
+    title: Denominators of the native string tension sigma_n, n = 0, 2, 3, 4, 5
+    builder: sigma_denominators
+    generated_by: census-output
+    bears_on: [R14, C5, G7, SIGMA_4, SIGMA_5]
+    what_a_hit_would_mean: >
+      As SIGMA_NUM. Denominators are the more likely of the two to be
+      shared with an independent computation, because a differing overall
+      normalisation changes the numerators while leaving the denominator
+      family recognisable.
+    scan:
+      snapshot: '2026-08-28'
+      terms: [3, 153, 408, 7250590288602460800, 2009803206414863779920000]
+      prefix_hits: {3: 0, 4: 0, 5: 0}
+      hits: []
+      expected_by_chance: 1.469037e-16
+      verdict: no-hit
+      reason: no OEIS sequence contains these 5 terms (largest |term| 2009803206414863779920000)
+  - id: ORDER4_DEN
+    title: The five exact denominators the fourth order is written over
+    builder: fourth_order_denominators
+    generated_by: census-output
+    # Both sides of C2 are named, though only the historical one can contribute
+    # a term: the v10a.26 side is a float and has no denominator at all. Naming
+    # only the side that has one would read as preferring it.
+    bears_on: [C2, G3, G9, C_SHP_HISTORICAL, C_SHP_NEW_NUM, Q_BAND_4, BETA_PEN_3,
+               X_QUANTUM, SIGMA_4]
+    what_a_hit_would_mean: >
+      q_band^(4), C_shp (historical), beta_pen, the degree-3 record quantum and
+      sigma_4 — the denominators of the whole fourth-order record, which is
+      where C2 lives. All five factor over primes below 40 (2,3,5,7,11,13,17,
+      19,29,31,37), so they are smooth numbers of a particular shape rather
+      than arbitrary integers. A hit would name the combinatorial object whose
+      order supplies that shape and would be a real lead on G9. It would NOT
+      adjudicate C2: an identification of a denominator says nothing about a
+      numerator, and the v10a.26 side has no exact denominator to compare.
+    scan:
+      snapshot: '2026-08-28'
+      terms: [7250590288602460800, 4405310420659200, 275331901291200, 40327601932800, 7250590288602460800]
+      prefix_hits: {3: 0, 4: 0, 5: 0}
+      hits: []
+      expected_by_chance: 1.013921e-29
+      verdict: no-hit
+      reason: no OEIS sequence contains these 5 terms (largest |term| 7250590288602460800)
+  - id: ORDER3_NUM
+    title: Numerators of the SU(3) third-order domino-engine coefficients
+    builder: third_order_numerators
+    generated_by: census-output
+    bears_on: [C13, R2, D_3, B_3, LEAK_3]
+    what_a_hit_would_mean: >
+      Eight coefficients out of one 251-gate domino census over a shared
+      denominator family. If an external enumeration produced the same
+      integers, it computed the same third-order structure independently —
+      the same standing Hamer 1989 has for the Gamma-point scalar, which is
+      this program's strongest external agreement. These are the corpus's own
+      numbers, so a hit is checkable rather than suggestive.
+    scan:
+      snapshot: '2026-08-28'
+      terms: [1975, -12331, -109151, -6335, -24541, -517313, -61751, -54049]
+      prefix_hits: {3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
+      hits: []
+      expected_by_chance: 5.045142e-43
+      verdict: no-hit
+      reason: no OEIS sequence contains these 8 terms (largest |term| 517313)
+  - id: DIM_Z2
+    title: dim Z_2(L) = L^3 + 2, the harmonic-plane-corrected cycle count, L = 1..13
+    builder: dim_z2_terms
+    generated_by: closed-form-in-N
+    bears_on: [R5, U1]
+    what_a_hit_would_mean: >
+      Nothing about this program, and that is exactly why it is registered.
+      It is the CALIBRATION entry: a closed form that really is in the OEIS,
+      so the closed-form-in-N branch of the gate is exercised on a genuine
+      match rather than on a fabricated one. A hit here names the polynomial
+      L^3 + 2, which was known before the query was asked. If this entry ever
+      stops hitting, the scan is broken, not the corpus.
+    scan:
+      snapshot: '2026-08-28'
+      terms: [3, 10, 29, 66, 127, 218, 345, 514, 731, 1002, 1333, 1730, 2199]
+      prefix_hits: {3: 44, 4: 3, 5: 2, 6: 2, 7: 2, 8: 2, 9: 2, 10: 2, 11: 2, 12: 2, 13: 2}
+      hits: ['A034324', 'A084380']
+      expected_by_chance: 5.419550e-40
+      verdict: not-evidence
+      reason: a closed form in N; the OEIS holds polynomial families without number, so a hit identifies a normalisation and not a mechanism
+  - id: C_SHP_NEW_DIGITS
+    title: Leading twelve significant digits of the v10a.26 C_shp, as a constant
+    builder: c_shp_new_digits
+    generated_by: census-output
+    bears_on: [C2, G3, C_SHP_NEW_NUM]
+    what_a_hit_would_mean: >
+      This is the one identification route the digit budget does NOT close.
+      Every other route fails because the recorded float carries 12.6 digits
+      and a rational at the historical denominator needs 31.4 — but an OEIS
+      entry with keyword cons carries hundreds of digits, so a match on the
+      twelve the run does know would SUPPLY the rest and identify the
+      coefficient outright. Twelve digits and not seventeen because the run's
+      own shift-invariance failure puts its noise floor at 4.6e-15; querying
+      the noise would guarantee a miss. A hit would be decisive for C2 and
+      would have to survive the same falsifier as any candidate: the exact
+      value must still agree once more digits exist. A miss establishes
+      nothing beyond the OEIS not knowing this constant.
+    scan:
+      snapshot: '2026-08-28'
+      terms: [2, 0, 2, 1, 3, 3, 2, 8, 8, 8, 6, 1]
+      prefix_hits: {3: 5295, 4: 1398, 5: 167, 6: 11, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0}
+      hits: []
+      expected_by_chance: 2.347349e-10
+      verdict: no-hit
+      reason: no OEIS sequence contains these 12 terms (largest |term| 8)
+  - id: C_SHP_OLD_DIGITS
+    title: Leading fifteen significant digits of the historical C_shp, as a constant
+    builder: c_shp_historical_digits
+    generated_by: census-output
+    bears_on: [C2, G3, C_SHP_HISTORICAL]
+    what_a_hit_would_mean: >
+      The same question put to the other side of C2, because asking it of only
+      one side would be preferring that side. The asymmetry that remains is in
+      the evidence and not in the treatment: this value is an exact rational,
+      so a match would NAME a constant already known here rather than identify
+      an unknown one. Fifteen digits because every one of them is real.
+    scan:
+      snapshot: '2026-08-28'
+      terms: [4, 8, 0, 8, 6, 3, 8, 3, 1, 8, 1, 3, 5, 8, 7]
+      prefix_hits: {3: 1803, 4: 172, 5: 16, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0}
+      hits: []
+      expected_by_chance: 4.533244e-16
+      verdict: no-hit
+      reason: no OEIS sequence contains these 15 terms (largest |term| 8)
+  - id: M_GAMMA_DIGITS
+    title: Leading twelve significant digits of the blind Gamma-point scalar m_Gamma^(4)
+    builder: m_gamma_digits
+    generated_by: census-output
+    bears_on: [C1, M_GAMMA_4_NUM, HAMER_A4_NUM]
+    what_a_hit_would_mean: >
+      m_Gamma^(4) is the program's strongest external agreement — it reproduces
+      Hamer's a_4 through the m_n = 2^(n-1) a_n bridge with no historical
+      target in its data flow. If its decimal expansion were a known constant,
+      that would be a second, independent external hook on the same number.
+      Twelve digits, from the run's own gamma_spread of 2.2e-13.
+    scan:
+      snapshot: '2026-08-28'
+      terms: [7, 7, 5, 1, 4, 5, 8, 6, 3, 0, 1, 8]
+      prefix_hits: {3: 2195, 4: 199, 5: 27, 6: 3, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0}
+      hits: []
+      expected_by_chance: 2.354759e-11
+      verdict: no-hit
+      reason: no OEIS sequence contains these 12 terms (largest |term| 8)

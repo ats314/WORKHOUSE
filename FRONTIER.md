@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 224/224 checks pass.
+**T1/T2 — re-derived here.** 244/244 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -38,6 +38,8 @@ it cannot drift from what the repository actually checks.
 | off-axis channel ledger (C2 geography, G14) | 23/23 |
 | the flat-band manuscript | 5/5 |
 | finite-rank truncation bridge (published SU(3) truncations) | 8/8 |
+| exact-form identification and external witness (C2, G3) | 16/16 |
+| dual-engine witness for the T1 layer (ADR 0010, R2, R14) | 4/4 |
 | two-cube charge-odd second-order closure (B=4 and B=6) | 6/6 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by

@@ -46,6 +46,7 @@ from . import claims as claims_mod
 from . import ledger as ledger_mod
 from . import literature as literature_mod
 from . import notes as notes_mod
+from . import oeis as oeis_mod
 from . import triage as triage_mod
 from .claims import ADR_REF, LEDGER_ID
 from .invariants import SUITES, source_path
@@ -72,6 +73,7 @@ CURATED_TYPES = frozenset(
         "uses",  # a check body reads a registered constant (K.NAME)
         "contains",  # notes.yaml: the archive a note document was inventoried in
         "evidences",  # runs/index.yaml: a pinned run record bears on a ledger item
+        "matches",  # sequences.yaml: an OEIS entry containing a registered sequence
         "duplicate_of",  # notes.yaml reviews
         "superseded_by",  # notes.yaml reviews
     }
@@ -82,6 +84,30 @@ CURATED_TYPES = frozenset(
 #: ``how`` field on each edge keeps them distinguishable.
 DERIVED_TYPES = frozenset({"cites", "mentions", "amends", "retracts", "uses", "carries"})
 TYPES = CURATED_TYPES | DERIVED_TYPES
+
+
+#: Where the sequence edges come from, named once so the edge's `source` field
+#: and the register cannot drift apart.
+SEQ_SOURCE = "ledger/sequences.yaml"
+
+
+def resolve_target(target: str) -> str:
+    """A curated cross-reference as a catalogue node id.
+
+    An already-namespaced id (anything containing a colon) passes through, a
+    ledger id stands for itself, and a bare name is a registered constant.
+
+    One rule for every register. The inline version this replaces coerced any
+    non-ledger target to ``CONST:``, which would have turned a namespaced
+    ``LEAN:foo`` into ``CONST:LEAN:foo`` and dangled it -- harmless only for as
+    long as no curated file names one, which is not a property anybody was
+    maintaining on purpose.
+    """
+    if ":" in target:
+        return target
+    if LEDGER_ID.fullmatch(target):
+        return target
+    return f"CONST:{target}"
 
 
 @dataclass(frozen=True, order=True)
@@ -266,12 +292,28 @@ def build(
         for target in run.get("bears_on", []):
             add(f"RUN:{run['id']}", target, "evidences", "curated", "runs/index.yaml")
 
+    # The sequence register. `bears_on` reads the register's own field name, so
+    # the edge type is that field verbatim (ADR 0007). Targets are resolved
+    # explicitly rather than by the literature module's `CONST:` coercion:
+    # that coercion assumes every non-ledger target is a bare constant name and
+    # would turn an already-namespaced id into `CONST:LEAN:...`, which dangles.
+    for seq in oeis_mod.load():
+        for target in seq.bears_on:
+            add(f"SEQ:{seq.id}", resolve_target(target), "bears_on", "curated", SEQ_SOURCE)
+        for aid in sorted((seq.scan or {}).get("hits", ())):
+            add(f"OEIS:{aid}", f"SEQ:{seq.id}", "matches", "curated", SEQ_SOURCE)
+
     lit = literature_mod.load()
     for paper in lit.papers:
         for edge in paper.get("bears_on", []):
             target = edge["target"]
-            dst = target if LEDGER_ID.fullmatch(target) else f"CONST:{target}"
-            add(f"LIT:{paper['id']}:{target}", dst, "bears_on", "curated", "literature/index.yaml")
+            add(
+                f"LIT:{paper['id']}:{target}",
+                resolve_target(target),
+                "bears_on",
+                "curated",
+                "literature/index.yaml",
+            )
     # The citation web: curated per-paper cites lists, emitted between the
     # paper-level LIT nodes. Bibliography, not endorsement — these edges can
     # rank and connect papers and can promote nothing.
@@ -310,8 +352,7 @@ def build(
                 # Same id-space rule the literature edges use: a bears_on
                 # target is either a ledger id (C2, G14) or a bare constant
                 # name, which is a CONST record.
-                dst = target if LEDGER_ID.fullmatch(target) else f"CONST:{target}"
-                add(nid, dst, "bears_on", "curated", "ledger/notes.yaml")
+                add(nid, resolve_target(target), "bears_on", "curated", "ledger/notes.yaml")
             for field_, type_ in (
                 ("duplicate_of", "duplicate_of"),
                 ("superseded_by", "superseded_by"),

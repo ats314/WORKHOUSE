@@ -207,3 +207,110 @@ def compare() -> dict:
         "c_base": c_base,
         "swaps": swaps,
     }
+
+
+# --------------------------------------------------------------------------
+# how much each amplitude family can move each fitted coefficient
+# --------------------------------------------------------------------------
+def amplitude_family(key: Key) -> tuple[str, str]:
+    """:func:`record_class`, with the nn same-plane class split by orientation.
+
+    The nn same-plane records carry TWO amplitudes, not one: a displacement
+    along an axis that lies in the record's own plane behaves differently from
+    one normal to it, and only the normal family touches ``A``. Lumping them --
+    which ``record_class`` does, because it classifies geometry rather than
+    dynamics -- hides exactly the split that decides which amplitudes ``A = 5/48``
+    already pins.
+    """
+    displacement, in_plane, _out = key
+    cls = record_class(key)
+    if cls != ("nn", "same"):
+        return cls
+    axis = next(i for i, x in enumerate(displacement) if x)
+    return ("nn-normal" if axis not in in_plane else "nn-inplane", "same")
+
+
+def sensitivities(
+    kernel: dict[Key, float] | None = None,
+    keys: set[Key] | None = None,
+    eps: float = 1e-3,
+) -> dict:
+    """d(A, B, C, D)/d|amplitude| for each family, one family at a time.
+
+    The 4-point Bloch fit is an exact linear functional of the record weights,
+    so these derivatives are exact numbers rather than local slopes, and a
+    finite difference recovers them to fit precision at any step size. They are
+    what says which amplitude can move which coefficient -- and, read the other
+    way, which measurement would decide C2 and which one provably cannot.
+
+    ``keys`` restricts which records move, and it matters: a family's
+    derivative is a property of the records perturbed, not of the class name.
+    ``('nn', 'cross')`` spans 36 records across the whole kernel but only the
+    12 divergent ones are in dispute, and the two derivatives are different
+    numbers. Default is the whole kernel; :func:`divergent_families` gives the
+    subset the C2 dispute actually lives on.
+    """
+    kernel = load_historical() if kernel is None else kernel
+    base = extract_shape(kernel)
+    moving = set(kernel) if keys is None else keys
+    families: dict[tuple[str, str], list[Key]] = {}
+    for key in moving:
+        families.setdefault(amplitude_family(key), []).append(key)
+    out = {}
+    for family, member_keys in families.items():
+        moved = dict(kernel)
+        for key in member_keys:
+            moved[key] = kernel[key] + eps * (1.0 if kernel[key] >= 0 else -1.0)
+        shifted = extract_shape(moved)
+        out[family] = {c: (shifted[c] - base[c]) / eps for c in "ABCD"}
+        out[family]["records"] = len(member_keys)
+    return out
+
+
+def divergent_families(comparison: dict | None = None) -> dict[tuple[str, str], list[Key]]:
+    """The disputed records, grouped by amplitude family."""
+    comparison = compare() if comparison is None else comparison
+    families: dict[tuple[str, str], list[Key]] = {}
+    for keys in comparison["divergent"].values():
+        for key in keys:
+            families.setdefault(amplitude_family(key), []).append(key)
+    return families
+
+
+def attribution() -> dict:
+    """The C difference between the kernels, split across amplitude families.
+
+    Each family's contribution is measured by swapping that family alone from
+    the scale-matched historical kernel to the cold one, which is exact because
+    the fit is linear. Two of the four contributions are not free:
+    ``('onsite', 'same')`` moves nothing at all, and ``('nn-normal', 'same')``
+    is fixed by ``A``, which both kernels return as 5/48.
+    """
+    hist, cold = load_historical(), load_cold()
+    comparison = compare()
+    scaled = {k: comparison["scale"] * w for k, w in hist.items()}
+    base = extract_shape(scaled)
+    families = divergent_families(comparison)
+    parts = {}
+    for family, keys in families.items():
+        swapped = dict(scaled)
+        for key in keys:
+            swapped[key] = cold[key]
+        shifted = extract_shape(swapped)
+        parts[family] = {
+            "records": len(keys),
+            "dA": shifted["A"] - base["A"],
+            "dC": shifted["C"] - base["C"],
+            "scaled_historical": abs(scaled[keys[0]]),
+            "cold": abs(cold[keys[0]]),
+            "cold_replicate_spread": (
+                max(abs(cold[k]) for k in keys) - min(abs(cold[k]) for k in keys)
+            ),
+        }
+    return {
+        "base": base,
+        "cold": comparison["shape_cold"],
+        "parts": parts,
+        "total_dA": sum(p["dA"] for p in parts.values()),
+        "total_dC": sum(p["dC"] for p in parts.values()),
+    }

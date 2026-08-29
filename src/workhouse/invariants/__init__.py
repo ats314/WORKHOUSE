@@ -45,6 +45,8 @@ _MODULES = (
     "channels",
     "manuscript",
     "bridge",
+    "identification",
+    "dual_engine",
     "two_cube",
 )
 

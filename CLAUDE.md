@@ -23,7 +23,7 @@ So a claim's status is **computed, not asserted**:
 | Tier | Meaning | Where it lives |
 |---|---|---|
 | **T0 proved** | Lean 4 compiles it, no `sorry`, standard axioms only | `lean/Workhouse/` |
-| **T1 derived** | re-derived symbolically from stated definitions, exactly | `src/workhouse/invariants/` |
+| **T1 derived** | re-derived symbolically from stated definitions, exactly — witnessed by a second engine (ADR 0016) | `src/workhouse/invariants/` |
 | **T2 numerical** | float agreement within a stated tolerance | same, tolerance in the detail line |
 | **T3 asserted** | a document says so and nothing checks it | `theory/`, the ledgers |
 
@@ -105,6 +105,15 @@ The second exists because the first cannot see the sealed core: `5/48`, `5/12`,
 `5/612`, `11/306`, `7/102` have no entry in it, and `5/48` alone lives in 44
 code files.
 
+When a value is recorded only as a float, `workhouse identify` answers the
+next question — what exact form it could have — and it answers the *useful*
+half: what it cannot. An integer-relation search always returns something (the
+pigeonhole guarantees a relation at height `10**(p/n)`), and
+`limit_denominator` always returns a rational with residual exactly zero; C20
+is the scar of believing one. So a hit is priced against the digits the value
+actually carries, rationals are *enumerated* exactly rather than searched for,
+and nothing found this way is ever promoted. ADR 0015 states the rule.
+
 `workhouse search` is the front door to both, plus the claim catalogue and the
 curated aliases in `ledger/symbols.yaml`. It matches by *value* rather than
 spelling (`-10/96` finds `-5/48`), and it carries two warnings a grep cannot:
@@ -115,11 +124,13 @@ forbidden names (`m_4`) and names coined here that the corpus never uses
 
 ```bash
 make verify    # re-derive every exact claim (T1/T2)
+make cross-check # ... and recompute the exact layer in python-flint too
 make status    # contradiction and gap registers
 make frontier  # regenerate FRONTIER.md — established / disputed / refuted / next
 make certified # regenerate CERTIFIED.md — every checked claim, ranked by tier
 make catalogue # regenerate index/ — claims.jsonl, symbols.jsonl, graph.jsonl
 make lit       # published work, and which claim each paper bears on
+make oeis      # the sequence register, and what the OEIS says about it
 make check     # ruff + pytest, what CI runs
 make lean      # T0: proof-check the Lean core (needs elan; see lean/README.md)
 make manifest  # re-pin theory/ after a deliberate, reviewed corpus change
@@ -134,6 +145,8 @@ workhouse export -o graph.json      # claims+symbols+edges as one versioned JSON
 workhouse triage /path/to/archive   # survey an unpinned collection
 workhouse notes                     # the notes register: reviewed vs pending, per archive
 workhouse notes --queue             # the next notes to review, highest signal first
+workhouse identify --claim C_shp    # what a recorded float can and cannot be
+workhouse oeis                      # the sequence register, and the OEIS's answer
 ```
 
 `FRONTIER.md` and `CERTIFIED.md` are generated and checked in. A test fails if
