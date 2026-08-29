@@ -458,5 +458,5 @@ def render(graph: Graph | None = None) -> str:
 
 def write(path: Path | None = None) -> Path:
     target = path or GRAPH
-    target.write_text(render())
+    target.write_text(render(), encoding="utf-8")
     return target

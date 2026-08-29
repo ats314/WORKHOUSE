@@ -92,13 +92,15 @@ def _signal(row: dict[str, Any]) -> int:
 def load(register: Path | None = None, notes_dir: Path | None = None) -> Notes:
     register = register or REGISTER
     notes_dir = notes_dir or NOTES_DIR
-    data = yaml.safe_load(register.read_text()) or {}
+    data = yaml.safe_load(register.read_text(encoding="utf-8")) or {}
     notes = Notes(archives=data.get("archives", []), reviews=data.get("reviews", []))
     for archive in notes.archives:
         manifest = notes_dir / f"{archive['id']}.jsonl"
         if manifest.is_file():
             notes.manifests[archive["id"]] = [
-                json.loads(line) for line in manifest.read_text().splitlines() if line.strip()
+                json.loads(line)
+                for line in manifest.read_text(encoding="utf-8").splitlines()
+                if line.strip()
             ]
     return notes
 
@@ -141,7 +143,9 @@ def write_manifest(
     notes_dir = notes_dir or NOTES_DIR
     notes_dir.mkdir(parents=True, exist_ok=True)
     target = notes_dir / f"{archive_id}.jsonl"
-    target.write_text("".join(json.dumps(row, sort_keys=True) + "\n" for row in rows))
+    target.write_text(
+        "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows), encoding="utf-8"
+    )
     return target
 
 
@@ -227,11 +231,21 @@ def validate(notes: Notes | None = None, root: Path | None = None) -> list[str]:
             elif _is_digest(dup) and dup not in manifest_digests:
                 problems.append(f"{label}: duplicate_of digest is in no manifest")
 
+        # Same shape as duplicate_of above, and for the same reason: a
+        # successor is often another inventoried note, but it can equally be a
+        # file this repository already pins -- a draft superseded by the
+        # manuscript of record, say. Requiring a manifest digest there would
+        # force the weaker `set-aside` on a document whose successor is MORE
+        # locatable than any manifest entry, not less.
         if verdict == "superseded":
             sup = str(review.get("superseded_by", ""))
-            if not _is_digest(sup):
-                problems.append(f"{label}: superseded_by must be the successor's digest")
-            elif sup not in manifest_digests:
+            if not sup:
+                problems.append(f"{label}: superseded names no superseded_by")
+            elif not _is_digest(sup) and not (root / sup).is_file():
+                problems.append(
+                    f"{label}: superseded_by {sup!r} is neither a digest nor a repository file"
+                )
+            elif _is_digest(sup) and sup not in manifest_digests:
                 problems.append(f"{label}: superseded_by digest is in no manifest")
 
         for target in review.get("bears_on", []):

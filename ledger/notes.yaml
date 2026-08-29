@@ -21,7 +21,8 @@
 #              required — name what it entered through.
 #   duplicate  same content as something already pinned or reviewed;
 #              `duplicate_of` names the path or digest.
-#   superseded an earlier draft of a later note; `superseded_by` digest.
+#   superseded an earlier draft of a later note; `superseded_by` names the
+#              successor, as a manifest digest or a path this repository pins.
 #   set-aside  reviewed, judged not load-bearing now; the reason says why.
 #
 # Every verdict carries a mandatory `reason`. A review without one is
@@ -281,6 +282,35 @@ archives:
       no public B6_dim(3) artifact exists, that the tempting B6_dim(3_2) name
       means d = 3/2, and it pins the exact upstream commits and blob hashes the generation
       rests on.
+
+  - id: UPLOADS_2026-08-28i
+    description: >-
+      The theory-graph atlas bundle: 31 files handed over as one .7z, being
+      the working set behind the 2026-08-28 paper drafts. Twenty-two are
+      byte-identical to artifacts this repository already pins, one is a
+      generated view of this repository's own graph, and eight are documents
+      no inventory had seen -- four of them successive drafts in the master
+      paper's own lineage, plus an agent experience memo on the theory-graph
+      interface, the finite-N capability result in a longer edition, a
+      charge-odd shell validation in plain text, and a VQE energy plot.
+    source: >-
+      Uploaded directly to the session on 2026-08-28 as
+      WORKHOUSE_THEORY_GRAPH_ATLAS_20260828.7z. The inventory fact that
+      decided how to treat it: this is mostly a RE-DELIVERY. A digest sweep
+      against the working tree and every prior manifest matched 22 of 31
+      files already pinned under runs/, paper/ and notes/imported/, so the
+      review below is dominated by `duplicate`, and the archive's value is
+      the eight that were new. The atlas HTML is the sharpest case in the
+      whole notes register for the derived/asserted boundary: it is not a
+      source document at all but the output of `workhouse atlas`, and the
+      copy shipped here reports 2,215 nodes and 2,759 edges where HEAD
+      regenerates 2,329 and 3,069. Importing it would have pinned a stale
+      view of this repository as though it were evidence about this
+      repository, so it is set aside with the regeneration command as its
+      reason. The experience memo is the item to read first: it is not
+      physics but a bug report against this repository's own CLI, and one of
+      its three findings reproduced here exactly as described.
+
 
 reviews:
 # Third review pass: the 2026-08-28 second batch, reviewed on arrival. The
@@ -2719,3 +2749,337 @@ reviews:
     bears_on: [R2]
     reason: >-
       The instrument. Deliberately does not enumerate the global B = 6 basis: through second order only the states reached by one action of M are needed. Pinned for inspection, not re-run here -- it imports a prior adapter and the pyclebsch package, neither of which travelled with the bundle, so the run record audits its certificate's arithmetic instead and says so.
+
+
+# Twelfth review pass: the theory-graph atlas bundle, 2026-08-28. Mostly a
+# re-delivery -- 22 of 31 files are byte-identical to artifacts already pinned,
+# which is why this pass is dominated by `duplicate`. The eight that were new
+# split three ways: two drafts of the master paper superseded by the pinned
+# artifact of record, a generated atlas and an unprovenanced figure set aside,
+# and three documents imported -- the full finite-order derivation, an agent bug
+# report against this repository's own CLI, and a LATER edition of the finite-N
+# capability result than the one already pinned. The atlas is set aside rather
+# than superseded because it is not a draft of anything: it is this repository's
+# own graph, rendered, and `workhouse atlas` regenerates it.
+
+  - digest: 1689159a934a877c7ecb5c00518c90e548bc6a19bb4248e5cf6c33df50b55ab0
+    path: B6_OPEN_CUBE_SIGN_REVERSAL_VALIDATION_2026-08-28.md
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: runs/b6_open_cube_channel_complete_2026-08-28/B6_OPEN_CUBE_SIGN_REVERSAL_VALIDATION_20260828.md
+    reason: Byte-identical to runs/b6_open_cube_channel_complete_2026-08-28/B6_OPEN_CUBE_SIGN_REVERSAL_VALIDATION_20260828.md,
+      which this repository already pins and whose checks already read it. Re-delivered inside the atlas
+      bundle as part of the working set behind the paper drafts; nothing here is new. Recorded rather
+      than dropped so the bundle's inventory is complete and the re-delivery is on the record.
+  - digest: 92cd12751575e3429c8447d0927943fb3dc4f940cef478d784f5d692701670d8
+    path: B6_SOURCE_AND_GENERATOR_AUDIT_2026-08-28.md
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: runs/b6_open_cube_channel_complete_2026-08-28/B6_SOURCE_AND_GENERATOR_AUDIT_20260828.md
+    reason: Byte-identical to runs/b6_open_cube_channel_complete_2026-08-28/B6_SOURCE_AND_GENERATOR_AUDIT_20260828.md,
+      which this repository already pins and whose checks already read it. Re-delivered inside the atlas
+      bundle as part of the working set behind the paper drafts; nothing here is new. Recorded rather
+      than dropped so the bundle's inventory is complete and the re-delivery is on the record.
+  - digest: 194188b6165fe875b2f1f0547ee3d3d7d3cc8f4213ca3283bdf32137350f88cf
+    path: BALAJI_B6_REPRESENTATION_THEORETIC_VALIDATION_ROUTE_2026-08-28.md
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: runs/b6_open_cube_channel_complete_2026-08-28/BALAJI_B6_REPRESENTATION_THEORETIC_VALIDATION_ROUTE_20260828.md
+    reason: Byte-identical to runs/b6_open_cube_channel_complete_2026-08-28/BALAJI_B6_REPRESENTATION_THEORETIC_VALIDATION_ROUTE_20260828.md,
+      which this repository already pins and whose checks already read it. Re-delivered inside the atlas
+      bundle as part of the working set behind the paper drafts; nothing here is new. Recorded rather
+      than dropped so the bundle's inventory is complete and the re-delivery is on the record.
+  - digest: 531132adb17a379aebc2ada12509ccc36daa371e8085c77c2637376bddcadd34
+    path: BALAJI_OPEN_CUBE_CHARGE_ODD_SHELL_VALIDATION_2026-08-28.md
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: runs/balaji_open_cube_b4_t1_2026-08-28/BALAJI_OPEN_CUBE_CHARGE_ODD_SHELL_VALIDATION_2026-08-28.md
+    reason: Byte-identical to runs/balaji_open_cube_b4_t1_2026-08-28/BALAJI_OPEN_CUBE_CHARGE_ODD_SHELL_VALIDATION_2026-08-28.md,
+      which this repository already pins and whose checks already read it. Re-delivered inside the atlas
+      bundle as part of the working set behind the paper drafts; nothing here is new. Recorded rather
+      than dropped so the bundle's inventory is complete and the re-delivery is on the record.
+  - digest: a567316ab629a87f6fb8e7799bcbe4383c056cec85de651e07ec181bd9260d71
+    path: CBB_FINITE_N_SU3_TN_BBDAGGER_BRIDGE_2026-08-28.md
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: notes/imported/UPLOADS_2026-08-28e/CBB_FINITE_N_SU3_TN_BBDAGGER_BRIDGE_20260828.md
+    reason: Byte-identical to notes/imported/UPLOADS_2026-08-28e/CBB_FINITE_N_SU3_TN_BBDAGGER_BRIDGE_20260828.md,
+      which this repository already pins and whose checks already read it. Re-delivered inside the atlas
+      bundle as part of the working set behind the paper drafts; nothing here is new. Recorded rather
+      than dropped so the bundle's inventory is complete and the re-delivery is on the record.
+  - digest: 27a29e695d3dd9aede47549ee0828cb510a686ec5dc27291e459a274586aeb75
+    path: NESTED_QUOTIENT_GAUGE_SPECTRAL_THEORY_COMPLETE_UNIFIED_MASTER_CLOSED_2026-08-28.docx
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: notes/imported/UPLOADS_2026-08-28c/NESTED_QUOTIENT_GAUGE_SPECTRAL_THEORY_COMPLETE_UNIFIED_MASTER_CLOSED_20260828.docx
+    reason: Byte-identical to notes/imported/UPLOADS_2026-08-28c/NESTED_QUOTIENT_GAUGE_SPECTRAL_THEORY_COMPLETE_UNIFIED_MASTER_CLOSED_20260828.docx,
+      which this repository already pins and whose checks already read it. Re-delivered inside the atlas
+      bundle as part of the working set behind the paper drafts; nothing here is new. Recorded rather
+      than dropped so the bundle's inventory is complete and the re-delivery is on the record.
+  - digest: a4da893f56ef49266571443918f77f158d7238492c56e1c865b54eabea51b792
+    path: WORKHOUSE_Master_Document.pdf
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: paper/nested_quotient_master_2026-08-28.pdf
+    reason: Byte-identical to paper/nested_quotient_master_2026-08-28.pdf, which this repository already
+      pins and whose checks already read it. Re-delivered inside the atlas bundle as part of the working
+      set behind the paper drafts; nothing here is new. Recorded rather than dropped so the bundle's
+      inventory is complete and the re-delivery is on the record.
+  - digest: 2aab926a1387a143aa56440fc563d95b2566b79f1b4d24fc9826be599d54a6a1
+    path: b6_cube_reduced_certificate.json
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: runs/b6_open_cube_channel_complete_2026-08-28/b6_cube_reduced_certificate.json
+    reason: Byte-identical to runs/b6_open_cube_channel_complete_2026-08-28/b6_cube_reduced_certificate.json,
+      which this repository already pins and whose checks already read it. Re-delivered inside the atlas
+      bundle as part of the working set behind the paper drafts; nothing here is new. Recorded rather
+      than dropped so the bundle's inventory is complete and the re-delivery is on the record.
+  - digest: 36687f407dfbb1c4b56183f21f7ed5eae22a330db07dd70fa51de379291100d8
+    path: balaji_open_cube_B4_T1_certificate.json
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: runs/balaji_open_cube_b4_t1_2026-08-28/balaji_open_cube_B4_T1_certificate.json
+    reason: Byte-identical to runs/balaji_open_cube_b4_t1_2026-08-28/balaji_open_cube_B4_T1_certificate.json,
+      which this repository already pins and whose checks already read it. Re-delivered inside the atlas
+      bundle as part of the working set behind the paper drafts; nothing here is new. Recorded rather
+      than dropped so the bundle's inventory is complete and the re-delivery is on the record.
+  - digest: b65b1e911a6bff0e669a1eeccfae908938562917993dfcdd3b4d66accc4e9378
+    path: balaji_open_cube_B4_T1_hamiltonian.npz
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: runs/balaji_open_cube_b4_t1_2026-08-28/balaji_open_cube_B4_T1_hamiltonian.npz
+    reason: Byte-identical to runs/balaji_open_cube_b4_t1_2026-08-28/balaji_open_cube_B4_T1_hamiltonian.npz,
+      which this repository already pins and whose checks already read it. Re-delivered inside the atlas
+      bundle as part of the working set behind the paper drafts; nothing here is new. Recorded rather
+      than dropped so the bundle's inventory is complete and the re-delivery is on the record.
+  - digest: 3a253bf551d74133e82c09a0805e36d651dbfaa68f604b2467109719cb80e1f9
+    path: balaji_open_cube_padding_audit_certificate.json
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: runs/balaji_open_cube_b4_t1_2026-08-28/balaji_open_cube_padding_audit_certificate.json
+    reason: Byte-identical to runs/balaji_open_cube_b4_t1_2026-08-28/balaji_open_cube_padding_audit_certificate.json,
+      which this repository already pins and whose checks already read it. Re-delivered inside the atlas
+      bundle as part of the working set behind the paper drafts; nothing here is new. Recorded rather
+      than dropped so the bundle's inventory is complete and the re-delivery is on the record.
+  - digest: 9d77369cdb80497f10b89fadcea3308ad529e34cac5e7ee566a48923b2df38b4
+    path: reconstruct_balaji_open_cube.py
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: runs/balaji_open_cube_b4_t1_2026-08-28/reconstruct_balaji_open_cube.py
+    reason: Byte-identical to runs/balaji_open_cube_b4_t1_2026-08-28/reconstruct_balaji_open_cube.py,
+      which this repository already pins and whose checks already read it. Re-delivered inside the atlas
+      bundle as part of the working set behind the paper drafts; nothing here is new. Recorded rather
+      than dropped so the bundle's inventory is complete and the re-delivery is on the record.
+  - digest: fb79dd04e532b54d1a7136da039b421d55d22b841bbe3f7db581558d8cab4575
+    path: reduced_b6_cube_second_order.py
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: runs/b6_open_cube_channel_complete_2026-08-28/reduced_b6_cube_second_order.py
+    reason: Byte-identical to runs/b6_open_cube_channel_complete_2026-08-28/reduced_b6_cube_second_order.py,
+      which this repository already pins and whose checks already read it. Re-delivered inside the atlas
+      bundle as part of the working set behind the paper drafts; nothing here is new. Recorded rather
+      than dropped so the bundle's inventory is complete and the re-delivery is on the record.
+  - digest: 8094af537eb80877bc48083c0f21d9ce52b831f36c04cf1c42729d03e5a1e18d
+    path: su3_finite_n_bridge_certificate.json
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: notes/imported/UPLOADS_2026-08-28e/su3_finite_n_bridge_certificate.json
+    reason: Byte-identical to notes/imported/UPLOADS_2026-08-28e/su3_finite_n_bridge_certificate.json,
+      which this repository already pins and whose checks already read it. Re-delivered inside the atlas
+      bundle as part of the working set behind the paper drafts; nothing here is new. Recorded rather
+      than dropped so the bundle's inventory is complete and the re-delivery is on the record.
+  - digest: 194cef2b55d0263c9647bf09bf953eefbf0425006710e8791cbbfb87775bc592
+    path: verify_cbb_tn_bridge.py
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: runs/cbb_finite_n_bridge_2026-08-28/verify_cbb_tn_bridge.py
+    reason: Byte-identical to runs/cbb_finite_n_bridge_2026-08-28/verify_cbb_tn_bridge.py, which this
+      repository already pins and whose checks already read it. Re-delivered inside the atlas bundle
+      as part of the working set behind the paper drafts; nothing here is new. Recorded rather than
+      dropped so the bundle's inventory is complete and the re-delivery is on the record.
+  - digest: 55f47cd77126e296d8dbd91d1a18ca2b66a80afa9dd20bc78c56c88a56113c5c
+    path: Efficient Truncations of SU(Nc) Lattice Gauge Theory for Quantum Simulation.pdf
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: 55f47cd77126e296d8dbd91d1a18ca2b66a80afa9dd20bc78c56c88a56113c5c
+    reason: 'The Ciavarella-Burbano-Bauer paper, arXiv:2503.11888v5. Reviewed on arrival in the f batch
+      and deliberately NOT stored: its redistribution licence was never established, so the register
+      carries the digest and the reading instead of the bytes. That decision is unchanged by the re-delivery.
+      Same digest as the copy inventoried under UPLOADS_2026-08-28f.'
+  - digest: 4afb495db60dcd670d1d96ca44c96087f7224ac4293d0858684bdad31a87c396
+    path: FABLEFINALDRAFT.txt
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: 4afb495db60dcd670d1d96ca44c96087f7224ac4293d0858684bdad31a87c396
+    reason: 'A LaTeX draft of the master paper, already inventoried in the d batch. Worth recording
+      what the re-delivery makes visible: it is a SIBLING of "Claudepaper 8-28.txt" in the same bundle,
+      not an ancestor -- 44 of its 743 lines differ from the pinned paper/master_paper_2026-08-28.tex
+      against Claudepaper''s 51, and both carry the same 30 \chk lines. Two drafts of one paper, converged
+      on the same check-citation device. Same digest as the copy inventoried under UPLOADS_2026-08-28d.'
+  - digest: 71650416d5788daac6e82117306a18bd20086d4fad2c9126de7f829affa1b8db
+    path: NESTED_QUOTIENT_GAUGE_SPECTRAL_THEORY_UNIFIED_MASTER_2026-08-28.docx
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: 71650416d5788daac6e82117306a18bd20086d4fad2c9126de7f829affa1b8db
+    reason: The cross-source UNIFIED MASTER, already inventoried and reviewed in the b batch. Re-delivered
+      unchanged. Same digest as the copy inventoried under UPLOADS_2026-08-28b.
+  - digest: 2c5503906c779270bf7c0668b4827535f7bbbe779492df5f5b140a34db810628
+    path: Nested_Quotient_Circuit_Hodge_Gauge_Spectral_Theory_Master.docx
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: 2c5503906c779270bf7c0668b4827535f7bbbe779492df5f5b140a34db810628
+    reason: The closure-audited Master edition, already inventoried and reviewed in the b batch. It
+      is also the successor named by two superseded verdicts below, which is why its digest needed to
+      stay locatable. Same digest as the copy inventoried under UPLOADS_2026-08-28b.
+  - digest: 42bc3bb96aa5f3b93a02642828074040421c820515a0f74931851cfbf21f1c47
+    path: WORKHOUSE_Final_Paper.zip
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: 42bc3bb96aa5f3b93a02642828074040421c820515a0f74931851cfbf21f1c47
+    reason: The final-paper container from the b batch, re-delivered unchanged. Same digest as the copy
+      inventoried under UPLOADS_2026-08-28b.
+  - digest: b6bbec6f699194ae99ef71eadbfe5b617de4ad93aab7cedd1a2a16a7a713feb2
+    path: balaji_open_cube_B4_T1_certificate.zip
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: b6bbec6f699194ae99ef71eadbfe5b617de4ad93aab7cedd1a2a16a7a713feb2
+    reason: The B = 4 certificate container from the g batch, re-delivered unchanged. Its extracted
+      contents are pinned under runs/balaji_open_cube_b4_t1_2026-08-28 and are separately duplicated
+      in this same bundle. Same digest as the copy inventoried under UPLOADS_2026-08-28g.
+  - digest: 7c15d85a5e849788a3a5993a413133705da79ced2fc0740260ee1e47374de6b8
+    path: final_paper_20260828.md
+    archive: UPLOADS_2026-08-28i
+    verdict: duplicate
+    duplicate_of: 7c15d85a5e849788a3a5993a413133705da79ced2fc0740260ee1e47374de6b8
+    reason: The short final-paper markdown from the b batch, re-delivered unchanged. Same digest as
+      the copy inventoried under UPLOADS_2026-08-28b.
+  - digest: 7d7be989e71fd6aa3c4a7dfd70cd256eaaf4de4183663deebed2201a5d0b1c9f
+    path: Balaji Open-Cube Charge-Odd Shell Validation.txt
+    archive: UPLOADS_2026-08-28i
+    verdict: superseded
+    superseded_by: 531132adb17a379aebc2ada12509ccc36daa371e8085c77c2637376bddcadd34
+    bears_on:
+    - R2
+    reason: 'The plain-text edition of the charge-odd shell validation, and demonstrably the EARLIER
+      one: the pinned Markdown carries a section this copy does not, the Kimura 1984 cross-check, which
+      states the y = 2u convention dictionary, confirms the zeroth-order energy and the first-order
+      sign, and then says in its own words that it does NOT test the open-cube second-order coefficient
+      because Kimura''s state is translation projected in a different geometry and his A_1/E four-link
+      states are charge even. Losing that paragraph would have cost exactly the caveat that keeps the
+      cross-check from reading as corroboration of the coefficient. Superseded by the Markdown already
+      pinned at runs/balaji_open_cube_b4_t1_2026-08-28/.'
+  - digest: 72701d79f9672eb3b9aaefdcf34812ca3d7b38bb62d862fffeb09b4efd707479
+    path: Nested_Quotient_Gauge_Spectral_Theory_Proven_Derivations.md
+    archive: UPLOADS_2026-08-28i
+    verdict: superseded
+    superseded_by: 6a28460a6d2d7fabc954015faafb080b55df025c23e1b550676fcc149bbe76ba
+    bears_on:
+    - C2
+    - C4
+    reason: 'The Markdown edition of the "Proven Derivations" synthesis whose .docx was reviewed as
+      superseded under UPLOADS_2026-08-28; it inherits that verdict and that successor, the closure-audited
+      Master edition. Two things worth keeping from the re-read. It is the heaviest coefficient carrier
+      in the whole bundle -- triage finds ten registered signatures in it, including BOTH C_shp branches
+      side by side, which is the correct handling and not a merge. And it is flagged for the C4 coupling
+      erratum: its printed coefficients are already in the canonical u = beta_N/(2N), so nothing here
+      may be rescaled by 4**r.'
+  - digest: 7f63ea60992b99c0b8227c95eee53eccacc1407e2fce2bb66763e6ebc96a8277
+    path: WORKHOUSE_THEORY_GRAPH_ATLAS_2026-08-28.html
+    archive: UPLOADS_2026-08-28i
+    verdict: set-aside
+    reason: 'Not a source document at all: this is the output of `workhouse atlas`, a generated view
+      of THIS repository''s own graph, and the sharpest case in the register for the derived/asserted
+      boundary. Importing it would pin a snapshot of the repository as though it were evidence about
+      the repository. It is also already stale -- the shipped copy reports 2,215 nodes and 2,759 edges,
+      where HEAD regenerates 2,329 and 3,069, so the bundle''s own atlas no longer describes the graph
+      it was rendered from. Set aside with its regeneration command as the reason it need not be kept:
+      `workhouse atlas -o atlas.html`. Nothing is lost; the generator and the ledgers it reads are both
+      in the repository.'
+  - digest: 63e9c5e3c10962ecfb8553381483885d499bce9f2fd0a88a13e08102233b720e
+    path: Claudepaper 8-28.txt
+    archive: UPLOADS_2026-08-28i
+    verdict: superseded
+    superseded_by: paper/master_paper_2026-08-28.tex
+    reason: 'A predecessor draft of the artifact of record, not a note: 51 of its 750 lines differ from
+      the pinned paper/master_paper_2026-08-28.tex, and the differences are editorial and structural
+      rather than numerical -- an aligned environment split into a display, a reordered rank argument
+      in the chain appendix, and \chk labels written `\^3` where the pinned edition writes `\^{}3`.
+      It carries the same 30 \chk lines, so the draft already had the device that ties each displayed
+      result to a machine check. Its sibling FABLEFINALDRAFT.txt differs from the same successor in
+      44 of 743 lines: two drafts of one paper, not a chain. The successor is pinned at sha256 603e9f2efcbd874666ccdc813b79802f04a1487dba9369cf7b812c9e4060471e,
+      recorded in paper/SHA256SUMS and guarded by tests/test_paper.py.'
+  - digest: 66cbff785d3fd85a18e08a9fe7582f4be88425c7f9ebdfe1a9ff61e52c1e6e09
+    path: master_paper_20260828.pdf
+    archive: UPLOADS_2026-08-28i
+    verdict: superseded
+    superseded_by: paper/master_paper_2026-08-28.pdf
+    reason: An earlier build of the master paper, 313,719 bytes against the pinned paper/master_paper_2026-08-28.pdf's
+      357,456. The pinned PDF is the one that is byte-reproducible under SOURCE_DATE_EPOCH and that
+      paper/SHA256SUMS records, and its .tex source is pinned beside it, so this build adds no evidence
+      and no provenance. Same successor as the Claude draft above, in its built form.
+  - digest: a4398a6b780c72c8b7068a211771cc4263b4c57578a6da7de9e60035c1a5ea3f
+    path: cube_VQE_Energies.pdf
+    archive: UPLOADS_2026-08-28i
+    verdict: set-aside
+    reason: A two-page Matplotlib 3.10.6 figure -- "Cube VQE", plotting an Exact curve against HEM,
+      Multi-Givens and adiabatic (g = 4.0 start) ansaetze over roughly 0.8 to 2.0. It plainly belongs
+      to the open-cube VQE work the B = 4 validation cites, but the bundle carries no generating script,
+      no caption, no axis units and no run record for it, so which Hamiltonian, cutoff and coupling
+      convention produced these curves cannot be established from the bytes. Set aside rather than pinned
+      into the B = 4 run directory, where it would sit beside re-derived certificates and read as though
+      it had the same standing. A figure whose provenance cannot be stated is decoration; recovering
+      the script would make it evidence.
+  - digest: 5eddc152442015bf837a4ce8adb16eaf21a2dd9b4a40e04b932fcfd80b541b2b
+    path: FINITE_ORDER_NESTED_QUOTIENT_SPECTRAL_REDUCTION_THEOREM_FULL_DERIVATION_2026-08-28.md
+    archive: UPLOADS_2026-08-28i
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-08-28i/FINITE_ORDER_NESTED_QUOTIENT_SPECTRAL_REDUCTION_THEOREM_FULL_DERIVATION_20260828.md
+    bears_on:
+    - C2
+    - G3
+    - R2
+    reason: 'The substantial new document of the bundle, and the one the drafts were built toward: a
+      full derivation of the finite-order reduction theorem with its two readout branches, stating that
+      the primitive N^-(2r-1) staircase and the all-rank shared-link hopping law are DIFFERENT evaluations
+      on different subgraphs of one temporal-history construction rather than one coefficient formula
+      -- which is a falsifiable structural claim, not an analogy. It reproduces this repository''s three
+      evidence axes correctly, keeps both C_shp branches unmerged, and states its own non-claims: no
+      infinite-volume limit, no continuum limit, no glueball identification, no convergence, no mass
+      gap. Imported verbatim because it is the derivation the graph was used to assemble; nothing in
+      it is promoted past T3 by being imported.'
+  - digest: 24c9ed6547146fb38fa50269b39cab874e368a3d5d99a3a4a89fe09a7615cbb1
+    path: THEORY_GRAPH_AGENT_EXPERIENCE_NOTES_2026-08-28.md
+    archive: UPLOADS_2026-08-28i
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-08-28i/THEORY_GRAPH_AGENT_EXPERIENCE_NOTES_20260828.md
+    bears_on:
+    - C2
+    reason: 'Read this one first. It is not physics: it is a bug report and interface review against
+      THIS repository''s CLI, written by an agent working C2 through the theory graph, and it is the
+      only document in the bundle that makes checkable claims about the repository itself. Three were
+      tested on HEAD. Its negative-value option-order bug REPRODUCES exactly as described -- `workhouse
+      search -211835444920651/4405310420659200 --corpus --limit 12` still dies with "unrecognized arguments:
+      --corpus --limit 12" -- and is fixed in this change with the regression test the memo asks for.
+      Its Windows cp1252 finding is now down to one unencoded text read, src/workhouse/payloads.py''s
+      canonical manifest, also fixed here. Its backslash-provenance finding does NOT reproduce against
+      the checked graph: index/graph.jsonl has 0 backslashed source fields in 3,069 records, so that
+      one was a Windows-local build artifact, and the memo''s own framing agrees. Imported verbatim
+      as the record of what was reported; the fixes are the response.'
+  - digest: 05ee44ae0a10dd4959438381a9cde9faee371f0586ce8624658b7fe07aa62721
+    path: FINITE_N_SU3_TRUNCATION_CAPABILITY_RESULT_2026-08-28.md
+    archive: UPLOADS_2026-08-28i
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-08-28i/FINITE_N_SU3_TRUNCATION_CAPABILITY_RESULT_20260828.md
+    bears_on:
+    - R2
+    - G3
+    reason: 'The finding that reverses a prior assumption: this is NEWER than the edition pinned at
+      notes/imported/UPLOADS_2026-08-28e/, not older, despite arriving later in a bundle that is otherwise
+      a re-delivery. The e edition''s section 10 is titled "The remaining decisive full-Hamiltonian
+      test" and calls for a small-u diagonalization that had not been done; this edition titles the
+      same section "Decisive B = 4 = T_1 full-Hamiltonian test: passed" and carries the result, having
+      absorbed the B = 4 reconstruction that the g batch delivered. Its status line changes with it,
+      from "exact through second order in the charge-odd one-plaquette sector" to that plus the B =
+      4 benchmark reconstructed and passed with B = 6 still open, and it corrects the scope note about
+      the public package to record the later d = 3, B = 4 master table. 100 lines differ. Imported verbatim;
+      the e edition keeps its own review as the earlier state of the same document.'
