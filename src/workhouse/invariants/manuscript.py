@@ -30,7 +30,7 @@ PAPER_TEXTS = (
 
 
 @manuscript.check(
-    "every \\chk in the united paper names a check that exists and passes",
+    "every \\chk in every pinned edition names a check that exists and passes",
     "MASTER paper, every displayed result",
 )
 def _():
@@ -44,20 +44,32 @@ def _():
     # So resolve every label against the live registry here, and require the
     # named check to be one that passes. This does not re-run them (the suites
     # do that); it asserts the paper cites nothing that has gone missing or red.
-    source = (PAPER_DIR / "master_paper_2026-08-28.tex").read_text(encoding="utf-8")
-    cited = [
-        m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
-        # The label body may contain "\^{}" -- LaTeX's standalone circumflex --
-        # so a [^}]* body stops at the wrong brace and truncates the name.
-        # Allow balanced empty groups.
-        for m in re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", source)
-    ]
+    #
+    # Every .tex in paper/ is scanned, not one named file. The first draft
+    # hard-coded the 2026-08-28 edition, so the 2026-08-29 successor would
+    # have carried its labels unchecked -- a device that verifies only the
+    # edition nobody is editing any more is worse than none.
+    editions = sorted(PAPER_DIR.glob("*.tex"))
+    cited: list[str] = []
+    per_edition: dict[str, int] = {}
+    for path in editions:
+        source = path.read_text(encoding="utf-8")
+        names = [
+            m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
+            # The label body may contain "\^{}" -- LaTeX's standalone circumflex --
+            # so a [^}]* body stops at the wrong brace and truncates the name.
+            # Allow balanced empty groups.
+            for m in re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", source)
+        ]
+        per_edition[path.name] = len(names)
+        cited += names
     known = {check[0] for suite in SUITES for check in suite.checks}
     unresolved = sorted(set(cited) - known)
-    return not unresolved and len(cited) > 0, (
-        f"{len(cited)} \\chk labels across {len(set(cited))} distinct checks, every one of them "
-        f"a registered check name; {len(unresolved)} unresolved. Each displayed result in the "
-        "paper is reproducible by the command printed beneath it"
+    return not unresolved and len(cited) > 0 and len(editions) > 0, (
+        f"{len(cited)} \\chk labels across {len(set(cited))} distinct checks in "
+        f"{len(editions)} pinned edition(s) {per_edition}, every one of them a registered "
+        f"check name; {len(unresolved)} unresolved. Each displayed result in each edition is "
+        "reproducible by the command printed beneath it"
     )
 
 
@@ -124,6 +136,21 @@ def _():
     # with the same coefficient-signature scanner `workhouse triage` points at
     # any unpinned archive. A future revision that crosses the firewall fails
     # here rather than passing unread.
+    #
+    # PAPER_TEXTS is a fixed pair on purpose -- the firewall is a property of
+    # the two ORIGINAL manuscripts, and the united and final editions discuss
+    # the fourth order deliberately. But a hardcoded list is exactly how the
+    # label-resolution check next door came to verify only the edition nobody
+    # was editing, so the list is asserted to cover every .txt in paper/
+    # rather than assumed to: a new extracted manuscript fails here until
+    # someone decides, in the diff, whether the firewall applies to it.
+    on_disk = {p.name for p in PAPER_DIR.glob("*.txt")}
+    if on_disk != set(PAPER_TEXTS):
+        return False, (
+            f"paper/ carries .txt manuscripts {sorted(on_disk)} but the firewall is "
+            f"declared over {sorted(PAPER_TEXTS)}; decide explicitly whether the new "
+            "one is inside the fourth-order firewall before this check can pass"
+        )
     report = TRIAGE.scan(PAPER_DIR)
     carried = {
         name: set(next(f for f in report.files if f.path.name == name).coefficients)

@@ -426,13 +426,16 @@ def _():
     at_r = e2.subs({a1: 4, a2: 4, a3: 4})
     separates = at_m == 16 and at_r == 48
     return vanishes and separates, (
-        "the two fourth-order records differ, in the shape basis, by "
+        "the two fourth-order records' carrier NUMERATORS differ by "
         "4*Delta_C*e_2, and e_2 is the ZERO POLYNOMIAL on every axial cut — "
         "so no Gamma-point or axial datum distinguishes them at any precision "
         f"(non-identifiability, not imprecision); e_2(M) = {at_m}, e_2(R) = "
-        f"{at_r}, so the records differ by 64*Delta_C at M and 192*Delta_C at "
-        "R — an off-axis contraction (G3) is the only decider, and neither "
-        "record is preferred here"
+        f"{at_r}, so the numerators differ by 64*Delta_C at M and 192*Delta_C "
+        "at R. Dividing by q = 8 and 12 gives the BAND separations 8*Delta_C "
+        "and 16*Delta_C, which is what the crosswalk check reports — the two "
+        "normalisations differ by a factor of q and an earlier wording of this "
+        "line did not say which it meant. An off-axis contraction (G3) is the "
+        "only decider, and neither record is preferred here"
     )
 
 

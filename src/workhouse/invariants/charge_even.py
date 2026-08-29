@@ -130,7 +130,7 @@ def _():
 
 
 @even_band.check(
-    "the C-even range [-4, 12] is exact, and each edge is attained at one point only",
+    "the C-even range is exact; the top is attained only at Gamma, the floor on three planes",
     "PAPER Thm. (incidence factorization) / ENGINE_FLUX_glueball_band_certificate_v2.py",
 )
 def _():
@@ -156,9 +156,22 @@ def _():
     #               f(16) = 16(16 - p)^2 - 4abc >= 16*16 - 4*64 = 0.
     #
     # Equality at the top forces p = 12 and abc = 64, hence a = b = c = 4,
-    # hence k = 0; equality at the bottom forces abc = 0 with p = 0, hence R.
-    # So the edges are not merely attained, as the scan reports: each is
-    # attained at exactly one high-symmetry momentum.
+    # hence k = 0: the upper edge really is one momentum.
+    #
+    # CORRECTED. An earlier version of this check said the same of the lower
+    # edge -- "equality at the bottom forces abc = 0 with p = 0, hence R" --
+    # and its name claimed "each edge is attained at one point only". That is
+    # false, and the predicate below never tested it: f(0) = -4abc, so mu = 0
+    # is a root as soon as ONE of a, b, c vanishes, i.e. everywhere on the
+    # three planes k_j = pi. At X the spectrum is {4, 4, -4} and the floor is
+    # attained there. p = 0 is what makes the root TRIPLE, not what makes it
+    # exist -- which is exactly what `attains_bottom` computes, since
+    # `set(spec) == {-4}` asks for all three branches at the floor. The
+    # arithmetic was right and the sentence describing it was wrong, and the
+    # sibling check `the C-even band touches its floor exactly on the three
+    # planes k_j = pi` had the true statement all along: the suite carried a
+    # claim and its contradiction at once. Name and detail line now say what
+    # the predicate does.
     paper = (
         ROOT / "corpus-import" / "papers" / "flat_band" / "PAPER_FLUX_glueball_flat_band_v1_1.tex"
     ).read_text(encoding="utf-8")
@@ -204,11 +217,16 @@ def _():
         "f(mu) < 0 for mu < 0 since f(0) = -4abc <= 0 and mu(mu - p)^2 < 0 there; and "
         "f'(mu) = (3mu - p)(mu - p) > 0 above p with f(16) = 16(16 - p)^2 - 4abc >= 0 "
         "because p <= 12 and abc <= 64 — so lambda in [-4, 12] exactly, with equality "
-        "at the top only when a = b = c = 4 (Gamma) and at the bottom only when p = 0 "
-        "(R). The corpus reaches the same range by a different route it does argue — "
+        "at the top only when a = b = c = 4, i.e. Gamma alone. The floor is different "
+        "and an earlier wording of this line got it wrong: f(0) = -4abc vanishes as "
+        "soon as ONE a_m does, so lambda = -4 is attained on the whole of the three "
+        "planes k_j = pi, and p = 0 (R) is where it becomes a TRIPLE root — which is "
+        "what the predicate here tests. The corpus reaches the same range by a "
+        "different route it does argue — "
         "the certificate gates the 12-neighbour count and the results note draws the "
         "bound from it — and reports the edges 'attained' from a dense scan; the cubic "
-        "gives attainment at exactly one momentum each, which a scan cannot. PAPER's "
+        "gives the top at exactly one momentum and the floor as a codimension-one "
+        "locus, neither of which a scan can decide. PAPER's "
         "theorem still states the range as a consequence of the factorization alone, "
         "and that factorization carries the lower edge only"
     )

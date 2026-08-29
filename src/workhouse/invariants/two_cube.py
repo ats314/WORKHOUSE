@@ -308,3 +308,79 @@ def _():
         f"ratio >= {hv['heldout_small_u']['minimum_wrong_to_correct_error_ratio']:.0f}. Read "
         "from the sealed certificate; the 1,590,462-state builder was not re-run here"
     )
+
+
+@two_cube.check(
+    "the B=6 six-channel census IS the Weingarten four-channel ledger, channel by channel",
+    "R2; runs/two_cube_codd_o2_2026-08-29 §7; FINAL paper Thm. 12",
+)
+def _():
+    # The census check next door establishes that the six coefficients SUM to
+    # t_3. Summing to the right number is weak evidence: six rationals have
+    # many ways to reach 5/612, and a fitted set would pass it. The stronger
+    # statement, and the one that makes the two-cube fold a re-derivation
+    # rather than a coincidence, is that the six coefficients are the four
+    # Weingarten channel weights individually:
+    #
+    #     c_1    = -w_1            c_8      = -w_Adj
+    #     c_3    =  w_Lambda2 / 2  c_bar3   =  w_Lambda2 / 2
+    #     c_6    =  w_Sym2 / 2     c_bar6   =  w_Sym2 / 2
+    #
+    # with w_rho = -(d_rho/N^2)/(C_F + C_rho/2) taken from the all-ranks
+    # suite, where it is derived from the order-2 Weingarten values and
+    # imports nothing from the corpus. The two sign conventions are not a
+    # fudge: t_N = B_N - A_N, so the MIXED family (1, Adj) enters the hopping
+    # negated and the LIKE family (Lambda2, Sym2) enters as it stands. That is
+    # the same relative sign the incidence orientation carries.
+    #
+    # The factor of two is the content. The Weingarten ledger is indexed by
+    # the FUSION channel of the shared link; the two-cube certificate is
+    # indexed by the irrep the link actually carries in the ranked
+    # intermediate state, which distinguishes rho from bar-rho. For SU(3) the
+    # like family splits as Lambda2 F = 3bar and Sym2 F = 6, and the census
+    # finds the two orientations of each carrying exactly half the fusion
+    # weight apiece -- the equal split the isotropy of the two link
+    # orientations predicts, measured on a 1,590,462-state space rather than
+    # assumed.
+    #
+    # Scope: N = 3, second order. The all-rank statement -- that each like
+    # family weight splits evenly between an irrep and its conjugate at every
+    # rank -- is NOT established here; it is a conjecture whose falsifier is
+    # one rank at which the split is uneven. Nothing here promotes it, and
+    # nothing here touches the fourth order or C2.
+    def w(channel: str) -> Fraction:
+        v = K.channel_weight(channel, 3)
+        return Fraction(int(v.p), int(v.q))
+
+    predicted = {
+        "1": -w("1"),
+        "8": -w("Adj"),
+        "3": w("Lambda2") / 2,
+        "bar3": w("Lambda2") / 2,
+        "6": w("Sym2") / 2,
+        "bar6": w("Sym2") / 2,
+    }
+    chans = _cert()["graph"]["channel_coefficients"]
+    measured = {k.split(":")[1]: Fraction(v["rational"]) for k, v in chans.items()}
+
+    agree = measured == predicted
+    # and the two truncations are the same truncation: B=4 keeps {1, 3, bar3},
+    # the published p+q<=1 link cutoff keeps {1, 3bar}, and both land on the
+    # same -1/12 because the two like-family halves reassemble.
+    b4 = measured["1"] + measured["3"] + measured["bar3"]
+    published_t1 = w("Lambda2") - w("1")
+    same_cutoff = b4 == published_t1 == Fraction(-1, 12)
+    omitted = measured["6"] + measured["bar6"] + measured["8"]
+    same_completion = omitted == w("Sym2") - w("Adj") == Fraction(14, 153)
+
+    return (agree and same_cutoff and same_completion), (
+        f"all six certificate coefficients equal their Weingarten predictions {predicted}: the "
+        "mixed family enters negated (t_N = B_N - A_N) and each like-family fusion weight splits "
+        "evenly between the irrep and its conjugate. Two unrelated constructions therefore agree "
+        f"channel by channel, not merely in the sum. The B=4 channel set sums to {b4}, exactly "
+        f"the published p+q<=1 link cutoff's w_Lambda2 - w_1, and what B=4 omits is {omitted} = "
+        "w_Sym2 - w_Adj = 14/153, exactly the published cutoff's completion -- so the operator-"
+        "level sign reversal and the finite-rank truncation's are one statement. N = 3 and "
+        "second order; the even split at every rank is a conjecture, falsified by one rank where "
+        "it is uneven"
+    )

@@ -94,13 +94,29 @@ def strip_lean_comments(body: str) -> str:
     return "".join(out)
 
 
+#: The one pattern that recognises a Lean declaration, shared with
+#: ``certified.lean_claims``. It lived in two places with two different
+#: spellings, and the copy here was the older one: it required the keyword to
+#: start the line, so the three ``@[simp] theorem bandVar_*`` declarations were
+#: invisible to it. FRONTIER.md then reported 37 where CERTIFIED.md reported 40
+#: --- two generated files disagreeing about the same count, each looking
+#: authoritative. Attributes and the `private`/`protected`/`nonrec` modifiers
+#: all sit BEFORE the keyword, so the pattern matches them rather than assuming
+#: they are absent, and there is now one pattern to keep correct instead of two.
+LEAN_DECL = re.compile(
+    r"^[ \t]*(?:@\[[^\]]*\]\s*)*(?:private\s+|protected\s+|nonrec\s+)*"
+    r"(?:theorem|lemma)\s+([A-Za-z_][\w'.]*)",
+    re.MULTILINE,
+)
+
+
 def _lean_counts() -> tuple[int, int]:
     theorems = sorries = 0
     if not LEAN.exists():
         return 0, 0
     for path in LEAN.rglob("*.lean"):
         body = strip_lean_comments(path.read_text(encoding="utf-8"))
-        theorems += len(re.findall(r"^\s*(?:theorem|lemma)\s", body, re.MULTILINE))
+        theorems += len(LEAN_DECL.findall(body))
         sorries += len(re.findall(r"\bsorry\b", body))
     return theorems, sorries
 
