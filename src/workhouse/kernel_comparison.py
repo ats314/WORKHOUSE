@@ -45,7 +45,7 @@ Key = tuple[tuple[int, int, int], tuple[int, int], tuple[int, int]]
 
 
 def load_historical() -> dict[Key, float]:
-    kernel = json.loads(HIST_CERT.read_text())["kernel"]
+    kernel = json.loads(HIST_CERT.read_text(encoding="utf-8"))["kernel"]
     return {
         (tuple(r["displacement"]), tuple(r["input_plane"]), tuple(r["output_plane"])): float(
             Fraction(r["weight"])
@@ -55,7 +55,7 @@ def load_historical() -> dict[Key, float]:
 
 
 def load_cold() -> dict[Key, float]:
-    records = json.loads(COLD_DUMP.read_text())["records"]
+    records = json.loads(COLD_DUMP.read_text(encoding="utf-8"))["records"]
 
     def centered(v):
         return tuple((x + 2) % 5 - 2 for x in v)

@@ -549,7 +549,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **settlement package and adjudication harness (G3)**
 
 - `FINDING: the closure cap is a third-order scaffold and fourth order needs 160`
-  - src/workhouse/invariants/adjudication.py:439 · engine closure(), max_states=100
+  - src/workhouse/invariants/adjudication.py:441 · engine closure(), max_states=100
   - `workhouse verify --only 'FINDING: the closure cap is a third-order scaffold and fourth order needs 160'`
 - `FINDING: the contamination scan reads only the engine file`
   - src/workhouse/invariants/adjudication.py:56 · settlement/mce_adjudication_harness.py
@@ -875,10 +875,10 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
   - src/workhouse/invariants/adjudication.py:84 · settlement/mce_adjudication_harness.py
   - `workhouse verify --only 'the harness carries the printed Delta_Gamma, not the rounded one'`
 - `the two 189-record kernels agree everywhere except three amplitudes, and the on-site anchor swap moves C by exactly zero`
-  - src/workhouse/invariants/adjudication.py:355 · runs/g3_kernel_record_dump_2026-08-28 + the historical certificate
+  - src/workhouse/invariants/adjudication.py:357 · runs/g3_kernel_record_dump_2026-08-28 + the historical certificate
   - `workhouse verify --only 'the two 189-record kernels agree everywhere except three amplitudes, and the on-site anchor swap moves C by exactly zero'`
 - `the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel`
-  - src/workhouse/invariants/adjudication.py:284 · notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt §[17]
+  - src/workhouse/invariants/adjudication.py:286 · notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt §[17]
   - `workhouse verify --only 'the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel'`
 **the flat-band manuscript**
 
