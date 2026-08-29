@@ -22,7 +22,7 @@ restored = _suite("restored payloads (G1)")
 )
 def _():
     pins = P.corpus_pins()
-    rel = str(P.KERNEL.relative_to(P.CORPUS))
+    rel = P.KERNEL.relative_to(P.CORPUS).as_posix()
     actual = P.sha256_of(P.KERNEL)
     semantic = P.semantic_sha()
     row = P.canonical_rows().get("A20K", {})
