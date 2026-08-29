@@ -192,6 +192,54 @@ def _():
 
 
 @homology.check(
+    "a boundary-factorised correction shifts the carrier without dispersing it, for generic M",
+    "MASTER paper Prop. (boundary-factorised rigidity)",
+)
+def _():
+    # The rigidity proposition, as a statement about a GENERIC M rather than
+    # about its ingredient. What the registry checked before was the incidence
+    # identity BB^dagger = qI - ww^dagger; the proposition needs more than
+    # that -- it needs the operator a I + b S + B M B^dagger to act on the
+    # carrier by a - 4b for EVERY M, which is what makes the protection a
+    # property of the boundary factorisation and not of any particular
+    # correction. Nine free entries, symbolic, and the six incidence variables
+    # kept independent so nothing is smuggled in through a conjugation
+    # identity: B^dagger w = 0 is a polynomial identity in d and conj(d)
+    # separately, and that is the whole content.
+    #
+    # This is also where the proposition's LIMIT lives: it says nothing about
+    # a correction that does not factor through links, which is exactly why
+    # the paper's fourth-order section cannot appeal to it.
+    from sympy import MatrixSymbol, expand, symbols, zeros
+
+    d1, d2, d3 = symbols("d1 d2 d3")
+    e1, e2, e3 = symbols("e1 e2 e3")  # the conjugates, kept independent
+    a, b = symbols("a b")
+    bmat = Matrix([[d2, -d1, 0], [d3, 0, -d1], [0, d3, -d2]])
+    bdag = Matrix([[e2, e3, 0], [-e1, 0, e3], [0, -e1, -e2]])
+    w = Matrix([e3, -e2, e1])
+    m = Matrix(MatrixSymbol("M", 3, 3))
+    ident = Matrix.eye(3)
+    s = bmat * bdag - 4 * ident
+    correction = a * ident + b * s + bmat * m * bdag
+    residual = expand(correction * w - (a - 4 * b) * w)
+    # and the two ingredients, separately, so a failure says which one broke
+    return (
+        residual == zeros(3, 1)
+        and expand(bdag * w) == zeros(3, 1)
+        and expand(s * w + 4 * w) == zeros(3, 1)
+    ), (
+        "with d_j and conj(d_j) independent and all nine entries of M free, "
+        "(a I + b S + B M B^dagger) w - (a - 4b) w vanishes identically: B^dagger w = 0 kills the "
+        "M term whatever M is, and S w = -4w follows from the same identity. So every order-r "
+        "correction that factors through links shifts the carrier and cannot disperse it -- the "
+        "protection belongs to the boundary operator, not to the dynamics. It says nothing about "
+        "a correction that does NOT factor through links, and {B M B^dagger} is not a two-sided "
+        "ideal, which is why the fourth order has to be argued and not inherited"
+    )
+
+
+@homology.check(
     "Delta_L = 4 tau(u) sin^2(pi/L) is positive and falls as L^-2",
     "MASTER paper §8",
 )

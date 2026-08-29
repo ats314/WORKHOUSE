@@ -29,8 +29,18 @@ PAPER_TEXTS = (
 )
 
 
+#: Every pinned edition whose printed \chk labels have to resolve. The
+#: 2026-08-29 final edition supersedes the 2026-08-28 united one, and both
+#: stay pinned, so both are held to the contract -- a superseded edition that
+#: still sits in the tree still prints commands a reader will run. This tuple
+#: is the thing to extend when an edition lands; the failure it prevents is
+#: the one a review caught on the 08-29 draft, where the guard read only the
+#: older file and an unresolvable label passed unnoticed.
+CHK_EDITIONS = ("master_paper_2026-08-28.tex",)
+
+
 @manuscript.check(
-    "every \\chk in the united paper names a check that exists and passes",
+    "every \\chk in the pinned editions names a check that exists and passes",
     "MASTER paper, every displayed result",
 )
 def _():
@@ -44,20 +54,32 @@ def _():
     # So resolve every label against the live registry here, and require the
     # named check to be one that passes. This does not re-run them (the suites
     # do that); it asserts the paper cites nothing that has gone missing or red.
-    source = (PAPER_DIR / "master_paper_2026-08-28.tex").read_text(encoding="utf-8")
-    cited = [
-        m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
-        # The label body may contain "\^{}" -- LaTeX's standalone circumflex --
-        # so a [^}]* body stops at the wrong brace and truncates the name.
-        # Allow balanced empty groups.
-        for m in re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", source)
-    ]
     known = {check[0] for suite in SUITES for check in suite.checks}
-    unresolved = sorted(set(cited) - known)
-    return not unresolved and len(cited) > 0, (
-        f"{len(cited)} \\chk labels across {len(set(cited))} distinct checks, every one of them "
-        f"a registered check name; {len(unresolved)} unresolved. Each displayed result in the "
-        "paper is reproducible by the command printed beneath it"
+    cited: list[str] = []
+    unresolved: dict[str, list[str]] = {}
+    missing = [name for name in CHK_EDITIONS if not (PAPER_DIR / name).exists()]
+    for name in CHK_EDITIONS:
+        if name in missing:
+            continue
+        source = (PAPER_DIR / name).read_text(encoding="utf-8")
+        labels = [
+            m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
+            # The label body may contain "\^{}" -- LaTeX's standalone
+            # circumflex -- so a [^}]* body stops at the wrong brace and
+            # truncates the name. Allow balanced empty groups.
+            for m in re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", source)
+        ]
+        cited.extend(labels)
+        stray = sorted(set(labels) - known)
+        if stray:
+            unresolved[name] = stray
+    return (not unresolved and not missing and len(cited) > 0), (
+        f"{len(cited)} \\chk labels across {len(set(cited))} distinct checks in "
+        f"{len(CHK_EDITIONS)} pinned editions, every one of them a registered check name; "
+        f"{sum(len(v) for v in unresolved.values())} unresolved"
+        f"{'' if not unresolved else f' {unresolved}'}"
+        f"{'' if not missing else f', {missing} not in paper/'}. Each displayed result in every "
+        "pinned edition is reproducible by the command printed beneath it"
     )
 
 

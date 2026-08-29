@@ -17,7 +17,7 @@ any of them moves.
 | `nested_quotient_master_2026-08-28.pdf` | the master derivation, uniting it with the nested-quotient circuit theory. Superseded by the united edition, kept the same way. |
 | `nested_quotient_master_2026-08-28.txt` | its extracted text, same provenance and standing as the line below. |
 | `homological_flat_bands_2026-08-28.txt` | its text, extracted once with `pypdf` 6.16.2 so checks can read it. Derived, never authority — where the two differ the PDF wins. |
-| `verify_core.py` | the master paper's portable verifier: 12 checks, standard library only, matching its Reproducibility section. |
+| `verify_core.py` | the master paper's portable verifier: 23 checks in nine claim groups, standard library only, matching its Reproducibility section. |
 | `../verify_core.py` | the flat-band manuscript's, 16 checks. Root-level so *that* manuscript's printed `python3 verify_core.py` is true as printed. |
 
 Two verifiers because there are two papers. They overlap on the ledger and
@@ -74,11 +74,15 @@ workhouse verify --only '<the name printed under the equation>'
 `section` string can cite it and `tests/test_documents.py` keeps the reference
 resolvable — the citation runs both ways.
 
-That device is itself checked. `every \chk in the united paper names a check
-that exists and passes` resolves all 32 printed labels against the live
-registry and fails if one is renamed or deleted — otherwise the paper would go
-on printing a command that no longer resolves, which is the same drift
-`FRONTIER.md`'s staleness test exists to catch.
+That device is itself checked. `every \chk in the pinned editions names a check
+that exists and passes` resolves every printed label in every edition listed in
+`manuscript.CHK_EDITIONS` against the live registry, and fails if one is
+renamed, deleted, or left red — otherwise the paper would go on printing a
+command that no longer resolves, which is the same drift `FRONTIER.md`'s
+staleness test exists to catch. **`CHK_EDITIONS` is the thing to extend when an
+edition lands.** It read only the 08-28 file for a while, which is exactly how a
+drifted label in a newer draft went unnoticed until the guard was made to read
+both.
 
 The united edition is deliberately **not** in `PAPER_TEXTS`, and so is not
 scanned by the fourth-order firewall check. It discusses the fourth order on

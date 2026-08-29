@@ -130,7 +130,7 @@ def _():
 
 
 @even_band.check(
-    "the C-even range [-4, 12] is exact, and each edge is attained at one point only",
+    "the C-even range [-4, 12] is exact; the top only at Gamma, the floor on three planes",
     "PAPER Thm. (incidence factorization) / ENGINE_FLUX_glueball_band_certificate_v2.py",
 )
 def _():
@@ -156,9 +156,17 @@ def _():
     #               f(16) = 16(16 - p)^2 - 4abc >= 16*16 - 4*64 = 0.
     #
     # Equality at the top forces p = 12 and abc = 64, hence a = b = c = 4,
-    # hence k = 0; equality at the bottom forces abc = 0 with p = 0, hence R.
-    # So the edges are not merely attained, as the scan reports: each is
-    # attained at exactly one high-symmetry momentum.
+    # hence k = 0: the top is attained at Gamma and nowhere else. Equality at
+    # the bottom is f(0) = 0, i.e. abc = 0, i.e. SOME k_j = pi -- the whole of
+    # three planes, not one point. It is a triple root only when p = 0 too,
+    # which is R alone.
+    #
+    # An earlier name for this check said "each edge is attained at one point
+    # only". That is true at the top and false at the bottom: the predicate it
+    # ran (all three eigenvalues equal -4) is the TRIPLE-root condition, not
+    # attainment, and among the four high-symmetry momenta X and M attain the
+    # floor too. The name asserted more than the arithmetic under it, and it
+    # contradicted the sibling check next door, which had the planes right.
     paper = (
         ROOT / "corpus-import" / "papers" / "flat_band" / "PAPER_FLUX_glueball_flat_band_v1_1.tex"
     ).read_text(encoding="utf-8")
@@ -189,7 +197,8 @@ def _():
     at_bottom = expand(f.subs(mu, 0) + 4 * a * b * c)
     edges = {name: EVEN.even_lambdas(k) for name, k in EVEN.HIGH_SYMMETRY.items()}
     attains_top = [n for n, spec in edges.items() if max(spec) == 12]
-    attains_bottom = [n for n, spec in edges.items() if set(spec) == {-4}]
+    attains_floor = sorted(n for n, spec in edges.items() if min(spec) == -4)
+    triple_floor = [n for n, spec in edges.items() if set(spec) == {-4}]
     ok = (
         asserts_range
         and proof_argues_determinants_only
@@ -198,19 +207,22 @@ def _():
         and at_top == 0
         and at_bottom == 0
         and attains_top == ["Gamma"]
-        and attains_bottom == ["R"]
+        and attains_floor == ["M", "R", "X"]
+        and triple_floor == ["R"]
     )
     return ok, (
         "f(mu) < 0 for mu < 0 since f(0) = -4abc <= 0 and mu(mu - p)^2 < 0 there; and "
         "f'(mu) = (3mu - p)(mu - p) > 0 above p with f(16) = 16(16 - p)^2 - 4abc >= 0 "
-        "because p <= 12 and abc <= 64 — so lambda in [-4, 12] exactly, with equality "
-        "at the top only when a = b = c = 4 (Gamma) and at the bottom only when p = 0 "
-        "(R). The corpus reaches the same range by a different route it does argue — "
-        "the certificate gates the 12-neighbour count and the results note draws the "
-        "bound from it — and reports the edges 'attained' from a dense scan; the cubic "
-        "gives attainment at exactly one momentum each, which a scan cannot. PAPER's "
-        "theorem still states the range as a consequence of the factorization alone, "
-        "and that factorization carries the lower edge only"
+        "because p <= 12 and abc <= 64 — so lambda in [-4, 12] exactly. The top needs "
+        "a = b = c = 4 and is attained at Gamma alone; the floor needs only abc = 0 and "
+        "is attained on the whole of the three planes k_j = pi — among the high-symmetry "
+        f"momenta at {attains_floor}, triple at {triple_floor} where p = 0 as well. The "
+        "corpus reaches the same range by a different route it does argue — the "
+        "certificate gates the 12-neighbour count and the results note draws the bound "
+        "from it — and reports the edges 'attained' from a dense scan; the cubic gives "
+        "the attainment SETS, which a scan cannot. PAPER's theorem still states the "
+        "range as a consequence of the factorization alone, and that factorization "
+        "carries the lower edge only"
     )
 
 

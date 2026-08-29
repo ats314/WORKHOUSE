@@ -172,6 +172,81 @@ def _():
 
 
 @two_cube.check(
+    "the B=6 six-channel census IS the Weingarten four-channel ledger, channel by channel",
+    "R2; runs/two_cube_codd_o2_2026-08-29 §7.3; MASTER paper Thm. (census)",
+)
+def _():
+    # That the six census coefficients SUM to 5/612 is weak evidence, and the
+    # check above says so: six rationals reach one target in many ways, and a
+    # fitted set would pass it. The statement worth making is the
+    # correspondence itself -- each link-resolved coefficient is one of the
+    # four Weingarten fusion weights, with two features that carry the content:
+    #
+    #   * the mixed family enters NEGATED, because t_N = B_N - A_N, which is
+    #     the same relative sign the incidence orientation carries;
+    #   * each like-family fusion weight splits EVENLY between an irrep and its
+    #     conjugate -- the two orientations of the shared link weighted equally.
+    #
+    # The weights come from _channel_weight, i.e. from the dimension/Casimir
+    # table and the order-two Weingarten values. Nothing about the two-cube
+    # build enters them, so this compares two independently constructed objects
+    # at six places rather than one number at one. Imported inside the function
+    # so importing a suite module never reorders SUITES.
+    from .rank_law import _channel_weight
+
+    def w(rho) -> Fraction:
+        value = _channel_weight(rho).subs(K.N, 3)
+        return Fraction(int(value.p), int(value.q))
+
+    c = {
+        k.split(":")[1]: Fraction(v["rational"])
+        for k, v in _cert()["graph"]["channel_coefficients"].items()
+    }
+    predicted = {
+        "1": -w("singlet"),
+        "8": -w("adjoint"),
+        "3": w("antisym") / 2,
+        "bar3": w("antisym") / 2,
+        "6": w("sym") / 2,
+        "bar6": w("sym") / 2,
+    }
+    # The cutoff corollary, on the same two objects: what a truncation keeping
+    # only the singlet and Lambda^2 F routes projects the hopping to, and what
+    # it omits. Both sides are computed twice -- from the census and from the
+    # weights -- and neither is 5/612, which would double-count.
+    legacy = c["1"] + c["3"] + c["bar3"]
+    restored = c["6"] + c["bar6"] + c["8"]
+    cutoff_ok = (
+        legacy == w("antisym") - w("singlet") == Fraction(-1, 12)
+        and restored == w("sym") - w("adjoint") == Fraction(14, 153)
+        and legacy + restored == Fraction(int(K.T_MINUS_2.p), int(K.T_MINUS_2.q))
+    )
+    # Rigidity: the labelled correspondence has no slack. Of all 6! ways to
+    # attach the six census values to the six predicted slots, only the ones
+    # that respect the correspondence work -- the degeneracy is exactly the
+    # 2 x 2 from the two conjugate pairs, never more.
+    from itertools import permutations
+
+    slots = ("1", "8", "3", "bar3", "6", "bar6")
+    matching = sum(
+        1
+        for perm in permutations(slots)
+        if all(c[perm[i]] == predicted[slots[i]] for i in range(6))
+    )
+    return (c == predicted and cutoff_ok and matching == 4), (
+        f"c_1 = -w_1 = {c['1']}, c_8 = -w_Adj = {c['8']}, "
+        f"c_3 = c_bar3 = w_Lam/2 = {c['3']}, c_6 = c_bar6 = w_Sym/2 = {c['6']} -- six "
+        "reconstructed coefficients landing on four predicted weights, with the two "
+        "coincidences the correspondence requires and no others "
+        f"({matching} of 720 labellings survive, exactly the 2x2 conjugate degeneracy). "
+        f"The B=4 half sums to {legacy} = w_Lam - w_1 and the restored half to {restored} "
+        "= w_Sym - w_Adj: the cutoff's projected hopping and the counterterm that completes "
+        "it. The six delivered numbers remain rational reconstructions of finite-precision "
+        "contractions; what is exact here is the identity they satisfy"
+    )
+
+
+@two_cube.check(
     "the B=6 connected kernel is (5/612) G_conn + diag, with the certified spectrum",
     "R2; runs/two_cube_codd_o2_2026-08-29 §7.4",
 )
@@ -231,6 +306,246 @@ def _():
         f"-(1/12) G_conn + D_B4 has exact spectrum {sorted(spec.items())} = "
         "{0, (-15/4)^2, (-11/6)^4, (-5/3)^4}: cross-cell entries +1/12, the truncated-branch "
         "ordering, on the same rebuilt two-cube geometry that gives +5/612 at B=6"
+    )
+
+
+@two_cube.check(
+    "connected first order vanishes by inclusion-exclusion, not by cancellation of numbers",
+    "R2; runs/two_cube_codd_o2_2026-08-29 §3",
+)
+def _():
+    # The delivery reports two first-order facts: PVP = I_11 on the shell, and
+    # its Moebius fold is exactly zero. The first is the build's; the second
+    # needs no build at all, and saying so is the point.
+    #
+    # If PVP is the identity then every source fold is the identity on its own
+    # faces, so the Moebius transform reduces to the same index arithmetic the
+    # geometry fold uses: entry (i,i) carries weight
+    #     1 - [i in L] - [i in R] + [i in F],
+    # and the eleven faces are covered exactly once by L or R, except the
+    # shared face which is in both and restored by F. Every weight is zero, so
+    # M[I_11] = 0 identically -- inclusion-exclusion on a cover, not eleven
+    # numbers that happen to cancel. First order is a scalar shift of the whole
+    # shell and carries no connected transport, which is why second order is
+    # the leading connected term rather than a correction to a first-order one.
+    fold = [
+        [
+            (1 if i == j else 0)
+            * (
+                1
+                - (
+                    (i in _I_L and j in _I_L)
+                    + (i in _I_R and j in _I_R)
+                    - (i in _I_F and j in _I_F)
+                )
+            )
+            for j in range(11)
+        ]
+        for i in range(11)
+    ]
+    cover = [(i in _I_L) + (i in _I_R) - (i in _I_F) for i in range(11)]
+    cert = _cert()["fold"]
+    return (
+        all(all(v == 0 for v in row) for row in fold)
+        and cover == [1] * 11
+        and cert["PVP"] == "I_11"
+        and cert["connected_PVP"] == "0"
+    ), (
+        "each of the eleven faces is covered exactly once by {L, R} once the shared face is "
+        f"restored by F ({cover}), so the Moebius weight of every diagonal entry of the identity "
+        "is 1 - 1 = 0 and M[I_11] = 0 identically -- no arithmetic on amplitudes enters. The "
+        f"delivery's own gates record PVP = {cert['PVP']} and connected PVP = "
+        f"{cert['connected_PVP']}; what is re-derived here is that the SECOND of those follows "
+        "from the first by counting alone. First order is a uniform shift of all eleven branches "
+        "and creates no branch ambiguity"
+    )
+
+
+@two_cube.check(
+    "every shared-link channel is separately proportional to the geometry, on all 56 pairs",
+    "R2; runs/two_cube_codd_o2_2026-08-29 §7.3",
+    tier=2,
+)
+def _():
+    # The strongest architectural statement the two-cube delivery supports,
+    # and the one the sum test cannot reach. The paper's separation --
+    #   colour dynamics -> a coefficient, cellular geometry -> B B^dagger
+    # -- is normally read off the TOTAL operator. Here it holds channel by
+    # channel: each of the six link-resolved matrices is separately
+    # proportional to the same incidence Gram, on every one of its nonzero
+    # off-diagonal entries.
+    #
+    # The 56 is rebuilt here rather than read: the eleven oriented plaquettes
+    # of the prism have exactly 56 ordered adjacent pairs, each sharing one
+    # link with signed overlap +-1, and the certificate reports a constant
+    # ratio on exactly that many entries for every channel. So the geometry
+    # does not merely survive the sum of the channels; it survives each of
+    # them, which is what makes t_3 a coefficient rather than a fit.
+    #
+    # T2: the per-channel ratios are float residuals from the sealed build.
+    # What is exact here is the 56 and the channel list.
+    def step(x, a):
+        y = list(x)
+        y[a - 1] += 1
+        return tuple(y)
+
+    rows = []
+    for x, (a, b) in _FACES:
+        chain: dict[tuple, int] = {}
+        for link, sign in (((x, a), 1), ((step(x, a), b), 1), ((step(x, b), a), -1), ((x, b), -1)):
+            chain[link] = chain.get(link, 0) + sign
+        rows.append(chain)
+    gram = [[sum(ri.get(k, 0) * rj.get(k, 0) for k in ri) for rj in rows] for ri in rows]
+    adjacent = [gram[i][j] for i in range(11) for j in range(11) if i != j and gram[i][j] != 0]
+
+    chans = _cert()["graph"]["channel_coefficients"]
+    counts = {k.split(":")[1]: v["nonzero_ratio_count"] for k, v in chans.items()}
+    worst = max(v["max_abs_residual_on_nonzero"] for v in chans.values())
+    return (
+        len(adjacent) == 56
+        and set(abs(v) for v in adjacent) == {1}
+        and set(counts) == {"1", "3", "bar3", "6", "bar6", "8"}
+        and set(counts.values()) == {56}
+        and worst < 1e-14
+    ), (
+        f"the prism has {len(adjacent)} ordered adjacent face pairs, each sharing one link with "
+        "signed overlap +-1, rebuilt here from oriented cell boundaries; the certificate reports "
+        f"a constant channel-to-geometry ratio on all {sorted(set(counts.values()))[0]} of them "
+        f"for every one of the six channels, worst residual {worst:.1e}. So the incidence "
+        "factorisation is not a property of the summed operator only -- each colour channel "
+        "carries the same geometry separately, which is the paper's separation of colour "
+        "dynamics from cellular geometry, measured rather than assumed"
+    )
+
+
+@two_cube.check(
+    "the connected diagonal is orbit-constant, and only the transporting orbit moves",
+    "R2; runs/two_cube_codd_o2_2026-08-29 §4, §7.4; MASTER paper §6",
+)
+def _():
+    # Neither delivery asks what SHAPE the connected diagonal has; both print
+    # eleven numbers. They are not eleven numbers. The open (3,2,2) prism has a
+    # symmetry group -- generated by the cell exchange x -> 2-x, the two
+    # transverse reflections and the y<->z swap, order 16 -- and the diagonal
+    # is constant on its orbits, in BOTH truncations.
+    #
+    # The orbits are 8 + 2 + 1: the eight side faces, the two end caps, the
+    # shared face. And the eight-orbit is exactly the support of the four
+    # cross-cell pairs -- the faces that carry connected transport at all. So
+    # the truncation moves the diagonal on precisely those eight faces and
+    # nowhere else: the end caps stay at -15/4 and the shared face at 0 in both
+    # B=4 and B=6, while the side value goes -7/4 -> -2317/612.
+    #
+    # That is the sharp form of what the cutoff does. Together with the four
+    # cross-cell blocks carrying the whole off-diagonal change, the entire
+    # B=4 -> B=6 difference is confined to the transporting orbit.
+    #
+    # It also explains the shape of the closed-geometry results next door: on
+    # the cube and on the torus the faces are a SINGLE orbit, so the same
+    # statement forces the diagonal to be scalar and the operator to be
+    # exactly alpha I + t G. The nonuniform D here is the open boundary, not a
+    # failure of the incidence form.
+    import itertools
+
+    ext = (2, 1, 1)  # the prism's vertex box is 3 x 2 x 2, so 2 x 1 x 1 cells
+    index = {f: i for i, f in enumerate(_FACES)}
+
+    def image(perm, flips, face):
+        x, (a, b) = face
+        moved = [0, 0, 0]
+        for i in range(3):
+            v = x[i]
+            if flips[i]:
+                v = ext[i] - v - (1 if (i + 1) in (a, b) else 0)
+            moved[perm[i]] = v
+        return (tuple(moved), tuple(sorted((perm[a - 1] + 1, perm[b - 1] + 1))))
+
+    symmetries = set()
+    axis_perms = [
+        p
+        for p in itertools.permutations(range(3))
+        if tuple(ext[p.index(i)] for i in range(3)) == ext
+    ]
+    for perm in axis_perms:
+        for flips in itertools.product((0, 1), repeat=3):
+            try:
+                img = tuple(index[image(perm, flips, f)] for f in _FACES)
+            except KeyError:
+                continue
+            if sorted(img) == list(range(11)):
+                symmetries.add(img)
+
+    def raw_gram():
+        def step(x, a):
+            y = list(x)
+            y[a - 1] += 1
+            return tuple(y)
+
+        rows = []
+        for x, (a, b) in _FACES:
+            chain: dict[tuple, int] = {}
+            for link, s in (((x, a), 1), ((step(x, a), b), 1), ((step(x, b), a), -1), ((x, b), -1)):
+                chain[link] = chain.get(link, 0) + s
+            rows.append(chain)
+        return [[sum(ri.get(k, 0) * rj.get(k, 0) for k in ri) for rj in rows] for ri in rows]
+
+    gram, conn = raw_gram(), _gram_conn()
+    # a symmetry of the complex preserves both Grams up to the orientation sign
+    preserves = all(
+        abs(m[i][j]) == abs(m[img[i]][img[j]])
+        for img in symmetries
+        for m in (gram, conn)
+        for i in range(11)
+        for j in range(11)
+    )
+
+    parent = list(range(11))
+
+    def find(a):
+        while parent[a] != a:
+            parent[a] = parent[parent[a]]
+            a = parent[a]
+        return a
+
+    for img in symmetries:
+        for i, j in enumerate(img):
+            ri, rj = find(i), find(j)
+            if ri != rj:
+                parent[ri] = rj
+    orbits: dict[int, list[int]] = {}
+    for i in range(11):
+        orbits.setdefault(find(i), []).append(i)
+    orbit_sets = sorted((tuple(v) for v in orbits.values()), key=len, reverse=True)
+
+    transporting = tuple(sorted({i for pair in ((0, 5), (1, 6), (3, 8), (4, 9)) for i in pair}))
+    d_b6 = [Fraction(x) for x in _cert()["graph"]["connected_diagonal"]]
+    d_b4 = [Fraction(-7, 4)] * 11
+    d_b4[2] = d_b4[10] = Fraction(-15, 4)
+    d_b4[7] = Fraction(0)
+    constant = all(len({d[i] for i in o}) == 1 for d in (d_b6, d_b4) for o in orbit_sets)
+    moved = tuple(sorted(o for o in orbit_sets if d_b6[o[0]] != d_b4[o[0]]))
+
+    return (
+        len(symmetries) == 16
+        and preserves
+        and [len(o) for o in orbit_sets] == [8, 2, 1]
+        and orbit_sets[0] == transporting
+        and constant
+        and moved == (transporting,)
+        and d_b6[2] == d_b4[2] == Fraction(-15, 4)
+        and d_b6[7] == d_b4[7] == 0
+    ), (
+        f"the prism's {len(symmetries)} geometric symmetries, built here from the vertex box and "
+        "checked to preserve both Grams up to orientation sign, have face orbits "
+        f"{[len(o) for o in orbit_sets]} -- eight sides, two end caps, one shared face -- and the "
+        "connected diagonal is constant on them in BOTH truncations "
+        f"(B=6: {d_b6[0]}, {d_b6[2]}, {d_b6[7]}; B=4: {d_b4[0]}, {d_b4[2]}, {d_b4[7]}). The "
+        "eight-orbit is exactly the support of the four cross-cell pairs, and it is the ONLY "
+        "orbit whose value changes with the cutoff: the end caps stay at -15/4 and the shared "
+        "face at 0. So the whole B=4 -> B=6 difference, diagonal and off-diagonal alike, lives on "
+        "the faces that carry connected transport. Where the faces are a single orbit -- the "
+        "closed cube, the periodic torus -- the same statement forces the diagonal to be scalar, "
+        "which is why alpha I + t G is exact there and not here"
     )
 
 

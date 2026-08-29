@@ -100,7 +100,22 @@ def _lean_counts() -> tuple[int, int]:
         return 0, 0
     for path in LEAN.rglob("*.lean"):
         body = strip_lean_comments(path.read_text(encoding="utf-8"))
-        theorems += len(re.findall(r"^\s*(?:theorem|lemma)\s", body, re.MULTILINE))
+        # Attributes and `private` sit BEFORE the keyword. certified.py's
+        # scrape already allows them -- it was fixed there when an
+        # `@[simp] theorem` turned out to be invisible to the T0 catalogue --
+        # and this one was not, so FRONTIER.md reported 37 where CERTIFIED.md
+        # reported 40 and the two generated views of the same tree disagreed.
+        # A count that is wrong in one generated file and right in another is
+        # worse than either, because whichever a reader opens first reads as
+        # authoritative.
+        theorems += len(
+            re.findall(
+                r"^\s*(?:@\[[^\]]*\]\s*)*(?:private\s+|protected\s+|nonrec\s+)*"
+                r"(?:theorem|lemma)\s",
+                body,
+                re.MULTILINE,
+            )
+        )
         sorries += len(re.findall(r"\bsorry\b", body))
     return theorems, sorries
 

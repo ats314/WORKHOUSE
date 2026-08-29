@@ -10,9 +10,9 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 40 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 224/224 checks pass.
+**T1/T2 — re-derived here.** 230/230 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -24,7 +24,7 @@ it cannot drift from what the repository actually checks.
 | old-to-new crosswalk | 5/5 |
 | fourth-order generalized Hodge pencil | 3/3 |
 | fourth-order checkpoint extraction | 3/3 |
-| homology and finite volume | 12/12 |
+| homology and finite volume | 13/13 |
 | settlement package and adjudication harness (G3) | 16/16 |
 | near-Gamma uniformity (G11) | 6/6 |
 | tier collapse (G14) | 6/6 |
@@ -37,8 +37,8 @@ it cannot drift from what the repository actually checks.
 | notes program: SAFE, Davies, coercivity (G20-G23) | 13/13 |
 | off-axis channel ledger (C2 geography, G14) | 23/23 |
 | the flat-band manuscript | 5/5 |
-| finite-rank truncation bridge (published SU(3) truncations) | 8/8 |
-| two-cube charge-odd second-order closure (B=4 and B=6) | 6/6 |
+| finite-rank truncation bridge (published SU(3) truncations) | 9/9 |
+| two-cube charge-odd second-order closure (B=4 and B=6) | 10/10 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
