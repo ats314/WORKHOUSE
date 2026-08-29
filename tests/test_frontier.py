@@ -102,6 +102,33 @@ def test_lean_counters_ignore_comments():
     stripped = F.strip_lean_comments(body)
     assert "sorry" not in stripped
     assert len(stripped.splitlines()) == len(body.splitlines())
+
+    # A string literal containing "/-" must not open a phantom comment that
+    # swallows a real sorry (Codex P2 on PR #32), and a sorry inside a
+    # string is data, not a proof hole.
+    tricky = (
+        'def marker : String := "/-"\n'
+        "theorem real_three : 3 = 3 := sorry\n"
+        'def quoted : String := "sorry \\" still sorry"\n'
+        "lemma real_four : 4 = 4 := rfl\n"
+    )
+    tricky_stripped = F.strip_lean_comments(tricky)
+    assert tricky_stripped.count("sorry") == 1  # only the real one survives
+    assert "real_four" in tricky_stripped
+
+    # A Char literal holding a double quote must not open phantom string
+    # mode (Codex P1 on PR #36) -- and a prime on an identifier is not a
+    # char literal, so h' followed by real code still scans.
+    chars = (
+        "def quote : Char := '\"'\n"
+        "theorem real_five : 5 = 5 := sorry\n"
+        "def esc : Char := '\\''\n"
+        "lemma with_prime (h' : True) : True := h'\n"
+        "theorem real_six : 6 = 6 := sorry\n"
+    )
+    chars_stripped = F.strip_lean_comments(chars)
+    assert chars_stripped.count("sorry") == 2
+    assert "real_six" in chars_stripped
     import re as _re
 
     assert len(_re.findall(r"^\s*(?:theorem|lemma)\s", stripped, _re.MULTILINE)) == 2

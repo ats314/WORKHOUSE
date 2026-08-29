@@ -61,19 +61,53 @@ class Frontier:
 
 
 def strip_lean_comments(body: str) -> str:
-    """Blank out `/- ... -/` blocks (nested; doc comments included) and `--` tails.
+    """Blank `/- ... -/` blocks (nested), `--` tails, and string contents.
 
     Newlines survive, so line numbers are stable for callers that scan
-    per-line. The counters must see only code: a module header that *says*
-    "no `sorry`" would otherwise count as one, so adding six documented
-    modules would report six sorries that do not exist.
+    per-line. The counters must see only code, in both directions: a module
+    header that *says* "no `sorry`" must not count as one, and a string
+    literal containing "/-" must not open a phantom comment that hides a
+    real `sorry` until some later `-/`. Double-quoted strings are tracked
+    with backslash escapes and their contents blanked (a `sorry` inside a
+    string is data, not a proof hole).
     """
     out: list[str] = []
     i, depth = 0, 0
+    in_string = False
+    ident = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'!?")
+
+    def char_literal_end(pos: int) -> int:
+        """End index past a character literal at ``pos``, or ``pos`` if none.
+
+        A quote after an identifier character is a prime (h'), never a
+        literal; a literal is exactly '<char>' or '<backslash-escape>'.
+        Without this, Char := '"' would open phantom string mode and blank
+        every later theorem and sorry in the file.
+        """
+        if body[pos] != "'" or (pos > 0 and body[pos - 1] in ident):
+            return pos
+        j = pos + 1
+        if j < len(body) and body[j] == "\\":
+            j += 2
+        elif j < len(body) and body[j] not in ("'", "\n"):
+            j += 1
+        else:
+            return pos
+        return j + 1 if j < len(body) and body[j] == "'" else pos
+
     while i < len(body):
         ch = body[i]
         two = body[i : i + 2]
-        if two == "/-":
+        if in_string:
+            if ch == "\\":
+                i += 2
+                continue
+            if ch == '"':
+                in_string = False
+            elif ch == "\n":
+                out.append("\n")
+            i += 1
+        elif two == "/-":
             depth += 1
             i += 2
         elif two == "-/" and depth:
@@ -88,6 +122,11 @@ def strip_lean_comments(body: str) -> str:
             if end == -1:
                 break
             i = end
+        elif ch == "'" and (end := char_literal_end(i)) != i:
+            i = end
+        elif ch == '"':
+            in_string = True
+            i += 1
         else:
             out.append(ch)
             i += 1

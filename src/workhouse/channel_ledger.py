@@ -279,6 +279,61 @@ def b_note(n: int) -> Fraction:
     return eval(P.b_evaluator(), {"__builtins__": {}}, {"N": Fraction(n)})  # noqa: S307
 
 
+def _degree_bound(expr) -> tuple[int, int]:
+    """Structural (numerator, denominator) degree bound in N, no expansion.
+
+    Add: the common-denominator bound. Mul/Pow: sums and multiples, with
+    negative integer powers swapping the roles. Conservative by design —
+    only an upper bound is needed to make sampling decisive.
+    """
+    from sympy import Add, Integer, Mul, Pow
+    from sympy import Rational as SRational
+    from sympy import Symbol as SSymbol
+
+    if isinstance(expr, (Integer, SRational, int)):
+        return (0, 0)
+    if isinstance(expr, SSymbol):
+        return (1, 0)
+    if isinstance(expr, Pow):
+        base_n, base_d = _degree_bound(expr.base)
+        k = int(expr.exp)
+        if k >= 0:
+            return (k * base_n, k * base_d)
+        return (-k * base_d, -k * base_n)
+    if isinstance(expr, Mul):
+        n = d = 0
+        for arg in expr.args:
+            an, ad = _degree_bound(arg)
+            n += an
+            d += ad
+        return (n, d)
+    if isinstance(expr, Add):
+        bounds = [_degree_bound(arg) for arg in expr.args]
+        total_d = sum(b[1] for b in bounds)
+        n = max(b[0] + total_d - b[1] for b in bounds)
+        return (n, total_d)
+    raise TypeError(f"unsupported node {type(expr).__name__}")
+
+
+def b_note_identity_bound() -> int:
+    """Points needed to make sampling prove b_note == beta_formula.
+
+    Both sides are rational functions of N. The difference's numerator has
+    degree at most max(n1 + d2, n2 + d1) over the structural bounds, so
+    agreement at MORE than that many distinct ranks forces the difference
+    to vanish identically.
+    """
+    from sympy import Symbol as SSymbol
+    from sympy import sympify
+
+    n_sym = SSymbol("N")
+    expr = sympify(P.B_NOTE.read_text(encoding="utf-8").strip(), locals={"N": n_sym})
+    n1, d1 = _degree_bound(expr)
+    n2 = 2 * P17.degree()  # P17(N^2)
+    d2 = 1 + 2 * R20.degree()  # N * R20(N^2)
+    return max(n1 + d2, n2 + d1)
+
+
 def _eps_coefficients(poly, n0: int) -> list[Fraction]:
     """Coefficients of ``poly(z)`` re-expanded in ``eps`` with ``z = (n0+eps)**2``."""
     shifted = Poly(poly.as_expr().subs(_z, (n0 + Symbol("eps")) ** 2), Symbol("eps"))
