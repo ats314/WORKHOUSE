@@ -3757,19 +3757,118 @@ def _():
     ok = (
         kc["beta"] == beta_hist
         and kc["alpha"] == alpha3
-        and beta_bal - beta_hist == Fraction(25, 64)
+        and beta_hist - beta_bal == P.as_fraction(K.DELTA_BETA_3)
         and beta_hist - beta_bal == -Fraction(15, 16) * alpha3
         and (c_hist - c_bal) / (a_shp / 2) == -Fraction(15, 32)
         and gcd(107551523941875, 275331901291200) == 4302060957675
     )
     return ok, (
-        "beta_3^bal - beta_3^hist = 25/64 exactly (raw numerator "
+        f"beta_3^hist - beta_3^bal = {K.DELTA_BETA_3} exactly (raw numerator "
         "-107551523941875 over 275331901291200 reduces by the factor "
-        "4302060957675), matching C10's recorded Delta_beta_3 = -25/64; "
+        "4302060957675), which IS the registry's DELTA_BETA_3 and C10's "
+        "recorded shift -- read here rather than compared against a literal; "
         "corollaries never before recorded: Delta_beta_3 = -(15/16)*alpha_3 "
         "and Delta_C_3/(A/2) = -15/32. A relation among recorded quantities "
         "-- whether the shift was derived or defined as the difference is "
         "open (off-axis ledger §7), and no side of C2 is preferred here"
+    )
+
+
+@channels.check(
+    "where both routes exist they agree, and at N = 3 the checkable one is closed",
+    "THM_SUN unified nality v2 §5; ledger C10; GCSG SU(6) certificate",
+)
+def _():
+    # The other half of C10. Delta_beta_3 is now read by the check that
+    # establishes it, one check up; Delta_q_3 is read by nothing anywhere,
+    # and this is why.
+    #
+    # The unified nality theorem states q_N = q_N^bal + Delta q_N^exc and
+    # warns, in its own words, that q_N^bal at an exceptional rank means the
+    # DIRECT fixed-rank contraction and not analytic continuation of the
+    # stable formula. That is a warning about method with no number attached,
+    # and it leaves two things unestablished that this check settles.
+    #
+    # First: where both routes exist, do they agree? They do. At N = 6 the
+    # shipped SU(6) certificate carries a direct fixed-rank balanced
+    # contraction, and it equals the stable continuation exactly -- so the
+    # warning is about VALIDITY, not about the two routes computing different
+    # objects. At N = 5 the continuation is regular and the corpus records no
+    # exceptional assignment, so the law reads Delta q_5 = 0 there.
+    #
+    # Second: what exactly closes the route at N = 3? D34 carries (z-9)^3
+    # with Q32(9) nonzero, so the continuation has a pole of order exactly
+    # three. Delta q_3 therefore rests on a fixed-rank contraction that is
+    # not in this repository, and no amount of algebra on the stable formula
+    # will produce it -- which is the precise, checkable form of "the
+    # balanced side of C2 is T3 here".
+    #
+    # One hypothesis tried and refuted, kept because the refutation is the
+    # useful part: that the Hadamard finite part of that pole IS the balanced
+    # value. It is not, and it is not q_3 either. It misses q_3^bal by
+    # 67307265071/305627904000 and q_3 by 48497711/101875968000 -- and the
+    # second miss is the interesting number, because it is small (height
+    # about 10^11, denominator 2^11 3^5 5^3 17^3) against operands of height
+    # about 10^19. Small is not zero. Recorded as a measured gap, with no
+    # mechanism claimed for it; ADR 0005 is what reading one off a near-miss
+    # costs here.
+    from fractions import Fraction
+
+    from sympy import factor_list
+
+    from . import channel_ledger as CL
+
+    zz, q32, d34 = P.q_polynomials()
+    factors = {str(b): e for b, e in factor_list(d34)[1]}
+
+    def continuation(n: int) -> Fraction:
+        return Fraction(-2, 3 * n) * Fraction(int(q32.eval(n * n)), int(d34.subs(zz, n * n)))
+
+    # N = 6: continuation against the shipped direct contraction, and the shift
+    certificate = P.su6()
+    agree_at_six = Fraction(certificate["balanced_N6"]["q"]) == continuation(6)
+    shift_at_six = Fraction(certificate["full_SU6"]["q"]) - Fraction(
+        certificate["balanced_N6"]["q"]
+    ) == P.as_fraction(K.DELTA_Q_6)
+    # N = 5: exceptional by the |p-q| = N <= 6 count, but carrying no assignment
+    five_is_exceptional = 5 in K.EXCEPTIONAL_RANKS
+    regular_at_five = d34.subs(zz, 25) != 0
+
+    # N = 3: the pole, exactly
+    laurent = CL.scalar_continuation_laurent(3, order=0)
+    pole_order = -min(laurent)
+    q3_balanced = P.as_fraction(K.Q_BAND_4) - P.as_fraction(K.DELTA_Q_3)
+    finite_part = laurent[0]
+    misses_balanced = finite_part - q3_balanced
+    misses_full = finite_part - P.as_fraction(K.Q_BAND_4)
+
+    ok = (
+        agree_at_six
+        and shift_at_six
+        and five_is_exceptional
+        and regular_at_five
+        and factors.get("z - 9") == 3
+        and q32.eval(9) != 0
+        and pole_order == 3
+        and laurent[-3] == Fraction(27, 64)
+        and misses_balanced != 0
+        and misses_full != 0
+        and misses_balanced == Fraction(-67307265071, 305627904000)
+        and misses_full == Fraction(48497711, 101875968000)
+        and P.as_fraction(K.DELTA_BETA_3) != 0
+    )
+    return ok, (
+        "at N = 6 the stable continuation equals the shipped direct fixed-rank balanced "
+        f"contraction exactly, and the full value exceeds it by {K.DELTA_Q_6} — so the two "
+        "routes compute one object wherever both are defined, and the corpus's warning is "
+        "about validity. At N = 3 the continuation route is closed: D34 carries (z-9)^3 "
+        f"with Q32(9) nonzero, a pole of order exactly {pole_order}, leading coefficient "
+        f"{laurent[-3]}. So Delta q_3 = {K.DELTA_Q_3} is a DEFINITION in this repository, "
+        f"not a check; it fixes q_3^bal = {q3_balanced}, a value recorded nowhere here. The "
+        f"finite part of the pole is not that value (off by {misses_balanced}) and not q_3 "
+        f"either (off by {misses_full}) — the second miss small against operands of height "
+        "about 10^19, measured and left unexplained. What would close it is the direct "
+        "SU(3) fixed-rank contraction, the artifact the unified nality theorem names"
     )
 
 
@@ -5061,9 +5160,13 @@ def _():
         # coverage checks: cite generated files, not claim ids
         "CHK:the-flat-band-manuscript:every-declared-note-document-is-a-graph--a77304",
         "CHK:the-flat-band-manuscript:every-node-the-theory-graph-strands-is-s-57688c",
-        # registered constants no check body reads -- a real T3 hole, shown
-        "CONST:DELTA_BETA_3",
-        "CONST:DELTA_Q_3",
+        # registered constants no check body reads -- a real T3 hole, shown.
+        # DELTA_BETA_3 and DELTA_Q_3 came off this list when the off-axis
+        # suite started reading them; they are removed rather than kept so a
+        # regression strands them loudly. What is left is not one hole but
+        # two kinds: transcribed literature values (HAMER, MUNSTER) and run
+        # metadata (SIGMA_5_*), neither of which is a claim this repository
+        # derives.
         "CONST:HAMER_MT_NUM",
         "CONST:LEAK_2",
         "CONST:LEAK_2_EVEN",
@@ -5132,10 +5235,12 @@ def _():
     return not unaccounted, (
         f"{len(ids)} catalogue nodes, {sum(degree.values()) // 2} edges, {len(stranded)} stranded "
         f"and every one accounted for ({dict(sorted(kinds.items()))}). {len(unaccounted)} "
-        f"unaccounted: {unaccounted}. The 14 stranded constants are the honest headline -- "
-        "DELTA_BETA_3 among them, so the balanced side of C2 is registered and checked by "
-        f"nothing. {len(connected)} previously-stranded nodes have since gained an edge"
-        + (f": {connected}" if connected else "")
+        f"unaccounted: {unaccounted}. The {kinds['CONST']} stranded constants are the honest "
+        "headline, and the C2 pair is no longer among them: DELTA_BETA_3 is read by the check "
+        "that establishes it, DELTA_Q_3 by the check that says exactly why it cannot be "
+        "established here. The residue is listed above rather than characterised, because a "
+        f"hand-written summary of it has gone stale twice. {len(connected)} previously-stranded "
+        "nodes have since gained an edge" + (f": {connected}" if connected else "")
     )
 
 
