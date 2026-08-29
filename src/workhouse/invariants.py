@@ -5062,7 +5062,6 @@ def _():
         "CHK:the-flat-band-manuscript:every-declared-note-document-is-a-graph--a77304",
         "CHK:the-flat-band-manuscript:every-node-the-theory-graph-strands-is-s-57688c",
         # registered constants no check body reads -- a real T3 hole, shown
-        "CONST:D3_EVEN",
         "CONST:DELTA_BETA_3",
         "CONST:DELTA_Q_3",
         "CONST:HAMER_MT_NUM",
@@ -5075,7 +5074,6 @@ def _():
         "CONST:RAW_FOLDED_AXIAL_GAMMA_NUM",
         "CONST:SIGMA_5_CRT_PRIMES",
         "CONST:SIGMA_5_TOPOLOGIES",
-        "CONST:T_3_EVEN",
         # Papers in the index whose bare node has no citation edge, because
         # the citation web is populated ONLY from primary sources -- an
         # INSPIRE reference list or the pinned PDF's bibliography -- and

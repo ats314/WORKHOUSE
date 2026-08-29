@@ -184,6 +184,10 @@ def third_order_numerators() -> list[int]:
     Domino-engine census outputs over a shared denominator family (249696 and
     its multiples), so unlike the rank laws these are not a closed form in any
     index -- they are what one enumeration returned.
+
+    ``D3_TOP``, not ``D_3_TOP``: the underscore variant was one of the five
+    duplicate registrations removed upstream, and it named the same rational.
+    The terms are unchanged, so the recorded scan stands.
     """
     return [
         int(K.B_3.p),
@@ -192,7 +196,7 @@ def third_order_numerators() -> list[int]:
         int(K.T3_EVEN.p),
         int(K.D3_ODD_DOMINO.p),
         int(K.D3_EVEN_DOMINO.p),
-        int(K.D_3_TOP.p),
+        int(K.D3_TOP.p),
         int(K.M3_EVEN_K0.p),
     ]
 

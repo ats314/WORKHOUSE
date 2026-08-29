@@ -89,3 +89,53 @@ def test_float_only_values_are_named_num():
 
 def test_q4_cross_derives_from_beta_pen():
     assert K.Q4_CROSS == K.BETA_PEN_3 / 4
+
+
+def test_shared_values_are_declared_coincidences_not_accidental_aliases():
+    """Two names on one rational must be deliberate, and say why.
+
+    The join keys of this corpus are exact rationals, not concepts, so a value
+    carried under two near-identical names is not a cosmetic wart: `workhouse
+    search` returns two "different" constants and a reader can cite them as
+    independent corroboration of each other. That is the same failure the
+    check-id truncation collision had, one layer down.
+
+    Distinct quantities may of course coincide -- a hopping and a leakage in
+    the same sector are different objects, and recording both is the point.
+    The rule is only that the coincidence be DECLARED, with a reason, in
+    K.DECLARED_COINCIDENCES.
+
+    This test exists because the registry had five undeclared aliases and did
+    not know it: T_3_EVEN, D3_ODD, D3_EVEN, E_VAC3_DOMINO and D_3_TOP
+    duplicated constants the block above them already carried, nothing read
+    any of them, and a note review's bears_on pointed at three of the dead
+    names. The registry's own prose miscounted the labels on -6335/249696 as
+    a result.
+    """
+    import collections
+
+    by_value = collections.defaultdict(list)
+    for name in dir(K):
+        if not name.isupper() or name.startswith("_"):
+            continue
+        value = getattr(K, name)
+        # Genuine fractions only. Integer entries in this registry are counts
+        # and dimensions -- two censuses landing on the same integer is not a
+        # claim about anything, so requiring a declaration there would be noise.
+        if isinstance(value, Rational) and value.q != 1:
+            by_value[str(value)].append(name)
+
+    shared = {v: sorted(n) for v, n in by_value.items() if len(n) > 1}
+    undeclared = {v: n for v, n in shared.items() if v not in K.DECLARED_COINCIDENCES}
+    assert not undeclared, (
+        "constants sharing a value with no declared reason -- either the same "
+        f"quantity registered twice (delete one), or not (declare it): {undeclared}"
+    )
+
+    for value, (names, reason) in K.DECLARED_COINCIDENCES.items():
+        actual = sorted(names)
+        assert value in shared, f"{value} is declared a coincidence but no longer shared"
+        assert shared[value] == actual, (
+            f"{value}: declared {actual}, registry now carries {shared[value]}"
+        )
+        assert len(reason.split()) >= 8, f"{value}: reason is too thin to be a reason"
