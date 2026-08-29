@@ -389,22 +389,25 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/channels.py:109 · UNIFIED v4.3 §6
   - `workhouse verify --only 'C_normal = -A_normal/2: the agreed axial coefficient pins the normal channel'`
 - `FINDING: an explicit second witness C_alt exhibits the C2 non-identifiability`
-  - src/workhouse/invariants/channels.py:441 · COMPLETE_UNIFIED_MASTER_CLOSED §15.3.2
+  - src/workhouse/invariants/channels.py:466 · COMPLETE_UNIFIED_MASTER_CLOSED §15.3.2
   - `workhouse verify --only 'FINDING: an explicit second witness C_alt exhibits the C2 non-identifiability'`
 - `FINDING: the retained Gamma/axis data cannot identify C_shp`
-  - src/workhouse/invariants/channels.py:387 · MASTER paper Thm. 13 / C2 / G3
+  - src/workhouse/invariants/channels.py:412 · MASTER paper Thm. 13 / C2 / G3
   - `workhouse verify --only 'FINDING: the retained Gamma/axis data cannot identify C_shp'`
 - `FINDING: the tier collapse is two integer cancellations at record level`
   - src/workhouse/invariants/channels.py:72 · MASTER_THEORY §5.2 / G14
   - `workhouse verify --only 'FINDING: the tier collapse is two integer cancellations at record level'`
+- `at N = 6, the one rank carrying both routes here, they agree; N = 3 is closed`
+  - src/workhouse/invariants/channels.py:244 · THM_SUN unified nality v2 §5; ledger C10; GCSG SU(6) certificate
+  - `workhouse verify --only 'at N = 6, the one rank carrying both routes here, they agree; N = 3 is closed'`
 - `on an axial cut the mixed invariants vanish and the norm divides`
-  - src/workhouse/invariants/channels.py:414 · MASTER paper §7
+  - src/workhouse/invariants/channels.py:439 · MASTER paper §7
   - `workhouse verify --only 'on an axial cut the mixed invariants vanish and the norm divides'`
 - `rotation decomposes only as a sum, and the ket convention is load-bearing`
   - src/workhouse/invariants/channels.py:162 · UNIFIED v4.3 §3.2 (carrier), tier_collapse convention
   - `workhouse verify --only 'rotation decomposes only as a sum, and the ket convention is load-bearing'`
 - `scalar vs shape continuation: poles where the corpus forbids, regular where it allows`
-  - src/workhouse/invariants/channels.py:342 · GLUEBALL_DETAILED_FORMULA v3.1; THM_SUN unified v2; THM_SU6
+  - src/workhouse/invariants/channels.py:367 · GLUEBALL_DETAILED_FORMULA v3.1; THM_SUN unified v2; THM_SU6
   - `workhouse verify --only 'scalar vs shape continuation: poles where the corpus forbids, regular where it allows'`
 - `the 189-record kernel decomposes in the shape basis over the whole zone`
   - src/workhouse/invariants/channels.py:32 · UNIFIED v4.3 §5.1/§6
@@ -416,14 +419,11 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/channels.py:187 · GLUEBALL_DETAILED_FORMULA v3.1 §11 + App. A
   - `workhouse verify --only 'the pinned structured B_N expression IS P17(N^2)/(N R20(N^2))'`
 - `the shape fit's C row sums to zero, so no Gamma-anchor error can move C_shp at all`
-  - src/workhouse/invariants/channels.py:962 · provenance nb-hodge-v10a26-alt2, _v10a3_extract_shape; UNIFIED v4.3 §5.1
+  - src/workhouse/invariants/channels.py:987 · provenance nb-hodge-v10a26-alt2, _v10a3_extract_shape; UNIFIED v4.3 §5.1
   - `workhouse verify --only 'the shape fit'"'"'s C row sums to zero, so no Gamma-anchor error can move C_shp at all'`
 - `the shipped displacement support is exactly six shells`
   - src/workhouse/invariants/channels.py:138 · off-axis ledger falsifier gate
   - `workhouse verify --only 'the shipped displacement support is exactly six shells'`
-- `where both routes exist they agree, and at N = 3 the checkable one is closed`
-  - src/workhouse/invariants/channels.py:244 · THM_SUN unified nality v2 §5; ledger C10; GCSG SU(6) certificate
-  - `workhouse verify --only 'where both routes exist they agree, and at N = 3 the checkable one is closed'`
 **old-to-new crosswalk**
 
 - `Phi_C at the high-symmetry points`
@@ -804,34 +804,34 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **off-axis channel ledger (C2 geography, G14)**
 
 - `FINDING: A = 5/48 pins the normal sector's whole C4 contribution`
-  - src/workhouse/invariants/channels.py:561 · UNIFIED v4.3 §5.1/§6, block decomposition
+  - src/workhouse/invariants/channels.py:586 · UNIFIED v4.3 §5.1/§6, block decomposition
   - `workhouse verify --only 'FINDING: A = 5/48 pins the normal sector'"'"'s whole C4 contribution'`
 - `FINDING: C_shp is carried by 6 of 189 records, not spread across the kernel`
-  - src/workhouse/invariants/channels.py:491 · UNIFIED v4.3 §5.1/§6, block decomposition
+  - src/workhouse/invariants/channels.py:516 · UNIFIED v4.3 §5.1/§6, block decomposition
   - `workhouse verify --only 'FINDING: C_shp is carried by 6 of 189 records, not spread across the kernel'`
 - `FINDING: the adjudicator's THIRD-VALUE scalar verdict is a C1 anchoring artifact`
-  - src/workhouse/invariants/channels.py:838 · provenance nb-hodge-v10a26-alt2, section 17
+  - src/workhouse/invariants/channels.py:863 · provenance nb-hodge-v10a26-alt2, section 17
   - `workhouse verify --only 'FINDING: the adjudicator'"'"'s THIRD-VALUE scalar verdict is a C1 anchoring artifact'`
 - `FINDING: the off-axis ledger carries two claims its own author later retracted`
-  - src/workhouse/invariants/channels.py:1148 · notes UPLOADS_2026-08-28d OFF_AXIS_LEDGER §6/§7, corrected by the C2 status note
+  - src/workhouse/invariants/channels.py:1173 · notes UPLOADS_2026-08-28d OFF_AXIS_LEDGER §6/§7, corrected by the C2 status note
   - `workhouse verify --only 'FINDING: the off-axis ledger carries two claims its own author later retracted'`
 - `FINDING: the run's own re-anchor moved C_shp by 4.6e-15, as the zero row sum requires`
-  - src/workhouse/invariants/channels.py:1025 · provenance nb-hodge-v10a26-alt2, sections 13 and 17
+  - src/workhouse/invariants/channels.py:1050 · provenance nb-hodge-v10a26-alt2, sections 13 and 17
   - `workhouse verify --only 'FINDING: the run'"'"'s own re-anchor moved C_shp by 4.6e-15, as the zero row sum requires'`
 - `FINDING: the v10a.26 cluster ledger is exhausted by supports <= 2 until fourth order`
-  - src/workhouse/invariants/channels.py:1073 · provenance nb-hodge-v10a26-alt2, section 16 rooted incidence transform
+  - src/workhouse/invariants/channels.py:1098 · provenance nb-hodge-v10a26-alt2, section 16 rooted incidence transform
   - `workhouse verify --only 'FINDING: the v10a.26 cluster ledger is exhausted by supports <= 2 until fourth order'`
 - `FINDING: the v10a.26 notebook carries a per-class ledger and attests its own blindness`
-  - src/workhouse/invariants/channels.py:690 · provenance nb-hodge-v10a26-alt2
+  - src/workhouse/invariants/channels.py:715 · provenance nb-hodge-v10a26-alt2
   - `workhouse verify --only 'FINDING: the v10a.26 notebook carries a per-class ledger and attests its own blindness'`
 - `FINDING: the v10a.26 run gates on known values before it unblinds`
-  - src/workhouse/invariants/channels.py:766 · provenance nb-hodge-v10a26-alt2, cell 17
+  - src/workhouse/invariants/channels.py:791 · provenance nb-hodge-v10a26-alt2, cell 17
   - `workhouse verify --only 'FINDING: the v10a.26 run gates on known values before it unblinds'`
 - `FINDING: the v10a.26 side supplies A, B, D but no block structure, and its C fights its own A`
-  - src/workhouse/invariants/channels.py:631 · provenance nb-hodge-v10a26-alt2 / GLUEBALL §10
+  - src/workhouse/invariants/channels.py:656 · provenance nb-hodge-v10a26-alt2 / GLUEBALL §10
   - `workhouse verify --only 'FINDING: the v10a.26 side supplies A, B, D but no block structure, and its C fights its own A'`
 - `the C_alt witness IS the balanced eps-free continuation, and Delta_C/(A/2) = 15/32`
-  - src/workhouse/invariants/channels.py:908 · OFF AXIS LEDGER 2026-08-22 §2, UNIFIED v4.3 §5.1
+  - src/workhouse/invariants/channels.py:933 · OFF AXIS LEDGER 2026-08-22 §2, UNIFIED v4.3 §5.1
   - `workhouse verify --only 'the C_alt witness IS the balanced eps-free continuation, and Delta_C/(A/2) = 15/32'`
 **old-to-new crosswalk**
 
