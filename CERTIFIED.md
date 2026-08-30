@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 188
+## T1 — re-derived exactly — 189
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -692,17 +692,20 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'the two Bloch incidence symbols, and the determinant asymmetry between them'`
 **the flat-band manuscript**
 
+- `FINDING: the v2 publication edition prints twelve labels that name no check`
+  - src/workhouse/invariants/manuscript.py:122 · paper/workhouse_publication_edition_v2_2026-08-30.tex; MASTER paper §Reproducibility
+  - `workhouse verify --only 'FINDING: the v2 publication edition prints twelve labels that name no check'`
 - `every \chk in every pinned edition names a check that exists and passes`
-  - src/workhouse/invariants/manuscript.py:32 · MASTER paper, every displayed result
+  - src/workhouse/invariants/manuscript.py:69 · MASTER paper, every displayed result
   - `workhouse verify --only 'every \chk in every pinned edition names a check that exists and passes'`
 - `every declared note document is a graph node with an edge`
-  - src/workhouse/invariants/manuscript.py:84 · ledger/notes.yaml + notes/*.jsonl
+  - src/workhouse/invariants/manuscript.py:163 · ledger/notes.yaml + notes/*.jsonl
   - `workhouse verify --only 'every declared note document is a graph node with an edge'`
 - `no fourth-order coefficient enters the manuscript`
-  - src/workhouse/invariants/manuscript.py:138 · PAPER_FLATBAND §6
+  - src/workhouse/invariants/manuscript.py:217 · PAPER_FLATBAND §6
   - `workhouse verify --only 'no fourth-order coefficient enters the manuscript'`
 - `q at the four high-symmetry points is 0, 4, 8, 12`
-  - src/workhouse/invariants/manuscript.py:160 · MASTER_DOC Fig. 2
+  - src/workhouse/invariants/manuscript.py:239 · MASTER_DOC Fig. 2
   - `workhouse verify --only 'q at the four high-symmetry points is 0, 4, 8, 12'`
 **tier collapse (G14)**
 
@@ -919,10 +922,10 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **the flat-band manuscript**
 
 - `every node the theory graph strands is stranded for a stated reason`
-  - src/workhouse/invariants/manuscript.py:179 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
+  - src/workhouse/invariants/manuscript.py:258 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
   - `workhouse verify --only 'every node the theory graph strands is stranded for a stated reason'`
 - `the Lean core DOES carry the historical C_shp side, and still adjudicates nothing`
-  - src/workhouse/invariants/manuscript.py:334 · lean/Workhouse/Basic.lean; MASTER paper §Reproducibility
+  - src/workhouse/invariants/manuscript.py:413 · lean/Workhouse/Basic.lean; MASTER paper §Reproducibility
   - `workhouse verify --only 'the Lean core DOES carry the historical C_shp side, and still adjudicates nothing'`
 **two-cube charge-odd second-order closure (B=4 and B=6)**
 

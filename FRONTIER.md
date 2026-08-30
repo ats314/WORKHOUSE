@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 40 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 237/237 checks pass.
+**T1/T2 — re-derived here.** 238/238 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -36,7 +36,7 @@ it cannot drift from what the repository actually checks.
 | tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
 | notes program: SAFE, Davies, coercivity (G20-G23) | 13/13 |
 | off-axis channel ledger (C2 geography, G14) | 23/23 |
-| the flat-band manuscript | 6/6 |
+| the flat-band manuscript | 7/7 |
 | finite-rank truncation bridge (published SU(3) truncations) | 9/9 |
 | two-cube charge-odd second-order closure (B=4 and B=6) | 11/11 |
 

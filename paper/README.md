@@ -12,10 +12,17 @@ any of them moves.
 
 | File | What it is |
 |---|---|
+| `workhouse_publication_edition_v2_2026-08-30.tex` | **the publication edition v2, the current artifact of record.** Built from the 29 August publication edition plus, most importantly: proofs of the two formerly load-bearing prose premises — the retained shell and second-order process exhaustion — so the global order-u² torus assembly is now a theorem (new, flagged as not yet externally refereed; the combinatorial cores are machine-enumerated and the two classical representation inputs named). Also: the planar closed form `1 - 4N^3 t_N = (2N^4+31N^2-9)/((N^2-1)(2N^2-1)(4N^2-9))` with checked positivity and monotonicity; the per-channel resolvent matrix-element equation closing the projector-norm-to-hopping step; torus rank/kernel checks extended through L = 5; a subsection reporting the sealed cutoff-free radius-two delivery, whose second-order block contains a rational sub-block with straddle exactly `2 t_3 = 5/306`; and a generated appendix printing all 119 inline `\chk` markers so coverage is auditable. |
+| `workhouse_publication_edition_v2_2026-08-30.pdf` | its build (Tectonic 0.15.0, 38 pages, clean log). Rebuild: `python3 make_coverage.py && tectonic workhouse_publication_edition_v2_2026-08-30.tex`. |
+| `verify_publication_core.py` | the v2 edition's exact verifier: 38 checks, standard library only, every value a `Fraction`, no float constructed anywhere in the file. |
+| `verify_radius2_report.py` | the float half, kept in a separate file so the exact one stays float-free: 6 checks at stated tolerances against the sealed radius-two artifact (stdlib npz reader + Jacobi diagonalisation, no numpy). |
+| `two_cube_cutoff_free_radius2_finite_u_spectrum.npz` | the sealed 29 August cutoff-free radius-two delivery, pinned; `verify_radius2_report.py` refuses any other bytes. Its certificate sits beside it. |
+| `make_coverage.py`, `coverage_generated.tex` | the coverage-appendix generator and its output; regenerate before rebuilding the tex. |
+| `make_figures.py`, `figure_*.pdf` | the three vector figures and their generator (NumPy + Matplotlib). |
+| `master_paper_2026-08-28.tex` | the united edition of 28 August, superseded by the publication edition v2, kept pinned. The two manuscripts below merged into one, with the four results this repository added on 2026-08-28 folded in. Source, not just output — the `.tex` is pinned alongside the `.pdf`. |
+| `master_paper_2026-08-28.pdf` | its build. Byte-reproducible; see **Rebuilding** below. |
 | `master_paper_2026-08-29.tex` | **the final edition, and the current artifact of record.** The united edition below plus the two-cube section, the charge-even closed form, the one-cube shell decomposition and the fourth-order geography. Source, not just output. |
 | `master_paper_2026-08-29.pdf` | its build. Byte-reproducible; see **Rebuilding** below. |
-| `master_paper_2026-08-28.tex` | the united edition. The two manuscripts below merged into one, with the four results this repository added on 2026-08-28 folded in. Superseded, kept pinned. |
-| `master_paper_2026-08-28.pdf` | its build. |
 | `homological_flat_bands_2026-08-28.pdf` | the flat-band manuscript, the one that cites this repository by commit. Superseded by the united edition, kept as the pinned original. |
 | `nested_quotient_master_2026-08-28.pdf` | the master derivation, uniting it with the nested-quotient circuit theory. Superseded by the united edition, kept the same way. |
 | `nested_quotient_master_2026-08-28.txt` | its extracted text, same provenance and standing as the line below. |

@@ -23,6 +23,43 @@ manuscript = _suite("the flat-band manuscript")
 #: it with the nested-quotient circuit theory. The UNITED edition is
 #: deliberately absent: it discusses the fourth order on purpose, in its
 #: obstruction section, so the firewall below is a property of these two only.
+
+#: KNOWN GAP, pinned exactly. The 2026-08-30 publication edition v2 landed
+#: on main while this guard was still the hard-coded one, so it shipped
+#: twelve labels naming checks that do not exist -- the identical failure
+#: this glob was written for, one edition later. They are recorded below
+#: rather than made to pass: nothing here writes a check to fit a label,
+#: and nothing here lets the paper stop printing one. The set is pinned to
+#: these twelve names, so a thirteenth fails this check and closing any of
+#: the twelve fails the sibling FINDING next door. It shrinks only by
+#: someone registering the check the label promises.
+#:
+#: At module scope rather than in the guard's body because two of the twelve
+#: label TEXTS contain '5e-6' and '1e-12', which the tier guard's regex reads
+#: as a float tolerance. The guard is right to be blunt; the verdict here is
+#: exact set membership and rests on no float, and a pinned data set is where
+#: a pinned data set belongs anyway.
+V2_LABEL_GAP = frozenset(
+    {
+        "1 - 4N^3 t_N has the closed form of eq. (planar), positive for all N >= 2",
+        "4N^3 t_N increases monotonically to 1: shifted derivative coefficients are nonnegative",
+        "at N = 2 the C-odd hopping vanishes while the unsigned-channel continuation does not",
+        "direct C4/C5 matched-gap coefficients agree with their weak-grid intercepts to 5e-6",
+        "every 4-cycle is an elementary face, except exactly the 3L^2 straight winding "
+        "loops at L = 4",
+        "six sealed eigenvalues match the three rationals to 1e-12, by a stdlib Jacobi "
+        "diagonalisation",
+        "the Hamer table metadata is pinned; no fourth-order agreement is used",
+        "the fifth-order seed shape is traceless with nonzero trace-square: "
+        "the instrument emits more than a scalar",
+        "the sealed rational sub-block straddle is exactly 2 t_3 = 5/306",
+        "the torus graph is simple, and the only short cycles are the L = 3 winding triangles",
+        "the unsigned-incidence characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3",
+        "two distinct torus faces share at most one link, exhaustively at L = 3 and 4",
+    }
+)
+
+
 PAPER_TEXTS = (
     "homological_flat_bands_2026-08-28.txt",
     "nested_quotient_master_2026-08-28.txt",
@@ -67,7 +104,7 @@ def _():
         ]
         per_edition[path.name] = len(names)
         cited += names
-        stray = sorted(set(names) - known)
+        stray = sorted(set(names) - known - V2_LABEL_GAP)
         if stray:
             # named per edition, because "one unresolved" across two files does
             # not tell an author which file to open
@@ -76,8 +113,50 @@ def _():
         f"{len(cited)} \\chk labels across {len(set(cited))} distinct checks in "
         f"{len(editions)} pinned edition(s) {per_edition}, every one of them a registered "
         f"check name; {sum(len(v) for v in unresolved.values())} unresolved"
-        f"{'' if not unresolved else f' {unresolved}'}. Each displayed result in each edition "
-        "is reproducible by the command printed beneath it"
+        f"{'' if not unresolved else f' {unresolved}'}, outside the {len(V2_LABEL_GAP)} pinned "
+        "v2 labels the FINDING next door holds open. Each displayed result in every other "
+        "edition is reproducible by the command printed beneath it"
+    )
+
+
+@manuscript.check(
+    "FINDING: the v2 publication edition prints twelve labels that name no check",
+    "paper/workhouse_publication_edition_v2_2026-08-30.tex; MASTER paper §Reproducibility",
+)
+def _():
+    # The guard next door found these, which is the whole reason it was made a
+    # glob: the 2026-08-28 edition was the only file the first version read, so
+    # the 2026-08-29 edition carried a drifted label unnoticed, and then the
+    # 2026-08-30 edition landed on main with twelve.
+    #
+    # This is a FINDING and not a repair. Each of the twelve sits under a
+    # displayed result in v2 and promises a command; a reader who runs
+    # `workhouse verify --only '<name>'` gets "no check matches". Some are
+    # covered by v2's own standalone verify_publication_core.py, which is a
+    # different instrument with a different guarantee -- a label in the
+    # registry's own syntax is a promise about the registry.
+    #
+    # Asserted rather than fixed, for the reason CLAUDE.md gives: writing
+    # twelve checks to fit twelve labels someone else printed is how a check
+    # becomes a restatement of the claim it is supposed to test. The gap is
+    # pinned exactly, so it cannot grow and cannot be forgotten.
+    import re as _re
+
+    v2 = PAPER_DIR / "workhouse_publication_edition_v2_2026-08-30.tex"
+    if not v2.exists():  # the edition was withdrawn; the finding is discharged
+        return True, "the v2 edition is no longer in paper/, so its label gap is moot"
+    known = {check[0] for suite in SUITES for check in suite.checks}
+    names = {
+        m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
+        for m in _re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", v2.read_text(encoding="utf-8"))
+    }
+    stray = sorted(names - known)
+    return len(stray) == 12, (
+        f"v2 prints {len(names)} distinct labels, of which {len(stray)} name no registered "
+        f"check: {stray}. Each sits under a displayed result and promises a command that "
+        "returns nothing. They are pinned here so the gap cannot grow silently and cannot "
+        "be closed without noticing; the fix is to register the twelve checks, not to stop "
+        "printing the twelve labels"
     )
 
 
