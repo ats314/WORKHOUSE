@@ -35,10 +35,12 @@ it, and the repository's answer to "who checks the device?" was
 `every \chk in the united paper names a check that exists and passes`. That
 invariant hard-coded `master_paper_2026-08-28.tex`. So the 29 August draft
 could — and did — print a label that resolved to nothing, while
-`workhouse verify` reported everything green. The guard now reads a tuple,
-`manuscript.CHK_EDITIONS`, and fails if any listed edition is missing or
-carries an unresolved label. **The tuple is the thing to extend when an edition
-lands.**
+`workhouse verify` reported everything green. The guard now globs `paper/*.tex`
+and fails if any edition carries an unresolved label, naming which file. A glob
+and not a list, deliberately: a list is one more thing to remember when an
+edition lands, and forgetting it is the failure this check exists to prevent.
+(This session first wrote it as a list; the parallel session wrote the glob, and
+the glob is the one that survives.)
 
 **2. A check name asserted more than the arithmetic under it.** The check
 `the C-even range [-4, 12] is exact, and each edge is attained at one point
@@ -298,6 +300,121 @@ The general lesson is one AGENTS.md already states, and this session committed
 anyway: **a negative asserted after two commands is not a negative.** It is the
 same shape as re-deriving something that already exists under different
 notation — search one lineage, find a hole in it, generalise.
+
+## The parallel session, and what was taken from it
+
+Two sessions worked this problem at once, off the same parent. The other one's
+commit is `f25328f` — the one this review wrongly called missing — and its
+package arrived after this branch was already pushed. Three of its findings are
+the same three this audit made independently: the two Lean counters disagreeing,
+the label guard reading one hard-coded edition, and the six-channel census being
+the Weingarten ledger rather than merely summing to it. Converging on the same
+three from different directions is worth more than either finding alone.
+
+Where the two differ, the stronger half wins, and it is not always this one's:
+
+- **The Lean scrape.** This session fixed the regex in `frontier.py` and left
+  `certified.py` with its own copy. The parallel session factored one
+  `frontier.LEAN_DECL` and had both import it, plus a test asserting the two
+  generated counts agree. Two copies of a pattern is how they drifted in the
+  first place; theirs is the fix, and it is taken.
+- **The label guard.** This session wrote a `CHK_EDITIONS` tuple to extend when
+  an edition lands. The parallel session globbed `paper/*.tex`. A list is one
+  more thing to remember, and forgetting it is precisely the failure the check
+  exists to prevent. Theirs is taken, with this one's per-edition reporting of
+  *which* file carries a stray label kept on top.
+- **The census check.** Both wrote it, under the same name, with the same
+  content. This one's carries a rigidity gate — of the 720 ways to attach six
+  measured values to six predicted slots, exactly 4 survive, which is the 2x2
+  conjugate degeneracy and no slack — and theirs carries the better explanation
+  of why the factor of two is the content. Merged, and switched to the public
+  `constants.channel_weight` rather than reaching into another suite module.
+- **The companion verifier.** Theirs had 29 checks to this one's 23, and the
+  two sets are not nested. Theirs alone had the charge-even `Gamma` splitting,
+  the second witness's off-axis separation, and the charge-odd half of the
+  high-symmetry spectra; this one alone had the closed cube surface and the two
+  connected two-cube spectra reassembled from the paper's own diagonals. The
+  union ships, at 25 — the three taken from theirs are re-derived here rather
+  than copied, so the `Gamma` levels come out of the cubic instead of being
+  asserted as a literal.
+- **The bibliography.** Theirs carries 23 entries to this one's 14, and the
+  gap is not padding. This edition's introduction said local topology,
+  line-graph constructions and compact localised states were "all established"
+  and cited nobody, and its carrier section named the singular-flat-band
+  mechanism with no reference at all. Four of their extra citations are papers
+  this repository's own register already holds with full provenance — the
+  Munster/Seo Euclidean series the external-comparisons paragraph *discusses by
+  name* while citing only the 1985 table — and those are taken outright.
+  Three more (Sutherland 1986, Mielke 1991, Bergman-Wu-Balents 2008) the
+  register did not hold; they were verified against primary bibliographic
+  records, indexed with what reading each would settle, and cited with the
+  same "not read here" the Balaji citation already carries. The register
+  refused them as stubs, correctly — *a stub that no indexed paper cites is
+  decoration* — so they entered as papers bearing on G14, which is where the
+  Hazra comparison already sits.
+- **A Windows invariant.** Their package reported the single failing check on a
+  Windows host: `str(path.relative_to(...))` gives backslashes there, and the
+  corpus pin file keys its rows with forward slashes, so the lookup silently
+  missed. Fixed with `as_posix()`, and the guard extended — no relative path in
+  `src/` may be stringified with the platform separator.
+
+## What the reconciliation changed in the manuscript
+
+Comparing the two editions region by region found things in this one that no
+dimension of the audit had caught, because they only show up beside an
+alternative.
+
+- **The Weingarten values are the $U(N)$ ones, in a paper about $SU(N)$.** Both
+  editions quote `Wg(e) = 1/(N^2-1)` and `Wg((12)) = -1/(N(N^2-1))`; those are
+  the unitary-group values, and the central theorem of the second-order chain
+  rests on them. The reduction is real and standard — a degree-(2,2) integrand
+  is invariant under `U -> zU`, so the `SU(N)` and `U(N)` integrals agree
+  provided the invariants at that degree are exhausted by permutation
+  contractions, which holds exactly when the degree is below the rank, `2 < N`,
+  i.e. the theorem's own `N >= 3`. At `N = 2` the extra `eps (x) eps` invariant
+  appears and it fails, which is a second reason the construction begins at
+  three, and the same `eps` channel that makes the `u^1` ledger row SU(3)-only.
+  The parallel edition states the step; this one did not. It does now, and it
+  is recorded as a fourth unchecked load-bearing premise rather than buried.
+- **The all-rank theorem asserted more than one matrix element.** It stated the
+  complete order-`u^2` momentum dependence on the torus as a theorem, while
+  this paper's own Scope section listed the premise behind that promotion as
+  unchecked — the paper contradicting itself about the status of its central
+  result. The parallel edition splits it: an unconditional theorem for the
+  adjacent shared-link coefficient, and a *conditional corollary* for the torus
+  assembly, with the two hypotheses named. That split is taken. Its hypothesis
+  (ii) is narrowed here to the part that is genuinely open, because the other
+  part — that the diagonal is scalar — is provable on the torus by
+  face-transitivity and is proved in the corollary's own proof.
+- **The abstract's most-quoted sentence went with it.** "The complete momentum
+  dependence through second order is the oriented edge-face Gram operator" is
+  exactly the promoted claim; it now states the matrix element as exact and the
+  assembly as conditional, and says the hypotheses are unchecked.
+- **The self-contained list was self-refuting.** Its item 2 carried a premise
+  no check covers and sat under the heading "self-contained". The coefficient
+  and the channel lemma stay there; the assembly moves to the conditional list
+  as its own item, and everything downstream that quotes a band edge or a
+  bandwidth at order `u^2` is told it inherits those hypotheses.
+- **"That is false in general and true here"** overstated what the
+  vacuum-mediated route establishes. It kills one family of non-adjacent
+  routes, by C-parity. It does not settle the enumeration, and the sentence
+  introducing it now says which of the two it does.
+- **The bibliography and the CBB attribution.** See above for the citations
+  taken; the parallel edition also records Ciavarella-Burbano-Bauer as
+  Phys. Rev. D 112, 054514 (2025) where this one keys it `CBB2026` off the
+  arXiv preprint alone. That is flagged rather than changed, because the
+  published reference has not been verified here.
+
+Two further items from the comparison are recorded and **not** applied, because
+they are larger than a merge and want the author's eye: the parallel edition
+constructs explicit *harmonic representatives* of the wrapping cycles
+(`h_ij = (1/L) sum_r s_ij(r)`, with `d_2 h = 0` and `d_3^T h = 0`), which this
+edition lacks entirely and which would need a new check; and it argues that this
+edition's remark "the 3 is the triple degeneracy of `B(0) = 0`, not `b_2(T^3)`"
+is wrong — that Fourier plus Hodge identify the Gamma nullity space canonically
+with `H_2(T^3)`, so the agreement is not a coincidence. If that is right the
+remark needs replacing, and it is exactly the kind of claim this repository
+settles with a check rather than a preference.
 
 ## What is still not checked, and what a referee should press on
 

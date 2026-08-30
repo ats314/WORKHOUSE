@@ -24,12 +24,14 @@ section:
      channel by channel against the four Weingarten weights, and the endpoint
      Casimir budgets that admit six channels at B = 6 and three at B = 4;
   7. the charge-even Bloch cubic mu(mu - p)^2 = 4 a1 a2 a3 with p + q = 12,
-     decided in the same Gaussian-rational arithmetic as group 3, and the four
-     high-symmetry spectra with their attainment sets;
+     decided in the same Gaussian-rational arithmetic as group 3, the four
+     high-symmetry spectra of BOTH sectors with their attainment sets, and the
+     Gamma splitting that pins t_+ where no charge-odd Gamma datum can;
   8. the fourth-order checkpoint algebra: the four extraction formulas invert,
-     X fixes A alone, and e_2 vanishes identically on every axial cut. This
-     group decides NO value of the disputed off-axis coefficient and prefers
-     no side of it -- it is the obstruction, as arithmetic;
+     X fixes A alone, the second witness separates off axis and not on it, and
+     e_2 vanishes identically on every axial cut. This group decides NO value
+     of the disputed off-axis coefficient and prefers no side of it -- it is
+     the obstruction, as arithmetic;
   9. the coupling convention: 4 Delta(3u/2) reproduces the printed towers, and
      a 4^r rescaling misses them by 16 at u^2 and 64 at u^3.
 
@@ -684,11 +686,48 @@ def _():
             return False
         if min(lambdas) < -4 or max(lambdas) > 12:
             return False
+    # the charge-ODD half of the same four points: q = 12 - p, and the signed
+    # spectrum is {0, q, q} by the incidence factorisation
+    for name, (ahat, _lam) in points.items():
+        q = 12 - sum(ahat)
+        if q != {"Gamma": 0, "X": 4, "M": 8, "R": 12}[name]:
+            return False
+        odd = [F(0), F(q), F(q)]
+        if sum(odd) != 2 * q or odd[0] * odd[1] * odd[2] != 0:
+            return False
     # the top is attained only at Gamma; the floor wherever some ahat_j = 0
     tops = [n for n, (_ah, lam) in points.items() if max(lam) == 12]
     floors = sorted(n for n, (_ah, lam) in points.items() if min(lam) == -4)
     triple = [n for n, (_ah, lam) in points.items() if set(lam) == {-4}]
     return tops == ["Gamma"] and floors == ["M", "R", "X"] and triple == ["R"]
+
+
+@check("C-even Gamma splitting A1++ minus E++ is exactly 12 t_+, at both orders")
+def _():
+    # At Gamma the unsigned adjacency spectrum has TWO distinct levels where
+    # the signed one has only one, which is why the charge-even rest frame
+    # separates the hopping from the leakage exactly where no charge-odd
+    # Gamma datum can. Derived from the cubic rather than asserted: at Gamma
+    # ahat = (4,4,4), p = 12 and the cubic factorises as (mu - 16)(mu - 4)^2.
+    p_zone, abc = 12, 4 * 4 * 4
+    roots = [16, 4, 4]
+    for mu in roots:
+        if mu**3 - 2 * p_zone * mu**2 + p_zone**2 * mu - 4 * abc != 0:
+            return False
+    if sum(roots) != 2 * p_zone or roots[0] * roots[1] * roots[2] != 4 * abc:
+        return False
+    levels = sorted({mu - 4 for mu in roots})  # lambda = mu - 4
+    if levels != [0, 12]:
+        return False
+    # through E_+(lambda, r) = tower + 12 leak + lambda t_+, tower and leak
+    # cancel in the difference and the splitting is (12 - 0) t_+
+    for r, t_plus, want in ((2, F(-11, 306), F(-22, 51)), (3, T3_EVEN, F(-6335, 20808))):
+        tower = F(13, 20) if r == 2 else F(101, 200)
+        top = tower + 12 * t_plus + levels[1] * t_plus
+        bottom = tower + 12 * t_plus + levels[0] * t_plus
+        if top - bottom != 12 * t_plus or 12 * t_plus != want:
+            return False
+    return True
 
 
 # ---------------------------------------------------------------------------
@@ -742,6 +781,27 @@ def _():
         if solve4(rows, deltas) != target:
             return False
     return CHECKPOINT_ROWS["X"] == (F(4), F(0), F(0), F(0))
+
+
+@check("the C_alt witness separates off-axis by 8 and 16 times its shift, and not on-axis")
+def _():
+    # Non-identifiability exhibited by construction rather than argued from a
+    # difference between two records: a second witness, shifted in C alone,
+    # is identical to the first at X and separates only off axis. It prefers
+    # no side of the dispute -- the shift is the recorded 25/1024 and the
+    # witness is not a candidate for the physical value.
+    def deltas(a, b, c, d):
+        coeffs = (a, b, c, d)
+        return {s: sum(r[i] * coeffs[i] for i in range(4)) for s, r in CHECKPOINT_ROWS.items()}
+
+    shift = F(25, 1024)
+    old_w = deltas(F(5, 48), F(0), F(0), F(0))
+    alt_w = deltas(F(5, 48), F(0), shift, F(0))
+    return (
+        alt_w["X"] - old_w["X"] == 0
+        and alt_w["M"] - old_w["M"] == 8 * shift == F(25, 128)
+        and alt_w["R"] - old_w["R"] == 16 * shift == F(25, 64)
+    )
 
 
 @check("e_2 is the zero polynomial on every axial cut; e_2(M) = 16, e_2(R) = 48")

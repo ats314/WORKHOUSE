@@ -29,60 +29,55 @@ PAPER_TEXTS = (
 )
 
 
-#: Every pinned edition whose printed \chk labels have to resolve. The
-#: 2026-08-29 final edition supersedes the 2026-08-28 united one, and both
-#: stay pinned, so both are held to the contract -- a superseded edition that
-#: still sits in the tree still prints commands a reader will run. This tuple
-#: is the thing to extend when an edition lands; the failure it prevents is
-#: the one a review caught on the 08-29 draft, where the guard read only the
-#: older file and an unresolvable label passed unnoticed.
-CHK_EDITIONS = (
-    "master_paper_2026-08-28.tex",
-    "master_paper_2026-08-29.tex",
-)
-
-
 @manuscript.check(
-    "every \\chk in the pinned editions names a check that exists and passes",
+    "every \\chk in every pinned edition names a check that exists and passes",
     "MASTER paper, every displayed result",
 )
 def _():
-    # The united paper's one device is that each displayed result carries the
-    # name of the machine check that establishes it, so a reader can re-run any
-    # line in about a second. That device is worth exactly as much as its
-    # weakest label: a renamed or deleted check leaves the paper printing a
-    # command that no longer resolves, and a paper that has drifted still reads
-    # as current -- the same failure mode FRONTIER.md's staleness test guards.
+    # The paper's one device is that each displayed result carries the name of
+    # the machine check that establishes it, so a reader can re-run any line in
+    # about a second. That device is worth exactly as much as its weakest
+    # label: a renamed or deleted check leaves the paper printing a command
+    # that no longer resolves, and a paper that has drifted still reads as
+    # current -- the same failure mode FRONTIER.md's staleness test guards.
     #
     # So resolve every label against the live registry here, and require the
     # named check to be one that passes. This does not re-run them (the suites
     # do that); it asserts the paper cites nothing that has gone missing or red.
+    #
+    # Every .tex in paper/ is scanned, not a named list. The first draft
+    # hard-coded the 2026-08-28 edition, so the 2026-08-29 successor carried
+    # its labels unchecked and a drifted one passed unnoticed -- a device that
+    # verifies only the edition nobody is editing any more is worse than none.
+    # A glob cannot go stale the next time an edition lands, which a list can;
+    # that is why this is a glob and not a list.
     known = {check[0] for suite in SUITES for check in suite.checks}
+    editions = sorted(PAPER_DIR.glob("*.tex"))
     cited: list[str] = []
+    per_edition: dict[str, int] = {}
     unresolved: dict[str, list[str]] = {}
-    missing = [name for name in CHK_EDITIONS if not (PAPER_DIR / name).exists()]
-    for name in CHK_EDITIONS:
-        if name in missing:
-            continue
-        source = (PAPER_DIR / name).read_text(encoding="utf-8")
-        labels = [
+    for path in editions:
+        source = path.read_text(encoding="utf-8")
+        names = [
             m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
             # The label body may contain "\^{}" -- LaTeX's standalone
             # circumflex -- so a [^}]* body stops at the wrong brace and
             # truncates the name. Allow balanced empty groups.
             for m in re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", source)
         ]
-        cited.extend(labels)
-        stray = sorted(set(labels) - known)
+        per_edition[path.name] = len(names)
+        cited += names
+        stray = sorted(set(names) - known)
         if stray:
-            unresolved[name] = stray
-    return (not unresolved and not missing and len(cited) > 0), (
+            # named per edition, because "one unresolved" across two files does
+            # not tell an author which file to open
+            unresolved[path.name] = stray
+    return (not unresolved and len(cited) > 0 and len(editions) > 0), (
         f"{len(cited)} \\chk labels across {len(set(cited))} distinct checks in "
-        f"{len(CHK_EDITIONS)} pinned editions, every one of them a registered check name; "
-        f"{sum(len(v) for v in unresolved.values())} unresolved"
-        f"{'' if not unresolved else f' {unresolved}'}"
-        f"{'' if not missing else f', {missing} not in paper/'}. Each displayed result in every "
-        "pinned edition is reproducible by the command printed beneath it"
+        f"{len(editions)} pinned edition(s) {per_edition}, every one of them a registered "
+        f"check name; {sum(len(v) for v in unresolved.values())} unresolved"
+        f"{'' if not unresolved else f' {unresolved}'}. Each displayed result in each edition "
+        "is reproducible by the command printed beneath it"
     )
 
 

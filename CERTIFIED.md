@@ -482,37 +482,37 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **restored payloads (G1)**
 
 - `FINDING: manifest row A60 names the pentagonal dual-cold bundle, and the tree lacks it`
-  - src/workhouse/invariants/restored.py:195 · UNIFIED §9.3 / G1
+  - src/workhouse/invariants/restored.py:200 · UNIFIED §9.3 / G1
   - `workhouse verify --only 'FINDING: manifest row A60 names the pentagonal dual-cold bundle, and the tree lacks it'`
 - `FINDING: no tetrahedral certificate exists, and no reference SHA is recorded for one`
-  - src/workhouse/invariants/restored.py:221 · corpus THM_FLUX_hodge_cellular_circuit_mobility_theorem.md / C15
+  - src/workhouse/invariants/restored.py:226 · corpus THM_FLUX_hodge_cellular_circuit_mobility_theorem.md / C15
   - `workhouse verify --only 'FINDING: no tetrahedral certificate exists, and no reference SHA is recorded for one'`
 - `q_N < 0 and beta_pen_N > 0 for every integer N >= 7 follow from the ledgers`
-  - src/workhouse/invariants/restored.py:115 · UNIFIED §8 / G1
+  - src/workhouse/invariants/restored.py:120 · UNIFIED §8 / G1
   - `workhouse verify --only 'q_N < 0 and beta_pen_N > 0 for every integer N >= 7 follow from the ledgers'`
 - `the 189-record kernel is shipped and carries both reference SHAs`
   - src/workhouse/invariants/restored.py:20 · UNIFIED §6 / G1
   - `workhouse verify --only 'the 189-record kernel is shipped and carries both reference SHAs'`
 - `the P_402 ledger is the Newton transcript of B_N * D_409`
-  - src/workhouse/invariants/restored.py:96 · UNIFIED §8 / G1
+  - src/workhouse/invariants/restored.py:101 · UNIFIED §8 / G1
   - `workhouse verify --only 'the P_402 ledger is the Newton transcript of B_N * D_409'`
 - `the Q_32 ledger is the Newton transcript of the compact q law`
-  - src/workhouse/invariants/restored.py:79 · UNIFIED §8 / G1
+  - src/workhouse/invariants/restored.py:84 · UNIFIED §8 / G1
   - `workhouse verify --only 'the Q_32 ledger is the Newton transcript of the compact q law'`
 - `the SU(5) stage-1 scan is shipped: 895,524 pairs, zero determinant sectors`
-  - src/workhouse/invariants/restored.py:175 · GCSG (Aug 8) / C16
+  - src/workhouse/invariants/restored.py:180 · GCSG (Aug 8) / C16
   - `workhouse verify --only 'the SU(5) stage-1 scan is shipped: 895,524 pairs, zero determinant sectors'`
 - `the SU(6) determinant correction is exactly 6/343 and momentum-independent`
-  - src/workhouse/invariants/restored.py:151 · GCSG (Aug 8) / C16
+  - src/workhouse/invariants/restored.py:156 · GCSG (Aug 8) / C16
   - `workhouse verify --only 'the SU(6) determinant correction is exactly 6/343 and momentum-independent'`
 - `the kernel re-derives q, alpha, beta, and the historical C_shp exactly`
-  - src/workhouse/invariants/restored.py:43 · UNIFIED §6 / G1
+  - src/workhouse/invariants/restored.py:48 · UNIFIED §6 / G1
   - `workhouse verify --only 'the kernel re-derives q, alpha, beta, and the historical C_shp exactly'`
 - `the stored fixed-rank q samples N = 7..18 match the compact law exactly`
-  - src/workhouse/invariants/restored.py:139 · UNIFIED §8 / C17
+  - src/workhouse/invariants/restored.py:144 · UNIFIED §8 / C17
   - `workhouse verify --only 'the stored fixed-rank q samples N = 7..18 match the compact law exactly'`
 - `three kernel copies agree record-for-record, from two independent builds`
-  - src/workhouse/invariants/restored.py:65 · UNIFIED §6 / G1
+  - src/workhouse/invariants/restored.py:70 · UNIFIED §6 / G1
   - `workhouse verify --only 'three kernel copies agree record-for-record, from two independent builds'`
 **second order, all ranks**
 
@@ -683,17 +683,17 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'the two Bloch incidence symbols, and the determinant asymmetry between them'`
 **the flat-band manuscript**
 
-- `every \chk in the pinned editions names a check that exists and passes`
-  - src/workhouse/invariants/manuscript.py:45 · MASTER paper, every displayed result
-  - `workhouse verify --only 'every \chk in the pinned editions names a check that exists and passes'`
+- `every \chk in every pinned edition names a check that exists and passes`
+  - src/workhouse/invariants/manuscript.py:32 · MASTER paper, every displayed result
+  - `workhouse verify --only 'every \chk in every pinned edition names a check that exists and passes'`
 - `every declared note document is a graph node with an edge`
-  - src/workhouse/invariants/manuscript.py:89 · ledger/notes.yaml + notes/*.jsonl
+  - src/workhouse/invariants/manuscript.py:84 · ledger/notes.yaml + notes/*.jsonl
   - `workhouse verify --only 'every declared note document is a graph node with an edge'`
 - `no fourth-order coefficient enters the manuscript`
-  - src/workhouse/invariants/manuscript.py:143 · PAPER_FLATBAND §6
+  - src/workhouse/invariants/manuscript.py:138 · PAPER_FLATBAND §6
   - `workhouse verify --only 'no fourth-order coefficient enters the manuscript'`
 - `q at the four high-symmetry points is 0, 4, 8, 12`
-  - src/workhouse/invariants/manuscript.py:165 · MASTER_DOC Fig. 2
+  - src/workhouse/invariants/manuscript.py:160 · MASTER_DOC Fig. 2
   - `workhouse verify --only 'q at the four high-symmetry points is 0, 4, 8, 12'`
 **tier collapse (G14)**
 
@@ -718,16 +718,16 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **two-cube charge-odd second-order closure (B=4 and B=6)**
 
 - `B=6 retains every adjacent shared-link channel; B=4 provably cannot`
-  - src/workhouse/invariants/two_cube.py:552 · R2; G3; runs/two_cube_codd_o2_2026-08-29 §6.4
+  - src/workhouse/invariants/two_cube.py:561 · R2; G3; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'B=6 retains every adjacent shared-link channel; B=4 provably cannot'`
 - `connected first order vanishes by inclusion-exclusion, not by cancellation of numbers`
-  - src/workhouse/invariants/two_cube.py:312 · R2; runs/two_cube_codd_o2_2026-08-29 §3
+  - src/workhouse/invariants/two_cube.py:321 · R2; runs/two_cube_codd_o2_2026-08-29 §3
   - `workhouse verify --only 'connected first order vanishes by inclusion-exclusion, not by cancellation of numbers'`
 - `the B=4 comparator on the same geometry gives -1/12 with the reversed spectrum`
-  - src/workhouse/invariants/two_cube.py:279 · R2; runs/two_cube_codd_o2_2026-08-29, B4 note §4
+  - src/workhouse/invariants/two_cube.py:288 · R2; runs/two_cube_codd_o2_2026-08-29, B4 note §4
   - `workhouse verify --only 'the B=4 comparator on the same geometry gives -1/12 with the reversed spectrum'`
 - `the B=6 connected kernel is (5/612) G_conn + diag, with the certified spectrum`
-  - src/workhouse/invariants/two_cube.py:249 · R2; runs/two_cube_codd_o2_2026-08-29 §7.4
+  - src/workhouse/invariants/two_cube.py:258 · R2; runs/two_cube_codd_o2_2026-08-29 §7.4
   - `workhouse verify --only 'the B=6 connected kernel is (5/612) G_conn + diag, with the certified spectrum'`
 - `the B=6 six-channel census IS the Weingarten four-channel ledger, channel by channel`
   - src/workhouse/invariants/two_cube.py:174 · R2; runs/two_cube_codd_o2_2026-08-29 §7.3; MASTER paper Thm. (census)
@@ -736,7 +736,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/two_cube.py:141 · R2; runs/two_cube_codd_o2_2026-08-29 §7
   - `workhouse verify --only 'the B=6 six-channel census sums to the registry'"'"'s own t_3 = 5/612'`
 - `the connected diagonal is orbit-constant, and only the transporting orbit moves`
-  - src/workhouse/invariants/two_cube.py:421 · R2; runs/two_cube_codd_o2_2026-08-29 §4, §7.4; MASTER paper §6
+  - src/workhouse/invariants/two_cube.py:430 · R2; runs/two_cube_codd_o2_2026-08-29 §4, §7.4; MASTER paper §6
   - `workhouse verify --only 'the connected diagonal is orbit-constant, and only the transporting orbit moves'`
 - `the connected two-cube geometry has exactly four cross-cell pairs, each -1`
   - src/workhouse/invariants/two_cube.py:118 · R2; runs/two_cube_codd_o2_2026-08-29 §1
@@ -901,15 +901,15 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **the flat-band manuscript**
 
 - `every node the theory graph strands is stranded for a stated reason`
-  - src/workhouse/invariants/manuscript.py:184 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
+  - src/workhouse/invariants/manuscript.py:179 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
   - `workhouse verify --only 'every node the theory graph strands is stranded for a stated reason'`
 **two-cube charge-odd second-order closure (B=4 and B=6)**
 
 - `every shared-link channel is separately proportional to the geometry, on all 56 pairs`
-  - src/workhouse/invariants/two_cube.py:364 · R2; runs/two_cube_codd_o2_2026-08-29 §7.3
+  - src/workhouse/invariants/two_cube.py:373 · R2; runs/two_cube_codd_o2_2026-08-29 §7.3
   - `workhouse verify --only 'every shared-link channel is separately proportional to the geometry, on all 56 pairs'`
 - `the certificate's own gates pass, target-blind, with the wrong-sign control rejected`
-  - src/workhouse/invariants/two_cube.py:593 · R2; runs/two_cube_codd_o2_2026-08-29 heldout_validation
+  - src/workhouse/invariants/two_cube.py:602 · R2; runs/two_cube_codd_o2_2026-08-29 heldout_validation
   - `workhouse verify --only 'the certificate'"'"'s own gates pass, target-blind, with the wrong-sign control rejected'`
 
 ## What is not here

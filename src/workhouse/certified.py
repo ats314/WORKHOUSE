@@ -12,12 +12,11 @@ repeats it.
 
 from __future__ import annotations
 
-import re
 import shlex
 from dataclasses import dataclass
 from pathlib import Path
 
-from .frontier import strip_lean_comments
+from .frontier import LEAN_DECL, strip_lean_comments
 from .invariants import SUITES
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -82,11 +81,11 @@ def lean_claims() -> list[Claim]:
             # rule in tests/test_graph.py. A theorem that no ledger has to
             # account for is exactly the hole the T0 layer is supposed to
             # close, so the prefix is matched rather than assumed absent.
-            m = re.match(
-                r"\s*(?:@\[[^\]]*\]\s*)*(?:private\s+|protected\s+|nonrec\s+)*"
-                r"(?:theorem|lemma)\s+([A-Za-z_][\w'.]*)",
-                line,
-            )
+            #
+            # The pattern is `frontier.LEAN_DECL` because it was fixed here and
+            # not there, and the two counters then disagreed (40 against 37)
+            # with no test standing between them. One pattern, one count.
+            m = LEAN_DECL.match(line)
             if m:
                 out.append(
                     Claim(

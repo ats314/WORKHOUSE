@@ -102,12 +102,43 @@ def test_lean_counters_ignore_comments():
     stripped = F.strip_lean_comments(body)
     assert "sorry" not in stripped
     assert len(stripped.splitlines()) == len(body.splitlines())
-    import re as _re
+    assert len(F.LEAN_DECL.findall(stripped)) == 2
 
-    assert len(_re.findall(r"^\s*(?:theorem|lemma)\s", stripped, _re.MULTILINE)) == 2
+
+def test_lean_counter_sees_attributed_and_modified_declarations():
+    """`@[simp] theorem` is a theorem, and the counter must see it.
+
+    The Lean tree carries three of them (`bandVar_zero`, `bandVar_pi`,
+    `bandVar_pi_div_two`). The counter's older regex required the keyword to
+    start the line, so it missed all three and FRONTIER.md reported 37 T0
+    theorems while CERTIFIED.md, whose scrape had already been fixed, reported
+    40. Both files are generated and both read as authoritative, which is the
+    failure this test exists to prevent.
+    """
+    body = (
+        "@[simp] theorem attributed : 1 = 1 := rfl\n"
+        "@[simp, norm_cast] private theorem both : 2 = 2 := rfl\n"
+        "protected lemma modified : 3 = 3 := rfl\n"
+        "nonrec theorem plain : 4 = 4 := rfl\n"
+    )
+    assert F.LEAN_DECL.findall(body) == ["attributed", "both", "modified", "plain"]
 
 
 def test_current_lean_tree_has_no_sorries():
     theorems, sorries = F._lean_counts()
     assert sorries == 0, "a sorry entered the Lean tree (or the counter regressed)"
     assert theorems >= 28
+
+
+def test_the_two_generated_lean_counts_agree():
+    """FRONTIER.md §1 and CERTIFIED.md's T0 header count the same theorems.
+
+    They scraped the same tree with two copies of one regex, the copies drifted,
+    and nothing compared them -- so the repository published two different T0
+    counts at once. They now share `frontier.LEAN_DECL`; this is the test that
+    makes a future divergence fail rather than print.
+    """
+    from workhouse import certified as C
+
+    theorems, _ = F._lean_counts()
+    assert theorems == len(C.lean_claims())

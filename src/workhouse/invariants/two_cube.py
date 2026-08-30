@@ -187,15 +187,24 @@ def _():
     #   * each like-family fusion weight splits EVENLY between an irrep and its
     #     conjugate -- the two orientations of the shared link weighted equally.
     #
-    # The weights come from _channel_weight, i.e. from the dimension/Casimir
+    # The factor of two is the content, and it is not a fudge. The Weingarten
+    # ledger is indexed by the FUSION channel of the shared link; the two-cube
+    # certificate is indexed by the irrep the link actually CARRIES in the
+    # ranked intermediate state, which distinguishes rho from bar-rho. For
+    # SU(3) the like family splits as Lambda^2 F = 3bar and Sym^2 F = 6, and
+    # the census finds the two orientations of each carrying exactly half the
+    # fusion weight apiece.
+    #
+    # The weights come from K.channel_weight, i.e. from the dimension/Casimir
     # table and the order-two Weingarten values. Nothing about the two-cube
     # build enters them, so this compares two independently constructed objects
-    # at six places rather than one number at one. Imported inside the function
-    # so importing a suite module never reorders SUITES.
-    from .rank_law import _channel_weight
-
+    # at six places rather than one number at one.
+    #
+    # Scope: N = 3, second order. The all-rank even split is a CONJECTURE whose
+    # falsifier is one rank at which the split is uneven; nothing here promotes
+    # it, and nothing here touches the fourth order or C2.
     def w(rho) -> Fraction:
-        value = _channel_weight(rho).subs(K.N, 3)
+        value = K.channel_weight(rho, 3)
         return Fraction(int(value.p), int(value.q))
 
     c = {
@@ -203,12 +212,12 @@ def _():
         for k, v in _cert()["graph"]["channel_coefficients"].items()
     }
     predicted = {
-        "1": -w("singlet"),
-        "8": -w("adjoint"),
-        "3": w("antisym") / 2,
-        "bar3": w("antisym") / 2,
-        "6": w("sym") / 2,
-        "bar6": w("sym") / 2,
+        "1": -w("1"),
+        "8": -w("Adj"),
+        "3": w("Lambda2") / 2,
+        "bar3": w("Lambda2") / 2,
+        "6": w("Sym2") / 2,
+        "bar6": w("Sym2") / 2,
     }
     # The cutoff corollary, on the same two objects: what a truncation keeping
     # only the singlet and Lambda^2 F routes projects the hopping to, and what
@@ -217,8 +226,8 @@ def _():
     legacy = c["1"] + c["3"] + c["bar3"]
     restored = c["6"] + c["bar6"] + c["8"]
     cutoff_ok = (
-        legacy == w("antisym") - w("singlet") == Fraction(-1, 12)
-        and restored == w("sym") - w("adjoint") == Fraction(14, 153)
+        legacy == w("Lambda2") - w("1") == Fraction(-1, 12)
+        and restored == w("Sym2") - w("Adj") == Fraction(14, 153)
         and legacy + restored == Fraction(int(K.T_MINUS_2.p), int(K.T_MINUS_2.q))
     )
     # Rigidity: the labelled correspondence has no slack. Of all 6! ways to

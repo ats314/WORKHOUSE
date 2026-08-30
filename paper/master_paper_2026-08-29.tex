@@ -39,15 +39,20 @@ We study the Kogut--Susskind Hamiltonian for pure $SU(N)$ gauge theory on a
 periodic cubic spatial lattice at strong coupling. After selecting the
 complete gauge-invariant charge-odd one-plaquette eigenspace, fixed-order
 contributions are organised as ordered magnetic histories on the Haar--Gram
-quotient of reachable Wilson networks. The complete momentum dependence
-through second order is the oriented edge--face Gram operator
-$t_N u^2 B(k)B(k)\dg$ with $B=\partial_2\dg$ and
+quotient of reachable Wilson networks. What is exact and all-rank is one matrix
+element: the connected second-order coupling between two plaquettes sharing an
+oriented link is $t_Nu^2$ times their incidence overlap, with
 \[
   t_N=\frac{2N(N^2-4)}{(N^2-1)(2N^2-1)(4N^2-9)}>0,\qquad N\ge 3 .
 \]
-The projected spectrum is $\{0,\,t_Nu^2q,\,t_Nu^2q\}$ up to a common scalar,
-with $q=4\sum_j\sin^2(k_j/2)$; the flat carrier is $\ker\partial_2$, of exact
-dimension $L^3+2$.
+Under two stated hypotheses --- that the retained shell is exactly the
+charge-odd one-plaquette span, and that no connected non-adjacent history
+carries momentum dependence --- those elements assemble into the oriented
+edge--face Gram operator $t_Nu^2B(k)B(k)\dg$ with $B=\partial_2\dg$, whose
+projected spectrum is $\{0,\,t_Nu^2q,\,t_Nu^2q\}$ up to a common scalar,
+$q=4\sum_j\sin^2(k_j/2)$. Neither hypothesis is checked here and both are named
+where they are used. The flat carrier is $\ker\partial_2$, of exact dimension
+$L^3+2$, and that is unconditional.
 
 Relative to the 28 August edition this one adds five things, each carrying its
 own machine check. The channel decomposition of $t_N$, previously a
@@ -137,19 +142,18 @@ fixes its kernel and spectrum. The separation is exact,
 
 \subsection*{What is proved, and what is conditional}
 
-Seven statements are self-contained here.
+Nine statements are self-contained here.
 
 \begin{enumerate}\itemsep2pt
 \item For every $N\ge3$ the shared-link channel weights are $d_\rho/N^2$,
   derived from the order-two Weingarten values
   (Theorem~\ref{thm:weingarten}). This was previously an isotropy
   \emph{hypothesis}, and everything in Section~\ref{sec:second} rests on it.
-\item For every $N\ge3$ the complete momentum dependence at order $u^2$ is
-  $t_Nu^2BB\dg$ (Theorem~\ref{thm:allrank}), on the one premise
-  Section~\ref{sec:scope} names and no check covers: that one-shared-link
-  processes exhaust the second-order off-diagonal intermediates. The channel
-  list they run through is complete (Lemma~\ref{lem:channels}); the process
-  enumeration is what is assumed.
+\item For every $N\ge3$ the connected second-order coupling between two
+  plaquettes sharing one link is $t_Nu^2$ times their incidence overlap
+  (Theorem~\ref{thm:allrank}), and the channel list it runs through is complete
+  (Lemma~\ref{lem:channels}). The assembly of those elements into the torus
+  operator is \emph{not} here; it is item~\ref{item:assembly} below.
 \item The Bloch spectrum of $BB\dg$ is $\{0,q,q\}$ (Theorem~\ref{thm:fact}),
   and on the periodic $L^3$ complex the zero-mode count is $L^3+2$
   (Theorem~\ref{thm:carrier}). The two are the same statement, by a sum rule
@@ -168,6 +172,18 @@ Seven statements are self-contained here.
   identity is self-contained; the two numbers it is evaluated at inherit the
   status of $t_{r,+}$, and the $r=3$ one is conditional --- see
   item~\ref{item:domino}.
+\item The vacuum-mediated route $p\to|0\rangle\to p'$ connects any pair of
+  plaquettes and is worth $1/\CF$; it vanishes in the charge-odd sector because
+  $V$ is charge-even, which is what makes Theorem~\ref{thm:allrank}'s
+  shared-link restriction true here and false in general, and it gives the
+  all-rank charge-even hopping $\ell_N$ in closed form
+  (Proposition~\ref{prop:vacuum}).
+\item A correction of the boundary-factorised form
+  $a_rI+b_rS+BM_rB\dg$ shifts the carrier without dispersing it, for
+  \emph{every} $M_r$ (Proposition~\ref{prop:rigid}). The protection is a
+  property of the boundary operator, not of the dynamics --- and the
+  proposition says nothing about a correction that does not factor through
+  links, which is why the fourth order has to be argued.
 \item On the closed cube surface the charge-odd shell is
   $A_1^{--}\oplus T_1^{+-}\oplus E^{--}$, with $G$-eigenvalues $0,4,6$; the
   labels follow from the rotation action rather than being assigned, the
@@ -186,7 +202,14 @@ certificates and microscopic rank-sweep artifacts are not included here, and
 repeated assertions in synthesis documents are not treated as independent
 reproductions.
 
-\begin{enumerate}\setcounter{enumi}{7}\itemsep2pt
+\begin{enumerate}\setcounter{enumi}{9}\itemsep2pt
+\item\label{item:assembly} On two hypotheses that no check covers --- that the
+  range of $P_-$ is exactly the charge-odd one-plaquette span, and that no
+  connected non-adjacent second-order history carries momentum dependence ---
+  the adjacent elements of item~2 assemble into $t_Nu^2BB\dg$, with the band
+  structure that follows from it (Conditional corollary~\ref{cor:assembly}).
+  Everything downstream that quotes a bandwidth or a band edge at order $u^2$
+  inherits those two hypotheses.
 \item A supplied two-cube delivery reports six link-irrep channel
   coefficients at $N=3$, as rational reconstructions of finite-precision
   contractions. Conditional on those six numbers, they are the four
@@ -224,6 +247,7 @@ higher-order operators, identification with the lightest physical glueball, or
 a continuum mass gap.
 
 \section{Hamiltonian and projected sector}
+\label{sec:sector}
 
 Let $\Lambda_L=(\mathbb{Z}/L\mathbb{Z})^3$, $L\ge3$, be a cubic spatial
 lattice with periodic boundary conditions. In units of the electric coupling
@@ -328,7 +352,7 @@ For $k\neq0$ the carrier is one-dimensional and represented by $w(k)$. At
 $\Gamma$, $B=0$ and all three branches meet; the normalised Bloch eigenvector
 has no direction-independent limit there, which is the familiar
 singular-flat-band mechanism behind the incompleteness of a purely compact
-localised basis.
+localised basis~\cite{BWB2008}.
 
 \begin{theorem}[Finite-torus carrier]\label{thm:carrier}
 For the periodic cubic cellulation of $T^3$,
@@ -480,7 +504,19 @@ $\operatorname{Tr}(AU)\operatorname{Tr}(BU^{\pm1})$ with $A,B$ independent
 Haar and $U$ the shared link. Integrating $A$ and $B$ contributes
 $\delta/N$ each and leaves a pure degree-$(2,2)$ moment of $U$.
 
-Second, two such moments settle both families. In the Weingarten calculus,
+Second, the group. The Weingarten values below are the $U(N)$ ones, and this
+is a paper about $SU(N)$; the reduction is a step, not a slip. A degree-$(2,2)$
+integrand is invariant under $U\mapsto zU$ for $z\in U(1)$, so integrating it
+over $SU(N)$ and over $U(N)=\bigl(SU(N)\times U(1)\bigr)/\mathbb Z_N$ give the
+same number provided the $SU(N)$-invariants at this degree are exhausted by the
+permutation contractions --- which holds exactly when the degree is below the
+rank, $2<N$. That is the theorem's own range, $N\ge3$. At $N=2$ the extra
+invariant $\epsilon\otimes\epsilon$ appears and the reduction fails, which is a
+second reason the construction begins at $N=3$; it is the same $\epsilon$
+channel that makes the $u^1$ row of Appendix~\ref{app:ledger} $SU(3)$-only.
+This step has no machine check, and Section~\ref{sec:scope} records it.
+
+Third, two moments settle both families. In the Weingarten calculus,
 whose asymptotic origin is~\cite{Weingarten1978} and whose finite-$N$ closed
 forms are~\cite{CollinsSniady2006}, the order-two values are
 $\mathrm{Wg}(e)=1/(N^2-1)$ and
@@ -541,41 +577,74 @@ and summing within the two orientation families,
   A_N&=w_{\mathbf 1}+w_{\mathrm{Adj}}=-\frac{2N^3}{(N^2-1)(2N^2-1)},\label{eq:AN}\\
   B_N&=w_{\Lambda^2}+w_{\mathrm{Sym}^2}=-\frac{4N(N^2-2)}{(N^2-1)(4N^2-9)}.\label{eq:BN}
 \end{align}
+Each individual weight in closed form is Appendix~\ref{app:closed}.
 \chk{the four channel weights follow from dimension and Casimir}
 \chk{A\_N and B\_N are the channel sums, not transcriptions}
 
 \subsection{The shared-link law}
 
-\begin{theorem}[All-rank shared-link law]\label{thm:allrank}
-For every integer $N\ge3$,
-\[
-  H^{(N)}_{\mathrm{eff},-}(k,u)=E_{\mathrm{flat},N}(u)I+t_Nu^2B(k)B(k)\dg+O(u^3),
-\]
-with $E_{\mathrm{flat},N}$ momentum independent and
+The statement that follows is about \emph{one matrix element}. Promoting it to
+the whole order-$u^2$ operator on the torus is a separate step with its own
+hypotheses, and the two are separated here because the paper's own Scope
+section lists one of those hypotheses as unchecked.
+
+\begin{theorem}[All-rank adjacent shared-link coefficient]\label{thm:allrank}
+For every integer $N\ge3$, in the untruncated theory or in any regulator
+retaining all four fusion channels of \eqref{eq:fusion}, the connected
+second-order matrix element between two plaquettes sharing one oriented link is
+$t_Nu^2$ times the signed incidence overlap of that pair, with
 \[
   t_N=B_N-A_N=\frac{2N(N^2-4)}{(N^2-1)(2N^2-1)(4N^2-9)}>0 .
 \]
-The three bands through second order are $E_{\mathrm{flat},N}(u)$ and
-$E_{\mathrm{flat},N}(u)+t_Nu^2q(k)$ twice.
 \end{theorem}
 
 \begin{proof}
-The diagonal and within-plaquette terms are scalars in face-orbital space, and
-they are scalars for a reason worth naming, because it fails elsewhere in this
-paper: translations act transitively on the faces of each orientation and the
-cubic point group permutes the three orientations, so the faces are a
-\emph{single} orbit and any invariant diagonal is a multiple of the identity.
-On an open cluster that is false, and Proposition~\ref{prop:orbit} is what
-replaces it there.
-Every surviving second-order inter-plaquette process uses one shared link ---
-see Proposition~\ref{prop:vacuum} for why the routes that do not are absent
-from this sector --- and its relative orientation is the incidence product
-appearing in $S=BB\dg-4I$. The contributions \eqref{eq:AN} and \eqref{eq:BN}
-therefore assemble as $d_NI+t_NS$; absorbing $-4t_N$ into the scalar and
-applying Theorem~\ref{thm:fact} gives the bands. Positivity: for $N\ge3$ every
-denominator factor is positive and $N^2-4>0$.
+Every second-order process between two plaquettes sharing exactly one link runs
+through that link's fusion channel; the list is complete by
+Lemma~\ref{lem:channels}, the weight of each is Theorem~\ref{thm:weingarten},
+and the resolvent denominator is $\CF+C_\rho/2$. Summing within the two
+orientation families gives \eqref{eq:AN} and \eqref{eq:BN}, and the relative
+orientation of the pair enters as the incidence product, so the two families
+appear with opposite sign and the element is $(B_N-A_N)u^2$ times that product.
+Positivity: for $N\ge3$ every denominator factor is positive and $N^2-4>0$. The
+regulator premise is not decoration --- Corollary~\ref{cor:cutoff} exhibits a
+published cutoff under which the same element comes out $-1/12$, of the
+opposite sign.
 \end{proof}
 \chk{t\_N = B\_N - A\_N}\chk{t\_N > 0 for N >= 3}
+
+\begin{conditional}[Incidence assembly on the finite torus]\label{cor:assembly}
+Assume in addition that
+\emph{(i)} the range of $P_-$ is exactly the charge-odd one-plaquette span, and
+\emph{(ii)} after the linked, vacuum-subtracted fold of \eqref{eq:heff} no
+connected second-order history between \emph{non-adjacent} plaquettes
+contributes a momentum-dependent term on $P_-$.
+Then
+\[
+  H^{(N)}_{\mathrm{eff},-}(k,u)=E_{\mathrm{flat},N}(u)I+t_Nu^2B(k)B(k)\dg+O(u^3),
+\]
+with $E_{\mathrm{flat},N}$ momentum independent, and the three bands through
+second order are $E_{\mathrm{flat},N}(u)$ and $E_{\mathrm{flat},N}(u)+t_Nu^2q(k)$
+twice.
+\end{conditional}
+
+\begin{proof}
+Under \emph{(ii)} only shared-link pairs carry momentum dependence, and
+Theorem~\ref{thm:allrank} gives each of those elements, so the off-diagonal
+part is $t_NS$ with $S=BB\dg-4I$. The diagonal is a scalar, and for a reason
+worth naming because it fails elsewhere in this paper: translations act
+transitively on the faces of each orientation and the cubic point group
+permutes the three orientations, so the faces are a \emph{single} orbit and any
+invariant diagonal is a multiple of the identity. On an open cluster that is
+false, and Proposition~\ref{prop:orbit} is what replaces it there. Absorbing
+$-4t_N$ into the scalar and applying Theorem~\ref{thm:fact} gives the bands.
+\end{proof}
+\chk{B B\^{}dagger = q I - d conj(d)\^{}T for the curl incidence}
+
+\noindent Hypothesis \emph{(i)} is the retained-shell premise of
+Section~\ref{sec:sector}; \emph{(ii)} is the one
+Proposition~\ref{prop:vacuum} narrows but does not close. Neither has a check,
+and Section~\ref{sec:scope} says so.
 
 Two consequences,
 \begin{equation}\label{eq:tsmall}
@@ -586,10 +655,12 @@ Two consequences,
 
 \subsection{The vacuum-mediated route}
 
-The proof of Theorem~\ref{thm:allrank} asserts that only shared-link routes
-survive. That is false in general and true here, for a reason worth stating:
-it is a charge-conjugation selection rule, and omitting it is a recorded
-error, not a hypothetical one.
+Hypothesis \emph{(ii)} of Corollary~\ref{cor:assembly} is not vacuous, and one
+family of routes it has to exclude can be excluded outright. The vacuum-mediated
+route connects \emph{any} pair of plaquettes, adjacent or not, and it vanishes
+in this sector by a charge-conjugation selection rule. That closes one family
+and not the hypothesis; omitting it is a recorded error, not a hypothetical
+one.
 
 \begin{proposition}[Vacuum-mediated route]\label{prop:vacuum}
 The route $\langle p'|V|0\rangle\langle 0|V|p\rangle/E_0$ is available for any
@@ -631,8 +702,9 @@ Let $q_{\max}(L)$ be the largest sampled $q$ on the periodic $L^3$ grid. Then
     12\cos^2\!\bigl(\pi/2L\bigr), & L\text{ odd},
   \end{cases}
 \end{equation}
-because only at even $L$ does some $k_j$ reach $\pi$ exactly. The width of the
-full retained charge-odd manifold is $W^{(-)}_{N,L}=q_{\max}(L)\,t_Nu^2+O(u^3)$,
+because only at even $L$ does some $k_j$ reach $\pi$ exactly. Under the
+hypotheses of Corollary~\ref{cor:assembly}, the width of the
+retained charge-odd manifold is $W^{(-)}_{N,L}=q_{\max}(L)\,t_Nu^2+O(u^3)$,
 so for even $L$ and in the thermodynamic limit $[u^2]W^{(-)}=12t_N\sim3/N^3$.
 This concerns the stiffness of the dispersive doublet, not motion of the
 lowest branch, which is flat at this order.
@@ -1099,6 +1171,8 @@ $8/3+u+u^2/2+7u^3/32$ and the charge-even one $8/3-u+(13/20)u^2+(101/200)u^3$,
 each of them $4\Delta(3u/2)$ on its own sector's series, so
 $\mathrm{tower}_{2,-}=1/2$ against $\mathrm{tower}_{2,+}=13/20$ and
 $\mathrm{tower}_{3,-}=7/32$ against $\mathrm{tower}_{3,+}=101/200$.
+The nine values it reproduces are tabulated in Appendices~\ref{app:ledger}
+and~\ref{app:even}.
 \chk{one assembly formula gives every registered band value}
 \chk{one assembly formula gives every C-even value at both orders}
 \chk{the plaquette graph is 12-regular and two faces share at most one link}
@@ -1151,7 +1225,8 @@ The \emph{third-order} content of this section is conditional on supplied
 exact-arithmetic ledgers. Its second-order content is not: $\mathrm{leak}_2$ is
 the all-rank $\ell_N$ of Proposition~\ref{prop:vacuum} at $N=3$, and the tower
 is the certified coupling conversion. The within-plaquette charge-odd tower
-contributes $8/3+u+u^2/2+7u^3/32$.
+contributes $8/3+u+u^2/2+7u^3/32$, and the registered $SU(3)$ values, with the
+scope of each row, are collected in Appendix~\ref{app:ledger}.
 
 \begin{reported}[Third-order ledger]\label{rep:su3}
 The supplied ledgers report, in exact rationals,
@@ -1481,13 +1556,15 @@ discriminating $u^3$ coefficient.
 \chk{the ratio and sigma series reproduce E\_flat exactly}
 
 \paragraph{Euclidean series.} Two printings of the same M\"unster/Seo series
---- the NPB 205 (1982) erratum row and Smit's Table 1 scalar column, which
-credits them --- agree rational for rational through $u^8$. That is agreement
+--- the second erratum to~\cite{Munster1981}, which prints the definitive
+corrected table and credits Ukawa and Seo~\cite{Seo1982} with locating the
+error, and Smit's Table~1 scalar column~\cite{Smit1982}, which credits them ---
+agree rational for rational through $u^8$. That is agreement
 transcription for transcription, not two independent computations, and it is
 recorded as such. One shift is recorded and not adjudicated: M\"unster's 1985
 table~\cite{Munster1985} differs from the 1982 erratum row at eighth order by
-exactly $-96$, a fourth correction already in print by 1983 that no erratum
-records. This is a Euclidean record; no Hamiltonian comparison is drawn from
+exactly $-96$, a fourth correction already in print by 1983~\cite{Munster1983}
+that no erratum records. This is a Euclidean record; no Hamiltonian comparison is drawn from
 it, and none is permitted.
 \chk{the errata-resolved Euclidean series is doubly sourced, transcription for transcription}
 \chk{FINDING: Munster's 1985 table shifts his 1982 erratum at eighth order}
@@ -1550,11 +1627,11 @@ Three crossings are named explicitly, and none of them is made here.
 any sentence containing the words ``mass gap'', and nothing in this edition
 shortens that route.
 
-Three premises earlier in the paper are arguments in prose rather than results,
-and all three are load-bearing. None has a check.
+Four premises earlier in the paper are arguments in prose rather than results,
+and all four are load-bearing. None has a check.
 
 That the range of $P_-$ is exactly the charge-odd one-plaquette span for
-$L\ge3$ is argued in Section~\ref{sec:carrier} from the link count of a reduced
+$L\ge3$ is argued in Section~\ref{sec:sector} from the link count of a reduced
 fundamental loop.
 
 That one-shared-link processes exhaust the second-order \emph{off-diagonal}
@@ -1564,6 +1641,12 @@ list is complete (Lemma~\ref{lem:channels}), two distinct faces of this lattice
 share at most one link, and the vacuum-mediated route vanishes in this sector
 (Proposition~\ref{prop:vacuum}). The gap is in the process enumeration, not in
 the channel list, and Theorem~\ref{thm:weingarten} is silent about it.
+
+That the degree-$(2,2)$ Haar moment over $SU(N)$ equals the $U(N)$ one is
+argued in the proof of Theorem~\ref{thm:weingarten} from the $U(1)$ invariance
+of the integrand and the exhaustion of the invariants below the rank. The
+argument is standard and the range is the theorem's own, but nothing here
+checks it.
 
 That the charge-even sector's second-order Bloch symbol is the unsigned
 incidence $\mathcal N(k)$ --- the signed incidence with the boundary
@@ -1578,7 +1661,7 @@ range, the bandwidth and the $\Gamma$-splitting all rest on it.
 A portable standard-library Python program, \texttt{paper/verify\_core.py} in
 the accompanying repository (the root-level file of the same name belongs to
 the earlier flat-band manuscript and is a different, smaller program), runs
-twenty-three checks in nine claim groups: the rational coefficient ledger; the
+twenty-five checks in nine claim groups: the rational coefficient ledger; the
 Weingarten derivation of Theorem~\ref{thm:weingarten} by explicit index
 summation; the incidence identity, \emph{decided} in exact Gaussian-rational
 arithmetic at rational torus points rather than checked to a residual; the
@@ -1588,8 +1671,10 @@ Proposition~\ref{prop:cube}; the Rayleigh quotient of the wrapping sheets; the
 two-cube connected geometry rebuilt from oriented cell boundaries, its exact
 $B=6$ and $B=4$ spectra, and Reported result~\ref{rep:census} channel by
 channel; the charge-even cubic of Theorem~\ref{thm:evencubic} with $p+q=12$ and
-the four high-symmetry spectra; the checkpoint algebra of
-\eqref{eq:checkpoints} together with the vanishing of $e_2$ on every axial cut;
+the four high-symmetry spectra of both sectors and the $\Gamma$ splitting of
+Proposition~\ref{prop:evengamma}; the checkpoint algebra of
+\eqref{eq:checkpoints}, the second witness, and the vanishing of $e_2$ on
+every axial cut;
 and the coupling convention, including the $16$ and $64$ by which a $4^r$
 rescaling misses. Every value in it is a
 \texttt{Fraction}: no float is constructed anywhere, so ``agreement'' there
@@ -1855,6 +1940,26 @@ $G$ fixed; that is the shell reversal the one-cube reconstructions report.
   \emph{The string tension, confinement and roughening in $SU(3)$ Hamiltonian
   lattice gauge theory}, Phys. Lett. B \textbf{98}, 63 (1981).
 
+\bibitem{Munster1981} G.~M\"unster,
+  \emph{Strong coupling expansions for the mass gap in lattice gauge theories},
+  Nucl. Phys. \textbf{B190}, 439 (1981); Erratum and Addendum
+  \textbf{B200}, 536 (1982); Erratum \textbf{B205}, 648 (1982). The two errata
+  were read here; the main paper was not.
+
+\bibitem{Seo1982} K.~Seo,
+  \emph{Glueball mass estimate by strong coupling expansion in lattice gauge
+  theories}, Nucl. Phys. \textbf{B209}, 200 (1982). Not read here; cited as the
+  independent locator of the eighth-order error.
+
+\bibitem{Smit1982} J.~Smit,
+  \emph{Estimate of glueball masses from their strong coupling series in
+  lattice QCD}, Nucl. Phys. \textbf{B206}, 309 (1982).
+
+\bibitem{Munster1983} G.~M\"unster,
+  \emph{Physical strong coupling expansion parameters and glueball mass
+  ratios}, Phys. Lett. B \textbf{121}, 53 (1983). Not read here; cited as the
+  1983 printing the 1985 shift is consistent with.
+
 \bibitem{Munster1985} G.~M\"unster,
   \emph{Effective transfer matrix for low-lying glueball states in lattice
   gauge theory}, Nucl. Phys. \textbf{B256}, 67 (1985).
@@ -1893,6 +1998,18 @@ $G$ fixed; that is the shell reversal the one-cube reconstructions report.
   \emph{Search for efficient formulations for Hamiltonian simulation of
   non-Abelian lattice gauge theories}, Phys. Rev. D \textbf{104}, 074505
   (2021).
+
+\bibitem{Sutherland1986} B.~Sutherland,
+  \emph{Localization of electronic wave functions due to local topology},
+  Phys. Rev. B \textbf{34}, 5208 (1986). Not read here.
+
+\bibitem{Mielke1991} A.~Mielke,
+  \emph{Ferromagnetism in the Hubbard model on line graphs and further
+  considerations}, J. Phys. A \textbf{24}, 3311 (1991). Not read here.
+
+\bibitem{BWB2008} D.~L. Bergman, C.~Wu and L.~Balents,
+  \emph{Band touching from real-space topology in frustrated hopping models},
+  Phys. Rev. B \textbf{78}, 125104 (2008), arXiv:0803.3628. Not read here.
 
 \bibitem{Hazra2026} T.~Hazra,
   \emph{New class of exactly flat topological bands: compact localised states

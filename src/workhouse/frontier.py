@@ -94,28 +94,29 @@ def strip_lean_comments(body: str) -> str:
     return "".join(out)
 
 
+#: The one pattern that recognises a Lean declaration, shared with
+#: ``certified.lean_claims``. It lived in two places with two different
+#: spellings, and the copy here was the older one: it required the keyword to
+#: start the line, so the three ``@[simp] theorem bandVar_*`` declarations were
+#: invisible to it. FRONTIER.md then reported 37 where CERTIFIED.md reported 40
+#: --- two generated files disagreeing about the same count, each looking
+#: authoritative. Attributes and the `private`/`protected`/`nonrec` modifiers
+#: all sit BEFORE the keyword, so the pattern matches them rather than assuming
+#: they are absent, and there is now one pattern to keep correct instead of two.
+LEAN_DECL = re.compile(
+    r"^[ \t]*(?:@\[[^\]]*\]\s*)*(?:private\s+|protected\s+|nonrec\s+)*"
+    r"(?:theorem|lemma)\s+([A-Za-z_][\w'.]*)",
+    re.MULTILINE,
+)
+
+
 def _lean_counts() -> tuple[int, int]:
     theorems = sorries = 0
     if not LEAN.exists():
         return 0, 0
     for path in LEAN.rglob("*.lean"):
         body = strip_lean_comments(path.read_text(encoding="utf-8"))
-        # Attributes and `private` sit BEFORE the keyword. certified.py's
-        # scrape already allows them -- it was fixed there when an
-        # `@[simp] theorem` turned out to be invisible to the T0 catalogue --
-        # and this one was not, so FRONTIER.md reported 37 where CERTIFIED.md
-        # reported 40 and the two generated views of the same tree disagreed.
-        # A count that is wrong in one generated file and right in another is
-        # worse than either, because whichever a reader opens first reads as
-        # authoritative.
-        theorems += len(
-            re.findall(
-                r"^\s*(?:@\[[^\]]*\]\s*)*(?:private\s+|protected\s+|nonrec\s+)*"
-                r"(?:theorem|lemma)\s",
-                body,
-                re.MULTILINE,
-            )
-        )
+        theorems += len(LEAN_DECL.findall(body))
         sorries += len(re.findall(r"\bsorry\b", body))
     return theorems, sorries
 

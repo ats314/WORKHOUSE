@@ -201,8 +201,11 @@ published. A paper is T3 until something checks it, same as any document.
 | `CBB_2026` | `R2` | corroborates | verified |
 | `BALAJI_2026` | `R2` | supplies-comparison | verified |
 | `HAZRA_2026` | `G14` | supplies-comparison | verified |
+| `SUTHERLAND_1986` | `G14` | supplies-comparison | not-yet-obtained |
+| `MIELKE_1991` | `G14` | supplies-comparison | not-yet-obtained |
+| `BWB_2008` | `G14` | supplies-comparison | not-yet-obtained |
 
-**9 of 45 edges rest on a source nobody here has read
+**12 of 48 edges rest on a source nobody here has read
 or pinned.** Obtaining and digest-pinning a primary source upgrades its
 edges from assertion to verification — the Hamer 1989 table did exactly
 that for the program's strongest external agreement.
@@ -259,10 +262,13 @@ different things: **in-web** is how many indexed papers cite this one
 | `MUNSTER_1985_TM` | 0 | 2 (2026-08-21) | pinned |
 | `CM_2003` | 0 | 1 (2026-08-21) | pinned |
 | `BALAJI_2026` | 0 | — | **not yet obtained** |
+| `BWB_2008` | 0 | — | **not yet obtained** |
 | `CBB_2026` | 0 | — | **not yet obtained** |
 | `CB_2024` | 0 | — | **not yet obtained** |
 | `FLPS_2026` | 0 | 0 (2026-08-21) | pinned |
 | `HAZRA_2026` | 0 | — | **not yet obtained** |
+| `MIELKE_1991` | 0 | — | **not yet obtained** |
+| `SUTHERLAND_1986` | 0 | — | **not yet obtained** |
 
 **Next acquisition target, computed: `KS_1975`** — 10 in-web
 citations and nobody here has read or pinned it. The ranking surfaces
