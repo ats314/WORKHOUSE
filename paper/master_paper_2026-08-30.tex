@@ -465,7 +465,34 @@ small-coupling spectral patch. The volume-uniform persistence of that patch is
 not obtained by bounding the norm of the extensive perturbation. Instead we
 use the local spectral enclosure of Yarotsky~\cite{Yarotsky2004}.
 
-\begin{theorem}[$SU(3)$ all-orders finite-volume Riesz island]\label{thm:riesz}
+\begin{proposition}[Periodic three-link cell descent]
+\label{prop:periodic-yarotsky-descent}
+Group the three positively oriented outgoing links at each vertex into one
+cell and rescale the Hamiltonian by $3/2$; the smallest nonzero one-link
+electric energy is $2/3$, so the rescaled one-cell Hamiltonian has gap one.
+Assign the three positively oriented plaquettes based at a vertex to that
+cell. Then each rescaled cell interaction has norm at most $27|u|$, the
+constants of the spectral localisation theorem of~\cite{Yarotsky2004} may be
+taken independent of $L$, and with $\lambda=27c_2|u|$ and $27|u|<c_1$,
+\begin{equation}\label{eq:yarotsky}
+  \operatorname{spec}\widetilde H_L(u)\subset
+  \bigcup_{a\in\operatorname{spec}H_{E,L}}[a(1-\lambda),a(1+\lambda)].
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Since $\|\chi_p+\bar\chi_p\|\le6$, the norm of each rescaled cell interaction
+is bounded by $\tfrac32|u|\cdot3\cdot6=27|u|$. The cell spaces may be infinite
+dimensional and the onsite Hamiltonians may be unbounded in the theorem
+of~\cite{Yarotsky2004}. Its linked-set proof uses only finite range, the local
+norm, and an exponential bound on the number of connected sets through a
+marked cell. The same bound holds on every periodic finite quotient because
+its interaction graph has the same uniformly bounded degree. Thus the
+constants are independent of $L$ and, translated back to the present energy
+units, \eqref{eq:yarotsky} follows.
+\end{proof}
+
+\begin{theorem}[$SU(3)$ all-orders finite-volume Riesz island]\label{thm:riesz}\label{thm:riesz-island}
 For periodic $L^3$ tori with $L\ge3$, let
 $\widetilde H_L(u)=H_L(u)-E_{0,L}(u)I$ and $\lambda=27c_2|u|$, where
 $c_1,c_2>0$ are the range-dependent constants in the spectral localisation
@@ -493,24 +520,8 @@ rank exactly $3L^3$.
 \end{theorem}
 
 \begin{proof}
-Group the three positively oriented outgoing links at each vertex into one
-cell and rescale the Hamiltonian by $3/2$. The smallest nonzero one-link
-electric energy is $2/3$, so the rescaled one-cell Hamiltonian has gap one.
-Assign the three positively oriented plaquettes based at a vertex to that
-cell. Since $\|\chi_p+\bar\chi_p\|\le6$, the norm of each rescaled cell
-interaction is bounded by $\tfrac32|u|\cdot3\cdot6=27|u|$.
-
-The cell spaces may be infinite dimensional and the onsite Hamiltonians may be
-unbounded in the theorem of~\cite{Yarotsky2004}. Its linked-set proof uses
-only finite range, the local norm, and an exponential bound on the number of
-connected sets through a marked cell. The same bound holds on every periodic
-finite quotient because its interaction graph has the same uniformly bounded
-degree. Thus the constants are independent of $L$ and, translated back to the
-present energy units,
-\begin{equation}\label{eq:yarotsky}
-  \operatorname{spec}\widetilde H_L(u)\subset
-  \bigcup_{a\in\operatorname{spec}H_{E,L}}[a(1-\lambda),a(1+\lambda)].
-\end{equation}
+Proposition~\ref{prop:periodic-yarotsky-descent} supplies the enclosure
+\eqref{eq:yarotsky} with $\lambda=27c_2|u|$ uniform in $L$.
 
 For an $SU(3)$ irrep $(p,q)$, its one-link electric energy in units of $1/6$
 has numerator $p^2+q^2+pq+3p+3q$. The nonzero one-link numerators below $18$
@@ -687,7 +698,7 @@ by accident; they are the same decomposition read in two bases.
 The same block decomposition says exactly what a local seed costs at sharp
 momentum.
 
-\begin{proposition}[Fixed-momentum carrier and the locality tradeoff]\label{prop:locality}
+\begin{proposition}[Fixed-momentum carrier and the locality tradeoff]\label{prop:locality}\label{prop:fixed-k-carrier}
 Let $b_x=\partial_3[x;1,2,3]$ be the six-face boundary of the elementary cube
 at $x$, and use the unitary discrete Fourier transform
 $\hat b_L(k)=L^{-3/2}\sum_{x\in\Lambda_L}e^{-ik\cdot x}b_x$. For every allowed
@@ -908,7 +919,7 @@ of $t_N$.
 Write $X_q=\chi_q+\bar\chi_q$, so $V=\sum_q X_q$, and let
 $Q_0=1-|0\rangle\langle0|$.
 
-\begin{lemma}[Second-order process completeness]\label{lem:exhaust}
+\begin{lemma}[Second-order process completeness]\label{lem:exhaust}\label{lem:process-complete}
 For $N\ge3$, $L\ge3$, and distinct plaquettes $p,p'$, define
 \begin{align}
   K_{2,-}&=P_-VQ_-(E_{F,N}-H_E)^{-1}Q_-VP_- ,\label{eq:K2}\\
@@ -2464,6 +2475,78 @@ the zone corner. The excluded zone fraction grows as $u^3$.
 \chk{the criterion survives C2: K depends on the kernel only through sqrt(W\_4)}
 \chk{the statement is non-vacuous only below an explicit coupling}
 
+% The G18/G19 inserts below are received documents, input verbatim. They refer
+% to one equation label and one citation key under the names used in the Rev5
+% source; aliasing here keeps the received files byte-identical rather than
+% editing them to match this manuscript.
+%
+% NOTE, for the maintainer: \cite{Yarotsky2004QP} and
+% \cite{Yarotsky2006GroundStates} are resolved here to ONE entry, the CMP 261
+% (2006) "Ground states in relatively bounded quantum perturbations of
+% classical lattice systems", arXiv:math-ph/0412040 -- the paper the internal
+% sheet-closure insert names in its own header. That identification was made
+% when the inserts were merged and is not independently verified; in
+% particular Yarotsky2004QP is NOT the quasi-particle paper already cited here
+% as \cite{Yarotsky2004} (arXiv:math-ph/0411042), whose one-site nondegeneracy
+% hypothesis this manuscript explicitly does not invoke.
+\makeatletter
+\providecommand{\whlabelalias}[2]{%
+  \expandafter\global\expandafter\let\csname r@#1\expandafter\endcsname
+  \csname r@#2\endcsname}
+\providecommand{\whcitealias}[2]{%
+  \expandafter\global\expandafter\let\csname b@#1\expandafter\endcsname
+  \csname b@#2\endcsname}
+\makeatother
+\whlabelalias{eq:riesz-contour}{eq:rieszcircle}
+\whcitealias{Yarotsky2006GroundStates}{Yarotsky2004QP}
+
+\section{Infinite volume at fixed lattice spacing}\label{sec:g18}
+
+Theorem~\ref{thm:riesz} is a finite-volume statement: it transports the
+complete three-component shell through a contour whose constants are uniform
+in $L$, but it says nothing about the thermodynamic limit, and its closing
+remark is explicit that it supplies an interacting Riesz cluster rather than a
+particle. This section closes that step at fixed spacing. The thermodynamic
+ground state and infinite-volume Hamiltonian come from the quantum-perturbation
+theorems of~\cite{Yarotsky2004QP} applied to the same three-link cell
+decomposition as Proposition~\ref{prop:periodic-yarotsky-descent}; the
+close-projection and GNS-transport chain then carries the coefficient shell
+into the physical sector, and the second-order coefficient of the exact
+orthonormal symbol isolates a rank-one internal sheet on every momentum ball
+compactly separated from $\Gamma$.
+
+Two boundaries survive and are stated where they arise. No rank-one separation
+is claimed \emph{at} $\Gamma$, where the cubic $T_1$ triplet meets; and the
+identification of the resulting semigroup with an isotropic Wilson-action
+transfer matrix, together with every continuum statement, is a separate problem
+taken up in Section~\ref{sec:g19}.
+
+\input{research_notes/G18_FIXED_SPACING_CARRIER_BRIDGE_INSERT}
+
+\section{The continuum bridge, and where it is blocked}\label{sec:g19}
+
+The previous section works at one fixed lattice spacing. The remaining step is
+the continuum limit, and the first result below is that it cannot be reached by
+extending the domain of Theorem~\ref{thm:riesz}: in the Hamiltonian coordinate
+$u=g_H^{-4}$ an asymptotically free trajectory has $u(a)\to\infty$, while the
+proved island requires $u<u_*$. The hypotheses are eventually \emph{disjoint},
+so this is a theorem about the two domains rather than a caution about
+extrapolating between them, and computing the existential constants would not
+change it. The corollary that follows sharpens it: no nonzero finite
+strong-coupling Taylor truncation yields a finite continuum mass at all.
+
+What the section does supply is the shape of what would be needed --- the
+necessary scaling law an electric-unit branch must obey, an unconditional
+atom-passage proposition showing that a uniformly source-visible bottom atom
+survives vague convergence without any isolation or Haag--Ruelle hypothesis,
+and a reflection-positivity-preserving blocking corollary for the raw
+deterministic Balaban average with reflection-adapted block and path data. A
+two-point counterexample closes off the stochastic variant. The section ends by
+naming the remaining object explicitly, which is a Hamiltonian--Wilson matching
+package rather than a further estimate.
+
+\input{research_notes/G19_CONTINUUM_BRIDGE_INSERT}
+
 \section{External comparisons}
 \label{sec:external}
 
@@ -2549,7 +2632,19 @@ This work does not establish a four-dimensional infinite-volume Yang--Mills
 mass gap, a continuum glueball mass, convergence of the strong-coupling series
 to the continuum, regulator independence of the first dispersive order, the
 full $SU(3)$ fourth-order rest coefficient or off-axis shape, or an
-identification of any level here with a physical glueball. At $\Gamma$ the
+identification of any level here with a physical glueball. Two of those
+exclusions are now sharper than a disclaimer.
+Section~\ref{sec:g18} \emph{does} reach infinite volume --- at one fixed
+lattice spacing --- so what the first item excludes is the continuum, not the
+thermodynamic limit. And the continuum exclusion is a theorem rather than a
+caution: by Proposition~\ref{prop:g19-axis} the hypotheses of
+Theorem~\ref{thm:riesz} and those of an asymptotically free trajectory are
+eventually \emph{disjoint} in the coupling coordinate $u=g_H^{-4}$, so no tail
+of a continuum trajectory lies in the proved domain and evaluating the
+existential constants $c_1,c_2$ would not change that. Corollary
+\ref{cor:g19-polynomial-obstruction} adds that no nonzero finite
+strong-coupling truncation yields a finite continuum mass at all.
+Section~\ref{sec:g19} names what would be required instead. At $\Gamma$ the
 three face orbitals transform as an axial vector of the cubic group, which
 with parity even and charge conjugation odd gives the retained-space label
 $T_1^{+-}$; this is an operator-space assignment, not a spectral one.
@@ -3105,6 +3200,55 @@ nowhere below, and that is the point.
 \input{coverage_master}
 
 \begin{thebibliography}{99}\small\sloppy\raggedright
+
+% Entries below marked (register) are transcribed from literature/index.yaml,
+% which records them as verified. The remainder are standard references supplied
+% when the G18/G19 inserts were merged; they have not been through this
+% repository's literature verification and should be spot-checked before
+% submission.
+\bibitem{Yarotsky2004QP} D.~A. Yarotsky,
+  \emph{Ground states in relatively bounded quantum perturbations of classical
+  lattice systems}, Commun. Math. Phys. \textbf{261}, 799--819 (2006),
+  \href{https://arxiv.org/abs/math-ph/0412040}{arXiv:math-ph/0412040}.
+
+\bibitem{Yarotsky2005Uniqueness} D.~A. Yarotsky,
+  \emph{Uniqueness of the ground state in weak perturbations of
+  non-interacting gapped quantum lattice systems}, J. Stat. Phys.
+  \textbf{118}, 119--144 (2005),
+  \href{https://arxiv.org/abs/math-ph/0401039}{arXiv:math-ph/0401039}.
+
+\bibitem{Balaban1985Averaging} T.~Ba{\l}aban,
+  \emph{Averaging operations for lattice gauge theories},
+  Commun. Math. Phys. \textbf{98}, 17--51 (1985).
+
+\bibitem{OsterwalderSeiler1978} K.~Osterwalder and E.~Seiler,
+  \emph{Gauge field theories on a lattice},
+  Ann. Physics \textbf{110}, 440--471 (1978).
+
+\bibitem{GrossWilczek1973} D.~J. Gross and F.~Wilczek,
+  \emph{Ultraviolet behavior of non-abelian gauge theories},
+  Phys. Rev. Lett. \textbf{30}, 1343--1346 (1973).
+
+\bibitem{Politzer1973} H.~D. Politzer,
+  \emph{Reliable perturbative results for strong interactions?},
+  Phys. Rev. Lett. \textbf{30}, 1346--1349 (1973).
+
+\bibitem{LuscherWeisz1995} M.~L\"uscher and P.~Weisz,
+  \emph{Computation of the relation between the bare lattice coupling and the
+  $\overline{\mathrm{MS}}$ coupling in $SU(N)$ gauge theories to two loops},
+  Nucl. Phys. B \textbf{452}, 234--260 (1995),
+  \href{https://arxiv.org/abs/hep-lat/9505011}{arXiv:hep-lat/9505011}.
+
+\bibitem{MorningstarPeardon1999} C.~J. Morningstar and M.~Peardon,
+  \emph{The glueball spectrum from an anisotropic lattice study},
+  Phys. Rev. D \textbf{60}, 034509 (1999),
+  \href{https://arxiv.org/abs/hep-lat/9901004}{arXiv:hep-lat/9901004}.
+  (register)
+
+\bibitem{AthenodorouTeper2020} A.~Athenodorou and M.~Teper,
+  \emph{The glueball spectrum of $SU(3)$ gauge theory in 3+1 dimensions},
+  JHEP \textbf{11} (2020) 172,
+  \href{https://arxiv.org/abs/2007.06422}{arXiv:2007.06422}. (register)
 
 \bibitem{Yarotsky2004} D.~A. Yarotsky,
   \emph{Quasi-particles in weak perturbations of non-interacting quantum

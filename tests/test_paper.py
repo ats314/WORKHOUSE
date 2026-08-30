@@ -39,10 +39,15 @@ def test_paper_directory_is_fully_pinned():
     # and are gitignored. Pinning them would make a local `pdflatex` run fail a
     # test about corpus integrity, which is a false alarm about the wrong thing.
     byproducts = {".aux", ".log", ".out", ".toc", ".synctex.gz", ".fls", ".fdb_latexmk"}
+    # Walked recursively since 2026-08-30: paper/research_notes/ holds the
+    # maintainer's G18/G19 inserts, input verbatim by the master edition. A
+    # file the manuscript compiles from is exactly what this manifest is for,
+    # and iterdir() would have pinned the directory name instead of its
+    # contents.
     on_disk = {
-        p.name
-        for p in PAPER.iterdir()
-        if p.suffix not in byproducts and not p.name.endswith(".synctex.gz")
+        str(p.relative_to(PAPER))
+        for p in PAPER.rglob("*")
+        if p.is_file() and p.suffix not in byproducts and not p.name.endswith(".synctex.gz")
     } - {"SHA256SUMS", "README.md"}
     assert set(recorded) == on_disk, f"pinned {sorted(recorded)} != on disk {sorted(on_disk)}"
     for name, digest in recorded.items():

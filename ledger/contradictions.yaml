@@ -116,6 +116,18 @@ contradictions:
       nearest-neighbour records are the normal orbit, which A pins in both
       kernels and which therefore cannot disagree freely — refining the
       "nn same-plane block" of runs/g3_kernel_record_dump_2026-08-28/.
+    sign_flip_is_not_the_whole_story: >
+      Tested and refuted 2026-08-30, so the next reader does not chase it. The
+      two orbits that differ in sign are exactly the two whose only shape
+      effect is C (A = B = D = 0 for both), which looks like a transpose or
+      conjugation convention differing between the pipelines. It is not: their
+      MAGNITUDES also differ, and by three different factors — u by 4.1327437,
+      rho by 10.68866, pi by 1.487657. Enumerating all four sign choices of
+      (rho, pi) at fixed magnitudes reproduces each kernel's own C exactly and
+      nothing else: the historical value needs (rho +, pi -) with historical
+      magnitudes, the v10a.26 value needs (rho -, pi +) with cold magnitudes,
+      and no sign choice on one kernel's magnitudes lands near the other's
+      value. So C2 is a disagreement about three numbers, not one convention.
     blocks: [G3]
 
   - id: C3
