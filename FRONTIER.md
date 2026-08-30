@@ -10,9 +10,9 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 44 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 48 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 236/236 checks pass.
+**T1/T2 — re-derived here.** 240/240 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -27,6 +27,7 @@ it cannot drift from what the repository actually checks.
 | fourth-order checkpoint extraction | 3/3 |
 | homology and finite volume | 12/12 |
 | the G18 interpolator: local carrier operators and the sheet no-go | 4/4 |
+| G17 uniformity: the shell isolation constant | 4/4 |
 | settlement package and adjudication harness (G3) | 16/16 |
 | near-Gamma uniformity (G11) | 6/6 |
 | tier collapse (G14) | 6/6 |

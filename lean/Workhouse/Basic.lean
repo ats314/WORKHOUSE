@@ -160,6 +160,34 @@ theorem channel_resolvent_assembly (n : ℚ) (h0 : n ≠ 0) (h1 : n ^ 2 - 1 ≠ 
       (mul_ne_zero (mul_ne_zero h1 h3) h45)]
   ring
 
+/-! ## The shell isolation constant (G17)
+
+The retained shell's volume-uniform electric isolation reduces to rational
+arithmetic once the census and Casimir minimality are in hand; the arithmetic
+layer is proved here. `shell_margin_five` is the counting bound's margin, and
+the three shelf numerators are the family inequalities behind
+`C(rho) >= 5 C_F / 4` for every nontrivial irrep other than `F`, `F-bar`:
+each is `8N(C - 5C_F/4)` with denominators cleared, and each factors with the
+sign visible. -/
+
+/-- Five charged links clear the plaquette shell by exactly `C_F/2`. -/
+theorem shell_margin_five (n : ℚ) :
+    5 * casimirF n / 2 - 2 * casimirF n = casimirF n / 2 := by
+  unfold casimirF; ring
+
+/-- The `Λ²F` shelf numerator: `8N(C - 5C_F/4)` clears to `(3N-11)(N+1)`,
+nonnegative from `N = 4`; at `N = 3` the antisymmetric square IS `F-bar`. -/
+theorem lambda2_shelf_numerator (n : ℚ) :
+    8 * ((n + 1) * (n - 2)) - 5 * (n ^ 2 - 1) = (3 * n - 11) * (n + 1) := by ring
+
+/-- The `Sym²F` shelf numerator: `(3N+11)(N-1)`, nonnegative for `N ≥ 1`. -/
+theorem sym2_shelf_numerator (n : ℚ) :
+    8 * ((n - 1) * (n + 2)) - 5 * (n ^ 2 - 1) = (3 * n + 11) * (n - 1) := by ring
+
+/-- The adjoint shelf numerator: `3N² + 5`, positive at every rank. -/
+theorem adjoint_shelf_numerator (n : ℚ) :
+    8 * (n * n) - 5 * (n ^ 2 - 1) = 3 * n ^ 2 + 5 := by ring
+
 /-! ## SU(3) through third order -/
 
 noncomputable def b₃ : ℚ := 1975 / 124848

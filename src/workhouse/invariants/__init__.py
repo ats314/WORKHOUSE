@@ -34,6 +34,7 @@ _MODULES = (
     "fourth_order",
     "homology",
     "interpolator",
+    "isolation",
     "adjudication",
     "uniformity",
     "tier",
