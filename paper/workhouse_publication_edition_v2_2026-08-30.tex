@@ -59,10 +59,13 @@ plaquettes that share one link,
   t_N=\frac{2N(N^2-4)}{(N^2-1)(2N^2-1)(4N^2-9)}>0,\qquad N\ge 3 .
 \]
 The oriented cellular boundary $B=\partial_2\dg$ fixes the corresponding local
-geometry. Conditional on two explicit premises---that the retained external
-space is exactly the charge-odd one-plaquette shell and that shared-link routes
-exhaust second-order off-diagonal processes---the global order-$u^2$ symbol is
-$t_Nu^2B(k)B(k)\dg$. Its spectrum is
+geometry. Two premises that earlier versions carried as hypotheses---that the
+retained external space is exactly the charge-odd one-plaquette shell, and
+that shared-link routes exhaust second-order off-diagonal processes---are
+proved here, from one classical Casimir-minimality fact and exhaustively
+enumerated lattice combinatorics, so the global order-$u^2$ symbol
+$t_Nu^2B(k)B(k)\dg$ is now a theorem within the standard degenerate
+perturbation framework. Its spectrum is
 $\{0,t_Nu^2q,t_Nu^2q\}$ up to a common scalar, with
 $q=4\sum_j\sin^2(k_j/2)$, and its flat carrier
 $\ker\partial_2$ has dimension $L^3+2$. A supplied $SU(3)$ two-cube
@@ -136,12 +139,15 @@ and the cubical chain complex fixes the latter,
 
 Seven mathematical statements are self-contained here; where an operator's
 identification with a projected physical sector is conditional, that condition
-is stated separately. Three premises in this paper are load-bearing prose
-with no check --- the retained-shell hypothesis, second-order process
-exhaustion, and the charge-even identification --- and they are gathered and
-argued in Section~\ref{sec:scope} rather than left implicit; the coverage
-appendix (Appendix~\ref{app:coverage}) makes their unchecked status visible
-by omission.
+is stated separately. Earlier editions carried three load-bearing prose
+premises; this edition proves two of them --- the retained shell and
+second-order process exhaustion (Lemmas~\ref{lem:shell}
+and~\ref{lem:exhaust}, new here and flagged as such) --- which makes the
+global second-order assembly a theorem (Theorem~\ref{thm:assembly}). The
+third, the charge-even identification, remains a hypothesis and is argued in
+Section~\ref{sec:scope}; the coverage appendix
+(Appendix~\ref{app:coverage}) makes its unchecked status visible by
+omission.
 
 \begin{enumerate}\itemsep2pt
 \item For every $N\ge3$ the shared-link channel weights are $d_\rho/N^2$,
@@ -150,9 +156,12 @@ by omission.
   \emph{hypothesis}, and everything in Section~\ref{sec:second} rests on it.
 \item For every $N\ge3$ the exact adjacent shared-link matrix element has
   coefficient $t_N$ (Theorem~\ref{thm:allrank}). Its assembly into the global
-  symbol $t_Nu^2BB\dg$ additionally assumes both that the retained external
-  range is exactly the charge-odd one-plaquette shell and that one-shared-link
-  processes exhaust the second-order off-diagonal intermediates.
+  symbol $t_Nu^2BB\dg$ formerly assumed that the retained external range is
+  exactly the charge-odd one-plaquette shell and that one-shared-link
+  processes exhaust the second-order off-diagonal intermediates; both are
+  now proved (Lemmas~\ref{lem:shell} and~\ref{lem:exhaust}), so the
+  assembly is Theorem~\ref{thm:assembly}, resting on one classical
+  Casimir-minimality input and machine-enumerated finite combinatorics.
 \item The Bloch spectrum of $BB\dg$ is $\{0,q,q\}$ (Theorem~\ref{thm:fact}),
   and on the periodic $L^3$ complex the zero-mode count is $L^3+2$
   (Theorem~\ref{thm:carrier}). The two are the same statement, by a sum rule
@@ -296,8 +305,11 @@ $E_{F,N}$ projector $P_-$ is exactly the charge-odd one-plaquette span. The
 supporting argument is that a reduced contractible fundamental loop at that
 energy has four distinct links and is an elementary plaquette; the sector
 qualification excludes the accidentally degenerate straight wrapping loop at
-$L=4$. A complete proof that no other gauge-invariant network lies in this
-range is not supplied. Conditional on this hypothesis, $Q=1_--P_-$ crosses no
+$L=4$. The complete proof that no other gauge-invariant network lies in this
+range --- for every $N$, every rep assignment, and every network topology ---
+is Lemma~\ref{lem:shell}, new in this edition; the construction here keeps
+the name ``hypothesis'' so its earlier standing stays visible in the record.
+Granting it, $Q=1_--P_-$ crosses no
 omitted $E_{F,N}$ eigendirection and degenerate perturbation theory gives
 \begin{equation}\label{eq:heff}
   H_{\mathrm{eff},-}=P_-H_EP_-+uH_1+u^2H_2+u^3H_3+\cdots
@@ -555,7 +567,33 @@ balanced Haar sector. This is useful negative evidence for retaining the
 contractions above; it is not a second derivation of $t_N$.
 \end{remark}
 
-With Theorem~\ref{thm:weingarten} the resolvent weight is
+A channel's squared projector norm and its signed contribution to the cross
+matrix element are related but not identical statements, and the step between
+them deserves its own displayed equation rather than a jump. For each
+intermediate irrep $\rho$, with $Q_\rho$ the projector onto the
+$E=3\CF+C_\rho/2$ intermediate carrying $\rho$ on the shared link,
+\begin{equation}\label{eq:channelme}
+  \langle p',-|VQ_\rho V|p,-\rangle
+  =\eta_\rho\,s(p',e)\,s(p,e)\,\frac{d_\rho}{N^2},
+  \qquad
+  \eta_\rho=
+  \begin{cases}
+    -1,&\rho\in\{\mathbf1,\mathrm{Adj}\}\ \text{(mixed family)},\\
+    +1,&\rho\in\{\Lambda^2F,\mathrm{Sym}^2F\}\ \text{(like family)},
+  \end{cases}
+\end{equation}
+where $d_\rho/N^2$ is the Weingarten weight of
+Theorem~\ref{thm:weingarten}, the incidence signs come from the oriented
+boundaries, and $\eta_\rho$ is the charge-odd family sign: reversing the
+induced orientation on one face interchanges the families and flips the
+charge-odd combination. Inserting the reduced resolvent, whose denominator
+against the external energy $2\CF$ is $\CF+C_\rho/2$ exactly,
+\begin{equation}\label{eq:channelres}
+  \langle p',-|VQ_\rho(E_{F,N}-H_E)^{-1}Q_\rho V|p,-\rangle
+  =-\eta_\rho\,s(p',e)s(p,e)\,\frac{d_\rho/N^2}{\CF+C_\rho/2}.
+\end{equation}
+Summing \eqref{eq:channelres} over the four channels is the whole content of
+the theorem below. With Theorem~\ref{thm:weingarten} the resolvent weight is
 \begin{equation}\label{eq:w}
   w_\rho=-\frac{d_\rho/N^2}{\CF+C_\rho/2},
 \end{equation}
@@ -627,6 +665,11 @@ Theorem~\ref{thm:fact}. The two assumptions are not consequences of the
 channel calculation and are retained explicitly.
 \end{proof}
 
+Both assumptions are discharged in Section~\ref{sec:closing}
+(Lemmas~\ref{lem:shell} and~\ref{lem:exhaust}), which upgrades this
+corollary to Theorem~\ref{thm:assembly}; the conditional form is kept above
+so the logical dependence stays legible.
+
 Two consequences,
 \begin{equation}\label{eq:tsmall}
   t_3=\frac{5}{612},\qquad
@@ -696,6 +739,134 @@ here. What the check above establishes is the all-rank value $\ell_N$ of the
 shared-link element, and the disposition of the non-adjacent contributions is
 prescription rather than result.
 \end{remark}
+
+\subsection{Closing the two premises}
+\label{sec:closing}
+
+Both premises of Corollary~\ref{cor:assembly} --- until this edition the two
+load-bearing prose hypotheses of the paper --- admit proofs. They are given
+here for the first time; their combinatorial cores are machine-checked, their
+single representation-theoretic input is classical and named, and a reader
+should audit them with the same hostility as everything else: they are new
+in this edition and have not yet survived external referees.
+
+\begin{lemma}[Retained shell]\label{lem:shell}
+Fix $N\ge3$ and $L\ge3$, in the cyclic gauge-invariant sector with trivial
+electric centre flux, excluding at $L=4$ the straight winding loops as in
+Section~\ref{sec:carrier}. The $E=E_{F,N}=2\CF$ eigenspace of $H_E$ is
+exactly the span of the single-plaquette states, and its charge-odd part is
+the span of the $|p,-\rangle$.
+\end{lemma}
+
+\begin{proof}
+In the electric basis a gauge-invariant state assigns an irrep $\rho_e$ to
+each link and an intertwiner to each site, with energy
+$\sum_e C(\rho_e)/2$ over the nontrivially charged links. The one classical
+input: for $SU(N)$ the quadratic Casimir of every nontrivial irrep satisfies
+$C(\rho)\ge\CF$, with equality exactly for $F$ and $\bar F$ (the fundamental
+weights $\omega_1,\omega_{N-1}$ are minuscule and $C(\lambda)
+=\langle\lambda,\lambda+2\delta\rangle$ grows strictly along the dominance
+order). So a state at $2\CF$ has $k\le4$ charged links.
+
+Geometry now does the rest, with no further representation arithmetic. A
+$1$-valent site is never invariant, and a $2$-valent site forces conjugate
+irreps on its two links, so the charged sublattice has minimum degree $2$ at
+charged sites and any junction has valence $\ge3$. With
+$\sum_{\text{sites}}\deg=2k\le8$: valence-$3$ junctions come in pairs
+($3j+2v=2k$ with $j$ even by parity of ends), and two $3$-valent junctions
+with $k\le4$ require three disjoint paths of lengths summing to $\le4$,
+hence lengths $(1,1,1)$ or $(1,1,2)$ --- both demand two distinct links
+between one pair of adjacent sites, which the simple cubic torus does not
+have. A $4$-valent junction with $k=4$ requires all four links to close
+pairwise through $2$-valent sites, again demanding parallel links. Cycles
+shorter than $4$ need care, because the odd-$L$ torus is \emph{not}
+bipartite: exhaustive enumeration (machine-checked at $L=3,4,5$) shows the
+only closed link sets of length $<4$ are the $3L^2$ straight winding
+triangles at $L=3$. A winding triangle carries one irrep $\rho$ around a
+noncontractible cycle: if $\rho$ has nonzero $N$-ality the trivial-centre-flux
+sector removes it, and if zero $N$-ality then $C(\rho)\ge C_{\mathrm{Adj}}=N$
+(the second classical input: the quasi-minuscule highest root minimises the
+Casimir on the nonzero root lattice), so its energy $3C(\rho)/2\ge3N/2>2\CF$.
+Two disjoint closed components need $\ge8$ charged links. So the charged
+sublattice at $E=2\CF$ is a single $4$-cycle of $2$-valent sites: one irrep
+$\rho$ runs around it (conjugated with orientation), the energy is
+$2C(\rho)=2\CF$, and minimality forces $\rho\in\{F,\bar F\}$.
+
+Finally, every $4$-cycle of the torus at $L\ge3$ is an elementary plaquette
+except, exactly at $L=4$, the straight winding loops --- machine-checked by
+exhaustive enumeration of all length-$4$ closed link paths at $L=3,4,5$ ---
+and the winding loops are removed by the sector qualification. The
+$E$-eigenspace is therefore spanned by the two orientation states of each
+plaquette, and its charge-odd part by the $|p,-\rangle$.
+\end{proof}
+\chk{the torus graph is simple, and the only short cycles are the L = 3 winding triangles}
+\chk{every 4-cycle is an elementary face, except exactly the 3L\^{}2 straight winding loops at L = 4}
+
+\begin{lemma}[Second-order process exhaustion]\label{lem:exhaust}
+For $p\ne p'$ in the charge-odd one-plaquette sector, every nonvanishing
+second-order route $\langle p',-|VQ(E_{F,N}-H_E)^{-1}QV|p,-\rangle$ has its
+two $V$-insertions supported on the faces $p$ and $p'$ themselves. In
+particular, when $p$ and $p'$ share no link the off-diagonal element
+vanishes, and when they share one link it is exhausted by the four fusion
+channels of Theorem~\ref{thm:allrank}.
+\end{lemma}
+
+\begin{proof}
+$V$ is a sum of single-plaquette terms, and multiplying by
+$\operatorname{Tr}U_q^{\pm1}$ changes the electric content only on the four
+links of $q$; the resolvent is diagonal in the electric basis and changes
+none. Two insertions $q_1,q_2$ therefore leave every link outside
+$\operatorname{supp}q_1\cup\operatorname{supp}q_2$ untouched, so
+$p\,\triangle\,p'\subseteq\operatorname{supp}q_1\cup\operatorname{supp}q_2$.
+The set $p\setminus p'$ has three links (shared-link pair) or four
+(otherwise), and by the exhaustive shared-link geometry a face distinct from
+$p$ contains at most one link of $p$: two insertions not supported on $p$
+cover at most two of them. Hence one insertion is supported on $p$, and
+symmetrically the other on $p'$; for $p\ne p'$ that pins
+$\{\operatorname{supp}q_1,\operatorname{supp}q_2\}=\{p,p'\}$ exactly.
+
+It remains to dispose of the routes this still allows beyond the fusion
+channels. If $p$ and $p'$ are disjoint (sharing a vertex or nothing), both
+orders factor through a local charge parity: annihilating the $p$-flux costs
+$\langle0_p|(\operatorname{Tr}U_p+\operatorname{Tr}U_p\dg)|p,-\rangle=0$,
+the selection rule of Proposition~\ref{prop:vacuum}, whether the intermediate
+is the vacuum or the two-plaquette state $|p\rangle\otimes|p'\rangle$; and
+the order that excites $p$ first leaves adjoint flux on $p$ that the
+remaining insertion, supported on $p'$, cannot clear. If they share one
+link, the two insertion orders are precisely the two orientation families
+of Theorem~\ref{thm:allrank}, whose intermediate content on the shared link
+is the four fusion channels; an insertion orientation that drives a
+nonshared link into $\Lambda^2F\oplus\mathrm{Sym}^2F$ cannot be returned to
+the trivial representation by the other insertion and contributes zero. The
+diagonal $p=p'$ terms are unconstrained by this argument and remain the
+scalar of Corollary~\ref{cor:assembly}.
+\end{proof}
+\chk{two distinct torus faces share at most one link, exhaustively at L = 3 and 4}
+
+\begin{theorem}[Global torus assembly, unconditional]\label{thm:assembly}
+For $N\ge3$ and $L\ge3$, in the sector of Lemma~\ref{lem:shell}, the
+charge-odd effective Hamiltonian through second order is
+\[
+  H^{(N)}_{\mathrm{eff},-}(k,u)
+  =E_{\mathrm{flat},N}(u)I+t_Nu^2B(k)B(k)\dg+O(u^3),
+\]
+with the three bands $E_{\mathrm{flat},N}(u)$ and
+$E_{\mathrm{flat},N}(u)+t_Nu^2q(k)$ twice, and flat carrier
+$\ker\partial_2$ of dimension $L^3+2$.
+\end{theorem}
+
+\begin{proof}
+Lemma~\ref{lem:shell} discharges assumption (i) of
+Corollary~\ref{cor:assembly} and Lemma~\ref{lem:exhaust} assumption (ii);
+the corollary's own proof then runs unchanged.
+\end{proof}
+
+The status change deserves one sober sentence rather than celebration. What
+was conditional is now proved relative to the standard degenerate
+perturbation framework of \eqref{eq:heff}, one classical Casimir-minimality
+fact, and finite combinatorics that a machine has enumerated; the charge-even
+identification of Section~\ref{sec:even} remains a hypothesis, and nothing
+about convergence, higher orders, or the continuum has changed.
 
 \subsection{Finite-volume width}
 
@@ -1820,24 +1991,13 @@ Three crossings are named explicitly, and none of them is made here.
 \noindent All three crossings are required, none is established here, and
 nothing in this edition shortens that route.
 
-Three premises earlier in the paper are arguments in prose rather than results,
-and all three are load-bearing. None has a check.
-
-That the range of $P_-$ is exactly the charge-odd one-plaquette span for
-$L\ge3$ is the retained-shell hypothesis stated before
-Section~\ref{sec:carrier}; it is supported by the link count of a reduced
-fundamental loop but not proved for every gauge-invariant network.
-
-That adjacent one-shared-link processes exhaust the second-order
-off-diagonal intermediates is assumed only in
-Corollary~\ref{cor:assembly}. Three ingredients \emph{are}
-settled: the two tensor-product decompositions \eqref{eq:fusion} are complete
-by representation theory, two distinct faces of this lattice share at most one
-link, and the vacuum-mediated route vanishes in this sector
-(Proposition~\ref{prop:vacuum}). What is not settled by any of them is that
-one-shared-link processes exhaust the second-order \emph{off-diagonal}
-intermediates. The gap is in the process enumeration, not in the channel list,
-and Theorem~\ref{thm:weingarten} is silent about it.
+Earlier editions carried three load-bearing prose premises here. Two of them
+are now proved --- the retained shell (Lemma~\ref{lem:shell}) and
+second-order process exhaustion (Lemma~\ref{lem:exhaust}) --- with their
+finite combinatorics machine-enumerated and their two classical
+representation-theoretic inputs named in the proofs. Those proofs are new in
+this edition and have not yet faced external referees; a reader auditing
+this paper should start there. One premise remains.
 
 That the complete linked charge-even Bloch symbol is the unsigned incidence
 $\mathcal N(k)$ --- the signed incidence with the boundary orientations
@@ -1856,7 +2016,8 @@ Weingarten sums, signed incidence and torus homology, closed-cube shell,
 two-cube connected geometry and reported channel arithmetic, the unsigned
 cubic, the saved historical Hodge pencil, the fourth-order obstruction, the
 coupling convention, the planar closed form \eqref{eq:planar}, and the
-exhaustive shared-link geometry at $L=3,4$ --- thirty-six checks, every value
+exhaustive shared-link geometry, cycle censuses and torus ranks through
+$L=5$ --- thirty-eight checks, every value
 a \texttt{Fraction} and no float constructed anywhere in the file. A second
 program, \texttt{verify\_radius2\_report.py}, holds everything the sealed
 radius-two artifact of Section~\ref{sec:radius2} can support: it is also
@@ -1886,7 +2047,7 @@ Signed incidence spectrum and $L^3+2$ carrier
 Adjacent all-rank coefficient $t_N$
  & Proven locally & Weingarten derivation; exact replay \\
 Global order-$u^2$ torus assembly
- & Conditional & Retained-shell and process-completeness hypotheses \\
+ & Proven (new this edition) & Lemmas~\ref{lem:shell},~\ref{lem:exhaust}; machine-enumerated combinatorial cores; not yet externally refereed \\
 Two-cube six-channel census
  & Reported numerical & Rational reconstructions; shared amplitude lineage; assembly test \\
 Unsigned-incidence cubic and range
@@ -1975,11 +2136,16 @@ or certify an uncompleted off-axis contraction.
 
 \section{Conclusion}
 
-The strongest result is an exact local one: for every $N\ge3$, the four
-shared-link fusion channels and their resolvent gaps give the closed coefficient
-$t_N$, while the oriented cellular boundary fixes its sign and geometry.
-Under two named completeness hypotheses this assembles into a homological
-flat carrier of dimension $L^3+2$. The $SU(3)$ two-cube calculation supplies a
+The strongest result is no longer only local. For every $N\ge3$, the four
+shared-link fusion channels and their resolvent gaps give the closed
+coefficient $t_N$, the oriented cellular boundary fixes its sign and
+geometry, and --- with the two completeness premises now proved
+(Lemmas~\ref{lem:shell} and~\ref{lem:exhaust}) --- the assembly into a
+homological flat carrier of dimension $L^3+2$ is a theorem: the flat sector
+is not a fine-tuned interference band but the cycle space of the lattice
+two-complex, degenerate because $\partial_2\partial_3=0$. Those two proofs
+are the newest and least-reviewed material here, and they deserve the
+reader's hardest look. The $SU(3)$ two-cube calculation supplies a
 nontrivial operator-level assembly check, including channel-by-channel
 geometry and orbit localisation, but shares its amplitude lineage and remains
 numerical at the contraction layer.
@@ -2175,8 +2341,9 @@ of evidence. This appendix makes that auditable: every inline
 check that certifies the sentence it sits beside --- is extracted verbatim
 by \texttt{make\_coverage.py} and printed here. A reader can therefore see
 exactly which statements are covered, and, by their absence from this list,
-which are not: the three load-bearing prose premises of
-Section~\ref{sec:scope} appear nowhere below, and that is the point.
+which are not: the remaining load-bearing hypothesis of
+Section~\ref{sec:scope} --- the charge-even identification --- appears
+nowhere below, and that is the point.
 
 \input{coverage_generated}
 

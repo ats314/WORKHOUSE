@@ -366,9 +366,9 @@ def rank(mat):
     return r
 
 
-@check("d2 d3 = 0 over Z and rank d3 = L^3 - 1, L = 1..3")
+@check("d2 d3 = 0 over Z and rank d3 = L^3 - 1, L = 1..5")
 def _():
-    for ell in (1, 2, 3):
+    for ell in (1, 2, 3, 4, 5):
         d2, d3 = d2_matrix(ell), d3_matrix(ell)
         if any(v != 0 for row in matmul(d2, d3) for v in row):
             return False
@@ -377,9 +377,11 @@ def _():
     return True
 
 
-@check("dim ker d2 = L^3 + 2 with an explicit spanning cycle basis, L = 1..3")
+@check("dim ker d2 = L^3 + 2 with an explicit spanning cycle basis, L = 1..5")
 def _():
-    for ell in (1, 2, 3):
+    # extended through L = 5 so the bundled verifier covers the same range
+    # the finite-volume text quotes (the bounds meeting at L = 1..5).
+    for ell in (1, 2, 3, 4, 5):
         d2, d3 = d2_matrix(ell), d3_matrix(ell)
         nullity = 3 * ell**3 - rank(d2)
         if nullity != ell**3 + 2:
@@ -977,6 +979,7 @@ def _pmul(a, b):
 def _pderiv(a):
     return [F(k) * c for k, c in enumerate(a)][1:] or [F(0)]
 
+
 def _peval(a, x):
     v = F(0)
     for c in reversed(a):
@@ -1049,6 +1052,114 @@ def _():
             for g_ in range(f + 1, nfaces):
                 if len(supports[f] & supports[g_]) > 1:
                     return False
+    return True
+
+
+@check("the torus graph is simple, and short cycles are only L = 3 winding lines")
+def _():
+    # the retained-shell lemma's small-cycle exclusions, by enumeration
+    # rather than parity (the odd-L torus is NOT bipartite -- the lemma must
+    # not pretend otherwise): no two links join the same site pair at
+    # L = 3..4, no closed 2-walk with distinct links anywhere, and the only
+    # length-3 closed link sets are the 3 L^2 straight winding lines at
+    # L = 3 (removed in the lemma by centre flux or the adjoint Casimir
+    # bound), with none at L = 4, 5.
+    for ell in (3, 4):
+        seen = set()
+        for x in product(range(ell), repeat=3):
+            for a in (1, 2, 3):
+                pair = frozenset((x, _shift(x, a, ell)))
+                if pair in seen:
+                    return False
+                seen.add(pair)
+    for ell in (3, 4, 5):
+        short = set()
+        for x0 in product(range(ell), repeat=3):
+            for steps in product([(a, s) for a in (1, 2, 3) for s in (1, -1)], repeat=3):
+                x, links, ok = x0, [], True
+                for a, s in steps:
+                    base = (
+                        x
+                        if s == 1
+                        else tuple((v - (1 if k == a - 1 else 0)) % ell for k, v in enumerate(x))
+                    )
+                    if (base, a) in links:
+                        ok = False
+                        break
+                    links.append((base, a))
+                    x = _shift(x, a, ell) if s == 1 else base
+                if ok and x == x0:
+                    short.add(frozenset(links))
+        if ell == 3:
+            lines = set()
+            for x in product(range(ell), repeat=3):
+                for a in (1, 2, 3):
+                    y, chain = x, []
+                    for _ in range(3):
+                        chain.append((y, a))
+                        y = _shift(y, a, ell)
+                    lines.add(frozenset(chain))
+            if short != lines or len(lines) != 3 * ell**2:
+                return False
+        elif short:
+            return False
+    return True
+
+
+def _four_cycles(ell):
+    """All sets of 4 distinct links forming a closed walk, as frozensets."""
+    out = set()
+    for x0 in product(range(ell), repeat=3):
+        for steps in product([(a, s) for a in (1, 2, 3) for s in (1, -1)], repeat=4):
+            x, links = x0, []
+            ok = True
+            for a, s in steps:
+                # the undirected link is named by its lower endpoint and axis
+                base = (
+                    x
+                    if s == 1
+                    else tuple((v - (1 if k == a - 1 else 0)) % ell for k, v in enumerate(x))
+                )
+                link = (base, a)
+                if link in links:
+                    ok = False
+                    break
+                links.append(link)
+                x = _shift(x, a, ell) if s == 1 else base
+            if ok and x == x0 and len(links) == 4:
+                out.add(frozenset(links))
+    return out
+
+
+@check("every 4-cycle is an elementary face, except the 3L^2 straight lines at L = 4")
+def _():
+    # the retained-shell lemma's cycle classification, by brute enumeration:
+    # at L = 3 and 5 the length-4 closed link sets are exactly the faces; at
+    # L = 4 exactly the faces plus the 3 L^2 straight winding loops the
+    # sector qualification removes.
+    for ell in (3, 4, 5):
+        faces = set()
+        for x in product(range(ell), repeat=3):
+            for i, j in PAIRS:
+                faces.add(
+                    frozenset({(x, i), (x, j), (_shift(x, i, ell), j), (_shift(x, j, ell), i)})
+                )
+        cycles = _four_cycles(ell)
+        extra = cycles - faces
+        if ell != 4:
+            if extra or len(cycles) != 3 * ell**3:
+                return False
+        else:
+            lines = set()
+            for x in product(range(ell), repeat=3):
+                for a in (1, 2, 3):
+                    y, chain = x, []
+                    for _ in range(4):
+                        chain.append((y, a))
+                        y = _shift(y, a, ell)
+                    lines.add(frozenset(chain))
+            if extra != lines or len(lines) != 3 * ell**2:
+                return False
     return True
 
 

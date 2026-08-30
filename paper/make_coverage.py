@@ -27,7 +27,8 @@ def chk_bodies(text):
 
 
 def main():
-    text = open(SRC, encoding="utf-8").read()
+    with open(SRC, encoding="utf-8") as fh:
+        text = fh.read()
     # ignore the macro definition itself and anything before the abstract
     body_start = text.index(r"\begin{abstract}")
     sections = [(0, "Abstract")]
