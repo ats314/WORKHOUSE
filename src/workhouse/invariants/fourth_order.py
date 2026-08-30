@@ -454,7 +454,7 @@ def _():
 
 
 @sealed.check(
-    "SELF-TEST: cellular's cube completion reproduces the agreed A at every rank",
+    "SELF-TEST: cellular's cube completion gives |A| = alpha_N/4 and C = -A/2 at every rank",
     "C2; G3 off-axis channel route; MOB §4",
 )
 def _():
@@ -468,29 +468,167 @@ def _():
     # kernel. The shape dictionary, verified in the check above, converts a
     # range-1 normal hop into (A, C). Composed, they must return A = 5/48.
     #
-    # They do, and at SYMBOLIC N rather than only at N = 3: A_normal = alpha_N/4
-    # identically, so the agreement is a rank-generic identity and not a
-    # coincidence at one rank. C_normal = -A_normal/2 falls out of the same
-    # composition -- the corpus records that relation as measured on the raw
-    # records, and here it is derived instead.
+    # They do, at SYMBOLIC N rather than only at N = 3, so the agreement is a
+    # rank-generic identity and not a coincidence at one rank.
+    #
+    # CORRECTED 2026-08-30. An earlier form of this check asserted
+    # A_normal = +alpha_N/4, which overstated it: the sign was CHOSEN, by
+    # taking the hop amplitude as +2 c_prim. Rebuilding the same channel in
+    # the Bloch basis from the repository's own cube boundary d_3 -- where
+    # the two opposite faces of a cube carry OPPOSITE signs, so the hop is
+    # -2 c_prim -- gives A_normal = -alpha_N/4 instead. What survives the
+    # convention, and what this check therefore asserts, is the magnitude
+    # |A_normal| = alpha_N/4 and the RATIO C_normal/A_normal = -1/2, which is
+    # sign-free. The corpus itself fixes the overall sign by taking |c_4|
+    # (see `alpha_3 = 4*|c_4^square(3)|`), so the convention is its, not this
+    # module's, and the ratio is the part that carries information.
     a_normal, c_normal = CELL.shape_from_normal_hop(CELL.CUBE, CELL.CAP_SECTOR)
     alpha = K.alpha_pen(CELL.N)
-    rank_generic = simplify(a_normal - alpha / 4) == 0
-    pinned = simplify(c_normal + a_normal / 2) == 0
-    at_three = simplify(a_normal.subs(CELL.N, 3))
+    # Compare squares rather than absolute values: N is declared positive but
+    # not >= 2, so sympy will not reduce Abs(N^2 - 1), and the point here is
+    # precisely that the sign is not being asserted.
+    rank_generic = simplify(a_normal**2 - (alpha / 4) ** 2) == 0
+    ratio = simplify(c_normal / a_normal + Rational(1, 2)) == 0
+    at_three = simplify(abs(a_normal.subs(CELL.N, 3)))
+    ok = rank_generic and ratio and at_three == K.A_SHP_3
+    return ok, (
+        "cellular's c_4,prim = -160/(N(N^2-1)^3) (S_4 = -20 over 24 histories) is a range-1 "
+        "normal hop, and the dictionary sends a hop of amplitude g to A = -g/2, C = +g/4. The "
+        f"result is |A_normal(N)| = alpha_N/4 IDENTICALLY in N, giving {at_three} at N = 3 -- "
+        "the agreed A_SHP_3, reached without reading either disputed kernel -- and the "
+        "sign-free ratio C_normal/A_normal = -1/2 exactly. The OVERALL sign is a convention: "
+        "built from the repository's own cube boundary d_3, whose opposite faces carry opposite "
+        "signs, the same channel gives A_normal = -alpha_N/4, and the corpus fixes the choice by "
+        "taking |c_4|. This validates the machinery on a channel both sides of C2 agree on. It "
+        "adjudicates nothing: the in-plane channel is not a fourth-order completion at all "
+        "(the minimal closed cell carrying a coplanar edge-sharing pair is the 1x2x1 box, ten "
+        "unit faces, r = 8), and the perpendicular channel is range-2"
+    )
+
+
+@sealed.check(
+    "the perpendicular cube sector is a second fourth-order primitive channel, S_4 = -11",
+    "C2; G3 off-axis channel route; MOB §4",
+)
+def _():
+    # A unit cube offers exactly TWO fourth-order primitive completions, and
+    # only one of them was on the books. Its three OPPOSITE face pairs are the
+    # normal hop (S_4 = -20 over 24 histories, the registered c_4). Its twelve
+    # ADJACENT pairs are perpendicular, so they change the face orientation --
+    # a distinct channel, uniform over all 24 ordered pairs, and not recorded
+    # anywhere in the corpus.
+    #
+    # This is the orbital-rotation sector the off-axis route needs, derived
+    # rather than delivered. What it does NOT license is reading it through
+    # the dictionary's range-1 rotation row: built in the Bloch basis from the
+    # repository's own cube boundary, the channel carries displacements up to
+    # +-2 on every axis, so it is range-2 -- the one dictionary row that says
+    # A, B, C, D are all nonzero. The recorded C = -f/2 does not apply to it,
+    # and the sign that check flags stays open.
+    perpendicular = {}
+    opposite = {}
+    for p in range(6):
+        for qq in range(6):
+            if p == qq:
+                continue
+            shared = {frozenset(e) for e in CELL._face_edges(CELL.CUBE.faces[p])} & {
+                frozenset(e) for e in CELL._face_edges(CELL.CUBE.faces[qq])
+            }
+            coefficient, signed, hist = CELL.c_prim(CELL.CUBE, p, qq)
+            bucket = perpendicular if shared else opposite
+            bucket[(simplify(coefficient), signed, len(hist))] = (
+                bucket.get((simplify(coefficient), signed, len(hist)), 0) + 1
+            )
+    perp_key = next(iter(perpendicular))
+    opp_key = next(iter(opposite))
+    c_perp, s_perp, n_perp = perp_key
+    c_opp, s_opp, _ = opp_key
     ok = (
-        rank_generic
-        and pinned
-        and at_three == K.A_SHP_3
-        and simplify(c_normal.subs(CELL.N, 3)) == -K.A_SHP_3 / 2
+        len(perpendicular) == 1
+        and len(opposite) == 1
+        and perpendicular[perp_key] == 24
+        and opposite[opp_key] == 6
+        and s_perp == -11
+        and n_perp == 14
+        and s_opp == -20
+        and simplify(c_perp - (-88) / (CELL.N * (CELL.N**2 - 1) ** 3)) == 0
+        and simplify(c_perp.subs(CELL.N, 3) + Rational(11, 192)) == 0
+        and simplify(c_perp / c_opp - Rational(11, 20)) == 0
     )
     return ok, (
-        f"cellular's c_4,prim = -160/(N(N^2-1)^3) (S_4 = -20 over 24 histories) is a normal hop "
-        f"of amplitude 2 c_4, and the dictionary sends that to A = -g/2, C = +g/4. The result is "
-        f"A_normal(N) = 160/(N(N^2-1)^3) = alpha_N/4 IDENTICALLY in N, giving {at_three} at "
-        "N = 3 -- the agreed A_SHP_3, reached without reading either disputed kernel. "
-        "C_normal = -A_normal/2 comes out of the same composition, so the relation the corpus "
-        "records as measured on the raw records is derived here. This validates the route; it "
-        "adjudicates nothing. The in-plane and orbital-rotation channels are where C2 lives, "
-        "they need their own cell/sector derivations, and the rotation sign is still open"
+        "the cube's 24 ordered perpendicular pairs all give S_4 = -11 over 14 histories, "
+        "c_4,perp = -88/(N(N^2-1)^3) = -11/192 at N = 3, against the 6 opposite pairs' "
+        "S_4 = -20 over 24 histories and -160/(N(N^2-1)^3) = -5/48. The ratio is exactly "
+        "11/20 at every rank. This is a fourth-order primitive coefficient the corpus does not "
+        "record. It is NOT the dictionary's range-1 rotation row: in the Bloch basis built from "
+        "the repository's own cube boundary the channel reaches displacement +-2 on every axis, "
+        "so it is range-2, and its carrier projection does not lie in the four-shape span"
+    )
+
+
+@sealed.check(
+    "the in-plane transfer is order eight, not four, in the primitive channel",
+    "C2; G3 off-axis channel route",
+)
+def _():
+    # The off-axis route's step 2 asks for the in-plane nearest-neighbour
+    # transfer -- two COPLANAR edge-sharing plaquettes -- through the same
+    # cellular machinery. It is not reachable there, and the reason is
+    # geometric rather than a matter of effort.
+    #
+    # c_prim completes a CLOSED cell: every edge in exactly two faces with
+    # opposite orientations, and the order is r = faces - 2. So a fourth-order
+    # completion needs a closed cell of exactly six unit squares, which on the
+    # cubic lattice is the unit cube alone -- and the unit cube has no coplanar
+    # face pair at all. The smallest closed cell that carries one is the 1x2x1
+    # box, whose surface is ten unit squares, giving r = 8.
+    #
+    # Recorded so the route is not planned around a step that cannot be taken
+    # in this channel: the fourth-order in-plane record has to come from the
+    # folded/linked or adjoint terms cellular's own scope note excludes.
+    e = [(1, 0, 0), (0, 1, 0), (0, 0, 1)]
+
+    def faces_of_box(dims):
+        out = []
+        for n in range(3):
+            i, j = (n + 1) % 3, (n + 2) % 3
+            for side, lo in ((+1, dims[n]), (-1, 0)):
+                for u in range(dims[i]):
+                    for v in range(dims[j]):
+                        base = [0, 0, 0]
+                        base[n], base[i], base[j] = lo, u, v
+                        base = tuple(base)
+                        step = [tuple(base[c] + e[i][c] for c in range(3))]
+                        step.append(tuple(step[0][c] + e[j][c] for c in range(3)))
+                        cyc = (base, step[0], step[1], tuple(base[c] + e[j][c] for c in range(3)))
+                        oriented = cyc if side > 0 else (cyc[0], cyc[3], cyc[2], cyc[1])
+                        out.append((oriented, n, side))
+        return out
+
+    report = {}
+    for name, dims in (("cube", (1, 1, 1)), ("1x2x1", (1, 2, 1))):
+        meta = faces_of_box(dims)
+        cell = CELL.Cell(name, tuple(m[0] for m in meta))  # raises unless closed and coherent
+        coplanar = sum(
+            1
+            for x in range(len(meta))
+            for y in range(x + 1, len(meta))
+            if meta[x][1] == meta[y][1]
+            and meta[x][2] == meta[y][2]
+            and len(
+                {frozenset(ed) for ed in CELL._face_edges(cell.faces[x])}
+                & {frozenset(ed) for ed in CELL._face_edges(cell.faces[y])}
+            )
+            == 1
+        )
+        report[name] = (len(cell.faces), len(cell.faces) - 2, coplanar)
+    ok = report["cube"] == (6, 4, 0) and report["1x2x1"] == (10, 8, 4)
+    return ok, (
+        f"(unit faces, r, coplanar edge-sharing pairs): {report}. Both validate as closed "
+        "coherently oriented cells, so the count is the geometry and not a construction "
+        "artefact. A fourth-order primitive completion needs six unit faces, which is the unit "
+        "cube, which has NO coplanar pair; the smallest closed cell that has one is the 1x2x1 "
+        "box at r = 8. So the in-plane nearest-neighbour transfer is order eight in this "
+        "channel, and the fourth-order in-plane record must come from the folded/linked or "
+        "adjoint terms that cellular's scope note excludes -- not from extending this module"
     )

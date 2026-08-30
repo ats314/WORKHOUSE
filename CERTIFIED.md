@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 193
+## T1 — re-derived exactly — 195
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -219,9 +219,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'a translation-local scalar shift changes nothing observable'`
 **fourth order, sealed core**
 
-- `SELF-TEST: cellular's cube completion reproduces the agreed A at every rank`
+- `SELF-TEST: cellular's cube completion gives |A| = alpha_N/4 and C = -A/2 at every rank`
   - src/workhouse/invariants/fourth_order.py:456 · C2; G3 off-axis channel route; MOB §4
-  - `workhouse verify --only 'SELF-TEST: cellular'"'"'s cube completion reproduces the agreed A at every rank'`
+  - `workhouse verify --only 'SELF-TEST: cellular'"'"'s cube completion gives |A| = alpha_N/4 and C = -A/2 at every rank'`
 - `alpha_3 = 4*A_shp = 5/12`
   - src/workhouse/invariants/fourth_order.py:26 · MASTER_THEORY §5.2
   - `workhouse verify --only 'alpha_3 = 4*A_shp = 5/12'`
@@ -237,6 +237,12 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `exceptional ranks are exactly {3,4,5,6}`
   - src/workhouse/invariants/fourth_order.py:88 · MASTER_THEORY §5.3
   - `workhouse verify --only 'exceptional ranks are exactly {3,4,5,6}'`
+- `the in-plane transfer is order eight, not four, in the primitive channel`
+  - src/workhouse/invariants/fourth_order.py:569 · C2; G3 off-axis channel route
+  - `workhouse verify --only 'the in-plane transfer is order eight, not four, in the primitive channel'`
+- `the perpendicular cube sector is a second fourth-order primitive channel, S_4 = -11`
+  - src/workhouse/invariants/fourth_order.py:509 · C2; G3 off-axis channel route; MOB §4
+  - `workhouse verify --only 'the perpendicular cube sector is a second fourth-order primitive channel, S_4 = -11'`
 **fourth-order checkpoint extraction**
 
 - `X is blind to B, C, D — it fixes A alone`
