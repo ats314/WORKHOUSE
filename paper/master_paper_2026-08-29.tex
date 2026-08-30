@@ -26,9 +26,9 @@
 
 \begin{document}
 
-\title{\bfseries Nested-quotient temporal histories and homological flat bands
+\title{\bfseries Homological flat bands and channel-resolved two-cube hopping
 in strong-coupling $SU(N)$ Hamiltonian lattice gauge theory\\[2mm]
-\large Final edition, with machine-checked provenance}
+\large With machine-checked provenance}
 \author{Alexander Smith\\ \small Independent Researcher}
 \date{29 August 2026}
 \maketitle
@@ -322,18 +322,29 @@ channel difference rather than in the incidence.
 \chk{at N = 2 the C-odd hopping vanishes and the C-even one does not}
 
 We work inside the charge-odd fundamental Wilson-loop cyclic sector with
-trivial electric centre flux around each torus cycle. Let $P_-$ be the full
-$E_{F,N}$ spectral projector there. For $L\ge3$ its range is the charge-odd
-one-plaquette span, since a reduced contractible fundamental loop at that
-energy has four distinct links and is an elementary plaquette. This sector
-qualification also excludes the accidentally degenerate straight wrapping loop
-at $L=4$. With $Q=1_--P_-$ the reduced resolvent crosses no omitted
-$E_{F,N}$ eigendirection, and degenerate perturbation theory gives
-\begin{equation}\label{eq:heff}
-  H_{\mathrm{eff},-}=P_-H_EP_-+uH_1+u^2H_2+u^3H_3+\cdots
+trivial electric centre flux around each torus cycle. Write $\Pi_{F,-}$ for the
+full $E_{F,N}$ spectral projector there and $P_-$ for the span of the
+elementary charge-odd one-plaquette states \eqref{eq:states}. We take as a
+\emph{hypothesis} that these coincide for $L\ge3$,
+\begin{equation}\label{eq:shell}
+  P_-=\Pi_{F,-}\qquad(L\ge3),
 \end{equation}
-with every $H_r$ linked, vacuum-subtracted, and carrying the appropriate
-$Q$-space resolvents.
+and it is a hypothesis rather than a result: the supporting argument is a
+loop-length count --- a reduced contractible fundamental loop at that energy
+has four distinct links and so is an elementary plaquette, and the sector
+qualification excludes the accidentally degenerate straight wrapping loop at
+$L=4$ --- but no check covers it, and Section~\ref{sec:scope} lists it among
+the premises carried in prose. Everything local to a plaquette pair is
+independent of it; what needs it is the assembly, which is why
+Conditional corollary~\ref{cor:assembly} names it again. With $Q=1_--P_-$ the
+reduced resolvent crosses no omitted $E_{F,N}$ eigendirection, and degenerate
+perturbation theory gives
+\begin{equation}\label{eq:heff}
+  H_{\mathrm{eff},-}=P_-H_EP_-+\sum_{r\ge1}u^rK^{(r)}_-
+\end{equation}
+with every $K^{(r)}_-$ linked, vacuum-subtracted, and carrying the appropriate
+$Q$-space resolvents. The superscript notation reserves $H_2$ for cellular
+homology, which Section~\ref{sec:carrier} needs it for.
 
 \section{Oriented incidence and the exact carrier}
 \label{sec:carrier}
@@ -664,11 +675,12 @@ opposite sign.
 \chk{t\_N = B\_N - A\_N}\chk{t\_N > 0 for N >= 3}
 
 \begin{conditional}[Incidence assembly on the finite torus]\label{cor:assembly}
-Assume in addition that
-\emph{(i)} the range of $P_-$ is exactly the charge-odd one-plaquette span, and
-\emph{(ii)} after the linked, vacuum-subtracted fold of \eqref{eq:heff} no
-connected second-order history between \emph{non-adjacent} plaquettes
-contributes a momentum-dependent term on $P_-$.
+Assume in addition
+\emph{(i)} the retained-shell hypothesis \eqref{eq:shell}, and
+\emph{(ii)} that after the linked, vacuum-subtracted fold of \eqref{eq:heff}
+one-shared-link processes exhaust the second-order \emph{off-diagonal}
+intermediates on $P_-$ --- equivalently, that no connected second-order history
+between non-adjacent plaquettes contributes a momentum-dependent term there.
 Then
 \[
   H^{(N)}_{\mathrm{eff},-}(k,u)=E_{\mathrm{flat},N}(u)I+t_Nu^2B(k)B(k)\dg+O(u^3),
@@ -735,7 +747,7 @@ the selection rule turns a one-rank erratum into an all-rank formula.
 One thing this proposition does \emph{not} do is dispose of the route between
 non-adjacent pairs. Taken over all pairs it would be a rank-one operator
 supported at $k=0$, which is not the twelve-neighbour adjacency $\ell_N$
-multiplies; which contributions survive in $H_2$ is settled by the linked,
+multiplies; which contributions survive in $K^{(2)}_-$ is settled by the linked,
 vacuum-subtracted prescription of \eqref{eq:heff}, not by anything derived
 here. What the check above establishes is the all-rank value $\ell_N$ of the
 shared-link element, and the disposition of the non-adjacent contributions is
@@ -851,7 +863,7 @@ hashes were produced before the recorded comparison, a chronology it itself
 calls record-backed and only partly auditable; the value is byte-present in the
 nested $B=4$ package that the $B=6$ build seals as an authority object, so the
 defensible statement is dependency-path nonuse and not corpus-wide absence.
-This repository and this repository re-thresholds those gates rather
+This repository re-thresholds those gates rather
 than re-running the build, including a deliberately wrong-sign control that the
 held-out scaling rejects: on a $66$-dimensional held-out word space the correct
 second-order residual falls with log-log slope $2.90$ while the sign-reversed
@@ -1364,8 +1376,8 @@ $\mathrm{leak}_3$.
 
 \begin{proposition}[Boundary-factorised rigidity]\label{prop:rigid}
 If an order-$r$ Bloch correction has the form
-$H_r(k)=a_rI+b_rS(k)+B(k)M_r(k)B(k)\dg$, then for every $k\neq0$,
-$H_r(k)w(k)=(a_r-4b_r)w(k)$: the correction shifts the carrier without
+$K^{(r)}_-(k)=a_rI+b_rS(k)+B(k)M_r(k)B(k)\dg$, then for every $k\neq0$,
+$K^{(r)}_-(k)w(k)=(a_r-4b_r)w(k)$: the correction shifts the carrier without
 dispersing it.
 \end{proposition}
 
@@ -1388,7 +1400,7 @@ carrier-projected fourth-order shapes the corpus works with are
 \end{equation}
 with $e_2=\sum_{i<j}a_ia_j$, $e_3=a_1a_2a_3$ and $a_i=4\sin^2(k_i/2)$. The
 $1/q$ is the carrier projection: $\|w\|^2=q$ by Theorem~\ref{thm:fact}, so the
-carrier-projected correction is $\varepsilon_4=(w\dg H_4w)/q$ and the
+carrier-projected correction is $\varepsilon_4=(w\dg K^{(4)}_-w)/q$ and the
 numerator, not $\varepsilon_4$, is the polynomial.
 \chk{the carrier projection is where the 1/q comes from}
 \chk{clearing the denominator reproduces the five-element numerator basis}
@@ -1604,7 +1616,14 @@ vectors.
 \subsection{A near-$\Gamma$ statement that does not adjudicate}
 
 One quantitative fourth-order statement can be made without adjudicating
-anything, because it depends on the kernel only through $\sqrt{W_4}$. What the
+anything, because it depends on the kernel only through $\sqrt{W_4}$. Here
+\[
+  W_4=\sup_k\bigl|\varepsilon_4(k)-\varepsilon_4(0)\bigr|
+\]
+is the zone spread of the carrier-projected fourth-order correction about
+$\Gamma$, and $\theta\in(0,1)$ is the fraction of the second-order isolation
+gap the fourth-order spread is allowed to occupy; we take $\theta=1/2$
+throughout. What the
 criterion needs is a lower bound on $q$ over the region $|k|\ge r$, and there it
 is sharp: writing $q=\sum_mh(k_m^2)$ with $h(t)=2(1-\cos\sqrt t)$, the identity
 $(s\cos s-\sin s)'=-s\sin s\le0$ makes $h$ concave and increasing on
@@ -1748,11 +1767,14 @@ Four premises earlier in the paper are arguments in prose rather than results,
 and all four are load-bearing. None has a check.
 
 That the range of $P_-$ is exactly the charge-odd one-plaquette span for
-$L\ge3$ is argued in Section~\ref{sec:sector} from the link count of a reduced
-fundamental loop.
+$L\ge3$ --- the retained-shell hypothesis \eqref{eq:shell} --- is argued in
+Section~\ref{sec:sector} from the link count of a reduced fundamental loop and
+carried as a hypothesis there, not established.
 
 That one-shared-link processes exhaust the second-order \emph{off-diagonal}
-intermediates is assumed in Theorem~\ref{thm:allrank}. Three neighbouring
+intermediates is hypothesis \emph{(ii)} of
+Conditional corollary~\ref{cor:assembly}; Theorem~\ref{thm:allrank}, being a
+statement about one matrix element, does not need it. Three neighbouring
 statements \emph{are} settled and should not be confused with it: the channel
 list is complete (Lemma~\ref{lem:channels}), two distinct faces of this lattice
 share at most one link, and the vacuum-mediated route vanishes in this sector

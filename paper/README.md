@@ -1,6 +1,6 @@
 # The manuscript of record
 
-*Nested-quotient temporal histories and homological flat bands in
+*Homological flat bands and channel-resolved two-cube hopping in
 strong-coupling SU(N) Hamiltonian lattice gauge theory*, Alexander Smith,
 29 August 2026 — the final edition, and the current artifact of record. It
 supersedes the 28 August united edition, which stays pinned here because the

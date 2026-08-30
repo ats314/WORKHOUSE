@@ -624,3 +624,54 @@ coefficients at 2.2e-15, not to the delivery as a whole at 2.1e-14 (the paper
 now prints both and says which is which); and the held-out finite-u control is
 a 66-dimensional star with the Q1–Q1 magnetic block *set to zero*, which is a
 second unexecuted computation rather than a modelling choice.
+
+## The reconciliation, aggregated
+
+The seven-region comparison against the parallel session's edition also
+finished: 77 agents, 62 recommendations surviving verification. Forty-one said
+keep this edition's half, twenty-one said take the other's or merge. As with
+the audit, most had already been applied — but six had not, and five of those
+are defects a reader would hit on the first page.
+
+**The title named a concept the paper never uses.** "Nested-quotient temporal
+histories" appears exactly once in the manuscript: in the title. Zero of the
+121 `\chk` labels touch it, and no section develops it. The title is now
+"Homological flat bands and channel-resolved two-cube hopping in strong-coupling
+SU(N) Hamiltonian lattice gauge theory", which is what the paper delivers.
+
+**A sentence was broken.** "This repository and this repository re-thresholds
+those gates" — a merge residue that survived three rounds of audit because
+every dimension was reading for content, not prose.
+
+**`W_4` and `θ` were used and never defined.** Five uses of `W_4`, four of `θ`,
+no definition of either, in the one quantitative fourth-order statement the
+paper makes. Both are now defined at first use: `W_4 = sup_k |ε_4(k) − ε_4(0)|`
+and `θ` the fraction of the isolation gap the fourth-order spread may occupy,
+fixed at `1/2` throughout.
+
+**`H_2` meant two things.** The perturbative expansion wrote
+`H_eff,- = P_-H_E P_- + uH_1 + u²H_2 + …` while §3 uses `H_2` for cellular
+homology, in the same paper, twenty pages apart. The perturbative operators are
+now `K^(r)_-`, matching the two-cube section's own `K^(2)_conn`, with the
+reservation stated where the expansion is written.
+
+**The retained-shell premise was asserted three ways at once.** §2 stated it as
+a derived fact ("its range *is* the charge-odd one-plaquette span, since…"),
+the assembly corollary *assumed* it as hypothesis (i), and Scope listed it as
+an unchecked prose premise. Under the first reading the corollary's hypothesis
+assumes nothing. It is now one object, `\eqref{eq:shell}`, carried as a
+hypothesis in §2 with the loop-length count as its support rather than its
+proof, and referenced by that label in both later places.
+
+The same alignment fixed a stale pointer the theorem split had left behind:
+Scope still said the process-exhaustion premise "is assumed in
+Theorem thm:allrank". Since the split, the theorem is a statement about one
+matrix element and does not need it — it is hypothesis (ii) of the conditional
+corollary, and Scope now says so.
+
+Two recommendations were declined. The near-Γ subsection keeps this edition's
+framing rather than the parallel one's, because "a near-Γ statement that does
+not adjudicate" is the more precise title and the parallel edition's version
+drops the explicit non-bound disclaimer. And the charge-even section does not
+gain a second display of `N(k)`: the determinant contrast it would carry is
+already made, with its check, in "The orientation signs are essential".
