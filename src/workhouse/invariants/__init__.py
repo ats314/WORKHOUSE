@@ -47,6 +47,7 @@ _MODULES = (
     "bridge",
     "two_cube",
     "electric_shell",
+    "orbits",
 )
 
 for _name in _MODULES:

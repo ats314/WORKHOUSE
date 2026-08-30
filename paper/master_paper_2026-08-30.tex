@@ -2261,7 +2261,80 @@ condition, the radius-two delivery the second, and a target-blind
 calculation satisfying both is exactly the next step named in the
 conclusion.
 
-\subsection{The tier collapse, as two integers}
+\subsection{The kernel is six amplitudes}\label{sec:orbits}
+
+Every non-axial number in the dispute has been a float, and for one reason: the
+shape coefficients were obtained by fitting $\varepsilon_4$ at four points of
+the zone, with condition number $45.8$. That is avoidable. Clearing the $1/q$
+turns the ansatz into a linear identity between Laurent polynomials in
+$z_j=e^{ik_j}$,
+\[
+  T(k)\;=\;\psi^{\dagger}S(k)\psi
+   \;=\;c_0e_1+Ae_1^{2}+B\,e_1e_2+4C\,e_2+D\,e_3 ,
+\]
+with $s_j=4\sin^2(k_j/2)=2-z_j-z_j^{-1}$ and $e_r$ the elementary symmetric
+functions of the $s_j$. Both sides are polynomials with rational coefficients,
+so the system either has an exact solution valid on the whole zone or none at
+all. For the saved historical kernel it has one, with identically vanishing
+residual, and it returns $A=5/48$, $B=D=0$ and the registered $C_{\mathrm{shp}}$
+as exact rationals.
+\chk{the shape coefficients are solved, not fitted: A = 5/48, B = D = 0 exactly}
+
+The decomposition makes a structure visible that the fit could not. The $189$
+records carry only \emph{six} distinct weight magnitudes, and each magnitude is
+one orbit of the cubic symmetry: a $132$-record skeleton at amplitude $u$; a
+$12$-record same-plane $(0,1,1)$ in-plane orbit at $u_2$; a $24$-record
+cross-plane orbit at $\rho$; a $12$-record same-plane nearest-neighbour in-plane
+orbit at $\pi$; a $6$-record normal orbit at $\nu$; and the $3$ on-site records
+at $\sigma$. Each orbit's amplitude, read off its own shape contribution, equals
+the weight its records carry up to sign --- which is what makes it an amplitude
+rather than a cluster.
+\chk{the 189 records carry exactly six weight magnitudes}
+
+Five of the six carrier projections then follow from the orbit's displacement
+set in two lines. Writing $n$ for a plane's normal and $\{i,j\}$ for its own
+axes, and using $|\psi_P|^2=s_{n(P)}$,
+\[
+\begin{aligned}
+  \text{on-site} &: &S_P&=\sigma
+     &&\longrightarrow\;\sigma\,e_1,\\
+  \text{normal} &: &S_P&=\nu\,(2-s_n)
+     &&\longrightarrow\;\nu\,(2e_1-e_1^{2}+2e_2),\\
+  \text{in-plane} &: &S_P&=\pi\bigl((2-s_i)+(2-s_j)\bigr)
+     &&\longrightarrow\;\pi\,(4e_1-2e_2),\\
+  \text{doubled} &: &S_P&=u_2(2-s_i)(2-s_j)
+     &&\longrightarrow\;u_2(4e_1-4e_2+3e_3),\\
+  \text{rotation} &: &S_{PQ}&=-\epsilon_P\epsilon_Q\,\rho\,
+        \bar d_{n(Q)}\overline{\bar d_{n(P)}}
+     &&\longrightarrow\;-2\rho\,e_2,
+\end{aligned}
+\]
+the last because the carrier annihilates the phases outright:
+$T=-\rho\sum_{m\neq n}s_ms_n$. The skeleton's displacement set is larger and its
+row is solved rather than read off, giving $u\,(12e_1-4e_1^{2}+12e_2-6e_3)$,
+again with zero residual. Each of the six is an exact Laurent identity on that
+orbit's own records.
+\chk{every orbit's carrier projection is closed form in e1, e2, e3}
+
+Collecting the six gives the whole shape table in closed form:
+\[
+  A=-\nu-4u,\qquad B=0,\qquad D=3u_2-6u,\qquad
+  4C=2\nu-2\pi-4u_2-2\rho+12u .
+\]
+Two consequences are immediate. Only two orbits carry $A$, so the agreed axial
+value fixes the normal amplitude outright, $\nu=-(5/48+4u)$: the normal channel
+is not independently disputed, it is a consequence of $A$.
+\chk{A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u)}
+And substituting that together with $u_2=2u$ collapses the fourth-order
+off-axis coefficient to three signed numbers,
+\[
+  \boxed{\;C_{\mathrm{shp}}\;=\;-\tfrac{5}{96}\;-\;u\;-\;\tfrac{1}{2}(\rho+\pi)\;}
+\]
+which reproduces the registered value exactly. The seven-row displacement-block
+ledger is a presentation of three amplitudes.
+\chk{C\_shp = -5/96 - u - (rho + pi)/2, exactly}
+
+\subsection{The tier collapse, in the orbit basis}
 
 The two shape coefficients $B$ and $D$ vanish in the recorded kernel even
 though the two-hop enumeration generates both, and the degree count does
@@ -2270,20 +2343,83 @@ the projection contributes one further power of $a$: for any vector whose
 components have squared modulus $a_i$ --- the carrier is one, in whichever of
 the two equivalent labellings --- the quadratic form $\mathrm{diag}(a_i^2)$
 evaluates to $\sum_i a_i^3=q^3-3qe_2+3e_3$, an explicit witness carrying a
-nonzero $e_3$. An earlier degree-bound mechanism proposed
-for the collapse was therefore retracted. What is checked is finer: every
-degree-three block amplitude is an integer multiple of one raw record weight
-$x$, and
-\[
-  B=0:\;(+1,+1,-2)\cdot x,\qquad
-  D=0:\;(-3,+6,-3)\cdot x
-\]
-over the displacement shells. The kernel does populate the forbidden tier; the
-dynamics cancels it with small integers. Any mechanism must reproduce those two
-vectors.
+nonzero $e_3$. An earlier degree-bound mechanism proposed for the collapse was
+therefore retracted.
 \chk{RETRACTED: the vertex count does NOT forbid B\_shp and D\_shp}
-\chk{FINDING: the tier collapse is two integer cancellations at record level}
 \chk{the vanishing coefficients are exactly the degree-3 ones}
+
+At the level of displacement shells the vanishing looks like two integer
+cancellations: every degree-three block amplitude is an integer multiple of one
+raw record weight $x$, and $B=0$ reads $(+1,+1,-2)\cdot x$ while $D=0$ reads
+$(-3,+6,-3)\cdot x$.
+\chk{FINDING: the tier collapse is two integer cancellations at record level}
+That grouping is the wrong one, and the orbit basis shows why. $B$ is the
+coefficient of $e_1e_2$, and \emph{no orbit's closed form contains that
+monomial}. There is nothing to cancel: $B$ is unpopulated, and needs no
+mechanism at all. Inside the skeleton the four $B$-carrying displacement blocks
+do cancel in $\pm$ pairs, same-plane against off-plane at the same shell and at
+unit weight, which is the $(+1,+1,-2)$ above with the two cross-plane blocks
+summed --- but that is an artefact of slicing one amplitude by displacement.
+\chk{B = 0 is unpopulated, not cancelled}
+
+$D$ is carried by exactly two orbits, the skeleton at $-6u$ and the doubled
+orbit at $+3u_2$, and every other orbit has $D=0$. So the entire $e_3$ collapse
+is the single equality
+\[
+  u_2=2u ,
+\]
+after which $D=-6u+3u_2$ vanishes for \emph{any} value of $u$. It is an
+identity in one amplitude, not a numerical coincidence between sectors, and it
+holds in the independently computed cold kernel too, with that kernel's own
+$u$. What a mechanism has to explain is no longer two weight vectors: it is why
+the same-plane $(0,1,1)$ in-plane orbit carries exactly twice the generic
+weight.
+\chk{the tier collapse is one identity: D = -6u + 3*u2 with u2 = 2u}
+
+That, in turn, is not an independent coincidence. Fix a plane with own axes
+$\{i,j\}$ and normal $n$, and write $X=2\cos k_i$, $Y=2\cos k_j$, $Z=2\cos k_n$.
+Everything the plane sends to itself beyond nearest neighbour is sixteen
+records: the $(0,0,2)$ shell at amplitude $u$, contributing $(X^2-2)+(Y^2-2)$;
+the mixed $(0,1,1)$ records at $u$, contributing $(X+Y)Z$; and the in-plane
+$(0,1,1)$ records at $u_2$, contributing $(u_2/u)XY$. Their sum is
+\[
+  u\bigl[(X+Y)(X+Y+Z)-4\bigr]
+\]
+\emph{if and only if} the cross term is $2XY$ --- that is, if and only if
+$u_2=2u$. The doubling is the condition for the same-plane long-range symbol to
+be a product rather than an inhomogeneous quadratic. With the product form,
+$D=0$ holds separately in the same-plane sector and in the $96$-record
+cross-plane skeleton, so neither vanishing is a cancellation between sectors at
+all --- the cross-plane one because it is $-2u\,e_2(e_1-8)$ exactly, pure $e_2$
+times a linear factor, which is also why it carries no $A$. What remains of the
+question is one level up: why the fourth-order dynamics produces a product
+there.
+\chk{u2 = 2u is the cross term of a perfect square}
+
+\subsection{Both branches in one basis}
+
+Two things follow for the dispute itself, and neither promotes a side.
+
+First, the $\epsilon$-free branch is exact. Evaluating the pinned structured
+$B_N$ expression at $N=3$ and comparing with $\beta$ recomputed from the raw
+$189$ records gives a difference of exactly $25/64$ --- two digits of
+denominator where the two inputs carry fourteen. Through
+$C_{\mathrm{shp}}=(\beta-2\alpha)/16$ with $\alpha=5/12$ shared, the balanced
+branch is $C_{\mathrm{hist}}+25/1024$ as an exact rational, not the float it
+had been carried as.
+\chk{the balanced branch is exact: B\_3 - beta\_historical = 25/64, so Delta C = 25/1024}
+
+Second, the two rival kernels are the same computation. The cold $v10a.26$
+record dump has the same six orbit sizes, satisfies $u_2=2u$ and
+$\nu=-(5/48+4u)$ to one part in $10^{13}$, and gives the same normalised shape
+table row for row. Its skeleton unit is $4.1327437$ times the historical one,
+and its $\rho$ and $\pi$ are \emph{opposite in sign}. So the free disagreement
+is two sign-flipped amplitudes and one scale --- not a re-weighting, and not a
+diffuse discrepancy. Six of the eighteen same-plane nearest-neighbour records
+are the normal orbit, which $A=5/48$ pins identically on both sides; neither
+kernel is self-refuting on its own $A$, so the comparison localises the
+disagreement without deciding it.
+\chk{FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped}
 
 \subsection{A \texorpdfstring{near-$\Gamma$}{near-Gamma} statement that does not adjudicate}
 

@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 243/243 checks pass.
+**T1/T2 — re-derived here.** 253/253 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -40,6 +40,7 @@ it cannot drift from what the repository actually checks.
 | finite-rank truncation bridge (published SU(3) truncations) | 8/8 |
 | two-cube charge-odd second-order closure (B=4 and B=6) | 12/12 |
 | the electric shell, and what isolates it | 5/5 |
+| fourth-order kernel orbits | 10/10 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:

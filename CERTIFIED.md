@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 195
+## T1 — re-derived exactly — 204
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -262,6 +262,35 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `historical Q4 numerator is positive definite`
   - src/workhouse/invariants/fourth_order.py:307 · UNIFIED §0.1
   - `workhouse verify --only 'historical Q4 numerator is positive definite'`
+**fourth-order kernel orbits**
+
+- `A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u)`
+  - src/workhouse/invariants/orbits.py:123 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u)'`
+- `B = 0 is unpopulated, not cancelled`
+  - src/workhouse/invariants/orbits.py:225 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'B = 0 is unpopulated, not cancelled'`
+- `C_shp = -5/96 - u - (rho + pi)/2, exactly`
+  - src/workhouse/invariants/orbits.py:135 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'C_shp = -5/96 - u - (rho + pi)/2, exactly'`
+- `every orbit's carrier projection is closed form in e1, e2, e3`
+  - src/workhouse/invariants/orbits.py:85 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'every orbit'"'"'s carrier projection is closed form in e1, e2, e3'`
+- `the 189 records carry exactly six weight magnitudes`
+  - src/workhouse/invariants/orbits.py:61 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'the 189 records carry exactly six weight magnitudes'`
+- `the balanced branch is exact: B_3 - beta_historical = 25/64, so Delta C = 25/1024`
+  - src/workhouse/invariants/orbits.py:268 · C2; walled-Brauer eps-sector; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'the balanced branch is exact: B_3 - beta_historical = 25/64, so Delta C = 25/1024'`
+- `the shape coefficients are solved, not fitted: A = 5/48, B = D = 0 exactly`
+  - src/workhouse/invariants/orbits.py:34 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'the shape coefficients are solved, not fitted: A = 5/48, B = D = 0 exactly'`
+- `the tier collapse is one identity: D = -6u + 3*u2 with u2 = 2u`
+  - src/workhouse/invariants/orbits.py:148 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'the tier collapse is one identity: D = -6u + 3*u2 with u2 = 2u'`
+- `u2 = 2u is the cross term of a perfect square`
+  - src/workhouse/invariants/orbits.py:178 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'u2 = 2u is the cross term of a perfect square'`
 **homology and finite volume**
 
 - `Delta_L = 4 tau(u) sin^2(pi/L) is positive and falls as L^-2`
@@ -780,7 +809,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/two_cube.py:313 · MASTER edition §5.1; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
 
-## T2 — float agreement within a stated tolerance — 48
+## T2 — float agreement within a stated tolerance — 49
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -843,6 +872,11 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `centered kernel difference is PSD (vanishes on axes)`
   - src/workhouse/invariants/fourth_order.py:318 · MASTER_THEORY §5.5
   - `workhouse verify --only 'centered kernel difference is PSD (vanishes on axes)'`
+**fourth-order kernel orbits**
+
+- `FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped`
+  - src/workhouse/invariants/orbits.py:294 · C2; G3 step 1; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped'`
 **near-Gamma uniformity (G11)**
 
 - `crossover constant K = (pi/2) sqrt(W_4 / (theta t_3))`

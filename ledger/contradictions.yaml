@@ -86,6 +86,36 @@ contradictions:
       Delta_C*Phi_C term can move the dispersion, so the crosswalk preserves
       bandwidth only if Delta_C vanishes or is absorbed by an exact operator
       identity. This is the finite-order bottleneck of the whole program.
+    balanced_branch:
+      value: "-13035490122347/550663802582400"
+      decimal: -0.023672320681358752
+      kind: exact-rational
+      derivation: >
+        Established exactly 2026-08-30 (suite "fourth-order kernel orbits").
+        The eps-free walled-Brauer branch was carried as a float. Evaluating
+        the pinned structured B_N expression at N = 3 gives
+        B_3 = 15644916262153/34416487661400, and beta from the raw 189 records
+        is 17607806155349/275331901291200; their difference is exactly 25/64,
+        two digits of denominator where the inputs carry fourteen. Through
+        C_shp = (beta - 2*alpha)/16 with alpha = 5/12 shared, the balanced
+        branch is C_historical + 25/1024 exactly. It is an intermediate value,
+        not a third side: the dispute remains historical vs v10a.26.
+    orbit_reduction: >
+      Established 2026-08-30 (same suite). Clearing the 1/q makes the shape
+      ansatz a linear system over Laurent polynomials in z_j = exp(i k_j), so
+      the coefficients are SOLVED over the whole zone rather than fitted at
+      four points (the transcript's procedure, condition number 45.8). The 189
+      records then carry only six weight magnitudes, one per cubic orbit, and
+      in terms of those amplitudes the shape data is closed form:
+        A = 5/48,  B = 0,  D = 0,  C_shp = -5/96 - u - (rho + pi)/2,
+      with nu = -(5/48 + 4u) forced by A and sigma entering c_0 alone. So C2
+      is a disagreement about three signed numbers. The cold dump satisfies the
+      same six-orbit structure and the same normalized table; relative to the
+      historical kernel its skeleton unit is scaled by 4.1327437 and its rho
+      and pi are OPPOSITE IN SIGN. Six of the eighteen same-plane
+      nearest-neighbour records are the normal orbit, which A pins in both
+      kernels and which therefore cannot disagree freely — refining the
+      "nn same-plane block" of runs/g3_kernel_record_dump_2026-08-28/.
     blocks: [G3]
 
   - id: C3
