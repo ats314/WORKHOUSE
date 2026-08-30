@@ -72,8 +72,11 @@ any particular correction. Registered, with nine free entries and the six
 incidence variables kept independent.
 
 **5. ~~The pinned commit did not exist.~~ RETRACTED — see *A retraction*
-below.** The edition pins `5ca91a9` for a different and better reason, given
-there.
+below.** The edition pins the last commit before it lands, for a different and
+better reason, given there. That target moves every time the registry does,
+which is the point of the rule, so it is named in the manuscript's
+Reproducibility section and nowhere else — including not here, where it would
+go stale on the next check.
 
 ## Two things the repository was wrong about
 
@@ -292,9 +295,13 @@ this session's clone.
 
 What survives is smaller and still worth having: those counters describe
 `f25328f`, and this edition's printed labels do not all resolve there, because
-several name checks that exist only in `5ca91a9`. A pin has to satisfy its own
-edition. That is why this edition pins `5ca91a9` — not because the other commit
-is missing, but because it is not this edition's.
+several name checks that do not exist on that branch. A pin has to satisfy its
+own edition. That is why this edition pins a commit on this branch — not
+because the other commit is missing, but because it is not this edition's. The
+rule that follows is mechanical and is now applied every time the registry
+changes: pin the last commit before the manuscript lands, re-measure the
+counters there, and re-pin whenever a new check is added, because a pin whose
+labels no longer all resolve is exactly the failure this finding was about.
 
 The general lesson is one AGENTS.md already states, and this session committed
 anyway: **a negative asserted after two commands is not a negative.** It is the
@@ -405,25 +412,41 @@ alternative.
   arXiv preprint alone. That is flagged rather than changed, because the
   published reference has not been verified here.
 
-Two further items from the comparison are recorded and **not** applied, because
-they are larger than a merge and want the author's eye: the parallel edition
-constructs explicit *harmonic representatives* of the wrapping cycles
-(`h_ij = (1/L) sum_r s_ij(r)`, with `d_2 h = 0` and `d_3^T h = 0`), which this
-edition lacks entirely and which would need a new check; and it argues that this
-edition's remark "the 3 is the triple degeneracy of `B(0) = 0`, not `b_2(T^3)`"
-is wrong — that Fourier plus Hodge identify the Gamma nullity space canonically
-with `H_2(T^3)`, so the agreement is not a coincidence. If that is right the
-remark needs replacing, and it is exactly the kind of claim this repository
-settles with a check rather than a preference.
+Two further items from the comparison were flagged as larger than a merge, and
+turned out to be one statement that a check settles. **The parallel edition is
+right on both, and this edition was wrong on one.**
+
+The remark "the 3 is the triple degeneracy of `B(0) = 0`, not `b_2(T^3)`" is
+false. Under the discrete Fourier transform `ker d_2 = (+)_k ker d_2(k)`; at
+`k != 0` the kernel block is exactly `im d_3(k)`, and `d_3(0) = 0`, so all of
+`im d_3` sits at nonzero momenta and the quotient is supported entirely at
+Gamma. The Gamma block *is* `H_2` and the 3 *is* `b_2(T^3)`. Two routes that
+looked like an agreement worth checking are one decomposition read in two
+bases — which is the better statement, and the one the paper now makes.
+
+And the harmonic representatives the parallel edition constructs are correct:
+`h_ij = (1/L) sum_r s_ij(r)` satisfies `d_2 h = 0` and `d_3^T h = 0` over Z at
+`L = 2, 3, 4`; the harmonic subspace is exactly 3-dimensional, so the three
+averages span it; and each single sheet differs from its own average by a
+boundary, so they are the same homology class. The averaging is the `k = 0`
+Fourier projection, and what it removes is precisely the non-harmonic part the
+sibling FINDING measures at Rayleigh quotient 2. Nothing about that FINDING is
+withdrawn — the generators Theorem 2 exhibits are still not harmonic — but the
+subsection no longer ends on a negative it could have resolved in one line.
+Registered as `the sheets average to harmonic representatives, and the Gamma
+block IS b_2`, which carries the retraction in its own detail line.
 
 ## What is still not checked, and what a referee should press on
 
 Recorded because a review that hides its gaps is worse than none.
 
-- **The four fusion channels are assumed to exhaust the shared-link routes.**
-  The Weingarten theorem fixes the weight of each channel; nothing establishes
-  that the list is complete. The paper says so in its Scope section, and it has
-  no check.
+- **One-shared-link processes are assumed to exhaust the second-order
+  off-diagonal intermediates.** The *channel* list is no longer in that
+  category — Lemma "The channel list is complete" derives it from the fusion
+  rules in three lines, and the weight-sum corollary is checked. What is still
+  prose is the enumeration of *processes*: that no other second-order route
+  contributes off-diagonally. The paper says so in its Scope section, and it
+  has no check.
 - **That the range of `P_-` is exactly the charge-odd one-plaquette span for
   `L >= 3`** is argued in prose from the link count of a reduced fundamental
   loop. Also stated, also unchecked.
@@ -437,3 +460,93 @@ Recorded because a review that hides its gaps is worse than none.
 - **The all-rank even split is a conjecture with a falsifier and no attempt.**
   A link-resolved census at `N = 4` in a truncation retaining every adjacent
   shared-link channel needs `B >= 33/4`, and none has been run.
+
+## The second round: six more findings, applied
+
+The nine-dimension audit and the seven-region reconciliation both finished
+after the first version of this document was written. Most of what they
+returned had already been applied. Six had not, and all six are now in the
+tree — five as new checks, one as a correction to a check that was already
+there.
+
+**A false contrast, printed twice.** §7.1 said that "at third order the
+charge-odd leakage separates from the charge-odd hopping". They were never
+together: `leak_2- = -11/306` against `t_2- = 5/612` already at second order.
+The pairing that actually parts is the charge-odd leakage against the
+charge-**even** hopping — equal at `r = 2` (both `-11/306`, and that is `ell_3`
+at every rank), unequal at `r = 3` (`-12331/249696` against `-6335/249696`).
+The manuscript copied the sentence from the registry check's own detail line,
+so both were wrong and both are fixed; the check now asserts the arithmetic
+(`leak_2- != t_2-` at both orders, `leak_2- == t_2+` at the second and not the
+third) instead of describing it, which is what would have caught it.
+
+**"Cubic symmetry alone permits" was the wrong attribution.** The shape family
+`{1, q, e_2, 4e_2/q, e_3/q}` is not what symmetry permits. The point group
+permutes `(a_1, a_2, a_3)`, so its invariants are the symmetric polynomials,
+and the numerators of degree at most three with no constant term span a
+**six**-dimensional space `{q, q^2, e_2, q^3, q e_2, e_3}` — one per partition.
+The recorded basis keeps five; the missing direction is `q^3`, the shape `q^2`,
+which is cubic invariant and regular at Gamma, so neither the point group nor
+the carrier projection excludes it. The omission is a property of the two-hop
+enumeration that produced the family, and it is load-bearing, because the
+obstruction certificate is a rank statement about *this* span. Registered as
+`the shape family is not symmetry-complete: cubic symmetry alone permits q^2 as
+well`, which computes both ranks.
+
+**The Casimir retention rule had an unstated boundary convention.** "Fits
+inside the truncation" was never resolved to `<= B` or `< B`, and both
+retentions the section leans on sit exactly on a boundary: `Lambda^2 F = bar3`
+has endpoint budget exactly `4` and the sextet exactly `6`. Under a strict rule
+`B = 4` would reach `{1}` alone and `B = 6` would lose the sextet,
+contradicting both delivered censuses. So the deliveries fix the convention —
+which also means the budget arithmetic is not an independent confirmation of
+either census, and the check says so.
+
+**The rest-frame blindness did not need the incidence ansatz.** The paper
+argued it from "the hopping enters only through `tau(u) q(k)`, and `q(0) = 0`",
+an argument inside an ansatz that Proposition "boundary-factorised rigidity"
+warns is not unconditional. Schur decides it outright, and decides both sectors
+at once. At Gamma the little group is the full cubic point group. The
+charge-odd state is the *oriented* 2-cell, on which a proper rotation acts by
+its exterior square — which is the rotation itself under Hodge duality, the
+defining `T_1`, irreducible, commutant dimension one, so the block is scalar at
+every order. Charge conjugation drops the orientation, so the charge-even state
+is the *unoriented* plane and the action is the axis permutation, `A_1 + E`,
+commutant dimension two. The two commutant dimensions are exactly the two level
+counts the sectors report, `{-4,-4,-4}` and `{12,0,0}`. Registered as `Schur
+alone fixes both Gamma blocks`, which builds the 24 rotations, verifies the
+exterior square, and solves both commutants.
+
+**Jordan's inequality was applied where it is weakest.** It is tight at `k = 0`
+and at the zone corner; the exclusion radius needs a lower bound on `q` over
+`|k| >= r`, whose minimiser is on a coordinate *axis*, where Jordan is loose by
+`pi^2/4`. The sharp minimum is elementary: writing `q = sum h(k_m^2)` with
+`h(t) = 2(1 - cos sqrt t)`, the identity `(s cos s - sin s)' = -s sin s <= 0`
+makes `h` concave and increasing on `[0, pi^2]`, so the minimum over the
+simplex is at a vertex and equals `4 sin^2(r/2)`. The radius becomes
+`2 arcsin((u/2) sqrt(W_4/(theta t_3)))`, leading constant
+`sqrt(W_4/(theta t_3))` — exactly `2/pi` times the Jordan constant, so `17.04`
+and `23.66` become `10.85` and `15.06`. The Jordan statement was never wrong,
+only loose, and both `chk` labels now stand side by side. The non-vacuity
+threshold `u < 0.133` is unchanged, because the two bounds agree exactly at the
+corner, where the ball fills the zone.
+
+**The even-`L` hypothesis was carried for one sector and dropped for the
+other.** The manuscript proved `q_max(L) = 12` only at even `L` for the
+charge-odd sector, then quoted the charge-even span `16`, the bandwidth
+`88/153` and the `88/15` ratio with no qualifier. The charge-even floor `-4` is
+`mu = 0`, i.e. some `ahat_m = 0`, i.e. some `k_m = pi` — which the periodic
+grid samples only at even `L`, exactly as for the charge-odd top. The
+charge-even *top* is different and needs no hypothesis: it sits at Gamma. The
+new check tabulates the sampled floor for `L = 2..8` and shows the odd-`L`
+deficit closing; the qualifier is now on the span, on the appendix rows, and on
+the ratio.
+
+Two smaller things went in with them. The second-witness subsection now says
+plainly that exhibiting a witness adds no logical strength — the obstruction
+theorem already proves the whole line is consistent — and that it is a concrete
+handle, not evidence. And the three flat-band priority papers entered last
+round (Sutherland 1986, Mielke 1991, Bergman–Wu–Balents 2008) had stranded the
+graph census; they are now accounted for by name, with the reason recorded:
+not-yet-obtained, so no primary reference list exists to build citation edges
+from, and inventing one is what `literature/index.yaml` forbids.

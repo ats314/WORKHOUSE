@@ -632,3 +632,54 @@ def _():
         f"ratio >= {hv['heldout_small_u']['minimum_wrong_to_correct_error_ratio']:.0f}. Read "
         "from the sealed certificate; the 1,590,462-state builder was not re-run here"
     )
+
+
+@two_cube.check(
+    "the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities",
+    "R2; G3; runs/two_cube_codd_o2_2026-08-29 §6.4",
+)
+def _():
+    # The check next door says the sextet's budget is exactly 6 and treats
+    # "fits inside B" as <= without saying so. The convention is not cosmetic,
+    # because BOTH of the decisions the paper leans on sit exactly on a
+    # boundary:
+    #
+    #   bar3 : 4/3 + 8/3 = 4     exactly the B = 4 cutoff
+    #   6    : 10/3 + 8/3 = 6    exactly the B = 6 cutoff
+    #
+    # Under a strict rule (< B) the B = 4 truncation would reach {1} alone and
+    # the B = 6 truncation would lose the sextet -- so a strict rule
+    # contradicts BOTH delivered runs, whose reachable censuses are
+    # {1, 3, bar3} and {1, 3, bar3, 6, bar6, 8}. The deliveries therefore fix
+    # the convention, and this check records that they do rather than leaving
+    # a reader to infer it. Note which way the evidence runs: the delivered
+    # censuses are the input and the rule is what is read off them, which is
+    # why the rule is not an independent confirmation of either census.
+    c2 = {
+        "1": Fraction(0),
+        "3": Fraction(4, 3),
+        "bar3": Fraction(4, 3),
+        "6": Fraction(10, 3),
+        "bar6": Fraction(10, 3),
+        "8": Fraction(3),
+    }
+    budgets = {rho: c2[rho] + 2 * c2["3"] for rho in c2}
+    delivered_b6 = set(_cert()["reachable_channel_census"]["labels"])
+    delivered_b4 = {"1", "3", "bar3"}
+
+    def retained(bound, strict):
+        return {rho for rho, b in budgets.items() if (b < bound if strict else b <= bound)}
+
+    weak_ok = retained(6, False) == delivered_b6 and retained(4, False) == delivered_b4
+    strict_b6 = retained(6, True)
+    strict_b4 = retained(4, True)
+    strict_fails = strict_b6 != delivered_b6 and strict_b4 != delivered_b4
+    on_the_boundary = budgets["bar3"] == 4 and budgets["6"] == 6
+    return weak_ok and strict_fails and on_the_boundary, (
+        f"budgets: 1 -> {budgets['1']}, 3/bar3 -> {budgets['bar3']}, 6/bar6 -> {budgets['6']}, "
+        f"8 -> {budgets['8']}. The weak rule (<= B) reproduces both delivered censuses; the "
+        f"strict rule (< B) gives {sorted(strict_b4)} at B = 4 and {sorted(strict_b6)} at "
+        "B = 6, contradicting both. bar3 sits exactly ON the B = 4 cutoff and the sextet "
+        "exactly ON the B = 6 cutoff, so every retention the paper uses is decided by an "
+        "equality and by the convention the deliveries fix"
+    )

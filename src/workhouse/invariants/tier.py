@@ -92,3 +92,66 @@ def _():
         "the prediction rested on degree 3 being unreachable through O(u^4); it is "
         "reachable, so the prediction has no basis and G14 keeps no falsifier from it"
     )
+
+
+@tier.check(
+    "the shape family is not symmetry-complete: cubic symmetry alone permits q^2 as well",
+    "MASTER_THEORY §5.1 / G14",
+)
+def _():
+    # A correction to an attribution the paper carried, not to a number.
+    # The five-element family {1, q, e_2, 4e_2/q, e_3/q} was introduced as
+    # what "cubic symmetry alone permits". It is not a symmetry statement.
+    # The cubic group acts on (a_1, a_2, a_3) by permutation, so its
+    # invariants are the symmetric polynomials, and the numerators of degree
+    # at most three with no constant term span a SIX-dimensional space,
+    #
+    #     {q, q^2, e_2, q^3, q e_2, e_3},
+    #
+    # one per partition: degree 1 gives q, degree 2 gives {q^2, e_2}, degree
+    # 3 gives {q^3, q e_2, e_3}. The recorded numerator basis keeps five of
+    # the six. What it omits is q^3 -- the shape q^2 -- which is cubic
+    # invariant and regular at Gamma (q^2 ~ |k|^4 -> 0), so neither the point
+    # group nor the carrier projection forbids it.
+    #
+    # The omission is a property of the two-hop enumeration that produced the
+    # family, and it is load-bearing: the obstruction certificate is a rank
+    # statement about THIS span, and a sixth direction would be a sixth
+    # unknown for the same data to determine. Nothing here says the
+    # enumeration is wrong -- only that its output is an enumeration result
+    # and must be cited as one.
+    a1, a2, a3 = symbols("a1 a2 a3", nonnegative=True)
+    q = a1 + a2 + a3
+    e2 = a1 * a2 + a1 * a3 + a2 * a3
+    e3 = a1 * a2 * a3
+
+    monomials = [
+        a1**i * a2**j * a3**k
+        for i in range(4)
+        for j in range(4)
+        for k in range(4)
+        if 1 <= i + j + k <= 3
+    ]
+
+    from sympy import Poly
+
+    def row(poly):
+        p = Poly(expand(poly), a1, a2, a3)
+        return [p.coeff_monomial(Poly(m, a1, a2, a3).monoms()[0]) for m in monomials]
+
+    symmetric = {"q": q, "q^2": q**2, "e_2": e2, "q^3": q**3, "q e_2": q * e2, "e_3": e3}
+    recorded = ["q", "q^2", "e_2", "q e_2", "e_3"]
+
+    full = Matrix([row(p) for p in symmetric.values()])
+    kept = Matrix([row(symmetric[name]) for name in recorded])
+    with_q3 = Matrix([*kept.tolist(), row(symmetric["q^3"])])
+
+    # q^3 is genuinely outside the recorded span: adding it raises the rank.
+    ok = full.rank() == 6 and kept.rank() == 5 and with_q3.rank() == 6
+    return ok, (
+        f"symmetric numerators of degree 1..3 span rank {full.rank()} "
+        f"({', '.join(symmetric)}); the recorded basis spans rank {kept.rank()} and "
+        f"adjoining q^3 takes it to {with_q3.rank()}. So the missing direction is q^3, "
+        "the shape q^2, and 'cubic symmetry alone permits' is the wrong attribution for "
+        "the five-element family: symmetry permits six, the two-hop enumeration returns five"
+    )

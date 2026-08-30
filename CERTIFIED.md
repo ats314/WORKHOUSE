@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 183
+## T1 — re-derived exactly — 188
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -256,43 +256,49 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **homology and finite volume**
 
 - `Delta_L = 4 tau(u) sin^2(pi/L) is positive and falls as L^-2`
-  - src/workhouse/invariants/homology.py:242 · MASTER paper §8
+  - src/workhouse/invariants/homology.py:340 · MASTER paper §8
   - `workhouse verify --only 'Delta_L = 4 tau(u) sin^2(pi/L) is positive and falls as L^-2'`
 - `FINDING: the wrapping sheets are cycles but NOT harmonic`
-  - src/workhouse/invariants/homology.py:143 · MASTER paper §3.1
+  - src/workhouse/invariants/homology.py:149 · MASTER paper §3.1
   - `workhouse verify --only 'FINDING: the wrapping sheets are cycles but NOT harmonic'`
 - `a boundary-factorised correction shifts the carrier without dispersing it, for generic M`
-  - src/workhouse/invariants/homology.py:194 · MASTER paper Prop. (boundary-factorised rigidity)
+  - src/workhouse/invariants/homology.py:292 · MASTER paper Prop. (boundary-factorised rigidity)
   - `workhouse verify --only 'a boundary-factorised correction shifts the carrier without dispersing it, for generic M'`
 - `cube boundaries and three wrapping sheets SPAN Z_2`
-  - src/workhouse/invariants/homology.py:82 · MASTER paper Thm. 2
+  - src/workhouse/invariants/homology.py:84 · MASTER paper Thm. 2
   - `workhouse verify --only 'cube boundaries and three wrapping sheets SPAN Z_2'`
 - `d_2 d_3 = 0 on the built complex`
-  - src/workhouse/invariants/homology.py:45 · MASTER paper App. E
+  - src/workhouse/invariants/homology.py:47 · MASTER paper App. E
   - `workhouse verify --only 'd_2 d_3 = 0 on the built complex'`
 - `dim Z_2 = (L^3 - 1) + 3 = L^3 + 2`
-  - src/workhouse/invariants/homology.py:24 · UNIFIED §0.1
+  - src/workhouse/invariants/homology.py:26 · UNIFIED §0.1
   - `workhouse verify --only 'dim Z_2 = (L^3 - 1) + 3 = L^3 + 2'`
 - `dim Z_2 = L^3 + 2 by rank, not by re-arranging the formula`
-  - src/workhouse/invariants/homology.py:64 · MASTER paper Thm. 2
+  - src/workhouse/invariants/homology.py:66 · MASTER paper Thm. 2
   - `workhouse verify --only 'dim Z_2 = L^3 + 2 by rank, not by re-arranging the formula'`
 - `dim Z_2 at L = 3, 4, 5`
-  - src/workhouse/invariants/homology.py:30 · UNIFIED §0.1
+  - src/workhouse/invariants/homology.py:32 · UNIFIED §0.1
   - `workhouse verify --only 'dim Z_2 at L = 3, 4, 5'`
 - `q_min on the L-torus grid is 4 sin^2(pi/L)`
-  - src/workhouse/invariants/homology.py:181 · MASTER paper §4.4
+  - src/workhouse/invariants/homology.py:187 · MASTER paper §4.4
   - `workhouse verify --only 'q_min on the L-torus grid is 4 sin^2(pi/L)'`
 - `rank d_3 = L^3 - 1 on the built complex`
-  - src/workhouse/invariants/homology.py:54 · MASTER paper App. E
+  - src/workhouse/invariants/homology.py:56 · MASTER paper App. E
   - `workhouse verify --only 'rank d_3 = L^3 - 1 on the built complex'`
 - `the Bloch and chain routes to the carrier agree`
-  - src/workhouse/invariants/homology.py:117 · MASTER paper Thm. 4
+  - src/workhouse/invariants/homology.py:119 · MASTER paper Thm. 4
   - `workhouse verify --only 'the Bloch and chain routes to the carrier agree'`
+- `the C-even floor needs even L too, so both bandwidths are even-L statements`
+  - src/workhouse/invariants/homology.py:355 · MASTER paper eq. (24) and §6 (range and attainment)
+  - `workhouse verify --only 'the C-even floor needs even L too, so both bandwidths are even-L statements'`
 - `the L^3+2 count is chain-level, not the Bloch convention`
-  - src/workhouse/invariants/homology.py:103 · MASTER paper Rmk. 3
+  - src/workhouse/invariants/homology.py:105 · MASTER paper Rmk. 3
   - `workhouse verify --only 'the L^3+2 count is chain-level, not the Bloch convention'`
+- `the sheets average to harmonic representatives, and the Gamma block IS b_2`
+  - src/workhouse/invariants/homology.py:200 · MASTER paper §3.1 / Rmk. after the Bloch-chain bridge
+  - `workhouse verify --only 'the sheets average to harmonic representatives, and the Gamma block IS b_2'`
 - `the zone maximum of q is 12 only at even L`
-  - src/workhouse/invariants/homology.py:165 · MASTER paper eq. (24)
+  - src/workhouse/invariants/homology.py:171 · MASTER paper eq. (24)
   - `workhouse verify --only 'the zone maximum of q is 12 only at even L'`
 **isotropic pentagonal cap band (v4.3 §9.3)**
 
@@ -355,10 +361,10 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **near-Gamma uniformity (G11)**
 
 - `Jordan bound q(k) >= (4/pi^2)|k|^2 holds on the whole zone`
-  - src/workhouse/invariants/uniformity.py:22 · GLUEBALL §18.3
+  - src/workhouse/invariants/uniformity.py:23 · GLUEBALL §18.3
   - `workhouse verify --only 'Jordan bound q(k) >= (4/pi^2)|k|^2 holds on the whole zone'`
 - `t(u) >= t_3 u^2 for u > 0, so the gap bound is safe`
-  - src/workhouse/invariants/uniformity.py:38 · MASTER_THEORY §4.4
+  - src/workhouse/invariants/uniformity.py:39 · MASTER_THEORY §4.4
   - `workhouse verify --only 't(u) >= t_3 u^2 for u > 0, so the gap bound is safe'`
 **notes program: SAFE, Davies, coercivity (G20-G23)**
 
@@ -639,8 +645,11 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `FINDING: the certificate key 'bandmin' holds the band MAXIMUM, at both orders`
   - src/workhouse/invariants/charge_even.py:347 · RUN_TROM_d3_results.json vs PAPER, the §6 patch, and the arithmetic
   - `workhouse verify --only 'FINDING: the certificate key '"'"'bandmin'"'"' holds the band MAXIMUM, at both orders'`
+- `Schur alone fixes both Gamma blocks: the C-odd triple is irreducible, the C-even one is not`
+  - src/workhouse/invariants/charge_even.py:610 · MASTER paper §6.3 (Where the rest frame is not blind); PAPER Prop. (C-even Gamma splitting)
+  - `workhouse verify --only 'Schur alone fixes both Gamma blocks: the C-odd triple is irreducible, the C-even one is not'`
 - `at N = 2 the C-odd hopping vanishes and the C-even one does not`
-  - src/workhouse/invariants/charge_even.py:552 · MASTER_THEORY §4.3; ledger/theorems.yaml (t_2 = 0)
+  - src/workhouse/invariants/charge_even.py:573 · MASTER_THEORY §4.3; ledger/theorems.yaml (t_2 = 0)
   - `workhouse verify --only 'at N = 2 the C-odd hopping vanishes and the C-even one does not'`
 - `both declared coincidences, checked: one is ell_N at all ranks, the other is bare`
   - src/workhouse/invariants/charge_even.py:505 · ENGINE_FLUX_su3_domino_d3.py / MASTER paper Prop. 8
@@ -709,6 +718,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the carrier projection is where the 1/q comes from`
   - src/workhouse/invariants/tier.py:57 · MASTER_THEORY §5.1
   - `workhouse verify --only 'the carrier projection is where the 1/q comes from'`
+- `the shape family is not symmetry-complete: cubic symmetry alone permits q^2 as well`
+  - src/workhouse/invariants/tier.py:97 · MASTER_THEORY §5.1 / G14
+  - `workhouse verify --only 'the shape family is not symmetry-complete: cubic symmetry alone permits q^2 as well'`
 - `the sixth-order prediction is withdrawn, not merely unproven`
   - src/workhouse/invariants/tier.py:87 · ADR 0005
   - `workhouse verify --only 'the sixth-order prediction is withdrawn, not merely unproven'`
@@ -741,8 +753,11 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the connected two-cube geometry has exactly four cross-cell pairs, each -1`
   - src/workhouse/invariants/two_cube.py:118 · R2; runs/two_cube_codd_o2_2026-08-29 §1
   - `workhouse verify --only 'the connected two-cube geometry has exactly four cross-cell pairs, each -1'`
+- `the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities`
+  - src/workhouse/invariants/two_cube.py:637 · R2; G3; runs/two_cube_codd_o2_2026-08-29 §6.4
+  - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
 
-## T2 — float agreement within a stated tolerance — 47
+## T2 — float agreement within a stated tolerance — 48
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -808,16 +823,19 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **near-Gamma uniformity (G11)**
 
 - `crossover constant K = (pi/2) sqrt(W_4 / (theta t_3))`
-  - src/workhouse/invariants/uniformity.py:44 · GLUEBALL §18.3
+  - src/workhouse/invariants/uniformity.py:45 · GLUEBALL §18.3
   - `workhouse verify --only 'crossover constant K = (pi/2) sqrt(W_4 / (theta t_3))'`
 - `excluded zone fraction grows as u^3`
-  - src/workhouse/invariants/uniformity.py:88 · GLUEBALL §18.3
+  - src/workhouse/invariants/uniformity.py:89 · GLUEBALL §18.3
   - `workhouse verify --only 'excluded zone fraction grows as u^3'`
 - `the criterion survives C2: K depends on the kernel only through sqrt(W_4)`
-  - src/workhouse/invariants/uniformity.py:52 · MASTER_THEORY §5.5 / C2
+  - src/workhouse/invariants/uniformity.py:53 · MASTER_THEORY §5.5 / C2
   - `workhouse verify --only 'the criterion survives C2: K depends on the kernel only through sqrt(W_4)'`
+- `the exact zone minimum of q on |k| >= r is 4 sin^2(r/2), and Jordan overstates it by pi/2`
+  - src/workhouse/invariants/uniformity.py:99 · GLUEBALL §18.3; the sharp form derived here
+  - `workhouse verify --only 'the exact zone minimum of q on |k| >= r is 4 sin^2(r/2), and Jordan overstates it by pi/2'`
 - `the statement is non-vacuous only below an explicit coupling`
-  - src/workhouse/invariants/uniformity.py:71 · GLUEBALL §18.3
+  - src/workhouse/invariants/uniformity.py:72 · GLUEBALL §18.3
   - `workhouse verify --only 'the statement is non-vacuous only below an explicit coupling'`
 **notes program: SAFE, Davies, coercivity (G20-G23)**
 

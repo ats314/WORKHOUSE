@@ -12,22 +12,22 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 40 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 230/230 checks pass.
+**T1/T2 — re-derived here.** 236/236 checks pass.
 
 | Suite | Passing |
 |---|---|
 | second order, all ranks | 12/12 |
 | SU(3) second and third order | 12/12 |
-| the charge-even band, exactly | 15/15 |
+| the charge-even band, exactly | 16/16 |
 | fourth order, sealed core | 6/6 |
 | fourth order, anchoring and the residual dispute | 13/13 |
 | old-to-new crosswalk | 5/5 |
 | fourth-order generalized Hodge pencil | 3/3 |
 | fourth-order checkpoint extraction | 3/3 |
-| homology and finite volume | 13/13 |
+| homology and finite volume | 15/15 |
 | settlement package and adjudication harness (G3) | 16/16 |
-| near-Gamma uniformity (G11) | 6/6 |
-| tier collapse (G14) | 6/6 |
+| near-Gamma uniformity (G11) | 7/7 |
+| tier collapse (G14) | 7/7 |
 | isotropic pentagonal cap band (v4.3 §9.3) | 11/11 |
 | native string tension through fifth order (v4.3 §11.2) | 7/7 |
 | published comparisons (literature/index.yaml) | 16/16 |
@@ -38,7 +38,7 @@ it cannot drift from what the repository actually checks.
 | off-axis channel ledger (C2 geography, G14) | 23/23 |
 | the flat-band manuscript | 5/5 |
 | finite-rank truncation bridge (published SU(3) truncations) | 9/9 |
-| two-cube charge-odd second-order closure (B=4 and B=6) | 10/10 |
+| two-cube charge-odd second-order closure (B=4 and B=6) | 11/11 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:

@@ -255,17 +255,28 @@ def _():
         "CONST:SIGMA_5_TOPOLOGIES",
         # Papers in the index whose bare node has no citation edge, because
         # the citation web is populated ONLY from primary sources -- an
-        # INSPIRE reference list or the pinned PDF's bibliography -- and
-        # these three are not-yet-obtained. Their bears_on edges exist
-        # (LIT:<paper>:R2 nodes carry those); it is the paper node itself
-        # that is unreachable. Inventing a cites list from memory to tidy
-        # the census is exactly what literature/index.yaml forbids, so they
-        # strand until someone obtains them. That makes this a live
-        # acquisition signal rather than a blemish.
+        # INSPIRE reference list or the pinned PDF's bibliography -- and no
+        # obtained source cites these. Their bears_on edges exist
+        # (LIT:<paper>:<claim> nodes carry those); it is the paper node
+        # itself that is unreachable. Inventing a cites list from memory to
+        # tidy the census is exactly what literature/index.yaml forbids, so
+        # they strand until someone obtains them and reads the real
+        # reference list. That makes this a live acquisition signal rather
+        # than a blemish.
+        #
+        # The last three are the flat-band priority line the manuscript's
+        # own introduction disclaims novelty against -- Sutherland's 1986
+        # localised states, Mielke's 1991 line-graph flat bands, and the
+        # 2008 Bergman-Wu-Balents band-touching analysis. They were entered
+        # as not-yet-obtained precisely so the disclaimer has named
+        # antecedents rather than a gesture, and they bear on G14.
         "LIT:BALAJI_2026",
+        "LIT:BWB_2008",
         "LIT:CBB_2026",
         "LIT:CB_2024",
         "LIT:HAZRA_2026",
+        "LIT:MIELKE_1991",
+        "LIT:SUTHERLAND_1986",
         # ledger entries with empty curated cross-reference fields
         "C11",
         "C14",

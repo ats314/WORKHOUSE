@@ -10,10 +10,12 @@ from sympy import (
     pi,
     simplify,
     sin,
+    symbols,
     sympify,
 )
 
 from .. import constants as K
+from .. import even_sector as EVEN
 from .. import torus as TOR
 from ._core import _suite
 
@@ -135,8 +137,12 @@ def _():
         f"sum over the momentum grid of (3 - rank B(k)) = {detail}, with "
         "nullity 3 exactly once (at Gamma) and 1 at each of the other L^3 - 1 "
         "momenta — the 3x3 Bloch spectrum and the (L^3+2)-dimensional chain "
-        "kernel are the same count: the 3 is B(0) = 0's triple degeneracy, not "
-        "b_2(T^3), and the L^3 - 1 counts momenta, not cubes"
+        "kernel are the same count, and the L^3 - 1 counts momenta, not cubes. "
+        "This detail line used to add 'the 3 is B(0) = 0's triple degeneracy, "
+        "NOT b_2(T^3)'. That was wrong and is retracted: the sibling check "
+        "'the sheets average to harmonic representatives' shows the Gamma block "
+        "IS the harmonic subspace, so the 3 is b_2(T^3) and the two readings "
+        "were never rivals"
     )
 
 
@@ -343,4 +349,69 @@ def _():
         f"tau(u) = {tau} has positive coefficients, so Delta_L > 0 for u > 0; "
         "L^2 * q_min -> 4 pi^2, so the carrier's nearest incidence separation "
         "vanishes as L^-2 and provides no volume-uniform isolation"
+    )
+
+
+@homology.check(
+    "the C-even floor needs even L too, so both bandwidths are even-L statements",
+    "MASTER paper eq. (24) and §6 (range and attainment)",
+)
+def _():
+    # The manuscript proved the even-L restriction for the charge-ODD top
+    # (q_max = 12 only when some k_j reaches pi) and then quoted the
+    # charge-EVEN span 16, the bandwidth 88/153 and the 88/15 ratio with no
+    # qualifier at all. The same restriction governs both, for the same
+    # reason, and this check says so.
+    #
+    # The C-even floor is lambda = -4, i.e. mu = 0, i.e. ahat_1 ahat_2 ahat_3
+    # = 0 with ahat_m = 2 + 2 cos k_m -- so the floor is attained exactly
+    # where some k_m = pi. On the periodic L^3 grid k_m = 2 pi n / L, and
+    # k_m = pi requires n = L/2: even L, and nothing else. So the C-even span
+    # is 16 on even grids and strictly less on odd ones, closing like
+    # L^{-2}, exactly as the C-odd span closes to 12.
+    #
+    # The C-even TOP is different and needs no hypothesis: lambda = 12 sits at
+    # Gamma, which every grid samples. It is the floor alone that is even-L,
+    # which is why the qualifier belongs on the SPAN and on every bandwidth
+    # read off it, not on the top.
+    #
+    # T1, and the verdict is exact: the whole statement reduces to whether the
+    # rational multiple 2n/L of pi hits 1, which is integer arithmetic on the
+    # grid, plus the cubic's constant term, which is symbolic. Nothing here
+    # rests on a float. An earlier draft computed the odd-L floor VALUES,
+    # which are irrational, and admitted them to the verdict through a
+    # floating-point tolerance; the tier guard rejected it and was right to,
+    # because that version would also have passed on a wrong attainment rule
+    # the sampled floors happened not to expose. The values are gone entirely
+    # rather than relabelled -- the exact statement is the stronger one, and
+    # the guard reads comments as well as code, so a float literal has no
+    # business in either.
+    from sympy import Rational as R
+
+    a, b, c = symbols("a b c", nonnegative=True)
+    # mu = 0 is a root of the C-even cubic iff ahat_1 ahat_2 ahat_3 = 0
+    floor_is_a_product = EVEN.even_cubic(0, a, b, c) == -4 * a * b * c
+    # and ahat_m = 2 + 2 cos k_m vanishes exactly at k_m = pi
+    kk = symbols("kk", real=True)
+    ahat_vanishes_at_pi = simplify((2 + 2 * cos(kk)).subs(kk, pi)) == 0
+
+    grids, ok = {}, True
+    for ell in range(2, 11):
+        # k_m / pi = 2n/L over the grid; ahat = 0 iff that rational equals 1
+        reaches_pi = [n for n in range(ell) if R(2 * n, ell) == 1]
+        exact = [simplify(2 + 2 * cos(2 * pi * R(n, ell))) for n in range(ell)]
+        zeros_here = [v for v in exact if v == 0]
+        grids[ell] = len(zeros_here)
+        ok = ok and (len(reaches_pi) == len(zeros_here)) and bool(zeros_here) == (ell % 2 == 0)
+    # the top: at Gamma every ahat is 4, and the cubic's largest root is mu = 16
+    top_at_gamma = EVEN.lambdas_from_abc(4, 4, 4) == [0, 0, 12]
+    return ok and floor_is_a_product and ahat_vanishes_at_pi and top_at_gamma, (
+        f"grid momenta reaching k_m = pi, by L: {grids} — one at even L, none at odd. "
+        "The C-even floor lambda = -4 is mu = 0, and the cubic's constant term is "
+        "-4 ahat_1 ahat_2 ahat_3, so the floor is attained exactly where some ahat_m "
+        "vanishes, exactly where some k_m = pi, exactly when L is even. The top 12 sits "
+        f"at Gamma, where the spectrum is {EVEN.lambdas_from_abc(4, 4, 4)}, and needs no "
+        "hypothesis. So 'span 16', the bandwidth 88/153 and the 88/15 ratio carry the "
+        "same even-L / thermodynamic-limit qualifier the manuscript already proved for "
+        "the C-odd 12 t_N, and it must be printed on both or on neither"
     )

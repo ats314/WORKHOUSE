@@ -536,16 +536,37 @@ def _():
     }
     matches_registry = {v: names for v, (names, _) in K.DECLARED_COINCIDENCES.items()} == declared
     distinct = K.T_MINUS_2 != K.LEAK_2 and K.LEAK_3 != K.B_3
-    ok = second_order and all_rank == 0 and third_order and matches_registry and distinct
+    # CORRECTION, kept visible because the wrong version was printed. An
+    # earlier detail line here -- and the manuscript, which copied it -- said
+    # that at third order "the C-odd leakage separates from the C-odd hop".
+    # It never joined it: leak_2- = -11/306 against t_2- = 5/612 at second
+    # order already. What leak_2- coincides with is the C-EVEN hop, and that
+    # is the pairing the third order breaks: leak_3- = -12331/249696 against
+    # t_3+ = -6335/249696. Naming the wrong partner made a live coincidence
+    # look like a live one between different objects, so the arithmetic is
+    # asserted here rather than described.
+    never_joined = K.LEAK_2 != K.T_MINUS_2 and K.LEAK_3 != K.B_3
+    joined_then_parted = K.LEAK_2 == K.T_PLUS_2 and K.LEAK_3 != K.T3_EVEN
+    ok = (
+        second_order
+        and all_rank == 0
+        and third_order
+        and matches_registry
+        and distinct
+        and never_joined
+        and joined_then_parted
+    )
     return ok, (
         f"leak_2- = leak_2+ = t_2+ = ell_3 = {K.T_PLUS_2} = -481/612 + 3/4, and "
         "ell_N = A_N + B_N + 1/C_F holds at symbolic N — so the first declared "
         "coincidence is one all-rank object under three names, derived rather than "
         f"observed. Only the C-odd hop stands apart ({K.T_MINUS_2}), because the vacuum "
-        "route cannot reach it. The second, leak_3+ = t_3+ = "
-        f"{K.T3_EVEN}, is verified and unexplained: at third order the C-odd leakage "
-        "separates from the C-odd hop while the C-even identity survives, which is why "
-        "it is U4 with a falsifier and not a mechanism"
+        "route cannot reach it — and it stands apart at BOTH orders, so nothing about "
+        "it 'separates' at the third. The pairing that does part is the C-odd leakage "
+        f"against the C-EVEN hop: equal at r = 2 (both {K.T_PLUS_2}), unequal at r = 3 "
+        f"({K.LEAK_3} against {K.T3_EVEN}). The second declared coincidence, "
+        f"leak_3+ = t_3+ = {K.T3_EVEN}, survives that and is verified and unexplained, "
+        "which is why it is U4 with a falsifier and not a mechanism"
     )
 
 
@@ -583,4 +604,119 @@ def _():
         "N = 3, decreasing monotonically to 4 — so the C-even band is the wider one "
         "always, and the flat-band program's asymmetry is a channel statement rather "
         "than a geometric one"
+    )
+
+
+@even_band.check(
+    "Schur alone fixes both Gamma blocks: the C-odd triple is irreducible, the C-even one is not",
+    "MASTER paper §6.3 (Where the rest frame is not blind); PAPER Prop. (C-even Gamma splitting)",
+)
+def _():
+    # The paper argued the charge-odd rest-frame blindness from the incidence
+    # ansatz -- "the hopping enters only through tau(u) q(k), and q(0) = 0" --
+    # and Proposition (boundary-factorised rigidity) warns in its own remark
+    # that the ansatz is not an unconditional all-orders statement. So as
+    # argued, the FINDING inherited a conditionality it does not need. This
+    # check removes it, using nothing but the point group.
+    #
+    # At Gamma the little group is the full cubic point group, so the 3x3
+    # block of the effective Hamiltonian commutes with the point-group action
+    # on the three plaquette orbitals -- at every order in u, and whether or
+    # not the correction factors through links. Schur then decides both
+    # sectors, and decides them DIFFERENTLY, which is the content:
+    #
+    #   C-odd: the state is the ORIENTED 2-cell e_i ^ e_j, so R acts by the
+    #     second exterior power. For a proper rotation Lambda^2 R = R (the
+    #     defining rep, T_1), which is irreducible -- commutant dimension 1 --
+    #     so the Gamma block is a SCALAR at every order and no charge-odd
+    #     rest-frame series can separate hopping from diagonal.
+    #
+    #   C-even: charge conjugation drops the orientation, so the state is the
+    #     UNORIENTED plane and R acts by the permutation of the three axes,
+    #     which is A_1 (+) E -- commutant dimension 2 -- so the Gamma block
+    #     has exactly two levels and the charge-even rest frame CAN see the
+    #     hopping.
+    #
+    # The two commutant dimensions ARE the two Gamma spectra the sectors
+    # report, {-4,-4,-4} and {12,0,0}, and this check ties them together.
+    import itertools
+
+    from sympy import Matrix, eye, zeros
+
+    def rotations():
+        for perm in itertools.permutations(range(3)):
+            for signs in itertools.product((1, -1), repeat=3):
+                r = zeros(3, 3)
+                for col, row in enumerate(perm):
+                    r[row, col] = signs[col]
+                if r.det() == 1:
+                    yield r
+
+    rots = list(rotations())
+    pairs = list(EVEN.FACE_PAIRS)
+
+    def odd_rep(r):
+        # (R e_i) ^ (R e_j) expanded in the basis e_a ^ e_b, a < b: the 2x2 minor
+        d = zeros(3, 3)
+        for col, (i, j) in enumerate(pairs):
+            for row, (a, b) in enumerate(pairs):
+                d[row, col] = r[a - 1, i - 1] * r[b - 1, j - 1] - r[b - 1, i - 1] * r[a - 1, j - 1]
+        return d
+
+    def even_rep(r):
+        # orientation dropped: the unordered plane {i,j} goes to {pi(i), pi(j)}
+        return odd_rep(r).applyfunc(abs)
+
+    def commutant_dim(reps):
+        rows = []
+        for d in reps:
+            # vec(D X - X D) = (I (x) D - D^T (x) I) vec(X), column-major vec
+            block = zeros(9, 9)
+            for a in range(3):
+                for b in range(3):
+                    for c in range(3):
+                        block[a * 3 + b, a * 3 + c] += d[b, c]
+                        block[a * 3 + b, c * 3 + b] -= d[c, a]
+            rows.append(block)
+        stacked = Matrix.vstack(*rows)
+        return len(stacked.nullspace())
+
+    odd = [odd_rep(r) for r in rots]
+    even = [even_rep(r) for r in rots]
+
+    # The exterior square of a proper rotation IS the rotation, conjugated by
+    # the Hodge duality e_1^e_2 -> e_3, e_1^e_3 -> -e_2, e_2^e_3 -> e_1. So
+    # the C-odd rep is the DEFINING rep T_1, derived here rather than asserted
+    # by character arithmetic.
+    hodge = Matrix([[0, 0, 1], [0, -1, 0], [1, 0, 0]])
+    exterior_square_is_defining = all(hodge * odd_rep(r) * hodge.inv() == r for r in rots)
+
+    gamma = {s: EVEN.gram(s).subs({z: 1 for z in EVEN.Z}) for s in (True, False)}
+    invariant = all(d * gamma[True] == gamma[True] * d for d in odd) and all(
+        d * gamma[False] == gamma[False] * d for d in even
+    )
+    dims = (commutant_dim(odd), commutant_dim(even))
+    spectra = (
+        sorted((gamma[True] - 4 * eye(3)).eigenvals().keys()),
+        sorted((gamma[False] - 4 * eye(3)).eigenvals().keys()),
+    )
+    levels = (len(spectra[0]), len(spectra[1]))
+    ok = (
+        len(rots) == 24
+        and dims == (1, 2)
+        and levels == dims
+        and invariant
+        and spectra == ([-4], [0, 12])
+        and exterior_square_is_defining
+    )
+    return ok, (
+        f"24 proper rotations, and the exterior square of each is the rotation itself "
+        f"under Hodge duality, so the C-odd rep is the defining T_1. Its commutant has "
+        f"dimension {dims[0]}; the C-even (unoriented, axis-permutation) rep has "
+        f"{dims[1]}. Both commute with their sector's Gamma Gram block, and the commutant "
+        f"dimensions are exactly the level counts: C-odd {spectra[0]} (one level, scalar) "
+        f"against C-even {spectra[1]} (two levels). So the charge-odd rest-frame blindness "
+        "is Schur's lemma on an irreducible T_1, not a consequence of the incidence "
+        "ansatz -- it holds at every order and survives any correction that does not "
+        "factor through links; and the charge-even sector is not blind for the same reason"
     )
