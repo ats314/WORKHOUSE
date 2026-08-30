@@ -45,7 +45,9 @@ def test_paper_directory_is_fully_pinned():
     # and iterdir() would have pinned the directory name instead of its
     # contents.
     on_disk = {
-        str(p.relative_to(PAPER))
+        # as_posix(), not str(): the manifest is byte-compared on Windows too,
+        # where str() would spell the separator as a backslash.
+        p.relative_to(PAPER).as_posix()
         for p in PAPER.rglob("*")
         if p.is_file() and p.suffix not in byproducts and not p.name.endswith(".synctex.gz")
     } - {"SHA256SUMS", "README.md"}
