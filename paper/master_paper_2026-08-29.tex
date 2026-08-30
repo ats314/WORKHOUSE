@@ -147,7 +147,9 @@ Seven statements are self-contained here.
 \item For every $N\ge3$ the complete momentum dependence at order $u^2$ is
   $t_Nu^2BB\dg$ (Theorem~\ref{thm:allrank}), on the one premise
   Section~\ref{sec:scope} names and no check covers: that one-shared-link
-  processes exhaust the second-order off-diagonal intermediates.
+  processes exhaust the second-order off-diagonal intermediates. The channel
+  list they run through is complete (Lemma~\ref{lem:channels}); the process
+  enumeration is what is assumed.
 \item The Bloch spectrum of $BB\dg$ is $\{0,q,q\}$ (Theorem~\ref{thm:fact}),
   and on the periodic $L^3$ complex the zero-mode count is $L^3+2$
   (Theorem~\ref{thm:carrier}). The two are the same statement, by a sum rule
@@ -426,6 +428,33 @@ with dimensions and quadratic Casimirs
 \end{aligned}
 \end{equation}
 
+\begin{lemma}[The channel list is complete]\label{lem:channels}
+For every $N\ge3$, a second-order process through one shared link has its
+intermediate shared-link representation in
+$\{\mathbf1,\mathrm{Adj},\Lambda^2F,\mathrm{Sym}^2F\}$ up to conjugation, and
+in nothing else. The conjugate of a channel carries the same Casimir and hence
+the same weight, which is why four labels suffice where the link-resolved
+census of Section~\ref{sec:twocube} needs six.
+\end{lemma}
+
+\begin{proof}
+The shared link of a one-plaquette shell state carries $F$ or $\bar F$ by
+\eqref{eq:EF}; one plaquette action tensors it by $F$ or $\bar F$; and
+\eqref{eq:fusion}, together with the conjugate product
+$\bar F\otimes\bar F=\Lambda^2\bar F\oplus\mathrm{Sym}^2\bar F$, decomposes
+every case completely and multiplicity-free. There is nothing else for the link
+to carry.
+\end{proof}
+\chk{each channel gap is C\_F + C\_R/2, and the weights sum to one}
+
+\noindent The corollary that makes this checkable rather than merely stated is
+that the weights $d_\rho/N^2$ sum to one within each orientation family, which
+is arithmetic on \eqref{eq:table}: a missing channel would leave a deficit.
+What Lemma~\ref{lem:channels} does \emph{not} settle --- and
+Section~\ref{sec:scope} says so --- is that one-shared-link processes exhaust
+the second-order off-diagonal intermediates. That is a statement about the
+process enumeration, not about this list.
+
 The six nonshared half-links contribute $3\CF$ and the fused link $C_\rho/2$,
 against an external one-plaquette energy $2\CF$, so the resolvent denominator
 is $\CF+C_\rho/2$ exactly.
@@ -618,10 +647,14 @@ attained by one unit of momentum in a single direction.
 Removing the orientation signs --- from the entries of \eqref{eq:B} and from
 the phases, so each $e^{ik}-1$ becomes $e^{ik}+1$ --- gives an unsigned
 incidence $\mathcal N(k)$ with $A+4I=\mathcal N\mathcal N\dg$.
-Its adjacency spectra at $\Gamma$ and $R$ are $\{12,0,0\}$ and $\{-4,-4,-4\}$,
-which share no eigenvalue, so no level can be momentum independent. The flat
+The contrast is a determinant identity, not a sample: read straight off the
+boundary formulas, $\det B(k)\equiv0$ identically in $k$ --- a zero eigenvalue
+at every momentum, which is the whole flat band --- while
+$\det\mathcal N(k)=-2\prod_j(1+e^{ik_j})$ vanishes only where some $k_j=\pi$. (Sampling agrees: the unsigned adjacency spectra at $\Gamma$ and $R$
+are $\{12,0,0\}$ and $\{-4,-4,-4\}$, which share no eigenvalue.) The flat
 branch is therefore not a generic consequence of three face orbitals or cubic
 symmetry.
+\chk{the two Bloch incidence symbols, and the determinant asymmetry between them}
 
 This control is not hypothetical: the unsigned spectrum is the charge-even
 sector's, which Section~\ref{sec:even} computes in closed form, and the two
@@ -867,6 +900,13 @@ The $B=6$ cube is channel-complete for the hopping and \emph{not} for the
 scalar: its scalar is $39/68$ against the bridge's $11/34$, differing by
 exactly $1/4$, the local same-face sextet route, which first enters at cutoff
 $20/3$ --- integer label $B=7$, so any cutoff above $20/3$ already carries it.
+That is not only arithmetic: the delivery reports the prediction executed. A
+six-face $B=7$ reachable-state probe returns $\alpha_{B=7}=11/34$ and
+$t_{B=7}=5/612$ with scalar-plus-Gram residual $1.1\times10^{-15}$, so raising
+the cutoff past the same-face threshold lowers all three absolute coefficients
+by exactly $1/4$ and leaves the relative shell $\{0,\,5/153,\,5/102\}$
+untouched --- the scalar moves, the hopping does not. That probe's artifact did
+not travel, so it is reported here and not checked.
 \chk{the B = 6 scalar misses the bridge's by exactly the same-face sextet route}
 
 \subsection{What the cutoff moves, and where}
@@ -1202,6 +1242,20 @@ fourth-order band or bandwidth is used above. What it does is state precisely
 where the disagreement lives, because that geography is now checked and it is
 what a decisive calculation must target.
 
+The two values, side by side and in no order of preference:
+\begin{equation}\label{eq:c2}
+\begin{aligned}
+  C_{\mathrm{old}}&=-\frac{211835444920651}{4405310420659200}=-0.0480863\ldots,\\
+  C_{\mathrm{new}}&=-0.020213328886166577,\\
+  \Delta_C&=C_{\mathrm{new}}-C_{\mathrm{old}}=0.0278730\ldots
+\end{aligned}
+\end{equation}
+The first is recorded as an exact rational and the second only as a float ---
+that asymmetry is a fact about the two records, not an argument for either. The
+gap is what ``less than half the disputed gap'' and ``the two records give
+$K=17.04$ and $K=23.66$'' below are measured against.
+\chk{Delta\_C = C\_new - C\_old > 0 (the real discrepancy)}
+
 The two records do agree on the axial datum, but the corpus's own quoted
 tolerance does not cover that agreement: the $\alpha$ gap is
 $2.43\times10^{-13}$ against a stated bound of $2.3\times10^{-13}$. The sealed core holds internally --- $\alpha_{\mathrm{new}}$ and
@@ -1503,15 +1557,13 @@ That the range of $P_-$ is exactly the charge-odd one-plaquette span for
 $L\ge3$ is argued in Section~\ref{sec:carrier} from the link count of a reduced
 fundamental loop.
 
-That the four fusion channels exhaust the second-order shared-link routes is
-assumed in Theorem~\ref{thm:allrank}. Three of its ingredients \emph{are}
-settled: the two tensor-product decompositions \eqref{eq:fusion} are complete
-by representation theory, two distinct faces of this lattice share at most one
-link, and the vacuum-mediated route vanishes in this sector
-(Proposition~\ref{prop:vacuum}). What is not settled by any of them is that
-one-shared-link processes exhaust the second-order \emph{off-diagonal}
-intermediates. The gap is in the process enumeration, not in the channel list,
-and Theorem~\ref{thm:weingarten} is silent about it.
+That one-shared-link processes exhaust the second-order \emph{off-diagonal}
+intermediates is assumed in Theorem~\ref{thm:allrank}. Three neighbouring
+statements \emph{are} settled and should not be confused with it: the channel
+list is complete (Lemma~\ref{lem:channels}), two distinct faces of this lattice
+share at most one link, and the vacuum-mediated route vanishes in this sector
+(Proposition~\ref{prop:vacuum}). The gap is in the process enumeration, not in
+the channel list, and Theorem~\ref{thm:weingarten} is silent about it.
 
 That the charge-even sector's second-order Bloch symbol is the unsigned
 incidence $\mathcal N(k)$ --- the signed incidence with the boundary

@@ -69,11 +69,9 @@ is what makes the protection a property of the boundary operator rather than of
 any particular correction. Registered, with nine free entries and the six
 incidence variables kept independent.
 
-**5. The pinned commit did not exist.** `f25328f8…` is not an object in this
-repository, so the printed reproduction recipe could not be run and no row of
-the counter table could be checked. Re-pinned, and every counter re-measured.
-The `T_1`, `T_2` and test rows matched no state the tree has ever been in, which
-is exactly what a hash that does not resolve stops anyone from noticing.
+**5. ~~The pinned commit did not exist.~~ RETRACTED — see *A retraction*
+below.** The edition pins `5ca91a9` for a different and better reason, given
+there.
 
 ## Two things the repository was wrong about
 
@@ -209,6 +207,97 @@ overclaim found eight more, and none of them is arithmetic either.
   power law were being used to draw a structural conclusion about a
   strong-coupling finite-lattice program. It stays, as a warning about why G18
   must live in a smeared basis, with nothing transferred.
+
+## What the coverage audit added
+
+The dimension asked what the paper *should* carry and does not found four
+things worth taking, beyond the three derived results above (which it
+independently proposed, and which had already landed).
+
+- **The channel list is a lemma, not an assumption.** The Scope section said
+  the four fusion channels are "assumed" to exhaust the shared-link routes.
+  Completeness of the *list* is one line: the shared link carries `F` or
+  `Fbar`, one plaquette action tensors it by `F` or `Fbar`, and both products
+  decompose completely and multiplicity-free. It is now a lemma in the body,
+  and the corollary that makes it checkable — the weights sum to one per
+  family, so a missing channel would leave a deficit — is named with it. What
+  remains assumed is sharper and smaller: that one-shared-link processes
+  exhaust the second-order *off-diagonal* intermediates. The gap is in the
+  process enumeration, not the channel list.
+- **The disputed coefficient had no magnitude anywhere in the paper.** The
+  longest section is about `C_shp` and never printed either recorded value or
+  the gap, which made "less than half the disputed gap" unreadable and left
+  `25/1024` — a witness the paper itself says is not a physical candidate — as
+  the only number attached to the dispute. Both values and the gap are printed
+  now, side by side and in no order of preference, with the note that one is
+  recorded exactly and the other only as a float. That asymmetry is a fact
+  about the records, not an argument for either.
+- **The `B = 7` scalar prediction was executed, and the paper reported it as
+  arithmetic.** The delivery ran a six-face `B = 7` reachable-state probe:
+  `alpha = 11/34`, `t = 5/612`, residual `1.1e-15`. So raising the cutoff past
+  the same-face sextet threshold lowers all three absolute coefficients by
+  exactly `1/4` and leaves the relative shell `{0, 5/153, 5/102}` untouched —
+  a prediction made and then run, which is stronger than a subtraction. Its
+  artifact did not travel, so it is reported and not checked.
+- **A two-point argument where a determinant identity was available.** "The
+  unsigned spectra at Gamma and R share no eigenvalue, so no level can be
+  momentum independent" samples two momenta for an all-`k` conclusion. Reading
+  straight off the boundary formulas, `det B(k) = 0` identically — a zero
+  eigenvalue at every momentum, which *is* the flat band — while
+  `det N(k) = -2 prod_j (1 + e^{i k_j})` vanishes only where some `k_j = pi`.
+  One identity replaces the sample, and the registry already had it.
+
+## What CI caught that no dimension did
+
+The repository's own Windows smoke job failed on the first push, and it was
+right to. `workhouse why C2` prints the theory graph's arrows (U+2192, U+2190);
+a default Windows console encodes cp1252; the command died with
+`UnicodeEncodeError`. It reproduces identically on `main`, so it is not this
+work's — but it is exactly the failure class `tests/test_portability.py`
+already guards in the other direction, and that guard covers only text the
+repository *reads*. The output side was never covered.
+
+Fixed where the input fix went: the CLI names its output error handler
+(`backslashreplace`) instead of inheriting whatever the console can encode, so
+one character degrades rather than the command dying, and every UTF-8 platform
+is byte-identical. The guard now covers both directions, in a subprocess with
+the console encoding forced — because the failure is in the stream, not in the
+string, and an in-process assertion would pass everywhere and prove nothing.
+
+## A retraction
+
+Finding 5 above said the draft's pinned commit
+`f25328f8d6658af63588fb3d30dbd3b7f6ede9c0` did not exist in this repository, on
+any branch, so no row of its counter table could be reproduced. That is false,
+and it is worth recording exactly how it went wrong.
+
+The commit exists. It is a **sibling** of this work: a parallel session, off the
+same parent `afc946c`, committed *Two counters disagreed, and a channel census
+turned out to be a ledger* at 19:27 UTC on 29 August. It sits in no ref — it was
+pushed by hash — so a clone that has fetched only branch heads does not have the
+object, and `git cat-file -t` on an object you have not fetched is
+indistinguishable from `git cat-file -t` on an object that was never made.
+`git log --all` agrees with it, for the same reason. Two commands, one blind
+spot, and the conclusion was generalised from both. The decisive command was
+never run: `git fetch origin <sha>`, which succeeds.
+
+And the counters were right. At `f25328f` the tree carries T0 = 40, T1 = 179,
+T2 = 46 — precisely the numbers the draft printed. The parallel session's own
+package says the 472-test row was pinned-commit provenance rather than a fresh
+local run, and labels it as such. So the draft's Reproducibility section was
+accurate for the commit it named, and the finding against it was an artifact of
+this session's clone.
+
+What survives is smaller and still worth having: those counters describe
+`f25328f`, and this edition's printed labels do not all resolve there, because
+several name checks that exist only in `5ca91a9`. A pin has to satisfy its own
+edition. That is why this edition pins `5ca91a9` — not because the other commit
+is missing, but because it is not this edition's.
+
+The general lesson is one AGENTS.md already states, and this session committed
+anyway: **a negative asserted after two commands is not a negative.** It is the
+same shape as re-deriving something that already exists under different
+notation — search one lineage, find a hole in it, generalise.
 
 ## What is still not checked, and what a referee should press on
 

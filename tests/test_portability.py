@@ -7,6 +7,9 @@ this repository holds hundreds of files that are not cp1252-decodable.
 """
 
 import ast
+import os
+import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -63,3 +66,30 @@ def test_the_corpus_really_is_not_cp1252_decodable():
         except UnicodeDecodeError:
             undecodable += 1
     assert undecodable > 100, f"only {undecodable} files are non-cp1252; the guard may be moot"
+
+
+def test_cli_output_survives_a_legacy_console():
+    """The OTHER direction of the encoding rule, which the reads-only guard misses.
+
+    The guard above covers text this repository reads. It says nothing about
+    text this repository prints, and the failure there is identical in shape:
+    ``workhouse why C2`` prints the graph's arrows (U+2192, U+2190), a default
+    Windows console encodes cp1252, and the command died with UnicodeEncodeError
+    before ``cli._name_the_output_encoding`` named an error handler. The
+    repository's own Windows smoke job caught it; nothing here did.
+
+    Run in a subprocess with the console encoding forced, because the failure is
+    in the stream and not in the string -- an in-process assertion on the text
+    would pass on every platform and prove nothing.
+    """
+    env = dict(os.environ, PYTHONIOENCODING="cp1252")
+    done = subprocess.run(
+        [sys.executable, "-m", "workhouse.cli", "why", "C2"],
+        capture_output=True,
+        cwd=ROOT,
+        env=env,
+        timeout=300,
+    )
+    assert done.returncode == 0, done.stderr.decode("utf-8", "replace")[-2000:]
+    # and the arrow really was exercised: degraded, not silently absent
+    assert b"\\u2192" in done.stdout or "→".encode("cp1252", "backslashreplace") in done.stdout
