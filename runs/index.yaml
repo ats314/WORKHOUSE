@@ -165,3 +165,33 @@ runs:
       delivery itself states no fourth-order claim changes, so C2 stays
       open -- what this retires is the one-cube-only objection, and it
       demonstrates the target-blind operator-level machinery G3 needs.
+
+  - id: g3_haar_hotloop_bench_2026-08-30
+    dir: runs/g3_haar_hotloop_bench_2026-08-30
+    title: >-
+      The G3 performance wall, measured: a compiled hot loop is worth
+      3.9x, not the register's 10-100x, and the second wall is Fraction
+    bears_on: [C2, G3]
+    detail: >-
+      G3's live step names its own blocker -- "an upstream engine
+      revision replacing the pure-Python union-find/canon hot loop with
+      a compiled core; the measured 50%+ self-time there implies
+      10-100x". The first half reproduces exactly: one exact Haar inner
+      product at balanced degree 3 takes 13.3 s through the pinned
+      engine, and merge_classes is 81% of cumulative time. The
+      multiplier does not. A CPython extension doing that function
+      -- verified bit-identical on 60,000 random partitions and on every
+      real inner product -- gives 3.9x, and Amdahl caps it at 5.3x, so
+      the register's estimate was mis-attributed rather than merely
+      optimistic. After the swap the profile moves: fractions.Fraction
+      becomes 56% and merge_classes falls to 5.6%. flint.fmpq, already
+      a dependency, is 7.7x on that arithmetic and exact, taking the
+      case to 1.66 s -- 7.8x in total, every value bit-identical. Set
+      against the register's own datum (a 2-face half-history at 1h51m
+      still inside its FIRST Haar Gram) that is roughly 14 minutes per
+      Gram, which leaves the 30-cluster assembly plausibly days rather
+      than hours. Nothing is committed into corpus-import/: the core is
+      an independent reimplementation of one function and the
+      benchmarks patch the module in memory only. The directory also
+      carries the range-1 shape-dictionary verification behind the
+      cheaper off-axis route.

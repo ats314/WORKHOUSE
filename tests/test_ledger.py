@@ -93,8 +93,14 @@ def test_g3_rewrite_keeps_the_protocol_and_the_traps():
         "block-structure comparison",
         "targeted kernel-bearing recomputation",
         "independent cross-amplitude computation",
+        # Added 2026-08-30. The cross-amplitude step measured its own blocker
+        # and found the register's 10-100x mis-attributed (3.9x, Amdahl-capped
+        # at 5.3x); this step is the cheaper route that does not need the
+        # engine at all, and it sits AFTER the measured one so the record
+        # still reads in the order the work happened.
+        "off-axis channel assembly through workhouse.cellular",
         "sealed scalar sweep (demoted, optional)",
-    ], "the rewritten route's steps: the executed pair, the live one, the demoted sweep"
+    ], "G3's steps: the executed pair, the measured one, the cheaper route, the demoted sweep"
     assert "inventory_trap" in g3, "the 3895-vs-3850 inventory warning must travel with G3"
 
 

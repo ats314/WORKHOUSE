@@ -133,9 +133,52 @@ gaps:
           agreed t3 hopping is its second-order element), so no
           fold-free shortcut exists. What unblocks it: an upstream engine
           revision replacing the pure-Python union-find/canon hot loop in
-          the exact Haar contraction with a compiled core (C or flint) —
-          the measured 50%+ self-time there implies 10-100x, which turns
-          the 30-cluster assembly into hours. Engineering, not physics.
+          the exact Haar contraction with a compiled core (C or flint).
+          MEASURED 2026-08-30 (runs/g3_haar_hotloop_bench_2026-08-30),
+          and the multiplier this entry carried was wrong: the hot loop
+          is 81% of cumulative time, so Amdahl caps a compiled core at
+          5.3x and the built one measures 3.9x — not 10-100x. After the
+          swap fractions.Fraction becomes 56% of what is left; flint.fmpq
+          (already a dependency, 7.7x, exact) takes the total to 7.8x
+          with every value bit-identical. Against this entry's own datum
+          — a 2-face half-history at 1h51m still inside its FIRST Haar
+          Gram — 7.8x is ~14 min per Gram, so the 30-cluster assembly is
+          plausibly days, not hours. Still engineering, but more of it
+          than one hot loop: the flint swap is not a drop-in, because the
+          engine builds its Weingarten inverse-Gram in Fraction at import
+          time. The next bounded increment is moving the whole (sigma,
+          tau) loop into the compiled core. Before spending that, weigh
+          the off-axis channel route below, which is cheaper and does not
+          need the engine at all.
+      - step: off-axis channel assembly through workhouse.cellular
+        status: >
+          proposed 2026-08-30, first premise checked. The route: C is
+          assembled channel by channel from range-1 operator structures
+          rather than by recomputing the fourth order, because each
+          structure contributes a FIXED shape coefficient. That
+          dictionary is now a registered check (`each range-1 structure
+          has a fixed shape coefficient; the rotation sign is a
+          convention`): scalar I gives (A,B,C,D) = 0, normal
+          translation gives A = -g/2 and C = +g/4, in-plane translation
+          gives C = -g/4, and every range-1 structure gives B = D = 0
+          identically — so the tier collapse (G14) is simply what range-1
+          looks like. FINDING: the orbital-rotation row is recorded as
+          C = -f/2; the covariant operator gives +f/2, and the raw
+          psi = (conj(d3), -conj(d2), conj(d1)) signs put it outside the
+          shape span altogether. That sector carries ~15% of the disputed
+          gap, so the sign is load-bearing and is NOT picked here.
+        what: >
+          workhouse.cellular already re-derives the axial channel
+          independently at symbolic N and is T1-checked
+          (`alpha_3 = 4*|c_4^square(3)|`). Extend it to the two channels
+          that carry the dispute, in this order: (1) the normal
+          cube-completion channel as a SELF-TEST against the agreed
+          A = 5/48 — a validation, not a target; (2) the in-plane
+          nearest-neighbour transfer, two coplanar edge-sharing
+          plaquettes; (3) the orbital-rotation sector, which also settles
+          the sign above. Engine-free and target-blind by construction,
+          and it attacks the disputed quantity rather than recomputing
+          the whole fourth order.
         what: >
           If no recorded v10a.26 structure exists, recompute blind ONLY the
           A-carrying sector (normal nearest-neighbour displacements) through
@@ -517,6 +560,22 @@ gaps:
       nonlocal operators. This gap's own statement treats the overlap as a fixed
       small number; the published scaling says the smeared basis is structural,
       not a convenience. See literature/index.yaml, SCHIERHOLZ_1988.
+
+      SHARPENED 2026-08-30, and the exponent recorded above is the wrong one
+      for THIS carrier. A supplied theory-mode session (the carrier-persistence
+      notes, T3, not replayed here) derives the overlap law
+      Z_0(a) ~ |f_d|^2 a^(2d-3) / (2M) for a local lattice source whose
+      lowest-dimension continuum operator has dimension d. Its arithmetic
+      checks and its d = 4 case REPRODUCES Schierholz's measured a^5
+      (2*4-3 = 5), which is what makes it worth recording. But the C-odd
+      carrier's leading continuum operator is d^abc F^a F^b F^c at dimension
+      six, so the exponent that actually applies here is a^(2*6-3) = a^9, not
+      a^5 — the extrapolation quoted there is Z_0 ~ 1.2e-6 at a sqrt(sigma) =
+      0.10 and 2.4e-9 at 0.05. Still a power, so formally survivable, and
+      brutal. The same law makes the case for smearing exactly: at fixed
+      physical radius R, Z_0 = |f_R|^2 R^(2d-3) / (2M) is a-independent. The
+      law itself is asserted rather than checked here; what is checked is the
+      dimension arithmetic and the agreement with the published a^5.
 
   - id: G19
     tier: 3

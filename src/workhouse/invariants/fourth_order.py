@@ -2,12 +2,15 @@ from __future__ import annotations
 
 from sympy import (
     Matrix,
+    Poly,
     Rational,
+    expand,
     eye,
     limit,
     pi,
     series,
     simplify,
+    solve,
     symbols,
     zeros,
 )
@@ -381,3 +384,69 @@ def _():
     dX, *_ = _deltas()
     free = {s for s in dX.free_symbols if s in {_Bs, _Cs, _Ds}}
     return not free, "Delta_X = 4*A_shp exactly, which is why the axial cuts agree"
+
+
+# --------------------------------------------------------------------------
+# The operator-structure dictionary behind the off-axis route.
+#
+# C2 is routed to G3, whose live step is a 30-cluster exact-Haar assembly
+# behind a measured performance wall. A cheaper route exists and rests on one
+# claim: that each range-1 operator structure contributes a FIXED shape
+# coefficient, so the disputed C can be assembled channel by channel from
+# structures that workhouse.cellular already re-derives independently.
+#
+# That claim is pure polynomial algebra in the band variables and is checked
+# here rather than taken on the page's word -- three of its four rows come out
+# exactly as recorded, and the fourth is sign-convention dependent, which
+# matters because that sector carries ~15% of the disputed gap.
+# --------------------------------------------------------------------------
+
+
+@sealed.check(
+    "each range-1 structure has a fixed shape coefficient; the rotation sign is a convention",
+    "C2; MASTER edition §8 (shape basis); the off-axis channel dictionary",
+)
+def _():
+    a1, a2, a3, g, f = symbols("a1 a2 a3 g f", positive=True)
+    a = (a1, a2, a3)
+    q = a1 + a2 + a3
+    e2 = a1 * a2 + a1 * a3 + a2 * a3
+    e3 = a1 * a2 * a3
+    cos = [1 - aj / 2 for aj in a]  # a_j = 4 sin^2(k_j/2) = 2 - 2 cos k_j
+    c0, A, B, C, D = symbols("c0 A B C D")
+
+    def fit(numerator):
+        """Match psi^dag H psi against c0 q + A q^2 + B e2 q + 4 C e2 + D e3."""
+        resid = expand(numerator - (c0 * q + A * q**2 + B * e2 * q + C * 4 * e2 + D * e3))
+        answer = solve(Poly(resid, a1, a2, a3).coeffs(), [c0, A, B, C, D], dict=True)
+        return answer[0] if answer else None
+
+    # |psi_n|^2 = a_n with psi the cube-boundary direction, so a diagonal H
+    # contributes sum_n a_n H_nn and q_a = q.
+    scalar = fit(g * q)
+    normal = fit(expand(g * sum(a[n] * cos[n] for n in range(3))))
+    inplane = fit(expand(g * sum(a[n] * sum(cos[m] for m in range(3) if m != n) for n in range(3))))
+    # Orbital rotation: psi^dag R psi = f sum_{n != m} eps_n eps_m a_n a_m.
+    # Taken covariantly (one sign for every product) it lands on 2 f e2; taken
+    # with the raw psi = (conj(d3), -conj(d2), conj(d1)) signs it does not lie
+    # in the shape span at all, which is the convention the record must fix.
+    rotation = fit(expand(f * 2 * e2))
+    raw_signs = fit(expand(f * 2 * (-a1 * a2 + a1 * a3 - a2 * a3)))
+
+    ok = (
+        scalar == {c0: g, A: 0, B: 0, C: 0, D: 0}
+        and normal == {c0: g, A: -g / 2, B: 0, C: g / 4, D: 0}
+        and inplane == {c0: 2 * g, A: 0, B: 0, C: -g / 4, D: 0}
+        and rotation == {c0: 0, A: 0, B: 0, C: f / 2, D: 0}
+        and raw_signs is None
+    )
+    return ok, (
+        "scalar I -> (A,B,C,D) = 0; normal translation g cos k_n -> A = -g/2, C = +g/4; "
+        "in-plane translation -> C = -g/4; covariant orbital rotation -> C = +f/2. Every "
+        "range-1 structure gives B = D = 0 identically, so the tier collapse is what range-1 "
+        "looks like. FINDING: the recorded dictionary gives the rotation row as C = -f/2; the "
+        "covariant operator gives +f/2, and the raw psi = (conj(d3), -conj(d2), conj(d1)) signs "
+        "put it OUTSIDE the shape span entirely. The rotation sector carries about 15% of the "
+        "disputed C2 gap, so that sign is load-bearing and is recorded here as unsettled rather "
+        "than picked"
+    )

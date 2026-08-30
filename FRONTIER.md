@@ -12,14 +12,14 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 239/239 checks pass.
+**T1/T2 — re-derived here.** 240/240 checks pass.
 
 | Suite | Passing |
 |---|---|
 | second order, all ranks | 12/12 |
 | SU(3) second and third order | 12/12 |
 | the charge-even band, exactly | 15/15 |
-| fourth order, sealed core | 6/6 |
+| fourth order, sealed core | 7/7 |
 | fourth order, anchoring and the residual dispute | 13/13 |
 | old-to-new crosswalk | 5/5 |
 | fourth-order generalized Hodge pencil | 3/3 |
