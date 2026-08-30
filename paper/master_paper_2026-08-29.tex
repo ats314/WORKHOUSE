@@ -157,7 +157,10 @@ Nine statements are self-contained here.
 \item The Bloch spectrum of $BB\dg$ is $\{0,q,q\}$ (Theorem~\ref{thm:fact}),
   and on the periodic $L^3$ complex the zero-mode count is $L^3+2$
   (Theorem~\ref{thm:carrier}). The two are the same statement, by a sum rule
-  over the momentum grid (Theorem~\ref{thm:bridge}).
+  over the momentum grid (Theorem~\ref{thm:bridge}) --- and not merely in
+  agreement: the $\Gamma$ block is the harmonic subspace, so its $3$ is
+  $b_2(T^3)$, and the wrapping sheets averaged over their translates
+  \eqref{eq:harm} are harmonic representatives of the three classes.
 \item\label{item:cutoff} The truncation that keeps only the singlet and $\Lambda^2F$ routes
   projects the hopping to $w_{\Lambda^2F}-w_{\mathbf 1}=-1/12$, and what it
   omits is $w_{\mathrm{Sym}^2F}-w_{\mathrm{Adj}}=14/153$; the two sum to
@@ -171,7 +174,11 @@ Nine statements are self-contained here.
   splitting is $12t_{r,+}$ exactly (Proposition~\ref{prop:evengamma}). The
   identity is self-contained; the two numbers it is evaluated at inherit the
   status of $t_{r,+}$, and the $r=3$ one is conditional --- see
-  item~\ref{item:domino}.
+  item~\ref{item:domino}. That the charge-odd rest frame is blind to the hopping
+  and the charge-even one is not follows from Schur's lemma alone: the
+  charge-odd triple carries the irreducible $T_1$ and the charge-even one
+  $A_1\oplus E$, so the two $\Gamma$ blocks have one level and two, at every
+  order and independently of the incidence ansatz.
 \item The vacuum-mediated route $p\to|0\rangle\to p'$ connects any pair of
   plaquettes and is worth $1/\CF$; it vanishes in the charge-odd sector because
   $V$ is charge-even, which is what makes Theorem~\ref{thm:allrank}'s
@@ -405,13 +412,21 @@ each. Summing gives $3+(L^3-1)=L^3+2$.
 \chk{the Bloch and chain routes to the carrier agree}
 
 \begin{remark}
-The two decompositions produce the same two numbers from different objects.
-The $3$ is the triple degeneracy of $B(0)=0$, not $b_2(T^3)$; the $L^3-1$
-counts non-$\Gamma$ momenta, not cubes. Their agreement is a consistency check
-on the whole construction, not a restatement.
+Earlier editions of this paper read the agreement as a coincidence worth
+checking --- ``the $3$ is the triple degeneracy of $B(0)=0$, not $b_2(T^3)$''.
+That was wrong, and the correction is the better statement. Under the discrete
+Fourier transform $\partial_2$ block-diagonalises and
+$\ker\partial_2=\bigoplus_k\ker\partial_2(k)$; at $k\neq0$ the kernel block is
+one-dimensional and is exactly $\operatorname{im}\partial_3(k)$, while
+$\partial_3(0)=0$. So all of $\operatorname{im}\partial_3$ sits at nonzero
+momenta and the quotient is supported entirely at $\Gamma$: the $\Gamma$ block
+\emph{is} $H_2$, and the $3$ \emph{is} $b_2(T^3)$. The two routes do not agree
+by accident; they are the same decomposition read in two bases.
+\chk{the sheets average to harmonic representatives, and the Gamma block IS b\_2}
 \end{remark}
 
-\subsection{The wrapping sheets are cycles, not harmonic}
+\subsection{The wrapping sheets are cycles, not harmonic --- and their
+harmonic representatives}
 
 Theorem~\ref{thm:carrier} exhibits its three $H_2$ generators explicitly as
 wrapping sheets $s_{(ij)}=\sum_{x:\,x_m=0}[x;i,j]$. These satisfy
@@ -426,10 +441,26 @@ $\partial_3\dg s\neq0$, and
 
 The distinction matters because $H_2$ is used in two senses: the quotient in
 Theorem~\ref{thm:carrier}, which the sheets span, and the harmonic subspace
-$\ker\partial_2\cap\ker\partial_3\dg$, which they do not lie in. Nothing
-downstream breaks --- Proposition~\ref{prop:rigid} rests on $B\dg w=0$, which
-covers all of $\ker\partial_2$ --- but a real-space statement phrased for the
-harmonic subspace does not cover the generators this construction exhibits.
+$\ker\partial_2\cap\ker\partial_3\dg$, which they do not lie in.
+
+Harmonic representatives do exist, and they are one line away. Averaging a
+sheet over its $L$ translates in the complementary direction,
+\begin{equation}\label{eq:harm}
+  h_{(ij)}=\frac1L\sum_{r=0}^{L-1}s_{(ij)}(r),
+  \qquad
+  \partial_2h_{(ij)}=0,\quad \partial_3\dg h_{(ij)}=0 ,
+\end{equation}
+gives three harmonic chains spanning
+$\ker\partial_2\cap\ker\partial_3\dg$, which is exactly three-dimensional;
+and $s_{(ij)}-h_{(ij)}\in\operatorname{im}\partial_3$, so a sheet and its
+average are the same homology class. The averaging is the $k=0$ Fourier
+projection, and what it removes is precisely the non-harmonic part measured
+above. Nothing about the finding is withdrawn --- the generators
+Theorem~\ref{thm:carrier} exhibits are still not harmonic --- but a real-space
+statement phrased for the harmonic subspace now has representatives to point
+at, and Proposition~\ref{prop:rigid} covers both, since $B\dg w=0$ holds on
+all of $\ker\partial_2$.
+\chk{the sheets average to harmonic representatives, and the Gamma block IS b\_2}
 
 \section{Exact all-rank dynamics at second order}
 \label{sec:second}
@@ -732,7 +763,14 @@ This control is not hypothetical: the unsigned spectrum is the charge-even
 sector's, which Section~\ref{sec:even} computes in closed form, and the two
 spans are the two bandwidths. The signed span is $8-(-4)=12$, giving the
 charge-odd width $12t_-=5/51$ at $N=3$; the unsigned span is $12-(-4)=16$,
-giving the charge-even width $16|\ell_3|=88/153$.
+giving the charge-even width $16|\ell_3|=88/153$. Both spans carry the even-$L$
+hypothesis of \eqref{eq:qmax}, and for the same reason: the charge-odd $12$
+needs every $k_j=\pi$ and the charge-even floor $-4$ needs some $k_j=\pi$, which
+the periodic grid samples only when $L$ is even. The charge-even \emph{top}
+needs no hypothesis --- it sits at $\Gamma$. Every bandwidth, ratio and band
+edge quoted below is therefore an even-$L$, thermodynamic-limit statement unless
+it is a $\Gamma$ statement.
+\chk{the C-even floor needs even L too, so both bandwidths are even-L statements}
 \chk{the two band spans ARE the two incidence spectra}
 
 \section{The second-order coefficient on a two-cube space}
@@ -904,10 +942,18 @@ that $B\ge33/4$, and no such construction has been run.
 
 The two-cube space also isolates why a cutoff can reverse the sign of $t_3$.
 An adjacent shared-link channel $\rho$ is reachable only if the endpoint
-Casimir budget $C_2(\rho)+2C_2(\mathbf 3)$ fits inside the truncation: the
-sextet needs exactly $6$ and the adjoint $17/3$, so both survive $B=6$ and
-neither survives $B=4$.
+Casimir budget $C_2(\rho)+2C_2(\mathbf 3)$ fits inside the truncation, meaning
+$C_2(\rho)+2C_2(\mathbf 3)\le B$: the sextet needs exactly $6$ and the adjoint
+$17/3$, so both survive $B=6$ and neither survives $B=4$. The weak inequality is
+not a convenience. Both retentions this section uses are decided by an
+\emph{equality}: $\Lambda^2F=\bar{\mathbf 3}$ has budget exactly $4$ and so sits
+exactly on the $B=4$ cutoff, and the sextet sits exactly on the $B=6$ one. Under
+a strict rule $B=4$ would reach $\{\mathbf 1\}$ alone and $B=6$ would lose the
+sextet, contradicting both delivered censuses --- so the deliveries are what fix
+the convention, which is also why the budget arithmetic is not an independent
+confirmation of either census.
 \chk{B=6 retains every adjacent shared-link channel; B=4 provably cannot}
+\chk{the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities}
 
 \begin{corollary}[What a link cutoff drops]\label{cor:cutoff}
 Retaining only the singlet and $\Lambda^2F$ routes projects the second-order
@@ -1181,10 +1227,14 @@ Because $\mathrm{leak}_{r,+}=t_{r,+}$ at both computed orders, the whole
 charge-even sector collapses to
 $\mathrm{tower}_{r,+}+(12+\lambda)\,t_{r,+}$, a one-parameter family in the
 charge-even tower. That
-equality is verified and unexplained: at third order the charge-odd leakage
-separates from the charge-odd hopping while the charge-even identity survives.
-It is recorded as a unifying candidate with a falsifier --- an order at which
-the two are computed independently and differ --- not as a mechanism.
+equality is verified and unexplained. The order-three separation is between the
+charge-odd leakage and the charge-\emph{even} hopping --- not, as an earlier
+edition printed, between the charge-odd leakage and the charge-odd hopping,
+which were never equal: $\mathrm{leak}_{2,-}=t_{2,+}=-11/306$ against
+$t_{2,-}=5/612$ at second order, and $\mathrm{leak}_{3,-}=-12331/249696$ against
+$t_{3,+}=-6335/249696$ at third. It is recorded as a unifying candidate with a
+falsifier --- an order at which the two are computed independently and differ
+--- not as a mechanism.
 \chk{both declared coincidences, checked: one is ell\_N at all ranks, the other is bare}
 
 \subsection{Where the rest frame is not blind}
@@ -1202,18 +1252,31 @@ exactly: $-22/51$ at $r=2$ and $-6335/20808$ at $r=3$.
 This is the structural counterpart of the charge-odd blindness recorded in
 Section~\ref{sec:su3}. The signed spectrum at $\Gamma$ is $\{-4,-4,-4\}$, one
 level, so no charge-odd rest-frame series can see the hopping; the unsigned
-spectrum has two levels, so the charge-even rest frame can. The $A_1^{++}$
+spectrum has two levels, so the charge-even rest frame can. Neither half needs
+the incidence ansatz, and stating them through it understates both. At $\Gamma$
+the little group is the full cubic point group, so the $3\times3$ block commutes
+with its action at every order in $u$ and whether or not the correction factors
+through links; Schur then decides the two sectors, and decides them
+differently. The charge-odd state is the \emph{oriented} $2$-cell
+$e_i\wedge e_j$, on which a proper rotation acts by its exterior square, which
+is the rotation itself under Hodge duality --- the defining rep $T_1$,
+irreducible, commutant dimension one, so the block is a scalar. Charge
+conjugation drops the orientation, so the charge-even state is the
+\emph{unoriented} plane and the action is the permutation of the three axes,
+$A_1\oplus E$, commutant dimension two. The two commutant dimensions are
+exactly the two level counts. The $A_1^{++}$
 branch is isotropic at leading order without assuming it, with curvature
 $\tfrac43|t_{r,+}|$ in all three directions --- $22/459$ at second order and
 $6335/187272$ at third.
 \chk{the C-even curvature is (4/3)|t\_+| at both orders, and isotropic}
+\chk{Schur alone fixes both Gamma blocks: the C-odd triple is irreducible, the C-even one is not}
 
 At both computed orders the charge-even bandwidth is $16|t_{r,+}|$ and the
 charge-odd manifold width $12|t_{r,-}|$. At any order at which the correction
 stays in the incidence algebra --- which Proposition~\ref{prop:rigid} warns is
 not automatic --- the second-order ratio is $4(3N^2-5)/[3(N^2-4)]$, finite and
 greater than one at every rank $N\ge3$, decreasing from $88/15$ at $N=3$
-towards $4$. So at second order the charge-even band is the wider one at every
+towards $4$ --- a ratio of two even-$L$ spans, in the sense fixed above. So at second order the charge-even band is the wider one at every
 rank, and that asymmetry is a channel statement, not a geometric one.
 \chk{the C-even bandwidth is 16|t\_+| at every order; the C-odd manifold width is 12|t\_-|}
 \chk{at N = 2 the C-odd hopping vanishes and the C-even one does not}
@@ -1263,7 +1326,11 @@ subtracting $4t_-$ gives the flat scalar $11/306$ at $\lambda=-4$.
 Hamer's 1989 rest-frame series~\cite{Hamer1989} agrees with $E_{\mathrm{flat}}$
 at every shared order. It cannot test $\tau$. The hopping enters the spectrum
 only through $\tau(u)q(k)$ and $q(0)=0$, so every \emph{charge-odd}
-$\Gamma$-point datum is blind to it --- the charge-even rest frame is not, by
+$\Gamma$-point datum is blind to it. That argument runs inside the incidence
+ansatz, which Proposition~\ref{prop:rigid} warns is not unconditional; the
+Schur argument of Section~\ref{sec:even} removes the caveat, since the
+charge-odd triple carries the irreducible $T_1$ and its $\Gamma$ block is
+therefore scalar at every order. The charge-even rest frame is not blind, by
 Proposition~\ref{prop:evengamma}; the one-parameter family
 $(b_3+\varepsilon,\ \mathrm{leak}_3+\varepsilon/3)$ leaves $d_3$ and therefore
 the entire comparison unchanged. What the agreement pins is the combination
@@ -1295,8 +1362,8 @@ $L^{\downarrow}_2L^{\uparrow}_2=L^{\uparrow}_2L^{\downarrow}_2=0$, so any
 polynomial in them acts on $\ker L^{\downarrow}_2\cap\ker L^{\uparrow}_2$ by
 its constant term. The proposition is not an unconditional all-orders
 statement: $\{BMB\dg\}$ is not a two-sided ideal in $\mathrm{End}(C_2)$, and a
-general higher-order correction need not factor through links. Cubic symmetry
-alone permits carrier-projected fourth-order shapes built from
+general higher-order correction need not factor through links. The
+carrier-projected fourth-order shapes the corpus works with are
 \begin{equation}\label{eq:shapes}
   1,\quad q,\quad e_2,\quad \frac{4e_2}{q},\quad \frac{e_3}{q},
 \end{equation}
@@ -1306,6 +1373,20 @@ carrier-projected correction is $\varepsilon_4=(w\dg H_4w)/q$ and the
 numerator, not $\varepsilon_4$, is the polynomial.
 \chk{the carrier projection is where the 1/q comes from}
 \chk{clearing the denominator reproduces the five-element numerator basis}
+
+That family is \emph{not} what cubic symmetry permits, and an earlier edition
+of this paper attributed it there. The point group permutes $(a_1,a_2,a_3)$, so
+its invariants are the symmetric polynomials, and the numerators of degree at
+most three with no constant term span a six-dimensional space
+$\{q,q^2,e_2,q^3,qe_2,e_3\}$ --- one per partition. Clearing the denominator in
+\eqref{eq:shapes} returns five of those six; the missing direction is $q^3$,
+that is the shape $q^2$, which is cubic invariant and regular at $\Gamma$
+($q^2\sim|k|^4$), so neither the point group nor the carrier projection
+excludes it. The omission is a property of the two-hop enumeration that
+produced the family, and it is load-bearing: Theorem~\ref{thm:obstruction} is a
+rank statement about \emph{this} span, and a sixth direction would be a sixth
+unknown for the same data to determine.
+\chk{the shape family is not symmetry-complete: cubic symmetry alone permits q\^{}2 as well}
 
 \section{The fourth-order boundary}
 \label{sec:fourth}
@@ -1373,8 +1454,11 @@ $\|w\|^2=q=L$ leaves a single power of $L$ with coefficient $\alpha_3/4=5/48$.
 
 Non-identifiability is better exhibited than argued from a difference between
 two records, since a difference could always be a computational error in one of
-them. The witness below is not itself a candidate for the physical
-coefficient --- it is the balanced $\epsilon$-free continuation of the
+them. The exhibition adds no logical strength: Theorem~\ref{thm:obstruction}
+already proves that \emph{every} value of $C$ is consistent with the retained
+data, so a witness is one point of a line already known to be a line. It is a
+concrete handle, not evidence. The witness below is not itself a candidate for
+the physical coefficient --- it is the balanced $\epsilon$-free continuation of the
 all-rank shape family, and $\epsilon$-free is precisely what the physical value
 is not. Its job is to make the $4\Delta_C e_2$ family concrete with an exactly
 known shift.
@@ -1501,20 +1585,34 @@ vectors.
 \subsection{A near-$\Gamma$ statement that does not adjudicate}
 
 One quantitative fourth-order statement can be made without adjudicating
-anything, because it depends on the kernel only through $\sqrt{W_4}$. With
-Jordan's inequality $q(k)\ge(4/\pi^2)|k|^2$ on the whole zone --- tight at
-$k=0$ and at the zone corner --- and $\tau(u)\ge t_3u^2$ for $u>0$, the
-fourth-order shape terms are dominated by the second-order dispersion outside a
-ball of radius $Ku$ with
-$K=(\pi/2)\sqrt{W_4/(\theta t_3)}$. The two records give $K=17.04$ and
-$K=23.66$ --- floating point, since one of the two bandwidths exists only as a
-float --- and the larger bounds both, so the exclusion radius can be stated for
-either record without choosing between them. It is not a bound on the open
+anything, because it depends on the kernel only through $\sqrt{W_4}$. What the
+criterion needs is a lower bound on $q$ over the region $|k|\ge r$, and there it
+is sharp: writing $q=\sum_mh(k_m^2)$ with $h(t)=2(1-\cos\sqrt t)$, the identity
+$(s\cos s-\sin s)'=-s\sin s\le0$ makes $h$ concave and increasing on
+$[0,\pi^2]$, so the minimum over the simplex sits at a vertex and
+\begin{equation}\label{eq:shellmin}
+  \min_{|k|\ge r}q(k)=4\sin^2(r/2),
+\end{equation}
+attained on a coordinate \emph{axis}. With $\tau(u)\ge t_3u^2$ for $u>0$, the
+fourth-order shape terms are therefore dominated by the second-order dispersion
+outside a ball of radius $2\arcsin\bigl(\tfrac u2\sqrt{W_4/(\theta t_3)}\bigr)$,
+which is $Ku$ to leading order with $K=\sqrt{W_4/(\theta t_3)}$: the two records
+give $K=10.85$ and $K=15.06$ --- floating point, since one of the two bandwidths
+exists only as a float --- and the larger bounds both, so the exclusion radius
+can be stated for either record without choosing between them. Jordan's
+inequality $q(k)\ge(4/\pi^2)|k|^2$ also holds on the whole zone and is tight at
+$k=0$ and at the corner, but the corner is not where this bound is used; on the
+axis it is loose by $\pi^2/4$, and the constants it gives, $17.04$ and $23.66$,
+are exactly $\pi/2$ times the sharp ones. It is not a bound on the open
 coefficient: a value of $C_{\mathrm{shp}}$ outside the two records carries its
 own $W_4$, and nothing here confines the answer to the interval the records
-span. The statement is non-vacuous only for $u<0.133$ at $\theta=1/2$,
-and the excluded zone fraction grows as $u^3$.
+span. The statement is non-vacuous only for $u<0.133$ at $\theta=1/2$, and that
+threshold is the same for both constants --- the sharp radius reaches $\pi$ when
+$\tfrac u2\sqrt{W_4/(\theta t_3)}=1$, which is exactly where $Ku=\pi$ for the
+Jordan constant, because the two bounds agree at the zone corner. The excluded
+zone fraction grows as $u^3$.
 \chk{Jordan bound q(k) >= (4/pi\^{}2)|k|\^{}2 holds on the whole zone}
+\chk{the exact zone minimum of q on |k| >= r is 4 sin\^{}2(r/2), and Jordan overstates it by pi/2}
 \chk{the criterion survives C2: K depends on the kernel only through sqrt(W\_4)}
 \chk{the statement is non-vacuous only below an explicit coupling}
 
@@ -1705,12 +1803,12 @@ this one landed, and a label that had drifted passed unnoticed until it was
 made to read both.
 
 This edition pins commit
-\texttt{5ca91a92ac3b15b4a9ef5138c408f08947b16ffa} of the accompanying
+\texttt{ba17095b30df879be8b4e175aa334742fabcf4c0} of the accompanying
 repository --- the commit at which every check name printed above resolves,
 and the last one before this file itself lands. It carries the counters in
 Table~\ref{tab:counters}. They describe \emph{that} commit and no other, and
 each row has its own command: after
-\texttt{git checkout 5ca91a9}, \texttt{make verify} gives the $T_1$ and $T_2$
+\texttt{git checkout ba17095}, \texttt{make verify} gives the $T_1$ and $T_2$
 rows and \texttt{make check} the test count, while the $T_0$ row is the
 declaration scrape that \texttt{workhouse certified} prints ---
 \texttt{make lean} compiles the tree and reports no count.
@@ -1723,9 +1821,9 @@ They are provenance rather than independent evidence; the argument is above, and
 Layer & Count \\
 \midrule
 $T_0$ — Lean 4 theorems, no \texttt{sorry} & 40 \\
-$T_1$ — exact re-derivations & 183 \\
-$T_2$ — numerical, within a stated tolerance & 47 \\
-Repository tests & 475 \\
+$T_1$ — exact re-derivations & 188 \\
+$T_2$ — numerical, within a stated tolerance & 48 \\
+Repository tests & 485 \\
 \bottomrule
 \end{tabular}
 \caption{Counters at the pinned commit. The $T_0$ row counts theorem
@@ -1829,7 +1927,11 @@ exactly as Section~\ref{sec:su3} says.
 
 \section{The charge-even ledger}\label{app:even}
 
-In the same convention, with $\lambda\in\{12,-4\}$ and \eqref{eq:assembly}:
+In the same convention, with $\lambda\in\{12,-4\}$ and \eqref{eq:assembly}. The
+$\lambda=-4$ rows and the bandwidth read off them are even-$L$,
+thermodynamic-limit values: $\lambda=-4$ requires some $k_j=\pi$, which the
+periodic grid samples only at even $L$. The $\lambda=12$ rows sit at $\Gamma$
+and hold on every grid.
 
 \begin{center}
 \begin{tabular}{@{}lll@{}}
@@ -1986,7 +2088,8 @@ $G$ fixed; that is the shell reversal the one-cube reconstructions report.
 
 \bibitem{CBB2026} A.~N. Ciavarella, I.~M. Burbano and C.~W. Bauer,
   \emph{Efficient truncations of $SU(N_c)$ lattice gauge theory for quantum
-  simulation}, arXiv:2503.11888.
+  simulation}, arXiv:2503.11888 (2025). No journal reference appears on the
+  arXiv record as of 30 August 2026.
 
 \bibitem{Balaji2026} S.~Balaji \emph{et al.},
   \emph{Quantum simulation of $SU(3)$ lattice Yang--Mills theory: one-cube

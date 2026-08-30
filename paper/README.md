@@ -72,9 +72,9 @@ carrying its own machine check:
    the disputed coefficient at all. It adjudicates nothing and prefers no side.
    §9.
 
-It pins commit `5ca91a92ac3b15b4a9ef5138c408f08947b16ffa` — the last commit
+It pins commit `ba17095b30df879be8b4e175aa334742fabcf4c0` — the last commit
 before the edition itself lands, chosen so that every check name it prints
-resolves there. The counters in its Table 1 (40 / 183 / 47 / 475) describe that
+resolves there. The counters in its Table 1 (40 / 188 / 48 / 485) describe that
 commit and no other.
 
 ## The united edition
@@ -155,14 +155,14 @@ Two editions pin two commits, and the rule is the same for both: the pinned
 commit is the one at which every check name the edition prints resolves, the
 counters describe *that* commit, and each row has its own command.
 
-The final edition pins `5ca91a92ac3b15b4a9ef5138c408f08947b16ffa`:
+The final edition pins `ba17095b30df879be8b4e175aa334742fabcf4c0`:
 
-| Table 1 says | measured at `5ca91a9` |
+| Table 1 says | measured at `ba17095` |
 |---|---|
 | 40 Lean theorems, no `sorry` | 40 declarations, 0 `sorry` (scrape; `make lean` compiles them, and needs `elan`) |
-| 183 exact re-derivations | 183 T1 checks |
-| 47 numerical, within a stated tolerance | 47 T2 checks |
-| 475 repository tests | 475 collected, 475 passed |
+| 188 exact re-derivations | 188 T1 checks |
+| 48 numerical, within a stated tolerance | 48 T2 checks |
+| 485 repository tests | 485 collected, 485 passed |
 
 The `T_0` row is the one qualification worth repeating, because the edition
 makes it itself: it counts declarations, which is a scrape of the tree, and the
@@ -182,7 +182,7 @@ this directory existed:
 | 28 Lean theorems, no omitted proofs | 28 theorems, 0 `sorry` |
 
 Those numbers describe `ca3d440` and stay true there; `git checkout ca3d440 &&
-make verify` reproduces them, exactly as `git checkout 5ca91a9 && make verify`
+make verify` reproduces them, exactly as `git checkout ba17095 && make verify`
 reproduces the rows above. They are **not** a description of HEAD and were
 never meant to be — this session's own work moves them, which is what pinning a
 commit is for. The current counts are in `FRONTIER.md` §1.
