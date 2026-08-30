@@ -199,6 +199,40 @@ def _():
 
 
 @rank_law.check(
+    "the per-channel resolvent equation closes the projector-to-hopping step",
+    "PUB edition eqs. (11)-(12) / Thm. 10",
+)
+def _():
+    # A channel's squared projector norm d_rho/N^2 and its signed contribution
+    # to the cross matrix element are related but not identical statements.
+    # The publication edition displays the step between them: the per-channel
+    # resolvent element is -eta_rho * s(p',e) s(p,e) * (d_rho/N^2)/(C_F + C_rho/2)
+    # with eta = -1 on the mixed family {1, Adj} and +1 on the like family
+    # {Lam^2, Sym^2}, and summing the four channels IS the all-rank theorem.
+    eta = {"singlet": -1, "adjoint": -1, "antisym": 1, "sym": 1}
+    cf = _casimir_fundamental()
+    element = {}
+    for rho, (d_rho, c_rho) in _CHANNELS.items():
+        element[rho] = -eta[rho] * (d_rho / K.N**2) / (cf + c_rho / 2)
+    # each per-channel element is eta_rho * w_rho of the weight formula ...
+    per_channel = all(
+        simplify(element[rho] - eta[rho] * _channel_weight(rho)) == 0 for rho in _CHANNELS
+    )
+    # ... and the incidence-stripped sum over the four channels is t_N exactly
+    total = sum(element.values())
+    assembles = simplify(total - K.hopping()) == 0
+    at3 = {rho: str(element[rho].subs(K.N, 3)) for rho in _CHANNELS}
+    return per_channel and assembles, (
+        "per-channel elements -eta_rho (d_rho/N^2)/(C_F + C_rho/2): the mixed "
+        "family enters with eta = -1 and the like family with eta = +1 (the "
+        "charge-odd orientation-reversal sign), each equals eta_rho w_rho, and "
+        f"the four sum to t_N symbolically in N; at N = 3: {at3} summing to "
+        "5/612 — the projector-norm-to-cross-matrix-element step is a "
+        "displayed identity, not a jump"
+    )
+
+
+@rank_law.check(
     "A_N and B_N are the channel sums, not transcriptions",
     "MASTER paper eqs. (21)-(22)",
 )

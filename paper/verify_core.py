@@ -12,9 +12,9 @@ section:
      Gaussian-rational arithmetic at rational torus points (each entry is a
      polynomial of degree <= 2 per variable; exact vanishing on a 5-point
      grid per variable decides the polynomial identity, not a residual);
-  4. the chain condition d2 d3 = 0 over Z and the finite-torus ranks, with an
-     EXPLICIT kernel basis (cube boundaries + three wrapping sheets) shown to
-     be cycles of full kernel rank;
+  4. the chain condition d2 d3 = 0 over Z and the finite-torus ranks through
+     L = 5, with an EXPLICIT kernel basis (cube boundaries + three wrapping
+     sheets) shown to be cycles of full kernel rank;
   5. the wrapping sheets are cycles but not harmonic: Rayleigh quotient
      exactly 2.
 
@@ -349,9 +349,9 @@ def rank(mat):
     return r
 
 
-@check("d2 d3 = 0 over Z and rank d3 = L^3 - 1, L = 1..3")
+@check("d2 d3 = 0 over Z and rank d3 = L^3 - 1, L = 1..5")
 def _():
-    for ell in (1, 2, 3):
+    for ell in (1, 2, 3, 4, 5):
         d2, d3 = d2_matrix(ell), d3_matrix(ell)
         if any(v != 0 for row in matmul(d2, d3) for v in row):
             return False
@@ -360,9 +360,12 @@ def _():
     return True
 
 
-@check("dim ker d2 = L^3 + 2 with an explicit spanning cycle basis, L = 1..3")
+@check("dim ker d2 = L^3 + 2 with an explicit spanning cycle basis, L = 1..5")
 def _():
-    for ell in (1, 2, 3):
+    # extended through L = 5 so the bundled verifier covers the same range
+    # the finite-volume statements quote (the bounds meeting at L = 1..5),
+    # matching the homology suite's flint route with nothing but Fractions.
+    for ell in (1, 2, 3, 4, 5):
         d2, d3 = d2_matrix(ell), d3_matrix(ell)
         nullity = 3 * ell**3 - rank(d2)
         if nullity != ell**3 + 2:

@@ -10,13 +10,14 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 44 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 224/224 checks pass.
+**T1/T2 — re-derived here.** 232/232 checks pass.
 
 | Suite | Passing |
 |---|---|
-| second order, all ranks | 12/12 |
+| second order, all ranks | 13/13 |
+| global assembly: retained shell and process completeness | 7/7 |
 | SU(3) second and third order | 12/12 |
 | the charge-even band, exactly | 15/15 |
 | fourth order, sealed core | 6/6 |

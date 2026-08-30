@@ -15,95 +15,98 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 40
+## T0 — proof-checked — 47
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
 **lean core**
 
 - `C_from_beta`
-  - lean/Workhouse/Basic.lean:97
+  - lean/Workhouse/Basic.lean:208
   - `make lean`
 - `alphaPen_eq_neg_four_cube`
-  - lean/Workhouse/Basic.lean:234
+  - lean/Workhouse/Basic.lean:345
   - `make lean`
 - `alphaPen_five`
-  - lean/Workhouse/Basic.lean:69
+  - lean/Workhouse/Basic.lean:180
   - `make lean`
 - `alphaPen_four`
-  - lean/Workhouse/Basic.lean:68
+  - lean/Workhouse/Basic.lean:179
   - `make lean`
 - `alphaPen_six`
-  - lean/Workhouse/Basic.lean:70
-  - `make lean`
-- `alphaPen_three`
-  - lean/Workhouse/Basic.lean:67
-  - `make lean`
-- `alphaPen_three_eq_four_A`
-  - lean/Workhouse/Basic.lean:73
-  - `make lean`
-- `bandVar_pi`
-  - lean/Workhouse/Basic.lean:257
-  - `make lean`
-- `bandVar_pi_div_two`
-  - lean/Workhouse/Basic.lean:260
-  - `make lean`
-- `bandVar_zero`
-  - lean/Workhouse/Basic.lean:254
-  - `make lean`
-- `beta_from_A_and_C`
-  - lean/Workhouse/Basic.lean:105
-  - `make lean`
-- `blind_holdout`
-  - lean/Workhouse/Basic.lean:83
-  - `make lean`
-- `cPrimTwo_forms`
-  - lean/Workhouse/Basic.lean:206
-  - `make lean`
-- `cubeCompletion_three`
-  - lean/Workhouse/Basic.lean:225
-  - `make lean`
-- `delta_M`
-  - lean/Workhouse/Basic.lean:293
-  - `make lean`
-- `delta_P`
-  - lean/Workhouse/Basic.lean:299
-  - `make lean`
-- `delta_R`
-  - lean/Workhouse/Basic.lean:307
-  - `make lean`
-- `delta_X`
-  - lean/Workhouse/Basic.lean:288
-  - `make lean`
-- `dim_Z₂`
   - lean/Workhouse/Basic.lean:181
   - `make lean`
+- `alphaPen_three`
+  - lean/Workhouse/Basic.lean:178
+  - `make lean`
+- `alphaPen_three_eq_four_A`
+  - lean/Workhouse/Basic.lean:184
+  - `make lean`
+- `bandVar_pi`
+  - lean/Workhouse/Basic.lean:368
+  - `make lean`
+- `bandVar_pi_div_two`
+  - lean/Workhouse/Basic.lean:371
+  - `make lean`
+- `bandVar_zero`
+  - lean/Workhouse/Basic.lean:365
+  - `make lean`
+- `beta_from_A_and_C`
+  - lean/Workhouse/Basic.lean:216
+  - `make lean`
+- `blind_holdout`
+  - lean/Workhouse/Basic.lean:194
+  - `make lean`
+- `cPrimTwo_forms`
+  - lean/Workhouse/Basic.lean:317
+  - `make lean`
+- `channel_resolvent_assembly`
+  - lean/Workhouse/Basic.lean:148
+  - `make lean`
+- `cubeCompletion_three`
+  - lean/Workhouse/Basic.lean:336
+  - `make lean`
+- `delta_M`
+  - lean/Workhouse/Basic.lean:404
+  - `make lean`
+- `delta_P`
+  - lean/Workhouse/Basic.lean:410
+  - `make lean`
+- `delta_R`
+  - lean/Workhouse/Basic.lean:418
+  - `make lean`
+- `delta_X`
+  - lean/Workhouse/Basic.lean:399
+  - `make lean`
+- `dim_Z₂`
+  - lean/Workhouse/Basic.lean:292
+  - `make lean`
 - `d₃_ledger`
-  - lean/Workhouse/Basic.lean:59
+  - lean/Workhouse/Basic.lean:170
   - `make lean`
 - `even_cubic_at_sixteen`
-  - lean/Workhouse/Basic.lean:137
+  - lean/Workhouse/Basic.lean:248
   - `make lean`
 - `even_cubic_at_zero`
-  - lean/Workhouse/Basic.lean:131
+  - lean/Workhouse/Basic.lean:242
   - `make lean`
 - `even_cubic_derivative_factors`
-  - lean/Workhouse/Basic.lean:144
+  - lean/Workhouse/Basic.lean:255
   - `make lean`
 - `even_gram_minors`
-  - lean/Workhouse/Basic.lean:124
+  - lean/Workhouse/Basic.lean:235
   - `make lean`
 - `extraction_A`
-  - lean/Workhouse/Basic.lean:163
+  - lean/Workhouse/Basic.lean:274
   - `make lean`
 - `extraction_B`
-  - lean/Workhouse/Basic.lean:165
+  - lean/Workhouse/Basic.lean:276
   - `make lean`
 - `extraction_C`
-  - lean/Workhouse/Basic.lean:169
+  - lean/Workhouse/Basic.lean:280
   - `make lean`
 - `extraction_D`
-  - lean/Workhouse/Basic.lean:173
+  - lean/Workhouse/Basic.lean:284
   - `make lean`
 - `hopping_deficit_numerator`
   - lean/Workhouse/Basic.lean:48
@@ -114,35 +117,53 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `hopping_two`
   - lean/Workhouse/Basic.lean:44
   - `make lean`
+- `like_family_sum`
+  - lean/Workhouse/Basic.lean:129
+  - `make lean`
+- `mixed_family_sum`
+  - lean/Workhouse/Basic.lean:118
+  - `make lean`
 - `newton_three`
-  - lean/Workhouse/Basic.lean:153
+  - lean/Workhouse/Basic.lean:264
   - `make lean`
 - `pentCompletion_three`
-  - lean/Workhouse/Basic.lean:229
+  - lean/Workhouse/Basic.lean:340
   - `make lean`
 - `prismCompletion_three`
-  - lean/Workhouse/Basic.lean:221
+  - lean/Workhouse/Basic.lean:332
   - `make lean`
 - `q_at_checkpoints`
-  - lean/Workhouse/Basic.lean:279
+  - lean/Workhouse/Basic.lean:390
   - `make lean`
 - `rank_law_numerator`
   - lean/Workhouse/Basic.lean:36
   - `make lean`
+- `resolventWeight_adjoint`
+  - lean/Workhouse/Basic.lean:80
+  - `make lean`
+- `resolventWeight_antisym`
+  - lean/Workhouse/Basic.lean:89
+  - `make lean`
+- `resolventWeight_singlet`
+  - lean/Workhouse/Basic.lean:72
+  - `make lean`
+- `resolventWeight_sym`
+  - lean/Workhouse/Basic.lean:104
+  - `make lean`
 - `stencil_zero_mode`
-  - lean/Workhouse/Basic.lean:87
+  - lean/Workhouse/Basic.lean:198
   - `make lean`
 - `tetraCompletion_three`
-  - lean/Workhouse/Basic.lean:217
+  - lean/Workhouse/Basic.lean:328
   - `make lean`
 - `tetra_from_count`
-  - lean/Workhouse/Basic.lean:211
+  - lean/Workhouse/Basic.lean:322
   - `make lean`
 - `width_eq_alpha_add_beta`
-  - lean/Workhouse/Basic.lean:101
+  - lean/Workhouse/Basic.lean:212
   - `make lean`
 
-## T1 — re-derived exactly — 178
+## T1 — re-derived exactly — 186
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -250,6 +271,29 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `historical Q4 numerator is positive definite`
   - src/workhouse/invariants/fourth_order.py:303 · UNIFIED §0.1
   - `workhouse verify --only 'historical Q4 numerator is positive definite'`
+**global assembly: retained shell and process completeness**
+
+- `Casimir minimality pinned on a bounded window: F and F-bar, then the adjoint`
+  - src/workhouse/invariants/assembly.py:197 · PUB edition Lem. 14
+  - `workhouse verify --only 'Casimir minimality pinned on a bounded window: F and F-bar, then the adjoint'`
+- `every 4-cycle is an elementary face, except exactly the 3L^2 straight loops at L = 4`
+  - src/workhouse/invariants/assembly.py:151 · PUB edition Lem. 14
+  - `workhouse verify --only 'every 4-cycle is an elementary face, except exactly the 3L^2 straight loops at L = 4'`
+- `the L >= 3 torus link graph is simple, and L = 2 is the counterexample`
+  - src/workhouse/invariants/assembly.py:109 · PUB edition Lem. 14
+  - `workhouse verify --only 'the L >= 3 torus link graph is simple, and L = 2 is the counterexample'`
+- `the only cycles shorter than 4 are the 3L^2 winding triangles, at L = 3 alone`
+  - src/workhouse/invariants/assembly.py:132 · PUB edition Lem. 14
+  - `workhouse verify --only 'the only cycles shorter than 4 are the 3L^2 winding triangles, at L = 3 alone'`
+- `the two insertions are pinned to p and p': coverage arithmetic, exhaustively`
+  - src/workhouse/invariants/assembly.py:272 · PUB edition Lem. 15
+  - `workhouse verify --only 'the two insertions are pinned to p and p'"'"': coverage arithmetic, exhaustively'`
+- `two distinct faces share at most one link, exhaustively at L = 3, 4, 5`
+  - src/workhouse/invariants/assembly.py:243 · PUB edition Thm. 10 / Lem. 15
+  - `workhouse verify --only 'two distinct faces share at most one link, exhaustively at L = 3, 4, 5'`
+- `winding loops clear the shell: 3N/2 exceeds 2 C_F at every rank`
+  - src/workhouse/invariants/assembly.py:175 · PUB edition Lem. 14
+  - `workhouse verify --only 'winding loops clear the shell: 3N/2 exceeds 2 C_F at every rank'`
 **homology and finite volume**
 
 - `Delta_L = 4 tau(u) sin^2(pi/L) is positive and falls as L^-2`
@@ -511,7 +555,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **second order, all ranks**
 
 - `A_N and B_N are the channel sums, not transcriptions`
-  - src/workhouse/invariants/rank_law.py:201 · MASTER paper eqs. (21)-(22)
+  - src/workhouse/invariants/rank_law.py:235 · MASTER paper eqs. (21)-(22)
   - `workhouse verify --only 'A_N and B_N are the channel sums, not transcriptions'`
 - `N^3 t_N increases monotonically to 1/4`
   - src/workhouse/invariants/rank_law.py:60 · CANON §10.2/§10.5
@@ -526,7 +570,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/rank_law.py:156 · MASTER paper §4.1
   - `workhouse verify --only 'each channel gap is C_F + C_R/2, and the weights sum to one'`
 - `ell_N = A_N + B_N + 1/C_F, the vacuum-mediated route at every rank`
-  - src/workhouse/invariants/rank_law.py:216 · MASTER paper Prop. 8 / C13
+  - src/workhouse/invariants/rank_law.py:250 · MASTER paper Prop. 8 / C13
   - `workhouse verify --only 'ell_N = A_N + B_N + 1/C_F, the vacuum-mediated route at every rank'`
 - `large-N expansion of t_N through 1/N^9`
   - src/workhouse/invariants/rank_law.py:52 · GLUEBALL §4
@@ -543,6 +587,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the four channel weights follow from dimension and Casimir`
   - src/workhouse/invariants/rank_law.py:182 · MASTER paper eq. (20) / App. A
   - `workhouse verify --only 'the four channel weights follow from dimension and Casimir'`
+- `the per-channel resolvent equation closes the projector-to-hopping step`
+  - src/workhouse/invariants/rank_law.py:201 · PUB edition eqs. (11)-(12) / Thm. 10
+  - `workhouse verify --only 'the per-channel resolvent equation closes the projector-to-hopping step'`
 - `the shared-link weights are Weingarten, not an isotropy assumption`
   - src/workhouse/invariants/rank_law.py:133 · MASTER paper Thm. 5 / App. B
   - `workhouse verify --only 'the shared-link weights are Weingarten, not an isotropy assumption'`

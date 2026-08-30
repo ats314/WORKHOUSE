@@ -49,6 +49,117 @@ theorem hopping_deficit_numerator (n : ℚ) :
     (n ^ 2 - 1) * (2 * n ^ 2 - 1) * (4 * n ^ 2 - 9) - 4 * (n ^ 3 * (2 * n * (n ^ 2 - 4)))
       = 2 * n ^ 4 + 31 * n ^ 2 - 9 := by ring
 
+/-! ## The per-channel resolvent equation: the projector-to-hopping step
+
+A channel's squared projector norm `d_ρ/N²` and its signed contribution to the
+cross matrix element are related but not identical statements. The publication
+edition (eqs. 11–12) displays the step between them: the per-channel resolvent
+element is `−η_ρ s(p',e) s(p,e) (d_ρ/N²)/(C_F + C_ρ/2)` with `η = −1` on the
+mixed family `{1, Adj}` and `+1` on the like family `{Λ², Sym²}`, and the
+incidence-stripped four-channel sum IS the all-rank hopping. Formalised here so
+the assembly is a proof-checked identity from the dimension/Casimir table, not
+a jump between two displayed formulas. -/
+
+/-- The fundamental quadratic Casimir `C_F = (n² − 1)/(2n)`. -/
+noncomputable def casimirF (n : ℚ) : ℚ := (n ^ 2 - 1) / (2 * n)
+
+/-- The per-channel resolvent weight `w = −(d/n²)/(C_F + c/2)` for an
+intermediate channel of dimension `d` and Casimir `c`. -/
+noncomputable def resolventWeight (d c n : ℚ) : ℚ :=
+    -(d / n ^ 2) / (casimirF n + c / 2)
+
+/-- The singlet channel `(d, c) = (1, 0)` in closed form: `w₁ = −2/(n(n²−1))`. -/
+theorem resolventWeight_singlet (n : ℚ) (h0 : n ≠ 0) (h1 : n ^ 2 - 1 ≠ 0) :
+    resolventWeight 1 0 n = -2 / (n * (n ^ 2 - 1)) := by
+  unfold resolventWeight casimirF
+  rw [show (n ^ 2 - 1) / (2 * n) + (0 : ℚ) / 2 = (n ^ 2 - 1) / (2 * n) by ring,
+    div_div_eq_mul_div, div_eq_div_iff h1 (mul_ne_zero h0 h1)]
+  field_simp
+
+/-- The adjoint channel `(d, c) = (n²−1, n)`: `w_Adj = −2(n²−1)/(n(2n²−1))`. -/
+theorem resolventWeight_adjoint (n : ℚ) (h0 : n ≠ 0) (h3 : 2 * n ^ 2 - 1 ≠ 0) :
+    resolventWeight (n ^ 2 - 1) n n = -(2 * (n ^ 2 - 1)) / (n * (2 * n ^ 2 - 1)) := by
+  unfold resolventWeight casimirF
+  rw [show (n ^ 2 - 1) / (2 * n) + n / 2 = (2 * n ^ 2 - 1) / (2 * n) by field_simp; ring,
+    div_div_eq_mul_div, div_eq_div_iff h3 (mul_ne_zero h0 h3)]
+  field_simp
+
+/-- The antisymmetric channel `(d, c) = (n(n−1)/2, (n+1)(n−2)/n)`:
+`w_Λ = −(n−1)/((n+1)(2n−3))`. -/
+theorem resolventWeight_antisym (n : ℚ) (h0 : n ≠ 0) (h1p : n + 1 ≠ 0)
+    (h4 : 2 * n - 3 ≠ 0) :
+    resolventWeight (n * (n - 1) / 2) ((n + 1) * (n - 2) / n) n
+      = -(n - 1) / ((n + 1) * (2 * n - 3)) := by
+  unfold resolventWeight casimirF
+  have hD : 2 * n ^ 2 - n - 3 ≠ 0 := fun h =>
+    mul_ne_zero h4 h1p (by linear_combination h)
+  rw [show (n ^ 2 - 1) / (2 * n) + (n + 1) * (n - 2) / n / 2
+        = (2 * n ^ 2 - n - 3) / (2 * n) by field_simp; ring,
+    div_div_eq_mul_div, div_eq_div_iff hD (mul_ne_zero h1p h4)]
+  field_simp
+  ring
+
+/-- The symmetric channel `(d, c) = (n(n+1)/2, (n−1)(n+2)/n)`:
+`w_Sym = −(n+1)/((n−1)(2n+3))`. -/
+theorem resolventWeight_sym (n : ℚ) (h0 : n ≠ 0) (h1m : n - 1 ≠ 0)
+    (h5 : 2 * n + 3 ≠ 0) :
+    resolventWeight (n * (n + 1) / 2) ((n - 1) * (n + 2) / n) n
+      = -(n + 1) / ((n - 1) * (2 * n + 3)) := by
+  unfold resolventWeight casimirF
+  have hD : 2 * n ^ 2 + n - 3 ≠ 0 := fun h =>
+    mul_ne_zero h5 h1m (by linear_combination h)
+  rw [show (n ^ 2 - 1) / (2 * n) + (n - 1) * (n + 2) / n / 2
+        = (2 * n ^ 2 + n - 3) / (2 * n) by field_simp; ring,
+    div_div_eq_mul_div, div_eq_div_iff hD (mul_ne_zero h1m h5)]
+  field_simp
+  ring
+
+/-- The mixed family `{1, Adj}` sums to the antiparallel channel sum `A_N`. -/
+theorem mixed_family_sum (n : ℚ) (h0 : n ≠ 0) (h1 : n ^ 2 - 1 ≠ 0)
+    (h3 : 2 * n ^ 2 - 1 ≠ 0) :
+    resolventWeight 1 0 n + resolventWeight (n ^ 2 - 1) n n = antiparallelSum n := by
+  rw [resolventWeight_singlet n h0 h1, resolventWeight_adjoint n h0 h3]
+  unfold antiparallelSum
+  rw [div_add_div _ _ (mul_ne_zero h0 h1) (mul_ne_zero h0 h3),
+    div_eq_div_iff (mul_ne_zero (mul_ne_zero h0 h1) (mul_ne_zero h0 h3))
+      (mul_ne_zero h1 h3)]
+  ring
+
+/-- The like family `{Λ²F, Sym²F}` sums to the parallel channel sum `B_N`. -/
+theorem like_family_sum (n : ℚ) (h0 : n ≠ 0) (h1 : n ^ 2 - 1 ≠ 0)
+    (h4 : 2 * n - 3 ≠ 0) (h5 : 2 * n + 3 ≠ 0) :
+    resolventWeight (n * (n - 1) / 2) ((n + 1) * (n - 2) / n) n
+        + resolventWeight (n * (n + 1) / 2) ((n - 1) * (n + 2) / n) n
+      = parallelSum n := by
+  have h1p : n + 1 ≠ 0 := fun h => h1 (by linear_combination (n - 1) * h)
+  have h1m : n - 1 ≠ 0 := fun h => h1 (by linear_combination (n + 1) * h)
+  have h45 : 4 * n ^ 2 - 9 ≠ 0 := fun h =>
+    mul_ne_zero h4 h5 (by linear_combination h)
+  rw [resolventWeight_antisym n h0 h1p h4, resolventWeight_sym n h0 h1m h5]
+  unfold parallelSum
+  rw [div_add_div _ _ (mul_ne_zero h1p h4) (mul_ne_zero h1m h5),
+    div_eq_div_iff (mul_ne_zero (mul_ne_zero h1p h4) (mul_ne_zero h1m h5))
+      (mul_ne_zero h1 h45)]
+  ring
+
+/-- The projector-to-cross-matrix-element assembly: the like-family sum minus
+the mixed-family sum — the four per-channel resolvent elements with their
+charge-odd family signs `η_ρ` — is the all-rank hopping `t_N` exactly. -/
+theorem channel_resolvent_assembly (n : ℚ) (h0 : n ≠ 0) (h1 : n ^ 2 - 1 ≠ 0)
+    (h3 : 2 * n ^ 2 - 1 ≠ 0) (h4 : 2 * n - 3 ≠ 0) (h5 : 2 * n + 3 ≠ 0) :
+    (resolventWeight (n * (n - 1) / 2) ((n + 1) * (n - 2) / n) n
+        + resolventWeight (n * (n + 1) / 2) ((n - 1) * (n + 2) / n) n)
+      - (resolventWeight 1 0 n + resolventWeight (n ^ 2 - 1) n n)
+      = hopping n := by
+  have h45 : 4 * n ^ 2 - 9 ≠ 0 := fun h =>
+    mul_ne_zero h4 h5 (by linear_combination h)
+  rw [mixed_family_sum n h0 h1 h3, like_family_sum n h0 h1 h4 h5]
+  unfold antiparallelSum parallelSum hopping
+  rw [div_sub_div _ _ (mul_ne_zero h1 h45) (mul_ne_zero h1 h3),
+    div_eq_div_iff (mul_ne_zero (mul_ne_zero h1 h45) (mul_ne_zero h1 h3))
+      (mul_ne_zero (mul_ne_zero h1 h3) h45)]
+  ring
+
 /-! ## SU(3) through third order -/
 
 noncomputable def b₃ : ℚ := 1975 / 124848

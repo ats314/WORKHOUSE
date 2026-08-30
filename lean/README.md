@@ -26,7 +26,11 @@ rational arithmetic.
 ## What is proved
 
 Second order all ranks (the rank law with denominators cleared, `t₃ = 5/612`,
-`t₂ = 0`, the deficit identity), the third-order ledger identity, the sealed
+`t₂ = 0`, the deficit identity), the per-channel resolvent equation — the four
+channel weights in closed form from the dimension/Casimir table, the two
+family sums `A_N` and `B_N`, and the projector-to-cross-matrix-element
+assembly `Σ η_ρ w_ρ = t_N` (PUB edition eqs. 11–12) as rational identities
+with explicit non-vanishing hypotheses — the third-order ledger identity, the sealed
 fourth-order core and the all-rank axial law at every exceptional rank, the
 pencil relations including the blind holdout `λ_R = 2λ_M − λ_X` and the
 25-point stencil zero-mode gate, the historical kernel's internal consistency
