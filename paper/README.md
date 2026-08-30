@@ -1,10 +1,20 @@
 # The manuscript of record
 
-*Homological flat bands and channel-resolved two-cube hopping in
-strong-coupling SU(N) Hamiltonian lattice gauge theory*, Alexander Smith,
-29 August 2026 — the final edition, and the current artifact of record. It
-supersedes the 28 August united edition, which stays pinned here because the
-checks refer to its bytes too.
+*Exact shared-link hopping and a homological carrier in strong-coupling SU(N)
+Hamiltonian lattice gauge theory*, Alexander Smith, 30 August 2026 — the
+**publication edition v2**, and the current artifact of record. It supersedes
+the 29 August final edition and the 28 August united edition, both of which
+stay pinned here because the checks refer to their bytes too.
+
+The 29 August edition's corrections were carried into v2 rather than lost with
+it: the false leak/hopping contrast, the shape family's wrong attribution to
+cubic symmetry, the `H_2` collision between the perturbative expansion and
+cellular homology, the retracted `b_2(T^3)` remark, the undefined `W_4`, `θ`
+and `Δ`, the Casimir retention convention, the Schur argument that makes the
+rest-frame blindness unconditional, the exact zone minimum that sharpens the
+near-Γ radius by π/2, the channel-completeness lemma, the harmonic
+representatives of the wrapping sheets, and the two disputed `C_shp` records
+printed side by side with their gap.
 
 It is pinned here for the same reason `runs/` is pinned: the checks below refer
 to *these bytes*. `SHA256SUMS` records them and `tests/test_paper.py` fails if
@@ -21,7 +31,7 @@ any of them moves.
 | `make_figures.py`, `figure_*.pdf` | the three vector figures and their generator (NumPy + Matplotlib). |
 | `master_paper_2026-08-28.tex` | the united edition of 28 August, superseded by the publication edition v2, kept pinned. The two manuscripts below merged into one, with the four results this repository added on 2026-08-28 folded in. Source, not just output — the `.tex` is pinned alongside the `.pdf`. |
 | `master_paper_2026-08-28.pdf` | its build. Byte-reproducible; see **Rebuilding** below. |
-| `master_paper_2026-08-29.tex` | **the final edition, and the current artifact of record.** The united edition below plus the two-cube section, the charge-even closed form, the one-cube shell decomposition and the fourth-order geography. Source, not just output. |
+| `master_paper_2026-08-29.tex` | the 29 August final edition, superseded by v2 and kept pinned; its corrections were carried across. |
 | `master_paper_2026-08-29.pdf` | its build. Byte-reproducible; see **Rebuilding** below. |
 | `homological_flat_bands_2026-08-28.pdf` | the flat-band manuscript, the one that cites this repository by commit. Superseded by the united edition, kept as the pinned original. |
 | `nested_quotient_master_2026-08-28.pdf` | the master derivation, uniting it with the nested-quotient circuit theory. Superseded by the united edition, kept the same way. |
