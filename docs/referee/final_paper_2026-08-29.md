@@ -148,6 +148,68 @@ not a failure of the incidence form. The all-rank theorem's "the diagonal terms
 are scalars in face-orbital space" now says why, and names the case where it
 fails.
 
+## What the scope audit changed
+
+The dimension that read the paper as a hostile referee looking only for
+overclaim found eight more, and none of them is arithmetic either.
+
+- **"measured here on the 1,590,462-state space" contradicted "the construction
+  was not re-run here"**, eleven lines apart, and it was the load-bearing
+  justification for calling the census more than a coincidence of one sum. It
+  now says what is true: the delivery resolves it on the two-cube space; what
+  this repository checks is the identity the six delivered numbers satisfy.
+- **1,590,462 is a basis dimension, not the scale of a computation.** The
+  delivery says flatly that the magnetic matrix is never assembled at that
+  dimension — the contraction runs over 794 paths and 398 reachable states. The
+  abstract said "space of 1,590,462 states" and the body said
+  "1,590,462-state construction" twice more. Only the first use, which names it
+  as a truncation's basis, survives.
+- **The census shares its amplitudes with the thing it is checked against.**
+  The two-cube build draws its local Wilson amplitudes from the same
+  hash-pinned `pyclebsch` archive as the single-cube reconstructions, and the
+  squared amplitudes that archive produces are the published `d_rho/N^2` — the
+  numerator of the weight formula. So the census does not confirm the weights
+  from an independent source; it tests the *assembly* that carries them: the
+  reachable-channel list, the resolvent denominators, the operator-level fold,
+  the even split between conjugates, and the geometry that survives each
+  channel separately. That is a different statement, and the paper now makes it
+  rather than the stronger one. Repetition is not independence, and neither is
+  a shared upstream.
+- **Target blindness was stated one notch above the delivery's own
+  qualification.** The value is byte-present in the nested `B=4` package the
+  `B=6` build seals as an authority object, and the delivery calls its
+  chronology record-backed and only partly auditable. The defensible claim is
+  dependency-path nonuse, and the paper says that now.
+- **A third load-bearing prose premise was unadmitted.** The Scope section said
+  "two"; there are three. That the charge-even sector's Bloch symbol is the
+  unsigned incidence — the signed one with the boundary orientations dropped —
+  is asserted and never argued, and the closed-form cubic, the range, the
+  bandwidth and the `Gamma`-splitting all rest on it. The registry records it
+  as a convention, not a result.
+- **The second premise was also stated less precisely than it can be.** Three
+  of its ingredients are settled: the two tensor-product decompositions are
+  complete by representation theory, two distinct faces share at most one link,
+  and the vacuum route vanishes by C-parity. What is not settled is that
+  one-shared-link processes exhaust the second-order off-diagonal
+  intermediates. The gap is in the process enumeration, not the channel list,
+  and the paper's central theorem now carries that qualifier in the
+  self-contained list rather than only in Scope.
+- **The near-Gamma exclusion radius "survives the dispute" only as a two-way
+  choice.** `K` depends on the kernel through `sqrt(W_4)`, and `W_4` depends on
+  the coefficient; the larger `K` bounds the two *recorded* candidates and
+  nothing else. C2 is open, not an interval. Retitled, and the limitation
+  stated.
+- **"A constraint on any candidate" outran its measurement.** The `A`-pinning
+  result is a weight audit inside one fixed 189-record support. A kernel on a
+  different support is not constrained by it, and the paper's own next item
+  makes identical support an observation about the two records rather than a
+  property of the problem.
+- **Schierholz crossed the regime firewall the paper enforces two paragraphs
+  earlier.** A `beta = 5.9` Euclidean Monte Carlo measurement and an `a -> 0`
+  power law were being used to draw a structural conclusion about a
+  strong-coupling finite-lattice program. It stays, as a warning about why G18
+  must live in a smeared basis, with nothing transferred.
+
 ## What is still not checked, and what a referee should press on
 
 Recorded because a review that hides its gaps is worse than none.
