@@ -476,37 +476,37 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **restored payloads (G1)**
 
 - `FINDING: manifest row A60 names the pentagonal dual-cold bundle, and the tree lacks it`
-  - src/workhouse/invariants/restored.py:195 · UNIFIED §9.3 / G1
+  - src/workhouse/invariants/restored.py:198 · UNIFIED §9.3 / G1
   - `workhouse verify --only 'FINDING: manifest row A60 names the pentagonal dual-cold bundle, and the tree lacks it'`
 - `FINDING: no tetrahedral certificate exists, and no reference SHA is recorded for one`
-  - src/workhouse/invariants/restored.py:221 · corpus THM_FLUX_hodge_cellular_circuit_mobility_theorem.md / C15
+  - src/workhouse/invariants/restored.py:224 · corpus THM_FLUX_hodge_cellular_circuit_mobility_theorem.md / C15
   - `workhouse verify --only 'FINDING: no tetrahedral certificate exists, and no reference SHA is recorded for one'`
 - `q_N < 0 and beta_pen_N > 0 for every integer N >= 7 follow from the ledgers`
-  - src/workhouse/invariants/restored.py:115 · UNIFIED §8 / G1
+  - src/workhouse/invariants/restored.py:118 · UNIFIED §8 / G1
   - `workhouse verify --only 'q_N < 0 and beta_pen_N > 0 for every integer N >= 7 follow from the ledgers'`
 - `the 189-record kernel is shipped and carries both reference SHAs`
   - src/workhouse/invariants/restored.py:20 · UNIFIED §6 / G1
   - `workhouse verify --only 'the 189-record kernel is shipped and carries both reference SHAs'`
 - `the P_402 ledger is the Newton transcript of B_N * D_409`
-  - src/workhouse/invariants/restored.py:96 · UNIFIED §8 / G1
+  - src/workhouse/invariants/restored.py:99 · UNIFIED §8 / G1
   - `workhouse verify --only 'the P_402 ledger is the Newton transcript of B_N * D_409'`
 - `the Q_32 ledger is the Newton transcript of the compact q law`
-  - src/workhouse/invariants/restored.py:79 · UNIFIED §8 / G1
+  - src/workhouse/invariants/restored.py:82 · UNIFIED §8 / G1
   - `workhouse verify --only 'the Q_32 ledger is the Newton transcript of the compact q law'`
 - `the SU(5) stage-1 scan is shipped: 895,524 pairs, zero determinant sectors`
-  - src/workhouse/invariants/restored.py:175 · GCSG (Aug 8) / C16
+  - src/workhouse/invariants/restored.py:178 · GCSG (Aug 8) / C16
   - `workhouse verify --only 'the SU(5) stage-1 scan is shipped: 895,524 pairs, zero determinant sectors'`
 - `the SU(6) determinant correction is exactly 6/343 and momentum-independent`
-  - src/workhouse/invariants/restored.py:151 · GCSG (Aug 8) / C16
+  - src/workhouse/invariants/restored.py:154 · GCSG (Aug 8) / C16
   - `workhouse verify --only 'the SU(6) determinant correction is exactly 6/343 and momentum-independent'`
 - `the kernel re-derives q, alpha, beta, and the historical C_shp exactly`
-  - src/workhouse/invariants/restored.py:43 · UNIFIED §6 / G1
+  - src/workhouse/invariants/restored.py:46 · UNIFIED §6 / G1
   - `workhouse verify --only 'the kernel re-derives q, alpha, beta, and the historical C_shp exactly'`
 - `the stored fixed-rank q samples N = 7..18 match the compact law exactly`
-  - src/workhouse/invariants/restored.py:139 · UNIFIED §8 / C17
+  - src/workhouse/invariants/restored.py:142 · UNIFIED §8 / C17
   - `workhouse verify --only 'the stored fixed-rank q samples N = 7..18 match the compact law exactly'`
 - `three kernel copies agree record-for-record, from two independent builds`
-  - src/workhouse/invariants/restored.py:65 · UNIFIED §6 / G1
+  - src/workhouse/invariants/restored.py:68 · UNIFIED §6 / G1
   - `workhouse verify --only 'three kernel copies agree record-for-record, from two independent builds'`
 **second order, all ranks**
 

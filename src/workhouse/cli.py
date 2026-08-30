@@ -537,6 +537,15 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     args = parser.parse_args(argv)
+    # A cp1252 console (Windows CI, some terminals) cannot encode the arrows
+    # and math glyphs the ledgers carry; escape them rather than crash, so the
+    # same command is runnable on every host.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure") and (stream.encoding or "").lower() not in (
+            "utf-8",
+            "utf8",
+        ):
+            stream.reconfigure(errors="backslashreplace")
     if _plain_stdout_wanted(args.no_color):
         sys.stdout = _AnsiStrippingStdout(sys.stdout)
     if args.command == "verify":

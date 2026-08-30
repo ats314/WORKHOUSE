@@ -22,7 +22,10 @@ restored = _suite("restored payloads (G1)")
 )
 def _():
     pins = P.corpus_pins()
-    rel = str(P.KERNEL.relative_to(P.CORPUS))
+    # as_posix, not str: the corpus manifest keys its rows with forward
+    # slashes, and str() would produce backslashes on Windows, failing the
+    # pin lookup there while passing everywhere else.
+    rel = P.KERNEL.relative_to(P.CORPUS).as_posix()
     actual = P.sha256_of(P.KERNEL)
     semantic = P.semantic_sha()
     row = P.canonical_rows().get("A20K", {})
