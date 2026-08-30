@@ -163,7 +163,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:212
   - `make lean`
 
-## T1 — re-derived exactly — 186
+## T1 — re-derived exactly — 190
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -675,6 +675,20 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the tetrahedral circuit attains its bound with nonzero weight`
   - src/workhouse/invariants/tetrahedral.py:382 · THM_FLUX §2 / C6
   - `workhouse verify --only 'the tetrahedral circuit attains its bound with nonzero weight'`
+**the G18 interpolator: local carrier operators and the sheet no-go**
+
+- `compact 2-cycles on open windows are exactly cube boundaries`
+  - src/workhouse/invariants/interpolator.py:178 · G18 / MASTER paper App. E
+  - `workhouse verify --only 'compact 2-cycles on open windows are exactly cube boundaries'`
+- `cube boundaries are exact flat eigenstates of every assembled symbol, L = 2..5`
+  - src/workhouse/invariants/interpolator.py:57 · G18 / PUB edition Thm. 16 / MASTER paper Thm. 2
+  - `workhouse verify --only 'cube boundaries are exact flat eigenstates of every assembled symbol, L = 2..5'`
+- `im d3 is Gamma-blind, and the sheets carry the whole zone-average`
+  - src/workhouse/invariants/interpolator.py:83 · G18 / MASTER paper Thm. 2
+  - `workhouse verify --only 'im d3 is Gamma-blind, and the sheets carry the whole zone-average'`
+- `the sheets decouple from local observables at exact rate 1/L`
+  - src/workhouse/invariants/interpolator.py:112 · G18 / MASTER paper §3.1
+  - `workhouse verify --only 'the sheets decouple from local observables at exact rate 1/L'`
 **the charge-even band, exactly**
 
 - `FINDING: the certificate key 'bandmin' holds the band MAXIMUM, at both orders`

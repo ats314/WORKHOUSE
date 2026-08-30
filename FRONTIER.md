@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 44 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 232/232 checks pass.
+**T1/T2 — re-derived here.** 236/236 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -26,6 +26,7 @@ it cannot drift from what the repository actually checks.
 | fourth-order generalized Hodge pencil | 3/3 |
 | fourth-order checkpoint extraction | 3/3 |
 | homology and finite volume | 12/12 |
+| the G18 interpolator: local carrier operators and the sheet no-go | 4/4 |
 | settlement package and adjudication harness (G3) | 16/16 |
 | near-Gamma uniformity (G11) | 6/6 |
 | tier collapse (G14) | 6/6 |
@@ -144,7 +145,7 @@ settles nothing is excluded however cheap it looks.
 - `G3` (weeks) Fourth-order adjudication — decide C_shp where it actually lives — settles C2, G9
   - REWRITTEN 2026-08-28, at the maintainer's standing instruction, after the sweep-cannot-decide-C2 finding below. The original G3 ("run the marked-cluster engine target-blind", the 11-item GLUEBALL §18.1 protocol) directed every session at a sealed 609-evaluation sweep that is now established — by T1 static scan, not by fatigue — to emit the Gamma-point scalar only, a quantity externally validated and structurally incapable of constraining Delta_C (Phi_C(0) = 0). Four sessions dead-ended on that path (absent engine, closure cap, cost, and finally the structural incapacity); the register, not the next agent, now carries that knowledge. What G3 must settle is unchanged: the off-axis coefficient C_shp (C2). The route is replaced by the two paths that can actually reach it, cheapest first.
 - `G17` (unbounded) PC-2 free-energy stability and the source-radius reduction — settles load-bearing
-  - The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction.
+  - The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction. Lead recorded 2026-08-30, unverified here: the Euclidean counterpart of the needed uniform-in-volume strong-coupling control is classical constructive work (the Osterwalder--Seiler cluster expansion for lattice gauge theory, 1978), which proves convergence and a mass gap at strong coupling uniformly in volume for the EUCLIDEAN theory. The open question G17 actually poses is the Hamiltonian transcription of that bound for this projected sector. Indexing the paper awaits a primary-source read (literature/index.yaml requires INSPIRE-sourced fields, never memory); nothing is promoted by this pointer.
 - `G18` (unbounded) The spectral bridge — settles load-bearing
   - Volume-uniform overlap of a smeared/dressed T_1^{+-} operator built on the protected carrier with the transfer-matrix spectrum, then multi-plaquette survival of the b_2-fold protected level. The corpus's own Monte Carlo shows the BARE operator carries <4% (2 sigma) of the physical state, so the theorem must live in the smeared basis.
 

@@ -33,6 +33,7 @@ _MODULES = (
     "charge_even",
     "fourth_order",
     "homology",
+    "interpolator",
     "adjudication",
     "uniformity",
     "tier",
