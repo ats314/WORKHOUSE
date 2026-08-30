@@ -59,6 +59,9 @@ KINDS = (
     "decision",
     "document",
     "citation",
+    "archive",
+    "note",
+    "run",
 )
 
 #: A ledger id anywhere in free text. Case-sensitive on purpose: `u4` in
@@ -308,7 +311,7 @@ def collect() -> list[Claim]:
                 where="ledger/contradictions.yaml",
                 cites=entry.get("section", ""),
                 status=entry["status"],
-                detail=" ".join(str(entry.get("resolution", "")).split()),
+                detail=" ".join(str(entry.get("resolution") or entry.get("notes") or "").split()),
                 related=sorted(entry.get("blocks", [])),
             )
         )
@@ -466,7 +469,7 @@ def collect() -> list[Claim]:
             Claim(
                 id=f"CITE:{alias['alias']}",
                 kind="citation",
-                statement=alias["alias"],
+                statement=alias.get("title", alias["alias"]),
                 tier=3,
                 where=str(alias.get("path", "")),
                 cites="ledger/documents.yaml",

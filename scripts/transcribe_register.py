@@ -118,7 +118,7 @@ supersedes: theory/superseded/MASTER_THEORY_UNIFIED_2026-08-20_v3.md §14
 def items(document: Path) -> list[tuple[str, str]]:
     section = re.search(
         r"^## 14\. Governing contradiction and errata register\n(.*?)^---$",
-        document.read_text(),
+        document.read_text(encoding="utf-8"),
         re.MULTILINE | re.DOTALL,
     )
     if section is None:
@@ -156,5 +156,5 @@ if __name__ == "__main__":
     missing = sorted(set(f"R{i}" for i in range(1, len(entries) + 1)) - set(CROSSWALK))
     if missing:
         raise SystemExit(f"CROSSWALK has no entry for {missing}; add one (empty lists are fine)")
-    OUT.write_text(render(entries))
+    OUT.write_text(render(entries), encoding="utf-8", newline="\n")
     print(f"{OUT}: {len(entries)} items")

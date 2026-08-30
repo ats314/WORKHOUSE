@@ -54,6 +54,9 @@ def test_the_ledger_edges_survive_the_round_trip():
     assert ("LIT:HAMER_1989:HAMER_A4_NUM", "CONST:HAMER_A4_NUM", "bears_on") in TRIPLES
     assert ("U3", "G14", "supported_by") in TRIPLES
     assert ("U3", "ADR:0005", "supported_by") in TRIPLES
+    assert ("CITE:UNIFIED", "CITE:GLUEBALL", "technical_appendix") in TRIPLES
+    assert ("CITE:UNIFIED", "CITE:GUIDE", "navigation") in TRIPLES
+    assert ("CITE:UNIFIED", "CITE:MANIFEST", "provenance") in TRIPLES
 
 
 def test_the_citation_web_is_in_the_graph():

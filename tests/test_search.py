@@ -1,6 +1,7 @@
 """Search is the retrieval this corpus actually needs: by value, not by concept."""
 
 import json
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -15,6 +16,34 @@ SYMBOLS = C.symbol_records(CATALOGUE)
 
 def _search(query):
     return S.search(query, CATALOGUE, SYMBOLS)
+
+
+def _fixed_string_search(patterns: str, *roots: Path) -> subprocess.CompletedProcess[str]:
+    """Run the corpus spelling gate with the host's available search tool."""
+    grep = shutil.which("grep")
+    if grep:
+        argv = [grep, "-rIohF", "-f", "-", *(str(root) for root in roots)]
+    else:
+        rg = shutil.which("rg")
+        if rg is None:
+            raise RuntimeError("the corpus spelling tests require grep or rg")
+        argv = [
+            rg,
+            "--no-ignore",
+            "-I",
+            "-o",
+            "-F",
+            "-f",
+            "-",
+            *(str(root) for root in roots),
+        ]
+    return subprocess.run(
+        argv,
+        input=patterns,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+    )
 
 
 def test_exact_rationals_match_by_value_not_by_spelling():
@@ -113,12 +142,7 @@ def test_every_declared_corpus_spelling_is_still_findable():
         for spelling in symbol["corpus_spellings"]
     }
     patterns = "\n".join(sorted(wanted)) + "\n"
-    found = subprocess.run(
-        ["grep", "-rIohF", "-f", "-", str(corpus), str(ROOT / "theory")],
-        input=patterns,
-        capture_output=True,
-        text=True,
-    )
+    found = _fixed_string_search(patterns, corpus, ROOT / "theory")
     seen = found.stdout
     missing = sorted(spelling for spelling in wanted if spelling not in seen)
     assert not missing, "declared corpus spellings that no longer appear: " + "; ".join(missing)
@@ -132,12 +156,7 @@ def test_coined_names_really_are_absent_from_the_corpus():
     coined = [s["canonical"] for s in SYMBOLS if s.get("coined_here")]
     if not coined:
         return
-    found = subprocess.run(
-        ["grep", "-rIohF", "-f", "-", str(corpus)],
-        input="\n".join(coined) + "\n",
-        capture_output=True,
-        text=True,
-    )
+    found = _fixed_string_search("\n".join(coined) + "\n", corpus)
     assert not found.stdout.strip(), (
         f"marked coined_here but present in the corpus: {set(found.stdout.split())}"
     )
