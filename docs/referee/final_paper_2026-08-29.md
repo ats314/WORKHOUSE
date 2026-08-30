@@ -590,3 +590,37 @@ the tree. `sorry` is a *warning* in Lean 4, not an error, so a green build does
 not by itself establish sorry-freeness — that rests on the declaration scrape —
 and nothing computes the axiom footprint at all. The counter table's caption
 already says only what is supported, and it stays as it is.
+
+## The full audit, aggregated
+
+The nine-dimension workflow finished long after its individual dimensions had
+been applied: 98 agents, 88 findings put to an adversarial verifier, 72
+surviving. Checking the survivor list against the edition mechanically —
+probing each finding's quoted text against the current file — found all but one
+already applied across the three rounds above. Recording the sweep because a
+list of findings nobody re-checked is not evidence that they were addressed.
+
+The residue was a notation hole rather than a false claim. The assembly formula
+credits its tower term to "the certified coupling conversion $4\Delta(3u/2)$",
+and `Δ` was never defined anywhere in the manuscript — so the sentence that
+says the assembly "takes no unregistered input" could not be checked from the
+page even though it is true. Both series are now written out where the erratum
+is discussed:
+
+    Δ_-(x) = 2/3 + x/6 + (1/18)x² + (7/432)x³
+    Δ_+(x) = 2/3 − x/6 + (13/180)x² + (101/2700)x³,   x = β_3/4 = 3u/2
+
+which is exactly what the passing check `the printed towers are canonical-u`
+converts. Writing it out surfaced a second, smaller problem it would have been
+easy to introduce: `Δ` already carries four other meanings in the paper — the
+checkpoint differences `Δ_X, Δ_M, Δ_P, Δ_R`, the coefficient gap `Δ_C`, and the
+finite-volume separation `Δ_L`. The sector subscript is now stated to be the
+only one that means this series.
+
+Nothing else in the 72 survived contact with the current edition. Two things
+the verifiers added to their finders' accounts are worth keeping, since both
+sharpen rather than soften: the census residual belongs to the six channel
+coefficients at 2.2e-15, not to the delivery as a whole at 2.1e-14 (the paper
+now prints both and says which is which); and the held-out finite-u control is
+a 66-dimensional star with the Q1–Q1 magnetic block *set to zero*, which is a
+second unexecuted computation rather than a modelling choice.
