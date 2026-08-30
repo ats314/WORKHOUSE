@@ -1767,8 +1767,8 @@ chain condition $\partial_2\partial_3=0$ over $\mathbb Z$ and the finite-torus
 ranks with an explicit kernel basis, together with the closed cube surface of
 Proposition~\ref{prop:cube}; the Rayleigh quotient of the wrapping sheets; the
 two-cube connected geometry rebuilt from oriented cell boundaries, its exact
-$B=6$ and $B=4$ spectra, and Reported result~\ref{rep:census} channel by
-channel; the charge-even cubic of Theorem~\ref{thm:evencubic} with $p+q=12$ and
+$B=6$ and $B=4$ spectra, the endpoint Casimir budgets and the weak retention
+rule they decide, and Reported result~\ref{rep:census} channel by channel; the charge-even cubic of Theorem~\ref{thm:evencubic} with $p+q=12$ and
 the four high-symmetry spectra of both sectors and the $\Gamma$ splitting of
 Proposition~\ref{prop:evengamma}; the checkpoint algebra of
 \eqref{eq:checkpoints}, the second witness, and the vanishing of $e_2$ on
@@ -1803,12 +1803,12 @@ this one landed, and a label that had drifted passed unnoticed until it was
 made to read both.
 
 This edition pins commit
-\texttt{ba17095b30df879be8b4e175aa334742fabcf4c0} of the accompanying
+\texttt{af3ab5f2e9860e75372c1a143a33c828f8b0d9ba} of the accompanying
 repository --- the commit at which every check name printed above resolves,
 and the last one before this file itself lands. It carries the counters in
 Table~\ref{tab:counters}. They describe \emph{that} commit and no other, and
 each row has its own command: after
-\texttt{git checkout ba17095}, \texttt{make verify} gives the $T_1$ and $T_2$
+\texttt{git checkout af3ab5f}, \texttt{make verify} gives the $T_1$ and $T_2$
 rows and \texttt{make check} the test count, while the $T_0$ row is the
 declaration scrape that \texttt{workhouse certified} prints ---
 \texttt{make lean} compiles the tree and reports no count.
@@ -1822,8 +1822,8 @@ Layer & Count \\
 \midrule
 $T_0$ — Lean 4 theorems, no \texttt{sorry} & 40 \\
 $T_1$ — exact re-derivations & 188 \\
-$T_2$ — numerical, within a stated tolerance & 48 \\
-Repository tests & 485 \\
+$T_2$ — numerical, within a stated tolerance & 49 \\
+Repository tests & 486 \\
 \bottomrule
 \end{tabular}
 \caption{Counters at the pinned commit. The $T_0$ row counts theorem
@@ -1842,9 +1842,21 @@ $t_2=0$, the third-order ledger identity, the axial law at every exceptional
 rank, the cycle count $(L^3-1)+3=L^3+2$, the four checkpoint-extraction
 formulas and the deltas they invert, and four statements about the charge-even
 cubic including the identity that its middle coefficient is $p^2$. It is
-exact-rational and polynomial algebra only: no perturbative derivation, no
-operator theory, and nothing that bears on $C_{\mathrm{shp}}$ appears there,
-because none of that reduces to rational arithmetic.
+exact-rational and polynomial algebra, plus the trigonometric checkpoint
+evaluations over $\mathbb R$ that supply those deltas --- the $\mathbb R$
+section exists because the extraction theorems formalised only half a statement
+without it. There is no perturbative derivation and no operator theory.
+
+An earlier edition added that ``nothing that bears on $C_{\mathrm{shp}}$
+appears there''. That was false, and false about the one genuinely open item
+here. The Lean core defines the historical side
+$C_{\mathrm{old}}=-211835444920651/4405310420659200$ as an exact rational and
+proves three internal-consistency relations about it: $C$ from $\beta$, the
+width as $\alpha+\beta$, and the tier-collapse relation. What it contains no
+spelling of, anywhere in the tree, is the v10a.26 value --- so the layer
+touches $C_{\mathrm{shp}}$ and still prefers neither side, and that
+even-handedness is an absence checked by inspection rather than asserted.
+\chk{the Lean core DOES carry the historical C\_shp side, and still adjudicates nothing}
 
 Machine checks certify algebra relative to stated definitions and inputs; they
 do not replace a derivation, and they do not certify an uncompleted off-axis

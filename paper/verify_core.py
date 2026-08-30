@@ -22,7 +22,8 @@ section:
   6. the two-cube connected geometry rebuilt from oriented cell boundaries,
      its exact B = 6 and B = 4 connected spectra, the six-channel census read
      channel by channel against the four Weingarten weights, and the endpoint
-     Casimir budgets that admit six channels at B = 6 and three at B = 4;
+     Casimir budgets that admit six channels at B = 6 and three at B = 4,
+     under a weak rule both of whose decisions are equalities;
   7. the charge-even Bloch cubic mu(mu - p)^2 = 4 a1 a2 a3 with p + q = 12,
      decided in the same Gaussian-rational arithmetic as group 3, the four
      high-symmetry spectra of BOTH sectors with their attainment sets, and the
@@ -604,13 +605,23 @@ def _():
     )
 
 
-@check("B=6 admits every adjacent shared-link channel and B=4 admits three")
+@check("B=6 admits every adjacent shared-link channel and B=4 admits three, by a weak rule")
 def _():
+    # The retention rule is C2(rho) + 2 C2(3) <= B, and the weak inequality is
+    # load-bearing: bar3 sits at exactly 4 and the sextet at exactly 6, so both
+    # decisions the paper uses are equalities. A strict rule would give {1}
+    # alone at B = 4 and lose the sextet at B = 6, contradicting both delivered
+    # censuses -- which is how the deliveries fix the convention.
     casimir = {"1": F(0), "3": F(4, 3), "bar3": F(4, 3), "6": F(10, 3), "bar6": F(10, 3), "8": F(3)}
     budget = {r: c + 2 * casimir["3"] for r, c in casimir.items()}
+    weak = {b: {r for r, v in budget.items() if v <= b} for b in (4, 6)}
+    strict = {b: {r for r, v in budget.items() if v < b} for b in (4, 6)}
     return (
-        {r for r, b in budget.items() if b <= 6} == set(CENSUS)
-        and {r for r, b in budget.items() if b <= 4} == {"1", "3", "bar3"}
+        weak[6] == set(CENSUS)
+        and weak[4] == {"1", "3", "bar3"}
+        and strict[6] != set(CENSUS)
+        and strict[4] != {"1", "3", "bar3"}
+        and budget["bar3"] == 4
         and budget["6"] == 6
         and budget["8"] == F(17, 3)
     )

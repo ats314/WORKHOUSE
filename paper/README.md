@@ -72,9 +72,9 @@ carrying its own machine check:
    the disputed coefficient at all. It adjudicates nothing and prefers no side.
    §9.
 
-It pins commit `ba17095b30df879be8b4e175aa334742fabcf4c0` — the last commit
+It pins commit `af3ab5f2e9860e75372c1a143a33c828f8b0d9ba` — the last commit
 before the edition itself lands, chosen so that every check name it prints
-resolves there. The counters in its Table 1 (40 / 188 / 48 / 485) describe that
+resolves there. The counters in its Table 1 (40 / 188 / 49 / 486) describe that
 commit and no other.
 
 ## The united edition
@@ -155,14 +155,14 @@ Two editions pin two commits, and the rule is the same for both: the pinned
 commit is the one at which every check name the edition prints resolves, the
 counters describe *that* commit, and each row has its own command.
 
-The final edition pins `ba17095b30df879be8b4e175aa334742fabcf4c0`:
+The final edition pins `af3ab5f2e9860e75372c1a143a33c828f8b0d9ba`:
 
-| Table 1 says | measured at `ba17095` |
+| Table 1 says | measured at `af3ab5f` |
 |---|---|
 | 40 Lean theorems, no `sorry` | 40 declarations, 0 `sorry` (scrape; `make lean` compiles them, and needs `elan`) |
 | 188 exact re-derivations | 188 T1 checks |
-| 48 numerical, within a stated tolerance | 48 T2 checks |
-| 485 repository tests | 485 collected, 485 passed |
+| 49 numerical, within a stated tolerance | 49 T2 checks |
+| 486 repository tests | 486 collected, 486 passed |
 
 The `T_0` row is the one qualification worth repeating, because the edition
 makes it itself: it counts declarations, which is a scrape of the tree, and the
@@ -182,7 +182,7 @@ this directory existed:
 | 28 Lean theorems, no omitted proofs | 28 theorems, 0 `sorry` |
 
 Those numbers describe `ca3d440` and stay true there; `git checkout ca3d440 &&
-make verify` reproduces them, exactly as `git checkout ba17095 && make verify`
+make verify` reproduces them, exactly as `git checkout af3ab5f && make verify`
 reproduces the rows above. They are **not** a description of HEAD and were
 never meant to be — this session's own work moves them, which is what pinning a
 commit is for. The current counts are in `FRONTIER.md` §1.
