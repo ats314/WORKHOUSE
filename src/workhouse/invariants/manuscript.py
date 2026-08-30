@@ -329,3 +329,77 @@ def _():
         f"hand-written summary of it has gone stale twice. {len(connected)} previously-stranded "
         "nodes have since gained an edge" + (f": {connected}" if connected else "")
     )
+
+
+@manuscript.check(
+    "the Lean core DOES carry the historical C_shp side, and still adjudicates nothing",
+    "lean/Workhouse/Basic.lean; MASTER paper §Reproducibility",
+    tier=2,
+)
+def _():
+    # CORRECTS a false reassurance the manuscript printed: "nothing that bears
+    # on C_shp appears there, because none of that reduces to rational
+    # arithmetic". Both halves are wrong, and the first is wrong about the one
+    # genuinely open item in this repository.
+    #
+    # lean/Workhouse/Basic.lean has a section headed "The historical SU(3)
+    # kernel" which DEFINES C_shp_old as an exact rational -- the historical
+    # side of C2 -- and proves three theorems relating it to the pencil
+    # coefficients. So C_shp does reduce to rational arithmetic, and the Lean
+    # layer does touch it.
+    #
+    # The true statement is better than the false one, and it is what this
+    # check establishes: the Lean layer proves INTERNAL-CONSISTENCY relations
+    # of the historical kernel and contains no trace of the rival v10a.26
+    # value, so it prefers neither side. "Adjudicates nothing" is a checkable
+    # absence, not a claimed one -- which is the difference the corpus rule
+    # about C2 is for.
+    #
+    # T2 because establishing the absence means naming the rival value, which
+    # the corpus records only as a float, and the tier guard matches `_NUM`.
+    # The verdict itself is an exact rational comparison plus string absence.
+    from .. import constants as K
+
+    lean_dir = PAPER_DIR.parent / "lean"
+    basic = (lean_dir / "Workhouse" / "Basic.lean").read_text(encoding="utf-8")
+    sources = sorted(lean_dir.rglob("*.lean"))
+    corpus = "\n".join(p.read_text(encoding="utf-8") for p in sources)
+
+    # 1. the historical side is there, as the exact rational the registry holds
+    declared = re.search(r"def\s+C_shp_old\s*:\s*ℚ\s*:=\s*(-?\d+)\s*/\s*(\d+)", basic)
+    matches_registry = (
+        declared is not None
+        and K.Rational(int(declared.group(1)), int(declared.group(2))) == K.C_SHP_HISTORICAL
+    )
+
+    # 2. and it is the subject of theorems, not a dangling definition
+    about_it = {
+        name
+        for name in ("C_from_beta", "width_eq_alpha_add_beta", "beta_from_A_and_C")
+        if re.search(rf"theorem\s+{name}\b", basic)
+    }
+
+    # 3. the rival value appears nowhere in the Lean tree, in any spelling
+    rival = repr(K.C_SHP_NEW_NUM).lstrip("-")
+    digits = rival.split(".")[-1]
+    absent = rival not in corpus and digits[:10] not in corpus
+
+    # 4. and the layer is NOT rational-only: the checkpoint deltas live over R
+    over_the_reals = "Real.sin" in basic and "(k : ℝ)" in basic
+    trig = {
+        name
+        for name in ("Real.sin_pi_div_four", "Real.sin_pi_div_two", "Real.sqrt")
+        if name in basic
+    }
+    ok = matches_registry and len(about_it) == 3 and absent and over_the_reals and trig
+    return ok, (
+        f"lean/Workhouse/Basic.lean defines C_shp_old = {K.C_SHP_HISTORICAL}, the "
+        f"registry's historical side of C2, and proves {sorted(about_it)} about it — so "
+        "the Lean layer DOES bear on C_shp, contrary to what the manuscript used to "
+        f"say. What it does not contain, across {len(sources)} .lean file(s), is any "
+        "spelling of the v10a.26 value: the adjudication is absent by inspection rather "
+        "than by assertion. The layer is also not exact-rational only — the checkpoint "
+        f"deltas are stated over R and use {sorted(trig)} — which is a strengthening: "
+        "the extraction theorems formalised only half a statement until that section "
+        "existed"
+    )

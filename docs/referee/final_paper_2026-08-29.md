@@ -550,3 +550,43 @@ round (Sutherland 1986, Mielke 1991, Bergman–Wu–Balents 2008) had stranded t
 graph census; they are now accounted for by name, with the reason recorded:
 not-yet-obtained, so no primary reference list exists to build citation edges
 from, and inventing one is what `literature/index.yaml` forbids.
+
+## The Lean layer, and a false reassurance about C2
+
+Found last, while checking why CI's `Lean (T0)` job passing did not license
+dropping the counter table's caveat. Two sentences about the Lean layer were
+false, and one of them was false about the single genuinely open item here.
+
+**"Nothing that bears on `C_shp` appears there."** It does.
+`lean/Workhouse/Basic.lean` has a section headed *The historical SU(3) kernel*
+that defines `C_shp_old` as the exact rational
+`-211835444920651/4405310420659200` — the historical side of C2 — and proves
+three theorems about it: `C_from_beta`, `width_eq_alpha_add_beta`, and
+`beta_from_A_and_C`. The stated reason for the claim was self-defeating: it
+said `C_shp` does not reduce to rational arithmetic, and the file reduces it to
+rational arithmetic on the next line.
+
+The true statement is the better one, and it is now a check rather than a
+sentence: the Lean layer proves *internal-consistency relations* of the
+historical kernel and contains no spelling of the v10a.26 value anywhere in
+the tree. So it touches `C_shp` and still prefers neither side — an absence
+established by inspection, which is what the corpus rule about C2 asks for and
+what a claimed absence cannot give. Registered as `the Lean core DOES carry the
+historical C_shp side, and still adjudicates nothing`; T2, because naming the
+rival value means reading a float.
+
+**"It is exact-rational and polynomial algebra only."** Also false, and the
+correction is a strengthening. The checkpoint deltas the same paragraph credits
+are stated over `ℝ` and use `Real.sin_pi_div_four` and `Real.sin_pi_div_two`;
+that section exists precisely because the extraction theorems formalised only
+half a statement without it.
+
+Two smaller things went in beside them. `verify_core.py`'s Casimir-budget check
+now asserts that the strict rule contradicts both delivered censuses, not just
+that the weak one reproduces them — the boundary is the content — and the
+manuscript's group-six description credits it. And a note on what CI does and
+does not establish: the `Lean (T0)` job runs `lake build`, which type-checks
+the tree. `sorry` is a *warning* in Lean 4, not an error, so a green build does
+not by itself establish sorry-freeness — that rests on the declaration scrape —
+and nothing computes the axiom footprint at all. The counter table's caption
+already says only what is supported, and it stays as it is.

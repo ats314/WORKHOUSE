@@ -757,7 +757,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/two_cube.py:637 · R2; G3; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
 
-## T2 — float agreement within a stated tolerance — 48
+## T2 — float agreement within a stated tolerance — 49
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -921,6 +921,9 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `every node the theory graph strands is stranded for a stated reason`
   - src/workhouse/invariants/manuscript.py:179 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
   - `workhouse verify --only 'every node the theory graph strands is stranded for a stated reason'`
+- `the Lean core DOES carry the historical C_shp side, and still adjudicates nothing`
+  - src/workhouse/invariants/manuscript.py:334 · lean/Workhouse/Basic.lean; MASTER paper §Reproducibility
+  - `workhouse verify --only 'the Lean core DOES carry the historical C_shp side, and still adjudicates nothing'`
 **two-cube charge-odd second-order closure (B=4 and B=6)**
 
 - `every shared-link channel is separately proportional to the geometry, on all 56 pairs`
