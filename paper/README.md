@@ -1,9 +1,20 @@
 # The manuscript of record
 
-*Homological flat bands in strongly coupled SU(N) Hamiltonian lattice gauge
-theory*, Alexander Smith, 28 August 2026 — the first piece of this program
-written for outside readers, and the first artifact that cites this repository
-by commit.
+*Exact shared-link hopping and a homological carrier in strong-coupling SU(N)
+Hamiltonian lattice gauge theory*, Alexander Smith, 30 August 2026 — the
+**publication edition v2**, and the current artifact of record. It supersedes
+the 29 August final edition and the 28 August united edition, both of which
+stay pinned here because the checks refer to their bytes too.
+
+The 29 August edition's corrections were carried into v2 rather than lost with
+it: the false leak/hopping contrast, the shape family's wrong attribution to
+cubic symmetry, the `H_2` collision between the perturbative expansion and
+cellular homology, the retracted `b_2(T^3)` remark, the undefined `W_4`, `θ`
+and `Δ`, the Casimir retention convention, the Schur argument that makes the
+rest-frame blindness unconditional, the exact zone minimum that sharpens the
+near-Γ radius by π/2, the channel-completeness lemma, the harmonic
+representatives of the wrapping sheets, and the two disputed `C_shp` records
+printed side by side with their gap.
 
 It is pinned here for the same reason `runs/` is pinned: the checks below refer
 to *these bytes*. `SHA256SUMS` records them and `tests/test_paper.py` fails if
@@ -20,11 +31,13 @@ any of them moves.
 | `make_figures.py`, `figure_*.pdf` | the three vector figures and their generator (NumPy + Matplotlib). |
 | `master_paper_2026-08-28.tex` | the united edition of 28 August, superseded by the publication edition v2, kept pinned. The two manuscripts below merged into one, with the four results this repository added on 2026-08-28 folded in. Source, not just output — the `.tex` is pinned alongside the `.pdf`. |
 | `master_paper_2026-08-28.pdf` | its build. Byte-reproducible; see **Rebuilding** below. |
+| `master_paper_2026-08-29.tex` | the 29 August final edition, superseded by v2 and kept pinned; its corrections were carried across. |
+| `master_paper_2026-08-29.pdf` | its build. Byte-reproducible; see **Rebuilding** below. |
 | `homological_flat_bands_2026-08-28.pdf` | the flat-band manuscript, the one that cites this repository by commit. Superseded by the united edition, kept as the pinned original. |
 | `nested_quotient_master_2026-08-28.pdf` | the master derivation, uniting it with the nested-quotient circuit theory. Superseded by the united edition, kept the same way. |
 | `nested_quotient_master_2026-08-28.txt` | its extracted text, same provenance and standing as the line below. |
 | `homological_flat_bands_2026-08-28.txt` | its text, extracted once with `pypdf` 6.16.2 so checks can read it. Derived, never authority — where the two differ the PDF wins. |
-| `verify_core.py` | the master paper's portable verifier: 12 checks, standard library only, matching its Reproducibility section. |
+| `verify_core.py` | the master paper's portable verifier: 25 checks in nine claim groups, standard library only, matching its Reproducibility section. |
 | `../verify_core.py` | the flat-band manuscript's, 16 checks. Root-level so *that* manuscript's printed `python3 verify_core.py` is true as printed. |
 
 Two verifiers because there are two papers. They overlap on the ledger and
@@ -40,7 +53,46 @@ make paper      # both verifiers, then three reproducible pdflatex passes
 
 The review that drove the united edition is
 `docs/referee/final_paper_review_2026-08-28.md`; this repository's own referee
-document on the flat-band manuscript is `docs/referee/final_paper_2026-08-28.md`.
+documents are `docs/referee/final_paper_2026-08-28.md` on the flat-band
+manuscript and `docs/referee/final_paper_2026-08-29.md` on the final edition.
+
+## The final edition
+
+`master_paper_2026-08-29.tex` is the united edition plus five things, each
+carrying its own machine check:
+
+1. **The two-cube section.** The channel decomposition of `t_N`, previously a
+   representation-theoretic ledger derived on a single plaquette pair, is
+   recovered on a face-sharing two-cube SU(3) space of 1,590,462 states and the
+   two decompositions agree channel by channel, not merely in the sum. On that
+   space each of the six channels is separately proportional to the same
+   incidence Gram, on all 56 adjacent pairs — the separation of colour from
+   geometry, measured. §5.
+2. **What the cutoff moves.** The connected diagonal, eleven numbers in both
+   deliveries, is constant on the prism's three symmetry orbits, and the whole
+   `B = 4 -> B = 6` difference is confined to the eight faces that carry
+   connected transport. Where the faces are a single orbit — the closed cube,
+   the periodic torus — the same statement forces the scalar diagonal that
+   makes `alpha I + t G` exact there. §5.3, and it is why §4's "the diagonal
+   terms are scalars in face-orbital space" now says *why*.
+3. **The one-cube shell.** `A_1^{--} + T_1^{+-} + E^{--}`, derived from the 24
+   rotations rather than assigned, with `ker d_2` on the closed cube surface
+   exhibited as the fundamental class — the same homological object as the
+   torus carrier. Its flat level sits at the scalar for every hopping
+   coefficient. §5.4.
+4. **The charge-even sector in closed form.** The Bloch cubic
+   `mu(mu - p)^2 = 4 a1 a2 a3` with `p + q = 12`, its exact range, and the
+   `Gamma`-point splitting that pins `t_+` where no charge-odd rest-frame datum
+   can. §6.
+5. **The fourth-order geography.** An obstruction certificate, an explicit
+   second witness, and the measurement that no `Gamma`-anchoring error can move
+   the disputed coefficient at all. It adjudicates nothing and prefers no side.
+   §9.
+
+It pins commit `af3ab5f2e9860e75372c1a143a33c828f8b0d9ba` — the last commit
+before the edition itself lands, chosen so that every check name it prints
+resolves there. The counters in its Table 1 (40 / 188 / 49 / 486) describe that
+commit and no other.
 
 ## The united edition
 
@@ -81,11 +133,15 @@ workhouse verify --only '<the name printed under the equation>'
 `section` string can cite it and `tests/test_documents.py` keeps the reference
 resolvable — the citation runs both ways.
 
-That device is itself checked. `every \chk in the united paper names a check
-that exists and passes` resolves all 32 printed labels against the live
-registry and fails if one is renamed or deleted — otherwise the paper would go
-on printing a command that no longer resolves, which is the same drift
-`FRONTIER.md`'s staleness test exists to catch.
+That device is itself checked. `every \chk in every pinned edition names a
+check that exists and passes` globs `paper/*.tex`, resolves every printed label
+against the live registry, and fails if one is renamed, deleted, or left red —
+otherwise the paper would go on printing a command that no longer resolves,
+which is the same drift `FRONTIER.md`'s staleness test exists to catch. It read
+one hard-coded filename for a while, which is exactly how a drifted label in a
+newer edition went unnoticed. **A glob and not a list, deliberately**: a list is
+one more thing to remember when an edition lands, and forgetting it is the
+failure this check exists to prevent.
 
 The united edition is deliberately **not** in `PAPER_TEXTS`, and so is not
 scanned by the fourth-order firewall check. It discusses the fourth order on
@@ -96,20 +152,42 @@ original manuscripts and remains measured for them.
 
 ```bash
 cd paper
+SOURCE_DATE_EPOCH=1756425600 FORCE_SOURCE_DATE=1 \
+  pdflatex -interaction=nonstopmode master_paper_2026-08-29.tex   # x3
 SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
   pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex   # x3
 ```
 
-Three passes for the cross-references. `SOURCE_DATE_EPOCH` is what makes the
-digest in `SHA256SUMS` reproducible — without it `pdflatex` stamps the build
-time into the PDF and the pin fails on a rebuild that changed nothing. Needs
-`texlive-latex-base` and `texlive-latex-recommended` (for `booktabs`). Zero
-overfull boxes and zero undefined references is the accepted state; the build
-is 7 pages.
+Three passes each, for the cross-references. `SOURCE_DATE_EPOCH` is what makes
+the digests in `SHA256SUMS` reproducible — without it `pdflatex` stamps the
+build time into the PDF and the pin fails on a rebuild that changed nothing.
+Each edition keeps its own epoch, which is its own date; changing one does not
+disturb the other. Needs `texlive-latex-base` and `texlive-latex-recommended`
+(for `booktabs`). Zero overfull boxes and zero undefined references is the
+accepted state; the 08-29 build is 20 pages and the 08-28 build 7.
 
-## What the manuscript says about this repository
+## What the manuscripts say about this repository
 
-§9 pins commit `ca3d440a7f93c17569e12d0511847505b6b72c5a` and reports four
+Two editions pin two commits, and the rule is the same for both: the pinned
+commit is the one at which every check name the edition prints resolves, the
+counters describe *that* commit, and each row has its own command.
+
+The final edition pins `af3ab5f2e9860e75372c1a143a33c828f8b0d9ba`:
+
+| Table 1 says | measured at `af3ab5f` |
+|---|---|
+| 40 Lean theorems, no `sorry` | 40 declarations, 0 `sorry` (scrape; `make lean` compiles them, and needs `elan`) |
+| 188 exact re-derivations | 188 T1 checks |
+| 49 numerical, within a stated tolerance | 49 T2 checks |
+| 486 repository tests | 486 collected, 486 passed |
+
+The `T_0` row is the one qualification worth repeating, because the edition
+makes it itself: it counts declarations, which is a scrape of the tree, and the
+environment the edition was typeset in carries no Lean toolchain, so the
+compilation was not re-run for it.
+
+The flat-band manuscript's §9 pins commit
+`ca3d440a7f93c17569e12d0511847505b6b72c5a` and reports four
 counters for it. All four were re-measured at that commit, before anything in
 this directory existed:
 
@@ -121,7 +199,8 @@ this directory existed:
 | 28 Lean theorems, no omitted proofs | 28 theorems, 0 `sorry` |
 
 Those numbers describe `ca3d440` and stay true there; `git checkout ca3d440 &&
-make verify` reproduces them. They are **not** a description of HEAD and were
+make verify` reproduces them, exactly as `git checkout af3ab5f && make verify`
+reproduces the rows above. They are **not** a description of HEAD and were
 never meant to be — this session's own work moves them, which is what pinning a
 commit is for. The current counts are in `FRONTIER.md` §1.
 
@@ -141,6 +220,23 @@ find out who checks it.
 ```bash
 workhouse verify --only '<check name>'
 ```
+
+The two **editions** carry their own map inline — every displayed result prints
+its check beneath it, and `every \chk in the pinned editions names a check that
+exists and passes` keeps all 141 of those labels resolvable. The table below is
+therefore the map for the two pinned **originals**, which print nothing. The
+rows the final edition adds, for a reader who wants them collected:
+
+| Final edition | Check | Tier |
+|---|---|---|
+| §5, the connected kernel | `the B=6 connected kernel is (5/612) G_conn + diag, with the certified spectrum` · `the connected two-cube geometry has exactly four cross-cell pairs, each -1` | T1 |
+| §5, first order | `connected first order vanishes by inclusion-exclusion, not by cancellation of numbers` | T1 |
+| §5, the six-channel census | `the B=6 six-channel census IS the Weingarten four-channel ledger, channel by channel` · `the B=6 six-channel census sums to the registry's own t_3 = 5/612` | T1 |
+| §5, the separation measured per channel | `every shared-link channel is separately proportional to the geometry, on all 56 pairs` | T2 |
+| §5.3, where the truncation lives | `the connected diagonal is orbit-constant, and only the transporting orbit moves` | T1 |
+| §5.4, the one-cube shell | `the one-cube shell is A1 + T1 + E, and its flat level is the S^2 fundamental class` | T1 |
+| §8, boundary-factorised rigidity | `a boundary-factorised correction shifts the carrier without dispersing it, for generic M` | T1 |
+| §6, range and attainment | `the C-even range [-4, 12] is exact; the top only at Gamma, the floor on three planes` · `the C-even band touches its floor exactly on the three planes k_j = pi` | T1 |
 
 | Manuscript | Check | Tier |
 |---|---|---|

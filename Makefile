@@ -45,16 +45,20 @@ catalogue:       ## Regenerate the index/ catalogues: claims, symbols, graph
 atlas:           ## Render the theory graph to atlas.html (a view; never checked in)
 	@.venv/bin/workhouse atlas
 
-paper:           ## Build the master paper PDF and run both stdlib core verifiers
+paper:           ## Build both master-paper PDFs and run both stdlib core verifiers
 	@python3 verify_core.py
 	@cd paper && python3 verify_core.py \
-		&& SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
-		   pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null \
-		&& SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
-		   pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null \
-		&& SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
-		   pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null \
-		&& echo "paper/master_paper_2026-08-28.pdf"
+		&& for pass in 1 2 3; do \
+			SOURCE_DATE_EPOCH=1756425600 FORCE_SOURCE_DATE=1 \
+			  pdflatex -interaction=nonstopmode master_paper_2026-08-29.tex >/dev/null; \
+		done \
+		&& for pass in 1 2 3; do \
+			SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
+			  pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex >/dev/null; \
+		done \
+		&& rm -f master_paper_2026-08-2[89].aux master_paper_2026-08-2[89].log \
+			 master_paper_2026-08-2[89].out \
+		&& echo "paper/master_paper_2026-08-29.pdf  paper/master_paper_2026-08-28.pdf"
 
 
 lit:             ## Published work, and which claim each paper bears on

@@ -93,3 +93,21 @@ def excluded_zone_fraction(u, theta=DEFAULT_THETA):
     if float(radius) >= float(pi):
         return 1.0
     return float((Rational(4, 3) * pi * radius**3) / (8 * pi**3))
+
+
+def exact_crossover_constant(bandwidth_4, theta=DEFAULT_THETA):
+    """The same radius constant, from the exact zone minimum instead of Jordan.
+
+    Jordan's inequality is tight at the zone corner, but the constraint the
+    criterion needs is a lower bound on ``q`` over the region ``|k| >= r``, and
+    there the minimiser is on a coordinate AXIS, not at the corner. The exact
+    minimum is ``4 sin^2(r/2)`` (see the invariant of the same name), so the
+    sufficient radius is
+
+        r  >=  2 arcsin( (u/2) sqrt(W_4 / (theta t_3)) ),
+
+    whose leading term is ``sqrt(W_4 / (theta t_3)) * u``. That is smaller than
+    the Jordan constant by exactly ``pi/2``: same theorem, sharper constant.
+    """
+    w4 = nsimplify(bandwidth_4, rational=True)
+    return sqrt(w4 / (theta * K.T_MINUS_2))

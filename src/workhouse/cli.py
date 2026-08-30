@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
 import os
 import re
@@ -29,6 +30,30 @@ def _plain_stdout_wanted(no_color: bool) -> bool:
     if no_color or os.environ.get("NO_COLOR"):
         return True
     return not sys.stdout.isatty()
+
+
+def _name_the_output_encoding() -> None:
+    """Never let the console's code page decide whether a command runs.
+
+    ``tests/test_portability.py`` fixed the INPUT side of this: every read in
+    ``src/`` names utf-8, because a corpus holding hundreds of non-cp1252 files
+    cannot be decoded by a Windows locale. The OUTPUT side was never covered and
+    fails the same way in the other direction -- ``workhouse why C2`` prints the
+    graph's arrows (U+2192, U+2190), cp1252 cannot encode them, and the command
+    dies with UnicodeEncodeError on a default Windows console. The repository's
+    own Windows smoke job is what caught it.
+
+    Losing one character is always better than losing the command, so ask for
+    ``backslashreplace`` and leave the stream's encoding alone: on every UTF-8
+    platform the output is byte-identical, and on a legacy code page an arrow
+    degrades to ``\\u2192`` instead of taking the process with it.
+    """
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is None:  # pytest's capture object, a plain StringIO
+            continue
+        with contextlib.suppress(ValueError, OSError):  # a stream that will not be told
+            reconfigure(errors="backslashreplace")
 
 
 class _AnsiStrippingStdout:
@@ -537,15 +562,7 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     args = parser.parse_args(argv)
-    # A cp1252 console (Windows CI, some terminals) cannot encode the arrows
-    # and math glyphs the ledgers carry; escape them rather than crash, so the
-    # same command is runnable on every host.
-    for stream in (sys.stdout, sys.stderr):
-        if hasattr(stream, "reconfigure") and (stream.encoding or "").lower() not in (
-            "utf-8",
-            "utf8",
-        ):
-            stream.reconfigure(errors="backslashreplace")
+    _name_the_output_encoding()
     if _plain_stdout_wanted(args.no_color):
         sys.stdout = _AnsiStrippingStdout(sys.stdout)
     if args.command == "verify":

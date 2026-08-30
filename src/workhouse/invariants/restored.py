@@ -22,9 +22,11 @@ restored = _suite("restored payloads (G1)")
 )
 def _():
     pins = P.corpus_pins()
-    # as_posix, not str: the corpus manifest keys its rows with forward
-    # slashes, and str() would produce backslashes on Windows, failing the
-    # pin lookup there while passing everywhere else.
+    # as_posix, not str: the corpus pin file keys its rows with forward
+    # slashes, and str() of a relative Path gives backslashes on Windows, so
+    # `pins.get(rel)` came back None and this check failed there and only
+    # there. Reported against this repository from a Windows host, where it
+    # was the single failing invariant out of 225.
     rel = P.KERNEL.relative_to(P.CORPUS).as_posix()
     actual = P.sha256_of(P.KERNEL)
     semantic = P.semantic_sha()

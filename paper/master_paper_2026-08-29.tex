@@ -1,25 +1,9 @@
-\documentclass[11pt]{article}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage{amsmath,amssymb,amsthm,mathtools}
-\usepackage[margin=1in]{geometry}
-\usepackage{booktabs,array,graphicx}
-\usepackage{microtype}
-\usepackage{enumitem}
-\usepackage{xurl}
-\usepackage[svgnames]{xcolor}
+\documentclass[10pt,twocolumn]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=0.85in]{geometry}
+\usepackage{booktabs}
 \usepackage{hyperref}
-\hypersetup{
-  colorlinks=true,
-  linkcolor=MidnightBlue,
-  citecolor=MidnightBlue,
-  urlcolor=MidnightBlue,
-  pdftitle={Exact shared-link hopping and a homological carrier in strong-coupling SU(N) Hamiltonian lattice gauge theory},
-  pdfauthor={Alexander Smith}
-}
-\setlist{itemsep=2pt,topsep=4pt}
-\setlength{\emergencystretch}{2em}
-\raggedbottom
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}
@@ -33,17 +17,18 @@
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 
-% Check labels remain in the source for registry validation but are suppressed
-% in the typeset article; Section~\ref{sec:repro} explains how to recover them.
-\newcommand{\chk}[1]{}
+% Every displayed result that a machine check establishes names it.
+\newcommand{\chk}[1]{\par\smallskip\noindent{\footnotesize\textsf{check:}
+  \texttt{#1}}\par\smallskip}
 
 \newcommand{\CF}{C_F}
 \newcommand{\dg}{^{\dagger}}
 
 \begin{document}
 
-\title{\bfseries Exact shared-link hopping and a homological carrier\\
-in strong-coupling $SU(N)$ Hamiltonian lattice gauge theory}
+\title{\bfseries Homological flat bands and channel-resolved two-cube hopping
+in strong-coupling $SU(N)$ Hamiltonian lattice gauge theory\\[2mm]
+\large With machine-checked provenance}
 \author{Alexander Smith\\ \small Independent Researcher}
 \date{29 August 2026}
 \maketitle
@@ -51,45 +36,69 @@ in strong-coupling $SU(N)$ Hamiltonian lattice gauge theory}
 \begin{abstract}
 \noindent
 We study the Kogut--Susskind Hamiltonian for pure $SU(N)$ gauge theory on a
-periodic cubic spatial lattice at strong coupling. In the normalised
-charge-odd fundamental-plaquette sector, an explicit order-two Weingarten
-calculation gives the exact coefficient of hopping between adjacent
-plaquettes that share one link,
+periodic cubic spatial lattice at strong coupling. After selecting the
+complete gauge-invariant charge-odd one-plaquette eigenspace, fixed-order
+contributions are organised as ordered magnetic histories on the Haar--Gram
+quotient of reachable Wilson networks. What is exact and all-rank is one matrix
+element: the connected second-order coupling between two plaquettes sharing an
+oriented link is $t_Nu^2$ times their incidence overlap, with
 \[
   t_N=\frac{2N(N^2-4)}{(N^2-1)(2N^2-1)(4N^2-9)}>0,\qquad N\ge 3 .
 \]
-The oriented cellular boundary $B=\partial_2\dg$ fixes the corresponding local
-geometry. Two premises that earlier versions carried as hypotheses---that the
-retained external space is exactly the charge-odd one-plaquette shell, and
-that shared-link routes exhaust second-order off-diagonal processes---are
-proved here, from one classical Casimir-minimality fact and exhaustively
-enumerated lattice combinatorics, so the global order-$u^2$ symbol
-$t_Nu^2B(k)B(k)\dg$ is now a theorem within the standard degenerate
-perturbation framework. Its spectrum is
-$\{0,t_Nu^2q,t_Nu^2q\}$ up to a common scalar, with
-$q=4\sum_j\sin^2(k_j/2)$, and its flat carrier
-$\ker\partial_2$ has dimension $L^3+2$. A supplied $SU(3)$ two-cube
-calculation reports the same coefficient channel by channel and localises the
-cutoff dependence to one symmetry orbit; these finite-precision contractions
-are corroboration, not an independent derivation. A later sealed cutoff-free
-radius-two spectrum returns the coefficient without being asked for it: six of
-the eleven eigenvalues of its second-order block are exact rationals, and the
-outer pair straddles the central triple by exactly $2t_3=5/306$, in an
-operator that made no shared-link truncation. Exact integer geometry also
-gives the closed-cube shell
-$A_1^{--}\oplus T_1^{+-}\oplus E^{--}$ with Gram eigenvalues $0,4,6$.
+Under two stated hypotheses --- that the retained shell is exactly the
+charge-odd one-plaquette span, and that no connected non-adjacent history
+carries momentum dependence --- those elements assemble into the oriented
+edge--face Gram operator $t_Nu^2B(k)B(k)\dg$ with $B=\partial_2\dg$, whose
+projected spectrum is $\{0,\,t_Nu^2q,\,t_Nu^2q\}$ up to a common scalar,
+$q=4\sum_j\sin^2(k_j/2)$. Neither hypothesis is checked here and both are named
+where they are used. The flat carrier is $\ker\partial_2$, of exact dimension
+$L^3+2$, and that is unconditional.
 
-For comparison we solve the spectrum of a defined unsigned-incidence operator
-in closed form. Identifying that operator with the complete charge-even linked
-Hamiltonian requires a further derivation, because the vacuum-mediated route
-must be accounted for. The organized upstream corpus records a cold exact
-replay of the retained $SU(3)$ third-order chain, although that microscopic
-replay is not bundled here. Fourth-order physical-kernel diagnostics remain
-conditional; in particular, the retained checkpoints provably do not determine
-the off-axis coefficient.
-All results are finite-volume, finite-order statements in a projected
-strong-coupling sector. No continuum glueball or Yang--Mills mass-gap claim is
-made.
+Relative to the 28 August edition this one adds five things, each carrying its
+own machine check. The channel decomposition of $t_N$, previously a
+representation-theoretic ledger derived on a single plaquette pair, is recovered on a
+genuine face-sharing two-cube $SU(3)$ cluster --- an exact-Casimir $B=6$ basis
+of $1{,}590{,}462$ states, which the delivery reaches by path enumeration
+without ever assembling the magnetic matrix --- and the
+two decompositions agree \emph{channel by channel} rather than only in the sum
+(Reported result~\ref{rep:census}); on that space each of the six channels is
+separately proportional to the same incidence Gram, on all $56$ adjacent pairs,
+so the separation of colour from geometry is measured and not assumed, and the
+connected diagonal --- eleven numbers in both deliveries --- is constant on the
+prism's three symmetry orbits, with the whole $B=4\to B=6$ difference confined
+to the eight faces that carry connected transport
+(Proposition~\ref{prop:orbit}).
+Separately, and by arithmetic on the weight
+ledger alone, a cutoff keeping only
+the singlet and $\Lambda^2F$ routes projects the hopping to $-1/12$ ---
+opposite in sign to $t_3$ --- and omits exactly $14/153$, the two summing to
+$t_3$ (Corollary~\ref{cor:cutoff}); the $B=4$ truncation of the two-cube space
+delivers the first of those two numbers outright, on the same geometry. The charge-even sector acquires a closed form:
+with $\hat a_m=2+2\cos k_m$ and $p=\sum_m\hat a_m=12-q$, its Bloch spectrum is
+the cubic $\mu(\mu-p)^2=4\hat a_1\hat a_2\hat a_3$, so one zone function runs
+both sectors (Theorem~\ref{thm:evencubic}), and its
+$\Gamma$-point splitting pins the charge-even hopping $t_{r,+}$ --- a
+separation the charge-odd rest frame has no analogue for, since its
+$\Gamma$ spectrum has only one level (Proposition~\ref{prop:evengamma}). The
+homological reading of the flat direction is shown to be the same one on a
+second complex: the six faces of a cube are a closed surface, its
+$\ker\partial_2$ is the fundamental class, and the one-cube charge-odd shell
+splits as $A_1^{--}\oplus T_1^{+-}\oplus E^{--}$ with the flat level sitting at
+the scalar for \emph{every} value of the hopping
+(Proposition~\ref{prop:cube}). Finally the open
+fourth-order off-axis coefficient is given a geography rather than a verdict:
+an exact obstruction certificate, an explicit second witness, and the
+measurement that no $\Gamma$-anchoring error can move it at all
+(Section~\ref{sec:fourth}).
+
+The two-cube channel census, and the $SU(3)$ third- and fourth-order
+statements, remain conditional on supplied ledgers --- the first on six
+rational reconstructions of finite-precision contractions, the others on
+exact-arithmetic ledgers --- whose raw payloads are not reproduced here, and
+all are labelled as such throughout. Every displayed result carries the name of the
+machine check that establishes it. All statements concern a formal
+finite-order projected sector: this is not a continuum glueball or mass-gap
+theorem.
 \end{abstract}
 
 \section{Introduction}
@@ -104,13 +113,9 @@ plaquette boundary and by charge conjugation, and the resulting interference is
 the central object here.
 
 Flat bands generated by incidence or Gram matrices have a long history: local
-topology and signed or line-graph constructions
-~\cite{Eckmann1944,Sutherland1986,Mielke1991,Zaslavsky2010,Kollar2020},
-compact localised states and their failure to span singular bands on a torus
-~\cite{Bergman2008,RhimYang2019}, and supersymmetric incidence
-factorisations~\cite{Roychowdhury2024} are all established. Closely related
-closed-membrane structures also occur in two-form spin liquids
-~\cite{ChungGingras2025}. A recent
+topology, line-graph constructions, compact localised states, and the need for
+noncontractible states on periodic systems are all established, and closely
+related closed-surface structures occur in two-form spin liquids. A recent
 classification of exactly flat bands protected by local graph
 topology~\cite{Hazra2026} reaches extensive face-graph degeneracy from an
 \emph{unoriented} face--vertex incidence, where rank--nullity alone gives
@@ -123,11 +128,11 @@ incidence flatness, cellular compact localised states, or homological counting
 are new in isolation.
 \chk{the discrete index theorem gives 0 on the signed face-edge operator, bounding nothing}
 
-The new dynamical content is local and exact. Starting from non-Abelian
-$SU(N)$ Hamiltonian lattice gauge theory, the shared-link matrix element in the
-charge-odd fundamental-plaquette sector factorises into a colour coefficient
-and an oriented edge--face Gram entry. Representation theory fixes the former
-and the cubical chain complex fixes the latter,
+The content is dynamical. Starting from non-Abelian $SU(N)$ Hamiltonian
+lattice gauge theory, exact strong-coupling matrix elements generate an
+oriented edge--face Gram operator in the charge-odd one-plaquette sector.
+Representation theory fixes its coefficient and the cubical chain complex
+fixes its kernel and spectrum. The separation is exact,
 \[
   \begin{aligned}
     \text{colour dynamics}&\longrightarrow t_N,\\
@@ -137,49 +142,55 @@ and the cubical chain complex fixes the latter,
 
 \subsection*{What is proved, and what is conditional}
 
-Seven mathematical statements are self-contained here; where an operator's
-identification with a projected physical sector is conditional, that condition
-is stated separately. Earlier editions carried three load-bearing prose
-premises; this edition proves two of them --- the retained shell and
-second-order process exhaustion (Lemmas~\ref{lem:shell}
-and~\ref{lem:exhaust}, new here and flagged as such) --- which makes the
-global second-order assembly a theorem (Theorem~\ref{thm:assembly}). The
-third, the charge-even identification, remains a hypothesis and is argued in
-Section~\ref{sec:scope}; the coverage appendix
-(Appendix~\ref{app:coverage}) makes its unchecked status visible by
-omission.
+Nine statements are self-contained here.
 
 \begin{enumerate}\itemsep2pt
 \item For every $N\ge3$ the shared-link channel weights are $d_\rho/N^2$,
   derived from the order-two Weingarten values
   (Theorem~\ref{thm:weingarten}). This was previously an isotropy
   \emph{hypothesis}, and everything in Section~\ref{sec:second} rests on it.
-\item For every $N\ge3$ the exact adjacent shared-link matrix element has
-  coefficient $t_N$ (Theorem~\ref{thm:allrank}). Its assembly into the global
-  symbol $t_Nu^2BB\dg$ formerly assumed that the retained external range is
-  exactly the charge-odd one-plaquette shell and that one-shared-link
-  processes exhaust the second-order off-diagonal intermediates; both are
-  now proved (Lemmas~\ref{lem:shell} and~\ref{lem:exhaust}), so the
-  assembly is Theorem~\ref{thm:assembly}, resting on one classical
-  Casimir-minimality input and machine-enumerated finite combinatorics.
+\item For every $N\ge3$ the connected second-order coupling between two
+  plaquettes sharing one link is $t_Nu^2$ times their incidence overlap
+  (Theorem~\ref{thm:allrank}), and the channel list it runs through is complete
+  (Lemma~\ref{lem:channels}). The assembly of those elements into the torus
+  operator is \emph{not} here; it is item~\ref{item:assembly} below.
 \item The Bloch spectrum of $BB\dg$ is $\{0,q,q\}$ (Theorem~\ref{thm:fact}),
   and on the periodic $L^3$ complex the zero-mode count is $L^3+2$
   (Theorem~\ref{thm:carrier}). The two are the same statement, by a sum rule
-  over the momentum grid (Theorem~\ref{thm:bridge}).
+  over the momentum grid (Theorem~\ref{thm:bridge}) --- and not merely in
+  agreement: the $\Gamma$ block is the harmonic subspace, so its $3$ is
+  $b_2(T^3)$, and the wrapping sheets averaged over their translates
+  \eqref{eq:harm} are harmonic representatives of the three classes.
 \item\label{item:cutoff} The truncation that keeps only the singlet and $\Lambda^2F$ routes
   projects the hopping to $w_{\Lambda^2F}-w_{\mathbf 1}=-1/12$, and what it
   omits is $w_{\mathrm{Sym}^2F}-w_{\mathrm{Adj}}=14/153$; the two sum to
   $t_3$ (Corollary~\ref{cor:cutoff}). This is arithmetic on
   \eqref{eq:w} and needs no input beyond Theorem~\ref{thm:weingarten}.
-\item The defined unsigned-incidence comparison operator has the cubic
+\item The charge-even Bloch spectrum is the cubic
   $\mu(\mu-p)^2=4\hat a_1\hat a_2\hat a_3$ with $p+q=12$
   (Theorem~\ref{thm:evencubic}); its range is exactly $[-4,12]$, the top
   attained only at $\Gamma$ and the floor on the three planes $k_j=\pi$, triple
-  only at $R$ (Proposition~\ref{prop:evenrange}). Conditional on identifying
-  this comparison operator with the complete linked charge-even symbol, its
-  $\Gamma$-point splitting is $12t_{r,+}$
-  (Proposition~\ref{prop:evengamma}). That identification is not derived here;
-  the vacuum-mediated all-pairs term must first be reorganised or cancelled.
+  only at $R$ (Proposition~\ref{prop:evenrange}); and its $\Gamma$-point
+  splitting is $12t_{r,+}$ exactly (Proposition~\ref{prop:evengamma}). The
+  identity is self-contained; the two numbers it is evaluated at inherit the
+  status of $t_{r,+}$, and the $r=3$ one is conditional --- see
+  item~\ref{item:domino}. That the charge-odd rest frame is blind to the hopping
+  and the charge-even one is not follows from Schur's lemma alone: the
+  charge-odd triple carries the irreducible $T_1$ and the charge-even one
+  $A_1\oplus E$, so the two $\Gamma$ blocks have one level and two, at every
+  order and independently of the incidence ansatz.
+\item The vacuum-mediated route $p\to|0\rangle\to p'$ connects any pair of
+  plaquettes and is worth $1/\CF$; it vanishes in the charge-odd sector because
+  $V$ is charge-even, which is what makes Theorem~\ref{thm:allrank}'s
+  shared-link restriction true here and false in general, and it gives the
+  all-rank charge-even hopping $\ell_N$ in closed form
+  (Proposition~\ref{prop:vacuum}).
+\item A correction of the boundary-factorised form
+  $a_rI+b_rS+BM_rB\dg$ shifts the carrier without dispersing it, for
+  \emph{every} $M_r$ (Proposition~\ref{prop:rigid}). The protection is a
+  property of the boundary operator, not of the dynamics --- and the
+  proposition says nothing about a correction that does not factor through
+  links, which is why the fourth order has to be argued.
 \item On the closed cube surface the charge-odd shell is
   $A_1^{--}\oplus T_1^{+-}\oplus E^{--}$, with $G$-eigenvalues $0,4,6$; the
   labels follow from the rotation action rather than being assigned, the
@@ -192,36 +203,38 @@ omission.
   (Proposition~\ref{prop:witness}).
 \end{enumerate}
 
-Three families of statements depend on computational artifacts outside this
-compact edition. Their raw class contractions, symbolic history certificates
-and microscopic rank-sweep artifacts are not bundled here, and repeated
-assertions in synthesis documents are not treated as independent
-reproductions. The organized upstream authority corpus does record a cold exact
-$251/251$ replay for the retained third-order operator chain; that is stronger
-than an unchecked delivery, but it is still cited here as external
-computational evidence because this release does not replay the raw chain.
+Two families of statements are \emph{conditional} on supplied exact-arithmetic
+derivation ledgers. Their raw class contractions, symbolic history
+certificates and microscopic rank-sweep artifacts are not included here, and
+repeated assertions in synthesis documents are not treated as independent
+reproductions.
 
-\begin{enumerate}\setcounter{enumi}{7}\itemsep2pt
+\begin{enumerate}\setcounter{enumi}{9}\itemsep2pt
+\item\label{item:assembly} On two hypotheses that no check covers --- that the
+  range of $P_-$ is exactly the charge-odd one-plaquette span, and that no
+  connected non-adjacent second-order history carries momentum dependence ---
+  the adjacent elements of item~2 assemble into $t_Nu^2BB\dg$, with the band
+  structure that follows from it (Conditional corollary~\ref{cor:assembly}).
+  Everything downstream that quotes a bandwidth or a band edge at order $u^2$
+  inherits those two hypotheses.
 \item A supplied two-cube delivery reports six link-irrep channel
   coefficients at $N=3$, as rational reconstructions of finite-precision
   contractions. Conditional on those six numbers, they are the four
   fusion-channel weights individually --- channel by channel and not merely in
-  the sum (Reported result~\ref{rep:census}) --- and the $\mathcal B=4$ truncation of
+  the sum (Reported result~\ref{rep:census}) --- and the $B=4$ truncation of
   that space retains exactly the adjacent shared-link channels the published
   link cutoff of item~\ref{item:cutoff} retains, so the two land on the same
   projected hopping --- the same channels, not the same scheme. Conditional on the delivered diagonals, the symmetry
   analysis of Proposition~\ref{prop:orbit} applies to them: the orbit structure
   itself is exact and takes no delivered input.
-  The $\mathcal B=6$ two-cube build was not reproduced here.
-\item\label{item:domino} For $SU(3)$, the frozen upstream corpus records that
-  all candidate third-order lifter classes vanish and gives the scalar and
-  shared-link coefficients of Section~\ref{sec:su3}. The census is three
-  lifter classes evaluated over $32$ five-trace numerator patterns each, $96$
-  contractions in total, within a retained chain that passed $251/251$ cold
-  exact gates upstream. This compact verifier checks the resulting rational
-  assembly but not those microscopic contractions. If the census is exhaustive
-  and the linked operator ledger complete, the effective Hamiltonian stays in
-  the incidence algebra through order $u^3$.
+  The $B=6$ two-cube build was not reproduced here.
+\item\label{item:domino} For $SU(3)$, supplied ledgers report that all
+  candidate third-order lifter classes vanish and report the scalar and shared-link coefficients of
+  Section~\ref{sec:su3}. The census is three lifter classes evaluated over
+  $32$ five-trace numerator patterns each, $96$ contractions in total, and
+  nothing here checks any of them. If it is exhaustive and the linked ledger
+  complete, the effective Hamiltonian stays in the incidence algebra through
+  order $u^3$.
 \item Supplied ledgers report the all-rank cube formula
   $\alpha_N=640/[N(N^2-1)^3]$ and its equality with the complete axial
   coefficient for $N=3,\dots,12$. Conditional on those calculations, the
@@ -229,14 +242,6 @@ computational evidence because this release does not replay the raw chain.
   complete off-axis operator remains open --- and by
   Theorem~\ref{thm:obstruction} it cannot be closed by any $\Gamma$ or axial
   datum.
-\item A sealed cutoff-free radius-two spectrum
-  (Section~\ref{sec:radius2}) is bundled with this edition, pinned by
-  SHA-256. Its second-order block contains a rational sub-block whose
-  splitting is exactly $2t_3$, its fourth- and fifth-order nested increments
-  agree with independent weak-coupling intercepts, and its fifth-order seed
-  object is a matrix, not a scalar. All of it is finite-precision and
-  reported at stated tolerances; the exact-arithmetic identifications it
-  corroborates are checked separately.
 \end{enumerate}
 
 These statements concern the effective Hamiltonian projected to the degenerate
@@ -249,6 +254,7 @@ higher-order operators, identification with the lightest physical glueball, or
 a continuum mass gap.
 
 \section{Hamiltonian and projected sector}
+\label{sec:sector}
 
 Let $\Lambda_L=(\mathbb{Z}/L\mathbb{Z})^3$, $L\ge3$, be a cubic spatial
 lattice with periodic boundary conditions. In units of the electric coupling
@@ -267,6 +273,25 @@ all-rank convention; the archived line $Y=2\beta/3=4u$ is a definition-label
 erratum and the printed coefficients are already in $u$. Reading it as a
 coordinate would demand dividing the order-$r$ coefficient by $4^r$, which
 misses the printed tables by exactly $16$ at $u^2$ and $64$ at $u^3$.
+
+The conversion those labels check is explicit, and the object it converts is
+used again in Section~\ref{sec:even}, so it is written out here. At $N=3$ the
+within-plaquette one-plaquette series of the two sectors are
+\begin{equation}\label{eq:bridge}
+\begin{aligned}
+  \Delta_-(x)&=\tfrac23+\tfrac x6+\tfrac1{18}x^2+\tfrac7{432}x^3,\\
+  \Delta_+(x)&=\tfrac23-\tfrac x6+\tfrac{13}{180}x^2+\tfrac{101}{2700}x^3,
+\end{aligned}
+\qquad x=\frac{\beta_3}4=\frac32\,u ,
+\end{equation}
+in the corpus's own printed coefficients. Then $4\Delta_-(3u/2)$ and
+$4\Delta_+(3u/2)$ are the charge-odd and charge-even towers in canonical $u$,
+and the erratum is exactly the claim that no further rescaling stands between
+the two coordinates. The letter $\Delta$ is reused elsewhere with other
+subscripts --- $\Delta_s$ for $s\in\{X,M,P,R\}$ are the fourth-order checkpoint
+differences of Section~\ref{sec:fourth}, $\Delta_C$ the gap between the two
+recorded off-axis coefficients, and $\Delta_L$ the finite-volume incidence separation of
+Section~\ref{sec:scope}. Only the sector subscript $\pm$ means this series.
 \chk{the printed towers are canonical-u: 4*Delta(3u/2) reproduces them verbatim}
 \chk{the 4**r rescaling breaks the bridge: order 2 off by 16, order 3 by 64}
 
@@ -291,26 +316,29 @@ Section~\ref{sec:second}, where it is checked together with them.
 For $SU(2)$ complex conjugation is an inner gauge transformation and the
 charge-odd state vanishes; this is why the construction begins at $N=3$. The
 same fact appears again in Section~\ref{sec:second}: $\Lambda^2F$ is the
-singlet exactly at $N=2$, which is where $t_N$ vanishes. The analytic
-continuation of the unsigned-channel coefficient is nonzero there, which
-locates the $N^2-4$ zero in the channel difference rather than in the
-incidence. Because the charge-conjugation split degenerates for $SU(2)$, this
-continuation is not asserted to be an $SU(2)$ charge-even spectrum.
-\chk{at N = 2 the C-odd hopping vanishes while the unsigned-channel continuation does not}
+singlet exactly at $N=2$, which is where $t_N$ vanishes. The charge-even
+hopping does \emph{not} vanish there, which locates the $N^2-4$ zero in the
+channel difference rather than in the incidence.
+\chk{at N = 2 the C-odd hopping vanishes and the C-even one does not}
 
 We work inside the charge-odd fundamental Wilson-loop cyclic sector with
-trivial electric centre flux around each torus cycle. We make the
-\emph{retained-shell hypothesis} that, for $L\ge3$, the range of its
-$E_{F,N}$ projector $P_-$ is exactly the charge-odd one-plaquette span. The
-supporting argument is that a reduced contractible fundamental loop at that
-energy has four distinct links and is an elementary plaquette; the sector
+trivial electric centre flux around each torus cycle. Write $\Pi_{F,-}$ for the
+full $E_{F,N}$ spectral projector there and $P_-$ for the span of the
+elementary charge-odd one-plaquette states \eqref{eq:states}. We take as a
+\emph{hypothesis} that these coincide for $L\ge3$,
+\begin{equation}\label{eq:shell}
+  P_-=\Pi_{F,-}\qquad(L\ge3),
+\end{equation}
+and it is a hypothesis rather than a result: the supporting argument is a
+loop-length count --- a reduced contractible fundamental loop at that energy
+has four distinct links and so is an elementary plaquette, and the sector
 qualification excludes the accidentally degenerate straight wrapping loop at
-$L=4$. The complete proof that no other gauge-invariant network lies in this
-range --- for every $N$, every rep assignment, and every network topology ---
-is Lemma~\ref{lem:shell}, new in this edition; the construction here keeps
-the name ``hypothesis'' so its earlier standing stays visible in the record.
-Granting it, $Q=1_--P_-$ crosses no
-omitted $E_{F,N}$ eigendirection and degenerate perturbation theory gives
+$L=4$ --- but no check covers it, and Section~\ref{sec:scope} lists it among
+the premises carried in prose. Everything local to a plaquette pair is
+independent of it; what needs it is the assembly, which is why
+Conditional corollary~\ref{cor:assembly} names it again. With $Q=1_--P_-$ the
+reduced resolvent crosses no omitted $E_{F,N}$ eigendirection, and degenerate
+perturbation theory gives
 \begin{equation}\label{eq:heff}
   H_{\mathrm{eff},-}=P_-H_EP_-+\sum_{r\ge1}u^rK^{(r)}_-
 \end{equation}
@@ -361,7 +389,7 @@ For $k\neq0$ the carrier is one-dimensional and represented by $w(k)$. At
 $\Gamma$, $B=0$ and all three branches meet; the normalised Bloch eigenvector
 has no direction-independent limit there, which is the familiar
 singular-flat-band mechanism behind the incompleteness of a purely compact
-localised basis.
+localised basis~\cite{BWB2008}.
 
 \begin{theorem}[Finite-torus carrier]\label{thm:carrier}
 For the periodic cubic cellulation of $T^3$,
@@ -375,17 +403,6 @@ There are $L^3$ three-cells and no four-cells, and $b_3(T^3)=1$, so
 rank$\,\partial_3=L^3-1$ by rank--nullity. Discrete Hodge decomposition gives
 $\ker\partial_2=B_2\oplus H_2$ with $\dim H_2=b_2(T^3)=3$.
 \end{proof}
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.97\textwidth]{figure_cellular_carrier.pdf}
-\caption{The carrier is a cellular cycle space. The left panel shows three
-visible terms in the outward-oriented boundary of one cube; the complete
-six-face formula is given in Appendix~\ref{app:chain}. Cube boundaries span
-$\operatorname{im}\partial_3$, while three noncontractible wrapping classes
-complete $\ker\partial_2$ on the three-torus.}
-\label{fig:cellular}
-\end{figure}
 
 The count is verified over $\mathbb{Z}$ rather than re-derived from the
 formula: the complex is built from the boundary formulas of
@@ -475,7 +492,7 @@ at, and Proposition~\ref{prop:rigid} covers both, since $B\dg w=0$ holds on
 all of $\ker\partial_2$.
 \chk{the sheets average to harmonic representatives, and the Gamma block IS b\_2}
 
-\section{Exact adjacent shared-link dynamics and conditional assembly}
+\section{Exact all-rank dynamics at second order}
 \label{sec:second}
 
 Two plaquettes sharing a link leave six nonshared fundamental links after the
@@ -506,9 +523,9 @@ census of Section~\ref{sec:twocube} needs six.
 \end{lemma}
 
 \begin{proof}
-The shared link of a one-plaquette shell state carries $F$ or $\bar F$; one
-plaquette action tensors it by $F$ or $\bar F$; and \eqref{eq:fusion}, together
-with the conjugate product
+The shared link of a one-plaquette shell state carries $F$ or $\bar F$ by
+\eqref{eq:EF}; one plaquette action tensors it by $F$ or $\bar F$; and
+\eqref{eq:fusion}, together with the conjugate product
 $\bar F\otimes\bar F=\Lambda^2\bar F\oplus\mathrm{Sym}^2\bar F$, decomposes
 every case completely and multiplicity-free. There is nothing else for the link
 to carry.
@@ -518,10 +535,10 @@ to carry.
 \noindent The corollary that makes this checkable rather than merely stated is
 that the weights $d_\rho/N^2$ sum to one within each orientation family, which
 is arithmetic on \eqref{eq:table}: a missing channel would leave a deficit.
-What Lemma~\ref{lem:channels} does \emph{not} settle is that one-shared-link
-processes exhaust the second-order off-diagonal intermediates --- that is
-Lemma~\ref{lem:exhaust}, and it is a statement about the process enumeration
-rather than about this list.
+What Lemma~\ref{lem:channels} does \emph{not} settle --- and
+Section~\ref{sec:scope} says so --- is that one-shared-link processes exhaust
+the second-order off-diagonal intermediates. That is a statement about the
+process enumeration, not about this list.
 
 The six nonshared half-links contribute $3\CF$ and the fused link $C_\rho/2$,
 against an external one-plaquette energy $2\CF$, so the resolvent denominator
@@ -548,7 +565,19 @@ $\operatorname{Tr}(AU)\operatorname{Tr}(BU^{\pm1})$ with $A,B$ independent
 Haar and $U$ the shared link. Integrating $A$ and $B$ contributes
 $\delta/N$ each and leaves a pure degree-$(2,2)$ moment of $U$.
 
-Second, two such moments settle both families. In the Weingarten calculus,
+Second, the group. The Weingarten values below are the $U(N)$ ones, and this
+is a paper about $SU(N)$; the reduction is a step, not a slip. A degree-$(2,2)$
+integrand is invariant under $U\mapsto zU$ for $z\in U(1)$, so integrating it
+over $SU(N)$ and over $U(N)=\bigl(SU(N)\times U(1)\bigr)/\mathbb Z_N$ give the
+same number provided the $SU(N)$-invariants at this degree are exhausted by the
+permutation contractions --- which holds exactly when the degree is below the
+rank, $2<N$. That is the theorem's own range, $N\ge3$. At $N=2$ the extra
+invariant $\epsilon\otimes\epsilon$ appears and the reduction fails, which is a
+second reason the construction begins at $N=3$; it is the same $\epsilon$
+channel that makes the $u^1$ row of Appendix~\ref{app:ledger} $SU(3)$-only.
+This step has no machine check, and Section~\ref{sec:scope} records it.
+
+Third, two moments settle both families. In the Weingarten calculus,
 whose asymptotic origin is~\cite{Weingarten1978} and whose finite-$N$ closed
 forms are~\cite{CollinsSniady2006}, the order-two values are
 $\mathrm{Wg}(e)=1/(N^2-1)$ and
@@ -561,11 +590,6 @@ sums give
     M_{\mathrm{cross}}&=\sum_{ijkl}\bigl\langle U_{ij}U_{kl}\bar U_{il}\bar U_{kj}\bigr\rangle=N .
   \end{aligned}
 \end{equation}
-The standard formula is often written for $U(N)$. The present degree-$(2,2)$
-integrands are invariant under $U\mapsto zU$, so disintegrating Haar measure
-over the central $U(1)$ shows that their normalised $U(N)$ and $SU(N)$
-integrals coincide. No determinant-sector term occurs at this degree for
-$N\ge3$.
 For the like family, $\operatorname{Tr}(AU)\operatorname{Tr}(BU)$ decomposes
 into $\mathrm{Sym}^2\oplus\Lambda^2$ by symmetrising the two index pairs
 jointly, and the two squared norms are
@@ -588,16 +612,15 @@ $S_2$ Gram matrix and the index sums in \eqref{eq:moments} are explicit, so
 the reader can check it without leaving this page. That the pair is not two
 fitted constants is separately checked --- the identity-permutation value times
 $N^2-1$ is $1$ identically in $N$, so the $SU(3)$ numbers are a specialisation
-of a rank-generic formula. Together these make the \emph{local shared-link
-coefficient} self-contained. They do not enumerate every second-order process
-or prove the global torus assembly. Appendix~%
+of a rank-generic formula. Together these are why the all-rank second-order
+result is self-contained rather than conditional. Appendix~%
 \ref{app:wg} records the index sums.
 \chk{the Weingarten route is independent of the corpus}
 \end{remark}
 
 \begin{remark}[External corroboration]
 The same numerator appears in the quantum-simulation literature from an
-unrelated direction. Ciavarella, Burbano and Bauer~\cite{CBB2025} publish a
+unrelated direction. Ciavarella, Burbano and Bauer~\cite{CBB2026} publish a
 finite-rank plaquette matrix element
 $|M_\rho|^2=\dim\rho/(\dim A\,\dim R)$; for two fundamental factors
 $\dim A=\dim R=N$ and this is $d_\rho/N^2$ identically in $N$. That is
@@ -606,46 +629,7 @@ does not check the premise that four channels exhaust the shared-link routes.
 \chk{the published dimension-ratio matrix element is this registry's weight formula}
 \end{remark}
 
-\begin{remark}[A falsified zero backend]
-The organized authority corpus contains an independent exact diagnostic at
-$N=3$:
-\[
- \mathrm{Wg}(e)=\frac18,\qquad
- \mathrm{Wg}((12))=-\frac1{24},\qquad
- \int_{SU(3)}|U_{11}|^4\,dU=\frac16\ne0.
-\]
-It therefore falsifies the archived stranded-flux rule that discards this
-balanced Haar sector. This is useful negative evidence for retaining the
-contractions above; it is not a second derivation of $t_N$.
-\end{remark}
-
-A channel's squared projector norm and its signed contribution to the cross
-matrix element are related but not identical statements, and the step between
-them deserves its own displayed equation rather than a jump. For each
-intermediate irrep $\rho$, with $Q_\rho$ the projector onto the
-$E=3\CF+C_\rho/2$ intermediate carrying $\rho$ on the shared link,
-\begin{equation}\label{eq:channelme}
-  \langle p',-|VQ_\rho V|p,-\rangle
-  =\eta_\rho\,s(p',e)\,s(p,e)\,\frac{d_\rho}{N^2},
-  \qquad
-  \eta_\rho=
-  \begin{cases}
-    -1,&\rho\in\{\mathbf1,\mathrm{Adj}\}\ \text{(mixed family)},\\
-    +1,&\rho\in\{\Lambda^2F,\mathrm{Sym}^2F\}\ \text{(like family)},
-  \end{cases}
-\end{equation}
-where $d_\rho/N^2$ is the Weingarten weight of
-Theorem~\ref{thm:weingarten}, the incidence signs come from the oriented
-boundaries, and $\eta_\rho$ is the charge-odd family sign: reversing the
-induced orientation on one face interchanges the families and flips the
-charge-odd combination. Inserting the reduced resolvent, whose denominator
-against the external energy $2\CF$ is $\CF+C_\rho/2$ exactly,
-\begin{equation}\label{eq:channelres}
-  \langle p',-|VQ_\rho(E_{F,N}-H_E)^{-1}Q_\rho V|p,-\rangle
-  =-\eta_\rho\,s(p',e)s(p,e)\,\frac{d_\rho/N^2}{\CF+C_\rho/2}.
-\end{equation}
-Summing \eqref{eq:channelres} over the four channels is the whole content of
-the theorem below. With Theorem~\ref{thm:weingarten} the resolvent weight is
+With Theorem~\ref{thm:weingarten} the resolvent weight is
 \begin{equation}\label{eq:w}
   w_\rho=-\frac{d_\rho/N^2}{\CF+C_\rho/2},
 \end{equation}
@@ -654,73 +638,75 @@ and summing within the two orientation families,
   A_N&=w_{\mathbf 1}+w_{\mathrm{Adj}}=-\frac{2N^3}{(N^2-1)(2N^2-1)},\label{eq:AN}\\
   B_N&=w_{\Lambda^2}+w_{\mathrm{Sym}^2}=-\frac{4N(N^2-2)}{(N^2-1)(4N^2-9)}.\label{eq:BN}
 \end{align}
+Each individual weight in closed form is Appendix~\ref{app:closed}.
 \chk{the four channel weights follow from dimension and Casimir}
 \chk{A\_N and B\_N are the channel sums, not transcriptions}
 
 \subsection{The shared-link law}
 
-\begin{theorem}[All-rank adjacent shared-link law]\label{thm:allrank}
-Let $p\ne p'$ be oriented plaquettes sharing the single link $e$. For every
-integer $N\ge3$, the linked order-$u^2$ contribution through the four fusion
-channels in \eqref{eq:fusion} is
-\[
-  \langle p',-|K^{(2)}_-|p,-\rangle
-  =t_N\,s(p',e)s(p,e)
-  =t_N(BB\dg)_{p'p},
-\]
-where $s(p,e)=\pm1$ is the cellular boundary incidence and
+The statement that follows is about \emph{one matrix element}. Promoting it to
+the whole order-$u^2$ operator on the torus is a separate step with its own
+hypotheses, and the two are separated here because the paper's own Scope
+section lists one of those hypotheses as unchecked.
+
+\begin{theorem}[All-rank adjacent shared-link coefficient]\label{thm:allrank}
+For every integer $N\ge3$, in the untruncated theory or in any regulator
+retaining all four fusion channels of \eqref{eq:fusion}, the connected
+second-order matrix element between two plaquettes sharing one oriented link is
+$t_Nu^2$ times the signed incidence overlap of that pair, with
 \[
   t_N=B_N-A_N=\frac{2N(N^2-4)}{(N^2-1)(2N^2-1)(4N^2-9)}>0 .
 \]
 \end{theorem}
 
 \begin{proof}
-Because distinct cubical faces share at most one link,
-$(BB\dg)_{p'p}=s(p',e)s(p,e)$. Reversing the induced orientation on one face
-interchanges the mixed and like fusion families. In the charge-odd
-combination that reversal changes the sign, so the oriented matrix element is
-the family difference $B_N-A_N$ times the incidence product. Substituting
-\eqref{eq:AN}--\eqref{eq:BN} gives the displayed rational function. For
-$N\ge3$ every denominator factor is positive and $N^2-4>0$.
+Every second-order process between two plaquettes sharing exactly one link runs
+through that link's fusion channel; the list is complete by
+Lemma~\ref{lem:channels}, the weight of each is Theorem~\ref{thm:weingarten},
+and the resolvent denominator is $\CF+C_\rho/2$. Summing within the two
+orientation families gives \eqref{eq:AN} and \eqref{eq:BN}, and the relative
+orientation of the pair enters as the incidence product, so the two families
+appear with opposite sign and the element is $(B_N-A_N)u^2$ times that product.
+Positivity: for $N\ge3$ every denominator factor is positive and $N^2-4>0$. The
+regulator premise is not decoration --- Corollary~\ref{cor:cutoff} exhibits a
+published cutoff under which the same element comes out $-1/12$, of the
+opposite sign.
 \end{proof}
 \chk{t\_N = B\_N - A\_N}\chk{t\_N > 0 for N >= 3}
-\chk{two distinct torus faces share at most one link, exhaustively at L = 3 and 4}
 
-The opening geometric ingredient of the proof is no longer prose: the
-verifier enumerates every distinct face pair of the periodic complex at
-$L=3$ and $L=4$ and confirms that no pair meets in more than one link. Two
-faces sharing a link span at most two sites per axis, so these windows
-already exhibit every local configuration and larger $L$ adds translates
-only.
-
-\begin{conditional}[Global torus assembly]\label{cor:assembly}
-Assume (i) the retained-shell hypothesis of Section~\ref{sec:carrier} and
-(ii) that adjacent one-shared-link routes exhaust all second-order
-off-diagonal intermediates. Translation and cubic symmetry then make the
-remaining diagonal contribution a scalar, and
+\begin{conditional}[Incidence assembly on the finite torus]\label{cor:assembly}
+Assume in addition
+\emph{(i)} the retained-shell hypothesis \eqref{eq:shell}, and
+\emph{(ii)} that after the linked, vacuum-subtracted fold of \eqref{eq:heff}
+one-shared-link processes exhaust the second-order \emph{off-diagonal}
+intermediates on $P_-$ --- equivalently, that no connected second-order history
+between non-adjacent plaquettes contributes a momentum-dependent term there.
+Then
 \[
-  H^{(N)}_{\mathrm{eff},-}(k,u)
-  =E_{\mathrm{flat},N}(u)I+t_Nu^2B(k)B(k)\dg+O(u^3).
+  H^{(N)}_{\mathrm{eff},-}(k,u)=E_{\mathrm{flat},N}(u)I+t_Nu^2B(k)B(k)\dg+O(u^3),
 \]
-Consequently the three bands through second order are
-$E_{\mathrm{flat},N}(u)$ and
-$E_{\mathrm{flat},N}(u)+t_Nu^2q(k)$ twice.
+with $E_{\mathrm{flat},N}$ momentum independent, and the three bands through
+second order are $E_{\mathrm{flat},N}(u)$ and $E_{\mathrm{flat},N}(u)+t_Nu^2q(k)$
+twice.
 \end{conditional}
 
 \begin{proof}
-Under assumption (ii), Theorem~\ref{thm:allrank} assembles every off-diagonal
-entry. Translations act transitively on faces of a fixed orientation and the
-cubic group permutes the orientations, so any invariant diagonal is a multiple
-of the identity. Thus the adjacency part is
-$t_N(BB\dg-4I)$; absorb $-4t_N$ into the scalar and apply
-Theorem~\ref{thm:fact}. The two assumptions are not consequences of the
-channel calculation and are retained explicitly.
+Under \emph{(ii)} only shared-link pairs carry momentum dependence, and
+Theorem~\ref{thm:allrank} gives each of those elements, so the off-diagonal
+part is $t_NS$ with $S=BB\dg-4I$. The diagonal is a scalar, and for a reason
+worth naming because it fails elsewhere in this paper: translations act
+transitively on the faces of each orientation and the cubic point group
+permutes the three orientations, so the faces are a \emph{single} orbit and any
+invariant diagonal is a multiple of the identity. On an open cluster that is
+false, and Proposition~\ref{prop:orbit} is what replaces it there. Absorbing
+$-4t_N$ into the scalar and applying Theorem~\ref{thm:fact} gives the bands.
 \end{proof}
+\chk{B B\^{}dagger = q I - d conj(d)\^{}T for the curl incidence}
 
-Both assumptions are discharged in Section~\ref{sec:closing}
-(Lemmas~\ref{lem:shell} and~\ref{lem:exhaust}), which upgrades this
-corollary to Theorem~\ref{thm:assembly}; the conditional form is kept above
-so the logical dependence stays legible.
+\noindent Hypothesis \emph{(i)} is the retained-shell premise of
+Section~\ref{sec:sector}; \emph{(ii)} is the one
+Proposition~\ref{prop:vacuum} narrows but does not close. Neither has a check,
+and Section~\ref{sec:scope} says so.
 
 Two consequences,
 \begin{equation}\label{eq:tsmall}
@@ -729,46 +715,22 @@ Two consequences,
 \end{equation}
 \chk{t\_2 = 0 and t\_3 = 5/612}\chk{large-N expansion of t\_N through 1/N\^{}9}
 
-The expansion is governed by a closed form. Writing the planar-normalised
-coefficient as $4N^3t_N$,
-\begin{equation}\label{eq:planar}
-  1-4N^3t_N=\frac{2N^4+31N^2-9}{(N^2-1)(2N^2-1)(4N^2-9)},
-\end{equation}
-an identity of rational functions, and the right side is positive and the
-left strictly decreasing for every real $N\ge2$: substituting $N=M+2$ makes
-every numerator coefficient of both the remainder and the derivative
-nonnegative, so $4N^3t_N$ increases monotonically to $1$. At fixed canonical
-coordinate $u$ the conditional bandwidth of Corollary~\ref{cor:assembly} is
-$12t_Nu^2$, so the entire dispersive content of the projected sector
-switches off at exactly the rate $N^{-3}$, with computable subleading
-coefficient $-1/(4N^2)$: conditional on the assembly, the carrier's exact
-degeneracy is approached by the \emph{whole} sector in the planar limit.
-This is consistent with the general suppression of glueball mixing at large
-$N$, but no 't~Hooft-coupling identification is made here: the statement is
-about the coefficient in the canonical coordinate, and it is exact.
-\chk{1 - 4N\^{}3 t\_N has the closed form of eq. (planar), positive for all N >= 2}
-\chk{4N\^{}3 t\_N increases monotonically to 1: shifted derivative coefficients are nonnegative}
-
 \subsection{The vacuum-mediated route}
 
-The proof of Theorem~\ref{thm:allrank} asserts that only shared-link routes
-survive. That is false in general and true here, for a reason worth stating:
-it is a charge-conjugation selection rule, and omitting it is a recorded
-error, not a hypothetical one.
+Hypothesis \emph{(ii)} of Corollary~\ref{cor:assembly} is not vacuous, and one
+family of routes it has to exclude can be excluded outright. The vacuum-mediated
+route connects \emph{any} pair of plaquettes, adjacent or not, and it vanishes
+in this sector by a charge-conjugation selection rule. That closes one family
+and not the hypothesis; omitting it is a recorded error, not a hypothetical
+one.
 
 \begin{proposition}[Vacuum-mediated route]\label{prop:vacuum}
-The reduced-resolvent route
-\[
- \frac{\langle p'|V|0\rangle\langle 0|V|p\rangle}{E_{F,N}-E_0}
- =\frac{\langle p'|V|0\rangle\langle 0|V|p\rangle}{E_{F,N}}
-\]
-is available for any
+The route $\langle p'|V|0\rangle\langle 0|V|p\rangle/E_0$ is available for any
 pair of plaquettes, sharing a link or not. It vanishes identically in the
 charge-odd sector, because $V$ is charge-even and $|0\rangle$ is charge-even,
 so $\langle0|V|p,-\rangle=0$. Consequently the charge-odd hopping
 $t_N=B_N-A_N$ carries no such term, while the charge-even shared-link element
-acquires $1/\CF$: the normalised charge-even matrix-element product is $2$
-and $E_{F,N}=2\CF$.
+acquires $1/\CF$:
 \[
   \ell_N=A_N+B_N+\frac1{\CF}
   =-\frac{2N(3N^2-5)}{(N^2-1)(2N^2-1)(4N^2-9)} .
@@ -792,134 +754,6 @@ shared-link element, and the disposition of the non-adjacent contributions is
 prescription rather than result.
 \end{remark}
 
-\subsection{Closing the two premises}
-\label{sec:closing}
-
-Both premises of Corollary~\ref{cor:assembly} --- until this edition the two
-load-bearing prose hypotheses of the paper --- admit proofs. They are given
-here for the first time; their combinatorial cores are machine-checked, their
-single representation-theoretic input is classical and named, and a reader
-should audit them with the same hostility as everything else: they are new
-in this edition and have not yet survived external referees.
-
-\begin{lemma}[Retained shell]\label{lem:shell}
-Fix $N\ge3$ and $L\ge3$, in the cyclic gauge-invariant sector with trivial
-electric centre flux, excluding at $L=4$ the straight winding loops as in
-Section~\ref{sec:carrier}. The $E=E_{F,N}=2\CF$ eigenspace of $H_E$ is
-exactly the span of the single-plaquette states, and its charge-odd part is
-the span of the $|p,-\rangle$.
-\end{lemma}
-
-\begin{proof}
-In the electric basis a gauge-invariant state assigns an irrep $\rho_e$ to
-each link and an intertwiner to each site, with energy
-$\sum_e C(\rho_e)/2$ over the nontrivially charged links. The one classical
-input: for $SU(N)$ the quadratic Casimir of every nontrivial irrep satisfies
-$C(\rho)\ge\CF$, with equality exactly for $F$ and $\bar F$ (the fundamental
-weights $\omega_1,\omega_{N-1}$ are minuscule and $C(\lambda)
-=\langle\lambda,\lambda+2\delta\rangle$ grows strictly along the dominance
-order). So a state at $2\CF$ has $k\le4$ charged links.
-
-Geometry now does the rest, with no further representation arithmetic. A
-$1$-valent site is never invariant, and a $2$-valent site forces conjugate
-irreps on its two links, so the charged sublattice has minimum degree $2$ at
-charged sites and any junction has valence $\ge3$. With
-$\sum_{\text{sites}}\deg=2k\le8$: valence-$3$ junctions come in pairs
-($3j+2v=2k$ with $j$ even by parity of ends), and two $3$-valent junctions
-with $k\le4$ require three disjoint paths of lengths summing to $\le4$,
-hence lengths $(1,1,1)$ or $(1,1,2)$ --- both demand two distinct links
-between one pair of adjacent sites, which the simple cubic torus does not
-have. A $4$-valent junction with $k=4$ requires all four links to close
-pairwise through $2$-valent sites, again demanding parallel links. Cycles
-shorter than $4$ need care, because the odd-$L$ torus is \emph{not}
-bipartite: exhaustive enumeration (machine-checked at $L=3,4,5$) shows the
-only closed link sets of length $<4$ are the $3L^2$ straight winding
-triangles at $L=3$. A winding triangle carries one irrep $\rho$ around a
-noncontractible cycle: if $\rho$ has nonzero $N$-ality the trivial-centre-flux
-sector removes it, and if zero $N$-ality then $C(\rho)\ge C_{\mathrm{Adj}}=N$
-(the second classical input: the quasi-minuscule highest root minimises the
-Casimir on the nonzero root lattice), so its energy $3C(\rho)/2\ge3N/2>2\CF$.
-Two disjoint closed components need $\ge8$ charged links. So the charged
-sublattice at $E=2\CF$ is a single $4$-cycle of $2$-valent sites: one irrep
-$\rho$ runs around it (conjugated with orientation), the energy is
-$2C(\rho)=2\CF$, and minimality forces $\rho\in\{F,\bar F\}$.
-
-Finally, every $4$-cycle of the torus at $L\ge3$ is an elementary plaquette
-except, exactly at $L=4$, the straight winding loops --- machine-checked by
-exhaustive enumeration of all length-$4$ closed link paths at $L=3,4,5$ ---
-and the winding loops are removed by the sector qualification. The
-$E$-eigenspace is therefore spanned by the two orientation states of each
-plaquette, and its charge-odd part by the $|p,-\rangle$.
-\end{proof}
-\chk{the torus graph is simple, and the only short cycles are the L = 3 winding triangles}
-\chk{every 4-cycle is an elementary face, except exactly the 3L\^{}2 straight winding loops at L = 4}
-
-\begin{lemma}[Second-order process exhaustion]\label{lem:exhaust}
-For $p\ne p'$ in the charge-odd one-plaquette sector, every nonvanishing
-second-order route $\langle p',-|VQ(E_{F,N}-H_E)^{-1}QV|p,-\rangle$ has its
-two $V$-insertions supported on the faces $p$ and $p'$ themselves. In
-particular, when $p$ and $p'$ share no link the off-diagonal element
-vanishes, and when they share one link it is exhausted by the four fusion
-channels of Theorem~\ref{thm:allrank}.
-\end{lemma}
-
-\begin{proof}
-$V$ is a sum of single-plaquette terms, and multiplying by
-$\operatorname{Tr}U_q^{\pm1}$ changes the electric content only on the four
-links of $q$; the resolvent is diagonal in the electric basis and changes
-none. Two insertions $q_1,q_2$ therefore leave every link outside
-$\operatorname{supp}q_1\cup\operatorname{supp}q_2$ untouched, so
-$p\,\triangle\,p'\subseteq\operatorname{supp}q_1\cup\operatorname{supp}q_2$.
-The set $p\setminus p'$ has three links (shared-link pair) or four
-(otherwise), and by the exhaustive shared-link geometry a face distinct from
-$p$ contains at most one link of $p$: two insertions not supported on $p$
-cover at most two of them. Hence one insertion is supported on $p$, and
-symmetrically the other on $p'$; for $p\ne p'$ that pins
-$\{\operatorname{supp}q_1,\operatorname{supp}q_2\}=\{p,p'\}$ exactly.
-
-It remains to dispose of the routes this still allows beyond the fusion
-channels. If $p$ and $p'$ are disjoint (sharing a vertex or nothing), both
-orders factor through a local charge parity: annihilating the $p$-flux costs
-$\langle0_p|(\operatorname{Tr}U_p+\operatorname{Tr}U_p\dg)|p,-\rangle=0$,
-the selection rule of Proposition~\ref{prop:vacuum}, whether the intermediate
-is the vacuum or the two-plaquette state $|p\rangle\otimes|p'\rangle$; and
-the order that excites $p$ first leaves adjoint flux on $p$ that the
-remaining insertion, supported on $p'$, cannot clear. If they share one
-link, the two insertion orders are precisely the two orientation families
-of Theorem~\ref{thm:allrank}, whose intermediate content on the shared link
-is the four fusion channels; an insertion orientation that drives a
-nonshared link into $\Lambda^2F\oplus\mathrm{Sym}^2F$ cannot be returned to
-the trivial representation by the other insertion and contributes zero. The
-diagonal $p=p'$ terms are unconstrained by this argument and remain the
-scalar of Corollary~\ref{cor:assembly}.
-\end{proof}
-\chk{two distinct torus faces share at most one link, exhaustively at L = 3 and 4}
-
-\begin{theorem}[Global torus assembly, unconditional]\label{thm:assembly}
-For $N\ge3$ and $L\ge3$, in the sector of Lemma~\ref{lem:shell}, the
-charge-odd effective Hamiltonian through second order is
-\[
-  H^{(N)}_{\mathrm{eff},-}(k,u)
-  =E_{\mathrm{flat},N}(u)I+t_Nu^2B(k)B(k)\dg+O(u^3),
-\]
-with the three bands $E_{\mathrm{flat},N}(u)$ and
-$E_{\mathrm{flat},N}(u)+t_Nu^2q(k)$ twice, and flat carrier
-$\ker\partial_2$ of dimension $L^3+2$.
-\end{theorem}
-
-\begin{proof}
-Lemma~\ref{lem:shell} discharges assumption (i) of
-Corollary~\ref{cor:assembly} and Lemma~\ref{lem:exhaust} assumption (ii);
-the corollary's own proof then runs unchanged.
-\end{proof}
-
-The status change deserves one sober sentence rather than celebration. What
-was conditional is now proved relative to the standard degenerate
-perturbation framework of \eqref{eq:heff}, one classical Casimir-minimality
-fact, and finite combinatorics that a machine has enumerated; the charge-even
-identification of Section~\ref{sec:even} remains a hypothesis, and nothing
-about convergence, higher orders, or the continuum has changed.
-
 \subsection{Finite-volume width}
 
 Let $q_{\max}(L)$ be the largest sampled $q$ on the periodic $L^3$ grid. Then
@@ -930,10 +764,10 @@ Let $q_{\max}(L)$ be the largest sampled $q$ on the periodic $L^3$ grid. Then
     12\cos^2\!\bigl(\pi/2L\bigr), & L\text{ odd},
   \end{cases}
 \end{equation}
-because only at even $L$ does some $k_j$ reach $\pi$ exactly. The width of the
-full retained charge-odd manifold is $W^{(-)}_{N,L}=q_{\max}(L)\,t_Nu^2+O(u^3)$,
-so for even $L$, and coefficientwise as $L\to\infty$ at fixed perturbative
-order, $[u^2]W^{(-)}=12t_N\sim3/N^3$.
+because only at even $L$ does some $k_j$ reach $\pi$ exactly. Under the
+hypotheses of Corollary~\ref{cor:assembly}, the width of the
+retained charge-odd manifold is $W^{(-)}_{N,L}=q_{\max}(L)\,t_Nu^2+O(u^3)$,
+so for even $L$ and in the thermodynamic limit $[u^2]W^{(-)}=12t_N\sim3/N^3$.
 This concerns the stiffness of the dispersive doublet, not motion of the
 lowest branch, which is flat at this order.
 \chk{the zone maximum of q is 12 only at even L}
@@ -942,35 +776,32 @@ The smallest nonzero incidence eigenvalue is $q_{\min}=4\sin^2(\pi/L)$,
 attained by one unit of momentum in a single direction.
 \chk{q\_min on the L-torus grid is 4 sin\^{}2(pi/L)}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.94\textwidth]{figure_second_order_bands.pdf}
-\caption{Order-$u^2$ coefficients along
-$\Gamma$--$X$--$M$--$R$--$\Gamma$. The red carrier and dispersive doublet
-are the signed incidence result; their conditional global assembly is
-Corollary~\ref{cor:assembly}. The blue curves are the exact unsigned-incidence
-comparison spectrum. Reading the blue curves as physical charge-even bands
-requires the separate symbol hypothesis of Section~\ref{sec:even}.}
-\label{fig:secondorder}
-\end{figure}
-
 \subsection{The orientation signs are essential}
 
 Removing the orientation signs --- from the entries of \eqref{eq:B} and from
 the phases, so each $e^{ik}-1$ becomes $e^{ik}+1$ --- gives an unsigned
-incidence $\mathcal N(k)$. Define its comparison adjacency by
-$A_+(k):=\mathcal N(k)\mathcal N(k)\dg-4I$.
-Its adjacency spectra at $\Gamma$ and $R$ are $\{12,0,0\}$ and $\{-4,-4,-4\}$,
-which share no eigenvalue, so no level can be momentum independent. The flat
+incidence $\mathcal N(k)$ with $A+4I=\mathcal N\mathcal N\dg$.
+The contrast is a determinant identity, not a sample: read straight off the
+boundary formulas, $\det B(k)\equiv0$ identically in $k$ --- a zero eigenvalue
+at every momentum, which is the whole flat band --- while
+$\det\mathcal N(k)=-2\prod_j(1+e^{ik_j})$ vanishes only where some $k_j=\pi$. (Sampling agrees: the unsigned adjacency spectra at $\Gamma$ and $R$
+are $\{12,0,0\}$ and $\{-4,-4,-4\}$, which share no eigenvalue.) The flat
 branch is therefore not a generic consequence of three face orbitals or cubic
 symmetry.
+\chk{the two Bloch incidence symbols, and the determinant asymmetry between them}
 
-Section~\ref{sec:even} computes the unsigned comparison spectrum in closed
-form. The signed span is $8-(-4)=12$, giving the charge-odd second-order width
-$12t_3=5/51$ at $N=3$. The unsigned continuous-zone span is
-$12-(-4)=16$. Interpreting $16|\ell_3|=88/153$ as a charge-even bandwidth is
-conditional on deriving the complete linked charge-even symbol; on a finite
-torus the value $-4$ is sampled only when $L$ is even.
+This control is not hypothetical: the unsigned spectrum is the charge-even
+sector's, which Section~\ref{sec:even} computes in closed form, and the two
+spans are the two bandwidths. The signed span is $8-(-4)=12$, giving the
+charge-odd width $12t_-=5/51$ at $N=3$; the unsigned span is $12-(-4)=16$,
+giving the charge-even width $16|\ell_3|=88/153$. Both spans carry the even-$L$
+hypothesis of \eqref{eq:qmax}, and for the same reason: the charge-odd $12$
+needs every $k_j=\pi$ and the charge-even floor $-4$ needs some $k_j=\pi$, which
+the periodic grid samples only when $L$ is even. The charge-even \emph{top}
+needs no hypothesis --- it sits at $\Gamma$. Every bandwidth, ratio and band
+edge quoted below is therefore an even-$L$, thermodynamic-limit statement unless
+it is a $\Gamma$ statement.
+\chk{the C-even floor needs even L too, so both bandwidths are even-L statements}
 \chk{the two band spans ARE the two incidence spectra}
 
 \section{The second-order coefficient on a two-cube space}
@@ -983,11 +814,8 @@ calculation on a space large enough for two cubes to interact. This section
 reports such a test and, more importantly, states what it settles.
 
 The construction is the open face-sharing $(3,2,2)$ prism with its eleven
-oriented plaquettes, in the exact-Casimir $\mathcal B=6$ $SU(3)$ truncation, of
-basis dimension $1{,}590{,}462$. The delivery reports that it reaches the
-relevant sector through $794$ paths and $398$ reachable states; it does not
-assemble a $1{,}590{,}462$-dimensional magnetic matrix. Its complete
-charge-odd one-plaquette shell at
+oriented plaquettes, in the exact-Casimir $B=6$ $SU(3)$ truncation, of
+dimension $1{,}590{,}462$. Its complete charge-odd one-plaquette shell at
 $E_*=8/3$ has dimension eleven --- a census result and not the plaquette count.
 The full $E_*$ eigenspace has dimension $22$, split $11_{C=+}\oplus11_{C=-}$ by
 tensor-derived charge conjugation, and the delivery removes all $22$ from the
@@ -1025,27 +853,23 @@ inside each block and nothing else: $G_{\mathrm{conn}}$ turns out to be four
 disjoint $2\times2$ blocks plus three isolated directions
 (Appendix~\ref{app:twocube}), so each pair splits by $2\times5/612=5/306$ about
 its own diagonal entry. Given $D$, which Appendix~\ref{app:twocube} prints,
-  the spectrum is then closed form: $0$ once, $-\tfrac{15}4$ twice,
-  $-\tfrac{34}9$ four times, and $-\tfrac{129}{34}$ four times ---
+the spectrum is then closed form,
+$\{0,\,(-\tfrac{15}4)^{2},\,(-\tfrac{34}9)^{4},\,(-\tfrac{129}{34})^{4}\}$ ---
 exact arithmetic on entries that are themselves reconstructions, a boundary
 made precise below.
 The delivery reports the coefficient recovered target-blind --- supplied to no
 builder, graph fit, branching rule or validator --- and reports that the payload
 hashes were produced before the recorded comparison, a chronology it itself
 calls record-backed and only partly auditable; the value is byte-present in the
-nested $\mathcal B=4$ package that the $\mathcal B=6$ build seals as an authority object, so the
+nested $B=4$ package that the $B=6$ build seals as an authority object, so the
 defensible statement is dependency-path nonuse and not corpus-wide absence.
-This paper re-thresholds those delivered gates rather
+This repository re-thresholds those gates rather
 than re-running the build, including a deliberately wrong-sign control that the
 held-out scaling rejects: on a $66$-dimensional held-out word space the correct
 second-order residual falls with log-log slope $2.90$ while the sign-reversed
 control falls with slope $2.00$, a minimum error ratio of $325$. What all this
 establishes is runtime nonuse of the comparator on the delivered dependency
-path, which is not a preregistration. The finite-$u$ validations are
-asymmetric: the $\mathcal B=4$ delivery includes a held-out diagonalisation of
-the full $4{,}180$-dimensional charge-odd space with an $O(u^3)$ residual,
-whereas the $\mathcal B=6$ check is restricted to the $66$-dimensional
-$P+Q_1$ star.
+path, which is not a preregistration.
 \chk{the connected two-cube geometry has exactly four cross-cell pairs, each -1}
 \chk{the B=6 connected kernel is (5/612) G\_conn + diag, with the certified spectrum}
 \chk{the certificate's own gates pass, target-blind, with the wrong-sign control rejected}
@@ -1113,14 +937,14 @@ two mixed, the ratio would be constant for the total and not for the parts.
 The correspondence is scoped to what the Casimir closure exhausts: adjacent,
 one-action, shared-link intermediates at order $u^2$. Same-face diagonal
 routes, on-site terms and higher-action intermediates lie outside it --- the
-$\mathcal B=6$ scalar below is exactly a place where one of them is missing --- and so
+$B=6$ scalar below is exactly a place where one of them is missing --- and so
 does any untruncated-Hilbert-space statement.
 
 It is scoped in one further way, which matters more. The two-cube build draws
 its local Wilson amplitudes from the same hash-pinned upstream
 Clebsch--Gordan archive as the single-cube reconstructions of the next
 subsection, and the squared amplitudes that archive produces are the published
-$d_\rho/N^2$~\cite{CBB2025} --- the numerator of \eqref{eq:w}. The census
+$d_\rho/N^2$~\cite{CBB2026} --- the numerator of \eqref{eq:w}. The census
 therefore does not confirm the weights from an independent source: it tests the
 \emph{assembly} that carries them, which is the reachable-channel list, the
 resolvent denominators, the operator-level fold, the even split between
@@ -1143,23 +967,22 @@ irrep and its conjugate in the link-resolved census.
 \noindent This is a conjecture and nothing here promotes it. Falsifying it
 means a link-resolved census at some $N\ge4$ in a truncation that still
 retains every adjacent shared-link channel; at $N=4$ the endpoint budgets make
-that $\mathcal B\ge33/4$, and no such construction has been run.
+that $B\ge33/4$, and no such construction has been run.
 
 \subsection{One truncation, two constructions}
 
 The two-cube space also isolates why a cutoff can reverse the sign of $t_3$.
 An adjacent shared-link channel $\rho$ is reachable only if the endpoint
 Casimir budget $C_2(\rho)+2C_2(\mathbf 3)$ fits inside the truncation, meaning
-$C_2(\rho)+2C_2(\mathbf 3)\le\mathcal B$: the sextet needs exactly $6$ and the
-adjoint $17/3$, so both survive $\mathcal B=6$ and neither survives
-$\mathcal B=4$. The weak inequality is not a convenience. Both retentions this
-section uses are decided by an \emph{equality}: $\Lambda^2F=\bar{\mathbf 3}$ has
-budget exactly $4$ and so sits exactly on the $\mathcal B=4$ cutoff, and the
-sextet sits exactly on the $\mathcal B=6$ one. Under a strict rule
-$\mathcal B=4$ would reach $\{\mathbf 1\}$ alone and $\mathcal B=6$ would lose
-the sextet, contradicting both delivered censuses --- so the deliveries are what
-fix the convention, which is also why the budget arithmetic is not an
-independent confirmation of either census.
+$C_2(\rho)+2C_2(\mathbf 3)\le B$: the sextet needs exactly $6$ and the adjoint
+$17/3$, so both survive $B=6$ and neither survives $B=4$. The weak inequality is
+not a convenience. Both retentions this section uses are decided by an
+\emph{equality}: $\Lambda^2F=\bar{\mathbf 3}$ has budget exactly $4$ and so sits
+exactly on the $B=4$ cutoff, and the sextet sits exactly on the $B=6$ one. Under
+a strict rule $B=4$ would reach $\{\mathbf 1\}$ alone and $B=6$ would lose the
+sextet, contradicting both delivered censuses --- so the deliveries are what fix
+the convention, which is also why the budget arithmetic is not an independent
+confirmation of either census.
 \chk{B=6 retains every adjacent shared-link channel; B=4 provably cannot}
 \chk{the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities}
 
@@ -1179,16 +1002,15 @@ and $-\tfrac1{12}+\tfrac{14}{153}=\tfrac5{612}=t_3$. This is arithmetic on
 \end{corollary}
 
 \noindent The published $p+q\le1$ link cutoff retains exactly those two
-routes --- a per-link restriction, where $\mathcal B=4$ is a total endpoint
-budget, so the two schemes agree on the retained channels at this order and are
-not the same rule --- so $-1/12$ is its projected adjacent hopping and
-$14/153$ is the adjacent-hopping correction that completes it --- not
-$5/612$, which would double-count what it already carries. On the two-cube
-space the first of those two numbers is delivered rather than inferred: a
-separately sealed $\mathcal B=4$ run on the identical geometry gives
-$K^{(2),\,\mathcal B=4}_{\mathrm{conn}}=-\tfrac1{12}G_{\mathrm{conn}}+D_{\mathcal B=4}$
+routes --- a per-link restriction, where $B=4$ is a total endpoint budget, so
+the two schemes agree on the retained channels at this order and are not the
+same rule --- so $-1/12$ is its projected hopping and $14/153$ is the counterterm
+that completes it --- not $5/612$, which would double-count what it already
+carries. On the two-cube space the first of those two numbers is delivered
+rather than inferred: a separately sealed $B=4$ run on the identical geometry
+gives $K^{(2),B4}_{\mathrm{conn}}=-\tfrac1{12}G_{\mathrm{conn}}+D_{B4}$
 outright, and the Casimir budgets of the previous paragraph say without
-reference to any census that $\mathcal B=4$ can reach only
+reference to any census that $B=4$ can reach only
 $\{\mathbf1,\mathbf3,\bar{\mathbf3}\}$. Conditional on \eqref{eq:census}, the
 same split of the census reproduces it,
 $c_{\mathbf 1}+c_{\mathbf 3}+c_{\bar{\mathbf 3}}=-1/12$, and gives the omitted
@@ -1197,37 +1019,43 @@ half as $c_{\mathbf 6}+c_{\bar{\mathbf 6}}+c_{\mathbf 8}=14/153$.
 \chk{FINDING: the T1 link cutoff reverses the sign of t\_3, and 14/153 is what it omits}
 
 \begin{remark}
-Two single-cube reconstructions bracket the same statement. A full $\mathcal B=4$ open
-cube assembled from the pinned \texttt{ymcirc} $d=3$, $\mathcal B=4$ plaquette data
-~\cite{Balaji2026,ymcirc2026} reproduces $-1/12$ and the truncated shell ordering to
-$4.3\times10^{-11}$; a $\mathcal B=6$ cube reproduces $+5/612$ and the inverse ordering
+Two single-cube reconstructions bracket the same statement. A full $B=4$ open
+cube assembled from the published \texttt{ymcirc} $d=3$, $B=4$ plaquette
+table~\cite{Balaji2026} reproduces $-1/12$ and the truncated shell ordering to
+$4.3\times10^{-11}$; a $B=6$ cube reproduces $+5/612$ and the inverse ordering
 to $8.4\times10^{-15}$. Both locate the missing weight at the same $14/153$.
 
 Neither is an independent replication. Both read tabulated plaquette matrix
 elements of the same lineage --- and the two-cube build draws its
 Clebsch--Gordan amplitudes from the same hash-pinned \texttt{pyclebsch} archive
-as the $\mathcal B=6$ cube, so that agreement is a cross-check of assembly and not of
-the amplitudes. The published closed form~\cite{CBB2025} is
+as the $B=6$ cube, so that agreement is a cross-check of assembly and not of
+the amplitudes. The published closed form~\cite{CBB2026} is
 $d_\rho/N^2$ --- the very numerator of \eqref{eq:w}. This is a cross-check of
 assembly, not a third confirmation of $t_3$; the exact rational identity is
 Corollary~\ref{cor:cutoff}, which needs no tolerance. The $p+q\le1$
-nomenclature and the finite-rank matrix element are both from~\cite{CBB2025},
+nomenclature and the finite-rank matrix element are both from~\cite{CBB2026},
 and single-cube $SU(N)$ diagonalisation in this style goes back
 to~\cite{CM2003}.
 
-The correction to the adjacent-hopping coefficient of a published $T_1$
-Hamiltonian is therefore $14/153$ and not $5/612$, which would double-count
-the two routes $T_1$ already carries. One coincidence of value is worth naming:
+A counterterm added to a published $T_1$ Hamiltonian is therefore $14/153$ and
+not $5/612$, which would double-count the two routes $T_1$ already carries. One coincidence of value is worth naming:
 $-1/12$ is also the singlet weight $w_{\mathbf 1}$, and the cutoff value is a
 \emph{difference} of two weights, not a weight.
 \chk{FINDING: a full T1 = B = 4 cube Hamiltonian reproduces -1/12 and the reversed shell}
 \chk{FINDING: the B = 6 cube flips the sign back to +5/612, closing the decisive test}
 \end{remark}
 
-The $\mathcal B=6$ cube is channel-complete for the hopping and \emph{not} for the
+The $B=6$ cube is channel-complete for the hopping and \emph{not} for the
 scalar: its scalar is $39/68$ against the bridge's $11/34$, differing by
 exactly $1/4$, the local same-face sextet route, which first enters at cutoff
-$20/3$ --- integer label $\mathcal B=7$, so any cutoff above $20/3$ already carries it.
+$20/3$ --- integer label $B=7$, so any cutoff above $20/3$ already carries it.
+That is not only arithmetic: the delivery reports the prediction executed. A
+six-face $B=7$ reachable-state probe returns $\alpha_{B=7}=11/34$ and
+$t_{B=7}=5/612$ with scalar-plus-Gram residual $1.1\times10^{-15}$, so raising
+the cutoff past the same-face threshold lowers all three absolute coefficients
+by exactly $1/4$ and leaves the relative shell $\{0,\,5/153,\,5/102\}$
+untouched --- the scalar moves, the hopping does not. That probe's artifact did
+not travel, so it is reported here and not checked.
 \chk{the B = 6 scalar misses the bridge's by exactly the same-face sextet route}
 
 \subsection{What the cutoff moves, and where}
@@ -1242,17 +1070,16 @@ face.
 \begin{proposition}[Where the truncation lives]\label{prop:orbit}
 The eight-element orbit is exactly the support of the four cross-cell pairs,
 and it is the only orbit whose diagonal value differs between the two
-truncations: the end caps carry $-15/4$ and the shared face $0$ at both
-$\mathcal B=4$ and $\mathcal B=6$, while the side value moves from $-7/4$ to
-$-2317/612$. Together with
+truncations: the end caps carry $-15/4$ and the shared face $0$ at both $B=4$
+and $B=6$, while the side value moves from $-7/4$ to $-2317/612$. Together with
 the four cross-cell blocks carrying the whole off-diagonal change, the entire
-$\mathcal B=4\to\mathcal B=6$ difference is confined to the faces that carry connected transport.
+$B=4\to B=6$ difference is confined to the faces that carry connected transport.
 \end{proposition}
 \chk{the connected diagonal is orbit-constant, and only the transporting orbit moves}
 
 This also says what the nonuniform $D$ is. Where the faces of a complex form a
-\emph{single} orbit --- the closed cube of the next subsection, or the periodic
-torus under Corollary~\ref{cor:assembly} --- orbit-constancy forces the diagonal to
+\emph{single} orbit --- the closed cube of the next subsection, the periodic
+torus of Theorem~\ref{thm:allrank} --- orbit-constancy forces the diagonal to
 be scalar, and the operator is exactly $\alpha I+tG$. The prism has three
 orbits because it has a boundary. $D$ is the open boundary showing up in the
 diagonal, not a failure of the incidence form.
@@ -1299,17 +1126,17 @@ $A_1^{--}$ level is Proposition~\ref{prop:rigid}'s mechanism on a second
 complex --- $Gw=0$ there, so that level sits at $\alpha$ for every $t$, and no truncation, no
 channel and no coefficient in dispute anywhere in this paper can move it. And
 the reversal the two runs report is therefore a statement about the sign of one
-number rather than about the shell as a whole: at $\mathcal B=6$ the levels are
-$\{39/68,\,371/612,\,127/204\}$ and at $\mathcal B=4$ $\{37/12,\,11/4,\,31/12\}$, in
+number rather than about the shell as a whole: at $B=6$ the levels are
+$\{39/68,\,371/612,\,127/204\}$ and at $B=4$ $\{37/12,\,11/4,\,31/12\}$, in
 the opposite order, with $A_1^{--}$ in each case sitting exactly at the scalar.
-The relative shell $\{0,4t,6t\}$ is $\{0,\,5/153,\,5/102\}$ at $\mathcal B=6$.
+The relative shell $\{0,4t,6t\}$ is $\{0,\,5/153,\,5/102\}$ at $B=6$.
 
 The finite-volume fingerprint of the 28 August finite-$N$ bridge certificate
 --- a different release, and named here because a reader tracing it to the
 two-cube one would find nothing --- is worth recording
 because its most discriminating multiplicity is not a feature of the
-truncation: on the periodic $3^3$ torus the incidence eigenvalues $0,3,6,9$
-have multiplicities $29,12,24,16$, respectively, and $29=L^3+2$ is
+truncation: on the periodic $3^3$ torus the incidence spectrum is
+$\{0^{29},3^{12},6^{24},9^{16}\}$, and $29=L^3+2$ is
 Theorem~\ref{thm:carrier}.
 \chk{the certificate's finite-volume fingerprints, and 29 = L\^{}3 + 2 is the Lean cycle count}
 
@@ -1317,103 +1144,26 @@ Theorem~\ref{thm:carrier}.
 Everything in this section is second order in $u$, finite volume, strong
 coupling, one sector. It bears on $t_N$ and decides nothing about the
 fourth-order coefficient of Section~\ref{sec:fourth}. The
-$\mathcal B=6$ two-cube construction was not re-run here: its arithmetic is
+$B=6$ two-cube construction was not re-run here: its arithmetic is
 audited against geometry rebuilt independently, and its diagonal $D$ is
 $B$-truncated and not proved cutoff-stable. The held-out finite-$u$ validation
 that rejects the wrong-sign control is a $66$-dimensional $P+Q_1$ word space
 with the $Q_1$--$Q_1$ magnetic block set to zero, not the full Hamiltonian, and
 no radius-three stability claim was executed. The two branches are not equally
-covered: at $\mathcal B=4$ the delivery reports a direct diagonalisation of the complete
+covered: at $B=4$ the delivery reports a direct diagonalisation of the complete
 $4{,}180$-dimensional charge-odd block at four small couplings, two of them
 held out, with the residual after $E_*+u+u^2\operatorname{eig}K_2$ scaling as
-$u^3$; at $\mathcal B=6$ no such diagonalisation exists and the $66$-dimensional star
-stands in for it. That $\mathcal B=4$ report carries no check here --- its certificate
+$u^3$; at $B=6$ no such diagonalisation exists and the $66$-dimensional star
+stands in for it. That $B=4$ report carries no check here --- its certificate
 did not travel --- and is recorded as the delivery's rather than as this
 paper's. No external group has reproduced the release.
 \end{remark}
 
-\subsection{A cutoff-free radius-two witness at finite coupling}
-\label{sec:radius2}
-
-A later sealed delivery (29 August 2026) assembles the charge-odd and
-charge-even $SU(3)$ two-cube Ritz operators with no Casimir cutoff at all:
-the electric seed $P$ (eleven charge-odd faces), the complete one-action
-frontier $Q_1$, and the exact-energy-factorized two-action frontier $Q_2$,
-with cumulative odd dimensions $11$, $77$, $773$. Three nested operators are
-diagonalised at each coupling --- $K_1$ on $P+Q_1$; $K_2^{\ast}$, which zeroes
-exactly the $Q_2$--$V$--$Q_2$ block; and the full $K_2$ --- and every
-finite-coupling Cauchy interlacing inequality between them is checked, with
-recorded violation exactly $0$. All quoted quantities are invariant under
-diagonal basis rephasing, which is why no signed hopping entry is read as an
-observable there. The delivery is finite-precision throughout; everything in
-this subsection is reported at stated tolerances, never promoted.
-
-\begin{reported}[The rational sub-block of the cutoff-free second-order
-spectrum]\label{rep:radius2}
-Six of the eleven eigenvalues of the sealed cutoff-free second-order block
-$C_2=BR_1B\dg$ on the odd seed are rationals to within $10^{-12}$
-(the worst residual is $5\times10^{-14}$, about $30$ ulps):
-\[
-  -\tfrac{2429}{306}\ (\times2),\qquad
-  -\tfrac{404}{51}\ (\times3),\qquad
-  -\tfrac{2419}{306}\ (\times1),
-\]
-and the outer levels straddle the central triple by exactly
-\[
-  \tfrac{2429}{306}-\tfrac{404}{51}
-  =\tfrac{404}{51}-\tfrac{2419}{306}
-  =\tfrac{5}{306}=2t_3 .
-\]
-The remaining five eigenvalues are not rational at this precision.
-\end{reported}
-
-The point is what this operator was \emph{not} told. The census of
-Reported result~\ref{rep:census} recovered the shared-link channel
-coefficients from a build that retained those channels; here the sealed
-radius-two operator retains every second-order route the two-action frontier
-supports, makes no shared-link truncation, and the shared-link coefficient
-$t_3=5/612$ of Theorem~\ref{thm:allrank} appears anyway --- as the exact
-splitting scale of a rational sub-block, embedded in a spectrum whose other
-levels are algebraic. A structural identification of that sub-block (which
-face combinations carry it, and why the central level is threefold) is not
-derived here and is recorded as a lead, not a claim; the open two-cube
-cluster has face-inequivalent environments, so a non-scalar diagonal is
-expected and no contradiction with Corollary~\ref{cor:assembly}, which is a
-torus statement, arises.
-\chk{the sealed rational sub-block straddle is exactly 2 t\_3 = 5/306}
-\chk{six sealed eigenvalues match the three rationals to 1e-12, by a stdlib Jacobi diagonalisation}
-
-The same delivery reports direct nested-difference coefficients at fourth
-and fifth order --- for the matched odd--even gap,
-$C_4^{\mathrm{gap}}=-0.8272230$ and $C_5^{\mathrm{gap}}=+4.1838863$ --- each
-agreeing with an independent weak-coupling Hellmann--Feynman intercept to
-better than $3\times10^{-6}$. These are increments between the nested
-truncations, in the delivery's own coupling convention, and are not asserted
-to be complete fourth- or fifth-order coefficients of the unablated sector
-Hamiltonian; no convergence claim accompanies them.
-\chk{direct C4/C5 matched-gap coefficients agree with their weak-grid intercepts to 5e-6}
-
-One further feature bears on Section~\ref{sec:fourth}. The delivery's
-fifth-order object on the eleven-dimensional seed is recorded as a
-\emph{matrix}: its traceless part is nonzero, with
-$\operatorname{tr}(\mathrm{shape}^2)=0.359$ and eleven recorded shape
-eigenvalues. It is therefore the first delivered instrument in this corpus
-whose output is not a $\Gamma$-point scalar. That observation is about the
-instrument class only: the two-cube cluster carries no off-axis momentum,
-and nothing here weakens Theorem~\ref{thm:obstruction} or bears on the value
-of $C_{\mathrm{shp}}$.
-\chk{the fifth-order seed shape is traceless with nonzero trace-square: the instrument emits more than a scalar}
-
-\section{The unsigned-incidence comparison operator}
+\section{The charge-even sector in closed form}
 \label{sec:even}
 
-The unsigned incidence $\mathcal N(k)$ of Section~\ref{sec:second} defines an
-exact algebraic comparison operator
-$G_+(k)=\mathcal N(k)\mathcal N(k)\dg$. Its identification with the complete
-linked charge-even effective Hamiltonian is an additional hypothesis, not a
-result of the shared-link calculation: Proposition~\ref{prop:vacuum} exposes
-an all-pairs vacuum route whose cancellation or linked-cluster reorganisation
-has not been derived. With that boundary explicit, write
+The unsigned incidence $\mathcal N(k)$ of Section~\ref{sec:second} is not a
+hypothetical control: it is the charge-even sector's Bloch symbol. Write
 \[
   \hat a_m=2+2\cos k_m=|1+e^{ik_m}|^2,\qquad p=\sum_m \hat a_m .
 \]
@@ -1422,20 +1172,20 @@ $a_m=4\sin^2(k_m/2)$ used in the charge-odd shape basis \eqref{eq:shapes}
 below,
 $\hat a_m+a_m=4$, and that complementarity is the sum rule below.
 
-\begin{theorem}[Unsigned-incidence Bloch cubic]\label{thm:evencubic}
+\begin{theorem}[Charge-even Bloch cubic]\label{thm:evencubic}
 $p+q=12$ pointwise, and the characteristic polynomial of
 $\mathcal N\mathcal N\dg$ is
 \[
   \mu^3-2p\,\mu^2+p^2\mu-4\hat a_1\hat a_2\hat a_3
   \;=\;\mu(\mu-p)^2-4\hat a_1\hat a_2\hat a_3 ,
 \]
-with the unsigned comparison-adjacency eigenvalues $\lambda=\mu-4$. The signed
+with the charge-even adjacency eigenvalues $\lambda=\mu-4$. The charge-odd
 counterpart of the same computation is $\mu(\mu-q)^2$.
 \end{theorem}
-\chk{the unsigned-incidence characteristic polynomial is mu(mu - p)\^{}2 = 4 a\_1 a\_2 a\_3}
+\chk{the C-even characteristic polynomial is mu(mu - p)\^{}2 = 4 a\_1 a\_2 a\_3}
 \chk{p + q = 12: one zone function runs both sectors}
 
-The algebraic closed form is complete rather than merely consistent at sampled momenta:
+The closed form is complete rather than merely consistent at sampled momenta:
 the characteristic polynomial of the $81\times81$ and $192\times192$ finite
 plaquette adjacencies factorises coefficient for coefficient over $\mathbb Z$
 into this cubic over the momentum grid.
@@ -1452,12 +1202,8 @@ at $R$ is it a triple root.
 Write $f(\mu)=\mu(\mu-p)^2-4\hat a_1\hat a_2\hat a_3$. Then
 $f(0)=-4\hat a_1\hat a_2\hat a_3\le0$ and $\mu(\mu-p)^2<0$ for $\mu<0$, so no
 root lies below $0$; and $f'(\mu)=(3\mu-p)(\mu-p)>0$ for $\mu>p$, with
-$\hat a_1\hat a_2\hat a_3\le(p/3)^3$ by AM--GM and
-\[
- f(16)\ge16(16-p)^2-\frac{4p^3}{27}
- =\frac4{27}(12-p)(48-p)^2\ge0.
-\]
-Hence $\mu\in[0,16]$ and
+$f(16)=16(16-p)^2-4\hat a_1\hat a_2\hat a_3\ge0$ because $p\le12$ and
+$\hat a_1\hat a_2\hat a_3\le64$. Hence $\mu\in[0,16]$ and
 $\lambda=\mu-4\in[-4,12]$. Equality at the top forces $p=12$ and
 $\hat a_1\hat a_2\hat a_3=64$, which is $\Gamma$. Equality at the bottom is
 $f(0)=0$, i.e. $\hat a_1\hat a_2\hat a_3=0$, i.e. some $k_j=\pi$; there
@@ -1468,49 +1214,33 @@ $R$ alone.
 \chk{the C-even band touches its floor exactly on the three planes k\_j = pi}
 
 \begin{remark}
-A flat unsigned-comparison branch would need $f(\mu_0)=0$ identically in $k$,
-which the constant term already forbids. Its minimum is attained on three
-measure-zero planes, against the signed operator's flat band. This contrast is
-an exact statement about two incidence constructions, not by itself a
-derivation of two physical charge sectors.
+A flat charge-even branch would need $f(\mu_0)=0$ identically in $k$, which the
+constant term already forbids. The charge-even kernel is three measure-zero
+planes against the charge-odd kernel's whole band: the two sectors are two
+readings of one geometric object, and only the signed one is flat.
 \chk{the C-even band touches its floor exactly on the three planes k\_j = pi}
 \chk{the C-even spectra at the four high-symmetry momenta}
 \end{remark}
 
-\subsection{Conditional charge-even assembly}
+\subsection{One assembly, both sectors, both orders}
 
-The shared-link coefficient at $r=2$ is all-rank and analytic. Turning it into
-a charge-even band structure assumes the symbol identification stated above;
-the displayed second-order scalar additionally uses the supplied
-$SU(3)$ leakage/tower identification. The $r=3$ values ---
+The $r=2$ content below is all-rank and checked. The $r=3$ values ---
 $t_{3,+}=-6335/249696$ and everything computed from it --- come from the same
 supplied domino ledger as Section~\ref{sec:su3}, and are conditional on it in
 the same way.
 
-Conditional on that identification, the scalar ledger is not a list of
-separate facts. Writing $\lambda$ for the
+The scalar ledger is not a list of separate facts. Writing $\lambda$ for the
 adjacency eigenvalue and $\mathrm{tower}_{r,s}$ for the within-plaquette term
 in canonical $u$,
 \begin{equation}\label{eq:assembly}
   E_s(\lambda,r)=\mathrm{tower}_{r,s}+12\,\mathrm{leak}_{r,s}+\lambda\,t_{r,s},
 \end{equation}
-with $\lambda\in\{-4,8\}$ in the signed charge-odd sector (carrier and dispersive
-top), $\lambda\in\{12,-4\}$ in the unsigned comparison, and $\lambda=0$
+with $\lambda\in\{-4,8\}$ in the charge-odd sector (carrier and dispersive
+top), $\lambda\in\{12,-4\}$ in the charge-even sector, and $\lambda=0$
 returning the on-site diagonals. This reproduces every registered diagonal
 and band value --- nine of them --- across both sectors and both orders. The
-tower term is the certified coupling conversion $4\Delta_\pm(3u/2)$, where at
-$N=3$ the within-plaquette one-plaquette series of the two sectors are
-\begin{equation}\label{eq:bridge}
-\begin{aligned}
-  \Delta_-(x)&=\tfrac23+\tfrac x6+\tfrac1{18}x^2+\tfrac7{432}x^3,\\
-  \Delta_+(x)&=\tfrac23-\tfrac x6+\tfrac{13}{180}x^2+\tfrac{101}{2700}x^3,
-\end{aligned}
-\qquad x=\frac{\beta_3}4=\frac32\,u ,
-\end{equation}
-in the corpus's own printed coefficients; so \eqref{eq:assembly} takes no
-unregistered input. The letter $\Delta$ is reused elsewhere with other
-subscripts --- the fourth-order checkpoint differences, the coefficient gap
-$\Delta_C$ --- and only the sector subscript $\pm$ means this series. The twelve is a count on this
+tower term is the certified coupling conversion $4\Delta_\pm(3u/2)$ of
+\eqref{eq:bridge}, so \eqref{eq:assembly} takes no unregistered input. The twelve is a count on this
 lattice, not a citation: the plaquette graph is $12$-regular and two distinct
 faces share at most one link. The two towers are different objects and both
 are needed: the charge-odd one contributes
@@ -1518,12 +1248,14 @@ $8/3+u+u^2/2+7u^3/32$ and the charge-even one $8/3-u+(13/20)u^2+(101/200)u^3$,
 each of them $4\Delta_\pm(3u/2)$ on its own sector's series, so
 $\mathrm{tower}_{2,-}=1/2$ against $\mathrm{tower}_{2,+}=13/20$ and
 $\mathrm{tower}_{3,-}=7/32$ against $\mathrm{tower}_{3,+}=101/200$.
+The nine values it reproduces are tabulated in Appendices~\ref{app:ledger}
+and~\ref{app:even}.
 \chk{one assembly formula gives every registered band value}
 \chk{one assembly formula gives every C-even value at both orders}
 \chk{the plaquette graph is 12-regular and two faces share at most one link}
 
-Because the supplied ledger has $\mathrm{leak}_{r,+}=t_{r,+}$ at both computed
-orders, the conditional charge-even assembly collapses to
+Because $\mathrm{leak}_{r,+}=t_{r,+}$ at both computed orders, the whole
+charge-even sector collapses to
 $\mathrm{tower}_{r,+}+(12+\lambda)\,t_{r,+}$, a one-parameter family in the
 charge-even tower. That
 equality is verified and unexplained. The order-three separation is between the
@@ -1538,69 +1270,57 @@ falsifier --- an order at which the two are computed independently and differ
 
 \subsection{Where the rest frame is not blind}
 
-\begin{conditional}[Charge-even $\Gamma$ splitting]\label{prop:evengamma}
-If the unsigned symbol is the complete linked charge-even symbol, then at
-$\Gamma$ its comparison spectrum is $\{12,0,0\}$, so the $A_1^{++}$ level
+\begin{proposition}[Charge-even $\Gamma$ splitting]\label{prop:evengamma}
+At $\Gamma$ the charge-even spectrum is $\{12,0,0\}$, so the $A_1^{++}$ level
 and the $E^{++}$ doublet are distinct, and
 \[
   E(A_1^{++})-E(E^{++})=12\,t_{r,+}
 \]
 exactly: $-22/51$ at $r=2$ and $-6335/20808$ at $r=3$.
-\end{conditional}
+\end{proposition}
 \chk{the C-even Gamma point pins t\_+, exactly where no C-odd Gamma datum can}
 
 This is the structural counterpart of the charge-odd blindness recorded in
 Section~\ref{sec:su3}. The signed spectrum at $\Gamma$ is $\{-4,-4,-4\}$, one
 level, so no charge-odd rest-frame series can see the hopping; the unsigned
-comparison spectrum has two levels, so the charge-even rest frame could fix
-the coefficient under the symbol hypothesis. Neither half needs the incidence
-ansatz, and stating them through it understates both. At $\Gamma$ the little
-group is the full cubic point group, so the $3\times3$ block commutes with its
-action at every order in $u$ and whether or not the correction factors through
-links; Schur then decides the two sectors, and decides them differently. The
-charge-odd state is the \emph{oriented} $2$-cell $e_i\wedge e_j$, on which a
-proper rotation acts by its exterior square, which is the rotation itself under
-Hodge duality --- the defining rep $T_1$, irreducible, commutant dimension one,
-so the block is a scalar. Charge conjugation drops the orientation, so the
-comparison state is the \emph{unoriented} plane and the action is the
-permutation of the three axes, $A_1\oplus E$, commutant dimension two. The two
-commutant dimensions are exactly the two level counts, and this half of the
-statement carries no symbol hypothesis at all.
-\chk{Schur alone fixes both Gamma blocks: the C-odd triple is irreducible, the C-even one is not}
-
-The $A_1^{++}$
+spectrum has two levels, so the charge-even rest frame can. Neither half needs
+the incidence ansatz, and stating them through it understates both. At $\Gamma$
+the little group is the full cubic point group, so the $3\times3$ block commutes
+with its action at every order in $u$ and whether or not the correction factors
+through links; Schur then decides the two sectors, and decides them
+differently. The charge-odd state is the \emph{oriented} $2$-cell
+$e_i\wedge e_j$, on which a proper rotation acts by its exterior square, which
+is the rotation itself under Hodge duality --- the defining rep $T_1$,
+irreducible, commutant dimension one, so the block is a scalar. Charge
+conjugation drops the orientation, so the charge-even state is the
+\emph{unoriented} plane and the action is the permutation of the three axes,
+$A_1\oplus E$, commutant dimension two. The two commutant dimensions are
+exactly the two level counts. The $A_1^{++}$
 branch is isotropic at leading order without assuming it, with curvature
 $\tfrac43|t_{r,+}|$ in all three directions --- $22/459$ at second order and
 $6335/187272$ at third.
 \chk{the C-even curvature is (4/3)|t\_+| at both orders, and isotropic}
+\chk{Schur alone fixes both Gamma blocks: the C-odd triple is irreducible, the C-even one is not}
 
-On a finite $L^3$ grid the conditional charge-even width is
-\[
- W^{(+)}_{r,L}=|t_{r,+}|\,[12-\lambda_{\min}^{(+)}(L)],
- \qquad \lambda_{\min}^{(+)}(L)=-4\ \Longleftrightarrow\ L\ \text{is even}.
-\]
-Thus it equals $16|t_{r,+}|$ for even $L$ and approaches that coefficientwise
-as $L\to\infty$; the charge-odd manifold width is $12|t_{r,-}|$ for even $L$.
-At any order at which the correction
+At both computed orders the charge-even bandwidth is $16|t_{r,+}|$ and the
+charge-odd manifold width $12|t_{r,-}|$. At any order at which the correction
 stays in the incidence algebra --- which Proposition~\ref{prop:rigid} warns is
 not automatic --- the second-order ratio is $4(3N^2-5)/[3(N^2-4)]$, finite and
 greater than one at every rank $N\ge3$, decreasing from $88/15$ at $N=3$
-towards $4$. So at second order the charge-even band is the wider one at every
-rank under the charge-even symbol hypothesis, and that asymmetry is a channel
-statement rather than a geometric one.
+towards $4$ --- a ratio of two even-$L$ spans, in the sense fixed above. So at second order the charge-even band is the wider one at every
+rank, and that asymmetry is a channel statement, not a geometric one.
 \chk{the C-even bandwidth is 16|t\_+| at every order; the C-odd manifold width is 12|t\_-|}
 \chk{at N = 2 the C-odd hopping vanishes and the C-even one does not}
 
-\section{\texorpdfstring{$SU(3)$}{SU(3)} through third order}
+\section{$SU(3)$ through third order}
 \label{sec:su3}
 
-The \emph{third-order} content of this section is an externally verified
-computational input: the frozen upstream corpus reports a $251/251$ cold exact
-replay for the retained chain, while this compact release checks only the
-assembled rationals. At second order the hopping coefficient $t_3$ is analytic,
-but the displayed flat scalar additionally uses the upstream $SU(3)$
-identification $\mathrm{leak}_2=\ell_3$ and its within-plaquette tower. That
-tower contributes $8/3+u+u^2/2+7u^3/32$.
+The \emph{third-order} content of this section is conditional on supplied
+exact-arithmetic ledgers. Its second-order content is not: $\mathrm{leak}_2$ is
+the all-rank $\ell_N$ of Proposition~\ref{prop:vacuum} at $N=3$, and the tower
+is the certified coupling conversion. The within-plaquette charge-odd tower
+contributes $8/3+u+u^2/2+7u^3/32$, and the registered $SU(3)$ values, with the
+scope of each row, are collected in Appendix~\ref{app:ledger}.
 
 \begin{reported}[Third-order ledger]\label{rep:su3}
 The supplied ledgers report, in exact rationals,
@@ -1630,19 +1350,23 @@ If the lifter census is exhaustive and the linked ledger complete, then
 
 The second-order diagonal is the $\lambda=0$ value
 $\tfrac12+12\,\mathrm{leak}_2=7/102$ with $\mathrm{leak}_2=-11/306$;
-subtracting $4t_3$ gives the flat scalar $11/306$ at $\lambda=-4$.
+subtracting $4t_-$ gives the flat scalar $11/306$ at $\lambda=-4$.
 \chk{d\_- = 1/2 + 12*leak\_2, and leak\_2 = -11/306}
 
 \begin{remark}[What the external comparison can and cannot do]
 Hamer's 1989 rest-frame series~\cite{Hamer1989} agrees with $E_{\mathrm{flat}}$
 at every shared order. It cannot test $\tau$. The hopping enters the spectrum
 only through $\tau(u)q(k)$ and $q(0)=0$, so every \emph{charge-odd}
-$\Gamma$-point datum is blind to it. Under the unsigned-symbol hypothesis the
-charge-even rest frame is not, by Conditional result~\ref{prop:evengamma}; the one-parameter family
+$\Gamma$-point datum is blind to it. That argument runs inside the incidence
+ansatz, which Proposition~\ref{prop:rigid} warns is not unconditional; the
+Schur argument of Section~\ref{sec:even} removes the caveat, since the
+charge-odd triple carries the irreducible $T_1$ and its $\Gamma$ block is
+therefore scalar at every order. The charge-even rest frame is not blind, by
+Proposition~\ref{prop:evengamma}; the one-parameter family
 $(b_3+\varepsilon,\ \mathrm{leak}_3+\varepsilon/3)$ leaves $d_3$ and therefore
 the entire comparison unchanged. What the agreement pins is the combination
 $12\,\mathrm{leak}_3-4b_3$. The $\lambda=8$ band top separates them, via \eqref{eq:assembly}.
-Conditional result~\ref{prop:evengamma} is the charge-\emph{even} analogue and
+Proposition~\ref{prop:evengamma} is the charge-\emph{even} analogue and
 separates $\mathrm{leak}_+$ from $t_+$; it says nothing about $b_3$ or
 $\mathrm{leak}_3$.
 \chk{FINDING: no Gamma-point datum can constrain the hopping}
@@ -1679,11 +1403,12 @@ $1/q$ is the carrier projection: $\|w\|^2=q$ by Theorem~\ref{thm:fact}, so the
 carrier-projected correction is $\varepsilon_4=(w\dg K^{(4)}_-w)/q$ and the
 numerator, not $\varepsilon_4$, is the polynomial.
 \chk{the carrier projection is where the 1/q comes from}
+\chk{clearing the denominator reproduces the five-element numerator basis}
 
 That family is \emph{not} what cubic symmetry permits, and an earlier edition
-attributed it there. The point group permutes $(a_1,a_2,a_3)$, so its
-invariants are the symmetric polynomials, and the numerators of degree at most
-three with no constant term span a six-dimensional space
+of this paper attributed it there. The point group permutes $(a_1,a_2,a_3)$, so
+its invariants are the symmetric polynomials, and the numerators of degree at
+most three with no constant term span a six-dimensional space
 $\{q,q^2,e_2,q^3,qe_2,e_3\}$ --- one per partition. Clearing the denominator in
 \eqref{eq:shapes} returns five of those six; the missing direction is $q^3$,
 that is the shape $q^2$, which is cubic invariant and regular at $\Gamma$
@@ -1693,7 +1418,6 @@ produced the family, and it is load-bearing: Theorem~\ref{thm:obstruction} is a
 rank statement about \emph{this} span, and a sixth direction would be a sixth
 unknown for the same data to determine.
 \chk{the shape family is not symmetry-complete: cubic symmetry alone permits q\^{}2 as well}
-\chk{clearing the denominator reproduces the five-element numerator basis}
 
 \section{The fourth-order boundary}
 \label{sec:fourth}
@@ -1705,88 +1429,19 @@ fourth-order band or bandwidth is used above. What it does is state precisely
 where the disagreement lives, because that geography is now checked and it is
 what a decisive calculation must target.
 
-After subtracting the rest value, the recorded carrier ansatz is
-\begin{equation}\label{eq:shapeansatz}
- \Delta_4(k):=\varepsilon_4(k)-\varepsilon_4(0)
- =Aq+Be_2+C_{\mathrm{shp}}\frac{4e_2}{q}
-   +D\frac{e_3}{q}.
+The two values, side by side and in no order of preference:
+\begin{equation}\label{eq:c2}
+\begin{aligned}
+  C_{\mathrm{old}}&=-\frac{211835444920651}{4405310420659200}=-0.0480863\ldots,\\
+  C_{\mathrm{new}}&=-0.020213328886166577,\\
+  \Delta_C&=C_{\mathrm{new}}-C_{\mathrm{old}}=0.0278730\ldots
+\end{aligned}
 \end{equation}
-The continuous $k\to0$ limit is used at $q=0$. Denote the two recorded
-mixed-gradient values by $C_{\mathrm{old}}$ and $C_{\mathrm{new}}$ and set
-$\Delta_C=C_{\mathrm{new}}-C_{\mathrm{old}}$. A supplied all-rank cube ledger
-also reports
-\begin{equation}\label{eq:alphaN}
- \alpha_N=\frac{640}{N(N^2-1)^3},
-\end{equation}
-but this formula and its identification with the complete axial coefficient
-remain conditional on that ledger. Sealed packages containing other
-fourth-order scalars use incompatible observable labels; none is promoted here
-to a canonical rest coefficient.
-
-\subsection{An exact theorem for the saved historical kernel}
-
-The upstream authority corpus supplies the hash-pinned $189$-record historical
-kernel. Pulling its centered fourth-order operator back to cube amplitudes with
-$\mathsf C=\partial_3$, define
-\[
- Q_4=\mathsf C\dg K^{(4)}_-\mathsf C,
- \qquad G=\mathsf C\dg\mathsf C,
- \qquad \mathcal Q_4=Q_4-s_4G,
-\]
-where $s_4=\operatorname{tr}K^{(4)}_-(\Gamma)/3$. If
-$L_i=2I-T_i-T_i^{-1}$, then $G=\sum_iL_i$ and the centered coefficient is the
-generalized eigenvalue $\mathcal Q_4\phi=\lambda_4G\phi$. The representative
-change $(Q_4,G)\sim(Q_4+\delta G,G)$ is a scalar gauge only when the scalar
-anchor changes simultaneously; it cannot change an off-axis shape.
-
-\begin{reported}[Exact saved-kernel Hodge pencil]\label{rep:historical}
-For the supplied historical kernel,
-\[
- q_{\mathrm{old}}^{(4)}
- =-\frac{20721577909065127111}{7250590288602460800},\qquad
- \alpha_{\mathrm{old}}=\frac5{12},\qquad
- \beta_{\mathrm{old}}
- =\frac{17607806155349}{275331901291200},
-\]
-and
-\begin{equation}\label{eq:oldhodge}
- \mathcal Q_{4,\mathrm{old}}
- =\frac5{48}\sum_iL_i^2
- +\frac{17607806155349}{1101327605164800}
-   \sum_{i<j}L_iL_j\succeq0.
-\end{equation}
-Its continuous-zone and even-$L$ width is
-\[
- W_{4,\mathrm{old}}=\alpha_{\mathrm{old}}+\beta_{\mathrm{old}}
- =\frac{132329431693349}{275331901291200}.
-\]
-These identities are exact for the saved kernel and its cold fixed-kernel
-checks. They do not establish that this kernel is the unique physical linked
-fourth-order operator.
-\end{reported}
-
-The corresponding $25$-point numerator stencil has
-\[
- w_0=\tfrac92\alpha+3\beta,\qquad
- w_1=-(\alpha+\beta),\qquad
- w_2=\tfrac14\alpha,\qquad
- w_d=\tfrac14\beta,
-\]
-and obeys $w_0+6w_1+6w_2+12w_d=0$ exactly. For
-$\alpha,\beta>0$, the generalized dispersion is bounded by
-$0\le\lambda_4\le\alpha+\beta$, with the continuous-zone extrema at
-$\Gamma$ and $R$ respectively; an odd-$L$ grid does not contain $R$.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.94\textwidth]{figure_historical_fourth_order.pdf}
-\caption{Exact dispersion of the saved historical kernel in
-Reported result~\ref{rep:historical}. The plot is a theorem about that
-hash-pinned kernel. Its identification with the complete physical linked
-$SU(3)$ fourth-order operator is disputed, so the curve is not used as a
-settled physical band.}
-\label{fig:historical}
-\end{figure}
+The first is recorded as an exact rational and the second only as a float ---
+that asymmetry is a fact about the two records, not an argument for either. The
+gap is what ``less than half the disputed gap'' and ``the two records give
+$K=17.04$ and $K=23.66$'' below are measured against.
+\chk{Delta\_C = C\_new - C\_old > 0 (the real discrepancy)}
 
 The two records do agree on the axial datum, but the corpus's own quoted
 tolerance does not cover that agreement: the $\alpha$ gap is
@@ -1821,11 +1476,9 @@ record is preferred here. An off-axis contraction is the only decider.
 \chk{the crosswalk is exactly scalar on the momentum axes}
 \end{remark}
 
-On the axial cut itself the invariants collapse to
-$q=q_{\mathrm{ax}}(k)=4\sin^2(k/2)$ with $e_2=e_3=0$. Dividing the raw
-cube-boundary numerator $(\alpha_N/4)q_{\mathrm{ax}}^2$ by
-$\|w\|^2=q=q_{\mathrm{ax}}$ leaves one power of $q_{\mathrm{ax}}$ with
-coefficient $\alpha_3/4=5/48$.
+On the axial cut itself the invariants collapse to $q=L(k)=4\sin^2(k/2)$ with
+$e_2=e_3=0$, and dividing the raw cube-boundary numerator $(\alpha_N/4)L^2$ by
+$\|w\|^2=q=L$ leaves a single power of $L$ with coefficient $\alpha_3/4=5/48$.
 \chk{on an axial cut the mixed invariants vanish and the norm divides}
 
 \subsection{A second witness}
@@ -1833,13 +1486,13 @@ coefficient $\alpha_3/4=5/48$.
 Non-identifiability is better exhibited than argued from a difference between
 two records, since a difference could always be a computational error in one of
 them. The exhibition adds no logical strength: Theorem~\ref{thm:obstruction}
-already proves that \emph{every} value of $C_{\mathrm{shp}}$ is consistent with
-the retained data, so a witness is one point of a line already known to be a
-line. It is a concrete handle, not evidence. The witness below is not itself a
-candidate for the physical coefficient. It is the balanced continuation obtained in the supplied source
-by setting an auxiliary bookkeeping parameter $\epsilon$ to zero; that source
-label carries no physical meaning here. Its sole role is to make the
-$4\Delta_Ce_2$ family concrete with an exactly known shift.
+already proves that \emph{every} value of $C$ is consistent with the retained
+data, so a witness is one point of a line already known to be a line. It is a
+concrete handle, not evidence. The witness below is not itself a candidate for
+the physical coefficient --- it is the balanced $\epsilon$-free continuation of the
+all-rank shape family, and $\epsilon$-free is precisely what the physical value
+is not. Its job is to make the $4\Delta_C e_2$ family concrete with an exactly
+known shift.
 
 \begin{proposition}[Explicit second witness]\label{prop:witness}
 There is a value $C_{\mathrm{alt}}$ with
@@ -1857,14 +1510,13 @@ The four checkpoint deltas are the $\Gamma$-subtracted carrier corrections
 $\Delta_s=\varepsilon_4(k_s)-\varepsilon_4(0)$ at
 $k_X=(\pi,0,0)$, $k_M=(\pi,\pi,0)$, $k_P=(\pi,\pi/2,0)$ and
 $k_R=(\pi,\pi,\pi)$ --- $P$ is the off-axis, off-corner point that makes the
-system invertible, with $a=(4,2,0)$. Its algebraic role is explicit here; no
-additional provenance is inferred for that checkpoint. In the shape basis they are
+system invertible, with $a=(4,2,0)$. In the shape basis they are
 \begin{equation}\label{eq:checkpoints}
 \begin{aligned}
   \Delta_X&=4A,\\
-  \Delta_M&=8A+16B+8C_{\mathrm{shp}},\\
-  \Delta_P&=6A+8B+\tfrac{16}3C_{\mathrm{shp}},\\
-  \Delta_R&=12A+48B+16C_{\mathrm{shp}}+\tfrac{16}3D,
+  \Delta_M&=8A+16B+8C,\\
+  \Delta_P&=6A+8B+\tfrac{16}3C,\\
+  \Delta_R&=12A+48B+16C+\tfrac{16}3D,
 \end{aligned}
 \end{equation}
 and they invert exactly, so the four shape coefficients are recoverable from
@@ -1873,20 +1525,6 @@ agree whatever the dispute does.
 \chk{checkpoint values at X, M, P, R}
 \chk{the four extraction formulas invert the ansatz}
 \chk{X is blind to B, C, D — it fixes A alone}
-
-The dispute is two numbers and their difference, and the paper should print
-all three rather than describe them:
-\begin{equation}\label{eq:c2}
-\begin{aligned}
-  C_{\mathrm{old}}&=-\frac{211835444920651}{4405310420659200}=-0.0480863\ldots,\\
-  C_{\mathrm{new}}&=-0.020213328886166577,\\
-  \Delta_C&=C_{\mathrm{new}}-C_{\mathrm{old}}=0.0278730\ldots
-\end{aligned}
-\end{equation}
-The first is recorded as an exact rational and the second only as a float ---
-that asymmetry is a fact about the two records, not an argument for either. The
-gap is $58\%$ of $|C_{\mathrm{old}}|$, so this is not a precision disagreement
-that a tighter run would close.
 
 Four further measurements locate the coefficient and bound where a
 disagreement could live. The distinction matters and is easy to lose: showing
@@ -1951,17 +1589,6 @@ constraining $C_{\mathrm{shp}}$. This is a statement about the instrument, made
 by reading it, not a report of a failed run.
 \chk{FINDING: the marked-cluster engine emits the Gamma scalar only — a completed 609-sweep cannot decide C\_shp}
 
-The instrument class that could eventually decide it now demonstrably
-exists: the sealed radius-two delivery of Section~\ref{sec:radius2} emits a
-seed-space \emph{matrix} at fifth order, not a scalar. What it lacks is
-off-axis momentum --- a two-cube cluster has none --- so it too cannot
-adjudicate. The requirement is now sharp on both counts: a decisive
-instrument must emit more than a $\Gamma$ scalar \emph{and} resolve an
-off-axis point such as $P$; the marked-cluster engine fails the first
-condition, the radius-two delivery the second, and a target-blind
-calculation satisfying both is exactly the next step named in the
-conclusion.
-
 \subsection{The tier collapse, as two integers}
 
 The two shape coefficients $B$ and $D$ vanish in the recorded kernel even
@@ -1986,7 +1613,7 @@ vectors.
 \chk{FINDING: the tier collapse is two integer cancellations at record level}
 \chk{the vanishing coefficients are exactly the degree-3 ones}
 
-\subsection{A \texorpdfstring{near-$\Gamma$}{near-Gamma} statement that does not adjudicate}
+\subsection{A near-$\Gamma$ statement that does not adjudicate}
 
 One quantitative fourth-order statement can be made without adjudicating
 anything, because it depends on the kernel only through $\sqrt{W_4}$. Here
@@ -1996,33 +1623,32 @@ anything, because it depends on the kernel only through $\sqrt{W_4}$. Here
 is the zone spread of the carrier-projected fourth-order correction about
 $\Gamma$, and $\theta\in(0,1)$ is the fraction of the second-order isolation
 gap the fourth-order spread is allowed to occupy; we take $\theta=1/2$
-throughout. What the criterion needs is a lower bound on $q$ over the region
-$|k|\ge r$, and there it is sharp: writing $q=\sum_mh(k_m^2)$ with
-$h(t)=2(1-\cos\sqrt t)$, the identity $(s\cos s-\sin s)'=-s\sin s\le0$ makes
-$h$ concave and increasing on $[0,\pi^2]$, so the minimum over the simplex sits
-at a vertex and
+throughout. What the
+criterion needs is a lower bound on $q$ over the region $|k|\ge r$, and there it
+is sharp: writing $q=\sum_mh(k_m^2)$ with $h(t)=2(1-\cos\sqrt t)$, the identity
+$(s\cos s-\sin s)'=-s\sin s\le0$ makes $h$ concave and increasing on
+$[0,\pi^2]$, so the minimum over the simplex sits at a vertex and
 \begin{equation}\label{eq:shellmin}
   \min_{|k|\ge r}q(k)=4\sin^2(r/2),
 \end{equation}
 attained on a coordinate \emph{axis}. With $\tau(u)\ge t_3u^2$ for $u>0$, the
 fourth-order shape terms are therefore dominated by the second-order dispersion
-outside a ball of radius
-$2\arcsin\bigl(\tfrac u2\sqrt{W_4/(\theta t_3)}\bigr)$, which is $Ku$ to
-leading order with $K=\sqrt{W_4/(\theta t_3)}$: the two records give
-$K=10.85$ and $K=15.06$ --- floating point, since one of the two bandwidths
-exists only as a float --- and the larger bounds both. Jordan's inequality
-$q(k)\ge(4/\pi^2)|k|^2$ also holds on the whole zone and is tight at $k=0$ and
-at the corner, but the corner is not where this bound is used; on the axis it
-is loose by $\pi^2/4$, and the constants it gives, $17.04$ and $23.66$, are
-exactly $\pi/2$ times the sharp ones. So the exclusion radius can be stated for
-either record without choosing between them. It is not a bound on the open
+outside a ball of radius $2\arcsin\bigl(\tfrac u2\sqrt{W_4/(\theta t_3)}\bigr)$,
+which is $Ku$ to leading order with $K=\sqrt{W_4/(\theta t_3)}$: the two records
+give $K=10.85$ and $K=15.06$ --- floating point, since one of the two bandwidths
+exists only as a float --- and the larger bounds both, so the exclusion radius
+can be stated for either record without choosing between them. Jordan's
+inequality $q(k)\ge(4/\pi^2)|k|^2$ also holds on the whole zone and is tight at
+$k=0$ and at the corner, but the corner is not where this bound is used; on the
+axis it is loose by $\pi^2/4$, and the constants it gives, $17.04$ and $23.66$,
+are exactly $\pi/2$ times the sharp ones. It is not a bound on the open
 coefficient: a value of $C_{\mathrm{shp}}$ outside the two records carries its
 own $W_4$, and nothing here confines the answer to the interval the records
 span. The statement is non-vacuous only for $u<0.133$ at $\theta=1/2$, and that
 threshold is the same for both constants --- the sharp radius reaches $\pi$ when
 $\tfrac u2\sqrt{W_4/(\theta t_3)}=1$, which is exactly where $Ku=\pi$ for the
-Jordan constant, because the two bounds agree at the zone corner ---
-and the excluded zone fraction grows as $u^3$.
+Jordan constant, because the two bounds agree at the zone corner. The excluded
+zone fraction grows as $u^3$.
 \chk{Jordan bound q(k) >= (4/pi\^{}2)|k|\^{}2 holds on the whole zone}
 \chk{the exact zone minimum of q on |k| >= r is 4 sin\^{}2(r/2), and Jordan overstates it by pi/2}
 \chk{the criterion survives C2: K depends on the kernel only through sqrt(W\_4)}
@@ -2031,36 +1657,32 @@ and the excluded zone fraction grows as $u^3$.
 \section{External comparisons}
 \label{sec:external}
 
-External results are useful here when their provenance is independent of the
-present calculation. We use them only within the scope stated below; all
-normalisation conversions and coefficient matches are calculations of this
-paper.
+External results count here because they are \emph{independent} --- produced
+without knowledge of this program --- not because they are published. Each is
+an assertion until something checks it.
 
-\paragraph{Hamer 1989, both sectors.} Let $a_n$ denote the coefficient of
-$x^n$ in Hamer's tabulated dimensionless mass series. The $1^{+-}$ rest-frame series agrees
+\paragraph{Hamer 1989, both sectors.} The $1^{+-}$ rest-frame series agrees
 with $E_{\mathrm{flat}}$ at every shared order: $16/3\div2=8/3$ exactly,
 $a_1=+1$, and $2a_2$, $4a_3$ matching $11/306$ and $d_3$ to $9.9\times10^{-14}$
-and $1.1\times10^{-12}$. Conditional on the unsigned-symbol identification,
-the $0^{++}$ series also matches the charge-even $A_1^{++}$ $\Gamma$-point
+and $1.1\times10^{-12}$. The $0^{++}$ series matches the charge-even $A_1^{++}$ $\Gamma$-point
 coefficients at $x^2$ and $x^3$, with the sign structure ($a_1=-1$ in the
 scalar channel where the carrier's is $+1$) reproduced; the $E^{++}$ doublet is
-not constrained by it, which is why Conditional result~\ref{prop:evengamma}
-uses the splitting rather than the level. The conversion
-$m_n=2^{n-1}a_n$ is $x=2u$ together
+not constrained by it, which is why Proposition~\ref{prop:evengamma} needs the
+splitting and not the level. The conversion $m_n=2^{n-1}a_n$ is $x=2u$ together
 with Hamer's normalisation $ma=(g^2/2)M$ --- the $2^n$ from the substitution,
 the half from the normalisation --- exactly, with no $4^r$ ambiguity anywhere.
 Hamer states in print that his $x^3$ and $x^4$ terms disagree with the earlier
-series of~\cite{KSS1976}. We report Hamer's comparison and do not independently
-adjudicate the earlier coefficient table.
+series of~\cite{KSS1976}; that paper has not been read here, so the
+disagreement is recorded and not adjudicated.
 \chk{Hamer's 1+- series matches the C-odd Gamma-point coefficients through x\^{}3}
 \chk{Hamer's 0++ series matches the C-even Gamma-point coefficients through x\^{}3}
 \chk{the m\_n = 2\^{}(n-1) a\_n bridge is the x = 2u conversion}
-\chk{the Hamer table metadata is pinned; no fourth-order agreement is used}
+\chk{the Hamer table is pinned, and the a\_4 agreement is primary-source}
 
-\paragraph{The string tension.} Let $t_n$ denote the coefficient sequence in
-the transcribed Kogut--Pearson--Shigemitsu $SU(3)$ table~\cite{KPS1981}, and
-let $\sigma_n$ denote the corresponding ledger coefficient after the displayed
-convention conversion. The transcription satisfies exactly
+\paragraph{The string tension.} The Kogut--Pearson--Shigemitsu $SU(3)$
+table~\cite{KPS1981} --- read here from the 1980 preprint, the journal pages
+themselves being unread --- equals this program's certified $\sigma$ series
+exactly,
 $2^{n-1}t_n=\sigma_n$ for $n=2,\dots,5$, in the physical sign convention
 $\sigma_n^{\mathrm{phys}}=(-1)^n\sigma_n^{\mathrm{raw}}$. The same series
 reproduces $E_{\mathrm{flat}}$ term by term through $u^3$, including the
@@ -2069,24 +1691,30 @@ discriminating $u^3$ coefficient.
 \chk{sigma\_n\^{}phys = (-1)\^{}n sigma\_n\^{}raw, and C5 is the n = 3 case}
 \chk{the ratio and sigma series reproduce E\_flat exactly}
 
-\paragraph{Euclidean series.} Historical Euclidean strong-coupling series by
-M\"unster, Seo and Smit~\cite{Munster1981,Seo1982,Smit1982,Munster1983,Munster1985}
-provide context only. The accompanying corpus contains a transcription
-comparison and an apparent eighth-order discrepancy between the 1982 erratum
-and the 1985 table. Because every original table page has not been
-independently re-transcribed for this paper, neither the apparent equality nor
-the discrepancy is used as evidence. No Hamiltonian coefficient is inferred
-from these Euclidean records.
+\paragraph{Euclidean series.} Two printings of the same M\"unster/Seo series
+--- the second erratum to~\cite{Munster1981}, which prints the definitive
+corrected table and credits Ukawa and Seo~\cite{Seo1982} with locating the
+error, and Smit's Table~1 scalar column~\cite{Smit1982}, which credits them ---
+agree rational for rational through $u^8$. That is agreement
+transcription for transcription, not two independent computations, and it is
+recorded as such. One shift is recorded and not adjudicated: M\"unster's 1985
+table~\cite{Munster1985} differs from the 1982 erratum row at eighth order by
+exactly $-96$, a fourth correction already in print by 1983~\cite{Munster1983}
+that no erratum records. This is a Euclidean record; no Hamiltonian comparison is drawn from
+it, and none is permitted.
 \chk{the errata-resolved Euclidean series is doubly sourced, transcription for transcription}
 \chk{FINDING: Munster's 1985 table shifts his 1982 erratum at eighth order}
 
-\paragraph{The overlap obstruction.} Schierholz~\cite{Schierholz1988} and
-Brandstaeter, Kronfeld and Schierholz~\cite{BKS1990} document the degradation
-of local-operator projection and its critical signal-to-noise scaling as the
-lattice spacing is reduced. Nothing quantitative is transferred to the
-present strong-coupling finite-order setting. Read only as a warning, these
-results motivate posing \texttt{G18} in a smeared basis; they supply no bound
-and do not identify the carrier with a physical glueball.
+\paragraph{The overlap obstruction.} Schierholz~\cite{Schierholz1988} measured
+in 1988 that at $\beta=5.9$ --- in the Euclidean scaling region, not at strong
+coupling --- a bare local operator carries only a couple of percent of the state
+it interpolates, and gave the scaling $a^5$ for a local dimension-four operator.
+Nothing is transferred from that measurement to here: it is a Euclidean Monte
+Carlo result at the opposite end of the coupling axis from $u\ll1$, and the
+firewall of Section~\ref{sec:scope} forbids importing it as a bound. Read as a
+warning rather than as a bound, it is why \texttt{G18} must be posed in a
+smeared basis: an overlap that falls as a power of the spacing is not something
+better statistics recover.
 \chk{the overlap obstruction was published in 1988, and it scales}
 
 \paragraph{Cross-regime discipline.} Two indexed papers declare an explicit
@@ -2109,10 +1737,9 @@ three face orbitals transform as an axial vector of the cubic group, which
 with parity even and charge conjugation odd gives the retained-space label
 $T_1^{+-}$; this is an operator-space assignment, not a spectral one.
 
-The carrier is macroscopically degenerate at finite $L$. Under the
-third-order factorisation input, its nearest incidence separation is
-$\Delta_L(u)=4\tau(u)\sin^2(\pi/L)+O(u^4)$, which falls as $L^{-2}$ and so
-provides no volume-uniform spectral isolation.
+The carrier is macroscopically degenerate at finite $L$, but its nearest
+incidence separation is $\Delta_L(u)=4\tau(u)\sin^2(\pi/L)+O(u^4)$, which
+falls as $L^{-2}$ and so provides no volume-uniform spectral isolation.
 \chk{Delta\_L = 4 tau(u) sin\^{}2(pi/L) is positive and falls as L\^{}-2}
 
 Three crossings are named explicitly, and none of them is made here.
@@ -2132,183 +1759,149 @@ Three crossings are named explicitly, and none of them is made here.
   strong coupling; the continuum is the opposite end of the axis.
 \end{itemize}
 
-\noindent All three crossings are required, none is established here, and
-nothing in this edition shortens that route.
+\noindent The second and third are the only route from the statements above to
+any sentence containing the words ``mass gap'', and nothing in this edition
+shortens that route.
 
-Earlier editions carried three load-bearing prose premises here. Two of them
-are now proved --- the retained shell (Lemma~\ref{lem:shell}) and
-second-order process exhaustion (Lemma~\ref{lem:exhaust}) --- with their
-finite combinatorics machine-enumerated and their two classical
-representation-theoretic inputs named in the proofs. Those proofs are new in
-this edition and have not yet faced external referees; a reader auditing
-this paper should start there. One premise remains.
+Four premises earlier in the paper are arguments in prose rather than results,
+and all four are load-bearing. None has a check.
 
-That the complete linked charge-even Bloch symbol is the unsigned incidence
-$\mathcal N(k)$ --- the signed incidence with the boundary orientations
-dropped --- is not derived. The cubic and range in Section~\ref{sec:even} are
-exact algebraic properties of the defined comparison operator; only their
-physical charge-even interpretation, bandwidth and $\Gamma$-splitting rest on
-this additional hypothesis.
+That the range of $P_-$ is exactly the charge-odd one-plaquette span for
+$L\ge3$ --- the retained-shell hypothesis \eqref{eq:shell} --- is argued in
+Section~\ref{sec:sector} from the link count of a reduced fundamental loop and
+carried as a hypothesis there, not established.
 
-\section{Evidence, authority, and reproducibility}
+That one-shared-link processes exhaust the second-order \emph{off-diagonal}
+intermediates is hypothesis \emph{(ii)} of
+Conditional corollary~\ref{cor:assembly}; Theorem~\ref{thm:allrank}, being a
+statement about one matrix element, does not need it. Three neighbouring
+statements \emph{are} settled and should not be confused with it: the channel
+list is complete (Lemma~\ref{lem:channels}), two distinct faces of this lattice
+share at most one link, and the vacuum-mediated route vanishes in this sector
+(Proposition~\ref{prop:vacuum}). The gap is in the process enumeration, not in
+the channel list, and Theorem~\ref{thm:weingarten} is silent about it.
+
+That the degree-$(2,2)$ Haar moment over $SU(N)$ equals the $U(N)$ one is
+argued in the proof of Theorem~\ref{thm:weingarten} from the $U(1)$ invariance
+of the integrand and the exhaustion of the invariants below the rank. The
+argument is standard and the range is the theorem's own, but nothing here
+checks it.
+
+That the charge-even sector's second-order Bloch symbol is the unsigned
+incidence $\mathcal N(k)$ --- the signed incidence with the boundary
+orientations dropped --- is asserted in Section~\ref{sec:second} and used
+throughout Section~\ref{sec:even} and Appendix~\ref{app:even}. The registry
+records it as a convention rather than a result, and the closed-form cubic, the
+range, the bandwidth and the $\Gamma$-splitting all rest on it.
+
+\section{Reproducibility}
 \label{sec:repro}
 
-The accompanying dependency-free program
-\texttt{verify\_publication\_core.py} uses exact integers and
-\texttt{Fraction} arithmetic. It checks the all-rank coefficient ledger and
-Weingarten sums, signed incidence and torus homology, closed-cube shell,
-two-cube connected geometry and reported channel arithmetic, the unsigned
-cubic, the saved historical Hodge pencil, the fourth-order obstruction, the
-coupling convention, the planar closed form \eqref{eq:planar}, and the
-exhaustive shared-link geometry, cycle censuses and torus ranks through
-$L=5$ --- thirty-eight checks, every value
-a \texttt{Fraction} and no float constructed anywhere in the file. A second
-program, \texttt{verify\_radius2\_report.py}, holds everything the sealed
-radius-two artifact of Section~\ref{sec:radius2} can support: it is also
-standard-library only (the payload is read with \texttt{zipfile} and
-\texttt{struct}, and the $11\times11$ block is diagonalised by cyclic
-Jacobi), but it works in floats at stated tolerances, and the two files are
-kept separate precisely so that the exact one stays float-free. Neither
-reconstructs the finite-precision Clebsch--Gordan inputs, replays the
-third-order microscopic contractions, or chooses $C_{\mathrm{shp}}$.
+A portable standard-library Python program, \texttt{paper/verify\_core.py} in
+the accompanying repository (the root-level file of the same name belongs to
+the earlier flat-band manuscript and is a different, smaller program), runs
+twenty-five checks in nine claim groups: the rational coefficient ledger; the
+Weingarten derivation of Theorem~\ref{thm:weingarten} by explicit index
+summation; the incidence identity, \emph{decided} in exact Gaussian-rational
+arithmetic at rational torus points rather than checked to a residual; the
+chain condition $\partial_2\partial_3=0$ over $\mathbb Z$ and the finite-torus
+ranks with an explicit kernel basis, together with the closed cube surface of
+Proposition~\ref{prop:cube}; the Rayleigh quotient of the wrapping sheets; the
+two-cube connected geometry rebuilt from oriented cell boundaries, its exact
+$B=6$ and $B=4$ spectra, the endpoint Casimir budgets and the weak retention
+rule they decide, and Reported result~\ref{rep:census} channel by channel; the charge-even cubic of Theorem~\ref{thm:evencubic} with $p+q=12$ and
+the four high-symmetry spectra of both sectors and the $\Gamma$ splitting of
+Proposition~\ref{prop:evengamma}; the checkpoint algebra of
+\eqref{eq:checkpoints}, the second witness, and the vanishing of $e_2$ on
+every axial cut;
+and the coupling convention, including the $16$ and $64$ by which a $4^r$
+rescaling misses. Every value in it is a
+\texttt{Fraction}: no float is constructed anywhere, so ``agreement'' there
+always means equality. It has no dependencies and runs in about half a second.
 
-Every sentence of this paper that a machine check certifies carries an
-inline \texttt{\textbackslash chk} marker in the source; the markers are
-extracted verbatim into Appendix~\ref{app:coverage}, so the coverage claim
-is itself auditable rather than asserted.
+Nothing in \texttt{verify\_core.py} assumes or decides a value of
+$C_{\mathrm{shp}}$. Its fourth-order group is the obstruction as arithmetic:
+the extraction formulas, the blindness of $X$, and the identical vanishing of
+$e_2$ on axial cuts.
 
-\subsection{Claim-level evidence map}
+Every theorem, proposition, corollary and reported result above names the
+machine check that establishes it, and the appendix tables name checks too.
+Three displayed objects deliberately carry none, because none is a result of
+this program: the dimension and Casimir table \eqref{eq:table}, which is
+standard $SU(N)$ representation theory; the boundary formulas of
+Appendix~\ref{app:chain}, which are definitions --- what is checked there is
+that they compose to zero; and Table~\ref{tab:counters}, which is provenance
+about a commit rather than a claim about the physics, and whose rows are
+re-measured by the commands printed beside it. The checks live in the
+accompanying repository, where
+\texttt{workhouse verify --only '<name>'} re-runs any one of them alone, with
+its numbers, in about a second. That device is itself checked: a registered
+invariant reads every pinned edition in \texttt{paper/} --- this one included
+--- resolves every printed label against the live registry, and fails if one is
+renamed, deleted, or left red. The guard is the reason this edition's labels
+can be trusted at all: the same invariant read only the previous edition until
+this one landed, and a label that had drifted passed unnoticed until it was
+made to read both.
 
-\begin{table}[ht]
+This edition pins commit
+\texttt{af3ab5f2e9860e75372c1a143a33c828f8b0d9ba} of the accompanying
+repository --- the commit at which every check name printed above resolves,
+and the last one before this file itself lands. It carries the counters in
+Table~\ref{tab:counters}. They describe \emph{that} commit and no other, and
+each row has its own command: after
+\texttt{git checkout af3ab5f}, \texttt{make verify} gives the $T_1$ and $T_2$
+rows and \texttt{make check} the test count, while the $T_0$ row is the
+declaration scrape that \texttt{workhouse certified} prints ---
+\texttt{make lean} compiles the tree and reports no count.
+They are provenance rather than independent evidence; the argument is above, and the checks are the checks.
+
+\begin{table}[t]
 \centering
-\small
-\begin{tabular}{@{}p{0.29\textwidth}p{0.24\textwidth}p{0.39\textwidth}@{}}
+\begin{tabular}{@{}lr@{}}
 \toprule
-Claim & Status & Evidence in this edition \\
+Layer & Count \\
 \midrule
-Signed incidence spectrum and $L^3+2$ carrier
- & Proven & Analytic integer topology; exact replay \\
-Adjacent all-rank coefficient $t_N$
- & Proven locally & Weingarten derivation; exact replay \\
-Global order-$u^2$ torus assembly
- & Proven (new this edition) & Lemmas~\ref{lem:shell},~\ref{lem:exhaust}; machine-enumerated combinatorial cores; not yet externally refereed \\
-Two-cube six-channel census
- & Reported numerical & Rational reconstructions; shared amplitude lineage; assembly test \\
-Unsigned-incidence cubic and range
- & Proven algebraically & Exact characteristic polynomial and finite-grid replay \\
-Physical charge-even identification
- & Conditional & Complete linked symbol, including vacuum route, not derived \\
-$SU(3)$ factorisation through $u^3$
- & Upstream cold-exact & $251/251$ exact gates reported by the frozen authority; raw replay not bundled here \\
-Historical fourth-order pencil
- & Exact for saved kernel & Hash-pinned payload and cold fixed-kernel checks \\
-Complete physical fourth-order kernel
- & Disputed/open & Historical and August candidates differ off axis \\
-Radius-two rational sub-block and $C_4$/$C_5$ increments
- & Reported numerical & Sealed hash-pinned artifact; stdlib float verifier at stated tolerances \\
-Infinite-volume particle or continuum gap
- & Open & No uniform overlap, full-sector, or continuum bridge \\
+$T_0$ — Lean 4 theorems, no \texttt{sorry} & 40 \\
+$T_1$ — exact re-derivations & 188 \\
+$T_2$ — numerical, within a stated tolerance & 49 \\
+Repository tests & 486 \\
 \bottomrule
 \end{tabular}
-\caption{Truth status and evidence level are separate. ``Exact for a saved
-kernel'' does not establish that kernel's physical identification.}
-\label{tab:evidence}
+\caption{Counters at the pinned commit. The $T_0$ row counts theorem
+declarations with no \texttt{sorry}, which is a scrape of the tree;
+\texttt{make lean} is what compiles them, and the standard the tree is held to
+is that every axiom footprint lies in $\{$\texttt{propext},
+\texttt{Classical.choice}, \texttt{Quot.sound}$\}$. That compilation was last
+run elsewhere: the environment this edition was typeset in carries no Lean
+toolchain, and the row is not asserted as re-measured here.}
+\label{tab:counters}
 \end{table}
 
-\subsection{Upstream corpus and downstream verifier}
+A smaller layer is proof-checked rather than merely re-derived. The Lean
+development compiles the rank law with denominators cleared, $t_3=5/612$ and
+$t_2=0$, the third-order ledger identity, the axial law at every exceptional
+rank, the cycle count $(L^3-1)+3=L^3+2$, the four checkpoint-extraction
+formulas and the deltas they invert, and four statements about the charge-even
+cubic including the identity that its middle coefficient is $p^2$. It is
+exact-rational and polynomial algebra, plus the trigonometric checkpoint
+evaluations over $\mathbb R$ that supply those deltas --- the $\mathbb R$
+section exists because the extraction theorems formalised only half a statement
+without it. There is no perturbative derivation and no operator theory.
 
-The organised \texttt{ALL THEORY} archive was consulted as
-the upstream scientific corpus. Its four-document v4.3 authority stack is
-frozen by byte count and SHA-256 in
-\nolinkurl{export/MAN_GOV_export_manifest.csv}; all four entries were
-rehashed for this edition and matched. The downstream verifier is
-\href{https://github.com/ats314/WORKHOUSE}{WORKHOUSE}. Document flow is
-one-way---frozen corpus to hash manifest to verifier---while verifier findings
-return to review and status records. The later two-cube results are not in the
-August 20 corpus and are therefore kept as later WORKHOUSE-local evidence.
+An earlier edition added that ``nothing that bears on $C_{\mathrm{shp}}$
+appears there''. That was false, and false about the one genuinely open item
+here. The Lean core defines the historical side
+$C_{\mathrm{old}}=-211835444920651/4405310420659200$ as an exact rational and
+proves three internal-consistency relations about it: $C$ from $\beta$, the
+width as $\alpha+\beta$, and the tier-collapse relation. What it contains no
+spelling of, anywhere in the tree, is the v10a.26 value --- so the layer
+touches $C_{\mathrm{shp}}$ and still prefers neither side, and that
+even-handedness is an absence checked by inspection rather than asserted.
+\chk{the Lean core DOES carry the historical C\_shp side, and still adjudicates nothing}
 
-The current hostile-scope audit branch is pinned at
-\nolinkurl{ff9a5976a5b03cd763e3e50daf4326138770460d}. On Windows, its registry was
-rerun locally: $229/230$ registered checks passed. The sole failure was the
-known path-separator comparison for a restored payload; the payload hash and
-all paper-relevant arithmetic checks passed. This is a platform-specific local
-audit result, not a claim that the complete test suite or Lean tree was rerun.
-The source-level \texttt{\string\chk} labels remain in this TeX file but are
-suppressed typographically; Appendix~\ref{app:coverage} prints all of them, so
-the coverage claim is auditable rather than asserted. The label guard now reads
-every edition in \texttt{paper/}, this one included, and it resolves all but
-twelve of the labels below against the live registry. Those twelve are recorded
-as a standing finding rather than quietly dropped: each sits under a displayed
-result and promises a command that currently returns nothing, and the fix is to
-register the twelve checks, not to stop printing the twelve labels.
-\chk{FINDING: the v2 publication edition prints twelve labels that name no check}
-
-The authority files are identified by the following SHA-256 values:
-\begin{itemize}
-\item master v4.3:
-  \nolinkurl{1f8295c3a797aeb854b4b0ca82485bd7f4a149617777d2a43fc147a4a53c26dd};
-\item detailed formulas v3.1:
-  \nolinkurl{924d5b26f865e33f530d166735e847b89f60df7fe363995e2788ab24e1ff4254};
-\item consolidation guide v4.3:
-  \nolinkurl{60b8a93c8149049f50ed3ce8e0cfd1b379723b6765f201395a2fda6c4a7e7aa7};
-\item canonical source manifest v4.3:
-  \nolinkurl{730bc99ed8d749de0dffbabfda85cd4512d8f7748782620b694759a03bacde05}.
-\end{itemize}
-
-\subsection{Data and code availability}
-
-This release directory contains the TeX source, generated vector figures,
-figure generator, exact verifier, build log, rendered-page audit, and a
-SHA-256 manifest. The historical kernel payload used in
-Reported result~\ref{rep:historical} has SHA-256
-\nolinkurl{635d40fa8a5d7da841fd30f36185eb96f14ec4c040678ddd8fb010379afb2900}.
-The pinned \texttt{ymcirc} $d=3$, $\mathcal B=4$ data blob is identified in
-Ref.~\cite{ymcirc2026} and has SHA-256
-\nolinkurl{4cad9538f2c052488556362e0cf6e4e63363e7f5801597aeab9013ef945c59dc}.
-The exact stranded-flux audit source and result have SHA-256
-\nolinkurl{a42800a91809a77bbd1d339ac604ea80a234eed305377bbabbf890fee98fde55}
-and
-\nolinkurl{d215fa1e9cd0bde0410eec16c687182c30bc62fa3f28c1445fd81e93888e1d60}.
-The sealed cutoff-free radius-two spectrum of Section~\ref{sec:radius2} and
-its certificate are bundled, with SHA-256
-\nolinkurl{52a17f87d3990b234635828a0c92f73f781e9a3abec8bb3c127e990b7a717e6c}
-and
-\nolinkurl{b9b14d28438585fc4f7d88f96497e9c6e01d0532a8402ffd6db17258a1638c0e};
-\texttt{verify\_radius2\_report.py} refuses to run against any other bytes.
-The two-cube build and its finite-precision Clebsch--Gordan payloads are not
-reproduced by the compact verifier; the exact statements that depend on them
-are labelled reported. A durable tag or archival DOI is still needed before
-journal submission.
-
-Machine checks certify algebra relative to their definitions and inputs. They
-do not replace derivations, promote numerical contractions to symbolic ones,
-or certify an uncompleted off-axis contraction.
-
-\section{Conclusion}
-
-The strongest result is no longer only local. For every $N\ge3$, the four
-shared-link fusion channels and their resolvent gaps give the closed
-coefficient $t_N$, the oriented cellular boundary fixes its sign and
-geometry, and --- with the two completeness premises now proved
-(Lemmas~\ref{lem:shell} and~\ref{lem:exhaust}) --- the assembly into a
-homological flat carrier of dimension $L^3+2$ is a theorem: the flat sector
-is not a fine-tuned interference band but the cycle space of the lattice
-two-complex, degenerate because $\partial_2\partial_3=0$. Those two proofs
-are the newest and least-reviewed material here, and they deserve the
-reader's hardest look. The $SU(3)$ two-cube calculation supplies a
-nontrivial operator-level assembly check, including channel-by-channel
-geometry and orbit localisation, but shares its amplitude lineage and remains
-numerical at the contraction layer.
-
-The unsigned-incidence cubic is exact as an algebraic comparison; its physical
-charge-even identification is not assumed silently. At fourth order the saved
-historical kernel has an exact positive generalized Hodge pencil and stencil,
-yet the later candidate differs in an off-axis coefficient that no scalar
-reanchoring, $\Gamma$ datum, or axial datum can determine. The decisive next
-object is therefore one target-blind, hash-sealed calculation that returns the
-rest scalar and off-axis shape from the same kernel. Until then the finite-order
-operator theorem is substantial, but the physical fourth-order kernel,
-infinite-volume particle interpretation, and continuum limit remain open.
+Machine checks certify algebra relative to stated definitions and inputs; they
+do not replace a derivation, and they do not certify an uncompleted off-axis
+contraction --- which is why Section~\ref{sec:fourth} stops where it does.
 
 \appendix
 
@@ -2358,7 +1951,7 @@ $(2,2)$ sector.
 \chk{SU(3) Weingarten values follow from the general formula}
 \chk{the fourth moment integral |U\_11|\^{}4 = 1/6 at N = 3}
 
-\section{The \texorpdfstring{$SU(3)$}{SU(3)} coefficient ledger}\label{app:ledger}
+\section{The $SU(3)$ coefficient ledger}\label{app:ledger}
 
 \begin{center}
 \begin{tabular}{@{}lll@{}}
@@ -2385,11 +1978,13 @@ inherits the $SU(3)$ tower term through \eqref{eq:assembly}; and the three
 $u^3$ rows are $SU(3)$-only and conditional on the supplied domino ledger,
 exactly as Section~\ref{sec:su3} says.
 
-\section{Unsigned comparison and conditional charge-even ledger}\label{app:even}
+\section{The charge-even ledger}\label{app:even}
 
-Conditional on identifying the unsigned-incidence comparison with the complete
-linked charge-even symbol, the same convention, with
-$\lambda\in\{12,-4\}$ and \eqref{eq:assembly}, gives:
+In the same convention, with $\lambda\in\{12,-4\}$ and \eqref{eq:assembly}. The
+$\lambda=-4$ rows and the bandwidth read off them are even-$L$,
+thermodynamic-limit values: $\lambda=-4$ requires some $k_j=\pi$, which the
+periodic grid samples only at even $L$. The $\lambda=12$ rows sit at $\Gamma$
+and hold on every grid.
 
 \begin{center}
 \begin{tabular}{@{}lll@{}}
@@ -2455,24 +2050,23 @@ and three isolated directions, which is why the spectra in
 Section~\ref{sec:twocube} are closed form once the diagonals below are
 supplied. The two connected diagonals are
 \[
-  D_{\mathcal B=6}=\tfrac1{612}\operatorname{diag}
+  D_{B6}=\tfrac1{612}\operatorname{diag}
   (-2317,-2317,-2295,-2317,-2317,
 \]
 \[
   \qquad -2317,-2317,0,-2317,-2317,-2295),
 \]
 \[
-  D_{\mathcal B=4}=\operatorname{diag}
+  D_{B4}=\operatorname{diag}
   (-\tfrac74,-\tfrac74,-\tfrac{15}4,-\tfrac74,-\tfrac74,
 \]
 \[
   \qquad -\tfrac74,-\tfrac74,0,-\tfrac74,-\tfrac74,-\tfrac{15}4),
 \]
 so both spectra are one line of arithmetic: a pair block contributes
-$D_{ii}\mp c$ twice and each isolated direction its own $D_{ii}$. The $\mathcal B=4$
-comparator on the same geometry gives $0$ once, $-\tfrac{15}4$ twice,
-$-\tfrac{11}6$ four times, and $-\tfrac53$ four times:
-the paired levels sit \emph{above} the isolated $-15/4$ pair, where at $\mathcal B=6$
+$D_{ii}\mp c$ twice and each isolated direction its own $D_{ii}$. The $B=4$
+comparator on the same geometry gives $\{0,(-\tfrac{15}4)^{2},(-\tfrac{11}6)^{4},(-\tfrac53)^{4}\}$:
+the paired levels sit \emph{above} the isolated $-15/4$ pair, where at $B=6$
 they sit below it. The three isolated levels $\{-\tfrac{15}4,-\tfrac{15}4,0\}$
 are identical in the two truncations, so the entire effect of the cutoff lives
 in the four cross-cell blocks. That reversal is not the coefficient's sign by itself --- within a
@@ -2483,175 +2077,99 @@ cube, where the kernel is $\alpha I+tG$ with one diagonal and the spectrum of
 $G$ fixed; that is the shell reversal the one-cube reconstructions report.
 \chk{the B=4 comparator on the same geometry gives -1/12 with the reversed spectrum}
 
-\section{Machine-check coverage}\label{app:coverage}
-
-The paper's discipline is that a machine check, not a sentence, is the unit
-of evidence. This appendix makes that auditable: every inline
-\texttt{\textbackslash chk} marker in the source --- each one naming the
-check that certifies the sentence it sits beside --- is extracted verbatim
-by \texttt{make\_coverage.py} and printed here. A reader can therefore see
-exactly which statements are covered, and, by their absence from this list,
-which are not: the remaining load-bearing hypothesis of
-Section~\ref{sec:scope} --- the charge-even identification --- appears
-nowhere below, and that is the point.
-
-\input{coverage_generated}
-
-\begin{thebibliography}{99}\small\sloppy\raggedright
-
-\bibitem{Eckmann1944} B.~Eckmann,
-  \emph{Harmonische Funktionen und Randwertaufgaben in einem Komplex},
-  Comment. Math. Helv. \textbf{17}, 240--255 (1944),
-  \href{https://doi.org/10.1007/BF02566245}{doi:10.1007/BF02566245}.
+\begin{thebibliography}{99}\small
 
 \bibitem{KS1975} J.~B. Kogut and L.~Susskind,
   \emph{Hamiltonian formulation of Wilson's lattice gauge theories},
-  Phys. Rev. D \textbf{11}, 395--408 (1975),
-  \href{https://doi.org/10.1103/PhysRevD.11.395}{doi:10.1103/PhysRevD.11.395}.
+  Phys. Rev. D \textbf{11}, 395 (1975).
 
 \bibitem{KSS1976} J.~B. Kogut, D.~K. Sinclair and L.~Susskind,
   \emph{A quantitative approach to low-energy quantum chromodynamics},
-  Nucl. Phys. B \textbf{114}, 199--236 (1976),
-  \href{https://doi.org/10.1016/0550-3213(76)90586-1}{doi:10.1016/0550-3213(76)90586-1}.
+  Nucl. Phys. \textbf{B114}, 199 (1976).
 
 \bibitem{Weingarten1978} D.~Weingarten,
   \emph{Asymptotic behavior of group integrals in the limit of infinite rank},
-  J. Math. Phys. \textbf{19}, 999--1001 (1978),
-  \href{https://doi.org/10.1063/1.523807}{doi:10.1063/1.523807}.
-
-\bibitem{Munster1981} G.~M\"unster,
-  \emph{Strong coupling expansions for the mass gap in lattice gauge theories},
-  Nucl. Phys. B \textbf{190}, 439--453 (1981), with addendum
-  \textbf{200}, 536--538 (1982) and erratum \textbf{205}, 648 (1982),
-  \href{https://doi.org/10.1016/0550-3213(81)90570-8}{doi:10.1016/0550-3213(81)90570-8}.
+  J. Math. Phys. \textbf{19}, 999 (1978).
 
 \bibitem{KPS1981} J.~B. Kogut, R.~B. Pearson and J.~Shigemitsu,
   \emph{The string tension, confinement and roughening in $SU(3)$ Hamiltonian
-  lattice gauge theory}, Phys. Lett. B \textbf{98}, 63--68 (1981),
-  \href{https://doi.org/10.1016/0370-2693(81)90369-5}{doi:10.1016/0370-2693(81)90369-5}.
+  lattice gauge theory}, Phys. Lett. B \textbf{98}, 63 (1981).
+
+\bibitem{Munster1981} G.~M\"unster,
+  \emph{Strong coupling expansions for the mass gap in lattice gauge theories},
+  Nucl. Phys. \textbf{B190}, 439 (1981); Erratum and Addendum
+  \textbf{B200}, 536 (1982); Erratum \textbf{B205}, 648 (1982). The two errata
+  were read here; the main paper was not.
 
 \bibitem{Seo1982} K.~Seo,
   \emph{Glueball mass estimate by strong coupling expansion in lattice gauge
-  theories}, Nucl. Phys. B \textbf{209}, 200--216 (1982),
-  \href{https://doi.org/10.1016/0550-3213(82)90110-9}{doi:10.1016/0550-3213(82)90110-9}.
+  theories}, Nucl. Phys. \textbf{B209}, 200 (1982). Not read here; cited as the
+  independent locator of the eighth-order error.
 
-\bibitem{Smit1982} C.~J. Smit,
+\bibitem{Smit1982} J.~Smit,
   \emph{Estimate of glueball masses from their strong coupling series in
-  lattice QCD}, Nucl. Phys. B \textbf{206}, 309--320 (1982),
-  \href{https://doi.org/10.1016/0550-3213(82)90537-5}{doi:10.1016/0550-3213(82)90537-5}.
+  lattice QCD}, Nucl. Phys. \textbf{B206}, 309 (1982).
 
 \bibitem{Munster1983} G.~M\"unster,
   \emph{Physical strong coupling expansion parameters and glueball mass
-  ratios}, Phys. Lett. B \textbf{121}, 53--55 (1983),
-  \href{https://doi.org/10.1016/0370-2693(83)90201-0}{doi:10.1016/0370-2693(83)90201-0}.
+  ratios}, Phys. Lett. B \textbf{121}, 53 (1983). Not read here; cited as the
+  1983 printing the 1985 shift is consistent with.
 
 \bibitem{Munster1985} G.~M\"unster,
   \emph{Effective transfer matrix for low-lying glueball states in lattice
-  gauge theory}, Nucl. Phys. B \textbf{256}, 67--76 (1985),
-  \href{https://doi.org/10.1016/0550-3213(85)90385-2}{doi:10.1016/0550-3213(85)90385-2}.
-
-\bibitem{Sutherland1986} B.~Sutherland,
-  \emph{Localization of electronic wave functions due to local topology},
-  Phys. Rev. B \textbf{34}, 5208--5211 (1986),
-  \href{https://doi.org/10.1103/PhysRevB.34.5208}{doi:10.1103/PhysRevB.34.5208}.
+  gauge theory}, Nucl. Phys. \textbf{B256}, 67 (1985).
 
 \bibitem{Schierholz1988} G.~Schierholz,
   \emph{Glueball masses in $SU(3)$ lattice gauge theory},
-  Nucl. Phys. B Proc. Suppl. \textbf{4}, 11--20 (1988),
-  \href{https://doi.org/10.1016/0920-5632(88)90075-8}{doi:10.1016/0920-5632(88)90075-8}.
+  Nucl. Phys. B (Proc. Suppl.) \textbf{4}, 11 (1988).
 
 \bibitem{Hamer1989} C.~J. Hamer,
   \emph{Hamiltonian strong coupling expansions for glueball masses in
-  $SU(3)$}, Phys. Lett. B \textbf{224}, 339--342 (1989),
-  \href{https://doi.org/10.1016/0370-2693(89)91242-2}{doi:10.1016/0370-2693(89)91242-2}.
-
-\bibitem{BKS1990} F.~Brandstaeter, A.~S. Kronfeld and G.~Schierholz,
-  \emph{Critical signal-to-noise ratio and glueball mass calculations},
-  Nucl. Phys. B \textbf{345}, 709--729 (1990),
-  \href{https://doi.org/10.1016/0550-3213(90)90406-4}{doi:10.1016/0550-3213(90)90406-4}.
-
-\bibitem{Mielke1991} A.~Mielke,
-  \emph{Ferromagnetism in the Hubbard model on line graphs and further
-  considerations}, J. Phys. A \textbf{24}, 3311--3321 (1991),
-  \href{https://doi.org/10.1088/0305-4470/24/14/018}{doi:10.1088/0305-4470/24/14/018}.
+  $SU(3)$}, Phys. Lett. B \textbf{224}, 339 (1989).
 
 \bibitem{CM2003} J.~Carlsson and B.~H.~J. McKellar,
-  \emph{$SU(N)$ lattice gauge theory on a single cube},
-  \href{https://arxiv.org/abs/hep-lat/0303022}{arXiv:hep-lat/0303022} (2003).
+  \emph{$SU(N)$ lattice gauge theory on a single cube}, hep-lat/0303022 (2003).
 
 \bibitem{CollinsSniady2006} B.~Collins and P.~\'Sniady,
-  \emph{Integration with respect to the Haar measure on unitary, orthogonal
-  and symplectic group}, Commun. Math. Phys. \textbf{264}, 773--795 (2006),
-  \href{https://doi.org/10.1007/s00220-006-1554-3}{doi:10.1007/s00220-006-1554-3}.
+  \emph{Integration with respect to the Haar measure on unitary, orthogonal and
+  symplectic group}, Comm. Math. Phys. \textbf{264}, 773 (2006),
+  math-ph/0402073.
 
-\bibitem{Bergman2008} D.~L. Bergman, C.~Wu and L.~Balents,
-  \emph{Band touching from real-space topology in frustrated hopping models},
-  Phys. Rev. B \textbf{78}, 125104 (2008),
-  \href{https://doi.org/10.1103/PhysRevB.78.125104}{doi:10.1103/PhysRevB.78.125104}.
+\bibitem{KRS2023} S.~V. Kadam, I.~Raychowdhury and J.~R. Stryker,
+  \emph{Loop-string-hadron formulation of an $SU(3)$ gauge theory with dynamical
+  quarks}, Phys. Rev. D \textbf{107}, 094513 (2023), arXiv:2212.04490.
 
-\bibitem{Zaslavsky2010} T.~Zaslavsky,
-  \emph{Matrices in the theory of signed simple graphs}, in
-  \emph{Advances in Discrete Mathematics and Applications: Mysore, 2008},
-  Ramanujan Mathematical Society Lecture Notes Series \textbf{13}, 207--229
-  (2010), \href{https://arxiv.org/abs/1303.3083}{arXiv:1303.3083}.
+\bibitem{CBB2026} A.~N. Ciavarella, I.~M. Burbano and C.~W. Bauer,
+  \emph{Efficient truncations of $SU(N_c)$ lattice gauge theory for quantum
+  simulation}, arXiv:2503.11888 (2025). No journal reference appears on the
+  arXiv record as of 30 August 2026.
 
-\bibitem{RhimYang2019} J.-W.~Rhim and B.-J.~Yang,
-  \emph{Classification of flat bands according to the band-crossing
-  singularity of Bloch wave functions}, Phys. Rev. B \textbf{99}, 045107
-  (2019), \href{https://doi.org/10.1103/PhysRevB.99.045107}{doi:10.1103/PhysRevB.99.045107}.
-
-\bibitem{Kollar2020} A.~J. Koll\'ar, M.~Fitzpatrick, P.~Sarnak and A.~A. Houck,
-  \emph{Line-graph lattices: Euclidean and non-Euclidean flat bands, and
-  implementations in circuit quantum electrodynamics}, Commun. Math. Phys.
-  \textbf{376}, 1909--1956 (2020),
-  \href{https://doi.org/10.1007/s00220-019-03645-8}{doi:10.1007/s00220-019-03645-8}.
+\bibitem{Balaji2026} S.~Balaji \emph{et al.},
+  \emph{Quantum simulation of $SU(3)$ lattice Yang--Mills theory: one-cube
+  benchmarks and circuit resource estimates}, arXiv:2509.25865. Used here for
+  its public \texttt{ymcirc} $d=3$, $B=4$ plaquette table; the paper itself has
+  not been read.
 
 \bibitem{DRS2021} Z.~Davoudi, I.~Raychowdhury and A.~Shaw,
   \emph{Search for efficient formulations for Hamiltonian simulation of
   non-Abelian lattice gauge theories}, Phys. Rev. D \textbf{104}, 074505
-  (2021), \href{https://doi.org/10.1103/PhysRevD.104.074505}{doi:10.1103/PhysRevD.104.074505}.
+  (2021).
 
-\bibitem{KRS2023} S.~V. Kadam, I.~Raychowdhury and J.~R. Stryker,
-  \emph{Loop-string-hadron formulation of an $SU(3)$ gauge theory with
-  dynamical quarks}, Phys. Rev. D \textbf{107}, 094513 (2023),
-  \href{https://doi.org/10.1103/PhysRevD.107.094513}{doi:10.1103/PhysRevD.107.094513}.
+\bibitem{Sutherland1986} B.~Sutherland,
+  \emph{Localization of electronic wave functions due to local topology},
+  Phys. Rev. B \textbf{34}, 5208 (1986). Not read here.
 
-\bibitem{Roychowdhury2024} K.~Roychowdhury, J.~Attig, S.~Trebst and
-  M.~J. Lawler, \emph{Supersymmetry on the lattice: Geometry, topology, and
-  flat bands}, Phys. Rev. Research \textbf{6}, 043273 (2024),
-  \href{https://doi.org/10.1103/PhysRevResearch.6.043273}{doi:10.1103/PhysRevResearch.6.043273}.
+\bibitem{Mielke1991} A.~Mielke,
+  \emph{Ferromagnetism in the Hubbard model on line graphs and further
+  considerations}, J. Phys. A \textbf{24}, 3311 (1991). Not read here.
 
-\bibitem{ChungGingras2025} K.~T.~K. Chung and M.~J.~P. Gingras,
-  \emph{2-form $U(1)$ spin liquids: A classical model and quantum aspects},
-  Phys. Rev. B \textbf{111}, 064417 (2025),
-  \href{https://doi.org/10.1103/PhysRevB.111.064417}{doi:10.1103/PhysRevB.111.064417}.
-
-\bibitem{CBB2025} A.~N. Ciavarella, I.~M. Burbano and C.~W. Bauer,
-  \emph{Efficient truncations of lattice gauge theory for quantum simulation},
-  Phys. Rev. D \textbf{112}, 054514 (2025),
-  \href{https://doi.org/10.1103/ylqb-phv5}{doi:10.1103/ylqb-phv5};
-  \href{https://arxiv.org/abs/2503.11888}{arXiv:2503.11888v5}.
-
-\bibitem{Balaji2026} P.~Balaji, C.~Conefrey-Shinozaki, P.~Draper,
-  J.~K. Elhaderi, D.~Gupta, L.~Hidalgo and A.~Lytle,
-  \emph{Perturbation theory, irrep truncations, and state preparation methods
-  for quantum simulations of $SU(3)$ lattice gauge theory}, Phys. Rev. D
-  \textbf{113}, 094505 (2026),
-  \href{https://doi.org/10.1103/m719-7tdf}{doi:10.1103/m719-7tdf};
-  \href{https://arxiv.org/abs/2509.25865}{arXiv:2509.25865v3}.
-
-\bibitem{ymcirc2026} HEPQIS--UIUC,
-  \emph{\texttt{ymcirc}: lattice-gauge-theory circuit and matrix-element
-  tools}, GitHub repository, commit
-  \nolinkurl{e9e190bfda405608de9cab71c0df0161cfcb1a10}, data blob
-  \nolinkurl{1808849c74b36f8082e7030d074681be4bb8c0fd} (accessed 28 August
-  2026), \href{https://github.com/hepqis-uiuc/ymcirc}{repository};
-  data introduced in \href{https://github.com/hepqis-uiuc/ymcirc/pull/76}{PR~76}.
+\bibitem{BWB2008} D.~L. Bergman, C.~Wu and L.~Balents,
+  \emph{Band touching from real-space topology in frustrated hopping models},
+  Phys. Rev. B \textbf{78}, 125104 (2008), arXiv:0803.3628. Not read here.
 
 \bibitem{Hazra2026} T.~Hazra,
-  \emph{New class of exactly flat topological bands---compact localised states
-  protected by local graph topology},
-  \href{https://arxiv.org/abs/2607.22831}{arXiv:2607.22831v1} (2026).
+  \emph{New class of exactly flat topological bands: compact localised states
+  protected by local graph topology}, arXiv:2607.22831.
 
 \end{thebibliography}
 

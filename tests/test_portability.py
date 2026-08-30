@@ -7,6 +7,9 @@ this repository holds hundreds of files that are not cp1252-decodable.
 """
 
 import ast
+import os
+import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -63,3 +66,54 @@ def test_the_corpus_really_is_not_cp1252_decodable():
         except UnicodeDecodeError:
             undecodable += 1
     assert undecodable > 100, f"only {undecodable} files are non-cp1252; the guard may be moot"
+
+
+def test_no_relative_path_is_stringified_with_the_platform_separator():
+    """`str(p.relative_to(q))` gives backslashes on Windows and slashes here.
+
+    The corpus pins, the manifests and the catalogues all key their rows with
+    forward slashes, so a relative path stringified the platform's way misses
+    every one of them -- silently on Linux, and as a failing invariant on
+    Windows. Reported against this repository from a Windows host, where
+    `the 189-record kernel is shipped and carries both reference SHAs` was the
+    single failure out of 225 and the payload was fine; only the lookup key was
+    wrong. `as_posix()` is the spelling that means the same thing everywhere.
+    """
+    offenders = []
+    for path in sorted(SRC.rglob("*.py")):
+        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Call) or getattr(node.func, "id", None) != "str":
+                continue
+            for arg in node.args:
+                inner = getattr(arg, "func", None)
+                if isinstance(inner, ast.Attribute) and inner.attr == "relative_to":
+                    offenders.append(f"{path.relative_to(ROOT)}:{node.lineno}")
+    assert not offenders, "str() of a relative path (use .as_posix()):\n" + "\n".join(offenders)
+
+
+def test_cli_output_survives_a_legacy_console():
+    """The OTHER direction of the encoding rule, which the reads-only guard misses.
+
+    The guard above covers text this repository reads. It says nothing about
+    text this repository prints, and the failure there is identical in shape:
+    ``workhouse why C2`` prints the graph's arrows (U+2192, U+2190), a default
+    Windows console encodes cp1252, and the command died with UnicodeEncodeError
+    before ``cli._name_the_output_encoding`` named an error handler. The
+    repository's own Windows smoke job caught it; nothing here did.
+
+    Run in a subprocess with the console encoding forced, because the failure is
+    in the stream and not in the string -- an in-process assertion on the text
+    would pass on every platform and prove nothing.
+    """
+    env = dict(os.environ, PYTHONIOENCODING="cp1252")
+    done = subprocess.run(
+        [sys.executable, "-m", "workhouse.cli", "why", "C2"],
+        capture_output=True,
+        cwd=ROOT,
+        env=env,
+        timeout=300,
+    )
+    assert done.returncode == 0, done.stderr.decode("utf-8", "replace")[-2000:]
+    # and the arrow really was exercised: degraded, not silently absent
+    assert b"\\u2192" in done.stdout or "→".encode("cp1252", "backslashreplace") in done.stdout

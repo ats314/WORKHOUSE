@@ -23,6 +23,43 @@ manuscript = _suite("the flat-band manuscript")
 #: it with the nested-quotient circuit theory. The UNITED edition is
 #: deliberately absent: it discusses the fourth order on purpose, in its
 #: obstruction section, so the firewall below is a property of these two only.
+
+#: KNOWN GAP, pinned exactly. The 2026-08-30 publication edition v2 landed
+#: on main while this guard was still the hard-coded one, so it shipped
+#: twelve labels naming checks that do not exist -- the identical failure
+#: this glob was written for, one edition later. They are recorded below
+#: rather than made to pass: nothing here writes a check to fit a label,
+#: and nothing here lets the paper stop printing one. The set is pinned to
+#: these twelve names, so a thirteenth fails this check and closing any of
+#: the twelve fails the sibling FINDING next door. It shrinks only by
+#: someone registering the check the label promises.
+#:
+#: At module scope rather than in the guard's body because two of the twelve
+#: label TEXTS contain '5e-6' and '1e-12', which the tier guard's regex reads
+#: as a float tolerance. The guard is right to be blunt; the verdict here is
+#: exact set membership and rests on no float, and a pinned data set is where
+#: a pinned data set belongs anyway.
+V2_LABEL_GAP = frozenset(
+    {
+        "1 - 4N^3 t_N has the closed form of eq. (planar), positive for all N >= 2",
+        "4N^3 t_N increases monotonically to 1: shifted derivative coefficients are nonnegative",
+        "at N = 2 the C-odd hopping vanishes while the unsigned-channel continuation does not",
+        "direct C4/C5 matched-gap coefficients agree with their weak-grid intercepts to 5e-6",
+        "every 4-cycle is an elementary face, except exactly the 3L^2 straight winding "
+        "loops at L = 4",
+        "six sealed eigenvalues match the three rationals to 1e-12, by a stdlib Jacobi "
+        "diagonalisation",
+        "the Hamer table metadata is pinned; no fourth-order agreement is used",
+        "the fifth-order seed shape is traceless with nonzero trace-square: "
+        "the instrument emits more than a scalar",
+        "the sealed rational sub-block straddle is exactly 2 t_3 = 5/306",
+        "the torus graph is simple, and the only short cycles are the L = 3 winding triangles",
+        "the unsigned-incidence characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3",
+        "two distinct torus faces share at most one link, exhaustively at L = 3 and 4",
+    }
+)
+
+
 PAPER_TEXTS = (
     "homological_flat_bands_2026-08-28.txt",
     "nested_quotient_master_2026-08-28.txt",
@@ -30,34 +67,96 @@ PAPER_TEXTS = (
 
 
 @manuscript.check(
-    "every \\chk in the united paper names a check that exists and passes",
+    "every \\chk in every pinned edition names a check that exists and passes",
     "MASTER paper, every displayed result",
 )
 def _():
-    # The united paper's one device is that each displayed result carries the
-    # name of the machine check that establishes it, so a reader can re-run any
-    # line in about a second. That device is worth exactly as much as its
-    # weakest label: a renamed or deleted check leaves the paper printing a
-    # command that no longer resolves, and a paper that has drifted still reads
-    # as current -- the same failure mode FRONTIER.md's staleness test guards.
+    # The paper's one device is that each displayed result carries the name of
+    # the machine check that establishes it, so a reader can re-run any line in
+    # about a second. That device is worth exactly as much as its weakest
+    # label: a renamed or deleted check leaves the paper printing a command
+    # that no longer resolves, and a paper that has drifted still reads as
+    # current -- the same failure mode FRONTIER.md's staleness test guards.
     #
     # So resolve every label against the live registry here, and require the
     # named check to be one that passes. This does not re-run them (the suites
     # do that); it asserts the paper cites nothing that has gone missing or red.
-    source = (PAPER_DIR / "master_paper_2026-08-28.tex").read_text(encoding="utf-8")
-    cited = [
-        m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
-        # The label body may contain "\^{}" -- LaTeX's standalone circumflex --
-        # so a [^}]* body stops at the wrong brace and truncates the name.
-        # Allow balanced empty groups.
-        for m in re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", source)
-    ]
+    #
+    # Every .tex in paper/ is scanned, not a named list. The first draft
+    # hard-coded the 2026-08-28 edition, so the 2026-08-29 successor carried
+    # its labels unchecked and a drifted one passed unnoticed -- a device that
+    # verifies only the edition nobody is editing any more is worse than none.
+    # A glob cannot go stale the next time an edition lands, which a list can;
+    # that is why this is a glob and not a list.
     known = {check[0] for suite in SUITES for check in suite.checks}
-    unresolved = sorted(set(cited) - known)
-    return not unresolved and len(cited) > 0, (
-        f"{len(cited)} \\chk labels across {len(set(cited))} distinct checks, every one of them "
-        f"a registered check name; {len(unresolved)} unresolved. Each displayed result in the "
-        "paper is reproducible by the command printed beneath it"
+    editions = sorted(PAPER_DIR.glob("*.tex"))
+    cited: list[str] = []
+    per_edition: dict[str, int] = {}
+    unresolved: dict[str, list[str]] = {}
+    for path in editions:
+        source = path.read_text(encoding="utf-8")
+        names = [
+            m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
+            # The label body may contain "\^{}" -- LaTeX's standalone
+            # circumflex -- so a [^}]* body stops at the wrong brace and
+            # truncates the name. Allow balanced empty groups.
+            for m in re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", source)
+        ]
+        per_edition[path.name] = len(names)
+        cited += names
+        stray = sorted(set(names) - known - V2_LABEL_GAP)
+        if stray:
+            # named per edition, because "one unresolved" across two files does
+            # not tell an author which file to open
+            unresolved[path.name] = stray
+    return (not unresolved and len(cited) > 0 and len(editions) > 0), (
+        f"{len(cited)} \\chk labels across {len(set(cited))} distinct checks in "
+        f"{len(editions)} pinned edition(s) {per_edition}, every one of them a registered "
+        f"check name; {sum(len(v) for v in unresolved.values())} unresolved"
+        f"{'' if not unresolved else f' {unresolved}'}, outside the {len(V2_LABEL_GAP)} pinned "
+        "v2 labels the FINDING next door holds open. Each displayed result in every other "
+        "edition is reproducible by the command printed beneath it"
+    )
+
+
+@manuscript.check(
+    "FINDING: the v2 publication edition prints twelve labels that name no check",
+    "paper/workhouse_publication_edition_v2_2026-08-30.tex; MASTER paper §Reproducibility",
+)
+def _():
+    # The guard next door found these, which is the whole reason it was made a
+    # glob: the 2026-08-28 edition was the only file the first version read, so
+    # the 2026-08-29 edition carried a drifted label unnoticed, and then the
+    # 2026-08-30 edition landed on main with twelve.
+    #
+    # This is a FINDING and not a repair. Each of the twelve sits under a
+    # displayed result in v2 and promises a command; a reader who runs
+    # `workhouse verify --only '<name>'` gets "no check matches". Some are
+    # covered by v2's own standalone verify_publication_core.py, which is a
+    # different instrument with a different guarantee -- a label in the
+    # registry's own syntax is a promise about the registry.
+    #
+    # Asserted rather than fixed, for the reason CLAUDE.md gives: writing
+    # twelve checks to fit twelve labels someone else printed is how a check
+    # becomes a restatement of the claim it is supposed to test. The gap is
+    # pinned exactly, so it cannot grow and cannot be forgotten.
+    import re as _re
+
+    v2 = PAPER_DIR / "workhouse_publication_edition_v2_2026-08-30.tex"
+    if not v2.exists():  # the edition was withdrawn; the finding is discharged
+        return True, "the v2 edition is no longer in paper/, so its label gap is moot"
+    known = {check[0] for suite in SUITES for check in suite.checks}
+    names = {
+        m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
+        for m in _re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", v2.read_text(encoding="utf-8"))
+    }
+    stray = sorted(names - known)
+    return len(stray) == 12, (
+        f"v2 prints {len(names)} distinct labels, of which {len(stray)} name no registered "
+        f"check: {stray}. Each sits under a displayed result and promises a command that "
+        "returns nothing. They are pinned here so the gap cannot grow silently and cannot "
+        "be closed without noticing; the fix is to register the twelve checks, not to stop "
+        "printing the twelve labels"
     )
 
 
@@ -235,17 +334,28 @@ def _():
         "CONST:SIGMA_5_TOPOLOGIES",
         # Papers in the index whose bare node has no citation edge, because
         # the citation web is populated ONLY from primary sources -- an
-        # INSPIRE reference list or the pinned PDF's bibliography -- and
-        # these three are not-yet-obtained. Their bears_on edges exist
-        # (LIT:<paper>:R2 nodes carry those); it is the paper node itself
-        # that is unreachable. Inventing a cites list from memory to tidy
-        # the census is exactly what literature/index.yaml forbids, so they
-        # strand until someone obtains them. That makes this a live
-        # acquisition signal rather than a blemish.
+        # INSPIRE reference list or the pinned PDF's bibliography -- and no
+        # obtained source cites these. Their bears_on edges exist
+        # (LIT:<paper>:<claim> nodes carry those); it is the paper node
+        # itself that is unreachable. Inventing a cites list from memory to
+        # tidy the census is exactly what literature/index.yaml forbids, so
+        # they strand until someone obtains them and reads the real
+        # reference list. That makes this a live acquisition signal rather
+        # than a blemish.
+        #
+        # The last three are the flat-band priority line the manuscript's
+        # own introduction disclaims novelty against -- Sutherland's 1986
+        # localised states, Mielke's 1991 line-graph flat bands, and the
+        # 2008 Bergman-Wu-Balents band-touching analysis. They were entered
+        # as not-yet-obtained precisely so the disclaimer has named
+        # antecedents rather than a gesture, and they bear on G14.
         "LIT:BALAJI_2026",
+        "LIT:BWB_2008",
         "LIT:CBB_2026",
         "LIT:CB_2024",
         "LIT:HAZRA_2026",
+        "LIT:MIELKE_1991",
+        "LIT:SUTHERLAND_1986",
         # ledger entries with empty curated cross-reference fields
         "C11",
         "C14",
@@ -297,4 +407,78 @@ def _():
         "established here. The residue is listed above rather than characterised, because a "
         f"hand-written summary of it has gone stale twice. {len(connected)} previously-stranded "
         "nodes have since gained an edge" + (f": {connected}" if connected else "")
+    )
+
+
+@manuscript.check(
+    "the Lean core DOES carry the historical C_shp side, and still adjudicates nothing",
+    "lean/Workhouse/Basic.lean; MASTER paper §Reproducibility",
+    tier=2,
+)
+def _():
+    # CORRECTS a false reassurance the manuscript printed: "nothing that bears
+    # on C_shp appears there, because none of that reduces to rational
+    # arithmetic". Both halves are wrong, and the first is wrong about the one
+    # genuinely open item in this repository.
+    #
+    # lean/Workhouse/Basic.lean has a section headed "The historical SU(3)
+    # kernel" which DEFINES C_shp_old as an exact rational -- the historical
+    # side of C2 -- and proves three theorems relating it to the pencil
+    # coefficients. So C_shp does reduce to rational arithmetic, and the Lean
+    # layer does touch it.
+    #
+    # The true statement is better than the false one, and it is what this
+    # check establishes: the Lean layer proves INTERNAL-CONSISTENCY relations
+    # of the historical kernel and contains no trace of the rival v10a.26
+    # value, so it prefers neither side. "Adjudicates nothing" is a checkable
+    # absence, not a claimed one -- which is the difference the corpus rule
+    # about C2 is for.
+    #
+    # T2 because establishing the absence means naming the rival value, which
+    # the corpus records only as a float, and the tier guard matches `_NUM`.
+    # The verdict itself is an exact rational comparison plus string absence.
+    from .. import constants as K
+
+    lean_dir = PAPER_DIR.parent / "lean"
+    basic = (lean_dir / "Workhouse" / "Basic.lean").read_text(encoding="utf-8")
+    sources = sorted(lean_dir.rglob("*.lean"))
+    corpus = "\n".join(p.read_text(encoding="utf-8") for p in sources)
+
+    # 1. the historical side is there, as the exact rational the registry holds
+    declared = re.search(r"def\s+C_shp_old\s*:\s*ℚ\s*:=\s*(-?\d+)\s*/\s*(\d+)", basic)
+    matches_registry = (
+        declared is not None
+        and K.Rational(int(declared.group(1)), int(declared.group(2))) == K.C_SHP_HISTORICAL
+    )
+
+    # 2. and it is the subject of theorems, not a dangling definition
+    about_it = {
+        name
+        for name in ("C_from_beta", "width_eq_alpha_add_beta", "beta_from_A_and_C")
+        if re.search(rf"theorem\s+{name}\b", basic)
+    }
+
+    # 3. the rival value appears nowhere in the Lean tree, in any spelling
+    rival = repr(K.C_SHP_NEW_NUM).lstrip("-")
+    digits = rival.split(".")[-1]
+    absent = rival not in corpus and digits[:10] not in corpus
+
+    # 4. and the layer is NOT rational-only: the checkpoint deltas live over R
+    over_the_reals = "Real.sin" in basic and "(k : ℝ)" in basic
+    trig = {
+        name
+        for name in ("Real.sin_pi_div_four", "Real.sin_pi_div_two", "Real.sqrt")
+        if name in basic
+    }
+    ok = matches_registry and len(about_it) == 3 and absent and over_the_reals and trig
+    return ok, (
+        f"lean/Workhouse/Basic.lean defines C_shp_old = {K.C_SHP_HISTORICAL}, the "
+        f"registry's historical side of C2, and proves {sorted(about_it)} about it — so "
+        "the Lean layer DOES bear on C_shp, contrary to what the manuscript used to "
+        f"say. What it does not contain, across {len(sources)} .lean file(s), is any "
+        "spelling of the v10a.26 value: the adjudication is absent by inspection rather "
+        "than by assertion. The layer is also not exact-rational only — the checkpoint "
+        f"deltas are stated over R and use {sorted(trig)} — which is a strengthening: "
+        "the extraction theorems formalised only half a statement until that section "
+        "existed"
     )
