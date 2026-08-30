@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 192
+## T1 — re-derived exactly — 193
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -212,46 +212,49 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **fourth order, anchoring and the residual dispute**
 
 - `C_old = (beta_pen_3 - 2*alpha_3)/16`
-  - src/workhouse/invariants/fourth_order.py:105 · MASTER_THEORY §5.5
+  - src/workhouse/invariants/fourth_order.py:106 · MASTER_THEORY §5.5
   - `workhouse verify --only 'C_old = (beta_pen_3 - 2*alpha_3)/16'`
 - `a translation-local scalar shift changes nothing observable`
-  - src/workhouse/invariants/fourth_order.py:142 · MASTER_THEORY §5.5 / C1
+  - src/workhouse/invariants/fourth_order.py:143 · MASTER_THEORY §5.5 / C1
   - `workhouse verify --only 'a translation-local scalar shift changes nothing observable'`
 **fourth order, sealed core**
 
+- `SELF-TEST: cellular's cube completion reproduces the agreed A at every rank`
+  - src/workhouse/invariants/fourth_order.py:456 · C2; G3 off-axis channel route; MOB §4
+  - `workhouse verify --only 'SELF-TEST: cellular'"'"'s cube completion reproduces the agreed A at every rank'`
 - `alpha_3 = 4*A_shp = 5/12`
-  - src/workhouse/invariants/fourth_order.py:25 · MASTER_THEORY §5.2
+  - src/workhouse/invariants/fourth_order.py:26 · MASTER_THEORY §5.2
   - `workhouse verify --only 'alpha_3 = 4*A_shp = 5/12'`
 - `alpha_3 = 4*|c_4^square(3)|`
-  - src/workhouse/invariants/fourth_order.py:38 · MOB §4
+  - src/workhouse/invariants/fourth_order.py:39 · MOB §4
   - `workhouse verify --only 'alpha_3 = 4*|c_4^square(3)|'`
 - `axial law reproduces alpha_4, alpha_5, alpha_6`
-  - src/workhouse/invariants/fourth_order.py:31 · MASTER_THEORY §5.3
+  - src/workhouse/invariants/fourth_order.py:32 · MASTER_THEORY §5.3
   - `workhouse verify --only 'axial law reproduces alpha_4, alpha_5, alpha_6'`
 - `each range-1 structure has a fixed shape coefficient; the rotation sign is a convention`
-  - src/workhouse/invariants/fourth_order.py:405 · C2; MASTER edition §8 (shape basis); the off-axis channel dictionary
+  - src/workhouse/invariants/fourth_order.py:406 · C2; MASTER edition §8 (shape basis); the off-axis channel dictionary
   - `workhouse verify --only 'each range-1 structure has a fixed shape coefficient; the rotation sign is a convention'`
 - `exceptional ranks are exactly {3,4,5,6}`
-  - src/workhouse/invariants/fourth_order.py:87 · MASTER_THEORY §5.3
+  - src/workhouse/invariants/fourth_order.py:88 · MASTER_THEORY §5.3
   - `workhouse verify --only 'exceptional ranks are exactly {3,4,5,6}'`
 **fourth-order checkpoint extraction**
 
 - `X is blind to B, C, D — it fixes A alone`
-  - src/workhouse/invariants/fourth_order.py:382 · MASTER_THEORY §5.1
+  - src/workhouse/invariants/fourth_order.py:383 · MASTER_THEORY §5.1
   - `workhouse verify --only 'X is blind to B, C, D — it fixes A alone'`
 - `checkpoint values at X, M, P, R`
-  - src/workhouse/invariants/fourth_order.py:358 · MASTER_THEORY §5.1
+  - src/workhouse/invariants/fourth_order.py:359 · MASTER_THEORY §5.1
   - `workhouse verify --only 'checkpoint values at X, M, P, R'`
 - `the four extraction formulas invert the ansatz`
-  - src/workhouse/invariants/fourth_order.py:370 · MASTER_THEORY §5.1
+  - src/workhouse/invariants/fourth_order.py:371 · MASTER_THEORY §5.1
   - `workhouse verify --only 'the four extraction formulas invert the ansatz'`
 **fourth-order generalized Hodge pencil**
 
 - `Q4 cross coefficient = beta_pen_3 / 4`
-  - src/workhouse/invariants/fourth_order.py:301 · GLUEBALL §8
+  - src/workhouse/invariants/fourth_order.py:302 · GLUEBALL §8
   - `workhouse verify --only 'Q4 cross coefficient = beta_pen_3 / 4'`
 - `historical Q4 numerator is positive definite`
-  - src/workhouse/invariants/fourth_order.py:306 · UNIFIED §0.1
+  - src/workhouse/invariants/fourth_order.py:307 · UNIFIED §0.1
   - `workhouse verify --only 'historical Q4 numerator is positive definite'`
 **homology and finite volume**
 
@@ -442,13 +445,13 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **old-to-new crosswalk**
 
 - `Phi_C at the high-symmetry points`
-  - src/workhouse/invariants/fourth_order.py:251 · MASTER_THEORY §5.1
+  - src/workhouse/invariants/fourth_order.py:252 · MASTER_THEORY §5.1
   - `workhouse verify --only 'Phi_C at the high-symmetry points'`
 - `Phi_C vanishes at Gamma along every direction`
-  - src/workhouse/invariants/fourth_order.py:238 · MASTER_THEORY §5.5
+  - src/workhouse/invariants/fourth_order.py:239 · MASTER_THEORY §5.5
   - `workhouse verify --only 'Phi_C vanishes at Gamma along every direction'`
 - `the crosswalk is exactly scalar on the momentum axes`
-  - src/workhouse/invariants/fourth_order.py:276 · MASTER_THEORY §5.5
+  - src/workhouse/invariants/fourth_order.py:277 · MASTER_THEORY §5.5
   - `workhouse verify --only 'the crosswalk is exactly scalar on the momentum axes'`
 **published comparisons (literature/index.yaml)**
 
@@ -789,50 +792,50 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **fourth order, anchoring and the residual dispute**
 
 - `C20: exact gate value vs printed float-reconstruction`
-  - src/workhouse/invariants/fourth_order.py:205 · MASTER_THEORY C20
+  - src/workhouse/invariants/fourth_order.py:206 · MASTER_THEORY C20
   - `workhouse verify --only 'C20: exact gate value vs printed float-reconstruction'`
 - `Delta_C = C_new - C_old > 0 (the real discrepancy)`
-  - src/workhouse/invariants/fourth_order.py:160 · MASTER_THEORY §5.5 / C2
+  - src/workhouse/invariants/fourth_order.py:161 · MASTER_THEORY §5.5 / C2
   - `workhouse verify --only 'Delta_C = C_new - C_old > 0 (the real discrepancy)'`
 - `Delta_Gamma = m_Gamma^(4) - q_band^(4)`
-  - src/workhouse/invariants/fourth_order.py:111 · MASTER_THEORY §5.5 / C1
+  - src/workhouse/invariants/fourth_order.py:112 · MASTER_THEORY §5.5 / C1
   - `workhouse verify --only 'Delta_Gamma = m_Gamma^(4) - q_band^(4)'`
 - `FINDING: the printed Delta_Gamma is one ulp low`
-  - src/workhouse/invariants/fourth_order.py:120 · MASTER_THEORY §5.5
+  - src/workhouse/invariants/fourth_order.py:121 · MASTER_THEORY §5.5
   - `workhouse verify --only 'FINDING: the printed Delta_Gamma is one ulp low'`
 - `Hamer 8*a_4 matches m_Gamma to ~5.2e-13`
-  - src/workhouse/invariants/fourth_order.py:190 · GLUEBALL §2.3
+  - src/workhouse/invariants/fourth_order.py:191 · GLUEBALL §2.3
   - `workhouse verify --only 'Hamer 8*a_4 matches m_Gamma to ~5.2e-13'`
 - `bandwidth ratio W4_new / W4_old ~ 1.93`
-  - src/workhouse/invariants/fourth_order.py:184 · MASTER_THEORY §5.5
+  - src/workhouse/invariants/fourth_order.py:185 · MASTER_THEORY §5.5
   - `workhouse verify --only 'bandwidth ratio W4_new / W4_old ~ 1.93'`
 - `beta_new = 8A + 16*C_new`
-  - src/workhouse/invariants/fourth_order.py:171 · MASTER_THEORY §5.5
+  - src/workhouse/invariants/fourth_order.py:172 · MASTER_THEORY §5.5
   - `workhouse verify --only 'beta_new = 8A + 16*C_new'`
 - `historical q_3 decimal expansion`
-  - src/workhouse/invariants/fourth_order.py:99 · MASTER_THEORY §5.5
+  - src/workhouse/invariants/fourth_order.py:100 · MASTER_THEORY §5.5
   - `workhouse verify --only 'historical q_3 decimal expansion'`
 - `off-axis band splits are 8*Delta_C and 16*Delta_C`
-  - src/workhouse/invariants/fourth_order.py:177 · MASTER_THEORY §5.5
+  - src/workhouse/invariants/fourth_order.py:178 · MASTER_THEORY §5.5
   - `workhouse verify --only 'off-axis band splits are 8*Delta_C and 16*Delta_C'`
 - `quarantined scalar decimal`
-  - src/workhouse/invariants/fourth_order.py:199 · MASTER_THEORY §5.5
+  - src/workhouse/invariants/fourth_order.py:200 · MASTER_THEORY §5.5
   - `workhouse verify --only 'quarantined scalar decimal'`
 - `run's applied shift is not Delta_Gamma`
-  - src/workhouse/invariants/fourth_order.py:223 · GLUEBALL §9.2 / C22
+  - src/workhouse/invariants/fourth_order.py:224 · GLUEBALL §9.2 / C22
   - `workhouse verify --only 'run'"'"'s applied shift is not Delta_Gamma'`
 **fourth order, sealed core**
 
 - `FINDING: alpha_new falls outside the corpus's own 2.3e-13 bound`
-  - src/workhouse/invariants/fourth_order.py:66 · GLUEBALL §10
+  - src/workhouse/invariants/fourth_order.py:67 · GLUEBALL §10
   - `workhouse verify --only 'FINDING: alpha_new falls outside the corpus'"'"'s own 2.3e-13 bound'`
 - `v10a.26 A, B, D match the sealed rationals within 2.3e-13`
-  - src/workhouse/invariants/fourth_order.py:58 · GLUEBALL §10
+  - src/workhouse/invariants/fourth_order.py:59 · GLUEBALL §10
   - `workhouse verify --only 'v10a.26 A, B, D match the sealed rationals within 2.3e-13'`
 **fourth-order generalized Hodge pencil**
 
 - `centered kernel difference is PSD (vanishes on axes)`
-  - src/workhouse/invariants/fourth_order.py:317 · MASTER_THEORY §5.5
+  - src/workhouse/invariants/fourth_order.py:318 · MASTER_THEORY §5.5
   - `workhouse verify --only 'centered kernel difference is PSD (vanishes on axes)'`
 **near-Gamma uniformity (G11)**
 
@@ -897,10 +900,10 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **old-to-new crosswalk**
 
 - `bandwidth is preserved only if Delta_C vanishes`
-  - src/workhouse/invariants/fourth_order.py:285 · MASTER_THEORY §5.5
+  - src/workhouse/invariants/fourth_order.py:286 · MASTER_THEORY §5.5
   - `workhouse verify --only 'bandwidth is preserved only if Delta_C vanishes'`
 - `crosswalk reproduces the recorded off-axis band splits`
-  - src/workhouse/invariants/fourth_order.py:263 · MASTER_THEORY §5.5
+  - src/workhouse/invariants/fourth_order.py:264 · MASTER_THEORY §5.5
   - `workhouse verify --only 'crosswalk reproduces the recorded off-axis band splits'`
 **published comparisons (literature/index.yaml)**
 

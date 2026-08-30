@@ -15,6 +15,7 @@ from sympy import (
     zeros,
 )
 
+from .. import cellular as CELL
 from .. import constants as K
 from ._core import _suite
 
@@ -449,4 +450,47 @@ def _():
         "put it OUTSIDE the shape span entirely. The rotation sector carries about 15% of the "
         "disputed C2 gap, so that sign is load-bearing and is recorded here as unsettled rather "
         "than picked"
+    )
+
+
+@sealed.check(
+    "SELF-TEST: cellular's cube completion reproduces the agreed A at every rank",
+    "C2; G3 off-axis channel route; MOB §4",
+)
+def _():
+    # The validation the off-axis route has to pass before it is trusted on
+    # anything disputed, and it is target-blind by construction: it lands on
+    # the ONE fourth-order shape coefficient both sides of C2 already agree on.
+    #
+    # Two independent pieces meet here. workhouse.cellular derives the
+    # primitive cube-completion coefficient from Haar moments, the electric
+    # convention and the history geometry -- it never reads either disputed
+    # kernel. The shape dictionary, verified in the check above, converts a
+    # range-1 normal hop into (A, C). Composed, they must return A = 5/48.
+    #
+    # They do, and at SYMBOLIC N rather than only at N = 3: A_normal = alpha_N/4
+    # identically, so the agreement is a rank-generic identity and not a
+    # coincidence at one rank. C_normal = -A_normal/2 falls out of the same
+    # composition -- the corpus records that relation as measured on the raw
+    # records, and here it is derived instead.
+    a_normal, c_normal = CELL.shape_from_normal_hop(CELL.CUBE, CELL.CAP_SECTOR)
+    alpha = K.alpha_pen(CELL.N)
+    rank_generic = simplify(a_normal - alpha / 4) == 0
+    pinned = simplify(c_normal + a_normal / 2) == 0
+    at_three = simplify(a_normal.subs(CELL.N, 3))
+    ok = (
+        rank_generic
+        and pinned
+        and at_three == K.A_SHP_3
+        and simplify(c_normal.subs(CELL.N, 3)) == -K.A_SHP_3 / 2
+    )
+    return ok, (
+        f"cellular's c_4,prim = -160/(N(N^2-1)^3) (S_4 = -20 over 24 histories) is a normal hop "
+        f"of amplitude 2 c_4, and the dictionary sends that to A = -g/2, C = +g/4. The result is "
+        f"A_normal(N) = 160/(N(N^2-1)^3) = alpha_N/4 IDENTICALLY in N, giving {at_three} at "
+        "N = 3 -- the agreed A_SHP_3, reached without reading either disputed kernel. "
+        "C_normal = -A_normal/2 comes out of the same composition, so the relation the corpus "
+        "records as measured on the raw records is derived here. This validates the route; it "
+        "adjudicates nothing. The in-plane and orbital-rotation channels are where C2 lives, "
+        "they need their own cell/sector derivations, and the rotation sign is still open"
     )
