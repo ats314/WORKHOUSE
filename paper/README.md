@@ -1,9 +1,17 @@
 # The manuscript of record
 
-*Homological flat bands in strongly coupled SU(N) Hamiltonian lattice gauge
-theory*, Alexander Smith, 28 August 2026 — the first piece of this program
-written for outside readers, and the first artifact that cites this repository
-by commit.
+*Volume-uniform electric-shell isolation, exact shared-link hopping, and a
+homological carrier in strong-coupling SU(N) Hamiltonian lattice gauge
+theory* — master edition, Alexander Smith, 30 August 2026. It merges the two
+lineages this directory had been carrying in parallel: the 29 August master
+paper (two-column, 22 pages) and the 30 August publication edition rev. 4
+(40 pages). Where they overlap, the later text governs; where only one carries
+something, it is kept.
+
+The lineage begins with *Homological flat bands in strongly coupled SU(N)
+Hamiltonian lattice gauge theory*, 28 August 2026 — the first piece of this
+program written for outside readers, and the first artifact that cites this
+repository by commit.
 
 It is pinned here for the same reason `runs/` is pinned: the checks below refer
 to *these bytes*. `SHA256SUMS` records them and `tests/test_paper.py` fails if
@@ -11,14 +19,18 @@ any of them moves.
 
 | File | What it is |
 |---|---|
-| `workhouse_publication_edition_v2_2026-08-30.tex` | **the publication edition v2, the current artifact of record.** Built from the 29 August publication edition plus, most importantly: proofs of the two formerly load-bearing prose premises — the retained shell and second-order process exhaustion — so the global order-u² torus assembly is now a theorem (new, flagged as not yet externally refereed; the combinatorial cores are machine-enumerated and the two classical representation inputs named). Also: the planar closed form `1 - 4N^3 t_N = (2N^4+31N^2-9)/((N^2-1)(2N^2-1)(4N^2-9))` with checked positivity and monotonicity; the per-channel resolvent matrix-element equation closing the projector-norm-to-hopping step; torus rank/kernel checks extended through L = 5; a subsection reporting the sealed cutoff-free radius-two delivery, whose second-order block contains a rational sub-block with straddle exactly `2 t_3 = 5/306`; and a generated appendix printing all 119 inline `\chk` markers so coverage is auditable. |
-| `workhouse_publication_edition_v2_2026-08-30.pdf` | its build (Tectonic 0.15.0, 38 pages, clean log). Rebuild: `python3 make_coverage.py && tectonic workhouse_publication_edition_v2_2026-08-30.tex`. |
-| `verify_publication_core.py` | the v2 edition's exact verifier: 38 checks, standard library only, every value a `Fraction`, no float constructed anywhere in the file. |
+| `master_paper_2026-08-30.tex` | **the master edition, the current artifact of record.** The two lineages merged. From the publication edition rev. 4: the volume-uniform electric window `spec(H_E) ∩ [0, 5C_F/2) = {0, 2C_F}` with an external margin ≥ `C_F/2` (Thm. 1, which proves more than the retained-shell premise asked for); the SU(3) all-orders finite-volume Riesz island from Yarotsky's local spectral enclosure (Thm. 2); the fixed-momentum carrier and the exact locality/sharp-momentum tradeoff (Prop. 10); the centre-charge process-completeness lemma and the explicit projector cross matrix element, which make the global order-u² assembly a corollary with no completeness hypothesis; the detached-replayed radius-two Ritz extension with its onset proposition; and the exact G17 free-energy reduction. From the 29 August master paper: the **retraction** of the Bloch–chain "coincidence" reading (the Γ block *is* `b_2(T^3)`) and the harmonic representatives that follow; the executed `B = 7` six-face probe; the sharp zone minimum `min_{|k|≥r} q = 4 sin²(r/2)`, which corrects the crossover constants from 17.04/23.66 to 10.85/15.06; the weak-inequality retention rule and what it does *not* confirm; the Weingarten `SU(N)`-vs-`U(N)` rank argument; the tier counter table and the Lean paragraph, including the retraction of "nothing that bears on `C_shp` appears there". Kept from v2 and dropped by both uploads: the planar closed form `1 - 4N^3 t_N = (2N^4+31N^2-9)/((N^2-1)(2N^2-1)(4N^2-9))` and the coverage appendix. |
+| `master_paper_2026-08-30.pdf` | its build (Tectonic 0.15.0, 46 pages, clean log: zero undefined references, zero overfull boxes). Rebuild: `python3 make_coverage.py && tectonic master_paper_2026-08-30.tex`. |
+| `coverage_master.tex` | its generated coverage appendix: all 126 inline `\chk` markers, verbatim, under the section that carries each. |
+| `workhouse_publication_edition_v2_2026-08-30.tex` | the publication edition v2, superseded by the master edition above and kept pinned. Built from the 29 August publication edition plus, most importantly: proofs of the two formerly load-bearing prose premises — the retained shell and second-order process exhaustion — so the global order-u² torus assembly is now a theorem (new, flagged as not yet externally refereed; the combinatorial cores are machine-enumerated and the two classical representation inputs named). Also: the planar closed form `1 - 4N^3 t_N = (2N^4+31N^2-9)/((N^2-1)(2N^2-1)(4N^2-9))` with checked positivity and monotonicity; the per-channel resolvent matrix-element equation closing the projector-norm-to-hopping step; torus rank/kernel checks extended through L = 5; a subsection reporting the sealed cutoff-free radius-two delivery, whose second-order block contains a rational sub-block with straddle exactly `2 t_3 = 5/306`; and a generated appendix printing all 119 inline `\chk` markers so coverage is auditable. |
+| `workhouse_publication_edition_v2_2026-08-30.pdf` | its build (Tectonic 0.15.0, 38 pages, clean log). Rebuilt on 2026-08-30 after eleven of its `\chk` labels were corrected — see **Label drift**, below. |
+| `coverage_generated.tex` | its coverage appendix, 118 markers. |
+| `verify_publication_core.py` | the exact verifier both the master edition and v2 name: 38 checks, standard library only, every value a `Fraction`, no float constructed anywhere in the file. It does **not** cover the arithmetic new in the master edition — the Casimir shelf, the Riesz-contour arithmetic, the cycle censuses, the fixed-momentum carrier, the harmonic representatives, the sharp zone minimum — and the master edition's §12 says so rather than implying otherwise. Those live in the registry, under `workhouse verify`. |
 | `verify_radius2_report.py` | the float half, kept in a separate file so the exact one stays float-free: 6 checks at stated tolerances against the sealed radius-two artifact (stdlib npz reader + Jacobi diagonalisation, no numpy). |
 | `two_cube_cutoff_free_radius2_finite_u_spectrum.npz` | the sealed 29 August cutoff-free radius-two delivery, pinned; `verify_radius2_report.py` refuses any other bytes. Its certificate sits beside it. |
-| `make_coverage.py`, `coverage_generated.tex` | the coverage-appendix generator and its output; regenerate before rebuilding the tex. |
+| `make_coverage.py` | the coverage-appendix generator. It regenerates the appendix of **every** edition that prints one — `coverage_master.tex` and `coverage_generated.tex` — because a single hard-coded source is how one edition's appendix ends up describing another. Run it before rebuilding either tex. |
 | `make_figures.py`, `figure_*.pdf` | the three vector figures and their generator (NumPy + Matplotlib). |
-| `master_paper_2026-08-28.tex` | the united edition of 28 August, superseded by the publication edition v2, kept pinned. The two manuscripts below merged into one, with the four results this repository added on 2026-08-28 folded in. Source, not just output — the `.tex` is pinned alongside the `.pdf`. |
+| `master_paper_2026-08-28.tex` | the united edition of 28 August, superseded, kept pinned. The two manuscripts below merged into one, with the four results this repository added on 2026-08-28 folded in. Source, not just output — the `.tex` is pinned alongside the `.pdf`. |
 | `master_paper_2026-08-28.pdf` | its build. Byte-reproducible; see **Rebuilding** below. |
 | `homological_flat_bands_2026-08-28.pdf` | the flat-band manuscript, the one that cites this repository by commit. Superseded by the united edition, kept as the pinned original. |
 | `nested_quotient_master_2026-08-28.pdf` | the master derivation, uniting it with the nested-quotient circuit theory. Superseded by the united edition, kept the same way. |
@@ -42,7 +54,43 @@ The review that drove the united edition is
 `docs/referee/final_paper_review_2026-08-28.md`; this repository's own referee
 document on the flat-band manuscript is `docs/referee/final_paper_2026-08-28.md`.
 
-## The united edition
+## The master edition (2026-08-30)
+
+Two lineages had been running in parallel in this directory, both descended
+from the 28 August united edition below: a two-column *master paper*
+(29 August, 22 pages) and the single-column *publication edition* (rev. 4,
+30 August, 40 pages). `master_paper_2026-08-30.tex` is the single document.
+
+Merging them was not concatenation, and three of the decisions are worth
+stating because a reader will otherwise wonder which text won:
+
+1. **Later text governs where they overlap.** The publication edition rev. 4
+   is the spine: its Theorem 1 (the volume-uniform electric window), Theorem 2
+   (the SU(3) Riesz island), the process-completeness lemma and the explicit
+   projector matrix element together retire the two prose premises that
+   earlier editions carried, so the global order-u² assembly is a corollary
+   with no completeness hypothesis at all.
+2. **Where only one carries something, it is kept** — including one place
+   where the older text is *right and the newer one is not*. Rev. 4 still
+   reads the Bloch–chain agreement as a coincidence worth checking ("the 3 is
+   the triple degeneracy of B(0) = 0, not b₂(T³)"). The 29 August master
+   retracts that: under the DFT all of `im ∂₃` sits at nonzero momenta, so the
+   Γ block *is* H₂ and the 3 *is* b₂(T³). The merged edition carries the
+   retraction, and `the sheets average to harmonic representatives, and the
+   Gamma block IS b_2` now checks it. Same for the near-Γ criterion: the
+   master's sharp zone minimum `min_{|k|≥r} q = 4 sin²(r/2)` replaces the
+   Jordan bound, which is tight only at the zone corner and loose by `π²/4`
+   where the criterion is actually used — the crossover constants drop from
+   17.04/23.66 to 10.85/15.06.
+3. **Nothing was dropped because both uploads dropped it.** The planar closed
+   form and the coverage appendix exist only in the repository's own v2 and
+   are kept: losing an established exact result to a merge would be a
+   regression the merge has no reason to make.
+
+The merged edition is 46 pages against 40 and 22, and its build carries zero
+undefined references and zero overfull boxes.
+
+## The united edition (2026-08-28)
 
 The two pinned manuscripts overlap heavily and disagree in emphasis: the
 flat-band paper carries the homology and the second-order chain, the master
@@ -77,25 +125,75 @@ it, printed beneath the equation, so any line can be re-run in about a second:
 workhouse verify --only '<the name printed under the equation>'
 ```
 
-`ledger/documents.yaml` legends the paper as `MASTER paper`, so a check's
-`section` string can cite it and `tests/test_documents.py` keeps the reference
-resolvable — the citation runs both ways.
+`ledger/documents.yaml` legends the 28 August edition as `MASTER paper` and
+the 30 August one as `MASTER edition`, so a check's `section` string can cite
+either and `tests/test_documents.py` keeps the reference resolvable — the
+citation runs both ways. The two aliases exist because section numbers are not
+portable between editions: the numbers in the existing citations are the
+28 August edition's, and repointing one alias at a later document would
+silently invalidate every one of them.
 
 That device is itself checked. `every \chk in the united paper names a check
-that exists and passes` resolves all 32 printed labels against the live
-registry and fails if one is renamed or deleted — otherwise the paper would go
-on printing a command that no longer resolves, which is the same drift
-`FRONTIER.md`'s staleness test exists to catch.
+that exists and passes` resolves every printed label in **every** pinned
+edition against the live registry and fails if one is renamed or deleted —
+otherwise the paper would go on printing a command that no longer resolves,
+which is the same drift `FRONTIER.md`'s staleness test exists to catch.
 
-The united edition is deliberately **not** in `PAPER_TEXTS`, and so is not
+### Label drift
+
+The guard read *one* edition until 2026-08-30, and the editions written after
+it drifted unwatched. When it was made to read them all, nineteen labels in the
+publication editions named no registered check at all — some renamed out from
+under the paper, some never registered. That is the failure the guard exists to
+catch, reported green for as long as it covered a third of the artifact.
+
+The resolution was not to widen anything:
+
+- **Seven were renames.** The check existed under a different name; the label
+  now points at it.
+- **Eight became real checks.** The statements were checkable and nobody had
+  checked them: the torus cycle census (short cycles, four-cycles), the
+  one-cube shell, the orbit-constant connected diagonal, the census read
+  channel by channel rather than only in the sum, the per-channel
+  proportionality on all 56 adjacent pairs, boundary-factorised rigidity for a
+  generic `M`, and the connected first-order cover count.
+- **Four radius-two labels collapse onto one.** Those statements are checked
+  by `verify_radius2_report.py`, a float program kept out of the exact layer on
+  purpose. A registered T2 check now runs it, so the labels resolve and name
+  what actually establishes the sentences.
+
+Six further checks were written for material the merge itself brought in — the
+`5C_F/4` Casimir shelf and the SU(3) additive spectrum behind Theorems 1 and 2,
+the Fourier carrier and its locality price, the harmonic representatives, the
+sharp zone minimum, and the weak retention rule — so the merged edition prints
+no marker it cannot back. Fifteen new checks in total; see
+`src/workhouse/invariants/electric_shell.py` and the additions to
+`homology.py`, `uniformity.py` and `two_cube.py`.
+
+Nothing was dropped to make the guard green, and no tolerance moved.
+
+The master edition is deliberately **not** in `PAPER_TEXTS`, and so is not
 scanned by the fourth-order firewall check. It discusses the fourth order on
-purpose, in §7, to state the obstruction. The firewall is a property of the two
+purpose, in §9, to state the obstruction. The firewall is a property of the two
 original manuscripts and remains measured for them.
 
 ## Rebuilding
 
 ```bash
 cd paper
+python3 make_coverage.py                       # regenerate both appendices
+tectonic master_paper_2026-08-30.tex           # 46 pages
+```
+
+Tectonic 0.15.0. Zero overfull boxes and zero undefined references is the
+accepted state. `make_coverage.py` regenerates the coverage appendix of every
+edition that prints one, and must run before the build: the appendix is what
+makes the coverage claim auditable, and a stale one describes a paper that no
+longer exists.
+
+The 28 August edition builds the older way, and its pinned digest depends on it:
+
+```bash
 SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
   pdflatex -interaction=nonstopmode master_paper_2026-08-28.tex   # x3
 ```
@@ -103,9 +201,8 @@ SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
 Three passes for the cross-references. `SOURCE_DATE_EPOCH` is what makes the
 digest in `SHA256SUMS` reproducible — without it `pdflatex` stamps the build
 time into the PDF and the pin fails on a rebuild that changed nothing. Needs
-`texlive-latex-base` and `texlive-latex-recommended` (for `booktabs`). Zero
-overfull boxes and zero undefined references is the accepted state; the build
-is 7 pages.
+`texlive-latex-base` and `texlive-latex-recommended` (for `booktabs`); that
+build is 7 pages.
 
 ## What the manuscript says about this repository
 

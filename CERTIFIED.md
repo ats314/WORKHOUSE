@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 178
+## T1 — re-derived exactly — 191
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -253,40 +253,49 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **homology and finite volume**
 
 - `Delta_L = 4 tau(u) sin^2(pi/L) is positive and falls as L^-2`
-  - src/workhouse/invariants/homology.py:194 · MASTER paper §8
+  - src/workhouse/invariants/homology.py:198 · MASTER paper §8
   - `workhouse verify --only 'Delta_L = 4 tau(u) sin^2(pi/L) is positive and falls as L^-2'`
 - `FINDING: the wrapping sheets are cycles but NOT harmonic`
-  - src/workhouse/invariants/homology.py:143 · MASTER paper §3.1
+  - src/workhouse/invariants/homology.py:147 · MASTER paper §3.1
   - `workhouse verify --only 'FINDING: the wrapping sheets are cycles but NOT harmonic'`
+- `a boundary-factorised correction shifts the carrier without dispersing it, for generic M`
+  - src/workhouse/invariants/homology.py:319 · MASTER edition §8 (boundary-factorised rigidity)
+  - `workhouse verify --only 'a boundary-factorised correction shifts the carrier without dispersing it, for generic M'`
 - `cube boundaries and three wrapping sheets SPAN Z_2`
-  - src/workhouse/invariants/homology.py:82 · MASTER paper Thm. 2
+  - src/workhouse/invariants/homology.py:86 · MASTER paper Thm. 2
   - `workhouse verify --only 'cube boundaries and three wrapping sheets SPAN Z_2'`
 - `d_2 d_3 = 0 on the built complex`
-  - src/workhouse/invariants/homology.py:45 · MASTER paper App. E
+  - src/workhouse/invariants/homology.py:49 · MASTER paper App. E
   - `workhouse verify --only 'd_2 d_3 = 0 on the built complex'`
 - `dim Z_2 = (L^3 - 1) + 3 = L^3 + 2`
-  - src/workhouse/invariants/homology.py:24 · UNIFIED §0.1
+  - src/workhouse/invariants/homology.py:28 · UNIFIED §0.1
   - `workhouse verify --only 'dim Z_2 = (L^3 - 1) + 3 = L^3 + 2'`
 - `dim Z_2 = L^3 + 2 by rank, not by re-arranging the formula`
-  - src/workhouse/invariants/homology.py:64 · MASTER paper Thm. 2
+  - src/workhouse/invariants/homology.py:68 · MASTER paper Thm. 2
   - `workhouse verify --only 'dim Z_2 = L^3 + 2 by rank, not by re-arranging the formula'`
 - `dim Z_2 at L = 3, 4, 5`
-  - src/workhouse/invariants/homology.py:30 · UNIFIED §0.1
+  - src/workhouse/invariants/homology.py:34 · UNIFIED §0.1
   - `workhouse verify --only 'dim Z_2 at L = 3, 4, 5'`
 - `q_min on the L-torus grid is 4 sin^2(pi/L)`
-  - src/workhouse/invariants/homology.py:181 · MASTER paper §4.4
+  - src/workhouse/invariants/homology.py:185 · MASTER paper §4.4
   - `workhouse verify --only 'q_min on the L-torus grid is 4 sin^2(pi/L)'`
 - `rank d_3 = L^3 - 1 on the built complex`
-  - src/workhouse/invariants/homology.py:54 · MASTER paper App. E
+  - src/workhouse/invariants/homology.py:58 · MASTER paper App. E
   - `workhouse verify --only 'rank d_3 = L^3 - 1 on the built complex'`
 - `the Bloch and chain routes to the carrier agree`
-  - src/workhouse/invariants/homology.py:117 · MASTER paper Thm. 4
+  - src/workhouse/invariants/homology.py:121 · MASTER paper Thm. 4
   - `workhouse verify --only 'the Bloch and chain routes to the carrier agree'`
+- `the Fourier sum of cube boundaries IS the carrier, and a local seed costs L^-3`
+  - src/workhouse/invariants/homology.py:279 · MASTER edition Prop. (fixed-momentum carrier and the locality tradeoff)
+  - `workhouse verify --only 'the Fourier sum of cube boundaries IS the carrier, and a local seed costs L^-3'`
 - `the L^3+2 count is chain-level, not the Bloch convention`
-  - src/workhouse/invariants/homology.py:103 · MASTER paper Rmk. 3
+  - src/workhouse/invariants/homology.py:107 · MASTER paper Rmk. 3
   - `workhouse verify --only 'the L^3+2 count is chain-level, not the Bloch convention'`
+- `the sheets average to harmonic representatives, and the Gamma block IS b_2`
+  - src/workhouse/invariants/homology.py:227 · MASTER edition §3.1 and Remark (Bloch--chain bridge)
+  - `workhouse verify --only 'the sheets average to harmonic representatives, and the Gamma block IS b_2'`
 - `the zone maximum of q is 12 only at even L`
-  - src/workhouse/invariants/homology.py:165 · MASTER paper eq. (24)
+  - src/workhouse/invariants/homology.py:169 · MASTER paper eq. (24)
   - `workhouse verify --only 'the zone maximum of q is 12 only at even L'`
 **isotropic pentagonal cap band (v4.3 §9.3)**
 
@@ -349,11 +358,14 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **near-Gamma uniformity (G11)**
 
 - `Jordan bound q(k) >= (4/pi^2)|k|^2 holds on the whole zone`
-  - src/workhouse/invariants/uniformity.py:22 · GLUEBALL §18.3
+  - src/workhouse/invariants/uniformity.py:23 · GLUEBALL §18.3
   - `workhouse verify --only 'Jordan bound q(k) >= (4/pi^2)|k|^2 holds on the whole zone'`
 - `t(u) >= t_3 u^2 for u > 0, so the gap bound is safe`
-  - src/workhouse/invariants/uniformity.py:38 · MASTER_THEORY §4.4
+  - src/workhouse/invariants/uniformity.py:39 · MASTER_THEORY §4.4
   - `workhouse verify --only 't(u) >= t_3 u^2 for u > 0, so the gap bound is safe'`
+- `the exact zone minimum of q on |k| >= r is 4 sin^2(r/2), and Jordan overstates it by pi/2`
+  - src/workhouse/invariants/uniformity.py:99 · MASTER edition §9.7 (near-Gamma statement that does not adjudicate)
+  - `workhouse verify --only 'the exact zone minimum of q on |k| >= r is 4 sin^2(r/2), and Jordan overstates it by pi/2'`
 **notes program: SAFE, Davies, coercivity (G20-G23)**
 
 - `FINDING: six bounded vectors in R^3 refute the 6-vs-3 Cartan counting`
@@ -675,19 +687,33 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the two Bloch incidence symbols, and the determinant asymmetry between them`
   - src/workhouse/invariants/charge_even.py:65 · PAPER Thm. (incidence factorization; Gauss law)
   - `workhouse verify --only 'the two Bloch incidence symbols, and the determinant asymmetry between them'`
+**the electric shell, and what isolates it**
+
+- `every 4-cycle is an elementary face, except exactly the 3L^2 straight winding loops at L = 4`
+  - src/workhouse/invariants/electric_shell.py:237 · MASTER edition Thm. 1, proof (four-cycle classification)
+  - `workhouse verify --only 'every 4-cycle is an elementary face, except exactly the 3L^2 straight winding loops at L = 4'`
+- `every nontrivial irrep clears 5/4 C_F, except the fundamental pair`
+  - src/workhouse/invariants/electric_shell.py:41 · MASTER edition Thm. 1 (uniform first electric spectral window)
+  - `workhouse verify --only 'every nontrivial irrep clears 5/4 C_F, except the fundamental pair'`
+- `the SU(3) additive electric spectrum leaves 14, 16, 17 around the shell`
+  - src/workhouse/invariants/electric_shell.py:110 · MASTER edition Thm. 2 (SU(3) all-orders finite-volume Riesz island)
+  - `workhouse verify --only 'the SU(3) additive electric spectrum leaves 14, 16, 17 around the shell'`
+- `the torus graph is simple, and the only short cycles are the L = 3 winding triangles`
+  - src/workhouse/invariants/electric_shell.py:194 · MASTER edition Thm. 1, proof (support census)
+  - `workhouse verify --only 'the torus graph is simple, and the only short cycles are the L = 3 winding triangles'`
 **the flat-band manuscript**
 
 - `every \chk in the united paper names a check that exists and passes`
   - src/workhouse/invariants/manuscript.py:32 · MASTER paper, every displayed result
   - `workhouse verify --only 'every \chk in the united paper names a check that exists and passes'`
 - `every declared note document is a graph node with an edge`
-  - src/workhouse/invariants/manuscript.py:64 · ledger/notes.yaml + notes/*.jsonl
+  - src/workhouse/invariants/manuscript.py:86 · ledger/notes.yaml + notes/*.jsonl
   - `workhouse verify --only 'every declared note document is a graph node with an edge'`
 - `no fourth-order coefficient enters the manuscript`
-  - src/workhouse/invariants/manuscript.py:118 · PAPER_FLATBAND §6
+  - src/workhouse/invariants/manuscript.py:140 · PAPER_FLATBAND §6
   - `workhouse verify --only 'no fourth-order coefficient enters the manuscript'`
 - `q at the four high-symmetry points is 0, 4, 8, 12`
-  - src/workhouse/invariants/manuscript.py:140 · MASTER_DOC Fig. 2
+  - src/workhouse/invariants/manuscript.py:162 · MASTER_DOC Fig. 2
   - `workhouse verify --only 'q at the four high-symmetry points is 0, 4, 8, 12'`
 **tier collapse (G14)**
 
@@ -714,20 +740,35 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `B=6 retains every adjacent shared-link channel; B=4 provably cannot`
   - src/workhouse/invariants/two_cube.py:237 · R2; G3; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'B=6 retains every adjacent shared-link channel; B=4 provably cannot'`
+- `connected first order vanishes by inclusion-exclusion, not by cancellation of numbers`
+  - src/workhouse/invariants/two_cube.py:356 · MASTER edition §5; runs/two_cube_codd_o2_2026-08-29 §5
+  - `workhouse verify --only 'connected first order vanishes by inclusion-exclusion, not by cancellation of numbers'`
 - `the B=4 comparator on the same geometry gives -1/12 with the reversed spectrum`
   - src/workhouse/invariants/two_cube.py:204 · R2; runs/two_cube_codd_o2_2026-08-29, B4 note §4
   - `workhouse verify --only 'the B=4 comparator on the same geometry gives -1/12 with the reversed spectrum'`
 - `the B=6 connected kernel is (5/612) G_conn + diag, with the certified spectrum`
   - src/workhouse/invariants/two_cube.py:174 · R2; runs/two_cube_codd_o2_2026-08-29 §7.4
   - `workhouse verify --only 'the B=6 connected kernel is (5/612) G_conn + diag, with the certified spectrum'`
+- `the B=6 six-channel census IS the Weingarten four-channel ledger, channel by channel`
+  - src/workhouse/invariants/two_cube.py:434 · MASTER edition Reported result (the census is the Weingarten ledger)
+  - `workhouse verify --only 'the B=6 six-channel census IS the Weingarten four-channel ledger, channel by channel'`
 - `the B=6 six-channel census sums to the registry's own t_3 = 5/612`
   - src/workhouse/invariants/two_cube.py:141 · R2; runs/two_cube_codd_o2_2026-08-29 §7
   - `workhouse verify --only 'the B=6 six-channel census sums to the registry'"'"'s own t_3 = 5/612'`
+- `the connected diagonal is orbit-constant, and only the transporting orbit moves`
+  - src/workhouse/invariants/two_cube.py:386 · MASTER edition §5.2; runs/two_cube_codd_o2_2026-08-29 §7.4
+  - `workhouse verify --only 'the connected diagonal is orbit-constant, and only the transporting orbit moves'`
 - `the connected two-cube geometry has exactly four cross-cell pairs, each -1`
   - src/workhouse/invariants/two_cube.py:118 · R2; runs/two_cube_codd_o2_2026-08-29 §1
   - `workhouse verify --only 'the connected two-cube geometry has exactly four cross-cell pairs, each -1'`
+- `the one-cube shell is A1 + T1 + E, and its flat level is the S^2 fundamental class`
+  - src/workhouse/invariants/two_cube.py:513 · MASTER edition §5.3 (one-cube shell)
+  - `workhouse verify --only 'the one-cube shell is A1 + T1 + E, and its flat level is the S^2 fundamental class'`
+- `the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities`
+  - src/workhouse/invariants/two_cube.py:313 · MASTER edition §5.1; runs/two_cube_codd_o2_2026-08-29 §6.4
+  - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
 
-## T2 — float agreement within a stated tolerance — 46
+## T2 — float agreement within a stated tolerance — 48
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -793,16 +834,16 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **near-Gamma uniformity (G11)**
 
 - `crossover constant K = (pi/2) sqrt(W_4 / (theta t_3))`
-  - src/workhouse/invariants/uniformity.py:44 · GLUEBALL §18.3
+  - src/workhouse/invariants/uniformity.py:45 · GLUEBALL §18.3
   - `workhouse verify --only 'crossover constant K = (pi/2) sqrt(W_4 / (theta t_3))'`
 - `excluded zone fraction grows as u^3`
-  - src/workhouse/invariants/uniformity.py:88 · GLUEBALL §18.3
+  - src/workhouse/invariants/uniformity.py:89 · GLUEBALL §18.3
   - `workhouse verify --only 'excluded zone fraction grows as u^3'`
 - `the criterion survives C2: K depends on the kernel only through sqrt(W_4)`
-  - src/workhouse/invariants/uniformity.py:52 · MASTER_THEORY §5.5 / C2
+  - src/workhouse/invariants/uniformity.py:53 · MASTER_THEORY §5.5 / C2
   - `workhouse verify --only 'the criterion survives C2: K depends on the kernel only through sqrt(W_4)'`
 - `the statement is non-vacuous only below an explicit coupling`
-  - src/workhouse/invariants/uniformity.py:71 · GLUEBALL §18.3
+  - src/workhouse/invariants/uniformity.py:72 · GLUEBALL §18.3
   - `workhouse verify --only 'the statement is non-vacuous only below an explicit coupling'`
 **notes program: SAFE, Davies, coercivity (G20-G23)**
 
@@ -883,13 +924,21 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel`
   - src/workhouse/invariants/adjudication.py:286 · notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt §[17]
   - `workhouse verify --only 'the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel'`
+**the electric shell, and what isolates it**
+
+- `the sealed radius-two report passes its six float checks at stated tolerances`
+  - src/workhouse/invariants/electric_shell.py:280 · MASTER edition §5.4; paper/verify_radius2_report.py
+  - `workhouse verify --only 'the sealed radius-two report passes its six float checks at stated tolerances'`
 **the flat-band manuscript**
 
 - `every node the theory graph strands is stranded for a stated reason`
-  - src/workhouse/invariants/manuscript.py:159 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
+  - src/workhouse/invariants/manuscript.py:181 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
   - `workhouse verify --only 'every node the theory graph strands is stranded for a stated reason'`
 **two-cube charge-odd second-order closure (B=4 and B=6)**
 
+- `every shared-link channel is separately proportional to the geometry, on all 56 pairs`
+  - src/workhouse/invariants/two_cube.py:479 · MASTER edition §5; runs/two_cube_codd_o2_2026-08-29 §7
+  - `workhouse verify --only 'every shared-link channel is separately proportional to the geometry, on all 56 pairs'`
 - `the certificate's own gates pass, target-blind, with the wrong-sign control rejected`
   - src/workhouse/invariants/two_cube.py:278 · R2; runs/two_cube_codd_o2_2026-08-29 heldout_validation
   - `workhouse verify --only 'the certificate'"'"'s own gates pass, target-blind, with the wrong-sign control rejected'`

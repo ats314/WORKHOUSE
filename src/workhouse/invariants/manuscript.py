@@ -44,20 +44,42 @@ def _():
     # So resolve every label against the live registry here, and require the
     # named check to be one that passes. This does not re-run them (the suites
     # do that); it asserts the paper cites nothing that has gone missing or red.
-    source = (PAPER_DIR / "master_paper_2026-08-28.tex").read_text(encoding="utf-8")
-    cited = [
-        m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
-        # The label body may contain "\^{}" -- LaTeX's standalone circumflex --
-        # so a [^}]* body stops at the wrong brace and truncates the name.
-        # Allow balanced empty groups.
-        for m in re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", source)
-    ]
+    #
+    # Read EVERY pinned edition, not one. Until 2026-08-30 this check read
+    # only master_paper_2026-08-28.tex, and the publication editions written
+    # after it drifted unwatched: nineteen of their labels named no registered
+    # check at all. A guard that covers one of three editions is a guard that
+    # reports green while the artifact of record prints commands that do not
+    # resolve, which is precisely the failure it exists to catch.
+    # Generated includes are not editions: they PRINT the markers, so counting
+    # them would double every label and hide a real one behind its own copy.
+    editions = [p for p in sorted(PAPER_DIR.glob("*.tex")) if not p.name.startswith("coverage_")]
     known = {check[0] for suite in SUITES for check in suite.checks}
-    unresolved = sorted(set(cited) - known)
-    return not unresolved and len(cited) > 0, (
-        f"{len(cited)} \\chk labels across {len(set(cited))} distinct checks, every one of them "
-        f"a registered check name; {len(unresolved)} unresolved. Each displayed result in the "
-        "paper is reproducible by the command printed beneath it"
+    cited, unresolved = {}, {}
+    for path in editions:
+        source = path.read_text(encoding="utf-8")
+        labels = [
+            m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
+            # The label body may contain "\^{}" -- LaTeX's standalone circumflex
+            # -- so a [^}]* body stops at the wrong brace and truncates the name.
+            # Allow balanced empty groups.
+            for m in re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", source)
+        ]
+        cited[path.name] = labels
+        missing = sorted(set(labels) - known)
+        if missing:
+            unresolved[path.name] = missing
+    total = sum(len(v) for v in cited.values())
+    distinct = {lab for labs in cited.values() for lab in labs}
+    ok = bool(editions) and total > 0 and not unresolved
+    return ok, (
+        f"{total} \\chk labels across {len(distinct)} distinct checks in "
+        f"{len(editions)} pinned editions "
+        f"({', '.join(f'{k}: {len(v)}' for k, v in cited.items())}), every one of them a "
+        f"registered check name; {sum(len(v) for v in unresolved.values())} unresolved"
+        + (f" -- {unresolved}" if unresolved else "")
+        + ". Each displayed result in every edition is reproducible by the command printed "
+        "beneath it"
     )
 
 

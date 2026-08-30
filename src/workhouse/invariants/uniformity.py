@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from sympy import (
     Rational,
+    cos,
     diff,
     nsimplify,
     pi,
@@ -92,4 +93,69 @@ def _():
     return abs(f2 / f1 - 8) < 1e-9, (
         f"u=0.02 excludes {100 * f1:.2f}%, u=0.04 excludes {100 * f2:.2f}% "
         "— a factor of 8, as a ball volume must"
+    )
+
+
+@near_gamma.check(
+    "the exact zone minimum of q on |k| >= r is 4 sin^2(r/2), and Jordan overstates it by pi/2",
+    "MASTER edition §9.7 (near-Gamma statement that does not adjudicate)",
+)
+def _():
+    # The exclusion radius was quoted from Jordan's inequality, which is
+    # tight at the ZONE CORNER and nowhere the criterion actually uses. The
+    # sharp statement is a concavity argument: writing q = sum_m h(k_m^2)
+    # with h(t) = 2(1 - cos sqrt t), the identity (s cos s - sin s)' =
+    # -s sin s <= 0 makes h concave and increasing on [0, pi^2], so the
+    # minimum of q over the simplex |k|^2 >= r^2 sits at a vertex and equals
+    # 4 sin^2(r/2) -- attained on a coordinate axis, which is exactly where
+    # the fourth-order shape terms are compared. The Jordan constant is
+    # therefore pi/2 times too large, and this check records the factor
+    # rather than leaving the printed constants unexplained.
+    s, tt = symbols("s tt", positive=True)
+    # Everything below is decided symbolically. An earlier draft sampled the
+    # vertex minimum in floats and declared itself T1, which the repository's
+    # own tier guard rejected -- correctly: a bound argued from float
+    # comparisons is T2 whatever its inputs look like. The concavity argument
+    # settles it exactly and needs no sampling.
+    #
+    # h(t) = 2(1 - cos sqrt t) is the per-axis contribution, q = sum_m h(k_m^2).
+    #   h'(t) = sin(sqrt t) / sqrt t >= 0 on [0, pi^2], since sin >= 0 on
+    #     [0, pi]: h is increasing, so the minimum over |k| >= r sits on the
+    #     sphere |k| = r.
+    #   h''(t) has the sign of (s cos s - sin s) at s = sqrt t, whose
+    #     derivative is -s sin s <= 0 on [0, pi]; that expression vanishes at
+    #     s = 0, so it is <= 0 throughout and h is CONCAVE there.
+    #   A concave function summed over the simplex {x >= 0, sum x = r^2}
+    #     attains its MINIMUM at an extreme point, i.e. all the length on one
+    #     axis -- and there q = h(r^2) = 4 sin^2(r/2).
+    concavity = simplify(diff(s * cos(s) - sin(s), s) + s * sin(s)) == 0
+    vanishes_at_zero = simplify((s * cos(s) - sin(s)).subs(s, 0)) == 0
+    h = 2 * (1 - cos(sqrt(tt)))
+    increasing = simplify(diff(h, tt) - sin(sqrt(tt)) / sqrt(tt)) == 0
+    # and the vertex value is the claimed one, exactly
+    r = symbols("r", positive=True)
+    vertex = simplify(h.subs(tt, r**2) - 4 * sin(r / 2) ** 2) == 0
+    vertex = bool(vertex) and concavity and vanishes_at_zero and increasing
+    # The relation between the two constants is exact and free of any
+    # bandwidth: for ANY W_4, the registered crossover constant is pi/2 times
+    # the sharp one, because Jordan's bound understates q on the axis by
+    # exactly pi^2/4 and K enters through sqrt(q). Verified with W_4 a free
+    # symbol, so no float and no float-valued constant is touched here -- the
+    # two recorded numeric constants belong to the T2 check above, which is
+    # where the reader should look for values.
+    theta, w4 = Rational(1, 2), symbols("W4", positive=True)
+    sharp = sqrt(w4 / (theta * K.T_MINUS_2))
+    jordan = G.crossover_constant(w4, theta)
+    factor = simplify(jordan - (pi / 2) * sharp) == 0
+    return concavity and increasing and vertex and factor, (
+        "h(t) = 2(1 - cos sqrt t) has h'(t) = sin(sqrt t)/sqrt t >= 0 and is concave on "
+        "[0, pi^2] by the identity (s cos s - sin s)' = -s sin s <= 0 with the expression "
+        "vanishing at s = 0; a concave sum over the simplex is minimised at a vertex, so "
+        "min_{|k| >= r} q(k) = h(r^2) = 4 sin^2(r/2), attained on a coordinate axis. Jordan's "
+        "(4/pi^2)|k|^2 is tight only at the zone corner; on the axis it is loose by pi^2/4, so "
+        "the sharp crossover constant is sqrt(W_4/(theta t_3)) and the registered Jordan "
+        "constant is exactly pi/2 times it -- verified with W_4 a free symbol, so it holds for "
+        "either recorded kernel and for any third one. Numerically that turns 17.04 and 23.66 "
+        "into 10.85 and 15.06; those values are floats and live in the T2 crossover check, not "
+        "here"
     )

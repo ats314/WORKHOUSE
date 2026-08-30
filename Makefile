@@ -45,7 +45,13 @@ catalogue:       ## Regenerate the index/ catalogues: claims, symbols, graph
 atlas:           ## Render the theory graph to atlas.html (a view; never checked in)
 	@.venv/bin/workhouse atlas
 
-paper:           ## Build the master paper PDF and run both stdlib core verifiers
+# Builds the 2026-08-28 edition, not the current master edition, and on
+# purpose: that edition's digest in paper/SHA256SUMS is byte-reproducible
+# under pdflatex + SOURCE_DATE_EPOCH, which is what makes the pin meaningful.
+# The 2026-08-30 master edition is built with Tectonic, which is not a
+# dependency of this repository -- see paper/README.md "Rebuilding". Both
+# stdlib verifiers run here either way.
+paper:           ## Build the 2026-08-28 paper PDF and run both stdlib core verifiers
 	@python3 verify_core.py
 	@cd paper && python3 verify_core.py \
 		&& SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
