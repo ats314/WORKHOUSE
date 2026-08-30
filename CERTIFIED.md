@@ -238,10 +238,10 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/fourth_order.py:88 · MASTER_THEORY §5.3
   - `workhouse verify --only 'exceptional ranks are exactly {3,4,5,6}'`
 - `the in-plane transfer is order eight, not four, in the primitive channel`
-  - src/workhouse/invariants/fourth_order.py:569 · C2; G3 off-axis channel route
+  - src/workhouse/invariants/fourth_order.py:622 · C2; G3 off-axis channel route
   - `workhouse verify --only 'the in-plane transfer is order eight, not four, in the primitive channel'`
 - `the perpendicular cube sector is a second fourth-order primitive channel, S_4 = -11`
-  - src/workhouse/invariants/fourth_order.py:509 · C2; G3 off-axis channel route; MOB §4
+  - src/workhouse/invariants/fourth_order.py:525 · C2; G3 off-axis channel route; MOB §4
   - `workhouse verify --only 'the perpendicular cube sector is a second fourth-order primitive channel, S_4 = -11'`
 **fourth-order checkpoint extraction**
 

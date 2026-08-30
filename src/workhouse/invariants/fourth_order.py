@@ -502,8 +502,24 @@ def _():
         "taking |c_4|. This validates the machinery on a channel both sides of C2 agree on. It "
         "adjudicates nothing: the in-plane channel is not a fourth-order completion at all "
         "(the minimal closed cell carrying a coplanar edge-sharing pair is the 1x2x1 box, ten "
-        "unit faces, r = 8), and the perpendicular channel is range-2"
+        "unit faces, r = 8), and the perpendicular channel is a different off-diagonal "
+        "structure from the recorded rotation row"
     )
+
+
+#: The unit cube at the origin in the standard cubical basis: (position, plane,
+#: boundary sign), read off the repository's own ``torus.d3_matrix``. The signs
+#: are what convert the coherently oriented cell ``cellular`` works in into the
+#: basis the Wilson loops actually live in, and they are load-bearing: the two
+#: opposite faces of a cube carry OPPOSITE signs.
+_CUBE_BLOCH = (
+    ((0, 0, 0), (1, 2), -1),
+    ((0, 0, 1), (1, 2), +1),
+    ((0, 0, 0), (1, 3), +1),
+    ((0, 1, 0), (1, 3), -1),
+    ((0, 0, 0), (2, 3), -1),
+    ((1, 0, 0), (2, 3), +1),
+)
 
 
 @sealed.check(
@@ -518,13 +534,22 @@ def _():
     # a distinct channel, uniform over all 24 ordered pairs, and not recorded
     # anywhere in the corpus.
     #
-    # This is the orbital-rotation sector the off-axis route needs, derived
-    # rather than delivered. What it does NOT license is reading it through
-    # the dictionary's range-1 rotation row: built in the Bloch basis from the
-    # repository's own cube boundary, the channel carries displacements up to
-    # +-2 on every axis, so it is range-2 -- the one dictionary row that says
-    # A, B, C, D are all nonzero. The recorded C = -f/2 does not apply to it,
-    # and the sign that check flags stays open.
+    # What it does NOT license is reading it through the dictionary's rotation
+    # row, and the reason is structural rather than a matter of range.
+    #
+    # CORRECTED 2026-08-30. An earlier form of this check said the channel is
+    # "range-2", inferred from displacements reaching +-2 on every axis. That
+    # measured the carrier projection psi^dag H psi, not the operator: psi
+    # itself carries displacement content (each d_j spans 0 and 1), so the
+    # projection inherits it. The OPERATOR has max |displacement| = 1 -- it is
+    # range-1, over the shells (0,0,0), (0,0,1) and (0,1,1).
+    #
+    # The real reason the dictionary's row does not apply: in the Bloch basis
+    # built from the repository's own cube boundary, this channel's entry is
+    # H_[(12),(13)] = -conj(d_2) d_3, whereas the recorded rotation row is
+    # +conj(d_n) d_m. Those are MINUS THE CONJUGATE of one another, so the two
+    # are different off-diagonal structures, and the recorded C = -f/2 is a
+    # statement about the other one. The flagged sign stays open.
     perpendicular = {}
     opposite = {}
     for p in range(6):
@@ -539,6 +564,28 @@ def _():
             bucket[(simplify(coefficient), signed, len(hist))] = (
                 bucket.get((simplify(coefficient), signed, len(hist)), 0) + 1
             )
+
+    # The record census, which is what compares against the corpus's own block
+    # table: (input plane, output plane, displacement) triples, by shell. The
+    # normal channel's 6 records at (0,0,1) match the recorded NORMAL (0,0,1)
+    # block exactly, which is the corroboration that this mapping is the right
+    # one; the perpendicular channel's 24 span THREE shells and so do not sit
+    # in any single recorded block.
+    def _census(cross_plane):
+        seen = {}
+        for xa, Pa, ea in _CUBE_BLOCH:
+            for xb, Pb, eb in _CUBE_BLOCH:
+                if (Pa != Pb) != cross_plane or (not cross_plane and (xa, Pa) == (xb, Pb)):
+                    continue
+                seen[(Pa, Pb, tuple(xb[i] - xa[i] for i in range(3)))] = ea * eb
+        out = {}
+        for _p, _q, delta in seen:
+            key = tuple(sorted(abs(c) for c in delta))
+            out[key] = out.get(key, 0) + 1
+        return out
+
+    shells = _census(True)
+    normal_shells = _census(False)
     perp_key = next(iter(perpendicular))
     opp_key = next(iter(opposite))
     c_perp, s_perp, n_perp = perp_key
@@ -554,15 +601,21 @@ def _():
         and simplify(c_perp - (-88) / (CELL.N * (CELL.N**2 - 1) ** 3)) == 0
         and simplify(c_perp.subs(CELL.N, 3) + Rational(11, 192)) == 0
         and simplify(c_perp / c_opp - Rational(11, 20)) == 0
+        and shells == {(0, 0, 0): 6, (0, 0, 1): 12, (0, 1, 1): 6}
+        and normal_shells == {(0, 0, 1): 6}
     )
     return ok, (
         "the cube's 24 ordered perpendicular pairs all give S_4 = -11 over 14 histories, "
         "c_4,perp = -88/(N(N^2-1)^3) = -11/192 at N = 3, against the 6 opposite pairs' "
         "S_4 = -20 over 24 histories and -160/(N(N^2-1)^3) = -5/48. The ratio is exactly "
         "11/20 at every rank. This is a fourth-order primitive coefficient the corpus does not "
-        "record. It is NOT the dictionary's range-1 rotation row: in the Bloch basis built from "
-        "the repository's own cube boundary the channel reaches displacement +-2 on every axis, "
-        "so it is range-2, and its carrier projection does not lie in the four-shape span"
+        "record. Its records are 6 at shell (0,0,0), 12 at (0,0,1) and 6 at (0,1,1) -- 24 in "
+        "all, max |displacement| 1, so the OPERATOR is range-1 (an earlier form of this check "
+        "said range-2, having measured the carrier projection, which inherits psi's own "
+        "displacement content). It is still NOT the dictionary's rotation row: this channel's "
+        "entry is H_[(12),(13)] = -conj(d_2) d_3 against the recorded +conj(d_n) d_m, which are "
+        "minus the conjugate of one another -- different off-diagonal structures. That, not "
+        "range, is why its carrier projection lies outside the four-shape span"
     )
 
 

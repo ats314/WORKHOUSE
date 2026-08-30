@@ -232,14 +232,33 @@ gaps:
           `the perpendicular cube sector is a second fourth-order primitive
           channel, S_4 = -11`.
 
-          It does NOT settle the +-f/2 sign, and the reason is worth the
-          line: built in the Bloch basis from the repository's own cube
-          boundary, that channel reaches displacement +-2 on every axis, so
-          it is RANGE-2 — the one dictionary row that says A, B, C, D are all
-          nonzero — and its carrier projection does not lie in the four-shape
-          span. The recorded range-1 rotation row therefore does not apply to
-          it. Whether the physical rotation record is this channel plus
-          something else, or a different channel entirely, is open.
+          It does NOT settle the +-f/2 sign. The first reason given for that
+          was wrong and is corrected here: the channel was called RANGE-2, on
+          displacements reaching +-2 per axis, but that measured the carrier
+          projection psi^dag H psi, which inherits psi's own displacement
+          content (each d_j spans 0 and 1). The OPERATOR has max
+          |displacement| = 1 — range-1, over shells (0,0,0), (0,0,1) and
+          (0,1,1).
+
+          The real reason, and it answers the question this entry left open:
+          it is A DIFFERENT CHANNEL, not the recorded rotation plus a
+          correction. Two independent signs of that. (i) Structure: in the
+          Bloch basis built from the repository's own cube boundary, this
+          channel's entry is H_[(12),(13)] = -conj(d_2) d_3, while the
+          recorded rotation row is +conj(d_n) d_m — minus the conjugate of
+          one another, so different off-diagonal structures, and the recorded
+          C = -f/2 is a statement about the other one. That, not range, is why
+          the carrier projection lies outside the four-shape span.
+          (ii) Census: the channel's 24 records split 6 at (0,0,0), 12 at
+          (0,0,1), 6 at (0,1,1) — spread over three shells, so they sit in no
+          single recorded block (MIXED (0,1,1) is 24 records but all in one
+          shell). The control that makes this census trustworthy is the
+          normal channel, whose 6 records at shell (0,0,1) match the recorded
+          NORMAL (0,0,1) block of 6 exactly.
+
+          What stays open is narrower than before: which channel the recorded
+          ROTATION block (120 records, contributing -0.004080 of C) actually
+          is, given that the cube's perpendicular completion is not it.
         what: >
           workhouse.cellular already re-derives the axial channel
           independently at symbolic N and is T1-checked

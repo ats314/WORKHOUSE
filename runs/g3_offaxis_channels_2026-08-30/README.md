@@ -58,17 +58,42 @@ convention is `|A| = alpha_N/4` and the ratio `C/A = -1/2`. The corpus fixes the
 overall sign itself, by taking `|c_4|`. That check has been corrected to assert
 only the magnitude and the ratio.
 
-The **perpendicular** sector does not land in the span. `rot4.py` says why:
+The **perpendicular** sector does not land in the span. `rot4.py` reports:
 
 - cubic permutation invariant: **True** (so the construction is sound)
-- displacement range per axis: **±2** — the channel is **range-2**
 - in the four-shape span: **False**
+- displacement range per axis: ±2 — **but see the correction below**
 
-Range-2 is precisely the one dictionary row that says `A, B, C, D` are all
-nonzero, so the range-1 rotation row — the `C = -f/2` whose sign was flagged —
-**does not apply to this channel**. The sign stays open, and the open question
-is sharper than before: whether the physical rotation record is this channel
-plus something else, or a different channel entirely.
+### Correction: it is range-1, and it is a different channel
+
+The ±2 line was first read as "the channel is range-2". That is wrong, and
+`shells.py` shows why: ±2 is a property of the carrier projection
+`psi^dag H psi`, which inherits psi's own displacement content, since each
+`d_j = e^{ik_j} - 1` spans displacements 0 and 1. The **operator** has
+`max |displacement| = 1`.
+
+| channel | records | shells | max &#124;δ&#124; |
+|---|---|---|---|
+| normal (opposite) | 6 | (0,0,1)×6 | 1 |
+| perpendicular | 24 | (0,0,0)×6, (0,0,1)×12, (0,1,1)×6 | 1 |
+
+The real reason the recorded rotation row does not apply is **structural**:
+this channel's Bloch entry is `H_[(12),(13)] = -conj(d_2) d_3`, while the
+recorded row is `+conj(d_n) d_m`. Those are *minus the conjugate* of one
+another — different off-diagonal structures — so `C = -f/2` is a statement
+about the other one, and the span failure follows from that rather than from
+range.
+
+The census points the same way. The perpendicular channel's 24 records spread
+across **three** shells, so they sit in no single recorded block: `MIXED
+(0,1,1)` is also 24 records, but all in one shell. The control that makes the
+census trustworthy is the normal channel — its 6 records at shell (0,0,1)
+match the recorded `NORMAL (0,0,1)` block of 6 **exactly**.
+
+So the answer to "this channel plus something else, or a different channel
+entirely" is **a different channel**. What stays open is narrower: which
+channel the recorded `ROTATION` block (120 records, contributing `-0.004080`
+of C) actually is.
 
 ## Scope
 
