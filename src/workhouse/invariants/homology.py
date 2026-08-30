@@ -192,6 +192,98 @@ def _():
 
 
 @homology.check(
+    "the sheets average to harmonic representatives, and the Gamma block IS b_2",
+    "MASTER paper §3.1 / Rmk. after the Bloch-chain bridge",
+)
+def _():
+    # RETRACTS a remark the manuscript carried from its 2026-08-28 edition:
+    # "the 3 is the triple degeneracy of B(0) = 0, not b_2(T^3)". It is
+    # b_2(T^3), canonically, and the mistake was to read a Fourier
+    # decomposition as a coincidence.
+    #
+    # Under discrete Fourier transform d_2 block-diagonalises and
+    # ker d_2 = (+)_k ker d_2(k). At k != 0 the kernel block is
+    # one-dimensional and is exactly im d_3(k), so the whole of im d_3 lives
+    # at nonzero momenta; at k = 0, d_3(0) = 0 and the kernel block is all of
+    # C^3. So the quotient ker d_2 / im d_3 is supported entirely at Gamma,
+    # and the Gamma block IS H_2. The two numbers of the bridge are the same
+    # numbers, not two that agree.
+    #
+    # The constructive half, which the earlier edition lacked entirely: a
+    # single wrapping sheet is a cycle but NOT harmonic (the sibling FINDING
+    # measures its Rayleigh quotient at exactly 2). Its average over the L
+    # translates in the complementary direction,
+    #
+    #     h_(ij) = (1/L) sum_{r<L} s_(ij)(r),
+    #
+    # IS harmonic -- it is the k = 0 Fourier component of the sheet, and the
+    # sheet's non-harmonicity is entirely in the modes the average kills. The
+    # three averages span the harmonic subspace, and each sheet differs from
+    # its own average by a boundary, so they are the same homology class.
+    # Nothing about the earlier FINDING is withdrawn: the exhibited
+    # generators are still not harmonic. What was missing was that harmonic
+    # representatives exist, and are one line away.
+    import flint
+
+    ok = True
+    detail = []
+    for ell in (2, 3, 4):
+        d2, d3 = TOR.d2_matrix(ell), TOR.d3_matrix(ell)
+        n_faces = 3 * ell**3
+
+        def averaged(pair, ell=ell, n_faces=n_faces):
+            """L * h_(ij): the sheet summed over all L translates."""
+            (m,) = set((1, 2, 3)) - set(pair)
+            vec = [0] * n_faces
+            for x in TOR.sites(ell):
+                if x[m - 1] < ell:
+                    vec[TOR.face_index(x, pair, ell)] += 1
+            return vec
+
+        d3_cols = [[int(d3[r, c]) for r in range(n_faces)] for c in range(d3.ncols())]
+        boundaries = flint.fmpz_mat([[col[r] for col in d3_cols] for r in range(n_faces)])
+        rank_boundaries = boundaries.rank()
+
+        for pair in TOR.FACE_PAIRS:
+            h = averaged(pair)
+            # harmonic: killed by d_2 and by d_3^T, over Z on L*h
+            ok &= all(
+                sum(int(d2[a, b]) * h[b] for b in range(n_faces)) == 0 for a in range(d2.nrows())
+            )
+            ok &= all(
+                sum(int(d3[b, c]) * h[b] for b in range(n_faces)) == 0 for c in range(d3.ncols())
+            )
+            # and the single sheet differs from the average by a boundary
+            sheet = TOR.wrapping_sheet(ell, pair)
+            diff = [ell * sheet[i] - h[i] for i in range(n_faces)]
+            augmented = flint.fmpz_mat(
+                [[col[r] for col in d3_cols] + [diff[r]] for r in range(n_faces)]
+            )
+            ok &= augmented.rank() == rank_boundaries
+
+        # the harmonic subspace is exactly three-dimensional: b_2(T^3)
+        stacked = flint.fmpz_mat(
+            [[int(d2[a, b]) for b in range(n_faces)] for a in range(d2.nrows())]
+            + [[int(d3[b, c]) for b in range(n_faces)] for c in range(d3.ncols())]
+        )
+        harmonic_dim = n_faces - stacked.rank()
+        ok &= harmonic_dim == 3 and rank_boundaries == ell**3 - 1
+        detail.append(f"L={ell}: harmonic {harmonic_dim}, rank d_3 {rank_boundaries}")
+
+    return ok, (
+        "h_(ij) = (1/L) sum_r s_(ij)(r) satisfies d_2 h = 0 AND d_3^T h = 0 over Z, for every "
+        f"pair and every {', '.join(detail)} -- so the harmonic subspace is exactly "
+        "b_2(T^3) = 3 and the three averaged sheets span it, while each single sheet differs "
+        "from its own average by a boundary and represents the same class. This RETRACTS the "
+        "manuscript's remark that the 3 at Gamma is 'not b_2(T^3)': ker d_2 = (+)_k ker d_2(k), "
+        "at k != 0 the kernel block is exactly im d_3(k), and d_3(0) = 0, so the quotient is "
+        "supported entirely at Gamma and the Gamma block IS H_2. The bridge's two numbers are "
+        "the same numbers. The sibling FINDING stands unchanged: a single sheet is a cycle and "
+        "is not harmonic"
+    )
+
+
+@homology.check(
     "a boundary-factorised correction shifts the carrier without dispersing it, for generic M",
     "MASTER paper Prop. (boundary-factorised rigidity)",
 )
