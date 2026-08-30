@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 253/253 checks pass.
+**T1/T2 — re-derived here.** 256/256 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -41,6 +41,7 @@ it cannot drift from what the repository actually checks.
 | two-cube charge-odd second-order closure (B=4 and B=6) | 12/12 |
 | the electric shell, and what isolates it | 5/5 |
 | fourth-order kernel orbits | 10/10 |
+| continuum and fixed-spacing bridges (G18, G19) | 3/3 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:

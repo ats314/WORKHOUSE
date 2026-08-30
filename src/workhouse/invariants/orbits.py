@@ -64,11 +64,20 @@ def _():
     sizes = sorted(len(g) for g in by.values())
     mags = KO.orbit_magnitudes(kernel_records())
     amps = KO.amplitudes(kernel_records())
+    registered = {
+        "u": K.X_QUANTUM,
+        "u2": K.U2_ORBIT,
+        "rho": K.RHO_ORBIT,
+        "pi": K.PI_ORBIT,
+        "nu": K.NU_ORBIT,
+        "sigma": K.SIGMA_ORBIT,
+    }
     ok = (
         len(by) == 6
         and sizes == [3, 6, 12, 12, 24, 132]
         and sum(sizes) == 189
         and all(abs(amps[n]) == mags[n] for n in amps)
+        and amps == registered
     )
     u = amps["u"]
     return ok, (
@@ -78,7 +87,9 @@ def _():
         + f", sigma = {amps['sigma'] / u}. Each orbit's amplitude, read off its own shape "
         "contribution, equals the weight its records carry up to sign -- which is the "
         "statement that an orbit really is one amplitude and not a group of records that "
-        "happen to be near each other"
+        "happen to be near each other. All six are registered by value, so each is reachable "
+        "from its own rational through `workhouse search` -- the join keys of this corpus are "
+        "exact rationals, and RHO_ORBIT and PI_ORBIT are the two the whole of C2 reduces to"
     )
 
 
@@ -135,8 +146,12 @@ def _():
 @orbit.check("C_shp = -5/96 - u - (rho + pi)/2, exactly", _LEDGER)
 def _():
     a = KO.amplitudes(kernel_records())
-    predicted = Fraction(-5, 96) - a["u"] - (a["rho"] + a["pi"]) / 2
-    ok = predicted == kernel_constants()["C_shp"]
+    predicted = Fraction(-5, 96) - K.X_QUANTUM - (K.RHO_ORBIT + K.PI_ORBIT) / 2
+    ok = predicted == kernel_constants()["C_shp"] == K.C_SHP_HISTORICAL and (
+        a["u"],
+        a["rho"],
+        a["pi"],
+    ) == (K.X_QUANTUM, K.RHO_ORBIT, K.PI_ORBIT)
     return ok, (
         f"three signed amplitudes reproduce C_shp = {predicted} exactly. In units of u: "
         f"rho = {a['rho'] / a['u']}, pi = {a['pi'] / a['u']}. The -5/96 is -A/2 from the "
@@ -282,7 +297,12 @@ def _():
     delta_beta = b3 - beta
     c_hist = kernel_constants()["C_shp"]
     c_bal = c_hist + delta_beta / 16
-    ok = delta_beta == Fraction(25, 64) and c_bal - c_hist == Fraction(25, 1024)
+    ok = (
+        delta_beta == Fraction(25, 64)
+        and c_bal - c_hist == Fraction(25, 1024)
+        and c_bal == K.C_SHP_BALANCED
+        and c_hist == K.C_SHP_HISTORICAL
+    )
     return ok, (
         f"B_3 = {b3} against beta = {beta} from the raw records: the difference is exactly "
         f"{delta_beta}, denominator 64 where the two inputs have denominators 3.4e13 and "

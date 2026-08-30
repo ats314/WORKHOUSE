@@ -422,6 +422,31 @@ BETA_PEN_3 = Rational(17607806155349, 275331901291200)
 #: ledger, WORK_SINCE_2026-08).
 X_QUANTUM = Rational(360421351, 40327601932800)
 
+# The six cubic orbits of the historical 189-record kernel (suite "fourth-order
+# kernel orbits"). Registered by VALUE because the join keys of this corpus are
+# exact rationals: RHO_ORBIT and PI_ORBIT are the two amplitudes the whole of C2
+# reduces to, and until they were entries here `workhouse search` could not find
+# either one from its own number -- the checks printed them as ratios to
+# X_QUANTUM, which is a different rational.
+#
+# X_QUANTUM is the skeleton amplitude u of that decomposition; the doubled orbit
+# is exactly 2u, which is the entire content of the e_3 tier collapse.
+#: Doubled orbit (12 records, same-plane (0,1,1) in-plane): exactly 2*X_QUANTUM.
+U2_ORBIT = Rational(360421351, 20163800966400)
+#: Rotation orbit (24 cross-plane records). Contributes to C alone, at -rho/2.
+RHO_ORBIT = Rational(238714892212171339, 29002361154409843200)
+#: In-plane orbit (12 records, same-plane nearest neighbour). C alone, at -pi/2.
+PI_ORBIT = Rational(-20535103905179, 1264270320593280)
+#: Normal orbit (6 records). Not independently disputed: A = 5/48 forces
+#: nu = -(5/48 + 4u) exactly, and C_normal = -A_normal/2.
+NU_ORBIT = Rational(-1050558388351, 10081900483200)
+#: On-site orbit (3 records). Enters c_0 alone; no effect on A, B, C or D.
+SIGMA_ORBIT = Rational(-780864191400383617, 302107928691769200)
+#: The eps-free (balanced) branch of C2, exact since 2026-08-30:
+#: B_3 - BETA_PEN_3 = 25/64 exactly, so this is C_SHP_HISTORICAL + 25/1024.
+#: An intermediate value, NOT a third side of the dispute.
+C_SHP_BALANCED = Rational(-13035490122347, 550663802582400)
+
 #: Vacuum-subtracted physical Gamma-point coefficient, from the blind
 #: finite-cluster/rooted oracle (float only). Reproduces Hamer's a_4 through the
 #: bridge m_n = 2**(n-1) * a_n with no historical target in its data flow, which

@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 204
+## T1 — re-derived exactly — 207
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -184,6 +184,17 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the two band spans ARE the two incidence spectra`
   - src/workhouse/invariants/su3.py:143 · MASTER paper §4.5 / ENGINE_FLUX_su3_domino_d3.py key corrected_Ceven_bandwidth_16|t|
   - `workhouse verify --only 'the two band spans ARE the two incidence spectra'`
+**continuum and fixed-spacing bridges (G18, G19)**
+
+- `the G18 sheet coefficient 5/612 is the registered shared-link hopping`
+  - src/workhouse/invariants/continuum.py:106 · G18; paper/research_notes/G18_INTERNAL_BBDAGGER_SHEET_CLOSURE_20260830.tex
+  - `workhouse verify --only 'the G18 sheet coefficient 5/612 is the registered shared-link hopping'`
+- `the equivariant Markov blocking counterexample is exact: integral = -1`
+  - src/workhouse/invariants/continuum.py:35 · G19; paper/research_notes/G19_CONTINUUM_BRIDGE_INSERT.tex
+  - `workhouse verify --only 'the equivariant Markov blocking counterexample is exact: integral = -1'`
+- `the two-loop exponents of the necessary continuum law are 51/121 and 86/121`
+  - src/workhouse/invariants/continuum.py:72 · G19; paper/research_notes/G19_CONTINUUM_BRIDGE_INSERT.tex
+  - `workhouse verify --only 'the two-loop exponents of the necessary continuum law are 51/121 and 86/121'`
 **coupling erratum (C4/G2)**
 
 - `the 4**r rescaling breaks the bridge: order 2 off by 16, order 3 by 64`
@@ -265,31 +276,31 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **fourth-order kernel orbits**
 
 - `A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u)`
-  - src/workhouse/invariants/orbits.py:123 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:134 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u)'`
 - `B = 0 is unpopulated, not cancelled`
-  - src/workhouse/invariants/orbits.py:225 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:240 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'B = 0 is unpopulated, not cancelled'`
 - `C_shp = -5/96 - u - (rho + pi)/2, exactly`
-  - src/workhouse/invariants/orbits.py:135 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:146 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'C_shp = -5/96 - u - (rho + pi)/2, exactly'`
 - `every orbit's carrier projection is closed form in e1, e2, e3`
-  - src/workhouse/invariants/orbits.py:85 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:96 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'every orbit'"'"'s carrier projection is closed form in e1, e2, e3'`
 - `the 189 records carry exactly six weight magnitudes`
   - src/workhouse/invariants/orbits.py:61 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the 189 records carry exactly six weight magnitudes'`
 - `the balanced branch is exact: B_3 - beta_historical = 25/64, so Delta C = 25/1024`
-  - src/workhouse/invariants/orbits.py:268 · C2; walled-Brauer eps-sector; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:283 · C2; walled-Brauer eps-sector; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the balanced branch is exact: B_3 - beta_historical = 25/64, so Delta C = 25/1024'`
 - `the shape coefficients are solved, not fitted: A = 5/48, B = D = 0 exactly`
   - src/workhouse/invariants/orbits.py:34 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the shape coefficients are solved, not fitted: A = 5/48, B = D = 0 exactly'`
 - `the tier collapse is one identity: D = -6u + 3*u2 with u2 = 2u`
-  - src/workhouse/invariants/orbits.py:148 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:163 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the tier collapse is one identity: D = -6u + 3*u2 with u2 = 2u'`
 - `u2 = 2u is the cross term of a perfect square`
-  - src/workhouse/invariants/orbits.py:178 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:193 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'u2 = 2u is the cross term of a perfect square'`
 **homology and finite volume**
 
@@ -875,7 +886,7 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **fourth-order kernel orbits**
 
 - `FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped`
-  - src/workhouse/invariants/orbits.py:294 · C2; G3 step 1; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:314 · C2; G3 step 1; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped'`
 **near-Gamma uniformity (G11)**
 
