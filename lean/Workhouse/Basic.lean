@@ -188,6 +188,14 @@ theorem sym2_shelf_numerator (n : ℚ) :
 theorem adjoint_shelf_numerator (n : ℚ) :
     8 * (n * n) - 5 * (n ^ 2 - 1) = 3 * n ^ 2 + 5 := by ring
 
+/-- The isolation switch point: `4N(2(C_{Λ²} − C_F) − C_F)` clears to
+`2(N−5)(N+1)`, so the heavier-irrep margin undercuts the domino margin `C_F`
+exactly below `N = 5` -- which, with `Λ²F = F-bar` at `N = 3`, leaves `SU(4)`
+as the single rank where the isolation constant is `2(C_{Λ²} − C_F) = 5/4`
+rather than `C_F`. -/
+theorem isolation_switch_numerator (n : ℚ) :
+    4 * ((n - 3) * (n + 1)) - 2 * (n ^ 2 - 1) = 2 * ((n - 5) * (n + 1)) := by ring
+
 /-! ## SU(3) through third order -/
 
 noncomputable def b₃ : ℚ := 1975 / 124848

@@ -15,101 +15,101 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 51
+## T0 — proof-checked — 52
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
 **lean core**
 
 - `C_from_beta`
-  - lean/Workhouse/Basic.lean:236
+  - lean/Workhouse/Basic.lean:244
   - `make lean`
 - `adjoint_shelf_numerator`
   - lean/Workhouse/Basic.lean:188
   - `make lean`
 - `alphaPen_eq_neg_four_cube`
-  - lean/Workhouse/Basic.lean:373
+  - lean/Workhouse/Basic.lean:381
   - `make lean`
 - `alphaPen_five`
-  - lean/Workhouse/Basic.lean:208
+  - lean/Workhouse/Basic.lean:216
   - `make lean`
 - `alphaPen_four`
-  - lean/Workhouse/Basic.lean:207
+  - lean/Workhouse/Basic.lean:215
   - `make lean`
 - `alphaPen_six`
-  - lean/Workhouse/Basic.lean:209
+  - lean/Workhouse/Basic.lean:217
   - `make lean`
 - `alphaPen_three`
-  - lean/Workhouse/Basic.lean:206
+  - lean/Workhouse/Basic.lean:214
   - `make lean`
 - `alphaPen_three_eq_four_A`
-  - lean/Workhouse/Basic.lean:212
+  - lean/Workhouse/Basic.lean:220
   - `make lean`
 - `bandVar_pi`
-  - lean/Workhouse/Basic.lean:396
+  - lean/Workhouse/Basic.lean:404
   - `make lean`
 - `bandVar_pi_div_two`
-  - lean/Workhouse/Basic.lean:399
+  - lean/Workhouse/Basic.lean:407
   - `make lean`
 - `bandVar_zero`
-  - lean/Workhouse/Basic.lean:393
+  - lean/Workhouse/Basic.lean:401
   - `make lean`
 - `beta_from_A_and_C`
-  - lean/Workhouse/Basic.lean:244
+  - lean/Workhouse/Basic.lean:252
   - `make lean`
 - `blind_holdout`
-  - lean/Workhouse/Basic.lean:222
+  - lean/Workhouse/Basic.lean:230
   - `make lean`
 - `cPrimTwo_forms`
-  - lean/Workhouse/Basic.lean:345
+  - lean/Workhouse/Basic.lean:353
   - `make lean`
 - `channel_resolvent_assembly`
   - lean/Workhouse/Basic.lean:148
   - `make lean`
 - `cubeCompletion_three`
-  - lean/Workhouse/Basic.lean:364
+  - lean/Workhouse/Basic.lean:372
   - `make lean`
 - `delta_M`
-  - lean/Workhouse/Basic.lean:432
+  - lean/Workhouse/Basic.lean:440
   - `make lean`
 - `delta_P`
-  - lean/Workhouse/Basic.lean:438
-  - `make lean`
-- `delta_R`
   - lean/Workhouse/Basic.lean:446
   - `make lean`
+- `delta_R`
+  - lean/Workhouse/Basic.lean:454
+  - `make lean`
 - `delta_X`
-  - lean/Workhouse/Basic.lean:427
+  - lean/Workhouse/Basic.lean:435
   - `make lean`
 - `dim_Z₂`
-  - lean/Workhouse/Basic.lean:320
+  - lean/Workhouse/Basic.lean:328
   - `make lean`
 - `d₃_ledger`
-  - lean/Workhouse/Basic.lean:198
+  - lean/Workhouse/Basic.lean:206
   - `make lean`
 - `even_cubic_at_sixteen`
-  - lean/Workhouse/Basic.lean:276
+  - lean/Workhouse/Basic.lean:284
   - `make lean`
 - `even_cubic_at_zero`
-  - lean/Workhouse/Basic.lean:270
+  - lean/Workhouse/Basic.lean:278
   - `make lean`
 - `even_cubic_derivative_factors`
-  - lean/Workhouse/Basic.lean:283
+  - lean/Workhouse/Basic.lean:291
   - `make lean`
 - `even_gram_minors`
-  - lean/Workhouse/Basic.lean:263
+  - lean/Workhouse/Basic.lean:271
   - `make lean`
 - `extraction_A`
-  - lean/Workhouse/Basic.lean:302
+  - lean/Workhouse/Basic.lean:310
   - `make lean`
 - `extraction_B`
-  - lean/Workhouse/Basic.lean:304
+  - lean/Workhouse/Basic.lean:312
   - `make lean`
 - `extraction_C`
-  - lean/Workhouse/Basic.lean:308
+  - lean/Workhouse/Basic.lean:316
   - `make lean`
 - `extraction_D`
-  - lean/Workhouse/Basic.lean:312
+  - lean/Workhouse/Basic.lean:320
   - `make lean`
 - `hopping_deficit_numerator`
   - lean/Workhouse/Basic.lean:48
@@ -119,6 +119,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `hopping_two`
   - lean/Workhouse/Basic.lean:44
+  - `make lean`
+- `isolation_switch_numerator`
+  - lean/Workhouse/Basic.lean:196
   - `make lean`
 - `lambda2_shelf_numerator`
   - lean/Workhouse/Basic.lean:180
@@ -130,16 +133,16 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:118
   - `make lean`
 - `newton_three`
-  - lean/Workhouse/Basic.lean:292
+  - lean/Workhouse/Basic.lean:300
   - `make lean`
 - `pentCompletion_three`
-  - lean/Workhouse/Basic.lean:368
+  - lean/Workhouse/Basic.lean:376
   - `make lean`
 - `prismCompletion_three`
-  - lean/Workhouse/Basic.lean:360
+  - lean/Workhouse/Basic.lean:368
   - `make lean`
 - `q_at_checkpoints`
-  - lean/Workhouse/Basic.lean:418
+  - lean/Workhouse/Basic.lean:426
   - `make lean`
 - `rank_law_numerator`
   - lean/Workhouse/Basic.lean:36
@@ -160,39 +163,48 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:174
   - `make lean`
 - `stencil_zero_mode`
-  - lean/Workhouse/Basic.lean:226
+  - lean/Workhouse/Basic.lean:234
   - `make lean`
 - `sym2_shelf_numerator`
   - lean/Workhouse/Basic.lean:184
   - `make lean`
 - `tetraCompletion_three`
-  - lean/Workhouse/Basic.lean:356
+  - lean/Workhouse/Basic.lean:364
   - `make lean`
 - `tetra_from_count`
-  - lean/Workhouse/Basic.lean:350
+  - lean/Workhouse/Basic.lean:358
   - `make lean`
 - `width_eq_alpha_add_beta`
-  - lean/Workhouse/Basic.lean:240
+  - lean/Workhouse/Basic.lean:248
   - `make lean`
 
-## T1 — re-derived exactly — 194
+## T1 — re-derived exactly — 197
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
 **G17 uniformity: the shell isolation constant**
 
+- `every 5-cycle wraps the torus, so flux empties the five-link shelf`
+  - src/workhouse/invariants/isolation.py:155 · G17 / PUB edition Lem. 14
+  - `workhouse verify --only 'every 5-cycle wraps the torus, so flux empties the five-link shelf'`
 - `five charged links clear the shell by exactly C_F/2, at every volume`
-  - src/workhouse/invariants/isolation.py:50 · G17 / PUB edition Lem. 14
+  - src/workhouse/invariants/isolation.py:92 · G17 / PUB edition Lem. 14
   - `workhouse verify --only 'five charged links clear the shell by exactly C_F/2, at every volume'`
-- `the L = 4 loop exclusion is load-bearing exactly at N = 4`
-  - src/workhouse/invariants/isolation.py:170 · G17 / PUB edition Lem. 14
-  - `workhouse verify --only 'the L = 4 loop exclusion is load-bearing exactly at N = 4'`
-- `the retained shell is isolated by C_F/2 above and 2C_F below, uniformly in L and N`
-  - src/workhouse/invariants/isolation.py:126 · G17 / G18 / PUB edition Thm. 16
-  - `workhouse verify --only 'the retained shell is isolated by C_F/2 above and 2C_F below, uniformly in L and N'`
+- `flux is winding times N-ality: fundamental wrapping loops die at every rank`
+  - src/workhouse/invariants/isolation.py:225 · G17 / PUB edition Lem. 14 / MASTER paper
+  - `workhouse verify --only 'flux is winding times N-ality: fundamental wrapping loops die at every rank'`
+- `one insertion cannot connect distinct plaquettes: |p Delta p'| >= 6`
+  - src/workhouse/invariants/isolation.py:272 · G17 / G18 / PUB edition Lem. 15
+  - `workhouse verify --only 'one insertion cannot connect distinct plaquettes: |p Delta p'"'"'| >= 6'`
+- `the exact isolation constant: gamma = C_F, except 5/4 at SU(4), attained`
+  - src/workhouse/invariants/isolation.py:184 · G17 / G18 / PUB edition Thm. 16
+  - `workhouse verify --only 'the exact isolation constant: gamma = C_F, except 5/4 at SU(4), attained'`
 - `the second-Casimir shelf: every irrep beyond F and F-bar clears 5C_F/4`
-  - src/workhouse/invariants/isolation.py:70 · G17 / PUB edition Lem. 14
+  - src/workhouse/invariants/isolation.py:112 · G17 / PUB edition Lem. 14
   - `workhouse verify --only 'the second-Casimir shelf: every irrep beyond F and F-bar clears 5C_F/4'`
+- `the stability hypothesis package, with its dimensionless ratio`
+  - src/workhouse/invariants/isolation.py:299 · G17 / PUB edition Lem. 14
+  - `workhouse verify --only 'the stability hypothesis package, with its dimensionless ratio'`
 **SU(3) second and third order**
 
 - `C-even bandwidth = top - bottom = 88/153`
