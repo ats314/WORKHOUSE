@@ -133,6 +133,11 @@ workhouse lit --intake           # identify inbox PDFs and print pinning advice
 workhouse triage /path/to/dir    # survey an unpinned archive, read-only
 ```
 
+The atlas opens on the scientific/evidence spine; the much larger note and
+archive layer is opt-in. Its detail panel retains each edge's direction,
+curated/derived marker, and source path, and open contradictions keep their
+branches and originators separate.
+
 `make help` lists the rest (`fmt`, `lock`, `clean`, …). Two are easy to
 conflate: `make manifest` re-pins `theory/` and `make corpus-manifest` re-pins
 `corpus-import/` — a deliberate corpus change needs the second, or the

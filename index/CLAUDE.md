@@ -18,9 +18,11 @@ judgement; the join is derived.
 
 `graph.jsonl` — one record per relationship between those records:
 `{src, dst, type, how, source}`. Edge types are the verbatim field names of the
-file each edge was read from, plus four derived extractions (`cites`,
-`mentions`, `amends`, `retracts`). No inferred edges, no invented nodes: an
-edge exists only when both endpoints resolve, and ADR 0007 records why.
+file each edge was read from, plus the derived extractions `cites`, `mentions`,
+`amends`, `retracts`, `uses`, and `carries`. The governing ALL THEORY stack is
+also explicit: `technical_appendix`, `navigation`, and `provenance` are curated
+from `ledger/documents.yaml`. No inferred edges, no invented nodes: an edge
+exists only when both endpoints resolve, and ADR 0007 records why.
 
 Prefer `workhouse search` over reading these by hand — it resolves a query four
 ways at once and knows about forbidden and repo-coined names. For everything

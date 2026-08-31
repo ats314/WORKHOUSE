@@ -69,6 +69,9 @@ CURATED_TYPES = frozenset(
         "formalizes",  # theorems.yaml
         "promotes",  # theorems.yaml: the T1/T2 check a theorem lifts to T0
         "originates",  # provenance.yaml: the corpus document a value comes from
+        "technical_appendix",  # documents.yaml: governing source-stack role
+        "navigation",  # documents.yaml: governing source-stack role
+        "provenance",  # documents.yaml: governing source-stack role
         "uses",  # a check body reads a registered constant (K.NAME)
         "contains",  # notes.yaml: the archive a note document was inventoried in
         "evidences",  # runs/index.yaml: a pinned run record bears on a ledger item
@@ -257,6 +260,19 @@ def build(
             # have no catalogue record to point at.
             if name.isupper():
                 add(sid, f"CONST:{name}", "code_names", "curated", "ledger/symbols.yaml")
+
+    # The governing ALL THEORY source stack. These relationships are authored
+    # in documents.yaml rather than inferred from filenames: UNIFIED names its
+    # technical appendix, navigation guide, and byte-level provenance record.
+    # The nodes remain T3 citation records; documentary authority never
+    # promotes an individual mathematical claim.
+    for document in claims_mod.load_document_aliases():
+        if document.get("unresolved"):
+            continue
+        src = f"CITE:{document['alias']}"
+        for type_ in ("technical_appendix", "navigation", "provenance"):
+            for target in document.get(type_, []):
+                add(src, f"CITE:{target}", type_, "curated", "ledger/documents.yaml")
 
     # The run register: evidences edges from each pinned run record to the
     # ledger items its entry names. Curated in runs/index.yaml; an edge says

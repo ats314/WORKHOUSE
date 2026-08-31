@@ -17,6 +17,7 @@ record or a ledger field.
 from __future__ import annotations
 
 import json
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -35,6 +36,20 @@ def _clip(text: Any, width: int) -> str:
     return text if len(text) <= width else text[: width - 1] + "…"
 
 
+def _claim_ref(claim: claims_mod.Claim) -> dict[str, Any]:
+    """The source-authored fields needed to inspect one branch candidate."""
+    return {
+        "id": claim.id,
+        "kind": claim.kind,
+        "statement": _clip(claim.statement, 200),
+        "tier": claim.tier,
+        "status": _clip(claim.status, 80),
+        "evidence": claim.evidence or "",
+        "where": claim.where or "",
+        "reproduce": claim.reproduce or "",
+    }
+
+
 def collect_data(
     catalogue: list[claims_mod.Claim] | None = None,
     symbols: list[dict] | None = None,
@@ -46,11 +61,35 @@ def collect_data(
 
     connected = {e.src for e in graph.edges} | {e.dst for e in graph.edges}
     led = ledger_mod.load()
-    sides = {
-        c["id"]: [{"label": s["label"], "value": str(s["value"])} for s in c["sides"]]
-        for c in led.contradictions
-        if c.get("sides")
-    }
+    by_value: dict[str, list[claims_mod.Claim]] = defaultdict(list)
+    for claim in catalogue:
+        if claim.kind == "constant" and claim.value is not None:
+            by_value[str(claim.value)].append(claim)
+    originators: dict[str, set[str]] = defaultdict(set)
+    for edge in graph.edges:
+        if edge.type == "originates":
+            originators[edge.dst].add(edge.src)
+
+    sides: dict[str, list[dict[str, Any]]] = {}
+    for contradiction in led.contradictions:
+        if not contradiction.get("sides"):
+            continue
+        records = []
+        for side in contradiction["sides"]:
+            value = str(side["value"])
+            matches = [_claim_ref(claim) for claim in by_value.get(value, [])]
+            records.append(
+                {
+                    "label": side["label"],
+                    "value": value,
+                    "kind": side.get("kind", ""),
+                    "matches": matches,
+                    "originators": sorted(
+                        {doc for match in matches for doc in originators.get(match["id"], set())}
+                    ),
+                }
+            )
+        sides[contradiction["id"]] = records
     delta = {c["id"]: str(c["delta"]) for c in led.contradictions if c.get("delta") is not None}
     falsifier = {u["id"]: _clip(u["falsifier"], 400) for u in led.unifying_candidates}
 
@@ -67,6 +106,8 @@ def collect_data(
             "evidence": c.evidence or "",
             "value": _clip(c.value, 80) if c.value is not None else None,
             "where": c.where or "",
+            "cites": _clip(c.cites, 300),
+            "detail": _clip(c.detail, 1200),
             "reproduce": c.reproduce or "",
         }
         if c.id in sides:
@@ -97,7 +138,9 @@ def collect_data(
 
     return {
         "nodes": nodes,
-        "edges": [{"s": e.src, "d": e.dst, "t": e.type, "h": e.how} for e in graph.edges],
+        "edges": [
+            {"s": e.src, "d": e.dst, "t": e.type, "h": e.how, "p": e.source} for e in graph.edges
+        ],
     }
 
 

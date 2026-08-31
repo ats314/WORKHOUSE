@@ -1,5 +1,6 @@
 """The prose corpus is evidence: it must be present and must not drift silently."""
 
+import csv
 import hashlib
 import re
 from pathlib import Path
@@ -45,7 +46,7 @@ def _register(document: Path) -> list[str]:
     Numbering is compared across versions, so the item text is returned without
     its leading number: v3's item 14 is v4.3's item 23 with identical text.
     """
-    body = document.read_text()
+    body = document.read_text(encoding="utf-8")
     section = re.search(
         r"^## 14\. Governing contradiction and errata register\n(.*?)^---$",
         body,
@@ -76,7 +77,9 @@ def test_upstream_governance_is_present_and_separate():
 
 def test_v3_is_quarantined_because_upstream_says_so():
     """The promotion is not our judgement: upstream's path index records it."""
-    index = (THEORY / "governance" / "MAN_GOV_all_theory_local_path_index_v4_3.csv").read_text()
+    index = (THEORY / "governance" / "MAN_GOV_all_theory_local_path_index_v4_3.csv").read_text(
+        encoding="utf-8"
+    )
     v3 = [ln for ln in index.splitlines() if "MASTER_THEORY_UNIFIED_2026-08-20_v3.md" in ln]
     assert v3, "upstream index does not mention v3 at all"
     assert all("quarantine_only" in ln for ln in v3), v3
@@ -86,8 +89,10 @@ def test_the_truncated_unified_v2_is_not_the_governing_document():
     """v2 stops mid-structure at §2.5; v4.3 carries the governing register."""
     v2 = THEORY / "superseded" / "MASTER_THEORY_UNIFIED_2026-08-20_v2.md"
     assert v2.exists() and MASTER.exists()
-    assert len(MASTER.read_text().splitlines()) > 5 * len(v2.read_text().splitlines())
-    assert "Governing contradiction and errata register" in MASTER.read_text()
+    assert len(MASTER.read_text(encoding="utf-8").splitlines()) > 5 * len(
+        v2.read_text(encoding="utf-8").splitlines()
+    )
+    assert "Governing contradiction and errata register" in MASTER.read_text(encoding="utf-8")
 
 
 def test_v4_3_register_extends_v3_without_retracting_anything():
@@ -113,12 +118,21 @@ def test_documents_are_non_trivial():
         assert p.stat().st_size > 5000, f"{p.name} looks truncated"
 
 
+def test_detailed_appendix_matches_the_canonical_a02_manifest_row():
+    manifest = THEORY / "GLUEBALL_CANONICAL_SOURCE_MANIFEST_2026-08-20_v4_3.csv"
+    rows = list(csv.DictReader(manifest.read_text(encoding="utf-8").splitlines()))
+    a02 = next(row for row in rows if row["id"] == "A02")
+    appendix = THEORY / "GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md"
+    assert appendix.stat().st_size == int(a02["bytes"])
+    assert hashlib.sha256(appendix.read_bytes()).hexdigest().upper() == a02["sha256"]
+
+
 def test_manifest_matches_contents():
     """SHA-256 manifest, so provenance is checkable the way the corpus demands."""
     manifest = THEORY / "SHA256SUMS"
     assert manifest.exists(), "theory/SHA256SUMS is missing"
     recorded = {}
-    for line in manifest.read_text().splitlines():
+    for line in manifest.read_text(encoding="utf-8").splitlines():
         if line.strip() and not line.startswith("#"):
             digest, name = line.split(maxsplit=1)
             recorded[name.strip()] = digest

@@ -1318,7 +1318,7 @@ R_{\cosh}
 
 Each tends to one under its corresponding isotropic-dispersion hypothesis.
 
-The stored `next14.json` record reports, for \(\beta=5.8941\), \(L=14\), \(N_t=16\), and 2000 configurations,
+The stored `CERT_O4_next14.json` record reports, for \(\beta=5.8941\), \(L=14\), \(N_t=16\), and 2000 configurations,
 
 \[
 aM(T_1^{+-})=1.6897344913\pm0.1206114757,
@@ -1440,7 +1440,7 @@ It does not establish that the historical centered fourth-order kernel is the fi
 | Complete physical momentum-resolved \(SU(3)\) \(O(u^4)\) kernel | Open |
 | All-rank historical centered family | Output-certified; not full cold regeneration |
 | Improved \(\mathcal O_3^{\mathrm{imp}}\) source | Analytic exact series cancellation |
-| `next14.json` ensemble result | Structured numerical evidence; not cold reproducible |
+| `CERT_O4_next14.json` ensemble result | Structured numerical evidence; not cold reproducible |
 | Pentagonal cap hop | Cold-certified, separate model |
 | Current Lean tree verifies these formulas | False; it contains no encoding of this \(O(u^4)\) theorem |
 | Continuum Yang–Mills mass gap | Not established |
