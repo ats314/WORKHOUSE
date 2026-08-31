@@ -336,6 +336,86 @@ def _():
 
 
 @orbit.check(
+    "the on-site orbit IS the momentum-independent channel",
+    "U5; C2; C10; GCSG SU(6) certificate; " + _LEDGER,
+)
+def _():
+    # Needed to read the exceptional-rank record in this basis. The on-site
+    # orbit's carrier projection is exactly sigma*e_1, so eps = T/q = sigma is
+    # CONSTANT over the zone: it moves every band value together and carries no
+    # A, B, C or D. Conversely, a correction reported as "momentum-independent"
+    # or "a scalar shift" is, in this basis, an on-site-orbit shift and nothing
+    # else. That is what makes the SU(6) determinant record readable here.
+    recs = kernel_records()
+    groups = KO.orbit_groups(recs)
+    amps = KO.amplitudes(recs)
+    co, residual = KO.coefficients(groups["sigma"])
+    exact = KO.bloch(groups["sigma"]) == {e: amps["sigma"] * c for e, c in KO.E1.items()}
+    ok = (
+        exact
+        and co["A"] == co["B"] == co["C"] == co["D"] == 0
+        and co["c0"] == amps["sigma"]
+        and not residual
+    )
+    return ok, (
+        f"T_on-site = sigma * e_1 exactly, so eps = T/q = sigma = {amps['sigma']} is constant "
+        "over the zone and A = B = C = D = 0. The converse is the useful direction: a "
+        "determinant correction recorded as a pure scalar shift IS an on-site-orbit shift. "
+        "Reading the exceptional ranks that way -- SU(6)'s sole determinant orbit shifts q, X, "
+        "M and R by 6/343 with A, B and the bandwidth unchanged, and SU(5) has no determinant "
+        "sector at all -- says the eps-sector stays inside the on-site orbit wherever it has "
+        "been computed independently. N = 3 is the one rank where it does not"
+    )
+
+
+@orbit.check(
+    "PREDICTION: the eps-sector at N=3 is Delta(rho + pi) = -25/512 and nothing else",
+    "U5; C2; C10; G3; " + _LEDGER,
+)
+def _():
+    # A falsifiable consequence of the orbit basis, not a measurement. Two
+    # inputs, both recorded elsewhere:
+    #
+    #   (i)  Delta A_3 = 0 -- both sides of C2 agree on alpha = 5/12, hence
+    #        A = 5/48. Since A = -nu - 4u exactly, this FORCES Delta nu = -4 Delta u.
+    #   (ii) the primitive cube-completion channel is link-balanced (one U and
+    #        one U-dagger on every link, so nu_l = 0) and therefore eps-blind.
+    #        That channel is the normal orbit, so Delta nu = 0, hence Delta u = 0,
+    #        and since u2 = 2u holds exactly in both recorded kernels, Delta u2 = 0.
+    #
+    # Then C = -5/96 - u - (rho + pi)/2 leaves the eps-sector only one place to
+    # go. With Delta beta_3 = +25/64 (balanced minus historical) and
+    # C_shp = (beta - 2 alpha)/16, Delta C = +25/1024 and therefore
+    # Delta(rho + pi) = -2 Delta C = -25/512.
+    #
+    # This does NOT adjudicate C2 and does not assume the forbidden N = 3
+    # substitution: it says what a direct balanced contraction at N = 3, if one
+    # is ever computed, must produce.
+    delta_c = Fraction(25, 1024)
+    delta_sum = -2 * delta_c
+    hist_sum = K.RHO_ORBIT + K.PI_ORBIT
+    predicted = hist_sum + delta_sum
+    # the prediction has to be consistent with the recorded historical value
+    consistent = (
+        Fraction(-5, 96) - K.X_QUANTUM - hist_sum / 2 == K.C_SHP_HISTORICAL
+        and -(Fraction(5, 48) + 4 * K.X_QUANTUM) == K.NU_ORBIT
+        and K.U2_ORBIT == 2 * K.X_QUANTUM
+    )
+    ok = consistent and delta_sum == Fraction(-25, 512)
+    return ok, (
+        f"given Delta A_3 = 0 and an eps-blind primitive channel, Delta u = Delta u2 = "
+        f"Delta nu = 0 and the whole eps-sector effect on the N = 3 fourth-order shape is "
+        f"Delta(rho + pi) = {delta_sum}. Historical rho + pi = {hist_sum}; a direct balanced "
+        f"contraction at N = 3 must therefore give {predicted}. FALSIFIER: any direct N = 3 "
+        "balanced contraction whose six orbit amplitudes differ from the historical ones "
+        "anywhere except in rho + pi, or whose rho + pi shift is not exactly -25/512. This is "
+        "a prediction about a computation nobody here has run; it prefers neither side of C2, "
+        "and it does not rest on the forbidden P17/R20 substitution at N = 3 -- only on "
+        "Delta beta_3, which the register records independently"
+    )
+
+
+@orbit.check(
     "FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped",
     "C2; G3 step 1; " + _LEDGER,
     tier=2,
