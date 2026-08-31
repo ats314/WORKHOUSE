@@ -447,3 +447,37 @@ def shared_link_weights(rank: int):
         "Lambda2": (direct - cross) / (2 * direct),
         "Sym2": (direct + cross) / (2 * direct),
     }
+
+
+# ---------------------------------------------------------------------------
+# From a primitive cell completion to a fourth-order shape coefficient
+#
+# C2's cheaper route assembles the disputed C channel by channel from range-1
+# operator structures rather than recomputing the fourth order. This is the
+# bridge it needs: a primitive cell completion IS a range-1 normal hop, so its
+# coefficient converts directly into (A, C) through the shape dictionary that
+# `each range-1 structure has a fixed shape coefficient` verifies.
+#
+# The conversion is two facts, both stated where they are used:
+#   * the hop amplitude is 2*c_prim -- the factor two is the Hermitian +- of
+#     the hop, not a normalisation choice;
+#   * a normal translation g*cos(k_n) contributes A = -g/2 and C = +g/4.
+#
+# Running it on the cube's cap sector is the SELF-TEST: it must return the
+# axial coefficient both sides of C2 already agree on, and it takes no input
+# from either disputed kernel. Only once that passes is the same route worth
+# pointing at the in-plane and rotation channels, which is where the dispute
+# actually lives.
+# ---------------------------------------------------------------------------
+
+
+def shape_from_normal_hop(cell, sector):
+    """``(A, C)`` for the range-1 normal hop a primitive completion generates.
+
+    Returns the two shape coefficients as exact rational functions of ``N``.
+    ``B`` and ``D`` are identically zero for every range-1 structure, which is
+    what the tier collapse looks like from here, so they are not returned.
+    """
+    coefficient, _signed_count, _hist = c_prim(cell, *sector)
+    amplitude = 2 * coefficient  # Hermitian +- of the hop
+    return simplify(-amplitude / 2), simplify(amplitude / 4)

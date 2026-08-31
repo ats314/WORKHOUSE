@@ -86,6 +86,69 @@ contradictions:
       Delta_C*Phi_C term can move the dispersion, so the crosswalk preserves
       bandwidth only if Delta_C vanishes or is absorbed by an exact operator
       identity. This is the finite-order bottleneck of the whole program.
+    balanced_branch_RETRACTED:
+      value: "-13035490122347/550663802582400"
+      decimal: -0.023672320681358752
+      kind: exact-rational
+      status: RETRACTED 2026-08-30, the same day it was recorded
+      retraction: >
+        Recorded as "the eps-free branch, established exactly". It is not a
+        branch of C2 at all. The 25/64 is the gap between BETA_PEN_3 and
+        payloads.b_evaluator() at N = 3 -- and that evaluator at N = 3 returns
+        exactly channel_ledger.beta_formula(3) = P17(9)/(3 R20(9)), which
+        GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md forbids at line ~1511:
+        "The compact beta_N formula is not to be substituted at N=3; use the
+        separate exact SU(3) value." The continuation route to N = 3 is
+        separately closed, D34 carrying (z-9)^3 with Q32(9) nonzero.
+        The arithmetic was never wrong and the relation is real -- it is what
+        DELTA_BETA_3 records, and the pre-existing check "the N=3 continuation
+        shift is exactly 25/64, with two exact corollaries" already stated it
+        correctly, including that whether the shift is derived or defined as a
+        difference is OPEN. What is withdrawn is the promotion: no direct
+        balanced contraction at N = 3 is held in this repository, so
+        C_historical + 25/1024 is not an established value of C_shp and must
+        not be read as one. Kept rather than deleted, per the rule that a
+        refuted claim's record is more useful than its absence.
+      what_the_exceptional_ranks_do_show: >
+        Not a licence for the substitution, but real evidence about the
+        mechanism, all of it already checked here. SU(5): the shipped stage-1
+        scan holds 895,524 candidate support/output pairs with ZERO
+        determinant-or-epsilon sectors. SU(6): the sole determinant orbit
+        shifts the scalar by exactly 6/343 at q, X, M and R while A, B and the
+        bandwidth are unchanged -- re-derived from the shipped certificate,
+        720 permutation terms, 11/11 gates. SU(4): the v0.8 changelog records
+        Delta A_4 = Delta B_4 = 0. So at every exceptional rank where the
+        determinant sector has been computed independently, it does not reach
+        B. N = 3 would be the one rank where it does. That is a pattern worth
+        explaining, not a proof that 25/64 is derived.
+    orbit_reduction: >
+      Established 2026-08-30 (same suite). Clearing the 1/q makes the shape
+      ansatz a linear system over Laurent polynomials in z_j = exp(i k_j), so
+      the coefficients are SOLVED over the whole zone rather than fitted at
+      four points (the transcript's procedure, condition number 45.8). The 189
+      records then carry only six weight magnitudes, one per cubic orbit, and
+      in terms of those amplitudes the shape data is closed form:
+        A = 5/48,  B = 0,  D = 0,  C_shp = -5/96 - u - (rho + pi)/2,
+      with nu = -(5/48 + 4u) forced by A and sigma entering c_0 alone. So C2
+      is a disagreement about three signed numbers. The cold dump satisfies the
+      same six-orbit structure and the same normalized table; relative to the
+      historical kernel its skeleton unit is scaled by 4.1327437 and its rho
+      and pi are OPPOSITE IN SIGN. Six of the eighteen same-plane
+      nearest-neighbour records are the normal orbit, which A pins in both
+      kernels and which therefore cannot disagree freely — refining the
+      "nn same-plane block" of runs/g3_kernel_record_dump_2026-08-28/.
+    sign_flip_is_not_the_whole_story: >
+      Tested and refuted 2026-08-30, so the next reader does not chase it. The
+      two orbits that differ in sign are exactly the two whose only shape
+      effect is C (A = B = D = 0 for both), which looks like a transpose or
+      conjugation convention differing between the pipelines. It is not: their
+      MAGNITUDES also differ, and by three different factors — u by 4.1327437,
+      rho by 10.68866, pi by 1.487657. Enumerating all four sign choices of
+      (rho, pi) at fixed magnitudes reproduces each kernel's own C exactly and
+      nothing else: the historical value needs (rho +, pi -) with historical
+      magnitudes, the v10a.26 value needs (rho -, pi +) with cold magnitudes,
+      and no sign choice on one kernel's magnitudes lands near the other's
+      value. So C2 is a disagreement about three numbers, not one convention.
     blocks: [G3]
 
   - id: C3

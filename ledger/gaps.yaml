@@ -84,6 +84,27 @@ gaps:
           dumped; see the cold-kernel-shares-every-protected-parameter
           check. The comparison therefore cannot be completed from
           recorded evidence and step 2 is the live route.
+
+          SUPERSEDED 2026-08-28 by runs/g3_kernel_record_dump_2026-08-28/:
+          the cold kernel's 189 records were reproduced on this container in
+          12.3 minutes from the pinned v10a.26 script, so a per-record cold
+          kernel does exist and the comparison was completed at four zone
+          points. COMPLETED EXACTLY 2026-08-30, suite "fourth-order kernel
+          orbits": clearing the 1/q makes the shape ansatz a linear system
+          over Laurent polynomials in exp(i k_j), so the historical side is
+          solved over the whole zone in exact rationals rather than fitted.
+          Result — both kernels have the same six weight orbits and the same
+          normalized shape table (A/B/D/C per unit amplitude identical row
+          for row), both satisfy u2 = 2u and nu = -(5/48 + 4u), and the shape
+          data of each is closed form in three signed amplitudes:
+          C_shp = -5/96 - u - (rho + pi)/2. The divergence is the skeleton
+          scale (4.1327437x) and the SIGNS of rho and pi. The prediction
+          this step was written on holds and is refined: the A-carrying
+          sector does contain the divergence, but six of the eighteen
+          same-plane nearest-neighbour records are the normal orbit, which A
+          pins identically in both kernels — so neither side is self-refuting
+          on its own A, and step 1 localizes without adjudicating. Step 2
+          remains the live route.
         what: >
           The historical 189-record kernel decomposes into displacement
           blocks; A = 5/48 pins the entire NORMAL block (81% of C_shp) and
@@ -133,9 +154,23 @@ gaps:
           agreed t3 hopping is its second-order element), so no
           fold-free shortcut exists. What unblocks it: an upstream engine
           revision replacing the pure-Python union-find/canon hot loop in
-          the exact Haar contraction with a compiled core (C or flint) —
-          the measured 50%+ self-time there implies 10-100x, which turns
-          the 30-cluster assembly into hours. Engineering, not physics.
+          the exact Haar contraction with a compiled core (C or flint).
+          MEASURED 2026-08-30 (runs/g3_haar_hotloop_bench_2026-08-30),
+          and the multiplier this entry carried was wrong: the hot loop
+          is 81% of cumulative time, so Amdahl caps a compiled core at
+          5.3x and the built one measures 3.9x — not 10-100x. After the
+          swap fractions.Fraction becomes 56% of what is left; flint.fmpq
+          (already a dependency, 7.7x, exact) takes the total to 7.8x
+          with every value bit-identical. Against this entry's own datum
+          — a 2-face half-history at 1h51m still inside its FIRST Haar
+          Gram — 7.8x is ~14 min per Gram, so the 30-cluster assembly is
+          plausibly days, not hours. Still engineering, but more of it
+          than one hot loop: the flint swap is not a drop-in, because the
+          engine builds its Weingarten inverse-Gram in Fraction at import
+          time. The next bounded increment is moving the whole (sigma,
+          tau) loop into the compiled core. Before spending that, weigh
+          the off-axis channel route below, which is cheaper and does not
+          need the engine at all.
         what: >
           If no recorded v10a.26 structure exists, recompute blind ONLY the
           A-carrying sector (normal nearest-neighbour displacements) through
@@ -150,6 +185,115 @@ gaps:
           (HODGE_v10a26_factor52_comp_script.txt); instrument it to dump
           the 189 records and run both kernels through one block
           decomposition.
+      - step: off-axis channel assembly through workhouse.cellular
+        status: >
+          proposed 2026-08-30, first premise checked. The route: C is
+          assembled channel by channel from range-1 operator structures
+          rather than by recomputing the fourth order, because each
+          structure contributes a FIXED shape coefficient. That
+          dictionary is now a registered check (`each range-1 structure
+          has a fixed shape coefficient; the rotation sign is a
+          convention`): scalar I gives (A,B,C,D) = 0, normal
+          translation gives A = -g/2 and C = +g/4, in-plane translation
+          gives C = -g/4, and every range-1 structure gives B = D = 0
+          identically — so the tier collapse (G14) is simply what range-1
+          looks like. FINDING: the orbital-rotation row is recorded as
+          C = -f/2; the covariant operator gives +f/2, and the raw
+          psi = (conj(d3), -conj(d2), conj(d1)) signs put it outside the
+          shape span altogether. That sector carries ~15% of the disputed
+          gap, so the sign is load-bearing and is NOT picked here.
+
+          SELF-TEST PASSED 2026-08-30, at symbolic N rather than only at
+          N = 3. Composing cellular's primitive cube completion
+          (c_4,prim = -160/(N(N^2-1)^3), S_4 = -20 over 24 histories,
+          derived from Haar moments and the electric convention, reading
+          neither disputed kernel) with the dictionary's normal-hop row
+          gives A_normal(N) = 160/(N(N^2-1)^3) = alpha_N/4 IDENTICALLY in
+          N, hence 5/48 at N = 3 — the agreed A_SHP_3. C_normal =
+          -A_normal/2 falls out of the same composition, so the relation
+          the corpus records as MEASURED on the raw records is now
+          DERIVED. Registered as `SELF-TEST: cellular's cube completion
+          reproduces the agreed A at every rank`; the bridge is
+          cellular.shape_from_normal_hop. The machinery is sound on a
+          channel both sides agree on, which is all a self-test can show.
+          It adjudicates nothing — the two channels that carry the
+          dispute are still to be derived, and the rotation sign with
+          them.
+
+          CORRECTED same day: that self-test asserted A_normal = +alpha_N/4,
+          and the sign was CHOSEN, not derived — it came from taking the hop
+          amplitude as +2 c_prim. Rebuilt in the Bloch basis from the
+          repository's own cube boundary d_3, whose two opposite faces carry
+          OPPOSITE signs, the same channel gives A_normal = -alpha_N/4. What
+          survives the convention is |A_normal| = alpha_N/4 and the ratio
+          C_normal/A_normal = -1/2, and the corpus fixes the overall sign
+          itself by taking |c_4|. The check now asserts only those two.
+
+          STEP ORDER CORRECTED 2026-08-30. This entry's `what` lists in-plane
+          (2) before rotation (3). In-plane is not reachable in this channel
+          at all: c_prim completes a CLOSED cell with r = faces - 2, so a
+          fourth-order completion needs exactly six unit squares, which on
+          the cubic lattice is the unit cube alone — and the unit cube has NO
+          coplanar edge-sharing face pair. The smallest closed cell that
+          carries one is the 1x2x1 box, ten unit faces, r = 8. So the
+          in-plane nearest-neighbour transfer is ORDER EIGHT here, and the
+          fourth-order in-plane record must come from the folded/linked or
+          adjoint terms cellular's own scope note excludes. Registered as
+          `the in-plane transfer is order eight, not four, in the primitive
+          channel`.
+
+          The rotation sector IS reachable, and is now derived. A unit cube
+          offers exactly two fourth-order completions: its 3 opposite pairs
+          (the normal hop, S_4 = -20 over 24 histories) and its 12 adjacent
+          perpendicular pairs, which change the face orientation and give
+          S_4 = -11 over 14 histories, c_4,perp = -88/(N(N^2-1)^3) =
+          -11/192 at N = 3, uniform over all 24 ordered pairs, ratio exactly
+          11/20 to the normal channel at every rank. A fourth-order
+          primitive coefficient the corpus does not record. Registered as
+          `the perpendicular cube sector is a second fourth-order primitive
+          channel, S_4 = -11`.
+
+          It does NOT settle the +-f/2 sign. The first reason given for that
+          was wrong and is corrected here: the channel was called RANGE-2, on
+          displacements reaching +-2 per axis, but that measured the carrier
+          projection psi^dag H psi, which inherits psi's own displacement
+          content (each d_j spans 0 and 1). The OPERATOR has max
+          |displacement| = 1 — range-1, over shells (0,0,0), (0,0,1) and
+          (0,1,1).
+
+          The real reason, and it answers the question this entry left open:
+          it is A DIFFERENT CHANNEL, not the recorded rotation plus a
+          correction. Two independent signs of that. (i) Structure: in the
+          Bloch basis built from the repository's own cube boundary, this
+          channel's entry is H_[(12),(13)] = -conj(d_2) d_3, while the
+          recorded rotation row is +conj(d_n) d_m — minus the conjugate of
+          one another, so different off-diagonal structures, and the recorded
+          C = -f/2 is a statement about the other one. That, not range, is why
+          the carrier projection lies outside the four-shape span.
+          (ii) Census: the channel's 24 records split 6 at (0,0,0), 12 at
+          (0,0,1), 6 at (0,1,1) — spread over three shells, so they sit in no
+          single recorded block (MIXED (0,1,1) is 24 records but all in one
+          shell). The control that makes this census trustworthy is the
+          normal channel, whose 6 records at shell (0,0,1) match the recorded
+          NORMAL (0,0,1) block of 6 exactly.
+
+          What stays open is narrower than before: which channel the recorded
+          ROTATION block (120 records, contributing -0.004080 of C) actually
+          is, given that the cube's perpendicular completion is not it.
+        what: >
+          workhouse.cellular already re-derives the axial channel
+          independently at symbolic N and is T1-checked
+          (`alpha_3 = 4*|c_4^square(3)|`). Extend it to the two channels
+          that carry the dispute, in this order: (1) the normal
+          cube-completion channel as a SELF-TEST against the agreed
+          A = 5/48 — DONE, see the status above; (2) the in-plane
+          nearest-neighbour transfer, two coplanar edge-sharing
+          plaquettes — NOT REACHABLE in this channel, it is order eight,
+          see the status above; (3) the orbital-rotation sector — DERIVED,
+          c_4,perp = -88/(N(N^2-1)^3), but it is range-2 and so does not
+          settle the sign. Engine-free and target-blind by construction,
+          and it attacks the disputed quantity rather than recomputing
+          the whole fourth order.
       - step: sealed scalar sweep (demoted, optional)
         status: priced out
         what: >
@@ -469,12 +613,62 @@ gaps:
       couples the translation sector to the 120-record rotation sector,
       whose shells are individually outside the shape span and cancel only
       as a sum.
+    sharpened_2026_08_30: >
+      The displacement-block form above is not the smallest one. Grouping the
+      189 records by weight magnitude instead of by displacement gives six
+      orbits, and in that basis (suite "fourth-order kernel orbits"):
+
+        D = 0 is ONE identity. Only two orbits carry e_3 — the 132-record
+        skeleton at -6u and the 12-record same-plane (0,1,1) in-plane orbit
+        at +3*u2 — and u2 = 2u exactly. So D = -6u + 3*u2 vanishes for ANY
+        value of u; it is not a numerical cancellation between sectors. The
+        whole content of the e_3 collapse is that one orbit carries exactly
+        twice the generic weight.
+
+        B = 0 has no cancellation in it at all at orbit level. Each orbit's
+        carrier projection is closed form in the elementary symmetric
+        functions of s_j — sigma*e1, nu*(2e1 - e1^2 + 2e2),
+        pi*(4e1 - 2e2), u2*(4e1 - 4e2 + 3e3), rho*(-2e2) and
+        u*(12e1 - 4e1^2 + 12e2 - 6e3), each an exact identity on that
+        orbit's own records — and NOT ONE of the six contains the e1*e2
+        monomial. B is the coefficient of e1*e2, so it is unpopulated
+        rather than cancelled. Five of the six forms follow from the
+        orbit's displacement set in two lines; the rotation one because
+        S_PQ = -eps_P eps_Q rho dbar_{n(Q)} conj(dbar_{n(P)}) exactly, so
+        the carrier kills the phases and leaves -rho sum_{m!=n} s_m s_n.
+        This supersedes the (+1,+1,-2) reading twice over. Inside the
+        skeleton the four B-carrying displacement blocks do cancel, shell
+        by shell, at unit weight: same-plane (0,0,2) at +1 against off-plane (0,0,2) at -1, and
+        same-plane (0,1,1) at +1 against off-plane (0,1,1) at -1. The
+        (+1,+1,-2) above is that pair with the two off-plane blocks summed,
+        and the "couples the translation sector to the 120-record rotation
+        sector" reading is superseded: the coupling is between two
+        displacement blocks of the SAME shell carrying the SAME amplitude,
+        and at orbit level there is nothing to couple.
+
+      Both hold in the cold v10a.26 dump too, with its own u. So the tier
+      collapse is a property of the orbit structure and survives the C2
+      disagreement entirely.
     next: >
-      Sharpest falsifiable step: derive the two integer weight vectors from
-      a projection/selection principle (U3's QPQ candidate is the natural
-      home — the same Feshbach Q-projection should specialize to both this
-      collapse and the pentagonal vanishings, and now it has two concrete
-      integer identities to reproduce, not just "B = D = 0").
+      Largely answered, 2026-08-30. B needs no mechanism: no orbit populates
+      e1*e2. D reduced to the single equality u2 = 2u, and that equality is
+      now explained. Write X = 2 cos k_i, Y = 2 cos k_j, Z = 2 cos k_n for a
+      plane with own axes {i,j} and normal n. Everything the plane sends to
+      itself beyond nearest neighbour is sixteen records — (0,0,2) at u
+      giving (X^2 - 2) + (Y^2 - 2), mixed (0,1,1) at u giving (X+Y)Z, and
+      in-plane (0,1,1) at u2 giving (u2/u) XY — and their sum is
+      u[(X+Y)(X+Y+Z) - 4] IF AND ONLY IF the cross term is 2XY. So u2 = 2u is
+      the condition for the same-plane long-range symbol to be a product
+      rather than an inhomogeneous quadratic, and with the product form D = 0
+      holds separately in the same-plane sector and in the 96-record
+      cross-plane skeleton. Neither vanishing is a cancellation between
+      sectors.
+
+      What is left is one level up: WHY the fourth-order dynamics produces a
+      product there. The factorisation is now a checked identity of the
+      recorded kernel, not a conjecture, so a mechanism has a single concrete
+      target — derive (X+Y)(X+Y+Z) for the same-plane sector. U3's QPQ
+      candidate remains the natural home.
 
   - id: G15
     tier: 3
@@ -508,6 +702,50 @@ gaps:
       survival of the b_2-fold protected level. The corpus's own Monte Carlo
       shows the BARE operator carries <4% (2 sigma) of the physical state, so
       the theorem must live in the smeared basis.
+    closed_at_fixed_spacing_2026_08_30: >
+      The maintainer's three G18 inserts were merged into
+      paper/master_paper_2026-08-30.tex as the section "Infinite volume at
+      fixed lattice spacing", which inputs
+      paper/research_notes/G18_FIXED_SPACING_CARRIER_BRIDGE_INSERT.tex, itself
+      inputting the CMP(1) close-projection/GNS-transport file and the internal
+      BB-dagger sheet-closure file. At ONE FIXED LATTICE SPACING the chain is
+      closed:
+
+        - infinite-volume external Riesz projection, from Theorems 2 and 3 of
+          Yarotsky's quantum-perturbation paper applied to the same three-link
+          cell decomposition the finite-volume island uses (now extracted in
+          the manuscript as Proposition "Periodic three-link cell descent" so
+          the inserts' cross-reference resolves);
+        - exponentially rooted shell dressing;
+        - the fixed-spacing three-component physical band and Wilson-source
+          frame, with a compact carrier-source residue;
+        - CMP(1) closed for the COMPLETE three-component shell, via
+          exact-support symmetry, unweighted coefficient close projection,
+          finite-support shell bridge, coefficient totality and
+          coefficient-to-GNS transport, with uniform nonvanishing of each
+          canonical seed;
+        - the exact fixed-spacing carrier sheet on any momentum patch
+          compactly separated from Gamma, which REMOVES the two hypotheses of
+          the former conditional fixed-k statement: it proves the exact
+          orthonormal-symbol coefficient [u^2] h_u = sigma_2 I + (5/612) BB^+
+          -- note 5/612 is t_3, the shared-link hopping -- and a remainder
+          uniform in momentum on the patch; hence no dark carrier there.
+
+      So the first exclusion in the manuscript's scope paragraph is now about
+      the CONTINUUM, not the thermodynamic limit.
+    still_open: >
+      Three boundaries, each stated by the inserts themselves rather than
+      inferred here. No rank-one separation is claimed AT Gamma, where the
+      cubic T_1 triplet meets. The threshold u_U is existential, inherited
+      from the Yarotsky contraction majorants, and necessarily deteriorates as
+      q_* falls to zero. And the semigroup identity is a restriction
+      statement: for every a_t > 0 the exact Hamiltonian semigroup acts on the
+      subspace as multiplication by exp(-a_t E_car(k,u)), which does NOT
+      identify exp(-a_t H_infinity(u)) with the finite-temporal-spacing
+      isotropic Wilson-action transfer matrix. The anisotropic-time/operator
+      equivalence is a separate open problem and is the same object G19 needs.
+      The inserts also do not identify an isotropic Wilson transfer-matrix
+      particle or a continuum Yang-Mills particle.
     load_bearing: true
     external_sharpening: >
       Schierholz 1988 (Nucl. Phys. B Proc. Suppl. 4, 11-20) measured the same
@@ -518,11 +756,76 @@ gaps:
       small number; the published scaling says the smeared basis is structural,
       not a convenience. See literature/index.yaml, SCHIERHOLZ_1988.
 
+      SHARPENED 2026-08-30, and the exponent recorded above is the wrong one
+      for THIS carrier. A supplied theory-mode session (the carrier-persistence
+      notes, T3, not replayed here) derives the overlap law
+      Z_0(a) ~ |f_d|^2 a^(2d-3) / (2M) for a local lattice source whose
+      lowest-dimension continuum operator has dimension d. Its arithmetic
+      checks and its d = 4 case REPRODUCES Schierholz's measured a^5
+      (2*4-3 = 5), which is what makes it worth recording. But the C-odd
+      carrier's leading continuum operator is d^abc F^a F^b F^c at dimension
+      six, so the exponent that actually applies here is a^(2*6-3) = a^9, not
+      a^5 — the extrapolation quoted there is Z_0 ~ 1.2e-6 at a sqrt(sigma) =
+      0.10 and 2.4e-9 at 0.05. Still a power, so formally survivable, and
+      brutal. The same law makes the case for smearing exactly: at fixed
+      physical radius R, Z_0 = |f_R|^2 R^(2d-3) / (2M) is a-independent. The
+      law itself is asserted rather than checked here; what is checked is the
+      dimension arithmetic and the agreement with the published a^5.
+
   - id: G19
     tier: 3
     state: open
     title: Continuum limit
     detail: "Nothing in the corpus reaches the scaling window; Borel-Pade is consistent, not controlled."
+    sharpened_2026_08_30: >
+      The maintainer's G19 continuum-bridge insert was merged into
+      paper/master_paper_2026-08-30.tex (section "The continuum bridge, and
+      where it is blocked", input from
+      paper/research_notes/G19_CONTINUUM_BRIDGE_INSERT.tex). It does not close
+      G19 and says so. What it changes is the STATUS of the obstruction.
+
+      UNCONDITIONAL. In the Hamiltonian coordinate u = g_H^-4 an
+      asymptotically free trajectory has u(a) -> infinity, while the proved
+      Riesz island requires u < u_*. The hypotheses of the fixed-cutoff
+      theorem and of a continuum trajectory are eventually DISJOINT, so no
+      tail of a continuum trajectory lies in the proved domain, and evaluating
+      the existential constants c_1, c_2 would not change that. This is a
+      theorem about two domains, not a caution about extrapolating between
+      them.
+
+      UNCONDITIONAL. No nonzero finite strong-coupling Taylor truncation
+      yields a finite continuum mass: g_H^2 P(u(a))/a diverges for every
+      nonzero polynomial P.
+
+      UNCONDITIONAL. Atom passage - a uniformly source-visible bottom atom
+      survives vague convergence as a nonzero atom of the limit, with no
+      isolation annulus, spin assignment or Haag-Ruelle hypothesis needed.
+
+      UNCONDITIONAL. Reflection positivity is preserved by the raw
+      deterministic Balaban-form average with reflection-adapted block and
+      path data - centred L^d blocks with odd L, reflection-paired trees and
+      paths, reversed coarse bonds by group inverse.
+
+      REFUTED. The stochastic variant. Equivariance plus one-sided mapping do
+      NOT suffice for a Markov blocking kernel; explicit two-point
+      counterexample with integral of (Theta F) F dnu equal to -1. The
+      sufficient replacement is a reflection factorisation
+      K((Theta' F) G) = (Theta TF)(TG).
+
+      CONDITIONAL. The necessary continuum scaling law for an electric-unit
+      branch, E(u) ~ (M / (c_H Lambda_H)) b_0^-p u^((1+p)/2)
+      exp(-sqrt(u) / (2 b_0)), with SU(3) essential exponential
+      exp(-(8 pi^2 / 11) sqrt u) and (1+p)/2 = 86/121.
+    next: >
+      Named by the insert rather than by this register: a Hamiltonian-Wilson
+      matching package - physical energy prefactor, anisotropy and
+      speed-of-light renormalisation, the g_H-g_W scheme map, and a
+      renormalised spectral measure that can be followed to large u. On a
+      Balaban route it must additionally close the literal lower-corner path
+      convention (the coarse gauge gate P(theta U) = g_theta . theta' P(U)
+      with supp P_c inside Lambda_+) and preserve reflection positivity
+      through every later gauge-fixing and large/small-field operation. Block
+      alignment alone does not prove the gate.
 
   # ------------------------------------------------------------------
   # G20-G23: the analysis-side program (the maintainer's notes archive,
@@ -842,3 +1145,56 @@ unifying_candidates:
       values; ADR 0005 is what happens when a clean mechanism is read off a
       coincidence in this corpus, and the charge-even suite deliberately checks
       the identity without asserting a cause for it.
+  - id: U5
+    statement: >
+      The determinant (epsilon / triality) sector enters the fourth-order band
+      shape through the ON-SITE ORBIT ALONE, at every rank where it has been
+      computed independently, and N = 3 is the sole exception. In the orbit
+      basis of the 189-record kernel the on-site orbit's carrier projection is
+      exactly sigma*e_1, so eps = T/q = sigma is constant over the zone and
+      carries no A, B, C or D — which means a correction recorded as
+      "momentum-independent" or "a pure scalar shift" IS an on-site-orbit
+      shift and nothing else. Read that way the record is uniform: SU(6)'s sole
+      determinant orbit shifts q, X, M and R by exactly 6/343 with A, B and the
+      bandwidth unchanged (an on-site shift); SU(5) ships 895,524 candidate
+      pairs with zero determinant sectors (no shift at all); SU(4) records
+      Delta A_4 = Delta B_4 = 0. Only at N = 3 is Delta beta_3 nonzero, i.e.
+      only there does the sector leave the on-site orbit.
+
+      The quantitative consequence is exact. Delta A_3 = 0 (both sides of C2
+      agree alpha = 5/12) plus the identity A = -nu - 4u forces
+      Delta nu = -4 Delta u; the primitive cube-completion channel is
+      link-balanced, hence eps-blind, and that channel IS the normal orbit, so
+      Delta nu = 0 and therefore Delta u = 0, and Delta u2 = 0 because u2 = 2u
+      holds exactly in both recorded kernels. C = -5/96 - u - (rho + pi)/2 then
+      leaves the sector exactly one place to act, and Delta beta_3 = +25/64
+      gives Delta C = +25/1024 and
+
+          Delta(rho + pi) = -25/512, with u, u2, nu and sigma unchanged.
+
+      Historical rho + pi = -12778990891087/1595026186790400, so a direct
+      balanced contraction at N = 3 must return -45330564458981/797513093395200.
+    supported_by:
+      - 'CHK: the on-site orbit IS the momentum-independent channel'
+      - 'CHK: PREDICTION: the eps-sector at N=3 is Delta(rho + pi) = -25/512 and nothing else'
+      - 'CHK: the SU(6) determinant correction is exactly 6/343 and momentum-independent'
+      - 'CHK: the SU(5) stage-1 scan is shipped: 895,524 pairs, zero determinant sectors'
+      - 'CHK: A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u)'
+      - 'OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08) §4: the primitive channel is link-balanced, hence eps-blind'
+      - 'STATE.md cont. 9: unified N-ality theorem, exact exceptional offsets'
+    falsifier: >
+      A direct balanced contraction at N = 3 whose six orbit amplitudes differ
+      from the historical ones anywhere except in rho + pi, or whose rho + pi
+      shift is not exactly -25/512. Equally: any exceptional rank at which the
+      determinant correction is shown to be momentum-DEPENDENT (it would then
+      not be an on-site shift), or an SU(3) determinant analysis that reaches A
+      rather than C, which would contradict the eps-blindness of the
+      link-balanced primitive channel that the whole chain rests on.
+    status: conjectured
+    note: >
+      This is a prediction about a computation nobody in this repository has
+      run. It prefers neither side of C2 and does NOT rest on the P17/R20
+      substitution at N = 3, which is forbidden and whose use here was
+      retracted on 2026-08-30 — only on Delta beta_3, which the register
+      records independently as DELTA_BETA_3.
+

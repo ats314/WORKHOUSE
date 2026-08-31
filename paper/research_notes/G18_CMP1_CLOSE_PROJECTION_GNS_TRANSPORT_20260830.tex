@@ -1,0 +1,394 @@
+% Publication-ready replacement for the unsupported CMP(1) paragraph in
+% G18_FIXED_SPACING_CARRIER_BRIDGE_INSERT.tex, lines 103--184.
+% This file is input by G18_FIXED_SPACING_CARRIER_BRIDGE_INSERT.tex.
+
+\subsubsection{Coefficient close projection and transport to the physical GNS sector}
+\label{sec:g18-cmp1-complete}
+
+We use the three-outgoing-link cell decomposition and the gap-one
+normalization of Proposition~\ref{prop:periodic-yarotsky-descent}.  If
+$J\Subset\mathbb Z^3$ is a nonempty exact cell support, write
+$\mathcal H'_J$ for the corresponding excited tensor factor and
+$H_{J,0}$ for the restriction of the free cell Hamiltonian.  Thus
+\begin{equation}
+ H_{J,0}\ge |J|\,1_{\mathcal H'_J}.
+ \label{eq:g18-cmp1-cell-gap}
+\end{equation}
+The superscript minus below means both local gauge invariance and odd charge
+conjugation parity.  Define
+\begin{align}
+ \mathcal X_0^-&=
+ \left\{v=(v_J):v_J\in\mathcal H'_J,
+       \ \|v\|_0:=\sum_J\|v_J\|<\infty\right\}^-,
+ \label{eq:g18-cmp1-x0}\\
+ \mathcal X_1^-&=
+ \left\{v\in\mathcal X_0^-:v_J\in\operatorname{Dom}H_{J,0},
+       \ \|v\|_1:=\sum_J\|H_{J,0}v_J\|<\infty\right\}.
+ \label{eq:g18-cmp1-x1}
+\end{align}
+The empty coefficient is absent in the odd sector.  Consequently
+\eqref{eq:g18-cmp1-cell-gap} makes $\|\cdot\|_1$ a norm, and the finite
+coefficient families with entries in $\operatorname{Dom}H_{J,0}$ form a
+core, denoted $\mathcal c_{00}^-$, for
+\begin{equation}
+ D(v_J)_J=(H_{J,0}v_J)_J,
+ \qquad \operatorname{Dom}D=\mathcal X_1^-.
+ \label{eq:g18-cmp1-D}
+\end{equation}
+
+\begin{lemma}[Exact-support symmetry]
+\label{lem:g18-cmp1-exact-support-symmetry}
+The exact-support projections commute with every local gauge
+transformation and with charge conjugation.  Hence $D$, Yarotsky's
+coefficient perturbation $F_u$, the free shell projection $R^-$, and the
+coefficient Riesz projection $\mathcal P_u^-$ preserve
+$\mathcal X_j^-$, $j=0,1$.
+\end{lemma}
+
+\begin{proof}
+Let $p_x=|\Omega_x\rangle\langle\Omega_x|$ and $q_x=1-p_x$ on a grouped
+cell.  In a finite box the exact-support projector is a tensor product of
+$q_x$ for $x\in J$ and $p_x$ for $x\notin J$.  A gauge transformation at a
+vertex acts on incident link factors by left or right regular
+representations.  After the links are regrouped into cells this action still
+factorizes over the cell tensor factors, and every factor fixes the constant
+cell vacuum $\Omega_x$.  It therefore commutes with $p_x$, $q_x$, and every
+exact-support projector.  Charge conjugation is the linkwise pullback by the
+group automorphism $U\mapsto\overline U$; it also factorizes and fixes
+$\Omega_x$, so the same conclusion holds.
+
+ The free electric Hamiltonian and the plaquette interaction commute with
+ these symmetries.  The symmetries fix the product vacuum and preserve the
+ normalization
+ $\langle\widetilde\Omega_\Lambda(u),\Omega_{\Lambda,0}\rangle=1$.
+ Since the interacting ground line is unique in the small-coupling domain,
+ this normalization fixes its representative and makes that representative
+ invariant.  Uniqueness of the finite-volume coefficient expansion then
+ implies that $D$ and $F_u$
+commute with the induced coefficient actions.  Passing to Yarotsky's
+thermodynamic coefficient limits preserves these commutators.  Functional
+calculus for $D$ and the contour definition of $\mathcal P_u^-$ prove the
+last assertion.
+\end{proof}
+
+\begin{lemma}[Unweighted coefficient close projection]
+\label{lem:g18-cmp1-close-projection-complete}
+Let $g=\sup_x\|\widehat\phi_x(u)\|=27|u|$.  There is a function
+$a(g)\to0$ such that
+\begin{equation}
+ \|F_uv\|_0\le a(g)\|v\|_1,
+ \qquad v\in\mathcal X_1^-.
+ \label{eq:g18-cmp1-relative-bound}
+\end{equation}
+ Assume in addition the spectral-enclosure conditions
+ \begin{equation}
+  27|u|<c_1,\qquad
+  \lambda:=27c_2|u|<\frac1{33}.
+  \label{eq:g18-cmp1-enclosure-smallness}
+ \end{equation}
+ On the circle
+ \begin{equation}
+  \gamma_u=\{z:|z-4|=r_u\},
+  \qquad r_u=\frac{1-\lambda}{8},
+  \label{eq:g18-cmp1-dynamic-contour}
+ \end{equation}
+ put
+ \begin{equation}
+  R^-=-\frac1{2\pi i}\oint_{\gamma_u}(D-z)^{-1}\,dz,
+  \qquad
+  \mathcal P_u^-=-\frac1{2\pi i}
+        \oint_{\gamma_u}(D+F_u-z)^{-1}\,dz .
+  \label{eq:g18-cmp1-projections}
+ \end{equation}
+ If $q(g):=35a(g)<1$, then
+\begin{equation}
+ \boxed{\quad
+ \|\mathcal P_u^--R^-\|_{\mathcal X_0^-\to\mathcal X_0^-}
+ \le \kappa(g):=\frac{q(g)}{1-q(g)}.
+ \quad}
+ \label{eq:g18-cmp1-kappa}
+\end{equation}
+In particular, $\kappa(g)\to0$; after decreasing the small-coupling
+interval, $\kappa(g)<1$.
+\end{lemma}
+
+\begin{proof}
+Fix any $0<\rho<1$.  Yarotsky's estimate~(14), for an input of exact
+support $J$, gives
+\[
+ \sum_K\|(F_uv_J)_K\|\rho^{-(d(K,J)+1)}
+ \le C_{14}(\rho)g|J|\|v_J\|.
+\]
+Since the weight on the left is at least $\rho^{-1}$,
+\[
+ \sum_K\|(F_uv_J)_K\|
+ \le \rho C_{14}(\rho)g|J|\|v_J\|
+ \le \rho C_{14}(\rho)g\|H_{J,0}v_J\|.
+\]
+Summing the columns proves~\eqref{eq:g18-cmp1-relative-bound} with
+$a(g)=\rho C_{14}(\rho)g$.  This also proves that $D+F_u$, with domain
+$\mathcal X_1^-$, is closed when $a(g)<1$.
+
+ The retained-shell gaps put $\gamma_u$ in the resolvent set of $D$ and give
+ \[
+  K_0:=\sup_{z\in\gamma_u}\|(D-z)^{-1}\|_{0\to0}
+  \le\frac8{1-\lambda}.
+ \]
+ Moreover,
+ \[
+  D(D-z)^{-1}=1+z(D-z)^{-1},
+  \qquad
+  K_1:=\sup_{z\in\gamma_u}\|D(D-z)^{-1}\|_{0\to0}
+  \le2+\frac{32}{1-\lambda}<35,
+ \]
+ because $|z|\le4+r_u$ on $\gamma_u$.  Therefore
+\[
+ \|F_u(D-z)^{-1}\|_{0\to0}\le a(g)K_1\le q(g).
+\]
+For $q(g)<1$, Yarotsky's Neumann series~(15) converges in
+$\mathcal X_0^-$ and yields
+\[
+ \|(D+F_u-z)^{-1}-(D-z)^{-1}\|_{0\to0}
+ \le K_0\frac{q(g)}{1-q(g)}.
+\]
+ The length of $\gamma_u$ is $2\pi r_u$, and
+ $r_uK_0\le1$.  Contour integration therefore proves
+ \eqref{eq:g18-cmp1-kappa}.
+\end{proof}
+
+\begin{lemma}[Finite-support shell bridge]
+\label{lem:g18-cmp1-finite-support-shell-bridge}
+In the physical charge-odd coefficient space,
+\begin{equation}
+ \operatorname{spec}(D|_{\mathcal X_0^-})\cap(-\infty,5)=\{4\},
+ \qquad
+ \operatorname{Ran}R^-
+ =\overline{\operatorname{span}}^{\,\|\cdot\|_0}
+   \{w_{x,\alpha}:x\in\mathbb Z^3,\ \alpha=1,2,3\}.
+ \label{eq:g18-cmp1-free-shell-span}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $v_J$ be a finite-support gauge-invariant, charge-odd eigen-coefficient
+of rescaled electric energy below $5$.  Choose a periodic side length $L$
+larger than the occupied-edge bounding box and embed the support injectively
+in the $L^3$ torus, extending by the cell vacuum.  No occupied path winds
+  around the torus, so the embedded coefficient belongs to the trivial
+  electric one-form sector.  The retained-shell theorem then forces its energy
+  to be $4$ and its energy-$4$ component to be a linear combination of odd
+  elementary plaquette vectors.  The cell Laplacians have discrete Casimir
+  spectrum, and energy below $5$ bounds the number of occupied cells.  Thus
+  this diagonal direct sum has no additional approximate spectrum below $5$.
+  Finite coefficient families are a core for
+$D$, and spectral truncation in each finite tensor factor followed by
+truncation in $J$ is dense in $\mathcal X_0^-$.  Applying these truncations
+to the spectral projection of $D$ proves
+\eqref{eq:g18-cmp1-free-shell-span}.
+\end{proof}
+
+\begin{lemma}[Coefficient totality]
+\label{lem:g18-cmp1-coefficient-totality-complete}
+Assume $\kappa(g)<1$.  Then
+\begin{equation}
+ \operatorname{Ran}\mathcal P_u^-
+ =\overline{\mathcal P_u^-\operatorname{Ran}R^-}^{\,\|\cdot\|_0}.
+ \label{eq:g18-cmp1-two-projection-totality}
+\end{equation}
+Using the finite-support retained-shell classification,
+\begin{equation}
+ \operatorname{Ran}\mathcal P_u^-
+ =\overline{\operatorname{span}}^{\,\|\cdot\|_0}
+ \{\mathcal P_u^-w_{x,\alpha}:
+ x\in\mathbb Z^3,\ \alpha=1,2,3\}.
+ \label{eq:g18-cmp1-seed-totality}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Write $P=\mathcal P_u^-$, $R=R^-$, and $Q=1-R$.  Both $R$ and $Q$ are
+blockwise orthogonal projections and hence contractions in the direct-sum
+$\ell^1$ norm.  For $v\in\mathcal X_0^-$ set
+\[
+ y_0=Qv,
+ \qquad y_{n+1}=QPy_n.
+\]
+Every $y_n$ lies in $\operatorname{Ran}Q$, and hence
+\begin{equation}
+ \|y_{n+1}\|_0
+ =\|Q(P-R)y_n\|_0
+ \le\kappa(g)\|y_n\|_0.
+ \label{eq:g18-cmp1-geometric-irrelevant}
+\end{equation}
+Idempotence of $P$ gives the exact identity
+\begin{equation}
+ Py_n=P^2y_n=PRPy_n+PQPy_n=PRPy_n+Py_{n+1}.
+ \label{eq:g18-cmp1-iteration-identity}
+\end{equation}
+Consequently, for every $N\ge0$,
+\begin{equation}
+ Pv=PRv+\sum_{n=0}^{N}PRPy_n+Py_{N+1}.
+ \label{eq:g18-cmp1-iteration-finite}
+\end{equation}
+The last term tends to zero by
+\eqref{eq:g18-cmp1-geometric-irrelevant}.  Every preceding term belongs to
+$P\operatorname{Ran}R$, which proves~\eqref{eq:g18-cmp1-two-projection-totality}.
+The reverse inclusion is immediate because $P$ is a projection.
+
+ Lemma~\ref{lem:g18-cmp1-finite-support-shell-bridge} says that
+ $\operatorname{Ran}R^-$ is the $\ell^1$-closed span of the
+ $w_{x,\alpha}$.
+Applying the bounded operator $P$ and using
+\eqref{eq:g18-cmp1-two-projection-totality} proves
+\eqref{eq:g18-cmp1-seed-totality}.  This is the complete version of the
+iteration compressed into equations~(21)--(24) of
+\cite{Yarotsky2004QP}; no one-site nondegeneracy assumption is used.
+\end{proof}
+
+\begin{lemma}[Coefficient-to-GNS transport]
+\label{lem:g18-cmp1-gns-transport-complete}
+ Let $\mathcal H_{u,\mathrm{phys}}^-$ be the closed local gauge-invariant,
+ charge-odd cyclic subspace in the GNS representation of the thermodynamic
+ ground state.  Put
+ \begin{equation}
+  \widehat H_\infty^-(u)=\frac32H_\infty^-(u),
+  \label{eq:g18-cmp1-rescaled-H-infty}
+ \end{equation}
+ and let $P_{F,\infty}^-(u)$ be its shell Riesz projection on
+ $\gamma_u$.  This is the same projection as the shell Riesz projection of
+ $H_\infty^-(u)$, because multiplication of the Hamiltonian and contour by
+ the same positive scalar does not change a spectral projection.
+Then the coefficient map extends to a contraction
+\begin{equation}
+ \Gamma_u:\mathcal X_0^-\longrightarrow
+ \mathcal H_{u,\mathrm{phys}}^-,
+ \qquad
+ \Gamma_uv=\pi_u\!\left(\sum_J\widehat v_J\right)\Omega_u,
+ \label{eq:g18-cmp1-Gamma}
+\end{equation}
+and satisfies
+\begin{equation}
+ P_{F,\infty}^-(u)\Gamma_u
+ =\Gamma_u\mathcal P_u^-.
+ \label{eq:g18-cmp1-riesz-intertwining}
+\end{equation}
+Moreover,
+\begin{equation}
+ \operatorname{Ran}P_{F,\infty}^-(u)
+ =\overline{\operatorname{span}}
+ \{P_{F,\infty}^-(u)
+       \pi_u(\widehat w_{x,\alpha})\Omega_u\}.
+ \label{eq:g18-cmp1-gns-totality}
+\end{equation}
+No injectivity assumption on $\Gamma_u$ is required.
+\end{lemma}
+
+\begin{proof}
+For a finite coefficient family,
+\[
+ \|\Gamma_uv\|
+ \le\sum_J\|\pi_u(\widehat v_J)\Omega_u\|
+ \le\sum_J\|\widehat v_J\|
+ =\sum_J\|v_J\|=\|v\|_0.
+\]
+Thus the series in~\eqref{eq:g18-cmp1-Gamma} converges in operator norm and
+$\Gamma_u$ extends by continuity to $\mathcal X_0^-$.  Exact-support
+symmetry, Lemma~\ref{lem:g18-cmp1-exact-support-symmetry}, puts its range in
+the physical odd sector.
+
+ Yarotsky's equation~(18), in the present gap-one normalization, gives on the
+ finite coefficient core
+ \begin{equation}
+  \widehat H_\infty^-(u)\Gamma_uv=\Gamma_u(D+F_u)v.
+ \label{eq:g18-cmp1-generator-intertwining}
+\end{equation}
+Finite exact-support and local spectral truncations approximate every
+$v\in\mathcal X_1^-$ in the $D$-graph norm.  The relative bound
+\eqref{eq:g18-cmp1-relative-bound}, boundedness of $\Gamma_u$, and closedness
+ of $\widehat H_\infty^-(u)$ therefore extend
+\eqref{eq:g18-cmp1-generator-intertwining} to all of
+ $\mathcal X_1^-$.  If $z$ lies on $\gamma_u$ and $a\in\mathcal X_0^-$,
+apply this equality to
+$v=(D+F_u-z)^{-1}a$ to obtain
+\begin{equation}
+  (\widehat H_\infty^-(u)-z)^{-1}\Gamma_ua
+ =\Gamma_u(D+F_u-z)^{-1}a.
+ \label{eq:g18-cmp1-resolvent-intertwining}
+\end{equation}
+Contour integration proves~\eqref{eq:g18-cmp1-riesz-intertwining}.
+
+ It remains only to justify density in the correct sector.  The paragraph
+ preceding equation~(18) of \cite{Yarotsky2004QP} states that finite linear
+ combinations of creator vectors $\pi_u(\widehat v_J)\Omega_u$ are dense in
+ the GNS Hilbert space.  To restrict this dense set to the physical odd
+ sector, average a finite creator family over
+the compact product of gauge groups at the finitely many vertices incident
+to its support, and then apply $(1-C)/2$.  By
+Lemma~\ref{lem:g18-cmp1-exact-support-symmetry}, this operation neither
+enlarges exact support nor leaves the finite coefficient core.  Since the
+corresponding Hilbert-space average is an orthogonal projection that fixes
+every physical odd vector, the averaged creator families are dense in
+$\mathcal H_{u,\mathrm{phys}}^-$.  Hence
+\[
+ \operatorname{Ran}P_{F,\infty}^-(u)
+ =\overline{P_{F,\infty}^-(u)\Gamma_u\mathcal c_{00}^-}
+ =\overline{\Gamma_u\mathcal P_u^-\mathcal c_{00}^-}.
+\]
+Now apply Lemma~\ref{lem:g18-cmp1-coefficient-totality-complete} and the
+boundedness of $\Gamma_u$ to obtain
+\eqref{eq:g18-cmp1-gns-totality}.
+\end{proof}
+
+\begin{corollary}[Uniform nonvanishing of each canonical seed]
+\label{cor:g18-cmp1-seed-nonzero-complete}
+For all sufficiently small $g$, every vector
+\[
+ \psi_{x,\alpha}
+ =P_{F,\infty}^-(u)\pi_u(\widehat w_{x,\alpha})\Omega_u
+\]
+is nonzero, uniformly in $x$ and $\alpha$.
+\end{corollary}
+
+\begin{proof}
+ The normalized creator has three-cell support $S_s$ and obeys
+ $\widehat w_s^{\,*}\widehat w_s
+ =p_{S_s}:=|\Omega_{S_s,0}\rangle\langle\Omega_{S_s,0}|\otimes I$.
+ Here is the needed local product-vacuum estimate.  In a periodic volume,
+ the product vacuum is a trial state, while the sum of interaction terms is
+ bounded below by $-|\Lambda|g$.  Hence
+ \[
+  E_\Lambda(u)\le |\Lambda|g,
+  \qquad
+  E_\Lambda(u)\ge
+  \sum_{x\in\Lambda}\langle\widehat h_x\rangle_{\Lambda,u}
+       -|\Lambda|g .
+ \]
+ Translation invariance gives
+ $\langle\widehat h_x\rangle_{\Lambda,u}\le2g$.  Since
+ $1-p_x\le\widehat h_x$ and
+ $1-p_{S_s}\le\sum_{x\in S_s}(1-p_x)$, every periodic subsequential limit
+ obeys
+ \[
+  1-\omega_u(p_{S_s})\le2|S_s|g=6g.
+ \]
+ Yarotsky uniqueness identifies that limit with $\omega_u$.
+Since $R^-w_s=w_s$, Lemma~\ref{lem:g18-cmp1-close-projection-complete} and
+the contraction property of $\Gamma_u$ imply
+\begin{align*}
+ \|\psi_s\|
+ &=\|\Gamma_u\mathcal P_u^-w_s\|\\
+ &\ge \|\Gamma_uw_s\|
+       -\|\Gamma_u(\mathcal P_u^--R^-)w_s\|\\
+ &\ge \sqrt{1-6g}-\kappa(g).
+\end{align*}
+The last quantity is positive after decreasing the small-coupling interval.
+\end{proof}
+
+\begin{remark}[Scope]
+\label{rem:g18-cmp1-scope-complete}
+Lemmas~\ref{lem:g18-cmp1-close-projection-complete}--
+\ref{lem:g18-cmp1-gns-transport-complete} close CMP(1) for the complete
+three-component shell at fixed lattice spacing.  They do not identify an
+individual internal dispersion sheet, an isotropic Wilson transfer-matrix
+particle, or a continuum Yang--Mills particle.
+\end{remark}

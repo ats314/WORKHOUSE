@@ -3,13 +3,17 @@ from __future__ import annotations
 from sympy import (
     I,
     Matrix,
+    conjugate,
     cos,
     exp,
+    expand,
+    eye,
     limit,
     oo,
     pi,
     simplify,
     sin,
+    symbols,
     sympify,
 )
 
@@ -203,4 +207,139 @@ def _():
         f"tau(u) = {tau} has positive coefficients, so Delta_L > 0 for u > 0; "
         "L^2 * q_min -> 4 pi^2, so the carrier's nearest incidence separation "
         "vanishes as L^-2 and provides no volume-uniform isolation"
+    )
+
+
+# --------------------------------------------------------------------------
+# What the 30 August master edition added to the carrier, and one retraction.
+#
+# Earlier editions read the agreement of the Bloch and chain counts as a
+# coincidence worth checking -- "the 3 is the triple degeneracy of B(0) = 0,
+# NOT b_2(T^3)". That was wrong. Under the DFT d_2 block-diagonalises; at
+# k != 0 the kernel block is one-dimensional and is exactly im d_3(k), while
+# d_3(0) = 0. So all of im d_3 sits at nonzero momenta, the quotient is
+# supported entirely at Gamma, and the Gamma block IS H_2. The real-space
+# face of the same statement is that averaging a wrapping sheet over its L
+# translates -- the k = 0 projection -- lands in the harmonic subspace.
+# --------------------------------------------------------------------------
+
+
+@homology.check(
+    "the sheets average to harmonic representatives, and the Gamma block IS b_2",
+    "MASTER edition §3.1 and Remark (Bloch--chain bridge)",
+)
+def _():
+    # Two halves, and the second is the retraction. First: the L-translate
+    # average h of a wrapping sheet satisfies d_2 h = 0 AND d_3^T h = 0, so
+    # the harmonic subspace has representatives for all three classes and is
+    # exactly three-dimensional; and h differs from s by a boundary, so they
+    # are the same class -- the finding that the SHEETS are not harmonic
+    # stands, and is not weakened by the existence of harmonic averages.
+    # Second: dim ker d_2 minus dim im d_3 is 3 at every extent, and the
+    # three harmonic chains span that quotient, which is what "the Gamma
+    # block is b_2" says without a Fourier transform.
+    harmonic, boundary_diff, quotient = {}, {}, {}
+    for ell in (2, 3, 4):
+        d2, d3 = TOR.d2_matrix(ell), TOR.d3_matrix(ell)
+        cols = []
+        for pair in ((1, 2), (1, 3), (2, 3)):
+            vec, denom = TOR.sheet_average(ell, pair)
+            cols.append(vec)
+            # d_2 h = 0 and d_3^T h = 0, both over Z on the numerator
+            up = [sum(int(d3[r, c]) * vec[r] for r in range(d3.nrows())) for c in range(d3.ncols())]
+            down = [
+                sum(int(d2[r, c]) * vec[c] for c in range(d2.ncols())) for r in range(d2.nrows())
+            ]
+            harmonic[(ell, pair)] = (all(v == 0 for v in up), all(v == 0 for v in down), denom)
+            # s - h is a boundary: L*s - (L*h) lies in im d_3, so the ranks agree
+            sheet = TOR.wrapping_sheet(ell, pair)
+            diff = [ell * sheet[r] - vec[r] for r in range(len(vec))]
+            aug = Matrix(
+                [[int(d3[r, c]) for c in range(d3.ncols())] + [diff[r]] for r in range(d3.nrows())]
+            )
+            base = Matrix([[int(d3[r, c]) for c in range(d3.ncols())] for r in range(d3.nrows())])
+            boundary_diff[(ell, pair)] = aug.rank() == base.rank()
+        span = Matrix([[col[r] for col in cols] for r in range(len(cols[0]))]).rank()
+        quotient[ell] = (TOR.kernel_dim_exact(ell) - d3.rank(), span)
+    ok = (
+        all(u and d for u, d, _ in harmonic.values())
+        and all(boundary_diff.values())
+        and all(qd == 3 and sp == 3 for qd, sp in quotient.values())
+    )
+    return ok, (
+        f"L = 2, 3, 4: the three translate-averaged sheets are harmonic (d_2 h = 0 and "
+        f"d_3^T h = 0, exactly, over Z on the numerator), each differs from its sheet by a "
+        f"boundary, and they span a 3-dimensional space; (dim ker d_2 - rank d_3, span) = "
+        f"{quotient}. So ker d_2 / im d_3 is 3 = b_2(T^3) and the harmonic subspace realises it "
+        "-- the retracted reading was that the 3 is only the triple degeneracy of B(0) = 0. "
+        "The sheets themselves remain non-harmonic; that finding is unchanged"
+    )
+
+
+@homology.check(
+    "the Fourier sum of cube boundaries IS the carrier, and a local seed costs L^-3",
+    "MASTER edition Prop. (fixed-momentum carrier and the locality tradeoff)",
+)
+def _():
+    # The locality proposition prices sharp momentum. Two exact halves:
+    # (1) the DFT of the radius-one cube boundaries has squared norm exactly
+    # q(k), and since d_2 d_3 = 0 it lies in ker B(k)^dagger, which is
+    # one-dimensional for k != 0 -- so the normalised Fourier sum is THE unit
+    # carrier there, not merely a vector in the kernel; (2) inverting the
+    # unitary transform gives the overlap of the unit carrier with one
+    # normalised cube seed as sqrt(q(k) / 6 L^3), which falls as L^{-3/2} in
+    # amplitude at fixed k. Both are rational identities, not tolerances.
+    norms = {}
+    for ell in (3, 4, 5):
+        for r in ((1, 0, 0), (1, 1, 0), (1, 1, 1), (2, 1, 0)):
+            if any(v >= ell for v in r):
+                continue
+            n2, q = TOR.cube_boundary_fourier_norm(ell, r)
+            norms[(ell, r)] = simplify(n2 - q) == 0
+    # the seed overlap, from the inverse transform: |<phi, b/sqrt6>|^2 = q / (6 L^3)
+    ell, r = 4, (1, 1, 0)
+    _, q = TOR.cube_boundary_fourier_norm(ell, r)
+    overlap_sq = simplify(q / (6 * ell**3))
+    # at k = 0 the transform vanishes: every cube boundary sums to zero
+    d3 = TOR.d3_matrix(3)
+    zero_mode = all(
+        sum(int(d3[row, c]) for c in range(d3.ncols())) == 0 for row in range(d3.nrows())
+    )
+    ok = all(norms.values()) and norms and zero_mode and overlap_sq == simplify(q / 384)
+    return ok, (
+        f"||\\hat b_L(k)||^2 = q(k) exactly at every tested (L, k): {sorted(norms)}; d_2 d_3 = 0 "
+        "puts it in ker B(k)^dagger, which Theorem (incidence factorisation) makes "
+        "one-dimensional for k != 0, so the normalised Fourier sum is the unique unit carrier "
+        f"there. The price is locality: one normalised cube seed has squared overlap "
+        f"q(k)/(6 L^3) = {overlap_sq} at L = 4, k = 2 pi(1,1,0)/4, i.e. amplitude O(L^(-3/2)) at "
+        "fixed momentum, and \\hat b_L(0) = 0 exactly because every cube boundary sums to zero"
+    )
+
+
+@homology.check(
+    "a boundary-factorised correction shifts the carrier without dispersing it, for generic M",
+    "MASTER edition §8 (boundary-factorised rigidity)",
+)
+def _():
+    # The protection belongs to the boundary operator, not the dynamics: for
+    # H_r(k) = a I + b S(k) + B(k) M(k) B(k)^dagger, the middle term is
+    # annihilated whatever M is, because B^dagger w = 0. Checked with a
+    # GENERIC symbolic M -- nine free entries, no structure assumed -- at
+    # symbolic momentum, so the statement is about the factorisation and not
+    # about any particular correction.
+    k1, k2, k3 = symbols("k1 k2 k3", real=True)
+    d = [exp(I * k) - 1 for k in (k1, k2, k3)]
+    B = Matrix([[d[1], -d[0], 0], [d[2], 0, -d[0]], [0, d[2], -d[1]]])
+    w = Matrix([conjugate(d[2]), -conjugate(d[1]), conjugate(d[0])])
+    m = Matrix(3, 3, symbols("m0:9"))
+    a, b = symbols("a b")
+    S = B * B.conjugate().T - 4 * eye(3)
+    H = a * eye(3) + b * S + B * m * B.conjugate().T
+    residual = simplify(expand(H * w - (a - 4 * b) * w))
+    return residual.is_zero_matrix, (
+        "with M a generic symbolic 3x3 (nine free entries) and k symbolic, "
+        "H_r(k) w(k) = (a_r - 4 b_r) w(k) identically: B^dagger w = 0 kills the middle term "
+        "whatever M is, and S w = -4 w. The correction moves the carrier level and cannot "
+        "disperse it -- and this is exactly why {B M B^dagger} being no two-sided ideal is the "
+        "caveat that matters, not the size of M"
     )

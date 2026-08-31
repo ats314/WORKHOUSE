@@ -1,0 +1,398 @@
+% G19 insertion used by the Rev5 manuscript source.
+
+\begin{proposition}[Exact strong/weak-coupling separation]
+\label{prop:g19-axis}
+For $SU(3)$ the Hamiltonian coordinate of this paper is
+$u=g_H^{-4}$.  Put
+\[
+ u_*:=\min\left\{\frac{c_1}{27},\frac{1}{891c_2}\right\},
+\]
+the coupling radius in Theorem~\ref{thm:riesz-island}.  If $a\downarrow0$ is
+any asymptotically-free Hamiltonian trajectory with $g_H(a)\to0$, then
+$u(a)\to\infty$.  In particular, there is $a_0>0$ such that
+$u(a)>u_*$ for $0<a<a_0$.  No tail of a continuum trajectory therefore lies
+in the proved Riesz-island domain.
+\end{proposition}
+
+\begin{proof}
+The function $x\mapsto x^{-4}$ tends to infinity as $x\downarrow0$.
+The eventual inequality is the definition of this limit.
+\end{proof}
+
+This is stronger than a warning about extrapolation: the hypotheses of the
+fixed-cutoff theorem and of the continuum trajectory are eventually disjoint.
+Numerical evaluation of the existential constants $c_1,c_2$ would not change
+that fact.
+
+\begin{conditional}[Necessary continuum scaling of an electric-unit branch]
+\label{cond:g19-scaling}
+Use the universal pure-gauge beta-function coefficients and the standard
+two-loop lattice scaling law~\cite{GrossWilczek1973,Politzer1973,LuscherWeisz1995}.
+Let
+\[
+ b_0=\frac{11N}{48\pi^2},\qquad
+ b_1=\frac{34N^2}{3(16\pi^2)^2},\qquad
+ p=\frac{b_1}{2b_0^2}=\frac{51}{121}.
+\]
+Assume that the Hamiltonian coupling has been matched to an
+asymptotically-free Wilson scheme, including the anisotropy/time
+normalisation, so that for a finite $\Lambda_H>0$
+\begin{equation}\label{eq:g19-asymptotic-scaling}
+ a\Lambda_H=
+ \exp\!\left[-\frac{1}{2b_0g_H(a)^2}\right]
+ \bigl(b_0g_H(a)^2\bigr)^{-p}[1+o(1)].
+\end{equation}
+Assume also that a vacuum-subtracted electric-unit excitation $E(u)$ obeys
+\begin{equation}\label{eq:g19-hamiltonian-normalisation}
+ aM(a)=c_Hg_H(a)^2E(u(a))[1+o(1)],\qquad c_H>0,
+\end{equation}
+and $M(a)\to M\in(0,\infty)$.  With $u=g_H^{-4}$, necessarily
+\begin{equation}\label{eq:g19-necessary-law}
+ E(u(a))=
+ \frac{M}{c_H\Lambda_H}b_0^{-p}
+ u(a)^{(1+p)/2}
+ \exp\!\left[-\frac{\sqrt{u(a)}}{2b_0}\right][1+o(1)].
+\end{equation}
+For $SU(3)$ the essential exponential is
+$\exp[-(8\pi^2/11)\sqrt u]$ and $(1+p)/2=86/121$.
+\end{conditional}
+
+The Hamer crosswalk printed earlier gives
+$aM_{\rm phys}=(g^2/2)M_A(x)$ and
+$E(u)=M_A(2u)/2$.  Hence $x=2u$ and $g=g_H$ would fix $c_H=1$,
+not $1/2$: the half is already present in $E=M_A/2$.  We leave $c_H$
+explicit because the upstream hostile audit still records the operator
+normalisation $H=W/2$, $u=x/2$ as an asserted bridge and because the
+Hamiltonian--Wilson anisotropy/time map needed at weak coupling has not been
+derived.  Proving that map would set $c_H=1$ in the present convention.
+
+\begin{proof}
+Set $x=g_H^{-2}=\sqrt u$.  Equation
+\eqref{eq:g19-asymptotic-scaling} gives
+$a=\Lambda_H^{-1}e^{-x/(2b_0)}(x/b_0)^p[1+o(1)]$, while
+\eqref{eq:g19-hamiltonian-normalisation} gives
+$E=aMx/c_H[1+o(1)]$.  Substitution proves
+\eqref{eq:g19-necessary-law}.
+\end{proof}
+
+\begin{corollary}[Finite Taylor data cannot supply the continuum mass]
+\label{cor:g19-polynomial-obstruction}
+Under the matching assumptions of Conditional result
+\ref{cond:g19-scaling}, substituting any nonzero polynomial $P(u)$ for
+$E(u)$ makes
+\[
+ \left|\frac{c_Hg_H(a)^2P(u(a))}{a}\right|\longrightarrow\infty.
+\]
+Thus no nonzero finite strong-coupling Taylor truncation yields a finite
+continuum mass.
+\end{corollary}
+
+\begin{proof}
+If $P$ has degree $d$ and leading coefficient $q_d\ne0$, then with
+$x=\sqrt u$ the expression is
+\[
+ c_H\Lambda_Hq_db_0^p
+ e^{x/(2b_0)}x^{2d-1-p}[1+o(1)].
+\]
+Its absolute value diverges because the exponential dominates every real
+power.  The conclusion is about finite truncations, not about a
+nonperturbatively continued branch.
+\end{proof}
+
+\begin{conditional}[Bare absolute-weight power counting]
+\label{cond:g19-bare-residue}
+Work first in a periodic box of fixed physical volume and let
+\[
+ \widetilde O_{a,n}=L(a)^{-3/2}\sum_x
+       \operatorname{ImTr}U_{p_n(x)}
+\]
+be the volume-normalized zero-momentum source made from plaquettes normal to
+direction $n$.  Suppose a continuum operator matching exists in the form
+\begin{equation}
+ \operatorname{ImTr}U_{p_n(x)}
+ =a^d Z_d(a)\mathcal O_n(x)+o(a^dZ_d(a))
+ \label{eq:g19-local-source-matching}
+\end{equation}
+in matrix elements against a fixed normalized state, and suppose the
+corresponding continuum matrix element is finite.  Then
+\begin{equation}
+ \left|\langle\Psi,\widetilde O_{a,n}\Omega\rangle\right|^2
+ =O\!\left(a^{2d-3}|Z_d(a)|^2\right).
+ \label{eq:g19-overlap-power}
+\end{equation}
+For the charge-odd plaquette source, tracelessness and
+\begin{equation}
+ \operatorname{ImTr}e^{iX}
+ =-\frac16\operatorname{Tr}X^3+O(\|X\|^5)
+ \label{eq:g19-imtr-expansion}
+\end{equation}
+give $d=6$ and
+$\mathcal O_n\propto d^{abc}B_n^aB_n^bB_n^c$.  Thus this state's absolute
+spectral-atom weight for the unrenormalized, volume-normalized source has the
+power $a^9|Z_6(a)|^2$.  If $Z_6$ contains only the usual logarithmic matching
+factors, that absolute weight vanishes as $a\downarrow0$.
+\end{conditional}
+
+\begin{proof}
+At fixed physical volume, $L(a)^3\asymp a^{-3}$.  Replacing the lattice sum
+by its Riemann sum in~\eqref{eq:g19-local-source-matching} gives
+\[
+ L(a)^{-3/2}\sum_x a^dZ_d(a)\mathcal O_n(x)
+ =a^{d-3/2}Z_d(a),
+   \frac1{\sqrt{V}}\int_V\mathcal O_n(y)\,d^3y+o(a^{d-3/2}Z_d(a)).
+\]
+Squaring proves~\eqref{eq:g19-overlap-power}.  For a plaquette,
+$X=a^2g_HF_{ij}+O(a^3)$; the linear term in
+$\operatorname{Tr}e^{iX}$ vanishes and the first imaginary term is cubic,
+which proves~\eqref{eq:g19-imtr-expansion} and $d=6$.
+\end{proof}
+
+This conditional result is an absolute-weight power count for the
+volume-normalized operator $\widetilde O_{a,n}$ above; it is not a
+statement about the Hilbert-normalized spectral fraction.  At fixed physical
+Euclidean time the same overall operator normalization multiplies the bottom
+atom and the full correlator, so it cancels from their ratio.  Consequently
+the factor $a^9|Z_6(a)|^2$ alone proves neither collapse nor survival of a
+normalized residue.  Smearing over a radius fixed in physical units changes
+the operator and its matching factors; a uniform lower bound for the
+renormalized source fraction still requires independent spectral-measure and
+matching control.  Moreover, the three diagonal tensors
+$d^{abc}B_n^aB_n^bB_n^c$ transform as $T_1$ under the cubic group but belong
+to a symmetric rank-three continuum tensor; the label $T_1^{+-}$ alone does
+not distinguish continuum spin one from spin three.  Auxiliary
+$A_2^{+-}$ and $T_2^{+-}$ operators are required for that degeneracy test.
+This is the standard cubic-subduction partner method used in continuum-spin
+assignments~\cite{MorningstarPeardon1999,AthenodorouTeper2020}.
+
+\begin{proposition}[Passage of a source-visible spectral atom]
+\label{prop:g19-atom-passage}
+Let $\mu_n$ be positive locally finite Borel measures on $[0,\infty)$,
+and suppose
+\[
+ M_n=\inf\operatorname{supp}\mu_n\in[m_-,m_+],
+ \qquad \mu_n(\{M_n\})\ge z_*>0 .
+\]
+Assume that the source spectral measures converge vaguely,
+$\mu_n\Rightarrow\mu$.  After passage to any subsequence on which
+$M_n\to M$, one has
+\begin{equation}
+ \operatorname{supp}\mu\subset[M,\infty),
+ \qquad \mu(\{M\})\ge z_* .
+ \label{eq:g19-atom-passage}
+\end{equation}
+Thus a uniformly source-visible bottom atom survives as a nonzero atom of
+the limiting spectral measure; no isolation annulus, spin assignment, or
+Haag--Ruelle hypothesis is needed for this weaker conclusion.
+\end{proposition}
+
+\begin{proof}
+Compactness of $[m_-,m_+]$ supplies the stated subsequence.  If
+$K\Subset[0,M)$, then $K\cap\operatorname{supp}\mu_n=\varnothing$ for all
+sufficiently large $n$, and vague convergence gives $\mu(K)=0$.  Hence the
+limiting support is contained in $[M,\infty)$.
+
+For $\varepsilon>0$, choose $f_\varepsilon\in C_c([0,\infty))$ with
+$0\le f_\varepsilon\le1$, equal to one on
+$[M-\varepsilon/2,M+\varepsilon/2]\cap[0,\infty)$ and supported in
+$[M-\varepsilon,M+\varepsilon]\cap[0,\infty)$.  Eventually
+$f_\varepsilon(M_n)=1$, so positivity and vague convergence give
+\[
+ \int f_\varepsilon\,d\mu
+ =\lim_n\int f_\varepsilon\,d\mu_n\ge z_* .
+\]
+Consequently
+$\mu([M-\varepsilon,M+\varepsilon]\cap[0,\infty))\ge z_*$.  Continuity
+from above as $\varepsilon\downarrow0$ proves
+$\mu(\{M\})\ge z_*$.
+\end{proof}
+
+For a positive transfer Hamiltonian and a charge-odd source, write
+\[
+ C_n(t)=\int e^{-tE}\,d\mu_n(E),\qquad
+ Z_n=\mu_n(\{M_n\}).
+\]
+Osterwalder--Schrader convergence~\cite{OsterwalderSeiler1978} strong enough
+to imply vague convergence
+of these source measures therefore turns a uniform lower bound on $Z_n$
+and a two-sided physical bound on $M_n$ into the nonzero limiting atom in
+Proposition~\ref{prop:g19-atom-passage}.  This is an exact reduction, not a
+proof of either uniform bound or of the required OS convergence.
+
+\begin{lemma}[What a finite-time correlator can certify]
+\label{lem:g19-residue-bound}
+Let a finite positive measure have the form
+\[
+ \mu=Z\delta_M+\nu,
+ \qquad \operatorname{supp}\nu\subset[M+\Delta,\infty),
+ \qquad \Delta>0,
+\]
+and put $C(t)=\int e^{-tE}\,d\mu(E)$ and $F(t)=e^{Mt}C(t)$.  Then
+\begin{equation}
+ Z\le F(t),
+ \qquad
+ Z\ge
+ \frac{F(t)-e^{-\Delta t}C(0)}{1-e^{-\Delta t}} .
+ \label{eq:g19-residue-bound}
+\end{equation}
+The second inequality may be replaced by zero when its right-hand side is
+negative.
+\end{lemma}
+
+\begin{proof}
+Positivity gives $F(t)\ge Z$.  The spectral gap gives
+\[
+ F(t)
+ =Z+\int e^{-t(E-M)}\,d\nu(E)
+ \le Z+e^{-\Delta t}\bigl(C(0)-Z\bigr),
+\]
+and rearrangement proves the lower bound.
+\end{proof}
+
+Without a gap above the atom, every finite-$t$ value of $F(t)$ is only an
+upper bound on $Z$; an absolutely continuous threshold can imitate a
+mass edge at finite time while having $Z=0$.  Lemma
+\ref{lem:g19-residue-bound} therefore explains exactly where a uniform
+external gap can enter a nonperturbative residue proof, while
+Proposition~\ref{prop:g19-atom-passage} shows that isolation is not part of
+the final atom-passage statement itself.
+
+\begin{proposition}[Conditional OS gap passage]
+\label{prop:g19-mosco}
+Let $q_n$ be nonnegative closed forms of physical transfer Hamiltonians
+$H_n$, with vacuum projections $P_n$, after isometric embedding in a common
+Hilbert space.  Suppose $q_n$ Mosco-converges to the form $q$ of an
+OS-reconstructed Hamiltonian $H$, $P_n\to P$ strongly,
+$\operatorname{ran}P=\ker H$, and for one $m>0$ independent of $n$,
+\[
+ q_n[\psi]\ge m\lVert(1-P_n)\psi\rVert^2
+ \quad(\psi\in D(q_n)).
+\]
+Then
+\[
+ q[\psi]\ge m\lVert(1-P)\psi\rVert^2,
+ \qquad
+ \operatorname{spec}(H)\subset\{0\}\cup[m,\infty).
+\]
+\end{proposition}
+
+\begin{proof}
+For $\psi\in D(q)$ choose a Mosco recovery sequence $\psi_n\to\psi$.
+The recovery and liminf properties give $q_n[\psi_n]\to q[\psi]$.
+Strong convergence of the projections gives
+$(1-P_n)\psi_n\to(1-P)\psi$.  Passing to the limit proves the form bound;
+the spectral inclusion follows from the spectral theorem.
+\end{proof}
+
+\begin{proposition}[Deterministic reflection-positive pushforward]
+\label{prop:g19-rp-pushforward}
+Let $(X,\mu,\theta;\mathcal A_+)$ be a reflected probability space with
+\[
+ (\Theta F)(U)=\overline{F(\theta U)},\qquad
+ \int_X(\Theta F)F\,d\mu\ge0\quad(F\in\mathcal A_+).
+\]
+Let $(X',\theta';\mathcal A'_+)$ be a coarse reflected configuration space,
+and let $P:X\to X'$ be measurable.  If
+\begin{equation}
+ P\theta=\theta'P\quad\mu\text{-a.e.},
+ \qquad P^*\mathcal A'_+\subset\mathcal A_+,
+ \label{eq:g19-rp-map}
+\end{equation}
+then the pushforward $P_\#\mu$ is reflection positive on
+$\mathcal A'_+$.  On the gauge-invariant algebra the first equality may hold
+only modulo a coarse gauge transformation.
+\end{proposition}
+
+\begin{proof}
+For $F'\in\mathcal A'_+$ put $F=F'\circ P$.  Then
+\[
+ \int_{X'}(\Theta'F')F'\,d(P_\#\mu)
+ =\int_X\overline{F'(\theta'P(U))}F'(P(U))\,d\mu(U)
+ =\int_X(\Theta F)F\,d\mu\ge0.
+\]
+If equivariance holds modulo a coarse gauge transformation, gauge invariance
+of $F'$ gives the same middle equality.
+\end{proof}
+
+\begin{corollary}[Reflection-adapted Balaban-form blocking]
+\label{cor:g19-balaban-rp}
+Let the Wilson measure live on a periodic lattice of even temporal extent and
+be reflection positive on the gauge-invariant positive-time algebra.  Let an
+odd block factor $L$ divide that extent.  Use centered $L^d$ blocks, put the
+reflection plane between two adjacent layers of block centres, and choose the
+reference trees and Balaban paths in reflection pairs, with reversed coarse
+bonds defined by group inverse.  Then the raw deterministic Balaban-form
+average of Eq.~(15) in Ref.~\cite{Balaban1985Averaging} pushes the Wilson
+measure to a reflection-positive coarse measure.
+\end{corollary}
+
+\begin{proof}
+Choose paths so that
+\[
+ \theta\Gamma_{c,x}=\Gamma_{\theta'c,\theta x},
+ \qquad \Gamma_{c^{-1},x'}=\Gamma_{c,x}^{-1}.
+\]
+Holonomy is functorial under reflection, while logarithm and exponential
+commute with unitary conjugation.  Reindexing the equal-weight average by
+$x\mapsto\theta x$ proves $P(\theta U)=\theta'P(U)$ off the principal-log
+branch set, which is Haar-null; Balaban's Eq.~(11) supplies gauge covariance.
+For a positive coarse bond, both endpoint blocks lie wholly in the fine
+positive half.  The locality statement following Eq.~(43) of
+Ref.~\cite{Balaban1985Averaging} therefore gives
+$P^*\mathcal A'_+\subset\mathcal A_+$.  Proposition
+\ref{prop:g19-rp-pushforward} applies, using Wilson reflection positivity from
+Ref.~\cite{OsterwalderSeiler1978}.
+\end{proof}
+
+The corollary proves preservation for the raw deterministic average with
+reflection-adapted block and path data.  It does not cover Balaban's literal
+lower-corner convention, field-dependent gauge fixing, an asymmetric
+large/small-field partition, a softened stochastic constraint, or a complete
+multistep effective action.  For the literal convention the finite-volume
+geometry gate is now exactly
+\begin{equation}
+ P_{\rm CMP98}(\theta U)
+ =g_\theta(U)\cdot\theta'P_{\rm CMP98}(U),
+ \qquad
+ \operatorname{supp}P_c\subset\Lambda_+
+ \quad(c\in E'_+),
+ \label{eq:g19-balaban-gate}
+\end{equation}
+where $g_\theta$ is the coarse gauge change induced by moving the reflected
+upper-corner basepoint back to the chosen lower corner.  Block alignment by
+itself does not prove Eq.~\eqref{eq:g19-balaban-gate}.
+
+\begin{remark}[Equivariant Markov blocking is insufficient]
+\label{rem:g19-markov-counterexample}
+Let the fine space be one point.  On the coarse space
+$X'=\{(s_-,s_+):s_\pm=\pm1\}$ with reflection
+$(s_-,s_+)\mapsto(s_+,s_-)$, take the reflection-invariant law
+\[
+ \nu=\tfrac12\delta_{(+1,-1)}+\tfrac12\delta_{(-1,+1)}.
+\]
+The resulting Markov kernel is reflection equivariant and maps every
+positive-time observable to a fine constant.  Nevertheless, for
+$F(s_-,s_+)=s_+$,
+\[
+ \int(\Theta'F)F\,d\nu=\mathbb E_\nu[s_-s_+]=-1.
+\]
+Thus equivariance and one-sided mapping do not suffice for a stochastic
+kernel.  A sufficient replacement is a reflection factorisation: there is a
+one-sided $T:\mathcal A'_+\to\mathcal A_+$ such that
+\[
+ K\bigl((\Theta'F)G\bigr)=(\Theta TF)(TG)
+ \qquad(F,G\in\mathcal A'_+).
+\]
+\end{remark}
+
+The hypotheses of Proposition~\ref{prop:g19-mosco} are not supplied here.
+Theorem~\ref{thm:riesz-island} controls a finite-volume cluster in a
+fixed-cutoff small-$u$ domain, not the whole physical transfer Hamiltonian
+along $a\downarrow0$.  The separate local weak-well expansion in the upstream
+corpus also has no proved operator identity relating its $\beta_{\rm loc}$ to
+$u$.  The exact next G19 object is therefore a Hamiltonian--Wilson matching
+package: the physical energy prefactor, anisotropy/speed-of-light
+renormalisation, $g_H$--$g_W$ scheme map, and a renormalised spectral measure
+that can be followed to large $u$.  On a Balaban route this package must also
+close Eq.~\eqref{eq:g19-balaban-gate} for the literal path convention and
+preserve reflection positivity through every later gauge-fixing and
+large/small-field operation.

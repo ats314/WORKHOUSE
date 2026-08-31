@@ -93,8 +93,14 @@ def test_g3_rewrite_keeps_the_protocol_and_the_traps():
         "block-structure comparison",
         "targeted kernel-bearing recomputation",
         "independent cross-amplitude computation",
+        # Added 2026-08-30. The cross-amplitude step measured its own blocker
+        # and found the register's 10-100x mis-attributed (3.9x, Amdahl-capped
+        # at 5.3x); this step is the cheaper route that does not need the
+        # engine at all, and it sits AFTER the measured one so the record
+        # still reads in the order the work happened.
+        "off-axis channel assembly through workhouse.cellular",
         "sealed scalar sweep (demoted, optional)",
-    ], "the rewritten route's steps: the executed pair, the live one, the demoted sweep"
+    ], "G3's steps: the executed pair, the measured one, the cheaper route, the demoted sweep"
     assert "inventory_trap" in g3, "the 3895-vs-3850 inventory warning must travel with G3"
 
 
@@ -175,3 +181,34 @@ def test_the_nine_items_v4_3_added_are_present():
         "Pentagonal Hamiltonian firewall",
         "Pentagonal fifth-order scope",
     }
+
+
+def test_no_ledger_file_has_a_duplicate_mapping_key():
+    """yaml.safe_load keeps the LAST of two identical keys, and says nothing.
+
+    Written after exactly that: an insertion landed between a step's ``status``
+    and its ``what``, leaving one step with two ``what`` keys and the step above
+    it with none. Every test still passed, ``workhouse verify`` still passed,
+    and the register silently carried the wrong prose under the right heading —
+    which is the failure mode this whole repository exists to make impossible.
+    A loader that raises on duplicates costs nothing and closes it.
+    """
+    import yaml
+
+    class StrictLoader(yaml.SafeLoader):
+        pass
+
+    def no_duplicates(loader, node, deep=False):
+        seen = set()
+        for key_node, _value in node.value:
+            key = loader.construct_object(key_node, deep=deep)
+            assert key not in seen, f"duplicate key {key!r} at {key_node.start_mark}"
+            seen.add(key)
+        return yaml.SafeLoader.construct_mapping(loader, node, deep)
+
+    StrictLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, no_duplicates)
+    from pathlib import Path
+
+    ledger_dir = Path(__file__).resolve().parents[1] / "ledger"
+    for path in sorted(ledger_dir.glob("*.yaml")):
+        yaml.load(path.read_text(encoding="utf-8"), Loader=StrictLoader)
