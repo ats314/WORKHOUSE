@@ -18,6 +18,7 @@ from fractions import Fraction
 
 from .. import constants as K
 from .. import kernel_orbits as KO
+from ..channel_ledger import beta_formula
 from ..payloads import _eval_fraction as _eval
 from ..payloads import b_evaluator, kernel_constants, kernel_records
 from ._core import _suite
@@ -281,33 +282,56 @@ def _():
 
 
 @orbit.check(
-    "the balanced branch is exact: B_3 - beta_historical = 25/64, so Delta C = 25/1024",
+    "RETRACTED: B_3 - beta_historical = 25/64 is a forbidden substitution, not an exact branch",
     "C2; walled-Brauer eps-sector; " + _LEDGER,
 )
 def _():
-    # Both quantities are computed here, from different artifacts: beta from
-    # the raw 189 records, B_3 by evaluating the pinned structured B_N
-    # expression at N = 3. Their difference is a two-digit rational. Since
-    # C_shp = (beta - 2 alpha)/16 and the balanced kernel shares alpha = 5/12,
-    # the balanced branch of C2 is an exact rational, not the float the
-    # register carries for it. Recording both sides more precisely; this
-    # prefers neither.
+    # RETRACTED 2026-08-30, same day it was added. The check as written said
+    # "the balanced branch is exact" and the value was registered as
+    # K.C_SHP_CONTINUATION_SHIFTED, as though B_3^bal were an established quantity.
+    #
+    # It is not. payloads.b_evaluator() at N = 3 returns exactly
+    # channel_ledger.beta_formula(3) = P17(9)/(3 R20(9)), and
+    # GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md says at line ~1511:
+    # "The compact beta_N formula is not to be substituted at N=3; use the
+    # separate exact SU(3) value." So the 25/64 is the gap between the
+    # historical value and a substitution the corpus explicitly forbids, at a
+    # rank where the continuation route is separately known to be closed (D34
+    # carries (z-9)^3, a pole of order exactly 3 -- see the "at N = 6" check in
+    # the off-axis channel ledger suite).
+    #
+    # The arithmetic was never wrong and is kept, because the relation is real
+    # and is what the register's DELTA_BETA_3 records. What is withdrawn is the
+    # word "exact branch" and any reading of C_historical + 25/1024 as an
+    # established balanced value of C_shp. The pre-existing check "the N=3
+    # continuation shift is exactly 25/64, with two exact corollaries" already
+    # stated this correctly, including that whether the shift is derived or
+    # defined as a difference is open; this check duplicated it with a stronger
+    # claim and no additional evidence.
     beta = kernel_constants()["beta"]
     b3 = _eval(b_evaluator(), 3)
     delta_beta = b3 - beta
-    c_hist = kernel_constants()["C_shp"]
-    c_bal = c_hist + delta_beta / 16
+    substitution = beta_formula(3)
     ok = (
         delta_beta == Fraction(25, 64)
-        and c_bal - c_hist == Fraction(25, 1024)
-        and c_bal == K.C_SHP_BALANCED
-        and c_hist == K.C_SHP_HISTORICAL
+        and b3 == substitution  # the whole point: B_3 IS the forbidden substitution
+        and beta == K.BETA_PEN_3
+        # the withdrawn value is kept and read here, so the retraction is
+        # anchored to the number it withdraws rather than floating free
+        and K.C_SHP_HISTORICAL + Fraction(25, 1024) == K.C_SHP_CONTINUATION_SHIFTED
     )
     return ok, (
-        f"B_3 = {b3} against beta = {beta} from the raw records: the difference is exactly "
-        f"{delta_beta}, denominator 64 where the two inputs have denominators 3.4e13 and "
-        f"2.8e14. Through C_shp = (beta - 2 alpha)/16 with alpha = 5/12 shared, "
-        f"C_balanced = {c_bal} = C_historical + 25/1024 exactly"
+        f"FINDING: b_evaluator(3) = {b3} is bit-identical to beta_formula(3) = P17(9)/(3 R20(9)), "
+        "the substitution GLUEBALL_DETAILED_FORMULA v3.1 forbids at N = 3. Its gap to the "
+        f"historical beta = {beta} is exactly 25/64, which is the register's DELTA_BETA_3 and "
+        "is a true relation among recorded quantities. It is NOT an exact balanced branch of "
+        "C2, and C_historical + 25/1024 is NOT an established value of C_shp: no direct "
+        "balanced contraction at N = 3 is held in this repository, and the continuation route "
+        "to N = 3 is closed by a third-order pole. What the exceptional ranks do show is that "
+        "the determinant sector does not reach B elsewhere -- SU(5) ships 895,524 pairs with "
+        "zero determinant sectors, and SU(6)'s sole determinant orbit shifts the scalar by "
+        "6/343 leaving A, B and the bandwidth unchanged -- which is evidence about the "
+        "mechanism, not a licence for the N = 3 substitution"
     )
 
 

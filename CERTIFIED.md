@@ -276,31 +276,31 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **fourth-order kernel orbits**
 
 - `A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u)`
-  - src/workhouse/invariants/orbits.py:134 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:135 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u)'`
 - `B = 0 is unpopulated, not cancelled`
-  - src/workhouse/invariants/orbits.py:240 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:241 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'B = 0 is unpopulated, not cancelled'`
 - `C_shp = -5/96 - u - (rho + pi)/2, exactly`
-  - src/workhouse/invariants/orbits.py:146 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:147 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'C_shp = -5/96 - u - (rho + pi)/2, exactly'`
+- `RETRACTED: B_3 - beta_historical = 25/64 is a forbidden substitution, not an exact branch`
+  - src/workhouse/invariants/orbits.py:284 · C2; walled-Brauer eps-sector; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'RETRACTED: B_3 - beta_historical = 25/64 is a forbidden substitution, not an exact branch'`
 - `every orbit's carrier projection is closed form in e1, e2, e3`
-  - src/workhouse/invariants/orbits.py:96 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:97 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'every orbit'"'"'s carrier projection is closed form in e1, e2, e3'`
 - `the 189 records carry exactly six weight magnitudes`
-  - src/workhouse/invariants/orbits.py:61 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:62 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the 189 records carry exactly six weight magnitudes'`
-- `the balanced branch is exact: B_3 - beta_historical = 25/64, so Delta C = 25/1024`
-  - src/workhouse/invariants/orbits.py:283 · C2; walled-Brauer eps-sector; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
-  - `workhouse verify --only 'the balanced branch is exact: B_3 - beta_historical = 25/64, so Delta C = 25/1024'`
 - `the shape coefficients are solved, not fitted: A = 5/48, B = D = 0 exactly`
-  - src/workhouse/invariants/orbits.py:34 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:35 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the shape coefficients are solved, not fitted: A = 5/48, B = D = 0 exactly'`
 - `the tier collapse is one identity: D = -6u + 3*u2 with u2 = 2u`
-  - src/workhouse/invariants/orbits.py:163 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:164 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the tier collapse is one identity: D = -6u + 3*u2 with u2 = 2u'`
 - `u2 = 2u is the cross term of a perfect square`
-  - src/workhouse/invariants/orbits.py:193 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:194 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'u2 = 2u is the cross term of a perfect square'`
 **homology and finite volume**
 
@@ -886,7 +886,7 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **fourth-order kernel orbits**
 
 - `FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped`
-  - src/workhouse/invariants/orbits.py:314 · C2; G3 step 1; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:338 · C2; G3 step 1; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped'`
 **near-Gamma uniformity (G11)**
 

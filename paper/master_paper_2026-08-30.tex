@@ -2411,14 +2411,34 @@ there.
 
 Two things follow for the dispute itself, and neither promotes a side.
 
-First, the $\epsilon$-free branch is exact. Evaluating the pinned structured
-$B_N$ expression at $N=3$ and comparing with $\beta$ recomputed from the raw
-$189$ records gives a difference of exactly $25/64$ --- two digits of
-denominator where the two inputs carry fourteen. Through
-$C_{\mathrm{shp}}=(\beta-2\alpha)/16$ with $\alpha=5/12$ shared, the balanced
-branch is $C_{\mathrm{hist}}+25/1024$ as an exact rational, not the float it
-had been carried as.
-\chk{the balanced branch is exact: B\_3 - beta\_historical = 25/64, so Delta C = 25/1024}
+First, a caution about the $\epsilon$-free branch, recorded here because the
+present authors first got it wrong. Evaluating the pinned structured $B_N$
+expression at $N=3$ and comparing with $\beta$ recomputed from the raw $189$
+records gives a difference of exactly $25/64$, and it is tempting to read
+$C_{\mathrm{hist}}+25/1024$ as an exact balanced value of $C_{\mathrm{shp}}$.
+That reading is wrong. At $N=3$ the structured expression returns exactly
+$P_{17}(9)/(3R_{20}(9))$, and the source formula is stated only for $N\ge4$
+with the explicit caution that it is not to be substituted at $N=3$; the
+continuation route to that rank is separately closed, $D_{34}$ carrying
+$(z-9)^3$ with $Q_{32}(9)\neq0$. The relation is real --- it is what
+$\Delta\beta_3$ records --- but no direct balanced contraction at $N=3$ is held
+here, so it is a relation among recorded quantities and not an established
+branch.
+\chk{RETRACTED: B\_3 - beta\_historical = 25/64 is a forbidden substitution, not an exact branch}
+
+What the exceptional ranks do show is a pattern about the determinant sector,
+and it is checked rather than asserted. At $SU(5)$ the shipped stage-1 scan
+holds $895{,}524$ candidate support/output pairs with \emph{zero} determinant
+sectors. At $SU(6)$ the sole determinant orbit shifts the scalar by exactly
+$6/343$ at $q$, $X$, $M$ and $R$ while $A$, $B$ and the bandwidth are
+unchanged. At $SU(4)$ the recorded offsets are $\Delta A_4=\Delta B_4=0$. So at
+every exceptional rank where the determinant sector has been computed
+independently it does not reach $B$, and $N=3$ would be the one rank where it
+does. That is a pattern worth explaining. It is not a licence for the
+substitution.
+\chk{the SU(5) stage-1 scan is shipped: 895,524 pairs, zero determinant sectors}
+\chk{the SU(6) determinant correction is exactly 6/343 and momentum-independent}
+\chk{the N=3 continuation shift is exactly 25/64, with two exact corollaries}
 
 Second, the two rival kernels are the same computation. The cold $v10a.26$
 record dump has the same six orbit sizes, satisfies $u_2=2u$ and

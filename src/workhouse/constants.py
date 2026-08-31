@@ -442,10 +442,20 @@ PI_ORBIT = Rational(-20535103905179, 1264270320593280)
 NU_ORBIT = Rational(-1050558388351, 10081900483200)
 #: On-site orbit (3 records). Enters c_0 alone; no effect on A, B, C or D.
 SIGMA_ORBIT = Rational(-780864191400383617, 302107928691769200)
-#: The eps-free (balanced) branch of C2, exact since 2026-08-30:
-#: B_3 - BETA_PEN_3 = 25/64 exactly, so this is C_SHP_HISTORICAL + 25/1024.
-#: An intermediate value, NOT a third side of the dispute.
-C_SHP_BALANCED = Rational(-13035490122347, 550663802582400)
+#: RETRACTED 2026-08-30, the same day it was added. Registered as "the exact
+#: eps-free branch of C2"; it is not one. It is C_SHP_HISTORICAL + 25/1024,
+#: where 25/64 is the gap between BETA_PEN_3 and b_evaluator(3) -- and
+#: b_evaluator(3) is bit-identical to P17(9)/(3 R20(9)), the substitution
+#: GLUEBALL_DETAILED_FORMULA v3.1 forbids at N = 3 ("use the separate exact
+#: SU(3) value"), at a rank where the continuation route is separately closed
+#: by a third-order pole in D34.
+#:
+#: Kept, not deleted, because the relation is real and DELTA_BETA_3 records it,
+#: and because deleting a refuted claim destroys the evidence it was tried.
+#: Read it as "historical plus the forbidden-substitution shift", never as a
+#: balanced value of C_shp. No direct balanced contraction at N = 3 is held in
+#: this repository.
+C_SHP_CONTINUATION_SHIFTED = Rational(-13035490122347, 550663802582400)
 
 #: Vacuum-subtracted physical Gamma-point coefficient, from the blind
 #: finite-cluster/rooted oracle (float only). Reproduces Hamer's a_4 through the
