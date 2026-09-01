@@ -357,6 +357,28 @@ archives:
       bears on the analysis-side gaps G20-G23, not on C2. Imported verbatim so
       a later Lean intake can compile and axiom-audit it; the bears_on below
       is a keyword census, recorded as such, not a mathematical review.
+  - id: EXTRACT_2026-09-01
+    description: >-
+      An LLM-extracted digest of the analysis-side Yang-Mills corpus
+      (EX007obstructionscaling.7z): sixteen EX-NNN documents that restate
+      129 technical items -- the Haar Jacobian Hessian and the geometric
+      constants, the Bakry-Emery curvature-mass mechanism, five obstructions
+      to the continuum limit (global CD constant, Haar link marginals, the
+      scaling dichotomy, plaquette entropy, the Z_N center-flux witness), the
+      fixed-cutoff hinge/Combes-Thomas/OS chain, RG and Riccati machinery, a
+      q-6j evaluator and a SPARC galaxy pipeline -- with the extractor's own
+      status vocabulary (solid/conditional/gap), an index, one figure and
+      two verification scripts. Derivative work by another agent, not a
+      primary source: every item is T3 here, and where the extractor says it
+      corrected the corpus (C_0 = 18 against 43.9077; a QDHT index swap) that
+      is a claim to check, not a correction to adopt.
+    source: >-
+      Uploaded directly to the session on 2026-09-01 as
+      ee38a699-EX007obstructionscaling.7z (567,912 bytes), described by the
+      maintainer as extracted by another agent from the corpus of files. Its
+      own README places it under a 03_verification sibling directory that was
+      not delivered. None of this program's exact join keys appears in it; it
+      bears on the analysis-side gaps G17-G23 and on nothing in C2.
 
 reviews:
 # Third review pass: the 2026-08-28 second batch, reviewed on arrival. The
@@ -3514,3 +3536,288 @@ reviews:
       Imported verbatim: the consolidation script that produced the
       *_Combined.lean files by merging module bodies and hoisting imports.
       Provenance for the bundle's shape, not mathematics.
+
+# The 2026-09-01 extraction bundle, reviewed on arrival. Derivative work by
+# another agent: imported whole so it is a set of graph nodes, every verdict
+# T3, and its two checkable constants entered as checks that cite it.
+  - digest: bc3d0fd39adb44c6f765b5e75da3aa24a551a57a01e19dbce7c6d3c49c236582
+    path: EX-001-haar-jacobian-hessian.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-001-haar-jacobian-hessian.md
+    bears_on: [G20]
+    reason: >-
+      Imported verbatim. Hess V_Haar(0) = (N/12) I for SU(N), derived (series
+      coefficient 1/24 times the Killing identity) where the corpus computed
+      it numerically. Agrees with the notes-program check 'V_Haar Hessian at
+      the identity is exactly I/4' at N = 3 and extends it to every N;
+      registered here as the symbolic-N check that cites this document.
+
+  - digest: cfa4816a177c45a98c96c05ec45a48820f0606ac6942fe41e40bf187c43e2ff0
+    path: EX-002-su2-convexity-threshold.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-002-su2-convexity-threshold.md
+    bears_on: [G20]
+    reason: >-
+      Imported verbatim. The exact SU(2) single-link convexity threshold
+      beta_c = 4.413914663 as the minimum of beta(theta) = -2(csc^2 theta -
+      theta^-2)/cos theta, recomputed to 11 figures. Not previously
+      registered; entered as a T2 check in the notes-program suite that cites
+      this document.
+
+  - digest: 94c9c4697f60e3a37e230b4e3aee6248c50d3d5bfb8d1c8d3c8a420558ca3d8e
+    path: EX-003-constants-reference.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-003-constants-reference.md
+    bears_on: [G20, G21]
+    reason: >-
+      Imported verbatim. One-normalisation table of the geometric constants
+      (Ric = N/4 or N/2 by convention, Hess V_Haar = N/12, ratio exactly 3)
+      reconciling eight conflicting numbers in the corpus and naming one
+      genuine slip (C_2(F) used where a curvature was meant). The
+      reconciliation is the extractor's; the constants themselves are
+      checkable and the Hessian one is.
+
+  - digest: ca54e3ae3b5711b04a2d384e15c641b91c00396c4123481ba3d471cfc6551f81
+    path: EX-004-be-mechanism.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md
+    bears_on: [G20, G22, G23]
+    reason: >-
+      Imported verbatim. The Bakry-Emery curvature-mass mechanism in full:
+      Ric_mu = Ric_g + Hess S_W on SU(N)^E, the Wilson Hessian at the vacuum
+      as (beta/N) d_1* d_1, and an unconditional CD/Poincare/LSI/gap for beta
+      < N^2/48 in d = 4, together with the explicit negative direction
+      (-beta/N) that stops the mechanism short of the continuum. Bears on
+      G20's SAFE-region certificate and on G23's spine; the extractor's status
+      flags (12 solid, 2 conditional, 1 gap) are recorded as its own, not
+      adopted.
+
+  - digest: b3a9c999d3af1d0e999cfa2325233761445e34ea6a833fd4f62e33a55ada99eb
+    path: EX-005-obstruction-global-cd.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-005-obstruction-global-cd.md
+    bears_on: [G19, G20, G23]
+    reason: >-
+      Imported verbatim. Obstruction: on a closed manifold int Delta f = 0
+      forces a negative Hessian direction, so the global CD(rho, infinity)
+      constant obeys rho_glob <= k_max - beta lambda with k_max = N/2 and
+      diverges to -infinity along the asymptotically free trajectory,
+      surviving restriction to the gauge-invariant sector. This is exactly
+      G23's uniformity hole stated as a theorem; T3 until checked.
+
+  - digest: 5f8ead8c8c7cc48bd0df8a29824f384c3a6a462c252a44cd17b5e1ea2c58da81
+    path: EX-006-obstruction-haar-marginal.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-006-obstruction-haar-marginal.md
+    bears_on: [G20, G23]
+    reason: >-
+      Imported verbatim. Obstruction: gauge invariance forces Haar link
+      marginals, strengthened to i.i.d. Haar on the links of any spanning
+      tree, so the small-field good set is exponentially atypical in the
+      volume for every beta and the localisation inequality that consumes it
+      is vacuous. Names the corpus's Assumption A.11.2 and an average-set/sup-
+      set quantifier slip. Bears on G20 (the SAFE ball) and G23.
+
+  - digest: afba0758c8c6fb37995581f1460f0065db9f2c0fff8e0058f37ce678e30c595f
+    path: EX-007-obstruction-scaling.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-007-obstruction-scaling.md
+    bears_on: [G19]
+    reason: >-
+      Imported verbatim. Obstruction: the scale-independent geometric source
+      and the vanishing a^2 g^2 Haar mass are one constant kappa_G/3 = N/6
+      read in two charts related by X = a g_0 A, so every convexity mass is
+      nu/a with nu a power of g_0 and no chart yields a finite continuum mass;
+      plus a dimensional-transmutation no-go. The archive's namesake. Bears on
+      G19, alongside the register's own unconditional no-Taylor-truncation
+      statement.
+
+  - digest: 54605de2adff47fd69bc81276208aaebd3bdd38c982a7a9176039e57224f2b19
+    path: EX-008-obstruction-entropy.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-008-obstruction-entropy.md
+    bears_on: [G17, G19]
+    reason: >-
+      Imported verbatim. Obstruction: the chessboard small-plaquette tail
+      bound is correct and volume-uniform, but the union bound over 6(R/a)^4
+      plaquettes needs c c_Phi(delta) > 4 while c_Phi <= 2 universally
+      (deficit 3.19 at N = 3), and the tube is genuinely atypical below 4
+      pi/(3 sqrt(11N)). Bears on G17's free-energy stability and on G19.
+
+  - digest: 3d8146b3ff492bb52f63c35dcdf419fba439c7463bac021d729c368fde8ebcb1
+    path: EX-009-obstruction-lyapunov.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-009-obstruction-lyapunov.md
+    bears_on: [G22]
+    reason: >-
+      Imported verbatim. The Z_N center-flux witness: every center-valued
+      configuration is an exact critical point of the Wilson action with
+      central plaquette holonomies, so the force vanishes while the plaquette
+      defect is extensive -- refuting pointwise pairing coercivity, the PL
+      form, the strip-drift hypothesis and the archive's drift certificates.
+      NOTE for G22: a central configuration is perfectly Cartan-aligned (all
+      links commute), so this witness does NOT meet the register's falsifier,
+      which asks for a configuration far from alignment; it refutes the
+      coercivity forms G22 already records as refuted, and sharpens why the
+      conjecture must be alignment-conditioned.
+
+  - digest: cab74c010e5585a7a890af1ccb5f3e72b031760411bf8a6a39ebc2e313b7d5eb
+    path: EX-010-hessian-numerics.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-010-hessian-numerics.md
+    bears_on: [G20]
+    reason: >-
+      Imported verbatim. The SU(3)/SU(2) convexity numerics reproduced and
+      audited in float64: the volume-stable convex core R(beta) ~ 0.110/beta,
+      the tau restoration map collapsed onto one formula, and the SU(2)
+      threshold to 15 digits (4.413914663154). Bears on G20, whose headline
+      min-eigenvalue the register records as unreproduced; this document does
+      not reproduce that headline either, it re-derives the scaling of the
+      core.
+
+  - digest: 6c86da82c5e9f499adefa0fee0f4001615cf897dec1923dad37f09602f683180
+    path: EX-011-matrix-hinge-chain.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-011-matrix-hinge-chain.md
+    bears_on: [G18, G21, G23]
+    reason: >-
+      Imported verbatim. The fixed-cutoff conditional chain with every
+      hypothesis stated: vacuum Hessian = discrete Maxwell operator, matrix
+      hinge on a good set, Helffer-Sjostrand covariance, Combes-Thomas/Davies
+      decay, exponential clustering, OS gap; a counterexample to the corpus's
+      kernel-form step and a repair through the Witten Laplacian on 1-forms;
+      explicit constants (kappa_G = N/2, m_H^2 = N/6, alpha_W = beta/n,
+      C_0(d_1* d_1) = 18 in d = 4). Bears on G21 and G23, and on G18 as the
+      analysis-side bridge.
+
+  - digest: 6469e3e341396b88b6842def7919ff3fe7025ec222764579a1e9b855fcd11430
+    path: EX-012-combes-thomas.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-012-combes-thomas.md
+    bears_on: [G21]
+    reason: >-
+      Imported verbatim. The abelian core: two conjugation theorems for M =
+      m^2 I + alpha d_1* d_1 (Combes-Thomas eta ~ m^2, Davies form-conjugation
+      eta ~ m), the row-sum constant C_0(Delta_1) = 18 exactly in d = 4, an
+      exact Green-kernel closed form with the sharp exponent kappa = arcosh(1
+      + m^2/(2 alpha)), and the claim that the corpus's FFT value C_0 =
+      43.9077 is a symbol-convention artifact with sqrt(L) divergence. The
+      register's G21 already carries C_bdy = C_0 = 3 nu_P = 18 on tori, so the
+      value agrees; the artifact claim about 43.9077 is the extractor's and is
+      recorded as such.
+
+  - digest: 51a3b4bf1ae8c2c8fe33d244eb6ef41e3abc8d07b4bcb51d314bc5d2820b478a
+    path: EX-013-rp-os.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-013-rp-os.md
+    bears_on: [G19, G23]
+    reason: >-
+      Imported verbatim. Finite-volume reflection positivity for the Wilson
+      measure, OS reconstruction, clustering-gap equivalence at fixed cutoff,
+      permanence of RP under limits, a two-line no-go for gauge-covariant
+      gauge-invariant Markov coarse-graining kernels, and an executed 4^4
+      SU(2) Monte-Carlo RP Gram test. Bears on G23 (the OS bridge) and on
+      G19's Balaban-route statements, which record the same Markov-kernel
+      refutation independently.
+
+  - digest: fc55bb4934560183d5529822693ce7ad90ca9bc6f521546cb505d8e30f6cc703
+    path: EX-014-rg-schur-riccati.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md
+    bears_on: [G19, G23]
+    reason: >-
+      Imported verbatim. The RG gap cascade (one-step Poincare recursion,
+      closed n-step form, IR fixed point), Schur-complement curvature
+      degradation under block marginalisation with the Brascamp-Lieb bound,
+      the Hamilton-type maximum principle reducing the vHJ Hessian flow to a
+      scalar Riccati inequality, and four reasons the RG class cannot reach
+      the continuum. Bears on G23's Schur no-go and on G19.
+
+  - digest: 329e109760af047c1dbbc28f8c90d007df7aa455d60d9e85d26c668a274467ca
+    path: EX-015-q6j.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-015-q6j.md
+    reason: >-
+      Imported verbatim. A log-space q-Racah / q-6j evaluator for U_q(su(2))
+      with a four-way validation suite and a Doob-transform toy gap model.
+      Reusable software from a side thread of the analysis programme; no claim
+      of this register depends on it. Imported verbatim, bears on nothing
+      here.
+
+  - digest: 420a1589713ca271bfa0afd09e14dbce10b920de0d496a625e88add1ea15d2f2
+    path: EX-016-sparc-pipeline.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/EX-016-sparc-pipeline.md
+    reason: >-
+      Imported verbatim. The 175-galaxy SPARC rotation-curve pipeline with its
+      kill-switch protocol and two no-go results. Off-programme (cosmology
+      thread); imported verbatim so the archive is whole, bears on nothing
+      here.
+
+  - digest: 41f042addc52b0f17e232173916b5931a1e42a2ded676ca6baa5bca82010331d
+    path: RAR_comparison.png
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/RAR_comparison.png
+    reason: >-
+      Imported verbatim. The figure the SPARC document references. Off-
+      programme; imported so the archive is whole.
+
+  - digest: 83a3dc8c5d7699b8737d1c74f191689a3b49b73cc09907b2a30583b5dcdfeb46
+    path: README.md
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/README.md
+    bears_on: [G19, G23]
+    reason: >-
+      Imported verbatim. The extraction's own index: 129 items, the status
+      vocabulary, and its reading that the mechanism is real at fixed cutoff
+      and the continuum limit is where it stops -- the same shape G19 and G23
+      record. An index, not evidence.
+
+  - digest: 4088cf132be9545ace1192562a81a364b8974f105a80d681b298091a55cbdb80
+    path: _index.json
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/_index.json
+    reason: >-
+      Imported verbatim. Machine index of the sixteen documents with item
+      counts and status breakdowns. Metadata.
+
+  - digest: 84f84c56b90ea23b4b9cd6b00158e7e8854ec8ee01409ec0b5534173741f8a02
+    path: verification_scripts/geometric_constants.py
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/verification_scripts/geometric_constants.py
+    bears_on: [G20]
+    reason: >-
+      Imported verbatim. Recomputes the EX-003 table from su(N) structure
+      constants (numpy). Not executed here; the Hessian constant it checks is
+      covered by an exact check in the notes-program suite.
+
+  - digest: 786c0ec8cfe2f66fc286331275d1cc08cc0b4496548ab741388e353c8aa0d573
+    path: verification_scripts/haar_hessian_check.py
+    archive: EXTRACT_2026-09-01
+    verdict: import
+    imported_to: notes/imported/EXTRACT_2026-09-01/verification_scripts/haar_hessian_check.py
+    bears_on: [G20]
+    reason: >-
+      Imported verbatim. Autodiff (torch) verification of Hess V_Haar(0) =
+      (N/12) I for SU(2)-SU(5). Not executed here (torch is not a dependency);
+      the statement is checked exactly in the notes-program suite instead.

@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 220
+## T1 — re-derived exactly — 222
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -438,6 +438,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'the exact zone minimum of q on |k| >= r is 4 sin^2(r/2), and Jordan overstates it by pi/2'`
 **notes program: SAFE, Davies, coercivity (G20-G23)**
 
+- `C_0(d_1* d_1) = 18 = 3 nu_P exactly in d = 4: the off-diagonal row sum of the lattice Maxwell operator`
+  - src/workhouse/invariants/notes_program.py:579 · EXTRACT_2026-09-01 (EX-001, EX-003, EX-010, EX-012) / G20, G21
+  - `workhouse verify --only 'C_0(d_1* d_1) = 18 = 3 nu_P exactly in d = 4: the off-diagonal row sum of the lattice Maxwell operator'`
 - `FINDING: six bounded vectors in R^3 refute the 6-vs-3 Cartan counting`
   - src/workhouse/invariants/notes_program.py:122 · notes review 2026-08-22 / G22
   - `workhouse verify --only 'FINDING: six bounded vectors in R^3 refute the 6-vs-3 Cartan counting'`
@@ -450,6 +453,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `G21 exponent identity: arcosh(1 + 2x^2) = 2 arsinh(x)`
   - src/workhouse/invariants/notes_program.py:25 · notes review 2026-08-22 / G21
   - `workhouse verify --only 'G21 exponent identity: arcosh(1 + 2x^2) = 2 arsinh(x)'`
+- `Hess V_Haar(0) = (N/12) I for every N: the series coefficient 1/24 times tr(ad_X^2) = 2N tr(X^2)`
+  - src/workhouse/invariants/notes_program.py:480 · EXTRACT_2026-09-01 (EX-001, EX-003, EX-010, EX-012) / G20, G21
+  - `workhouse verify --only 'Hess V_Haar(0) = (N/12) I for every N: the series coefficient 1/24 times tr(ad_X^2) = 2N tr(X^2)'`
 - `V_Haar Hessian at the identity is exactly I/4 (adjoint Casimir 3)`
   - src/workhouse/invariants/notes_program.py:46 · notes review 2026-08-22 / G20
   - `workhouse verify --only 'V_Haar Hessian at the identity is exactly I/4 (adjoint Casimir 3)'`
@@ -859,7 +865,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/two_cube.py:313 · MASTER edition §5.1; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
 
-## T2 — float agreement within a stated tolerance — 51
+## T2 — float agreement within a stated tolerance — 52
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -961,6 +967,9 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `G21 Davies bound verified on the 3x3 periodic 2D lattice, arb-certified`
   - src/workhouse/invariants/notes_program.py:172 · notes review 2026-08-22 / G21
   - `workhouse verify --only 'G21 Davies bound verified on the 3x3 periodic 2D lattice, arb-certified'`
+- `the SU(2) single-link convexity threshold is beta_c = 4.413914663154, the minimum of -2(csc^2 t - t^-2)/cos t`
+  - src/workhouse/invariants/notes_program.py:538 · EXTRACT_2026-09-01 (EX-001, EX-003, EX-010, EX-012) / G20, G21
+  - `workhouse verify --only 'the SU(2) single-link convexity threshold is beta_c = 4.413914663154, the minimum of -2(csc^2 t - t^-2)/cos t'`
 **off-axis channel ledger (C2 geography, G14)**
 
 - `FINDING: A = 5/48 pins the normal sector's whole C4 contribution`
