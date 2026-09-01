@@ -42,6 +42,7 @@ _KIND_RANK = {
     "gap": 7,
     "register": 7,
     "unifying": 7,
+    "route": 7,
 }
 _KIND_TITLE = {
     0: "Originating documents",

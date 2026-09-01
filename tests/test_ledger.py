@@ -100,7 +100,16 @@ def test_g3_rewrite_keeps_the_protocol_and_the_traps():
         # still reads in the order the work happened.
         "off-axis channel assembly through workhouse.cellular",
         "sealed scalar sweep (demoted, optional)",
-    ], "G3's steps: the executed pair, the measured one, the cheaper route, the demoted sweep"
+        # Added 2026-09-01, from the graph: the two disputed orbit amplitudes
+        # flip sign together between the rival kernels while the normal orbit
+        # does not, and nothing recorded anyone asking which sign pattern
+        # covariance permits. Recorded as an `untried` route rather than as a
+        # sentence in a session, so the next reader sees it as open work.
+        "covariance sign test of the two flipped orbits",
+    ], (
+        "G3's steps: the executed pair, the measured one, the cheaper route, the demoted "
+        "sweep, the untried sign test"
+    )
     assert "inventory_trap" in g3, "the 3895-vs-3850 inventory warning must travel with G3"
 
 
@@ -212,3 +221,30 @@ def test_no_ledger_file_has_a_duplicate_mapping_key():
     ledger_dir = Path(__file__).resolve().parents[1] / "ledger"
     for path in sorted(ledger_dir.glob("*.yaml")):
         yaml.load(path.read_text(encoding="utf-8"), Loader=StrictLoader)
+
+
+def test_plan_steps_carry_a_closed_route_state():
+    """Every plan step is a route with a state from the closed vocabulary.
+
+    The failure this prevents: a route a run has closed reading as open work.
+    G3's sealed sweep was re-attempted by four sessions after it was known to
+    emit only the Gamma scalar; it is now `dead`, with the finding that killed
+    it as its closer, and a validator rejects a step without a state.
+    """
+    led = L.load()
+    steps = [(g["id"], st) for g in led.gaps for st in g.get("plan", []) or []]
+    assert steps
+    for gid, st in steps:
+        assert st.get("state") in L.ROUTE_STATES, (gid, st.get("step"))
+    g3 = next(g for g in led.gaps if g["id"] == "G3")
+    by_step = {st["step"]: st for st in g3["plan"]}
+    assert by_step["sealed scalar sweep (demoted, optional)"]["state"] == "dead"
+    assert by_step["sealed scalar sweep (demoted, optional)"]["cannot_decide"] == ["C2"]
+    assert by_step["off-axis channel assembly through workhouse.cellular"]["state"] == "dead"
+    assert by_step["independent cross-amplitude computation"]["state"] == "live"
+    # a step with an unknown state is a validation failure, not a silent open route
+    import copy
+
+    broken = copy.deepcopy(led)
+    next(g for g in broken.gaps if g["id"] == "G3")["plan"][0]["state"] = "pending"
+    assert any("state must be one of" in p for p in L.validate(broken))

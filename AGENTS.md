@@ -93,11 +93,15 @@ not by picking the better-looking number.
 ## Finding things
 
 `README.md` has the retrieval order and the search mechanics; do not re-derive
-them here. The one thing worth repeating, because it is the thing agents get
-wrong: the corpus is about 61 context windows, so reading it is not a plan, and
-the join keys are **exact rationals, not concepts**. Search by value first —
+them here. Two things are worth repeating, because they are the things agents
+get wrong. The corpus is about 61 context windows, so reading it is not a plan,
+and the join keys are **exact rationals, not concepts**. Search by value first —
 `workhouse search` does that, and knows which names this repository coined and
-which are forbidden.
+which are forbidden. And query the graph before the files: `workhouse why <id>`
+prints the routes a gap has tried and which are dead. On 2026-09-01 a session
+that read the ledgers in the prescribed order and never ran `why` recommended a
+route closed two days earlier; the graph had the closure and the reading order
+did not.
 
 ## Prefer decisive calculations
 

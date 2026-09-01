@@ -144,7 +144,11 @@ def _():
     )
 
 
-@orbit.check("C_shp = -5/96 - u - (rho + pi)/2, exactly", _LEDGER)
+@orbit.check(
+    "C_shp = -5/96 - u - (rho + pi)/2, exactly",
+    _LEDGER,
+    rests_on=("every orbit's carrier projection is closed form in e1, e2, e3",),
+)
 def _():
     a = KO.amplitudes(kernel_records())
     predicted = Fraction(-5, 96) - K.X_QUANTUM - (K.RHO_ORBIT + K.PI_ORBIT) / 2
@@ -402,16 +406,26 @@ def _():
         and K.U2_ORBIT == 2 * K.X_QUANTUM
     )
     ok = consistent and delta_sum == Fraction(-25, 512)
-    return ok, (
-        f"given Delta A_3 = 0 and an eps-blind primitive channel, Delta u = Delta u2 = "
-        f"Delta nu = 0 and the whole eps-sector effect on the N = 3 fourth-order shape is "
-        f"Delta(rho + pi) = {delta_sum}. Historical rho + pi = {hist_sum}; a direct balanced "
-        f"contraction at N = 3 must therefore give {predicted}. FALSIFIER: any direct N = 3 "
-        "balanced contraction whose six orbit amplitudes differ from the historical ones "
-        "anywhere except in rho + pi, or whose rho + pi shift is not exactly -25/512. This is "
-        "a prediction about a computation nobody here has run; it prefers neither side of C2, "
-        "and it does not rest on the forbidden P17/R20 substitution at N = 3 -- only on "
-        "Delta beta_3, which the register records independently"
+    return (
+        ok,
+        (
+            f"given Delta A_3 = 0 and an eps-blind primitive channel, Delta u = Delta u2 = "
+            f"Delta nu = 0 and the whole eps-sector effect on the N = 3 fourth-order shape is "
+            f"Delta(rho + pi) = {delta_sum}. Historical rho + pi = {hist_sum}; a direct balanced "
+            f"contraction at N = 3 must therefore give {predicted}. FALSIFIER: any direct N = 3 "
+            "balanced contraction whose six orbit amplitudes differ from the historical ones "
+            "anywhere except in rho + pi, or whose rho + pi shift is not exactly -25/512. This is "
+            "a prediction about a computation nobody here has run; it prefers neither side of C2, "
+            "and it does not rest on the forbidden P17/R20 substitution at N = 3 -- only on "
+            "Delta beta_3, which the register records independently"
+        ),
+        {
+            # The number a direct balanced contraction at N = 3 must return. As a
+            # catalogue constant it is searchable by value, so a future run that
+            # prints it -- or misses it -- can be joined to this prediction.
+            "RHO_PLUS_PI_BALANCED_N3_PREDICTED": predicted,
+            "DELTA_RHO_PLUS_PI_N3_PREDICTED": delta_sum,
+        },
     )
 
 

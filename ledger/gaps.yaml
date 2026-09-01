@@ -76,6 +76,10 @@ gaps:
     unblocks: [G9]
     plan:
       - step: block-structure comparison
+        state: done
+        closed_by:
+          - 'RUN:g3_kernel_record_dump_2026-08-28'
+          - 'CHK:FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped'
         status: >
           answered 2026-08-28, HODGE_RUNS intake: NO recorded per-record
           v10a.26 kernel exists — the 15-hour transcript prints the cold
@@ -116,6 +120,10 @@ gaps:
           is inconsistent with its own A is self-refuting. First task:
           establish whether that v10a.26 structure exists in the corpus.
       - step: targeted kernel-bearing recomputation
+        state: done
+        closed_by:
+          - 'RUN:g3_kernel_record_dump_2026-08-28'
+          - 'CHK:C_shp = -5/96 - u - (rho + pi)/2, exactly'
         status: >
           executed 2026-08-28 (runs/g3_kernel_record_dump_2026-08-28): the
           cold kernel's 189 records reproduced on CPU in 12.3 minutes and
@@ -131,6 +139,7 @@ gaps:
           cubic-symmetry multiplicity, and the A = 5/48 identity plus the
           shared bulk over-determine the rest.
       - step: independent cross-amplitude computation
+        state: live
         status: >
           attempted 2026-08-28, blocked on the measured exact-arithmetic
           wall, with the target now fully specified. Sharpened first: the
@@ -186,6 +195,11 @@ gaps:
           the 189 records and run both kernels through one block
           decomposition.
       - step: off-axis channel assembly through workhouse.cellular
+        state: dead
+        closed_by:
+          - 'RUN:g3_offaxis_channels_2026-08-30'
+          - 'CHK:the in-plane transfer is order eight, not four, in the primitive channel'
+          - 'CHK:the perpendicular cube sector is a second fourth-order primitive channel, S_4 = -11'
         status: >
           proposed 2026-08-30, first premise checked. The route: C is
           assembled channel by channel from range-1 operator structures
@@ -295,6 +309,10 @@ gaps:
           and it attacks the disputed quantity rather than recomputing
           the whole fourth order.
       - step: sealed scalar sweep (demoted, optional)
+        state: dead
+        closed_by:
+          - 'CHK:FINDING: the marked-cluster engine emits the Gamma scalar only — a completed 609-sweep cannot decide C_shp'
+        cannot_decide: [C2]
         status: priced out
         what: >
           The GLUEBALL §18.1 sealed sweep remains the only path to a blind
@@ -302,6 +320,33 @@ gaps:
           nothing about C2 and costs months (measured: 45+ min for the
           smallest of 609 clusters, cap-lifted, without completing). Run it
           only if a blind scalar confirmation is ever worth that price.
+      - step: covariance sign test of the two flipped orbits
+        state: untried
+        status: >
+          proposed 2026-09-01, from the graph rather than from a file: the
+          kernel-orbits suite records that the two rival kernels agree on the
+          support, all six orbit sizes, the normalized shape table and both
+          tier-collapse identities, that one scale factor explains 144 of 189
+          records, and that their free disagreement is the two amplitudes rho
+          (cross-plane) and pi (in-plane) -- OPPOSITE IN SIGN in the two
+          kernels, with the normal orbit unmoved. Two orbits flipping together
+          while a third does not is the signature of a convention, and the
+          off-axis run already found one (an entry that is minus the conjugate
+          of the recorded rotation row). Nothing in the graph records anyone
+          having asked which sign pattern Hermiticity plus cubic covariance
+          permit in the Bloch basis both kernels claim. Nobody has spent
+          anything on this yet.
+        what: >
+          In the Bloch basis built from the repository's own cube boundary
+          d_3, derive from Hermiticity and cubic covariance the sign the
+          cross-plane and in-plane entries must carry relative to the normal
+          entry, then ask which kernel's (rho, pi) sign pattern is consistent.
+          Engine-free -- the same construction runs/g3_offaxis_channels used.
+          Bounded outcome: it can refute one kernel's sign pattern, and one
+          counterexample is the cheapest decisive move this program has; it
+          cannot produce the value, because the magnitudes differ too (the
+          cross-plane amplitude by a factor of about ten), so the live
+          cross-amplitude route stays the way to the number.
     leads:
       - settlement/mce_adjudication_harness.py
       - settlement/README.md

@@ -62,6 +62,7 @@ KINDS = (
     "archive",
     "note",
     "run",
+    "route",
 )
 
 #: A ledger id anywhere in free text. Case-sensitive on purpose: `u4` in
@@ -148,6 +149,46 @@ def check_id(suite_name: str, check_name: str) -> str:
     return f"CHK:{_ident(suite_name)}:{_ident(check_name)}"
 
 
+def route_id(gap_id: str, step: str) -> str:
+    """The catalogue id of one plan step under a gap -- a route.
+
+    A route is an attempt at a gap with a recorded state (untried, live,
+    dead, done) and, when closed, the run or check that closed it. Making it a
+    node is what lets `why G3` say which attempts are dead instead of leaving
+    that to a reader of run READMEs.
+    """
+    return f"ROUTE:{gap_id}:{_ident(step)}"
+
+
+#: A ``\chk{...}`` label in a manuscript source, with LaTeX escapes undone.
+#: The body may contain ``\^{}`` (a standalone circumflex), so a ``[^}]*``
+#: body would stop at the wrong brace; balanced empty groups are allowed.
+_CHK_LABEL = re.compile(r"\\chk\{((?:[^{}]|\{\})*)\}")
+
+
+def chk_labels(source: str) -> list[str]:
+    r"""Every ``\chk`` label in a pinned edition, in order, as check names.
+
+    One parser for the manuscript guard and the graph, so the two can never
+    disagree about what a paper labels.
+    """
+    return [
+        m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
+        for m in _CHK_LABEL.findall(source)
+    ]
+
+
+def _yield_value(text: str) -> tuple[str, float | None]:
+    """A yielded value's exact string and float, as `_as_value` would give."""
+    try:
+        exact = Fraction(text)
+    except (ValueError, ZeroDivisionError):
+        return text, None  # symbolic in N or L
+    if exact.denominator == 1:
+        return str(exact.numerator), float(exact)
+    return f"{exact.numerator}/{exact.denominator}", float(exact)
+
+
 def note_id(archive_id: str, row: dict[str, Any]) -> str:
     """The catalogue id of one archived note document.
 
@@ -228,9 +269,10 @@ def collect() -> list[Claim]:
 
     for suite in SUITES:
         for result in suite.run():
+            chk = check_id(suite.name, result.name)
             out.append(
                 Claim(
-                    id=check_id(suite.name, result.name),
+                    id=chk,
                     kind="check",
                     statement=result.name,
                     tier=result.tier,
@@ -239,8 +281,32 @@ def collect() -> list[Claim]:
                     reproduce=f"workhouse verify --only {result.name!r}",
                     detail=result.detail,
                     status="passing" if result.passed else "FAILING",
+                    related=sorted(result.rests_on),
                 )
             )
+            # A value a check yields is a constant with the check as its
+            # origin: searchable by value, and carrying the check's tier
+            # while the check passes. A failing check's yields are T3 --
+            # recorded, not established.
+            for name, text in sorted(result.yields.items()):
+                exact, decimal = _yield_value(text)
+                out.append(
+                    Claim(
+                        id=f"CONST:{name}",
+                        kind="constant",
+                        statement=f"{name}, yielded by the check {result.name!r}",
+                        tier=result.tier if result.passed else 3,
+                        value=exact,
+                        decimal=decimal,
+                        where=result.source,
+                        cites=result.section,
+                        reproduce=f"workhouse verify --only {result.name!r}",
+                        status="yielded by a passing check"
+                        if result.passed
+                        else "yielded by a FAILING check",
+                        related=[chk],
+                    )
+                )
 
     for constant in K.REGISTRY:
         exact, decimal = _as_value(constant.value)
@@ -336,6 +402,26 @@ def collect() -> list[Claim]:
                 related=sorted(entry.get("resolves", []) + entry.get("unblocks", [])),
             )
         )
+    # Routes: one node per plan step, so an attempt has a state a query can
+    # read. Everything is copied from the step's own fields.
+    for entry in led.gaps:
+        for step in entry.get("plan", []) or []:
+            out.append(
+                Claim(
+                    id=route_id(entry["id"], step["step"]),
+                    kind="route",
+                    statement=f"{entry['id']} route: {step['step']}",
+                    tier=3,
+                    where="ledger/gaps.yaml",
+                    cites=entry["id"],
+                    status=str(step.get("state", "")),
+                    detail=" ".join(str(step.get("status", "")).split()),
+                    related=sorted(
+                        [str(r) for r in step.get("closed_by", []) or []]
+                        + [str(r) for r in step.get("cannot_decide", []) or []]
+                    ),
+                )
+            )
     for entry in led.register:
         out.append(
             Claim(
@@ -587,10 +673,12 @@ def load_catalogue(path: Path | None = None) -> list[Claim]:
     """The checked-in catalogue, rehydrated without running a single check.
 
     ``index/claims.jsonl`` is staleness-tested, so it is current at every
-    commit; a *finding* tool (search) can read it in milliseconds instead of
-    re-running every suite to rebuild what is already on disk. ``why`` keeps
-    calling ``collect()`` because it promises live verdicts. Falls back to a
-    live ``collect()`` when the index has not been generated yet.
+    commit; a query tool (search, why, derive, branches) reads it in
+    milliseconds instead of re-running every suite to rebuild what is already
+    on disk. Verdicts are those of the last regeneration, which the staleness
+    tests hold equal to the live ones at every commit; ``--live`` rebuilds
+    for a working tree mid-edit. Falls back to a live ``collect()`` when the
+    index has not been generated yet.
     """
     target = path or CLAIMS
     if not target.exists():

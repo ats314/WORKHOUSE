@@ -46,7 +46,10 @@ class _AnsiStrippingStdout:
 
 
 def _verify(
-    verbose: bool, only: str | None = None, tier: int | None = None, as_json: bool = False
+    verbose: bool,
+    only: str | list[str] | None = None,
+    tier: int | None = None,
+    as_json: bool = False,
 ) -> int:
     """Run the checks, or one of them.
 
@@ -59,14 +62,19 @@ def _verify(
     failures = 0
     total = 0
     records: list[dict] = []
-    needle = only.lower() if only else None
+    # `--only` repeats: each occurrence is one more claim to re-establish,
+    # so a reader can run the three checks a theorem rests on in one command
+    # instead of finding that the last flag silently won.
+    needles = [only.lower()] if isinstance(only, str) else [o.lower() for o in (only or [])]
+    needle = needles[0] if needles else None
     for suite in SUITES:
         # Filter BEFORE running: `--only` promises one claim in about a
         # second, which post-filtering a full 100+-check run cannot keep.
         wanted = [
             name
             for name, _section, check_tier, _fn in suite.checks
-            if (needle is None or needle in name.lower()) and (tier is None or check_tier == tier)
+            if (not needles or any(n in name.lower() for n in needles))
+            and (tier is None or check_tier == tier)
         ]
         if not wanted:
             continue
@@ -252,8 +260,21 @@ def _search(query: str, corpus: bool, limit: int, as_json: bool = False) -> int:
 
 def _index(write: bool) -> int:
     if write:
-        claims_path, symbols_path = claims_mod.write()
-        graph_path = graph_mod.write()
+        # To a fixpoint, not once. One check reads the generated graph and
+        # prints its edge count into its own detail line, which the claims
+        # file then carries: a single write after an edge-count change leaves
+        # the two files one step apart, and the staleness tests catch it on
+        # the next run rather than this one. The Makefile looped for this;
+        # the command now does, so no caller has to know.
+        for _pass in range(4):
+            before = _index_bytes()
+            claims_path, symbols_path = claims_mod.write()
+            graph_path = graph_mod.write()
+            if _index_bytes() == before:
+                break
+        else:
+            print("index did not converge in 4 passes")
+            return 1
         for path in (claims_path, symbols_path, graph_path):
             rows = len(path.read_text(encoding="utf-8").splitlines())
             print(f"wrote {path.relative_to(claims_mod.ROOT)}: {rows} records")
@@ -269,22 +290,49 @@ def _index(write: bool) -> int:
     return 0
 
 
-def _why(node_id: str, as_json: bool = False) -> int:
+def _index_bytes() -> tuple[bytes, ...]:
+    paths = (claims_mod.CLAIMS, claims_mod.SYMBOLS, graph_mod.GRAPH)
+    return tuple(p.read_bytes() if p.exists() else b"" for p in paths)
+
+
+_LIVE_HELP = (
+    "rebuild the catalogue and graph by running every check (minutes) instead of "
+    "reading the checked-in, staleness-tested index (milliseconds)"
+)
+
+
+def _views(live: bool):
+    """Catalogue, symbols and graph for a query: the checked-in index unless
+    ``--live`` asks for a rebuild.
+
+    Reading the index is what makes a query take milliseconds. The rebuild
+    exists for a working tree mid-edit, where the index is knowingly stale.
+    """
+    symbols = claims_mod.load_symbols()
+    if live:
+        catalogue = claims_mod.collect()
+        return catalogue, symbols, graph_mod.build(catalogue, symbols)
+    return claims_mod.load_catalogue(), symbols, graph_mod.load()
+
+
+def _why(node_id: str, as_json: bool = False, live: bool = False) -> int:
+    catalogue, symbols, graph = _views(live)
     if as_json:
-        data, found = navigator_mod.neighborhood(node_id)
+        data, found = navigator_mod.neighborhood(node_id, catalogue, symbols, graph)
         print(json.dumps(data, sort_keys=True))
         return 0 if found else 1
-    text, found = navigator_mod.explain(node_id)
+    text, found = navigator_mod.explain(node_id, catalogue, symbols, graph)
     print(text)
     return 0 if found else 1
 
 
-def _derive(ids: list[str], out: str | None) -> int:
+def _derive(ids: list[str], out: str | None, live: bool = False) -> int:
     from pathlib import Path
 
     from . import derive as derive_mod
 
-    text, ok = derive_mod.render(ids)
+    catalogue, symbols, graph = _views(live)
+    text, ok = derive_mod.render(ids, catalogue, symbols, graph)
     if out:
         Path(out).write_text(text + "\n", encoding="utf-8", newline="\n")
         print(f"wrote {out}")
@@ -293,8 +341,9 @@ def _derive(ids: list[str], out: str | None) -> int:
     return 0 if ok else 1
 
 
-def _branches(target: str | None) -> int:
-    text, ok = navigator_mod.branchwise(target)
+def _branches(target: str | None, live: bool = False) -> int:
+    catalogue, _symbols, graph = _views(live)
+    text, ok = navigator_mod.branchwise(target, catalogue, graph)
     print(text)
     return 0 if ok else 1
 
@@ -406,7 +455,12 @@ def main(argv: list[str] | None = None) -> int:
 
     v = sub.add_parser("verify", help="re-derive the corpus's exact claims")
     v.add_argument("-v", "--verbose", action="store_true", help="show detail for passes too")
-    v.add_argument("--only", metavar="TEXT", help="run just the checks whose name contains TEXT")
+    v.add_argument(
+        "--only",
+        metavar="TEXT",
+        action="append",
+        help="run just the checks whose name contains TEXT (repeatable)",
+    )
     v.add_argument("--tier", type=int, choices=(1, 2), help="run only T1 or only T2 checks")
     v.add_argument("--json", action="store_true", help="machine-readable results, one JSON object")
 
@@ -442,6 +496,7 @@ def main(argv: list[str] | None = None) -> int:
     wy.add_argument(
         "--json", action="store_true", help="the record and every edge, one JSON object"
     )
+    wy.add_argument("--live", action="store_true", help=_LIVE_HELP)
 
     de = sub.add_parser(
         "derive",
@@ -449,12 +504,14 @@ def main(argv: list[str] | None = None) -> int:
     )
     de.add_argument("ids", nargs="+", help="root claim ids, e.g. C2 G3 G10")
     de.add_argument("-o", "--out", metavar="PATH", help="write to a file instead of stdout")
+    de.add_argument("--live", action="store_true", help=_LIVE_HELP)
 
     br = sub.add_parser(
         "branches",
         help="the branchwise view: every conflicting value, both branches side by side",
     )
     br.add_argument("id", nargs="?", help="one contradiction id (default: all with sides)")
+    br.add_argument("--live", action="store_true", help=_LIVE_HELP)
 
     ex = sub.add_parser(
         "export",
@@ -555,11 +612,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "index":
         return _index(args.write)
     if args.command == "why":
-        return _why(args.id, args.json)
+        return _why(args.id, args.json, args.live)
     if args.command == "derive":
-        return _derive(args.ids, args.out)
+        return _derive(args.ids, args.out, args.live)
     if args.command == "branches":
-        return _branches(args.id)
+        return _branches(args.id, args.live)
     if args.command == "export":
         return _export(args.out)
     if args.command == "atlas":

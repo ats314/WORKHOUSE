@@ -227,3 +227,136 @@ def test_run_register_matches_runs_directory():
         assert rdir.is_dir(), f"{rid}: {run['dir']} is not a directory"
         assert (rdir / "SHA256SUMS").is_file(), f"{rid}: no SHA256SUMS pin"
         assert run.get("bears_on"), f"{rid}: a run with no bears_on is invisible"
+
+
+# --------------------------------------------------------------------------
+# The joins added 2026-09-01: checks that rest on checks, values a check
+# yields, routes under a gap, and the labels a pinned manuscript prints.
+# Each test pins one edge so a silent format change is loud.
+# --------------------------------------------------------------------------
+
+
+def test_checks_declare_what_they_rest_on_and_it_resolves():
+    """`rests_on` names resolve to exactly one check and the relation is acyclic.
+
+    Before this field the graph had 265 check nodes and no edge between them,
+    so nothing could answer "which checks fall if this one is refuted".
+    """
+    rests = [e for e in GRAPH.edges if e.type == "rests_on"]
+    assert len(rests) >= 10, len(rests)
+    assert all(e.how == "curated" for e in rests)
+    assert all(e.src.startswith("CHK:") and e.dst.startswith("CHK:") for e in rests)
+    window = C.check_id(
+        "the electric shell, and what isolates it",
+        "below 5 C_F/2 the trivial-flux electric spectrum is exactly 0 and 2 C_F",
+    )
+    shelf = C.check_id(
+        "the electric shell, and what isolates it",
+        "every nontrivial irrep clears 5/4 C_F, except the fundamental pair",
+    )
+    assert (window, shelf, "rests_on") in TRIPLES
+    assert not any("rests_on cycle" in p for p in G.validate(GRAPH))
+    # a name that matches no check, or two, is a dangling reference, not an edge
+    assert not any(ref.startswith("CHK:?") for ref, _c, _s in GRAPH.dangling)
+
+
+def test_a_yielded_value_is_a_constant_reachable_by_value():
+    """A check may return a third element: exact values it establishes.
+
+    The perpendicular cube coefficient existed only inside a prose detail line
+    until this; now `workhouse search -11/192` finds it, and the graph says
+    which check it came from.
+    """
+    from fractions import Fraction
+
+    by_id = {c.id: c for c in CATALOGUE}
+    perp = by_id["CONST:C4_PERP_3"]
+    assert perp.kind == "constant" and Fraction(perp.value) == Fraction(-11, 192)
+    assert perp.tier == 1 and perp.status == "yielded by a passing check"
+    origin = C.check_id(
+        "fourth order, sealed core",
+        "the perpendicular cube sector is a second fourth-order primitive channel, S_4 = -11",
+    )
+    assert (origin, "CONST:C4_PERP_3", "yields") in TRIPLES
+    # symbolic yields keep their expression and carry no float
+    assert by_id["CONST:C4_PERP_N"].decimal is None and "N" in by_id["CONST:C4_PERP_N"].value
+    # the U5 prediction is now a number a future run can be joined to
+    assert Fraction(by_id["CONST:RHO_PLUS_PI_BALANCED_N3_PREDICTED"].value) == Fraction(
+        -45330564458981, 797513093395200
+    )
+
+
+def test_a_yielded_name_never_shadows_a_registered_constant():
+    """The registry stays the authority for the names it holds."""
+    from workhouse import constants as K
+
+    registered = {c.name for c in K.REGISTRY} | {
+        n for n in dir(K) if n.isupper() and not n.startswith("_")
+    }
+    yielded = {c.id[len("CONST:") :] for c in CATALOGUE if c.status.startswith("yielded by")}
+    assert not (yielded & registered), yielded & registered
+
+
+def test_a_yielded_float_without_num_suffix_fails_the_check():
+    """The exact/float boundary is enforced where a number is born."""
+    from workhouse.invariants._core import Suite
+
+    suite = Suite("scratch")
+
+    @suite.check("yields a bare float")
+    def _():
+        return True, "", {"BAD": 0.5}
+
+    @suite.check("yields a labelled float")
+    def _():
+        return True, "", {"FINE_NUM": 0.5}
+
+    results = {r.name: r for r in suite.run()}
+    assert not results["yields a bare float"].passed
+    assert "_NUM" in results["yields a bare float"].detail
+    assert results["yields a labelled float"].passed
+    assert results["yields a labelled float"].yields == {"FINE_NUM": "0.5"}
+
+
+def test_routes_are_nodes_with_a_state_and_a_closer():
+    """A gap's plan steps are routes: `why G3` says which are dead and why."""
+    by_id = {c.id: c for c in CATALOGUE}
+    routes = [c for c in CATALOGUE if c.kind == "route" and c.cites == "G3"]
+    states = {c.status for c in routes}
+    assert {"live", "dead", "done", "untried"} <= states, states
+    sweep = C.route_id("G3", "sealed scalar sweep (demoted, optional)")
+    assert by_id[sweep].status == "dead"
+    assert ("G3", sweep, "plans") in TRIPLES
+    assert (sweep, "C2", "cannot_decide") in TRIPLES
+    closers = {d for (s, d, t) in TRIPLES if s == sweep and t == "closed_by"}
+    assert closers and all(d.startswith("CHK:") for d in closers), closers
+    cellular = C.route_id("G3", "off-axis channel assembly through workhouse.cellular")
+    assert (cellular, "RUN:g3_offaxis_channels_2026-08-30", "closed_by") in TRIPLES
+
+
+def test_why_on_a_gap_lists_its_routes_by_state():
+    text, found = navigator.explain("G3", CATALOGUE, SYMBOLS, GRAPH)
+    assert found
+    assert "Routes" in text
+    assert "[dead] sealed scalar sweep" in text
+    assert "cannot decide C2" in text
+    assert "[untried] covariance sign test" in text
+
+
+def test_a_pinned_manuscript_labels_the_checks_it_prints():
+    """Every \\chk label in a legended edition is a `labels` edge to the check."""
+    from workhouse import claims
+
+    labels = [e for e in GRAPH.edges if e.type == "labels"]
+    editions = {e.src for e in labels}
+    assert {"CITE:PUBLICATION rev5", "CITE:MASTER edition", "CITE:PUBLICATION v2"} <= editions
+    source = (ROOT / "paper" / "workhouse_publication_edition_rev5_2026-08-30.tex").read_text(
+        encoding="utf-8"
+    )
+    printed = set(claims.chk_labels(source))
+    assert "t_N = B_N - A_N" in printed
+    target = C.check_id("second order, all ranks", "t_N = B_N - A_N")
+    assert ("CITE:PUBLICATION rev5", target, "labels") in TRIPLES
+    # one edge per distinct label the edition prints
+    rev5 = {d for (s, d, t) in TRIPLES if s == "CITE:PUBLICATION rev5" and t == "labels"}
+    assert len(rev5) == len(printed)
