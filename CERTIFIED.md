@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 216
+## T1 — re-derived exactly — 218
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -290,9 +290,15 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `RETRACTED: B_3 - beta_historical = 25/64 is a forbidden substitution, not an exact branch`
   - src/workhouse/invariants/orbits.py:288 · C2; walled-Brauer eps-sector; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'RETRACTED: B_3 - beta_historical = 25/64 is a forbidden substitution, not an exact branch'`
+- `every orbit is separately Hermitian and cubic-covariant, so symmetry fixes no sign`
+  - src/workhouse/invariants/orbits.py:494 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'every orbit is separately Hermitian and cubic-covariant, so symmetry fixes no sign'`
 - `every orbit's carrier projection is closed form in e1, e2, e3`
   - src/workhouse/invariants/orbits.py:97 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'every orbit'"'"'s carrier projection is closed form in e1, e2, e3'`
+- `no plane-basis convention flips rho or pi: only +-1 keeps the 144 agreed records`
+  - src/workhouse/invariants/orbits.py:558 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'no plane-basis convention flips rho or pi: only +-1 keeps the 144 agreed records'`
 - `the 189 records carry exactly six weight magnitudes`
   - src/workhouse/invariants/orbits.py:62 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the 189 records carry exactly six weight magnitudes'`
@@ -847,7 +853,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/two_cube.py:313 · MASTER edition §5.1; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
 
-## T2 — float agreement within a stated tolerance — 49
+## T2 — float agreement within a stated tolerance — 50
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -912,6 +918,9 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
   - `workhouse verify --only 'centered kernel difference is PSD (vanishes on axes)'`
 **fourth-order kernel orbits**
 
+- `FINDING: the cold kernel carries the same orientation character, so its flips are real`
+  - src/workhouse/invariants/orbits.py:620 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'FINDING: the cold kernel carries the same orientation character, so its flips are real'`
 - `FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped`
   - src/workhouse/invariants/orbits.py:432 · C2; G3 step 1; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped'`

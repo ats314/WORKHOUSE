@@ -100,16 +100,22 @@ def test_g3_rewrite_keeps_the_protocol_and_the_traps():
         # still reads in the order the work happened.
         "off-axis channel assembly through workhouse.cellular",
         "sealed scalar sweep (demoted, optional)",
-        # Added 2026-09-01, from the graph: the two disputed orbit amplitudes
-        # flip sign together between the rival kernels while the normal orbit
-        # does not, and nothing recorded anyone asking which sign pattern
-        # covariance permits. Recorded as an `untried` route rather than as a
-        # sentence in a session, so the next reader sees it as open work.
+        # Added 2026-09-01, from the graph, and run the same day: symmetry
+        # fixes no orbit's sign and no plane-basis convention reaches the
+        # flip, so the route closed `done` with a negative result. It stays
+        # listed because a closed route is evidence the next reader needs.
         "covariance sign test of the two flipped orbits",
     ], (
         "G3's steps: the executed pair, the measured one, the cheaper route, the demoted "
-        "sweep, the untried sign test"
+        "sweep, the sign test"
     )
+    sign_test = next(
+        s for s in g3["plan"] if s["step"] == "covariance sign test of the two flipped orbits"
+    )
+    assert sign_test["state"] == "done", "the sign test was run on 2026-09-01; it is not open work"
+    assert len(sign_test["closed_by"]) == 3 and all(
+        ref.startswith("CHK:") for ref in sign_test["closed_by"]
+    ), "a done route names the checks that closed it"
     assert "inventory_trap" in g3, "the 3895-vs-3850 inventory warning must travel with G3"
 
 

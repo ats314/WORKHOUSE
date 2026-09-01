@@ -427,3 +427,144 @@ def cross_plane_skeleton(records, u: Fraction) -> tuple[list, Laurent]:
     group = [r for r in records if r[0][0] != r[0][1] and abs(r[1]) == u]
     form = _mul(E2, _add(E1, _mono((0, 0, 0), -8)))
     return group, {e: -2 * u * c for e, c in form.items() if c}
+
+
+# -- the cubic group on plaquette records ------------------------------------
+#
+# The sign test G3 asked for. A kernel record ((ip, op, d), w) couples an input
+# plaquette of plane ``ip`` based at the origin to an output plaquette of plane
+# ``op`` based at ``d``. Plaquettes are corner-based, so ``d`` is not the vector
+# the cubic group acts on: the centre of a plaquette in plane {i, j} sits at
+# (e_i + e_j)/2 from its base, and the geometric displacement is
+#
+#     Delta = d + c(op) - c(ip),        c(P) = (e_i + e_j)/2,
+#
+# which is what a signed permutation of the axes rotates. Reflecting an axis
+# that a plaquette contains reverses the loop, so a plane picks up the
+# orientation character  chi_g(P) = s_i s_j * sgn(order of the image axes).
+# ``PSI_SIGN`` is the same character read at the identity: eps_P is the parity
+# of (i, j, n(P)), i.e. the cube boundary d_3.
+
+Signed = tuple[tuple[int, int, int], tuple[int, int, int]]
+
+
+def cubic_group() -> list[Signed]:
+    """The 48 signed permutations of the axes: ``(sigma, s)`` with x_j -> s_j x_{sigma_j}."""
+    from itertools import permutations, product
+
+    return [(sigma, s) for sigma in permutations(range(3)) for s in product((1, -1), repeat=3)]
+
+
+def act_plane(g: Signed, plane: tuple[int, int]) -> tuple[tuple[int, int], int]:
+    """The image plane and the orientation character of ``plane`` under ``g``."""
+    sigma, s = g
+    i, j = plane
+    a, b = sigma[i], sigma[j]
+    return (min(a, b), max(a, b)), s[i] * s[j] * (1 if a < b else -1)
+
+
+def act_vector(g: Signed, v) -> tuple[int, int, int]:
+    sigma, s = g
+    out = [0, 0, 0]
+    for j in range(3):
+        out[sigma[j]] = s[j] * v[j]
+    return tuple(out)
+
+
+def _centre2(plane: tuple[int, int]) -> list[int]:
+    """Twice the centre offset of a plaquette based at the origin (kept integer)."""
+    out = [0, 0, 0]
+    for j in plane:
+        out[j] = 1
+    return out
+
+
+def transform_record(g: Signed, key, use_character: bool = True):
+    """``(key', chi)``: where ``g`` sends a record key, and the sign it acquires.
+
+    Returns ``(None, 0)`` when the rotated centre displacement is not a legal
+    base displacement for the image planes, which cannot happen for a
+    consistent record set and is reported rather than hidden.
+    """
+    ip, op, d = key
+    ip2, ci = act_plane(g, ip)
+    op2, co = act_plane(g, op)
+    c_ip, c_op = _centre2(ip), _centre2(op)
+    delta2 = act_vector(g, tuple(2 * d[j] + c_op[j] - c_ip[j] for j in range(3)))
+    c_ip2, c_op2 = _centre2(ip2), _centre2(op2)
+    d2 = []
+    for j in range(3):
+        v = delta2[j] - (c_op2[j] - c_ip2[j])
+        if v % 2:
+            return None, 0
+        d2.append(v // 2)
+    return (ip2, op2, tuple(d2)), (ci * co if use_character else 1)
+
+
+def _same(a, b, tol) -> bool:
+    return a == b if tol == 0 else abs(a - b) <= tol * abs(b)
+
+
+def is_hermitian(records, tol=0) -> bool:
+    """Every record has its adjoint partner ``((op, ip, -d), w)`` at the same weight."""
+    table = {key: w for key, w in records}
+    for (ip, op, d), w in records:
+        partner = table.get((op, ip, tuple(-x for x in d)))
+        if partner is None or not _same(partner, w, tol):
+            return False
+    return True
+
+
+def is_transposition_symmetric(records, tol=0) -> bool:
+    """Swapping input and output planes at the same centre displacement is a symmetry.
+
+    In centred coordinates that is Hermiticity composed with inversion, so for a
+    cubic-covariant Hermitian kernel it holds automatically -- which is why
+    which plane a dump calls the row and which the anchor cannot matter.
+    """
+    table = {key: w for key, w in records}
+    for key, w in records:
+        (ip, op, d), _ = key, w
+        # centre displacement of the swapped record equals that of the original
+        c_ip, c_op = _centre2(ip), _centre2(op)
+        d2 = []
+        for j in range(3):
+            v = 2 * d[j] + c_op[j] - c_ip[j] - (c_ip[j] - c_op[j])
+            if v % 2:
+                return False
+            d2.append(v // 2)
+        partner = table.get((op, ip, tuple(d2)))
+        if partner is None or not _same(partner, w, tol):
+            return False
+    return True
+
+
+def covariant_elements(records, use_character: bool = True, tol=0) -> list[Signed]:
+    """The elements of the cubic group under which the record set is invariant."""
+    table = {key: w for key, w in records}
+    keep = []
+    for g in cubic_group():
+        ok = True
+        for key, w in records:
+            key2, chi = transform_record(g, key, use_character)
+            if key2 is None or key2 not in table or not _same(table[key2], chi * w, tol):
+                ok = False
+                break
+        if ok:
+            keep.append(g)
+    return keep
+
+
+def regauge(records, g: Signed):
+    """A change of basis of the plane fibre alone: ``S -> U_g S U_g^T`` with k untouched.
+
+    The plane labels and orientations move; the displacement does not. This is
+    the whole space of conventions available in the plane basis -- which
+    plaquette is called which, and which way round each one is traversed.
+    """
+    out = []
+    for (ip, op, d), w in records:
+        ip2, ci = act_plane(g, ip)
+        op2, co = act_plane(g, op)
+        out.append(((ip2, op2, d), ci * co * w))
+    return out
