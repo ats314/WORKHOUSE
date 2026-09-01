@@ -32,6 +32,7 @@ from . import navigator as navigator_mod
 #: a claim that earlier rows imply later ones.
 _KIND_RANK = {
     "document": 0,
+    "corpus": 0,
     "citation": 1,
     "constant": 2,
     "check": 3,
@@ -131,7 +132,7 @@ def render(
     w("> at generation time. Nothing in this file is authored.")
 
     for query in roots:
-        root = navigator_mod._resolve(query, node_ids)
+        root = navigator_mod._resolve(query, node_ids, navigator_mod._corpus_paths(catalogue))
         w("")
         if root is None:
             w(f"## {query} — no record with this id")

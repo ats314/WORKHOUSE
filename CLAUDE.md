@@ -107,7 +107,9 @@ code files.
 
 `workhouse why <id>` is the front door: one query, everything recorded about
 a claim — both sides of a dispute, every check with its verdict, what each
-check rests on, the routes tried and which are dead. `workhouse search` is
+check rests on, the routes tried and which are dead, and the corpus files
+that carry a value. Every file `corpus-import/` pins is a graph node (ADR
+0016), so `why <path>` works on a corpus file too. `workhouse search` is
 the front door to the two indexes above, plus the claim catalogue and the
 curated aliases in `ledger/symbols.yaml`. It matches by *value* rather than
 spelling (`-10/96` finds `-5/48`), and it carries two warnings a grep cannot:

@@ -63,7 +63,13 @@ KINDS = (
     "note",
     "run",
     "route",
+    "corpus",
 )
+
+#: The pinned ALL THEORY import and its manifest: one node per file.
+CORPUS_DIR = ROOT / "corpus-import"
+CORPUS_MANIFEST = CORPUS_DIR / "SHA256SUMS"
+CORPUS_ARCHIVE_ID = "ARCHIVE:ALL_THEORY_2026-08-20"
 
 #: A ledger id anywhere in free text. Case-sensitive on purpose: `u4` in
 #: "O(u^4)" and `U` in "SU(4)" must not read as claim ids.
@@ -147,6 +153,23 @@ def _ident(text: str) -> str:
 def check_id(suite_name: str, check_name: str) -> str:
     """The catalogue id of one registered check. The single place the format lives."""
     return f"CHK:{_ident(suite_name)}:{_ident(check_name)}"
+
+
+def corpus_id(path: str) -> str:
+    """The catalogue id of one pinned corpus file, keyed on its manifest path."""
+    return f"CORPUS:{_ident(path)}"
+
+
+def load_corpus_manifest(path: Path | None = None) -> list[tuple[str, str]]:
+    """``(relative path, sha256)`` for every file corpus-import/SHA256SUMS pins."""
+    target = path or CORPUS_MANIFEST
+    rows: list[tuple[str, str]] = []
+    for line in target.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
+        digest, rel = line.split(maxsplit=1)
+        rows.append((rel.strip(), digest))
+    return sorted(rows)
 
 
 def route_id(gap_id: str, step: str) -> str:
@@ -363,6 +386,71 @@ def collect() -> list[Claim]:
                 decimal=decimal,
                 where="src/workhouse/constants.py",
                 status="module-level, not in REGISTRY",
+            )
+        )
+
+    # ALL THEORY, file by file. The 2026-08-20 import sat in corpus-import/ as
+    # 928 pinned files and reached the graph through six curated provenance
+    # documents and a value index beside it -- so "which corpus files carry
+    # 5/48" had an answer in `search --corpus` and none in `why`. Every pinned
+    # file is now a node, keyed on its manifest path and digest, and joined to
+    # the registered constants whose exact values its bytes contain. Nothing
+    # here promotes anything: a corpus file is T3 whatever it says, and the
+    # join is by value, never by a name map.
+    by_value: dict[Fraction, list[str]] = {}
+    for claim in out:
+        if claim.kind == "constant" and claim.value:
+            try:
+                by_value.setdefault(Fraction(claim.value), []).append(claim.id)
+            except (ValueError, ZeroDivisionError):
+                continue  # symbolic in N or L, or a float repr
+    manifest = load_corpus_manifest()
+    carried = _corpus_values()
+    out.append(
+        Claim(
+            id=CORPUS_ARCHIVE_ID,
+            kind="archive",
+            statement=(
+                "ALL THEORY, the 2026-08-20 import: corpus-import/, every file pinned by "
+                "corpus-import/SHA256SUMS and present here as a node"
+            ),
+            tier=3,
+            where="corpus-import/SHA256SUMS",
+            cites="corpus-import/README.md",
+            status=f"{len(manifest)} files pinned",
+            detail=(
+                "The received research corpus. Immutable evidence of what was believed; "
+                "T3 until a check says otherwise. Edges: contains -> each file, and each "
+                "file carries -> the registered constants whose exact values it holds"
+            ),
+        )
+    )
+    for rel, digest in manifest:
+        values = carried.get(rel, set())
+        constants = sorted({cid for v in values if v in by_value for cid in by_value[v]})
+        suffix = rel.rsplit(".", 1)[-1].lower() if "." in rel else ""
+        klass = "prose" if suffix in ("md", "tex") else "code"
+        names = [c[len("CONST:") :] for c in constants]
+        out.append(
+            Claim(
+                id=corpus_id(rel),
+                kind="corpus",
+                statement=rel,
+                tier=3,
+                where=f"corpus-import/{rel}",
+                cites="corpus-import/SHA256SUMS",
+                status=klass,
+                detail=f"sha256 {digest[:12]}"
+                + (
+                    f"; carries {len(names)} registered constant"
+                    + ("s" if len(names) != 1 else "")
+                    + ": "
+                    + ", ".join(names[:12])
+                    + (f", … {len(names) - 12} more" if len(names) > 12 else "")
+                    if names
+                    else "; carries no registered exact value"
+                ),
+                related=constants,
             )
         )
 
@@ -666,6 +754,24 @@ def collect() -> list[Claim]:
             )
         )
 
+    return out
+
+
+def _corpus_values() -> dict[str, set[Fraction]]:
+    """Manifest path -> every exact rational the file's bytes contain.
+
+    Read through ``corpus_index.scan_cached`` -- the same scan `search
+    --corpus` uses, over prose and code alike -- so the graph's `carries` edges
+    and the search's corpus hits can never disagree about what a file holds.
+    """
+    from . import corpus_index as X
+
+    table = X.scan_cached(CORPUS_DIR, X.CODE_EXTS | X.PROSE_EXTS)
+    out: dict[str, set[Fraction]] = {}
+    for value, record in table.items():
+        for path in record.files:
+            rel = Path(path).resolve().relative_to(CORPUS_DIR.resolve()).as_posix()
+            out.setdefault(rel, set()).add(value)
     return out
 
 

@@ -83,6 +83,7 @@ CURATED_TYPES = frozenset(
         "closed_by",  # gaps.yaml plan step -> the run, check or ADR that settled it
         "cannot_decide",  # gaps.yaml plan step -> the claim its instrument cannot reach
         "labels",  # a pinned manuscript -> a check it prints a \chk label for
+        "pinned_as",  # a corpus file -> the provenance document or alias that pins it
     }
 )
 #: "cites" appears on both sides deliberately: the DERIVED kind is an id
@@ -437,6 +438,27 @@ def build(
         source = (ROOT / path).read_text(encoding="utf-8")
         for label in sorted(set(claims_mod.chk_labels(source))):
             add(f"CITE:{document['alias']}", check_ref(label), "labels", "curated", path)
+
+    # ALL THEORY, file by file: the archive contains every pinned corpus file,
+    # each file carries the registered constants its bytes hold (matched by
+    # exact value in the catalogue, never by name), and a file that a
+    # provenance record or a document alias pins is joined to that record.
+    corpus_by_where: dict[str, str] = {}
+    for claim in catalogue:
+        if claim.kind != "corpus":
+            continue
+        corpus_by_where[claim.where] = claim.id
+        add(claims_mod.CORPUS_ARCHIVE_ID, claim.id, "contains", "curated", claim.cites)
+        for const in claim.related:
+            add(claim.id, const, "carries", "derived", claim.where)
+    for doc in claims_mod.load_provenance():
+        cid = corpus_by_where.get(f"corpus-import/{doc['path']}")
+        if cid:
+            add(cid, f"DOC:{doc['id']}", "pinned_as", "curated", "ledger/provenance.yaml")
+    for document in claims_mod.load_document_aliases():
+        cid = corpus_by_where.get(str(document.get("path", "")))
+        if cid and not document.get("unresolved"):
+            add(cid, f"CITE:{document['alias']}", "pinned_as", "curated", "ledger/documents.yaml")
 
     for theorem in claims_mod.load_theorems():
         tid = f"LEAN:{theorem['name']}"

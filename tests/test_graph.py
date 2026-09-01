@@ -360,3 +360,55 @@ def test_a_pinned_manuscript_labels_the_checks_it_prints():
     # one edge per distinct label the edition prints
     rev5 = {d for (s, d, t) in TRIPLES if s == "CITE:PUBLICATION rev5" and t == "labels"}
     assert len(rev5) == len(printed)
+
+
+# --------------------------------------------------------------------------
+# ALL THEORY, file by file (ADR 0016). The corpus was loaded to the repository
+# on 2026-08-20 and reached the graph as six provenance documents; the
+# maintainer's instruction is that the whole corpus be reflected, so every
+# pinned file is a node.
+# --------------------------------------------------------------------------
+
+
+def test_every_pinned_corpus_file_is_a_node():
+    manifest = C.load_corpus_manifest()
+    assert len(manifest) >= 900
+    ids = {c.id for c in CATALOGUE if c.kind == "corpus"}
+    assert len(ids) == len(manifest)
+    for rel, _digest in manifest:
+        assert C.corpus_id(rel) in ids, rel
+    archive = next(c for c in CATALOGUE if c.id == C.CORPUS_ARCHIVE_ID)
+    assert archive.kind == "archive"
+    contains = {d for (s, d, t) in TRIPLES if s == C.CORPUS_ARCHIVE_ID and t == "contains"}
+    assert contains == ids
+
+
+def test_corpus_files_carry_registered_constants_by_value():
+    """The join is by exact value: 5/48 sits in dozens of corpus files."""
+    carriers = {s for (s, d, t) in TRIPLES if d == "CONST:A_SHP_3" and t == "carries"}
+    assert len(carriers) >= 40, len(carriers)
+    assert all(s.startswith("CORPUS:") for s in carriers)
+    # and a file with no registered value carries nothing rather than guessing
+    by_id = {c.id: c for c in CATALOGUE}
+    empty = [c for c in CATALOGUE if c.kind == "corpus" and not c.related]
+    assert empty and all("carries no registered exact value" in c.detail for c in empty)
+    assert all(by_id[s].kind == "corpus" for s in carriers)
+
+
+def test_provenance_documents_are_joined_to_their_corpus_file():
+    kernel = C.corpus_id(
+        "programs/one_plaquette/y4_o3_flatband_verification/"
+        "y4_full_real_space_H4_kernel.json/CERT_Y4_full_real_space_h4_kernel.json"
+    )
+    assert (kernel, "DOC:kernel-historical-189", "pinned_as") in TRIPLES
+
+
+def test_why_resolves_a_corpus_file_by_path():
+    rel = (
+        "programs/one_plaquette/y4_o3_flatband_verification/"
+        "ENGINE_Y4_global_band_edge_certificate.py"
+    )
+    for query in (rel, f"corpus-import/{rel}"):
+        text, found = navigator.explain(query, CATALOGUE, SYMBOLS, GRAPH)
+        assert found, query
+        assert "carries" in text or "contains" in text
