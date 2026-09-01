@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 218
+## T1 — re-derived exactly — 220
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -276,43 +276,49 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **fourth-order kernel orbits**
 
 - `A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u)`
-  - src/workhouse/invariants/orbits.py:135 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:144 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u)'`
 - `B = 0 is unpopulated, not cancelled`
-  - src/workhouse/invariants/orbits.py:245 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:254 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'B = 0 is unpopulated, not cancelled'`
+- `CORRECTED PREDICTION: the eps-sector at N=3 is Delta(rho + pi~) = -25/512; u is NOT constrained`
+  - src/workhouse/invariants/orbits.py:384 · U5; C2; C10; G3; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'CORRECTED PREDICTION: the eps-sector at N=3 is Delta(rho + pi~) = -25/512; u is NOT constrained'`
 - `C_shp = -5/96 - u - (rho + pi)/2, exactly`
-  - src/workhouse/invariants/orbits.py:147 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:156 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'C_shp = -5/96 - u - (rho + pi)/2, exactly'`
-- `PREDICTION: the eps-sector at N=3 is Delta(rho + pi) = -25/512 and nothing else`
-  - src/workhouse/invariants/orbits.py:375 · U5; C2; C10; G3; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
-  - `workhouse verify --only 'PREDICTION: the eps-sector at N=3 is Delta(rho + pi) = -25/512 and nothing else'`
+- `H4 = -nu~(L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2 C_shp R exactly: C_shp is the coefficient of the one non-Hodge operator`
+  - src/workhouse/invariants/orbits.py:758 · C2; G14; U5; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'H4 = -nu~(L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2 C_shp R exactly: C_shp is the coefficient of the one non-Hodge operator'`
 - `RETRACTED: B_3 - beta_historical = 25/64 is a forbidden substitution, not an exact branch`
-  - src/workhouse/invariants/orbits.py:288 · C2; walled-Brauer eps-sector; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:297 · C2; walled-Brauer eps-sector; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'RETRACTED: B_3 - beta_historical = 25/64 is a forbidden substitution, not an exact branch'`
 - `every orbit is separately Hermitian and cubic-covariant, so symmetry fixes no sign`
-  - src/workhouse/invariants/orbits.py:494 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:516 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'every orbit is separately Hermitian and cubic-covariant, so symmetry fixes no sign'`
 - `every orbit's carrier projection is closed form in e1, e2, e3`
-  - src/workhouse/invariants/orbits.py:97 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:106 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'every orbit'"'"'s carrier projection is closed form in e1, e2, e3'`
 - `no plane-basis convention flips rho or pi: only +-1 keeps the 144 agreed records`
-  - src/workhouse/invariants/orbits.py:558 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:580 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'no plane-basis convention flips rho or pi: only +-1 keeps the 144 agreed records'`
+- `the 144 agreed records are u S_sq^2, the shared-link adjacency squared`
+  - src/workhouse/invariants/orbits.py:696 · C2; G14; U5; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'the 144 agreed records are u S_sq^2, the shared-link adjacency squared'`
 - `the 189 records carry exactly six weight magnitudes`
-  - src/workhouse/invariants/orbits.py:62 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:71 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the 189 records carry exactly six weight magnitudes'`
 - `the on-site orbit IS the momentum-independent channel`
-  - src/workhouse/invariants/orbits.py:342 · U5; C2; C10; GCSG SU(6) certificate; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:351 · U5; C2; C10; GCSG SU(6) certificate; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the on-site orbit IS the momentum-independent channel'`
 - `the shape coefficients are solved, not fitted: A = 5/48, B = D = 0 exactly`
-  - src/workhouse/invariants/orbits.py:35 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:44 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the shape coefficients are solved, not fitted: A = 5/48, B = D = 0 exactly'`
 - `the tier collapse is one identity: D = -6u + 3*u2 with u2 = 2u`
-  - src/workhouse/invariants/orbits.py:168 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:177 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the tier collapse is one identity: D = -6u + 3*u2 with u2 = 2u'`
 - `u2 = 2u is the cross term of a perfect square`
-  - src/workhouse/invariants/orbits.py:198 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:207 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'u2 = 2u is the cross term of a perfect square'`
 **homology and finite volume**
 
@@ -853,7 +859,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/two_cube.py:313 · MASTER edition §5.1; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
 
-## T2 — float agreement within a stated tolerance — 50
+## T2 — float agreement within a stated tolerance — 51
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -919,10 +925,13 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **fourth-order kernel orbits**
 
 - `FINDING: the cold kernel carries the same orientation character, so its flips are real`
-  - src/workhouse/invariants/orbits.py:620 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:642 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: the cold kernel carries the same orientation character, so its flips are real'`
+- `FINDING: the cold kernel has the same Hodge form, with nu~ = -5/48 and its own (u, rho, pi~, sigma~)`
+  - src/workhouse/invariants/orbits.py:828 · C2; G14; U5; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - `workhouse verify --only 'FINDING: the cold kernel has the same Hodge form, with nu~ = -5/48 and its own (u, rho, pi~, sigma~)'`
 - `FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped`
-  - src/workhouse/invariants/orbits.py:432 · C2; G3 step 1; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:454 · C2; G3 step 1; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped'`
 **near-Gamma uniformity (G11)**
 

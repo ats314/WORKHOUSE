@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 268/268 checks pass.
+**T1/T2 — re-derived here.** 271/271 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -40,7 +40,7 @@ it cannot drift from what the repository actually checks.
 | finite-rank truncation bridge (published SU(3) truncations) | 8/8 |
 | two-cube charge-odd second-order closure (B=4 and B=6) | 12/12 |
 | the electric shell, and what isolates it | 8/8 |
-| fourth-order kernel orbits | 15/15 |
+| fourth-order kernel orbits | 18/18 |
 | continuum and fixed-spacing bridges (G18, G19) | 3/3 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
@@ -146,6 +146,7 @@ settles nothing is excluded however cheap it looks.
 - `G3` (weeks) Fourth-order adjudication — decide C_shp where it actually lives — settles C2, G9
   - REWRITTEN 2026-08-28, at the maintainer's standing instruction, after the sweep-cannot-decide-C2 finding below. The original G3 ("run the marked-cluster engine target-blind", the 11-item GLUEBALL §18.1 protocol) directed every session at a sealed 609-evaluation sweep that is now established — by T1 static scan, not by fatigue — to emit the Gamma-point scalar only, a quantity externally validated and structurally incapable of constraining Delta_C (Phi_C(0) = 0). Four sessions dead-ended on that path (absent engine, closure cap, cost, and finally the structural incapacity); the register, not the next agent, now carries that knowledge. What G3 must settle is unchanged: the off-axis coefficient C_shp (C2). The route is replaced by the two paths that can actually reach it, cheapest first.
   - routes live: independent cross-amplitude computation
+  - routes untried: chain amplitude u on the three-plaquette cluster
   - routes done: block-structure comparison; targeted kernel-bearing recomputation; covariance sign test of the two flipped orbits
   - routes dead: off-axis channel assembly through workhouse.cellular; sealed scalar sweep (demoted, optional)
 - `G17` (unbounded) PC-2 free-energy stability and the source-radius reduction — settles load-bearing
@@ -305,13 +306,13 @@ falsifier is an analogy, and analogies do not belong on this list.
 - status: conjectured
 
 **U5 — The determinant (epsilon / triality) sector enters the fourth-order band shape through the ON-SITE ORBIT ALONE, at every rank where it has been computed independently, and N = 3 is the sole exception. In the orbit basis of the 189-record kernel the on-site orbit's carrier projection is exactly sigma*e_1, so eps = T/q = sigma is constant over the zone and carries no A, B, C or D — which means a correction recorded as "momentum-independent" or "a pure scalar shift" IS an on-site-orbit shift and nothing else. Read that way the record is uniform: SU(6)'s sole determinant orbit shifts q, X, M and R by exactly 6/343 with A, B and the bandwidth unchanged (an on-site shift); SU(5) ships 895,524 candidate pairs with zero determinant sectors (no shift at all); SU(4) records Delta A_4 = Delta B_4 = 0. Only at N = 3 is Delta beta_3 nonzero, i.e. only there does the sector leave the on-site orbit.
-The quantitative consequence is exact. Delta A_3 = 0 (both sides of C2 agree alpha = 5/12) plus the identity A = -nu - 4u forces Delta nu = -4 Delta u; the primitive cube-completion channel is link-balanced, hence eps-blind, and that channel IS the normal orbit, so Delta nu = 0 and therefore Delta u = 0, and Delta u2 = 0 because u2 = 2u holds exactly in both recorded kernels. C = -5/96 - u - (rho + pi)/2 then leaves the sector exactly one place to act, and Delta beta_3 = +25/64 gives Delta C = +25/1024 and
+The quantitative consequence, AMENDED 2026-09-01. In the Hodge form of the kernel (suite "fourth-order kernel orbits"), the normal orbit is nu = nu~ - 4u with nu~ = -5/48 the primitive cube completion and -4u the diagonal shadow of the two-hop sector u S_sq^2. Eps-blindness of the link-balanced primitive channel fixes nu~, which is the same statement as Delta A_3 = 0 (A = -nu~ exactly); it says nothing about u. And C = -5/96 - (rho + pi~)/2 with pi~ = pi + 2u, so Delta beta_3 = +25/64 gives Delta C = +25/1024 and
 
-    Delta(rho + pi) = -25/512, with u, u2, nu and sigma unchanged.
+    Delta(rho + pi~) = -25/512, with nu~ = -5/48 unchanged; u, u2, sigma~ free.
 
-Historical rho + pi = -12778990891087/1595026186790400, so a direct balanced contraction at N = 3 must return -45330564458981/797513093395200.**
+Historical rho + pi~ = -17607806155349/2202655210329600 (2*X_QUANTUM above the earlier rho + pi), so a direct balanced contraction at N = 3 must return rho + pi~ = -15644916262153/275331901291200.**
 
-- supported by: CHK: the on-site orbit IS the momentum-independent channel, CHK: PREDICTION: the eps-sector at N=3 is Delta(rho + pi) = -25/512 and nothing else, CHK: the SU(6) determinant correction is exactly 6/343 and momentum-independent, CHK: the SU(5) stage-1 scan is shipped: 895,524 pairs, zero determinant sectors, CHK: A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u), OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08) §4: the primitive channel is link-balanced, hence eps-blind, STATE.md cont. 9: unified N-ality theorem, exact exceptional offsets
-- would be falsified by: A direct balanced contraction at N = 3 whose six orbit amplitudes differ from the historical ones anywhere except in rho + pi, or whose rho + pi shift is not exactly -25/512. Equally: any exceptional rank at which the determinant correction is shown to be momentum-DEPENDENT (it would then not be an on-site shift), or an SU(3) determinant analysis that reaches A rather than C, which would contradict the eps-blindness of the link-balanced primitive channel that the whole chain rests on.
+- supported by: CHK: the on-site orbit IS the momentum-independent channel, CHK: CORRECTED PREDICTION: the eps-sector at N=3 is Delta(rho + pi~) = -25/512; u is NOT constrained, CHK: H4 = -nu~(L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2 C_shp R exactly: C_shp is the coefficient of the one non-Hodge operator, CHK: the SU(6) determinant correction is exactly 6/343 and momentum-independent, CHK: the SU(5) stage-1 scan is shipped: 895,524 pairs, zero determinant sectors, CHK: A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u), OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08) §4: the primitive channel is link-balanced, hence eps-blind, STATE.md cont. 9: unified N-ality theorem, exact exceptional offsets
+- would be falsified by: A direct balanced contraction at N = 3 whose nu~ = nu + 4u is not -5/48, or whose rho + pi~ shift from the historical value is not exactly -25/512 (amended 2026-09-01: u, u2 and sigma~ are NOT constrained, so a shift in them refutes nothing). Equally: any exceptional rank at which the determinant correction is shown to be momentum-DEPENDENT (it would then not be an on-site shift), or an SU(3) determinant analysis that reaches A rather than C, which would contradict the eps-blindness of the link-balanced primitive channel that the whole chain rests on.
 - status: conjectured
 

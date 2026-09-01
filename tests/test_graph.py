@@ -280,10 +280,12 @@ def test_a_yielded_value_is_a_constant_reachable_by_value():
     assert (origin, "CONST:C4_PERP_3", "yields") in TRIPLES
     # symbolic yields keep their expression and carry no float
     assert by_id["CONST:C4_PERP_N"].decimal is None and "N" in by_id["CONST:C4_PERP_N"].value
-    # the U5 prediction is now a number a future run can be joined to
-    assert Fraction(by_id["CONST:RHO_PLUS_PI_BALANCED_N3_PREDICTED"].value) == Fraction(
-        -45330564458981, 797513093395200
+    # the U5 prediction is now a number a future run can be joined to -- in its
+    # corrected 2026-09-01 form, on rho + pi~ (ADR 0019)
+    assert Fraction(by_id["CONST:RHO_PLUS_PI_REDUCED_BALANCED_N3_PREDICTED"].value) == Fraction(
+        -15644916262153, 275331901291200
     )
+    assert "CONST:RHO_PLUS_PI_BALANCED_N3_PREDICTED" not in by_id, "the withdrawn number is gone"
 
 
 def test_a_yielded_name_never_shadows_a_registered_constant():

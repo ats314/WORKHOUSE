@@ -568,3 +568,187 @@ def regauge(records, g: Signed):
         op2, co = act_plane(g, op)
         out.append(((ip2, op2, d), ci * co * w))
     return out
+
+
+# -- the Hodge form of the kernel ---------------------------------------------
+#
+# The corpus's own algebra (GLUEBALL v3.1 §6.2; THM_FLUX Prop. 2): the signed
+# shared-edge square adjacency S_sq satisfies S_sq + 4I = L_down, the down
+# Laplacian on plaquettes, and the cube boundary gives the up Laplacian L_up.
+# What the checks in ``invariants/orbits.py`` add is that BOTH recorded
+# fourth-order kernels are exactly a polynomial in those two operators plus
+# one more -- the cross-plane half of S_sq -- and that the coefficient of that
+# one operator is -2 C_shp. Everything here is incidence algebra on records.
+
+Records = dict
+
+
+def _e(j: int) -> tuple[int, int, int]:
+    v = [0, 0, 0]
+    v[j] = 1
+    return tuple(v)
+
+
+def _vadd(x, y) -> tuple[int, int, int]:
+    return tuple(p + q for p, q in zip(x, y, strict=True))
+
+
+def plaquette_boundary(plane: tuple[int, int], base) -> dict:
+    """The oriented boundary of the plaquette of ``plane`` based at ``base``.
+
+    Links are ``(site, direction)``, oriented along +direction; the loop runs
+    base -> +i -> +j -> back, so the return legs enter with sign -1.
+    """
+    i, j = plane
+    return {
+        (tuple(base), i): 1,
+        (_vadd(base, _e(i)), j): 1,
+        (_vadd(base, _e(j)), i): -1,
+        (tuple(base), j): -1,
+    }
+
+
+def cube_boundary(base) -> dict:
+    """The cube boundary d_3 as face signs: PSI_SIGN on the far face, minus on the near.
+
+    This is the carrier psi = (dbar_3, -dbar_2, dbar_1) read in real space:
+    dbar_n = z_n - 1 is 'the face at base + e_n minus the face at base'.
+    """
+    out = {}
+    for pl in PLANES:
+        n = NORMAL_OF[pl]
+        out[(pl, _vadd(base, _e(n)))] = PSI_SIGN[pl]
+        out[(pl, tuple(base))] = -PSI_SIGN[pl]
+    return out
+
+
+def identity() -> Records:
+    return {(p, p, (0, 0, 0)): Fraction(1) for p in PLANES}
+
+
+def down_laplacian(reach: int = 2) -> Records:
+    """L_down = d_1 d_1^dagger on plaquettes: shared links, with orientation signs.
+
+    Diagonal 4 (four links per plaquette); off-diagonal +-1 on the twelve
+    shared-link neighbours. ``L_down - 4I`` is the corpus's S_sq.
+    """
+    from itertools import product
+
+    out: Records = {}
+    for ip in PLANES:
+        b0 = plaquette_boundary(ip, (0, 0, 0))
+        for op in PLANES:
+            for d in product(range(-reach, reach + 1), repeat=3):
+                b1 = plaquette_boundary(op, d)
+                v = sum(b0[link] * b1[link] for link in b0 if link in b1)
+                if v:
+                    out[(ip, op, d)] = Fraction(v)
+    return out
+
+
+def up_laplacian(reach: int = 2) -> Records:
+    """L_up = d_2^dagger d_2 on plaquettes: pairs of faces of a common cube.
+
+    Diagonal 2 (two cubes per plaquette); -1 on the opposite face of each cube,
+    and +-1 on the perpendicular faces -- exactly minus the cross-plane half of
+    L_down, so the full Laplacian L_down + L_up is the scalar Laplacian on each
+    plane component, with no cross-plane entries at all.
+    """
+    from itertools import product
+
+    cubes = [cube_boundary(c) for c in product(range(-reach - 1, reach + 1), repeat=3)]
+    out: Records = {}
+    for ip in PLANES:
+        for op in PLANES:
+            for d in product(range(-reach, reach + 1), repeat=3):
+                v = 0
+                for c in cubes:
+                    if (ip, (0, 0, 0)) in c and (op, d) in c:
+                        v += c[(ip, (0, 0, 0))] * c[(op, d)]
+                if v:
+                    out[(ip, op, d)] = Fraction(v)
+    return out
+
+
+def combine(*terms) -> Records:
+    """sum_i c_i * records_i, dropping zeros."""
+    out = defaultdict(Fraction)
+    for c, m in terms:
+        for k, v in m.items():
+            out[k] += c * v
+    return {k: v for k, v in out.items() if v}
+
+
+def compose(a: Records, b: Records) -> Records:
+    """The operator product on records: ip at 0 -> q at d1 (a), q -> op at d1 + d2 (b)."""
+    out = defaultdict(Fraction)
+    by_in = defaultdict(list)
+    for (ip, q, d), w in b.items():
+        by_in[ip].append((q, d, w))
+    for (ip, q, d1), w1 in a.items():
+        for op, d2, w2 in by_in[q]:
+            out[(ip, op, _vadd(d1, d2))] += w1 * w2
+    return {k: v for k, v in out.items() if v}
+
+
+def cross_half(records: Records) -> Records:
+    return {k: v for k, v in records.items() if k[0] != k[1]}
+
+
+def bloch_matrix(records) -> dict:
+    """S[op][ip](k) = sum_d w z^d, as Laurent polynomials."""
+    S = {op: {ip: {} for ip in PLANES} for op in PLANES}
+    for (ip, op, d), w in dict(records).items():
+        S[op][ip] = _add(S[op][ip], _mono(d, Fraction(w)))
+    return S
+
+
+def carrier() -> dict:
+    """psi_P = eps_P dbar_{n(P)} as Laurent polynomials, per plane."""
+    return {p: {e: PSI_SIGN[p] * c for e, c in _dbar(NORMAL_OF[p]).items()} for p in PLANES}
+
+
+def apply(records, vector: dict) -> dict:
+    S = bloch_matrix(records)
+    out = {}
+    for op in PLANES:
+        acc: Laurent = {}
+        for ip in PLANES:
+            acc = _add(acc, _mul(S[op][ip], vector[ip]))
+        out[op] = acc
+    return out
+
+
+def acts_as(records, scalar: Laurent) -> bool:
+    """True when the operator sends the carrier to ``scalar * carrier``."""
+    psi = carrier()
+    image = apply(records, psi)
+    return all(image[p] == _mul(scalar, psi[p]) for p in PLANES)
+
+
+def hodge_form(amps: dict) -> dict:
+    """The five coefficients of  H4 = -nu~ (L_up - 2) + u S^2 - pi~ S + sigma~ I - 2C R.
+
+    ``S = L_down - 4`` and ``R`` is its cross-plane half. Reduced amplitudes:
+    nu~ = nu + 4u, pi~ = pi + 2u, sigma~ = sigma - 12u -- the orbit amplitudes
+    with the diagonal shadow of u S^2 removed. Works on exact and float
+    amplitudes alike; the caller decides the tier.
+    """
+    u = amps["u"]
+    nu_r, pi_r, sigma_r = amps["nu"] + 4 * u, amps["pi"] + 2 * u, amps["sigma"] - 12 * u
+    c_shp = nu_r / 2 - (amps["rho"] + pi_r) / 2
+    return {"nu~": nu_r, "u": u, "pi~": pi_r, "sigma~": sigma_r, "C": c_shp}
+
+
+def hodge_records(form: dict) -> Records:
+    """Assemble the kernel the Hodge form describes, as records."""
+    ident = identity()
+    s_sq = combine((1, down_laplacian()), (-4, ident))
+    up = combine((1, up_laplacian()), (-2, ident))
+    return combine(
+        (-Fraction(form["nu~"]), up),
+        (Fraction(form["u"]), compose(s_sq, s_sq)),
+        (-Fraction(form["pi~"]), s_sq),
+        (Fraction(form["sigma~"]), ident),
+        (-2 * Fraction(form["C"]), cross_half(s_sq)),
+    )

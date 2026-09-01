@@ -46,3 +46,29 @@ def test_regauging_fixes_same_plane_records_and_signs_cross_plane_ones():
         original = dict(recs)[(ip, op, d)]
         flipped = ((0, 2) in (ip, op)) and ip != op
         assert w == (-original if flipped else original)
+
+
+def test_the_two_hodge_laplacians_annihilate_each_other_and_sum_to_the_scalar_laplacian():
+    # GLUEBALL v3.1 §6.2 as incidence algebra on records: L_down L_up = 0, and
+    # L_down + L_up has no cross-plane entry at all -- it is the scalar
+    # Laplacian (6 on site, -1 on the six axis neighbours) on each plane.
+    down, up = KO.down_laplacian(), KO.up_laplacian()
+    assert KO.compose(down, up) == {} and KO.compose(up, down) == {}
+    total = KO.combine((1, down), (1, up))
+    assert all(ip == op for (ip, op, _d) in total)
+    values = {tuple(sorted(abs(x) for x in d)): v for (_ip, _op, d), v in total.items()}
+    assert values == {(0, 0, 0): 6, (0, 0, 1): -1}
+
+
+def test_s_square_is_the_shared_link_adjacency_and_kills_the_carrier():
+    s_sq = KO.combine((1, KO.down_laplacian()), (-4, KO.identity()))
+    assert all(v in (1, -1) for v in s_sq.values()) and len(s_sq) == 36
+    assert KO.acts_as(KO.down_laplacian(), {})
+    assert KO.acts_as(s_sq, KO._mono((0, 0, 0), -4))
+    assert KO.acts_as(KO.up_laplacian(), KO.E1)
+
+
+def test_hodge_form_round_trips_the_historical_kernel():
+    recs = kernel_records()
+    form = KO.hodge_form(KO.amplitudes(recs))
+    assert KO.hodge_records(form) == dict(recs)
