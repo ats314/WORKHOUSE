@@ -323,7 +323,14 @@ def test_routes_are_nodes_with_a_state_and_a_closer():
     by_id = {c.id: c for c in CATALOGUE}
     routes = [c for c in CATALOGUE if c.kind == "route" and c.cites == "G3"]
     states = {c.status for c in routes}
-    assert {"live", "dead", "done", "untried"} <= states, states
+    # `untried` left the set on 2026-09-01 when the sign test was run; a route
+    # state is a fact about the ledger, so the test follows it rather than
+    # pinning a snapshot.
+    assert {"live", "dead", "done"} <= states, states
+    sign_test = C.route_id("G3", "covariance sign test of the two flipped orbits")
+    assert by_id[sign_test].status == "done"
+    sign_closers = {d for (s, d, t) in TRIPLES if s == sign_test and t == "closed_by"}
+    assert len(sign_closers) == 3 and all(d.startswith("CHK:") for d in sign_closers)
     sweep = C.route_id("G3", "sealed scalar sweep (demoted, optional)")
     assert by_id[sweep].status == "dead"
     assert ("G3", sweep, "plans") in TRIPLES
@@ -340,7 +347,7 @@ def test_why_on_a_gap_lists_its_routes_by_state():
     assert "Routes" in text
     assert "[dead] sealed scalar sweep" in text
     assert "cannot decide C2" in text
-    assert "[untried] covariance sign test" in text
+    assert "[done] covariance sign test" in text
 
 
 def test_a_pinned_manuscript_labels_the_checks_it_prints():

@@ -473,3 +473,189 @@ def _():
         "two sign-flipped amplitudes and one scale. This does not decide C2; it says the "
         "disagreement is not a re-weighting"
     )
+
+
+# -- G3: the covariance sign test ---------------------------------------------
+#
+# The route recorded on G3 as untried: rho and pi flip sign together between
+# the two kernels while nu does not, and "two orbits flipping together while a
+# third does not" reads like a convention. Ask the question exactly. Symmetry
+# is Hermiticity plus covariance under the cubic group O_h acting on plaquette
+# CENTRES with the orientation character (PSI_SIGN read at the identity); a
+# convention is a change of basis of the plane fibre alone. The first cannot
+# fix any orbit's sign, and the second cannot reach the flip. So the flip is
+# not a convention -- which does not say which kernel is right.
+
+_SIGN_TEST = "C2; G3 covariance sign test; " + _LEDGER
+_ORIENTED = "every orbit is separately Hermitian and cubic-covariant, so symmetry fixes no sign"
+_REGAUGE = "no plane-basis convention flips rho or pi: only +-1 keeps the 144 agreed records"
+
+
+@orbit.check(_ORIENTED, _SIGN_TEST)
+def _():
+    # Corner-based displacements are not what the cubic group rotates: the
+    # geometric displacement is between plaquette centres, d + c(op) - c(ip).
+    # With that, and the orientation character chi_g(P) = s_i s_j sgn(order),
+    # every one of the six orbits is invariant under all 48 elements on its
+    # own. Two controls show the two ingredients are load-bearing: without the
+    # character the cross-plane orbits keep only 12 elements, and on the raw
+    # corner-based d they keep only 6.
+    recs = kernel_records()
+    groups = KO.orbit_groups(recs)
+    with_chi = {n: len(KO.covariant_elements(g)) for n, g in groups.items()}
+    without_chi = {n: len(KO.covariant_elements(g, use_character=False)) for n, g in groups.items()}
+    herm = {n: KO.is_hermitian(g) for n, g in groups.items()}
+    swap = {n: KO.is_transposition_symmetric(g) for n, g in groups.items()}
+    # the raw-d control: act on d as if it were the centre displacement
+    raw = {
+        n: sum(
+            all(
+                (KO.act_plane(g, ip)[0], KO.act_plane(g, op)[0], KO.act_vector(g, d)) in dict(grp)
+                and dict(grp)[(KO.act_plane(g, ip)[0], KO.act_plane(g, op)[0], KO.act_vector(g, d))]
+                == KO.act_plane(g, ip)[1] * KO.act_plane(g, op)[1] * w
+                for (ip, op, d), w in grp
+            )
+            for g in KO.cubic_group()
+        )
+        for n, grp in groups.items()
+        if n in ("u", "rho")
+    }
+    # and symmetry is linear: flipping rho alone, pi alone, or both, is still a
+    # Hermitian covariant kernel, so all four sign patterns are admissible
+    flips = {}
+    for pattern in ((-1, 1), (1, -1), (-1, -1)):
+        flipped = [
+            (k, (pattern[0] if n == "rho" else pattern[1] if n == "pi" else 1) * w)
+            for n, g in groups.items()
+            for k, w in g
+        ]
+        flips[pattern] = KO.is_hermitian(flipped) and len(KO.covariant_elements(flipped)) == 48
+    ok = (
+        all(herm.values())
+        and all(swap.values())
+        and all(v == 48 for v in with_chi.values())
+        and without_chi["u"] == without_chi["rho"] == 12
+        and raw == {"u": 6, "rho": 6}
+        and all(flips.values())
+    )
+    return ok, (
+        "on plaquette-centred displacements Delta = d + c(op) - c(ip), with the orientation "
+        "character chi_g(P) = s_i s_j sgn(order) -- PSI_SIGN read at the identity, i.e. the cube "
+        f"boundary d_3 -- every orbit is invariant under all 48 elements of O_h: {with_chi}. "
+        f"Each is Hermitian and each is symmetric under swapping input and output plane at fixed "
+        "centre displacement, so which plane a dump calls the row cannot matter. Controls: without "
+        f"the character the cross-plane orbits keep only {without_chi['u']} and "
+        f"{without_chi['rho']} elements, and on the raw corner-based d they keep only "
+        f"{raw['u']} and {raw['rho']}. "
+        "Symmetry is linear, so the kernel with rho flipped, with pi flipped, and with both "
+        "flipped is Hermitian and fully covariant too: all four sign patterns of (rho, pi) are "
+        "admissible, and Hermiticity plus cubic covariance fix NO orbit's sign relative to the "
+        "normal orbit. The sign test therefore cannot pick a side of C2 -- what it can do is "
+        "decide whether the flip is a convention, which the next check does"
+    )
+
+
+@orbit.check(_REGAUGE, _SIGN_TEST, rests_on=(_ORIENTED,))
+def _():
+    # The conventions available in the plane basis are exactly the 48 signed
+    # permutations of the fibre with k untouched: which plaquette is called
+    # which, and which way round each is traversed. Both kernels agree, up to
+    # one scale, on the 144 skeleton and doubled records. Only +-1 preserves
+    # those, so no convention distinguishes the two bases -- and the flip
+    # itself is out of reach anyway: pi is a same-plane orbit, which a
+    # regauging cannot touch at all, and every diagonal regauging other than
+    # +-1 flips exactly two of the three cross-plane pairs, which throws rho
+    # (and the cross-plane skeleton with it) out of the cubic shape span.
+    recs = kernel_records()
+    groups = KO.orbit_groups(recs)
+    amps = KO.amplitudes(recs)
+    agreed = set(groups["u"]) | set(groups["u2"])
+    keep = [g for g in KO.cubic_group() if agreed <= set(KO.regauge(recs, g))]
+    identity = ((0, 1, 2), (1, 1, 1))
+    minus = ((0, 1, 2), (-1, -1, -1))
+    diagonal = [g for g in KO.cubic_group() if g[0] == (0, 1, 2)]
+    cross = [r for r in groups["u"] if r[0][0] != r[0][1]]
+    table = {}
+    for g in diagonal:
+        co_rho, res_rho = KO.coefficients(KO.regauge(groups["rho"], g))
+        co_pi, res_pi = KO.coefficients(KO.regauge(groups["pi"], g))
+        _, res_cross = KO.coefficients(KO.regauge(cross, g))
+        table[g[1]] = (
+            co_rho["C"] / amps["rho"],
+            bool(res_rho),
+            co_pi["C"] / amps["pi"],
+            bool(res_pi),
+            bool(res_cross),
+        )
+    trivial = {(1, 1, 1), (-1, -1, -1)}
+    ok = (
+        set(keep) == {identity, minus}
+        and len(agreed) == 144
+        and all(
+            row[2] == Fraction(-1, 2) and not row[3]  # pi untouched by every regauging
+            for row in table.values()
+        )
+        and all(
+            table[s][0] == Fraction(-1, 2) and not table[s][1] and not table[s][4] for s in trivial
+        )
+        and all(table[s][1] and table[s][4] for s in table if s not in trivial)
+    )
+    return ok, (
+        f"of the 48 fibre regaugings U S U^T (k untouched) exactly {len(keep)} preserve the 144 "
+        "skeleton and doubled records both kernels agree on: the identity and -1. Every plane "
+        "permutation moves a normal hop onto an in-plane displacement, and every diagonal "
+        "orientation change other than +-1 flips two of the three cross-plane pairs. For the "
+        "eight diagonal regaugings, (C_rho/rho, rho off-span, C_pi/pi, pi off-span, cross-skeleton "
+        f"off-span) = {table}. So pi, a same-plane orbit, is untouched by every convention the "
+        "plane basis has, and rho can only be flipped together with two-thirds of the cross-plane "
+        "skeleton -- which leaves the cubic shape span entirely, so no cubic-covariant kernel in "
+        "any plane-basis convention carries the historical skeleton with the cold sign of rho. "
+        "FINDING: the (rho, pi) sign flip between the two kernels is not a basis convention. "
+        "Combined with the previous check -- symmetry admits every sign pattern -- the two "
+        "kernels are two different Hermitian, cubic-covariant operators, and C2 is a disagreement "
+        "about which fourth-order operator the theory produces, not about how to write one down"
+    )
+
+
+@orbit.check(
+    "FINDING: the cold kernel carries the same orientation character, so its flips are real",
+    _SIGN_TEST,
+    tier=2,
+    rests_on=(_ORIENTED, _REGAUGE),
+)
+def _():
+    # The regauging result applies to the cold kernel only if it is in the same
+    # basis. Run the identical symmetry test on the v10a.26 dump: same centred
+    # displacements, same character. Float weights, so T2; a record matches its
+    # image within 1e-9 relative, three orders looser than the dump's own
+    # within-orbit spread.
+    tol = 1e-9
+    cold = {n: g for _, n, g in KO.cold_orbits()}
+    herm = {n: KO.is_hermitian(g, tol) for n, g in cold.items()}
+    swap = {n: KO.is_transposition_symmetric(g, tol) for n, g in cold.items()}
+    with_chi = {n: len(KO.covariant_elements(g, tol=tol)) for n, g in cold.items()}
+    without_chi = {
+        n: len(KO.covariant_elements(g, use_character=False, tol=tol)) for n, g in cold.items()
+    }
+    hist_without = {
+        len(g): len(KO.covariant_elements(g, use_character=False))
+        for g in KO.orbit_groups(kernel_records()).values()
+    }
+    ok = (
+        sorted(cold) == [3, 6, 12, 24, 132]
+        and all(herm.values())
+        and all(swap.values())
+        and all(v == 48 for v in with_chi.values())
+        and without_chi == hist_without
+    )
+    return ok, (
+        f"the v10a.26 dump's orbits (by size) are Hermitian to {tol:.0e} relative and invariant "
+        f"under all 48 elements of O_h with the SAME orientation character: {with_chi}; without "
+        f"the character they keep {without_chi}, exactly the historical pattern {hist_without}. "
+        "Both kernels are therefore written in the same plane basis up to the sign +-1 that fixes "
+        "everything, and the previous check's conclusion transfers: the opposite signs of rho "
+        "and pi are not a convention of either computation. The route recorded on G3 as the "
+        "covariance sign test closes here with a negative result -- it eliminates 'convention' "
+        "as the explanation of C2 and leaves the independent cross-amplitude computation as the "
+        "only open route. Nothing here prefers either side"
+    )

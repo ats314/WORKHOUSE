@@ -321,21 +321,31 @@ gaps:
           smallest of 609 clusters, cap-lifted, without completing). Run it
           only if a blind scalar confirmation is ever worth that price.
       - step: covariance sign test of the two flipped orbits
-        state: untried
+        state: done
+        closed_by:
+          - 'CHK:every orbit is separately Hermitian and cubic-covariant, so symmetry fixes no sign'
+          - 'CHK:no plane-basis convention flips rho or pi: only +-1 keeps the 144 agreed records'
+          - 'CHK:FINDING: the cold kernel carries the same orientation character, so its flips are real'
         status: >
-          proposed 2026-09-01, from the graph rather than from a file: the
-          kernel-orbits suite records that the two rival kernels agree on the
-          support, all six orbit sizes, the normalized shape table and both
-          tier-collapse identities, that one scale factor explains 144 of 189
-          records, and that their free disagreement is the two amplitudes rho
-          (cross-plane) and pi (in-plane) -- OPPOSITE IN SIGN in the two
-          kernels, with the normal orbit unmoved. Two orbits flipping together
-          while a third does not is the signature of a convention, and the
-          off-axis run already found one (an entry that is minus the conjugate
-          of the recorded rotation row). Nothing in the graph records anyone
-          having asked which sign pattern Hermiticity plus cubic covariance
-          permit in the Bloch basis both kernels claim. Nobody has spent
-          anything on this yet.
+          proposed 2026-09-01 from the graph and run the same day, engine-free,
+          in the kernel-orbits suite. Result: NEGATIVE for the reading that
+          motivated it. On plaquette-centred displacements with the orientation
+          character (PSI_SIGN read at the identity), every one of the six orbits
+          is separately Hermitian and invariant under all 48 elements of O_h, in
+          both kernels; symmetry is linear, so all four sign patterns of
+          (rho, pi) are admissible and Hermiticity plus cubic covariance fix no
+          orbit's sign relative to the normal orbit. And the flip is not a
+          convention: of the 48 plane-fibre regaugings only +-1 preserves the
+          144 records the kernels agree on, pi is a same-plane orbit no
+          regauging touches, and every diagonal regauging other than +-1 flips
+          two of the three cross-plane pairs and throws rho and the cross-plane
+          skeleton out of the cubic shape span. The cold dump passes the
+          identical test with the identical character, so both kernels sit in
+          the same basis. What this closes: 'two orbits flipping together
+          while a third does not is the signature of a convention' -- it is
+          not. What it leaves: C2 is a disagreement between two different
+          Hermitian cubic-covariant operators, decidable only by an
+          independent computation of the cross and in-plane amplitudes.
         what: >
           In the Bloch basis built from the repository's own cube boundary
           d_3, derive from Hermiticity and cubic covariance the sign the
@@ -347,6 +357,9 @@ gaps:
           cannot produce the value, because the magnitudes differ too (the
           cross-plane amplitude by a factor of about ten), so the live
           cross-amplitude route stays the way to the number.
+          DONE -- see the status above. Symmetry constrains neither sign, so
+          the refutation it could have delivered is not available; what it
+          delivered instead is that the flip is not a convention.
     leads:
       - settlement/mce_adjudication_harness.py
       - settlement/README.md
