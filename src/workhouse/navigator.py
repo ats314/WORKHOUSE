@@ -39,6 +39,9 @@ def _resolve(query: str, node_ids: set[str]) -> str | None:
         prefix, rest = q.split(":", 1)
         candidates += [f"{prefix.upper()}:{rest}", f"{prefix.upper()}:{rest.lower()}"]
     candidates += [f"CONST:{q}", f"LEAN:{q}", f"SYM:{q.lower()}", f"LIT:{q}", f"LIT:{q.upper()}"]
+    # Editions, routes, runs and provenance documents are nodes too; a query
+    # by their bare name should land on them without the prefix.
+    candidates += [f"CITE:{q}", f"ROUTE:{q}", f"RUN:{q}", f"DOC:{q}"]
     for candidate in candidates:
         if candidate in node_ids:
             return candidate

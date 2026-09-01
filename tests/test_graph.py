@@ -293,9 +293,7 @@ def test_a_yielded_name_never_shadows_a_registered_constant():
     registered = {c.name for c in K.REGISTRY} | {
         n for n in dir(K) if n.isupper() and not n.startswith("_")
     }
-    yielded = {
-        c.id[len("CONST:") :] for c in CATALOGUE if c.status.startswith("yielded by")
-    }
+    yielded = {c.id[len("CONST:") :] for c in CATALOGUE if c.status.startswith("yielded by")}
     assert not (yielded & registered), yielded & registered
 
 

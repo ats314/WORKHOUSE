@@ -575,3 +575,21 @@ def write(path: Path | None = None) -> Path:
     target = path or GRAPH
     target.write_text(render(), encoding="utf-8", newline="\n")
     return target
+
+
+def load(path: Path | None = None) -> Graph:
+    """The checked-in graph, rehydrated without running a single check.
+
+    ``index/graph.jsonl`` is staleness-tested, so it is current at every
+    commit. A query tool that rebuilt it -- and the catalogue it hangs on --
+    ran every suite first, which put ``why`` at four minutes per question and
+    made the graph unusable as a front door. Falls back to a live ``build()``
+    only when the index has not been generated yet.
+    """
+    target = path or GRAPH
+    if not target.exists():
+        return build()
+    edges = [
+        Edge(**json.loads(line)) for line in target.read_text(encoding="utf-8").splitlines() if line
+    ]
+    return Graph(edges=sorted(edges), dangling=[])

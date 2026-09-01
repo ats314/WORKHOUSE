@@ -618,8 +618,9 @@ def _():
             "all, max |displacement| 1, so the OPERATOR is range-1 (an earlier form of this check "
             "said range-2, having measured the carrier projection, which inherits psi's own "
             "displacement content). It is still NOT the dictionary's rotation row: this channel's "
-            "entry is H_[(12),(13)] = -conj(d_2) d_3 against the recorded +conj(d_n) d_m, which are "
-            "minus the conjugate of one another -- different off-diagonal structures. That, not "
+            "entry is H_[(12),(13)] = -conj(d_2) d_3 against the recorded +conj(d_n) d_m, "
+            "which are minus the conjugate of one another -- different off-diagonal "
+            "structures. That, not "
             "range, is why its carrier projection lies outside the four-shape span"
         ),
         {

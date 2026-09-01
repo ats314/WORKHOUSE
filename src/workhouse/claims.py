@@ -167,7 +167,7 @@ _CHK_LABEL = re.compile(r"\\chk\{((?:[^{}]|\{\})*)\}")
 
 
 def chk_labels(source: str) -> list[str]:
-    """Every ``\chk`` label in a pinned edition, in order, as check names.
+    r"""Every ``\chk`` label in a pinned edition, in order, as check names.
 
     One parser for the manuscript guard and the graph, so the two can never
     disagree about what a paper labels.
@@ -673,10 +673,12 @@ def load_catalogue(path: Path | None = None) -> list[Claim]:
     """The checked-in catalogue, rehydrated without running a single check.
 
     ``index/claims.jsonl`` is staleness-tested, so it is current at every
-    commit; a *finding* tool (search) can read it in milliseconds instead of
-    re-running every suite to rebuild what is already on disk. ``why`` keeps
-    calling ``collect()`` because it promises live verdicts. Falls back to a
-    live ``collect()`` when the index has not been generated yet.
+    commit; a query tool (search, why, derive, branches) reads it in
+    milliseconds instead of re-running every suite to rebuild what is already
+    on disk. Verdicts are those of the last regeneration, which the staleness
+    tests hold equal to the live ones at every commit; ``--live`` rebuilds
+    for a working tree mid-edit. Falls back to a live ``collect()`` when the
+    index has not been generated yet.
     """
     target = path or CLAIMS
     if not target.exists():

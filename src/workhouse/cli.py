@@ -295,22 +295,44 @@ def _index_bytes() -> tuple[bytes, ...]:
     return tuple(p.read_bytes() if p.exists() else b"" for p in paths)
 
 
-def _why(node_id: str, as_json: bool = False) -> int:
+_LIVE_HELP = (
+    "rebuild the catalogue and graph by running every check (minutes) instead of "
+    "reading the checked-in, staleness-tested index (milliseconds)"
+)
+
+
+def _views(live: bool):
+    """Catalogue, symbols and graph for a query: the checked-in index unless
+    ``--live`` asks for a rebuild.
+
+    Reading the index is what makes a query take milliseconds. The rebuild
+    exists for a working tree mid-edit, where the index is knowingly stale.
+    """
+    symbols = claims_mod.load_symbols()
+    if live:
+        catalogue = claims_mod.collect()
+        return catalogue, symbols, graph_mod.build(catalogue, symbols)
+    return claims_mod.load_catalogue(), symbols, graph_mod.load()
+
+
+def _why(node_id: str, as_json: bool = False, live: bool = False) -> int:
+    catalogue, symbols, graph = _views(live)
     if as_json:
-        data, found = navigator_mod.neighborhood(node_id)
+        data, found = navigator_mod.neighborhood(node_id, catalogue, symbols, graph)
         print(json.dumps(data, sort_keys=True))
         return 0 if found else 1
-    text, found = navigator_mod.explain(node_id)
+    text, found = navigator_mod.explain(node_id, catalogue, symbols, graph)
     print(text)
     return 0 if found else 1
 
 
-def _derive(ids: list[str], out: str | None) -> int:
+def _derive(ids: list[str], out: str | None, live: bool = False) -> int:
     from pathlib import Path
 
     from . import derive as derive_mod
 
-    text, ok = derive_mod.render(ids)
+    catalogue, symbols, graph = _views(live)
+    text, ok = derive_mod.render(ids, catalogue, symbols, graph)
     if out:
         Path(out).write_text(text + "\n", encoding="utf-8", newline="\n")
         print(f"wrote {out}")
@@ -319,8 +341,9 @@ def _derive(ids: list[str], out: str | None) -> int:
     return 0 if ok else 1
 
 
-def _branches(target: str | None) -> int:
-    text, ok = navigator_mod.branchwise(target)
+def _branches(target: str | None, live: bool = False) -> int:
+    catalogue, _symbols, graph = _views(live)
+    text, ok = navigator_mod.branchwise(target, catalogue, graph)
     print(text)
     return 0 if ok else 1
 
@@ -473,6 +496,7 @@ def main(argv: list[str] | None = None) -> int:
     wy.add_argument(
         "--json", action="store_true", help="the record and every edge, one JSON object"
     )
+    wy.add_argument("--live", action="store_true", help=_LIVE_HELP)
 
     de = sub.add_parser(
         "derive",
@@ -480,12 +504,14 @@ def main(argv: list[str] | None = None) -> int:
     )
     de.add_argument("ids", nargs="+", help="root claim ids, e.g. C2 G3 G10")
     de.add_argument("-o", "--out", metavar="PATH", help="write to a file instead of stdout")
+    de.add_argument("--live", action="store_true", help=_LIVE_HELP)
 
     br = sub.add_parser(
         "branches",
         help="the branchwise view: every conflicting value, both branches side by side",
     )
     br.add_argument("id", nargs="?", help="one contradiction id (default: all with sides)")
+    br.add_argument("--live", action="store_true", help=_LIVE_HELP)
 
     ex = sub.add_parser(
         "export",
@@ -586,11 +612,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "index":
         return _index(args.write)
     if args.command == "why":
-        return _why(args.id, args.json)
+        return _why(args.id, args.json, args.live)
     if args.command == "derive":
-        return _derive(args.ids, args.out)
+        return _derive(args.ids, args.out, args.live)
     if args.command == "branches":
-        return _branches(args.id)
+        return _branches(args.id, args.live)
     if args.command == "export":
         return _export(args.out)
     if args.command == "atlas":

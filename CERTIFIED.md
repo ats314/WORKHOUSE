@@ -249,7 +249,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/fourth_order.py:88 · MASTER_THEORY §5.3
   - `workhouse verify --only 'exceptional ranks are exactly {3,4,5,6}'`
 - `the in-plane transfer is order eight, not four, in the primitive channel`
-  - src/workhouse/invariants/fourth_order.py:622 · C2; G3 off-axis channel route
+  - src/workhouse/invariants/fourth_order.py:636 · C2; G3 off-axis channel route
   - `workhouse verify --only 'the in-plane transfer is order eight, not four, in the primitive channel'`
 - `the perpendicular cube sector is a second fourth-order primitive channel, S_4 = -11`
   - src/workhouse/invariants/fourth_order.py:525 · C2; G3 off-axis channel route; MOB §4
@@ -279,16 +279,16 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/orbits.py:135 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u)'`
 - `B = 0 is unpopulated, not cancelled`
-  - src/workhouse/invariants/orbits.py:241 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:245 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'B = 0 is unpopulated, not cancelled'`
 - `C_shp = -5/96 - u - (rho + pi)/2, exactly`
   - src/workhouse/invariants/orbits.py:147 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'C_shp = -5/96 - u - (rho + pi)/2, exactly'`
 - `PREDICTION: the eps-sector at N=3 is Delta(rho + pi) = -25/512 and nothing else`
-  - src/workhouse/invariants/orbits.py:371 · U5; C2; C10; G3; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:375 · U5; C2; C10; G3; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'PREDICTION: the eps-sector at N=3 is Delta(rho + pi) = -25/512 and nothing else'`
 - `RETRACTED: B_3 - beta_historical = 25/64 is a forbidden substitution, not an exact branch`
-  - src/workhouse/invariants/orbits.py:284 · C2; walled-Brauer eps-sector; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:288 · C2; walled-Brauer eps-sector; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'RETRACTED: B_3 - beta_historical = 25/64 is a forbidden substitution, not an exact branch'`
 - `every orbit's carrier projection is closed form in e1, e2, e3`
   - src/workhouse/invariants/orbits.py:97 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
@@ -297,16 +297,16 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/orbits.py:62 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the 189 records carry exactly six weight magnitudes'`
 - `the on-site orbit IS the momentum-independent channel`
-  - src/workhouse/invariants/orbits.py:338 · U5; C2; C10; GCSG SU(6) certificate; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:342 · U5; C2; C10; GCSG SU(6) certificate; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the on-site orbit IS the momentum-independent channel'`
 - `the shape coefficients are solved, not fitted: A = 5/48, B = D = 0 exactly`
   - src/workhouse/invariants/orbits.py:35 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the shape coefficients are solved, not fitted: A = 5/48, B = D = 0 exactly'`
 - `the tier collapse is one identity: D = -6u + 3*u2 with u2 = 2u`
-  - src/workhouse/invariants/orbits.py:164 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:168 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the tier collapse is one identity: D = -6u + 3*u2 with u2 = 2u'`
 - `u2 = 2u is the cross term of a perfect square`
-  - src/workhouse/invariants/orbits.py:194 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:198 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'u2 = 2u is the cross term of a perfect square'`
 **homology and finite volume**
 
@@ -743,7 +743,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/charge_even.py:134 · PAPER Thm. (incidence factorization) / ENGINE_FLUX_glueball_band_certificate_v2.py
   - `workhouse verify --only 'the C-even range [-4, 12] is exact, and each edge is attained at one point only'`
 - `the C-even range [-4, 12] is exact; the top only at Gamma, the floor on three planes`
-  - src/workhouse/invariants/charge_even.py:666 · PUBLICATION rev5 Prop. (range and attainment)
+  - src/workhouse/invariants/charge_even.py:676 · PUBLICATION rev5 Prop. (range and attainment)
   - `workhouse verify --only 'the C-even range [-4, 12] is exact; the top only at Gamma, the floor on three planes'`
 - `the C-even spectra at the four high-symmetry momenta`
   - src/workhouse/invariants/charge_even.py:282 · MASTER paper §4.5 / PAPER Thm. (the C-even band)
@@ -755,7 +755,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/charge_even.py:67 · PAPER Thm. (incidence factorization; Gauss law)
   - `workhouse verify --only 'the two Bloch incidence symbols, and the determinant asymmetry between them'`
 - `the unsigned-incidence characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3`
-  - src/workhouse/invariants/charge_even.py:626 · PUBLICATION rev5 Thm. (unsigned-incidence Bloch cubic)
+  - src/workhouse/invariants/charge_even.py:635 · PUBLICATION rev5 Thm. (unsigned-incidence Bloch cubic)
   - `workhouse verify --only 'the unsigned-incidence characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3'`
 **the electric shell, and what isolates it**
 
@@ -769,13 +769,13 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/electric_shell.py:42 · MASTER edition Thm. 1 (uniform first electric spectral window)
   - `workhouse verify --only 'every nontrivial irrep clears 5/4 C_F, except the fundamental pair'`
 - `second-order off-diagonal processes are exactly the adjacent shared-link channels`
-  - src/workhouse/invariants/electric_shell.py:520 · PUBLICATION rev5 Lemma (second-order process completeness)
+  - src/workhouse/invariants/electric_shell.py:530 · PUBLICATION rev5 Lemma (second-order process completeness)
   - `workhouse verify --only 'second-order off-diagonal processes are exactly the adjacent shared-link channels'`
 - `the SU(3) additive electric spectrum leaves 14, 16, 17 around the shell`
   - src/workhouse/invariants/electric_shell.py:111 · MASTER edition Thm. 2 (SU(3) all-orders finite-volume Riesz island)
   - `workhouse verify --only 'the SU(3) additive electric spectrum leaves 14, 16, 17 around the shell'`
 - `the retained electric shell is exactly the trivial-flux charge-odd plaquette span`
-  - src/workhouse/invariants/electric_shell.py:456 · PUBLICATION rev5 Thm. 1, eq. (retained-shell)
+  - src/workhouse/invariants/electric_shell.py:461 · PUBLICATION rev5 Thm. 1, eq. (retained-shell)
   - `workhouse verify --only 'the retained electric shell is exactly the trivial-flux charge-odd plaquette span'`
 - `the torus graph is simple, and the only short cycles are the L = 3 winding triangles`
   - src/workhouse/invariants/electric_shell.py:195 · MASTER edition Thm. 1, proof (support census)
@@ -783,16 +783,16 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **the flat-band manuscript**
 
 - `every \chk in the united paper names a check that exists and passes`
-  - src/workhouse/invariants/manuscript.py:32 · MASTER paper, every displayed result
+  - src/workhouse/invariants/manuscript.py:31 · MASTER paper, every displayed result
   - `workhouse verify --only 'every \chk in the united paper names a check that exists and passes'`
 - `every declared note document is a graph node with an edge`
-  - src/workhouse/invariants/manuscript.py:86 · ledger/notes.yaml + notes/*.jsonl
+  - src/workhouse/invariants/manuscript.py:84 · ledger/notes.yaml + notes/*.jsonl
   - `workhouse verify --only 'every declared note document is a graph node with an edge'`
 - `no fourth-order coefficient enters the manuscript`
-  - src/workhouse/invariants/manuscript.py:140 · PAPER_FLATBAND §6
+  - src/workhouse/invariants/manuscript.py:138 · PAPER_FLATBAND §6
   - `workhouse verify --only 'no fourth-order coefficient enters the manuscript'`
 - `q at the four high-symmetry points is 0, 4, 8, 12`
-  - src/workhouse/invariants/manuscript.py:162 · MASTER_DOC Fig. 2
+  - src/workhouse/invariants/manuscript.py:160 · MASTER_DOC Fig. 2
   - `workhouse verify --only 'q at the four high-symmetry points is 0, 4, 8, 12'`
 **tier collapse (G14)**
 
@@ -913,7 +913,7 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **fourth-order kernel orbits**
 
 - `FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped`
-  - src/workhouse/invariants/orbits.py:418 · C2; G3 step 1; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:432 · C2; G3 step 1; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped'`
 **near-Gamma uniformity (G11)**
 
@@ -1016,7 +1016,7 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **the flat-band manuscript**
 
 - `every node the theory graph strands is stranded for a stated reason`
-  - src/workhouse/invariants/manuscript.py:181 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
+  - src/workhouse/invariants/manuscript.py:179 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
   - `workhouse verify --only 'every node the theory graph strands is stranded for a stated reason'`
 **two-cube charge-odd second-order closure (B=4 and B=6)**
 

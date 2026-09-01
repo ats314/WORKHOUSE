@@ -145,6 +145,10 @@ settles nothing is excluded however cheap it looks.
 
 - `G3` (weeks) Fourth-order adjudication — decide C_shp where it actually lives — settles C2, G9
   - REWRITTEN 2026-08-28, at the maintainer's standing instruction, after the sweep-cannot-decide-C2 finding below. The original G3 ("run the marked-cluster engine target-blind", the 11-item GLUEBALL §18.1 protocol) directed every session at a sealed 609-evaluation sweep that is now established — by T1 static scan, not by fatigue — to emit the Gamma-point scalar only, a quantity externally validated and structurally incapable of constraining Delta_C (Phi_C(0) = 0). Four sessions dead-ended on that path (absent engine, closure cap, cost, and finally the structural incapacity); the register, not the next agent, now carries that knowledge. What G3 must settle is unchanged: the off-axis coefficient C_shp (C2). The route is replaced by the two paths that can actually reach it, cheapest first.
+  - routes live: independent cross-amplitude computation
+  - routes untried: covariance sign test of the two flipped orbits
+  - routes done: block-structure comparison; targeted kernel-bearing recomputation
+  - routes dead: off-axis channel assembly through workhouse.cellular; sealed scalar sweep (demoted, optional)
 - `G17` (unbounded) PC-2 free-energy stability and the source-radius reduction — settles load-bearing
   - The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction.
 - `G18` (unbounded) The spectral bridge — settles load-bearing
