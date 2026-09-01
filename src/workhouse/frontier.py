@@ -445,12 +445,9 @@ def brief() -> str:
         "(posture) and CLAUDE.md (rules) before changing anything.",
         "",
         "The graph is the front door, not the files: `workhouse why <id>` prints "
-        "everything recorded about one claim (both sides of a dispute, every "
-        "check with its verdict, the routes tried and which are dead), "
-        "`workhouse search <value>` matches by exact rational, `workhouse derive "
-        "<id>` exports the evidence chain. Query before reading; the measured "
-        "failure mode is re-deriving what exists under different notation, and "
-        "the second is repeating a route a run already closed.",
+        "everything recorded about one claim, including which routes are dead. "
+        "Query before reading: the two measured failure modes are re-deriving what "
+        "exists under other notation, and repeating a route a run already closed.",
         "",
         f"State: {f.checks_passed}/{f.checks_total} checks pass, "
         f"{f.lean_theorems} Lean theorems with {f.lean_sorries} sorry. "
@@ -480,11 +477,11 @@ def brief() -> str:
             live = [st["step"] for st in routes if st.get("state") in ("live", "untried")]
             dead = [st["step"] for st in routes if st.get("state") == "dead"]
             lines.append(
-                "  Its routes: "
+                "  Routes: "
                 + ", ".join(f"{n} {state}" for state, n in sorted(counts.items()))
                 + (f". Open: {'; '.join(live)}" if live else "")
-                + (f". Dead, do not repeat: {'; '.join(dead)}" if dead else "")
-                + f". Start with: workhouse why {g['id']}."
+                + (f". Dead: {'; '.join(dead)}" if dead else "")
+                + f". Start with `workhouse why {g['id']}`."
             )
     lines += [
         "",
@@ -493,14 +490,12 @@ def brief() -> str:
         "rescaling; exact rationals stay sympy.Rational and floats carry _NUM; "
         "never edit theory/; never widen a tolerance to clear a finding.",
         "",
-        "Orientation after the graph: FRONTIER.md, then ledger/, then invariants/. "
-        "corpus-import/ is 950 files and ~61 context windows — target it, never "
-        "read it recursively. Exact rationals are the join keys, not concepts.",
+        "Then: FRONTIER.md, ledger/, invariants/. corpus-import/ is 950 files and "
+        "~61 context windows — target it, never read it recursively. Exact "
+        "rationals are the join keys, not concepts.",
         "",
         "Commands: workhouse why <id> | search <value|symbol|id> | derive <id> | "
-        "branches <id> | verify [--only TEXT ...] | frontier | status; make check. "
-        "A check declares what it rests on (rests_on) and may yield exact values "
-        "(searchable constants); a gap's plan steps are routes with a state.",
+        "branches <id> | verify [--only TEXT ...] | frontier | status; make check.",
     ]
     return "\n".join(lines)
 
