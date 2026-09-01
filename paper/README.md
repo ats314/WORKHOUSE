@@ -225,6 +225,14 @@ no marker it cannot back. Fifteen new checks in total; see
 
 Nothing was dropped to make the guard green, and no tolerance moved.
 
+**2026-09-01, one rename with a correction.** The master edition's §9 label
+`PREDICTION: the eps-sector at N=3 is Delta(rho + pi) = -25/512 and nothing
+else` now points at `CORRECTED PREDICTION: the eps-sector at N=3 is
+Delta(rho + pi~) = -25/512; u is NOT constrained`, and a one-paragraph
+correction follows it in the source: the step `Δν = 0 ⇒ Δu = 0` was wrong
+(ADR 0019). The 30 August prose is kept as written and the PDF is the 30
+August build; `coverage_master.tex` and the manifest were regenerated.
+
 The master edition is deliberately **not** in `PAPER_TEXTS`, and so is not
 scanned by the fourth-order firewall check. It discusses the fourth order on
 purpose, in §9, to state the obstruction. The firewall is a property of the two

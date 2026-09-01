@@ -104,10 +104,14 @@ def test_g3_rewrite_keeps_the_protocol_and_the_traps():
         # fixes no orbit's sign and no plane-basis convention reaches the
         # flip, so the route closed `done` with a negative result. It stays
         # listed because a closed route is evidence the next reader needs.
+        # Added 2026-09-01 from the Hodge form: the two-hop weight u is one
+        # number the kernels disagree on by 4.13x; it cannot decide C2 but
+        # decides which pipeline to trust, on a ten-link cluster.
+        "chain amplitude u on the three-plaquette cluster",
         "covariance sign test of the two flipped orbits",
     ], (
         "G3's steps: the executed pair, the measured one, the cheaper route, the demoted "
-        "sweep, the sign test"
+        "sweep, the chain amplitude, the sign test"
     )
     sign_test = next(
         s for s in g3["plan"] if s["step"] == "covariance sign test of the two flipped orbits"

@@ -27,6 +27,15 @@ orbit = _suite("fourth-order kernel orbits")
 
 _LEDGER = "C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)"
 
+# The Hodge-form checks at the end of the module; named here because the
+# corrected prediction rests on one of them.
+_HODGE = "C2; G14; U5; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; " + _LEDGER
+_SQUARE = "the 144 agreed records are u S_sq^2, the shared-link adjacency squared"
+_FORM = (
+    "H4 = -nu~(L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2 C_shp R exactly: "
+    "C_shp is the coefficient of the one non-Hodge operator"
+)
+
 
 def _shell(d):
     return tuple(sorted(abs(v) for v in d))
@@ -373,58 +382,71 @@ def _():
 
 
 @orbit.check(
-    "PREDICTION: the eps-sector at N=3 is Delta(rho + pi) = -25/512 and nothing else",
+    "CORRECTED PREDICTION: the eps-sector at N=3 is Delta(rho + pi~) = -25/512; "
+    "u is NOT constrained",
     "U5; C2; C10; G3; " + _LEDGER,
+    rests_on=(_FORM,),
 )
 def _():
-    # A falsifiable consequence of the orbit basis, not a measurement. Two
-    # inputs, both recorded elsewhere:
+    # A falsifiable consequence of the orbit basis, not a measurement -- and a
+    # correction, 2026-09-01, of the form this check carried since 2026-08-30.
     #
-    #   (i)  Delta A_3 = 0 -- both sides of C2 agree on alpha = 5/12, hence
-    #        A = 5/48. Since A = -nu - 4u exactly, this FORCES Delta nu = -4 Delta u.
-    #   (ii) the primitive cube-completion channel is link-balanced (one U and
-    #        one U-dagger on every link, so nu_l = 0) and therefore eps-blind.
-    #        That channel is the normal orbit, so Delta nu = 0, hence Delta u = 0,
-    #        and since u2 = 2u holds exactly in both recorded kernels, Delta u2 = 0.
+    # As first written it concluded "Delta u = Delta u2 = Delta nu = 0 and the
+    # whole eps-sector effect is Delta(rho + pi) = -25/512, and nothing else".
+    # The step was: A = -nu - 4u, both sides agree A = 5/48, so Delta nu =
+    # -4 Delta u; the primitive cube-completion channel is link-balanced and
+    # eps-blind, "and that channel IS the normal orbit", so Delta nu = 0 and
+    # hence Delta u = 0. The identification in quotes is false. The normal
+    # orbit is nu = -5/48 - 4u: the primitive completion PLUS the diagonal
+    # shadow of the two-hop sector u S_sq^2 (check "the 144 agreed records are
+    # u S_sq^2 ..."). Eps-blindness of the primitive channel fixes nu~ = nu + 4u
+    # = -5/48, which is the SAME statement as Delta A = 0 -- it constrains u not
+    # at all. The two recorded kernels are the witness: both have nu~ = -5/48
+    # exactly and their u differ by a factor of 4.13.
     #
-    # Then C = -5/96 - u - (rho + pi)/2 leaves the eps-sector only one place to
-    # go. With Delta beta_3 = +25/64 (balanced minus historical) and
-    # C_shp = (beta - 2 alpha)/16, Delta C = +25/1024 and therefore
-    # Delta(rho + pi) = -2 Delta C = -25/512.
-    #
-    # This does NOT adjudicate C2 and does not assume the forbidden N = 3
-    # substitution: it says what a direct balanced contraction at N = 3, if one
-    # is ever computed, must produce.
+    # What survives is the C-identity. In the Hodge form C = -5/96 - (rho +
+    # pi~)/2 with pi~ = pi + 2u, so with Delta beta_3 = +25/64 and C_shp =
+    # (beta - 2 alpha)/16, Delta C = +25/1024 and Delta(rho + pi~) = -25/512.
+    # The number is unchanged; the quantity it constrains is rho + pi~, not
+    # rho + pi, and u, u2, sigma~ are free. The former yields
+    # RHO_PLUS_PI_BALANCED_N3_PREDICTED and DELTA_RHO_PLUS_PI_N3_PREDICTED are
+    # withdrawn with the "nothing else" clause; their replacements follow.
     delta_c = Fraction(25, 1024)
     delta_sum = -2 * delta_c
-    hist_sum = K.RHO_ORBIT + K.PI_ORBIT
+    form = KO.hodge_form(KO.amplitudes(kernel_records()))
+    hist_sum = K.RHO_ORBIT + form["pi~"]
     predicted = hist_sum + delta_sum
-    # the prediction has to be consistent with the recorded historical value
+    # the cold witness -- nu~ = -5/48 with u 4.13x larger -- is the T2 check
+    # "FINDING: the cold kernel has the same Hodge form ..."; this check stays exact
     consistent = (
-        Fraction(-5, 96) - K.X_QUANTUM - hist_sum / 2 == K.C_SHP_HISTORICAL
-        and -(Fraction(5, 48) + 4 * K.X_QUANTUM) == K.NU_ORBIT
-        and K.U2_ORBIT == 2 * K.X_QUANTUM
+        form["C"] == K.C_SHP_HISTORICAL
+        and Fraction(-5, 96) - hist_sum / 2 == K.C_SHP_HISTORICAL
+        and form["nu~"] == Fraction(-5, 48)
+        and -8 * hist_sum == K.BETA_PEN_3
     )
     ok = consistent and delta_sum == Fraction(-25, 512)
     return (
         ok,
         (
-            f"given Delta A_3 = 0 and an eps-blind primitive channel, Delta u = Delta u2 = "
-            f"Delta nu = 0 and the whole eps-sector effect on the N = 3 fourth-order shape is "
-            f"Delta(rho + pi) = {delta_sum}. Historical rho + pi = {hist_sum}; a direct balanced "
-            f"contraction at N = 3 must therefore give {predicted}. FALSIFIER: any direct N = 3 "
-            "balanced contraction whose six orbit amplitudes differ from the historical ones "
-            "anywhere except in rho + pi, or whose rho + pi shift is not exactly -25/512. This is "
-            "a prediction about a computation nobody here has run; it prefers neither side of C2, "
-            "and it does not rest on the forbidden P17/R20 substitution at N = 3 -- only on "
-            "Delta beta_3, which the register records independently"
+            f"given Delta A_3 = 0 and an eps-blind primitive channel, nu~ = -5/48 is fixed and the "
+            f"eps-sector's effect on the N = 3 fourth-order shape is Delta(rho + pi~) = "
+            f"{delta_sum}: historical rho + pi~ = {hist_sum}, so a direct balanced contraction "
+            f"at N = 3 must give rho + pi~ = {predicted}. RETRACTED from the 2026-08-30 form: "
+            "'Delta u = Delta u2 "
+            "= Delta nu = 0 ... and nothing else'. That rested on identifying the normal orbit "
+            "with the primitive channel; the normal orbit is the primitive channel plus the -4u "
+            "shadow of u S_sq^2, so Delta A = 0 constrains u not at all -- the two recorded "
+            "kernels both have nu~ = -5/48 with u differing by a factor 4.13 (the T2 Hodge-form "
+            "finding). In the register's terms the prediction is beta_bal = beta_pen + 25/64 "
+            f"with beta_pen = -8 (rho + pi~) = {K.BETA_PEN_3}. "
+            "FALSIFIER: any direct N = 3 balanced contraction whose nu~ is not -5/48, or whose "
+            "rho + pi~ shift from the historical value is not exactly -25/512. It prefers neither "
+            "side of C2 and does not rest on the forbidden P17/R20 substitution at N = 3 -- only "
+            "on Delta beta_3, which the register records independently"
         ),
         {
-            # The number a direct balanced contraction at N = 3 must return. As a
-            # catalogue constant it is searchable by value, so a future run that
-            # prints it -- or misses it -- can be joined to this prediction.
-            "RHO_PLUS_PI_BALANCED_N3_PREDICTED": predicted,
-            "DELTA_RHO_PLUS_PI_N3_PREDICTED": delta_sum,
+            "RHO_PLUS_PI_REDUCED_BALANCED_N3_PREDICTED": predicted,
+            "DELTA_RHO_PLUS_PI_REDUCED_N3_PREDICTED": delta_sum,
         },
     )
 
@@ -658,4 +680,177 @@ def _():
         "covariance sign test closes here with a negative result -- it eliminates 'convention' "
         "as the explanation of C2 and leaves the independent cross-amplitude computation as the "
         "only open route. Nothing here prefers either side"
+    )
+
+
+# -- the Hodge form of the kernel ---------------------------------------------
+#
+# The corpus's own algebra, GLUEBALL v3.1 §6.2 and THM_FLUX Prop. 2: the signed
+# shared-edge square adjacency satisfies S_sq + 4I = L_down, the cube boundary
+# gives L_up, L_down L_up = 0, and every polynomial in the two acts on the
+# carrier by a scalar. What was not recorded: BOTH fourth-order kernels ARE such
+# a polynomial, plus one operator -- the cross-plane half of S_sq -- and the
+# coefficient of that one operator is -2 C_shp exactly.
+
+
+@orbit.check(_SQUARE, _HODGE)
+def _():
+    # Three exact facts. (i) The unit shared-link pattern -- the rho orbit's
+    # sign structure on the 24 cross-plane pairs plus the pi orbit's on the 12
+    # coplanar ones -- is exactly the off-diagonal of L_down = d_1 d_1^dagger,
+    # so it is S_sq = L_down - 4I. (ii) Its square, as an operator product on
+    # records, is the skeleton plus the doubled orbit at unit weight, plus a
+    # diagonal shadow: -4 on the six normal keys, -2 on the twelve in-plane
+    # keys, +12 on site. That is the whole of the 144 agreed records AND the
+    # exact -4u the normal orbit carries beyond -5/48. (iii) L_down annihilates
+    # the cube-boundary carrier, so S_sq psi = -4 psi and S_sq^2 psi = 16 psi:
+    # the entire two-hop sector is a constant on the carrier.
+    recs = kernel_records()
+    groups = KO.orbit_groups(recs)
+    amps = KO.amplitudes(recs)
+    u = amps["u"]
+    pattern = {k: w / abs(amps["rho"]) for k, w in groups["rho"]}
+    pattern.update({k: w / abs(amps["pi"]) for k, w in groups["pi"]})
+    ident = KO.identity()
+    s_sq = KO.combine((1, KO.down_laplacian()), (-4, ident))
+    square = KO.compose(s_sq, s_sq)
+    agreed = dict(groups["u"]) | dict(groups["u2"])
+    shadow = {k: v for k, v in square.items() if k not in agreed}
+    shadow_classes: dict = {}
+    for (ip, op, d), v in shadow.items():
+        key = ("same" if ip == op else "cross", tuple(sorted(abs(x) for x in d)))
+        shadow_classes.setdefault(key, set()).add(v)
+    ok = (
+        pattern == s_sq
+        and all(square.get(k) == w / u for k, w in agreed.items())
+        and len(agreed) == 144
+        and shadow_classes
+        == {("same", (0, 0, 1)): {Fraction(-4), Fraction(-2)}, ("same", (0, 0, 0)): {Fraction(12)}}
+        and {
+            v
+            for (ip, op, d), v in shadow.items()
+            if ip == op and any(d) and d[KO.NORMAL_OF[ip]] == 0
+        }
+        == {Fraction(-2)}
+        and {v for (ip, op, d), v in shadow.items() if ip == op and d[KO.NORMAL_OF[ip]] != 0}
+        == {Fraction(-4)}
+        and KO.acts_as(KO.down_laplacian(), {})
+        and KO.acts_as(s_sq, KO._mono((0, 0, 0), -4))
+        and KO.acts_as(square, KO._mono((0, 0, 0), 16))
+        and amps["nu"] + 4 * u == Fraction(-5, 48)
+    )
+    return ok, (
+        "the unit sign pattern of the rho and pi orbits IS the off-diagonal of L_down = d_1 "
+        "d_1^dagger (diagonal 4), i.e. S_sq = L_down - 4I, exactly. Its operator square "
+        "reproduces every one of the 144 skeleton and doubled records at weight u = "
+        f"{u}, with u2 = 2u as the two coplanar paths, and nothing else off the "
+        "nearest-neighbour shell; its diagonal shadow is -4 on the normal keys, -2 on the "
+        "in-plane keys and +12 on site -- so nu + 4u = -5/48 is the primitive cube completion "
+        "with the shadow removed, and the -4u the normal orbit carries is not a correction to "
+        "the cube channel but the two-hop sector's own diagonal. L_down psi = 0 for the "
+        "cube-boundary carrier (d_1^dagger d_2^dagger = 0), hence S_sq psi = -4 psi and "
+        "S_sq^2 psi = 16 psi: the whole two-hop sector, 144 records and their shadow, is the "
+        "constant 16u on the carrier. That is why the 4.13x disagreement of the two kernels "
+        "on u is invisible in C"
+    )
+
+
+@orbit.check(_FORM, _HODGE, rests_on=(_SQUARE,))
+def _():
+    # The identity, as records, on all 189: with the reduced amplitudes
+    # nu~ = nu + 4u = -5/48, pi~ = pi + 2u, sigma~ = sigma - 12u,
+    #
+    #   H4 = -nu~ (L_up - 2I) + u S_sq^2 - pi~ S_sq + sigma~ I - 2 C_shp R,
+    #
+    # where R is the cross-plane half of S_sq (equivalently minus the
+    # cross-plane half of L_up). On the carrier, L_up psi = e1 psi and
+    # S_sq psi = -4 psi, so every term but the last is a scalar there and the
+    # carrier projection is T = -nu~ e1^2 + (2 nu~ + 16u + 4 pi~ + sigma~) e1
+    # - 2 (-2 C_shp) e2 / ... -- i.e. A = -nu~, B = D = 0 with no cancellation
+    # to explain, and 4C = the coefficient of R. So C_shp is not an off-axis
+    # fit parameter: it is the weight of the single operator in the kernel
+    # that is not a polynomial in the two Hodge Laplacians, and the carrier is
+    # an exact eigenvector of H4 if and only if C_shp = 0.
+    recs = kernel_records()
+    amps = KO.amplitudes(recs)
+    form = KO.hodge_form(amps)
+    ident = KO.identity()
+    s_sq = KO.combine((1, KO.down_laplacian()), (-4, ident))
+    up = KO.combine((1, KO.up_laplacian()), (-2, ident))
+    r_half = KO.cross_half(s_sq)
+    # R is where the two Laplacians overlap: minus the cross half of L_up
+    overlap = KO.cross_half(KO.up_laplacian()) == {k: -v for k, v in r_half.items()}
+    # the Hodge part alone, and the residual it leaves, which must be -2C R
+    hodge_part = KO.combine(
+        (-form["nu~"], up),
+        (form["u"], KO.compose(s_sq, s_sq)),
+        (-form["pi~"], s_sq),
+        (form["sigma~"], ident),
+    )
+    residual = KO.combine((1, dict(recs)), (-1, hodge_part))
+    ok = (
+        KO.hodge_records(form) == dict(recs)
+        and form["nu~"] == Fraction(-5, 48)
+        and form["C"] == K.C_SHP_HISTORICAL == kernel_constants()["C_shp"]
+        and overlap
+        and residual == {k: -2 * form["C"] * v for k, v in r_half.items()}
+        and KO.acts_as(KO.up_laplacian(), KO.E1)
+        and KO.acts_as(KO.compose(KO.down_laplacian(), KO.up_laplacian()), {})
+        and KO.acts_as(KO.compose(KO.up_laplacian(), KO.down_laplacian()), {})
+        # the eigenvector criterion: H4 psi - lambda psi = -2C R psi, nonzero here
+        and not KO.acts_as(r_half, {})
+        # and the registered diagonal coefficient is the reduced shared-link sum
+        and -8 * (amps["rho"] + form["pi~"]) == K.BETA_PEN_3
+    )
+    return (
+        ok,
+        (
+            f"all 189 records equal -nu~ (L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2C R with "
+            f"nu~ = {form['nu~']}, u = {form['u']}, pi~ = {form['pi~']}, sigma~ = "
+            f"{form['sigma~']} and C = {form['C']} = C_shp exactly. L_down L_up = 0 and "
+            "L_up psi = e1 psi, S_sq psi = -4 psi, so on the cube-boundary carrier every term "
+            "but the last is a scalar: A = -nu~ = 5/48 with NO u in it, B = D = 0 with nothing "
+            "to cancel, and 4C e2 is the projection of -2C R alone. The tier collapse G14 asked "
+            "a mechanism for is therefore the Hodge structure of the kernel: the only operator "
+            "outside the algebra of the two Laplacians is R, the cross-plane half of the "
+            "shared-link adjacency, and R projects to pure e2. And the carrier is an exact "
+            "eigenvector of H4 if and only if C_shp = 0 -- C2 is the question of how far the "
+            "cube boundary is from being an eigenvector. The disagreement between the two "
+            "kernels is four numbers (u, rho, pi~, sigma~); u and sigma~ enter the carrier "
+            "band only through its constant, so C_shp = -5/96 - (rho + pi~)/2 rests on the two "
+            "shared-link amplitudes and nothing else. In the register's own terms, "
+            f"beta_pen = -8 (rho + pi~) = {K.BETA_PEN_3} exactly"
+        ),
+        {"PI_REDUCED": form["pi~"], "SIGMA_REDUCED": form["sigma~"]},
+    )
+
+
+@orbit.check(
+    "FINDING: the cold kernel has the same Hodge form, with nu~ = -5/48 and its own "
+    "(u, rho, pi~, sigma~)",
+    _HODGE,
+    tier=2,
+    rests_on=(_FORM,),
+)
+def _():
+    cold = dict(KO.cold_records())
+    form = KO.hodge_form(KO.cold_amplitudes())
+    built = KO.hodge_records(form)
+    scale = max(abs(v) for v in cold.values())
+    gap = max(abs(float(built.get(k, 0)) - cold.get(k, 0.0)) for k in set(built) | set(cold))
+    ok = (
+        gap < 1e-11 * scale
+        and abs(form["nu~"] + 5 / 48) < 1e-12
+        and abs(form["C"] - K.C_SHP_NEW_NUM) < 1e-12
+    )
+    return ok, (
+        f"the v10a.26 dump is -nu~ (L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2C R to "
+        f"{gap:.1e} absolute on records of size up to {scale:.2f} ({gap / scale:.1e} relative), "
+        f"with nu~ = {form['nu~']:.15f} (-5/48 to {abs(form['nu~'] + 5 / 48):.1e}), "
+        f"u = {form['u']:.10e}, pi~ = {form['pi~']:.12f}, sigma~ = {form['sigma~']:.10f}, and "
+        f"C = {form['C']:.15f} against the registered {K.C_SHP_NEW_NUM!r}. So the two rival "
+        "kernels share the Hodge form and the primitive cube completion; they differ in the "
+        "two-hop weight u (band-invisible on the carrier), the on-site anchor, and the two "
+        "shared-link amplitudes rho and pi~ -- and C2 is exactly the last two. Nothing here "
+        "prefers either side"
     )
