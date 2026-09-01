@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 258/258 checks pass.
+**T1/T2 — re-derived here.** 259/259 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -42,6 +42,7 @@ it cannot drift from what the repository actually checks.
 | the electric shell, and what isolates it | 5/5 |
 | fourth-order kernel orbits | 12/12 |
 | continuum and fixed-spacing bridges (G18, G19) | 3/3 |
+| Hecke cover correspondence table | 1/1 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -310,5 +311,11 @@ Historical rho + pi = -12778990891087/1595026186790400, so a direct balanced con
 
 - supported by: CHK: the on-site orbit IS the momentum-independent channel, CHK: PREDICTION: the eps-sector at N=3 is Delta(rho + pi) = -25/512 and nothing else, CHK: the SU(6) determinant correction is exactly 6/343 and momentum-independent, CHK: the SU(5) stage-1 scan is shipped: 895,524 pairs, zero determinant sectors, CHK: A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u), OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08) §4: the primitive channel is link-balanced, hence eps-blind, STATE.md cont. 9: unified N-ality theorem, exact exceptional offsets
 - would be falsified by: A direct balanced contraction at N = 3 whose six orbit amplitudes differ from the historical ones anywhere except in rho + pi, or whose rho + pi shift is not exactly -25/512. Equally: any exceptional rank at which the determinant correction is shown to be momentum-DEPENDENT (it would then not be an on-site shift), or an SU(3) determinant analysis that reaches A rather than C, which would contradict the eps-blindness of the link-balanced primitive channel that the whole chain rests on.
+- status: conjectured
+
+**U6 — A number-theoretic construction landed 2026-08-31 (the "Hecke cover correspondence" note — see corpus-import/programs/ hecke_cover_correspondence/) maps lines in P^2(F_p) with Q = 0 to sublattices of Z^3, reads off a quantity lambda_p at each of ten odd primes p = 3..31, and reports that lambda_p is the Hecke eigenvalue of a level-2 eta/Eisenstein newform at p, verified independently at all ten. The note's own boxed result is that the same neighbor sum acts on four infrared parameters it calls tau, C, S_0, A by tau' = (p+1) tau, C' = lambda_p C, S_0' = (p+1) S_0, A' = (p+1) A + (4/5)((p+1) - lambda_p) C. Candidate: the note's C and quartic harmonic H_4 are the SAME object as this corpus's fourth-order shape coefficient C_shp and its quartic obstruction basis (UNIFIED §5.1), under a normalization not yet derived here — in which case the p+1 / lambda_p Hecke eigenline decomposition would be a new, independent handle on the open C2 dispute (does either recorded C_shp value, or neither, sit on the harmonic eigenline?).**
+
+- supported by: corpus-import/programs/hecke_cover_correspondence/NOTE_FLUX_hecke_cover_correspondence_2026-08-31.md, CHK: the geometric A_p column is p^4 times the printed lambda_p
+- would be falsified by: Derive the normalization map between the note's (tau, C, S_0, A, H_4) and this corpus's own fourth-order coordinates (q_a, e_2, e_3, C_shp, the shapes A/B/C/D of UNIFIED §5.1) and show that no such map carries C to C_shp — e.g. because the note's construction has no analogue of the off-axis dependence Phi_C(k) = 4 e_2(k)/Q(k) that C_shp multiplies, or because the dimensional/degree count of H_4 does not match the quartic obstruction space's. Either kills the identification outright, the same way q_band^(4) and m_Gamma^(4) turned out to be differently anchored rather than rival estimates (ADR 0002). Equally fatal in the other direction: exhibiting the map and finding that NEITHER recorded C_shp value sits on the eigenline it predicts would leave the construction standing but refute its relevance to C2.
 - status: conjectured
 

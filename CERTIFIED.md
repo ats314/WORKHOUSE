@@ -142,10 +142,15 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 209
+## T1 — re-derived exactly — 210
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
+**Hecke cover correspondence table**
+
+- `the geometric A_p column is p^4 times the printed lambda_p`
+  - src/workhouse/invariants/hecke.py:44 · U6; corpus-import/programs/hecke_cover_correspondence/NOTE_FLUX_hecke_cover_correspondence_2026-08-31.md, target-blind prime table
+  - `workhouse verify --only 'the geometric A_p column is p^4 times the printed lambda_p'`
 **SU(3) second and third order**
 
 - `C-even bandwidth = top - bottom = 88/153`
