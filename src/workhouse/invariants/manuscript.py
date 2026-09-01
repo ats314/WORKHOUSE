@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import re
 
 from sympy import (
     pi,
@@ -58,13 +57,12 @@ def _():
     cited, unresolved = {}, {}
     for path in editions:
         source = path.read_text(encoding="utf-8")
-        labels = [
-            m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
-            # The label body may contain "\^{}" -- LaTeX's standalone circumflex
-            # -- so a [^}]* body stops at the wrong brace and truncates the name.
-            # Allow balanced empty groups.
-            for m in re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", source)
-        ]
+        # One parser, shared with the graph's `labels` edges, so the guard and
+        # the graph cannot disagree about what an edition labels. Imported
+        # here, not at module level: claims imports the invariants package.
+        from .. import claims as claims_mod
+
+        labels = claims_mod.chk_labels(source)
         cited[path.name] = labels
         missing = sorted(set(labels) - known)
         if missing:

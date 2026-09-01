@@ -355,6 +355,11 @@ def _casimir(labels, n):
 @electric_shell.check(
     "below 5 C_F/2 the trivial-flux electric spectrum is exactly 0 and 2 C_F",
     "PUBLICATION rev5 Thm. 1 (uniform first electric spectral window)",
+    rests_on=(
+        "every nontrivial irrep clears 5/4 C_F, except the fundamental pair",
+        "the torus graph is simple, and the only short cycles are the L = 3 winding triangles",
+        "every 4-cycle is an elementary face, except exactly the 3L^2 straight winding loops at L = 4",  # noqa: E501
+    ),
 )
 def _():
     # The theorem's proof is a chain of finite facts, and this check walks the
@@ -456,6 +461,11 @@ def _():
 @electric_shell.check(
     "the retained electric shell is exactly the trivial-flux charge-odd plaquette span",
     "PUBLICATION rev5 Thm. 1, eq. (retained-shell)",
+    rests_on=(
+        "below 5 C_F/2 the trivial-flux electric spectrum is exactly 0 and 2 C_F",
+        "every 4-cycle is an elementary face, except exactly the 3L^2 straight winding loops at L = 4",  # noqa: E501
+        "d_2 d_3 = 0 on the built complex",
+    ),
 )
 def _():
     # The corollary is a count with two uniqueness inputs. Uniqueness: at each
@@ -520,6 +530,12 @@ def _sparse(vec_items, n):
 @electric_shell.check(
     "second-order off-diagonal processes are exactly the adjacent shared-link channels",
     "PUBLICATION rev5 Lemma (second-order process completeness)",
+    rests_on=(
+        "the retained electric shell is exactly the trivial-flux charge-odd plaquette span",
+        "the plaquette graph is 12-regular and two faces share at most one link",
+        "the shared-link weights are Weingarten, not an isotropy assumption",
+        "each channel gap is C_F + C_R/2, and the weights sum to one",
+    ),
 )
 def _():
     # The lemma's combinatorial core, enumerated. A term chi_p^eps chi_q^eta on

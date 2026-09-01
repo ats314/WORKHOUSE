@@ -282,6 +282,22 @@ def explain(
             w("  leads:")
             for lead in gap["leads"]:
                 w(f"    {lead}")
+        # Routes, by state. This is the block that answers "what has been
+        # tried" without a trip through the run READMEs: a dead route names
+        # what killed it, a live one is where effort goes, an untried one is a
+        # recorded proposal nobody has spent anything on.
+        routes = gap.get("plan", []) or []
+        if routes:
+            w("")
+            w("\033[1mRoutes\033[0m")
+            order = {"live": 0, "untried": 1, "done": 2, "dead": 3}
+            for step in sorted(routes, key=lambda st: order.get(st.get("state"), 9)):
+                rid = claims_mod.route_id(node, step["step"])
+                w(f"  [{step.get('state', '?')}] {step['step']}  \033[2m{rid}\033[0m")
+                for ref in step.get("closed_by", []) or []:
+                    w(f"      closed by {ref}")
+                for ref in step.get("cannot_decide", []) or []:
+                    w(f"      cannot decide {ref}")
         # Structured sub-blocks are too big to print; say they exist and where.
         elided = [
             key

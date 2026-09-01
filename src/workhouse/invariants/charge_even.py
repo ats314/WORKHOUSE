@@ -589,6 +589,11 @@ def _():
 @even_band.check(
     "at N = 2 the C-odd hopping vanishes while the unsigned-channel continuation does not",
     "PUBLICATION rev5 §2 (why the construction begins at N = 3)",
+    rests_on=(
+        "t_2 = 0 and t_3 = 5/612",
+        "the four channel weights follow from dimension and Casimir",
+        "ell_N = A_N + B_N + 1/C_F, the vacuum-mediated route at every rank",
+    ),
 )
 def _():
     # The sentence in rev. 5 is sharper than "t_2 = 0": it locates the zero.
@@ -613,19 +618,24 @@ def _():
     ell_num, _ = K.even_hopping().as_numer_denom()
     factor_ok = t_num.subs(K.N, 2) == 0 and ell_num.subs(K.N, 2) != 0
     ok = like_is_mixed and pairs_cancel and t2 == 0 and ell2 == Rational(-4, 21) and factor_ok
-    return ok, (
-        f"at N = 2 the channel table is (d, C_2): Lambda^2 F = {tuple(data['Lambda2'])} = "
-        f"singlet, Sym^2 F = {tuple(data['Sym2'])} = adjoint, so w_Lambda2 = w_1 = "
-        f"{channelwise['1']} and w_Sym2 = w_Adj = {channelwise['Adj']} and t_2 = B_2 - A_2 "
-        f"vanishes channel by channel; the unsigned continuation A_2 + B_2 + 1/C_F = {ell2} "
-        "does not. The zero is the channel-difference factor N^2 - 4, not the incidence, and "
-        "nothing here asserts an SU(2) charge-even spectrum"
+    return (
+        ok,
+        (
+            f"at N = 2 the channel table is (d, C_2): Lambda^2 F = {tuple(data['Lambda2'])} = "
+            f"singlet, Sym^2 F = {tuple(data['Sym2'])} = adjoint, so w_Lambda2 = w_1 = "
+            f"{channelwise['1']} and w_Sym2 = w_Adj = {channelwise['Adj']} and t_2 = B_2 - A_2 "
+            f"vanishes channel by channel; the unsigned continuation A_2 + B_2 + 1/C_F = {ell2} "
+            "does not. The zero is the channel-difference factor N^2 - 4, not the incidence, and "
+            "nothing here asserts an SU(2) charge-even spectrum"
+        ),
+        {"ELL_2_CONTINUED": ell2},
     )
 
 
 @even_band.check(
     "the unsigned-incidence characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3",
     "PUBLICATION rev5 Thm. (unsigned-incidence Bloch cubic)",
+    rests_on=("the C-even characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3",),
 )
 def _():
     # Rev. 5 states the cubic for the OPERATOR N N^dagger, defined by dropping
@@ -666,6 +676,10 @@ def _():
 @even_band.check(
     "the C-even range [-4, 12] is exact; the top only at Gamma, the floor on three planes",
     "PUBLICATION rev5 Prop. (range and attainment)",
+    rests_on=(
+        "the C-even characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3",
+        "the C-even range [-4, 12] is exact, and each edge is attained at one point only",
+    ),
 )
 def _():
     # The earlier check in this suite is titled "each edge is attained at one

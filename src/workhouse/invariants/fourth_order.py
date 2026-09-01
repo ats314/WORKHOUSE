@@ -525,6 +525,9 @@ _CUBE_BLOCH = (
 @sealed.check(
     "the perpendicular cube sector is a second fourth-order primitive channel, S_4 = -11",
     "C2; G3 off-axis channel route; MOB §4",
+    rests_on=(
+        "SELF-TEST: cellular's cube completion gives |A| = alpha_N/4 and C = -A/2 at every rank",
+    ),
 )
 def _():
     # A unit cube offers exactly TWO fourth-order primitive completions, and
@@ -604,18 +607,28 @@ def _():
         and shells == {(0, 0, 0): 6, (0, 0, 1): 12, (0, 1, 1): 6}
         and normal_shells == {(0, 0, 1): 6}
     )
-    return ok, (
-        "the cube's 24 ordered perpendicular pairs all give S_4 = -11 over 14 histories, "
-        "c_4,perp = -88/(N(N^2-1)^3) = -11/192 at N = 3, against the 6 opposite pairs' "
-        "S_4 = -20 over 24 histories and -160/(N(N^2-1)^3) = -5/48. The ratio is exactly "
-        "11/20 at every rank. This is a fourth-order primitive coefficient the corpus does not "
-        "record. Its records are 6 at shell (0,0,0), 12 at (0,0,1) and 6 at (0,1,1) -- 24 in "
-        "all, max |displacement| 1, so the OPERATOR is range-1 (an earlier form of this check "
-        "said range-2, having measured the carrier projection, which inherits psi's own "
-        "displacement content). It is still NOT the dictionary's rotation row: this channel's "
-        "entry is H_[(12),(13)] = -conj(d_2) d_3 against the recorded +conj(d_n) d_m, which are "
-        "minus the conjugate of one another -- different off-diagonal structures. That, not "
-        "range, is why its carrier projection lies outside the four-shape span"
+    return (
+        ok,
+        (
+            "the cube's 24 ordered perpendicular pairs all give S_4 = -11 over 14 histories, "
+            "c_4,perp = -88/(N(N^2-1)^3) = -11/192 at N = 3, against the 6 opposite pairs' "
+            "S_4 = -20 over 24 histories and -160/(N(N^2-1)^3) = -5/48. The ratio is exactly "
+            "11/20 at every rank. This is a fourth-order primitive coefficient the corpus does not "
+            "record. Its records are 6 at shell (0,0,0), 12 at (0,0,1) and 6 at (0,1,1) -- 24 in "
+            "all, max |displacement| 1, so the OPERATOR is range-1 (an earlier form of this check "
+            "said range-2, having measured the carrier projection, which inherits psi's own "
+            "displacement content). It is still NOT the dictionary's rotation row: this channel's "
+            "entry is H_[(12),(13)] = -conj(d_2) d_3 against the recorded +conj(d_n) d_m, which are "
+            "minus the conjugate of one another -- different off-diagonal structures. That, not "
+            "range, is why its carrier projection lies outside the four-shape span"
+        ),
+        {
+            # The coefficient the corpus does not record, now reachable by value:
+            # `workhouse search -11/192` lands here.
+            "C4_PERP_3": Rational(-11, 192),
+            "C4_PERP_N": simplify(c_perp),
+            "S4_PERP": -11,
+        },
     )
 
 

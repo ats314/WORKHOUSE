@@ -483,6 +483,7 @@ def _():
 @published.check(
     "the Hamer table metadata is pinned; no fourth-order agreement is used",
     "HAMER_1989 / PUBLICATION rev5 (External comparisons)",
+    rests_on=("the Hamer table is pinned, and the a_4 agreement is primary-source",),
 )
 def _():
     # Rev. 5 confines its Hamer comparison to what the flat scalar can test --

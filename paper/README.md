@@ -186,6 +186,12 @@ edition against the live registry and fails if one is renamed or deleted —
 otherwise the paper would go on printing a command that no longer resolves,
 which is the same drift `FRONTIER.md`'s staleness test exists to catch.
 
+Since 2026-09-01 the same labels are graph edges: every legended edition emits
+one `labels` edge per distinct `\chk` label, through the parser the guard uses,
+so `workhouse why 'PUBLICATION rev5'` lists the checks that edition rests on
+and `workhouse why <check>` says which editions print it. The claim-to-check
+map is computed from the source rather than maintained here (ADR 0015).
+
 ### Label drift
 
 The guard read *one* edition until 2026-08-30, and the editions written after

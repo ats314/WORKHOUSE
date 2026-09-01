@@ -356,6 +356,12 @@ def render(f: Frontier) -> str:
         detail = " ".join(str(g.get("detail", "")).split())
         if detail:
             w(f"  - {detail}")
+        # Routes by state, so the next session inherits which attempts are
+        # dead rather than rediscovering it from run READMEs.
+        for state in ("live", "untried", "done", "dead"):
+            names = [st["step"] for st in g.get("plan", []) or [] if st.get("state") == state]
+            if names:
+                w(f"  - routes {state}: {'; '.join(names)}")
     w("")
 
     w("## 7b. What published work bears on this")
@@ -438,6 +444,14 @@ def brief() -> str:
         "WORKHOUSE — verification layer over a research corpus. Read AGENTS.md "
         "(posture) and CLAUDE.md (rules) before changing anything.",
         "",
+        "The graph is the front door, not the files: `workhouse why <id>` prints "
+        "everything recorded about one claim (both sides of a dispute, every "
+        "check with its verdict, the routes tried and which are dead), "
+        "`workhouse search <value>` matches by exact rational, `workhouse derive "
+        "<id>` exports the evidence chain. Query before reading; the measured "
+        "failure mode is re-deriving what exists under different notation, and "
+        "the second is repeating a route a run already closed.",
+        "",
         f"State: {f.checks_passed}/{f.checks_total} checks pass, "
         f"{f.lean_theorems} Lean theorems with {f.lean_sorries} sorry. "
         f"{len(f.disputed)} open contradiction, {len(f.open_gaps)} open gaps "
@@ -458,6 +472,20 @@ def brief() -> str:
     if f.cheapest:
         g = f.cheapest[0]
         lines.append(f"Cheapest decisive next step: {g['id']} — {g['title']}.")
+        routes = g.get("plan", []) or []
+        if routes:
+            counts = {}
+            for st in routes:
+                counts[st.get("state", "?")] = counts.get(st.get("state", "?"), 0) + 1
+            live = [st["step"] for st in routes if st.get("state") in ("live", "untried")]
+            dead = [st["step"] for st in routes if st.get("state") == "dead"]
+            lines.append(
+                "  Its routes: "
+                + ", ".join(f"{n} {state}" for state, n in sorted(counts.items()))
+                + (f". Open: {'; '.join(live)}" if live else "")
+                + (f". Dead, do not repeat: {'; '.join(dead)}" if dead else "")
+                + f". Start with: workhouse why {g['id']}."
+            )
     lines += [
         "",
         "Traps: q_band^(4) and m_Gamma^(4) are differently anchored coordinates, "
@@ -465,13 +493,14 @@ def brief() -> str:
         "rescaling; exact rationals stay sympy.Rational and floats carry _NUM; "
         "never edit theory/; never widen a tolerance to clear a finding.",
         "",
-        "Orientation: FRONTIER.md, then ledger/, then invariants/. "
+        "Orientation after the graph: FRONTIER.md, then ledger/, then invariants/. "
         "corpus-import/ is 950 files and ~61 context windows — target it, never "
         "read it recursively. Exact rationals are the join keys, not concepts.",
         "",
-        "Commands: workhouse search <value|symbol|id> | why <id> | verify | "
-        "frontier | status; make check. Search first: the measured failure "
-        "mode is re-deriving what exists under different notation.",
+        "Commands: workhouse why <id> | search <value|symbol|id> | derive <id> | "
+        "branches <id> | verify [--only TEXT ...] | frontier | status; make check. "
+        "A check declares what it rests on (rests_on) and may yield exact values "
+        "(searchable constants); a gap's plan steps are routes with a state.",
     ]
     return "\n".join(lines)
 
