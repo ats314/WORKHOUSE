@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 209
+## T1 — re-derived exactly — 216
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -519,6 +519,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `stored full text is verbatim, and the licence is checked`
   - src/workhouse/invariants/published.py:454 · KRS_2023
   - `workhouse verify --only 'stored full text is verbatim, and the licence is checked'`
+- `the Hamer table metadata is pinned; no fourth-order agreement is used`
+  - src/workhouse/invariants/published.py:483 · HAMER_1989 / PUBLICATION rev5 (External comparisons)
+  - `workhouse verify --only 'the Hamer table metadata is pinned; no fourth-order agreement is used'`
 - `the KPS 1980 string-tension table equals the certified sigma series EXACTLY`
   - src/workhouse/invariants/published.py:221 · KPS_1981 / G7
   - `workhouse verify --only 'the KPS 1980 string-tension table equals the certified sigma series EXACTLY'`
@@ -701,63 +704,81 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **the charge-even band, exactly**
 
 - `FINDING: the certificate key 'bandmin' holds the band MAXIMUM, at both orders`
-  - src/workhouse/invariants/charge_even.py:335 · RUN_TROM_d3_results.json vs PAPER, the §6 patch, and the arithmetic
+  - src/workhouse/invariants/charge_even.py:337 · RUN_TROM_d3_results.json vs PAPER, the §6 patch, and the arithmetic
   - `workhouse verify --only 'FINDING: the certificate key '"'"'bandmin'"'"' holds the band MAXIMUM, at both orders'`
 - `at N = 2 the C-odd hopping vanishes and the C-even one does not`
-  - src/workhouse/invariants/charge_even.py:540 · MASTER_THEORY §4.3; ledger/theorems.yaml (t_2 = 0)
+  - src/workhouse/invariants/charge_even.py:542 · MASTER_THEORY §4.3; ledger/theorems.yaml (t_2 = 0)
   - `workhouse verify --only 'at N = 2 the C-odd hopping vanishes and the C-even one does not'`
+- `at N = 2 the C-odd hopping vanishes while the unsigned-channel continuation does not`
+  - src/workhouse/invariants/charge_even.py:589 · PUBLICATION rev5 §2 (why the construction begins at N = 3)
+  - `workhouse verify --only 'at N = 2 the C-odd hopping vanishes while the unsigned-channel continuation does not'`
 - `both declared coincidences, checked: one is ell_N at all ranks, the other is bare`
-  - src/workhouse/invariants/charge_even.py:493 · ENGINE_FLUX_su3_domino_d3.py / MASTER paper Prop. 8
+  - src/workhouse/invariants/charge_even.py:495 · ENGINE_FLUX_su3_domino_d3.py / MASTER paper Prop. 8
   - `workhouse verify --only 'both declared coincidences, checked: one is ell_N at all ranks, the other is bare'`
 - `one assembly formula gives every C-even value at both orders`
-  - src/workhouse/invariants/charge_even.py:300 · ENGINE_FLUX_su3_domino_d3.py / MASTER paper eq. (30)
+  - src/workhouse/invariants/charge_even.py:302 · ENGINE_FLUX_su3_domino_d3.py / MASTER paper eq. (30)
   - `workhouse verify --only 'one assembly formula gives every C-even value at both orders'`
 - `p + q = 12: one zone function runs both sectors`
-  - src/workhouse/invariants/charge_even.py:122 · MASTER paper eq. (24)
+  - src/workhouse/invariants/charge_even.py:124 · MASTER paper eq. (24)
   - `workhouse verify --only 'p + q = 12: one zone function runs both sectors'`
 - `the Bloch cubic IS the finite L = 3 and L = 4 plaquette spectrum, exactly`
-  - src/workhouse/invariants/charge_even.py:259 · UNIFIED §0.1; the corpus checks the analogous statement numerically
+  - src/workhouse/invariants/charge_even.py:261 · UNIFIED §0.1; the corpus checks the analogous statement numerically
   - `workhouse verify --only 'the Bloch cubic IS the finite L = 3 and L = 4 plaquette spectrum, exactly'`
 - `the C-even Gamma point pins t_+, exactly where no C-odd Gamma datum can`
-  - src/workhouse/invariants/charge_even.py:395 · MASTER paper Rmk. 12 / PAPER Thm. (the C-even band)
+  - src/workhouse/invariants/charge_even.py:397 · MASTER paper Rmk. 12 / PAPER Thm. (the C-even band)
   - `workhouse verify --only 'the C-even Gamma point pins t_+, exactly where no C-odd Gamma datum can'`
 - `the C-even band touches its floor exactly on the three planes k_j = pi`
-  - src/workhouse/invariants/charge_even.py:217 · PAPER Rmk. (an exactly immobile excitation)
+  - src/workhouse/invariants/charge_even.py:219 · PAPER Rmk. (an exactly immobile excitation)
   - `workhouse verify --only 'the C-even band touches its floor exactly on the three planes k_j = pi'`
 - `the C-even bandwidth is 16|t_+| at every order; the C-odd manifold width is 12|t_-|`
-  - src/workhouse/invariants/charge_even.py:459 · PAPER Rmk. (an exactly immobile excitation)
+  - src/workhouse/invariants/charge_even.py:461 · PAPER Rmk. (an exactly immobile excitation)
   - `workhouse verify --only 'the C-even bandwidth is 16|t_+| at every order; the C-odd manifold width is 12|t_-|'`
 - `the C-even characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3`
-  - src/workhouse/invariants/charge_even.py:103 · PAPER Thm. (the C-even band) states the range; the closed form is derived here
+  - src/workhouse/invariants/charge_even.py:105 · PAPER Thm. (the C-even band) states the range; the closed form is derived here
   - `workhouse verify --only 'the C-even characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3'`
 - `the C-even curvature is (4/3)|t_+| at both orders, and isotropic`
-  - src/workhouse/invariants/charge_even.py:428 · PAPER Thm. (the C-even band); §6 patch curvature 22/459
+  - src/workhouse/invariants/charge_even.py:430 · PAPER Thm. (the C-even band); §6 patch curvature 22/459
   - `workhouse verify --only 'the C-even curvature is (4/3)|t_+| at both orders, and isotropic'`
 - `the C-even range [-4, 12] is exact, and each edge is attained at one point only`
-  - src/workhouse/invariants/charge_even.py:132 · PAPER Thm. (incidence factorization) / ENGINE_FLUX_glueball_band_certificate_v2.py
+  - src/workhouse/invariants/charge_even.py:134 · PAPER Thm. (incidence factorization) / ENGINE_FLUX_glueball_band_certificate_v2.py
   - `workhouse verify --only 'the C-even range [-4, 12] is exact, and each edge is attained at one point only'`
+- `the C-even range [-4, 12] is exact; the top only at Gamma, the floor on three planes`
+  - src/workhouse/invariants/charge_even.py:666 · PUBLICATION rev5 Prop. (range and attainment)
+  - `workhouse verify --only 'the C-even range [-4, 12] is exact; the top only at Gamma, the floor on three planes'`
 - `the C-even spectra at the four high-symmetry momenta`
-  - src/workhouse/invariants/charge_even.py:280 · MASTER paper §4.5 / PAPER Thm. (the C-even band)
+  - src/workhouse/invariants/charge_even.py:282 · MASTER paper §4.5 / PAPER Thm. (the C-even band)
   - `workhouse verify --only 'the C-even spectra at the four high-symmetry momenta'`
 - `the plaquette graph is 12-regular and two faces share at most one link`
-  - src/workhouse/invariants/charge_even.py:40 · MASTER paper eq. (30) / UNIFIED §0.1
+  - src/workhouse/invariants/charge_even.py:42 · MASTER paper eq. (30) / UNIFIED §0.1
   - `workhouse verify --only 'the plaquette graph is 12-regular and two faces share at most one link'`
 - `the two Bloch incidence symbols, and the determinant asymmetry between them`
-  - src/workhouse/invariants/charge_even.py:65 · PAPER Thm. (incidence factorization; Gauss law)
+  - src/workhouse/invariants/charge_even.py:67 · PAPER Thm. (incidence factorization; Gauss law)
   - `workhouse verify --only 'the two Bloch incidence symbols, and the determinant asymmetry between them'`
+- `the unsigned-incidence characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3`
+  - src/workhouse/invariants/charge_even.py:626 · PUBLICATION rev5 Thm. (unsigned-incidence Bloch cubic)
+  - `workhouse verify --only 'the unsigned-incidence characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3'`
 **the electric shell, and what isolates it**
 
+- `below 5 C_F/2 the trivial-flux electric spectrum is exactly 0 and 2 C_F`
+  - src/workhouse/invariants/electric_shell.py:355 · PUBLICATION rev5 Thm. 1 (uniform first electric spectral window)
+  - `workhouse verify --only 'below 5 C_F/2 the trivial-flux electric spectrum is exactly 0 and 2 C_F'`
 - `every 4-cycle is an elementary face, except exactly the 3L^2 straight winding loops at L = 4`
-  - src/workhouse/invariants/electric_shell.py:237 · MASTER edition Thm. 1, proof (four-cycle classification)
+  - src/workhouse/invariants/electric_shell.py:238 · MASTER edition Thm. 1, proof (four-cycle classification)
   - `workhouse verify --only 'every 4-cycle is an elementary face, except exactly the 3L^2 straight winding loops at L = 4'`
 - `every nontrivial irrep clears 5/4 C_F, except the fundamental pair`
-  - src/workhouse/invariants/electric_shell.py:41 · MASTER edition Thm. 1 (uniform first electric spectral window)
+  - src/workhouse/invariants/electric_shell.py:42 · MASTER edition Thm. 1 (uniform first electric spectral window)
   - `workhouse verify --only 'every nontrivial irrep clears 5/4 C_F, except the fundamental pair'`
+- `second-order off-diagonal processes are exactly the adjacent shared-link channels`
+  - src/workhouse/invariants/electric_shell.py:520 · PUBLICATION rev5 Lemma (second-order process completeness)
+  - `workhouse verify --only 'second-order off-diagonal processes are exactly the adjacent shared-link channels'`
 - `the SU(3) additive electric spectrum leaves 14, 16, 17 around the shell`
-  - src/workhouse/invariants/electric_shell.py:110 · MASTER edition Thm. 2 (SU(3) all-orders finite-volume Riesz island)
+  - src/workhouse/invariants/electric_shell.py:111 · MASTER edition Thm. 2 (SU(3) all-orders finite-volume Riesz island)
   - `workhouse verify --only 'the SU(3) additive electric spectrum leaves 14, 16, 17 around the shell'`
+- `the retained electric shell is exactly the trivial-flux charge-odd plaquette span`
+  - src/workhouse/invariants/electric_shell.py:456 · PUBLICATION rev5 Thm. 1, eq. (retained-shell)
+  - `workhouse verify --only 'the retained electric shell is exactly the trivial-flux charge-odd plaquette span'`
 - `the torus graph is simple, and the only short cycles are the L = 3 winding triangles`
-  - src/workhouse/invariants/electric_shell.py:194 · MASTER edition Thm. 1, proof (support census)
+  - src/workhouse/invariants/electric_shell.py:195 · MASTER edition Thm. 1, proof (support census)
   - `workhouse verify --only 'the torus graph is simple, and the only short cycles are the L = 3 winding triangles'`
 **the flat-band manuscript**
 
@@ -990,7 +1011,7 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **the electric shell, and what isolates it**
 
 - `the sealed radius-two report passes its six float checks at stated tolerances`
-  - src/workhouse/invariants/electric_shell.py:280 · MASTER edition §5.4; paper/verify_radius2_report.py
+  - src/workhouse/invariants/electric_shell.py:281 · MASTER edition §5.4; paper/verify_radius2_report.py
   - `workhouse verify --only 'the sealed radius-two report passes its six float checks at stated tolerances'`
 **the flat-band manuscript**
 

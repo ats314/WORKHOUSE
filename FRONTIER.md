@@ -12,13 +12,13 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 258/258 checks pass.
+**T1/T2 — re-derived here.** 265/265 checks pass.
 
 | Suite | Passing |
 |---|---|
 | second order, all ranks | 12/12 |
 | SU(3) second and third order | 12/12 |
-| the charge-even band, exactly | 15/15 |
+| the charge-even band, exactly | 18/18 |
 | fourth order, sealed core | 10/10 |
 | fourth order, anchoring and the residual dispute | 13/13 |
 | old-to-new crosswalk | 5/5 |
@@ -30,7 +30,7 @@ it cannot drift from what the repository actually checks.
 | tier collapse (G14) | 6/6 |
 | isotropic pentagonal cap band (v4.3 §9.3) | 11/11 |
 | native string tension through fifth order (v4.3 §11.2) | 7/7 |
-| published comparisons (literature/index.yaml) | 16/16 |
+| published comparisons (literature/index.yaml) | 17/17 |
 | restored payloads (G1) | 11/11 |
 | coupling erratum (C4/G2) | 2/2 |
 | tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
@@ -39,7 +39,7 @@ it cannot drift from what the repository actually checks.
 | the flat-band manuscript | 5/5 |
 | finite-rank truncation bridge (published SU(3) truncations) | 8/8 |
 | two-cube charge-odd second-order closure (B=4 and B=6) | 12/12 |
-| the electric shell, and what isolates it | 5/5 |
+| the electric shell, and what isolates it | 8/8 |
 | fourth-order kernel orbits | 12/12 |
 | continuum and fixed-spacing bridges (G18, G19) | 3/3 |
 

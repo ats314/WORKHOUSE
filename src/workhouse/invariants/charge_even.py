@@ -9,8 +9,10 @@ from sympy import (
     expand,
     limit,
     oo,
+    pi,
     simplify,
     symbols,
+    zeros,
 )
 
 from .. import constants as K
@@ -571,4 +573,147 @@ def _():
         "N = 3, decreasing monotonically to 4 — so the C-even band is the wider one "
         "always, and the flat-band program's asymmetry is a channel statement rather "
         "than a geometric one"
+    )
+
+
+# --------------------------------------------------------------------------
+# Publication edition rev. 5 re-scopes three of this suite's statements. The
+# unsigned incidence is a defined COMPARISON operator there, not a sector:
+# its identification with the complete linked charge-even symbol is a stated
+# hypothesis (the all-pairs vacuum route is not disposed of). The labels
+# below carry that scoping, and each check adds the fact the rescoped
+# sentence actually turns on rather than re-running its predecessor.
+# --------------------------------------------------------------------------
+
+
+@even_band.check(
+    "at N = 2 the C-odd hopping vanishes while the unsigned-channel continuation does not",
+    "PUBLICATION rev5 §2 (why the construction begins at N = 3)",
+)
+def _():
+    # The sentence in rev. 5 is sharper than "t_2 = 0": it locates the zero.
+    # At N = 2, Lambda^2 F IS the singlet (dimension 1, Casimir 0) and Sym^2 F
+    # IS the adjoint (dimension 3, Casimir 2), so the like-family weights
+    # coincide with the mixed-family weights channel by channel and the
+    # difference B_N - A_N vanishes term by term -- the N^2 - 4 factor is a
+    # channel coincidence, not an incidence zero. The unsigned-channel sum
+    # A_N + B_N + 1/C_F has no such cancellation and continues to -4/21. Rev. 5
+    # is careful not to call that an SU(2) charge-even spectrum, because the
+    # charge-conjugation split degenerates there; neither does this check.
+    data = K.channel_data(2)
+    like_is_mixed = data["Lambda2"] == data["1"] and data["Sym2"] == data["Adj"]
+    channelwise = {c: K.channel_weight(c, 2) for c in K.CHANNELS}
+    pairs_cancel = (
+        channelwise["Lambda2"] == channelwise["1"] and channelwise["Sym2"] == channelwise["Adj"]
+    )
+    t2 = K.hopping(2)
+    ell2 = K.even_hopping(2)
+    # and the zero is the factor N^2 - 4 of t_N, absent from ell_N
+    t_num, _ = K.hopping().as_numer_denom()
+    ell_num, _ = K.even_hopping().as_numer_denom()
+    factor_ok = t_num.subs(K.N, 2) == 0 and ell_num.subs(K.N, 2) != 0
+    ok = like_is_mixed and pairs_cancel and t2 == 0 and ell2 == Rational(-4, 21) and factor_ok
+    return ok, (
+        f"at N = 2 the channel table is (d, C_2): Lambda^2 F = {tuple(data['Lambda2'])} = "
+        f"singlet, Sym^2 F = {tuple(data['Sym2'])} = adjoint, so w_Lambda2 = w_1 = "
+        f"{channelwise['1']} and w_Sym2 = w_Adj = {channelwise['Adj']} and t_2 = B_2 - A_2 "
+        f"vanishes channel by channel; the unsigned continuation A_2 + B_2 + 1/C_F = {ell2} "
+        "does not. The zero is the channel-difference factor N^2 - 4, not the incidence, and "
+        "nothing here asserts an SU(2) charge-even spectrum"
+    )
+
+
+@even_band.check(
+    "the unsigned-incidence characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3",
+    "PUBLICATION rev5 Thm. (unsigned-incidence Bloch cubic)",
+)
+def _():
+    # Rev. 5 states the cubic for the OPERATOR N N^dagger, defined by dropping
+    # every boundary sign from B(k). So build N(k) that way -- entrywise from
+    # the signed incidence, each coefficient replaced by its absolute value --
+    # rather than from a separate unsigned formula, and read the three
+    # coefficients off the characteristic polynomial: -2p, p^2 and
+    # -4 a_1 a_2 a_3, with the signed counterpart of the same computation
+    # returning mu(mu - q)^2 and nothing in between.
+    signed = EVEN.bloch_incidence(True)
+    unsigned = EVEN.bloch_incidence(False)
+    dropped = signed.applyfunc(
+        lambda entry: sum(abs(coeff) * term for term, coeff in entry.as_coefficients_dict().items())
+    )
+    built_by_dropping = expand(dropped - unsigned) == zeros(*unsigned.shape)
+    a = EVEN.a_symbols()
+    p = sum(a)
+    charpoly = EVEN.gram_charpoly(False)
+    coeffs = {k: cancel(expand(charpoly).coeff(EVEN.MU, k)) for k in (3, 2, 1, 0)}
+    coefficient_ok = (
+        coeffs[3] == 1
+        and cancel(coeffs[2] + 2 * p) == 0
+        and cancel(coeffs[1] - p**2) == 0
+        and cancel(coeffs[0] + 4 * a[0] * a[1] * a[2]) == 0
+    )
+    signed_ok = cancel(EVEN.gram_charpoly(True) - EVEN.odd_cubic(EVEN.MU, EVEN.q_symbol())) == 0
+    ok = built_by_dropping and coefficient_ok and signed_ok
+    return ok, (
+        "N(k) built from B(k) by replacing every boundary sign with +1 is the registered "
+        "unsigned incidence entry for entry; its Gram charpoly has coefficients (1, -2p, p^2, "
+        "-4 a_1 a_2 a_3) with a_m = |1 + e^{i k_m}|^2, i.e. mu(mu - p)^2 = 4 a_1 a_2 a_3, and "
+        "the same computation on B(k) returns mu(mu - q)^2. This is a statement about the "
+        "defined comparison operator; its reading as the charge-even symbol is rev. 5's "
+        "separately stated hypothesis"
+    )
+
+
+@even_band.check(
+    "the C-even range [-4, 12] is exact; the top only at Gamma, the floor on three planes",
+    "PUBLICATION rev5 Prop. (range and attainment)",
+)
+def _():
+    # The earlier check in this suite is titled "each edge is attained at one
+    # point only", and that title overstates the floor. The top IS attained at
+    # Gamma alone. The floor lambda = -4, i.e. mu = 0, is f(0) = -4 a_1 a_2 a_3
+    # = 0, which is the union of the three planes k_j = pi -- a positive-measure
+    # set on the zone, not a point. What is unique is the TRIPLE root: on a
+    # plane f = mu (mu - p)^2 and mu = 0 is simple unless p = 0, which is R
+    # alone. Rev. 5 states it that way; this check proves it that way, and the
+    # older title stands as the record of what was claimed before.
+    mu = EVEN.MU
+    a, b, c = symbols("a b c", nonnegative=True)
+    f = EVEN.even_cubic(mu, a, b, c)
+    # floor: f(0) = -4abc, zero iff some a_j = 0 iff some k_j = pi
+    floor_locus = expand(f.subs(mu, 0) + 4 * a * b * c) == 0
+    # on the plane a = 0: f = mu (mu - (b + c))^2, so mu = 0 is simple unless b = c = 0
+    on_plane = expand(f.subs(a, 0) - mu * (mu - (b + c)) ** 2) == 0
+    simple_unless_R = expand(diff(f.subs(a, 0), mu).subs(mu, 0) - (b + c) ** 2) == 0
+    # top: mu = 16 needs (16 - p)^2 * 16 = 4abc with p <= 12 and abc <= (p/3)^3;
+    # both bounds are tight only at a = b = c = 4
+    top_gap = expand(16 * (16 - (a + b + c)) ** 2 - 4 * a * b * c)
+    top_only_gamma = top_gap.subs({a: 4, b: 4, c: 4}) == 0 and all(
+        top_gap.subs({a: x, b: y, c: z}) > 0
+        for x in range(0, 5)
+        for y in range(0, 5)
+        for z in range(0, 5)
+        if (x, y, z) != (4, 4, 4)
+    )
+    # the finite grid at L = 4: every momentum with some k_j = pi sits on the floor
+    grid = {}
+    for i in range(4):
+        for j in range(4):
+            for k in range(4):
+                kk = (pi * i / 2, pi * j / 2, pi * k / 2)
+                spec = EVEN.even_lambdas(kk)
+                grid[(i, j, k)] = (min(spec) == -4, spec.count(-4))
+    on_floor = [key for key, (floor, _m) in grid.items() if floor]
+    planes = [key for key in grid if 2 in key]
+    triple = [key for key, (_f, m) in grid.items() if m == 3]
+    grid_ok = (
+        sorted(on_floor) == sorted(planes) and len(planes) == 4**3 - 3**3 and triple == [(2, 2, 2)]
+    )
+    ok = floor_locus and on_plane and simple_unless_R and top_only_gamma and grid_ok
+    return ok, (
+        "f(0) = -4 a_1 a_2 a_3 vanishes exactly on the three planes k_j = pi, where "
+        "f = mu (mu - p)^2 and the floor root is simple unless p = 0, i.e. except at R; the "
+        f"top 16(16 - p)^2 = 4abc holds at a = b = c = 4 alone. On the L = 4 grid {len(on_floor)} "
+        "of 64 momenta touch lambda = -4 -- exactly the 64 - 27 = 37 on the planes -- and only "
+        "R carries it triply. The older title 'each edge is attained at one point only' is "
+        "true of the top and of the triple floor, not of the floor"
     )

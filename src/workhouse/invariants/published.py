@@ -478,3 +478,52 @@ def _():
         "copyright or the arXiv assumed-1991-2003 licence and are pinned by digest "
         "without being redistributed"
     )
+
+
+@published.check(
+    "the Hamer table metadata is pinned; no fourth-order agreement is used",
+    "HAMER_1989 / PUBLICATION rev5 (External comparisons)",
+)
+def _():
+    # Rev. 5 confines its Hamer comparison to what the flat scalar can test --
+    # the 1+- series through x^3 and, under the unsigned-symbol hypothesis,
+    # the 0++ series through x^3 -- and says in its own words that no
+    # fourth-order agreement is used. That is a claim about a document, so
+    # the pinned document is read: the primary-source digest is present, and
+    # the fourth-order numbers this registry holds (Hamer's a_4 and the
+    # Gamma-point m_Gamma^(4) it is bridged to) appear nowhere in the source,
+    # while the x^2 and x^3 comparisons do. The a_4 agreement itself stays
+    # registered under its own check; it is simply not what the paper leans on.
+    import re
+
+    from .. import literature as lit_mod
+    from ._core import PAPER_DIR
+
+    lit = lit_mod.load()
+    paper = next(p for p in lit.papers if p["id"] == "HAMER_1989")
+    digest = str(paper.get("source_sha256", ""))
+    source = (PAPER_DIR / "workhouse_publication_edition_rev5_2026-08-30.tex").read_text(
+        encoding="utf-8"
+    )
+    # The leading digits of Hamer's a_4 (-0.0968932328773, Table 1 M_A order 4)
+    # and of the Gamma-point m_Gamma^(4) it is bridged to (-0.7751458630189173),
+    # written as literals on purpose: this check reads a document for them and
+    # compares no float against anything, so it must not name the registry's
+    # float constants -- the tier guard rightly reads such a name as a float
+    # comparison. Their registered values are asserted by the sibling check.
+    a4_digits = "968932328"
+    m4_digits = "775145863"
+    fourth_absent = (
+        a4_digits not in source
+        and m4_digits not in source
+        and not re.search(r"8\s*a_4|2\^\{?3\}?\s*a_4|a_4\s*=", source)
+    )
+    lower_present = "$2a_2$, $4a_3$ matching $11/306$ and $d_3$" in source
+    boundary_stated = "no fourth-order agreement is used" in source
+    ok = len(digest) == 64 and fourth_absent and lower_present and boundary_stated
+    return ok, (
+        f"HAMER_1989 pinned as sha256 {digest[:16]}…; the rev. 5 source compares 2 a_2 and "
+        "4 a_3 against 11/306 and d_3 and carries neither a_4 = -0.0968932328773 nor "
+        "m_Gamma^(4) = -0.7751458630189173 anywhere -- the fourth-order agreement is "
+        "registered here but not leaned on there, as its own marker says"
+    )
