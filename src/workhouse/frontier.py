@@ -21,6 +21,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from . import check_cache
 from . import ledger as ledger_mod
 from . import literature as literature_mod
 from .invariants import SUITES
@@ -194,8 +195,9 @@ def _cheapest(led: ledger_mod.Ledgers) -> list[dict[str, Any]]:
 def compute() -> Frontier:
     led = ledger_mod.load()
     suites, passed, total = [], 0, 0
+    cache = check_cache.CheckCache()
     for suite in SUITES:
-        results = suite.run()
+        results = suite.run(cache=cache)
         ok = sum(1 for r in results if r.passed)
         suites.append((suite.name, ok, len(results)))
         passed += ok

@@ -332,6 +332,31 @@ archives:
       runs/two_cube_codd_o2_2026-08-29 and audited for arithmetic by the
       two_cube invariant suite. Second order only: the theorem note itself
       states that no fourth-order claim changes, so C2 stays open.
+  - id: UPLOADS_2026-09-01
+    description: >-
+      The maintainer's consolidated Lean bundle (Lattice_Scaling_Combined.7z):
+      20 Lean files, 10,544 lines and 904 theorem statements, from the
+      analysis-side Yang-Mills lineage -- curvature positivity, Witten-
+      Laplacian and covariance bounds, Haar and reflection-positivity
+      material, lattice scaling and tensor-network sizing -- plus the folder
+      guide and the consolidation script that produced the *_Combined files.
+      Three `sorry`s, all in Master_Theorem_Combined.lean; no `axiom`, but
+      Geometry_Combined imports YangMills.Stubs.LatticeStubs from its parent
+      project, which is not delivered, so nothing here builds standalone and
+      nothing here is T0.
+    source: >-
+      Uploaded directly to the session on 2026-09-01 as
+      bda84e18-Lattice_Scaling_Combined.7z (41,177 bytes), described by the
+      maintainer as 'my previous optimized lean'. The inventory fact that
+      decided how to treat it: none of the 22 files is known to any prior
+      manifest by digest, the RESEARCH_2026-08 archive carries no
+      Optimized_Lean folder, and the folder guide itself says the set shares
+      no file with YangMills/. None of this program's exact join keys (5/612,
+      5/48, 11/306, 109151/249696) or its vocabulary (Kogut-Susskind,
+      Weingarten, plaquette incidence) appears in any file, so the bundle
+      bears on the analysis-side gaps G20-G23, not on C2. Imported verbatim so
+      a later Lean intake can compile and axiom-audit it; the bears_on below
+      is a keyword census, recorded as such, not a mathematical review.
 
 reviews:
 # Third review pass: the 2026-08-28 second batch, reviewed on arrival. The
@@ -3204,3 +3229,288 @@ reviews:
     reason: >-
       Repo-authored digest pin for the run directory, written by this session
       -- not a source document. Recorded so the inventory is complete.
+
+# Intake of the 2026-09-01 Lean bundle: 22 files, all new by digest, all
+# imported verbatim. bears_on is a keyword census over each file's source,
+# recorded as such; no file has been compiled or mathematically reviewed.
+
+  - digest: 2f7c3821a1ed8ee27eb0e1da137f20bdcf091c2ef574adc741f77854fdaf7260
+    path: 00_FOLDER_GUIDE.md
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/00_FOLDER_GUIDE.md
+    reason: >-
+      Imported verbatim: the bundle's own folder guide, stating 20 files,
+      refactored from YangMills/, sharing no file with it, entry point
+      YangMillsOptimized.lean. Same name as COLAB_RUNS/00_FOLDER_GUIDE.md in
+      RESEARCH_2026-08 but different bytes -- a different guide, not a re-
+      delivery.
+
+  - digest: 32c27796ebde6711f9e3ee8b89976016114c5dc9edd3c2c82ca56fd702f3eaee
+    path: Continuum_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Continuum_Combined.lean
+    bears_on: [G22]
+    reason: >-
+      Imported verbatim: 10 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G22); no exact join key of
+      the cubic flux-band program appears in the file.
+
+  - digest: 6acd3b77b24db93ef20c38fd1503d55d885e8b83b120adea2e26b6206a71a870
+    path: Dynamics_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Dynamics_Combined.lean
+    bears_on: [G20, G22]
+    reason: >-
+      Imported verbatim: 22 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G22); no exact join
+      key of the cubic flux-band program appears in the file.
+
+  - digest: 95a84c4bb4452b9b71557bbcdef62cbe6b963d0797eb2349e350b1c4eeb17a55
+    path: Gauge_Axioms_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Gauge_Axioms_Combined.lean
+    bears_on: [G20]
+    reason: >-
+      Imported verbatim: 19 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20); no exact join key of
+      the cubic flux-band program appears in the file.
+
+  - digest: 48913a73eae7c47ec350d5fa4555b3b9102874f26f67e6004021d33589c9e138
+    path: Gauge_Geometry_Advanced_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Gauge_Geometry_Advanced_Combined.lean
+    bears_on: [G20, G22]
+    reason: >-
+      Imported verbatim: 36 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G22); no exact join
+      key of the cubic flux-band program appears in the file.
+
+  - digest: a0fa1c1f99c2ad0f250b3f33298d9cfdb490010cf07247aacfe1e3e6e52d6c00
+    path: Geometric_Analysis_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Geometric_Analysis_Combined.lean
+    bears_on: [G20, G21, G22]
+    reason: >-
+      Imported verbatim: 25 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G21, G22); no exact
+      join key of the cubic flux-band program appears in the file.
+
+  - digest: c40624b82c9bfb1f23e6a22499e83f69110f77a3bb1dee668b0a2293cb089896
+    path: Geometry_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Geometry_Combined.lean
+    bears_on: [G20, G21, G22]
+    reason: >-
+      Imported verbatim: 28 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G21, G22); no exact
+      join key of the cubic flux-band program appears in the file.
+
+  - digest: 693d719e96b2981afb5744129a4a4bb67d24d22d14a5ed233534f7c50b0db379
+    path: Lattice_Scaling_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Lattice_Scaling_Combined.lean
+    bears_on: [G20, G21]
+    reason: >-
+      Imported verbatim: 46 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G21); no exact join
+      key of the cubic flux-band program appears in the file.
+
+  - digest: e16890e03df3958004272c7f10357bf70e3678e7c188c02237fedeff23450351
+    path: Lie_Group_Analysis_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Lie_Group_Analysis_Combined.lean
+    bears_on: [G20, G22]
+    reason: >-
+      Imported verbatim: 57 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G22); no exact join
+      key of the cubic flux-band program appears in the file.
+
+  - digest: 7e95a256be0b494fb7224d9bedc8141781b4a14c7364f1dfac2ebec673b4e7d4
+    path: Master_Theorem_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Master_Theorem_Combined.lean
+    bears_on: [G20, G22]
+    reason: >-
+      Imported verbatim: 34 theorem/lemma statements, 3 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G22); no exact join
+      key of the cubic flux-band program appears in the file.
+
+  - digest: 2842ca6315b4b01801c3868308d8495f3e88fe0949e8e1eeb0b57b057c94998f
+    path: Physics_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Physics_Combined.lean
+    bears_on: [G20, G21, G23]
+    reason: >-
+      Imported verbatim: 15 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G21, G23); no exact
+      join key of the cubic flux-band program appears in the file.
+
+  - digest: bc898bfec00917a3a0979a9a580ccf2100e11b23451013673dcf1f206495399c
+    path: Quantum_Deformation_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Quantum_Deformation_Combined.lean
+    bears_on: [G20, G22]
+    reason: >-
+      Imported verbatim: 19 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G22); no exact join
+      key of the cubic flux-band program appears in the file.
+
+  - digest: cfe43fc2e2b424f66849cd483524f9a6b2ea4241aeb4c5100cc49e59251682c5
+    path: Renormalization_Advanced_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Renormalization_Advanced_Combined.lean
+    bears_on: [G20, G21, G22, G23]
+    reason: >-
+      Imported verbatim: 19 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G21, G22, G23); no
+      exact join key of the cubic flux-band program appears in the file.
+
+  - digest: e529674bf209595c540405757e8d06a25e6d445069a27d941dd7998087c758e0
+    path: Simulation_Tools_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Simulation_Tools_Combined.lean
+    reason: >-
+      Imported verbatim: 28 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (no gap keyword matched);
+      no exact join key of the cubic flux-band program appears in the file.
+
+  - digest: 94886f84f5a081b0273f344de52499d922836fb72a842b5928e00cbc999e4c61
+    path: Spectral_Convexity_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Spectral_Convexity_Combined.lean
+    bears_on: [G20, G22]
+    reason: >-
+      Imported verbatim: 43 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G22); no exact join
+      key of the cubic flux-band program appears in the file.
+
+  - digest: 1b51c07f88a5b92170bcdc03c374ed7aa548e6bd90add78c5d2ee1d209be45e2
+    path: Topology_Anomaly_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Topology_Anomaly_Combined.lean
+    bears_on: [G20, G22]
+    reason: >-
+      Imported verbatim: 15 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G22); no exact join
+      key of the cubic flux-band program appears in the file.
+
+  - digest: 1b3a53aa9b12266daea48bbc6bbaa275710a0276c70ade6f9977559dc7fdc74e
+    path: Typicality_Simulation_Combined.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/Typicality_Simulation_Combined.lean
+    bears_on: [G20, G22]
+    reason: >-
+      Imported verbatim: 36 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G22); no exact join
+      key of the cubic flux-band program appears in the file.
+
+  - digest: a3dc8c7985dee579a0e3dd4bafe255de1c61c4ca61c78f73695099c45387512e
+    path: YM_Foundations.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/YM_Foundations.lean
+    bears_on: [G20, G21, G22]
+    reason: >-
+      Imported verbatim: 138 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G21, G22); no exact
+      join key of the cubic flux-band program appears in the file.
+
+  - digest: 888ccf1deaaef91d8f7a8df349e162a8aca7dcf80e442ec833ed0be8be050b51
+    path: YM_GaugeTheory.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/YM_GaugeTheory.lean
+    bears_on: [G20, G22]
+    reason: >-
+      Imported verbatim: 96 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G22); no exact join
+      key of the cubic flux-band program appears in the file.
+
+  - digest: 4ce3d25bfcb5ce033ffa476c9eb95e75097233e8d2804430dafd12d44e8d6ded
+    path: YM_MassGapProof.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/YM_MassGapProof.lean
+    bears_on: [G20, G21, G22, G23]
+    reason: >-
+      Imported verbatim: 107 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G21, G22, G23); no
+      exact join key of the cubic flux-band program appears in the file.
+
+  - digest: cdc1e2e819c223a3f21ab3a333b4254ff012302fa7376bcd8c354438e8c92c16
+    path: YM_Renormalization.lean
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/YM_Renormalization.lean
+    bears_on: [G20, G21, G22, G23]
+    reason: >-
+      Imported verbatim: 111 theorem/lemma statements, 0 sorry. Not compiled
+      here -- the bundle imports a stubs module from its parent project that
+      was not delivered -- so its proof status is unknown and it is T3.
+      bears_on is a keyword census over the source (G20, G21, G22, G23); no
+      exact join key of the cubic flux-band program appears in the file.
+
+  - digest: ba8f47d0022fab183936d293a3e857c3ffa076c2a1210cbb0ab138b0b63665d1
+    path: consolidate_modules.py
+    archive: UPLOADS_2026-09-01
+    verdict: import
+    imported_to: notes/imported/UPLOADS_2026-09-01/consolidate_modules.py
+    reason: >-
+      Imported verbatim: the consolidation script that produced the
+      *_Combined.lean files by merging module bodies and hoisting imports.
+      Provenance for the bundle's shape, not mathematics.

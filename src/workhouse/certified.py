@@ -17,6 +17,7 @@ import shlex
 from dataclasses import dataclass
 from pathlib import Path
 
+from . import check_cache
 from .frontier import strip_lean_comments
 from .invariants import SUITES
 
@@ -102,8 +103,9 @@ def lean_claims() -> list[Claim]:
 
 def _check_claims() -> list[Claim]:
     out: list[Claim] = []
+    cache = check_cache.CheckCache()
     for suite in SUITES:
-        for r in suite.run():
+        for r in suite.run(cache=cache):
             out.append(
                 Claim(
                     tier=r.tier,

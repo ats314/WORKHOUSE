@@ -85,16 +85,36 @@ class Suite:
 
         return register
 
-    def run(self, names: set[str] | None = None) -> list[Result]:
+    def run(self, names: set[str] | None = None, cache=None) -> list[Result]:
         """Run the checks, or just the named subset.
 
         ``names`` exists so ``verify --only`` can keep its promise of one
         claim in about a second — filtering after a full run cannot.
+
+        ``cache`` is a ``check_cache.CheckCache`` or ``None``. With one, a
+        check whose inputs are unchanged since its last run returns its
+        recorded result instead of running; the collectors pass one, and
+        ``workhouse verify`` never does, because "re-derive it now" is that
+        command's whole promise.
         """
+        import inspect
+
         out = []
         for name, section, tier, fn in self.checks:
             if names is not None and name not in names:
                 continue
+            key = None
+            if cache is not None and cache.on:
+                try:
+                    source = inspect.getsource(fn)
+                except OSError:  # pragma: no cover
+                    source = ""
+                key = cache.key(self.name, name, source)
+                hit = cache.get(key)
+                if hit is not None:
+                    hit["rests_on"] = tuple(hit.get("rests_on", ()))
+                    out.append(Result(**hit))
+                    continue
             yields: dict[str, str] = {}
             try:
                 outcome = fn()
@@ -105,19 +125,22 @@ class Suite:
                     passed, detail = outcome
             except Exception as exc:  # a broken check is a failure
                 passed, detail = False, f"raised {type(exc).__name__}: {exc}"
-            out.append(
-                Result(
-                    name,
-                    passed,
-                    detail,
-                    section,
-                    tier,
-                    fn.__code__.co_firstlineno,
-                    source_path(fn),
-                    yields,
-                    getattr(fn, "rests_on", ()),
-                )
+            # Plain Python types only: a sympy BooleanTrue passes every `if`
+            # but is not a bool, and a cached result must serialise as JSON.
+            result = Result(
+                name,
+                bool(passed),
+                str(detail),
+                section,
+                tier,
+                fn.__code__.co_firstlineno,
+                source_path(fn),
+                yields,
+                getattr(fn, "rests_on", ()),
             )
+            out.append(result)
+            if key is not None:
+                cache.put(key, result)
         return out
 
 

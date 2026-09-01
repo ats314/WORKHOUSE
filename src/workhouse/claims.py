@@ -32,6 +32,7 @@ from typing import Any
 import yaml
 
 from . import certified as certified_mod
+from . import check_cache
 from . import constants as K
 from . import ledger as ledger_mod
 from . import literature as literature_mod
@@ -290,8 +291,9 @@ def decisions() -> list[dict[str, Any]]:
 def collect() -> list[Claim]:
     out: list[Claim] = []
 
+    cache = check_cache.CheckCache()
     for suite in SUITES:
-        for result in suite.run():
+        for result in suite.run(cache=cache):
             chk = check_id(suite.name, result.name)
             out.append(
                 Claim(

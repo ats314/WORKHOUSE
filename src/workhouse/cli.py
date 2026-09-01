@@ -315,6 +315,27 @@ def _views(live: bool):
     return claims_mod.load_catalogue(), symbols, graph_mod.load()
 
 
+def _ask(query: str, limit: int, as_json: bool) -> int:
+    from . import finder as finder_mod
+
+    rows, text = finder_mod.ask(query, limit)
+    print(finder_mod.render_json(rows, query) if as_json else text)
+    return 0 if rows else 1
+
+
+def _cache(clear: bool) -> int:
+    from . import check_cache
+
+    if clear:
+        print(f"removed {check_cache.clear()} cached check results")
+        return 0
+    print(
+        f"check cache: {'enabled' if check_cache.enabled() else 'disabled'}; "
+        f"inputs fingerprint {check_cache.fingerprint()[:12]}"
+    )
+    return 0
+
+
 def _why(node_id: str, as_json: bool = False, live: bool = False) -> int:
     catalogue, symbols, graph = _views(live)
     if as_json:
@@ -485,6 +506,19 @@ def main(argv: list[str] | None = None) -> int:
     se.add_argument("--limit", type=int, default=20, help="claims to show (default 20)")
     se.add_argument("--json", action="store_true", help="machine-readable results, one JSON object")
 
+    ak = sub.add_parser(
+        "ask",
+        help="natural-language candidate finder over corpus prose and the catalogue (T3 only)",
+    )
+    ak.add_argument(
+        "query", help="a question in words: 'which document argues the upper band edge'"
+    )
+    ak.add_argument("--limit", type=int, default=10, help="candidates to show (default 10)")
+    ak.add_argument("--json", action="store_true", help="machine-readable candidates")
+
+    ca = sub.add_parser("cache", help="the per-check result cache the collectors use")
+    ca.add_argument("--clear", action="store_true", help="delete every cached check result")
+
     ix = sub.add_parser("index", help="the claim, symbol, and graph catalogues")
     ix.add_argument("-w", "--write", action="store_true", help="regenerate index/*.jsonl")
 
@@ -613,6 +647,10 @@ def main(argv: list[str] | None = None) -> int:
         return _index(args.write)
     if args.command == "why":
         return _why(args.id, args.json, args.live)
+    if args.command == "ask":
+        return _ask(args.query, args.limit, args.json)
+    if args.command == "cache":
+        return _cache(args.clear)
     if args.command == "derive":
         return _derive(args.ids, args.out, args.live)
     if args.command == "branches":

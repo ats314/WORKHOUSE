@@ -139,6 +139,8 @@ workhouse export -o graph.json      # claims+symbols+edges as one versioned JSON
 workhouse triage /path/to/archive   # survey an unpinned collection
 workhouse notes                     # the notes register: reviewed vs pending, per archive
 workhouse notes --queue             # the next notes to review, highest signal first
+workhouse ask "<question in words>" # candidate finder over corpus prose and the catalogue; T3, ends in `why`
+workhouse cache --clear             # the per-check result cache the collectors use (never `verify`)
 ```
 
 `FRONTIER.md` and `CERTIFIED.md` are generated and checked in. A test fails if

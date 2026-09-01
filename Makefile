@@ -62,8 +62,14 @@ certified:       ## Regenerate CERTIFIED.md — every checked claim, ranked by t
 frontier:        ## Regenerate FRONTIER.md from the ledgers and the suites
 	@.venv/bin/workhouse frontier --write
 
-regen: frontier certified catalogue  ## Every generated file, in one order — the staleness tests stop tripping on partial regens
-	@echo "regenerated: FRONTIER.md CERTIFIED.md index/"
+# Catalogue FIRST. One check reads the generated graph (note coverage), so a
+# view rendered before the catalogue pass records that check against the
+# previous graph -- on 2026-09-01 that put "1 checks are failing" into a
+# committed CERTIFIED.md the moment a new archive was declared. With the
+# per-check cache a pass is seconds, so the views are rendered after the
+# catalogue has reached its fixpoint, never before.
+regen: catalogue frontier certified  ## Every generated file, in one order — the staleness tests stop tripping on partial regens
+	@echo "regenerated: index/ FRONTIER.md CERTIFIED.md"
 
 fmt:             ## Auto-format
 	@.venv/bin/ruff check --fix . && .venv/bin/ruff format .
