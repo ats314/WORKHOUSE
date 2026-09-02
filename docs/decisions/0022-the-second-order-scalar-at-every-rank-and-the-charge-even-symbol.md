@@ -85,6 +85,49 @@ Four things changed:
   says so: a Haar-exact or Clebsch–Gordan second-order run at `N = 4` would be
   the first genuine test beyond `SU(3)`.
 
+## What the referee round found
+
+The built edition was then refereed by a second panel: five referees with
+distinct briefs — the fourth-order section against ADR 0019–0021 and the run
+certificates; every number in the new text recomputed; the new theorems and
+propositions; overclaims and scope; document integrity — and a judge. No
+number in a theorem moved. The confirmed corrections went in as a follow-up
+commit:
+
+- the scalar-ledger theorem's clause `d_{2,N,L} = d^-_{2,N}` was off by
+  exactly `4 t_N` against the corollary that absorbs `-4 t_N` into the
+  scalar; the flat scalar is `d^-_{2,N} - 4 t_N` and the clause now says so;
+- three sentences inherited from revision 5 — an introduction item, the
+  second-order figure caption, the bandwidth sentence — still called the
+  charge-even identification conditional at order `u^2`; each now states the
+  theorem and confines the hypothesis to `u^3`;
+- `W_4 = alpha + beta` is the zone spread of `(alpha Q + beta R)/(2S)` only
+  while `beta = 8A + 16 C_shp >= 0`; the third `C_shp` value has
+  `beta < 0`, where the spread is `alpha = 5/12` at `X` because `Q <= 2S`.
+  The conclusion survives: the third value carries the smallest bandwidth of
+  the three. The two Lean tags are `norm_num` on the historical values and
+  now sit beside those;
+- four amplitudes were assembled, not three, and only the two-hop weight and
+  the corner cluster have two implementations; the cold kernel's `nu` is its
+  own `-5/48 - 4u` with the wrong `u` (to `1.4e-12`, the record's own
+  tolerance); and the runs import the marked-cluster engine's primitives, so
+  "from outside both pipelines" became "reading neither kernel";
+- the cold `rho` decimal `-0.0879716` was a transcription slip for the
+  registered `-0.08797736136` (`-0.0879774`), repeated in
+  `ledger/contradictions.yaml`, `runs/index.yaml` and ADR 0021, all
+  corrected; the run's own README is hash-pinned with its certificate and
+  keeps the slip on record, which is what a pin is for;
+- the proof-checked appendix dropped `±`, `∓`, `‖`, `χ̄` and `π̃` and
+  truncated docstrings at a colon; it now prints every docstring in full.
+
+Two findings were dismissed as style ("proven locally" for `t_N`; the
+phrasing of what revision 5 had proved of the scalar). The judge's list of
+what a human referee would still press on is recorded here as open: whether
+`W_4` is defined before it is used; which component of the cluster
+computation is independent of the cold engine's Haar contraction, given the
+shared Haar integrals; and the physical content of a `u^2` bandwidth in a
+sector with extensive vacuum coupling at `Gamma`.
+
 ## Decision
 
 - **G25.** The second-order half is discharged: the charge-even symbol is a

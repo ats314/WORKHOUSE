@@ -19,7 +19,7 @@ any of them moves.
 
 | File | What it is |
 |---|---|
-| `workhouse_publication_edition_rev6_2026-09-02.tex` | **publication edition, revision 6 — the current article of record.** Revision 5 patched in place by `scripts`-free replacement (forty anchored edits, every anchor required to occur exactly once, so no sentence of the maintainer's moved unless a result changed it), built here with Tectonic 0.15.0. What changed, all of it machine-checked: the second-order **scalar** is now a closed form at every rank (Theorem *Second-order scalar ledger*: on-site `σ_N + 1/C_F + 12 ℓ_N`, `L` cancelling, odd tower `−12N/((N²−1)(N²−9))` for `N ≥ 5`, `N = 3, 4` exceptional and stated); the **charge-even second-order symbol is a theorem** (`ℓ_N` times the unsigned incidence, the vacuum-mediated route cancelled pair by pair by the doubly-excited exchange route — the `N = 3` cancellation is the corpus's own flat-band lemma, which rev5 had called "not derived"; those sentences are withdrawn and a `FINDING` records it); the **even split of the link-resolved census is a proposition**, retiring rev5's conjecture; the fourth-order section carries the **Hodge normal form** `H₄ = −ν̃(L↑−2) + u S² − π̃ S + σ̃ − 2 C_shp R`, the three amplitudes recomputed from outside both pipelines (ADR 0019–0021), the **third side of C2**, the standing of the two records (cold pipeline wrong on `u`, `π`, `ρ`; historical wrong on `ρ`) and the U5 refutation; a `\leanref{…}` tag marks each statement proof-checked among the **95 Lean theorems**; the missing radius-two figure is regenerated from the pinned NPZ (`make_figure_radius2.py`); the two `\qquad`/`\overline` slips and the "a the" are fixed. New appendices: the ledger at `N = 3..7`, the proof-checked statements, and the coverage appendix (`coverage_rev6.tex`, 146 markers). 60 pages, zero overfull boxes, zero undefined references. |
+| `workhouse_publication_edition_rev6_2026-09-02.tex` | **publication edition, revision 6 — the current article of record.** Revision 5 patched in place by `scripts`-free replacement (forty anchored edits, every anchor required to occur exactly once, so no sentence of the maintainer's moved unless a result changed it), built here with Tectonic 0.15.0. What changed, all of it machine-checked: the second-order **scalar** is now a closed form at every rank (Theorem *Second-order scalar ledger*: on-site `σ_N + 1/C_F + 12 ℓ_N`, `L` cancelling, odd tower `−12N/((N²−1)(N²−9))` for `N ≥ 5`, `N = 3, 4` exceptional and stated); the **charge-even second-order symbol is a theorem** (`ℓ_N` times the unsigned incidence, the vacuum-mediated route cancelled pair by pair by the doubly-excited exchange route — the `N = 3` cancellation is the corpus's own flat-band lemma, which rev5 had called "not derived"; those sentences are withdrawn and a `FINDING` records it); the **even split of the link-resolved census is a proposition**, retiring rev5's conjecture; the fourth-order section carries the **Hodge normal form** `H₄ = −ν̃(L↑−2) + u S² − π̃ S + σ̃ − 2 C_shp R`, the four amplitudes recomputed reading neither kernel (ADR 0019–0021), the **third side of C2**, the standing of the two records (cold pipeline wrong on `u`, `π`, `ρ`, and on `ν` through its `u`; historical wrong on `ρ`) and the U5 refutation; a `\leanref{…}` tag marks each statement proof-checked among the **95 Lean theorems**; the missing radius-two figure is regenerated from the pinned NPZ (`make_figure_radius2.py`); the two `\qquad`/`\overline` slips and the "a the" are fixed. New appendices: the ledger at `N = 3..7`, the proof-checked statements, and the coverage appendix (`coverage_rev6.tex`, 146 markers). 60 pages, zero overfull boxes, zero undefined references. |
 | `workhouse_publication_edition_rev6_2026-09-02.pdf` | its build. Rebuild: `python3 make_coverage.py && tectonic workhouse_publication_edition_rev6_2026-09-02.tex`. |
 | `coverage_rev6.tex` | its generated coverage appendix, 146 markers. |
 | `figure_radius_two_spectrum.pdf`, `make_figure_radius2.py` | the radius-two figure revision 5 names and never shipped, rendered from the pinned NPZ with the same standard-library reader `verify_radius2_report.py` uses (`uv run --with matplotlib --with numpy python make_figure_radius2.py`). |
@@ -95,6 +95,52 @@ by line. What the review changed:
 - the bandwidth `16|ℓ_N|` carries its even-`L` qualifier, the Hamer `0⁺⁺`
   agreement is stated to the table's precision, and the paper says plainly
   that no engine independent of its own algebra exists at `N ≥ 4`.
+
+A second panel then refereed the built edition itself, under the same rule:
+five hostile referees with distinct briefs — the fourth-order section against
+ADR 0019–0021 and the run certificates; every number in the new text
+recomputed; the new theorems and propositions; overclaims and scope; document
+integrity — and a judge. Nothing it raised touched a number in a theorem.
+What it confirmed went in as a follow-up commit on the same branch:
+
+- the scalar-ledger theorem's clause `d_{2,N,L} = d⁻_{2,N}` was off by exactly
+  `4 t_N` against the corollary that absorbs `−4 t_N` into the scalar; it now
+  reads `d_{2,N,L} = d⁻_{2,N} − 4 t_N`, the flat scalar;
+- three sentences inherited from revision 5 — an introduction item, the
+  caption of the second-order figure, and the bandwidth sentence — still
+  called the charge-even identification conditional at order `u²`, which the
+  theorem two sections later had made unconditional; each now states the `u²`
+  result and confines the hypothesis to `u³`, and two more "conditional"
+  qualifiers in the charge-even section say at which order they apply;
+- `W_4 = α + β` is the zone spread of the fourth-order symbol only while
+  `β = 8A + 16 C_shp ≥ 0`; the third `C_shp` value has `β < 0`, where the
+  spread is `α = 5/12` at `X`, and the paragraph now says so — the conclusion,
+  that the third value carries the smallest bandwidth of the three, survives;
+- four amplitudes were assembled (`u`, `π`, `ν`, `ρ`), not three, and only the
+  two-hop weight and the corner cluster have two implementations; the cold
+  kernel's `ν` is its own `−5/48 − 4u` with the wrong `u`; and because the
+  runs import the marked-cluster engine's primitives, "from outside both
+  pipelines" is now "reading neither kernel";
+- the cold `ρ` decimal `−0.0879716` was a transcription slip for the registered
+  `−0.08797736…`, which rounds to `−0.0879774`; the contradiction register,
+  the run index and ADR 0021 repeated it and are corrected, and the run's own
+  README, hash-pinned with its certificate, keeps the slip on record;
+- the proof-checked appendix had dropped `±`, `∓`, `‖`, `χ̄` and `π̃` from its
+  docstrings and truncated several at a colon; it now prints every docstring
+  in full;
+- and the smaller items: `27` suites, not `28`; the two cube completions carry
+  their signs (`−5/48` opposite, `+53/768` adjacent); the tier collapse is
+  stated in the checks' own terms rather than as "the diagonal shadow"; the
+  `ε`-sector is a shift, with U5's prediction beside it; the census-split
+  proof carries the `ss'` factor per monomial; the linked-cluster gate is
+  stated as the one distant plaquette it tests; two Lean tags and two
+  cross-references were added.
+
+Two findings were dismissed as style, and the judge's list of what a human
+referee would still press on — whether `W_4` is defined before it is used;
+which component of the cluster computation is independent of the cold engine's
+Haar contraction; the physical content of a `u²` bandwidth in a sector with
+extensive vacuum coupling at `Γ` — is recorded in ADR 0022 as open.
 
 ## Revision 5 (2026-09-01 pin)
 
