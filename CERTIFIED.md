@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 222
+## T1 — re-derived exactly — 224
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -287,6 +287,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `C_shp = -5/96 - u - (rho + pi)/2, exactly`
   - src/workhouse/invariants/orbits.py:156 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'C_shp = -5/96 - u - (rho + pi)/2, exactly'`
+- `FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel's 4.13 u is wrong`
+  - src/workhouse/invariants/orbits.py:898 · C2; G3 chain amplitude route; G14; ADR 0019; RUN g3_chain_amplitude_2026-09-02
+  - `workhouse verify --only 'FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel'"'"'s 4.13 u is wrong'`
 - `H4 = -nu~(L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2 C_shp R exactly: C_shp is the coefficient of the one non-Hodge operator`
   - src/workhouse/invariants/orbits.py:758 · C2; G14; U5; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'H4 = -nu~(L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2 C_shp R exactly: C_shp is the coefficient of the one non-Hodge operator'`
@@ -308,6 +311,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the 189 records carry exactly six weight magnitudes`
   - src/workhouse/invariants/orbits.py:71 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the 189 records carry exactly six weight magnitudes'`
+- `the engine's primitives plus textbook second-order theory return t_3 S_sq, the C-even hop and the leakage`
+  - src/workhouse/invariants/orbits.py:874 · C2; G3 chain amplitude route; G14; ADR 0019; RUN g3_chain_amplitude_2026-09-02
+  - `workhouse verify --only 'the engine'"'"'s primitives plus textbook second-order theory return t_3 S_sq, the C-even hop and the leakage'`
 - `the on-site orbit IS the momentum-independent channel`
   - src/workhouse/invariants/orbits.py:351 · U5; C2; C10; GCSG SU(6) certificate; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the on-site orbit IS the momentum-independent channel'`
