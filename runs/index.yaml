@@ -225,3 +225,31 @@ runs:
       signs the normal channel gives A = -alpha_N/4, so only |A| and the
       ratio C/A = -1/2 are convention-free, and the corpus fixes the sign
       by taking |c_4|. Nothing adjudicated; C2 open.
+
+  - id: g3_chain_amplitude_2026-09-02
+    dir: runs/g3_chain_amplitude_2026-09-02
+    title: >-
+      The two-hop weight u computed independently on three ten-link chains:
+      X_QUANTUM exactly, the cold pipeline wrong by 4.13
+    bears_on: [G3, G14, C2]
+    detail: >-
+      The G3 route "chain amplitude u on the three-plaquette cluster" (ADR
+      0019), run. A fourth-order cluster cumulant W(P,Q,R) - W(P,R) on the
+      P -> R element, assembled with the pinned exact engine's own Hermitian
+      formula (D - A C1 - C1^T A - (K2 N + N K2)/2 + A A J) but using the
+      engine only for Wilson-word states, the word product, the H0 action and
+      Haar inner products; the closure, the resolvent (a Krylov minimal
+      polynomial in H0, no Gram) and the C-parity projection are the run's
+      own, and it never reads either kernel. The second-order stage
+      reproduces the register exactly first (t_3 = -+5/612 with the S_sq sign
+      pattern, T_PLUS_2 = -11/306, LEAK_2 = -11/306 after the -3/4 bubble).
+      Then, on the coplanar-coplanar, coplanar-perpendicular and
+      perpendicular-perpendicular chains, the C-odd cumulant is
+      s * 360421351/40327601932800 with s the product of the two signed
+      shared-link incidences: |u| = X_QUANTUM as a rational, on all three.
+      116 s on CPU; 9,431 Haar integrals, none above the (2,2) family. Also
+      records the C-even chain amplitude 948253471/40327601932800, which
+      neither kernel holds. Decides which pipeline has standing on the
+      two-hop sector, not C2: the cold v10a.26 u is 4.1327437 times this.
+      A same-day first attempt is kept as first_attempt_*: it validated
+      the second order and then died on Gram matrices of degree-3 words.

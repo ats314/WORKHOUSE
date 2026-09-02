@@ -854,3 +854,154 @@ def _():
         "shared-link amplitudes rho and pi~ -- and C2 is exactly the last two. Nothing here "
         "prefers either side"
     )
+
+
+# --------------------------------------------------------------------------
+# The two-hop weight computed from outside both kernels (2026-09-02).
+# runs/g3_chain_amplitude_2026-09-02: a fourth-order cluster cumulant on
+# three ten-link chains, using the pinned exact engine for four primitives
+# only and reading neither kernel. These checks read the pinned certificate
+# rather than re-running it (two minutes), for the reason bridge.py gives:
+# the certificate is the artifact the run record pins, and the run is the
+# reproduction. ADR 0020.
+# --------------------------------------------------------------------------
+
+_CHAIN_RUN = (
+    "G3; G14; C2; U5; runs/g3_chain_amplitude_2026-09-02; ADR 0020; GLUEBALL v3.1 §6.1-6.2, §7; "
+    "THM_FLUX Prop. 2; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)"
+)
+_CHAIN_EXACT = (
+    "the chain amplitude u, computed independently on three ten-link clusters, is X_QUANTUM exactly"
+)
+
+
+def _chain_certificate() -> dict:
+    import json
+
+    from ._core import ROOT
+
+    path = ROOT / "runs" / "g3_chain_amplitude_2026-09-02" / "chain_amplitude_certificate.json"
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+@orbit.check(
+    "the chain assembly reproduces the second-order register before any fourth-order "
+    "number is read",
+    _CHAIN_RUN,
+    rests_on=(
+        "the G18 sheet coefficient 5/612 is the registered shared-link hopping",
+        "both declared coincidences, checked: one is ell_N at all ranks, the other is bare",
+    ),
+)
+def _():
+    # The run's own gate, pinned here. Its second-order stage is the same
+    # closure, resolvent and Haar contraction the fourth order uses, so the
+    # register's constants coming out of it from the primitives is what
+    # licenses reading the fourth-order number at all. The sign pattern is
+    # the point: -5/612 for a coplanar pair and +5/612 for a perpendicular
+    # one is the S_sq of THM_FLUX Prop. 2, which the Hodge form is built on.
+    so = {k: Fraction(v) for k, v in _chain_certificate()["second_order"].items()}
+    t3 = Fraction(K.T_MINUS_2.p, K.T_MINUS_2.q)
+    even = Fraction(K.T_PLUS_2.p, K.T_PLUS_2.q)
+    leak = Fraction(K.LEAK_2.p, K.LEAK_2.q)
+    bubble = 1 / Fraction(K.casimir_fundamental(3).p, K.casimir_fundamental(3).q)
+    ok = (
+        so["coplanar_shared_link_codd_hop"] == -t3
+        and so["perpendicular_shared_link_codd_hop"] == t3
+        and so["shared_link_ceven_hop_coplanar"] == even
+        and so["shared_link_ceven_hop_perpendicular"] == even
+        and so["codd_leakage_per_shared_link_neighbour"] + bubble == leak
+        and so["codd_leakage_per_disjoint_neighbour"] == -bubble
+        and so["disjoint_pair_codd_hop"] == 0
+    )
+    cop, perp = so["coplanar_shared_link_codd_hop"], so["perpendicular_shared_link_codd_hop"]
+    lk = so["codd_leakage_per_shared_link_neighbour"]
+    return ok, (
+        f"from the engine's primitives and the run's own resolvent: coplanar C-odd hop {cop} "
+        f"and perpendicular {perp} (t_3 = {t3} with the S_sq sign pattern), C-even hop "
+        f"{so['shared_link_ceven_hop_coplanar']} in both geometries (T_PLUS_2 = {even}), C-odd "
+        f"leakage {lk} + {bubble} = {leak} (LEAK_2 after the "
+        f"neighbour's vacuum bubble 1/C_F), and a disjoint neighbour contributes the bubble alone "
+        f"with hop {so['disjoint_pair_codd_hop']}. Four registered constants out of an assembly "
+        "that never read either kernel"
+    )
+
+
+@orbit.check(
+    _CHAIN_EXACT,
+    _CHAIN_RUN,
+    rests_on=(
+        "the chain assembly reproduces the second-order register before any fourth-order "
+        "number is read",
+        "the 189 records carry exactly six weight magnitudes",
+        _SQUARE,
+    ),
+)
+def _():
+    # The universality the Hodge form rested on, computed: one cumulant per
+    # two-hop chain whatever the planes, the sign being the (S_sq^2)_PR entry.
+    # Exact rationals end to end, so equality is equality. This decides which
+    # pipeline has standing on the two-hop sector and NOT C2: u is
+    # band-invisible on the carrier, and rho, pi~ live on shared-link pairs
+    # the chain never isolates. Nothing here prefers either side.
+    chains = _chain_certificate()["chains"]
+    u = Fraction(K.X_QUANTUM.p, K.X_QUANTUM.q)
+    by = {
+        name: (Fraction(c["codd_chain_amplitude"]), c["incidence_sign"])
+        for name, c in chains.items()
+    }
+    even = {Fraction(c["ceven_chain_amplitude"]) for c in chains.values()}
+    signs = {name: s for name, (_a, s) in by.items()}
+    ok = (
+        set(chains) == {"coplanar_chain", "bent_chain", "zigzag_chain"}
+        and all(a == s * u for a, s in by.values())
+        and signs == {"coplanar_chain": 1, "bent_chain": -1, "zigzag_chain": -1}
+        and len(even) == 1
+    )
+    (u_even,) = even
+    return (
+        ok,
+        (
+            f"C-odd cumulant W(P,Q,R) - W(P,R) = s * {u} on every chain, s = "
+            + ", ".join(f"{s:+d} ({name.replace('_chain', '')})" for name, s in signs.items())
+            + f", and s is the product of the two signed shared-link incidences -- the "
+            f"(S_sq^2)_PR entry. |u| = X_QUANTUM = {u} as a rational, three chain types, "
+            f"116 s. The C-even cumulant is {u_even} on all three, sign-free because the "
+            "C-even hop carries no sign. So the two-hop sector is u S_sq^2 with ONE weight "
+            "where it has been computed, and the historical exact kernel's weight is right"
+        ),
+        {"U_CEVEN_CHAIN": u_even},
+    )
+
+
+@orbit.check(
+    "FINDING: the cold kernel's u is 4.13 times the independent chain value; the historical "
+    "kernel's is exact",
+    _CHAIN_RUN,
+    tier=2,
+    rests_on=(
+        _CHAIN_EXACT,
+        "FINDING: the cold kernel has the same Hodge form, with nu~ = -5/48 and its own "
+        "(u, rho, pi~, sigma~)",
+    ),
+)
+def _():
+    # The standing consequence, as a number. The cold u is a float from the
+    # v10a.26 dump (T2); the independent chain value and the historical
+    # kernel's are the same rational. A pipeline wrong on u has no standing
+    # on rho and pi~ until its error is located and shown not to reach them.
+    # Not a preference for the historical C_shp: that side has lost its
+    # rival's credibility, not gained a proof.
+    chains = _chain_certificate()["chains"]
+    chain_u = {Fraction(c["u"]) for c in chains.values()}
+    (u_chain,) = chain_u
+    u_cold = KO.hodge_form(KO.cold_amplitudes())["u"]
+    ratio = u_cold / float(u_chain)
+    ok = u_chain == Fraction(K.X_QUANTUM.p, K.X_QUANTUM.q) and abs(ratio - 4.1327437) < 1e-7
+    return ok, (
+        f"independent chain u = {u_chain} = {float(u_chain):.10e}; historical kernel u = "
+        f"X_QUANTUM = {K.X_QUANTUM}, identical; cold v10a.26 u = {u_cold:.10e}, which is "
+        f"{ratio:.7f} times the independent value (the record dump's scale factor 4.1327437, "
+        f"to {abs(ratio - 4.1327437):.1e}). Neither side of C2 is promoted; what changes is "
+        "which pipeline's fourth-order numbers carry independent weight"
+    )
