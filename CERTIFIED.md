@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 40
+## T0 — proof-checked — 95
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -23,6 +23,15 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 
 - `C_from_beta`
   - lean/Workhouse/Basic.lean:97
+  - `make lean`
+- `C_shp_from_orbits_cluster`
+  - lean/Workhouse/Basic.lean:794
+  - `make lean`
+- `C_shp_from_orbits_historical`
+  - lean/Workhouse/Basic.lean:790
+  - `make lean`
+- `adjoint_gap`
+  - lean/Workhouse/Basic.lean:486
   - `make lean`
 - `alphaPen_eq_neg_four_cube`
   - lean/Workhouse/Basic.lean:234
@@ -57,11 +66,41 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `blind_holdout`
   - lean/Workhouse/Basic.lean:83
   - `make lean`
+- `bloch_factorisation`
+  - lean/Workhouse/Basic.lean:672
+  - `make lean`
 - `cPrimTwo_forms`
   - lean/Workhouse/Basic.lean:206
   - `make lean`
+- `carrier_in_kernel`
+  - lean/Workhouse/Basic.lean:682
+  - `make lean`
+- `carrier_norm`
+  - lean/Workhouse/Basic.lean:690
+  - `make lean`
+- `casimirWeight_one`
+  - lean/Workhouse/Basic.lean:575
+  - `make lean`
+- `casimirWeight_sub_fundamental`
+  - lean/Workhouse/Basic.lean:579
+  - `make lean`
+- `casimir_shelf`
+  - lean/Workhouse/Basic.lean:584
+  - `make lean`
+- `census_three`
+  - lean/Workhouse/Basic.lean:564
+  - `make lean`
+- `channelWeight_eq`
+  - lean/Workhouse/Basic.lean:331
+  - `make lean`
+- `channel_gap`
+  - lean/Workhouse/Basic.lean:417
+  - `make lean`
 - `cubeCompletion_three`
   - lean/Workhouse/Basic.lean:225
+  - `make lean`
+- `cutoff_split`
+  - lean/Workhouse/Basic.lean:752
   - `make lean`
 - `delta_M`
   - lean/Workhouse/Basic.lean:293
@@ -78,8 +117,29 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `dim_Z₂`
   - lean/Workhouse/Basic.lean:181
   - `make lean`
+- `disjoint_pair_cancels`
+  - lean/Workhouse/Basic.lean:558
+  - `make lean`
 - `d₃_ledger`
   - lean/Workhouse/Basic.lean:59
+  - `make lean`
+- `eps_sector_refutes_U5`
+  - lean/Workhouse/Basic.lean:805
+  - `make lean`
+- `evenCubicR_factor`
+  - lean/Workhouse/Basic.lean:700
+  - `make lean`
+- `evenHop_eq`
+  - lean/Workhouse/Basic.lean:430
+  - `make lean`
+- `evenHop_three`
+  - lean/Workhouse/Basic.lean:441
+  - `make lean`
+- `evenHop_three_from_channels`
+  - lean/Workhouse/Basic.lean:445
+  - `make lean`
+- `evenHop_two`
+  - lean/Workhouse/Basic.lean:450
   - `make lean`
 - `even_cubic_at_sixteen`
   - lean/Workhouse/Basic.lean:137
@@ -89,6 +149,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `even_cubic_derivative_factors`
   - lean/Workhouse/Basic.lean:144
+  - `make lean`
+- `even_cubic_neg_below_zero`
+  - lean/Workhouse/Basic.lean:705
+  - `make lean`
+- `even_cubic_pos_above_sixteen`
+  - lean/Workhouse/Basic.lean:718
   - `make lean`
 - `even_gram_minors`
   - lean/Workhouse/Basic.lean:124
@@ -105,6 +171,18 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `extraction_D`
   - lean/Workhouse/Basic.lean:173
   - `make lean`
+- `family_weights_sum_to_one`
+  - lean/Workhouse/Basic.lean:421
+  - `make lean`
+- `flatOdd_five`
+  - lean/Workhouse/Basic.lean:517
+  - `make lean`
+- `flatOdd_six`
+  - lean/Workhouse/Basic.lean:521
+  - `make lean`
+- `gammaEven_five`
+  - lean/Workhouse/Basic.lean:525
+  - `make lean`
 - `hopping_deficit_numerator`
   - lean/Workhouse/Basic.lean:48
   - `make lean`
@@ -114,8 +192,26 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `hopping_two`
   - lean/Workhouse/Basic.lean:44
   - `make lean`
+- `kinematic_constants`
+  - lean/Workhouse/Basic.lean:653
+  - `make lean`
+- `like_family_sum`
+  - lean/Workhouse/Basic.lean:401
+  - `make lean`
+- `mixed_family_sum`
+  - lean/Workhouse/Basic.lean:389
+  - `make lean`
 - `newton_three`
   - lean/Workhouse/Basic.lean:153
+  - `make lean`
+- `nu_from_A_and_u`
+  - lean/Workhouse/Basic.lean:785
+  - `make lean`
+- `one_cube_shell`
+  - lean/Workhouse/Basic.lean:759
+  - `make lean`
+- `onsiteOdd_five`
+  - lean/Workhouse/Basic.lean:515
   - `make lean`
 - `pentCompletion_three`
   - lean/Workhouse/Basic.lean:229
@@ -129,8 +225,35 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `rank_law_numerator`
   - lean/Workhouse/Basic.lean:36
   - `make lean`
+- `riesz_contour_clearances`
+  - lean/Workhouse/Basic.lean:640
+  - `make lean`
+- `riesz_min_clearance`
+  - lean/Workhouse/Basic.lean:648
+  - `make lean`
+- `riesz_separations`
+  - lean/Workhouse/Basic.lean:633
+  - `make lean`
 - `stencil_zero_mode`
   - lean/Workhouse/Basic.lean:87
+  - `make lean`
+- `su3_even_ledger`
+  - lean/Workhouse/Basic.lean:539
+  - `make lean`
+- `su3_numerator_large`
+  - lean/Workhouse/Basic.lean:616
+  - `make lean`
+- `su3_numerators_below_eighteen`
+  - lean/Workhouse/Basic.lean:609
+  - `make lean`
+- `su3_odd_ledger`
+  - lean/Workhouse/Basic.lean:530
+  - `make lean`
+- `su3_semigroup_gap`
+  - lean/Workhouse/Basic.lean:624
+  - `make lean`
+- `su4_ledger`
+  - lean/Workhouse/Basic.lean:549
   - `make lean`
 - `tetraCompletion_three`
   - lean/Workhouse/Basic.lean:217
@@ -138,11 +261,53 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `tetra_from_count`
   - lean/Workhouse/Basic.lean:211
   - `make lean`
+- `tier_collapse_orbits`
+  - lean/Workhouse/Basic.lean:800
+  - `make lean`
+- `towerEven_five`
+  - lean/Workhouse/Basic.lean:523
+  - `make lean`
+- `towerOdd_closed`
+  - lean/Workhouse/Basic.lean:496
+  - `make lean`
+- `towerOdd_five`
+  - lean/Workhouse/Basic.lean:513
+  - `make lean`
+- `towerOdd_six`
+  - lean/Workhouse/Basic.lean:519
+  - `make lean`
+- `two_cube_spectra`
+  - lean/Workhouse/Basic.lean:744
+  - `make lean`
+- `two_flux_gaps`
+  - lean/Workhouse/Basic.lean:470
+  - `make lean`
+- `wAdjoint_closed`
+  - lean/Workhouse/Basic.lean:356
+  - `make lean`
+- `wAntisym_closed`
+  - lean/Workhouse/Basic.lean:362
+  - `make lean`
+- `wSinglet_closed`
+  - lean/Workhouse/Basic.lean:350
+  - `make lean`
+- `wSym_closed`
+  - lean/Workhouse/Basic.lean:375
+  - `make lean`
 - `width_eq_alpha_add_beta`
   - lean/Workhouse/Basic.lean:101
   - `make lean`
+- `width_ratio_numerator`
+  - lean/Workhouse/Basic.lean:454
+  - `make lean`
+- `winding_triangle_clears_window`
+  - lean/Workhouse/Basic.lean:599
+  - `make lean`
+- `zero_nality_clears_window`
+  - lean/Workhouse/Basic.lean:594
+  - `make lean`
 
-## T1 — re-derived exactly — 230
+## T1 — re-derived exactly — 238
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -623,6 +788,32 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `three kernel copies agree record-for-record, from two independent builds`
   - src/workhouse/invariants/restored.py:68 · UNIFIED §6 / G1
   - `workhouse verify --only 'three kernel copies agree record-for-record, from two independent builds'`
+**second order at every rank: the scalar ledger and the charge-even symbol**
+
+- `FINDING: revision 5 called the charge-even vacuum-route cancellation underived; the pinned corpus proves it for distant pairs at N = 3`
+  - src/workhouse/invariants/second_order.py:722 · PUBLICATION rev5 Prop. (vacuum-mediated route) remark and §6 opening; PAPER Lemma (vacuum-mediated route); corpus-import/programs/one_plaquette/PAPER_FLUX_manuscript_section6_patch.tex Lemma 6.1'
+  - `workhouse verify --only 'FINDING: revision 5 called the charge-even vacuum-route cancellation underived; the pinned corpus proves it for distant pairs at N = 3'`
+- `at N = 3 the all-rank second-order ledger is the register and an independent engine's table, line by line`
+  - src/workhouse/invariants/second_order.py:339 · runs/g3_chain_amplitude_replication_2026-09-02/chain_amplitude_certificate.json; PAPER App. B; MASTER paper §5
+  - `workhouse verify --only 'at N = 3 the all-rank second-order ledger is the register and an independent engine'"'"'s table, line by line'`
+- `the charge-even second-order symbol is ell_N times the unsigned incidence: the vacuum route cancels the doubly-excited route on every link-disjoint pair`
+  - src/workhouse/invariants/second_order.py:408 · PUBLICATION rev5 Prop. (vacuum-mediated route) and §6 (the symbol hypothesis); C13; G25
+  - `workhouse verify --only 'the charge-even second-order symbol is ell_N times the unsigned incidence: the vacuum route cancels the doubly-excited route on every link-disjoint pair'`
+- `the large-N second-order ledger: the towers and flat scalar are O(N^-3), and the leading same-face and bubble terms cancel`
+  - src/workhouse/invariants/second_order.py:562 · GLUEBALL §4 (large-N expansion of t_N); PUBLICATION rev5 eq. (tsmall)
+  - `workhouse verify --only 'the large-N second-order ledger: the towers and flat scalar are O(N^-3), and the leading same-face and bubble terms cancel'`
+- `the link-resolved census split is a theorem at every rank: -w_rho on the self-conjugate mixed channels, w_rho/2 on each like channel and its conjugate`
+  - src/workhouse/invariants/second_order.py:489 · PUBLICATION rev5 Conj. (all-rank even split) and Reported result (the census is the Weingarten ledger); runs/two_cube_codd_o2_2026-08-29
+  - `workhouse verify --only 'the link-resolved census split is a theorem at every rank: -w_rho on the self-conjugate mixed channels, w_rho/2 on each like channel and its conjugate'`
+- `the same-face route is exceptional at N = 3 and N = 4: Lambda^2 F is the conjugate fundamental, then self-conjugate`
+  - src/workhouse/invariants/second_order.py:286 · PUBLICATION rev5 Lemma (reduced same-face route), which proves the N = 3 case; C13
+  - `workhouse verify --only 'the same-face route is exceptional at N = 3 and N = 4: Lambda^2 F is the conjugate fundamental, then self-conjugate'`
+- `the second-order on-site scalar is closed form at every rank: same-face route + 1/C_F + 12 ell_N, and L cancels`
+  - src/workhouse/invariants/second_order.py:201 · PUBLICATION rev5 Cor. (global torus assembly), which names the scalar d_{2,N,L} and gives it at N = 3 only; C13; G24
+  - `workhouse verify --only 'the second-order on-site scalar is closed form at every rank: same-face route + 1/C_F + 12 ell_N, and L cancels'`
+- `the two-cube B=6 connected diagonal is the per-neighbour ledger face by face: one shared-link neighbour and four disjoint faces in the other cube`
+  - src/workhouse/invariants/second_order.py:641 · runs/two_cube_codd_o2_2026-08-29 certificate graph.connected_diagonal; PUBLICATION rev5 Prop. (where the truncation lives) and App. (the two-cube geometry)
+  - `workhouse verify --only 'the two-cube B=6 connected diagonal is the per-neighbour ledger face by face: one shared-link neighbour and four disjoint faces in the other cube'`
 **second order, all ranks**
 
 - `A_N and B_N are the channel sums, not transcriptions`

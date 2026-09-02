@@ -341,3 +341,349 @@ theorems:
       increases above mu = p and no root exceeds 16, i.e. lambda <= 12.
     formalizes: [G25]
     promotes: []
+
+  # ------------------------------------------------------------------
+  # 2026-09-02: the second-order layer at every rank, the electric window
+  # and Riesz-island arithmetic, the incidence factorisation over C, the
+  # charge-even range bound, and the fourth-order orbit identities.
+  # ------------------------------------------------------------------
+
+  - name: channelWeight_eq
+    statement: >
+      A shared-link channel weight -(d/N^2)/(C_F + c/2) in cleared form,
+      -2d/(N(N^2 - 1 + Nc)).
+    formalizes: [SYM:shared_link_weights, R2]
+    promotes: []
+
+  - name: wSinglet_closed
+    statement: "The singlet channel weight, w_1 = -2/(N(N^2-1))."
+    formalizes: [SYM:shared_link_weights, R2]
+    promotes:
+      - "the four channel weights follow from dimension and Casimir"
+
+  - name: wAdjoint_closed
+    statement: "The adjoint channel weight, w_Adj = -2(N^2-1)/(N(2N^2-1))."
+    formalizes: [SYM:shared_link_weights, R2]
+    promotes:
+      - "the four channel weights follow from dimension and Casimir"
+
+  - name: wAntisym_closed
+    statement: "The antisymmetric-square channel weight, w_Lam = -(N-1)/((N+1)(2N-3))."
+    formalizes: [SYM:shared_link_weights, R2]
+    promotes:
+      - "the four channel weights follow from dimension and Casimir"
+
+  - name: wSym_closed
+    statement: "The symmetric-square channel weight, w_Sym = -(N+1)/((N-1)(2N+3))."
+    formalizes: [SYM:shared_link_weights, R2]
+    promotes:
+      - "the four channel weights follow from dimension and Casimir"
+
+  - name: mixed_family_sum
+    statement: "The mixed family F x Fbar = 1 + Adj sums to A_N."
+    formalizes: [SYM:shared_link_weights, CONST:t_N, R2]
+    promotes:
+      - "A_N and B_N are the channel sums, not transcriptions"
+
+  - name: like_family_sum
+    statement: "The like family F x F = Lam^2 F + Sym^2 F sums to B_N."
+    formalizes: [SYM:shared_link_weights, CONST:t_N, R2]
+    promotes:
+      - "A_N and B_N are the channel sums, not transcriptions"
+
+  - name: channel_gap
+    statement: >
+      The resolvent gap of a shared-link channel: 3 C_F + C_rho/2 against the
+      external 2 C_F leaves C_F + C_rho/2.
+    formalizes: [SYM:shared_link_weights]
+    promotes:
+      - "each channel gap is C_F + C_R/2, and the weights sum to one"
+
+  - name: family_weights_sum_to_one
+    statement: "The channel weights d_rho/N^2 sum to one within each orientation family."
+    formalizes: [SYM:shared_link_weights, G24]
+    promotes:
+      - "each channel gap is C_F + C_R/2, and the weights sum to one"
+
+  - name: evenHop_eq
+    statement: >
+      The charge-even shared-link hop: A_N + B_N + 1/C_F is the closed form
+      ell_N = -2N(3N^2-5)/((N^2-1)(2N^2-1)(4N^2-9)).
+    formalizes: [SYM:ell_n, C13]
+    promotes:
+      - "ell_N = A_N + B_N + 1/C_F, the vacuum-mediated route at every rank"
+
+  - name: evenHop_three
+    statement: "ell_3 = -11/306."
+    value: "-11/306"
+    formalizes: [SYM:ell_n, CONST:T_PLUS_2, C13]
+    promotes:
+      - "ell_N = A_N + B_N + 1/C_F, the vacuum-mediated route at every rank"
+
+  - name: evenHop_three_from_channels
+    statement: >
+      At N = 3 the shared-link-only sum is the superseded -481/612 of C13 and
+      the vacuum route 3/4 is exactly what was omitted.
+    formalizes: [C13, SYM:ell_n]
+    promotes:
+      - "ell_N = A_N + B_N + 1/C_F, the vacuum-mediated route at every rank"
+
+  - name: evenHop_two
+    statement: "Continued to N = 2 the charge-even hop is -4/21, where the charge-odd one vanishes."
+    value: "-4/21"
+    formalizes: [CONST:ELL_2_CONTINUED, SYM:ell_n]
+    promotes: []
+
+  - name: width_ratio_numerator
+    statement: >
+      The bandwidth ratio 16|ell_N|/(12 t_N) = 4(3N^2-5)/(3(N^2-4)), denominators
+      cleared: the charge-even band is the wider one at every rank.
+    formalizes: [SYM:ell_n, CONST:t_N, G25]
+    promotes: []
+
+  - name: two_flux_gaps
+    statement: >
+      The two-flux plaquette gaps E_F - 2C_2(Sym^2 F) = -(N-1)(N+3)/N and
+      E_F - 2C_2(Lam^2 F) = -(N+1)(N-3)/N, the denominators of the same-face route.
+    formalizes: [CONST:SAME_FACE_2_ODD_N]
+    promotes: []
+
+  - name: adjoint_gap
+    statement: "The adjoint gap E_F - 2N = -(N^2+1)/N of the charge-even same-face route."
+    formalizes: [CONST:SAME_FACE_2_EVEN_N]
+    promotes: []
+
+  - name: towerOdd_closed
+    statement: >
+      The charge-odd tower sigma_N + 1/C_F collapses to -12N/((N^2-1)(N^2-9)) for
+      generic rank: the same-face route and the vacuum bubble cancel at O(1/N).
+    formalizes: [CONST:TOWER_2_ODD_N]
+    promotes: []
+
+  - name: towerOdd_five
+    statement: "The charge-odd tower at N = 5 is -5/32."
+    value: "-5/32"
+    formalizes: [CONST:TOWER_2_ODD_5]
+    promotes: []
+
+  - name: onsiteOdd_five
+    statement: "The charge-odd on-site second-order scalar at N = 5 is -4785/20384."
+    value: "-4785/20384"
+    formalizes: [CONST:ONSITE_2_ODD_5]
+    promotes: []
+
+  - name: flatOdd_five
+    statement: "The flat (carrier) second-order scalar at N = 5 is -4945/20384."
+    value: "-4945/20384"
+    formalizes: [CONST:FLAT_2_ODD_5]
+    promotes: []
+
+  - name: towerOdd_six
+    statement: "The charge-odd tower at N = 6 is -8/105."
+    value: "-8/105"
+    formalizes: [CONST:TOWER_2_ODD_N]
+    promotes: []
+
+  - name: flatOdd_six
+    statement: "The flat second-order scalar at N = 6 is -13976/111825."
+    value: "-13976/111825"
+    formalizes: [CONST:FLAT_2_ODD_6]
+    promotes: []
+
+  - name: towerEven_five
+    statement: "The charge-even tower at N = 5 is -155/1248."
+    value: "-155/1248"
+    formalizes: [CONST:TOWER_2_EVEN_5]
+    promotes: []
+
+  - name: gammaEven_five
+    statement: "The charge-even A1++ level at Gamma, order u^2, at N = 5 is -17195/61152."
+    value: "-17195/61152"
+    formalizes: [CONST:GAMMA_A1PP_2_5]
+    promotes: []
+
+  - name: su3_odd_ledger
+    statement: >
+      N = 3: the sextet route -1/4 plus the bubble 3/4 is the tower 1/2, twelve
+      leakages give the on-site 7/102, and subtracting 4 t_3 gives the flat 11/306.
+    formalizes: [CONST:D_MINUS_2, CONST:BAND_ODD_FLAT, CONST:TOWER_B2_MINUS, CONST:SAME_FACE_2_ODD_3]
+    promotes:
+      - "d_- = 1/2 + 12*leak_2, and leak_2 = -11/306"
+      - "d_- - 4 t_- = 11/306"
+
+  - name: su3_even_ledger
+    statement: >
+      N = 3, charge even: vacuum 3/4, adjoint -3/5, sextet -1/4 give -1/10; tower
+      13/20; on-site 223/1020; A1++ at Gamma -217/1020; band top 1109/3060.
+    formalizes: [CONST:D_PLUS_2, CONST:BAND_EVEN_BOTTOM, CONST:BAND_EVEN_TOP, CONST:TOWER_B2_PLUS, CONST:SAME_FACE_2_EVEN_3]
+    promotes: []
+
+  - name: su4_ledger
+    statement: >
+      N = 4: Lam^2 F is self-conjugate, so the odd same-face route is -4/21 and the
+      tower 12/35, on-site 10828/59675, flat 9932/59675; the even tower is -2132/1785.
+    formalizes: [CONST:TOWER_2_ODD_4, CONST:ONSITE_2_ODD_4, CONST:FLAT_2_ODD_4, CONST:SAME_FACE_2_EVEN_4]
+    promotes: []
+
+  - name: disjoint_pair_cancels
+    statement: >
+      The charge-even vacuum route on a link-disjoint pair, 2/E_F, is cancelled by
+      the doubly-excited exchange route 2/(E_F - 2E_F).
+    formalizes: [SYM:ell_n, C13, G25]
+    promotes: []
+
+  - name: census_three
+    statement: >
+      The link-resolved census at N = 3: -w_1 = 1/12, -w_Adj = 16/51, w_Lam/2 = -1/12,
+      w_Sym/2 = -1/9, and the six sum to t_3.
+    formalizes: [SYM:shared_link_weights, CONST:CENSUS_LAM_N, CONST:CENSUS_SYM_N, R2]
+    promotes: []
+
+  - name: casimirWeight_one
+    statement: "C_2(omega_1) = C_F."
+    formalizes: ["CHK:the-electric-shell-and-what-isolates-it:every-nontrivial-irrep-clears-5-4-c-f-ex-606948"]
+    promotes: []
+
+  - name: casimirWeight_sub_fundamental
+    statement: >
+      C_2(omega_i) - C_F = (N+1)(i-1)(N-i-1)/(2N): minimal exactly at the fundamental pair.
+    formalizes: ["CHK:the-electric-shell-and-what-isolates-it:every-nontrivial-irrep-clears-5-4-c-f-ex-606948", "CHK:the-electric-shell-and-what-isolates-it:below-5-c-f-2-the-trivial-flux-electric--4078fd"]
+    promotes: []
+
+  - name: casimir_shelf
+    statement: >
+      The three shelf comparisons of the electric window theorem, as rational
+      functions of N: (N+1)(3N-11)/(8N), (N-1)(3N+11)/(8N), (3N^2+5)/(8N).
+    formalizes: ["CHK:the-electric-shell-and-what-isolates-it:every-nontrivial-irrep-clears-5-4-c-f-ex-606948", "CHK:the-electric-shell-and-what-isolates-it:below-5-c-f-2-the-trivial-flux-electric--4078fd"]
+    promotes: []
+
+  - name: zero_nality_clears_window
+    statement: >
+      A zero-N-ality loop at 2C_2(R) >= 2N clears the window 5C_F/2, denominators
+      cleared: 8N^2 - 5(N^2-1) = 3N^2 + 5.
+    formalizes: ["CHK:the-electric-shell-and-what-isolates-it:below-5-c-f-2-the-trivial-flux-electric--4078fd", "CHK:the-electric-shell-and-what-isolates-it:every-4-cycle-is-an-elementary-face-exce-8c7389"]
+    promotes: []
+
+  - name: winding_triangle_clears_window
+    statement: "The L = 3 winding triangle at 3N/2 clears the window: 6N^2 - 5(N^2-1) = N^2 + 5."
+    formalizes: ["CHK:the-electric-shell-and-what-isolates-it:below-5-c-f-2-the-trivial-flux-electric--4078fd", "CHK:the-electric-shell-and-what-isolates-it:the-torus-graph-is-simple-and-the-only-s-3ab142"]
+    promotes: []
+
+  - name: su3_numerators_below_eighteen
+    statement: >
+      The nonzero SU(3) one-link numerators p^2 + q^2 + pq + 3p + 3q below 18 are
+      exactly 4, 9, 10, 16, by enumeration.
+    formalizes: ["CHK:the-electric-shell-and-what-isolates-it:the-su-3-additive-electric-spectrum-leav-74795a"]
+    promotes: []
+
+  - name: su3_numerator_large
+    statement: "Any SU(3) label with p >= 5 has one-link numerator above 18."
+    formalizes: ["CHK:the-electric-shell-and-what-isolates-it:the-su-3-additive-electric-spectrum-leav-74795a"]
+    promotes: []
+
+  - name: su3_semigroup_gap
+    statement: >
+      The additive semigroup of {4, 9, 10, 16} does not reach 15 with at most four
+      links, and reaches 14 and 17: the shell 16 is flanked by 14 and 17.
+    formalizes: ["CHK:the-electric-shell-and-what-isolates-it:the-su-3-additive-electric-spectrum-leav-74795a"]
+    promotes: []
+
+  - name: riesz_separations
+    statement: "The Riesz-island separations (1 - 15 lambda)/3 and (1 - 33 lambda)/6."
+    formalizes: ["CHK:the-electric-shell-and-what-isolates-it:the-su-3-additive-electric-spectrum-leav-74795a"]
+    promotes: []
+
+  - name: riesz_contour_clearances
+    statement: >
+      The contour |z - 8/3| = (1 - lambda)/12 clears the shell, the upper neighbour
+      and the lower neighbour by (1-33 lambda)/12, (1-33 lambda)/12 and (3-27 lambda)/12.
+    formalizes: ["CHK:the-electric-shell-and-what-isolates-it:the-su-3-additive-electric-spectrum-leav-74795a"]
+    promotes: []
+
+  - name: riesz_min_clearance
+    statement: "For lambda >= 0 the lower clearance dominates, so the minimum is (1 - 33 lambda)/12."
+    formalizes: ["CHK:the-electric-shell-and-what-isolates-it:the-su-3-additive-electric-spectrum-leav-74795a"]
+    promotes: []
+
+  - name: kinematic_constants
+    statement: "The local interaction bound 27|u| and the rescaled SU(3) local gap (3/4) C_F = 1."
+    formalizes: ["CHK:the-electric-shell-and-what-isolates-it:the-su-3-additive-electric-spectrum-leav-74795a"]
+    promotes: []
+
+  - name: bloch_factorisation
+    statement: "The incidence factorisation B B^dagger = q I - w w^dagger over C, entry by entry."
+    formalizes: [U1]
+    promotes:
+      - "B B^dagger = q I - d conj(d)^T for the curl incidence"
+
+  - name: carrier_in_kernel
+    statement: "B^dagger w = 0: the Bloch form of d_2 d_3 = 0."
+    formalizes: [U1]
+    promotes: []
+
+  - name: carrier_norm
+    statement: "The carrier's squared norm is q."
+    formalizes: [U1]
+    promotes: []
+
+  - name: evenCubicR_factor
+    statement: "The charge-even cubic over the reals is mu (mu - p)^2 - 4abc."
+    formalizes: [G25]
+    promotes: []
+
+  - name: even_cubic_neg_below_zero
+    statement: "Below mu = 0 the charge-even cubic is strictly negative, so lambda >= -4."
+    formalizes: [G25]
+    promotes: []
+
+  - name: even_cubic_pos_above_sixteen
+    statement: >
+      Above mu = 16 the charge-even cubic is strictly positive when each a_i is in
+      [0, 4], so lambda <= 12: every root lies in [0, 16].
+    formalizes: [G25]
+    promotes: []
+
+  - name: two_cube_spectra
+    statement: >
+      The B = 6 two-cube levels -129/34, -34/9, -15/4 and the B = 4 levels -5/3, -11/6
+      from the connected diagonal and the cross-cell pairs.
+    formalizes: [R2]
+    promotes: []
+
+  - name: cutoff_split
+    statement: "w_Lam - w_1 = -1/12, w_Sym - w_Adj = 14/153, and the two sum to t_3."
+    formalizes: [R2, CONST:t_N]
+    promotes: []
+
+  - name: one_cube_shell
+    statement: >
+      The B = 6 cube scalar misses the bridge's by the same-face sextet route 1/4, and
+      its shell is {39/68, 371/612, 127/204}.
+    formalizes: [R2]
+    promotes: []
+
+  - name: nu_from_A_and_u
+    statement: "The agreed normal amplitude is -(5/48 + 4u): the cube completion plus the two-hop shadow."
+    formalizes: [CONST:NU_ORBIT, CONST:X_QUANTUM, CONST:A_shp_3, G14]
+    promotes:
+      - "A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u)"
+
+  - name: C_shp_from_orbits_historical
+    statement: "C_shp^historical = -5/96 - u - (rho + pi)/2 on the historical orbit amplitudes."
+    formalizes: [C2, CONST:C_SHP_HISTORICAL, CONST:X_QUANTUM, CONST:RHO_ORBIT, CONST:PI_ORBIT]
+    promotes: []
+
+  - name: C_shp_from_orbits_cluster
+    statement: "The cluster-assembled third side of C2 is the same formula on the cluster rho."
+    formalizes: [C2, CONST:C_SHP_CLUSTER, CONST:RHO_CLUSTER]
+    promotes: []
+
+  - name: tier_collapse_orbits
+    statement: "In orbit amplitudes D = -6u + 3(2u) and B = (1 + 1 - 2) x vanish identically."
+    formalizes: [G14]
+    promotes: []
+
+  - name: eps_sector_refutes_U5
+    statement: "The measured epsilon sector of rho + pi~, 2(-55/13872) = -55/6936, is not U5's -25/512."
+    formalizes: [U5, CONST:EPS_SECTOR_SHARED_LINK_AMPLITUDE]
+    promotes: []

@@ -49,6 +49,7 @@ _MODULES = (
     "electric_shell",
     "orbits",
     "continuum",
+    "second_order",
 )
 
 for _name in _MODULES:

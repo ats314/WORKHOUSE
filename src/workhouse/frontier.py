@@ -101,7 +101,18 @@ def _lean_counts() -> tuple[int, int]:
         return 0, 0
     for path in LEAN.rglob("*.lean"):
         body = strip_lean_comments(path.read_text(encoding="utf-8"))
-        theorems += len(re.findall(r"^\s*(?:theorem|lemma)\s", body, re.MULTILINE))
+        # Attributes sit BEFORE the keyword (`@[simp] theorem ...`), and the
+        # first version of this regex did not allow them: three theorems were
+        # invisible here while CERTIFIED.md, which scrapes with the prefix
+        # allowed, counted them -- 37 against 40 on the same tree. Same
+        # pattern as certified.lean_claims, so the two views cannot disagree.
+        theorems += len(
+            re.findall(
+                r"^\s*(?:@\[[^\]]*\]\s*)*(?:private\s+|protected\s+|nonrec\s+)*(?:theorem|lemma)\s",
+                body,
+                re.MULTILINE,
+            )
+        )
         sorries += len(re.findall(r"\bsorry\b", body))
     return theorems, sorries
 
