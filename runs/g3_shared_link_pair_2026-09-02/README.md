@@ -103,7 +103,7 @@ THM_FLUX Prop. 2's `S_□` has it.
 |---|---|
 | `shared_link_pair.py` | the run: `python shared_link_pair.py {normal,coplanar,perpendicular} {gate,dressing,cube,pair,all}`; `EPS_BLIND=1` for the balanced contraction |
 | `assemble.py` | sums the stage outputs, compares with the records, writes the certificate |
-| `console_*.log` | complete output of every stage as run here |
+| `console_*.log` | complete output of every stage as run here; the coplanar and perpendicular `all` runs were started before the cube stage existed, so their cube terms are in the separate `*_cube` files, and the normal pair was run stage by stage |
 | `pair_route_*.json` | every cumulant, per stage and pair |
 | `shared_link_pair_certificate.json` | the assembled elements and comparisons; the checks in the kernel-orbits suite read this |
 | `SHA256SUMS` | the pin |

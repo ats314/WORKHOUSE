@@ -25,8 +25,17 @@ PI_ORBIT = F(-20535103905179, 1264270320593280)
 
 
 def load(name, stage):
-    with open(HERE / f"pair_route_{name}_{stage}.json") as fh:
-        return json.load(fh)
+    """A stage's output: its own file, or the combined file an `all` run writes."""
+    try:
+        with open(HERE / f"pair_route_{name}_{stage}.json") as fh:
+            return json.load(fh)
+    except FileNotFoundError:
+        if stage in ("gate", "dressing", "pair", "cube"):
+            with open(HERE / f"pair_route_{name}_all.json") as fh:
+                d = json.load(fh)
+            if stage != "cube" or "cubes" in d:
+                return d
+        raise
 
 
 def main():
