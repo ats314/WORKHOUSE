@@ -288,7 +288,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/orbits.py:156 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'C_shp = -5/96 - u - (rho + pi)/2, exactly'`
 - `FINDING: U5 is falsified -- the epsilon sector of rho + pi~ is -55/6936, not -25/512`
-  - src/workhouse/invariants/orbits.py:1106 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:1109 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: U5 is falsified -- the epsilon sector of rho + pi~ is -55/6936, not -25/512'`
 - `FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel's 4.13 u is wrong`
   - src/workhouse/invariants/orbits.py:898 · C2; G3 chain amplitude route; G14; ADR 0019; RUN g3_chain_amplitude_2026-09-02
@@ -321,16 +321,16 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/orbits.py:1039 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the cluster expansion is linked: a plaquette sharing no link with the pair contributes exactly zero'`
 - `the corner cluster's cumulant agrees between two implementations of the resolvent`
-  - src/workhouse/invariants/orbits.py:1206 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:1209 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the corner cluster'"'"'s cumulant agrees between two implementations of the resolvent'`
 - `the engine's primitives plus textbook second-order theory return t_3 S_sq, the C-even hop and the leakage`
   - src/workhouse/invariants/orbits.py:874 · C2; G3 chain amplitude route; G14; ADR 0019; RUN g3_chain_amplitude_2026-09-02
   - `workhouse verify --only 'the engine'"'"'s primitives plus textbook second-order theory return t_3 S_sq, the C-even hop and the leakage'`
 - `the lattice fourth-order in-plane nearest-neighbour element, assembled from clusters, is the historical kernel's pi exactly`
-  - src/workhouse/invariants/orbits.py:1061 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:1064 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the lattice fourth-order in-plane nearest-neighbour element, assembled from clusters, is the historical kernel'"'"'s pi exactly'`
 - `the lattice fourth-order normal element, assembled from clusters with the cube-completion term, is the agreed nu = -5/48 - 4u exactly`
-  - src/workhouse/invariants/orbits.py:1167 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:1170 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the lattice fourth-order normal element, assembled from clusters with the cube-completion term, is the agreed nu = -5/48 - 4u exactly'`
 - `the on-site orbit IS the momentum-independent channel`
   - src/workhouse/invariants/orbits.py:351 · U5; C2; C10; GCSG SU(6) certificate; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
@@ -955,7 +955,7 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **fourth-order kernel orbits**
 
 - `FINDING: C_shp from the assembled amplitudes is a third value, -5/96 - u - (rho + pi)/2 with the cluster rho`
-  - src/workhouse/invariants/orbits.py:1289 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:1292 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: C_shp from the assembled amplitudes is a third value, -5/96 - u - (rho + pi)/2 with the cluster rho'`
 - `FINDING: the cold kernel carries the same orientation character, so its flips are real`
   - src/workhouse/invariants/orbits.py:642 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
@@ -967,7 +967,7 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
   - src/workhouse/invariants/orbits.py:454 · C2; G3 step 1; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped'`
 - `FINDING: the lattice fourth-order rotation element, assembled from clusters, is neither kernel's rho`
-  - src/workhouse/invariants/orbits.py:1239 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:1242 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: the lattice fourth-order rotation element, assembled from clusters, is neither kernel'"'"'s rho'`
 **near-Gamma uniformity (G11)**
 

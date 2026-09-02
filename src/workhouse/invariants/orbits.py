@@ -1048,13 +1048,16 @@ def _():
     # depend on the volume.
     cert = _pair_certificate()
     pairs = cert["pairs"]
-    ok = "coplanar" in pairs and pairs["coplanar"]["gate_far_X_all_zero"] is True
+    ok = all(
+        name in pairs and pairs[name]["gate_far_X_all_zero"] is True
+        for name in ("coplanar", "perpendicular")
+    )
     return ok, (
         "W(P,Q,X) - W(P,Q) = 0 on all four orientation elements for X = the (0,1) plaquette at "
-        "(5,5,5), link-disjoint from the coplanar pair. The Hermitian assembly "
-        "D - A C1 - C1^T A - (K2 N + N K2)/2 + A A J with the fold terms is size-consistent, so "
-        "the lattice element is a finite sum of connected cumulants: the pair cluster and the "
-        "three-plaquette clusters that share a link with it"
+        "(5,5,5), link-disjoint from both the coplanar and the perpendicular pair. The Hermitian "
+        "assembly D - A C1 - C1^T A - (K2 N + N K2)/2 + A A J with the fold terms is "
+        "size-consistent, so the lattice element is a finite sum of connected cumulants: the pair "
+        "cluster and the three-plaquette clusters that share a link with it"
     )
 
 
