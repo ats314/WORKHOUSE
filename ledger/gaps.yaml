@@ -326,29 +326,45 @@ gaps:
           only if a blind scalar confirmation is ever worth that price.
       - step: chain amplitude u on the three-plaquette cluster
         state: done
+        cannot_decide: [C2]
         closed_by:
           - 'RUN:g3_chain_amplitude_2026-09-02'
-          - 'CHK:the chain amplitude u, computed independently on three ten-link clusters, is X_QUANTUM exactly'
-          - 'CHK:the chain assembly reproduces the second-order register before any fourth-order number is read'
-          - 'CHK:FINDING: the cold kernel''s u is 4.13 times the independent chain value; the historical kernel''s is exact'
-        cannot_decide: [C2]
+          - "CHK:FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel's 4.13 u is wrong"
+          - "CHK:the engine's primitives plus textbook second-order theory return t_3 S_sq, the C-even hop and the leakage"
+          - 'RUN:g3_chain_amplitude_replication_2026-09-02'
+          - "CHK:REPLICATION: a second implementation, with the engine's PVP assembly and a Krylov resolvent, gives u = X_QUANTUM on three chain types"
         status: >
-          RUN 2026-09-02, runs/g3_chain_amplitude_2026-09-02, 116 s on CPU.
-          Result: u = 360421351/40327601932800 = X_QUANTUM EXACTLY, as a
-          rational, on all three chain types -- coplanar-coplanar,
-          coplanar-perpendicular and perpendicular-perpendicular -- with the
-          C-odd amplitude carrying the product of the two signed shared-link
-          incidences, i.e. (S_sq^2)_PR. So the universality the Hodge form
-          rests on holds where it was computed, and the historical exact
-          kernel's two-hop weight is right; the cold v10a.26 dump's is wrong
-          by its factor 4.1327437. The assembly reproduced the register's
-          second-order constants (t_3 = -+5/612 with the S_sq sign pattern,
-          T_PLUS_2 = -11/306, LEAK_2 = -11/306 after the -3/4 bubble) from
-          the primitives before any fourth-order number was read, and never
-          read either kernel. A first attempt the same day (kept as
-          first_attempt_*) died on Gram matrices of degree-3 words; the run
-          that succeeded needs no Gram at all, see ADR 0020. Proposed
-          2026-09-01 from the Hodge form.
+          REPLICATED the same day by a second implementation written without
+          reading the first (runs/g3_chain_amplitude_replication_2026-09-02):
+          a Krylov resolvent instead of block characteristic polynomials, the
+          engine's own assembly with PVP = the baryonic vertex instead of
+          PVP = 0, and a third chain type (coplanar-perpendicular, opposite
+          hop signs) with the incidence sign computed from link traversals.
+          Same rational, same C-even amplitude, 116 s; ADR 0020.
+          RUN 2026-09-02: u = 360421351/40327601932800 = X_QUANTUM exactly on
+          the coplanar chain and minus that on the bent chain, from an
+          assembly that takes only Wilson words, Haar integrals and the H0
+          action from the pinned engine and reproduces the register at
+          second order first. The historical exact kernel is right on the
+          one quantity in the agreed sector the pipelines disagree on; the
+          v10a.26 dump's 4.1327437 u is wrong there. C2 is not decided (u
+          is band-invisible on the carrier), but the cold pipeline's rho
+          and pi~ have no independent standing until its error is located
+          and shown not to reach them. Universality across chain
+          geometries holds, which was G14's last dynamical input. Runs in
+          seconds; the wall the register measured was Gram matrices the
+          resolvent never needed. Proposed 2026-09-01 from the Hodge form. The 144 records both
+          kernels agree on in shape are u S_sq^2, so u is one number: the
+          fourth-order amplitude carried by every two-hop chain P -> Q -> R
+          with Q sharing one link with each endpoint and P, R link-disjoint.
+          The kernels disagree on it by a factor 4.1327437 while agreeing on
+          nu~ = -5/48, so it is a fourth disagreement, not a normalisation.
+          It cannot decide C2 -- u S_sq^2 is the constant 16u on the carrier
+          -- but it decides which PIPELINE is trustworthy on a quantity far
+          smaller than the perpendicular-pair assembly: one chain, ten links,
+          at most two fluxes per link, no epsilon sector in the integrals,
+          and the histories are the orderings of +Q, +R, -P, -Q with folds.
+          A pipeline wrong on u has no standing on rho and pi~.
         what: >
           Compute u independently on the coplanar (2,0,0) chain and on one
           bent chain (P coplanar with Q, R perpendicular to Q); they must
@@ -357,10 +373,6 @@ gaps:
           4.1327437 X_QUANTUM. The exact engine's own inner products are the
           fallback if an electric-basis computation is not built; the
           cluster is small enough that the measured wall does not apply.
-          It cannot decide C2: u S_sq^2 is the constant 16u on the carrier,
-          and rho and pi~ live on shared-link pairs, which this cluster
-          never isolates. What it decides is which PIPELINE has standing on
-          rho and pi~.
       - step: covariance sign test of the two flipped orbits
         state: done
         closed_by:
@@ -792,19 +804,21 @@ gaps:
       three-plaquette chain cluster is the smallest place to compute it; see
       the G3 route "chain amplitude u on the three-plaquette cluster".
     universality_2026_09_02: >
-      Computed, on the three chain types named above, in
-      runs/g3_chain_amplitude_2026-09-02: the C-odd fourth-order cumulant
-      W(P,Q,R) - W(P,R) on the P -> R element is s * 360421351/40327601932800
-      on every chain, s = +1 for coplanar-coplanar and -1 for the two bent
-      chains, and s is exactly the product of the two signed shared-link
-      incidences of THM_FLUX Prop. 2 -- the (S_sq^2)_PR entry. So the two-hop
-      sector is u S_sq^2 with ONE weight where it has been computed, and that
-      weight is the historical kernel's X_QUANTUM to the digit. The
-      universality is now T1 on three clusters, not a premise; what remains
-      of G14 is the mechanism behind it (why one cumulant per two-hop chain,
-      whatever the planes), which is a question about the Haar contraction
-      and not about the kernel. Check "the chain amplitude u, computed
-      independently on three ten-link clusters, is X_QUANTUM exactly"; ADR 0020.
+      Computed, not explained: the coplanar chain and the bent chain return
+      X_QUANTUM and -X_QUANTUM exactly from an independent fourth-order
+      assembly (RUN g3_chain_amplitude_2026-09-02; check "FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel's 4.13 u is wrong"). So
+      the weight is one number across geometries, with the sign S_PQ S_QR.
+      A derivation of WHY -- the fourth-order form of THM_FLUX Prop. 2's
+      single fusion coefficient -- is what remains; the computation now
+      exists to test any candidate in seconds.
+    replication_2026_09_02: >
+      A second implementation (runs/g3_chain_amplitude_replication_2026-09-02;
+      check "REPLICATION: a second implementation, with the engine's PVP assembly and a Krylov resolvent, gives u = X_QUANTUM on three chain types")
+      returns the same rational on three chain types including the
+      coplanar-perpendicular one, where the two hops carry opposite signs
+      and the cumulant carries their product. So the universality holds
+      across all three junction types, sign included, from two independently
+      written assemblies. ADR 0020.
   - id: G15
     tier: 3
     state: open

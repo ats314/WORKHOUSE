@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 224
+## T1 — re-derived exactly — 225
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -287,9 +287,15 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `C_shp = -5/96 - u - (rho + pi)/2, exactly`
   - src/workhouse/invariants/orbits.py:156 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'C_shp = -5/96 - u - (rho + pi)/2, exactly'`
+- `FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel's 4.13 u is wrong`
+  - src/workhouse/invariants/orbits.py:898 · C2; G3 chain amplitude route; G14; ADR 0019; RUN g3_chain_amplitude_2026-09-02
+  - `workhouse verify --only 'FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel'"'"'s 4.13 u is wrong'`
 - `H4 = -nu~(L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2 C_shp R exactly: C_shp is the coefficient of the one non-Hodge operator`
   - src/workhouse/invariants/orbits.py:758 · C2; G14; U5; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'H4 = -nu~(L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2 C_shp R exactly: C_shp is the coefficient of the one non-Hodge operator'`
+- `REPLICATION: a second implementation, with the engine's PVP assembly and a Krylov resolvent, gives u = X_QUANTUM on three chain types`
+  - src/workhouse/invariants/orbits.py:945 · C2; G3 chain amplitude route; G14; ADR 0019; RUN g3_chain_amplitude_2026-09-02; runs/g3_chain_amplitude_replication_2026-09-02; ADR 0020
+  - `workhouse verify --only 'REPLICATION: a second implementation, with the engine'"'"'s PVP assembly and a Krylov resolvent, gives u = X_QUANTUM on three chain types'`
 - `RETRACTED: B_3 - beta_historical = 25/64 is a forbidden substitution, not an exact branch`
   - src/workhouse/invariants/orbits.py:297 · C2; walled-Brauer eps-sector; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'RETRACTED: B_3 - beta_historical = 25/64 is a forbidden substitution, not an exact branch'`
@@ -308,12 +314,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the 189 records carry exactly six weight magnitudes`
   - src/workhouse/invariants/orbits.py:71 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the 189 records carry exactly six weight magnitudes'`
-- `the chain amplitude u, computed independently on three ten-link clusters, is X_QUANTUM exactly`
-  - src/workhouse/invariants/orbits.py:930 · G3; G14; C2; U5; runs/g3_chain_amplitude_2026-09-02; ADR 0020; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
-  - `workhouse verify --only 'the chain amplitude u, computed independently on three ten-link clusters, is X_QUANTUM exactly'`
-- `the chain assembly reproduces the second-order register before any fourth-order number is read`
-  - src/workhouse/invariants/orbits.py:887 · G3; G14; C2; U5; runs/g3_chain_amplitude_2026-09-02; ADR 0020; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
-  - `workhouse verify --only 'the chain assembly reproduces the second-order register before any fourth-order number is read'`
+- `the engine's primitives plus textbook second-order theory return t_3 S_sq, the C-even hop and the leakage`
+  - src/workhouse/invariants/orbits.py:874 · C2; G3 chain amplitude route; G14; ADR 0019; RUN g3_chain_amplitude_2026-09-02
+  - `workhouse verify --only 'the engine'"'"'s primitives plus textbook second-order theory return t_3 S_sq, the C-even hop and the leakage'`
 - `the on-site orbit IS the momentum-independent channel`
   - src/workhouse/invariants/orbits.py:351 · U5; C2; C10; GCSG SU(6) certificate; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the on-site orbit IS the momentum-independent channel'`
@@ -871,7 +874,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/two_cube.py:313 · MASTER edition §5.1; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
 
-## T2 — float agreement within a stated tolerance — 53
+## T2 — float agreement within a stated tolerance — 52
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -945,9 +948,6 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped`
   - src/workhouse/invariants/orbits.py:454 · C2; G3 step 1; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped'`
-- `FINDING: the cold kernel's u is 4.13 times the independent chain value; the historical kernel's is exact`
-  - src/workhouse/invariants/orbits.py:977 · G3; G14; C2; U5; runs/g3_chain_amplitude_2026-09-02; ADR 0020; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
-  - `workhouse verify --only 'FINDING: the cold kernel'"'"'s u is 4.13 times the independent chain value; the historical kernel'"'"'s is exact'`
 **near-Gamma uniformity (G11)**
 
 - `crossover constant K = (pi/2) sqrt(W_4 / (theta t_3))`

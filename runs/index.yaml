@@ -166,6 +166,31 @@ runs:
       open -- what this retires is the one-cube-only objection, and it
       demonstrates the target-blind operator-level machinery G3 needs.
 
+  - id: g3_chain_amplitude_2026-09-02
+    dir: runs/g3_chain_amplitude_2026-09-02
+    title: >-
+      The chain amplitude u computed independently: X_QUANTUM exactly on two
+      chain geometries, so the cold kernel's 4.13 u is wrong
+    bears_on: [C2, G3, G14]
+    detail: >-
+      The route ADR 0019 opened, run. An assembly that takes only Wilson
+      words, exact Haar inner products and the H0 action from the pinned
+      engine and does the rest itself -- invariant blocks, a Gram-free
+      polynomial resolvent, the projector off the model space, Hermitian
+      fourth-order theory with PVP = 0, charge-pruned integrals -- first
+      reproduces the register at second order (t_3 = 5/612 with the S_sq
+      sign pattern, the C-even hop -11/306, the leakage -11/306 after the
+      vacuum bubble), then returns the cluster cumulant of the P -> R
+      element on Q-touched histories: u = 360421351/40327601932800 on the
+      coplanar chain and minus that on the bent chain, X_QUANTUM exactly
+      with the sign S_PQ S_QR. Universality, G14's last dynamical input,
+      holds. The v10a.26 dump's u is 4.1327437 times this and is wrong
+      there; C2 is not decided, because u is band-invisible on the
+      carrier, but the cold pipeline's sign-flipped rho and pi~ lose
+      their independent standing. The first attempt built Gram matrices
+      and ran blind for 33 minutes; the recorded version runs in seconds
+      with a live log. The C-even chain amplitude is new to the register.
+
   - id: g3_haar_hotloop_bench_2026-08-30
     dir: runs/g3_haar_hotloop_bench_2026-08-30
     title: >-
@@ -226,30 +251,30 @@ runs:
       ratio C/A = -1/2 are convention-free, and the corpus fixes the sign
       by taking |c_4|. Nothing adjudicated; C2 open.
 
-  - id: g3_chain_amplitude_2026-09-02
-    dir: runs/g3_chain_amplitude_2026-09-02
+  - id: g3_chain_amplitude_replication_2026-09-02
+    dir: runs/g3_chain_amplitude_replication_2026-09-02
     title: >-
-      The two-hop weight u computed independently on three ten-link chains:
-      X_QUANTUM exactly, the cold pipeline wrong by 4.13
+      The two-hop weight u replicated by a second implementation: X_QUANTUM
+      exactly on three chain types, with the engine's PVP assembly
     bears_on: [G3, G14, C2]
     detail: >-
-      The G3 route "chain amplitude u on the three-plaquette cluster" (ADR
-      0019), run. A fourth-order cluster cumulant W(P,Q,R) - W(P,R) on the
-      P -> R element, assembled with the pinned exact engine's own Hermitian
-      formula (D - A C1 - C1^T A - (K2 N + N K2)/2 + A A J) but using the
-      engine only for Wilson-word states, the word product, the H0 action and
-      Haar inner products; the closure, the resolvent (a Krylov minimal
-      polynomial in H0, no Gram) and the C-parity projection are the run's
-      own, and it never reads either kernel. The second-order stage
-      reproduces the register exactly first (t_3 = -+5/612 with the S_sq sign
-      pattern, T_PLUS_2 = -11/306, LEAK_2 = -11/306 after the -3/4 bubble).
-      Then, on the coplanar-coplanar, coplanar-perpendicular and
-      perpendicular-perpendicular chains, the C-odd cumulant is
-      s * 360421351/40327601932800 with s the product of the two signed
-      shared-link incidences: |u| = X_QUANTUM as a rational, on all three.
+      A second computation of the G3 chain route, written the same day
+      without reading runs/g3_chain_amplitude_2026-09-02 and agreeing with
+      it on every number. It differs where it matters: the resolvent is a
+      Krylov minimal polynomial of H0 relative to each vector (no block is
+      diagonalised); the fourth-order assembly is the engine's own,
+      D - A C1 - C1^T A - (K2 N + N K2)/2 + A A J with A = PVP the SU(3)
+      baryonic vertex <P|V|Pbar> = 1, where the first run assumed PVP = 0
+      (the two agree on the cumulant only because the A-terms cancel
+      between link-disjoint endpoints); and it computes three chain types,
+      adding the coplanar-perpendicular chain on which the two hops carry
+      opposite signs, with the incidence sign computed from link
+      traversals. The second-order register is reproduced first. Result:
+      the C-odd cumulant is s * 360421351/40327601932800 with s = +1, -1,
+      -1 the (S_sq^2)_PR incidence product, |u| = X_QUANTUM as a rational on
+      all three; the C-even cumulant 948253471/40327601932800 on all three.
       116 s on CPU; 9,431 Haar integrals, none above the (2,2) family. Also
-      records the C-even chain amplitude 948253471/40327601932800, which
-      neither kernel holds. Decides which pipeline has standing on the
-      two-hop sector, not C2: the cold v10a.26 u is 4.1327437 times this.
-      A same-day first attempt is kept as first_attempt_*: it validated
-      the second order and then died on Gram matrices of degree-3 words.
+      measures the obstacle to the next route: a (3,0)^3-family integral
+      of the shared-link pair's baryonic history took 264 s. Decides
+      nothing about C2 and promotes neither side.
+
