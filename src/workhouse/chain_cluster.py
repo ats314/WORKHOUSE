@@ -36,7 +36,14 @@ ROOT = Path(__file__).resolve().parents[2]
 ENGINE = ROOT / "corpus-import" / "programs" / "hodge_o4_adjudication" / "src"
 if str(ENGINE) not in sys.path:
     sys.path.insert(0, str(ENGINE))
-import DATA_SU3_Exact_MarkedCluster_m4_Colab as M  # noqa: E402
+# corpus-import/ is pinned evidence: importing the engine must not write a
+# __pycache__ into it (the corpus-integrity test walks the tree)
+_bytecode = sys.dont_write_bytecode
+sys.dont_write_bytecode = True
+try:
+    import DATA_SU3_Exact_MarkedCluster_m4_Colab as M  # noqa: E402
+finally:
+    sys.dont_write_bytecode = _bytecode
 
 X_QUANTUM = F(360421351, 40327601932800)
 
