@@ -854,3 +854,86 @@ def _():
         "shared-link amplitudes rho and pi~ -- and C2 is exactly the last two. Nothing here "
         "prefers either side"
     )
+
+
+# -- G3: the chain amplitude u, computed independently --------------------------
+#
+# The route ADR 0019 opened. ``workhouse.chain_cluster`` uses the pinned exact
+# engine for three primitives only (Wilson words, Haar inner products, the H0
+# action) and assembles degenerate perturbation theory itself. Its second order
+# reproduces the register; its fourth order returns the two-hop weight u on a
+# ten-link cluster in seconds.
+
+_CHAIN = "C2; G3 chain amplitude route; G14; ADR 0019; RUN g3_chain_amplitude_2026-09-02"
+_SECOND = (
+    "the engine's primitives plus textbook second-order theory return t_3 S_sq, "
+    "the C-even hop and the leakage"
+)
+
+
+@orbit.check(_SECOND, _CHAIN)
+def _():
+    from .. import chain_cluster as CC
+
+    v = CC.validate()
+    ok = (
+        v["ok"]
+        and v["coplanar_hop"] == -Fraction(5, 612)
+        and v["perpendicular_hop"] == Fraction(5, 612)
+        and v["c_even_hop"] == K.T_PLUS_2
+        and v["leakage"] == K.LEAK_2
+        and -v["coplanar_hop"] == K.T_MINUS_2
+    )
+    return ok, (
+        f"C-odd shared-link hop {v['coplanar_hop']} for a coplanar pair and "
+        f"{v['perpendicular_hop']} for a perpendicular pair -- t_3 = 5/612 with exactly the sign "
+        "pattern of S_sq, the shared-link adjacency the Hodge form is built on; C-even hop "
+        f"{v['c_even_hop']} = T_PLUS_2; C-odd per-neighbour leakage {v['leakage']} = LEAK_2 once "
+        "the neighbour's own vacuum bubble -3/4 is "
+        "subtracted. Nothing here read either fourth-order kernel: the numbers come from Haar "
+        "integrals, the Fierz action and P V R V P on one- and two-plaquette clusters"
+    )
+
+
+@orbit.check(
+    "FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; "
+    "the cold kernel's 4.13 u is wrong",
+    _CHAIN,
+    rests_on=(_SECOND, _SQUARE),
+)
+def _():
+    # The cluster cumulant W({P,Q,R}) - W({P,R}) of the P -> R element, fourth
+    # order, Hermitian form with PVP = 0, Q-touched histories only (the others
+    # cancel between the clusters). Two chain geometries: coplanar P-Q-R along
+    # an axis, and bent (bottom face, side face, top face of a cube). The Hodge
+    # form says both carry the SAME weight u with sign S_PQ S_QR: +1 for two
+    # coplanar junctions, -1 for two perpendicular ones.
+    from .. import chain_cluster as CC
+
+    cop_odd, cop_even = CC.chain_amplitude("coplanar")
+    bent_odd, bent_even = CC.chain_amplitude("bent")
+    cold_ratio = 4.132743700859149
+    ok = (
+        cop_odd == K.X_QUANTUM
+        and bent_odd == -K.X_QUANTUM
+        and cop_even == bent_even
+        and abs(float(cop_odd) / float(K.X_QUANTUM) - cold_ratio) > 3
+    )
+    return (
+        ok,
+        (
+            f"coplanar chain u = {cop_odd}, bent chain u = {bent_odd}: equal to X_QUANTUM = "
+            f"{K.X_QUANTUM} exactly, as rationals, with the sign S_PQ S_QR the Hodge form "
+            "requires (+1 coplanar, -1 bent). Universality holds: two geometrically different "
+            "two-hop chains carry one weight, which is the single dynamical input G14 had left. "
+            "The historical exact "
+            "kernel is reproduced on the one quantity in the agreed sector the two pipelines "
+            f"disagree on; the v10a.26 dump's u is {cold_ratio:.7f} times this and is therefore "
+            "WRONG there. That does not decide C2 -- u is the constant 16u on the carrier -- but "
+            "the cold pipeline has a demonstrated error in a sector whose shape it shares with the "
+            "historical kernel, and until that error is located and shown not to reach rho and pi~ "
+            f"its sign-flipped values have no independent weight. The C-even chain amplitude "
+            f"{cop_even} is new to the register"
+        ),
+        {"U_CHAIN_C_EVEN": cop_even},
+    )

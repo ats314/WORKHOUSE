@@ -325,10 +325,26 @@ gaps:
           smallest of 609 clusters, cap-lifted, without completing). Run it
           only if a blind scalar confirmation is ever worth that price.
       - step: chain amplitude u on the three-plaquette cluster
-        state: untried
+        state: done
         cannot_decide: [C2]
+        closed_by:
+          - 'RUN:g3_chain_amplitude_2026-09-02'
+          - "CHK:FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel's 4.13 u is wrong"
+          - "CHK:the engine's primitives plus textbook second-order theory return t_3 S_sq, the C-even hop and the leakage"
         status: >
-          proposed 2026-09-01 from the Hodge form. The 144 records both
+          RUN 2026-09-02: u = 360421351/40327601932800 = X_QUANTUM exactly on
+          the coplanar chain and minus that on the bent chain, from an
+          assembly that takes only Wilson words, Haar integrals and the H0
+          action from the pinned engine and reproduces the register at
+          second order first. The historical exact kernel is right on the
+          one quantity in the agreed sector the pipelines disagree on; the
+          v10a.26 dump's 4.1327437 u is wrong there. C2 is not decided (u
+          is band-invisible on the carrier), but the cold pipeline's rho
+          and pi~ have no independent standing until its error is located
+          and shown not to reach them. Universality across chain
+          geometries holds, which was G14's last dynamical input. Runs in
+          seconds; the wall the register measured was Gram matrices the
+          resolvent never needed. Proposed 2026-09-01 from the Hodge form. The 144 records both
           kernels agree on in shape are u S_sq^2, so u is one number: the
           fourth-order amplitude carried by every two-hop chain P -> Q -> R
           with Q sharing one link with each endpoint and P, R link-disjoint.
@@ -778,6 +794,14 @@ gaps:
       perpendicular-perpendicular) carries the same fourth-order weight. The
       three-plaquette chain cluster is the smallest place to compute it; see
       the G3 route "chain amplitude u on the three-plaquette cluster".
+    universality_2026_09_02: >
+      Computed, not explained: the coplanar chain and the bent chain return
+      X_QUANTUM and -X_QUANTUM exactly from an independent fourth-order
+      assembly (RUN g3_chain_amplitude_2026-09-02; check "FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel's 4.13 u is wrong"). So
+      the weight is one number across geometries, with the sign S_PQ S_QR.
+      A derivation of WHY -- the fourth-order form of THM_FLUX Prop. 2's
+      single fusion coefficient -- is what remains; the computation now
+      exists to test any candidate in seconds.
   - id: G15
     tier: 3
     state: open
