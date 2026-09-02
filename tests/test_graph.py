@@ -325,10 +325,11 @@ def test_routes_are_nodes_with_a_state_and_a_closer():
     by_id = {c.id: c for c in CATALOGUE}
     routes = [c for c in CATALOGUE if c.kind == "route" and c.cites == "G3"]
     states = {c.status for c in routes}
-    # `untried` left the set on 2026-09-01 when the sign test was run; a route
-    # state is a fact about the ledger, so the test follows it rather than
-    # pinning a snapshot.
-    assert {"live", "dead", "done"} <= states, states
+    # `untried` left the set on 2026-09-01 when the sign test was run and
+    # returned on 2026-09-02 with the corner-cluster route, when `live` left
+    # it as the cross-amplitude route closed; a route state is a fact about
+    # the ledger, so the test follows it rather than pinning a snapshot.
+    assert {"untried", "dead", "done"} <= states, states
     sign_test = C.route_id("G3", "covariance sign test of the two flipped orbits")
     assert by_id[sign_test].status == "done"
     sign_closers = {d for (s, d, t) in TRIPLES if s == sign_test and t == "closed_by"}
