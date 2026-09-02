@@ -109,9 +109,15 @@ def test_g3_rewrite_keeps_the_protocol_and_the_traps():
         # decides which pipeline to trust, on a ten-link cluster.
         "chain amplitude u on the three-plaquette cluster",
         "covariance sign test of the two flipped orbits",
+        # Added 2026-09-02 when the cross-amplitude route closed: the assembled
+        # rho rests on the one cluster type no agreed record contains, so the
+        # route that would settle C2's third side is that cluster from a third
+        # implementation or from the historical pipeline's own ledger.
+        "the corner cluster from a third implementation, or from the historical pipeline's "
+        "own face-resolved ledger",
     ], (
         "G3's steps: the executed pair, the measured one, the cheaper route, the demoted "
-        "sweep, the chain amplitude, the sign test"
+        "sweep, the chain amplitude, the sign test, the corner cluster"
     )
     sign_test = next(
         s for s in g3["plan"] if s["step"] == "covariance sign test of the two flipped orbits"
@@ -251,7 +257,7 @@ def test_plan_steps_carry_a_closed_route_state():
     assert by_step["sealed scalar sweep (demoted, optional)"]["state"] == "dead"
     assert by_step["sealed scalar sweep (demoted, optional)"]["cannot_decide"] == ["C2"]
     assert by_step["off-axis channel assembly through workhouse.cellular"]["state"] == "dead"
-    assert by_step["independent cross-amplitude computation"]["state"] == "live"
+    assert by_step["independent cross-amplitude computation"]["state"] == "done"
     # a step with an unknown state is a validation failure, not a silent open route
     import copy
 

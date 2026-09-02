@@ -1005,3 +1005,320 @@ def _():
         "engine's PVP = +-1 per C-sector), three chain types: one rational. Nothing here "
         "prefers either side of C2"
     )
+
+
+# --------------------------------------------------------------------------
+# The shared-link pair, where rho and pi~ live (2026-09-02).
+# runs/g3_shared_link_pair_2026-09-02: the lattice fourth-order nearest-
+# neighbour element assembled from cluster cumulants -- the pair cluster with
+# the engine's full assembly, baryonic histories included, plus every
+# three-plaquette cluster a four-insertion history can touch -- using the
+# engine for primitives only and workhouse.haar_epsilon for the epsilon
+# families. Reads the pinned certificate; the run is the reproduction (about
+# six hours of CPU for both pairs). ADR 0021.
+# --------------------------------------------------------------------------
+
+_PAIR_RUN = "runs/g3_shared_link_pair_2026-09-02"
+_PAIR_CITE = "C2; G3; G14; U5; " + _PAIR_RUN + "; ADR 0021; THM_FLUX Prop. 2; " + _LEDGER
+_PI_EXACT = (
+    "the lattice fourth-order in-plane nearest-neighbour element, assembled from clusters, "
+    "is the historical kernel's pi exactly"
+)
+
+
+def _pair_certificate() -> dict:
+    import json
+
+    from ._core import ROOT
+
+    return json.loads(
+        (ROOT / _PAIR_RUN / "shared_link_pair_certificate.json").read_text(encoding="utf-8")
+    )
+
+
+@orbit.check(
+    "the cluster expansion is linked: a plaquette sharing no link with the pair contributes "
+    "exactly zero",
+    _PAIR_CITE,
+)
+def _():
+    # The size-consistency gate on the Hermitian assembly with its folds:
+    # W(P,Q,X) - W(P,Q) on every P-block x Q-block element, for an X five
+    # sites away. Exact zero, not small. Without this the dressing sum would
+    # depend on the volume.
+    cert = _pair_certificate()
+    pairs = cert["pairs"]
+    ok = all(
+        name in pairs and pairs[name]["gate_far_X_all_zero"] is True
+        for name in ("coplanar", "perpendicular")
+    )
+    return ok, (
+        "W(P,Q,X) - W(P,Q) = 0 on all four orientation elements for X = the (0,1) plaquette at "
+        "(5,5,5), link-disjoint from both the coplanar and the perpendicular pair. The Hermitian "
+        "assembly D - A C1 - C1^T A - (K2 N + N K2)/2 + A A J with the fold terms is "
+        "size-consistent, so the lattice element is a finite sum of connected cumulants: the pair "
+        "cluster and the three-plaquette clusters that share a link with it"
+    )
+
+
+@orbit.check(
+    _PI_EXACT,
+    _PAIR_CITE,
+    rests_on=(
+        "the cluster expansion is linked: a plaquette sharing no link with the pair contributes "
+        "exactly zero",
+        "REPLICATION: a second implementation, with the engine's PVP assembly and a Krylov "
+        "resolvent, gives u = X_QUANTUM on three chain types",
+    ),
+)
+def _():
+    # H4_PQ = W(P,Q)_PQ + sum_X [W(P,Q,X)_PQ - W(P,Q)_PQ] over the 20 plaquettes
+    # X sharing a link with P or Q (a four-insertion history with net charge
+    # P Qbar carries at most one X Xbar pair). The pair cluster carries the
+    # baryonic histories {Q,Q,Pbar,Pbar}, whose Haar families reach the
+    # pure-six link; the dressings are cheap. Exact rationals end to end.
+    cert = _pair_certificate()["pairs"]["coplanar"]
+    total = Fraction(cert["lattice_codd"])
+    pair = Fraction(cert["pair_cluster_codd"])
+    dress = {x: Fraction(d["codd"]) for x, d in cert["dressings"].items()}
+    classes = {}
+    for x, v in dress.items():
+        classes.setdefault(v, []).append(x)
+    record = Fraction(K.PI_ORBIT.p, K.PI_ORBIT.q)
+    ok = (
+        total == record
+        and cert["equals_record"] is True
+        and len(dress) == 20
+        and sorted(len(v) for v in classes.values()) == [2, 18]
+        and pair + sum(dress.values()) == total
+    )
+    single, double = (v for v in sorted(classes, key=lambda v: len(classes[v]), reverse=True))
+    return (
+        ok,
+        (
+            f"pair cluster {pair} plus 18 single-contact dressings at {single} each plus the 2 "
+            f"plaquettes on the shared link at {double} each = {total} = the record "
+            f"(0,1)->(0,1) at (1,0,0), PI_ORBIT = {record}, EXACTLY. The v10a.26 dump's value "
+            "there has the opposite sign. This is the first of C2's two shared-link amplitudes "
+            "computed from outside both pipelines, and it is the historical kernel's"
+        ),
+        {"PAIR_SINGLE_CONTACT_DRESSING": single, "PAIR_SHARED_LINK_DRESSING": double},
+    )
+
+
+@orbit.check(
+    "FINDING: U5 is falsified -- the epsilon sector of rho + pi~ is -55/6936, not -25/512",
+    _PAIR_CITE,
+    rests_on=(
+        _PI_EXACT,
+        "CORRECTED PREDICTION: the eps-sector at N=3 is Delta(rho + pi~) = -25/512; "
+        "u is NOT constrained",
+    ),
+)
+def _():
+    # U5's own falsifier: "a direct balanced contraction at N = 3 whose rho +
+    # pi~ shift from the historical value is not exactly -25/512". The
+    # epsilon-blind assembly is that contraction -- every integral with an
+    # unbalanced Haar family dropped, which also sets PVP = 0. The dressings
+    # are unchanged by it (checked on both dressing classes), so the whole
+    # shift is the two pair clusters' epsilon sector, -55/13872 each: the
+    # baryonic histories {Q,Q,Pbar,Pbar} are exactly the epsilon sector of a
+    # shared-link amplitude, and they are eight times smaller than the
+    # continuation shift Delta beta_3 = 25/64 was read as implying.
+    cert = _pair_certificate()
+    eps = {
+        n: Fraction(d["eps_sector_codd"])
+        for n, d in cert["pairs"].items()
+        if "eps_sector_codd" in d
+    }
+    delta = Fraction(cert["eps_sector_delta_rho_plus_pi_reduced"])
+    ok = (
+        set(eps) == {"coplanar", "perpendicular"}
+        and eps["coplanar"] == eps["perpendicular"] == Fraction(55, 13872)
+        and delta == -2 * Fraction(55, 13872)
+        and delta != Fraction(-25, 512)
+        and cert["U5_prediction_holds"] is False
+    )
+    return (
+        ok,
+        (
+            f"epsilon-blind minus full, per shared-link amplitude: {-eps['coplanar']} on the "
+            f"coplanar pair and {-eps['perpendicular']} on the perpendicular pair (the pair "
+            f"cluster is the same abstract cluster in both), so Delta(rho + pi~) = {delta} = "
+            f"{float(delta):.6e} against U5's -25/512 = {float(Fraction(-25, 512)):.6e}. "
+            "The falsifier U5 named has fired: the continuation shift Delta beta_3 = 25/64 is "
+            "not the epsilon sector's contribution to the shape, and whether that shift is derived "
+            "or merely defined as a difference (C10) is now the open question in its place"
+        ),
+        {
+            "EPS_SECTOR_SHARED_LINK_AMPLITUDE": eps["coplanar"],
+            "DELTA_RHO_PLUS_PI_REDUCED_EPS": delta,
+        },
+    )
+
+
+_NU_EXACT = (
+    "the lattice fourth-order normal element, assembled from clusters with the cube-completion "
+    "term, is the agreed nu = -5/48 - 4u exactly"
+)
+_RHO_FINDING = (
+    "FINDING: the lattice fourth-order rotation element, assembled from clusters, is "
+    "neither kernel's rho"
+)
+
+
+@orbit.check(
+    _NU_EXACT,
+    _PAIR_CITE,
+    rests_on=(
+        _PI_EXACT,
+        "A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u)",
+    ),
+)
+def _():
+    # The second kind of four-insertion history: when P and Q are two faces of
+    # one cube, the cube's OTHER four faces carry P to Q with no P or Qbar
+    # insertion, because six faces of a cube have zero net triality. On the
+    # stacked pair that channel is the whole primitive cube completion, and
+    # it returns exactly -5/48 in two seconds; the four side faces are
+    # two-hop chains at -u each; the disjoint pair and every single-contact
+    # plaquette give exactly zero (linked). Both kernels agree on this
+    # record, so it validates the cube term and the chain dressings before
+    # they are used where the kernels disagree.
+    cert = _pair_certificate()["pairs"]["normal"]
+    total = Fraction(cert["lattice_codd"])
+    dress = {x: Fraction(d["codd"]) for x, d in cert["dressings"].items()}
+    u = Fraction(K.X_QUANTUM.p, K.X_QUANTUM.q)
+    record = Fraction(K.NU_ORBIT.p, K.NU_ORBIT.q)
+    cube = Fraction(cert["cube_completion_codd"])
+    ok = (
+        total == record == Fraction(-5, 48) - 4 * u
+        and cube == Fraction(-5, 48)
+        and Fraction(cert["pair_cluster_codd"]) == 0
+        and sorted(dress.values()) == [-u] * 4 + [Fraction(0)] * 16
+    )
+    return ok, (
+        f"disjoint pair {cert['pair_cluster_codd']}, 16 single-contact dressings at 0, the 4 side "
+        f"faces at {-u} each (two-hop chains, sign -1), and the cube completion through the "
+        f"four side faces {cube} = -5/48: total {total} = NU_ORBIT = -5/48 - 4u exactly. The "
+        "primitive cube completion nu~ = -5/48 is the cube-completion channel, computed from "
+        "primitives, and the -4u shadow is the four side chains"
+    )
+
+
+@orbit.check(
+    "the corner cluster's cumulant agrees between two implementations of the resolvent",
+    _PAIR_CITE,
+    rests_on=(_PI_EXACT,),
+)
+def _():
+    # The one cluster type the rotation pair has and no agreed record
+    # exercises: three faces meeting at a cube vertex, pairwise sharing a
+    # link. Its cumulant W(P,Q,X) - W(P,Q) on the P <- Q element is computed
+    # live here by the FIRST implementation (workhouse.chain_cluster: block
+    # characteristic polynomial, PVP = 0 form, engine Haar) and compared with
+    # the run's (Krylov resolvent, the engine's PVP assembly, epsilon-network
+    # Haar). The A-terms cancel in this cumulant, so the two forms must agree;
+    # they do, to the digit, in seconds.
+    from .. import chain_cluster as CC
+
+    cert = _pair_certificate()["pairs"]["perpendicular"]
+    corner = "((1, 2), (1, 0, 0))"
+    run_value = Fraction(cert["dressings"][corner]["codd"])
+    P, Q = ((tuple(f[0]), tuple(f[1])) for f in cert["faces"])
+    odd, even = CC.Chain([P, ((1, 2), (1, 0, 0)), Q], [P, Q], 1).run("corner")
+    ok = odd == run_value and run_value == Fraction(-2580244782961, 398756546697600)
+    return (
+        ok,
+        (
+            f"corner face (1,2) at (1,0,0) with the perpendicular pair: run {run_value}, first "
+            f"implementation {odd} (C-even {even}). Identical rationals from two resolvents and "
+            "two Haar integrators; the corner cumulant is not an artefact of either"
+        ),
+        {"PAIR_CORNER_DRESSING": run_value},
+    )
+
+
+@orbit.check(
+    _RHO_FINDING,
+    _PAIR_CITE,
+    tier=2,
+    rests_on=(
+        _PI_EXACT,
+        _NU_EXACT,
+        "the corner cluster's cumulant agrees between two implementations of the resolvent",
+    ),
+)
+def _():
+    # Every component of this assembly is validated elsewhere: the pair
+    # cluster, the single-contact and shared-link dressings on pi (exact);
+    # the cube-completion term and the side chains on nu (exact); the corner
+    # cluster by a second implementation. Put together for the rotation
+    # pair they give a value that is neither recorded kernel's. The
+    # historical kernel is therefore right on u, pi and nu and wrong on rho;
+    # the cold dump is wrong on all four it was checked on. Nothing here
+    # promotes either recorded side; the computed value is recorded beside
+    # them as C2's third side.
+    cert = _pair_certificate()
+    pair = cert["pairs"]["perpendicular"]
+    rho = Fraction(pair["lattice_codd"])
+    hist = Fraction(K.RHO_ORBIT.p, K.RHO_ORBIT.q)
+    cold = KO.cold_amplitudes()["rho"]
+    dress = {x: Fraction(d["codd"]) for x, d in pair["dressings"].items()}
+    classes = {}
+    for v in dress.values():
+        classes[v] = classes.get(v, 0) + 1
+    cube = Fraction(pair["cube_completion_codd"])
+    ok = (
+        len(dress) == 18
+        and sorted(classes.values()) == [2, 2, 14]
+        and cube == Fraction(53, 768)
+        and rho != hist
+        and abs(float(rho) - cold) > 0.1 * abs(cold)
+        and pair["equals_record"] is False
+    )
+    return ok, (
+        f"pair cluster {pair['pair_cluster_codd']} (the same abstract cluster as the coplanar "
+        f"pair's), 14 single-contact dressings, 2 shared-link plaquettes, 2 corner faces, and the "
+        f"cube completion through the other four faces of the shared cube {cube} (not the 5/48 of "
+        f"the opposite-face pair): total {rho} = {float(rho):.9e}. Historical RHO_ORBIT = {hist} = "
+        f"{float(hist):.9e}; cold {cold:.9e}. The assembled rotation amplitude matches neither, "
+        f"differing from the historical by {rho - hist} = {float(rho - hist):.6e}. With u, pi and "
+        "nu reproduced exactly, the discrepancy is confined to the rotation orbit -- the corner "
+        "and cube clusters that only a perpendicular shared-link pair has"
+    )
+
+
+@orbit.check(
+    "FINDING: C_shp from the assembled amplitudes is a third value, -5/96 - u - (rho + pi)/2 "
+    "with the cluster rho",
+    _PAIR_CITE,
+    tier=2,
+    rests_on=(_RHO_FINDING, "C_shp = -5/96 - u - (rho + pi)/2, exactly"),
+)
+def _():
+    cert = _pair_certificate()
+    rho = Fraction(cert["pairs"]["perpendicular"]["lattice_codd"])
+    pi = Fraction(cert["pairs"]["coplanar"]["lattice_codd"])
+    u = Fraction(K.X_QUANTUM.p, K.X_QUANTUM.q)
+    c = Fraction(-5, 96) - u - (rho + pi) / 2
+    hist = Fraction(K.C_SHP_HISTORICAL.p, K.C_SHP_HISTORICAL.q)
+    ok = (
+        c == Fraction(cert["C_shp_from_computed_amplitudes"])
+        and pi == Fraction(K.PI_ORBIT.p, K.PI_ORBIT.q)
+        and c != hist
+        and abs(float(c) - K.C_SHP_NEW_NUM) > 1e-3
+    )
+    return (
+        ok,
+        (
+            f"C_shp = -5/96 - u - (rho + pi)/2 = {c} = {float(c):.12f} with the cluster rho and "
+            f"the (historical, exact) pi; historical {float(hist):.12f}, cold "
+            f"{K.C_SHP_NEW_NUM:.12f}. Recorded as C2's third side, not promoted: what it rests on "
+            "is the rotation-pair assembly, and no record both pipelines got right has a corner "
+            "cluster to check that assembly against. The route to close it is a third "
+            "implementation of the corner cluster, or the historical pipeline's own "
+            "face-resolved ledger for the 18 three-clusters"
+        ),
+        {"C_SHP_CLUSTER": c, "RHO_CLUSTER": rho},
+    )

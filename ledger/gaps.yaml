@@ -139,8 +139,28 @@ gaps:
           cubic-symmetry multiplicity, and the A = 5/48 identity plus the
           shared bulk over-determine the rest.
       - step: independent cross-amplitude computation
-        state: live
+        state: done
+        closed_by:
+          - 'RUN:g3_shared_link_pair_2026-09-02'
+          - 'CHK:the lattice fourth-order in-plane nearest-neighbour element, assembled from clusters, is the historical kernel''s pi exactly'
+          - 'CHK:the lattice fourth-order normal element, assembled from clusters with the cube-completion term, is the agreed nu = -5/48 - 4u exactly'
+          - 'CHK:FINDING: the lattice fourth-order rotation element, assembled from clusters, is neither kernel''s rho'
         status: >
+          RUN 2026-09-02 (runs/g3_shared_link_pair_2026-09-02, ADR 0021). The
+          wall below was not the hot loop the benchmark measured but the
+          representation: with the epsilon tensors kept as epsilons
+          (workhouse.haar_epsilon) the pair's baryonic pure-six integrals cost
+          0.02 s each instead of 400 s, and both shared-link amplitudes were
+          assembled from clusters in about three hours per pair. Result: pi
+          is the historical record EXACTLY, nu is the agreed -5/48 - 4u
+          EXACTLY with the -5/48 arising as the cube-completion channel, and
+          rho is NEITHER kernel's -- recorded as C2's third side, because
+          the one cluster type only a perpendicular shared-link pair has (the
+          corner) is validated by a second implementation but by no agreed
+          record. C2 is therefore decided against the cold dump on every
+          amplitude checked and against the historical kernel on rho; the
+          coefficient itself now rests on the corner cluster and is recorded,
+          not promoted. Earlier status follows.
           attempted 2026-08-28, blocked on the measured exact-arithmetic
           wall, with the target now fully specified. Sharpened first: the
           24 divergent cross records are ONE amplitude in each kernel
@@ -413,6 +433,26 @@ gaps:
           DONE -- see the status above. Symmetry constrains neither sign, so
           the refutation it could have delivered is not available; what it
           delivered instead is that the flip is not a convention.
+      - step: the corner cluster from a third implementation, or from the historical pipeline's own face-resolved ledger
+        state: untried
+        cannot_decide: []
+        status: >
+          proposed 2026-09-02 from runs/g3_shared_link_pair_2026-09-02. The
+          assembled rho rests on one cluster type no agreed record contains:
+          the corner (three faces at a cube vertex, pairwise sharing a link),
+          whose cumulant two implementations here agree on to the digit. A
+          third, independently written evaluation of that one cumulant --
+          or the historical pipeline's face-resolved H4 ledger for its 18
+          three-clusters, which would show where the two assemblies part --
+          is what turns C2's third side into the answer or finds the error.
+          Cost: one three-plaquette cluster, seven minutes with the tools
+          here; the ledger, if it exists, is a document to obtain.
+        what: >
+          Compute W(P,Q,X) - W(P,Q) on the P <- Q element for P = xy(0,0,0),
+          Q = zx(0,0,0) (the corpus's (2,0) orientation) and X = yz(1,0,0)
+          without reusing chain_amplitude.py, chain_cluster.py or
+          haar_epsilon.py, and compare with -2580244782961/398756546697600
+          (C-odd) and -56022878647/4153714028100 (C-even).
     leads:
       - settlement/mce_adjudication_harness.py
       - settlement/README.md
@@ -811,6 +851,17 @@ gaps:
       A derivation of WHY -- the fourth-order form of THM_FLUX Prop. 2's
       single fusion coefficient -- is what remains; the computation now
       exists to test any candidate in seconds.
+    cube_completion_2026_09_02: >
+      The Hodge form writes the cube channel as -nu~ (L_up - 2) with one
+      weight for every pair of faces of a cube. Computed from primitives
+      (runs/g3_shared_link_pair_2026-09-02), the cube-completion channel --
+      the four-insertion histories that are the cube's other four faces -- is
+      -5/48 for OPPOSITE faces, reproducing nu~ exactly, and 53/768 for
+      ADJACENT faces. So a single weight on L_up is not the mechanism; on the
+      historical records it is a reparametrisation that absorbs the
+      difference into the rotation orbit. A mechanism for the tier collapse
+      has to account for 53/768 against 80/768, which is the first concrete
+      number a candidate has to reproduce. ADR 0021.
     replication_2026_09_02: >
       A second implementation (runs/g3_chain_amplitude_replication_2026-09-02;
       check "REPLICATION: a second implementation, with the engine's PVP assembly and a Krylov resolvent, gives u = X_QUANTUM on three chain types")
@@ -1354,11 +1405,26 @@ unifying_candidates:
       not be an on-site shift), or an SU(3) determinant analysis that reaches A
       rather than C, which would contradict the eps-blindness of the
       link-balanced primitive channel that the whole chain rests on.
-    status: conjectured
+    status: refuted
+    refuted_2026_09_02: >
+      The computation nobody had run has been run
+      (runs/g3_shared_link_pair_2026-09-02). The direct balanced contraction
+      -- the same cluster assembly with every unbalanced Haar family dropped,
+      which also sets PVP = 0 -- leaves every three-plaquette dressing
+      unchanged and moves each shared-link pair cluster's C-odd element by
+      exactly -55/13872, on the coplanar and the perpendicular pair alike.
+      So the epsilon sector of rho + pi~ is -55/6936, and the falsifier
+      above has fired: the shift is not -25/512. The continuation shift
+      Delta beta_3 = 25/64 is therefore not the epsilon sector's
+      contribution to the fourth-order shape, and C10's question -- whether
+      that shift is derived or merely defined as a difference -- is what
+      remains. The exceptional-rank pattern (SU(4), SU(5), SU(6)) is
+      untouched by this; what fell is the N = 3 quantitative step. Check
+      "FINDING: U5 is falsified -- the epsilon sector of rho + pi~ is -55/6936, not -25/512"; ADR 0021.
     note: >
-      This is a prediction about a computation nobody in this repository has
-      run. It prefers neither side of C2 and does NOT rest on the P17/R20
-      substitution at N = 3, which is forbidden and whose use here was
-      retracted on 2026-08-30 — only on Delta beta_3, which the register
-      records independently as DELTA_BETA_3.
+      Written 2026-08-30 as a prediction about a computation nobody in this
+      repository had run; refuted 2026-09-02, see above. It preferred neither
+      side of C2 and did NOT rest on the P17/R20 substitution at N = 3, which
+      is forbidden and whose use here was retracted on 2026-08-30 -- only on
+      Delta beta_3, which the register records independently as DELTA_BETA_3.
 
