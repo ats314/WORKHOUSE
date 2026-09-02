@@ -937,3 +937,71 @@ def _():
         ),
         {"U_CHAIN_C_EVEN": cop_even},
     )
+
+
+_REPLICATION = "runs/g3_chain_amplitude_replication_2026-09-02"
+
+
+@orbit.check(
+    "REPLICATION: a second implementation, with the engine's PVP assembly and a Krylov "
+    "resolvent, gives u = X_QUANTUM on three chain types",
+    _CHAIN + "; " + _REPLICATION + "; ADR 0020",
+    rests_on=(
+        "FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent "
+        "chain; the cold kernel's 4.13 u is wrong",
+        _SQUARE,
+    ),
+)
+def _():
+    # Written the same day without reading chain_cluster, and differing from
+    # it where it matters: the resolvent is a Krylov minimal polynomial of H0
+    # relative to each vector rather than a block characteristic polynomial;
+    # the fourth-order assembly is the engine's own with A = PVP = the SU(3)
+    # baryonic vertex (<P|V|Pbar> = 1, not zero -- the two agree on the
+    # cumulant only because the A-terms cancel between link-disjoint
+    # endpoints); and it adds the coplanar-perpendicular chain, on which the
+    # two hops carry opposite signs, with the incidence sign computed from
+    # link traversals. Reads the pinned certificate (the run takes two
+    # minutes) and compares with the live first implementation.
+    import json
+
+    from .. import chain_cluster as CC
+    from ._core import ROOT
+
+    cert = json.loads(
+        (ROOT / _REPLICATION / "chain_amplitude_certificate.json").read_text(encoding="utf-8")
+    )
+    u = Fraction(K.X_QUANTUM.p, K.X_QUANTUM.q)
+    chains = cert["chains"]
+    by = {
+        name: (Fraction(c["codd_chain_amplitude"]), c["incidence_sign"])
+        for name, c in chains.items()
+    }
+    even = {Fraction(c["ceven_chain_amplitude"]) for c in chains.values()}
+    signs = {name: s for name, (_a, s) in by.items()}
+    so = {k: Fraction(v) for k, v in cert["second_order"].items()}
+    t3 = Fraction(K.T_MINUS_2.p, K.T_MINUS_2.q)
+    cop_odd, cop_even = CC.chain_amplitude("coplanar")
+    ok = (
+        set(chains) == {"coplanar_chain", "bent_chain", "zigzag_chain"}
+        and all(a == s * u for a, s in by.values())
+        and signs == {"coplanar_chain": 1, "bent_chain": -1, "zigzag_chain": -1}
+        and even == {cop_even}
+        and cop_odd == u
+        and so["coplanar_shared_link_codd_hop"] == -t3
+        and so["perpendicular_shared_link_codd_hop"] == t3
+        and so["shared_link_ceven_hop_coplanar"] == so["shared_link_ceven_hop_perpendicular"]
+        and so["shared_link_ceven_hop_coplanar"] == Fraction(K.T_PLUS_2.p, K.T_PLUS_2.q)
+    )
+    (u_even,) = even
+    return ok, (
+        f"C-odd cumulant W(P,Q,R) - W(P,R) = s * {u} on every chain, s = "
+        + ", ".join(f"{s:+d} ({name.replace('_chain', '')})" for name, s in signs.items())
+        + ", s the product of the two signed shared-link incidences -- the (S_sq^2)_PR entry -- "
+        f"and the C-even cumulant {u_even} on all three, equal to the first implementation's "
+        f"{cop_even}. Same second-order gate ({so['coplanar_shared_link_codd_hop']}, "
+        f"{so['perpendicular_shared_link_codd_hop']}, {so['shared_link_ceven_hop_coplanar']}). "
+        "Two implementations, different resolvents, different assemblies (PVP = 0 against the "
+        "engine's PVP = +-1 per C-sector), three chain types: one rational. Nothing here "
+        "prefers either side of C2"
+    )

@@ -250,3 +250,31 @@ runs:
       signs the normal channel gives A = -alpha_N/4, so only |A| and the
       ratio C/A = -1/2 are convention-free, and the corpus fixes the sign
       by taking |c_4|. Nothing adjudicated; C2 open.
+
+  - id: g3_chain_amplitude_replication_2026-09-02
+    dir: runs/g3_chain_amplitude_replication_2026-09-02
+    title: >-
+      The two-hop weight u replicated by a second implementation: X_QUANTUM
+      exactly on three chain types, with the engine's PVP assembly
+    bears_on: [G3, G14, C2]
+    detail: >-
+      A second computation of the G3 chain route, written the same day
+      without reading runs/g3_chain_amplitude_2026-09-02 and agreeing with
+      it on every number. It differs where it matters: the resolvent is a
+      Krylov minimal polynomial of H0 relative to each vector (no block is
+      diagonalised); the fourth-order assembly is the engine's own,
+      D - A C1 - C1^T A - (K2 N + N K2)/2 + A A J with A = PVP the SU(3)
+      baryonic vertex <P|V|Pbar> = 1, where the first run assumed PVP = 0
+      (the two agree on the cumulant only because the A-terms cancel
+      between link-disjoint endpoints); and it computes three chain types,
+      adding the coplanar-perpendicular chain on which the two hops carry
+      opposite signs, with the incidence sign computed from link
+      traversals. The second-order register is reproduced first. Result:
+      the C-odd cumulant is s * 360421351/40327601932800 with s = +1, -1,
+      -1 the (S_sq^2)_PR incidence product, |u| = X_QUANTUM as a rational on
+      all three; the C-even cumulant 948253471/40327601932800 on all three.
+      116 s on CPU; 9,431 Haar integrals, none above the (2,2) family. Also
+      measures the obstacle to the next route: a (3,0)^3-family integral
+      of the shared-link pair's baryonic history took 264 s. Decides
+      nothing about C2 and promotes neither side.
+

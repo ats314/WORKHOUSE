@@ -331,7 +331,16 @@ gaps:
           - 'RUN:g3_chain_amplitude_2026-09-02'
           - "CHK:FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel's 4.13 u is wrong"
           - "CHK:the engine's primitives plus textbook second-order theory return t_3 S_sq, the C-even hop and the leakage"
+          - 'RUN:g3_chain_amplitude_replication_2026-09-02'
+          - "CHK:REPLICATION: a second implementation, with the engine's PVP assembly and a Krylov resolvent, gives u = X_QUANTUM on three chain types"
         status: >
+          REPLICATED the same day by a second implementation written without
+          reading the first (runs/g3_chain_amplitude_replication_2026-09-02):
+          a Krylov resolvent instead of block characteristic polynomials, the
+          engine's own assembly with PVP = the baryonic vertex instead of
+          PVP = 0, and a third chain type (coplanar-perpendicular, opposite
+          hop signs) with the incidence sign computed from link traversals.
+          Same rational, same C-even amplitude, 116 s; ADR 0020.
           RUN 2026-09-02: u = 360421351/40327601932800 = X_QUANTUM exactly on
           the coplanar chain and minus that on the bent chain, from an
           assembly that takes only Wilson words, Haar integrals and the H0
@@ -802,6 +811,14 @@ gaps:
       A derivation of WHY -- the fourth-order form of THM_FLUX Prop. 2's
       single fusion coefficient -- is what remains; the computation now
       exists to test any candidate in seconds.
+    replication_2026_09_02: >
+      A second implementation (runs/g3_chain_amplitude_replication_2026-09-02;
+      check "REPLICATION: a second implementation, with the engine's PVP assembly and a Krylov resolvent, gives u = X_QUANTUM on three chain types")
+      returns the same rational on three chain types including the
+      coplanar-perpendicular one, where the two hops carry opposite signs
+      and the cumulant carries their product. So the universality holds
+      across all three junction types, sign included, from two independently
+      written assemblies. ADR 0020.
   - id: G15
     tier: 3
     state: open

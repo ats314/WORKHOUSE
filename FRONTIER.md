@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 276/276 checks pass.
+**T1/T2 — re-derived here.** 277/277 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -40,7 +40,7 @@ it cannot drift from what the repository actually checks.
 | finite-rank truncation bridge (published SU(3) truncations) | 8/8 |
 | two-cube charge-odd second-order closure (B=4 and B=6) | 12/12 |
 | the electric shell, and what isolates it | 8/8 |
-| fourth-order kernel orbits | 20/20 |
+| fourth-order kernel orbits | 21/21 |
 | continuum and fixed-spacing bridges (G18, G19) | 3/3 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
