@@ -26,6 +26,8 @@ if [ "${CLAUDE_CODE_REMOTE:-}" = "true" ]; then
       # activation. Resolve the path now: the env file is sourced from an
       # arbitrary cwd later, so a literal $PWD here would point elsewhere.
       [ -d .venv ] && echo "export PATH=\"$(cd .venv/bin && pwd):\$PATH\""
+      # elan (Lean toolchain manager) — if bootstrap installed it, persist for the session.
+      [ -x "$HOME/.elan/bin/elan" ] && echo "export PATH=\"$HOME/.elan/bin:\$PATH\""
     } >> "$CLAUDE_ENV_FILE"
   fi
 fi
