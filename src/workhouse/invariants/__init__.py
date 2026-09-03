@@ -50,6 +50,7 @@ _MODULES = (
     "orbits",
     "continuum",
     "second_order",
+    "monotonicity",
 )
 
 for _name in _MODULES:
