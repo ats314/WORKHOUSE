@@ -1026,6 +1026,41 @@ gaps:
       with supp P_c inside Lambda_+) and preserve reflection positivity
       through every later gauge-fixing and large/small-field operation. Block
       alignment alone does not prove the gate.
+    plan:
+      - step: Griffiths-type monotonicity of the electric-flux sector free energies in beta
+        state: dead
+        closed_by:
+          - 'CHK:the leading electric-flux gap C_F L / (2 sqrt u) decreases in u for every N'
+          - 'CHK:every fifth-order slope coefficient is negative, so the flux gap falls as beta grows'
+          - 'CHK:a weight u^k, k >= 1, flips the small-u direction: the sign is the weight''s, not evidence'
+          - 'ADR 0022'
+        cannot_decide: [G19]
+        status: >
+          proposed 2026-09-03 (Alex): a correlation inequality that holds at
+          every beta and makes the electric-flux free energies F_e(beta)
+          monotone in beta, sector by sector -- the sectors are Z_N-valued,
+          so the non-abelian obstruction to Griffiths' inequalities for
+          Wilson loops need not apply -- would carry the gap from strong to
+          weak coupling the way Griffiths carries Ising order across phases.
+          Closed the same day by a sign, before the inequality itself was
+          attempted: the Ising argument needs the monotone quantity to be
+          INCREASING in beta, and the certified series says the flux gap is
+          DECREASING -- at leading order for every N (the gap is
+          C_F L / (2 sqrt u)), and term by term through fifth order for SU(3)
+          (every slope coefficient (n - 1/2) sigma_n is negative, so the
+          truncated gap falls on all of u > 0). A sector-wise monotonicity,
+          if it holds, bounds the weak-coupling gap from ABOVE by its
+          strong-coupling value; it cannot bound it from below, so it cannot
+          establish a gap at large beta. Reweighting by a power of u flips
+          the small-u direction for every k >= 1 and therefore proves
+          nothing. Whether the monotonicity itself holds for SU(N) is left
+          open and is now irrelevant to this gap. What would revive the
+          route: a functional of the sector free energies, defined without
+          knowledge of the large-beta behaviour, that is increasing in beta
+          at small beta AND whose positivity at large beta implies a gap.
+          None is known; the magnetic ('t Hooft twist) free energies go the
+          other way where Griffiths applies, and that direction proves
+          deconfinement persists upward, not confinement. See ADR 0022.
 
   # ------------------------------------------------------------------
   # G20-G23: the analysis-side program (the maintainer's notes archive,

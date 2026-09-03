@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 230
+## T1 — re-derived exactly — 233
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -428,6 +428,12 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'the two face energies differ, so the eigenspace must be chosen'`
 **native string tension through fifth order (v4.3 §11.2)**
 
+- `a weight u^k, k >= 1, flips the small-u direction: the sign is the weight's, not evidence`
+  - src/workhouse/invariants/string_tension.py:237 · §11.2 / ADR 0022 (G19 route)
+  - `workhouse verify --only 'a weight u^k, k >= 1, flips the small-u direction: the sign is the weight'"'"'s, not evidence'`
+- `every fifth-order slope coefficient is negative, so the flux gap falls as beta grows`
+  - src/workhouse/invariants/string_tension.py:181 · §11.2 / ADR 0022 (G19 route)
+  - `workhouse verify --only 'every fifth-order slope coefficient is negative, so the flux gap falls as beta grows'`
 - `m_{1+-}(0) = 8/3 follows from sigma(0) = 2/3 alone`
   - src/workhouse/invariants/string_tension.py:106 · §11.2
   - `workhouse verify --only 'm_{1+-}(0) = 8/3 follows from sigma(0) = 2/3 alone'`
@@ -440,6 +446,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the even coefficients are not sign-flipped`
   - src/workhouse/invariants/string_tension.py:38 · §11.2
   - `workhouse verify --only 'the even coefficients are not sign-flipped'`
+- `the leading electric-flux gap C_F L / (2 sqrt u) decreases in u for every N`
+  - src/workhouse/invariants/string_tension.py:144 · §11.2 / ADR 0022 (G19 route)
+  - `workhouse verify --only 'the leading electric-flux gap C_F L / (2 sqrt u) decreases in u for every N'`
 - `the ratio and sigma series reproduce E_flat exactly`
   - src/workhouse/invariants/string_tension.py:78 · §11.2 vs §4.4
   - `workhouse verify --only 'the ratio and sigma series reproduce E_flat exactly'`

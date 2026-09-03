@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 284/284 checks pass.
+**T1/T2 — re-derived here.** 287/287 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -29,7 +29,7 @@ it cannot drift from what the repository actually checks.
 | near-Gamma uniformity (G11) | 7/7 |
 | tier collapse (G14) | 6/6 |
 | isotropic pentagonal cap band (v4.3 §9.3) | 11/11 |
-| native string tension through fifth order (v4.3 §11.2) | 7/7 |
+| native string tension through fifth order (v4.3 §11.2) | 10/10 |
 | published comparisons (literature/index.yaml) | 17/17 |
 | restored payloads (G1) | 11/11 |
 | coupling erratum (C4/G2) | 2/2 |
@@ -208,8 +208,10 @@ published. A paper is T3 until something checks it, same as any document.
 | `CBB_2026` | `R2` | corroborates | verified |
 | `BALAJI_2026` | `R2` | supplies-comparison | verified |
 | `HAZRA_2026` | `G14` | supplies-comparison | verified |
+| `T_HOOFT_1979` | `G19` | supplies-method | not-yet-obtained |
+| `GINIBRE_1970` | `G19` | confusable | not-yet-obtained |
 
-**9 of 45 edges rest on a source nobody here has read
+**11 of 47 edges rest on a source nobody here has read
 or pinned.** Obtaining and digest-pinning a primary source upgrades its
 edges from assertion to verification — the Hamer 1989 table did exactly
 that for the program's strongest external agreement.
@@ -222,8 +224,8 @@ different things: **in-web** is how many indexed papers cite this one
 
 | Paper | In-web | INSPIRE (as of) | Standing |
 |---|---|---|---|
+| `WILSON_1974` | 10 | 7208 (2026-08-21) | stub |
 | `KS_1975` | 10 | 2815 (2026-08-21) | **not yet obtained** |
-| `WILSON_1974` | 9 | 7208 (2026-08-21) | stub |
 | `KSS_1976` | 6 | 225 (2026-08-21) | **not yet obtained** |
 | `MP_1999` | 5 | 1233 (2026-08-21) | pinned |
 | `MT_1989` | 5 | 202 (2026-08-21) | stub |
@@ -256,6 +258,7 @@ different things: **in-web** is how many indexed papers cite this one
 | `BORGA_2024` | 1 | 10 (2026-08-21) | pinned |
 | `HSB_2000` | 1 | 9 (2026-08-21) | pinned |
 | `SEO_UKAWA_1982` | 1 | 3 (2026-08-21) | stub |
+| `T_HOOFT_1979` | 0 | 1386 (2026-09-03) | **not yet obtained** |
 | `AT_2021_SUN` | 0 | 115 (2026-08-21) | pinned |
 | `KRS_2023` | 0 | 67 (2026-08-21) | pinned |
 | `LLL_2006` | 0 | 62 (2026-08-21) | pinned |
@@ -269,9 +272,10 @@ different things: **in-web** is how many indexed papers cite this one
 | `CBB_2026` | 0 | — | **not yet obtained** |
 | `CB_2024` | 0 | — | **not yet obtained** |
 | `FLPS_2026` | 0 | 0 (2026-08-21) | pinned |
+| `GINIBRE_1970` | 0 | — | **not yet obtained** |
 | `HAZRA_2026` | 0 | — | **not yet obtained** |
 
-**Next acquisition target, computed: `KS_1975`** — 10 in-web
+**Next acquisition target, computed: `WILSON_1974`** — 10 in-web
 citations and nobody here has read or pinned it. The ranking surfaces
 this automatically; obtaining the paper re-ranks it.
 
