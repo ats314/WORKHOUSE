@@ -49,11 +49,11 @@ KEY VARIABLES:
 from __future__ import annotations
 
 from sympy import Rational, Symbol, log, exp, simplify
-import numpy as np
 
 # =============================================================================
 # Define the sector structure and free energy calculation
 # =============================================================================
+
 
 def sector_free_energy_weak_coupling(sector, rank=3, order=2):
     """
@@ -110,6 +110,8 @@ def verify_monotonicity_numerically(rank=3, beta_range=None, n_points=50):
 
     Test: compute d F_s/dβ and check sign for all s and all β.
     """
+    import numpy as np
+
     if beta_range is None:
         beta_range = (0.01, 5.0)
 
@@ -134,11 +136,11 @@ def verify_monotonicity_numerically(rank=3, beta_range=None, n_points=50):
         diffs = np.diff(f_vals)
         monotone = np.all(np.isnan(diffs)) or np.all(diffs <= 0) or np.all(diffs >= 0)
         results[s] = {
-            'f_vals': f_vals,
-            'diffs': diffs,
-            'monotone': monotone,
-            'min_slope': np.nanmin(diffs) if not np.all(np.isnan(diffs)) else np.nan,
-            'max_slope': np.nanmax(diffs) if not np.all(np.isnan(diffs)) else np.nan,
+            "f_vals": f_vals,
+            "diffs": diffs,
+            "monotone": monotone,
+            "min_slope": np.nanmin(diffs) if not np.all(np.isnan(diffs)) else np.nan,
+            "max_slope": np.nanmax(diffs) if not np.all(np.isnan(diffs)) else np.nan,
         }
 
     return results
@@ -147,6 +149,7 @@ def verify_monotonicity_numerically(rank=3, beta_range=None, n_points=50):
 # =============================================================================
 # Griffiths-type inequality mechanism
 # =============================================================================
+
 
 def griffiths_energy_lower_bound(sector, n=Symbol("N", positive=True)):
     """

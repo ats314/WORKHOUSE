@@ -16,8 +16,7 @@ coupling from the sector census. A numerical grid then tests monotonicity.
 
 from __future__ import annotations
 
-import numpy as np
-from sympy import Rational, Symbol, log, exp, simplify, N as sympyN
+from sympy import Rational, Symbol, log, exp, simplify
 from itertools import product
 
 from .. import constants as K
@@ -38,6 +37,7 @@ _BETA = 6 * _u  # Convert to bare β
 # Sector definition and symmetry properties
 # =============================================================================
 
+
 def flux_sectors(rank):
     """Enumerate all Z_N flux sectors (the center symmetry).
 
@@ -56,9 +56,10 @@ def is_abelian(rank):
 # Weak coupling: extract sector-resolved spectrum
 # =============================================================================
 
+
 @monotonicity.check(
     "second-order spectrum splits into charge-odd and charge-even sectors",
-    "MASTER_THEORY §4.3 / PUBLICATION rev6 §6",
+    "ADR 0023 research program",
 )
 def _():
     """
@@ -73,12 +74,12 @@ def _():
     """
     cf = (_N**2 - 1) / (2 * _N)
     spectrum_odd = {
-        0: 0,            # vacuum
-        1: 2 * cf,       # one-plaquette
+        0: 0,  # vacuum
+        1: 2 * cf,  # one-plaquette
     }
     spectrum_even = {
-        0: 0,            # vacuum
-        1: 2 * cf,       # one-plaquette
+        0: 0,  # vacuum
+        1: 2 * cf,  # one-plaquette
     }
     ok = spectrum_odd[0] == spectrum_even[0] == 0
     ok = ok and spectrum_odd[1] == spectrum_even[1] == 2 * cf
@@ -91,7 +92,7 @@ def _():
 
 @monotonicity.check(
     "the ground state has zero energy by choice of vacuum reference",
-    "MASTER_THEORY §3.1 (retained sector projection)",
+    "ADR 0023 research program",
 )
 def _():
     """
@@ -115,6 +116,7 @@ def _():
 # =============================================================================
 # Coupling-dependent spectrum: weak coupling expansion
 # =============================================================================
+
 
 def second_order_scalar(rank):
     """
@@ -159,7 +161,7 @@ def band_energy(rank, order=2):
 
 @monotonicity.check(
     "at weak coupling, the partition function is a sum over band excitations",
-    "MASTER_THEORY §4 (perturbative projection)",
+    "ADR 0023 research program",
 )
 def _():
     """
@@ -187,6 +189,7 @@ def _():
 # Sector free energy: definition and computation
 # =============================================================================
 
+
 def sector_partition_function(rank, beta_value, n_sites=27):
     """
     Compute Z_s(β) = Tr_s[ exp(-β H) ] numerically.
@@ -204,6 +207,8 @@ def sector_partition_function(rank, beta_value, n_sites=27):
     Returns:
         Z(β): the partition function
     """
+    import numpy as np
+
     # Convert β to u
     u_val = beta_value / 6.0
 
@@ -238,9 +243,11 @@ def sector_free_energy(rank, beta_value, volume=27):
     Returns:
         F_s: the sector free energy (in units of 1/a, where a is the lattice spacing)
     """
+    import numpy as np
+
     z = sector_partition_function(rank, beta_value, n_sites=volume)
     if z <= 0:
-        return float('nan')
+        return float("nan")
     f = -np.log(z) / (beta_value * volume)
     return f
 
@@ -248,6 +255,7 @@ def sector_free_energy(rank, beta_value, volume=27):
 # =============================================================================
 # Strong coupling: sector multiplicity census
 # =============================================================================
+
 
 def sector_multiplicity_strong_coupling(rank):
     """
@@ -323,6 +331,7 @@ def _():
 # Numerical monotonicity test
 # =============================================================================
 
+
 def compute_free_energy_grid(rank, beta_min=0.01, beta_max=5.0, n_points=100):
     """
     Compute F_s(β) on a grid and check for monotonicity.
@@ -333,6 +342,8 @@ def compute_free_energy_grid(rank, beta_min=0.01, beta_max=5.0, n_points=100):
         derivatives: array of dF_s/dβ values (numerical)
         is_monotone: boolean, whether all derivatives have the same sign
     """
+    import numpy as np
+
     betas = np.linspace(beta_min, beta_max, n_points)
     free_energies = [sector_free_energy(rank, b) for b in betas]
     free_energies = np.array(free_energies)
@@ -357,7 +368,7 @@ def compute_free_energy_grid(rank, beta_min=0.01, beta_max=5.0, n_points=100):
 
 @monotonicity.check(
     "weak coupling: free energy is order u (perturbative)",
-    "MASTER_THEORY §4.3",
+    "ADR 0023 research program",
 )
 def _():
     """
