@@ -258,3 +258,120 @@ def _():
         ),
         {"ODD_SWAP_GAP_2": registered},
     )
+
+
+# --------------------------------------------------------------------------
+# Fourth order: the disconnected half of the U4 falsifier (G25 route).
+#
+# Past third order the des Cloizeaux blocks above stop, but within one
+# C-parity sector the rotor's excited level is nondegenerate, so plain
+# Rayleigh-Schrodinger with intermediate normalisation reaches any order in
+# exact rationals. The eigenvalue is the same either way.
+# --------------------------------------------------------------------------
+
+
+def _rayleigh_schroedinger(seed, manifold, order, drop_vacuum=False, top=9):
+    """Energy coefficients E_1..E_order of the rotor level seeded by ``seed``.
+
+    ``seed`` is a dict irrep -> amplitude; the level must be nondegenerate
+    within its C-parity sector, which the two-state manifold {3, 3bar} is once
+    the sector is fixed. Recursion: E_k = <psi_0|V|psi_(k-1)> and
+    psi_k = R (V psi_(k-1) - sum_j E_j psi_(k-j)) with V = -W and
+    R = Q (E_0 - H_0)^-1 Q.
+    """
+    irreps = [(p, q) for p in range(top + 1) for q in range(top + 1) if p + q <= top]
+    idx = {r: i for i, r in enumerate(irreps)}
+    n = len(irreps)
+    w = zeros(n, n)
+    for p, q in irreps:
+        for r2 in [(p + 1, q), (p - 1, q + 1), (p, q - 1), (p, q + 1), (p + 1, q - 1), (p - 1, q)]:
+            if r2 in idx:
+                w[idx[r2], idx[(p, q)]] += 1
+    energy = [2 * _casimir(*r) for r in irreps]
+    e0 = energy[idx[manifold[0]]]
+    psi0 = Matrix([seed.get(r, 0) for r in irreps])
+    psi0 = psi0 / (psi0.T * psi0)[0] ** Rational(1, 2)
+    res = zeros(n, n)
+    for r in irreps:
+        if r in manifold or (drop_vacuum and r == (0, 0)):
+            continue
+        res[idx[r], idx[r]] = 1 / (e0 - energy[idx[r]])
+    v = -w
+    psis, coefficients = [psi0], [e0]
+    for k in range(1, order + 1):
+        ek = (psi0.T * v * psis[k - 1])[0]
+        rhs = v * psis[k - 1] - ek * psi0
+        for j in range(1, k):
+            rhs -= coefficients[j] * psis[k - j]
+        coefficients.append(ek)
+        psis.append(res * rhs)
+    return coefficients[1:]
+
+
+@swap_odd.check(
+    "fourth-order rotor: gaps 1657/28000 and 143/8960, vacuum -39/1280, route + vac = -63/800",
+    "ADR 0023 addendum; v10a.7 one-face vacuum gate; channels suite size-1 row",
+    rests_on=(
+        "the rotor towers 13/20, 1/2, 101/200, 7/32 and vacuum -3/4, -9/32 follow from SU(3) fusion",  # noqa: E501
+    ),
+)
+def _():
+    # The disconnected half of the fourth-order falsifier, engine-free. Two
+    # of the numbers already exist in the corpus by other routes and are
+    # matched here to the last digit: the one-face vacuum e4 = -39/1280 that
+    # the v10a.7 Hodge engine gates as a float, and the size-1 cluster row
+    # 143/8960 of m_Gamma^(4) that the channels suite reads from the v10a.26
+    # rooted incidence transform. Both are the same rotor, so both are now
+    # T1. The new number is the last one: the vacuum's share of the excited
+    # C-even energy no longer cancels the vacuum energy at fourth order, so
+    # E_4(psi_A) - vac_4^domino - gap_4 = +63/800 + [conn_A - conn_vac], and
+    # U4's all-orders equality needs the two connected diagrams to differ by
+    # exactly -63/800. The recursion is checked against the des Cloizeaux
+    # blocks through third order before it is trusted one order further.
+    vac = _rayleigh_schroedinger({(0, 0): 1}, [(0, 0)], 5)
+    even = _rayleigh_schroedinger({(1, 0): 1, (0, 1): 1}, [(1, 0), (0, 1)], 5)
+    odd = _rayleigh_schroedinger({(1, 0): 1, (0, 1): -1}, [(1, 0), (0, 1)], 5)
+    even_novac = _rayleigh_schroedinger({(1, 0): 1, (0, 1): 1}, [(1, 0), (0, 1)], 5, True)
+    odd_novac = _rayleigh_schroedinger({(1, 0): 1, (0, 1): -1}, [(1, 0), (0, 1)], 5, True)
+    agrees_with_des_cloizeaux = (
+        vac[:3] == [0, Rational(-3, 4), Rational(-9, 32)]
+        and even[:3] == [-1, Rational(-1, 10), Rational(179, 800)]
+        and odd[:3] == [1, Rational(-1, 4), Rational(-1, 16)]
+    )
+    gap_even = [even[k] - vac[k] for k in range(5)]
+    gap_odd = [odd[k] - vac[k] for k in range(5)]
+    route_plus_vac = [even[k] - even_novac[k] + vac[k] for k in range(5)]
+    odd_no_route = all(odd[k] == odd_novac[k] for k in range(5))
+    # a truncation check: the same numbers at a larger irrep box
+    vac_bigger = _rayleigh_schroedinger({(0, 0): 1}, [(0, 0)], 5, top=11)
+    ok = (
+        agrees_with_des_cloizeaux
+        and vac[3] == Rational(-39, 1280)
+        and gap_even[3] == Rational(1657, 28000)
+        and gap_odd[3] == Rational(143, 8960)
+        and route_plus_vac[:3] == [0, 0, 0]
+        and route_plus_vac[3] == Rational(-63, 800)
+        and odd_no_route
+        and vac_bigger == vac
+    )
+    return (
+        ok,
+        (
+            f"Rayleigh-Schrodinger to fifth order, agreeing with the des Cloizeaux blocks through "
+            f"third: vacuum {vac}, C-even gap {gap_even}, C-odd gap {gap_odd}. The fourth-order "
+            "vacuum -39/1280 is the v10a.7 engine's one-face gate and the C-odd gap 143/8960 is "
+            "the size-1 row of m_Gamma^(4), both now derived. Vacuum share of the excited C-even "
+            f"energy plus vacuum energy: {route_plus_vac} -- zero through third order, which is "
+            "the U4 identity, and -63/800 at fourth, which is the disconnected half of its "
+            "falsifier: leak_4 - t_4 = 63/800 + [conn_A - conn_vac]. Stable from irrep box 9 to 11"
+        ),
+        {
+            "E_VAC_SINGLE_4": vac[3],
+            "E_VAC_SINGLE_5": vac[4],
+            "GAP_4_EVEN": gap_even[3],
+            "GAP_4_ODD": gap_odd[3],
+            "GAP_5_EVEN": gap_even[4],
+            "GAP_5_ODD": gap_odd[4],
+            "ROUTE_4_PLUS_VAC_4": route_plus_vac[3],
+        },
+    )

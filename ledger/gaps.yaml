@@ -1234,8 +1234,37 @@ gaps:
     state: partial
     plan:
       - step: fourth-order domino, the U4 falsifier
-        state: untried
+        state: live
         status: >
+          PROGRESS 2026-09-03, parts (1) and (3) below done, (2) sharpened.
+          (1) The engine-free rotor now runs to fifth order by
+          Rayleigh-Schrodinger (swap-odd suite, T1): vac_4 = -39/1280,
+          gap_4 = 1657/28000 (C-even) and 143/8960 (C-odd). The first is the
+          v10a.7 Hodge engine's one-face vacuum gate and the second is the
+          size-1 row of m_Gamma^(4) in the channels suite, both matched to
+          the digit, so two historical fourth-order numbers are now derived.
+          The decisive one is new: the vacuum's share of the excited C-even
+          energy plus the vacuum energy is -63/800 at fourth order, after
+          being 0 at orders 1-3. So the disconnected half of the falsifier
+          is NONZERO: leak_(4,+) - t_(4,+) = 63/800 + conn_A - conn_vac.
+          (3) Exhausted: the domino engine emits one swap-odd observable per
+          order, De - Te, and it is matched at orders 1-3. (2) The connected
+          domino vacuum conn_vac is already in the corpus: the v10a.7 engine
+          gates the two-face vacuum linked O(u^4) weight omega4 = -327/83776,
+          the SAME for coplanar and perpendicular pairs, with zero linked
+          O(u^2) and O(u^3) (corpus-import/programs/hodge_o4_adjudication/
+          src/ENGINE_O4_hodge_v10a7_marked_linked_scalar.py, float gates at
+          a stated tolerance with rational recognition -- T3 here until
+          re-derived). Taking it as read, U4's all-orders equality holds at
+          fourth order if and only if the connected swap-odd excited
+          diagram is conn_A = omega4 - 63/800 = -173109/2094400. That one
+          number is what remains, and nothing in the corpus computes it:
+          it needs the two-plaquette states |R_1, R_2, R_s> with W acting
+          on one plaquette while the other is charged, i.e. SU(3)
+          recoupling coefficients, or the pinned engine's word calculus
+          extended to letter degree five with fourth-order des Cloizeaux.
+          Original costing follows.
+
           Compute leak_(4,+) - t_(4,+) on the abstract domino. ADR 0023
           derives the identity through third order and predicts where it
           stops: at order four the inert plaquette can be excited and
@@ -1442,7 +1471,13 @@ unifying_candidates:
       two quantities with no symmetry relating them. That difference is the
       sharpened falsifier: zero would mean a cancellation this derivation
       does not predict, nonzero ends the identity at the first order the
-      mechanism cannot reach. NOT a byproduct of G3: G3's weight cards are
+      mechanism cannot reach. SHARPENED 2026-09-03 (swap-odd suite, fifth
+      check): the disconnected part is not zero either -- the vacuum share
+      of the excited rotor energy stops cancelling the vacuum energy at
+      fourth order, by -63/800 -- so with the corpus's linked pair vacuum
+      omega4 = -327/83776 (v10a.7 gates, T3 here) the equality survives at
+      fourth order only if the connected swap-odd excited diagram is
+      exactly -173109/2094400. NOT a byproduct of G3: G3's weight cards are
       the cubic fourth-order kernel on three-plaquette lattice clusters,
       while this is the two-plaquette domino at order four, which the pinned
       engine cannot reach as is (its word basis is truncated at letter

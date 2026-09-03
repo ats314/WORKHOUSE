@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 237
+## T1 — re-derived exactly — 238
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -850,6 +850,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `W psi_A has no two-plaquette and no vacuum image for C-even; C-odd keeps the like-family pair`
   - src/workhouse/invariants/swap_odd.py:132 · ADR 0023 (the swap-odd lemma)
   - `workhouse verify --only 'W psi_A has no two-plaquette and no vacuum image for C-even; C-odd keeps the like-family pair'`
+- `fourth-order rotor: gaps 1657/28000 and 143/8960, vacuum -39/1280, route + vac = -63/800`
+  - src/workhouse/invariants/swap_odd.py:311 · ADR 0023 addendum; v10a.7 one-face vacuum gate; channels suite size-1 row
+  - `workhouse verify --only 'fourth-order rotor: gaps 1657/28000 and 143/8960, vacuum -39/1280, route + vac = -63/800'`
 - `the C-odd swap-odd gap is 2 A_N + 1/C_F: -3/68 at N = 3, the like family and not the mixed`
   - src/workhouse/invariants/swap_odd.py:218 · ADR 0023; MASTER_THEORY §4.3 (A_N, B_N)
   - `workhouse verify --only 'the C-odd swap-odd gap is 2 A_N + 1/C_F: -3/68 at N = 3, the like family and not the mixed'`

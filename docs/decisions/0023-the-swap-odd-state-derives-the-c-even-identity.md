@@ -100,3 +100,35 @@ word basis. It is costed as an untried route on G25.
 - The graph found this one. The candidate had been sitting with one edge
   since 2026-08-28; the two files that decide it, the engine's definitions
   and the corpus's "distinct mechanisms" sentence, were never read together.
+
+## Addendum, 2026-09-03: the disconnected half of the fourth-order falsifier
+
+The G25 route's cheap part ran the same day. Within one C-parity sector the
+rotor's excited level is nondegenerate, so Rayleigh–Schrödinger reaches
+fifth order in exact rationals, agreeing with the des Cloizeaux blocks
+through third. Two of its fourth-order numbers already existed in the corpus
+by other routes and match to the digit: the one-face vacuum `−39/1280` the
+v10a.7 Hodge engine gates as a float, and the size-1 cluster row `143/8960`
+of `m_Γ⁽⁴⁾`. Both are now T1.
+
+The number that matters is new. The vacuum's share of the excited C-even
+energy plus the vacuum energy is `0, 0, 0` at orders one to three — that is
+the identity — and `−63/800` at order four. So the disconnected half of the
+falsifier does not vanish:
+
+    leak_(4,+) − t_(4,+) = 63/800 + conn_A − conn_vac.
+
+The corpus already holds `conn_vac`: the v10a.7 engine gates the two-face
+vacuum linked `O(u⁴)` weight `ω₄ = −327/83776`, the same for coplanar and
+perpendicular pairs, with zero linked `O(u²)` and `O(u³)` — exactly the
+"no connected vacuum diagram below fourth order" the derivation assumed.
+It is a float gate at a stated tolerance with rational recognition, T3
+here. Taken as read, U4's all-orders equality survives fourth order if and
+only if the connected swap-odd excited diagram is
+
+    conn_A = ω₄ − 63/800 = −173109/2094400.
+
+Nothing in the corpus computes that number. It is the one remaining
+quantity, and it needs SU(3) recoupling between two-plaquette states or the
+engine's word calculus at letter degree five. The route stays `live` on G25
+with that target written down.

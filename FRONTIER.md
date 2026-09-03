@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 291/291 checks pass.
+**T1/T2 — re-derived here.** 292/292 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -42,7 +42,7 @@ it cannot drift from what the repository actually checks.
 | the electric shell, and what isolates it | 8/8 |
 | fourth-order kernel orbits | 28/28 |
 | continuum and fixed-spacing bridges (G18, G19) | 3/3 |
-| the swap-odd domino state (U4, ADR 0023) | 4/4 |
+| the swap-odd domino state (U4, ADR 0023) | 5/5 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
