@@ -533,9 +533,10 @@ def _():
         "coincidence is one all-rank object under three names, derived rather than "
         f"observed. Only the C-odd hop stands apart ({K.T_MINUS_2}), because the vacuum "
         "route cannot reach it. The second, leak_3+ = t_3+ = "
-        f"{K.T3_EVEN}, is verified and unexplained: at third order the C-odd leakage "
-        "separates from the C-odd hop while the C-even identity survives, which is why "
-        "it is U4 with a falsifier and not a mechanism"
+        f"{K.T3_EVEN}, is verified here and stops here: at third order the C-odd leakage "
+        "separates from the C-odd hop while the C-even identity survives. Why is the "
+        "swap-odd suite's business (ADR 0023), which refuted U4's vacuum-route reading "
+        "and derived the equality"
     )
 
 

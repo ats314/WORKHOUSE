@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 287/287 checks pass.
+**T1/T2 — re-derived here.** 291/291 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -42,6 +42,7 @@ it cannot drift from what the repository actually checks.
 | the electric shell, and what isolates it | 8/8 |
 | fourth-order kernel orbits | 28/28 |
 | continuum and fixed-spacing bridges (G18, G19) | 3/3 |
+| the swap-odd domino state (U4, ADR 0023) | 4/4 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -307,7 +308,7 @@ falsifier is an analogy, and analogies do not belong on this list.
 
 - supported by: ENGINE_FLUX_su3_domino_d3.py, PAPER §third order, G25
 - would be falsified by: An order r at which the C-even per-neighbour leakage and the C-even hopping are computed independently and differ. Fourth order is the first untested one and is reachable from the same weight cards G3 needs. Equally fatal in the other direction: a derivation showing the two quantities are equal for a reason that does not involve the vacuum route would refute the identification while leaving the equality standing.
-- status: conjectured
+- status: refuted
 
 **U5 — The determinant (epsilon / triality) sector enters the fourth-order band shape through the ON-SITE ORBIT ALONE, at every rank where it has been computed independently, and N = 3 is the sole exception. In the orbit basis of the 189-record kernel the on-site orbit's carrier projection is exactly sigma*e_1, so eps = T/q = sigma is constant over the zone and carries no A, B, C or D — which means a correction recorded as "momentum-independent" or "a pure scalar shift" IS an on-site-orbit shift and nothing else. Read that way the record is uniform: SU(6)'s sole determinant orbit shifts q, X, M and R by exactly 6/343 with A, B and the bandwidth unchanged (an on-site shift); SU(5) ships 895,524 candidate pairs with zero determinant sectors (no shift at all); SU(4) records Delta A_4 = Delta B_4 = 0. Only at N = 3 is Delta beta_3 nonzero, i.e. only there does the sector leave the on-site orbit.
 The quantitative consequence, AMENDED 2026-09-01. In the Hodge form of the kernel (suite "fourth-order kernel orbits"), the normal orbit is nu = nu~ - 4u with nu~ = -5/48 the primitive cube completion and -4u the diagonal shadow of the two-hop sector u S_sq^2. Eps-blindness of the link-balanced primitive channel fixes nu~, which is the same statement as Delta A_3 = 0 (A = -nu~ exactly); it says nothing about u. And C = -5/96 - (rho + pi~)/2 with pi~ = pi + 2u, so Delta beta_3 = +25/64 gives Delta C = +25/1024 and
