@@ -1232,6 +1232,36 @@ gaps:
   - id: G25
     tier: 1
     state: partial
+    plan:
+      - step: fourth-order domino, the U4 falsifier
+        state: untried
+        status: >
+          Compute leak_(4,+) - t_(4,+) on the abstract domino. ADR 0023
+          derives the identity through third order and predicts where it
+          stops: at order four the inert plaquette can be excited and
+          de-excited within one walk, and the domino vacuum acquires its
+          first connected diagram, so the difference is [connected
+          (excited, fluctuating-neighbour) diagram of the swap-odd state]
+          minus [connected domino vacuum diagram]. Zero is a cancellation
+          the derivation does not predict; nonzero ends the identity.
+          Cost, in three parts. (1) Cheap, engine-free: the single-plaquette
+          rotor of the swap-odd suite extended to fourth order pins gap_4
+          and vac_4 for both sectors, i.e. every disconnected piece of the
+          difference. Degenerate perturbation theory with a first-order
+          split manifold at fourth order needs the Bloch/des Cloizeaux
+          formula one order up, so it is error-prone rather than expensive.
+          (2) Not cheap: the two connected diagrams need the domino at
+          order four. The pinned ENGINE_FLUX_su3_domino_d3.py keeps every
+          function at letter degree <= 4 by Cayley-Hamilton and implements
+          des Cloizeaux to third order; a fourth-order walk reaches degree
+          five, so both the basis and the perturbation formula must be
+          extended and the Haar-moment layer (ENGINE_FLUX_su3_moments_ext)
+          must supply p = q = 4 Weingarten data. Not a G3 byproduct. (3) A
+          zero-cost check first: any third-order observable of the swap-odd
+          state the engine computed for another gate must equal the rotor's,
+          since the derivation says psi_A is a free excitation beside an
+          inert plaquette in every quantity through third order, not only
+          in energy.
     status: >
       opened and largely discharged 2026-08-28. The C-even sector was
       registered and inert: LEAK_2, LEAK_2_EVEN and LEAK_3_EVEN were read by
@@ -1412,8 +1442,12 @@ unifying_candidates:
       two quantities with no symmetry relating them. That difference is the
       sharpened falsifier: zero would mean a cancellation this derivation
       does not predict, nonzero ends the identity at the first order the
-      mechanism cannot reach. Both are reachable from the weight cards G3
-      needs.
+      mechanism cannot reach. NOT a byproduct of G3: G3's weight cards are
+      the cubic fourth-order kernel on three-plaquette lattice clusters,
+      while this is the two-plaquette domino at order four, which the pinned
+      engine cannot reach as is (its word basis is truncated at letter
+      degree four and a fourth-order domino walk reaches five). Costed as a
+      route on G25.
   - id: U5
     statement: >
       The determinant (epsilon / triality) sector enters the fourth-order band

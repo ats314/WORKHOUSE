@@ -83,7 +83,10 @@ diagram at the same order. So
 two quantities no symmetry relates. That difference is the sharpened
 falsifier, recorded on U4: zero would be a cancellation this derivation
 does not predict, nonzero ends the identity at the first order the mechanism
-cannot reach.
+cannot reach. It is not a byproduct of G3 — G3's weight cards are the cubic
+fourth-order kernel on three-plaquette lattice clusters, while this needs the
+two-plaquette domino at order four, past the pinned engine's degree-four
+word basis. It is costed as an untried route on G25.
 
 ## Consequences
 
