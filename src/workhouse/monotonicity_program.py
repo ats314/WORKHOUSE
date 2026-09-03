@@ -48,8 +48,6 @@ KEY VARIABLES:
 
 from __future__ import annotations
 
-from sympy import Rational, Symbol, log, exp, simplify
-
 # =============================================================================
 # Define the sector structure and free energy calculation
 # =============================================================================
@@ -124,9 +122,7 @@ def verify_monotonicity_numerically(rank=3, beta_range=None, n_points=50):
         for beta in betas:
             try:
                 f = sector_free_energy_weak_coupling(s, rank)
-                if beta > 0.5:
-                    # Blend with strong-coupling asymptotics
-                    f_sc = sector_multiplicity_strong_coupling(s, rank)
+                # TODO: At intermediate/strong coupling, blend with asymptotics
                 f_vals.append(f)
             except Exception as e:
                 print(f"Error at sector {s}, β={beta}: {e}")
@@ -151,7 +147,7 @@ def verify_monotonicity_numerically(rank=3, beta_range=None, n_points=50):
 # =============================================================================
 
 
-def griffiths_energy_lower_bound(sector, n=Symbol("N", positive=True)):
+def griffiths_energy_lower_bound(sector, n=None):
     """
     Attempt to derive a Griffiths-type lower bound on the energy.
 

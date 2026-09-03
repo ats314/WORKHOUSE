@@ -16,8 +16,7 @@ coupling from the sector census. A numerical grid then tests monotonicity.
 
 from __future__ import annotations
 
-from sympy import Rational, Symbol, log, exp, simplify
-from itertools import product
+from sympy import Rational, Symbol
 
 from .. import constants as K
 from ._core import _suite
@@ -208,9 +207,6 @@ def sector_partition_function(rank, beta_value, n_sites=27):
         Z(β): the partition function
     """
     import numpy as np
-
-    # Convert β to u
-    u_val = beta_value / 6.0
 
     # Ground state contribution (vacuum)
     z = 1.0
