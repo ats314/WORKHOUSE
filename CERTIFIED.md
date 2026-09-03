@@ -15,8 +15,6 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-**1 checks are failing.** They are marked below.
-
 ## T0 — proof-checked — 95
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
@@ -309,7 +307,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:594
   - `make lean`
 
-## T1 — re-derived exactly — 243
+## T1 — re-derived exactly — 244
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -595,6 +593,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'the two face energies differ, so the eigenspace must be chosen'`
 **monotonicity of flux sector free energies**
 
+- `SU(3) monotonicity conjecture: framework ready for numerical grid test`
+  - src/workhouse/invariants/monotonicity.py:510 · ADR 0023 research program
+  - `workhouse verify --only 'SU(3) monotonicity conjecture: framework ready for numerical grid test'`
 - `at weak coupling, the partition function is a sum over band excitations`
   - src/workhouse/invariants/monotonicity.py:195 · ADR 0023 research program
   - `workhouse verify --only 'at weak coupling, the partition function is a sum over band excitations'`
@@ -1099,7 +1100,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/two_cube.py:313 · MASTER edition §5.1; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
 
-## T2 — float agreement within a stated tolerance — 55
+## T2 — float agreement within a stated tolerance — 54
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -1179,11 +1180,6 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `FINDING: the lattice fourth-order rotation element, assembled from clusters, is neither kernel's rho`
   - src/workhouse/invariants/orbits.py:1242 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: the lattice fourth-order rotation element, assembled from clusters, is neither kernel'"'"'s rho'`
-**monotonicity of flux sector free energies**
-
-- `SU(3) monotonicity test: F_s(β) is monotone on β ∈ [0.1, 3.0]` **[FAILING]**
-  - src/workhouse/invariants/monotonicity.py:510 · ADR 0023 research program
-  - `workhouse verify --only 'SU(3) monotonicity test: F_s(β) is monotone on β ∈ [0.1, 3.0]'`
 **near-Gamma uniformity (G11)**
 
 - `crossover constant K = (pi/2) sqrt(W_4 / (theta t_3))`

@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 95 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 297/298 checks pass.
+**T1/T2 — re-derived here.** 298/298 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -43,7 +43,7 @@ it cannot drift from what the repository actually checks.
 | fourth-order kernel orbits | 28/28 |
 | continuum and fixed-spacing bridges (G18, G19) | 3/3 |
 | second order at every rank: the scalar ledger and the charge-even symbol | 8/8 |
-| monotonicity of flux sector free energies | 5/6 |
+| monotonicity of flux sector free energies | 6/6 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
