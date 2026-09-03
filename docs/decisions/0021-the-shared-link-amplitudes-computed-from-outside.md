@@ -59,7 +59,7 @@ cluster machinery is the replication run's; nothing reads either kernel.
   sharing a link) at `−2580244782961/398756546697600`, and the cube
   completion through the other four faces of the shared cube at `53/768`, not
   `5/48`: total `588708011765248393/14501180577204921600 = +0.0405972`.
-  The historical record is `+0.0082309`, the cold `−0.0879716`. Neither.
+  The historical record is `+0.0082309`, the cold `−0.0879774`. Neither.
 - **The ε-sector.** The ε-blind assembly (every unbalanced-family integral
   dropped: the "direct balanced contraction" U5 makes a prediction for)
   leaves every dressing unchanged and moves each pair cluster by exactly

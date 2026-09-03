@@ -10,9 +10,9 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 95 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 284/284 checks pass.
+**T1/T2 — re-derived here.** 298/298 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -42,6 +42,8 @@ it cannot drift from what the repository actually checks.
 | the electric shell, and what isolates it | 8/8 |
 | fourth-order kernel orbits | 28/28 |
 | continuum and fixed-spacing bridges (G18, G19) | 3/3 |
+| second order at every rank: the scalar ledger and the charge-even symbol | 8/8 |
+| monotonicity of flux sector free energies | 6/6 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:

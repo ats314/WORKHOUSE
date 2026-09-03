@@ -49,6 +49,8 @@ _MODULES = (
     "electric_shell",
     "orbits",
     "continuum",
+    "second_order",
+    "monotonicity",
 )
 
 for _name in _MODULES:

@@ -17,6 +17,7 @@ import sys
 EDITIONS = (
     ("master_paper_2026-08-30.tex", "coverage_master.tex"),
     ("workhouse_publication_edition_v2_2026-08-30.tex", "coverage_generated.tex"),
+    ("workhouse_publication_edition_rev6_2026-09-02.tex", "coverage_rev6.tex"),
 )
 
 
@@ -31,6 +32,23 @@ def chk_bodies(text):
                 depth -= 1
             i += 1
         yield m.start(), text[m.end() : i - 1]
+
+
+def printable(body):
+    """A label as it can be typeset.
+
+    Labels are check names, written for the registry and never for TeX: a
+    name such as ``below 5 C_F/2 ...`` carries a raw underscore, which the
+    suppressed ``\\chk`` macro never typesets but this appendix must. Escape
+    the specials that are not already escaped, so an edition whose labels
+    were written escaped (every earlier one) comes out byte-identical.
+    """
+    body = body.replace(chr(0x2014), "---")
+    return re.sub(
+        r"(?<!\\)([_&%#$])|(?<!\\)\^(?!\{\})",
+        lambda m: ("\\" + m.group(1)) if m.group(1) else "\\^{}",
+        body,
+    )
 
 
 def generate(src, out):
@@ -62,7 +80,7 @@ def generate(src, out):
         for sec in order:
             fh.write(f"\\item[] \\textbf{{{sec}}}\n\\begin{{itemize}}\\itemsep0pt\n")
             for body in grouped[sec]:
-                fh.write(f"  \\item {body.replace(chr(0x2014), '---')}\n")
+                fh.write(f"  \\item {printable(body)}\n")
             fh.write("\\end{itemize}\n")
         fh.write("\\end{itemize}\n")
     print(f"{src}: {n} markers across {len(order)} sections -> {out}")
