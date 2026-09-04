@@ -356,11 +356,12 @@ def link_spectrum_symbolic(word, link) -> tuple:
     A superset of the true spectrum on the block is harmless to the Lagrange
     projectors, and each component is verified afterwards anyway."""
     a, b = L.content(word).get(link, [0, 0])
+    weight = L.link_weight(link)
     out = set()
     for k in range(min(a, b) + 1):
         for lam in partitions(a - k):
             for mu in partitions(b - k):
-                out.add(casimir_symbolic(lam, mu) / 2)
+                out.add(weight * casimir_symbolic(lam, mu) / 2)
     return tuple(sorted(out))
 
 
@@ -402,13 +403,15 @@ def state_label(per_link: dict) -> tuple:
     links carrying anything else) -- the rank-independent channel label of ADR 0026,
     read off the per-link energies rather than searched for."""
     extra, names = -4, []
-    for e in per_link.values():
+    for lk, e in per_link.items():
         if not e:
             continue
-        if e == E_FUND:
-            extra += 1
+        weight = L.link_weight(lk)
+        unit = e / weight
+        if unit == E_FUND:
+            extra += weight
         else:
-            names.append(ENERGY_NAME[e])
+            names.extend([ENERGY_NAME[unit]] * weight)
     return (extra, tuple(sorted(names)))
 
 
@@ -548,7 +551,7 @@ def _resolvent_labelled(vec, e0):
     return out
 
 
-def channels(faces3, x_index: int) -> dict:
+def channels(faces3, x_index: int, reduced: bool = False) -> dict:
     """The three-cluster cumulant of ``loopcalc.cumulant`` split by channel, over Q(N).
 
     Returns ``{key: {(a, b): RF}}`` with ``key = ("direct", l1, l2, l3)`` for the
@@ -557,15 +560,18 @@ def channels(faces3, x_index: int) -> dict:
     labels of the H2 and V2 intermediates; the entries sum to the cumulant's.
     Labels are ``state_label`` values, read off each component's per-link
     energies, so the same channel means the same thing on every cluster."""
-    cl3 = L.Cluster(faces3)
+    cl3 = L.Cluster(faces3, reduced)
     ends = [f for k, f in enumerate(faces3) if k != x_index]
-    cl2 = L.Cluster(ends)
+    cl2 = L.Cluster(ends, reduced)
     x_words = {cl3.words[2 * x_index], cl3.words[2 * x_index + 1]}
+    end_ids3 = [k for k in range(6) if k // 2 != x_index]
     e0 = cl3.e0
     kets = {}
     for a in (0, 1):
         stage: dict = {}
-        for f1, vec1 in _apply_V_flagged(cl3, {cl2.words[a]: RF(1)}, False, x_words).items():
+        for f1, vec1 in _apply_V_flagged(
+            cl3, {cl3.words[end_ids3[a]]: RF(1)}, False, x_words
+        ).items():
             if not vec1:
                 continue
             for l1, c1 in _resolvent_labelled(vec1, e0).items():
@@ -579,7 +585,9 @@ def channels(faces3, x_index: int) -> dict:
     bras = {}
     for b in (2, 3):
         stage = {}
-        for f1, vec1 in _apply_V_flagged(cl3, {cl2.words[b]: RF(1)}, False, x_words).items():
+        for f1, vec1 in _apply_V_flagged(
+            cl3, {cl3.words[end_ids3[b]]: RF(1)}, False, x_words
+        ).items():
             if not vec1:
                 continue
             for l3, c3 in _resolvent_labelled(vec1, e0).items():
@@ -621,7 +629,7 @@ def channels(faces3, x_index: int) -> dict:
 
     h3, v3 = moments(cl3)
     h2_, v2_ = moments(cl2)
-    ids3 = [k for k in range(6) if k // 2 != x_index]
+    ids3 = end_ids3
     for a in (0, 1):
         for b in (2, 3):
             for lab, hm in h3.items():

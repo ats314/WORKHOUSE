@@ -51,6 +51,19 @@ def set_rank(n: int) -> None:
     CF = F(N * N - 1, 2 * N)
 
 
+#: Effective links. A face's private links -- those in no other face of the
+#: cluster -- enter every history word only through their product along the
+#: face, and by Peter-Weyl D^r(U_a U_b U_c) = D^r(U_a) D^r(U_b) D^r(U_c), so a
+#: path of k private links is one Haar link whose single-link H0 is k times the
+#: usual one (the same irrep on every link of the path). ``reduced_words``
+#: collapses each maximal private run to one such link and records k here.
+LINK_WEIGHT: dict[int, int] = {}
+
+
+def link_weight(lk: int) -> int:
+    return LINK_WEIGHT.get(lk, 1)
+
+
 def _charge_zero(charge: int) -> bool:
     """Whether a link carrying net flux ``charge`` (#U minus #Udag) can have a nonzero
     Haar integral: the charge must be 0 mod N. The two rank predicates of the engine
@@ -276,11 +289,11 @@ def links_of(vec: dict) -> set:
 
 # ---------------------------------------------------------------- H0
 def h0_link(word: tuple, link: int) -> tuple:
-    return _h0_link(word, link, N)
+    return _h0_link(word, link, N, link_weight(link))
 
 
 @cache
-def _h0_link(word: tuple, link: int, rank: int) -> tuple:
+def _h0_link(word: tuple, link: int, rank: int, weight: int = 1) -> tuple:
     """The single-link part (1/2) E_link^2 of H0 on a word, as ((word, coeff), ...).
 
     E acts on a U slot by left multiplication with T^A and on a Udag slot by
@@ -301,7 +314,7 @@ def _h0_link(word: tuple, link: int, rank: int) -> tuple:
             closed, w = rewire(word, _crossing(s, t, False))
             out[w] -= F(1, 2) * F(N) ** closed
             out[word] += F(1, 2 * N)
-    return tuple((w, c) for w, c in out.items() if c)
+    return tuple((w, c * weight) for w, c in out.items() if c)
 
 
 def apply_h0_link(vec: dict, link: int) -> dict:
@@ -320,11 +333,11 @@ def apply_h0(vec: dict) -> dict:
 
 
 def link_spectrum(word: tuple, link: int) -> tuple:
-    return _link_spectrum(word, link, N)
+    return _link_spectrum(word, link, N, link_weight(link))
 
 
 @cache
-def _link_spectrum(word: tuple, link: int, rank: int) -> tuple:
+def _link_spectrum(word: tuple, link: int, rank: int, weight: int = 1) -> tuple:
     """The rational spectrum of the single-link H0 on the closure of `word` under it.
 
     Rank-generic: the block is built by breadth-first closure under `h0_link`,
@@ -365,7 +378,7 @@ def _project_link(vec: dict, link: int):
         groups[(a, b)][w] = c
     for (a, b), sub in groups.items():
         if N == 3:
-            energies = link_energies(a, b)
+            energies = [e * link_weight(link) for e in link_energies(a, b)]
         else:
             energies = sorted(set().union(*(link_spectrum(w, link) for w in sub)))
         for e in energies:
@@ -526,6 +539,51 @@ def plaquette(plane, base, conjugate: bool = False) -> tuple:
     return canon([tuple(steps)])
 
 
+def reduced_words(faces) -> list:
+    """Each face's word with every maximal run of private links replaced by one effective link.
+
+    A link is private when it lies in one face of ``faces`` only. Each run is
+    interned as a link keyed by its letters, so the same run is the same link
+    wherever it recurs, and its weight (the run's length) is recorded in
+    ``LINK_WEIGHT``. A face sharing no link at all becomes a single effective
+    link of weight four. The words are returned in the order of ``faces``,
+    each starting at a shared link."""
+    traces = [plaquette(pl, b)[0] for pl, b in faces]
+    count: dict = defaultdict(int)
+    for tr in traces:
+        for lk, _o in tr:
+            count[lk] += 1
+    out = []
+    for tr in traces:
+        shared = [i for i, (lk, _o) in enumerate(tr) if count[lk] > 1]
+        if not shared:
+            eff = link(("path",) + tuple(tr), 0)
+            LINK_WEIGHT[eff] = len(tr)
+            out.append(canon([((eff, 1),)]))
+            continue
+        rot = tr[shared[0] :] + tr[: shared[0]]
+        letters: list = []
+        run: list = []
+        for lk, o in rot:
+            if count[lk] > 1:
+                _flush_run(run, letters)
+                letters.append((lk, o))
+            else:
+                run.append((lk, o))
+        _flush_run(run, letters)
+        out.append(canon([tuple(letters)]))
+    return out
+
+
+def _flush_run(run: list, letters: list) -> None:
+    """Replace the private run collected so far by one effective link letter."""
+    if run:
+        eff = link(("path",) + tuple(run), 0)
+        LINK_WEIGHT[eff] = len(run)
+        letters.append((eff, 1))
+        run.clear()
+
+
 def plaquette_links(plane, base) -> frozenset:
     return frozenset(lk for lk, _o in plaquette(plane, base)[0])
 
@@ -559,12 +617,14 @@ def plaquettes_sharing_a_link(faces) -> list:
 class Cluster:
     """A set of faces, each in both orientations: words 2k (face k) and 2k+1 (its conjugate)."""
 
-    def __init__(self, faces):
+    def __init__(self, faces, reduced: bool = False):
         self.faces = list(faces)
+        self.reduced = reduced
+        face_words = reduced_words(self.faces) if reduced else [plaquette(pl, b) for pl, b in faces]
         self.words = []
-        for pl, b in self.faces:
-            self.words.append(plaquette(pl, b))
-            self.words.append(plaquette(pl, b, True))
+        for w in face_words:
+            self.words.append(w)
+            self.words.append(conj(w))
         self.e0 = 4 * CF / 2
 
     def V(self, vec: dict) -> dict:
@@ -614,7 +674,7 @@ def _R_flagged(cl: Cluster, by_flag: dict) -> dict:
     return {f: cl.R(v) if v else {} for f, v in by_flag.items()}
 
 
-def cumulant(faces3, x_index: int) -> dict:
+def cumulant(faces3, x_index: int, reduced: bool = False) -> dict:
     """The three-cluster cumulant W(faces3) - W(faces3 minus X) between the two
     non-X faces, at fourth order, in the Hermitian PVP = 0 form
 
@@ -626,19 +686,21 @@ def cumulant(faces3, x_index: int) -> dict:
     cancel, and no epsilon family occurs (charge counting; both facts the
     runs also rely on). Returns W[(a, b)] for a in the end-face words (0, 1)
     and b in the other end's (2, 3), indexed as in the two-cluster."""
-    cl3 = Cluster(faces3)
+    cl3 = Cluster(faces3, reduced)
     ends = [f for k, f in enumerate(faces3) if k != x_index]
-    cl2 = Cluster(ends)
+    cl2 = Cluster(ends, reduced)
     x_words = {cl3.words[2 * x_index], cl3.words[2 * x_index + 1]}
     end_ids3 = [k for k in range(6) if k // 2 != x_index]
+    # the end faces' words as the three-cluster spells them (on a reduced cluster the
+    # two-cluster spells them differently, since X's shared links are private there)
     ket = {}
     for a in (0, 1):
-        v = {False: {cl2.words[a]: F(1)}, True: {}}
+        v = {False: {cl3.words[end_ids3[a]]: F(1)}, True: {}}
         v = _R_flagged(cl3, _split_V(cl3, v, x_words))
         ket[a] = _R_flagged(cl3, _split_V(cl3, v, x_words))
     bra = {}
     for b in (2, 3):
-        v = {False: {cl2.words[b]: F(1)}, True: {}}
+        v = {False: {cl3.words[end_ids3[b]]: F(1)}, True: {}}
         v = _R_flagged(cl3, _split_V(cl3, v, x_words))
         bra[b] = _split_V(cl3, v, x_words)
     direct = {}

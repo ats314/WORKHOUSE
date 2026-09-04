@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 83 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 352/352 checks pass.
+**T1/T2 — re-derived here.** 355/355 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -51,6 +51,7 @@ it cannot drift from what the repository actually checks.
 | the third engine at every rank (all-rank cumulants) | 12/12 |
 | the T1 triplet at Gamma and the uniform isolation of the flat band | 7/7 |
 | the third engine over Q(N): closed forms derived, the degree bound | 10/10 |
+| private-link paths as single links; universality history by history | 3/3 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
