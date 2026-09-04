@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 64
+## T0 — proof-checked — 70
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -63,8 +63,14 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `blind_holdout`
   - lean/Workhouse/Basic.lean:230
   - `make lean`
+- `cIso_assembled`
+  - lean/Workhouse/Basic.lean:580
+  - `make lean`
 - `cPrimTwo_forms`
   - lean/Workhouse/Basic.lean:353
+  - `make lean`
+- `cShpAssembled_neg`
+  - lean/Workhouse/Basic.lean:576
   - `make lean`
 - `cShp_assembled_value`
   - lean/Workhouse/Basic.lean:424
@@ -144,6 +150,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `hopping_two`
   - lean/Workhouse/Basic.lean:44
   - `make lean`
+- `isolation_condition_assembled`
+  - lean/Workhouse/Basic.lean:571
+  - `make lean`
 - `isolation_switch_numerator`
   - lean/Workhouse/Basic.lean:196
   - `make lean`
@@ -162,6 +171,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `pentCompletion_three`
   - lean/Workhouse/Basic.lean:376
   - `make lean`
+- `piTilde_neg`
+  - lean/Workhouse/Basic.lean:566
+  - `make lean`
 - `prismCompletion_three`
   - lean/Workhouse/Basic.lean:368
   - `make lean`
@@ -170,6 +182,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `rank_law_numerator`
   - lean/Workhouse/Basic.lean:36
+  - `make lean`
+- `relative_gap_pos`
+  - lean/Workhouse/Basic.lean:588
   - `make lean`
 - `resolventWeight_adjoint`
   - lean/Workhouse/Basic.lean:80
@@ -204,6 +219,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `tetra_from_count`
   - lean/Workhouse/Basic.lean:358
   - `make lean`
+- `uStarSq_isolation`
+  - lean/Workhouse/Basic.lean:584
+  - `make lean`
 - `w4_old_is_alpha_plus_beta`
   - lean/Workhouse/Basic.lean:436
   - `make lean`
@@ -214,7 +232,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:248
   - `make lean`
 
-## T1 — re-derived exactly — 281
+## T1 — re-derived exactly — 286
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -892,6 +910,23 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the sheets decouple from local observables at exact rate 1/L`
   - src/workhouse/invariants/interpolator.py:112 · G18 / MASTER paper §3.1
   - `workhouse verify --only 'the sheets decouple from local observables at exact rate 1/L'`
+**the T1 triplet at Gamma and the uniform isolation of the flat band**
+
+- `a band theorem at fourth order: the carrier expectation of the centered kernel is the corpus dispersion exactly, psi^dagger (H4 - sI) psi = A q_a^2 + 4C e2, so on the punctured zone the lowest band is E_flat + u^4 (s + A q_a + 4C e2/q_a) up to a Kato-Temple remainder bounded by C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2), uniformly in k`
+  - src/workhouse/invariants/gamma_isolation.py:347 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
+  - `workhouse verify --only 'a band theorem at fourth order: the carrier expectation of the centered kernel is the corpus dispersion exactly, psi^dagger (H4 - sI) psi = A q_a^2 + 4C e2, so on the punctured zone the lowest band is E_flat + u^4 (s + A q_a + 4C e2/q_a) up to a Kato-Temple remainder bounded by C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2), uniformly in k'`
+- `the Hodge Laplacian on plaquettes is the scalar q_a: L_down + L_up = q_a I, Lambda^2 = q_a Lambda, L_up Lambda = 0, so Lambda = q_a P_t and L_up = q_a P_c`
+  - src/workhouse/invariants/gamma_isolation.py:165 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
+  - `workhouse verify --only 'the Hodge Laplacian on plaquettes is the scalar q_a: L_down + L_up = q_a I, Lambda^2 = q_a Lambda, L_up Lambda = 0, so Lambda = q_a P_t and L_up = q_a P_c'`
+- `the fourth-order kernel at Gamma is the scalar q_band^(4) on the orientation triplet, for either recorded C_shp, and has no linear term in k`
+  - src/workhouse/invariants/gamma_isolation.py:137 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
+  - `workhouse verify --only 'the fourth-order kernel at Gamma is the scalar q_band^(4) on the orientation triplet, for either recorded C_shp, and has no linear term in k'`
+- `the fourth-order kernel is bounded by C_iso q_a(k) away from its Gamma scalar, C_iso = 5/48 for the assembled C_shp, so the flat band is isolated at every k != 0 for u^2 < 2/51 -- no exclusion radius`
+  - src/workhouse/invariants/gamma_isolation.py:187 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
+  - `workhouse verify --only 'the fourth-order kernel is bounded by C_iso q_a(k) away from its Gamma scalar, C_iso = 5/48 for the assembled C_shp, so the flat band is isolated at every k != 0 for u^2 < 2/51 -- no exclusion radius'`
+- `the three plaquette orientations at k = 0 carry an irreducible representation of the cubic group (the T1 triplet), so every cubic-covariant effective Hamiltonian is a scalar at Gamma at every order`
+  - src/workhouse/invariants/gamma_isolation.py:109 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
+  - `workhouse verify --only 'the three plaquette orientations at k = 0 carry an irreducible representation of the cubic group (the T1 triplet), so every cubic-covariant effective Hamiltonian is a scalar at Gamma at every order'`
 **the charge-even band, exactly**
 
 - `FINDING: the certificate key 'bandmin' holds the band MAXIMUM, at both orders`
@@ -1128,7 +1163,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/two_cube.py:313 · MASTER edition §5.1; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
 
-## T2 — float agreement within a stated tolerance — 54
+## T2 — float agreement within a stated tolerance — 56
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -1304,6 +1339,14 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel`
   - src/workhouse/invariants/adjudication.py:286 · notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt §[17]
   - `workhouse verify --only 'the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel'`
+**the T1 triplet at Gamma and the uniform isolation of the flat band**
+
+- `the band theorem's remainder bound holds numerically: on a grid the lowest eigenvalue of t_3 u^2 Lambda + u^4 (H4 - sI) sits within C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2) of u^4 (A q_a + 4C e2/q_a)`
+  - src/workhouse/invariants/gamma_isolation.py:375 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
+  - `workhouse verify --only 'the band theorem'"'"'s remainder bound holds numerically: on a grid the lowest eigenvalue of t_3 u^2 Lambda + u^4 (H4 - sI) sits within C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2) of u^4 (A q_a + 4C e2/q_a)'`
+- `the isolation bound is tight: the numerical supremum of ||H4(k) - sI|| / q_a(k) over the zone is 5/48, attained on an axis, and the fourth-order band gap obeys the bound at every sampled k`
+  - src/workhouse/invariants/gamma_isolation.py:243 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
+  - `workhouse verify --only 'the isolation bound is tight: the numerical supremum of ||H4(k) - sI|| / q_a(k) over the zone is 5/48, attained on an axis, and the fourth-order band gap obeys the bound at every sampled k'`
 **the electric shell, and what isolates it**
 
 - `the sealed radius-two report passes its six float checks at stated tolerances`

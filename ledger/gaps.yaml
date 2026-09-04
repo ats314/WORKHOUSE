@@ -765,6 +765,22 @@ gaps:
         edges that forms the other half of G11.
       recorded_in: docs/decisions/0003-near-gamma-exclusion-radius.md
 
+    uniform_isolation_2026_09_04: >
+      The near-Gamma half is discharged at fourth order without any
+      exclusion radius (ADR 0028, suite gamma_isolation). The premise of the
+      radius -- that the O(u^4) operator "does not shrink at all" near Gamma
+      -- is false by symmetry: at k = 0 the three orientations are one
+      irreducible T1 triplet, so every cubic-covariant effective Hamiltonian
+      is a scalar there at every order, and inversion removes the linear
+      term, so every order's deviation from its Gamma scalar is O(q_a). On
+      the Hodge form, ||H4(k) - sI|| <= (5/48) q_a(k) exactly for the
+      assembled C_shp (tight, attained on an axis), and by Weyl the lowest
+      band of t(u) Lambda + u^4 (H4 - sI) is isolated from the other two at
+      every k != 0 for u^2 < 2/51, with relative gap >= q_a (t_3 u^2 -
+      (5/24) u^4). The triple degeneracy at Gamma is exact and harmless: the
+      spin-1 multiplet at rest. The radius |k| >= K u stays as the earlier,
+      weaker sufficient criterion. Still open in G11: the outward-rounded
+      interval half; and nothing here bounds the sum of all orders (G17).
   - id: G12
     tier: 2
     state: open
