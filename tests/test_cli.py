@@ -237,3 +237,13 @@ def test_generated_files_pin_lf_newlines():
             if ".write_text(" in line and not line.strip().startswith("#"):
                 window = "\n".join(src.splitlines()[i : i + 4])
                 assert 'newline="\\n"' in window, f"{module_name}: unpinned newline: {line.strip()}"
+
+
+def test_verify_only_is_repeatable(capsys):
+    """Two --only flags run two checks; the last flag no longer silently wins."""
+    from workhouse import cli
+
+    code = cli.main(["verify", "--only", "t_2 = 0 and t_3 = 5/612", "--only", "t_N = B_N - A_N"])
+    out = capsys.readouterr().out
+    assert code == 0
+    assert "2/2 checks passed" in out

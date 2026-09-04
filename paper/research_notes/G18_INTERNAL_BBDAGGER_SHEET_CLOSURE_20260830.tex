@@ -1,0 +1,472 @@
+% Publication-ready G18 continuation.  This file is input by
+% G18_FIXED_SPACING_CARRIER_BRIDGE_INSERT.tex and assumes its repaired CMP(1)
+% close-projection/GNS transport lemma and complete fixed-spacing
+% three-component band theorem.
+%
+% Bibliography addition required if this insert is merged:
+% \bibitem{Yarotsky2006GroundStates} D. A. Yarotsky,
+%   \emph{Ground states in relatively bounded quantum perturbations of
+%   classical lattice systems}, Commun. Math. Phys. \textbf{261}, 799--819
+%   (2006), \href{https://arxiv.org/abs/math-ph/0412040}
+%   {arXiv:math-ph/0412040}.
+
+\subsection{Exact isolation of the internal carrier sheet away from
+\texorpdfstring{$\Gamma$}{Gamma}}
+\label{sec:g18-internal-sheet-closure}
+
+This subsection works at fixed lattice spacing in the $SU(3)$ Hamiltonian
+theory and in the unrescaled energy convention of Eq.~\eqref{eq:H}.  It uses
+the repaired close-projection theorem and
+Theorem~\ref{thm:g18-fixed-spacing-band}; no Wilson-action transfer matrix is
+used.  The result closes the internal rank-one sheet on every fixed momentum
+patch whose closure avoids $\Gamma$.  It does not give a gap uniform as
+$k\to0$.
+
+For $\mu>0$, let $\mathcal A_\mu$ denote the unital Banach $*$-algebra of
+$3\times3$ convolution kernels $K=(K_{\alpha\beta}(x))$ on $\mathbb Z^3$ with
+norm
+\begin{equation}
+ \|K\|_{\mu,\sharp}:=
+ \max\left\{
+ \max_\alpha\sum_{x,\beta}e^{\mu|x|_1}|K_{\alpha\beta}(x)|,
+ \max_\beta\sum_{x,\alpha}e^{\mu|x|_1}|K_{\alpha\beta}(x)|
+ \right\}.
+ \label{eq:g18-weighted-algebra}
+\end{equation}
+Its Fourier transform is analytic for
+$|\operatorname{Im}k_j|<\mu$ and
+$\sup_{k\in\mathbb T^3}\|K(k)\|\le\|K\|_{\mu,\sharp}$.
+
+\begin{lemma}[Coupling-analytic exponentially local symbol]
+\label{lem:g18-u-analytic-symbol}
+There are $\rho_0>0$ and $\mu>0$ such that the orthonormal-frame Hamiltonian
+of Theorem~\ref{thm:g18-fixed-spacing-band} is represented by a map
+\begin{equation}
+ u\longmapsto h_u\in\mathcal A_\mu
+ \label{eq:g18-banach-holomorphic}
+\end{equation}
+which is holomorphic for complex $|u|<\rho_0$.  For real $u$, $h_u(k)$ is
+Hermitian.  The same statement holds for the canonical Gram kernel $G_u$ and
+the physical one-mark energy kernel $\mathcal K_u$, and
+\begin{equation}
+ h_u=G_u^{-1/2}\mathcal K_uG_u^{-1/2}.
+ \label{eq:g18-h-from-gk}
+\end{equation}
+Here the inverse square root is the branch satisfying $G_0^{-1/2}=I$.
+\end{lemma}
+
+\begin{proof}
+Choose $\rho_0$ strictly inside both the repaired CMP(1) smallness domain and
+the complex ground-state contraction domain.  With
+$\lambda_0=27c_2\rho_0<1/33$, one may use the fixed contour
+\[
+ \gamma_{\rho_0}:\quad |z-4|=(1-\lambda_0)/8
+\]
+in the gap-one rescaling.  It encloses the target cluster for every
+$|u|\le\rho_0$ and stays in the coefficient resolvent set.  Indeed, the
+target disc has radius at most $4\lambda_0$, while the nearest other free
+centres are $7/2$ and $17/4$.  The inequalities separating all three discs
+from this contour reduce on the upper side to
+$33\lambda_0<1$ (and on the lower side to the weaker
+$\lambda_0<1/9$).  For complex $u$ this statement uses the coefficient
+Neumann-resolvent bound, whose absolute majorant depends on $|u|$, rather
+than a self-adjoint spectral-ordering argument.  This fixed contour, rather
+than a contour depending on the evaluation point $u$, is what makes the
+following holomorphic calculation literal.
+
+The product-ground-state fixed-point map used in
+\cite{Yarotsky2004QP} is analytic in the bounded interaction.  On a closed
+complex $u$-disc contained in the contraction domain its contraction
+constant and all coefficient majorants depend only on $|u|$.  The analytic
+contraction theorem therefore makes its fixed point, the dressed coefficient
+perturbation $F_u$, and the Neumann resolvent series holomorphic in their
+weighted coefficient norms.  Contour integration on $\gamma_{\rho_0}$ makes
+the coefficient Riesz projection $\mathcal P_u^-$ holomorphic in every
+slightly weaker rooted norm.
+
+We record why the spatial estimate remains valid on a complex disc.  In the
+proof of \cite[Theorem~1]{Yarotsky2006GroundStates}, Lemmas~3--4 give
+holomorphic polymer activities whose absolute values, uniformly on a closed
+parameter disc, obey a majorant of the form
+\[
+ |a_u(\chi)|\le C_\rho\varepsilon_\rho^{|\operatorname{supp}\chi|},
+ \qquad \varepsilon_\rho<1,
+\]
+after the coupling disc is made small enough.  The number of polymers of
+size $n$ through a specified point grows at most exponentially in $n$.
+Consequently the connected-cluster series is absolutely and locally
+uniformly convergent for complex $u$, which is the argument used there to
+prove weak-star analyticity.  With two marked local insertions, every
+connected cluster joining supports $I$ and $J$ has size bounded below by a
+constant times $\operatorname{dist}(I,J)$.  Summing the same activity
+majorant therefore gives the complex-disc estimate
+\begin{equation}
+ \sup_{|u|\le\rho}
+ |\omega_u^{\mathbb C}(A^*B)
+   -\omega_u^{\mathbb C}(A^*)\omega_u^{\mathbb C}(B)|
+ \le C_\rho^{|I|+|J|}\tau_\rho^{\operatorname{dist}(I,J)}
+       \|A\|\|B\|,
+ \qquad \tau_\rho<1.
+ \label{eq:g18-complex-cluster-majorant}
+\end{equation}
+Here $\omega_u^{\mathbb C}$ denotes the holomorphic continuation; for real
+$u$ it is the physical ground state.  This is an absolute cluster bound, not
+an inference from real-$u$ positivity or from pointwise weak-star
+analyticity.
+
+Put $\mathbb D_u:=D+F_u$ for the gap-one coefficient Hamiltonian
+and use the one-mark identities
+\begin{align}
+ (G_u)_{st}
+ &=\omega_u\!\left(\widehat w_s^*\,\widehat{\mathcal P_u^-w_t}\right),
+ \label{eq:g18-one-mark-g-analytic}\\
+ (\widehat{\mathcal K}_u)_{st}
+ &=\omega_u\!\left(\widehat w_s^*\,
+       \widehat{\mathbb D_u\mathcal P_u^-w_t}\right),
+ \qquad \mathcal K_u:=\frac23\widehat{\mathcal K}_u.
+ \label{eq:g18-one-mark-k-analytic}
+\end{align}
+They agree with the Hilbert-space Gram and energy kernels for real $u$ but,
+unlike a two-mark norm formula, also give their holomorphic continuation to
+complex $u$.  To make the summation explicit, write
+$\mathcal P_u^-w_t=w_t+c_t(u)$.  The rooted Neumann majorant gives, uniformly
+for $|u|\le\rho<\rho_0$,
+\[
+ \sum_J\eta^{-d(J,S_t)}\|D_Jc_{t,J}(u)\|\le A_{\eta,\rho},
+\]
+and the same calculation applied to
+\[
+ \mathbb D_u\mathcal P_u^-w_t
+ =4w_t+Dc_t+F_uw_t+F_uc_t
+\]
+gives a rooted majorant $A'_{\eta,\rho}$.  Both coefficient families are
+holomorphic.  Exact-support projections commute with charge conjugation, so
+$w_t$, $c_{t,J}$ and every displayed energy correction are charge odd.  The
+analytically continued ground-state functional is charge even; hence both
+one-point terms in
+\eqref{eq:g18-complex-cluster-majorant} vanish identically, for complex as
+well as real $u$.  For separated roots apply
+\eqref{eq:g18-complex-cluster-majorant} term by term and use
+$\operatorname{dist}(S_s,S_t)\le
+\operatorname{dist}(S_s,J)+d(J,S_t)$, exactly as in the real CMP(3) Schur
+sum.  Contacting roots form a fixed finite list and are bounded directly by
+the absolutely convergent marked-cluster series.  Choose $\eta$ and then the
+disc so that
+$\theta_\rho:=\max\{C_\rho\eta,\tau_\rho\}<1$.  Since the number of roots at
+distance $n$ grows quadratically, any
+$0<\mu_0<-\log\theta_\rho$ gives constants $C,\mu_0>0$ such that
+\[
+ \sum_{x\in\mathbb Z^3}e^{\mu_0|x|_1}
+ \sup_{|u|\le\rho}\bigl(
+   |G_{\alpha\beta}(x;u)|
+   +|\mathcal K_{\alpha\beta}(x;u)|
+ \bigr)\le C,
+ \qquad \rho<\rho_0.
+\]
+Finite spatial truncations are holomorphic, and this summable supremum
+majorant makes them converge locally uniformly in $\mathcal A_\mu$ for any
+$0<\mu<\mu_0$.  Thus $G_u$ and $\mathcal K_u$ are Banach-valued holomorphic
+maps.
+
+After shrinking $\rho_0$ if necessary,
+$\|G_u-I\|_{\mu,\sharp}<1$.  The binomial series for $G_u^{-1/2}$ converges
+locally uniformly in the unital Banach algebra $\mathcal A_\mu$ and is
+holomorphic.  Equation~\eqref{eq:g18-h-from-gk} proves the claim.  The
+coefficient calculation in the gap-one Hamiltonian
+$\widehat H=(3/2)H$ would give the non-scalar coefficient
+$(3/2)t_3=5/408$.  Multiplying the completed symbol by $2/3$ returns exactly
+$t_3=5/612$ in the unrescaled normalization of Eq.~\eqref{eq:H}.
+\end{proof}
+
+\begin{lemma}[Finite-to-infinite second-order coefficient]
+\label{lem:g18-finite-infinite-u2}
+In the orthonormal frame of
+Theorem~\ref{thm:g18-fixed-spacing-band},
+\begin{equation}
+ [u^0]h_u(k)=\frac83I_3,\qquad
+ [u^1]h_u(k)=I_3,\qquad
+ [u^2]h_u(k)=\sigma_2I_3+\frac5{612}B(k)B(k)^\dagger,
+ \label{eq:g18-exact-infinite-u2}
+\end{equation}
+where $\sigma_2$ is a real scalar.  If the separate $SU(3)$ diagonal ledger
+quoted in Section~\ref{sec:su3} is adopted, then $\sigma_2=11/306$; the
+internal-sheet conclusion below does not use this value.
+\end{lemma}
+
+\begin{proof}
+First work in a sufficiently large finite periodic box ($L\ge5$), in the
+physical charge-odd trivial-flux shell, and use a fixed contour valid on a
+complex $u$-disc.  Kato parallel transport gives a holomorphic intertwiner
+from the free plaquette shell to the interacting Riesz island; on the real
+axis it is unitary.  Differentiating its reduced operator at $u=0$ gives the ordinary
+degenerate reduced-resolvent coefficient
+\[
+ P_-(-V)Q_-(E_{F,3}-H_E)^{-1}Q_-(-V)P_-
+   -[u^2]E_{\rm vac,L}(u)I,
+\]
+with the conventional scalar terms absorbed into the diagonal ledger.  This
+is precisely the $Q_-=1_--P_-$ prescription of Eq.~\eqref{eq:heff}, rather
+than an eigenvalue-only comparison.  The retained-shell theorem,
+the first-order charge/determinant census, and
+Corollary~\ref{cor:assembly} therefore give
+\[
+ k_{L,0}=\frac83I,\qquad k_{L,1}=I,\qquad
+ k_{L,2}=\sigma_{2,L}I+\frac5{612}BB^\dagger.
+ \label{eq:g18-finite-kato-u2}
+\]
+
+The canonical Gram orthonormalization used to define $h_{L,u}$ is another
+holomorphic intertwiner which equals the free plaquette frame at $u=0$ and
+is unitary for real $u$.  The two identifications differ by a holomorphic
+near-identity similarity $Z(u)$, unitary on the real axis.  If
+$Z_0=I$ and
+\[
+ a(u)=a_0I+ua_1I+u^2a_2+\sum_{n\ge3}u^na_n,
+\]
+then direct expansion gives
+\[
+ [u^2]\,Z(u)^{-1}a(u)Z(u)=a_2;
+\]
+all possible frame terms are commutators with $a_0I$ or $a_1I$.  Thus the
+full second-order matrix, not merely its eigenvalues, is unchanged by the
+orthonormal-frame choice.  This is the point at which scalarity of both the
+zeroth- and first-order coefficients is essential.
+
+It remains to justify passage to infinite volume without confusing torus
+convolution with convolution on $\mathbb Z^3$.  Let $\mathcal A_{\mu,L}$ be
+the corresponding weighted convolution algebra on $\mathbb Z_L^3$, using
+the torus distance, and let
+\[
+ (\Pi_LK)([x])=\sum_{n\in\mathbb Z^3}K(x+nL)
+\]
+be periodisation.  Then $\Pi_L:\mathcal A_\mu\to\mathcal A_{\mu,L}$ is a
+contractive algebra homomorphism.  Let $G_{L,u}$ and
+$\mathcal K_{L,u}$ be the periodic finite-volume one-mark kernels.  The
+coefficient fixed-point and marked-cluster series converge term by term to
+their infinite-volume series for every fixed centred displacement, locally
+uniformly on a smaller complex $u$-disc.  The periodic ground-state limit is
+the same state as the open-box limit because the small-perturbation ground
+state is unique \cite{Yarotsky2005Uniqueness}.  This first identifies the
+two limits for real $u$; local uniform holomorphy and the identity theorem
+then identify their complex continuations on the common disc.
+
+The proof of Lemma~\ref{lem:g18-u-analytic-symbol} gives the stronger bound,
+uniformly in $L$,
+\[
+ \sum_{[x]}e^{\mu_0d_L([x],0)}
+ \sup_{|u|\le\rho}
+ \bigl(|G_{L,\alpha\beta}(x;u)|
+       +|\mathcal K_{L,\alpha\beta}(x;u)|\bigr)\le C_\rho.
+\]
+Fix $0<\mu<\mu_0$.  Split the torus norm at
+$d_L([x],0)=R$, with $2R<L$.  The finite part of
+$G_{L,u}-\Pi_LG_u$ (and of the energy kernel) converges locally uniformly by
+the preceding termwise limit.  Both tails, including every periodised image,
+are at most $C_\rho e^{-(\mu_0-\mu)R}$.  Letting first $L\to\infty$ and then
+$R\to\infty$ proves
+\[
+ \|G_{L,u}-\Pi_LG_u\|_{\mu,\sharp,L}\longrightarrow0,\qquad
+ \|\mathcal K_{L,u}-\Pi_L\mathcal K_u\|_{\mu,\sharp,L}
+ \longrightarrow0
+\]
+locally uniformly in $u$.  On a smaller disc all Gram kernels obey a common
+$\|G_{L,u}-I\|_{\mu,\sharp,L}\le r_G<1$.  The binomial series is therefore
+uniform in $L$, and the homomorphism property of $\Pi_L$ gives
+\[
+ \|h_{L,u}-\Pi_Lh_u\|_{\mu,\sharp,L}\longrightarrow0
+\]
+locally uniformly.  This also shows explicitly that wrap-around products in
+the finite-torus inverse square root are accounted for by periodisation, not
+silently identified with infinite convolution.  Cauchy's formula on any
+circle inside that disc now gives
+\begin{equation}
+ [u^2]h_u(x) =
+ \lim_{L\to\infty}[u^2]h_{L,u}(x)
+ \label{eq:g18-cauchy-coefficient-limit}
+\end{equation}
+for each fixed displacement $x$.  This is stronger than convergence at a
+few real couplings: local uniformity on a complex contour is what permits
+interchanging the thermodynamic limit with Taylor-coefficient extraction.
+
+At order two every connected process is supported on one face or on two
+faces sharing one link.  Hence, once the roots and this finite process
+neighbourhood fit without wrapping, the finite-volume coefficient is exactly
+the infinite-lattice coefficient.  Lemma~\ref{lem:process-complete} excludes
+all other off-diagonal supports, and
+Theorem~\ref{thm:allrank} assigns the surviving oriented shared-link element
+$t_3=5/612$.  Translation and cubic symmetry make the remaining diagonal a
+scalar.  The coefficient is finite range, so the entrywise identity also
+holds in every $\mathcal A_\mu$.  This proves
+\eqref{eq:g18-exact-infinite-u2}.
+\end{proof}
+
+Define
+\begin{equation}
+ s_{\le2}(u):=\frac83+u+\sigma_2u^2,\qquad t_3:=\frac5{612}.
+ \label{eq:g18-s2-definition}
+\end{equation}
+
+\begin{theorem}[Exact fixed-spacing carrier sheet on a nonzero-momentum patch]
+\label{thm:g18-exact-fixed-k-carrier}
+Assume the repaired CMP(1) lemma and
+Theorem~\ref{thm:g18-fixed-spacing-band}.  Let $U$ be a relatively compact
+open momentum ball whose closure lies in
+$\mathbb T^3\setminus\{0\}$, and put
+\[
+ q_*:=\inf_{k\in U}q(k)>0.
+\]
+Then there is $u_U>0$ such that for every real
+$0<|u|<u_U$ the exact infinite-volume target band over $U$ has a rank-one
+analytic Riesz subbundle, descended from $\ker B(k)^\dagger$, separated from
+the other two target branches by
+\begin{equation}
+ \operatorname{gap}_{\rm int}(k,u)
+ \ge\frac12t_3u^2q_*,
+ \qquad k\in U.
+ \label{eq:g18-closed-internal-gap}
+\end{equation}
+Its direct integral is a reducing, translation-invariant subspace unitarily
+equivalent to $L^2(U)$, on which translations and the Hamiltonian act as
+\begin{equation}
+ (T_xf)(k)=e^{ik\cdot x}f(k),
+ \qquad
+ (H_{\rm car}(u)f)(k)=E_{\rm car}(k,u)f(k).
+ \label{eq:g18-carrier-representation-closed}
+\end{equation}
+The function $E_{\rm car}(k,u)$ is real analytic in $k$ on $U$.
+\end{theorem}
+
+\begin{proof}
+Choose $0<r<\rho_0$ in Lemma~\ref{lem:g18-u-analytic-symbol} and set
+\[
+ M_r:=\sup_{|\zeta|=r}\|h_\zeta\|_{\mu,\sharp}<\infty,
+ \qquad C_r:=\frac{2M_r}{r^3}.
+\]
+Cauchy's estimate in $\mathcal A_\mu$, followed by summing the Taylor tail,
+gives for $|u|\le r/2$
+\begin{equation}
+ h_u(k)=s_{\le2}(u)I_3+t_3u^2B(k)B(k)^\dagger+R_u(k),
+ \qquad
+ \sup_{k\in\mathbb T^3}\|R_u(k)\|
+ \le C_r|u|^3.
+ \label{eq:g18-uniform-cubic-remainder}
+\end{equation}
+Indeed, the $n$th Banach-valued Taylor coefficient has norm at most
+$M_rr^{-n}$, and
+$\sum_{n\ge3}(|u|/r)^n\le2|u|^3/r^3$ on this disc.
+
+One may therefore take, in addition to the smallness thresholds required by
+CMP(1)--CMP(3),
+\begin{equation}
+ u_U:=\min\left\{\frac r2,
+          \frac{t_3q_*}{4C_r}\right\}>0.
+ \label{eq:g18-explicit-uU}
+\end{equation}
+For $0<|u|<u_U$,
+\[
+ \sup_{k\in U}\|R_u(k)\|
+ \le\frac14t_3u^2q_*.
+\]
+The comparison matrix in
+\eqref{eq:g18-uniform-cubic-remainder} has a simple carrier eigenvalue
+$s_{\le2}(u)$ and a double eigenvalue
+$s_{\le2}(u)+t_3u^2q(k)$.  Weyl's inequality separates the corresponding
+exact spectral clusters by at least
+\[
+ t_3u^2q(k)-2\|R_u(k)\|
+ \ge\frac12t_3u^2q_*.
+\]
+The small contour surrounding the lower cluster therefore defines a rank-one
+Riesz projection analytic in $k$.  Put
+$P_0(k)=v_0(k)v_0(k)^\dagger$ with
+$v_0(k)=w(k)/\sqrt{q(k)}$; this is the limiting comparison projection chosen
+by the $BB^\dagger$ coefficient, not a spectral projection of the triply
+degenerate $u=0$ fiber.  The same Riesz estimate and
+$\|R_u\|/(t_3u^2q_*)=O(|u|/q_*)$ show that, after decreasing $u_U$ if
+necessary,
+$\sup_{k\in U}\|P_{\rm car}(k,u)-P_0(k)\|<1/2$.  Hence
+\[
+ v_u(k):=\frac{P_{\rm car}(k,u)v_0(k)}
+ {\|P_{\rm car}(k,u)v_0(k)\|}
+\]
+is a globally defined real-analytic unit section on the whole momentum ball.
+Fourier direct integration gives
+\eqref{eq:g18-carrier-representation-closed}; analyticity of the simple
+eigenvalue follows from analyticity of the matrix symbol.
+\end{proof}
+
+\begin{corollary}[No dark carrier on a fixed momentum patch]
+\label{cor:g18-no-dark-fixed-patch}
+After possibly decreasing $u_U$, the rank-one sheet in
+Theorem~\ref{thm:g18-exact-fixed-k-carrier} is seen uniformly by a dressed
+cube-boundary Wilson source.  More precisely, put
+\[
+ v_0(k):=\frac{w(k)}{\sqrt{q(k)}},\qquad k\in U,
+\]
+and let $S_W(k,u)$ be the normalized literal-Wilson projected synthesis map
+written in the orthonormal band frame, with the fixed CMP(4) normalization
+chosen so that $S_W(k,0)=I_3$.  If $P_{\rm car}(k,u)$ is the exact rank-one
+projection, then $u_U$ may be chosen so that
+\begin{equation}
+ \inf_{k\in U}
+ \bigl\|P_{\rm car}(k,u)S_W(k,u)v_0(k)\bigr\|^2
+ \ge\frac14,
+ \qquad 0<|u|<u_U.
+ \label{eq:g18-fixed-patch-carrier-overlap}
+\end{equation}
+The number $1/4$ is an absolute projected-norm bound for this normalized
+coefficient vector, not a spectral fraction normalized by the full raw-source
+covariance.  Consequently every $f\in C_c^\infty(U)$ gives a rapidly decaying
+spatial smearing of the literal Wilson plaquettes, with cube-boundary
+incidence, whose projection onto the exact carrier sheet is nonzero and
+volume independent.
+\end{corollary}
+
+\begin{proof}
+At $u=0$ the three target levels coincide, so there is no spectrally defined
+rank-one carrier projection.  Instead let
+$P_0(k)=v_0(k)v_0(k)^\dagger$ be the limiting comparison projection selected
+by the $BB^\dagger$ coefficient.  Then
+$P_0(k)S_W(k,0)v_0(k)=v_0(k)$.  The remainder estimate
+\eqref{eq:g18-uniform-cubic-remainder} and the order-$u^2$ gap imply, by the
+finite-dimensional Riesz-projection estimate, that
+\[
+ \sup_{k\in U}\|P_{\rm car}(k,u)-P_0(k)\|\longrightarrow0
+ \quad (u\to0).
+\]
+CMP(3)--CMP(4) make this explicit.  In the notation
+$W=T_cG^{-1/2}$ and $T_W=T_c(I+E)$,
+\[
+ S_W=W^*T_W=G^{1/2}(I+E),
+\]
+so $\|S_W-I\|_{\mu,\sharp}\to0$.  Therefore
+\[
+ \|P_{\rm car}S_Wv_0\|
+ \ge1-\|P_{\rm car}-P_0\|-\|S_W-I\|.
+\]
+Since $\overline U$ is compact, the right-hand side is at least $1/2$ after
+shrinking $u_U$.
+Squaring gives \eqref{eq:g18-fixed-patch-carrier-overlap}.  Fourier transform
+then turns $f\in C_c^\infty(U)$ into a rapidly decaying spatial smearing.
+The identity
+$f(k)v_0(k)=w(k)f(k)/\sqrt{q(k)}$ identifies its coefficients as the
+cube-boundary incidence combination of the three literal Wilson plaquettes.
+\end{proof}
+
+\begin{remark}[What has and has not been closed]
+\label{rem:g18-internal-sheet-firewall}
+Theorem~\ref{thm:g18-exact-fixed-k-carrier} removes the two hypotheses in the
+former conditional fixed-$k$ statement: it proves both the exact
+orthonormal-symbol coefficient
+$[u^2]h_u=\sigma_2I+(5/612)BB^\dagger$ and a remainder uniform in momentum
+on a nonzero-momentum patch.  The threshold $u_U$ is
+existential because the Yarotsky contraction majorants are existential, and
+it necessarily deteriorates as $q_*\downarrow0$.  No rank-one separation at
+$\Gamma$ is claimed; the cubic $T_1$ triplet meets there.
+
+For every $a_t>0$, the exact Hamiltonian semigroup restricts to this subspace
+as multiplication by $e^{-a_tE_{\rm car}(k,u)}$.  This does \emph{not}
+identify $e^{-a_tH_\infty(u)}$ with the finite-temporal-spacing isotropic
+Wilson-action transfer matrix.  The anisotropic-time/operator equivalence and
+every continuum-limit statement remain separate open problems.
+\end{remark}

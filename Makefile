@@ -26,26 +26,22 @@ status:          ## Print the contradiction and gap registers
 	@.venv/bin/workhouse status
 
 catalogue:       ## Regenerate the index/ catalogues: claims, symbols, graph
-# One pass is not always enough, and the shortfall is silent. Some checks READ
-# a generated index -- note coverage reads index/graph.jsonl -- so on the pass
-# that first adds a node they still see the previous generation, and their
-# detail line lands in claims.jsonl one generation stale. The files look
-# written, `make check` then fails with "stale; run `make catalogue`", and the
-# obvious reading of that message is that the command was never run. Loop to a
-# fixpoint instead: the second pass is skipped entirely when nothing moved.
-	@n=0; prev=""; \
-	while [ $$n -lt 4 ]; do \
-		.venv/bin/workhouse index --write; \
-		now=`cat index/claims.jsonl index/symbols.jsonl index/graph.jsonl | sha256sum`; \
-		[ "$$now" = "$$prev" ] && break; \
-		prev=$$now; n=`expr $$n + 1`; \
-	done; \
-	if [ $$n -ge 4 ]; then echo "catalogue did not converge in 4 passes"; exit 1; fi
+# `workhouse index -w` iterates to a fixpoint itself (some checks read the
+# generated graph and print its counts into their own detail lines, so one
+# pass can leave claims.jsonl a generation behind); the loop that used to
+# live here moved into the command so every caller gets it.
+	@.venv/bin/workhouse index -w
 
 atlas:           ## Render the theory graph to atlas.html (a view; never checked in)
 	@.venv/bin/workhouse atlas
 
-paper:           ## Build the master paper PDF and run both stdlib core verifiers
+# Builds the 2026-08-28 edition, not the current master edition, and on
+# purpose: that edition's digest in paper/SHA256SUMS is byte-reproducible
+# under pdflatex + SOURCE_DATE_EPOCH, which is what makes the pin meaningful.
+# The 2026-08-30 master edition is built with Tectonic, which is not a
+# dependency of this repository -- see paper/README.md "Rebuilding". Both
+# stdlib verifiers run here either way.
+paper:           ## Build the 2026-08-28 paper PDF and run both stdlib core verifiers
 	@python3 verify_core.py
 	@cd paper && python3 verify_core.py \
 		&& SOURCE_DATE_EPOCH=1756339200 FORCE_SOURCE_DATE=1 \
@@ -66,8 +62,14 @@ certified:       ## Regenerate CERTIFIED.md — every checked claim, ranked by t
 frontier:        ## Regenerate FRONTIER.md from the ledgers and the suites
 	@.venv/bin/workhouse frontier --write
 
-regen: frontier certified catalogue  ## Every generated file, in one order — the staleness tests stop tripping on partial regens
-	@echo "regenerated: FRONTIER.md CERTIFIED.md index/"
+# Catalogue FIRST. One check reads the generated graph (note coverage), so a
+# view rendered before the catalogue pass records that check against the
+# previous graph -- on 2026-09-01 that put "1 checks are failing" into a
+# committed CERTIFIED.md the moment a new archive was declared. With the
+# per-check cache a pass is seconds, so the views are rendered after the
+# catalogue has reached its fixpoint, never before.
+regen: catalogue frontier certified  ## Every generated file, in one order — the staleness tests stop tripping on partial regens
+	@echo "regenerated: index/ FRONTIER.md CERTIFIED.md"
 
 fmt:             ## Auto-format
 	@.venv/bin/ruff check --fix . && .venv/bin/ruff format .

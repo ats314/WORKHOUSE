@@ -27,6 +27,7 @@ def test_the_view_matches_the_graph_exactly():
     assert len(DATA["edges"]) == len(GRAPH.edges)
     triples = {(e.src, e.dst, e.type) for e in GRAPH.edges}
     assert {(e["s"], e["d"], e["t"]) for e in DATA["edges"]} == triples
+    assert all(e["p"] for e in DATA["edges"]), "the atlas must retain each edge source"
 
 
 def test_the_dispute_stays_two_sided():
@@ -36,6 +37,17 @@ def test_the_dispute_stays_two_sided():
     assert "-211835444920651/4405310420659200" in values
     assert "-0.020213328886166577" in values
     assert "never promote" in HTML
+
+
+def test_the_dispute_is_branchwise_and_keeps_originators():
+    c2 = next(n for n in DATA["nodes"] if n["id"] == "C2")
+    historical = next(s for s in c2["sides"] if s["label"] == "historical")
+    current = next(s for s in c2["sides"] if s["label"] == "v10a.26")
+    assert {m["id"] for m in historical["matches"]} >= {"CONST:C_shp (historical)"}
+    assert {m["id"] for m in current["matches"]} >= {"CONST:C_SHP_NEW_NUM"}
+    assert "DOC:kernel-historical-189" in historical["originators"]
+    assert "DOC:nb-hodge-v10a26-alt2" in current["originators"]
+    assert "A diagonal shift cannot reconcile this" in c2["detail"]
 
 
 def test_unifying_candidates_carry_their_falsifier():
@@ -52,7 +64,7 @@ def test_self_contained_except_google_fonts():
 
 def test_no_authored_prose_enters_the_page():
     """Node text is copied from records; the template carries no per-claim prose."""
-    template = atlas.TEMPLATE.read_text()
+    template = atlas.TEMPLATE.read_text(encoding="utf-8")
     assert atlas.MARKER in template
     for needle in ("C_shp", "q_band", "tier collapse"):
         assert needle.lower() not in template.lower(), needle
@@ -60,7 +72,14 @@ def test_no_authored_prose_enters_the_page():
 
 def test_write_targets_a_path_outside_the_pinned_trees(tmp_path):
     out = atlas.write(tmp_path / "atlas.html", DATA)
-    assert out.read_text() == HTML
+    assert out.read_text(encoding="utf-8") == HTML
     default = atlas.DEFAULT_OUT.resolve()
     for pinned in ("theory", "corpus-import", "settlement", "index"):
         assert (ROOT / pinned) not in default.parents
+
+
+def test_full_graph_layout_uses_spatial_hashing_and_notes_are_opt_in():
+    template = atlas.TEMPLATE.read_text(encoding="utf-8")
+    assert "Spatial hashing" in template
+    assert "for (let j = i + 1" not in template
+    assert '["note", "notes & archives", "--k-note", false]' in template

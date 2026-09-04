@@ -467,3 +467,169 @@ def _():
         "and Prop 7.39's rearrangement is an exact identity -- the manuscript spine and "
         "G_drift_full_algebra derive the same G22 reduction independently and agree"
     )
+
+
+# ==========================================================================
+# The 2026-09-01 extraction bundle (ledger/notes.yaml, EXTRACT_2026-09-01):
+# an LLM-extracted digest of the analysis-side corpus. Two of its constants
+# are cheap to establish exactly and one numerically; the documents stay T3.
+
+_EXTRACT = "EXTRACT_2026-09-01 (EX-001, EX-003, EX-010, EX-012) / G20, G21"
+
+
+@notes_prog.check(
+    "Hess V_Haar(0) = (N/12) I for every N: the series coefficient 1/24 times "
+    "tr(ad_X^2) = 2N tr(X^2)",
+    _EXTRACT,
+)
+def _():
+    # The extraction's EX-001 derives what the I/4 check above establishes at
+    # N = 3, for every N, and the derivation is two exact facts:
+    #   (i)  V_Haar(X) = -log det f(ad_X) with f(z) = (1 - e^{-z})/z, and
+    #        log f(z) = -z/2 + z^2/24 + O(z^3), so with tr ad_X = 0,
+    #        V_Haar = -tr(ad_X^2)/24 + O(X^3);
+    #   (ii) tr_gl(ad_X^2) = tr(L_X - R_X)^2 = 2N tr(X^2) - 2 (tr X)^2, and
+    #        ad_X kills the identity, so on sl(N) with X traceless
+    #        tr(ad_X^2) = 2N tr(X^2).
+    # In the extraction's convention (A), <X,Y> = 2 tr(X^dag Y), a traceless
+    # anti-Hermitian X has tr(X^2) = -|X|^2/2, so V_Haar = N|X|^2/24 and the
+    # Hessian is 2 N/24 = N/12. At N = 3 that is I/4, the check above. The
+    # identity (ii) is checked here on random rational traceless X for N = 2..5
+    # with ad_X written in the elementary-matrix basis, where no square roots
+    # appear because a trace is basis-independent.
+    from random import Random
+
+    from sympy import exp, log, symbols
+
+    z = symbols("z")
+    f = (1 - exp(-z)) / z
+    expansion = series(log(f), z, 0, 3).removeO()
+    coeff_ok = expansion == -z / 2 + z**2 / 24
+    rng = Random(20260901)
+    killing = {}
+    for n in range(2, 6):
+        X = Matrix(n, n, lambda i, j: Rational(rng.randint(-5, 5), rng.randint(1, 4)))
+        X = X - eye(n) * (X.trace() / n)  # traceless
+        # ad_X on gl(n) in the basis E_ij, as an n^2 x n^2 matrix
+        ad = zeros(n * n, n * n)
+        for a in range(n):
+            for b in range(n):
+                E = zeros(n, n)
+                E[a, b] = 1
+                comm = X * E - E * X
+                for c in range(n):
+                    for d in range(n):
+                        ad[c * n + d, a * n + b] = comm[c, d]
+        killing[n] = ((ad * ad).trace(), 2 * n * (X * X).trace())
+    killing_ok = all(lhs == rhs for lhs, rhs in killing.values())
+    hess = {n: Rational(2 * n, 24) for n in range(2, 6)}
+    ok = coeff_ok and killing_ok and hess[3] == Rational(1, 4)
+    return ok, (
+        f"log((1 - e^-z)/z) = {expansion} + O(z^3), so V_Haar = -tr(ad_X^2)/24 + O(X^3); and "
+        f"tr(ad_X^2) = 2N tr(X^2) on random rational traceless X: {killing}. With "
+        "<X,Y> = 2 tr(X^dag Y) that is V_Haar = N|X|^2/24, Hessian (N/12) I: "
+        + ", ".join(f"N={n}: {hess[n]}" for n in hess)
+        + ". The I/4 the register held for SU(3) is the N = 3 case; the extraction's EX-003 "
+        "table (Ric = N/4 in the same convention, ratio exactly 3 to the Haar Hessian) "
+        "is consistent with it. T3 documents, T1 constant"
+    )
+
+
+@notes_prog.check(
+    "the SU(2) single-link convexity threshold is beta_c = 4.413914663154, the minimum of "
+    "-2(csc^2 t - t^-2)/cos t",
+    _EXTRACT,
+    tier=2,
+)
+def _():
+    # EX-002 / EX-010: beta_c is the minimum of beta(t) = -2 (csc^2 t - 1/t^2)
+    # / cos t over the interval where it is positive, t in (pi/2, pi) -- the
+    # value at which the SU(2) one-link Wilson + Haar-Jacobian action first
+    # becomes convex. On (0, pi/2) beta is negative and unbounded below at
+    # pi/2, so the minimisation is over the second interval; a grid scan puts
+    # the minimum near t = 2.1 rad. Recomputed here with mpmath at 30 digits
+    # by a root of beta'(t); the extraction's 15-digit value is reproduced to
+    # the stated tolerance.
+    import mpmath as mp
+
+    mp.mp.dps = 30
+    beta = lambda t: -2 * (mp.csc(t) ** 2 - 1 / t**2) / mp.cos(t)  # noqa: E731
+    t_star = mp.findroot(lambda t: mp.diff(beta, t), mp.mpf("2.1"))
+    value = beta(t_star)
+    claimed = mp.mpf("4.413914663154")
+    tol = mp.mpf("1e-11")
+    # a minimum, not just a stationary point, and inside the positive interval
+    curvature = mp.diff(beta, t_star, 2)
+    grid_min = min(beta(mp.pi / 2 + mp.mpf(k) / 200) for k in range(1, 300))
+    ok = (
+        abs(value - claimed) < tol
+        and curvature > 0
+        and mp.pi / 2 < t_star < mp.pi
+        and grid_min >= value - mp.mpf("1e-25")
+    )
+    return ok, (
+        f"beta'(t) = 0 at t* = {mp.nstr(t_star, 15)} rad with beta''(t*) = "
+        f"{mp.nstr(curvature, 6)} > 0 on (pi/2, pi), beta(t*) = {mp.nstr(value, 16)}; the "
+        "extraction's "
+        f"4.413914663154 is reproduced to {mp.nstr(abs(value - claimed), 3)} (tolerance 1e-11). "
+        "A number the register did not hold; T2, resting on a float minimisation"
+    )
+
+
+@notes_prog.check(
+    "C_0(d_1* d_1) = 18 = 3 nu_P exactly in d = 4: the off-diagonal row sum of the lattice "
+    "Maxwell operator",
+    _EXTRACT,
+)
+def _():
+    # EX-012 claims the corpus's FFT value C_0 = 43.9077 is a symbol-convention
+    # artifact and the exact constant is 18. The register's G21 already carries
+    # C_bdy = C_0 = 3 nu_P on tori; this makes the integer explicit and
+    # volume-independent by building d_1 on periodic tori of side 3 and 4 in
+    # d = 4 and reading the largest off-diagonal absolute row sum of d_1* d_1.
+    # Every link lies in 2(d - 1) = 6 plaquettes and each plaquette couples it
+    # to 3 other links with weight +-1, so the sum is 6 * 3 = 18 whatever L.
+    from itertools import product
+
+    def c0(d: int, L: int) -> tuple[int, int]:
+        sites = list(product(range(L), repeat=d))
+        links = {(s, mu): i for i, (s, mu) in enumerate((s, mu) for s in sites for mu in range(d))}
+
+        def shift(s, mu):
+            t = list(s)
+            t[mu] = (t[mu] + 1) % L
+            return tuple(t)
+
+        rows: dict[int, dict[int, int]] = {i: {} for i in links.values()}
+        for s in sites:
+            for mu in range(d):
+                for nu in range(mu + 1, d):
+                    # plaquette boundary: +l(s,mu) +l(s+mu,nu) -l(s+nu,mu) -l(s,nu)
+                    bd = {
+                        links[(s, mu)]: 1,
+                        links[(shift(s, mu), nu)]: 1,
+                        links[(shift(s, nu), mu)]: -1,
+                        links[(s, nu)]: -1,
+                    }
+                    for a, va in bd.items():
+                        for b, vb in bd.items():
+                            rows[a][b] = rows[a].get(b, 0) + va * vb
+        diag = {rows[i][i] for i in rows}
+        offsum = {sum(abs(v) for j, v in rows[i].items() if j != i) for i in rows}
+        assert len(diag) == 1 and len(offsum) == 1
+        return diag.pop(), offsum.pop()
+
+    results = {(4, L): c0(4, L) for L in (3, 4)}
+    results[(3, 3)] = c0(3, 3)
+    ok = all(v == (6, 18) for (d, _L), v in results.items() if d == 4) and results[(3, 3)] == (
+        4,
+        12,
+    )
+    return ok, (
+        f"(diagonal, off-diagonal absolute row sum) of d_1* d_1 on periodic tori: {results}. "
+        "In d = 4 every link is in 6 plaquettes, each coupling it to 3 other links at weight "
+        "+-1: C_0 = 18 = 3 nu_P, the same at L = 3 and L = 4, and 12 in d = 3. This is the "
+        "constant G21's C_bdy = C_0 = 3 nu_P already names; the extraction's claim that a "
+        "reported 43.9077 was a symbol-convention artifact is recorded as its own -- the "
+        "register never held that number"
+    )

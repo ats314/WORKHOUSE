@@ -28,9 +28,15 @@ def _clip(text: str, width: int = 76) -> str:
     return text if len(text) <= width else text[: width - 1] + "…"
 
 
-def _resolve(query: str, node_ids: set[str]) -> str | None:
+def _resolve(query: str, node_ids: set[str], by_where: dict[str, str] | None = None) -> str | None:
     """A forgiving id lookup. Fuzzier retrieval stays `workhouse search`'s job."""
     q = query.strip()
+    # A corpus file by its path, with or without the corpus-import/ prefix.
+    if by_where:
+        posix = q.replace("\\", "/").strip("/")
+        for spelled in (posix, f"corpus-import/{posix}"):
+            if spelled in by_where:
+                return by_where[spelled]
     candidates = [q, q.upper()]
     m = re.fullmatch(r"(?i)adr[:\s]*(\d{1,4})", q)
     if m:
@@ -39,10 +45,18 @@ def _resolve(query: str, node_ids: set[str]) -> str | None:
         prefix, rest = q.split(":", 1)
         candidates += [f"{prefix.upper()}:{rest}", f"{prefix.upper()}:{rest.lower()}"]
     candidates += [f"CONST:{q}", f"LEAN:{q}", f"SYM:{q.lower()}", f"LIT:{q}", f"LIT:{q.upper()}"]
+    # Editions, routes, runs and provenance documents are nodes too; a query
+    # by their bare name should land on them without the prefix.
+    candidates += [f"CITE:{q}", f"ROUTE:{q}", f"RUN:{q}", f"DOC:{q}", f"CORPUS:{q}"]
     for candidate in candidates:
         if candidate in node_ids:
             return candidate
     return None
+
+
+def _corpus_paths(catalogue: list[claims_mod.Claim]) -> dict[str, str]:
+    """corpus-import path -> CORPUS node id, so `why <path>` lands on the file."""
+    return {c.where: c.id for c in catalogue if c.kind == "corpus"}
 
 
 def branchwise(
@@ -148,7 +162,7 @@ def neighborhood(
 
     by_id = {c.id: c for c in catalogue}
     sym_by_id = {f"SYM:{s['id']}": s for s in symbols}
-    node = _resolve(query, set(by_id) | set(sym_by_id))
+    node = _resolve(query, set(by_id) | set(sym_by_id), _corpus_paths(catalogue))
     if node is None:
         return {"query": query, "error": f"no record with id {query!r}"}, False
 
@@ -190,7 +204,7 @@ def explain(
     sym_by_id = {f"SYM:{s['id']}": s for s in symbols}
     node_ids = set(by_id) | set(sym_by_id)
 
-    node = _resolve(query, node_ids)
+    node = _resolve(query, node_ids, _corpus_paths(catalogue))
     if node is None:
         return (
             f"no record with id {query!r}.\n"
@@ -282,6 +296,22 @@ def explain(
             w("  leads:")
             for lead in gap["leads"]:
                 w(f"    {lead}")
+        # Routes, by state. This is the block that answers "what has been
+        # tried" without a trip through the run READMEs: a dead route names
+        # what killed it, a live one is where effort goes, an untried one is a
+        # recorded proposal nobody has spent anything on.
+        routes = gap.get("plan", []) or []
+        if routes:
+            w("")
+            w("\033[1mRoutes\033[0m")
+            order = {"live": 0, "untried": 1, "done": 2, "dead": 3}
+            for step in sorted(routes, key=lambda st: order.get(st.get("state"), 9)):
+                rid = claims_mod.route_id(node, step["step"])
+                w(f"  [{step.get('state', '?')}] {step['step']}  \033[2m{rid}\033[0m")
+                for ref in step.get("closed_by", []) or []:
+                    w(f"      closed by {ref}")
+                for ref in step.get("cannot_decide", []) or []:
+                    w(f"      cannot decide {ref}")
         # Structured sub-blocks are too big to print; say they exist and where.
         elided = [
             key

@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "ledger" / "documents.yaml"
 STANDINGS = {"current", "superseded", "quarantined", "corpus", "repo"}
 
-ALIASES = yaml.safe_load(SOURCE.read_text())["aliases"]
+ALIASES = yaml.safe_load(SOURCE.read_text(encoding="utf-8"))["aliases"]
 
 #: Tokens that make a citation resolvable WITHOUT the alias table: ledger ids,
 #: ADR references, literature ids, and repository paths.
@@ -45,6 +45,16 @@ def test_legend_is_sound():
         assert entry["standing"] in STANDINGS, f"{alias}: unknown standing {entry['standing']!r}"
         if entry["standing"] == "superseded":
             assert "superseded" in path, f"{alias}: superseded standing but not in superseded/"
+
+
+def test_the_canonical_authority_stack_is_explicit_and_resolvable():
+    by_alias = {entry["alias"]: entry for entry in ALIASES}
+    assert set(by_alias["UNIFIED"]["technical_appendix"]) == {"GLUEBALL"}
+    assert set(by_alias["UNIFIED"]["navigation"]) == {"GUIDE"}
+    assert set(by_alias["UNIFIED"]["provenance"]) == {"MANIFEST"}
+    for relation in ("technical_appendix", "navigation", "provenance"):
+        for target in by_alias["UNIFIED"][relation]:
+            assert target in by_alias and not by_alias[target].get("unresolved")
 
 
 def test_every_check_citation_resolves():

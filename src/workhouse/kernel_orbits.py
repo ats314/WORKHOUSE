@@ -1,0 +1,754 @@
+"""The fourth-order kernel as six amplitudes, exactly.
+
+One investigation, one module — the shape of ``tier_collapse.py`` and
+``kernel_comparison.py``.
+
+``kernel_comparison`` fits the shape coefficients at four points of the zone
+with condition number 45.8, which is what the v10a.26 transcript did and why
+every non-axial number in the dispute is a float. This module does the
+decomposition instead of the fit. The Bloch symbol of the carrier projection,
+
+    T(k) = psi(k)^dagger S(k) psi(k),   psi = (dbar_3, -dbar_2, dbar_1),
+
+is a *Laurent polynomial* in z_j = exp(i k_j) with rational coefficients, and
+the shape ansatz cleared of its denominator,
+
+    T = c0*e1 + A*e1^2 + B*e1*e2 + 4C*e2 + D*e3,   e_r = elementary sym in s_j,
+    s_j = 4 sin^2(k_j/2) = 2 - z_j - z_j^{-1},
+
+is a linear system over that same ring. Solving it exactly gives the shape
+coefficients over the *whole* zone, with a residual that is either zero or a
+witness that the kernel is outside the four-shape span. No tolerance appears
+anywhere, so the result is T1 and blockwise.
+
+What that buys, and why the module exists: the 189 records of the historical
+kernel carry only **six** distinct weight magnitudes, and each magnitude is one
+orbit of the cubic symmetry. In terms of those six amplitudes the shape data is
+closed form —
+
+    A = 5/48,   B = 0,   D = 0,   C = -5/96 - u - (rho + pi)/2,
+
+with ``nu = -(5/48 + 4u)`` forced by A and the on-site amplitude entering c0
+alone. Three signed numbers, not a seven-row table of floats. The cold v10a.26
+dump reproduces the same six orbits and the same normalized coefficients, which
+is what makes the two kernels comparable amplitude by amplitude rather than
+through one aggregate C.
+
+Nothing here prefers either side of C2. It reports both in the same basis.
+"""
+
+from __future__ import annotations
+
+import json
+from collections import defaultdict
+from fractions import Fraction
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+COLD_DUMP = ROOT / "runs" / "g3_kernel_record_dump_2026-08-28" / "g3_kernel_records.json"
+
+PLANES = ((0, 1), (0, 2), (1, 2))
+#: The direction a plane does not contain — psi_P is +-dbar of it.
+NORMAL_OF = {(0, 1): 2, (0, 2): 1, (1, 2): 0}
+#: psi = (dbar_3, -dbar_2, dbar_1) in plane order, per ``payloads.rayleigh``.
+PSI_SIGN = {(0, 1): 1, (0, 2): -1, (1, 2): 1}
+
+Exponent = tuple[int, int, int]
+Laurent = dict[Exponent, Fraction]
+
+# -- exact Laurent arithmetic in three variables -----------------------------
+
+
+def _add(a: Laurent, b: Laurent, scale=1) -> Laurent:
+    out = dict(a)
+    for e, c in b.items():
+        v = out.get(e, 0) + scale * c
+        if v:
+            out[e] = v
+        else:
+            out.pop(e, None)
+    return out
+
+
+def _mul(a: Laurent, b: Laurent) -> Laurent:
+    out: Laurent = {}
+    for e1, c1 in a.items():
+        for e2, c2 in b.items():
+            e = (e1[0] + e2[0], e1[1] + e2[1], e1[2] + e2[2])
+            v = out.get(e, 0) + c1 * c2
+            if v:
+                out[e] = v
+            else:
+                out.pop(e, None)
+    return out
+
+
+def _mono(exp, coeff=Fraction(1)) -> Laurent:
+    return {tuple(exp): Fraction(coeff)}
+
+
+def _s(j: int) -> Laurent:
+    """s_j = 4 sin^2(k_j/2) = 2 - z_j - z_j^{-1}."""
+    up, down = [0, 0, 0], [0, 0, 0]
+    up[j], down[j] = 1, -1
+    return _add(_add(_mono((0, 0, 0), 2), _mono(up, -1)), _mono(down, -1))
+
+
+def _dbar(j: int, conj: bool = False) -> Laurent:
+    """dbar_j = z_j - 1, or its conjugate z_j^{-1} - 1."""
+    e = [0, 0, 0]
+    e[j] = -1 if conj else 1
+    return _add(_mono(e), _mono((0, 0, 0), -1))
+
+
+_S = [_s(0), _s(1), _s(2)]
+E1 = _add(_add(_S[0], _S[1]), _S[2])
+E2 = _add(_add(_mul(_S[0], _S[1]), _mul(_S[0], _S[2])), _mul(_S[1], _S[2]))
+E3 = _mul(_mul(_S[0], _S[1]), _S[2])
+
+#: T = c0*e1 + A*e1^2 + B*e1*e2 + 4C*e2 + D*e3.  The ansatz is written for
+#: eps = T/q with q = e1; clearing q keeps every entry polynomial.
+BASIS: dict[str, Laurent] = {
+    "c0": E1,
+    "A": _mul(E1, E1),
+    "B": _mul(E1, E2),
+    "4C": E2,
+    "D": E3,
+}
+ORDER = ("c0", "A", "B", "4C", "D")
+
+
+# -- the carrier projection, and its exact shape ------------------------------
+
+
+def bloch(records) -> Laurent:
+    """T(k) = psi^dagger S(k) psi as an exact Laurent polynomial."""
+    out: Laurent = {}
+    for (ip, op, d), w in records:
+        term = _mul(_mul(_dbar(NORMAL_OF[op], conj=True), _dbar(NORMAL_OF[ip])), _mono(d))
+        out = _add(out, term, PSI_SIGN[op] * PSI_SIGN[ip] * Fraction(w))
+    return out
+
+
+def shape(target: Laurent) -> tuple[dict[str, Fraction], Laurent]:
+    """Exact shape coefficients of a Laurent target, and what is left over.
+
+    A nonempty residual is the statement that this record group does not lie in
+    the four-shape span at all — that is a finding, not a fitting error, so it
+    is returned rather than minimized.
+    """
+    exps = sorted(set().union(*(b.keys() for b in BASIS.values())) | set(target))
+    rows = [
+        [BASIS[n].get(e, Fraction(0)) for n in ORDER] + [target.get(e, Fraction(0))] for e in exps
+    ]
+    pivots, r = [], 0
+    for col in range(len(ORDER)):
+        p = next((i for i in range(r, len(rows)) if rows[i][col]), None)
+        if p is None:
+            continue
+        rows[r], rows[p] = rows[p], rows[r]
+        inv = rows[r][col]
+        rows[r] = [v / inv for v in rows[r]]
+        for i in range(len(rows)):
+            if i != r and rows[i][col]:
+                f = rows[i][col]
+                rows[i] = [a - f * b for a, b in zip(rows[i], rows[r], strict=True)]
+        pivots.append(col)
+        r += 1
+    coeffs = dict.fromkeys(ORDER, Fraction(0))
+    for i, col in enumerate(pivots):
+        coeffs[ORDER[col]] = rows[i][len(ORDER)]
+    fit: Laurent = {}
+    for n in ORDER:
+        fit = _add(fit, BASIS[n], coeffs[n])
+    return coeffs, _add(target, fit, -1)
+
+
+def coefficients(records) -> tuple[dict[str, Fraction], Laurent]:
+    """``(A, B, C, D, c0)`` of a record group, with C already halved out of 4C."""
+    co, residual = shape(bloch(records))
+    co = dict(co)
+    co["C"] = co["4C"] / 4
+    return co, residual
+
+
+# -- the six orbits -----------------------------------------------------------
+
+
+def orbits(records) -> dict[Fraction, list]:
+    """Records grouped by weight magnitude — one group per cubic orbit."""
+    by = defaultdict(list)
+    for key, w in records:
+        by[abs(w)].append((key, w))
+    return dict(by)
+
+
+#: What each orbit contributes, per unit of its own amplitude. Both
+#: independently computed kernels give exactly this table, which is what makes
+#: the amplitudes comparable across them.
+#:
+#:   orbit        n    A      B     D      C
+#:   skeleton   132   -4      0    -6     +3
+#:   doubled     12    0      0    +3     -1
+#:   rotation    24    0      0     0   -1/2
+#:   in-plane    12    0      0     0   -1/2
+#:   normal       6   -1      0     0   +1/2
+#:   on-site      3    0      0     0      0
+ORBIT_SIZES = (("skeleton", 132), ("rotation", 24), ("normal", 6), ("on-site", 3))
+
+
+def amplitudes(records, solver=coefficients) -> dict[str, Fraction]:
+    """The six signed orbit amplitudes: u, u2, rho, pi, nu, sigma.
+
+    Read off the orbit's *shape contribution*, not its record signs: the
+    rotation orbit carries both signs by construction (twelve of each), so a
+    sign taken from the weights would be a convention, while
+
+        C_skeleton = 3u,  C_doubled = -u2,  C_rot = -rho/2,
+        C_in-plane = -pi/2,  A_normal = -nu,  c0_on-site = sigma
+
+    is forced. ``orbit_amplitude_matches_record_weight`` then checks that each
+    one equals the orbit's record weight up to sign, which is the statement
+    that the orbit really is a single amplitude.
+    """
+    by = orbits(records)
+    twelves = sorted(m for m in by if len(by[m]) == 12)
+    groups = {
+        "u": by[max(by, key=lambda m: len(by[m]))],
+        "u2": by[twelves[0]],
+        "rho": by[next(m for m in by if len(by[m]) == 24)],
+        "pi": by[twelves[1]],
+        "nu": by[next(m for m in by if len(by[m]) == 6)],
+        "sigma": by[next(m for m in by if len(by[m]) == 3)],
+    }
+    co = {name: solver(g)[0] for name, g in groups.items()}
+    return {
+        "u": co["u"]["C"] / 3,
+        "u2": -co["u2"]["C"],
+        "rho": -2 * co["rho"]["C"],
+        "pi": -2 * co["pi"]["C"],
+        "nu": -co["nu"]["A"],
+        "sigma": co["sigma"]["c0"],
+    }
+
+
+def orbit_magnitudes(records) -> dict[str, Fraction]:
+    """The weight magnitude carried by each orbit's records."""
+    by = orbits(records)
+    twelves = sorted(m for m in by if len(by[m]) == 12)
+    return {
+        "u": max(by, key=lambda m: len(by[m])),
+        "u2": twelves[0],
+        "rho": next(m for m in by if len(by[m]) == 24),
+        "pi": twelves[1],
+        "nu": next(m for m in by if len(by[m]) == 6),
+        "sigma": next(m for m in by if len(by[m]) == 3),
+    }
+
+
+# -- the cold (v10a.26) dump, in the same basis -------------------------------
+
+
+def cold_records() -> list:
+    """The v10a.26 record dump keyed like ``payloads.kernel_records``.
+
+    Displacements are stored on a 5^3 torus; ``(x + 2) % 5 - 2`` recenters
+    them, the convention ``kernel_comparison.load_cold`` already established.
+    Weights are floats: everything downstream of here is T2.
+    """
+    obj = json.loads(COLD_DUMP.read_text(encoding="utf-8"))
+    return [
+        (
+            (
+                tuple(r["anchor_pol"]),
+                tuple(r["row_pol"]),
+                tuple((x + 2) % 5 - 2 for x in r["displacement"]),
+            ),
+            r["re"],
+        )
+        for r in obj["records"]
+    ]
+
+
+def cold_orbits(tol: float = 1e-9) -> list[tuple[float, int, list]]:
+    """Cold records clustered by weight magnitude: ``(magnitude, count, group)``.
+
+    The clusters are not close calls — within each one the spread is below
+    1e-15 relative, and the gaps between them are factors of two or more.
+    """
+    groups: list[list] = []
+    for key, w in sorted(cold_records(), key=lambda r: abs(r[1])):
+        if groups and abs(abs(w) - abs(groups[-1][-1][1])) <= tol * max(1.0, abs(w)):
+            groups[-1].append((key, w))
+        else:
+            groups.append([(key, w)])
+    return [(sum(abs(w) for _, w in g) / len(g), len(g), g) for g in groups]
+
+
+def _float_shape(records) -> dict[str, float]:
+    """Shape coefficients of float-weighted records, over the same exact basis.
+
+    Least squares over the whole zone rather than the transcript's four points
+    (condition number 45.8). The basis is exact; only the weights are floats,
+    so anything reached through here is T2.
+    """
+    target: dict[Exponent, float] = {}
+    for (ip, op, d), w in records:
+        term = _mul(_mul(_dbar(NORMAL_OF[op], conj=True), _dbar(NORMAL_OF[ip])), _mono(d))
+        sign = PSI_SIGN[op] * PSI_SIGN[ip]
+        for e, c in term.items():
+            target[e] = target.get(e, 0.0) + sign * w * float(c)
+    exps = sorted(set().union(*(b.keys() for b in BASIS.values())) | set(target))
+    cols = [[float(BASIS[n].get(e, 0)) for e in exps] for n in ORDER]
+    y = [target.get(e, 0.0) for e in exps]
+    m = len(ORDER)
+    gram = [
+        [sum(cols[i][r] * cols[j][r] for r in range(len(exps))) for j in range(m)] for i in range(m)
+    ]
+    rhs = [sum(cols[i][r] * y[r] for r in range(len(exps))) for i in range(m)]
+    for i in range(m):
+        p = max(range(i, m), key=lambda r: abs(gram[r][i]))
+        gram[i], gram[p] = gram[p], gram[i]
+        rhs[i], rhs[p] = rhs[p], rhs[i]
+        if abs(gram[i][i]) < 1e-30:
+            continue
+        for r in range(m):
+            if r != i and gram[r][i]:
+                f = gram[r][i] / gram[i][i]
+                gram[r] = [a - f * b for a, b in zip(gram[r], gram[i], strict=True)]
+                rhs[r] -= f * rhs[i]
+    co = {ORDER[i]: (rhs[i] / gram[i][i] if abs(gram[i][i]) > 1e-30 else 0.0) for i in range(m)}
+    co["C"] = co["4C"] / 4
+    return co
+
+
+def cold_amplitudes() -> dict[str, float]:
+    """The v10a.26 dump's six signed amplitudes, by the same definitions.
+
+    Float throughout, so T2. Orbits are told apart exactly as in the exact
+    path: by record count, and the two 12-record orbits by magnitude.
+    """
+    cold = cold_orbits()
+    groups = {n: g for _, n, g in cold}
+    twelves = sorted((m, g) for m, n, g in cold if n == 12)
+    return {
+        "u": _float_shape(groups[132])["C"] / 3,
+        "u2": -_float_shape(twelves[0][1])["C"],
+        "rho": -2 * _float_shape(groups[24])["C"],
+        "pi": -2 * _float_shape(twelves[1][1])["C"],
+        "nu": -_float_shape(groups[6])["A"],
+        "sigma": _float_shape(groups[3])["c0"],
+    }
+
+
+#: Each orbit's carrier projection T = psi^dagger S psi, as a polynomial in the
+#: elementary symmetric functions of s_j, per unit of the orbit's amplitude.
+#: Five of the six follow from the orbit's displacement set in two lines; the
+#: sixth (the skeleton) is solved from its records, with residual zero.
+#:
+#:   on-site    S_P = sigma                     -> sigma * e1
+#:   normal     S_P = nu (2 - s_n)              -> nu (2 e1 - e1^2 + 2 e2)
+#:   in-plane   S_P = pi sum_{i in P} (2 - s_i) -> pi (4 e1 - 2 e2)
+#:   doubled    S_P = u2 (2 - s_i)(2 - s_j)     -> u2 (4 e1 - 4 e2 + 3 e3)
+#:   rotation   S_PQ = -eps_P eps_Q rho dbar_{n(Q)} conj(dbar_{n(P)})
+#:                                              -> rho (-2 e2)
+#:   skeleton                                   -> u (12 e1 - 4 e1^2 + 12 e2 - 6 e3)
+#:
+#: No orbit produces the e1*e2 monomial, which is B: the q e_2 collapse is that
+#: none of the six generates it, not a cancellation between them.
+CLOSED_FORMS = {
+    "sigma": {"e1": 1},
+    "nu": {"e1": 2, "e1e1": -1, "e2": 2},
+    "pi": {"e1": 4, "e2": -2},
+    "u2": {"e1": 4, "e2": -4, "e3": 3},
+    "rho": {"e2": -2},
+    "u": {"e1": 12, "e1e1": -4, "e2": 12, "e3": -6},
+}
+
+
+def symmetric(**terms) -> Laurent:
+    """A combination of e1, e1^2 (``e1e1``), e2, e3 as a Laurent polynomial."""
+    parts = {"e1": E1, "e1e1": _mul(E1, E1), "e2": E2, "e3": E3}
+    out: Laurent = {}
+    for name, coeff in terms.items():
+        out = _add(out, parts[name], coeff)
+    return out
+
+
+def orbit_groups(records) -> dict[str, list]:
+    """Records keyed by orbit name, the same six the amplitudes are named for."""
+    by = orbits(records)
+    twelves = sorted(m for m in by if len(by[m]) == 12)
+    return {
+        "u": by[max(by, key=lambda m: len(by[m]))],
+        "u2": by[twelves[0]],
+        "rho": by[next(m for m in by if len(by[m]) == 24)],
+        "pi": by[twelves[1]],
+        "nu": by[next(m for m in by if len(by[m]) == 6)],
+        "sigma": by[next(m for m in by if len(by[m]) == 3)],
+    }
+
+
+def two_cos(m: int) -> Laurent:
+    """X_m = z_m + z_m^{-1} = 2 cos k_m = 2 - s_m."""
+    up, down = [0, 0, 0], [0, 0, 0]
+    up[m], down[m] = 1, -1
+    return _add(_mono(up), _mono(down))
+
+
+def same_plane_long_range(records) -> dict[tuple[int, int], Laurent]:
+    """Per plane, the same-plane records at shells (0,0,2) and (0,1,1).
+
+    That is everything a plane sends to itself except the two
+    nearest-neighbour orbits (nu along its normal, pi in its own axes) and the
+    on-site term: sixteen records, four at u2 and twelve at u.
+    """
+    out: dict[tuple[int, int], Laurent] = {}
+    for (ip, op, d), w in records:
+        if ip == op and any(d) and sorted(abs(x) for x in d) != [0, 0, 1]:
+            out.setdefault(ip, {})[tuple(d)] = Fraction(w)
+    return out
+
+
+def perfect_product(plane: tuple[int, int], u: Fraction) -> Laurent:
+    """u * [(X + Y)(X + Y + Z) - 4] for a plane with axes {i, j} and normal n."""
+    i, j = plane
+    xy = _add(two_cos(i), two_cos(j))
+    form = _add(_mul(xy, _add(xy, two_cos(NORMAL_OF[plane]))), _mono((0, 0, 0), -4))
+    return {e: u * c for e, c in form.items() if c}
+
+
+def cross_plane_skeleton(records, u: Fraction) -> tuple[list, Laurent]:
+    """The 96 cross-plane records at amplitude u, and their closed form.
+
+    ``-2 u e_2 (e_1 - 8)``: pure e_2 times a linear factor, which is why the
+    sector carries no e_3 and no A at all.
+    """
+    group = [r for r in records if r[0][0] != r[0][1] and abs(r[1]) == u]
+    form = _mul(E2, _add(E1, _mono((0, 0, 0), -8)))
+    return group, {e: -2 * u * c for e, c in form.items() if c}
+
+
+# -- the cubic group on plaquette records ------------------------------------
+#
+# The sign test G3 asked for. A kernel record ((ip, op, d), w) couples an input
+# plaquette of plane ``ip`` based at the origin to an output plaquette of plane
+# ``op`` based at ``d``. Plaquettes are corner-based, so ``d`` is not the vector
+# the cubic group acts on: the centre of a plaquette in plane {i, j} sits at
+# (e_i + e_j)/2 from its base, and the geometric displacement is
+#
+#     Delta = d + c(op) - c(ip),        c(P) = (e_i + e_j)/2,
+#
+# which is what a signed permutation of the axes rotates. Reflecting an axis
+# that a plaquette contains reverses the loop, so a plane picks up the
+# orientation character  chi_g(P) = s_i s_j * sgn(order of the image axes).
+# ``PSI_SIGN`` is the same character read at the identity: eps_P is the parity
+# of (i, j, n(P)), i.e. the cube boundary d_3.
+
+Signed = tuple[tuple[int, int, int], tuple[int, int, int]]
+
+
+def cubic_group() -> list[Signed]:
+    """The 48 signed permutations of the axes: ``(sigma, s)`` with x_j -> s_j x_{sigma_j}."""
+    from itertools import permutations, product
+
+    return [(sigma, s) for sigma in permutations(range(3)) for s in product((1, -1), repeat=3)]
+
+
+def act_plane(g: Signed, plane: tuple[int, int]) -> tuple[tuple[int, int], int]:
+    """The image plane and the orientation character of ``plane`` under ``g``."""
+    sigma, s = g
+    i, j = plane
+    a, b = sigma[i], sigma[j]
+    return (min(a, b), max(a, b)), s[i] * s[j] * (1 if a < b else -1)
+
+
+def act_vector(g: Signed, v) -> tuple[int, int, int]:
+    sigma, s = g
+    out = [0, 0, 0]
+    for j in range(3):
+        out[sigma[j]] = s[j] * v[j]
+    return tuple(out)
+
+
+def _centre2(plane: tuple[int, int]) -> list[int]:
+    """Twice the centre offset of a plaquette based at the origin (kept integer)."""
+    out = [0, 0, 0]
+    for j in plane:
+        out[j] = 1
+    return out
+
+
+def transform_record(g: Signed, key, use_character: bool = True):
+    """``(key', chi)``: where ``g`` sends a record key, and the sign it acquires.
+
+    Returns ``(None, 0)`` when the rotated centre displacement is not a legal
+    base displacement for the image planes, which cannot happen for a
+    consistent record set and is reported rather than hidden.
+    """
+    ip, op, d = key
+    ip2, ci = act_plane(g, ip)
+    op2, co = act_plane(g, op)
+    c_ip, c_op = _centre2(ip), _centre2(op)
+    delta2 = act_vector(g, tuple(2 * d[j] + c_op[j] - c_ip[j] for j in range(3)))
+    c_ip2, c_op2 = _centre2(ip2), _centre2(op2)
+    d2 = []
+    for j in range(3):
+        v = delta2[j] - (c_op2[j] - c_ip2[j])
+        if v % 2:
+            return None, 0
+        d2.append(v // 2)
+    return (ip2, op2, tuple(d2)), (ci * co if use_character else 1)
+
+
+def _same(a, b, tol) -> bool:
+    return a == b if tol == 0 else abs(a - b) <= tol * abs(b)
+
+
+def is_hermitian(records, tol=0) -> bool:
+    """Every record has its adjoint partner ``((op, ip, -d), w)`` at the same weight."""
+    table = {key: w for key, w in records}
+    for (ip, op, d), w in records:
+        partner = table.get((op, ip, tuple(-x for x in d)))
+        if partner is None or not _same(partner, w, tol):
+            return False
+    return True
+
+
+def is_transposition_symmetric(records, tol=0) -> bool:
+    """Swapping input and output planes at the same centre displacement is a symmetry.
+
+    In centred coordinates that is Hermiticity composed with inversion, so for a
+    cubic-covariant Hermitian kernel it holds automatically -- which is why
+    which plane a dump calls the row and which the anchor cannot matter.
+    """
+    table = {key: w for key, w in records}
+    for key, w in records:
+        (ip, op, d), _ = key, w
+        # centre displacement of the swapped record equals that of the original
+        c_ip, c_op = _centre2(ip), _centre2(op)
+        d2 = []
+        for j in range(3):
+            v = 2 * d[j] + c_op[j] - c_ip[j] - (c_ip[j] - c_op[j])
+            if v % 2:
+                return False
+            d2.append(v // 2)
+        partner = table.get((op, ip, tuple(d2)))
+        if partner is None or not _same(partner, w, tol):
+            return False
+    return True
+
+
+def covariant_elements(records, use_character: bool = True, tol=0) -> list[Signed]:
+    """The elements of the cubic group under which the record set is invariant."""
+    table = {key: w for key, w in records}
+    keep = []
+    for g in cubic_group():
+        ok = True
+        for key, w in records:
+            key2, chi = transform_record(g, key, use_character)
+            if key2 is None or key2 not in table or not _same(table[key2], chi * w, tol):
+                ok = False
+                break
+        if ok:
+            keep.append(g)
+    return keep
+
+
+def regauge(records, g: Signed):
+    """A change of basis of the plane fibre alone: ``S -> U_g S U_g^T`` with k untouched.
+
+    The plane labels and orientations move; the displacement does not. This is
+    the whole space of conventions available in the plane basis -- which
+    plaquette is called which, and which way round each one is traversed.
+    """
+    out = []
+    for (ip, op, d), w in records:
+        ip2, ci = act_plane(g, ip)
+        op2, co = act_plane(g, op)
+        out.append(((ip2, op2, d), ci * co * w))
+    return out
+
+
+# -- the Hodge form of the kernel ---------------------------------------------
+#
+# The corpus's own algebra (GLUEBALL v3.1 §6.2; THM_FLUX Prop. 2): the signed
+# shared-edge square adjacency S_sq satisfies S_sq + 4I = L_down, the down
+# Laplacian on plaquettes, and the cube boundary gives the up Laplacian L_up.
+# What the checks in ``invariants/orbits.py`` add is that BOTH recorded
+# fourth-order kernels are exactly a polynomial in those two operators plus
+# one more -- the cross-plane half of S_sq -- and that the coefficient of that
+# one operator is -2 C_shp. Everything here is incidence algebra on records.
+
+Records = dict
+
+
+def _e(j: int) -> tuple[int, int, int]:
+    v = [0, 0, 0]
+    v[j] = 1
+    return tuple(v)
+
+
+def _vadd(x, y) -> tuple[int, int, int]:
+    return tuple(p + q for p, q in zip(x, y, strict=True))
+
+
+def plaquette_boundary(plane: tuple[int, int], base) -> dict:
+    """The oriented boundary of the plaquette of ``plane`` based at ``base``.
+
+    Links are ``(site, direction)``, oriented along +direction; the loop runs
+    base -> +i -> +j -> back, so the return legs enter with sign -1.
+    """
+    i, j = plane
+    return {
+        (tuple(base), i): 1,
+        (_vadd(base, _e(i)), j): 1,
+        (_vadd(base, _e(j)), i): -1,
+        (tuple(base), j): -1,
+    }
+
+
+def cube_boundary(base) -> dict:
+    """The cube boundary d_3 as face signs: PSI_SIGN on the far face, minus on the near.
+
+    This is the carrier psi = (dbar_3, -dbar_2, dbar_1) read in real space:
+    dbar_n = z_n - 1 is 'the face at base + e_n minus the face at base'.
+    """
+    out = {}
+    for pl in PLANES:
+        n = NORMAL_OF[pl]
+        out[(pl, _vadd(base, _e(n)))] = PSI_SIGN[pl]
+        out[(pl, tuple(base))] = -PSI_SIGN[pl]
+    return out
+
+
+def identity() -> Records:
+    return {(p, p, (0, 0, 0)): Fraction(1) for p in PLANES}
+
+
+def down_laplacian(reach: int = 2) -> Records:
+    """L_down = d_1 d_1^dagger on plaquettes: shared links, with orientation signs.
+
+    Diagonal 4 (four links per plaquette); off-diagonal +-1 on the twelve
+    shared-link neighbours. ``L_down - 4I`` is the corpus's S_sq.
+    """
+    from itertools import product
+
+    out: Records = {}
+    for ip in PLANES:
+        b0 = plaquette_boundary(ip, (0, 0, 0))
+        for op in PLANES:
+            for d in product(range(-reach, reach + 1), repeat=3):
+                b1 = plaquette_boundary(op, d)
+                v = sum(b0[link] * b1[link] for link in b0 if link in b1)
+                if v:
+                    out[(ip, op, d)] = Fraction(v)
+    return out
+
+
+def up_laplacian(reach: int = 2) -> Records:
+    """L_up = d_2^dagger d_2 on plaquettes: pairs of faces of a common cube.
+
+    Diagonal 2 (two cubes per plaquette); -1 on the opposite face of each cube,
+    and +-1 on the perpendicular faces -- exactly minus the cross-plane half of
+    L_down, so the full Laplacian L_down + L_up is the scalar Laplacian on each
+    plane component, with no cross-plane entries at all.
+    """
+    from itertools import product
+
+    cubes = [cube_boundary(c) for c in product(range(-reach - 1, reach + 1), repeat=3)]
+    out: Records = {}
+    for ip in PLANES:
+        for op in PLANES:
+            for d in product(range(-reach, reach + 1), repeat=3):
+                v = 0
+                for c in cubes:
+                    if (ip, (0, 0, 0)) in c and (op, d) in c:
+                        v += c[(ip, (0, 0, 0))] * c[(op, d)]
+                if v:
+                    out[(ip, op, d)] = Fraction(v)
+    return out
+
+
+def combine(*terms) -> Records:
+    """sum_i c_i * records_i, dropping zeros."""
+    out = defaultdict(Fraction)
+    for c, m in terms:
+        for k, v in m.items():
+            out[k] += c * v
+    return {k: v for k, v in out.items() if v}
+
+
+def compose(a: Records, b: Records) -> Records:
+    """The operator product on records: ip at 0 -> q at d1 (a), q -> op at d1 + d2 (b)."""
+    out = defaultdict(Fraction)
+    by_in = defaultdict(list)
+    for (ip, q, d), w in b.items():
+        by_in[ip].append((q, d, w))
+    for (ip, q, d1), w1 in a.items():
+        for op, d2, w2 in by_in[q]:
+            out[(ip, op, _vadd(d1, d2))] += w1 * w2
+    return {k: v for k, v in out.items() if v}
+
+
+def cross_half(records: Records) -> Records:
+    return {k: v for k, v in records.items() if k[0] != k[1]}
+
+
+def bloch_matrix(records) -> dict:
+    """S[op][ip](k) = sum_d w z^d, as Laurent polynomials."""
+    S = {op: {ip: {} for ip in PLANES} for op in PLANES}
+    for (ip, op, d), w in dict(records).items():
+        S[op][ip] = _add(S[op][ip], _mono(d, Fraction(w)))
+    return S
+
+
+def carrier() -> dict:
+    """psi_P = eps_P dbar_{n(P)} as Laurent polynomials, per plane."""
+    return {p: {e: PSI_SIGN[p] * c for e, c in _dbar(NORMAL_OF[p]).items()} for p in PLANES}
+
+
+def apply(records, vector: dict) -> dict:
+    S = bloch_matrix(records)
+    out = {}
+    for op in PLANES:
+        acc: Laurent = {}
+        for ip in PLANES:
+            acc = _add(acc, _mul(S[op][ip], vector[ip]))
+        out[op] = acc
+    return out
+
+
+def acts_as(records, scalar: Laurent) -> bool:
+    """True when the operator sends the carrier to ``scalar * carrier``."""
+    psi = carrier()
+    image = apply(records, psi)
+    return all(image[p] == _mul(scalar, psi[p]) for p in PLANES)
+
+
+def hodge_form(amps: dict) -> dict:
+    """The five coefficients of  H4 = -nu~ (L_up - 2) + u S^2 - pi~ S + sigma~ I - 2C R.
+
+    ``S = L_down - 4`` and ``R`` is its cross-plane half. Reduced amplitudes:
+    nu~ = nu + 4u, pi~ = pi + 2u, sigma~ = sigma - 12u -- the orbit amplitudes
+    with the diagonal shadow of u S^2 removed. Works on exact and float
+    amplitudes alike; the caller decides the tier.
+    """
+    u = amps["u"]
+    nu_r, pi_r, sigma_r = amps["nu"] + 4 * u, amps["pi"] + 2 * u, amps["sigma"] - 12 * u
+    c_shp = nu_r / 2 - (amps["rho"] + pi_r) / 2
+    return {"nu~": nu_r, "u": u, "pi~": pi_r, "sigma~": sigma_r, "C": c_shp}
+
+
+def hodge_records(form: dict) -> Records:
+    """Assemble the kernel the Hodge form describes, as records."""
+    ident = identity()
+    s_sq = combine((1, down_laplacian()), (-4, ident))
+    up = combine((1, up_laplacian()), (-2, ident))
+    return combine(
+        (-Fraction(form["nu~"]), up),
+        (Fraction(form["u"]), compose(s_sq, s_sq)),
+        (-Fraction(form["pi~"]), s_sq),
+        (Fraction(form["sigma~"]), ident),
+        (-2 * Fraction(form["C"]), cross_half(s_sq)),
+    )

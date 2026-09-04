@@ -69,11 +69,21 @@ CURATED_TYPES = frozenset(
         "formalizes",  # theorems.yaml
         "promotes",  # theorems.yaml: the T1/T2 check a theorem lifts to T0
         "originates",  # provenance.yaml: the corpus document a value comes from
+        "technical_appendix",  # documents.yaml: governing source-stack role
+        "navigation",  # documents.yaml: governing source-stack role
+        "provenance",  # documents.yaml: governing source-stack role
         "uses",  # a check body reads a registered constant (K.NAME)
         "contains",  # notes.yaml: the archive a note document was inventoried in
         "evidences",  # runs/index.yaml: a pinned run record bears on a ledger item
         "duplicate_of",  # notes.yaml reviews
         "superseded_by",  # notes.yaml reviews
+        "rests_on",  # a check's declared inputs: other registered checks
+        "yields",  # a check -> the exact value it returns as a catalogue constant
+        "plans",  # gaps.yaml: a gap -> one of its plan steps (a route)
+        "closed_by",  # gaps.yaml plan step -> the run, check or ADR that settled it
+        "cannot_decide",  # gaps.yaml plan step -> the claim its instrument cannot reach
+        "labels",  # a pinned manuscript -> a check it prints a \chk label for
+        "pinned_as",  # a corpus file -> the provenance document or alias that pins it
     }
 )
 #: "cites" appears on both sides deliberately: the DERIVED kind is an id
@@ -202,6 +212,21 @@ def _adr_id(text: str) -> str | None:
     return f"ADR:{m.group(1)}" if m else None
 
 
+def _closer_id(ref: str, check_ref) -> str:
+    """Resolve a plan step's `closed_by` entry to a catalogue id.
+
+    Accepted spellings, all verbatim from the ledger: a ledger id (C2, G14),
+    a run id (RUN:<dir>), an ADR (ADR 0005 / ADR:0005), or a check by its
+    registered name (CHK:<name>). Anything else stays as written and lands in
+    the dangling report.
+    """
+    if ref.startswith("CHK:"):
+        return check_ref(ref[len("CHK:") :])
+    if adr := _adr_id(ref):
+        return adr
+    return ref
+
+
 def build(
     catalogue: list[claims_mod.Claim] | None = None,
     symbols: list[dict] | None = None,
@@ -221,6 +246,20 @@ def build(
                 if ref not in nodes:
                     dangling.append((ref, f"{src} -> {dst}", source))
 
+    # Check names resolve to catalogue ids through this map. It is built first
+    # because three curated sources below name checks by their registered
+    # name rather than by id: theorems.yaml (`promotes`), gaps.yaml plan steps
+    # (`closed_by: CHK:<name>`), and the manuscripts' \chk labels.
+    chk_ids: dict[str, list[str]] = {}
+    for suite in SUITES:
+        for name, _section, _tier, _fn in suite.checks:
+            chk_ids.setdefault(name, []).append(claims_mod.check_id(suite.name, name))
+
+    def check_ref(name: str) -> str:
+        """The one catalogue id for a registered check name, or a dangling marker."""
+        ids = chk_ids.get(name, [])
+        return ids[0] if len(ids) == 1 else f"CHK:?{name}"
+
     led = ledger_mod.load()
     for entry in led.contradictions:
         for gap in entry.get("blocks", []):
@@ -232,6 +271,20 @@ def build(
             add(entry["id"], target, "unblocks", "curated", "ledger/gaps.yaml")
         for target in entry.get("depends_on", []):
             add(entry["id"], target, "depends_on", "curated", "ledger/gaps.yaml")
+        # Routes: each plan step is a node, so a gap's `why` can say which
+        # attempts are live, which are dead and what killed them. A dead route
+        # with no closed_by edge is a dead route nobody can audit, and a route
+        # that reads as open when a run has closed it is how four sessions
+        # were spent on the 609-cluster sweep after it was known to emit only
+        # the Gamma scalar.
+        for step in entry.get("plan", []) or []:
+            rid = claims_mod.route_id(entry["id"], step["step"])
+            add(entry["id"], rid, "plans", "curated", "ledger/gaps.yaml")
+            for ref in step.get("closed_by", []) or []:
+                closer = _closer_id(str(ref), check_ref)
+                add(rid, closer, "closed_by", "curated", "ledger/gaps.yaml")
+            for ref in step.get("cannot_decide", []) or []:
+                add(rid, str(ref), "cannot_decide", "curated", "ledger/gaps.yaml")
     for entry in led.register:
         for target in entry["contradictions"]:
             add(entry["id"], target, "contradictions", "curated", "ledger/governing_register.yaml")
@@ -257,6 +310,19 @@ def build(
             # have no catalogue record to point at.
             if name.isupper():
                 add(sid, f"CONST:{name}", "code_names", "curated", "ledger/symbols.yaml")
+
+    # The governing ALL THEORY source stack. These relationships are authored
+    # in documents.yaml rather than inferred from filenames: UNIFIED names its
+    # technical appendix, navigation guide, and byte-level provenance record.
+    # The nodes remain T3 citation records; documentary authority never
+    # promotes an individual mathematical claim.
+    for document in claims_mod.load_document_aliases():
+        if document.get("unresolved"):
+            continue
+        src = f"CITE:{document['alias']}"
+        for type_ in ("technical_appendix", "navigation", "provenance"):
+            for target in document.get(type_, []):
+                add(src, f"CITE:{target}", type_, "curated", "ledger/documents.yaml")
 
     # The run register: evidences edges from each pinned run record to the
     # ledger items its entry names. Curated in runs/index.yaml; an edge says
@@ -341,10 +407,59 @@ def build(
         for target in adr["retracts"]:
             add(adr["id"], target, "retracts", "derived", adr["where"])
 
-    chk_ids: dict[str, list[str]] = {}
+    # A check's declared inputs. Curated: the author wrote the names at
+    # registration, and they must resolve to exactly one registered check --
+    # a name matching two suites would fan a dependency out to a check nobody
+    # named, and a name matching none is a dangling reference the validator
+    # reports rather than a silently missing edge.
     for suite in SUITES:
-        for name, _section, _tier, _fn in suite.checks:
-            chk_ids.setdefault(name, []).append(claims_mod.check_id(suite.name, name))
+        for name, _section, _tier, fn in suite.checks:
+            chk = claims_mod.check_id(suite.name, name)
+            for dep in getattr(fn, "rests_on", ()):
+                add(chk, check_ref(dep), "rests_on", "curated", source_path(fn))
+
+    # A check that yields an exact value is the origin of that catalogue
+    # constant. The catalogue records the yielding check in `related`, so no
+    # check runs here.
+    for claim in catalogue:
+        if claim.kind == "constant" and claim.status.startswith("yielded by"):
+            for chk in claim.related:
+                add(chk, claim.id, "yields", "curated", claim.where)
+
+    # A pinned manuscript labels the checks it prints. The manuscript guard
+    # already verifies every label resolves; this makes the same fact an edge,
+    # so `why <edition>` lists what the paper rests on and `why <check>` says
+    # which editions print it -- the claim-to-check map computed rather than
+    # maintained by hand in paper/README.md, where it drifted once already.
+    for document in claims_mod.load_document_aliases():
+        path = str(document.get("path", ""))
+        if document.get("unresolved") or not path.endswith(".tex"):
+            continue
+        source = (ROOT / path).read_text(encoding="utf-8")
+        for label in sorted(set(claims_mod.chk_labels(source))):
+            add(f"CITE:{document['alias']}", check_ref(label), "labels", "curated", path)
+
+    # ALL THEORY, file by file: the archive contains every pinned corpus file,
+    # each file carries the registered constants its bytes hold (matched by
+    # exact value in the catalogue, never by name), and a file that a
+    # provenance record or a document alias pins is joined to that record.
+    corpus_by_where: dict[str, str] = {}
+    for claim in catalogue:
+        if claim.kind != "corpus":
+            continue
+        corpus_by_where[claim.where] = claim.id
+        add(claims_mod.CORPUS_ARCHIVE_ID, claim.id, "contains", "curated", claim.cites)
+        for const in claim.related:
+            add(claim.id, const, "carries", "derived", claim.where)
+    for doc in claims_mod.load_provenance():
+        cid = corpus_by_where.get(f"corpus-import/{doc['path']}")
+        if cid:
+            add(cid, f"DOC:{doc['id']}", "pinned_as", "curated", "ledger/provenance.yaml")
+    for document in claims_mod.load_document_aliases():
+        cid = corpus_by_where.get(str(document.get("path", "")))
+        if cid and not document.get("unresolved"):
+            add(cid, f"CITE:{document['alias']}", "pinned_as", "curated", "ledger/documents.yaml")
+
     for theorem in claims_mod.load_theorems():
         tid = f"LEAN:{theorem['name']}"
         for target in theorem.get("formalizes", []):
@@ -448,6 +563,28 @@ def validate(graph: Graph | None = None) -> list[str]:
             problems.append(f"unknown provenance {edge.how!r} on {edge.src} -> {edge.dst}")
     for ref, context, source in graph.dangling:
         problems.append(f"unresolved id {ref!r} in edge {context} ({source})")
+    # A check resting on a check that rests on it is not a derivation, it is
+    # a loop, and `derive` would walk it forever in spirit if not in code.
+    rests = {}
+    for edge in graph.edges:
+        if edge.type == "rests_on":
+            rests.setdefault(edge.src, []).append(edge.dst)
+    state: dict[str, int] = {}
+
+    def visit(node: str, trail: list[str]) -> None:
+        mark = state.get(node, 0)
+        if mark == 2:
+            return
+        if mark == 1:
+            problems.append(f"rests_on cycle: {' -> '.join([*trail, node])}")
+            return
+        state[node] = 1
+        for nxt in rests.get(node, []):
+            visit(nxt, [*trail, node])
+        state[node] = 2
+
+    for node in sorted(rests):
+        visit(node, [])
     return problems
 
 
@@ -460,3 +597,21 @@ def write(path: Path | None = None) -> Path:
     target = path or GRAPH
     target.write_text(render(), encoding="utf-8", newline="\n")
     return target
+
+
+def load(path: Path | None = None) -> Graph:
+    """The checked-in graph, rehydrated without running a single check.
+
+    ``index/graph.jsonl`` is staleness-tested, so it is current at every
+    commit. A query tool that rebuilt it -- and the catalogue it hangs on --
+    ran every suite first, which put ``why`` at four minutes per question and
+    made the graph unusable as a front door. Falls back to a live ``build()``
+    only when the index has not been generated yet.
+    """
+    target = path or GRAPH
+    if not target.exists():
+        return build()
+    edges = [
+        Edge(**json.loads(line)) for line in target.read_text(encoding="utf-8").splitlines() if line
+    ]
+    return Graph(edges=sorted(edges), dangling=[])

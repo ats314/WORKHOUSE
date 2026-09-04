@@ -134,7 +134,7 @@ def write_manifest(
                 "pinned_as": f.duplicate_of,
             },
         )
-        row["paths"].append(str(f.path))
+        row["paths"].append(f.path.as_posix())
 
     rows = sorted(by_digest.values(), key=lambda r: r["paths"][0])
     for row in rows:

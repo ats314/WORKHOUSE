@@ -37,7 +37,9 @@ def registry(archive, tmp_path):
     )
     notes.write_manifest(archive, "TEST_ARCHIVE", reg, notes_dir=tmp_path / "notes")
     manifest = tmp_path / "notes" / "TEST_ARCHIVE.jsonl"
-    reg.manifests["TEST_ARCHIVE"] = [json.loads(line) for line in manifest.read_text().splitlines()]
+    reg.manifests["TEST_ARCHIVE"] = [
+        json.loads(line) for line in manifest.read_text(encoding="utf-8").splitlines()
+    ]
     return reg
 
 

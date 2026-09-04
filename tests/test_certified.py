@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_certified_md_is_current():
-    assert C.render() == (ROOT / "CERTIFIED.md").read_text(), (
+    assert C.render() == (ROOT / "CERTIFIED.md").read_text(encoding="utf-8"), (
         "CERTIFIED.md is stale; run `make certified`"
     )
 
@@ -77,7 +77,7 @@ def test_t0_claims_point_at_real_lean_lines():
         if claim.tier != 0:
             continue
         path, _, line = claim.where.rpartition(":")
-        body = (ROOT / path).read_text().splitlines()
+        body = (ROOT / path).read_text(encoding="utf-8").splitlines()
         assert claim.name in body[int(line) - 1], claim.where
 
 

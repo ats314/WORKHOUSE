@@ -157,3 +157,46 @@ def sheet_rayleigh_num_den(ell, pair=(1, 2)):
         for c in range(d3.ncols())
     ]
     return sum(v * v for v in up), sum(v * v for v in s)
+
+
+def sheet_average(ell, pair):
+    """The L-translate average of a wrapping sheet, as an integer chain / L.
+
+    Returned as ``(numerator_vector, L)``: averaging s_(ij) over its L
+    translates in the complementary direction is the k = 0 Fourier
+    projection, and what it removes is exactly the non-harmonic part
+    ``sheet_rayleigh_num_den`` measures. The result is harmonic --
+    ``d_2 h = 0`` AND ``d_3^T h = 0`` -- and differs from the sheet by a
+    boundary, so the two are the same homology class.
+    """
+    i, j = pair
+    vec = [0] * (3 * ell**3)
+    for x in sites(ell):
+        vec[face_index(x, pair, ell)] = 1  # every translate, weight 1, over L
+    return vec, ell
+
+
+def cube_boundary_fourier_norm(ell, momentum):
+    """(||\\hat b(k)||^2, q(k)) for the DFT of the cube boundaries, exactly.
+
+    ``momentum`` is a triple of integers ``r`` meaning ``k = 2 pi r / L``.
+    The claim of the locality proposition is that the two are equal, so the
+    normalised Fourier sum of radius-one cube boundaries is the unit carrier
+    in that fibre. Computed over the cyclotomic integers rather than in
+    floats: the entries of the transformed boundary are ``d_m = w^{r_m} - 1``
+    with ``w`` a primitive L-th root of unity, and both sides are rational.
+    """
+    from sympy import Rational, cos, pi, simplify
+
+    q = sum(4 * simplify(sin_sq(r, ell)) for r in momentum)
+    # \hat b(k) = (d_3, -d_2, d_1) in the (12, 13, 23) face basis, and
+    # |d_m|^2 = |w^{r_m} - 1|^2 = 2 - 2 cos(2 pi r_m / L) = 4 sin^2(pi r_m / L).
+    norm = sum(2 - 2 * cos(2 * pi * Rational(r, ell)) for r in momentum)
+    return simplify(norm), simplify(q)
+
+
+def sin_sq(r, ell):
+    """sin^2(pi r / L), exactly."""
+    from sympy import Rational, pi, sin
+
+    return sin(pi * Rational(r, ell)) ** 2

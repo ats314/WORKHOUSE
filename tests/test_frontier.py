@@ -1,9 +1,12 @@
 """The frontier is generated, so the thing to test is that it cannot go stale."""
 
 import json
+import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+import pytest
 
 from workhouse import frontier as F
 
@@ -16,8 +19,37 @@ def test_frontier_md_is_current():
     Regenerating must be a no-op. If this fails, run `make frontier` — the
     failure is the point: something changed and the orientation file did not.
     """
-    on_disk = (ROOT / "FRONTIER.md").read_text()
+    on_disk = (ROOT / "FRONTIER.md").read_text(encoding="utf-8")
     assert F.render(F.compute()) == on_disk, "FRONTIER.md is stale; run `make frontier`"
+
+
+def test_the_two_t0_counters_agree():
+    """One Lean tree, one count. They were allowed to disagree once.
+
+    `FRONTIER.md` and `CERTIFIED.md` each report the size of the T0 layer, and
+    each used to scrape the tree with its own copy of the declaration pattern.
+    `certified` widened its copy to allow the `@[simp]` prefix; `frontier` was
+    left behind. The generated files then said 37 and 40 over the same three
+    declarations, both regenerated, both staleness-tested, and neither test
+    could see the disagreement because each only compared a file with the
+    scrape that wrote it.
+
+    A number this repository prints in two places is a number two things must
+    agree on, which is the same rule it applies to the corpus.
+    """
+    from workhouse import certified as C
+
+    counted, _sorries = F._lean_counts()
+    assert counted == len(C.lean_claims()), (
+        f"FRONTIER counts {counted} Lean theorems, CERTIFIED lists {len(C.lean_claims())}"
+    )
+
+
+def test_no_lean_theorem_is_counted_twice():
+    """The scrape returns declarations, so a duplicated name is a real one."""
+    names = [name for _rel, _n, name in F.lean_declarations()]
+    dupes = sorted({n for n in names if names.count(n) > 1})
+    assert not dupes, f"two Lean declarations share a name: {dupes}"
 
 
 def test_the_brief_is_short_enough_to_read():
@@ -41,9 +73,12 @@ def test_the_brief_names_the_open_contradiction_by_id():
 
 def test_the_hook_emits_valid_session_start_json():
     """The hook's stdout is parsed by the harness; anything else breaks startup."""
+    bash = shutil.which("bash")
+    if bash is None:
+        pytest.skip("the session-start hook requires bash")
     hook = ROOT / ".claude" / "hooks" / "session-start.sh"
     proc = subprocess.run(
-        ["bash", str(hook)],
+        [bash, str(hook)],
         capture_output=True,
         text=True,
         env={"PATH": "/usr/bin:/bin:/usr/local/bin", "CLAUDE_PROJECT_DIR": str(ROOT)},
