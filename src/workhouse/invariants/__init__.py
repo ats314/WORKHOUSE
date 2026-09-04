@@ -56,6 +56,7 @@ _MODULES = (
     "hecke",
     "third_implementation",
     "all_rank",
+    "gamma_isolation",
 )
 
 for _name in _MODULES:

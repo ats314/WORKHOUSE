@@ -542,4 +542,54 @@ theorem delta_R (c0 A B C D : ℝ) :
       = 12 * A + 48 * B + 16 * C + 16 / 3 * D := by
   unfold eps4 qInv e2Inv e3Inv; simp; ring
 
+/-! ### The T1 triplet at Gamma and the isolation constant (ADR 0028)
+
+At `k = 0` the orientation triplet is one irreducible `T_1`, so the effective
+Hamiltonian is a scalar there at every order; on the Hodge form the deviation
+from that scalar is bounded by `C_iso q_a(k)`, and the arithmetic below is the
+rational part of that bound: the condition making `C_iso = -nu~ = 5/48` for the
+assembled `C_shp`, and the resulting isolation threshold `u*^2 = 2/51`. -/
+
+/-- The assembled off-axis coefficient in the kernel's basis (ADR 0024). -/
+noncomputable def cShpAssembled : ℚ := -13035490122347 / 550663802582400
+
+/-- The two-hop weight `u = X_QUANTUM`. -/
+noncomputable def xQuantum : ℚ := 360421351 / 40327601932800
+
+/-- The in-plane orbit amplitude `pi`. -/
+noncomputable def piOrbit : ℚ := -20535103905179 / 1264270320593280
+
+/-- `nu~ = -5/48`, the opposite-face cube completion. -/
+noncomputable def nuTilde : ℚ := -5 / 48
+
+/-- `pi~ = pi + 2u` is negative, so `sup |eps| = 4u - pi~` over `q_a ∈ [0, 12]`. -/
+theorem piTilde_neg : piOrbit + 2 * xQuantum < 0 := by
+  unfold piOrbit xQuantum; norm_num
+
+/-- The condition under which the carrier coefficient dominates the transverse one,
+`-nu~ + 2C ≥ sup |eps| = 4u - pi~`, for the assembled `C_shp`. -/
+theorem isolation_condition_assembled :
+    4 * xQuantum - (piOrbit + 2 * xQuantum) ≤ -nuTilde + 2 * cShpAssembled := by
+  unfold xQuantum piOrbit nuTilde cShpAssembled; norm_num
+
+/-- The assembled `C_shp` is negative, so `2C + 2|C| = 0` and `C_iso = -nu~`. -/
+theorem cShpAssembled_neg : cShpAssembled < 0 := by
+  unfold cShpAssembled; norm_num
+
+/-- `C_iso = max(-nu~ + 2C, sup|eps|) + 2|C| = (-nu~ + 2C) - 2C = -nu~ = 5/48`. -/
+theorem cIso_assembled : (-nuTilde + 2 * cShpAssembled) + 2 * (-cShpAssembled) = 5 / 48 := by
+  unfold nuTilde cShpAssembled; norm_num
+
+/-- The isolation threshold: `u*^2 = t_3 / (2 C_iso) = (5/612) / (5/24) = 2/51`. -/
+theorem uStarSq_isolation : (5 / 612 : ℚ) / (2 * (5 / 48)) = 2 / 51 := by
+  norm_num
+
+/-- Below the threshold the relative gap `t_3 u^2 - 2 C_iso u^4` is positive. -/
+theorem relative_gap_pos (u : ℚ) (hu : 0 < u) (h : u ^ 2 < 2 / 51) :
+    0 < 5 / 612 * u ^ 2 - 2 * (5 / 48) * u ^ 4 := by
+  have hu2 : 0 < u ^ 2 := by positivity
+  have : u ^ 4 = u ^ 2 * u ^ 2 := by ring
+  rw [this]
+  nlinarith [mul_lt_mul_of_pos_left h hu2]
+
 end Workhouse

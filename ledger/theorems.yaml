@@ -527,3 +527,35 @@ theorems:
     value: "-11/306"
     formalizes: ["CONST:T_PLUS_2", R2]
     promotes: []
+
+  - name: piTilde_neg
+    statement: "pi~ = pi + 2u is negative, so sup |eps(k)| over the zone is 4u - pi~."
+    formalizes: ["CONST:PI_ORBIT", "CONST:X_QUANTUM", G11]
+    promotes: []
+
+  - name: isolation_condition_assembled
+    statement: "For the assembled C_shp, -nu~ + 2C >= 4u - pi~: the carrier coefficient of H4 - sI dominates the transverse one."
+    formalizes: ["CONST:C_SHP_ASSEMBLED", G11]
+    promotes: []
+
+  - name: cShpAssembled_neg
+    statement: "The assembled C_shp is negative, so 2C + 2|C| = 0 in the isolation constant."
+    formalizes: ["CONST:C_SHP_ASSEMBLED"]
+    promotes: []
+
+  - name: cIso_assembled
+    statement: "The isolation constant for the assembled kernel is C_iso = -nu~ = 5/48."
+    value: "5/48"
+    formalizes: [G11]
+    promotes: []
+
+  - name: uStarSq_isolation
+    statement: "The isolation threshold u*^2 = t_3/(2 C_iso) = (5/612)/(5/24) = 2/51."
+    value: "2/51"
+    formalizes: ["CONST:T_MINUS_2", G11]
+    promotes: []
+
+  - name: relative_gap_pos
+    statement: "For 0 < u and u^2 < 2/51 the relative band gap t_3 u^2 - 2 C_iso u^4 is positive."
+    formalizes: [G11]
+    promotes: []
