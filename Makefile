@@ -89,7 +89,8 @@ lean:            ## T0: proof-check the Lean core (needs elan on PATH)
 corpus-manifest: ## Regenerate corpus-import/SHA256SUMS after a deliberate corpus change
 	@.venv/bin/python -c "import hashlib,subprocess,pathlib; \
 	 root=pathlib.Path('corpus-import'); \
-	 ns=[n for n in subprocess.run(['git','ls-files','-z','corpus-import/'],capture_output=True,text=True).stdout.split(chr(0)) if n and not n.endswith('SHA256SUMS')]; \
+	 repo_authored={'SHA256SUMS','CLAUDE.md'}; \
+	 ns=[n for n in subprocess.run(['git','ls-files','-z','corpus-import/'],capture_output=True,text=True).stdout.split(chr(0)) if n and pathlib.Path(n).name not in repo_authored]; \
 	 ls=[f'{hashlib.sha256(pathlib.Path(n).read_bytes()).hexdigest()}  {pathlib.Path(n).relative_to(root)}' for n in sorted(ns) if pathlib.Path(n).is_file()]; \
 	 (root/'SHA256SUMS').write_text(chr(10).join(ls)+chr(10)); \
 	 print(f'corpus-import/SHA256SUMS: {len(ls)} files')"
