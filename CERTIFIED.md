@@ -199,7 +199,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:248
   - `make lean`
 
-## T1 — re-derived exactly — 267
+## T1 — re-derived exactly — 268
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1001,6 +1001,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the adjacent-face cube completion is -106/(N(N^2-1)^3): the primitive -88 plus ten multi-loop histories at -18`
   - src/workhouse/invariants/third_implementation.py:288 · C2; G3; G14; MOB §4; runs/g3_offaxis_channels_2026-08-30; runs/g3_corner_third_implementation_2026-09-04; ADR 0024
   - `workhouse verify --only 'the adjacent-face cube completion is -106/(N(N^2-1)^3): the primitive -88 plus ten multi-loop histories at -18'`
+- `the all-rank beta_N formula at N = 3 is 8A + 16 C_shp_assembled exactly: the SU(3) exception in the shape channel was the cube shortfall`
+  - src/workhouse/invariants/third_implementation.py:527 · C2; G3; G14; runs/g3_corner_third_implementation_2026-09-04; runs/g3_shared_link_pair_2026-09-02; ADR 0024; ADR 0021; C10; GLUEBALL v3.1 ~1511 (the forbidden substitution); corpus CLAUDE.md trap 2
+  - `workhouse verify --only 'the all-rank beta_N formula at N = 3 is 8A + 16 C_shp_assembled exactly: the SU(3) exception in the shape channel was the cube shortfall'`
 - `the corner cluster's cumulant from a third implementation, independent of the engine in every primitive`
   - src/workhouse/invariants/third_implementation.py:154 · C2; G3; G14; runs/g3_corner_third_implementation_2026-09-04; runs/g3_shared_link_pair_2026-09-02; ADR 0024; ADR 0021
   - `workhouse verify --only 'the corner cluster'"'"'s cumulant from a third implementation, independent of the engine in every primitive'`

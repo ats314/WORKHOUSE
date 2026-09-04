@@ -522,3 +522,44 @@ def _():
             "assembly read in the conjugate basis and is superseded"
         ),
     )
+
+
+@third.check(
+    "the all-rank beta_N formula at N = 3 is 8A + 16 C_shp_assembled exactly: the SU(3) "
+    "exception in the shape channel was the cube shortfall",
+    _CITE + "; C10; GLUEBALL v3.1 ~1511 (the forbidden substitution); corpus CLAUDE.md trap 2",
+    rests_on=(
+        "RETRACTED: B_3 - beta_historical = 25/64 is a forbidden substitution, not an exact branch",
+        "FINDING: C_shp from the assembled amplitudes in the kernel's basis is C_historical + "
+        "25/1024, the registered continuation-shifted value",
+    ),
+)
+def _():
+    # The corpus forbids substituting the compact all-rank beta_N formula at
+    # N = 3 and prescribes a separate SU(3) value 25/64 below it, attributing
+    # the gap to the determinant sector (trap 2 and trap 3 of the corpus
+    # CLAUDE.md, C10). With the historical rho corrected by its own ledger,
+    # beta = 8A + 16 C_shp at N = 3 IS the formula's value: the SU(3)
+    # exception in the shape channel was the sixteen missing cube orderings.
+    # The formula stays forbidden as a DERIVATION at N = 3 (its continuation
+    # route has a third-order pole there); what this check records is that
+    # the number it produces is the assembled one, exactly.
+    from ..channel_ledger import beta_formula
+    from ..payloads import kernel_constants
+
+    a = _rat(K.A_SHP_3)
+    c = _rat(K.C_SHP_ASSEMBLED)
+    beta_hist = kernel_constants()["beta"]
+    formula = beta_formula(3)
+    ok = (
+        8 * a + 16 * c == formula
+        and formula - beta_hist == Fraction(25, 64)
+        and beta_hist == _rat(K.BETA_PEN_3)
+        and c - _rat(K.C_SHP_HISTORICAL) == Fraction(25, 1024)
+    )
+    return ok, (
+        f"beta_N(3) = {formula} = 8 * {a} + 16 * {c} = 8A + 16 C_shp_assembled, against the "
+        f"historical beta_3 = {beta_hist} (gap 25/64 = 16 * 25/1024). The formula is still not a "
+        "derivation at N = 3; it is now the right number there, and nothing distinguishes N = 3 "
+        "from N >= 4 in the fourth-order shape coefficient"
+    )
