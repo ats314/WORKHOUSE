@@ -381,6 +381,53 @@ the completion family and the sealed core's `alphaPen`. -/
 theorem alphaPen_eq_neg_four_cube (n : ℚ) : alphaPen n = -4 * cubeCompletion n := by
   unfold alphaPen cubeCompletion; ring
 
+/-! ## The adjacent-face cube completion (G3, C2, G14 — ADR 0024)
+
+`cubeCompletion` is the opposite-face row, 24 single-loop orderings. Between two
+ADJACENT faces of the cube 14 orderings are single-loop (`S₄ = −11`, the
+off-axis run's second primitive channel) and 10 pass through a product of two
+disjoint loops; in the units of the law the latter add `−18`. The enumeration
+is `workhouse.cellular.c_full` at T1; the algebra is here. -/
+
+/-- `−106/(N(N²−1)³)`: the adjacent-face completion at every rank. -/
+noncomputable def cubeCompletionAdjacent (n : ℚ) : ℚ := -106 / (n * (n ^ 2 - 1) ^ 3)
+
+/-- Primitive plus multi-loop, at every rank. -/
+theorem cubeCompletionAdjacent_split (n : ℚ) :
+    cubeCompletionAdjacent n = -88 / (n * (n ^ 2 - 1) ^ 3) + -18 / (n * (n ^ 2 - 1) ^ 3) := by
+  unfold cubeCompletionAdjacent; ring
+
+/-- The SU(3) value, the rotation record's cube term in the kernel's basis. -/
+theorem cubeCompletionAdjacent_three : cubeCompletionAdjacent 3 = -53 / 768 := by
+  unfold cubeCompletionAdjacent; norm_num
+
+/-- Adjacent over opposite is `53/80` at every rank. -/
+theorem cubeCompletionAdjacent_ratio (n : ℚ) (h0 : n ≠ 0) (h1 : n ^ 2 - 1 ≠ 0) :
+    cubeCompletionAdjacent n = 53 / 80 * cubeCompletion n := by
+  unfold cubeCompletionAdjacent cubeCompletion
+  have h3 : (n ^ 2 - 1) ^ 3 ≠ 0 := pow_ne_zero 3 h1
+  field_simp
+  ring
+
+/-- The historical pipeline's eight orderings sum to `31/1536` in magnitude; the
+sixteen it lacks are exactly `25/512`. -/
+theorem cube_shortfall : (53 : ℚ) / 768 - 31 / 1536 = 25 / 512 := by norm_num
+
+/-- `C_shp = −5/96 − u − (ρ + π)/2`, so lowering `ρ` by `25/512` raises `C_shp` by
+`25/1024`. -/
+theorem cShp_from_rho_shift (u rho pi : ℚ) :
+    -5 / 96 - u - ((rho - 25 / 512) + pi) / 2 = (-5 / 96 - u - (rho + pi) / 2) + 25 / 1024 := by
+  ring
+
+/-- The assembled coefficient in the kernel's basis: the historical value plus `25/1024`
+is the continuation-shifted rational. -/
+theorem cShp_assembled_value : C_shp_old + 25 / 1024 = -13035490122347 / 550663802582400 := by
+  unfold C_shp_old; norm_num
+
+/-- Through `β = 8A + 16C`, the same shift is `+25/64` on `β₃`. -/
+theorem beta_shift_from_cShp : 8 * A_shp + 16 * (C_shp_old + 25 / 1024) = βPenOld + 25 / 64 := by
+  unfold A_shp C_shp_old βPenOld; norm_num
+
 /-! ## The checkpoint deltas, from the ansatz
 
 The four `extraction_*` theorems above invert the cubic-invariant ansatz on the

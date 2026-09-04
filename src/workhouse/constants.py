@@ -298,6 +298,13 @@ CEVEN_CURVATURE_3 = Rational(6335, 187272)
 #: and a reader can cite them as independent corroboration of each other.
 #: `tests/test_constants.py` fails on any shared value not declared here.
 DECLARED_COINCIDENCES: dict[str, tuple[tuple[str, ...], str]] = {
+    "-13035490122347/550663802582400": (
+        ("C_SHP_ASSEMBLED", "C_SHP_CONTINUATION_SHIFTED"),
+        "one number reached by two routes: the forbidden N = 3 substitution of the all-rank "
+        "beta_N formula (retracted as a derivation, 2026-08-30) and the cluster assembly read "
+        "in the kernel's own basis (ADR 0024). They are kept apart so the retraction and the "
+        "derivation each keep their own name; that they agree is the finding, not an alias",
+    ),
     "-11/306": (
         ("LEAK_2", "LEAK_2_EVEN", "T_PLUS_2"),
         "second-order per-neighbour leakage in both charge sectors, and the "
@@ -379,6 +386,13 @@ B_SHP_3 = Rational(0)
 D_SHP_3 = Rational(0)
 ALPHA_PEN_3 = Rational(5, 12)  # = 4 * A_SHP_3
 CUBE_COMPLETION_4 = Rational(-5, 48)  # c_4^square(3); alpha_3 = 4*|c_4^square(3)|
+#: The cube completion between ADJACENT faces, -106/(N(N^2-1)^3) at N = 3: the
+#: primitive -88 (S_4 = -11) plus ten multi-loop orderings at -18 (ADR 0024).
+#: In the kernel's own (0,2) basis it enters the rotation record as -53/768.
+CUBE_COMPLETION_ADJACENT_4 = Rational(-53, 768)
+#: The historical Y4 pipeline's value of the same term: 8 of the 24 orderings,
+#: each with the right weight, summing to -31/1536 (stage3i, ADR 0024).
+CUBE_COMPLETION_ADJACENT_HISTORICAL_4 = Rational(-31, 1536)
 
 #: v10a.26 folded-run values for the sealed core. Consistent with the exact
 #: rationals above but NOT exact rational equalities from that run (GLUEBALL §10).
@@ -395,6 +409,12 @@ def alpha_pen(n=N):
     return Rational(640) / (n * (n**2 - 1) ** 3)
 
 
+def cube_completion_adjacent(n=N):
+    """The adjacent-face cube completion at every rank, -106 / (N (N**2-1)**3) (ADR 0024)."""
+    n = sympify(n)
+    return Rational(-106) / (n * (n**2 - 1) ** 3)
+
+
 # --------------------------------------------------------------------------
 # Fourth order — anchoring and the residual dispute (MASTER_THEORY §5.5)
 #
@@ -409,7 +429,7 @@ def alpha_pen(n=N):
 # the SOS factorization, the mobility coefficients, or the bandwidth. C1 is an
 # anchoring distinction, not a dispute.
 #
-# What remains genuinely open is C2, the off-axis shape coefficient. See the
+# C2, the off-axis shape coefficient, was resolved on 2026-09-04 (ADR 0024). See the
 # crosswalk at the foot of this module for why a Gamma-point match is
 # structurally incapable of settling it.
 # --------------------------------------------------------------------------
@@ -460,6 +480,12 @@ SIGMA_ORBIT = Rational(-780864191400383617, 302107928691769200)
 #: balanced value of C_shp. No direct balanced contraction at N = 3 is held in
 #: this repository.
 C_SHP_CONTINUATION_SHIFTED = Rational(-13035490122347, 550663802582400)
+#: The cluster-assembled off-axis coefficient read in the kernel's own basis
+#: (ADR 0024): C_SHP_HISTORICAL + 25/1024, the same rational as the
+#: continuation-shifted value above -- reached now by assembly, not by the
+#: forbidden substitution. The rotation amplitude it comes from, in that basis:
+C_SHP_ASSEMBLED = Rational(-13035490122347, 550663802582400)
+RHO_ASSEMBLED = Rational(-588708011765248393, 14501180577204921600)
 
 #: Vacuum-subtracted physical Gamma-point coefficient, from the blind
 #: finite-cluster/rooted oracle (float only). Reproduces Hamer's a_4 through the
@@ -902,18 +928,19 @@ REGISTRY: tuple[Constant, ...] = (
     Constant(
         "C_shp (historical)",
         C_SHP_HISTORICAL,
-        "disputed",
+        "superseded",
         "output-certified",
         "MASTER_THEORY §5.5",
-        "C2 — the one genuinely open fourth-order coefficient",
+        "C2, resolved 2026-09-04 (ADR 0024): the historical kernel's rho lacks 16 of the 24 "
+        "adjacent-face cube orderings; the coefficient is C_SHP_ASSEMBLED = this + 25/1024",
     ),
     Constant(
         "C_shp (v10a.26)",
         C_SHP_NEW_NUM,
-        "disputed",
+        "falsified",
         "numerical",
         "MASTER_THEORY §5.5",
-        "C2 — the one genuinely open fourth-order coefficient",
+        "C2, resolved 2026-09-04 (ADR 0024): the cold pipeline is wrong on u, pi and rho",
     ),
     Constant(
         "Hamer a_4",

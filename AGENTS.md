@@ -187,7 +187,8 @@ The goal is compression, not accumulation:
 Progress is measurable — and the measurements live in the generated views, not
 here, because a hand-written count is stale the session after it is written.
 `FRONTIER.md` §1 carries the live check and theorem counts; the ledger carries
-the contradiction and gap states (one contradiction genuinely open: C2); the
+the contradiction and gap states (C2, the last open contradiction, closed by
+derivation on 2026-09-04, ADR 0024); the
 FINDING checks this repository holds against the corpus are listed in
 `CERTIFIED.md`. Every session should move at least one claim from T3 toward
 T1, or record why it cannot be moved.

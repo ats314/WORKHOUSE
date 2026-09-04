@@ -200,9 +200,10 @@ more useful to the next attempt than silence.
    pass. `SHA256SUMS` pins it. `theory/superseded/` is for the audit trail and
    is never current — including `MASTER_THEORY_UNIFIED_2026-08-20_v3.md`, which
    upstream's own path index marks `quarantine_only`.
-2. **Never promote a disputed value.** `C_shp` is genuinely open (C2). Both
-   sides stay recorded; code must not pick one, average them, or prefer the
-   exact rational because it looks more authoritative.
+2. **Never promote a disputed value.** A dispute closes by derivation or not at
+   all. `C_shp` (C2) closed that way on 2026-09-04 (ADR 0024); both recorded
+   values stay in the registry with their verdicts, and code must never pick a
+   side by preference or by the look of a rational.
 3. **`q_band^(4)` and `m_Γ^(4)` are not rivals.** They are differently anchored
    coordinates — a band-kernel anchor and a vacuum-subtracted physical Γ-point
    coefficient. Calling both "`m_4`" regenerates a contradiction that does not
@@ -249,9 +250,10 @@ scripts/       bootstrap, check, register transcription
 
 ## Where the work is
 
-One contradiction is genuinely open — **C2**, the fourth-order off-axis
-coefficient, `-0.04808638…` against `-0.02021332…`, a gap of `0.02787305…`. It
-cannot be closed by re-anchoring: the crosswalk is
+The last open contradiction, **C2** (the fourth-order off-axis coefficient,
+`-0.04808638…` against `-0.02021332…`), was resolved on 2026-09-04 by
+derivation (ADR 0024): `C_shp = C_historical + 25/1024 = -0.02367232…`. Why no
+re-anchoring could have closed it: the crosswalk is
 
 ```
 c_4_new(k) = c_4_old(k) + Δ_Γ + Δ_C · Φ_C(k),   Φ_C(k) = 4·e_2(k)/Q(k)
@@ -259,8 +261,8 @@ c_4_new(k) = c_4_old(k) + Δ_Γ + Δ_C · Φ_C(k),   Φ_C(k) = 4·e_2(k)/Q(k)
 
 and `Φ_C(0) = 0`, so the Γ-point scalar pins `Δ_Γ` and places **no** constraint
 on `Δ_C`. `Φ_C` also vanishes on every axial cut, which is why axial data agree
-exactly while M and R split by `8Δ_C` and `16Δ_C`. That is the finite-order
-bottleneck of the whole program, and G3 is the run that would settle it.
+exactly while M and R split by `8Δ_C` and `16Δ_C`. That was the finite-order
+bottleneck of the whole program; G3 settled it from the rotation amplitude.
 
 What the dispute *is*, as of 2026-08-30, is smaller than the numbers suggest.
 Clearing the `1/q` makes the shape ansatz a linear identity between Laurent
@@ -276,9 +278,11 @@ where `ν = -(5/48 + 4u)` is forced by `A` and `σ` enters `c_0` alone. Three
 signed numbers. The v10a.26 kernel has the same six orbits and the same
 normalised table row for row; its skeleton unit is `4.1327437×` and its `ρ` and
 `π` are **opposite in sign**. The ε-free branch is exact too:
-`B_3 - β_historical = 25/64`, so it is `C_historical + 25/1024`. Neither side is
-promoted — both are now in one basis, which is what makes them comparable.
-See the `fourth-order kernel orbits` suite.
+`B_3 - β_historical = 25/64`, so it is `C_historical + 25/1024` — which is the
+value the cluster assembly reaches in the kernel's own basis, with the
+historical pipeline's own word ledger confirming every cluster of `ρ` but the
+sixteen adjacent-face cube orderings it lacks (ADR 0024). See the
+`fourth-order kernel orbits` and `third implementation` suites.
 
 The corpus's own one-sentence summary of its largest unpaid debt:
 

@@ -48,10 +48,14 @@ request, where the diff is visible.
    a deliberate, reviewed event. `theory/superseded/` holds documents kept for
    the audit trail — never read one as current.
 
-2. **Never promote a disputed value.** The off-axis coefficient `C_shp` is
-   unresolved. Both sides are recorded side by side, and code must not pick
+2. **Never promote a disputed value.** A dispute closes by derivation or
+   not at all: both sides stay recorded side by side, and code must not pick
    one, average them, or prefer the exact rational because it looks more
-   authoritative.
+   authoritative. The off-axis coefficient `C_shp` (C2) closed that way on
+   2026-09-04 — every cluster of the rotation record is the historical
+   pipeline's own number, and the one that is not is explained ordering by
+   ordering (ADR 0024). Its two recorded values stay in the registry with
+   their verdicts.
 
    The `Γ` scalars are *not* in that category: `q_band^(4)` and `m_Γ^(4)` are
    differently anchored coordinates, not rival estimates. Use those names —

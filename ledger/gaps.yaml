@@ -56,8 +56,17 @@ gaps:
 
   - id: G3
     tier: 1
-    state: open
+    state: discharged
     title: Fourth-order adjudication — decide C_shp where it actually lives
+    status: >
+      DISCHARGED 2026-09-04 (ADR 0024). C_shp lives in the rotation amplitude
+      rho, and rho is now decided: the historical pipeline's own Stage-3I
+      ledger, the 2026-09-02 cluster assembly and a third engine agree on
+      every cluster of the rotation record but the adjacent-face cube
+      completion, where the historical ledger holds 8 of 24 orderings; in
+      the kernel's basis C_shp = C_historical + 25/1024. C2 is resolved.
+      One follow-up stays as an untried step (the pair cluster from the
+      third engine, pure-six family included); it can sharpen, not overturn.
     detail: >
       REWRITTEN 2026-08-28, at the maintainer's standing instruction, after
       the sweep-cannot-decide-C2 finding below. The original G3 ("run the
@@ -434,10 +443,31 @@ gaps:
           the refutation it could have delivered is not available; what it
           delivered instead is that the flip is not a convention.
       - step: the corner cluster from a third implementation, or from the historical pipeline's own face-resolved ledger
-        state: untried
+        state: done
+        closed_by:
+          - 'RUN:g3_corner_third_implementation_2026-09-04'
+          - "CHK:the corner cluster's cumulant from a third implementation, independent of the engine in every primitive"
+          - 'CHK:FINDING: the historical rotation record holds every cluster the assembly has, to the digit, except 16 of the 24 cube orderings'
+          - "CHK:FINDING: the run's rotation element is in the conjugate basis; in the kernel's own basis rho = -RHO_CLUSTER and rho_historical - rho = 25/512, the cube term alone"
         cannot_decide: []
         status: >
-          proposed 2026-09-02 from runs/g3_shared_link_pair_2026-09-02. The
+          DONE 2026-09-04, both halves at once (ADR 0024). A third engine
+          written from scratch (workhouse.loopcalc: Fierz H0 by port
+          rewiring, Weingarten by Gram pseudoinverse, per-link projector
+          resolvent) returns the corner cumulant to the digit in two
+          seconds, after climbing the whole validation ladder. And the
+          historical pipeline's face-resolved ledger IS in the corpus:
+          DATA_Y4_stagei_authority_fixture.xz.b85 is the Stage-3I word
+          ledger the kernel copies name by hash; reassembled by Stage 3J's
+          own rule it gives the 189 records exactly, and read by support set
+          it holds the same pair, chains, fans and corners as the assembly,
+          to the digit, and 8 of the 24 orderings of the adjacent-face cube
+          completion (-31/1536 against -53/768). The whole
+          historical-vs-assembled difference on rho is that cube term,
+          25/512 exactly, and ADR 0021 had read rho in the conjugate
+          orientation of the (0,2) face: in the kernel's basis
+          rho_assembled = -RHO_CLUSTER and C_shp = C_historical + 25/1024.
+          ORIGINAL TEXT: proposed 2026-09-02 from runs/g3_shared_link_pair_2026-09-02. The
           assembled rho rests on one cluster type no agreed record contains:
           the corner (three faces at a cube vertex, pairwise sharing a link),
           whose cumulant two implementations here agree on to the digit. A
@@ -453,6 +483,48 @@ gaps:
           without reusing chain_amplitude.py, chain_cluster.py or
           haar_epsilon.py, and compare with -2580244782961/398756546697600
           (C-odd) and -56022878647/4153714028100 (C-even).
+      - step: close C2 in the ledger on the recorded evidence -- the maintainer's call
+        state: done
+        closed_by:
+          - 'ADR 0024'
+          - 'RUN:g3_corner_third_implementation_2026-09-04'
+        cannot_decide: []
+        status: >
+          DONE 2026-09-04, at the maintainer's instruction in the session
+          that found the evidence ("if you can make a common sense decision
+          to proceed, please do"): C2 resolved, G3 discharged, the two
+          disputed registry entries retired, the rule files updated.
+          ORIGINAL: proposed 2026-09-04 (ADR 0024). The evidence decides C2 -- every
+          cluster of the rotation record agrees between the historical
+          pipeline's own ledger, the 2026-09-02 assembly and the third
+          engine except the adjacent-face cube completion, where the
+          historical ledger holds 8 of 24 orderings -- but non-negotiable 2
+          makes the status flip the maintainer's decision, not an agent's.
+        what: >
+          Set C2 status to resolved with the resolution "C_shp =
+          C_SHP_HISTORICAL + 25/1024 = -13035490122347/550663802582400,
+          both recorded kernels wrong on rho"; retire the two `disputed`
+          registry entries (constants.REGISTRY: "C_shp (historical)" to
+          superseded, "C_shp (v10a.26)" to falsified) and amend
+          tests/test_constants.py::test_disputed_entries_record_both_sides
+          accordingly; rewrite non-negotiable 2 in CLAUDE.md and AGENTS.md's
+          "one contradiction genuinely open"; regenerate FRONTIER/CERTIFIED.
+      - step: the pair cluster from the third engine, pure-six family included
+        state: untried
+        cannot_decide: []
+        status: >
+          proposed 2026-09-04. The pair cluster -17612026391/1147250744640
+          is the one component of rho with a single implementation, though
+          the historical ledger holds it to the digit and pi_historical
+          pins it. Its baryonic histories reach the (6,0) family;
+          workhouse.loopcalc refuses that family. Adding it means the
+          S_6 Gram pseudoinverse (720 permutations) with two epsilon pairs
+          on virtual slots, or the engine's ten eps-eps invariants; cost is
+          the double permutation sum, not the algebra.
+        what: >
+          Extend loopcalc.haar_link to |a - b| = 6 and run the perpendicular
+          pair's full assembly in the PVP != 0 form; compare with the
+          2026-09-02 pair cluster and the Stage-3I pair sum.
     leads:
       - settlement/mce_adjudication_harness.py
       - settlement/README.md
@@ -870,6 +942,18 @@ gaps:
       and the cumulant carries their product. So the universality holds
       across all three junction types, sign included, from two independently
       written assemblies. ADR 0020.
+    adjacent_cube_completion_2026_09_04: >
+      The cube-completion channel has a closed form for adjacent faces at
+      every rank (ADR 0024, check "the adjacent-face cube completion is
+      -106/(N(N^2-1)^3) ..."): the primitive simple-loop law's -88 (the
+      off-axis run's S_4 = -11) plus ten multi-loop orderings at -18, total
+      -106/(N(N^2-1)^3) against the opposite faces' -160, ratio 53/80 at
+      every N. The argument is a two-line selection rule: every cube link
+      lies in exactly two faces, so once both are present the link's adjoint
+      component can never reach the target and only the singlet -- the n = 1
+      Haar moment -- survives. The Hodge form's single weight on L_up is
+      confirmed to be a reparametrisation; a mechanism for the tier collapse
+      has to produce -160 and -106 together.
   - id: G15
     tier: 3
     state: open
@@ -1650,6 +1734,18 @@ unifying_candidates:
       is forbidden and whose use here was retracted on 2026-08-30 -- only on
       Delta beta_3, which the register records independently as DELTA_BETA_3.
 
+    revisited_2026_09_04: >
+      The number U5 named is real; its mechanism is not. In the kernel's own
+      basis the cluster-assembled rotation amplitude is
+      rho_historical - 25/512 exactly, so Delta(rho + pi~) between the
+      historical kernel and the assembly IS -25/512 (ADR 0024). But the
+      whole difference sits in the adjacent-face cube completion, a cluster
+      with no determinant sector (every link carries U x U-dagger), where
+      the historical Stage-3I ledger holds 8 of the 24 insertion orderings;
+      the epsilon sector proper was measured on 2026-09-02 at -55/6936. So
+      the refutation stands on the stated mechanism, and the corpus's
+      "determinant sectors shift C at N = 3 by -25/1024" (C10, corpus trap
+      3) is an enumeration shortfall wearing the determinant sector's name.
   - id: U6
     statement: >
       A number-theoretic construction landed 2026-08-31 (the "Hecke cover

@@ -47,7 +47,8 @@ def test_the_dispute_is_branchwise_and_keeps_originators():
     assert {m["id"] for m in current["matches"]} >= {"CONST:C_SHP_NEW_NUM"}
     assert "DOC:kernel-historical-189" in historical["originators"]
     assert "DOC:nb-hodge-v10a26-alt2" in current["originators"]
-    assert "A diagonal shift cannot reconcile this" in c2["detail"]
+    # Resolved 2026-09-04 (ADR 0024): the detail is now the resolution.
+    assert "C_SHP_HISTORICAL + 25/1024" in c2["detail"]
 
 
 def test_unifying_candidates_carry_their_falsifier():

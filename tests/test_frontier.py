@@ -96,12 +96,17 @@ def test_the_cheapest_step_actually_settles_something():
         assert gap.get("resolves") or gap.get("unblocks") or gap.get("load_bearing"), gap["id"]
 
 
-def test_downstream_ranking_puts_the_adjudication_first():
-    """G3 gates the fourth order, which gates the sixth. If that stops being
-    true the dependency spine has changed and someone should notice."""
+def test_downstream_ranking_no_longer_gates_on_the_adjudication():
+    """G3 gated the fourth order, which gated the sixth. It was discharged on
+    2026-09-04 (ADR 0024), so the spine has changed and this is the notice:
+    nothing open gates C2 any more, and G3 is not in the open ranking."""
+    from workhouse import ledger as L
+
     ranked = F.compute().downstream
-    assert ranked[0][0] == "G3", ranked[:3]
-    assert "C2" in ranked[0][2]
+    assert "G3" not in [r[0] for r in ranked], ranked[:3]
+    assert not any("C2" in r[2] for r in ranked), ranked[:3]
+    g3 = next(g for g in L.load().gaps if g["id"] == "G3")
+    assert g3["state"] == "discharged"
 
 
 def test_unifying_candidates_all_carry_a_falsifier():

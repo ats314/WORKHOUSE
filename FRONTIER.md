@@ -10,9 +10,9 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 52 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 59 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 312/312 checks pass.
+**T1/T2 — re-derived here.** 322/322 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -47,6 +47,7 @@ it cannot drift from what the repository actually checks.
 | continuum and fixed-spacing bridges (G18, G19) | 3/3 |
 | the swap-odd domino state (U4, ADR 0023) | 5/5 |
 | Hecke cover correspondence table | 1/1 |
+| the third implementation and the historical ledger (G3, C2) | 10/10 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -68,14 +69,7 @@ argument exists and the artifact does not.
 
 ## 3. What remains disputed
 
-**C2 — Fourth-order off-axis coefficient C_shp — the one genuinely open item**
-
-- historical: `-211835444920651/4405310420659200` = -0.04808638318135875
-- v10a.26: `-0.020213328886166577`
-- cluster-assembled 2026-09-02: `-54822624038066723/853010622188524800` = -0.06426956782485449
-- gap between them: `0.027873054295192174`
-- routed to: G3
-
+Nothing is open in the contradiction register.
 ## 4. What has been refuted
 
 - **C6** F-2 mobility rule — The promotion r_physical = w_min - 2 is falsified by the pentagonal isotropic cap hop at r=4 with w_min-2=5. The scoped bound r >= w_min - 2 survives, with survival gates.
@@ -95,7 +89,6 @@ Claims this repository made and withdrew:
 
 **Tier 1 — weeks**
 
-- `G3` Fourth-order adjudication — decide C_shp where it actually lives
 - `G4` Pentagonal O(u^4) closure in-corpus *(partial — see its status in the ledger)*
 - `G6` B_N fixed-rank holdout ledger for N = 7..18
 - `G7` Native torelon reruns of sigma_5 and sigma_6
@@ -126,6 +119,7 @@ Claims this repository made and withdrew:
 **Discharged** — finished work stays recorded, not re-queued:
 
 - `G2` Regenerate all displayed tables in canonical u — discharged 2026-08-21
+- `G3` Fourth-order adjudication — decide C_shp where it actually lives — DISCHARGED 2026-09-04 (ADR 0024). C_shp lives in the rotation amplitude rho, and rho is now decided: the historical pipeline's own Stage-3I ledger, the 2026-09-02 cluster assembly and a third engine agree on every cluster of the rotation record but the adjacent-face cube completion, where the historical ledger holds 8 of 24 orderings; in the kernel's basis C_shp = C_historical + 25/1024. C2 is resolved. One follow-up stays as an untried step (the pair cluster from the third engine, pure-six family included); it can sharpen, not overturn.
 - `G5` Tetrahedral local Haar-resolvent coefficient — discharged 2026-08-21
 - `G24` Derive the shared-link isotropy premise, the one unproved input of the second-order chain — discharged 2026-08-28, the day it was opened. The premise is not an assumption: it follows from the order-2 Weingarten values. Two steps. The six nonshared links collapse, because each plaquette contributes a product of three independent Haar links and a product of independent Haar matrices is Haar -- so the two-plaquette amplitude is Tr(A U) Tr(B U^(+-1)) with A and B independent Haar, and integrating them leaves a pure degree-(2,2) moment of the shared link. Two such moments settle both families: M_direct = N^2 and M_cross = N, so the like family splits as (N+1)/(2N) and (N-1)/(2N), and the mixed family's singlet component of U_ij conj(U_lk) is delta_il delta_jk/N of squared norm 1, giving 1/N^2. All four are exactly d_R/N^2. Registered as `the shared-link weights are Weingarten, not an isotropy assumption` (T1), which imports nothing from the corpus -- the Weingarten pair is the inverse of the S_2 Gram matrix and the index sums are explicit. A_N, B_N and t_N therefore rest on representation theory alone.
 
@@ -136,7 +130,7 @@ Transitive closure over the ledger's own `unblocks`, `depends_on`, and
 
 | Gap | Gates | What cannot move until it does |
 |---|---|---|
-| `G3` Fourth-order adjudication — decide C_shp where it actually lives | 3 | G25, G9, C2 |
+| — | 0 | nothing currently gates anything |
 
 - G3 -> G9 and the mass ratio at orders 4-6
 - nothing further without G17 + G18
@@ -149,11 +143,6 @@ Ready — no open prerequisite — and decisive: it resolves a contradiction,
 unblocks another gap, or is load-bearing. Cheapest first. Bookkeeping that
 settles nothing is excluded however cheap it looks.
 
-- `G3` (weeks) Fourth-order adjudication — decide C_shp where it actually lives — settles C2, G9
-  - REWRITTEN 2026-08-28, at the maintainer's standing instruction, after the sweep-cannot-decide-C2 finding below. The original G3 ("run the marked-cluster engine target-blind", the 11-item GLUEBALL §18.1 protocol) directed every session at a sealed 609-evaluation sweep that is now established — by T1 static scan, not by fatigue — to emit the Gamma-point scalar only, a quantity externally validated and structurally incapable of constraining Delta_C (Phi_C(0) = 0). Four sessions dead-ended on that path (absent engine, closure cap, cost, and finally the structural incapacity); the register, not the next agent, now carries that knowledge. What G3 must settle is unchanged: the off-axis coefficient C_shp (C2). The route is replaced by the two paths that can actually reach it, cheapest first.
-  - routes untried: the corner cluster from a third implementation, or from the historical pipeline's own face-resolved ledger
-  - routes done: block-structure comparison; targeted kernel-bearing recomputation; independent cross-amplitude computation; chain amplitude u on the three-plaquette cluster; covariance sign test of the two flipped orbits
-  - routes dead: off-axis channel assembly through workhouse.cellular; sealed scalar sweep (demoted, optional)
 - `G17` (unbounded) PC-2 free-energy stability and the source-radius reduction — settles load-bearing
   - The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction. Lead recorded 2026-08-30, unverified here: the Euclidean counterpart of the needed uniform-in-volume strong-coupling control is classical constructive work (the Osterwalder--Seiler cluster expansion for lattice gauge theory, 1978), which proves convergence and a mass gap at strong coupling uniformly in volume for the EUCLIDEAN theory. The open question G17 actually poses is the Hamiltonian transcription of that bound for this projected sector. Indexing the paper awaits a primary-source read (literature/index.yaml requires INSPIRE-sourced fields, never memory); nothing is promoted by this pointer.
 - `G18` (unbounded) The spectral bridge — settles load-bearing
