@@ -523,10 +523,18 @@ def _():
     declared = {
         str(K.T_PLUS_2): ("LEAK_2", "LEAK_2_EVEN", "T_PLUS_2"),
         str(K.T3_EVEN): ("T3_EVEN", "LEAK_3_EVEN"),
+        # Added 2026-09-04 (ADR 0024): the C_shp reached by the cluster assembly
+        # in the kernel's basis is the rational the forbidden N = 3 substitution
+        # produced. Two routes, one number; the retraction and the derivation
+        # keep separate names, and the agreement is the finding.
+        str(K.C_SHP_ASSEMBLED): ("C_SHP_ASSEMBLED", "C_SHP_CONTINUATION_SHIFTED"),
     }
     matches_registry = {v: names for v, (names, _) in K.DECLARED_COINCIDENCES.items()} == declared
     distinct = K.T_MINUS_2 != K.LEAK_2 and K.LEAK_3 != K.B_3
-    ok = second_order and all_rank == 0 and third_order and matches_registry and distinct
+    c_shp = (
+        K.C_SHP_ASSEMBLED == K.C_SHP_CONTINUATION_SHIFTED == K.C_SHP_HISTORICAL + Rational(25, 1024)
+    )
+    ok = second_order and all_rank == 0 and third_order and matches_registry and distinct and c_shp
     return ok, (
         f"leak_2- = leak_2+ = t_2+ = ell_3 = {K.T_PLUS_2} = -481/612 + 3/4, and "
         "ell_N = A_N + B_N + 1/C_F holds at symbolic N — so the first declared "
@@ -536,7 +544,10 @@ def _():
         f"{K.T3_EVEN}, is verified here and stops here: at third order the C-odd leakage "
         "separates from the C-odd hop while the C-even identity survives. Why is the "
         "swap-odd suite's business (ADR 0023), which refuted U4's vacuum-route reading "
-        "and derived the equality"
+        f"and derived the equality. The third, C_SHP_ASSEMBLED = {K.C_SHP_ASSEMBLED} = "
+        "C_SHP_CONTINUATION_SHIFTED = C_historical + 25/1024, is two routes to one number "
+        "(ADR 0024): the all-rank formula's forbidden N = 3 substitution and the cluster "
+        "assembly in the kernel's basis"
     )
 
 

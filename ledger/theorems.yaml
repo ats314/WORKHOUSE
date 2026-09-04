@@ -446,3 +446,51 @@ theorems:
     formalizes: [G17]
     promotes:
       - "the exact isolation constant: gamma = C_F, except 5/4 at SU(4), attained"
+
+  - name: cubeCompletionAdjacent_split
+    statement: >
+      The adjacent-face cube completion -106/(N(N^2-1)^3) is the primitive
+      -88 plus the ten multi-loop orderings' -18, at every rank.
+    formalizes: [G14, "CONST:CUBE_COMPLETION_ADJACENT_N"]
+    promotes: []
+
+  - name: cubeCompletionAdjacent_three
+    statement: "c_4^adj(3) = -53/768, the rotation record's cube term in the kernel's basis."
+    value: "-53/768"
+    formalizes: ["CONST:CUBE_COMPLETION_ADJACENT_4", G3]
+    promotes: []
+
+  - name: cubeCompletionAdjacent_ratio
+    statement: "c_4^adj(N) = (53/80) c_4^square(N) at every rank with N(N^2-1) nonzero."
+    formalizes: [G14]
+    promotes: []
+
+  - name: cube_shortfall
+    statement: >
+      53/768 - 31/1536 = 25/512: the sixteen cube orderings the historical
+      pipeline lacks are exactly the rotation shift.
+    value: "25/512"
+    formalizes: [C2, "CONST:CUBE_COMPLETION_ADJACENT_HISTORICAL_4"]
+    promotes: []
+
+  - name: cShp_from_rho_shift
+    statement: >
+      In C_shp = -5/96 - u - (rho + pi)/2, lowering rho by 25/512 raises
+      C_shp by 25/1024.
+    formalizes: [C2]
+    promotes: []
+
+  - name: cShp_assembled_value
+    statement: >
+      C_historical + 25/1024 = -13035490122347/550663802582400, the assembled
+      coefficient in the kernel's basis.
+    value: "-13035490122347/550663802582400"
+    formalizes: [C2, "CONST:C_SHP_ASSEMBLED"]
+    promotes: []
+
+  - name: beta_shift_from_cShp
+    statement: >
+      Through beta = 8A + 16C the same shift is beta_historical + 25/64, the
+      register's DELTA_BETA_3.
+    formalizes: [C10, C2]
+    promotes: []

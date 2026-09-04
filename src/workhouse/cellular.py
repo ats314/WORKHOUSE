@@ -481,3 +481,80 @@ def shape_from_normal_hop(cell, sector):
     coefficient, _signed_count, _hist = c_prim(cell, *sector)
     amplitude = 2 * coefficient  # Hermitian +- of the hop
     return simplify(-amplitude / 2), simplify(amplitude / 4)
+
+
+# ==========================================================================
+# The cube completion beyond the primitive law: multi-loop intermediates
+# ==========================================================================
+# Every link of a closed cell lies in exactly two faces. In a completion
+# history the second face containing a link is inserted at a definite time, or
+# never (the link belongs to the target face); once both faces are present the
+# link carries U x U-dagger = 1 + adjoint, nothing later touches it, and the
+# adjoint can never return to the target, so only the singlet survives. The
+# singlet projection IS the fundamental-pair moment `_contract_link` applies.
+# So the exact cube completion is the primitive sum extended to histories
+# whose intermediates are PRODUCTS of disjoint simple loops, with H0 additive
+# over the loops -- the ten orderings of the adjacent-face pair that begin
+# with a face disjoint from the current loop, which `_merge` rejects.
+
+
+def _face_trace(face):
+    return [
+        (tuple(sorted(e)), +1 if tuple(e) == tuple(sorted(e)) else -1) for e in _face_edges(face)
+    ]
+
+
+def _contract_all(traces):
+    """Contract every link present once as U and once as U-dagger; (factor, traces)."""
+    factor = sympify(1)
+    while True:
+        seen, dup = {}, None
+        for w in traces:
+            for letter, o in w:
+                if letter in seen:
+                    dup = letter
+                    break
+                seen[letter] = o
+            if dup is not None:
+                break
+        if dup is None:
+            return factor, traces
+        f, traces = _contract_link(traces, dup)
+        factor *= f
+
+
+def multiloop_histories(cell, p_idx, q_idx):
+    """Every temporal ordering of the other faces, single- or multi-loop.
+
+    Returns ``(order, intermediate total lengths, loop counts, N-power)`` per
+    ordering; the N-power is the net Haar factor of the contractions."""
+    p, q = cell.faces[p_idx], cell.faces[q_idx]
+    others = [f for k, f in enumerate(cell.faces) if k not in (p_idx, q_idx)]
+    target = sorted((lab, -o) for lab, o in _face_trace(q))
+    out = []
+    for order in permutations(range(len(others))):
+        traces, factor, lengths, loops = [_face_trace(p)], sympify(1), [], []
+        for step, k in enumerate(order):
+            f, traces = _contract_all(traces + [_face_trace(others[k])])
+            factor *= f
+            if step < len(order) - 1:
+                lengths.append(sum(len(w) for w in traces))
+                loops.append(len(traces))
+        if len(traces) != 1 or sorted(traces[0]) != target:
+            raise ValueError(f"ordering {order} does not complete to the reversed target")
+        out.append((order, tuple(lengths), tuple(loops), simplify(factor)))
+    return out
+
+
+def c_full(cell, p_idx, q_idx):
+    """The completion amplitude with multi-loop intermediates: sum over orderings of
+    (Haar factor) prod_j 1/(E_0 - E_j), E(L) = L C_F/2. Returns (amplitude, rows)."""
+    ell = len(cell.faces[p_idx])
+    total, rows = sympify(0), []
+    for order, lengths, loops, factor in multiloop_histories(cell, p_idx, q_idx):
+        w = factor
+        for length in lengths:
+            w *= 1 / ((ell - length) * C_F / 2)
+        rows.append((order, lengths, loops, simplify(w)))
+        total += w
+    return simplify(total), rows

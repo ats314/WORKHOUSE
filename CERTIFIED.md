@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 52
+## T0 — proof-checked — 59
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -46,16 +46,19 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:220
   - `make lean`
 - `bandVar_pi`
-  - lean/Workhouse/Basic.lean:404
+  - lean/Workhouse/Basic.lean:451
   - `make lean`
 - `bandVar_pi_div_two`
-  - lean/Workhouse/Basic.lean:407
+  - lean/Workhouse/Basic.lean:454
   - `make lean`
 - `bandVar_zero`
-  - lean/Workhouse/Basic.lean:401
+  - lean/Workhouse/Basic.lean:448
   - `make lean`
 - `beta_from_A_and_C`
   - lean/Workhouse/Basic.lean:252
+  - `make lean`
+- `beta_shift_from_cShp`
+  - lean/Workhouse/Basic.lean:428
   - `make lean`
 - `blind_holdout`
   - lean/Workhouse/Basic.lean:230
@@ -63,23 +66,41 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `cPrimTwo_forms`
   - lean/Workhouse/Basic.lean:353
   - `make lean`
+- `cShp_assembled_value`
+  - lean/Workhouse/Basic.lean:424
+  - `make lean`
+- `cShp_from_rho_shift`
+  - lean/Workhouse/Basic.lean:418
+  - `make lean`
 - `channel_resolvent_assembly`
   - lean/Workhouse/Basic.lean:148
+  - `make lean`
+- `cubeCompletionAdjacent_ratio`
+  - lean/Workhouse/Basic.lean:405
+  - `make lean`
+- `cubeCompletionAdjacent_split`
+  - lean/Workhouse/Basic.lean:396
+  - `make lean`
+- `cubeCompletionAdjacent_three`
+  - lean/Workhouse/Basic.lean:401
   - `make lean`
 - `cubeCompletion_three`
   - lean/Workhouse/Basic.lean:372
   - `make lean`
+- `cube_shortfall`
+  - lean/Workhouse/Basic.lean:414
+  - `make lean`
 - `delta_M`
-  - lean/Workhouse/Basic.lean:440
+  - lean/Workhouse/Basic.lean:487
   - `make lean`
 - `delta_P`
-  - lean/Workhouse/Basic.lean:446
+  - lean/Workhouse/Basic.lean:493
   - `make lean`
 - `delta_R`
-  - lean/Workhouse/Basic.lean:454
+  - lean/Workhouse/Basic.lean:501
   - `make lean`
 - `delta_X`
-  - lean/Workhouse/Basic.lean:435
+  - lean/Workhouse/Basic.lean:482
   - `make lean`
 - `dim_Z₂`
   - lean/Workhouse/Basic.lean:328
@@ -142,7 +163,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:368
   - `make lean`
 - `q_at_checkpoints`
-  - lean/Workhouse/Basic.lean:426
+  - lean/Workhouse/Basic.lean:473
   - `make lean`
 - `rank_law_numerator`
   - lean/Workhouse/Basic.lean:36
@@ -178,7 +199,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:248
   - `make lean`
 
-## T1 — re-derived exactly — 258
+## T1 — re-derived exactly — 267
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -346,58 +367,58 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/orbits.py:254 · G14; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'B = 0 is unpopulated, not cancelled'`
 - `CORRECTED PREDICTION: the eps-sector at N=3 is Delta(rho + pi~) = -25/512; u is NOT constrained`
-  - src/workhouse/invariants/orbits.py:384 · U5; C2; C10; G3; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:387 · U5; C2; C10; G3; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'CORRECTED PREDICTION: the eps-sector at N=3 is Delta(rho + pi~) = -25/512; u is NOT constrained'`
 - `C_shp = -5/96 - u - (rho + pi)/2, exactly`
   - src/workhouse/invariants/orbits.py:156 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'C_shp = -5/96 - u - (rho + pi)/2, exactly'`
 - `FINDING: U5 is falsified -- the epsilon sector of rho + pi~ is -55/6936, not -25/512`
-  - src/workhouse/invariants/orbits.py:1109 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:1112 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: U5 is falsified -- the epsilon sector of rho + pi~ is -55/6936, not -25/512'`
 - `FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel's 4.13 u is wrong`
-  - src/workhouse/invariants/orbits.py:898 · C2; G3 chain amplitude route; G14; ADR 0019; RUN g3_chain_amplitude_2026-09-02
+  - src/workhouse/invariants/orbits.py:901 · C2; G3 chain amplitude route; G14; ADR 0019; RUN g3_chain_amplitude_2026-09-02
   - `workhouse verify --only 'FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel'"'"'s 4.13 u is wrong'`
 - `H4 = -nu~(L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2 C_shp R exactly: C_shp is the coefficient of the one non-Hodge operator`
-  - src/workhouse/invariants/orbits.py:758 · C2; G14; U5; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:761 · C2; G14; U5; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'H4 = -nu~(L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2 C_shp R exactly: C_shp is the coefficient of the one non-Hodge operator'`
 - `REPLICATION: a second implementation, with the engine's PVP assembly and a Krylov resolvent, gives u = X_QUANTUM on three chain types`
-  - src/workhouse/invariants/orbits.py:945 · C2; G3 chain amplitude route; G14; ADR 0019; RUN g3_chain_amplitude_2026-09-02; runs/g3_chain_amplitude_replication_2026-09-02; ADR 0020
+  - src/workhouse/invariants/orbits.py:948 · C2; G3 chain amplitude route; G14; ADR 0019; RUN g3_chain_amplitude_2026-09-02; runs/g3_chain_amplitude_replication_2026-09-02; ADR 0020
   - `workhouse verify --only 'REPLICATION: a second implementation, with the engine'"'"'s PVP assembly and a Krylov resolvent, gives u = X_QUANTUM on three chain types'`
 - `RETRACTED: B_3 - beta_historical = 25/64 is a forbidden substitution, not an exact branch`
   - src/workhouse/invariants/orbits.py:297 · C2; walled-Brauer eps-sector; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'RETRACTED: B_3 - beta_historical = 25/64 is a forbidden substitution, not an exact branch'`
 - `every orbit is separately Hermitian and cubic-covariant, so symmetry fixes no sign`
-  - src/workhouse/invariants/orbits.py:516 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:519 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'every orbit is separately Hermitian and cubic-covariant, so symmetry fixes no sign'`
 - `every orbit's carrier projection is closed form in e1, e2, e3`
   - src/workhouse/invariants/orbits.py:106 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'every orbit'"'"'s carrier projection is closed form in e1, e2, e3'`
 - `no plane-basis convention flips rho or pi: only +-1 keeps the 144 agreed records`
-  - src/workhouse/invariants/orbits.py:580 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:583 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'no plane-basis convention flips rho or pi: only +-1 keeps the 144 agreed records'`
 - `the 144 agreed records are u S_sq^2, the shared-link adjacency squared`
-  - src/workhouse/invariants/orbits.py:696 · C2; G14; U5; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:699 · C2; G14; U5; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the 144 agreed records are u S_sq^2, the shared-link adjacency squared'`
 - `the 189 records carry exactly six weight magnitudes`
   - src/workhouse/invariants/orbits.py:71 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the 189 records carry exactly six weight magnitudes'`
 - `the cluster expansion is linked: a plaquette sharing no link with the pair contributes exactly zero`
-  - src/workhouse/invariants/orbits.py:1039 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:1042 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the cluster expansion is linked: a plaquette sharing no link with the pair contributes exactly zero'`
 - `the corner cluster's cumulant agrees between two implementations of the resolvent`
-  - src/workhouse/invariants/orbits.py:1209 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:1212 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the corner cluster'"'"'s cumulant agrees between two implementations of the resolvent'`
 - `the engine's primitives plus textbook second-order theory return t_3 S_sq, the C-even hop and the leakage`
-  - src/workhouse/invariants/orbits.py:874 · C2; G3 chain amplitude route; G14; ADR 0019; RUN g3_chain_amplitude_2026-09-02
+  - src/workhouse/invariants/orbits.py:877 · C2; G3 chain amplitude route; G14; ADR 0019; RUN g3_chain_amplitude_2026-09-02
   - `workhouse verify --only 'the engine'"'"'s primitives plus textbook second-order theory return t_3 S_sq, the C-even hop and the leakage'`
 - `the lattice fourth-order in-plane nearest-neighbour element, assembled from clusters, is the historical kernel's pi exactly`
-  - src/workhouse/invariants/orbits.py:1064 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:1067 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the lattice fourth-order in-plane nearest-neighbour element, assembled from clusters, is the historical kernel'"'"'s pi exactly'`
 - `the lattice fourth-order normal element, assembled from clusters with the cube-completion term, is the agreed nu = -5/48 - 4u exactly`
-  - src/workhouse/invariants/orbits.py:1170 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:1173 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the lattice fourth-order normal element, assembled from clusters with the cube-completion term, is the agreed nu = -5/48 - 4u exactly'`
 - `the on-site orbit IS the momentum-independent channel`
-  - src/workhouse/invariants/orbits.py:351 · U5; C2; C10; GCSG SU(6) certificate; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:354 · U5; C2; C10; GCSG SU(6) certificate; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'the on-site orbit IS the momentum-independent channel'`
 - `the shape coefficients are solved, not fitted: A = 5/48, B = D = 0 exactly`
   - src/workhouse/invariants/orbits.py:44 · C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
@@ -862,10 +883,10 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/charge_even.py:337 · RUN_TROM_d3_results.json vs PAPER, the §6 patch, and the arithmetic
   - `workhouse verify --only 'FINDING: the certificate key '"'"'bandmin'"'"' holds the band MAXIMUM, at both orders'`
 - `at N = 2 the C-odd hopping vanishes and the C-even one does not`
-  - src/workhouse/invariants/charge_even.py:543 · MASTER_THEORY §4.3; ledger/theorems.yaml (t_2 = 0)
+  - src/workhouse/invariants/charge_even.py:554 · MASTER_THEORY §4.3; ledger/theorems.yaml (t_2 = 0)
   - `workhouse verify --only 'at N = 2 the C-odd hopping vanishes and the C-even one does not'`
 - `at N = 2 the C-odd hopping vanishes while the unsigned-channel continuation does not`
-  - src/workhouse/invariants/charge_even.py:590 · PUBLICATION rev5 §2 (why the construction begins at N = 3)
+  - src/workhouse/invariants/charge_even.py:601 · PUBLICATION rev5 §2 (why the construction begins at N = 3)
   - `workhouse verify --only 'at N = 2 the C-odd hopping vanishes while the unsigned-channel continuation does not'`
 - `both declared coincidences, checked: one is ell_N at all ranks, the other is bare`
   - src/workhouse/invariants/charge_even.py:495 · ENGINE_FLUX_su3_domino_d3.py / MASTER paper Prop. 8
@@ -898,7 +919,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/charge_even.py:134 · PAPER Thm. (incidence factorization) / ENGINE_FLUX_glueball_band_certificate_v2.py
   - `workhouse verify --only 'the C-even range [-4, 12] is exact, and each edge is attained at one point only'`
 - `the C-even range [-4, 12] is exact; the top only at Gamma, the floor on three planes`
-  - src/workhouse/invariants/charge_even.py:677 · PUBLICATION rev5 Prop. (range and attainment)
+  - src/workhouse/invariants/charge_even.py:688 · PUBLICATION rev5 Prop. (range and attainment)
   - `workhouse verify --only 'the C-even range [-4, 12] is exact; the top only at Gamma, the floor on three planes'`
 - `the C-even spectra at the four high-symmetry momenta`
   - src/workhouse/invariants/charge_even.py:282 · MASTER paper §4.5 / PAPER Thm. (the C-even band)
@@ -910,7 +931,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/charge_even.py:67 · PAPER Thm. (incidence factorization; Gauss law)
   - `workhouse verify --only 'the two Bloch incidence symbols, and the determinant asymmetry between them'`
 - `the unsigned-incidence characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3`
-  - src/workhouse/invariants/charge_even.py:636 · PUBLICATION rev5 Thm. (unsigned-incidence Bloch cubic)
+  - src/workhouse/invariants/charge_even.py:647 · PUBLICATION rev5 Thm. (unsigned-incidence Bloch cubic)
   - `workhouse verify --only 'the unsigned-incidence characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3'`
 **the electric shell, and what isolates it**
 
@@ -966,6 +987,35 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the |0> route is minus the vacuum energy at orders 2 and 3, so leak_(k,+) = t_(k,+) follows`
   - src/workhouse/invariants/swap_odd.py:164 · ADR 0023; CERT_FLUX_d3 'exact identity (gated)'
   - `workhouse verify --only 'the |0> route is minus the vacuum energy at orders 2 and 3, so leak_(k,+) = t_(k,+) follows'`
+**the third implementation and the historical ledger (G3, C2)**
+
+- `FINDING: C_shp from the assembled amplitudes in the kernel's basis is C_historical + 25/1024, the registered continuation-shifted value`
+  - src/workhouse/invariants/third_implementation.py:472 · C2; G3; G14; runs/g3_corner_third_implementation_2026-09-04; runs/g3_shared_link_pair_2026-09-02; ADR 0024; ADR 0021; C10; ADR 0019
+  - `workhouse verify --only 'FINDING: C_shp from the assembled amplitudes in the kernel'"'"'s basis is C_historical + 25/1024, the registered continuation-shifted value'`
+- `FINDING: the historical rotation record holds every cluster the assembly has, to the digit, except 16 of the 24 cube orderings`
+  - src/workhouse/invariants/third_implementation.py:361 · C2; G3; G14; runs/g3_corner_third_implementation_2026-09-04; runs/g3_shared_link_pair_2026-09-02; ADR 0024; ADR 0021; corpus manifest row A41F
+  - `workhouse verify --only 'FINDING: the historical rotation record holds every cluster the assembly has, to the digit, except 16 of the 24 cube orderings'`
+- `FINDING: the run's rotation element is in the conjugate basis; in the kernel's own basis rho = -RHO_CLUSTER and rho_historical - rho = 25/512, the cube term alone`
+  - src/workhouse/invariants/third_implementation.py:419 · C2; G3; G14; runs/g3_corner_third_implementation_2026-09-04; runs/g3_shared_link_pair_2026-09-02; ADR 0024; ADR 0021; ADR 0018; ADR 0019; THM_FLUX Prop. 2
+  - `workhouse verify --only 'FINDING: the run'"'"'s rotation element is in the conjugate basis; in the kernel'"'"'s own basis rho = -RHO_CLUSTER and rho_historical - rho = 25/512, the cube term alone'`
+- `the adjacent-face cube completion is -106/(N(N^2-1)^3): the primitive -88 plus ten multi-loop histories at -18`
+  - src/workhouse/invariants/third_implementation.py:288 · C2; G3; G14; MOB §4; runs/g3_offaxis_channels_2026-08-30; runs/g3_corner_third_implementation_2026-09-04; ADR 0024
+  - `workhouse verify --only 'the adjacent-face cube completion is -106/(N(N^2-1)^3): the primitive -88 plus ten multi-loop histories at -18'`
+- `the corner cluster's cumulant from a third implementation, independent of the engine in every primitive`
+  - src/workhouse/invariants/third_implementation.py:154 · C2; G3; G14; runs/g3_corner_third_implementation_2026-09-04; runs/g3_shared_link_pair_2026-09-02; ADR 0024; ADR 0021
+  - `workhouse verify --only 'the corner cluster'"'"'s cumulant from a third implementation, independent of the engine in every primitive'`
+- `the cube completion from the third engine: -5/48 between opposite faces, -53/768 between adjacent ones`
+  - src/workhouse/invariants/third_implementation.py:252 · C2; G3; G14; runs/g3_corner_third_implementation_2026-09-04; runs/g3_shared_link_pair_2026-09-02; ADR 0024; ADR 0021
+  - `workhouse verify --only 'the cube completion from the third engine: -5/48 between opposite faces, -53/768 between adjacent ones'`
+- `the historical pipeline's own word ledger, pinned in the corpus, reassembles to the 189 records`
+  - src/workhouse/invariants/third_implementation.py:340 · C2; G3; corpus manifest row A41F; ADR 0024; runs/g3_corner_third_implementation_2026-09-04
+  - `workhouse verify --only 'the historical pipeline'"'"'s own word ledger, pinned in the corpus, reassembles to the 189 records'`
+- `the third engine reproduces every dressing class of the three shared-link pairs, and the far gate`
+  - src/workhouse/invariants/third_implementation.py:187 · C2; G3; G14; runs/g3_corner_third_implementation_2026-09-04; runs/g3_shared_link_pair_2026-09-02; ADR 0024; ADR 0021
+  - `workhouse verify --only 'the third engine reproduces every dressing class of the three shared-link pairs, and the far gate'`
+- `the third engine reproduces the second-order constants and u = X_QUANTUM on three chain types`
+  - src/workhouse/invariants/third_implementation.py:104 · C2; G3; G14; runs/g3_corner_third_implementation_2026-09-04; runs/g3_shared_link_pair_2026-09-02; ADR 0024; ADR 0021; ADR 0020
+  - `workhouse verify --only 'the third engine reproduces the second-order constants and u = X_QUANTUM on three chain types'`
 **tier collapse (G14)**
 
 - `B B^dagger = q I - d conj(d)^T for the curl incidence`
@@ -1085,19 +1135,19 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **fourth-order kernel orbits**
 
 - `FINDING: C_shp from the assembled amplitudes is a third value, -5/96 - u - (rho + pi)/2 with the cluster rho`
-  - src/workhouse/invariants/orbits.py:1292 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:1295 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: C_shp from the assembled amplitudes is a third value, -5/96 - u - (rho + pi)/2 with the cluster rho'`
 - `FINDING: the cold kernel carries the same orientation character, so its flips are real`
-  - src/workhouse/invariants/orbits.py:642 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:645 · C2; G3 covariance sign test; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: the cold kernel carries the same orientation character, so its flips are real'`
 - `FINDING: the cold kernel has the same Hodge form, with nu~ = -5/48 and its own (u, rho, pi~, sigma~)`
-  - src/workhouse/invariants/orbits.py:828 · C2; G14; U5; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:831 · C2; G14; U5; GLUEBALL v3.1 §6.1-6.2, §7; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: the cold kernel has the same Hodge form, with nu~ = -5/48 and its own (u, rho, pi~, sigma~)'`
 - `FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped`
-  - src/workhouse/invariants/orbits.py:454 · C2; G3 step 1; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:457 · C2; G3 step 1; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped'`
 - `FINDING: the lattice fourth-order rotation element, assembled from clusters, is neither kernel's rho`
-  - src/workhouse/invariants/orbits.py:1242 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
+  - src/workhouse/invariants/orbits.py:1245 · C2; G3; G14; U5; runs/g3_shared_link_pair_2026-09-02; ADR 0021; THM_FLUX Prop. 2; C2; G14; OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08)
   - `workhouse verify --only 'FINDING: the lattice fourth-order rotation element, assembled from clusters, is neither kernel'"'"'s rho'`
 **near-Gamma uniformity (G11)**
 

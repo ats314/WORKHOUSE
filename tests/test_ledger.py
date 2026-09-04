@@ -22,12 +22,16 @@ def test_registers_are_complete():
     assert led.gap_ids >= {f"G{i}" for i in range(1, 24)}
 
 
-def test_only_the_off_axis_coefficient_remains_open():
-    """C1 dissolved into an anchoring distinction; C2 is the real open item."""
+def test_no_contradiction_remains_open_and_c2_closed_by_derivation():
+    """C1 dissolved into an anchoring distinction; C2, the last real open item,
+    was resolved by derivation on 2026-09-04 (ADR 0024). Both of its recorded
+    sides stay listed, as C1's and C15's do."""
     led = L.load()
-    assert {c["id"] for c in led.open_contradictions} == {"C2"}
-    for c in led.open_contradictions:
-        assert "G3" in c["blocks"], f"{c['id']} must route to the adjudication run"
+    assert {c["id"] for c in led.open_contradictions} == set()
+    c2 = next(c for c in led.contradictions if c["id"] == "C2")
+    assert c2["status"] == "resolved"
+    assert "25/1024" in c2["resolution"]
+    assert {s["label"] for s in c2["sides"]} >= {"historical", "v10a.26"}
 
 
 def test_disputed_contradictions_carry_both_numbers():
@@ -115,9 +119,15 @@ def test_g3_rewrite_keeps_the_protocol_and_the_traps():
         # implementation or from the historical pipeline's own ledger.
         "the corner cluster from a third implementation, or from the historical pipeline's "
         "own face-resolved ledger",
+        # Added 2026-09-04 when the corner route closed both ways (ADR 0024):
+        # the ledger closure the maintainer authorised the same night, and the
+        # one follow-up that can sharpen but not overturn the result.
+        "close C2 in the ledger on the recorded evidence -- the maintainer's call",
+        "the pair cluster from the third engine, pure-six family included",
     ], (
         "G3's steps: the executed pair, the measured one, the cheaper route, the demoted "
-        "sweep, the chain amplitude, the sign test, the corner cluster"
+        "sweep, the chain amplitude, the sign test, the corner cluster, the closure, the "
+        "pair cluster"
     )
     sign_test = next(
         s for s in g3["plan"] if s["step"] == "covariance sign test of the two flipped orbits"

@@ -338,9 +338,12 @@ def _():
         "the substitution GLUEBALL_DETAILED_FORMULA v3.1 forbids at N = 3. Its gap to the "
         f"historical beta = {beta} is exactly 25/64, which is the register's DELTA_BETA_3 and "
         "is a true relation among recorded quantities. It is NOT an exact balanced branch of "
-        "C2, and C_historical + 25/1024 is NOT an established value of C_shp: no direct "
-        "balanced contraction at N = 3 is held in this repository, and the continuation route "
-        "to N = 3 is closed by a third-order pole. What the exceptional ranks do show is that "
+        "C2 BY THIS ROUTE, and on 2026-08-30 C_historical + 25/1024 was not an established value "
+        "of C_shp: no direct balanced contraction at N = 3 was held here, and the continuation "
+        "route to N = 3 is closed by a third-order pole. REVISITED 2026-09-04 (ADR 0024): the "
+        "cluster assembly read in the kernel's basis reaches exactly this rational, so the number "
+        "is now established by a legitimate route while the retraction of the continuation "
+        "DERIVATION stands. What the exceptional ranks do show is that "
         "the determinant sector does not reach B elsewhere -- SU(5) ships 895,524 pairs with "
         "zero determinant sectors, and SU(6)'s sole determinant orbit shifts the scalar by "
         "6/343 leaving A, B and the bandwidth unchanged -- which is evidence about the "
@@ -1314,11 +1317,12 @@ def _():
         (
             f"C_shp = -5/96 - u - (rho + pi)/2 = {c} = {float(c):.12f} with the cluster rho and "
             f"the (historical, exact) pi; historical {float(hist):.12f}, cold "
-            f"{K.C_SHP_NEW_NUM:.12f}. Recorded as C2's third side, not promoted: what it rests on "
-            "is the rotation-pair assembly, and no record both pipelines got right has a corner "
-            "cluster to check that assembly against. The route to close it is a third "
-            "implementation of the corner cluster, or the historical pipeline's own "
-            "face-resolved ledger for the 18 three-clusters"
+            f"{K.C_SHP_NEW_NUM:.12f}. This is the certificate's arithmetic in the run's (2,0) "
+            "traversal of the perpendicular face. SUPERSEDED 2026-09-04 (ADR 0024): the kernel's "
+            "records are in the x-then-z (0,2) basis, in which the assembled rho is -RHO_CLUSTER "
+            "and C_shp = C_historical + 25/1024; see the third-implementation suite, whose "
+            "FINDINGs rest on the corner cluster from a third implementation and on the "
+            "historical pipeline's own ledger, both of which this route asked for"
         ),
         {"C_SHP_CLUSTER": c, "RHO_CLUSTER": rho},
     )

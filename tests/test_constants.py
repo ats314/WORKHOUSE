@@ -12,10 +12,18 @@ def test_registry_vocabularies_are_closed():
         assert c.source, f"{c.name} has no provenance"
 
 
-def test_disputed_entries_record_both_sides():
-    disputed = {c.name for c in K.REGISTRY if c.status == "disputed"}
-    # C_shp is the one genuinely open pair; neither side may appear alone.
-    assert "C_shp (historical)" in disputed and "C_shp (v10a.26)" in disputed
+def test_resolved_dispute_keeps_both_sides_recorded():
+    # C2 was resolved on 2026-09-04 (ADR 0024). The rule this test used to hold --
+    # neither side of a dispute may appear alone -- survives the resolution: both
+    # recorded kernels' values stay in the registry with their verdicts, beside the
+    # value that replaced them, so the history of the dispute is not erased.
+    names = {c.name: c for c in K.REGISTRY}
+    assert names["C_shp (historical)"].status == "superseded"
+    assert names["C_shp (v10a.26)"].status == "falsified"
+    # The value that replaced them is this repository's derivation, not a corpus
+    # number, so it lives as a module constant read by the checks, not in REGISTRY.
+    assert K.C_SHP_HISTORICAL + Rational(25, 1024) == K.C_SHP_ASSEMBLED
+    assert not {c.name for c in K.REGISTRY if c.status == "disputed"}
 
 
 def test_the_anchor_pair_is_recorded_but_not_disputed():

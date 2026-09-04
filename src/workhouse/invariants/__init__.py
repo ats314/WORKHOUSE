@@ -54,6 +54,7 @@ _MODULES = (
     "continuum",
     "swap_odd",
     "hecke",
+    "third_implementation",
 )
 
 for _name in _MODULES:
