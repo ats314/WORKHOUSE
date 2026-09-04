@@ -147,3 +147,50 @@ def _():
         f"{s['identity']['terms']} terms: naive pairing matches none, reversal alone matches "
         f"none, reversal with the end roles swapped and P conjugated matches all with ratio -1"
     )
+
+
+_RESIDUALS_RUN = "runs/vertex_residuals_2026-09-04"
+
+_RESIDUALS = (
+    "where the identity lives: after every private path is integrated, the straight and the "
+    "L chain leave the same formal word in the two shared links, coefficient for coefficient, in "
+    "every (sequence, channel) term; after the middle face's private links alone they do not"
+)
+
+
+@reduction.check(_RESIDUALS, _CITE + "; " + _RESIDUALS_RUN + "; ADR 0031", rests_on=(_BY_HISTORY,))
+def _():
+    # Each final integrand is Haar-integrated over some of its links (balanced
+    # n = 1 families, so each integration is the cut delta delta / N), adjacent
+    # U U~ pairs are cancelled, and the residual words over the role alphabet
+    # are summed. Integrating the middle face's private links only leaves
+    # different functions of the shared links and the end paths in the two
+    # geometries -- the L chain threads the end paths through one trace with
+    # both shared links, the straight chain does not; integrating the end
+    # paths too leaves literally the same word. The lemma behind universality
+    # is therefore about the fully contracted two-link word.
+    cert = json.loads((ROOT / _RESIDUALS_RUN / "certificate.json").read_text(encoding="utf-8"))
+    partial = cert["stages"]["xpriv"]
+    full = cert["stages"]["xpriv,wP,wQ"]
+    pairs = cert["stages"]["pairs"]
+    ok = (
+        full["residual_vectors_equal"] == full["terms"] == 124
+        and full["totals_equal"] == 124
+        and partial["totals_equal"] == 124
+        and partial["residual_vectors_equal"] < partial["terms"]
+        and set(full["residual_words_straight"]) == set(full["residual_words_L"]) == {"()"}
+        and pairs["coefficient_and_value_pair_multisets_equal"] == 124
+        and max(
+            int(k.split("(")[1].split(")")[0].split(",")[-1] or 0) for k in pairs["family_sizes"]
+        )
+        <= 3
+    )
+    return ok, (
+        f"integrating the middle face's private links only: residual vectors equal in "
+        f"{partial['residual_vectors_equal']} of {partial['terms']} terms (totals equal in all); "
+        f"integrating the end paths as well: equal in {full['residual_vectors_equal']} of "
+        f"{full['terms']}, every term reducing to the empty word; per integrand, the (Fierz "
+        f"coefficient, Haar integral) pairs agree as multisets in "
+        f"{pairs['coefficient_and_value_pair_multisets_equal']} of {pairs['terms']} terms over "
+        f"{pairs['integrands_straight']} integrands, with Haar families of size at most three"
+    )

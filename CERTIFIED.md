@@ -271,7 +271,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:247
   - `make lean`
 
-## T1 — re-derived exactly — 299
+## T1 — re-derived exactly — 300
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -747,6 +747,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `universality of the two-hop weight holds history by history: the straight and the L-shaped chain agree in every (insertion sequence, channel) term of the direct term, and integrand by integrand within each term`
   - src/workhouse/invariants/path_reduction.py:97 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; ADR 0019
   - `workhouse verify --only 'universality of the two-hop weight holds history by history: the straight and the L-shaped chain agree in every (insertion sequence, channel) term of the direct term, and integrand by integrand within each term'`
+- `where the identity lives: after every private path is integrated, the straight and the L chain leave the same formal word in the two shared links, coefficient for coefficient, in every (sequence, channel) term; after the middle face's private links alone they do not`
+  - src/workhouse/invariants/path_reduction.py:161 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; runs/vertex_residuals_2026-09-04; ADR 0031
+  - `workhouse verify --only 'where the identity lives: after every private path is integrated, the straight and the L chain leave the same formal word in the two shared links, coefficient for coefficient, in every (sequence, channel) term; after the middle face'"'"'s private links alone they do not'`
 **published comparisons (literature/index.yaml)**
 
 - `FINDING: Munster's 1985 table shifts his 1982 erratum at eighth order`
