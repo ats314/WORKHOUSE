@@ -1117,7 +1117,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **the third engine over Q(N): closed forms derived, the degree bound**
 
 - `beta_N is a sum of resolvent products: -16 u + 32 d - 16 corner + 848/(N(N^2-1)^3) over 254 channel terms, each a rational function of N whose denominator is a product of resolvent factors, equals P17(N^2)/(N R20(N^2))`
-  - src/workhouse/invariants/rank_field.py:718 · G14; C2; runs/channels_symbolic_rank_2026-09-04; ADR 0029; ADR 0026; ADR 0019; runs/beta_n_symbolic_rank_2026-09-04
+  - src/workhouse/invariants/rank_field.py:735 · G14; C2; runs/channels_symbolic_rank_2026-09-04; ADR 0029; ADR 0026; ADR 0019; runs/beta_n_symbolic_rank_2026-09-04
   - `workhouse verify --only 'beta_N is a sum of resolvent products: -16 u + 32 d - 16 corner + 848/(N(N^2-1)^3) over 254 channel terms, each a rational function of N whose denominator is a product of resolvent factors, equals P17(N^2)/(N R20(N^2))'`
 - `every cumulant of the beta_N assembly is one rational function of N computed over Q(N): the closed forms are derived, not reconstructed, and specialise to the per-rank records at N = 3..70`
   - src/workhouse/invariants/rank_field.py:202 · G14; C10; R2; runs/beta_n_symbolic_rank_2026-09-04; ADR 0029; ADR 0027; ADR 0025
@@ -1129,7 +1129,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/rank_field.py:321 · G14; C10; R2; runs/beta_n_symbolic_rank_2026-09-04; ADR 0029; ADR 0027; ADR 0025
   - `workhouse verify --only 'the coplanar dressings are the exact negatives of the perpendicular ones in Q(N), single contact and fan alike, so the eleven-cumulant assembly is three cumulants and the cube: beta_N = -16u + 32d - 16 corner + 848/(N(N^2-1)^3)'`
 - `the corner dressing by channel: 87 C-odd channels, at most three doubled links in any direct-term state, every resolvent factor the corner adds to R20 the energy of an identified intermediate state, and the Weingarten poles at N = -+3 of single channels cancelling in the sum`
-  - src/workhouse/invariants/rank_field.py:641 · G14; C2; runs/channels_symbolic_rank_2026-09-04; ADR 0029; ADR 0026; ADR 0019; ADR 0025
+  - src/workhouse/invariants/rank_field.py:658 · G14; C2; runs/channels_symbolic_rank_2026-09-04; ADR 0029; ADR 0026; ADR 0019; ADR 0025
   - `workhouse verify --only 'the corner dressing by channel: 87 C-odd channels, at most three doubled links in any direct-term state, every resolvent factor the corner adds to R20 the energy of an identified intermediate state, and the Weingarten poles at N = -+3 of single channels cancelling in the sum'`
 - `the final polynomial identity: -16 u + 32 d - 16 corner - 8 K_adj = P17(N^2)/(N R20(N^2)) as rational functions, for the closed forms of the two-hop weight, the single-contact dressing, the corner dressing and the adjacent-face cube completion`
   - src/workhouse/invariants/rank_field.py:374 · G14; C10; R2; runs/beta_n_symbolic_rank_2026-09-04; ADR 0029; ADR 0027; ADR 0025; GLUEBALL v3.1 Appendix A
@@ -1137,9 +1137,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the shared-link fan dressing is universal channel by channel in Q(N): the coplanar fan is minus the perpendicular fan in every C-odd channel and equal in every C-even one, and its channels are the only ones that carry three-box irreps`
   - src/workhouse/invariants/rank_field.py:551 · G14; C2; runs/channels_symbolic_rank_2026-09-04; ADR 0029; ADR 0026; ADR 0019
   - `workhouse verify --only 'the shared-link fan dressing is universal channel by channel in Q(N): the coplanar fan is minus the perpendicular fan in every C-odd channel and equal in every C-even one, and its channels are the only ones that carry three-box irreps'`
-- `the single-contact dressing is universal only in sum: between the straight and the L-shaped three-face chain 76 of its 92 C-odd channels agree with the incidence sign, and the 8 that agree with the wrong sign together with the 8 present in each geometry only sum to zero across the two`
+- `the single-contact dressing is universal channel by channel too, once the two geometries are matched: the straight chain dresses Q where the L-shaped chain dresses P, so the direct term's intermediate states correspond in reverse time order, and then all 92 C-odd channels have ratio -1 and all 164 C-even channels ratio +1`
   - src/workhouse/invariants/rank_field.py:602 · G14; C2; runs/channels_symbolic_rank_2026-09-04; ADR 0029; ADR 0026; ADR 0019
-  - `workhouse verify --only 'the single-contact dressing is universal only in sum: between the straight and the L-shaped three-face chain 76 of its 92 C-odd channels agree with the incidence sign, and the 8 that agree with the wrong sign together with the 8 present in each geometry only sum to zero across the two'`
+  - `workhouse verify --only 'the single-contact dressing is universal channel by channel too, once the two geometries are matched: the straight chain dresses Q where the L-shaped chain dresses P, so the direct term'"'"'s intermediate states correspond in reverse time order, and then all 92 C-odd channels have ratio -1 and all 164 C-even channels ratio +1'`
 - `the specialisation argument's certificate: every eigencomponent an exact H0 eigenvector over Q(N), every Haar family balanced with n <= 3, every flux audited, and the one resolvent denominator vanishing at an integer rank >= 4 is at N = 4`
   - src/workhouse/invariants/rank_field.py:280 · G14; C10; R2; runs/beta_n_symbolic_rank_2026-09-04; ADR 0029; ADR 0027; ADR 0025; ADR 0024
   - `workhouse verify --only 'the specialisation argument'"'"'s certificate: every eigencomponent an exact H0 eigenvector over Q(N), every Haar family balanced with n <= 3, every flux audited, and the one resolvent denominator vanishing at an integer rank >= 4 is at N = 4'`

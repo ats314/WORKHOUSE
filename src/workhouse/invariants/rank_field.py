@@ -592,41 +592,58 @@ def _():
 
 
 _SINGLE_CHANNELS = (
-    "the single-contact dressing is universal only in sum: between the straight and the L-shaped "
-    "three-face chain 76 of its 92 C-odd channels agree with the incidence sign, and the 8 that "
-    "agree with the wrong sign together with the 8 present in each geometry only sum to zero "
-    "across the two"
+    "the single-contact dressing is universal channel by channel too, once the two geometries "
+    "are matched: the straight chain dresses Q where the L-shaped chain dresses P, so the direct "
+    "term's intermediate states correspond in reverse time order, and then all 92 C-odd channels "
+    "have ratio -1 and all 164 C-even channels ratio +1"
 )
 
 
 @field.check(_SINGLE_CHANNELS, _CHANNEL_CITE, rests_on=(_NEGATIVES, _U_CHANNELS_QN))
 def _():
     # The coplanar single contact is the straight chain P-Q-X with the dressing
-    # on Q; the perpendicular one is the chain X-P-Q with X coplanar to P and
-    # Q perpendicular, the two shared links of P adjacent. The totals are exact
-    # negatives (the check above), but unlike u and the fan the agreement is
-    # not channel by channel: 24 channels are exceptional, and they cancel
-    # only as a sum -- a coincidence of sums in ADR 0026's sense, recorded.
-    ratios, one_sided = _ratios("single_perp", "single_cop", "odd")
-    counts = _counts(ratios)
-    perp, cop = _channels("single_perp", "odd"), _channels("single_cop", "odd")
-    exceptional = set(one_sided) | set(ratios.get(Fraction(1), []))
-    cross = sum((perp.get(k, SR.RF(0)) + cop.get(k, SR.RF(0)) for k in exceptional), SR.RF(0))
-    only_perp = sum(1 for k in one_sided if k in perp)
-    only_cop = sum(1 for k in one_sided if k in cop)
+    # on Q; the perpendicular one is the chain X-P-Q with X on P, the two
+    # shared links of P adjacent. A channel label lists the intermediate
+    # states in time order from the ket end, so the two geometries' direct
+    # terms correspond with the labels reversed (the dressed end is the ket in
+    # one and the bra in the other); the fold labels, one per factor of
+    # {H2, V2}, correspond as they stand. Under that correspondence the
+    # agreement is exact in every channel of both sectors. Read with the
+    # labels paired naively, 24 channels look exceptional and cancel only in
+    # sum; that reading was recorded for a few hours on 2026-09-04 and is
+    # wrong -- the artifact, not the dressing, was the exception. Where the
+    # geometries attach the dressing to the same end (u's chains, the fans)
+    # the naive pairing is the right one, which is why it worked there.
+    def paired(key):
+        if key[0] == "direct":
+            return ("direct", key[3], key[2], key[1])
+        return key
+
+    results = {}
+    for sector in ("odd", "even"):
+        perp, cop = _channels("single_perp", sector), _channels("single_cop", sector)
+        ratios: dict = {}
+        one_sided = 0
+        for key, value in perp.items():
+            other = cop.get(paired(key))
+            if other is None:
+                one_sided += 1
+            else:
+                ratios.setdefault(_ratio_key(other / value), []).append(key)
+        results[sector] = (_counts(ratios), one_sided, len(perp), len(cop))
+    naive, naive_one = _ratios("single_perp", "single_cop", "odd")
     ok = (
-        counts == {Fraction(-1): 76, Fraction(1): 8}
-        and only_perp == only_cop == 8
-        and cross == 0
-        and len(perp) == len(cop) == 92
+        results["odd"] == ({Fraction(-1): 92}, 0, 92, 92)
+        and results["even"] == ({Fraction(1): 164}, 0, 164, 164)
+        and _counts(naive) == {Fraction(-1): 76, Fraction(1): 8}
+        and len(naive_one) == 16
     )
     return ok, (
-        f"C-odd channels: {counts.get(Fraction(-1), 0)} with ratio -1, "
-        f"{counts.get(Fraction(1), 0)} with ratio +1, "
-        f"{only_perp} only in the L geometry and {only_cop} only in the straight one; the "
-        f"{len(exceptional)} exceptional channels sum to {cross.to_sympy()} across the two "
-        "geometries. The dressing is one function of N by cancellation between channels, not "
-        "channel by channel"
+        "with the direct-term labels reversed between the geometries and the fold labels as they "
+        "stand: L/straight = -1 in all 92 C-odd channels and +1 in all 164 C-even ones, none "
+        "one-sided. Paired naively the same channels read as 76 agreeing, 8 with the wrong sign "
+        "and 16 one-sided, the 24 cancelling only in sum -- an artifact of the time-ordered "
+        "labels, retracted the day it was recorded"
     )
 
 
@@ -723,7 +740,9 @@ _BETA_BY_CHANNEL = (
 def _():
     # The question the G14 route asked: whether the corpus's all-rank formula
     # is itself a sum of resolvent products. It is: three cumulants by channel
-    # and the cube completion, with the integer weights of the assembly.
+    # and the cube completion, with the integer weights of the assembly. And
+    # every one of the three is universal channel by channel across the
+    # geometries it occurs in.
     n = _N
     u, d, c = (
         _channels("u_coplanar", "odd"),

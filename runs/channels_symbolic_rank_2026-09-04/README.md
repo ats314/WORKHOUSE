@@ -44,13 +44,20 @@ The channels of each cluster sum to its cumulant of
    equal in every one of its 138 C-even channels. Its labels are the only
    ones carrying three-box irreps (`F³` and `F² ⊗ F̄` on the tripled link),
    which is where its own factors `4N ∓ 3`, `4N ∓ 7`, `4N² − 7` come from.
-4. **The single-contact dressing is universal only in sum.** Between the
-   straight chain (coplanar pair, dressing on Q) and the L-shaped chain
-   (perpendicular pair, dressing on P), 76 of the 92 C-odd channels agree with
-   the incidence sign, 8 agree with the wrong sign, and 8 are present in each
-   geometry only; those 24 exceptional channels sum to zero across the two
-   geometries. The exact negative `d_cop = −d_perp` is a cancellation between
-   channels — a coincidence of sums in ADR 0026's sense — unlike u and the fan.
+4. **The single-contact dressing is universal channel by channel too**, once
+   the two geometries are matched correctly. The straight chain (coplanar
+   pair) carries the dressing on Q, the L-shaped chain (perpendicular pair)
+   on P, and a channel label lists the intermediate states in time order from
+   the ket end; so the direct-term channels of one geometry correspond to
+   those of the other with the labels reversed, while the fold labels, one per
+   factor of `{H2, V2}`, correspond as they stand. Under that correspondence
+   L/straight = −1 in all 92 C-odd channels and +1 in all 164 C-even ones,
+   none one-sided. Paired naively the same channels read as 76 agreeing, 8
+   with the wrong sign and 16 one-sided, "cancelling only in sum"; that
+   reading was recorded for a few hours on 2026-09-04 and is an artifact of
+   the labels, retracted here. For u's chains and the fans both geometries
+   attach the dressing to the same end, which is why the naive pairing was
+   right there.
 5. **The corner's channels.** 87 nonzero C-odd channels (31 direct, 24 in the
    two-face fold, 32 in the three-face fold); at most three doubled links in
    any direct-term state (the corner's faces pairwise share three different
@@ -74,7 +81,8 @@ The channels of each cluster sum to its cumulant of
    factors above (and `N`, `N ± 1`, `N ± 3`), of degree at most 7 in N, every
    numerator of degree at most 4. This answers the route's question: the
    corpus's all-rank formula is itself a sum of resolvent products, with the
-   assembly's integer weights.
+   assembly's integer weights, and every one of the three cumulants is
+   universal channel by channel across the geometries it occurs in.
 
 ## Files
 

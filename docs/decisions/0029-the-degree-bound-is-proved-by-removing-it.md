@@ -111,13 +111,16 @@ rational function of N in both sectors. Eight clusters:
   cluster (three faces around a link, two coplanar), and this is the forced
   case. Its labels alone carry three-box irreps (`F³`, `F² ⊗ F̄` on the
   tripled link), the origin of `4N ∓ 3`, `4N ∓ 7`, `4N² − 7`.
-- *single contact*: **universal only in sum.** Between the straight chain and
-  the L-shaped chain, 76 of the 92 C-odd channels agree with the incidence
-  sign, 8 agree with the wrong sign, 8 are present in each geometry only, and
-  the 24 exceptional channels sum to zero across the two geometries. The exact
-  negative `d_cop = −d_perp` is a cancellation between channels — a
-  "coincidence of sums" in the sense ADR 0026's route anticipated, here found
-  rather than feared, and recorded.
+- *single contact*: universal channel by channel as well, once the two
+  geometries are matched: the straight chain dresses Q, the L-shaped chain
+  dresses P, and a channel label lists the intermediate states in time order
+  from the ket end, so the direct-term channels correspond with the labels
+  reversed and the fold labels as they stand. Then L/straight = −1 in all 92
+  C-odd channels and +1 in all 164 C-even ones. Paired naively the same data
+  read as 24 exceptional channels "cancelling only in sum"; that reading was
+  recorded for a few hours and retracted the same day — the artifact was in
+  the labels, not in the dressing. So all three cumulants of `β_N` are
+  universal at the level of individual channels.
 - *corner*: 87 C-odd channels (31 direct, 24 two-face fold, 32 three-face
   fold), at most three doubled links in a direct-term state, never a tripled
   one; every factor the corner adds to `R20` is the resolvent of an identified
@@ -146,7 +149,9 @@ rational function of N in both sectors. Eight clusters:
 - The pair cluster is not computed over ℚ(N); it cancels (ADR 0027) and the
   record does not need it.
 - Universality channel by channel is computed, not explained. The route
-  opened below asks for the explanation.
+  opened below asks for the explanation. A first probe on the reduced
+  clusters shows it holds even history by history, for each time-ordered
+  insertion sequence separately, which is where a proof will start.
 
 ## Decision
 
@@ -155,17 +160,16 @@ rational function of N in both sectors. Eight clusters:
   against every pinned rank), the specialisation audit, the
   coplanar-perpendicular negatives and the three-cumulant form, the final
   polynomial identity (promoted by the Lean theorems), u's 74 channels as
-  identities, u's universality channel by channel, the fan's, the
-  single-contact finding, the corner's channels and their resolvent factors,
-  and β_N as a sum of resolvent products.
+  identities, u's universality channel by channel, the fan's, the single
+  contact's under the reversed-label correspondence, the corner's channels
+  and their resolvent factors, and β_N as a sum of resolvent products.
 - Lean: `P17`, `R20`, `betaN`, the three closed forms, four cofactor lemmas,
   `betaN_assembled_numerator`, four `_over_R20` lemmas,
   `assembly_three_cumulants`, `betaN_from_three_cumulants`, `betaN_three`,
   `betaN_four`.
 - G14: the corner/fan route is `done`; the resolvent-audit and N = 4 routes
   gain what the ℚ(N) run covers and what it does not; a new route asks for a
-  proof of channel-wise universality from the Haar contraction, and for why
-  the single-contact dressing needs its 24 exceptional channels to cancel.
+  proof of channel-wise universality from the Haar contraction.
 - Two run records, both pinned; `symbols.yaml` notes that the dressings and
   the two-hop weight are now derived; `runs/index.yaml` gains both records.
 
