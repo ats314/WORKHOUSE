@@ -571,9 +571,9 @@ def _():
             fv = Fraction(val)
             if exprs[label].subs(n, int(n_str)) != Rational(fv.numerator, fv.denominator):
                 pinned_ok = False
-    live = CC.decompose(CC.COPLANAR, 4)
+    live = CC.decompose(CC.COPLANAR, 3)
     live_ok = {str(k) for k in live} == set(exprs) and all(
-        exprs[str(k)].subs(n, 4) == Rational(v.numerator, v.denominator) for k, v in live.items()
+        exprs[str(k)].subs(n, 3) == Rational(v.numerator, v.denominator) for k, v in live.items()
     )
     den = (
         2
@@ -600,7 +600,7 @@ def _():
     ok = pinned_ok and live_ok and sum_ok and len(exprs) == 74 and direct == 58 and fold == 16
     return ok, (
         f"{len(exprs)} channels ({direct} direct, {fold} fold) at every pinned rank N = 3..30 and "
-        f"live at N = 4; each closed form verified on at least {held} held-out ranks at "
+        f"live at N = 3; each closed form verified on at least {held} held-out ranks at "
         "reconstruction; the sum of the 74 forms minus the reconstructed u(N) is identically zero. "
         "The pure-fundamental chain channel is -4/(N(N^2-1)^3); every other channel carries the "
         "resolvent factors of its irreps"
