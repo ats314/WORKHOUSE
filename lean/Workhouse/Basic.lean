@@ -428,6 +428,45 @@ theorem cShp_assembled_value : C_shp_old + 25 / 1024 = -13035490122347 / 5506638
 theorem beta_shift_from_cShp : 8 * A_shp + 16 * (C_shp_old + 25 / 1024) = βPenOld + 25 / 64 := by
   unfold A_shp C_shp_old βPenOld; norm_num
 
+/-- The bandwidth `W₄ = α + β` moves with `β`: the assembled row is the historical
+`W₄` plus `25/64`, with `α = 5/12` untouched. -/
+theorem w4_shift_from_beta : W₄_old + 25 / 64 = 29985119454403 / 34416487661400 := by
+  unfold W₄_old; norm_num
+
+theorem w4_old_is_alpha_plus_beta : W₄_old = alphaPen 3 + βPenOld := by
+  unfold W₄_old alphaPen βPenOld; norm_num
+
+/-! ## The single-contact dressing at every rank (ADR 0025)
+
+The fourth-order dressing of a shared-link pair by a plaquette touching one
+face, in the C-even sector, reconstructed from the third engine at N = 3..70
+and verified on the held-out ranks. Here the identity it satisfies is proved:
+it is minus the C-even hopping squared over the plaquette rest energy 2 C_F. -/
+
+/-- The all-rank C-even second-order hopping `ℓ_N = −2N(3N²−5)/((N²−1)(4N²−9)(2N²−1))`. -/
+noncomputable def evenHopping (n : ℚ) : ℚ :=
+  -2 * n * (3 * n ^ 2 - 5) / ((n ^ 2 - 1) * (4 * n ^ 2 - 9) * (2 * n ^ 2 - 1))
+
+/-- The C-even single-contact dressing, as reconstructed. -/
+noncomputable def singleContactEven (n : ℚ) : ℚ :=
+  -4 * n ^ 3 * (3 * n ^ 2 - 5) ^ 2 / ((n ^ 2 - 1) ^ 3 * (4 * n ^ 2 - 9) ^ 2 * (2 * n ^ 2 - 1) ^ 2)
+
+/-- `singleContactEven = −ℓ_N² / (2 C_F)` with `2 C_F = (N² − 1)/N`. -/
+theorem singleContactEven_eq (n : ℚ) (h0 : n ≠ 0) (h1 : n ^ 2 - 1 ≠ 0)
+    (h9 : 4 * n ^ 2 - 9 ≠ 0) :
+    singleContactEven n = -(evenHopping n) ^ 2 / ((n ^ 2 - 1) / n) := by
+  unfold singleContactEven evenHopping
+  field_simp
+  ring
+
+/-- Its SU(3) value is the run's `−121/249696`. -/
+theorem singleContactEven_three : singleContactEven 3 = -121 / 249696 := by
+  unfold singleContactEven; norm_num
+
+/-- The C-even hopping at SU(3) is `−11/306`, the registered `ell_3`. -/
+theorem evenHopping_three : evenHopping 3 = -11 / 306 := by
+  unfold evenHopping; norm_num
+
 /-! ## The checkpoint deltas, from the ansatz
 
 The four `extraction_*` theorems above invert the cubic-invariant ansatz on the

@@ -954,6 +954,65 @@ gaps:
       Haar moment -- survives. The Hodge form's single weight on L_up is
       confirmed to be a reparametrisation; a mechanism for the tier collapse
       has to produce -160 and -106 together.
+    all_rank_cumulants_2026_09_04: >
+      The third engine is rank-generic once its single-link spectra come from
+      the block characteristic polynomial (loopcalc.set_rank, link_spectrum),
+      and runs/rank_sweep_cumulants_2026-09-04 holds the two-hop weight u and
+      the three dressing classes of the perpendicular pair at every N from 3
+      to 40, in the kernel's basis. The second order reproduces t_N and ell_N
+      at every rank, with the raw leakage ell_N - 1/C_F in both sectors -- the
+      leak = hop identity of ADR 0023 is an all-rank fact. The fourth-order
+      cumulants at N >= 4 are new; the all-rank suite reconstructs them as
+      rational functions of N and verifies on held-out ranks (ADR 0025):
+      the single-contact dressing (C-even: -ell_N^2/(2 C_F), proved in
+      Lean), the fan (17, 24), the two-hop weight u (21, 28) with the
+      double zero (N^2-4)^2 in the C-odd sector, and the corner (23, 30).
+      What this offers G14: the universality of u across chain types, T1 at
+      N = 3, can now be tested at every rank, and the closed form of u is
+      the first place a mechanism could be read off rather than guessed --
+      its denominator factors 9N^2-16, 2N^2-3, 3N^2-2 and 4N^2 -+ N - 4 are
+      the resolvents of the intermediate states the chain passes through.
+    plan:
+      - step: read the mechanism off u(N) -- decompose the two-hop cumulant by intermediate irrep and match its denominator factors to resolvents
+        state: untried
+        cannot_decide: []
+        status: >
+          proposed 2026-09-04 (ADR 0025). The two-hop weight is now a (21, 28)
+          rational function of N with denominator
+          2(N^2-1)^3(4N^2-9)^3(9N^2-16)(2N^2-3)(2N^2-1)^3(3N^2-2)(4N^2-N-4)(4N^2+N-4)
+          and a C-odd numerator carrying (N^2-4)^2. Each denominator factor
+          is an E_0 - E_j of some intermediate state on the ten-link chain;
+          the third engine's per-link projectors already label every
+          component by its link irreps, so the decomposition is a bookkeeping
+          pass, not a new computation. A first pass at N = 3 (scratch, not
+          pinned) tags every contribution by its three intermediate energies:
+          58 nonzero direct channels summing to -4851603649/40327601932800
+          = -1.203e-4 and 16 fold channels summing to 9875/76406976 =
+          +1.292e-4, so u = X_QUANTUM = 8.9e-6 is the residue of a
+          cancellation between the direct and fold terms three orders of
+          magnitude larger than itself. The pair cluster's fold term is
+          exactly zero on the link-disjoint block. Whatever mechanism makes
+          u universal must act on that cancellation, not on either term.
+          The channel structure is rank-stable: 58 direct and 16 fold
+          channels at N = 3, 4 and 5 alike, direct/fold = -0.931, -0.935,
+          -0.937. The first-resolvent energies above E_0, in units of
+          C_F/2, are 2 (the merged six-link loop), 4 (eight links or two
+          plaquettes), and 2 plus the shared link's excess in Lambda^2
+          (2(N-2)/(N-1)), adjoint (2N^2/(N^2-1)) or Sym^2 (2(N+2)/(N+1)):
+          the channels are labelled by link irreps, so grouping by label
+          across ranks is well defined and each group can be reconstructed
+          in N with the same tooling as the totals.
+        what: >
+          In workhouse.loopcalc, instrument eigen_components to record the
+          per-link irrep assignment of each resolvent leaf on the coplanar
+          chain, group the fourth-order histories by the sequence of link
+          irreps they pass through, and reconstruct each group's contribution
+          as a rational function of N. The group whose denominators carry
+          (3N -+ 4) and (4N^2 -+ N - 4) is where the two planes' universality
+          of u is decided: if it is one channel with a symmetric role for the
+          two hops, that is the mechanism; if the two chain types reach the
+          same u through different channel sums, universality is a
+          coincidence of sums and G14 stays open.
   - id: G15
     tier: 3
     state: open

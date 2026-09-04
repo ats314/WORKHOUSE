@@ -563,3 +563,51 @@ def _():
         "derivation at N = 3; it is now the right number there, and nothing distinguishes N = 3 "
         "from N >= 4 in the fourth-order shape coefficient"
     )
+
+
+@third.check(
+    "the fourth-order shape table with the resolved C_shp: beta_3, W_4, lambda_M and lambda_R "
+    "move by 25/64, 25/64, 25/128 and 25/64; alpha and lambda_X do not",
+    "C2; C10; G11; MASTER_THEORY §5-6; ADR 0024; " + _RUN,
+    rests_on=(
+        "FINDING: C_shp from the assembled amplitudes in the kernel's basis is C_historical + "
+        "25/1024, the registered continuation-shifted value",
+        "the all-rank beta_N formula at N = 3 is 8A + 16 C_shp_assembled exactly: the SU(3) "
+        "exception in the shape channel was the cube shortfall",
+    ),
+)
+def _():
+    # C2's own crosswalk said what a change in C does: nothing on the axis
+    # (lambda_X = alpha = 4A), 8 Delta_C at M and 16 Delta_C at R, hence
+    # 16 Delta_C on beta = 8A + 16C and on the bandwidth W_4 = alpha + beta.
+    # With Delta_C = 25/1024 those are numbers, and the historical shape row
+    # (MASTER_THEORY §6: q, alpha = 5/12, beta, W_4) becomes the assembled one.
+    # The exclusion radius of G11 scales as sqrt(W_4): it grows by
+    # sqrt(W_4_assembled / W_4_historical).
+    alpha = _rat(K.ALPHA_PEN_3)
+    a = _rat(K.A_SHP_3)
+    c_hist = _rat(K.C_SHP_HISTORICAL)
+    c = _rat(K.C_SHP_ASSEMBLED)
+    beta_hist = _rat(K.BETA_PEN_3)
+    beta = 8 * a + 16 * c
+    w4_hist = alpha + beta_hist
+    w4 = alpha + beta
+    lam_m_hist, lam_m = alpha + beta_hist / 2, alpha + beta / 2
+    ok = (
+        alpha == 4 * a
+        and beta_hist == 8 * a + 16 * c_hist
+        and beta == _rat(K.BETA_PEN_3_ASSEMBLED)
+        and w4 == _rat(K.W4_ASSEMBLED)
+        and lam_m == _rat(K.LAMBDA_M_ASSEMBLED)
+        and beta - beta_hist == Fraction(25, 64)
+        and w4 - w4_hist == Fraction(25, 64)
+        and lam_m - lam_m_hist == Fraction(25, 128)
+        and w4_hist == Fraction(132329431693349, 275331901291200)
+    )
+    return ok, (
+        f"alpha = 4A = {alpha} unchanged; beta = 8A + 16C: historical {beta_hist}, assembled "
+        f"{beta} (+25/64); W_4 = alpha + beta: historical {w4_hist} = {float(w4_hist):.12f}, "
+        f"assembled {w4} = {float(w4):.12f} (+25/64); lambda_M: {lam_m_hist} -> {lam_m} "
+        f"(+25/128); lambda_R = W_4. The near-Gamma exclusion radius of G11, proportional to "
+        f"sqrt(W_4), grows by a factor {float((w4 / w4_hist) ** 0.5):.6f}"
+    )

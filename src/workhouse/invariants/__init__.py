@@ -55,6 +55,7 @@ _MODULES = (
     "swap_odd",
     "hecke",
     "third_implementation",
+    "all_rank",
 )
 
 for _name in _MODULES:
