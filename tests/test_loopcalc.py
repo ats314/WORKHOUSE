@@ -80,3 +80,31 @@ def test_neighbour_census():
     assert len(L.plaquettes_sharing_a_link([P, ((2, 0), (0, 0, 0))])) == 18
     assert len(L.plaquettes_sharing_a_link([P, ((0, 1), (1, 0, 0))])) == 20
     assert len(L.plaquettes_sharing_a_link([P, ((0, 1), (0, 0, 1))])) == 20
+
+
+def test_charpoly_spectra_agree_with_the_su3_table():
+    P = L.plaquette((0, 1), (0, 0, 0))
+    X = L.plaquette((1, 2), (0, 0, 0))
+    for word in (L.product(P, L.conj(P)), L.product(P, X), L.product(L.product(P, X), L.conj(X))):
+        for link in L.links_of({word: F(1)}):
+            a, b = L.content(word).get(link, [0, 0])
+            assert set(L.link_spectrum(word, link)) <= set(L.link_energies(a, b))
+            # the closure's spectrum contains every energy the content can carry
+            # that the word actually populates; at least the largest one appears
+            assert max(L.link_spectrum(word, link)) in L.link_energies(a, b)
+
+
+def test_rank_generic_second_order_matches_the_all_rank_formulas():
+    from workhouse import constants as K
+
+    try:
+        for n in (4, 5):
+            L.set_rank(n)
+            pair = L.Cluster([((0, 1), (0, 0, 0)), ((0, 1), (1, 0, 0))])
+            h2, _ = pair.second_order()
+            t_n = F(K.hopping(n).p, K.hopping(n).q)
+            ell_n = F(K.even_hopping(n).p, K.even_hopping(n).q)
+            assert L.codd(h2, 0, 1) == -t_n
+            assert L.ceven(h2, 0, 1) == ell_n
+    finally:
+        L.set_rank(3)

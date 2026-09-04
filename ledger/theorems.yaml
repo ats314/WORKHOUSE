@@ -494,3 +494,36 @@ theorems:
       register's DELTA_BETA_3.
     formalizes: [C10, C2]
     promotes: []
+
+  - name: w4_shift_from_beta
+    statement: >
+      W_4 assembled = W_4 historical + 25/64 = 29985119454403/34416487661400,
+      the fourth-order bandwidth with the resolved C_shp.
+    value: "29985119454403/34416487661400"
+    formalizes: [C2, G11, "CONST:W4_ASSEMBLED"]
+    promotes: []
+
+  - name: w4_old_is_alpha_plus_beta
+    statement: "W_4 historical = alpha_3 + beta_3 = 5/12 + 17607806155349/275331901291200."
+    formalizes: ["CONST:BETA_PEN_3", "CONST:ALPHA_PEN_3"]
+    promotes: []
+
+  - name: singleContactEven_eq
+    statement: >
+      The C-even single-contact dressing of a shared-link pair is minus the
+      C-even hopping squared over the plaquette rest energy, at every rank:
+      singleContactEven(N) = -ell_N^2 / (2 C_F).
+    formalizes: [G14, "CONST:SINGLE_CONTACT_DRESSING_EVEN_N"]
+    promotes: []
+
+  - name: singleContactEven_three
+    statement: "The C-even single-contact dressing at SU(3) is -121/249696."
+    value: "-121/249696"
+    formalizes: ["CONST:SINGLE_CONTACT_DRESSING_EVEN_N"]
+    promotes: []
+
+  - name: evenHopping_three
+    statement: "ell_3 = -11/306, the SU(3) value of the all-rank C-even hopping."
+    value: "-11/306"
+    formalizes: ["CONST:T_PLUS_2", R2]
+    promotes: []

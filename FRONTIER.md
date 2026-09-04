@@ -10,9 +10,9 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 59 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 64 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 322/322 checks pass.
+**T1/T2 — re-derived here.** 330/330 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -47,7 +47,8 @@ it cannot drift from what the repository actually checks.
 | continuum and fixed-spacing bridges (G18, G19) | 3/3 |
 | the swap-odd domino state (U4, ADR 0023) | 5/5 |
 | Hecke cover correspondence table | 1/1 |
-| the third implementation and the historical ledger (G3, C2) | 10/10 |
+| the third implementation and the historical ledger (G3, C2) | 11/11 |
+| the third engine at every rank (all-rank cumulants) | 7/7 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:

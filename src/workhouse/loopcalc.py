@@ -39,6 +39,22 @@ N = 3
 CF = F(N * N - 1, 2 * N)
 
 
+def set_rank(n: int) -> None:
+    """Switch the engine to SU(n). Every cache keyed on the rank is cleared.
+
+    At n = 3 the per-link spectra come from the SU(3) Casimir table; at any
+    other rank they are computed from the single-link H0 block's characteristic
+    polynomial (`link_spectrum`), which needs no table at all. The two agree at
+    n = 3 (tests/test_loopcalc.py)."""
+    global N, CF
+    N = int(n)
+    CF = F(N * N - 1, 2 * N)
+    weingarten.cache_clear()
+    h0_link.cache_clear()
+    integrate.cache_clear()
+    link_spectrum.cache_clear()
+
+
 def casimir2(p: int, q: int) -> F:
     """SU(3) quadratic Casimir of the irrep (p, q), normalised so C2(3) = 4/3."""
     return F(p * p + q * q + p * q + 3 * p + 3 * q, 3)
@@ -286,6 +302,40 @@ def apply_h0(vec: dict) -> dict:
     return out
 
 
+@cache
+def link_spectrum(word: tuple, link: int) -> tuple:
+    """The rational spectrum of the single-link H0 on the closure of `word` under it.
+
+    Rank-generic: the block is built by breadth-first closure under `h0_link`,
+    its characteristic polynomial taken exactly (flint), and the rational roots
+    kept. Over-complete formal words can add spurious roots; a superset of the
+    true spectrum is harmless to the Lagrange projectors."""
+    from collections import deque as _deque
+
+    import flint
+    from sympy import Poly, Rational, Symbol, roots
+
+    words, seen, queue, act = [], {word}, _deque([word]), {}
+    while queue:
+        w = queue.popleft()
+        words.append(w)
+        act[w] = h0_link(w, link)
+        for w2, _c in act[w]:
+            if w2 not in seen:
+                seen.add(w2)
+                queue.append(w2)
+    idx = {w: i for i, w in enumerate(words)}
+    n = len(words)
+    mat = flint.fmpq_mat(n, n)
+    for j, w in enumerate(words):
+        for w2, c in act[w]:
+            mat[idx[w2], j] += flint.fmpq(c.numerator, c.denominator)
+    cp = mat.charpoly()
+    x = Symbol("x")
+    coeffs = [Rational(int(cp[k].p), int(cp[k].q)) for k in range(cp.degree(), -1, -1)]
+    return tuple(sorted({F(int(r.p), int(r.q)) for r in roots(Poly(coeffs, x), filter="Q")}))
+
+
 def _project_link(vec: dict, link: int):
     """Split vec into single-link H0 eigencomponents on `link`: yields (energy, component)."""
     groups = defaultdict(dict)
@@ -293,7 +343,10 @@ def _project_link(vec: dict, link: int):
         a, b = content(w).get(link, [0, 0])
         groups[(a, b)][w] = c
     for (a, b), sub in groups.items():
-        energies = link_energies(a, b)
+        if N == 3:
+            energies = link_energies(a, b)
+        else:
+            energies = sorted(set().union(*(link_spectrum(w, link) for w in sub)))
         for e in energies:
             comp = dict(sub)
             for e2 in energies:

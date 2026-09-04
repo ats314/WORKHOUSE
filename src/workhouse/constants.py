@@ -486,6 +486,14 @@ C_SHP_CONTINUATION_SHIFTED = Rational(-13035490122347, 550663802582400)
 #: forbidden substitution. The rotation amplitude it comes from, in that basis:
 C_SHP_ASSEMBLED = Rational(-13035490122347, 550663802582400)
 RHO_ASSEMBLED = Rational(-588708011765248393, 14501180577204921600)
+#: The shape table that follows (ADR 0024): beta = 8A + 16C, W_4 = alpha + beta,
+#: lambda_X = alpha, lambda_M = alpha + beta/2, lambda_R = alpha + beta. Against
+#: the historical row: beta and lambda_R up by 25/64, lambda_M by 25/128, W_4 by
+#: 25/64, lambda_X and alpha unchanged -- the "M and R split by 8 Delta_C and
+#: 16 Delta_C" of C2's own crosswalk, with Delta_C = 25/1024 now a number.
+BETA_PEN_3_ASSEMBLED = Rational(15644916262153, 34416487661400)
+W4_ASSEMBLED = Rational(5, 12) + BETA_PEN_3_ASSEMBLED
+LAMBDA_M_ASSEMBLED = Rational(5, 12) + BETA_PEN_3_ASSEMBLED / 2
 
 #: Vacuum-subtracted physical Gamma-point coefficient, from the blind
 #: finite-cluster/rooted oracle (float only). Reproduces Hamer's a_4 through the

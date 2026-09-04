@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 59
+## T0 — proof-checked — 64
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -46,13 +46,13 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:220
   - `make lean`
 - `bandVar_pi`
-  - lean/Workhouse/Basic.lean:451
+  - lean/Workhouse/Basic.lean:490
   - `make lean`
 - `bandVar_pi_div_two`
-  - lean/Workhouse/Basic.lean:454
+  - lean/Workhouse/Basic.lean:493
   - `make lean`
 - `bandVar_zero`
-  - lean/Workhouse/Basic.lean:448
+  - lean/Workhouse/Basic.lean:487
   - `make lean`
 - `beta_from_A_and_C`
   - lean/Workhouse/Basic.lean:252
@@ -91,22 +91,25 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:414
   - `make lean`
 - `delta_M`
-  - lean/Workhouse/Basic.lean:487
+  - lean/Workhouse/Basic.lean:526
   - `make lean`
 - `delta_P`
-  - lean/Workhouse/Basic.lean:493
+  - lean/Workhouse/Basic.lean:532
   - `make lean`
 - `delta_R`
-  - lean/Workhouse/Basic.lean:501
+  - lean/Workhouse/Basic.lean:540
   - `make lean`
 - `delta_X`
-  - lean/Workhouse/Basic.lean:482
+  - lean/Workhouse/Basic.lean:521
   - `make lean`
 - `dim_Z₂`
   - lean/Workhouse/Basic.lean:328
   - `make lean`
 - `d₃_ledger`
   - lean/Workhouse/Basic.lean:206
+  - `make lean`
+- `evenHopping_three`
+  - lean/Workhouse/Basic.lean:467
   - `make lean`
 - `even_cubic_at_sixteen`
   - lean/Workhouse/Basic.lean:284
@@ -163,7 +166,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:368
   - `make lean`
 - `q_at_checkpoints`
-  - lean/Workhouse/Basic.lean:473
+  - lean/Workhouse/Basic.lean:512
   - `make lean`
 - `rank_law_numerator`
   - lean/Workhouse/Basic.lean:36
@@ -183,6 +186,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `shell_margin_five`
   - lean/Workhouse/Basic.lean:174
   - `make lean`
+- `singleContactEven_eq`
+  - lean/Workhouse/Basic.lean:455
+  - `make lean`
+- `singleContactEven_three`
+  - lean/Workhouse/Basic.lean:463
+  - `make lean`
 - `stencil_zero_mode`
   - lean/Workhouse/Basic.lean:234
   - `make lean`
@@ -195,11 +204,17 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `tetra_from_count`
   - lean/Workhouse/Basic.lean:358
   - `make lean`
+- `w4_old_is_alpha_plus_beta`
+  - lean/Workhouse/Basic.lean:436
+  - `make lean`
+- `w4_shift_from_beta`
+  - lean/Workhouse/Basic.lean:433
+  - `make lean`
 - `width_eq_alpha_add_beta`
   - lean/Workhouse/Basic.lean:248
   - `make lean`
 
-## T1 — re-derived exactly — 268
+## T1 — re-derived exactly — 276
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -987,6 +1002,29 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the |0> route is minus the vacuum energy at orders 2 and 3, so leak_(k,+) = t_(k,+) follows`
   - src/workhouse/invariants/swap_odd.py:164 · ADR 0023; CERT_FLUX_d3 'exact identity (gated)'
   - `workhouse verify --only 'the |0> route is minus the vacuum energy at orders 2 and 3, so leak_(k,+) = t_(k,+) follows'`
+**the third engine at every rank (all-rank cumulants)**
+
+- `the corner dressing at every rank: (23, 30) rational functions of N in both sectors, verified on 12 held-out ranks`
+  - src/workhouse/invariants/all_rank.py:438 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024
+  - `workhouse verify --only 'the corner dressing at every rank: (23, 30) rational functions of N in both sectors, verified on 12 held-out ranks'`
+- `the cube-completion closed forms hold with the full H0 dynamics at N = 4 and 5: -160/(N(N^2-1)^3) opposite, -106/(N(N^2-1)^3) adjacent`
+  - src/workhouse/invariants/all_rank.py:132 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024; runs/g3_corner_third_implementation_2026-09-04
+  - `workhouse verify --only 'the cube-completion closed forms hold with the full H0 dynamics at N = 4 and 5: -160/(N(N^2-1)^3) opposite, -106/(N(N^2-1)^3) adjacent'`
+- `the rank sweep's N = 3 row is the registered SU(3) cumulants, sign and magnitude, in the kernel's basis`
+  - src/workhouse/invariants/all_rank.py:179 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024
+  - `workhouse verify --only 'the rank sweep'"'"'s N = 3 row is the registered SU(3) cumulants, sign and magnitude, in the kernel'"'"'s basis'`
+- `the shared-link fan dressing at every rank: a (17, 24) rational function of N with denominator 3(N^2-1)^3(4N^2-9)^3(2N^2-1)^3(16N^2-9)(16N^2-49)(4N^2-7), verified on held-out ranks`
+  - src/workhouse/invariants/all_rank.py:274 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024
+  - `workhouse verify --only 'the shared-link fan dressing at every rank: a (17, 24) rational function of N with denominator 3(N^2-1)^3(4N^2-9)^3(2N^2-1)^3(16N^2-9)(16N^2-49)(4N^2-7), verified on held-out ranks'`
+- `the single-contact dressing at every rank: C-odd 2N^3(N^2-4)(10N^2-13)/((N^2-1)^3(4N^2-9)^2(2N^2-1)^2), C-even -ell_N^2/(2C_F)`
+  - src/workhouse/invariants/all_rank.py:224 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024
+  - `workhouse verify --only 'the single-contact dressing at every rank: C-odd 2N^3(N^2-4)(10N^2-13)/((N^2-1)^3(4N^2-9)^2(2N^2-1)^2), C-even -ell_N^2/(2C_F)'`
+- `the third engine reproduces the all-rank second-order hopping t_N and C-even hopping ell_N, and leak = hop in both sectors, at N = 3..7 live and N = 3..70 pinned`
+  - src/workhouse/invariants/all_rank.py:67 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024; THM_FLUX Prop. 2; ADR 0023
+  - `workhouse verify --only 'the third engine reproduces the all-rank second-order hopping t_N and C-even hopping ell_N, and leak = hop in both sectors, at N = 3..7 live and N = 3..70 pinned'`
+- `the two-hop weight u at every rank: (21, 28) rational functions of N in both sectors, C-odd with the double zero (N^2-4)^2 at SU(2), verified on 16 held-out ranks`
+  - src/workhouse/invariants/all_rank.py:359 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024; ADR 0020
+  - `workhouse verify --only 'the two-hop weight u at every rank: (21, 28) rational functions of N in both sectors, C-odd with the double zero (N^2-4)^2 at SU(2), verified on 16 held-out ranks'`
 **the third implementation and the historical ledger (G3, C2)**
 
 - `FINDING: C_shp from the assembled amplitudes in the kernel's basis is C_historical + 25/1024, the registered continuation-shifted value`
@@ -1010,6 +1048,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the cube completion from the third engine: -5/48 between opposite faces, -53/768 between adjacent ones`
   - src/workhouse/invariants/third_implementation.py:252 · C2; G3; G14; runs/g3_corner_third_implementation_2026-09-04; runs/g3_shared_link_pair_2026-09-02; ADR 0024; ADR 0021
   - `workhouse verify --only 'the cube completion from the third engine: -5/48 between opposite faces, -53/768 between adjacent ones'`
+- `the fourth-order shape table with the resolved C_shp: beta_3, W_4, lambda_M and lambda_R move by 25/64, 25/64, 25/128 and 25/64; alpha and lambda_X do not`
+  - src/workhouse/invariants/third_implementation.py:568 · C2; C10; G11; MASTER_THEORY §5-6; ADR 0024; runs/g3_corner_third_implementation_2026-09-04
+  - `workhouse verify --only 'the fourth-order shape table with the resolved C_shp: beta_3, W_4, lambda_M and lambda_R move by 25/64, 25/64, 25/128 and 25/64; alpha and lambda_X do not'`
 - `the historical pipeline's own word ledger, pinned in the corpus, reassembles to the 189 records`
   - src/workhouse/invariants/third_implementation.py:340 · C2; G3; corpus manifest row A41F; ADR 0024; runs/g3_corner_third_implementation_2026-09-04
   - `workhouse verify --only 'the historical pipeline'"'"'s own word ledger, pinned in the corpus, reassembles to the 189 records'`
