@@ -10,7 +10,7 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 40 Lean theorems, 0 `sorry`.
 
 **T1/T2 — re-derived here.** 292/292 checks pass.
 

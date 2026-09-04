@@ -23,6 +23,35 @@ def test_frontier_md_is_current():
     assert F.render(F.compute()) == on_disk, "FRONTIER.md is stale; run `make frontier`"
 
 
+def test_the_two_t0_counters_agree():
+    """One Lean tree, one count. They were allowed to disagree once.
+
+    `FRONTIER.md` and `CERTIFIED.md` each report the size of the T0 layer, and
+    each used to scrape the tree with its own copy of the declaration pattern.
+    `certified` widened its copy to allow the `@[simp]` prefix; `frontier` was
+    left behind. The generated files then said 37 and 40 over the same three
+    declarations, both regenerated, both staleness-tested, and neither test
+    could see the disagreement because each only compared a file with the
+    scrape that wrote it.
+
+    A number this repository prints in two places is a number two things must
+    agree on, which is the same rule it applies to the corpus.
+    """
+    from workhouse import certified as C
+
+    counted, _sorries = F._lean_counts()
+    assert counted == len(C.lean_claims()), (
+        f"FRONTIER counts {counted} Lean theorems, CERTIFIED lists {len(C.lean_claims())}"
+    )
+
+
+def test_no_lean_theorem_is_counted_twice():
+    """The scrape returns declarations, so a duplicated name is a real one."""
+    names = [name for _rel, _n, name in F.lean_declarations()]
+    dupes = sorted({n for n in names if names.count(n) > 1})
+    assert not dupes, f"two Lean declarations share a name: {dupes}"
+
+
 def test_the_brief_is_short_enough_to_read():
     """An injection long enough to skim is long enough to ignore."""
     text = F.brief()
