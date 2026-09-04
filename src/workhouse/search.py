@@ -230,7 +230,10 @@ def format_results(
         if symbol.get("coined_here"):
             w("  \033[33mCoined in this repository. The corpus does not use this name;")
             spellings = ", ".join(symbol["corpus_spellings"])
-            w(f"  it writes {spellings}. Not finding it is not absence.\033[0m")
+            if spellings:
+                w(f"  it writes {spellings}. Not finding it is not absence.\033[0m")
+            else:
+                w("  it has no spelling for the quantity. Not finding it is not absence.\033[0m")
         else:
             w(f"  corpus spellings: {', '.join(symbol['corpus_spellings'])}")
         if symbol.get("code_names"):

@@ -37,12 +37,19 @@ def _fixed_string_search(patterns: str, *roots: Path) -> subprocess.CompletedPro
             "-",
             *(str(root) for root in roots),
         ]
-    return subprocess.run(
-        argv,
-        input=patterns,
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
+    # The patterns go in as bytes, not through text mode. `text=True` writes the
+    # child's stdin through a TextIOWrapper with universal newlines, so on Windows
+    # every "\n" becomes "\r\n" and grep -F searches for `5/48\r` -- a spelling that
+    # is in no file. The gate then reported every declared spelling as missing,
+    # including `5/48`, which is in 74 corpus files. A gate that fails open on one
+    # platform and closed on another is worse than no gate: it taught the maintainer
+    # to distrust a local test run and verify only in CI.
+    proc = subprocess.run(argv, input=patterns.encode("utf-8"), capture_output=True)
+    return subprocess.CompletedProcess(
+        proc.args,
+        proc.returncode,
+        proc.stdout.decode("utf-8", "replace"),
+        proc.stderr.decode("utf-8", "replace"),
     )
 
 

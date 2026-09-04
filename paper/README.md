@@ -19,6 +19,7 @@ any of them moves.
 
 | File | What it is |
 |---|---|
+| `workhouse_publication_edition_rev5_2026-08-30.tex` | **publication edition, revision 5** — the maintainer's latest single-column article, pinned verbatim on 2026-09-01 (source only; no build, see **Revision 5** below). Same lineage as v2, rewritten around the volume-uniform electric window (Thm. 1), the periodic Yarotsky descent and the SU(3) Riesz island, the small-support two-cycle and reduced same-face lemmas that make second-order process completeness a theorem, the fixed-momentum carrier, the radius-two Ritz extension, the exact G17 reduction, and a new external-comparisons section that places Schor, O'Carroll–Dantas Barbosa, Bricmont–Fröhlich, Münster and Yarotsky against the paper's own claim boundary. |
 | `master_paper_2026-08-30.tex` | **the master edition, the current artifact of record.** The two lineages merged. From the publication edition rev. 4: the volume-uniform electric window `spec(H_E) ∩ [0, 5C_F/2) = {0, 2C_F}` with an external margin ≥ `C_F/2` (Thm. 1, which proves more than the retained-shell premise asked for); the SU(3) all-orders finite-volume Riesz island from Yarotsky's local spectral enclosure (Thm. 2); the fixed-momentum carrier and the exact locality/sharp-momentum tradeoff (Prop. 10); the centre-charge process-completeness lemma and the explicit projector cross matrix element, which make the global order-u² assembly a corollary with no completeness hypothesis; the detached-replayed radius-two Ritz extension with its onset proposition; and the exact G17 free-energy reduction. From the 29 August master paper: the **retraction** of the Bloch–chain "coincidence" reading (the Γ block *is* `b_2(T^3)`) and the harmonic representatives that follow; the executed `B = 7` six-face probe; the sharp zone minimum `min_{|k|≥r} q = 4 sin²(r/2)`, which corrects the crossover constants from 17.04/23.66 to 10.85/15.06; the weak-inequality retention rule and what it does *not* confirm; the Weingarten `SU(N)`-vs-`U(N)` rank argument; the tier counter table and the Lean paragraph, including the retraction of "nothing that bears on `C_shp` appears there". Kept from v2 and dropped by both uploads: the planar closed form `1 - 4N^3 t_N = (2N^4+31N^2-9)/((N^2-1)(2N^2-1)(4N^2-9))` and the coverage appendix. |
 | `master_paper_2026-08-30.pdf` | its build (Tectonic 0.15.0, 46 pages, clean log: zero undefined references, zero overfull boxes). Rebuild: `python3 make_coverage.py && tectonic master_paper_2026-08-30.tex`. |
 | `coverage_master.tex` | its generated coverage appendix: all 126 inline `\chk` markers, verbatim, under the section that carries each. |
@@ -53,6 +54,52 @@ make paper      # both verifiers, then three reproducible pdflatex passes
 The review that drove the united edition is
 `docs/referee/final_paper_review_2026-08-28.md`; this repository's own referee
 document on the flat-band manuscript is `docs/referee/final_paper_2026-08-28.md`.
+
+## Revision 5 (2026-09-01 pin)
+
+`workhouse_publication_edition_rev5_2026-08-30.tex` is the maintainer's
+revision 5 of the publication edition, pinned exactly as uploaded — CRLF line
+endings included, which is why `.gitattributes` now marks `paper/**` as
+`-text` like every other byte-pinned tree. It is not edited here, and the master edition remains the merged artifact of record;
+rev. 5 is the article lineage carried forward. The guard `every \chk in the
+united paper names a check that exists and passes` reads it like every other
+edition, and on arrival seven of its 107 distinct labels resolved to nothing.
+None of the seven was fixed by editing the paper:
+
+- **Three became real checks**, in `electric_shell.py`, because the theorem
+  and lemma they sit under delegate to finite arithmetic nobody had carried
+  out: the window assembly (`below 5 C_F/2 the trivial-flux electric spectrum
+  is exactly 0 and 2 C_F` — the support bound, the centre-neutral Casimir
+  floor `C_2 ≥ N` by enumeration over su(3..7), the two winding energies as
+  rational functions of `N`, and the fundamental-only face), the retained-shell
+  count (`3L^3` from the built complex, and the 96 once-winding lines at
+  `L = 4` that trivial flux removes), and the process-completeness lemma
+  (`second-order off-diagonal processes are exactly the adjacent shared-link
+  channels` — every centre-charge match `∂(εp+ηq) = ∂(ε'p'+η'r) mod N` at
+  `L = 3, 4`, `N = 3, 4, 5` is the same-face route or the exchange route and
+  nothing else, with the `L = 2` wrapping sheet as the lemma's sharpness).
+- **Four are rescoped restatements of existing checks**, and each got a check
+  of its own carrying the fact the new wording turns on rather than an alias:
+  the `N = 2` zero located channel by channel (`Λ²F` is the singlet and
+  `Sym²F` the adjoint there); the cubic built for the *unsigned-incidence
+  comparison operator* from `B(k)` by dropping signs; the range statement with
+  the floor on the three planes `k_j = π` — which also records that the older
+  title `each edge is attained at one point only` overstates the floor; and
+  the Hamer marker, now checked as a claim about the document (`a_4` and
+  `m_Γ^(4)` appear nowhere in the source).
+
+Recorded, not corrected, because the file is pinned as delivered:
+
+- two missing backslashes inside math, `,qquad` (line 514) and `+overline{`
+  (line 560), typeset as stray text rather than failing the build;
+- "arithmetic and a the cited periodic-boundary version" (line 2949);
+- the source includes `figure_radius_two_spectrum.pdf` and names
+  `audit_radius2_attachment.py` and the detached two-cube release verifier;
+  none of the three is in this directory, so the edition is pinned as source
+  and not built here. `verify_publication_core.py` is present and passes its
+  38/38 as printed;
+- the hostile-scope audit commit it pins, `ff9a5976…`, is not reachable from
+  this repository's history.
 
 ## The master edition (2026-08-30)
 
@@ -139,6 +186,12 @@ edition against the live registry and fails if one is renamed or deleted —
 otherwise the paper would go on printing a command that no longer resolves,
 which is the same drift `FRONTIER.md`'s staleness test exists to catch.
 
+Since 2026-09-01 the same labels are graph edges: every legended edition emits
+one `labels` edge per distinct `\chk` label, through the parser the guard uses,
+so `workhouse why 'PUBLICATION rev5'` lists the checks that edition rests on
+and `workhouse why <check>` says which editions print it. The claim-to-check
+map is computed from the source rather than maintained here (ADR 0015).
+
 ### Label drift
 
 The guard read *one* edition until 2026-08-30, and the editions written after
@@ -171,6 +224,14 @@ no marker it cannot back. Fifteen new checks in total; see
 `homology.py`, `uniformity.py` and `two_cube.py`.
 
 Nothing was dropped to make the guard green, and no tolerance moved.
+
+**2026-09-01, one rename with a correction.** The master edition's §9 label
+`PREDICTION: the eps-sector at N=3 is Delta(rho + pi) = -25/512 and nothing
+else` now points at `CORRECTED PREDICTION: the eps-sector at N=3 is
+Delta(rho + pi~) = -25/512; u is NOT constrained`, and a one-paragraph
+correction follows it in the source: the step `Δν = 0 ⇒ Δu = 0` was wrong
+(ADR 0019). The 30 August prose is kept as written and the PDF is the 30
+August build; `coverage_master.tex` and the manifest were regenerated.
 
 The master edition is deliberately **not** in `PAPER_TEXTS`, and so is not
 scanned by the fourth-order firewall check. It discusses the fourth order on

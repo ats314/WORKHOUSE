@@ -76,6 +76,10 @@ gaps:
     unblocks: [G9]
     plan:
       - step: block-structure comparison
+        state: done
+        closed_by:
+          - 'RUN:g3_kernel_record_dump_2026-08-28'
+          - 'CHK:FINDING: the cold kernel is the same six orbits with rho and pi sign-flipped'
         status: >
           answered 2026-08-28, HODGE_RUNS intake: NO recorded per-record
           v10a.26 kernel exists — the 15-hour transcript prints the cold
@@ -116,6 +120,10 @@ gaps:
           is inconsistent with its own A is self-refuting. First task:
           establish whether that v10a.26 structure exists in the corpus.
       - step: targeted kernel-bearing recomputation
+        state: done
+        closed_by:
+          - 'RUN:g3_kernel_record_dump_2026-08-28'
+          - 'CHK:C_shp = -5/96 - u - (rho + pi)/2, exactly'
         status: >
           executed 2026-08-28 (runs/g3_kernel_record_dump_2026-08-28): the
           cold kernel's 189 records reproduced on CPU in 12.3 minutes and
@@ -131,7 +139,28 @@ gaps:
           cubic-symmetry multiplicity, and the A = 5/48 identity plus the
           shared bulk over-determine the rest.
       - step: independent cross-amplitude computation
+        state: done
+        closed_by:
+          - 'RUN:g3_shared_link_pair_2026-09-02'
+          - 'CHK:the lattice fourth-order in-plane nearest-neighbour element, assembled from clusters, is the historical kernel''s pi exactly'
+          - 'CHK:the lattice fourth-order normal element, assembled from clusters with the cube-completion term, is the agreed nu = -5/48 - 4u exactly'
+          - 'CHK:FINDING: the lattice fourth-order rotation element, assembled from clusters, is neither kernel''s rho'
         status: >
+          RUN 2026-09-02 (runs/g3_shared_link_pair_2026-09-02, ADR 0021). The
+          wall below was not the hot loop the benchmark measured but the
+          representation: with the epsilon tensors kept as epsilons
+          (workhouse.haar_epsilon) the pair's baryonic pure-six integrals cost
+          0.02 s each instead of 400 s, and both shared-link amplitudes were
+          assembled from clusters in about three hours per pair. Result: pi
+          is the historical record EXACTLY, nu is the agreed -5/48 - 4u
+          EXACTLY with the -5/48 arising as the cube-completion channel, and
+          rho is NEITHER kernel's -- recorded as C2's third side, because
+          the one cluster type only a perpendicular shared-link pair has (the
+          corner) is validated by a second implementation but by no agreed
+          record. C2 is therefore decided against the cold dump on every
+          amplitude checked and against the historical kernel on rho; the
+          coefficient itself now rests on the corner cluster and is recorded,
+          not promoted. Earlier status follows.
           attempted 2026-08-28, blocked on the measured exact-arithmetic
           wall, with the target now fully specified. Sharpened first: the
           24 divergent cross records are ONE amplitude in each kernel
@@ -171,6 +200,10 @@ gaps:
           tau) loop into the compiled core. Before spending that, weigh
           the off-axis channel route below, which is cheaper and does not
           need the engine at all.
+          HODGE FORM 2026-09-01: the target is the coefficient of R, the
+          cross-plane half of the shared-link adjacency -- C_shp = -5/96 -
+          (rho + pi~)/2 with pi~ = pi + 2u, so exactly two shared-link
+          amplitudes, and the two-hop weight u drops out of C entirely.
         what: >
           If no recorded v10a.26 structure exists, recompute blind ONLY the
           A-carrying sector (normal nearest-neighbour displacements) through
@@ -186,6 +219,11 @@ gaps:
           the 189 records and run both kernels through one block
           decomposition.
       - step: off-axis channel assembly through workhouse.cellular
+        state: dead
+        closed_by:
+          - 'RUN:g3_offaxis_channels_2026-08-30'
+          - 'CHK:the in-plane transfer is order eight, not four, in the primitive channel'
+          - 'CHK:the perpendicular cube sector is a second fourth-order primitive channel, S_4 = -11'
         status: >
           proposed 2026-08-30, first premise checked. The route: C is
           assembled channel by channel from range-1 operator structures
@@ -295,6 +333,10 @@ gaps:
           and it attacks the disputed quantity rather than recomputing
           the whole fourth order.
       - step: sealed scalar sweep (demoted, optional)
+        state: dead
+        closed_by:
+          - 'CHK:FINDING: the marked-cluster engine emits the Gamma scalar only — a completed 609-sweep cannot decide C_shp'
+        cannot_decide: [C2]
         status: priced out
         what: >
           The GLUEBALL §18.1 sealed sweep remains the only path to a blind
@@ -302,6 +344,115 @@ gaps:
           nothing about C2 and costs months (measured: 45+ min for the
           smallest of 609 clusters, cap-lifted, without completing). Run it
           only if a blind scalar confirmation is ever worth that price.
+      - step: chain amplitude u on the three-plaquette cluster
+        state: done
+        cannot_decide: [C2]
+        closed_by:
+          - 'RUN:g3_chain_amplitude_2026-09-02'
+          - "CHK:FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel's 4.13 u is wrong"
+          - "CHK:the engine's primitives plus textbook second-order theory return t_3 S_sq, the C-even hop and the leakage"
+          - 'RUN:g3_chain_amplitude_replication_2026-09-02'
+          - "CHK:REPLICATION: a second implementation, with the engine's PVP assembly and a Krylov resolvent, gives u = X_QUANTUM on three chain types"
+        status: >
+          REPLICATED the same day by a second implementation written without
+          reading the first (runs/g3_chain_amplitude_replication_2026-09-02):
+          a Krylov resolvent instead of block characteristic polynomials, the
+          engine's own assembly with PVP = the baryonic vertex instead of
+          PVP = 0, and a third chain type (coplanar-perpendicular, opposite
+          hop signs) with the incidence sign computed from link traversals.
+          Same rational, same C-even amplitude, 116 s; ADR 0020.
+          RUN 2026-09-02: u = 360421351/40327601932800 = X_QUANTUM exactly on
+          the coplanar chain and minus that on the bent chain, from an
+          assembly that takes only Wilson words, Haar integrals and the H0
+          action from the pinned engine and reproduces the register at
+          second order first. The historical exact kernel is right on the
+          one quantity in the agreed sector the pipelines disagree on; the
+          v10a.26 dump's 4.1327437 u is wrong there. C2 is not decided (u
+          is band-invisible on the carrier), but the cold pipeline's rho
+          and pi~ have no independent standing until its error is located
+          and shown not to reach them. Universality across chain
+          geometries holds, which was G14's last dynamical input. Runs in
+          seconds; the wall the register measured was Gram matrices the
+          resolvent never needed. Proposed 2026-09-01 from the Hodge form. The 144 records both
+          kernels agree on in shape are u S_sq^2, so u is one number: the
+          fourth-order amplitude carried by every two-hop chain P -> Q -> R
+          with Q sharing one link with each endpoint and P, R link-disjoint.
+          The kernels disagree on it by a factor 4.1327437 while agreeing on
+          nu~ = -5/48, so it is a fourth disagreement, not a normalisation.
+          It cannot decide C2 -- u S_sq^2 is the constant 16u on the carrier
+          -- but it decides which PIPELINE is trustworthy on a quantity far
+          smaller than the perpendicular-pair assembly: one chain, ten links,
+          at most two fluxes per link, no epsilon sector in the integrals,
+          and the histories are the orderings of +Q, +R, -P, -Q with folds.
+          A pipeline wrong on u has no standing on rho and pi~.
+        what: >
+          Compute u independently on the coplanar (2,0,0) chain and on one
+          bent chain (P coplanar with Q, R perpendicular to Q); they must
+          agree, which is the universality the Hodge form rests on. Compare
+          with X_QUANTUM = 360421351/40327601932800 and with the cold value
+          4.1327437 X_QUANTUM. The exact engine's own inner products are the
+          fallback if an electric-basis computation is not built; the
+          cluster is small enough that the measured wall does not apply.
+      - step: covariance sign test of the two flipped orbits
+        state: done
+        closed_by:
+          - 'CHK:every orbit is separately Hermitian and cubic-covariant, so symmetry fixes no sign'
+          - 'CHK:no plane-basis convention flips rho or pi: only +-1 keeps the 144 agreed records'
+          - 'CHK:FINDING: the cold kernel carries the same orientation character, so its flips are real'
+        status: >
+          proposed 2026-09-01 from the graph and run the same day, engine-free,
+          in the kernel-orbits suite. Result: NEGATIVE for the reading that
+          motivated it. On plaquette-centred displacements with the orientation
+          character (PSI_SIGN read at the identity), every one of the six orbits
+          is separately Hermitian and invariant under all 48 elements of O_h, in
+          both kernels; symmetry is linear, so all four sign patterns of
+          (rho, pi) are admissible and Hermiticity plus cubic covariance fix no
+          orbit's sign relative to the normal orbit. And the flip is not a
+          convention: of the 48 plane-fibre regaugings only +-1 preserves the
+          144 records the kernels agree on, pi is a same-plane orbit no
+          regauging touches, and every diagonal regauging other than +-1 flips
+          two of the three cross-plane pairs and throws rho and the cross-plane
+          skeleton out of the cubic shape span. The cold dump passes the
+          identical test with the identical character, so both kernels sit in
+          the same basis. What this closes: 'two orbits flipping together
+          while a third does not is the signature of a convention' -- it is
+          not. What it leaves: C2 is a disagreement between two different
+          Hermitian cubic-covariant operators, decidable only by an
+          independent computation of the cross and in-plane amplitudes.
+        what: >
+          In the Bloch basis built from the repository's own cube boundary
+          d_3, derive from Hermiticity and cubic covariance the sign the
+          cross-plane and in-plane entries must carry relative to the normal
+          entry, then ask which kernel's (rho, pi) sign pattern is consistent.
+          Engine-free -- the same construction runs/g3_offaxis_channels used.
+          Bounded outcome: it can refute one kernel's sign pattern, and one
+          counterexample is the cheapest decisive move this program has; it
+          cannot produce the value, because the magnitudes differ too (the
+          cross-plane amplitude by a factor of about ten), so the live
+          cross-amplitude route stays the way to the number.
+          DONE -- see the status above. Symmetry constrains neither sign, so
+          the refutation it could have delivered is not available; what it
+          delivered instead is that the flip is not a convention.
+      - step: the corner cluster from a third implementation, or from the historical pipeline's own face-resolved ledger
+        state: untried
+        cannot_decide: []
+        status: >
+          proposed 2026-09-02 from runs/g3_shared_link_pair_2026-09-02. The
+          assembled rho rests on one cluster type no agreed record contains:
+          the corner (three faces at a cube vertex, pairwise sharing a link),
+          whose cumulant two implementations here agree on to the digit. A
+          third, independently written evaluation of that one cumulant --
+          or the historical pipeline's face-resolved H4 ledger for its 18
+          three-clusters, which would show where the two assemblies part --
+          is what turns C2's third side into the answer or finds the error.
+          Cost: one three-plaquette cluster, seven minutes with the tools
+          here; the ledger, if it exists, is a document to obtain.
+        what: >
+          Compute W(P,Q,X) - W(P,Q) on the P <- Q element for P = xy(0,0,0),
+          Q = zx(0,0,0) (the corpus's (2,0) orientation) and X = yz(1,0,0)
+          without reusing chain_amplitude.py, chain_cluster.py or
+          haar_epsilon.py, and compare with -2580244782961/398756546697600
+          (C-odd) and -56022878647/4153714028100 (C-even).
     leads:
       - settlement/mce_adjudication_harness.py
       - settlement/README.md
@@ -562,7 +713,7 @@ gaps:
     tier: 3
     state: open
     title: Mechanism of the tier collapse B_shp = D_shp = 0
-    status: open — better posed, one mechanism tried and retracted
+    status: open — reduced 2026-09-01 to one dynamical input, the universality of the two-hop weight u
     detail: >
       Restated: why does the degree-3 part of d^dagger H_4 d vanish, when the
       two-hop enumeration produces it? MASTER_THEORY 5.1 records that the 144
@@ -669,7 +820,56 @@ gaps:
       recorded kernel, not a conjecture, so a mechanism has a single concrete
       target — derive (X+Y)(X+Y+Z) for the same-plane sector. U3's QPQ
       candidate remains the natural home.
-
+    hodge_form_2026_09_01: >
+      The product is a square. Suite "fourth-order kernel orbits", exact on
+      the historical kernel and to 1e-13 on the cold one: with S_sq = L_down -
+      4I the signed shared-link adjacency (THM_FLUX Prop. 2) and L_up the cube
+      Laplacian,
+        H4 = -nu~ (L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ I - 2 C_shp R,
+      nu~ = -5/48, pi~ = pi + 2u, sigma~ = sigma - 12u, R the cross-plane half
+      of S_sq. The 144 agreed records are u S_sq^2 exactly, and (X+Y)(X+Y+Z)-4
+      is its same-plane diagonal once the shadow (-4 normal, -2 in-plane, +12
+      on site) is put back. On the carrier L_down psi = 0 and L_up psi = e1
+      psi, so every term but the last is a scalar there and B = D = 0 with
+      nothing to cancel; R projects to -2 e2, which is 4C. The mechanism is
+      therefore the Hodge structure of the kernel, given ONE dynamical input:
+      the two-hop sector enters as the square of the second-order operator
+      with a single weight u -- the fourth-order form of Prop. 2's "the same
+      local fusion coefficient multiplies every surviving shared-edge pair".
+      Recorded by checks "the 144 agreed records are u S_sq^2, the shared-link adjacency squared" and "H4 = -nu~(L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2 C_shp R exactly: C_shp is the coefficient of the one non-Hodge operator"; ADR 0019.
+    next_2026_09_01: >
+      One question is left and it is the universality of u: why every
+      two-hop chain (coplanar-coplanar, coplanar-perpendicular,
+      perpendicular-perpendicular) carries the same fourth-order weight. The
+      three-plaquette chain cluster is the smallest place to compute it; see
+      the G3 route "chain amplitude u on the three-plaquette cluster".
+    universality_2026_09_02: >
+      Computed, not explained: the coplanar chain and the bent chain return
+      X_QUANTUM and -X_QUANTUM exactly from an independent fourth-order
+      assembly (RUN g3_chain_amplitude_2026-09-02; check "FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel's 4.13 u is wrong"). So
+      the weight is one number across geometries, with the sign S_PQ S_QR.
+      A derivation of WHY -- the fourth-order form of THM_FLUX Prop. 2's
+      single fusion coefficient -- is what remains; the computation now
+      exists to test any candidate in seconds.
+    cube_completion_2026_09_02: >
+      The Hodge form writes the cube channel as -nu~ (L_up - 2) with one
+      weight for every pair of faces of a cube. Computed from primitives
+      (runs/g3_shared_link_pair_2026-09-02), the cube-completion channel --
+      the four-insertion histories that are the cube's other four faces -- is
+      -5/48 for OPPOSITE faces, reproducing nu~ exactly, and 53/768 for
+      ADJACENT faces. So a single weight on L_up is not the mechanism; on the
+      historical records it is a reparametrisation that absorbs the
+      difference into the rotation orbit. A mechanism for the tier collapse
+      has to account for 53/768 against 80/768, which is the first concrete
+      number a candidate has to reproduce. ADR 0021.
+    replication_2026_09_02: >
+      A second implementation (runs/g3_chain_amplitude_replication_2026-09-02;
+      check "REPLICATION: a second implementation, with the engine's PVP assembly and a Krylov resolvent, gives u = X_QUANTUM on three chain types")
+      returns the same rational on three chain types including the
+      coplanar-perpendicular one, where the two hops carry opposite signs
+      and the cumulant carries their product. So the universality holds
+      across all three junction types, sign included, from two independently
+      written assemblies. ADR 0020.
   - id: G15
     tier: 3
     state: open
@@ -826,6 +1026,41 @@ gaps:
       with supp P_c inside Lambda_+) and preserve reflection positivity
       through every later gauge-fixing and large/small-field operation. Block
       alignment alone does not prove the gate.
+    plan:
+      - step: Griffiths-type monotonicity of the electric-flux sector free energies in beta
+        state: dead
+        closed_by:
+          - 'CHK:the leading electric-flux gap C_F L / (2 sqrt u) decreases in u for every N'
+          - 'CHK:every fifth-order slope coefficient is negative, so the flux gap falls as beta grows'
+          - 'CHK:a weight u^k, k >= 1, flips the small-u direction: the sign is the weight''s, not evidence'
+          - 'ADR 0022'
+        cannot_decide: [G19]
+        status: >
+          proposed 2026-09-03 (Alex): a correlation inequality that holds at
+          every beta and makes the electric-flux free energies F_e(beta)
+          monotone in beta, sector by sector -- the sectors are Z_N-valued,
+          so the non-abelian obstruction to Griffiths' inequalities for
+          Wilson loops need not apply -- would carry the gap from strong to
+          weak coupling the way Griffiths carries Ising order across phases.
+          Closed the same day by a sign, before the inequality itself was
+          attempted: the Ising argument needs the monotone quantity to be
+          INCREASING in beta, and the certified series says the flux gap is
+          DECREASING -- at leading order for every N (the gap is
+          C_F L / (2 sqrt u)), and term by term through fifth order for SU(3)
+          (every slope coefficient (n - 1/2) sigma_n is negative, so the
+          truncated gap falls on all of u > 0). A sector-wise monotonicity,
+          if it holds, bounds the weak-coupling gap from ABOVE by its
+          strong-coupling value; it cannot bound it from below, so it cannot
+          establish a gap at large beta. Reweighting by a power of u flips
+          the small-u direction for every k >= 1 and therefore proves
+          nothing. Whether the monotonicity itself holds for SU(N) is left
+          open and is now irrelevant to this gap. What would revive the
+          route: a functional of the sector free energies, defined without
+          knowledge of the large-beta behaviour, that is increasing in beta
+          at small beta AND whose positivity at large beta implies a gap.
+          None is known; the magnetic ('t Hooft twist) free energies go the
+          other way where Griffiths applies, and that direction proves
+          deconfinement persists upward, not confinement. See ADR 0022.
 
   # ------------------------------------------------------------------
   # G20-G23: the analysis-side program (the maintainer's notes archive,
@@ -997,6 +1232,65 @@ gaps:
   - id: G25
     tier: 1
     state: partial
+    plan:
+      - step: fourth-order domino, the U4 falsifier
+        state: live
+        status: >
+          PROGRESS 2026-09-03, parts (1) and (3) below done, (2) sharpened.
+          (1) The engine-free rotor now runs to fifth order by
+          Rayleigh-Schrodinger (swap-odd suite, T1): vac_4 = -39/1280,
+          gap_4 = 1657/28000 (C-even) and 143/8960 (C-odd). The first is the
+          v10a.7 Hodge engine's one-face vacuum gate and the second is the
+          size-1 row of m_Gamma^(4) in the channels suite, both matched to
+          the digit, so two historical fourth-order numbers are now derived.
+          The decisive one is new: the vacuum's share of the excited C-even
+          energy plus the vacuum energy is -63/800 at fourth order, after
+          being 0 at orders 1-3. So the disconnected half of the falsifier
+          is NONZERO: leak_(4,+) - t_(4,+) = 63/800 + conn_A - conn_vac.
+          (3) Exhausted: the domino engine emits one swap-odd observable per
+          order, De - Te, and it is matched at orders 1-3. (2) The connected
+          domino vacuum conn_vac is already in the corpus: the v10a.7 engine
+          gates the two-face vacuum linked O(u^4) weight omega4 = -327/83776,
+          the SAME for coplanar and perpendicular pairs, with zero linked
+          O(u^2) and O(u^3) (corpus-import/programs/hodge_o4_adjudication/
+          src/ENGINE_O4_hodge_v10a7_marked_linked_scalar.py, float gates at
+          a stated tolerance with rational recognition -- T3 here until
+          re-derived). Taking it as read, U4's all-orders equality holds at
+          fourth order if and only if the connected swap-odd excited
+          diagram is conn_A = omega4 - 63/800 = -173109/2094400. That one
+          number is what remains, and nothing in the corpus computes it:
+          it needs the two-plaquette states |R_1, R_2, R_s> with W acting
+          on one plaquette while the other is charged, i.e. SU(3)
+          recoupling coefficients, or the pinned engine's word calculus
+          extended to letter degree five with fourth-order des Cloizeaux.
+          Original costing follows.
+
+          Compute leak_(4,+) - t_(4,+) on the abstract domino. ADR 0023
+          derives the identity through third order and predicts where it
+          stops: at order four the inert plaquette can be excited and
+          de-excited within one walk, and the domino vacuum acquires its
+          first connected diagram, so the difference is [connected
+          (excited, fluctuating-neighbour) diagram of the swap-odd state]
+          minus [connected domino vacuum diagram]. Zero is a cancellation
+          the derivation does not predict; nonzero ends the identity.
+          Cost, in three parts. (1) Cheap, engine-free: the single-plaquette
+          rotor of the swap-odd suite extended to fourth order pins gap_4
+          and vac_4 for both sectors, i.e. every disconnected piece of the
+          difference. Degenerate perturbation theory with a first-order
+          split manifold at fourth order needs the Bloch/des Cloizeaux
+          formula one order up, so it is error-prone rather than expensive.
+          (2) Not cheap: the two connected diagrams need the domino at
+          order four. The pinned ENGINE_FLUX_su3_domino_d3.py keeps every
+          function at letter degree <= 4 by Cayley-Hamilton and implements
+          des Cloizeaux to third order; a fourth-order walk reaches degree
+          five, so both the basis and the perturbation formula must be
+          extended and the Haar-moment layer (ENGINE_FLUX_su3_moments_ext)
+          must supply p = q = 4 Weingarten data. Not a G3 byproduct. (3) A
+          zero-cost check first: any third-order observable of the swap-odd
+          state the engine computed for another gate must equal the rotor's,
+          since the derivation says psi_A is a free excitation beside an
+          inert plaquette in every quantity through third order, not only
+          in energy.
     status: >
       opened and largely discharged 2026-08-28. The C-even sector was
       registered and inert: LEAK_2, LEAK_2_EVEN and LEAK_3_EVEN were read by
@@ -1139,12 +1433,56 @@ unifying_candidates:
       Equally fatal in the other direction: a derivation showing the two
       quantities are equal for a reason that does not involve the vacuum route
       would refute the identification while leaving the equality standing.
-    status: conjectured
+    status: refuted
     note: >
       Recorded as a candidate and nothing more. Two equal values are two equal
       values; ADR 0005 is what happens when a clean mechanism is read off a
       coincidence in this corpus, and the charge-even suite deliberately checks
       the identity without asserting a cause for it.
+    refuted_2026_09_03: >
+      By the second clause of its own falsifier: the equality is DERIVED, at
+      both computed orders, for a reason that is not the vacuum route (ADR
+      0023, suite "the swap-odd domino state"). With the engine's definitions,
+      leak_k - t_k = E_k(psi_A) - vac_k^domino - gap_k^single for the
+      swap-odd state psi_A = e_1 - e_2. Class functions multiply
+      commutatively, so W psi_A = e_1^2 - e_2^2 has no two-plaquette image and
+      no vacuum image, and H_0 conserves each plaquette's isotypic content, so
+      through third order E_k(psi_A) is the single-plaquette rotor energy
+      with the vacuum removed from its intermediates. The vacuum's share of
+      the excited rotor energy is exactly -vac_k at k = 2 (3/4 = 1/C_F) and
+      k = 3 (9/32): the "|0> route" and the "vacuum-energy bookkeeping" the
+      corpus calls distinct mechanisms of equal value are one matrix element,
+      <0|W|e> = |e|^2 over 2 C_F, with opposite signs. Hence E_k(psi_A) =
+      E_k^exc + vac_k, which is leak_k = t_k. Nothing vacuum-mediated enters
+      psi_A at all -- the vacuum cancels out of it -- so the identification
+      "one vacuum-mediated route entering both" is wrong even though the
+      equality stands and both rationals keep their registered values. The
+      same bookkeeping in the C-odd sector, where the swap-odd state keeps the
+      like-family cross terms and has no vacuum route, gives
+      leak_(2,-) - t_(2,-) = 2 A_N + 1/C_F = -3/68 at N = 3, the registered
+      value, and not 2 B_N + 1/C_F = -1/36.
+    what_stays_open: >
+      The all-orders half. The lemma keeps two-plaquette intermediates out of
+      E(psi_A) only while a walk cannot excite the inert plaquette and
+      de-excite it again, which needs four insertions; and the domino vacuum
+      first acquires a connected diagram at the same order. So at fourth
+      order leak_(4,+) - t_(4,+) = [connected (excited, fluctuating-neighbour)
+      diagram of psi_A] - [connected domino vacuum diagram], a difference of
+      two quantities with no symmetry relating them. That difference is the
+      sharpened falsifier: zero would mean a cancellation this derivation
+      does not predict, nonzero ends the identity at the first order the
+      mechanism cannot reach. SHARPENED 2026-09-03 (swap-odd suite, fifth
+      check): the disconnected part is not zero either -- the vacuum share
+      of the excited rotor energy stops cancelling the vacuum energy at
+      fourth order, by -63/800 -- so with the corpus's linked pair vacuum
+      omega4 = -327/83776 (v10a.7 gates, T3 here) the equality survives at
+      fourth order only if the connected swap-odd excited diagram is
+      exactly -173109/2094400. NOT a byproduct of G3: G3's weight cards are
+      the cubic fourth-order kernel on three-plaquette lattice clusters,
+      while this is the two-plaquette domino at order four, which the pinned
+      engine cannot reach as is (its word basis is truncated at letter
+      degree four and a fourth-order domino walk reaches five). Costed as a
+      route on G25.
   - id: U5
     statement: >
       The determinant (epsilon / triality) sector enters the fourth-order band
@@ -1161,42 +1499,72 @@ unifying_candidates:
       Delta A_4 = Delta B_4 = 0. Only at N = 3 is Delta beta_3 nonzero, i.e.
       only there does the sector leave the on-site orbit.
 
-      The quantitative consequence is exact. Delta A_3 = 0 (both sides of C2
-      agree alpha = 5/12) plus the identity A = -nu - 4u forces
-      Delta nu = -4 Delta u; the primitive cube-completion channel is
-      link-balanced, hence eps-blind, and that channel IS the normal orbit, so
-      Delta nu = 0 and therefore Delta u = 0, and Delta u2 = 0 because u2 = 2u
-      holds exactly in both recorded kernels. C = -5/96 - u - (rho + pi)/2 then
-      leaves the sector exactly one place to act, and Delta beta_3 = +25/64
+      The quantitative consequence, AMENDED 2026-09-01. In the Hodge form of
+      the kernel (suite "fourth-order kernel orbits"), the normal orbit is
+      nu = nu~ - 4u with nu~ = -5/48 the primitive cube completion and -4u the
+      diagonal shadow of the two-hop sector u S_sq^2. Eps-blindness of the
+      link-balanced primitive channel fixes nu~, which is the same statement
+      as Delta A_3 = 0 (A = -nu~ exactly); it says nothing about u. And
+      C = -5/96 - (rho + pi~)/2 with pi~ = pi + 2u, so Delta beta_3 = +25/64
       gives Delta C = +25/1024 and
 
-          Delta(rho + pi) = -25/512, with u, u2, nu and sigma unchanged.
+          Delta(rho + pi~) = -25/512, with nu~ = -5/48 unchanged; u, u2, sigma~ free.
 
-      Historical rho + pi = -12778990891087/1595026186790400, so a direct
-      balanced contraction at N = 3 must return -45330564458981/797513093395200.
+      Historical rho + pi~ = -17607806155349/2202655210329600 (2*X_QUANTUM above the
+      earlier rho + pi), so a direct balanced contraction at N = 3 must
+      return rho + pi~ = -15644916262153/275331901291200.
+    amended_2026_09_01: >
+      The 2026-08-30 form concluded "Delta u = Delta u2 = Delta nu = 0 and the
+      whole effect is Delta(rho + pi) = -25/512, and nothing else". Its step
+      "the primitive cube-completion channel IS the normal orbit, so Delta nu
+      = 0, hence Delta u = 0" is withdrawn: the normal orbit is the primitive
+      channel PLUS the -4u shadow of u S_sq^2 (check "the 144 agreed records
+      are u S_sq^2, the shared-link adjacency squared"), so eps-blindness
+      constrains nu~ = nu + 4u only. The two recorded kernels are the witness:
+      both have nu~ = -5/48 exactly and their u differ by a factor 4.1327437.
+      The number -25/512 survives; the quantity it constrains is rho + pi~.
+      Kept as an amendment rather than rewritten, per the rule that a
+      withdrawn step is evidence for the next reader.
     supported_by:
       - 'CHK: the on-site orbit IS the momentum-independent channel'
-      - 'CHK: PREDICTION: the eps-sector at N=3 is Delta(rho + pi) = -25/512 and nothing else'
+      - 'CHK: CORRECTED PREDICTION: the eps-sector at N=3 is Delta(rho + pi~) = -25/512; u is NOT constrained'
+      - 'CHK: H4 = -nu~(L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2 C_shp R exactly: C_shp is the coefficient of the one non-Hodge operator'
       - 'CHK: the SU(6) determinant correction is exactly 6/343 and momentum-independent'
       - 'CHK: the SU(5) stage-1 scan is shipped: 895,524 pairs, zero determinant sectors'
       - 'CHK: A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u)'
       - 'OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08) §4: the primitive channel is link-balanced, hence eps-blind'
       - 'STATE.md cont. 9: unified N-ality theorem, exact exceptional offsets'
     falsifier: >
-      A direct balanced contraction at N = 3 whose six orbit amplitudes differ
-      from the historical ones anywhere except in rho + pi, or whose rho + pi
-      shift is not exactly -25/512. Equally: any exceptional rank at which the
+      A direct balanced contraction at N = 3 whose nu~ = nu + 4u is not -5/48,
+      or whose rho + pi~ shift from the historical value is not exactly
+      -25/512 (amended 2026-09-01: u, u2 and sigma~ are NOT constrained, so a
+      shift in them refutes nothing). Equally: any exceptional rank at which the
       determinant correction is shown to be momentum-DEPENDENT (it would then
       not be an on-site shift), or an SU(3) determinant analysis that reaches A
       rather than C, which would contradict the eps-blindness of the
       link-balanced primitive channel that the whole chain rests on.
-    status: conjectured
+    status: refuted
+    refuted_2026_09_02: >
+      The computation nobody had run has been run
+      (runs/g3_shared_link_pair_2026-09-02). The direct balanced contraction
+      -- the same cluster assembly with every unbalanced Haar family dropped,
+      which also sets PVP = 0 -- leaves every three-plaquette dressing
+      unchanged and moves each shared-link pair cluster's C-odd element by
+      exactly -55/13872, on the coplanar and the perpendicular pair alike.
+      So the epsilon sector of rho + pi~ is -55/6936, and the falsifier
+      above has fired: the shift is not -25/512. The continuation shift
+      Delta beta_3 = 25/64 is therefore not the epsilon sector's
+      contribution to the fourth-order shape, and C10's question -- whether
+      that shift is derived or merely defined as a difference -- is what
+      remains. The exceptional-rank pattern (SU(4), SU(5), SU(6)) is
+      untouched by this; what fell is the N = 3 quantitative step. Check
+      "FINDING: U5 is falsified -- the epsilon sector of rho + pi~ is -55/6936, not -25/512"; ADR 0021.
     note: >
-      This is a prediction about a computation nobody in this repository has
-      run. It prefers neither side of C2 and does NOT rest on the P17/R20
-      substitution at N = 3, which is forbidden and whose use here was
-      retracted on 2026-08-30 — only on Delta beta_3, which the register
-      records independently as DELTA_BETA_3.
+      Written 2026-08-30 as a prediction about a computation nobody in this
+      repository had run; refuted 2026-09-02, see above. It preferred neither
+      side of C2 and did NOT rest on the P17/R20 substitution at N = 3, which
+      is forbidden and whose use here was retracted on 2026-08-30 -- only on
+      Delta beta_3, which the register records independently as DELTA_BETA_3.
 
   - id: U6
     statement: >

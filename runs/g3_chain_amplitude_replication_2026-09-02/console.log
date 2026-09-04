@@ -1,0 +1,94 @@
+== single
+    two-insertion moments: 0.2s; krylov {'max_degree': 7, 'calls': 6}
+   done in 0.2s
+== coplanar_pair
+    two-insertion moments: 0.3s; krylov {'max_degree': 9, 'calls': 18}
+   done in 0.3s
+== perpendicular_pair
+    two-insertion moments: 0.3s; krylov {'max_degree': 9, 'calls': 30}
+   done in 0.3s
+== disjoint_pair
+    two-insertion moments: 0.3s; krylov {'max_degree': 9, 'calls': 42}
+   done in 0.3s
+
+second order (register: t_3 = 5/612, T_PLUS_2 = -11/306, LEAK_2 = -11/306, bubble -3/4)
+  single-plaquette C-odd diagonal           = -1/4
+  single-plaquette C-even diagonal          = -1/10
+  coplanar shared-link C-odd hop            = -5/612
+  perpendicular shared-link C-odd hop       = 5/612
+  shared-link C-even hop (coplanar)         = -11/306
+  shared-link C-even hop (perpendicular)    = -11/306
+  C-odd leakage per shared-link neighbour   = -481/612
+  C-odd leakage per disjoint neighbour      = -3/4
+  disjoint-pair C-odd hop                   = 0
+  disjoint-pair C-even hop                  = 0
+
+fourth order: chain cumulant W(P,Q,R) - W(P,R) on the P -> R element
+== coplanar_chain: faces [((0, 1), (0, 0, 0)), ((0, 1), (1, 0, 0)), ((0, 1), (2, 0, 0))]
+    links: 10, shared with Q: [[1], [5]]
+    two-insertion moments on both clusters: 0.5s; krylov {'max_degree': 10, 'calls': 72}
+      ket 4 -> bras [0, 1]: |z_touched|=504 krylov={'max_degree': 34, 'calls': 78} 9.4s
+      haar {'engine': 2280, 'skipped': 20256, 'slow': 0} 10.2s
+      ket 5 -> bras [0, 1]: |z_touched|=516 krylov={'max_degree': 34, 'calls': 84} 19.4s
+      haar {'engine': 2796, 'skipped': 20772, 'slow': 0} 20.2s
+      ket 0 -> bras [4, 5]: |z_touched|=490 krylov={'max_degree': 34, 'calls': 90} 29.1s
+      haar {'engine': 3286, 'skipped': 21262, 'slow': 0} 29.9s
+      ket 1 -> bras [4, 5]: |z_touched|=496 krylov={'max_degree': 34, 'calls': 96} 38.7s
+      haar {'engine': 3782, 'skipped': 21758, 'slow': 0} 39.5s
+      W[00] = 247949/15281395200   (D_touched -3546721751/15281395200, fold3-fold2 -35469697/152813952)
+      W[01] = 32017/4392984960   (D_touched -3330253/14356160, fold3-fold2 -77233/332928)
+      W[10] = 32017/4392984960   (D_touched -3330253/14356160, fold3-fold2 -77233/332928)
+      W[11] = 247949/15281395200   (D_touched -3546721751/15281395200, fold3-fold2 -35469697/152813952)
+    chain cumulant done in 39.5s
+  coplanar_chain: (S_sq^2)_PR incidence sign through Q = +1
+  coplanar_chain: C-odd chain amplitude          = 360421351/40327601932800 = 8.937336557e-06
+  coplanar_chain: C-odd amplitude / incidence sign  u = 360421351/40327601932800
+  coplanar_chain: C-even chain amplitude         = 948253471/40327601932800 = 2.351375796e-05
+  coplanar_chain: u / X_QUANTUM = 1
+== bent_chain: faces [((0, 1), (0, 0, 0)), ((0, 1), (1, 0, 0)), ((1, 2), (2, 0, 0))]
+    links: 10, shared with Q: [[1], [5]]
+    two-insertion moments on both clusters: 0.6s; krylov {'max_degree': 34, 'calls': 126}
+      ket 4 -> bras [0, 1]: |z_touched|=516 krylov={'max_degree': 34, 'calls': 132} 9.2s
+      haar {'engine': 5158, 'skipped': 34808, 'slow': 0} 10.0s
+      ket 5 -> bras [0, 1]: |z_touched|=504 krylov={'max_degree': 34, 'calls': 138} 19.0s
+      haar {'engine': 5662, 'skipped': 35312, 'slow': 0} 19.8s
+      ket 0 -> bras [4, 5]: |z_touched|=490 krylov={'max_degree': 34, 'calls': 144} 27.7s
+      haar {'engine': 6152, 'skipped': 35802, 'slow': 0} 28.5s
+      ket 1 -> bras [4, 5]: |z_touched|=496 krylov={'max_degree': 34, 'calls': 150} 36.3s
+      haar {'engine': 6648, 'skipped': 36298, 'slow': 0} 37.2s
+      W[00] = 32017/4392984960   (D_touched -3330253/14356160, fold3-fold2 -77233/332928)
+      W[01] = 247949/15281395200   (D_touched -3546721751/15281395200, fold3-fold2 -35469697/152813952)
+      W[10] = 247949/15281395200   (D_touched -3546721751/15281395200, fold3-fold2 -35469697/152813952)
+      W[11] = 32017/4392984960   (D_touched -3330253/14356160, fold3-fold2 -77233/332928)
+    chain cumulant done in 37.2s
+  bent_chain: (S_sq^2)_PR incidence sign through Q = -1
+  bent_chain: C-odd chain amplitude          = -360421351/40327601932800 = -8.937336557e-06
+  bent_chain: C-odd amplitude / incidence sign  u = 360421351/40327601932800
+  bent_chain: C-even chain amplitude         = 948253471/40327601932800 = 2.351375796e-05
+  bent_chain: u / X_QUANTUM = 1
+== zigzag_chain: faces [((0, 2), (0, 0, 0)), ((0, 1), (0, 0, 0)), ((1, 2), (1, 0, -1))]
+    links: 10, shared with Q: [[0], [1]]
+    two-insertion moments on both clusters: 0.7s; krylov {'max_degree': 34, 'calls': 180}
+      ket 4 -> bras [0, 1]: |z_touched|=488 krylov={'max_degree': 34, 'calls': 186} 9.7s
+      haar {'engine': 7996, 'skipped': 49320, 'slow': 0} 10.8s
+      ket 5 -> bras [0, 1]: |z_touched|=487 krylov={'max_degree': 34, 'calls': 192} 19.5s
+      haar {'engine': 8483, 'skipped': 49807, 'slow': 0} 20.6s
+      ket 0 -> bras [4, 5]: |z_touched|=474 krylov={'max_degree': 34, 'calls': 198} 29.5s
+      haar {'engine': 8957, 'skipped': 50281, 'slow': 0} 30.6s
+      ket 1 -> bras [4, 5]: |z_touched|=474 krylov={'max_degree': 34, 'calls': 204} 39.4s
+      haar {'engine': 9431, 'skipped': 50755, 'slow': 0} 40.5s
+      W[00] = 32017/4392984960   (D_touched -3330253/14356160, fold3-fold2 -77233/332928)
+      W[01] = 247949/15281395200   (D_touched -3546721751/15281395200, fold3-fold2 -35469697/152813952)
+      W[10] = 247949/15281395200   (D_touched -3546721751/15281395200, fold3-fold2 -35469697/152813952)
+      W[11] = 32017/4392984960   (D_touched -3330253/14356160, fold3-fold2 -77233/332928)
+    chain cumulant done in 40.5s
+  zigzag_chain: (S_sq^2)_PR incidence sign through Q = -1
+  zigzag_chain: C-odd chain amplitude          = -360421351/40327601932800 = -8.937336557e-06
+  zigzag_chain: C-odd amplitude / incidence sign  u = 360421351/40327601932800
+  zigzag_chain: C-even chain amplitude         = 948253471/40327601932800 = 2.351375796e-05
+  zigzag_chain: u / X_QUANTUM = 1
+certificate written: chain_amplitude_certificate.json
+
+X_QUANTUM (historical exact kernel) = 360421351/40327601932800 = 8.937336557e-06
+cold v10a.26 value                  = 4.132743700859149 * X_QUANTUM = 3.693572136e-05
+haar calls: {'engine': 9431, 'skipped': 50755, 'slow': 0}; krylov {'max_degree': 34, 'calls': 204}; E0 {'with_e0': 92, 'without': 112}; total 118.2s

@@ -33,6 +33,13 @@ TIERS = frozenset({0, 1, 2, 3})
 #: work — the exact "redo finished work" failure mode AGENTS.md warns about.
 #: `partial` still counts as open work; only `discharged` leaves the queue.
 GAP_STATES = frozenset({"open", "partial", "discharged"})
+#: Machine-readable state of one plan step (a route) under a gap. The prose
+#: stays in the step's `status`; this field is what `why` and the frontier
+#: read. `dead` is the one that earns the field: a route closed by a run or a
+#: finding must stop reading as open work, because G3's sealed sweep was
+#: re-attempted by four sessions after it was known to emit only the Gamma
+#: scalar. `untried` is a recorded proposal nobody has spent anything on yet.
+ROUTE_STATES = frozenset({"untried", "live", "dead", "done"})
 UNIFYING_STATUSES = frozenset({"conjectured", "supported", "promoted", "refuted"})
 
 
@@ -188,6 +195,43 @@ def validate(ledgers: Ledgers) -> list[str]:
         for ref in g.get("depends_on", []) + g.get("unblocks", []):
             if ref not in ledgers.gap_ids:
                 problems.append(f"{g['id']} references unknown gap {ref}")
+        seen_steps: set[str] = set()
+        for step in g.get("plan", []) or []:
+            label = f"{g['id']} plan step {step.get('step')!r}"
+            if not str(step.get("step", "")).strip():
+                problems.append(f"{g['id']}: a plan step has no name")
+                continue
+            if step["step"] in seen_steps:
+                problems.append(f"{label}: duplicate step name")
+            seen_steps.add(step["step"])
+            if step.get("state") not in ROUTE_STATES:
+                problems.append(
+                    f"{label}: state must be one of {sorted(ROUTE_STATES)}, got "
+                    f"{step.get('state')!r}"
+                )
+            # A closed route names what closed it, or its status prose does;
+            # a bare 'dead' is an assertion nobody can audit.
+            if step.get("state") in ("dead", "done") and not (
+                step.get("closed_by") or str(step.get("status", "")).strip()
+            ):
+                problems.append(f"{label}: {step['state']} but neither closed_by nor status")
+            for ref in step.get("closed_by", []) or []:
+                ref = str(ref)
+                if re.fullmatch(r"[CG]\d+", ref) and ref not in (
+                    ledgers.contradiction_ids | ledgers.gap_ids
+                ):
+                    problems.append(f"{label}: closed_by unknown {ref}")
+                if not (
+                    re.fullmatch(r"[CGRU]\d+", ref)
+                    or ref.startswith(("RUN:", "CHK:"))
+                    or re.fullmatch(r"ADR[:\s]*\d{4}", ref)
+                ):
+                    problems.append(
+                        f"{label}: closed_by {ref!r} is not a ledger, run, check or ADR id"
+                    )
+            for ref in step.get("cannot_decide", []) or []:
+                if ref not in (ledgers.contradiction_ids | ledgers.gap_ids):
+                    problems.append(f"{label}: cannot_decide unknown {ref}")
 
     # Path-valued fields, wherever they nest. Contradictions carry them too.
     for entry in ledgers.gaps + ledgers.contradictions:

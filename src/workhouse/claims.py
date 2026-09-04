@@ -32,6 +32,7 @@ from typing import Any
 import yaml
 
 from . import certified as certified_mod
+from . import check_cache
 from . import constants as K
 from . import ledger as ledger_mod
 from . import literature as literature_mod
@@ -62,7 +63,14 @@ KINDS = (
     "archive",
     "note",
     "run",
+    "route",
+    "corpus",
 )
+
+#: The pinned ALL THEORY import and its manifest: one node per file.
+CORPUS_DIR = ROOT / "corpus-import"
+CORPUS_MANIFEST = CORPUS_DIR / "SHA256SUMS"
+CORPUS_ARCHIVE_ID = "ARCHIVE:ALL_THEORY_2026-08-20"
 
 #: A ledger id anywhere in free text. Case-sensitive on purpose: `u4` in
 #: "O(u^4)" and `U` in "SU(4)" must not read as claim ids.
@@ -148,6 +156,63 @@ def check_id(suite_name: str, check_name: str) -> str:
     return f"CHK:{_ident(suite_name)}:{_ident(check_name)}"
 
 
+def corpus_id(path: str) -> str:
+    """The catalogue id of one pinned corpus file, keyed on its manifest path."""
+    return f"CORPUS:{_ident(path)}"
+
+
+def load_corpus_manifest(path: Path | None = None) -> list[tuple[str, str]]:
+    """``(relative path, sha256)`` for every file corpus-import/SHA256SUMS pins."""
+    target = path or CORPUS_MANIFEST
+    rows: list[tuple[str, str]] = []
+    for line in target.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
+        digest, rel = line.split(maxsplit=1)
+        rows.append((rel.strip(), digest))
+    return sorted(rows)
+
+
+def route_id(gap_id: str, step: str) -> str:
+    """The catalogue id of one plan step under a gap -- a route.
+
+    A route is an attempt at a gap with a recorded state (untried, live,
+    dead, done) and, when closed, the run or check that closed it. Making it a
+    node is what lets `why G3` say which attempts are dead instead of leaving
+    that to a reader of run READMEs.
+    """
+    return f"ROUTE:{gap_id}:{_ident(step)}"
+
+
+#: A ``\chk{...}`` label in a manuscript source, with LaTeX escapes undone.
+#: The body may contain ``\^{}`` (a standalone circumflex), so a ``[^}]*``
+#: body would stop at the wrong brace; balanced empty groups are allowed.
+_CHK_LABEL = re.compile(r"\\chk\{((?:[^{}]|\{\})*)\}")
+
+
+def chk_labels(source: str) -> list[str]:
+    r"""Every ``\chk`` label in a pinned edition, in order, as check names.
+
+    One parser for the manuscript guard and the graph, so the two can never
+    disagree about what a paper labels.
+    """
+    return [
+        m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
+        for m in _CHK_LABEL.findall(source)
+    ]
+
+
+def _yield_value(text: str) -> tuple[str, float | None]:
+    """A yielded value's exact string and float, as `_as_value` would give."""
+    try:
+        exact = Fraction(text)
+    except (ValueError, ZeroDivisionError):
+        return text, None  # symbolic in N or L
+    if exact.denominator == 1:
+        return str(exact.numerator), float(exact)
+    return f"{exact.numerator}/{exact.denominator}", float(exact)
+
+
 def note_id(archive_id: str, row: dict[str, Any]) -> str:
     """The catalogue id of one archived note document.
 
@@ -226,11 +291,13 @@ def decisions() -> list[dict[str, Any]]:
 def collect() -> list[Claim]:
     out: list[Claim] = []
 
+    cache = check_cache.CheckCache()
     for suite in SUITES:
-        for result in suite.run():
+        for result in suite.run(cache=cache):
+            chk = check_id(suite.name, result.name)
             out.append(
                 Claim(
-                    id=check_id(suite.name, result.name),
+                    id=chk,
                     kind="check",
                     statement=result.name,
                     tier=result.tier,
@@ -239,8 +306,32 @@ def collect() -> list[Claim]:
                     reproduce=f"workhouse verify --only {result.name!r}",
                     detail=result.detail,
                     status="passing" if result.passed else "FAILING",
+                    related=sorted(result.rests_on),
                 )
             )
+            # A value a check yields is a constant with the check as its
+            # origin: searchable by value, and carrying the check's tier
+            # while the check passes. A failing check's yields are T3 --
+            # recorded, not established.
+            for name, text in sorted(result.yields.items()):
+                exact, decimal = _yield_value(text)
+                out.append(
+                    Claim(
+                        id=f"CONST:{name}",
+                        kind="constant",
+                        statement=f"{name}, yielded by the check {result.name!r}",
+                        tier=result.tier if result.passed else 3,
+                        value=exact,
+                        decimal=decimal,
+                        where=result.source,
+                        cites=result.section,
+                        reproduce=f"workhouse verify --only {result.name!r}",
+                        status="yielded by a passing check"
+                        if result.passed
+                        else "yielded by a FAILING check",
+                        related=[chk],
+                    )
+                )
 
     for constant in K.REGISTRY:
         exact, decimal = _as_value(constant.value)
@@ -300,6 +391,71 @@ def collect() -> list[Claim]:
             )
         )
 
+    # ALL THEORY, file by file. The 2026-08-20 import sat in corpus-import/ as
+    # 928 pinned files and reached the graph through six curated provenance
+    # documents and a value index beside it -- so "which corpus files carry
+    # 5/48" had an answer in `search --corpus` and none in `why`. Every pinned
+    # file is now a node, keyed on its manifest path and digest, and joined to
+    # the registered constants whose exact values its bytes contain. Nothing
+    # here promotes anything: a corpus file is T3 whatever it says, and the
+    # join is by value, never by a name map.
+    by_value: dict[Fraction, list[str]] = {}
+    for claim in out:
+        if claim.kind == "constant" and claim.value:
+            try:
+                by_value.setdefault(Fraction(claim.value), []).append(claim.id)
+            except (ValueError, ZeroDivisionError):
+                continue  # symbolic in N or L, or a float repr
+    manifest = load_corpus_manifest()
+    carried = _corpus_values()
+    out.append(
+        Claim(
+            id=CORPUS_ARCHIVE_ID,
+            kind="archive",
+            statement=(
+                "ALL THEORY, the 2026-08-20 import: corpus-import/, every file pinned by "
+                "corpus-import/SHA256SUMS and present here as a node"
+            ),
+            tier=3,
+            where="corpus-import/SHA256SUMS",
+            cites="corpus-import/README.md",
+            status=f"{len(manifest)} files pinned",
+            detail=(
+                "The received research corpus. Immutable evidence of what was believed; "
+                "T3 until a check says otherwise. Edges: contains -> each file, and each "
+                "file carries -> the registered constants whose exact values it holds"
+            ),
+        )
+    )
+    for rel, digest in manifest:
+        values = carried.get(rel, set())
+        constants = sorted({cid for v in values if v in by_value for cid in by_value[v]})
+        suffix = rel.rsplit(".", 1)[-1].lower() if "." in rel else ""
+        klass = "prose" if suffix in ("md", "tex") else "code"
+        names = [c[len("CONST:") :] for c in constants]
+        out.append(
+            Claim(
+                id=corpus_id(rel),
+                kind="corpus",
+                statement=rel,
+                tier=3,
+                where=f"corpus-import/{rel}",
+                cites="corpus-import/SHA256SUMS",
+                status=klass,
+                detail=f"sha256 {digest[:12]}"
+                + (
+                    f"; carries {len(names)} registered constant"
+                    + ("s" if len(names) != 1 else "")
+                    + ": "
+                    + ", ".join(names[:12])
+                    + (f", … {len(names) - 12} more" if len(names) > 12 else "")
+                    if names
+                    else "; carries no registered exact value"
+                ),
+                related=constants,
+            )
+        )
+
     led = ledger_mod.load()
     for entry in led.contradictions:
         out.append(
@@ -336,6 +492,26 @@ def collect() -> list[Claim]:
                 related=sorted(entry.get("resolves", []) + entry.get("unblocks", [])),
             )
         )
+    # Routes: one node per plan step, so an attempt has a state a query can
+    # read. Everything is copied from the step's own fields.
+    for entry in led.gaps:
+        for step in entry.get("plan", []) or []:
+            out.append(
+                Claim(
+                    id=route_id(entry["id"], step["step"]),
+                    kind="route",
+                    statement=f"{entry['id']} route: {step['step']}",
+                    tier=3,
+                    where="ledger/gaps.yaml",
+                    cites=entry["id"],
+                    status=str(step.get("state", "")),
+                    detail=" ".join(str(step.get("status", "")).split()),
+                    related=sorted(
+                        [str(r) for r in step.get("closed_by", []) or []]
+                        + [str(r) for r in step.get("cannot_decide", []) or []]
+                    ),
+                )
+            )
     for entry in led.register:
         out.append(
             Claim(
@@ -583,14 +759,34 @@ def collect() -> list[Claim]:
     return out
 
 
+def _corpus_values() -> dict[str, set[Fraction]]:
+    """Manifest path -> every exact rational the file's bytes contain.
+
+    Read through ``corpus_index.scan_cached`` -- the same scan `search
+    --corpus` uses, over prose and code alike -- so the graph's `carries` edges
+    and the search's corpus hits can never disagree about what a file holds.
+    """
+    from . import corpus_index as X
+
+    table = X.scan_cached(CORPUS_DIR, X.CODE_EXTS | X.PROSE_EXTS)
+    out: dict[str, set[Fraction]] = {}
+    for value, record in table.items():
+        for path in record.files:
+            rel = Path(path).resolve().relative_to(CORPUS_DIR.resolve()).as_posix()
+            out.setdefault(rel, set()).add(value)
+    return out
+
+
 def load_catalogue(path: Path | None = None) -> list[Claim]:
     """The checked-in catalogue, rehydrated without running a single check.
 
     ``index/claims.jsonl`` is staleness-tested, so it is current at every
-    commit; a *finding* tool (search) can read it in milliseconds instead of
-    re-running every suite to rebuild what is already on disk. ``why`` keeps
-    calling ``collect()`` because it promises live verdicts. Falls back to a
-    live ``collect()`` when the index has not been generated yet.
+    commit; a query tool (search, why, derive, branches) reads it in
+    milliseconds instead of re-running every suite to rebuild what is already
+    on disk. Verdicts are those of the last regeneration, which the staleness
+    tests hold equal to the live ones at every commit; ``--live`` rebuilds
+    for a working tree mid-edit. Falls back to a live ``collect()`` when the
+    index has not been generated yet.
     """
     target = path or CLAIMS
     if not target.exists():

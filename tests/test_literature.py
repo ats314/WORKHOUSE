@@ -235,15 +235,23 @@ def test_in_degree_is_computed_and_covers_every_node():
     assert set(degree) == lit.node_ids
     # The foundational Hamiltonian paper is the web's hub, and it is exactly
     # the kind of fact this layer exists to compute rather than remember.
-    top = max(degree, key=lambda n: (degree[n], n))
-    assert top == "KS_1975", sorted(degree.items(), key=lambda kv: -kv[1])[:3]
+    # Since 2026-09-03 it SHARES the top in-degree with the Wilson 1974 stub
+    # (T_HOOFT_1979 cites Wilson), so the assertion is "attains the maximum",
+    # not "is the unique maximum" -- a tie broken by id is not a hub claim.
+    top = max(degree.values())
+    assert degree["KS_1975"] == top, sorted(degree.items(), key=lambda kv: -kv[1])[:3]
 
 
 def test_the_acquisition_target_falls_out_of_the_data():
     """The most in-web-cited unpinned paper surfaces automatically."""
     targets = L.acquisition_targets()
     assert targets, "nothing to acquire would mean every source is pinned"
-    assert targets[0]["id"] == "KS_1975"
+    # KS_1975 shares the top in-web count with the Wilson 1974 stub (see the
+    # in-degree test); the lead row must carry that maximum and KS_1975 must
+    # be one of the rows that do.
+    top = targets[0]["in_web"]
+    assert top == max(t["in_web"] for t in targets)
+    assert any(t["id"] == "KS_1975" and t["in_web"] == top for t in targets)
     assert all(not t["obtained"] and t["in_web"] > 0 for t in targets)
 
 

@@ -166,6 +166,31 @@ runs:
       open -- what this retires is the one-cube-only objection, and it
       demonstrates the target-blind operator-level machinery G3 needs.
 
+  - id: g3_chain_amplitude_2026-09-02
+    dir: runs/g3_chain_amplitude_2026-09-02
+    title: >-
+      The chain amplitude u computed independently: X_QUANTUM exactly on two
+      chain geometries, so the cold kernel's 4.13 u is wrong
+    bears_on: [C2, G3, G14]
+    detail: >-
+      The route ADR 0019 opened, run. An assembly that takes only Wilson
+      words, exact Haar inner products and the H0 action from the pinned
+      engine and does the rest itself -- invariant blocks, a Gram-free
+      polynomial resolvent, the projector off the model space, Hermitian
+      fourth-order theory with PVP = 0, charge-pruned integrals -- first
+      reproduces the register at second order (t_3 = 5/612 with the S_sq
+      sign pattern, the C-even hop -11/306, the leakage -11/306 after the
+      vacuum bubble), then returns the cluster cumulant of the P -> R
+      element on Q-touched histories: u = 360421351/40327601932800 on the
+      coplanar chain and minus that on the bent chain, X_QUANTUM exactly
+      with the sign S_PQ S_QR. Universality, G14's last dynamical input,
+      holds. The v10a.26 dump's u is 4.1327437 times this and is wrong
+      there; C2 is not decided, because u is band-invisible on the
+      carrier, but the cold pipeline's sign-flipped rho and pi~ lose
+      their independent standing. The first attempt built Gram matrices
+      and ran blind for 33 minutes; the recorded version runs in seconds
+      with a live log. The C-even chain amplitude is new to the register.
+
   - id: g3_haar_hotloop_bench_2026-08-30
     dir: runs/g3_haar_hotloop_bench_2026-08-30
     title: >-
@@ -225,3 +250,59 @@ runs:
       signs the normal channel gives A = -alpha_N/4, so only |A| and the
       ratio C/A = -1/2 are convention-free, and the corpus fixes the sign
       by taking |c_4|. Nothing adjudicated; C2 open.
+
+  - id: g3_chain_amplitude_replication_2026-09-02
+    dir: runs/g3_chain_amplitude_replication_2026-09-02
+    title: >-
+      The two-hop weight u replicated by a second implementation: X_QUANTUM
+      exactly on three chain types, with the engine's PVP assembly
+    bears_on: [G3, G14, C2]
+    detail: >-
+      A second computation of the G3 chain route, written the same day
+      without reading runs/g3_chain_amplitude_2026-09-02 and agreeing with
+      it on every number. It differs where it matters: the resolvent is a
+      Krylov minimal polynomial of H0 relative to each vector (no block is
+      diagonalised); the fourth-order assembly is the engine's own,
+      D - A C1 - C1^T A - (K2 N + N K2)/2 + A A J with A = PVP the SU(3)
+      baryonic vertex <P|V|Pbar> = 1, where the first run assumed PVP = 0
+      (the two agree on the cumulant only because the A-terms cancel
+      between link-disjoint endpoints); and it computes three chain types,
+      adding the coplanar-perpendicular chain on which the two hops carry
+      opposite signs, with the incidence sign computed from link
+      traversals. The second-order register is reproduced first. Result:
+      the C-odd cumulant is s * 360421351/40327601932800 with s = +1, -1,
+      -1 the (S_sq^2)_PR incidence product, |u| = X_QUANTUM as a rational on
+      all three; the C-even cumulant 948253471/40327601932800 on all three.
+      116 s on CPU; 9,431 Haar integrals, none above the (2,2) family. Also
+      measures the obstacle to the next route: a (3,0)^3-family integral
+      of the shared-link pair's baryonic history took 264 s. Decides
+      nothing about C2 and promotes neither side.
+
+  - id: g3_shared_link_pair_2026-09-02
+    dir: runs/g3_shared_link_pair_2026-09-02
+    title: >-
+      The shared-link amplitudes assembled from clusters: pi and nu are the
+      historical records exactly, rho is neither kernel's
+    bears_on: [C2, G3, G14, U5]
+    detail: >-
+      The G3 route "independent cross-amplitude computation", run. The
+      lattice fourth-order element between two plaquettes as a finite sum of
+      connected cluster cumulants -- the pair cluster with the engine's full
+      assembly and its baryonic histories, the three-plaquette dressings for
+      every plaquette sharing a link with the pair, and the cube-completion
+      channel through the other four faces of a cube both faces belong to --
+      with the cluster machinery of the replication run and the Haar
+      integrals of workhouse.haar_epsilon, reading neither kernel. A far
+      plaquette gives exactly zero (linked). The in-plane element is the
+      historical pi to the digit; the normal element is the agreed
+      -5/48 - 4u to the digit, the -5/48 being the cube-completion channel
+      computed from primitives; the rotation element is
+      588708011765248393/14501180577204921600 = +0.0405972, against the
+      historical +0.0082309 and the cold -0.0879716. Every component is
+      validated on an agreed record or by a second implementation (the
+      corner cluster, identical in workhouse.chain_cluster), and none as a
+      whole, which is why rho is recorded as C2's third side and nothing is promoted.
+      The epsilon-blind assembly leaves the dressings unchanged and moves
+      each pair cluster by exactly -55/13872, refuting U5's -25/512. About
+      three hours of CPU per pair; the pure-six integrals that priced the
+      route out of reach cost 0.02 s each here.

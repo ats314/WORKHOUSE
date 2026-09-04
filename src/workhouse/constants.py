@@ -223,9 +223,11 @@ M3_EVEN_K0 = Rational(-54049, 520200)
 
 #: Domino-engine certificate locks (ENGINE_FLUX_su3_domino_d3.py, 251 gates;
 #: conditional on that engine's census, same lineage as B_3/LEAK_3/D_3).
-#: The engine's structural identity leak_{r,+} = t_{r,+} — the vacuum-route
-#: mechanism — holds at both computed orders; T3_EVEN is therefore both the
-#: C-even third-order hopping and the C-even third-order per-neighbour leakage.
+#: The engine's structural identity leak_{r,+} = t_{r,+} holds at both
+#: computed orders; T3_EVEN is therefore both the C-even third-order hopping
+#: and the C-even third-order per-neighbour leakage. The engine calls the
+#: mechanism the vacuum route; ADR 0023 derives the identity and it is not
+#: (the swap-odd state e_1 - e_2 has no vacuum image at all).
 T3_EVEN = Rational(-6335, 249696)  # C-even third-order hopping, engine lock
 D3_ODD_DOMINO = Rational(-24541, 62424)  # domino C-odd diagonal at order 3
 D3_EVEN_DOMINO = Rational(-517313, 6242400)  # domino C-even diagonal at order 3
@@ -306,7 +308,9 @@ DECLARED_COINCIDENCES: dict[str, tuple[tuple[str, ...], str]] = {
     "-6335/249696": (
         ("T3_EVEN", "LEAK_3_EVEN"),
         "the engine's structural identity leak_{r,+} = t_{r,+} at third order; "
-        "hopping and leakage are different objects that this run finds equal",
+        "hopping and leakage are different objects that this run finds equal, and "
+        "the swap-odd suite derives why (ADR 0023): the swap-odd domino state is a "
+        "single excited plaquette beside an inert one through third order",
     ),
 }
 

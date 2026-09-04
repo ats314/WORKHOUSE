@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import re
 
 from sympy import (
     pi,
@@ -58,13 +57,12 @@ def _():
     cited, unresolved = {}, {}
     for path in editions:
         source = path.read_text(encoding="utf-8")
-        labels = [
-            m.replace("\\_", "_").replace("\\^{}", "^").replace("\\^", "^")
-            # The label body may contain "\^{}" -- LaTeX's standalone circumflex
-            # -- so a [^}]* body stops at the wrong brace and truncates the name.
-            # Allow balanced empty groups.
-            for m in re.findall(r"\\chk\{((?:[^{}]|\{\})*)\}", source)
-        ]
+        # One parser, shared with the graph's `labels` edges, so the guard and
+        # the graph cannot disagree about what an edition labels. Imported
+        # here, not at module level: claims imports the invariants package.
+        from .. import claims as claims_mod
+
+        labels = claims_mod.chk_labels(source)
         cited[path.name] = labels
         missing = sorted(set(labels) - known)
         if missing:
@@ -268,6 +266,13 @@ def _():
         "LIT:CBB_2026",
         "LIT:CB_2024",
         "LIT:HAZRA_2026",
+        # A paper whose ONLY relation is `confusable` -- recorded so an analogy
+        # is not re-proposed as a route (ADR 0022). Confusable edges are
+        # excluded from bears_on by design, its reference list is unread, and
+        # nothing indexed cites it, so the node has no honest edge. It strands
+        # until either it is obtained or the route it warns against is
+        # revived, and both are the right trigger for reconnecting it.
+        "LIT:GINIBRE_1970",
         # ledger entries with empty curated cross-reference fields
         "C11",
         "C14",

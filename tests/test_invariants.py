@@ -13,8 +13,16 @@ CASES = [(s.name, name, tier, fn) for s in SUITES for name, _sec, tier, fn in s.
     ids=[f"{s}::{n}" for s, n, _t, _f in CASES],
 )
 def test_invariant(suite, name, tier, fn):
-    passed, detail = fn()
+    # A check returns (passed, detail) or, since 2026-09-01, (passed, detail,
+    # yields). The third element is normalised by the same function the suite
+    # runner uses, so a yielded float without the _NUM suffix fails here too.
+    from workhouse.invariants._core import _exact_yields
+
+    outcome = fn()
+    passed, detail = outcome[0], outcome[1]
     assert passed, f"[{suite}] T{tier} {name}: {detail}"
+    if len(outcome) == 3:
+        assert _exact_yields(name, outcome[2]), f"[{suite}] {name}: empty yields"
 
 
 def test_every_suite_has_checks():

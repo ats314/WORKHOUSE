@@ -227,3 +227,198 @@ def test_run_register_matches_runs_directory():
         assert rdir.is_dir(), f"{rid}: {run['dir']} is not a directory"
         assert (rdir / "SHA256SUMS").is_file(), f"{rid}: no SHA256SUMS pin"
         assert run.get("bears_on"), f"{rid}: a run with no bears_on is invisible"
+
+
+# --------------------------------------------------------------------------
+# The joins added 2026-09-01: checks that rest on checks, values a check
+# yields, routes under a gap, and the labels a pinned manuscript prints.
+# Each test pins one edge so a silent format change is loud.
+# --------------------------------------------------------------------------
+
+
+def test_checks_declare_what_they_rest_on_and_it_resolves():
+    """`rests_on` names resolve to exactly one check and the relation is acyclic.
+
+    Before this field the graph had 265 check nodes and no edge between them,
+    so nothing could answer "which checks fall if this one is refuted".
+    """
+    rests = [e for e in GRAPH.edges if e.type == "rests_on"]
+    assert len(rests) >= 10, len(rests)
+    assert all(e.how == "curated" for e in rests)
+    assert all(e.src.startswith("CHK:") and e.dst.startswith("CHK:") for e in rests)
+    window = C.check_id(
+        "the electric shell, and what isolates it",
+        "below 5 C_F/2 the trivial-flux electric spectrum is exactly 0 and 2 C_F",
+    )
+    shelf = C.check_id(
+        "the electric shell, and what isolates it",
+        "every nontrivial irrep clears 5/4 C_F, except the fundamental pair",
+    )
+    assert (window, shelf, "rests_on") in TRIPLES
+    assert not any("rests_on cycle" in p for p in G.validate(GRAPH))
+    # a name that matches no check, or two, is a dangling reference, not an edge
+    assert not any(ref.startswith("CHK:?") for ref, _c, _s in GRAPH.dangling)
+
+
+def test_a_yielded_value_is_a_constant_reachable_by_value():
+    """A check may return a third element: exact values it establishes.
+
+    The perpendicular cube coefficient existed only inside a prose detail line
+    until this; now `workhouse search -11/192` finds it, and the graph says
+    which check it came from.
+    """
+    from fractions import Fraction
+
+    by_id = {c.id: c for c in CATALOGUE}
+    perp = by_id["CONST:C4_PERP_3"]
+    assert perp.kind == "constant" and Fraction(perp.value) == Fraction(-11, 192)
+    assert perp.tier == 1 and perp.status == "yielded by a passing check"
+    origin = C.check_id(
+        "fourth order, sealed core",
+        "the perpendicular cube sector is a second fourth-order primitive channel, S_4 = -11",
+    )
+    assert (origin, "CONST:C4_PERP_3", "yields") in TRIPLES
+    # symbolic yields keep their expression and carry no float
+    assert by_id["CONST:C4_PERP_N"].decimal is None and "N" in by_id["CONST:C4_PERP_N"].value
+    # the U5 prediction is now a number a future run can be joined to -- in its
+    # corrected 2026-09-01 form, on rho + pi~ (ADR 0019)
+    assert Fraction(by_id["CONST:RHO_PLUS_PI_REDUCED_BALANCED_N3_PREDICTED"].value) == Fraction(
+        -15644916262153, 275331901291200
+    )
+    assert "CONST:RHO_PLUS_PI_BALANCED_N3_PREDICTED" not in by_id, "the withdrawn number is gone"
+
+
+def test_a_yielded_name_never_shadows_a_registered_constant():
+    """The registry stays the authority for the names it holds."""
+    from workhouse import constants as K
+
+    registered = {c.name for c in K.REGISTRY} | {
+        n for n in dir(K) if n.isupper() and not n.startswith("_")
+    }
+    yielded = {c.id[len("CONST:") :] for c in CATALOGUE if c.status.startswith("yielded by")}
+    assert not (yielded & registered), yielded & registered
+
+
+def test_a_yielded_float_without_num_suffix_fails_the_check():
+    """The exact/float boundary is enforced where a number is born."""
+    from workhouse.invariants._core import Suite
+
+    suite = Suite("scratch")
+
+    @suite.check("yields a bare float")
+    def _():
+        return True, "", {"BAD": 0.5}
+
+    @suite.check("yields a labelled float")
+    def _():
+        return True, "", {"FINE_NUM": 0.5}
+
+    results = {r.name: r for r in suite.run()}
+    assert not results["yields a bare float"].passed
+    assert "_NUM" in results["yields a bare float"].detail
+    assert results["yields a labelled float"].passed
+    assert results["yields a labelled float"].yields == {"FINE_NUM": "0.5"}
+
+
+def test_routes_are_nodes_with_a_state_and_a_closer():
+    """A gap's plan steps are routes: `why G3` says which are dead and why."""
+    by_id = {c.id: c for c in CATALOGUE}
+    routes = [c for c in CATALOGUE if c.kind == "route" and c.cites == "G3"]
+    states = {c.status for c in routes}
+    # `untried` left the set on 2026-09-01 when the sign test was run and
+    # returned on 2026-09-02 with the corner-cluster route, when `live` left
+    # it as the cross-amplitude route closed; a route state is a fact about
+    # the ledger, so the test follows it rather than pinning a snapshot.
+    assert {"untried", "dead", "done"} <= states, states
+    sign_test = C.route_id("G3", "covariance sign test of the two flipped orbits")
+    assert by_id[sign_test].status == "done"
+    sign_closers = {d for (s, d, t) in TRIPLES if s == sign_test and t == "closed_by"}
+    assert len(sign_closers) == 3 and all(d.startswith("CHK:") for d in sign_closers)
+    sweep = C.route_id("G3", "sealed scalar sweep (demoted, optional)")
+    assert by_id[sweep].status == "dead"
+    assert ("G3", sweep, "plans") in TRIPLES
+    assert (sweep, "C2", "cannot_decide") in TRIPLES
+    closers = {d for (s, d, t) in TRIPLES if s == sweep and t == "closed_by"}
+    assert closers and all(d.startswith("CHK:") for d in closers), closers
+    cellular = C.route_id("G3", "off-axis channel assembly through workhouse.cellular")
+    assert (cellular, "RUN:g3_offaxis_channels_2026-08-30", "closed_by") in TRIPLES
+
+
+def test_why_on_a_gap_lists_its_routes_by_state():
+    text, found = navigator.explain("G3", CATALOGUE, SYMBOLS, GRAPH)
+    assert found
+    assert "Routes" in text
+    assert "[dead] sealed scalar sweep" in text
+    assert "cannot decide C2" in text
+    assert "[done] covariance sign test" in text
+
+
+def test_a_pinned_manuscript_labels_the_checks_it_prints():
+    """Every \\chk label in a legended edition is a `labels` edge to the check."""
+    from workhouse import claims
+
+    labels = [e for e in GRAPH.edges if e.type == "labels"]
+    editions = {e.src for e in labels}
+    assert {"CITE:PUBLICATION rev5", "CITE:MASTER edition", "CITE:PUBLICATION v2"} <= editions
+    source = (ROOT / "paper" / "workhouse_publication_edition_rev5_2026-08-30.tex").read_text(
+        encoding="utf-8"
+    )
+    printed = set(claims.chk_labels(source))
+    assert "t_N = B_N - A_N" in printed
+    target = C.check_id("second order, all ranks", "t_N = B_N - A_N")
+    assert ("CITE:PUBLICATION rev5", target, "labels") in TRIPLES
+    # one edge per distinct label the edition prints
+    rev5 = {d for (s, d, t) in TRIPLES if s == "CITE:PUBLICATION rev5" and t == "labels"}
+    assert len(rev5) == len(printed)
+
+
+# --------------------------------------------------------------------------
+# ALL THEORY, file by file (ADR 0016). The corpus was loaded to the repository
+# on 2026-08-20 and reached the graph as six provenance documents; the
+# maintainer's instruction is that the whole corpus be reflected, so every
+# pinned file is a node.
+# --------------------------------------------------------------------------
+
+
+def test_every_pinned_corpus_file_is_a_node():
+    manifest = C.load_corpus_manifest()
+    assert len(manifest) >= 900
+    ids = {c.id for c in CATALOGUE if c.kind == "corpus"}
+    assert len(ids) == len(manifest)
+    for rel, _digest in manifest:
+        assert C.corpus_id(rel) in ids, rel
+    archive = next(c for c in CATALOGUE if c.id == C.CORPUS_ARCHIVE_ID)
+    assert archive.kind == "archive"
+    contains = {d for (s, d, t) in TRIPLES if s == C.CORPUS_ARCHIVE_ID and t == "contains"}
+    assert contains == ids
+
+
+def test_corpus_files_carry_registered_constants_by_value():
+    """The join is by exact value: 5/48 sits in dozens of corpus files."""
+    carriers = {s for (s, d, t) in TRIPLES if d == "CONST:A_SHP_3" and t == "carries"}
+    assert len(carriers) >= 40, len(carriers)
+    assert all(s.startswith("CORPUS:") for s in carriers)
+    # and a file with no registered value carries nothing rather than guessing
+    by_id = {c.id: c for c in CATALOGUE}
+    empty = [c for c in CATALOGUE if c.kind == "corpus" and not c.related]
+    assert empty and all("carries no registered exact value" in c.detail for c in empty)
+    assert all(by_id[s].kind == "corpus" for s in carriers)
+
+
+def test_provenance_documents_are_joined_to_their_corpus_file():
+    kernel = C.corpus_id(
+        "programs/one_plaquette/y4_o3_flatband_verification/"
+        "y4_full_real_space_H4_kernel.json/CERT_Y4_full_real_space_h4_kernel.json"
+    )
+    assert (kernel, "DOC:kernel-historical-189", "pinned_as") in TRIPLES
+
+
+def test_why_resolves_a_corpus_file_by_path():
+    rel = (
+        "programs/one_plaquette/y4_o3_flatband_verification/"
+        "ENGINE_Y4_global_band_edge_certificate.py"
+    )
+    for query in (rel, f"corpus-import/{rel}"):
+        text, found = navigator.explain(query, CATALOGUE, SYMBOLS, GRAPH)
+        assert found, query
+        assert "carries" in text or "contains" in text

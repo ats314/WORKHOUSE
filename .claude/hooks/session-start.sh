@@ -25,7 +25,11 @@ if [ "${CLAUDE_CODE_REMOTE:-}" = "true" ]; then
       # Put the project venv first so `python`/`pytest` resolve without
       # activation. Resolve the path now: the env file is sourced from an
       # arbitrary cwd later, so a literal $PWD here would point elsewhere.
-      [ -d .venv ] && echo "export PATH=\"$(cd .venv/bin && pwd):\$PATH\""
+      # bin/ on POSIX, Scripts/ on Windows -- see the probe below for why
+      # naming only one of them is a silent failure rather than a loud one.
+      for d in .venv/bin .venv/Scripts; do
+        [ -d "$d" ] && echo "export PATH=\"$(cd "$d" && pwd):\$PATH\"" && break
+      done
     } >> "$CLAUDE_ENV_FILE"
   fi
 fi
@@ -33,8 +37,17 @@ fi
 # The brief is computed from the ledgers and the suites, so it cannot go stale.
 # If the package will not import -- no venv yet, a syntax error mid-edit -- say
 # nothing rather than injecting a stale or broken block.
+# A uv venv puts the interpreter in bin/ on POSIX and Scripts/ on Windows.
+# Probing only bin/ meant that on the maintainer's own workstation this test
+# always failed, `python3` was not on PATH either, and every session opened on
+# the degraded branch below -- the one whose text says a degraded session is
+# the one that needs orientation most. The hook announced its own failure in
+# the same breath as the orientation it was failing to deliver, for weeks,
+# and nothing was watching stdout closely enough to notice.
 python=python3
-[ -x .venv/bin/python ] && python=.venv/bin/python
+for candidate in .venv/bin/python .venv/Scripts/python.exe; do
+  [ -x "$candidate" ] && python=$candidate && break
+done
 
 if brief=$("$python" -m workhouse.cli frontier --brief 2>/dev/null); then
   "$python" - "$brief" <<'PY'

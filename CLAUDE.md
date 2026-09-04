@@ -105,11 +105,28 @@ The second exists because the first cannot see the sealed core: `5/48`, `5/12`,
 `5/612`, `11/306`, `7/102` have no entry in it, and `5/48` alone lives in 44
 code files.
 
-`workhouse search` is the front door to both, plus the claim catalogue and the
+`workhouse why <id>` is the front door: one query, everything recorded about
+a claim — both sides of a dispute, every check with its verdict, what each
+check rests on, the routes tried and which are dead, and the corpus files
+that carry a value. Every file `corpus-import/` pins is a graph node (ADR
+0016), so `why <path>` works on a corpus file too. `workhouse search` is
+the front door to the two indexes above, plus the claim catalogue and the
 curated aliases in `ledger/symbols.yaml`. It matches by *value* rather than
 spelling (`-10/96` finds `-5/48`), and it carries two warnings a grep cannot:
 forbidden names (`m_4`) and names coined here that the corpus never uses
 (`Phi_C`, which the corpus writes as `4e_2/q_a`).
+
+## Land your own green work
+
+From Alex, 2026-08-29: agents were leaving green PRs open, waiting for a
+review that was never coming. So: **when your PR is green — CI passing, no
+merge conflict, no unaddressed review comment — mark it ready and merge it
+yourself.** Do not wait for a human to press the button. The failure this
+prevents: verified work stranded in open PRs while the branch drifts.
+
+This is not a license to skip the gates. Everything above still holds —
+`make check` and `make verify` clean before pushing, the generated files
+regenerated, and a red or conflicted PR is yours to fix, never to merge.
 
 ## Commands
 
@@ -134,6 +151,8 @@ workhouse export -o graph.json      # claims+symbols+edges as one versioned JSON
 workhouse triage /path/to/archive   # survey an unpinned collection
 workhouse notes                     # the notes register: reviewed vs pending, per archive
 workhouse notes --queue             # the next notes to review, highest signal first
+workhouse ask "<question in words>" # candidate finder over corpus prose and the catalogue; T3, ends in `why`
+workhouse cache --clear             # the per-check result cache the collectors use (never `verify`)
 ```
 
 `FRONTIER.md` and `CERTIFIED.md` are generated and checked in. A test fails if
@@ -166,6 +185,19 @@ analogy, and analogies accumulate without ever being wrong.
 
 Register it on a suite in `src/workhouse/invariants/`, cite the corpus
 section, and return `(passed, detail)` where `detail` carries the numbers a
-reader needs to argue with you. `tests/test_invariants.py` picks it up
-automatically. If the statement is pure rational or polynomial algebra, prefer
-promoting it to T0 in `lean/Workhouse/Basic.lean` instead.
+reader needs to argue with you. Declare the checks it takes as inputs with
+`rests_on=(...)` so the graph can say what falls if one is refuted, and return
+an exact value it establishes as a third element `{NAME: value}` so `workhouse
+search` can reach it by value (a float needs the `_NUM` suffix, as in the
+registry). `tests/test_invariants.py` picks it up automatically. If the
+statement is pure rational or polynomial algebra, prefer promoting it to T0 in
+`lean/Workhouse/Basic.lean` instead.
+
+## Recording an attempt
+
+A gap's `plan` steps in `ledger/gaps.yaml` are routes, each with a `state`
+from `untried | live | dead | done`. When a run or a finding closes one, set
+the state and name the closer in `closed_by`; when an instrument is
+structurally unable to reach a claim, say so in `cannot_decide`. The failure
+this prevents: a dead route reading as open work, which cost four sessions on
+G3. `workhouse why <gap>` prints the routes; see ADR 0015.
