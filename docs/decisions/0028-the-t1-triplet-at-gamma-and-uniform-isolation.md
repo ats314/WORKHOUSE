@@ -99,7 +99,7 @@ limit; the boundary in `CLAUDE.md` §4 stands.
 
 ## Decision
 
-- A new suite, `gamma_isolation`, with the six checks above.
+- A new suite, `gamma_isolation`, with the seven checks above (five T1, two T2).
 - Six Lean theorems: the sign of `π̃`, the domination condition, the sign of
   the assembled `C_shp`, `C_iso = 5/48`, `u*² = 2/51`, and the positivity of
   the relative gap below it.

@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 70 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 341/341 checks pass.
+**T1/T2 — re-derived here.** 342/342 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -49,7 +49,7 @@ it cannot drift from what the repository actually checks.
 | Hecke cover correspondence table | 1/1 |
 | the third implementation and the historical ledger (G3, C2) | 11/11 |
 | the third engine at every rank (all-rank cumulants) | 12/12 |
-| the T1 triplet at Gamma and the uniform isolation of the flat band | 6/6 |
+| the T1 triplet at Gamma and the uniform isolation of the flat band | 7/7 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:

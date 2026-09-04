@@ -313,35 +313,22 @@ def _():
 
 
 _BAND_THEOREM = (
-    "a band theorem at fourth order: on the punctured zone the lowest band is E_flat + u^4 "
-    "(s + A q_a + 4C e2/q_a) up to a remainder bounded by C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2), "
-    "uniformly in k"
+    "a band theorem at fourth order: the carrier expectation of the centered kernel is the "
+    "corpus dispersion exactly, psi^dagger (H4 - sI) psi = A q_a^2 + 4C e2, so on the punctured "
+    "zone the lowest band is E_flat + u^4 (s + A q_a + 4C e2/q_a) up to a Kato-Temple remainder "
+    "bounded by C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2), uniformly in k"
 )
 
 
-@gamma.check(_BAND_THEOREM, _CITE, rests_on=(_BOUND,))
-def _():
-    # The carrier expectation of H4 - sI is the corpus dispersion, exactly as Laurent
-    # polynomials: psi^dagger (H4 - sI) psi = A q_a^2 + 4C e2 with |psi|^2 = q_a, i.e. the
-    # centered shape A q_a + 4C e2/q_a with B = D = 0. With the isolation gap of the previous
-    # check, the Kato-Temple inequality bounds the lowest eigenvalue of
-    # M = t u^2 Lambda + u^4 (H4 - sI) by |E_0 - u^4 mu(k)| <= ||E||^2 / delta with
-    # ||E|| <= C_iso u^4 q_a and delta >= q_a (t_3 u^2 - 2 C_iso u^4): the remainder is
-    # C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2), so a fixed-momentum coefficient theorem IS a band
-    # theorem at this order. The bound is then tested numerically on a grid (floats; the exact
-    # content is the Laurent identity and the constants).
-    import mpmath as mp
-
-    mp.mp.dps = 20
+def _centered_expectation():
+    """psi^dagger (H4 - sI) psi as a Laurent polynomial, and the target A q_a^2 + 4C e2."""
     form = _forms()["assembled"]
     s = 2 * form["nu~"] + 16 * form["u"] + 4 * form["pi~"] + form["sigma~"]
     centered = KO.combine((1, KO.hodge_records(form)), (-s, KO.identity()))
     expectation = KO.bloch(centered.items())
     a_shp = Fraction(5, 48)
     c_shp = form["C"]
-    # q_a and e2 as Laurent polynomials in z_i = e^{i k_i}
-    qa = _q_a_records()
-    qa_l = KO.bloch_matrix(qa)[_PLANES[0]][_PLANES[0]]
+    qa_l = KO.bloch_matrix(_q_a_records())[_PLANES[0]][_PLANES[0]]
     e2_l = {}
     for i in range(3):
         for j in range(i + 1, 3):
@@ -353,9 +340,44 @@ def _():
                 ai[tuple(ei)] = Fraction(-1)
                 aj[tuple(ej)] = Fraction(-1)
             e2_l = KO._add(e2_l, KO._mul(ai, aj))
-    target = KO._add(KO._mul(qa_l, qa_l), e2_l, Fraction(0))
     target = KO._add({e: a_shp * c for e, c in KO._mul(qa_l, qa_l).items()}, e2_l, 4 * c_shp)
-    identity = expectation == {e: c for e, c in target.items() if c}
+    return expectation, {e: c for e, c in target.items() if c}, a_shp, c_shp, s, form
+
+
+@gamma.check(_BAND_THEOREM, _CITE, rests_on=(_BOUND,))
+def _():
+    # The Kato-Temple inequality for the isolated lowest eigenvalue of M = A + E with
+    # A psi = 0: |E_0 - <psi|E|psi>/|psi|^2| <= ||E||^2 / delta, with ||E|| <= C_iso u^4 q_a and
+    # delta >= q_a (t_3 u^2 - 2 C_iso u^4) from the previous check; the remainder is
+    # C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2). What is exact here is the expectation itself:
+    # the corpus dispersion A q_a + 4C e2/q_a with B = D = 0, as Laurent polynomials.
+    expectation, target, a_shp, c_shp, _s, _form = _centered_expectation()
+    identity = expectation == target
+    c_iso = Fraction(5, 48)
+    t3 = _rat(K.T_MINUS_2)
+    return identity, (
+        f"psi^dagger (H4 - sI) psi = A q_a^2 + 4C e2 exactly as Laurent polynomials ({identity}), "
+        f"A = {a_shp}, C = {c_shp}, |psi|^2 = q_a: the centered dispersion A q_a + 4C e2/q_a with "
+        f"B = D = 0. Remainder C_iso^2 u^6 q_a/(t_3 - 2 C_iso u^2) with C_iso = {c_iso}, "
+        f"t_3 = {t3}: at this order a fixed-momentum coefficient theorem is a band theorem. On "
+        "T_L^3 every k != 0 has q_a >= 4 sin^2(pi/L), so the finite-volume isolation at fourth "
+        "order closes as L^-2 with the same constants"
+    )
+
+
+_BAND_NUMERIC = (
+    "the band theorem's remainder bound holds numerically: on a grid the lowest eigenvalue of "
+    "t_3 u^2 Lambda + u^4 (H4 - sI) sits within C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2) of "
+    "u^4 (A q_a + 4C e2/q_a)"
+)
+
+
+@gamma.check(_BAND_NUMERIC, _CITE, tier=2, rests_on=(_BAND_THEOREM,))
+def _():
+    import mpmath as mp
+
+    mp.mp.dps = 20
+    _expectation, _target, a_shp, c_shp, s, form = _centered_expectation()
     c_iso = Fraction(5, 48)
     t3 = _rat(K.T_MINUS_2)
 
@@ -394,12 +416,10 @@ def _():
             mu = float(a_shp) * q + 4 * float(c_shp) * e2(k) / q
             ratio = abs(e0 - u**4 * mu) / (remainder_const * q)
             worst = max(worst, ratio)
-    ok = identity and worst <= 1.0
+    ok = worst <= 1.0
     return ok, (
-        f"psi^dagger (H4 - sI) psi = A q_a^2 + 4C e2 exactly as Laurent polynomials ({identity}), "
-        f"A = {a_shp}, C = {c_shp}: the centered dispersion A q_a + 4C e2/q_a with B = D = 0; "
-        f"Kato-Temple remainder C_iso^2 u^6 q_a/(t_3 - 2 C_iso u^2) with C_iso = 5/48; over a 7^3 "
-        f"grid plus three near-Gamma points at u = 0.05, 0.10, 0.15 the worst |E_0 - u^4 mu| is "
-        f"{worst:.4f} of the bound (<= 1). On T_L^3 every k != 0 has q_a >= 4 sin^2(pi/L), so the "
-        "finite-volume isolation at fourth order closes as L^-2 with the same constants"
+        f"over a 7^3 grid plus three near-Gamma points at u = 0.05, 0.10, 0.15 the worst "
+        f"|E_0 - u^4 (A q_a + 4C e2/q_a)| is {worst:.4f} of the bound "
+        "C_iso^2 u^6 q_a/(t_3 - 2 C_iso u^2) (<= 1 required; floats, mpmath at 20 digits). "
+        "The exact content is the T1 identity this rests on"
     )

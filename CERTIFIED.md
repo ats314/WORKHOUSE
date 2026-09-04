@@ -912,9 +912,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'the sheets decouple from local observables at exact rate 1/L'`
 **the T1 triplet at Gamma and the uniform isolation of the flat band**
 
-- `a band theorem at fourth order: on the punctured zone the lowest band is E_flat + u^4 (s + A q_a + 4C e2/q_a) up to a remainder bounded by C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2), uniformly in k`
-  - src/workhouse/invariants/gamma_isolation.py:322 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
-  - `workhouse verify --only 'a band theorem at fourth order: on the punctured zone the lowest band is E_flat + u^4 (s + A q_a + 4C e2/q_a) up to a remainder bounded by C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2), uniformly in k'`
+- `a band theorem at fourth order: the carrier expectation of the centered kernel is the corpus dispersion exactly, psi^dagger (H4 - sI) psi = A q_a^2 + 4C e2, so on the punctured zone the lowest band is E_flat + u^4 (s + A q_a + 4C e2/q_a) up to a Kato-Temple remainder bounded by C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2), uniformly in k`
+  - src/workhouse/invariants/gamma_isolation.py:347 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
+  - `workhouse verify --only 'a band theorem at fourth order: the carrier expectation of the centered kernel is the corpus dispersion exactly, psi^dagger (H4 - sI) psi = A q_a^2 + 4C e2, so on the punctured zone the lowest band is E_flat + u^4 (s + A q_a + 4C e2/q_a) up to a Kato-Temple remainder bounded by C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2), uniformly in k'`
 - `the Hodge Laplacian on plaquettes is the scalar q_a: L_down + L_up = q_a I, Lambda^2 = q_a Lambda, L_up Lambda = 0, so Lambda = q_a P_t and L_up = q_a P_c`
   - src/workhouse/invariants/gamma_isolation.py:165 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
   - `workhouse verify --only 'the Hodge Laplacian on plaquettes is the scalar q_a: L_down + L_up = q_a I, Lambda^2 = q_a Lambda, L_up Lambda = 0, so Lambda = q_a P_t and L_up = q_a P_c'`
@@ -1163,7 +1163,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/two_cube.py:313 · MASTER edition §5.1; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
 
-## T2 — float agreement within a stated tolerance — 55
+## T2 — float agreement within a stated tolerance — 56
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -1341,6 +1341,9 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
   - `workhouse verify --only 'the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel'`
 **the T1 triplet at Gamma and the uniform isolation of the flat band**
 
+- `the band theorem's remainder bound holds numerically: on a grid the lowest eigenvalue of t_3 u^2 Lambda + u^4 (H4 - sI) sits within C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2) of u^4 (A q_a + 4C e2/q_a)`
+  - src/workhouse/invariants/gamma_isolation.py:375 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
+  - `workhouse verify --only 'the band theorem'"'"'s remainder bound holds numerically: on a grid the lowest eigenvalue of t_3 u^2 Lambda + u^4 (H4 - sI) sits within C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2) of u^4 (A q_a + 4C e2/q_a)'`
 - `the isolation bound is tight: the numerical supremum of ||H4(k) - sI|| / q_a(k) over the zone is 5/48, attained on an axis, and the fourth-order band gap obeys the bound at every sampled k`
   - src/workhouse/invariants/gamma_isolation.py:243 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
   - `workhouse verify --only 'the isolation bound is tight: the numerical supremum of ||H4(k) - sI|| / q_a(k) over the zone is 5/48, attained on an axis, and the fourth-order band gap obeys the bound at every sampled k'`
