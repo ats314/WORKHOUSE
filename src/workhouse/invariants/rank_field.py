@@ -18,6 +18,10 @@ the values the per-rank engine computes at every N >= 5, by the argument in
 and N = 4 the forms agree with the per-rank engine as a checked fact (a
 resolvent denominator vanishes at N = 4 and the argument does not reach). The
 polynomial identity itself is proved in Lean (``betaN_from_three_cumulants``).
+
+The pinned forms are read as integer coefficient lists into ``symbolic_rank.RF``
+(flint), so every comparison, ratio and sum below is exact field arithmetic in
+Q(N); sympy touches only the handful of literal forms and the factoring.
 """
 
 from __future__ import annotations
@@ -26,7 +30,9 @@ import ast
 import json
 from fractions import Fraction
 from functools import cache
+from math import gcd, lcm
 
+import flint
 from sympy import Poly, Rational, Symbol, cancel, expand, factor, sympify
 
 from .. import loopcalc as LC
@@ -46,12 +52,57 @@ _P = ((0, 1), (0, 0, 0))
 _Q02 = ((0, 2), (0, 0, 0))
 
 
+@cache
 def _json(rel: str) -> dict:
     return json.loads((ROOT / rel).read_text(encoding="utf-8"))
 
 
-def _form(text: str):
-    return cancel(sympify(text, locals={"N": _N}))
+def _rf(entry: dict) -> SR.RF:
+    """A pinned ``{"num": [...], "den": [...]}`` coefficient record as an element of Q(N)."""
+    return SR.RF(flint.fmpq_poly(entry["num"]), flint.fmpq_poly(entry["den"]))
+
+
+def _poly_of(expr) -> flint.fmpq_poly:
+    return flint.fmpq_poly(
+        [flint.fmpq(int(c.p), int(c.q)) for c in Poly(expr, _N).all_coeffs()[::-1]]
+    )
+
+
+def _rf_from_sympy(expr) -> SR.RF:
+    num, den = cancel(expr).as_numer_denom()
+    return SR.RF(_poly_of(num), _poly_of(den))
+
+
+def _prim(coeffs) -> tuple:
+    """Coefficients, constant term first, scaled to primitive integers with a positive lead."""
+    fr = [Fraction(int(c.p), int(c.q)) for c in coeffs]
+    m = 1
+    for c in fr:
+        m = lcm(m, c.denominator)
+    ints = [int(c * m) for c in fr]
+    while ints and ints[-1] == 0:
+        ints.pop()
+    g = 0
+    for v in ints:
+        g = gcd(g, abs(v))
+    ints = [v // g for v in ints] if g else ints
+    if ints and ints[-1] < 0:
+        ints = [-v for v in ints]
+    return tuple(ints)
+
+
+def _ptuple(expr) -> tuple:
+    return _prim(Poly(expr, _N).all_coeffs()[::-1])
+
+
+def _pstr(t: tuple) -> str:
+    return str(sum(c * _N**k for k, c in enumerate(t)))
+
+
+def _den_factors(rf: SR.RF) -> set:
+    """The irreducible factors of a denominator, as primitive coefficient tuples."""
+    _content, facs = rf.den.factor()
+    return {_prim(f.coeffs()) for f, _m in facs}
 
 
 def _rat(x: Fraction) -> Rational:
@@ -173,9 +224,9 @@ def _():
         w = LC.cumulant([_P, ((0, 1), (1, 0, 0)), _Q02], 1)
         live_odd, live_even = LC.block_odd(w), LC.block_even(w)
     live_ok = (
-        cancel(live_odd.to_sympy() - _form(forms["single_perp_odd"]["factored"])) == 0
-        and cancel(live_even.to_sympy() - _form(forms["single_perp_even"]["factored"])) == 0
-        and cancel(live_odd.to_sympy() - single_contact_odd(_N)) == 0
+        live_odd == _rf(forms["single_perp_odd"])
+        and live_even == _rf(forms["single_perp_even"])
+        and live_odd == _rf_from_sympy(single_contact_odd(_N))
         and S.stats["components_verified"] > 0
     )
     sweep = _json(_SWEEP + "/certificate.json")["ranks"]
@@ -197,13 +248,12 @@ def _():
     }
     pinned_ok, ranks = True, 0
     for name, (rows, key) in keys.items():
-        expr = _form(forms[name]["factored"])
+        rf = _rf(forms[name])
         for n_str, row in rows.items():
             if row.get(key) is None:
                 continue
             ranks += 1
-            val = Fraction(row[key])
-            if expr.subs(_N, int(n_str)) != _rat(val):
+            if rf.at(int(n_str)) != Fraction(row[key]):
                 pinned_ok = False
     degrees = {k: tuple(v["degrees_in_N"]) for k, v in forms.items()}
     ok = live_ok and pinned_ok and degrees["beta_assembled"] == (34, 41)
@@ -276,12 +326,12 @@ def _():
     # factors 4N -+ 3, 4N -+ 7, 4N^2 - 7 -- and beta = -16u - 8(rho + pi)
     # collapses to three cumulants and the cube, alpha_N cancelling.
     forms = _json(_BETA_RUN + "/closed_forms.json")
-    f = {k: _form(v["factored"]) for k, v in forms["forms"].items()}
+    f = {k: _rf(v) for k, v in forms["forms"].items()}
     negatives = (
-        cancel(f["single_cop_odd"] + f["single_perp_odd"]) == 0
-        and cancel(f["fan_cop_odd"] + f["fan_perp_odd"]) == 0
-        and cancel(f["single_cop_even"] - f["single_perp_even"]) == 0
-        and cancel(f["fan_cop_even"] - f["fan_perp_even"]) == 0
+        f["single_cop_odd"] + f["single_perp_odd"] == 0
+        and f["fan_cop_odd"] + f["fan_perp_odd"] == 0
+        and f["single_cop_even"] == f["single_perp_even"]
+        and f["fan_cop_even"] == f["fan_perp_even"]
     )
     three = (
         -16 * f["u_odd"]
@@ -289,20 +339,20 @@ def _():
         - 16 * f["corner_odd"]
         - 8 * f["cube_adjacent_odd"]
     )
-    collapsed = cancel(f["beta_assembled"] - three) == 0
+    collapsed = f["beta_assembled"] == three
     assembly = _json(_ASSEMBLY + "/certificate.json")["ranks"]
+    sweep = _json(_SWEEP + "/certificate.json")["ranks"]
     rank_ok = all(
-        Fraction(row["single_coplanar"]) + Fraction(row["single_odd"]) == 0
-        and Fraction(row["fan_coplanar"]) + Fraction(row["fan_odd"]) == 0
-        for row, sweep_row in (
-            (assembly[n], _json(_SWEEP + "/certificate.json")["ranks"][n]) for n in assembly
-        )
-        for row in (
-            {**row, "single_odd": sweep_row["single_odd"], "fan_odd": sweep_row["fan_odd"]},
-        )
+        Fraction(assembly[n]["single_coplanar"]) + Fraction(sweep[n]["single_odd"]) == 0
+        and Fraction(assembly[n]["fan_coplanar"]) + Fraction(sweep[n]["fan_odd"]) == 0
+        for n in assembly
     )
-    fan_factors = {4 * _N - 3, 4 * _N + 3, 4 * _N - 7, 4 * _N + 7, 4 * _N**2 - 7}
-    r20_factors = {fct for fct, _m in Poly(R20.as_expr().subs(_z, _N**2), _N).factor_list()[1]}
+    fan_factors = {
+        _ptuple(e) for e in (4 * _N - 3, 4 * _N + 3, 4 * _N - 7, 4 * _N + 7, 4 * _N**2 - 7)
+    }
+    r20_factors = {
+        _ptuple(fct) for fct, _m in Poly(R20.as_expr().subs(_z, _N**2), _N).factor_list()[1]
+    }
     fans_absent = not (fan_factors & r20_factors)
     ok = negatives and collapsed and rank_ok and fans_absent
     return ok, (
@@ -341,7 +391,7 @@ def _():
     cleared = expand(numerator - P17.as_expr().subs(_z, n**2)) == 0
     forms = _json(_BETA_RUN + "/closed_forms.json")["forms"]
     same_forms = all(
-        cancel(_form(forms[k]["factored"]) - g(n)) == 0
+        _rf(forms[k]) == _rf_from_sympy(g(n))
         for k, g in (
             ("u_odd", two_hop_odd),
             ("single_perp_odd", single_contact_odd),
@@ -370,14 +420,21 @@ _CHANNEL_CITE = "G14; C2; " + _CHANNEL_RUN + "; ADR 0029; ADR 0026; ADR 0019"
 
 @cache
 def _channels(cluster: str, sector: str) -> dict:
-    """{channel key: nonzero rational function} of one cluster of the pinned record."""
+    """{channel key: nonzero element of Q(N)} of one cluster of the pinned record."""
     rows = _json(_CHANNEL_RUN + "/certificate.json")["clusters"][cluster]["channels"]
     out = {}
     for row in rows.values():
-        expr = _form(row[sector]["factored"])
-        if expr != 0:
-            out[ast.literal_eval(row["key"])] = expr
+        rf = _rf(row[sector])
+        if rf:
+            out[ast.literal_eval(row["key"])] = rf
     return out
+
+
+def _ratio_key(rf: SR.RF):
+    """A constant ratio as a Fraction, anything else as its printed form."""
+    if rf.num.degree() <= 0 and rf.den.degree() <= 0:
+        return rf.at(0)
+    return str(rf.to_sympy())
 
 
 def _ratios(a: str, b: str, sector: str):
@@ -387,15 +444,14 @@ def _ratios(a: str, b: str, sector: str):
     one_sided = []
     for key in set(fa) | set(fb):
         if key in fa and key in fb:
-            ratios.setdefault(cancel(fb[key] / fa[key]), []).append(key)
+            ratios.setdefault(_ratio_key(fb[key] / fa[key]), []).append(key)
         else:
             one_sided.append(key)
     return ratios, one_sided
 
 
-def _denominator_factors(expr) -> set:
-    den = Poly(cancel(expr).as_numer_denom()[1], _N)
-    return {f.as_expr() for f, _m in den.factor_list()[1]}
+def _counts(ratios: dict) -> dict:
+    return {r: len(keys) for r, keys in ratios.items()}
 
 
 _U_CHANNELS_QN = (
@@ -425,11 +481,14 @@ def _():
     def norm(key):
         return (key[0],) + tuple((e, tuple(sorted(names))) for e, names in key[1:])
 
-    pin = {norm(ast.literal_eval(label)): _form(v["form"]) for label, v in pinned.items()}
+    pin = {
+        norm(ast.literal_eval(label)): _rf_from_sympy(sympify(v["form"], locals={"N": _N}))
+        for label, v in pinned.items()
+    }
     ours = {norm(k): v for k, v in mine.items()}
-    agree = sum(1 for k in pin if k in ours and cancel(ours[k] - pin[k]) == 0)
+    agree = sum(1 for k in pin if k in ours and ours[k] == pin[k])
     even = _channels("u_coplanar", "even")
-    total = cancel(sum(mine.values()) - two_hop_odd(_N)) == 0
+    total = sum(mine.values(), SR.RF(0)) == _rf_from_sympy(two_hop_odd(_N))
     ok = agree == len(pin) == 74 and set(ours) == set(pin) and total and len(even) == 122
     return ok, (
         f"{agree} of {len(pin)} pinned channel forms recovered as identities in Q(N); the C-odd "
@@ -467,15 +526,12 @@ def _():
     for other in ("u_bent", "u_L"):
         for sector in ("odd", "even"):
             ratios, one_sided = _ratios("u_coplanar", other, sector)
-            results[(other, sector)] = (
-                {r: len(keys) for r, keys in ratios.items()},
-                len(one_sided),
-            )
+            results[(other, sector)] = (_counts(ratios), len(one_sided))
     ok = (
-        results[("u_bent", "odd")] == ({-1: 74}, 0)
-        and results[("u_bent", "even")] == ({1: 122}, 0)
-        and results[("u_L", "odd")] == ({1: 74}, 0)
-        and results[("u_L", "even")] == ({1: 122}, 0)
+        results[("u_bent", "odd")] == ({Fraction(-1): 74}, 0)
+        and results[("u_bent", "even")] == ({Fraction(1): 122}, 0)
+        and results[("u_L", "odd")] == ({Fraction(1): 74}, 0)
+        and results[("u_L", "even")] == ({Fraction(1): 122}, 0)
     )
     return ok, (
         "bent/coplanar = -1 in all 74 C-odd channels and +1 in all 122 C-even ones; L/coplanar = "
@@ -514,13 +570,13 @@ def _():
         n for key in _channels("u_coplanar", "odd") for _e, irreps in key[1:] for n in irreps
     }
     fan_factors = set()
-    for expr in _channels("fan_perp", "odd").values():
-        fan_factors |= _denominator_factors(expr)
-    own = {4 * _N - 3, 4 * _N + 3, 4 * _N - 7, 4 * _N + 7, 4 * _N**2 - 7}
+    for rf in _channels("fan_perp", "odd").values():
+        fan_factors |= _den_factors(rf)
+    own = {_ptuple(e) for e in (4 * _N - 3, 4 * _N + 3, 4 * _N - 7, 4 * _N + 7, 4 * _N**2 - 7)}
     ok = (
-        {r: len(k) for r, k in odd.items()} == {-1: 84}
+        _counts(odd) == {Fraction(-1): 84}
         and not one_odd
-        and {r: len(k) for r, k in even.items()} == {1: 138}
+        and _counts(even) == {Fraction(1): 138}
         and not one_even
         and three_box == {"3|", "21|", "111|", "2|1", "11|1"}
         and not (corner_names | u_names) & three_box
@@ -552,23 +608,25 @@ def _():
     # not channel by channel: 24 channels are exceptional, and they cancel
     # only as a sum -- a coincidence of sums in ADR 0026's sense, recorded.
     ratios, one_sided = _ratios("single_perp", "single_cop", "odd")
-    counts = {r: len(k) for r, k in ratios.items()}
+    counts = _counts(ratios)
     perp, cop = _channels("single_perp", "odd"), _channels("single_cop", "odd")
-    exceptional = set(one_sided) | set(ratios.get(1, []))
-    cross = cancel(sum(perp.get(k, 0) + cop.get(k, 0) for k in exceptional))
+    exceptional = set(one_sided) | set(ratios.get(Fraction(1), []))
+    cross = sum((perp.get(k, SR.RF(0)) + cop.get(k, SR.RF(0)) for k in exceptional), SR.RF(0))
     only_perp = sum(1 for k in one_sided if k in perp)
     only_cop = sum(1 for k in one_sided if k in cop)
     ok = (
-        counts == {-1: 76, 1: 8}
+        counts == {Fraction(-1): 76, Fraction(1): 8}
         and only_perp == only_cop == 8
         and cross == 0
         and len(perp) == len(cop) == 92
     )
     return ok, (
-        f"C-odd channels: {counts.get(-1, 0)} with ratio -1, {counts.get(1, 0)} with ratio +1, "
+        f"C-odd channels: {counts.get(Fraction(-1), 0)} with ratio -1, "
+        f"{counts.get(Fraction(1), 0)} with ratio +1, "
         f"{only_perp} only in the L geometry and {only_cop} only in the straight one; the "
-        f"{len(exceptional)} exceptional channels sum to {cross} across the two geometries. The "
-        "dressing is one function of N by cancellation between channels, not channel by channel"
+        f"{len(exceptional)} exceptional channels sum to {cross.to_sympy()} across the two "
+        "geometries. The dressing is one function of N by cancellation between channels, not "
+        "channel by channel"
     )
 
 
@@ -601,39 +659,41 @@ def _():
         extra, irreps = key[2]
         energy = cancel(extra + sum(excess[i] for i in irreps))
         num = Poly(energy.as_numer_denom()[0], n)
-        predicted[key] = {f.as_expr() for f, _m in num.factor_list()[1]}
+        predicted[key] = {_ptuple(f) for f, _m in num.factor_list()[1]}
     new_factors = {
-        3 * n**2 - 1,
-        2 * n - 1,
-        2 * n + 1,
-        4 * n**2 - 2 * n - 5,
-        4 * n**2 + 2 * n - 5,
-        4 * n**2 - 5,
-        3 * n - 5,
-        3 * n + 5,
+        _ptuple(e)
+        for e in (
+            3 * n**2 - 1,
+            2 * n - 1,
+            2 * n + 1,
+            4 * n**2 - 2 * n - 5,
+            4 * n**2 + 2 * n - 5,
+            4 * n**2 - 5,
+            3 * n - 5,
+            3 * n + 5,
+        )
     }
     explained = True
-    for key, expr in corner.items():
-        for f in _denominator_factors(expr) & new_factors:
+    for key, rf in corner.items():
+        for f in _den_factors(rf) & new_factors:
             if key[0] != "direct" or f not in predicted[key]:
                 explained = False
     kinds = {k: sum(1 for key in corner if key[0] == k) for k in ("direct", "fold2", "fold3")}
     max_doubled = max(len(irreps) for key in corner if key[0] == "direct" for _e, irreps in key[1:])
     fold_max = max(len(irreps) for key in corner if key[0] != "direct" for _e, irreps in key[1:])
     all_factors = set()
-    for expr in corner.values():
-        all_factors |= _denominator_factors(expr)
-    total = sum(corner.values())
-    poles_cancel = {n - 3, n + 3} <= all_factors and not (
-        {n - 3, n + 3} & _denominator_factors(total)
-    )
+    for rf in corner.values():
+        all_factors |= _den_factors(rf)
+    total = sum(corner.values(), SR.RF(0))
+    poles = {_ptuple(n - 3), _ptuple(n + 3)}
+    poles_cancel = poles <= all_factors and not (poles & _den_factors(total))
     ok = (
         len(corner) == 87
         and kinds == {"direct": 31, "fold2": 24, "fold3": 32}
         and max_doubled == 3
         and fold_max == 4
         and explained
-        and cancel(total - corner_odd(n)) == 0
+        and total == _rf_from_sympy(corner_odd(n))
         and poles_cancel
     )
     return ok, (
@@ -670,46 +730,59 @@ def _():
         _channels("single_perp", "odd"),
         _channels("corner", "odd"),
     )
+    cube = SR.RF(848, SR.N_SYM * (SR.N_SYM**2 - 1) ** 3)
     total = (
-        -16 * sum(u.values())
-        + 32 * sum(d.values())
-        - 16 * sum(c.values())
-        + 848 / (n * (n**2 - 1) ** 3)
+        -16 * sum(u.values(), SR.RF(0))
+        + 32 * sum(d.values(), SR.RF(0))
+        - 16 * sum(c.values(), SR.RF(0))
+        + cube
     )
-    identity = cancel(total - corpus_beta(n)) == 0
-    linear = {n, n - 1, n + 1, n - 3, n + 3}
-    allowed = linear | {
-        2 * n - 3,
-        2 * n + 3,
-        3 * n - 4,
-        3 * n + 4,
-        2 * n - 1,
-        2 * n + 1,
-        3 * n - 5,
-        3 * n + 5,
-        2 * n**2 - 1,
-        2 * n**2 - 3,
-        3 * n**2 - 2,
-        3 * n**2 - 1,
-        4 * n**2 - 5,
-        4 * n**2 - n - 4,
-        4 * n**2 + n - 4,
-        4 * n**2 - 2 * n - 5,
-        4 * n**2 + 2 * n - 5,
+    identity = total == _rf_from_sympy(corpus_beta(n))
+    allowed = {
+        _ptuple(e)
+        for e in (
+            n,
+            n - 1,
+            n + 1,
+            n - 3,
+            n + 3,
+            2 * n - 3,
+            2 * n + 3,
+            3 * n - 4,
+            3 * n + 4,
+            2 * n - 1,
+            2 * n + 1,
+            3 * n - 5,
+            3 * n + 5,
+            2 * n**2 - 1,
+            2 * n**2 - 3,
+            3 * n**2 - 2,
+            3 * n**2 - 1,
+            4 * n**2 - 5,
+            4 * n**2 - n - 4,
+            4 * n**2 + n - 4,
+            4 * n**2 - 2 * n - 5,
+            4 * n**2 + 2 * n - 5,
+        )
     }
     factors = set()
     degrees = set()
     for fs in (u, d, c):
-        for expr in fs.values():
-            factors |= _denominator_factors(expr)
-            num, den = cancel(expr).as_numer_denom()
-            degrees.add((Poly(num, n).degree(), Poly(den, n).degree()))
+        for rf in fs.values():
+            factors |= _den_factors(rf)
+            degrees.add(rf.degrees())
     terms = len(u) + len(d) + len(c) + 1
-    ok = identity and terms == 254 and factors <= allowed and max(dn for _dg, dn in degrees) <= 7
+    ok = (
+        identity
+        and terms == 254
+        and factors <= allowed
+        and max(dn for _dg, dn in degrees) <= 7
+        and max(dg for dg, _dn in degrees) <= 4
+    )
     return ok, (
         f"{terms} terms ({len(u)} of u, {len(d)} of the single contact, {len(c)} of the corner, "
         "one "
         "cube completion) sum to P17(N^2)/(N R20(N^2)) identically; every channel denominator is a "
-        f"product of {sorted(str(f) for f in factors)} with degree at most 7 in N, and every "
+        f"product of {sorted(_pstr(f) for f in factors)} with degree at most 7 in N, and every "
         "numerator has degree at most 4"
     )
