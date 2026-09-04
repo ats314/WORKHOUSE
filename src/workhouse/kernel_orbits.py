@@ -42,6 +42,7 @@ from __future__ import annotations
 import json
 from collections import defaultdict
 from fractions import Fraction
+from math import fsum
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -282,7 +283,17 @@ def cold_orbits(tol: float = 1e-9) -> list[tuple[float, int, list]]:
             groups[-1].append((key, w))
         else:
             groups.append([(key, w)])
-    return [(sum(abs(w) for _, w in g) / len(g), len(g), g) for g in groups]
+    # fsum, not sum: the builtin's float summation changed algorithm in CPython
+    # 3.12 (Neumaier compensation), so the same weights in the same order give
+    # different last bits on 3.11 and 3.12. `requires-python = ">=3.11"` allows
+    # both, CI pins 3.11, and the maintainer's workstation runs 3.12 -- so this
+    # mean, and everything downstream of it, was version-dependent. Those values
+    # are printed into check detail lines, which are pinned in
+    # index/claims.jsonl, which is staleness-tested: the catalogue could only be
+    # regenerated correctly on one Python minor version. fsum is exactly rounded
+    # on every version, so the result is now reproducible AND closer to the true
+    # sum than either builtin was.
+    return [(fsum(abs(w) for _, w in g) / len(g), len(g), g) for g in groups]
 
 
 def _float_shape(records) -> dict[str, float]:
@@ -303,9 +314,12 @@ def _float_shape(records) -> dict[str, float]:
     y = [target.get(e, 0.0) for e in exps]
     m = len(ORDER)
     gram = [
-        [sum(cols[i][r] * cols[j][r] for r in range(len(exps))) for j in range(m)] for i in range(m)
+        [fsum(cols[i][r] * cols[j][r] for r in range(len(exps))) for j in range(m)]
+        for i in range(m)
     ]
-    rhs = [sum(cols[i][r] * y[r] for r in range(len(exps))) for i in range(m)]
+    # fsum here too: the normal equations are where the per-record error
+    # actually accumulates -- 189 records into a 6x6 Gram matrix.
+    rhs = [fsum(cols[i][r] * y[r] for r in range(len(exps))) for i in range(m)]
     for i in range(m):
         p = max(range(i, m), key=lambda r: abs(gram[r][i]))
         gram[i], gram[p] = gram[p], gram[i]
