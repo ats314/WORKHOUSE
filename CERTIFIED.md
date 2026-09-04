@@ -15,224 +15,263 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 70
+## T0 — proof-checked — 83
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
 **lean core**
 
 - `C_from_beta`
-  - lean/Workhouse/Basic.lean:244
+  - lean/Workhouse/Basic.lean:243
   - `make lean`
 - `adjoint_shelf_numerator`
-  - lean/Workhouse/Basic.lean:188
+  - lean/Workhouse/Basic.lean:187
   - `make lean`
 - `alphaPen_eq_neg_four_cube`
-  - lean/Workhouse/Basic.lean:381
+  - lean/Workhouse/Basic.lean:380
   - `make lean`
 - `alphaPen_five`
-  - lean/Workhouse/Basic.lean:216
-  - `make lean`
-- `alphaPen_four`
   - lean/Workhouse/Basic.lean:215
   - `make lean`
-- `alphaPen_six`
-  - lean/Workhouse/Basic.lean:217
-  - `make lean`
-- `alphaPen_three`
+- `alphaPen_four`
   - lean/Workhouse/Basic.lean:214
   - `make lean`
+- `alphaPen_six`
+  - lean/Workhouse/Basic.lean:216
+  - `make lean`
+- `alphaPen_three`
+  - lean/Workhouse/Basic.lean:213
+  - `make lean`
 - `alphaPen_three_eq_four_A`
-  - lean/Workhouse/Basic.lean:220
+  - lean/Workhouse/Basic.lean:219
+  - `make lean`
+- `assembly_three_cumulants`
+  - lean/Workhouse/Basic.lean:717
   - `make lean`
 - `bandVar_pi`
-  - lean/Workhouse/Basic.lean:490
+  - lean/Workhouse/Basic.lean:489
   - `make lean`
 - `bandVar_pi_div_two`
-  - lean/Workhouse/Basic.lean:493
+  - lean/Workhouse/Basic.lean:492
   - `make lean`
 - `bandVar_zero`
-  - lean/Workhouse/Basic.lean:487
+  - lean/Workhouse/Basic.lean:486
+  - `make lean`
+- `betaN_assembled_numerator`
+  - lean/Workhouse/Basic.lean:682
+  - `make lean`
+- `betaN_four`
+  - lean/Workhouse/Basic.lean:742
+  - `make lean`
+- `betaN_from_three_cumulants`
+  - lean/Workhouse/Basic.lean:726
+  - `make lean`
+- `betaN_three`
+  - lean/Workhouse/Basic.lean:738
   - `make lean`
 - `beta_from_A_and_C`
-  - lean/Workhouse/Basic.lean:252
+  - lean/Workhouse/Basic.lean:251
   - `make lean`
 - `beta_shift_from_cShp`
-  - lean/Workhouse/Basic.lean:428
+  - lean/Workhouse/Basic.lean:427
   - `make lean`
 - `blind_holdout`
-  - lean/Workhouse/Basic.lean:230
+  - lean/Workhouse/Basic.lean:229
   - `make lean`
 - `cIso_assembled`
-  - lean/Workhouse/Basic.lean:580
+  - lean/Workhouse/Basic.lean:579
   - `make lean`
 - `cPrimTwo_forms`
-  - lean/Workhouse/Basic.lean:353
+  - lean/Workhouse/Basic.lean:352
   - `make lean`
 - `cShpAssembled_neg`
-  - lean/Workhouse/Basic.lean:576
+  - lean/Workhouse/Basic.lean:575
   - `make lean`
 - `cShp_assembled_value`
-  - lean/Workhouse/Basic.lean:424
+  - lean/Workhouse/Basic.lean:423
   - `make lean`
 - `cShp_from_rho_shift`
-  - lean/Workhouse/Basic.lean:418
+  - lean/Workhouse/Basic.lean:417
   - `make lean`
 - `channel_resolvent_assembly`
-  - lean/Workhouse/Basic.lean:148
+  - lean/Workhouse/Basic.lean:147
+  - `make lean`
+- `cornerDen_cof`
+  - lean/Workhouse/Basic.lean:673
+  - `make lean`
+- `cornerDressing_over_R20`
+  - lean/Workhouse/Basic.lean:701
+  - `make lean`
+- `cubeCompletionAdjacent_over_R20`
+  - lean/Workhouse/Basic.lean:707
   - `make lean`
 - `cubeCompletionAdjacent_ratio`
-  - lean/Workhouse/Basic.lean:405
+  - lean/Workhouse/Basic.lean:404
   - `make lean`
 - `cubeCompletionAdjacent_split`
-  - lean/Workhouse/Basic.lean:396
+  - lean/Workhouse/Basic.lean:395
   - `make lean`
 - `cubeCompletionAdjacent_three`
-  - lean/Workhouse/Basic.lean:401
+  - lean/Workhouse/Basic.lean:400
   - `make lean`
 - `cubeCompletion_three`
-  - lean/Workhouse/Basic.lean:372
+  - lean/Workhouse/Basic.lean:371
+  - `make lean`
+- `cubeDen_cof`
+  - lean/Workhouse/Basic.lean:676
   - `make lean`
 - `cube_shortfall`
-  - lean/Workhouse/Basic.lean:414
+  - lean/Workhouse/Basic.lean:413
   - `make lean`
 - `delta_M`
-  - lean/Workhouse/Basic.lean:526
+  - lean/Workhouse/Basic.lean:525
   - `make lean`
 - `delta_P`
-  - lean/Workhouse/Basic.lean:532
+  - lean/Workhouse/Basic.lean:531
   - `make lean`
 - `delta_R`
-  - lean/Workhouse/Basic.lean:540
+  - lean/Workhouse/Basic.lean:539
   - `make lean`
 - `delta_X`
-  - lean/Workhouse/Basic.lean:521
+  - lean/Workhouse/Basic.lean:520
   - `make lean`
 - `dim_Z₂`
-  - lean/Workhouse/Basic.lean:328
+  - lean/Workhouse/Basic.lean:327
   - `make lean`
 - `d₃_ledger`
-  - lean/Workhouse/Basic.lean:206
+  - lean/Workhouse/Basic.lean:205
   - `make lean`
 - `evenHopping_three`
-  - lean/Workhouse/Basic.lean:467
+  - lean/Workhouse/Basic.lean:466
   - `make lean`
 - `even_cubic_at_sixteen`
-  - lean/Workhouse/Basic.lean:284
+  - lean/Workhouse/Basic.lean:283
   - `make lean`
 - `even_cubic_at_zero`
-  - lean/Workhouse/Basic.lean:278
+  - lean/Workhouse/Basic.lean:277
   - `make lean`
 - `even_cubic_derivative_factors`
-  - lean/Workhouse/Basic.lean:291
+  - lean/Workhouse/Basic.lean:290
   - `make lean`
 - `even_gram_minors`
-  - lean/Workhouse/Basic.lean:271
+  - lean/Workhouse/Basic.lean:270
   - `make lean`
 - `extraction_A`
-  - lean/Workhouse/Basic.lean:310
+  - lean/Workhouse/Basic.lean:309
   - `make lean`
 - `extraction_B`
-  - lean/Workhouse/Basic.lean:312
+  - lean/Workhouse/Basic.lean:311
   - `make lean`
 - `extraction_C`
-  - lean/Workhouse/Basic.lean:316
+  - lean/Workhouse/Basic.lean:315
   - `make lean`
 - `extraction_D`
-  - lean/Workhouse/Basic.lean:320
+  - lean/Workhouse/Basic.lean:319
   - `make lean`
 - `hopping_deficit_numerator`
-  - lean/Workhouse/Basic.lean:48
+  - lean/Workhouse/Basic.lean:47
   - `make lean`
 - `hopping_three`
-  - lean/Workhouse/Basic.lean:41
+  - lean/Workhouse/Basic.lean:40
   - `make lean`
 - `hopping_two`
-  - lean/Workhouse/Basic.lean:44
+  - lean/Workhouse/Basic.lean:43
   - `make lean`
 - `isolation_condition_assembled`
-  - lean/Workhouse/Basic.lean:571
+  - lean/Workhouse/Basic.lean:570
   - `make lean`
 - `isolation_switch_numerator`
-  - lean/Workhouse/Basic.lean:196
+  - lean/Workhouse/Basic.lean:195
   - `make lean`
 - `lambda2_shelf_numerator`
-  - lean/Workhouse/Basic.lean:180
+  - lean/Workhouse/Basic.lean:179
   - `make lean`
 - `like_family_sum`
-  - lean/Workhouse/Basic.lean:129
+  - lean/Workhouse/Basic.lean:128
   - `make lean`
 - `mixed_family_sum`
-  - lean/Workhouse/Basic.lean:118
+  - lean/Workhouse/Basic.lean:117
   - `make lean`
 - `newton_three`
-  - lean/Workhouse/Basic.lean:300
+  - lean/Workhouse/Basic.lean:299
   - `make lean`
 - `pentCompletion_three`
-  - lean/Workhouse/Basic.lean:376
+  - lean/Workhouse/Basic.lean:375
   - `make lean`
 - `piTilde_neg`
-  - lean/Workhouse/Basic.lean:566
+  - lean/Workhouse/Basic.lean:565
   - `make lean`
 - `prismCompletion_three`
-  - lean/Workhouse/Basic.lean:368
+  - lean/Workhouse/Basic.lean:367
   - `make lean`
 - `q_at_checkpoints`
-  - lean/Workhouse/Basic.lean:512
+  - lean/Workhouse/Basic.lean:511
   - `make lean`
 - `rank_law_numerator`
-  - lean/Workhouse/Basic.lean:36
+  - lean/Workhouse/Basic.lean:35
   - `make lean`
 - `relative_gap_pos`
-  - lean/Workhouse/Basic.lean:588
+  - lean/Workhouse/Basic.lean:587
   - `make lean`
 - `resolventWeight_adjoint`
-  - lean/Workhouse/Basic.lean:80
+  - lean/Workhouse/Basic.lean:79
   - `make lean`
 - `resolventWeight_antisym`
-  - lean/Workhouse/Basic.lean:89
+  - lean/Workhouse/Basic.lean:88
   - `make lean`
 - `resolventWeight_singlet`
-  - lean/Workhouse/Basic.lean:72
+  - lean/Workhouse/Basic.lean:71
   - `make lean`
 - `resolventWeight_sym`
-  - lean/Workhouse/Basic.lean:104
+  - lean/Workhouse/Basic.lean:103
   - `make lean`
 - `shell_margin_five`
-  - lean/Workhouse/Basic.lean:174
+  - lean/Workhouse/Basic.lean:173
+  - `make lean`
+- `singleContactDen_cof`
+  - lean/Workhouse/Basic.lean:669
   - `make lean`
 - `singleContactEven_eq`
-  - lean/Workhouse/Basic.lean:455
+  - lean/Workhouse/Basic.lean:454
   - `make lean`
 - `singleContactEven_three`
-  - lean/Workhouse/Basic.lean:463
+  - lean/Workhouse/Basic.lean:462
+  - `make lean`
+- `singleContactOdd_over_R20`
+  - lean/Workhouse/Basic.lean:695
   - `make lean`
 - `stencil_zero_mode`
-  - lean/Workhouse/Basic.lean:234
+  - lean/Workhouse/Basic.lean:233
   - `make lean`
 - `sym2_shelf_numerator`
-  - lean/Workhouse/Basic.lean:184
+  - lean/Workhouse/Basic.lean:183
   - `make lean`
 - `tetraCompletion_three`
-  - lean/Workhouse/Basic.lean:364
+  - lean/Workhouse/Basic.lean:363
   - `make lean`
 - `tetra_from_count`
-  - lean/Workhouse/Basic.lean:358
+  - lean/Workhouse/Basic.lean:357
+  - `make lean`
+- `twoHopDen_cof`
+  - lean/Workhouse/Basic.lean:666
+  - `make lean`
+- `twoHopWeight_over_R20`
+  - lean/Workhouse/Basic.lean:689
   - `make lean`
 - `uStarSq_isolation`
-  - lean/Workhouse/Basic.lean:584
+  - lean/Workhouse/Basic.lean:583
   - `make lean`
 - `w4_old_is_alpha_plus_beta`
-  - lean/Workhouse/Basic.lean:436
+  - lean/Workhouse/Basic.lean:435
   - `make lean`
 - `w4_shift_from_beta`
-  - lean/Workhouse/Basic.lean:433
+  - lean/Workhouse/Basic.lean:432
   - `make lean`
 - `width_eq_alpha_add_beta`
-  - lean/Workhouse/Basic.lean:248
+  - lean/Workhouse/Basic.lean:247
   - `make lean`
 
-## T1 — re-derived exactly — 286
+## T1 — re-derived exactly — 296
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1075,6 +1114,38 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `u is universal channel by channel: the coplanar, bent and in-plane L chains agree in every one of the 74 channels, up to the incidence sign, at N = 3..30`
   - src/workhouse/invariants/all_rank.py:616 · G14; runs/u_by_channel_2026-09-04; ADR 0026; ADR 0020; THM_FLUX Prop. 2
   - `workhouse verify --only 'u is universal channel by channel: the coplanar, bent and in-plane L chains agree in every one of the 74 channels, up to the incidence sign, at N = 3..30'`
+**the third engine over Q(N): closed forms derived, the degree bound**
+
+- `beta_N is a sum of resolvent products: -16 u + 32 d - 16 corner + 848/(N(N^2-1)^3) over 254 channel terms, each a rational function of N whose denominator is a product of resolvent factors, equals P17(N^2)/(N R20(N^2))`
+  - src/workhouse/invariants/rank_field.py:735 · G14; C2; runs/channels_symbolic_rank_2026-09-04; ADR 0029; ADR 0026; ADR 0019; runs/beta_n_symbolic_rank_2026-09-04
+  - `workhouse verify --only 'beta_N is a sum of resolvent products: -16 u + 32 d - 16 corner + 848/(N(N^2-1)^3) over 254 channel terms, each a rational function of N whose denominator is a product of resolvent factors, equals P17(N^2)/(N R20(N^2))'`
+- `every cumulant of the beta_N assembly is one rational function of N computed over Q(N): the closed forms are derived, not reconstructed, and specialise to the per-rank records at N = 3..70`
+  - src/workhouse/invariants/rank_field.py:202 · G14; C10; R2; runs/beta_n_symbolic_rank_2026-09-04; ADR 0029; ADR 0027; ADR 0025
+  - `workhouse verify --only 'every cumulant of the beta_N assembly is one rational function of N computed over Q(N): the closed forms are derived, not reconstructed, and specialise to the per-rank records at N = 3..70'`
+- `the 74 channels of u are identities in Q(N): every closed form of the pinned reconstruction is the symbolic channel exactly, and the finer per-link labelling adds only channels that vanish in the C-odd sector`
+  - src/workhouse/invariants/rank_field.py:464 · G14; C2; runs/channels_symbolic_rank_2026-09-04; ADR 0029; ADR 0026; ADR 0019
+  - `workhouse verify --only 'the 74 channels of u are identities in Q(N): every closed form of the pinned reconstruction is the symbolic channel exactly, and the finer per-link labelling adds only channels that vanish in the C-odd sector'`
+- `the coplanar dressings are the exact negatives of the perpendicular ones in Q(N), single contact and fan alike, so the eleven-cumulant assembly is three cumulants and the cube: beta_N = -16u + 32d - 16 corner + 848/(N(N^2-1)^3)`
+  - src/workhouse/invariants/rank_field.py:321 · G14; C10; R2; runs/beta_n_symbolic_rank_2026-09-04; ADR 0029; ADR 0027; ADR 0025
+  - `workhouse verify --only 'the coplanar dressings are the exact negatives of the perpendicular ones in Q(N), single contact and fan alike, so the eleven-cumulant assembly is three cumulants and the cube: beta_N = -16u + 32d - 16 corner + 848/(N(N^2-1)^3)'`
+- `the corner dressing by channel: 87 C-odd channels, at most three doubled links in any direct-term state, every resolvent factor the corner adds to R20 the energy of an identified intermediate state, and the Weingarten poles at N = -+3 of single channels cancelling in the sum`
+  - src/workhouse/invariants/rank_field.py:658 · G14; C2; runs/channels_symbolic_rank_2026-09-04; ADR 0029; ADR 0026; ADR 0019; ADR 0025
+  - `workhouse verify --only 'the corner dressing by channel: 87 C-odd channels, at most three doubled links in any direct-term state, every resolvent factor the corner adds to R20 the energy of an identified intermediate state, and the Weingarten poles at N = -+3 of single channels cancelling in the sum'`
+- `the final polynomial identity: -16 u + 32 d - 16 corner - 8 K_adj = P17(N^2)/(N R20(N^2)) as rational functions, for the closed forms of the two-hop weight, the single-contact dressing, the corner dressing and the adjacent-face cube completion`
+  - src/workhouse/invariants/rank_field.py:374 · G14; C10; R2; runs/beta_n_symbolic_rank_2026-09-04; ADR 0029; ADR 0027; ADR 0025; GLUEBALL v3.1 Appendix A
+  - `workhouse verify --only 'the final polynomial identity: -16 u + 32 d - 16 corner - 8 K_adj = P17(N^2)/(N R20(N^2)) as rational functions, for the closed forms of the two-hop weight, the single-contact dressing, the corner dressing and the adjacent-face cube completion'`
+- `the shared-link fan dressing is universal channel by channel in Q(N): the coplanar fan is minus the perpendicular fan in every C-odd channel and equal in every C-even one, and its channels are the only ones that carry three-box irreps`
+  - src/workhouse/invariants/rank_field.py:551 · G14; C2; runs/channels_symbolic_rank_2026-09-04; ADR 0029; ADR 0026; ADR 0019
+  - `workhouse verify --only 'the shared-link fan dressing is universal channel by channel in Q(N): the coplanar fan is minus the perpendicular fan in every C-odd channel and equal in every C-even one, and its channels are the only ones that carry three-box irreps'`
+- `the single-contact dressing is universal channel by channel too, once the two geometries are matched: the straight chain dresses Q where the L-shaped chain dresses P, so the direct term's intermediate states correspond in reverse time order, and then all 92 C-odd channels have ratio -1 and all 164 C-even channels ratio +1`
+  - src/workhouse/invariants/rank_field.py:602 · G14; C2; runs/channels_symbolic_rank_2026-09-04; ADR 0029; ADR 0026; ADR 0019
+  - `workhouse verify --only 'the single-contact dressing is universal channel by channel too, once the two geometries are matched: the straight chain dresses Q where the L-shaped chain dresses P, so the direct term'"'"'s intermediate states correspond in reverse time order, and then all 92 C-odd channels have ratio -1 and all 164 C-even channels ratio +1'`
+- `the specialisation argument's certificate: every eigencomponent an exact H0 eigenvector over Q(N), every Haar family balanced with n <= 3, every flux audited, and the one resolvent denominator vanishing at an integer rank >= 4 is at N = 4`
+  - src/workhouse/invariants/rank_field.py:280 · G14; C10; R2; runs/beta_n_symbolic_rank_2026-09-04; ADR 0029; ADR 0027; ADR 0025; ADR 0024
+  - `workhouse verify --only 'the specialisation argument'"'"'s certificate: every eigencomponent an exact H0 eigenvector over Q(N), every Haar family balanced with n <= 3, every flux audited, and the one resolvent denominator vanishing at an integer rank >= 4 is at N = 4'`
+- `u is universal channel by channel as an identity in Q(N): bent = -coplanar and L = coplanar in every C-odd channel and both equal it in every C-even channel, so u2 = 2u and the tier collapse D = -6u + 3u2 = 0 hold at every rank`
+  - src/workhouse/invariants/rank_field.py:507 · G14; C2; runs/channels_symbolic_rank_2026-09-04; ADR 0029; ADR 0026; ADR 0019; THM_FLUX Prop. 2
+  - `workhouse verify --only 'u is universal channel by channel as an identity in Q(N): bent = -coplanar and L = coplanar in every C-odd channel and both equal it in every C-even channel, so u2 = 2u and the tier collapse D = -6u + 3u2 = 0 hold at every rank'`
 **the third implementation and the historical ledger (G3, C2)**
 
 - `FINDING: C_shp from the assembled amplitudes in the kernel's basis is C_historical + 25/1024, the registered continuation-shifted value`

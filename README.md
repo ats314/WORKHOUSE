@@ -284,12 +284,8 @@ historical pipeline's own word ledger confirming every cluster of `ρ` but the
 sixteen adjacent-face cube orderings it lacks (ADR 0024). See the
 `fourth-order kernel orbits` and `third implementation` suites.
 
-The corpus's own one-sentence summary of its largest unpaid debt:
-
-> The corpus proves protection and computes coefficients; it assumes, and
-> nowhere proves, that the protected object is the glueball.
-
-`FRONTIER.md` §5–7 has the ranked open list and what is cheapest next.
+`FRONTIER.md` opens with a one-sentence state of the program; its §5–7 has the
+ranked open list and what is cheapest next.
 
 ## Licence
 

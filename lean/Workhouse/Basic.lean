@@ -5,11 +5,10 @@ Nothing in this file is taken on the authority of a document. Every statement
 below is either proved from the definitions given here, or it is not present.
 Prose in the corpus is a *pointer* to a claim, never evidence for it.
 
-Scope, stated honestly: this file formalises the **exact-rational and
-polynomial-identity layer**. That layer is real mathematics and it is now
-proof-checked. It is *not* the physics — no perturbative derivation, no
-operator theory, and nothing touching the disputed fourth-order kernel appears
-here, because none of that is reducible to rational arithmetic.
+Scope: this file formalises the **exact-rational and polynomial-identity
+layer**. Derivations that need operator theory or Haar integration are T1
+checks in `src/workhouse/invariants/`; what they reduce to rational or
+polynomial identities is proved here.
 
 Provenance for each statement is a section reference, recorded so a reader can
 find what the corpus *claims*; the Lean proof is what makes it true here.
@@ -591,5 +590,156 @@ theorem relative_gap_pos (u : ℚ) (hu : 0 < u) (h : u ^ 2 < 2 / 51) :
   have : u ^ 4 = u ^ 2 * u ^ 2 := by ring
   rw [this]
   nlinarith [mul_lt_mul_of_pos_left h hu2]
+
+/-! ## The all-rank shape coefficient, assembled from three cumulants (ADR 0029)
+
+The corpus states `β_N = P17(N²)/(N R20(N²))` and never derives it. ADR 0027
+assembled it from cluster cumulants at N = 4..70; ADR 0029 computes every
+cumulant over the field ℚ(N) with the third engine, so each is one rational
+function of N. With the pair cluster cancelling and the coplanar dressings the
+exact negatives of the perpendicular ones, the assembly is three cumulants and
+the adjacent-face cube completion, and the identity with the corpus's formula
+is the polynomial identity `betaN_assembled_numerator` below. The definitions
+carry the closed forms the engine returns; what Lean checks is that they sum
+to the corpus's coefficient. -/
+
+/-- The corpus's numerator `P17(z)`, `z = N²` (GLUEBALL v3.1, Appendix A). -/
+def P17 (z : ℚ) : ℚ :=
+  2096187310080 * z ^ 17 - 45206560309248 * z ^ 16 + 448972002607104 * z ^ 15 - 2723575470882816 * z ^ 14 + 11288692151812096 * z ^ 13 - 33888218411529728 * z ^ 12 + 76218901019673664 * z ^ 11 - 131068691814847264 * z ^ 10 + 174326341061538992 * z ^ 9 - 180230597250871976 * z ^ 8 + 144751635142984472 * z ^ 7 - 89742150515602808 * z ^ 6 + 42388925672412712 * z ^ 5 - 14916377727371552 * z ^ 4 + 3768794520714128 * z ^ 3 - 641987460459360 * z ^ 2 + 65414604672000 * z - 2967321600000
+
+/-- The corpus's denominator `R20(z)` in its factored form. -/
+def R20 (z : ℚ) : ℚ :=
+  (z - 1) ^ 3 * (2 * z - 3) * (2 * z - 1) ^ 3 * (3 * z - 2) * (3 * z - 1) * (4 * z - 9) ^ 3
+    * (4 * z - 5) * (4 * z - 1) * (9 * z - 25) * (9 * z - 16) * (16 * z ^ 2 - 44 * z + 25)
+    * (16 * z ^ 2 - 33 * z + 16)
+
+/-- `β_N = P17(N²)/(N R20(N²))`, the corpus's all-rank fourth-order shape coefficient. -/
+noncomputable def betaN (n : ℚ) : ℚ := P17 (n ^ 2) / (n * R20 (n ^ 2))
+
+/-- The two-hop weight `u(N)`, C-odd: numerator. -/
+def twoHopNum (n : ℚ) : ℚ :=
+  n ^ 3 * (n ^ 2 - 4) ^ 2 * (16896 * n ^ 14 - 131616 * n ^ 12 + 451352 * n ^ 10 - 882908 * n ^ 8 + 1058410 * n ^ 6 - 771029 * n ^ 4 + 313093 * n ^ 2 - 54216)
+
+/-- The two-hop weight: denominator. -/
+def twoHopDen (n : ℚ) : ℚ :=
+  2 * (n ^ 2 - 1) ^ 3 * (4 * n ^ 2 - 9) ^ 3 * (9 * n ^ 2 - 16) * (2 * n ^ 2 - 3) * (2 * n ^ 2 - 1) ^ 3
+    * (3 * n ^ 2 - 2) * (4 * n ^ 2 - n - 4) * (4 * n ^ 2 + n - 4)
+
+noncomputable def twoHopWeight (n : ℚ) : ℚ := twoHopNum n / twoHopDen n
+
+/-- The C-odd single-contact dressing of the perpendicular pair: numerator and denominator. -/
+def singleContactNum (n : ℚ) : ℚ := 2 * n ^ 3 * (n ^ 2 - 4) * (10 * n ^ 2 - 13)
+
+def singleContactDen (n : ℚ) : ℚ := (n ^ 2 - 1) ^ 3 * (4 * n ^ 2 - 9) ^ 2 * (2 * n ^ 2 - 1) ^ 2
+
+noncomputable def singleContactOdd (n : ℚ) : ℚ := singleContactNum n / singleContactDen n
+
+/-- The C-odd corner dressing: numerator and denominator. -/
+def cornerNum (n : ℚ) : ℚ :=
+  16 * n ^ 3 * (n ^ 2 - 4) * (2379648 * n ^ 18 - 28088736 * n ^ 16 + 143075272 * n ^ 14 - 411323454 * n ^ 12 + 732994774 * n ^ 10 - 837251963 * n ^ 8 + 611821212 * n ^ 6 - 275614672 * n ^ 4 + 69464470 * n ^ 2 - 7465875)
+
+def cornerDen (n : ℚ) : ℚ :=
+  (n ^ 2 - 1) ^ 3 * (4 * n ^ 2 - 9) ^ 3 * (4 * n ^ 2 - 1) * (9 * n ^ 2 - 25) * (2 * n ^ 2 - 1) ^ 3
+    * (3 * n ^ 2 - 1) * (4 * n ^ 2 - 5) * (4 * n ^ 2 - 2 * n - 5) * (4 * n ^ 2 + 2 * n - 5)
+
+noncomputable def cornerDressing (n : ℚ) : ℚ := cornerNum n / cornerDen n
+
+/-- The cofactors: `N R20(N²)` over each cumulant's denominator, polynomials because
+every denominator factor is a factor of `R20`. -/
+def twoHopCof (n : ℚ) : ℚ :=
+  n * (4 * n ^ 2 - 1) * (9 * n ^ 2 - 25) * (3 * n ^ 2 - 1) * (4 * n ^ 2 - 5)
+    * (16 * n ^ 4 - 44 * n ^ 2 + 25) / 2
+
+def singleContactCof (n : ℚ) : ℚ :=
+  n * (2 * n ^ 2 - 3) * (2 * n ^ 2 - 1) * (3 * n ^ 2 - 2) * (3 * n ^ 2 - 1) * (4 * n ^ 2 - 9)
+    * (4 * n ^ 2 - 5) * (4 * n ^ 2 - 1) * (9 * n ^ 2 - 25) * (9 * n ^ 2 - 16)
+    * (16 * n ^ 4 - 44 * n ^ 2 + 25) * (16 * n ^ 4 - 33 * n ^ 2 + 16)
+
+def cornerCof (n : ℚ) : ℚ :=
+  n * (2 * n ^ 2 - 3) * (3 * n ^ 2 - 2) * (9 * n ^ 2 - 16) * (16 * n ^ 4 - 33 * n ^ 2 + 16)
+
+def cubeCof (n : ℚ) : ℚ :=
+  (2 * n ^ 2 - 3) * (2 * n ^ 2 - 1) ^ 3 * (3 * n ^ 2 - 2) * (3 * n ^ 2 - 1) * (4 * n ^ 2 - 9) ^ 3
+    * (4 * n ^ 2 - 5) * (4 * n ^ 2 - 1) * (9 * n ^ 2 - 25) * (9 * n ^ 2 - 16)
+    * (16 * n ^ 4 - 44 * n ^ 2 + 25) * (16 * n ^ 4 - 33 * n ^ 2 + 16)
+
+theorem twoHopDen_cof (n : ℚ) : n * R20 (n ^ 2) = twoHopDen n * twoHopCof n := by
+  unfold R20 twoHopDen twoHopCof; ring
+
+theorem singleContactDen_cof (n : ℚ) :
+    n * R20 (n ^ 2) = singleContactDen n * singleContactCof n := by
+  unfold R20 singleContactDen singleContactCof; ring
+
+theorem cornerDen_cof (n : ℚ) : n * R20 (n ^ 2) = cornerDen n * cornerCof n := by
+  unfold R20 cornerDen cornerCof; ring
+
+theorem cubeDen_cof (n : ℚ) : n * R20 (n ^ 2) = (n * (n ^ 2 - 1) ^ 3) * cubeCof n := by
+  unfold R20 cubeCof; ring
+
+/-- The final polynomial identity: over the common denominator `N R20(N²)`, the three
+cumulants and the cube completion, with the assembly weights `−16, 32, −16, −8`, have
+numerator `P17(N²)` exactly. -/
+theorem betaN_assembled_numerator (n : ℚ) :
+    -16 * (twoHopNum n * twoHopCof n) + 32 * (singleContactNum n * singleContactCof n)
+        - 16 * (cornerNum n * cornerCof n) - 8 * (-106 * cubeCof n)
+      = P17 (n ^ 2) := by
+  unfold twoHopNum twoHopCof singleContactNum singleContactCof cornerNum cornerCof cubeCof P17
+  ring
+
+theorem twoHopWeight_over_R20 (n : ℚ) (h : n * R20 (n ^ 2) ≠ 0) :
+    twoHopWeight n = twoHopNum n * twoHopCof n / (n * R20 (n ^ 2)) := by
+  rw [twoHopDen_cof] at h ⊢
+  unfold twoHopWeight
+  exact (mul_div_mul_right _ _ (right_ne_zero_of_mul h)).symm
+
+theorem singleContactOdd_over_R20 (n : ℚ) (h : n * R20 (n ^ 2) ≠ 0) :
+    singleContactOdd n = singleContactNum n * singleContactCof n / (n * R20 (n ^ 2)) := by
+  rw [singleContactDen_cof] at h ⊢
+  unfold singleContactOdd
+  exact (mul_div_mul_right _ _ (right_ne_zero_of_mul h)).symm
+
+theorem cornerDressing_over_R20 (n : ℚ) (h : n * R20 (n ^ 2) ≠ 0) :
+    cornerDressing n = cornerNum n * cornerCof n / (n * R20 (n ^ 2)) := by
+  rw [cornerDen_cof] at h ⊢
+  unfold cornerDressing
+  exact (mul_div_mul_right _ _ (right_ne_zero_of_mul h)).symm
+
+theorem cubeCompletionAdjacent_over_R20 (n : ℚ) (h : n * R20 (n ^ 2) ≠ 0) :
+    cubeCompletionAdjacent n = -106 * cubeCof n / (n * R20 (n ^ 2)) := by
+  rw [cubeDen_cof] at h ⊢
+  unfold cubeCompletionAdjacent
+  exact (mul_div_mul_right _ _ (right_ne_zero_of_mul h)).symm
+
+/-- The eleven-cumulant assembly of ADR 0027 collapses to three cumulants and the cube:
+with the pair cancelling and each coplanar dressing the negative of its perpendicular
+counterpart, `8A + 16C` with `A = α/4`, `C = −α/8 − u − (ρ + π)/2` is
+`−16u + 32d − 16 corner − 8 K`, and `α` drops out. -/
+theorem assembly_three_cumulants (alpha u pair d s corner k : ℚ) :
+    8 * (alpha / 4)
+        + 16 * (-alpha / 8 - u
+          - ((pair + 14 * d + 2 * s + 2 * corner + k) + (-pair + 18 * (-d) + 2 * (-s))) / 2)
+      = -16 * u + 32 * d - 16 * corner - 8 * k := by
+  ring
+
+/-- `β_N` from three cumulants and the cube completion, at every rank where the corpus's
+denominator is nonzero. -/
+theorem betaN_from_three_cumulants (n : ℚ) (h : n * R20 (n ^ 2) ≠ 0) :
+    -16 * twoHopWeight n + 32 * singleContactOdd n - 16 * cornerDressing n
+        - 8 * cubeCompletionAdjacent n
+      = betaN n := by
+  rw [twoHopWeight_over_R20 n h, singleContactOdd_over_R20 n h, cornerDressing_over_R20 n h,
+    cubeCompletionAdjacent_over_R20 n h]
+  unfold betaN
+  rw [← betaN_assembled_numerator n]
+  ring
+
+/-- SU(3): the continuation value of the corpus's formula, which ADR 0024 showed is the
+assembled `β₃ = β_historical + 25/64`. -/
+theorem betaN_three : betaN 3 = 15644916262153 / 34416487661400 := by
+  unfold betaN P17 R20; norm_num
+
+/-- SU(4): the corpus's low-rank table value. -/
+theorem betaN_four : betaN 4 = 3601925923737103752887 / 70481696720359496343750 := by
+  unfold betaN P17 R20; norm_num
 
 end Workhouse

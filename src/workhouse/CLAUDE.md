@@ -47,6 +47,7 @@ third, add an explicit `FINDING:` check that *asserts* the discrepancy.
 - `even_sector.py` — the charge-even Bloch cubic, and the finite lattice it is checked against
 - `haar_epsilon.py` — exact SU(3) Haar integrals with the ε-tensors kept as ε's; the engine's projectors, a reduction the engine's partitions cannot do (ADR 0021)
 - `chain_cluster.py` — the first implementation of the chain-amplitude route (ADR 0020)
+- `symbolic_rank.py` — the third engine (`loopcalc`) run over the field Q(N): the fourth-order cumulants as rational functions of N, derived (ADR 0029)
 - `rigor.py` — certified Arb enclosures for T2 comparisons (ADR 0010); the only sanctioned route to arb
 - `triage.py` — read-only survey of an unpinned archive
 - `notes.py` — the notes register: archive inventories, review verdicts, intake rules

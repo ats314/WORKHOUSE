@@ -559,3 +559,95 @@ theorems:
     statement: "For 0 < u and u^2 < 2/51 the relative band gap t_3 u^2 - 2 C_iso u^4 is positive."
     formalizes: [G11]
     promotes: []
+
+  - name: twoHopDen_cof
+    statement: >
+      N R20(N^2) = twoHopDen(N) twoHopCof(N): the two-hop weight's denominator divides
+      the corpus's, with the cofactor a polynomial (ADR 0029).
+    formalizes: [G14, "CONST:TWO_HOP_WEIGHT_ODD_N"]
+    promotes: []
+
+  - name: singleContactDen_cof
+    statement: >
+      N R20(N^2) = singleContactDen(N) singleContactCof(N): the single-contact
+      dressing's denominator divides the corpus's.
+    formalizes: [G14, "CONST:SINGLE_CONTACT_DRESSING_ODD_N"]
+    promotes: []
+
+  - name: cornerDen_cof
+    statement: >
+      N R20(N^2) = cornerDen(N) cornerCof(N): the corner dressing's denominator
+      divides the corpus's.
+    formalizes: [G14, "CONST:CORNER_DRESSING_ODD_N"]
+    promotes: []
+
+  - name: cubeDen_cof
+    statement: >
+      N R20(N^2) = N (N^2-1)^3 cubeCof(N): the cube completion's denominator
+      divides the corpus's.
+    formalizes: [G14, "CONST:CUBE_COMPLETION_ADJACENT_N"]
+    promotes: []
+
+  - name: betaN_assembled_numerator
+    statement: >
+      The final polynomial identity of ADR 0029, denominators cleared over
+      N R20(N^2): -16 twoHopNum twoHopCof + 32 singleContactNum singleContactCof
+      - 16 cornerNum cornerCof + 848 cubeCof = P17(N^2), degree 34 in N.
+    formalizes: [G14, C10, R2]
+    promotes:
+      - "the final polynomial identity: -16 u + 32 d - 16 corner - 8 K_adj = P17(N^2)/(N R20(N^2)) as rational functions, for the closed forms of the two-hop weight, the single-contact dressing, the corner dressing and the adjacent-face cube completion"
+
+  - name: twoHopWeight_over_R20
+    statement: "The two-hop weight written over the common denominator N R20(N^2)."
+    formalizes: ["CONST:TWO_HOP_WEIGHT_ODD_N"]
+    promotes: []
+
+  - name: singleContactOdd_over_R20
+    statement: "The C-odd single-contact dressing written over N R20(N^2)."
+    formalizes: ["CONST:SINGLE_CONTACT_DRESSING_ODD_N"]
+    promotes: []
+
+  - name: cornerDressing_over_R20
+    statement: "The C-odd corner dressing written over N R20(N^2)."
+    formalizes: ["CONST:CORNER_DRESSING_ODD_N"]
+    promotes: []
+
+  - name: cubeCompletionAdjacent_over_R20
+    statement: "The adjacent-face cube completion written over N R20(N^2)."
+    formalizes: ["CONST:CUBE_COMPLETION_ADJACENT_N"]
+    promotes: []
+
+  - name: assembly_three_cumulants
+    statement: >
+      The eleven-cumulant assembly beta = 8A + 16C of ADR 0027 collapses to
+      -16u + 32d - 16 corner - 8K once the pair cancels and each coplanar
+      dressing is the negative of its perpendicular counterpart; alpha_N drops
+      out. Pure algebra on the assembly formula.
+    formalizes: [G14, C10]
+    promotes: []
+
+  - name: betaN_from_three_cumulants
+    statement: >
+      -16 u(N) + 32 d(N) - 16 corner(N) - 8 K_adj(N) = P17(N^2)/(N R20(N^2))
+      wherever N R20(N^2) is nonzero: the corpus's all-rank shape coefficient
+      from three cluster cumulants and the cube completion, with the closed
+      forms ADR 0029 derives over Q(N). Together with the numerator identity
+      and the four cofactor lemmas it proves the identity check whole.
+    formalizes: [G14, C10, R2, "CONST:TWO_HOP_WEIGHT_ODD_N", "CONST:CORNER_DRESSING_ODD_N"]
+    promotes:
+      - "the final polynomial identity: -16 u + 32 d - 16 corner - 8 K_adj = P17(N^2)/(N R20(N^2)) as rational functions, for the closed forms of the two-hop weight, the single-contact dressing, the corner dressing and the adjacent-face cube completion"
+
+  - name: betaN_three
+    statement: >
+      beta_N at N = 3 is 15644916262153/34416487661400, the historical beta_3
+      plus 25/64 (ADR 0024): the formula's continuation value is the
+      assembled one.
+    value: "15644916262153/34416487661400"
+    formalizes: [C10, "CONST:BETA_PEN_3_ASSEMBLED"]
+    promotes: []
+
+  - name: betaN_four
+    statement: "beta_4 = 3601925923737103752887/70481696720359496343750, the corpus's low-rank table value."
+    value: "3601925923737103752887/70481696720359496343750"
+    formalizes: [R2]
+    promotes: []
