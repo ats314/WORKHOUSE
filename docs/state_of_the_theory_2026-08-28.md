@@ -126,7 +126,7 @@ coupling — explicitly *not* a continuum particle. Its own stopping point is
 stated with unusual honesty: small `u` is strong coupling, the continuum is
 the opposite end of the axis, and the missing uniform source-carrying
 invariant-mass-island theorem "is essentially the particle-resolved
-constructive 4D Yang–Mills problem." The Clay firewall holds.
+constructive 4D Yang–Mills problem."
 
 **Evidence status (finding, recorded):** the chain's own manifest pins eight
 documents; four are delivered and byte-match; four — the foundations F1–F3 —
@@ -177,9 +177,8 @@ than the transplanted figure suggested.
    corrected; the spectral-bridge algebra becomes bedrock.
 4. **G3 upstream revision** — cap + output contract, then the scalar
    certificate (C3/C22 close; C2 does not).
-5. **G17/G18** remain the only path to any sentence containing "mass gap".
-   Nothing this week changed that; several things sharpened what those
-   sentences must contain.
+5. **G17/G18** remain the open infinite-volume problems. Nothing this week
+   changed that; several things sharpened what they must contain.
 
 ---
 

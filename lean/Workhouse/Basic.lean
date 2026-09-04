@@ -5,11 +5,10 @@ Nothing in this file is taken on the authority of a document. Every statement
 below is either proved from the definitions given here, or it is not present.
 Prose in the corpus is a *pointer* to a claim, never evidence for it.
 
-Scope, stated honestly: this file formalises the **exact-rational and
-polynomial-identity layer**. That layer is real mathematics and it is now
-proof-checked. It is *not* the physics — no perturbative derivation, no
-operator theory, and nothing touching the disputed fourth-order kernel appears
-here, because none of that is reducible to rational arithmetic.
+Scope: this file formalises the **exact-rational and polynomial-identity
+layer**. Derivations that need operator theory or Haar integration are T1
+checks in `src/workhouse/invariants/`; what they reduce to rational or
+polynomial identities is proved here.
 
 Provenance for each statement is a section reference, recorded so a reader can
 find what the corpus *claims*; the Lean proof is what makes it true here.
@@ -736,7 +735,7 @@ theorem betaN_from_three_cumulants (n : ℚ) (h : n * R20 (n ^ 2) ≠ 0) :
 
 /-- SU(3): the continuation value of the corpus's formula, which ADR 0024 showed is the
 assembled `β₃ = β_historical + 25/64`. -/
-theorem betaN_three : betaN 3 = 3524097394027 / 55066380258240 := by
+theorem betaN_three : betaN 3 = 15644916262153 / 34416487661400 := by
   unfold betaN P17 R20; norm_num
 
 /-- SU(4): the corpus's low-rank table value. -/

@@ -133,17 +133,13 @@ A hypothesis that fails is recorded as failed — in the repository, with how it
 failed. ADR 0005 is the pattern. Deleting a refuted claim destroys the evidence
 that it was tried, and the reason it died usually narrows the next attempt.
 
-## Watch the regime boundaries
+## State the regime
 
 finite lattice → infinite volume → continuum → physical observable.
 
-Every crossing must be stated and either proved, tested, or marked as an
-assumption. A theorem about a finite-dimensional effective Hamiltonian is not a
-theorem about a continuum field theory. A protected lattice excitation is not a
-particle. A perturbative coefficient is not a prediction outside its regime.
-§12 of the governing document is the firewall; read it before any continuum
-claim. G18 (the spectral bridge) and G19 (the continuum limit) are where this
-program's largest unpaid debts sit.
+Say which of these a claim lives in, and whether a crossing is proved, tested,
+or assumed. The open problems at the crossings are G17 (volume-uniform
+free-energy control), G18 (the spectral overlap) and G19 (the continuum limit).
 
 ## Look for the structure underneath
 

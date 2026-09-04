@@ -28,10 +28,10 @@ this repository is built not to do.
 layer** — no `sorry`, standard axioms only (`propext`, `Classical.choice`,
 `Quot.sound`). The live theorem count is in `FRONTIER.md` §1.
 
-That layer is real and it is now machine-checked. It is **not** the physics.
-No perturbative derivation, no operator theory, and nothing touching the
-disputed fourth-order kernel appears here, because none of that reduces to
-rational arithmetic.
+That layer is machine-checked. Derivations that need operator theory or Haar
+integration are T1 checks in `src/workhouse/invariants/`; whatever they reduce
+to rational or polynomial identities is promoted here, the all-rank
+fourth-order shape coefficient included (ADR 0029).
 
 ## What is proved
 

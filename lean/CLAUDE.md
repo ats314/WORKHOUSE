@@ -17,9 +17,7 @@ exactly that, prefer promoting it rather than leaving it at T1.
 
 Do not axiomatize a physics assumption to get a compiling theorem. The point of
 formalizing is to *expose* the hypothesis an informal derivation left out; an
-axiom that hides it inverts the exercise. The corpus's own note is blunt about
-this: an unfinished or axiomatized mass-gap statement in a Lean tree is not
-evidence.
+axiom that hides it inverts the exercise.
 
 ## A known shape
 
