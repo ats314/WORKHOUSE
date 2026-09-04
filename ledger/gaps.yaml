@@ -974,10 +974,23 @@ gaps:
       the resolvents of the intermediate states the chain passes through.
     plan:
       - step: read the mechanism off u(N) -- decompose the two-hop cumulant by intermediate irrep and match its denominator factors to resolvents
-        state: untried
+        state: done
+        closed_by:
+          - 'RUN:u_by_channel_2026-09-04'
+          - 'CHK:u is the sum of 74 irrep-labelled channels, each a product of resolvent factors in N, and the 74 closed forms sum to u(N) identically'
+          - 'CHK:u is universal channel by channel: the coplanar, bent and in-plane L chains agree in every one of the 74 channels, up to the incidence sign, at N = 3..30'
         cannot_decide: []
         status: >
-          proposed 2026-09-04 (ADR 0025). The two-hop weight is now a (21, 28)
+          DONE 2026-09-04 (ADR 0026). 74 channels, each a product of the
+          resolvent factors its irreps bring (Lambda^2: 2N-3, 3N-4; Sym^2:
+          2N+3, 3N+4; adjoint: 2N^2-1, 3N^2-2; mixed pairs: 2N^2-3 and
+          4N^2 -+ N - 4), summing to u(N) identically; and the coplanar,
+          bent and in-plane L chains agree in every channel up to the
+          incidence sign at every rank 3..30. The universality of u is
+          decided channel by channel, so the Hodge form's one dynamical
+          input is a property of the Haar contraction on the doubled links,
+          not an input. What remains for G14 is the next step.
+          ORIGINAL: proposed 2026-09-04 (ADR 0025). The two-hop weight is now a (21, 28)
           rational function of N with denominator
           2(N^2-1)^3(4N^2-9)^3(9N^2-16)(2N^2-3)(2N^2-1)^3(3N^2-2)(4N^2-N-4)(4N^2+N-4)
           and a C-odd numerator carrying (N^2-4)^2. Each denominator factor
@@ -1013,6 +1026,26 @@ gaps:
           two hops, that is the mechanism; if the two chain types reach the
           same u through different channel sums, universality is a
           coincidence of sums and G14 stays open.
+      - step: the same channel decomposition for the corner and fan dressings of the rotation orbit
+        state: untried
+        cannot_decide: []
+        status: >
+          proposed 2026-09-04 (ADR 0026). With u universal channel by
+          channel, the tier collapse B = D = 0 rests on the Hodge form
+          alone (B unpopulated by the carrier projection, D = 0 from
+          u2 = 2u, which is the L-chain equality). The one fourth-order
+          content of the kernel outside the Hodge algebra is C_shp, carried
+          by rho = pair + 14 single + 2 fan + 2 corner + cube. The corner
+          and fan have closed forms in N (ADR 0025); decomposing them the
+          same way, and the cube completion by ordering, would give the
+          shape coefficient C_shp(N) channel by channel -- and say whether
+          the all-rank beta_N formula is itself a sum of resolvent products.
+        what: >
+          Extend workhouse.chain_channels.decompose to a three-cluster with
+          a shared link between the end faces (the corner and fan geometry
+          need no new machinery beyond labelling three doubled links), sweep
+          N = 3..30, reconstruct each channel, and compare the corner's
+          channels with the fan's.
   - id: G15
     tier: 3
     state: open

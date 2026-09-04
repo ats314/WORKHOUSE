@@ -49,10 +49,6 @@ def set_rank(n: int) -> None:
     global N, CF
     N = int(n)
     CF = F(N * N - 1, 2 * N)
-    weingarten.cache_clear()
-    h0_link.cache_clear()
-    integrate.cache_clear()
-    link_spectrum.cache_clear()
 
 
 def casimir2(p: int, q: int) -> F:
@@ -115,8 +111,12 @@ def _perm_sign(p: tuple) -> int:
     return 1 if (len(p) - _cycles(p)) % 2 == 0 else -1
 
 
-@cache
 def weingarten(n: int) -> dict:
+    return _weingarten(n, N)
+
+
+@cache
+def _weingarten(n: int, rank: int) -> dict:
     """Wg(pi), pi in S_n: the pseudoinverse of the Gram matrix G[s,t] = N^cycles(s^-1 t).
 
     For n <= N the Gram matrix is invertible and Wg is its inverse; for n > N it is
@@ -132,7 +132,7 @@ def weingarten(n: int) -> dict:
     gram = flint.fmpq_mat(m, m)
     for i, s in enumerate(perms):
         for j, t in enumerate(perms):
-            gram[i, j] = flint.fmpq(N) ** _cycles(_compose(_inverse(s), t))
+            gram[i, j] = flint.fmpq(rank) ** _cycles(_compose(_inverse(s), t))
     cp = gram.charpoly()
     x = Symbol("x")
     coeffs = [Rational(int(cp[k].p), int(cp[k].q)) for k in range(cp.degree(), -1, -1)]
@@ -262,8 +262,12 @@ def links_of(vec: dict) -> set:
 
 
 # ---------------------------------------------------------------- H0
-@cache
 def h0_link(word: tuple, link: int) -> tuple:
+    return _h0_link(word, link, N)
+
+
+@cache
+def _h0_link(word: tuple, link: int, rank: int) -> tuple:
     """The single-link part (1/2) E_link^2 of H0 on a word, as ((word, coeff), ...).
 
     E acts on a U slot by left multiplication with T^A and on a Udag slot by
@@ -302,8 +306,12 @@ def apply_h0(vec: dict) -> dict:
     return out
 
 
-@cache
 def link_spectrum(word: tuple, link: int) -> tuple:
+    return _link_spectrum(word, link, N)
+
+
+@cache
+def _link_spectrum(word: tuple, link: int, rank: int) -> tuple:
     """The rational spectrum of the single-link H0 on the closure of `word` under it.
 
     Rank-generic: the block is built by breadth-first closure under `h0_link`,
@@ -431,8 +439,12 @@ def haar_link(word: tuple, link: int) -> dict:
     return {k: v for k, v in out.items() if v}
 
 
-@cache
 def integrate(word: tuple) -> F:
+    return _integrate(word, N)
+
+
+@cache
+def _integrate(word: tuple, rank: int) -> F:
     """The full Haar integral of a formal word, link by link."""
     vec = {word: F(1)}
     while True:
