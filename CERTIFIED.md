@@ -142,7 +142,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:101
   - `make lean`
 
-## T1 — re-derived exactly — 230
+## T1 — re-derived exactly — 238
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -428,6 +428,12 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'the two face energies differ, so the eigenspace must be chosen'`
 **native string tension through fifth order (v4.3 §11.2)**
 
+- `a weight u^k, k >= 1, flips the small-u direction: the sign is the weight's, not evidence`
+  - src/workhouse/invariants/string_tension.py:237 · §11.2 / ADR 0022 (G19 route)
+  - `workhouse verify --only 'a weight u^k, k >= 1, flips the small-u direction: the sign is the weight'"'"'s, not evidence'`
+- `every fifth-order slope coefficient is negative, so the flux gap falls as beta grows`
+  - src/workhouse/invariants/string_tension.py:181 · §11.2 / ADR 0022 (G19 route)
+  - `workhouse verify --only 'every fifth-order slope coefficient is negative, so the flux gap falls as beta grows'`
 - `m_{1+-}(0) = 8/3 follows from sigma(0) = 2/3 alone`
   - src/workhouse/invariants/string_tension.py:106 · §11.2
   - `workhouse verify --only 'm_{1+-}(0) = 8/3 follows from sigma(0) = 2/3 alone'`
@@ -440,6 +446,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the even coefficients are not sign-flipped`
   - src/workhouse/invariants/string_tension.py:38 · §11.2
   - `workhouse verify --only 'the even coefficients are not sign-flipped'`
+- `the leading electric-flux gap C_F L / (2 sqrt u) decreases in u for every N`
+  - src/workhouse/invariants/string_tension.py:144 · §11.2 / ADR 0022 (G19 route)
+  - `workhouse verify --only 'the leading electric-flux gap C_F L / (2 sqrt u) decreases in u for every N'`
 - `the ratio and sigma series reproduce E_flat exactly`
   - src/workhouse/invariants/string_tension.py:78 · §11.2 vs §4.4
   - `workhouse verify --only 'the ratio and sigma series reproduce E_flat exactly'`
@@ -749,10 +758,10 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/charge_even.py:337 · RUN_TROM_d3_results.json vs PAPER, the §6 patch, and the arithmetic
   - `workhouse verify --only 'FINDING: the certificate key '"'"'bandmin'"'"' holds the band MAXIMUM, at both orders'`
 - `at N = 2 the C-odd hopping vanishes and the C-even one does not`
-  - src/workhouse/invariants/charge_even.py:542 · MASTER_THEORY §4.3; ledger/theorems.yaml (t_2 = 0)
+  - src/workhouse/invariants/charge_even.py:543 · MASTER_THEORY §4.3; ledger/theorems.yaml (t_2 = 0)
   - `workhouse verify --only 'at N = 2 the C-odd hopping vanishes and the C-even one does not'`
 - `at N = 2 the C-odd hopping vanishes while the unsigned-channel continuation does not`
-  - src/workhouse/invariants/charge_even.py:589 · PUBLICATION rev5 §2 (why the construction begins at N = 3)
+  - src/workhouse/invariants/charge_even.py:590 · PUBLICATION rev5 §2 (why the construction begins at N = 3)
   - `workhouse verify --only 'at N = 2 the C-odd hopping vanishes while the unsigned-channel continuation does not'`
 - `both declared coincidences, checked: one is ell_N at all ranks, the other is bare`
   - src/workhouse/invariants/charge_even.py:495 · ENGINE_FLUX_su3_domino_d3.py / MASTER paper Prop. 8
@@ -785,7 +794,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/charge_even.py:134 · PAPER Thm. (incidence factorization) / ENGINE_FLUX_glueball_band_certificate_v2.py
   - `workhouse verify --only 'the C-even range [-4, 12] is exact, and each edge is attained at one point only'`
 - `the C-even range [-4, 12] is exact; the top only at Gamma, the floor on three planes`
-  - src/workhouse/invariants/charge_even.py:676 · PUBLICATION rev5 Prop. (range and attainment)
+  - src/workhouse/invariants/charge_even.py:677 · PUBLICATION rev5 Prop. (range and attainment)
   - `workhouse verify --only 'the C-even range [-4, 12] is exact; the top only at Gamma, the floor on three planes'`
 - `the C-even spectra at the four high-symmetry momenta`
   - src/workhouse/invariants/charge_even.py:282 · MASTER paper §4.5 / PAPER Thm. (the C-even band)
@@ -797,7 +806,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/charge_even.py:67 · PAPER Thm. (incidence factorization; Gauss law)
   - `workhouse verify --only 'the two Bloch incidence symbols, and the determinant asymmetry between them'`
 - `the unsigned-incidence characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3`
-  - src/workhouse/invariants/charge_even.py:635 · PUBLICATION rev5 Thm. (unsigned-incidence Bloch cubic)
+  - src/workhouse/invariants/charge_even.py:636 · PUBLICATION rev5 Thm. (unsigned-incidence Bloch cubic)
   - `workhouse verify --only 'the unsigned-incidence characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3'`
 **the electric shell, and what isolates it**
 
@@ -836,6 +845,23 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `q at the four high-symmetry points is 0, 4, 8, 12`
   - src/workhouse/invariants/manuscript.py:160 · MASTER_DOC Fig. 2
   - `workhouse verify --only 'q at the four high-symmetry points is 0, 4, 8, 12'`
+**the swap-odd domino state (U4, ADR 0023)**
+
+- `W psi_A has no two-plaquette and no vacuum image for C-even; C-odd keeps the like-family pair`
+  - src/workhouse/invariants/swap_odd.py:132 · ADR 0023 (the swap-odd lemma)
+  - `workhouse verify --only 'W psi_A has no two-plaquette and no vacuum image for C-even; C-odd keeps the like-family pair'`
+- `fourth-order rotor: gaps 1657/28000 and 143/8960, vacuum -39/1280, route + vac = -63/800`
+  - src/workhouse/invariants/swap_odd.py:311 · ADR 0023 addendum; v10a.7 one-face vacuum gate; channels suite size-1 row
+  - `workhouse verify --only 'fourth-order rotor: gaps 1657/28000 and 143/8960, vacuum -39/1280, route + vac = -63/800'`
+- `the C-odd swap-odd gap is 2 A_N + 1/C_F: -3/68 at N = 3, the like family and not the mixed`
+  - src/workhouse/invariants/swap_odd.py:218 · ADR 0023; MASTER_THEORY §4.3 (A_N, B_N)
+  - `workhouse verify --only 'the C-odd swap-odd gap is 2 A_N + 1/C_F: -3/68 at N = 3, the like family and not the mixed'`
+- `the rotor towers 13/20, 1/2, 101/200, 7/32 and vacuum -3/4, -9/32 follow from SU(3) fusion`
+  - src/workhouse/invariants/swap_odd.py:91 · ENGINE_FLUX_su3_domino_d3.py (spectral cross-validation); UNIFIED §2.1 towers
+  - `workhouse verify --only 'the rotor towers 13/20, 1/2, 101/200, 7/32 and vacuum -3/4, -9/32 follow from SU(3) fusion'`
+- `the |0> route is minus the vacuum energy at orders 2 and 3, so leak_(k,+) = t_(k,+) follows`
+  - src/workhouse/invariants/swap_odd.py:164 · ADR 0023; CERT_FLUX_d3 'exact identity (gated)'
+  - `workhouse verify --only 'the |0> route is minus the vacuum energy at orders 2 and 3, so leak_(k,+) = t_(k,+) follows'`
 **tier collapse (G14)**
 
 - `B B^dagger = q I - d conj(d)^T for the curl incidence`

@@ -266,6 +266,13 @@ def _():
         "LIT:CBB_2026",
         "LIT:CB_2024",
         "LIT:HAZRA_2026",
+        # A paper whose ONLY relation is `confusable` -- recorded so an analogy
+        # is not re-proposed as a route (ADR 0022). Confusable edges are
+        # excluded from bears_on by design, its reference list is unread, and
+        # nothing indexed cites it, so the node has no honest edge. It strands
+        # until either it is obtained or the route it warns against is
+        # revived, and both are the right trigger for reconnecting it.
+        "LIT:GINIBRE_1970",
         # ledger entries with empty curated cross-reference fields
         "C11",
         "C14",
