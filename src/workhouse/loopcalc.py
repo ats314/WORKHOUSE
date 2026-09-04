@@ -703,3 +703,30 @@ def cube_completion(p, q, others) -> dict:
         for b in (2, 3):
             result[(a, b)] = inner(cl.words[b], dict(final))
     return result
+
+
+def pair_element(faces2) -> dict:
+    """The full fourth-order element between two faces on their own cluster, in the
+    Hermitian PVP = 0 form, W[(a, b)] for a in the first face's words (0, 1) and b
+    in the second's (2, 3).
+
+    Exact for N >= 4: the first-order vertex <Pbar|V|P> is the determinant family
+    (3, 0), which vanishes unless N = 3, and a fourth-order history on a pair can
+    reach a determinant family only through N insertions of one face plus the
+    other's conjugate, which needs N <= 4. At N = 4 that family is (4, 0), handled
+    by the determinant trick; at N >= 5 every family is balanced. At N = 3 the
+    baryonic vertex is +-1 and the assembly needs the A-terms and the pure-six
+    family (ADR 0021), which this engine refuses."""
+    if N < 4:
+        raise ValueError("pair_element is the PVP = 0 form, exact for N >= 4 only")
+    cl = Cluster(faces2)
+    kets = {a: cl.R(cl.V(cl.R(cl.V({cl.words[a]: F(1)})))) for a in (0, 1)}
+    bras = {b: cl.V(cl.R(cl.V({cl.words[b]: F(1)}))) for b in (2, 3)}
+    h2, v2 = cl.second_order()
+    out = {}
+    for a in (0, 1):
+        for b in (2, 3):
+            direct = sum((c * inner(w, kets[a]) for w, c in bras[b].items()), F(0))
+            fold = sum(h2[b][k] * v2[k][a] + v2[b][k] * h2[k][a] for k in range(4)) / 2
+            out[(a, b)] = direct - fold
+    return out

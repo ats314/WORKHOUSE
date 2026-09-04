@@ -108,3 +108,18 @@ def test_rank_generic_second_order_matches_the_all_rank_formulas():
             assert L.ceven(h2, 0, 1) == ell_n
     finally:
         L.set_rank(3)
+
+
+def test_pair_element_is_zero_on_a_disjoint_pair_and_refuses_su3():
+    P = ((0, 1), (0, 0, 0))
+    try:
+        L.set_rank(5)
+        w = L.pair_element([P, ((0, 1), (0, 0, 1))])
+        assert all(v == 0 for v in w.values())
+        assert L.block_odd(L.pair_element([P, ((0, 1), (1, 0, 0))])) == F(
+            69983264815081, 180858882716209152
+        )
+    finally:
+        L.set_rank(3)
+    with pytest.raises(ValueError):
+        L.pair_element([P, ((0, 1), (1, 0, 0))])

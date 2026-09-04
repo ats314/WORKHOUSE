@@ -651,3 +651,227 @@ def _():
         "ADR 0019 called the one dynamical input of the Hodge form is a property of the Haar "
         "contraction on the abstract three-plaquette cluster"
     )
+
+
+_BETA_RUN = "runs/beta_n_from_assembly_2026-09-04"
+
+
+def _beta_certificate() -> dict:
+    return json.loads((ROOT / _BETA_RUN / "certificate.json").read_text(encoding="utf-8"))
+
+
+_PAIR_CANCELS = (
+    "the coplanar and perpendicular two-face clusters are one abstract graph up to conjugating Q, "
+    "so their C-odd pair elements are exact negatives at every rank and the pair cluster drops "
+    "out of C_shp"
+)
+
+
+@rank.check(
+    _PAIR_CANCELS,
+    "C2; C10; " + _BETA_RUN + "; ADR 0027",
+    rests_on=(_SECOND_ORDER,),
+)
+def _():
+    # The engine's value for a cluster depends only on its abstract graph: which link
+    # matrices appear, in which direction, in which face -- the Haar measure, the link
+    # energies and the Fierz rewiring are all per link and invariant under relabelling a
+    # link or reversing it. Here a bijection of the seven links, with reversals, is found
+    # that carries the coplanar cluster's words onto the perpendicular cluster's; it must
+    # conjugate an odd number of faces (the shared link is traversed oppositely by the
+    # coplanar pair and in the same direction by the perpendicular one, and a reversal
+    # of the shared link preserves that), and the C-odd block is odd under conjugating a
+    # face. The four entries of the two pair elements are then compared under Q <-> Q-bar
+    # at N = 5, live.
+    from itertools import permutations, product
+
+    def canon(word):
+        (cyc,) = word
+        rots = [tuple(cyc[i:] + cyc[:i]) for i in range(len(cyc))]
+        return min(rots)
+
+    def relabel(word, sigma, flip):
+        (cyc,) = word
+        return canon(((tuple((sigma[link], d * flip[link]) for link, d in cyc)),))
+
+    cop = LC.Cluster([_P, ((0, 1), (1, 0, 0))])
+    perp = LC.Cluster([_P, _Q02])
+    links_c = sorted({link for w in cop.words for link, _ in w[0]})
+    links_p = sorted({link for w in perp.words for link, _ in w[0]})
+    target = {canon(w): i for i, w in enumerate(perp.words)}
+    parities = set()
+    for perm in permutations(links_p, len(links_c)):
+        sigma = dict(zip(links_c, perm, strict=True))
+        for signs in product((1, -1), repeat=len(links_c)):
+            flip = dict(zip(links_c, signs, strict=True))
+            images = [target.get(relabel(w, sigma, flip)) for w in cop.words]
+            if None in images or len(set(images)) != 4:
+                continue
+            # images[i] is where the i-th word (P, P-bar, Q, Q-bar) lands; landing on an
+            # odd index (P-bar or Q-bar) is a conjugation, whether or not the faces swap roles
+            conjugated = (images[0] in (1, 3)) + (images[2] in (1, 3))
+            parities.add(conjugated % 2)
+    isomorphic = parities == {1}
+
+    def live():
+        a = LC.pair_element([_P, ((0, 1), (1, 0, 0))])
+        b = LC.pair_element([_P, _Q02])
+        entries = all(a[(i, j)] == b[(i, 5 - j)] for i in (0, 1) for j in (2, 3))
+        return entries, LC.block_odd(a), LC.block_odd(b), LC.block_even(a), LC.block_even(b)
+
+    entries, odd_c, odd_p, even_c, even_p = _at_rank(5, live)
+    ok = isomorphic and entries and odd_c + odd_p == 0 and even_c == even_p
+    return ok, (
+        f"every link bijection carrying the coplanar words onto the perpendicular words conjugates "
+        f"an odd number of faces (parities found: {sorted(parities)}); at N = 5 the four entries "
+        f"agree under Q <-> Q-bar, C-odd blocks {odd_c} and {odd_p}, C-even blocks equal ({even_c})"
+    )
+
+
+_BETA_EVERY_RANK = (
+    "the cluster assembly reproduces the corpus's all-rank beta_N = P17(N^2)/(N R20(N^2)) exactly "
+    "at every rank N = 4..70 (the pair cluster, which cancels, computed at N >= 5), and the "
+    "link-disjoint pair is zero at every rank"
+)
+
+
+@rank.check(
+    _BETA_EVERY_RANK,
+    "C2; C10; G14; R2; GLUEBALL v3.1 ~1074, ~1080-1088, Appendix A ~1490-1508; "
+    + _BETA_RUN
+    + "; ADR 0027",
+    rests_on=(
+        _PAIR_CANCELS,
+        _U_N,
+        _CORNER_N,
+        _FAN_N,
+        _SINGLE_N,
+        _CUBE_RANKS,
+        "FINDING: C_shp from the assembled amplitudes in the kernel's basis is C_historical + "
+        "25/1024, the registered continuation-shifted value",
+    ),
+)
+def _():
+    # The corpus states beta_N "for N >= 4", output-certified by its all-rank
+    # program and never re-derived. Here it is assembled from cluster cumulants
+    # by an engine that reads no kernel, no engine and no corpus formula:
+    #   pi = pair_cop + 18 d_cop + 2 s_cop; rho = pair_perp + 14 d_perp + 2 s_perp
+    #   + 2 corner + K_adj; C = -alpha_N/8 - u - (rho + pi)/2; beta = 8A + 16C,
+    # all in the kernel's (0,2) basis, with the pair cluster in the PVP = 0 form
+    # (exact for N >= 4: the first-order vertex is the (3,0) determinant family).
+    # Every rank in the pinned run is checked against channel_ledger.beta_formula,
+    # and N = 5 is recomputed live end to end.
+    from ..channel_ledger import beta_formula
+
+    cert = _beta_certificate()["ranks"]
+    pinned = all(
+        Fraction(row["beta_assembled"]) == beta_formula(int(n_str)) == Fraction(row["beta_corpus"])
+        and row["equal"] is True
+        for n_str, row in cert.items()
+    )
+    # the pair cluster is computed at N >= 5 (at N = 4 its (4,0)-family PVP = 0 form is
+    # infeasible and, cancelling identically, not needed); where computed, the stacked
+    # pair is zero and the two shared-link pairs are negatives
+    with_pair = {n_str: row for n_str, row in cert.items() if row["pair_coplanar"] is not None}
+    pairs_ok = set(map(int, with_pair)) == set(range(5, 71)) and all(
+        Fraction(row["pair_normal"]) == 0
+        and Fraction(row["pair_coplanar"]) + Fraction(row["pair_perpendicular"]) == 0
+        for row in with_pair.values()
+    )
+    ranks_ok = set(map(int, cert)) == set(range(4, 71)) and pairs_ok
+
+    def live():
+        P = _P
+        pair_cop = LC.block_odd(LC.pair_element([P, ((0, 1), (1, 0, 0))]))
+        pair_perp = LC.block_odd(LC.pair_element([P, _Q02]))
+        d_cop = LC.block_odd(LC.cumulant([P, ((0, 1), (2, 0, 0)), ((0, 1), (1, 0, 0))], 1))
+        s_cop = LC.block_odd(LC.cumulant([P, ((1, 2), (1, 0, 0)), ((0, 1), (1, 0, 0))], 1))
+        d_perp = LC.block_odd(LC.cumulant([P, ((0, 1), (1, 0, 0)), _Q02], 1))
+        s_perp = LC.block_odd(LC.cumulant([P, ((0, 1), (0, -1, 0)), _Q02], 1))
+        corner = LC.block_odd(LC.cumulant([P, ((1, 2), (1, 0, 0)), _Q02], 1))
+        u = LC.block_odd(LC.cumulant([P, ((0, 1), (1, 0, 0)), ((0, 1), (2, 0, 0))], 1))
+        return pair_cop, pair_perp, d_cop, s_cop, d_perp, s_perp, corner, u
+
+    n = 5
+    pair_cop, pair_perp, d_cop, s_cop, d_perp, s_perp, corner, u = _at_rank(n, live)
+    den = n * (n * n - 1) ** 3
+    pi = pair_cop + 18 * d_cop + 2 * s_cop
+    rho = pair_perp + 14 * d_perp + 2 * s_perp + 2 * corner + Fraction(-106, den)
+    c = Fraction(-80, den) - u - (rho + pi) / 2
+    beta_live = 8 * Fraction(160, den) + 16 * c
+    live_ok = beta_live == beta_formula(5) == Fraction(cert["5"]["beta_assembled"])
+    cancel_ok = pair_cop + pair_perp == 0
+    ok = pinned and ranks_ok and live_ok and cancel_ok
+    return ok, (
+        f"beta assembled = P17(N^2)/(N R20(N^2)) at every pinned rank N = 4..70 ({len(cert)} "
+        f"ranks, exact rationals; the pair cluster computed at the {len(with_pair)} ranks N >= 5); "
+        f"live at N = 5: pi = {pi}, rho = {rho}, C = {c}, "
+        f"beta = {beta_live} = "
+        f"beta_formula(5). The stacked pair is 0 at every rank, and the coplanar and perpendicular "
+        f"pair clusters are exact negatives at every rank (live at N = 5: {pair_cop} and "
+        f"{pair_perp}), so the pair cluster drops out of C_shp. The corpus's 'for N >= 4' formula, "
+        "output-certified and never re-derived, is now assembled from cluster cumulants by an "
+        "engine that reads none of it; with ADR 0024 it holds at N = 3 too"
+    )
+
+
+_BETA_CLOSED_FORM = (
+    "the assembled beta's closed form in N, reconstructed from 38 ranks and confirmed on the "
+    "other 28, is the corpus's P17(N^2)/(N R20(N^2)) as a rational function; the pair "
+    "clusters' closed forms are exact negatives with a double pole at N = 3"
+)
+
+
+@rank.check(
+    _BETA_CLOSED_FORM,
+    "GLUEBALL v3.1 Appendix A ~1490-1508 (P17, R20); C10; G14; "
+    + _BETA_RUN
+    + "/closed_forms.json; ADR 0027",
+    rests_on=(_BETA_EVERY_RANK,),
+)
+def _():
+    # reconstruct_beta.py finds, for each certified quantity, the lowest-degree N^s g(N^2)
+    # through the first dp + dq + 1 ranks that reproduces every remaining rank. Here every
+    # form is re-evaluated at every certified rank N >= 5 (the reconstruction's domain: at
+    # N = 4 the (4,0) determinant family enters the pair cluster's Haar integrals and is
+    # not part of the continuation), the beta form is compared with the corpus's formula
+    # as a rational function, and the two pair forms are added. What this does not prove:
+    # that the assembled beta is a rational function of bounded degree in N -- with that
+    # bound the rank-by-rank equality would already imply the symbolic identity.
+    from sympy import Rational, Symbol, cancel, limit, sympify
+
+    from ..channel_ledger import P17, R20, _z
+
+    N = Symbol("N")
+    forms = json.loads((ROOT / _BETA_RUN / "closed_forms.json").read_text(encoding="utf-8"))
+    cert = _beta_certificate()["ranks"]
+    keys = (
+        "pair_coplanar",
+        "pair_perpendicular",
+        "single_coplanar",
+        "fan_coplanar",
+        "C_shp",
+        "beta_assembled",
+    )
+    expr = {k: sympify(forms[k]["form"], locals={"N": N}) for k in keys}
+    every_rank = all(
+        expr[k].subs(N, n) == Rational(row[k])
+        for n_str, row in cert.items()
+        if (n := int(n_str)) >= 5
+        for k in keys
+    )
+    held = {k: forms[k]["held_out"] for k in keys}
+    corpus = P17.as_expr().subs(_z, N**2) / (N * R20.as_expr().subs(_z, N**2))
+    identity = cancel(expr["beta_assembled"] - corpus) == 0
+    pair_sum = cancel(expr["pair_coplanar"] + expr["pair_perpendicular"]) == 0
+    residue = limit(expr["pair_coplanar"] * (N - 3) ** 2, N, 3)
+    pole = residue == Rational(5, 1088)
+    ok = every_rank and identity and pair_sum and pole and forms["identity"]["holds"] is True
+    return ok, (
+        f"every closed form reproduces every certified rank N >= 5 (held-out ranks {held}); "
+        f"beta_assembled(N) - P17(N^2)/(N R20(N^2)) = 0 as a rational function; "
+        f"pair_coplanar(N) + pair_perpendicular(N) = 0 identically; the pair cluster's "
+        f"continuation has a double pole at N = 3 with (N-3)^2-coefficient {residue}, which the "
+        "sum pi + rho never sees. The identity is symbolic given a degree bound on the assembled "
+        "beta; the rank-by-rank equality at 4..70 stands on its own"
+    )
