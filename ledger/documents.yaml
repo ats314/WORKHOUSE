@@ -84,19 +84,20 @@ aliases:
       "Reported computational result" and "Conditional corollary" throughout,
       and states which artifacts its bundle does not contain.
   - alias: PUB edition
-    path: paper/workhouse_publication_edition_20260829.tex
-    standing: repo
+    unresolved: true
     note: >
-      the publication edition, v2.1 of 2026-08-30 (file basename keeps the
-      29 August date of the first edition it supersedes; SHA
-      2082094666...7c4652 against the release manifest of the delivered
-      package). Carries the two premise proofs -- Lem. 14 (retained shell)
-      and Lem. 15 (second-order process exhaustion) -- that upgrade the
-      conditional global torus assembly to Thm. 16, and the per-channel
-      resolvent equations (11)-(12) closing the projector-norm-to-hopping
-      step. Its own scope section still leaves the physical fourth-order
-      kernel, the infinite-volume particle interpretation, and the continuum
-      limit open; nothing cited from it moves C2.
+      'PUB edition Lem. 14/15' and the equation (11)-(12) cites, from the
+      global assembly, G17 uniformity and G18 interpolator suites. The
+      publication edition of 2026-08-29 that carries those lemma numbers was
+      NOT ingested: its \chk labels name seven checks that no longer exist,
+      one of them because this repository later renamed
+      '...at L = 3 and 4' to '...at L = 3, 4, 5' after the tex had been
+      pinned byte-for-byte. Ingesting it fails the \chk resolution check;
+      the checks themselves pass and are unaffected. Recorded as unresolved
+      rather than pointed at the rev5 edition already in paper/, whose lemma
+      numbering is different -- a plausible wrong mapping is exactly what
+      this field exists to prevent. Resolving it means rebuilding the
+      edition against current check names and pinning that.
   - alias: UNIFIED
     path: theory/MASTER_THEORY_UNIFIED_2026-08-20_v4_3.md
     standing: current

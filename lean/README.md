@@ -3,14 +3,24 @@
 What compiles here is proved. Nothing else in this repository is.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
-export PATH="$HOME/.elan/bin:$PATH"
-cd lean && lake exe cache get && lake build
+make lean-setup   # elan, the pinned Lean, mathlib's build cache — from the repo root
+make lean         # proof-check
 ```
+
+`make lean-setup` runs `scripts/bootstrap-lean.sh`, which the Lean CI job also
+runs, so a local toolchain and CI's are installed by one recipe rather than two
+that drift. It is idempotent and deliberately *not* part of `make bootstrap`:
+`make check` never compiles Lean, so folding it in would charge every session a
+multi-GB download for a tier it is not going to check.
 
 `lake-manifest.json` pins every dependency revision, so the build is
 reproducible even though `lakefile.toml` tracks mathlib's `master`.
 `.lake/` is ~8 GB and gitignored.
+
+`make lean` passes `--wfail`. Lean reports a `sorry` as a *warning*, so a plain
+`lake build` exits 0 with one present — and the "no sorries" line the target
+prints would then be an assertion rather than a check, which is the one thing
+this repository is built not to do.
 
 ## Scope, stated honestly
 

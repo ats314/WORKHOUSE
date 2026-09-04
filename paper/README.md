@@ -37,8 +37,6 @@ any of them moves.
 | `nested_quotient_master_2026-08-28.pdf` | the master derivation, uniting it with the nested-quotient circuit theory. Superseded by the united edition, kept the same way. |
 | `nested_quotient_master_2026-08-28.txt` | its extracted text, same provenance and standing as the line below. |
 | `homological_flat_bands_2026-08-28.txt` | its text, extracted once with `pypdf` 6.16.2 so checks can read it. Derived, never authority — where the two differ the PDF wins. |
-| `workhouse_publication_edition_20260829.tex` | **the publication edition, v2.1 (2026-08-30)** — the basename keeps the first edition's date. Proves the two premises the master paper leaves as hypotheses (Lem. 14 retained shell, Lem. 15 process exhaustion, upgrading the conditional assembly to Thm. 16) and displays the per-channel resolvent equations (11)–(12). Their combinatorial cores and the channel algebra are checked here — see the `global assembly` suite and the `second order, all ranks` suite. Its scope section stands: the physical fourth-order kernel, infinite-volume particle interpretation, and continuum limit remain open. |
-| `workhouse_publication_edition_20260829.pdf` | its delivered build, pinned byte-for-byte from the v2.1 release package (not rebuilt here — the release manifest carries the same hashes). |
 | `verify_core.py` | the master paper's portable verifier: 12 checks, standard library only, matching its Reproducibility section; finite-volume ranks through L = 5. |
 | `../verify_core.py` | the flat-band manuscript's, 16 checks. Root-level so *that* manuscript's printed `python3 verify_core.py` is true as printed. |
 

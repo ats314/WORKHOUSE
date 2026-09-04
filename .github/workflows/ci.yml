@@ -87,32 +87,16 @@ jobs:
             ~/.elan
             lean/.lake
           key: lean-v2-${{ hashFiles('lean/lean-toolchain', 'lean/lake-manifest.json') }}
-      # The two network steps below get the same treatment for their own
-      # transient failures: retry, but still fail closed — the proof check
-      # itself is never skipped.
-      - name: Install elan
-        run: |
-          for i in 1 2 3; do
-            if [ -x "$HOME/.elan/bin/elan" ]; then break; fi
-            curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
-              | sh -s -- -y --default-toolchain none && break
-            echo "elan install attempt $i failed; retrying in $((i * 10))s" >&2
-            sleep $((i * 10))
-          done
-          [ -x "$HOME/.elan/bin/elan" ]
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - name: Fetch mathlib cache and build
-        working-directory: lean
-        run: |
-          got_cache=""
-          for i in 1 2 3; do
-            if lake exe cache get; then got_cache=1; break; fi
-            echo "lake exe cache get attempt $i failed; retrying in $((i * 10))s" >&2
-            sleep $((i * 10))
-          done
-          [ -n "$got_cache" ]
-          lake build
-          echo "Lean core: proof-checked, no sorries"
+      # Both network steps live in scripts/bootstrap-lean.sh so that a
+      # contributor's `make lean-setup` and this job install the same thing;
+      # the script keeps the retry-but-fail-closed handling they had here.
+      - name: Install the T0 toolchain
+        run: bash scripts/bootstrap-lean.sh
+      # `make lean` rather than a bare `lake build`, so CI exercises the entry
+      # point contributors actually use — including its --wfail gate, without
+      # which a `sorry` only warns and the build still exits 0.
+      - name: Proof-check
+        run: make lean
 
   # The 2026-08-28 agent experience notes hit two Windows-only failures: a
   # cp1252 decode crash in `workhouse why` and backslash paths making the

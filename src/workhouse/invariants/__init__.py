@@ -53,6 +53,7 @@ _MODULES = (
     "orbits",
     "continuum",
     "swap_odd",
+    "hecke",
 )
 
 for _name in _MODULES:

@@ -15,8 +15,6 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-**3 checks are failing.** They are marked below.
-
 ## T0 — proof-checked — 52
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
@@ -180,7 +178,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:248
   - `make lean`
 
-## T1 — re-derived exactly — 257
+## T1 — re-derived exactly — 258
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -207,6 +205,11 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the stability hypothesis package, with its dimensionless ratio`
   - src/workhouse/invariants/isolation.py:299 · G17 / PUB edition Lem. 14
   - `workhouse verify --only 'the stability hypothesis package, with its dimensionless ratio'`
+**Hecke cover correspondence table**
+
+- `the geometric A_p column is p^4 times the printed lambda_p`
+  - src/workhouse/invariants/hecke.py:44 · U6; corpus-import/programs/hecke_cover_correspondence/NOTE_FLUX_hecke_cover_correspondence_2026-08-31.md, target-blind prime table
+  - `workhouse verify --only 'the geometric A_p column is p^4 times the printed lambda_p'`
 **SU(3) second and third order**
 
 - `C-even bandwidth = top - bottom = 88/153`
@@ -934,10 +937,10 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'the torus graph is simple, and the only short cycles are the L = 3 winding triangles'`
 **the flat-band manuscript**
 
-- `every \chk in the united paper names a check that exists and passes` **[FAILING]**
+- `every \chk in the united paper names a check that exists and passes`
   - src/workhouse/invariants/manuscript.py:31 · MASTER paper, every displayed result
   - `workhouse verify --only 'every \chk in the united paper names a check that exists and passes'`
-- `every declared note document is a graph node with an edge` **[FAILING]**
+- `every declared note document is a graph node with an edge`
   - src/workhouse/invariants/manuscript.py:84 · ledger/notes.yaml + notes/*.jsonl
   - `workhouse verify --only 'every declared note document is a graph node with an edge'`
 - `no fourth-order coefficient enters the manuscript`
@@ -1199,7 +1202,7 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
   - `workhouse verify --only 'the sealed radius-two report passes its six float checks at stated tolerances'`
 **the flat-band manuscript**
 
-- `every node the theory graph strands is stranded for a stated reason` **[FAILING]**
+- `every node the theory graph strands is stranded for a stated reason`
   - src/workhouse/invariants/manuscript.py:179 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
   - `workhouse verify --only 'every node the theory graph strands is stranded for a stated reason'`
 **two-cube charge-odd second-order closure (B=4 and B=6)**
