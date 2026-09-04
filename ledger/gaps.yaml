@@ -1043,29 +1043,27 @@ gaps:
           same u through different channel sums, universality is a
           coincidence of sums and G14 stays open.
       - step: the same channel decomposition for the corner and fan dressings of the rotation orbit
-        state: untried
-        cannot_decide: []
-      - step: audit the premise that D - (1/2){H2, V2} is the Hermitian fourth-order effective Hamiltonian on a cluster with PVP = 0 (the pair element at N >= 4), against a direct Bloch or Schrieffer-Wolff expansion on the two-face cluster at N = 5
-        state: untried
-        cannot_decide: []
-        status: >
-          Taken as given by every lens of the 2026-09-04 adversarial
-          verification of ADR 0027; unrefuted, unaudited.
-      - step: audit the rank-generic resolvent at N >= 5 -- link_spectrum roots, the dropping of the E0 component, vacuum intermediates -- against the SU(3) Casimir table route continued to N = 4, 5 by hand
-        state: untried
+        state: done
+        closed_by:
+          - 'RUN:channels_symbolic_rank_2026-09-04'
+          - 'CHK:the shared-link fan dressing is universal channel by channel in Q(N): the coplanar fan is minus the perpendicular fan in every C-odd channel and equal in every C-even one, and its channels are the only ones that carry three-box irreps'
+          - 'CHK:the corner dressing by channel: 87 C-odd channels, at most three doubled links in any direct-term state, every resolvent factor the corner adds to R20 the energy of an identified intermediate state, and the Weingarten poles at N = -+3 of single channels cancelling in the sum'
+          - 'CHK:the single-contact dressing is universal only in sum: between the straight and the L-shaped three-face chain 76 of its 92 C-odd channels agree with the incidence sign, and the 8 that agree with the wrong sign together with the 8 present in each geometry only sum to zero across the two'
+          - 'CHK:beta_N is a sum of resolvent products: -16 u + 32 d - 16 corner + 848/(N(N^2-1)^3) over 254 channel terms, each a rational function of N whose denominator is a product of resolvent factors, equals P17(N^2)/(N R20(N^2))'
         cannot_decide: []
         status: >
-          Taken as given by every lens of the 2026-09-04 adversarial
-          verification of ADR 0027; unrefuted, unaudited.
-      - step: the completeness of the eleven-cumulant decomposition of beta_N at general N rests on the charge-counting argument alone (a connected four-insertion history from P to Q is P Qbar X Xbar, the pair, or the cube); enumerate the fourth-order support at N = 5 from the engine and compare with the 189 Hodge-form keys
-        state: untried
-        cannot_decide: []
-      - step: the N = 4 row of the beta record rests on the determinant trick (pseudoinverse Weingarten at n > N plus the epsilon insertion) in the three-face cumulants; audit that path at N = 4 against an independent epsilon-network reduction, and make the (4,0)-family pair element feasible the same way
-        state: untried
-        cannot_decide: []
-        status: >
-          proposed 2026-09-04 (ADR 0026). With u universal channel by
-          channel, the tier collapse B = D = 0 rests on the Hodge form
+          DONE 2026-09-04 (ADR 0029), over Q(N) rather than a rank sweep. The
+          fan is universal channel by channel like u (coplanar = -perpendicular
+          in every C-odd channel, equal in every C-even one); the single-contact
+          dressing is universal only in sum (76 of 92 C-odd channels agree, 24
+          exceptional ones cancel across the two geometries); the corner's 87
+          channels carry at most three doubled links, and every factor it adds
+          to R20 is the resolvent of an identified middle state. beta_N is a
+          sum of 254 resolvent-product channels with the assembly's integer
+          weights, equal to P17(N^2)/(N R20(N^2)) identically: the all-rank
+          formula IS a sum of resolvent products.
+          ORIGINAL: proposed 2026-09-04 (ADR 0026). With u universal channel
+          by channel, the tier collapse B = D = 0 rests on the Hodge form
           alone (B unpopulated by the carrier projection, D = 0 from
           u2 = 2u, which is the L-chain equality). The one fourth-order
           content of the kernel outside the Hodge algebra is C_shp, carried
@@ -1079,7 +1077,67 @@ gaps:
           a shared link between the end faces (the corner and fan geometry
           need no new machinery beyond labelling three doubled links), sweep
           N = 3..30, reconstruct each channel, and compare the corner's
-          channels with the fan's.
+          channels with the fan's. Done over Q(N) instead, with per-link
+          labels (workhouse.symbolic_rank.channels).
+      - step: audit the premise that D - (1/2){H2, V2} is the Hermitian fourth-order effective Hamiltonian on a cluster with PVP = 0 (the pair element at N >= 4), against a direct Bloch or Schrieffer-Wolff expansion on the two-face cluster at N = 5
+        state: untried
+        cannot_decide: []
+        status: >
+          Taken as given by every lens of the 2026-09-04 adversarial
+          verification of ADR 0027; unrefuted, unaudited.
+      - step: audit the rank-generic resolvent at N >= 5 -- link_spectrum roots, the dropping of the E0 component, vacuum intermediates -- against the SU(3) Casimir table route continued to N = 4, 5 by hand
+        state: untried
+        cannot_decide: []
+        status: >
+          Taken as given by every lens of the 2026-09-04 adversarial
+          verification of ADR 0027; unrefuted, unaudited. Partly covered
+          later the same day (ADR 0029): over Q(N) every eigencomponent
+          of every resolvent is verified to be an exact eigenvector of every
+          single-link H0 with the SU(N) Casimir energies (21,556 components),
+          so the spectra are no longer read off characteristic-polynomial
+          roots at all; and the resolvent denominators E0 - E are recorded
+          with their roots (one integer root >= 4, at N = 4). What remains
+          unaudited is the dropping of the E0 components -- that the E0
+          eigenspace on the reachable words is the plaquette span -- and the
+          vacuum intermediates.
+      - step: the completeness of the eleven-cumulant decomposition of beta_N at general N rests on the charge-counting argument alone (a connected four-insertion history from P to Q is P Qbar X Xbar, the pair, or the cube); enumerate the fourth-order support at N = 5 from the engine and compare with the 189 Hodge-form keys
+        state: untried
+        cannot_decide: []
+      - step: the N = 4 row of the beta record rests on the determinant trick (pseudoinverse Weingarten at n > N plus the epsilon insertion) in the three-face cumulants; audit that path at N = 4 against an independent epsilon-network reduction, and make the (4,0)-family pair element feasible the same way
+        state: untried
+        cannot_decide: []
+        status: >
+          Sharpened 2026-09-04 (ADR 0029): the closed forms derived over Q(N)
+          are regular at N = 4 and agree with the N = 4 row of every per-rank
+          record, so whatever the determinant trick contributes there is what
+          the generic rational function gives. The symbolic run also names
+          the N = 4 degeneracy: the state P^3 with every link of the plaquette
+          in Lambda^3 F, which is Fbar at N = 4, has energy E0 exactly there
+          (the one resolvent denominator with an integer root >= 4). The audit
+          of the path itself is still open.
+      - step: prove channel-wise universality from the Haar contraction -- that a channel's value depends on which links are doubled and in which irreps, not on where on the cluster they sit -- for u and the fan, and explain why the single-contact dressing achieves its universality only by a cancellation among 24 exceptional channels
+        state: untried
+        cannot_decide: []
+        status: >
+          Opened 2026-09-04 (ADR 0029). With every channel an identity in
+          Q(N), the mechanism of the tier collapse is a statement about the
+          channels alone: B is unpopulated by the carrier projection, D = 0
+          is u2 = 2u, and u2 = 2u is the L chain equalling the straight chain
+          channel by channel. What is left is a proof of that equality from
+          the contraction rather than a computation of it.
+    symbolic_rank_2026_09_04: >
+      The degree bound of ADR 0027 is proved by removing it (ADR 0029): the
+      third engine runs over the field Q(N) (workhouse.symbolic_rank), and
+      every cumulant of the beta_N assembly is computed as one rational
+      function of N -- the reconstructions of ADR 0025 and ADR 0027
+      identically, specialising to every per-rank record at N = 3..70. The
+      coplanar dressings are the exact negatives of the perpendicular ones,
+      so beta_N = -16u + 32 d_single - 16 d_corner + 848/(N(N^2-1)^3), and
+      the identity with P17(N^2)/(N R20(N^2)) is a polynomial identity
+      proved in Lean (betaN_from_three_cumulants). The channel decomposition
+      of the corner and fan is in the route above; the tier collapse B = D
+      = 0 is a theorem at every rank N >= 5, given the six-orbit structure of
+      the kernel, because u is universal channel by channel as an identity.
     beta_n_assembled_2026_09_04: >
       The all-rank shape coefficient beta_N is the sum of eleven cluster
       cumulants per rank -- two pair clusters, the coplanar and

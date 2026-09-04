@@ -51,6 +51,19 @@ def set_rank(n: int) -> None:
     CF = F(N * N - 1, 2 * N)
 
 
+def _charge_zero(charge: int) -> bool:
+    """Whether a link carrying net flux ``charge`` (#U minus #Udag) can have a nonzero
+    Haar integral: the charge must be 0 mod N. The two rank predicates of the engine
+    are functions so that ``symbolic_rank`` can run it over Q(N), where "0 mod N"
+    means 0 for every family it meets."""
+    return charge % N == 0
+
+
+def _family_supported(diff: int) -> bool:
+    """Whether a family with net flux ``diff`` is one determinant away from balance."""
+    return abs(diff) <= N
+
+
 def casimir2(p: int, q: int) -> F:
     """SU(3) quadratic Casimir of the irrep (p, q), normalised so C2(3) = 4/3."""
     return F(p * p + q * q + p * q + 3 * p + 3 * q, 3)
@@ -407,9 +420,9 @@ def haar_link(word: tuple, link: int) -> dict:
     us = [s for s, (lk, o) in enumerate(letters) if lk == link and o > 0]
     ds = [s for s, (lk, o) in enumerate(letters) if lk == link and o < 0]
     diff = len(us) - len(ds)
-    if diff % N != 0:
+    if not _charge_zero(diff):
         return {}
-    if abs(diff) > N:
+    if not _family_supported(diff):
         raise NotImplementedError(f"family ({len(us)},{len(ds)}) on link {link}")
     if not us and not ds:
         return {word: F(1)}
@@ -468,7 +481,7 @@ def inner(bra: tuple, vec: dict) -> F:
         for t in bc + w:
             for lk, o in t:
                 cnt[lk] += o
-        if any(v % N for v in cnt.values()):
+        if any(not _charge_zero(v) for v in cnt.values()):
             continue
         tot += c * integrate(product(bc, w))
     return tot

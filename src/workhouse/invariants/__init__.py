@@ -57,6 +57,7 @@ _MODULES = (
     "third_implementation",
     "all_rank",
     "gamma_isolation",
+    "rank_field",
 )
 
 for _name in _MODULES:
