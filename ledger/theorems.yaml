@@ -341,3 +341,108 @@ theorems:
       increases above mu = p and no root exceeds 16, i.e. lambda <= 12.
     formalizes: [G25]
     promotes: []
+
+  - name: resolventWeight_singlet
+    statement: >
+      The singlet channel of the per-channel resolvent equation in closed
+      form: w_1 = -(1/N^2)/(C_F + 0/2) = -2/(N(N^2-1)).
+    formalizes: [CONST:t_N, R2]
+    promotes:
+      - "the four channel weights follow from dimension and Casimir"
+
+  - name: resolventWeight_adjoint
+    statement: >
+      The adjoint channel in closed form:
+      w_Adj = -((N^2-1)/N^2)/(C_F + N/2) = -2(N^2-1)/(N(2N^2-1)).
+    formalizes: [CONST:t_N, R2]
+    promotes:
+      - "the four channel weights follow from dimension and Casimir"
+
+  - name: resolventWeight_antisym
+    statement: >
+      The antisymmetric channel in closed form:
+      w_Lam = -(N(N-1)/2 / N^2)/(C_F + (N+1)(N-2)/(2N)) = -(N-1)/((N+1)(2N-3)).
+    formalizes: [CONST:t_N, R2]
+    promotes:
+      - "the four channel weights follow from dimension and Casimir"
+
+  - name: resolventWeight_sym
+    statement: >
+      The symmetric channel in closed form:
+      w_Sym = -(N(N+1)/2 / N^2)/(C_F + (N-1)(N+2)/(2N)) = -(N+1)/((N-1)(2N+3)).
+    formalizes: [CONST:t_N, R2]
+    promotes:
+      - "the four channel weights follow from dimension and Casimir"
+
+  - name: mixed_family_sum
+    statement: >
+      The mixed family {1, Adj} of per-channel resolvent weights sums to the
+      antiparallel channel sum A_N = -2N^3/((N^2-1)(2N^2-1)), from the
+      dimension/Casimir table rather than by transcription.
+    formalizes: [CONST:t_N, R2]
+    promotes:
+      - "A_N and B_N are the channel sums, not transcriptions"
+
+  - name: like_family_sum
+    statement: >
+      The like family {Lam^2 F, Sym^2 F} of per-channel resolvent weights sums
+      to the parallel channel sum B_N = -4N(N^2-2)/((N^2-1)(4N^2-9)).
+    formalizes: [CONST:t_N, R2]
+    promotes:
+      - "A_N and B_N are the channel sums, not transcriptions"
+
+  - name: channel_resolvent_assembly
+    statement: >
+      The projector-to-cross-matrix-element assembly (PUB edition eqs. 11-12):
+      the like-family sum minus the mixed-family sum -- the four per-channel
+      resolvent elements carrying their charge-odd family signs eta_rho -- is
+      the all-rank hopping t_N exactly, for every N with the channel
+      denominators nonzero.
+    formalizes: [CONST:t_N, R2]
+    promotes:
+      - "the per-channel resolvent equation closes the projector-to-hopping step"
+
+  - name: shell_margin_five
+    statement: >
+      Five charged links clear the plaquette shell by exactly C_F/2:
+      5*C_F/2 - 2*C_F = C_F/2, the counting margin of the volume-uniform
+      shell-isolation statement.
+    formalizes: [G17]
+    promotes:
+      - "five charged links clear the shell by exactly C_F/2, at every volume"
+
+  - name: lambda2_shelf_numerator
+    statement: >
+      The Lambda^2 F shelf numerator: 8(N+1)(N-2) - 5(N^2-1) = (3N-11)(N+1),
+      denominators cleared -- nonnegative from N = 4, and at N = 3 the
+      antisymmetric square is F-bar itself.
+    formalizes: [G17]
+    promotes:
+      - "the second-Casimir shelf: every irrep beyond F and F-bar clears 5C_F/4"
+
+  - name: sym2_shelf_numerator
+    statement: >
+      The Sym^2 F shelf numerator: 8(N-1)(N+2) - 5(N^2-1) = (3N+11)(N-1),
+      nonnegative for every N >= 1.
+    formalizes: [G17]
+    promotes:
+      - "the second-Casimir shelf: every irrep beyond F and F-bar clears 5C_F/4"
+
+  - name: adjoint_shelf_numerator
+    statement: >
+      The adjoint shelf numerator: 8N^2 - 5(N^2-1) = 3N^2 + 5, positive at
+      every rank.
+    formalizes: [G17]
+    promotes:
+      - "the second-Casimir shelf: every irrep beyond F and F-bar clears 5C_F/4"
+
+  - name: isolation_switch_numerator
+    statement: >
+      The isolation switch point, denominators cleared:
+      4N(2(C_L2 - C_F) - C_F) = 2(N-5)(N+1), so the heavier-irrep margin
+      undercuts the domino margin C_F exactly below N = 5 -- with
+      Lambda^2 F = F-bar at N = 3, SU(4) is the single rank where the shell
+      isolation constant is 5/4 rather than C_F.
+    formalizes: [G17]
+    promotes:
+      - "the exact isolation constant: gamma = C_F, except 5/4 at SU(4), attained"

@@ -28,10 +28,13 @@ from ._core import SUITES, Result, Suite, source_path
 #: order the single-file version defined them in.
 _MODULES = (
     "rank_law",
+    "assembly",
     "su3",
     "charge_even",
     "fourth_order",
     "homology",
+    "interpolator",
+    "isolation",
     "adjudication",
     "uniformity",
     "tier",

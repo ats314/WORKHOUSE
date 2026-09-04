@@ -292,6 +292,35 @@ def _():
         # this census is for -- it shrinks when the work is done, and the
         # entries are removed so a regression strands them again loudly.
         "LEAN:stencil_zero_mode",
+        # The global-assembly suite: checked, and cited by no pinned document.
+        # Their `cites` edges would have come from the 2026-08-29 publication
+        # edition, which is NOT ingested. That edition's \chk labels went stale
+        # against its own branch: it names seven checks that no longer exist,
+        # one of them because the branch itself later renamed
+        # "...at L = 3 and 4" to "...at L = 3, 4, 5" after the tex was pinned
+        # byte-for-byte. Ingesting it fails the \chk resolution check next
+        # door; not ingesting it strands these seven. Both checks are right,
+        # and the manuscript is the thing that is wrong.
+        #
+        # The checks themselves are unaffected -- they pass, and they carry the
+        # combinatorial cores of PUB Lem. 14 and Lem. 15. What is missing is
+        # only the citation edge from a manuscript to them. These come off this
+        # list the moment a corrected edition is pinned, which is the honest
+        # trigger: the edition has to be rebuilt, not the census tidied.
+        "CHK:global-assembly-retained-shell-and-proce-912203:"
+        "casimir-minimality-pinned-on-a-bounded-w-8eeaeb",
+        "CHK:global-assembly-retained-shell-and-proce-912203:"
+        "every-4-cycle-is-an-elementary-face-exce-d57568",
+        "CHK:global-assembly-retained-shell-and-proce-912203:"
+        "the-l--3-torus-link-graph-is-simple-and--42cd4f",
+        "CHK:global-assembly-retained-shell-and-proce-912203:"
+        "the-only-cycles-shorter-than-4-are-the-3-f8dfeb",
+        "CHK:global-assembly-retained-shell-and-proce-912203:"
+        "the-two-insertions-are-pinned-to-p-and-p-5797f7",
+        "CHK:global-assembly-retained-shell-and-proce-912203:"
+        "two-distinct-faces-share-at-most-one-lin-2c42f9",
+        "CHK:global-assembly-retained-shell-and-proce-912203:"
+        "winding-loops-clear-the-shell-3n-2-excee-7d6686",
     }
 
     index_dir = PAPER_DIR.parent / "index"

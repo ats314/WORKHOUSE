@@ -37,7 +37,7 @@ any of them moves.
 | `nested_quotient_master_2026-08-28.pdf` | the master derivation, uniting it with the nested-quotient circuit theory. Superseded by the united edition, kept the same way. |
 | `nested_quotient_master_2026-08-28.txt` | its extracted text, same provenance and standing as the line below. |
 | `homological_flat_bands_2026-08-28.txt` | its text, extracted once with `pypdf` 6.16.2 so checks can read it. Derived, never authority — where the two differ the PDF wins. |
-| `verify_core.py` | the master paper's portable verifier: 12 checks, standard library only, matching its Reproducibility section. |
+| `verify_core.py` | the master paper's portable verifier: 12 checks, standard library only, matching its Reproducibility section; finite-volume ranks through L = 5. |
 | `../verify_core.py` | the flat-band manuscript's, 16 checks. Root-level so *that* manuscript's printed `python3 verify_core.py` is true as printed. |
 
 Two verifiers because there are two papers. They overlap on the ledger and
@@ -404,7 +404,9 @@ open against the united edition too.
 python3 verify_core.py        # or: make paper
 ```
 
-Standard library only, no arguments, no floats, about a fifth of a second. It
+Standard library only, no arguments, no floats, about ten seconds — nearly
+all of it the exact `Fraction` elimination of the L = 4 and L = 5 torus
+boundary maps, which the finite-volume checks now cover through L = 5. It
 exists so a referee who will install nothing can still check the arithmetic,
 and so §9's reproducibility sentence names something real.
 

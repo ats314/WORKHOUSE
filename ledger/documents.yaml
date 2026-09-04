@@ -83,6 +83,21 @@ aliases:
       circuit theory. Same pin and map. It labels its computational conclusions
       "Reported computational result" and "Conditional corollary" throughout,
       and states which artifacts its bundle does not contain.
+  - alias: PUB edition
+    unresolved: true
+    note: >
+      'PUB edition Lem. 14/15' and the equation (11)-(12) cites, from the
+      global assembly, G17 uniformity and G18 interpolator suites. The
+      publication edition of 2026-08-29 that carries those lemma numbers was
+      NOT ingested: its \chk labels name seven checks that no longer exist,
+      one of them because this repository later renamed
+      '...at L = 3 and 4' to '...at L = 3, 4, 5' after the tex had been
+      pinned byte-for-byte. Ingesting it fails the \chk resolution check;
+      the checks themselves pass and are unaffected. Recorded as unresolved
+      rather than pointed at the rev5 edition already in paper/, whose lemma
+      numbering is different -- a plausible wrong mapping is exactly what
+      this field exists to prevent. Resolving it means rebuilding the
+      edition against current check names and pinning that.
   - alias: UNIFIED
     path: theory/MASTER_THEORY_UNIFIED_2026-08-20_v4_3.md
     standing: current
