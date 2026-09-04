@@ -23,7 +23,7 @@ REPO_AUTHORED = {"SHA256SUMS", "CLAUDE.md"}
 
 
 def _entries():
-    for line in MANIFEST.read_text().splitlines():
+    for line in MANIFEST.read_text(encoding="utf-8").splitlines():
         if line.strip():
             digest, name = line.split("  ", 1)
             yield digest, name
@@ -52,7 +52,7 @@ def test_every_corpus_file_matches_its_hash():
 
 def test_formatters_are_excluded_from_evidence():
     """The config fix that stopped the 296-file rewrite must stay in place."""
-    cfg = (CORPUS.parent / "pyproject.toml").read_text()
+    cfg = (CORPUS.parent / "pyproject.toml").read_text(encoding="utf-8")
     assert "corpus-import" in cfg and "settlement" in cfg, (
         "ruff's extend-exclude must keep covering both evidence trees"
     )
@@ -66,7 +66,7 @@ def test_nothing_in_the_corpus_escapes_the_manifest():
     generator run sat in the tree unnoticed. Walk the directory instead.
     """
     pinned = {name for _, name in _entries()} | REPO_AUTHORED
-    present = {str(p.relative_to(CORPUS)) for p in CORPUS.rglob("*") if p.is_file()}
+    present = {p.relative_to(CORPUS).as_posix() for p in CORPUS.rglob("*") if p.is_file()}
     unpinned = sorted(present - pinned)
     assert not unpinned, (
         f"{len(unpinned)} files in corpus-import/ are not in the manifest: "

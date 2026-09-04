@@ -12,12 +12,12 @@ repeats it.
 
 from __future__ import annotations
 
-import re
 import shlex
 from dataclasses import dataclass
 from pathlib import Path
 
-from .frontier import strip_lean_comments
+from . import check_cache
+from .frontier import lean_declarations
 from .invariants import SUITES
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -64,46 +64,31 @@ class Claim:
 def lean_claims() -> list[Claim]:
     """Theorem names from the Lean tree, with the file and line each sits on.
 
-    Public because it is the single scrape of the T0 layer: ``claims.py`` reuses
-    it to give every theorem a catalogue record.
+    Public because ``claims.py`` reuses it to give every theorem a catalogue
+    record. The scrape is `frontier.lean_declarations`; this adds the tier and
+    the re-check command.
     """
-    out: list[Claim] = []
-    if not LEAN_DIR.exists():
-        return out
-    for path in sorted(LEAN_DIR.rglob("*.lean")):
-        rel = path.relative_to(ROOT).as_posix()
-        for n, line in enumerate(
-            strip_lean_comments(path.read_text(encoding="utf-8")).splitlines(), 1
-        ):
-            # Attributes and `private` sit BEFORE the keyword, and the first
-            # draft of this regex did not allow them -- so an
-            # `@[simp] theorem` was invisible to the T0 scrape, escaping both
-            # the catalogue and the "every Lean theorem has a curated entry"
-            # rule in tests/test_graph.py. A theorem that no ledger has to
-            # account for is exactly the hole the T0 layer is supposed to
-            # close, so the prefix is matched rather than assumed absent.
-            m = re.match(
-                r"\s*(?:@\[[^\]]*\]\s*)*(?:private\s+|protected\s+|nonrec\s+)*"
-                r"(?:theorem|lemma)\s+([A-Za-z_][\w'.]*)",
-                line,
-            )
-            if m:
-                out.append(
-                    Claim(
-                        tier=0,
-                        name=m.group(1),
-                        where=f"{rel}:{n}",
-                        reproduce="make lean",
-                        suite="lean core",
-                    )
-                )
-    return out
+    # The scrape itself is `frontier.lean_declarations`, which owns the one
+    # pattern that knows attributes and `private` precede the keyword. This
+    # function used to carry its own copy; when only one copy was widened the
+    # two T0 counts disagreed by exactly the three `@[simp] theorem`s.
+    return [
+        Claim(
+            tier=0,
+            name=name,
+            where=f"{rel}:{n}",
+            reproduce="make lean",
+            suite="lean core",
+        )
+        for rel, n, name in lean_declarations()
+    ]
 
 
 def _check_claims() -> list[Claim]:
     out: list[Claim] = []
+    cache = check_cache.CheckCache()
     for suite in SUITES:
-        for r in suite.run():
+        for r in suite.run(cache=cache):
             out.append(
                 Claim(
                     tier=r.tier,

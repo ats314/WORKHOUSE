@@ -21,6 +21,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from . import check_cache
 from . import ledger as ledger_mod
 from . import literature as literature_mod
 from .invariants import SUITES
@@ -94,15 +95,48 @@ def strip_lean_comments(body: str) -> str:
     return "".join(out)
 
 
+# Attributes, `private` and `nonrec` sit BEFORE the keyword. Two scrapes of
+# the Lean tree used to carry their own copy of this pattern; `certified.py`
+# widened its copy to allow the prefix and this one was left behind, so
+# `@[simp] theorem` was counted there and not here -- FRONTIER.md said 37 and
+# CERTIFIED.md said 40, over the same three declarations, for four days. The
+# pattern and the scrape now live here once and `certified.lean_claims` builds
+# on them, so the two cannot drift apart again; `tests/test_frontier.py` pins
+# the agreement.
+LEAN_DECL = re.compile(
+    r"^[ \t]*(?:@\[[^\]]*\]\s*)*(?:private\s+|protected\s+|nonrec\s+)*"
+    r"(?:theorem|lemma)\s+([A-Za-z_][\w'.]*)",
+    re.MULTILINE,
+)
+
+
+def lean_declarations() -> list[tuple[str, int, str]]:
+    """Every Lean theorem in the tree, as (repo-relative path, line, name).
+
+    The single scrape of the T0 layer: `certified.lean_claims` turns these into
+    catalogue records and `claims.py` reuses those, so a theorem is either
+    visible to all three or to none.
+    """
+    out: list[tuple[str, int, str]] = []
+    if not LEAN.exists():
+        return out
+    for path in sorted(LEAN.rglob("*.lean")):
+        rel = path.relative_to(ROOT).as_posix()
+        body = strip_lean_comments(path.read_text(encoding="utf-8"))
+        for m in LEAN_DECL.finditer(body):
+            out.append((rel, body.count("\n", 0, m.start()) + 1, m.group(1)))
+    return out
+
+
 def _lean_counts() -> tuple[int, int]:
-    theorems = sorries = 0
+    sorries = 0
     if not LEAN.exists():
         return 0, 0
     for path in LEAN.rglob("*.lean"):
-        body = strip_lean_comments(path.read_text(encoding="utf-8"))
-        theorems += len(re.findall(r"^\s*(?:theorem|lemma)\s", body, re.MULTILINE))
-        sorries += len(re.findall(r"\bsorry\b", body))
-    return theorems, sorries
+        sorries += len(
+            re.findall(r"\bsorry\b", strip_lean_comments(path.read_text(encoding="utf-8")))
+        )
+    return len(lean_declarations()), sorries
 
 
 def _retracted() -> list[tuple[str, str]]:
@@ -194,8 +228,9 @@ def _cheapest(led: ledger_mod.Ledgers) -> list[dict[str, Any]]:
 def compute() -> Frontier:
     led = ledger_mod.load()
     suites, passed, total = [], 0, 0
+    cache = check_cache.CheckCache()
     for suite in SUITES:
-        results = suite.run()
+        results = suite.run(cache=cache)
         ok = sum(1 for r in results if r.passed)
         suites.append((suite.name, ok, len(results)))
         passed += ok
@@ -356,6 +391,12 @@ def render(f: Frontier) -> str:
         detail = " ".join(str(g.get("detail", "")).split())
         if detail:
             w(f"  - {detail}")
+        # Routes by state, so the next session inherits which attempts are
+        # dead rather than rediscovering it from run READMEs.
+        for state in ("live", "untried", "done", "dead"):
+            names = [st["step"] for st in g.get("plan", []) or [] if st.get("state") == state]
+            if names:
+                w(f"  - routes {state}: {'; '.join(names)}")
     w("")
 
     w("## 7b. What published work bears on this")
@@ -438,6 +479,11 @@ def brief() -> str:
         "WORKHOUSE — verification layer over a research corpus. Read AGENTS.md "
         "(posture) and CLAUDE.md (rules) before changing anything.",
         "",
+        "The graph is the front door, not the files: `workhouse why <id>` prints "
+        "everything recorded about one claim, including which routes are dead. "
+        "Query before reading: the two measured failure modes are re-deriving what "
+        "exists under other notation, and repeating a route a run already closed.",
+        "",
         f"State: {f.checks_passed}/{f.checks_total} checks pass, "
         f"{f.lean_theorems} Lean theorems with {f.lean_sorries} sorry. "
         f"{len(f.disputed)} open contradiction, {len(f.open_gaps)} open gaps "
@@ -458,6 +504,20 @@ def brief() -> str:
     if f.cheapest:
         g = f.cheapest[0]
         lines.append(f"Cheapest decisive next step: {g['id']} — {g['title']}.")
+        routes = g.get("plan", []) or []
+        if routes:
+            counts = {}
+            for st in routes:
+                counts[st.get("state", "?")] = counts.get(st.get("state", "?"), 0) + 1
+            live = [st["step"] for st in routes if st.get("state") in ("live", "untried")]
+            dead = [st["step"] for st in routes if st.get("state") == "dead"]
+            lines.append(
+                "  Routes: "
+                + ", ".join(f"{n} {state}" for state, n in sorted(counts.items()))
+                + (f". Open: {'; '.join(live)}" if live else "")
+                + (f". Dead: {'; '.join(dead)}" if dead else "")
+                + f". Start with `workhouse why {g['id']}`."
+            )
     lines += [
         "",
         "Traps: q_band^(4) and m_Gamma^(4) are differently anchored coordinates, "
@@ -465,13 +525,12 @@ def brief() -> str:
         "rescaling; exact rationals stay sympy.Rational and floats carry _NUM; "
         "never edit theory/; never widen a tolerance to clear a finding.",
         "",
-        "Orientation: FRONTIER.md, then ledger/, then invariants/. "
-        "corpus-import/ is 950 files and ~61 context windows — target it, never "
-        "read it recursively. Exact rationals are the join keys, not concepts.",
+        "Then: FRONTIER.md, ledger/, invariants/. corpus-import/ is 950 files and "
+        "~61 context windows — target it, never read it recursively. Exact "
+        "rationals are the join keys, not concepts.",
         "",
-        "Commands: workhouse search <value|symbol|id> | why <id> | verify | "
-        "frontier | status; make check. Search first: the measured failure "
-        "mode is re-deriving what exists under different notation.",
+        "Commands: workhouse why <id> | search <value|symbol|id> | derive <id> | "
+        "branches <id> | verify [--only TEXT ...] | frontier | status; make check.",
     ]
     return "\n".join(lines)
 

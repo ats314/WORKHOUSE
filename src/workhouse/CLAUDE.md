@@ -45,6 +45,8 @@ third, add an explicit `FINDING:` check that *asserts* the discrepancy.
 - `corpus_registry.py` — near-miss, multiple, and coverage sweeps over the whole corpus
 - `tier_collapse.py`, `near_gamma.py`, `settlement.py`, `payloads.py` — one investigation each
 - `even_sector.py` — the charge-even Bloch cubic, and the finite lattice it is checked against
+- `haar_epsilon.py` — exact SU(3) Haar integrals with the ε-tensors kept as ε's; the engine's projectors, a reduction the engine's partitions cannot do (ADR 0021)
+- `chain_cluster.py` — the first implementation of the chain-amplitude route (ADR 0020)
 - `rigor.py` — certified Arb enclosures for T2 comparisons (ADR 0010); the only sanctioned route to arb
 - `triage.py` — read-only survey of an unpinned archive
 - `notes.py` — the notes register: archive inventories, review verdicts, intake rules

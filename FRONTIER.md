@@ -10,35 +10,40 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 37 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 40 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 224/224 checks pass.
+**T1/T2 — re-derived here.** 293/293 checks pass.
 
 | Suite | Passing |
 |---|---|
 | second order, all ranks | 12/12 |
 | SU(3) second and third order | 12/12 |
-| the charge-even band, exactly | 15/15 |
-| fourth order, sealed core | 6/6 |
+| the charge-even band, exactly | 18/18 |
+| fourth order, sealed core | 10/10 |
 | fourth order, anchoring and the residual dispute | 13/13 |
 | old-to-new crosswalk | 5/5 |
 | fourth-order generalized Hodge pencil | 3/3 |
 | fourth-order checkpoint extraction | 3/3 |
-| homology and finite volume | 12/12 |
+| homology and finite volume | 15/15 |
 | settlement package and adjudication harness (G3) | 16/16 |
-| near-Gamma uniformity (G11) | 6/6 |
+| near-Gamma uniformity (G11) | 7/7 |
 | tier collapse (G14) | 6/6 |
 | isotropic pentagonal cap band (v4.3 §9.3) | 11/11 |
-| native string tension through fifth order (v4.3 §11.2) | 7/7 |
-| published comparisons (literature/index.yaml) | 16/16 |
+| native string tension through fifth order (v4.3 §11.2) | 10/10 |
+| published comparisons (literature/index.yaml) | 17/17 |
 | restored payloads (G1) | 11/11 |
 | coupling erratum (C4/G2) | 2/2 |
 | tetrahedral Haar-resolvent coefficient (G5) | 13/13 |
-| notes program: SAFE, Davies, coercivity (G20-G23) | 13/13 |
+| notes program: SAFE, Davies, coercivity (G20-G23) | 16/16 |
 | off-axis channel ledger (C2 geography, G14) | 23/23 |
 | the flat-band manuscript | 5/5 |
 | finite-rank truncation bridge (published SU(3) truncations) | 8/8 |
-| two-cube charge-odd second-order closure (B=4 and B=6) | 6/6 |
+| two-cube charge-odd second-order closure (B=4 and B=6) | 12/12 |
+| the electric shell, and what isolates it | 8/8 |
+| fourth-order kernel orbits | 28/28 |
+| continuum and fixed-spacing bridges (G18, G19) | 3/3 |
+| the swap-odd domino state (U4, ADR 0023) | 5/5 |
+| Hecke cover correspondence table | 1/1 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -64,6 +69,7 @@ argument exists and the artifact does not.
 
 - historical: `-211835444920651/4405310420659200` = -0.04808638318135875
 - v10a.26: `-0.020213328886166577`
+- cluster-assembled 2026-09-02: `-54822624038066723/853010622188524800` = -0.06426956782485449
 - gap between them: `0.027873054295192174`
 - routed to: G3
 
@@ -142,6 +148,9 @@ settles nothing is excluded however cheap it looks.
 
 - `G3` (weeks) Fourth-order adjudication — decide C_shp where it actually lives — settles C2, G9
   - REWRITTEN 2026-08-28, at the maintainer's standing instruction, after the sweep-cannot-decide-C2 finding below. The original G3 ("run the marked-cluster engine target-blind", the 11-item GLUEBALL §18.1 protocol) directed every session at a sealed 609-evaluation sweep that is now established — by T1 static scan, not by fatigue — to emit the Gamma-point scalar only, a quantity externally validated and structurally incapable of constraining Delta_C (Phi_C(0) = 0). Four sessions dead-ended on that path (absent engine, closure cap, cost, and finally the structural incapacity); the register, not the next agent, now carries that knowledge. What G3 must settle is unchanged: the off-axis coefficient C_shp (C2). The route is replaced by the two paths that can actually reach it, cheapest first.
+  - routes untried: the corner cluster from a third implementation, or from the historical pipeline's own face-resolved ledger
+  - routes done: block-structure comparison; targeted kernel-bearing recomputation; independent cross-amplitude computation; chain amplitude u on the three-plaquette cluster; covariance sign test of the two flipped orbits
+  - routes dead: off-axis channel assembly through workhouse.cellular; sealed scalar sweep (demoted, optional)
 - `G17` (unbounded) PC-2 free-energy stability and the source-radius reduction — settles load-bearing
   - The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction.
 - `G18` (unbounded) The spectral bridge — settles load-bearing
@@ -201,8 +210,10 @@ published. A paper is T3 until something checks it, same as any document.
 | `CBB_2026` | `R2` | corroborates | verified |
 | `BALAJI_2026` | `R2` | supplies-comparison | verified |
 | `HAZRA_2026` | `G14` | supplies-comparison | verified |
+| `T_HOOFT_1979` | `G19` | supplies-method | not-yet-obtained |
+| `GINIBRE_1970` | `G19` | confusable | not-yet-obtained |
 
-**9 of 45 edges rest on a source nobody here has read
+**11 of 47 edges rest on a source nobody here has read
 or pinned.** Obtaining and digest-pinning a primary source upgrades its
 edges from assertion to verification — the Hamer 1989 table did exactly
 that for the program's strongest external agreement.
@@ -215,8 +226,8 @@ different things: **in-web** is how many indexed papers cite this one
 
 | Paper | In-web | INSPIRE (as of) | Standing |
 |---|---|---|---|
+| `WILSON_1974` | 10 | 7208 (2026-08-21) | stub |
 | `KS_1975` | 10 | 2815 (2026-08-21) | **not yet obtained** |
-| `WILSON_1974` | 9 | 7208 (2026-08-21) | stub |
 | `KSS_1976` | 6 | 225 (2026-08-21) | **not yet obtained** |
 | `MP_1999` | 5 | 1233 (2026-08-21) | pinned |
 | `MT_1989` | 5 | 202 (2026-08-21) | stub |
@@ -249,6 +260,7 @@ different things: **in-web** is how many indexed papers cite this one
 | `BORGA_2024` | 1 | 10 (2026-08-21) | pinned |
 | `HSB_2000` | 1 | 9 (2026-08-21) | pinned |
 | `SEO_UKAWA_1982` | 1 | 3 (2026-08-21) | stub |
+| `T_HOOFT_1979` | 0 | 1386 (2026-09-03) | **not yet obtained** |
 | `AT_2021_SUN` | 0 | 115 (2026-08-21) | pinned |
 | `KRS_2023` | 0 | 67 (2026-08-21) | pinned |
 | `LLL_2006` | 0 | 62 (2026-08-21) | pinned |
@@ -262,9 +274,10 @@ different things: **in-web** is how many indexed papers cite this one
 | `CBB_2026` | 0 | — | **not yet obtained** |
 | `CB_2024` | 0 | — | **not yet obtained** |
 | `FLPS_2026` | 0 | 0 (2026-08-21) | pinned |
+| `GINIBRE_1970` | 0 | — | **not yet obtained** |
 | `HAZRA_2026` | 0 | — | **not yet obtained** |
 
-**Next acquisition target, computed: `KS_1975`** — 10 in-web
+**Next acquisition target, computed: `WILSON_1974`** — 10 in-web
 citations and nobody here has read or pinned it. The ranking surfaces
 this automatically; obtaining the paper re-ranks it.
 
@@ -296,5 +309,22 @@ falsifier is an analogy, and analogies do not belong on this list.
 
 - supported by: ENGINE_FLUX_su3_domino_d3.py, PAPER §third order, G25
 - would be falsified by: An order r at which the C-even per-neighbour leakage and the C-even hopping are computed independently and differ. Fourth order is the first untested one and is reachable from the same weight cards G3 needs. Equally fatal in the other direction: a derivation showing the two quantities are equal for a reason that does not involve the vacuum route would refute the identification while leaving the equality standing.
+- status: refuted
+
+**U5 — The determinant (epsilon / triality) sector enters the fourth-order band shape through the ON-SITE ORBIT ALONE, at every rank where it has been computed independently, and N = 3 is the sole exception. In the orbit basis of the 189-record kernel the on-site orbit's carrier projection is exactly sigma*e_1, so eps = T/q = sigma is constant over the zone and carries no A, B, C or D — which means a correction recorded as "momentum-independent" or "a pure scalar shift" IS an on-site-orbit shift and nothing else. Read that way the record is uniform: SU(6)'s sole determinant orbit shifts q, X, M and R by exactly 6/343 with A, B and the bandwidth unchanged (an on-site shift); SU(5) ships 895,524 candidate pairs with zero determinant sectors (no shift at all); SU(4) records Delta A_4 = Delta B_4 = 0. Only at N = 3 is Delta beta_3 nonzero, i.e. only there does the sector leave the on-site orbit.
+The quantitative consequence, AMENDED 2026-09-01. In the Hodge form of the kernel (suite "fourth-order kernel orbits"), the normal orbit is nu = nu~ - 4u with nu~ = -5/48 the primitive cube completion and -4u the diagonal shadow of the two-hop sector u S_sq^2. Eps-blindness of the link-balanced primitive channel fixes nu~, which is the same statement as Delta A_3 = 0 (A = -nu~ exactly); it says nothing about u. And C = -5/96 - (rho + pi~)/2 with pi~ = pi + 2u, so Delta beta_3 = +25/64 gives Delta C = +25/1024 and
+
+    Delta(rho + pi~) = -25/512, with nu~ = -5/48 unchanged; u, u2, sigma~ free.
+
+Historical rho + pi~ = -17607806155349/2202655210329600 (2*X_QUANTUM above the earlier rho + pi), so a direct balanced contraction at N = 3 must return rho + pi~ = -15644916262153/275331901291200.**
+
+- supported by: CHK: the on-site orbit IS the momentum-independent channel, CHK: CORRECTED PREDICTION: the eps-sector at N=3 is Delta(rho + pi~) = -25/512; u is NOT constrained, CHK: H4 = -nu~(L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2 C_shp R exactly: C_shp is the coefficient of the one non-Hodge operator, CHK: the SU(6) determinant correction is exactly 6/343 and momentum-independent, CHK: the SU(5) stage-1 scan is shipped: 895,524 pairs, zero determinant sectors, CHK: A = 5/48 forces the normal amplitude: nu = -(5/48 + 4u), OFF_AXIS_LEDGER (maintainer, WORK_SINCE_2026-08) §4: the primitive channel is link-balanced, hence eps-blind, STATE.md cont. 9: unified N-ality theorem, exact exceptional offsets
+- would be falsified by: A direct balanced contraction at N = 3 whose nu~ = nu + 4u is not -5/48, or whose rho + pi~ shift from the historical value is not exactly -25/512 (amended 2026-09-01: u, u2 and sigma~ are NOT constrained, so a shift in them refutes nothing). Equally: any exceptional rank at which the determinant correction is shown to be momentum-DEPENDENT (it would then not be an on-site shift), or an SU(3) determinant analysis that reaches A rather than C, which would contradict the eps-blindness of the link-balanced primitive channel that the whole chain rests on.
+- status: refuted
+
+**U6 — A number-theoretic construction landed 2026-08-31 (the "Hecke cover correspondence" note — see corpus-import/programs/ hecke_cover_correspondence/) maps lines in P^2(F_p) with Q = 0 to sublattices of Z^3, reads off a quantity lambda_p at each of ten odd primes p = 3..31, and reports that lambda_p is the Hecke eigenvalue of a level-2 eta/Eisenstein newform at p, verified independently at all ten. The note's own boxed result is that the same neighbor sum acts on four infrared parameters it calls tau, C, S_0, A by tau' = (p+1) tau, C' = lambda_p C, S_0' = (p+1) S_0, A' = (p+1) A + (4/5)((p+1) - lambda_p) C. Candidate: the note's C and quartic harmonic H_4 are the SAME object as this corpus's fourth-order shape coefficient C_shp and its quartic obstruction basis (UNIFIED §5.1), under a normalization not yet derived here — in which case the p+1 / lambda_p Hecke eigenline decomposition would be a new, independent handle on the open C2 dispute (does either recorded C_shp value, or neither, sit on the harmonic eigenline?).**
+
+- supported by: corpus-import/programs/hecke_cover_correspondence/NOTE_FLUX_hecke_cover_correspondence_2026-08-31.md, CHK: the geometric A_p column is p^4 times the printed lambda_p
+- would be falsified by: Derive the normalization map between the note's (tau, C, S_0, A, H_4) and this corpus's own fourth-order coordinates (q_a, e_2, e_3, C_shp, the shapes A/B/C/D of UNIFIED §5.1) and show that no such map carries C to C_shp — e.g. because the note's construction has no analogue of the off-axis dependence Phi_C(k) = 4 e_2(k)/Q(k) that C_shp multiplies, or because the dimensional/degree count of H_4 does not match the quartic obstruction space's. Either kills the identification outright, the same way q_band^(4) and m_Gamma^(4) turned out to be differently anchored rather than rival estimates (ADR 0002). Equally fatal in the other direction: exhibiting the map and finding that NEITHER recorded C_shp value sits on the eigenline it predicts would leave the construction standing but refute its relevance to C2.
 - status: conjectured
 

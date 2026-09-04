@@ -89,7 +89,11 @@ def test_manifest_lists_exactly_the_unobtained_ranked():
     ids = [r["id"] for r in rows]
     expected = {r["id"] for r in L.relevance(LIT) if not r["obtained"]}
     assert set(ids) == expected
-    assert ids[0] == "KS_1975", "the computed top acquisition target leads the manifest"
+    # the computed top acquisition target leads the manifest; KS_1975 ties
+    # the Wilson 1974 stub for that top in-web count (tests/test_literature.py)
+    top = rows[0]["in_web"]
+    assert top == max(r["in_web"] for r in rows)
+    assert any(r["id"] == "KS_1975" and r["in_web"] == top for r in rows)
     for row in rows:
         assert row["links"], row["id"]
         assert str(row["settles"]).strip(), row["id"]

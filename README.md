@@ -133,6 +133,11 @@ workhouse lit --intake           # identify inbox PDFs and print pinning advice
 workhouse triage /path/to/dir    # survey an unpinned archive, read-only
 ```
 
+The atlas opens on the scientific/evidence spine; the much larger note and
+archive layer is opt-in. Its detail panel retains each edge's direction,
+curated/derived marker, and source path, and open contradictions keep their
+branches and originators separate.
+
 `make help` lists the rest (`fmt`, `lock`, `clean`, …). Two are easy to
 conflate: `make manifest` re-pins `theory/` and `make corpus-manifest` re-pins
 `corpus-import/` — a deliberate corpus change needs the second, or the
@@ -256,6 +261,24 @@ and `Φ_C(0) = 0`, so the Γ-point scalar pins `Δ_Γ` and places **no** constra
 on `Δ_C`. `Φ_C` also vanishes on every axial cut, which is why axial data agree
 exactly while M and R split by `8Δ_C` and `16Δ_C`. That is the finite-order
 bottleneck of the whole program, and G3 is the run that would settle it.
+
+What the dispute *is*, as of 2026-08-30, is smaller than the numbers suggest.
+Clearing the `1/q` makes the shape ansatz a linear identity between Laurent
+polynomials in `exp(i k_j)`, so the coefficients are solved over the whole zone
+instead of fitted at four points — and in that basis the 189-record kernel
+carries only **six** weight magnitudes, one per cubic orbit, with
+
+```
+A = 5/48,   B = 0,   D = 0,   C_shp = -5/96 - u - (ρ + π)/2
+```
+
+where `ν = -(5/48 + 4u)` is forced by `A` and `σ` enters `c_0` alone. Three
+signed numbers. The v10a.26 kernel has the same six orbits and the same
+normalised table row for row; its skeleton unit is `4.1327437×` and its `ρ` and
+`π` are **opposite in sign**. The ε-free branch is exact too:
+`B_3 - β_historical = 25/64`, so it is `C_historical + 25/1024`. Neither side is
+promoted — both are now in one basis, which is what makes them comparable.
+See the `fourth-order kernel orbits` suite.
 
 The corpus's own one-sentence summary of its largest unpaid debt:
 

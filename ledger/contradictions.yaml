@@ -72,6 +72,10 @@ contradictions:
       - label: v10a.26
         value: -0.020213328886166577
         kind: float
+      - label: cluster-assembled 2026-09-02
+        value: "-54822624038066723/853010622188524800"
+        decimal: -0.06426956782485449
+        kind: exact-rational
     delta: 0.027873054295192174
     notes: >
       A diagonal shift cannot reconcile this, and the reason is structural.
@@ -86,6 +90,145 @@ contradictions:
       Delta_C*Phi_C term can move the dispersion, so the crosswalk preserves
       bandwidth only if Delta_C vanishes or is absorbed by an exact operator
       identity. This is the finite-order bottleneck of the whole program.
+    balanced_branch_RETRACTED:
+      value: "-13035490122347/550663802582400"
+      decimal: -0.023672320681358752
+      kind: exact-rational
+      status: RETRACTED 2026-08-30, the same day it was recorded
+      retraction: >
+        Recorded as "the eps-free branch, established exactly". It is not a
+        branch of C2 at all. The 25/64 is the gap between BETA_PEN_3 and
+        payloads.b_evaluator() at N = 3 -- and that evaluator at N = 3 returns
+        exactly channel_ledger.beta_formula(3) = P17(9)/(3 R20(9)), which
+        GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md forbids at line ~1511:
+        "The compact beta_N formula is not to be substituted at N=3; use the
+        separate exact SU(3) value." The continuation route to N = 3 is
+        separately closed, D34 carrying (z-9)^3 with Q32(9) nonzero.
+        The arithmetic was never wrong and the relation is real -- it is what
+        DELTA_BETA_3 records, and the pre-existing check "the N=3 continuation
+        shift is exactly 25/64, with two exact corollaries" already stated it
+        correctly, including that whether the shift is derived or defined as a
+        difference is OPEN. What is withdrawn is the promotion: no direct
+        balanced contraction at N = 3 is held in this repository, so
+        C_historical + 25/1024 is not an established value of C_shp and must
+        not be read as one. Kept rather than deleted, per the rule that a
+        refuted claim's record is more useful than its absence.
+      what_the_exceptional_ranks_do_show: >
+        Not a licence for the substitution, but real evidence about the
+        mechanism, all of it already checked here. SU(5): the shipped stage-1
+        scan holds 895,524 candidate support/output pairs with ZERO
+        determinant-or-epsilon sectors. SU(6): the sole determinant orbit
+        shifts the scalar by exactly 6/343 at q, X, M and R while A, B and the
+        bandwidth are unchanged -- re-derived from the shipped certificate,
+        720 permutation terms, 11/11 gates. SU(4): the v0.8 changelog records
+        Delta A_4 = Delta B_4 = 0. So at every exceptional rank where the
+        determinant sector has been computed independently, it does not reach
+        B. N = 3 would be the one rank where it does. That is a pattern worth
+        explaining, not a proof that 25/64 is derived.
+    orbit_reduction: >
+      Established 2026-08-30 (same suite). Clearing the 1/q makes the shape
+      ansatz a linear system over Laurent polynomials in z_j = exp(i k_j), so
+      the coefficients are SOLVED over the whole zone rather than fitted at
+      four points (the transcript's procedure, condition number 45.8). The 189
+      records then carry only six weight magnitudes, one per cubic orbit, and
+      in terms of those amplitudes the shape data is closed form:
+        A = 5/48,  B = 0,  D = 0,  C_shp = -5/96 - u - (rho + pi)/2,
+      with nu = -(5/48 + 4u) forced by A and sigma entering c_0 alone. So C2
+      is a disagreement about three signed numbers. The cold dump satisfies the
+      same six-orbit structure and the same normalized table; relative to the
+      historical kernel its skeleton unit is scaled by 4.1327437 and its rho
+      and pi are OPPOSITE IN SIGN. Six of the eighteen same-plane
+      nearest-neighbour records are the normal orbit, which A pins in both
+      kernels and which therefore cannot disagree freely — refining the
+      "nn same-plane block" of runs/g3_kernel_record_dump_2026-08-28/.
+    sign_flip_is_not_the_whole_story: >
+      Tested and refuted 2026-08-30, so the next reader does not chase it. The
+      two orbits that differ in sign are exactly the two whose only shape
+      effect is C (A = B = D = 0 for both), which looks like a transpose or
+      conjugation convention differing between the pipelines. It is not: their
+      MAGNITUDES also differ, and by three different factors — u by 4.1327437,
+      rho by 10.68866, pi by 1.487657. Enumerating all four sign choices of
+      (rho, pi) at fixed magnitudes reproduces each kernel's own C exactly and
+      nothing else: the historical value needs (rho +, pi -) with historical
+      magnitudes, the v10a.26 value needs (rho -, pi +) with cold magnitudes,
+      and no sign choice on one kernel's magnitudes lands near the other's
+      value. So C2 is a disagreement about three numbers, not one convention.
+    sign_flip_is_not_a_convention: >
+      Tested 2026-09-01, the covariance sign test recorded on G3, three checks
+      in the kernel-orbits suite. On plaquette-centred displacements with the
+      orientation character (PSI_SIGN read at the identity) every one of the
+      six orbits is separately Hermitian and invariant under all 48 elements
+      of O_h, in BOTH kernels with the SAME character; symmetry is linear, so
+      all four sign patterns of (rho, pi) are admissible and Hermiticity plus
+      cubic covariance fix no orbit's sign. And no convention reaches the flip:
+      of the 48 plane-fibre regaugings only +-1 preserves the 144 records the
+      kernels agree on; pi is a same-plane orbit no regauging touches; every
+      diagonal regauging other than +-1 flips two of the three cross-plane
+      pairs and throws rho, with the cross-plane skeleton, out of the cubic
+      shape span. So the two kernels are two different Hermitian
+      cubic-covariant operators in one basis. C2 is about which fourth-order
+      operator the theory produces, not about how to write one down, and only
+      an independent computation of the cross and in-plane amplitudes decides it.
+    hodge_form_2026_09_01: >
+      Both kernels are, exactly (historical) and to 1e-13 (cold),
+        H4 = -nu~ (L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ I - 2 C_shp R
+      with S_sq = L_down - 4I the signed shared-link adjacency, L_up the cube
+      Laplacian, R the cross-plane half of S_sq, nu~ = -5/48 in both, pi~ =
+      pi + 2u, sigma~ = sigma - 12u. Every term but the last is a polynomial
+      in the two Hodge Laplacians and acts on the cube-boundary carrier by a
+      scalar, so C_shp is the coefficient of the ONE operator outside that
+      algebra, and the carrier is an exact eigenvector of H4 iff C_shp = 0.
+      The disagreement is four numbers, (u, rho, pi~, sigma~); u and sigma~
+      reach the carrier band only through its constant, so C2 is exactly the
+      two shared-link amplitudes: C_shp = -5/96 - (rho + pi~)/2. The 4.13x
+      scale on u is real (nu~ agrees, so no normalisation relates the
+      kernels) and band-invisible on the carrier. Checks: "the 144 agreed records are u S_sq^2, the shared-link adjacency squared", "H4 = -nu~(L_up - 2) + u S_sq^2 - pi~ S_sq + sigma~ - 2 C_shp R exactly: C_shp is the coefficient of the one non-Hodge operator",
+      "FINDING: the cold kernel has the same Hodge form, with nu~ = -5/48 and its own (u, rho, pi~, sigma~)"; ADR 0019.
+    chain_amplitude_2026_09_02: >
+      The one number in the agreed two-hop sector the two kernels disagree
+      on, u, computed independently (RUN g3_chain_amplitude_2026-09-02):
+      X_QUANTUM exactly, on two chain geometries. The historical exact
+      kernel is right there and the v10a.26 dump is wrong by 4.1327437.
+      This does not decide C2 -- u is the constant 16u on the carrier --
+      but the cold side's sign-flipped rho and pi~ now rest on a pipeline
+      with a demonstrated error in a sector it shares with the historical
+      kernel, and carry no independent weight until that error is located
+      and shown not to reach them. Check "FINDING: the chain amplitude is u = X_QUANTUM exactly, on the coplanar and the bent chain; the cold kernel's 4.13 u is wrong".
+    replication_2026_09_02: >
+      Replicated by a second implementation written without reading the
+      first (runs/g3_chain_amplitude_replication_2026-09-02): different
+      resolvent, the engine's own fourth-order assembly with PVP = +-1 per
+      C-sector rather than PVP = 0, three chain types. Same rational. The
+      statement about standing now rests on two assemblies; nothing about
+      C2 changes and neither side is promoted. Check "REPLICATION: a second implementation, with the engine's PVP assembly and a Krylov resolvent, gives u = X_QUANTUM on three chain types"; ADR 0020.
+    shared_link_pair_2026_09_02: >
+      The two amplitudes C2 reduces to have now been assembled from clusters,
+      from primitives, reading neither kernel
+      (runs/g3_shared_link_pair_2026-09-02, ADR 0021). The in-plane element
+      pi is the historical record EXACTLY, -20535103905179/1264270320593280;
+      so is the normal element nu = -5/48 - 4u, with the -5/48 arising as
+      the cube-completion channel through the other four faces of the cube;
+      so was u (ADR 0020). The rotation element rho is NEITHER kernel's:
+      588708011765248393/14501180577204921600 = +0.0405972 against the
+      historical +0.0082309 and the cold -0.0879716. Every component of that
+      assembly is validated on an agreed record (the pair cluster and the
+      two dressing classes on pi; the cube term and the side chains on nu)
+      or by a second implementation (the corner cluster, identical in
+      workhouse.chain_cluster), and no agreed record has a corner cluster to
+      check the whole against. Consequences: the cold dump is wrong on u, pi
+      and rho; the historical kernel is right on u, pi, nu and wrong on rho,
+      so the historical C_shp is not the fourth-order coefficient either.
+      The assembled C_shp = -5/96 - u - (rho + pi)/2 =
+      -54822624038066723/853010622188524800 = -0.064269568 is recorded as
+      this entry's third side, and nothing is promoted: what would establish it is
+      a third implementation of the corner cluster, or the historical
+      pipeline's own face-resolved ledger for the eighteen three-clusters,
+      which this repository does not hold. Checks "the lattice fourth-order
+      in-plane nearest-neighbour element, assembled from clusters, is the
+      historical kernel's pi exactly", "the lattice fourth-order normal
+      element, assembled from clusters with the cube-completion term, is the
+      agreed nu = -5/48 - 4u exactly", "FINDING: the lattice fourth-order
+      rotation element, assembled from clusters, is neither kernel's rho".
     blocks: [G3]
 
   - id: C3

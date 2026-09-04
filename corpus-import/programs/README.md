@@ -6,6 +6,7 @@
 | `pmbsf/` | PMBSF analytic sparsity program (May 22–30 layer) | Conditional firewall closure = Lemma Q + Bałaban + boundary gate; "NOT a Yang–Mills mass-gap proof" per its own master |
 | `one_plaquette/` | Flat-band program (separate; strong-coupling only) | Exact spectroscopy through O(y³), machine-certified; **tromino_o3/ = next-order suite (F024, all gates pass)**; firewall: no manuscript support routed through Program B |
 | `rooted_capacity_program/` | Doc layer of the rooted projected-capacity line (uploaded June 12, F025) | Self-labeled conditional; rooted source-stability criterion — M3a/Z.B-adjacent; deep read = #47b |
+| `hecke_cover_correspondence/` | Candidate Hecke-eigenline mechanism for the fourth-order kernel (landed 2026-08-31) | Record-backed only: the note reached this repository, the generator/verifier/certificates it names did not. One transcription check (`A_p = p^4 lambda_p`); no independent re-derivation yet. See `U6` |
 
 Live status + next actions: `STATE.md`. Engines + data backing campaign claims: `numerics/`.
 

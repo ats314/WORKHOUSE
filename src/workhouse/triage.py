@@ -16,7 +16,7 @@ import hashlib
 import re
 from collections import Counter
 from dataclasses import dataclass, field
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 from sympy import Rational
 
@@ -105,7 +105,9 @@ DATE_IN_NAME = re.compile(r"(20\d{2})[-_]?(\d{2})[-_]?(\d{2})")
 
 @dataclass
 class FileReport:
-    path: Path
+    # Archive-relative paths are serialized evidence identifiers, not host
+    # filesystem paths. Keep them stable across Windows and POSIX checkouts.
+    path: PurePosixPath
     size: int
     sha256: str
     duplicate_of: str | None = None
@@ -189,7 +191,7 @@ def scan(root: Path, max_scan_bytes: int = MAX_SCAN_BYTES) -> Report:
         except OSError:
             continue
         digest = hashlib.sha256(data).hexdigest()
-        rel = path.relative_to(root)
+        rel = PurePosixPath(path.relative_to(root).as_posix())
         rep = FileReport(path=rel, size=len(data), sha256=digest, duplicate_of=pinned.get(digest))
 
         date = DATE_IN_NAME.search(path.name)

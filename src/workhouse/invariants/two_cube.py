@@ -308,3 +308,281 @@ def _():
         f"ratio >= {hv['heldout_small_u']['minimum_wrong_to_correct_error_ratio']:.0f}. Read "
         "from the sealed certificate; the 1,590,462-state builder was not re-run here"
     )
+
+
+@two_cube.check(
+    "the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities",
+    "MASTER edition §5.1; runs/two_cube_codd_o2_2026-08-29 §6.4",
+)
+def _():
+    # The cutoff comparison is a WEAK inequality, and that is not a
+    # convenience: both retentions this section turns on are decided by an
+    # equality. Lambda^2 F = bar3 has budget exactly 4 and sits exactly on
+    # the B = 4 cutoff; the sextet has budget exactly 6 and sits exactly on
+    # the B = 6 one. Under a strict rule B = 4 would reach {1} alone and
+    # B = 6 would lose the sextet, contradicting both delivered censuses --
+    # so the DELIVERIES fix the convention, which is exactly why the budget
+    # arithmetic is not an independent confirmation of either census. That
+    # last clause is the point of the check: it bounds what the budgets prove.
+    c2 = {
+        "1": Fraction(0),
+        "3": Fraction(4, 3),
+        "bar3": Fraction(4, 3),
+        "6": Fraction(10, 3),
+        "bar6": Fraction(10, 3),
+        "8": Fraction(3),
+    }
+    budget = {rho: c2[rho] + 2 * c2["3"] for rho in c2}
+    weak = {b: {rho for rho, v in budget.items() if v <= b} for b in (4, 6)}
+    strict = {b: {rho for rho, v in budget.items() if v < b} for b in (4, 6)}
+    delivered = {4: {"1", "3", "bar3"}, 6: {"1", "3", "bar3", "6", "bar6", "8"}}
+    ok = (
+        weak == delivered
+        and budget["bar3"] == 4
+        and budget["6"] == 6
+        and strict[4] == {"1"}
+        and strict[6] == {"1", "3", "bar3", "8"}
+        and strict != delivered
+    )
+    return ok, (
+        f"budgets C2(rho) + 2 C2(3) = { {k: str(v) for k, v in budget.items()} }; the weak rule "
+        f"reproduces both delivered censuses exactly, while the strict rule would give "
+        f"{sorted(strict[4])} at B = 4 and drop the sextets at B = 6. Both retentions the "
+        "section uses sit ON the cutoff (bar3 at 4, the sextet at 6), so the convention is "
+        "fixed by the deliveries and the budget arithmetic corroborates rather than confirms"
+    )
+
+
+@two_cube.check(
+    "connected first order vanishes by inclusion-exclusion, not by cancellation of numbers",
+    "MASTER edition §5; runs/two_cube_codd_o2_2026-08-29 §5",
+)
+def _():
+    # On the shell P V P = I_11, so first order is nonzero but scalar. Its
+    # connected fold vanishes identically -- and by COUNTING, not by
+    # arithmetic cancellation: each of the eleven faces is covered exactly
+    # once by {L, R} once the shared face is restored by F, so the Moebius
+    # weight applied to the identity is 1 - 1 = 0 on every index. That
+    # distinction is what makes second order the leading connected term
+    # rather than a correction to a first-order one, so it is worth
+    # separating from the numerical fold.
+    weights = {}
+    for i in range(11):
+        weights[i] = (i in _I_L) + (i in _I_R) - (i in _I_F)
+    covered_once = set(weights.values()) == {1}
+    fold_of_identity = [1 - weights[i] for i in range(11)]
+    # and the same on the off-diagonal: the identity has none, so the fold is
+    # exactly the diagonal statement above
+    ok = covered_once and all(v == 0 for v in fold_of_identity)
+    return ok, (
+        f"Moebius weight (i in L) + (i in R) - (i in F) is {sorted(set(weights.values()))} on "
+        "every one of the eleven faces -- the shared face 7 is in both cells and restored once "
+        "by F, the other ten in exactly one -- so folding the identity gives 1 - 1 = 0 index by "
+        "index. First order is scalar on the shell and its connected part vanishes by cover "
+        "counting; second order is therefore the leading connected term"
+    )
+
+
+@two_cube.check(
+    "the connected diagonal is orbit-constant, and only the transporting orbit moves",
+    "MASTER edition §5.2; runs/two_cube_codd_o2_2026-08-29 §7.4",
+)
+def _():
+    # D is treated as an eleven-number remainder in both deliveries. It is
+    # not eleven numbers: the open prism has a symmetry group of order 16
+    # (cell exchange, two transverse reflections, the y <-> z swap) whose
+    # orbits on the faces are 8 + 2 + 1, and D is constant on them. The
+    # eight-element orbit is exactly the support of the four cross-cell
+    # pairs, and it is the ONLY orbit whose value differs between the two
+    # truncations -- so the whole B = 4 -> B = 6 difference is confined to
+    # the faces that carry connected transport. That is the architecture
+    # measured rather than assumed.
+    sides = tuple(i for i in range(11) if i not in (2, 7, 10))
+    caps, shared = (2, 10), (7,)
+    d6 = [Fraction(x) for x in _cert()["graph"]["connected_diagonal"]]
+    d4 = [
+        Fraction(-15, 4) if i in caps else Fraction(0) if i in shared else Fraction(-7, 4)
+        for i in range(11)
+    ]
+    transporting = {i for pair in ((0, 5), (1, 6), (3, 8), (4, 9)) for i in pair}
+    orbits = {"sides": sides, "caps": caps, "shared": shared}
+    const = {
+        name: (len({d6[i] for i in idx}) == 1 and len({d4[i] for i in idx}) == 1)
+        for name, idx in orbits.items()
+    }
+    moved = {name: d6[idx[0]] != d4[idx[0]] for name, idx in orbits.items()}
+    ok = (
+        all(const.values())
+        and set(sides) == transporting
+        and moved == {"sides": True, "caps": False, "shared": False}
+        and d6[0] == Fraction(-2317, 612)
+        and d4[0] == Fraction(-7, 4)
+        and d6[2] == d4[2] == Fraction(-15, 4)
+        and d6[7] == d4[7] == 0
+    )
+    return ok, (
+        f"orbits 8 + 2 + 1: D is constant on each at both truncations {const}. The eight side "
+        f"faces are exactly the support of the four cross-cell pairs, and only their value moves "
+        f"({d4[0]} -> {d6[0]}); the end caps stay -15/4 and the shared face 0 at both B = 4 and "
+        "B = 6. With the four cross-cell blocks carrying the whole off-diagonal change, the "
+        "entire B=4 -> B=6 difference lives on the faces that carry connected transport -- and "
+        "where the faces form a SINGLE orbit (closed cube, periodic torus) the same argument "
+        "forces D scalar, so the prism's three orbits are its boundary, not a defect"
+    )
+
+
+@two_cube.check(
+    "the B=6 six-channel census IS the Weingarten four-channel ledger, channel by channel",
+    "MASTER edition Reported result (the census is the Weingarten ledger)",
+)
+def _():
+    # The registered sum check is weak evidence on its own: six rationals
+    # reach one target in many ways and a fitted set would pass it. The
+    # stronger statement is the correspondence itself -- c_1 = -w_1,
+    # c_8 = -w_Adj, and each like-family weight split EVENLY between an
+    # irrep and its conjugate, c_3 = c_bar3 = w_{Lambda^2 F}/2 and
+    # c_6 = c_bar6 = w_{Sym^2 F}/2. Four predicted numbers, six delivered
+    # ones, and the two coincidences the correspondence requires. Still
+    # conditional on the delivery's rational reconstructions, which is why
+    # the paper labels it reported and not proved.
+    chans = _cert()["graph"]["channel_coefficients"]
+    c = {k.split(":")[1]: Fraction(v["rational"]) for k, v in chans.items()}
+
+    def _w(channel):
+        # the registry's own resolvent weight, so this is a JOIN against
+        # constants.py and not a second local derivation of the same number
+        r = K.channel_weight(channel, 3)
+        return Fraction(int(r.p), int(r.q))
+
+    w = {"1": _w("1"), "8": _w("Adj"), "3": _w("Lambda2"), "6": _w("Sym2")}
+    ok = (
+        c["1"] == -w["1"]
+        and c["8"] == -w["8"]
+        and c["3"] == c["bar3"] == w["3"] / 2
+        and c["6"] == c["bar6"] == w["6"] / 2
+        and w["1"] == Fraction(-1, 12)
+        and w["8"] == Fraction(-16, 51)
+        and w["3"] == Fraction(-1, 6)
+        and w["6"] == Fraction(-2, 9)
+    )
+    return ok, (
+        f"Weingarten weights at N = 3 from d_rho/N^2 over C_F + C_rho/2: w_1 = {w['1']}, "
+        f"w_Adj = {w['8']}, w_Lambda2 = {w['3']}, w_Sym2 = {w['6']}. The delivered census "
+        f"matches channel by channel: c_1 = {c['1']} = -w_1, c_8 = {c['8']} = -w_Adj, "
+        f"c_3 = c_bar3 = {c['3']} = w_Lambda2/2, c_6 = c_bar6 = {c['6']} = w_Sym2/2 -- six "
+        "reconstructed rationals landing on four predicted ones with the two conjugate "
+        "coincidences the correspondence requires, which is stronger than the one-sum test and "
+        "still conditional on the reconstruction"
+    )
+
+
+@two_cube.check(
+    "every shared-link channel is separately proportional to the geometry, on all 56 pairs",
+    "MASTER edition §5; runs/two_cube_codd_o2_2026-08-29 §7",
+    tier=2,
+)
+def _():
+    # The paper's central architecture -- colour separates from geometry --
+    # measured rather than assumed. The delivery resolves the connected
+    # operator into six link-irrep matrices, and EACH ONE is a scalar
+    # multiple of the same incidence Gram: the ratio (channel matrix entry) /
+    # (G_conn entry) is constant across all 56 adjacent ordered pairs, to a
+    # residual the certificate records per channel. If colour and geometry
+    # did not separate, six matrices would be six different shapes summing to
+    # one; instead they are six numbers times one shape. T2: the residuals
+    # are floats from the delivery's own reconstruction.
+    chans = _cert()["graph"]["channel_coefficients"]
+    counts = {k.split(":")[1]: v["nonzero_ratio_count"] for k, v in chans.items()}
+    resid = {k.split(":")[1]: v["max_abs_residual_on_nonzero"] for k, v in chans.items()}
+    worst = max(resid.values())
+    ok = (
+        set(counts) == {"1", "3", "bar3", "6", "bar6", "8"}
+        and all(n == 56 for n in counts.values())
+        and worst < 2.2e-15
+    )
+    pairs = sorted(set(counts.values()))
+    return ok, (
+        f"all six channels report a constant channel-to-geometry ratio on {pairs} "
+        f"nonzero adjacent ordered pairs each, worst residual {worst:.2e} < 2.2e-15. Colour and "
+        "geometry separate channel by channel, not merely in the sum -- six numbers times one "
+        "incidence Gram, which is what the shared-link factorisation claims and what a fitted "
+        "ledger would not reproduce"
+    )
+
+
+@two_cube.check(
+    "the one-cube shell is A1 + T1 + E, and its flat level is the S^2 fundamental class",
+    "MASTER edition §5.3 (one-cube shell)",
+)
+def _():
+    # Both deliveries ASSERT the cubic labels and neither builds the symmetry
+    # matrices. They are integer linear algebra and take no delivered input,
+    # so they are derived here. The six faces of a cube are a closed surface:
+    # ker d_2 is one-dimensional, spanned by the sum of all six -- the
+    # fundamental class, b_2(S^2) = 1, which is the torus theorem on a
+    # complex with no three-cells. G = d_2^T d_2 then has spectrum
+    # {0, 4, 4, 4, 6, 6}, the antisymmetric combinations b_{+i} - b_{-i}
+    # carrying the defining representation and the symmetric ones the
+    # permutation representation of the three unordered axes. With the
+    # charge-odd inversion P b_{+i} = -b_{-i} the shell is
+    # A_1^{--} + T_1^{+-} + E^{--}, and alpha I + t G has levels alpha,
+    # alpha + 4t, alpha + 6t. The A_1 level sits AT the scalar for every t:
+    # no truncation, no channel, no disputed coefficient can move it.
+    #
+    # Faces in the order (+x, -x, +y, -y, +z, -z), outward oriented; edges
+    # are the twelve cube edges, each shared by exactly two faces with
+    # opposite induced orientation.
+    axes = ((0, 1), (2, 3), (4, 5))
+    edges = []
+    for a in range(3):
+        for b in range(3):
+            if a == b:
+                continue
+            for i in axes[a]:
+                for j in axes[b]:
+                    if (j, i) not in [(x, y) for x, y in edges]:
+                        edges.append((i, j))
+    edges = sorted({tuple(sorted(e)) for e in edges})
+    d2 = [[0] * 6 for _ in edges]
+    for r, (i, j) in enumerate(edges):
+        d2[r][i], d2[r][j] = 1, -1
+    gram = [
+        [sum(d2[r][i] * d2[r][j] for r in range(len(edges))) for j in range(6)] for i in range(6)
+    ]
+    # exact spectrum by the symmetry-adapted basis, not by a solver
+    anti = [[1 if k == i else -1 if k == j else 0 for k in range(6)] for i, j in axes]
+    symm = [[1 if k in (i, j) else 0 for k in range(6)] for i, j in axes]
+
+    def _apply(vec):
+        return [sum(gram[i][j] * vec[j] for j in range(6)) for i in range(6)]
+
+    def _eig(vec):
+        img = _apply(vec)
+        nz = next(i for i, v in enumerate(vec) if v != 0)
+        lam = Fraction(img[nz], vec[nz])
+        return lam if all(Fraction(img[i]) == lam * vec[i] for i in range(6)) else None
+
+    anti_eigs = {_eig(v) for v in anti}
+    total = [1] * 6
+    flat = _eig(total)
+    # the symmetric sector splits as A_1 (the total) + E; take two E vectors
+    e_vecs = [
+        [a - b for a, b in zip(symm[0], symm[1], strict=True)],
+        [a - b for a, b in zip(symm[1], symm[2], strict=True)],
+    ]
+    e_eigs = {_eig(v) for v in e_vecs}
+    ok = (
+        len(edges) == 12
+        and anti_eigs == {Fraction(4)}
+        and flat == Fraction(0)
+        and e_eigs == {Fraction(6)}
+    )
+    return ok, (
+        f"G = d_2^T d_2 on the closed cube surface, built from {len(edges)} oriented edges: the "
+        "three antisymmetric combinations b_{+i} - b_{-i} carry the defining representation with "
+        f"eigenvalue {anti_eigs.pop()}, the two symmetric traceless ones give {e_eigs.pop()}, and "
+        "the sum of all six faces -- the S^2 fundamental class -- has eigenvalue 0. So the shell "
+        "is A_1^{--} + T_1^{+-} + E^{--} with G-spectrum {0, 4, 4, 4, 6, 6} and alpha I + t G has "
+        "levels alpha, alpha + 4t, alpha + 6t: the A_1 level sits at the scalar for EVERY t, "
+        "which is why no truncation or disputed coefficient anywhere can move it"
+    )
