@@ -271,7 +271,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:247
   - `make lean`
 
-## T1 — re-derived exactly — 296
+## T1 — re-derived exactly — 299
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -736,6 +736,17 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the crosswalk is exactly scalar on the momentum axes`
   - src/workhouse/invariants/fourth_order.py:277 · MASTER_THEORY §5.5
   - `workhouse verify --only 'the crosswalk is exactly scalar on the momentum axes'`
+**private-link paths as single links; universality history by history**
+
+- `a private-link path is one effective link with k times the single-link H0: every three-cluster cumulant of the beta_N assembly is the same, channel by channel in both sectors, on the reduced cluster as on the full one`
+  - src/workhouse/invariants/path_reduction.py:46 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026
+  - `workhouse verify --only 'a private-link path is one effective link with k times the single-link H0: every three-cluster cumulant of the beta_N assembly is the same, channel by channel in both sectors, on the reduced cluster as on the full one'`
+- `the single-contact dressing agrees history by history between its two geometries once time is reversed, the end roles are swapped and one end face is conjugated: every (sequence, channel) term has ratio -1`
+  - src/workhouse/invariants/path_reduction.py:132 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026
+  - `workhouse verify --only 'the single-contact dressing agrees history by history between its two geometries once time is reversed, the end roles are swapped and one end face is conjugated: every (sequence, channel) term has ratio -1'`
+- `universality of the two-hop weight holds history by history: the straight and the L-shaped chain agree in every (insertion sequence, channel) term of the direct term, and integrand by integrand within each term`
+  - src/workhouse/invariants/path_reduction.py:97 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; ADR 0019
+  - `workhouse verify --only 'universality of the two-hop weight holds history by history: the straight and the L-shaped chain agree in every (insertion sequence, channel) term of the direct term, and integrand by integrand within each term'`
 **published comparisons (literature/index.yaml)**
 
 - `FINDING: Munster's 1985 table shifts his 1982 erratum at eighth order`

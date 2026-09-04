@@ -1126,11 +1126,32 @@ gaps:
           channels alone: B is unpopulated by the carrier projection, D = 0
           is u2 = 2u, and u2 = 2u is the L chain equalling the straight chain
           channel by channel. What is left is a proof of that equality from
-          the contraction rather than a computation of it. A first probe the
-          same day, on clusters with their private-link paths collapsed to
-          weighted effective links, finds the equality holds history by
-          history -- for each time-ordered insertion sequence separately --
-          which is where the proof will start.
+          the contraction rather than a computation of it. Sharpened the same
+          day (ADR 0030, runs/path_reduction_2026-09-04): on clusters with
+          their private-link paths collapsed to weighted effective links --
+          which compute every cumulant identically, channel by channel --
+          the equality holds for each time-ordered insertion sequence
+          separately and, within each, integrand by integrand as a
+          value-preserving bijection; the single-contact dressing likewise
+          once time is reversed, the end roles swapped and one end face
+          conjugated. So the lemma to prove is about one face: a middle word
+          Tr(U1 A U2 B-dagger) with two private links of weight one behaves,
+          under every Fierz rewiring with its neighbours' shared-link letters
+          and the final Haar integration, like Tr(U1 U2 C-dagger) with one
+          private link of weight two -- the energies by the path lemma, the
+          Haar values because the second n = 1 contraction's 1/N is paid back
+          by one extra closed loop. Not yet written out.
+        closed_by: []
+    path_reduction_2026_09_04: >
+      The path-reduction lemma is in the engine (loopcalc.reduced_words,
+      LINK_WEIGHT): a private path of k links is one Haar link with k times
+      the single-link H0, and the reduced clusters -- two shared links and a
+      few weighted private ones -- give every fourth-order cumulant channel by
+      channel (suite "private-link paths as single links; universality
+      history by history", ADR 0030). Universality of u is a bijection of
+      integrands between the straight and the L chain, term by term; the
+      tier collapse's last unexplained input is therefore one Haar identity
+      on one face, stated in the route above.
     symbolic_rank_2026_09_04: >
       The degree bound of ADR 0027 is proved by removing it (ADR 0029): the
       third engine runs over the field Q(N) (workhouse.symbolic_rank), and
