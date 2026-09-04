@@ -116,6 +116,18 @@ spelling (`-10/96` finds `-5/48`), and it carries two warnings a grep cannot:
 forbidden names (`m_4`) and names coined here that the corpus never uses
 (`Phi_C`, which the corpus writes as `4e_2/q_a`).
 
+## Land your own green work
+
+From Alex, 2026-08-29: agents were leaving green PRs open, waiting for a
+review that was never coming. So: **when your PR is green — CI passing, no
+merge conflict, no unaddressed review comment — mark it ready and merge it
+yourself.** Do not wait for a human to press the button. The failure this
+prevents: verified work stranded in open PRs while the branch drifts.
+
+This is not a license to skip the gates. Everything above still holds —
+`make check` and `make verify` clean before pushing, the generated files
+regenerated, and a red or conflicted PR is yours to fix, never to merge.
+
 ## Commands
 
 ```bash
