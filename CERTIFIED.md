@@ -214,7 +214,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:248
   - `make lean`
 
-## T1 — re-derived exactly — 278
+## T1 — re-derived exactly — 281
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1004,6 +1004,15 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'the |0> route is minus the vacuum energy at orders 2 and 3, so leak_(k,+) = t_(k,+) follows'`
 **the third engine at every rank (all-rank cumulants)**
 
+- `the assembled beta's closed form in N, reconstructed from 38 ranks and confirmed on the other 28, is the corpus's P17(N^2)/(N R20(N^2)) as a rational function; the pair clusters' closed forms are exact negatives with a double pole at N = 3`
+  - src/workhouse/invariants/all_rank.py:825 · GLUEBALL v3.1 Appendix A ~1490-1508 (P17, R20); C10; G14; runs/beta_n_from_assembly_2026-09-04/closed_forms.json; ADR 0027
+  - `workhouse verify --only 'the assembled beta'"'"'s closed form in N, reconstructed from 38 ranks and confirmed on the other 28, is the corpus'"'"'s P17(N^2)/(N R20(N^2)) as a rational function; the pair clusters'"'"' closed forms are exact negatives with a double pole at N = 3'`
+- `the cluster assembly reproduces the corpus's all-rank beta_N = P17(N^2)/(N R20(N^2)) exactly at every rank N = 4..70 (the pair cluster, which cancels, computed at N >= 5), and the link-disjoint pair is zero at every rank`
+  - src/workhouse/invariants/all_rank.py:738 · C2; C10; G14; R2; GLUEBALL v3.1 ~1074, ~1080-1088, Appendix A ~1490-1508; runs/beta_n_from_assembly_2026-09-04; ADR 0027
+  - `workhouse verify --only 'the cluster assembly reproduces the corpus'"'"'s all-rank beta_N = P17(N^2)/(N R20(N^2)) exactly at every rank N = 4..70 (the pair cluster, which cancels, computed at N >= 5), and the link-disjoint pair is zero at every rank'`
+- `the coplanar and perpendicular two-face clusters are one abstract graph up to conjugating Q, so their C-odd pair elements are exact negatives at every rank and the pair cluster drops out of C_shp`
+  - src/workhouse/invariants/all_rank.py:670 · C2; C10; runs/beta_n_from_assembly_2026-09-04; ADR 0027
+  - `workhouse verify --only 'the coplanar and perpendicular two-face clusters are one abstract graph up to conjugating Q, so their C-odd pair elements are exact negatives at every rank and the pair cluster drops out of C_shp'`
 - `the corner dressing at every rank: (23, 30) rational functions of N in both sectors, verified on 12 held-out ranks`
   - src/workhouse/invariants/all_rank.py:443 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024
   - `workhouse verify --only 'the corner dressing at every rank: (23, 30) rational functions of N in both sectors, verified on 12 held-out ranks'`
