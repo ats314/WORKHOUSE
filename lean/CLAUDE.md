@@ -4,7 +4,8 @@ A theorem here is proof-checked: Lean 4 compiles it, no `sorry`, standard axioms
 only (`propext`, `Classical.choice`, `Quot.sound`). Nothing else in this
 repository has that standing.
 
-`make lean` builds it. Needs `elan` on PATH; see `README.md`.
+`make lean` builds it, with `--wfail` so a `sorry` fails rather than warns.
+`make lean-setup` installs elan and the pinned toolchain first; see `README.md`.
 
 ## What belongs here
 
