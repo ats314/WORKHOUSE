@@ -214,7 +214,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:248
   - `make lean`
 
-## T1 — re-derived exactly — 276
+## T1 — re-derived exactly — 278
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1005,26 +1005,32 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **the third engine at every rank (all-rank cumulants)**
 
 - `the corner dressing at every rank: (23, 30) rational functions of N in both sectors, verified on 12 held-out ranks`
-  - src/workhouse/invariants/all_rank.py:438 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024
+  - src/workhouse/invariants/all_rank.py:443 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024
   - `workhouse verify --only 'the corner dressing at every rank: (23, 30) rational functions of N in both sectors, verified on 12 held-out ranks'`
 - `the cube-completion closed forms hold with the full H0 dynamics at N = 4 and 5: -160/(N(N^2-1)^3) opposite, -106/(N(N^2-1)^3) adjacent`
-  - src/workhouse/invariants/all_rank.py:132 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024; runs/g3_corner_third_implementation_2026-09-04
+  - src/workhouse/invariants/all_rank.py:137 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024; runs/g3_corner_third_implementation_2026-09-04
   - `workhouse verify --only 'the cube-completion closed forms hold with the full H0 dynamics at N = 4 and 5: -160/(N(N^2-1)^3) opposite, -106/(N(N^2-1)^3) adjacent'`
 - `the rank sweep's N = 3 row is the registered SU(3) cumulants, sign and magnitude, in the kernel's basis`
-  - src/workhouse/invariants/all_rank.py:179 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024
+  - src/workhouse/invariants/all_rank.py:184 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024
   - `workhouse verify --only 'the rank sweep'"'"'s N = 3 row is the registered SU(3) cumulants, sign and magnitude, in the kernel'"'"'s basis'`
 - `the shared-link fan dressing at every rank: a (17, 24) rational function of N with denominator 3(N^2-1)^3(4N^2-9)^3(2N^2-1)^3(16N^2-9)(16N^2-49)(4N^2-7), verified on held-out ranks`
-  - src/workhouse/invariants/all_rank.py:274 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024
+  - src/workhouse/invariants/all_rank.py:279 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024
   - `workhouse verify --only 'the shared-link fan dressing at every rank: a (17, 24) rational function of N with denominator 3(N^2-1)^3(4N^2-9)^3(2N^2-1)^3(16N^2-9)(16N^2-49)(4N^2-7), verified on held-out ranks'`
 - `the single-contact dressing at every rank: C-odd 2N^3(N^2-4)(10N^2-13)/((N^2-1)^3(4N^2-9)^2(2N^2-1)^2), C-even -ell_N^2/(2C_F)`
-  - src/workhouse/invariants/all_rank.py:224 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024
+  - src/workhouse/invariants/all_rank.py:229 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024
   - `workhouse verify --only 'the single-contact dressing at every rank: C-odd 2N^3(N^2-4)(10N^2-13)/((N^2-1)^3(4N^2-9)^2(2N^2-1)^2), C-even -ell_N^2/(2C_F)'`
 - `the third engine reproduces the all-rank second-order hopping t_N and C-even hopping ell_N, and leak = hop in both sectors, at N = 3..7 live and N = 3..70 pinned`
-  - src/workhouse/invariants/all_rank.py:67 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024; THM_FLUX Prop. 2; ADR 0023
+  - src/workhouse/invariants/all_rank.py:72 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024; THM_FLUX Prop. 2; ADR 0023
   - `workhouse verify --only 'the third engine reproduces the all-rank second-order hopping t_N and C-even hopping ell_N, and leak = hop in both sectors, at N = 3..7 live and N = 3..70 pinned'`
 - `the two-hop weight u at every rank: (21, 28) rational functions of N in both sectors, C-odd with the double zero (N^2-4)^2 at SU(2), verified on 16 held-out ranks`
-  - src/workhouse/invariants/all_rank.py:359 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024; ADR 0020
+  - src/workhouse/invariants/all_rank.py:364 · G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; runs/rank_sweep_cumulants_2026-09-04; ADR 0024; ADR 0020
   - `workhouse verify --only 'the two-hop weight u at every rank: (21, 28) rational functions of N in both sectors, C-odd with the double zero (N^2-4)^2 at SU(2), verified on 16 held-out ranks'`
+- `u is the sum of 74 irrep-labelled channels, each a product of resolvent factors in N, and the 74 closed forms sum to u(N) identically`
+  - src/workhouse/invariants/all_rank.py:549 · G14; C2; runs/u_by_channel_2026-09-04; ADR 0026; ADR 0019
+  - `workhouse verify --only 'u is the sum of 74 irrep-labelled channels, each a product of resolvent factors in N, and the 74 closed forms sum to u(N) identically'`
+- `u is universal channel by channel: the coplanar, bent and in-plane L chains agree in every one of the 74 channels, up to the incidence sign, at N = 3..30`
+  - src/workhouse/invariants/all_rank.py:616 · G14; runs/u_by_channel_2026-09-04; ADR 0026; ADR 0020; THM_FLUX Prop. 2
+  - `workhouse verify --only 'u is universal channel by channel: the coplanar, bent and in-plane L chains agree in every one of the 74 channels, up to the incidence sign, at N = 3..30'`
 **the third implementation and the historical ledger (G3, C2)**
 
 - `FINDING: C_shp from the assembled amplitudes in the kernel's basis is C_historical + 25/1024, the registered continuation-shifted value`

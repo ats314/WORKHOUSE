@@ -26,8 +26,9 @@ from __future__ import annotations
 import json
 from fractions import Fraction
 
-from sympy import Rational, Symbol, cancel, factor
+from sympy import Rational, Symbol, cancel, factor, sympify
 
+from .. import chain_channels as CC
 from .. import constants as K
 from .. import loopcalc as LC
 from ._core import ROOT, _suite
@@ -39,6 +40,10 @@ _CITE = "G14; C2; R2; MASTER_THEORY §4.1-4.2, §5; " + _RUN + "; ADR 0024"
 _P = ((0, 1), (0, 0, 0))
 _Q02 = ((0, 2), (0, 0, 0))
 _N = Symbol("N")
+
+
+def sympify_form(text: str):
+    return sympify(text, locals={"N": _N})
 
 
 def _certificate() -> dict:
@@ -519,4 +524,130 @@ def _():
             "(N^2-1)^3(4N^2-9)^3(4N^2-1)(9N^2-25)(2N^2-1)^3(3N^2-1)(4N^2-5)(4N^2-2N-5)(4N^2+2N-5)"
         ),
         {"CORNER_DRESSING_ODD_N": cancel(odd), "CORNER_DRESSING_EVEN_N": cancel(even)},
+    )
+
+
+_CHANNEL_RUN = "runs/u_by_channel_2026-09-04"
+
+
+def _channel_certificate() -> dict:
+    return json.loads((ROOT / _CHANNEL_RUN / "certificate.json").read_text(encoding="utf-8"))
+
+
+def _channel_forms() -> dict:
+    return json.loads(
+        (ROOT / _CHANNEL_RUN / "channel_closed_forms.json").read_text(encoding="utf-8")
+    )
+
+
+_U_CHANNELS = (
+    "u is the sum of 74 irrep-labelled channels, each a product of resolvent factors in N, "
+    "and the 74 closed forms sum to u(N) identically"
+)
+
+
+@rank.check(_U_CHANNELS, "G14; C2; " + _CHANNEL_RUN + "; ADR 0026; ADR 0019", rests_on=(_U_N,))
+def _():
+    # Every contribution to the two-hop cumulant is tagged by the irreps of
+    # the links its intermediate states double -- singlet, Lambda^2, adjoint
+    # or Sym^2 -- and the tag is rank-independent. The pinned run holds the
+    # 58 direct and 16 fold channels at N = 3..30; the pinned reconstruction
+    # holds each channel's closed form, a product of the resolvent factors
+    # its irreps bring (Lambda^2: 2N-3 and 3N-4; Sym^2: 2N+3 and 3N+4; the
+    # adjoint: 2N^2-1 and 3N^2-2; mixed pairs: 2N^2-3 and 4N^2 -+ N - 4).
+    # Checked: every form at every pinned rank, one rank live, and the sum
+    # of the 74 forms against the reconstructed u(N) symbolically.
+    cert = _channel_certificate()
+    forms = _channel_forms()
+    n = _N
+    exprs = {label: cancel(sympify_form(v["form"])) for label, v in forms.items()}
+    pinned_ok = True
+    for n_str, row in cert["ranks"].items():
+        ch = row["coplanar"]["channels"]
+        if set(ch) != set(exprs):
+            pinned_ok = False
+            break
+        for label, val in ch.items():
+            fv = Fraction(val)
+            if exprs[label].subs(n, int(n_str)) != Rational(fv.numerator, fv.denominator):
+                pinned_ok = False
+    live = CC.decompose(CC.COPLANAR, 4)
+    live_ok = {str(k) for k in live} == set(exprs) and all(
+        exprs[str(k)].subs(n, 4) == Rational(v.numerator, v.denominator) for k, v in live.items()
+    )
+    den = (
+        2
+        * (n**2 - 1) ** 3
+        * (4 * n**2 - 9) ** 3
+        * (9 * n**2 - 16)
+        * (2 * n**2 - 3)
+        * (2 * n**2 - 1) ** 3
+        * (3 * n**2 - 2)
+        * (4 * n**2 - n - 4)
+        * (4 * n**2 + n - 4)
+    )
+    u_odd = (
+        n**3
+        * (n**2 - 4) ** 2
+        * _poly(n, [-54216, 313093, -771029, 1058410, -882908, 451352, -131616, 16896])
+        / den
+    )
+    total = sum(exprs.values())
+    sum_ok = cancel(total - u_odd) == 0
+    direct = sum(1 for k in exprs if k.startswith("('direct'"))
+    fold = len(exprs) - direct
+    held = min(v["held_out"] for v in forms.values())
+    ok = pinned_ok and live_ok and sum_ok and len(exprs) == 74 and direct == 58 and fold == 16
+    return ok, (
+        f"{len(exprs)} channels ({direct} direct, {fold} fold) at every pinned rank N = 3..30 and "
+        f"live at N = 4; each closed form verified on at least {held} held-out ranks at "
+        "reconstruction; the sum of the 74 forms minus the reconstructed u(N) is identically zero. "
+        "The pure-fundamental chain channel is -4/(N(N^2-1)^3); every other channel carries the "
+        "resolvent factors of its irreps"
+    )
+
+
+_CHAIN_TYPES = (
+    "u is universal channel by channel: the coplanar, bent and in-plane L chains agree in every "
+    "one of the 74 channels, up to the incidence sign, at N = 3..30"
+)
+
+
+@rank.check(
+    _CHAIN_TYPES,
+    "G14; " + _CHANNEL_RUN + "; ADR 0026; ADR 0020; THM_FLUX Prop. 2",
+    rests_on=(_U_CHANNELS,),
+)
+def _():
+    # ADR 0020 found u = X_QUANTUM on three chain types and asked why -- "a
+    # question about the Haar contraction rather than the kernel". Here it
+    # is answered at the finest level the calculus offers: not only the sums
+    # but every irrep-labelled channel agrees between the coplanar chain, the
+    # bent chain (P and R on opposite cube faces through a side face) and the
+    # in-plane L chain (the connector's two shared links ADJACENT, the
+    # doubled-orbit geometry of ADR 0019). The straight and bent chains carry
+    # the incidence signs +1 and -1 of THM_FLUX Prop. 2; the L chain's sign
+    # is that of its own two incidences.
+    cert = _channel_certificate()
+    ok = True
+    signs = {}
+    for row in cert["ranks"].values():
+        cop = {k: Fraction(v) for k, v in row["coplanar"]["channels"].items()}
+        for name in ("bent", "L"):
+            other = {k: Fraction(v) for k, v in row[name]["channels"].items()}
+            if set(other) != set(cop):
+                ok = False
+                continue
+            ratios = {k: other[k] / cop[k] for k in cop if cop[k]}
+            if len(set(ratios.values())) != 1 or set(ratios.values()) - {Fraction(1), Fraction(-1)}:
+                ok = False
+            signs.setdefault(name, set()).update(ratios.values())
+    ok = ok and signs.get("bent") == {Fraction(-1)} and len(signs.get("L", set())) == 1
+    return ok, (
+        f"at every pinned rank all 74 channels of the bent chain are "
+        f"{', '.join(str(x) for x in sorted(signs.get('bent', [])))} times the coplanar chain's "
+        f"and all 74 of the L chain are {', '.join(str(x) for x in sorted(signs.get('L', [])))} "
+        "times it: the two-hop weight is one function of N per channel, whatever the planes. What "
+        "ADR 0019 called the one dynamical input of the Hodge form is a property of the Haar "
+        "contraction on the abstract three-plaquette cluster"
     )
