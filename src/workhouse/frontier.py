@@ -95,15 +95,48 @@ def strip_lean_comments(body: str) -> str:
     return "".join(out)
 
 
+# Attributes, `private` and `nonrec` sit BEFORE the keyword. Two scrapes of
+# the Lean tree used to carry their own copy of this pattern; `certified.py`
+# widened its copy to allow the prefix and this one was left behind, so
+# `@[simp] theorem` was counted there and not here -- FRONTIER.md said 37 and
+# CERTIFIED.md said 40, over the same three declarations, for four days. The
+# pattern and the scrape now live here once and `certified.lean_claims` builds
+# on them, so the two cannot drift apart again; `tests/test_frontier.py` pins
+# the agreement.
+LEAN_DECL = re.compile(
+    r"^[ \t]*(?:@\[[^\]]*\]\s*)*(?:private\s+|protected\s+|nonrec\s+)*"
+    r"(?:theorem|lemma)\s+([A-Za-z_][\w'.]*)",
+    re.MULTILINE,
+)
+
+
+def lean_declarations() -> list[tuple[str, int, str]]:
+    """Every Lean theorem in the tree, as (repo-relative path, line, name).
+
+    The single scrape of the T0 layer: `certified.lean_claims` turns these into
+    catalogue records and `claims.py` reuses those, so a theorem is either
+    visible to all three or to none.
+    """
+    out: list[tuple[str, int, str]] = []
+    if not LEAN.exists():
+        return out
+    for path in sorted(LEAN.rglob("*.lean")):
+        rel = path.relative_to(ROOT).as_posix()
+        body = strip_lean_comments(path.read_text(encoding="utf-8"))
+        for m in LEAN_DECL.finditer(body):
+            out.append((rel, body.count("\n", 0, m.start()) + 1, m.group(1)))
+    return out
+
+
 def _lean_counts() -> tuple[int, int]:
-    theorems = sorries = 0
+    sorries = 0
     if not LEAN.exists():
         return 0, 0
     for path in LEAN.rglob("*.lean"):
-        body = strip_lean_comments(path.read_text(encoding="utf-8"))
-        theorems += len(re.findall(r"^\s*(?:theorem|lemma)\s", body, re.MULTILINE))
-        sorries += len(re.findall(r"\bsorry\b", body))
-    return theorems, sorries
+        sorries += len(
+            re.findall(r"\bsorry\b", strip_lean_comments(path.read_text(encoding="utf-8")))
+        )
+    return len(lean_declarations()), sorries
 
 
 def _retracted() -> list[tuple[str, str]]:
