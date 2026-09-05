@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 83
+## T0 — proof-checked — 97
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -102,6 +102,21 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `cornerDressing_over_R20`
   - lean/Workhouse/Basic.lean:701
   - `make lean`
+- `corrected_eq_compression`
+  - lean/Workhouse/VacuumCompression.lean:55
+  - `make lean`
+- `corrected_eq_sub_vacuum_terms`
+  - lean/Workhouse/VacuumCompression.lean:40
+  - `make lean`
+- `corrected_hermitian`
+  - lean/Workhouse/VacuumChart.lean:72
+  - `make lean`
+- `corrected_vacuum_column`
+  - lean/Workhouse/VacuumChart.lean:63
+  - `make lean`
+- `corrected_vacuum_legs`
+  - lean/Workhouse/VacuumChart.lean:80
+  - `make lean`
 - `cubeCompletionAdjacent_over_R20`
   - lean/Workhouse/Basic.lean:707
   - `make lean`
@@ -141,6 +156,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `d₃_ledger`
   - lean/Workhouse/Basic.lean:205
   - `make lean`
+- `endpoint_disjoint_cancellation`
+  - lean/Workhouse/VacuumChart.lean:99
+  - `make lean`
 - `evenHopping_three`
   - lean/Workhouse/Basic.lean:466
   - `make lean`
@@ -167,6 +185,15 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `extraction_D`
   - lean/Workhouse/Basic.lean:319
+  - `make lean`
+- `fixed_vacuum_row`
+  - lean/Workhouse/VacuumChart.lean:50
+  - `make lean`
+- `generator_antihermitian`
+  - lean/Workhouse/VacuumChart.lean:39
+  - `make lean`
+- `generator_vacuum`
+  - lean/Workhouse/VacuumChart.lean:44
   - `make lean`
 - `hopping_deficit_numerator`
   - lean/Workhouse/Basic.lean:47
@@ -195,6 +222,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `newton_three`
   - lean/Workhouse/Basic.lean:299
   - `make lean`
+- `normalized_taylor_growth`
+  - lean/Workhouse/RootedScalarBounds.lean:13
+  - `make lean`
 - `pentCompletion_three`
   - lean/Workhouse/Basic.lean:375
   - `make lean`
@@ -206,6 +236,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `q_at_checkpoints`
   - lean/Workhouse/Basic.lean:511
+  - `make lean`
+- `rankOne_adjoint`
+  - lean/Workhouse/VacuumChart.lean:35
   - `make lean`
 - `rank_law_numerator`
   - lean/Workhouse/Basic.lean:35
@@ -224,6 +257,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `resolventWeight_sym`
   - lean/Workhouse/Basic.lean:103
+  - `make lean`
+- `scalar_vacuum_cancellation`
+  - lean/Workhouse/VacuumChart.lean:56
   - `make lean`
 - `shell_margin_five`
   - lean/Workhouse/Basic.lean:173
@@ -261,6 +297,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `uStarSq_isolation`
   - lean/Workhouse/Basic.lean:583
   - `make lean`
+- `vacuum_corner_zero`
+  - lean/Workhouse/VacuumCompression.lean:31
+  - `make lean`
+- `vacuum_projection`
+  - lean/Workhouse/VacuumCompression.lean:24
+  - `make lean`
 - `w4_old_is_alpha_plus_beta`
   - lean/Workhouse/Basic.lean:435
   - `make lean`
@@ -271,7 +313,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:247
   - `make lean`
 
-## T1 — re-derived exactly — 305
+## T1 — re-derived exactly — 318
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -997,6 +1039,25 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the second-order C-odd shell of the symmetric Wilson transfer generator at finite temporal step: with d_tau(Delta) = (tau/2) coth(tau Delta/2) the hopping is t_W = 5/612 + 175/280908 eps^2 + O(eps^3), the flat scalar s_2W = 11/306 - 89159/2247264 eps^2, and the first literal-source Gram coefficient -2 d_tau(E_F) = -3/4 - 4/9 eps^2`
   - src/workhouse/invariants/wilson_step.py:238 · G19; paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md sections 5-7; runs/uniform_wilson_window_2026-09-04 eqs. (11)-(18); window_shell_certificate.json
   - `workhouse verify --only 'the second-order C-odd shell of the symmetric Wilson transfer generator at finite temporal step: with d_tau(Delta) = (tau/2) coth(tau Delta/2) the hopping is t_W = 5/612 + 175/280908 eps^2 + O(eps^3), the flat scalar s_2W = 11/306 - 89159/2247264 eps^2, and the first literal-source Gram coefficient -2 d_tau(E_F) = -3/4 - 4/9 eps^2'`
+**the Wilson vacuum correction is exact orthogonal compression**
+
+- `compression and Perron damping sharpen the uniform quadratic bound to 118872/125 times f_star squared`
+  - src/workhouse/invariants/wilson_compression.py:59 · G18; paper/research_notes/G18_VACUUM_COMPRESSION_BOUND_20260905.md; exact combination of the previously proved support census
+  - `workhouse verify --only 'compression and Perron damping sharpen the uniform quadratic bound to 118872/125 times f_star squared'`
+- `the vacuum-column commutator is exactly orthogonal compression QAQ, with a scalar-normalization negative control`
+  - src/workhouse/invariants/wilson_compression.py:46 · G18; paper/research_notes/G18_VACUUM_COMPRESSION_BOUND_20260905.md; symbolic complex three-state block and exact overlapping tensor model
+  - `workhouse verify --only 'the vacuum-column commutator is exactly orthogonal compression QAQ, with a scalar-normalization negative control'`
+**the blocked Wilson transfer: spectral block, cluster margin, source moments**
+
+- `the explicit sufficient thresholds of the blocked-transfer polymer criterion leave the Kotecky-Preiss margin 11/56 < 1/4: with delta = e^(-(4+2xi))/16 and y = 1/256 the atom sum 2 e^(4+2xi) delta + 8y/(1 - 144y) is exactly 1/8 + 1/14, and the coupling disc u_c = log(1 + e^(-(16+8xi)) / (256 (1+delta)^4)) / (J (s0 + tau0)) is where y reaches 1/256`
+  - src/workhouse/invariants/wilson_block.py:90 · G19; paper/research_notes/G19_DISCRETE_TIME_VACUUM_AND_WINDOW_20260904.md section 4, eqs. (12)-(15); runs/discrete_time_wilson_2026-09-04
+  - `workhouse verify --only 'the explicit sufficient thresholds of the blocked-transfer polymer criterion leave the Kotecky-Preiss margin 11/56 < 1/4: with delta = e^(-(4+2xi))/16 and y = 1/256 the atom sum 2 e^(4+2xi) delta + 8y/(1 - 144y) is exactly 1/8 + 1/14, and the coupling disc u_c = log(1 + e^(-(16+8xi)) / (256 (1+delta)^4)) / (J (s0 + tau0)) is where y reaches 1/256'`
+- `the source-moment identities of the excited-window note hold exactly: with G = J*J and P = J G^-1 J*, Q = 1 - P, the moments C_j = J* D^j J satisfy J*(D Q D)J = C_2 - C_1 G^-1 C_1 (the leakage R*R in the source frame) and J*(D - c)^2 J = J*(D - c)P(D - c)J + J*(D - c)Q(D - c)J for every scalar c (the split into (A - c)^2 and R*R); a dark state orthogonal to the sources leaves every C_j unchanged while enlarging the window, so positive source weight is not completeness`
+  - src/workhouse/invariants/wilson_block.py:161 · G18; paper/research_notes/G18_EXCITED_WINDOW_OPERATOR_BRIDGE_20260904.md sections 6-7, eqs. (19)-(20); runs/excited_wilson_window_2026-09-04
+  - `workhouse verify --only 'the source-moment identities of the excited-window note hold exactly: with G = J*J and P = J G^-1 J*, Q = 1 - P, the moments C_j = J* D^j J satisfy J*(D Q D)J = C_2 - C_1 G^-1 C_1 (the leakage R*R in the source frame) and J*(D - c)^2 J = J*(D - c)P(D - c)J + J*(D - c)Q(D - c)J for every scalar c (the split into (A - c)^2 and R*R); a dark state orthogonal to the sources leaves every C_j unchanged while enlarging the window, so positive source weight is not completeness'`
+- `the spectrally optimal Wilson block: with the shell eigenvalue x^4 and the rest of the odd spectrum below x^5, x = exp(-gamma s), the guaranteed separation x^4 (1 - x) is maximal at x = 4/5 with value 256/3125; rounding the block to whole steps of at most s_sp/4 keeps at least 1024/15625; and the support count 4n x^max(n-4,0) is at most 16 for x <= 4/5, attained at n = 4 and 5`
+  - src/workhouse/invariants/wilson_block.py:41 · G18; paper/research_notes/G18_EXCITED_WINDOW_OPERATOR_BRIDGE_20260904.md sections 1 and 4; runs/excited_wilson_window_2026-09-04
+  - `workhouse verify --only 'the spectrally optimal Wilson block: with the shell eigenvalue x^4 and the rest of the odd spectrum below x^5, x = exp(-gamma s), the guaranteed separation x^4 (1 - x) is maximal at x = 4/5 with value 256/3125; rounding the block to whole steps of at most s_sp/4 keeps at least 1024/15625; and the support count 4n x^max(n-4,0) is at most 16 for x <= 4/5, attained at n = 4 and 5'`
 **the charge-even band, exactly**
 
 - `FINDING: the certificate key 'bandmin' holds the band MAXIMUM, at both orders`
@@ -1090,6 +1151,34 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `q at the four high-symmetry points is 0, 4, 8, 12`
   - src/workhouse/invariants/manuscript.py:160 · MASTER_DOC Fig. 2
   - `workhouse verify --only 'q at the four high-symmetry points is 0, 4, 8, 12'`
+**the local Wilson vacuum chart: exact quadratic repair and support bound**
+
+- `local quadratic chart coefficients retain overlapping and disjoint support structure: connected generators are block-power invariant, disjoint coefficients factor, and free spectator entries remain present`
+  - src/workhouse/invariants/wilson_vacuum_chart.py:49 · G18; paper/research_notes/G18_SECOND_ORDER_WILSON_VACUUM_CHART_20260905.md sections 5 and 7; exact finite product-transfer models
+  - `workhouse verify --only 'local quadratic chart coefficients retain overlapping and disjoint support structure: connected generators are block-power invariant, disjoint coefficients factor, and free spectator entries remain present'`
+- `the complete quadratic support majorant is 40432/5: repeated, overlapping and disjoint activity counts have exact maxima 16, 336 and 2592/5 for delta <= 4/5`
+  - src/workhouse/invariants/wilson_vacuum_chart.py:95 · G18; paper/research_notes/G18_SECOND_ORDER_WILSON_VACUUM_CHART_20260905.md section 6; rational arithmetic and decreasing-tail induction
+  - `workhouse verify --only 'the complete quadratic support majorant is 40432/5: repeated, overlapping and disjoint activity counts have exact maxima 16, 336 and 2592/5 for delta <= 4/5'`
+- `the endpoint-gauge mixed-kick identity is exact: r_tau(E1+E2) times (r_tau(E1)+r_tau(E2)+tau) equals r_tau(E1)r_tau(E2); omitting the mixed exponential kick leaves the nonzero residual -tau^2/(xy-1)`
+  - src/workhouse/invariants/wilson_vacuum_chart.py:125 · G18; paper/research_notes/G18_WILSON_ENDPOINT_GAUGE_AND_MAJORANT_20260905.md section 4, equation (11); rational algebra after x=exp(tau E1), y=exp(tau E2)
+  - `workhouse verify --only 'the endpoint-gauge mixed-kick identity is exact: r_tau(E1+E2) times (r_tau(E1)+r_tau(E2)+tau) equals r_tau(E1)r_tau(E2); omitting the mixed exponential kick leaves the nonzero residual -tau^2/(xy-1)'`
+- `the local vacuum chart repairs a genuine quadratic creation term: the two-level symmetric transfer leaves 97/96 after the first rotation, and the exact second generator 97/24 cancels it on both vacuum legs`
+  - src/workhouse/invariants/wilson_vacuum_chart.py:25 · G18; paper/research_notes/G18_SECOND_ORDER_WILSON_VACUUM_CHART_20260905.md sections 4 and 8; finite exact two-level model
+  - `workhouse verify --only 'the local vacuum chart repairs a genuine quadratic creation term: the two-level symmetric transfer leaves 97/96 after the first rotation, and the exact second generator 97/24 cancels it on both vacuum legs'`
+**the resolvent-composed rooted creator map: exact finite controls**
+
+- `finite disjoint-support creator exp/log invert exactly, and a Pauli-flip negative control detects replacement of the nilpotent creator product`
+  - src/workhouse/invariants/rooted_creator.py:47 · G18; paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md section 2; exact six-link bitmask creator algebra
+  - `workhouse verify --only 'finite disjoint-support creator exp/log invert exactly, and a Pauli-flip negative control detects replacement of the nilpotent creator product'`
+- `the full kinetic resolvent-composed creator map preserves the radius-1/16 ball on three specified six-link inputs and has pair ratios below one half`
+  - src/workhouse/invariants/rooted_creator.py:77 · G18; paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md equation (19); exact finite-binary instances only
+  - `workhouse verify --only 'the full kinetic resolvent-composed creator map preserves the radius-1/16 ball on three specified six-link inputs and has pair ratios below one half'`
+- `the moving-weight creator constants place the six-link Pauli model inside the explicit contraction domain using a rational upper bound for atanh(kappa)`
+  - src/workhouse/invariants/rooted_creator.py:26 · G18; paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md equations (2), (3a), (3b); exact rational specialization
+  - `workhouse verify --only 'the moving-weight creator constants place the six-link Pauli model inside the explicit contraction domain using a rational upper bound for atanh(kappa)'`
+- `the normalized magnetic creator-flow differential equals direct nilpotent operator conjugation on three exact six-link families`
+  - src/workhouse/invariants/rooted_creator.py:64 · G18; paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md sections 2 and 4; separate output-partition and basis-action paths
+  - `workhouse verify --only 'the normalized magnetic creator-flow differential equals direct nilpotent operator conjugation on three exact six-link families'`
 **the swap-odd domino state (U4, ADR 0023)**
 
 - `W psi_A has no two-plaquette and no vacuum image for C-even; C-odd keeps the like-family pair`

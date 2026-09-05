@@ -55,6 +55,24 @@ just a claim of authority.
 
 ## Reading order
 
+The [rooted Wilson contraction theorem](paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md)
+now gives convergent nonunitary vacuum coordinates on an explicit coupling
+disk independent of volume and temporal mesh. A moving support weight absorbs
+the magnetic flow's growth; the full kinetic resolvent restores that weight.
+The [infinite-lattice coefficient limit](paper/research_notes/G18_WILSON_CREATOR_THERMODYNAMIC_LIMIT_20260905.md)
+is analytic on the same disk and has a quantitative local convergence bound.
+Its [sealed run](runs/wilson_rooted_contraction_2026-09-05/README.md) separates
+the analytic proofs from finite exact controls and the scalar Lean theorem.
+Physical state/operator realization and the excited-space bridge remain open.
+
+The [5 September Wilson-chart continuation](paper/research_notes/G18_WILSON_CHART_RESEARCH_REPORT_20260905.md)
+derives a connected local vacuum chart at every fixed order, with exact
+finite-model checks and a Lean algebraic kernel. Its [sealed run](runs/wilson_vacuum_chart_2026-09-05/README.md)
+preserves the verification evidence and the nonlinear task as it stood then.
+The subsequent [exact compression identity](paper/research_notes/G18_VACUUM_COMPRESSION_BOUND_20260905.md)
+shows that every corrected local coefficient is `QAQ` and sharpens the
+quadratic bound to `118872 f_star^2/125`; its algebra is also checked in Lean.
+
 The corpus is roughly 12.2M tokens — about 61 context windows. Reading it is not
 a plan. Go in this order and stop when the question is answered.
 

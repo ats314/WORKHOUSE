@@ -1,0 +1,134 @@
+{
+  "status": "PASS",
+  "date": "2026-09-05",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "packages": {
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "sympy": "1.14.0"
+  },
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1"
+  },
+  "runs": [
+    {
+      "id": "discrete_time_wilson_2026-09-04",
+      "status": "PASS",
+      "checks_passed": 26,
+      "grids": [
+        192,
+        384
+      ],
+      "baseline_path": "runs/discrete_time_wilson_2026-09-04/discrete_time_certificate.json",
+      "output_path": "outputs/bundle_replay_20260905/discrete_time_certificate.json",
+      "source_path": "runs/discrete_time_wilson_2026-09-04/verify_discrete_time_bridge.py",
+      "source_sha256": "7488659a8a5c9ab9ac2416e0773432c77acc54134a6675a92cfc75f18566cc95",
+      "baseline_sha256": "b65649bd8bfb52d1a31a8278db154d616290829b4a1ddec074f3c4b095a35fb1",
+      "replay_sha256": "9c3b714dcd7a685558ed263d3676f7be676d49c82c2079624e42e7155c39ca20",
+      "nonnumeric_fields_and_verdicts_unchanged": true,
+      "numeric_leaves_compared": 277,
+      "changed_numeric_leaves": 113,
+      "largest_absolute_differences": [
+        {
+          "path": "/checks/23/orders/0.01",
+          "before": 2.0105016893991605,
+          "after": 2.010501688481489,
+          "absolute_difference": 9.176717163938974e-10,
+          "scaled_difference": 4.564391670161412e-10
+        },
+        {
+          "path": "/checks/23/orders/0.005",
+          "before": 2.0105021169918036,
+          "after": 2.0105021179085774,
+          "absolute_difference": 9.167737680115806e-10,
+          "scaled_difference": 4.5599244081635365e-10
+        },
+        {
+          "path": "/checks/16/observed_order",
+          "before": 1.9927898825461217,
+          "after": 1.9927898825711836,
+          "absolute_difference": 2.506195251328336e-11,
+          "scaled_difference": 1.2576314609218783e-11
+        },
+        {
+          "path": "/checks/7/rows/0/activity_bound_max_ratio",
+          "before": 1.0000000000051599,
+          "after": 1.0000000000066442,
+          "absolute_difference": 1.4843681839238343e-12,
+          "scaled_difference": 1.4843681839139717e-12
+        },
+        {
+          "path": "/SU3_diagnostic_rows/8/certified_moment_lower_bound",
+          "before": 0.922229056721718,
+          "after": 0.9222290567215933,
+          "absolute_difference": 1.2467804566540508e-13,
+          "scaled_difference": 1.2467804566540508e-13
+        }
+      ],
+      "max_scaled_difference": 4.564391670161412e-10,
+      "comparison_envelope": 2e-09,
+      "diagnostic_tolerances": "All original script thresholds passed; the comparison envelope is only a replay comparison, not a rigorous numerical enclosure."
+    },
+    {
+      "id": "excited_wilson_window_2026-09-04",
+      "status": "PASS",
+      "checks_passed": 33,
+      "grids": [
+        384,
+        768
+      ],
+      "baseline_path": "runs/excited_wilson_window_2026-09-04/excited_window_certificate.json",
+      "output_path": "outputs/bundle_replay_20260905/excited_window_certificate.json",
+      "source_path": "runs/excited_wilson_window_2026-09-04/verify_excited_window.py",
+      "source_sha256": "f486cdbddf926f09d27cd14718ef85d4302ec5d15a918549f8d0319eac69e58b",
+      "baseline_sha256": "28407125a86ed6e0a719d80d8acbfbb21cc182eac0d2ed85ad4f55c3b194074e",
+      "replay_sha256": "13aabb34efe19b62685228d26361cf9f4c0e27391872c83765426ce1a79c43bb",
+      "nonnumeric_fields_and_verdicts_unchanged": true,
+      "numeric_leaves_compared": 189,
+      "changed_numeric_leaves": 124,
+      "largest_absolute_differences": [
+        {
+          "path": "/checks/29/gap_bound",
+          "before": 3.9489795163413235,
+          "after": 3.948979516341294,
+          "absolute_difference": 2.930988785010413e-14,
+          "scaled_difference": 7.422142284814723e-15
+        },
+        {
+          "path": "/SU3_model/rows/0/input_model_gap_bound_formula",
+          "before": 3.9489795163413235,
+          "after": 3.948979516341294,
+          "absolute_difference": 2.930988785010413e-14,
+          "scaled_difference": 7.422142284814723e-15
+        },
+        {
+          "path": "/SU3_model/rows/0/actual_input_model_energy_gap",
+          "before": 3.9494299107196214,
+          "after": 3.949429910719598,
+          "absolute_difference": 2.353672812205332e-14,
+          "scaled_difference": 5.9595254642118e-15
+        },
+        {
+          "path": "/checks/31/gap_bound",
+          "before": 3.949683139041564,
+          "after": 3.9496831390415585,
+          "absolute_difference": 5.329070518200751e-15,
+          "scaled_difference": 1.3492400100464544e-15
+        },
+        {
+          "path": "/SU3_model/rows/2/input_model_gap_bound_formula",
+          "before": 3.949683139041564,
+          "after": 3.9496831390415585,
+          "absolute_difference": 5.329070518200751e-15,
+          "scaled_difference": 1.3492400100464544e-15
+        }
+      ],
+      "max_scaled_difference": 7.422142284814723e-15,
+      "comparison_envelope": 2e-09,
+      "diagnostic_tolerances": "All original script thresholds passed; the comparison envelope is only a replay comparison, not a rigorous numerical enclosure."
+    }
+  ]
+}

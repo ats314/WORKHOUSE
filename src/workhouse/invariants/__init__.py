@@ -60,6 +60,10 @@ _MODULES = (
     "rank_field",
     "path_reduction",
     "wilson_step",
+    "wilson_block",
+    "wilson_vacuum_chart",
+    "wilson_compression",
+    "rooted_creator",
 )
 
 for _name in _MODULES:

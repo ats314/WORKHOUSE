@@ -1,0 +1,58 @@
+{
+  "checks": [
+    {
+      "detail": "{'complex_symbolic_block': True, 'exact_overlap_model': True, 'unnormalized_defect_is_vacuum_projector': True}; the generic finite-matrix statement is separately Lean-checked. Operator norm and infinite-dimensional consequences use the analytic proof.",
+      "line": 46,
+      "name": "the vacuum-column commutator is exactly orthogonal compression QAQ, with a scalar-normalization negative control",
+      "passed": true,
+      "rests_on": [],
+      "section": "G18; paper/research_notes/G18_VACUUM_COMPRESSION_BOUND_20260905.md; symbolic complex three-state block and exact overlapping tensor model",
+      "source": "src/workhouse/invariants/wilson_compression.py:46",
+      "tier": 1,
+      "yields": {}
+    },
+    {
+      "detail": "QAQ alone: 6032/5; retaining Perron damping: 3096/5 f_star^2 + 41472/125 (J s1)^2 <= 118872/125 f_star^2. These are sufficient norm-bound constants, not perturbative physical coefficients.",
+      "line": 59,
+      "name": "compression and Perron damping sharpen the uniform quadratic bound to 118872/125 times f_star squared",
+      "passed": true,
+      "rests_on": [],
+      "section": "G18; paper/research_notes/G18_VACUUM_COMPRESSION_BOUND_20260905.md; exact combination of the previously proved support census",
+      "source": "src/workhouse/invariants/wilson_compression.py:59",
+      "tier": 1,
+      "yields": {
+        "WILSON_CHART_COMPRESSION_SUPPORT_FACTOR": "6032/5",
+        "WILSON_CHART_DAMPED_SUPPORT_FACTOR": "118872/125"
+      }
+    }
+  ],
+  "coefficient_convention": "[u^2] is half the second derivative",
+  "exact_check_count": 2,
+  "not_claimed": [
+    "convergent nonlinear chart",
+    "thermodynamic actual-Wilson Riesz band"
+  ],
+  "passed": true,
+  "runtime": {
+    "python": "3.12.14",
+    "sympy": "1.14.0"
+  },
+  "schema": "workhouse-wilson-vacuum-compression/v1",
+  "scope": "exact symbolic complex three-state block, tensor transfer, rational bounds; arbitrary finite-matrix compression separately Lean checked; operator-norm conclusions proved analytically",
+  "sharpened_bounds": {
+    "connected_factor": "3096/5",
+    "disjoint_Js1_factor": "41472/125",
+    "simple_compression_factor": "6032/5",
+    "single_f_star_factor": "118872/125"
+  },
+  "sources": {
+    "lean/Workhouse.lean": "7bb4cee1b9de51fb8ca8facd2174cabcc90a0dcac3ece8fdcd3f5c84de7ca026",
+    "lean/Workhouse/VacuumChart.lean": "9ee0c04a68d74b1cf8afa3aeaa2a42c3e94b5a6ce65648e1b04d38cfe05fc334",
+    "lean/Workhouse/VacuumCompression.lean": "407a01823025dc4e6f73a71d13d8ddd8b0457f3e693746702e3ca4f583f274d2",
+    "paper/research_notes/G18_VACUUM_COMPRESSION_BOUND_20260905.md": "a1df8c18b94e68819b52a0d888451313c76c8b56c5e4d30d9a99a1decc1e6969",
+    "scripts/verify_wilson_vacuum_compression.py": "ffb18a06a3c15084da80f88108e3338de19fa0d96d2314e7ad21506ff6a5db28",
+    "src/workhouse/invariants/wilson_compression.py": "b6f3cb34852ed20d88d4c6b200b99e98b5118b5314eebe4dcc641672f4f80b51",
+    "src/workhouse/wilson_vacuum_chart.py": "1d4e41d5524a1a67f73bcd3a2070b1e0b60a3be72d2a475aced9ebc0da56ad4a",
+    "tests/test_wilson_vacuum_compression.py": "3e6e3fc2ca479784902aa64d400e66f91d12212bf7eb67a78ad4251516227bcb"
+  }
+}

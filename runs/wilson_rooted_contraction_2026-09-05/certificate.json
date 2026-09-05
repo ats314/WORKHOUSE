@@ -1,0 +1,122 @@
+{
+  "analytic_result": {
+    "contraction_constant_bound": "1/2",
+    "creator_ball_radius": "1/16",
+    "evidence": "written Hilbert-space proofs, independently reviewed",
+    "hypotheses": [
+      "four distinct links per interaction, at most four interactions per link",
+      "bounded local potentials of norm at most J_star",
+      "additive free kinetic energy with link vacuum and excited gap gamma > 0",
+      "0 < tau <= tau0 and mu >= gamma*tau0/2"
+    ],
+    "infinite_lattice_object": "analytic stabilized creator coefficient family",
+    "local_root_error": "(1/8)*q^(N+1)/(1-q), q=abs(u)/r < 1, r < u_star",
+    "u_star": "min(9*gamma/(309680*J_star*exp(4*mu)), 9/(8450*tau0*J_star*exp(4*mu)))"
+  },
+  "base_revision": "e6380a25a88ea4764deeb32358967ee44e3ecfe4",
+  "checks": [
+    {
+      "detail": "R=1/4, weight=2, gamma=1/2, tau0=J=1: u_star=9/9909760; atanh(1/10^8)<=u_upper=1/99999999; all four margins are positive. The analytic bound log(2)>=1/2 supplies the stated kinetic and weight premises.",
+      "line": 26,
+      "name": "the moving-weight creator constants place the six-link Pauli model inside the explicit contraction domain using a rational upper bound for atanh(kappa)",
+      "passed": true,
+      "rests_on": [],
+      "section": "G18; paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md equations (2), (3a), (3b); exact rational specialization",
+      "source": "src/workhouse/invariants/rooted_creator.py:26",
+      "tier": 1,
+      "yields": {}
+    },
+    {
+      "detail": "Three exact inputs: zero, one six-link creator, and 63 mixed coefficients; log(exp(v))=v: True; creator-square versus flip-square control: True. No support truncation occurs within the six-link model.",
+      "line": 47,
+      "name": "finite disjoint-support creator exp/log invert exactly, and a Pauli-flip negative control detects replacement of the nilpotent creator product",
+      "passed": true,
+      "rests_on": [],
+      "section": "G18; paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md section 2; exact six-link bitmask creator algebra",
+      "source": "src/workhouse/invariants/rooted_creator.py:47",
+      "tier": 1,
+      "yields": {}
+    },
+    {
+      "detail": "{'zero': {'exponential_action': True, 'normalized_creator_flow': True, 'removed_scalar': True}, 'six_link': {'exponential_action': True, 'normalized_creator_flow': True, 'removed_scalar': True}, 'mixed_63': {'exponential_action': True, 'normalized_creator_flow': True, 'removed_scalar': True}}; the operator path applies raising operators to input basis vectors, while the differential path uses the normalized star logarithm.",
+      "line": 64,
+      "name": "the normalized magnetic creator-flow differential equals direct nilpotent operator conjugation on three exact six-link families",
+      "passed": true,
+      "rests_on": [],
+      "section": "G18; paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md sections 2 and 4; separate output-partition and basis-action paths",
+      "source": "src/workhouse/invariants/rooted_creator.py:64",
+      "tier": 1,
+      "yields": {}
+    },
+    {
+      "detail": "input norms=(Fraction(0, 1), Fraction(1, 128), Fraction(1, 128)); all three exact image norms<=1/16 and all three exact pair ratios<=1/2; nonzero normalizers and the independent mixed-kick zero-input formula checked=True. This finite sample control does not replace the complete-ball analytic proof.",
+      "line": 77,
+      "name": "the full kinetic resolvent-composed creator map preserves the radius-1/16 ball on three specified six-link inputs and has pair ratios below one half",
+      "passed": true,
+      "rests_on": [],
+      "section": "G18; paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md equation (19); exact finite-binary instances only",
+      "source": "src/workhouse/invariants/rooted_creator.py:77",
+      "tier": 1,
+      "yields": {}
+    }
+  ],
+  "exact_check_count": 4,
+  "finite_binary_controls": {
+    "input_norms": [
+      "0",
+      "1/128",
+      "1/128"
+    ],
+    "normalizers_nonzero": true,
+    "output_norms": [
+      "640000000/29999999700000003",
+      "344090243118795051951543574515206169173984375/16127999516160009676799887104000967679995161600016128",
+      "208673339235123515748226322178285739596299225016310785800518912595516242057268924839219593289556001275759945590717555714132075961314015113761077508759510865749694538097865899155830860540546875/9763886649625014764539648300072591042849465080588124259588394016339923970882373104458760865049738569870613528826882738866499268144413189172545235225163278449304861665275630228881527987238589312270336"
+    ],
+    "pair_ratios": [
+      "26250000075051271405737252587982440234375/125999996220000075599999118000007559999962200000126",
+      "3770886230564959541459244734921503886187918293458443961144838728206514418404709230343188365247961449195065070780622871324268380013455448142241510800972140104997076927936482638197483744049465158501360546875/762803636873917909740481688841998788756905051511920135832317146817844512993948049189642727242143778535102682429265971692111309544351124560807824839142956519702781225668348320829015017655182213127909500090279002112",
+      "2528378110128912654147606877803512004020278040304816007809006719674369367777607274834584770841615685800450571618839406724520856330418897836512885538611707602860995732039660964054866211749592582846331406321968261070759340808775103723828125/1034552411819202825246232672751889898092817410125319208788679696336224569529441423519679821363773258163091720441801094897979339937569466469042661651853126903988256937567170398794335791570755403538947915126024526918183755898515536710801745608966144"
+    ],
+    "zero_formula": true
+  },
+  "finite_model_constants": {
+    "A": "16900/9",
+    "B": "33280/9",
+    "C": "6500",
+    "L": "619360/9",
+    "flow_moment_margin": "899866871/3599999964",
+    "flow_radius_margin": "899864791/7199999928",
+    "gamma": "1/2",
+    "lipschitz_margin": "890090231/1799999982",
+    "radius": "1/4",
+    "selfmap_margin": "99791999/1599999984",
+    "tau0": "1",
+    "u_star": "9/9909760",
+    "u_upper": "1/99999999"
+  },
+  "passed": true,
+  "remaining_operator_work": [
+    "physical state and GNS realization of the coefficient family",
+    "controlled unitary chart or justified physical metric",
+    "complete excited Riesz range and weighted source identification"
+  ],
+  "runtime": {
+    "python": "3.12.14",
+    "sympy": "1.14.0"
+  },
+  "schema": "workhouse-rooted-wilson-contraction/v1",
+  "sources": {
+    "lean/Workhouse.lean": "54562231a1167657a5ad5fe085ce5acb45f48bb8b675d57b4dc09d2089f4ee73",
+    "lean/Workhouse/RootedScalarBounds.lean": "15eb325a92c9ad2594278726ada0d3dc7e52b4c3a9d6f11c10caa0a315aa1a12",
+    "paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md": "07a7e7b79576af3f969349e977ce386ff42e391f6f48a7f358b6c8b7a248ffc9",
+    "paper/research_notes/G18_SAME_WEIGHT_CREATOR_OBSTRUCTION_20260905.md": "b805023b9faeed4d87dcdbb6dc6c25959905116ca30dcf4480b14c4f479fa913",
+    "paper/research_notes/G18_WILSON_CREATOR_THERMODYNAMIC_LIMIT_20260905.md": "c9c1c0b772c9cf7f50b98b07a86f82ba0e9d54d5970e7220b3604dcfad53abb1",
+    "scripts/verify_rooted_creator_obstruction.py": "c98249638834ab4d993b12680989fcf690832c4df4adaae55dc61bf6a473e7cc",
+    "scripts/verify_rooted_wilson_contraction.py": "bf437c2c4126090c5c215b7221e3b9233f17b8732795cd8f1e2d236c91042689",
+    "src/workhouse/invariants/rooted_creator.py": "bc41c8cee4865092ee2f2efd133f726b68fc39e82797caddf0f9ee2e6e40ea93",
+    "src/workhouse/rooted_creator.py": "579840855232c16962f360974ca3d5771c76c5005aef6bf4b5e07cad15547dd1",
+    "tests/test_rooted_creator.py": "bc3021ba5bc4156944c1af26d63a39cd6ad3258cbda05f15f9d6cb9a5c9d8e5b"
+  },
+  "verification_scope": "The passed field concerns the finite exact checks above. They do not machine-certify the analytic contraction theorem or its infinite-lattice consequence. The separate Lean theorem certifies a real rational Taylor inequality used in the active-plaquette obstruction."
+}

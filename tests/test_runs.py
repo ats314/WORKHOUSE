@@ -1,13 +1,13 @@
 """In-repo run artifacts are evidence: pinned by digest, never edited.
 
-Unlike ``settlement/`` (received) these were produced in this repository by
-pinned code, so the generating script and the artifact are BOTH present —
-but the artifacts still pin, because a transcript that can drift silently
-stops being a transcript.
+Runs produced here preserve both generating code and output. Received runs
+also preserve their original package manifests and any nested prior inputs.
+Both kinds are pinned: a transcript that can drift silently stops being a
+transcript.
 """
 
 import hashlib
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 RUNS = Path(__file__).resolve().parents[1] / "runs"
 
@@ -26,10 +26,18 @@ def test_every_run_dir_is_fully_pinned():
             if line.strip() and not line.startswith("#"):
                 digest, name = line.split(maxsplit=1)
                 recorded[name.strip()] = digest
-        on_disk = {p.name for p in run_dir.iterdir()} - {"SHA256SUMS"}
+        # Received runs may preserve nested prior/ inputs. Every file must be
+        # pinned, including those below a directory; directories have no hash.
+        on_disk = {p.relative_to(run_dir).as_posix() for p in run_dir.rglob("*") if p.is_file()} - {
+            "SHA256SUMS"
+        }
         assert set(recorded) == on_disk, (
             f"{run_dir.name}: pinned {sorted(recorded)} != on disk {sorted(on_disk)}"
         )
         for name, digest in recorded.items():
+            relative = PurePosixPath(name)
+            assert not relative.is_absolute() and ".." not in relative.parts, (
+                f"{run_dir.name}: unsafe manifest path {name!r}"
+            )
             actual = hashlib.sha256((run_dir / name).read_bytes()).hexdigest()
             assert actual == digest, f"{run_dir.name}/{name} changed: {actual}"

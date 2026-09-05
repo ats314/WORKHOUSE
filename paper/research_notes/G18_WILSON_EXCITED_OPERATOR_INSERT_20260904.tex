@@ -1,0 +1,162 @@
+% Research insert. This does NOT close the thermodynamic Wilson band theorem.
+% Dependencies are recorded in EXCITED_WINDOW_OPERATOR_BRIDGE.md.
+% Requires amsmath, amssymb and theorem/lemma/proposition/proof environments.
+\subsection{Two temporal scales and the excited Wilson window}
+\label{sec:wilson-excited-operator}
+Let $\gamma=C_F/2$, $E_s=4\gamma$, and retain the calibrated transfer
+\[
+ T_{\epsilon,L}(u)=e^{\tau uV_L/2}e^{-\tau K_{\epsilon,L}}e^{\tau uV_L/2},
+ \qquad \tau=\tau_F(\epsilon).
+\]
+The uniform free kinetic window is an input: in the neutral physical odd
+sector its plaquette projector $P_0$ has energy $4\gamma$, rank $3L^3$,
+and complementary energy at least $5\gamma$.
+
+\begin{proposition}[Optimal guaranteed free separation]
+The separation guaranteed by that window for a block of duration $s$ is
+$g(s)=e^{-4\gamma s}(1-e^{-\gamma s})$. It is maximal at
+\[
+ s_{\rm sp}=\gamma^{-1}\log(5/4),\qquad
+ c=(4/5)^4,\quad d=(4/5)^5,\quad c-d=256/3125.
+\]
+If $m=\lceil s_{\rm sp}/\tau\rceil$ and
+$\tau\le\tau_0\le s_{\rm sp}/4$, then $s=m\tau$ obeys
+\[
+ e^{-\gamma s}\le4/5,\qquad g(s)\ge g_*:=1024/15625.
+\]
+\end{proposition}
+\begin{proof}
+Set $x=e^{-\gamma s}$. The derivative of $x^4(1-x)$ is $x^3(4-5x)$.
+Rounding increases $s$ by at most $\tau_0$; the first exponential loses
+at most a factor $4/5$ and the second factor increases.
+\end{proof}
+The long block used for a vacuum cluster expansion need not equal this
+spectral block. Positive integer powers have the same spectral projections,
+Perron vector, and normalized logarithmic energies.
+
+\begin{theorem}[Mesh-uniform isolation at a fixed finite volume]
+Put $P=3L^3$, $J=2N$, $s_1=s_{\rm sp}+\tau_0$, $g_v=1/5$, and
+\[
+ r_L=\min\{g_*/100,\ g_v/(64N\sqrt P),\ 1/5\},\qquad
+ u_L=\frac{\log(1+r_L)}{s_1JP}.
+\]
+For each fixed $L\ge3$ and $|u|<u_L$, the actual normalized Wilson block
+has an isolated neutral odd spectral cluster of rank $P$. Its projected
+normalized literal plaquette sources form a basis with Gram lower bound
+$9I/16$. The result is uniform in the allowed temporal mesh and has no
+representation cutoff. Its coupling interval is not uniform in volume.
+\end{theorem}
+\begin{proof}
+Write $B=T^m$, $B_0=e^{-sK}$, and $D=B/b_0$. Telescoping the bounded
+magnetic factors gives
+\[
+ \|B-B_0\|\le r:=e^{s_1JP|u|}-1,\qquad |b_0-1|\le r,
+ \qquad \|D-B_0\|\le\eta:=2r/(1-r)\le g_*/40.
+\]
+On the odd circle $|z-e^{-sE_s}|=g_*/3$, Neumann inversion gives a Riesz
+projection $\Pi$ of rank $P$, continued from $u=0$, and
+\[
+ \|\Pi-P_0\|\le\eta/(g_*/3-\eta)\le3/37.
+\]
+For the aligned Perron vector, the complementary eigenvalue equation gives
+$\|\Omega-\Omega_0\|\le2\sqrt2r/g_v$.
+Since $\|O_p\|\le\sqrt2N$, the literal-source synthesis map obeys
+$\|J(u)-J(0)\|\le4N\sqrt P r/g_v\le1/16$. The free map $J(0)$ is an
+isometry. Thus $\|\Pi J(u)a\|\ge(1-3/37-1/16)\|a\|>3\|a\|/4$.
+Equal dimensions prove totality in this finite-volume cluster.
+\end{proof}
+
+\subsection{A full-operator first derivative after local vacuum rotation}
+Set $d_\tau(E)=\frac\tau2\coth(\tau E/2)$. With $P_p^{\rm vac}$ the
+four-link product vacuum projection, define
+\[
+ S_p=d_\tau(E_s)(v_pP_p^{\rm vac}-P_p^{\rm vac}v_p),\qquad
+ U_L(u)=\exp\!\left(u\sum_pS_p\right).
+\]
+This is a first-order chart, not an exact nonlinear vacuum chart.
+
+\begin{theorem}[Uniform full-Hilbert-space derivative]
+For $\widetilde D_L(u)=U_L(u)^*T(u)^mU_L(u)/b_0(u)$,
+\[
+ \sup_L\|\widetilde D_L'(0)\|\le16J(s+2d_\tau(E_s)).
+\]
+No restriction on link representation labels is used.
+\end{theorem}
+\begin{proof}
+The derivative is
+$\sum_pF_p\otimes e^{-sK_{p^c}}$, where
+$F_p=B_p'(0)+[e^{-sK_p},S_p]$ is self-adjoint. Since
+$B_p'(0)\Omega_p=d_\tau(E_s)(1-e^{-sE_s})v_p\Omega_p$, the commutator
+cancels it. Hence $F_pP_p^{\rm vac}=P_p^{\rm vac}F_p=0$ and
+$\|F_p\|\le f:=J(s+2d_\tau(E_s))$.
+An $n$-excited-link configuration meets at most $4n$ plaquettes and leaves
+at least $\max(n-4,0)$ excited links outside any one of them. The positive
+quadratic-form majorant is consequently at most
+$4fn\delta^{\max(n-4,0)}\le16f$, with $\delta=e^{-\gamma s}\le4/5$.
+\end{proof}
+The raw derivative instead has vacuum norm
+$\sqrt{2P}\,d_\tau(E_s)(1-e^{-sE_s})$ and is not volume bounded.
+Higher derivatives of this first-order chart are not controlled by the theorem.
+
+\subsection{An all-orders sufficient activity norm}
+\begin{theorem}[Locally vacuum-annihilating operator activities]
+Let $D_i=P_i+d_i$, $0\le d_i\le\delta(1-P_i)$, $0<\delta<1$.
+Suppose a self-adjoint transfer has the exact disjoint-family expansion
+\[
+ \mathcal D_\Lambda=
+ \sum_{\{X_j\}\,\mathrm{disjoint}}
+ \bigotimes_jF_{X_j}\otimes\bigotimes_{i\notin\cup X_j}D_i,
+ \qquad F_XP_X=P_XF_X=0.
+\]
+If $\eta=\sup_i\sum_{X\ni i}\delta^{-|X|}\|F_X\|<\log(1/\delta)$, then
+\[
+ \|\mathcal D_\Lambda-\bigotimes_iD_i\|
+ \le\sup_{n\ge1}\delta^n(e^{n\eta}-1)
+ \le\frac{\eta}{e(\log(1/\delta)-\eta)}.
+\]
+\end{theorem}
+\begin{proof}
+Every activity must meet the input excited set $I$ or its quadratic form
+vanishes. Bound the untouched free factors by
+$\delta^{|I|-|\cup X_j|}$ and drop disjointness only in the positive
+majorant. The sum is at most $\delta^{|I|}(e^{|I|\eta}-1)$.
+Use $e^{n\eta}-1\le n\eta e^{n\eta}$ and
+$\sup_{x\ge0}xe^{-ax}=1/(ea)$.
+\end{proof}
+At $\delta=4/5$, $\eta\le1/400$ implies an operator error at most
+$1/158<g_*/10$ and an isolated rank-$3L^3$ finite-volume odd shell.
+The exact Wilson vacuum chart and this all-orders activity bound have
+\emph{not} been established. Scalar path activities are not these dressed
+operator activities. Thermodynamic identification and spatially rooted
+bounds remain separate requirements.
+
+\subsection{Full-complement completeness and exact source leakage}
+Let $D$ be a positive contraction, $J:\mathbb C^r\to\mathcal H$ injective,
+$G=J^*J$, $W=JG^{-1/2}$, $Q=1-WW^*$. Define
+\[
+ A=W^*DW,\qquad R=QDW,\qquad D_Q=QDQ|_{Q\mathcal H}.
+\]
+\begin{theorem}[Complete spectral range from a full-complement bound]
+If $A\succeq aI_r$ and $D_Q\preceq bI_Q$ with $b<a$, then there is no
+spectrum in $(b,a)$, exactly $r$ eigenvalues lie above $b$, and the sources
+project onto their entire spectral range. Moreover
+$\|\Pi-WW^*\|\le\|R\|/(a-b)$.
+\end{theorem}
+\begin{proof}
+For $b<\lambda<a$ the Schur complement is
+$A-\lambda+R^*(\lambda-D_Q)^{-1}R\succ0$, and the complementary block is
+negative. Its positive inertia is $r$. Min--max gives the same count;
+projecting the source span onto the high range is injective and hence onto.
+The Sylvester equation between $D_Q\le b$ and $D|_{\operatorname{Ran}\Pi}\ge a$
+gives the angle bound.
+\end{proof}
+With $C_j=J^*D^jJ$ the exact identities are
+\[
+ R^*R=G^{-1/2}(C_2-C_1G^{-1}C_1)G^{-1/2},
+\]
+\[
+ W^*(z-D)^{-1}W=[z-A-R^*(z-D_Q)^{-1}R]^{-1}.
+\]
+Thus moments determine leading leakage but cannot determine a spectral
+bound on the full complement; a completely source-invisible state is a
+counterexample. The accompanying finite-model tests retain that check.
