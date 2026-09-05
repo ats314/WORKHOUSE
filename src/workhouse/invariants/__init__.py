@@ -62,6 +62,7 @@ _MODULES = (
     "wilson_step",
     "wilson_block",
     "wilson_vacuum_chart",
+    "wilson_compression",
 )
 
 for _name in _MODULES:
