@@ -68,6 +68,7 @@ _MODULES = (
     "wilson_activity_extraction",
     "wilson_creator_velocity",
     "wilson_physical_band",
+    "continuum_wilson_block",
 )
 
 for _name in _MODULES:

@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 100 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 392/392 checks pass.
+**T1/T2 — re-derived here.** 398/398 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -61,6 +61,7 @@ it cannot drift from what the repository actually checks.
 | the Wilson transfer activities: exact partition extraction | 2/2 |
 | the Wilson weighted chart: exact creator velocity controls | 6/6 |
 | the complete Wilson band: finite source and projection controls | 5/5 |
+| physical Wilson blocks: exact metric, rotor and shell controls | 6/6 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:

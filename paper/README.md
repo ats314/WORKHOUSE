@@ -43,6 +43,24 @@ records scoped exact controls and the analytic proof. The
 [research goal](../docs/research_goal.md) explains what this closes and what
 the spatial scale argument must establish for the Clay theorem.
 
+The [physical history-blocking proof](research_notes/G19_OS_BLOCKING_AND_REVERSE_MASS_MATCHING_20260905.md)
+now specifies the exact mass and source transport and the missing
+eliminated-mode comparison. Its [conditional-gradient repair](research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md)
+and [actual Wilson block geometry](research_notes/G19_WILSON_BLOCK_SCORE_AND_FIBER_OBSTRUCTION_20260905.md)
+replace the failed raw-diffusion shortcut with precise surviving inputs.
+The [compact rotor and vertical-energy theorem](research_notes/G19_WILSON_PHYSICAL_FIBER_FAST_GAP_20260905.md)
+proves the fast physical scale `1/a`, and the
+[full coupled two-square theorem](research_notes/G19_WILSON_TWO_SQUARE_PHYSICAL_SHELLS_20260905.md)
+establishes its three lowest physical excited shells and complete real-source
+frame. The [sealed scale-block run](../runs/continuum_wilson_block_2026-09-05/README.md)
+distinguishes exact untruncated SU(2) rotor enclosures from the analytic
+large-coupling and source proofs. Interacting blocks and their actual
+OS-history complement remain the next physical comparison.
+The [Born-Oppenheimer and two-strip proof](research_notes/G19_WILSON_STRIP_BO_AND_TWO_STRIP_SPLITTING_20260905.md)
+adds exact quantum-ground coefficients, the on-shell angular correction
+and an actual four-face radial/mixed spectral splitting with a controlled
+remainder. Its additive-strip geometry is stated explicitly.
+
 The current research guide also connects the September C2 resolution,
 symbolic all-rank assembly, and fixed-spacing construction to their proofs
 and downstream questions. Older disputes and proposed next steps in pinned

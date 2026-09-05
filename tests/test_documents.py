@@ -74,3 +74,14 @@ def test_every_check_citation_resolves():
             if not resolvable:
                 orphans.append(f"{suite.name} :: {name} :: {section!r}")
     assert not orphans, "citations no cold agent can resolve:\n  " + "\n  ".join(orphans)
+
+
+def test_explicit_document_citations_resolve_without_promoting_the_source():
+    by_alias = {entry["alias"]: entry for entry in ALIASES}
+    for entry in ALIASES:
+        cited = entry.get("cites", [])
+        assert isinstance(cited, list) and len(cited) == len(set(cited))
+        for target in cited:
+            assert target != entry["alias"]
+            assert target in by_alias and not by_alias[target].get("unresolved")
+    assert by_alias["GLUEBALL_REVERSE_TARGET_DATA"]["cites"] == ["OS_HISTORY_BLOCKING"]

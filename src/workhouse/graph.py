@@ -66,7 +66,7 @@ CURATED_TYPES = frozenset(
         "claims",  # symbols.yaml
         "code_names",  # symbols.yaml
         "bears_on",  # literature/index.yaml
-        "cites",  # literature/index.yaml: the curated citation web, LIT -> LIT
+        "cites",  # curated literature and document citation webs
         "formalizes",  # theorems.yaml
         "promotes",  # theorems.yaml: the T1/T2 check a theorem lifts to T0
         "originates",  # provenance.yaml: the corpus document a value comes from
@@ -89,7 +89,8 @@ CURATED_TYPES = frozenset(
 )
 #: "cites" appears on both sides deliberately: the DERIVED kind is an id
 #: parsed out of a check's free text (CHK -> ledger id), the CURATED kind is
-#: the verbatim ``cites`` field of literature/index.yaml (LIT -> LIT). The
+#: the verbatim ``cites`` field of literature/index.yaml (LIT -> LIT) or
+#: ledger/documents.yaml (CITE -> CITE). The
 #: ``how`` field on each edge keeps them distinguishable.
 DERIVED_TYPES = frozenset({"cites", "mentions", "amends", "retracts", "uses", "carries"})
 TYPES = CURATED_TYPES | DERIVED_TYPES
@@ -314,7 +315,10 @@ def build(
             if name.isupper():
                 add(sid, f"CONST:{name}", "code_names", "curated", "ledger/symbols.yaml")
 
-    # The governing ALL THEORY source stack. These relationships are authored
+    # The governing ALL THEORY source stack and explicit document citations.
+    # A document's cites list records an actual source reference without
+    # turning a guidance note into a theorem or a proof dependency.
+    # These relationships are authored
     # in documents.yaml rather than inferred from filenames: UNIFIED names its
     # technical appendix, navigation guide, and byte-level provenance record.
     # The nodes remain T3 citation records; documentary authority never
@@ -323,7 +327,7 @@ def build(
         if document.get("unresolved"):
             continue
         src = f"CITE:{document['alias']}"
-        for type_ in ("technical_appendix", "navigation", "provenance"):
+        for type_ in ("technical_appendix", "navigation", "provenance", "cites"):
             for target in document.get(type_, []):
                 add(src, f"CITE:{target}", type_, "curated", "ledger/documents.yaml")
 

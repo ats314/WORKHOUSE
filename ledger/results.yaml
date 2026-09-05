@@ -4,6 +4,251 @@
 # that entire statement. This does not change its mathematically established status.
 schema: results/v1
 results:
+  - id: RESULT:WILSON_STRIP_BO_FIRST_TERM
+    statement: >
+      For the actual adjacent-strip vertical ground, the normalized flat
+      coarse derivative is O(g^2), while the intrinsic horizontal derivative
+      is O(g). The ground-energy and Born-Huang terms combine to
+      sqrt(5)(5-2N^2)|Q|^2/(160N) at order one. On finite coarse energy
+      shells of the stated two-strip graph, the exact on-shell self-energy
+      and direct metric correction leave the angular form
+      (11/80)sum_i norm([Q_i,grad_Q_i]psi)^2 in electric energy units.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - Fixed SU(N), N>=2, actual adjacent-strip link form, u=g^-4 and the specified balanced coordinates with bounded coarse Q.
+      - The unique gapped vertical ground and the physical Haar half-density normalization of the vertical fast-energy theorem.
+      - The on-shell angular calculation is restricted to finite coarse oscillator energy shells and the specified two strips sharing only their base vertex.
+    scope: >
+      Actual finite-block ground and first effective-energy terms, justified
+      through localized polynomial quasimodes. Coarse Haar, metric and
+      magnetic terms remain explicit. Single-strip physical Gauss gives
+      exact inversion cancellation; the common Gauss constraint of two
+      strips does not remove each strip's off-diagonal coupling. No
+      uncontrolled infinite-energy denominator or universal adiabatic
+      approximation is used, and the fiber-ground projection is not the
+      OS-history projection.
+    source: CITE:WILSON_STRIP_BO
+    source_section: Sections 1-6, normalized vertical ground, intrinsic connection, projected form and finite-shell on-shell self-energy
+    depends_on: [RESULT:WILSON_VERTICAL_FAST_ENERGY]
+    bears_on: [G19, G23]
+    supported_by:
+      - target: RUN:continuum_wilson_block_2026-09-05
+        scope: Exact coordinate jets, Lie and Gaussian contractions, finite on-shell matrices and negative denominator controls; the parameter asymptotics are analytic.
+      - target: CHK:physical-wilson-blocks-exact-metric-roto-2299e1:the-actual-strip-metric-and-gaussian-con-17a660
+        scope: Symbolic strip metric jets and exact fixed-rank contractions check the displayed first coefficients, not the analytic parameter remainder.
+
+  - id: RESULT:WILSON_TWO_STRIP_PHYSICAL_SPLITTING
+    statement: >
+      On the actual two-identical-strip graph with four faces, fourteen
+      edges and eleven vertices, the first physical excitation at large u
+      is an exactly degenerate radial doublet. Its gap is
+      2sqrt(3)sqrt(u)+delta_R+O_N(u^-1/4), where
+      delta_R=sqrt(15)(5-2N^2)/(80N)-3(2N^2-3)/(32N).
+      The next mixed singlet has delta_M=delta_R+(54N^2-15)/(160N)
+      in place of delta_R, with the same error order.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - Fixed SU(N), N>=2, and the specified finite cubic graph of two identical adjacent-square strips sharing only a base vertex.
+      - The Hamiltonian is the sum of the two actual shared-edge strip Hamiltonians, restricted to their common diagonal gauge-invariant space.
+      - No plaquette interaction joins the two strips or crosses the finite graph boundary; u is sufficiently large.
+    scope: >
+      Actual finite-graph spectral splitting, beyond a formal coefficient.
+      A rank-three harmonic count and physical finite-Hermite correctors
+      give O_N(u^-1/4) eigenvalue errors. Identical additive strips give the
+      exact radial degeneracy; the common Gauss condition creates no hopping.
+      This supplies a physical multi-holonomy example but not a bound for
+      interacting blocks, an OS complement or a continuum trajectory.
+    source: CITE:WILSON_STRIP_BO
+    source_section: Sections 6-7.1, explicit graph, second-order gap matrix and actual eigenvalue/quasimode proof
+    depends_on: [RESULT:WILSON_STRIP_BO_FIRST_TERM, RESULT:WILSON_TWO_SQUARE_PHYSICAL_SHELLS]
+    bears_on: [G19, G23]
+    supported_by:
+      - target: RUN:continuum_wilson_block_2026-09-05
+        scope: Symbolic-rank moments and first-shell coefficients, with independent SU(2) original-seven-link spectral coefficient checks; the actual all-fixed-rank asymptotic remainder is analytic.
+      - target: CHK:physical-wilson-blocks-exact-metric-roto-2299e1:original-seven-link-product-logarithms-i-770bf5
+        scope: An independent SU(2) product-logarithm calculation reproduces the radial and mixed energy coefficients; it does not certify the global localization argument.
+      - target: CHK:physical-wilson-blocks-exact-metric-roto-2299e1:the-two-strip-on-shell-self-energy-leave-9f719a
+        scope: Exact Gaussian effective matrices and symbolic-rank moments check the splitting coefficients and necessary metric and denominator terms; the quasimode remainder is analytic.
+
+  - id: RESULT:OS_HISTORY_BLOCK_INTERTWINER
+    statement: >
+      An exact deterministic pushforward of a reflection-positive fine
+      history measure, preserving the positive history algebra and b-step
+      time translation, induces an OS isometry J with T_f^b J=J T_c.
+      If T_f is positive, T_f J=J T_c^(1/b). The physical clock h_c=b h_f
+      preserves coarse masses and pullback-source weights on ran J;
+      a separate bound on its reducing complement gives the full fine gap.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - The coarse measure is the true deterministic pushforward of the full fine history measure.
+      - Reflection equivariance and positive-time locality hold on the tested invariant algebra, and the block commutes with b fine time translations.
+      - The fine reconstructed transfer is positive; physical time is calibrated by h_c=b h_f.
+    scope: >
+      Generic exact history theorem. It constructs the isometry from the
+      history form, not from a chosen slice marginal. Coarse spectral
+      transport alone does not control eliminated fine modes. Application
+      to a Wilson trajectory still requires its actual block map, generated
+      effective measure, complement estimate and source normalization.
+    source: CITE:OS_HISTORY_BLOCKING
+    source_section: Sections 4-5, equations (5)-(9); Sections 2-3 and 6-7 state physical matching obligations
+    depends_on: []
+    bears_on: [G19, G23, RESULT:WILSON_INFINITE_PHYSICAL_BAND]
+    supported_by: []
+
+  - id: RESULT:CONDITIONAL_GRADIENT_REPAIR
+    statement: >
+      In the matched quotient metric, a conditional fiber Poincare gap
+      kappa and mixed-score bound M give c=M/kappa and the sharp fine
+      Poincare bound lambda_max of [[C,cC],[cC,kappa^-1+c^2 C]].
+      A Gaussian family attains this matrix. Under strict relative fiber
+      separation B<=theta C, theta<1, the scale loss is at most
+      1+c^2/(1-theta), so a square-summable score budget suffices to iterate.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - A differentiable conditional density in justified product coordinates, with the actual centered conditional score retained.
+      - Uniform fiber Poincare constant, the stated mixed-score bound and a coarse marginal Poincare constant in the matched metric.
+      - The iterative conclusion additionally requires a uniform strict fiber separation and a finite sum of squared relative score constants.
+    scope: >
+      Configuration-space Dirichlet theorem, not an OS energy comparison.
+      Arithmetic averaging has sharp reverse gradient constant m in the
+      raw coarse Euclidean metric, or one in its quotient metric. The
+      imported 1/m reverse bound is refuted by a linear pullback. Correct
+      physical rescaling does not create a geometric contraction. Actual
+      Wilson fiber and score hypotheses must be established separately.
+    source: CITE:CONDITIONAL_GRADIENT_REPAIR
+    source_section: Sections 1-5, exact quotient gradient and equations (2)-(7)
+    depends_on: []
+    bears_on: [G19, G23]
+    supported_by:
+      - target: RUN:continuum_wilson_block_2026-09-05
+        scope: Exact averaging, Gaussian covariance, metric and two-by-two matrix controls; the conditional differentiation and all-scale implication are analytic.
+      - target: CHK:physical-wilson-blocks-exact-metric-roto-2299e1:conditional-gaussian-covariance-is-sharp-545967
+        scope: Finite exact covariance and quotient-metric controls check sharpness and the retained score, not the general conditional differentiation or an actual RG trajectory.
+
+  - id: RESULT:WILSON_BLOCK_SCORE_OBSTRUCTION
+    statement: >
+      In the specified actual Wilson bouquet and adjacent-strip blocks,
+      the action and Haar coordinate score starts at g^2, while the
+      intrinsic horizontal score generally starts at g. An explicit
+      gauge-invariant two-coarse-holonomy test prevents a universal total
+      Gauss cancellation. For SU(N), N>=5, a secondary central well gives
+      an exponentially small global compact-fiber diffusion gap.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - The finite Wilson blocks, based gauge, Haar disintegration, electric link form and normalized weak-field coordinates specified in the proof.
+      - Fixed bounded coarse weak-field coordinates and g tending to zero for the score asymptotics.
+      - N>=5 only for the secondary-center-well diffusion obstruction.
+    scope: >
+      Exact block geometry and analytic coefficient and variational results.
+      Surrounding plaquette couplings are absent. Single coarse class
+      directions do cancel the leading score; total Gauss alone does not
+      cancel the displayed two-holonomy example. Diffusion metastability is
+      not a slow OS transfer mode and does not refute every possible block map.
+    source: CITE:WILSON_BLOCK_SCORE
+    source_section: Sections 1-6.1, exact action/Haar, metric, horizontal score, gauge counterexample and rare-well bound
+    depends_on: []
+    bears_on: [G19, G23, RESULT:CONDITIONAL_GRADIENT_REPAIR]
+    supported_by:
+      - target: RUN:continuum_wilson_block_2026-09-05
+        scope: Finite symbolic action, Haar, Lie-bracket and metric controls; the asymptotic and rare-well variational conclusions are the analytic proof.
+
+  - id: RESULT:COMPACT_ROTOR_FAST_GAP
+    statement: >
+      For a compact connected group with simple Lie algebra and a faithful
+      finite-dimensional unitary representation rho, the character
+      potential dim(rho)-Re chi_rho has a unique nondegenerate minimum.
+      The rotor -kappa Delta+lambda v has leading full gap omega_rho and
+      leading class-function gap 2 omega_rho, where
+      omega_rho=sqrt(2 b_rho kappa lambda). In the stated SU(N)
+      normalization the eigenvalue remainder is O_N(kappa^(3/4)lambda^(1/4)).
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - Fixed compact connected G with simple Lie algebra, a fixed bi-invariant metric and a faithful finite-dimensional unitary rho.
+      - The positive trace-form constant satisfies -ReTr(d rho(X)d rho(Y))=b_rho times the chosen metric.
+      - Positive kappa and lambda with lambda/kappa tending to infinity; constants may depend on the group, representation and metric.
+    scope: >
+      Compact physical rotor theorem proved by IMS localization and min-max.
+      The absence of an adjoint linear singlet and the invariant quadratic
+      supply the class-sector factor two. A nonfaithful representation can
+      have several zero-potential wells and is excluded. This is not an
+      extension of the separate SU(N) odd plaquette-band construction.
+    source: CITE:WILSON_FIBER_FAST_GAP
+    source_section: Sections 1-2, compact-group theorem, faithful-representation extension and localization proof
+    depends_on: []
+    bears_on: [G19, G23]
+    supported_by: []
+
+  - id: RESULT:WILSON_VERTICAL_FAST_ENERGY
+    statement: >
+      The actual induced vertical electric metrics give constrained
+      bouquet and adjacent-strip Wilson rotors -Delta+4u v and
+      -(5/4)Delta+4u v. Their physical class gaps are respectively
+      4sqrt(u)+O_N(u^(1/4)) and 2sqrt(5)sqrt(u)+O_N(u^(1/4)).
+      A fixed weak-field coarse neighborhood has a uniform sqrt(u)
+      lower gap and a direct-integral vertical form inequality after
+      subtracting its coarse-dependent ground energy.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - The specified finite bouquet or adjacent-strip link graph, Haar measure and electric convention H_E=(1/2)sum C2.
+      - Fixed SU(N), N>=2, with sufficiently large u; the neighborhood statement requires Re sqrt(U)>=a0 I for fixed a0>0.
+      - Physical conversion uses u=g_H^-4 and H_physical=c_H(a)g_H^2 H/a with the stated clock matching.
+    scope: >
+      Exact induced-metric realization of the compact-rotor theorem.
+      The physical fast energy is of order 1/a. Rare diffusion wells cost
+      order u potential energy here and do not enter the low rotor spectrum.
+      The direct-integral fiber-ground projection is not yet the actual
+      reducing projection of an OS-history block, and no coupled multiblock
+      estimate is asserted. SU(2) certificates concern the untruncated class
+      rotor at their four specified couplings.
+    source: CITE:WILSON_FIBER_FAST_GAP
+    source_section: Sections 3-7, exact link factors, uniform coarse-neighborhood form, physical units and evidence scope
+    depends_on: [RESULT:COMPACT_ROTOR_FAST_GAP]
+    bears_on: [G19, G23, RESULT:WILSON_BLOCK_SCORE_OBSTRUCTION]
+    supported_by:
+      - target: RUN:continuum_wilson_block_2026-09-05
+        scope: Exact untruncated SU(2) class-rotor enclosures at u=1,100,10000,1000000 from integer Sturm signs and tail Schur bounds; not the uniform asymptotic or OS comparison.
+      - target: CHK:physical-wilson-blocks-exact-metric-roto-2299e1:four-su2-intrinsic-rotor-enclosures-repl-cb93d2
+        scope: Integer Sturm replay and the analytic tail comparison certify the four stated untruncated SU(2) enclosures; no all-coupling asymptotic or OS bound follows from the samples.
+
+  - id: RESULT:WILSON_TWO_SQUARE_PHYSICAL_SHELLS
+    statement: >
+      The full actual adjacent-two-square Wilson Hamiltonian on jointly
+      gauge-invariant L2(SU(N)^2) has gap 2sqrt(3)sqrt(u)+O_N(u^(1/4)).
+      Its first three physical excited shells are simple, with leading
+      excitation coefficients 2sqrt(3), sqrt(3)+sqrt(5), and 2sqrt(5).
+      Three explicit centered real Wilson sources, scaled by sqrt(u),
+      have projected Gram tending to I and span the entire three-shell range.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - The actual finite adjacent-two-square graph with its shared-edge electric coupling and no surrounding plaquette interactions.
+      - Fixed SU(N), N>=2, electric convention H_E=(1/2)sum C2, shifted magnetic potential 2u(v(U1)+v(U2)), and sufficiently large u.
+      - Physical functions are invariant under simultaneous conjugation of the two based holonomies.
+    scope: >
+      Full coupled physical finite-block theorem, not a constrained-fiber
+      corollary. Exact Gauss identities yield physical inversion symmetry
+      and remove the linear local metric form. The invariant product
+      oscillator and IMS proof isolate the complete first three shells;
+      potential-energy convergence controls the projected source matrix.
+      The inversion symmetry is special to this graph. Ambient couplings,
+      interacting blocks and the actual OS blocking complement remain open.
+    source: CITE:WILSON_TWO_SQUARE_PHYSICAL_SHELLS
+    source_section: Sections 1-5, exact Gauss/inversion identity, physical oscillator, compact localization and projected source frame
+    depends_on: []
+    bears_on: [G19, G23, RESULT:WILSON_VERTICAL_FAST_ENERGY]
+    supported_by:
+      - target: RUN:continuum_wilson_block_2026-09-05
+        scope: Finite Lie-algebra and Gaussian normalization controls for the declared local identities; the compact physical spectrum and complete source frame are analytic conclusions.
+      - target: CHK:physical-wilson-blocks-exact-metric-roto-2299e1:joint-gauss-cancellation-holds-in-mixed--91ef51
+        scope: Exact invariant-polynomial and Gaussian source controls check the local cancellation and normalization; full group inversion and projected-source convergence are analytic.
+
   - id: RESULT:WILSON_INFINITE_PHYSICAL_BAND
     statement: >
       The actual Perron-normalized Wilson transfer has a common open-box and
