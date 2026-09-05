@@ -1294,6 +1294,34 @@ gaps:
     tier: 3
     state: open
     title: The spectral bridge
+    rooted_wilson_contraction_2026_09_05: >
+      The exact endpoint creator equation now has a proved nonlinear
+      contraction on a common complex coupling disk. A moving support
+      weight sigma(t)=mu-gamma*t/2 absorbs the magnetic creator flow's
+      support moment, and the full reduced resolvent restores the lost
+      weight: norm R_tau h in mu is at most gamma^(-1) times norm h in
+      (mu-gamma*tau/2,-1). For mu >= gamma*tau0/2 and
+      u_star=min(9*gamma/(309680*J_star*exp(4*mu)),
+      9/(8450*tau0*J_star*exp(4*mu))), the actual composed map R_tau N_tau
+      contracts the creator ball of radius 1/16 with constant at most 1/2.
+      The scalar normalizer is nonzero on the constructed domain. At each
+      finite volume this gives holomorphic nonunitary vacuum coordinates,
+      and the positive Wilson-kernel premise identifies their real branch
+      with the actual Perron vacuum throughout the interval.
+
+      Exact connected active-plaquette witnesses stabilize each rooted
+      Taylor coefficient. Their common Cauchy bound constructs a canonical
+      infinite-lattice analytic creator family on the same disk, of norm
+      at most 1/16. If all clusters through order N fit at a root, its
+      local approximation error is at most (1/8)*q^(N+1)/(1-q),
+      q=abs(u)/r and abs(u)<r<u_star. This is a coefficient-family limit,
+      not a global free-tensor-product vacuum vector or physical operator
+      realization. The analytic proofs are
+      paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md and
+      paper/research_notes/G18_WILSON_CREATOR_THERMODYNAMIC_LIMIT_20260905.md.
+      The finite exact controls, independent disjoint-block and SU(3) Haar
+      checks, scalar Lean inequality, and source snapshots are in
+      runs/wilson_rooted_contraction_2026-09-05.
     local_wilson_vacuum_chart_2026_09_05: >
       The actual normalized symmetric transfer T^m/b_0 now has an explicit
       second local vacuum rotation. After the first rotation, each normalized
@@ -1333,7 +1361,13 @@ gaps:
       The creator-log equation v_J = r_tau(K_J) N_tau,J(u,v) identifies the
       remaining nonlinear map. Inequality (17) in
       paper/research_notes/G18_WILSON_ENDPOINT_GAUGE_AND_MAJORANT_20260905.md
-      is a sufficient rooted Lipschitz estimate, not yet established. The
+      was a sufficient same-weight proposal. The later rooted contraction
+      proves the needed estimate after full kinetic smoothing instead.
+      An explicit SU(3) disjoint active-plaquette family disproves the
+      unrestricted same-weight bound for arbitrary trial families, as
+      shown in G18_SAME_WEIGHT_CREATOR_OBSTRUCTION_20260905.md; this is not
+      a separate counterexample with every lattice interaction active.
+      The
       earlier explicit Cauchy bounding sequence itself has zero convergence
       radius, without implying zero radius for the actual coefficients.
     wilson_vacuum_compression_2026_09_05: >
@@ -1482,11 +1516,13 @@ gaps:
       So the first exclusion in the manuscript's scope paragraph is now about
       the CONTINUUM, not the thermodynamic limit.
     still_open: >
-      The September 5 formal chart is constructed at every fixed magnetic
-      order; convergence of its connected coefficients and realization as
-      an exact actual-Wilson vacuum chart remain open. A positive-radius,
-      spatially rooted operator-activity bound is still required; finite-order
-      coefficient bounds and scalar path activities do not establish it.
+      The actual Wilson vacuum now has convergent nonunitary creator
+      coordinates and a canonical analytic infinite-lattice coefficient
+      family on an explicit common disk. A controlled physical state and
+      operator realization is still required: transport these coordinates
+      to a bounded unitary vacuum chart, or provide an equivalent justified
+      metric and full-Hilbert-space operator-activity estimate. Convergence
+      of the earlier ordered unitary generator product has not been proved.
       Thermodynamic Hilbert-space/range identification, source totality,
       and spatially weighted sharp-shell matching must accompany the operator
       bound; the full complementary spectrum cannot be inferred from source
@@ -1506,18 +1542,24 @@ gaps:
           and generators independent of positive integer temporal block power.
           The native finite-model checks validate their algebraic controls;
           the analytic arbitrary-order theorem is not certified by those tests.
-      - step: Prove convergence and exact realization of the rooted Wilson vacuum chart
+      - step: Prove a common analytic domain and rooted contraction for the Wilson creator coordinates
+        state: done
+        status: >
+          G18_ROOTED_WILSON_CONTRACTION_20260905.md proves the moving-weight
+          flow and the full-resolvent contraction, including nonzero scalar
+          normalization and explicit constants. The companion limit note
+          constructs the infinite-lattice creator family through stabilized
+          Taylor coefficients with a quantitative local error. These are
+          analytic theorems; the native checks and Lean lemma certify only
+          their stated finite algebra and scalar arithmetic.
+      - step: Realize the convergent creator coordinates in a controlled physical operator chart
         state: live
         status: >
-          Improve the explicit fixed-order bounds in
-          G18_VACUUM_CHART_RECURSION_20260905.md to a convergent rooted
-          majorant and an exact symmetry-preserving vacuum chart, or supply
-          the Doob alternative with an explicit physical-Hilbert-space bridge.
-          A positive-radius majorant for transformed operator coefficients
-          alone does not prove convergence of the chart implementing them.
-          The endpoint-gauge note supplies a new exact support-size inverse
-          and the explicit connected-map inequality (17) to target; its
-          common analytic ball and rooted Lipschitz constants remain unproved.
+          Convert the nonunitary endpoint creator coordinates to a controlled
+          symmetry-preserving unitary chart, or an equivalent physical metric
+          with a justified operator bridge. The creator-family norm alone
+          does not give a bounded global exponential on the free infinite
+          tensor product or the complete physical excited projection.
           Bound the realized locally vacuum-annihilating activities on the
           full Hilbert space; eta <= 1/400 remains one sufficient spectral-block
           threshold. Establish spatially weighted source transformations too.
