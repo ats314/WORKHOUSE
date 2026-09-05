@@ -15,6 +15,8 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
+**2 checks are failing.** They are marked below.
+
 ## T0 — proof-checked — 83
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
@@ -271,7 +273,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:247
   - `make lean`
 
-## T1 — re-derived exactly — 302
+## T1 — re-derived exactly — 304
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -739,22 +741,19 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **private-link paths as single links; universality history by history**
 
 - `a private-link path is one effective link with k times the single-link H0: every three-cluster cumulant of the beta_N assembly is the same, channel by channel in both sectors, on the reduced cluster as on the full one`
-  - src/workhouse/invariants/path_reduction.py:48 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026
+  - src/workhouse/invariants/path_reduction.py:46 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026
   - `workhouse verify --only 'a private-link path is one effective link with k times the single-link H0: every three-cluster cumulant of the beta_N assembly is the same, channel by channel in both sectors, on the reduced cluster as on the full one'`
 - `the single-contact dressing agrees history by history between its two geometries once time is reversed, the end roles are swapped and one end face is conjugated: every (sequence, channel) term has ratio -1`
-  - src/workhouse/invariants/path_reduction.py:134 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026
+  - src/workhouse/invariants/path_reduction.py:132 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026
   - `workhouse verify --only 'the single-contact dressing agrees history by history between its two geometries once time is reversed, the end roles are swapped and one end face is conjugated: every (sequence, channel) term has ratio -1'`
-- `the single-contact dressing obeys the same lemma once time is reversed: phi (delete the hub private after the hub-end letter, keep the other as the weight-two link, reverse the hub-end link, conjugate) maps every history's straight integrand onto its L integrand with the same coefficient up to the incidence sign, and preserves the Haar integral on the mirror family`
-  - src/workhouse/invariants/path_reduction.py:268 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; runs/dressing_lemma_2026-09-04; ADR 0033
-  - `workhouse verify --only 'the single-contact dressing obeys the same lemma once time is reversed: phi (delete the hub private after the hub-end letter, keep the other as the weight-two link, reverse the hub-end link, conjugate) maps every history'"'"'s straight integrand onto its L integrand with the same coefficient up to the incidence sign, and preserves the Haar integral on the mirror family'`
 - `the universality lemma, by exhaustion on the fourth-order family: phi (delete the second private letter of the straight middle face, keep the first as the weight-two link) maps every history's straight integrand onto its L integrand with the same coefficient, and preserves the Haar integral on every word the Fierz swaps and cuts can generate from the face words`
-  - src/workhouse/invariants/path_reduction.py:211 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; runs/universality_lemma_2026-09-04; ADR 0032
+  - src/workhouse/invariants/path_reduction.py:209 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; runs/universality_lemma_2026-09-04; ADR 0032
   - `workhouse verify --only 'the universality lemma, by exhaustion on the fourth-order family: phi (delete the second private letter of the straight middle face, keep the first as the weight-two link) maps every history'"'"'s straight integrand onto its L integrand with the same coefficient, and preserves the Haar integral on every word the Fierz swaps and cuts can generate from the face words'`
 - `universality of the two-hop weight holds history by history: the straight and the L-shaped chain agree in every (insertion sequence, channel) term of the direct term, and integrand by integrand within each term`
-  - src/workhouse/invariants/path_reduction.py:99 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; ADR 0019
+  - src/workhouse/invariants/path_reduction.py:97 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; ADR 0019
   - `workhouse verify --only 'universality of the two-hop weight holds history by history: the straight and the L-shaped chain agree in every (insertion sequence, channel) term of the direct term, and integrand by integrand within each term'`
 - `where the identity lives: after every private path is integrated, the straight and the L chain leave the same formal word in the two shared links, coefficient for coefficient, in every (sequence, channel) term; after the middle face's private links alone they do not`
-  - src/workhouse/invariants/path_reduction.py:163 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; runs/vertex_residuals_2026-09-04; ADR 0031
+  - src/workhouse/invariants/path_reduction.py:161 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; runs/vertex_residuals_2026-09-04; ADR 0031
   - `workhouse verify --only 'where the identity lives: after every private path is integrated, the straight and the L chain leave the same formal word in the two shared links, coefficient for coefficient, in every (sequence, channel) term; after the middle face'"'"'s private links alone they do not'`
 **published comparisons (literature/index.yaml)**
 
@@ -986,6 +985,17 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the three plaquette orientations at k = 0 carry an irreducible representation of the cubic group (the T1 triplet), so every cubic-covariant effective Hamiltonian is a scalar at Gamma at every order`
   - src/workhouse/invariants/gamma_isolation.py:109 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
   - `workhouse verify --only 'the three plaquette orientations at k = 0 carry an irreducible representation of the cubic group (the T1 triplet), so every cubic-covariant effective Hamiltonian is a scalar at Gamma at every order'`
+**the Wilson transfer matrix at finite temporal step**
+
+- `the exact SU(3) Wilson multipliers through eps^3 from Cartan Gaussian moments with the Weyl Vandermonde: lambda_3 = 1 - 2/3 eps + 1/36 eps^2 + 13/648 eps^3, lambda_8 = 1 - 3/2 eps + 11/16 eps^2 + 1/96 eps^3, lambda_6 = 1 - 5/3 eps + 65/72 eps^2 - 55/1296 eps^3; the calibrated clock is tau = eps + 7/24 eps^2 + 13/144 eps^3 and the calibrated energies k(8) = 3/2 - 5/96 eps^2, k(6) = 5/3 - 5/72 eps^2` **[FAILING]**
+  - src/workhouse/invariants/wilson_step.py:186 · G19; paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md sections 5-7; runs/uniform_wilson_window_2026-09-04 section 6; exact_laplace_certificate.json
+  - `workhouse verify --only 'the exact SU(3) Wilson multipliers through eps^3 from Cartan Gaussian moments with the Weyl Vandermonde: lambda_3 = 1 - 2/3 eps + 1/36 eps^2 + 13/648 eps^3, lambda_8 = 1 - 3/2 eps + 11/16 eps^2 + 1/96 eps^3, lambda_6 = 1 - 5/3 eps + 65/72 eps^2 - 55/1296 eps^3; the calibrated clock is tau = eps + 7/24 eps^2 + 13/144 eps^3 and the calibrated energies k(8) = 3/2 - 5/96 eps^2, k(6) = 5/3 - 5/72 eps^2'`
+- `the four shared-link channels of the second-order C-odd shell reproduce t_N at every rank: w_rho = -(d_rho/N^2)/(C_F + C_rho/2) for rho = 1, Adj, Lambda^2 F, Sym^2 F, and (w_Lambda2 + w_Sym2) - (w_1 + w_Adj) = 2N(N^2-4)/((N^2-1)(2N^2-1)(4N^2-9)) identically`
+  - src/workhouse/invariants/wilson_step.py:79 · G19; paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md sections 5-7; runs/uniform_wilson_window_2026-09-04 eq. (12) at eps -> 0; corpus section 4.1
+  - `workhouse verify --only 'the four shared-link channels of the second-order C-odd shell reproduce t_N at every rank: w_rho = -(d_rho/N^2)/(C_F + C_rho/2) for rho = 1, Adj, Lambda^2 F, Sym^2 F, and (w_Lambda2 + w_Sym2) - (w_1 + w_Adj) = 2N(N^2-4)/((N^2-1)(2N^2-1)(4N^2-9)) identically'`
+- `the second-order C-odd shell of the symmetric Wilson transfer generator at finite temporal step: with d_tau(Delta) = (tau/2) coth(tau Delta/2) the hopping is t_W = 5/612 + 175/280908 eps^2 + O(eps^3), the flat scalar s_2W = 11/306 - 89159/2247264 eps^2, and the first literal-source Gram coefficient -2 d_tau(E_F) = -3/4 - 4/9 eps^2` **[FAILING]**
+  - src/workhouse/invariants/wilson_step.py:234 · G19; paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md sections 5-7; runs/uniform_wilson_window_2026-09-04 eqs. (11)-(18); window_shell_certificate.json
+  - `workhouse verify --only 'the second-order C-odd shell of the symmetric Wilson transfer generator at finite temporal step: with d_tau(Delta) = (tau/2) coth(tau Delta/2) the hopping is t_W = 5/612 + 175/280908 eps^2 + O(eps^3), the flat scalar s_2W = 11/306 - 89159/2247264 eps^2, and the first literal-source Gram coefficient -2 d_tau(E_F) = -3/4 - 4/9 eps^2'`
 **the charge-even band, exactly**
 
 - `FINDING: the certificate key 'bandmin' holds the band MAXIMUM, at both orders`

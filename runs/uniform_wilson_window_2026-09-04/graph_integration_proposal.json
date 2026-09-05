@@ -1,0 +1,96 @@
+{
+  "type": "research_graph_proposal_not_applied",
+  "upstream_commit": "31255abac3829cb0cc1ce7c36c1852db8cdafbea",
+  "native_schema_compatibility": "Not claimed: map proposed identifiers into the current catalogue before integration.",
+  "native_gap_states_changed": [],
+  "claims": [
+    {
+      "proposed_id": "WILSON_KINETIC_NO_POLLUTION",
+      "status": "proven",
+      "evidence": "analytic",
+      "scope": "all irreps, fixed N, sufficiently small epsilon",
+      "statement": "k_epsilon(R)>=c_N min(C_R,1/epsilon)",
+      "premises": [
+        "positive Wilson multipliers",
+        "static Gaussian heat-kernel upper estimate",
+        "tau_F/epsilon tends to 1"
+      ],
+      "proof": "UNIFORM_WILSON_WINDOW.md#2-uniform-high-representation-exclusion",
+      "formalized_in_lean": false
+    },
+    {
+      "proposed_id": "WILSON_PHYSICAL_KINETIC_WINDOW",
+      "status": "proven",
+      "evidence": "analytic",
+      "scope": "free kinetic operator, fixed N>=3, all L>=3, existential epsilon_0",
+      "statement": "spectrum below 5 C_F/2 exactly vacuum and fundamental plaquette shell at 2 C_F",
+      "premises": [
+        "WILSON_KINETIC_NO_POLLUTION",
+        "fixed-irrep calibrated limit",
+        "Revision 6 Theorem 1 support and Casimir shelves"
+      ],
+      "formalized_in_lean": false
+    },
+    {
+      "proposed_id": "WILSON_ACTUAL_TRANSFER_ORDER2",
+      "status": "proven",
+      "evidence": "analytic",
+      "scope": "finite magnetic Taylor order, no irrep cutoff, not summed series",
+      "statement": "coth-weighted four channels give full signed incidence shell plus explicit scalar; first literal-source Gram coefficient derived",
+      "premises": [
+        "WILSON_PHYSICAL_KINETIC_WINDOW",
+        "Revision 6 channel projector cross elements and process census",
+        "direct-plus-folded transfer perturbation"
+      ],
+      "exact_arithmetic_tests": "window_shell_certificate.json",
+      "formalized_in_lean": false
+    },
+    {
+      "proposed_id": "WILSON_WEIGHTED_MATCHING_FIXED_ORDER",
+      "status": "proven",
+      "evidence": "analytic",
+      "scope": "every fixed magnetic order, constants may depend on order; sufficiently large volume",
+      "statement": "h, G, S coefficient differences are O(epsilon^2) in the spatially weighted norm",
+      "premises": [
+        "finite-order tensor-power reachability",
+        "linked factorization",
+        "calibrated fixed-irrep expansion",
+        "symmetric finite-matrix product logarithm"
+      ],
+      "formalized_in_lean": false
+    },
+    {
+      "proposed_id": "AUXILIARY_DRESSED_MATCHING",
+      "status": "conditional",
+      "evidence": "analytic",
+      "scope": "SU(3), K_epsilon-uV, not actual Wilson transfer logarithm",
+      "statement": "complete dressed shell and sources converge in weighted norm, inheriting existing G18 construction uniformly",
+      "premises": [
+        "WILSON_PHYSICAL_KINETIC_WINDOW",
+        "common kinematic contour",
+        "upstream G18 complete-band/source construction",
+        "uniform auxiliary weighted Taylor majorant"
+      ],
+      "formalized_in_lean": false
+    },
+    {
+      "proposed_id": "WILSON_DRESSED_MATCHING_SUMMED",
+      "status": "open",
+      "evidence": "analytic",
+      "scope": "actual symmetric Wilson transfer, all magnetic orders",
+      "statement": "construct uniform discrete-time vacuum and one-mark Riesz expansion and its complete source frame",
+      "missing": [
+        "uniform epsilon weighted coefficient majorant",
+        "identification of sums with actual spectral sector",
+        "source totality"
+      ],
+      "reduction": "UNIFORM_WILSON_WINDOW.md Section 10",
+      "cannot_be_closed_by": [
+        "finite representation scan",
+        "finite set of Taylor coefficients",
+        "auxiliary Hamiltonian stability alone"
+      ]
+    }
+  ],
+  "verification_note": "Status proven refers to written analytic arguments. The operator claims are not automatically T0/T1 in WORKHOUSE. Register individual exact arithmetic checks separately; numerical scans are T2 and do not prove the analytic window."
+}
