@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 96
+## T0 — proof-checked — 97
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -222,6 +222,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `newton_three`
   - lean/Workhouse/Basic.lean:299
   - `make lean`
+- `normalized_taylor_growth`
+  - lean/Workhouse/RootedScalarBounds.lean:13
+  - `make lean`
 - `pentCompletion_three`
   - lean/Workhouse/Basic.lean:375
   - `make lean`
@@ -310,7 +313,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:247
   - `make lean`
 
-## T1 — re-derived exactly — 314
+## T1 — re-derived exactly — 318
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1162,6 +1165,20 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the local vacuum chart repairs a genuine quadratic creation term: the two-level symmetric transfer leaves 97/96 after the first rotation, and the exact second generator 97/24 cancels it on both vacuum legs`
   - src/workhouse/invariants/wilson_vacuum_chart.py:25 · G18; paper/research_notes/G18_SECOND_ORDER_WILSON_VACUUM_CHART_20260905.md sections 4 and 8; finite exact two-level model
   - `workhouse verify --only 'the local vacuum chart repairs a genuine quadratic creation term: the two-level symmetric transfer leaves 97/96 after the first rotation, and the exact second generator 97/24 cancels it on both vacuum legs'`
+**the resolvent-composed rooted creator map: exact finite controls**
+
+- `finite disjoint-support creator exp/log invert exactly, and a Pauli-flip negative control detects replacement of the nilpotent creator product`
+  - src/workhouse/invariants/rooted_creator.py:47 · G18; paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md section 2; exact six-link bitmask creator algebra
+  - `workhouse verify --only 'finite disjoint-support creator exp/log invert exactly, and a Pauli-flip negative control detects replacement of the nilpotent creator product'`
+- `the full kinetic resolvent-composed creator map preserves the radius-1/16 ball on three specified six-link inputs and has pair ratios below one half`
+  - src/workhouse/invariants/rooted_creator.py:77 · G18; paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md equation (19); exact finite-binary instances only
+  - `workhouse verify --only 'the full kinetic resolvent-composed creator map preserves the radius-1/16 ball on three specified six-link inputs and has pair ratios below one half'`
+- `the moving-weight creator constants place the six-link Pauli model inside the explicit contraction domain using a rational upper bound for atanh(kappa)`
+  - src/workhouse/invariants/rooted_creator.py:26 · G18; paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md equations (2), (3a), (3b); exact rational specialization
+  - `workhouse verify --only 'the moving-weight creator constants place the six-link Pauli model inside the explicit contraction domain using a rational upper bound for atanh(kappa)'`
+- `the normalized magnetic creator-flow differential equals direct nilpotent operator conjugation on three exact six-link families`
+  - src/workhouse/invariants/rooted_creator.py:64 · G18; paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md sections 2 and 4; separate output-partition and basis-action paths
+  - `workhouse verify --only 'the normalized magnetic creator-flow differential equals direct nilpotent operator conjugation on three exact six-link families'`
 **the swap-odd domino state (U4, ADR 0023)**
 
 - `W psi_A has no two-plaquette and no vacuum image for C-even; C-odd keeps the like-family pair`

@@ -10,9 +10,9 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 96 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 97 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 370/370 checks pass.
+**T1/T2 — re-derived here.** 374/374 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -56,6 +56,7 @@ it cannot drift from what the repository actually checks.
 | the blocked Wilson transfer: spectral block, cluster margin, source moments | 3/3 |
 | the local Wilson vacuum chart: exact quadratic repair and support bound | 4/4 |
 | the Wilson vacuum correction is exact orthogonal compression | 2/2 |
+| the resolvent-composed rooted creator map: exact finite controls | 4/4 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -155,9 +156,9 @@ settles nothing is excluded however cheap it looks.
   - The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction. Lead recorded 2026-08-30, unverified here: the Euclidean counterpart of the needed uniform-in-volume strong-coupling control is classical constructive work (the Osterwalder--Seiler cluster expansion for lattice gauge theory, 1978), which proves convergence and a mass gap at strong coupling uniformly in volume for the EUCLIDEAN theory. The open question G17 actually poses is the Hamiltonian transcription of that bound for this projected sector. Indexing the paper awaits a primary-source read (literature/index.yaml requires INSPIRE-sourced fields, never memory); nothing is promoted by this pointer.
 - `G18` (unbounded) The spectral bridge — settles load-bearing
   - The fixed-spacing Hamiltonian complete band and literal-source frame are constructed in the G18 inserts; the relative-gap continuation gives one coupling domain for every nonzero momentum. The remaining actual-Wilson target is an exact vacuum chart with a volume-uniform operator-activity bound, then thermodynamic Riesz-range/source totality and spatially weighted projected-kernel matching. Finite-volume isolation, a populated Borel window, and unprojected correlation matching are already available with the distinct scopes recorded below.
-  - routes live: Prove convergence and exact realization of the rooted Wilson vacuum chart
+  - routes live: Realize the convergent creator coordinates in a controlled physical operator chart
   - routes untried: Transport the complete Wilson Riesz range and source frame to infinite volume
-  - routes done: Construct the local Wilson vacuum chart at every fixed magnetic order
+  - routes done: Construct the local Wilson vacuum chart at every fixed magnetic order; Prove a common analytic domain and rooted contraction for the Wilson creator coordinates
 
 ## 7b. What published work bears on this
 
