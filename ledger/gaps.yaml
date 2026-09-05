@@ -1341,8 +1341,9 @@ gaps:
       connected footprints of at most 3n+1 links, block-power-independent
       generators, and explicit finite uniform bounds at each order. These
       are analytic research-note theorems under the calibrated kinetic-gap
-      premises, not a convergent nonlinear chart or a machine proof of an
-      infinite-dimensional theorem. The native wilson_vacuum_chart suite
+      premises. This fixed-order construction alone does not establish
+      convergence of its ordered unitary product; the later creator theorem
+      establishes convergence in different nonunitary coordinates. The native wilson_vacuum_chart suite
       supplies live T1 checks of finite transfer algebra and the
       rational support bound; the independent two-level trace/determinant
       oracle also checks noncommuting mixed coefficients. See
@@ -1359,7 +1360,7 @@ gaps:
       retains the mixed magnetic kick; its rational form is checked in Lean
       and by a native exact check with an omitted-kick negative control.
       The creator-log equation v_J = r_tau(K_J) N_tau,J(u,v) identifies the
-      remaining nonlinear map. Inequality (17) in
+      nonlinear map settled by the later rooted contraction. Inequality (17) in
       paper/research_notes/G18_WILSON_ENDPOINT_GAUGE_AND_MAJORANT_20260905.md
       was a sufficient same-weight proposal. The later rooted contraction
       proves the needed estimate after full kinetic smoothing instead.
@@ -1375,7 +1376,8 @@ gaps:
       commutator with a triangle-inequality bound. The matrix identity is
       now Lean-checked. Orthogonal compression gives norm F <= norm A,
       so the fixed-order recurrence may take l_n=k_n instead of 11k_n;
-      generator bounds and the nonlinear convergence task are unchanged.
+      generator bounds and the still-open ordered-unitary convergence task
+      are unchanged by compression alone.
       At degree two the actual Perron subtraction and free kinetic damping
       improve the full coefficient bound to (3096/5) f_star^2 plus
       (41472/125)(J s1)^2, hence at most (118872/125) f_star^2. The simpler
@@ -1535,6 +1537,7 @@ gaps:
     plan:
       - step: Construct the local Wilson vacuum chart at every fixed magnetic order
         state: done
+        closed_by: [RESULT:WILSON_FIXED_ORDER_CHART, RESULT:WILSON_VACUUM_COMPRESSION]
         status: >
           The September 5 second-order and connected-monomial recursion notes
           give exact local scalar cancellation, bounded vacuum-column
@@ -1544,6 +1547,8 @@ gaps:
           the analytic arbitrary-order theorem is not certified by those tests.
       - step: Prove a common analytic domain and rooted contraction for the Wilson creator coordinates
         state: done
+        closed_by: [RESULT:WILSON_ROOTED_CONTRACTION]
+        depends_on: [RESULT:WILSON_ENDPOINT_EQUATION, RESULT:WILSON_KINETIC_WINDOW]
         status: >
           G18_ROOTED_WILSON_CONTRACTION_20260905.md proves the moving-weight
           flow and the full-resolvent contraction, including nonzero scalar
@@ -1552,8 +1557,42 @@ gaps:
           Taylor coefficients with a quantitative local error. These are
           analytic theorems; the native checks and Lean lemma certify only
           their stated finite algebra and scalar arithmetic.
+      - step: Stabilize the rooted Taylor coefficients by connected active-plaquette witnesses
+        state: done
+        closed_by: [RESULT:WILSON_COEFFICIENT_LOCALITY]
+        depends_on: [RESULT:WILSON_ENDPOINT_EQUATION]
+        status: >
+          Every degree-n monomial has a connected active-face witness with
+          at most n faces and 3n+1 links. The entire rooted coefficient family
+          stabilizes when those neighborhoods fit; exact output supports
+          need not themselves be connected.
+      - step: Construct the analytic infinite-lattice creator family with a local error bound
+        state: done
+        closed_by: [RESULT:WILSON_CREATOR_LIMIT]
+        depends_on: [RESULT:WILSON_ROOTED_CONTRACTION, RESULT:WILSON_COEFFICIENT_LOCALITY]
+        status: >
+          The common holomorphic disk and coefficient stabilization give
+          norm at most 1/16 and rooted error at most (1/8) q^(N+1)/(1-q).
+          This is local rooted convergence and a canonical analytic family,
+          not global norm convergence of zero-extended finite boxes or a
+          construction of a physical infinite-volume vacuum vector.
+      - step: Prove an undamped same-weight Lipschitz bound for arbitrary active plaquette families
+        state: dead
+        closed_by: [RESULT:WILSON_SAME_WEIGHT_OBSTRUCTION]
+        cannot_decide: [G18]
+        status: >
+          Disjoint independently active SU(3) plaquettes give derivative
+          ratio at least ((1+t/2)^n-1)/(4n tau), diverging with n for
+          0<t<=1/200. This closes the unrestricted active-family proposal,
+          not a separate full-active-lattice assertion. The successful
+          composed-resolvent contraction does not require this estimate.
       - step: Realize the convergent creator coordinates in a controlled physical operator chart
         state: live
+        depends_on:
+          - RESULT:WILSON_ROOTED_CONTRACTION
+          - RESULT:WILSON_CREATOR_LIMIT
+          - RESULT:WILSON_VACUUM_COMPRESSION
+          - CITE:WILSON_EXCITED_OPERATOR_BRIDGE
         status: >
           Convert the nonunitary endpoint creator coordinates to a controlled
           symmetry-preserving unitary chart, or an equivalent physical metric
@@ -1565,6 +1604,7 @@ gaps:
           threshold. Establish spatially weighted source transformations too.
       - step: Transport the complete Wilson Riesz range and source frame to infinite volume
         state: untried
+        depends_on: [ROUTE:G18:realize-the-convergent-creator-coordinat-e7b852]
         status: >
           From the full operator bound, prove thermodynamic range/source
           identification and spatially rooted contour limits, then match

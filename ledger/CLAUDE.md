@@ -1,12 +1,33 @@
-# Three registers, and they are not peers
+# Registers and their roles
 
 | File | Contents | Standing |
 |---|---|---|
 | `governing_register.yaml` | R1–R23, verbatim from the governing document §14 | **authority** |
 | `contradictions.yaml` | C1–C22, from `MASTER_THEORY.md` §8 | historical numbering, kept because checks cite it |
-| `gaps.yaml` | G1–G19 plus `unifying_candidates` | the open-work register |
+| `gaps.yaml` | registered G-ids and `unifying_candidates` | the open-work register |
+| `results.yaml` | stable `RESULT:` claims with hypotheses and proof sources | analytic results and their explicitly scoped evidence |
 
-Where R and C disagree, R controls.
+Where the R and C transcriptions differ, R governs the documentary crosswalk.
+
+The governing register is a documentary transcription, not a substitute for
+later derivations. Current resolutions and research consequences live in the
+contradiction, gap and result registers. Keep each source's historical wording
+and record why the mathematical status changed.
+
+`results.yaml` separates a theorem from the file that contains it. Use the
+existing status and evidence vocabularies; an analytic proof can be `proven`
+while its full statement remains T3 for machine certification. Each result
+names its exact hypotheses, scope, pinned `CITE:` source and source section.
+`depends_on` records mathematical inputs; `bears_on` records consequences or
+relevance. `supported_by` records controls with an explicit statement of what
+they check. A finite control is not an implicit proof of the larger claim.
+The generator validates source pins and graph endpoints and rejects cyclic
+result dependencies.
+
+Routes may cite `RESULT:` or `CITE:` closers and declare `depends_on` inputs.
+After changing source ledgers, run `make regen` and query the affected result
+and gap with `workhouse why`. Update the current research map and land the
+green change under the root `CLAUDE.md` completion rule.
 
 Three curated crosslink files sit beside them, same discipline (judgement in
 the YAML, the join derived, validation mechanical): `symbols.yaml` maps repo

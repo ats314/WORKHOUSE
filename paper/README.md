@@ -1,4 +1,29 @@
-# The manuscript of record
+# Research results and manuscript editions
+
+For the current mathematical state, start with
+[Current research](../docs/current_research.md),
+[FRONTIER.md](../FRONTIER.md), and the claim graph through
+`workhouse why G18`. The manuscript editions below preserve the arguments and
+verification coverage recorded when they were written; they are not the
+current status register for the September results.
+
+The [rooted Wilson contraction theorem](research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md)
+establishes convergent nonunitary vacuum creator coordinates on an explicit
+coupling disk uniform in spatial volume and temporal mesh. Its
+[infinite-lattice continuation](research_notes/G18_WILSON_CREATOR_THERMODYNAMIC_LIMIT_20260905.md)
+constructs an analytic creator family with a quantitative local convergence
+bound. The [sealed verification run](../runs/wilson_rooted_contraction_2026-09-05/README.md)
+distinguishes these analytic proofs from finite exact controls and the scalar
+Lean theorem. Controlled physical operator realization and the complete
+excited-space identification remain open.
+
+The current research guide also connects the September C2 resolution,
+symbolic all-rank assembly, and fixed-spacing construction to their proofs
+and downstream questions. Older disputes and proposed next steps in pinned
+editions remain part of the research history; use the live ledger for their
+present verdicts.
+
+## The manuscript of record
 
 *Volume-uniform electric-shell isolation, exact shared-link hopping, and a
 homological carrier in strong-coupling SU(N) Hamiltonian lattice gauge

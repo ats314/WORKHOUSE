@@ -9,7 +9,8 @@ Read all three before changing anything; they are short on purpose.
 
 ## The one principle
 
-**No document is authority. Only a machine check is.**
+**A claim is established by its proof or computation under explicit
+hypotheses. Its artifact must not claim more than that argument establishes.**
 
 Text in `theory/`, `corpus-import/`, and `settlement/` states what someone
 believed. Some of it was written with AI assistance and some of it is wrong —
@@ -18,17 +19,22 @@ one-ulp transcription, a tolerance quoted tighter than its own data, and a
 mechanism the author of this file proposed and then had to retract. Confidence
 of phrasing carries no evidential weight.
 
-So a claim's status is **computed, not asserted**:
+The repository's machine-verification tier is computed, not assigned by
+confidence. It is distinct from mathematical status and evidence:
 
 | Tier | Meaning | Where it lives |
 |---|---|---|
 | **T0 proved** | Lean 4 compiles it, no `sorry`, standard axioms only | `lean/Workhouse/` |
 | **T1 derived** | re-derived symbolically from stated definitions, exactly | `src/workhouse/invariants/` |
 | **T2 numerical** | float agreement within a stated tolerance | same, tolerance in the detail line |
-| **T3 asserted** | a document says so and nothing checks it | `theory/`, the ledgers |
+| **T3** | the full statement has no dedicated repository machine certification | source documents and curated analytic results |
 
-**T3 is the default for everything in the corpus.** Promoting a claim means
-writing the check, not citing the sentence.
+**T3 is the default for machine certification.** An analytic result may
+nevertheless be `proven` with `analytic` evidence when its derivation works.
+Record the theorem, hypotheses, source and dependencies in `ledger/results.yaml`;
+do not invent a Lean or exact-computation certification for its unformalized
+steps. Conversely, a successful finite test does not prove a general theorem.
+Novelty, publication, and the agent's prior familiarity decide neither case.
 
 ## The maintainer's rule
 
@@ -120,7 +126,30 @@ spelling (`-10/96` finds `-5/48`), and it carries two warnings a grep cannot:
 forbidden names (`m_4`) and names coined here that the corpus never uses
 (`Phi_C`, which the corpus writes as `4e_2/q_a`).
 
-## Land your own green work
+## Complete the result, then land your own green work
+
+A research result is not finished while it lives only in a response, run
+directory, or branch. Before handoff:
+
+1. Record the precise statement, hypotheses, regime and proof source. Preserve
+   original received and sealed evidence; correct current interpretations in
+   maintained ledgers and navigation, with links to the historical stage.
+2. Update the relevant claim and route states. Give established analytic
+   results stable `RESULT:` ids in `ledger/results.yaml`; declare actual
+   `depends_on` inputs, downstream `bears_on` connections, and the narrow
+   scope of each `supported_by` control. Link completed routes with
+   `closed_by` and open successor routes with their inputs. A keyword match
+   or a shared gap does not establish a mathematical dependency.
+3. Update `README.md`, `docs/current_research.md`, and other affected current
+   documentation. Search relevant live check descriptions for the old claim
+   or open-task wording. Keep frozen proof sources and dated reports as
+   evidence of their stage; their latest status belongs in the current map.
+4. Run `make regen` (catalogue, frontier, certified, in that order), inspect
+   `workhouse why` for the changed results and gap, and complete the required
+   verification below. Generated views are never edited by hand.
+5. Push the tested commit, inspect its CI and reviews, and merge when green.
+   Confirm the merge and the presence of the result and graph changes on
+   GitHub `main`. State separately whether work is local, pushed, or merged.
 
 From Alex, 2026-08-29: agents were leaving green PRs open, waiting for a
 review that was never coming. So: **when your PR is green — CI passing, no
@@ -131,6 +160,19 @@ prevents: verified work stranded in open PRs while the branch drifts.
 This is not a license to skip the gates. Everything above still holds —
 `make check` and `make verify` clean before pushing, the generated files
 regenerated, and a red or conflicted PR is yours to fix, never to merge.
+
+Recheck the remote base and exact head before merging so concurrent agents'
+changes are included. Use the normal PR merge path without bypassing branch
+protection, keep independent work in isolated branches/worktrees, and resolve
+conflicts without discarding another agent's work. If CI or review identifies
+a concrete failure, fix it and rerun the affected checks. A green PR needs no
+extra human button press unless the user has explicitly requested review-only
+work or a repository protection requires it.
+
+On 2026-09-05 a completed proof and regenerated graph remained in draft
+PR #98 after all checks passed. The repository's `main` page therefore looked
+unchanged. The completion rule includes merging and verifying `main` to
+prevent that same failure recurring.
 
 ## Commands
 

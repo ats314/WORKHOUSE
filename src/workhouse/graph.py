@@ -46,6 +46,7 @@ from . import claims as claims_mod
 from . import ledger as ledger_mod
 from . import literature as literature_mod
 from . import notes as notes_mod
+from . import results as results_mod
 from . import triage as triage_mod
 from .claims import ADR_REF, LEDGER_ID
 from .invariants import SUITES, source_path
@@ -285,6 +286,8 @@ def build(
                 add(rid, closer, "closed_by", "curated", "ledger/gaps.yaml")
             for ref in step.get("cannot_decide", []) or []:
                 add(rid, str(ref), "cannot_decide", "curated", "ledger/gaps.yaml")
+            for ref in step.get("depends_on", []) or []:
+                add(rid, ref, "depends_on", "curated", "ledger/gaps.yaml")
     for entry in led.register:
         for target in entry["contradictions"]:
             add(entry["id"], target, "contradictions", "curated", "ledger/governing_register.yaml")
@@ -323,6 +326,18 @@ def build(
         for type_ in ("technical_appendix", "navigation", "provenance"):
             for target in document.get(type_, []):
                 add(src, f"CITE:{target}", type_, "curated", "ledger/documents.yaml")
+
+    # Result dependencies name mathematical inputs; support edges instead
+    # name finite checks and keep their exact boundary in the result detail.
+    # Neither relationship promotes the analytic statement's computed tier.
+    for result in results_mod.load():
+        src = result["id"]
+        add(src, result["source"], "cites", "curated", "ledger/results.yaml")
+        for type_ in ("depends_on", "bears_on"):
+            for target in result[type_]:
+                add(src, target, type_, "curated", "ledger/results.yaml")
+        for support in result["supported_by"]:
+            add(src, support["target"], "supported_by", "curated", "ledger/results.yaml")
 
     # The run register: evidences edges from each pinned run record to the
     # ledger items its entry names. Curated in runs/index.yaml; an edge says
@@ -585,6 +600,29 @@ def validate(graph: Graph | None = None) -> list[str]:
 
     for node in sorted(rests):
         visit(node, [])
+
+    # An analytic result cannot use itself, directly or through other
+    # results, as a mathematical input. Other relevance edges may cycle.
+    dependencies: dict[str, list[str]] = {}
+    for edge in graph.edges:
+        if edge.type == "depends_on":
+            dependencies.setdefault(edge.src, []).append(edge.dst)
+    state = {}
+
+    def visit_result(node: str, trail: list[str]) -> None:
+        mark = state.get(node, 0)
+        if mark == 2:
+            return
+        if mark == 1:
+            problems.append(f"result depends_on cycle: {' -> '.join([*trail, node])}")
+            return
+        state[node] = 1
+        for nxt in dependencies.get(node, []):
+            visit_result(nxt, [*trail, node])
+        state[node] = 2
+
+    for node in sorted(n for n in dependencies if n.startswith(("RESULT:", "ROUTE:"))):
+        visit_result(node, [])
     return problems
 
 

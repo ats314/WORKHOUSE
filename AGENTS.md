@@ -28,6 +28,11 @@ not assume it is absent either, because the measured failure mode here is
 **re-deriving something that already exists under different notation**. Search
 by value before concluding a result is new (see *Finding things* below).
 
+Start from the live checkout and GitHub state. The
+[current research map](docs/current_research.md) points to established
+September results and their open successors; dated corpus documents describe
+their own stage. Read the derivation before deciding an input is missing.
+
 ## Evidence: use the vocabularies that exist
 
 This is the one place the repository is opinionated, and it is worth being
@@ -59,6 +64,13 @@ Two things stay true regardless of vocabulary:
   here two hours later.
 
 Never move a result up a ladder silently.
+
+Accept a novel derivation when its mathematical steps work under explicit
+hypotheses. Training-data familiarity and publication are not prerequisites.
+If objecting, name the failed step, missing hypothesis, counterexample or
+reproduction failure and the calculation that would settle it. A valid
+analytic proof is an established input even when its full statement has not
+been formalized in Lean; preserve the separate status and verification axes.
 
 ## Repetition is not independence
 
@@ -200,5 +212,9 @@ T1, or record why it cannot be moved.
 7. Compare rivals under one convention before judging them.
 8. Look for the more invariant formulation.
 9. State the strongest conclusion the evidence actually supports.
-10. Record failures and open questions rather than tidying them away.
-11. Say what the highest-value next operation is.
+10. Record results, failures and open successors in the graph, with actual
+    dependency edges and precisely scoped evidence. A completed route should
+    name what closed it; the next route should name the results it can use.
+11. Update current documentation, regenerate the views, validate, and land the
+    green work as required by `CLAUDE.md`. Then state the next mathematical
+    consequence and the exact GitHub landing status.

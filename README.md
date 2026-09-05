@@ -1,8 +1,8 @@
 # WORKHOUSE
 
-A verification layer over the SU(N) cubic flux-band spectral program: four years
-of research, 928 corpus files, and a small set of machine checks that decide
-which of it is actually established.
+A mathematical research and verification workspace for the SU(N) cubic
+flux-band spectral program. It connects analytic derivations, exact
+computations, Lean proofs, and their source history in a queryable theory graph.
 
 **This page is the operating manual.** If you are an agent starting a session,
 read it, then `FRONTIER.md` for the current state. `AGENTS.md` is the research
@@ -11,9 +11,10 @@ Three files, short on purpose, no overlap.
 
 ---
 
-## The one principle
+## Proof, computation, and provenance
 
-**No document is authority. Only a machine check is.**
+**Accept a result when its argument works under explicit hypotheses. Record
+exactly what each proof or computation establishes.**
 
 Everything in `theory/`, `corpus-import/`, and `settlement/` states what someone
 believed. Some was written with AI assistance and some of it is wrong. This
@@ -22,8 +23,10 @@ transcription, a tolerance quoted tighter than its own data, a stale manifest
 generator, a corpus file that was loading itself as agent instructions, and a
 mechanism proposed here and retracted here two hours later.
 
-Confidence of phrasing carries no evidential weight. Neither does repetition:
-with 928 files and heavy copying, a value in forty files may have one origin.
+Confidence, publication status, and familiarity are not mathematical tests.
+Neither is repetition: a value in forty files may have one origin. Analytic
+proofs are usable inputs once their steps and hypotheses are established;
+finite examples and numerical agreement establish only their stated scope.
 
 ## What "established" means here
 
@@ -32,12 +35,16 @@ with 928 files and heavy copying, a value in forty files may have one origin.
 | **T0** | Lean 4 compiles it, no `sorry`, standard axioms only |
 | **T1** | re-derived symbolically from stated definitions, in exact rationals |
 | **T2** | float agreement within a tolerance printed in the check's detail line |
-| **T3** | a document says so and nothing checks it |
+| **T3** | the full statement has no dedicated repository machine certification |
 
-**T3 is the default.** Promoting a claim means writing the check, not citing the
-sentence. The live counts are in `FRONTIER.md` §1 and the `CERTIFIED.md`
-header — generated and staleness-tested, unlike this paragraph, which is why
-this paragraph no longer carries numbers.
+Verification tier, mathematical status, and evidence are separate axes.
+An analytic theorem can be `proven` with `analytic` evidence while its full
+statement remains T3 for machine certification. The graph records such
+results in [`ledger/results.yaml`](ledger/results.yaml), including hypotheses,
+proof source, dependencies, and the precise scope of supporting controls.
+A scalar Lean lemma or finite-model test does not certify a larger theorem.
+The live check counts are generated in [`FRONTIER.md`](FRONTIER.md) and
+[`CERTIFIED.md`](CERTIFIED.md).
 
 `CERTIFIED.md` lists every certified claim individually, ranked by tier, each
 with the command that re-establishes it alone:
@@ -53,7 +60,13 @@ workhouse verify --only 'h_4^side = A_+'
 That third line is the point. A certification nobody can cheaply reproduce is
 just a claim of authority.
 
-## Reading order
+## Current research
+
+Start with the [current research map](docs/current_research.md) for the
+established results, their proof chain, and the next concrete operator target.
+The September C2 resolution, symbolic all-rank assembly, and fixed-spacing
+Hamiltonian G18 construction are established inputs; see that map before
+proposing to redo them.
 
 The [rooted Wilson contraction theorem](paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md)
 now gives convergent nonunitary vacuum coordinates on an explicit coupling
@@ -65,6 +78,18 @@ Its [sealed run](runs/wilson_rooted_contraction_2026-09-05/README.md) separates
 the analytic proofs from finite exact controls and the scalar Lean theorem.
 Physical state/operator realization and the excited-space bridge remain open.
 
+The graph now exposes the individual results and their consequences:
+
+```bash
+workhouse why RESULT:WILSON_ROOTED_CONTRACTION
+workhouse why RESULT:WILSON_CREATOR_LIMIT
+workhouse why G18
+```
+
+The first two queries show the mathematical inputs and scoped verification
+evidence. The G18 routes distinguish completed creator convergence from the
+live physical operator realization and the subsequent excited-range transport.
+
 The [5 September Wilson-chart continuation](paper/research_notes/G18_WILSON_CHART_RESEARCH_REPORT_20260905.md)
 derives a connected local vacuum chart at every fixed order, with exact
 finite-model checks and a Lean algebraic kernel. Its [sealed run](runs/wilson_vacuum_chart_2026-09-05/README.md)
@@ -73,6 +98,8 @@ The subsequent [exact compression identity](paper/research_notes/G18_VACUUM_COMP
 shows that every corrected local coefficient is `QAQ` and sharpens the
 quadratic bound to `118872 f_star^2/125`; its algebra is also checked in Lean.
 
+## Reading order
+
 The corpus is roughly 12.2M tokens — about 61 context windows. Reading it is not
 a plan. Go in this order and stop when the question is answered.
 
@@ -80,11 +107,12 @@ a plan. Go in this order and stop when the question is answered.
    gates the most, and the cheapest decisive test. `make frontier` regenerates.
 2. **`CERTIFIED.md`** — generated. Every checked claim, by tier, with its
    re-check command. Reach for it before *relying* on anything.
-3. **`ledger/`** — `governing_register.yaml` (R1–R23, **the authority**),
+3. **`ledger/`** — `governing_register.yaml` (R1–R23, the governing transcription),
    `contradictions.yaml` (C1–C22, older numbering), `gaps.yaml` (G1–G19 plus
-   `unifying_candidates`).
-4. **`src/workhouse/invariants/`** — if a claim is checked, the check is a
-   better source than the prose that states it.
+   later registered gaps and `unifying_candidates`), and `results.yaml`
+   (established analytic statements with explicit inputs and scope).
+4. **`src/workhouse/invariants/`** — inspect the implementation and scope of
+   a check; use the linked proof source for the analytic theorem it supports.
 5. **`theory/`** — the governing document, for definitions and cited sections.
 6. **`corpus-import/`** — targeted only. See below.
 
