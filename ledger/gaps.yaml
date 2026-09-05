@@ -1294,6 +1294,21 @@ gaps:
     tier: 3
     state: open
     title: The spectral bridge
+    wilson_weighted_activities_2026_09_05: >
+      The new creator-velocity chart closes the full-operator activity
+      target. Exact tangent inversion, holomorphic conjugate coordinates,
+      connected assigned footprints and the actual Perron logarithm yield
+      a contour/tree bound sup_i sum 2^|X| norm F_X <=1/2500 on
+      |u|<=u_star/1252800000. The normalized actual transfer is within
+      1/998 of its free product, so its complete finite physical odd shell
+      is isolated on one interval uniform in volume and temporal mesh.
+      Local-source conjugation retains cardinality and spatial margins.
+      These are activities of a new chart; only the generic partition
+      extraction lemma is reused from the common-filter construction.
+      Complete thermodynamic Riesz range and literal-source-frame
+      invertibility/totality are the next task. Proofs are
+      WILSON_CARDINALITY_CHART and WILSON_WEIGHTED_ACTIVITIES; the earlier
+      dated entries below retain their stage-specific obligations.
     wilson_activity_extraction_2026_09_05: >
       The exact activity family is now constructed. For every induced finite
       link subsystem, dress its actual normalized Wilson block by its own
@@ -1525,11 +1540,14 @@ gaps:
       now has an exact quasi-local spectral-flow realization on the full
       bounded local algebra and exact connected, locally vacuum-annihilating
       transfer activities from induced-subsystem partition subtraction.
-      The remaining target is a volume-uniform bound on their weighted
-      activity sum and source transformations,
-      then thermodynamic Riesz-range/source totality and spatially weighted
-      projected-kernel matching. Finite-volume isolation, a populated Borel
-      window, and unprojected correlation matching remain distinct inputs.
+      A new creator-velocity chart now gives weighted local-source transport,
+      an actual activity norm with weight 2^|X| at most 1/2500, and a
+      normalized-transfer norm bound 1/998 on one interval uniform in volume
+      and temporal mesh. It isolates the complete finite physical odd shell.
+      The remaining target is thermodynamic Riesz-range/source totality and
+      spatially weighted projected-kernel matching. A complete finite band,
+      a populated Borel window, and unprojected correlation matching remain
+      distinct inputs to that task.
     closed_at_fixed_spacing_2026_08_30: >
       The maintainer's three G18 inserts were merged into
       paper/master_paper_2026-08-30.tex as the section "Infinite volume at
@@ -1562,19 +1580,17 @@ gaps:
       So the first exclusion in the manuscript's scope paragraph is now about
       the CONTINUUM, not the thermodynamic limit.
     still_open: >
-      Bound the weighted norm of the now-constructed exact activities of the
-      normalized actual Wilson transfer after quasi-local vacuum transport.
-      The target is sum (5/4)^|X| norm F_X <= 1/400 uniformly at a root,
-      with a stronger cardinality margin if an extra spatial weight is
-      required. Establish the source-transformation norm separately. The
-      parent gap and vacuum automorphism do not control that transfer's full
-      complementary spectrum. In particular spectral flow need not preserve
-      the exponential weights required by the sharp-shell source problem;
-      supply those estimates or prove a sufficient replacement. Convergence
-      of the older ordered unitary product is not needed for the established
-      vacuum realization and is not asserted. Thermodynamic excited-range
-      identification, source totality and spatially weighted sharp-shell
-      matching remain after the transfer bound. At Gamma the cubic T_1 triplet
+      Construct the compatible thermodynamic operator and complete Riesz
+      range in the transported representation, and prove uniform
+      invertibility and totality of the projected literal-source frame.
+      The new creator-velocity chart supplies the required cardinality and
+      spatial source bounds, and its actual Wilson activities satisfy the
+      stronger weight 2^|X| bound on |u|<=u_star/1252800000. This sufficient
+      replacement does not identify or bound the earlier common-filter
+      activities. Complete finite-volume shell isolation now holds on a
+      common interval; transporting that complete range and proving source
+      totality remain separate. Spatially weighted sharp-shell matching
+      follows its own operator and energy-domain hypotheses. At Gamma the cubic T_1 triplet
       still meets, so no rank-one
       isolation there is asserted. The Hamiltonian coupling threshold remains
       existential, but the September 4 relative-gap theorem removes its
@@ -1659,28 +1675,57 @@ gaps:
           cumulant annihilate the local vacuum on both sides. This proves
           existence and exact disjoint reconstruction, with no norm estimate.
       - step: Bound the dressed Wilson transfer activities on the full Hilbert space
-        state: live
+        state: done
+        closed_by: [RESULT:WILSON_WEIGHTED_ACTIVITIES]
         depends_on:
-          - RESULT:WILSON_ACTIVITY_EXTRACTION
-          - RESULT:WILSON_VACUUM_COMPRESSION
+          - RESULT:WILSON_CARDINALITY_CHART
+          - RESULT:ORDERED_CONTOUR_ACTIVITIES
+          - CITE:WILSON_ACTIVITY_EXTRACTION
           - CITE:WILSON_EXCITED_OPERATOR_BRIDGE
         status: >
-          Estimate the exact partition activities in their full operator
-          norm. Prove eta=sup_i sum_(X contains i)(5/4)^|X| norm F_X <=1/400,
-          or preferably the stronger eta_epsilon with weight
-          exp((log(5/4)+epsilon)|X|) for epsilon>0. Connected supports then
-          yield the corresponding spatial activity control. Prove the
-          source-transformation bounds separately. Diameter decay of spectral
-          flow alone does not supply the support-cardinality norm, and an
-          auxiliary parent gap does not settle it.
-      - step: Transport the complete Wilson Riesz range and source frame to infinite volume
-        state: untried
-        depends_on: [ROUTE:G18:bound-the-dressed-wilson-transfer-activi-144f15]
+          Closed by a sufficient replacement chart: real-linear
+          creator-velocity inversion and its holomorphic doubled system
+          give connected assigned-support coefficients. Their ordered
+          contour, including the actual local Perron logarithm, has
+          activities with sup_i sum 2^|X| norm F_X <=1/2500 on
+          |u|<=u_star/1252800000. Source conjugation has its own weighted
+          bound in the chart theorem. The partition citation uses only
+          the generic extraction lemma; the new activities are not equated
+          with the previous common-filter family's activities.
+      - step: Construct a Wilson vacuum chart with exponential assigned-support and source bounds
+        state: done
+        closed_by: [RESULT:CREATOR_VELOCITY_INVERSION, RESULT:WILSON_CARDINALITY_CHART]
+        depends_on: [RESULT:WILSON_SYMMETRIC_CREATORS, RESULT:WILSON_COEFFICIENT_LOCALITY]
         status: >
-          From the full operator bound, prove thermodynamic range/source
-          identification and spatially rooted contour limits, then match
-          the sharp projected h, G, S kernels. Positive Borel-window Grams
-          and full correlation convergence alone cannot decide totality.
+          Exact lowering removes its whole support, making the creator
+          tangent map a rooted contraction. Its unique inverse yields a
+          local unitary; holomorphic conjugate variables and connected
+          witness footprints control its assigned interaction supports.
+          A moving-weight commutator estimate transports local sources
+          with cardinality and spatial margins. This establishes source
+          locality, not projected-source frame invertibility or totality.
+      - step: Isolate the complete finite physical Wilson shell on a common interval
+        state: done
+        closed_by: [RESULT:WILSON_UNIFORM_FINITE_SHELL]
+        depends_on: [RESULT:WILSON_WEIGHTED_ACTIVITIES, RESULT:WILSON_KINETIC_WINDOW, CITE:WILSON_EXCITED_OPERATOR_BRIDGE]
+        status: >
+          The actual normalized blocked transfer is within 1/998 of its
+          free product, below a tenth of the rounded external margin.
+          In the neutral physical odd sector its complete contour range
+          has rank 3 L^3 on admitted periodic lattices, uniformly in
+          volume and mesh on |u|<=u_star/1252800000. This is an actual
+          transfer conclusion, independent of chosen source overlaps.
+      - step: Transport the complete Wilson Riesz range and source frame to infinite volume
+        state: live
+        depends_on: [RESULT:WILSON_UNIFORM_FINITE_SHELL, RESULT:WILSON_CARDINALITY_CHART]
+        status: >
+          Use the actual full-operator bound, complete finite shell and
+          weighted source transport to construct thermodynamic
+          range/source identification and spatially rooted contour limits,
+          then prove uniform invertibility and totality of the projected
+          literal-source frame and match the sharp h, G, S kernels.
+          Positive Borel-window Grams, local source bounds and full
+          correlation convergence alone cannot decide totality.
     load_bearing: true
     external_sharpening: >
       Schierholz 1988 (Nucl. Phys. B Proc. Suppl. 4, 11-20) measured the same
@@ -1816,8 +1861,10 @@ gaps:
       exp(-(8 pi^2 / 11) sqrt u) and (1+p)/2 = 86/121.
     next: >
       First finish the actual-Wilson operator matching recorded on G18:
-      exact vacuum chart, full operator activities, thermodynamic complete
-      range/source identification, and spatially weighted sharp-shell kernels.
+      thermodynamic complete range and literal-source-frame identification,
+      followed by spatially weighted sharp-shell kernels. The exact vacuum
+      chart, full weighted operator activities, local source transport and
+      common-interval complete finite physical shell are now established.
       The September 4 scalar expansion already handles the vacuum and full
       source correlations; that step should not be restarted as an open task.
       The continuum insert additionally requires a Hamiltonian-Wilson

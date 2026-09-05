@@ -322,7 +322,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/CreatorParent.lean:27
   - `make lean`
 
-## T1 — re-derived exactly — 325
+## T1 — re-derived exactly — 331
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1081,6 +1081,26 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the vacuum-column commutator is exactly orthogonal compression QAQ, with a scalar-normalization negative control`
   - src/workhouse/invariants/wilson_compression.py:46 · G18; paper/research_notes/G18_VACUUM_COMPRESSION_BOUND_20260905.md; symbolic complex three-state block and exact overlapping tensor model
   - `workhouse verify --only 'the vacuum-column commutator is exactly orthogonal compression QAQ, with a scalar-normalization negative control'`
+**the Wilson weighted chart: exact creator velocity controls**
+
+- `22 finite creator-tangent columns agree with independent tensor matrices and real-linear inversion transports the normalized vacuum line`
+  - src/workhouse/invariants/wilson_creator_velocity.py:14 · G18; paper/research_notes/G18_WILSON_CARDINALITY_UNITARY_CHART_20260905.md section 2; exact 3x3x2 and complex 3x2 finite tensor controls
+  - `workhouse verify --only '22 finite creator-tangent columns agree with independent tensor matrices and real-linear inversion transports the normalized vacuum line'`
+- `363 labeled overlap graphs reproduce 20 marked-tree coefficients through degree five at four roots`
+  - src/workhouse/invariants/wilson_creator_velocity.py:125 · G18; paper/research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md section 4; exact Kirchhoff enumeration versus formal tree recursion
+  - `workhouse verify --only '363 labeled overlap graphs reproduce 20 marked-tree coefficients through degree five at four roots'`
+- `connected ordered contour words equal partition cumulants through degree three with noncommuting overlap projectors`
+  - src/workhouse/invariants/wilson_creator_velocity.py:85 · G18; paper/research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md section 4; three binary links and two ordered insertion intervals
+  - `workhouse verify --only 'connected ordered contour words equal partition cumulants through degree three with noncommuting overlap projectors'`
+- `exact rational majorant consequences give creator velocity 1/6, activity 1/2500 and full-operator bound 1/998 below the shell threshold`
+  - src/workhouse/invariants/wilson_creator_velocity.py:103 · G18; paper/research_notes/G18_WILSON_CARDINALITY_UNITARY_CHART_20260905.md section 3 and paper/research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md section 5; stated transcendental premises
+  - `workhouse verify --only 'exact rational majorant consequences give creator velocity 1/6, activity 1/2500 and full-operator bound 1/998 below the shell threshold'`
+- `the creator chart factorizes on four disjoint tensor links and a complex one-link path has the exact vacuum phase 1/198`
+  - src/workhouse/invariants/wilson_creator_velocity.py:57 · G18; paper/research_notes/G18_WILSON_CARDINALITY_UNITARY_CHART_20260905.md section 2.2; component and phase controls
+  - `workhouse verify --only 'the creator chart factorizes on four disjoint tensor links and a complex one-link path has the exact vacuum phase 1/198'`
+- `two exact rooted matrix contraction certificates bound nonzero four-term Neumann remainders`
+  - src/workhouse/invariants/wilson_creator_velocity.py:34 · G18; paper/research_notes/G18_WILSON_CARDINALITY_UNITARY_CHART_20260905.md equations (1)-(3); finite coefficient-l1 rooted norm controls
+  - `workhouse verify --only 'two exact rooted matrix contraction certificates bound nonzero four-term Neumann remainders'`
 **the blocked Wilson transfer: spectral block, cluster margin, source moments**
 
 - `the explicit sufficient thresholds of the blocked-transfer polymer criterion leave the Kotecky-Preiss margin 11/56 < 1/4: with delta = e^(-(4+2xi))/16 and y = 1/256 the atom sum 2 e^(4+2xi) delta + 8y/(1 - 144y) is exactly 1/8 + 1/14, and the coupling disc u_c = log(1 + e^(-(16+8xi)) / (256 (1+delta)^4)) / (J (s0 + tau0)) is where y reaches 1/256`

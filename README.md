@@ -87,9 +87,16 @@ identification through that automorphism. The
 independent exact controls and the narrowly scoped Lean identities.
 The [partition activity extraction](paper/research_notes/G18_WILSON_ACTIVITY_EXTRACTION_20260905.md)
 constructs exact connected activities for the dressed transfer, each
-annihilating its local vacuum. The next target is their full operator norm
-weighted by support cardinality and the source-transformation bounds;
-the auxiliary parent gap does not establish the Wilson excited spectrum.
+annihilating its local vacuum. A new
+[creator-velocity unitary chart](paper/research_notes/G18_WILSON_CARDINALITY_UNITARY_CHART_20260905.md)
+now supplies exponential support bounds for the generator and transported
+local sources. Its [weighted-activity theorem](paper/research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md)
+proves `sup_i sum_(X contains i) 2^|X| ||F_X||<=1/2500` on the common
+interval `|u|<=u_star/1252800000`. The actual normalized Wilson transfer
+is within `1/998` of its free product, isolating the complete finite-volume
+physical charge-odd shell, of rank `3 L^3` on the admitted periodic lattices.
+This uses a different chart from the parent spectral flow. The next target
+is its complete thermodynamic Riesz range and literal-source frame.
 
 The graph now exposes the individual results and their consequences:
 
@@ -99,13 +106,18 @@ workhouse why RESULT:WILSON_CREATOR_LIMIT
 workhouse why RESULT:CREATOR_PARENT_GAP
 workhouse why RESULT:WILSON_VACUUM_SPECTRAL_FLOW
 workhouse why RESULT:WILSON_ACTIVITY_EXTRACTION
+workhouse why RESULT:CREATOR_VELOCITY_INVERSION
+workhouse why RESULT:WILSON_CARDINALITY_CHART
+workhouse why RESULT:ORDERED_CONTOUR_ACTIVITIES
+workhouse why RESULT:WILSON_WEIGHTED_ACTIVITIES
+workhouse why RESULT:WILSON_UNIFORM_FINITE_SHELL
 workhouse why G18
 ```
 
 These queries show the mathematical inputs and scoped verification evidence.
-The G18 routes distinguish completed vacuum transport and exact activity
-extraction from the live weighted-norm estimate and subsequent excited-range
-transport.
+The G18 routes distinguish completed vacuum transport, activity norm and
+uniform finite-volume shell isolation from the live thermodynamic
+excited-range and literal-source-frame task.
 
 The [5 September Wilson-chart continuation](paper/research_notes/G18_WILSON_CHART_RESEARCH_REPORT_20260905.md)
 derives a connected local vacuum chart at every fixed order, with exact
