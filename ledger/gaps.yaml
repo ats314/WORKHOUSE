@@ -1118,7 +1118,7 @@ gaps:
           (the one resolvent denominator with an integer root >= 4). The audit
           of the path itself is still open.
       - step: prove channel-wise universality from the Haar contraction -- that a channel's value depends on which links are doubled and in which irreps, not on where on the cluster they sit -- for u, the fan and the single-contact dressing
-        state: untried
+        state: live
         cannot_decide: []
         status: >
           Opened 2026-09-04 (ADR 0029). With every channel an identity in
@@ -1148,8 +1148,22 @@ gaps:
           rewirings produce on the four shared-link letters -- the energies
           by the path lemma, the Haar values by n = 1 cuts, the second cut's
           1/N paid by a closed loop. A finite case analysis over those
-          wirings is the proof; not yet written out.
-        closed_by: []
+          wirings is the proof.
+          CLOSED AT FOURTH ORDER for the two-hop weight (ADR 0032,
+          runs/universality_lemma_2026-09-04): phi -- delete the straight
+          middle face's second private letter, keep the first as the
+          weight-two link, reverse the second shared link -- is a
+          coefficient-preserving bijection of the histories' integrands (124
+          terms, 536 integrands), and the Haar integral is phi-invariant on
+          the whole family of words the Fierz swaps and cuts generate from the
+          face words at the multiplicities fourth order reaches (exhaustive
+          for a = b = 1 and (2,1), (1,2); sampled at (2,2)); on arbitrary
+          wirings it is not. What remains: the lemma for arbitrary
+          multiplicities (an inductive proof, needed at sixth order), and the
+          same construction for the single-contact dressing and the fan.
+        closed_by:
+          - 'RUN:universality_lemma_2026-09-04'
+          - 'ADR:0032'
     path_reduction_2026_09_04: >
       The path-reduction lemma is in the engine (loopcalc.reduced_words,
       LINK_WEIGHT): a private path of k links is one Haar link with k times
