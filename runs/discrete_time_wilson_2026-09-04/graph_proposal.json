@@ -1,0 +1,109 @@
+{
+  "schema": "staged_research_nodes/v1",
+  "applied_to_repository": false,
+  "native_G18_G19_status_changes": false,
+  "warning": "Staged, explicitly named input references, not presumed existing native IDs. Analytic proof status does not imply a machine verification tier. Map to native graph schema only after review.",
+  "nodes": [
+    {
+      "id": "WDT:uniform_coarse_mixing",
+      "status": "proven",
+      "evidence": "analytic",
+      "statement": "The prior Wilson heat minorization and calibrated gap imply uniform positive-time smoothing and arbitrarily small coarse Haar bonds.",
+      "depends_on": [
+        "INPUT:Wilson_heat_minorization",
+        "INPUT:uniform_calibrated_one_link_gap"
+      ],
+      "proof": "DISCRETE_TIME_VACUUM_AND_WINDOW.md#2",
+      "machine_proof_checked": false
+    },
+    {
+      "id": "WDT:scalar_polymer_criterion",
+      "status": "proven",
+      "evidence": "analytic",
+      "statement": "Exact block bridge activities satisfy a mesh-independent scalar KP criterion, with sufficient atom bound 11/56.",
+      "depends_on": [
+        "WDT:uniform_coarse_mixing",
+        "INPUT:bounded_multiplication_plaquette_potential",
+        "EXTERNAL:Ueltschi_Theorems_1_3"
+      ],
+      "proof": "DISCRETE_TIME_VACUUM_AND_WINDOW.md#3-4",
+      "machine_proof_checked": false
+    },
+    {
+      "id": "WDT:vacuum_and_full_sources",
+      "status": "proven",
+      "evidence": "analytic",
+      "statement": "The actual Wilson Perron vacuum and full local multiplication-source correlators are analytic and exponentially clustering uniformly in volume and temporal mesh.",
+      "depends_on": [
+        "WDT:scalar_polymer_criterion"
+      ],
+      "proof": "DISCRETE_TIME_VACUUM_AND_WINDOW.md#5",
+      "machine_proof_checked": false
+    },
+    {
+      "id": "WDT:weighted_full_correlation_matching",
+      "status": "proven",
+      "evidence": "analytic",
+      "statement": "Unprojected odd-source correlations converge to their Hamiltonian counterparts in a weighted space-time sum on a common small coupling domain.",
+      "depends_on": [
+        "WDT:vacuum_and_full_sources",
+        "INPUT:fixed_representation_calibrated_convergence",
+        "WDT:uniform_coarse_mixing"
+      ],
+      "proof": "DISCRETE_TIME_VACUUM_AND_WINDOW.md#6",
+      "machine_proof_checked": false
+    },
+    {
+      "id": "WDT:three_source_visible_window",
+      "status": "proven",
+      "evidence": "analytic",
+      "statement": "A two-moment functional-calculus estimate bounds the three-source Borel-window Gram below by I/2 on a common sufficiently small real coupling domain.",
+      "depends_on": [
+        "WDT:vacuum_and_full_sources",
+        "INPUT:exact_physical_plaquette_seed"
+      ],
+      "proof": "DISCRETE_TIME_VACUUM_AND_WINDOW.md#7",
+      "machine_proof_checked": false
+    },
+    {
+      "id": "WDT:weak_projected_source_matching",
+      "status": "conditional",
+      "evidence": "analytic",
+      "statement": "With the existing Hamiltonian G18 external gaps as a premise, Wilson Borel-window source Grams converge to Hamiltonian shell Grams in unweighted matrix norm.",
+      "depends_on": [
+        "WDT:weighted_full_correlation_matching",
+        "G18:hamiltonian_complete_shell_external_gaps"
+      ],
+      "proof": "DISCRETE_TIME_VACUUM_AND_WINDOW.md#6",
+      "machine_proof_checked": false
+    },
+    {
+      "id": "WDT:excited_riesz_and_totality",
+      "status": "open",
+      "evidence": "prose-only",
+      "statement": "Localize the actual vacuum-dressed Wilson block transfer on an excited contour and prove totality of the resulting three-component source frame.",
+      "depends_on": [
+        "WDT:vacuum_and_full_sources",
+        "WDT:three_source_visible_window"
+      ],
+      "cannot_be_inferred_from": [
+        "full_correlation_convergence_alone",
+        "positive_three_source_Gram_alone"
+      ],
+      "decisive_next_object": "Rooted operator contour majorant or irreducible source-tube continuation near the plaquette spectral neighborhood."
+    }
+  ],
+  "diagnostics": {
+    "count": 26,
+    "evidence": "numerical",
+    "exact_subchecks": [
+      "KP rational margin",
+      "cubical incidence counts",
+      "finite combinatorial identities"
+    ],
+    "not_proved_by_diagnostics": [
+      "infinite-volume operator theorem",
+      "complete excited-band identification"
+    ]
+  }
+}

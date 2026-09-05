@@ -1,0 +1,248 @@
+% Research insert, 2026-09-04. Not automatically included in any manuscript.
+% Requires amsmath, amssymb and theorem, lemma, proposition, proof environments.
+% Full derivation and hypotheses: DISCRETE_TIME_VACUUM_AND_WINDOW.md.
+% This insert does not identify a complete isolated Wilson excited band.
+\subsection{Physical-time blocking of the actual Wilson transfer}
+\label{sec:wdt-blocked-vacuum}
+
+Retain the fundamental-character clock $\tau=\tau_F(\epsilon)$ and the
+retuned Wilson transfer
+\[
+ T_{\epsilon,L}(u)=e^{\tau uV_L/2}e^{-\tau K_{\epsilon,L}}e^{\tau uV_L/2},
+ \qquad \beta_t=2N/\epsilon,\qquad \beta_s=2Nu\tau.
+\]
+The preceding uniform kinetic-window result supplies
+$k_\epsilon(F)=C_F/2$, a uniform one-link gap $\gamma=C_F/2$,
+$k_\epsilon(R)\to C_R/2$ at every fixed representation, and
+$p_\epsilon\ge a h_{\epsilon/4}$ for one $a>0$. Here $h_s$ is the
+heat kernel of $e^{-sC_2/2}$ and $D=N^2-1$.
+These are inputs, not consequences of a finite representation scan.
+
+\begin{lemma}[Uniform smoothing and coarse mixing]
+\label{lem:wdt-smoothing}
+There is $A<\infty$ such that
+\[
+ \|p_\epsilon^{*m}\|_\infty\le A[1+(m\tau)^{-D/2}],\qquad m\ge1.
+\]
+For any $\delta>0$ there is a finite $s_0$, independent of the temporal
+mesh, such that with
+\[
+ m_\epsilon=\lceil s_0/\tau\rceil,\quad
+ s_\epsilon=m_\epsilon\tau\in[s_0,s_0+\tau_0],
+\]
+one has $\|p_\epsilon^{*m_\epsilon}-1\|_\infty\le\delta$ for all
+sufficiently small $\epsilon$.
+\end{lemma}
+\begin{proof}
+Write $p_\epsilon=a h_{\epsilon/4}+(1-a)r_\epsilon$ with
+$r_\epsilon$ a probability density. In the binomial expansion of the
+convolution power, terms with at least $am/2$ heat factors are bounded by
+$C[1+(m\epsilon)^{-D/2}]$. The remaining binomial probability is at most
+$e^{-am/8}$, while its density is bounded by $C\epsilon^{-D/2}$.
+The finite supremum of $x^{D/2}e^{-ax/8}$ absorbs this term. The clock
+and $\epsilon$ are uniformly comparable. For mixing, put fixed positive-time
+smoothing factors on either side of a middle convolution. The latter has
+zero-mean $L^2$ norm at most $e^{-\gamma t}$. The outer factors have
+uniform $L^2$ norms by smoothing, so their convolution kernel approaches
+one uniformly as the middle physical time grows.
+\end{proof}
+
+Set $B_{\epsilon,L}=T_{\epsilon,L}^{m_\epsilon}$. For real $u$,
+if $\lambda_{0,L}$ and $b_{0,L}$ are the respective top eigenvalues,
+\begin{equation}
+ -s_\epsilon^{-1}\log(B_{\epsilon,L}/b_{0,L})
+ =-\tau^{-1}\log(T_{\epsilon,L}/\lambda_{0,L}).
+ \label{eq:wdt-power-preserves-energy}
+\end{equation}
+Thus blocking changes neither energies nor spectral projections. It is not
+replacement by $K_\epsilon-uV$ or by a heat-kernel action.
+
+\subsubsection{Exact free-bridge expansion and a uniform convergence test}
+Conditional on the coarse endpoint link configurations, free paths on
+separate links are independent. Write $v_p=\chi_p+\bar\chi_p$,
+$\|v_p\|_\infty\le J=2N$, and
+\[
+ F_p=\exp\!\left[u\tau\left(\tfrac12 v_p(U_0)
+     +\sum_{j=1}^{m_\epsilon-1}v_p(U_j)+\tfrac12v_p(U_{m_\epsilon})\right)\right]-1.
+\]
+For a finite set $X$ of distinct plaquettes define
+$M_{\epsilon,X}=\mathbb E_{\rm bridge}\prod_{p\in X}F_p$.
+For complex $u$,
+\[
+ \|M_{\epsilon,X}\|_\infty\le b(u)^{|X|},\qquad
+ b(u)=e^{J(s_0+\tau_0)|u|}-1.
+\]
+Independent link bridges factor this activity over shared-link connected
+components. Let $P_\ell=p_\epsilon^{*m_\epsilon}(U'_\ell U_\ell^{-1})$.
+The exact block kernel is
+\[
+ B(U',U)=\prod_\ell P_\ell\!
+   \sum_{\{X_i\}\ {\rm link\!\!\!-disjoint}}\prod_iM_{\epsilon,X_i}.
+\]
+Absorb $P_\ell$ on the links of each occupied $X_i$ into its activity;
+its norm is at most $[(1+\delta)^4b(u)]^{|X_i|}$. On the unoccupied links
+write $P_\ell=1+q_\ell$, $\|q_\ell\|_\infty\le\delta$.
+The same-slab exclusion of overlapping magnetic and temporal atoms is
+retained in this identity.
+
+\begin{proposition}[Temporal-mesh-independent scalar polymer criterion]
+\label{prop:wdt-polymer-criterion}
+Use coarse sites $(\ell,j)$. Temporal atoms have support size two;
+a connected $r$-plaquette magnetic atom has support size at most $8r$.
+Fix $\xi>0$ and suppose
+\[
+ \delta\le e^{-(4+2\xi)}/16,\qquad
+ y=e^{16+8\xi}(1+\delta)^4b(u)\le1/256.
+\]
+Then the scalar hard-core polymer expansion of $\operatorname{Tr}B^M$
+converges uniformly in spatial volume and temporal mesh, with a positive
+exponential weight in coarse space-time support. In particular it converges
+on a nonzero common disc, for example strictly inside
+\[
+ u_c=\frac1{J(s_0+\tau_0)}
+ \log\!\left(1+\frac{e^{-(16+8\xi)}}{256(1+\delta)^4}\right).
+\]
+\end{proposition}
+\begin{proof}
+A link lies in four spatial plaquettes. The plaquette shared-link graph
+has degree twelve, and at most $144^{r-1}$ connected $r$-sets contain a
+specified plaquette, by a depth-first spanning-tree encoding.
+Thus at most $8\,144^{r-1}$ magnetic atoms of size $r$ contain a given
+coarse site. If $b_A$ bounds an atom of support $S_A$, then
+\[
+ \sup_z\sum_{A\ni z}b_Ae^{(2+\xi)|S_A|}
+ \le 2e^{4+2\xi}\delta+\frac{8y}{1-144y}
+ \le\frac18+\frac1{14}=\frac{11}{56}<\frac14.
+\]
+Expand the scalar path integral and group admissible atoms into connected
+components under support intersection. A component $\Gamma$ has weight
+$w(\Gamma)=\int\prod_{A\in\Gamma}f_A\,d\mu$ and
+$|w(\Gamma)|\le\prod_A b_A$. Disjoint components factor. Same-slab
+exclusions only remove terms in the positive majorant.
+
+For completeness the connected-component majorant follows from
+$T_A^{(0)}=b_Ae^{(1+\xi)|S_A|}$ and
+\[
+ T_A^{(n+1)}=b_Ae^{(1+\xi)|S_A|}
+       \exp\!\left(\sum_{B:S_B\cap S_A\ne\varnothing}T_B^{(n)}\right).
+\]
+Rooted trees overcount connected atom sets. Induction bounds this iteration
+by $b_Ae^{(2+\xi)|S_A|}$. Consequently
+\[
+ \sup_z\sum_{\Gamma\ni z}|w(\Gamma)|
+ e^{|\operatorname{supp}\Gamma|+\xi\sum_{A\in\Gamma}|S_A|}
+ \le11/56.
+\]
+Summing over the sites of an incompatible polymer is the
+Kotecky--Preiss criterion. Apply the abstract cluster and marked-correlation
+theorems of Ueltschi (arXiv:math-ph/0304003v3, Theorems 1--3).
+This invocation is of a scalar polymer theorem after an exact path
+representation, not a theorem about a noncommutative transfer logarithm.
+\end{proof}
+
+\begin{theorem}[Uniform vacuum and full-source construction]
+\label{thm:wdt-vacuum}
+In a smaller common disc, bounded local multiplication-observable
+correlations have thermodynamic and zero-temperature limits, are analytic
+in $u$, and satisfy
+\[
+ |\langle AB\rangle_c|\le C_{A,B}e^{-\xi d(S_A,S_B)}.
+\]
+For real $u$ the finite-volume state is the actual Perron vacuum of the
+Wilson transfer. Its excitation gap has a uniform lower bound
+$\xi/(s_0+\tau_0)$ in electric-energy units.
+\end{theorem}
+\begin{proof}
+Introduce marks $e^{\theta A}-1$ and differentiate the convergent log
+partition function. Its connected terms join the marks, and the support
+weight bounds their separation. Boundary-sensitive connected terms have
+exponentially small tails, giving the limits and their interchange.
+In finite volume the positive compact transfer has a simple positive
+Perron eigenvector, which is the zero-temperature trace limit. A centered
+source has a positive moment measure for $D_\epsilon=B/b_0$. Its moments
+are at most $C_Ae^{-\xi j}$, so its spectral support is below $e^{-\xi}$.
+Bounded multiplication functions times the strictly positive vacuum are
+dense, proving the claimed gap. This argument is at fixed spatial spacing.
+\end{proof}
+
+\subsubsection{All-orders matching of full source correlations}
+The same scalar construction applies to the Hamiltonian block kernel
+$e^{-s(H_E-uV)}$. The previous minorization also proves
+$p_\epsilon^{*m}\to h_s$ uniformly on the compact group when
+$m\tau\to s>0$: discard the exponentially unlikely binomial part and
+use a fixed positive-time heat factor to dominate all representation tails.
+On a fixed finite link support, expand the bounded potential by insertion
+number $n$. At least one of its $n+1$ free gaps has duration at least
+$s/(n+1)$. Smoothing on this gap gives the summable bound
+\[
+ C_Y[1+((n+1)/s)^{D|\operatorname{links}(Y)|/2}]
+ (s\|V_Y\||u|)^n/n!.
+\]
+For fixed $n$, omit short free gaps, apply kernel and Riemann-sum
+convergence, and then restore the omitted gaps. The displayed bound permits
+summation over $n$. Thus each finite block activity converges uniformly,
+including endpoints and complex $u$. The common polymer majorant permits
+its substitution into the infinite marked series.
+
+For the normalized odd Wilson sources, let $C_{\epsilon,j}^W(x;u)$
+be the complete, \emph{unprojected}, vacuum source-correlation matrix at
+time $j s_\epsilon$, and let $C_j^H(x;s_\epsilon,u)$ be its Hamiltonian
+comparator. For some common $\mu,\nu>0$,
+\begin{equation}
+ \sum_{j\ge0,x}e^{\mu|x|_1+\nu j}
+ \max_{\alpha,\beta}|(C_{\epsilon,j}^W-C_j^H)_{\alpha\beta}(x)|\to0.
+ \label{eq:wdt-full-correlation-matching}
+\end{equation}
+No uniform quadratic temporal rate is asserted. Polynomial approximation
+of continuous functions of the positive block transfer also gives source
+spectral-measure convergence and convergence at every fixed positive
+physical time. If the Hamiltonian G18 shell and its external gaps are taken
+as additional premises, source Gram matrices in a common Borel energy
+window converge in unweighted matrix norm. This last observation does not
+establish an exponentially local Wilson Riesz projection.
+
+\begin{theorem}[Source-visible plaquette window without assuming a pole]
+\label{thm:wdt-visible-window}
+For SU(3), fix $E_s=8/3$ and $0<\Delta<E_s$. There is a further common
+small real coupling interval in which the source Gram matrix in the energy
+window $I_\Delta=(E_s-\Delta,E_s+\Delta)$ obeys
+\[
+ J_\epsilon(k,u)^*1_{I_\Delta}(G_\epsilon)J_\epsilon(k,u)
+ \succeq \tfrac12 I_3.
+\]
+This is uniform on finite-volume momentum grids and holds in the limiting
+energy--momentum representation almost everywhere. The projection is Borel,
+not asserted to be a Riesz projection.
+\end{theorem}
+\begin{proof}
+Put $c=e^{-s_\epsilon E_s}$ and use the first three full source moments:
+\[
+ \mathcal V=C_2-2cC_1+c^2C_0\succeq0.
+\]
+At $u=0$, $(C_0,C_1,C_2)=(I,cI,c^2I)$ exactly. Positivity for both signs
+of real $u$ gives $\mathcal V'(0)=0$. Uniform analyticity hence gives
+$\|\mathcal V\|_{\mu,\sharp}\le Ku^2$ and $C_0\succeq3I/4$
+in a smaller common interval. For
+\[
+ d_*=e^{-(s_0+\tau_0)E_s}(1-e^{-s_0\Delta})>0
+\]
+functional calculus gives
+$1_{I_\Delta^c}(G_\epsilon)\le d_*^{-2}(D_\epsilon-c)^2$.
+The window Gram is therefore at least $C_0-d_*^{-2}\mathcal V$, which
+is at least $I/2$ if $Ku^2\le d_*^2/4$.
+In infinite volume the window is defined by the corresponding positive
+Borel interval of $D_\epsilon$; no logarithm on a possible kernel of that
+limiting transfer is assumed.
+\end{proof}
+
+\paragraph{Boundary.}
+A bounded-below three-source synthesis into a window is not totality of
+that window and need not have invariant range. The remaining task is the
+vacuum-dressed excited-transfer contour estimate, or an irreducible tube
+construction reaching the plaquette spectral neighborhood. These results
+neither select an isolated internal carrier nor establish the spatial
+continuum limit. The positive measure
+$(1-\eta^2)\delta_{E_s}+\eta^2(2\Delta)^{-1}1_{[E_s-\Delta,E_s+\Delta]}dE$
+has uniformly converging, exponentially decaying correlators but no
+isolated spectral point at $E_s$ when $\eta>0$; it is a negative control
+for confusing the proved correlation matching with excited-band isolation.

@@ -1,0 +1,66 @@
+{
+  "schema": "research-proposal/1",
+  "base_reference": "d2f46c586d76d000c07369c6e83ae218bf897734",
+  "native_gap_changes": [],
+  "nodes": [
+    {
+      "id": "W_OPTIMAL_SPECTRAL_BLOCK",
+      "claim_status": "proven",
+      "evidence": "analytic",
+      "premises": [
+        "uniform calibrated physical free window"
+      ],
+      "result": "s_sp=log(5/4)/gamma; optimal guaranteed gap 256/3125"
+    },
+    {
+      "id": "W_FINITE_VOLUME_COMPLETE_WINDOW",
+      "claim_status": "proven",
+      "evidence": "analytic",
+      "premises": [
+        "uniform calibrated physical free window",
+        "bounded plaquette potential",
+        "positive actual transfer"
+      ],
+      "scope": "fixed finite spatial volume, untruncated, temporal-mesh-uniform; coupling radius depends on volume"
+    },
+    {
+      "id": "W_FIRST_VACUUM_ROTATED_DERIVATIVE",
+      "claim_status": "proven",
+      "evidence": "analytic",
+      "result": "full Hilbert-space norm of first derivative bounded by 16 J (s+2 d_tau(E_s)) uniformly in volume"
+    },
+    {
+      "id": "W_ANCHORED_ACTIVITY_IMPLICATION",
+      "claim_status": "conditional",
+      "evidence": "analytic",
+      "premises": [
+        "exact symmetry-preserving vacuum chart",
+        "exact disjoint locally vacuum-annihilating operator expansion",
+        "eta<=1/400"
+      ],
+      "result": "operator error <=1/158 and finite-volume full shell isolation"
+    },
+    {
+      "id": "W_SOURCE_COMPLEMENT_IMPLICATION",
+      "claim_status": "conditional",
+      "evidence": "analytic",
+      "premises": [
+        "A>=a",
+        "Q D Q<=b on entire complement",
+        "b<a"
+      ],
+      "result": "isolated complete rank-r spectral range, not only positive source weights"
+    },
+    {
+      "id": "W_THERMODYNAMIC_OPERATOR_CHART",
+      "claim_status": "open",
+      "evidence": "prose-only",
+      "required": "all-orders Wilson activity estimate plus rooted source/range identification"
+    }
+  ],
+  "do_not_infer": [
+    "first derivative is not the summed nonlinear chart",
+    "finite retained matrix complement is not full physical complement",
+    "full source correlator convergence alone is not Riesz isolation"
+  ]
+}
