@@ -1,0 +1,131 @@
+% New manuscript insert: a derived implication from the existing G18 inputs.
+% Not automatically input into the main manuscript. No upstream status is changed.
+% Requires amsmath, amssymb, and theorem/lemma/proof environments.
+\subsection{Uniform relative carrier isolation on the punctured zone}
+\label{sec:g18-relative-gap-bridge}
+
+We retain the fixed-spacing physical-band identification and the
+coupling-analytic weighted symbol of Lemma~\ref{lem:g18-u-analytic-symbol}.
+The conclusion below strengthens patchwise isolation; it is not an
+independent proof of those inputs. Write
+\[
+ L(k)=B(k)B(k)^\dagger=q(k)I-w(k)w(k)^\dagger,\qquad
+ q(k)=4\sum_{j=1}^3\sin^2(k_j/2),\qquad t_3=\frac5{612}.
+\]
+The symmetry-covariant frame has the irreducible cubic $T_1$ representation
+at $\Gamma$, where inversion is scalar. Thus
+$h_u(0)=E_\Gamma(u)I$ and $\nabla_kh_u(0)=0$.
+The latter assertion does not require entrywise evenness in a
+plaquette-base convention. If
+$h_u(-k)=J(k)h_u(k)J(k)^{-1}$ with $J(0)=pI$, differentiating at zero
+leaves the commutator with $E_\Gamma I$, which vanishes, and gives
+$-\partial_jh_u(0)=\partial_jh_u(0)$.
+Gram orthonormalization preserves covariance by functional calculus.
+
+\begin{lemma}[Weighted centering]
+\label{lem:g18-weighted-centering}
+Let $R\in\mathcal A_\mu$ and assume $\nabla R(0)=0$. Then, on
+$[-\pi,\pi]^3$,
+\[
+ \|R(k)-R(0)\|\le\gamma_\mu\|R\|_{\mu,\sharp}q(k),\qquad
+ \gamma_\mu=\frac{\pi^2}{2e^2\mu^2}.
+\]
+\end{lemma}
+\begin{proof}
+Exponential summability permits differentiation of the Fourier series.
+The zero first moment gives
+\[
+ R(k)-R(0)=\sum_xR(x)(e^{ik\cdot x}-1-ik\cdot x).
+\]
+The integral Taylor remainder satisfies
+$|e^{it}-1-it|\le t^2/2$. Apply it entrywise, use
+$|k\cdot x|\le |k|_2|x|_1$, and apply the row/column Schur bound:
+\[
+ \|R(k)-R(0)\|\le\frac{|k|_2^2}{2}
+ \sup_{s\ge0}(s^2e^{-\mu s})\|R\|_{\mu,\sharp}.
+\]
+The supremum is $4/(e^2\mu^2)$ and
+$|k|_2^2\le(\pi^2/4)q(k)$, proving the assertion.
+\end{proof}
+
+\begin{theorem}[One coupling domain for every nonzero momentum]
+\label{thm:g18-global-relative-gap}
+Assume that $u\mapsto h_u\in\mathcal A_\mu$ is holomorphic on
+$|u|<\rho_0$, Hermitian for real $u$, and has the symmetry properties above.
+Assume also the full matrix coefficient identity
+\[
+ h_u(k)=s_{\le2}(u)I+t_3u^2L(k)+O_{\mathcal A_\mu}(u^3).
+\]
+Choose $0<\rho<\rho_0$ within all upstream smallness domains and set
+\[
+ M_\rho=\sup_{|\zeta|=\rho}\|h_\zeta\|_{\mu,\sharp},\qquad
+ K=\frac{\pi^2M_\rho}{e^2\mu^2\rho^3},\qquad
+ u_* = \min\left\{\rho/2,\frac{t_3}{4K}\right\}.
+\]
+If $K=0$, omit its restriction. For every real $0<|u|<u_*$ and every
+$k\ne0$, the lowest eigenvalue of $h_u(k)$ is simple, and
+\begin{align}
+ \|h_u(k)-E_\Gamma(u)I-t_3u^2L(k)\|&\le K|u|^3q(k),
+ \label{eq:g18-relative-tail}\\
+ E_1(k,u)-E_0(k,u)&\ge u^2q(k)(t_3-2K|u|)
+ \ge\tfrac12t_3u^2q(k).
+ \label{eq:g18-relative-gap-global}
+\end{align}
+The coupling domain is independent of momentum.
+\end{theorem}
+\begin{proof}
+Cauchy's estimate in $\mathcal A_\mu$ bounds the Taylor tail beginning at
+order three by $2M_\rho|u|^3/\rho^3$ for $|u|\le\rho/2$.
+Its first momentum derivative vanishes, coefficientwise by symmetry and
+holomorphy. Lemma~\ref{lem:g18-weighted-centering}, with its exact Gamma
+value subtracted, gives~\eqref{eq:g18-relative-tail}.
+The comparison eigenvalues after subtracting $E_\Gamma I$ are
+$0,t_3u^2q,t_3u^2q$. Weyl's eigenvalue inequality shifts each by at most
+$K|u|^3q$. Subtracting the two worst shifts proves
+\eqref{eq:g18-relative-gap-global}.
+\end{proof}
+
+Let $P_0=ww^\dagger/q$ and let $P_u$ denote the exact lowest projection.
+A useful companion estimate is
+\[
+ \|P_u(k)-P_0(k)\|\le\frac{K|u|}{t_3-2K|u|},\qquad k\ne0.
+\]
+Indeed, put $a=t_3u^2q$ and $\varepsilon=K|u|^3q$.
+The exact eigenvalue relative to the Gamma scalar lies in
+$[-\varepsilon,\varepsilon]$. Projecting its eigenvector equation onto
+$1-P_0$ gives
+$\|(1-P_0)v\|\le\varepsilon\|P_0v\|/(a-2\varepsilon)$,
+and the rank-one projection distance is $\|(1-P_0)v\|$.
+After shrinking the common interval, the distance is less than $1/2$ and
+\[
+ v_u(k)=\frac{P_u(k)w(k)/\sqrt{q(k)}}
+ {\|P_u(k)w(k)/\sqrt{q(k)}\|}
+\]
+is a global periodic real-analytic unit section on the punctured zone.
+Its direct integral is a reducing carrier subspace. This is a fiberwise
+energy--momentum construction; no energy-only isolating contour is asserted.
+
+For the normalized three-orientation Wilson synthesis $S_W$, the
+complete-band frame bound $S_W^\dagger S_W\succeq z_*I$ implies
+\[
+ \sum_{\alpha=1}^3|\langle v_u,S_We_\alpha\rangle|^2\ge z_*.
+\]
+The left and right Gram matrices of the square synthesis map have the same
+least eigenvalue. The usual normalized cube-source estimate also becomes
+uniform:
+\[
+ \|P_uS_Wv_0\|\ge1-\|P_u-P_0\|-\|S_W-I\|,\qquad v_0=w/\sqrt q.
+\]
+Neither statement makes the compact cube boundary a uniformly normalized
+local source: its coefficient is $w$, not $w/\sqrt q$, and its weight
+vanishes with $q$ near Gamma.
+
+\paragraph{Boundary.}
+The exact absolute internal gap still tends to zero at Gamma; no
+rank-one choice there is claimed. The constants are existential and the
+finite-order threshold $\sqrt{2/51}$ is not an all-orders threshold.
+The theorem inherits the G18 analytic-symbol and physical-band inputs.
+It proves no finite-temporal-spacing Wilson identification or continuum
+limit. The patch theorem remains valid, but deterioration of its coupling
+threshold with the patch minimum of $q$ is not necessary under the stronger
+weighted hypotheses used here.

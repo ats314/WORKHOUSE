@@ -1,0 +1,108 @@
+{
+  "format": "staged research integration proposal; not a native WORKHOUSE schema",
+  "base_commit": "31255abac3829cb0cc1ce7c36c1852db8cdafbea",
+  "items": [
+    {
+      "name": "Uniform relative carrier isolation on the punctured zone",
+      "status": "conditional",
+      "evidence": "analytic",
+      "bears_on": [
+        "G11",
+        "G18"
+      ],
+      "premises": [
+        "G18 weighted Banach-holomorphic exact symbol",
+        "G18 full second-order matrix coefficient",
+        "symmetry-covariant T1 frame and scalar inversion at Gamma"
+      ],
+      "conclusion": "Centered summed remainder bounded by K |u|^3 q(k); one small-u threshold for every k != 0",
+      "proof": "paper/research_notes/G18_RELATIVE_GAP_BRIDGE_20260904.tex",
+      "not_closed": [
+        "independent recertification of G18 premises",
+        "rank-one isolation at Gamma",
+        "Wilson transfer identification",
+        "G19"
+      ]
+    },
+    {
+      "name": "Temporal Wilson limit in canonical electric units",
+      "status": "proven",
+      "evidence": "analytic",
+      "bears_on": [
+        "G18",
+        "G19"
+      ],
+      "premises": [
+        "fixed finite spatial lattice",
+        "canonical H_E=(1/2) sum C2",
+        "bounded finite-volume V",
+        "Chernoff product theorem"
+      ],
+      "conclusion": "beta_t=2N/epsilon and beta_s=2Nu epsilon define a positive transfer family converging strongly under time refinement to exp(-t H(u))",
+      "proof": "paper/research_notes/G19_TEMPORAL_WILSON_MATCHING_20260904.md Sections 1-2",
+      "not_closed": [
+        "volume-uniform limit",
+        "varying-vacuum convergence",
+        "excited-projection convergence",
+        "spatial continuum limit"
+      ]
+    },
+    {
+      "name": "Fixed-irrep Wilson kinetic clock correction",
+      "status": "proven",
+      "evidence": "analytic",
+      "bears_on": [
+        "G18",
+        "G19"
+      ],
+      "premises": [
+        "SU(N) Haar exponential-coordinate Jacobian",
+        "Gaussian trace contractions",
+        "Laplace localization at identity"
+      ],
+      "conclusion": "tau_F=epsilon+(N^2-2)/(8N) epsilon^2+O(epsilon^3); calibrated fixed-irrep energy error O_R(epsilon^2)",
+      "proof": "paper/research_notes/G19_TEMPORAL_WILSON_MATCHING_20260904.md Sections 3-4",
+      "numerical_evidence": "runs/relative_gap_wilson_matching_2026-09-04/wilson_clock_certificate.json",
+      "not_closed": [
+        "uniformity over unbounded representations",
+        "renormalized interacting physical anisotropy"
+      ]
+    },
+    {
+      "name": "Weighted matched-band transport",
+      "status": "conditional",
+      "evidence": "analytic",
+      "bears_on": [
+        "G18",
+        "G19"
+      ],
+      "premises": [
+        "complete Wilson and Hamiltonian bands constructed in a common frame",
+        "weighted symbol difference <= D epsilon^p",
+        "Hamiltonian gap >= a(u)q(k)",
+        "same Gamma symmetries"
+      ],
+      "conclusion": "Wilson carrier gap >= [a(u)-2 gamma_mu D epsilon^p]q(k), uniformly for k != 0",
+      "proof": "paper/research_notes/G19_TEMPORAL_WILSON_MATCHING_20260904.md Section 6",
+      "not_closed": [
+        "physical uniform matched-band premise",
+        "source synthesis matching",
+        "continuum limit"
+      ]
+    }
+  ],
+  "next_route": {
+    "on": [
+      "G18",
+      "G19"
+    ],
+    "state": "untried",
+    "what": "Establish a uniform low spectral window for the Wilson kinetic multipliers, then the complete dressed-shell and weighted symbol/source matching estimates.",
+    "cannot_be_decided_by": [
+      "fixed-irrep asymptotics alone",
+      "single-plaquette Ritz convergence",
+      "Gamma-only rest energies"
+    ]
+  },
+  "status_policy": "These statuses describe the explicitly scoped statements and remain staged proposals. No native registry status or evidence tier was edited."
+}
