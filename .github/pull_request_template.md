@@ -1,22 +1,28 @@
 ## What changed
 
-<!-- One paragraph. What does this PR do? -->
+<!-- State the result or behavior, its hypotheses and scope, and what remains open. -->
 
 ## Why
 
-<!-- Which contradiction (C1-C22) or gap (G1-G19) does this move? -->
+<!-- Which claim or gap does this move? Name the established inputs and the concrete consequence or next route. Use current ledger verdicts. -->
 
-## Corpus impact
+## Research record
 
-- [ ] No document in `theory/` was modified
-- [ ] If a document changed, `theory/SHA256SUMS` is regenerated and the reason is stated above
-- [ ] No disputed value was promoted (C1/C2 remain recorded with both sides)
+- [ ] Affected claims, graph dependencies, provenance, routes, and current documentation are updated
+- [ ] `index/`, `FRONTIER.md`, and `CERTIFIED.md` are regenerated
+- [ ] Sealed evidence is preserved; any deliberate source change and manifest update is explained
+- [ ] Verdicts follow the derivation and retain earlier evidence; C1 is an anchoring distinction and C2 was resolved on 2026-09-04
 - [ ] No tolerance was widened to make a check pass
 
 ## Verification
 
 ```
+make verify
 make check
 ```
 
-<!-- Paste the result. If a new FINDING check was added, quote its detail line. -->
+<!-- Paste results and relevant Lean or independent checks. State exactly what each establishes. Inspect workhouse why <id> for the affected claims. -->
+
+## Landing
+
+<!-- Follow CLAUDE.md: mark ready and merge when CI is green, conflicts are resolved, and no review comment is unaddressed. Report pushed versus merged status accurately and verify main at the merged commit. -->

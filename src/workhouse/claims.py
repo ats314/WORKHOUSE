@@ -37,6 +37,7 @@ from . import constants as K
 from . import ledger as ledger_mod
 from . import literature as literature_mod
 from . import notes as notes_mod
+from . import results as results_mod
 from .invariants import SUITES
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -65,6 +66,7 @@ KINDS = (
     "run",
     "route",
     "corpus",
+    "result",
 )
 
 #: The pinned ALL THEORY import and its manifest: one node per file.
@@ -241,6 +243,26 @@ def load_document_aliases(path: Path | None = None) -> list[dict[str, Any]]:
     """The citation-alias register (ledger/documents.yaml)."""
     source = path or ROOT / "ledger" / "documents.yaml"
     return yaml.safe_load(source.read_text(encoding="utf-8"))["aliases"]
+
+
+def result_claims() -> list[Claim]:
+    """Analytic status is copied; partial controls never change the full tier."""
+    aliases = {f"CITE:{a['alias']}": a["path"] for a in load_document_aliases() if a.get("path")}
+    return [
+        Claim(
+            id=result["id"],
+            kind="result",
+            statement=result["statement"],
+            tier=3,
+            where=aliases[result["source"]],
+            cites=f"{result['source']} {result['source_section']}",
+            status=result["status"],
+            evidence=result["evidence"],
+            detail=results_mod.detail(result),
+            related=sorted(set(result["depends_on"] + result["bears_on"])),
+        )
+        for result in results_mod.load()
+    ]
 
 
 def load_provenance(path: Path | None = None) -> list[dict[str, Any]]:
@@ -509,6 +531,7 @@ def collect() -> list[Claim]:
                     related=sorted(
                         [str(r) for r in step.get("closed_by", []) or []]
                         + [str(r) for r in step.get("cannot_decide", []) or []]
+                        + [str(r) for r in step.get("depends_on", []) or []]
                     ),
                 )
             )
@@ -755,6 +778,10 @@ def collect() -> list[Claim]:
                 related=sorted(run.get("bears_on", [])),
             )
         )
+
+    # Analytic proof records preserve the author's claim status and scope.
+    # Finite controls and scalar Lean lemmas never promote the whole theorem.
+    out.extend(result_claims())
 
     return out
 

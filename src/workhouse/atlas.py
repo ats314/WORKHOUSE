@@ -107,7 +107,9 @@ def collect_data(
             "value": _clip(c.value, 80) if c.value is not None else None,
             "where": c.where or "",
             "cites": _clip(c.cites, 300),
-            "detail": _clip(c.detail, 1200),
+            # A result's final support boundary must remain visible even
+            # when its hypotheses are longer than the ordinary preview.
+            "detail": c.detail if c.kind == "result" else _clip(c.detail, 1200),
             "reproduce": c.reproduce or "",
         }
         if c.id in sides:

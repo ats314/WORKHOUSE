@@ -1,0 +1,245 @@
+# Analytic results are first-class claims, distinct from their documents and controls.
+# Status and evidence use the existing constants.py vocabularies. A full analytic
+# result remains T3 for repository machine verification unless a check certifies
+# that entire statement. This does not change its mathematically established status.
+schema: results/v1
+results:
+  - id: RESULT:WILSON_KINETIC_WINDOW
+    statement: >
+      At fixed N >= 3 and sufficiently small calibrated Wilson temporal step,
+      the physical neutral kinetic spectrum below 5 C_F/2 is exactly {0, 2 C_F};
+      the excited shell is the elementary fundamental-plaquette span and the
+      one-link excited kinetic gap is at least C_F/2.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - Fixed N >= 3, periodic cubic lattice L >= 3, neutral one-form-flux physical sector.
+      - The calibrated Wilson clock and all-representation exclusion of the cited note.
+    scope: >
+      Free kinetic theorem, uniform in volume and admitted temporal step.
+      The charge-odd shell has dimension 3 L^3 and external margin at least C_F/2.
+      Interacting Wilson excited-space identification is a separate claim.
+    source: CITE:WILSON_KINETIC_WINDOW
+    source_section: Sections 2-3, Theorem 3 and equation (7)
+    depends_on: []
+    bears_on: [G18, G19]
+    supported_by: []
+
+  - id: RESULT:WILSON_SECOND_ORDER_CHART
+    statement: >
+      The actual symmetric Wilson transfer admits two local vacuum rotations
+      whose complete second-order coefficient has an exact connected/disconnected
+      decomposition and full-operator bound 40432 f_star^2/5; both generators
+      are independent of positive integer temporal block power.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - Bounded four-link Wilson plaquette multipliers with the cited J and time bounds.
+      - The calibrated additive free kinetic gap and normalized finite-subsystem Perron germs.
+    scope: >
+      Complete Taylor coefficients through degree two, uniform in volume,
+      representation dimensions and temporal mesh. The displayed bound is
+      valid but sharpened by RESULT:WILSON_VACUUM_COMPRESSION. No convergence
+      of the infinite ordered unitary product follows from fixed-degree bounds.
+    source: CITE:WILSON_SECOND_ORDER_CHART
+    source_section: Theorems 5.1 and 6.1; Proposition 7.1
+    depends_on: [RESULT:WILSON_KINETIC_WINDOW, CITE:WILSON_EXCITED_OPERATOR_BRIDGE]
+    bears_on: [G18, G19]
+    supported_by:
+      - target: RUN:wilson_vacuum_chart_2026-09-05
+        scope: Exact finite tensor controls, scalar support constants and finite matrix algebra; not the full analytic operator theorem.
+
+  - id: RESULT:WILSON_FIXED_ORDER_CHART
+    statement: >
+      Connected local vacuum generators exist at every fixed magnetic degree.
+      The corrected transfer coefficients annihilate both vacuum legs, the chart
+      factors over disconnected active components, and the generators are
+      independent of positive integer block power.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - The actual symmetric transfer, scalar normalization and local coefficient convention of the second-order construction.
+      - Bounded plaquette interactions and the additive free kinetic gap.
+    scope: >
+      Uniform full-operator coefficient bounds at each fixed degree. Degree-n
+      connected face witnesses occupy at most 3n+1 links. The original crude
+      recurrence does not establish a positive convergence radius for the
+      ordered unitary generator product.
+    source: CITE:WILSON_FIXED_ORDER_CHART
+    source_section: Theorem 1, Corollary 2 and Theorem 3
+    depends_on: [RESULT:WILSON_SECOND_ORDER_CHART]
+    bears_on: [G18, G19]
+    supported_by:
+      - target: RUN:wilson_vacuum_chart_2026-09-05
+        scope: Exact finite tensor calculations through degree four and the finite matrix cancellation kernel; not arbitrary-order analytic convergence.
+
+  - id: RESULT:WILSON_VACUUM_COMPRESSION
+    statement: >
+      Vacuum anchoring is exactly orthogonal compression F=A+[D,S]=QAQ.
+      Applied to the Wilson chart, compression, normalization and kinetic
+      damping sharpen the complete quadratic bound to 118872 f_star^2/125.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - Bounded self-adjoint operators D and A, unit vacuum Omega, D Omega=Omega, chi orthogonal to Omega and (I-D)chi=A Omega.
+      - P is the vacuum projection, Q=I-P, and S=|chi><Omega|-|Omega><chi|.
+      - The fixed-order Wilson normalization and time/interaction bounds for the stated quadratic estimate.
+    scope: >
+      Exact local compression identity and the cited operator estimates.
+      The Lean theorem verifies finite matrix algebra under its own explicit
+      hypotheses; operator norms and uniform analytic convergence are not
+      conclusions of that Lean statement.
+    source: CITE:WILSON_VACUUM_COMPRESSION
+    source_section: Proposition 1; Section 2 and Corollary 2.1; Section 3
+    depends_on: [RESULT:WILSON_SECOND_ORDER_CHART, RESULT:WILSON_FIXED_ORDER_CHART]
+    bears_on: [G18]
+    supported_by:
+      - target: LEAN:corrected_eq_compression
+        scope: Finite Hermitian matrix identity over a commutative star ring; no operator-norm or infinite-dimensional theorem.
+      - target: RUN:wilson_vacuum_compression_2026-09-05
+        scope: Exact complex block controls, rational support arithmetic and strict Lean build evidence for the stated algebraic subclaims.
+
+  - id: RESULT:WILSON_ENDPOINT_EQUATION
+    statement: >
+      Removing the magnetic endpoint and taking the normalized creation
+      logarithm gives the exact equation v=R_tau N_tau(u,v), with
+      R_tau,X=tau/(exp(tau K_X)-1). Disconnected active components factor
+      before the logarithm, and the local creator vector field has degree at most eight.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - Finitely many links with exact excited support factors and their commuting nilpotent creators.
+      - Bounded plaquette interactions, each on four distinct links, for the degree-eight vector-field bound.
+      - The actual transfer T=M C M, M=exp(tau u V/2), C=exp(-tau K), with additive gapped K.
+      - Nonzero scalar normalization in the finite-volume analytic germ about the free point.
+    scope: >
+      Exact connected-coordinate equation and local algebra. The same-weight
+      inequality proposed in Section 6 is not a conclusion of this result.
+      RESULT:WILSON_ROOTED_CONTRACTION supplies the common nonlinear domain
+      and proves the normalizer stays nonzero there.
+    source: CITE:WILSON_ENDPOINT_EQUATION
+    source_section: Sections 2-5a, equations (13)-(14)
+    depends_on: []
+    bears_on: [G18, G19]
+    supported_by:
+      - target: LEAN:endpoint_disjoint_cancellation
+        scope: The rational mixed-kick cancellation after substituting x=exp(tau E1), y=exp(tau E2), with nonzero denominators; no spectral estimate.
+      - target: RUN:wilson_vacuum_chart_2026-09-05
+        scope: Finite exact controls for endpoint cancellation and creator algebra, preserving the original historical convergence boundary.
+
+  - id: RESULT:WILSON_TRANSFER_RESOLVENT
+    statement: >
+      For real Delta!=0, tau>0 and d_tau(Delta)=(tau/2)coth(tau Delta/2), the scalar discrepancy from
+      1/Delta is at most min(tau/2,tau^2|Delta|/12). Functional calculus gives
+      uniform unweighted O(tau) and energy-weighted O(tau^2) reduced-resolvent bounds.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - tau>0 and a self-adjoint reduced operator A with spectrum outside (-gamma,gamma), gamma>0.
+      - The sharper interaction estimate requires range(C) in domain(|A|) and bounded |A|C, as stated in equation (4).
+    scope: >
+      Entire-spectrum estimates with no representation cutoff or volume factor.
+      A bounded multiplier alone does not supply the energy-weighted premise,
+      and a uniform unweighted O(tau^2) replacement is false on unbounded spectra.
+    source: CITE:WILSON_TRANSFER_RESOLVENT
+    source_section: Scalar estimate and Operator consequences, equations (1)-(4)
+    depends_on: []
+    bears_on: [G18, G19, RESULT:WILSON_SECOND_ORDER_CHART, CITE:WILSON_EXCITED_OPERATOR_BRIDGE]
+    supported_by: []
+
+  - id: RESULT:WILSON_ROOTED_CONTRACTION
+    statement: >
+      The exact resolvent-composed creator map contracts the rooted ball of
+      radius 1/16 with Lipschitz constant at most 1/2 for |u|<=u_star, where
+      u_star=min(9 gamma/(309680 J_star exp(4mu)),9/(8450 tau0 J_star exp(4mu))).
+      Its fixed point is holomorphic on the common open disk.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - Four distinct links per plaquette, at most four plaquettes per link and bounded plaquette norm J_star>0.
+      - Additive self-adjoint free kinetic operator with one-link excited gap gamma>0; 0<tau<=tau0 and mu>=gamma tau0/2.
+      - Identifying the real finite-volume branch with the Wilson Perron vacuum additionally uses the compact self-adjoint positivity-improving Wilson-kernel premise.
+    scope: >
+      Uniform in finite volume, temporal mesh and link representation dimensions.
+      The kinetic-window result supplies the actual Wilson gap premise;
+      the abstract finite-link theorem needs only its explicitly stated gap.
+      Moving support weight absorbs the magnetic flow growth and the full
+      kinetic resolvent restores it. This proves convergence of nonunitary
+      creator coordinates, not the earlier ordered unitary product or a
+      complete thermodynamic physical excited space.
+    source: CITE:WILSON_ROOTED_CONTRACTION
+    source_section: Sections 1-7, equations (3b) and (19)
+    depends_on: [RESULT:WILSON_ENDPOINT_EQUATION, RESULT:WILSON_KINETIC_WINDOW]
+    bears_on: [G18, G19]
+    supported_by:
+      - target: RUN:wilson_rooted_contraction_2026-09-05
+        scope: Four exact finite-model controls and rational constants, independent obstruction diagnostics and pinned proof sources; finite samples do not prove contraction on the complete ball.
+
+  - id: RESULT:WILSON_COEFFICIENT_LOCALITY
+    statement: >
+      Every nonzero degree-n Wilson creator monomial has a connected active-plaquette
+      witness using at most n faces and 3n+1 links. The entire Taylor coefficient
+      family at a fixed root stabilizes exactly once that neighborhood fits.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - Compatible finite open boxes or periodic interior charts exhaust one infinite cubic lattice with identical local kinetic operators and Wilson multipliers.
+      - The finite-volume isolated vacuum germ and independent formal plaquette couplings, with exact active-component factorization.
+    scope: >
+      Coefficientwise locality of the actual endpoint creator logarithm.
+      Output exact supports need not be connected; their active-plaquette
+      witnesses are connected. This statement alone asserts no uniform
+      analytic radius or infinite-volume Hilbert-space vector.
+    source: CITE:WILSON_CREATOR_LIMIT
+    source_section: Section 2, Exact locality of a fixed Taylor coefficient
+    depends_on: [RESULT:WILSON_ENDPOINT_EQUATION, RESULT:WILSON_KINETIC_WINDOW]
+    bears_on: [G18, G19]
+    supported_by: []
+
+  - id: RESULT:WILSON_CREATOR_LIMIT
+    statement: >
+      Stabilized Wilson creator coefficients define a canonical infinite-lattice
+      family holomorphic for |u|<u_star with rooted norm at most 1/16. If all
+      clusters through order N fit at a root, the local finite-volume error
+      is at most (1/8)q^(N+1)/(1-q), q=|u|/r<1 and r<u_star.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - The uniform common-disk rooted contraction bound and the compatible local lattice data of coefficient locality.
+      - Fixed 0<tau<=tau0; locality comparisons avoid the boundary and periodic identifications through the stated order.
+    scope: >
+      Analytic infinite-lattice coefficient family and quantitative convergence
+      at each root. Zero-extended finite boxes need not converge in the global
+      supremum-over-roots norm. No bounded global creator exponential, physical
+      state uniqueness, or complete excited Riesz projection is inferred.
+    source: CITE:WILSON_CREATOR_LIMIT
+    source_section: Sections 1-4
+    depends_on: [RESULT:WILSON_ROOTED_CONTRACTION, RESULT:WILSON_COEFFICIENT_LOCALITY]
+    bears_on: [G18, G19]
+    supported_by: []
+
+  - id: RESULT:WILSON_SAME_WEIGHT_OBSTRUCTION
+    statement: >
+      For arbitrarily many disjoint independently active SU(3) Wilson plaquettes,
+      the undamped normalized magnetic creator map has no volume-uniform
+      same-weight Lipschitz bound over arbitrary trial creator families.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - Independent active four-link SU(3) plaquettes, V=Tr(U)+Tr(U)* and eta=V Omega/sqrt(2).
+      - Fixed t=tau u in (0,1/200] and arbitrary giant-support trial creators.
+    scope: >
+      The derivative lower ratio ((1+t/2)^n-1)/(4n tau) diverges with n.
+      This refutes the unrestricted active-family version of the proposed
+      same-weight estimate. It is not a separate counterexample with every
+      lattice plaquette active at the same nonzero coupling, and it does not
+      refute the resolvent-composed contraction.
+    source: CITE:WILSON_SAME_WEIGHT_OBSTRUCTION
+    source_section: Exact SU(3) inputs; explicit positive interval; Failure of the undamped same-weight estimate
+    depends_on: [RESULT:WILSON_ENDPOINT_EQUATION]
+    bears_on: [G18, RESULT:WILSON_ROOTED_CONTRACTION]
+    supported_by:
+      - target: LEAN:normalized_taylor_growth
+        scope: Only the real rational Taylor lower inequality on 0<=t<=1/200; no Haar moment or operator-norm assertion.
+      - target: RUN:wilson_rooted_contraction_2026-09-05
+        scope: Independent finite creation logarithms, exact SU(3) Weyl moments through order eight and numerical exponentials; the all-n obstruction is the pinned analytic derivation.

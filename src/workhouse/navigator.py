@@ -262,7 +262,11 @@ def explain(
         if claim.where:
             w(f"  \033[2m{claim.where}" + (f" · {claim.cites}" if claim.cites else "") + "\033[0m")
         if claim.detail:
-            w(f"  {_clip(claim.detail, 200)}")
+            if claim.kind == "result":
+                for line in claim.detail.splitlines():
+                    w(f"  {line}")
+            else:
+                w(f"  {_clip(claim.detail, 200)}")
         if claim.reproduce:
             w(f"  \033[2m{claim.reproduce}\033[0m")
 

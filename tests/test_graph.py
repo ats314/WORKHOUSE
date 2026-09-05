@@ -68,7 +68,11 @@ def test_the_citation_web_is_in_the_graph():
     assert ("LIT:HAMER_1989", "LIT:HIP_1986", "cites") in TRIPLES
     assert ("LIT:CS_2006", "LIT:WEINGARTEN_1978", "cites") in TRIPLES
     assert ("LIT:LLL_2006", "LIT:HAMER_1989", "cites") in TRIPLES
-    curated_cites = [e for e in GRAPH.edges if e.type == "cites" and e.how == "curated"]
+    curated_cites = [
+        e
+        for e in GRAPH.edges
+        if e.type == "cites" and e.how == "curated" and e.source == "literature/index.yaml"
+    ]
     assert all(e.src.startswith("LIT:") and e.dst.startswith("LIT:") for e in curated_cites)
     from workhouse import literature
 

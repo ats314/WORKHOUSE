@@ -22,6 +22,8 @@ from typing import Any
 
 import yaml
 
+from .results import is_catalogue_id
+
 LEDGER_DIR = Path(__file__).resolve().parents[2] / "ledger"
 
 CONTRADICTION_STATUSES = frozenset(
@@ -223,12 +225,16 @@ def validate(ledgers: Ledgers) -> list[str]:
                     problems.append(f"{label}: closed_by unknown {ref}")
                 if not (
                     re.fullmatch(r"[CGRU]\d+", ref)
-                    or ref.startswith(("RUN:", "CHK:"))
+                    or ref.startswith(("RUN:", "CHK:", "RESULT:", "CITE:"))
                     or re.fullmatch(r"ADR[:\s]*\d{4}", ref)
                 ):
                     problems.append(
-                        f"{label}: closed_by {ref!r} is not a ledger, run, check or ADR id"
+                        f"{label}: closed_by {ref!r} is not a ledger, run, check, "
+                        "result, citation or ADR id"
                     )
+            dependencies = step.get("depends_on", [])
+            if not isinstance(dependencies, list) or not all(map(is_catalogue_id, dependencies)):
+                problems.append(f"{label}: depends_on must be a list of full catalogue ids")
             for ref in step.get("cannot_decide", []) or []:
                 if ref not in (ledgers.contradiction_ids | ledgers.gap_ids):
                     problems.append(f"{label}: cannot_decide unknown {ref}")

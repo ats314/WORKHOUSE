@@ -158,7 +158,8 @@ settles nothing is excluded however cheap it looks.
   - The fixed-spacing Hamiltonian complete band and literal-source frame are constructed in the G18 inserts; the relative-gap continuation gives one coupling domain for every nonzero momentum. The remaining actual-Wilson target is an exact vacuum chart with a volume-uniform operator-activity bound, then thermodynamic Riesz-range/source totality and spatially weighted projected-kernel matching. Finite-volume isolation, a populated Borel window, and unprojected correlation matching are already available with the distinct scopes recorded below.
   - routes live: Realize the convergent creator coordinates in a controlled physical operator chart
   - routes untried: Transport the complete Wilson Riesz range and source frame to infinite volume
-  - routes done: Construct the local Wilson vacuum chart at every fixed magnetic order; Prove a common analytic domain and rooted contraction for the Wilson creator coordinates
+  - routes done: Construct the local Wilson vacuum chart at every fixed magnetic order; Prove a common analytic domain and rooted contraction for the Wilson creator coordinates; Stabilize the rooted Taylor coefficients by connected active-plaquette witnesses; Construct the analytic infinite-lattice creator family with a local error bound
+  - routes dead: Prove an undamped same-weight Lipschitz bound for arbitrary active plaquette families
 
 ## 7b. What published work bears on this
 

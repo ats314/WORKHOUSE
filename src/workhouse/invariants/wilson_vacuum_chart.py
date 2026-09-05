@@ -143,5 +143,7 @@ def _():
     return ok, (
         f"complete rational residual={complete}; omitted mixed kick gives {omitted}; "
         f"at x=2,y=3,tau=1/5 the exact negative-control residual is {witness}. "
-        "This checks the endpoint identity only; the nonlinear rooted inequality remains open."
+        "This checks the endpoint identity only. The resolvent-composed rooted contraction "
+        "is proved analytically in G18_ROOTED_WILSON_CONTRACTION_20260905.md; "
+        "the unrestricted undamped same-weight proposal fails for disjoint active families."
     )

@@ -44,6 +44,7 @@ _KIND_RANK = {
     "register": 7,
     "unifying": 7,
     "route": 7,
+    "result": 7,
 }
 _KIND_TITLE = {
     0: "Originating documents",
@@ -159,6 +160,9 @@ def render(
                 if x
             )
             w(f"*{standing}*")
+            if claim.kind == "result":
+                w("")
+                w(claim.detail)
             if claim.value is not None:
                 decimal = f"  (`{claim.decimal!r}`)" if claim.decimal is not None else ""
                 w("")
@@ -208,6 +212,9 @@ def render(
                         w(f"  - value: `{claim.value}`")
                     if claim.kind == "check" and claim.reproduce:
                         w(f"  - reproduce: `{claim.reproduce}`")
+                    if claim.kind == "result":
+                        for line in claim.detail.splitlines():
+                            w(f"  - {line}")
                 for label in neighbor.via[:4]:
                     w(f"  - edge: `{label}`")
                 if len(neighbor.via) > 4:
