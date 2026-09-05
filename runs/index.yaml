@@ -506,3 +506,29 @@ runs:
       closes G18 or G19; the Wilson-band matching estimate stays a hypothesis.
       The exact algebra tests run in CI; the numerical replays need NumPy and
       are pinned only.
+  - id: dressing_lemma_2026-09-04
+    dir: runs/dressing_lemma_2026-09-04
+    title: >-
+      The single-contact dressing obeys the two-hop universality lemma once
+      time is reversed: phi is a coefficient-preserving bijection of the 560
+      history integrands in all 128 terms, every integrand has the Haar
+      integral of its image, and the mirror family is phi-invariant throughout
+    bears_on: [G14, C2]
+    detail: >-
+      ADR 0032 left the single-contact dressing as "the same phi-type argument
+      applies". Checked: the face carrying both shared links is an end of the
+      dressing's cumulant, ADR 0030's correspondence reverses time, and the
+      straight cluster must be staged from the matching end (one resolvent
+      expansion on the ket side, two on the bra side) before the integrands
+      pair off; staged naively only 52 of 128 terms do, while every total
+      agrees, and that artifact is kept in the certificate. With the matching
+      staging phi (delete the hub private after the hub-end letter, keep the
+      other as the weight-two link, reverse the hub-end link, conjugate) is a
+      bijection with equal coefficients up to the incidence sign in 128 of 128
+      terms, all 560 integrands have the Haar integral of their image over
+      Q(N), and the abstract family, the two-hop family with the two shared
+      links' roles exchanged, is phi-invariant on the same counts (576;
+      17,280 twice; a one-percent sample of 518,400; 384; 2,052 twice), the
+      control on arbitrary wirings failing. Every universality the fourth-order
+      assembly uses now rests on the one finite identity; the general-order
+      statement remains (ADR 0033).
