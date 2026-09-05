@@ -23,9 +23,17 @@ selected vacuum state on all bounded local observables. Its
 finite controls and the algebraic Lean statements. The additive
 [activity-extraction proof](research_notes/G18_WILSON_ACTIVITY_EXTRACTION_20260905.md)
 constructs exact connected, locally vacuum-annihilating transfer activities
-by induced-subsystem partition subtraction. Their weighted operator norm
-and complete excited-space identification remain open; the auxiliary
-parent gap does not determine Wilson excitation energies.
+by induced-subsystem partition subtraction. The subsequent
+[creator-velocity chart](research_notes/G18_WILSON_CARDINALITY_UNITARY_CHART_20260905.md)
+has exponential assigned-support and local-source bounds. Its
+[weighted-activity proof](research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md)
+gives the full norm `sum 2^|X| ||F_X||<=1/2500` uniformly at a root, and
+the actual normalized transfer bound `1/998`, on
+`|u|<=u_star/1252800000`. This isolates the complete finite-volume neutral
+physical charge-odd shell on one volume- and mesh-independent interval.
+The new chart shares the actual vacuum with parent spectral flow; their
+excited actions are not identified. Complete thermodynamic range and
+literal-source-frame identification remain open.
 
 The current research guide also connects the September C2 resolution,
 symbolic all-rank assembly, and fixed-spacing construction to their proofs

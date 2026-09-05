@@ -4,6 +4,148 @@
 # that entire statement. This does not change its mathematically established status.
 schema: results/v1
 results:
+  - id: RESULT:CREATOR_VELOCITY_INVERSION
+    statement: >
+      For exact-support creators W and a C1 path w, the conjugate-linear
+      tangent map T_w b=Q exp(-W) B^dagger exp(W) Omega satisfies
+      norm T_w <= 2 exp(-2(nu-a_nu)) M1(w;nu) when nu>=a_nu.
+      If this bound is below one, b-T_w b=dot w has a unique real-linear
+      Neumann solution and S=B-B^dagger transports the creator vacuum line.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - Finite tensor product of arbitrary Hilbert spaces with unit link vacua and exact excited creator supports.
+      - a_nu is the rooted creator norm with weight exp(nu times support cardinality), M1 its first cardinality moment.
+      - The displayed contraction constant is strictly below one and w(0)=0 for product-vacuum transport.
+    scope: >
+      Generic dimension-free local tangent theorem. Each local anti-Hermitian
+      block has norm exactly norm b_X. The transported vector has an explicit
+      nonzero scalar factor whose phase need not vanish for complex-valued
+      paths. No global similarity-norm bound or excited-spectrum conclusion
+      is used or inferred.
+    source: CITE:WILSON_CARDINALITY_CHART
+    source_section: Section 2, equations (1)-(7)
+    depends_on: []
+    bears_on: [G18, G19]
+    supported_by:
+      - target: RUN:wilson_weighted_activities_2026-09-05
+        scope: Exact finite matrix/support tangent comparisons, real-linear inversion, component and phase controls; not the general Banach-space theorem.
+
+  - id: RESULT:WILSON_CARDINALITY_CHART
+    statement: >
+      The actual symmetric Wilson creators admit a new vacuum-line unitary
+      chart from creator-velocity inversion. A holomorphic doubled system
+      on independent plaquette variables gives norm b<=1/6 and connected
+      generator coefficients norm S_alpha<=|Y_alpha| r^(-n)/3, with
+      r=u_star/4 and |Y_alpha|<=3n+1. The assigned interaction and transported
+      local sources have exponential cardinality and spatial bounds.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - The actual symmetric creator theorem with sigma0>=log(2), rooted norm at most 1/8 and the same uniform coupling disk.
+      - Independent plaquette couplings and compatible induced subsystems, with at most four plaquettes per link and twelve overlap neighbors per plaquette.
+      - For the stated source specialization, the integrated generator norm at weight 1+log(2) is at most 1/2500.
+    scope: >
+      Uniform in volume, mesh and local Hilbert-space dimension. The chart
+      preserves gauge, charge and component symmetries and transports the
+      actual vacuum. It is a different chart from common-filter spectral
+      flow, with no asserted equality on excited vectors. Source conjugation
+      has output cardinality weight log(2), controlled by initial weight
+      log(2)+1/2 with multiplier exp(1/1250). This is source locality, not
+      uniform invertibility or totality of a projected literal-source frame.
+    source: CITE:WILSON_CARDINALITY_CHART
+    source_section: Sections 3-5, holomorphic pair, assigned witnesses and source estimate
+    depends_on: [RESULT:CREATOR_VELOCITY_INVERSION, RESULT:WILSON_SYMMETRIC_CREATORS, RESULT:WILSON_COEFFICIENT_LOCALITY]
+    bears_on: [G18, G19]
+    supported_by:
+      - target: RUN:wilson_weighted_activities_2026-09-05
+        scope: Two finite exact velocity inverses and rational consequences of the stated analytic constants; no machine certification of polydisk or source convergence.
+
+  - id: RESULT:ORDERED_CONTOUR_ACTIVITIES
+    statement: >
+      An ordered contour of bounded local insertions interleaved with
+      tensor-product kinetic contractions has connected disjoint-support
+      activities with rooted norm at weight kappa at most E, provided
+      E=sup_i sum_(Y contains i) exp((kappa+h)|Y|) a_Y<=h and h>0,
+      where a_Y is the integrated insertion norm on assigned support Y.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - Common induced-subsystem insertion coefficients and tensor-product free kinetic contractions, with no inverse kinetic factors.
+      - Finite E as displayed, nonnegative kappa, and h>0 with E<=h.
+      - Insertions on disjoint supports commute; overlapping insertions need not commute.
+    scope: >
+      Dimension-free full-operator theorem. Ordered shuffles factor disjoint
+      components, and a rooted-tree supersolution proves absolute connected
+      convergence. Primitive insertions need not annihilate the vacuum;
+      actual normalized vacuum anchoring is a separate input for the
+      resulting partition activities.
+    source: CITE:WILSON_WEIGHTED_ACTIVITIES
+    source_section: Section 4, primitive contour and operator connected-cluster lemma
+    depends_on: []
+    bears_on: [G18, G19]
+    supported_by:
+      - target: RUN:wilson_weighted_activities_2026-09-05
+        scope: Noncommuting polynomial contour coefficients through degree three and independently checked finite rooted-tree coefficients; not the all-orders operator theorem.
+
+  - id: RESULT:WILSON_WEIGHTED_ACTIVITIES
+    statement: >
+      For the creator-velocity chart of the actual induced Wilson transfers,
+      partition activities are self-adjoint, locally vacuum-annihilating and
+      connected, with sup_(Lambda,tau,i) sum_(X contains i) 2^|X| norm F_X
+      <=1/2500 for real |u|<=u_star/1252800000. This also bounds the norm
+      with weight (5/4)^|X| exp(log(8/5) diameter(X)).
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - The calibrated Wilson tensor model and common creator disk, with mu>=max(gamma tau0/2,log(2)+gamma tau0/4).
+      - s_sp=log(5/4)/gamma, 0<tau<=tau0<=s_sp/4, m=ceil(s_sp/tau), and common induced-subsystem coupling path.
+      - Every subsystem uses its actual Perron eigenvalue of T_X^m and its own creator-velocity chart, with the stated positive Wilson-kernel premise.
+    scope: >
+      Actual full-operator estimate with no representation cutoff, uniform
+      in finite volume and temporal mesh. It proves a sufficient replacement
+      for the weighted-activity route using a new chart. It neither equates
+      these activities with the earlier common-filter activities nor bounds
+      that earlier family's norm. The citation to activity extraction uses
+      its generic partition uniqueness lemma. Source-frame totality and
+      thermodynamic complete Riesz-range identification remain separate.
+    source: CITE:WILSON_WEIGHTED_ACTIVITIES
+    source_section: Sections 1-5, equations (1)-(2) and (17)
+    depends_on: [RESULT:WILSON_CARDINALITY_CHART, RESULT:ORDERED_CONTOUR_ACTIVITIES, RESULT:WILSON_ROOTED_CONTRACTION, RESULT:WILSON_ENDPOINT_EQUATION, CITE:WILSON_ACTIVITY_EXTRACTION]
+    bears_on: [G18, G19]
+    supported_by:
+      - target: RUN:wilson_weighted_activities_2026-09-05
+        scope: Exact scalar arithmetic under the displayed transcendental and analytic majorant premises; finite tensor controls do not certify the uniform Wilson norm theorem.
+
+  - id: RESULT:WILSON_UNIFORM_FINITE_SHELL
+    statement: >
+      The actual Perron-normalized blocked Wilson transfer in the new chart
+      differs from its free product by at most 1/998, below one tenth of
+      the rounded shell margin 1024/15625. On the common interval
+      |u|<=u_star/1252800000 this gives the complete isolated finite-volume
+      neutral physical charge-odd plaquette shell, of rank 3 L^3 on the
+      periodic lattices of the calibrated window theorem.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - All hypotheses of the actual Wilson weighted-activity theorem, including the common mesh and block-time regime.
+      - Fixed N>=3, periodic cubic L>=3, physical neutral one-form sector and charge-odd restriction of the calibrated kinetic-window theorem.
+      - The full-operator close-projection contour argument of the excited-window bridge.
+    scope: >
+      Actual Wilson transfer spectrum, not the auxiliary parent spectrum.
+      The contour includes every finite-volume eigenstate in the isolated
+      band, independently of its overlap with a chosen source. This gives
+      one coupling interval for all admitted volumes and meshes. It does
+      not yet construct the complete thermodynamic Riesz range or a
+      uniformly invertible literal-source frame.
+    source: CITE:WILSON_WEIGHTED_ACTIVITIES
+    source_section: Sections 1 and 5, equation (3) and its physical contour consequence
+    depends_on: [RESULT:WILSON_WEIGHTED_ACTIVITIES, RESULT:WILSON_KINETIC_WINDOW, CITE:WILSON_EXCITED_OPERATOR_BRIDGE]
+    bears_on: [G18, G19]
+    supported_by:
+      - target: RUN:wilson_weighted_activities_2026-09-05
+        scope: Only the exact rational comparison 1/998 below one tenth of the rounded shell margin; full spectral isolation is the cited analytic implication.
+
   - id: RESULT:WILSON_ACTIVITY_EXTRACTION
     statement: >
       Partition Mobius inversion of the vacuum-dressed transfers of all induced

@@ -296,8 +296,10 @@ def render(f: Frontier) -> str:
     w("workhouse verify --only 'h_4^side = A_+'   # one claim, with its numbers")
     w("```")
     w("")
-    w("Everything else in the corpus is **T3: asserted and unchecked**. That is")
-    w("the default, not an accusation.")
+    w("**T3** means the full statement has no dedicated repository machine")
+    w("certification. An analytic result may still be mathematically proved:")
+    w("`ledger/results.yaml` records its status, hypotheses, proof and scoped")
+    w("support separately. Finite checks certify only the statements they check.")
     w("")
 
     w("## 2. What is supported but not proved")

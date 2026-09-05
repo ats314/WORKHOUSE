@@ -66,6 +66,7 @@ _MODULES = (
     "rooted_creator",
     "wilson_creator_parent",
     "wilson_activity_extraction",
+    "wilson_creator_velocity",
 )
 
 for _name in _MODULES:

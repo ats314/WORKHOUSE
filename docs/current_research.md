@@ -41,12 +41,22 @@ algebra, bounded plaquette interactions, and the additive kinetic gap.
 | GNS parent realization | Quasi-local annihilators and the closure of the local parent form realize the actual vacuum, with parent interaction bound `17/128`. | [Parent theorem, §§3–4](../paper/research_notes/G18_WILSON_CREATOR_PARENT_AND_SPECTRAL_FLOW_20260905.md) |
 | Quasi-local vacuum transport | A spectral-flow automorphism gives the selected actual Wilson state on all bounded local observables; it is pure and locally normal. | [Parent theorem, §5](../paper/research_notes/G18_WILSON_CREATOR_PARENT_AND_SPECTRAL_FLOW_20260905.md) |
 | Exact connected transfer activities | Induced-subsystem partition subtraction gives the exact disjoint expansion, self-adjoint local vacuum annihilation, and zero activities on disconnected plaquette supports. | [Activity extraction, §§2–3](../paper/research_notes/G18_WILSON_ACTIVITY_EXTRACTION_20260905.md) |
+| Creator-velocity inversion | A real-linear Neumann inverse gives an exact local anti-Hermitian vacuum-line generator; its phase is explicit. | [Cardinality chart, §2](../paper/research_notes/G18_WILSON_CARDINALITY_UNITARY_CHART_20260905.md) |
+| Wilson chart with support bounds | A holomorphic doubled system and connected active witnesses bound assigned operator supports and transport local sources with cardinality and spatial weights. | [Cardinality chart, §§3–5](../paper/research_notes/G18_WILSON_CARDINALITY_UNITARY_CHART_20260905.md) |
+| Ordered-contour activity bound | Disjoint ordered shuffles and a rooted-tree supersolution turn a primitive interaction bound into a full connected-activity bound without a representation cutoff. | [Weighted activities, §4](../paper/research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md) |
+| Uniform Wilson activity norm | In the new chart, `sup_i sum 2^|X| ||F_X||<=1/2500` on `|u|<=u_star/1252800000`, uniformly in volume and temporal mesh. | [Weighted activities, §§1–5](../paper/research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md) |
+| Complete uniform finite Wilson shell | The actual normalized transfer differs from its free product by at most `1/998`; the complete neutral physical odd shell has rank `3 L^3` on the admitted periodic lattices. | [Weighted activities, §§1, 5](../paper/research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md) |
 | Same-weight obstruction | Arbitrary disjoint active SU(3) plaquette families disprove the unrestricted undamped same-weight estimate. | [Obstruction](../paper/research_notes/G18_SAME_WEIGHT_CREATOR_OBSTRUCTION_20260905.md) |
 
 The fixed-order unitary chart and the convergent nonunitary creator family
 are distinct constructions. The latter resolves nonlinear creator convergence.
 The parent spectral flow now provides a quasi-local vacuum chart without
 requiring convergence of the former's ordered unitary product.
+The creator-velocity chart is a further construction with a direct
+cardinality bound. It has the same actual vacuum line as parent spectral
+flow, but its action on excited vectors and its transfer activities are
+not asserted to be the same. Its full transfer bound supplies the
+previously missing sufficient estimate for uniform finite Wilson isolation.
 The earlier endpoint note's proposed same-weight inequality is historical:
 the successful proof uses the full resolvent to restore a moving support weight.
 
@@ -97,14 +107,33 @@ unit ball, which proves local normality. This is automorphic GNS transport;
 it does not posit a global implementing unitary in the original free
 representation.
 
-The remaining transfer object is now explicit. Apply partition Möbius
-inversion to every induced subsystem's dressed, Perron-normalized transfer,
+The exact transfer object was made explicit by partition Möbius
+inversion of every induced subsystem's dressed, Perron-normalized transfer,
 using the same mesh, block power and spectral-flow convention. Products
 with overlapping support vanish in a formal square-free support algebra;
 disjoint coefficients commute. The resulting partition cumulants reconstruct
 the dressed transfer exactly. The unit vacuum eigenvector cancels their
 vacuum components, while real component factorization cancels disconnected
 supports. This requires no multivariate analytic spectral-flow extension.
+
+The new chart solves `b-T_w b=dot w`, where
+`T_w b=Q exp(-W) B^dagger exp(W) Omega`. Exact support deletion by a
+lowering operator yields a strict rooted contraction. A doubled system
+with independent conjugate creator coordinates makes that inverse
+holomorphic in plaquette couplings. Its coefficient of degree `n` uses
+one connected active witness with at most `3n+1` links. Assigning the
+operator to this full witness footprint preserves its dependence on
+induced-subsystem couplings, even when its exact excited support shrinks.
+
+The actual Perron logarithm has the same connected witness property.
+Combine both unitary legs, magnetic insertions and this scalar logarithm
+in an ordered contour with kinetic contraction factors. Disjoint
+components factor by ordered shuffles; a rooted-tree majorant bounds the
+connected components. At `|u|<=u_star/1252800000` it gives activities
+with weight `2^|X|` and norm at most `1/2500`. Partition uniqueness then
+identifies those components with the activities of the new chart.
+The existing operator bridge gives the actual-transfer bound `1/998`
+and the complete finite-volume physical odd shell on that common interval.
 
 ```mermaid
 flowchart TD
@@ -120,9 +149,18 @@ flowchart TD
   G[Generic creator parent gap] --> Q
   N[NSY spectral-flow theorem] --> Q
   Q --> A[Exact connected transfer activities]
-  A -. input to open task .-> O[Cardinality-weighted operator activity bound]
-  V[Exact vacuum compression] -. input to open task .-> O
-  O -. required before .-> P[Complete excited range and source transport]
+  W --> V[Creator-velocity unitary chart and source bounds]
+  I[Generic tangent inversion] --> V
+  L --> V
+  V --> O[Weighted activities of the new chart]
+  E --> O
+  C --> O
+  R[Generic ordered-contour tree bound] --> O
+  M[Generic partition uniqueness] --> O
+  O --> F[Complete uniform finite Wilson shell]
+  PW[Calibrated physical plaquette window] --> F
+  V -. input to open task .-> P[Complete thermodynamic range and literal-source frame]
+  F -. input to open task .-> P
 ```
 
 Solid arrows display established proof inputs; dashed arrows display
@@ -138,26 +176,22 @@ supremum-over-roots norm, or a bounded infinite-volume creator exponential.
 
 ## The next concrete target
 
-Estimate the now-constructed exact partition activities in the full operator
-norm required by the
-[excited-window operator bridge](../paper/research_notes/G18_EXCITED_WINDOW_OPERATOR_BRIDGE_20260904.md).
-The basic sufficient threshold is
-`eta=sup_i sum_(X contains i)(5/4)^|X| ||F_X||<=1/400`.
-The weight measures support cardinality, which diameter decay of spectral
-flow alone does not control. A useful stronger target replaces the weight
-by `exp((log(5/4)+epsilon)|X|)` for some `epsilon>0`.
+Construct the compatible thermodynamic operator and complete Riesz range
+in the transported representation, and prove uniform invertibility and
+totality of the projected literal-source frame. The new inputs are an
+actual full-transfer bound, a complete finite-volume shell on a common
+interval, and weighted local-source transport. A bounded source conjugation
+does not by itself make its projected sources a complete frame.
 
-Every surviving activity support is connected, so
-`diameter(X)<=|X|-1`. Thus a proved basic cardinality bound supplies a bare
-exponential spatial activity bound. The stronger target supplies an extra
-spatial weight while retaining the entire basic cardinality factor.
-Prove the required source-transformation norms separately. Sharing the
-actual vacuum does not identify the auxiliary parent's excitation spectrum
-with the Wilson transfer spectrum.
+The activity norm already has a cardinality margin: connected supports
+satisfy `diameter(X)<=|X|-1`, so its weight `2^|X|` also controls
+`(5/4)^|X| exp(log(8/5) diameter(X))`. The new source chart has a matching
+cardinality and spatial estimate. These are available inputs for spatially
+rooted contour limits and sharp projected `h, G, S` kernels. The bound on
+the earlier common-filter activities has not been asserted; the new chart
+supplies a sufficient replacement.
 
-After that, establish thermodynamic transport of the complete Riesz range
-and source frame, including source totality and weighted sharp-shell
-matching. Existing scalar vacuum/GNS and unprojected correlation results
+Existing scalar vacuum/GNS and unprojected correlation results
 remain available. The selected full quantum vacuum now agrees with their
 stated equal-time multiplication sector; complete excited-range and
 time-dependent representation identification retain their own obligations.
@@ -176,6 +210,11 @@ workhouse why RESULT:CREATOR_PARENT_GAP
 workhouse why RESULT:WILSON_PARENT_GNS
 workhouse why RESULT:WILSON_VACUUM_SPECTRAL_FLOW
 workhouse why RESULT:WILSON_ACTIVITY_EXTRACTION
+workhouse why RESULT:CREATOR_VELOCITY_INVERSION
+workhouse why RESULT:WILSON_CARDINALITY_CHART
+workhouse why RESULT:ORDERED_CONTOUR_ACTIVITIES
+workhouse why RESULT:WILSON_WEIGHTED_ACTIVITIES
+workhouse why RESULT:WILSON_UNIFORM_FINITE_SHELL
 workhouse why RESULT:WILSON_SAME_WEIGHT_OBSTRUCTION
 workhouse why G18
 make verify
