@@ -6,8 +6,8 @@
 # `ledger/symbols.yaml`: judgement lives in a curated YAML, the join is
 # derived, and validation is mechanical (`tests/test_graph.py`) —
 #
-#   - every `name` must be a theorem in lean/Workhouse/Basic.lean, and every
-#     theorem there must have an entry here;
+#   - every `name` must be a theorem in the lean/Workhouse/ source tree, and
+#     every theorem in that tree must have an entry here;
 #   - every `formalizes` entry must resolve to a catalogue record;
 #   - every `promotes` entry must match exactly one registered invariant
 #     check, by its exact name — and it belongs here only if the theorem,
@@ -23,7 +23,7 @@
 # defensible link exists the lists stay empty — an honest gap beats an
 # invented edge.
 schema: theorems/v1
-source: lean/Workhouse/Basic.lean
+source: lean/Workhouse
 
 theorems:
   - name: rank_law_numerator
@@ -650,4 +650,125 @@ theorems:
     statement: "beta_4 = 3601925923737103752887/70481696720359496343750, the corpus's low-rank table value."
     value: "3601925923737103752887/70481696720359496343750"
     formalizes: [R2]
+    promotes: []
+
+  # VacuumChart: explicit algebraic substeps of the G18 vacuum chart.
+  # These entries do not promote the complete physical bridge or any whole
+  # numerical invariant check, including its negative controls.
+  - name: rankOne_adjoint
+    statement: >
+      Over a commutative star ring, the matrix |u><v| has conjugate transpose
+      |v><u|. An algebraic rank-one identity with no analytic hypotheses.
+    formalizes: [G18]
+    promotes: []
+
+  - name: generator_antihermitian
+    statement: >
+      Over a commutative star ring, S = |chi><Omega| - |Omega><chi| satisfies
+      S^dagger = -S for arbitrary vectors Omega and chi; normalization and
+      orthogonality are not required for this algebraic identity.
+    formalizes: [G18]
+    promotes: []
+
+  - name: generator_vacuum
+    statement: >
+      For finite matrices over a commutative star ring, Omega^* Omega = 1
+      and chi^* Omega = 0 imply S Omega = chi for the explicit generator
+      S = |chi><Omega| - |Omega><chi|.
+    formalizes: [G18]
+    promotes: []
+
+  - name: fixed_vacuum_row
+    statement: >
+      For a finite Hermitian matrix D over a commutative star ring,
+      D Omega = Omega implies Omega^* D = Omega^*: the fixed vacuum
+      column has a fixed adjoint row.
+    formalizes: [G18]
+    promotes: []
+
+  - name: scalar_vacuum_cancellation
+    statement: >
+      For finite matrices over a commutative star ring, D^dagger = D,
+      D Omega = Omega, and chi - D chi = A Omega imply Omega^* A Omega = 0.
+      No Hermiticity of A or orthogonality of chi is needed; the resolvent
+      equation is an explicit premise, not an existence conclusion.
+    formalizes: [G18]
+    promotes: []
+
+  - name: corrected_vacuum_column
+    statement: >
+      For finite matrices over a commutative star ring, Omega^* Omega = 1,
+      chi^* Omega = 0, D Omega = Omega, and chi - D chi = A Omega imply
+      (A + [D,S]) Omega = 0 for S = |chi><Omega| - |Omega><chi|.
+      This algebraic column cancellation does not require Hermitian D or A.
+    formalizes: [G18]
+    promotes: []
+
+  - name: corrected_hermitian
+    statement: >
+      For finite Hermitian matrices D and A over a commutative star ring,
+      F = A + [D,S] is Hermitian for S = |chi><Omega| - |Omega><chi| and
+      arbitrary vectors Omega and chi. No resolvent equation is required.
+    formalizes: [G18]
+    promotes: []
+
+  - name: corrected_vacuum_legs
+    statement: >
+      For finite Hermitian matrices D and A over a commutative star ring,
+      Omega^* Omega = 1, chi^* Omega = 0, D Omega = Omega, and
+      chi - D chi = A Omega imply F P = P F = 0, where
+      P = |Omega><Omega|, S = |chi><Omega| - |Omega><chi|, and F = A + [D,S].
+      This proves both algebraic vacuum legs; it asserts no inverse
+      existence, operator bound, locality, or thermodynamic conclusion.
+    formalizes: [G18]
+    promotes: []
+
+  - name: endpoint_disjoint_cancellation
+    statement: >
+      Over any field, x != 1, y != 1, and x*y != 1 imply
+      (tau/(x*y-1)) * (tau/(x-1) + tau/(y-1) + tau)
+      = (tau/(x-1)) * (tau/(y-1)). This is the rational endpoint
+      disjoint-support cancellation, including the mixed magnetic kick
+      +tau; it assumes no exponential representation or energy spectrum.
+    formalizes: [G18, G19]
+    promotes: []
+
+  # VacuumCompression: the exact algebra supporting the sharper norm estimate.
+  - name: vacuum_projection
+    statement: >
+      For a finite vector over a commutative star ring, Omega^* Omega = 1
+      implies that P = |Omega><Omega| is Hermitian and idempotent:
+      P^dagger = P and P^2 = P. No operator-norm inequality is asserted.
+    formalizes: [G18]
+    promotes: []
+
+  - name: vacuum_corner_zero
+    statement: >
+      For finite matrices over a commutative star ring, D^dagger = D,
+      D Omega = Omega, and chi - D chi = A Omega imply P A P = 0 for
+      P = |Omega><Omega|. Neither normalization nor Hermiticity of A
+      is needed for this algebraic vacuum-corner cancellation.
+    formalizes: [G18]
+    promotes: []
+
+  - name: corrected_eq_sub_vacuum_terms
+    statement: >
+      For finite Hermitian matrices D and A over a commutative star ring,
+      D Omega = Omega and chi - D chi = A Omega imply
+      F = A - A P - P A, where P = |Omega><Omega|,
+      S = |chi><Omega| - |Omega><chi|, and F = A + [D,S].
+      Normalization and orthogonality of chi are unnecessary for the identity.
+    formalizes: [G18]
+    promotes: []
+
+  - name: corrected_eq_compression
+    statement: >
+      For finite Hermitian matrices D and A over a commutative star ring,
+      D Omega = Omega and chi - D chi = A Omega imply
+      F = (I-P) A (I-P), where P = |Omega><Omega|,
+      S = |chi><Omega| - |Omega><chi|, and F = A + [D,S].
+      The equality does not require normalization or orthogonality of chi;
+      operator norms, resolvent existence, and infinite-dimensional
+      extensions are outside this theorem's algebraic scope.
+    formalizes: [G18]
     promotes: []

@@ -10,9 +10,9 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 83 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 96 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 361/361 checks pass.
+**T1/T2 — re-derived here.** 370/370 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -53,6 +53,9 @@ it cannot drift from what the repository actually checks.
 | the third engine over Q(N): closed forms derived, the degree bound | 10/10 |
 | private-link paths as single links; universality history by history | 6/6 |
 | the Wilson transfer matrix at finite temporal step | 3/3 |
+| the blocked Wilson transfer: spectral block, cluster margin, source moments | 3/3 |
+| the local Wilson vacuum chart: exact quadratic repair and support bound | 4/4 |
+| the Wilson vacuum correction is exact orthogonal compression | 2/2 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -151,7 +154,10 @@ settles nothing is excluded however cheap it looks.
 - `G17` (unbounded) PC-2 free-energy stability and the source-radius reduction — settles load-bearing
   - The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction. Lead recorded 2026-08-30, unverified here: the Euclidean counterpart of the needed uniform-in-volume strong-coupling control is classical constructive work (the Osterwalder--Seiler cluster expansion for lattice gauge theory, 1978), which proves convergence and a mass gap at strong coupling uniformly in volume for the EUCLIDEAN theory. The open question G17 actually poses is the Hamiltonian transcription of that bound for this projected sector. Indexing the paper awaits a primary-source read (literature/index.yaml requires INSPIRE-sourced fields, never memory); nothing is promoted by this pointer.
 - `G18` (unbounded) The spectral bridge — settles load-bearing
-  - Volume-uniform overlap of a smeared/dressed T_1^{+-} operator built on the protected carrier with the transfer-matrix spectrum, then multi-plaquette survival of the b_2-fold protected level. The corpus's own Monte Carlo shows the BARE operator carries <4% (2 sigma) of the physical state, so the theorem must live in the smeared basis.
+  - The fixed-spacing Hamiltonian complete band and literal-source frame are constructed in the G18 inserts; the relative-gap continuation gives one coupling domain for every nonzero momentum. The remaining actual-Wilson target is an exact vacuum chart with a volume-uniform operator-activity bound, then thermodynamic Riesz-range/source totality and spatially weighted projected-kernel matching. Finite-volume isolation, a populated Borel window, and unprojected correlation matching are already available with the distinct scopes recorded below.
+  - routes live: Prove convergence and exact realization of the rooted Wilson vacuum chart
+  - routes untried: Transport the complete Wilson Riesz range and source frame to infinite volume
+  - routes done: Construct the local Wilson vacuum chart at every fixed magnetic order
 
 ## 7b. What published work bears on this
 
