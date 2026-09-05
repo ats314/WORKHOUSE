@@ -76,19 +76,36 @@ The [infinite-lattice coefficient limit](paper/research_notes/G18_WILSON_CREATOR
 is analytic on the same disk and has a quantitative local convergence bound.
 Its [sealed run](runs/wilson_rooted_contraction_2026-09-05/README.md) separates
 the analytic proofs from finite exact controls and the scalar Lean theorem.
-Physical state/operator realization and the excited-space bridge remain open.
+
+The [creator parent and spectral-flow theorem](paper/research_notes/G18_WILSON_CREATOR_PARENT_AND_SPECTRAL_FLOW_20260905.md)
+now restores the actual symmetric Wilson vacuum, constructs an auxiliary
+parent with gap at least `247/256`, and obtains its quasi-local vacuum
+transport. The actual finite-volume Wilson states converge on all bounded
+local observables to a pure, locally normal state with an explicit GNS
+identification through that automorphism. The
+[parent run](runs/wilson_creator_parent_2026-09-05/README.md) records the
+independent exact controls and the narrowly scoped Lean identities.
+The [partition activity extraction](paper/research_notes/G18_WILSON_ACTIVITY_EXTRACTION_20260905.md)
+constructs exact connected activities for the dressed transfer, each
+annihilating its local vacuum. The next target is their full operator norm
+weighted by support cardinality and the source-transformation bounds;
+the auxiliary parent gap does not establish the Wilson excited spectrum.
 
 The graph now exposes the individual results and their consequences:
 
 ```bash
 workhouse why RESULT:WILSON_ROOTED_CONTRACTION
 workhouse why RESULT:WILSON_CREATOR_LIMIT
+workhouse why RESULT:CREATOR_PARENT_GAP
+workhouse why RESULT:WILSON_VACUUM_SPECTRAL_FLOW
+workhouse why RESULT:WILSON_ACTIVITY_EXTRACTION
 workhouse why G18
 ```
 
-The first two queries show the mathematical inputs and scoped verification
-evidence. The G18 routes distinguish completed creator convergence from the
-live physical operator realization and the subsequent excited-range transport.
+These queries show the mathematical inputs and scoped verification evidence.
+The G18 routes distinguish completed vacuum transport and exact activity
+extraction from the live weighted-norm estimate and subsequent excited-range
+transport.
 
 The [5 September Wilson-chart continuation](paper/research_notes/G18_WILSON_CHART_RESEARCH_REPORT_20260905.md)
 derives a connected local vacuum chart at every fixed order, with exact

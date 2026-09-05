@@ -10,9 +10,9 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 97 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 100 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 374/374 checks pass.
+**T1/T2 — re-derived here.** 381/381 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -57,6 +57,8 @@ it cannot drift from what the repository actually checks.
 | the local Wilson vacuum chart: exact quadratic repair and support bound | 4/4 |
 | the Wilson vacuum correction is exact orthogonal compression | 2/2 |
 | the resolvent-composed rooted creator map: exact finite controls | 4/4 |
+| the Wilson creator parent: exact finite tensor controls | 5/5 |
+| the Wilson transfer activities: exact partition extraction | 2/2 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -155,10 +157,10 @@ settles nothing is excluded however cheap it looks.
 - `G17` (unbounded) PC-2 free-energy stability and the source-radius reduction — settles load-bearing
   - The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction. Lead recorded 2026-08-30, unverified here: the Euclidean counterpart of the needed uniform-in-volume strong-coupling control is classical constructive work (the Osterwalder--Seiler cluster expansion for lattice gauge theory, 1978), which proves convergence and a mass gap at strong coupling uniformly in volume for the EUCLIDEAN theory. The open question G17 actually poses is the Hamiltonian transcription of that bound for this projected sector. Indexing the paper awaits a primary-source read (literature/index.yaml requires INSPIRE-sourced fields, never memory); nothing is promoted by this pointer.
 - `G18` (unbounded) The spectral bridge — settles load-bearing
-  - The fixed-spacing Hamiltonian complete band and literal-source frame are constructed in the G18 inserts; the relative-gap continuation gives one coupling domain for every nonzero momentum. The remaining actual-Wilson target is an exact vacuum chart with a volume-uniform operator-activity bound, then thermodynamic Riesz-range/source totality and spatially weighted projected-kernel matching. Finite-volume isolation, a populated Borel window, and unprojected correlation matching are already available with the distinct scopes recorded below.
-  - routes live: Realize the convergent creator coordinates in a controlled physical operator chart
+  - The fixed-spacing Hamiltonian complete band and literal-source frame are constructed in the G18 inserts; the relative-gap continuation gives one coupling domain for every nonzero momentum. The actual Wilson vacuum now has an exact quasi-local spectral-flow realization on the full bounded local algebra and exact connected, locally vacuum-annihilating transfer activities from induced-subsystem partition subtraction. The remaining target is a volume-uniform bound on their weighted activity sum and source transformations, then thermodynamic Riesz-range/source totality and spatially weighted projected-kernel matching. Finite-volume isolation, a populated Borel window, and unprojected correlation matching remain distinct inputs.
+  - routes live: Bound the dressed Wilson transfer activities on the full Hilbert space
   - routes untried: Transport the complete Wilson Riesz range and source frame to infinite volume
-  - routes done: Construct the local Wilson vacuum chart at every fixed magnetic order; Prove a common analytic domain and rooted contraction for the Wilson creator coordinates; Stabilize the rooted Taylor coefficients by connected active-plaquette witnesses; Construct the analytic infinite-lattice creator family with a local error bound
+  - routes done: Construct the local Wilson vacuum chart at every fixed magnetic order; Prove a common analytic domain and rooted contraction for the Wilson creator coordinates; Stabilize the rooted Taylor coefficients by connected active-plaquette witnesses; Construct the analytic infinite-lattice creator family with a local error bound; Realize the convergent creator coordinates in a controlled physical operator chart; Extract exact connected locally vacuum-annihilating Wilson transfer activities
   - routes dead: Prove an undamped same-weight Lipschitz bound for arbitrary active plaquette families
 
 ## 7b. What published work bears on this
@@ -170,6 +172,7 @@ published. A paper is T3 until something checks it, same as any document.
 
 | Paper | Bears on | Relation | Status |
 |---|---|---|---|
+| `NSY_2019` | `G18` | supplies-method | verified |
 | `KS_1975` | `R2` | supplies-method | not-yet-obtained |
 | `KSS_1976` | `D_3` | contradicts | not-yet-obtained |
 | `KSS_1976` | `M_GAMMA_4_NUM` | contradicts | not-yet-obtained |
@@ -218,7 +221,7 @@ published. A paper is T3 until something checks it, same as any document.
 | `T_HOOFT_1979` | `G19` | supplies-method | not-yet-obtained |
 | `GINIBRE_1970` | `G19` | confusable | not-yet-obtained |
 
-**11 of 47 edges rest on a source nobody here has read
+**11 of 48 edges rest on a source nobody here has read
 or pinned.** Obtaining and digest-pinning a primary source upgrades its
 edges from assertion to verification — the Hamer 1989 table did exactly
 that for the program's strongest external agreement.
@@ -281,6 +284,7 @@ different things: **in-web** is how many indexed papers cite this one
 | `FLPS_2026` | 0 | 0 (2026-08-21) | pinned |
 | `GINIBRE_1970` | 0 | — | **not yet obtained** |
 | `HAZRA_2026` | 0 | — | **not yet obtained** |
+| `NSY_2019` | 0 | — | **not yet obtained** |
 
 **Next acquisition target, computed: `WILSON_1974`** — 10 in-web
 citations and nobody here has read or pinned it. The ranking surfaces

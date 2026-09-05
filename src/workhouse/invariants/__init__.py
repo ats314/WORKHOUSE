@@ -64,6 +64,8 @@ _MODULES = (
     "wilson_vacuum_chart",
     "wilson_compression",
     "rooted_creator",
+    "wilson_creator_parent",
+    "wilson_activity_extraction",
 )
 
 for _name in _MODULES:

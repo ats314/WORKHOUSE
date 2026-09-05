@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 97
+## T0 — proof-checked — 100
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -95,6 +95,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `channel_resolvent_assembly`
   - lean/Workhouse/Basic.lean:147
+  - `make lean`
+- `commuting_pair_square`
+  - lean/Workhouse/CreatorParent.lean:19
   - `make lean`
 - `cornerDen_cof`
   - lean/Workhouse/Basic.lean:673
@@ -204,6 +207,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `hopping_two`
   - lean/Workhouse/Basic.lean:43
   - `make lean`
+- `idempotent_square_defect`
+  - lean/Workhouse/CreatorParent.lean:10
+  - `make lean`
 - `isolation_condition_assembled`
   - lean/Workhouse/Basic.lean:570
   - `make lean`
@@ -312,8 +318,11 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `width_eq_alpha_add_beta`
   - lean/Workhouse/Basic.lean:247
   - `make lean`
+- `wilson_gap_constant`
+  - lean/Workhouse/CreatorParent.lean:27
+  - `make lean`
 
-## T1 — re-derived exactly — 318
+## T1 — re-derived exactly — 325
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1028,6 +1037,31 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the three plaquette orientations at k = 0 carry an irreducible representation of the cubic group (the T1 triplet), so every cubic-covariant effective Hamiltonian is a scalar at Gamma at every order`
   - src/workhouse/invariants/gamma_isolation.py:109 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
   - `workhouse verify --only 'the three plaquette orientations at k = 0 carry an irreducible representation of the cubic group (the T1 triplet), so every cubic-covariant effective Hamiltonian is a scalar at Gamma at every order'`
+**the Wilson creator parent: exact finite tensor controls**
+
+- `20 finite idempotent singular bounds and 43 overlap commutator bounds retain orthogonal support blocks`
+  - src/workhouse/invariants/wilson_creator_parent.py:85 · G18; paper/research_notes/G18_WILSON_CREATOR_PARENT_AND_SPECTRAL_FLOW_20260905.md section 2 equations (2)-(4); exact binary and vector-valued ternary examples
+  - `workhouse verify --only '20 finite idempotent singular bounds and 43 overlap commutator bounds retain orthogonal support blocks'`
+- `81 exact rational PSD congruences independently certify six finite parent gap and block controls`
+  - src/workhouse/invariants/wilson_creator_parent.py:66 · G18; paper/research_notes/G18_WILSON_CREATOR_PARENT_AND_SPECTRAL_FLOW_20260905.md section 2; explicit rational congruences, no numerical eigenvalues
+  - `workhouse verify --only '81 exact rational PSD congruences independently certify six finite parent gap and block controls'`
+- `exact negative controls reject omitted parent quadratic terms and a uniform global creator similarity bound`
+  - src/workhouse/invariants/wilson_creator_parent.py:126 · G18; paper/research_notes/G18_WILSON_CREATOR_PARENT_AND_SPECTRAL_FLOW_20260905.md sections 1 and 2; six finite witnesses and a factorized one-link family
+  - `workhouse verify --only 'exact negative controls reject omitted parent quadratic terms and a uniform global creator similarity bound'`
+- `six exact finite tensor creator parents have commuting idempotents and a one-dimensional vacuum`
+  - src/workhouse/invariants/wilson_creator_parent.py:44 · G18; paper/research_notes/G18_WILSON_CREATOR_PARENT_AND_SPECTRAL_FLOW_20260905.md section 2; finite dimensions 8, 16, 16, 8, 27 and 12
+  - `workhouse verify --only 'six exact finite tensor creator parents have commuting idempotents and a one-dimensional vacuum'`
+- `the stated creator majorants evaluate exactly to gap 247/256 and cover bounds 5/24, 5/9 and 55/72`
+  - src/workhouse/invariants/wilson_creator_parent.py:104 · G18; paper/research_notes/G18_WILSON_CREATOR_PARENT_AND_SPECTRAL_FLOW_20260905.md sections 2 and 3; scalar sufficient-bound arithmetic only
+  - `workhouse verify --only 'the stated creator majorants evaluate exactly to gap 247/256 and cover bounds 5/24, 5/9 and 55/72'`
+**the Wilson transfer activities: exact partition extraction**
+
+- `partition cumulants reconstruct 32 exact induced tensor transfers and give 30 vacuum-anchored activities with noncommuting overlaps`
+  - src/workhouse/invariants/wilson_activity_extraction.py:12 · G18; paper/research_notes/G18_WILSON_ACTIVITY_EXTRACTION_20260905.md section 2; two positive four-link rational congruence models
+  - `workhouse verify --only 'partition cumulants reconstruct 32 exact induced tensor transfers and give 30 vacuum-anchored activities with noncommuting overlaps'`
+- `vacuum fixing without component factorization leaves a disconnected two-link activity of exactly 1/12`
+  - src/workhouse/invariants/wilson_activity_extraction.py:42 · G18; paper/research_notes/G18_WILSON_ACTIVITY_EXTRACTION_20260905.md section 2; missing-factorization negative control
+  - `workhouse verify --only 'vacuum fixing without component factorization leaves a disconnected two-link activity of exactly 1/12'`
 **the Wilson transfer matrix at finite temporal step**
 
 - `the exact SU(3) Wilson multipliers through eps^3 from Cartan Gaussian moments with the Weyl Vandermonde: lambda_3 = 1 - 2/3 eps + 1/36 eps^2 + 13/648 eps^3, lambda_8 = 1 - 3/2 eps + 11/16 eps^2 + 1/96 eps^3, lambda_6 = 1 - 5/3 eps + 65/72 eps^2 - 55/1296 eps^3; the calibrated clock is tau = eps + 7/24 eps^2 + 13/144 eps^3 and the calibrated energies k(8) = 3/2 - 5/96 eps^2, k(6) = 5/3 - 5/72 eps^2`
