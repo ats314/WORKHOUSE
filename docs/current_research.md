@@ -6,6 +6,11 @@ the [result register](../ledger/results.yaml) supplies precise analytic
 statements, hypotheses, proof sources, and dependencies. The dated manuscripts
 and sealed runs retain the claims and open questions of their own stage.
 
+The governing objective is the Clay Yang-Mills existence and mass gap
+problem. Read the [goal and remaining obligations](research_goal.md) for
+the connection between this construction, physical spectral control and
+the spatial continuum target.
+
 ## Established starting point
 
 The [September C2 derivation](decisions/0024-the-corner-cluster-from-a-third-implementation-and-the-ledger-that-was-here.md)
@@ -46,6 +51,7 @@ algebra, bounded plaquette interactions, and the additive kinetic gap.
 | Ordered-contour activity bound | Disjoint ordered shuffles and a rooted-tree supersolution turn a primitive interaction bound into a full connected-activity bound without a representation cutoff. | [Weighted activities, §4](../paper/research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md) |
 | Uniform Wilson activity norm | In the new chart, `sup_i sum 2^|X| ||F_X||<=1/2500` on `|u|<=u_star/1252800000`, uniformly in volume and temporal mesh. | [Weighted activities, §§1–5](../paper/research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md) |
 | Complete uniform finite Wilson shell | The actual normalized transfer differs from its free product by at most `1/998`; the complete neutral physical odd shell has rank `3 L^3` on the admitted periodic lattices. | [Weighted activities, §§1, 5](../paper/research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md) |
+| Complete infinite-volume physical Wilson band | The actual transfer has a vacuum gap; its entire isolated odd band is present in the Euclidean reconstruction and is spanned by the projected literal sources, with Gram between `9/16` and `81/64` on one common interval. | [Complete band and source theorem](../paper/research_notes/G18_WILSON_INFINITE_VOLUME_PHYSICAL_BAND_20260905.md) |
 | Same-weight obstruction | Arbitrary disjoint active SU(3) plaquette families disprove the unrestricted undamped same-weight estimate. | [Obstruction](../paper/research_notes/G18_SAME_WEIGHT_CREATOR_OBSTRUCTION_20260905.md) |
 
 The fixed-order unitary chart and the convergent nonunitary creator family
@@ -159,8 +165,11 @@ flowchart TD
   M[Generic partition uniqueness] --> O
   O --> F[Complete uniform finite Wilson shell]
   PW[Calibrated physical plaquette window] --> F
-  V -. input to open task .-> P[Complete thermodynamic range and literal-source frame]
-  F -. input to open task .-> P
+  V --> P[Actual infinite-volume transfer and complete physical source frame]
+  O --> P
+  PW --> P
+  P -. scale control required .-> CL[Nontrivial continuum theory with positive physical mass gap]
+  RG[Controlled trajectory with clock and source normalization] -. open input .-> CL
 ```
 
 Solid arrows display established proof inputs; dashed arrows display
@@ -176,12 +185,24 @@ supremum-over-roots norm, or a bounded infinite-volume creator exponential.
 
 ## The next concrete target
 
-Construct the compatible thermodynamic operator and complete Riesz range
-in the transported representation, and prove uniform invertibility and
-totality of the projected literal-source frame. The new inputs are an
-actual full-transfer bound, a complete finite-volume shell on a common
-interval, and weighted local-source transport. A bounded source conjugation
-does not by itself make its projected sources a complete frame.
+The actual infinite-volume transfer, complete Riesz band and onto literal-
+source frame are now established. Every surviving anchored activity meets
+the finite excited support, giving an absolutely convergent strong operator
+limit. Source labels retained through the local commutator expansion give
+a bound on the entire synthesis operator, not just its separate columns.
+A close-projection inverse proves completeness. Reflection-positive history
+completion then contains the entire band, identifying the actual OS and
+quantum GNS spectral objects without assuming equality of their full
+high-energy spaces.
+
+The central next target is a valid one-step scale comparison for actual
+effective Wilson measures or physical transfer forms, with the coarse
+metric, fluctuation modes and clock specified. The known small-u endpoint
+must be connected to the large-u trajectory of the continuum coordinate
+u=g_H^-4. Work backward as well from finite positive physical masses and
+nonvanishing renormalized source measures, to specify what the intermediate
+scale description must preserve. The [goal map](research_goal.md) states
+the proof obligations; G19 retains failed routes and their exact reasons.
 
 The activity norm already has a cardinality margin: connected supports
 satisfy `diameter(X)<=|X|-1`, so its weight `2^|X|` also controls
@@ -191,13 +212,13 @@ rooted contour limits and sharp projected `h, G, S` kernels. The bound on
 the earlier common-filter activities has not been asserted; the new chart
 supplies a sufficient replacement.
 
-Existing scalar vacuum/GNS and unprojected correlation results
-remain available. The selected full quantum vacuum now agrees with their
-stated equal-time multiplication sector; complete excited-range and
-time-dependent representation identification retain their own obligations.
-G18 stays open.
-Temporal Wilson matching and the spatial continuum passage retain their
-own hypotheses and G19 routes.
+Existing scalar vacuum and unprojected correlation results remain inputs.
+The new transfer construction now also identifies all finite multi-time
+bounded local correlations and the full physical isolated band. G18 remains
+open for spatially weighted sharp-kernel matching and its internal-sheet
+questions. Temporal matching and spatial cutoff removal have distinct
+energy-domain and scale hypotheses; neither follows just from a gap in
+electric-time units at fixed spatial spacing.
 
 ## Reproduce and continue
 

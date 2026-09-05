@@ -19,6 +19,16 @@ prose confidence, and which model wrote it are not evidence.
 
 ## What the job is
 
+The governing objective is the Clay Yang-Mills existence and mass gap problem.
+Use the [research goal and obligations](docs/research_goal.md) to select work.
+Each iteration must name the obligation it advances and the mathematical
+implication that connects its result to that objective. Pursue substantive
+end-to-end arguments; do not use the number of solved lemmas or checks as a
+proxy for progress. Accept valid novel proofs under their explicit hypotheses.
+When a route fails, identify and repair the exact failed step or retain its
+strongest surviving statement. Report current inability to progress honestly
+without claiming that all future mathematical directions are impossible.
+
 Not to summarize the corpus. To **continue the research program**: reconstruct
 the strongest defensible structure, find what is actually unresolved, try to
 break what looks solid, and derive new results where the evidence supports them.

@@ -4,6 +4,54 @@
 # that entire statement. This does not change its mathematically established status.
 schema: results/v1
 results:
+  - id: RESULT:WILSON_INFINITE_PHYSICAL_BAND
+    statement: >
+      The actual Perron-normalized Wilson transfer has a common open-box and
+      centered-periodic strong limit in the transported product representation.
+      It is a positive contraction fixing the vacuum, differs from the free
+      product by at most 1/998, and has nonvacuum norm at most 4/5+1/998.
+      On |u|<=u_star/(10022400000 N), the complete infinite-volume physical
+      odd band is isomorphic to ell2(Z3) tensor C3. The projected literal
+      plaquette-source synthesis is onto this entire band, with Gram greater
+      than (9/16)I and at most (81/64)I. Its actual Euclidean OS band and
+      quantum GNS band coincide, intertwining the physical transfer and sources.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - All calibrated kinetic, actual positive Wilson-kernel, incidence and common-disk hypotheses of the weighted-activity and cardinality-chart theorems.
+      - Fixed SU(N) with N>=3 and fixed spatial lattice spacing; compatible induced open boxes or centered periodic exhaustions with the same local data.
+      - 0<tau<=tau0<=log(5/4)/(4 gamma), m=ceil(log(5/4)/(gamma tau)), and the full neutral physical odd free-window premise.
+      - gamma=C_F/2=(N^2-1)/(4N) is the exact calibrated fundamental-link energy, not an arbitrary smaller gap lower bound.
+      - Literal odd sources O_p=(chi_p-chi_bar_p)/sqrt(2), with free orthonormal plaquette vectors and norm at most sqrt(2)N.
+    scope: >
+      An actual infinite-volume Wilson construction, uniform over admitted
+      temporal meshes and without a representation cutoff. Anchored activities
+      converge uniformly on each local Hilbert-space unit ball. The tagged
+      source norm controls the entire synthesis operator; close projections
+      and a Neumann inverse prove totality in infinite dimension. Reflection-
+      positive history completion contains the whole band by selective source
+      cyclicity. Fine time steps are the positive mth root of the block.
+      No global equality of the OS and full quantum high-energy spaces,
+      global transfer injectivity, spatial continuum limit or all-group
+      extension is asserted. The positive energy gap is in electric-time units.
+    source: CITE:WILSON_INFINITE_PHYSICAL_BAND
+    source_section: Complete theorem and proof, operator limit, tagged synthesis, close projection and selective OS reconstruction
+    depends_on: [RESULT:WILSON_WEIGHTED_ACTIVITIES, RESULT:WILSON_CARDINALITY_CHART, RESULT:WILSON_KINETIC_WINDOW]
+    bears_on: [G18, G19]
+    supported_by:
+      - target: RUN:wilson_physical_band_2026-09-05
+        scope: Exact finite projection, synthesis, Gram and activity controls and rational margins; the infinite-dimensional operator, source and OS conclusions are the analytic proof.
+      - target: CHK:the-complete-wilson-band-finite-source-a-eadc07:an-exact-rational-rotated-band-has-a-dir-739ab0
+        scope: A finite rotated spectral island checks direct rotation and both source-inverse identities; infinite-dimensional totality is proved analytically.
+      - target: CHK:the-complete-wilson-band-finite-source-a-eadc07:a-tagged-centered-finite-source-family-o-eeb18c
+        scope: A finite centered tensor family checks the tagged Gram-Schur mechanism and an uncentered negative control, not the general source estimate.
+      - target: CHK:the-complete-wilson-band-finite-source-a-eadc07:a-noncommuting-four-link-transfer-agrees-b57f0b
+        scope: Finite exact activity reconstruction and local tail certificates check the exhaustion mechanism, not the infinite operator limit.
+      - target: CHK:the-complete-wilson-band-finite-source-a-eadc07:finite-source-controls-distinguish-a-gra-b6c9e2
+        scope: Exact finite witnesses distinguish a positive Gram and small source columns from complete synthesis; the infinite counterexample is an analytic argument.
+      - target: CHK:the-complete-wilson-band-finite-source-a-eadc07:exact-source-and-gap-margins-yield-a-gra-0bda7c
+        scope: Rational consequences of the stated source and projection estimates give the displayed Gram and inverse margins; their analytic premises remain explicit.
+
   - id: RESULT:CREATOR_VELOCITY_INVERSION
     statement: >
       For exact-support creators W and a C1 path w, the conjugate-linear
@@ -136,8 +184,10 @@ results:
       The contour includes every finite-volume eigenstate in the isolated
       band, independently of its overlap with a chosen source. This gives
       one coupling interval for all admitted volumes and meshes. It does
-      not yet construct the complete thermodynamic Riesz range or a
-      uniformly invertible literal-source frame.
+      not itself construct the complete thermodynamic Riesz range or a
+      uniformly invertible literal-source frame; those follow in
+      RESULT:WILSON_INFINITE_PHYSICAL_BAND from additional source and
+      operator-limit arguments.
     source: CITE:WILSON_WEIGHTED_ACTIVITIES
     source_section: Sections 1 and 5, equation (3) and its physical contour consequence
     depends_on: [RESULT:WILSON_WEIGHTED_ACTIVITIES, RESULT:WILSON_KINETIC_WINDOW, CITE:WILSON_EXCITED_OPERATOR_BRIDGE]

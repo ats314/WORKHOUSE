@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 100 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 387/387 checks pass.
+**T1/T2 — re-derived here.** 392/392 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -60,6 +60,7 @@ it cannot drift from what the repository actually checks.
 | the Wilson creator parent: exact finite tensor controls | 5/5 |
 | the Wilson transfer activities: exact partition extraction | 2/2 |
 | the Wilson weighted chart: exact creator velocity controls | 6/6 |
+| the complete Wilson band: finite source and projection controls | 5/5 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -160,9 +161,9 @@ settles nothing is excluded however cheap it looks.
 - `G17` (unbounded) PC-2 free-energy stability and the source-radius reduction — settles load-bearing
   - The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction. Lead recorded 2026-08-30, unverified here: the Euclidean counterpart of the needed uniform-in-volume strong-coupling control is classical constructive work (the Osterwalder--Seiler cluster expansion for lattice gauge theory, 1978), which proves convergence and a mass gap at strong coupling uniformly in volume for the EUCLIDEAN theory. The open question G17 actually poses is the Hamiltonian transcription of that bound for this projected sector. Indexing the paper awaits a primary-source read (literature/index.yaml requires INSPIRE-sourced fields, never memory); nothing is promoted by this pointer.
 - `G18` (unbounded) The spectral bridge — settles load-bearing
-  - The fixed-spacing Hamiltonian complete band and literal-source frame are constructed in the G18 inserts; the relative-gap continuation gives one coupling domain for every nonzero momentum. The actual Wilson vacuum now has an exact quasi-local spectral-flow realization on the full bounded local algebra and exact connected, locally vacuum-annihilating transfer activities from induced-subsystem partition subtraction. A new creator-velocity chart now gives weighted local-source transport, an actual activity norm with weight 2^|X| at most 1/2500, and a normalized-transfer norm bound 1/998 on one interval uniform in volume and temporal mesh. It isolates the complete finite physical odd shell. The remaining target is thermodynamic Riesz-range/source totality and spatially weighted projected-kernel matching. A complete finite band, a populated Borel window, and unprojected correlation matching remain distinct inputs to that task.
-  - routes live: Transport the complete Wilson Riesz range and source frame to infinite volume
-  - routes done: Construct the local Wilson vacuum chart at every fixed magnetic order; Prove a common analytic domain and rooted contraction for the Wilson creator coordinates; Stabilize the rooted Taylor coefficients by connected active-plaquette witnesses; Construct the analytic infinite-lattice creator family with a local error bound; Realize the convergent creator coordinates in a controlled physical operator chart; Extract exact connected locally vacuum-annihilating Wilson transfer activities; Bound the dressed Wilson transfer activities on the full Hilbert space; Construct a Wilson vacuum chart with exponential assigned-support and source bounds; Isolate the complete finite physical Wilson shell on a common interval
+  - The fixed-spacing Hamiltonian complete band and literal-source frame are constructed in the G18 inserts; the relative-gap continuation gives one coupling domain for every nonzero momentum. The actual Wilson vacuum now has an exact quasi-local spectral-flow realization on the full bounded local algebra and exact connected, locally vacuum-annihilating transfer activities from induced-subsystem partition subtraction. A new creator-velocity chart now gives weighted local-source transport, an actual activity norm with weight 2^|X| at most 1/2500, and a normalized-transfer norm bound 1/998 on one interval uniform in volume and temporal mesh. It isolates the complete finite physical odd shell. The subsequent infinite-volume theorem constructs the actual strong transfer limit, its vacuum gap and complete physical odd Riesz range. On |u|<=u_star/(10022400000 N), the literal-source synthesis is onto that entire range with Gram between 9/16 and 81/64. The same band is identified in the actual reflection-positive Wilson reconstruction. Spatially weighted projected-kernel matching remains separate.
+  - routes live: Match spatially weighted sharp Wilson band kernels and their physical clock
+  - routes done: Construct the local Wilson vacuum chart at every fixed magnetic order; Prove a common analytic domain and rooted contraction for the Wilson creator coordinates; Stabilize the rooted Taylor coefficients by connected active-plaquette witnesses; Construct the analytic infinite-lattice creator family with a local error bound; Realize the convergent creator coordinates in a controlled physical operator chart; Extract exact connected locally vacuum-annihilating Wilson transfer activities; Bound the dressed Wilson transfer activities on the full Hilbert space; Construct a Wilson vacuum chart with exponential assigned-support and source bounds; Isolate the complete finite physical Wilson shell on a common interval; Transport the complete Wilson Riesz range and source frame to infinite volume
   - routes dead: Prove an undamped same-weight Lipschitz bound for arbitrary active plaquette families
 
 ## 7b. What published work bears on this

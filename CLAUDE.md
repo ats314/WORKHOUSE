@@ -128,6 +128,11 @@ forbidden names (`m_4`) and names coined here that the corpus never uses
 
 ## Complete the result, then land your own green work
 
+For each research iteration, include its consequence for the governing
+[Clay objective](docs/research_goal.md): which obligation changed and what
+the new result enables. Record mathematical scope and repository landing
+status separately. A count of successful checks cannot replace that account.
+
 A research result is not finished while it lives only in a response, run
 directory, or branch. Before handoff:
 

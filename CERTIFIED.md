@@ -322,7 +322,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/CreatorParent.lean:27
   - `make lean`
 
-## T1 — re-derived exactly — 331
+## T1 — re-derived exactly — 336
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1168,6 +1168,23 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the unsigned-incidence characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3`
   - src/workhouse/invariants/charge_even.py:647 · PUBLICATION rev5 Thm. (unsigned-incidence Bloch cubic)
   - `workhouse verify --only 'the unsigned-incidence characteristic polynomial is mu(mu - p)^2 = 4 a_1 a_2 a_3'`
+**the complete Wilson band: finite source and projection controls**
+
+- `a noncommuting four-link transfer agrees with disjoint-activity exhaustion and local tail certificates`
+  - src/workhouse/invariants/wilson_physical_band.py:55 · paper/research_notes/G18_WILSON_INFINITE_VOLUME_PHYSICAL_BAND_20260905.md section 2.2; exact finite exhaustion mechanism
+  - `workhouse verify --only 'a noncommuting four-link transfer agrees with disjoint-activity exhaustion and local tail certificates'`
+- `a tagged centered finite source family obeys the Gram-Schur bound and removing centering fails`
+  - src/workhouse/invariants/wilson_physical_band.py:35 · paper/research_notes/G18_WILSON_INFINITE_VOLUME_PHYSICAL_BAND_20260905.md section 4; ten-site sparse tensor vectors
+  - `workhouse verify --only 'a tagged centered finite source family obeys the Gram-Schur bound and removing centering fails'`
+- `an exact rational rotated band has a direct rotation and a two-sided projected-source inverse`
+  - src/workhouse/invariants/wilson_physical_band.py:12 · paper/research_notes/G18_WILSON_INFINITE_VOLUME_PHYSICAL_BAND_20260905.md section 5; finite four-dimensional operator algebra
+  - `workhouse verify --only 'an exact rational rotated band has a direct rotation and a two-sided projected-source inverse'`
+- `exact source and gap margins yield a Gram lower bound above 9/16 and inverse norm below 6/5`
+  - src/workhouse/invariants/wilson_physical_band.py:100 · paper/research_notes/G18_WILSON_INFINITE_VOLUME_PHYSICAL_BAND_20260905.md sections 3-5; rational implications
+  - `workhouse verify --only 'exact source and gap margins yield a Gram lower bound above 9/16 and inverse norm below 6/5'`
+- `finite source controls distinguish a Gram lower bound, small columns and complete synthesis`
+  - src/workhouse/invariants/wilson_physical_band.py:82 · paper/research_notes/G18_WILSON_INFINITE_VOLUME_PHYSICAL_BAND_20260905.md section 5; completeness negative controls
+  - `workhouse verify --only 'finite source controls distinguish a Gram lower bound, small columns and complete synthesis'`
 **the electric shell, and what isolates it**
 
 - `below 5 C_F/2 the trivial-flux electric spectrum is exactly 0 and 2 C_F`
