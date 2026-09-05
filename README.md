@@ -142,6 +142,18 @@ handles periodic original-link Hodge and Bianchi constraints with the same
 box-count uniformity, retaining all torus harmonic modes. Uniform nonlinear
 quantum-form bounds and actual local history/source maps remain open.
 
+The [global vertical comparison](paper/research_notes/G19_WILSON_GLOBAL_VERTICAL_BARRIER_20260905.md) now controls
+every coarse SU(N) holonomy for the actual two-face blocks, retaining both
+the full fiber fast penalty and its coarse potential. The
+[ground-bundle form](paper/research_notes/G19_WILSON_GROUND_BUNDLE_RELATIVE_FORM_20260905.md) proves a relative
+`O(g^2)` magnetic correction on a fixed near-identity chart, with the actual
+coarse kinetic metric retained. For the actual adjacent strip, the
+[full-vacuum complement theorem](paper/research_notes/G19_WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT_20260905.md) proves the
+entire physical fast-compression floor `(sqrt(3)+sqrt(5))sqrt(u)+o(sqrt(u))`
+and realizes the closed Schur form at each fixed large u. Uniform
+interacting-volume bounds, coarse matching and source/history identification
+remain to be controlled.
+
 The next scale comparison also has a sharper target.
 [Exact Gaussian histories](paper/research_notes/G19_GAUSSIAN_OS_HISTORY_OBSERVABILITY_20260905.md)
 can retain all fine frequencies despite fewer equal-time coordinates. A
@@ -167,6 +179,9 @@ workhouse why RESULT:WILSON_CREATOR_LIMIT
 workhouse why RESULT:CREATOR_PARENT_GAP
 workhouse why RESULT:WILSON_VACUUM_SPECTRAL_FLOW
 workhouse why RESULT:WILSON_ACTIVITY_EXTRACTION
+workhouse why RESULT:WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT
+workhouse why RESULT:WILSON_GLOBAL_VERTICAL_BARRIER
+workhouse why RESULT:WILSON_GROUND_BUNDLE_RELATIVE_FORM
 workhouse why RESULT:OS_HISTORY_BLOCK_INTERTWINER
 workhouse why RESULT:WILSON_TWO_SQUARE_PHYSICAL_SHELLS
 workhouse why RESULT:CREATOR_VELOCITY_INVERSION
@@ -315,8 +330,13 @@ three generated views, and their staleness tests will demand the regeneration
 at the next `make check` anyway. Cheaper to do it now than to discover it
 after the full run.
 
-If the statement is pure rational or polynomial algebra, prefer promoting it to
-T0 in `lean/Workhouse/Basic.lean` instead.
+If the statement is pure rational or polynomial algebra, consider formalizing
+it in an appropriate `lean/Workhouse/` module. Add its import to
+`lean/Workhouse.lean` and register every theorem, including helpers, in
+`ledger/theorems.yaml` before regenerating the views. Use scoped
+`supported_by` edges for partial mathematical inputs; a `promotes` entry is
+valid only when the formal theorem proves the entire named check. Run the
+strict Lean build as well as the theorem-register and graph checks.
 
 ## What counts as done
 

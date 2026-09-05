@@ -66,6 +66,9 @@ algebra, bounded plaquette interactions, and the additive kinetic gap.
 | Exact Gaussian OS observation | The full history range is the Fock space over the visible frequency subspaces. Regular Euclidean sampling retains the same frequencies; the explicit physical strip examples distinguish this range from a configuration fiber. | [OS observability and invariant scope](../paper/research_notes/G19_GAUSSIAN_OS_HISTORY_OBSERVABILITY_20260905.md) |
 | Exact Gaussian memory and spectral comparison | Keeping both the static Schur potential and induced kinetic mass gives `f mu/(f+mu)<=lambda<=mu`, with no assumption of small interface coupling. The exact marginal may retain every fine frequency. | [Memory and frequency theorem, §5](../paper/research_notes/G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md) |
 | Closed-form physical energy comparison | Under the exact form and coarse-identification hypotheses, the full gap obeys `Delta_fine >= (Delta_coarse^-1+f^-1)^-1`; graph sources cover the entire window `[0,E]`, with lower frame bound `1-(E/f)^2`. Summable inverse fast energies suffice to iterate. The uniform Wilson hypotheses remain open. | [Form domains, complete gap and frame, §§1-7](../paper/research_notes/G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md) |
+| Global actual Wilson vertical barrier | Every full fiber level obeys the cap `min(e_j,epsilon_N u)` and an affine coarse-potential bound on all SU(N). The fast penalty retains the coarse energy cost; a global conditional gap is not asserted. | [Global comparison, §§1-8](../paper/research_notes/G19_WILSON_GLOBAL_VERTICAL_BARRIER_20260905.md) |
+| Actual ground-bundle relative form | Normalized quantum-ground derivatives and the exact horizontal connection give a local projected coarse form with relative `O(g^2)` magnetic error. The original coarse metric and Haar measure remain explicit. | [Ground-bundle theorem, §§1-5](../paper/research_notes/G19_WILSON_GROUND_BUNDLE_RELATIVE_FORM_20260905.md) |
+| Actual full-vacuum block complement | The entire physical fiber-ground complement of the adjacent strip has bottom `(sqrt(3)+sqrt(5))sqrt(u)+o(sqrt(u))` above the true vacuum. A bounded fixed-u Schur lift and complete low-window graph frame are realized; interacting-volume constants remain open. | [Actual complement and Schur realization, §§1-6](../paper/research_notes/G19_WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT_20260905.md) |
 | Same-weight obstruction | Arbitrary disjoint active SU(3) plaquette families disprove the unrestricted undamped same-weight estimate. | [Obstruction](../paper/research_notes/G18_SAME_WEIGHT_CREATOR_OBSTRUCTION_20260905.md) |
 
 The fixed-order unitary chart and the convergent nonunitary creator family
@@ -187,6 +190,11 @@ flowchart TD
   GS[Exact physical two-square Gauss symmetry] --> BF[Full coupled block gap and physical source frame]
   OS[Exact OS-history blocking theorem] -. actual block map required .-> RG[Physical scale comparison with clock and source normalization]
   VF -. physical form comparison required .-> RG
+  VB[Global two-face vertical barrier] -. uniform nonlinear comparison required .-> RG
+  GB[Actual local ground-bundle form] --> AF[Actual strip full-vacuum complement and Schur form]
+  BF --> AF
+  SC --> AF
+  AF -. interacting-volume and coarse/source comparison required .-> RG
   HC[Planar and three-dimensional harmonic interfaces] -. nonlinear quantum form bound required .-> RG
   SC[Closed-form Schur gap and complete graph frame] -. actual coarse and literal source matching required .-> RG
   OB[Exact Gaussian history observability] -. nonlinear physical history map required .-> RG
@@ -249,6 +257,21 @@ empty. The existing OS intertwiner is unchanged, but its complement must
 be computed from the actual map and observable algebra rather than counted
 from discarded equal-time coordinates.
 
+The [global nonlinear vertical estimate](../paper/research_notes/G19_WILSON_GLOBAL_VERTICAL_BARRIER_20260905.md)
+now removes the small-coarse restriction for the actual two-face blocks.
+It bounds the whole counted fiber spectrum and retains a scalar Wilson
+potential together with the full fast penalty. The
+[ground-bundle comparison](../paper/research_notes/G19_WILSON_GROUND_BUNDLE_RELATIVE_FORM_20260905.md) controls the
+actual projected coarse form on a fixed chart with a relative `O(g^2)`
+magnetic correction. This has no additive error per disjoint copy.
+The [actual strip complement](../paper/research_notes/G19_WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT_20260905.md) now also
+controls the entire physical Q compression after true full-vacuum
+subtraction and derives its exact closed Schur factorization. Its first
+fast channel is mixed, with energy `sqrt(3)+sqrt(5)` in units of
+`sqrt(u)`. The lift is bounded at fixed u; uniform surrounding
+interactions, many-block vacuum adaptation and comparison with a prescribed
+coarse theory remain open.
+
 The retained projection must also control the actual vacuum mismatch.
 Even independent gapped qubits have an exponentially deteriorating raw
 reference fast compression; local vacuum dressing restores the uniform
@@ -263,8 +286,8 @@ dressing `U_j`, and a full coarse gap for the normalized operator with
 `M_j=I+U_j*U_j` retained. In common physical units a finite sum of `1/f_j`
 then preserves a positive gap. Establish these Wilson hypotheses uniformly
 in the block family, with changing ground energy, surrounding plaquettes
-and the established three-dimensional harmonic split retained. Its nonlinear
-quantum realization and source/locality identification still require proof.
+and the established three-dimensional harmonic split retained. Uniform
+interacting quantum realization and source/locality identification still require proof.
 Control the generated memory and renormalized source synthesis on the selected physical
 energy band, then match to the established infrared transfer with a
 summable physical-energy error budget. Literal face sources carry a
@@ -320,6 +343,9 @@ workhouse why RESULT:WILSON_VERTICAL_FAST_ENERGY
 workhouse why RESULT:WILSON_TWO_SQUARE_PHYSICAL_SHELLS
 workhouse why RESULT:WILSON_STRIP_BO_FIRST_TERM
 workhouse why RESULT:WILSON_TWO_STRIP_PHYSICAL_SPLITTING
+workhouse why RESULT:WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT
+workhouse why RESULT:WILSON_GLOBAL_VERTICAL_BARRIER
+workhouse why RESULT:WILSON_GROUND_BUNDLE_RELATIVE_FORM
 workhouse why RESULT:WILSON_FINITE_CELL_PHYSICAL_GAP
 workhouse why RESULT:WILSON_HARMONIC_BOUNDARY
 workhouse why RESULT:WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY
@@ -332,7 +358,8 @@ make check
 make lean
 ```
 
-The [boundary and scale-comparison run](../runs/continuum_scale_comparison_2026-09-05/README.md),
+The [nonlinear block run](../runs/nonlinear_wilson_block_2026-09-05/README.md),
+[boundary and scale-comparison run](../runs/continuum_scale_comparison_2026-09-05/README.md),
 [physical scale-block run](../runs/continuum_wilson_block_2026-09-05/README.md),
 [complete physical-band run](../runs/wilson_physical_band_2026-09-05/README.md),
 [weighted-activity run](../runs/wilson_weighted_activities_2026-09-05/README.md),

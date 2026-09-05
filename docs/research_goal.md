@@ -58,6 +58,18 @@ Bianchi constraints and retains torus harmonic directions. The small curl freque
 retained slow modes, so the theorem does not demand an impossible uniform
 lower bound on the entire growing block's gap.
 
+The [global vertical barrier](../paper/research_notes/G19_WILSON_GLOBAL_VERTICAL_BARRIER_20260905.md) supplies
+a nonlinear comparison for every coarse holonomy of the actual two-face
+blocks, with a full-fiber fast term and scalar coarse potential. The
+[ground-bundle theorem](../paper/research_notes/G19_WILSON_GROUND_BUNDLE_RELATIVE_FORM_20260905.md) also controls
+the true local projected coarse form with relative `O(g^2)` magnetic
+error. The
+[actual adjacent-strip complement](../paper/research_notes/G19_WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT_20260905.md) now
+also has a proved fast floor above the true full vacuum, and a closed
+normalized Schur realization at fixed u. These remove specific single-block
+premises. Uniform interacting-volume compression, coarse matching and
+the actual source/history comparison remain the scale obligation.
+
 Exact Gaussian history reconstruction also repairs the object being
 compared across scales. Reducing equal-time variables can leave the whole
 fine physical history space observable. The useful successor is therefore
@@ -69,7 +81,7 @@ general definition of eliminated configuration modes.
 ```mermaid
 flowchart TD
   IR[Established infrared Wilson transfer and sources] -. generated effective theory matching required .-> RG[OPEN actual physical scale comparison]
-  UV[Established finite-cell spectra and harmonic interfaces] -. uniform nonlinear forms and source maps required .-> RG
+  UV[Established finite-cell, harmonic-interface and nonlinear two-face bounds] -. uniform interacting forms and source maps required .-> RG
   FM[Exact Gaussian memory and conditional form comparison] -. realize its hypotheses for Wilson required .-> RG
   OS[Exact history intertwining and observability] -. actual map and invariant source algebra required .-> RG
   R[Reverse finite-mass and residue constraints] -. clock and renormalization required .-> RG
@@ -108,6 +120,13 @@ bound exactly. The [Schur proof](../paper/research_notes/G19_FORM_SCHUR_SCALE_CO
 Section 7, makes this a concrete choice of physical projection. The existing
 creator and vacuum-transport mechanisms motivate that construction, with
 their stated coupling scope retained.
+
+The global vertical bound keeps the central fiber energy and the varying
+coarse potential. The local ground-bundle theorem additionally keeps the
+exact metric and its geometric correction. The true vacuum shift is now
+controlled in the actual adjacent-strip compression, but its finite-block
+proof does not permit discarding extensive vacuum mismatches in an
+interacting lattice.
 
 Prove the uniform nonlinear energy comparison for the actual coupled Wilson
 block family, using the retained harmonic slow space and interface bound as

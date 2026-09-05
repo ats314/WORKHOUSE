@@ -149,7 +149,11 @@ directory, or branch. Before handoff:
    documentation. Search relevant live check descriptions for the old claim
    or open-task wording. Keep frozen proof sources and dated reports as
    evidence of their stage; their latest status belongs in the current map.
-4. Run `make regen` (catalogue, frontier, certified, in that order), inspect
+4. Register every new Lean theorem in `ledger/theorems.yaml`, including
+   helper lemmas. A successful compiler run and a scoped `RESULT:` support
+   edge do not replace this inventory entry. Keep `promotes` empty unless
+   the formal theorem proves the entire named check. Then run `make regen`
+   (catalogue, frontier, certified, in that order), inspect
    `workhouse why` for the changed results and gap, and complete the required
    verification below. Generated views are never edited by hand.
 5. Push the tested commit, inspect its CI and reviews, and merge when green.

@@ -70,6 +70,7 @@ _MODULES = (
     "wilson_physical_band",
     "continuum_wilson_block",
     "continuum_scale_comparison",
+    "nonlinear_wilson_block",
 )
 
 for _name in _MODULES:
