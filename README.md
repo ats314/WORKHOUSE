@@ -4,6 +4,10 @@ A mathematical research and verification workspace for the SU(N) cubic
 flux-band spectral program. It connects analytic derivations, exact
 computations, Lean proofs, and their source history in a queryable theory graph.
 
+The governing objective is the **Clay Yang-Mills existence and mass gap
+problem**. The [goal and remaining obligations](docs/research_goal.md) connect
+each current target to that objective, including the spatial scale passage.
+
 **This page is the operating manual.** If you are an agent starting a session,
 read it, then `FRONTIER.md` for the current state. `AGENTS.md` is the research
 posture — how to decide what to do next. `CLAUDE.md` is the non-negotiables.
@@ -95,8 +99,16 @@ proves `sup_i sum_(X contains i) 2^|X| ||F_X||<=1/2500` on the common
 interval `|u|<=u_star/1252800000`. The actual normalized Wilson transfer
 is within `1/998` of its free product, isolating the complete finite-volume
 physical charge-odd shell, of rank `3 L^3` on the admitted periodic lattices.
-This uses a different chart from the parent spectral flow. The next target
-is its complete thermodynamic Riesz range and literal-source frame.
+This uses a different chart from the parent spectral flow. The
+[complete physical-band theorem](paper/research_notes/G18_WILSON_INFINITE_VOLUME_PHYSICAL_BAND_20260905.md)
+now constructs the actual infinite-volume transfer, with nonvacuum norm at
+most `4/5+1/998`, and identifies its entire isolated odd band in the Wilson
+Euclidean reconstruction. On `|u|<=u_star/(10022400000 N)`, the projected
+literal plaquette sources are onto that band, with Gram between `9/16` and
+`81/64`. This completes the actual Wilson range and source-identification
+stage at fixed spatial spacing. The next central target is a controlled
+comparison across spatial scales, with the physical clock and source
+normalization retained; see the goal map for its precise missing inputs.
 
 The graph now exposes the individual results and their consequences:
 
@@ -111,13 +123,16 @@ workhouse why RESULT:WILSON_CARDINALITY_CHART
 workhouse why RESULT:ORDERED_CONTOUR_ACTIVITIES
 workhouse why RESULT:WILSON_WEIGHTED_ACTIVITIES
 workhouse why RESULT:WILSON_UNIFORM_FINITE_SHELL
+workhouse why RESULT:WILSON_INFINITE_PHYSICAL_BAND
 workhouse why G18
+workhouse why G19
 ```
 
 These queries show the mathematical inputs and scoped verification evidence.
-The G18 routes distinguish completed vacuum transport, activity norm and
-uniform finite-volume shell isolation from the live thermodynamic
-excited-range and literal-source-frame task.
+The G18 routes distinguish the completed actual infinite-volume physical
+band from the remaining sharp-kernel matching. G19 tracks the separate
+scale passage needed for a nontrivial continuum theory with a positive
+physical mass gap.
 
 The [5 September Wilson-chart continuation](paper/research_notes/G18_WILSON_CHART_RESEARCH_REPORT_20260905.md)
 derives a connected local vacuum chart at every fixed order, with exact

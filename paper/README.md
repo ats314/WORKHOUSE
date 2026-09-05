@@ -32,8 +32,16 @@ the actual normalized transfer bound `1/998`, on
 `|u|<=u_star/1252800000`. This isolates the complete finite-volume neutral
 physical charge-odd shell on one volume- and mesh-independent interval.
 The new chart shares the actual vacuum with parent spectral flow; their
-excited actions are not identified. Complete thermodynamic range and
-literal-source-frame identification remain open.
+excited actions are not identified. The subsequent
+[complete physical-band proof](research_notes/G18_WILSON_INFINITE_VOLUME_PHYSICAL_BAND_20260905.md)
+constructs the actual infinite-volume transfer and vacuum gap and identifies
+the complete odd band in the physical Euclidean reconstruction. Its tagged
+source estimate and infinite-dimensional onto inverse give the literal
+plaquette frame on `|u|<=u_star/(10022400000 N)`, with Gram between `9/16`
+and `81/64`. The [sealed run](../runs/wilson_physical_band_2026-09-05/README.md)
+records scoped exact controls and the analytic proof. The
+[research goal](../docs/research_goal.md) explains what this closes and what
+the spatial scale argument must establish for the Clay theorem.
 
 The current research guide also connects the September C2 resolution,
 symbolic all-rank assembly, and fixed-spacing construction to their proofs
