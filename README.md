@@ -55,6 +55,11 @@ just a claim of authority.
 
 ## Reading order
 
+The [5 September Wilson-chart continuation](paper/research_notes/G18_WILSON_CHART_RESEARCH_REPORT_20260905.md)
+derives a connected local vacuum chart at every fixed order, with exact
+finite-model checks and a Lean algebraic kernel. Its [sealed run](runs/wilson_vacuum_chart_2026-09-05/README.md)
+preserves the verification evidence and the remaining nonlinear convergence task.
+
 The corpus is roughly 12.2M tokens — about 61 context windows. Reading it is not
 a plan. Go in this order and stop when the question is answered.
 

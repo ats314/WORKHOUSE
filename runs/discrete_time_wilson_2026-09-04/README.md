@@ -51,6 +51,22 @@ preceding note, kept as received.
 |---|---|
 | `verify_discrete_time_bridge.py`, `wilson_clock.py` | 26 finite diagnostics (exact combinatorics, a finite-state bridge model, a one-plaquette SU(3) truncation, negative controls); need NumPy and SciPy; pinned only |
 | `discrete_time_certificate.json`, `checks.log` | the recorded results of that execution |
-| `graph_proposal.json` | the session's staged dependency nodes; not applied |
+| `graph_proposal.json` | the immutable staged proposal; its scoped results now map to G18/G19 and their operator-chart routes |
 | `source_manifest.json`, `environment.json`, `requirements.txt`, `PACKAGE_README.md`, `PACKAGE_SHA256SUMS` | provenance |
 | `SHA256SUMS` | the pin of this directory |
+
+## ZIP provenance and native graph integration
+
+The input `workhouse_discrete_time_20260904.zip` has SHA-256
+`7c3709c0b398eefac3207e9cb8c3e6bc45a6eaebd85af1e711f2701e2898279c`. On 2026-09-05 every one of its 13 file members was compared byte for byte with the preserved
+repository destination. `import_manifest.json` records the complete mapping,
+sizes and hashes, including the relocated paper notes and the unchanged
+package README/checksum file. The original ZIP remains an external input;
+the repository retains every file member rather than depending on that local path.
+
+`RUN:discrete_time_wilson_2026-09-04` is registered as evidence on both G18 and G19.
+The proposal's analytic claims and remaining targets are integrated into
+`ledger/gaps.yaml`; its original JSON remains immutable provenance. The
+new routes require an exact Wilson vacuum chart, full operator activities,
+and thermodynamic range/source identification. No broad G18/G19 completion
+or machine proof of the analytic construction is inferred from this import.

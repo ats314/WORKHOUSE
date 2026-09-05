@@ -52,6 +52,22 @@ to files moved or renamed: the two notes now live in `paper/research_notes/` as
 |---|---|
 | `verify_excited_window.py` (with `prior/wilson_clock.py`) | 33 checks: exact block arithmetic, the derivative cancellation, the factor-16 bound, an exact all-orders sum over 198 disjoint families in a six-site model, source-moment and Schur identities, the dark-state and product-system controls, a one-plaquette SU(3) truncation; need NumPy and SciPy; pinned only |
 | `excited_window_certificate.json`, `checks.log` | the recorded results of that execution |
-| `graph_proposal.json` | the session's staged dependency nodes; not applied |
+| `graph_proposal.json` | the immutable staged proposal; its scoped results now map to G18/G19 and their operator-chart routes |
 | `source_manifest.json`, `environment.json`, `requirements.txt`, `PACKAGE_README.md`, `PACKAGE_SHA256SUMS` | provenance |
 | `SHA256SUMS` | the pin of this directory |
+
+## ZIP provenance and native graph integration
+
+The input `workhouse_excited_window_operator_bridge.zip` has SHA-256
+`3fc9447a6120b93e45114da8f7b04cf150ea71ae20b8730265dce9ffaff70d14`. On 2026-09-05 every one of its 14 file members was compared byte for byte with the preserved
+repository destination. `import_manifest.json` records the complete mapping,
+sizes and hashes, including the relocated paper notes and the unchanged
+package README/checksum file. The original ZIP remains an external input;
+the repository retains every file member rather than depending on that local path.
+
+`RUN:excited_wilson_window_2026-09-04` is registered as evidence on both G18 and G19.
+The proposal's analytic claims and remaining targets are integrated into
+`ledger/gaps.yaml`; its original JSON remains immutable provenance. The
+new routes require an exact Wilson vacuum chart, full operator activities,
+and thermodynamic range/source identification. No broad G18/G19 completion
+or machine proof of the analytic construction is inferred from this import.
