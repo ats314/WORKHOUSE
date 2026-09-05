@@ -219,7 +219,11 @@ def _():
             f"tau = {tau}; k(8) = {k8}; k(6) = {k6}; the pinned certificate agrees string for "
             f"string: {pinned_ok}"
         ),
-        {"tau_W_eps2": "7/24", "k_W_adj_eps2": "-5/96", "k_W_sextet_eps2": "-5/72"},
+        {
+            "TAU_W_EPS2": Rational(7, 24),
+            "K_W_ADJ_EPS2": Rational(-5, 96),
+            "K_W_SEXTET_EPS2": Rational(-5, 72),
+        },
     )
 
 
@@ -281,5 +285,5 @@ def _():
             f"ledger's 5/612 and 11/306; the pinned certificate carries the same two eps^2 "
             f"coefficients: {pinned_ok}"
         ),
-        {"t_W_eps2": "175/280908", "s_2W_eps2": "-89159/2247264", "G_W_source_eps2": "-4/9"},
+        {"T_W_EPS2": t2, "S_2W_EPS2": s2, "G_W_SOURCE_EPS2": g2},
     )

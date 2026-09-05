@@ -15,8 +15,6 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-**2 checks are failing.** They are marked below.
-
 ## T0 — proof-checked — 83
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
@@ -987,14 +985,14 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'the three plaquette orientations at k = 0 carry an irreducible representation of the cubic group (the T1 triplet), so every cubic-covariant effective Hamiltonian is a scalar at Gamma at every order'`
 **the Wilson transfer matrix at finite temporal step**
 
-- `the exact SU(3) Wilson multipliers through eps^3 from Cartan Gaussian moments with the Weyl Vandermonde: lambda_3 = 1 - 2/3 eps + 1/36 eps^2 + 13/648 eps^3, lambda_8 = 1 - 3/2 eps + 11/16 eps^2 + 1/96 eps^3, lambda_6 = 1 - 5/3 eps + 65/72 eps^2 - 55/1296 eps^3; the calibrated clock is tau = eps + 7/24 eps^2 + 13/144 eps^3 and the calibrated energies k(8) = 3/2 - 5/96 eps^2, k(6) = 5/3 - 5/72 eps^2` **[FAILING]**
+- `the exact SU(3) Wilson multipliers through eps^3 from Cartan Gaussian moments with the Weyl Vandermonde: lambda_3 = 1 - 2/3 eps + 1/36 eps^2 + 13/648 eps^3, lambda_8 = 1 - 3/2 eps + 11/16 eps^2 + 1/96 eps^3, lambda_6 = 1 - 5/3 eps + 65/72 eps^2 - 55/1296 eps^3; the calibrated clock is tau = eps + 7/24 eps^2 + 13/144 eps^3 and the calibrated energies k(8) = 3/2 - 5/96 eps^2, k(6) = 5/3 - 5/72 eps^2`
   - src/workhouse/invariants/wilson_step.py:186 · G19; paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md sections 5-7; runs/uniform_wilson_window_2026-09-04 section 6; exact_laplace_certificate.json
   - `workhouse verify --only 'the exact SU(3) Wilson multipliers through eps^3 from Cartan Gaussian moments with the Weyl Vandermonde: lambda_3 = 1 - 2/3 eps + 1/36 eps^2 + 13/648 eps^3, lambda_8 = 1 - 3/2 eps + 11/16 eps^2 + 1/96 eps^3, lambda_6 = 1 - 5/3 eps + 65/72 eps^2 - 55/1296 eps^3; the calibrated clock is tau = eps + 7/24 eps^2 + 13/144 eps^3 and the calibrated energies k(8) = 3/2 - 5/96 eps^2, k(6) = 5/3 - 5/72 eps^2'`
 - `the four shared-link channels of the second-order C-odd shell reproduce t_N at every rank: w_rho = -(d_rho/N^2)/(C_F + C_rho/2) for rho = 1, Adj, Lambda^2 F, Sym^2 F, and (w_Lambda2 + w_Sym2) - (w_1 + w_Adj) = 2N(N^2-4)/((N^2-1)(2N^2-1)(4N^2-9)) identically`
   - src/workhouse/invariants/wilson_step.py:79 · G19; paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md sections 5-7; runs/uniform_wilson_window_2026-09-04 eq. (12) at eps -> 0; corpus section 4.1
   - `workhouse verify --only 'the four shared-link channels of the second-order C-odd shell reproduce t_N at every rank: w_rho = -(d_rho/N^2)/(C_F + C_rho/2) for rho = 1, Adj, Lambda^2 F, Sym^2 F, and (w_Lambda2 + w_Sym2) - (w_1 + w_Adj) = 2N(N^2-4)/((N^2-1)(2N^2-1)(4N^2-9)) identically'`
-- `the second-order C-odd shell of the symmetric Wilson transfer generator at finite temporal step: with d_tau(Delta) = (tau/2) coth(tau Delta/2) the hopping is t_W = 5/612 + 175/280908 eps^2 + O(eps^3), the flat scalar s_2W = 11/306 - 89159/2247264 eps^2, and the first literal-source Gram coefficient -2 d_tau(E_F) = -3/4 - 4/9 eps^2` **[FAILING]**
-  - src/workhouse/invariants/wilson_step.py:234 · G19; paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md sections 5-7; runs/uniform_wilson_window_2026-09-04 eqs. (11)-(18); window_shell_certificate.json
+- `the second-order C-odd shell of the symmetric Wilson transfer generator at finite temporal step: with d_tau(Delta) = (tau/2) coth(tau Delta/2) the hopping is t_W = 5/612 + 175/280908 eps^2 + O(eps^3), the flat scalar s_2W = 11/306 - 89159/2247264 eps^2, and the first literal-source Gram coefficient -2 d_tau(E_F) = -3/4 - 4/9 eps^2`
+  - src/workhouse/invariants/wilson_step.py:238 · G19; paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md sections 5-7; runs/uniform_wilson_window_2026-09-04 eqs. (11)-(18); window_shell_certificate.json
   - `workhouse verify --only 'the second-order C-odd shell of the symmetric Wilson transfer generator at finite temporal step: with d_tau(Delta) = (tau/2) coth(tau Delta/2) the hopping is t_W = 5/612 + 175/280908 eps^2 + O(eps^3), the flat scalar s_2W = 11/306 - 89159/2247264 eps^2, and the first literal-source Gram coefficient -2 d_tau(E_F) = -3/4 - 4/9 eps^2'`
 **the charge-even band, exactly**
 
