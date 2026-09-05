@@ -271,7 +271,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:247
   - `make lean`
 
-## T1 — re-derived exactly — 300
+## T1 — re-derived exactly — 301
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -744,6 +744,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the single-contact dressing agrees history by history between its two geometries once time is reversed, the end roles are swapped and one end face is conjugated: every (sequence, channel) term has ratio -1`
   - src/workhouse/invariants/path_reduction.py:132 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026
   - `workhouse verify --only 'the single-contact dressing agrees history by history between its two geometries once time is reversed, the end roles are swapped and one end face is conjugated: every (sequence, channel) term has ratio -1'`
+- `the universality lemma, by exhaustion on the fourth-order family: phi (delete the second private letter of the straight middle face, keep the first as the weight-two link) maps every history's straight integrand onto its L integrand with the same coefficient, and preserves the Haar integral on every word the Fierz swaps and cuts can generate from the face words`
+  - src/workhouse/invariants/path_reduction.py:209 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; runs/universality_lemma_2026-09-04; ADR 0032
+  - `workhouse verify --only 'the universality lemma, by exhaustion on the fourth-order family: phi (delete the second private letter of the straight middle face, keep the first as the weight-two link) maps every history'"'"'s straight integrand onto its L integrand with the same coefficient, and preserves the Haar integral on every word the Fierz swaps and cuts can generate from the face words'`
 - `universality of the two-hop weight holds history by history: the straight and the L-shaped chain agree in every (insertion sequence, channel) term of the direct term, and integrand by integrand within each term`
   - src/workhouse/invariants/path_reduction.py:97 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; ADR 0019
   - `workhouse verify --only 'universality of the two-hop weight holds history by history: the straight and the L-shaped chain agree in every (insertion sequence, channel) term of the direct term, and integrand by integrand within each term'`

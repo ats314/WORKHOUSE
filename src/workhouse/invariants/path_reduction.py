@@ -194,3 +194,60 @@ def _():
         f"{pairs['coefficient_and_value_pair_multisets_equal']} of {pairs['terms']} terms over "
         f"{pairs['integrands_straight']} integrands, with Haar families of size at most three"
     )
+
+
+_LEMMA_RUN = "runs/universality_lemma_2026-09-04"
+
+_LEMMA = (
+    "the universality lemma, by exhaustion on the fourth-order family: phi (delete the second "
+    "private letter of the straight middle face, keep the first as the weight-two link) maps every "
+    "history's straight integrand onto its L integrand with the same coefficient, and preserves "
+    "the Haar integral on every word the Fierz swaps and cuts can generate from the face words"
+)
+
+
+@reduction.check(
+    _LEMMA, _CITE + "; " + _LEMMA_RUN + "; ADR 0032", rests_on=(_RESIDUALS, _BY_HISTORY)
+)
+def _():
+    # The record enumerates the family a fourth-order history can produce -- a
+    # product of face words, then any permutation of out-targets within each
+    # shared link's letters (every permutation, a superset of the like-pair
+    # swaps), then the Fierz cuts of unlike pairs with their closed loops
+    # counted, never X's own letter with X~'s -- and checks integrate(w) ==
+    # integrate(phi(w)) on all of it for the multiplicities fourth order
+    # reaches, exhaustively where the count allows. The control shows the
+    # identity is a property of the family: on arbitrary wirings of the same
+    # letters phi does not preserve the integral, and cutting a pair no history
+    # can cut breaks it too.
+    cert = json.loads((ROOT / _LEMMA_RUN / "certificate.json").read_text(encoding="utf-8"))
+    a = cert["parts"]["A_phi_on_histories"]
+    fam = cert["parts"]["B_C_family"]
+    ctrl = cert["parts"]["D_control"]
+    exhaustive = [k for k, v in fam.items() if v["exhaustive"]]
+    ok = (
+        a["terms"]
+        == a["terms_where_phi_is_a_bijection_onto_L"]
+        == a["terms_with_equal_coefficients"]
+        == 124
+        and a["integrands_straight"] == 536
+        and all(v["phi_invariant"] == v["words"] for v in fam.values())
+        and fam["swaps a=1 b=1"]["words"] == 576
+        and fam["swaps a=2 b=1"]["words"] == fam["swaps a=1 b=2"]["words"] == 17280
+        and fam["swaps a=b=1 over Q(N)"]["words"] == 576
+        and fam["reachable swaps then cuts a=1 b=1"]["words"] == 384
+        and len(exhaustive) >= 5
+        and all(v["phi_invariant"] < v["words"] for v in ctrl.values())
+    )
+    total = sum(v["words"] for v in fam.values())
+    families = ", ".join(
+        f"{k}: {v['words']}" + ("" if v["exhaustive"] else " sampled") for k, v in fam.items()
+    )
+    controls = ", ".join(f"{k}: {v['phi_invariant']}/{v['words']}" for k, v in ctrl.items())
+    return ok, (
+        "phi is a coefficient-preserving bijection of integrands in "
+        f"{a['terms_where_phi_is_a_bijection_onto_L']} of {a['terms']} history terms "
+        f"({a['integrands_straight']} integrands); the Haar integral is phi-invariant on all "
+        f"{total} words of the swap and cut families checked ({families}); on arbitrary wirings "
+        f"it is not ({controls})"
+    )
