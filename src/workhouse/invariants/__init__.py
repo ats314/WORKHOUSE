@@ -59,6 +59,7 @@ _MODULES = (
     "gamma_isolation",
     "rank_field",
     "path_reduction",
+    "wilson_step",
 )
 
 for _name in _MODULES:

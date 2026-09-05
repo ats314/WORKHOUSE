@@ -1294,6 +1294,18 @@ gaps:
     tier: 3
     state: open
     title: The spectral bridge
+    auxiliary_wilson_family_2026_09_04: >
+      From the uniform-window package (runs/uniform_wilson_window_2026-09-04):
+      for SU(3) the auxiliary Hamiltonians K_eps - uV, with K_eps the
+      calibrated Wilson kinetic energy, share the vacuum, the symmetries, the
+      onsite gap and a common externally isolated kinematic contour
+      |z - 8/3| = 1/12 with resolvent bound 24, uniformly in eps and the
+      volume, so the G18 construction runs for the whole family on one small
+      complex u-disc and its dressed shell, Gram and source kernels converge
+      to the Hamiltonian ones in the weighted norm. Conditional on the G18
+      construction itself, and explicitly NOT a statement about the
+      logarithm of the symmetric Wilson transfer operator, whose second-order
+      weight is coth-shaped; the summed actual-Wilson matching remains open.
     relative_gap_bridge_2026_09_04: >
       A parallel session (GPT, 2026-09-04, reviewed and integrated by PR)
       strengthened the fixed-spacing patch theorem conditionally: if the
@@ -1427,6 +1439,36 @@ gaps:
     tier: 3
     state: open
     title: Continuum limit
+    uniform_wilson_window_2026_09_04: >
+      A third package from the parallel session (GPT, 2026-09-04, reviewed and
+      integrated by PR) takes the temporal matching one step further. For the
+      calibrated Wilson kinetic energy k_eps(R) = -log(lambda_R)/tau, a
+      pointwise heat-kernel comparison gives k_eps(R) >= c_N min(C_R, 1/eps)
+      for EVERY irrep at once, so no high representation can fall into a
+      fixed low-energy window as eps -> 0, uniformly in the spatial volume;
+      with Revision 6's support census this makes the free physical spectrum
+      below 5 C_F/2 exactly {0, 2 C_F}, vacuum and fundamental plaquette shell,
+      for every periodic L >= 3 and eps below an existential eps_0(N). The
+      actual symmetric transfer generator's second-order reduced-resolvent
+      weight is d_tau(Delta) = (tau/2) coth(tau Delta/2) rather than 1/Delta;
+      with it the complete C-odd shell at finite temporal step is again the
+      signed incidence adjacency, with t_W = 5/612 + 175/280908 eps^2 and
+      s_2W = 11/306 - 89159/2247264 eps^2 from the exact SU(3) multipliers
+      (lambda_3 = 1 - 2/3 eps + 1/36 eps^2 + 13/648 eps^3, lambda_8, lambda_6
+      from Cartan Gaussian moments), and the first literal-source Gram
+      coefficient is -2 d_tau(E_F) = -3/4 - 4/9 eps^2. The exact part is
+      re-derived here as the suite "the Wilson transfer matrix at finite
+      temporal step", including that the four channel weights reproduce t_N
+      at every rank. Matching of the energy, Gram and source kernels is
+      O(eps^2) at every FIXED magnetic order in the spatially weighted norm,
+      with order-dependent constants; the summed statement for the actual
+      Wilson transfer operator is not established and is reduced to a uniform
+      discrete-time marked-cluster majorant (the note's Section 10). The
+      analytic theorems are research-note proofs, not machine checks; the
+      231-irrep scans need NumPy and are pinned only.
+      paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md,
+      paper/research_notes/G19_WILSON_KINETIC_WINDOW_INSERT_20260904.tex,
+      runs/uniform_wilson_window_2026-09-04.
     temporal_wilson_matching_2026_09_04: >
       From the same parallel session: an explicit positive Wilson transfer
       family with beta_t = 2N/epsilon and beta_s = 2N u epsilon converges

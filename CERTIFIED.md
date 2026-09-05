@@ -271,7 +271,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:247
   - `make lean`
 
-## T1 — re-derived exactly — 302
+## T1 — re-derived exactly — 305
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -986,6 +986,17 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the three plaquette orientations at k = 0 carry an irreducible representation of the cubic group (the T1 triplet), so every cubic-covariant effective Hamiltonian is a scalar at Gamma at every order`
   - src/workhouse/invariants/gamma_isolation.py:109 · G11; MASTER_THEORY §3 (singular at Gamma), §5, §12 (the near-Gamma competition); ADR 0028
   - `workhouse verify --only 'the three plaquette orientations at k = 0 carry an irreducible representation of the cubic group (the T1 triplet), so every cubic-covariant effective Hamiltonian is a scalar at Gamma at every order'`
+**the Wilson transfer matrix at finite temporal step**
+
+- `the exact SU(3) Wilson multipliers through eps^3 from Cartan Gaussian moments with the Weyl Vandermonde: lambda_3 = 1 - 2/3 eps + 1/36 eps^2 + 13/648 eps^3, lambda_8 = 1 - 3/2 eps + 11/16 eps^2 + 1/96 eps^3, lambda_6 = 1 - 5/3 eps + 65/72 eps^2 - 55/1296 eps^3; the calibrated clock is tau = eps + 7/24 eps^2 + 13/144 eps^3 and the calibrated energies k(8) = 3/2 - 5/96 eps^2, k(6) = 5/3 - 5/72 eps^2`
+  - src/workhouse/invariants/wilson_step.py:186 · G19; paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md sections 5-7; runs/uniform_wilson_window_2026-09-04 section 6; exact_laplace_certificate.json
+  - `workhouse verify --only 'the exact SU(3) Wilson multipliers through eps^3 from Cartan Gaussian moments with the Weyl Vandermonde: lambda_3 = 1 - 2/3 eps + 1/36 eps^2 + 13/648 eps^3, lambda_8 = 1 - 3/2 eps + 11/16 eps^2 + 1/96 eps^3, lambda_6 = 1 - 5/3 eps + 65/72 eps^2 - 55/1296 eps^3; the calibrated clock is tau = eps + 7/24 eps^2 + 13/144 eps^3 and the calibrated energies k(8) = 3/2 - 5/96 eps^2, k(6) = 5/3 - 5/72 eps^2'`
+- `the four shared-link channels of the second-order C-odd shell reproduce t_N at every rank: w_rho = -(d_rho/N^2)/(C_F + C_rho/2) for rho = 1, Adj, Lambda^2 F, Sym^2 F, and (w_Lambda2 + w_Sym2) - (w_1 + w_Adj) = 2N(N^2-4)/((N^2-1)(2N^2-1)(4N^2-9)) identically`
+  - src/workhouse/invariants/wilson_step.py:79 · G19; paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md sections 5-7; runs/uniform_wilson_window_2026-09-04 eq. (12) at eps -> 0; corpus section 4.1
+  - `workhouse verify --only 'the four shared-link channels of the second-order C-odd shell reproduce t_N at every rank: w_rho = -(d_rho/N^2)/(C_F + C_rho/2) for rho = 1, Adj, Lambda^2 F, Sym^2 F, and (w_Lambda2 + w_Sym2) - (w_1 + w_Adj) = 2N(N^2-4)/((N^2-1)(2N^2-1)(4N^2-9)) identically'`
+- `the second-order C-odd shell of the symmetric Wilson transfer generator at finite temporal step: with d_tau(Delta) = (tau/2) coth(tau Delta/2) the hopping is t_W = 5/612 + 175/280908 eps^2 + O(eps^3), the flat scalar s_2W = 11/306 - 89159/2247264 eps^2, and the first literal-source Gram coefficient -2 d_tau(E_F) = -3/4 - 4/9 eps^2`
+  - src/workhouse/invariants/wilson_step.py:238 · G19; paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md sections 5-7; runs/uniform_wilson_window_2026-09-04 eqs. (11)-(18); window_shell_certificate.json
+  - `workhouse verify --only 'the second-order C-odd shell of the symmetric Wilson transfer generator at finite temporal step: with d_tau(Delta) = (tau/2) coth(tau Delta/2) the hopping is t_W = 5/612 + 175/280908 eps^2 + O(eps^3), the flat scalar s_2W = 11/306 - 89159/2247264 eps^2, and the first literal-source Gram coefficient -2 d_tau(E_F) = -3/4 - 4/9 eps^2'`
 **the charge-even band, exactly**
 
 - `FINDING: the certificate key 'bandmin' holds the band MAXIMUM, at both orders`

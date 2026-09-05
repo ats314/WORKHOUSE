@@ -1,0 +1,165 @@
+% Research insert; not automatically included in the WORKHOUSE manuscript.
+% Requires amsmath, amssymb and lemma/theorem/proof environments.
+% New derivation, not a Lean formalization. The full all-orders Wilson matching
+% remains open; see the final paragraph and UNIFORM_WILSON_WINDOW.md.
+\subsection{Uniform calibrated Wilson kinetic window}
+\label{sec:wilson-kinetic-window}
+Fix $N\ge3$ and normalized Haar measure on $SU(N)$. Use
+$\operatorname{tr}_F(T_aT_b)=\delta_{ab}/2$ and put
+\[
+ p_\epsilon(U)=Z_\epsilon^{-1}e^{-\phi(U)/\epsilon},\qquad
+ \phi(U)=2(N-\operatorname{ReTr}U),\qquad
+ \lambda_R(\epsilon)=\frac1{d_R}\int p_\epsilon(U)\overline{\chi_R(U)}\,dU.
+\]
+All $\lambda_R$ are positive: the exponential has a character expansion with
+nonnegative tensor-product multiplicities, and every irrep appears. They are
+at most one because $p_\epsilon$ is a probability density. Define
+\[
+ \tau_F(\epsilon)=-\frac2{C_F}\log\lambda_F(\epsilon),\qquad
+ k_\epsilon(R)=-\frac{\log\lambda_R(\epsilon)}{\tau_F(\epsilon)},\qquad
+ K_{\epsilon,L}=\sum_\ell k_\epsilon(\ell).
+\]
+The calibration gives $k_\epsilon(F)=k_\epsilon(\bar F)=C_F/2$ exactly. The
+fixed-irrep Laplace expansion gives $\tau_F=\epsilon+O(\epsilon^2)$ and
+$k_\epsilon(R)=C_R/2+O_R(\epsilon^2)$, but is not uniform over all $R$.
+
+\begin{lemma}[Uniform exclusion of high representations]
+\label{lem:wilson-no-pollution}
+For each fixed $N$ there are $c_N,\epsilon_1>0$ such that
+\[
+ k_\epsilon(R)\ge c_N\min\{C_R,\epsilon^{-1}\}
+ \quad(0<\epsilon<\epsilon_1)
+\]
+for every irrep $R$. In particular every fixed low-energy window contains a
+common finite set of link representations as $\epsilon\downarrow0$.
+\end{lemma}
+\begin{proof}
+Let $r(U)$ be distance from identity for the metric with $C_2=-\Delta$, and
+let $h_s$ be the density of $e^{-sC_2/2}$. Along a shortest geodesic
+$U=e^{iX}$ one has $r(U)^2=2\operatorname{tr}X^2$ and
+$\phi(U)\le r(U)^2/2$. The unique nondegenerate minimum of $\phi$ and
+compactness give $Z_\epsilon\le B_N\epsilon^{(N^2-1)/2}$.
+The Gaussian upper heat-kernel bound, specialized to the static bi-invariant
+metric, gives
+\[
+ h_s(U)\le A_Ns^{-(N^2-1)/2}e^{-r(U)^2/(4s)}.
+\]
+One precise external input is Buzano--Yudowitz, arXiv:2007.07112,
+Theorem 1.5 and Corollary 1.4, with their heat time replaced by $s/2$.
+Taking $s=\epsilon/4$ proves $p_\epsilon\ge a_Nh_{\epsilon/4}$ for some
+$a_N>0$. This comparison is used on the nonnegative Dirichlet integrand:
+\[
+ \langle f,(1-C_p)f\rangle
+ =\frac12\int p(U)\|L_Uf-f\|^2\,dU.
+\]
+Consequently $1-\lambda_R\ge a_N(1-e^{-\epsilon C_R/8})$. Now use
+$-\log x\ge1-x$, $\tau_F\le2\epsilon$ and
+$1-e^{-x}\ge(1-e^{-1})\min\{x,1\}$. For example
+$c_N=a_N(1-e^{-1})/16$ suffices. If $k_\epsilon(R)\le E$ and
+$\epsilon<c_N/E$, then $C_R\le E/c_N$; there are finitely many such
+highest weights.
+\end{proof}
+
+\begin{theorem}[Calibrated Wilson free physical shell]
+\label{thm:wilson-physical-window}
+For every fixed $N\ge3$, there is $\epsilon_0(N)>0$ such that for all
+$0<\epsilon<\epsilon_0(N)$ and periodic $L^3$ lattices with $L\ge3$,
+\[
+ \operatorname{spec}(K_{\epsilon,L}|_{\mathcal H_{\rm phys}^{(0)}})
+ \cap[0,5C_F/2)=\{0,2C_F\}.
+\]
+The vacuum is unique and the $2C_F$ eigenspace is exactly the oriented
+fundamental-plaquette span. Its neutral charge-odd part has dimension $3L^3$.
+The external free physical margin is at least $C_F/2$, uniformly in volume.
+\end{theorem}
+\begin{proof}
+The preceding lemma turns fixed-irrep convergence into uniform convergence
+on every bounded-energy set. Shrinking $\epsilon_0$ gives
+\[
+ k_\epsilon(R)\ge C_F/2\ (R\ne1),\qquad
+ k_\epsilon(R)>5C_F/8\ (R\notin\{1,F,\bar F\}),
+\]
+and $k_\epsilon(R)>5C_F/6$ for every nonzero zero-$N$-ality irrep.
+The strict inequalities follow from the Casimir shelves in the electric
+window theorem; the last uses $C_R\ge N$. An energy below $5C_F/2$ has
+at most four nontrivial links. Gauge invariance forbids degree-one support.
+The support classification is therefore the same as for the Casimir
+Hamiltonian: a single three- or four-cycle. The $L=3$ winding triangle and
+$L=4$ winding four-cycle require zero $N$-ality and violate the new shelves.
+The remaining four-cycle is an elementary plaquette; degree-two intertwiners
+transport the same irrep around it, and the shelf excludes everything but
+$F,\bar F$. Calibration fixes its energy to $2C_F$. Orthogonality gives the
+stated dimension and the upper window gives the margin.
+\end{proof}
+For $SU(3)$ the window is $[0,10/3)$ with levels $0,8/3$ and margin $2/3$.
+The temporal threshold remains existential. On the kinematic space, after
+shrinking it once more, the circle $|z-8/3|=1/12$ has clearance at least
+$1/24$, uniformly in volume. This uses the nearest additive Casimir values
+$14/6,16/6,17/6$ and the common finite-label reduction, not a physical-sector
+identification before imposing the constraints.
+
+\subsection{Actual finite-step shell and source coefficients}
+The retuned Wilson transfer is
+\[
+ T_{\epsilon,L}(u)=e^{\tau_FuV_L/2}e^{-\tau_FK_{\epsilon,L}}
+                         e^{\tau_FuV_L/2},\qquad
+ G_{\epsilon,L}(u)=-\tau_F^{-1}\log T_{\epsilon,L}(u).
+\]
+Its spatial Wilson coefficient is $\beta_s=2Nu\tau_F$, with
+$\beta_t=2N/\epsilon$. In general $G_{\epsilon,L}(u)\ne K_{\epsilon,L}-uV_L$.
+For a degenerate free shell $P$ of energy $E_s$ with scalar $PVP$, direct
+second-order transfer perturbation and its folded term give
+\[
+ [u^2]G_{\epsilon,\mathrm{eff}}
+ =-\sum_{m\notin P}d_\tau(E_m-E_s)PVQ_mVP,\qquad
+ d_\tau(\Delta)=\frac\tau2\coth\frac{\tau\Delta}{2}.
+\]
+Indeed, with $c=e^{-\tau E_s}$ and $d=e^{-\tau E_m}$, their sum is
+$\tau^2(c+d)/4+\tau^2(c+d)^2/[4(c-d)]
+=\tau^2c(c+d)/[2(c-d)]$. Applying $-\log/\tau$ and canceling the internal
+$(PVP)^2$ term proves the formula.
+The original complete channel and centre-charge classification then gives
+\[
+ w_\rho^W=-\frac{d_\rho}{N^2}d_\tau(C_F+k_\epsilon(\rho)),\quad
+ A_W=w_1^W+w_{\rm Adj}^W,\quad
+ B_W=w_{\Lambda^2F}^W+w_{\operatorname{Sym}^2F}^W,\quad t_W=B_W-A_W.
+\]
+For $SU(3)$ set $E_F=8/3$ and
+\[
+ \ell_W=A_W+B_W+2d_\tau(E_F),\qquad
+ \sigma_W=-d_\tau(4k_\epsilon(6)-E_F),\qquad
+ s_{2,W}=\sigma_W+2d_\tau(E_F)+12\ell_W-4t_W.
+\]
+Vacuum subtraction cancels the volume-dependent link-disjoint bubbles, so
+\[
+ T_{\le2}h_{\epsilon,u}^W(k)
+ =\left(\frac83+u+s_{2,W}u^2\right)I+t_Wu^2B(k)B(k)^\dagger.
+\]
+Exact SU(3) Gaussian moments give
+\[
+ \tau_F=\epsilon+\frac7{24}\epsilon^2+\frac{13}{144}\epsilon^3+O(\epsilon^4),
+ \quad k_\epsilon(8)=\frac32-\frac5{96}\epsilon^2+O(\epsilon^3),
+ \quad k_\epsilon(6)=\frac53-\frac5{72}\epsilon^2+O(\epsilon^3).
+\]
+Consequently
+\[
+ t_W=\frac5{612}+\frac{175}{280908}\epsilon^2+O(\epsilon^3),\qquad
+ s_{2,W}=\frac{11}{306}-\frac{89159}{2247264}\epsilon^2+O(\epsilon^3).
+\]
+For the normalized literal source $O_p^-=(\chi_p-\bar\chi_p)/\sqrt2$, the
+complete-shell projected Gram kernel satisfies
+\[
+ G_\epsilon^W(k,u)=I-2u\,d_{\tau_F}(8/3)I+O(u^2),\qquad
+ [u](G_\epsilon^W-G^H)=-\frac49\epsilon^2I+O(\epsilon^3).
+\]
+This is an absolute projected Gram statement, not a normalized spectral fraction.
+
+At every fixed magnetic order, only a finite set of tensor-power irreps and
+linked supports can occur. The calibrated finite-space kinetic error and
+symmetric product logarithm therefore give $O(\epsilon^2)$ matching of that
+order's energy and source kernels in the spatially weighted convolution norm,
+with constants independent of sufficiently large spatial volume. Summing those
+orders still requires a uniform discrete-time marked-cluster majorant and
+identification of its sums with the actual vacuum and complete Riesz shell.
+Neither the free kinetic theorem nor the finite-order identities above alone
+establish that summed Wilson-band/source result.
