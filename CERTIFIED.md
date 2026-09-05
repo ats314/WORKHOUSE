@@ -271,7 +271,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/Basic.lean:247
   - `make lean`
 
-## T1 — re-derived exactly — 301
+## T1 — re-derived exactly — 302
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -739,19 +739,22 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **private-link paths as single links; universality history by history**
 
 - `a private-link path is one effective link with k times the single-link H0: every three-cluster cumulant of the beta_N assembly is the same, channel by channel in both sectors, on the reduced cluster as on the full one`
-  - src/workhouse/invariants/path_reduction.py:46 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026
+  - src/workhouse/invariants/path_reduction.py:48 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026
   - `workhouse verify --only 'a private-link path is one effective link with k times the single-link H0: every three-cluster cumulant of the beta_N assembly is the same, channel by channel in both sectors, on the reduced cluster as on the full one'`
 - `the single-contact dressing agrees history by history between its two geometries once time is reversed, the end roles are swapped and one end face is conjugated: every (sequence, channel) term has ratio -1`
-  - src/workhouse/invariants/path_reduction.py:132 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026
+  - src/workhouse/invariants/path_reduction.py:134 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026
   - `workhouse verify --only 'the single-contact dressing agrees history by history between its two geometries once time is reversed, the end roles are swapped and one end face is conjugated: every (sequence, channel) term has ratio -1'`
+- `the single-contact dressing obeys the same lemma once time is reversed: phi (delete the hub private after the hub-end letter, keep the other as the weight-two link, reverse the hub-end link, conjugate) maps every history's straight integrand onto its L integrand with the same coefficient up to the incidence sign, and preserves the Haar integral on the mirror family`
+  - src/workhouse/invariants/path_reduction.py:268 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; runs/dressing_lemma_2026-09-04; ADR 0033
+  - `workhouse verify --only 'the single-contact dressing obeys the same lemma once time is reversed: phi (delete the hub private after the hub-end letter, keep the other as the weight-two link, reverse the hub-end link, conjugate) maps every history'"'"'s straight integrand onto its L integrand with the same coefficient up to the incidence sign, and preserves the Haar integral on the mirror family'`
 - `the universality lemma, by exhaustion on the fourth-order family: phi (delete the second private letter of the straight middle face, keep the first as the weight-two link) maps every history's straight integrand onto its L integrand with the same coefficient, and preserves the Haar integral on every word the Fierz swaps and cuts can generate from the face words`
-  - src/workhouse/invariants/path_reduction.py:209 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; runs/universality_lemma_2026-09-04; ADR 0032
+  - src/workhouse/invariants/path_reduction.py:211 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; runs/universality_lemma_2026-09-04; ADR 0032
   - `workhouse verify --only 'the universality lemma, by exhaustion on the fourth-order family: phi (delete the second private letter of the straight middle face, keep the first as the weight-two link) maps every history'"'"'s straight integrand onto its L integrand with the same coefficient, and preserves the Haar integral on every word the Fierz swaps and cuts can generate from the face words'`
 - `universality of the two-hop weight holds history by history: the straight and the L-shaped chain agree in every (insertion sequence, channel) term of the direct term, and integrand by integrand within each term`
-  - src/workhouse/invariants/path_reduction.py:97 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; ADR 0019
+  - src/workhouse/invariants/path_reduction.py:99 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; ADR 0019
   - `workhouse verify --only 'universality of the two-hop weight holds history by history: the straight and the L-shaped chain agree in every (insertion sequence, channel) term of the direct term, and integrand by integrand within each term'`
 - `where the identity lives: after every private path is integrated, the straight and the L chain leave the same formal word in the two shared links, coefficient for coefficient, in every (sequence, channel) term; after the middle face's private links alone they do not`
-  - src/workhouse/invariants/path_reduction.py:161 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; runs/vertex_residuals_2026-09-04; ADR 0031
+  - src/workhouse/invariants/path_reduction.py:163 · G14; runs/path_reduction_2026-09-04; ADR 0030; ADR 0029; ADR 0026; runs/vertex_residuals_2026-09-04; ADR 0031
   - `workhouse verify --only 'where the identity lives: after every private path is integrated, the straight and the L chain leave the same formal word in the two shared links, coefficient for coefficient, in every (sequence, channel) term; after the middle face'"'"'s private links alone they do not'`
 **published comparisons (literature/index.yaml)**
 

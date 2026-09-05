@@ -11,7 +11,9 @@ weight agrees between the straight and the L-shaped chain for every
 time-ordered insertion sequence separately, and integrand by integrand
 within each; the single-contact dressing agrees history by history once the
 two geometries are matched (time reversed, end roles swapped, one end face
-conjugated). The record is ``runs/path_reduction_2026-09-04``.
+conjugated). The record is ``runs/path_reduction_2026-09-04``. The lemma itself
+(ADR 0032) and its extension to the single-contact dressing (ADR 0033) are read from
+``runs/universality_lemma_2026-09-04`` and ``runs/dressing_lemma_2026-09-04``.
 """
 
 from __future__ import annotations
@@ -250,4 +252,64 @@ def _():
         f"({a['integrands_straight']} integrands); the Haar integral is phi-invariant on all "
         f"{total} words of the swap and cut families checked ({families}); on arbitrary wirings "
         f"it is not ({controls})"
+    )
+
+
+_DRESSING_RUN = "runs/dressing_lemma_2026-09-04"
+
+_DRESSING_LEMMA = (
+    "the single-contact dressing obeys the same lemma once time is reversed: phi (delete the hub "
+    "private after the hub-end letter, keep the other as the weight-two link, reverse the hub-end "
+    "link, conjugate) maps every history's straight integrand onto its L integrand with the same "
+    "coefficient up to the incidence sign, and preserves the Haar integral on the mirror family"
+)
+
+
+@reduction.check(
+    _DRESSING_LEMMA,
+    _CITE + "; " + _DRESSING_RUN + "; ADR 0033",
+    rests_on=(_LEMMA, _SINGLE_BY_HISTORY),
+)
+def _():
+    # The face carrying both shared links (the hub) is an end face of the
+    # single-contact dressing, not the inserted one, and ADR 0030's
+    # correspondence reverses time. Staged from the matching end -- one
+    # resolvent expansion on the ket side, two on the bra side -- the straight
+    # cluster's integrands pair off with the L cluster's one to one; staged
+    # naively they do not, which is the 52-of-128 the record keeps as the
+    # artifact it was. The family is the two-hop lemma's mirror image (the two
+    # shared links exchange roles), checked here directly on the same counts.
+    cert = json.loads((ROOT / _DRESSING_RUN / "certificate.json").read_text(encoding="utf-8"))
+    a = cert["parts"]["A_phi_on_histories"]
+    fam = cert["parts"]["B_C_family"]
+    ctrl = cert["parts"]["D_control"]
+    exhaustive = [k for k, v in fam.items() if v["exhaustive"]]
+    naive = a["naive_staging_terms_with_equal_coefficient_value_multisets"]
+    ok = (
+        a["terms"]
+        == a["terms_where_phi_is_a_bijection_onto_L"]
+        == a["terms_with_equal_coefficients_up_to_the_incidence_sign"]
+        == 128
+        and a["integrands_straight"] == a["integrands_with_equal_Haar_integral_over_QN"] == 560
+        and a["keys_equal_under_the_correspondence"]
+        and naive < a["terms"]
+        and a["phi"]["reversed_links"] == ["end path", "hub-end link"]
+        and a["phi"]["conjugate"]
+        and all(v["phi_invariant"] == v["words"] for v in fam.values())
+        and fam["swaps a=1 c=1"]["words"] == 576
+        and fam["swaps a=2 c=1"]["words"] == fam["swaps a=1 c=2"]["words"] == 17280
+        and fam["swaps a=c=1 over Q(N)"]["words"] == 576
+        and fam["reachable swaps then cuts a=1 c=1"]["words"] == 384
+        and len(exhaustive) >= 5
+        and all(v["phi_invariant"] < v["words"] for v in ctrl.values())
+    )
+    total = sum(v["words"] for v in fam.values())
+    controls = ", ".join(f"{k}: {v['phi_invariant']}/{v['words']}" for k, v in ctrl.items())
+    return ok, (
+        "staged from the matching end, phi is a coefficient-preserving bijection of integrands in "
+        f"{a['terms_where_phi_is_a_bijection_onto_L']} of {a['terms']} history terms and every "
+        f"one of the {a['integrands_straight']} integrands has the Haar integral of its image over "
+        f"Q(N) (naively staged, the (coefficient, value) multisets agree in only {naive} terms); "
+        f"the integral is phi-invariant on all {total} words of the mirror family's swap and "
+        f"cut families; on arbitrary wirings it is not ({controls})"
     )
