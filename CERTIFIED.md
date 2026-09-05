@@ -322,7 +322,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/CreatorParent.lean:27
   - `make lean`
 
-## T1 — re-derived exactly — 342
+## T1 — re-derived exactly — 349
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -403,6 +403,29 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the two-loop exponents of the necessary continuum law are 51/121 and 86/121`
   - src/workhouse/invariants/continuum.py:72 · G19; paper/research_notes/G19_CONTINUUM_BRIDGE_INSERT.tex
   - `workhouse verify --only 'the two-loop exponents of the necessary continuum law are 51/121 and 86/121'`
+**continuum scale comparison: boundary, history and Schur controls**
+
+- `closed-form Schur controls retain the graph norm, vacuum and entire low-window frame`
+  - src/workhouse/invariants/continuum_scale_comparison.py:116 · paper/research_notes/G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md rational matrix, graph-frame and inverse-budget controls
+  - `workhouse verify --only 'closed-form Schur controls retain the graph norm, vacuum and entire low-window frame'`
+- `noncommuting Gaussian blocks retain exact memory and replay rational spectral enclosures`
+  - src/workhouse/invariants/continuum_scale_comparison.py:59 · paper/research_notes/G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md Gaussian oscillator corollary; finite exact matrix and Sturm controls
+  - `workhouse verify --only 'noncommuting Gaussian blocks retain exact memory and replay rational spectral enclosures'`
+- `original-link incidence recovers the quotient metric and retains the discrete IMS defect`
+  - src/workhouse/invariants/continuum_scale_comparison.py:18 · paper/research_notes/G19_WILSON_FINITE_CELL_GAP_AND_BOUNDARY_FORM_20260905.md sections 2-5; paper/research_notes/G19_WILSON_HARMONIC_BOUNDARY_COMPARISON_20260905.md finite original-link controls
+  - `workhouse verify --only 'original-link incidence recovers the quotient metric and retains the discrete IMS defect'`
+- `periodic three-dimensional links retain Hodge, interface and harmonic-mode constraints`
+  - src/workhouse/invariants/continuum_scale_comparison.py:136 · paper/research_notes/G19_WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY_20260905.md finite integer, rational Green-kernel and explicit fast-field controls
+  - `workhouse verify --only 'periodic three-dimensional links retain Hodge, interface and harmonic-mode constraints'`
+- `quadratic singlet reconstruction does not erase an unobserved physical chirality`
+  - src/workhouse/invariants/continuum_scale_comparison.py:96 · paper/research_notes/G19_GAUSSIAN_OS_HISTORY_OBSERVABILITY_20260905.md physical-algebra limits; finite invariant polynomial controls
+  - `workhouse verify --only 'quadratic singlet reconstruction does not erase an unobserved physical chirality'`
+- `retained interface squares give exact finite fast floors and a literal face-source factor`
+  - src/workhouse/invariants/continuum_scale_comparison.py:38 · paper/research_notes/G19_WILSON_HARMONIC_BOUNDARY_COMPARISON_20260905.md sections 3-6; finite gluing, LDL and source controls
+  - `workhouse verify --only 'retained interface squares give exact finite fast floors and a literal face-source factor'`
+- `sampled Gaussian histories see frequencies that one equal-time coordinate omits`
+  - src/workhouse/invariants/continuum_scale_comparison.py:76 · paper/research_notes/G19_GAUSSIAN_OS_HISTORY_OBSERVABILITY_20260905.md finite covariance, observability and weighted-strip controls
+  - `workhouse verify --only 'sampled Gaussian histories see frequencies that one equal-time coordinate omits'`
 **coupling erratum (C4/G2)**
 
 - `the 4**r rescaling breaks the bridge: order 2 off by 16, order 3 by 64`

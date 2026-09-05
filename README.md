@@ -120,14 +120,44 @@ proves fast vertical energy of order `1/a`. More strongly, the
 [full coupled two-square theorem](paper/research_notes/G19_WILSON_TWO_SQUARE_PHYSICAL_SHELLS_20260905.md)
 proves its complete low physical shells and an onto frame of real Wilson
 sources, with gap `2 sqrt(3) sqrt(u)+O_N(u^(1/4))`. The next comparison must
-control interacting blocks and identify their energy with the actual
-OS-history complement. The [new run](runs/continuum_wilson_block_2026-09-05/README.md)
+control interacting blocks and compare the actual generated history
+dynamics with a physical low-energy model. The [new run](runs/continuum_wilson_block_2026-09-05/README.md)
 separates analytic theorems from exact fixed-coupling SU(2) rotor enclosures.
 The [two-strip spectral calculation](paper/research_notes/G19_WILSON_STRIP_BO_AND_TWO_STRIP_SPLITTING_20260905.md)
 also determines the actual first-shell radial doublet and higher mixed
 singlet, including their order-one splitting and controlled remainder, on
 the specified four-face graph. Its strip Hamiltonians remain additive;
 interactions joining blocks are still part of the next comparison.
+
+The [finite-cell theorem](paper/research_notes/G19_WILSON_FINITE_CELL_GAP_AND_BOUNDARY_FORM_20260905.md)
+now treats the full physical Wilson Hamiltonian on any fixed complex satisfying
+the explicit flat-orbit and curl hypotheses. Its first physical gap is twice
+the least weighted curl frequency, with an order-one remainder. The
+[planar boundary comparison](paper/research_notes/G19_WILSON_HARMONIC_BOUNDARY_COMPARISON_20260905.md)
+retains every interface and exterior link at the harmonic level. After
+retaining box-scale slow modes, its fast energy is at least `2sqrt(u)/L`,
+independent of the number of boxes, and box averages form a stable low-mode
+frame. The [three-dimensional companion](paper/research_notes/G19_WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY_20260905.md)
+handles periodic original-link Hodge and Bianchi constraints with the same
+box-count uniformity, retaining all torus harmonic modes. Uniform nonlinear
+quantum-form bounds and actual local history/source maps remain open.
+
+The next scale comparison also has a sharper target.
+[Exact Gaussian histories](paper/research_notes/G19_GAUSSIAN_OS_HISTORY_OBSERVABILITY_20260905.md)
+can retain all fine frequencies despite fewer equal-time coordinates. A
+configuration fiber therefore does not identify the OS complement. The
+[Schur comparison](paper/research_notes/G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md)
+keeps the generated temporal memory and induced kinetic mass, with an exact
+low-frequency error bound. The remaining Wilson task is a uniform physical
+form and source comparison for that actual generated dynamics, including
+boundary interactions and the physical clock. The
+[closed-form theorem](paper/research_notes/G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md)
+now gives a sufficient nonlinear energy criterion: the exact normalized
+Schur operator and a fast bound `f` imply
+`Delta_fine >= (Delta_coarse^-1+f^-1)^-1`, together with an onto low-window
+graph-source frame. Its uniform Wilson form, coarse and literal-source
+hypotheses remain to be proved. The fixed-spacing infrared construction
+and the earlier conditional OS intertwiner remain inputs.
 
 The graph now exposes the individual results and their consequences:
 

@@ -4,6 +4,248 @@
 # that entire statement. This does not change its mathematically established status.
 schema: results/v1
 results:
+  - id: RESULT:WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY
+    statement: On an n-periodic cubic original-link complex, the transverse curl Hessian and
+      the retained space S=ran(P_C B) of Coulomb-projected componentwise L-cube means satisfy
+      K_C>=kappa_L(I_C-P_S), kappa_L=4 sin^2(pi/(2L))>=4/L^2. The fast compression has the same
+      lower bound independently of box count. All three torus harmonic cochain directions per
+      color are retained, and the original-link Hodge and Bianchi constraints are respected.
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - The stated periodic cubic orientation convention with n>=3 and L>=2 dividing n; boxes
+      partition basepoints and every link and interface difference remains in the energy.
+    - Original-link Euclidean metric, C=ker d0*, and the exact cochain operators; the result
+      tensors with a fixed Lie-algebra inner product.
+    - A strictly positive Gaussian-frequency application requires an explicit regulator or a
+      separately specified treatment of retained flat variables; positive face weights give
+      the stated w_min variant.
+    scope: Three-dimensional harmonic form theorem, uniform in the number of boxes. The nonlocal
+      Coulomb projection is not identified with a local Wilson history block. Torus zero modes
+      preclude an unregulated normalized Gaussian vacuum and the unique-flat-orbit finite-cell
+      theorem. The bound concerns a coordinate squared-frequency compression, not the vacuum-subtracted
+      quantum-form compression in the general Schur theorem. Nonlinear Wilson forms, actual
+      sources, locality and the all-scale comparison remain open.
+    source: CITE:WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY
+    source_section: Sections 2-6, cochain identities, projected box inequality, retained zero
+      modes and quantum/source scope
+    depends_on: []
+    bears_on:
+    - G19
+    - G23
+    - RESULT:WILSON_HARMONIC_BOUNDARY
+    - RESULT:FORM_SCHUR_SCALE_COMPARISON
+    - RESULT:GAUSSIAN_OS_OBSERVABILITY
+    supported_by:
+      - target: RUN:continuum_scale_comparison_2026-09-05
+        scope: Frozen original derivations, exact controls and independent audits preserve provenance and the stated analytic versus finite-computation boundaries.
+      - target: CHK:continuum-scale-comparison-boundary-hist-ab618b:periodic-three-dimensional-links-retain--42c852
+        scope: Exact periods 3 and 4 verify Hodge/Bianchi, interface matrices, rational Green kernels and selected projected fields; the all-size inequality is analytic.
+  - id: RESULT:WILSON_FINITE_CELL_PHYSICAL_GAP
+    statement: 'For the actual gauge-invariant Wilson Hamiltonian on a fixed finite cell complex,
+      the physical gap is 2 sqrt(2 b_rho) sigma_min sqrt(u)+O(1). Here sigma_min is the least
+      singular value of the weighted original-link curl on the transverse quotient. If its multiplicity
+      is m, the complete first physical excited cluster has m(m+1)/2 levels. The order-one remainder
+      follows from projected odd Taylor cancellation and finite Hermite correctors.
+
+      '
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - A fixed finite connected oriented cell complex with nonzero cycle rank, positive fixed face
+      weights, and all original-link electric contributions retained.
+    - Every flat connection is gauge equivalent to the trivial connection, and the weighted curl
+      is injective on ker d0*.
+    - A compact connected group with simple Lie algebra, a fixed bi-invariant metric, and a faithful
+      finite-dimensional unitary representation with trace constant b_rho.
+    - All vertex Gauss constraints are imposed, u tends to infinity, and the group, complex, weights
+      and representation remain fixed.
+    scope: 'Full nonlinear physical finite-complex theorem. A positive Hessian alone does not
+      imply uniqueness of the flat gauge orbit. The first harmonic cluster can split at order
+      one; its rank is not an assertion of exact degeneracy. Constants are not uniform in a growing
+      family. The L-by-L example has leading gap coefficient of order 1/L, identifying slow modes
+      that must be retained. The discrete-curl Hessian itself is recovered prior work, not a new
+      claim.
+
+      '
+    source: CITE:WILSON_FINITE_CELL_GAP
+    source_section: Sections 2-5, equations (1)-(10); Sections 6-8 give growing-block and boundary
+      scope
+    depends_on: []
+    bears_on:
+    - G19
+    - G23
+    - RESULT:WILSON_TWO_SQUARE_PHYSICAL_SHELLS
+    - RESULT:WILSON_HARMONIC_BOUNDARY
+    supported_by:
+      - target: RUN:continuum_scale_comparison_2026-09-05
+        scope: Frozen original derivations, exact controls and independent audits preserve provenance and the stated analytic versus finite-computation boundaries.
+      - target: CHK:continuum-scale-comparison-boundary-hist-ab618b:original-link-incidence-recovers-the-quo-4ddb41
+        scope: Exact finite incidence and quotient metrics verify geometric inputs; compact localization, all-group invariant multiplicity and asymptotic remainders are analytic.
+  - id: RESULT:WILSON_HARMONIC_BOUNDARY
+    statement: 'On planar rectangular Wilson disks tiled by L-by-L face boxes, original-link incidence
+      gives K=C C*=4I-A_face and an exact sum of internal Neumann, interface and outer-boundary
+      forms. Thus K>=kappa_L Q, kappa_L=4 sin^2(pi/(2L))>=4/L^2, independently of the number of
+      boxes. The harmonic fast complement has energy at least 2sqrt(u)/L. Box averages form a
+      frame on a spatial spectral window below Lambda<kappa_L, with bounds 1-Lambda/kappa_L and 1; literal
+      face sources carry the additional K^(1/4) frequency factor.
+
+      '
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - The actual original-link harmonic Hessian on a finite filled planar rectangle, with all
+      exterior boundary links and interface edges retained.
+    - A tiling by full L-by-L boxes, L>=2, with normalized box constants and Q their orthogonal
+      complement; the stated extensions use their explicit internal Poincare constants.
+    - The source lower bound uses a band [epsilon,Lambda] with epsilon>0 and Lambda<kappa_L; the
+      physical scalar conclusion concerns normalized quadratic color contractions.
+    scope: 'All-size harmonic boundary and spectral-frame theorem, uniform in the number of boxes.
+      The periodic infinite-lattice frame statement concerns the bounded harmonic spatial operator.
+      The harmonic spectral projection is not an OS history block. Linear face sources are adjoint-valued;
+      quadratic contractions cover the corresponding physical two-quantum sector, not all higher
+      invariant sectors. Electric-dual box means are not automatically literal magnetic holonomy
+      means. The companion three-dimensional harmonic theorem handles periodic link Hodge/Bianchi constraints; nonlinear quantum-form and all-scale Wilson bounds remain separate.
+
+      '
+    source: CITE:WILSON_HARMONIC_BOUNDARY
+    source_section: Sections 2-7, equations (1)-(12)
+    depends_on: []
+    bears_on:
+    - G19
+    - G23
+    - RESULT:WILSON_FINITE_CELL_PHYSICAL_GAP
+    - RESULT:GAUSSIAN_SCHUR_MEMORY
+    - RESULT:FORM_SCHUR_SCALE_COMPARISON
+    supported_by:
+      - target: RUN:continuum_scale_comparison_2026-09-05
+        scope: Frozen original derivations, exact controls and independent audits preserve provenance and the stated analytic versus finite-computation boundaries.
+      - target: CHK:continuum-scale-comparison-boundary-hist-ab618b:retained-interface-squares-give-exact-fi-fa99c7
+        scope: Finite tiled rectangles, rational Poincare certificates and the Section 7 literal-source factor retain interfaces and exterior terms; the uniform all-size statements are analytic.
+  - id: RESULT:FORM_SCHUR_SCALE_COMPARISON
+    statement: 'A nonnegative closed Hamiltonian form with exact factorization h[p,q]=k0[p]+norm(F^(1/2)(q+Up))^2,
+      F>=f I and bounded U, has normalized static Schur operator L=M^-1/2 K0 M^-1/2 with M=I+U*U.
+      Its variational energies obey f mu_j/(f+mu_j)<=lambda_j<=mu_j. With finite vacuum and full
+      coarse gap mu, the complete fine gap is at least (mu^-1+f^-1)^-1. The graph isometry projects
+      onto the entire spectral window [0,E], E<f, with frame lower bound 1-(E/f)^2. Repeated actual
+      coarse comparisons preserve a positive gap when the inverse fast energies are summable in
+      common physical units.
+
+      '
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - A nonnegative self-adjoint Hamiltonian and the exact closed-form factorization on D(h)={(p,q):p
+      in D(k0),q+Up in D(F^(1/2))}, with k0 closed, F>=f>0 and U bounded into Q.
+    - For finite retained P contained in the Hamiltonian form domain, the factorization and U
+      are derived from the actual restricted cross form; no operator-domain assumption on P is
+      made.
+    - The infinite-retained full-gap conclusion requires a finite-dimensional vacuum and a genuine
+      full gap of L; discreteness of higher levels requires its own finite spectral-rank premise.
+    - Iteration requires actual coarse gap(L_j)>=Delta_j, a common physical clock, and a finite
+      sum of f_j^-1; errors or changing energy prefactors must be included in that comparison.
+    scope: 'Generic exact closed-form theorem, including unbounded Hamiltonians and an infinite
+      retained space. These inequalities concern actual Hamiltonian energies, without square roots.
+      They permit large cross coupling but retain its full induced metric. The graph isometry
+      need not reduce H or equal an OS-history range. Its whole-window frame is not yet a literal
+      Wilson source frame. Uniform nonlinear Wilson fast bounds, bounded dressing, the actual
+      coarse identification, source comparison and continuum limits remain unproved applications.
+
+      '
+    source: CITE:FORM_SCHUR_SCALE_COMPARISON
+    source_section: Sections 1-7, closed domains, exact shifted form, full gap, graph frame and
+      scale recursion
+    depends_on: []
+    bears_on:
+    - G19
+    - G23
+    - RESULT:GAUSSIAN_SCHUR_MEMORY
+    - RESULT:WILSON_HARMONIC_BOUNDARY
+    - RESULT:OS_HISTORY_BLOCK_INTERTWINER
+    supported_by:
+      - target: RUN:continuum_scale_comparison_2026-09-05
+        scope: Frozen original derivations, exact controls and independent audits preserve provenance and the stated analytic versus finite-computation boundaries.
+      - target: CHK:continuum-scale-comparison-boundary-hist-ab618b:closed-form-schur-controls-retain-the-gr-374e30
+        scope: Exact finite shifted forms, graph metric, vacuum, entire rank-two source window and eight-step inverse budget; the unbounded closed-form theorem and Wilson application are not machine-certified.
+  - id: RESULT:GAUSSIAN_OS_OBSERVABILITY
+    statement: 'For a finite positive frequency matrix Omega and linear observation B, the exact
+      Gaussian OS one-particle range is direct_sum_omega ran(P_omega B*), and its full coordinate-history
+      range is the symmetric Fock space over that subspace. Regular positive Euclidean-time sampling
+      gives the same range. Simultaneously invariant histories give its compact-group invariant
+      Fock space. The actual symmetric strip loses a mixed physical singlet at sqrt(3)+sqrt(5),
+      while arbitrarily small unequal positive face weights restore complete observability; separate-slice
+      physical completeness is also proved for the two-mode SU(2) example.
+
+      '
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - A finite-dimensional stationary Gaussian process with covariance (2 Omega)^-1 exp(-Omega
+      absolute(t-s)), Omega strictly positive, and the stated linear observation.
+    - The full polynomial coordinate-history algebra; for the invariant conclusion the compact
+      group commutes with Omega and the observation is equivariant.
+    - The smaller separately invariant slice algebra is covered only by the explicit symmetric-strip
+      and two-mode SU(2) density proofs, not by one-particle observability alone.
+    scope: 'Exact Gaussian OS and physical tangent statements. Equal-time configuration fibers
+      do not generally equal the OS complement, and arbitrarily weak frequency residues can change
+      the exact history range. A three-mode SO(3) chirality example prevents an unrestricted separate-slice
+      cyclicity inference. The existing generic OS history intertwiner remains valid. No nonlinear
+      Wilson range is identified by continuity from this tangent calculation.
+
+      '
+    source: CITE:GAUSSIAN_OS_OBSERVABILITY
+    source_section: Sections 1-6, rank criterion, Wick density, invariant algebra and actual strip
+      examples
+    depends_on: []
+    bears_on:
+    - G19
+    - G23
+    - RESULT:OS_HISTORY_BLOCK_INTERTWINER
+    - RESULT:GAUSSIAN_SCHUR_MEMORY
+    supported_by:
+      - target: RUN:continuum_scale_comparison_2026-09-05
+        scope: Frozen original derivations, exact controls and independent audits preserve provenance and the stated analytic versus finite-computation boundaries.
+      - target: CHK:continuum-scale-comparison-boundary-hist-ab618b:sampled-gaussian-histories-see-frequenci-af5cd0
+        scope: Finite reflected Gram and observability ranks, weighted-strip residues and mixed singlet energy; Gaussian reconstruction and density are analytic.
+      - target: CHK:continuum-scale-comparison-boundary-hist-ab618b:quadratic-singlet-reconstruction-does-no-fd65c0
+        scope: Exact quadratic reconstruction and a Gauss-invariant chirality countercontrol distinguish observable algebras; general source cyclicity is not inferred.
+  - id: RESULT:GAUSSIAN_SCHUR_MEMORY
+    statement: 'For a finite positive squared-frequency block matrix [[C,D],[D*,F]] with F>=f
+      I, exact Gaussian elimination gives K(x)=K0+x M-x^2 D F^-2(F+x I)^-1D*, where K0=C-D F^-1D*
+      and M=I+D F^-2D*. If mu_j are the eigenvalues of M^-1/2 K0 M^-1/2, the first retained-count
+      eigenvalues lambda_j of the full matrix obey f mu_j/(f+mu_j)<=lambda_j<=mu_j.
+
+      '
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - A finite-dimensional real positive squared-frequency matrix in an orthogonal unit-kinetic
+      coordinate split, with F>=f I and f>0.
+    - The exact generated Gaussian history marginal, with x the nonnegative squared Euclidean
+      Fourier frequency.
+    scope: 'Exact generic memory identity and sorted spectral comparison, with no smallness assumption
+      on the interface matrix D. The induced mass M must be retained. The low-frequency relative
+      error is at most mu/(2f). The exact marginal can contain every fine frequency, so this theorem
+      compares it with a coarse dynamical approximation without equating that approximation to
+      the exact OS range. Applying the planar Wilson bound requires the specified electric-dual
+      or nonlocal normalized chart and a separate literal-source/reflection match.
+
+      '
+    source: CITE:FORM_SCHUR_SCALE_COMPARISON
+    source_section: Section 5, exact Gaussian specialization, positive-frequency Loewner bounds
+      and source-coordinate scope
+    depends_on:
+    - RESULT:FORM_SCHUR_SCALE_COMPARISON
+    bears_on:
+    - G19
+    - G23
+    - RESULT:WILSON_HARMONIC_BOUNDARY
+    - RESULT:GAUSSIAN_OS_OBSERVABILITY
+    supported_by:
+      - target: RUN:continuum_scale_comparison_2026-09-05
+        scope: Frozen original derivations, exact controls and independent audits preserve provenance and the stated analytic versus finite-computation boundaries.
+      - target: CHK:continuum-scale-comparison-boundary-hist-ab618b:noncommuting-gaussian-blocks-retain-exac-38b061
+        scope: A rational noncommuting block verifies exact resolvent memory, sample Loewner bounds and independently replayed Sturm spectral enclosures; the general spectral comparison is analytic.
   - id: RESULT:WILSON_STRIP_BO_FIRST_TERM
     statement: >
       For the actual adjacent-strip vertical ground, the normalized flat

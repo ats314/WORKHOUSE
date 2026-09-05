@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 100 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 398/398 checks pass.
+**T1/T2 — re-derived here.** 405/405 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -62,6 +62,7 @@ it cannot drift from what the repository actually checks.
 | the Wilson weighted chart: exact creator velocity controls | 6/6 |
 | the complete Wilson band: finite source and projection controls | 5/5 |
 | physical Wilson blocks: exact metric, rotor and shell controls | 6/6 |
+| continuum scale comparison: boundary, history and Schur controls | 7/7 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -176,6 +177,7 @@ published. A paper is T3 until something checks it, same as any document.
 
 | Paper | Bears on | Relation | Status |
 |---|---|---|---|
+| `URZUA_2019` | `G19` | supplies-comparison | verified |
 | `NSY_2019` | `G18` | supplies-method | verified |
 | `KS_1975` | `R2` | supplies-method | not-yet-obtained |
 | `KSS_1976` | `D_3` | contradicts | not-yet-obtained |
@@ -225,7 +227,7 @@ published. A paper is T3 until something checks it, same as any document.
 | `T_HOOFT_1979` | `G19` | supplies-method | not-yet-obtained |
 | `GINIBRE_1970` | `G19` | confusable | not-yet-obtained |
 
-**11 of 48 edges rest on a source nobody here has read
+**11 of 49 edges rest on a source nobody here has read
 or pinned.** Obtaining and digest-pinning a primary source upgrades its
 edges from assertion to verification — the Hamer 1989 table did exactly
 that for the program's strongest external agreement.
@@ -272,6 +274,7 @@ different things: **in-web** is how many indexed papers cite this one
 | `BORGA_2024` | 1 | 10 (2026-08-21) | pinned |
 | `HSB_2000` | 1 | 9 (2026-08-21) | pinned |
 | `SEO_UKAWA_1982` | 1 | 3 (2026-08-21) | stub |
+| `LEWIS_1967` | 1 | — | stub |
 | `T_HOOFT_1979` | 0 | 1386 (2026-09-03) | **not yet obtained** |
 | `AT_2021_SUN` | 0 | 115 (2026-08-21) | pinned |
 | `KRS_2023` | 0 | 67 (2026-08-21) | pinned |
@@ -289,6 +292,7 @@ different things: **in-web** is how many indexed papers cite this one
 | `GINIBRE_1970` | 0 | — | **not yet obtained** |
 | `HAZRA_2026` | 0 | — | **not yet obtained** |
 | `NSY_2019` | 0 | — | **not yet obtained** |
+| `URZUA_2019` | 0 | — | pinned |
 
 **Next acquisition target, computed: `WILSON_1974`** — 10 in-web
 citations and nobody here has read or pinned it. The ranking surfaces
