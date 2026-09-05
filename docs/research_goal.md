@@ -28,15 +28,49 @@ controlled physical spectral object that a scale argument can act on.
 The full theorem has analytic evidence; the exact controls certify their
 declared finite identities and constants.
 
+The [physical scale package](../paper/research_notes/G19_OS_BLOCKING_AND_REVERSE_MASS_MATCHING_20260905.md)
+now adds an exact OS-history blocking intertwiner with the physical clock
+retained. It identifies a separate eliminated-mode estimate as the missing
+spectral input. A [corrected conditional-gradient theorem](../paper/research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md)
+and [actual Wilson block calculation](../paper/research_notes/G19_WILSON_BLOCK_SCORE_AND_FIBER_OBSTRUCTION_20260905.md)
+locate the failed raw averaging and diffusion premises.
+
+The constructive replacement uses physical quantum energy. The
+[compact rotor theorem](../paper/research_notes/G19_WILSON_PHYSICAL_FIBER_FAST_GAP_20260905.md)
+proves a fast vertical scale `1/a` for the specified Wilson blocks. The
+[full coupled two-square theorem](../paper/research_notes/G19_WILSON_TWO_SQUARE_PHYSICAL_SHELLS_20260905.md)
+also proves the entire block's physical gap and three lowest excited shells,
+with real Wilson sources spanning that complete range. These supply a
+physical local spectrum and source map for the scale comparison; they do
+not yet identify the modes removed by an actual OS blocking map.
+The [two-strip continuation](../paper/research_notes/G19_WILSON_STRIP_BO_AND_TWO_STRIP_SPLITTING_20260905.md)
+determines the first physical radial/mixed splitting with a controlled
+remainder on an actual four-face graph. Its strips share a gauge constraint
+and have additive Hamiltonians; surrounding interactions remain to be added.
+
+```mermaid
+flowchart TD
+  IR[Established actual infrared Wilson transfer and sources] -. effective-measure matching required .-> S[OPEN actual scale and boundary comparison]
+  UV[Established finite physical block gaps and source shells] -. interacting blocks and eliminated modes required .-> S
+  OS[Established exact OS-history intertwiner theorem] -. actual reflection and time-covariant block required .-> S
+  R[Reverse finite-mass and source-weight constraints] -. physical clock and renormalization required .-> S
+  S -. controlled trajectory required .-> L[OPEN finite positive physical mass and renormalized correlation limit]
+  L -. field theory axioms and all compact simple groups required .-> C[Clay Yang-Mills existence and mass gap]
+```
+
+Dashed arrows identify remaining hypotheses or constructions. The established
+infrared theory and ultraviolet finite-block inputs meet at the open scale
+comparison; neither is being presented as a continuum proof.
+
 ## Remaining obligations for the Clay theorem
 
 | Obligation | Established input | What must still be proved |
 |---|---|---|
-| Remove the spatial lattice cutoff | The actual Wilson theory and physical spectral band exist in the stated small-u regime, uniformly in volume and admitted temporal mesh. | Construct and control a trajectory of theories as spatial spacing a tends to zero, rather than extrapolate a fixed small-u expansion. |
+| Remove the spatial lattice cutoff | The actual Wilson theory and physical spectral band exist in the stated small-u regime; exact history blocking specifies how a true scale map would transport them. | Construct the actual block/effective-measure trajectory and compare its eliminated OS modes with controlled physical local energies, including interactions between blocks. |
 | Retain a finite, positive physical mass | There is a positive transfer gap in electric-time units at each admitted fixed spatial scale. | Control the energy normalization and spectrum along that trajectory so a positive finite-energy physical excitation survives and the vacuum remains separated from all excitations. |
 | Obtain a nontrivial continuum field theory | Actual Wilson multi-time correlations and their reflection-positive reconstruction are available at fixed spacing; the literal-source band is nonzero. | Produce renormalized limiting correlation distributions with nonzero physical content, the required regularity, full Euclidean symmetry and reconstruction axioms. |
-| Control the physical observable space | Literal plaquette sources span the complete fixed-scale odd band. | Control suitable renormalized or smeared source spectral measures across scales; a fixed-scale frame constant alone does not do this. |
-| Cover every compact simple gauge group | The present physical odd-shell construction uses SU(N), N at least 3. | Establish suitable physical sectors and the continuum construction for the remaining compact simple groups. The SU(2) analogue cannot use an identically zero odd fundamental character. |
+| Control the physical observable space | Literal plaquette sources span the complete fixed-scale odd band; real Wilson sources span the first three physical shells of the full two-square block. | Control renormalized or smeared source spectral measures across scales, retaining nonzero normalized weight and the intended scalar or other physical channel. |
+| Cover every compact simple gauge group | The odd-shell construction uses SU(N), N at least 3; the compact-rotor theorem applies to faithful unitary representations of compact connected simple groups. The finite two-square real sources also cover SU(2). | Extend the appropriate interacting physical sectors and continuum construction beyond the present odd-shell regime. A generic one-rotor result does not construct a full all-group Yang-Mills theory. |
 
 The existing [continuum bridge](../paper/research_notes/G19_CONTINUUM_BRIDGE_INSERT.tex)
 already identifies the central scale mismatch: in its Hamiltonian coordinate
@@ -48,13 +82,21 @@ They determine which kind of new estimate is needed.
 
 ## The next central target
 
-Derive a valid scale comparison that can carry physical spectral control
-between the weak-coupling ultraviolet description and the controlled
-infrared description. Start from the recorded coarse-graining and
-Schur-complement routes, retaining the actual measure, conditional
-expectation, Dirichlet metric and physical time normalization throughout.
-The decisive result would bound the coarse/fine coupling and fluctuation
-contribution uniformly enough to iterate along a specified trajectory.
+Derive the scale comparison for actual coupled or overlapping Wilson blocks,
+starting from the now-proved local physical spectrum. Specify the true
+reflection/time-covariant history block and retain its generated effective
+measure. Bound the eliminated OS modes by the vacuum-subtracted physical
+block energy while controlling surrounding plaquettes, cross terms and
+changing ground energy. Then match the infrared effective transfer and
+renormalized source synthesis to the controlled endpoint, with errors
+summable in physical energy units along a specified trajectory.
+
+The full two-square operator includes its real shared-edge coupling. Its
+exact physical inversion symmetry improves the localization remainder but
+is special to that graph; arbitrary blocks can retain cubic magnetic terms.
+The next comparison must prove its own cancellations or bounds. The single
+block's fast energy of order `1/a` is the desired eliminated scale, not a
+finite continuum glueball mass.
 
 Pursue the reverse direction alongside this construction: start from the
 necessary behavior of a finite positive physical glueball mass and a

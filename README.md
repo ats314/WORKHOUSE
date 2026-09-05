@@ -110,6 +110,25 @@ stage at fixed spatial spacing. The next central target is a controlled
 comparison across spatial scales, with the physical clock and source
 normalization retained; see the goal map for its precise missing inputs.
 
+The [physical scale package](paper/research_notes/G19_OS_BLOCKING_AND_REVERSE_MASS_MATCHING_20260905.md)
+now gives an exact OS-history blocking intertwiner and identifies the
+eliminated-mode estimate it needs. The [sharp conditional-gradient repair](paper/research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md)
+and [actual Wilson block calculation](paper/research_notes/G19_WILSON_BLOCK_SCORE_AND_FIBER_OBSTRUCTION_20260905.md)
+locate the failed averaging and raw-diffusion shortcuts. The
+[physical rotor theorem](paper/research_notes/G19_WILSON_PHYSICAL_FIBER_FAST_GAP_20260905.md)
+proves fast vertical energy of order `1/a`. More strongly, the
+[full coupled two-square theorem](paper/research_notes/G19_WILSON_TWO_SQUARE_PHYSICAL_SHELLS_20260905.md)
+proves its complete low physical shells and an onto frame of real Wilson
+sources, with gap `2 sqrt(3) sqrt(u)+O_N(u^(1/4))`. The next comparison must
+control interacting blocks and identify their energy with the actual
+OS-history complement. The [new run](runs/continuum_wilson_block_2026-09-05/README.md)
+separates analytic theorems from exact fixed-coupling SU(2) rotor enclosures.
+The [two-strip spectral calculation](paper/research_notes/G19_WILSON_STRIP_BO_AND_TWO_STRIP_SPLITTING_20260905.md)
+also determines the actual first-shell radial doublet and higher mixed
+singlet, including their order-one splitting and controlled remainder, on
+the specified four-face graph. Its strip Hamiltonians remain additive;
+interactions joining blocks are still part of the next comparison.
+
 The graph now exposes the individual results and their consequences:
 
 ```bash
@@ -118,6 +137,8 @@ workhouse why RESULT:WILSON_CREATOR_LIMIT
 workhouse why RESULT:CREATOR_PARENT_GAP
 workhouse why RESULT:WILSON_VACUUM_SPECTRAL_FLOW
 workhouse why RESULT:WILSON_ACTIVITY_EXTRACTION
+workhouse why RESULT:OS_HISTORY_BLOCK_INTERTWINER
+workhouse why RESULT:WILSON_TWO_SQUARE_PHYSICAL_SHELLS
 workhouse why RESULT:CREATOR_VELOCITY_INVERSION
 workhouse why RESULT:WILSON_CARDINALITY_CHART
 workhouse why RESULT:ORDERED_CONTOUR_ACTIVITIES

@@ -52,6 +52,14 @@ algebra, bounded plaquette interactions, and the additive kinetic gap.
 | Uniform Wilson activity norm | In the new chart, `sup_i sum 2^|X| ||F_X||<=1/2500` on `|u|<=u_star/1252800000`, uniformly in volume and temporal mesh. | [Weighted activities, §§1–5](../paper/research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md) |
 | Complete uniform finite Wilson shell | The actual normalized transfer differs from its free product by at most `1/998`; the complete neutral physical odd shell has rank `3 L^3` on the admitted periodic lattices. | [Weighted activities, §§1, 5](../paper/research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md) |
 | Complete infinite-volume physical Wilson band | The actual transfer has a vacuum gap; its entire isolated odd band is present in the Euclidean reconstruction and is spanned by the projected literal sources, with Gram between `9/16` and `81/64` on one common interval. | [Complete band and source theorem](../paper/research_notes/G18_WILSON_INFINITE_VOLUME_PHYSICAL_BAND_20260905.md) |
+| Exact physical history blocking | A true reflection/time-covariant pushforward gives an OS isometry and `T_f J=J T_c^(1/b)`. A separate eliminated-mode bound is needed for the full fine gap. | [History intertwiner and reverse mass matching](../paper/research_notes/G19_OS_BLOCKING_AND_REVERSE_MASS_MATCHING_20260905.md) |
+| Correct conditional-gradient recursion | The quotient metric and centered score give a sharp Gaussian-saturated two-by-two bound; a strict fiber separation permits a square-summable score budget. | [Conditional-gradient repair](../paper/research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md) |
+| Actual Wilson block obstruction | The action/Haar score starts at `g^2`, but the intrinsic score is generally `O(g)`; for `N>=5` a rare center well makes the raw compact-fiber diffusion gap exponentially small. | [Exact block geometry and failed premises](../paper/research_notes/G19_WILSON_BLOCK_SCORE_AND_FIBER_OBSTRUCTION_20260905.md) |
+| Compact-group physical rotor | A faithful character potential has one nondegenerate minimum; the invariant quadratic is the first class excitation, giving twice the unrestricted oscillator gap. | [Compact rotor theorem, §§1–2](../paper/research_notes/G19_WILSON_PHYSICAL_FIBER_FAST_GAP_20260905.md) |
+| Actual Wilson vertical fast energy | The constrained bouquet and strip class gaps are `4 sqrt(u)` and `2 sqrt(5) sqrt(u)` to leading order, with uniform bounds on a fixed coarse neighborhood. Their physical scale is `1/a`. | [Exact fiber factors and form inequality, §§3–6](../paper/research_notes/G19_WILSON_PHYSICAL_FIBER_FAST_GAP_20260905.md) |
+| Full coupled two-square physical shells | Exact Gauss/inversion cancellation proves gap `2 sqrt(3) sqrt(u)+O_N(u^(1/4))`, three simple low physical shells, and an onto projected frame of three real Wilson sources. | [Full physical block and source theorem](../paper/research_notes/G19_WILSON_TWO_SQUARE_PHYSICAL_SHELLS_20260905.md) |
+| Actual strip ground and effective first term | The normalized vertical ground, Born-Huang energy and exact on-shell self-energy retain the true metric; the two-strip angular correction is `11/80`. | [Ground and effective-energy proof, §§1–6](../paper/research_notes/G19_WILSON_STRIP_BO_AND_TWO_STRIP_SPLITTING_20260905.md) |
+| Actual two-strip physical splitting | On the specified four-face graph, an exact radial doublet lies below the mixed singlet by `(54N^2-15)/(160N)+O_N(u^-1/4)`. Localized physical quasimodes prove the spectral remainder. | [Actual finite-graph theorem, §7](../paper/research_notes/G19_WILSON_STRIP_BO_AND_TWO_STRIP_SPLITTING_20260905.md) |
 | Same-weight obstruction | Arbitrary disjoint active SU(3) plaquette families disprove the unrestricted undamped same-weight estimate. | [Obstruction](../paper/research_notes/G18_SAME_WEIGHT_CREATOR_OBSTRUCTION_20260905.md) |
 
 The fixed-order unitary chart and the convergent nonunitary creator family
@@ -168,8 +176,14 @@ flowchart TD
   V --> P[Actual infinite-volume transfer and complete physical source frame]
   O --> P
   PW --> P
-  P -. scale control required .-> CL[Nontrivial continuum theory with positive physical mass gap]
-  RG[Controlled trajectory with clock and source normalization] -. open input .-> CL
+  CG[Compact rotor localization] --> VF[Actual Wilson vertical fast energy]
+  GM[Exact Wilson link metric] --> VF
+  GS[Exact physical two-square Gauss symmetry] --> BF[Full coupled block gap and physical source frame]
+  OS[Exact OS-history blocking theorem] -. actual block map required .-> RG[Physical scale comparison with clock and source normalization]
+  VF -. complement comparison required .-> RG
+  BF -. interacting blocks required .-> RG
+  P -. infrared effective matching required .-> RG
+  RG -. trajectory and continuum correlation limits required .-> CL[Nontrivial continuum theory with positive physical mass gap]
 ```
 
 Solid arrows display established proof inputs; dashed arrows display
@@ -195,14 +209,31 @@ completion then contains the entire band, identifying the actual OS and
 quantum GNS spectral objects without assuming equality of their full
 high-energy spaces.
 
-The central next target is a valid one-step scale comparison for actual
-effective Wilson measures or physical transfer forms, with the coarse
-metric, fluctuation modes and clock specified. The known small-u endpoint
-must be connected to the large-u trajectory of the continuum coordinate
-u=g_H^-4. Work backward as well from finite positive physical masses and
-nonvanishing renormalized source measures, to specify what the intermediate
-scale description must preserve. The [goal map](research_goal.md) states
-the proof obligations; G19 retains failed routes and their exact reasons.
+The scale package now supplies an exact OS-history intertwiner under the
+actual pushforward, reflection and time-covariance hypotheses. It also
+repairs the reversed averaging estimate and computes the actual Wilson
+horizontal score. The rare diffusion well is compatible with a fast physical
+rotor: its potential height is order `u`, above the physical low energies
+of order `sqrt(u)`. The full adjacent-two-square calculation goes further,
+retaining the shared-edge coupling and proving its low physical spectrum
+and complete real-source frame. Its special inversion cancellation is not
+asserted for arbitrary blocks.
+The two-strip continuation also computes the first actual physical
+splitting after the leading harmonic degeneracy: the radial doublet is
+lower than the mixed singlet. This finite graph has additive strip
+Hamiltonians with a common gauge constraint, so its result supplies a
+physical multi-holonomy control without an interaction between the strips.
+
+The central next target is the actual OS-history complement comparison for
+coupled or overlapping blocks: retain surrounding plaquettes, generated
+interactions, changing ground energy and the physical clock. Match the
+infrared effective transfer and renormalized source synthesis to the
+controlled small-u endpoint while the microscopic coordinate `u=g_H^-4`
+tends to infinity. The [goal map](research_goal.md) keeps the resulting
+continuum correlation, finite positive mass and source-weight obligations
+separate. The [external glueball guide](../paper/research_notes/G19_GLUEBALL_REVERSE_TARGET_DATA_20260905.md)
+explains why a charge-even scalar source should accompany the odd band;
+its numerical mass ratios are not theorem dependencies.
 
 The activity norm already has a cardinality margin: connected supports
 satisfy `diameter(X)<=|X|-1`, so its weight `2^|X|` also controls
@@ -237,13 +268,24 @@ workhouse why RESULT:ORDERED_CONTOUR_ACTIVITIES
 workhouse why RESULT:WILSON_WEIGHTED_ACTIVITIES
 workhouse why RESULT:WILSON_UNIFORM_FINITE_SHELL
 workhouse why RESULT:WILSON_SAME_WEIGHT_OBSTRUCTION
+workhouse why RESULT:OS_HISTORY_BLOCK_INTERTWINER
+workhouse why RESULT:CONDITIONAL_GRADIENT_REPAIR
+workhouse why RESULT:WILSON_BLOCK_SCORE_OBSTRUCTION
+workhouse why RESULT:COMPACT_ROTOR_FAST_GAP
+workhouse why RESULT:WILSON_VERTICAL_FAST_ENERGY
+workhouse why RESULT:WILSON_TWO_SQUARE_PHYSICAL_SHELLS
+workhouse why RESULT:WILSON_STRIP_BO_FIRST_TERM
+workhouse why RESULT:WILSON_TWO_STRIP_PHYSICAL_SPLITTING
 workhouse why G18
 make verify
 make check
 make lean
 ```
 
-The [parent and spectral-flow run](../runs/wilson_creator_parent_2026-09-05/README.md),
+The [physical scale-block run](../runs/continuum_wilson_block_2026-09-05/README.md),
+[complete physical-band run](../runs/wilson_physical_band_2026-09-05/README.md),
+[weighted-activity run](../runs/wilson_weighted_activities_2026-09-05/README.md),
+[parent and spectral-flow run](../runs/wilson_creator_parent_2026-09-05/README.md),
 [rooted-contraction run](../runs/wilson_rooted_contraction_2026-09-05/README.md),
 [chart run](../runs/wilson_vacuum_chart_2026-09-05/README.md), and
 [compression run](../runs/wilson_vacuum_compression_2026-09-05/README.md)

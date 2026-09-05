@@ -322,7 +322,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/CreatorParent.lean:27
   - `make lean`
 
-## T1 — re-derived exactly — 336
+## T1 — re-derived exactly — 342
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -787,6 +787,26 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the crosswalk is exactly scalar on the momentum axes`
   - src/workhouse/invariants/fourth_order.py:277 · MASTER_THEORY §5.5
   - `workhouse verify --only 'the crosswalk is exactly scalar on the momentum axes'`
+**physical Wilson blocks: exact metric, rotor and shell controls**
+
+- `conditional Gaussian covariance is sharp in the quotient metric and retains a nonzero score`
+  - src/workhouse/invariants/continuum_wilson_block.py:19 · paper/research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md sections 1-5; finite covariance and Lie algebra controls
+  - `workhouse verify --only 'conditional Gaussian covariance is sharp in the quotient metric and retains a nonzero score'`
+- `four SU2 intrinsic rotor enclosures replay by integer Sturm signs and a tail Schur bound`
+  - src/workhouse/invariants/continuum_wilson_block.py:81 · paper/research_notes/G19_WILSON_PHYSICAL_FIBER_FAST_GAP_20260905.md and the sealed rotor operator derivation; exact fixed-u certificate replay
+  - `workhouse verify --only 'four SU2 intrinsic rotor enclosures replay by integer Sturm signs and a tail Schur bound'`
+- `joint Gauss cancellation holds in mixed polynomial controls and physical source limits are orthogonal`
+  - src/workhouse/invariants/continuum_wilson_block.py:58 · paper/research_notes/G19_WILSON_TWO_SQUARE_PHYSICAL_SHELLS_20260905.md; finite invariant polynomial and Gaussian source controls
+  - `workhouse verify --only 'joint Gauss cancellation holds in mixed polynomial controls and physical source limits are orthogonal'`
+- `original seven-link product logarithms independently reproduce the SU2 radial and mixed corrections`
+  - src/workhouse/invariants/continuum_wilson_block.py:102 · paper/research_notes/G19_WILSON_STRIP_BO_AND_TWO_STRIP_SPLITTING_20260905.md original-link independent control; exact Gaussian Rayleigh coefficients
+  - `workhouse verify --only 'original seven-link product logarithms independently reproduce the SU2 radial and mixed corrections'`
+- `the actual strip metric and Gaussian contractions give the declared Born-Huang and vertical shifts`
+  - src/workhouse/invariants/continuum_wilson_block.py:36 · paper/research_notes/G19_WILSON_STRIP_BO_AND_TWO_STRIP_SPLITTING_20260905.md sections 1-4; symbolic jets and exact ranks 2, 3, 4
+  - `workhouse verify --only 'the actual strip metric and Gaussian contractions give the declared Born-Huang and vertical shifts'`
+- `the two-strip on-shell self-energy leaves a positive angular term and splits the first singlet shell`
+  - src/workhouse/invariants/continuum_wilson_block.py:120 · paper/research_notes/G19_WILSON_STRIP_BO_AND_TWO_STRIP_SPLITTING_20260905.md sections 6-7; exact finite oscillator effective matrices
+  - `workhouse verify --only 'the two-strip on-shell self-energy leaves a positive angular term and splits the first singlet shell'`
 **private-link paths as single links; universality history by history**
 
 - `a private-link path is one effective link with k times the single-link H0: every three-cluster cumulant of the beta_N assembly is the same, channel by channel in both sectors, on the reduced cluster as on the full one`

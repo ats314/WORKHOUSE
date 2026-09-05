@@ -57,6 +57,8 @@ def test_the_ledger_edges_survive_the_round_trip():
     assert ("CITE:UNIFIED", "CITE:GLUEBALL", "technical_appendix") in TRIPLES
     assert ("CITE:UNIFIED", "CITE:GUIDE", "navigation") in TRIPLES
     assert ("CITE:UNIFIED", "CITE:MANIFEST", "provenance") in TRIPLES
+    assert ("CITE:OS_HISTORY_BLOCKING", "CITE:G19_CONTINUUM_BRIDGE", "cites") in TRIPLES
+    assert ("CITE:GLUEBALL_REVERSE_TARGET_DATA", "CITE:OS_HISTORY_BLOCKING", "cites") in TRIPLES
 
 
 def test_the_citation_web_is_in_the_graph():
