@@ -52,7 +52,7 @@ algebra, bounded plaquette interactions, and the additive kinetic gap.
 | Uniform Wilson activity norm | In the new chart, `sup_i sum 2^|X| ||F_X||<=1/2500` on `|u|<=u_star/1252800000`, uniformly in volume and temporal mesh. | [Weighted activities, §§1–5](../paper/research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md) |
 | Complete uniform finite Wilson shell | The actual normalized transfer differs from its free product by at most `1/998`; the complete neutral physical odd shell has rank `3 L^3` on the admitted periodic lattices. | [Weighted activities, §§1, 5](../paper/research_notes/G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md) |
 | Complete infinite-volume physical Wilson band | The actual transfer has a vacuum gap; its entire isolated odd band is present in the Euclidean reconstruction and is spanned by the projected literal sources, with Gram between `9/16` and `81/64` on one common interval. | [Complete band and source theorem](../paper/research_notes/G18_WILSON_INFINITE_VOLUME_PHYSICAL_BAND_20260905.md) |
-| Exact physical history blocking | A true reflection/time-covariant pushforward gives an OS isometry and `T_f J=J T_c^(1/b)`. A separate eliminated-mode bound is needed for the full fine gap. | [History intertwiner and reverse mass matching](../paper/research_notes/G19_OS_BLOCKING_AND_REVERSE_MASS_MATCHING_20260905.md) |
+| Exact physical history blocking | A true reflection/time-covariant pushforward gives an OS isometry and `T_f J=J T_c^(1/b)`. When its reducing complement is nonzero, that complement needs a separate energy bound for the full fine gap. | [History intertwiner and reverse mass matching](../paper/research_notes/G19_OS_BLOCKING_AND_REVERSE_MASS_MATCHING_20260905.md) |
 | Correct conditional-gradient recursion | The quotient metric and centered score give a sharp Gaussian-saturated two-by-two bound; a strict fiber separation permits a square-summable score budget. | [Conditional-gradient repair](../paper/research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md) |
 | Actual Wilson block obstruction | The action/Haar score starts at `g^2`, but the intrinsic score is generally `O(g)`; for `N>=5` a rare center well makes the raw compact-fiber diffusion gap exponentially small. | [Exact block geometry and failed premises](../paper/research_notes/G19_WILSON_BLOCK_SCORE_AND_FIBER_OBSTRUCTION_20260905.md) |
 | Compact-group physical rotor | A faithful character potential has one nondegenerate minimum; the invariant quadratic is the first class excitation, giving twice the unrestricted oscillator gap. | [Compact rotor theorem, §§1–2](../paper/research_notes/G19_WILSON_PHYSICAL_FIBER_FAST_GAP_20260905.md) |
@@ -60,6 +60,12 @@ algebra, bounded plaquette interactions, and the additive kinetic gap.
 | Full coupled two-square physical shells | Exact Gauss/inversion cancellation proves gap `2 sqrt(3) sqrt(u)+O_N(u^(1/4))`, three simple low physical shells, and an onto projected frame of three real Wilson sources. | [Full physical block and source theorem](../paper/research_notes/G19_WILSON_TWO_SQUARE_PHYSICAL_SHELLS_20260905.md) |
 | Actual strip ground and effective first term | The normalized vertical ground, Born-Huang energy and exact on-shell self-energy retain the true metric; the two-strip angular correction is `11/80`. | [Ground and effective-energy proof, §§1–6](../paper/research_notes/G19_WILSON_STRIP_BO_AND_TWO_STRIP_SPLITTING_20260905.md) |
 | Actual two-strip physical splitting | On the specified four-face graph, an exact radial doublet lies below the mixed singlet by `(54N^2-15)/(160N)+O_N(u^-1/4)`. Localized physical quasimodes prove the spectral remainder. | [Actual finite-graph theorem, §7](../paper/research_notes/G19_WILSON_STRIP_BO_AND_TWO_STRIP_SPLITTING_20260905.md) |
+| Full physical finite-cell Wilson gap | On a fixed complex with one flat gauge orbit and nondegenerate transverse curl, the gap is `2 sqrt(2 b_rho) sigma_min sqrt(u)+O(1)`; the complete first cluster has `m(m+1)/2` levels. Constants may depend on the whole complex. | [Finite-cell proof, §§2-5](../paper/research_notes/G19_WILSON_FINITE_CELL_GAP_AND_BOUNDARY_FORM_20260905.md) |
+| All-size harmonic interfaces and frames | The actual planar curl matrix satisfies `K>=kappa_L Q`, with `kappa_L>=4/L^2`, retaining every interface and boundary edge. The fast harmonic complement and low-mode box frame are uniform in the number of boxes. Literal sources have an additional frequency weight. | [Boundary and frame theorem, §§4-7](../paper/research_notes/G19_WILSON_HARMONIC_BOUNDARY_COMPARISON_20260905.md) |
+| Three-dimensional harmonic fast bound | Coulomb-projected componentwise box means retain the three torus harmonic directions and give `K_C>=kappa_L(I-P_S)`, uniformly in box count. This is a squared-frequency form bound; no unregulated Gaussian vacuum or nonlinear quantum-form gap is inferred. | [Periodic original-link theorem](../paper/research_notes/G19_WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY_20260905.md) |
+| Exact Gaussian OS observation | The full history range is the Fock space over the visible frequency subspaces. Regular Euclidean sampling retains the same frequencies; the explicit physical strip examples distinguish this range from a configuration fiber. | [OS observability and invariant scope](../paper/research_notes/G19_GAUSSIAN_OS_HISTORY_OBSERVABILITY_20260905.md) |
+| Exact Gaussian memory and spectral comparison | Keeping both the static Schur potential and induced kinetic mass gives `f mu/(f+mu)<=lambda<=mu`, with no assumption of small interface coupling. The exact marginal may retain every fine frequency. | [Memory and frequency theorem, §5](../paper/research_notes/G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md) |
+| Closed-form physical energy comparison | Under the exact form and coarse-identification hypotheses, the full gap obeys `Delta_fine >= (Delta_coarse^-1+f^-1)^-1`; graph sources cover the entire window `[0,E]`, with lower frame bound `1-(E/f)^2`. Summable inverse fast energies suffice to iterate. The uniform Wilson hypotheses remain open. | [Form domains, complete gap and frame, §§1-7](../paper/research_notes/G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md) |
 | Same-weight obstruction | Arbitrary disjoint active SU(3) plaquette families disprove the unrestricted undamped same-weight estimate. | [Obstruction](../paper/research_notes/G18_SAME_WEIGHT_CREATOR_OBSTRUCTION_20260905.md) |
 
 The fixed-order unitary chart and the convergent nonunitary creator family
@@ -180,7 +186,10 @@ flowchart TD
   GM[Exact Wilson link metric] --> VF
   GS[Exact physical two-square Gauss symmetry] --> BF[Full coupled block gap and physical source frame]
   OS[Exact OS-history blocking theorem] -. actual block map required .-> RG[Physical scale comparison with clock and source normalization]
-  VF -. complement comparison required .-> RG
+  VF -. physical form comparison required .-> RG
+  HC[Planar and three-dimensional harmonic interfaces] -. nonlinear quantum form bound required .-> RG
+  SC[Closed-form Schur gap and complete graph frame] -. actual coarse and literal source matching required .-> RG
+  OB[Exact Gaussian history observability] -. nonlinear physical history map required .-> RG
   BF -. interacting blocks required .-> RG
   P -. infrared effective matching required .-> RG
   RG -. trajectory and continuum correlation limits required .-> CL[Nontrivial continuum theory with positive physical mass gap]
@@ -224,16 +233,51 @@ lower than the mixed singlet. This finite graph has additive strip
 Hamiltonians with a common gauge constraint, so its result supplies a
 physical multi-holonomy control without an interaction between the strips.
 
-The central next target is the actual OS-history complement comparison for
-coupled or overlapping blocks: retain surrounding plaquettes, generated
-interactions, changing ground energy and the physical clock. Match the
-infrared effective transfer and renormalized source synthesis to the
-controlled small-u endpoint while the microscopic coordinate `u=g_H^-4`
-tends to infinity. The [goal map](research_goal.md) keeps the resulting
-continuum correlation, finite positive mass and source-weight obligations
-separate. The [external glueball guide](../paper/research_notes/G19_GLUEBALL_REVERSE_TARGET_DATA_20260905.md)
-explains why a charge-even scalar source should accompany the odd band;
-its numerical mass ratios are not theorem dependencies.
+The central target is now a uniform physical comparison for the actual
+generated Wilson history dynamics. The finite-cell result supplies genuine
+coupled physical spectra. The planar harmonic theorem supplies an all-size
+fast bound after retaining slow modes and keeps every interface term. The
+Gaussian memory theorem specifies the induced stiffness and kinetic mass
+that a local coarse approximation must preserve.
+
+The history projection needs separate attention: even an arbitrarily weak
+observable frequency is retained by exact positive-time histories. For the
+symmetric strip the first missing physical vector is a mixed coarse/fine
+singlet; a class gap on the fixed fiber gives the wrong first complement
+energy. Under unequal weights the full Gaussian history complement can be
+empty. The existing OS intertwiner is unchanged, but its complement must
+be computed from the actual map and observable algebra rather than counted
+from discarded equal-time coordinates.
+
+The retained projection must also control the actual vacuum mismatch.
+Even independent gapped qubits have an exponentially deteriorating raw
+reference fast compression; local vacuum dressing restores the uniform
+bound exactly. The [Schur proof](../paper/research_notes/G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md),
+Section 7, makes this a concrete choice of physical projection. The existing
+creator and vacuum-transport mechanisms motivate that construction, with
+their stated coupling scope retained.
+
+The closed-form Schur theorem now makes the sufficient bound precise:
+prove the exact physical form factorization with `F_j>=f_j>0`, bounded
+dressing `U_j`, and a full coarse gap for the normalized operator with
+`M_j=I+U_j*U_j` retained. In common physical units a finite sum of `1/f_j`
+then preserves a positive gap. Establish these Wilson hypotheses uniformly
+in the block family, with changing ground energy, surrounding plaquettes
+and the established three-dimensional harmonic split retained. Its nonlinear
+quantum realization and source/locality identification still require proof.
+Control the generated memory and renormalized source synthesis on the selected physical
+energy band, then match to the established infrared transfer with a
+summable physical-energy error budget. Literal face sources carry a
+`K^(1/4)` weight; a low-mode frame alone does not supply a nonzero limiting
+renormalized source residue. The physical clock, continuum correlations
+and finite positive mass remain separate requirements in the
+[goal map](research_goal.md).
+
+The [combined coupled-oscillator method review](../paper/research_notes/G19_COUPLED_OSCILLATOR_METHOD_REVIEW_20260905.md)
+provides a useful exact moving-frame benchmark with explicit corrected
+transformations. It does not supply the missing Wilson bound or equate
+renormalization scale with Schrodinger time. Numerical glueball data remain
+source and physical-unit guidance, not theorem premises.
 
 The activity norm already has a cardinality margin: connected supports
 satisfy `diameter(X)<=|X|-1`, so its weight `2^|X|` also controls
@@ -276,13 +320,20 @@ workhouse why RESULT:WILSON_VERTICAL_FAST_ENERGY
 workhouse why RESULT:WILSON_TWO_SQUARE_PHYSICAL_SHELLS
 workhouse why RESULT:WILSON_STRIP_BO_FIRST_TERM
 workhouse why RESULT:WILSON_TWO_STRIP_PHYSICAL_SPLITTING
+workhouse why RESULT:WILSON_FINITE_CELL_PHYSICAL_GAP
+workhouse why RESULT:WILSON_HARMONIC_BOUNDARY
+workhouse why RESULT:WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY
+workhouse why RESULT:GAUSSIAN_OS_OBSERVABILITY
+workhouse why RESULT:FORM_SCHUR_SCALE_COMPARISON
+workhouse why RESULT:GAUSSIAN_SCHUR_MEMORY
 workhouse why G18
 make verify
 make check
 make lean
 ```
 
-The [physical scale-block run](../runs/continuum_wilson_block_2026-09-05/README.md),
+The [boundary and scale-comparison run](../runs/continuum_scale_comparison_2026-09-05/README.md),
+[physical scale-block run](../runs/continuum_wilson_block_2026-09-05/README.md),
 [complete physical-band run](../runs/wilson_physical_band_2026-09-05/README.md),
 [weighted-activity run](../runs/wilson_weighted_activities_2026-09-05/README.md),
 [parent and spectral-flow run](../runs/wilson_creator_parent_2026-09-05/README.md),

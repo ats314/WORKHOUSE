@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "workhouse"
+version = "0.1.0"
+description = "Machine-checkable ledger and symbolic verification suite for the SU(N) cubic flux-band spectral program"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "All rights reserved — unpublished private research. See NOTICE." }
+dependencies = [
+  "sympy>=1.12",
+  "PyYAML>=6.0",
+  "python-flint>=0.9",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.6",
+]
+
+[project.scripts]
+workhouse = "workhouse.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/workhouse"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+# settlement/ holds received artifacts pinned by settlement/SHA256SUMS.
+# Formatting them would change their hashes and destroy the provenance record.
+# Received evidence. Formatting it rewrites the corpus: a first run silently
+# modified 296 files under corpus-import/ before this line existed.
+# notes/imported/ holds verbatim imports from the notes archive, each
+# hash-verified against its register digest by validate(); formatting one
+# is a validation failure by construction.
+# runs/ and docs/handoff/ are transcripts of executions (runs/ pinned by
+# per-run SHA256SUMS; handoff scripts preserved verbatim from session
+# agents) — reformatting a transcript corrupts it.
+extend-exclude = ["settlement", "corpus-import", "lean", "notes/imported", "runs", "docs/handoff"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

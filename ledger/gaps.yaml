@@ -1875,16 +1875,28 @@ gaps:
       exp(-sqrt(u) / (2 b_0)), with SU(3) essential exponential
       exp(-(8 pi^2 / 11) sqrt u) and (1+p)/2 = 86/121.
     next: >
-      Compare the actual OS-history complement of a reflection and
-      time-covariant Wilson block with vacuum-subtracted vertical quantum
-      energy, retaining surrounding interactions and couplings between
-      blocks. Exact history intertwining now preserves the physical clock;
-      actual constrained fibers have fast energy of order 1/a, and the full
-      coupled two-square physical Hamiltonian has a proved gap and complete
-      first-shell source frame. These are inputs, not an identification of
-      that block with the eliminated OS modes. Match the generated infrared
-      effective transfer and renormalized source synthesis to the controlled
-      infinite-volume Wilson endpoint with summable physical-energy errors.
+      Compare the actual generated Wilson history dynamics with a controlled coarse
+      physical model, retaining its temporal memory, induced mass, interfaces,
+      varying ground energy and renormalized source weights. The finite-cell
+      physical theorem supplies fixed-complex spectra; the planar harmonic
+      comparison supplies a fast scale 1/(La) after slow modes are retained,
+      uniformly in the number of boxes. Prove the corresponding nonlinear physical
+      energy and mixed-form estimates uniformly for the actual block family,
+      including three-dimensional Hodge/Bianchi constraints and large-field
+      localization. Specify the reflection/time-compatible history map and its
+      physical observable algebra. An exact history block may retain all observed
+      frequencies, so its complement must not be identified with an equal-time
+      fiber. Control low-energy transfer and source errors in physical units and
+      match the generated infrared dynamics to the established small-u Wilson
+      endpoint. The closed-form theorem makes one sufficient iteration criterion
+      explicit: prove the normalized coarse gap after retaining M_j=I+U_j*U_j and
+      obtain a finite sum of inverse fast physical energies. The exact
+      factorization, bounded U_j and uniform Wilson F_j lower bound remain
+      substantive application hypotheses.
+      Choose a vacuum-adapted physical projection: the exact independent-qubit
+      example shows that a raw reference projection can lose a uniform F_j
+      bound despite a fixed true gap. Local vacuum dressing repairs that
+      example; its interacting Wilson analogue requires its own proof.
       Spatially weighted sharp-shell matching on G18 remains a supporting
       clock route.
       The September 4 scalar expansion already handles the vacuum and full
@@ -1901,22 +1913,58 @@ gaps:
     plan:
       - step: Connect the actual Wilson fixed-scale construction to a controlled continuum trajectory
         state: live
-        depends_on: [RESULT:WILSON_INFINITE_PHYSICAL_BAND, RESULT:OS_HISTORY_BLOCK_INTERTWINER, RESULT:WILSON_VERTICAL_FAST_ENERGY, RESULT:WILSON_TWO_SQUARE_PHYSICAL_SHELLS]
-        status: >
-          The actual infinite-volume transfer and source band provide the
-          controlled infrared endpoint. Exact full-history blocking gives
-          an OS isometry and positive-transfer intertwiner under explicit
-          reflection, locality and time-covariance hypotheses. Actual Wilson
-          vertical rotors have fast physical energy, and the complete coupled
-          two-square physical block has first excitation 2sqrt(3)sqrt(u)
-          plus a smaller-order error and a complete three-source low-shell
-          frame. Still required are the actual history block/effective
-          measure, a comparison of its eliminated modes to those physical
-          local energies, coupled-block bounds, infrared matching, and
-          renormalized continuum correlation and source limits. The
-          single-block inversion cancellation is not an arbitrary-block
-          even expansion. No all-scale contraction or finite continuum mass
-          is asserted.
+        depends_on:
+        - RESULT:WILSON_INFINITE_PHYSICAL_BAND
+        - RESULT:OS_HISTORY_BLOCK_INTERTWINER
+        - RESULT:WILSON_FINITE_CELL_PHYSICAL_GAP
+        - RESULT:WILSON_HARMONIC_BOUNDARY
+        - RESULT:WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY
+        - RESULT:GAUSSIAN_OS_OBSERVABILITY
+        - RESULT:GAUSSIAN_SCHUR_MEMORY
+        - RESULT:FORM_SCHUR_SCALE_COMPARISON
+        status: 'Actual fixed-spacing infrared transfer and sources remain the controlled endpoint.
+          The ultraviolet side now has a general fixed-cell physical first-cluster theorem and
+          all-size planar and three-dimensional harmonic interface bounds, with planar
+          low-mode/source frames and retained periodic harmonic directions. Gaussian
+          Schur elimination retains memory and induced mass, giving a quantitative sorted-frequency
+          approximation without small interface coupling. Exact history observability repairs
+          the earlier emphasis on counting eliminated modes: the actual complement may be zero,
+          and global Gauss permits mixed singlets when it is nonzero. The missing step is the
+          uniform nonlinear Wilson physical form, source and effective-dynamics comparison,
+          followed by a controlled trajectory and continuum limits. Neither a fixed-cell order-one
+          remainder nor a harmonic planar inequality verifies those hypotheses. The proved abstract
+          form theorem supplies a sufficient full-gap and whole-window graph-source comparison;
+          iterating requires actual normalized coarse gap matching and a summable inverse-fast-energy
+          budget in one clock.
+
+          '
+      - step: Retain planar and periodic three-dimensional harmonic interfaces while isolating box-scale fast modes
+        state: done
+        closed_by:
+        - RESULT:WILSON_HARMONIC_BOUNDARY
+        - RESULT:WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY
+        - RESULT:GAUSSIAN_SCHUR_MEMORY
+        status: 'Original-link curl incidence gives K>=kappa_L Q with kappa_L>=4/L^2 independently
+          of the number of boxes. The retained spectral complement and source frames are exact
+          harmonic statements. The Schur kernel keeps all interface coupling and its induced
+          mass. The periodic three-dimensional companion imposes original-link Hodge/Bianchi
+          constraints and retains torus harmonic directions. This completes the stated
+          harmonic comparisons, not the nonlinear quantum-form application.
+
+          '
+      - step: Derive an energy comparison that retains arbitrary cross coupling and the induced
+          norm
+        state: done
+        closed_by:
+        - RESULT:FORM_SCHUR_SCALE_COMPARISON
+        status: 'An exact nonnegative closed-form factorization gives the full energy bound
+          Delta_fine>=(Delta_coarse^-1+f^-1)^-1 and an onto frame for the whole low-energy window.
+          Infinite retained spaces use the explicit closed domain and finite-vacuum hypothesis.
+          No small cross-coupling condition is needed, but the normalized coarse operator must
+          retain M=I+U*U. Actual Wilson factorization, uniform bounds, coarse matching and literal
+          sources remain live.
+
+          '
       - step: Infer a scale contraction from the forward averaging derivative and a uniform raw fiber diffusion gap
         state: dead
         closed_by: [RESULT:CONDITIONAL_GRADIENT_REPAIR, RESULT:WILSON_BLOCK_SCORE_OBSTRUCTION, ADR 0038]
@@ -2060,32 +2108,54 @@ gaps:
     tier: 3
     state: open
     title: The OS bridge with uniform constants
-    status: >
-      The actual fixed-scale Wilson transfer and complete physical odd
-      source band are established. The new exact history-block theorem
-      constructs the compression isometry when the coarse measure is the
-      true full-history pushforward and the map preserves reflection,
-      positive-time locality and blocked time translation. The remaining
-      scale-uniform question is control of the actual eliminated physical
-      modes. Intrinsic Wilson fibers and the full coupled two-square
-      physical Hamiltonian now have proved fast-energy bounds, but neither
-      has yet been identified with that OS-history complement. The raw
-      conditional-gradient shortcut has precise averaging, geometric-score
-      and rare-diffusion-well failures, with a sharp surviving conditional
-      recursion retained separately.
+    status: 'The actual fixed-scale Wilson transfer and complete physical odd source band remain
+      established. The exact history theorem gives an isometry and transfer intertwiner for
+      a true reflection/time-compatible pushforward. Gaussian observability now proves that
+      its range is a history-frequency subspace, not an equal-time coordinate count; an arbitrarily
+      small observed residue can make the whole physical two-mode SU(2) history space visible.
+      The scale-uniform target is therefore the actual generated dynamics and its controlled
+      physical low-energy approximation, with memory, clock and sources retained. The closed-form
+      Schur theorem supplies a sufficient full-gap and whole-window graph-frame comparison,
+      subject to exact physical form factorization and actual normalized coarse matching. Its
+      uniform Wilson realization remains open. An eliminated-mode bound is one valid branch
+      when the specified history complement is nontrivial. The old diffusion-time and raw conditional-gradient
+      failures remain historical evidence.
+
+      '
     plan:
-      - step: Compare the actual OS-history complement with the coupled physical block energy
-        state: live
-        depends_on: [RESULT:OS_HISTORY_BLOCK_INTERTWINER, RESULT:WILSON_VERTICAL_FAST_ENERGY, RESULT:WILSON_TWO_SQUARE_PHYSICAL_SHELLS]
-        status: >
-          Specify the actual reflection/time-covariant block and its true
-          effective history measure. Prove a vacuum-subtracted energy
-          comparison for the reducing complement, including horizontal and
-          vertical couplings, varying ground energy, surrounding plaquettes
-          and interactions between blocks. Retain the physical time step
-          through iteration. A configuration diffusion inequality, a
-          constrained-fiber projection, or a finite two-square gap alone
-          does not supply this comparison.
+    - step: Compare the actual generated history dynamics with a controlled physical low-energy
+        model
+      state: live
+      depends_on:
+      - RESULT:OS_HISTORY_BLOCK_INTERTWINER
+      - RESULT:GAUSSIAN_OS_OBSERVABILITY
+      - RESULT:GAUSSIAN_SCHUR_MEMORY
+      - RESULT:WILSON_HARMONIC_BOUNDARY
+      - RESULT:WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY
+      - RESULT:FORM_SCHUR_SCALE_COMPARISON
+      status: 'This refines the earlier actual-complement comparison; it does not withdraw the
+        generic OS intertwiner. Specify the genuine history map, physical invariant algebra
+        and generated measure. Bound the nonlinear physical forms, induced kinetic mass and
+        memory approximation uniformly, and match literal or renormalized source synthesis on
+        the selected physical band. When an actual reducing complement survives, bound its full
+        globally invariant energy, including mixed coarse/fine color singlets. A class gap on
+        a constrained fiber and the dimension of ker B do not provide that bound. Retain the
+        physical time step through iteration.
+
+        '
+    - step: Determine what the exact harmonic history block observes before assigning an eliminated
+        space
+      state: done
+      closed_by:
+      - RESULT:GAUSSIAN_OS_OBSERVABILITY
+      status: 'The visible frequency projections determine the full Gaussian Wick-Fock range;
+        regular positive Euclidean sampling gives the same range. The symmetric strip''s first
+        missing physical mode is mixed, and unequal positive face weights can remove the complement
+        entirely. The smaller separately invariant physical algebra has its own density theorem
+        in the two-mode SU(2) example and a three-mode chirality counterexample in general.
+        The actual nonlinear Wilson map remains to be analyzed.
+
+        '
     detail: >
       Historical notes-program spine as a conditional chain: local curvature
       -> LSI -> diffusion gap -> exponential clustering -> OS

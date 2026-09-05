@@ -30,8 +30,9 @@ declared finite identities and constants.
 
 The [physical scale package](../paper/research_notes/G19_OS_BLOCKING_AND_REVERSE_MASS_MATCHING_20260905.md)
 now adds an exact OS-history blocking intertwiner with the physical clock
-retained. It identifies a separate eliminated-mode estimate as the missing
-spectral input. A [corrected conditional-gradient theorem](../paper/research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md)
+retained. Its range and any remaining complement must be determined from
+the actual history map; the new Gaussian observability theorem makes this
+distinction explicit. A [corrected conditional-gradient theorem](../paper/research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md)
 and [actual Wilson block calculation](../paper/research_notes/G19_WILSON_BLOCK_SCORE_AND_FIBER_OBSTRUCTION_20260905.md)
 locate the failed raw averaging and diffusion premises.
 
@@ -48,14 +49,32 @@ determines the first physical radial/mixed splitting with a controlled
 remainder on an actual four-face graph. Its strips share a gauge constraint
 and have additive Hamiltonians; surrounding interactions remain to be added.
 
+The ultraviolet input now goes beyond isolated rotors and two-square
+examples. A full physical finite-cell theorem gives the complete first
+cluster from the original-link curl spectrum, while all-size planar and periodic three-dimensional
+harmonic decompositions retain actual interfaces. The planar source frame
+keeps its frequency weights; the three-dimensional link proof respects
+Bianchi constraints and retains torus harmonic directions. The small curl frequencies on growing disks are
+retained slow modes, so the theorem does not demand an impossible uniform
+lower bound on the entire growing block's gap.
+
+Exact Gaussian history reconstruction also repairs the object being
+compared across scales. Reducing equal-time variables can leave the whole
+fine physical history space observable. The useful successor is therefore
+a controlled approximation of the actual generated transfer or memory,
+with a proved low-energy projection and source map. A bound on the actual
+OS complement is still useful when that complement exists; it is not the
+general definition of eliminated configuration modes.
+
 ```mermaid
 flowchart TD
-  IR[Established actual infrared Wilson transfer and sources] -. effective-measure matching required .-> S[OPEN actual scale and boundary comparison]
-  UV[Established finite physical block gaps and source shells] -. interacting blocks and eliminated modes required .-> S
-  OS[Established exact OS-history intertwiner theorem] -. actual reflection and time-covariant block required .-> S
-  R[Reverse finite-mass and source-weight constraints] -. physical clock and renormalization required .-> S
-  S -. controlled trajectory required .-> L[OPEN finite positive physical mass and renormalized correlation limit]
-  L -. field theory axioms and all compact simple groups required .-> C[Clay Yang-Mills existence and mass gap]
+  IR[Established infrared Wilson transfer and sources] -. generated effective theory matching required .-> RG[OPEN actual physical scale comparison]
+  UV[Established finite-cell spectra and harmonic interfaces] -. uniform nonlinear forms and source maps required .-> RG
+  FM[Exact Gaussian memory and conditional form comparison] -. realize its hypotheses for Wilson required .-> RG
+  OS[Exact history intertwining and observability] -. actual map and invariant source algebra required .-> RG
+  R[Reverse finite-mass and residue constraints] -. clock and renormalization required .-> RG
+  RG -. controlled trajectory required .-> C[OPEN finite physical mass and continuum correlations]
+  C -. field theory axioms and all groups required .-> YM[Clay Yang-Mills existence and mass gap]
 ```
 
 Dashed arrows identify remaining hypotheses or constructions. The established
@@ -66,11 +85,11 @@ comparison; neither is being presented as a continuum proof.
 
 | Obligation | Established input | What must still be proved |
 |---|---|---|
-| Remove the spatial lattice cutoff | The actual Wilson theory and physical spectral band exist in the stated small-u regime; exact history blocking specifies how a true scale map would transport them. | Construct the actual block/effective-measure trajectory and compare its eliminated OS modes with controlled physical local energies, including interactions between blocks. |
+| Remove the spatial lattice cutoff | The actual small-u Wilson transfer and source band; exact history intertwining; finite-cell physical spectra; all-size planar and three-dimensional harmonic interface comparisons. | Realize the actual Wilson block and generated history dynamics, prove uniform nonlinear physical form bounds with the harmonic constraints, flat variables and interfaces retained, and control approximation errors along a specified trajectory. |
 | Retain a finite, positive physical mass | There is a positive transfer gap in electric-time units at each admitted fixed spatial scale. | Control the energy normalization and spectrum along that trajectory so a positive finite-energy physical excitation survives and the vacuum remains separated from all excitations. |
 | Obtain a nontrivial continuum field theory | Actual Wilson multi-time correlations and their reflection-positive reconstruction are available at fixed spacing; the literal-source band is nonzero. | Produce renormalized limiting correlation distributions with nonzero physical content, the required regularity, full Euclidean symmetry and reconstruction axioms. |
-| Control the physical observable space | Literal plaquette sources span the complete fixed-scale odd band; real Wilson sources span the first three physical shells of the full two-square block. | Control renormalized or smeared source spectral measures across scales, retaining nonzero normalized weight and the intended scalar or other physical channel. |
-| Cover every compact simple gauge group | The odd-shell construction uses SU(N), N at least 3; the compact-rotor theorem applies to faithful unitary representations of compact connected simple groups. The finite two-square real sources also cover SU(2). | Extend the appropriate interacting physical sectors and continuum construction beyond the present odd-shell regime. A generic one-rotor result does not construct a full all-group Yang-Mills theory. |
+| Control the physical observable space | The complete fixed-scale odd-band sources, finite-block real source shells, and harmonic box/source frame bounds with their frequency weights. | Match actual gauge-invariant source algebras and renormalized spectral measures across scales, retain a nonzero physical residue, and control the intended channel. Exact vector observability alone need not imply cyclicity of every chosen invariant subalgebra. |
+| Cover every compact simple gauge group | The finite-cell physical theorem applies to a faithful unitary representation of each stated compact connected group with simple Lie algebra, under its fixed-complex hypotheses. | Supply the interacting all-scale continuum construction for those groups. The current fixed-spacing odd-band route still has its own SU(N), N>=3 scope. |
 
 The existing [continuum bridge](../paper/research_notes/G19_CONTINUUM_BRIDGE_INSERT.tex)
 already identifies the central scale mismatch: in its Hamiltonian coordinate
@@ -82,14 +101,24 @@ They determine which kind of new estimate is needed.
 
 ## The next central target
 
-Derive the scale comparison for actual coupled or overlapping Wilson blocks,
-starting from the now-proved local physical spectrum. Specify the true
-reflection/time-covariant history block and retain its generated effective
-measure. Bound the eliminated OS modes by the vacuum-subtracted physical
-block energy while controlling surrounding plaquettes, cross terms and
-changing ground energy. Then match the infrared effective transfer and
-renormalized source synthesis to the controlled endpoint, with errors
-summable in physical energy units along a specified trajectory.
+The retained projection must also control the actual vacuum mismatch.
+Even independent gapped qubits have an exponentially deteriorating raw
+reference fast compression; local vacuum dressing restores the uniform
+bound exactly. The [Schur proof](../paper/research_notes/G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md),
+Section 7, makes this a concrete choice of physical projection. The existing
+creator and vacuum-transport mechanisms motivate that construction, with
+their stated coupling scope retained.
+
+Prove the uniform nonlinear energy comparison for the actual coupled Wilson
+block family, using the retained harmonic slow space and interface bound as
+inputs. Keep the generated temporal memory, induced kinetic mass, varying
+vacuum energy and literal-source frequency factors. Specify the genuine
+reflection/time-compatible history map and its invariant observable algebra.
+Then compare its low-energy transfer and renormalized sources with the
+controlled infrared endpoint, with errors summable in physical energy units.
+The closed-form Schur theorem states sufficient form hypotheses and a
+summable inverse-fast-energy budget. Their uniform Wilson realization,
+including the full normalized coarse gap, remains the decisive open estimate.
 
 The full two-square operator includes its real shared-edge coupling. Its
 exact physical inversion symmetry improves the localization remainder but

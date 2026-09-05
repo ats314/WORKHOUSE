@@ -54,8 +54,27 @@ proves the fast physical scale `1/a`, and the
 establishes its three lowest physical excited shells and complete real-source
 frame. The [sealed scale-block run](../runs/continuum_wilson_block_2026-09-05/README.md)
 distinguishes exact untruncated SU(2) rotor enclosures from the analytic
-large-coupling and source proofs. Interacting blocks and their actual
-OS-history complement remain the next physical comparison.
+large-coupling and source proofs. Uniform nonlinear interacting blocks and their actual generated
+history dynamics remain the next physical comparison.
+
+The [finite-cell physical theorem](research_notes/G19_WILSON_FINITE_CELL_GAP_AND_BOUNDARY_FORM_20260905.md)
+extends the first-cluster result to actual fixed complexes with the stated
+flat-orbit hypotheses. The [planar harmonic comparison](research_notes/G19_WILSON_HARMONIC_BOUNDARY_COMPARISON_20260905.md)
+retains every boundary and interface term, controls the fast scale uniformly
+in the number of boxes and supplies low-mode/source frames. Its
+[three-dimensional companion](research_notes/G19_WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY_20260905.md)
+retains all periodic link interfaces, imposes the Hodge/Bianchi constraints
+and keeps the torus harmonic directions in the coarse space. The
+[Gaussian OS proof](research_notes/G19_GAUSSIAN_OS_HISTORY_OBSERVABILITY_20260905.md)
+shows why a configuration fiber does not identify the exact history range.
+The [general form-Schur proof](research_notes/G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md)
+includes the Gaussian memory specialization and gives a conditional full-gap
+recursion and an onto graph-source frame. Its actual uniform Wilson form,
+coarse and literal-source hypotheses remain open. The
+[coupled-oscillator method review](research_notes/G19_COUPLED_OSCILLATOR_METHOD_REVIEW_20260905.md)
+preserves the user's useful exact quadratic benchmark and the independently
+checked transformation corrections without making it a Wilson proof premise.
+
 The [Born-Oppenheimer and two-strip proof](research_notes/G19_WILSON_STRIP_BO_AND_TWO_STRIP_SPLITTING_20260905.md)
 adds exact quantum-ground coefficients, the on-shell angular correction
 and an actual four-face radial/mixed spectral splitting with a controlled
