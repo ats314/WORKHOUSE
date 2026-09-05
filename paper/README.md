@@ -14,8 +14,18 @@ coupling disk uniform in spatial volume and temporal mesh. Its
 constructs an analytic creator family with a quantitative local convergence
 bound. The [sealed verification run](../runs/wilson_rooted_contraction_2026-09-05/README.md)
 distinguishes these analytic proofs from finite exact controls and the scalar
-Lean theorem. Controlled physical operator realization and the complete
-excited-space identification remain open.
+Lean theorem. The subsequent
+[creator-parent and spectral-flow proof](research_notes/G18_WILSON_CREATOR_PARENT_AND_SPECTRAL_FLOW_20260905.md)
+restores the actual symmetric Wilson vacuum, proves its auxiliary parent
+has gap at least `247/256`, and constructs quasi-local transport of the
+selected vacuum state on all bounded local observables. Its
+[run](../runs/wilson_creator_parent_2026-09-05/README.md) preserves independent
+finite controls and the algebraic Lean statements. The additive
+[activity-extraction proof](research_notes/G18_WILSON_ACTIVITY_EXTRACTION_20260905.md)
+constructs exact connected, locally vacuum-annihilating transfer activities
+by induced-subsystem partition subtraction. Their weighted operator norm
+and complete excited-space identification remain open; the auxiliary
+parent gap does not determine Wilson excitation energies.
 
 The current research guide also connects the September C2 resolution,
 symbolic all-rank assembly, and fixed-spacing construction to their proofs

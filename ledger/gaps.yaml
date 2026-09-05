@@ -1294,6 +1294,47 @@ gaps:
     tier: 3
     state: open
     title: The spectral bridge
+    wilson_activity_extraction_2026_09_05: >
+      The exact activity family is now constructed. For every induced finite
+      link subsystem, dress its actual normalized Wilson block by its own
+      parent spectral flow, using a common filter, mesh, block power and
+      initial unitary. Partition Mobius inversion of these operators gives
+      the bridge's exact disjoint-support expansion. Every activity is
+      self-adjoint and annihilates the local vacuum on both sides; real
+      component factorization makes it zero on disconnected induced
+      plaquette supports. No restriction identity between subsystem unitaries
+      or multivariate analytic continuation of spectral flow is assumed.
+      The next step is quantitative, proving the sum of (5/4)^|X| norm F_X
+      is at most 1/400, preferably with a positive cardinality margin that
+      also buys an additional spatial weight. The source-transformation
+      norm remains separate. Proof is WILSON_ACTIVITY_EXTRACTION; the
+      already sealed parent proof and run are unchanged.
+    wilson_parent_and_spectral_flow_2026_09_05: >
+      Half magnetic flow restores the actual symmetric Wilson creators with
+      nonzero scalar normalization and norm at most 1/8 at support weight
+      at least log(2). Their exact-support annihilators define a bounded
+      parent with the same finite-volume Perron vacuum. The independent
+      creator-parent theorem proves H^2 >= (1-K1-M1^2)H and hence gap at
+      least 247/256, uniformly in volume and link Hilbert-space dimension.
+      This is an auxiliary parent gap, not a Wilson excitation-energy bound.
+
+      Connected-face coefficient locality and a strict smaller coupling
+      disk supply spatial decay, path-derivative bounds, and locally uniform
+      interaction convergence. The primary-source NSY spectral-flow theorem
+      then gives a symmetry-covariant quasi-local automorphism transporting
+      the product state to the selected actual Wilson vacuum on every
+      bounded local observable. The limit is pure and locally normal; its
+      GNS representation is the automorphic transport of the product
+      representation. The periodic boundary comparison uses intrinsic torus
+      metrics and embedded interior balls, never a false ambient global
+      norm bound on wrapping interactions. The construction need not be
+      implemented by a global unitary in the original free representation,
+      and spectral-flow tails need not remain exponential. The remaining
+      step is the actual dressed-transfer activity estimate and its source
+      norm, before complete excited Riesz-range transport. Proof and scoped
+      evidence are WILSON_CREATOR_PARENT and
+      runs/wilson_creator_parent_2026-09-05; the analytic result nodes record
+      the individual dependencies and machine-verification boundaries.
     rooted_wilson_contraction_2026_09_05: >
       The exact endpoint creator equation now has a proved nonlinear
       contraction on a common complex coupling disk. A moving support
@@ -1480,12 +1521,15 @@ gaps:
     detail: >
       The fixed-spacing Hamiltonian complete band and literal-source frame are
       constructed in the G18 inserts; the relative-gap continuation gives one
-      coupling domain for every nonzero momentum. The remaining actual-Wilson
-      target is an exact vacuum chart with a volume-uniform operator-activity
-      bound, then thermodynamic Riesz-range/source totality and spatially
-      weighted projected-kernel matching. Finite-volume isolation, a populated
-      Borel window, and unprojected correlation matching are already available
-      with the distinct scopes recorded below.
+      coupling domain for every nonzero momentum. The actual Wilson vacuum
+      now has an exact quasi-local spectral-flow realization on the full
+      bounded local algebra and exact connected, locally vacuum-annihilating
+      transfer activities from induced-subsystem partition subtraction.
+      The remaining target is a volume-uniform bound on their weighted
+      activity sum and source transformations,
+      then thermodynamic Riesz-range/source totality and spatially weighted
+      projected-kernel matching. Finite-volume isolation, a populated Borel
+      window, and unprojected correlation matching remain distinct inputs.
     closed_at_fixed_spacing_2026_08_30: >
       The maintainer's three G18 inserts were merged into
       paper/master_paper_2026-08-30.tex as the section "Infinite volume at
@@ -1518,17 +1562,20 @@ gaps:
       So the first exclusion in the manuscript's scope paragraph is now about
       the CONTINUUM, not the thermodynamic limit.
     still_open: >
-      The actual Wilson vacuum now has convergent nonunitary creator
-      coordinates and a canonical analytic infinite-lattice coefficient
-      family on an explicit common disk. A controlled physical state and
-      operator realization is still required: transport these coordinates
-      to a bounded unitary vacuum chart, or provide an equivalent justified
-      metric and full-Hilbert-space operator-activity estimate. Convergence
-      of the earlier ordered unitary generator product has not been proved.
-      Thermodynamic Hilbert-space/range identification, source totality,
-      and spatially weighted sharp-shell matching must accompany the operator
-      bound; the full complementary spectrum cannot be inferred from source
-      moments. At Gamma the cubic T_1 triplet still meets, so no rank-one
+      Bound the weighted norm of the now-constructed exact activities of the
+      normalized actual Wilson transfer after quasi-local vacuum transport.
+      The target is sum (5/4)^|X| norm F_X <= 1/400 uniformly at a root,
+      with a stronger cardinality margin if an extra spatial weight is
+      required. Establish the source-transformation norm separately. The
+      parent gap and vacuum automorphism do not control that transfer's full
+      complementary spectrum. In particular spectral flow need not preserve
+      the exponential weights required by the sharp-shell source problem;
+      supply those estimates or prove a sufficient replacement. Convergence
+      of the older ordered unitary product is not needed for the established
+      vacuum realization and is not asserted. Thermodynamic excited-range
+      identification, source totality and spatially weighted sharp-shell
+      matching remain after the transfer bound. At Gamma the cubic T_1 triplet
+      still meets, so no rank-one
       isolation there is asserted. The Hamiltonian coupling threshold remains
       existential, but the September 4 relative-gap theorem removes its
       earlier patch-q_* dependence on the punctured zone. Temporal matching
@@ -1587,24 +1634,48 @@ gaps:
           not a separate full-active-lattice assertion. The successful
           composed-resolvent contraction does not require this estimate.
       - step: Realize the convergent creator coordinates in a controlled physical operator chart
-        state: live
+        state: done
+        closed_by: [RESULT:WILSON_SYMMETRIC_CREATORS, RESULT:CREATOR_PARENT_GAP, RESULT:WILSON_PARENT_GNS, RESULT:WILSON_VACUUM_SPECTRAL_FLOW]
         depends_on:
           - RESULT:WILSON_ROOTED_CONTRACTION
           - RESULT:WILSON_CREATOR_LIMIT
+          - LIT:NSY_2019
+        status: >
+          Actual symmetric creators, the generic parent gap, and explicit
+          spatial/derivative locality verify the spectral-flow hypotheses.
+          The resulting symmetry-covariant quasi-local automorphism gives
+          the selected actual Wilson state on the full local algebra, its
+          local normality, and automorphic GNS transport. No bounded global
+          creator exponential or free-representation implementing unitary
+          is required. The transfer-activity obligation is separated below.
+      - step: Extract exact connected locally vacuum-annihilating Wilson transfer activities
+        state: done
+        closed_by: [RESULT:WILSON_ACTIVITY_EXTRACTION]
+        depends_on: [RESULT:WILSON_VACUUM_SPECTRAL_FLOW, CITE:WILSON_EXCITED_OPERATOR_BRIDGE]
+        status: >
+          The induced-subsystem dressed transfers have exact partition
+          cumulants. Common-filter component factorization proves connected
+          support, and their unit vacuum eigenvectors make every nonsingleton
+          cumulant annihilate the local vacuum on both sides. This proves
+          existence and exact disjoint reconstruction, with no norm estimate.
+      - step: Bound the dressed Wilson transfer activities on the full Hilbert space
+        state: live
+        depends_on:
+          - RESULT:WILSON_ACTIVITY_EXTRACTION
           - RESULT:WILSON_VACUUM_COMPRESSION
           - CITE:WILSON_EXCITED_OPERATOR_BRIDGE
         status: >
-          Convert the nonunitary endpoint creator coordinates to a controlled
-          symmetry-preserving unitary chart, or an equivalent physical metric
-          with a justified operator bridge. The creator-family norm alone
-          does not give a bounded global exponential on the free infinite
-          tensor product or the complete physical excited projection.
-          Bound the realized locally vacuum-annihilating activities on the
-          full Hilbert space; eta <= 1/400 remains one sufficient spectral-block
-          threshold. Establish spatially weighted source transformations too.
+          Estimate the exact partition activities in their full operator
+          norm. Prove eta=sup_i sum_(X contains i)(5/4)^|X| norm F_X <=1/400,
+          or preferably the stronger eta_epsilon with weight
+          exp((log(5/4)+epsilon)|X|) for epsilon>0. Connected supports then
+          yield the corresponding spatial activity control. Prove the
+          source-transformation bounds separately. Diameter decay of spectral
+          flow alone does not supply the support-cardinality norm, and an
+          auxiliary parent gap does not settle it.
       - step: Transport the complete Wilson Riesz range and source frame to infinite volume
         state: untried
-        depends_on: [ROUTE:G18:realize-the-convergent-creator-coordinat-e7b852]
+        depends_on: [ROUTE:G18:bound-the-dressed-wilson-transfer-activi-144f15]
         status: >
           From the full operator bound, prove thermodynamic range/source
           identification and spatially rooted contour limits, then match

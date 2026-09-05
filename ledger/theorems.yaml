@@ -782,3 +782,31 @@ theorems:
       operator-norm bound, Haar moments, or an infinite-volume conclusion.
     formalizes: [G18]
     promotes: []
+
+  - name: idempotent_square_defect
+    statement: >
+      In any star ring, P*P=P implies
+      (star(P)*P)^2-star(P)*P = star((star(P)-1)*P)*((star(P)-1)*P).
+      This exact algebraic identity supports the nonnegative diagonal
+      correction in the parent-gap proof; operator positivity and spectral
+      calculus are not formalized by this statement.
+    formalizes: [G18]
+    promotes: []
+
+  - name: commuting_pair_square
+    statement: >
+      In any star ring, P*Q=Q*P implies
+      (star(P)*P)*(star(Q)*Q) = star(P*Q)*(P*Q)
+      + star(P)*(P*star(Q)-star(Q)*P)*Q.
+      This is the exact cross-term identity used in the creator parent
+      gap proof; it assumes no norm or infinite-volume limit.
+    formalizes: [G18]
+    promotes: []
+
+  - name: wilson_gap_constant
+    statement: >
+      For real a,K,M, the hypotheses a<=1/8, K<=a/4, and 0<=M<=a/2
+      imply 247/256<=1-K-M^2. This verifies the scalar specialization
+      of the analytic parent-gap estimate, not its Hilbert-space hypotheses.
+    formalizes: [G18]
+    promotes: []

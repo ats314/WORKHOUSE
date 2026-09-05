@@ -36,11 +36,17 @@ algebra, bounded plaquette interactions, and the additive kinetic gap.
 | Rooted contraction | A unique fixed point in the stated creator ball on an explicit common analytic disk, uniform in volume and temporal mesh. | [Contraction](../paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md) |
 | Coefficient locality | Degree `n` uses a connected witness of at most `n` plaquettes and `3n+1` links; rooted Taylor coefficients stabilize exactly. | [Limit, §2](../paper/research_notes/G18_WILSON_CREATOR_THERMODYNAMIC_LIMIT_20260905.md) |
 | Infinite-lattice creator limit | Stabilized coefficients form a bounded analytic family with a quantitative local finite-volume error. | [Limit, §§3–4](../paper/research_notes/G18_WILSON_CREATOR_THERMODYNAMIC_LIMIT_20260905.md) |
+| Actual symmetric creators | Half magnetic flow restores the actual Wilson vacuum with nonzero normalization and rooted norm at most `1/8`. | [Parent theorem, §1](../paper/research_notes/G18_WILSON_CREATOR_PARENT_AND_SPECTRAL_FLOW_20260905.md) |
+| Generic creator parent gap | The exact parent obeys `H^2 >= (1-K1-M1^2)H`; the Wilson specialization has unique vacuum and gap at least `247/256`. | [Parent theorem, §2](../paper/research_notes/G18_WILSON_CREATOR_PARENT_AND_SPECTRAL_FLOW_20260905.md) |
+| GNS parent realization | Quasi-local annihilators and the closure of the local parent form realize the actual vacuum, with parent interaction bound `17/128`. | [Parent theorem, §§3–4](../paper/research_notes/G18_WILSON_CREATOR_PARENT_AND_SPECTRAL_FLOW_20260905.md) |
+| Quasi-local vacuum transport | A spectral-flow automorphism gives the selected actual Wilson state on all bounded local observables; it is pure and locally normal. | [Parent theorem, §5](../paper/research_notes/G18_WILSON_CREATOR_PARENT_AND_SPECTRAL_FLOW_20260905.md) |
+| Exact connected transfer activities | Induced-subsystem partition subtraction gives the exact disjoint expansion, self-adjoint local vacuum annihilation, and zero activities on disconnected plaquette supports. | [Activity extraction, §§2–3](../paper/research_notes/G18_WILSON_ACTIVITY_EXTRACTION_20260905.md) |
 | Same-weight obstruction | Arbitrary disjoint active SU(3) plaquette families disprove the unrestricted undamped same-weight estimate. | [Obstruction](../paper/research_notes/G18_SAME_WEIGHT_CREATOR_OBSTRUCTION_20260905.md) |
 
 The fixed-order unitary chart and the convergent nonunitary creator family
-are distinct constructions. The latter resolves nonlinear creator convergence;
-convergence of the former's ordered unitary product remains an operator task.
+are distinct constructions. The latter resolves nonlinear creator convergence.
+The parent spectral flow now provides a quasi-local vacuum chart without
+requiring convergence of the former's ordered unitary product.
 The earlier endpoint note's proposed same-weight inequality is historical:
 the successful proof uses the full resolvent to restore a moving support weight.
 
@@ -69,6 +75,37 @@ The exact map contracts the ball `||v||_mu<=1/16` by at most `1/2` for
 real Wilson Perron identification additionally uses the stated compact,
 self-adjoint, positivity-improving kernel premise.
 
+For the parent continuation, choose
+`mu>=max(gamma tau0/2,log(2)+gamma tau0/4)`.
+The actual symmetric creator family is `w=F_(tau/2)(u,v)` and obeys
+`||w||_(mu-gamma tau0/4)<=1/8`. With
+`a_X=|w_X><Omega_X|` and `b_i=q_i-sum_(X contains i)a_X`, its exact
+annihilators define `H_parent=sum_i b_i^dagger b_i`. The generic gap proof
+uses commuting idempotents and orthogonal support blocks; it does not
+estimate an extensive global similarity condition number.
+
+The connected witnesses also control spatial extent. On the smaller disk
+`|u|<=u_star/8`, both creators and their derivatives along `s` to `su`
+have positive spatial weights and locally uniform coefficient limits.
+Together with the parent gap these verify the hypotheses of the
+[NSY spectral-flow theorem](https://arxiv.org/abs/1810.02428), including its
+infinite-dimensional on-site setting. Open boxes use the lattice metric;
+periodic interiors use intrinsic torus metrics and local boundary comparison.
+The resulting automorphism gives the full bounded-local-observable limit
+`omega_W=omega_0 composed with alpha`. Convergence is uniform on each local
+unit ball, which proves local normality. This is automorphic GNS transport;
+it does not posit a global implementing unitary in the original free
+representation.
+
+The remaining transfer object is now explicit. Apply partition Möbius
+inversion to every induced subsystem's dressed, Perron-normalized transfer,
+using the same mesh, block power and spectral-flow convention. Products
+with overlapping support vanish in a formal square-free support algebra;
+disjoint coefficients commute. The resulting partition cumulants reconstruct
+the dressed transfer exactly. The unit vacuum eigenvector cancels their
+vacuum components, while real component factorization cancels disconnected
+supports. This requires no multivariate analytic spectral-flow extension.
+
 ```mermaid
 flowchart TD
   E[Exact endpoint creator equation] --> C[Rooted contraction and common analytic disk]
@@ -77,7 +114,13 @@ flowchart TD
   K --> L
   C --> T[Analytic infinite-lattice creator family]
   L --> T
-  T -. input to open task .-> O[Controlled physical operator realization]
+  T --> W[Actual symmetric creators and spatial locality]
+  C --> W
+  W --> Q[Quasi-local actual Wilson vacuum transport]
+  G[Generic creator parent gap] --> Q
+  N[NSY spectral-flow theorem] --> Q
+  Q --> A[Exact connected transfer activities]
+  A -. input to open task .-> O[Cardinality-weighted operator activity bound]
   V[Exact vacuum compression] -. input to open task .-> O
   O -. required before .-> P[Complete excited range and source transport]
 ```
@@ -95,21 +138,30 @@ supremum-over-roots norm, or a bounded infinite-volume creator exponential.
 
 ## The next concrete target
 
-Realize the convergent creator coordinates in the established physical
-state/GNS construction with a controlled operator chart or a justified
-equivalent metric. Use compression to obtain locally vacuum-annihilating
-activities on the full Hilbert space, and bound their total activity in
-the norm required by the
+Estimate the now-constructed exact partition activities in the full operator
+norm required by the
 [excited-window operator bridge](../paper/research_notes/G18_EXCITED_WINDOW_OPERATOR_BRIDGE_20260904.md).
-That bridge gives `eta<=1/400` as one sufficient threshold. The missing
-argument must construct the realization and prove its operator and spatially
-weighted source bounds, rather than assume they follow from `||v||_mu`.
+The basic sufficient threshold is
+`eta=sup_i sum_(X contains i)(5/4)^|X| ||F_X||<=1/400`.
+The weight measures support cardinality, which diameter decay of spectral
+flow alone does not control. A useful stronger target replaces the weight
+by `exp((log(5/4)+epsilon)|X|)` for some `epsilon>0`.
+
+Every surviving activity support is connected, so
+`diameter(X)<=|X|-1`. Thus a proved basic cardinality bound supplies a bare
+exponential spatial activity bound. The stronger target supplies an extra
+spatial weight while retaining the entire basic cardinality factor.
+Prove the required source-transformation norms separately. Sharing the
+actual vacuum does not identify the auxiliary parent's excitation spectrum
+with the Wilson transfer spectrum.
 
 After that, establish thermodynamic transport of the complete Riesz range
 and source frame, including source totality and weighted sharp-shell
 matching. Existing scalar vacuum/GNS and unprojected correlation results
-remain available; this task is their identification with these convergent
-coordinates and the complete excited operator construction. G18 stays open.
+remain available. The selected full quantum vacuum now agrees with their
+stated equal-time multiplication sector; complete excited-range and
+time-dependent representation identification retain their own obligations.
+G18 stays open.
 Temporal Wilson matching and the spatial continuum passage retain their
 own hypotheses and G19 routes.
 
@@ -119,6 +171,11 @@ own hypotheses and G19 routes.
 workhouse why RESULT:WILSON_ENDPOINT_EQUATION
 workhouse why RESULT:WILSON_ROOTED_CONTRACTION
 workhouse why RESULT:WILSON_CREATOR_LIMIT
+workhouse why RESULT:WILSON_SYMMETRIC_CREATORS
+workhouse why RESULT:CREATOR_PARENT_GAP
+workhouse why RESULT:WILSON_PARENT_GNS
+workhouse why RESULT:WILSON_VACUUM_SPECTRAL_FLOW
+workhouse why RESULT:WILSON_ACTIVITY_EXTRACTION
 workhouse why RESULT:WILSON_SAME_WEIGHT_OBSTRUCTION
 workhouse why G18
 make verify
@@ -126,7 +183,8 @@ make check
 make lean
 ```
 
-The [rooted-contraction run](../runs/wilson_rooted_contraction_2026-09-05/README.md),
+The [parent and spectral-flow run](../runs/wilson_creator_parent_2026-09-05/README.md),
+[rooted-contraction run](../runs/wilson_rooted_contraction_2026-09-05/README.md),
 [chart run](../runs/wilson_vacuum_chart_2026-09-05/README.md), and
 [compression run](../runs/wilson_vacuum_compression_2026-09-05/README.md)
 preserve original evidence. Analytic proof, exact finite control, numerical

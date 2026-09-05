@@ -4,6 +4,155 @@
 # that entire statement. This does not change its mathematically established status.
 schema: results/v1
 results:
+  - id: RESULT:WILSON_ACTIVITY_EXTRACTION
+    statement: >
+      Partition Mobius inversion of the vacuum-dressed transfers of all induced
+      finite link subsystems gives a unique activity family with F_singleton=0,
+      exact disjoint-support reconstruction, self-adjoint activities, and
+      F_X P_X=P_X F_X=0. Activities vanish when the induced plaquette
+      hypergraph on X is disconnected, so every nonzero activity support is
+      a connected union of retained plaquettes.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - The induced models retain precisely the plaquettes fully supported in their link sets, with the same calibrated kinetic kernels and real coupling in the parent theorem's domain.
+      - Use one temporal mesh, one integer block power, and the same parent spectral filter and coupling path on every subsystem, with U_X(0)=I.
+      - Each subsystem uses its own actual Perron normalization and parent unitary; no operator restriction or partial-trace consistency is assumed.
+    scope: >
+      Exact finite-family operator algebra at real coupling, valid for arbitrary
+      link Hilbert-space dimensions and actual open or periodic geometry.
+      No multivariate analytic spectral-flow continuation is required.
+      This result provides no bound on the basic weighted activity sum with
+      factor (5/4)^|X|. Connectedness converts a proved cardinality bound to a
+      bare spatial bound; an extra spatial weight retaining the original
+      cardinality factor needs a stronger cardinality margin. Source norms
+      and the complete excited Riesz-range identification remain separate.
+    source: CITE:WILSON_ACTIVITY_EXTRACTION
+    source_section: Sections 2-4, partition extraction, actual induced family and weighted-norm target
+    depends_on: [RESULT:WILSON_VACUUM_SPECTRAL_FLOW, CITE:WILSON_EXCITED_OPERATOR_BRIDGE]
+    bears_on: [G18, G19]
+    supported_by:
+      - target: RUN:wilson_activity_extraction_2026-09-05
+        scope: Independent exact finite tensor implementations of partition extraction, reconstruction, local vacuum annihilation and component cancellation, with a missing-factorization negative control. These models do not compute actual Wilson rotor activity norms or certify the general analytic theorem.
+
+  - id: RESULT:WILSON_SYMMETRIC_CREATORS
+    statement: >
+      The half magnetic flow w=F_(tau/2)(u,v) restores the actual symmetric
+      Wilson vacuum with nonzero scalar normalization and rooted norm at most
+      1/8 at weight sigma0=mu-gamma tau0/4. Its Taylor coefficients retain
+      connected active-face witnesses. On |u|<=u_star/8 they have positive
+      spatial cover weights and uniform path-derivative bounds.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - The uniform rooted endpoint creator theorem and compatible Wilson lattice data.
+      - mu>=max(gamma tau0/2,log(2)+gamma tau0/4), with the same u_star as the contraction theorem.
+      - The finite-volume positive Wilson-kernel premise identifies the real eigenvector branch with the Perron vacuum.
+    scope: >
+      Uniform in finite volume, temporal mesh and link Hilbert-space dimension.
+      Exact scalar normalization, analytic creator convergence, and spatial
+      and derivative locality hold without a global creator exponential in
+      infinite volume. Open-box comparisons use the lattice metric; periodic
+      interior comparisons use intrinsic torus distances before taking limits.
+    source: CITE:WILSON_CREATOR_PARENT
+    source_section: Sections 1 and 3, actual half-flow and spatial/derivative locality
+    depends_on: [RESULT:WILSON_ROOTED_CONTRACTION, RESULT:WILSON_COEFFICIENT_LOCALITY, RESULT:WILSON_CREATOR_LIMIT]
+    bears_on: [G18, G19]
+    supported_by:
+      - target: RUN:wilson_creator_parent_2026-09-05
+        scope: Exact finite creator/parent algebra and independent certificate replay; the analytic half-flow and infinite-lattice estimates are proved in the cited note.
+
+  - id: RESULT:CREATOR_PARENT_GAP
+    statement: >
+      For a finite family of commuting exact-support creators a_X, put
+      b_i=q_i-sum_(X contains i)a_X and H=sum_i b_i^dagger b_i.
+      Its kernel is exactly the creator vacuum line, and its gap is at least
+      1-K1-M1^2, where K1=sup_i sum_(X contains i)(|X|-1)||a_X||
+      and M1=sup_i sum_(X contains i)|X|||a_X||. Rooted norm a at
+      weight log(2) gives gap at least 1-a/4-a^2/4; a<=1/8 gives 247/256.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - Finite tensor-product Hilbert space with unit link vacua, q_i the complementary projections, and a_X=|w_X><Omega_X| on nonempty exact excited supports.
+      - K1 and M1 are finite, with 1-K1-M1^2 positive for a positive gap conclusion.
+    scope: >
+      A dimension-free generic parent theorem independent of Wilson spectral
+      claims. Orthogonal support blocks give a full-Hilbert-space inequality.
+      The auxiliary parent shares the creator vacuum, not necessarily any
+      excitation energies, with another operator.
+    source: CITE:WILSON_CREATOR_PARENT
+    source_section: Section 2, generic parent gap and its explicit specialization
+    depends_on: []
+    bears_on: [G18]
+    supported_by:
+      - target: LEAN:idempotent_square_defect
+        scope: Only the noncommutative idempotent square-defect identity; no analytic operator inequality.
+      - target: LEAN:commuting_pair_square
+        scope: Only the commuting-pair ring identity underlying the pair decomposition; no norm or spectral assertion.
+      - target: LEAN:wilson_gap_constant
+        scope: Only the exact scalar specialization to 247/256 at a=1/8.
+      - target: RUN:wilson_creator_parent_2026-09-05
+        scope: Finite exact parent identities, positivity controls and independent artifact replay; these controls do not replace the arbitrary-dimension gap proof.
+
+  - id: RESULT:WILSON_PARENT_GNS
+    statement: >
+      The actual symmetric Wilson vacuum has exact quasi-local annihilators
+      b_i and a bounded-interaction parent. Its rooted interaction perturbation
+      is at most 2 M1(1+M0), hence at most 17/128 at the stated 1/8 creator
+      bound. Any selected full quantum local limit satisfies b_i Omega=0;
+      the closure of its local-vector parent form has unique vacuum and gap
+      at least 247/256.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - The symmetric creator bounds, compatible local coefficient limits and generic parent-gap theorem.
+      - Real coupling in the stated creator disk; a positive spatial interaction weight is obtained on |u|<=u_star/8.
+      - Identification with the existing multiplication-source state uses the common domain of the earlier Wilson scalar vacuum expansion.
+    scope: >
+      Full bounded local quantum operators and a gapped auxiliary GNS parent.
+      The form is the closure from local vectors; no unproved maximal-form
+      core is assumed. This result alone does not give uniqueness across
+      possible subnet states or identify the Wilson excitation generator.
+    source: CITE:WILSON_CREATOR_PARENT
+    source_section: Sections 2-4, interaction bound and GNS parent form
+    depends_on: [RESULT:WILSON_SYMMETRIC_CREATORS, RESULT:CREATOR_PARENT_GAP, CITE:WILSON_DISCRETE_TIME_VACUUM]
+    bears_on: [G18, G19]
+    supported_by:
+      - target: RUN:wilson_creator_parent_2026-09-05
+        scope: Exact finite parent algebra and rational constants; physical state limits and the closed GNS form are analytic consequences.
+
+  - id: RESULT:WILSON_VACUUM_SPECTRAL_FLOW
+    statement: >
+      Along s to s*u with |u|<=u_star/8, the uniformly gapped bounded parent
+      admits a symmetry-covariant quasi-local spectral-flow automorphism alpha_s.
+      The actual finite-volume Wilson Perron states converge on every bounded
+      local observable to omega_W=omega_0 composed with alpha_s, uniformly on
+      each local unit ball. The selected limit is pure and locally normal,
+      and its GNS representation is the automorphic transport of the product state.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - The symmetric creator spatial bounds and their path derivatives, with positive support and spatial decay margins.
+      - The parent gap is at least 247/256 throughout the path, including restrictions of the compatible infinite creator family.
+      - NSY 2019 Assumption 6.12 and Theorems 6.3 and 6.14 apply to the bounded parent interaction on the cubic link lattice with arbitrary on-site Hilbert spaces.
+      - Actual finite-volume interactions and derivatives converge locally with uniform locality tails; periodic comparisons use intrinsic torus metrics and embedded interior neighborhoods.
+    scope: >
+      The actual selected vacuum on the full quasi-local link algebra is
+      realized, with uniqueness of its admissible finite-volume limit.
+      The automorphism need not have exponential tails or be implemented
+      inside the original free representation. It need not equal the earlier
+      ordered unitary-generator product. No complete Wilson excited Riesz
+      range, transfer activity majorant, or source totality follows from the
+      auxiliary parent gap. The older Euclidean source algebra retains its
+      explicitly stated domain of identification.
+    source: CITE:WILSON_CREATOR_PARENT
+    source_section: Section 5, primary-source spectral flow and finite-volume comparison
+    depends_on: [RESULT:WILSON_SYMMETRIC_CREATORS, RESULT:CREATOR_PARENT_GAP, LIT:NSY_2019]
+    bears_on: [G18, G19, RESULT:WILSON_PARENT_GNS]
+    supported_by:
+      - target: RUN:wilson_creator_parent_2026-09-05
+        scope: Sealed analytic derivation, primary-source hypothesis audit and finite parent controls; spectral flow and local normality are not finite-test or Lean conclusions.
+
   - id: RESULT:WILSON_KINETIC_WINDOW
     statement: >
       At fixed N >= 3 and sufficiently small calibrated Wilson temporal step,
