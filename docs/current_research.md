@@ -13,6 +13,24 @@ the spatial continuum target.
 
 ## Latest scale comparison
 
+The [exact Gaussian path endpoint](../paper/research_notes/G19_GAUSSIAN_PATH_ENDPOINT_BASELINE_20260906.md)
+now fixes the quadratic memory and true marginal normalization for the local
+block. Its complete low-Fock comparison has no particle-count loss. The
+[conditioned quantum covariance](../paper/research_notes/G19_CONDITIONAL_QUANTUM_PATH_COVARIANCE_20260906.md)
+has a uniform full fiber gap and a summable spatial kernel at each fixed
+block scale; its specified transverse kernel need not decay exponentially.
+The [first Wilson ground and source correction](../paper/research_notes/G19_CUBIC_GROUND_TRANSFER_20260906.md)
+is an explicit Lie cubic with its moving-source bracket term retained.
+
+The next target is the **nonlinear excess above this quadratic memory**.
+An actual coupled path Gaussian already has a leading nonzero score, so the
+special strip's small total-score estimate cannot be assumed for general
+blocks. Connected second-order terms need time-integrated energy control
+together with quartic, metric, Haar and source corrections. Their uniform
+interacting remainder, complete source algebra and physical scale trajectory
+remain open. The [reproduction run](../runs/gaussian_path_nonlinear_input_2026-09-06/README.md) preserves
+the three analytic proofs and their original exact finite controls.
+
 The [complete endpoint comparison](../paper/research_notes/G19_LITERAL_ENDPOINT_COMPLETE_WINDOW_20260905.md)
 now transports the entire additive physical Wilson low cluster at its natural
 time, with every high retained source direction included. Its two-lag matrix
@@ -53,6 +71,9 @@ algebra, bounded plaquette interactions, and the additive kinetic gap.
 
 | Result | Mathematical consequence | Proof |
 |---|---|---|
+| Exact Gaussian path endpoint | The true marginal fixes both polarizations and the complete low-Fock count with relative low-momentum error O(|K|^2). Static Schur memory remains distinct. | [Endpoint baseline](../paper/research_notes/G19_GAUSSIAN_PATH_ENDPOINT_BASELINE_20260906.md) |
+| Complete conditioned quantum covariance | Exact fast precision and low-pole cancellation give a fixed-L summable spatial kernel, uniformly in volume and bounded regulator. The stated kernel need not have exponential decay. | [Covariance theorem](../paper/research_notes/G19_CONDITIONAL_QUANTUM_PATH_COVARIANCE_20260906.md) |
+| First Wilson ground and source Lie cubic | The actual finite-cell first jets determine the exterior-three-form corrector and chosen-source marginal coefficient, with no internal color contraction and with chart motion retained. | [First correction](../paper/research_notes/G19_CUBIC_GROUND_TRANSFER_20260906.md) |
 | Calibrated kinetic window | The neutral physical free spectrum below `5 C_F/2` is `{0,2 C_F}`; the one-link excited gap is at least `C_F/2`. | [Window, §§2–3](../paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md) |
 | Second-order chart | Complete connected/disconnected decomposition, uniform full-operator coefficient bound, and block-independent generators. | [Second-order chart](../paper/research_notes/G18_SECOND_ORDER_WILSON_VACUUM_CHART_20260905.md) |
 | Fixed-order recursion | Local vacuum anchoring and uniform full-operator bounds at every fixed magnetic degree. | [Recursion](../paper/research_notes/G18_VACUUM_CHART_RECURSION_20260905.md) |
@@ -265,6 +286,24 @@ supremum-over-roots norm, or a bounded infinite-volume creator exponential.
 
 ## The next concrete target
 
+The [exact Gaussian path endpoint](../paper/research_notes/G19_GAUSSIAN_PATH_ENDPOINT_BASELINE_20260906.md)
+now fixes the quadratic memory and true marginal normalization for the local
+block. Its complete low-Fock comparison has no particle-count loss. The
+[conditioned quantum covariance](../paper/research_notes/G19_CONDITIONAL_QUANTUM_PATH_COVARIANCE_20260906.md)
+has a uniform full fiber gap and a summable spatial kernel at each fixed
+block scale; its specified transverse kernel need not decay exponentially.
+The [first Wilson ground and source correction](../paper/research_notes/G19_CUBIC_GROUND_TRANSFER_20260906.md)
+is an explicit Lie cubic with its moving-source bracket term retained.
+
+The next target is the **nonlinear excess above this quadratic memory**.
+An actual coupled path Gaussian already has a leading nonzero score, so the
+special strip's small total-score estimate cannot be assumed for general
+blocks. Connected second-order terms need time-integrated energy control
+together with quartic, metric, Haar and source corrections. Their uniform
+interacting remainder, complete source algebra and physical scale trajectory
+remain open. The [reproduction run](../runs/gaussian_path_nonlinear_input_2026-09-06/README.md) preserves
+the three analytic proofs and their original exact finite controls.
+
 The actual infinite-volume transfer, complete Riesz band and onto literal-
 source frame are now established. Every surviving anchored activity meets
 the finite excited support, giving an absolutely convergent strong operator
@@ -388,6 +427,8 @@ energy-domain and scale hypotheses; neither follows just from a gap in
 electric-time units at fixed spatial spacing.
 
 ## Reproduce and continue
+
+The [Gaussian/nonlinear input run](../runs/gaussian_path_nonlinear_input_2026-09-06/README.md) replays the original exact controls. The three complete statements are analytic T3 results; this iteration adds no native CHK or Lean theorem.
 
 ```bash
 workhouse why RESULT:WILSON_ENDPOINT_EQUATION
