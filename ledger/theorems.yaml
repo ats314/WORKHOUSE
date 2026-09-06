@@ -810,3 +810,65 @@ theorems:
       of the analytic parent-gap estimate, not its Hilbert-space hypotheses.
     formalizes: [G18]
     promotes: []
+
+  # GlobalWilsonVertical: scalar subclaims; scoped RESULT support edges live
+  # in results.yaml. No entry promotes a full operator or spectral theorem.
+  - name: strip_factor
+    statement: >
+      For real 0<=eta<=1/2, t=1/(1+8eta/3) is positive, at most 1 and
+      1-eta, and at least 3/7; its loss satisfies 1-t<=8eta/3<=3eta.
+      This is scalar algebra for the actual strip comparison factor.
+    formalizes: []
+    promotes: []
+
+  - name: near_cap
+    statement: >
+      For real u>=0, epsilon<=3/2, 0<=t<=1, 1-t<=8eta/3 and
+      a>=t e+4u eta, one has a>=min(e,epsilon u). No positivity of
+      a or e, min-max argument, or spectral interpretation is assumed.
+    formalizes: []
+    promotes: []
+
+  - name: near_affine
+    statement: >
+      For real e,u,eta>=0, 0<epsilon<=1, 3eta<=v<=4eta,
+      1-t<=3eta and a>=t e+4u eta, one has a>=e+(u-e/epsilon)v.
+      The potentially negative affine coefficient is retained.
+    formalizes: []
+    promotes: []
+
+  - name: far_affine
+    statement: >
+      For real e>=0, epsilon>0, v>=epsilon and a>=u v,
+      one has a>=e+(u-e/epsilon)v. This is scalar algebra under
+      an assumed far-region lower input, not a product-potential proof.
+    formalizes: []
+    promotes: []
+
+  - name: spectral_from_split
+    statement: >
+      For real e,u>=0 and 0<epsilon<=1, assume that v<=epsilon implies
+      an eta in [0,1/2] with 3eta<=v<=4eta and
+      a>=e/(1+8eta/3)+4u eta, while v>=epsilon implies a>=u v.
+      Then a>=min(e,epsilon u) and a>=e+(u-e/epsilon)v.
+      All spectral and group-theoretic inputs remain hypotheses.
+    formalizes: []
+    promotes: []
+
+  - name: two_sector_form
+    statement: >
+      For real e0<=e1, epsilon>0 and v,g,q>=0, the two inequalities
+      ai>=ei+(u-ei/epsilon)v for i=0,1 imply
+      a0 g+a1 q>=e0(g+q)+(e1-e0)q+(u-e1/epsilon)v(g+q).
+      Nonnegative scalar g,q represent assumed squared norms; no
+      orthogonal projection or Hilbert-space decomposition is formalized.
+    formalizes: []
+    promotes: []
+
+  - name: half_potential_threshold
+    statement: >
+      For real u,e and epsilon>0, the hypothesis 2e<=epsilon u
+      implies u/2<=u-e/epsilon. No actual spectral threshold is
+      supplied by this scalar implication.
+    formalizes: []
+    promotes: []

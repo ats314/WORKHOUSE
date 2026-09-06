@@ -75,6 +75,19 @@ coarse and literal-source hypotheses remain open. The
 preserves the user's useful exact quadratic benchmark and the independently
 checked transformation corrections without making it a Wilson proof premise.
 
+The [global nonlinear vertical barrier](research_notes/G19_WILSON_GLOBAL_VERTICAL_BARRIER_20260905.md) controls
+the entire coarse SU(N) group for the actual two-face fibers, retaining
+their coarse potential and full fast term. The
+[actual ground-bundle form](research_notes/G19_WILSON_GROUND_BUNDLE_RELATIVE_FORM_20260905.md) gives a relative
+`O(g^2)` projected magnetic correction on a fixed near-identity chart.
+The [nonlinear block evidence](../runs/nonlinear_wilson_block_2026-09-05/README.md)
+separates the analytic theorems from finite Python controls and seven
+formal scalar Lean implications. The
+[actual full-vacuum complement](research_notes/G19_WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT_20260905.md) supplies the
+mixed-channel fast floor and a closed Schur realization for one physical
+adjacent strip. Uniform interacting-volume lifts, coarse comparison and
+literal/OS source identification remain separate.
+
 The [Born-Oppenheimer and two-strip proof](research_notes/G19_WILSON_STRIP_BO_AND_TWO_STRIP_SPLITTING_20260905.md)
 adds exact quantum-ground coefficients, the on-shell angular correction
 and an actual four-face radial/mixed spectral splitting with a controlled

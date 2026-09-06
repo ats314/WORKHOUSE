@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 100
+## T0 — proof-checked — 107
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -189,6 +189,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `extraction_D`
   - lean/Workhouse/Basic.lean:319
   - `make lean`
+- `far_affine`
+  - lean/Workhouse/GlobalWilsonVertical.lean:73
+  - `make lean`
 - `fixed_vacuum_row`
   - lean/Workhouse/VacuumChart.lean:50
   - `make lean`
@@ -197,6 +200,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `generator_vacuum`
   - lean/Workhouse/VacuumChart.lean:44
+  - `make lean`
+- `half_potential_threshold`
+  - lean/Workhouse/GlobalWilsonVertical.lean:129
   - `make lean`
 - `hopping_deficit_numerator`
   - lean/Workhouse/Basic.lean:47
@@ -224,6 +230,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `mixed_family_sum`
   - lean/Workhouse/Basic.lean:117
+  - `make lean`
+- `near_affine`
+  - lean/Workhouse/GlobalWilsonVertical.lean:54
+  - `make lean`
+- `near_cap`
+  - lean/Workhouse/GlobalWilsonVertical.lean:39
   - `make lean`
 - `newton_three`
   - lean/Workhouse/Basic.lean:299
@@ -282,8 +294,14 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `singleContactOdd_over_R20`
   - lean/Workhouse/Basic.lean:695
   - `make lean`
+- `spectral_from_split`
+  - lean/Workhouse/GlobalWilsonVertical.lean:86
+  - `make lean`
 - `stencil_zero_mode`
   - lean/Workhouse/Basic.lean:233
+  - `make lean`
+- `strip_factor`
+  - lean/Workhouse/GlobalWilsonVertical.lean:13
   - `make lean`
 - `sym2_shelf_numerator`
   - lean/Workhouse/Basic.lean:183
@@ -299,6 +317,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `twoHopWeight_over_R20`
   - lean/Workhouse/Basic.lean:689
+  - `make lean`
+- `two_sector_form`
+  - lean/Workhouse/GlobalWilsonVertical.lean:112
   - `make lean`
 - `uStarSq_isolation`
   - lean/Workhouse/Basic.lean:583
@@ -322,7 +343,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/CreatorParent.lean:27
   - `make lean`
 
-## T1 — re-derived exactly — 349
+## T1 — re-derived exactly — 354
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -723,6 +744,23 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the exact zone minimum of q on |k| >= r is 4 sin^2(r/2), and Jordan overstates it by pi/2`
   - src/workhouse/invariants/uniformity.py:99 · MASTER edition §9.7 (near-Gamma statement that does not adjudicate)
   - `workhouse verify --only 'the exact zone minimum of q on |k| >= r is 4 sin^2(r/2), and Jordan overstates it by pi/2'`
+**nonlinear Wilson block: global barriers and ground geometry**
+
+- `actual SU2 fiber metrics expose the central conditional-gap obstruction`
+  - src/workhouse/invariants/nonlinear_wilson_block.py:32 · paper/research_notes/G19_WILSON_GLOBAL_VERTICAL_BARRIER_20260905.md sections 4 and 7; exact rational group, adjoint and Casimir controls
+  - `workhouse verify --only 'actual SU2 fiber metrics expose the central conditional-gap obstruction'`
+- `complete low-space leakage preserves vacuum-subtracted compression and the mixed singlet`
+  - src/workhouse/invariants/nonlinear_wilson_block.py:91 · paper/research_notes/G19_WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT_20260905.md finite rational projection and physical Hermite controls
+  - `workhouse verify --only 'complete low-space leakage preserves vacuum-subtracted compression and the mixed singlet'`
+- `ground-bundle lift geometry retains the anisotropic Casimir graph estimate`
+  - src/workhouse/invariants/nonlinear_wilson_block.py:70 · paper/research_notes/G19_WILSON_GROUND_BUNDLE_RELATIVE_FORM_20260905.md exact lift, vertical metric and finite spin-one controls
+  - `workhouse verify --only 'ground-bundle lift geometry retains the anisotropic Casimir graph estimate'`
+- `noncommuting positive trace comparison retains its required positivity hypotheses`
+  - src/workhouse/invariants/nonlinear_wilson_block.py:15 · paper/research_notes/G19_WILSON_GLOBAL_VERTICAL_BARRIER_20260905.md sections 2-4; finite matrix and symbolic Lagrange controls
+  - `workhouse verify --only 'noncommuting positive trace comparison retains its required positivity hypotheses'`
+- `symbolic fiber budgets preserve spectral caps and the joint Wilson potential`
+  - src/workhouse/invariants/nonlinear_wilson_block.py:51 · paper/research_notes/G19_WILSON_GLOBAL_VERTICAL_BARRIER_20260905.md sections 3-6; exact scalar controls with explicit domains
+  - `workhouse verify --only 'symbolic fiber budgets preserve spectral caps and the joint Wilson potential'`
 **notes program: SAFE, Davies, coercivity (G20-G23)**
 
 - `C_0(d_1* d_1) = 18 = 3 nu_P exactly in d = 4: the off-diagonal row sum of the lattice Maxwell operator`

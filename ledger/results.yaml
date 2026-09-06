@@ -4,6 +4,140 @@
 # that entire statement. This does not change its mathematically established status.
 schema: results/v1
 results:
+  - id: RESULT:WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT
+    statement: For the actual physical adjacent-two-square SU(N) Wilson Hamiltonian, let P_u be its
+      global exact conditional fiber-ground projection and Q_u=I-P_u. The bottom of the closed restricted
+      form Q_u(H-E_vac)Q_u is (sqrt(3)+sqrt(5))sqrt(u)+o_N(sqrt(u)), above the true full-block vacuum.
+      At each sufficiently large fixed u the actual cross form yields a bounded Riesz lift U_u and
+      a closed nonnegative Schur form with exact triangular domain. The normalized retained operator
+      and its entire low-window graph-source frame therefore satisfy the established physical Schur
+      theorem.
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - One actual adjacent two-square graph with all seven electric links and both magnetic terms retained,
+      physical simultaneous conjugation invariance, fixed SU(N), N>=2, and u tending to infinity.
+    - The projection is the exact positive ground of the intrinsic full Haar fiber operator at each
+      coarse U; compression is defined by restriction of the H1 quadratic form, not an assumed operator-domain
+      product.
+    - The full physical first-shell theorem supplies the complete rank-two space below the mixed shell.
+      The actual ground-bundle derivative and projected-form estimates control the constrained upper
+      trial.
+    - The Schur realization is at each fixed sufficiently large u; global smoothness and coercivity
+      yield finite lift bounds which are not claimed uniform in u or block count.
+    scope: An actual nonlinear one-block fast-compression floor after true full-vacuum subtraction,
+      not the internal spectral gap of the compressed operator and not an independent class-rotor gap.
+      The first complement channel is a mixed physical singlet. The retained projection need not contain
+      the full vacuum or reduce H. The induced normalized coarse form exists, but comparison with a
+      prescribed bare Wilson theory, uniform interacting-volume lifts and fast bounds, literal/OS sources
+      and the continuum trajectory remain open.
+    source: CITE:WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT
+    source_section: Sections 1-6, closed global compression, complete low-space leakage, energy-controlled
+      mixed trial and actual Schur realization
+    depends_on:
+    - RESULT:WILSON_TWO_SQUARE_PHYSICAL_SHELLS
+    - RESULT:WILSON_GROUND_BUNDLE_RELATIVE_FORM
+    - RESULT:FORM_SCHUR_SCALE_COMPARISON
+    bears_on:
+    - G19
+    - G23
+    - RESULT:WILSON_GLOBAL_VERTICAL_BARRIER
+    supported_by:
+    - target: RUN:nonlinear_wilson_block_2026-09-05
+      scope: Frozen proof, original finite controls and independent domain-aware audit of the actual compression and fixed-u Schur realization.
+    - target: CHK:nonlinear-wilson-block-global-barriers-a-d1a6c1:complete-low-space-leakage-preserves-vac-e58452
+      scope: Exact four-state leakage and projection-energy examples plus a Gauss-invariant mixed Hermite polynomial; not the actual infinite-dimensional asymptotic or Schur domain theorem.
+  - id: RESULT:WILSON_GLOBAL_VERTICAL_BARRIER
+    statement: For the actual bouquet and adjacent-strip Wilson fibers, every u>0, coarse U in SU(N)
+      and full counted eigenvalue satisfy E_j(U)>=min(e_j,epsilon_N u) and E_j(U)>=e_j+(u-e_j/epsilon_N)v(U),
+      where epsilon_N=min(1,4/N) and e_j=E_j(I). The exact form obeys A_U-e0>=delta(I-P_U)+(u-e1/epsilon_N)v(U).
+      Its actual conditional ground potential satisfies (u-e0/epsilon_N)v(U)<=E0(U)-e0<=2u m v(U)<=2u
+      v(U), with 0<=m<=1.
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Fixed SU(N), N>=2, metric -2 ReTr(XY), u>0 and the exact two-face bouquet or adjacent-strip original-link
+      Hamiltonian with no surrounding plaquettes.
+    - Full Haar fiber spectrum with multiplicity, actual vertical Schur metric, and central full-fiber
+      e0,e1 and delta=e1-e0; no class-sector factor two is used.
+    - The affine and form inequalities hold for every u; a nonnegative scalar barrier requires e1<=epsilon_N
+      u, which the established rotor theorem supplies for sufficiently large u at each fixed N.
+    scope: Global in the coarse group for these actual finite blocks, including cut-locus and central
+      coarse values. It retains the coarse-dependent classical minimum and references the central fiber
+      vacuum, not the full-block vacuum. The conditional gap at SU(2), U=-I is exactly 3/4 or 15/16,
+      so a global sqrt(u) conditional-gap claim is excluded. No rank-uniform threshold, volume-uniform
+      interacting fast compression, OS projection or continuum limit follows.
+    source: CITE:WILSON_GLOBAL_VERTICAL_BARRIER
+    source_section: Sections 1-8, principal-root chart, actual metric, all-j min-max cap, affine form
+      and ground-potential comparison
+    depends_on:
+    - RESULT:COMPACT_ROTOR_FAST_GAP
+    - RESULT:WILSON_VERTICAL_FAST_ENERGY
+    bears_on:
+    - G19
+    - G23
+    - RESULT:WILSON_GROUND_BUNDLE_RELATIVE_FORM
+    - RESULT:FORM_SCHUR_SCALE_COMPARISON
+    supported_by:
+    - target: RUN:nonlinear_wilson_block_2026-09-05
+      scope: Frozen original derivations, independent audit, exact controls and strict scalar Lean compilation preserve provenance of the analytic all-rank theorem.
+    - target: CHK:nonlinear-wilson-block-global-barriers-a-d1a6c1:noncommuting-positive-trace-comparison-r-b8e6d9
+      scope: Arbitrary-symbol vector identities and a noncommuting rational matrix positivity control; no elliptic or min-max conclusion.
+    - target: CHK:nonlinear-wilson-block-global-barriers-a-d1a6c1:actual-su2-fiber-metrics-expose-the-cent-fd66aa
+      scope: Three exact SU(2) points and normalized Casimir arithmetic, including the central conditional-gap obstruction.
+    - target: CHK:nonlinear-wilson-block-global-barriers-a-d1a6c1:symbolic-fiber-budgets-preserve-spectral-3f6b5e
+      scope: Nine rational-function certificates for the scalar parameter budgets and trial identity under their explicit domains.
+    - target: LEAN:spectral_from_split
+      scope: Pure real scalar cap and affine assembly conditional on the supplied near-region and far-region inequalities; no spectral or SU(N) premise is formalized.
+    - target: LEAN:strip_factor
+      scope: Exact real strip factor, its range and kinetic-loss bounds for eta between zero and one half.
+    - target: LEAN:near_cap
+      scope: Real scalar transfer from an assumed near-region min-max input to its convex spectral cap.
+    - target: LEAN:near_affine
+      scope: Real scalar near-region affine comparison under explicit eta, v, epsilon and lower-input hypotheses.
+    - target: LEAN:far_affine
+      scope: Real scalar far-region affine comparison under the assumed global product-potential barrier.
+    - target: LEAN:two_sector_form
+      scope: Scalar algebra after an assumed ground/excited orthogonal decomposition, with nonnegative squared norms.
+    - target: LEAN:half_potential_threshold
+      scope: Real scalar threshold inequality only.
+  - id: RESULT:WILSON_GROUND_BUNDLE_RELATIVE_FORM
+    statement: For the actual bouquet and adjacent-strip Wilson Hamiltonians on a fixed near-identity
+      coarse chart, the normalized conditional quantum ground has balanced derivatives norm(partial_i
+      Omega_U)<=C|X| and norm(partial_i partial_j Omega_U)<=C. Its exact horizontal Born-Huang term
+      is at most C sqrt(u) v(U), and Berry connection vanishes. The exact ground-bundle isometry satisfies
+      q_c+(1-C/sqrt(u))V_c<=q_full[J]-e(I)<=q_c+(1+C/sqrt(u))V_c, retaining the actual coarse metric
+      and Haar measure. With u=g^-4 the relative magnetic correction is O(g^2).
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Fixed SU(N), N>=2, actual two-face bouquet or adjacent-strip metric, sufficiently large u, and
+      a fixed exponential chart U=exp(X) with Re exp(X/2)>=a0 I>0.
+    - The differentiated balanced operator has its scalar classical minimum V_c=4u(N-ReTr sqrt(U))
+      removed; its full conditional fiber gap is uniformly of order sqrt(u) on the chart.
+    - Coarse test functions use the Dirichlet form domain inside the chart. The same relative constant
+      tensors only for additive disjoint-edge copies, including a common residual Gauss constraint.
+    scope: Actual nonlinear finite-block compression with a domain-aware quantum-ground derivative
+      proof. Balanced derivatives and intrinsic horizontal derivatives have different scales. The theorem
+      is local in coarse U; the global barrier does not supply a global conditional gap or global ground
+      derivative bound. J need not contain the true full vacuum, reduce the Hamiltonian or be an OS-history
+      range. Global patching, interacting-volume fast compression, off-diagonal memory, true vacuum
+      subtraction and physical source matching remain separate.
+    source: CITE:WILSON_GROUND_BUNDLE_RELATIVE_FORM
+    source_section: Sections 1-5, common-domain graph bound, normalized ground derivatives, actual
+      horizontal connection and projected form
+    depends_on:
+    - RESULT:WILSON_VERTICAL_FAST_ENERGY
+    bears_on:
+    - G19
+    - G23
+    - RESULT:WILSON_GLOBAL_VERTICAL_BARRIER
+    - RESULT:FORM_SCHUR_SCALE_COMPARISON
+    supported_by:
+    - target: RUN:nonlinear_wilson_block_2026-09-05
+      scope: Frozen derivation, original geometry controls and independent audit retain the common-domain and analytic derivative hypotheses.
+    - target: CHK:nonlinear-wilson-block-global-barriers-a-d1a6c1:ground-bundle-lift-geometry-retains-the--340ce5
+      scope: Exact rational lift identities and a noncommuting spin-one Casimir graph estimate; not the uniform quantum-ground derivative or relative form theorem.
   - id: RESULT:WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY
     statement: On an n-periodic cubic original-link complex, the transverse curl Hessian and
       the retained space S=ran(P_C B) of Coulomb-projected componentwise L-cube means satisfy

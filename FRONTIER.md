@@ -10,9 +10,9 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 100 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 107 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 405/405 checks pass.
+**T1/T2 — re-derived here.** 410/410 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -63,6 +63,7 @@ it cannot drift from what the repository actually checks.
 | the complete Wilson band: finite source and projection controls | 5/5 |
 | physical Wilson blocks: exact metric, rotor and shell controls | 6/6 |
 | continuum scale comparison: boundary, history and Schur controls | 7/7 |
+| nonlinear Wilson block: global barriers and ground geometry | 5/5 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
