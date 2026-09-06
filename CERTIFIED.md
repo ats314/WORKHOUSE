@@ -343,7 +343,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/CreatorParent.lean:27
   - `make lean`
 
-## T1 — re-derived exactly — 361
+## T1 — re-derived exactly — 371
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -724,6 +724,38 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `vacuum-exact copies preserve compressed and full inverse-energy floors`
   - src/workhouse/invariants/literal_coarse_sources.py:37 · paper/research_notes/G19_WILSON_LITERAL_VACUUM_COARSE_SOURCES_20260905.md complete low-space leakage, independent copies and inverse-energy addendum; finite controls
   - `workhouse verify --only 'vacuum-exact copies preserve compressed and full inverse-energy floors'`
+**literal endpoint spectra and localized true-ground sources**
+
+- `actual averaged path sources obey gauge covariance cochain restriction and transverse rank`
+  - src/workhouse/invariants/endpoint_window.py:175 · paper/research_notes/G19_LOCAL_COVARIANT_AVERAGED_PATH_SOURCES_20260905.md sections 2-4; exact n4 L2 incidence and noncommuting SU2 holonomies
+  - `workhouse verify --only 'actual averaged path sources obey gauge covariance cochain restriction and transverse rank'`
+- `actual leading SU2 metric and invariant vacuum forcing retain the connection coefficient`
+  - src/workhouse/invariants/endpoint_window.py:97 · paper/research_notes/G19_TRUE_GROUND_LOCALIZED_WILSON_SCORE_20260905.md sections 1-2; finite order-two Lie algebra
+  - `workhouse verify --only 'actual leading SU2 metric and invariant vacuum forcing retain the connection coefficient'`
+- `all finite complex Fourier blocks satisfy the full physical source floor`
+  - src/workhouse/invariants/endpoint_window.py:200 · paper/research_notes/G19_LOCAL_COVARIANT_AVERAGED_PATH_SOURCES_20260905.md sections 4-6; exact Qi full matrices and independent alias controls
+  - `workhouse verify --only 'all finite complex Fourier blocks satisfy the full physical source floor'`
+- `an any-bad event fails while componentwise centered score variances add`
+  - src/workhouse/invariants/endpoint_window.py:155 · paper/research_notes/G19_LOCAL_GRADIENT_EXCITATION_SUPPORT_20260905.md sections 4-6; exact product-event and score controls
+  - `workhouse verify --only 'an any-bad event fails while componentwise centered score variances add'`
+- `complete centered radial and pair profiles retain the local bad-gradient bound`
+  - src/workhouse/invariants/endpoint_window.py:136 · paper/research_notes/G19_LOCAL_GRADIENT_EXCITATION_SUPPORT_20260905.md sections 1-3 and 5; finite exact tensor forms
+  - `workhouse verify --only 'complete centered radial and pair profiles retain the local bad-gradient bound'`
+- `complete finite endpoint cluster retains the vacuum and all high source directions`
+  - src/workhouse/invariants/endpoint_window.py:18 · paper/research_notes/G19_LITERAL_ENDPOINT_COMPLETE_WINDOW_20260905.md sections 2-3.1; exact five-state model
+  - `workhouse verify --only 'complete finite endpoint cluster retains the vacuum and all high source directions'`
+- `genuine compressed Markov paths and marginal energy cutoffs expose distinct failures`
+  - src/workhouse/invariants/endpoint_window.py:60 · paper/research_notes/G19_LITERAL_ENDPOINT_COMPLETE_WINDOW_20260905.md sections 5-6; finite reversible path and separate self-adjoint countermodels
+  - `workhouse verify --only 'genuine compressed Markov paths and marginal energy cutoffs expose distinct failures'`
+- `localized score contractions distinguish class cancellation from common Gauss pairs`
+  - src/workhouse/invariants/endpoint_window.py:116 · paper/research_notes/G19_TRUE_GROUND_LOCALIZED_WILSON_SCORE_20260905.md sections 4-6; exact SU2 Gaussian covariance and Schur exponents
+  - `workhouse verify --only 'localized score contractions distinguish class cancellation from common Gauss pairs'`
+- `the conditional physical-clock loss obeys its rational summable majorant`
+  - src/workhouse/invariants/endpoint_window.py:80 · paper/research_notes/G19_LITERAL_ENDPOINT_COMPLETE_WINDOW_20260905.md section 7; eight finite steps and a symbolic scalar identity
+  - `workhouse verify --only 'the conditional physical-clock loss obeys its rational summable majorant'`
+- `two exact time lags and a complete discarded cap determine strict spectral counts`
+  - src/workhouse/invariants/endpoint_window.py:38 · paper/research_notes/G19_LITERAL_ENDPOINT_COMPLETE_WINDOW_20260905.md section 3.1 and section 5; finite matrix extension of the prior excited bridge
+  - `workhouse verify --only 'two exact time lags and a complete discarded cap determine strict spectral counts'`
 **native string tension through fifth order (v4.3 §11.2)**
 
 - `a weight u^k, k >= 1, flips the small-u direction: the sign is the weight's, not evidence`
