@@ -1921,38 +1921,98 @@ gaps:
       - step: Connect the actual Wilson fixed-scale construction to a controlled continuum trajectory
         state: live
         depends_on:
-        - RESULT:WILSON_INFINITE_PHYSICAL_BAND
-        - RESULT:OS_HISTORY_BLOCK_INTERTWINER
-        - RESULT:WILSON_FINITE_CELL_PHYSICAL_GAP
-        - RESULT:WILSON_HARMONIC_BOUNDARY
-        - RESULT:WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY
-        - RESULT:GAUSSIAN_OS_OBSERVABILITY
-        - RESULT:GAUSSIAN_SCHUR_MEMORY
-        - RESULT:FORM_SCHUR_SCALE_COMPARISON
-        - RESULT:WILSON_GLOBAL_VERTICAL_BARRIER
-        - RESULT:WILSON_GROUND_BUNDLE_RELATIVE_FORM
-        - RESULT:WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT
-        status: 'Actual fixed-spacing infrared transfer and sources remain the controlled endpoint.
-          The ultraviolet side now has a general fixed-cell physical first-cluster theorem and
-          all-size planar and three-dimensional harmonic interface bounds, with planar
-          low-mode/source frames and retained periodic harmonic directions. Gaussian
-          Schur elimination retains memory and induced mass, giving a quantitative sorted-frequency
-          approximation without small interface coupling. Exact history observability repairs
-          the earlier emphasis on counting eliminated modes: the actual complement may be zero,
-          and global Gauss permits mixed singlets when it is nonzero. The missing step is the
-          uniform nonlinear Wilson physical form, source and effective-dynamics comparison,
-          followed by a controlled trajectory and continuum limits. Neither a fixed-cell order-one
-          remainder nor a harmonic planar inequality verifies those hypotheses. The proved abstract
-          form theorem supplies a sufficient full-gap and whole-window graph-source comparison;
-          iterating requires actual normalized coarse gap matching and a summable inverse-fast-energy
-          budget in one clock.
-          The nonlinear two-face continuation now supplies a global vertical barrier,
-          a local ground-bundle relative form, and the actual strip complement floor
-          after true vacuum subtraction. Its fixed-u Schur lift and normalized coarse
-          operator exist on their full domains; uniform interacting-volume bounds and
-          matching to a specified coarse Wilson theory remain open.
+          - RESULT:WILSON_INFINITE_PHYSICAL_BAND
+          - RESULT:OS_HISTORY_BLOCK_INTERTWINER
+          - RESULT:WILSON_FINITE_CELL_PHYSICAL_GAP
+          - RESULT:WILSON_HARMONIC_BOUNDARY
+          - RESULT:WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY
+          - RESULT:GAUSSIAN_OS_OBSERVABILITY
+          - RESULT:GAUSSIAN_SCHUR_MEMORY
+          - RESULT:FORM_SCHUR_SCALE_COMPARISON
+          - RESULT:WILSON_GLOBAL_VERTICAL_BARRIER
+          - RESULT:WILSON_GROUND_BUNDLE_RELATIVE_FORM
+          - RESULT:WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT
+          - RESULT:WILSON_LITERAL_FAST_COMPLEMENT
+          - RESULT:WILSON_LITERAL_COARSE_FORM
+          - RESULT:WILSON_COMMON_GAUSS_LITERAL_FAST_COMPLEMENT
+          - RESULT:GROUND_MARGINAL_SCHUR_SCORE
+          - RESULT:GAUSSIAN_QUANTUM_FAST_SOURCES
+          - RESULT:TRUE_GROUND_CENTER_SCORE_OBSTRUCTION
+        status: "Actual fixed-spacing infrared transfer and sources remain the controlled endpoint. The ultraviolet\
+          \ side now has a general fixed-cell physical first-cluster theorem and all-size planar and three-dimensional\
+          \ harmonic interface bounds, with planar low-mode/source frames and retained periodic harmonic directions.\
+          \ Gaussian Schur elimination retains memory and induced mass, giving a quantitative sorted-frequency\
+          \ approximation without small interface coupling. Exact history observability repairs the earlier\
+          \ emphasis on counting eliminated modes: the actual complement may be zero, and global Gauss permits\
+          \ mixed singlets when it is nonzero. The missing step is the uniform nonlinear Wilson physical form,\
+          \ source and effective-dynamics comparison, followed by a controlled trajectory and continuum limits.\
+          \ Neither a fixed-cell order-one remainder nor a harmonic planar inequality verifies those hypotheses.\
+          \ The proved abstract form theorem supplies a sufficient full-gap and whole-window graph-source comparison;\
+          \ iterating requires actual normalized coarse gap matching and a summable inverse-fast-energy budget\
+          \ in one clock. The nonlinear two-face continuation now supplies a global vertical barrier, a local\
+          \ ground-bundle relative form, and the actual strip complement floor after true vacuum subtraction.\
+          \ Its fixed-u Schur lift and normalized coarse operator exist on their full domains; uniform interacting-volume\
+          \ bounds and matching to a specified coarse Wilson theory remain open.\n The true-vacuum literal source\
+          \ now identifies the exact marginal form, with full-form fast bounds and complete low-window frames\
+          \ for additive copies, including one common Gauss constraint. The harmonic interface inequality also\
+          \ gives an entire regulated Gaussian quantum fast/source theorem. An exact central SU(2) identity\
+          \ disproves the proposed global sublinear Fisher bound. The next interacting estimate must use actual\
+          \ energy-localized score/form control, retain high retained energies and their coupling, and compare\
+          \ the true quantum marginal and generated memory in physical units."
+      - step: Identify the true-vacuum literal coarse form and additive physical fast space
+        state: done
+        closed_by:
+          - RESULT:WILSON_LITERAL_COARSE_FORM
+          - RESULT:WILSON_LITERAL_FAST_COMPLEMENT
+          - RESULT:WILSON_COMMON_GAUSS_LITERAL_FAST_COMPLEMENT
+        status: 'The literal projection fixes the exact full quantum vacuum and identifies its actual marginal
+          energy form. The physical fast lower floor and entire low-window frame are uniform over finite or
+          countable additive copies, both with independent Gauss constraints and with one common Gauss constraint.
+          The latter includes every low adjoint pair singlet. A fixed-u actual Schur realization follows for
+          one block. Ambient electric or plaquette interactions and uniform interacting lifts are not part of
+          this completed additive result.
 
           '
+      - step: Lift the full harmonic boundary inequality to the entire Gaussian quantum fast form
+        state: done
+        closed_by:
+          - RESULT:GAUSSIAN_QUANTUM_FAST_SOURCES
+        status: 'The full matrix form gives dGamma(sqrt(K))>=sqrt(kappa)Q for the exact coordinate Wick range
+          Gamma(K^-1/4 S), and an onto frame for the whole low physical window. The periodic Coulomb-box application
+          is uniform in box count and positive regulator, retaining flat modes. Planar electric-dual or weighted-face
+          sources are specified separately from unweighted face averages. Nonlinear Wilson forms, local observables
+          and zero-regulator flat-sector quantization remain open.
+
+          '
+      - step: Bound the global true-ground Fisher matrix by C0+C1 sqrt(u)v(U)
+        state: dead
+        closed_by:
+          - RESULT:TRUE_GROUND_CENTER_SCORE_OBSTRUCTION
+        cannot_decide:
+          - G19
+          - G23
+        status: The exact actual SU(2) bouquet gives weighted Fisher at least (64/3)u-O(sqrt(u)) at U=-I, where
+          v(U)=4. Smoothness makes the violation persist on open neighborhoods, so uniform almost-everywhere
+          variants fail. The generic intrinsic-score and full-gap theorem remains valid under its explicit hypotheses,
+          and other weighted or energy-restricted score estimates remain available.
+      - step: Control the true interacting Wilson score and forms on the relevant energy space
+        state: live
+        depends_on:
+          - RESULT:WILSON_LITERAL_COARSE_FORM
+          - RESULT:WILSON_COMMON_GAUSS_LITERAL_FAST_COMPLEMENT
+          - RESULT:GROUND_MARGINAL_SCHUR_SCORE
+          - RESULT:GAUSSIAN_QUANTUM_FAST_SOURCES
+          - RESULT:WILSON_GLOBAL_VERTICAL_BARRIER
+          - RESULT:FORM_SCHUR_SCALE_COMPARISON
+          - RESULT:TRUE_GROUND_CENTER_SCORE_OBSTRUCTION
+        status: The exact SU(2) central true-ground Fisher matrix grows at least linearly in u, so the proposed
+          global C0+C1 sqrt(u)v(U) estimate is no longer a live target. Prove an actual full-Q energy weight
+          and a resolvent-weighted or coarse-gradient-energy score estimate on the relevant source window. A
+          good-region small ratio plus controlled bad-region gradient-energy leakage yields a conditional small
+          window Schur loss. Small bad-region probability is insufficient. Control the remaining high retained
+          spectrum and its coupling or identify the complete fine low window before claiming a full gap. Then
+          compare the actual quantum marginal, induced mass and generated memory with the chosen effective theory
+          in a common physical clock; all bounds must survive ambient interactions.
       - step: Establish the actual two-face vertical, coarse and full-vacuum complementary forms
         state: done
         closed_by:
@@ -2154,33 +2214,34 @@ gaps:
 
       '
     plan:
-    - step: Compare the actual generated history dynamics with a controlled physical low-energy
-        model
+    - step: Compare the actual generated history dynamics with a controlled physical low-energy model
       state: live
       depends_on:
-      - RESULT:OS_HISTORY_BLOCK_INTERTWINER
-      - RESULT:GAUSSIAN_OS_OBSERVABILITY
-      - RESULT:GAUSSIAN_SCHUR_MEMORY
-      - RESULT:WILSON_HARMONIC_BOUNDARY
-      - RESULT:WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY
-      - RESULT:FORM_SCHUR_SCALE_COMPARISON
-      - RESULT:WILSON_GLOBAL_VERTICAL_BARRIER
-      - RESULT:WILSON_GROUND_BUNDLE_RELATIVE_FORM
-      - RESULT:WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT
-      status: 'This refines the earlier actual-complement comparison; it does not withdraw the
-        generic OS intertwiner. Specify the genuine history map, physical invariant algebra
-        and generated measure. Bound the nonlinear physical forms, induced kinetic mass and
-        memory approximation uniformly, and match literal or renormalized source synthesis on
-        the selected physical band. When an actual reducing complement survives, bound its full
-        globally invariant energy, including mixed coarse/fine color singlets. A class gap on
-        a constrained fiber and the dimension of ker B do not provide that bound. Retain the
-        physical time step through iteration.
-        The actual adjacent strip now realizes a full-vacuum fast compression and
-        closed Schur factorization at fixed u. Neither its conditional projection
-        nor the resulting graph sources have been identified with this history map;
-        volume-uniform interacting lifts, memory and source comparison remain live.
-
-        '
+        - RESULT:OS_HISTORY_BLOCK_INTERTWINER
+        - RESULT:GAUSSIAN_OS_OBSERVABILITY
+        - RESULT:GAUSSIAN_SCHUR_MEMORY
+        - RESULT:WILSON_HARMONIC_BOUNDARY
+        - RESULT:WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY
+        - RESULT:FORM_SCHUR_SCALE_COMPARISON
+        - RESULT:WILSON_GLOBAL_VERTICAL_BARRIER
+        - RESULT:WILSON_GROUND_BUNDLE_RELATIVE_FORM
+        - RESULT:WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT
+        - RESULT:WILSON_LITERAL_COARSE_FORM
+        - RESULT:WILSON_LITERAL_FAST_COMPLEMENT
+        - RESULT:WILSON_COMMON_GAUSS_LITERAL_FAST_COMPLEMENT
+        - RESULT:GROUND_MARGINAL_SCHUR_SCORE
+        - RESULT:GAUSSIAN_QUANTUM_FAST_SOURCES
+        - RESULT:TRUE_GROUND_CENTER_SCORE_OBSTRUCTION
+      status: "The actual history map, jointly invariant algebra, generated measure, memory and physical clock\
+        \ remain explicit. Literal true-vacuum source ranges now have complete low-window frames and fast\
+        \ floors in additive Wilson models, including common Gauss, and in the regulated full Gaussian boundary\
+        \ model. These equal-time ranges need not be the reducing OS-history range. The generic weighted intrinsic-score\
+        \ theorem gives a concrete sufficient nonlinear comparison, but its true interacting Wilson Fisher,\
+        \ full-Q and marginal-gap premises remain open. Match the actual generated dynamics and source synthesis\
+        \ across scales; a constrained class gap, a wrong source-frequency weight or dimension counting cannot\
+        \ replace this construction.\n The central SU(2) true-ground identity disproves the earlier global\
+        \ sublinear Fisher candidate. The replacement must use actual energy-localized score/form control\
+        \ and retain the high-retained-space or complete-fine-window obligation."
     - step: Determine what the exact harmonic history block observes before assigning an eliminated
         space
       state: done

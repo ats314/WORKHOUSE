@@ -343,7 +343,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/CreatorParent.lean:27
   - `make lean`
 
-## T1 — re-derived exactly — 354
+## T1 — re-derived exactly — 361
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -701,6 +701,29 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the two face energies differ, so the eigenspace must be chosen`
   - src/workhouse/invariants/pentagonal.py:27 · §9.3 / C8
   - `workhouse verify --only 'the two face energies differ, so the eigenspace must be chosen'`
+**literal coarse sources: vacuum, Gauss, score and quantum complement**
+
+- `central true-ground score retains Haar drift and the actual horizontal metric`
+  - src/workhouse/invariants/literal_coarse_sources.py:149 · paper/research_notes/G19_TRUE_GROUND_CENTER_SCORE_OBSTRUCTION_20260905.md exact Riccati, Haar and SU2 geometry controls; reconstructed trial scope
+  - `workhouse verify --only 'central true-ground score retains Haar drift and the actual horizontal metric'`
+- `common Gauss pair singlets retain orthogonal leakage and exclude the higher chirality shell`
+  - src/workhouse/invariants/literal_coarse_sources.py:65 · paper/research_notes/G19_WILSON_COMMON_GAUSS_LITERAL_FAST_FLOOR_20260905.md equivariant projection, complete low supports and refined floor; finite SO3 model
+  - `workhouse verify --only 'common Gauss pair singlets retain orthogonal leakage and exclude the higher chirality shell'`
+- `complete Gaussian low windows distinguish physical wrong-source weights and retained zero modes`
+  - src/workhouse/invariants/literal_coarse_sources.py:125 · paper/research_notes/G19_GAUSSIAN_QUANTUM_FAST_SOURCES_20260905.md sections 5-8; full finite window, physical counterexample and regulator controls
+  - `workhouse verify --only 'complete Gaussian low windows distinguish physical wrong-source weights and retained zero modes'`
+- `intrinsic conditional score retains connection terms and the sharp full-gap factor`
+  - src/workhouse/invariants/literal_coarse_sources.py:86 · paper/research_notes/G19_GROUND_MARGINAL_SCHUR_SCORE_20260905.md sections 2-4; exact noncommuting Fisher, torus and two-state controls
+  - `workhouse verify --only 'intrinsic conditional score retains connection terms and the sharp full-gap factor'`
+- `inverse-frequency source geometry controls all particles in the checked tensor sectors`
+  - src/workhouse/invariants/literal_coarse_sources.py:106 · paper/research_notes/G19_GAUSSIAN_QUANTUM_FAST_SOURCES_20260905.md sections 2-4; exact matrix bridge and one-through-four particle controls
+  - `workhouse verify --only 'inverse-frequency source geometry controls all particles in the checked tensor sectors'`
+- `true weighted vacuum sources preserve the exact coarse form and vacuum subtraction`
+  - src/workhouse/invariants/literal_coarse_sources.py:17 · paper/research_notes/G19_WILSON_LITERAL_VACUUM_COARSE_SOURCES_20260905.md literal isometry, projection and ground-state transform; finite graph control
+  - `workhouse verify --only 'true weighted vacuum sources preserve the exact coarse form and vacuum subtraction'`
+- `vacuum-exact copies preserve compressed and full inverse-energy floors`
+  - src/workhouse/invariants/literal_coarse_sources.py:37 · paper/research_notes/G19_WILSON_LITERAL_VACUUM_COARSE_SOURCES_20260905.md complete low-space leakage, independent copies and inverse-energy addendum; finite controls
+  - `workhouse verify --only 'vacuum-exact copies preserve compressed and full inverse-energy floors'`
 **native string tension through fifth order (v4.3 §11.2)**
 
 - `a weight u^k, k >= 1, flips the small-u direction: the sign is the weight's, not evidence`

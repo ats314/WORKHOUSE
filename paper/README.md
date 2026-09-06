@@ -70,7 +70,7 @@ shows why a configuration fiber does not identify the exact history range.
 The [general form-Schur proof](research_notes/G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md)
 includes the Gaussian memory specialization and gives a conditional full-gap
 recursion and an onto graph-source frame. Its actual uniform Wilson form,
-coarse and literal-source hypotheses remain open. The
+coarse and interacting-volume source/history hypotheses remain open. The
 [coupled-oscillator method review](research_notes/G19_COUPLED_OSCILLATOR_METHOD_REVIEW_20260905.md)
 preserves the user's useful exact quadratic benchmark and the independently
 checked transformation corrections without making it a Wilson proof premise.
@@ -86,7 +86,20 @@ formal scalar Lean implications. The
 [actual full-vacuum complement](research_notes/G19_WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT_20260905.md) supplies the
 mixed-channel fast floor and a closed Schur realization for one physical
 adjacent strip. Uniform interacting-volume lifts, coarse comparison and
-literal/OS source identification remain separate.
+interacting literal/OS source identification remain separate; the additive
+literal continuation is recorded below.
+
+The literal-source continuation connects the actual vacuum, coarse energy
+form and complete fast/source spaces:
+
+- [True-vacuum literal coarse sources](research_notes/G19_WILSON_LITERAL_VACUUM_COARSE_SOURCES_20260905.md): exact quantum marginal form, fixed-u Schur realization, and the literal full-form fast bound with independent-copy frames.
+- [Common-Gauss literal fast space](research_notes/G19_WILSON_COMMON_GAUSS_LITERAL_FAST_FLOOR_20260905.md): uniform additive-copy bounds and complete cross-block singlet frames.
+- [Weighted true-ground score criterion](research_notes/G19_GROUND_MARGINAL_SCHUR_SCORE_20260905.md): the exact intrinsic cross identity and a conditional full-gap bound; its uniform Wilson premises remain open.
+- [Entire Gaussian quantum fast form](research_notes/G19_GAUSSIAN_QUANTUM_FAST_SOURCES_20260905.md): the full harmonic-to-quantum bridge with correctly weighted invariant sources and explicit retained flat-mode regulation.
+- [Exact central true-ground score](research_notes/G19_TRUE_GROUND_CENTER_SCORE_OBSTRUCTION_20260905.md): a finite-u SU(2) identity disproves the global sublinear Fisher candidate and identifies an energy-localized replacement.
+
+Its [sealed run](../runs/literal_quantum_sources_2026-09-05/README.md) records exact finite evidence
+separately from the analytic conclusions.
 
 The [Born-Oppenheimer and two-strip proof](research_notes/G19_WILSON_STRIP_BO_AND_TWO_STRIP_SPLITTING_20260905.md)
 adds exact quantum-ground coefficients, the on-shell angular correction

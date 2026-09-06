@@ -71,6 +71,7 @@ _MODULES = (
     "continuum_wilson_block",
     "continuum_scale_comparison",
     "nonlinear_wilson_block",
+    "literal_coarse_sources",
 )
 
 for _name in _MODULES:
