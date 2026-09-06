@@ -4,6 +4,133 @@
 # that entire statement. This does not change its mathematically established status.
 schema: results/v1
 results:
+  - id: RESULT:GAUSSIAN_PATH_ENDPOINT_BASELINE
+    statement: 'The true-marginal Gaussian literal isometry is J=Gamma(Omega^-1/2 W G^-1/2), G=W*Omega^-1W.
+      Its complete endpoint is exactly Gamma(M_tau), where M_tau=G^-1/2 W*Omega^-1 exp(-tau Omega)W G^-1/2,
+      and its logarithm is dGamma(-log(M_tau)/tau). For the local path source at nonzero massless coarse
+      momentum K, both polarization frequencies obey 0<=nu/omega0-1<=pi^9|K|^2/(6144s) at tau=sL/v. This
+      yields complete low-Fock counting bounds below 2v/L without a particle-count loss. The actual path
+      Gaussian has a nonzero leading conditional Fisher of order g^-2; a complete invariant two-boson
+      example has static relative loss 5/37, independent of g.
+
+      '
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Positive finite oscillator Omega, full-row-rank observation or its supported quotient, and actual
+      Gaussian marginal covariance G/2.
+    - Path application uses the periodic original-link transverse complex, n=Lm, L>=2, and v^2=2b_rep
+      u.
+    - Massless comparison removes the three harmonic coordinates or restricts to a nonzero momentum block;
+      a positive regulator has the separate stated bounds.
+    - Physical restriction uses the complete residual compact-group invariant Fock algebra and equivariant
+      source.
+    scope: 'Exact fixed-time second quantization does not make the endpoint family a semigroup or the
+      full static Schur map a second quantization. The local inverse row Gram is auxiliary RR*, not the
+      anchored derivative or true marginal Gram. Constants in the low-frequency estimate are uniform in
+      volume and L; no unregulated flat vacuum or interacting Wilson limit follows. Averaged linear gauge
+      paths have explicit Dimock/Balaban provenance; the comparison retains the quantum precision.
+
+      '
+    source: CITE:GAUSSIAN_PATH_ENDPOINT_BASELINE
+    source_section: Sections 1-7, exact endpoint, two-polarization and full low-Fock comparison, row Gram
+      and score/static counterexamples
+    depends_on:
+    - RESULT:GAUSSIAN_QUANTUM_FAST_SOURCES
+    - RESULT:WILSON_COVARIANT_BLOCK_SOURCES
+    bears_on:
+    - G19
+    - G23
+    - RESULT:LITERAL_ENDPOINT_SPECTRAL_COMPARISON
+    - RESULT:WILSON_LOCALIZED_TRUE_GROUND_SCORE
+    supported_by:
+    - target: RUN:gaussian_path_nonlinear_input_2026-09-06
+      scope: Five original exact finite families check tensor compression, marginal and invariant two-boson
+        static matrices, the actual n6 L2 path Fisher, a noncommuting Gram sandwich and row-Gram moments.
+        Whole Fock domains and uniform momentum estimates remain analytic T3 statements; no native CHK
+        or Lean theorem is added.
+  - id: RESULT:CONDITIONAL_QUANTUM_PATH_COVARIANCE
+    statement: 'The complete conditional quantum covariance for the actual path source is C_fast=C-CW(W*CW)^-1W*C=Q_F(Q_F
+      Omega Q_F|F)^-1Q_F, where C=Omega^-1, F=ker W*, and its probability covariance is C_fast/2. Its
+      precision has floor sqrt(v^2/(33L^2)+rho^2). Exact alias conditioning cancels the low pole. At each
+      fixed L the spatial covariance kernel is bounded by B(L,epsilon*) v^-1 (1+|x|)^-4 and is absolutely
+      summable uniformly in block count and 0<=rho/v<=epsilon*. An explicit directional term shows that
+      this ambient transverse covariance need not have exponential spatial decay.
+
+      '
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - The established local-path source W=R* on coarse transverse cochains, retaining every harmonic coordinate.
+    - Fine period n=Lm>=3, fixed L>=2, v>0 and bounded dimensionless regulator rho/v; the joint Gaussian
+      uses rho>0.
+    - Original-link electric metric and color-diagonal fixed compact simple-group Gaussian law.
+    scope: 'The inverse is the compressed precision, not the compressed covariance. Summability constants
+      are not asserted uniform in L. The zero-regulator limit defines the conditional fiber kernel but
+      not a normalized flat joint vacuum. The non-exponential witness concerns the specified ambient transverse
+      coordinate covariance, not every gauge-invariant field-strength kernel. Summability does not imply
+      a small conditional Fisher matrix or an interacting conditional law.
+
+      '
+    source: CITE:CONDITIONAL_QUANTUM_PATH_COVARIANCE
+    source_section: Sections 2-5, complete precision, alias cancellation, conormal Fourier summability
+      and non-exponential witness
+    depends_on:
+    - RESULT:WILSON_COVARIANT_BLOCK_SOURCES
+    bears_on:
+    - G19
+    - G23
+    - RESULT:GAUSSIAN_PATH_ENDPOINT_BASELINE
+    - RESULT:WILSON_CUBIC_GROUND_TRANSFER
+    supported_by:
+    - target: RUN:gaussian_path_nonlinear_input_2026-09-06
+      scope: Three original exact finite families check conditioning and compressed precision, complete
+        Q(i) alias matrices, pole-cancellation orders and the non-differentiability witness. The derivative,
+        Fourier, all-volume and fixed-scale summability arguments remain analytic T3 statements.
+  - id: RESULT:WILSON_CUBIC_GROUND_TRANSFER
+    statement: 'For the stated finite Wilson complex the first ground forcing has exactly the Lie-cubic
+      form H1 Phi0=P_D Phi0 with D in exterior^3 E*. Its first ground corrector is P_C Phi0, C=-(Omega^(1)+Omega^(2)+Omega^(3))^-1D,
+      so it vanishes when dim E<3. Color-diagonal Gaussian conditioning gives E(P_C|y)=P_C(m(y)) with
+      no internal pair contraction. A specified local nonlinear source chart y_g=W*x+gY1(x)+O(g^2) has
+      first marginal-density coefficient 2P_C(m(y))+2<G^-1y,Y1(m(y))>, retaining the moving-source bracket
+      correction.
+
+      '
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Fixed finite connected Wilson complex with unique flat gauge orbit, H^1=0, positive face weights
+      and the established finite-cell localization expansion.
+    - Fixed compact connected simple group with bi-invariant metric, faithful unitary representation and
+      color-diagonal positive oscillator frequency matrix.
+    - The source statement uses the chosen finite local submersive group/tree chart and its true Gaussian
+      marginal; all remainder constants retain fixed-complex scope.
+    scope: 'The actual first electric and magnetic jets supply one Lie bracket; invariance alone would
+      not exclude every other cubic tensor. Rank-two cancellation is a vacuum-forcing statement, not vanishing
+      of H1 on every state. The marginal coefficient is not a volume-uniform interacting derivative bound.
+      The full matrix-valued observation sigma algebra may contain further directions first visible at
+      quadratic order and is not identified with the chosen chart or tangent sigma algebra. Second-order
+      quartic, metric, Haar and source terms remain necessary; no running coupling or all-orders convergence
+      is asserted.
+
+      '
+    source: CITE:CUBIC_GROUND_TRANSFER
+    source_section: Sections 1-4, actual first jets, exterior resolvent, conditional cancellation and
+      moving-source pushforward
+    depends_on:
+    - RESULT:WILSON_FINITE_CELL_PHYSICAL_GAP
+    - CITE:LOCAL_COVARIANT_AVERAGED_PATH_SOURCES
+    bears_on:
+    - G19
+    - G23
+    - RESULT:CONDITIONAL_QUANTUM_PATH_COVARIANCE
+    - RESULT:GAUSSIAN_PATH_ENDPOINT_BASELINE
+    supported_by:
+    - target: RUN:gaussian_path_nonlinear_input_2026-09-06
+      scope: Original symbolic controls check bracket trace and contraction identities, exterior frequency
+        denominators, rank-two cancellation and moving-source divergence with explicit negatives. The
+        actual finite-cell first-jet and localization theorem remains analytic T3; the preserved connected-energy
+        draft is explicitly unverified and supplies no evidence edge.
   - id: RESULT:WILSON_COVARIANT_BLOCK_SOURCES
     statement: 'An average of anchored length-L Wilson paths defines a globally local endpoint-gauge-covariant
       matrix block on the periodic three-dimensional cubic lattice. Its tangent is T=R-d0c Phi, with R

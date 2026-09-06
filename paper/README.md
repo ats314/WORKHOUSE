@@ -7,6 +7,24 @@ For the current mathematical state, start with
 verification coverage recorded when they were written; they are not the
 current status register for the September results.
 
+The [exact Gaussian path endpoint](../paper/research_notes/G19_GAUSSIAN_PATH_ENDPOINT_BASELINE_20260906.md)
+now fixes the quadratic memory and true marginal normalization for the local
+block. Its complete low-Fock comparison has no particle-count loss. The
+[conditioned quantum covariance](../paper/research_notes/G19_CONDITIONAL_QUANTUM_PATH_COVARIANCE_20260906.md)
+has a uniform full fiber gap and a summable spatial kernel at each fixed
+block scale; its specified transverse kernel need not decay exponentially.
+The [first Wilson ground and source correction](../paper/research_notes/G19_CUBIC_GROUND_TRANSFER_20260906.md)
+is an explicit Lie cubic with its moving-source bracket term retained.
+
+The next target is the **nonlinear excess above this quadratic memory**.
+An actual coupled path Gaussian already has a leading nonzero score, so the
+special strip's small total-score estimate cannot be assumed for general
+blocks. Connected second-order terms need time-integrated energy control
+together with quartic, metric, Haar and source corrections. Their uniform
+interacting remainder, complete source algebra and physical scale trajectory
+remain open. The [reproduction run](../runs/gaussian_path_nonlinear_input_2026-09-06/README.md) preserves
+the three analytic proofs and their original exact finite controls.
+
 The [rooted Wilson contraction theorem](research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md)
 establishes convergent nonunitary vacuum creator coordinates on an explicit
 coupling disk uniform in spatial volume and temporal mesh. Its
