@@ -1,0 +1,154 @@
+{
+  "source_root": "C:/WORKHOUSE/WORKHOUSE-autonomous-20260905/outputs/wilson_complete_band_20260905/next_scale/next_nonlinear",
+  "run": "literal_quantum_sources_2026-09-05",
+  "files": [
+    {
+      "source": "C:/WORKHOUSE/WORKHOUSE-autonomous-20260905/outputs/wilson_complete_band_20260905/next_scale/next_nonlinear/next_literal/LITERAL_VACUUM_COARSE_PROJECTION.md",
+      "source_sha256": "3e64cf53600a4e07805f4e3e9c5911cc49a1a7f807b810ba7d4760a5f8bb9b55",
+      "canonical": "paper/research_notes/G19_WILSON_LITERAL_VACUUM_COARSE_SOURCES_20260905.md",
+      "replacements": [
+        {
+          "old": "5 September 2026. Independent outputs-only derivation. No current canonical\nsource, native check or sealed run is changed. This note concerns the actual",
+          "new": "5 September 2026. Analytic true-vacuum source theorem. This note concerns the actual",
+          "count": 1
+        },
+        {
+          "old": "These outputs do not alter the current canonical\npackage.",
+          "new": "The original derivation and exact controls are preserved in the cited run.",
+          "count": 1
+        },
+        {
+          "old": "`paper/research_notes/G19_WILSON_TWO_SQUARE_PHYSICAL_SHELLS_20260905.md`",
+          "new": "[G19_WILSON_TWO_SQUARE_PHYSICAL_SHELLS_20260905.md](G19_WILSON_TWO_SQUARE_PHYSICAL_SHELLS_20260905.md)",
+          "count": 1
+        },
+        {
+          "old": "`check_literal_vacuum_projection.py`",
+          "new": "[check_literal_vacuum_projection.py](../../runs/literal_quantum_sources_2026-09-05/check_literal_vacuum_projection.py)",
+          "count": 1
+        }
+      ],
+      "appendices": [
+        "\n## 9. Full form from the compressed inverse\n\nThis separately derived continuation is appended with its original proof\nscope. The original addendum and its independent exact controls are\npreserved in the [literal-source run](../../runs/literal_quantum_sources_2026-09-05/README.md).\n\n5 September 2026. Analytic addendum to the unchanged literal and common-Gauss\nsource derivations. This strengthens their actual additive conclusions from\nrestricted fast coercivity to a full form inequality. It adds no interacting\nHamiltonian or OS-history identification.\n\n### 9.1. Pseudoinverse lemma with the true vacuum retained\n\nLet h be a nonnegative self-adjoint operator with closed form, unique unit\nvacuum Omega, and a strictly positive full gap on Omega-perp. Let Pi0 be its\nvacuum projection. Let P be an orthogonal projection with P Omega=Omega,\nand Q=I-P. Define G=h_+^-1 as the inverse on Omega-perp and zero on Omega.\nIt is bounded and nonnegative. If\n\n    Q G Q <= gamma Q,             gamma>0,                (1)\n\nthen the entire form satisfies\n\n    h >= gamma^-1 Q.                                     (2)\n\nProof: (1) gives ||G^(1/2)Q||<=sqrt(gamma), and the adjoint has the same\nnorm. For every psi in D(h^(1/2)), exact vacuum retention gives\n\n    Q psi = Q(I-Pi0)psi = Q G^(1/2) h^(1/2)psi.\n\nTaking norms proves (2). No commutation of P with h is assumed. This is a\nfull form statement, not the result of deleting a cross block. The equality\nQ Pi0=0 is essential. Nor is preservation of D(h^(1/2)) by P needed merely\nfor this implication; the earlier source constructions separately supply\nthe restricted-form domains when their compressions are discussed.\n\nMore generally, the same proof works for any vacuum kernel if Q annihilates\nthat entire kernel and the inverse on its orthogonal complement is bounded.\n\n### 9.2. The one-block and independent-copy literal source\n\nUse the true-vacuum projection and the complete physical low spectrum from\nSections 1–8 of this note. Denote the first\nphysical energy by a>0, the next threshold by t>a, and the complete first\nexcited projection by Pi1. For one block Pi1 is rank one; for the independent\ncopies it is the full one-excitation span. The exact vacuum has energy zero.\n\nThe known spectral decomposition gives\n\n    h >= a Pi1+t(I-Pi0-Pi1),\n    G <= a^-1 Pi1+t^-1(I-Pi0-Pi1).                       (3)\n\nIf ||Q Pi1||=delta, with 0<=delta<1, then (3) and Q Pi0=0 imply\n\n    QGQ <= [1/t+(1/a-1/t)delta^2]Q.\n\nConsequently the full Hamiltonian bound is\n\n    h >= c Q,\n    c=[1/t+(1/a-1/t)delta^2]^-1.                         (4)\n\nThis is the inverse-energy analogue of the refined restricted-compression\nfloor f=t-(t-a)delta^2. Generally c<=f; the stronger applicability of the\nfull inequality costs a different constant. In fact\n\n    f-c=(t-a)^2 delta^2(1-delta^2)/[a+(t-a)delta^2]>=0.   (5)\n\nOne cannot assign f itself to the full form without further information.\n\nIn the actual fixed-rank strip, a/sqrt(u) tends to 2sqrt(3),\nt/sqrt(u) tends to sqrt(3)+sqrt(5), and delta tends to zero. The preceding\nliteral proof establishes exact vacuum inclusion and the complete low-space\nleakage. Thus\n\n    c(u)/sqrt(u) -> sqrt(3)+sqrt(5).                      (6)\n\nFor independent Gauss copies, exact excitation supports make the full\none-excitation leakage delta independent of copy count. Their known full\ngap is a and the threshold is t once 2a>=t. Equations (3)--(6) therefore\nhold uniformly for all finite copies and for their countable exact-vacuum\nincomplete tensor product. The required positive full gap is an established\ninput of this additive spectral decomposition, not inferred circularly from\nthe new inequality.\n\n### 9.3. One common Gauss constraint\n\nUse the complete common-Gauss classification in\n[the common-Gauss proof](G19_WILSON_COMMON_GAUSS_LITERAL_FAST_FLOOR_20260905.md). Below\nt=min(b,alpha+beta,3alpha), its physical low space consists of the true\nvacuum, the radial states of energy a, and adjoint pair singlets of energy\n2alpha. For sufficiently large u, max(a,2alpha)<t. Write their full\nprojections as R_rad and R_pair. The known full gap is min(a,2alpha).\n\nThe inverse spectral bound is\n\n    G <= t^-1(I-Pi0)\n       +(1/a-1/t)R_rad+(1/(2alpha)-1/t)R_pair.           (7)\n\nThe earlier exact-support proof gives radial leakage d_r^2 and pair leakage\nd_pair^2=2d_A^2-d_A^4. The Q images of different radial/pair support vectors\nare mutually orthogonal. Within every such support the displayed physical\nlow vector is unique. Thus the norm of the compressed inverse deficit is\nthe maximum, not the sum, of its two coefficients:\n\n    gamma=1/t+max{(1/a-1/t)d_r^2,\n                  (1/(2alpha)-1/t)(2d_A^2-d_A^4)},\n    h >= gamma^-1 Q.                                    (8)\n\nFor one copy the pair term may be omitted; retaining it gives a valid weaker\nbound. The exact support argument works for arbitrary superpositions and\nfor the countable l2 sums, without rank or copy-count factors. Since both\nleakages tend to zero and t/sqrt(u) tends to sqrt(3)+sqrt(5), the full-form\ncoefficient in (8) has that same limit uniformly in copy count.\n\nThis statement is for additive blocks with their specified common residual\naction. Interblock plaquettes or shared electric derivatives would change\nthe vacuum and exact spectral/support decomposition and are not included.\n\n### 9.4. Entire low-window literal source frame\n\nFor either (4) or (8), let `Pi_E=1_[0,E](h)`, with 0<=E<c, where c denotes\nthe corresponding full-form coefficient. Its entire spectral window obeys\n\n    Pi_E Q Pi_E <= (E/c)Pi_E,\n    Pi_E P Pi_E >= (1-E/c)Pi_E.                          (9)\n\nIf J is the actual literal source isometry onto ran P, then B=Pi_E J has\nB B*>= (1-E/c)Pi_E. It is onto the whole window, and\nB*(B B*)^-1 is a right inverse of norm at most (1-E/c)^-1/2. This includes\nthe true vacuum and remains valid at infinite rank. It uses the actual\nquantum marginal source norm and a lower bound on B B*, not on B* B.\n\nThe prior exact low-window Gram formulas remain available and can be sharper\nthan (9). The new advantage is a single full-form mechanism with a directly\nusable energy-window consequence.\n\n### 9.5. Relation to the Gaussian theorem and exact negative control\n\nThe Gaussian proof first obtains a compressed inverse-frequency bound for\nits exactly weighted coordinate source, and turns it into a full frequency\nform before second quantization. Here the same inverse-norm factorization\nacts directly on the actual additive quantum Hamiltonian, using its exact\ntrue-vacuum source and established full low spectrum. Neither route discards\na noncommuting cross term.\n\nThe independent four-state control has\n\n    h=diag(0,4,7,11),\n    P=|e0><e0|+|v><v|,  v=(0,3/5,4/5,0),\n    delta^2=16/25, a=4, t=7.\n\nIts exact full coefficient is c=175/37, while the restricted-compression\nfloor is f=127/25. Direct rational PSD elimination verifies QGQ<=(37/175)Q\nand h-(175/37)Q>=0. The latter is sharp on the vector (0,7,-3,0).\nReplacing c by f makes the nonvacuum 2-by-2 principal determinant\n-1296/625, so the full-form promotion of the compressed floor fails.\n\nRotating the retained vacuum line away from e0 also gives a negative\nexpectation on the actual vacuum for every claimed positive full coefficient.\nThis checks that exact vacuum inclusion is a mathematical premise of (1)--(2),\nnot a convenient choice of normalization.\n\n### 9.6. Evidence and scope\n\n[check_literal_inverse_energy.py](../../runs/literal_quantum_sources_2026-09-05/check_literal_inverse_energy.py) and its saved output verify the exact\nfour-state inverse cap, full PSD bound, saturation, compression distinction,\nvacuum-inclusion negative control, and scalar constant identity (5).\nThese are finite controls. The full domain, spectral and countable-product\narguments are the analytic proof above plus the unchanged accepted inputs.\n\nThis addendum strengthens the existing literal/common results; it does not\ncreate a new physical projection or require a new result node. It does not\nidentify the literal equal-time source range with all OS histories, supply\ninteracting Wilson score bounds, or prove a continuum limit.\n",
+        "\nThe accepted original derivation, independent audits and finite controls\nare preserved in the [sealed evidence run](../../runs/literal_quantum_sources_2026-09-05/README.md).\nThe run's native checks retain their finite scope; the operator, domain\nand limiting statements above are analytic proofs.\n"
+      ],
+      "canonical_sha256": "a9ce56042125ea9c3b2339f35ebbda485e50cb85f63d641195c882b7b7f05efd"
+    },
+    {
+      "source": "C:/WORKHOUSE/WORKHOUSE-autonomous-20260905/outputs/wilson_complete_band_20260905/next_scale/next_nonlinear/next_literal_common/COMMON_GAUSS_LITERAL_FAST_FLOOR.md",
+      "source_sha256": "c40a5572ced2cfaa73434d0b5162764c32042c0c5b9b74f3b0ab6ada3f01a7de",
+      "canonical": "paper/research_notes/G19_WILSON_COMMON_GAUSS_LITERAL_FAST_FLOOR_20260905.md",
+      "replacements": [
+        {
+          "old": "5 September 2026. Independent outputs-only derivation.",
+          "new": "5 September 2026. Analytic additive common-Gauss theorem.",
+          "count": 1
+        },
+        {
+          "old": "[LITERAL_VACUUM_COARSE_PROJECTION.md](../next_literal/LITERAL_VACUUM_COARSE_PROJECTION.md)",
+          "new": "[the literal-source theorem](G19_WILSON_LITERAL_VACUUM_COARSE_SOURCES_20260905.md)",
+          "count": 1
+        },
+        {
+          "old": "[check_common_gauss_literal_projection.py](check_common_gauss_literal_projection.py)",
+          "new": "[check_common_gauss_literal_projection.py](../../runs/literal_quantum_sources_2026-09-05/check_common_gauss_literal_projection.py)",
+          "count": 1
+        },
+        {
+          "old": "`paper/research_notes/G19_WILSON_TWO_SQUARE_PHYSICAL_SHELLS_20260905.md`",
+          "new": "[G19_WILSON_TWO_SQUARE_PHYSICAL_SHELLS_20260905.md](G19_WILSON_TWO_SQUARE_PHYSICAL_SHELLS_20260905.md)",
+          "count": 1
+        }
+      ],
+      "appendices": [
+        "\n## 7. Full Hamiltonian form and entire-window continuation\n\nThe separately proved [compressed-inverse continuation](G19_WILSON_LITERAL_VACUUM_COARSE_SOURCES_20260905.md#9-full-form-from-the-compressed-inverse)\nupgrades the additive common-Gauss result to the entire form\n\n```text\nh_M >= c_u Q_M,\nc_u^-1=1/t_u+max{(1/a_u-1/t_u)d_r^2,\n                  (1/(2alpha_u)-1/t_u)(2d_A^2-d_A^4)}.\n```\n\nIt uses the exact vacuum and the complete inverse spectral bound, with the\nsame orthogonal support decomposition. The coefficient tends to\n`(sqrt(3)+sqrt(5))sqrt(u)` uniformly over finite and countable copies.\nIt differs from the sharper restricted-compression constant in (21), which\ncannot automatically be assigned to a full noncommuting form. The entire\nspectral window `[0,E]`, `E<c_u`, has an onto literal frame with lower bound\n`1-E/c_u`. The original exact low-window Gram weights remain available.\n\nThis is an additive continuation, not an interacting or OS-range claim.\nIts independent original proof is preserved with the literal-source run.\n",
+        "\nThe accepted original derivation, independent audits and finite controls\nare preserved in the [sealed evidence run](../../runs/literal_quantum_sources_2026-09-05/README.md).\nThe run's native checks retain their finite scope; the operator, domain\nand limiting statements above are analytic proofs.\n"
+      ],
+      "canonical_sha256": "7603b6f5938166e3f0e12d854b2d1a82aadf2f185ec0b84aed6659fe081f8486"
+    },
+    {
+      "source": "C:/WORKHOUSE/WORKHOUSE-autonomous-20260905/outputs/wilson_complete_band_20260905/next_scale/next_nonlinear/next_literal/GROUND_MARGINAL_SCHUR_SCORE.md",
+      "source_sha256": "8070371a611bfad5036824ff0c910fa4a57fc21a467d566cd889513397beff25",
+      "canonical": "paper/research_notes/G19_GROUND_MARGINAL_SCHUR_SCORE_20260905.md",
+      "replacements": [
+        {
+          "old": "## 5. The precise Wilson target exposed by this identity\n",
+          "new": "## 5. The precise Wilson target exposed by this identity\n\n**Later resolution, 5 September 2026.** The displayed global sublinear\nFisher candidate in this section is retained as the proposal at this stage.\nThe [exact central SU(2) true-ground identity](G19_TRUE_GROUND_CENTER_SCORE_OBSTRUCTION_20260905.md)\ndisproves it for the actual two-square bouquet, on open coarse neighborhoods\nat sufficiently large u. Sections 1–4 of this note remain valid. The\nsuccessor gives an energy-localized integral/resolvent criterion, retaining\nthe high-retained-space obligation before any full-gap conclusion.\n\n",
+          "count": 1
+        }
+      ],
+      "appendices": [
+        "\nThe accepted original derivation, independent audits and finite controls\nare preserved in the [sealed evidence run](../../runs/literal_quantum_sources_2026-09-05/README.md).\nThe run's native checks retain their finite scope; the operator, domain\nand limiting statements above are analytic proofs.\n"
+      ],
+      "canonical_sha256": "e5474c4118f001b6771d2049e8021f8be7f7af1617158889891d1bb34b455975"
+    },
+    {
+      "source": "C:/WORKHOUSE/WORKHOUSE-autonomous-20260905/outputs/wilson_complete_band_20260905/next_scale/next_nonlinear/next_gaussian_full/ENTIRE_GAUSSIAN_LITERAL_COMPLEMENT.md",
+      "source_sha256": "35172fb21b341d52975bb2c3abc3fcd49a15dbda8d444fb3e0191077523bef01",
+      "canonical": "paper/research_notes/G19_GAUSSIAN_QUANTUM_FAST_SOURCES_20260905.md",
+      "replacements": [
+        {
+          "old": "5 September 2026. Outputs-only analytic successor.",
+          "new": "5 September 2026. Analytic full-quantum harmonic theorem.",
+          "count": 1
+        },
+        {
+          "old": "`paper/research_notes/G19_WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY_20260905.md`",
+          "new": "[G19_WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY_20260905.md](G19_WILSON_THREE_DIMENSIONAL_HARMONIC_BOUNDARY_20260905.md)",
+          "count": 1
+        },
+        {
+          "old": "`check_entire_gaussian_literal_complement.py`",
+          "new": "[check_entire_gaussian_literal_complement.py](../../runs/literal_quantum_sources_2026-09-05/check_entire_gaussian_literal_complement.py)",
+          "count": 1
+        },
+        {
+          "old": "Pi=1_[0,E_*](H)",
+          "new": "`Pi=1_[0,E_*](H)`",
+          "count": 1
+        }
+      ],
+      "appendices": [
+        "\nThe accepted original derivation, independent audits and finite controls\nare preserved in the [sealed evidence run](../../runs/literal_quantum_sources_2026-09-05/README.md).\nThe run's native checks retain their finite scope; the operator, domain\nand limiting statements above are analytic proofs.\n"
+      ],
+      "canonical_sha256": "d26cd81a6db579c6ab231d0c381f16315c238f97792bb6c9022fcc2b0cc41556"
+    },
+    {
+      "source": "C:/WORKHOUSE/WORKHOUSE-autonomous-20260905/outputs/wilson_complete_band_20260905/next_scale/next_nonlinear/next_quantum_score_center/TRUE_GROUND_CENTER_SCORE_OBSTRUCTION.md",
+      "source_sha256": "2f4b748442c2a3e00190084f7d2ca1773ff3c7fb5a7f5c2d4968658773ab93c7",
+      "canonical": "paper/research_notes/G19_TRUE_GROUND_CENTER_SCORE_OBSTRUCTION_20260905.md",
+      "replacements": [
+        {
+          "old": "5 September 2026. Outputs-only analytic successor.",
+          "new": "5 September 2026. Analytic full-quantum harmonic theorem.",
+          "count": 1
+        },
+        {
+          "old": "5 September 2026. Analytic full-quantum harmonic theorem. This note disproves",
+          "new": "5 September 2026. Analytic exact-score successor. This note disproves",
+          "count": 1
+        },
+        {
+          "old": "`next_literal/GROUND_MARGINAL_SCHUR_SCORE.md`",
+          "new": "[the generic score theorem](G19_GROUND_MARGINAL_SCHUR_SCORE_20260905.md)",
+          "count": 1
+        },
+        {
+          "old": "`check_central_score_identity_independent.py`",
+          "new": "[check_central_score_identity_independent.py](../../runs/literal_quantum_sources_2026-09-05/check_central_score_identity_independent.py)",
+          "count": 1
+        },
+        {
+          "old": "are the immediate preceding\noutputs.",
+          "new": "are the immediate preceding\nproof notes.",
+          "count": 1
+        }
+      ],
+      "appendices": [
+        "\nThe accepted original derivation, independent audits and finite controls\nare preserved in the [sealed evidence run](../../runs/literal_quantum_sources_2026-09-05/README.md).\nThe run's native checks retain their finite scope; the operator, domain\nand limiting statements above are analytic proofs.\n"
+      ],
+      "canonical_sha256": "2a63346682c6f76e3d114ae0761edd13ce41761419d0758eeba2d433a5bf0b3c"
+    }
+  ],
+  "inverse_original_sha256": "dbcd96ad5570f6fe8e625c002257b053a6ffc796058f4f3ca7cadd031edc676f"
+}

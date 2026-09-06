@@ -154,6 +154,27 @@ and realizes the closed Schur form at each fixed large u. Uniform
 interacting-volume bounds, coarse matching and source/history identification
 remain to be controlled.
 
+The [literal coarse-source construction](paper/research_notes/G19_WILSON_LITERAL_VACUUM_COARSE_SOURCES_20260905.md)
+now uses the true full Wilson vacuum. It identifies the exact quantum
+ground marginal and coarse energy form, fixes the vacuum exactly, and
+gives a full Hamiltonian fast bound with complete low-window source frames.
+The [common-Gauss extension](paper/research_notes/G19_WILSON_COMMON_GAUSS_LITERAL_FAST_FLOOR_20260905.md)
+includes cross-block adjoint singlets with a bound independent of the
+number of additive copies, including countably many copies.
+
+The [Gaussian quantum bridge](paper/research_notes/G19_GAUSSIAN_QUANTUM_FAST_SOURCES_20260905.md)
+also turns the actual harmonic interface inequality into an entire quantum
+fast bound and literal source frame. Its periodic application retains a
+positive regulator for flat modes and specifies the Coulomb coordinate
+sources; unweighted face averages have a different frequency weight.
+An [exact SU(2) center identity](paper/research_notes/G19_TRUE_GROUND_CENTER_SCORE_OBSTRUCTION_20260905.md)
+now rules out the proposed global sublinear Fisher estimate. The
+[generic score criterion](paper/research_notes/G19_GROUND_MARGINAL_SCHUR_SCORE_20260905.md)
+remains valid; the next interacting target is energy-localized actual
+score/form control, including coarse-gradient leakage and the remaining
+high-energy retained space, followed by comparison of the true quantum
+marginal across scales.
+
 The next scale comparison also has a sharper target.
 [Exact Gaussian histories](paper/research_notes/G19_GAUSSIAN_OS_HISTORY_OBSERVABILITY_20260905.md)
 can retain all fine frequencies despite fewer equal-time coordinates. A
@@ -167,9 +188,16 @@ boundary interactions and the physical clock. The
 now gives a sufficient nonlinear energy criterion: the exact normalized
 Schur operator and a fast bound `f` imply
 `Delta_fine >= (Delta_coarse^-1+f^-1)^-1`, together with an onto low-window
-graph-source frame. Its uniform Wilson form, coarse and literal-source
-hypotheses remain to be proved. The fixed-spacing infrared construction
+graph-source frame. Its interacting-volume Wilson form, coarse and generated-history
+comparisons remain to be proved. The fixed-spacing infrared construction
 and the earlier conditional OS intertwiner remain inputs.
+
+The [literal-source verification run](runs/literal_quantum_sources_2026-09-05/README.md) preserves the accepted proofs and scoped exact controls. Reproduce the native checks with
+
+```bash
+python scripts/verify_literal_coarse_sources.py --output <fresh.json>
+python scripts/replay_literal_coarse_sources.py <fresh.json>
+```
 
 The graph now exposes the individual results and their consequences:
 
@@ -179,6 +207,12 @@ workhouse why RESULT:WILSON_CREATOR_LIMIT
 workhouse why RESULT:CREATOR_PARENT_GAP
 workhouse why RESULT:WILSON_VACUUM_SPECTRAL_FLOW
 workhouse why RESULT:WILSON_ACTIVITY_EXTRACTION
+workhouse why RESULT:WILSON_LITERAL_FAST_COMPLEMENT
+workhouse why RESULT:WILSON_LITERAL_COARSE_FORM
+workhouse why RESULT:WILSON_COMMON_GAUSS_LITERAL_FAST_COMPLEMENT
+workhouse why RESULT:GROUND_MARGINAL_SCHUR_SCORE
+workhouse why RESULT:GAUSSIAN_QUANTUM_FAST_SOURCES
+workhouse why RESULT:TRUE_GROUND_CENTER_SCORE_OBSTRUCTION
 workhouse why RESULT:WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT
 workhouse why RESULT:WILSON_GLOBAL_VERTICAL_BARRIER
 workhouse why RESULT:WILSON_GROUND_BUNDLE_RELATIVE_FORM

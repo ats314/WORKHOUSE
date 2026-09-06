@@ -70,6 +70,12 @@ algebra, bounded plaquette interactions, and the additive kinetic gap.
 | Actual ground-bundle relative form | Normalized quantum-ground derivatives and the exact horizontal connection give a local projected coarse form with relative `O(g^2)` magnetic error. The original coarse metric and Haar measure remain explicit. | [Ground-bundle theorem, §§1-5](../paper/research_notes/G19_WILSON_GROUND_BUNDLE_RELATIVE_FORM_20260905.md) |
 | Actual full-vacuum block complement | The entire physical fiber-ground complement of the adjacent strip has bottom `(sqrt(3)+sqrt(5))sqrt(u)+o(sqrt(u))` above the true vacuum. A bounded fixed-u Schur lift and complete low-window graph frame are realized; interacting-volume constants remain open. | [Actual complement and Schur realization, §§1-6](../paper/research_notes/G19_WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT_20260905.md) |
 | Same-weight obstruction | Arbitrary disjoint active SU(3) plaquette families disprove the unrestricted undamped same-weight estimate. | [Obstruction](../paper/research_notes/G18_SAME_WEIGHT_CREATOR_OBSTRUCTION_20260905.md) |
+| Exact literal quantum marginal | Coarse observables times the true vacuum give the exact marginal energy form and a fixed-u normalized Schur realization that fixes the vacuum. | [Literal form, §§1–2, 5](../paper/research_notes/G19_WILSON_LITERAL_VACUUM_COARSE_SOURCES_20260905.md) |
+| Literal fast floor and independent-copy frame | The complementary floor is `b-(b-a)delta^2`; a separate inverse-energy argument gives the full form `h>=cQ`. Both have the same limiting coefficient and uniform finite/countable-copy literal frames. | [Literal complement and full form, §§3–7, 9](../paper/research_notes/G19_WILSON_LITERAL_VACUUM_COARSE_SOURCES_20260905.md) |
+| Common-Gauss literal floor | The complete low space includes a singlet on each block pair. Its exact frame weights are `1`, `1-d_r^2` and `(1-d_A^2)^2`; the complementary and full-form bounds have no copy-count loss. | [Common-Gauss theorem, §§1–5, 7](../paper/research_notes/G19_WILSON_COMMON_GAUSS_LITERAL_FAST_FLOOR_20260905.md) |
+| True-ground weighted score criterion | A centered intrinsic Fisher bound against the actual full-Q form controls the Schur loss and gives a sharp two-sector full-gap lower bound under explicit hypotheses. | [Score criterion, §§1–5](../paper/research_notes/G19_GROUND_MARGINAL_SCHUR_SCORE_20260905.md) |
+| Entire Gaussian quantum complement | The full boundary inequality gives a full Fock-space fast bound and onto invariant literal frame. The regulated three-dimensional floor is at least `2sqrt(u)/L`, uniform in box count and positive regulator. | [Gaussian quantum theorem, §§1–9](../paper/research_notes/G19_GAUSSIAN_QUANTUM_FAST_SOURCES_20260905.md) |
+| Exact central score obstruction | The actual SU(2) bouquet has weighted Fisher at least `(64/3)u-O(sqrt(u))`, disproving the proposed global sublinear bound. An energy-window Schur criterion survives with explicit high-retained-space obligations. | [Center identity and repair, §§1–5](../paper/research_notes/G19_TRUE_GROUND_CENTER_SCORE_OBSTRUCTION_20260905.md) |
 
 The fixed-order unitary chart and the convergent nonunitary creator family
 are distinct constructions. The latter resolves nonlinear creator convergence.
@@ -158,6 +164,17 @@ identifies those components with the activities of the new chart.
 The existing operator bridge gives the actual-transfer bound `1/998`
 and the complete finite-volume physical odd shell on that common interval.
 
+The literal coarse projection now follows the exact full vacuum:
+`J f=f(U)Omega`, with source norm given by its quantum marginal. In the
+additive model this fixes every local vacuum exactly, so projection errors
+preserve the exact set of excited blocks. Below the mixed threshold at
+most two blocks can be excited. The common Gauss constraint adds adjoint
+pair singlets, and Schur's lemma gives their entire frame weight without
+summing errors over the number of pairs. For the harmonic interface model,
+the exact Wick range is `Gamma(K^-1/4 S)`; the full matrix inequality then
+controls every Fock sector. Both mechanisms identify the source and the
+fast form in the same true-vacuum Hilbert space.
+
 ```mermaid
 flowchart TD
   E[Exact endpoint creator equation] --> C[Rooted contraction and common analytic disk]
@@ -200,6 +217,17 @@ flowchart TD
   OB[Exact Gaussian history observability] -. nonlinear physical history map required .-> RG
   BF -. interacting blocks required .-> RG
   P -. infrared effective matching required .-> RG
+  BF --> LF[Literal true-vacuum full-form bound and independent-copy frame]
+  LF --> LC[Common-Gauss literal full-form bound and complete frame]
+  LF --> LM[Exact quantum marginal and fixed-u Schur form]
+  SC --> LM
+  HC --> GF[Entire regulated Gaussian quantum bound and sources]
+  SC --> GF
+  LC -. interacting low-space comparison required .-> RG
+  LM -. actual marginal and lift bounds required .-> RG
+  GSCORE[Generic true-ground score criterion] -. energy-localized Wilson premises required .-> RG
+  CENTER[Exact central Fisher obstruction and restricted-energy repair] -. localization and high-retained control required .-> RG
+  GF -. nonlinear and local-source comparison required .-> RG
   RG -. trajectory and continuum correlation limits required .-> CL[Nontrivial continuum theory with positive physical mass gap]
 ```
 
@@ -269,16 +297,32 @@ controls the entire physical Q compression after true full-vacuum
 subtraction and derives its exact closed Schur factorization. Its first
 fast channel is mixed, with energy `sqrt(3)+sqrt(5)` in units of
 `sqrt(u)`. The lift is bounded at fixed u; uniform surrounding
-interactions, many-block vacuum adaptation and comparison with a prescribed
-coarse theory remain open.
+interactions and comparison with a prescribed coarse theory remain open.
+The additive true-vacuum literal continuation below addresses copy-count
+uniformity with its different retained projection.
 
-The retained projection must also control the actual vacuum mismatch.
-Even independent gapped qubits have an exponentially deteriorating raw
-reference fast compression; local vacuum dressing restores the uniform
-bound exactly. The [Schur proof](../paper/research_notes/G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md),
-Section 7, makes this a concrete choice of physical projection. The existing
-creator and vacuum-transport mechanisms motivate that construction, with
-their stated coupling scope retained.
+The [true-vacuum literal projection](../paper/research_notes/G19_WILSON_LITERAL_VACUUM_COARSE_SOURCES_20260905.md)
+now resolves the additive vacuum mismatch exactly. Its full-form bound and
+complete source frame survive one common Gauss constraint, including every
+low cross-block adjoint singlet, with no copy-count loss. The
+[Gaussian quantum theorem](../paper/research_notes/G19_GAUSSIAN_QUANTUM_FAST_SOURCES_20260905.md)
+also controls the entire regulated physical Fock complement for the specified
+Coulomb or electric-dual coordinate source. Ambient interactions still
+require a new comparison.
+
+Prove energy-localized true-ground score/form control for the actual
+interacting Wilson family. The global `C0+C1 sqrt(u)v(U)` Fisher candidate
+is disproved by the exact central SU(2) ground identity. The replacement
+must control the intrinsic score against the actual full-Q energy weight
+on the relevant source window, including its coarse-gradient energy
+leakage into regions with large pointwise Fisher. Small probability of
+those regions is insufficient. A low marginal-window estimate also needs
+control of the remaining retained spectrum and its coupling, or a
+complete fine-window identification, before implying a full gap. The
+additive common-Gauss and regulated Gaussian source bounds remain
+reference inputs. Ambient interactions, the actual quantum marginal,
+induced memory and the physical clock must be controlled along the scale
+trajectory.
 
 The closed-form Schur theorem now makes the sufficient bound precise:
 prove the exact physical form factorization with `F_j>=f_j>0`, bounded
@@ -370,3 +414,7 @@ The [nonlinear block run](../runs/nonlinear_wilson_block_2026-09-05/README.md),
 preserve original evidence. Analytic proof, exact finite control, numerical
 diagnostic, and Lean theorem each have an explicit scope. Current totals
 belong in the generated catalogue, not in duplicated snapshot counts here.
+
+The [literal quantum-source run](../runs/literal_quantum_sources_2026-09-05/README.md) separates the six analytic
+results from finite native controls; the exact central identity closes the
+failed global score candidate without changing the generic theorem.
