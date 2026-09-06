@@ -112,6 +112,18 @@ and downstream questions. Older disputes and proposed next steps in pinned
 editions remain part of the research history; use the live ledger for their
 present verdicts.
 
+## Current endpoint and local-source continuation
+
+- [Complete literal endpoint spectrum](research_notes/G19_LITERAL_ENDPOINT_COMPLETE_WINDOW_20260905.md): full retained-space comparison, two-lag complete-count criterion and actual additive Wilson clusters.
+- [Actual localized true-ground score](research_notes/G19_TRUE_GROUND_LOCALIZED_WILSON_SCORE_20260905.md): fixed-SU(N) derivative control and relative class/common-Gauss selected-source loss.
+- [Local gradient excitation supports](research_notes/G19_LOCAL_GRADIENT_EXCITATION_SUPPORT_20260905.md): arbitrary profile superpositions without copy-count loss and a cutoff onto frame.
+- [Local covariant path sources](research_notes/G19_LOCAL_COVARIANT_AVERAGED_PATH_SOURCES_20260905.md): globally defined matrix observation, exact cochain tangent, full harmonic bound and regulated Gaussian source consequence.
+
+The [reproduction run](../runs/wilson_endpoint_local_score_2026-09-05/README.md)
+preserves the original proofs and exact finite controls. These inputs advance
+the interacting scale comparison; they do not construct the nonlinear
+interacting hierarchy, identify every OS history range or remove the regulator.
+
 ## The manuscript of record
 
 *Volume-uniform electric-shell isolation, exact shared-link hopping, and a

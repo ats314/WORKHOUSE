@@ -72,6 +72,7 @@ _MODULES = (
     "continuum_scale_comparison",
     "nonlinear_wilson_block",
     "literal_coarse_sources",
+    "endpoint_window",
 )
 
 for _name in _MODULES:

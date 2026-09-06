@@ -99,7 +99,7 @@ flowchart TD
   IR[Established infrared Wilson transfer and sources] -. generated effective theory matching required .-> RG[OPEN actual physical scale comparison]
   UV[Established finite-cell and nonlinear two-face forms] -. uniform interacting forms required .-> RG
   LS[Additive Wilson and regulated Gaussian literal fast/source bounds] -. interacting and local-history comparison required .-> RG
-  FM[Exact memory, score obstruction and conditional energy repair] -. Wilson energy-localized forms and coarse matching required .-> RG
+  FM[Exact memory, score obstruction and conditional energy repair] -. interacting forms and coarse matching required .-> RG
   R[Reverse finite-mass and residue constraints] -. clock and renormalization required .-> RG
   RG -. controlled trajectory required .-> C[OPEN finite physical mass and continuum correlations]
   C -. field theory axioms and all groups required .-> YM[Clay Yang-Mills existence and mass gap]
@@ -113,7 +113,7 @@ comparison; neither is being presented as a continuum proof.
 
 | Obligation | Established input | What must still be proved |
 |---|---|---|
-| Remove the spatial lattice cutoff | The actual small-u Wilson transfer and source band; exact history intertwining; finite-cell physical spectra; all-size planar and three-dimensional harmonic interface comparisons. | Realize the actual Wilson block and generated history dynamics, prove uniform nonlinear physical form bounds with the harmonic constraints, flat variables and interfaces retained, and control approximation errors along a specified trajectory. |
+| Remove the spatial lattice cutoff | The actual small-u Wilson transfer and source band; exact history intertwining; finite-cell physical spectra; all-size planar and three-dimensional harmonic interface comparisons. | Realize the interacting fast/source and generated-history comparison for the local Wilson block, prove uniform nonlinear physical form bounds with the harmonic constraints, flat variables and interfaces retained, and control approximation errors along a specified trajectory. |
 | Retain a finite, positive physical mass | There is a positive transfer gap in electric-time units at each admitted fixed spatial scale. | Control the energy normalization and spectrum along that trajectory so a positive finite-energy physical excitation survives and the vacuum remains separated from all excitations. |
 | Obtain a nontrivial continuum field theory | Actual Wilson multi-time correlations and their reflection-positive reconstruction are available at fixed spacing; the literal-source band is nonzero. | Produce renormalized limiting correlation distributions with nonzero physical content, the required regularity, full Euclidean symmetry and reconstruction axioms. |
 | Control the physical observable space | The complete fixed-scale odd-band sources, finite-block real source shells, complete additive common-Gauss literal frames, and entire regulated Gaussian source bounds with their frequency weights. | Match actual gauge-invariant source algebras and renormalized spectral measures across scales, retain a nonzero physical residue, and control the intended channel. Exact vector observability alone need not imply cyclicity of every chosen invariant subalgebra. |
@@ -128,6 +128,24 @@ matching assumptions. These are established inputs, not reasons to stop.
 They determine which kind of new estimate is needed.
 
 ## The next central target
+
+The latest step joins three established mechanisms. The
+[complete endpoint theorem](../paper/research_notes/G19_LITERAL_ENDPOINT_COMPLETE_WINDOW_20260905.md)
+transports the entire additive physical low spectrum with high retained
+sources controlled. The [actual local score theorem](../paper/research_notes/G19_TRUE_GROUND_LOCALIZED_WILSON_SCORE_20260905.md)
+and [excitation-support localization](../paper/research_notes/G19_LOCAL_GRADIENT_EXCITATION_SUPPORT_20260905.md)
+give a uniform selected-source Schur estimate. The
+[local covariant path block](../paper/research_notes/G19_LOCAL_COVARIANT_AVERAGED_PATH_SOURCES_20260905.md)
+gives an actual spatially local observation with the required uniform
+transverse tangent and full regulated Gaussian source mechanism.
+
+The remaining step is the actual interacting nonlinear fast/source and
+generated-law comparison for that geometry. Endpoint positivity alone
+does not erase memory, create a local Markov logarithm or assemble a
+compatible scale hierarchy. A selected static source estimate alone does
+not control its entire retained Schur complement. The conditional endpoint
+clock budget states sufficient summable losses for a full gap, with those
+interacting and hierarchy hypotheses still open.
 
 The exact true-vacuum projection eliminates the additive product-vacuum
 mismatch, and its common-Gauss fast floor survives without a copy-count

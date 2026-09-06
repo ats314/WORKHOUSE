@@ -11,6 +11,27 @@ problem. Read the [goal and remaining obligations](research_goal.md) for
 the connection between this construction, physical spectral control and
 the spatial continuum target.
 
+## Latest scale comparison
+
+The [complete endpoint comparison](../paper/research_notes/G19_LITERAL_ENDPOINT_COMPLETE_WINDOW_20260905.md)
+now transports the entire additive physical Wilson low cluster at its natural
+time, with every high retained source direction included. Its two-lag matrix
+certificate keeps the complete spectral-tail premise explicit. The
+[actual localized quantum-ground score](../paper/research_notes/G19_TRUE_GROUND_LOCALIZED_WILSON_SCORE_20260905.md)
+gives relative `O(u^-1)` Schur loss for local class sources and `O(u^-1/2)` for
+the complete selected common-Gauss chart. The
+[local gradient theorem](../paper/research_notes/G19_LOCAL_GRADIENT_EXCITATION_SUPPORT_20260905.md)
+transfers that estimate without a copy-count factor. These static selected-source
+and complete endpoint conclusions have different scopes.
+
+A [local gauge-covariant matrix block](../paper/research_notes/G19_LOCAL_COVARIANT_AVERAGED_PATH_SOURCES_20260905.md)
+now realizes a physical tangent source with a uniform full three-dimensional
+harmonic bound and an entire regulated Gaussian fast/source consequence.
+The next target is its actual interacting quantum ground, fast form and
+generated endpoint/history law, with a consistent physical clock and scale
+trajectory. The [new run](../runs/wilson_endpoint_local_score_2026-09-05/README.md)
+keeps analytic theorems separate from finite exact controls.
+
 ## Established starting point
 
 The [September C2 derivation](decisions/0024-the-corner-cluster-from-a-third-implementation-and-the-ledger-that-was-here.md)
@@ -310,8 +331,12 @@ also controls the entire regulated physical Fock complement for the specified
 Coulomb or electric-dual coordinate source. Ambient interactions still
 require a new comparison.
 
-Prove energy-localized true-ground score/form control for the actual
-interacting Wilson family. The global `C0+C1 sqrt(u)v(U)` Fisher candidate
+The actual local additive score premise is now proved, and the exact
+endpoint theorem separately controls its complete additive physical
+cluster including all high retained sources. The new local covariant
+matrix observation realizes the uniform physical harmonic source.
+Extend those inputs to actual interacting Wilson ground/source and
+endpoint laws, with quantitative errors uniform over the block family. The global `C0+C1 sqrt(u)v(U)` Fisher candidate
 is disproved by the exact central SU(2) ground identity. The replacement
 must control the intrinsic score against the actual full-Q energy weight
 on the relevant source window, including its coarse-gradient energy

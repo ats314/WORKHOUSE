@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 107 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 417/417 checks pass.
+**T1/T2 — re-derived here.** 427/427 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -65,6 +65,7 @@ it cannot drift from what the repository actually checks.
 | continuum scale comparison: boundary, history and Schur controls | 7/7 |
 | nonlinear Wilson block: global barriers and ground geometry | 5/5 |
 | literal coarse sources: vacuum, Gauss, score and quantum complement | 7/7 |
+| literal endpoint spectra and localized true-ground sources | 10/10 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:

@@ -66,6 +66,25 @@ just a claim of authority.
 
 ## Current research
 
+The [complete endpoint comparison](paper/research_notes/G19_LITERAL_ENDPOINT_COMPLETE_WINDOW_20260905.md)
+now transports the entire additive physical Wilson low cluster at its natural
+time, with every high retained source direction included. Its two-lag matrix
+certificate keeps the complete spectral-tail premise explicit. The
+[actual localized quantum-ground score](paper/research_notes/G19_TRUE_GROUND_LOCALIZED_WILSON_SCORE_20260905.md)
+gives relative `O(u^-1)` Schur loss for local class sources and `O(u^-1/2)` for
+the complete selected common-Gauss chart. The
+[local gradient theorem](paper/research_notes/G19_LOCAL_GRADIENT_EXCITATION_SUPPORT_20260905.md)
+transfers that estimate without a copy-count factor. These static selected-source
+and complete endpoint conclusions have different scopes.
+
+A [local gauge-covariant matrix block](paper/research_notes/G19_LOCAL_COVARIANT_AVERAGED_PATH_SOURCES_20260905.md)
+now realizes a physical tangent source with a uniform full three-dimensional
+harmonic bound and an entire regulated Gaussian fast/source consequence.
+The next target is its actual interacting quantum ground, fast form and
+generated endpoint/history law, with a consistent physical clock and scale
+trajectory. The [new run](runs/wilson_endpoint_local_score_2026-09-05/README.md)
+keeps analytic theorems separate from finite exact controls.
+
 Start with the [current research map](docs/current_research.md) for the
 established results, their proof chain, and the next concrete operator target.
 The September C2 resolution, symbolic all-rank assembly, and fixed-spacing
