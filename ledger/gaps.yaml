@@ -1918,6 +1918,28 @@ gaps:
       through every later gauge-fixing and large/small-field operation. Block
       alignment alone does not prove the gate.
     plan:
+      - step: Control time-integrated conditional cubic energy with retained-mean localization
+        state: done
+        closed_by:
+        - RESULT:DYNAMIC_CONDITIONAL_CUBIC_ENERGY
+        status: Fixed-L dynamic covariance has a summable spatial kernel and integrable time envelope. Bounded
+          retained means and local coefficient incidence give a volume/regulator-uniform fiber synthesis bound;
+          full-inverse quadratic-form domination transfers that bound, not absolute kernel rows.
+      - step: Identify the actual nonreducing Gaussian fast inverse with its energy prior
+        state: done
+        closed_by:
+        - RESULT:GAUSSIAN_FULL_FAST_GREEN
+        status: The exact all-n constrained inverse removes the full retained tensor source and retains every
+          sector with at least one fast leg. Its Lie-cubic exchange has explicit probability and physical-color
+          normalization; neither equal-time covariance nor an all-fast tensor product replaces it.
+      - step: Resolve the unlocalized local harmonic cubic exchange target
+        state: done
+        closed_by:
+        - RESULT:WILSON_HARMONIC_CUBIC_OBSTRUCTION
+        status: An actual local Wilson magnetic cubic contains two retained harmonic legs and one fast leg,
+          giving regulator-divergent positive inverse energy despite the fast floor. The selected spatially
+          summed plaquette contribution cancels. This rejects an unlocalized absolute local bound while preserving
+          bounded-mean and cancellation-aware routes.
       - step: Keep the exact quadratic endpoint and its complete low-frequency source normalization
         state: done
         closed_by:
@@ -1946,11 +1968,16 @@ gaps:
         - RESULT:GAUSSIAN_PATH_ENDPOINT_BASELINE
         - RESULT:CONDITIONAL_QUANTUM_PATH_COVARIANCE
         - RESULT:WILSON_CUBIC_GROUND_TRANSFER
-        status: Combine connected two-cubic terms with the quartic Wilson, electric metric, Haar and moving-source
-          terms. Prove rooted time-integrated or actual resolvent bounds and uniform remainders, including
-          high retained directions, source algebra, flat variables and the physical-clock trajectory. The
-          unverified equal-time connected-cubic draft is only a proposed next calculation; equal-time variance
-          is not the complete generated energy coefficient.
+        - RESULT:DYNAMIC_CONDITIONAL_CUBIC_ENERGY
+        - RESULT:GAUSSIAN_FULL_FAST_GREEN
+        - RESULT:WILSON_HARMONIC_CUBIC_OBSTRUCTION
+        status: Combine the established dynamic cubic energy and exact full fast Green identity with quartic
+          magnetic, electric metric, Haar, moving-source, baseline cross and fast-form variation terms. Prove
+          bounds for the actual spatial coefficients and the complete interacting remainder with retained harmonic
+          localization, actual compact dynamics or explicit cancellations. Full source algebra, high retained
+          directions and a summable physical-clock trajectory remain open. The historical equal-time draft is
+          preserved; the new time-integrated result has explicit bounded-mean and local-incidence hypotheses
+          and does not close the entire nonlinear coefficient.
       - step: Realize the uniform transverse harmonic source as an actual local covariant path observation
         state: done
         closed_by:
@@ -2301,6 +2328,13 @@ gaps:
 
       '
     plan:
+    - step: Identify the actual nonreducing Gaussian fast inverse with its energy prior
+      state: done
+      closed_by:
+      - RESULT:GAUSSIAN_FULL_FAST_GREEN
+      status: The exact all-n constrained inverse removes the full retained tensor source and retains every
+        sector with at least one fast leg. Its Lie-cubic exchange has explicit probability and physical-color
+        normalization; neither equal-time covariance nor an all-fast tensor product replaces it.
     - step: Identify exact Gaussian endpoint memory and its first chosen-source nonlinear coefficient
       state: done
       closed_by:
@@ -2318,10 +2352,14 @@ gaps:
       - RESULT:CONDITIONAL_QUANTUM_PATH_COVARIANCE
       - RESULT:WILSON_CUBIC_GROUND_TRANSFER
       - RESULT:LITERAL_ENDPOINT_SPECTRAL_COMPARISON
-      status: Establish uniform interacting remainder and complete source/history matching with a common
-        physical clock. The chosen local source chart need not generate the whole matrix observation sigma
-        algebra; neither first coefficients nor a fixed-time endpoint construct the full multitime law or
-        continuum trajectory.
+      - RESULT:DYNAMIC_CONDITIONAL_CUBIC_ENERGY
+      - RESULT:GAUSSIAN_FULL_FAST_GREEN
+      - RESULT:WILSON_HARMONIC_CUBIC_OBSTRUCTION
+      status: Use the actual full fast inverse and bounded-mean energy input in the complete nonlinear generated
+        coefficient, retaining the harmonic witness and spatial cancellations. Establish uniform interacting
+        remainder and complete source/history matching with a common physical clock. The chosen local source
+        chart need not generate the whole matrix observation sigma algebra; these Gaussian inputs alone do
+        not construct a multitime law or continuum trajectory.
     - step: Retain exact endpoint memory while comparing the entire additive physical low source window
       state: done
       closed_by:

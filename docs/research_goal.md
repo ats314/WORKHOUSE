@@ -99,7 +99,7 @@ flowchart TD
   IR[Established infrared Wilson transfer and sources] -. generated effective theory matching required .-> RG[OPEN actual physical scale comparison]
   UV[Established finite-cell and nonlinear two-face forms] -. uniform interacting forms required .-> RG
   LS[Additive Wilson and regulated Gaussian literal fast/source bounds] -. interacting and local-history comparison required .-> RG
-  FM[Exact quantum memory, summable fast covariance and first Lie cubic] -. interacting forms and coarse matching required .-> RG
+  FM[Exact quantum memory, dynamic cubic energy and full Gaussian inverse] -. complete nonlinear coefficient, harmonic control and remainder required .-> RG
   R[Reverse finite-mass and residue constraints] -. clock and renormalization required .-> RG
   RG -. controlled trajectory required .-> C[OPEN finite physical mass and continuum correlations]
   C -. field theory axioms and all groups required .-> YM[Clay Yang-Mills existence and mass gap]
@@ -129,23 +129,31 @@ They determine which kind of new estimate is needed.
 
 ## The next central target
 
-The [exact Gaussian path endpoint](../paper/research_notes/G19_GAUSSIAN_PATH_ENDPOINT_BASELINE_20260906.md)
-now fixes the quadratic memory and true marginal normalization for the local
-block. Its complete low-Fock comparison has no particle-count loss. The
-[conditioned quantum covariance](../paper/research_notes/G19_CONDITIONAL_QUANTUM_PATH_COVARIANCE_20260906.md)
-has a uniform full fiber gap and a summable spatial kernel at each fixed
-block scale; its specified transverse kernel need not decay exponentially.
-The [first Wilson ground and source correction](../paper/research_notes/G19_CUBIC_GROUND_TRANSFER_20260906.md)
-is an explicit Lie cubic with its moving-source bracket term retained.
+The [dynamic conditional covariance](../paper/research_notes/G19_DYNAMIC_FIBER_COVARIANCE_AND_CUBIC_ENERGY_20260906.md)
+now gives a time-integrated connected cubic energy bound, uniform in volume
+and bounded regulator at each fixed block scale, with bounded retained means
+and local coefficient incidence. Quadratic-form domination carries its
+synthesis bound to the actual full fast inverse. The
+[exact full Gaussian Green operator](../paper/research_notes/G19_FULL_GAUSSIAN_FAST_GREEN_20260906.md)
+also identifies that inverse on every chaos, keeping energy denominators and
+all sectors with at least one fast excitation even for nonreducing sources.
 
-The next target is the **nonlinear excess above this quadratic memory**.
-An actual coupled path Gaussian already has a leading nonzero score, so the
-special strip's small total-score estimate cannot be assumed for general
-blocks. Connected second-order terms need time-integrated energy control
-together with quartic, metric, Haar and source corrections. Their uniform
-interacting remainder, complete source algebra and physical scale trajectory
-remain open. The [reproduction run](../runs/gaussian_path_nonlinear_input_2026-09-06/README.md) preserves
-the three analytic proofs and their original exact finite controls.
+The [actual local Wilson harmonic witness](../paper/research_notes/G19_WILSON_HARMONIC_CUBIC_OBSTRUCTION_20260906.md)
+shows why an unlocalized regulator-uniform absolute exchange bound fails:
+two retained harmonic coordinates supply divergent variance while the fast
+gap stays positive. Its selected global plaquette sum cancels. The bounded-mean
+estimate survives, and a complete calculation must preserve these distinctions.
+
+The next target is the **complete nonlinear excess above the exact quadratic
+memory**. Combine this cubic energy input with the quartic magnetic, electric
+metric, Haar, moving-source, baseline cross and fast-form variation terms.
+Control the spatial coefficients and interacting remainder with harmonic
+localization, actual compact dynamics or proved cancellations. Complete source
+and history matching and the physical scale trajectory remain open. The
+[reproduction run](../runs/dynamic_fast_green_2026-09-06/README.md) preserves the three analytic
+proofs and their separately scoped exact controls. The
+[quadratic endpoint baseline](../paper/research_notes/G19_GAUSSIAN_PATH_ENDPOINT_BASELINE_20260906.md)
+and first ground/source Lie cubic remain established inputs.
 
 The preceding step joins three established mechanisms. The
 [complete endpoint theorem](../paper/research_notes/G19_LITERAL_ENDPOINT_COMPLETE_WINDOW_20260905.md)
