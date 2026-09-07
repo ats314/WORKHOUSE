@@ -4,6 +4,122 @@
 # that entire statement. This does not change its mathematically established status.
 schema: results/v1
 results:
+  - id: RESULT:DYNAMIC_CONDITIONAL_CUBIC_ENERGY
+    statement: For the actual periodic path fiber, Sigma_t=(1/2)Q_F Omega_F^-1 exp(-t Omega_F)Q_F has block
+      kernel bounded by (B/v) exp(-avt)(1+|x|)^-4, with a=1/(2sqrt(33)L). Its absolute spatial row is time-integrable
+      with bound B1/(av^2), uniformly in volume and bounded rho/v at fixed L. Exact two-time Lie-cubic Wick
+      contractions give the three energy denominators and the bounded-mean, local-incidence fiber synthesis
+      bound (17). The same synthesis bound holds for the actual full literal fast inverse because 0<=F0^-1<=D_vert^-1
+      as quadratic forms.
+    hypotheses:
+    - Actual original-link transverse path source, period n=Lm>=3, fixed L>=2, v>0, and 0<=rho/v<=epsilon_*<infinity.
+    - Color-diagonal compact-simple-group Gaussian covariance; local alternating cubic tensors have finite
+      A=sup_v sum_ijk |D_v,ijk| and a_*=sup_k sum_v,ij |D_v,ijk|.
+    - Retained means on the vertex supports obey |m_i|<=M0, either directly or through the stated local
+      cutoffs. The integrated synthesis coefficients belong to the exact retained marginal L2 space.
+    - The full joint Gaussian and its actual literal Q compression use rho>0; rho=0 defines the normalized
+      conditional affine fiber only.
+    scope: The time envelope follows from fixed-coordinate spectral calculus and conormal Fourier bounds,
+      not from the gap alone. Constants may depend on L, epsilon_*, M0 and local coefficient norms. The
+      explicit bound (16) retains the M0^4/v^2, M0^2/v^3 and 1/v^4 contributions. Full-inverse quadratic-form
+      domination does not identify its kernel with the conditional fiber kernel or imply an absolute rooted
+      full-inverse row bound. No uniform interacting remainder or complete second-order Wilson coefficient
+      is claimed.
+    source_section: Sections 1-7, dynamic spectral calculus, Fourier periodization, two-time Wick energy
+      and full-inverse form domination
+    depends_on:
+    - RESULT:CONDITIONAL_QUANTUM_PATH_COVARIANCE
+    bears_on:
+    - G19
+    - G23
+    - RESULT:WILSON_CUBIC_GROUND_TRANSFER
+    - RESULT:GAUSSIAN_FULL_FAST_GREEN
+    supported_by:
+    - target: RUN:dynamic_fast_green_2026-09-06
+      scope: Original exact controls check the finite spectral functional calculus, all three two-time Lie-cubic
+        Wick sectors and energy denominators, and a strict nonreducing full-versus-fiber inverse example.
+        Spatial conormal estimates, all-volume periodization and the full bounded-mean synthesis theorem
+        remain analytic; no native CHK or Lean theorem is added.
+    status: proven
+    evidence: analytic
+    source: CITE:DYNAMIC_CONDITIONAL_CUBIC_ENERGY
+  - id: RESULT:GAUSSIAN_FULL_FAST_GREEN
+    statement: Let D_n=sum_j Omega^(j), L_n=tensor^n Omega^-1/2, U_n=tensor^n W and A_n=L_n D_n^-1 L_n.
+      If P_n projects onto ran(L_n U_n), the actual compressed Green operator satisfies L_n Q_n(Q_n D_n
+      Q_n|Q_n)^-1 Q_n L_n=A_n-A_n U_n(U_n* A_n U_n)^-1 U_n* A_n. This is exact for every n>=1 without a
+      reducing-source assumption. For ordered alternating spatial Lie-cubic tensors, the actual connected
+      inverse energy is (3! C_A dim(g)/2^3)<D,T_3 E>, with T_3 given by this identity.
+    hypotheses:
+    - Finite real oscillator space with Omega>0 and injective source W; probability covariance is (1/2)Omega^-1
+      and the literal Fock range is Gamma(ran Omega^(-1/2) W).
+    - The tensor formula uses the actual full literal complement and its closed form compression; Q means
+      at least one fast excitation, not a fast excitation in every leg.
+    - The physical cubic specialization uses a color-diagonal covariance and invariant Lie tensor with sum_bc
+      f_abc f_dbc=C_A delta_ad; tensor normalizations are on ordered spatial triples.
+    scope: The energy prior has eigenvalues 1/[product_j omega_j times sum_j omega_j]; an equal-time prior
+      or tensor product of one-leg fast inverses is different. Symmetric and invariant restrictions follow
+      from equivariance. This finite all-chaos identity does not establish spatial summability of the shorted
+      n-leg symbol or a nonlinear Wilson remainder.
+    source_section: Sections 1-4, literal Fock projection, constrained inverse and exact cubic exchange
+    depends_on:
+    - RESULT:GAUSSIAN_PATH_ENDPOINT_BASELINE
+    bears_on:
+    - G19
+    - G23
+    - RESULT:DYNAMIC_CONDITIONAL_CUBIC_ENERGY
+    - RESULT:WILSON_CUBIC_GROUND_TRANSFER
+    supported_by:
+    - target: RUN:dynamic_fast_green_2026-09-06
+      scope: Original exact nonreducing one-, two- and three-leg examples compare the formula with direct
+        compressed inversion and an independent constrained solve. A wedge-three control rejects all-fast
+        tensor replacement and an equal-time-prior control rejects dropping energy denominators. These finite
+        examples are supplemented by an independent 64-component colored-polynomial solve with 27 retained
+        and 37 complementary directions, checking the ordered 3! C_A dim(g)/8 prefactor. They do not certify
+        the all-n theorem or a spatial locality estimate.
+    status: proven
+    evidence: analytic
+    source: CITE:GAUSSIAN_FULL_FAST_GREEN
+  - id: RESULT:WILSON_HARMONIC_CUBIC_OBSTRUCTION
+    statement: On each even periodic n>=4 cubic lattice with the actual L=2 path source, a local Wilson
+      magnetic cubic has a physical component with two retained harmonic modes of frequency rho and one
+      source-null mode of frequency omega_h=sqrt(4v^2+rho^2). For b_x=Q V_x^(3)Phi and V=n^3, its actual
+      full-fast inverse energy is at least v^4 C_A dim(g)/[2 V^3 rho^2 omega_h(2rho+omega_h)]. Thus the
+      unlocalized absolute rooted local exchange cannot be regulator-uniform, even though the full fast
+      floor stays positive. The selected component of the global sum of parallel plaquette cubics cancels
+      exactly.
+    hypotheses:
+    - Even fine period n>=4, L=2 actual averaged-path observation, original-link transverse exponential
+      tangent chart, rho>0 and fixed v>0 with v^2=2b_rep u.
+    - Compact simple gauge algebra with a faithful unitary character normalization and the simultaneous-adjoint
+      physical Fock subspace.
+    - The tested force is the actual local magnetic cubic, conditionally centered using the true Gaussian
+      literal projection, with the retained harmonic coordinates integrated against the unrestricted regulated
+      joint Gaussian.
+    scope: At fixed volume the displayed lower bound times rho^2 tends to v^2 C_A dim(g)/(8 V^3)>0. The
+      obstruction concerns a local absolute exchange before spatial cancellation. It neither implies divergence
+      of the globally summed full Wilson first corrector nor refutes the bounded-retained-mean dynamic estimate.
+      The complete electric-plus-magnetic forcing, actual compact harmonic law, cancellation-aware bounds
+      and interacting remainder remain separate obligations.
+    source_section: Sections 3-5, actual path modes, ordered plaquette, physical Fock component, divergent
+      diagonal and global selected-component cancellation
+    depends_on:
+    - RESULT:WILSON_COVARIANT_BLOCK_SOURCES
+    - RESULT:GAUSSIAN_PATH_ENDPOINT_BASELINE
+    bears_on:
+    - G19
+    - G23
+    - RESULT:DYNAMIC_CONDITIONAL_CUBIC_ENERGY
+    - RESULT:WILSON_CUBIC_GROUND_TRANSFER
+    - RESULT:GAUSSIAN_FULL_FAST_GREEN
+    supported_by:
+    - target: RUN:dynamic_fast_green_2026-09-06
+      scope: Original exact n=4 and n=6 path/curl controls, ordered BCH and direct SU(2) character expansion,
+        invariant Fock normalization, rational regulator divergence and spatial-sum cancellation support
+        the explicit witness. The all-even-n calculation and stated compact-simple-group scope remain analytic;
+        this is not a nonlinear asymptotic certification.
+    status: proven
+    evidence: analytic
+    source: CITE:WILSON_HARMONIC_CUBIC_OBSTRUCTION
   - id: RESULT:GAUSSIAN_PATH_ENDPOINT_BASELINE
     statement: 'The true-marginal Gaussian literal isometry is J=Gamma(Omega^-1/2 W G^-1/2), G=W*Omega^-1W.
       Its complete endpoint is exactly Gamma(M_tau), where M_tau=G^-1/2 W*Omega^-1 exp(-tau Omega)W G^-1/2,
