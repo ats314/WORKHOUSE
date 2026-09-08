@@ -4,6 +4,84 @@
 # that entire statement. This does not change its mathematically established status.
 schema: results/v1
 results:
+  - id: RESULT:WILSON_FLAT_BACKGROUND_FAST_SOURCES
+    statement: For every flat compact-group connection U on the labeled periodic cubic lattice,
+      the actual anchored-path observation has physical tangent source S_U with full covariant
+      curl bound K_U >= 3072/(pi^10 L^2)(I-P_U) >= (33L^2)^-1(I-P_U), uniformly in volume and
+      flat winding holonomies. Its real source dimension is 2 dim(g) m^3+D_U, where D_U is
+      the dimension of the holonomy-invariant Lie algebra, and it retains every covariantly
+      harmonic direction. The unreduced tangent T_U has T_U T_U* >= L^-2 I and a local
+      boundary-edge right inverse of norm L. In the representation Hilbert-Schmidt metric,
+      the actual matrix observation's fixed-background Lie chart stays a submersion with
+      derivative Gram at least (4L^2)^-1 I on the linkwise neighborhood
+      delta <= 1/(2 sqrt(6) L (7L-6)^2), including nonflat configurations.
+    hypotheses:
+    - Fine period n=Lm>=3, integer L>=2, and the actual translated internal-anchor matrix
+      observation with labeled coarse loops and parallel edges retained.
+    - G is a compact unitary matrix group with invariant Lie metric. The covariant curl,
+      physical tangent dimension and boundary right inverse are evaluated at a periodic
+      connection whose elementary plaquette holonomies are I.
+    - The nonlinear local submersion uses operator-norm linkwise distance to a fixed flat U0,
+      left-trivialized variations, representation Hilbert-Schmidt norms and the orthogonal
+      Lie projection of M(U) U0_c^-1 as an auxiliary chart.
+    scope: Twisted cochains preserve the actual winding holonomies and all interfaces; no common
+      maximal group torus, fixed stabilizer dimension or zero-frequency inverse is assumed.
+      The boundary right inverse and submersion are unreduced source-geometric constructions.
+      They do not supply a physical quantum Schur projection, a complete nonlinear observation
+      algebra identification, a true-ground marginal estimate or the probability of the linkwise
+      neighborhood. The full interacting scale-comparison theorem remains open.
+    source: CITE:FLAT_HOLONOMY_SOURCES_AND_RANK_REPAIR
+    source_section: Sections 1-4, twisted actual cochains, continuous alias inequality, boundary
+      right inverse and explicit nonflat local submersion neighborhood
+    depends_on:
+    - RESULT:WILSON_COVARIANT_BLOCK_SOURCES
+    bears_on: [G19, G23]
+    supported_by:
+    - target: RUN:flat_holonomy_sources_2026-09-07
+      scope: Exact Q(i) direct-word and independent Fourier/Hodge controls cover all 32 blocks
+        across four n=4,L=2 adjoint-background cases, including every neutral and charged SU2
+        direction. They check the full 1/132 physical form bound and 1/4 unreduced Gram bound.
+        Separate boundary-column controls include n=L=3 and n=L=4 winding geometries. The
+        all-volume, arbitrary-flat-background and nonlinear-neighborhood conclusions remain analytic.
+    status: proven
+    evidence: analytic
+  - id: RESULT:WILSON_PHYSICAL_SOURCE_RANK_REPAIR
+    statement: For the periodic SU2 family U_1(t)=exp(t T_3/n), U_2=U_3=I, the physical
+      anchored-path source projection has rank 6m^3+1 for 0<t<2pi and 6m^3+3 at t=0.
+      Its operator-norm difference from the identity-background projection is exactly one.
+      A fixed constant direction-1 charged field is retained harmonic at identity and is
+      a gauge gradient at t>0. Thus the physical Coulomb source spaces do not form a
+      differentiable fixed-rank bundle across this family. Retaining all coarse gauge variables
+      in the same actual observation gives the smooth constant-rank ambient projection
+      T_U*(T_U T_U*)^-1 T_U, with the uniform Gram bound L^-2 I and the proved local
+      nonflat submersion neighborhood.
+    hypotheses:
+    - The same periodic labeled geometry, flat-background observation and original-link
+      left-trivialized norm as RESULT:WILSON_FLAT_BACKGROUND_FAST_SOURCES.
+    - SU2 generators T_a=-i sigma_a/2 and the stated constant-link family, with 0<=t<2pi.
+    - Smoothness of the repaired ambient projection is along smooth families of flat
+      backgrounds; the nonlinear neighborhood uses the auxiliary source chart from Section 4.
+    scope: The norm jump is a change of the physical Gauss quotient and does not exhibit an
+      unobserved physical slow mode. The repaired ambient projection need not preserve the
+      Coulomb subspace and cannot be substituted for the true-vacuum physical source projection.
+      Keep the exact coarse gauge action and full nonlinear matrix observation. This repairs
+      a source-coordinate premise; uniform interacting energy, vacuum and history estimates
+      remain to be proved.
+    source: CITE:FLAT_HOLONOMY_SOURCES_AND_RANK_REPAIR
+    source_section: Sections 4-6, smooth redundant source construction, explicit SU2 norm-one
+      physical projection jump and the interacting successor
+    depends_on:
+    - RESULT:WILSON_FLAT_BACKGROUND_FAST_SOURCES
+    bears_on: [G19, G23]
+    supported_by:
+    - target: RUN:flat_holonomy_sources_2026-09-07
+      scope: The exact finite SU2 source ranks are 51 at identity and 49 at the noncentral
+        backgrounds, while the unreduced rank remains 72. The constant charged vector obeys
+        P0 A=A and Pt A=0 and has an exact gauge preimage. A separate shifted harmonic rejects
+        freezing the identity source. The all-t norm discontinuity and smooth-family repair
+        follow from the analytic proof, not a finite sampling argument.
+    status: proven
+    evidence: analytic
   - id: RESULT:DYNAMIC_CONDITIONAL_CUBIC_ENERGY
     statement: For the actual periodic path fiber, Sigma_t=(1/2)Q_F Omega_F^-1 exp(-t Omega_F)Q_F has block
       kernel bounded by (B/v) exp(-avt)(1+|x|)^-4, with a=1/(2sqrt(33)L). Its absolute spatial row is time-integrable

@@ -1,5 +1,22 @@
 # Current research map
 
+The [flat-background continuation](../paper/research_notes/G19_FLAT_HOLONOMY_SOURCES_AND_RANK_REPAIR_20260907.md)
+proves the same full `1/(33L^2)` physical tangent floor over every flat
+holonomy, uniformly in volume, with every covariant harmonic mode retained.
+Boundary edges give the actual unreduced source a right inverse of norm L.
+Its nonlinear tangent chart stays onto on a linkwise nonflat neighborhood
+of radius `1/(2sqrt(6)L(7L-6)^2)`, independent of volume and flat background.
+
+The physical Coulomb source projection nevertheless jumps by norm one at
+an SU(2) stabilizer change. The same matrix observation has a smooth
+constant-rank realization when the coarse gauge variables are retained.
+This repairs the coordinate premise; it does not identify that ambient
+projection with a physical quantum Schur projection. The next work is the
+complete interacting true-vacuum energy and source comparison in these
+redundant compact variables, retaining the exact Gauss action. The
+[pinned run](../runs/flat_holonomy_sources_2026-09-07/README.md) supplies exact
+finite controls with a separately stated analytic scope.
+
 This is the maintained entry point for the September continuation. The
 [frontier](../FRONTIER.md) supplies live verification counts and gap routes;
 the [result register](../ledger/results.yaml) supplies precise analytic
