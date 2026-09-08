@@ -149,12 +149,16 @@ def _():
     e1, _e2, _e3 = _elementary()
     scalar = {(p, p, d): c for p in KO.PLANES for d, c in e1.items()}
     ok = total == diagonal and total == scalar and not KO.compose(l_down, l_up)
-    return ok, (
-        f"L_down + L_up has {len(total)} records, all plane-diagonal, and equals q I "
-        f"exactly (q = e_1 = sum_j 4 sin^2(k_j/2)); L_down L_up = 0. So on the fibre "
-        "L_up = q I - L_down, the two kernels are complementary, and Q = 1 - P_psi is "
-        "the orthogonal projector onto ker L_up"
-    ), {"HODGE_FIBRE_DIM": Fraction(3)}
+    return (
+        ok,
+        (
+            f"L_down + L_up has {len(total)} records, all plane-diagonal, and equals q I "
+            f"exactly (q = e_1 = sum_j 4 sin^2(k_j/2)); L_down L_up = 0. So on the fibre "
+            "L_up = q I - L_down, the two kernels are complementary, and Q = 1 - P_psi is "
+            "the orthogonal projector onto ker L_up"
+        ),
+        {"HODGE_FIBRE_DIM": Fraction(3)},
+    )
 
 
 @hodge.check("neither Hodge generator leaves the carrier: Q L_down psi = Q L_up psi = 0", _SEC)
@@ -242,7 +246,11 @@ def _():
     two_r_no_u = sorted(
         w
         for w in table
-        if any(w[i] == "R" and w[j] == "R" and "U" not in w[i + 1 : j] for i in range(len(w)) for j in range(i + 1, len(w)))
+        if any(
+            w[i] == "R" and w[j] == "R" and "U" not in w[i + 1 : j]
+            for i in range(len(w))
+            for j in range(i + 1, len(w))
+        )
     )
     return defective == expected and defective == two_r_no_u, (
         f"{len(table)} words of length <= 3 in (S, U, R); exactly {len(defective)} have a "
@@ -306,14 +314,20 @@ def _():
     sigma_rr, _defect = table["RR"]
     target = KO._add(KO._mul(e1, e2), _scale(e3, Fraction(3)))
     ok = sigma_rr == target and sigma_rr != KO._mul(e1, e2)
-    return ok, (
-        "sigma(RR) = q e_2 + 3 e_3 exactly over the whole zone. The B-monomial and the "
-        "D-monomial enter the R^2 channel at fixed relative weight 1 : 3, so D = 3 B for "
-        "any kernel whose degree-3 tier is carried by R^2 alone"
-    ), {"RR_TIER_RATIO": Fraction(3)}
+    return (
+        ok,
+        (
+            "sigma(RR) = q e_2 + 3 e_3 exactly over the whole zone. The B-monomial and the "
+            "D-monomial enter the R^2 channel at fixed relative weight 1 : 3, so D = 3 B for "
+            "any kernel whose degree-3 tier is carried by R^2 alone"
+        ),
+        {"RR_TIER_RATIO": Fraction(3)},
+    )
 
 
-@hodge.check("FINDING: the algebra contains a shape monomial the four-shape ansatz cannot hold", _SEC)
+@hodge.check(
+    "FINDING: the algebra contains a shape monomial the four-shape ansatz cannot hold", _SEC
+)
 def _():
     # U2 states that every fourth-order shape coefficient is a symmetric
     # function of the Bloch scalars in the span {c_0, A q, B e_2, C (4 e_2/q),
@@ -338,15 +352,19 @@ def _():
     matrix = sp.Matrix([[sp.Rational(m.get(k, 0)) for m in span] for k in exps])
     rhs = sp.Matrix([sp.Rational(sigma_rur.get(k, 0)) for k in exps])
     solvable = matrix.rank() == matrix.row_join(rhs).rank()
-    return sigma_rur == target and not defect and not solvable, (
-        "sigma(RUR) = 4 e_2^2 exactly, and R U R has zero Feshbach defect, so the value is "
-        "the honest carrier symbol of that word and not an artefact of a truncation. Its "
-        "shape symbol 4 e_2^2 / q is NOT in the span of the ansatz's cleared monomials "
-        "{q, q^2, e_2, q e_2, e_3} (rank test, exact). PREDICTION, not a result: an order "
-        "whose kernel populates R U R or R^3 is not describable by the four-shape ansatz at "
-        "all, however its coefficients are fitted. Which words order six populates is open "
-        "(G9, G10)"
-    ), {"RUR_SHAPE_WEIGHT": Fraction(4)}
+    return (
+        sigma_rur == target and not defect and not solvable,
+        (
+            "sigma(RUR) = 4 e_2^2 exactly, and R U R has zero Feshbach defect, so the value is "
+            "the honest carrier symbol of that word and not an artefact of a truncation. Its "
+            "shape symbol 4 e_2^2 / q is NOT in the span of the ansatz's cleared monomials "
+            "{q, q^2, e_2, q e_2, e_3} (rank test, exact). PREDICTION, not a result: an order "
+            "whose kernel populates R U R or R^3 is not describable by the four-shape ansatz at "
+            "all, however its coefficients are fitted. Which words order six populates is open "
+            "(G9, G10)"
+        ),
+        {"RUR_SHAPE_WEIGHT": Fraction(4)},
+    )
 
 
 @hodge.check("the fourth-order kernel is linear in R, so the collapse needs no cancellation", _SEC)
@@ -398,7 +416,10 @@ def _():
     from .. import cellular as CELL
 
     rows = {}
-    for name, cell in (("tetrahedron", CELL.TETRAHEDRON), ("pentagonal prism", CELL.PENTAGONAL_PRISM)):
+    for name, cell in (
+        ("tetrahedron", CELL.TETRAHEDRON),
+        ("pentagonal prism", CELL.PENTAGONAL_PRISM),
+    ):
         boundary = sp.Matrix(cell.boundary_matrix())
         l_down = boundary.T * boundary
         kernel = CELL.integer_kernel(cell)
