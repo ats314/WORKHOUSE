@@ -2133,3 +2133,48 @@ results:
         scope: R-degree one of the 189 recorded fourth-order records, and C = C_shp.
       - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:finding-the-algebra-contains-a-shape-mon-c148d1
         scope: The exact rank test placing 4 e_2^2 / q outside the ansatz span. A prediction about order six, not a result at order six.
+
+  - id: RESULT:FESHBACH_RESOLVENT_COMPARISON
+    statement: >
+      Let A_0 and A_g be symmetric invertible forms on a Feshbach complement,
+      R_0 = A_0^-1, R_g = A_g^-1, and w a source. Then
+      (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g) w, w> identically. If moreover
+      both forms are positive and |V[u,u]| <= kappa A_0[u,u] for V = (A_g -
+      A_0)/g with |g| kappa < 1, then
+      |<(R_0 - R_g) w, w>| <= |g| kappa/(1 - |g| kappa)^2 <R_0 w, w>.
+      Both the mixed pairing and the constant are therefore free of any
+      quantity evaluated on the interacting problem.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - A_0 symmetric and both forms invertible on the complement; nothing else
+        is used for the identity.
+      - For the constant only - A_0, A_g positive on the complement, a relative
+        (KLMN-type) form bound |V[u,u]| <= kappa A_0[u,u], and |g| kappa < 1.
+    scope: >
+      Exact linear algebra on arbitrary symmetric forms. It removes one obstacle
+      from one estimate shape: an absolute volume-uniform bound on an
+      interacting resolvent is replaced by a volume-uniform relative form bound.
+      It does NOT supply the latter, proves nothing about Yang-Mills or any
+      lattice gauge interaction, establishes no infinite-volume or continuum
+      statement, and does not discharge G17, G22 or G23. Past |g| kappa = 1 the
+      variational route is void rather than loose.
+    source: CITE:FESHBACH_RESOLVENT_COMPARISON
+    source_section: The mixed form is removable; The constant, when a relative form bound exists
+    depends_on: []
+    bears_on:
+      - G17
+      - G22
+      - G23
+    supported_by:
+      - target: CHK:the-feshbach-resolvent-comparison:the-interacting-inverse-image-cancels--a-ab8923
+        scope: The identity itself, exact on four deterministic form pairs at n = 3..6; no positivity used.
+      - target: CHK:the-feshbach-resolvent-comparison:the-variational-sandwich-puts-the-free-o-87725b
+        scope: The two-sided sandwich on the same four cases; establishes only that one side is free of the interacting optimizer.
+      - target: CHK:the-feshbach-resolvent-comparison:a-relative-form-bound-gives-the-explicit-5b58ad
+        scope: The explicit constant verified on the same cases. It assumes the relative form bound rather than deriving it.
+      - target: CHK:the-feshbach-resolvent-comparison:finding-the-reduction-buys-a-relative-fo-13f679
+        scope: >
+          The witness that the reduction is conditional - kappa growth collapses the margin, the
+          constant degrades as margin^-2, and the bound voids at |g| kappa >= 1. This check is the
+          scope limit, not a supporting estimate.
