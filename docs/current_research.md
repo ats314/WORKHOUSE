@@ -128,6 +128,16 @@ A_0[u,u]` with `|g| kappa < 1` closes the other with the explicit constant
 `kappa/(1 - |g| kappa)^2 <R_0 w, w>` — built from Gaussian data and `kappa`
 alone.
 
+**What the exchange opens.** A relative bound is a max over local terms where
+an operator bound is a sum, so it does not accumulate with the volume. Checked
+on a local kinetic form with a near-zero mode, `n = 4..64`: `kappa` is flat to
+`3e-05` while `||R_0 V||` — the quantity Neumann iteration needs — grows
+linearly. The divergent quantity is exactly the one the identity removes. Two
+open directions follow: the small-field half closes by locality alone (leaving
+only G22's rough set), and since the identity needs no positivity, past
+`|g| kappa = 1` the collapsed object is still a *resolvent difference*, where
+trace-class and Krein spectral-shift methods apply. Neither is claimed.
+
 **What it does not buy.** The saving is that `kappa` is a relative (KLMN-type)
 bound rather than an absolute one; that is also the whole remaining exposure.
 The registered `FINDING:` is a witness, not a caveat: scaling the interaction

@@ -69,11 +69,52 @@ the relative form bound with a volume-uniform `kappa` is precisely what fails
 on the rough set — which is G22's registered statement — and nothing in this
 note supplies it. So:
 
-**The identity moves the difficulty. It does not remove it.** An absolute bound
+**The identity moves the difficulty rather than removing it** -- but it moves it
+somewhere with different tools, which the next section makes precise. An absolute bound
 on the interacting resolvent, uniform in volume, is replaced by a
 volume-uniform relative form bound. The first three checks are exact linear
 algebra and prove nothing about Yang-Mills; the physics is entirely in whether
 `kappa` exists uniformly, and that question is open here.
+
+## What the exchange opens (checked, and open)
+
+The trade is not merely verbal. A relative bound is a **max over local terms**
+where an operator bound is a **sum**: if `V = sum_x V_x` and `A_0 = sum_x
+A_{0,x}` with `V_x <= kappa A_{0,x}` as forms, summing gives `V <= kappa A_0`
+with the *same* kappa at any volume. The absolute bound has no such stability.
+
+Checked on a one-dimensional local kinetic form with a near-zero mode, `n = 4`
+to `64`:
+
+| n | kappa (what the identity needs) | \|\|R_0 V\|\| (what Neumann needs) |
+|---|---|---|
+| 4 | 0.500000 | 1.2 |
+| 16 | 0.499995 | 5.1 |
+| 64 | 0.499968 | 20.4 |
+
+kappa is flat to 3e-05 across the range; the Neumann quantity grows linearly.
+**The quantity that diverges with the volume is precisely the one the identity
+removes.** That is a caricature of a kinetic interaction in one dimension, not
+a gauge statement, and it supplies no kappa for SU(N).
+
+Two consequences follow, stated as open directions rather than results:
+
+1. **The small-field half closes by locality alone.** Where the Wilson
+   interaction admits a local decomposition dominated term-by-term by the free
+   form -- which it does at small field, by Taylor expansion -- kappa is
+   volume-uniform by summation, with no global estimate needed. The residual is
+   then confined to the rough set, which is exactly G22's own set.
+
+2. **The identity survives the loss of positivity; only the variational route
+   does not.** Past `|g| kappa = 1` the sandwich is void, but the collapsed
+   object `<(R_0 - R_g)w, w>` is a **resolvent difference**, and resolvent
+   differences are the natural object of trace-class perturbation theory and
+   the Krein spectral shift -- tools that need no positivity and no relative
+   form bound. Whether they apply here is untested.
+
+Neither is claimed. Both are reachable from the identity and were not reachable
+from the estimate it replaces, which is the sense in which this is a path
+rather than a restatement.
 
 ## Scope
 

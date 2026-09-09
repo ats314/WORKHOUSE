@@ -343,7 +343,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/CreatorParent.lean:27
   - `make lean`
 
-## T1 — re-derived exactly — 380
+## T1 — re-derived exactly — 384
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1171,6 +1171,20 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `two R insertions unlock the L^-4 tier locked at B : D = 1 : 3`
   - src/workhouse/invariants/hodge_feshbach.py:303 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
   - `workhouse verify --only 'two R insertions unlock the L^-4 tier locked at B : D = 1 : 3'`
+**the Feshbach resolvent comparison**
+
+- `FINDING: the reduction buys a relative form bound, not the estimate -- void at |g| kappa >= 1`
+  - src/workhouse/invariants/feshbach_resolvent.py:139 · G17; G22; G23
+  - `workhouse verify --only 'FINDING: the reduction buys a relative form bound, not the estimate -- void at |g| kappa >= 1'`
+- `a relative form bound gives the explicit constant C = kappa/(1-|g|kappa)^2 <R_0 w,w>`
+  - src/workhouse/invariants/feshbach_resolvent.py:110 · G17; G22; G23
+  - `workhouse verify --only 'a relative form bound gives the explicit constant C = kappa/(1-|g|kappa)^2 <R_0 w,w>'`
+- `the interacting inverse image cancels: (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g)w, w>`
+  - src/workhouse/invariants/feshbach_resolvent.py:59 · G17; G22; G23
+  - `workhouse verify --only 'the interacting inverse image cancels: (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g)w, w>'`
+- `the variational sandwich puts the free optimizer on one side`
+  - src/workhouse/invariants/feshbach_resolvent.py:86 · G17; G22; G23
+  - `workhouse verify --only 'the variational sandwich puts the free optimizer on one side'`
 **the G18 interpolator: local carrier operators and the sheet no-go**
 
 - `compact 2-cycles on open windows are exactly cube boundaries`

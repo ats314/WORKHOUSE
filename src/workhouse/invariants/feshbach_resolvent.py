@@ -172,3 +172,105 @@ def _():
         "an absolute bound on the interacting resolvent to a volume-uniform relative form bound, "
         "and does not supply the latter. G22 is where that debt is registered"
     )
+
+
+def _chain(n: int, mass: float):
+    """A_0 = sum over links of (u_i - u_j)^2 + mass; V = sum of signed local link terms.
+
+    A one-dimensional caricature of a local kinetic form with a near-zero mode.
+    It models one thing only: how the two candidate hypotheses behave as the
+    volume grows.
+    """
+    a0 = [[0.0] * n for _ in range(n)]
+    v = [[0.0] * n for _ in range(n)]
+    for i in range(n - 1):
+        c = 0.5 * (-1) ** i
+        for a, sa in ((i, 1), (i + 1, -1)):
+            for b, sb in ((i, 1), (i + 1, -1)):
+                a0[a][b] += sa * sb
+                v[a][b] += c * sa * sb
+    for i in range(n):
+        a0[i][i] += mass
+    return a0, v
+
+
+def _spectral(a0, v, n: int):
+    """(kappa, ||R_0 V||) by Cholesky plus power iteration, in floats."""
+    import math
+    import random
+
+    ell = [[0.0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(i + 1):
+            s = sum(ell[i][k] * ell[j][k] for k in range(j))
+            ell[i][j] = math.sqrt(a0[i][i] - s) if i == j else (a0[i][j] - s) / ell[j][j]
+
+    def fwd(b):
+        y = [0.0] * n
+        for i in range(n):
+            y[i] = (b[i] - sum(ell[i][k] * y[k] for k in range(i))) / ell[i][i]
+        return y
+
+    def back(b):
+        x = [0.0] * n
+        for i in reversed(range(n)):
+            x[i] = (b[i] - sum(ell[k][i] * x[k] for k in range(i + 1, n))) / ell[i][i]
+        return x
+
+    def mul(m, u):
+        return [sum(m[i][j] * u[j] for j in range(n)) for i in range(n)]
+
+    def power(op):
+        random.seed(0)
+        u = [random.random() for _ in range(n)]
+        lam = 0.0
+        for _ in range(4000):
+            w = op(u)
+            s = math.sqrt(sum(x * x for x in w))
+            if s < 1e-300:
+                return 0.0
+            u = [x / s for x in w]
+            lam = s
+        return lam
+
+    kappa = power(lambda x: fwd(mul(v, back(x))))
+    resolvent_norm = math.sqrt(power(lambda x: mul(v, back(fwd(back(fwd(mul(v, x))))))))
+    return kappa, resolvent_norm
+
+
+@feshbach.check("the relative bound is volume-stable where the Neumann quantity is not", _SEC)
+def _():
+    # The reason the reduction is a path and not just a restatement, and the
+    # answer to "what does moving the difficulty buy".
+    #
+    # Neumann iteration on the second resolvent identity needs ||R_0 V||
+    # bounded uniformly in the volume. That quantity ACCUMULATES: on a local
+    # form with a near-zero mode it grows linearly in the size of the system,
+    # because R_0 carries the growing inverse gap. The relative bound kappa
+    # does not accumulate. It is a max over local terms rather than a sum:
+    # if V = sum_x V_x and A_0 = sum_x A_{0,x} with V_x <= kappa A_{0,x} as
+    # forms, summing gives V <= kappa A_0 with the SAME kappa at any volume.
+    #
+    # Scope, and it matters: this is a one-dimensional caricature of a local
+    # kinetic form, not a gauge interaction. It demonstrates the mechanism --
+    # relative bounds are stable under volume growth, absolute ones are not --
+    # and nothing about SU(N). Whether the gauge interaction admits such a
+    # local decomposition on the rough set is G22 and is untouched here.
+    rows = []
+    for n in (4, 8, 16, 32, 64):
+        a0, v = _chain(n, 1e-6)
+        rows.append((n, *_spectral(a0, v, n)))
+    kappas = [k for _n, k, _r in rows]
+    norms = [r for _n, _k, r in rows]
+    flat = max(kappas) - min(kappas) < 1e-3
+    grows = all(norms[i] < norms[i + 1] for i in range(len(norms) - 1)) and norms[-1] > 8 * norms[0]
+    return flat and grows, (
+        "across n = 4..64 with a near-zero mode: kappa is "
+        + ", ".join(f"{k:.6f}" for k in kappas)
+        + f" (spread {max(kappas) - min(kappas):.2e}, volume-independent) while ||R_0 V|| is "
+        + ", ".join(f"{r:.1f}" for r in norms)
+        + f" (a factor {norms[-1] / norms[0]:.1f} across the same range, growing linearly). "
+        "The quantity Neumann iteration needs diverges with the volume; the quantity the "
+        "collapse identity needs does not, because a relative bound is a max over local terms "
+        "and not a sum. One dimension, kinetic interaction: the mechanism, not a gauge statement"
+    )
