@@ -129,6 +129,17 @@ They determine which kind of new estimate is needed.
 
 ## The next central target
 
+The [flat-background source theorem](../paper/research_notes/G19_FLAT_HOLONOMY_SOURCES_AND_RANK_REPAIR_20260907.md)
+now supplies uniform tangent control over the retained flat holonomies,
+an explicit boundary source lift and a volume-independent linkwise
+neighborhood of nonlinear source submersivity. It also proves that the
+physical Coulomb source projection changes rank at enhanced stabilizers.
+Use the smooth unreduced matrix observation and its exact coarse gauge
+action for the compact-holonomy comparison; differentiating a global
+fixed-rank physical source bundle is a failed route. Uniform interacting
+vacuum, complete energy and history estimates are still required. The
+ambient source lift does not itself construct their physical Schur map.
+
 The [dynamic conditional covariance](../paper/research_notes/G19_DYNAMIC_FIBER_COVARIANCE_AND_CUBIC_ENERGY_20260906.md)
 now gives a time-integrated connected cubic energy bound, uniform in volume
 and bounded regulator at each fixed block scale, with bounded retained means

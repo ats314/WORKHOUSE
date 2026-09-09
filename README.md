@@ -8,6 +8,12 @@ The governing objective is the **Clay Yang-Mills existence and mass gap
 problem**. The [goal and remaining obligations](docs/research_goal.md) connect
 each current target to that objective, including the spatial scale passage.
 
+The [flat-background source theorem](paper/research_notes/G19_FLAT_HOLONOMY_SOURCES_AND_RANK_REPAIR_20260907.md)
+now retains every covariant harmonic direction, with uniform source bounds
+and an explicit nonlinear local submersion neighborhood. It also identifies
+and repairs the changing-rank source-coordinate obstruction. The interacting
+true-vacuum energy comparison remains the next obligation.
+
 **This page is the operating manual.** If you are an agent starting a session,
 read it, then `FRONTIER.md` for the current state. `AGENTS.md` is the research
 posture — how to decide what to do next. `CLAUDE.md` is the non-negotiables.
