@@ -75,6 +75,96 @@ generated endpoint/history law, with a consistent physical clock and scale
 trajectory. The [new run](../runs/wilson_endpoint_local_score_2026-09-05/README.md)
 keeps analytic theorems separate from finite exact controls.
 
+## The Feshbach channel of the plaquette Hodge algebra
+
+Added 2026-09-08. G14 asked for the mechanism of the tier collapse
+`B_shp = D_shp = 0`; U3 asked for a single statement about the Feshbach
+projection `Q` that would explain it and the pentagonal proper-return
+vanishing together. The cubic half now has one, exactly
+([note](../paper/research_notes/G14_HODGE_FESHBACH_CHANNEL_20260908.md),
+suite `the Feshbach channel of the plaquette Hodge algebra`, T1 over the whole
+zone).
+
+`L_down + L_up = q I` per plane component and `L_down L_up = 0`, so at each
+Bloch point the plaquette fibre splits as `ker L_down (+) ker L_up` and the
+Feshbach complement of the carrier **is a Hodge summand**: `Q` is exactly the
+projector onto `ker L_up`. Both Laplacians therefore act on the carrier line by
+scalars, the Hodge algebra generates no off-carrier coupling at all, and every
+excursion off the retained sector costs one insertion of the single non-Hodge
+operator `R` — whose excitation `phi = Q R psi` satisfies `L_up phi = 0`
+identically.
+
+Consequences, all exact: a word in `(S, U, R)` has nonzero Feshbach defect
+exactly when it contains two `R` insertions with no `U` between them (`RUR`
+factorizes, `RSR` does not); every word with at most one `R` has carrier symbol
+`(-4)^#S (-2)^#R q^(#U + 1 - #R) e_2^#R` and so reaches only the `c_0`, `A` and
+`4C` tiers; and the recorded fourth-order kernel is linear in `R`. The tier
+collapse is **R-degree one** — unpopulated, not cancelled, and independent of
+the six-orbit structure. It also relocates C2: `C_shp` is the amplitude of the
+sole generator of the Feshbach channel, which is a structural remark about the
+dispute and not a verdict in it.
+
+Two identities of the same algebra are registered as predictions rather than
+results: `sigma(RR) = q e_2 + 3 e_3`, so a degree-3 tier carried by `R^2` alone
+has `D = 3 B`; and `sigma(RUR) = 4 e_2^2`, whose shape symbol lies outside the
+four-shape ansatz's span — a candidate falsifier for U2 at an order that
+inserts `R` twice. Which words order six populates is open (G9, G10), and
+[ADR 0005](decisions/0005-retracting-the-degree-bound.md) is why that
+distinction is stated twice.
+
+The hypothesis was corrected the same day it was written. A first draft asked
+for `L_down + L_up` to be a scalar — link regularity — and the pentagonal prism
+refutes that (five links on a cap, four on a side, sum
+`diag(6, 6, 5, 5, 5, 5, 5)`); the over-strong version would have excluded the
+geometry U3 is about. What is actually needed, and what holds in all three
+geometries, is that `psi` spans `ker L_down` and is an eigenvector of `L_up`.
+
+The general form is registered as `U7` with its falsifier. It is derived in one
+geometry and consistent with two; the cheapest test of the second is the
+tetrahedral Q-projected proper returns, now an untried route on G14.
+
+## The Feshbach resolvent comparison
+
+Added 2026-09-09, and narrow on purpose. An estimate shape recurs across the
+uniformity gaps: a bilinear form pairing a *free* inverse image against an
+*interacting* one, needing a bound uniform in the volume. The usual attack —
+second resolvent identity, then Neumann iteration — needs an absolute operator
+bound on `A_0^-1 (A_g - A_0)` uniform in volume, and stalls there.
+
+The mixed form is removable
+([note](../paper/research_notes/G22_FESHBACH_RESOLVENT_COMPARISON_20260909.md),
+suite `the Feshbach resolvent comparison`; the identity and sandwich are T1
+exact, the constant and the two witnesses are T2):
+
+    (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g) w, w>
+
+needing only symmetry of `A_0` and invertibility. The pairing is a difference of
+two quadratic forms of the **same** vector, so no absolute bound on the
+interacting resolvent is required. A Legendre sandwich then puts the free
+optimizer alone on one side, and a relative form bound `|V[u,u]| <= kappa
+A_0[u,u]` with `|g| kappa < 1` closes the other with the explicit constant
+`kappa/(1 - |g| kappa)^2 <R_0 w, w>` — built from Gaussian data and `kappa`
+alone.
+
+**What the exchange opens.** A relative bound is a max over local terms where
+an operator bound is a sum, so it does not accumulate with the volume. Measured (T2,
+floating power iteration, a one-dimensional caricature) on a local kinetic form
+with a near-zero mode, `n = 4..64`: `kappa` is flat to `3e-05` while `||R_0 V||` — the quantity Neumann iteration needs — grows
+linearly. The divergent quantity is exactly the one the identity removes. Two
+open directions follow: the small-field half closes by locality alone (leaving
+only G22's rough set), and since the identity needs no positivity, past
+`|g| kappa = 1` the collapsed object is still a *resolvent difference*, where
+trace-class and Krein spectral-shift methods apply. Neither is claimed.
+
+**What it does not buy.** The saving is that `kappa` is a relative (KLMN-type)
+bound rather than an absolute one; that is also the whole remaining exposure.
+The registered `FINDING:` is a witness, not a caveat: scaling the interaction
+drives `kappa` up linearly, the constant degrades as `(1 - |g| kappa)^-2`, and
+past `|g| kappa = 1` the form loses positivity and the route is void. That is
+the large-field region — G22's rough set in form-bound language. The identity
+moves the difficulty; it does not remove it, and it establishes nothing about
+infinite volume (G17, G23) or the continuum limit (G19).
+
 ## Established starting point
 
 The [September C2 derivation](decisions/0024-the-corner-cluster-from-a-third-implementation-and-the-ledger-that-was-here.md)

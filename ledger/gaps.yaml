@@ -1081,6 +1081,17 @@ gaps:
           N = 3..30, reconstruct each channel, and compare the corner's
           channels with the fan's. Done over Q(N) instead, with per-link
           labels (workhouse.symbolic_rank.channels).
+      - step: derive why the fourth-order dynamics is R-linear -- why no four-insertion history inserts the cross-plane operator twice -- which is what the tier collapse now reduces to
+        state: untried
+        depends_on:
+          - RESULT:TIER_COLLAPSE_IS_R_DEGREE
+          - RESULT:HODGE_FESHBACH_SPLITTING
+        cannot_decide: []
+      - step: test the Hodge-summand mechanism in a second geometry by computing the tetrahedral Q-projected proper-return contributions, the first clause of U7's falsifier
+        state: untried
+        depends_on:
+          - RESULT:HODGE_FESHBACH_SPLITTING
+        cannot_decide: []
       - step: audit the premise that D - (1/2){H2, V2} is the Hermitian fourth-order effective Hamiltonian on a cluster with PVP = 0 (the pair element at N >= 4), against a direct Bloch or Schrieffer-Wolff expansion on the two-face cluster at N = 5
         state: untried
         cannot_decide: []
@@ -1205,6 +1216,33 @@ gaps:
       of the corner and fan is in the route above; the tier collapse B = D
       = 0 is a theorem at every rank N >= 5, given the six-orbit structure of
       the kernel, because u is universal channel by channel as an identity.
+    feshbach_channel_2026_09_08: >
+      The mechanism question is answered for the cubic geometry, and the answer
+      is one level above the orbit structure. The Feshbach complement of the
+      carrier is a HODGE SUMMAND: L_down + L_up = q I per plane component and
+      L_down L_up = 0, so Q is exactly the projector onto ker L_up, both
+      Laplacians act on the carrier line by scalars, and the Hodge algebra
+      generates no off-carrier coupling at all. Every excursion off the retained
+      sector costs one insertion of the single non-Hodge operator R, whose
+      excitation phi = Q R psi satisfies L_up phi = 0 identically. Every word in
+      (S, U, R) with at most one R then has carrier symbol
+      (-4)^#S (-2)^#R q^(#U + 1 - #R) e_2^#R, reaching only the c_0, A and 4C
+      tiers; a word has nonzero Feshbach defect exactly when it contains two R
+      insertions unseparated by U (so R U R factorizes and R S R does not). The
+      recorded kernel is linear in R, so B = D = 0 is R-degree one -- not a
+      cancellation, not a property of the six orbits, and true at every rank for
+      any R-linear kernel. Suite "the Feshbach channel of the plaquette Hodge
+      algebra", RESULT:HODGE_FESHBACH_SPLITTING and
+      RESULT:TIER_COLLAPSE_IS_R_DEGREE, note CITE:HODGE_FESHBACH_CHANNEL, ADR 0045. Two
+      further exact identities of the same algebra: sigma(RR) = q e_2 + 3 e_3,
+      so a degree-3 tier carried by R^2 alone has D = 3 B; and
+      sigma(RUR) = 4 e_2^2, whose shape symbol lies OUTSIDE the four-shape
+      ansatz's span -- a registered FINDING and a falsifier candidate for U2 at
+      sixth order. Which words order six populates is open (G9, G10); ADR 0005
+      is why that is stated as a prediction and not a result. The remaining
+      G14-adjacent work is no longer "why does the degree-3 tier vanish" but
+      "why is the fourth-order dynamics R-linear", i.e. why no history inserts
+      the cross-plane operator twice.
     beta_n_assembled_2026_09_04: >
       The all-rank shape coefficient beta_N is the sum of eleven cluster
       cumulants per rank -- two pair clusters, the coplanar and
@@ -2342,6 +2380,28 @@ gaps:
       below any fixed floor -- by constrained minimization, not random
       sampling (the archive's 64k-sample "hunt" has no falsifying
       power and is set aside in the notes register).
+    resolvent_comparison_2026_09_09: >
+      A narrowing, not a step toward the conjecture. The estimate shape that
+      keeps recurring in the uniformity gaps -- a bilinear form pairing a free
+      inverse image against an interacting one, needing a volume-uniform bound
+      -- does not require an absolute bound on the interacting resolvent at all.
+      The mixed pairing collapses exactly:
+      (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g)w, w>, a difference of two
+      quadratic forms of the SAME vector, needing only symmetry of A_0. A
+      Legendre sandwich then puts the free optimizer alone on one side, and a
+      relative form bound |V[u,u]| <= kappa A_0[u,u] with |g| kappa < 1 closes
+      the other with the explicit constant kappa/(1 - |g| kappa)^2 <R_0 w, w>.
+      RESULT:FESHBACH_RESOLVENT_COMPARISON, note
+      CITE:FESHBACH_RESOLVENT_COMPARISON, suite "the Feshbach resolvent
+      comparison" (T1, exact).
+      What this means for G22 is narrow and worth stating plainly: it converts
+      an absolute-bound obligation into a RELATIVE one, which is the form G22's
+      own conjecture already has. It supplies no kappa. The registered witness
+      shows the constant degrading as (1 - |g| kappa)^-2 and the route going
+      void at |g| kappa = 1 where A_g loses positivity -- which is the
+      large-field region, i.e. G22's rough set, restated in form-bound
+      language. So the conjecture is untouched; only the shape of what must be
+      proved about it has moved.
 
   - id: G23
     tier: 3
@@ -2687,6 +2747,19 @@ unifying_candidates:
       in {q_a, e_2, e_3}. The five-shape enumeration of §5.1 would then be
       incomplete rather than merely unexplained.
     status: supported
+    candidate_falsifier_2026_09_08: >
+      Not yet a refutation, and scoped narrowly. U2 is used as the claim that
+      the FIVE-element span {q, q^2, e_2, q e_2, e_3} (the ansatz cleared of its
+      1/q) holds the shape coefficient. The operator algebra that produced the
+      fourth-order kernel contains a word whose carrier symbol is not in that
+      span: sigma(R U R) = 4 e_2^2 exactly, with zero Feshbach defect, and an
+      exact rank test places 4 e_2^2 / q outside the five monomials (suite "the
+      Feshbach channel of the plaquette Hodge algebra", the FINDING check). This
+      does NOT falsify U2 as literally stated -- 4 e_2^2 / q is still a function
+      of the Bloch scalars -- and it says nothing about fourth order, where the
+      kernel is R-linear and the ansatz is exact. It is a prediction about the
+      first order that inserts the cross-plane operator twice with a Laplacian
+      between, and which words order six populates is open (G9, G10).
 
   - id: U3
     statement: >
@@ -2708,6 +2781,18 @@ unifying_candidates:
       Stated as an analogy that has not yet been reduced to a derivation. What
       would promote it is a single statement about Q P Q on the charge-odd
       sector that specializes to both. G14 is the cubic half.
+    cubic_half_derived_2026_09_08: >
+      The statement U3 asked for now exists and is registered as U7: the
+      Feshbach complement of the carrier is a Hodge summand, so the Hodge
+      algebra generates no off-sector coupling and every excursion costs one
+      non-Hodge insertion. Under it the cubic half of U3 is derived rather than
+      observed -- B = D = 0 is R-degree one, T1 over the whole zone (suite "the
+      Feshbach channel of the plaquette Hodge algebra",
+      RESULT:TIER_COLLAPSE_IS_R_DEGREE). U3 itself stays CONJECTURED, and
+      deliberately: the pentagonal half has not been re-derived as a Hodge-word
+      statement, so what exists is one derivation and one unreduced analogy,
+      which is exactly the shape of thing ADR 0005 was written about. U7 carries
+      the general statement and the falsifier that would decide both.
 
   - id: U4
     statement: >
@@ -2923,3 +3008,69 @@ unifying_candidates:
       identification above. Do not treat the shared letter C, or the shared
       word "harmonic", as evidence of identity on its own — that is exactly
       the trap CLAUDE.md names for q_band^(4) / m_Gamma^(4).
+  - id: U7
+    statement: >
+      The Feshbach complement of a homologically protected retained sector is a
+      Hodge summand, and that single fact is the mechanism behind every
+      projection vanishing in this corpus. Precisely: let the retained sector be
+      the line spanned by psi, where psi spans ker L_down and is an eigenvector
+      of L_up. (Those two conditions are the whole hypothesis; L_down L_up = 0
+      is automatic from d^2 = 0.) Then both Laplacians act on the retained line
+      by scalars, so the Hodge algebra generates no off-sector coupling at all;
+      every history whose operator is a word in that algebra is scalar on the
+      retained sector and shape-inert; and all shape dispersion is carried by
+      non-Hodge insertions. U3's "two vanishings" are then two specializations —
+      the cubic tier collapse is R-degree one, and the pentagonal proper-return
+      vanishing would be that proper returns are Hodge words.
+    supported_by:
+      - CITE:HODGE_FESHBACH_CHANNEL
+      - RESULT:HODGE_FESHBACH_SPLITTING
+      - RESULT:TIER_COLLAPSE_IS_R_DEGREE
+      - G14
+      - U3
+    falsifier: >
+      A geometry whose retained sector is a down-Laplacian kernel line, whose
+      two Laplacians sum to a scalar, and in which a proper-return history —
+      a word in the Hodge algebra alone — nevertheless contributes non-scalar
+      shape dispersion to the retained sector. That exhibits a Hodge word with
+      nonzero Feshbach defect and kills the statement outright. Equally fatal
+      in the other direction: a Q-projected vanishing in a geometry where Q is
+      NOT a Hodge summand (the two Laplacians do not sum to a scalar, or the
+      retained sector is not a down-kernel), which would leave the identity
+      standing while refuting it as the mechanism, exactly as ADR 0023 did to
+      U4. The pentagonal cap and the tetrahedron are the two nearest tests and
+      neither has been computed: the tetrahedral Q-projected proper returns
+      are the cheapest, and are the untried route recorded on G14.
+    status: supported
+    note: >
+      Derived, not observed, in exactly one geometry: the cubic charge-odd
+      sector, T1 over the whole zone (suite "the Feshbach channel of the
+      plaquette Hodge algebra"). The other two geometries are consistent but
+      uncomputed — the tetrahedral point is the primitive-level statement that
+      proper returns are exactly scalar on the face space, which is what U7
+      predicts but is not the Q-projected test, and the pentagonal 28-history
+      vanishing has not been re-derived as a Hodge-word statement here. Until
+      one of those is computed this is one derivation and two analogies, which
+      is precisely the position ADR 0005 warns about. What would promote it is
+      the falsifier's first clause failing in a second geometry.
+    hypothesis_corrected_2026_09_08: >
+      The first draft of this candidate asked for L_down + L_up to be a scalar
+      -- link regularity -- because that is what the cubic plaquette lattice
+      does, and the pentagonal prism refuted it the same day: its caps carry
+      five links and its sides four, so the sum is diag(6, 6, 5, 5, 5, 5, 5).
+      Had the over-strong version stood, U7 would have excluded the very
+      geometry U3 is about. The hypothesis actually needed is weaker and is
+      checked in all three geometries (suite check "the Hodge-word statement
+      needs only L_down psi = 0 and L_up psi = lambda psi"): ker L_down is one
+      dimensional and spanned by the carrier, and L_up psi = lambda psi -- 4 psi
+      on the tetrahedron, 7 psi on the pentagonal prism, q psi on the cubic
+      lattice. That alone makes every word in the two Laplacians scalar on the
+      carrier, which is the whole Hodge-word half. Recorded here rather than
+      quietly fixed: the over-strong version is the kind of hypothesis that
+      would have been obeyed for a year.
+    scope_note: >
+      The statement is about which operators can carry shape dispersion, not
+      about their amplitudes. It says nothing about C_shp's value and does not
+      touch C2; it says only that C_shp is the amplitude of the sole generator
+      of the cubic Feshbach channel, which is a structural remark about the
+      dispute, not a verdict in it.

@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 107 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 427/427 checks pass.
+**T1/T2 — re-derived here.** 441/441 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -66,6 +66,8 @@ it cannot drift from what the repository actually checks.
 | nonlinear Wilson block: global barriers and ground geometry | 5/5 |
 | literal coarse sources: vacuum, Gauss, score and quantum complement | 7/7 |
 | literal endpoint spectra and localized true-ground sources | 10/10 |
+| the Feshbach channel of the plaquette Hodge algebra | 9/9 |
+| the Feshbach resolvent comparison | 5/5 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -347,4 +349,10 @@ Historical rho + pi~ = -17607806155349/2202655210329600 (2*X_QUANTUM above the e
 - supported by: corpus-import/programs/hecke_cover_correspondence/NOTE_FLUX_hecke_cover_correspondence_2026-08-31.md, CHK: the geometric A_p column is p^4 times the printed lambda_p
 - would be falsified by: Derive the normalization map between the note's (tau, C, S_0, A, H_4) and this corpus's own fourth-order coordinates (q_a, e_2, e_3, C_shp, the shapes A/B/C/D of UNIFIED §5.1) and show that no such map carries C to C_shp — e.g. because the note's construction has no analogue of the off-axis dependence Phi_C(k) = 4 e_2(k)/Q(k) that C_shp multiplies, or because the dimensional/degree count of H_4 does not match the quartic obstruction space's. Either kills the identification outright, the same way q_band^(4) and m_Gamma^(4) turned out to be differently anchored rather than rival estimates (ADR 0002). Equally fatal in the other direction: exhibiting the map and finding that NEITHER recorded C_shp value sits on the eigenline it predicts would leave the construction standing but refute its relevance to C2.
 - status: conjectured
+
+**U7 — The Feshbach complement of a homologically protected retained sector is a Hodge summand, and that single fact is the mechanism behind every projection vanishing in this corpus. Precisely: let the retained sector be the line spanned by psi, where psi spans ker L_down and is an eigenvector of L_up. (Those two conditions are the whole hypothesis; L_down L_up = 0 is automatic from d^2 = 0.) Then both Laplacians act on the retained line by scalars, so the Hodge algebra generates no off-sector coupling at all; every history whose operator is a word in that algebra is scalar on the retained sector and shape-inert; and all shape dispersion is carried by non-Hodge insertions. U3's "two vanishings" are then two specializations — the cubic tier collapse is R-degree one, and the pentagonal proper-return vanishing would be that proper returns are Hodge words.**
+
+- supported by: CITE:HODGE_FESHBACH_CHANNEL, RESULT:HODGE_FESHBACH_SPLITTING, RESULT:TIER_COLLAPSE_IS_R_DEGREE, G14, U3
+- would be falsified by: A geometry whose retained sector is a down-Laplacian kernel line, whose two Laplacians sum to a scalar, and in which a proper-return history — a word in the Hodge algebra alone — nevertheless contributes non-scalar shape dispersion to the retained sector. That exhibits a Hodge word with nonzero Feshbach defect and kills the statement outright. Equally fatal in the other direction: a Q-projected vanishing in a geometry where Q is NOT a Hodge summand (the two Laplacians do not sum to a scalar, or the retained sector is not a down-kernel), which would leave the identity standing while refuting it as the mechanism, exactly as ADR 0023 did to U4. The pentagonal cap and the tetrahedron are the two nearest tests and neither has been computed: the tetrahedral Q-projected proper returns are the cheapest, and are the untried route recorded on G14.
+- status: supported
 

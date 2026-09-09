@@ -343,7 +343,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/CreatorParent.lean:27
   - `make lean`
 
-## T1 — re-derived exactly — 371
+## T1 — re-derived exactly — 383
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1142,6 +1142,46 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the tetrahedral circuit attains its bound with nonzero weight`
   - src/workhouse/invariants/tetrahedral.py:382 · THM_FLUX §2 / C6
   - `workhouse verify --only 'the tetrahedral circuit attains its bound with nonzero weight'`
+**the Feshbach channel of the plaquette Hodge algebra**
+
+- `FINDING: the algebra contains a shape monomial the four-shape ansatz cannot hold`
+  - src/workhouse/invariants/hodge_feshbach.py:328 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - `workhouse verify --only 'FINDING: the algebra contains a shape monomial the four-shape ansatz cannot hold'`
+- `Q is the projector onto ker L_up: the fibre splits as ker L_down + ker L_up`
+  - src/workhouse/invariants/hodge_feshbach.py:138 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - `workhouse verify --only 'Q is the projector onto ker L_up: the fibre splits as ker L_down + ker L_up'`
+- `neither Hodge generator leaves the carrier: Q L_down psi = Q L_up psi = 0`
+  - src/workhouse/invariants/hodge_feshbach.py:164 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - `workhouse verify --only 'neither Hodge generator leaves the carrier: Q L_down psi = Q L_up psi = 0'`
+- `one R or none reaches only the c_0, A and 4C tiers -- e_3 is unreachable`
+  - src/workhouse/invariants/hodge_feshbach.py:264 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - `workhouse verify --only 'one R or none reaches only the c_0, A and 4C tiers -- e_3 is unreachable'`
+- `the Feshbach defect of a word vanishes unless two R's meet unseparated by U`
+  - src/workhouse/invariants/hodge_feshbach.py:235 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - `workhouse verify --only 'the Feshbach defect of a word vanishes unless two R'"'"'s meet unseparated by U'`
+- `the Hodge-word statement needs only L_down psi = 0 and L_up psi = lambda psi, and both hold in three geometries`
+  - src/workhouse/invariants/hodge_feshbach.py:397 · U7; U3; G5; ADR 0008
+  - `workhouse verify --only 'the Hodge-word statement needs only L_down psi = 0 and L_up psi = lambda psi, and both hold in three geometries'`
+- `the R-excitation is up-harmonic: L_up (Q R psi) = 0 exactly`
+  - src/workhouse/invariants/hodge_feshbach.py:183 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - `workhouse verify --only 'the R-excitation is up-harmonic: L_up (Q R psi) = 0 exactly'`
+- `the fourth-order kernel is linear in R, so the collapse needs no cancellation`
+  - src/workhouse/invariants/hodge_feshbach.py:370 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - `workhouse verify --only 'the fourth-order kernel is linear in R, so the collapse needs no cancellation'`
+- `two R insertions unlock the L^-4 tier locked at B : D = 1 : 3`
+  - src/workhouse/invariants/hodge_feshbach.py:303 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - `workhouse verify --only 'two R insertions unlock the L^-4 tier locked at B : D = 1 : 3'`
+**the Feshbach resolvent comparison**
+
+- `a relative form bound gives the explicit constant C = kappa/(1-|g|kappa)^2 <R_0 w,w>`
+  - src/workhouse/invariants/feshbach_resolvent.py:117 · G17; G22; G23
+  - `workhouse verify --only 'a relative form bound gives the explicit constant C = kappa/(1-|g|kappa)^2 <R_0 w,w>'`
+- `the interacting inverse image cancels: (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g)w, w>`
+  - src/workhouse/invariants/feshbach_resolvent.py:65 · G17; G22; G23
+  - `workhouse verify --only 'the interacting inverse image cancels: (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g)w, w>'`
+- `the variational sandwich puts the free optimizer on one side`
+  - src/workhouse/invariants/feshbach_resolvent.py:92 · G17; G22; G23
+  - `workhouse verify --only 'the variational sandwich puts the free optimizer on one side'`
 **the G18 interpolator: local carrier operators and the sheet no-go**
 
 - `compact 2-cycles on open windows are exactly cube boundaries`
@@ -1561,7 +1601,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/two_cube.py:313 · MASTER edition §5.1; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
 
-## T2 — float agreement within a stated tolerance — 56
+## T2 — float agreement within a stated tolerance — 58
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -1737,6 +1777,14 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel`
   - src/workhouse/invariants/adjudication.py:286 · notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt §[17]
   - `workhouse verify --only 'the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel'`
+**the Feshbach resolvent comparison**
+
+- `FINDING: the reduction buys a relative form bound, not the estimate -- void at |g| kappa >= 1`
+  - src/workhouse/invariants/feshbach_resolvent.py:146 · G17; G22; G23
+  - `workhouse verify --only 'FINDING: the reduction buys a relative form bound, not the estimate -- void at |g| kappa >= 1'`
+- `the relative bound is volume-stable where the Neumann quantity is not`
+  - src/workhouse/invariants/feshbach_resolvent.py:249 · G17; G22; G23
+  - `workhouse verify --only 'the relative bound is volume-stable where the Neumann quantity is not'`
 **the T1 triplet at Gamma and the uniform isolation of the flat band**
 
 - `the band theorem's remainder bound holds numerically: on a grid the lowest eigenvalue of t_3 u^2 Lambda + u^4 (H4 - sI) sits within C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2) of u^4 (A q_a + 4C e2/q_a)`
