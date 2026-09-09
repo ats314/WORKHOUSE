@@ -74,6 +74,7 @@ _MODULES = (
     "literal_coarse_sources",
     "endpoint_window",
     "hodge_feshbach",
+    "feshbach_resolvent",
 )
 
 for _name in _MODULES:

@@ -106,6 +106,48 @@ The general form is registered as `U7` with its falsifier. It is derived in one
 geometry and consistent with two; the cheapest test of the second is the
 tetrahedral Q-projected proper returns, now an untried route on G14.
 
+## The Feshbach resolvent comparison
+
+Added 2026-09-09, and narrow on purpose. An estimate shape recurs across the
+uniformity gaps: a bilinear form pairing a *free* inverse image against an
+*interacting* one, needing a bound uniform in the volume. The usual attack —
+second resolvent identity, then Neumann iteration — needs an absolute operator
+bound on `A_0^-1 (A_g - A_0)` uniform in volume, and stalls there.
+
+The mixed form is removable
+([note](../paper/research_notes/G22_FESHBACH_RESOLVENT_COMPARISON_20260909.md),
+suite `the Feshbach resolvent comparison`; the identity and sandwich are T1
+exact, the constant and the two witnesses are T2):
+
+    (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g) w, w>
+
+needing only symmetry of `A_0` and invertibility. The pairing is a difference of
+two quadratic forms of the **same** vector, so no absolute bound on the
+interacting resolvent is required. A Legendre sandwich then puts the free
+optimizer alone on one side, and a relative form bound `|V[u,u]| <= kappa
+A_0[u,u]` with `|g| kappa < 1` closes the other with the explicit constant
+`kappa/(1 - |g| kappa)^2 <R_0 w, w>` — built from Gaussian data and `kappa`
+alone.
+
+**What the exchange opens.** A relative bound is a max over local terms where
+an operator bound is a sum, so it does not accumulate with the volume. Measured (T2,
+floating power iteration, a one-dimensional caricature) on a local kinetic form
+with a near-zero mode, `n = 4..64`: `kappa` is flat to `3e-05` while `||R_0 V||` — the quantity Neumann iteration needs — grows
+linearly. The divergent quantity is exactly the one the identity removes. Two
+open directions follow: the small-field half closes by locality alone (leaving
+only G22's rough set), and since the identity needs no positivity, past
+`|g| kappa = 1` the collapsed object is still a *resolvent difference*, where
+trace-class and Krein spectral-shift methods apply. Neither is claimed.
+
+**What it does not buy.** The saving is that `kappa` is a relative (KLMN-type)
+bound rather than an absolute one; that is also the whole remaining exposure.
+The registered `FINDING:` is a witness, not a caveat: scaling the interaction
+drives `kappa` up linearly, the constant degrades as `(1 - |g| kappa)^-2`, and
+past `|g| kappa = 1` the form loses positivity and the route is void. That is
+the large-field region — G22's rough set in form-bound language. The identity
+moves the difficulty; it does not remove it, and it establishes nothing about
+infinite volume (G17, G23) or the continuum limit (G19).
+
 ## Established starting point
 
 The [September C2 derivation](decisions/0024-the-corner-cluster-from-a-third-implementation-and-the-ledger-that-was-here.md)
