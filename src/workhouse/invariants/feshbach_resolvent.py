@@ -17,6 +17,12 @@ follows that through to an explicit constant, and then records what the
 constant costs -- because the reduction is not free, and the price is exactly
 the hypothesis the gaps above are about.
 
+Tiers, because the difference is the whole point here: the collapse identity and
+the sandwich are T1, decided in exact rationals with no tolerance. The constant,
+the void witness and the volume-stability comparison are **T2** -- they rest on
+floating eigenvalues and power iteration, because a relative form bound is a
+spectral quantity and not a rational one. Do not quote the T2 rows as exact.
+
 Nothing here is specific to this corpus's geometry: A_0 and A_g are any two
 symmetric invertible forms on the Feshbach complement. That generality is the
 point -- the identity is available wherever the shape appears -- and it is also
@@ -96,9 +102,10 @@ def _():
     for n, seed, gval in _CASES:
         a0, v, g, ag, w = _forms(n, seed, gval)
         u0, ug = a0.inv() * w, ag.inv() * w
-        mid = sp.N((u0.T * w)[0] - (ug.T * w)[0])
-        lo, hi = sorted([sp.N(g * (u0.T * v * u0)[0]), sp.N(g * (ug.T * v * ug)[0])])
-        held.append(bool(lo - sp.Float("1e-20") <= mid <= hi + sp.Float("1e-20")))
+        # every entry is rational, so the sandwich is decided exactly -- no tolerance
+        mid = sp.nsimplify((u0.T * w)[0] - (ug.T * w)[0])
+        lo, hi = sorted([sp.Rational(g * (u0.T * v * u0)[0]), sp.Rational(g * (ug.T * v * ug)[0])])
+        held.append(bool(lo <= mid <= hi))
     return all(held), (
         f"the sandwich g V[u_g,u_g] <= <(R_0 - R_g)w,w> <= g V[u_0,u_0] holds in all "
         f"{len(held)} cases. One side is the interaction form on the free optimizer alone, so "
@@ -139,6 +146,7 @@ def _():
 @feshbach.check(
     "FINDING: the reduction buys a relative form bound, not the estimate -- void at |g| kappa >= 1",
     _SEC,
+    tier=2,
 )
 def _():
     # What this module does NOT do, recorded as a witness instead of a caveat.
@@ -238,7 +246,9 @@ def _spectral(a0, v, n: int):
     return kappa, resolvent_norm
 
 
-@feshbach.check("the relative bound is volume-stable where the Neumann quantity is not", _SEC)
+@feshbach.check(
+    "the relative bound is volume-stable where the Neumann quantity is not", _SEC, tier=2
+)
 def _():
     # The reason the reduction is a path and not just a restatement, and the
     # answer to "what does moving the difficulty buy".

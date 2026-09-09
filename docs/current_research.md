@@ -116,7 +116,8 @@ bound on `A_0^-1 (A_g - A_0)` uniform in volume, and stalls there.
 
 The mixed form is removable
 ([note](../paper/research_notes/G22_FESHBACH_RESOLVENT_COMPARISON_20260909.md),
-suite `the Feshbach resolvent comparison`, T1 exact):
+suite `the Feshbach resolvent comparison`; the identity and sandwich are T1
+exact, the constant and the two witnesses are T2):
 
     (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g) w, w>
 
@@ -129,9 +130,9 @@ A_0[u,u]` with `|g| kappa < 1` closes the other with the explicit constant
 alone.
 
 **What the exchange opens.** A relative bound is a max over local terms where
-an operator bound is a sum, so it does not accumulate with the volume. Checked
-on a local kinetic form with a near-zero mode, `n = 4..64`: `kappa` is flat to
-`3e-05` while `||R_0 V||` — the quantity Neumann iteration needs — grows
+an operator bound is a sum, so it does not accumulate with the volume. Measured (T2,
+floating power iteration, a one-dimensional caricature) on a local kinetic form
+with a near-zero mode, `n = 4..64`: `kappa` is flat to `3e-05` while `||R_0 V||` — the quantity Neumann iteration needs — grows
 linearly. The divergent quantity is exactly the one the identity removes. Two
 open directions follow: the small-field half closes by locality alone (leaving
 only G22's rough set), and since the identity needs no positivity, past

@@ -2,8 +2,13 @@
 
 **Date** 2026-09-09. **Bears on** G17, G22, G23. **Machine certification**
 suite `the Feshbach resolvent comparison`
-(`src/workhouse/invariants/feshbach_resolvent.py`), four T1 checks, exact
-rational linear algebra on deterministic form pairs.
+(`src/workhouse/invariants/feshbach_resolvent.py`), five checks. **Two are T1**
+— the collapse identity and the variational sandwich, decided in exact
+rationals with no tolerance. **Three are T2** — the explicit constant, the void
+witness and the volume-stability comparison — because `kappa` is a spectral
+quantity computed by floating eigenvalues and power iteration. Do not quote the
+T2 rows as exact; the tier split is the point of this note's evidence, not
+bookkeeping.
 
 ## The shape
 
@@ -83,8 +88,8 @@ where an operator bound is a **sum**: if `V = sum_x V_x` and `A_0 = sum_x
 A_{0,x}` with `V_x <= kappa A_{0,x}` as forms, summing gives `V <= kappa A_0`
 with the *same* kappa at any volume. The absolute bound has no such stability.
 
-Checked on a one-dimensional local kinetic form with a near-zero mode, `n = 4`
-to `64`:
+Measured (T2, floating power iteration) on a one-dimensional local kinetic
+form with a near-zero mode, `n = 4` to `64`:
 
 | n | kappa (what the identity needs) | \|\|R_0 V\|\| (what Neumann needs) |
 |---|---|---|
@@ -93,6 +98,8 @@ to `64`:
 | 64 | 0.499968 | 20.4 |
 
 kappa is flat to 3e-05 across the range; the Neumann quantity grows linearly.
+This is numerical agreement on a caricature, not an exact theorem: it makes the
+direction below plausible and establishes none of it.
 **The quantity that diverges with the volume is precisely the one the identity
 removes.** That is a caricature of a kinetic interaction in one dimension, not
 a gauge statement, and it supplies no kappa for SU(N).

@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 107 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 440/440 checks pass.
+**T1/T2 — re-derived here.** 441/441 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -67,7 +67,7 @@ it cannot drift from what the repository actually checks.
 | literal coarse sources: vacuum, Gauss, score and quantum complement | 7/7 |
 | literal endpoint spectra and localized true-ground sources | 10/10 |
 | the Feshbach channel of the plaquette Hodge algebra | 9/9 |
-| the Feshbach resolvent comparison | 4/4 |
+| the Feshbach resolvent comparison | 5/5 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:

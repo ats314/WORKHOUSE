@@ -343,7 +343,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/CreatorParent.lean:27
   - `make lean`
 
-## T1 — re-derived exactly — 384
+## T1 — re-derived exactly — 385
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1182,6 +1182,9 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the interacting inverse image cancels: (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g)w, w>`
   - src/workhouse/invariants/feshbach_resolvent.py:59 · G17; G22; G23
   - `workhouse verify --only 'the interacting inverse image cancels: (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g)w, w>'`
+- `the relative bound is volume-stable where the Neumann quantity is not`
+  - src/workhouse/invariants/feshbach_resolvent.py:241 · G17; G22; G23
+  - `workhouse verify --only 'the relative bound is volume-stable where the Neumann quantity is not'`
 - `the variational sandwich puts the free optimizer on one side`
   - src/workhouse/invariants/feshbach_resolvent.py:86 · G17; G22; G23
   - `workhouse verify --only 'the variational sandwich puts the free optimizer on one side'`
