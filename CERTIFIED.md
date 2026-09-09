@@ -343,7 +343,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/CreatorParent.lean:27
   - `make lean`
 
-## T1 — re-derived exactly — 385
+## T1 — re-derived exactly — 383
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1173,20 +1173,14 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'two R insertions unlock the L^-4 tier locked at B : D = 1 : 3'`
 **the Feshbach resolvent comparison**
 
-- `FINDING: the reduction buys a relative form bound, not the estimate -- void at |g| kappa >= 1`
-  - src/workhouse/invariants/feshbach_resolvent.py:139 · G17; G22; G23
-  - `workhouse verify --only 'FINDING: the reduction buys a relative form bound, not the estimate -- void at |g| kappa >= 1'`
 - `a relative form bound gives the explicit constant C = kappa/(1-|g|kappa)^2 <R_0 w,w>`
-  - src/workhouse/invariants/feshbach_resolvent.py:110 · G17; G22; G23
+  - src/workhouse/invariants/feshbach_resolvent.py:117 · G17; G22; G23
   - `workhouse verify --only 'a relative form bound gives the explicit constant C = kappa/(1-|g|kappa)^2 <R_0 w,w>'`
 - `the interacting inverse image cancels: (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g)w, w>`
-  - src/workhouse/invariants/feshbach_resolvent.py:59 · G17; G22; G23
+  - src/workhouse/invariants/feshbach_resolvent.py:65 · G17; G22; G23
   - `workhouse verify --only 'the interacting inverse image cancels: (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g)w, w>'`
-- `the relative bound is volume-stable where the Neumann quantity is not`
-  - src/workhouse/invariants/feshbach_resolvent.py:241 · G17; G22; G23
-  - `workhouse verify --only 'the relative bound is volume-stable where the Neumann quantity is not'`
 - `the variational sandwich puts the free optimizer on one side`
-  - src/workhouse/invariants/feshbach_resolvent.py:86 · G17; G22; G23
+  - src/workhouse/invariants/feshbach_resolvent.py:92 · G17; G22; G23
   - `workhouse verify --only 'the variational sandwich puts the free optimizer on one side'`
 **the G18 interpolator: local carrier operators and the sheet no-go**
 
@@ -1607,7 +1601,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/two_cube.py:313 · MASTER edition §5.1; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
 
-## T2 — float agreement within a stated tolerance — 56
+## T2 — float agreement within a stated tolerance — 58
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -1783,6 +1777,14 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel`
   - src/workhouse/invariants/adjudication.py:286 · notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt §[17]
   - `workhouse verify --only 'the v10a.26 cold kernel shares every protected shape parameter and differs only in C — and records no per-record kernel'`
+**the Feshbach resolvent comparison**
+
+- `FINDING: the reduction buys a relative form bound, not the estimate -- void at |g| kappa >= 1`
+  - src/workhouse/invariants/feshbach_resolvent.py:146 · G17; G22; G23
+  - `workhouse verify --only 'FINDING: the reduction buys a relative form bound, not the estimate -- void at |g| kappa >= 1'`
+- `the relative bound is volume-stable where the Neumann quantity is not`
+  - src/workhouse/invariants/feshbach_resolvent.py:249 · G17; G22; G23
+  - `workhouse verify --only 'the relative bound is volume-stable where the Neumann quantity is not'`
 **the T1 triplet at Gamma and the uniform isolation of the flat band**
 
 - `the band theorem's remainder bound holds numerically: on a grid the lowest eigenvalue of t_3 u^2 Lambda + u^4 (H4 - sI) sits within C_iso^2 u^6 q_a / (t_3 - 2 C_iso u^2) of u^4 (A q_a + 4C e2/q_a)`
