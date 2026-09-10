@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 290
+## T0 — proof-checked — 353
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -138,6 +138,15 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `bound_time_rescaling`
   - lean/Workhouse/PlateauObstruction.lean:142
   - `make lean`
+- `boundedTwoPointSource_abs_le`
+  - lean/Workhouse/SourceRadiusGrowth.lean:147
+  - `make lean`
+- `bounded_footprint_radius`
+  - lean/Workhouse/SourceTilt.lean:169
+  - `make lean`
+- `bounded_footprint_radius_sharp`
+  - lean/Workhouse/SourceTilt.lean:197
+  - `make lean`
 - `bounded_gap_on_range_of_square`
   - lean/Workhouse/GroundStateAssembly.lean:708
   - `make lean`
@@ -162,6 +171,18 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `cShp_from_rho_shift`
   - lean/Workhouse/Basic.lean:418
   - `make lean`
+- `centeredExpL2_norm_le`
+  - lean/Workhouse/SourceTilt.lean:153
+  - `make lean`
+- `centeredExpL2_norm_sq`
+  - lean/Workhouse/SourceTilt.lean:109
+  - `make lean`
+- `centeredExpL2_orthogonal_constants`
+  - lean/Workhouse/SourceTilt.lean:128
+  - `make lean`
+- `centered_exp_integral_sq`
+  - lean/Workhouse/SourceTilt.lean:78
+  - `make lean`
 - `channel_resolvent_assembly`
   - lean/Workhouse/Basic.lean:148
   - `make lean`
@@ -179,6 +200,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `commuting_pair_square`
   - lean/Workhouse/CreatorParent.lean:19
+  - `make lean`
+- `continuous_riccati_barrier`
+  - lean/Workhouse/SC17Riccati.lean:79
   - `make lean`
 - `cornerDen_cof`
   - lean/Workhouse/Basic.lean:674
@@ -231,6 +255,36 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `cubic_localized_pairing`
   - lean/Workhouse/ResolventLocalization.lean:351
   - `make lean`
+- `defaultBeta_pos`
+  - lean/Workhouse/SC17Riccati.lean:244
+  - `make lean`
+- `defaultBeta_sq`
+  - lean/Workhouse/SC17Riccati.lean:246
+  - `make lean`
+- `default_parameter_endpoint`
+  - lean/Workhouse/SC17Riccati.lean:268
+  - `make lean`
+- `default_parameter_identity`
+  - lean/Workhouse/SC17Riccati.lean:252
+  - `make lean`
+- `default_parameter_interval`
+  - lean/Workhouse/SC17Riccati.lean:285
+  - `make lean`
+- `default_parameter_monotone`
+  - lean/Workhouse/SC17Riccati.lean:260
+  - `make lean`
+- `default_reference_budget`
+  - lean/Workhouse/SC17Riccati.lean:307
+  - `make lean`
+- `default_reference_product`
+  - lean/Workhouse/SC17Riccati.lean:276
+  - `make lean`
+- `default_smallRoot_and_gap`
+  - lean/Workhouse/SC17Riccati.lean:315
+  - `make lean`
+- `default_small_defect_criterion`
+  - lean/Workhouse/SC17Riccati.lean:301
+  - `make lean`
 - `deleted_frame_invisible_sector`
   - lean/Workhouse/SpectralReconstruction.lean:342
   - `make lean`
@@ -276,6 +330,33 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `exists_limit_of_cut_response`
   - lean/Workhouse/ThermodynamicLimit.lean:22
   - `make lean`
+- `exists_riccati_fixedPoint`
+  - lean/Workhouse/SC17Riccati.lean:158
+  - `make lean`
+- `exists_riccati_solution`
+  - lean/Workhouse/SC17Riccati.lean:199
+  - `make lean`
+- `exists_scalar_reference_riccati`
+  - lean/Workhouse/SC17Riccati.lean:212
+  - `make lean`
+- `exp_source_bounds`
+  - lean/Workhouse/SourceTilt.lean:28
+  - `make lean`
+- `exp_source_integral_le`
+  - lean/Workhouse/SourceTilt.lean:47
+  - `make lean`
+- `exp_source_memLp`
+  - lean/Workhouse/SourceTilt.lean:40
+  - `make lean`
+- `exp_source_second_moment_gap`
+  - lean/Workhouse/SourceTilt.lean:313
+  - `make lean`
+- `exp_source_variance_le`
+  - lean/Workhouse/SourceTilt.lean:93
+  - `make lean`
+- `exp_source_variance_pos`
+  - lean/Workhouse/SourceTilt.lean:285
+  - `make lean`
 - `extraction_A`
   - lean/Workhouse/Basic.lean:310
   - `make lean`
@@ -287,6 +368,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `extraction_D`
   - lean/Workhouse/Basic.lean:320
+  - `make lean`
+- `factored_residual_dual_bound`
+  - lean/Workhouse/W6Residual.lean:205
+  - `make lean`
+- `factored_w6_bound`
+  - lean/Workhouse/W6Residual.lean:243
   - `make lean`
 - `far_affine`
   - lean/Workhouse/GlobalWilsonVertical.lean:73
@@ -309,6 +396,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `finite_ground_state_residual_identity`
   - lean/Workhouse/Basic.lean:774
   - `make lean`
+- `finite_source_abs_le`
+  - lean/Workhouse/SourceTilt.lean:56
+  - `make lean`
+- `finite_source_partition_bound`
+  - lean/Workhouse/SourceTilt.lean:67
+  - `make lean`
 - `finite_source_propagation`
   - lean/Workhouse/ResolventLocalization.lean:244
   - `make lean`
@@ -321,8 +414,20 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `fixed_vacuum_row`
   - lean/Workhouse/VacuumChart.lean:50
   - `make lean`
+- `functional_le_energyDualNorm`
+  - lean/Workhouse/W6Residual.lean:41
+  - `make lean`
 - `gap_bound_on_graph_limit`
   - lean/Workhouse/ThermodynamicLimit.lean:75
+  - `make lean`
+- `gaussian_energy_coefficient_one`
+  - lean/Workhouse/W6Residual.lean:273
+  - `make lean`
+- `gaussian_energy_coefficient_three`
+  - lean/Workhouse/W6Residual.lean:289
+  - `make lean`
+- `gaussian_energy_coefficient_two`
+  - lean/Workhouse/W6Residual.lean:280
   - `make lean`
 - `generator_antihermitian`
   - lean/Workhouse/VacuumChart.lean:39
@@ -366,6 +471,27 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `idempotent_square_defect`
   - lean/Workhouse/CreatorParent.lean:10
   - `make lean`
+- `independent_exp_moment_difference`
+  - lean/Workhouse/SourceRadiusGrowth.lean:38
+  - `make lean`
+- `independent_exp_radius_squared_tendsto`
+  - lean/Workhouse/SourceRadiusGrowth.lean:77
+  - `make lean`
+- `independent_exp_sum_integral`
+  - lean/Workhouse/SourceRadiusGrowth.lean:25
+  - `make lean`
+- `independent_exp_variance`
+  - lean/Workhouse/SourceRadiusGrowth.lean:104
+  - `make lean`
+- `independent_nonzero_source_radius_unbounded`
+  - lean/Workhouse/SourceRadiusGrowth.lean:124
+  - `make lean`
+- `independent_sum_abs_le`
+  - lean/Workhouse/SourceRadiusGrowth.lean:94
+  - `make lean`
+- `independent_twoPoint_radius_unbounded`
+  - lean/Workhouse/SourceRadiusGrowth.lean:160
+  - `make lean`
 - `integer_geometric_hasSum`
   - lean/Workhouse/ResolventLocalization.lean:301
   - `make lean`
@@ -386,6 +512,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `interior_minimum_value`
   - lean/Workhouse/PlateauObstruction.lean:99
+  - `make lean`
+- `inverse_energy_eq_dual_norm_sq`
+  - lean/Workhouse/W6Residual.lean:113
+  - `make lean`
+- `inverse_energy_le_dual`
+  - lean/Workhouse/W6Residual.lean:81
   - `make lean`
 - `isolation_condition_assembled`
   - lean/Workhouse/Basic.lean:571
@@ -534,6 +666,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `observable_frame_lower_bound`
   - lean/Workhouse/SpectralReconstruction.lean:322
   - `make lean`
+- `one_lt_integral_exp_of_centered_nonzero`
+  - lean/Workhouse/SourceTilt.lean:235
+  - `make lean`
 - `pentCompletion_three`
   - lean/Workhouse/Basic.lean:376
   - `make lean`
@@ -555,6 +690,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `positive_slow_mode_prevents_faster_bound`
   - lean/Workhouse/PlateauObstruction.lean:239
   - `make lean`
+- `power_difference_lower`
+  - lean/Workhouse/SourceRadiusGrowth.lean:51
+  - `make lean`
+- `power_difference_per_site_tendsto`
+  - lean/Workhouse/SourceRadiusGrowth.lean:64
+  - `make lean`
 - `prismCompletion_three`
   - lean/Workhouse/Basic.lean:368
   - `make lean`
@@ -572,6 +713,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `q_at_checkpoints`
   - lean/Workhouse/Basic.lean:512
+  - `make lean`
+- `quadratic_forbidden_interval`
+  - lean/Workhouse/SC17Riccati.lean:64
   - `make lean`
 - `quartic_gaussian_frequency_optimal`
   - lean/Workhouse/Basic.lean:1056
@@ -603,6 +747,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `rank_law_numerator`
   - lean/Workhouse/Basic.lean:36
   - `make lean`
+- `raw_tilt_gt_one_of_su2_moments`
+  - lean/Workhouse/SourceTilt.lean:274
+  - `make lean`
 - `reflection_kernel_gram`
   - lean/Workhouse/SpectralReconstruction.lean:237
   - `make lean`
@@ -627,6 +774,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `residual_oscillation_positive_gap`
   - lean/Workhouse/Basic.lean:928
   - `make lean`
+- `residual_square_completion`
+  - lean/Workhouse/W6Residual.lean:48
+  - `make lean`
 - `resolventWeight_adjoint`
   - lean/Workhouse/Basic.lean:80
   - `make lean`
@@ -638,6 +788,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `resolventWeight_sym`
   - lean/Workhouse/Basic.lean:104
+  - `make lean`
+- `riccatiMap_lipschitz_on_ball`
+  - lean/Workhouse/SC17Riccati.lean:131
+  - `make lean`
+- `riccatiMap_norm_le`
+  - lean/Workhouse/SC17Riccati.lean:114
   - `make lean`
 - `sc17_plaquette_interval`
   - lean/Workhouse/ThermodynamicLimit.lean:214
@@ -678,6 +834,21 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `slow_mode_fits_positive_plateau`
   - lean/Workhouse/PlateauObstruction.lean:213
   - `make lean`
+- `smallRoot_contraction_margin`
+  - lean/Workhouse/SC17Riccati.lean:51
+  - `make lean`
+- `smallRoot_equation`
+  - lean/Workhouse/SC17Riccati.lean:36
+  - `make lean`
+- `smallRoot_lt_half_inverse`
+  - lean/Workhouse/SC17Riccati.lean:45
+  - `make lean`
+- `smallRoot_lt_reference_floor`
+  - lean/Workhouse/SC17Riccati.lean:59
+  - `make lean`
+- `smallRoot_nonneg`
+  - lean/Workhouse/SC17Riccati.lean:28
+  - `make lean`
 - `spectral_from_split`
   - lean/Workhouse/GlobalWilsonVertical.lean:86
   - `make lean`
@@ -695,6 +866,15 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `sym2_shelf_numerator`
   - lean/Workhouse/Basic.lean:184
+  - `make lean`
+- `symmetricTwoPoint_integral`
+  - lean/Workhouse/SourceTilt.lean:336
+  - `make lean`
+- `symmetricTwoPoint_raw_tilt_gt_one`
+  - lean/Workhouse/SourceTilt.lean:359
+  - `make lean`
+- `symmetricTwoPoint_source_bound`
+  - lean/Workhouse/SourceTilt.lean:347
   - `make lean`
 - `symmetric_coupling_sum`
   - lean/Workhouse/GroundStateAssembly.lean:528
@@ -758,6 +938,15 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `variance_le_deviation`
   - lean/Workhouse/GroundStateAssembly.lean:59
+  - `make lean`
+- `variational_residual_dual_identity`
+  - lean/Workhouse/W6Residual.lean:132
+  - `make lean`
+- `variational_residual_error_bound`
+  - lean/Workhouse/W6Residual.lean:147
+  - `make lean`
+- `variational_residual_identity`
+  - lean/Workhouse/W6Residual.lean:60
   - `make lean`
 - `w4_old_is_alpha_plus_beta`
   - lean/Workhouse/Basic.lean:436
