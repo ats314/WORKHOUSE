@@ -15,6 +15,7 @@ their source histories into a queryable theory graph.
 | Find a derivation's Lean coverage and remaining work | [Derivation proof map](docs/derivation_formalization.md) |
 | Inspect checked claims and reproduce one | [Frontier](FRONTIER.md), [certified catalogue](CERTIFIED.md), then `workhouse why ID` |
 | Begin an agent session | [Task index](INDEX.md), [research instructions](AGENTS.md), [working agreement](CLAUDE.md) |
+| Coordinate local and GitHub work, intake and task ownership | [Workspace operations](docs/workspace_operations.md) |
 | Set up, test, contribute, and publish | [Contributing](CONTRIBUTING.md) |
 | Add a formal proof and precise dependency links | [Formalization workflow](docs/formalization_workflow.md) |
 | Find another guide or a historical record | [Documentation index](docs/README.md) |
@@ -61,7 +62,9 @@ uv run --no-sync workhouse search '5/612'
 uv run --no-sync workhouse why G19
 ```
 
-Before starting a new branch, inspect local changes and `git fetch origin`.
+Before starting a new branch, inspect local changes, coordinate the shared-ref
+refresh and select the base under
+[workspace operations](docs/workspace_operations.md#start-with-an-observed-git-and-command-state).
 Follow [Contributing](CONTRIBUTING.md) for a fresh clone, native PowerShell
 commands, Lean setup, and validation. Existing uncommitted work must be kept.
 Reading the checked-in guides does not require installing anything.

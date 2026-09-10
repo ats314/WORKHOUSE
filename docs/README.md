@@ -32,6 +32,7 @@ necessary dependencies. `workhouse why G19` exposes the same selected routes.
 | Exact statement-to-Lean coverage and remaining work | [Derivation proof map](derivation_formalization.md) | Follow source-pinned statement IDs and kernel-extracted dependencies. |
 | Add a faithful Lean proof and its graph connections | [Formalization workflow](formalization_workflow.md) | Distinguish whole-statement coverage from a supporting ingredient; verify actual dependencies. |
 | Maintain guides, agent instructions and publication workflows | [Documentation maintenance](documentation_maintenance.md), [scope manifest](documentation_manifest.json) | Preserve original bytes, check navigation and commands, and verify the published revision. |
+| Coordinate local and GitHub agents, intake and task closeout | [Workspace operations](workspace_operations.md) | Observe current Git state, agree on ownership and retain source and handoff records. |
 | Canonical checkout, archives and pending corpus review | [Workspace coordination](workspace_coordination.md), [corpus coverage](corpus_coverage.md) | Preserve original paths and evidence; distinguish a located file from a reviewed claim. |
 | Current research directions and integration reviews | [research/](research/) | Query the named graph obligation before restarting a route. |
 | Recorded checks, audits and independent reviews | [validation/](validation/) | Read the run date, source revision and precise checked statement. |
