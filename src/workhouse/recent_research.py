@@ -26,6 +26,7 @@ from .constants import EVIDENCE, STATUSES
 ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = "ledger/recent_research.yaml"
 SOURCE_BASE = "runs/recent_research_integration_2026-09-09/sources/"
+SOURCE_BASES = (SOURCE_BASE, "runs/w6_bg_budget_2026-09-10/sources/")
 SCHEMA = "recent-research/v1"
 LINK_TYPES = frozenset(
     {"depends_on", "bears_on", "supported_by", "cannot_decide", "closed_by", "plans"}
@@ -105,7 +106,7 @@ def validate(
             continue
         relative = PurePosixPath(path)
         if (
-            not path.startswith(SOURCE_BASE)
+            not path.startswith(SOURCE_BASES)
             or relative.is_absolute()
             or ".." in relative.parts
             or "\\" in path

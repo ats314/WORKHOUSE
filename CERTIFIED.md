@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 353
+## T0 — proof-checked — 389
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -170,6 +170,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `cShp_from_rho_shift`
   - lean/Workhouse/Basic.lean:418
+  - `make lean`
+- `carrier_homological_protection`
+  - lean/Workhouse/HodgeFeshbach.lean:123
+  - `make lean`
+- `carrier_s_eigenvalue`
+  - lean/Workhouse/HodgeFeshbach.lean:134
   - `make lean`
 - `centeredExpL2_norm_le`
   - lean/Workhouse/SourceTilt.lean:153
@@ -378,6 +384,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `far_affine`
   - lean/Workhouse/GlobalWilsonVertical.lean:73
   - `make lean`
+- `feshbach_hodge_no_coupling`
+  - lean/Workhouse/HodgeFeshbach.lean:141
+  - `make lean`
 - `finite_assembly_gap`
   - lean/Workhouse/GroundStateAssembly.lean:631
   - `make lean`
@@ -438,6 +447,24 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `geom_sum_mul_sub`
   - lean/Workhouse/Basic.lean:1239
   - `make lean`
+- `geometric_majorant_le_iff`
+  - lean/Workhouse/PolymerCluster.lean:59
+  - `make lean`
+- `geometric_majorant_mono`
+  - lean/Workhouse/PolymerCluster.lean:50
+  - `make lean`
+- `geometric_majorant_nonneg`
+  - lean/Workhouse/PolymerCluster.lean:38
+  - `make lean`
+- `geometric_majorant_pos`
+  - lean/Workhouse/PolymerCluster.lean:44
+  - `make lean`
+- `geometric_series_from_one_hasSum`
+  - lean/Workhouse/PolymerCluster.lean:24
+  - `make lean`
+- `geometric_series_from_one_tsum`
+  - lean/Workhouse/PolymerCluster.lean:33
+  - `make lean`
 - `gram_form_nonnegative`
   - lean/Workhouse/GroundStateAssembly.lean:841
   - `make lean`
@@ -458,6 +485,24 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `hardy_linear_remainder`
   - lean/Workhouse/Basic.lean:984
+  - `make lean`
+- `hodge_algebra_relations`
+  - lean/Workhouse/HodgeFeshbach.lean:33
+  - `make lean`
+- `hodge_decomposition`
+  - lean/Workhouse/HodgeFeshbach.lean:101
+  - `make lean`
+- `hodge_feshbach_words_count`
+  - lean/Workhouse/HodgeFeshbach.lean:268
+  - `make lean`
+- `hodge_ker_disjoint`
+  - lean/Workhouse/HodgeFeshbach.lean:55
+  - `make lean`
+- `hodge_vector_decomposition`
+  - lean/Workhouse/HodgeFeshbach.lean:73
+  - `make lean`
+- `hodge_word_is_scalar`
+  - lean/Workhouse/HodgeFeshbach.lean:355
   - `make lean`
 - `hopping_deficit_numerator`
   - lean/Workhouse/Basic.lean:48
@@ -642,6 +687,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `norm_sandwiched_neumann_quadratic_remainder_le`
   - lean/Workhouse/ResolventLocalization.lean:409
   - `make lean`
+- `normalized_carrier_projection_fixes_carrier`
+  - lean/Workhouse/HodgeFeshbach.lean:173
+  - `make lean`
 - `normalized_fast_coercive`
   - lean/Workhouse/ResolventLocalization.lean:183
   - `make lean`
@@ -741,11 +789,35 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `r4_r5_optimized_upper_bound`
   - lean/Workhouse/PlateauObstruction.lean:194
   - `make lean`
+- `r_excitation_carrier_projection_zero`
+  - lean/Workhouse/HodgeFeshbach.lean:195
+  - `make lean`
+- `r_excitation_in_ker_up`
+  - lean/Workhouse/HodgeFeshbach.lean:154
+  - `make lean`
+- `r_excitation_orthogonal`
+  - lean/Workhouse/HodgeFeshbach.lean:180
+  - `make lean`
+- `r_excitation_up_harmonic`
+  - lean/Workhouse/HodgeFeshbach.lean:188
+  - `make lean`
 - `rankOne_adjoint`
   - lean/Workhouse/VacuumChart.lean:35
   - `make lean`
 - `rank_law_numerator`
   - lean/Workhouse/Basic.lean:36
+  - `make lean`
+- `rank_one_laplacian_carrier_eigenvalue`
+  - lean/Workhouse/HodgeFeshbach.lean:167
+  - `make lean`
+- `rank_one_rur_carrier_factorization`
+  - lean/Workhouse/HodgeFeshbach.lean:215
+  - `make lean`
+- `rank_one_rur_cleared_defect_zero`
+  - lean/Workhouse/HodgeFeshbach.lean:224
+  - `make lean`
+- `rank_one_rur_vector_factorization`
+  - lean/Workhouse/HodgeFeshbach.lean:207
   - `make lean`
 - `raw_tilt_gt_one_of_su2_moments`
   - lean/Workhouse/SourceTilt.lean:274
@@ -794,6 +866,15 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `riccatiMap_norm_le`
   - lean/Workhouse/SC17Riccati.lean:114
+  - `make lean`
+- `rr_carrier_polynomial_remainder`
+  - lean/Workhouse/HodgeFeshbach.lean:318
+  - `make lean`
+- `rur_carrier_polynomial_cleared_identity`
+  - lean/Workhouse/HodgeFeshbach.lean:327
+  - `make lean`
+- `rur_two_r_no_u_false`
+  - lean/Workhouse/HodgeFeshbach.lean:304
   - `make lean`
 - `sc17_plaquette_interval`
   - lean/Workhouse/ThermodynamicLimit.lean:214
@@ -915,6 +996,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `twoHopWeight_over_R20`
   - lean/Workhouse/Basic.lean:690
   - `make lean`
+- `two_r_no_u_words_count`
+  - lean/Workhouse/HodgeFeshbach.lean:288
+  - `make lean`
+- `two_r_no_u_words_enum`
+  - lean/Workhouse/HodgeFeshbach.lean:291
+  - `make lean`
 - `two_sector_form`
   - lean/Workhouse/GlobalWilsonVertical.lean:112
   - `make lean`
@@ -923,6 +1010,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `unitary_ground_state_gap`
   - lean/Workhouse/GroundStateAssembly.lean:669
+  - `make lean`
+- `unweightedActivityPower_le_weighted`
+  - lean/Workhouse/PolymerCluster.lean:85
+  - `make lean`
+- `ur_carrier_polynomial_value`
+  - lean/Workhouse/HodgeFeshbach.lean:333
   - `make lean`
 - `vacuum_corner_zero`
   - lean/Workhouse/VacuumCompression.lean:31
@@ -954,8 +1047,23 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `w4_shift_from_beta`
   - lean/Workhouse/Basic.lean:433
   - `make lean`
+- `weightedActivityBase_beta_zero`
+  - lean/Workhouse/PolymerCluster.lean:115
+  - `make lean`
+- `weightedActivityBase_geometric_hasSum`
+  - lean/Workhouse/PolymerCluster.lean:99
+  - `make lean`
+- `weightedActivityBase_nonneg`
+  - lean/Workhouse/PolymerCluster.lean:73
+  - `make lean`
+- `weightedActivityBase_small_beta_regime`
+  - lean/Workhouse/PolymerCluster.lean:122
+  - `make lean`
 - `weighted_cauchy_schwarz_sq`
   - lean/Workhouse/GroundStateAssembly.lean:114
+  - `make lean`
+- `weighted_geometric_majorant_nonneg`
+  - lean/Workhouse/PolymerCluster.lean:108
   - `make lean`
 - `weighted_inverse_difference_bound`
   - lean/Workhouse/ResolventLocalization.lean:121
