@@ -72,12 +72,19 @@ The OS source pair has an important version relation: the 1975 paper corrects an
 
 ## Reproduce and extend
 
+These commands rewrite source metadata and generated views. They are for
+deliberate acquisition maintenance after preserving prior outputs and reviewing
+the source inputs, not ordinary reading setup. See the
+[collection guide](README.md#maintaining-local-extraction) for local extraction
+prerequisites and [current research](../../docs/current_research.md) for later
+results beyond this source map.
+
 ```text
-python scripts/build_yangmills_sources.py
-workhouse index -w
-workhouse frontier --write
-workhouse certified --write
-workhouse atlas
+uv run --no-sync python scripts/build_yangmills_sources.py
+uv run --no-sync workhouse index -w
+uv run --no-sync workhouse frontier --write
+uv run --no-sync workhouse certified --write
+uv run --no-sync workhouse atlas
 ```
 
 Use `workhouse why STUDY:YM:target`, `workhouse why STUDY:YM:matrix-commutator-model`, or `workhouse why G23` to move from these diagrams to the native graph. Source acquisition states and corrected bibliographic details are in `COVERAGE.md`; raw citations, URLs, source hashes, and selected-page reading records are in the JSON manifests.

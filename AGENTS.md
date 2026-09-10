@@ -6,12 +6,20 @@ Read [workspace coordination](docs/workspace_coordination.md) before selecting
 paths or importing old work. Preserve the nested earlier checkout and named
 research worktrees; use them as explicit sources, not competing defaults.
 
+Check `git status --short --branch` and the remote before editing. Refresh
+GitHub history before treating a missing local result as missing from the
+project. Coordinate file ownership with other agents and stage only your own
+exact paths. The maintainer's preservation rule is **do not erase anything**:
+keep original files, failed attempts, duplicates and other agents' work. Follow
+[documentation maintenance](docs/documentation_maintenance.md) when revising
+maintained navigation; frozen evidence retains its original bytes.
+
 # Research mission
 
-Three files, no overlap. `README.md` is the operating manual — reading order,
-commands, how to add a check, what counts as done. `CLAUDE.md` is the
-non-negotiables, and they bind. **This file is the posture**: what the work *is*
-and how to decide what to do next.
+`README.md` is the operating manual; `CLAUDE.md` records the working agreement.
+This file explains the research posture and how to select the next question.
+The [formalization workflow](docs/formalization_workflow.md) describes how a
+source statement becomes a precisely scoped proof connection.
 
 ## What this repository is
 
@@ -93,9 +101,8 @@ been formalized in Lean; preserve the separate status and verification axes.
 ## Repetition is not independence
 
 The single most useful sentence in any brief for this corpus: **repeated
-statements are not independent evidence.** With 950 files and heavy copying,
-consensus is manufactured by duplication. A value in forty files may have one
-origin.
+statements are not independent evidence.** Heavy copying can manufacture
+consensus. A value in many files may have one origin.
 
 So when you count support, count **distinct originating computations**, not
 files. The mechanics for that are already here:
@@ -124,14 +131,23 @@ not by picking the better-looking number.
 
 `README.md` has the retrieval order and the search mechanics; do not re-derive
 them here. Two things are worth repeating, because they are the things agents
-get wrong. The corpus is about 61 context windows, so reading it is not a plan,
-and the join keys are **exact rationals, not concepts**. Search by value first —
+get wrong. Use targeted retrieval, and treat **exact rationals, symbols, source
+paths and stable claim IDs** as join keys. Search by value first —
 `workhouse search` does that, and knows which names this repository coined and
 which are forbidden. And query the graph before the files: `workhouse why <id>`
 prints the routes a gap has tried and which are dead. On 2026-09-01 a session
 that read the ledgers in the prescribed order and never ran `why` recommended a
 route closed two days earlier; the graph had the closure and the reading order
 did not.
+
+For derivations, start with the generated
+[proof map](docs/derivation_formalization.md), then read the exact source section
+and its `DERIV:` record in `ledger/derivation_statements.yaml`. Source identity,
+mathematical status and formal coverage are separate. A `formalizes` edge means
+the entire named statement is covered; a `supported_by` edge means only its
+recorded ingredient. The Lean dependency export records constants used in
+elaborated proofs. It does not establish that a formal theorem faithfully
+encodes the source, so inspect hypotheses and conclusions too.
 
 ## Prefer decisive calculations
 
@@ -168,8 +184,9 @@ that it was tried, and the reason it died usually narrows the next attempt.
 finite lattice → infinite volume → continuum → physical observable.
 
 Say which of these a claim lives in, and whether a crossing is proved, tested,
-or assumed. The open problems at the crossings are G17 (volume-uniform
-free-energy control), G18 (the spectral overlap) and G19 (the continuum limit).
+or assumed. Query the current gap routes and
+[research map](docs/current_research.md) for the precise surviving obligations;
+a historical gap label can include both completed routes and open successors.
 
 ## Look for the structure underneath
 
@@ -198,17 +215,17 @@ designing decisive experiments — all in scope. Mark conjectures as conjectures
 until something checks them, and when a claim of your own fails, retract it here
 rather than in conversation.
 
-Where a statement is pure rational or polynomial algebra, reducing it to a Lean
-theorem is worth doing — not as ritual, but because a failed formalization
-usually reveals the hypothesis the informal derivation omitted.
+Formalize the actual mathematical objects and conclusions where possible.
+The Lean library includes algebra, operators, measures, limits and spectral
+arguments. A scalar implication can be a useful ingredient, but does not
+formalize an operator construction merely because both appear in the same
+derivation. A failed formalization can reveal an omitted hypothesis; record
+that precise step rather than weakening the target silently.
 
 ## The direction of travel
 
-The goal is compression, not accumulation:
-
-```
-950 files  →  ~100 real results  →  ~20 structural principles  →  a few theorems
-```
+Make the source history navigable as precise statements, dependencies and
+reusable proofs. File and lemma counts do not measure the strength of a result.
 
 Progress is measurable — and the measurements live in the generated views, not
 here, because a hand-written count is stale the session after it is written.
@@ -216,8 +233,10 @@ here, because a hand-written count is stale the session after it is written.
 the contradiction and gap states (C2, the last open contradiction, closed by
 derivation on 2026-09-04, ADR 0024); the
 FINDING checks this repository holds against the corpus are listed in
-`CERTIFIED.md`. Every session should move at least one claim from T3 toward
-T1, or record why it cannot be moved.
+`CERTIFIED.md`. Mathematical work should advance an identified obligation or
+record the obstruction found. Organization and documentation tasks should
+improve retrieval and preserve those distinctions; they need not manufacture
+a new mathematical claim or tier promotion.
 
 ## Default loop
 
@@ -233,6 +252,7 @@ T1, or record why it cannot be moved.
 10. Record results, failures and open successors in the graph, with actual
     dependency edges and precisely scoped evidence. A completed route should
     name what closed it; the next route should name the results it can use.
-11. Update current documentation, regenerate the views, validate, and land the
-    green work as required by `CLAUDE.md`. Then state the next mathematical
-    consequence and the exact GitHub landing status.
+11. Update affected documentation and regenerate scientific views when their
+    inputs changed. Apply the checks appropriate to the change and land green
+    work under `CLAUDE.md`. Report the mathematical consequence and distinguish
+    local, pushed and merged state using the actual commit and CI evidence.

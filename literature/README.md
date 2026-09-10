@@ -4,6 +4,14 @@ Published work, indexed by the claim it bears on. `index.yaml` is the map;
 `workhouse lit` reads it, and `workhouse lit --holes` prints what the map is
 structurally missing.
 
+Start with [the literature rules](CLAUDE.md), the
+[Yang-Mills source collection](yangmills/README.md), or the
+[marked-transfer sources](wilson-marked/README.md). The
+[current research guide](../docs/current_research.md) and
+[derivation proof map](../docs/derivation_formalization.md) record the later
+local mathematical and formalization state. Acquisition, extraction, reading
+and machine certification are separate records.
+
 The corpus arrived with almost no bibliography. The governing document cites
 "Hamer's table" for the decimal that carries its strongest external validation,
 without a paper; the citation had to be recovered from a Python dict inside
@@ -22,8 +30,9 @@ here, where they would rot: how many edges rest on an unread source, which
 papers the web itself leans on most, and which unobtained paper to acquire
 next.
 
-The verified edges are the ones checked against a paper actually read; the
-strongest are:
+The verified edges are the ones checked against a paper actually read.
+Examples recorded in the register include the following; consult each current
+entry's relation, status, detail and pinned source before relying on it:
 
 - `CS_2006 → C7` — the Weingarten calculus that falsified the stranded-flux zero
   backend, now re-derived from the general formula rather than quoted from a
@@ -70,8 +79,8 @@ SZH_1997 with no citation link between the two lines.
 
 ## Getting the unobtained
 
-The web computes what to fetch; the acquisition loop makes fetching it a
-two-minute task instead of an archaeology session:
+The web ranks acquisition candidates. From a configured checkout, use
+`uv run --no-sync` before these commands:
 
 ```bash
 workhouse lit --acquire        # every unobtained paper, ranked, with links
@@ -90,12 +99,13 @@ loop this tooling encodes.
 
 ## What is stored, and what is not
 
-One paper. `KRS_2023` is CC BY-NC-ND, which permits a verbatim copy, so the
-unmodified PDF is here and its bytes are hashed against the digest of the copy
-that was read. Everything else is under publisher copyright or arXiv's
-assumed-1991-2003 licence, neither of which permits redistribution; those are
-pinned by `source_sha256` so the reading stays identifiable without the file
-being republished.
+The current `fulltext` and `licence` fields in [index.yaml](index.yaml)
+determine which reading copies are versioned. The validator enforces the
+repository's declared storage policy and checks verbatim-copy digests.
+Ignored [inbox](inbox/README.md) copies, source hashes and acquisition metadata
+serve different purposes; obtaining a copy does not automatically authorize
+publishing it. Avoid static claims that only one paper is stored or that every
+other paper has the same licence.
 
 The gate is enforced in `literature.py` and exercised by tests that mutate an
 entry to confirm it fires — not remembered.

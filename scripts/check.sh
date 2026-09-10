@@ -34,6 +34,8 @@ for s in $stacks; do
       if command -v mypy >/dev/null 2>&1 && grep -q '^\[tool.mypy\]' pyproject.toml 2>/dev/null; then
         run mypy .
       fi
+      # Portable local-link and anchor checks for maintained documentation.
+      run python scripts/check_docs.py
       command -v pytest >/dev/null 2>&1 && run pytest -q
       ;;
     rust)

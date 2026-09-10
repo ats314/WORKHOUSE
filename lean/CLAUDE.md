@@ -1,34 +1,52 @@
-# T0: the only tier a document cannot argue with
+# Lean working agreement
 
-A theorem here is proof-checked: Lean 4 compiles it, no `sorry`, standard axioms
-only (`propext`, `Classical.choice`, `Quot.sound`). Nothing else in this
-repository has that standing.
+Apply the repository [working agreement](../CLAUDE.md) and the
+[formalization workflow](../docs/formalization_workflow.md). The rules here
+concern proof scope and its integration; the generated
+[proof map](../docs/derivation_formalization.md) records current coverage.
 
-`make lean` builds it, with `--wfail` so a `sorry` fails rather than warns.
-`make lean-setup` installs elan and the pinned toolchain first; see `README.md`.
+## Mathematical scope
 
-## What belongs here
+Formalize the research statement at its natural level: algebra, geometry,
+probability measures, Hilbert/Banach operators, domains, closed forms,
+limits, spectral projections, and reconstruction when required. The
+maintainer's formalization request includes full analytic statements.
 
-Formal statements from the research derivations, including rational and
-polynomial algebra, Hilbert and Banach operators, measure-theoretic limits,
-Dirichlet forms and their dependencies. The maintainer's September 9 request
-explicitly extends the earlier algebra-only scope. Preserve precise hypotheses
-and build the actual mathematical objects required by each statement.
+Construct the actual objects required by the source. Explicit hypotheses may
+be the source's stated inputs, but must not hide the conclusion or substitute
+a finite/scalar surrogate for an infinite operator theorem. A useful supporting
+lemma can be integrated with its narrow scope while the larger theorem remains
+open to formalization. Accept valid proofs under their precise assumptions;
+novelty is not a reason to weaken or reject them.
 
-If an invariant in `src/workhouse/invariants/` is exactly a formalized statement,
-prefer promoting it rather than leaving it at T1. A useful abstract operator
-lemma must state its remaining Wilson-specific realization inputs; it does not
-by itself formalize a complete source document.
+## Proof and source boundaries
 
-## What does not
+- No `sorry`, `admit`, or new axioms that replace a proof. Strict builds use
+  `lake build --wfail`; dependency export also audits transitive axioms.
+- State domain, integrability, positivity, completeness, normalization, and
+  parameter-uniformity hypotheses wherever the argument uses them. Preserve
+  the source's physical time and operator identifications.
+- Register every theorem, including helpers, in `ledger/theorems.yaml`.
+  Give derivation proofs exact `proof_sources` and matching whole or scoped
+  links in `ledger/derivation_statements.yaml`.
+- `lean`/`formalizes` describe whole statements; `lean_support`/`supported_by`
+  describe named ingredients. `promotes` requires the entire named check,
+  alone or jointly with its other registered proofs.
+- Keep analytic status, evidence level, and machine-verification tier distinct.
+  T3 does not imply that a valid analytic proof is false or unproved.
+- Preserve received proofs, failed attempts, and sealed runs. Record corrections
+  and successor statements with provenance; do not change a source digest to
+  conceal a disagreement or label old evidence as a new run.
 
-Do not axiomatize a physics assumption to get a compiling theorem. The point of
-formalizing is to *expose* the hypothesis an informal derivation left out; an
-axiom that hides it inverts the exercise.
+## Integration
 
-## A known shape
+Import new modules in `Workhouse.lean`, compile strictly, then run the kernel
+export from the repository Python environment. Regenerate the proof map before
+catalogue/frontier/certified views, and inspect `workhouse why` for both the
+source statement and each affected proof. The workflow gives exact commands
+and checks. Serialize full builds/exports when agents share a checkout.
 
-`rank_law_numerator` and `hopping_deficit_numerator` are stated with
-denominators cleared, because `field_simp` left an uncleared inverse. That is a
-tactic limitation, not a mathematical one — the cleared form is equivalent and
-provable.
+Equivalent reformulations are welcome when the equivalence is justified.
+For example, denominator-cleared polynomial identities must retain the
+conditions needed when interpreting them as rational formulas. Tactic
+convenience does not authorize dropping a mathematical obligation.

@@ -1,18 +1,24 @@
-name: Numerical discrepancy
-description: A printed value disagrees with its own definition
+name: Mathematical or numerical discrepancy
+description: A statement, proof or value disagrees with its stated definitions or evidence
 labels: [discrepancy]
 body:
   - type: input
     id: section
     attributes:
-      label: Corpus section
-      placeholder: "MASTER_THEORY §5.5"
+      label: Claim ID and exact source
+      placeholder: "Claim/DERIV/LEAN ID, source path, section or line, and commit"
     validations: { required: true }
   - type: textarea
     id: values
     attributes:
-      label: The two values
-      description: Give both, exactly as printed, plus the gap in absolute terms and in ulps.
+      label: Expected and observed result
+      description: Give the statement or values exactly as recorded, with hypotheses and conventions. For floating-point disagreements include absolute error and ulps where meaningful; retain exact rational values as exact.
+    validations: { required: true }
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction and evidence
+      description: Include the command or proof step, checkout commit, platform/toolchain where relevant, actual output, and source hashes or run paths. Preserve both sides; do not widen a tolerance or re-pin a source to make the disagreement disappear.
     validations: { required: true }
   - type: dropdown
     id: kind
