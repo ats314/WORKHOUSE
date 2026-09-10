@@ -27,6 +27,15 @@ where it came from. Documentary `technical_appendix`, `navigation` and
 historical ALL THEORY collection the active checkout. Both endpoints must
 resolve during validation. Shared vocabulary is not a dependency (ADR 0007).
 
+Selected derivation routes emit `targets` to their exact objective and
+`blocked_by` to explicitly authored completion inputs within that route.
+Neither edge means every solution of the parent gap must use that route.
+`bears_on` remains relevance. Curated priorities and their source status are
+rendered in FRONTIER section 7 and in text/JSON `workhouse why` output.
+Cached queries use their supplied catalogue snapshot; `--live` selects a
+fresh catalogue. Proof tier and missing Lean coverage do not determine
+whether an analytic target is complete.
+
 Derivation source dependencies are curated in
 `ledger/derivation_statements.yaml`. Its whole-statement `lean` entries produce
 `LEAN -> DERIV formalizes`; scoped `lean_support` ingredients produce

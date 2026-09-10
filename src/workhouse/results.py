@@ -34,6 +34,7 @@ _PREFIXES = frozenset(
         "LIT",
         "ADR",
         "ROUTE",
+        "DERIV",
     }
 )
 

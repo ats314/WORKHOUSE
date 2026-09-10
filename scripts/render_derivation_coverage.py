@@ -81,6 +81,9 @@ def render() -> str:
         "centered L2 variance, bounded-footprint radius and strict source-tilt obstruction |",
         "| [SourceRadiusGrowth](../lean/Workhouse/SourceRadiusGrowth.lean) | Actual product "
         "integrals and variance-per-site divergence, with a constructed atomic example |",
+        "| [TheoryCurrentBridges](../lean/Workhouse/TheoryCurrentBridges.lean) | Inverse-free "
+        "variational bound, bounded-inverse W6 composition, residual budgets, Schur algebra "
+        "and abstract Riccati certificate; each source link records its exact scope |",
         "",
         "These mechanisms supply reusable formal steps. Their application to the actual "
         "Wilson objects still requires the recorded cylinder, domain, projection, "

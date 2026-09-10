@@ -14,6 +14,7 @@ sides and the delta, never a preference.
 from __future__ import annotations
 
 import re
+from dataclasses import replace
 
 from . import claims as claims_mod
 from . import frontier as frontier_mod
@@ -57,6 +58,96 @@ def _resolve(query: str, node_ids: set[str], by_where: dict[str, str] | None = N
 def _corpus_paths(catalogue: list[claims_mod.Claim]) -> dict[str, str]:
     """corpus-import path -> CORPUS node id, so `why <path>` lands on the file."""
     return {c.where: c.id for c in catalogue if c.kind == "corpus"}
+
+
+def _catalogue_status(claim: claims_mod.Claim) -> str:
+    """Read lifecycle status without interpreting a machine tier as truth."""
+    if claim.kind == "gap":
+        state = re.search(r"\b(open|partial|discharged)\b", claim.status)
+        if state:
+            return state.group(1)
+    return claim.status
+
+
+def priority_rows(
+    node: str,
+    catalogue: list[claims_mod.Claim],
+    led: ledger_mod.Ledgers | None = None,
+) -> list[dict]:
+    """Selected route metadata with lifecycle/readiness from this catalogue.
+
+    ``node`` is a resolved gap or route id. Only selected ROUTE records and
+    owning gaps present in ``catalogue`` are eligible. The ledger supplies
+    authored scope, tests and connections; the supplied catalogue supplies
+    every target, input, route and gap status. A cached query therefore cannot
+    advertise a newly authored route which that snapshot cannot resolve.
+
+    Readiness is delegated to ``research_priorities.collect`` with an explicit
+    status map. No checks, source registers or second graph are collected.
+    Conditional implications retain their status; their model hypotheses are
+    blockers only where the route explicitly names them. Text and JSON views
+    consume these same rows, including the collector's ``input_status`` labels.
+    """
+    by_id = {claim.id: claim for claim in catalogue}
+    if node not in by_id or by_id[node].kind not in {"gap", "route"}:
+        return []
+    led = ledger_mod.load() if led is None else led
+    statuses = {cid: _catalogue_status(claim) for cid, claim in by_id.items()}
+    snapshot_gaps = []
+    for gap in led.gaps:
+        gap_claim = by_id.get(gap["id"])
+        if gap_claim is None or gap_claim.kind != "gap":
+            continue
+        steps = []
+        for step in gap.get("plan", []) or []:
+            rid = claims_mod.route_id(gap["id"], step["step"])
+            route = by_id.get(rid)
+            if route is not None and route.kind == "route":
+                steps.append({**step, "state": statuses[rid]})
+        snapshot_gaps.append({**gap, "state": statuses[gap["id"]], "plan": steps})
+    snapshot = replace(led, gaps=snapshot_gaps)
+    rows = frontier_mod.research_priorities.collect(snapshot, statuses=statuses)
+    return [row for row in rows if row["gap"] == node or row["id"] == node]
+
+
+def _priority_lines(rows: list[dict]) -> list[str]:
+    """Render the shared priority data without hiding its application scope."""
+    if not rows:
+        return []
+    lines = ["", "\033[1mCurrent derivation priorities (curated order)\033[0m"]
+    for row in rows:
+        lines.extend(
+            [
+                f"  {row['priority']}. {row['step']} [{row['state']}]",
+                f"      {row['id']}",
+                f"      scope: {row['scope']}",
+            ]
+        )
+        if row.get("target"):
+            lines.append(f"      target {row['target']} ({row['target_status']})")
+        for ref, status in row["input_status"].items():
+            standing = (
+                "conditional implication; actual model hypotheses remain separate"
+                if status == "conditional"
+                else status
+            )
+            lines.append(f"      source input {ref} ({standing})")
+        if row["pending"]:
+            pending = ", ".join(f"{ref} ({row['pending_status'][ref]})" for ref in row["pending"])
+            lines.append(f"      completion awaits: {pending}")
+        elif row["ready"]:
+            lines.append(
+                "      readiness: no recorded completion blocker; feasibility is unassessed"
+            )
+        lines.extend(
+            [
+                f"      consequence: {row['consequence']}",
+                f"      next test: {row['decisive_test']}",
+            ]
+        )
+        if row["bears_on"]:
+            lines.append(f"      bears on: {', '.join(row['bears_on'])}")
+    return lines
 
 
 def branchwise(
@@ -187,6 +278,7 @@ def neighborhood(
         "outgoing": outgoing,
         "incoming": incoming,
         "neighbors": neighbors,
+        "priorities": priority_rows(node, catalogue),
     }, True
 
 
@@ -262,7 +354,7 @@ def explain(
         if claim.where:
             w(f"  \033[2m{claim.where}" + (f" · {claim.cites}" if claim.cites else "") + "\033[0m")
         if claim.detail:
-            if claim.kind == "result":
+            if claim.kind in {"result", "route"}:
                 for line in claim.detail.splitlines():
                     w(f"  {line}")
             else:
@@ -283,10 +375,10 @@ def explain(
     gap = next((g for g in led.gaps if g["id"] == node), None)
     if gap:
         cost = frontier_mod.TIER_COST.get(gap["tier"], "")
-        state = gap.get("state", "open")
+        state = _catalogue_status(by_id[node]) if node in by_id else gap.get("state", "open")
         w("")
         w(f"\033[1mGap standing\033[0m  {state} · cost tier {gap['tier']} — {cost}")
-        if state != "open" and gap.get("status"):
+        if state != "open" and state == gap.get("state") and gap.get("status"):
             w(f"  {' '.join(str(gap['status']).split())}")
         open_prerequisites = sorted(set(gap.get("depends_on", [])) & led.open_gap_ids)
         if open_prerequisites:
@@ -304,7 +396,12 @@ def explain(
         # tried" without a trip through the run READMEs: a dead route names
         # what killed it, a live one is where effort goes, an untried one is a
         # recorded proposal nobody has spent anything on.
-        routes = gap.get("plan", []) or []
+        routes = []
+        for step in gap.get("plan", []) or []:
+            rid = claims_mod.route_id(node, step["step"])
+            route = by_id.get(rid)
+            if route is not None and route.kind == "route":
+                routes.append({**step, "state": route.status})
         if routes:
             w("")
             w("\033[1mRoutes\033[0m")
@@ -332,6 +429,8 @@ def explain(
     if candidate:
         w("")
         w(f"\033[1mFalsifier\033[0m  {' '.join(str(candidate['falsifier']).split())}")
+
+    lines.extend(_priority_lines(priority_rows(node, catalogue, led)))
 
     # -- every edge in and out, grouped by the source's own field name ------
     outgoing: dict[str, list[graph_mod.Edge]] = {}
