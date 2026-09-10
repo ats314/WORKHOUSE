@@ -103,6 +103,19 @@ workspace. Pytest manages that directory, so never point it at source or
 existing research files. Shell changes also require the shell lint checks
 listed in [CI](.github/workflows/ci.yml). Report any unavailable check explicitly.
 
+The native Windows shell-hook tests need Git for Windows Bash. Check
+`Get-Command bash`: a WindowsApps/WSL launcher does not accept the native paths
+used by those tests. If Git uses its default installation location, put its
+Bash first in this PowerShell session before running pytest:
+
+```powershell
+$env:PATH = "C:\Program Files\Git\bin;$env:PATH"
+Get-Command bash
+```
+
+Use your actual Git installation path if different. This changes only the
+current session's executable lookup; it does not change the machine settings.
+
 For changed Lean or theorem registration, use the strict build and kernel
 export workflow. For changed scientific inputs, regenerate in order:
 kernel export when affected, proof map, catalogue, frontier, certified view;
