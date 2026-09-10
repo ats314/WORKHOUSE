@@ -13,6 +13,12 @@ own dated mathematical statements and verification scope.
 
 ## Choose a route
 
+The generated [current derivation priorities](../FRONTIER.md#7-current-derivation-priorities)
+list precise source targets, explicit completion inputs and decisive tests.
+Read the [priority review](research/graph-priorities-2026-09-10.md) for the
+mathematical consequences and the distinction between sufficient routes and
+necessary dependencies. `workhouse why G19` exposes the same selected routes.
+
 | Need | Start here | How to use it |
 | --- | --- | --- |
 | Governing objective and current research obligations | [Research goal](research_goal.md), [current research map](current_research.md) | Select a precise source/graph obligation and retain its regime and hypotheses. |
