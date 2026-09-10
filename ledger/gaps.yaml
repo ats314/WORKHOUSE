@@ -824,6 +824,16 @@ gaps:
           its actual conditional center. Full conditional concentration and a finite-flow speed
           contradiction rule out M10 for that choice. This is an existence counterexample within
           Q8, not a proof against every admissible transport or the synchronized successor.
+      - step: Resolve the antipodal conditional magnetic normal geometry
+        state: done
+        closed_by:
+          - RESULT:W6_ANTIPODAL_HESSIAN_SPECTRUM
+          - RESULT:W6_ANTIPODAL_GAUGE_NORMAL_COERCIVITY
+          - RESULT:W6_ANTIPODAL_ANGULAR_REDUCTION
+        depends_on:
+          - RESULT:W6_CONDITIONAL_AGMON_GEOMETRY
+        status: |
+          The exact noncommuting conditional Hessian has seven eigenvalues uniformly at least 4(sqrt(2)-1). Its two antipodal zero directions are precisely gauge tangents; the original electric metric retains the normal bound with coefficient (sqrt(2)-1)/2. Compact normal relaxation gives leading angular potential -2sqrt(2)delta n3. This closes the magnetic geometric subproblem, not the actual conditional amplitude or M10 estimate.
       - step: Prove the actual conditional-score domination M10
         state: live
         depends_on:
@@ -832,17 +842,21 @@ gaps:
           - RESULT:W6_CONDITIONAL_SCORE_CONTINUITY
           - RESULT:W6_SYNCHRONIZED_CONDITIONAL_DILATION
           - RESULT:W6_SYNCHRONIZED_SCORE_CRITERION
+          - RESULT:W6_ANTIPODAL_HESSIAN_SPECTRUM
+          - RESULT:W6_ANTIPODAL_GAUGE_NORMAL_COERCIVITY
+          - RESULT:W6_ANTIPODAL_ANGULAR_REDUCTION
+          - RESULT:W6_ANTIPODAL_GAUGE_SCORE_INVARIANCE
         bears_on:
           - DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_WEIGHT_FROM_M10
         status: |
           The source-potential moment M8-M9 is established. The open target is the actual small-g conditional score K_g<=C0+C1 g^-2 E(V|w), including rare fibers, with uniform nonnegative C0,C1. This sufficient route implies the weighted score/Hardy estimate M11-M15; it is not asserted necessary for every W6 argument and does not imply the full source-energy jets R10. The local near-well estimate and averaged moments alone do not settle it.
-          The selected realization now uses the explicit synchronized S13 radial profiles. The exact conditional continuity identity and tangency are established; an actual counterexample rules out some other admissible Q8 choices. Prove the S14-S15 uniform conditional tube moments, differentiated amplitude control, common-reference outside deviation and antipodal estimate, or obtain a different sufficient source-weighted pairing. DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:M10_SYNCHRONIZED_SCORE records this specialization of the same M10 target, not a separate priority or a prerequisite for every possible proof of M10.
+          The selected realization now uses the explicit synchronized S13 radial profiles. The exact conditional continuity identity and tangency are established; an actual counterexample rules out some other admissible Q8 choices. The antipodal magnetic normal bound, exact gauge kernel and leading angular transition are now established, and the actual score is constant along the endpoint gauge orbit. Prove the S14-S15 uniform conditional tube moments, differentiated actual-ground amplitude control, common-reference outside deviation and degeneration-uniform score estimate on the resulting normal/angular geometry, or obtain a different sufficient source-weighted pairing. DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:M10_SYNCHRONIZED_SCORE records this specialization of the same M10 target, not a separate priority or a prerequisite for every possible proof of M10.
         frontier:
           priority: 1
           target: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10
           scope: Actual four-face SU(2) conditional source law for the selected synchronized S13 transport, uniformly as g tends to zero, with chart-complement, rare-fiber and antipodal contributions retained.
           consequence: M10 together with the established source-potential moment makes the M11-M15 uniform weighted score bound applicable. Complete source-energy transport and interacting-grid uniformity remain separate.
-          decisive_test: For the synchronized S13 field, establish the actual conditional tube moments and differentiated amplitude bound in S14, then control the S15 outside deviation with the same reference and a degeneration-uniform antipodal score estimate. Compare the resulting complete variance with 1+g^-2 E(V|w), or prove a sufficient source-weighted pairing directly.
+          decisive_test: For the synchronized S13 field, establish the actual conditional tube moments and differentiated amplitude bound in S14, then use the established antipodal magnetic normal/angular geometry to prove the true-ground score estimate and control the S15 outside deviation with the same reference. Compare the resulting complete variance with 1+g^-2 E(V|w), or prove a sufficient source-weighted pairing directly.
       - step: Control complete source-vacuum transport energy jets R10
         state: untried
         depends_on:

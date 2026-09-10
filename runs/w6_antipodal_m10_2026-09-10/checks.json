@@ -1,0 +1,105 @@
+{
+  "schema": "w6-antipodal-controls/v1",
+  "passed": true,
+  "exact_checks": [
+    {
+      "name": "W6 antipodal: exact noncommuting fixed-Q chart",
+      "passed": true,
+      "detail": "Direct quaternion products give U2 U3=A^4 and the exact four scalar terms of A1, modulo |A|=|Ec|=1; arbitrary noncommuting axes are retained.",
+      "section": "W6_ANTIPODAL_MAGNETIC_GEOMETRY A1",
+      "tier": 1,
+      "line": 47,
+      "source": "src/workhouse/invariants/w6_antipodal.py:47",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "W6 antipodal: original four-face quadratic expansion",
+      "passed": true,
+      "detail": "Original face words give 2C(|a|^2+|c-a|^2+|b|^2+|c+b|^2)-4S n.(c cross (a-b)), with zero linear term; n=e3 by rotation covariance.",
+      "section": "W6_ANTIPODAL_MAGNETIC_GEOMETRY A2",
+      "tier": 1,
+      "line": 100,
+      "source": "src/workhouse/invariants/w6_antipodal.py:100",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "W6 antipodal: complete nine-dimensional Hessian spectrum",
+      "passed": true,
+      "detail": "Characteristic polynomial: (lambda-8C)^3 ((lambda-8C)^2-32C^2) ((lambda-8C)^2-32)^2. Orthogonal p,m,c change and singular values C,1,1 are checked from the original Hessian.",
+      "section": "W6_ANTIPODAL_MAGNETIC_GEOMETRY A3",
+      "tier": 1,
+      "line": 114,
+      "source": "src/workhouse/invariants/w6_antipodal.py:114",
+      "yields": {},
+      "rests_on": [
+        "W6 antipodal: original four-face quadratic expansion"
+      ]
+    },
+    {
+      "name": "W6 antipodal: seven uniform normal eigenvalues and soft scaling",
+      "passed": true,
+      "detail": "Seven eigenvalues >=4(sqrt(2)-1)>0 on 0<=theta<=pi. The double soft branch is 8cos(theta/4)-4sqrt(2), with expansion sqrt(2)delta-sqrt(2)delta^2/8+O(delta^3).",
+      "section": "W6_ANTIPODAL_MAGNETIC_GEOMETRY A3",
+      "tier": 1,
+      "line": 148,
+      "source": "src/workhouse/invariants/w6_antipodal.py:148",
+      "yields": {},
+      "rests_on": [
+        "W6 antipodal: complete nine-dimensional Hessian spectrum"
+      ]
+    },
+    {
+      "name": "W6 antipodal: gauge tangent equals the two-dimensional kernel",
+      "passed": true,
+      "detail": "Rotating-axis tangents have Gram matrix 2I and lie in the endpoint Hessian kernel. Its exact rank seven proves they exhaust that kernel; the global conjugation-orbit identification is supplied analytically.",
+      "section": "W6_ANTIPODAL_MAGNETIC_GEOMETRY A4",
+      "tier": 1,
+      "line": 169,
+      "source": "src/workhouse/invariants/w6_antipodal.py:169",
+      "yields": {},
+      "rests_on": [
+        "W6 antipodal: original four-face quadratic expansion"
+      ]
+    },
+    {
+      "name": "W6 antipodal: original-edge metric comparison constants",
+      "passed": true,
+      "detail": "Original independent non-tree generators contribute cometric I/4 on each factor, hence G<=4G_product. Fixed-Q pullback diag(I,I,2I)<=2I gives the quotient-distance coefficient (sqrt(2)-1)/2. Inversion and the distance implication are analytic arguments, not ground-score bounds.",
+      "section": "W6_ANTIPODAL_MAGNETIC_GEOMETRY A5",
+      "tier": 1,
+      "line": 194,
+      "source": "src/workhouse/invariants/w6_antipodal.py:194",
+      "yields": {},
+      "rests_on": [
+        "W6 antipodal: seven uniform normal eigenvalues and soft scaling",
+        "W6 antipodal: gauge tangent equals the two-dimensional kernel"
+      ]
+    },
+    {
+      "name": "W6 antipodal: exact displaced-orbit angular potential",
+      "passed": true,
+      "detail": "Original potential on the old orbit: 16-2sqrt(2)(3+cos(delta)+sin(delta)n3). Leading term -2sqrt(2)delta n3; the O(delta^2) normal-relaxation assertion uses the separate compact implicit-function argument.",
+      "section": "W6_ANTIPODAL_MAGNETIC_GEOMETRY A6",
+      "tier": 1,
+      "line": 213,
+      "source": "src/workhouse/invariants/w6_antipodal.py:213",
+      "yields": {},
+      "rests_on": []
+    }
+  ],
+  "numerical_control": {
+    "name": "original_potential_second_directional_derivatives",
+    "tier": 2,
+    "passed": true,
+    "samples": 60,
+    "seed": 20260910,
+    "step": 0.001,
+    "method": "five-point central second difference of original four face words",
+    "maximum_absolute_error": 1.0770180303154575e-08,
+    "absolute_tolerance": 2e-07,
+    "scope": "Finite corroboration, including theta=0 and theta=pi; not proof."
+  },
+  "scope": "Exact magnetic algebra and finite numerical corroboration. Bundle, metric-order and score-invariance arguments are reviewed in the source note. No full-statement Lean formalization or true-ground M10 estimate."
+}

@@ -63,6 +63,18 @@ The synchronized S13 field is the selected realization of the existing
 its specialized open record is not a second priority or a necessary premise
 of every possible proof of M10.
 
+The [antipodal magnetic review](derivations/w6-antipodal-magnetic-geometry.md)
+now establishes the full nine-dimensional conditional magnetic Hessian:
+seven eigenvalues have the uniform floor 4(sqrt(2)-1), and the two antipodal
+zero directions are exactly gauge tangents. The original electric metric
+retains positive normal coercivity. Normal relaxation gives the leading
+angular potential -2sqrt(2)delta n3, while the actual endpoint score is
+constant along the gauge orbit. These inputs resolve the magnetic geometric
+subproblem. Uniform true-ground amplitude, score and complement estimates
+on this normal/angular geometry remain the M10 successor. Start with
+`RESULT:W6_ANTIPODAL_GAUGE_NORMAL_COERCIVITY` and
+`RESULT:W6_ANTIPODAL_ANGULAR_REDUCTION`.
+
 An analytic proof retains its registered mathematical status when Lean covers
 only an ingredient. Conversely, a compiling abstract theorem applies to a
 Wilson construction only after its model, domain and identification hypotheses

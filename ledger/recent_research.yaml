@@ -479,6 +479,18 @@ sources:
   original_path: C:\WORKHOUSE\research\w6_bg_uniform_20260910\bg_actual_potential_checks.json
   sha256: 94c7c0e7d6b325978ce8a4fc89bfa4e58d19ce0a50d43df4ed47cc525f2ff24f
   bytes: 420
+- id: DOC:RECENT:w6_antipodal_m10_20260910:w6-antipodal-magnetic-geometry.md
+  title: Reviewed W6 antipodal magnetic geometry
+  path: runs/w6_antipodal_m10_2026-09-10/sources/w6-antipodal-magnetic-geometry.md
+  original_path: C:/WORKHOUSE/worktrees/w6-antipodal-m10-20260910/docs/derivations/w6-antipodal-magnetic-geometry.md
+  sha256: 5b3e0b2312f11ee8d367fb582de1baa3f22346355485abcd849c186d1e539310
+  bytes: 11342
+- id: DOC:RECENT:w6_antipodal_m10_20260910:pasted-text.txt
+  title: Received antipodal M10 calculation; author-supplied execution claims
+  path: runs/w6_antipodal_m10_2026-09-10/sources/pasted-text.txt
+  original_path: C:/Users/Alex/.codex/attachments/d25dc2bd-11f4-4b89-9d27-64e844b22eb1/pasted-text.txt
+  sha256: b19a94fcf454fd0b02aa1e51917a3dcd0f26ec5ee1775c0cc4b7201b03672239
+  bytes: 5038
 nodes:
 - id: RESULT:W6_CONDITIONAL_SCORE_CONTINUITY
   statement: For the actual positive four-face SU(2) square ground in Haar-product coordinates
@@ -1807,3 +1819,187 @@ nodes:
   - type: bears_on
     target: G19
     detail: Advances the all-source criterion without claiming uniform small-coupling closure.
+- id: RESULT:W6_ANTIPODAL_HESSIAN_SPECTRUM
+  statement: At the actual four-face SU(2) conditional minimizer, in quaternion-angle chart norm |a|^2+|b|^2+|c|^2,
+    the Hessian eigenvalues are 8C (3), (8-4sqrt(2))C (1), (8+4sqrt(2))C (1), 8C-4sqrt(2) (2), 8C+4sqrt(2)
+    (2), C=cos(theta/4). Seven are at least 4(sqrt(2)-1); only the double soft branch vanishes at theta=pi,
+    as sqrt(2)delta-sqrt(2)delta^2/8+O(delta^3).
+  status: proven
+  evidence: analytic
+  tier: 3
+  scope: 'Hypotheses: Actual twelve-edge four-face potential and the prior constrained minimizer.; Unit-quaternion
+    angle convention, fixed Q=A^4, 0<=theta<=pi, and the exact noncommuting A1 chart with its specified
+    Euclidean tangent norm. Scope: Magnetic Hessian at constrained minima on the finite square. These
+    are not electric-metric eigenvalues, an Agmon Hessian or a quantum precision.'
+  detail: A1-A4 retain the cross-product term from the original face words. The singular values of CI-SJ
+    are C,1,1. The exact characteristic polynomial gives all nine eigenvalues, including endpoint degeneracies.
+  verification: Reviewed analytic argument; separately registered exact controls have T1 scope. No full-statement
+    Lean certification or M10 closure.
+  sources:
+  - id: DOC:RECENT:w6_antipodal_m10_20260910:w6-antipodal-magnetic-geometry.md
+    anchor: '## A3 Full spectrum and seven uniform directions'
+    locator: A1-A6; exact fixed-Q chart, quadratic form and full spectrum
+  - id: DOC:RECENT:w6_antipodal_m10_20260910:pasted-text.txt
+    anchor: complete conditional Hessian spectrum
+    locator: Received spectrum derivation; originating calculation reviewed independently
+      in A1-A8 of the integrated note. Prior execution claims remain received provenance.
+  links:
+  - type: depends_on
+    target: RESULT:W6_CONDITIONAL_AGMON_GEOMETRY
+    detail: Established input at the scope stated in this result.
+  - type: supported_by
+    target: CHK:w6-antipodal-conditional-magnetic-geomet-c2e41f:w6-antipodal-exact-noncommuting-fixed-q--87322c
+    detail: Exact finite algebraic support only; analytic orbit, bundle, metric-order and true-ground
+      arguments retain their explicit source hypotheses.
+  - type: supported_by
+    target: CHK:w6-antipodal-conditional-magnetic-geomet-c2e41f:w6-antipodal-original-four-face-quadrati-3763e0
+    detail: Exact finite algebraic support only; analytic orbit, bundle, metric-order and true-ground
+      arguments retain their explicit source hypotheses.
+  - type: supported_by
+    target: CHK:w6-antipodal-conditional-magnetic-geomet-c2e41f:w6-antipodal-complete-nine-dimensional-h-08c10c
+    detail: Exact finite algebraic support only; analytic orbit, bundle, metric-order and true-ground
+      arguments retain their explicit source hypotheses.
+  - type: supported_by
+    target: CHK:w6-antipodal-conditional-magnetic-geomet-c2e41f:w6-antipodal-seven-uniform-normal-eigenv-93aa40
+    detail: Exact finite algebraic support only; analytic orbit, bundle, metric-order and true-ground
+      arguments retain their explicit source hypotheses.
+  - type: bears_on
+    target: DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:M10_SYNCHRONIZED_SCORE
+    detail: Supplies reviewed magnetic geometry or symmetry for the selected synchronized M10 route; the
+      actual uniform score bound remains open.
+  - type: bears_on
+    target: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10
+    detail: Supplies reviewed magnetic geometry or symmetry for the selected synchronized M10 route; the
+      actual uniform score bound remains open.
+  - type: bears_on
+    target: G19
+    detail: Supplies reviewed magnetic geometry or symmetry for the selected synchronized M10 route; the
+      actual uniform score bound remains open.
+- id: RESULT:W6_ANTIPODAL_GAUGE_NORMAL_COERCIVITY
+  statement: At Q=-I the complete constrained minimum sphere is one simultaneous-conjugation orbit M.
+    Its two-dimensional tangent is exactly the conditional magnetic Hessian kernel. For the inverse original-edge
+    cometric G, Hess V[xi,xi]>=(sqrt(2)-1)/2 dist_G(xi,T M)^2 at every antipodal minimum.
+  status: proven
+  evidence: analytic
+  tier: 3
+  scope: 'Hypotheses: The original square geometry and complete S2 constrained minimum classification.;
+    At Q=-I, M={(exp(pi n/4),exp(pi n/4),exp(pi n/2)):n in S^2}.; G is the inverse of the sum of all original
+    edge squares, with generators i sigma/2; distance is linear tangent-space distance in its fixed-Q
+    restriction. Scope: Finite-square Morse-Bott magnetic minimum. The inequality is at each minimum,
+    not throughout configuration space or for a logarithmic ground density.'
+  detail: A8 explicitly computes both gauge tangent columns. Rank seven leaves no other kernel. Four independent
+    non-tree fields imply G<=4G_product; the fixed-Q product pullback is diag(I,I,2I)<=2I. Projection
+    to the chart-normal complement therefore transfers the spectral bound with factor 1/8.
+  verification: Reviewed analytic argument; separately registered exact controls have T1 scope. No full-statement
+    Lean certification or M10 closure.
+  sources:
+  - id: DOC:RECENT:w6_antipodal_m10_20260910:w6-antipodal-magnetic-geometry.md
+    anchor: '## A4 The antipodal kernel is exactly gauge'
+    locator: A7-A11; complete minimum sphere, tangent kernel and original electric metric
+  links:
+  - type: depends_on
+    target: RESULT:W6_ANTIPODAL_HESSIAN_SPECTRUM
+    detail: Established input at the scope stated in this result.
+  - type: supported_by
+    target: CHK:w6-antipodal-conditional-magnetic-geomet-c2e41f:w6-antipodal-gauge-tangent-equals-the-tw-cf1d3e
+    detail: Exact finite algebraic support only; analytic orbit, bundle, metric-order and true-ground
+      arguments retain their explicit source hypotheses.
+  - type: supported_by
+    target: CHK:w6-antipodal-conditional-magnetic-geomet-c2e41f:w6-antipodal-original-edge-metric-compar-dc321e
+    detail: Exact finite algebraic support only; analytic orbit, bundle, metric-order and true-ground
+      arguments retain their explicit source hypotheses.
+  - type: bears_on
+    target: DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:M10_SYNCHRONIZED_SCORE
+    detail: Supplies reviewed magnetic geometry or symmetry for the selected synchronized M10 route; the
+      actual uniform score bound remains open.
+  - type: bears_on
+    target: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10
+    detail: Supplies reviewed magnetic geometry or symmetry for the selected synchronized M10 route; the
+      actual uniform score bound remains open.
+  - type: bears_on
+    target: G19
+    detail: Supplies reviewed magnetic geometry or symmetry for the selected synchronized M10 route; the
+      actual uniform score bound remains open.
+- id: RESULT:W6_ANTIPODAL_ANGULAR_REDUCTION
+  statement: For Q_delta=-cos(delta)+sin(delta)e3 and y on the old antipodal minimum sphere, the original
+    potential equals 16-2sqrt(2)(3+cos(delta)+sin(delta)n3). The uniformly invertible rank-seven normal
+    Hessian gives a unique small normal critical section with displacement O(delta), uniformly over S^2.
+    Its relaxed magnetic potential is 16-8sqrt(2)-2sqrt(2)delta n3+O(delta^2), uniformly.
+  status: proven
+  evidence: analytic
+  tier: 3
+  scope: 'Hypotheses: Smooth original potential on the common compact fiber y=(U0,U1,U2), with U3=U2^-1
+    Q_delta and delta sufficiently small.; The complete antipodal Morse-Bott minimum and a smooth tubular
+    neighborhood of its rank-seven normal bundle. Scope: Normally relaxed magnetic potential only. No
+    effective quantum Hamiltonian, true-ground conditional density or joint small-g/delta asymptotic is
+    identified.'
+  detail: The exact restriction follows by original face multiplication. Uniform inverse and compactness
+    yield a normal critical section by the parameterized implicit function theorem; uniqueness patches
+    local bundle sections. Since the old normal gradient and displacement are O(delta), relaxation changes
+    V by O(delta^2).
+  verification: Reviewed analytic argument; separately registered exact controls have T1 scope. No full-statement
+    Lean certification or M10 closure.
+  sources:
+  - id: DOC:RECENT:w6_antipodal_m10_20260910:w6-antipodal-magnetic-geometry.md
+    anchor: '## A6 Angular continuation and normal relaxation'
+    locator: A12-A13; exact old-orbit restriction and compact normal-bundle implicit function
+  links:
+  - type: depends_on
+    target: RESULT:W6_ANTIPODAL_GAUGE_NORMAL_COERCIVITY
+    detail: Established input at the scope stated in this result.
+  - type: supported_by
+    target: CHK:w6-antipodal-conditional-magnetic-geomet-c2e41f:w6-antipodal-exact-displaced-orbit-angul-779044
+    detail: Exact finite algebraic support only; analytic orbit, bundle, metric-order and true-ground
+      arguments retain their explicit source hypotheses.
+  - type: bears_on
+    target: DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:M10_SYNCHRONIZED_SCORE
+    detail: Supplies reviewed magnetic geometry or symmetry for the selected synchronized M10 route; the
+      actual uniform score bound remains open.
+  - type: bears_on
+    target: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10
+    detail: Supplies reviewed magnetic geometry or symmetry for the selected synchronized M10 route; the
+      actual uniform score bound remains open.
+  - type: bears_on
+    target: G19
+    detail: Supplies reviewed magnetic geometry or symmetry for the selected synchronized M10 route; the
+      actual uniform score bound remains open.
+- id: RESULT:W6_ANTIPODAL_GAUGE_SCORE_INVARIANCE
+  statement: For the actual positive normalized ground and the specified synchronized conjugation-equivariant
+    Haar transport, sigma_g=(partial_g Psi_g+D Psi_g/g)/Psi_g is constant on simultaneous-conjugation
+    orbits for every g>0. Its differential vanishes along the two antipodal magnetic Hessian-zero directions.
+  status: proven
+  evidence: analytic
+  tier: 3
+  scope: 'Hypotheses: Actual smooth positive normalized simple quantum ground at g>0, with conjugation-invariant
+    Hamiltonian and Haar measure.; The specified synchronized smooth projectable equivariant field Z and
+    full Haar generator D=Z+div_Haar(Z)/2.; At Q=-I the Hessian kernel is exactly the tangent of the minimum
+    gauge orbit. Scope: Exact endpoint symmetry, not a bound on normal derivatives or on the conditional
+    variance across the whole fiber. Away from the antipode full axis changes do not preserve fixed Q.'
+  detail: Positive simplicity fixes the ground under conjugation; its g derivative is invariant. Equivariance
+    of Z and invariant Haar measure make D commute with conjugation. The positive denominator preserves
+    invariance of the score.
+  verification: Reviewed analytic argument; separately registered exact controls have T1 scope. No full-statement
+    Lean certification or M10 closure.
+  sources:
+  - id: DOC:RECENT:w6_antipodal_m10_20260910:w6-antipodal-magnetic-geometry.md
+    anchor: '## A7 Gauge-invariant score and the open successor'
+    locator: A14-A15; actual ground and Haar half-density symmetry
+  links:
+  - type: depends_on
+    target: RESULT:W6_CONDITIONAL_SCORE_CONTINUITY
+    detail: Established input at the scope stated in this result.
+  - type: depends_on
+    target: RESULT:W6_ANTIPODAL_GAUGE_NORMAL_COERCIVITY
+    detail: Established input at the scope stated in this result.
+  - type: bears_on
+    target: DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:M10_SYNCHRONIZED_SCORE
+    detail: Supplies reviewed magnetic geometry or symmetry for the selected synchronized M10 route; the
+      actual uniform score bound remains open.
+  - type: bears_on
+    target: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10
+    detail: Supplies reviewed magnetic geometry or symmetry for the selected synchronized M10 route; the
+      actual uniform score bound remains open.
+  - type: bears_on
+    target: G19
+    detail: Supplies reviewed magnetic geometry or symmetry for the selected synchronized M10 route; the
+      actual uniform score bound remains open.

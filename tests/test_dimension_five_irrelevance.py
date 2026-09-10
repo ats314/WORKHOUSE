@@ -20,7 +20,7 @@ def test_no_dim_5_check():
 def test_dim_6_leading_check():
     passed, detail = _check_dim_6_leading()
     assert passed is True
-    assert "lowest non-marginal dimension is strictly d=6" in detail
+    assert "operator realization is separate" in detail
 
 
 def test_scaling_gain_check():
@@ -40,7 +40,8 @@ def test_cauchy_sum_check():
 def test_so4_restoration_check():
     passed, detail = _check_so4_restoration()
     assert passed is True
-    assert "establishing OS1" in detail
+    assert "requires the separate model estimates" in detail
+    assert "establishing OS1" not in detail
 
 
 def test_dim5_suite_run():

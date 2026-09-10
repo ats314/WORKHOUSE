@@ -30,6 +30,7 @@ SOURCE_BASES = (
     SOURCE_BASE,
     "runs/w6_bg_budget_2026-09-10/sources/",
     "runs/m10_conditional_transport_2026-09-10/sources/",
+    "runs/w6_antipodal_m10_2026-09-10/sources/",
 )
 SCHEMA = "recent-research/v1"
 LINK_TYPES = frozenset(

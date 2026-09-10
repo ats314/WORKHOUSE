@@ -1,0 +1,118 @@
+I derived an exact result for the graph’s antipodal M10 obstruction: **the conditional Wilson potential has seven uniformly positive Hessian directions; its two vanishing directions become exactly gauge rotations at the antipode.** The nearby angular problem also has an explicit leading potential. I wrote no files.
+
+Your [existing derivation](/C:/WORKHOUSE/REPO/docs/derivations/w6-conditional-transport-obstruction.md:73) supplies the constrained minimizer. Write SU(2) as unit quaternions, with
+\[
+\alpha=\theta/4,\qquad A=e^{\alpha n},\qquad B=A^2,\qquad Q=A^4.
+\]
+Then \(U_0=U_1=A,\ U_2=U_3=B\), and
+\[
+V_{\min}(\theta)=16[1-\cos(\theta/4)].
+\]
+
+Here is the additional calculation.
+
+Use the exact fixed-\(Q\) chart
+\[
+U_0=Ae^a,\quad U_1=A^{-1}e^bB,\quad
+U_2=Be^c,\quad U_3=e^{-c}B,
+\]
+where \(a,b,c\in\mathbb R^3\). This preserves \(U_2U_3=Q\) identically, including for noncommuting variations.
+
+Cyclicity of the scalar quaternion part gives the actual four-face potential as
+\[
+V=16-4\operatorname{Sc}\!\left(
+Ae^a+Ae^ce^{-a}+Ae^b+Ae^{-c}e^{-b}
+\right).
+\]
+Set \(C=\cos\alpha,\ S=\sin\alpha\). Expanding directly,
+\[
+\begin{aligned}
+V-V_{\min}
+={}&2C\bigl(|a|^2+|c-a|^2+|b|^2+|c+b|^2\bigr)\\
+&-4S\,n\cdot[c\times(a-b)]+O(|(a,b,c)|^3).
+\end{aligned}
+\]
+The cross-product term retains the noncommutative contribution.
+
+Put
+\[
+p=\frac{a+b}{\sqrt2},\qquad m=\frac{a-b}{\sqrt2},
+\qquad Jm=n\times m.
+\]
+The quadratic term becomes
+\[
+4C(|p|^2+|m|^2+|c|^2)
+-4\sqrt2\,c\cdot(CI-SJ)m.
+\]
+The map \(CI-SJ\) has singular value \(C\) parallel to \(n\), and singular value \(1\) in both perpendicular directions. Therefore the **complete conditional Hessian spectrum**, in the norm \(|a|^2+|b|^2+|c|^2\), is
+
+| Eigenvalue | Multiplicity |
+|---|---:|
+| \(8C\) | 3 |
+| \((8-4\sqrt2)C\) | 1 |
+| \((8+4\sqrt2)C\) | 1 |
+| \(8C-4\sqrt2\) | 2 |
+| \(8C+4\sqrt2\) | 2 |
+
+Since \(1/\sqrt2\le C\le1\), seven eigenvalues satisfy
+\[
+\boxed{\lambda_{\mathrm{normal}}\ge4(\sqrt2-1)>0}
+\]
+throughout \(0\le\theta\le\pi\). Only the double eigenvalue
+\[
+\lambda_{\mathrm{soft}}(\theta)=8\cos(\theta/4)-4\sqrt2
+\]
+vanishes. Its exact endpoint scaling is
+\[
+\lambda_{\mathrm{soft}}(\pi-\delta)
+=\sqrt2\,\delta-\frac{\sqrt2}{8}\delta^2+O(\delta^3).
+\]
+
+At \(Q=-I\), the minimizing configurations form
+\[
+\mathcal M=\{(e^{\pi n/4},e^{\pi n/4},e^{\pi n/2}):n\in S^2\}.
+\]
+This is one simultaneous-conjugation orbit. Its two tangent directions lie in the Hessian kernel because \(V\) is constant on the orbit. The computed kernel has dimension exactly two, so
+\[
+\boxed{\ker\operatorname{Hess}(V|_{Q=-I})=T\mathcal M.}
+\]
+
+The original electric metric can also be retained. Its four independent non-tree edge fields imply \(G\le4G_{\mathrm{product}}\). On this fixed-\(Q\) chart, \(G_{\mathrm{product}}\le2I\). Consequently, at the antipodal minimum,
+\[
+\operatorname{Hess}V[\xi,\xi]
+\ge\frac{\sqrt2-1}{2}
+\,\operatorname{dist}_{G}(\xi,T\mathcal M)^2.
+\]
+Thus the normal positivity survives comparison with the actual electric metric.
+
+There is a useful continuation beyond the endpoint. Fix
+\[
+Q_\delta=-\cos\delta+\sin\delta\,e_3,\qquad \theta=\pi-\delta,
+\]
+and evaluate the potential on the old antipodal orbit, taking \(U_3=U_2^{-1}Q_\delta\). Direct multiplication gives
+\[
+\boxed{
+V_\delta(n)=16-2\sqrt2\,[3+\cos\delta+\sin\delta\,n_3].
+}
+\]
+Hence
+\[
+V_\delta(n)=16-8\sqrt2-2\sqrt2\,\delta n_3+O(\delta^2).
+\]
+The uniformly invertible seven-dimensional normal Hessian permits solving the normal critical-point equations with a displacement \(O(\delta)\), uniformly over \(S^2\). That displacement changes the potential only at order \(\delta^2\). The resulting effective angular potential is therefore
+\[
+\boxed{
+V_{\mathrm{eff},\delta}(n)
+=16-8\sqrt2-2\sqrt2\,\delta n_3+O(\delta^2).
+}
+\]
+
+This advances the [remaining antipodal analysis](/C:/WORKHOUSE/REPO/docs/derivations/w6-conditional-transport-obstruction.md:317): its magnetic geometry reduces to seven uniformly controlled normal directions and a compact angular transition with a known coefficient. Moreover, the actual ground and synchronized dilation are conjugation invariant/equivariant, so the actual score
+\[
+\sigma_g=\frac{\partial_g\Psi_g+D\Psi_g/g}{\Psi_g}
+\]
+is constant along every gauge orbit. At the endpoint, the two Hessian-zero directions therefore carry **no score variation along the orbit**.
+
+The remaining step is the true-ground conditional amplitude and score estimate on this geometry. The calculation establishes the magnetic normal bound; it does not identify that Hessian with \(-\log\Psi_g\) or close M10.
+
+I checked the quaternion expansion and characteristic polynomial exactly with SymPy. Sixty independent evaluations of the original potential’s second directional derivatives agreed within \(1.7\times10^{-7}\). No Lean check was run. The saved graph reported stale; the mathematical source files were verified unchanged from the inspected commit.

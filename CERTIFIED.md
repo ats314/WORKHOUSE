@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 400
+## T0 — proof-checked — 431
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -126,14 +126,26 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `betaN_three`
   - lean/Workhouse/Basic.lean:739
   - `make lean`
+- `betaStabilityWindow_pos`
+  - lean/Workhouse/PolymerCluster.lean:221
+  - `make lean`
 - `beta_from_A_and_C`
   - lean/Workhouse/Basic.lean:252
+  - `make lean`
+- `beta_le_window_implies_tiltedKp_le`
+  - lean/Workhouse/PolymerCluster.lean:231
+  - `make lean`
+- `beta_le_window_implies_tree_bound`
+  - lean/Workhouse/PolymerCluster.lean:246
   - `make lean`
 - `beta_shift_from_cShp`
   - lean/Workhouse/Basic.lean:428
   - `make lean`
 - `blind_holdout`
   - lean/Workhouse/Basic.lean:230
+  - `make lean`
+- `bochner_gamma2_lower_bound`
+  - lean/Workhouse/BakryEmeryCoercivity.lean:51
   - `make lean`
 - `bound_time_rescaling`
   - lean/Workhouse/PlateauObstruction.lean:142
@@ -197,6 +209,36 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `closed_extension_of_integration_by_parts`
   - lean/Workhouse/ThermodynamicLimit.lean:92
+  - `make lean`
+- `clusterMassGap_ge_log_kp`
+  - lean/Workhouse/PolymerCluster.lean:299
+  - `make lean`
+- `clusterMassGap_pos`
+  - lean/Workhouse/PolymerCluster.lean:289
+  - `make lean`
+- `clusterMassGap_pos_of_strict_kp`
+  - lean/Workhouse/PolymerCluster.lean:321
+  - `make lean`
+- `cluster_correlation_exponential_decay`
+  - lean/Workhouse/PolymerCluster.lean:329
+  - `make lean`
+- `cluster_free_energy_density_bound_le`
+  - lean/Workhouse/PolymerCluster.lean:258
+  - `make lean`
+- `cluster_free_energy_density_bound_le_window`
+  - lean/Workhouse/PolymerCluster.lean:266
+  - `make lean`
+- `cluster_free_energy_density_bound_nonneg`
+  - lean/Workhouse/PolymerCluster.lean:273
+  - `make lean`
+- `coercivityConstant_lt_one`
+  - lean/Workhouse/BakryEmeryCoercivity.lean:69
+  - `make lean`
+- `coercivityConstant_mono`
+  - lean/Workhouse/BakryEmeryCoercivity.lean:77
+  - `make lean`
+- `coercivityConstant_pos`
+  - lean/Workhouse/BakryEmeryCoercivity.lean:62
   - `make lean`
 - `combes_thomas_geometric_bound`
   - lean/Workhouse/Basic.lean:1248
@@ -429,6 +471,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `fixed_vacuum_row`
   - lean/Workhouse/VacuumChart.lean:50
   - `make lean`
+- `form_coercivity_bound`
+  - lean/Workhouse/BakryEmeryCoercivity.lean:87
+  - `make lean`
 - `full_graph_source_ward`
   - lean/Workhouse/TheoryCurrentBridges.lean:213
   - `make lean`
@@ -633,6 +678,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `localized_kernel_pairing`
   - lean/Workhouse/ResolventLocalization.lean:262
   - `make lean`
+- `log_one_add_div_pos`
+  - lean/Workhouse/PolymerCluster.lean:312
+  - `make lean`
 - `logarithmic_time_is_stationary`
   - lean/Workhouse/PlateauObstruction.lean:47
   - `make lean`
@@ -780,6 +828,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `quadratic_forbidden_interval`
   - lean/Workhouse/SC17Riccati.lean:64
   - `make lean`
+- `quantum_curvature_restoration`
+  - lean/Workhouse/BakryEmeryCoercivity.lean:36
+  - `make lean`
+- `quantum_restoration_ratio_gt_one`
+  - lean/Workhouse/BakryEmeryCoercivity.lean:112
+  - `make lean`
 - `quartic_gaussian_frequency_optimal`
   - lean/Workhouse/Basic.lean:1056
   - `make lean`
@@ -879,6 +933,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `resolventWeight_sym`
   - lean/Workhouse/Basic.lean:104
   - `make lean`
+- `ricInfty_pos_of_quantum_restoration`
+  - lean/Workhouse/BakryEmeryCoercivity.lean:44
+  - `make lean`
 - `riccatiMap_lipschitz_on_ball`
   - lean/Workhouse/SC17Riccati.lean:131
   - `make lean`
@@ -975,6 +1032,15 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `stencil_zero_mode`
   - lean/Workhouse/Basic.lean:234
   - `make lean`
+- `strict_kotecky_preiss_criterion`
+  - lean/Workhouse/PolymerCluster.lean:170
+  - `make lean`
+- `strict_kotecky_preiss_iff`
+  - lean/Workhouse/PolymerCluster.lean:186
+  - `make lean`
+- `strict_kp_criterion_lt_one`
+  - lean/Workhouse/PolymerCluster.lean:162
+  - `make lean`
 - `strip_factor`
   - lean/Workhouse/GlobalWilsonVertical.lean:13
   - `make lean`
@@ -1001,6 +1067,18 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `theta_minimum_value`
   - lean/Workhouse/PlateauObstruction.lean:122
+  - `make lean`
+- `tiltedKpParameter_at_alpha_zero`
+  - lean/Workhouse/PolymerCluster.lean:156
+  - `make lean`
+- `tiltedKpParameter_nonneg`
+  - lean/Workhouse/PolymerCluster.lean:149
+  - `make lean`
+- `tilted_kotecky_preiss_convergent`
+  - lean/Workhouse/PolymerCluster.lean:206
+  - `make lean`
+- `tilted_kotecky_preiss_tree_bound`
+  - lean/Workhouse/PolymerCluster.lean:199
   - `make lean`
 - `total_family_localization_projection_gap`
   - lean/Workhouse/SpectralReconstruction.lean:202
@@ -1041,6 +1119,15 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `uStarSq_isolation`
   - lean/Workhouse/Basic.lean:584
   - `make lean`
+- `uniform_source_radius_bound_le`
+  - lean/Workhouse/PolymerCluster.lean:340
+  - `make lean`
+- `uniform_source_radius_bound_le_window`
+  - lean/Workhouse/PolymerCluster.lean:373
+  - `make lean`
+- `uniform_source_radius_bound_nonneg`
+  - lean/Workhouse/PolymerCluster.lean:367
+  - `make lean`
 - `unitary_ground_state_gap`
   - lean/Workhouse/GroundStateAssembly.lean:669
   - `make lean`
@@ -1073,6 +1160,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `variational_residual_identity`
   - lean/Workhouse/W6Residual.lean:60
+  - `make lean`
+- `volume_uniform_coercivity_hierarchy`
+  - lean/Workhouse/BakryEmeryCoercivity.lean:128
+  - `make lean`
+- `volume_uniform_rho_pos`
+  - lean/Workhouse/BakryEmeryCoercivity.lean:121
   - `make lean`
 - `w4_old_is_alpha_plus_beta`
   - lean/Workhouse/Basic.lean:436
@@ -1222,7 +1315,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 514
+## T1 — re-derived exactly — 526
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1303,6 +1396,29 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the two band spans ARE the two incidence spectra`
   - src/workhouse/invariants/su3.py:143 · MASTER paper §4.5 / ENGINE_FLUX_su3_domino_d3.py key corrected_Ceven_bandwidth_16|t|
   - `workhouse verify --only 'the two band spans ARE the two incidence spectra'`
+**W6 antipodal conditional magnetic geometry**
+
+- `W6 antipodal: complete nine-dimensional Hessian spectrum`
+  - src/workhouse/invariants/w6_antipodal.py:114 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A3
+  - `workhouse verify --only 'W6 antipodal: complete nine-dimensional Hessian spectrum'`
+- `W6 antipodal: exact displaced-orbit angular potential`
+  - src/workhouse/invariants/w6_antipodal.py:213 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A6
+  - `workhouse verify --only 'W6 antipodal: exact displaced-orbit angular potential'`
+- `W6 antipodal: exact noncommuting fixed-Q chart`
+  - src/workhouse/invariants/w6_antipodal.py:47 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A1
+  - `workhouse verify --only 'W6 antipodal: exact noncommuting fixed-Q chart'`
+- `W6 antipodal: gauge tangent equals the two-dimensional kernel`
+  - src/workhouse/invariants/w6_antipodal.py:169 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A4
+  - `workhouse verify --only 'W6 antipodal: gauge tangent equals the two-dimensional kernel'`
+- `W6 antipodal: original four-face quadratic expansion`
+  - src/workhouse/invariants/w6_antipodal.py:100 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A2
+  - `workhouse verify --only 'W6 antipodal: original four-face quadratic expansion'`
+- `W6 antipodal: original-edge metric comparison constants`
+  - src/workhouse/invariants/w6_antipodal.py:194 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A5
+  - `workhouse verify --only 'W6 antipodal: original-edge metric comparison constants'`
+- `W6 antipodal: seven uniform normal eigenvalues and soft scaling`
+  - src/workhouse/invariants/w6_antipodal.py:148 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A3
+  - `workhouse verify --only 'W6 antipodal: seven uniform normal eigenvalues and soft scaling'`
 **Wilson PBH proposal: exact orbit curvature and flow tests**
 
 - `FINDING: Wilson gradient flow expands a regular orbit distance by 8/7`
@@ -1721,6 +1837,23 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the printed towers are canonical-u: 4*Delta(3u/2) reproduces them verbatim`
   - src/workhouse/invariants/coupling.py:21 · UNIFIED §2.1 / C4
   - `workhouse verify --only 'the printed towers are canonical-u: 4*Delta(3u/2) reproduces them verbatim'`
+**dimension counts and geometric scaling controls (G19)**
+
+- `canonical dimension-six scaling at L=3 equals 1/9 and is below 1/2`
+  - src/workhouse/invariants/dimension_five_irrelevance.py:85 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
+  - `workhouse verify --only 'canonical dimension-six scaling at L=3 equals 1/9 and is below 1/2'`
+- `dimension-five monomial partitions have odd index and derivative counts`
+  - src/workhouse/invariants/dimension_five_irrelevance.py:27 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
+  - `workhouse verify --only 'dimension-five monomial partitions have odd index and derivative counts'`
+- `parity-even monomial partitions omit dimension five and allow dimension six`
+  - src/workhouse/invariants/dimension_five_irrelevance.py:53 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
+  - `workhouse verify --only 'parity-even monomial partitions omit dimension five and allow dimension six'`
+- `the geometric ratio 1/9 has exact sum 9/8 and the stated finite tail`
+  - src/workhouse/invariants/dimension_five_irrelevance.py:102 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
+  - `workhouse verify --only 'the geometric ratio 1/9 has exact sum 9/8 and the stated finite tail'`
+- `the prescribed geometric sequence (1/9)^k tends to zero`
+  - src/workhouse/invariants/dimension_five_irrelevance.py:127 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
+  - `workhouse verify --only 'the prescribed geometric sequence (1/9)^k tends to zero'`
 **finite-rank truncation bridge (published SU(3) truncations)**
 
 - `FINDING: the T1 link cutoff reverses the sign of t_3, and 14/153 is what it omits`
