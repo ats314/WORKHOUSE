@@ -38,7 +38,7 @@ from ._core import _suite
 
 feshbach = _suite("the Feshbach resolvent comparison")
 
-_SEC = "G17; G22; G23"
+_SEC = "FESHBACH_RESOLVENT; G17; G22; G23"
 
 # Deterministic data. No RNG: a check whose witness changes between runs cannot
 # be argued with, and the identity is exact, so one fixed family settles it.
@@ -104,7 +104,8 @@ def _():
         u0, ug = a0.inv() * w, ag.inv() * w
         # every entry is rational, so the sandwich is decided exactly -- no tolerance
         mid = sp.nsimplify((u0.T * w)[0] - (ug.T * w)[0])
-        lo, hi = sorted([sp.Rational(g * (u0.T * v * u0)[0]), sp.Rational(g * (ug.T * v * ug)[0])])
+        lo = sp.Rational(g * (ug.T * v * ug)[0])
+        hi = sp.Rational(g * (u0.T * v * u0)[0])
         held.append(bool(lo <= mid <= hi))
     return all(held), (
         f"the sandwich g V[u_g,u_g] <= <(R_0 - R_g)w,w> <= g V[u_0,u_0] holds in all "
@@ -115,7 +116,9 @@ def _():
 
 
 @feshbach.check(
-    "a relative form bound gives the explicit constant C = kappa/(1-|g|kappa)^2 <R_0 w,w>", _SEC
+    "a relative form bound gives the explicit constant C = kappa/(1-|g|kappa)^2 <R_0 w,w>",
+    _SEC,
+    tier=2,
 )
 def _():
     # If |V[u,u]| <= kappa A_0[u,u] with |g| kappa < 1, then A_g >= (1-|g|kappa) A_0,
@@ -151,16 +154,16 @@ def _():
 def _():
     # What this module does NOT do, recorded as a witness instead of a caveat.
     # Scaling V alone drives kappa up at fixed g, and the constant degrades like
-    # (1 - |g| kappa)^-2 before going through infinity. Past |g| kappa = 1 the
-    # form A_g is no longer positive on the complement and the whole variational
-    # route is void -- not loose, void.
+    # (1 - |g| kappa)^-2. At |g| kappa >= 1 this sufficient criterion no
+    # longer certifies positivity; it does not show that A_g loses positivity.
+    # The finite family below approaches the threshold from its positive side.
     #
     # This is the shape of the large-field problem, which is why the identity
     # above is a reduction and not a solution: for a lattice gauge interaction
     # the relative form bound with a volume-uniform kappa is exactly what fails
     # on the rough set, and G22 is the registered statement of that failure.
     # Anyone reading the first three checks as an infinite-volume estimate should
-    # read this one: the checks are exact linear algebra, and the physics is in
+    # read this one: only the first two checks are exact, and the physics is in
     # whether kappa exists uniformly, which nothing here establishes.
     g = sp.Rational(1, 100)
     row = []
@@ -176,7 +179,9 @@ def _():
         + ", ".join(f"scale {s}: kappa={k:.2f}, margin={m:.4f}" for s, k, m in row)
         + f". The constant grows as margin^-2 ({row[0][1] / row[0][2] ** 2:.3f} to "
         f"{row[-1][1] / row[-1][2] ** 2:.1f} across this family) and the bound is void once "
-        "|g| kappa >= 1, where A_g loses positivity. So the identity moves the difficulty from "
+        "|g| kappa >= 1, where this bound no longer certifies positivity. Actual loss of "
+        "positivity does not follow from failure of this sufficient criterion. "
+        "So the identity moves the difficulty from "
         "an absolute bound on the interacting resolvent to a volume-uniform relative form bound, "
         "and does not supply the latter. G22 is where that debt is registered"
     )

@@ -41,6 +41,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 
 import yaml
 
@@ -79,6 +80,31 @@ REDISTRIBUTABLE = frozenset(
 VERBATIM_ONLY = frozenset({"cc-by-nc-nd", "cc-by-nd"})
 
 LEDGER_ID = re.compile(r"^[CGRU]\d+$")
+
+
+def valid_source_url(value: Any) -> bool:
+    """A retrievable HTTPS citation, including institutional works without a DOI.
+
+    This validates an address, not the source's authorship or mathematical truth;
+    both still require curation. Credentials and whitespace cannot be identifiers.
+    """
+    if not isinstance(value, str) or not value or any(c.isspace() for c in value):
+        return False
+    try:
+        parsed = urlsplit(value)
+        return bool(
+            parsed.scheme == "https"
+            and parsed.hostname
+            and parsed.username is None
+            and parsed.password is None
+        )
+    except ValueError:
+        return False
+
+
+def citation_identifier(record: dict[str, Any]) -> str:
+    """Prefer the persistent scholarly identifier; use the curated source URL last."""
+    return record.get("doi") or record.get("arxiv") or record.get("source_url") or ""
 
 
 @dataclass
@@ -196,8 +222,14 @@ def validate(lit: Literature | None = None) -> list[str]:
             problems.append(f"{pid}: duplicate id")
         seen.add(pid)
 
-        if not paper.get("doi") and not paper.get("arxiv"):
-            problems.append(f"{pid}: no DOI and no arXiv id — the citation is unpinnable")
+        if paper.get("source_url") and not valid_source_url(paper["source_url"]):
+            problems.append(f"{pid}: source_url must be an HTTPS URL without credentials or spaces")
+        if (
+            not paper.get("doi")
+            and not paper.get("arxiv")
+            and not valid_source_url(paper.get("source_url"))
+        ):
+            problems.append(f"{pid}: no DOI, arXiv id or HTTPS source_url — citation is unpinnable")
 
         problems += _check_inspire_fields(paper)
 

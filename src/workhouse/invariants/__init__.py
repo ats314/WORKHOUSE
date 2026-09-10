@@ -75,6 +75,21 @@ _MODULES = (
     "endpoint_window",
     "hodge_feshbach",
     "feshbach_resolvent",
+    "ym_reconstruction",
+    "ym_flat_directions",
+    "ym_ground_state",
+    "wilson_marked",
+    "wilson_shell",
+    "wilson_spatial",
+    "wilson_selected",
+    "ym_pbh",
+    "wilson_weighted",
+    "wilson_vacuum",
+    "wilson_background",
+    "wilson_sc17",
+    "yangmills_gpu_audit",
+    "balaban_repair",
+    "anisotropy_variance",
 )
 
 for _name in _MODULES:

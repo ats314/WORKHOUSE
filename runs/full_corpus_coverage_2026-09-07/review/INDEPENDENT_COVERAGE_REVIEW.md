@@ -1,0 +1,32 @@
+# Independent full-corpus coverage gate review
+
+2026-09-07. The initial pass was read-only. After three concrete v1 validation holes were reported, the parent authorized a repair only under `coverage_gate_v2/`. The original staged gate, tests, manifest and eight compressed inputs were not edited. `INDEPENDENT_COVERAGE_PROBES.json` records the original source-hash snapshot and accepted v1 mutation probes; `coverage_gate_v2/HANDOFF.json` records the final repaired files and preservation checks.
+
+## Findings and disposition
+
+| Finding | Evidence | Disposition |
+|---|---|---|
+| Eligible content and copy-path coverage is independently reconstructed. | The baseline covers 12,108 content hashes from the frozen loose-file and recursive-member inputs. Removing a digest or an occurrence path fails. Member-only object/classification coverage is checked against the complete member hash union. | Accepted, with the explicit census/exclusion boundary below. |
+| v1 checked only the extraction status, not its source locator, hash or method. | Replacing a text locator with `../wrong-source.txt` and its text SHA with zeroes still passed. | Fixed in v2: reconstruct the complete normalized extraction dictionary from the pinned raw extraction record and pinned source metadata path, then require exact equality. Negative tests independently alter locator, hash and method. |
+| v1 did not check structured archive chains. | Dropping `provenance.archive_members` passed while flattened occurrence paths stayed unchanged. That could discard container hashes, nested ancestry, member index and unsafe-name flags. | Fixed in v2: reconstruct the structured occurrence multiset from pinned members and compare all retained fields, including multiplicity. Dropped-chain and changed-container-hash tests fail. Unsafe archive names remain evidence strings, never extraction instructions. |
+| v1 did not check prior-review references. | Removing the references passed. Candidate metadata could also assert an unsupported review reference. | Fixed in v2: a ninth independently hashed gzip input preserves the original `archive_review_join.jsonl`; references and prior inventory archive IDs are reconstructed from it. Dropped and fabricated references fail. No new verdict is created. |
+| Dict construction could silently collapse duplicated input keys. | File/classification and recovered-object tables were indexed without checking key multiplicity. | v2 rejects duplicate loose paths, classification paths, member object/classification digests, extraction digests and contract roles. A duplicate-census negative test passes. |
+| A new archive requeued previously reviewed exact content. | The original generator marked all 12,108 pending. `prior_review_refs` did not affect `Notes.unreviewed`. There are 229 previously reviewed exact hashes and 1,639 exact current `pinned_as` targets, with 21 overlapping. | The separate graph agent repaired native notes reuse by exact digest, retaining original verdicts and scopes. Independently checked current state: 0 own reviews, 229 reused scoped reviews, 11,879 pending. The other 1,618 merely pinned files correctly remain pending. The original staged count is a historical pre-fix snapshot, not the current queue count. |
+
+## Protected configuration, quarantine and outer scope
+
+The fixed classifications identify one protected loose configuration path and one protected member-only digest. Neither digest appears in the eligible manifest. The archive classification step explicitly uses original member names, so materialization under a hash does not lose the configuration exclusion. The gate does not read, publish or test configuration contents. This is a check of the declared protected classes, not a claim that filename rules can identify every possible secret.
+
+The live baseline checked all 36 quarantine records: original and retained hashes match the frozen pre-move census; retained and quarantine files currently have those exact bytes; destination paths are bounded under the designated quarantine root, with resolved-path containment. The two excluded compiler auxiliaries stay in capture/relocation metadata without entering the research notes queue. The verifier is a preservation/locator check. It neither performs a move nor proves that original paths were removed, and it should not be described as a deletion or cleanup executor.
+
+The gate establishes exact coverage **relative to its pinned census, classifications and recursive member inventory**. It does not re-enumerate the entire live machine, prove the eligibility policy mathematically appropriate, or certify extraction fidelity. The surrounding run already preserves `capture/excluded_subtrees.jsonl`, capture errors/summary/scripts, and archive container/per-archive coverage records. Those records retain the 187 excluded infrastructure/audit subtrees and the capture boundary; they must remain pinned in the final run. No further-drive search was requested or performed.
+
+The complete extraction dictionary preserves method limitations: image metadata is not OCR; array headers are not numerical analysis; stored notebook outputs are not reruns; PDF/OOXML text is not visual equation verification. Unsupported files remain captured and pending. v2 compares extraction metadata to its frozen producer output; it does not rerun every extractor or prove that the extracted text is faithful.
+
+## Verification and handoff
+
+The v2 gate passes the original full manifest and all live quarantine checks. **17 focused tests pass**, including the previous subset/path/promotion/optimized-Python controls and the added metadata/provenance negatives. Ruff passes. All eight original gzip input bytes and the full 12,108-row manifest remain identical to v1. The ninth gzip contains historical review metadata only.
+
+For canonical integration, copy the v2 gate and tests to their planned script/test destinations, replace the run contract with the v2 contract, and add `inputs/prior_reviews.jsonl.gz`. Preserve the v1 gate/test/contract snapshot under run history. The new contract references the same original eight inputs with unchanged hashes. `HANDOFF.json` gives exact source and destination paths and hashes.
+
+There is no remaining identified blocker in this bounded coverage-gate review. Final repository-wide validation, run manifest sealing and publication remain parent-owned. No mathematical result is promoted by this gate, queue reuse, content extraction or exact-byte identity.

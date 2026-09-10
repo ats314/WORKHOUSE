@@ -91,6 +91,14 @@ def test_paper_level_nodes_exist_beside_the_edge_records():
     assert "stub" in stub.status
 
 
+def test_each_paper_reaches_every_one_of_its_bearing_claims():
+    """A paper's citation neighborhood must connect to the claims it bears on."""
+    from workhouse import literature
+
+    for paper, edge in literature.load().edges():
+        assert (f"LIT:{paper['id']}", f"LIT:{paper['id']}:{edge['target']}", "contains") in TRIPLES
+
+
 def test_checks_cite_the_ids_buried_in_their_free_text():
     """The load-bearing derived join: section strings, check names, suite names."""
     tier_collapse_cites = {

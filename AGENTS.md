@@ -1,3 +1,11 @@
+## Workspace identity
+
+On the maintainer's workstation the active checkout is `C:\WORKHOUSE\REPO`.
+The outer directory is the research archive; ALL THEORY is one source collection.
+Read [workspace coordination](docs/workspace_coordination.md) before selecting
+paths or importing old work. Preserve the nested earlier checkout and named
+research worktrees; use them as explicit sources, not competing defaults.
+
 # Research mission
 
 Three files, no overlap. `README.md` is the operating manual — reading order,

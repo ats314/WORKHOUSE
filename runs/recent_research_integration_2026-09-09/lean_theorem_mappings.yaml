@@ -1,0 +1,140 @@
+# New proof modules integrated on 2026-09-09. Root owns authoritative ledger.
+# All names are declarations in namespace Workhouse. Source identification,
+# spectral decomposition, analytic domain closure and continuum transport are
+# not promoted by these polynomial and coefficient theorems.
+theorems:
+  - name: anisotropy_variance_identity
+    statement: >
+      For real x+y+z=1, x^3+y^3+z^3-(x^2+y^2+z^2)^2 equals
+      sum(i<j) xi*xj*(xi-xj)^2. No positivity assumption is needed.
+    formalizes: ['RESULT:RECENT_ANISOTROPY_VARIANCE_CORE']
+    promotes: ['anisotropy variance is exactly the simplex pair sum and cubic shape invariant']
+  - name: anisotropy_variance_nonnegative
+    statement: >
+      The pair-sum anisotropy variance is nonnegative for nonnegative
+      x,y,z, without requiring normalization.
+    formalizes: ['RESULT:RECENT_ANISOTROPY_VARIANCE_CORE']
+    promotes: ['anisotropy variance is exactly the simplex pair sum and cubic shape invariant']
+  - name: anisotropy_shape_identity
+    statement: >
+      On x+y+z=1, the pair-sum variance equals e2+3*e3-4*e2^2,
+      where e2=xy+xz+yz and e3=xyz.
+    formalizes: ['RESULT:RECENT_ANISOTROPY_VARIANCE_CORE', 'RESULT:RECENT_ANISOTROPY_INDUCED_SIXTH']
+    promotes: ['anisotropy variance is exactly the simplex pair sum and cubic shape invariant']
+  - name: anisotropy_centered_moment_identity
+    statement: >
+      On x+y+z=1, the weighted centered second moment with weights
+      x,y,z and mean x^2+y^2+z^2 equals the pair-sum anisotropy variance.
+      The full Laurent-kernel identification is a separate exact check.
+    formalizes: ['RESULT:RECENT_ANISOTROPY_VARIANCE_CORE']
+    promotes: []
+  - name: anisotropy_variance_upper_bound
+    statement: >
+      The anisotropy variance is at most 1/4 for all nonnegative
+      real x,y,z with x+y+z=1.
+    formalizes: ['RESULT:RECENT_ANISOTROPY_VARIANCE_CORE']
+    promotes: []
+  - name: anisotropy_variance_zero_iff
+    statement: >
+      For nonnegative x,y,z, anisotropy variance vanishes exactly when
+      every pair has at least one zero coordinate or equal coordinates.
+      This proves that all positive coordinates on the support are equal.
+    formalizes: ['RESULT:RECENT_ANISOTROPY_NODAL_SET']
+    promotes: []
+  - name: anisotropy_axis_node
+    statement: 'The pair-sum anisotropy variance at (x,0,0) is zero for every real x.'
+    formalizes: ['RESULT:RECENT_ANISOTROPY_NODAL_SET']
+    promotes: []
+  - name: anisotropy_face_node
+    statement: 'The pair-sum anisotropy variance at (x,x,0) is zero for every real x.'
+    formalizes: ['RESULT:RECENT_ANISOTROPY_NODAL_SET']
+    promotes: []
+  - name: anisotropy_body_node
+    statement: 'The pair-sum anisotropy variance at (x,x,x) is zero for every real x.'
+    formalizes: ['RESULT:RECENT_ANISOTROPY_NODAL_SET']
+    promotes: []
+  - name: anisotropy_generic_holdout
+    statement: 'The anisotropy variance at (1/6,1/3,1/2) equals 5/324.'
+    formalizes: ['RESULT:RECENT_ANISOTROPY_VARIANCE_CORE']
+    promotes: ['anisotropy variance is exactly the simplex pair sum and cubic shape invariant']
+    value: '5/324'
+  - name: anisotropy_induced_coefficient
+    statement: >
+      With the existing cShpAssembled and hopping definitions,
+      -4*cShpAssembled^2/hopping(3) equals
+      -169924002729806205028788409/619343593697933825385600000.
+      The operator origin of this induced mixing contribution and the full
+      sixth-order Hamiltonian are not formalized by this rational identity.
+    formalizes: ['RESULT:RECENT_ANISOTROPY_INDUCED_SIXTH']
+    promotes: []
+    value: '-169924002729806205028788409/619343593697933825385600000'
+  - name: wilson_square_sharp_constant
+    statement: >
+      K=(4-sqrt(2))^3/1372 equals gamma^2/[4*(4+sqrt(2))],
+      where gamma=(4*sqrt(2)-2)/7. This is the exact coefficient
+      identity retaining both the retained and fast reference energies.
+    formalizes: ['RESULT:W6_SQUARE_SHARP_INVERSE_ENERGY']
+    promotes: []
+  - name: wilson_square_sharp_constant_pos
+    statement: 'The exact first-force coefficient (4-sqrt(2))^3/1372 is strictly positive.'
+    formalizes: ['RESULT:W6_SQUARE_SHARP_INVERSE_ENERGY']
+    promotes: []
+  - name: wilson_square_first_source_saturates
+    statement: >
+      The product of the sharp constant K and first-source energy
+      24*sqrt(2) equals (528*sqrt(2)-600)/343. Source and inverse
+      energy identification remain in the campaign derivation.
+    formalizes: ['RESULT:W6_SQUARE_SHARP_INVERSE_ENERGY']
+    promotes: []
+  - name: wilson_square_radial_ratio_difference
+    statement: >
+      For every real n>=1, defining K_n=gamma^2/[4*(4+sqrt(2)*(2n-1))],
+      K-K_n equals gamma^2*sqrt(2)*(n-1)/
+      [2*(4+sqrt(2))*(4+sqrt(2)*(2n-1))].
+    formalizes: ['RESULT:W6_SQUARE_SHARP_INVERSE_ENERGY']
+    promotes: []
+  - name: wilson_square_radial_ratio_bound
+    statement: >
+      For every real n>=1, the radial ratio K_n is nonnegative and
+      at most K=(4-sqrt(2))^3/1372, without a finite-level cutoff.
+    formalizes: ['RESULT:W6_SQUARE_SHARP_INVERSE_ENERGY']
+    promotes: []
+  - name: wilson_square_radial_ratio_strict
+    statement: 'For every real n>1, the radial ratio K_n is strictly smaller than K.'
+    formalizes: ['RESULT:W6_SQUARE_SHARP_INVERSE_ENERGY']
+    promotes: []
+  - name: wilson_square_finite_radial_synthesis_bound
+    statement: >
+      For any finite index set, real levels at least one and nonnegative
+      weights, sum(K_level*weight) is at most K*sum(weight).
+      This proves finite spectral-weight assembly; Gaussian decomposition
+      and closure in the infinite form domain remain analytic steps.
+    formalizes: ['RESULT:W6_SQUARE_SHARP_INVERSE_ENERGY']
+    promotes: []
+  - name: wilson_grid_block_energy_identity
+    statement: >
+      The four-edge cycle energy (a-b)^2+(a-c)^2+(b-d)^2+(c-d)^2
+      equals twice the squared norm off the constant direction plus
+      (a-b-c+d)^2/2, for arbitrary real a,b,c,d.
+    formalizes: ['RESULT:W6_SHARED_EDGE_GAUSSIAN_FLOOR']
+    promotes: []
+  - name: wilson_grid_block_energy_lower_bound
+    statement: >
+      The four-edge cycle energy is at least twice
+      a^2+b^2+c^2+d^2-(a+b+c+d)^2/4. This is the local quadratic
+      certificate; full shared-edge assembly is a separate argument.
+    formalizes: ['RESULT:W6_SHARED_EDGE_GAUSSIAN_FLOOR']
+    promotes: []
+  - name: wilson_grid_block_energy_upper_bound
+    statement: >
+      The four-edge cycle energy is at most
+      4*(a^2+b^2+c^2+d^2) for arbitrary real block coordinates.
+      This local bound does not assert the full-grid 8I operator bound.
+    formalizes: ['RESULT:W6_SHARED_EDGE_GAUSSIAN_FLOOR']
+    promotes: []
+  - name: wilson_grid_block_energy_zero_iff
+    statement: >
+      The four-edge cycle energy is zero exactly when all four
+      real block coordinates are equal, identifying its retained kernel.
+    formalizes: ['RESULT:W6_SHARED_EDGE_GAUSSIAN_FLOOR']
+    promotes: []

@@ -1,0 +1,71 @@
+{
+  "task": "Jaffe-Witten Yang-Mills source collection and native theory-graph integration",
+  "validated_on": "2026-09-08",
+  "repository": "C:/WORKHOUSE/ALL THEORY/WORKHOUSE",
+  "coverage": {
+    "seed_numbered_references": 50,
+    "represented_numbered_references": 50,
+    "distinct_works_in_seed_bibliography": 61,
+    "additional_related_works": 3,
+    "complete_source_pdfs_acquired_excluding_seed": 26,
+    "seed_pdf": 1,
+    "publisher_previews": 1,
+    "metadata_only_works": 37,
+    "source_note": "Three acquired versions in the first bibliography group are explicitly identified earlier or related versions; the manifests distinguish them from journal copies. Copyrighted reading copies remain in the ignored inbox; the CC BY Mondal PDF is declared in literature/fulltext."
+  },
+  "graph": {
+    "catalogue_records": 3885,
+    "symbol_records": 28,
+    "connected_atlas_nodes": 3886,
+    "edges": 7335,
+    "added_catalogue_nodes": 194,
+    "added_edges": 449,
+    "new_study_nodes": 37,
+    "edges_incident_to_study_nodes": 150,
+    "generator_exit_code": 0,
+    "dangling_endpoint_validation": "passed",
+    "study_verification_tier": "T3",
+    "study_evidence_level": "prose-only"
+  },
+  "validation": {
+    "existing_python_invariants": {"passing": 361, "failing": 0, "method": "Live checks during catalogue regeneration; outcomes inspected in regenerated claims.jsonl."},
+    "focused_source_tests": {"passed": 68, "failed": 0},
+    "combined_graph_source_view_tests": {
+      "total_distinct_tests": 136,
+      "initial_passed": 134,
+      "initial_failed": 2,
+      "resolved_failures": [
+        {
+          "test": "tests/test_atlas.py::test_self_contained_except_google_fonts",
+          "cause": "The old assertion scanned source citation URLs embedded as data and classified them as rendering dependencies.",
+          "resolution": "The test now checks the page template, which contains all rendering code and resource references. Citation URLs remain in the graph data.",
+          "rerun": "All 10 atlas tests passed."
+        },
+        {
+          "test": "tests/test_frontier.py::test_the_hook_emits_valid_session_start_json",
+          "cause": "Windows selected the WindowsApps bash launcher rather than Git Bash.",
+          "resolution": "Prepend C:/Program Files/Git/bin to PATH for the test invocation; no hook source change.",
+          "rerun": "The hook test passed with Git Bash."
+        }
+      ],
+      "final_unresolved_failures": 0,
+      "execution_note": "The initial combined invocation exited 1. Its two failing cases were resolved and rerun separately; this report does not represent the initial invocation as green.",
+      "files": ["test_graph.py", "test_atlas.py", "test_frontier.py", "test_certified.py", "test_documents.py", "test_provenance.py", "test_literature.py", "test_acquisition.py", "test_study_graph.py", "test_yangmills_sources.py"]
+    },
+    "ruff_check": "passed repository-wide",
+    "ruff_format_check": "209 Python files passed",
+    "git_diff_check": "passed",
+    "lean_build": "Not rerun; no Lean source changed.",
+    "entire_pytest_suite": "Not run; the listed graph, literature, provenance, view, and source-integrity tests were selected for this change."
+  },
+  "generated_views": ["index/claims.jsonl", "index/symbols.jsonl", "index/graph.jsonl", "FRONTIER.md", "CERTIFIED.md", "atlas.html"],
+  "reproduction": [
+    "python scripts/build_yangmills_sources.py",
+    "workhouse index -w",
+    "workhouse frontier --write",
+    "workhouse certified --write",
+    "workhouse atlas",
+    "pytest tests/test_graph.py tests/test_atlas.py tests/test_frontier.py tests/test_certified.py tests/test_documents.py tests/test_provenance.py tests/test_literature.py tests/test_acquisition.py tests/test_study_graph.py tests/test_yangmills_sources.py"
+  ],
+  "windows_runtime_note": "Validation used the locked dependencies in .venv, UTF-8 output, a writable pytest base directory, and Git Bash for the shell-hook rerun."
+}

@@ -304,7 +304,7 @@ footer .mono { font-size: 11px; }
   <div id="stage">
     <canvas id="cv"></canvas>
     <div id="tip"></div>
-    <div class="hint">drag to pan · wheel to zoom · click to inspect · notes are opt-in</div>
+    <div class="hint">drag to pan · wheel to zoom · click to inspect · archived notes are opt-in</div>
   </div>
   <aside id="panel" aria-live="polite"></aside>
 </main>
@@ -317,7 +317,8 @@ footer .mono { font-size: 11px; }
 "use strict";
 const DATA = /*__DATA__*/;
 
-const GROUP_OF = k => (
+const GROUP_OF = (k, id = "") => (
+  id.startsWith("STUDY:") ? "theory" :
   k === "check" ? "check" :
   k === "constant" ? "constant" :
   k === "theorem" ? "theorem" :
@@ -338,7 +339,7 @@ const GROUPS = [
   ["note", "notes & archives", "--k-note", false],
 ];
 
-const nodes = DATA.nodes.map((n, i) => ({ ...n, i, g: GROUP_OF(n.kind), x: 0, y: 0, vx: 0, vy: 0, deg: 0 }));
+const nodes = DATA.nodes.map((n, i) => ({ ...n, i, g: GROUP_OF(n.kind, n.id), x: 0, y: 0, vx: 0, vy: 0, deg: 0 }));
 const byId = new Map(nodes.map(n => [n.id, n]));
 const edges = DATA.edges.filter(e => byId.has(e.s) && byId.has(e.d));
 for (const e of edges) { byId.get(e.s).deg++; byId.get(e.d).deg++; }
@@ -571,7 +572,7 @@ function rowHtml(o, meta = "") {
     ? `<span class="pf ${o.status === "passing" ? "pass" : "fail"}">${o.status === "passing" ? "PASS" : "FAIL"}</span>`
     : "";
   return `<div class="erow" tabindex="0" data-id="${esc(o.id)}">
-    <span class="dot" style="background:${C[o.g || GROUP_OF(o.kind)]}"></span>
+    <span class="dot" style="background:${C[o.g || GROUP_OF(o.kind, o.id)]}"></span>
     <span class="eid mono">${esc(o.id)}</span>${pf}
     <span class="est">${esc(o.statement || "")}</span>
     ${meta ? `<span class="edge-meta">${esc(meta)}</span>` : ""}</div>`;
@@ -617,7 +618,7 @@ function renderPanel() {
         <span class="mono">${esc(s.value)}</span></div>`;
       if (s.kind) h += `<div class="edge-meta">recorded as ${esc(s.kind)}</div>`;
       for (const matchRef of s.matches || []) {
-        const match = byId.get(matchRef.id) || { ...matchRef, g: GROUP_OF(matchRef.kind) };
+        const match = byId.get(matchRef.id) || { ...matchRef, g: GROUP_OF(matchRef.kind, matchRef.id) };
         const tier = match.tier === null || match.tier === undefined ? "" : (TIER[match.tier] || "T" + match.tier);
         const meta = [tier, match.status && `status · ${match.status}`, match.evidence && `evidence · ${match.evidence}`].filter(Boolean).join(" · ");
         h += rowHtml(match, meta);

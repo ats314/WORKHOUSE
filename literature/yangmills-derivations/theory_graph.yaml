@@ -1,0 +1,463 @@
+schema: literature-study/v1
+title: Source-derived mathematical interfaces with exact checks and Lean bridges
+nodes:
+- id: STUDY:YM:derive-volume-residual-budget
+  statement: For n independent optimized quartic trials the global residual budget is hbar*Omega*(1-n/4), while tensorizing
+    the one-site certificates preserves 3*hbar*Omega/4.
+  status: proven
+  detail: GST-9 checks residual additivity and the exact n-copy budget. The comparison generator gap remains the minimum
+    one-site gap, whereas meanR-infR adds over sites. At four copies the global certificate reaches zero even though
+    the product Hamiltonian remains gapped. Analytic tensor-product spectral theory, separately stated in the derivation,
+    supplies the volume-uniform one-site comparison.
+  sources:
+  - paper: MMM_2019_CURVATURE
+    locator: PDF pp. 12-13, anisotropic oscillator (II.24)-(II.27)
+  - paper: JW_2006
+    locator: p. 12, section 6.5, volume-uniform gap requirement
+  links:
+  - type: supported_by
+    target: CITE:YM_GROUND_STATE
+    detail: GST-9 derives and checks the product-model calibration.
+  - type: depends_on
+    target: STUDY:YM:derive-quartic-certificate
+    detail: The one-site residual floor and mean fix the additive error.
+  - type: bears_on
+    target: G17
+    detail: A local or tensorized error bound must be controlled before adding interactions over growing volumes.
+  - type: bears_on
+    target: G23
+    detail: Prevents a finite residual certificate from being mistaken for uniform global curvature control.
+  - type: supported_by
+    target: CHK:yang-mills-ground-state-transform-and-re-221197:finding-global-residual-budget-loses-the-247c63
+    detail: 'Exact checked component: FINDING: global residual budget loses the tensor product gap at four quartic copies.
+      The full analytic scope is stated in the derivation and check detail.'
+- id: STUDY:YM:derive-ground-state-residual
+  statement: A positive trial state gives an exact weighted ground-state transform with residual R=(H psi)/psi; the residual
+    is constant only for an exact eigenstate.
+  status: proven
+  detail: YM_GROUND_STATE GST-1 and GST-4 reconstruct the differential and finite matrix identities. The all-finite-index-set
+    Lean theorem proves the matrix identity with an explicit row equation. A generic symmetric three-by-three matrix
+    and arbitrary smooth two-dimensional differential expressions are checked independently. Infinite-dimensional domain
+    extension is separate.
+  sources:
+  - paper: MMM_2019_CURVATURE
+    locator: PDF pp. 9-12, equations (II.2), (II.4), (II.9), (II.13)
+  - paper: MONDAL_2023_GEOMETRIC
+    locator: PDF pp. 18-21, equations (4.1), (4.4), (4.8)-(4.11)
+  links:
+  - type: supported_by
+    target: CITE:YM_GROUND_STATE
+    detail: GST-1 derives the trial-state residual instead of assuming an exact vacuum.
+  - type: supported_by
+    target: LEAN:finite_ground_state_residual_identity
+    detail: Proves the finite form identity for every finite index set and symmetric matrix satisfying the residual row
+      equation.
+  - type: supported_by
+    target: LEAN:finite_ground_state_ratio_identity
+    detail: Constructs the residual directly by division by a nonzero trial vector.
+  - type: bears_on
+    target: STUDY:YM:weighted-curvature
+    detail: Identifies which measure and weighted generator belong to the Hamiltonian.
+  - type: bears_on
+    target: G23
+    detail: Supplies a concrete operator identification method rather than equating unrelated diffusion and physical
+      clocks.
+  - type: supported_by
+    target: CHK:yang-mills-ground-state-transform-and-re-221197:ground-state-trial-residual-gives-exact--555a23
+    detail: 'Exact checked component: ground-state trial residual gives exact conjugation in two flat dimensions. The
+      full analytic scope is stated in the derivation and check detail.'
+  - type: supported_by
+    target: CHK:yang-mills-ground-state-transform-and-re-221197:weighted-dirichlet-identity-retains-the--47e6d9
+    detail: 'Exact checked component: weighted Dirichlet identity retains the trial residual. The full analytic scope
+      is stated in the derivation and check detail.'
+  - type: supported_by
+    target: CHK:yang-mills-ground-state-transform-and-re-221197:finite-symmetric-matrix-ground-state-res-dd86d4
+    detail: 'Exact checked component: finite symmetric matrix ground-state residual identity. The full analytic scope
+      is stated in the derivation and check detail.'
+  - type: supported_by
+    target: CHK:yang-mills-ground-state-transform-and-re-221197:finding-omitting-a-nonconstant-ground-st-ccc939
+    detail: 'Exact checked component: FINDING: omitting a nonconstant ground-state residual overstates a finite gap.
+      The full analytic scope is stated in the derivation and check detail.'
+  - type: supported_by
+    target: CHK:yang-mills-ground-state-transform-and-re-221197:finding-quartic-logarithmic-trial-state--de33c0
+    detail: 'Exact checked component: FINDING: quartic logarithmic trial state has an unbounded negative residual for
+      a quartic potential. The full analytic scope is stated in the derivation and check detail.'
+- id: STUDY:YM:derive-weighted-form-transfer
+  statement: A weighted Poincare bound transfers to the centered finite physical matrix form through the constructed
+    inverse map f_i=x_i/psi_i.
+  status: conditional
+  detail: The Lean theorem uses symmetry, a nonzero exact eigenvector, and a Poincare inequality for its actual weighted
+    Dirichlet form. It proves the norm, mean-zero and energy transport rather than assuming an isometry. Nonpositive
+    off-diagonal entries separately guarantee nonnegative edge conductances. No Poincare floor for the physical Yang-Mills
+    operator is asserted.
+  sources:
+  - paper: MMM_2019_CURVATURE
+    locator: PDF pp. 10-12, equations (II.9), (II.13), (II.22)-(II.23)
+  links:
+  - type: supported_by
+    target: LEAN:finite_ground_state_gap_transfer
+    detail: Constructs division by psi and proves the centered physical form inequality.
+  - type: supported_by
+    target: LEAN:finite_ground_state_dirichlet_nonneg
+    detail: Checks the finite conductance positivity under explicit off-diagonal signs.
+  - type: depends_on
+    target: STUDY:YM:derive-ground-state-residual
+    detail: The constant-residual case identifies the physical energy above its ground level.
+  - type: bears_on
+    target: G23
+    detail: Gives a finite formal template for the operator and form bridge.
+- id: STUDY:YM:derive-curvature-normalization
+  statement: For kinetic prefactor c=hbar^2/(2m), the weighted curvature Ric+(2/hbar)Hess S gives comparison gap c*kappa
+    under the closed-operator hypotheses.
+  status: conditional
+  detail: GST-3 derives the integrated Bochner inequality and states the spectral-calculus argument. The flat differential
+    identity is checked exactly. GST-5 independently calibrates the coefficient and physical energy on an anisotropic
+    oscillator, obtaining hbar*omega_min. The curved-manifold Ricci term and uniform global floor are analytic inputs.
+  sources:
+  - paper: MMM_2019_CURVATURE
+    locator: PDF pp. 11-13, equations (II.16), (II.22)-(II.27)
+  - paper: MONDAL_2023_GEOMETRIC
+    locator: PDF p. 4 Theorem 1.1; pp. 20-22, equations (4.9)-(4.11) and regulator removal
+  links:
+  - type: supported_by
+    target: CITE:YM_GROUND_STATE
+    detail: GST-3 through GST-5 state the operator inequality and normalization.
+  - type: depends_on
+    target: STUDY:YM:derive-ground-state-residual
+    detail: S is the logarithm of the trial wavefunction for the chosen kinetic metric.
+  - type: bears_on
+    target: G20
+    detail: Specifies the global weighted curvature object beyond the checked local SAFE Hessian.
+  - type: bears_on
+    target: G23
+    detail: The energy conversion is valid for the operator identified by the ground-state transform.
+  - type: supported_by
+    target: CHK:yang-mills-ground-state-transform-and-re-221197:flat-weighted-bochner-identity-has-hessi-bbe5ae
+    detail: 'Exact checked component: flat weighted Bochner identity has Hessian coefficient 2/hbar. The full analytic
+      scope is stated in the derivation and check detail.'
+  - type: supported_by
+    target: CHK:yang-mills-ground-state-transform-and-re-221197:anisotropic-oscillator-calibrates-curvat-76363b
+    detail: 'Exact checked component: anisotropic oscillator calibrates curvature gap to hbar omega_min. The full analytic
+      scope is stated in the derivation and check detail.'
+- id: STUDY:YM:derive-residual-mean-gap
+  statement: A weighted comparison gap gamma and a trial residual with lower floor r_min and finite mean give gap(H)>=gamma-(meanR-r_min)
+    under min-max hypotheses.
+  status: conditional
+  detail: GST-6 proves E1>=gamma+r_min by min-max and E0<=meanR by the normalized trial vector. The residual need not
+    be bounded above. Lean proves the exact scalar gap budget; it does not formalize min-max, the weighted curvature
+    floor or the operator domains. The finite transform supplies an independent concrete algebraic realization.
+  sources:
+  - paper: MMM_2019_CURVATURE
+    locator: PDF pp. 9-17, section II ground-state comparison and continuous-spectrum discussion
+  links:
+  - type: supported_by
+    target: CITE:YM_GROUND_STATE
+    detail: GST-6 reconstructs the residual-mean extension from the source method.
+  - type: supported_by
+    target: LEAN:residual_mean_gap_budget
+    detail: Proves the scalar implication from the two explicit variational bounds.
+  - type: depends_on
+    target: STUDY:YM:derive-ground-state-residual
+    detail: The residual belongs to the exact conjugated physical form.
+  - type: depends_on
+    target: STUDY:YM:derive-curvature-normalization
+    detail: A valid weighted curvature floor is one way to establish gamma.
+  - type: bears_on
+    target: G23
+    detail: Replaces an unknown exact vacuum by an explicit trial state and a quantified residual budget.
+  - type: supported_by
+    target: CHK:yang-mills-ground-state-transform-and-re-221197:trial-residual-gap-budget-uses-its-mean--56f8ae
+    detail: 'Exact checked component: trial residual gap budget uses its mean above its floor. The full analytic scope
+      is stated in the derivation and check detail.'
+- id: STUDY:YM:derive-quartic-certificate
+  statement: A Gaussian trial for the pure quartic oscillator yields the residual certificate gap>=3*hbar*Omega/4 at
+    Omega^3=6*lambda*hbar/m^2.
+  status: proven
+  detail: This is a finite-dimensional analytic consequence of GST-6 with the standard quartic Friedrichs operator and
+    Gaussian weighted gap. Exact checks derive the residual square, Gaussian moments and frequency optimization. Lean
+    proves the global residual floor and the arithmetic and optimization lemmas; the full oscillator spectral theorem
+    and min-max application are not formalized.
+  sources:
+  - paper: MMM_2019_CURVATURE
+    locator: PDF pp. 12-13, oscillator calibration (II.24)-(II.27)
+  - paper: SIMON_1983_DISCRETE
+    locator: printed pp. 211-212, oscillator comparison method in section 2
+  links:
+  - type: supported_by
+    target: CITE:YM_GROUND_STATE
+    detail: GST-7 derives the quartic trial residual and mean.
+  - type: supported_by
+    target: LEAN:quartic_trial_residual_floor
+    detail: Proves the residual lower bound for every real coordinate.
+  - type: supported_by
+    target: LEAN:quartic_gaussian_gap_budget
+    detail: Proves the 3/4 coefficient once the mean and comparison gap are supplied.
+  - type: supported_by
+    target: LEAN:quartic_gaussian_frequency_optimal_iff
+    detail: Proves global optimality and uniqueness within this normalized Gaussian certificate family.
+  - type: depends_on
+    target: STUDY:YM:derive-residual-mean-gap
+    detail: The residual is unbounded above
+    so its mean-floor budget is the useful comparison.: null
+  - type: cannot_decide
+    target: G19
+    detail: An oscillator certificate supplies a calibration
+    not the Yang-Mills field construction or regulator limit.: null
+  - type: supported_by
+    target: CHK:yang-mills-ground-state-transform-and-re-221197:pure-quartic-oscillator-gaussian-residua-fb5834
+    detail: 'Exact checked component: pure quartic oscillator Gaussian residual certificate. The full analytic scope
+      is stated in the derivation and check detail.'
+  - type: supported_by
+    target: CHK:yang-mills-ground-state-transform-and-re-221197:quartic-gaussian-certificate-is-optimize-5d58e3
+    detail: 'Exact checked component: quartic Gaussian certificate is optimized at frequency cubed 6 lambda hbar over
+      mass squared. The full analytic scope is stated in the derivation and check detail.'
+- id: STUDY:YM:derive-simon-transverse
+  statement: The normalized finite SU(2) commutator model has two transverse oscillator modes in each matrix slice and
+    a global lower form T/2+g*sqrt(m-1)*sum|A_i|.
+  status: proven
+  detail: YM_FLAT_DIRECTIONS equations (7)-(12) reconstruct the slice spectra and allocate each kinetic and pair-potential
+    term. The exact checks verify the transverse matrix and counting; Lean proves the aggregation implication from explicit
+    slice estimates. The oscillator integration and form closure are analytic. This model has m>=2 real three-component
+    matrices and g>0, with normalization stated in the derivation.
+  sources:
+  - paper: SIMON_1983_DISCRETE
+    locator: printed pp. 211-212 equation (5); pp. 216-217 Theorem 3 and Corollary 4
+  links:
+  - type: supported_by
+    target: CITE:YM_FLAT_DIRECTIONS
+    detail: Equations (7)-(12) give the complete slice and allocation derivation.
+  - type: supported_by
+    target: LEAN:transverse_slice_form_aggregation
+    detail: Proves how the stated slice bounds retain half the kinetic form.
+  - type: bears_on
+    target: STUDY:YM:matrix-commutator-model
+    detail: Supplies an explicit SU(2) normalization and reconstructs its confinement mechanism.
+  - type: bears_on
+    target: G22
+    detail: Normal zero-point energy is a candidate quantum mechanism beyond the failed classical force-counting argument.
+  - type: supported_by
+    target: CHK:yang-mills-flat-directions-exact-finite--a665db:ym-flat-directions-oscillator-square-com-a2e957
+    detail: 'Exact checked component: YM flat directions: oscillator square completion fixes the zero-point constant.
+      The full analytic scope is stated in the derivation and check detail.'
+  - type: supported_by
+    target: CHK:yang-mills-flat-directions-exact-finite--a665db:ym-flat-directions-simon-s-scalar-split--b42b01
+    detail: 'Exact checked component: YM flat directions: Simon''s scalar split retains half the Laplacian. The full
+      analytic scope is stated in the derivation and check detail.'
+  - type: supported_by
+    target: CHK:yang-mills-flat-directions-exact-finite--a665db:ym-flat-directions-su-2-slice-has-two-tr-6a6c76
+    detail: 'Exact checked component: YM flat directions: SU(2) slice has two transverse modes. The full analytic scope
+      is stated in the derivation and check detail.'
+  - type: supported_by
+    target: CHK:yang-mills-flat-directions-exact-finite--a665db:ym-flat-directions-balanced-slice-aggreg-2f4007
+    detail: 'Exact checked component: YM flat directions: balanced slice aggregation retains half the kinetic energy.
+      The full analytic scope is stated in the derivation and check detail.'
+- id: STUDY:YM:derive-valley-hessian
+  statement: Along a commuting SU(2) valley the classical force vanishes while the transverse quadratic form is a Gram
+    projector with growing nonzero normal eigenvalues.
+  status: proven
+  detail: For A_i=a_i e3, the transverse potential is rho^2 sum|u_i|^2-|sum a_i u_i|^2, rho^2=sum a_i^2. The finite-sum
+    Lean identity proves the underlying Lagrange identity for every finite index set. Exact three-matrix checks verify
+    the transverse Hessian. DQ, Hess V and grad V are distinct; the commuting valley is outside G22 rough nonaligned
+    configurations.
+  sources:
+  - paper: SIMON_1983_DISCRETE
+    locator: printed pp. 216-217, derivative criterion in Theorem 3 and matrix application Corollary 4
+  links:
+  - type: supported_by
+    target: LEAN:finite_transverse_valley_identity
+    detail: Proves the finite sum-of-squared-minors identity underlying the normal quadratic form.
+  - type: supported_by
+    target: CITE:YM_FLAT_DIRECTIONS
+    detail: Section 6 derives the Jacobian norm
+    vanishing force and full transverse Hessian.: null
+  - type: bears_on
+    target: G22
+    detail: Supplies the distinct normal stiffness quantity to evaluate in a quantum confinement comparison.
+  - type: cannot_decide
+    target: G22
+    detail: Commuting zero-energy aligned configurations neither prove nor refute the rough nonaligned force conjecture.
+  - type: supported_by
+    target: CHK:yang-mills-flat-directions-exact-finite--a665db:ym-flat-directions-commutator-jacobian-i-b536b5
+    detail: 'Exact checked component: YM flat directions: commutator Jacobian is coercive while the force vanishes. The
+      full analytic scope is stated in the derivation and check detail.'
+  - type: supported_by
+    target: CHK:yang-mills-flat-directions-exact-finite--a665db:ym-flat-directions-commuting-valley-hess-0072e4
+    detail: 'Exact checked component: YM flat directions: commuting-valley Hessian is a Gram projector. The full analytic
+      scope is stated in the derivation and check detail.'
+- id: STUDY:YM:derive-finite-confinement-energy
+  statement: Retained kinetic control and a growing radial tail give compact resolvent for the finite SU(2) matrix model,
+    with E0>=3m[g^2(m-1)/32]^(1/3).
+  status: proven
+  detail: YM_FLAT_DIRECTIONS sections 4-5 give the form-domain tail estimate, local Rellich compactness argument, three-dimensional
+    Hardy completion and exact radial minimizer. Lean proves the normalized radial inequality. The resulting number bounds
+    unshifted ground energy; a quantitative E1-E0 estimate requires a separate comparison. Coupling dilation scales each
+    finite-model energy difference as g^(2/3).
+  sources:
+  - paper: SIMON_1983_DISCRETE
+    locator: printed pp. 211-212 section 2; pp. 216-217 Theorem 3 and Corollary 4
+  links:
+  - type: supported_by
+    target: CITE:YM_FLAT_DIRECTIONS
+    detail: Sections 4-7 provide compactness
+    energy: null
+    coupling scale and vacuum-subtraction scope.: null
+  - type: supported_by
+    target: LEAN:hardy_linear_lower_bound
+    detail: Proves the positive-radius normalized lower bound used after the analytic Hardy inequality.
+  - type: depends_on
+    target: STUDY:YM:derive-simon-transverse
+    detail: The half-kinetic term is essential for compact form embedding.
+  - type: bears_on
+    target: STUDY:YM:derive-residual-mean-gap
+    detail: A trial-state upper ground-energy estimate is one possible partner for a separate excitation lower bound.
+  - type: cannot_decide
+    target: STUDY:YM:physical-gap
+    detail: A positive unshifted finite-model ground energy does not give the continuum vacuum-subtracted mass.
+  - type: supported_by
+    target: CHK:yang-mills-flat-directions-exact-finite--a665db:ym-flat-directions-three-dimensional-har-7bf5e1
+    detail: 'Exact checked component: YM flat directions: three-dimensional Hardy completion has coefficient 1/4. The
+      full analytic scope is stated in the derivation and check detail.'
+  - type: supported_by
+    target: CHK:yang-mills-flat-directions-exact-finite--a665db:ym-flat-directions-radial-lower-bound-mi-13233b
+    detail: 'Exact checked component: YM flat directions: radial lower-bound minimum has cube 27/32. The full analytic
+      scope is stated in the derivation and check detail.'
+  - type: supported_by
+    target: CHK:yang-mills-flat-directions-exact-finite--a665db:ym-flat-directions-quartic-coupling-dila-b5d74f
+    detail: 'Exact checked component: YM flat directions: quartic coupling dilation scales energies as g^(2/3). The full
+      analytic scope is stated in the derivation and check detail.'
+- id: STUDY:YM:derive-positive-spectral-kernel
+  statement: A positive finite spectral measure gives a reflection-positive time kernel by an explicit Gram factorization.
+  status: proven
+  detail: The derivation is equation R2 of docs/derivations/yangmills-reconstruction.md. The exact four-by-four two-atom
+    check is a finite instance. Full OS reconstruction additionally needs its distribution, covariance, symmetry and
+    totality hypotheses.
+  sources:
+  - paper: OS_1975
+    locator: printed p. 291, equations (5.2)-(5.3)
+  links:
+  - type: supported_by
+    target: CITE:YM_RECONSTRUCTION
+    detail: Section 2 derives the arbitrary finite positive-weight Gram identity.
+  - type: bears_on
+    target: STUDY:YM:os-reconstruction
+    detail: Supplies a finite reconstruction calibration with the physical clock explicit.
+  - type: cannot_decide
+    target: G19
+    detail: Finite time-kernel positivity alone supplies no continuum field construction.
+  - type: supported_by
+    target: CHK:yang-mills-source-extraction-reconstruct-3b388f:two-atom-reflection-kernel-is-an-exact-g-056987
+    detail: 'Exact checked component: two-atom reflection kernel is an exact Gram matrix with determinant w1*w2*(r1-r2)^2.
+      The full analytic scope is stated in the derivation and check detail.'
+- id: STUDY:YM:derive-observable-completeness
+  statement: A common physical-time decay rate on a dense centered observable set excludes low-energy spectrum on the
+    full vacuum orthocomplement.
+  status: conditional
+  detail: Equation R1 and the spectral-projection argument in YM_RECONSTRUCTION section 1 give the analytic implication.
+    Section 3 checks a finite observable frame with A* A=diag(2,3), and exhibits an invisible sector for an incomplete
+    frame. Density in the physical Yang-Mills space is an outstanding hypothesis.
+  sources:
+  - paper: OS_1975
+    locator: printed p. 291, totality paragraph and equation (5.3)
+  - paper: JW_2006
+    locator: p. 6, sections 4-5
+  links:
+  - type: supported_by
+    target: CITE:YM_RECONSTRUCTION
+    detail: Sections 1 and 3 identify the spectral projection and frame mechanism.
+  - type: depends_on
+    target: STUDY:YM:os-hypothesis-repair
+    detail: The physical Hilbert space and semigroup require the corrected reconstruction framework.
+  - type: bears_on
+    target: STUDY:YM:sector-completeness
+    detail: Makes the full-space implication beyond a selected carrier explicit.
+  - type: bears_on
+    target: G18
+    detail: Builds on the existing fixed-spacing carrier frame and no-dark-carrier patch theorem; full-complement and
+      continuum comparisons retain their stated scope.
+  - type: bears_on
+    target: G23
+    detail: Converts physical-time decay into a gap after the domain and density obligations are established.
+  - type: supported_by
+    target: CHK:yang-mills-source-extraction-reconstruct-3b388f:a-complete-observable-frame-detects-both-d515e4
+    detail: 'Exact checked component: a complete observable frame detects both excited sectors with exact lower frame
+      bound 2. The full analytic scope is stated in the derivation and check detail.'
+- id: STUDY:YM:derive-plateau-spectral-weight
+  statement: A fixed localization plateau gives a quantitative low-energy spectral-weight bound and permits an arbitrarily
+    weak slow mode.
+  status: proven
+  detail: YM_RECONSTRUCTION section 4 derives the optimized positive-measure estimate A^theta epsilon^(1-theta)/(theta^theta
+    (1-theta)^(1-theta)) when the stationary time is nonnegative, with theta=E/eta. The positive transfer example diag(1,15/16,3/4)
+    realizes a slow mode with arbitrary weight u^2. These are analytic and finite statements, not a Yang-Mills gap certificate.
+  sources:
+  - paper: OS_1975
+    locator: printed p. 291, nonnegative self-adjoint H in (5.3)
+  - paper: JW_2006
+    locator: p. 6, physical spectral-gap definition
+  links:
+  - type: supported_by
+    target: CITE:YM_RECONSTRUCTION
+    detail: Section 4 gives the derivation
+    stationary point: null
+    boundary case and exact transfer counterexample.: null
+  - type: bears_on
+    target: G23
+    detail: Sharpens the existing nondecaying-localization-error finding into a measurable leakage budget.
+  - type: cannot_decide
+    target: STUDY:YM:physical-gap
+    detail: A nonzero bound on spectral weight does not force the weight to vanish.
+  - type: supported_by
+    target: CHK:yang-mills-source-extraction-reconstruct-3b388f:a-positive-three-state-transfer-matrix-r-41210f
+    detail: 'Exact checked component: a positive three-state transfer matrix realizes a hidden slow mode under an arbitrarily
+      small plateau. The full analytic scope is stated in the derivation and check detail.'
+  - type: supported_by
+    target: CHK:yang-mills-source-extraction-reconstruct-3b388f:spectral-leakage-optimization-has-statio-3b8d27
+    detail: 'Exact checked component: spectral leakage optimization has stationary x=A*(1-theta)/(epsilon*theta) with
+      a positive derivative slope. The full analytic scope is stated in the derivation and check detail.'
+- id: STUDY:YM:derive-adaptive-localization
+  statement: A physical correlation bound with tunable terms A exp(-eta t+alpha R) and B exp(-beta R) yields decay rate
+    eta beta/(alpha+beta).
+  status: conditional
+  detail: For eta,beta>0 and alpha>=0, choose R=eta t/(alpha+beta). Both exponents equal -delta t. The exact rate algebra
+    is checked; establishing the two-parameter Yang-Mills bound uniformly in R, spacing and volume remains open. A worsening
+    eta(R) does not meet the hypothesis.
+  sources:
+  - paper: JW_2006
+    locator: pp. 7-8, section 6.1, uniform approximation and clustering methods
+  - paper: OS_1975
+    locator: printed p. 291, physical semigroup (5.3)
+  links:
+  - type: supported_by
+    target: CITE:YM_RECONSTRUCTION
+    detail: Section 5 proves the balancing implication and states its falsifier.
+  - type: depends_on
+    target: STUDY:YM:derive-observable-completeness
+    detail: A common rate must cover a dense centered set to control the full spectrum.
+  - type: bears_on
+    target: G23
+    detail: Gives a concrete sufficient repair for a fixed localization plateau.
+  - type: bears_on
+    target: G20
+    detail: Localization must have a valid gauge-invariant or gauge-fixed measure
+    rather than assuming typicality of unfixed small links.: null
+  - type: supported_by
+    target: CHK:yang-mills-source-extraction-reconstruct-3b388f:adaptive-localization-balances-both-expo-4ffc03
+    detail: 'Exact checked component: adaptive localization balances both exponents at delta=eta*beta/(alpha+beta). The
+      full analytic scope is stated in the derivation and check detail.'
+- id: STUDY:YM:derive-clock-normalization
+  statement: For a positive transfer eigenvalue r and physical step a, the physical energy is -log(r)/a.
+  status: proven
+  detail: This is the finite spectral functional calculus of T=exp(-a H). The reconstruction examples use this clock
+    throughout; importing a weighted sampling generator requires a separate unitary identification or form comparison.
+  sources:
+  - paper: OS_1975
+    locator: printed p. 291, equation (5.3)
+  links:
+  - type: supported_by
+    target: CITE:YM_RECONSTRUCTION
+    detail: Section 2 fixes the transfer-to-energy normalization.
+  - type: bears_on
+    target: STUDY:YM:operator-identification
+    detail: A shared symbol for a gap does not identify two operators or their time units.
+  - type: bears_on
+    target: G23
+    detail: Keeps the physical and diffusion clocks explicit in the bridge.

@@ -55,6 +55,12 @@ def test_browser_links_carry_the_walled_archive_for_a_human():
     assert labels["doi"].startswith("https://doi.org/10.1016/")
 
 
+def test_a_source_only_work_keeps_its_canonical_acquisition_link():
+    url = "https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf"
+    assert A.browser_links({"source_url": url}) == [("source", url)]
+    assert A.browser_links({"source_url": "http://example.org/unsafe"}) == []
+
+
 def test_walled_hosts_are_refused_wherever_the_url_comes_from():
     """OpenAlex sometimes lists the publisher's own copy as 'open'. The
     boundary is per-host, not per-code-path: walled hosts stay browser links

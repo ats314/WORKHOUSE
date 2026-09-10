@@ -28,7 +28,8 @@ this repository is built not to do.
 ## Scope, stated honestly
 
 The modules imported by `Workhouse.lean` formalize rational and polynomial
-identities, finite matrix algebra and scalar inequalities. They use no
+identities, finite matrix algebra, probability-measure comparison, bounded
+operator inverses, unbounded-operator closability and analytic limit arguments. They use no
 `sorry` and only standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
 The live theorem count is in `FRONTIER.md` §1.
 
@@ -49,9 +50,20 @@ is formalized; narrow supporting uses can be recorded in a result's scoped
 `supported_by` entries instead. Compilation and those support edges do not
 replace the required register entry.
 
-Run the strict build and check the inventory before regenerating the graph,
-frontier and verification catalogue. This prevents a compiled theorem from
-being omitted from the curated map or left disconnected in the graph.
+Record its precise source statement in `ledger/derivation_statements.yaml`:
+`lean` means the entire stated claim, while `lean_support` records an explicitly
+scoped ingredient. Keep the source's analytic status independent of this coverage.
+
+Run `python scripts/export_lean_dependencies.py` from the configured repository
+environment. It runs the strict build, extracts elaborated type/proof constants
+and transitive axioms, and checks every registered theorem. The generated
+`ledger/lean_dependencies.json` pins its Lean inputs and records dependencies on
+both project declarations and mathlib. The graph follows local definitions to
+the next registered theorem. Regenerate the catalogue, frontier and certified
+views after this export; stale exports are rejected.
+
+The [derivation proof map](../docs/derivation_formalization.md) gives coverage and
+remaining obligations for every current top-level derivation document.
 
 ## What is proved
 
@@ -80,3 +92,36 @@ SU(N) geometry, min-max arguments, or the full nonlinear fast complement.
 Two theorems are stated with denominators cleared rather than as rational
 identities with non-vanishing side conditions. That is deliberate: the cleared
 form is what the algebra actually says, and it needs no hypotheses to be true.
+
+## September source integration
+
+The September 1-9 integration adds these modules to the active `Workhouse.lean`
+import root. Their individual statements and graph targets are in
+`ledger/theorems.yaml`; theorem counts remain generated in `FRONTIER.md`.
+
+| Module | Formalized content | Source |
+|---|---|---|
+| `VacuumChart` | Rank-one adjoints, corrected vacuum legs, endpoint cancellation | September 5 vacuum-chart package |
+| `VacuumCompression` | Exact compression and vacuum-corner identities | September 5 compression package |
+| `RootedScalarBounds` | Normalized Taylor lower bound | September 5 rooted-contraction package |
+| `CreatorParent` | Star-ring square identities and parent-gap constant | September 5 creator-parent package |
+| `GlobalWilsonVertical` | Spectral-cap and affine-comparison scalar implications | September 5 nonlinear-block package |
+| `AnisotropyVariance` | Simplex variance, complete zero set, uniform bound, induced coefficient | September 8 anisotropy campaign |
+| `WilsonSquareForce` | Sharp inverse-energy coefficient bound for every radial index and finite spectral synthesis | September 9 square-block campaign |
+| `WilsonGridAlgebra` | Exact four-edge energy decomposition, bounds and constant kernel | September 9 compact-continuation campaign |
+| `ResolventLocalization` | Infinite Neumann inverse, exact signed identity, cubic operator remainder, Schur minimization and infinite lattice sums | BF1–BF3, SP1–SP10, W4–W6 and localized pairing |
+| `GroundStateAssembly` | Probability-measure density comparison, noncommuting projection assembly and explicit-domain physical gap transport | VA/BA assembly, GST and Gram positivity |
+| `ThermodynamicLimit` | Actual weak-law and uniform-score limits, integration by parts, unbounded-operator closability, form-core limits and spectral interval mass | SC17 T12 and IF3–IF13 |
+| `SpectralReconstruction` | Positive spectral-measure decay, support-gap exclusion, localization balancing and dense-family projection extension | Reconstruction R1–R7 |
+| `PlateauObstruction` | Exact exponential optimization and positive slow-mode obstruction for every positive plateau | Reconstruction R4–R5 |
+
+The five existing branch modules are copied without byte changes. The three
+campaign modules retain the original eight anisotropy statements and add
+proofs of the complete nodal criterion and the stated universal algebraic
+bounds. Operator identification, infinite-dimensional domains and interacting
+transport remain explicit in the source results they support.
+
+The [integration report](../runs/recent_research_integration_2026-09-09/lean_integration_report.json)
+records the successful strict build and the standard-axiom audit for all 46
+integrated declarations. [The run](../runs/recent_research_integration_2026-09-09/README.md)
+preserves their provenance and validation outputs.

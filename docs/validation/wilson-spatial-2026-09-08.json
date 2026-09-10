@@ -1,0 +1,244 @@
+{
+  "recorded_at": "2026-09-09T00:32:45.853288+00:00",
+  "analytic_scope": "Exact Schur excess and conditional weighted remainder; complete local Wilson/source jets and conditional scale budgets",
+  "not_established": "Uniform interacting Wilson SP8/coarse matching, complete spatial trajectory and continuum measure",
+  "input_pins": [
+    {
+      "name": "G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md",
+      "source_checkout": "C:\\WORKHOUSE\\WORKHOUSE-autonomous-20260905",
+      "source_commit": "4bf812428e0af51d1ffcda299b0d97b38b644926",
+      "sha256": "df1737860dd8fd6e59398170c8c5204c05f5fb41c216a8a7009ef9949e0e6acd",
+      "matches_commit_after_lf_normalization": true
+    },
+    {
+      "name": "G19_FULL_GAUSSIAN_FAST_GREEN_20260906.md",
+      "source_checkout": "C:\\WORKHOUSE\\WORKHOUSE-autonomous-20260905",
+      "source_commit": "4bf812428e0af51d1ffcda299b0d97b38b644926",
+      "sha256": "ac6767464a2fbc1e6ec174b638bdf642e07dc473a60a4c08967fec6526f3ab7b",
+      "matches_commit_after_lf_normalization": true
+    },
+    {
+      "name": "G19_DYNAMIC_FIBER_COVARIANCE_AND_CUBIC_ENERGY_20260906.md",
+      "source_checkout": "C:\\WORKHOUSE\\WORKHOUSE-autonomous-20260905",
+      "source_commit": "4bf812428e0af51d1ffcda299b0d97b38b644926",
+      "sha256": "4fb0bfd9dc1fb1c545a147670fcfe9f6302773cbece6fe0642284d0a9ae387aa",
+      "matches_commit_after_lf_normalization": true
+    },
+    {
+      "name": "G19_CUBIC_GROUND_TRANSFER_20260906.md",
+      "source_checkout": "C:\\WORKHOUSE\\WORKHOUSE-autonomous-20260905",
+      "source_commit": "4bf812428e0af51d1ffcda299b0d97b38b644926",
+      "sha256": "e321d704a9e9a741523ed06d66736cd97e3fbae2910a493dd88b6d2111264e93",
+      "matches_commit_after_lf_normalization": true
+    },
+    {
+      "name": "G19_WILSON_FINITE_CELL_GAP_AND_BOUNDARY_FORM_20260905.md",
+      "source_checkout": "C:\\WORKHOUSE\\WORKHOUSE-autonomous-20260905",
+      "source_commit": "4bf812428e0af51d1ffcda299b0d97b38b644926",
+      "sha256": "5fc9ff6495b6197dbd13b1b69f61f6bbe8f35d953915486cd616b3a8909a8db5",
+      "matches_commit_after_lf_normalization": true
+    },
+    {
+      "name": "G19_GAUSSIAN_PATH_ENDPOINT_BASELINE_20260906.md",
+      "source_checkout": "C:\\WORKHOUSE\\WORKHOUSE-autonomous-20260905",
+      "source_commit": "4bf812428e0af51d1ffcda299b0d97b38b644926",
+      "sha256": "6ecf1868aaa3b8be3bec2c9cdb057b6f4d3b8cf352c8e5639657f25c874cccbb",
+      "matches_commit_after_lf_normalization": true
+    },
+    {
+      "name": "G19_WILSON_HARMONIC_CUBIC_OBSTRUCTION_20260906.md",
+      "source_checkout": "C:\\WORKHOUSE\\WORKHOUSE-autonomous-20260905",
+      "source_commit": "4bf812428e0af51d1ffcda299b0d97b38b644926",
+      "sha256": "3ac41920cde3f580e45dba0730e0cc29846bcb996b7e3199c8e95c6b625c9399",
+      "matches_commit_after_lf_normalization": true
+    },
+    {
+      "name": "G19_LOCAL_COVARIANT_AVERAGED_PATH_SOURCES_20260905.md",
+      "source_checkout": "C:\\WORKHOUSE\\WORKHOUSE-autonomous-20260905",
+      "source_commit": "4bf812428e0af51d1ffcda299b0d97b38b644926",
+      "sha256": "32f04e9b3682463f6a5f5e5602e6bedfab91678edf0bef916fa1a8f6cdffeb6d",
+      "matches_commit_after_lf_normalization": true
+    },
+    {
+      "name": "G19_FLAT_HOLONOMY_SOURCES_AND_RANK_REPAIR_20260907.md",
+      "source_checkout": "C:\\WORKHOUSE\\WORKHOUSE-flat-holonomy-20260907",
+      "source_commit": "687e1a6c535b19dcd7ce8ca0a802d8270f069111",
+      "sha256": "c6d524158f83d3a1b0c007f438d00b6526ae1630bea63152132724ef90a5e761",
+      "matches_commit_after_lf_normalization": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "Spatial Schur excess is exact with noncommuting fast blocks",
+      "passed": true,
+      "detail": "Two retained and two fast directions, nonzero reference cross coupling, two signed couplings and two energies; exact full rational inverses agree",
+      "section": "WILSON_SPATIAL; G19 SP1-SP5",
+      "tier": 1,
+      "line": 34,
+      "source": "src/workhouse/invariants/wilson_spatial.py:34",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Spatial second jet includes every baseline and fast-variation cross term",
+      "passed": true,
+      "detail": "Direct three-factor inverse-series convolution matches the full graph coefficient; a2-b1(F0-z)^-1 b1* fails, as does the undressed cubic force",
+      "section": "WILSON_SPATIAL; G19 SP7-SP10",
+      "tier": 1,
+      "line": 57,
+      "source": "src/workhouse/invariants/wilson_spatial.py:57",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Spatial energy derivative retains the full induced graph metric",
+      "passed": true,
+      "detail": "The derivative of the exact energy pencil is -(1+B(F-z)^-2 B*); discarding memory would falsely give a unit metric",
+      "section": "WILSON_SPATIAL; G19 SP6; WILSON_SPATIAL_SCHUR_INPUT sections 1 and 5",
+      "tier": 1,
+      "line": 91,
+      "source": "src/workhouse/invariants/wilson_spatial.py:91",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Spatial source straightening has both commutators and the nested term",
+      "passed": true,
+      "detail": "Independent coefficient multiplication of U*HU with a noncommuting, second-order unitary jet verifies the source terms and their signs",
+      "section": "WILSON_SPATIAL; G19 SP16",
+      "tier": 1,
+      "line": 106,
+      "source": "src/workhouse/invariants/wilson_spatial.py:106",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Actual SU2 harmonic commutator has nonzero quartic Wilson energy",
+      "passed": true,
+      "detail": "The actual ordered four-link SU2 word has zero linear curl yet 2 g^-2 v = (g^2/2)x^2 y^2 + higher orders; harmonic coordinates remain interacting",
+      "section": "WILSON_SPATIAL; G19 SP12-SP13 SP19",
+      "tier": 1,
+      "line": 137,
+      "source": "src/workhouse/invariants/wilson_spatial.py:137",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Actual nonzero-curl Wilson quartic retains all three logarithmic terms",
+      "passed": true,
+      "detail": "An actual three-loop SU2 word gives quartic terms (5/8, -3/2, -27/32); their sum -55/32 agrees with direct exponential-word multiplication",
+      "section": "WILSON_SPATIAL; G19 SP12-SP13",
+      "tier": 1,
+      "line": 163,
+      "source": "src/workhouse/invariants/wilson_spatial.py:163",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Actual SU2 radial Haar flattening retains its electric second-order scalar",
+      "passed": true,
+      "detail": "On SU2 class functions the exact flattened radial electric operator is -1/2(d_r^2+2/r d_r)-1/8, yielding -g^2/8 after dilation; metric and Haar are combined",
+      "section": "WILSON_SPATIAL; G19 SP14",
+      "tier": 1,
+      "line": 189,
+      "source": "src/workhouse/invariants/wilson_spatial.py:189",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Actual averaged-path polar source has the complete second correction",
+      "passed": true,
+      "detail": "Two noncommuting actual SU2 path words with weights 1/3 and 2/3: direct polar/log series reproduce the nonzero second source correction",
+      "section": "WILSON_SPATIAL; G19 SP17a; WILSON_SPATIAL_FLAT_INPUT section 4, actual redundant observation geometry",
+      "tier": 1,
+      "line": 207,
+      "source": "src/workhouse/invariants/wilson_spatial.py:207",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Spatial normalized moving-source density has the complete second jet",
+      "passed": true,
+      "detail": "Five exact Gaussian test moments agree with normalized pushforward; d1=2*x**3, d2=2*x**6 - 3*x**4 - 2*x**2 - 1/2. Omitting the ground/source cross term changes the second moment",
+      "section": "WILSON_SPATIAL; G19 SP15 SP17-SP18",
+      "tier": 1,
+      "line": 249,
+      "source": "src/workhouse/invariants/wilson_spatial.py:249",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Spatial third-order remainder constant bounds a nonzero exact defect",
+      "passed": true,
+      "detail": "Exact positive and negative coupling controls satisfy C3=16/3; a sign-changed fast-form variation leaves a nonzero bounded cubic defect",
+      "section": "WILSON_SPATIAL; G19 SP8-SP9",
+      "tier": 1,
+      "line": 286,
+      "source": "src/workhouse/invariants/wilson_spatial.py:286",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Spatial gap iteration carries every accumulated comparison loss",
+      "passed": true,
+      "detail": "Four distinct loss factors and doubling physical fast energies reproduce the exact weighted reciprocal-gap formula; omitting accumulated losses fails",
+      "section": "WILSON_SPATIAL; G19 SP20-SP22",
+      "tier": 1,
+      "line": 308,
+      "source": "src/workhouse/invariants/wilson_spatial.py:308",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Spatial onto frames alone cannot preserve a specified observable",
+      "passed": true,
+      "detail": "A frame of lower bound one can annihilate a chosen source; the separate telescoping amplitude budget leaves 9/32 and spectral weight at least 81/1024",
+      "section": "WILSON_SPATIAL; G19 SP23-SP24",
+      "tier": 1,
+      "line": 329,
+      "source": "src/workhouse/invariants/wilson_spatial.py:329",
+      "yields": {},
+      "rests_on": []
+    }
+  ],
+  "artifacts": {
+    "docs/derivations/wilson-spatial-schur-excess.md": "5ddb7f812a9e6f536180602a55fd3ea5cb1769e807ae2e51237f263ba4ba7f89",
+    "src/workhouse/invariants/wilson_spatial.py": "db3fe6402f39bf07661744f27901664bd1398fb040def5f23d0acae2c2337450",
+    "scripts/validate_wilson_spatial.py": "5ab2c66d7d49f88544d18efd797e330a23ea9810801a70fd6756275a969fe1d6",
+    "lean/Workhouse/Basic.lean": "7cbd8b7775cb839fd6cb65b9a7fcd912531f8e787656cc87e7817858168b08ab",
+    "ledger/theorems.yaml": "23480677965df0f14d2aac1fc0c208bb5058a961094c9e2b18ea771a1746a623",
+    "ledger/gaps.yaml": "a49e87d82f96b62ff22886d448a4beb05a8e415792c8da55341436ea77dc7752",
+    "ledger/documents.yaml": "05795fb09b5c51e3b894d7f9b8e6016745ea116a61da1e7cb0ad1b01310669f6"
+  },
+  "test_runs": [
+    {
+      "file": "wilson-spatial-focused-2026-09-08.xml",
+      "sha256": "bae0d359ca05cfbb382899b60a3d8225602b6f9db3fee3193b153028da66c965",
+      "tests": 1,
+      "failures": 0,
+      "errors": 1,
+      "skipped": 0
+    },
+    {
+      "file": "wilson-spatial-focused-retry-2026-09-08.xml",
+      "sha256": "e91a3e0b5cb54774ee9e6679968a52e3bcc0736d9d7f5c416a8a0f54008257c6",
+      "tests": 79,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "wilson-spatial-graph-2026-09-08.xml",
+      "sha256": "9f809f80a0d397638aa50dfc8bf6efd0d29fc603de773c102ca3f885531c35f1",
+      "tests": 31,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "retry_reason": "The first collection failed on indentation in the new G19 ledger route. The repaired YAML was parsed directly, then the focused checks were rerun. The original error report is preserved; no full-regression pass is claimed.",
+  "lean_records": {
+    "wilson-spatial-axioms-2026-09-08.txt": "fb19e9eb5bb30f5342605922a9a742c6d0e57ef503a5610caab1e0ee6bdd53d1",
+    "wilson-spatial-lean-build-2026-09-08.txt": "bd845799addb268d0675928d94962870f82cbf99d5f0113f67bd9b67c3950278"
+  }
+}

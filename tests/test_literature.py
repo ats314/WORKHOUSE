@@ -1,5 +1,7 @@
 """The literature index is an evidence map: every edge must resolve and be honest."""
 
+import pytest
+
 from workhouse import literature as L
 
 
@@ -37,9 +39,44 @@ def test_no_fulltext_is_stored_without_a_redistributable_licence():
 
 
 def test_every_paper_is_pinnable():
-    """A DOI or an arXiv id, so the citation can be resolved rather than trusted."""
+    """Resolve a persistent identifier or a curated institutional HTTPS source."""
     for paper in L.load().papers:
-        assert paper.get("doi") or paper.get("arxiv"), paper["id"]
+        assert (
+            paper.get("doi") or paper.get("arxiv") or L.valid_source_url(paper.get("source_url"))
+        ), paper["id"]
+
+
+def test_an_institutional_work_without_doi_or_arxiv_is_identifiable():
+    lit = L.load()
+    paper = lit.papers[0]
+    paper["doi"] = paper["arxiv"] = None
+    paper["source_url"] = "https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf"
+    assert L.validate(lit) == []
+    assert L.citation_identifier(paper) == paper["source_url"]
+    paper["doi"] = "10.1103/PhysRevD.11.395"
+    assert L.citation_identifier(paper) == paper["doi"]
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        None,
+        "",
+        "http://example.org/a.pdf",
+        "https:///a.pdf",
+        "https://a b/a.pdf",
+        "https://user:password@example.org/a.pdf",
+        "file:///a.pdf",
+        "https://[broken",
+    ],
+)
+def test_invalid_source_urls_cannot_replace_a_scholarly_identifier(url):
+    lit = L.load()
+    paper = lit.papers[0]
+    paper["doi"] = paper["arxiv"] = None
+    paper["source_url"] = url
+    assert not L.valid_source_url(url)
+    assert any("unpinnable" in p for p in L.validate(lit))
 
 
 def test_the_hamer_edge_is_verified_and_stays_pinned():

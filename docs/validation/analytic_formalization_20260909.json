@@ -1,0 +1,323 @@
+{
+  "schema": "workhouse-analytic-formalization-validation/v1",
+  "recorded_at_utc": "2026-09-10T00:26:36.832210+00:00",
+  "scope": "Local pre-publication validation of canonical workspace reconciliation and analytic formalization. GitHub publication and CI are recorded by the subsequent commit, pull request and workflow run.",
+  "canonical_repository": "C:\\WORKHOUSE\\REPO",
+  "preserved_source_checkout": "C:\\WORKHOUSE\\ALL THEORY\\WORKHOUSE",
+  "lean": {
+    "registered_theorems": 290,
+    "new_theorems_this_pass": 110,
+    "module_counts": {
+      "ThermodynamicLimit": 10,
+      "GroundStateAssembly": 36,
+      "ResolventLocalization": 28,
+      "SpectralReconstruction": 22,
+      "PlateauObstruction": 14
+    },
+    "strict_build": "passed: lake build --wfail",
+    "kernel_export": "ledger/lean_dependencies.json",
+    "standard_axioms_only": true,
+    "sorry": 0
+  },
+  "coverage": {
+    "derivation_documents": 20,
+    "statement_groups": 167,
+    "whole_statement_lean_links": 10,
+    "scoped_ingredients_only": 30,
+    "without_direct_lean_links": 127,
+    "distinct_attached_lean_declarations": 120,
+    "scope_note": "Whole and scoped support are separate. This is not complete formalization of every derivation. Analytic mathematical status is independent of repository machine-certification coverage."
+  },
+  "graph": {
+    "claims": 17036,
+    "edges": 27184
+  },
+  "native_checks": {
+    "passed": 562,
+    "total": 562
+  },
+  "regression": {
+    "pytest_passed": 1303,
+    "pytest_duration": null,
+    "commands": [
+      {
+        "command": [
+          "C:\\WORKHOUSE\\REPO\\.venv\\Scripts\\ruff.exe",
+          "check",
+          "."
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "C:\\WORKHOUSE\\REPO\\.venv\\Scripts\\ruff.exe",
+          "format",
+          "--check",
+          "."
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "C:\\WORKHOUSE\\REPO\\.venv\\Scripts\\python.exe",
+          "scripts/render_derivation_coverage.py",
+          "--check"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "C:\\WORKHOUSE\\REPO\\.venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "C:\\WORKHOUSE\\tmp\\formalization-full-e1b559f1f26940fd8add428cf4c3b8eb"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "log_sha256": "d185384b5e6d697c152c79a801e7e571c107217bcab656ac8a8c329f6baf07ac"
+  },
+  "connection_audit": {
+    "schema": "workhouse-formalization-connection-audit/v1",
+    "checked_at_utc": "2026-09-10T00:04:45.686528+00:00",
+    "checkout": "C:\\WORKHOUSE\\REPO",
+    "status": "pass",
+    "read_only_repository": true,
+    "inputs_sha256": {
+      "ledger/theorems.yaml": "b43bf132543fd1df4c671f10824cdac418a851d565863ce255939041b842971b",
+      "ledger/lean_dependencies.json": "4a3a5e23463f832013ae0bf295e86b2c58995bac4e480b82f5c563bb6add26cd",
+      "ledger/derivation_statements.yaml": "8042e173f3b0abde9bc91734ba718c8bf80a06db53de9d6c3af0c472834b009b"
+    },
+    "registered_theorems": 290,
+    "new_declarations": 110,
+    "module_counts": {
+      "ThermodynamicLimit": 10,
+      "GroundStateAssembly": 36,
+      "ResolventLocalization": 28,
+      "SpectralReconstruction": 22,
+      "PlateauObstruction": 14
+    },
+    "module_sha256_utf8_lf": {
+      "ThermodynamicLimit": "b5c50685452c1f588d16775faa79bf8b52b1d12f309267dacde5a1b4ce3548bd",
+      "GroundStateAssembly": "4e5474836257d0ee497eace202b54144411efcb46e8125d09d029b023dc06750",
+      "ResolventLocalization": "f0a3d97ec2d760cc7eeef20d653ac160a9c3a248e744c72425462cabf09a8c42",
+      "SpectralReconstruction": "bf97a2b07c1ae25ea84f482d0db1b426dce88e9d5218668384ba07a039289f89",
+      "PlateauObstruction": "8a60bda557a08edc88480cfb4cb619533001e0708027e45c65fcac5f58827b62"
+    },
+    "source_and_kernel_validators": "pass",
+    "all_exported_source_fingerprints_match": true,
+    "proof_sources": {
+      "records": 174,
+      "unique_derivation_statements": 32,
+      "checked_fields": [
+        "statement",
+        "path",
+        "raw-byte sha256",
+        "locator",
+        "anchor",
+        "scope"
+      ],
+      "all_bidirectional_connections_match": true,
+      "scope_text_matches_support_edges": true
+    },
+    "new_source_edge_counts": {
+      "supported_by": 165,
+      "formalizes": 9
+    },
+    "new_kernel_dependency_edges": 86,
+    "all_kernel_dependency_edges": 148,
+    "new_nonstandard_axioms": [],
+    "new_direct_promotes": [],
+    "new_registry_formalizes": [],
+    "whole_coverage_review": {
+      "DERIV:YANGMILLS_RECONSTRUCTION:R2": {
+        "result": "correct for the stated finite R2 claim",
+        "declarations": [
+          "reflection_kernel_gram",
+          "reflection_kernel_nonnegative",
+          "transfer_energy_nonnegative",
+          "transfer_energy_reconstructs_ratio",
+          "transfer_power_eq_physical_decay"
+        ],
+        "coverage": "Actual complex Gram factorization for arbitrary finite mode/time sets; nonnegative weights imply positivity; E=-log(r)/a and r^n=exp(-a*n*E) retain the positive physical time step.",
+        "boundary": "Does not construct OS spacetime reconstruction, identify Wilson transfer, or assert a continuum gap. The source ancillary two-mode determinant aside is not part of this DERIV statement."
+      },
+      "DERIV:YANGMILLS_RECONSTRUCTION:R3": {
+        "result": "correct for the stated finite R3 claim",
+        "declarations": [
+          "observable_frame_gram",
+          "observable_frame_lower_bound",
+          "observable_frame_correlation",
+          "deleted_frame_invisible_sector"
+        ],
+        "coverage": "Actual complex 3x2 frame has Gram diag(2,3); arbitrary complex-vector squared-norm lower bound; exact summed correlator; explicit nonzero invisible vector after specified row deletion.",
+        "boundary": "Only this finite carrier is certified. Full physical or continuum observable totality is not inferred."
+      }
+    },
+    "partial_coverage_review": "All other new links are explicitly scoped supported_by edges; no new theorem has a promotes entry, and no other DERIV lean list contains a new theorem. Existing whole finite algebra bridges are unchanged.",
+    "focused_tests": {
+      "command": "python -B -m pytest tests/test_derivation_statements.py tests/test_lean_dependencies.py -q -p no:cacheprovider -k \"not generated_graph_retains_precise_source_and_kernel_dependencies\" --basetemp=C:\\WORKHOUSE\\tmp\\connection-audit-20260909-1",
+      "exit_code": 0,
+      "passed": 48,
+      "excluded": "Generated graph comparison intentionally deferred because root was regenerating graph concurrently."
+    },
+    "graph_basis": "Validated live derivation_statements.edge_records and lean_dependencies.edge_records; did not edit or regenerate generated views.",
+    "errors": []
+  },
+  "preservation_audit": {
+    "schema": "workhouse-preservation-audit/v1",
+    "recorded_at_utc": "2026-09-10T00:02:33.966969+00:00",
+    "status": "passed",
+    "method": "Independent SHA-256 of raw bytes; no source, registry, generated-view, or run modification.",
+    "protected_nested_checkout": {
+      "path": "C:\\WORKHOUSE\\ALL THEORY\\WORKHOUSE",
+      "manifest": "C:\\WORKHOUSE\\navigation\\reconciliation\\2026-09-09\\merge_manifest.json",
+      "files_checked": 1036,
+      "source_discrepancies": [],
+      "build_cache_discrepancies_in_protected_manifest": [],
+      "all_protected_bytes_unchanged": true
+    },
+    "derivation_sources": {
+      "live_inventory_documents": 20,
+      "frozen_inventory_documents": 20,
+      "initial_manifest_documents": 20,
+      "top_level_derivation_markdown_files": 20,
+      "live_vs_frozen_difference": [],
+      "live_vs_manifest_difference": [],
+      "live_vs_top_level_difference": [],
+      "all_copies_and_pins_agree": true,
+      "discrepancies": [],
+      "files": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "sha256": "05ee05dc5acf99fabcefcd897cba340f45de94a583ea1d737a9011bb5650ec47",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/wilson-marked-shell-transport.md",
+          "sha256": "a887ed9de154cec0adabb644744e25b38017dda83f92f687f5a14b762004a840",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/wilson-marked-transfer.md",
+          "sha256": "e7096d99ced649350cf18ae0ee656613cf3a95de28e090348bf6bf015114cbf4",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/wilson-sc17-physical-time-limit.md",
+          "sha256": "f842a6b9f826a9977cfbcad1de1d3339c2443b5e666b1c200f0bafd791863038",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/wilson-sc17-spatial-closure.md",
+          "sha256": "eacf05f43bc1ac8caab7fed6f8533539a4e6c87b9fa459de73e32ca729b93654",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/wilson-sc17-thermodynamic-limit.md",
+          "sha256": "6d72876a35a866768f1b0428847f56df803cb3569eb65c8d96e94ab56996e324",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/wilson-selected-inverse-wall.md",
+          "sha256": "c0473aca76790ef7adc6e9d90642f94a252d7052e02fa0b7ee79f92afd099cfe",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/wilson-spatial-schur-excess.md",
+          "sha256": "5ddb7f812a9e6f536180602a55fd3ea5cb1769e807ae2e51237f263ba4ba7f89",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/wilson-true-blocks-independent-check.md",
+          "sha256": "6984f428f801c70efc3270a1efbeb0ebaaddce23bea6b311a1daac7782e3546f",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/wilson-weighted-repair-and-rotor-gap.md",
+          "sha256": "dac4e8fd2d13f3e78710dfa8dde20e4aee2ac9db388d6f06d6b042644434a819",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/yangmills-continuum-balaban-multiscale-proof.md",
+          "sha256": "55296902489318e28594a61d9fefc422a6b879a5c747751622bbbe353cddf711",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/yangmills-formal-bridges.md",
+          "sha256": "bb3245e82e5dc857758fd27302ec45259b9de02b7140616c4de0435affcbd12a",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/yangmills-gpu-resolution-audit.md",
+          "sha256": "45a72f1f90d9da8fb1f07cb1663dc7df5a53eb3fe8c41377a721c6581344657b",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/yangmills-pbh-wilson-test.md",
+          "sha256": "3122ef912820b5a0b912858b85165e6dbffd3f90543f7e49a76de8833b68baee",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "sha256": "a180dddf141798385fceeec35d0e3cd1fecf0df126a1d12c43bb8abf1fdbd5a2",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/yangmills-resolvent-localization-and-dirichlet-gap.md",
+          "sha256": "876b76c1aee3eb8e7e3d81ae00ca31182644c77e09c1c8c9434cf75e72128574",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/yangmills-simon-flat-directions.md",
+          "sha256": "850d8bf0ea4b6192fea459e881f1ff93774c76083bba1fc9027d8bbae8e15afc",
+          "all_copies_and_pins_agree": true
+        },
+        {
+          "path": "docs/derivations/yangmills-weighted-curvature.md",
+          "sha256": "75c853725c68db30a3f264f4eb5ee9cf614ea784c670cd8eb0dde208d84a073a",
+          "all_copies_and_pins_agree": true
+        }
+      ],
+      "live_and_frozen_inventory_bytes_equal": true
+    },
+    "frozen_run": {
+      "path": "C:\\WORKHOUSE\\REPO\\runs\\analytic_formalization_2026-09-09",
+      "checksum_file": "C:\\WORKHOUSE\\REPO\\runs\\analytic_formalization_2026-09-09\\SHA256SUMS",
+      "checksum_entries_checked": 52,
+      "actual_payload_files": 52,
+      "discrepancies": [],
+      "unlisted_payload_files": [],
+      "listed_but_absent_files": []
+    },
+    "build_cache_scope": {
+      "canonical_packages_path": "C:\\WORKHOUSE\\REPO\\lean\\.lake\\packages",
+      "resolved_shared_packages_path": "C:\\WORKHOUSE\\ALL THEORY\\WORKHOUSE\\lean\\.lake\\packages",
+      "explanation": "Dependency-package build caches under .lake may change during authorized compilation. They are not evidence of modified derivation or protected working-source bytes; this audit makes no claim that all package-cache bytes are unchanged. Any cache path explicitly present in the protected manifest was still checked above."
+    },
+    "input_hashes": {
+      "C:\\WORKHOUSE\\navigation\\reconciliation\\2026-09-09\\merge_manifest.json": "71721c51b51252d44cee06ce7793020c66380af6b4991c9055f1a0e98101b92f",
+      "C:\\WORKHOUSE\\navigation\\reconciliation\\2026-09-09\\formalization\\source_manifest.json": "aee337badb3a54e1c65d5ae649cf8d5797492c5dc98d6b3a8ae2ae7918efffe2",
+      "C:\\WORKHOUSE\\REPO\\ledger\\derivation_statements.yaml": "8042e173f3b0abde9bc91734ba718c8bf80a06db53de9d6c3af0c472834b009b",
+      "C:\\WORKHOUSE\\REPO\\runs\\analytic_formalization_2026-09-09\\ledger\\derivation_statements.yaml": "8042e173f3b0abde9bc91734ba718c8bf80a06db53de9d6c3af0c472834b009b",
+      "C:\\WORKHOUSE\\REPO\\runs\\analytic_formalization_2026-09-09\\SHA256SUMS": "d757d462806d06de1ac00ea25a7782c23a92c5a774b5c2f7a3a4dcd9db288f64"
+    },
+    "inputs_changed_during_audit": [],
+    "output_path": "C:\\WORKHOUSE\\navigation\\reconciliation\\2026-09-09\\formalization\\preservation-audit.json"
+  },
+  "frozen_evidence": "runs/analytic_formalization_2026-09-09/SHA256SUMS"
+}

@@ -34,10 +34,14 @@ import yaml
 from . import certified as certified_mod
 from . import check_cache
 from . import constants as K
+from . import derivation_statements as derivation_statements_mod
+from . import lean_dependencies as lean_dependencies_mod
 from . import ledger as ledger_mod
 from . import literature as literature_mod
 from . import notes as notes_mod
+from . import recent_research as recent_research_mod
 from . import results as results_mod
+from . import study_graph as study_graph_mod
 from .invariants import SUITES
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -574,7 +578,7 @@ def collect() -> list[Claim]:
                     ),
                     tier=3,
                     where="literature/index.yaml",
-                    cites=paper.get("doi") or paper.get("arxiv") or "",
+                    cites=literature_mod.citation_identifier(paper),
                     status=edge["status"],
                     detail=" ".join(str(edge["detail"]).split()),
                     related=[edge["target"]],
@@ -601,7 +605,7 @@ def collect() -> list[Claim]:
                 statement=f"{record['title']} ({record['year']})",
                 tier=3,
                 where="literature/index.yaml",
-                cites=record.get("doi") or record.get("arxiv") or "",
+                cites=literature_mod.citation_identifier(record),
                 status=standing,
                 detail=f"{weights}. {' '.join(str(record.get('note', '')).split())}".strip(),
                 related=sorted(
@@ -615,6 +619,7 @@ def collect() -> list[Claim]:
     # pattern: judgement in a curated file, the join derived, validation
     # mechanical (tests/test_graph.py).
     notes = {t["name"]: t for t in load_theorems()}
+    kernel = lean_dependencies_mod.load()
     chk_ids: dict[str, list[str]] = {}
     for suite in SUITES:
         for name, _section, _tier, _fn in suite.checks:
@@ -623,6 +628,15 @@ def collect() -> list[Claim]:
         note = notes.get(lean.name, {})
         value = note.get("value")
         related = set(note.get("formalizes", []))
+        proof = kernel["theorems"][lean.name]
+        related.update(f"LEAN:{name}" for name in proof["project_dependencies"])
+        source_detail = []
+        for source in note.get("proof_sources", []):
+            related.add(source["statement"])
+            source_detail.append(
+                f"Derivation: {source['statement']} — {source['path']} "
+                f"({source['locator']}); SHA-256 {source['sha256']}. Scope: {source['scope']}"
+            )
         for check_name in note.get("promotes", []):
             related.update(chk_ids.get(check_name, []))
         out.append(
@@ -635,6 +649,7 @@ def collect() -> list[Claim]:
                 decimal=float(Fraction(value)) if value is not None else None,
                 where=lean.where,
                 reproduce="make lean",
+                detail="\n".join([lean_dependencies_mod.detail(proof, kernel), *source_detail]),
                 related=sorted(related),
             )
         )
@@ -674,6 +689,18 @@ def collect() -> list[Claim]:
                 cites="ledger/documents.yaml",
                 status=alias["standing"],
                 detail=" ".join(str(alias.get("note", "")).split()),
+                related=sorted(
+                    {
+                        target
+                        for relation in (
+                            "bears_on",
+                            "supported_by",
+                            "cannot_decide",
+                            "superseded_by",
+                        )
+                        for target in alias.get(relation, [])
+                    }
+                ),
             )
         )
 
@@ -782,6 +809,48 @@ def collect() -> list[Claim]:
     # Analytic proof records preserve the author's claim status and scope.
     # Finite controls and scalar Lean lemmas never promote the whole theorem.
     out.extend(result_claims())
+
+    # Literature studies preserve authored requirements and intermediate ideas
+    # as ordinary T3 notes. Their documentary sources do not certify them.
+    out.extend(collect_study_claims(paper_ids=lit.ids))
+    out.extend(Claim(**record) for record in recent_research_mod.claim_records())
+    out.extend(Claim(**record) for record in derivation_statements_mod.claim_records())
+    return out
+
+
+def collect_study_claims(
+    studies: list[study_graph_mod.Study] | None = None,
+    *,
+    paper_ids: set[str] | None = None,
+) -> list[Claim]:
+    """Copy the study records without running any invariant or collecting the graph."""
+    studies = studies if studies is not None else study_graph_mod.load()
+    problems = study_graph_mod.validate(studies, paper_ids=paper_ids)
+    if problems:
+        raise ValueError("literature study problems:\n" + "\n".join(problems))
+    out = []
+    for study in studies:
+        for node in study.nodes:
+            sources = [f"LIT:{s['paper']} ({s['locator']})" for s in node["sources"]]
+            links = node.get("links", [])
+            explanations = [f"{link['type']} {link['target']}: {link['detail']}" for link in links]
+            out.append(
+                Claim(
+                    id=node["id"],
+                    kind="note",
+                    statement=node["statement"],
+                    tier=3,
+                    where=f"{study.source}#{node['id']}",
+                    cites="; ".join(sources),
+                    status=node["status"],
+                    evidence="prose-only",
+                    detail="\n".join([node["detail"], *explanations]),
+                    related=sorted(
+                        {f"LIT:{s['paper']}" for s in node["sources"]}
+                        | {link["target"] for link in links}
+                    ),
+                )
+            )
 
     return out
 

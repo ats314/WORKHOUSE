@@ -1,7 +1,12 @@
 """The atlas is a faithful, self-contained view of the graph — never a new source."""
 
+import json
 import re
+import shutil
+import subprocess
 from pathlib import Path
+
+import pytest
 
 from workhouse import atlas
 from workhouse import claims as C
@@ -57,8 +62,16 @@ def test_unifying_candidates_carry_their_falsifier():
 
 
 def test_self_contained_except_google_fonts():
-    """The artifact CSP admits fonts.googleapis.com and nothing else external."""
-    urls = set(re.findall(r"https?://[^\s\"'<>)]+", HTML))
+    """The page depends only on Google Fonts; citation URLs are inert node data.
+
+    Institutional sources can have URL identifiers instead of DOI/arXiv strings.
+    Those identifiers must survive in the graph without being mistaken for a
+    script, style, font, or other resource that the atlas fetches to render.
+    The template contains all page code and resource references; the renderer
+    only substitutes the separately tested graph data into its marker.
+    """
+    template = atlas.TEMPLATE.read_text(encoding="utf-8")
+    urls = set(re.findall(r"https?://[^\s\"'<>)]+", template))
     outside = {u for u in urls if not u.startswith("https://fonts.googleapis.com")}
     assert not outside, outside
 
@@ -84,3 +97,32 @@ def test_full_graph_layout_uses_spatial_hashing_and_notes_are_opt_in():
     assert "Spatial hashing" in template
     assert "for (let j = i + 1" not in template
     assert '["note", "notes & archives", "--k-note", false]' in template
+
+
+def test_study_notes_are_visible_with_theory_while_archive_notes_stay_opt_in():
+    """Exercise the actual browser classifier; a T3 study must not vanish by default."""
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("Node.js is unavailable for the atlas selector regression")
+    template = atlas.TEMPLATE.read_text(encoding="utf-8")
+    selector = template.split("const GROUP_OF = ", 1)[1].split("const nodes = ", 1)[0]
+    script = (
+        "const GROUP_OF = "
+        + selector
+        + """
+const enabled = new Set(GROUPS.filter(row => row[3]).map(row => row[0]));
+const cases = [['note', 'STUDY:YM:target'], ['note', 'NOTE:archive:old'],
+               ['archive', 'ARCHIVE:old'], ['gap', 'G19']];
+console.log(JSON.stringify(cases.map(([kind, id]) => {
+  const group = GROUP_OF(kind, id); return [group, enabled.has(group)];
+})));
+"""
+    )
+    result = subprocess.run([node, "-e", script], capture_output=True, text=True, check=True)
+    assert json.loads(result.stdout) == [
+        ["theory", True],
+        ["note", False],
+        ["note", False],
+        ["theory", True],
+    ]
+    assert "GROUP_OF(n.kind, n.id)" in template

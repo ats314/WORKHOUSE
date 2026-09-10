@@ -147,7 +147,7 @@ def test_done_routes_can_name_the_proof_or_analytic_result():
     ledgers = L.load()
     route = next(g for g in ledgers.gaps if g["id"] == "G18")["plan"][0]
     route["state"] = "done"
-    route["closed_by"] = ["RESULT:example", "CITE:PROOF"]
+    route["closed_by"] = ["RESULT:WILSON_ROOTED_CONTRACTION", "CITE:WILSON_SHELL"]
     assert not any("closed_by" in p for p in L.validate(ledgers))
     assert G._closer_id("RESULT:example", lambda _: "unreachable") == "RESULT:example"
     assert G._closer_id("CITE:PROOF", lambda _: "unreachable") == "CITE:PROOF"

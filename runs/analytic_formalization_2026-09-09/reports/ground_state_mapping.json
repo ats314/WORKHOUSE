@@ -1,0 +1,805 @@
+{
+  "schema": "workhouse/formalization-mapping/v1",
+  "module": "lean/Workhouse/GroundStateAssembly.lean",
+  "module_sha256": "4e5474836257d0ee497eace202b54144411efcb46e8125d09d029b023dc06750",
+  "verification": {
+    "strict_compile": "lake env lean -DwarningAsError=true -o .lake/build/lib/lean/Workhouse/GroundStateAssembly.olean Workhouse/GroundStateAssembly.lean",
+    "compile_exit_code": 0,
+    "axiom_audit_exit_code": 0,
+    "theorem_count": 36,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "custom_axioms": [],
+    "sorry": false,
+    "global_lake_build_performed": false
+  },
+  "declarations": [
+    {
+      "declaration": "Workhouse.GroundStateAssembly.variance_eq_second_moment",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA4 / VA10 variance comparison",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        }
+      ],
+      "dependencies": [],
+      "scope": "Finite normalized weight; exact second moment identity, without a positivity claim.",
+      "promotes": [],
+      "line": 45
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.variance_le_deviation",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA4 / VA10 variance infimum",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.variance_eq_second_moment"
+      ],
+      "scope": "Finite weight summing to one; the mean minimizes its quadratic deviation.",
+      "promotes": [],
+      "line": 59
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.variance_density_upper",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA10",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "locator": "BA2 / BA2",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.variance_le_deviation"
+      ],
+      "scope": "Finite normalized target weight and pointwise domination w <= M v; compares variances.",
+      "promotes": [],
+      "line": 77
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.poincare_density_comparison",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA10",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "locator": "BA2 / BA2",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.variance_density_upper"
+      ],
+      "scope": "Arbitrary finite weights with two-sided pointwise bounds, nonnegative energy and reference Poincare input; derives m Var_w <= M C energy_w.",
+      "promotes": [],
+      "line": 91
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.weighted_cauchy_schwarz_sq",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA16 remainder Cauchy-Schwarz",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "locator": "BA3 / BA7",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671"
+        }
+      ],
+      "dependencies": [],
+      "scope": "Finite nonnegative weight, no normalization; proves weighted covariance square bound.",
+      "promotes": [],
+      "line": 114
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.product_minorization_covariance",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA16",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "locator": "BA3 / BA7",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.weighted_cauchy_schwarz_sq"
+      ],
+      "scope": "Arbitrary finite joint probability weights, both marginal equations and product minorization; constructs nonnegative remainder and proves the all-observable covariance bound. Only one observable needs centering.",
+      "promotes": [],
+      "line": 128
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.measure_variance_le_deviation",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA10 variance infimum",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "locator": "BA2 / BA2",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671"
+        }
+      ],
+      "dependencies": [],
+      "scope": "Actual probability measure on an arbitrary measurable space; square-integrable real observable and any constant center.",
+      "promotes": [],
+      "line": 184
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.measure_variance_density_upper",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA10",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "locator": "BA2 / BA2",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.measure_variance_le_deviation"
+      ],
+      "scope": "Actual probability measures mu, nu, square-integrability under each, and mu <= M nu; proves Var_mu <= M Var_nu.",
+      "promotes": [],
+      "line": 193
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.measure_variance_density_lower",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-sc17-thermodynamic-limit.md",
+          "sha256": "6d72876a35a866768f1b0428847f56df803cb3569eb65c8d96e94ab56996e324",
+          "locator": "IF11"
+        },
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c",
+          "locator": "VA4 conditional density floor"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.measure_variance_le_deviation"
+      ],
+      "scope": "Actual probability measures on arbitrary measurable spaces, L2 observable, and lower measure domination m nu <= mu; proves Var_mu(f) >= m Var_nu(f), allowing the two means to differ.",
+      "promotes": [],
+      "line": 214
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.withDensity_variance_floor",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-sc17-thermodynamic-limit.md",
+          "sha256": "6d72876a35a866768f1b0428847f56df803cb3569eb65c8d96e94ab56996e324",
+          "locator": "IF11"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.measure_variance_density_lower"
+      ],
+      "scope": "Actual normalized Radon-Nikodym density with a.e. lower floor; transfers a definite variance lower bound to every L2 observable.",
+      "promotes": [],
+      "line": 232
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.measure_poincare_comparison",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA10",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "locator": "BA2 / BA2",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.measure_variance_density_upper"
+      ],
+      "scope": "Actual probability measures, two-sided measure domination m nu <= mu <= M nu, nonnegative integrable energy and a reference Poincare bound; derives the target bound.",
+      "promotes": [],
+      "line": 243
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.withDensity_poincare_comparison",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA10",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "locator": "BA2 / BA2",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.measure_poincare_comparison"
+      ],
+      "scope": "Normalized withDensity w, a.e. Radon-Nikodym bounds, reference L2 observable, nonnegative target-integrable energy and reference Poincare bound; target L2 membership is derived.",
+      "promotes": [],
+      "line": 267
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.withDensity_poincare_constant",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA10",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "locator": "BA2 / BA2",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.withDensity_poincare_comparison"
+      ],
+      "scope": "The same genuine measure theorem with strictly positive lower density bound; derives the explicit M C / m constant.",
+      "promotes": [],
+      "line": 288
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.integral_mul_eq_L2_inner",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c",
+          "locator": "VA16 Cauchy-Schwarz"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671",
+          "locator": "BA3 / BA7"
+        }
+      ],
+      "dependencies": [],
+      "scope": "Identifies the Bochner integral of real L2 representatives with the inner product of their actual L2 equivalence classes.",
+      "promotes": [],
+      "line": 308
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.integral_cauchy_schwarz_sq",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c",
+          "locator": "VA16"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671",
+          "locator": "BA3 / BA7"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.integral_mul_eq_L2_inner"
+      ],
+      "scope": "Integral Cauchy-Schwarz on arbitrary measurable spaces and measures, without finite-state assumptions.",
+      "promotes": [],
+      "line": 318
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.integral_remainder_measure",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c",
+          "locator": "VA16 subtracting the product part"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671",
+          "locator": "BA3 / BA7"
+        }
+      ],
+      "dependencies": [],
+      "scope": "Constructs the genuine nonnegative remainder measure mu - alpha nu under domination alpha nu <= mu and computes its integrals exactly.",
+      "promotes": [],
+      "line": 329
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.measure_minorization_covariance",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c",
+          "locator": "VA16"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671",
+          "locator": "BA3 / BA7"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.integral_remainder_measure",
+        "Workhouse.GroundStateAssembly.integral_cauchy_schwarz_sq"
+      ],
+      "scope": "Reference cross moment zero and matching second moments, together with reference-measure minorization, imply the full covariance-square contraction on arbitrary L2 real observables.",
+      "promotes": [],
+      "line": 348
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.joint_measure_minorization_covariance",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c",
+          "locator": "VA16"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671",
+          "locator": "BA3 / BA7"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.measure_minorization_covariance"
+      ],
+      "scope": "Actual joint probability measure, actual marginal pushforward equalities, and domination of alpha times their product; derives the centered all-observable covariance bound by actual product integration.",
+      "promotes": [],
+      "line": 383
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.joint_withDensity_minorization_covariance",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c",
+          "locator": "VA16"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671",
+          "locator": "BA3 / BA7"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.joint_measure_minorization_covariance"
+      ],
+      "scope": "The continuous joint theorem with an a.e. density floor relative to the product of its actual marginals; measure domination is derived.",
+      "promotes": [],
+      "line": 421
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.joint_withDensity_covariance_variance",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c",
+          "locator": "VA16"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671",
+          "locator": "BA3 / BA7"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.joint_withDensity_minorization_covariance"
+      ],
+      "scope": "All real square-integrable block observables, with centering performed in the proof: Cov_joint(f,g)^2 <= (1-alpha)^2 Var_marginal(f) Var_marginal(g). No finite discretization, sampled family, or supplied covariance conclusion.",
+      "promotes": [],
+      "line": 441
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.projection_energy",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA4 / VA11",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        }
+      ],
+      "dependencies": [],
+      "scope": "Self-adjoint idempotent on an arbitrary real inner product space; inner x Qx = norm(Qx)^2.",
+      "promotes": [],
+      "line": 488
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.projection_energy_nonneg",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA4 / VA11",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.projection_energy"
+      ],
+      "scope": "Projection positivity is proved from self-adjointness and idempotence.",
+      "promotes": [],
+      "line": 494
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.assembly_energy",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA11 / VA12",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.projection_energy"
+      ],
+      "scope": "Finite family of orthogonal projections on an arbitrary real inner product space; exact sum-of-norm-squares energy.",
+      "promotes": [],
+      "line": 504
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.assembly_symmetric",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA12",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        }
+      ],
+      "dependencies": [],
+      "scope": "The projection sum is symmetric without assuming pairwise commutativity.",
+      "promotes": [],
+      "line": 509
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.assembly_kernel_iff",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA5 common-vacuum kernel",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.assembly_energy"
+      ],
+      "scope": "The sum's kernel equals the intersection of the individual kernels; does not assume that this intersection consists of constants.",
+      "promotes": [],
+      "line": 516
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.symmetric_coupling_sum",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA12 row-budget sum",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        }
+      ],
+      "dependencies": [],
+      "scope": "Exact double-counting of a symmetric interaction matrix into row sums.",
+      "promotes": [],
+      "line": 528
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.assembly_square_lower",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA12",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "locator": "BA3 / BA8",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.symmetric_coupling_sum",
+        "Workhouse.GroundStateAssembly.assembly_energy"
+      ],
+      "scope": "Arbitrary real inner product space, symmetric zero-diagonal pair coefficients, bounded row sums, and local anticommutator estimates; proves G^2 >= (1-kappa)G as a quadratic-form inequality.",
+      "promotes": [],
+      "line": 544
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.finite_spectral_gap_of_square",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA12 spectral step",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        },
+        {
+          "path": "docs/derivations/yangmills-weighted-curvature.md",
+          "locator": "GST-3a to GST-3b, finite-dimensional realization",
+          "sha256": "75c853725c68db30a3f264f4eb5ee9cf614ea784c670cd8eb0dde208d84a073a"
+        }
+      ],
+      "dependencies": [],
+      "scope": "Finite-dimensional real inner product space, symmetric nonnegative linear map, and T^2 >= delta T; diagonalization proves the kernel-complement gap. Neither inverse existence nor a nonzero-eigenvalue lower bound is assumed.",
+      "promotes": [],
+      "line": 590
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.finite_assembly_gap",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA12",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "locator": "BA3 / BA8 finite-dimensional realization",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.assembly_energy",
+        "Workhouse.GroundStateAssembly.assembly_symmetric",
+        "Workhouse.GroundStateAssembly.assembly_square_lower",
+        "Workhouse.GroundStateAssembly.finite_spectral_gap_of_square"
+      ],
+      "scope": "Finite-dimensional full kernel-complement projection gap from local anticommutators and row sums. It does not replace the infinite-dimensional Wilson spectral argument.",
+      "promotes": [],
+      "line": 631
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.local_floor_tensorization",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA11 / VA14",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        }
+      ],
+      "dependencies": [],
+      "scope": "Arbitrary real inner product space; local energy floors plus an explicitly stated tensorization bound imply the assembled gamma/C energy bound.",
+      "promotes": [],
+      "line": 648
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.unitary_ground_state_gap",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "locator": "VA9 / VA14",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+        },
+        {
+          "path": "docs/derivations/yangmills-weighted-curvature.md",
+          "locator": "GST-1 / GST-2 exact-ground specialization",
+          "sha256": "75c853725c68db30a3f264f4eb5ee9cf614ea784c670cd8eb0dde208d84a073a"
+        }
+      ],
+      "dependencies": [],
+      "scope": "Arbitrary real inner product spaces, explicit form domain, an isometric ground-state identification and exact form identity, local floors and tensorization on the vacuum complement; proves the physical form inequality for every admissible vector. No excited eigenvector is assumed.",
+      "promotes": [],
+      "line": 669
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.bounded_gap_on_range_of_square",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c",
+          "locator": "VA12 spectral step"
+        },
+        {
+          "path": "docs/derivations/yangmills-weighted-curvature.md",
+          "sha256": "75c853725c68db30a3f264f4eb5ee9cf614ea784c670cd8eb0dde208d84a073a",
+          "locator": "GST-3a to GST-3b; GST-3: curvature normalization and a spectral argument without a discrete excited state"
+        }
+      ],
+      "dependencies": [],
+      "scope": "Positive bounded operator on an arbitrary complex Hilbert space and T^2 >= delta T; CFC constructs sqrt(T) and proves the delta energy floor on range(T). Neither a square-root hypothesis nor a spectral-gap hypothesis is added.",
+      "promotes": [],
+      "line": 708
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.bounded_spectral_gap_of_square",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c",
+          "locator": "VA12 spectral step"
+        },
+        {
+          "path": "docs/derivations/yangmills-weighted-curvature.md",
+          "sha256": "75c853725c68db30a3f264f4eb5ee9cf614ea784c670cd8eb0dde208d84a073a",
+          "locator": "GST-3a to GST-3b; GST-3: curvature normalization and a spectral argument without a discrete excited state"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.bounded_gap_on_range_of_square"
+      ],
+      "scope": "Arbitrary complex Hilbert space: positivity and T^2 >= delta T imply the full kernel-complement gap. Uses continuity and closure(range T) = (ker T)^perp. No finite dimension, compactness, inverse, or pre-existing gap.",
+      "promotes": [],
+      "line": 737
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.bounded_projection_assembly_gap",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+          "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c",
+          "locator": "VA12"
+        },
+        {
+          "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+          "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671",
+          "locator": "BA3 / BA8"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.projection_energy_nonneg",
+        "Workhouse.GroundStateAssembly.assembly_square_lower",
+        "Workhouse.GroundStateAssembly.assembly_energy",
+        "Workhouse.GroundStateAssembly.bounded_spectral_gap_of_square"
+      ],
+      "scope": "Finite family of actual bounded complex orthogonal projections on an arbitrary Hilbert space; local anticommutator estimates and row bounds imply the full kernel-complement gap. Realification and positivity are constructed within the proof.",
+      "promotes": [],
+      "line": 773
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.gram_quadratic_eq_squares",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-gpu-resolution-audit.md",
+          "locator": "GA10 / GA20",
+          "sha256": "45a72f1f90d9da8fb1f07cb1663dc7df5a53eb3fe8c41377a721c6581344657b"
+        }
+      ],
+      "dependencies": [],
+      "scope": "All finite rectangular real amplitude arrays; their Gram quadratic form is exactly a sum of squares.",
+      "promotes": [],
+      "line": 825
+    },
+    {
+      "declaration": "Workhouse.GroundStateAssembly.gram_form_nonnegative",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-gpu-resolution-audit.md",
+          "locator": "GA10 / GA20",
+          "sha256": "45a72f1f90d9da8fb1f07cb1663dc7df5a53eb3fe8c41377a721c6581344657b"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.GroundStateAssembly.gram_quadratic_eq_squares"
+      ],
+      "scope": "Gram positivity for every such array. Does not identify synthetic arrays with physical Schwinger functions or prove OS reconstruction.",
+      "promotes": [],
+      "line": 841
+    }
+  ],
+  "mathlib_dependencies": [
+    "ProbabilityTheory.variance_sub_const",
+    "ProbabilityTheory.variance_le_expectation_sq",
+    "ProbabilityTheory.variance_eq_integral",
+    "MeasureTheory.integral_mono_measure",
+    "MeasureTheory.integral_smul_measure",
+    "MeasureTheory.withDensity_mono",
+    "MeasureTheory.withDensity_const",
+    "MeasureTheory.MemLp.mono_measure",
+    "MeasureTheory.MemLp.smul_measure",
+    "LinearMap.IsSymmetric.eigenvectorBasis",
+    "LinearMap.IsSymmetric.eigenvalues",
+    "LinearMap.IsSymmetric.apply_eigenvectorBasis",
+    "OrthonormalBasis.sum_sq_inner_right",
+    "OrthonormalBasis.sum_inner_mul_inner",
+    "LinearIsometryEquiv.inner_map_eq_flip",
+    "MeasureTheory.L2.inner_def",
+    "MeasureTheory.Measure.sub_add_cancel_of_le",
+    "MeasureTheory.Measure.sub_le",
+    "MeasureTheory.integral_add_measure",
+    "MeasureTheory.integral_prod_mul",
+    "MeasureTheory.integral_map",
+    "CFC.sqrt",
+    "CFC.sqrt_mul_sqrt_self",
+    "ContinuousLinearMap.nonneg_iff_isPositive",
+    "ContinuousLinearMap.orthogonal_ker",
+    "closure_minimal"
+  ],
+  "outstanding_formalization": [
+    {
+      "source": {
+        "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+        "locator": "VA1--VA4, VA9",
+        "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+      },
+      "obligation": "Construct the actual finite Wilson elliptic Hamiltonian/ground, Feynman-Kac comparison, SU(2) heat kernel bounds, and ground-transform form-domain identification. The measure Poincare transfer and abstract domain-to-physical transfer are formalized here; these model constructions are not."
+    },
+    {
+      "source": {
+        "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+        "locator": "VA12",
+        "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c"
+      },
+      "obligation": "Derive the local anticommutator estimate from the actual conditional-projection angle and identify the concrete Wilson conditional operators. The arbitrary-dimensional bounded square-to-gap and projection row-budget assembly implications are now complete."
+    },
+    {
+      "source": {
+        "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+        "locator": "BA6--BA8",
+        "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671"
+      },
+      "obligation": "Formalize the continuous joint-density mixed-ratio integral producing the minorization floor and conditional disintegration/operator-angle identification. The actual continuous joint covariance-to-variance theorem from the floor and true marginal identities is now complete."
+    },
+    {
+      "source": {
+        "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+        "locator": "BA20--BA25a",
+        "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671"
+      },
+      "obligation": "Translate the already established Brownian-slab activity construction, KP expansion, and actual-ground angle bound in k/epsilon <= 1/256000 into Lean. The source's analytic status remains established in this window; lack of Lean does not reopen that mathematical result."
+    },
+    {
+      "source": {
+        "path": "docs/derivations/wilson-true-vacuum-block-estimates.md",
+        "locator": "BA26 / BA8",
+        "sha256": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671"
+      },
+      "obligation": "The large-k/epsilon continuation is a separate source-stated open analytic successor; no volume-uniform continuum-window angle bound is supplied by the small-activity proof."
+    },
+    {
+      "source": {
+        "path": "docs/derivations/yangmills-weighted-curvature.md",
+        "locator": "GST-1--GST-3, GST-6",
+        "sha256": "75c853725c68db30a3f264f4eb5ee9cf614ea784c670cd8eb0dde208d84a073a"
+      },
+      "obligation": "Riemannian differential conjugation, integrated Bochner inequality/domain extension, the unbounded-operator spectral passage, and trial-state min-max residual comparison remain beyond this module. The exact-ground abstract form transfer, finite-dimensional bridge, and arbitrary-dimensional bounded positive-operator square-to-gap theorem are proved."
+    },
+    {
+      "source": {
+        "path": "docs/derivations/yangmills-gpu-resolution-audit.md",
+        "locator": "GA10 / GA20",
+        "sha256": "45a72f1f90d9da8fb1f07cb1663dc7df5a53eb3fe8c41377a721c6581344657b"
+      },
+      "obligation": "The Gram sum-of-squares/positivity part is proved. Rank <= 3 for the specific archive and any identification with actual field-theory correlation functions are separate; no physical OS statement is inferred from Gram positivity."
+    },
+    {
+      "source": {
+        "path": "docs/derivations/wilson-sc17-thermodynamic-limit.md",
+        "sha256": "6d72876a35a866768f1b0428847f56df803cb3569eb65c8d96e94ab56996e324",
+        "locator": "IF11"
+      },
+      "obligation": "The genuine measure lower-variance comparison is now formalized. Identification of the actual Wilson marginal's density floor, the normalized SU(2) Haar variance 1/4, and passage of that observable to the intended limiting state remain model-specific applications."
+    }
+  ],
+  "preserved_prior_report": "ground_extension/preserved/manifest.json",
+  "helper_definitions": [
+    {
+      "declaration": "Workhouse.GroundStateAssembly.complexProjectionAsReal",
+      "source": {
+        "path": "docs/derivations/wilson-vacuum-aligned-assembly.md",
+        "sha256": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c",
+        "locator": "VA12"
+      },
+      "scope": "Constructs the realification of a complex bounded orthogonal projection with the same action and norm."
+    }
+  ]
+}

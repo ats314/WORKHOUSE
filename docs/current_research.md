@@ -1,5 +1,14 @@
 # Current research map
 
+The [derivation proof map](derivation_formalization.md) now provides exact
+source and statement locators for the September documents. The added formal
+mechanisms cover measure comparison, noncommuting assembly, infinite operator
+inverse/Schur arguments, weak-law and score limits, operator closability and
+spectral interval mass. Their explicit hypotheses remain visible in Lean and
+their kernel dependencies are exported into the theory graph. The mathematical
+source status is retained; full Wilson cylinder, generator, stochastic-dynamics
+and spatial-continuum instantiations are separate remaining formalization work.
+
 The [flat-background continuation](../paper/research_notes/G19_FLAT_HOLONOMY_SOURCES_AND_RANK_REPAIR_20260907.md)
 proves the same full `1/(33L^2)` physical tangent floor over every flat
 holonomy, uniformly in volume, with every covariant harmonic mode retained.
@@ -77,93 +86,117 @@ keeps analytic theorems separate from finite exact controls.
 
 ## The Feshbach channel of the plaquette Hodge algebra
 
-Added 2026-09-08. G14 asked for the mechanism of the tier collapse
-`B_shp = D_shp = 0`; U3 asked for a single statement about the Feshbach
-projection `Q` that would explain it and the pentagonal proper-return
-vanishing together. The cubic half now has one, exactly
-([note](../paper/research_notes/G14_HODGE_FESHBACH_CHANNEL_20260908.md),
-suite `the Feshbach channel of the plaquette Hodge algebra`, T1 over the whole
-zone).
+Added 2026-09-08; scope reconciled 2026-09-09 against the
+[exact integration review](research/september_feshbach_integration.md) and
+[maintained result register](../ledger/results.yaml). The
+[original note](../paper/research_notes/G14_HODGE_FESHBACH_CHANNEL_20260908.md)
+remains preserved, including its subsequently refuted R-degree inference.
+The actual fourth-order tier collapse `B_shp = D_shp = 0` remains established.
 
-`L_down + L_up = q I` per plane component and `L_down L_up = 0`, so at each
-Bloch point the plaquette fibre splits as `ker L_down (+) ker L_up` and the
-Feshbach complement of the carrier **is a Hodge summand**: `Q` is exactly the
-projector onto `ker L_up`. Both Laplacians therefore act on the carrier line by
-scalars, the Hodge algebra generates no off-carrier coupling at all, and every
-excursion off the retained sector costs one insertion of the single non-Hodge
-operator `R` — whose excitation `phi = Q R psi` satisfies `L_up phi = 0`
-identically.
+The exact Laurent identities are `L_down + L_up = q I`,
+`L_down L_up = 0`, `L_up = psi psi^dagger` and `psi^dagger psi = q`.
+For `q > 0`, the carrier line and its orthogonal complement are the two
+Hodge summands, and `Q = I - psi psi^dagger/q` projects onto `ker L_up`.
+Both Laplacians act scalarly on the carrier, so their algebra has no
+off-carrier coupling. The excitation `phi = Q R psi` satisfies
+`L_up phi = 0`. At Gamma, `q = 0` and `psi = 0`: the cleared identities
+remain valid, but this construction defines no normalized carrier projector.
+These are the scope boundaries of `RESULT:HODGE_FESHBACH_SPLITTING`.
 
-Consequences, all exact: a word in `(S, U, R)` has nonzero Feshbach defect
-exactly when it contains two `R` insertions with no `U` between them (`RUR`
-factorizes, `RSR` does not); every word with at most one `R` has carrier symbol
-`(-4)^#S (-2)^#R q^(#U + 1 - #R) e_2^#R` and so reaches only the `c_0`, `A` and
-`4C` tiers; and the recorded fourth-order kernel is linear in `R`. The tier
-collapse is **R-degree one** — unpopulated, not cancelled, and independent of
-the six-orbit structure. It also relocates C2: `C_shp` is the amplitude of the
-sole generator of the Feshbach channel, which is a structural remark about the
-dispute and not a verdict in it.
+The exact word table covers the 39 words of lengths one through three in
+`(S, U, R)`. Within that table, the seven words with a nonzero Laurent
+Feshbach defect contain two `R` insertions with no `U` between them;
+`RUR` factorizes and `RSR` does not. This is neither an all-length theorem
+nor a claim that the defect is nonzero at every momentum. For words in this
+table with at most one `R`, the verified carrier formula is
+`(-4)^#S (-2)^#R q^(#U + 1 - #R) e_2^#R`.
 
-Two identities of the same algebra are registered as predictions rather than
-results: `sigma(RR) = q e_2 + 3 e_3`, so a degree-3 tier carried by `R^2` alone
-has `D = 3 B`; and `sigma(RUR) = 4 e_2^2`, whose shape symbol lies outside the
-four-shape ansatz's span — a candidate falsifier for U2 at an order that
-inserts `R` twice. Which words order six populates is open (G9, G10), and
-[ADR 0005](decisions/0005-retracting-the-degree-bound.md) is why that
-distinction is stated twice.
+That formula itself refutes the broader claim that one `R` excludes the
+`B` tier: `sigma(UR) = sigma(RU) = -2 q e_2`, so the normalized symbol is
+`-2 e_2` despite one `R` and zero Feshbach defect. The historical
+`RESULT:TIER_COLLAPSE_IS_R_DEGREE` retains that falsified inference and
+its source history. The surviving mechanism is the actual support of the
+recorded 189-term fourth-order kernel:
 
-The hypothesis was corrected the same day it was written. A first draft asked
-for `L_down + L_up` to be a scalar — link regularity — and the pentagonal prism
-refutes that (five links on a cap, four on a side, sum
-`diag(6, 6, 5, 5, 5, 5, 5)`); the over-strong version would have excluded the
-geometry U3 is about. What is actually needed, and what holds in all three
-geometries, is that `psi` spans `ker L_down` and is an eigenvector of `L_up`.
+| Supported word | Cleared carrier symbol |
+| --- | --- |
+| `I` | `q` |
+| `U` | `q^2` |
+| `S` | `-4q` |
+| `S^2` | `16q` |
+| `R` | `-2e_2` |
 
-The general form is registered as `U7` with its falsifier. It is derived in one
-geometry and consistent with two; the cheapest test of the second is the
-tetrahedral Q-projected proper returns, now an untried route on G14.
+Their span `{q, q^2, e_2}` excludes the `q e_2` and `e_3` tiers.
+`RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT` therefore preserves `B_shp = D_shp = 0`
+for this kernel, without relying on R-degree alone. This correction changes
+no resolved value of `C_shp` or the C2 adjudication.
+
+The identities `sigma(RR) = q e_2 + 3 e_3` and `sigma(RUR) = 4 e_2^2`
+are also established exact algebraic results. The first implies `D = 3B`
+when `R^2` alone carries that tier. The second lies outside the five-monomial
+cleared ansatz `{q, q^2, e_2, q e_2, e_3}`. Which words the sixth-order
+dynamics produces, and whether other terms cancel an additional shape,
+remain open in G9/G10. [ADR 0005](decisions/0005-retracting-the-degree-bound.md)
+records why an algebraic possibility cannot decide a dynamical coefficient.
+
+For the tetrahedron and pentagonal prism, the native incidence check verifies
+that `psi` spans `ker L_down` and is an `L_up` eigenvector, with eigenvalues
+4 and 7 respectively. Those hypotheses imply scalar Hodge words on the
+carrier. A scalar total Laplacian is unnecessary: the prism sum is
+`diag(6, 6, 5, 5, 5, 5, 5)`. The registered U7 candidate retains the proved
+scalar lemma while its proposed explanation of all projection vanishings
+remains conjectured. The checks do not compute the other cells' proper-return
+or Q-projected histories; that identification remains a separate U3/G14 route.
 
 ## The Feshbach resolvent comparison
 
-Added 2026-09-09, and narrow on purpose. An estimate shape recurs across the
-uniformity gaps: a bilinear form pairing a *free* inverse image against an
-*interacting* one, needing a bound uniform in the volume. The usual attack —
-second resolvent identity, then Neumann iteration — needs an absolute operator
-bound on `A_0^-1 (A_g - A_0)` uniform in volume, and stalls there.
+Added 2026-09-09; read the
+[preserved derivation](../paper/research_notes/G22_FESHBACH_RESOLVENT_COMPARISON_20260909.md)
+with its [scope corrections](research/september_feshbach_integration.md) and
+`RESULT:FESHBACH_RESOLVENT_COMPARISON`. For symmetric invertible forms on
+the chosen complement, with `R_0 = A_0^-1` and `R_g = A_g^-1`, the analytic
+identity is
 
-The mixed form is removable
-([note](../paper/research_notes/G22_FESHBACH_RESOLVENT_COMPARISON_20260909.md),
-suite `the Feshbach resolvent comparison`; the identity and sandwich are T1
-exact, the constant and the two witnesses are T2):
+```text
+(A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g)w, w>.
+```
 
-    (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g) w, w>
+For operator or closed-form applications, the inverse images and mixed
+pairings must exist on the stated domains. The repository's two T1 controls
+check the identity and oriented variational sandwich on four finite rational
+matrix fixtures; they do not machine-certify an arbitrary-form or
+infinite-dimensional theorem. The constant and two numerical witnesses are T2.
 
-needing only symmetry of `A_0` and invertibility. The pairing is a difference of
-two quadratic forms of the **same** vector, so no absolute bound on the
-interacting resolvent is required. A Legendre sandwich then puts the free
-optimizer alone on one side, and a relative form bound `|V[u,u]| <= kappa
-A_0[u,u]` with `|g| kappa < 1` closes the other with the explicit constant
-`kappa/(1 - |g| kappa)^2 <R_0 w, w>` — built from Gaussian data and `kappa`
-alone.
+When both forms are positive, the variational argument gives
+`g V[u_g,u_g] <= <(R_0-R_g)w,w> <= g V[u_0,u_0]`, with this orientation
+for either sign of `g`. If an independent relative form bound
+`|V[u,u]| <= kappa A_0[u,u]` is established and `rho = |g| kappa < 1`, then
 
-**What the exchange opens.** A relative bound is a max over local terms where
-an operator bound is a sum, so it does not accumulate with the volume. Measured (T2,
-floating power iteration, a one-dimensional caricature) on a local kinetic form
-with a near-zero mode, `n = 4..64`: `kappa` is flat to `3e-05` while `||R_0 V||` — the quantity Neumann iteration needs — grows
-linearly. The divergent quantity is exactly the one the identity removes. Two
-open directions follow: the small-field half closes by locality alone (leaving
-only G22's rough set), and since the identity needs no positivity, past
-`|g| kappa = 1` the collapsed object is still a *resolvent difference*, where
-trace-class and Krein spectral-shift methods apply. Neither is claimed.
+```text
+|<(R_0-R_g)w,w>| <= rho/(1-rho)^2 <R_0 w,w>.
+```
 
-**What it does not buy.** The saving is that `kappa` is a relative (KLMN-type)
-bound rather than an absolute one; that is also the whole remaining exposure.
-The registered `FINDING:` is a witness, not a caveat: scaling the interaction
-drives `kappa` up linearly, the constant degrades as `(1 - |g| kappa)^-2`, and
-past `|g| kappa = 1` the form loses positivity and the route is void. That is
-the large-field region — G22's rough set in form-bound language. The identity
-moves the difficulty; it does not remove it, and it establishes nothing about
-infinite volume (G17, G23) or the continuum limit (G19).
+The analytic estimate is conditional on that bound. The native constant
+check computes `kappa` by floating spectral arithmetic on the finite fixtures;
+it supplies no uniform interacting Wilson value.
+
+A volume-independent relative bound can follow from an actual decomposition
+`A_0 = sum_x A_0,x`, with positive reference terms, and uniform termwise
+estimates `|V_x[u,u]| <= kappa A_0,x[u,u]`. Both the decomposition and the
+estimates must be proved on compatible domains. Locality or a small-field
+Taylor expansion alone does not establish them. The preserved one-dimensional
+kinetic example reports T2 observations for `n = 4..64`: `kappa` stays flat
+to `3e-05` while `||R_0 V||` grows. This illustrates a possible comparison
+mechanism without establishing it for gauge theory or proving that only the
+rough set remains.
+
+Failure of `rho < 1` invalidates this sufficient margin estimate; it does
+not itself imply loss of positivity. For example, `A_0 = V = I`, `g = 2`
+gives `A_g = 3I > 0`. The algebraic identity remains available whenever the
+inverses and pairings exist. Trace-class and spectral-shift methods require
+additional hypotheses, not supplied here. Uniform interacting relative bounds,
+operator-domain control and the relevant infinite-volume and continuum
+comparisons remain obligations of G17, G22, G23 and G19.
 
 ## Established starting point
 

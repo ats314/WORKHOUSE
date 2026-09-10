@@ -10,9 +10,9 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 107 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 290 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 441/441 checks pass.
+**T1/T2 — re-derived here.** 562/562 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -66,8 +66,23 @@ it cannot drift from what the repository actually checks.
 | nonlinear Wilson block: global barriers and ground geometry | 5/5 |
 | literal coarse sources: vacuum, Gauss, score and quantum complement | 7/7 |
 | literal endpoint spectra and localized true-ground sources | 10/10 |
-| the Feshbach channel of the plaquette Hodge algebra | 9/9 |
+| the Feshbach channel of the plaquette Hodge algebra | 10/10 |
 | the Feshbach resolvent comparison | 5/5 |
+| Yang-Mills source extraction: reconstruction and localization | 5/5 |
+| Yang-Mills flat directions: exact finite-dimensional algebra | 9/9 |
+| Yang-Mills ground-state transform and residual certificates (G20, G23) | 11/11 |
+| Wilson marked expansion: exact blocks and uniform bound algebra | 12/12 |
+| Wilson complete shell: complex anchoring and weighted matching interfaces | 7/7 |
+| Wilson spatial passage: complete Schur excess and scale budgets | 12/12 |
+| Wilson spatial inverse: compact spectral obstruction and selected repair | 5/5 |
+| Wilson PBH proposal: exact orbit curvature and flow tests | 5/5 |
+| Wilson positive repair: weighted gradient, full rotor and shared-link residual | 9/9 |
+| Wilson vacuum assembly: connected-volume falsifier and true-conditional repair | 16/16 |
+| Wilson background continuation: magnetic comparison and charged covariance | 7/7 |
+| Wilson SC17: endpoint reanchoring and connected spatial decay | 9/9 |
+| Yang-Mills GPU archive: exact operator identification audit | 6/6 |
+| Balaban submission: the two proposed repairs and what they expose | 3/3 |
+| anisotropy variance: full-kernel mixing and induced sixth order | 4/4 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -131,7 +146,6 @@ Claims this repository made and withdrew:
 - `G15` Symbolic-N Gram transcript
 - `G16` Rank-uniform control in tau = beta/N^3
 - `G17` PC-2 free-energy stability and the source-radius reduction **[load-bearing]**
-- `G18` The spectral bridge **[load-bearing]**
 - `G19` Continuum limit
 - `G20` SAFE-region curvature certificate
 - `G21` Davies/Combes-Thomas O(m) decay for the massive Maxwell 1-form kernel *(partial — see its status in the ledger)*
@@ -143,6 +157,7 @@ Claims this repository made and withdrew:
 - `G2` Regenerate all displayed tables in canonical u — discharged 2026-08-21
 - `G3` Fourth-order adjudication — decide C_shp where it actually lives — DISCHARGED 2026-09-04 (ADR 0024). C_shp lives in the rotation amplitude rho, and rho is now decided: the historical pipeline's own Stage-3I ledger, the 2026-09-02 cluster assembly and a third engine agree on every cluster of the rotation record but the adjacent-face cube completion, where the historical ledger holds 8 of 24 orderings; in the kernel's basis C_shp = C_historical + 25/1024. C2 is resolved. One follow-up stays as an untried step (the pair cluster from the third engine, pure-six family included); it can sharpen, not overturn.
 - `G5` Tetrahedral local Haar-resolvent coefficient — discharged 2026-08-21
+- `G18` The spectral bridge at fixed lattice spacing — Fixed-spacing closure only; continuum source transport remains G19. The later RESULT:WILSON_INFINITE_PHYSICAL_BAND also establishes the actual infinite-volume Wilson transfer, complete odd Riesz range and onto literal-source frame on its common small-coupling interval, as recorded in still_open and the retained plan. The August 30 statements quoted below are historical, with their later scope corrections retained in those fields. Discharged at fixed lattice spacing, reconciled 2026-09-09 via Yarotsky quantum-perturbation Riesz projection, exponentially rooted shell dressing, and CMP(1) shell closure (G18_FIXED_SPACING_CARRIER_BRIDGE_INSERT.tex). The complete three-component band and onto literal-source frame are accepted in that theorem's small-u interval. Continuum source transport remains in G19: fixed physical smearing radius R removes an explicit bare power but does not prove cutoff-uniform matched f_R or convergence of its spectral measure. The continuum insert retains those hypotheses; a common bare a^9 factor cancels in normalized spectral fractions. WILSON_G19_REVIEW records the precise source comparison. Former status (2026-08-30): The `G18 interpolator` suite (four T1 checks) splits the overlap problem exactly. In-sector, at every nonzero momentum, the overlap deficit is exactly ZERO with a named radius-1 operator: the boundary of one elementary cube is an exact zero-mode of the face Gram at every L, hence an exact flat eigenstate of the proved order-u^2 symbol, of the third-order factorisation, and of every boundary-factorised correction, with L-independent norm 6. Against that, a proved no-go: every im d3 vector has exactly zero zone-average component, the k = 0 carrier content is carried entirely by the wrapping sheets, and a sheet's normalised overlap with any fixed local observable is exactly 1/L -- while compact 2-cycles on open windows are exactly cube boundaries (checked n = 2..4; the unbounded statement is Alexander duality, a named classical input). So every finitely supported exactly-flat operator is Gamma-blind, and a G18 interpolator for the zero-momentum protected level MUST leave the exactly-flat local algebra: through u^3 it can only couple via the in-sector directions that are flat-degenerate at Gamma anyway, or via out-of-sector (multi-plaquette) content -- which is precisely where the <4% bare-overlap measurement lives. What remains, and stays tier 3: the out-of-sector dressing, the transfer-matrix identification, and everything non-perturbative. The published a^5 degradation (Schierholz 1988) is now explained structurally rather than treated as an empirical constant: the exactly-flat local algebra cannot see the state at all, so the bare operator's coupling is entirely dressing-borne. Companion fact from the isolation suite, same day (constant corrected later that day): the L^-2 collapse this gap's detail cites is the minimal-grid-momentum statement, not a fixed-momentum one. At any fixed nonzero momentum the in-shell splitting t_N u^2 q(k) is L-independent along nested volumes (the L-grid embeds in the mL-grid), and the shell around the carrier keeps a volume-uniform electric isolation of gamma above (C_F, or 5/4 at SU(4) alone) and 2C_F below, with no first-order off-diagonal anywhere (|p Delta p'| >= 6). A particle statement lives at fixed k, where no collapse occurs; the collapse governs only the approach to Gamma.
 - `G24` Derive the shared-link isotropy premise, the one unproved input of the second-order chain — discharged 2026-08-28, the day it was opened. The premise is not an assumption: it follows from the order-2 Weingarten values. Two steps. The six nonshared links collapse, because each plaquette contributes a product of three independent Haar links and a product of independent Haar matrices is Haar -- so the two-plaquette amplitude is Tr(A U) Tr(B U^(+-1)) with A and B independent Haar, and integrating them leaves a pure degree-(2,2) moment of the shared link. Two such moments settle both families: M_direct = N^2 and M_cross = N, so the like family splits as (N+1)/(2N) and (N-1)/(2N), and the mixed family's singlet component of U_ij conj(U_lk) is delta_il delta_jk/N of squared norm 1, giving 1/N^2. All four are exactly d_R/N^2. Registered as `the shared-link weights are Weingarten, not an isotropy assumption` (T1), which imports nothing from the corpus -- the Weingarten pair is the inverse of the S_2 Gram matrix and the index sums are explicit. A_N, B_N and t_N therefore rest on representation theory alone.
 
 ## 6. What blocks the most downstream theory
@@ -167,11 +182,6 @@ settles nothing is excluded however cheap it looks.
 
 - `G17` (unbounded) PC-2 free-energy stability and the source-radius reduction — settles load-bearing
   - The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction. Lead recorded 2026-08-30, unverified here: the Euclidean counterpart of the needed uniform-in-volume strong-coupling control is classical constructive work (the Osterwalder--Seiler cluster expansion for lattice gauge theory, 1978), which proves convergence and a mass gap at strong coupling uniformly in volume for the EUCLIDEAN theory. The open question G17 actually poses is the Hamiltonian transcription of that bound for this projected sector. Indexing the paper awaits a primary-source read (literature/index.yaml requires INSPIRE-sourced fields, never memory); nothing is promoted by this pointer.
-- `G18` (unbounded) The spectral bridge — settles load-bearing
-  - The fixed-spacing Hamiltonian complete band and literal-source frame are constructed in the G18 inserts; the relative-gap continuation gives one coupling domain for every nonzero momentum. The actual Wilson vacuum now has an exact quasi-local spectral-flow realization on the full bounded local algebra and exact connected, locally vacuum-annihilating transfer activities from induced-subsystem partition subtraction. A new creator-velocity chart now gives weighted local-source transport, an actual activity norm with weight 2^|X| at most 1/2500, and a normalized-transfer norm bound 1/998 on one interval uniform in volume and temporal mesh. It isolates the complete finite physical odd shell. The subsequent infinite-volume theorem constructs the actual strong transfer limit, its vacuum gap and complete physical odd Riesz range. On |u|<=u_star/(10022400000 N), the literal-source synthesis is onto that entire range with Gram between 9/16 and 81/64. The same band is identified in the actual reflection-positive Wilson reconstruction. Spatially weighted projected-kernel matching remains separate.
-  - routes live: Match spatially weighted sharp Wilson band kernels and their physical clock
-  - routes done: Construct the local Wilson vacuum chart at every fixed magnetic order; Prove a common analytic domain and rooted contraction for the Wilson creator coordinates; Stabilize the rooted Taylor coefficients by connected active-plaquette witnesses; Construct the analytic infinite-lattice creator family with a local error bound; Realize the convergent creator coordinates in a controlled physical operator chart; Extract exact connected locally vacuum-annihilating Wilson transfer activities; Bound the dressed Wilson transfer activities on the full Hilbert space; Construct a Wilson vacuum chart with exponential assigned-support and source bounds; Isolate the complete finite physical Wilson shell on a common interval; Transport the complete Wilson Riesz range and source frame to infinite volume
-  - routes dead: Prove an undamped same-weight Lipschitz bound for arbitrary active plaquette families
 
 ## 7b. What published work bears on this
 
@@ -231,8 +241,107 @@ published. A paper is T3 until something checks it, same as any document.
 | `HAZRA_2026` | `G14` | supplies-comparison | verified |
 | `T_HOOFT_1979` | `G19` | supplies-method | not-yet-obtained |
 | `GINIBRE_1970` | `G19` | confusable | not-yet-obtained |
+| `YAROTSKY_2004_QP` | `G18` | supplies-method | verified |
+| `YAROTSKY_2004_QP` | `G19` | supplies-method | verified |
+| `YAROTSKY_2004_GS` | `G17` | supplies-method | verified |
+| `YAROTSKY_2004_GS` | `G19` | supplies-method | verified |
+| `UELTSCHI_2004_CLUSTER` | `G17` | supplies-method | verified |
+| `UELTSCHI_2004_CLUSTER` | `G19` | supplies-method | verified |
+| `KP_1986` | `G17` | supplies-method | not-yet-obtained |
+| `JW_2006` | `G17` | supplies-method | verified |
+| `JW_2006` | `G18` | supplies-method | verified |
+| `JW_2006` | `G19` | supplies-method | verified |
+| `JW_2006` | `G20` | supplies-method | verified |
+| `JW_2006` | `G22` | supplies-method | verified |
+| `JW_2006` | `G23` | supplies-method | verified |
+| `AIZENMAN_1982` | `G19` | supplies-comparison | not-yet-obtained |
+| `BALABAN_1985` | `G19` | supplies-method | not-yet-obtained |
+| `BALABAN_1987` | `G19` | supplies-method | not-yet-obtained |
+| `BBIJ_1984` | `G17` | supplies-method | not-yet-obtained |
+| `BBIJ_1984` | `G23` | supplies-method | not-yet-obtained |
+| `BRS_1976` | `G19` | supplies-method | not-yet-obtained |
+| `BF_1980` | `G17` | supplies-method | not-yet-obtained |
+| `BF_1980` | `G23` | supplies-method | not-yet-obtained |
+| `BFS_1979_I` | `G19` | supplies-method | not-yet-obtained |
+| `BFS_1979_I` | `G23` | supplies-method | not-yet-obtained |
+| `BFS_1980_II` | `G19` | supplies-method | not-yet-obtained |
+| `BFS_1980_II` | `G23` | supplies-method | not-yet-obtained |
+| `BFS_1981_III` | `G19` | supplies-method | not-yet-obtained |
+| `BFS_1981_III` | `G23` | supplies-method | not-yet-obtained |
+| `CREUTZ_1980` | `G18` | supplies-comparison | not-yet-obtained |
+| `FP_1967` | `G19` | supplies-method | not-yet-obtained |
+| `FO_1976` | `G19` | supplies-comparison | not-yet-obtained |
+| `FEYNMAN_1981` | `G18` | supplies-comparison | not-yet-obtained |
+| `FEYNMAN_1981` | `G22` | supplies-comparison | not-yet-obtained |
+| `FROHLICH_1982` | `G19` | supplies-comparison | not-yet-obtained |
+| `FOS_1983` | `G23` | supplies-method | not-yet-obtained |
+| `GAWEDZKI_1985` | `G19` | supplies-comparison | not-yet-obtained |
+| `GJ_1968_I` | `G19` | supplies-comparison | not-yet-obtained |
+| `GJ_1970_II` | `G19` | supplies-comparison | not-yet-obtained |
+| `GJ_1970_III` | `G19` | supplies-comparison | not-yet-obtained |
+| `GJ_1972_IV` | `G19` | supplies-comparison | not-yet-obtained |
+| `GJ_1973_POSITIVITY` | `G19` | supplies-comparison | not-yet-obtained |
+| `GJ_1974_SINGLE_PHASE` | `G19` | supplies-comparison | not-yet-obtained |
+| `GJ_1987_QP` | `G17` | supplies-method | not-yet-obtained |
+| `GJ_1987_QP` | `G23` | supplies-method | not-yet-obtained |
+| `GJ_1985_SELECTED_I` | `G17` | supplies-method | not-yet-obtained |
+| `GJ_1985_SELECTED_I` | `G23` | supplies-method | not-yet-obtained |
+| `GJ_1985_SELECTED_II` | `G17` | supplies-method | not-yet-obtained |
+| `GJ_1985_SELECTED_II` | `G23` | supplies-method | not-yet-obtained |
+| `GJS_1974` | `G18` | supplies-method | not-yet-obtained |
+| `GJS_1974` | `G23` | supplies-method | not-yet-obtained |
+| `GJS_1976_I` | `G17` | supplies-method | not-yet-obtained |
+| `GJS_1976_II` | `G17` | supplies-method | not-yet-obtained |
+| `GW_1973` | `G19` | supplies-comparison | not-yet-obtained |
+| `GRS_1975_I` | `G17` | supplies-method | not-yet-obtained |
+| `GRS_1975_I` | `G23` | supplies-method | not-yet-obtained |
+| `GRS_1975_II` | `G17` | supplies-method | not-yet-obtained |
+| `GRS_1975_II` | `G23` | supplies-method | not-yet-obtained |
+| `GRS_1975_GAP` | `G19` | supplies-comparison | not-yet-obtained |
+| `HAAG_1992` | `G18` | supplies-method | not-yet-obtained |
+| `HAAG_1992` | `G23` | supplies-method | not-yet-obtained |
+| `THOOFT_1974` | `G19` | supplies-comparison | not-yet-obtained |
+| `IMBRIE_1981_I` | `G17` | supplies-comparison | not-yet-obtained |
+| `IMBRIE_1981_II` | `G17` | supplies-comparison | not-yet-obtained |
+| `IZ_1980` | `G19` | supplies-comparison | not-yet-obtained |
+| `JAFFE_2000_CQFT` | `G17` | supplies-method | not-yet-obtained |
+| `JAFFE_2000_CQFT` | `G19` | supplies-method | not-yet-obtained |
+| `MRS_1993` | `G19` | supplies-method | not-yet-obtained |
+| `MS_1980_Y3` | `G19` | supplies-comparison | not-yet-obtained |
+| `MALDACENA_1998` | `G19` | supplies-comparison | not-yet-obtained |
+| `MR_1976_CRITICAL` | `G19` | supplies-comparison | not-yet-obtained |
+| `NELSON_1973_MARKOFF` | `G23` | supplies-method | not-yet-obtained |
+| `ORAIFEARTAIGH_1997` | `G19` | supplies-comparison | not-yet-obtained |
+| `OS_1973` | `G23` | supplies-method | not-yet-obtained |
+| `OS_1975` | `G23` | supplies-method | not-yet-obtained |
+| `OS_SEILER_1978` | `G23` | supplies-method | not-yet-obtained |
+| `OS_SENEOR_1976` | `G19` | supplies-comparison | not-yet-obtained |
+| `POLITZER_1973` | `G19` | supplies-comparison | not-yet-obtained |
+| `RIVASSEAU_1991` | `G19` | supplies-method | not-yet-obtained |
+| `SALAM_1968` | `G19` | supplies-comparison | not-yet-obtained |
+| `SW_1994` | `G19` | supplies-comparison | not-yet-obtained |
+| `SEILER_1975_Y2` | `G19` | supplies-comparison | not-yet-obtained |
+| `SIMON_1983_DISCRETE` | `G18` | supplies-method | not-yet-obtained |
+| `SIMON_1983_DISCRETE` | `G22` | supplies-method | not-yet-obtained |
+| `SINGER_1981_ORBIT` | `G20` | supplies-method | not-yet-obtained |
+| `SINGER_1981_ORBIT` | `G23` | supplies-method | not-yet-obtained |
+| `STREATER_WIGHTMAN_1964` | `G18` | supplies-method | not-yet-obtained |
+| `STREATER_WIGHTMAN_1964` | `G23` | supplies-method | not-yet-obtained |
+| `SYMANZIK_1969` | `G23` | supplies-method | not-yet-obtained |
+| `WEINBERG_1967` | `G19` | supplies-comparison | not-yet-obtained |
+| `WILSON_1977_LECTURES` | `G17` | supplies-method | not-yet-obtained |
+| `WILSON_1977_LECTURES` | `G19` | supplies-method | not-yet-obtained |
+| `WITTEN_1994_FOUR_MANIFOLD` | `G19` | supplies-comparison | not-yet-obtained |
+| `YANG_MILLS_1954` | `G19` | supplies-comparison | not-yet-obtained |
+| `MMM_2019_CURVATURE` | `G20` | supplies-method | not-yet-obtained |
+| `MMM_2019_CURVATURE` | `G23` | supplies-method | not-yet-obtained |
+| `MONDAL_2023_GEOMETRIC` | `G20` | supplies-method | not-yet-obtained |
+| `MONDAL_2023_GEOMETRIC` | `G23` | supplies-method | not-yet-obtained |
+| `MONDAL_2023_GEOMETRIC` | `G19` | supplies-method | not-yet-obtained |
+| `BV_1981_GEOMETRY` | `G20` | supplies-method | not-yet-obtained |
+| `BV_1981_GEOMETRY` | `G23` | supplies-method | not-yet-obtained |
 
-**11 of 49 edges rest on a source nobody here has read
+**98 of 148 edges rest on a source nobody here has read
 or pinned.** Obtaining and digest-pinning a primary source upgrades its
 edges from assertion to verification — the Hamer 1989 table did exactly
 that for the program's strongest external agreement.
@@ -256,6 +365,7 @@ different things: **in-web** is how many indexed papers cite this one
 | `HIP_1986` | 4 | 15 (2026-08-21) | **not yet obtained** |
 | `CS_2006` | 3 | 518 (2026-08-21) | **not yet obtained** |
 | `HAMER_1989` | 3 | 10 (2026-08-21) | pinned |
+| `SINGER_1981_ORBIT` | 3 | — | **not yet obtained** |
 | `WEINGARTEN_1978` | 2 | 196 (2026-08-21) | stub |
 | `AT_2020_SU3` | 2 | 184 (2026-08-21) | pinned |
 | `DFSST_1985_STRING` | 2 | 174 (2026-08-21) | stub |
@@ -267,6 +377,8 @@ different things: **in-web** is how many indexed papers cite this one
 | `SMIT_1982` | 2 | 33 (2026-08-21) | stub |
 | `MICHAEL_1987` | 2 | 31 (2026-08-21) | stub |
 | `CAO_2023` | 2 | 23 (2026-08-21) | pinned |
+| `BV_1981_GEOMETRY` | 2 | — | **not yet obtained** |
+| `JAFFE_2000_CQFT` | 2 | — | pinned |
 | `CHEN_2006` | 1 | 762 (2026-08-21) | pinned |
 | `DZ_1983` | 1 | 345 (2026-08-21) | stub |
 | `CKS_2021` | 1 | 285 (2026-08-21) | pinned |
@@ -279,7 +391,69 @@ different things: **in-web** is how many indexed papers cite this one
 | `BORGA_2024` | 1 | 10 (2026-08-21) | pinned |
 | `HSB_2000` | 1 | 9 (2026-08-21) | pinned |
 | `SEO_UKAWA_1982` | 1 | 3 (2026-08-21) | stub |
+| `AIZENMAN_1982` | 1 | — | **not yet obtained** |
+| `BALABAN_1985` | 1 | — | **not yet obtained** |
+| `BALABAN_1987` | 1 | — | **not yet obtained** |
+| `BBIJ_1984` | 1 | — | pinned |
+| `BFS_1979_I` | 1 | — | **not yet obtained** |
+| `BFS_1980_II` | 1 | — | pinned |
+| `BFS_1981_III` | 1 | — | **not yet obtained** |
+| `BF_1980` | 1 | — | **not yet obtained** |
+| `BRS_1976` | 1 | — | pinned |
+| `CREUTZ_1980` | 1 | — | pinned |
+| `FEYNMAN_1981` | 1 | — | **not yet obtained** |
+| `FOS_1983` | 1 | — | **not yet obtained** |
+| `FO_1976` | 1 | — | **not yet obtained** |
+| `FP_1967` | 1 | — | **not yet obtained** |
+| `FROHLICH_1982` | 1 | — | pinned |
+| `GAWEDZKI_1985` | 1 | — | **not yet obtained** |
+| `GJS_1974` | 1 | — | **not yet obtained** |
+| `GJS_1976_I` | 1 | — | **not yet obtained** |
+| `GJS_1976_II` | 1 | — | **not yet obtained** |
+| `GJ_1968_I` | 1 | — | pinned |
+| `GJ_1970_II` | 1 | — | **not yet obtained** |
+| `GJ_1970_III` | 1 | — | **not yet obtained** |
+| `GJ_1972_IV` | 1 | — | **not yet obtained** |
+| `GJ_1973_POSITIVITY` | 1 | — | **not yet obtained** |
+| `GJ_1974_SINGLE_PHASE` | 1 | — | pinned |
+| `GJ_1985_SELECTED_I` | 1 | — | **not yet obtained** |
+| `GJ_1985_SELECTED_II` | 1 | — | **not yet obtained** |
+| `GJ_1987_QP` | 1 | — | **not yet obtained** |
+| `GRS_1975_GAP` | 1 | — | **not yet obtained** |
+| `GRS_1975_I` | 1 | — | **not yet obtained** |
+| `GRS_1975_II` | 1 | — | **not yet obtained** |
+| `GW_1973` | 1 | — | pinned |
+| `HAAG_1992` | 1 | — | **not yet obtained** |
+| `IMBRIE_1981_I` | 1 | — | pinned |
+| `IMBRIE_1981_II` | 1 | — | pinned |
+| `IZ_1980` | 1 | — | **not yet obtained** |
+| `JW_2006` | 1 | — | pinned |
+| `KP_1986` | 1 | — | **not yet obtained** |
 | `LEWIS_1967` | 1 | — | stub |
+| `MALDACENA_1998` | 1 | — | pinned |
+| `MMM_2019_CURVATURE` | 1 | — | pinned |
+| `MRS_1993` | 1 | — | pinned |
+| `MR_1976_CRITICAL` | 1 | — | pinned |
+| `MS_1980_Y3` | 1 | — | **not yet obtained** |
+| `NELSON_1973_MARKOFF` | 1 | — | **not yet obtained** |
+| `ORAIFEARTAIGH_1997` | 1 | — | **not yet obtained** |
+| `OS_1973` | 1 | — | pinned |
+| `OS_1975` | 1 | — | pinned |
+| `OS_SEILER_1978` | 1 | — | **not yet obtained** |
+| `OS_SENEOR_1976` | 1 | — | pinned |
+| `POLITZER_1973` | 1 | — | pinned |
+| `RIVASSEAU_1991` | 1 | — | **not yet obtained** |
+| `SALAM_1968` | 1 | — | **not yet obtained** |
+| `SEILER_1975_Y2` | 1 | — | **not yet obtained** |
+| `SIMON_1983_DISCRETE` | 1 | — | pinned |
+| `STREATER_WIGHTMAN_1964` | 1 | — | **not yet obtained** |
+| `SW_1994` | 1 | — | pinned |
+| `SYMANZIK_1969` | 1 | — | **not yet obtained** |
+| `THOOFT_1974` | 1 | — | pinned |
+| `WEINBERG_1967` | 1 | — | pinned |
+| `WILSON_1977_LECTURES` | 1 | — | **not yet obtained** |
+| `WITTEN_1994_FOUR_MANIFOLD` | 1 | — | pinned |
+| `YANG_MILLS_1954` | 1 | — | pinned |
 | `T_HOOFT_1979` | 0 | 1386 (2026-09-03) | **not yet obtained** |
 | `AT_2021_SUN` | 0 | 115 (2026-08-21) | pinned |
 | `KRS_2023` | 0 | 67 (2026-08-21) | pinned |
@@ -296,8 +470,12 @@ different things: **in-web** is how many indexed papers cite this one
 | `FLPS_2026` | 0 | 0 (2026-08-21) | pinned |
 | `GINIBRE_1970` | 0 | — | **not yet obtained** |
 | `HAZRA_2026` | 0 | — | **not yet obtained** |
+| `MONDAL_2023_GEOMETRIC` | 0 | — | pinned |
 | `NSY_2019` | 0 | — | **not yet obtained** |
+| `UELTSCHI_2004_CLUSTER` | 0 | — | pinned |
 | `URZUA_2019` | 0 | — | pinned |
+| `YAROTSKY_2004_GS` | 0 | — | pinned |
+| `YAROTSKY_2004_QP` | 0 | — | pinned |
 
 **Next acquisition target, computed: `WILSON_1974`** — 10 in-web
 citations and nobody here has read or pinned it. The ranking surfaces
@@ -350,9 +528,9 @@ Historical rho + pi~ = -17607806155349/2202655210329600 (2*X_QUANTUM above the e
 - would be falsified by: Derive the normalization map between the note's (tau, C, S_0, A, H_4) and this corpus's own fourth-order coordinates (q_a, e_2, e_3, C_shp, the shapes A/B/C/D of UNIFIED §5.1) and show that no such map carries C to C_shp — e.g. because the note's construction has no analogue of the off-axis dependence Phi_C(k) = 4 e_2(k)/Q(k) that C_shp multiplies, or because the dimensional/degree count of H_4 does not match the quartic obstruction space's. Either kills the identification outright, the same way q_band^(4) and m_Gamma^(4) turned out to be differently anchored rather than rival estimates (ADR 0002). Equally fatal in the other direction: exhibiting the map and finding that NEITHER recorded C_shp value sits on the eigenline it predicts would leave the construction standing but refute its relevance to C2.
 - status: conjectured
 
-**U7 — The Feshbach complement of a homologically protected retained sector is a Hodge summand, and that single fact is the mechanism behind every projection vanishing in this corpus. Precisely: let the retained sector be the line spanned by psi, where psi spans ker L_down and is an eigenvector of L_up. (Those two conditions are the whole hypothesis; L_down L_up = 0 is automatic from d^2 = 0.) Then both Laplacians act on the retained line by scalars, so the Hodge algebra generates no off-sector coupling at all; every history whose operator is a word in that algebra is scalar on the retained sector and shape-inert; and all shape dispersion is carried by non-Hodge insertions. U3's "two vanishings" are then two specializations — the cubic tier collapse is R-degree one, and the pentagonal proper-return vanishing would be that proper returns are Hodge words.**
+**U7 — If the retained line spans ker L_down and its carrier psi is an L_up eigenvector, every word in the two Hodge generators acts scalarly on that line and has zero off-carrier coupling. This does not forbid momentum-dependent scalar dispersion. The further proposal that this mechanism explains every projection vanishing in the corpus remains a cross-geometry conjecture. On the cubic lattice the actual H4 support {I,U,S,S^2,R} proves B=D=0; R-degree one alone does not, as sigma(UR)=-2 q e_2 shows. Proper-return identification in the pentagonal and tetrahedral problems remains separate.**
 
-- supported by: CITE:HODGE_FESHBACH_CHANNEL, RESULT:HODGE_FESHBACH_SPLITTING, RESULT:TIER_COLLAPSE_IS_R_DEGREE, G14, U3
-- would be falsified by: A geometry whose retained sector is a down-Laplacian kernel line, whose two Laplacians sum to a scalar, and in which a proper-return history — a word in the Hodge algebra alone — nevertheless contributes non-scalar shape dispersion to the retained sector. That exhibits a Hodge word with nonzero Feshbach defect and kills the statement outright. Equally fatal in the other direction: a Q-projected vanishing in a geometry where Q is NOT a Hodge summand (the two Laplacians do not sum to a scalar, or the retained sector is not a down-kernel), which would leave the identity standing while refuting it as the mechanism, exactly as ADR 0023 did to U4. The pentagonal cap and the tetrahedron are the two nearest tests and neither has been computed: the tetrahedral Q-projected proper returns are the cheapest, and are the untried route recorded on G14.
-- status: supported
+- supported by: CITE:HODGE_FESHBACH_CHANNEL, CITE:HODGE_FESHBACH, RESULT:HODGE_FESHBACH_SPLITTING, RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT, G14, U3
+- would be falsified by: The carrier-scalar lemma is tested against its actual kernel/eigenvector hypotheses. To refute the broader explanatory proposal, exhibit a particular proposed projection vanishing that is not generated by those Hodge words, or a purported proper-return history whose required Hodge-word identification fails. A scalar total Laplacian is not required: the pentagonal prism already excludes that unnecessary premise. The exact UR counterexample has already refuted the R-degree-only cubic subclaim.
+- status: conjectured
 

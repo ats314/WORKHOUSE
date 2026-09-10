@@ -1,0 +1,715 @@
+{
+  "schema": "workhouse-formalization-mapping/v1",
+  "module": "lean/Workhouse/ResolventLocalization.lean",
+  "module_sha256": "f0a3d97ec2d760cc7eeef20d653ac160a9c3a248e744c72425462cabf09a8c42",
+  "namespace": "Workhouse.ResolventLocalization",
+  "verification": {
+    "command": "lake env lean -DwarningAsError=true --stdin (the module source followed by #print axioms for all 28 theorem names)",
+    "exit_code": 0,
+    "all_theorems_compiled": true,
+    "theorems": 28,
+    "sorry": false,
+    "new_axioms": false,
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "axiom_free": [
+      "signed_resolvent_identity"
+    ],
+    "global_lake_build_by_agent": false
+  },
+  "theorems": [
+    {
+      "name": "Workhouse.ResolventLocalization.neumann_summable",
+      "line": 24,
+      "scope": "Convergence of the infinite operator series for norm(C)<1.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "## BF1. The energy-dependent relative-form statement"
+        }
+      ],
+      "dependencies": [
+        "summable_geometric_of_norm_lt_one"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.mul_neumann",
+      "line": 29,
+      "scope": "The series is an actual right inverse of 1+C.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "## BF1. The energy-dependent relative-form statement"
+        }
+      ],
+      "dependencies": [
+        "mul_neg_geom_series"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.neumann_mul",
+      "line": 34,
+      "scope": "The series is an actual left inverse of 1+C.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "## BF1. The energy-dependent relative-form statement"
+        }
+      ],
+      "dependencies": [
+        "geom_series_mul_neg"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.norm_neumann_le",
+      "line": 39,
+      "scope": "Operator inverse norm <= 1/(1-norm(C)).",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "## BF1. The energy-dependent relative-form statement"
+        }
+      ],
+      "dependencies": [
+        "tsum_geometric_le_of_norm_lt_one"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.norm_neumann_sub_one_le",
+      "line": 44,
+      "scope": "Norm of inverse minus identity <= norm(C)/(1-norm(C)).",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "## BF1. The energy-dependent relative-form statement"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.mul_neumann",
+        "Workhouse.ResolventLocalization.norm_neumann_le",
+        "norm_mul_le"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.norm_neumann_sub_one_le_budget",
+      "line": 59,
+      "scope": "External relative norm budget theta gives theta/(1-theta).",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "(BF1)"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.norm_neumann_sub_one_le"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.signed_resolvent_identity",
+      "line": 79,
+      "scope": "Noncommutative exact R0-Rg=R0(Fg-F0)Rg under the actual inverse laws.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-resolvent-localization-and-dirichlet-gap.md",
+          "anchor": "### 2.1 The Resolvent Identity"
+        },
+        {
+          "path": "docs/derivations/wilson-selected-inverse-wall.md",
+          "anchor": "(W6)"
+        }
+      ],
+      "dependencies": [],
+      "promotes": [],
+      "axioms": []
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.normalized_selected_pairing_bound",
+      "line": 92,
+      "scope": "Actual real Hilbert-space selected pairing controlled by theta/(1-theta) times squared source norm.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "(BF1)"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.norm_neumann_sub_one_le_budget",
+        "abs_real_inner_le_norm",
+        "ContinuousLinearMap.le_opNorm"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.weighted_selected_pairing_bound",
+      "line": 111,
+      "scope": "Normalized selected pairing after the supplied inverse-square-root source map L.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "(BF1)"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.normalized_selected_pairing_bound"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.weighted_inverse_difference_bound",
+      "line": 121,
+      "scope": "Actual sandwiched operator difference L*R*L-L*L bounded in the original source coordinate, requiring symmetric L.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "(BF1)"
+        },
+        {
+          "path": "docs/derivations/wilson-selected-inverse-wall.md",
+          "anchor": "(W5)"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.weighted_selected_pairing_bound"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.signed_resolvent_pairing",
+      "line": 133,
+      "scope": "Equality of signed Hilbert-space pairings under inverse laws and symmetry of R0.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-resolvent-localization-and-dirichlet-gap.md",
+          "anchor": "### 2.1 The Resolvent Identity"
+        },
+        {
+          "path": "docs/derivations/wilson-selected-inverse-wall.md",
+          "anchor": "(W6)"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.signed_resolvent_identity"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.schur_square_completion",
+      "line": 150,
+      "scope": "Exact bounded fast-Hilbert-space square completion for arbitrary retained value and graph force.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-spatial-schur-excess.md",
+          "anchor": "(SP3)"
+        },
+        {
+          "path": "docs/derivations/wilson-selected-inverse-wall.md",
+          "anchor": "(W4)"
+        },
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "(BF3)"
+        }
+      ],
+      "dependencies": [
+        "real_inner_comm"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.schur_minimizer_value",
+      "line": 164,
+      "scope": "The graph correction -R v attains a-inner(v,Rv).",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-spatial-schur-excess.md",
+          "anchor": "(SP4)"
+        },
+        {
+          "path": "docs/derivations/wilson-selected-inverse-wall.md",
+          "anchor": "(W4)"
+        },
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "(BF3)"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.schur_square_completion"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.schur_minimizer_lower_bound",
+      "line": 173,
+      "scope": "Fast positivity proves global minimization for every vector in the Hilbert space.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-spatial-schur-excess.md",
+          "anchor": "(SP3)"
+        },
+        {
+          "path": "docs/derivations/wilson-selected-inverse-wall.md",
+          "anchor": "(W4)"
+        },
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "(BF3)"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.schur_square_completion"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.normalized_fast_coercive",
+      "line": 183,
+      "scope": "Derives coercivity (1-theta)norm(q)^2 <= inner(q,(1+C)q) from norm(C)<=theta.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-spatial-schur-excess.md",
+          "anchor": "(SP2)"
+        },
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "## BF1. The energy-dependent relative-form statement"
+        }
+      ],
+      "dependencies": [
+        "abs_real_inner_le_norm",
+        "ContinuousLinearMap.le_opNorm"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.normalized_schur_unique_minimizer",
+      "line": 203,
+      "scope": "Constructs inverse and proves unique global Schur minimizer for symmetric C with norm(C)<=theta<1.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-spatial-schur-excess.md",
+          "anchor": "(SP3)",
+          "also": "(SP4)"
+        },
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "(BF3)"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.mul_neumann",
+        "Workhouse.ResolventLocalization.normalized_fast_coercive",
+        "Workhouse.ResolventLocalization.schur_square_completion",
+        "Workhouse.ResolventLocalization.schur_minimizer_value",
+        "Workhouse.ResolventLocalization.schur_minimizer_lower_bound"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.finite_source_propagation",
+      "line": 244,
+      "scope": "Correct propagation bound with full source l1 mass; nonsingleton support cannot discard its size.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-resolvent-localization-and-dirichlet-gap.md",
+          "anchor": "### 2.3 Volume-Uniformity of the Pairing"
+        }
+      ],
+      "dependencies": [
+        "Finset.abs_sum_le_sum_abs"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.localized_kernel_pairing",
+      "line": 262,
+      "scope": "Absolute convergence and norm bound for the infinite double pairing given actual summable source envelopes and kernel bound.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-resolvent-localization-and-dirichlet-gap.md",
+          "anchor": "### 2.3 Volume-Uniformity of the Pairing"
+        }
+      ],
+      "dependencies": [
+        "Summable.mul_of_nonneg",
+        "HasSum.mul",
+        "Summable.of_norm_bounded",
+        "tsum_of_norm_bounded"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.localized_finite_volume_bound",
+      "line": 289,
+      "scope": "Every finite-volume sum is bounded by the same infinite majorant.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-resolvent-localization-and-dirichlet-gap.md",
+          "anchor": "### 2.3 Volume-Uniformity of the Pairing"
+        }
+      ],
+      "dependencies": [
+        "Finset.abs_sum_le_sum_abs",
+        "Summable.sum_le_tsum"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.integer_geometric_hasSum",
+      "line": 301,
+      "scope": "Exact sum over Z of q^abs(z) equals (1+q)/(1-q), 0<=q<1.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-resolvent-localization-and-dirichlet-gap.md",
+          "anchor": "### 2.3 Volume-Uniformity of the Pairing"
+        }
+      ],
+      "dependencies": [
+        "hasSum_geometric_of_lt_one",
+        "HasSum.of_nat_of_neg_add_one"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.cubicWeight_nonneg",
+      "line": 329,
+      "scope": "Nonnegative exponential majorant in every dimension, in recursive Z-product coordinates.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-resolvent-localization-and-dirichlet-gap.md",
+          "anchor": "### 2.3 Volume-Uniformity of the Pairing"
+        }
+      ],
+      "dependencies": [],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.cubic_geometric_hasSum",
+      "line": 337,
+      "scope": "Exact infinite d-dimensional integer lattice sum ((1+q)/(1-q))^d.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-resolvent-localization-and-dirichlet-gap.md",
+          "anchor": "### 2.3 Volume-Uniformity of the Pairing"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.integer_geometric_hasSum",
+        "Workhouse.ResolventLocalization.cubicWeight_nonneg",
+        "HasSum.mul"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.cubic_localized_pairing",
+      "line": 351,
+      "scope": "Actual infinite-lattice pairing summability with explicit dimension-dependent, volume-independent constant from the supplied decay envelopes.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-resolvent-localization-and-dirichlet-gap.md",
+          "anchor": "### 2.3 Volume-Uniformity of the Pairing"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.localized_kernel_pairing",
+        "Workhouse.ResolventLocalization.cubic_geometric_hasSum",
+        "Workhouse.ResolventLocalization.cubicWeight_nonneg"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.neumann_quadratic_remainder_identity",
+      "line": 378,
+      "scope": "Exact noncommutative operator error R-(1-C+C^2)=-C^3 R for the constructed infinite-series inverse.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "## BF1. The energy-dependent relative-form statement"
+        },
+        {
+          "path": "docs/derivations/wilson-spatial-schur-excess.md",
+          "anchor": "## 3. The complete second-order coefficient and a uniform remainder",
+          "also": "(SP7)-(SP9)"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.mul_neumann"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.neumann_quadratic_expansion",
+      "line": 389,
+      "scope": "Actual inverse expansion R=1-C+C^2+(-C^3 R), with explicit operator-valued remainder.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "## BF1. The energy-dependent relative-form statement"
+        },
+        {
+          "path": "docs/derivations/wilson-spatial-schur-excess.md",
+          "anchor": "## 3. The complete second-order coefficient and a uniform remainder",
+          "also": "(SP7)-(SP9)"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.neumann_quadratic_remainder_identity"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.norm_neumann_quadratic_remainder_le",
+      "line": 396,
+      "scope": "Cubic operator norm error <= norm(C)^3/(1-norm(C)); the geometric denominator is retained.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "## BF1. The energy-dependent relative-form statement"
+        },
+        {
+          "path": "docs/derivations/wilson-spatial-schur-excess.md",
+          "anchor": "## 3. The complete second-order coefficient and a uniform remainder",
+          "also": "(SP7)-(SP9)"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.neumann_quadratic_remainder_identity",
+        "Workhouse.ResolventLocalization.norm_neumann_le",
+        "norm_mul_le",
+        "norm_pow_le"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.norm_sandwiched_neumann_quadratic_remainder_le",
+      "line": 409,
+      "scope": "Arbitrary bounded left and right source maps preserve the cubic remainder with their explicit norm factors.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "## BF1. The energy-dependent relative-form statement"
+        },
+        {
+          "path": "docs/derivations/wilson-spatial-schur-excess.md",
+          "anchor": "## 3. The complete second-order coefficient and a uniform remainder",
+          "also": "(SP7)-(SP9)"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.norm_neumann_quadratic_remainder_le",
+        "norm_mul_le"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.ResolventLocalization.neumann_quadratic_remainder_pairing_bound",
+      "line": 431,
+      "scope": "Actual Hilbert selected-pairing error <= norm(C)^3/(1-norm(C))*norm(w)^2; weighted form by substituting Lw.",
+      "sources": [
+        {
+          "path": "docs/derivations/wilson-background-covariance-continuation.md",
+          "anchor": "## BF1. The energy-dependent relative-form statement"
+        },
+        {
+          "path": "docs/derivations/wilson-spatial-schur-excess.md",
+          "anchor": "## 3. The complete second-order coefficient and a uniform remainder",
+          "also": "(SP7)-(SP9)"
+        }
+      ],
+      "dependencies": [
+        "Workhouse.ResolventLocalization.norm_neumann_quadratic_remainder_le",
+        "abs_real_inner_le_norm",
+        "ContinuousLinearMap.le_opNorm"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "definitions": [
+    "Workhouse.ResolventLocalization.neumann",
+    "Workhouse.ResolventLocalization.schurEnergy",
+    "Workhouse.ResolventLocalization.CubicLattice",
+    "Workhouse.ResolventLocalization.cubicWeight"
+  ],
+  "inventory_unit_links": [
+    {
+      "source": "docs/derivations/wilson-background-covariance-continuation.md",
+      "key": "BF1_BF3",
+      "implemented": "Normalized bounded-operator inverse construction, selected norm/form estimate, exact bounded Schur minimizer.",
+      "remaining": "Closed unbounded forms and their representation by A0^(-1/2), common form domains and cross-functional extension, energy-dependent source derivative identity, Wilson uniform norm hypotheses."
+    },
+    {
+      "source": "docs/derivations/wilson-spatial-schur-excess.md",
+      "key": "SP1_SP6",
+      "implemented": "Bounded normalized fast Hilbert operator, exact Schur square completion, unique minimizer.",
+      "remaining": "Closed-form domain construction, sharp two-sided inverse order SP5, energy differentiation SP6 and induced graph metric. General operators are on real Hilbert spaces; complex sesquilinear formalization remains."
+    },
+    {
+      "source": "docs/derivations/wilson-selected-inverse-wall.md",
+      "key": "W4_W5",
+      "implemented": "Bounded-Hilbert W4 square completion and variational minimizer; selected inverse difference estimate.",
+      "remaining": "Unbounded compact/Gaussian domain-dual realization, quantitative third-order operator remainder W5, actual coupled Wilson W6."
+    },
+    {
+      "source": "docs/derivations/yangmills-resolvent-localization-and-dirichlet-gap.md",
+      "key": "CONDITIONAL_LOCALIZATION",
+      "implemented": "Exact signed resolvent identity, correct finite-source propagation, infinite-lattice summability, general infinite kernel pairing.",
+      "remaining": "Combes-Thomas hypotheses and actual Wilson identification are not established. The audited proposal's W6, WR26 and time-splice closure claims remain unpromoted."
+    },
+    {
+      "source": "docs/derivations/wilson-spatial-schur-excess.md",
+      "key": "SP7_SP10",
+      "implemented": "Exact quadratic Neumann expansion with genuine third-order operator remainder, norm bound, bounded source sandwich and actual Hilbert selected-pairing estimate.",
+      "remaining": "Combine the g-dependent direct and graph-force remainders to prove the complete SP9 constant; establish the interacting Wilson SP8 norm hypotheses and unbounded common-domain representation."
+    }
+  ],
+  "source_corrections": [
+    "The source proposal drops the source-support cardinality for nonsingleton S0 when replacing its l1 norm by its supremum norm. finite_source_propagation retains the exact l1 mass.",
+    "The source audit explicitly rejects promoting the massive surrogate to the actual Wilson operator.",
+    "Ground transformation does not set the scalar F_Lambda=E0-sum(e_star) to zero and does not itself prove a uniform Poincare constant.",
+    "These 28 proofs formalize the displayed bounded operator, cubic inverse remainder and summability statements exactly; they do not constitute full Lean translation of the four entire derivations."
+  ]
+}
