@@ -78,6 +78,9 @@ accounts for 1,347 passes and one Windows symlink skip out of 1,348 cases.
 Both the initial error report and corrected rerun are retained. The earlier
 [integration checkpoint](validation.json) records its then-pending work;
 GitHub CI and merge status are recorded by the publishing pull request.
+The [PR 119 reconciliation](reconciliation_pr119.json) records the subsequent
+literature-only upstream merge and regeneration of the combined graph. It
+preserves both integrations and does not alter the requested source snapshots.
 `SHA256SUMS` pins this run. Maintained navigation was preserved separately
 under the workstation's `navigation/preserved/2026-09-10-folder-evidence-integration/`;
 those navigation backups are not scientific evidence.
