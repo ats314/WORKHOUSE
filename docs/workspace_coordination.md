@@ -92,6 +92,7 @@ for source-to-proof integration.
 
 From the outer workspace, `workhouse.ps1 where`, `workhouse.ps1 doctor`, and
 `workhouse.ps1 why G19` route through the canonical path in `WORKSPACE.json`.
+`G19` is an example query target; substitute the ID relevant to your task.
 The doctor uses local Git references; it does not claim to have fetched GitHub.
 
 Coordinate exact file ownership when agents work concurrently. Preserve

@@ -9,6 +9,10 @@ they do not define separate graph meanings. Select the checkout through
 
 ## Start with a retained snapshot
 
+Select graph targets from the user's task. The commands below use `G19` and
+`5/612` as examples; replace them with the relevant graph IDs and search value.
+Example IDs do not set research priorities, and `brief` has no default target.
+
 Run from the selected checkout in its configured environment:
 
 ```text
@@ -18,8 +22,8 @@ uv run --no-sync workhouse search '5/612'
 uv run --no-sync workhouse brief G19 --json --out .graph-state/TASK/start.json
 ```
 
-Replace `TASK` with a new dated task identifier. `--startup` stands alone: it
-prints the protocol location and startup notice without collecting the graph or
+Replace `TASK` with a new dated task identifier as well. `--startup` stands
+alone: it prints the protocol location and startup notice without collecting the graph or
 running calculations. It does not replace a target-specific briefing.
 
 Supply every relevant target ID together to obtain one shared snapshot, for

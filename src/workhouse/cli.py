@@ -568,7 +568,9 @@ def main(argv: list[str] | None = None) -> int:
     ix.add_argument("-w", "--write", action="store_true", help="regenerate index/*.jsonl")
 
     bf = sub.add_parser("brief", help="one source-identified graph snapshot for an agent task")
-    bf.add_argument("ids", nargs="*", help="one or more graph IDs, e.g. G19 G17")
+    bf.add_argument(
+        "ids", nargs="*", help="one or more graph IDs relevant to your task; no default target"
+    )
     bf.add_argument("--json", action="store_true", help="full machine-readable provenance envelope")
     bf.add_argument("-o", "--out", metavar="PATH", help="create a new file; refuse overwrite")
     bf.add_argument(
