@@ -80,8 +80,14 @@ def _walk(rel: str):
         return
     if any(part in SKIP_PARTS for part in target.parts):
         return
+
+    def onerror(error: OSError) -> None:
+        # Preserve permission skips, but fail before caching an incomplete scan.
+        if not isinstance(error, PermissionError):
+            raise error
+
     paths = []
-    for directory, directories, filenames in os.walk(target):
+    for directory, directories, filenames in os.walk(target, onerror=onerror):
         # Prune before descent: filtering rglob results still scans dependency caches.
         directories[:] = [name for name in directories if name not in SKIP_PARTS]
         for name in filenames:

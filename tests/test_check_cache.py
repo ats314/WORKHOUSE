@@ -1,7 +1,10 @@
 """The per-check cache is keyed on every input and never serves `verify`."""
 
+import errno
 import json
 from pathlib import Path
+
+import pytest
 
 from workhouse import check_cache as CC
 from workhouse.invariants._core import Result, Suite
@@ -68,6 +71,30 @@ def test_walk_prunes_excluded_directories_before_descent(tmp_path, monkeypatch):
     monkeypatch.setattr(CC.os, "walk", observed_walk)
     assert list(CC._walk("tree")) == [tmp_path / "tree/visible/leaf.txt"]
     assert visited == [tmp_path / "tree", tmp_path / "tree/visible"]
+
+
+def test_walk_propagates_unexpected_scan_errors(tmp_path, monkeypatch):
+    monkeypatch.setattr(CC, "ROOT", tmp_path)
+    (tmp_path / "tree").mkdir()
+
+    def fail_scandir(path):
+        raise OSError(errno.EIO, "injected scan failure", str(path))
+
+    monkeypatch.setattr(CC.os, "scandir", fail_scandir)
+    with pytest.raises(OSError, match="injected scan failure") as failure:
+        list(CC._walk("tree"))
+    assert failure.value.errno == errno.EIO
+
+
+def test_walk_preserves_permission_error_skips(tmp_path, monkeypatch):
+    monkeypatch.setattr(CC, "ROOT", tmp_path)
+    (tmp_path / "tree").mkdir()
+
+    def fail_scandir(path):
+        raise PermissionError(errno.EACCES, "injected permission failure", str(path))
+
+    monkeypatch.setattr(CC.os, "scandir", fail_scandir)
+    assert list(CC._walk("tree")) == []
 
 
 def test_fingerprint_covers_the_input_trees_and_changes_when_one_does(tmp_path, monkeypatch):
