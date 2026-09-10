@@ -1,6 +1,7 @@
 """The frontier is generated, so the thing to test is that it cannot go stale."""
 
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -11,6 +12,23 @@ import pytest
 from workhouse import frontier as F
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _find_bash() -> str | None:
+    bash = shutil.which("bash")
+    if bash and "WindowsApps" in bash:
+        bash = None
+    if not bash:
+        git_cmd = shutil.which("git")
+        if git_cmd:
+            for rel in ("bin/bash.exe", "usr/bin/bash.exe"):
+                candidate = Path(git_cmd).resolve().parents[1] / rel
+                if candidate.is_file():
+                    bash = str(candidate)
+                    break
+        if not bash and Path("C:/Program Files/Git/bin/bash.exe").is_file():
+            bash = "C:/Program Files/Git/bin/bash.exe"
+    return bash
 
 
 def test_frontier_md_is_current():
@@ -73,15 +91,20 @@ def test_the_brief_names_the_open_contradiction_by_id():
 
 def test_the_hook_emits_valid_session_start_json():
     """The hook's stdout is parsed by the harness; anything else breaks startup."""
-    bash = shutil.which("bash")
+    bash = _find_bash()
     if bash is None:
         pytest.skip("the session-start hook requires bash")
     hook = ROOT / ".claude" / "hooks" / "session-start.sh"
+    if sys.platform == "win32":
+        env = dict(os.environ)
+        env["CLAUDE_PROJECT_DIR"] = str(ROOT)
+    else:
+        env = {"PATH": "/usr/bin:/bin:/usr/local/bin", "CLAUDE_PROJECT_DIR": str(ROOT)}
     proc = subprocess.run(
         [bash, str(hook)],
         capture_output=True,
         text=True,
-        env={"PATH": "/usr/bin:/bin:/usr/local/bin", "CLAUDE_PROJECT_DIR": str(ROOT)},
+        env=env,
         check=True,
     )
     payload = json.loads(proc.stdout)
