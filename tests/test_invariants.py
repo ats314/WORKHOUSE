@@ -74,7 +74,7 @@ def test_every_suite_module_is_registered():
     )
 
 
-def test_every_check_reports_a_source_that_exists():
+def test_every_check_reports_a_source_that_exists(monkeypatch):
     """`verify`, the catalogue and CERTIFIED.md all print a check's location.
 
     That location used to be a hard-coded `invariants.py` plus a line number,
@@ -83,11 +83,33 @@ def test_every_check_reports_a_source_that_exists():
     """
     import pathlib
 
+    from workhouse.invariants._core import Suite, source_path
+
+    def reject_execution(*_args, **_kwargs):
+        pytest.fail("Source metadata inspection must not rerun mathematical checks")
+
+    monkeypatch.setattr(Suite, "run", reject_execution)
     root = pathlib.Path(__file__).resolve().parents[1]
     for suite in SUITES:
-        for name, _sec, _tier, _fn in suite.checks:
-            result = next(r for r in suite.run({name}) if r.name == name)
-            path, _, line = result.source.rpartition(":")
-            assert (root / path).is_file(), f"{suite.name}::{name} -> {result.source}"
+        for name, _sec, _tier, fn in suite.checks:
+            source = source_path(fn)
+            path, _, line = source.rpartition(":")
+            assert (root / path).is_file(), f"{suite.name}::{name} -> {source}"
             assert int(line) > 0
-            assert path.startswith("src/workhouse/invariants/"), result.source
+            assert int(line) == fn.__code__.co_firstlineno
+            assert path.startswith("src/workhouse/invariants/"), source
+
+
+def test_suite_run_reports_source_metadata():
+    from workhouse.invariants._core import Suite
+
+    suite = Suite("source metadata probe")
+
+    @suite.check("probe")
+    def probe():
+        return True, "cheap source metadata check"
+
+    (result,) = suite.run()
+    assert result.passed
+    assert result.line == probe.__code__.co_firstlineno
+    assert result.source == f"tests/test_invariants.py:{probe.__code__.co_firstlineno}"
