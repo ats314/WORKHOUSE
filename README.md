@@ -89,6 +89,14 @@ preserved with [source hashes and verification evidence](runs/track_a_formalizat
 The proof map distinguishes these complete abstract results from the remaining
 Wilson-model and SU(2) Haar identifications.
 
+The [reviewed current and geometry connections](paper/research_notes/THEORY_CURRENT_BRIDGES_20260910.md)
+add an explicit current for the fixed square's complete first residual, with
+constant below `1/840`, and connect it to selected-inverse control, source
+totality, Schur metrics and Riccati residual certificates. The variational
+energy estimate is inverse-free; the checked W6 composition retains its
+bounded-inverse assumptions. Start with `workhouse why RESULT:SQUARE_FIRST_CURRENT_BUDGET`
+and the [integration evidence](runs/theory_current_bridges_2026-09-10/README.md).
+
 Accept a derivation when its mathematical argument works under its explicit
 hypotheses. Publication status, novelty, and an agent's prior familiarity do
 not determine whether it is valid. Record exactly what its proof establishes.

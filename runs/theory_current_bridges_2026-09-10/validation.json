@@ -1,0 +1,57 @@
+{
+  "date": "2026-09-10",
+  "base_commit": "8f1eeb1c33689f21bff64d24846044e282d30118",
+  "scope": "Fresh derivation controls, focused regressions and strict Lean build; broad publication CI is attached to the final GitHub commit.",
+  "commands": [
+    {
+      "command": [
+        "-B",
+        "scripts/verify_source_current_bridges.py"
+      ],
+      "exit_code": 0,
+      "output": "source_current_controls.json"
+    },
+    {
+      "command": [
+        "-B",
+        "scripts/verify_theory_geometry_bridges.py"
+      ],
+      "exit_code": 0,
+      "output": "geometry_controls.json"
+    },
+    {
+      "command": [
+        "-B",
+        "-m",
+        "pytest",
+        "tests/test_source_current_bridges.py",
+        "tests/test_theory_geometry_bridges.py",
+        "tests/test_check_cache.py",
+        "-q",
+        "--basetemp=tmp/pytest-bridges-final"
+      ],
+      "exit_code": 0,
+      "output": "focused_tests.log"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/export_lean_dependencies.py"
+      ],
+      "exit_code": 0,
+      "output": "lean_export.log",
+      "scope": "Fresh aggregate strict build and export: 400 registered theorems; 841 declarations; standard transitive axioms."
+    }
+  ],
+  "preserved_initial_failures": [
+    "Initial invariant adapters tried unsupported algebraic-number yields, then strings; final adapters expose exact rational bounds and retain radical formulas in source/control details.",
+    "Initial aggregate exporter used an elan proxy without ELAN_HOME; rerun with the pinned toolchain bin passed.",
+    "An early cache fingerprint regression overlapped active source edits; after input freeze and directory-pruning repair all nine cache tests passed."
+  ],
+  "cache_pruning": {
+    "equivalent_fixture_eligible_files": 80,
+    "legacy_seconds": 0.04423,
+    "pruned_seconds": 0.00589,
+    "full_fingerprint_seconds": 0.3283
+  }
+}

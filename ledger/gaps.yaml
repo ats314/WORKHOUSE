@@ -1249,6 +1249,26 @@ gaps:
           - G19
         status: |
           For M_m=sqrt(L+m^2) on a periodic scalar lattice, (L+m^2)1=m^2 1 gives M_m 1 = m 1 exactly, so the row sums are m; every off-diagonal entry is negative by the heat representation, hence sum_(f!=e)|M_m(e,f)| equals M_m(e,e)-m and the conditional maximal-correlation row is exactly kappa_m = 1 - m/M_m(e,e). Since M_m(e,e) tends to a finite positive constant, kappa_m tends to one as m vanishes: numerically .6154 at m=1, .9582 at m=.1 and .9987 at m=.003 on a 24^3 torus. A criterion of the VA12/VA19/R11 shape needs a row strictly below one with a margin, and this full-coordinate scalar reference has no such margin. The scalar three-site instance of the identity is registered as the SC17 check "a scalar Gaussian square-root precision has the exact critical angle row"; the lattice statement above is its uniform version. This computation does not determine the SU2 gauge-invariant or conditioned fast-sector angles. The separate averaged-path precision cusp excludes uniform exponential locality but permits R4a's polynomial budget. Neither observation rules out a physical block-angle route or a positive scaled product of its conditional gap and shrinking angle margin.
+      - step: Construct the complete first residual current for the fixed twelve-edge square
+        state: done
+        closed_by:
+        - RESULT:SQUARE_FIRST_RESIDUAL_CURRENT
+        - RESULT:SQUARE_FIRST_CURRENT_BUDGET
+        status: The actual complete first coefficient has an explicit current and all-radial-source inverse-energy
+          constant Kstar<1/840, including horizontal and v-current contributions. Fast test vectors and fixed-square
+          first-order scope are explicit; this does not close the finite-coupling or uniform-volume residual.
+      - step: Extend the explicit square current to the complete finite-coupling residual
+        state: live
+        depends_on:
+        - RESULT:SQUARE_FIRST_CURRENT_BUDGET
+        - RESULT:SELECTED_INVERSE_WITHOUT_DIAGONAL
+        - RESULT:FULL_GRAPH_SOURCE_CONGRUENCE
+        - RESULT:SOURCE_CONGRUENCE_METRIC_TRANSPORT
+        status: Prove the complete transported finite-g current remainder against the actual interacting energy,
+          with reference source synthesis and the required uniform parameter bounds. The no-diagonal criterion
+          then supplies the selected-inverse estimate. Compatible source domains and metric transport remain
+          explicit, and coupled-volume extension is a further step. This is an alternative sufficient current
+          route, not a claim that a fixed-square coefficient settles the existing W6 target.
     status: |
       Reconciled 2026-09-09 after reviewing 43 distinct G19 document versions. Nonlinear finite-cell shells and scores, complete Gaussian fast/source bounds, fixed-spacing matching, and conditional continuum/OS transport are retained. The newly cited Balaban continuum proof stops at (7.6): its O(1/k) expectation increments do not imply the Cauchy conclusion in Theorem 7.1, which invokes a nonexistent O(1/k^2) estimate. Its (6.10) weight kappa_k=(3/4)^k kappa_0 also fails the positive entropy margin required in (8.14). WILSON_G19_REVIEW gives an exact bounded counterexample and sufficient summable-map/source repair.
     continuation_2026_09_09: |

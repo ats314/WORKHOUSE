@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 389
+## T0 — proof-checked — 400
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -375,8 +375,14 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `extraction_D`
   - lean/Workhouse/Basic.lean:320
   - `make lean`
+- `factored_inverse_energy_without_uniform_gap`
+  - lean/Workhouse/TheoryCurrentBridges.lean:76
+  - `make lean`
 - `factored_residual_dual_bound`
   - lean/Workhouse/W6Residual.lean:205
+  - `make lean`
+- `factored_variational_energy_without_inverse`
+  - lean/Workhouse/TheoryCurrentBridges.lean:114
   - `make lean`
 - `factored_w6_bound`
   - lean/Workhouse/W6Residual.lean:243
@@ -423,11 +429,17 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `fixed_vacuum_row`
   - lean/Workhouse/VacuumChart.lean:50
   - `make lean`
+- `full_graph_source_ward`
+  - lean/Workhouse/TheoryCurrentBridges.lean:213
+  - `make lean`
 - `functional_le_energyDualNorm`
   - lean/Workhouse/W6Residual.lean:41
   - `make lean`
 - `gap_bound_on_graph_limit`
   - lean/Workhouse/ThermodynamicLimit.lean:75
+  - `make lean`
+- `gapless_factored_w6_bound`
+  - lean/Workhouse/TheoryCurrentBridges.lean:140
   - `make lean`
 - `gaussian_energy_coefficient_one`
   - lean/Workhouse/W6Residual.lean:273
@@ -572,6 +584,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `joint_measure_minorization_covariance`
   - lean/Workhouse/GroundStateAssembly.lean:383
+  - `make lean`
+- `joint_resolvent_budget`
+  - lean/Workhouse/TheoryCurrentBridges.lean:240
   - `make lean`
 - `joint_withDensity_covariance_variance`
   - lean/Workhouse/GroundStateAssembly.lean:441
@@ -834,6 +849,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `rescaled_correlation_identity`
   - lean/Workhouse/PlateauObstruction.lean:228
   - `make lean`
+- `residual_controls_inverse_without_diagonal`
+  - lean/Workhouse/TheoryCurrentBridges.lean:250
+  - `make lean`
 - `residual_mean_gap_budget`
   - lean/Workhouse/Basic.lean:1012
   - `make lean`
@@ -867,6 +885,15 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `riccatiMap_norm_le`
   - lean/Workhouse/SC17Riccati.lean:114
   - `make lean`
+- `riccati_default_contraction_bound`
+  - lean/Workhouse/TheoryCurrentBridges.lean:47
+  - `make lean`
+- `riccati_residual_certificate`
+  - lean/Workhouse/TheoryCurrentBridges.lean:33
+  - `make lean`
+- `rotated_two_level_schur_numerator`
+  - lean/Workhouse/TheoryCurrentBridges.lean:195
+  - `make lean`
 - `rr_carrier_polynomial_remainder`
   - lean/Workhouse/HodgeFeshbach.lean:318
   - `make lean`
@@ -881,6 +908,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `scalar_vacuum_cancellation`
   - lean/Workhouse/VacuumChart.lean:56
+  - `make lean`
+- `schur_connection_cancellation`
+  - lean/Workhouse/TheoryCurrentBridges.lean:179
+  - `make lean`
+- `schur_metric_pairing_on_shell`
+  - lean/Workhouse/TheoryCurrentBridges.lean:187
   - `make lean`
 - `schur_minimizer_lower_bound`
   - lean/Workhouse/ResolventLocalization.lean:173
@@ -1189,7 +1222,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 502
+## T1 — re-derived exactly — 514
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -2252,6 +2285,44 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `three kernel copies agree record-for-record, from two independent builds`
   - src/workhouse/invariants/restored.py:68 · UNIFIED §6 / G1
   - `workhouse verify --only 'three kernel copies agree record-for-record, from two independent builds'`
+**reviewed theory current and geometry bridges**
+
+- `Hodge secular cubic and induced eighth-order moment identities`
+  - src/workhouse/invariants/theory_current_bridges.py:38 · THEORY_GEOMETRY_RICCATI_BRIDGES; TG1-TG8; G14; G19
+  - `workhouse verify --only 'Hodge secular cubic and induced eighth-order moment identities'`
+- `abstract Riccati default contraction and residual amplification constants`
+  - src/workhouse/invariants/theory_current_bridges.py:53 · THEORY_GEOMETRY_RICCATI_BRIDGES; TG1-TG8; G14; G19
+  - `workhouse verify --only 'abstract Riccati default contraction and residual amplification constants'`
+- `complete square first cometric and differential operator identity`
+  - src/workhouse/invariants/theory_current_bridges.py:65 · SOURCE_CURRENT_SPECTRAL_BRIDGES; SCB0A-SCB6; G19
+  - `workhouse verify --only 'complete square first cometric and differential operator identity'`
+- `complete square first current joint radial bound below one over 840`
+  - src/workhouse/invariants/theory_current_bridges.py:75 · SOURCE_CURRENT_SPECTRAL_BRIDGES; SCB0A-SCB6; G19
+  - `workhouse verify --only 'complete square first current joint radial bound below one over 840'`
+- `complete square first residual current exact Gaussian moments`
+  - src/workhouse/invariants/theory_current_bridges.py:70 · SOURCE_CURRENT_SPECTRAL_BRIDGES; SCB0A-SCB6; G19
+  - `workhouse verify --only 'complete square first residual current exact Gaussian moments'`
+- `degenerate energy square completion and kernel example`
+  - src/workhouse/invariants/theory_current_bridges.py:81 · SOURCE_CURRENT_SPECTRAL_BRIDGES; SCB0A-SCB6; G19
+  - `workhouse verify --only 'degenerate energy square completion and kernel example'`
+- `full Schur source congruence and retained metric algebra`
+  - src/workhouse/invariants/theory_current_bridges.py:43 · THEORY_GEOMETRY_RICCATI_BRIDGES; TG1-TG8; G14; G19
+  - `workhouse verify --only 'full Schur source congruence and retained metric algebra'`
+- `normalized exponential variance and cumulant double-integral polynomial identity`
+  - src/workhouse/invariants/theory_current_bridges.py:96 · SOURCE_CURRENT_SPECTRAL_BRIDGES; SCB0A-SCB6; G19
+  - `workhouse verify --only 'normalized exponential variance and cumulant double-integral polynomial identity'`
+- `scalar-source Schur parity and mixed-parity negative control`
+  - src/workhouse/invariants/theory_current_bridges.py:48 · THEORY_GEOMETRY_RICCATI_BRIDGES; TG1-TG8; G14; G19
+  - `workhouse verify --only 'scalar-source Schur parity and mixed-parity negative control'`
+- `selected inverse testing and moving source centering algebra`
+  - src/workhouse/invariants/theory_current_bridges.py:86 · SOURCE_CURRENT_SPECTRAL_BRIDGES; SCB0A-SCB6; G19
+  - `workhouse verify --only 'selected inverse testing and moving source centering algebra'`
+- `three-coordinate sharp anisotropy stationary and boundary algebra`
+  - src/workhouse/invariants/theory_current_bridges.py:32 · THEORY_GEOMETRY_RICCATI_BRIDGES; TG1-TG8; G14; G19
+  - `workhouse verify --only 'three-coordinate sharp anisotropy stationary and boundary algebra'`
+- `tiny exponential tangent and incomplete source dark-state counterexample`
+  - src/workhouse/invariants/theory_current_bridges.py:91 · SOURCE_CURRENT_SPECTRAL_BRIDGES; SCB0A-SCB6; G19
+  - `workhouse verify --only 'tiny exponential tangent and incomplete source dark-state counterexample'`
 **second order, all ranks**
 
 - `A_N and B_N are the channel sums, not transcriptions`

@@ -90,6 +90,7 @@ _MODULES = (
     "yangmills_gpu_audit",
     "balaban_repair",
     "anisotropy_variance",
+    "theory_current_bridges",
 )
 
 for _name in _MODULES:

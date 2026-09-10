@@ -1,0 +1,66 @@
+const base=load("energy_lean_cmd");
+const extra=`
+/-- The limiting variational estimate does not require any inverse operator. -/
+theorem factored_variational_energy_without_inverse
+    (Y : E →L[ℝ] F) (j : F) (a : E → ℝ) (g κ : ℝ) (hκ : 0 < κ)
+    (hcoerc : ∀ v, κ * ‖Y v‖ ^ 2 ≤ a v) (v : E) :
+    2 * g * inner ℝ j (Y v) - a v ≤ g ^ 2 * ‖j‖ ^ 2 / κ := by
+  let x := ‖Y v‖
+  let n := |g| * ‖j‖
+  have hlin : g * inner ℝ j (Y v) ≤ n * x := by
+    calc
+      _ ≤ |g * inner ℝ j (Y v)| := le_abs_self _
+      _ = |g| * |inner ℝ j (Y v)| := abs_mul _ _
+      _ ≤ |g| * (‖j‖ * ‖Y v‖) :=
+        mul_le_mul_of_nonneg_left (abs_real_inner_le_norm _ _) (abs_nonneg g)
+      _ = _ := by dsimp [n, x]; ring
+  have hc : κ * x ^ 2 ≤ a v := hcoerc v
+  apply (le_div_iff₀ hκ).2
+  calc
+    (2 * g * inner ℝ j (Y v) - a v) * κ ≤
+        (2 * n * x - κ * x ^ 2) * κ := by
+      apply mul_le_mul_of_nonneg_right _ hκ.le
+      nlinarith
+    _ ≤ n ^ 2 := by nlinarith [sq_nonneg (n - κ * x)]
+    _ = g ^ 2 * ‖j‖ ^ 2 := by dsimp [n]; rw [mul_pow, sq_abs]
+
+/-- The complete selected-inverse W6 implication with a possibly degenerate
+lower energy represented by Y. -/
+theorem gapless_factored_w6_bound (A0 Ag R0 Rg : E →L[ℝ] E)
+    (Y : E →L[ℝ] F) (t : E) (j : F) (κ a C g g0 b : ℝ)
+    (hκ : 0 < κ) (hC : 0 ≤ C) (hb : 0 ≤ b) (hg0 : |g| ≤ g0)
+    (h0 : A0 * R0 = 1) (hg : Ag * Rg = 1) (hginv : Rg * Ag = 1)
+    (hsym : ∀ x y, inner ℝ x (Ag y) = inner ℝ (Ag x) y)
+    (hcoerc : ∀ v, κ * ‖Y v‖ ^ 2 ≤ inner ℝ v (Ag v))
+    (hdiag : |inner ℝ (R0 t) ((Ag - A0) (R0 t))| ≤ a * |g| * b)
+    (hfactor : ∀ v, inner ℝ (residual Ag R0 t) v = g * inner ℝ j (Y v))
+    (hj : ‖j‖ ^ 2 ≤ C * b) :
+    |inner ℝ t ((Rg - R0) t)| ≤ (a + C * g0 / κ) * |g| * b := by
+  have he := factored_inverse_energy_without_uniform_gap Ag Rg Y
+    (residual Ag R0 t) j g κ hκ hg hcoerc hfactor
+  have hgg : g ^ 2 ≤ g0 * |g| := by nlinarith [abs_nonneg g, sq_abs g]
+  have hrem : inner ℝ (residual Ag R0 t) (Rg (residual Ag R0 t)) ≤
+      (C * g0 / κ) * |g| * b := by
+    calc
+      _ ≤ g ^ 2 * ‖j‖ ^ 2 / κ := he.2
+      _ ≤ g ^ 2 * (C * b) / κ := by gcongr
+      _ ≤ (g0 * |g|) * (C * b) / κ :=
+        div_le_div_of_nonneg_right
+          (mul_le_mul_of_nonneg_right hgg (mul_nonneg hC hb)) hκ.le
+      _ = _ := by ring
+  rw [variational_residual_identity A0 Ag R0 Rg h0 hg hginv hsym t]
+  calc
+    _ ≤ |-(inner ℝ (R0 t) ((Ag - A0) (R0 t)))| +
+        |inner ℝ (residual Ag R0 t) (Rg (residual Ag R0 t))| := abs_add_le _ _
+    _ = |inner ℝ (R0 t) ((Ag - A0) (R0 t))| +
+        inner ℝ (residual Ag R0 t) (Rg (residual Ag R0 t)) := by
+      rw [abs_neg, abs_of_nonneg he.1]
+    _ ≤ a * |g| * b + (C * g0 / κ) * |g| * b := add_le_add hdiag hrem
+    _ = _ := by ring
+#print axioms factored_variational_energy_without_inverse
+#print axioms gapless_factored_w6_bound
+`;
+const cmd=base.replace("#print axioms factored_inverse_energy_without_uniform_gap",extra+"\n#print axioms factored_inverse_energy_without_uniform_gap");
+store("energy_lean_cmd_full",cmd);
+text(await tools.exec_command({cmd,workdir:"C:\\WORKHOUSE\\REPO\\lean",max_output_tokens:2500,yield_time_ms:1000}))
+

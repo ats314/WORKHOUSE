@@ -52,6 +52,8 @@ INPUT_TREES = (
     "docs/derivations",
     "lean",
     "verify_core.py",
+    "scripts/verify_source_current_bridges.py",
+    "scripts/verify_theory_geometry_bridges.py",
     "corpus-import/SHA256SUMS",
     "corpus-import/records",
 )
@@ -76,10 +78,23 @@ def _walk(rel: str):
         return
     if not target.is_dir():
         return
-    for path in sorted(target.rglob("*")):
-        if not path.is_file() or any(part in SKIP_PARTS for part in path.parts):
-            continue
-        yield path
+    if any(part in SKIP_PARTS for part in target.parts):
+        return
+
+    def onerror(error: OSError) -> None:
+        # Preserve permission skips, but fail before caching an incomplete scan.
+        if not isinstance(error, PermissionError):
+            raise error
+
+    paths = []
+    for directory, directories, filenames in os.walk(target, onerror=onerror):
+        # Prune before descent: filtering rglob results still scans dependency caches.
+        directories[:] = [name for name in directories if name not in SKIP_PARTS]
+        for name in filenames:
+            path = Path(directory) / name
+            if name not in SKIP_PARTS and path.is_file():
+                paths.append(path)
+    yield from sorted(paths)
 
 
 def fingerprint(trees=INPUT_TREES) -> str:
