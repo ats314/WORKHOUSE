@@ -1068,7 +1068,7 @@ documents:
     remaining: Formalize Brascamp-Lieb conditional variance, marginal Schur curvature and the actual projection-angle
       assembly.
   - id: DERIV:WILSON_SC17_SPATIAL_CLOSURE:R12_R14
-    statement: The necessary full conditional defect is V_B+((H_out Omega)/Omega)-2epsilon A^2; exact
+    statement: The necessary full conditional Hessian defect is Hess(V_B+((H_out Omega)/Omega))-2epsilon A^2; exact
       Gaussian pressure cancels the reference BB* term, while cutoffs create the explicit gradient and
       commutator defects.
     locator: '## 4. The actual quantum pressure and cutoff defects are part of the input (lines 698-756)'
@@ -1090,6 +1090,33 @@ documents:
     lean: []
     remaining: Formalize the outside-pressure derivative, Gaussian cancellation and every cutoff/product-domain
       term; the actual uniform smallness estimate remains unproved.
+  - id: DERIV:WILSON_SC17_SPATIAL_CLOSURE:ACTUAL_REFERENCE_DEFECT_BOUND
+    statement: On the specified actual Wilson conditional source chart, establish a volume-uniform
+      weighted bound on the complete signed Hessian defect D_B=Hess(V_B+(H_out Omega)/Omega)-2epsilon A^2,
+      including the actual kinetic metric, moving source projector and localization terms, with
+      norm(D_B)_(s,infty)<=delta and 2 beta_s(A)^2 delta/epsilon<1.
+    locator: '## 4. The actual quantum pressure and cutoff defects are part of the input (lines 698-756), with the R5-R7 budget in section 2'
+    anchor: '## 4. The actual quantum pressure and cutoff defects are part of the input'
+    source_labels:
+    - R12
+    - R12a
+    - R13
+    - R14
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - Actual positive Wilson vacuum, compatible source and block coordinates, and multiplication
+      terms assigned exactly once; the complete coupled Gaussian reference is subtracted.
+    - The reference semigroup budget beta_s(A) is finite in the chosen weighted norm at the
+      fixed blocking scale; epsilon>0 and all conditional, metric and cutoff domains are retained.
+    - The desired uniformity concerns the stated block family and surrounding volume; a separate
+      source-compatible reference-angle margin is still needed for global assembly.
+    depends_on:
+    - DERIV:WILSON_SC17_SPATIAL_CLOSURE:R12_R14
+    lean: []
+    remaining: Prove the actual complete weighted smallness estimate. The proved Gaussian pressure
+      cancellation, an isolated magnetic Taylor coefficient, or formalizing the conditional
+      Riccati implication does not discharge this model obligation.
   - id: DERIV:WILSON_SC17_SPATIAL_CLOSURE:R15
     statement: The |K|^3 cusp persists under the analytic unitary fast frame (i sin(K/4),cos(K/4)); it
       is a scalar compression singularity, not an eigenvalue-crossing or gauge-choice artifact.
@@ -4664,6 +4691,31 @@ documents:
     lean: []
     remaining: No full-statement Lean formalization. Full conditional source-generator jets and growing-grid
       uniformity are not conclusions.
+  - id: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:SOURCE_ENERGY_JETS_R10
+    statement: For the actual complete compact-square source/vacuum generator A(g) in R9, prove
+      ||A^(r)(g)||_(q_g->q_g)<=d_r g^(-r-1) for r=0,1,2 with finite constants independent of small positive
+      g. This is the open model input R10, not the already proved conditional implication R10 to R12.
+    locator: '## 4. An explicit bridge from the actual transport generator to M1,M2,M3 (lines 199-218); section 5 (lines 271-309)'
+    anchor: '||A^(r)(g)||_(q_g -> q_g) <= d_r g^(-r-1),  r=0,1,2,      (R10)'
+    source_labels:
+    - R9
+    - R10
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - Actual fixed compact-square Hamiltonian and common electric H1 form domain; actual simple normalized
+      positive ground, 0<=e_g<=E and physical gap gamma>0 on 0<g<g_*.
+    - P_g is the complete true-ground literal-source projection from C1, and A(g) is exactly the R9
+      source/vacuum generator; q_g[u]=H_g[u]+gamma||u||^2, including vacuum components.
+    - Parameter derivatives are taken at positive g on the fixed compact form domain. The target covers
+      all source and fast energies, including spatial derivatives and generator derivatives through order two.
+    depends_on:
+    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+    lean: []
+    remaining: Establish the conditional-source projection energy bounds beyond the proved vacuum-only
+      generator. A direct proof of mixed-form R11 is an alternative sufficient route and need not prove
+      R10 itself. M10 and the Hardy source-to-L2 bound are not prerequisites of R10 and do not imply it;
+      a different source chart requires its own consistent transformed operator and covariant derivatives.
   - id: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:COMPLETE_BUDGET
     statement: For the complete actual positive-reference source/vacuum transport, energy-operator bounds
       ||A^(r)(g)||_(q_g->q_g)<=d_r g^(-r-1), r=0,1,2, imply explicit all-energy M_j(s)<=c_j s^-j for j=1,2,3
@@ -4691,9 +4743,33 @@ documents:
       zero.
     depends_on:
     - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:SOURCE_ENERGY_JETS_R10
     lean: []
     remaining: Prove the actual complete conditional source-generator energy jets or exact mixed-form
       substitute; supply interacting-grid, coarse-matching and physical-clock convergence inputs.
+  - id: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:INTERACTING_GRID_COMPARISON
+    statement: For the actual interacting growing-grid family, obtain a volume-independent fast floor
+      and complete source/transport energy estimates using linked or locally centered energy bounds,
+      and control the coarse-theory matching discrepancy after the prescribed injection. The fixed-square
+      constants depending on total ground energy E and the Gaussian grid floor do not prove this extension.
+    locator: '## 6. Source energies, subdivision, interacting grids, and the physical clock (lines 351-366)'
+    anchor: 'A linked/local centered-energy estimate must replace that'
+    source_labels: []
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - Actual coupled Wilson grids and specified block/source injections, with true vacuum subtraction,
+      common physical energy normalization and the required retained, fast and spectral-energy domains.
+    - Constants must be independent of growing spatial volume in the intended small-coupling regime;
+      the existing fixed-square E and gamma are not assumed to have that uniformity.
+    - Actual source-energy comparison factors and the discrepancy between the generated coarse form and
+      prescribed coarse theory are retained; the Gaussian covariance-weighted source is not identified
+      with the nonlinear quantum source without proof.
+    depends_on: []
+    lean: []
+    remaining: Prove the interacting fast-floor and connected energy/source comparison in the specified
+      grid family. Controlling the local coupling remainder does not control coarse matching, the explicit
+      physical-clock change in R14, or convergence of the exact transported jets and observables.
 - id: CITE:W6_CONDITIONAL_SCORE_TAIL_CONTROL
   path: docs/derivations/w6-conditional-score-tail-control.md
   sha256: d04ae01d29d33cc5bfcc01abf1844f3e0692d682810ac01ee947a6ec93375471
@@ -4730,6 +4806,29 @@ documents:
     lean: []
     remaining: No uniform actual small-g Hardy bound is proved. Construct actual phase/amplitude/global
       chart control, rare-fiber estimates and full source energy regularity.
+  - id: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10
+    statement: For the actual compact square and specified source-preserving dilation, prove
+      K_g(w)<=C0+C1 W_g(w) almost everywhere in nu_g, where W_g(w)=g^-2 E_(mu_g)(V|w), with finite
+      nonnegative C0,C1 independent of 0<g<g_*. This sufficient conditional-score domination is open.
+    locator: '### M.4. The precise remaining conditional-score inequality (lines 473-495)'
+    anchor: '### M.4. The precise remaining conditional-score inequality'
+    source_labels:
+    - M10
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - Actual fixed twelve-edge, four-face compact Wilson square, true normalized quantum ground Psi_g,
+      dmu_g=Psi_g^2 dU, literal source w=Tr(U2 U3)/2 and its marginal nu_g.
+    - sigma_g=(partial_g Psi_g+D Psi_g/g)/Psi_g uses the specified compact dilation of Q8, including its
+      Haar divergence; K_g=Var_(mu_g)(sigma_g|w) retains all compact corrections and rare coarse fibers.
+    - The established actual fixed-square gap and ground-energy bounds hold on the specified small-coupling
+      interval. Averaged conditional-score control is not assumed to imply pointwise domination.
+    depends_on: []
+    lean: []
+    remaining: Prove M10 for the actual conditional law, or retain its open status if a different sufficient
+      source-energy estimate is proved. The phase-adapted local implication requires whole-fiber tails,
+      conditional-mean gluing and consistent global dilation before it can address this target. M10 is
+      not asserted necessary for the Hardy bound or for the separate source-generator energy-jet route.
   - id: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:ACTUAL_SOURCE_MOMENT
     statement: The actual four-face SU2 product obeys 1-w<=V globally. The exact true-ground source form
       gives g^-2 integral V|f|^2 <= b_g[f]+e_g||f||^2, hence the uniform centered bound integral a_g|f|^2
@@ -4767,3 +4866,31 @@ documents:
     remaining: Prove M10 or another sufficient actual conditional score estimate. The source moment alone
       does not establish uniform Hardy control, complete transport derivatives, or an interacting grid
       floor.
+  - id: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_WEIGHT_FROM_M10
+    statement: Conditional on the actual M10 domination, every centered finite-energy source satisfies
+      integral K_g|f|^2 dnu_g <= [C1+(C0+C1 E)/gamma] b_g[f], and the actual median Hardy constant obeys
+      mathfrak_B_g<=C1+2(C0+C1 E)/gamma uniformly at small coupling. The implication is analytically
+      proved; its M10 model input remains open.
+    locator: '### M.4. The precise remaining conditional-score inequality and M.5 (lines 497-563)'
+    anchor: '### M.5. Exact anchored Hardy constant, retaining the uncentered term'
+    source_labels:
+    - M11
+    - M12
+    - M13
+    - M14
+    - M15
+    status: conditional
+    evidence: analytic
+    hypotheses:
+    - Actual compact-square source form b_g[f]=g^2 integral (1-w^2)|f'|^2 dnu_g, actual ground-energy
+      bound e_g<=E and physical gap gamma>0, with the true-ground source identity M7.
+    - The actual conditional-score domination M10 holds with finite nonnegative C0,C1 uniform in g.
+    - Sources belong to the full compact retained form domain; centered sources give M12, and the
+      median-anchored half-source argument retains the uncentered vacuum-energy term for M14-M15.
+    depends_on:
+    - DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:ACTUAL_SOURCE_MOMENT
+    - DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10
+    lean: []
+    remaining: Formalize this already established conditional implication if needed. Actual application
+      requires M10 or another sufficient score estimate; the conclusion controls the source-frame derivative
+      into L2, not spatial energy derivatives, full generator jets, or interacting-volume uniformity.

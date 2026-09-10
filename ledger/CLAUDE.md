@@ -37,6 +37,17 @@ source ledgers, validate the relevant register, regenerate affected views and
 query the result and gap with `workhouse why`. Update the current research map
 and land green work under the root [working agreement](../CLAUDE.md).
 
+Selected current routes carry a `frontier` mapping with unique positive
+`priority`, optional exact `target`, and nonempty `scope`, `consequence` and
+`decisive_test`. The order is curated research judgment; it is not a necessary
+proof chain. Route `bears_on` records downstream relevance. Use `blocked_by`
+only for an explicit unfinished input needed to complete that particular
+route. Targets and blockers name authored-status G/C/RESULT/DERIV/ROUTE nodes.
+Name an actual open model hypothesis separately from its proved conditional
+implication; completing an identity must not hide an unfinished application.
+Keep sufficient alternatives separate, and preserve established analytic
+status independently of Lean coverage. See the [priority review](../docs/research/graph-priorities-2026-09-10.md).
+
 Curated crosslink files follow the same discipline (judgement in the YAML,
 the join derived, validation mechanical): `symbols.yaml` maps repo
 names to corpus spellings, `theorems.yaml` maps each Lean theorem to the

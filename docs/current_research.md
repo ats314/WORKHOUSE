@@ -18,6 +18,14 @@ and remaining formalization. Counts belong there and in the generated
 
 ## Read the current claim at its own scope
 
+Use the generated [derivation priority queue](../FRONTIER.md#7-current-derivation-priorities)
+and [source-based priority review](research/graph-priorities-2026-09-10.md)
+to select the next calculation. The queue reads native route metadata and
+live source status. It separates curated order, exact targets, explicit
+completion inputs and conditional consequences; missing Lean coverage is
+not an unresolved analytic theorem. The broad gap-level dependency count
+does not measure these source-level routes.
+
 The [September 10 formalization correction](research/formalization-scope-2026-09-10.md)
 distinguishes the up-Laplacian from its normalized carrier projector and adds
 an actual rank-one RUR factorization. Its syntactic word counts and geometric

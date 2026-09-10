@@ -21,7 +21,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from . import check_cache
+from . import check_cache, research_priorities
 from . import ledger as ledger_mod
 from . import literature as literature_mod
 from .invariants import SUITES
@@ -59,6 +59,7 @@ class Frontier:
     external: list[tuple[str, str, str, str]]
     web: list[dict[str, Any]]
     acquisition: list[dict[str, Any]]
+    priorities: list[dict[str, Any]]
 
 
 def strip_lean_comments(body: str) -> str:
@@ -259,6 +260,7 @@ def compute() -> Frontier:
         ],
         web=literature_mod.relevance(lit),
         acquisition=literature_mod.acquisition_targets(lit),
+        priorities=research_priorities.collect(led),
     )
 
 
@@ -365,8 +367,9 @@ def render(f: Frontier) -> str:
 
     w("## 6. What blocks the most downstream theory")
     w("")
-    w("Transitive closure over the ledger's own `unblocks`, `depends_on`, and")
-    w("`blocks` edges. The number is how much cannot move until this one does.")
+    w("The table counts only registered **gap-level** `unblocks`, `depends_on`,")
+    w("and contradiction `blocks` edges. It does not rank all source statements")
+    w("or alternative research routes. Current derivation priorities follow in §7.")
     w("")
     w("| Gap | Gates | What cannot move until it does |")
     w("|---|---|---|")
@@ -375,13 +378,49 @@ def render(f: Frontier) -> str:
         title = next(g["title"] for g in f.open_gaps if g["id"] == gid)
         w(f"| `{gid}` {title} | {weight} | {', '.join(reached)} |")
     if not gated:
-        w("| — | 0 | nothing currently gates anything |")
+        w(
+            "| — | 0 | No open gap-level dependency is recorded; "
+            "see the source-level routes below. |"
+        )
     w("")
     for line in f.spine:
         w(f"- {line}")
     w("")
 
-    w("## 7. The cheapest decisive test available now")
+    w("## 7. Current derivation priorities")
+    w("")
+    w("Selected routes and their order are curated in `ledger/gaps.yaml`; this")
+    w("view is generated. Order expresses research judgment, not a claim that")
+    w("every approach requires the preceding route. `blocked_by` records only")
+    w("explicit inputs needed to complete that chosen route. Analytic proofs")
+    w("remain established regardless of incomplete Lean coverage or T3 tier.")
+    w("")
+    for row in f.priorities:
+        w(f"### {row['priority']}. {row['step']} ({row['gap']})")
+        w("")
+        w(f"- Route: `{row['id']}`")
+        if row.get("target"):
+            w(f"- Target: `{row['target']}` — {row['target_status']}")
+        w(f"- Scope: {row['scope']}")
+        if row["inputs"]:
+            w(
+                "- Source inputs: "
+                + ", ".join(f"`{ref}` ({row['input_status'][ref]})" for ref in row["inputs"])
+            )
+        if row["invalid_inputs"]:
+            w("- Input review required: " + ", ".join(f"`{ref}`" for ref in row["invalid_inputs"]))
+        if row["pending"]:
+            pending = ", ".join(f"`{ref}` ({row['pending_status'][ref]})" for ref in row["pending"])
+            w(f"- Completion awaits: {pending}. The decisive test can still be investigated.")
+        else:
+            w("- Readiness: no explicit unresolved completion input is recorded.")
+        w(f"- Consequence: {row['consequence']}")
+        w(f"- Decisive next test: {row['decisive_test']}")
+        w("")
+    if not f.priorities:
+        w("No active source-level priority route is registered.")
+        w("")
+    w("### Gap-level cost shortlist")
     w("")
     w("Ready — no open prerequisite — and decisive: it resolves a contradiction,")
     w("unblocks another gap, or is load-bearing. Cheapest first. Bookkeeping that")
@@ -496,14 +535,22 @@ def brief() -> str:
         "command — `workhouse verify --only '<name>'` runs it alone, with its "
         "numbers, in about a second.",
         "",
-        "No document is authority; only a machine check is. Everything in "
-        "theory/ is T3 (asserted, unchecked) until an invariant says otherwise.",
+        "Accept analytic proofs under their stated hypotheses. Mathematical "
+        "status and machine tier are separate; incomplete Lean coverage does "
+        "not reopen an established theorem. Preserve theory/ source evidence.",
         "",
     ]
     if f.disputed:
         c = f.disputed[0]
         lines.append(f"Open: {c['id']} {c['title']}. Never promote either side.")
-    if f.cheapest:
+    if f.priorities:
+        route = next((r for r in f.priorities if r["ready"]), f.priorities[0])
+        lines.append(f"Current derivation priority: {route['step']} ({route['gap']}).")
+        lines.append(f"Scope: {route['scope']}")
+        lines.append(
+            f"Start with `workhouse why {route['id']}`; FRONTIER §7 carries inputs and tests."
+        )
+    elif f.cheapest:
         g = f.cheapest[0]
         lines.append(f"Cheapest decisive next step: {g['id']} — {g['title']}.")
         routes = g.get("plan", []) or []

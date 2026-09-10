@@ -40,6 +40,7 @@ from . import ledger as ledger_mod
 from . import literature as literature_mod
 from . import notes as notes_mod
 from . import recent_research as recent_research_mod
+from . import research_priorities as research_priorities_mod
 from . import results as results_mod
 from . import study_graph as study_graph_mod
 from .invariants import SUITES
@@ -531,11 +532,18 @@ def collect() -> list[Claim]:
                     where="ledger/gaps.yaml",
                     cites=entry["id"],
                     status=str(step.get("state", "")),
-                    detail=" ".join(str(step.get("status", "")).split()),
+                    detail=research_priorities_mod.detail(step),
                     related=sorted(
                         [str(r) for r in step.get("closed_by", []) or []]
                         + [str(r) for r in step.get("cannot_decide", []) or []]
                         + [str(r) for r in step.get("depends_on", []) or []]
+                        + [str(r) for r in step.get("blocked_by", []) or []]
+                        + [str(r) for r in step.get("bears_on", []) or []]
+                        + (
+                            [step["frontier"]["target"]]
+                            if (step.get("frontier") or {}).get("target")
+                            else []
+                        )
                     ),
                 )
             )

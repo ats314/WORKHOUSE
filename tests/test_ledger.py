@@ -82,9 +82,9 @@ def test_g3_no_longer_claims_to_resolve_c1():
     assert "C2" in g3["resolves"]
 
 
-def test_load_bearing_gaps_are_the_bridge_and_the_free_energy_bound():
+def test_load_bearing_gaps_include_the_actual_continuum_comparison():
     led = L.load()
-    assert {g["id"] for g in led.load_bearing_gaps} == {"G17", "G18"}
+    assert {g["id"] for g in led.load_bearing_gaps} == {"G17", "G18", "G19"}
 
 
 def test_g3_rewrite_keeps_the_protocol_and_the_traps():
