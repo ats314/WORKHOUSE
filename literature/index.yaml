@@ -231,6 +231,47 @@ papers:
         status: not-yet-obtained
         detail: |
           What reading it would settle: whether the cellular completion family (G5's tetrahedral row and the prism-cap Catalan family) already appears among its per-cluster rational weights. A prior appearance is a WIN -- a new anchor row for the referee brief -- and a clean absence extends the recorded negative search to the most likely published table. Euclidean regime: its numbers would be compared as combinatorial weights, never as coefficients of the Hamiltonian series.
+  - id: BB_1983
+    title: Glueball spectroscopy in 4d SU(3) lattice gauge theory (I)
+    authors:
+      - B. Berg
+      - A. Billoire
+    venue: Nucl. Phys. B221, 109-140
+    year: 1983
+    doi: 10.1016/0550-3213(83)90620-X
+    arxiv: null
+    inspire_recid: 182491
+    inspire_citations:
+      count: 207
+      as_of: 2026-08-21
+    licence: publisher-copyright
+    fulltext: null
+    source_sha256: d30b57d10cc352c0ff20511c65c130397d9f7b94ab0428a17fa096fc54dcf8c8
+    note: |
+      Promoted from a stub on 2026-09-10, when the maintainer supplied the full 32-page scan of the published article and it was read in full. North-Holland copyright, so the copy is pinned by digest and never stored. Part I of two: the printed title carries the "(I)", and section 1 states that Part II will give the MCV results on a 5^3 x 8 lattice using Wilson loops up to length 8. Euclidean quenched Monte Carlo throughout -- comparison only, nothing numerical enters any Hamiltonian claim.
+      What the pinned pages actually carry, in three parts.
+      (1) The operator classification the T_1^{+-} channel label comes from. Section 3 constructs every irreducible representation of the 48-element cubic group O_h on spacelike Wilson-loop operators up to length 8, and Table 3.1 (p. 120) prints the irreducible content of the four prototypes up to length 6. The single spatial plaquette, d = 6, decomposes as A_1^{++} + E^{++} + T_1^{+-} -- three C-even states and three C-odd ones -- and that C-odd triplet is the class the corpus's bare T_1^{+-} carrier belongs to. Section 3.2 states the rule that produces the split: real parts of Wilson-loop operators carry C = +1, imaginary parts carry C = -1. The transcription was checked here by summing the printed multiplicities against the printed dimension d, exactly, for all four prototypes: #1 plaquette 1 + 2 + 3 = 6; #2 double plaquette 1 + 1 + 4 + 3 + 3 = 12; #3 bent plaquette 12 (P = +) + 12 (P = -) = 24; #4 twisted plaquette 1 + 3 + 1 + 3 = 8. A second, independent check of the same transcription: applying the paper's own subduction assignment (eq. 3.6 -- A_1 -> 0, T_1 -> 1, E and T_2 -> 2, A_2 -> 3) to Table 3.1 yields ten distinct J^{PC} labels, nine of them excited, which is the count section 5 states and the set Table 8 tabulates.
+      (2) The mass gap. m(0^{++}) = (280 +- 50) Lambda_L (eq. 4.6), about 750 MeV through Lambda_L = (6 +- 1) x 10^-3 sqrt(K) and sqrt(K) approximately 440 MeV (eqs. 4.7-4.8); the tangent method on the strong-coupling series gives 310 Lambda_L (eq. 4.9). A 4^3 x 8 lattice, Pietarinen heat bath, about 80 hours of CDC 7600.
+      (3) The negative result, which is the part that matters here. The 0^{++} scaling window ends sharply at 5.6 < beta < 5.7, and there is no scaling window for any of the nine excited states: "we have no signal for the existence of any of these states in the physical spectrum" (section 5). Table 8 gives the 1^{+-} at distance t = 1, minimized over its contributing operators, as 4.87(44), 4.19(24), 4.33(16) and 4.56(41) at beta = 5.2, 5.4, 5.6 and 5.7 -- roughly flat in beta, which is the paper's own reading of it. A methodological finding recorded alongside: systematic-sweep upgrading produced significantly negative values for the positive-definite 0^{--} correlation (Table 9), and random-link upgrading, which satisfies detailed balance, removed the effect immediately.
+      Its bibliography is why the promotion matters for the citation web. This 1983 Euclidean Monte Carlo paper DOES cite the Hamiltonian strong-coupling line -- KSS_1976 is its [17], with Munster [18], Seo [19] and Smit [21] on the Euclidean series -- so the bibliographic split that docs/referee/modern_anchor_sweep_2026-08-21.md documents in CHEN_2006, AT_2020_SU3 and MORNINGSTAR_2025 is not present at the trunk of the lattice line. It opens later. Section 4.3 also prints what KSS_1976's diagonal Pade extrapolation gave, which nothing else in this web records: m(1^{+-}) approximately 1.6 m(0^{++}) (eq. 4.10a) and m(2^{++}) approximately 1.0 m(0^{++}) (eq. 4.10b).
+      Recorded scan limits, so nobody re-derives them as content: printed pages 121, 129 and 135 yield no usable text layer in this scan, so nothing is quoted from them -- including the final mass-gap collection that p. 130 refers to as table 6. Table 8's leading "OP" column, which names the contributing operators per row, is likewise not reliably recovered; only the labelled "minimized" rows are quoted above.
+    cites:
+      - CREUTZ_1980
+      - KSS_1976
+      - MUNSTER_1981
+      - SEO_1982
+      - SMIT_1982
+    bears_on:
+      - target: G18
+        relation: supplies-method
+        status: verified
+        detail: |
+          G18 identifies a protected carrier with the glueball in the T_1^{+-} channel, and this paper is where that channel's operator content was published. Table 3.1 puts the single spatial plaquette at multiplicity one in T_1^{+-}, beside A_1^{++} and E^{++}, and section 3.2's C-parity rule (real part C = +1, imaginary part C = -1) is the mechanism that separates them. The dimension sums 6, 12, 24, 8 and the nine-excited-state count are reproduced exactly here from the printed multiplicities, so the transcription is checked rather than trusted. What it does NOT supply: any statement about dressing, overlap size, or the transfer-matrix identification -- SCHIERHOLZ_1988 measures the overlap, this paper only says which representation the operator sits in.
+      - target: G19
+        relation: supplies-comparison
+        status: verified
+        detail: |
+          The earliest instance in this web of exactly the obstruction G19 is about, from the Euclidean side. The 0^{++} scaling window closes at 5.6 < beta < 5.7 while the string-tension scaling window of its refs [35, 23] extends, in the paper's own words, "to a much higher value" of beta, and no excited state -- the 1^{+-} carrier channel included -- shows any scaling window at all on the 4^3 x 8 lattice. The paper's own conclusion is that the scaling region for excited states "may then be totally out of present computer and SC possibilities". That is not the last word and must not be read as one: MP_1999, CHEN_2006 and AT_2020_SU3 did reach a continuum-extrapolated SU(3) 1^{+-} in the decades after, on anisotropic lattices with far larger variational bases. What this entry supplies is the other end of the baseline, and FLPS_2026 shows the difficulty is not merely historical -- its 2026 SU(6) update is still pre-continuum with no T1+- plateau despite nine T1+- operators in its basis. It is a comparison and a history, not a bound: nothing here constrains the source transport G19 needs, and no number crosses into a Hamiltonian claim.
   - id: IH_1984
     title: Methods in Hamiltonian lattice field theory (II). Linked-cluster expansions
     authors:
@@ -876,6 +917,37 @@ papers:
         status: verified
         detail: |
           A dated marker for where the modern large-N line actually stands relative to the continuum limit G19 is about: preliminary masses at two lattice spacings only (beta = 25.55, 26.22), in bare lattice units with no scale-setting quantity anywhere in the paper -- A1++ 0.68(4) / 0.471(74), E++ 1.13(19) / 0.98(7), T2++ 0.93(8), T2-+ 0.92(7) (Table 5, self-labelled preliminary) -- no continuum extrapolation, and no T1+- plateau despite 9 T1+- operators in the variational basis (Table 1). Nothing numerical can transfer even in principle: the paper contains no physical units. What it supplies is the comparison point that in 2026 the newest SU(6) update is still pre-continuum with multilevel sampling as the claimed path forward -- G19's "nothing reaches the scaling window" has a contemporary Euclidean echo, not a refutation.
+  - id: BESIII_2026
+    title: Lightest 0-+ Glueball as Dominant Constituent of X(2370)
+    authors:
+      - BESIII Collaboration
+    venue: 'arXiv:2607.20366 [hep-ex]'
+    year: 2026
+    doi: 10.48550/arXiv.2607.20366
+    arxiv: '2607.20366'
+    inspire_recid: null
+    inspire_citations: null
+    licence: arxiv-nonexclusive-distrib
+    fulltext: null
+    source_sha256: be4ce06aec9d00ad92e25a249979c3e71bfabaa2a55f41d2d89cd6c10c1fcdd0
+    scope_firewall: |
+      Experiment in full QCD with dynamical quarks, in a channel this repository does not check. The measured object is a physical hadron produced in J/psi radiative decay and reconstructed from mesons; every number in it is a branching fraction, a resonance parameter or a confidence limit of that theory, not of the pure-gauge SU(3) Hamiltonian lattice the corpus computes in. Its own reference [15] (MORNINGSTAR_2025) records the matching caution from the lattice side: with N_f = 2 + 1 dynamical quarks, no scalar state below about 2 GeV can be considered predominantly a glueball. Corpus section 12 forbids the crossing; nothing here may supply a value.
+    note: |
+      The maintainer-supplied primary arXiv v1 PDF (10 pages, 22 July 2026), read in full on 2026-09-10; bibliographic metadata, DOI and licence taken from the file's own embedded arXiv fields. The arXiv nonexclusive-distrib grant runs to arXiv and not to this repository, so the copy is pinned by digest and never stored.
+      The measurement: with (10087 +- 44) x 10^6 J/psi events, the decay X(2370) -> K*(892)^0 Kbar^0 + c.c. is searched for in J/psi -> gamma K0_S K0_S pi0 and not found. B[J/psi -> gamma X(2370)] x B[X(2370) -> K*(892)^0 Kbar^0 + c.c. -> K0_S K0_S pi0] = (0.1 +- 1.2(stat) +- 1.1(syst)) x 10^-6, hence < 2.7 x 10^-6 at 90 percent C.L.; the ratio to the inclusive K0_S K0_S pi0 mode is R = 0.003 +- 0.040(stat) +- 0.026(syst), hence R < 0.081 at 90 percent C.L. Because a 0^{-+} flavor singlet cannot decay to K*(892) Kbar by generalized G-parity, the suppression is read as a flavor-singlet signature, and the paper claims the X(2370) as the first flavor-singlet light hadron observed above 1 GeV/c^2.
+      Supporting numbers as printed: the X(2370) mass 2376.3 +- 8.7(stat) +3.2/-4.3(syst) MeV/c^2 and width 83 +- 17(stat) +44/-6(syst) MeV from the 2011 discovery; J^{PC} = 0^{-+} determined at more than 9.8 sigma; the fit here fixes mass and width to the combined 2359 MeV/c^2 and 170 MeV. It quotes the lattice 0^{-+} ground-state glueball mass as 2.3 to 3.0 GeV/c^2 from its refs [1-6], and the lattice-predicted radiative production rate to the pure 0^{-+} glueball as (2.31 +- 0.90) x 10^-4 from its ref [5].
+      Why it is indexed here rather than left out as phenomenology: it is the experimental half of the identification problem G18 names, argued in the same shape. Its central mechanism is that the glueball is not itself the observed state -- a glueball/c-cbar mixing with a 2 to 5 degree angle raises the mixture's J/psi radiative production rate to (2-20) x 10^-3, one to two orders of magnitude above the pure glueball's, so "identification of the 0^{-+} glueball dominant mixture particle should be an unambiguous proof". A published, experimental statement that the object of interest is reached only through a dressed state, from a programme with no knowledge of this one.
+      Bibliographic reading, from its own 39-entry reference list: the lattice anchors are Bali et al. 1993 [1], MP_1999 [2], CHEN_2006 [3], Gregory et al. 2012 [4], Gui et al. 2019 [5], Vadacchino 2023 [6], MORNINGSTAR_2025 [15] and Dudek et al. 2011 [39]. There is no Hamiltonian strong-coupling work of any kind in it -- not KS_1975, not KSS_1976, not HAMER_1989 -- so the split documented in docs/referee/modern_anchor_sweep_2026-08-21.md holds on the experimental side too, and now at both ends of the same web: absent in BB_1983 at the 1983 trunk, complete by 2026.
+    cites:
+      - MP_1999
+      - CHEN_2006
+      - MORNINGSTAR_2025
+    bears_on:
+      - target: G18
+        relation: supplies-comparison
+        status: verified
+        detail: |
+          A comparison of structure, never of numbers, and in a different channel: the state here is 0^{-+}, while G18's bridge targets the 1^{+-} carrier, and this is full QCD with quarks rather than the pure-gauge theory the corpus computes in -- the scope firewall above binds, and no branching fraction, mass or limit from this paper enters any claim. What it does supply is an independent, published instance of G18's own difficulty: the glueball is identified not as an eigenstate but as the dominant constituent of a mixture, with the mixing angle small (2-5 degrees) yet decisive for the observable, since it moves the J/psi radiative production rate from (2.31 +- 0.90) x 10^-4 for the pure 0^{-+} glueball to (2-20) x 10^-3 for the mixture. The bare object is not what is measured; a dressed one is. That is the same structure as the few-percent bare-operator overlap SCHIERHOLZ_1988 measures and G18's smeared carrier repairs, arrived at from experiment and from a different channel, which is the whole evidential value of the edge. It promotes nothing: the identification itself is an interpretation the paper argues for, its own reference [15] records the dynamical-quark caution against reading any sub-2 GeV scalar as predominantly glue, and nothing in it bears on the transfer-matrix identification G18 leaves open.
   - id: CAO_2023
     title: Random surfaces and lattice Yang-Mills
     authors:
@@ -3200,20 +3272,6 @@ stubs:
       as_of: 2026-08-21
     note: |
       Cited by HAMER_1989 (contemporary Euclidean spectrum) and by MP_1999 (the previous-generation spectrum it improves on): the bridge between the 1989 comparison and the modern anisotropic-lattice one.
-  - id: BB_1983
-    title: Glueball spectroscopy in four-dimensional SU(3) lattice gauge theory
-    authors:
-      - B. Berg
-      - A. Billoire
-    venue: Nucl. Phys. B221, 109
-    year: 1983
-    doi: 10.1016/0550-3213(83)90620-X
-    inspire_recid: 182491
-    inspire_citations:
-      count: 207
-      as_of: 2026-08-21
-    note: |
-      Cited by HIP_1986 and MP_1999: the early Euclidean SU(3) spectroscopy both the Hamiltonian series paper and the modern anisotropic study measure themselves against.
   - id: DFSST_1985_GLUEBALL
     title: 'The 0++ glueball mass in SU(3) lattice gauge theory: towards definitive results'
     authors:
@@ -3301,6 +3359,9 @@ stubs:
     note: |
       The paper the Weingarten calculus is named after, cited by CS_2006 -- whose closed-form version of that calculus is what refuted C7. The method chain behind the one T1-promoted edge in this file.
 wanted:
+  - what: Berg and Billoire, Glueball spectroscopy in 4d SU(3) lattice gauge theory (II), Nucl. Phys. B226 (1983)
+    would_settle: |
+      Part I is now pinned and read (BB_1983). It classifies spacelike Wilson loops up to length 8 but reports Monte Carlo results only from loops up to length 6 on a 4^3 x 8 lattice, and defers the length-8 measurements on a 5^3 x 8 lattice to Part II. Part I's Table 3.1 gives the T_1^{+-} content of the length-4 and length-6 prototypes only; the length-8 content sits in the table on its p. 121, which this scan does not render, so Part II is the printed record of both what the enlarged basis contains in this channel and what it measured -- the earliest data point on the question G18's smeared carrier and FLPS_2026's nine-operator T1+- basis are both about. It would also fix whether the 1^{+-} non-scaling of Part I survives a larger basis and a larger lattice, which Part I leaves explicitly open.
   - what: A review of Schrieffer-Wolff / Feshbach projection error control
     would_settle: |
       U3 conjectures that both vanishings in this corpus are properties of the Q projection rather than of either geometry. A general statement about Q P Q on a degenerate sector is what would promote it, and G14 is the cubic half.
