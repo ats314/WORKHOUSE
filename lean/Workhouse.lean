@@ -16,3 +16,5 @@ import Workhouse.W6Residual
 import Workhouse.SC17Riccati
 import Workhouse.SourceTilt
 import Workhouse.SourceRadiusGrowth
+import Workhouse.HodgeFeshbach
+import Workhouse.PolymerCluster

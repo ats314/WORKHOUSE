@@ -29,6 +29,11 @@ own dated mathematical statements and verification scope.
 | Bounded experimental proposals and findings | [experiments/](experiments/) | Keep their stated hypotheses and stopping criteria attached. |
 
 For September 1 onward work, start with the current research map and proof map.
+The [September 10 scope correction](research/formalization-scope-2026-09-10.md)
+connects the corrected Hodge and polymer ingredients to their exact source groups.
+The [W6 derivative budget](derivations/w6-ground-jets-and-transport-budget.md)
+and [conditional-score analysis](derivations/w6-conditional-score-tail-control.md)
+record the fixed-square progress and the remaining uniform transport estimates.
 The [September 9 integration run](../runs/recent_research_integration_2026-09-09/README.md)
 preserves the intake evidence; its [document coverage map](../runs/recent_research_integration_2026-09-09/docs_coverage.json)
 links that run's priority documents to native citation IDs. The later

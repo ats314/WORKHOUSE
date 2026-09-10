@@ -31,6 +31,13 @@ integration milestone; use the live guides and generated views for current
 scope and counts. GitHub holds the versioned verification project and selected
 evidence, while the larger local archive retains its original files.
 
+The [September 10 Hodge and polymer scope correction](docs/research/formalization-scope-2026-09-10.md)
+separates abstract operator proofs and scalar ingredients from their remaining
+physical-model identifications, with preserved source inputs and exact proof links.
+The [W6 continuation](docs/derivations/w6-ground-jets-and-transport-budget.md)
+adds actual fixed-square ground and operator derivative bounds and an explicit
+criterion for the complete source-transport budget.
+
 ## Quick start
 
 From an existing checkout, with Python 3.11 or newer and `uv` available:
