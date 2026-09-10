@@ -113,9 +113,9 @@ def render(
     symbols: list[dict] | None = None,
     graph: graph_mod.Graph | None = None,
 ) -> tuple[str, bool]:
-    catalogue = catalogue if catalogue is not None else claims_mod.collect()
+    catalogue = catalogue if catalogue is not None else claims_mod.load_catalogue()
     symbols = symbols if symbols is not None else claims_mod.load_symbols()
-    graph = graph if graph is not None else graph_mod.build(catalogue, symbols)
+    graph = graph if graph is not None else graph_mod.load()
     by_id = {c.id: c for c in catalogue}
     sym_by_id = {f"SYM:{s['id']}": s for s in symbols}
     node_ids = set(by_id) | set(sym_by_id)

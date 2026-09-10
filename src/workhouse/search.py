@@ -74,7 +74,7 @@ def search(
     symbols: list[dict[str, Any]] | None = None,
 ) -> tuple[list[Hit], list[dict[str, Any]]]:
     """Return matching claims and the alias records that matched."""
-    catalogue = catalogue if catalogue is not None else claims_mod.collect()
+    catalogue = catalogue if catalogue is not None else claims_mod.load_catalogue()
     symbols = symbols if symbols is not None else claims_mod.symbol_records(catalogue)
     needle = query.strip()
     lowered = needle.lower()
@@ -163,7 +163,7 @@ def nearest_value(
     wanted = _as_fraction(query)
     if wanted is None or wanted == 0:
         return None
-    catalogue = catalogue if catalogue is not None else claims_mod.collect()
+    catalogue = catalogue if catalogue is not None else claims_mod.load_catalogue()
     best: tuple[claims_mod.Claim, float] | None = None
     for claim in catalogue:
         value = _claim_value(claim)
