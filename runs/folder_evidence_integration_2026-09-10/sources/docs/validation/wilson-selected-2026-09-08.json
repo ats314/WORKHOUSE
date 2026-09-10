@@ -1,0 +1,212 @@
+{
+  "recorded_at": "2026-09-09T00:39:43.268897+00:00",
+  "analytic_scope": "Compact SU2 min-max obstruction after finite-rank Gaussian retention; conditional selected-resolvent Schur remainder; exact method counterexamples",
+  "open_estimate": "W6: uniform interacting signed fast-form pairing on both inverse images of the complete graph force; actual fast floor and direct/source remainders are also unproved. No continuum construction is claimed.",
+  "guidance_pdf": {
+    "path": "C:\\Users\\Alex\\.codex\\codex-remote-attachments\\01a082e4-6acd-7fb3-9b51-19444da9ee6b\\7CB6AE9F-52F3-4247-B1C0-B94760FF97DD\\1-yangmills.pdf",
+    "sha256": "3558403ca14c11e382f73a09e548222708540bfdf478cf96aa11c52d43e23e09",
+    "quoted_pages": [
+      11,
+      12
+    ]
+  },
+  "input_pins": [
+    {
+      "source": "C:\\WORKHOUSE\\WORKHOUSE-autonomous-20260905\\paper\\research_notes\\G19_TRUE_GROUND_LOCALIZED_WILSON_SCORE_20260905.md",
+      "commit": "4bf812428e0af51d1ffcda299b0d97b38b644926",
+      "sha256": "530f1c4b229c6237bf243967aeda998f5eaabcc1e3080c4e096c5b0d9d4706c7",
+      "git_blob_sha256": "530f1c4b229c6237bf243967aeda998f5eaabcc1e3080c4e096c5b0d9d4706c7",
+      "matches_commit_after_lf_normalization": true
+    },
+    {
+      "source": "C:\\WORKHOUSE\\WORKHOUSE-autonomous-20260905\\paper\\research_notes\\G19_LOCAL_GRADIENT_EXCITATION_SUPPORT_20260905.md",
+      "commit": "4bf812428e0af51d1ffcda299b0d97b38b644926",
+      "sha256": "41f0f8eb24bf23fda00ef33143d12624adb15cb05fdfdead0910bb3169050064",
+      "git_blob_sha256": "41f0f8eb24bf23fda00ef33143d12624adb15cb05fdfdead0910bb3169050064",
+      "matches_commit_after_lf_normalization": true
+    },
+    {
+      "source": "C:\\WORKHOUSE\\WORKHOUSE-autonomous-20260905\\paper\\research_notes\\G19_GROUND_MARGINAL_SCHUR_SCORE_20260905.md",
+      "commit": "4bf812428e0af51d1ffcda299b0d97b38b644926",
+      "sha256": "e5474c4118f001b6771d2049e8021f8be7f7af1617158889891d1bb34b455975",
+      "git_blob_sha256": "e5474c4118f001b6771d2049e8021f8be7f7af1617158889891d1bb34b455975",
+      "matches_commit_after_lf_normalization": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "SU2 character kinetic normalization uses all four plaquette links",
+      "passed": true,
+      "detail": "The rational generating function satisfies the character differential identity; Chebyshev U_n for n=0,...,8 independently satisfies the SU2 radial Laplacian equation: four original links give -2 Delta eigenvalue n(n+2)/2",
+      "section": "WILSON_SELECTED; G19 W2",
+      "tier": 1,
+      "line": 28,
+      "source": "src/workhouse/invariants/wilson_selected.py:28",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "FINDING: compact Wilson spectral growth defeats a full Gaussian upper form bound",
+      "passed": true,
+      "detail": "g=1/4, rank r=1, n=1024: actual min-max lower bound 32768 exceeds the proposed Gaussian upper bound 5125. The all-C analytic margin is [252+256(k^2-1)]m^2>0 for integer k,m>=1; finite-rank retention only",
+      "section": "WILSON_SELECTED; G19 W2-W3",
+      "tier": 1,
+      "line": 52,
+      "source": "src/workhouse/invariants/wilson_selected.py:52",
+      "yields": {
+        "WILSON_COMPACT_LOWER_WITNESS": "32768",
+        "WILSON_GAUSSIAN_UPPER_WITNESS": "5125"
+      },
+      "rests_on": [
+        "SU2 character kinetic normalization uses all four plaquette links"
+      ]
+    },
+    {
+      "name": "Selected inverse variation can be bounded with unbounded relative perturbation",
+      "passed": true,
+      "detail": "Exact diagonal resolvent identity gives g^2/(1+g^2 n) per coefficient while the relative perturbation is g^2 n; three rational couplings check 0<selected loss<=6g^2 independently by matrix inversion",
+      "section": "WILSON_SELECTED; G19 W4-W5",
+      "tier": 1,
+      "line": 76,
+      "source": "src/workhouse/invariants/wilson_selected.py:76",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "FINDING: true vacuum subtraction reverses the bare positive-perturbation inverse order",
+      "passed": true,
+      "detail": "H0=diag(0,2), V=diag(100,0)>=0, g=1/20: true vacuum is 1/4, so fast energy 7/4<2 and inverse 4/7>1/2 despite bare positivity",
+      "section": "WILSON_SELECTED; G19 section 4",
+      "tier": 1,
+      "line": 98,
+      "source": "src/workhouse/invariants/wilson_selected.py:98",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "FINDING: spectator reference moments grow despite an exact unit excitation gap",
+      "passed": true,
+      "detail": "Independent exact tensor matrices for M=1,...,4 and g=1/2 verify H rho=rho, <N0>=1+(M-2)p and <N0^2>=<N0>^2+Mp(1-p), p=1/5. The all-M product proof has quadratic spectator growth; local rotation repairs the product vacuum, with no coupled-Wilson estimate inferred",
+      "section": "WILSON_SELECTED; G19 section 4",
+      "tier": 1,
+      "line": 124,
+      "source": "src/workhouse/invariants/wilson_selected.py:124",
+      "yields": {},
+      "rests_on": []
+    }
+  ],
+  "artifacts": {
+    "docs/derivations/wilson-selected-inverse-wall.md": "c0473aca76790ef7adc6e9d90642f94a252d7052e02fa0b7ee79f92afd099cfe",
+    "src/workhouse/invariants/wilson_selected.py": "f27d1642bffe639e507ee0a814a332ff5d6a2617f65753da67bc87c7a3e3a535",
+    "src/workhouse/invariants/__init__.py": "7115623e2e3f4584f11cd5700a8870efd4e2d063cc6884dc017980de44686e0d",
+    "scripts/validate_wilson_selected.py": "0a84b32588a3817ac1d0abe28aa78abf436581e7c8d5be19baf4379fdb2a1384",
+    "scripts/validate_wilson_spatial.py": "5ab2c66d7d49f88544d18efd797e330a23ea9810801a70fd6756275a969fe1d6",
+    "docs/research/spatial-continuum-passage-2026-09-08.md": "6f2595489eaabb401f025e288ec9bdbb6578111df85df88378fde50ec39328ca",
+    "ledger/documents.yaml": "05795fb09b5c51e3b894d7f9b8e6016745ea116a61da1e7cb0ad1b01310669f6",
+    "ledger/gaps.yaml": "a49e87d82f96b62ff22886d448a4beb05a8e415792c8da55341436ea77dc7752",
+    "index/claims.jsonl": "f4e98c9fb24d156000940dbd7f6d3118071bcde02a14b8ca5010b5501f0f845f",
+    "index/symbols.jsonl": "7f36d4dcbd98f4ab39fcf9b4dc4b60b99de31e2c7c14a19fc8db83a4b093c366",
+    "index/graph.jsonl": "5a92c554584157d1684b60e143005f5158ba602d31d9294546df3a5aba7bb43a",
+    "FRONTIER.md": "9c181a2c3509b5e6d0c480360425527cd180dfa25bcc83927a71cb0db70e7bff",
+    "CERTIFIED.md": "0c07761de76f4afe16d1e528f2c732c69f2fc923103357d5dae2af0a62bbd150"
+  },
+  "test_runs": [
+    {
+      "file": "wilson-selected-focused-2026-09-08.xml",
+      "sha256": "3b55d5eb931f15f6cd4dbcc9e4bfdd59c549ce9445b653f8d22c4bac1466b133",
+      "tests": 98,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "wilson-selected-graph-2026-09-08.xml",
+      "sha256": "0db8478be14c4007c7564e0e4df41af798175bc55200ed5d640e29eb02b2898d",
+      "tests": 37,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "generated_graph": {
+    "claim_records": 4054,
+    "edge_records": 8052,
+    "native_checks": 422,
+    "native_checks_passing": 422,
+    "lean_records": 118,
+    "g19_routes": [
+      {
+        "id": "ROUTE:G19:derive-actual-wilson-physical-time-block-5cb95a",
+        "statement": "G19 route: derive actual Wilson physical-time blocks and a uniform vacuum polymer majorant",
+        "status": "done",
+        "related": [
+          "CITE:WILSON_MARKED",
+          "G18",
+          "G19",
+          "LEAN:wilson_polymer_kp_budget",
+          "LEAN:wilson_symmetric_block_identity"
+        ]
+      },
+      {
+        "id": "ROUTE:G19:bound-the-actual-vacuum-dressed-wilson-b-a67e12",
+        "statement": "G19 route: bound the actual vacuum-dressed Wilson block on arbitrary excitation coefficients and identify its complete shell",
+        "status": "done",
+        "related": [
+          "CITE:WILSON_ACTIVITY_INPUT",
+          "CITE:WILSON_BAND_INPUT",
+          "CITE:WILSON_CHART_INPUT",
+          "CITE:WILSON_SHELL",
+          "G19"
+        ]
+      },
+      {
+        "id": "ROUTE:G19:assemble-the-complete-nonlinear-schur-ex-d9b20a",
+        "statement": "G19 route: assemble the complete nonlinear Schur excess and error-weighted spatial budget",
+        "status": "done",
+        "related": [
+          "CITE:WILSON_SPATIAL",
+          "G19",
+          "LEAN:wilson_spatial_budget_telescope"
+        ]
+      },
+      {
+        "id": "ROUTE:G19:prove-the-uniform-interacting-spatial-fo-ab1a69",
+        "statement": "G19 route: prove the uniform interacting spatial form bounds and actual coarse/source matching",
+        "status": "live",
+        "related": [
+          "G19"
+        ]
+      },
+      {
+        "id": "ROUTE:G19:impose-a-global-gaussian-fast-form-upper-1a61ce",
+        "statement": "G19 route: impose a global Gaussian fast-form upper bound after finite-rank source retention",
+        "status": "dead",
+        "related": [
+          "CITE:WILSON_SELECTED",
+          "G19"
+        ]
+      },
+      {
+        "id": "ROUTE:G19:transport-the-established-wilson-carrier-a24827",
+        "statement": "G19 route: transport the established Wilson carrier and literal sources along a controlled spatial scale trajectory",
+        "status": "live",
+        "related": [
+          "G19"
+        ]
+      },
+      {
+        "id": "ROUTE:G19:griffiths-type-monotonicity-of-the-elect-037ba7",
+        "statement": "G19 route: Griffiths-type monotonicity of the electric-flux sector free energies in beta",
+        "status": "dead",
+        "related": [
+          "ADR 0022",
+          "CHK:a weight u^k, k >= 1, flips the small-u direction: the sign is the weight's, not evidence",
+          "CHK:every fifth-order slope coefficient is negative, so the flux gap falls as beta grows",
+          "CHK:the leading electric-flux gap C_F L / (2 sqrt u) decreases in u for every N",
+          "G19"
+        ]
+      }
+    ]
+  },
+  "execution_note": "Initial sandbox execution could not load pyflint or run ruff (access denied); normal host execution is used for validation. No full pytest pass is claimed."
+}

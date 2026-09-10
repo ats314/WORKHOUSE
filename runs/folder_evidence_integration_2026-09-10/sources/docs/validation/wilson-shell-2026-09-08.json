@@ -1,0 +1,419 @@
+{
+  "schema": "wilson-shell-validation/v1",
+  "validated_at": "2026-09-09T00:33:35.954051+00:00",
+  "scope": {
+    "mathematical_status": "proven under the explicit calibrated-window and G18 inputs",
+    "evidence": "analytic",
+    "full_theorem_machine_tier": "T3; only the separately named finite/scalar controls are T1/T0",
+    "step_1": "The normalized marked expansion cancels disconnected vacuum components.",
+    "step_2": "Actual complete Wilson shell and onto source frame; common complex weighted Taylor majorant.",
+    "step_3": "Summed temporal matching, relative carrier gap and positive source overlap.",
+    "specific_WT6_rooted_operator_norm_proved": false,
+    "sufficient_alternative": "Full Hilbert-space complex anchored estimate plus finite-order kernel locality.",
+    "spatial_continuum_proved": false,
+    "summed_epsilon_squared_rate_proved": false
+  },
+  "unchanged_analytic_inputs": [
+    {
+      "file": "G18_ROOTED_WILSON_CONTRACTION_20260905.md",
+      "sha256": "07a7e7b79576af3f969349e977ce386ff42e391f6f48a7f358b6c8b7a248ffc9",
+      "git_blob_content_sha256": "07a7e7b79576af3f969349e977ce386ff42e391f6f48a7f358b6c8b7a248ffc9",
+      "matches_recorded_commit_after_lf_normalization": true
+    },
+    {
+      "file": "G18_WILSON_CREATOR_THERMODYNAMIC_LIMIT_20260905.md",
+      "sha256": "c9c1c0b772c9cf7f50b98b07a86f82ba0e9d54d5970e7220b3604dcfad53abb1",
+      "git_blob_content_sha256": "c9c1c0b772c9cf7f50b98b07a86f82ba0e9d54d5970e7220b3604dcfad53abb1",
+      "matches_recorded_commit_after_lf_normalization": true
+    },
+    {
+      "file": "G18_WILSON_CREATOR_PARENT_AND_SPECTRAL_FLOW_20260905.md",
+      "sha256": "a47b6d3aba8e7dcd7c1f8cd694f54c279a885a9e99ec19896f8232f2efd3cf6a",
+      "git_blob_content_sha256": "a47b6d3aba8e7dcd7c1f8cd694f54c279a885a9e99ec19896f8232f2efd3cf6a",
+      "matches_recorded_commit_after_lf_normalization": true
+    },
+    {
+      "file": "G18_WILSON_CARDINALITY_UNITARY_CHART_20260905.md",
+      "sha256": "15ae9409d96220d41c6cf9c77ce7a294bc2760a586d2e0a245235fd02e6e908f",
+      "git_blob_content_sha256": "15ae9409d96220d41c6cf9c77ce7a294bc2760a586d2e0a245235fd02e6e908f",
+      "matches_recorded_commit_after_lf_normalization": true
+    },
+    {
+      "file": "G18_WILSON_ACTIVITY_EXTRACTION_20260905.md",
+      "sha256": "babc712caa1aa31c88eb5dd02f485d68e31eb615c0012a5a1a98749231b9c5bd",
+      "git_blob_content_sha256": "babc712caa1aa31c88eb5dd02f485d68e31eb615c0012a5a1a98749231b9c5bd",
+      "matches_recorded_commit_after_lf_normalization": true
+    },
+    {
+      "file": "G18_WILSON_WEIGHTED_ACTIVITY_BOUND_20260905.md",
+      "sha256": "45458b4e3666f82563c05c797271e546defe3407ab2e3e16c8620c6b97bdfbb0",
+      "git_blob_content_sha256": "45458b4e3666f82563c05c797271e546defe3407ab2e3e16c8620c6b97bdfbb0",
+      "matches_recorded_commit_after_lf_normalization": true
+    },
+    {
+      "file": "G18_WILSON_INFINITE_VOLUME_PHYSICAL_BAND_20260905.md",
+      "sha256": "966e464c641e96aad31391054261ca567ec1f87734a878cf4af2327a0a5a83fc",
+      "git_blob_content_sha256": "966e464c641e96aad31391054261ca567ec1f87734a878cf4af2327a0a5a83fc",
+      "matches_recorded_commit_after_lf_normalization": true
+    },
+    {
+      "file": "G18_EXCITED_WINDOW_OPERATOR_BRIDGE_20260904.md",
+      "sha256": "5b15f9c07d8b7e6a9e512f445409fdfbd33a3ddd3113ed343466c89a6ca26dd0",
+      "git_blob_content_sha256": "5b15f9c07d8b7e6a9e512f445409fdfbd33a3ddd3113ed343466c89a6ca26dd0",
+      "matches_recorded_commit_after_lf_normalization": true
+    },
+    {
+      "file": "G18_WILSON_ENDPOINT_GAUGE_AND_MAJORANT_20260905.md",
+      "sha256": "bc3636fea19117b162c733f409c50e61aa208cc88eb370b68b95c798aea9b6f2",
+      "git_blob_content_sha256": "bc3636fea19117b162c733f409c50e61aa208cc88eb370b68b95c798aea9b6f2",
+      "matches_recorded_commit_after_lf_normalization": true
+    }
+  ],
+  "direct_checks_passed": 19,
+  "direct_checks_total": 19,
+  "direct_checks": [
+    {
+      "name": "Wilson block expansion retains the symmetric endpoint factors at every tested order",
+      "passed": true,
+      "detail": "Exact noncommuting 2x2 matrices, m=1,2,4, coefficients 0..4: (A K A)^m=A(K A^2)^(m-1)K A, matches=[True, True, True]; total magnetic time m*tau=1",
+      "section": "WILSON_MARKED; G17; G18; G19 WT-1",
+      "tier": 1,
+      "line": 69,
+      "source": "src/workhouse/invariants/wilson_marked.py:69",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Wilson activation selects exactly the words that contain every active plaquette",
+      "passed": true,
+      "detail": "Two noncommuting interaction labels: mixed activation vanishes at orders 0,1, has a nonzero higher coefficient, and vanishes if a required label is removed; m=1,2,3",
+      "section": "WILSON_MARKED; G17; G18; G19 WT-2",
+      "tier": 1,
+      "line": 85,
+      "source": "src/workhouse/invariants/wilson_marked.py:85",
+      "yields": {},
+      "rests_on": [
+        "Wilson block expansion retains the symmetric endpoint factors at every tested order"
+      ]
+    },
+    {
+      "name": "Wilson activated-block majorant coefficients are onto-label counts divided by factorial",
+      "passed": true,
+      "detail": "36 exact coefficients: sum_j (-1)^(k-j) binomial(k,j) j^n/n! equals sum_(r_1+...+r_k=n, r_i>=1) 1/prod r_i!; the block norm majorant is (exp(ell*v*abs(u))-1)^k, with no slice-count factor",
+      "section": "WILSON_MARKED; G17; G18; G19 WT-2",
+      "tier": 1,
+      "line": 105,
+      "source": "src/workhouse/invariants/wilson_marked.py:105",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Wilson normalized marked expectation cancels an independent vacuum factor exactly",
+      "passed": true,
+      "detail": "For m=1,2,4, exact tensor contractions give numerator=N_A*Z_B, denominator=Z_A*Z_B, and the normalized observable equals N_A/Z_A. The all-orders factorization proof and its nonzero-denominator hypothesis are in WT-3",
+      "section": "WILSON_MARKED; G17; G18; G19 WT-3",
+      "tier": 1,
+      "line": 138,
+      "source": "src/workhouse/invariants/wilson_marked.py:138",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Wilson disconnected components separated in time also factor after a vacuum reset",
+      "passed": true,
+      "detail": "Same-site components: vacuum reset gives 8=8; without the reset the value is 26/3. Separation in time alone is insufficient",
+      "section": "WILSON_MARKED; G17; G18; G19 WT-3",
+      "tier": 1,
+      "line": 159,
+      "source": "src/workhouse/invariants/wilson_marked.py:159",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Wilson complete finite configuration sum equals the transfer power and factorizes by polymers",
+      "passed": true,
+      "detail": "All 625 four-block configurations, including 16 disconnected ones, factor by connected components; sum=350730113/18874368=<Omega,B^4 Omega>. This checks the complete projector/activation pipeline on a finite two-link model",
+      "section": "WILSON_MARKED; G17; G18; G19 WT-3",
+      "tier": 1,
+      "line": 176,
+      "source": "src/workhouse/invariants/wilson_marked.py:176",
+      "yields": {},
+      "rests_on": [
+        "Wilson normalized marked expectation cancels an independent vacuum factor exactly",
+        "Wilson activation selects exactly the words that contain every active plaquette"
+      ]
+    },
+    {
+      "name": "cubic link-time polymer graph has degree at most 38 and at most ten labels per vertex",
+      "passed": true,
+      "detail": "(L, spatial degree, link-time degree, incident binary labels)=[(3, 12, 38, 10), (4, 12, 38, 10)]; analytically each link meets four plaquettes, each contributes at most three neighbors",
+      "section": "WILSON_MARKED; G17; G18; G19 WT-4",
+      "tier": 1,
+      "line": 241,
+      "source": "src/workhouse/invariants/wilson_marked.py:241",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Wilson polymer counting satisfies the Kotecky-Preiss budget when its ratio is at most one half",
+      "passed": true,
+      "detail": "Root sum <= r/[D^2(1-r)], incompatibility multiplier D+1; D=38,r=1/2 gives 39/1444<1. The general r<=1/2,D>=2 budget is Lean-proved; activity and lattice-animal bounds are analytic inputs",
+      "section": "WILSON_MARKED; G17; G18; G19 WT-4",
+      "tier": 1,
+      "line": 270,
+      "source": "src/workhouse/invariants/wilson_marked.py:270",
+      "yields": {},
+      "rests_on": [
+        "cubic link-time polymer graph has degree at most 38 and at most ten labels per vertex",
+        "Wilson activated-block majorant coefficients are onto-label counts divided by factorial"
+      ]
+    },
+    {
+      "name": "Wilson complex resolvent denominator has an exact radial and angular square decomposition",
+      "passed": true,
+      "detail": "|r exp(i theta)-1|^2=(r-1)^2+4r sin(theta/2)^2 exactly. The sine and exponential inequalities giving the all-energy norm bound are stated in WT-5",
+      "section": "WILSON_MARKED; G17; G18; G19 WT-5",
+      "tier": 1,
+      "line": 287,
+      "source": "src/workhouse/invariants/wilson_marked.py:287",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Wilson damped denominators have a finite physical-time limit while a raw transfer resolvent diverges",
+      "passed": true,
+      "detail": "tau/(1-exp(-tau E))=tau+tau/(exp(tau E)-1); the damped limit is 1/E, whereas the raw resolvent has a nonzero 1/tau coefficient. Lean proves tau/(exp(tau E)-1)<=1/E for all positive tau,E",
+      "section": "WILSON_MARKED; G17; G18; G19 WT-5",
+      "tier": 1,
+      "line": 302,
+      "source": "src/workhouse/invariants/wilson_marked.py:302",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Wilson carrier transport error budgets preserve a relative gap and a positive source amplitude conditionally",
+      "passed": true,
+      "detail": "Gap coefficient c spends 2*gamma*eta; source amplitude source spends error. Positivity requires 2*gamma*eta<c and error<source. Existence, completeness and matching of the Wilson shell are separate unproved premises",
+      "section": "WILSON_MARKED; G17; G18; G19 WT-6",
+      "tier": 1,
+      "line": 323,
+      "source": "src/workhouse/invariants/wilson_marked.py:323",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "FINDING: a uniform vacuum gap does not determine the multiplicity or source totality of an excited shell",
+      "passed": true,
+      "detail": "Positive transfers diag(1,1/2,1/4,1/8) and diag(1,1/2,1/2,1/8) have the same vacuum gap log(2), but shell ranks 1 and 2. The second shell has a vector orthogonal to the stated source",
+      "section": "WILSON_MARKED; G17; G18; G19 WT-6",
+      "tier": 1,
+      "line": 339,
+      "source": "src/workhouse/invariants/wilson_marked.py:339",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Wilson nonnormal anchored activities satisfy an exact full-tensor bilinear certificate",
+      "passed": true,
+      "detail": "Four qubits, three overlapping pair activities, 4 nonempty disjoint families; the full 15-dimensional nonvacuum Schur complement has an exact positive LDL diagonal. Activities are nonnormal and annihilate both vacuum legs; no selected-source restriction",
+      "section": "WILSON_SHELL; G18; G19 S8",
+      "tier": 1,
+      "line": 33,
+      "source": "src/workhouse/invariants/wilson_shell.py:33",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "FINDING: right vacuum annihilation alone does not give the anchored bilinear bound",
+      "passed": true,
+      "detail": "F=|0><1| has F P=0 but P F=F. The proposed two-sided bound gives |<0,F1>|=1 <= sqrt(<0,Q0><1,Q1>)=0, which is false",
+      "section": "WILSON_SHELL; G18; G19 S8",
+      "tier": 1,
+      "line": 78,
+      "source": "src/workhouse/invariants/wilson_shell.py:78",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Wilson complete-shell complex contour and Gram budgets are strict exact inequalities",
+      "passed": true,
+      "detail": "error=1/998; complex projection defect <= 15625/495351<1/9; Gram defect <= 13/32<1/2; contour left bound=4608/15625>0. These certify arithmetic once the analytic activity and synthesis bounds are supplied",
+      "section": "WILSON_SHELL; G18; G19 S9-S15",
+      "tier": 1,
+      "line": 94,
+      "source": "src/workhouse/invariants/wilson_shell.py:94",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Wilson disconnected-shell source matrix element excludes an independently rotated spectator",
+      "passed": true,
+      "detail": "Complete rank-two single-excitation shell on two three-level factors: marked diagonal=(t**2 - 1)**2/(t**2 + 1)**2, cross=0; every spectator-parameter coefficient vanishes",
+      "section": "WILSON_SHELL; G18; G19 S2 and support lemma",
+      "tier": 1,
+      "line": 118,
+      "source": "src/workhouse/invariants/wilson_shell.py:118",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Wilson Taylor range counting has a certified exponential envelope at every order",
+      "passed": true,
+      "detail": "2(n+4)^3-(n+5)^3=n**3 + 9*n**2 + 21*n + 3, coefficients=[3, 21, 9, 1]; base orders 0..4 pass, so n^3<=4*2^n at every natural order. 3(24n+1)^3<=187500*2^n for n>=1; spatial support is an analytic input",
+      "section": "WILSON_SHELL; G18; G19 S17",
+      "tier": 1,
+      "line": 144,
+      "source": "src/workhouse/invariants/wilson_shell.py:144",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Wilson holomorphic source Gram uses adjoint reflection rather than conjugating the variable",
+      "passed": true,
+      "detail": "Real-coefficient analytic source: J# J=[[z**2 + 1, z], [z, z**2 + 1]] is polynomial in z; J(z)* J(z) contains conjugate(z). This checks the continuation convention, not a Wilson model",
+      "section": "WILSON_SHELL; G18; G19 S11-S14",
+      "tier": 1,
+      "line": 161,
+      "source": "src/workhouse/invariants/wilson_shell.py:161",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Wilson matching after removal of its equal constant and linear terms has an exact shifted tail",
+      "passed": true,
+      "detail": "Dividing the degree-(M+3) remainder by u^2 gives (2B/R^2)(u/R)^(M+1)/(1-u/R); xi=t/(8 gamma) leaves coefficient t/4. The two equal Taylor coefficients and common analytic radius are required inputs",
+      "section": "WILSON_SHELL; G18; G19 S18-S20",
+      "tier": 1,
+      "line": 178,
+      "source": "src/workhouse/invariants/wilson_shell.py:178",
+      "yields": {},
+      "rests_on": []
+    }
+  ],
+  "artifact_sha256": {
+    "docs/derivations/wilson-marked-shell-transport.md": "a887ed9de154cec0adabb644744e25b38017dda83f92f687f5a14b762004a840",
+    "src/workhouse/invariants/wilson_shell.py": "d195314d4acc95bef7265fd32fd3288f05aca3e63b8d7acf3f94d19601660dc0",
+    "src/workhouse/ledger.py": "3602fad4908b89a2c5f4ea7cc0bb9b5c87914885689b59b8bf811ccd8f3275ba",
+    "tests/test_ledger.py": "f719832bb8d7eb5a6ead2b4fff9f26350ddffe594707a979df1f531283166206",
+    "lean/Workhouse/Basic.lean": "7cbd8b7775cb839fd6cb65b9a7fcd912531f8e787656cc87e7817858168b08ab",
+    "ledger/theorems.yaml": "23480677965df0f14d2aac1fc0c208bb5058a961094c9e2b18ea771a1746a623",
+    "ledger/documents.yaml": "05795fb09b5c51e3b894d7f9b8e6016745ea116a61da1e7cb0ad1b01310669f6",
+    "ledger/gaps.yaml": "a49e87d82f96b62ff22886d448a4beb05a8e415792c8da55341436ea77dc7752",
+    "literature/wilson-marked/theory_graph.yaml": "3bc9be03bde272d44485341b46107a619c3e24ff230971fb78a2cc0713b0552c",
+    "paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md": "9691c8a6e26e8ceb231b78bbc23e4acdc6c0b65b6795549f4e151bc5e18a22db",
+    "paper/research_notes/G18_RELATIVE_GAP_BRIDGE_20260904.tex": "d6f613bc7318009096fa0126efa217572deda1f20b393067cfc867697bbb1e1e",
+    "paper/research_notes/G18_FIXED_SPACING_CARRIER_BRIDGE_INSERT.tex": "87dc50be936d5b93e4e03cd5a15a0b4fe2a6b9d7a446eda933856f8133887022",
+    "paper/research_notes/G18_INTERNAL_BBDAGGER_SHEET_CLOSURE_20260830.tex": "8c871855b5bb415b8fc7a61db9b43e3a4781a74257af23abdab23ab2d8ca0ec0"
+  },
+  "other_validation": {
+    "lean": "lake build --wfail; new axioms: wilson-shell-axioms-2026-09-08.txt",
+    "new_lemma_axioms": "'Workhouse.wilson_taylor_polynomial_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Workhouse.wilson_complex_gram_budget' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Workhouse.wilson_uniform_carrier_coefficient' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+    "pytest": {
+      "tests": 768,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "228f5912d62d24d9cf408ca716e1a84a54c8dd14c31df2160a3be58d75ff4c5e",
+      "retries": [
+        {
+          "file": "wilson-shell-hook-retry-2026-09-08.xml",
+          "sha256": "92d3daf9cdbefd58b05ca9ebc4f08f335da5ce6ca05f1b984391a9cd0812d14b",
+          "passed_testcases": [
+            [
+              "tests.test_frontier",
+              "test_the_hook_emits_valid_session_start_json"
+            ]
+          ],
+          "reason": "Git Bash before the WindowsApps WSL bash launcher on PATH",
+          "repository_code_changed_for_retry": false
+        },
+        {
+          "file": "wilson-shell-ledger-retry-2026-09-08.xml",
+          "sha256": "3b3571a1092bb81ee00aa749286d498fb20613d689dcd951b6fa5d26e3f4a279",
+          "passed_testcases": [
+            [
+              "tests.test_ledger",
+              "test_c1_forbids_the_terminology_that_manufactured_it"
+            ],
+            [
+              "tests.test_ledger",
+              "test_closed_routes_accept_registered_analytic_sources"
+            ],
+            [
+              "tests.test_ledger",
+              "test_closed_routes_reject_unknown_or_unresolved_analytic_sources[CITE:CANON]"
+            ],
+            [
+              "tests.test_ledger",
+              "test_closed_routes_reject_unknown_or_unresolved_analytic_sources[CITE:UNREGISTERED_PROOF]"
+            ],
+            [
+              "tests.test_ledger",
+              "test_closed_routes_reject_unknown_or_unresolved_analytic_sources[LEAN:unregistered_theorem]"
+            ],
+            [
+              "tests.test_ledger",
+              "test_disputed_contradictions_carry_both_numbers"
+            ],
+            [
+              "tests.test_ledger",
+              "test_every_open_contradiction_is_visible_in_the_governing_register"
+            ],
+            [
+              "tests.test_ledger",
+              "test_g3_no_longer_claims_to_resolve_c1"
+            ],
+            [
+              "tests.test_ledger",
+              "test_g3_rewrite_keeps_the_protocol_and_the_traps"
+            ],
+            [
+              "tests.test_ledger",
+              "test_governing_register_is_complete"
+            ],
+            [
+              "tests.test_ledger",
+              "test_ledgers_load_and_validate"
+            ],
+            [
+              "tests.test_ledger",
+              "test_load_bearing_gaps_are_the_bridge_and_the_free_energy_bound"
+            ],
+            [
+              "tests.test_ledger",
+              "test_no_contradiction_remains_open_and_c2_closed_by_derivation"
+            ],
+            [
+              "tests.test_ledger",
+              "test_no_ledger_file_has_a_duplicate_mapping_key"
+            ],
+            [
+              "tests.test_ledger",
+              "test_plan_steps_carry_a_closed_route_state"
+            ],
+            [
+              "tests.test_ledger",
+              "test_registers_are_complete"
+            ],
+            [
+              "tests.test_ledger",
+              "test_the_crosswalk_is_pinned"
+            ],
+            [
+              "tests.test_ledger",
+              "test_the_nine_items_v4_3_added_are_present"
+            ],
+            [
+              "tests.test_ledger",
+              "test_the_register_transcription_is_verbatim"
+            ]
+          ],
+          "reason": "Accept registered CITE/LEAN closers; reject missing or unresolved references",
+          "repository_code_changed_for_retry": true
+        }
+      ],
+      "effective_unique_testcases": 772,
+      "unresolved_failed_testcases": []
+    }
+  }
+}

@@ -2310,3 +2310,178 @@ results:
       - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:finding-the-algebra-contains-a-shape-mon-c148d1
         scope: Exact sigma(RUR)=4e_2^2 and rank outside the five-monomial cleared ansatz. The actual higher-order
           dynamical coefficient is not established.
+  - id: RESULT:COMMON_SPACE_CONTRACTIVE_DRIFT
+    statement: Let x_(k+1)=F_k(x_k) in one closed Banach-space domain, with common contraction factor 0<=theta<1
+      and summable successive map drift d_k. Then Delta_k=||x_k-x_(k-1)|| satisfies Delta_(k+1)<=theta Delta_k+d_k
+      and sum_(k>=1) Delta_k<=(Delta_1+sum_(k>=1)d_k)/(1-theta); hence x_k converges. If the actual normalized
+      observable maps Phi_k have a common Lipschitz constant and summable successive drift e_k, then Phi_k(x_k)
+      has absolutely summable increments and converges. A sufficient map-drift mechanism is uniform Lipschitz
+      dependence on a bounded-variation coupling t_k, with summable errors in F_k-F(t_k,.); an actual monotone
+      inverse-coupling recurrence yields the stated O(t_k^2) difference bound.
+    hypotheses:
+    - D is a closed subset of a Banach space, x_0 belongs to D, and every F_k maps D into D with the same
+      Lipschitz factor theta<1.
+    - For k>=1, sup_D ||F_k-F_(k-1)||<=d_k with d_k>=0 and sum d_k finite. Native scale coordinates, reference
+      actions, vacuum subtractions, source norms and clocks are transported into this one specified domain
+      before the bound is invoked.
+    - The represented expectation is exactly m_k(O)=Phi_k(x_k). The maps Phi_k:D->C have uniform Lipschitz
+      constant L_O and sup_D |Phi_k-Phi_(k-1)|<=e_k with sum e_k finite.
+    - For the sufficient parameter mechanism, F(t,.) is uniformly Lipschitz in t and sup_D ||F_k-F(t_k,.)||<=r_k
+      with sum r_k finite; the sequence t_k has finite total variation. The optional recurrence 1/t_(k+1)-1/t_k=b+eta_k,
+      b>0, |eta_k|<=b/2 and t_k>0 implies 0<=t_k-t_(k+1)<=(3b/2)t_k^2.
+    scope: Abstract analytic convergence criterion and its explicit coupling-drift mechanism, extracted
+      from the supplied September 9 repair proof. A size estimate ||K_(k+1)||<=theta||K_k||+C/k alone does
+      not establish map or observable drift. No actual interacting Wilson common-space RG map, cross-cutoff
+      law, continuum field, or source/clock comparison is constructed by this result.
+    source_section: Sections 2-3, equations R1-R9; Section 4 states the actual Wilson application boundary.
+    depends_on: []
+    bears_on:
+    - G19
+    - G23
+    supported_by: []
+    status: proven
+    evidence: analytic
+    source: CITE:G19_CAUCHY_DRIFT_REPAIR
+  - id: RESULT:PROJECTIVE_SOURCE_MARTINGALE
+    statement: For a countable projectively consistent family of actual probability laws on standard Borel
+      spaces with specified refinement-to-coarse maps, there is a common sequence law supported on the blocking
+      identities. If the actual normalized observables satisfy conditional source compatibility and a uniform
+      L2 bound, M_n=O_n(x_n) is an L2-bounded martingale and converges in L2. For N>n, E|M_N-M_n|^2=E|M_N|^2-E|M_n|^2,
+      and its expectations agree at all cutoffs.
+    hypotheses:
+    - Each X_n is standard Borel; pi_n:X_(n+1)->X_n is measurable; mu_n is a specified probability law satisfying
+      (pi_n)_#mu_(n+1)=mu_n for every n. Multi-step blocking maps are the indicated compositions.
+    - R_n is the regular conditional law of mu_(n+1) given pi_n, and the actual normalized observable O_n
+      satisfies O_n(x_n)=integral O_(n+1)(x_(n+1)) R_n(x_n,dx_(n+1)) almost surely.
+    - The observables obey sup_n integral |O_n|^2 dmu_n<infinity. The filtration is the completion of sigma(x_n)
+      under the constructed common law.
+    scope: The inverse-limit probability law and L2 source convergence follow from the stated actual cutoff
+      identities. Exact integration separately inside each finite cutoff does not supply projective consistency
+      between different cutoff theories. The limit space is not identified with distributional continuum
+      gauge fields, and no Euclidean/OS or spectral mass-gap conclusion is asserted.
+    source_section: Section 3, equations B4-B6 and the finite-cutoff triangular-family counterexample.
+    depends_on: []
+    bears_on:
+    - G19
+    - G23
+    supported_by: []
+    status: proven
+    evidence: analytic
+    source: CITE:G19_PROJECTIVE_MARTINGALE_REPAIR
+  - id: RESULT:REVERSE_MARTINGALE_BLOCKING
+    statement: For one specified probability law mu, a decreasing sequence of completed sigma-algebras G_n,
+      and Z in L2(mu), the blocked observables M_n=E[Z|G_n] converge in L2 to E[Z|intersection_n G_n]. Their
+      squared increments telescope, with sum_n E|M_n-M_(n+1)|^2<=||Z||_2^2 and ||M_n-M_N||_2^2=||M_n||_2^2-||M_N||_2^2
+      for N>n.
+    hypotheses:
+    - There is one already specified probability space (Omega,mu), with completed sigma-algebras G_0 containing
+      G_1 containing subsequent G_n.
+    - Z belongs to L2(mu), and each blocked observable is the actual conditional expectation E[Z|G_n] under
+      that same law.
+    scope: Exact nested coarsening of one established law supplies a reverse martingale. This does not compare
+      independently specified microscopic cutoff measures or construct a continuum refinement law. Applied
+      to an established fixed-spacing SC17 history law, it concerns coarsening that law.
+    source_section: Section 4, equations B7-B8.
+    depends_on: []
+    bears_on:
+    - G19
+    - G23
+    supported_by: []
+    status: proven
+    evidence: analytic
+    source: CITE:G19_PROJECTIVE_MARTINGALE_REPAIR
+  - id: RESULT:PREDICTABLE_SOURCE_DRIFT
+    statement: On one filtered probability space, let M_n be adapted L2 observables, r_n=E[M_(n+1)-M_n|F_n],
+      and xi_(n+1)=M_(n+1)-M_n-r_n. If sum ||r_n||_2 and sum E|xi_(n+1)|^2 are finite, then M_n converges
+      in L2 and its expectations converge. The tail satisfies ||M_N-M_n||_2<=sum_(j=n)^(N-1)||r_j||_2+(sum_(j=n)^(N-1)E
+      Var(M_(j+1)|F_j))^(1/2). An actual conditional Poincare inequality bounds each variance by its conditional
+      fast Dirichlet energy divided by the conditional gap.
+    hypotheses:
+    - M_n is adapted to an increasing filtration F_n on one specified common probability space and M_n belongs
+      to L2 for every n.
+    - The predictable increments r_n have summable L2 norms, and the centered martingale differences xi_(n+1)
+      have summable second moments.
+    - For the conditional-gap sufficient estimate, an actual refinement kernel R_n, its actual conditional
+      fast Dirichlet form E_(fast,n,x), and a positive conditional gap gamma_n satisfy Var_(R_n(x,.))(f)<=gamma_n^-1
+      E_(fast,n,x)(f,f); integrating the resulting energy bound must give a summable variance budget.
+    - When applied to cutoff observables, M_n=O_n(x_n) and r_n=R_n O_(n+1)(x_n)-O_n(x_n) use the actual
+      normalized sources and actual common cross-cutoff law.
+    scope: Analytic criterion separates predictable source drift from centered conditional fluctuations.
+      Square summability of centered variances does not remove a generic O(g_n^2) predictable drift. Actual
+      Wilson cross-cutoff coupling, source matching and uniform conditional energy budgets are application
+      hypotheses rather than conclusions.
+    source_section: Section 5, equations B9-B14; Section 6 gives the exact remaining application.
+    depends_on: []
+    bears_on:
+    - G19
+    - G23
+    supported_by: []
+    status: proven
+    evidence: analytic
+    source: CITE:G19_PROJECTIVE_MARTINGALE_REPAIR
+  - id: RESULT:UNIFORM_MARKED_CLUSTERING
+    statement: Suppose the actual normalized connected two-observable covariance has an absolutely convergent
+      marked expansion, and its entropy-inclusive weighted sum obeys sum_(X meets both supports) exp(m diam_phys(X))
+      |K_k(X;O1,O2)|<=C(O1,O2) uniformly in cutoff k, for m>0. If the physical support separation is R,
+      then |Cov_k(O1,O2)|<=C(O1,O2) exp(-mR) uniformly in k.
+    hypotheses:
+    - The covariance of the specified normalized observables equals the stated connected marked expansion
+      at every cutoff.
+    - The common physical distance, source normalization, and positive number m are fixed across cutoffs;
+      every term meeting both supports has physical diameter at least their separation R.
+    - The entropy-inclusive weighted absolute sum is bounded by C(O1,O2) independently of cutoff, including
+      marked-source insertion and all support/root normalization factors.
+    scope: Sufficient analytic exponential-clustering implication from an actual uniformly weighted two-marked
+      norm. The unmarked polymer norm or a chosen decay-weight schedule does not establish its premise.
+      Physical-time correlation convergence and reconstruction hypotheses remain separate before deriving
+      any spectral lower bound; the result does not identify an exact physical mass or construct the actual
+      Wilson marked estimate.
+    source_section: Section 5, sufficient mass repair and equation M4; equations M1-M3 record why the submitted
+      schedule and prefactor need repair.
+    depends_on: []
+    bears_on:
+    - G19
+    - G23
+    supported_by: []
+    status: proven
+    evidence: analytic
+    source: CITE:G19_CAUCHY_DRIFT_REPAIR
+  - id: RESULT:SOURCE_COMPLEMENT_COMPLETE_WINDOW
+    statement: Let D be a positive self-adjoint contraction and J an injective source synthesis map
+      from C^r, with finite r>=1. Set G=J*J, W=J G^-1/2, P=WW*, Q=I-P, A=W*DW, R=QDW and D_Q=QDQ restricted
+      to QH. If A>=a I_r and D_Q<=b I_Q for real b<a, then D has exactly r eigenvalues above b, counted
+      with multiplicity, all at least a, and no spectrum in (b,a). The high spectral projection Pi has
+      rank r and Pi J maps C^r onto its entire range. Moreover ||Pi-P||<=||R||/(a-b).
+    hypotheses:
+    - H is a complex Hilbert space; D is a bounded positive self-adjoint contraction on H.
+    - The source dimension r is finite and positive, and J:C^r -> H is bounded and injective, so G is
+      positive definite and W is an isometry.
+    - The lower bound A>=a I_r and upper bound D_Q<=b I_Q hold as operator inequalities with real b<a.
+      The upper bound is on the entire complementary Hilbert space, not on a finite truncation or source-visible
+      subspace.
+    scope: An abstract complete-window and onto-source theorem, independently valid without the activity
+      theorem or a small off-diagonal hypothesis. The norm estimate uses the Sylvester equation and
+      the separation a-b. Source moments alone do not establish the full-complement premise. Applying
+      this to an actual Wilson family requires that premise, the specified positive transfer/source
+      normalization and any desired uniform parameter bounds. This analytic extraction is not a Lean
+      certification or a thermodynamic/continuum construction.
+    source: CITE:WILSON_EXCITED_OPERATOR_BRIDGE
+    source_section: Section 6, Theorem 6 and equation (18), lines 453-519; full source/complement separation,
+      finite positive inertia, onto projected sources and the Sylvester projection estimate.
+    depends_on: []
+    bears_on:
+    - G18
+    - G19
+    - RESULT:LITERAL_ENDPOINT_SPECTRAL_COMPARISON
+    - RESULT:WILSON_UNIFORM_FINITE_SHELL
+    supported_by:
+    - target: RUN:excited_wilson_window_2026-09-04
+      scope: Preserved analytic source, exact finite source/complement controls and explicit dark-state
+        counterexample. The report does not freshly replay this historical run or turn the infinite-dimensional
+        spectral argument into a finite check.
+    - target: CHK:the-blocked-wilson-transfer-spectral-blo-699747:the-source-moment-identities-of-the-exci-9a82df
+      scope: Exact six-/seven-dimensional leakage-moment and dark-state controls show why complete complement
+        information is necessary. This check does not prove the general spectral theorem or verify an
+        actual Wilson full-complement bound.
+    status: proven
+    evidence: analytic

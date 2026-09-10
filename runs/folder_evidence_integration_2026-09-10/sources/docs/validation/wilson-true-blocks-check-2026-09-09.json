@@ -1,0 +1,92 @@
+{
+  "scope": "Independent re-derivation of the BA20-BA26 rational chain, its incidence combinatorics, and the CB1-CB5 results in docs/derivations/wilson-true-blocks-independent-check.md. Exact rationals except where a logarithm is unavoidable. The audited files are read only.",
+  "audited_sha256": {
+    "docs/derivations/wilson-true-vacuum-block-estimates.md": "23aebb949cd2b6daf304328693041e42795962adc61ec70d1d574f3c1193d671",
+    "docs/validation/wilson-true-blocks-2026-09-09.json": "1178ea975e58fda31606054bd6d109b322f22cb4225269e69bc2932ef9c3eabd",
+    "scripts/validate_wilson_true_blocks.py": "d07cad9183217b730a2c5243fbcd12ed2f692a64acdd67ffc0f46583d1a71083"
+  },
+  "checks": [
+    {
+      "name": "BA22_pinned_sum_is_1_over_3664",
+      "passed": true,
+      "detail": "A = 1/3664"
+    },
+    {
+      "name": "BA22_kp_criterion",
+      "passed": true,
+      "detail": "(D+1)A = 85/3664"
+    },
+    {
+      "name": "BA24_block_row_is_30_over_229",
+      "passed": true,
+      "detail": "30/229"
+    },
+    {
+      "name": "BA25_gap_exceeds_13_over_5",
+      "passed": true,
+      "detail": "gap/eps > 2.604542879895"
+    },
+    {
+      "name": "BA25a_C_AT_below_29_over_25",
+      "passed": true,
+      "detail": "C_AT <= 1.151833106363"
+    },
+    {
+      "name": "BA21_majorant_dominates_true_tail",
+      "passed": true,
+      "detail": "4e^-12 = 2.457685e-05 <= 2.772627e-05 < 1/32000"
+    },
+    {
+      "name": "BA20_incidence_side3",
+      "passed": true,
+      "detail": "plaquettes per link 4, links per plaquette 4"
+    },
+    {
+      "name": "BA20_incidence_side4",
+      "passed": true,
+      "detail": "plaquettes per link 4, links per plaquette 4"
+    },
+    {
+      "name": "BA20_incidence_side5",
+      "passed": true,
+      "detail": "plaquettes per link 4, links per plaquette 4"
+    },
+    {
+      "name": "CB1_single_link_row_is_10_over_229",
+      "passed": true,
+      "detail": "kappa = 10/229"
+    },
+    {
+      "name": "CB1_single_link_gap_exceeds_block_gap",
+      "passed": true,
+      "detail": "single-link gap/eps > 2.867919771032 vs block 2.604542879895"
+    },
+    {
+      "name": "CB1_single_link_closes_VA12",
+      "passed": true,
+      "detail": "kappa = 10/229 < 1 and gap/eps > 2.867920 > 14/5"
+    },
+    {
+      "name": "CB3_row_bound_is_lambda_independent",
+      "passed": true,
+      "detail": "alpha is pinned by the free temporal factor sup|a| = 2.7726e-05, independent of lambda, so the row bound 30/229 does not vanish as lambda -> 0 although every D_BC does"
+    },
+    {
+      "name": "CB2_window_inside_its_own_ceiling",
+      "passed": true,
+      "detail": "1/256000 = 3.906250e-06 <= 3.986104e-06 (within 2.00 percent)"
+    },
+    {
+      "name": "CB2_ceiling_finite_under_separate_budgets",
+      "passed": true,
+      "detail": "largest KP-admissible alpha = 3.214615e-04; ceiling 5.114789e-05, a factor 12.8 above the equal-budget value, still finite"
+    },
+    {
+      "name": "CB5_boxed_constants_do_not_chain",
+      "passed": true,
+      "detail": "chaining through C_AT < 29/25 gives 2.583782 < 13/5; BA25's direct 199/229 gives 2.604543"
+    }
+  ],
+  "all_passed": true,
+  "remaining": "BA26 is the wall and CB2 does not move it: no redistribution of the activity budget reaches k/epsilon -> infinity. Continuum carrier and observable-overlap transport remain unproved."
+}

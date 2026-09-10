@@ -33,6 +33,12 @@ evidence, while the larger local archive retains its original files.
 
 ## Quick start
 
+The [September 10 folder review](runs/folder_evidence_integration_2026-09-10/README.md)
+traces all 114 files in the requested archive derivation, research and validation
+folders to preserved bytes, scoped reviews and graph entries. It extracts the
+reusable convergence criteria and connects historical validation logs without
+treating their earlier executions as new mathematical certification.
+
 From an existing checkout, with Python 3.11 or newer and `uv` available:
 
 ```text
