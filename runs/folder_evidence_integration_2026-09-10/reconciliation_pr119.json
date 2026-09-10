@@ -1,0 +1,59 @@
+{
+  "schema": "folder-evidence-upstream-reconciliation/v1",
+  "status": "local reconciliation verification complete; updated-commit CI required before merge",
+  "recorded_at_utc": "2026-09-10T16:00:24.6239193Z",
+  "upstream_main": "890837a6cbd020d22baae8f443c623096e999dfb",
+  "upstream_pr": 119,
+  "prior_integration_head": "d493c7e031e09517dfa13ffff92400fa325a4e80",
+  "changes": "The only upstream nongenerated change is literature/index.yaml. Resolve the generated claims conflict by regeneration; preserve the upstream literature bytes exactly. No requested source, scientific implementation, Lean source, or six-result ledger changed.",
+  "independent_review": "Exact upstream literature blob fbe0e36d341427c02d6ece18b6254d0498ed9132 retained; all 114 preserved/selected sources and all six result records checked intact.",
+  "generation": {
+    "exit_codes": [
+      0,
+      0,
+      0
+    ],
+    "logs": [
+      "catalogue-after-pr119.log",
+      "frontier-after-pr119.log",
+      "certified-after-pr119.log"
+    ],
+    "commands": [
+      "python -m workhouse.cli index -w",
+      "python -m workhouse.cli frontier --write",
+      "python -m workhouse.cli certified --write"
+    ],
+    "claims": 17230,
+    "symbols": 28,
+    "edges": 28761
+  },
+  "validation": {
+    "literature": {
+      "report": "pytest-pr119-literature.xml",
+      "passed": 35,
+      "tests": 35
+    },
+    "source_coverage": {
+      "report": "source-after-pr119.json",
+      "files": 114,
+      "unrepresented": 0
+    },
+    "intake_and_pins": {
+      "report": "pytest-pr119-coverage.xml",
+      "passed": 18,
+      "tests": 18
+    }
+  },
+  "earlier_commit_ci": {
+    "url": "https://github.com/ats314/WORKHOUSE/actions/runs/34496131046",
+    "jobs": [
+      "check",
+      "Shell lint",
+      "Lean (T0)",
+      "Windows smoke (encoding and path determinism)"
+    ],
+    "commit": "d493c7e031e09517dfa13ffff92400fa325a4e80",
+    "conclusion": "success"
+  },
+  "publication": "Updated-commit CI and final merge are recorded by https://github.com/ats314/WORKHOUSE/pull/120. Earlier local and remote reports retain their exact tested scope."
+}

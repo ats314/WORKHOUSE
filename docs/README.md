@@ -48,6 +48,14 @@ The [Lean guide](../lean/README.md) describes the active proof modules, while th
 
 ## September source routes
 
+The [three-folder review of September 10](../runs/folder_evidence_integration_2026-09-10/README.md)
+covers the complete requested archive scope: 42 derivation files, three research
+notes and 69 validation artifacts. Its per-file inventory records exact source
+identity, later maintained versions, reviewed statements and native graph links.
+Run `uv run --no-sync python scripts/verify_folder_evidence.py` from the repository
+root to check source capture and graph coverage. This is an intake check; the
+mathematical proofs and historical test records retain their stated scopes.
+
 | Topic | Documents to follow |
 | --- | --- |
 | Wilson transfer and complete-shell matching | [Marked transfer](derivations/wilson-marked-transfer.md), [shell transport](derivations/wilson-marked-shell-transport.md), [unchanged shell inputs](derivations/wilson-shell-inputs/README.md), [September 8 route](research/next-path-wilson-transfer-2026-09-08.md) |

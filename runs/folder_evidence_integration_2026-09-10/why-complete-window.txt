@@ -1,0 +1,23 @@
+RESULT:SOURCE_COMPLEMENT_COMPLETE_WINDOW — Let D be a positive self-adjoint contraction and J an injective source synthesis map from C^r, with finite r>=1. Set G=J*J, W=J G^-1/2, P=WW*, Q=I-P, A=W*DW, R=QDW and D_Q=QDQ restricted to QH. If A>=a I_r and D_Q<=b I_Q for real b<a, then D has exactly r eigenvalues above b, counted with multiplicity, all at least a, and no spectrum in (b,a). The high spectral projection Pi has rank r and Pi J maps C^r onto its entire range. Moreover ||Pi-P||<=||R||/(a-b).
+  result · T3 · proven · analytic
+  paper/research_notes/G18_EXCITED_WINDOW_OPERATOR_BRIDGE_20260904.md · CITE:WILSON_EXCITED_OPERATOR_BRIDGE Section 6, Theorem 6 and equation (18), lines 453-519; full source/complement separation, finite positive inertia, onto projected sources and the Sylvester projection estimate.
+  Hypotheses: H is a complex Hilbert space; D is a bounded positive self-adjoint contraction on H.; The source dimension r is finite and positive, and J:C^r -> H is bounded and injective, so G is positive definite and W is an isometry.; The lower bound A>=a I_r and upper bound D_Q<=b I_Q hold as operator inequalities with real b<a. The upper bound is on the entire complementary Hilbert space, not on a finite truncation or source-visible subspace.
+  Scope: An abstract complete-window and onto-source theorem, independently valid without the activity theorem or a small off-diagonal hypothesis. The norm estimate uses the Sylvester equation and the separation a-b. Source moments alone do not establish the full-complement premise. Applying this to an actual Wilson family requires that premise, the specified positive transfer/source normalization and any desired uniform parameter bounds. This analytic extraction is not a Lean certification or a thermodynamic/continuum construction.
+  Support RUN:excited_wilson_window_2026-09-04: Preserved analytic source, exact finite source/complement controls and explicit dark-state counterexample. The report does not freshly replay this historical run or turn the infinite-dimensional spectral argument into a finite check.
+  Support CHK:the-blocked-wilson-transfer-spectral-blo-699747:the-source-moment-identities-of-the-exci-9a82df: Exact six-/seven-dimensional leakage-moment and dark-state controls show why complete complement information is necessary. This check does not prove the general spectral theorem or verify an actual Wilson full-complement bound.
+
+This record points at
+  bears_on → G18  T3  The spectral bridge at fixed lattice spacing
+  bears_on → G19  T3  Continuum limit
+  bears_on → RESULT:LITERAL_ENDPOINT_SPECTRAL_COMPARISON  T3  For h>=0 self-adjoint and an isometry J retaining its entir…
+  bears_on → RESULT:WILSON_UNIFORM_FINITE_SHELL  T3  The actual Perron-normalized blocked Wilson transfer in the…
+  cites → CITE:WILSON_EXCITED_OPERATOR_BRIDGE  T3  Wilson excited-window operator bridge and its explicit hypo…
+  supported_by → CHK:the-blocked-wilson-transfer-spectral-blo-699747:the-source-moment-identities-of-the-exci-9a82df  T1 PASS  the source-moment identities of the excited-window note hol…
+  supported_by → RUN:excited_wilson_window_2026-09-04  T3  Actual Wilson excited-window operator bridge: complete fini…
+
+Points at this record
+  bears_on ← CITE:SEPT_DOC_G18_EXCITED_WINDOW_OPERATOR_BRIDGE_20260904  T3  From a source-visible window to operator-level isolation
+  evidences ← RUN:folder_evidence_integration_2026-09-10  T3  Complete review and graph intake of the three requested Sep…
+
+Re-check it yourself
+  workhouse verify --only 'the source-moment identities of the excited-window note hold exactly: with G = J*J and P = J G^-1 J*, Q = 1 - P, the moments C_j = J* D^j J satisfy J*(D Q D)J = C_2 - C_1 G^-1 C_1 (the leakage R*R in the source frame) and J*(D - c)^2 J = J*(D - c)P(D - c)J + J*(D - c)Q(D - c)J for every scalar c (the split into (A - c)^2 and R*R); a dark state orthogonal to the sources leaves every C_j unchanged while enlarging the window, so positive source weight is not completeness'

@@ -1,0 +1,108 @@
+{
+  "schema": "folder-evidence-local-validation/v1",
+  "status": "local verification complete; remote CI and publication pending at recording",
+  "recorded_at_utc": "2026-09-10T15:29:24.5235632Z",
+  "initial_main": "42b0762e4ce382efa153a969e8bb44bb77537844",
+  "reconciled_main": "e4b38b24676dddaf3755b5cc2c5a58a906105387",
+  "source_coverage": {
+    "derivations": 42,
+    "validation": 69,
+    "files": 114,
+    "unrepresented": 0,
+    "research": 3,
+    "received_bytes": 2020424,
+    "source_originals_unchanged": true
+  },
+  "mathematical_checks": {
+    "log": "mathematical_checks.log",
+    "total": 562,
+    "command": "python -m workhouse.cli verify",
+    "passed": 562,
+    "exit_code": 0
+  },
+  "regression": {
+    "initial": {
+      "total": 1348,
+      "cause": "All 181 errors were FileNotFoundError for the missing parent of the selected basetemp, before test bodies ran.",
+      "failures": 0,
+      "exit_code": 1,
+      "log": "pytest-full.log",
+      "passed": 1167,
+      "command": "python -m pytest -q --basetemp C:\\WORKHOUSE\\test-temp\\folder-evidence-full-20260910-a --junitxml=tmp/pytest-full.xml",
+      "report": "pytest-full.xml",
+      "errors": 181
+    },
+    "combined": {
+      "failures": 0,
+      "passed": 1347,
+      "remaining_errors": 0,
+      "note": "Full collection plus exact affected-case rerun, not a single uninterrupted green full run.",
+      "skipped": 1,
+      "total": 1348
+    },
+    "retry": {
+      "total": 181,
+      "exactly_covers_initial_errors": true,
+      "failures": 0,
+      "exit_code": 0,
+      "skipped": 1,
+      "log": "pytest-retry.log",
+      "passed": 180,
+      "command": "python -m pytest --lf -q --basetemp C:\\WORKHOUSE\\worktrees\\folder-evidence-integration-20260910\\tmp\\pytest-retry-1 --junitxml=tmp/pytest-retry.xml",
+      "report": "pytest-retry.xml",
+      "skip": "tests.test_docs::test_symlink_targets_cannot_escape_the_checkout: Host does not permit symlink creation",
+      "errors": 0
+    }
+  },
+  "other_checks": [
+    {
+      "command": "python -m ruff check . --extend-exclude tmp",
+      "status": "passed"
+    },
+    {
+      "command": "python -m ruff format --check . --extend-exclude tmp",
+      "status": "passed",
+      "files": 469
+    },
+    {
+      "errors": 0,
+      "files": 27,
+      "status": "passed",
+      "warnings": 0,
+      "command": "python scripts/check_docs.py",
+      "links": 457
+    },
+    {
+      "command": "python scripts/render_derivation_coverage.py --check",
+      "status": "passed"
+    },
+    {
+      "unrepresented": 0,
+      "command": "python scripts/verify_folder_evidence.py",
+      "status": "passed",
+      "files": 114
+    },
+    {
+      "tests": 10,
+      "command": "python -m pytest tests/test_folder_evidence.py -q",
+      "status": "passed"
+    }
+  ],
+  "generation": {
+    "commands": [
+      "python -m workhouse.cli index -w",
+      "python -m workhouse.cli frontier --write",
+      "python -m workhouse.cli certified --write"
+    ],
+    "symbols": 28,
+    "edges": 28747,
+    "claims": 17226,
+    "exit_codes": [
+      0,
+      0,
+      0
+    ]
+  },
+  "independent_review": "All 114 source and selected-file hashes, non-self graph connections, and six analytic result scopes reviewed without publication-blocking findings.",
+  "scope": "Source capture, scoped source/proof-interface review, six analytic criteria extraction and graph integration. No fresh independent reconstruction of every analytic proof. Results remain proven/analytic at machine tier T3. No Lean sources changed; local Lean rebuild not run. Exact-head remote Lean CI remains required before merge."
+}

@@ -1,0 +1,120 @@
+{
+  "recorded_at": "2026-09-09T18:53:05.340891+00:00",
+  "scope": "Seven exact finite controls. The all-coupling magnetic comparison and charged parabolic bounds have analytic proofs; the controls do not formalize their operator domains, gauge disintegration, or Markov evolution in Lean. No spatial decay, full quantum fast comparison, or continuum mass gap is certified.",
+  "controls": [
+    {
+      "name": "Adjoint Casimir and gauge-star residual have exact positive constants",
+      "passed": true,
+      "detail": "Casimir(adj)=8; I-J/6 is the sum of 15 positive pair squares and an orthogonal projection. Same-tail adjoint tensor adjoint has an explicit singlet. The analytic Markov and gauge-covariance arguments are stated separately.",
+      "section": "WILSON_BACKGROUND; G19; G23 SC5-SC9",
+      "tier": 1,
+      "line": 16,
+      "source": "src/workhouse/invariants/wilson_background.py:16",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "SU2 parabolic derivative identities retain the signed product cancellation",
+      "passed": true,
+      "detail": "Exact left-invariant quaternion fields on two SU2 factors give both parabolic Ward identities and Q=H+F tensor F cancellation. This kinematic fixture is not asserted to be a gauge-invariant Wilson vacuum.",
+      "section": "WILSON_BACKGROUND; G19; G23 SC1-SC4 SC16",
+      "tier": 1,
+      "line": 53,
+      "source": "src/workhouse/invariants/wilson_background.py:53",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Cubic incidence gives the uniform magnetic Hessian constant 64",
+      "passed": true,
+      "detail": "The side-three periodic cubic control has 81 links, four links per face and four faces per link; the analytic Frechet bound gives 4*4*4=64 and theta<=2112 ell^2 delta. Delta<=1/(4224 ell^2) gives theta<=1/2.",
+      "section": "WILSON_BACKGROUND; G19; G23 BF4-BF6",
+      "tier": 1,
+      "line": 97,
+      "source": "src/workhouse/invariants/wilson_background.py:97",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Signed fast resolvent pairing obeys its relative-form bound",
+      "passed": true,
+      "detail": "Noncommuting signed fast matrices at z=1/3 give pairing=-4770/116999, exactly the resolvent difference; both relative-order matrices are positive. No true-Wilson quantum relative constant is inferred from this fixture.",
+      "section": "WILSON_BACKGROUND; G19; G23 BF1-BF3",
+      "tier": 1,
+      "line": 126,
+      "source": "src/workhouse/invariants/wilson_background.py:126",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "A fixed fast inverse does not prevent a vanishing retained Schur energy",
+      "passed": true,
+      "detail": "For H=0 direct_sum [[1+eta,1],[1,1]], the exact fast inverse is one while the retained Schur form is eta and an excited Rayleigh quotient is eta/2. Fast invertibility alone cannot supply the physical gap.",
+      "section": "WILSON_BACKGROUND; G19; G23 BC1",
+      "tier": 1,
+      "line": 143,
+      "source": "src/workhouse/invariants/wilson_background.py:143",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "All-coupling charged covariance constants preserve both cancellation terms",
+      "passed": true,
+      "detail": "Force<=4k, charged inverse<=3/(4epsilon), first derivative<=3lambda; source product<=24epsilon lambda^2. Adding the retained F tensor F term yields 27lambda^2 nearby and 18lambda^2 for disjoint tail stars. These constants contain no spatial distance decay.",
+      "section": "WILSON_BACKGROUND; G19; G23 SC10-SC14",
+      "tier": 1,
+      "line": 159,
+      "source": "src/workhouse/invariants/wilson_background.py:159",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Barycenter connection averaging fails its claimed gauge equivariance",
+      "passed": true,
+      "detail": "Cartan gauge h has zero values at both cell barycenters but integral_0^1 h'=1/16. Thus the submitted Q(A) connection average cannot transform by an interpolation of barycenter gauge values; background averaging of homogeneous fluctuations survives.",
+      "section": "WILSON_BACKGROUND; G19; G23 BC2",
+      "tier": 1,
+      "line": 176,
+      "source": "src/workhouse/invariants/wilson_background.py:176",
+      "yields": {},
+      "rests_on": []
+    }
+  ],
+  "test_runs": [
+    {
+      "file": "wilson-background-graph.xml",
+      "tests": 34,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "wilson-background-invariants.xml",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "wilson-background-ledger.xml",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "remaining_derivation": "SC17: spatial decay of R_xy(F_e tensor V_f+V_e tensor F_f)+F_e tensor F_f. The actual uniform time/volume bound 18lambda^2 has no distance factor. BF6 is a small-field affine-slice comparison; its extension to the actual quantum fast restriction still needs excluded-field coupling, vacuum subtraction, literal source fibers and retained Schur control.",
+  "artifacts_sha256": {
+    "docs/derivations/wilson-background-covariance-continuation.md": "0e9a829409799104ec43d3718093aaffbf64625b174d27c6dcadf6a34e7ef918",
+    "docs/validation/wilson-background-independent-review.md": "14d510acc6160f41f0bd756585e6e0b280d31ab7899373a48604884e02acad48",
+    "src/workhouse/invariants/wilson_background.py": "d22c1a9dcc88a717ff6d0da6776067f6963d102fb42e48acceff1d932095560c",
+    "src/workhouse/invariants/__init__.py": "0e105ad76ecb0f753bc6cd91c00bdb92b08d9e0fbed634504e9c64aae11f2abf",
+    "scripts/validate_wilson_background.py": "7b0f8c8e368676039a68301d795979627ba9213b2a87d0d2c830a55a9a70e800",
+    "ledger/documents.yaml": "1ed137b1ff5392616e1ab21d65db68c3d3557a23b72a56686cea1cf4b273d9ec",
+    "ledger/gaps.yaml": "ff86cae6484e7984405a2411af2c22e59b89ad93e9a91087cceffaaadf6e0112",
+    "index/claims.jsonl": "6151723598cd9725597f76da5fc531c81de3df425a5460951113a84e010d2bb2",
+    "index/graph.jsonl": "74426dbd0e49a863ab7c4c63eb3789d874fd2db1e5e503502a7457c2e7afeb43",
+    "FRONTIER.md": "1553994af350c9d4904e2553a2a042b7bbc9b75900c75b7a26de42de3a76f1ee",
+    "CERTIFIED.md": "1a96a8d0fda8471f27fb3d5a9ddcec6c858746563cc3705848682915665405b3"
+  }
+}

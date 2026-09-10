@@ -1,0 +1,355 @@
+{
+  "schema": "wilson-marked-validation/v1",
+  "validated_at": "2026-09-08T18:11:00.865337+00:00",
+  "base_commit": "f36db9e1a447ff23ed72faf43783f886958a43ef",
+  "scope": {
+    "full_three_step_goal_complete": false,
+    "step_1": "Exact discrete-time block and fixed-observable expansion; disconnected vacuum cancellation derived analytically.",
+    "step_2": "Uniform vacuum polymer expansion, finite-volume vacuum and local thermodynamic state derived analytically; complete excited shell and source frame remain open.",
+    "step_3": "Existing matching, relative-gap and source-amplitude implications recorded conditionally; Wilson hypotheses not discharged.",
+    "regime": "Small coupling on an explicit common disc, uniformly small temporal step, fixed spatial spacing. No spatial continuum or large-coupling conclusion."
+  },
+  "invariants": {
+    "total_passed": 398,
+    "total": 398,
+    "basis": "Full cold check collection during native index regeneration; 398/398 recorded in regenerated FRONTIER.md.",
+    "new_direct_checks": [
+      {
+        "name": "Wilson block expansion retains the symmetric endpoint factors at every tested order",
+        "passed": true,
+        "detail": "Exact noncommuting 2x2 matrices, m=1,2,4, coefficients 0..4: (A K A)^m=A(K A^2)^(m-1)K A, matches=[True, True, True]; total magnetic time m*tau=1",
+        "section": "WILSON_MARKED; G17; G18; G19 WT-1",
+        "tier": 1,
+        "line": 69,
+        "source": "src/workhouse/invariants/wilson_marked.py:69",
+        "yields": {},
+        "rests_on": [],
+        "id": "CHK:wilson-marked-expansion-exact-blocks-and-c930ee:wilson-block-expansion-retains-the-symme-341b26"
+      },
+      {
+        "name": "Wilson activation selects exactly the words that contain every active plaquette",
+        "passed": true,
+        "detail": "Two noncommuting interaction labels: mixed activation vanishes at orders 0,1, has a nonzero higher coefficient, and vanishes if a required label is removed; m=1,2,3",
+        "section": "WILSON_MARKED; G17; G18; G19 WT-2",
+        "tier": 1,
+        "line": 85,
+        "source": "src/workhouse/invariants/wilson_marked.py:85",
+        "yields": {},
+        "rests_on": [
+          "Wilson block expansion retains the symmetric endpoint factors at every tested order"
+        ],
+        "id": "CHK:wilson-marked-expansion-exact-blocks-and-c930ee:wilson-activation-selects-exactly-the-wo-b935c8"
+      },
+      {
+        "name": "Wilson activated-block majorant coefficients are onto-label counts divided by factorial",
+        "passed": true,
+        "detail": "36 exact coefficients: sum_j (-1)^(k-j) binomial(k,j) j^n/n! equals sum_(r_1+...+r_k=n, r_i>=1) 1/prod r_i!; the block norm majorant is (exp(ell*v*abs(u))-1)^k, with no slice-count factor",
+        "section": "WILSON_MARKED; G17; G18; G19 WT-2",
+        "tier": 1,
+        "line": 105,
+        "source": "src/workhouse/invariants/wilson_marked.py:105",
+        "yields": {},
+        "rests_on": [],
+        "id": "CHK:wilson-marked-expansion-exact-blocks-and-c930ee:wilson-activated-block-majorant-coeffici-6eddaa"
+      },
+      {
+        "name": "Wilson normalized marked expectation cancels an independent vacuum factor exactly",
+        "passed": true,
+        "detail": "For m=1,2,4, exact tensor contractions give numerator=N_A*Z_B, denominator=Z_A*Z_B, and the normalized observable equals N_A/Z_A. The all-orders factorization proof and its nonzero-denominator hypothesis are in WT-3",
+        "section": "WILSON_MARKED; G17; G18; G19 WT-3",
+        "tier": 1,
+        "line": 138,
+        "source": "src/workhouse/invariants/wilson_marked.py:138",
+        "yields": {},
+        "rests_on": [],
+        "id": "CHK:wilson-marked-expansion-exact-blocks-and-c930ee:wilson-normalized-marked-expectation-can-feb054"
+      },
+      {
+        "name": "Wilson disconnected components separated in time also factor after a vacuum reset",
+        "passed": true,
+        "detail": "Same-site components: vacuum reset gives 8=8; without the reset the value is 26/3. Separation in time alone is insufficient",
+        "section": "WILSON_MARKED; G17; G18; G19 WT-3",
+        "tier": 1,
+        "line": 159,
+        "source": "src/workhouse/invariants/wilson_marked.py:159",
+        "yields": {},
+        "rests_on": [],
+        "id": "CHK:wilson-marked-expansion-exact-blocks-and-c930ee:wilson-disconnected-components-separated-ffbcea"
+      },
+      {
+        "name": "Wilson complete finite configuration sum equals the transfer power and factorizes by polymers",
+        "passed": true,
+        "detail": "All 625 four-block configurations, including 16 disconnected ones, factor by connected components; sum=350730113/18874368=<Omega,B^4 Omega>. This checks the complete projector/activation pipeline on a finite two-link model",
+        "section": "WILSON_MARKED; G17; G18; G19 WT-3",
+        "tier": 1,
+        "line": 176,
+        "source": "src/workhouse/invariants/wilson_marked.py:176",
+        "yields": {},
+        "rests_on": [
+          "Wilson normalized marked expectation cancels an independent vacuum factor exactly",
+          "Wilson activation selects exactly the words that contain every active plaquette"
+        ],
+        "id": "CHK:wilson-marked-expansion-exact-blocks-and-c930ee:wilson-complete-finite-configuration-sum-ee0aaa"
+      },
+      {
+        "name": "cubic link-time polymer graph has degree at most 38 and at most ten labels per vertex",
+        "passed": true,
+        "detail": "(L, spatial degree, link-time degree, incident binary labels)=[(3, 12, 38, 10), (4, 12, 38, 10)]; analytically each link meets four plaquettes, each contributes at most three neighbors",
+        "section": "WILSON_MARKED; G17; G18; G19 WT-4",
+        "tier": 1,
+        "line": 241,
+        "source": "src/workhouse/invariants/wilson_marked.py:241",
+        "yields": {},
+        "rests_on": [],
+        "id": "CHK:wilson-marked-expansion-exact-blocks-and-c930ee:cubic-link-time-polymer-graph-has-degree-654156"
+      },
+      {
+        "name": "Wilson polymer counting satisfies the Kotecky-Preiss budget when its ratio is at most one half",
+        "passed": true,
+        "detail": "Root sum <= r/[D^2(1-r)], incompatibility multiplier D+1; D=38,r=1/2 gives 39/1444<1. The general r<=1/2,D>=2 budget is Lean-proved; activity and lattice-animal bounds are analytic inputs",
+        "section": "WILSON_MARKED; G17; G18; G19 WT-4",
+        "tier": 1,
+        "line": 270,
+        "source": "src/workhouse/invariants/wilson_marked.py:270",
+        "yields": {},
+        "rests_on": [
+          "cubic link-time polymer graph has degree at most 38 and at most ten labels per vertex",
+          "Wilson activated-block majorant coefficients are onto-label counts divided by factorial"
+        ],
+        "id": "CHK:wilson-marked-expansion-exact-blocks-and-c930ee:wilson-polymer-counting-satisfies-the-ko-d40848"
+      },
+      {
+        "name": "Wilson complex resolvent denominator has an exact radial and angular square decomposition",
+        "passed": true,
+        "detail": "|r exp(i theta)-1|^2=(r-1)^2+4r sin(theta/2)^2 exactly. The sine and exponential inequalities giving the all-energy norm bound are stated in WT-5",
+        "section": "WILSON_MARKED; G17; G18; G19 WT-5",
+        "tier": 1,
+        "line": 287,
+        "source": "src/workhouse/invariants/wilson_marked.py:287",
+        "yields": {},
+        "rests_on": [],
+        "id": "CHK:wilson-marked-expansion-exact-blocks-and-c930ee:wilson-complex-resolvent-denominator-has-9c38b3"
+      },
+      {
+        "name": "Wilson damped denominators have a finite physical-time limit while a raw transfer resolvent diverges",
+        "passed": true,
+        "detail": "tau/(1-exp(-tau E))=tau+tau/(exp(tau E)-1); the damped limit is 1/E, whereas the raw resolvent has a nonzero 1/tau coefficient. Lean proves tau/(exp(tau E)-1)<=1/E for all positive tau,E",
+        "section": "WILSON_MARKED; G17; G18; G19 WT-5",
+        "tier": 1,
+        "line": 302,
+        "source": "src/workhouse/invariants/wilson_marked.py:302",
+        "yields": {},
+        "rests_on": [],
+        "id": "CHK:wilson-marked-expansion-exact-blocks-and-c930ee:wilson-damped-denominators-have-a-finite-2c8d41"
+      },
+      {
+        "name": "Wilson carrier transport error budgets preserve a relative gap and a positive source amplitude conditionally",
+        "passed": true,
+        "detail": "Gap coefficient c spends 2*gamma*eta; source amplitude source spends error. Positivity requires 2*gamma*eta<c and error<source. Existence, completeness and matching of the Wilson shell are separate unproved premises",
+        "section": "WILSON_MARKED; G17; G18; G19 WT-6",
+        "tier": 1,
+        "line": 323,
+        "source": "src/workhouse/invariants/wilson_marked.py:323",
+        "yields": {},
+        "rests_on": [],
+        "id": "CHK:wilson-marked-expansion-exact-blocks-and-c930ee:wilson-carrier-transport-error-budgets-p-5b888d"
+      },
+      {
+        "name": "FINDING: a uniform vacuum gap does not determine the multiplicity or source totality of an excited shell",
+        "passed": true,
+        "detail": "Positive transfers diag(1,1/2,1/4,1/8) and diag(1,1/2,1/2,1/8) have the same vacuum gap log(2), but shell ranks 1 and 2. The second shell has a vector orthogonal to the stated source",
+        "section": "WILSON_MARKED; G17; G18; G19 WT-6",
+        "tier": 1,
+        "line": 339,
+        "source": "src/workhouse/invariants/wilson_marked.py:339",
+        "yields": {},
+        "rests_on": [],
+        "id": "CHK:wilson-marked-expansion-exact-blocks-and-c930ee:finding-a-uniform-vacuum-gap-does-not-de-ef4ab5"
+      }
+    ]
+  },
+  "lean": {
+    "command": "lake build --wfail",
+    "passed": true,
+    "build_jobs": 3034,
+    "total_theorems": 113,
+    "new_theorems": [
+      "wilson_symmetric_block_identity",
+      "wilson_disconnected_vacuum_cancel",
+      "wilson_geometric_telescope",
+      "wilson_damped_time_denominator",
+      "wilson_time_kernel_split",
+      "wilson_polymer_kp_budget",
+      "wilson_relative_gap_budget",
+      "wilson_relative_gap_positive",
+      "wilson_source_weight_defect",
+      "wilson_source_weight_positive"
+    ],
+    "axioms": {
+      "wilson_symmetric_block_identity": [
+        "propext"
+      ],
+      "wilson_disconnected_vacuum_cancel": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "wilson_geometric_telescope": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "wilson_damped_time_denominator": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "wilson_time_kernel_split": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "wilson_polymer_kp_budget": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "wilson_relative_gap_budget": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "wilson_relative_gap_positive": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "wilson_source_weight_defect": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "wilson_source_weight_positive": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "audit_log": "docs/validation/wilson-marked-axioms-2026-09-08.txt",
+    "scope": "Monoid identities, finite sums, scalar cancellation, exponential denominator inequality, and conditional scalar error budgets. The infinite-dimensional operator and polymer arguments are not formalized."
+  },
+  "sources": {
+    "manifest": "literature/wilson-marked/sources.json",
+    "acquired_pdf_count": 3,
+    "extracted_pages": 53,
+    "verified_hashes": [
+      {
+        "paper": "YAROTSKY_2004_QP",
+        "pdf_sha256": "b0f7c876b690f0fdc7730a88100c5b841352ed339369fe57fa9497c53d6019f3",
+        "text_sha256": "df9422e2d16a559dd8a211a1ece620e79e2943eb674c24309a45b34d102aa115",
+        "local_text_bytes_sha256": "0089ae78e1c130edf0612578b734d3d727375cd6d3a585912af68932c5f06c84",
+        "pages": 17,
+        "verified": true
+      },
+      {
+        "paper": "YAROTSKY_2004_GS",
+        "pdf_sha256": "f0423f368b45e5583911b860c932ba2c2e5564c777b6d5cf6dcf12ac1edcbe39",
+        "text_sha256": "c2411fd454f6b7eaaa15fa3f2b7a5e93c3aa60312df83c37304e6f4d2b768421",
+        "local_text_bytes_sha256": "c7f1c8180876d06140e4000bbd7d5692530cd2df8c1907673d37491e06761581",
+        "pages": 25,
+        "verified": true
+      },
+      {
+        "paper": "UELTSCHI_2004_CLUSTER",
+        "pdf_sha256": "2cc3e036af5b2a46afe95acf0b5863fe5c7d31554debb10a2a5cade4122bdbfc",
+        "text_sha256": "b7700847472771c8e8817b921cdd57c439cface5c1e8bf688593cbedadf6414d",
+        "local_text_bytes_sha256": "fbe3771f7857839e8fdebff864511ec6434c38b0c9d2128dc7d4127b152a9074",
+        "pages": 11,
+        "verified": true
+      }
+    ],
+    "text_hash_convention": "The manifest text_sha256 hashes decoded UTF-8 text after universal-newline normalization to LF. local_text_bytes_sha256 hashes the actual extracted-text file, including Windows CRLF line endings. PDF hashes always use original file bytes.",
+    "reading_scope": "Selected pages and statements listed in source manifest; page extraction is not full semantic review.",
+    "original_kotecky_preiss": "Bibliographic metadata only. Inspected convergence statement is Ueltschi Theorem 1."
+  },
+  "graph": {
+    "catalogue_records": 4011,
+    "edges": 7960,
+    "atlas_nodes": 4012,
+    "new_study_nodes": [
+      {
+        "id": "STUDY:YM:wilson-block-majorant",
+        "status": "proven",
+        "tier": 3
+      },
+      {
+        "id": "STUDY:YM:wilson-vacuum-cancellation",
+        "status": "proven",
+        "tier": 3
+      },
+      {
+        "id": "STUDY:YM:wilson-vacuum-majorant",
+        "status": "proven",
+        "tier": 3
+      },
+      {
+        "id": "STUDY:YM:wilson-free-marked-resolvent",
+        "status": "proven",
+        "tier": 3
+      },
+      {
+        "id": "STUDY:YM:wilson-complete-shell",
+        "status": "open",
+        "tier": 3
+      },
+      {
+        "id": "STUDY:YM:wilson-carrier-transport",
+        "status": "conditional",
+        "tier": 3
+      }
+    ],
+    "all_study_nodes": 57,
+    "G19_status": "cost 3 · open",
+    "source_and_link_validation_problems": [],
+    "native_why_complete_shell": "passed; open node resolves its dependencies and conditional transport successor"
+  },
+  "tests": {
+    "tests": 118,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "status": "passed",
+    "junit": "docs/validation/wilson-marked-tests-2026-09-08.xml",
+    "scope": "Graph, study graph, literature, documents, frontier, certified view, atlas, Yang-Mills sources and invariant registration; UTF-8 subprocess mode and writable Windows basetemp."
+  },
+  "static_checks": {
+    "ruff_check": "passed",
+    "ruff_format_check": "passed",
+    "git_diff_check": "passed"
+  },
+  "open_obligations": [
+    "WT-6 arbitrary-input rooted norm for the vacuum-dressed block perturbation next to the mapped free resolvent.",
+    "Vacuum-dressed coefficient map, coefficient/Hilbert/GNS transport, complete excited Riesz shell, source totality and positive Gram bound.",
+    "Common holomorphic majorant for actual Wilson energy, Gram and synthesis kernels, then summed matching and carrier-overlap transport.",
+    "Subsequent spatial continuum crossing and large-coupling control remain separate."
+  ],
+  "artifacts_sha256": {
+    "docs/derivations/wilson-marked-transfer.md": "16fc802f1d6b8abfb93412071ca0f9d8a8986719b9b43c5bc57b5d98bf0c0c76",
+    "src/workhouse/invariants/wilson_marked.py": "e28c04613e93f4a655f109a68bc60b260e33b9e2cddc20cc56a8e0215504f8cf",
+    "src/workhouse/invariants/__init__.py": "f749c0b6baa863f6fb7ff312c99ce5e984c3d63d7f012d436d00f799a9b05b8e",
+    "lean/Workhouse/Basic.lean": "276102ea261851a1df11868e1871b30cc7bbb113f2b89856488354d0122676f4",
+    "ledger/theorems.yaml": "a2dc909f4e8e98abbc44b922d46fe6659961c1396f2912535e95ddab338d1087",
+    "ledger/gaps.yaml": "9da6be2284da9581d95822f28dbe6f0741cacd3a862af7efb76d9d2a5b991b95",
+    "ledger/documents.yaml": "43a9da47f27228df1467e58fa4ac0e128786501c102d68144f780af6c8f028e3",
+    "literature/index.yaml": "4d690e84658a8a56e4a3d7d76bbd92111c985260f2d14a2ba8e0f6992e03df37",
+    "literature/wilson-marked/theory_graph.yaml": "b201d7eba1a755ef7c522993e3475831a1319942ec02941fd2e82ef69e4fd077",
+    "literature/wilson-marked/sources.json": "745441ea2ef5ea40bcd07384d7b9883d92dca514ba4034fc997f0baf0ebb9aa7",
+    "index/claims.jsonl": "f99f81043ce538cb10e0ce5d076d0afc0fa762143b1a0e2ef9210231504cb9c1",
+    "index/graph.jsonl": "b03125499a6672563cf3bb6ce3cc41616470d2eee15720652a4e6136001b1993",
+    "FRONTIER.md": "b4565200ca9c3706a61cd4465993ab5ef0949581816de531c110b770344c1e86",
+    "CERTIFIED.md": "04a5f8daf2432a739a51e25b64deb8303a6c17e21310ed0d0c644e70fc7cf911",
+    "atlas.html": "9a2ce753ec257f55d33856cf8dc8fc1e069c46a868d5fb8e53760a0dacdabed3",
+    "docs/validation/wilson-marked-tests-2026-09-08.xml": "6010073a19902f116d5aba0b9bec17b325c4e4a6a90d0fa7edd5427d05cbe742",
+    "docs/validation/wilson-marked-axioms-2026-09-08.txt": "d6501cd36caa5b2cbf814915df33519e3f186129e42bac99988ec42016b79ca8"
+  }
+}

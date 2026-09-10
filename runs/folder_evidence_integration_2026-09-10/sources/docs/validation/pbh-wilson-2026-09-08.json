@@ -1,0 +1,112 @@
+{
+  "recorded_at": "2026-09-09T01:07:54.454130+00:00",
+  "scope": "Five exact finite/differential controls. The finite SU2 lattice horizontal-geodesic argument PBH-5 is an analytic proof. No full manifold theorem is claimed machine-formalized.",
+  "verdict": "The proposed classical Wilson weight cannot maintain globally positive pointwise orbit curvature at all large beta in the stated regularization. This does not refute other LSI or true-ground curvature methods. W6 remains open; no continuum Yang-Mills proof is claimed.",
+  "checks": [
+    {
+      "name": "FINDING: the actual Wilson orbit curvature is negative at a regular plaquette orbit",
+      "passed": true,
+      "detail": "Four-link quotient metric dtheta^2 and exact Haar pushforward sin^2(theta) give Ric_nu=beta cos(theta)+2 csc^2(theta); beta=8, theta=2pi/3 gives -4/3 at a principal orbit. This falsifies the global positive-curvature premise",
+      "section": "PBH_WILSON_TEST; G19; G23 PBH-4",
+      "tier": 1,
+      "line": 15,
+      "source": "src/workhouse/invariants/ym_pbh.py:15",
+      "yields": {
+        "WILSON_PBH_CURVATURE_WITNESS": "-4/3"
+      },
+      "rests_on": []
+    },
+    {
+      "name": "Weighted Gamma2 retains both the kinetic prefactor and signed Hessian",
+      "passed": true,
+      "detail": "For arbitrary smooth f,W, L=c(d2-W'd) gives Gamma=c(f')^2 and Gamma2=c^2[(f'')^2+W''(f')^2]; with c=1/2, f''=0, f'!=0, the curvature ratio is W''/2. A diffusion gap needs the physical-time identification",
+      "section": "PBH_WILSON_TEST; G19; G23 PBH-1 PBH-4",
+      "tier": 1,
+      "line": 37,
+      "source": "src/workhouse/invariants/ym_pbh.py:37",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "FINDING: the classical Wilson density is not the exact physical ground-state weight",
+      "passed": true,
+      "detail": "For the actual radial Wilson H=-c(d2+2cot(theta)d)+k(1-cos(theta)), psi=exp[-beta(1-cos(theta))/2] has residual with cos(theta)^2 coefficient c beta^2/4>0. No choice of k makes this residual constant for beta,c>0",
+      "section": "PBH_WILSON_TEST; G19; G23 PBH-6",
+      "tier": 1,
+      "line": 60,
+      "source": "src/workhouse/invariants/ym_pbh.py:60",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "FINDING: Wilson gradient flow expands a regular orbit distance by 8/7",
+      "passed": true,
+      "detail": "tan(theta(t)/2)=exp(-t)tan(theta0/2); theta0=2pi/3 and t=log(2) give D Phi_t=8/7>1 in the exact quotient metric. Action descent is not contraction",
+      "section": "PBH_WILSON_TEST; G19; G23 section PBH-5",
+      "tier": 1,
+      "line": 85,
+      "source": "src/workhouse/invariants/ym_pbh.py:85",
+      "yields": {
+        "WILSON_FLOW_EXPANSION_WITNESS": "8/7"
+      },
+      "rests_on": []
+    },
+    {
+      "name": "FINDING: center-valued Wilson configurations remain rough at positive flow time",
+      "passed": true,
+      "detail": "Every su(2) tangent has zero trace, so every all-center link configuration is stationary for Wilson flow. A negative plaquette keeps energy 2/a^4. This falsifies a deterministic uniform bound, not a bound on probabilistic expectations",
+      "section": "PBH_WILSON_TEST; G19; G23 section PBH-5",
+      "tier": 1,
+      "line": 105,
+      "source": "src/workhouse/invariants/ym_pbh.py:105",
+      "yields": {},
+      "rests_on": []
+    }
+  ],
+  "test_runs": [
+    {
+      "file": "pbh-wilson-focused-2026-09-08.xml",
+      "sha256": "87f47ff11d3ec8f3ba5c7570ca8dbac7fca8fe591757de06ea61a0bd26be43e4",
+      "tests": 64,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "pbh-wilson-graph-2026-09-08.xml",
+      "sha256": "b9e4cb5a130bea5dfde8bbf102ce9ab434e78f8223121f4fa8f45b7cb6f51dbf",
+      "tests": 37,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "artifacts": {
+    "docs/derivations/yangmills-pbh-wilson-test.md": "3122ef912820b5a0b912858b85165e6dbffd3f90543f7e49a76de8833b68baee",
+    "docs/derivations/yangmills-weighted-curvature.md": "75c853725c68db30a3f264f4eb5ee9cf614ea784c670cd8eb0dde208d84a073a",
+    "src/workhouse/invariants/ym_pbh.py": "354e47ee1ce4452571e06fc6e654e038a6659828fd6c903aa111d99af644d0ad",
+    "src/workhouse/invariants/__init__.py": "93d96cc217744bd6fb63cd5daf1c2305b400260e6569379a0418c71124bdcfd5",
+    "scripts/validate_pbh_wilson.py": "49e48c22a06fdb7a4ee0292b36f6f40e3d4169298570e1b4d9079053d8e72302",
+    "ledger/documents.yaml": "c1b03bfeb1c388e803470cd6cc784a564ca568745b311981c6e1be7a810ae53b",
+    "ledger/gaps.yaml": "fdcdebe8f4285fdbb0ce8aa2ca8e13ee53041e2478a91e94975c833cd4919b82",
+    "index/claims.jsonl": "9a99e2e67a2c9aed710b094e7b3c077b3954f07873ec7270093feac51291cb75",
+    "index/graph.jsonl": "ede12bb6f343e83ca4011406838c677dd20f0ccd4e89f640027365bf6a67d390",
+    "FRONTIER.md": "c022d239465d907d4561aad6734e76ef4afbea1db27e8e42605da09599bf12d3",
+    "CERTIFIED.md": "9840b0faf3040aeb4b6171a2219d8cb1a55fa805134794d2e6bf72d67d10afa4"
+  },
+  "primary_sources": [
+    {
+      "url": "https://www.sfb1283.uni-bielefeld.de/preprints/sfb22100.pdf",
+      "locator": "Assumption 1.1, Theorems 1.2 and 1.4; Section 4.3",
+      "scope": "Strong-coupling infinite-volume uniqueness, LSI and clustering"
+    },
+    {
+      "url": "https://arxiv.org/abs/1101.0963",
+      "scope": "Perturbative gradient-flow finiteness after underlying renormalization"
+    },
+    {
+      "url": "https://arxiv.org/abs/1809.06318",
+      "scope": "Ground-state weighted curvature; conventions pinned in GST derivation"
+    }
+  ]
+}

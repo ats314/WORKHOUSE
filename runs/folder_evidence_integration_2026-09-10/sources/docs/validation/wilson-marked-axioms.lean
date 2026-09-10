@@ -1,0 +1,12 @@
+import Workhouse.Basic
+
+#print axioms Workhouse.wilson_symmetric_block_identity
+#print axioms Workhouse.wilson_disconnected_vacuum_cancel
+#print axioms Workhouse.wilson_geometric_telescope
+#print axioms Workhouse.wilson_damped_time_denominator
+#print axioms Workhouse.wilson_time_kernel_split
+#print axioms Workhouse.wilson_polymer_kp_budget
+#print axioms Workhouse.wilson_relative_gap_budget
+#print axioms Workhouse.wilson_relative_gap_positive
+#print axioms Workhouse.wilson_source_weight_defect
+#print axioms Workhouse.wilson_source_weight_positive
