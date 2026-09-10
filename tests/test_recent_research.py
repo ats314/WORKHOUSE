@@ -80,10 +80,9 @@ def test_missing_copy_does_not_fall_back_to_external_original(research, tmp_path
     [
         "../outside.md",
         "C:/outside.md",
-        R.SOURCE_BASE + "../outside.md",
-        R.SOURCE_BASES[1] + "../outside.md",
+        *(base + "../outside.md" for base in R.SOURCE_BASES),
         "runs/unregistered/sources/proof.md",
-        R.SOURCE_BASES[1].rstrip("/") + "-other/proof.md",
+        *(base.rstrip("/") + "-other/proof.md" for base in R.SOURCE_BASES),
     ],
 )
 def test_source_paths_cannot_escape_the_pinned_bundle(research, tmp_path, path):
@@ -93,10 +92,11 @@ def test_source_paths_cannot_escape_the_pinned_bundle(research, tmp_path, path):
     )
 
 
-def test_second_preserved_bundle_retains_hash_and_scope_validation(research, tmp_path):
+@pytest.mark.parametrize("base", R.SOURCE_BASES)
+def test_preserved_bundles_retain_hash_and_scope_validation(research, tmp_path, base):
     source = research.sources[0]
     contents = (tmp_path / source["path"]).read_bytes()
-    source["path"] = R.SOURCE_BASES[1] + "campaign/proof.md"
+    source["path"] = base + "campaign/proof.md"
     target = tmp_path / source["path"]
     target.parent.mkdir(parents=True)
     target.write_bytes(contents)

@@ -37,6 +37,11 @@ physical-model identifications, with preserved source inputs and exact proof lin
 The [W6 continuation](docs/derivations/w6-ground-jets-and-transport-budget.md)
 adds actual fixed-square ground and operator derivative bounds and an explicit
 criterion for the complete source-transport budget.
+The [conditional transport continuation](docs/derivations/w6-conditional-transport-obstruction.md)
+derives the exact true-ground conditional score, locates its constrained Agmon
+centers, and proves that some admissible Q8 cutoffs fail M10 in the actual model.
+It specifies synchronized radial profiles that follow those centers; their
+uniform M10 estimate remains open.
 
 ## Quick start
 
