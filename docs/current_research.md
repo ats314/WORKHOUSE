@@ -1,5 +1,115 @@
 # Current research map
 
+Maintained guide, reconciled with the source and statement ledgers on **9 September
+2026**. The workspace reconciliation and source-linked analytic formalization
+were merged in [PR #113](https://github.com/ats314/WORKHOUSE/pull/113), merge
+commit `742033a`. That records integration of the stated work; later changes
+and CI results must be checked against their own revision.
+
+Start here to select a mathematical obligation. Use the
+[research goal](research_goal.md) for the governing continuum target and the
+[formalization workflow](formalization_workflow.md) to turn a precise source
+statement into a reviewed Lean proof and graph relationship. The
+[derivation proof map](derivation_formalization.md) is generated from the live
+[statement inventory](../ledger/derivation_statements.yaml); it supplies source
+hashes, section locators, dependencies, whole-statement proofs, scoped ingredients
+and remaining formalization. Counts belong there and in the generated
+[frontier](../FRONTIER.md), not in another manually maintained total.
+
+## Read the current claim at its own scope
+
+An analytic proof retains its registered mathematical status when Lean covers
+only an ingredient. Conversely, a compiling abstract theorem applies to a
+Wilson construction only after its model, domain and identification hypotheses
+are supplied. Read the source, its `DERIV:` or `RESULT:` record, and the actual
+formal declaration together. A historical report's missing input may have been
+discharged by a later derivation; its date and scope still matter.
+
+| Route | Established source and exact graph entry | Successor to distinguish |
+| --- | --- | --- |
+| Fixed-spacing physical transfer and complete odd band | [Infinite-volume Wilson construction](../paper/research_notes/G18_WILSON_INFINITE_VOLUME_PHYSICAL_BAND_20260905.md), `RESULT:WILSON_INFINITE_PHYSICAL_BAND`; [marked shell transport](derivations/wilson-marked-shell-transport.md), `DERIV:WILSON_MARKED_SHELL_TRANSPORT:S10_S15` and `:S21_S22` | G18 is discharged at its registered fixed-spacing scope. Matching and transporting that construction through the spatial continuum trajectory remain G19 obligations; an older statement that the entire band/source stage is absent is stale. |
+| Actual true-vacuum block assembly | [True-vacuum block estimates](derivations/wilson-true-vacuum-block-estimates.md), `DERIV:WILSON_TRUE_VACUUM_BLOCK_ESTIMATES:BA20_BA26`; [independent check](derivations/wilson-true-blocks-independent-check.md) | BA20–BA25a establish the explicit strong-coupling window. The BA26 budget ceiling and continuation beyond that window remain distinct from missing Lean constructions. |
+| SC17 spatial control | [Spatial closure](derivations/wilson-sc17-spatial-closure.md), `DERIV:WILSON_SC17_SPATIAL_CLOSURE:OPTIMIZED_INTERVAL` and `:RATIONAL_WINDOW` | The optimized bare-bootstrap interval has endpoint `lambda_c` in `(1/73,1/72)`; the endpoint keeps the stated gap but loses the interior exponential rate. The full reference-defect estimates outside this interval are separate. |
+| Thermodynamic ground law and physical form | [Thermodynamic derivation](derivations/wilson-sc17-thermodynamic-limit.md), `DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:T12`, `:SCORE_LIMIT`, `:IF4_IF7`, `:IF8_IF9`, `:IF10_IF13` | The source proves the limiting law, closed form, physical spectral gap and nonzero plaquette spectral-interval weight in its regime. Constructing their exact cylinder, operator and spectral identifications in Lean is unfinished formalization, not an absent analytic theorem. |
+| Actual physical Euclidean time | [Physical-time derivation](derivations/wilson-sc17-physical-time-limit.md), `DERIV:WILSON_SC17_PHYSICAL_TIME_LIMIT:P17_P18`, `:PHYSICAL_TIME_GAP`, `:P19_P20` | The source identifies the process with the specified closed form and the finite physical vacuum-correlation limit, including the endpoint. Its P10 names the further spatial-continuum inputs; this fixed-spacing identification does not supply those estimates. |
+| Complete spatial Schur comparison | [Schur excess](derivations/wilson-spatial-schur-excess.md), `DERIV:WILSON_SPATIAL_SCHUR_EXCESS:SP7_SP10`, `:SP11_SP16`, `:SP20_SP24`; [selected-inverse wall](derivations/wilson-selected-inverse-wall.md), `DERIV:WILSON_SELECTED_INVERSE_WALL:W6` | Keep the full magnetic, metric/Haar, vacuum, moving-source and force terms. W6 is the explicitly open actual interacting selected-pairing estimate; finite or normalized inverse lemmas alone do not discharge it. |
+| Flat holonomies and source rank | [Flat-background source theorem](../paper/research_notes/G19_FLAT_HOLONOMY_SOURCES_AND_RANK_REPAIR_20260907.md), `RESULT:WILSON_FLAT_BACKGROUND_FAST_SOURCES`, `RESULT:WILSON_PHYSICAL_SOURCE_RANK_REPAIR` | Use the proved unreduced source and exact gauge action across stabilizer changes. Its ambient source lift is not automatically the physical quantum Schur projection. |
+| Reconstruction and continuum closure | [Reconstruction](derivations/yangmills-reconstruction.md), `DERIV:YANGMILLS_RECONSTRUCTION:R1`, `:R6_R7`; [continuum manuscript](derivations/yangmills-continuum-balaban-multiscale-proof.md) and [Cauchy repair](validation/wilson-g19-cauchy-repair.md) | Preserve the manuscript's statement-specific proven, conditional, disputed and open entries. A positive physical-time rate, actual reconstructed spectral measure and total observable family must meet on the same continuum object. |
+
+For all September 1 onward sources, also use the
+[documentation topic index](README.md#september-source-routes) and the
+[recent-research ledger](../ledger/recent_research.yaml). They retain standalone
+anisotropy, W6, strip and square-block campaigns without treating every similarly
+named folder as another active repository.
+
+## Select the kind of work before proceeding
+
+| Kind of obligation | Where to read it | What discharges it |
+| --- | --- | --- |
+| Mathematical successor | The source's hypotheses and conclusion, [results](../ledger/results.yaml), [gaps](../ledger/gaps.yaml) and the statement's `status` | A proof of the missing estimate or construction at the required regime, with its dependencies and downstream consequence stated. |
+| Formalization successor | The statement's `lean`, `lean_support` and `remaining` fields in [the inventory](../ledger/derivation_statements.yaml) | A compiled faithful declaration, checked assumptions and actual proof dependencies; whole coverage only when it proves the complete named statement. |
+| Reproduction or source review | A dated [run](../runs/), its manifest and the [corpus review queue](corpus_coverage.md) | Replay or review of the specified source bytes and exact claim; preserve the prior evidence and any unresolved remainder. |
+| Repository integration | [Workspace coordination](workspace_coordination.md), current Git state and the change's PR | Review, required checks and verified merge status for that revision. A local file or old passing log is insufficient. |
+
+The existing analytic Lean modules prove inverse/Schur, measure comparison,
+projection assembly, weak-limit/closure and spectral mechanisms. For example,
+`DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_CLOSABLE` has formal support from
+`LEAN:closed_extension_of_integration_by_parts`; the actual cylinder gradient,
+Hilbert direct sum, dense test domain and limiting adjoint still need a faithful
+Lean construction. This is a concrete formalization task. It does not reopen
+the source's proof of closability.
+
+Similarly, `DERIV:WILSON_SC17_SPATIAL_CLOSURE:R12_R14` names the full conditional
+pressure/Hessian and cutoff defects needed for its continuation, and
+`DERIV:YANGMILLS_CONTINUUM_BALABAN_MULTISCALE_PROOF:THEOREM_7_1` records the
+unsupplied summable cross-scale increment. Those are mathematical successor
+obligations, not merely requests to translate existing algebra into Lean.
+
+## Keep the corrections attached
+
+The [September Feshbach review](research/september_feshbach_integration.md)
+preserves both the exact identities and their scope corrections.
+`RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT` proves the recorded fourth-order
+support mechanism; the historical R-degree-only inference is retained as
+falsified. `RESULT:FESHBACH_RESOLVENT_COMPARISON` has an analytic statement
+with explicit compatible-domain and relative-form hypotheses; its finite
+controls do not supply an interacting uniform constant.
+
+`RESULT:WILSON_HARMONIC_CUBIC_OBSTRUCTION` retains the actual local harmonic
+witness and the selected global cancellation. A failed unrestricted absolute
+bound does not erase the surviving bounded-mean or selected comparison.
+The same discipline applies to the [vacuum assembly](derivations/wilson-vacuum-aligned-assembly.md)
+and [weighted repair](derivations/wilson-weighted-repair-and-rotor-gap.md):
+follow the later true-vacuum and SC17 results before repeating an older
+"remaining angle estimate" as a statement about every regime.
+
+## Query and report an exact obligation
+
+```powershell
+uv run --no-sync workhouse why G19
+uv run --no-sync workhouse why RESULT:WILSON_INFINITE_PHYSICAL_BAND
+uv run --no-sync workhouse why DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_CLOSABLE
+uv run --no-sync workhouse why LEAN:closed_extension_of_integration_by_parts
+uv run --no-sync workhouse why DERIV:WILSON_SELECTED_INVERSE_WALL:W6
+```
+
+Report the hypothesis discharged, theorem now applicable, precise remaining
+blocker and verification performed. Preserve analytic status, machine tier,
+source provenance and publication state as separate facts. Follow the
+[formalization workflow](formalization_workflow.md) for edits to proof mappings;
+do not hand-edit the generated proof map, frontier, certified view or graph.
+
+## Dated route history
+
+The collapsed narrative below preserves the earlier September 5–9 guide and
+its links. Its words "now", "next" and "remains" describe that recorded stage.
+Its closing description of G18 as open is superseded by the current registered
+fixed-spacing closure above. The earlier narrative is retained for source
+history; use the current tables and live ledgers to choose new work.
+
+<details>
+<summary>Earlier September 5–9 research narrative, retained after PR #113</summary>
+
 The [derivation proof map](derivation_formalization.md) now provides exact
 source and statement locators for the September documents. The added formal
 mechanisms cover measure comparison, noncommuting assembly, infinite operator
@@ -646,3 +756,5 @@ belong in the generated catalogue, not in duplicated snapshot counts here.
 The [literal quantum-source run](../runs/literal_quantum_sources_2026-09-05/README.md) separates the six analytic
 results from finite native controls; the exact central identity closes the
 failed global score candidate without changing the generic theorem.
+
+</details>

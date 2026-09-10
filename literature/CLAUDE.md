@@ -1,7 +1,7 @@
 # An evidence map, not a bibliography
 
-An entry earns its place by naming a claim in this repository — a `C`, `G`,
-`R`, or `U` id, or a registered constant — and saying what relationship the
+An entry earns its place by naming a target accepted by the current claim
+registry and validator, and saying what relationship the
 paper has to it. `ledger.validate`'s counterpart here rejects a target that does
 not resolve, because a citation attached to no claim is decoration.
 
@@ -13,17 +13,17 @@ workhouse lit --holes         # the missing-link report over bears_on x cites
 
 ## A published paper is not authority either
 
-It is T3 until something checks it, exactly like a corpus document. What makes
-an external result valuable is **independence** — it was produced without any
-knowledge of this program, so agreement is evidence rather than bookkeeping.
+Literature relationships retain their recorded source-reading status and
+scope. A mathematical result's status and machine tier are separate: an
+analytic argument may be established while its complete Lean encoding is
+unfinished. Publication alone does not certify it, and unfamiliarity is not
+a reason to reject a valid argument.
 
-One edge here has been promoted past T3: `CS_2006 → C7`. The SU(3) Weingarten
-values that falsified the stranded-flux zero backend are now re-derived
-symbolically in `N` from the `n = 2` Gram matrix, so they no longer rest on a
-transcript. Everything else is still an assertion about a paper nobody here has
-read.
-
-The counter is printed at the bottom of `workhouse lit` on purpose.
+Use the live register, `workhouse lit`, and the associated invariant/theorem
+records to determine what has been read or checked. Do not repeat historical
+claims that only one edge was checked or all other papers are unread.
+Independence belongs in the provenance: repeated citations or copied source
+text are not additional originating arguments.
 
 ## Never store a paper you do not have the right to store
 
@@ -32,11 +32,10 @@ The counter is printed at the bottom of `workhouse lit` on purpose.
 `arxiv-assumed-1991-2003`, which covers most pre-2004 arXiv papers. That licence
 grants **arXiv** the right to distribute; it grants this repository nothing.
 
-`VERBATIM_ONLY` holds the NoDerivatives licences. They permit storing the file
-and forbid changing it, so an entry using one must record `source_sha256` and
-the stored bytes are hashed against it — extracted text, a reformat, or an
-excerpt would all be derivatives. One paper qualifies (`KRS_2023`, CC BY-NC-ND);
-the rest are pinned by digest and not stored.
+For entries using `VERBATIM_ONLY`, the validator requires `source_sha256` and
+compares the stored bytes with that digest. Preserve those copies unchanged.
+Inspect the actual source's declared licence and the current entry instead of
+inferring permission from download availability or an old stored-paper count.
 
 ## A scope firewall binds
 
@@ -95,6 +94,13 @@ Verified metadata only. An unverified citation is the same failure mode as an
 unverified coefficient — `KS_1975` carries a note because two secondary sources
 disagree about its page range, and the ADS bibcode settles it.
 
-If you have not read the paper, the edge status is `not-yet-obtained` and the
-`detail` says what you expect to find. That is a useful entry. What is not
-useful is an edge marked `verified` because the abstract sounded right.
+Use the existing edge vocabulary: `verified`, `transcription-unverified`,
+`not-yet-obtained`, or `refuted`. Keep acquisition and reading distinct. When
+the source is available but the specific relationship is unverified, retain
+`transcription-unverified` and explain what still needs checking; use
+`not-yet-obtained` for a source that has not been obtained. A downloaded file,
+an extraction or an abstract is not enough to mark a relationship `verified`.
+
+After a substantive source or relationship change, follow the relevant
+validation and graph-generation steps in [Contributing](../CONTRIBUTING.md).
+For navigation-only edits, use [documentation maintenance](../docs/documentation_maintenance.md).

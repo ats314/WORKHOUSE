@@ -1,5 +1,91 @@
 # Research goal and the path to it
 
+Maintained scope guide, updated **9 September 2026** after the integration in
+[PR #113](https://github.com/ats314/WORKHOUSE/pull/113). Read the
+[current research map](current_research.md) for source-specific routes and the
+[derivation proof map](derivation_formalization.md) for exact formal coverage.
+
+## Governing objective
+
+The objective is the Clay Yang-Mills existence and mass gap problem: a
+nontrivial quantum Yang-Mills theory on four-dimensional Euclidean space,
+for every compact simple gauge group, with the required field-theory axioms
+and a strictly positive mass gap. The
+[official problem statement](https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf)
+specifies the target. The maintainer established this research objective on
+5 September 2026.
+
+Progress means discharging a precise dependency of that construction, proving
+a needed mechanism, or resolving a failed step with its strongest surviving
+conclusion. A count of checks, formal lemmas or reviewed files measures work
+performed; it does not measure distance to the theorem.
+
+## Established inputs keep their scopes
+
+The [result register](../ledger/results.yaml) records
+`RESULT:WILSON_INFINITE_PHYSICAL_BAND` as proven: the actual infinite-volume
+physical Wilson transfer and complete odd-band literal-source frame are
+established on the stated small-coupling interval. G18 is discharged at its
+registered fixed-spacing scope. Its historical route should not be restarted
+as though the entire transfer or source-identification theorem were absent.
+
+The September 9 [SC17 thermodynamic proof](derivations/wilson-sc17-thermodynamic-limit.md)
+establishes its limiting ground law, closed form, full and physical gap, and
+nonzero plaquette spectral-interval weight. The companion
+[physical-time proof](derivations/wilson-sc17-physical-time-limit.md) identifies
+the actual finite physical vacuum-correlation limit with that generator,
+including the optimized endpoint. These are established analytic inputs in
+their fixed-spacing regimes. Their incomplete Lean realization does not
+change that mathematical standing.
+
+The [flat-background source theorem](../paper/research_notes/G19_FLAT_HOLONOMY_SOURCES_AND_RANK_REPAIR_20260907.md),
+finite-cell spectra, true-vacuum block estimates and Gaussian/selected
+comparison results provide further inputs with different hypotheses.
+Do not combine their constants across gauges, operators, parameter regimes
+or physical clocks without proving the connecting identifications.
+
+## Remaining obligations for the continuum target
+
+| Obligation | Exact route to inspect | Required successor |
+| --- | --- | --- |
+| Uniform interacting comparison across spatial scales | [Selected inverse](derivations/wilson-selected-inverse-wall.md), `DERIV:WILSON_SELECTED_INVERSE_WALL:W6`; [SC17 continuation](derivations/wilson-sc17-spatial-closure.md), `DERIV:WILSON_SC17_SPATIAL_CLOSURE:R12_R14` | Establish the actual selected-pairing or full conditional reference-defect estimates with the vacuum, pressure, harmonic and moving-source terms included. |
+| Summable scale transport | [Spatial Schur excess](derivations/wilson-spatial-schur-excess.md), `DERIV:WILSON_SPATIAL_SCHUR_EXCESS:SP7_SP10`, `:SP20_SP24`, `:SP25` | Realize the complete comparison and summable errors along a specified trajectory; retain the source metric and common physical clock. |
+| Nontrivial continuum correlations and Euclidean symmetry | [Continuum manuscript](derivations/yangmills-continuum-balaban-multiscale-proof.md), `DERIV:YANGMILLS_CONTINUUM_BALABAN_MULTISCALE_PROOF:THEOREM_7_1`, `:THEOREM_7_2`, `:OS1`; [repair record](validation/wilson-g19-cauchy-repair.md) | Supply the missing summable increment, actual limiting fields/distributions and symmetry-restoration estimates. Preserve each entry's current conditional, disputed or open status. |
+| Positive finite physical mass and observable weight | [Reconstruction](derivations/yangmills-reconstruction.md), `DERIV:YANGMILLS_RECONSTRUCTION:R1`, `:R6_R7`; [physical-time scope P10](derivations/wilson-sc17-physical-time-limit.md#p10-exact-scope-and-inputs-still-required-for-spatial-continuum) | Control physical energy and renormalized spectral measures through cutoff removal; identify the reconstructed generator and total observable family with the same limit. |
+| Every compact simple gauge group | The group and representation hypotheses in the cited finite-cell, transfer and continuum sources | Extend the complete interacting continuum construction within those hypotheses; a theorem for a stated SU(N) or SU(2) regime does not silently cover every group. |
+
+The fixed-spacing small-coupling constructions do not themselves control the
+spatial continuum trajectory. The [continuum bridge](../paper/research_notes/G19_CONTINUUM_BRIDGE_INSERT.tex)
+states the scale mismatch and its matching hypotheses. SC17 physical-time P10
+likewise states why its bounded bare-bootstrap interval does not supply the
+required large-parameter background comparison. These source conclusions
+identify where a new mathematical estimate is needed.
+
+## Formalization is a separate dependency chain
+
+Use [the statement inventory](../ledger/derivation_statements.yaml) and
+[formalization workflow](formalization_workflow.md) to select a whole statement
+or a necessary ingredient. Actual cylinder derivatives, closed-form domains,
+conditional projections, spectral measures and stochastic constructions must
+be encoded faithfully when a theorem uses them. An abstract theorem with
+uninstantiated model hypotheses remains scoped support for its source.
+
+Report the exact obligation, proof or reproducible artifact, hypothesis
+discharged, downstream theorem enabled and remaining blocker. Keep source
+status, machine verification and local/pushed/merged state separate. A valid
+novel proof is evaluated on its mathematics, independently of whether it
+already appears in published literature or has a complete Lean translation.
+
+## Historical development of the target
+
+The earlier goal narrative below is retained with its source links. Its
+"present", "now" and "next" refer to the September 5–7 stages it describes;
+later September 9 results and the current route above determine present work.
+It supplies history, not a second competing task queue.
+
+<details>
+<summary>Earlier goal narrative and September 5–7 route development</summary>
+
 The objective is the Clay Yang-Mills existence and mass gap problem. The
 [official statement](https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf)
 asks for a nontrivial quantum Yang-Mills theory on four-dimensional Euclidean
@@ -246,3 +332,5 @@ state whether their repository records are local, pushed or merged.
 If no currently available route permits further progress, report that
 inability and its precise mathematical obstruction. Exhausting the present
 methods is not a proof that no future mathematical direction exists.
+
+</details>

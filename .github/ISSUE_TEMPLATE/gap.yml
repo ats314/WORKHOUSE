@@ -1,23 +1,33 @@
-name: Gap work
-description: Work toward one of the ranked gaps G1-G19
+name: Research or formalization work
+description: Advance a registered gap, derivation statement or proof dependency
 labels: [gap]
 body:
   - type: input
     id: gap
     attributes:
-      label: Gap id
-      placeholder: "G3"
+      label: Claim, gap or derivation statement ID
+      placeholder: "G19 or DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
     validations: { required: true }
   - type: textarea
     id: scope
     attributes:
-      label: What this closes, and what it explicitly does not
+      label: Precise statement and scope
+      description: State the hypotheses, mathematical regime, intended conclusion and whether this is new mathematics or formalization of an established derivation.
     validations: { required: true }
-  - type: checkboxes
-    id: discipline
+  - type: textarea
+    id: sources
     attributes:
-      label: Blind-run discipline
-      options:
-        - label: No historical target enters the data flow before sealing
-        - label: Checkpoint hashes recorded
-        - label: Comparison targets loaded only after unblinding
+      label: Sources and dependencies
+      description: Give the source path and exact section, existing RESULT/DERIV/LEAN IDs, and the relevant output of workhouse why. Check current GitHub history before declaring an input absent.
+    validations: { required: true }
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation and remaining work
+      description: Name the proposed proof or check, what has actually run, and the missing construction. Use "not yet run" when appropriate. Supporting lemmas and finite checks must retain their scope.
+    validations: { required: true }
+  - type: textarea
+    id: blind_run
+    attributes:
+      label: Blinded comparison, if applicable
+      description: For a blinded computation, record checkpoint hashes, how historical targets are excluded before sealing, and when comparison targets are introduced. Leave blank for other work.

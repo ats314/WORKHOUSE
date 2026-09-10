@@ -1,5 +1,11 @@
 # Yang-Mills source and theory map
 
+This guide describes the source collection and its initial research routes.
+For subsequent results and remaining obligations, use [current research](../../docs/current_research.md),
+the [derivation proof map](../../docs/derivation_formalization.md), and the
+[formalization workflow](../../docs/formalization_workflow.md). An older
+source-acquisition date or missing Lean proof does not negate a later analytic result.
+
 This collection starts from Arthur Jaffe and Edward Witten's **Quantum Yang-Mills Theory**, the 14-page official Clay problem statement supplied by Alex. The attachment and the [official PDF](https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf) have the same SHA-256:
 
 `3558403ca14c11e382f73a09e548222708540bfdf478cf96aa11c52d43e23e09`
@@ -37,13 +43,28 @@ These are page-specific connections to the supplied text. Statements about what 
 Example queries, from the repository root:
 
 ```text
-workhouse why STUDY:YM:target
-workhouse why STUDY:YM:orbit-curvature
-workhouse why STUDY:YM:flat-directions
-workhouse lit --for G23
-workhouse why LIT:JW_2006
-workhouse atlas
+uv run --no-sync workhouse why STUDY:YM:target
+uv run --no-sync workhouse why STUDY:YM:orbit-curvature
+uv run --no-sync workhouse why STUDY:YM:flat-directions
+uv run --no-sync workhouse lit --for G23
+uv run --no-sync workhouse why LIT:JW_2006
+uv run --no-sync workhouse atlas
 ```
+
+## Maintaining local extraction
+
+The committed extraction index is usable without the ignored PDF copies.
+Rebuilding it is a deliberate acquisition-maintenance operation, not setup for
+an ordinary clone or documentation change. Before running
+`uv run --no-sync python scripts/extract_yangmills_pages.py`, install the
+script's `pypdf` dependency and restore the complete reading-copy set matching
+the recorded source hashes. Preserve the existing extraction outputs and their
+digests first. Missing PDFs are skipped by the extractor, which still overwrites
+`pages.jsonl`, `sources.json`, and `summary.json`; an incomplete local collection
+can therefore replace a useful committed index with reduced or empty coverage.
+Review the output diff and coverage against the preserved snapshot before
+publishing any rebuild. Source-record changes also require the normal catalogue
+and generated-view workflow in the [contribution guide](../../CONTRIBUTING.md).
 
 ## Concrete research use
 

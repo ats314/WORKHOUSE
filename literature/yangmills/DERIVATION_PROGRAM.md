@@ -1,5 +1,13 @@
 # From source relations to verified mathematical interfaces
 
+This page retains the initial three-derivation program and its source-intake
+snapshot. For the expanded program and subsequent results, start with
+[current research](../../docs/current_research.md), the
+[derivation proof map](../../docs/derivation_formalization.md), and the
+[formalization workflow](../../docs/formalization_workflow.md). The initial
+Lean bridge note below is a historical scope record; the generated proof map
+is the current theorem inventory. Acquisition counts below describe this stage.
+
 The source collection now feeds three reconstructed derivations, exact symbolic checks, and Lean lemmas. The most productive connection is a **trial-state residual method**: weighted geometry can bound a physical Hamiltonian's gap even when the exact vacuum is unknown, provided the residual error is controlled. Simon's transverse confinement supplies a complementary way to understand flat valleys. OS reconstruction specifies the physical observable space and time parameter on which either mechanism must act.
 
 The supplied Clay PDF is the same byte-pinned document as the first attachment. Its bibliography guides the construction requirements and candidate mechanisms. The repository's established flux-band, fourth-order, and fixed-spacing carrier results remain inputs to this program.
@@ -73,12 +81,12 @@ Each interface has a falsifier in its detailed derivation. The new gap routes in
 All acquired source pages are searchable through the [777-page locator index](extraction/README.md). Its topic and theorem-label hits are discovery aids, not reviewed claims. The collection still records 37 sources without local full text and one preview; those access gaps remain visible.
 
 ```text
-workhouse why STUDY:YM:derive-ground-state-residual
-workhouse why STUDY:YM:derive-simon-transverse
-workhouse why STUDY:YM:derive-adaptive-localization
-workhouse why LEAN:finite_ground_state_residual_identity
-workhouse why G23
-workhouse verify --only "pure quartic oscillator Gaussian residual certificate"
+uv run --no-sync workhouse why STUDY:YM:derive-ground-state-residual
+uv run --no-sync workhouse why STUDY:YM:derive-simon-transverse
+uv run --no-sync workhouse why STUDY:YM:derive-adaptive-localization
+uv run --no-sync workhouse why LEAN:finite_ground_state_residual_identity
+uv run --no-sync workhouse why G23
+uv run --no-sync workhouse verify --only "pure quartic oscillator Gaussian residual certificate"
 ```
 
-From `lean/`, `lake build --wfail` checks the formal development. The exact inventory and scope of the new theorems is in [the formal bridge note](../../docs/derivations/yangmills-formal-bridges.md), and the final validation run is recorded under `docs/validation/`.
+From `lean/`, `lake build --wfail` checks the formal development. The initial bridge inventory and scope are in [the formal bridge note](../../docs/derivations/yangmills-formal-bridges.md), with that stage's validation under `docs/validation/`. Follow the current proof map and formalization workflow linked above for subsequent theorems and their exact source dependencies.

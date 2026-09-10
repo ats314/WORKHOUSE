@@ -1,127 +1,86 @@
-# T0 — the proof-checked core
+# Lean formalization
 
-Successful strict Lean compilation certifies the exact formal statements
-under their displayed hypotheses. The repository also records established
-analytic proofs in `ledger/results.yaml`; their mathematical status is
-separate from their machine-verification tier.
+This directory contains the machine-checked mathematical layer. It includes
+exact algebra, finite matrices, measures, bounded and unbounded operators,
+analytic limits, and spectral arguments. Formalize the complete mathematical
+statement under its actual hypotheses, including the constructions it needs.
+There is no algebra-only restriction.
+
+Start with the [formalization workflow](../docs/formalization_workflow.md).
+The [generated proof map](../docs/derivation_formalization.md) locates each
+source statement, its whole or partial Lean coverage, and the remaining work.
+[FRONTIER.md](../FRONTIER.md) and [CERTIFIED.md](../CERTIFIED.md) report current
+verification; the import root is [Workhouse.lean](Workhouse.lean).
+
+## Build from the repository root
+
+On Linux/macOS with Bash and Make:
 
 ```bash
-make lean-setup   # elan, the pinned Lean, mathlib's build cache — from the repo root
-make lean         # proof-check
+make lean-setup
+make lean
 ```
 
-`make lean-setup` runs `scripts/bootstrap-lean.sh`, which the Lean CI job also
-runs, so a local toolchain and CI's are installed by one recipe rather than two
-that drift. It is idempotent and deliberately *not* part of `make bootstrap`:
-`make check` never compiles Lean, so folding it in would charge every session a
-multi-GB download for a tier it is not going to check.
+The first command uses [bootstrap-lean.sh](../scripts/bootstrap-lean.sh) to
+install elan if needed and obtain the pinned toolchain and mathlib cache.
+The second runs `lake build --wfail`. Lean is a separate setup from Python;
+`make check` does not compile it. Downloads and builds can be substantial.
 
-`lake-manifest.json` pins every dependency revision, so the build is
-reproducible even though `lakefile.toml` tracks mathlib's `master`.
-`.lake/` is ~8 GB and gitignored.
+For native Windows, provision elan and put `lake` on `PATH` first; this
+repository's installer is a Bash script, not a PowerShell installer. In
+PowerShell, run these commands individually and stop on a nonzero exit code:
 
-`make lean` passes `--wfail`. Lean reports a `sorry` as a *warning*, so a plain
-`lake build` exits 0 with one present — and the "no sorries" line the target
-prints would then be an assertion rather than a check, which is the one thing
-this repository is built not to do.
+```powershell
+Push-Location lean
+lake exe cache get
+lake build --wfail
+Pop-Location
+```
 
-## Scope, stated honestly
+For the integrated build and dependency export on Windows, prefer the exporter
+below: it builds imported project modules sequentially before the aggregate
+build to avoid concurrent access failures in the shared mathlib cache. Coordinate
+with other agents so only one full Lean build/export runs in this checkout.
 
-The modules imported by `Workhouse.lean` formalize rational and polynomial
-identities, finite matrix algebra, probability-measure comparison, bounded
-operator inverses, unbounded-operator closability and analytic limit arguments. They use no
-`sorry` and only standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
-The live theorem count is in `FRONTIER.md` §1.
+[lean-toolchain](lean-toolchain), [lake-manifest.json](lake-manifest.json),
+and [lakefile.toml](lakefile.toml) specify the toolchain and dependencies.
+Use their pins; dependency upgrades are a separate reviewed change.
 
-That formal layer is T0. Exact computational derivations in
-`src/workhouse/invariants/` have their own T1 scope; their finite controls
-do not automatically certify general operator or Haar-integration theorems.
-Analytic results can be proven while their full statements remain T3 for
-machine verification. A scalar lemma supporting such a result certifies
-its stated scalar implication, including the supplied hypotheses.
+## Register and connect every proof
 
-## Adding a formal statement
+Add every theorem, including helpers, to
+[ledger/theorems.yaml](../ledger/theorems.yaml). Import new modules from
+`Workhouse.lean`. Keep registered short names unique across namespaces.
 
-Put the theorem in the appropriate module, import new modules from
-`Workhouse.lean`, and add every theorem name to `ledger/theorems.yaml`,
-including helper lemmas. The register records the actual formal statement.
-Leave `formalizes` and `promotes` empty when no entire named claim or check
-is formalized; narrow supporting uses can be recorded in a result's scoped
-`supported_by` entries instead. Compilation and those support edges do not
-replace the required register entry.
+For derivation work, record precise `proof_sources` and update
+[ledger/derivation_statements.yaml](../ledger/derivation_statements.yaml).
+A statement's `lean` list means its complete stated claim is formalized;
+`lean_support` names a narrower ingredient with its exact scope. A source
+argument's mathematical status remains separate from its formal coverage.
+Use `promotes` only when the complete named computational check is proved.
 
-Record its precise source statement in `ledger/derivation_statements.yaml`:
-`lean` means the entire stated claim, while `lean_support` records an explicitly
-scoped ingredient. Keep the source's analytic status independent of this coverage.
+With the repository Python environment installed and `lake` on `PATH`:
 
-Run `python scripts/export_lean_dependencies.py` from the configured repository
-environment. It runs the strict build, extracts elaborated type/proof constants
-and transitive axioms, and checks every registered theorem. The generated
-`ledger/lean_dependencies.json` pins its Lean inputs and records dependencies on
-both project declarations and mathlib. The graph follows local definitions to
-the next registered theorem. Regenerate the catalogue, frontier and certified
-views after this export; stale exports are rejected.
+```text
+uv run --no-sync python scripts/export_lean_dependencies.py
+```
 
-The [derivation proof map](../docs/derivation_formalization.md) gives coverage and
-remaining obligations for every current top-level derivation document.
+The exporter runs strict Lean builds, reads elaborated proof/type dependencies
+and transitive axioms, validates registration and source fingerprints, then
+writes [ledger/lean_dependencies.json](../ledger/lean_dependencies.json).
+It has no read-only `--check` or `--help` mode. A plain successful `lake build`
+does not replace this export, and an export cannot establish faithful source
+encoding without mathematical review. Only the standard axioms `propext`,
+`Classical.choice`, and `Quot.sound` are accepted for registered theorems.
 
-## What is proved
+After proof or ledger changes, follow the
+[ordered export, rendering, and checks](../docs/formalization_workflow.md#export-render-and-check)
+before publication. Documentation-only changes do not require a Lean build or
+scientific regeneration when those inputs are unchanged.
 
-Second order all ranks (the rank law with denominators cleared, `t₃ = 5/612`,
-`t₂ = 0`, the deficit identity), the per-channel resolvent equation — the four
-channel weights in closed form from the dimension/Casimir table, the two
-family sums `A_N` and `B_N`, and the projector-to-cross-matrix-element
-assembly `Σ η_ρ w_ρ = t_N` (PUB edition eqs. 11–12) as rational identities
-with explicit non-vanishing hypotheses — the third-order ledger identity, the sealed
-fourth-order core and the all-rank axial law at every exceptional rank, the
-pencil relations including the blind holdout `λ_R = 2λ_M − λ_X` and the
-25-point stencil zero-mode gate, the historical kernel's internal consistency
-(`C` from `β`, width as `α + β`, the tier-collapse relation), Newton's identity
-in three variables, the four checkpoint-extraction formulas, and the
-finite-volume cycle count.
+## Earlier integration records
 
-The later modules add the Wilson vacuum-chart and compression matrix
-identities, the rooted scalar bound, the creator-parent algebra, and the
-global vertical comparison's seven scalar lemmas. The latter certify the
-strip factor, spectral-cap and affine assembly, two-sector scalar form,
-and threshold inequality. They do not formalize elliptic operators,
-SU(N) geometry, min-max arguments, or the full nonlinear fast complement.
-
-## Style note
-
-Two theorems are stated with denominators cleared rather than as rational
-identities with non-vanishing side conditions. That is deliberate: the cleared
-form is what the algebra actually says, and it needs no hypotheses to be true.
-
-## September source integration
-
-The September 1-9 integration adds these modules to the active `Workhouse.lean`
-import root. Their individual statements and graph targets are in
-`ledger/theorems.yaml`; theorem counts remain generated in `FRONTIER.md`.
-
-| Module | Formalized content | Source |
-|---|---|---|
-| `VacuumChart` | Rank-one adjoints, corrected vacuum legs, endpoint cancellation | September 5 vacuum-chart package |
-| `VacuumCompression` | Exact compression and vacuum-corner identities | September 5 compression package |
-| `RootedScalarBounds` | Normalized Taylor lower bound | September 5 rooted-contraction package |
-| `CreatorParent` | Star-ring square identities and parent-gap constant | September 5 creator-parent package |
-| `GlobalWilsonVertical` | Spectral-cap and affine-comparison scalar implications | September 5 nonlinear-block package |
-| `AnisotropyVariance` | Simplex variance, complete zero set, uniform bound, induced coefficient | September 8 anisotropy campaign |
-| `WilsonSquareForce` | Sharp inverse-energy coefficient bound for every radial index and finite spectral synthesis | September 9 square-block campaign |
-| `WilsonGridAlgebra` | Exact four-edge energy decomposition, bounds and constant kernel | September 9 compact-continuation campaign |
-| `ResolventLocalization` | Infinite Neumann inverse, exact signed identity, cubic operator remainder, Schur minimization and infinite lattice sums | BF1–BF3, SP1–SP10, W4–W6 and localized pairing |
-| `GroundStateAssembly` | Probability-measure density comparison, noncommuting projection assembly and explicit-domain physical gap transport | VA/BA assembly, GST and Gram positivity |
-| `ThermodynamicLimit` | Actual weak-law and uniform-score limits, integration by parts, unbounded-operator closability, form-core limits and spectral interval mass | SC17 T12 and IF3–IF13 |
-| `SpectralReconstruction` | Positive spectral-measure decay, support-gap exclusion, localization balancing and dense-family projection extension | Reconstruction R1–R7 |
-| `PlateauObstruction` | Exact exponential optimization and positive slow-mode obstruction for every positive plateau | Reconstruction R4–R5 |
-
-The five existing branch modules are copied without byte changes. The three
-campaign modules retain the original eight anisotropy statements and add
-proofs of the complete nodal criterion and the stated universal algebraic
-bounds. Operator identification, infinite-dimensional domains and interacting
-transport remain explicit in the source results they support.
-
-The [integration report](../runs/recent_research_integration_2026-09-09/lean_integration_report.json)
-records the successful strict build and the standard-axiom audit for all 46
-integrated declarations. [The run](../runs/recent_research_integration_2026-09-09/README.md)
-preserves their provenance and validation outputs.
+The [September integration run](../runs/recent_research_integration_2026-09-09/README.md)
+and its [Lean report](../runs/recent_research_integration_2026-09-09/lean_integration_report.json)
+are preserved evidence of that run. Use the current proof map and fresh build
+results for the current checkout; a dated run does not certify later edits.

@@ -26,17 +26,21 @@ name stays pending; `pinned_as` alone is not a semantic review. This prevents
 an expanded inventory from requiring the same reviewed bytes to be read again.
 
 ```bash
-workhouse notes                                # status: reviewed / pending, per archive
-workhouse notes --queue                        # the next documents to review, highest signal first
-workhouse notes --scan <root> --archive <id>   # (re)inventory a mounted archive
+uv run --no-sync workhouse notes                                # status: reviewed / pending, per archive
+uv run --no-sync workhouse notes --queue                        # the next documents to review, highest signal first
+uv run --no-sync workhouse notes --scan <root> --archive <id>   # write/rewrite the declared inventory
 ```
 
 ## The flow, end to end
 
 1. **Declare** the archive in `ledger/notes.yaml` — id, what it is, where the
    bytes live. Declaring and inventorying are separate deliberate events.
-2. **Inventory** with `--scan`. The scanner is `workhouse triage` underneath:
-   read-only, digest-deduplicating, and signal-ranking (files carrying
+2. **Inventory** with `--scan`. It reads the archive and writes the declared
+   JSONL inventory. Preserve the old inventory bytes and digest before an
+   intentional rescan; do not rescan a full-root coverage snapshot through the
+   older text-only scanner. The underlying `workhouse triage` scanning is
+   read-only with respect to source files, groups inventory records by digest
+   without deleting duplicates, and ranks signals (files carrying
    registered coefficients surface first; `4**r`-erratum carriers are
    flagged so nobody rescales them).
 3. **Review** from the queue. Each verdict is one entry in the register,
@@ -48,6 +52,10 @@ workhouse notes --scan <root> --archive <id>   # (re)inventory a mounted archive
    `extract` skips the copy: the note's content enters as registered claims
    or checks, and `bears_on` records which.
 
+After an intentional inventory or review-register change, regenerate the
+affected catalogue and views in the [documented order](../CONTRIBUTING.md#verification-by-change-type).
+Inspect the diff and the affected `workhouse why` records before publishing.
+
 ## In the theory graph
 
 Every inventoried document is a catalogue node (`NOTE:<archive>:<name>-<digest>`),
@@ -57,12 +65,12 @@ was a sentence nobody could traverse, and "which notes touch C2?" had no answer
 the graph could give. It does now.
 
 ```bash
-workhouse why C2          # includes the notes that bear on it
-workhouse search 'OFF AXIS LEDGER'
+uv run --no-sync workhouse why C2          # includes the notes that bear on it
+uv run --no-sync workhouse search 'OFF AXIS LEDGER'
 ```
 
-Four edge types carry it. Three are curated — `contains`, and the reviews' own
-`bears_on`, `duplicate_of` and `superseded_by`. The fourth, `carries`, is
+Archive membership produces `contains` links; review records provide
+`bears_on`, `duplicate_of` and `superseded_by`. The `carries` links are
 derived **by value**: `triage` records which coefficient signatures a
 document's bytes contain, and a signature is the digit string of a registry
 constant's own exact numerator and denominator, so a document links to a
@@ -89,6 +97,9 @@ would otherwise go silently missing.
 - **A trash can.** `set-aside` records a judgement; it deletes nothing. The
   archive keeps the bytes, the register keeps the why, and a later review
   can overturn the verdict with a better reason.
-- **A promoter.** No verdict changes any claim's tier. A note that bears on
-  a claim is still T3 until an invariant or a Lean proof says otherwise —
-  the same rule the published literature lives under.
+- **A promoter.** No review verdict changes a claim's tier. Note records
+  remain T3; the associated mathematical claims have their own status,
+  evidence and machine-certification records. Follow the
+  [derivation proof map](../docs/derivation_formalization.md) for precise
+  formal coverage and [current research](../docs/current_research.md) for
+  later results rather than treating the intake date as current status.

@@ -6,10 +6,10 @@ help:            ## Show this help
 bootstrap:       ## Install dependencies for whatever stacks this repo contains
 	@bash scripts/bootstrap.sh
 
-check:           ## Everything CI runs: lint + tests (~2.5 min)
+check:           ## Python lint and regression tests (the CI check job)
 	@bash scripts/check.sh
 
-quick:           ## The fast inner loop while iterating (~10 s): lint + the invariant tests
+quick:           ## Lint plus invariant and constant tests; runtime depends on the checks
 	@.venv/bin/ruff check . && .venv/bin/ruff format --check . \
 		&& .venv/bin/pytest -q tests/test_invariants.py tests/test_constants.py
 
@@ -19,7 +19,7 @@ lint:            ## Lint only
 test:            ## Tests only
 	@.venv/bin/pytest -q
 
-verify:          ## Re-derive every exact claim in the corpus
+verify:          ## Run every registered mathematical check (T1/T2)
 	@.venv/bin/workhouse verify
 
 status:          ## Print the contradiction and gap registers
@@ -66,9 +66,9 @@ frontier:        ## Regenerate FRONTIER.md from the ledgers and the suites
 # view rendered before the catalogue pass records that check against the
 # previous graph -- on 2026-09-01 that put "1 checks are failing" into a
 # committed CERTIFIED.md the moment a new archive was declared. With the
-# per-check cache a pass is seconds, so the views are rendered after the
+# per-check cache, later passes can reuse results. Render the views after the
 # catalogue has reached its fixpoint, never before.
-regen: catalogue frontier certified  ## Every generated file, in one order — the staleness tests stop tripping on partial regens
+regen: catalogue frontier certified  ## Regenerate catalogue, frontier and certified in order; excludes Lean export, proof map and atlas
 	@echo "regenerated: index/ FRONTIER.md CERTIFIED.md"
 
 fmt:             ## Auto-format

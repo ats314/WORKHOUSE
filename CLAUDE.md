@@ -5,7 +5,30 @@ software instinct — make the failing check pass — is frequently **wrong** he
 
 This file is the rules. `AGENTS.md` is the posture — what the research is and
 how to decide what to do next. `FRONTIER.md` is the current state, generated.
-Read all three before changing anything; they are short on purpose.
+Read them with the README and CERTIFIED before changing scientific claims.
+For documentation work, use the
+[maintenance guide](docs/documentation_maintenance.md); for proof work, use the
+[formalization workflow](docs/formalization_workflow.md).
+
+## Select the checkout and preserve the work
+
+The workstation's active checkout is `C:\WORKHOUSE\REPO`; the outer workspace
+and `ALL THEORY` contain preserved collections. Follow
+[workspace coordination](docs/workspace_coordination.md), inspect local changes
+and refresh the remote history before choosing a base or declaring a result
+absent. Do not create another checkout inside an archive collection.
+
+The maintainer's organization instruction is **do not erase anything**. Keep
+source bytes, failed routes, duplicates, archives and uncommitted work. Preserve
+the original bytes and path/hash record before revising maintained navigation,
+as described in the maintenance guide. Reuse an existing preservation record
+only when it matches the bytes being revised. Do not reset, clean, deduplicate
+or move the research archive as part of routine organization.
+
+Coordinate owned files when agents share a checkout. Use exact paths for staging
+and commits; inspect both the working diff and staged diff so another agent's
+work is not included accidentally. Isolate independent work where needed and
+preserve concurrent changes when reconciling branches.
 
 ## The one principle
 
@@ -31,7 +54,8 @@ confidence. It is distinct from mathematical status and evidence:
 
 **T3 is the default for machine certification.** An analytic result may
 nevertheless be `proven` with `analytic` evidence when its derivation works.
-Record the theorem, hypotheses, source and dependencies in `ledger/results.yaml`;
+Record the theorem, hypotheses, source and dependencies in `ledger/results.yaml`
+and use `ledger/derivation_statements.yaml` for located derivation groups;
 do not invent a Lean or exact-computation certification for its unformalized
 steps. Conversely, a successful finite test does not prove a general theorem.
 Novelty, publication, and the agent's prior familiarity decide neither case.
@@ -106,14 +130,14 @@ The join keys of this corpus are **exact rationals, not concepts**. No semantic
 search retrieves `109151/249696` from a natural-language query. Two indexes
 cover it:
 
-- `corpus-import/export/index/ENGINE_GOV_build_constants_index.py` — prose
-  (`.md`, `.tex`), 322 files, magnitude floor 1000
-- `src/workhouse/corpus_index.py` — code, certificates, notebooks and data
-  (532 files), no magnitude floor, and cross-references the two
+- `corpus-import/export/index/ENGINE_GOV_build_constants_index.py` — the
+  historical prose index (`.md`, `.tex`), with a magnitude floor
+- `src/workhouse/corpus_index.py` — code, certificates, notebooks and data,
+  with no magnitude floor and cross-references to the prose index
 
 The second exists because the first cannot see the sealed core: `5/48`, `5/12`,
-`5/612`, `11/306`, `7/102` have no entry in it, and `5/48` alone lives in 44
-code files.
+`5/612`, `11/306`, `7/102` can be absent from the prose index while their
+computations are present in code files.
 
 `workhouse why <id>` is the front door: one query, everything recorded about
 a claim — both sides of a dispute, every check with its verdict, what each
@@ -150,10 +174,11 @@ directory, or branch. Before handoff:
    or open-task wording. Keep frozen proof sources and dated reports as
    evidence of their stage; their latest status belongs in the current map.
 4. Register every new Lean theorem in `ledger/theorems.yaml`, including
-   helper lemmas. A successful compiler run and a scoped `RESULT:` support
-   edge do not replace this inventory entry. Keep `promotes` empty unless
-   the formal theorem proves the entire named check. Then run `make regen`
-   (catalogue, frontier, certified, in that order), inspect
+   helper lemmas, and import its subject module from `lean/Workhouse.lean`.
+   Locate its source statement and map full coverage or scoped support as
+   described below. Run the strict dependency exporter and refresh the proof
+   map before `make regen` (catalogue, frontier, certified, in that order).
+   Inspect
    `workhouse why` for the changed results and gap, and complete the required
    verification below. Generated views are never edited by hand.
 5. Push the tested commit, inspect its CI and reviews, and merge when green.
@@ -166,9 +191,15 @@ merge conflict, no unaddressed review comment — mark it ready and merge it
 yourself.** Do not wait for a human to press the button. The failure this
 prevents: verified work stranded in open PRs while the branch drifts.
 
-This is not a license to skip the gates. Everything above still holds —
-`make check` and `make verify` clean before pushing, the generated files
-regenerated, and a red or conflicted PR is yours to fix, never to merge.
+Verification follows the changed inputs. Scientific or executable changes need
+the applicable regression checks, `make check` and `make verify`; Lean changes
+also need the strict build and refreshed dependency export. Regenerate views
+when their source inputs changed. For a documentation-only change, inspect the
+diff, resolve relative links, check documented commands against their actual
+entry points and run the documentation checks in the maintenance guide. Do not
+rerun research or rewrite generated scientific evidence merely to edit prose.
+Required remote CI must still pass before merging; a red or conflicted PR is
+yours to fix, never to merge.
 
 Recheck the remote base and exact head before merging so concurrent agents'
 changes are included. Use the normal PR merge path without bypassing branch
@@ -186,13 +217,13 @@ prevent that same failure recurring.
 ## Commands
 
 ```bash
-make verify    # re-derive every exact claim (T1/T2)
+make verify    # run every registered mathematical check (T1/T2)
 make status    # contradiction and gap registers
 make frontier  # regenerate FRONTIER.md — established / disputed / refuted / next
 make certified # regenerate CERTIFIED.md — every checked claim, ranked by tier
 make catalogue # regenerate index/ — claims.jsonl, symbols.jsonl, graph.jsonl
 make lit       # published work, and which claim each paper bears on
-make check     # ruff + pytest, what CI runs
+make check     # ruff + documentation links + pytest; CI Python entry point
 make lean      # T0: proof-check the Lean core (needs elan; see lean/README.md)
 make manifest  # re-pin theory/ after a deliberate, reviewed corpus change
 
@@ -216,7 +247,40 @@ current.
 
 `CERTIFIED.md` is the answer to "what is the best-established thing here, and
 how do I check it myself?" — every claim ranked by tier, every row carrying its
-own one-second reproduction command. Point a skeptical reader there first.
+own reproduction command. Point a reader seeking verification there first.
+
+## Connect derivations to formal proofs
+
+`ledger/derivation_statements.yaml` uses `derivation-statements/v1`: native
+`CITE:` document identity, raw source SHA-256, exact locators and anchors,
+stable `DERIV:` statement IDs, hypotheses, curated source dependencies and
+explicit remaining work. In a statement record, `lean` lists whole-statement
+proofs; `lean_support` lists a theorem and the precise ingredient it proves.
+The graph emits `LEAN -> DERIV formalizes` for the former and
+`DERIV -> LEAN supported_by` for the latter. Supporting a statement never
+silently promotes the full statement's machine-verification tier.
+
+`ledger/theorems.yaml` inventories every theorem. Keep `promotes` empty unless
+the theorem proves the entire named check. Use a suitable module under
+`lean/Workhouse/`, including analytic modules; `Basic.lean` is not the default
+destination for every proof. Establish the actual object, domain and limit
+hypotheses needed by the source, or record exactly what remains unformalized.
+
+`python scripts/export_lean_dependencies.py` strictly builds Lean and exports
+elaborated type/proof constants and transitive axioms into
+`ledger/lean_dependencies.json`. Registered theorem dependencies traverse local
+helpers and stop at the next registered theorem. The loader checks them against
+the declaration records and source fingerprints; identifiers mentioned in
+comments are not proof dependencies. Lean fingerprints normalize line endings
+only (`utf8-lf`); derivation fingerprints preserve received bytes. Do not edit
+the export to make a stale-source or axiom failure disappear.
+
+After proof or registry changes, follow the regeneration order in the
+[formalization workflow](docs/formalization_workflow.md), including
+`python scripts/render_derivation_coverage.py`. The generated
+[proof map](docs/derivation_formalization.md) supplies current coverage counts;
+keep changing counts out of agent rules. Mathematical source dependencies and
+kernel proof dependencies answer different questions and must remain distinct.
 
 ## The notes archive
 
@@ -244,9 +308,11 @@ reader needs to argue with you. Declare the checks it takes as inputs with
 `rests_on=(...)` so the graph can say what falls if one is refuted, and return
 an exact value it establishes as a third element `{NAME: value}` so `workhouse
 search` can reach it by value (a float needs the `_NUM` suffix, as in the
-registry). `tests/test_invariants.py` picks it up automatically. If the
-statement is pure rational or polynomial algebra, prefer promoting it to T0 in
-`lean/Workhouse/Basic.lean` instead.
+registry). `tests/test_invariants.py` picks it up automatically. Formalize
+reusable mathematical statements in the appropriate Lean module when possible,
+with the source scope and registration described above. A finite computation
+remains useful evidence even when the associated analytic theorem requires
+additional arguments.
 
 ## Recording an attempt
 
