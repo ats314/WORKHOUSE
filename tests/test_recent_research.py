@@ -76,13 +76,33 @@ def test_missing_copy_does_not_fall_back_to_external_original(research, tmp_path
 
 
 @pytest.mark.parametrize(
-    "path", ["../outside.md", "C:/outside.md", R.SOURCE_BASE + "../outside.md"]
+    "path",
+    [
+        "../outside.md",
+        "C:/outside.md",
+        R.SOURCE_BASE + "../outside.md",
+        R.SOURCE_BASES[1] + "../outside.md",
+        "runs/unregistered/sources/proof.md",
+        R.SOURCE_BASES[1].rstrip("/") + "-other/proof.md",
+    ],
 )
 def test_source_paths_cannot_escape_the_pinned_bundle(research, tmp_path, path):
     research.sources[0]["path"] = path
     assert any(
         "inside the preserved source bundle" in p for p in R.validate(research, root=tmp_path)
     )
+
+
+def test_second_preserved_bundle_retains_hash_and_scope_validation(research, tmp_path):
+    source = research.sources[0]
+    contents = (tmp_path / source["path"]).read_bytes()
+    source["path"] = R.SOURCE_BASES[1] + "campaign/proof.md"
+    target = tmp_path / source["path"]
+    target.parent.mkdir(parents=True)
+    target.write_bytes(contents)
+    assert R.validate(research, root=tmp_path, known_ids={"G19"}) == []
+    target.write_bytes(contents + b"Changed claim.\n")
+    assert any("SHA-256 mismatch" in p for p in R.validate(research, root=tmp_path))
 
 
 def test_curated_links_preserve_direction_and_require_resolving_endpoints(research, tmp_path):
@@ -148,7 +168,9 @@ def test_repository_registry_covers_scoped_results_and_preserves_the_remaining_o
     }
     assert R.validate(research, known_ids=native_ids) == []
     campaigns = {
-        source["path"].removeprefix(R.SOURCE_BASE).split("/", 1)[0] for source in research.sources
+        source["path"].removeprefix(R.SOURCE_BASE).split("/", 1)[0]
+        for source in research.sources
+        if source["path"].startswith(R.SOURCE_BASE)
     }
     assert len(campaigns) == 9
     nodes = {node["id"]: node for node in research.nodes}
@@ -159,3 +181,13 @@ def test_repository_registry_covers_scoped_results_and_preserves_the_remaining_o
     assert nodes["ROUTE:RECENT_ANISOTROPY_DIRECT_SIXTH"]["status"] == "open"
     assert nodes["ROUTE:RECENT_W6_VERTICAL_GAP_SURROGATE"]["status"] == "falsified"
     assert nodes["ROUTE:RECENT_W6_UNWEIGHTED_RESIDUAL_SURROGATE"]["status"] == "falsified"
+    assert nodes["RESULT:W6_ACTUAL_COMPACT_GROUND_JETS"]["status"] == "proven"
+    assert nodes["RESULT:W6_COMPLETE_TRANSPORT_DERIVATIVE_BUDGET"]["status"] == "conditional"
+    for name in (
+        "RESULT:W6_ACTUAL_COMPACT_GROUND_JETS",
+        "RESULT:W6_COMPLETE_TRANSPORT_DERIVATIVE_BUDGET",
+        "RESULT:W6_COMPACT_CONDITIONAL_SCORE_TAIL_CONTROL",
+    ):
+        # Exact finite controls do not certify the full analytic operator statement.
+        assert nodes[name]["tier"] == 3
+        assert nodes[name]["evidence"] == "analytic"

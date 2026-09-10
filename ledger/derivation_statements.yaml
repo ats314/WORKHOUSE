@@ -1,5 +1,5 @@
 schema: derivation-statements/v1
-date: '2026-09-09'
+date: '2026-09-10'
 scope: All top-level docs/derivations Markdown documents; proof-block/equation-group granularity. Named
   inputs and definitions are hypotheses, not automatically established model identifications.
 coverage_policy: Status and evidence describe the source argument. Only lean records whole-statement formal
@@ -4492,3 +4492,278 @@ documents:
     - independent_twoPoint_radius_unbounded
     remaining: None for this stated abstract result. The separate Wilson-model realization and SU(2) Haar
       identification boundaries remain as stated in the source.
+- id: CITE:HODGE_POLYMER_SUPPORTED
+  path: docs/derivations/hodge-polymer-supported-statements.md
+  sha256: e0221c892ff185e73e9d535bfae71b48a260d2f114c8d564c55dcb748b9172b3
+  statements:
+  - id: DERIV:HODGE_POLYMER_SUPPORTED:H1
+    statement: Over a field, D+U=qI and DU=0 imply the three quadratic operator identities; for nonzero
+      q the two kernels are complementary with the explicit vector decomposition.
+    locator: '## H1: complementary kernels from Hodge relations (from line 17)'
+    anchor: '## H1: complementary kernels from Hodge relations'
+    source_labels:
+    - H1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - A module over a field with linear endomorphisms D,U.
+    - D+U=qI and DU=0; the complementary-kernel statements require q!=0.
+    depends_on: []
+    lean:
+    - hodge_algebra_relations
+    - hodge_ker_disjoint
+    - hodge_vector_decomposition
+    - hodge_decomposition
+    remaining: ''
+  - id: DERIV:HODGE_POLYMER_SUPPORTED:H2
+    statement: A vector killed by D is an eigenvector of U under D+U=qI; S=D-4I acts by -4, maps Q killing
+      the carrier create no Hodge coupling, and arbitrary Hodge words preserve the carrier line. The separately
+      assumed range condition UQ=0 implies UQRpsi=0.
+    locator: '## H2: carrier action and absence of Hodge coupling (from line 33)'
+    anchor: '## H2: carrier action and absence of Hodge coupling'
+    source_labels:
+    - H2
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Linear endomorphisms of a module over a field; Dpsi=0.
+    - For carrier eigenvalue and no-coupling conclusions, D+U=qI and Qpsi=0.
+    - For arbitrary Hodge words, Upsi=lambda psi. For the separate range implication, UQv=0 for every
+      v.
+    depends_on: []
+    lean:
+    - carrier_homological_protection
+    - carrier_s_eigenvalue
+    - feshbach_hodge_no_coupling
+    - r_excitation_in_ker_up
+    - hodge_word_is_scalar
+    remaining: ''
+  - id: DERIV:HODGE_POLYMER_SUPPORTED:H3
+    statement: For a real inner-product carrier of squared norm q!=0, the unnormalized rank-one Laplacian
+      and its normalized projector have their distinct carrier actions and both annihilate the orthogonal
+      R-excitation. Independently over a field, Uv=ell(v)psi implies the actual RUR vector and carrier-functional
+      factorizations and the cleared-defect identity when ell(psi)=q.
+    locator: '## H3: rank-one normalization, excitation and factorization (from line 45)'
+    anchor: '## H3: rank-one normalization, excitation and factorization'
+    source_labels:
+    - H3
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - A real inner-product space, q=<psi,psi>!=0, and a continuous linear R for the orthogonal excitation.
+    - For the independent algebraic rank-one factorization, a module over a field, linear functional ell
+      and linear R,U with Uv=ell(v)psi; ell(psi)=q for the cleared identity.
+    depends_on: []
+    lean:
+    - rank_one_laplacian_carrier_eigenvalue
+    - normalized_carrier_projection_fixes_carrier
+    - r_excitation_orthogonal
+    - r_excitation_up_harmonic
+    - r_excitation_carrier_projection_zero
+    - rank_one_rur_vector_factorization
+    - rank_one_rur_carrier_factorization
+    - rank_one_rur_cleared_defect_zero
+    remaining: ''
+  - id: DERIV:HODGE_POLYMER_SUPPORTED:H4
+    statement: Exact enumeration of the two-R-without-U Boolean pattern among 39 nonempty words, and rational
+      identities for explicitly supplied carrier polynomials. No equality between that pattern and an
+      evaluated lattice defect is asserted.
+    locator: '## H4: finite word patterns and supplied polynomial identities (from line 71)'
+    anchor: '## H4: finite word patterns and supplied polynomial identities'
+    source_labels:
+    - H4
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - The explicitly enumerated nonempty words of length one through three over S,U,R.
+    - The Boolean pattern hasTwoRNoU and the displayed rational polynomial definitions, with natural subtraction
+      in the one-R exponent.
+    depends_on: []
+    lean:
+    - hodge_feshbach_words_count
+    - two_r_no_u_words_count
+    - two_r_no_u_words_enum
+    - rur_two_r_no_u_false
+    - rr_carrier_polynomial_remainder
+    - rur_carrier_polynomial_cleared_identity
+    - ur_carrier_polynomial_value
+    remaining: ''
+  - id: DERIV:HODGE_POLYMER_SUPPORTED:P1
+    statement: For 0<=x<1 the geometric series starting at exponent one sums to x/(1-x), and this scalar
+      quotient is nonnegative, positive for x>0, and increasing.
+    locator: '## P1: geometric-series majorant (from line 93)'
+    anchor: '## P1: geometric-series majorant'
+    source_labels:
+    - P1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Real 0<=x<1, with x>0 for strict positivity and x<=y<1 for monotonicity.
+    depends_on: []
+    lean:
+    - geometric_series_from_one_hasSum
+    - geometric_series_from_one_tsum
+    - geometric_majorant_nonneg
+    - geometric_majorant_pos
+    - geometric_majorant_mono
+    remaining: ''
+  - id: DERIV:HODGE_POLYMER_SUPPORTED:P2
+    statement: The scalar base x=(D beta/4)exp(c) obeys positivity, power comparison, a small-beta geometric
+      radius and its substituted series identities. For 0<=x<1 and c>=0, x/(1-x)<=c iff x<=c/(1+c). No
+      actual polymer expansion or free-energy estimate is asserted.
+    locator: '## P2: parameter bounds and the separate tree budget (from line 107)'
+    anchor: '## P2: parameter bounds and the separate tree budget'
+    source_labels:
+    - P2
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Real D,beta,c; D,beta>=0 for positivity, c>=0 for power comparison, and D>0 for the small-beta radius.
+    - The geometric sum requires the defined base x<1. The separate budget equivalence assumes 0<=x<1
+      and c>=0.
+    depends_on: []
+    lean:
+    - geometric_majorant_le_iff
+    - weightedActivityBase_nonneg
+    - unweightedActivityPower_le_weighted
+    - weightedActivityBase_geometric_hasSum
+    - weighted_geometric_majorant_nonneg
+    - weightedActivityBase_beta_zero
+    - weightedActivityBase_small_beta_regime
+    remaining: ''
+- id: CITE:W6_GROUND_JETS_TRANSPORT_BUDGET
+  path: docs/derivations/w6-ground-jets-and-transport-budget.md
+  sha256: a1638b09ba941b0cbcc5ef6bb205dc45d1c443b8fdec0fe8d21bec17a7fa3974
+  statements:
+  - id: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+    statement: For the actual fixed compact square at sufficiently small positive coupling, the raw electric/magnetic
+      and vacuum-subtracted form derivatives through order three obey explicit g^-j energy bounds. The
+      actual ground-energy and normalized ground-vector derivatives through order three, and the vacuum-only
+      skew generator through its second derivative, obey the corresponding inverse-power bounds with explicit
+      constants from E and gamma.
+    locator: '## 2. Raw electric and magnetic derivatives already have the required scaling (lines 51-198)'
+    anchor: '## 2. Raw electric and magnetic derivatives already have the required scaling'
+    source_labels:
+    - R1
+    - R2
+    - R3
+    - R4
+    - R5
+    - R6
+    - R7
+    - R8
+    - R8a
+    - R8b
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual compact fixed-square H_g=(g^2/2)T+g^-2V with nonnegative common-domain T,V.
+    - Actual simple normalized real ground, smooth at positive coupling; 0<=e_g<=E and physical gap gamma>0
+      uniformly on the specified small-coupling interval.
+    depends_on: []
+    lean: []
+    remaining: No full-statement Lean formalization. Full conditional source-generator jets and growing-grid
+      uniformity are not conclusions.
+  - id: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:COMPLETE_BUDGET
+    statement: For the complete actual positive-reference source/vacuum transport, energy-operator bounds
+      ||A^(r)(g)||_(q_g->q_g)<=d_r g^(-r-1), r=0,1,2, imply explicit all-energy M_j(s)<=c_j s^-j for j=1,2,3
+      and hence the complete compact Schur residual budget. The composite budget retains changing source
+      energies and physical clock factors.
+    locator: '## 4. An explicit bridge from the actual transport generator to M1,M2,M3 (lines 199-367)'
+    anchor: '## 4. An explicit bridge from the actual transport generator to M1,M2,M3'
+    source_labels:
+    - R9
+    - R10
+    - R11
+    - R12
+    - R13
+    - R14
+    - R15
+    status: conditional
+    evidence: analytic
+    hypotheses:
+    - Complete actual common-domain source/vacuum transport R'=A R and nonreducing graph from the positive-reference
+      source theorem.
+    - For q_g=H_g+gamma, full energy-space ||A^(r)(g)||<=d_r g^(-r-1), r=0,1,2, with finite uniform constants.
+    - Local t in [s/2,s], fixed spectral window below the actual gap. The composite source growth and
+      subdivision inputs are the prior S2-S5 theorem.
+    - Positive physical clock tau_n; physical matching discrepancies are separately retained, not assumed
+      zero.
+    depends_on:
+    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+    lean: []
+    remaining: Prove the actual complete conditional source-generator energy jets or exact mixed-form
+      substitute; supply interacting-grid, coarse-matching and physical-clock convergence inputs.
+- id: CITE:W6_CONDITIONAL_SCORE_TAIL_CONTROL
+  path: docs/derivations/w6-conditional-score-tail-control.md
+  sha256: d04ae01d29d33cc5bfcc01abf1844f3e0692d682810ac01ee947a6ec93375471
+  statements:
+  - id: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:INTERVAL_OBSTRUCTION_REPAIR
+    statement: The compact Hardy constant is finite on closed positive-coupling intervals; the Gaussian
+      source-preserving rare-annulus example disproves an inference from averaged scores and near-well
+      jets, and a local phase-adapted field removes the centered leading phase term under its explicit
+      local hypotheses.
+    locator: '## 1. What the actual compact endpoints do prove (lines 67-284)'
+    anchor: '## 1. What the actual compact endpoints do prove'
+    source_labels:
+    - B1
+    - B2
+    - B3
+    - B4
+    - B5
+    - B5a
+    - B6
+    - B7
+    - B8
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual positive smooth compact ground and conditional score at positive g; a closed interval [a,b]
+      with a>0 for uniform endpoint bounds.
+    - 'For the distinct Gaussian inference test: the stated independent Gaussian modes, rare-annulus smooth
+      source-preserving bump, and theta=2 sqrt(2).'
+    - 'For the local phase implication: smooth g-independent conditional phase with nondegenerate minimum,
+      g-independent parametric Morse chart and normalized chart-restricted conditional Poincare bound.'
+    - Amplitude eta derivatives are bounded by C'/g; any chart-complement tails/mean differences and the
+      cutoff fourth-moment condition are separate explicit requirements.
+    depends_on: []
+    lean: []
+    remaining: No uniform actual small-g Hardy bound is proved. Construct actual phase/amplitude/global
+      chart control, rare-fiber estimates and full source energy regularity.
+  - id: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:ACTUAL_SOURCE_MOMENT
+    statement: The actual four-face SU2 product obeys 1-w<=V globally. The exact true-ground source form
+      gives g^-2 integral V|f|^2 <= b_g[f]+e_g||f||^2, hence the uniform centered bound integral a_g|f|^2
+      <=4(1+E/gamma)b_g[f]. If the additional open score inequality K_g<=C0+C1 g^-2 E(V|w) holds, the
+      scalar Hardy constant is at most C1+2(C0+C1E)/gamma.
+    locator: '## 6. Uniform actual source potential moment and sharper score criterion (lines 325-586)'
+    anchor: '## 6. Uniform actual source potential moment and sharper score criterion'
+    source_labels:
+    - M1
+    - M2
+    - M3
+    - M4
+    - M5
+    - M6
+    - M7
+    - M8
+    - M9
+    - M10
+    - M11
+    - M12
+    - M13
+    - M14
+    - M15
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual four-face Wilson square with the original eight boundary-edge source derivatives and positive
+      kinetic/potential forms.
+    - Actual positive quantum ground with e_g<=E and physical gap gamma>0 on the specified small-coupling
+      interval; centered finite-energy source for M8-M9.
+    - M11-M15 additionally assume the expressly open actual conditional-score domination M10 with uniform
+      nonnegative C0,C1.
+    depends_on: []
+    lean: []
+    remaining: Prove M10 or another sufficient actual conditional score estimate. The source moment alone
+      does not establish uniform Hardy control, complete transport derivatives, or an interacting grid
+      floor.

@@ -1,6 +1,6 @@
 # Current research map
 
-Maintained guide, reconciled with the source and statement ledgers on **9 September
+Maintained guide, reconciled with the source and statement ledgers on **10 September
 2026**. The workspace reconciliation and source-linked analytic formalization
 were merged in [PR #113](https://github.com/ats314/WORKHOUSE/pull/113), merge
 commit `742033a`. That records integration of the stated work; later changes
@@ -17,6 +17,26 @@ and remaining formalization. Counts belong there and in the generated
 [frontier](../FRONTIER.md), not in another manually maintained total.
 
 ## Read the current claim at its own scope
+
+The [September 10 formalization correction](research/formalization-scope-2026-09-10.md)
+distinguishes the up-Laplacian from its normalized carrier projector and adds
+an actual rank-one RUR factorization. Its syntactic word counts and geometric
+majorants remain scoped ingredients; they do not promote the full physical
+Hodge checks or discharge the G17 Hamiltonian transcription.
+
+The [fixed-square derivative reduction](derivations/w6-ground-jets-and-transport-budget.md)
+establishes energy bounds through order three for the raw Hamiltonian,
+ground energy and ground vector. Explicit bounds on the complete conditional
+source-transport generator would then give `M_j(s) <= c_j s^-j`; those source
+bounds remain to be proved. The
+[conditional-score analysis](derivations/w6-conditional-score-tail-control.md)
+separates positive-coupling endpoint control from uniform control as `g` tends
+to zero. It proves the actual uniform source moment
+`integral [4(1-w)/g^2]|f|^2 dnu_g <= 4(1+E/gamma)b_g[f]` for centered
+finite-energy sources. The remaining sufficient inequality is conditional
+score domination by the actual conditional potential (M10).
+Changing source energies and the physical clock are retained in the
+subdivision budget. Neither result asserts an interacting growing-grid floor.
 
 An analytic proof retains its registered mathematical status when Lean covers
 only an ingredient. Conversely, a compiling abstract theorem applies to a
