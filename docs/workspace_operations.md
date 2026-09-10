@@ -63,6 +63,7 @@ git remote -v
 git worktree list --porcelain
 python scripts/workspace_status.py --workspace-root C:/WORKHOUSE --remote
 uv run --no-sync workhouse --help
+uv run --no-sync workhouse brief --startup
 ```
 
 The [workspace status tool](../scripts/workspace_status.py) is read-only. The
@@ -79,14 +80,18 @@ differences and select a base that preserves pending work. A separate task
 worktree can begin from a verified integration base while existing work is
 reconciled. Check live GitHub before calling a result absent from the project.
 
-Check documented CLI interfaces against the selected executable's help. If
-session instructions require `workhouse brief`, confirm it is listed and inspect
-`workhouse brief --help` before using its startup and task-record options. If it
-is unavailable, report the unavailable interface and record the checkout and
-help output in the task handoff. A successful `frontier --brief` or `why` query
-does not certify the same briefing semantics. Follow the selected checkout's
-available graph protocol and keep the requirement unresolved until the actual
-interface is restored or the maintainer directs a different workflow.
+All agents follow the [THEORY GRAPH protocol](theory_graph_protocol.md). After
+the startup notice, retain the target snapshot with
+`workhouse brief ID --json --out .graph-state/TASK/start.json`, using a unique
+task identifier and a new output path. Read its freshness and execution
+provenance, then keep the [manual task record](../graph-tasks/README.md).
+
+Check the selected executable's `workhouse brief --help` when using another
+checkout. If the command is unavailable, retain its error and checkout identity
+and report **brief unavailable**. A `frontier --brief` or `why` query is a
+supplementary navigator, not a retained briefing with equivalent semantics.
+Task records are manual; no automatic task-record validation or cross-agent
+conformance gate is implemented by this integration.
 
 For mathematical work, read the [current research map](current_research.md),
 query the relevant graph IDs and follow the

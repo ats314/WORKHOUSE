@@ -4,11 +4,14 @@ Read [README.md](README.md), [AGENTS.md](AGENTS.md), and [CLAUDE.md](CLAUDE.md).
 On the maintainer's workstation use `C:\WORKHOUSE\REPO`; elsewhere use your
 clone root. Inspect local changes and live GitHub history before deciding that
 a result is absent. See [workspace coordination](docs/workspace_coordination.md).
+Use the [THEORY GRAPH protocol](docs/theory_graph_protocol.md) for one shared
+briefing contract across agents and retain [manual task records](graph-tasks/README.md).
 
 ## Choose the maintained source
 
 | Task | Start here | Next source or command |
 | --- | --- | --- |
+| Start a graph task and retain its provenance | [THEORY GRAPH protocol](docs/theory_graph_protocol.md), [task records](graph-tasks/README.md) | `workhouse brief --startup`, then `workhouse brief ID --json --out PATH` |
 | Find current mathematical results and obligations | [Current research](docs/current_research.md), [research goal](docs/research_goal.md) | `workhouse why ID`, then the exact source |
 | Reproduce a checked claim | [CERTIFIED.md](CERTIFIED.md), [FRONTIER.md](FRONTIER.md) | Its printed verifier command and hypotheses |
 | Trace a derivation into Lean | [Proof map](docs/derivation_formalization.md) | [Statement inventory](ledger/derivation_statements.yaml), `workhouse why DERIV:...` |
@@ -28,6 +31,7 @@ With the checkout environment configured, prefix commands with `uv run --no-sync
 
 ```text
 workhouse search '5/612'
+workhouse brief G19 --json
 workhouse why G19
 workhouse why DERIV:YANGMILLS_RECONSTRUCTION:R3
 workhouse why LEAN:closed_extension_of_integration_by_parts

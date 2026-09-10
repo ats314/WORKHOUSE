@@ -260,34 +260,79 @@ def _search(query: str, corpus: bool, limit: int, as_json: bool = False) -> int:
 
 def _index(write: bool) -> int:
     if write:
-        # To a fixpoint, not once. One check reads the generated graph and
-        # prints its edge count into its own detail line, which the claims
-        # file then carries: a single write after an edge-count change leaves
-        # the two files one step apart, and the staleness tests catch it on
-        # the next run rather than this one. The Makefile looped for this;
-        # the command now does, so no caller has to know.
-        for _pass in range(4):
-            before = _index_bytes()
-            claims_path, symbols_path = claims_mod.write()
-            graph_path = graph_mod.write()
-            if _index_bytes() == before:
-                break
-        else:
-            print("index did not converge in 4 passes")
+        from . import briefing
+
+        try:
+            inputs = briefing.content_manifest(claims_mod.ROOT)
+            with briefing.cache_observation(inputs):
+                result = _write_index()
+            if result == 0:
+                briefing.record_index_state(claims_mod.ROOT, inputs)
+            return result
+        except briefing.BriefingError as exc:
+            print(f"index provenance {exc.status}: {exc}", file=sys.stderr)
             return 1
-        for path in (claims_path, symbols_path, graph_path):
-            rows = len(path.read_text(encoding="utf-8").splitlines())
-            print(f"wrote {path.relative_to(claims_mod.ROOT)}: {rows} records")
-        problems = graph_mod.validate()
-        if problems:
-            print("\n\033[31mGraph problems\033[0m")
-            for p in problems:
-                print(f"  - {p}")
-            return 1
-        return 0
     for claim in claims_mod.collect():
         print(f"{claim.id}\t{claim.kind}\t{claim.statement}")
     return 0
+
+
+def _write_index() -> int:
+    # To a fixpoint, not once. One check reads the generated graph and
+    # prints its edge count into its own detail line, which the claims
+    # file then carries: a single write after an edge-count change leaves
+    # the two files one step apart, and the staleness tests catch it on
+    # the next run rather than this one. The Makefile looped for this;
+    # the command now does, so no caller has to know.
+    for _pass in range(4):
+        before = _index_bytes()
+        claims_path, symbols_path = claims_mod.write()
+        graph_path = graph_mod.write()
+        if _index_bytes() == before:
+            break
+    else:
+        print("index did not converge in 4 passes")
+        return 1
+    for path in (claims_path, symbols_path, graph_path):
+        rows = len(path.read_text(encoding="utf-8").splitlines())
+        print(f"wrote {path.relative_to(claims_mod.ROOT)}: {rows} records")
+    problems = graph_mod.validate()
+    if problems:
+        print("\n\033[31mGraph problems\033[0m")
+        for p in problems:
+            print(f"  - {p}")
+        return 1
+    return 0
+
+
+def _brief(
+    ids: list[str], as_json: bool, out: str | None, startup: bool, live: bool, fresh: bool
+) -> int:
+    from pathlib import Path
+
+    from . import briefing
+
+    if startup:
+        try:
+            print(briefing.startup_text())
+            return 0
+        except briefing.BriefingError as exc:
+            print(f"brief {exc.status}: {exc}", file=sys.stderr)
+            return 1
+    result = briefing.build_brief(ids, live=live, fresh=fresh)
+    text = json.dumps(result, indent=2, sort_keys=True) if as_json else briefing.render_text(result)
+    if out:
+        path = Path(out)
+        try:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with path.open("x", encoding="utf-8", newline="\n") as stream:
+                stream.write(text + "\n")
+        except OSError as exc:
+            print(f"brief output unavailable; existing files are preserved: {exc}", file=sys.stderr)
+            return 1
+    else:
+        print(text)
+    return 0 if result["status"] == "ok" else 1
 
 
 def _index_bytes() -> tuple[bytes, ...]:
@@ -522,6 +567,21 @@ def main(argv: list[str] | None = None) -> int:
     ix = sub.add_parser("index", help="the claim, symbol, and graph catalogues")
     ix.add_argument("-w", "--write", action="store_true", help="regenerate index/*.jsonl")
 
+    bf = sub.add_parser("brief", help="one source-identified graph snapshot for an agent task")
+    bf.add_argument("ids", nargs="*", help="one or more graph IDs, e.g. G19 G17")
+    bf.add_argument("--json", action="store_true", help="full machine-readable provenance envelope")
+    bf.add_argument("-o", "--out", metavar="PATH", help="create a new file; refuse overwrite")
+    bf.add_argument(
+        "--startup", action="store_true", help="shared protocol notice; no calculations"
+    )
+    modes = bf.add_mutually_exclusive_group()
+    modes.add_argument(
+        "--live", action="store_true", help="rebuild; report cache reuse and execution"
+    )
+    modes.add_argument(
+        "--fresh", action="store_true", help="rebuild; execute Python checks without cache"
+    )
+
     wy = sub.add_parser("why", help="everything the repository records about one claim")
     wy.add_argument(
         "id",
@@ -628,6 +688,12 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     args = parser.parse_args(argv)
+    if (
+        args.command == "brief"
+        and args.startup
+        and (args.ids or args.json or args.out or args.live or args.fresh)
+    ):
+        parser.error("brief --startup is a standalone protocol notice")
     # A cp1252 console (Windows CI, some terminals) cannot encode the arrows
     # and math glyphs the ledgers carry; escape them rather than crash, so the
     # same command is runnable on every host.
@@ -645,6 +711,8 @@ def main(argv: list[str] | None = None) -> int:
         return _search(args.query, args.corpus, args.limit, args.json)
     if args.command == "index":
         return _index(args.write)
+    if args.command == "brief":
+        return _brief(args.ids, args.json, args.out, args.startup, args.live, args.fresh)
     if args.command == "why":
         return _why(args.id, args.json, args.live)
     if args.command == "ask":

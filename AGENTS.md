@@ -4,6 +4,12 @@ Follow [workspace operations](docs/workspace_operations.md) for the shared
 local/GitHub workflow: checkout selection, intake, task ownership, shared writers
 and closeout. Outer navigation links to that versioned operating contract.
 
+For graph use, every agent follows the shared
+[THEORY GRAPH protocol](docs/theory_graph_protocol.md). Run
+`workhouse brief --startup`, retain a target-specific briefing, and maintain the
+[manual task record](graph-tasks/README.md) for mathematical work. The protocol
+defines freshness and execution provenance; these do not change scientific tiers.
+
 On the maintainer's workstation the active checkout is `C:\WORKHOUSE\REPO`.
 The outer directory is the research archive; ALL THEORY is one source collection.
 Read [workspace coordination](docs/workspace_coordination.md) before selecting

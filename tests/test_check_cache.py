@@ -2,6 +2,8 @@
 
 import errno
 import json
+import os
+from contextvars import Context
 from pathlib import Path
 
 import pytest
@@ -188,3 +190,122 @@ def test_standalone_bridge_implementation_change_invalidates_cached_check(tmp_pa
         before = CC.fingerprint()
         target.write_text("# changed mathematical computation\n", encoding="utf-8")
         assert CC.fingerprint() != before
+
+
+def test_observed_collection_reuses_by_content_and_reports_check_identity(tmp_path, monkeypatch):
+    monkeypatch.setattr(CC, "ROOT", tmp_path)
+    monkeypatch.setenv("XDG_CACHE_HOME", str(tmp_path / "cache"))
+    monkeypatch.delenv("WORKHOUSE_NO_CACHE", raising=False)
+    suite = Suite("observed suite")
+    calls = []
+
+    @suite.check("observed check")
+    def _():
+        calls.append(1)
+        return True, "executed"
+
+    with CC.observe(content_key="inputs-one") as first:
+        suite.run(cache=CC.CheckCache())
+    with CC.observe(content_key="inputs-one") as reused:
+        suite.run(cache=CC.CheckCache())
+    with CC.observe(content_key="inputs-two") as changed:
+        suite.run(cache=CC.CheckCache())
+    assert len(calls) == 2
+    assert first["reused"] == changed["reused"] == []
+    assert reused["reused"] == [("observed suite", "observed check")]
+
+
+def test_fresh_observation_bypasses_cache_reads_and_writes(tmp_path, monkeypatch):
+    monkeypatch.setattr(CC, "ROOT", tmp_path)
+    monkeypatch.setenv("XDG_CACHE_HOME", str(tmp_path / "cache"))
+    monkeypatch.delenv("WORKHOUSE_NO_CACHE", raising=False)
+    suite = Suite("fresh suite")
+    calls = []
+
+    @suite.check("fresh check")
+    def _():
+        calls.append(1)
+        return True, f"execution {len(calls)}"
+
+    with CC.observe(content_key="same-inputs"):
+        suite.run(cache=CC.CheckCache())
+    cached_bytes = {path: path.read_bytes() for path in CC._cache_dir().glob("*")}
+    with CC.observe(content_key="same-inputs", fresh=True) as fresh:
+        cache = CC.CheckCache()
+        assert not cache.on
+        assert suite.run(cache=cache)[0].detail == "execution 2"
+        assert cache.get("any-key") is None
+        cache.put("another-key", Result("n", True, "d", "s", 1, 0, "src.py"))
+    assert fresh["reused"] == []
+    assert {path: path.read_bytes() for path in CC._cache_dir().glob("*")} == cached_bytes
+    assert "WORKHOUSE_NO_CACHE" not in os.environ
+    with CC.observe(content_key="same-inputs") as reused:
+        assert suite.run(cache=CC.CheckCache())[0].detail == "execution 1"
+    assert len(calls) == 2
+    assert reused["reused"] == [("fresh suite", "fresh check")]
+
+
+def test_observations_restore_nested_and_exceptional_contexts():
+    assert CC._OBSERVATION.get() is None
+    with CC.observe(content_key="outer") as outer:
+        assert Context().run(CC._OBSERVATION.get) is None
+        with (
+            pytest.raises(RuntimeError, match="inner failure"),
+            CC.observe(content_key="inner", fresh=True) as inner,
+        ):
+            assert CC._OBSERVATION.get() is inner
+            raise RuntimeError("inner failure")
+        assert CC._OBSERVATION.get() is outer
+        assert outer == {"content_key": "outer", "fresh": False, "reused": []}
+    assert CC._OBSERVATION.get() is None
+
+
+def test_observed_index_key_uses_bytes_even_when_size_and_mtime_match(tmp_path, monkeypatch):
+    monkeypatch.setattr(CC, "ROOT", tmp_path)
+    monkeypatch.delenv("WORKHOUSE_NO_CACHE", raising=False)
+    index = tmp_path / "index" / "graph.jsonl"
+    index.parent.mkdir()
+    index.write_bytes(b"old")
+    original_stat = index.stat()
+    with CC.observe(content_key="stable-inputs"):
+        before = CC.CheckCache()
+        before_index = before.key("suite", "check", "GRAPH.read_text()")
+        before_plain = before.key("suite", "check", "return True, ''")
+        index.write_bytes(b"new")
+        os.utime(index, ns=(original_stat.st_atime_ns, original_stat.st_mtime_ns))
+        after = CC.CheckCache()
+        assert after.key("suite", "check", "GRAPH.read_text()") != before_index
+        assert after.key("suite", "check", "return True, ''") == before_plain
+
+
+@pytest.mark.parametrize("failure_kind", ["scan", "read"])
+def test_observed_index_fails_on_unreadable_data(tmp_path, monkeypatch, failure_kind):
+    monkeypatch.setattr(CC, "ROOT", tmp_path)
+    monkeypatch.delenv("WORKHOUSE_NO_CACHE", raising=False)
+    index = tmp_path / "index"
+    index.mkdir()
+    graph = index / "graph.jsonl"
+    graph.write_text("{}\n", encoding="utf-8")
+    if failure_kind == "scan":
+        original = CC.os.scandir
+
+        def fail_scan(path):
+            if Path(path) == index:
+                raise PermissionError(errno.EACCES, "unreadable index directory", str(path))
+            return original(path)
+
+        monkeypatch.setattr(CC.os, "scandir", fail_scan)
+    else:
+        original = Path.read_bytes
+
+        def fail_read(path):
+            if path == graph:
+                raise PermissionError(errno.EACCES, "unreadable index file", str(path))
+            return original(path)
+
+        monkeypatch.setattr(Path, "read_bytes", fail_read)
+    with (
+        CC.observe(content_key="same-inputs"),
+        pytest.raises(PermissionError, match="unreadable index"),
+    ):
+        CC.CheckCache()
