@@ -51,10 +51,15 @@ def _commit() -> str | None:
     return sha if out.returncode == 0 and len(sha) == 40 else None
 
 
-def build() -> dict:
-    catalogue = claims_mod.collect()
-    symbols = claims_mod.load_symbols()
-    graph = graph_mod.build(catalogue, symbols)
+def build(live: bool = False) -> dict:
+    if live:
+        catalogue = claims_mod.collect()
+        symbols = claims_mod.load_symbols()
+        graph = graph_mod.build(catalogue, symbols)
+    else:
+        catalogue = claims_mod.load_catalogue()
+        symbols = claims_mod.load_symbols()
+        graph = graph_mod.load()
     return {
         "schema_version": SCHEMA_VERSION,
         "generator": "workhouse export",
@@ -75,5 +80,5 @@ def build() -> dict:
     }
 
 
-def render() -> str:
-    return json.dumps(build(), sort_keys=True, ensure_ascii=False, indent=1) + "\n"
+def render(live: bool = False) -> str:
+    return json.dumps(build(live=live), sort_keys=True, ensure_ascii=False, indent=1) + "\n"

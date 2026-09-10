@@ -165,8 +165,8 @@ def branchwise(
     preferred, or averaged, and the "missing comparison" is the gap's own
     statement, not a synthesis.
     """
-    catalogue = catalogue if catalogue is not None else claims_mod.collect()
-    graph = graph if graph is not None else graph_mod.build(catalogue)
+    catalogue = catalogue if catalogue is not None else claims_mod.load_catalogue()
+    graph = graph if graph is not None else graph_mod.load()
     by_id = {c.id: c for c in catalogue}
     led = ledger_mod.load()
 
@@ -247,9 +247,9 @@ def neighborhood(
     """
     from dataclasses import asdict
 
-    catalogue = catalogue if catalogue is not None else claims_mod.collect()
+    catalogue = catalogue if catalogue is not None else claims_mod.load_catalogue()
     symbols = symbols if symbols is not None else claims_mod.load_symbols()
-    graph = graph if graph is not None else graph_mod.build(catalogue, symbols)
+    graph = graph if graph is not None else graph_mod.load()
 
     by_id = {c.id: c for c in catalogue}
     sym_by_id = {f"SYM:{s['id']}": s for s in symbols}
@@ -288,9 +288,9 @@ def explain(
     symbols: list[dict] | None = None,
     graph: graph_mod.Graph | None = None,
 ) -> tuple[str, bool]:
-    catalogue = catalogue if catalogue is not None else claims_mod.collect()
+    catalogue = catalogue if catalogue is not None else claims_mod.load_catalogue()
     symbols = symbols if symbols is not None else claims_mod.load_symbols()
-    graph = graph if graph is not None else graph_mod.build(catalogue, symbols)
+    graph = graph if graph is not None else graph_mod.load()
 
     by_id = {c.id: c for c in catalogue}
     sym_by_id = {f"SYM:{s['id']}": s for s in symbols}

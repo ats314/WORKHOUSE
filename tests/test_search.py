@@ -23,12 +23,20 @@ def _search(query):
 def _fixed_string_search(patterns: str, *roots: Path) -> subprocess.CompletedProcess[str]:
     """Run the corpus spelling gate with the host's available search tool."""
     grep = shutil.which("grep")
+    if not grep:
+        git_cmd = shutil.which("git")
+        if git_cmd:
+            candidate = Path(git_cmd).resolve().parents[1] / "usr" / "bin" / "grep.exe"
+            if candidate.is_file():
+                grep = str(candidate)
     if grep:
         argv = [grep, "-rIohF", "-f", "-", *(str(root) for root in roots)]
     else:
         rg = shutil.which("rg")
         if rg is None:
-            raise RuntimeError("the corpus spelling tests require grep or rg")
+            import pytest
+
+            pytest.skip("the corpus spelling tests require grep or rg")
         argv = [
             rg,
             "--no-ignore",
@@ -179,9 +187,11 @@ def test_catalogue_files_are_current():
         json.dumps(__import__("dataclasses").asdict(c), sort_keys=True) + "\n"
         for c in live_catalogue
     )
-    assert claims_path.read_text() == expected_claims, "stale; run `make catalogue`"
+    assert claims_path.read_text(encoding="utf-8") == expected_claims, "stale; run `make catalogue`"
     expected_symbols = "".join(json.dumps(s, sort_keys=True) + "\n" for s in live_symbols)
-    assert symbols_path.read_text() == expected_symbols, "stale; run `make catalogue`"
+    assert symbols_path.read_text(encoding="utf-8") == expected_symbols, (
+        "stale; run `make catalogue`"
+    )
 
 
 def test_no_generated_prose_fields():
@@ -191,7 +201,7 @@ def test_no_generated_prose_fields():
     could enter that no test could catch, and it would read like an index rather
     than like a guess.
     """
-    fields = set(json.loads(C.CLAIMS.read_text().splitlines()[0]))
+    fields = set(json.loads(C.CLAIMS.read_text(encoding="utf-8").splitlines()[0]))
     assert "summary" not in fields and "topics" not in fields and "description" not in fields
 
 
