@@ -1,0 +1,129 @@
+{
+  "schema": "workhouse.m10-transport-exact-checks.v1",
+  "scope": "Exact finite symbolic identities only. This run does not certify the external one-well theorem, actual conditional concentration, compact elliptic estimates, the finite-flow limiting argument, or the complete all-fiber M10 estimate.",
+  "source": "docs/derivations/w6-conditional-transport-obstruction.md",
+  "passed": 20,
+  "total": 20,
+  "checks": [
+    {
+      "name": "haar_radial_divergence",
+      "passed": true,
+      "statement": "SU(2) radial Haar divergence is z'(r)+2 cot(r) z(r).",
+      "exact_value": "2*z(r)/tan(r) + Derivative(z(r), r)"
+    },
+    {
+      "name": "haar_euler_origin",
+      "passed": true,
+      "statement": "The three-dimensional Euler field has Haar divergence tending to 3.",
+      "exact_value": "3"
+    },
+    {
+      "name": "constrained_minimum_path_value",
+      "passed": true,
+      "statement": "The stated constrained path has V=16[1-cos(theta/4)].",
+      "exact_value": "16 - 16*cos(theta/4)"
+    },
+    {
+      "name": "constrained_antipode",
+      "passed": true,
+      "statement": "The antipodal constrained value is 16-8 sqrt(2).",
+      "exact_value": "16 - 8*sqrt(2)"
+    },
+    {
+      "name": "potential_small_angle",
+      "passed": true,
+      "statement": "v_min(theta)=theta^2/2+O(theta^4).",
+      "exact_value": "1/2"
+    },
+    {
+      "name": "agmon_phase_eikonal",
+      "passed": true,
+      "statement": "I(0)=0 and I'(theta)^2=v_min(theta).",
+      "exact_value": "32*sqrt(2)*(1 - cos(theta/8))"
+    },
+    {
+      "name": "agmon_small_angle",
+      "passed": true,
+      "statement": "I(theta)=sqrt(2) theta^2/4+O(theta^4).",
+      "exact_value": "sqrt(2)/4"
+    },
+    {
+      "name": "trace_cometric_factor",
+      "passed": true,
+      "statement": "Gamma(w,w)=2(1-w^2) implies Gamma(theta,theta)=2 on regular fibers.",
+      "exact_value": "2"
+    },
+    {
+      "name": "horizontal_lift_and_metric_speed",
+      "passed": true,
+      "statement": "The constrained path is half the theta gradient and has G-speed squared 1/2.",
+      "exact_value": "{'gradient': 'Matrix([[1/2], [1/2], [1], [1]])', 'speed_squared': '1/2'}"
+    },
+    {
+      "name": "actual_gaussian_riccati",
+      "passed": true,
+      "statement": "The stated actual-square precision satisfies A C A=M.",
+      "exact_value": "Matrix([[sqrt(6)/6 + 1/2, 1/2 - sqrt(6)/6, -1/4 - sqrt(6)/12, -1/4 + sqrt(6)/12], [1/2 - sqrt(6)/6, sqrt(6)/6 + 1/2, -1/4 + sqrt(6)/12, -1/4 - sqrt(6)/12], [-1/4 - sqrt(6)/12, -1/4 + sqrt(6)/12, sqrt(6)/24 + sqrt(2)/8 + 1/4, -sqrt(6)/24 + sqrt(2)/8], [-1/4 + sqrt(6)/12, -1/4 - sqrt(6)/12, -sqrt(6)/24 + sqrt(2)/8, sqrt(6)/24 + sqrt(2)/8 + 1/4]])"
+    },
+    {
+      "name": "conditional_gaussian_mean",
+      "passed": true,
+      "statement": "At fixed q, the Gaussian minimum is (q/4,q/4,q/2).",
+      "exact_value": "Matrix([[1/4], [1/4], [1/2]])"
+    },
+    {
+      "name": "conditional_hessian_positive",
+      "passed": true,
+      "statement": "All three leading principal minors of the one-color fast Hessian are positive.",
+      "exact_value": "[sqrt(6)/6 + 1/2, sqrt(6)/3, sqrt(6)/6]"
+    },
+    {
+      "name": "conditional_quadratic_form_S7",
+      "passed": true,
+      "statement": "S7 equals one half the conditional Hessian quadratic form, per color.",
+      "exact_value": "c**2/4 + (a + b)**2/4 + sqrt(6)*(a - b - c)**2/12"
+    },
+    {
+      "name": "normal_drift_gaussian_coefficient",
+      "passed": true,
+      "statement": "Both Gaussian variance formulas give (6+sqrt(6))|q|^2/48 for the stopped-Q drift.",
+      "exact_value": "sqrt(6)/48 + 1/8"
+    },
+    {
+      "name": "gaussian_retained_phase",
+      "passed": true,
+      "statement": "The retained Gaussian phase matches I(|q|/2) at quadratic order.",
+      "exact_value": "sqrt(2)/16"
+    },
+    {
+      "name": "synchronized_cutoff_velocities",
+      "passed": true,
+      "statement": "The four synchronized profiles preserve the complete minimum curve exactly.",
+      "exact_value": "[theta*chi(theta)/4, theta*chi(theta)/4, theta*chi(theta)/2, theta*chi(theta)]"
+    },
+    {
+      "name": "shifted_gaussian_skew_score",
+      "passed": true,
+      "statement": "Euler dilation with its skew half-density term gives sigma=-a m(x-m)/g^3.",
+      "exact_value": "center*stiffness*(center - x)/g**3"
+    },
+    {
+      "name": "shifted_gaussian_score_variance",
+      "passed": true,
+      "statement": "The normalized squared-ground density gives Var(sigma)=a m^2/(2g^4).",
+      "exact_value": "center**2*stiffness/(2*g**4)"
+    },
+    {
+      "name": "conditional_score_continuity_residual",
+      "passed": true,
+      "statement": "Twice the score minus its coarse scalar is r/p; conditional normalization centers it.",
+      "exact_value": "2 sigma - coarse_scalar = r/p"
+    },
+    {
+      "name": "quadratic_laplace_variance_factor",
+      "passed": true,
+      "statement": "For Cov(z)=(2H)^-1, Var(G z^2/2)=G^2/(8H^2).",
+      "exact_value": "G**2/(8*H**2)"
+    }
+  ]
+}

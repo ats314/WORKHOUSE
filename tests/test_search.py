@@ -10,7 +10,9 @@ from workhouse import claims as C
 from workhouse import search as S
 
 ROOT = Path(__file__).resolve().parents[1]
-CATALOGUE = C.collect()
+if not C.CLAIMS.is_file():
+    raise FileNotFoundError("Missing checked-in catalogue; run `make catalogue` before testing")
+CATALOGUE = C.load_catalogue()
 SYMBOLS = C.symbol_records(CATALOGUE)
 
 
@@ -171,11 +173,14 @@ def test_coined_names_really_are_absent_from_the_corpus():
 
 def test_catalogue_files_are_current():
     claims_path, symbols_path = C.CLAIMS, C.SYMBOLS
+    live_catalogue = C.collect()
+    live_symbols = C.symbol_records(live_catalogue)
     expected_claims = "".join(
-        json.dumps(__import__("dataclasses").asdict(c), sort_keys=True) + "\n" for c in CATALOGUE
+        json.dumps(__import__("dataclasses").asdict(c), sort_keys=True) + "\n"
+        for c in live_catalogue
     )
     assert claims_path.read_text() == expected_claims, "stale; run `make catalogue`"
-    expected_symbols = "".join(json.dumps(s, sort_keys=True) + "\n" for s in SYMBOLS)
+    expected_symbols = "".join(json.dumps(s, sort_keys=True) + "\n" for s in live_symbols)
     assert symbols_path.read_text() == expected_symbols, "stale; run `make catalogue`"
 
 

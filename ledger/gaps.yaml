@@ -799,21 +799,50 @@ gaps:
     next: |
       Compare the actual generated Wilson history dynamics with a controlled coarse physical model, retaining its temporal memory, induced mass, interfaces, varying ground energy and renormalized source weights. The finite-cell physical theorem supplies fixed-complex spectra; the planar harmonic comparison supplies a fast scale 1/(La) after slow modes are retained, uniformly in the number of boxes. Prove the corresponding nonlinear physical energy and mixed-form estimates uniformly for the actual block family, including three-dimensional Hodge/Bianchi constraints and large-field localization. Specify the reflection/time-compatible history map and its physical observable algebra. An exact history block may retain all observed frequencies, so its complement must not be identified with an equal-time fiber. Control low-energy transfer and source errors in physical units and match the generated infrared dynamics to the established small-u Wilson endpoint. The closed-form theorem makes one sufficient iteration criterion explicit: prove the normalized coarse gap after retaining M_j=I+U_j*U_j and obtain a finite sum of inverse fast physical energies. The exact factorization, bounded U_j and uniform Wilson F_j lower bound remain substantive application hypotheses. The actual two-face blocks now have a global vertical spectral/potential comparison and a local quantum-ground projected form with relative O(g^2) magnetic correction. The adjacent strip also has a true full-vacuum complementary floor and an actual closed-form Schur realization at each sufficiently large fixed u. Extend these to the interacting block family with uniform lift, vacuum, coarse and source bounds; the local results do not provide those volume-uniform constants by tensoring. Choose a vacuum-adapted physical projection: the exact independent-qubit example shows that a raw reference projection can lose a uniform F_j bound despite a fixed true gap. Local vacuum dressing repairs that example; its interacting Wilson analogue requires its own proof. Spatially weighted sharp-shell matching on G18 remains a supporting clock route. The September 4 scalar expansion already handles the vacuum and full source correlations; that step should not be restarted as an open task. The continuum insert additionally requires a Hamiltonian-Wilson matching package - physical energy prefactor, anisotropy and speed-of-light renormalisation, the g_H-g_W scheme map, and a renormalised spectral measure that can be followed to large u. On a Balaban route it must additionally close the literal lower-corner path convention (the coarse gauge gate P(theta U) = g_theta . theta' P(U) with supp P_c inside Lambda_+) and preserve reflection positivity through every later gauge-fixing and large/small-field operation. Block alignment alone does not prove the gate.
     plan:
+      - step: Derive the actual conditional continuity score and locate the constrained Agmon centers
+        state: done
+        closed_by:
+          - RESULT:W6_CONDITIONAL_SCORE_CONTINUITY
+          - RESULT:W6_CONDITIONAL_AGMON_GEOMETRY
+        status: The true-ground score is exactly the conditional continuity residual including
+          coarse transport and Haar divergence. A sharp original-electric-metric calibration locates
+          the conditional Agmon minimum. These identities do not by themselves bound the score.
+      - step: Synchronize compact radial dilation with the actual conditional minimum curve
+        state: done
+        closed_by:
+          - RESULT:W6_SYNCHRONIZED_CONDITIONAL_DILATION
+        depends_on:
+          - RESULT:W6_CONDITIONAL_AGMON_GEOMETRY
+        status: The explicitly synchronized four radial profiles preserve the square's conditional
+          minimum curve and cancel its linear normal phase drift. Endpoint requirements on arbitrary
+          Q8 profiles alone do not specify this tangency.
+      - step: Infer actual uniform M10 from the endpoint requirements on arbitrary Q8 cutoffs
+        state: dead
+        closed_by:
+          - RESULT:W6_ARBITRARY_Q8_SCORE_OBSTRUCTION
+        status: A permitted smooth radial cutoff freezes a fixed small regular Q while moving
+          its actual conditional center. Full conditional concentration and a finite-flow speed
+          contradiction rule out M10 for that choice. This is an existence counterexample within
+          Q8, not a proof against every admissible transport or the synchronized successor.
       - step: Prove the actual conditional-score domination M10
-        state: untried
+        state: live
         depends_on:
           - DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:ACTUAL_SOURCE_MOMENT
           - DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:INTERVAL_OBSTRUCTION_REPAIR
+          - RESULT:W6_CONDITIONAL_SCORE_CONTINUITY
+          - RESULT:W6_SYNCHRONIZED_CONDITIONAL_DILATION
+          - RESULT:W6_SYNCHRONIZED_SCORE_CRITERION
         bears_on:
           - DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_WEIGHT_FROM_M10
         status: |
           The source-potential moment M8-M9 is established. The open target is the actual small-g conditional score K_g<=C0+C1 g^-2 E(V|w), including rare fibers, with uniform nonnegative C0,C1. This sufficient route implies the weighted score/Hardy estimate M11-M15; it is not asserted necessary for every W6 argument and does not imply the full source-energy jets R10. The local near-well estimate and averaged moments alone do not settle it.
+          The selected realization now uses the explicit synchronized S13 radial profiles. The exact conditional continuity identity and tangency are established; an actual counterexample rules out some other admissible Q8 choices. Prove the S14-S15 uniform conditional tube moments, differentiated amplitude control, common-reference outside deviation and antipodal estimate, or obtain a different sufficient source-weighted pairing. DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:M10_SYNCHRONIZED_SCORE records this specialization of the same M10 target, not a separate priority or a prerequisite for every possible proof of M10.
         frontier:
           priority: 1
           target: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10
-          scope: Actual four-face SU(2) conditional source law, uniformly as g tends to zero, with chart-complement and rare-fiber contributions retained.
+          scope: Actual four-face SU(2) conditional source law for the selected synchronized S13 transport, uniformly as g tends to zero, with chart-complement, rare-fiber and antipodal contributions retained.
           consequence: M10 together with the established source-potential moment makes the M11-M15 uniform weighted score bound applicable. Complete source-energy transport and interacting-grid uniformity remain separate.
-          decisive_test: Derive the actual fiber score and compare its squared weight with 1+g^-2 E(V|w) on the near-well region and a rare-fiber/tail region; either obtain common constants or exhibit the precise failing regime before choosing a weaker sufficient pairing estimate.
+          decisive_test: For the synchronized S13 field, establish the actual conditional tube moments and differentiated amplitude bound in S14, then control the S15 outside deviation with the same reference and a degeneration-uniform antipodal score estimate. Compare the resulting complete variance with 1+g^-2 E(V|w), or prove a sufficient source-weighted pairing directly.
       - step: Control complete source-vacuum transport energy jets R10
         state: untried
         depends_on:

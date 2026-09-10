@@ -46,6 +46,23 @@ score domination by the actual conditional potential (M10).
 Changing source energies and the physical clock are retained in the
 subdivision budget. Neither result asserts an interacting growing-grid floor.
 
+The [conditional transport continuation](derivations/w6-conditional-transport-obstruction.md)
+now expresses the actual score as a conditional continuity residual and derives
+the constrained Agmon center using the original electric metric. Its specified
+synchronized radial profiles follow that center exactly, cancelling the linear
+normal phase drift. M10 remains open for this choice: the conditional amplitude,
+quadratic phase fluctuations, rare-fiber complements and antipodal degeneracy
+still need estimates. A finite-flow argument using actual conditional
+concentration proves that some permitted Q8 cutoffs fail M10. This leaves the
+specified synchronized successor open; no actual g^-4 score asymptotic is
+assumed in that counterexample. The established source-moment implication
+M11-M15 and the separate complete-energy and interacting-grid obligations retain
+their scopes.
+The synchronized S13 field is the selected realization of the existing
+`DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10` priority;
+its specialized open record is not a second priority or a necessary premise
+of every possible proof of M10.
+
 An analytic proof retains its registered mathematical status when Lean covers
 only an ingredient. Conversely, a compiling abstract theorem applies to a
 Wilson construction only after its model, domain and identification hypotheses

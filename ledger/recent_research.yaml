@@ -1,10 +1,16 @@
 schema: recent-research/v1
 title: 'September 8-10 research: exact results, analytic consequences and open W6 transfer'
 source_scope: 'The nine September 8-9 campaigns plus the September 10 fixed-square ground-jet,
-  source-moment and conditional-transport continuation. Prior subdivision work is identified
-  separately. Each statement retains its proof scope. Source identity does not imply a fresh
+  source-moment, actual conditional-transport obstruction and synchronized-repair continuation.
+  Prior subdivision work is identified separately. Each statement retains its proof scope. Source identity does not imply a fresh
   replay or full-statement native formalization.'
 sources:
+- id: DOC:RECENT:m10_conditional_transport_20260910:w6-conditional-transport-obstruction.md
+  title: Actual conditional score, calibrated Agmon geometry and synchronized compact transport
+  path: runs/m10_conditional_transport_2026-09-10/sources/w6-conditional-transport-obstruction.md
+  original_path: C:/WORKHOUSE/worktrees/m10-conditional-transport-20260910/docs/derivations/w6-conditional-transport-obstruction.md
+  sha256: 33f5cefc2105ec3ec354edacce46371cfede62a2e46ec1557cacc5ae80f473e5
+  bytes: 18575
 - id: DOC:RECENT:anisotropy_variance_20260908:TEST_REPORT.md
   title: anisotropy_variance_20260908 / TEST_REPORT.md
   path: runs/recent_research_integration_2026-09-09/sources/anisotropy_variance_20260908/TEST_REPORT.md
@@ -474,6 +480,218 @@ sources:
   sha256: 94c7c0e7d6b325978ce8a4fc89bfa4e58d19ce0a50d43df4ed47cc525f2ff24f
   bytes: 420
 nodes:
+- id: RESULT:W6_CONDITIONAL_SCORE_CONTINUITY
+  statement: For the actual positive four-face SU(2) square ground in Haar-product coordinates
+    (y,Q)=(U0,U1,U2,U2 U3), let p_g(y|Q) be its normalized conditional density and
+    Z=Z_y+Z_Q a smooth physical projectable field with D=Z+div(Z)/2. The renormalized
+    conditional score variance is exactly K_g(Q)=(1/4) integral r_g^2/p_g dy, where
+    r_g=partial_g p_g+g^-1 Z_Q p_g+g^-1 div_y(p_g Z_y). Simultaneous conjugation
+    invariance identifies this variance with K_g(w), w=tr(Q)/2.
+  status: proven
+  evidence: analytic
+  tier: 3
+  scope: Actual smooth positive-coupling quantum ground and conditional Haar measure; Z_Q
+    depends only on Q and its equivariant flow preserves the literal trace algebra.
+    The identity retains conditional normalization, coarse motion and fiber divergence.
+  detail: S1-S2 derive the conditional continuity residual and its zero fiber integral.
+    The result makes no classical-density replacement and supplies no uniform small-g
+    bound on that residual or its squared conditional norm.
+  verification: Analytic identity. The companion finite controls have their explicitly stated
+    symbolic scope; no full-statement Lean formalization or uniform M10 certification is claimed.
+  sources:
+  - id: DOC:RECENT:m10_conditional_transport_20260910:w6-conditional-transport-obstruction.md
+    anchor: '## S1 Exact conditional score'
+    locator: S1-S2; actual conditional normalization and continuity residual
+  links:
+  - type: bears_on
+    target: RESULT:W6_COMPACT_CONDITIONAL_SCORE_TAIL_CONTROL
+    detail: Identifies the exact actual score whose M10 bound would activate M11-M15.
+  - type: bears_on
+    target: G19
+    detail: Supplies the actual fixed-square conditional transport identity, not interacting-grid constants.
+- id: RESULT:W6_CONDITIONAL_AGMON_GEOMETRY
+  statement: For the actual twelve-edge SU(2) square and theta=acos(tr(U2 U3)/2),
+    the constrained magnetic minimum is vmin(theta)=16[1-cos(theta/4)] and the
+    constrained zero-energy Agmon minimum for the original electric metric is
+    I(theta)=32 sqrt(2)[1-cos(theta/8)]. At regular fixed Q=exp(i theta n.sigma),
+    both minima are attained uniquely by U0=U1=exp(i theta n.sigma/4) and
+    U2=U3=exp(i theta n.sigma/2). The local conditional phase Hessian is positive
+    near the unique well.
+  status: proven
+  evidence: analytic
+  tier: 3
+  scope: Actual square potential and original twelve-edge electric cometric, with
+    Gamma(w,w)=2(1-w^2). Fixed-Q uniqueness is for 0<theta<pi; at Q=-I the minimizing
+    set is the two-sphere of axes. Local smoothness and Hessian positivity are near-well statements.
+  detail: Quaternion maximization and the SU(2) angle inequality give S3-S4. The sharp
+    original-electric-metric calibration gives S5 and the equal-face path attains it.
+    S6-S7 identify the exact minimum graph m(q)=(q/4,q/4,q/2) and positive local
+    conditional Gaussian Hessian. Potential and Agmon minima are connected by this proof,
+    rather than identified by assumption. No differentiated ground asymptotics are asserted.
+  verification: Analytic geometric proof. Finite metric and Hessian identities have narrower
+    scope than the action-minimization theorem or a uniform all-fiber score estimate.
+  sources:
+  - id: DOC:RECENT:m10_conditional_transport_20260910:w6-conditional-transport-obstruction.md
+    anchor: '## S2 Exact constrained geometry'
+    locator: S3-S7; potential minimum, calibrated action and local conditional Hessian
+  links:
+  - type: bears_on
+    target: G19
+    detail: Locates the actual kinetic-metric conditional centers required for source transport.
+- id: RESULT:W6_ACTUAL_CONDITIONAL_CONCENTRATION
+  statement: For every sufficiently small fixed nonzero Lie vector q with Q=exp(i q.sigma/2),
+    the actual four-face SU(2) ground conditional probability p_g(y|Q)dy converges weakly
+    to the point mass at m(q)=(q/4,q/4,q/2) as g tends to zero.
+  status: proven
+  evidence: analytic
+  tier: 3
+  scope: Actual compact elliptic square operator with its unique nondegenerate well, simple
+    positive physical ground, established uniform physical gap and quantum exponential tails.
+    q is fixed and sufficiently small before g tends to zero; this is not only the q=O(g)
+    harmonic scaling or a statement at the antipodal fiber.
+  detail: The explicitly named Klein-Rosenberger one-well comparison theorem supplies the
+    actual Dirichlet ground with relative local spatial control. Cutting off that exact ground
+    on a positive-action shell gives an exponentially small residual; the physical gap and
+    elliptic estimates transfer it to the actual compact ground. Choosing q below the fixed
+    comparison and tail exponents lets conditional Laplace normalization retain the full-fiber
+    exponential gap. No derivative in g of a WKB remainder is used.
+  verification: Analytic proof with an explicitly named external local comparison theorem and
+    its stated application. Finite symbolic controls do not certify the comparison theorem,
+    elliptic passage or conditional weak limit; no full-statement Lean formalization is claimed.
+  sources:
+  - id: DOC:RECENT:m10_conditional_transport_20260910:w6-conditional-transport-obstruction.md
+    anchor: '## S3 Actual conditional concentration'
+    locator: Actual Dirichlet comparison, compact physical-gap transfer and full conditional Laplace limit
+  links:
+  - type: depends_on
+    target: LIT:KLEIN_ROSENBERGER_2020_WKB
+    detail: Essential external scalar one-well input under Hypotheses 1.1, 3.2 and 6.1;
+      Theorem 6.5, equation (6.9), and its spatial elliptic bootstrap compare actual Dirichlet
+      eigenfunctions with the local WKB construction of Theorem 6.2. This is an analytic
+      dependency, not finite-check certification or a differentiated coupling-score theorem.
+  - type: depends_on
+    target: RESULT:W6_CONDITIONAL_AGMON_GEOMETRY
+    detail: Supplies the exact conditional phase minimum and positive local normal Hessian.
+  - type: depends_on
+    target: RESULT:W6_SQUARE_FINITE_G_FLOOR
+    detail: Supplies the physical gap used to identify the compact ground from the cutoff Dirichlet ground.
+  - type: depends_on
+    target: RESULT:W6_QUANTUM_GROUND_CONCENTRATION
+    detail: Supplies the actual quantum exponential tail control outside a fixed well neighborhood.
+  - type: bears_on
+    target: G19
+    detail: Identifies actual rare-fiber localization on the fixed square without a uniform all-fiber theorem.
+- id: RESULT:W6_ARBITRARY_Q8_SCORE_OBSTRUCTION
+  statement: There exists a smooth complete conjugation-equivariant radial product field
+    satisfying every Q8 endpoint and source-algebra requirement for which no finite
+    nonnegative C0,C1 can satisfy the actual M10 inequality
+    K_g(w)<=C0+C1 g^-2 E_mu_g[V|w] uniformly on 0<g<g_*.
+  status: proven
+  evidence: analytic
+  tier: 3
+  scope: Existence of bad admissible Q8 cutoff choices in the actual four-face SU(2) ground
+    law. This does not refute M10 for every admissible transport or for the separately specified
+    synchronized field, and does not retract the averaged score bound, fixed-square gap or G19 program.
+  detail: Choose a fixed small regular Q at which the common radial cutoff freezes Q but
+    remains Euler at all three conditional center coordinates. Actual conditional concentration
+    makes finite-flow endpoint vectors asymptotically orthogonal for every small fixed positive
+    logarithmic time. M10 and V<=32 would bound their distance by
+    sqrt(C0)(exp(t)-1)g+sqrt(32C1)t, a contradiction for sufficiently small t. The proof uses
+    ordinary relative local comparison, not differentiated WKB. The displayed g^-4 score rate
+    remains a conditional refinement and is not registered as an actual-model theorem.
+  verification: Analytic actual-model counterexample through the full conditional concentration
+    and finite-flow argument. Finite controls only check the stated metric, normalization and
+    coefficient identities; no full-statement Lean formalization is claimed.
+  sources:
+  - id: DOC:RECENT:m10_conditional_transport_20260910:w6-conditional-transport-obstruction.md
+    anchor: '## S4 A transport obstruction'
+    locator: S8-S11; explicit admissible cutoff, conditional speed and finite-flow contradiction
+  links:
+  - type: depends_on
+    target: RESULT:W6_CONDITIONAL_SCORE_CONTINUITY
+    detail: Supplies the exact normalized fiber-vector speed without a factor-of-two loss.
+  - type: depends_on
+    target: RESULT:W6_ACTUAL_CONDITIONAL_CONCENTRATION
+    detail: Supplies actual conditional localization, hence vanishing overlap after a center-moving finite flow.
+  - type: bears_on
+    target: RESULT:W6_COMPACT_CONDITIONAL_SCORE_TAIL_CONTROL
+    detail: Refutes arbitrary-cutoff realization of M10 while preserving the conditional M11-M15 implication.
+  - type: bears_on
+    target: G19
+    detail: Rules out only the unsynchronized arbitrary-Q8 shortcut and directs the fixed-square source estimate.
+- id: RESULT:W6_SYNCHRONIZED_CONDITIONAL_DILATION
+  statement: For a smooth conditional phase S with minimum graph y=m(q) and conditional
+    Hessian B, d_y(2S-ZS) at that graph equals -B[Z_y-Dm Z_q]. The square's radial speeds
+    z0(r)=z1(r)=r chi(4r), z2(r)=r chi(2r), zQ(r)=r chi(r) satisfy Q8 and preserve its
+    conditional minimum curve exactly. Their linear normal phase drift consequently vanishes
+    wherever the phase is smooth.
+  status: proven
+  evidence: analytic
+  tier: 3
+  scope: SU(2) angle coordinates and a smooth cutoff chi equal to one near zero and zero
+    above theta_a<pi. Each factor uses the displayed synchronized profile and the full Haar
+    half-divergence generator. The local phase identity is used only where that phase is smooth.
+  detail: S12 is the differentiated minimum-graph identity. S13 cancels its normal mismatch
+    on the exact actual square graph. One identical radial profile cannot be tangent for every
+    angle while obeying both endpoint conditions; this algebraic fact is distinct from proving
+    score failure for every identical profile. Tangency does not establish full phase homogeneity,
+    M10, amplitude bounds, rare-fiber complements or antipodal score control.
+  verification: Exact analytic tangency and phase-derivative identities. The full actual
+    synchronized conditional score estimate remains open and is not machine-certified.
+  sources:
+  - id: DOC:RECENT:m10_conditional_transport_20260910:w6-conditional-transport-obstruction.md
+    anchor: '## S5 Synchronized tangency'
+    locator: S12-S13; normal-drift identity and specified synchronized radial profiles
+  links:
+  - type: depends_on
+    target: RESULT:W6_CONDITIONAL_AGMON_GEOMETRY
+    detail: Supplies the actual minimum graph which the four radial profiles preserve.
+  - type: bears_on
+    target: G19
+    detail: Repairs the identified transport mismatch without claiming full M10 or interacting-volume constants.
+- id: RESULT:W6_SYNCHRONIZED_SCORE_CRITERION
+  statement: For the specified synchronized field, uniform conditional tube moments
+    E|eta|^(2j)<=c_(2j)g^(2j), j=1,2,3, the stated amplitude-score derivative bound c_a/g,
+    and the smooth phase remainder yield the local S14 squared-score estimate. Adding the
+    actual outside-tube squared deviation from the same reference beta_g gives the full
+    conditional variance bound S15. Uniform potential-weighted control of that complement
+    and the remaining source regimes would imply synchronized M10.
+  status: conditional
+  evidence: analytic
+  tier: 3
+  scope: Actual conditional law with the stated uniform tube moment and differentiated
+    relative-amplitude hypotheses. The common reference beta_g retains conditional mean
+    differences. Antipodal degeneration and outside-tube bounds are additional inputs.
+  detail: Synchronized tangency and the oscillator jet give
+    |F(q,eta)-F(q,0)|<=c_F(|q||eta|^2+|eta|^3). The local bound is
+    4c_F^2(c4|q|^2/g^2+c6)+2c_a^2c2. The exact constrained potential controls the q term
+    by 2pi^2 g^-2 E(V|Q). S15 keeps the actual conditional complement; an exponentially
+    small unconditioned marginal is not a replacement. The undifferentiated comparison used
+    for the obstruction does not supply the amplitude-derivative premise.
+  verification: Analytic implication under its displayed hypotheses. No actual uniform
+    amplitude, complement, antipodal or complete M10 estimate is promoted.
+  sources:
+  - id: DOC:RECENT:m10_conditional_transport_20260910:w6-conditional-transport-obstruction.md
+    anchor: '## S6 Remaining all-fiber estimate'
+    locator: S14-S15 and their explicit moment, amplitude and complement hypotheses
+  links:
+  - type: depends_on
+    target: RESULT:W6_CONDITIONAL_SCORE_CONTINUITY
+    detail: Identifies the actual conditional score whose variance is bounded.
+  - type: depends_on
+    target: RESULT:W6_SYNCHRONIZED_CONDITIONAL_DILATION
+    detail: Supplies cancellation of the leading linear normal phase term.
+  - type: depends_on
+    target: RESULT:W6_CONDITIONAL_AGMON_GEOMETRY
+    detail: Supplies the retained-potential lower bound and the local oscillator Hessian.
+  - type: bears_on
+    target: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10
+    detail: Supplies a sufficient criterion for the selected synchronized S13 realization
+      of the existing M10 target. It is not a necessary premise for every M10 proof and
+      does not make the generic M11-M15 implication depend on this particular construction.
+  - type: bears_on
+    target: G19
+    detail: Isolates a fixed-square conditional amplitude and tail obligation; full transport jets remain separate.
 - id: RESULT:RECENT_ANISOTROPY_VARIANCE_CORE
   statement: The carrier residual is ||QHp||^2=4 C^2 q^2 V, with V=sum x_i^3-(sum x_i^2)^2=sum_{i<j} x_i
     x_j(x_i-x_j)^2.
