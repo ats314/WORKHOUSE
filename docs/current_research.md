@@ -95,6 +95,24 @@ obligations, not merely requests to translate existing algebra into Lean.
 
 ## Keep the corrections attached
 
+The [September 10 source review](../runs/folder_evidence_integration_2026-09-10/README.md)
+extracts the Cauchy and martingale repair notes as analytic results with explicit
+application hypotheses. `RESULT:COMMON_SPACE_CONTRACTIVE_DRIFT` supplies convergence
+from common-space contraction and summable map/observable drift;
+`RESULT:PROJECTIVE_SOURCE_MARTINGALE` supplies a common law and L2 convergence from
+actual projective cutoff consistency and normalized source compatibility.
+`RESULT:REVERSE_MARTINGALE_BLOCKING` applies to coarsenings of one established law,
+and `RESULT:PREDICTABLE_SOURCE_DRIFT` allows summable predictable drift and
+conditional variances. `RESULT:UNIFORM_MARKED_CLUSTERING` converts a uniform
+two-marked physical weighted norm into exponential covariance decay. These are
+proved criteria; applying them to a continuum Wilson trajectory requires the
+specified actual laws, sources, drift estimates and physical normalization.
+`RESULT:SOURCE_COMPLEMENT_COMPLETE_WINDOW` separately proves an onto source
+frame and the complete high spectral window from a finite source lower bound
+and an upper bound on the entire complementary Hilbert space, with an explicit
+projection-angle estimate. Source moments alone do not supply that complement
+bound. Its existing fixed-spacing applications retain their own regimes.
+
 The [September Feshbach review](research/september_feshbach_integration.md)
 preserves both the exact identities and their scope corrections.
 `RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT` proves the recorded fourth-order

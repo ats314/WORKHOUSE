@@ -364,6 +364,18 @@ def test_proving_sc17_identity_does_not_hide_its_actual_model_target(live_regist
     assert not any(row.get("target") == SC17 for row in research_priorities.collect(led, statuses))
 
 
+def test_published_g14_route_ids_survive_the_reconciliation(live_registry):
+    led, _, _ = live_registry
+    gap = next(g for g in led.gaps if g["id"] == "G14")
+    routes = {claims.route_id("G14", step["step"]): step for step in gap["plan"]}
+    retired = routes["ROUTE:G14:derive-why-the-fourth-order-dynamics-is--076bf3"]
+    current = routes["ROUTE:G14:derive-the-actual-fourth-order-hodge-sup-0b65b4"]
+    assert retired["state"] == "dead"
+    assert current["state"] == "untried"
+    assert "RESULT:TIER_COLLAPSE_IS_R_DEGREE" not in current["depends_on"]
+    assert "RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT" in current["depends_on"]
+
+
 def test_real_g19_routes_emit_exact_targets_and_available_input_edges(live_registry, route_graph):
     led, statuses, _ = live_registry
     g19 = deepcopy(next(g for g in led.gaps if g["id"] == "G19"))

@@ -1,0 +1,303 @@
+{
+  "recorded_at": "2026-09-09T01:53:32.971489+00:00",
+  "analytic_scope": "WR1-WR12: integrated Wilson class diffusion gap and explicit complete compact rotor gap. WR13-WR16: nonnegative trial residual for the actual overlapping lattice. WR20-WR21: exact true-ground boundary-form embedding. WR22-WR24: uniform actual-link fast barrier on the full compact boundary space, including cancellation of staples. WR25-WR26 retain the unresolved vacuum-frustration term in the actual link assembly. Analytic domain, eigenfunction and min-max arguments are not Lean-formalized.",
+  "unresolved": "Uniform connected residual and selected-source assembly on the actual lattice with complete boundary retention, followed by spatial continuum and physical-clock transport. A fixed finite unreduced frame is insufficient.",
+  "checks": [
+    {
+      "name": "Wilson negative curvature cancels in a positive derivative supersolution",
+      "passed": true,
+      "detail": "Exact Bh/h=2 csc^2(theta)-1 and conjugated one-form potential. The beta terms cancel in Bh/h; endpoint closure and the spectral argument are analytic",
+      "section": "WILSON_WEIGHTED_REPAIR; G19; G23 WR1",
+      "tier": 1,
+      "line": 32,
+      "source": "src/workhouse/invariants/wilson_weighted.py:32",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Weighted derivative energy differs from its positive form by an exact divergence",
+      "passed": true,
+      "detail": "For arbitrary differentiable u,h,W the positive-function factorization has exactly boundary derivative (exp(-W) h'/h u^2)'; no boundary term is omitted",
+      "section": "WILSON_WEIGHTED_REPAIR; G19; G23 WR2",
+      "tier": 1,
+      "line": 49,
+      "source": "src/workhouse/invariants/wilson_weighted.py:49",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "The smooth sinh Wilson trial has the exact nonnegative physical residual",
+      "passed": true,
+      "detail": "Differentiation of sinh(a x)/(a x), with k=c a^2/8 and x=cos(theta/2), gives (H psi)/psi=3c[a x coth(a x)-1]/4. Its even series supplies smooth poles",
+      "section": "WILSON_WEIGHTED_REPAIR; G19; G23 WR4 WR5",
+      "tier": 1,
+      "line": 68,
+      "source": "src/workhouse/invariants/wilson_weighted.py:68",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "The complete SU2 rotor separates into the Dirichlet radial and angular operators",
+      "passed": true,
+      "detail": "Multiplication by sin(theta) gives -c d2-c+k(1-cos(theta)) +c ell(ell+1)csc^2(theta) for every angular sector; endpoint domains are stated in WR3",
+      "section": "WILSON_WEIGHTED_REPAIR; G19; G23 WR7",
+      "tier": 1,
+      "line": 84,
+      "source": "src/workhouse/invariants/wilson_weighted.py:84",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Exact scalar budgets certify the conservative complete-rotor gap constants",
+      "passed": true,
+      "detail": "Exact margins for D0>1, delta>1/4, the k/c=5/2 radial split and k/c=64 complete-spectrum split. Together with WR8-WR10 these give max{c/2,sqrt(ck)/16}",
+      "section": "WILSON_WEIGHTED_REPAIR; G19; G23 WR8 WR11",
+      "tier": 1,
+      "line": 106,
+      "source": "src/workhouse/invariants/wilson_weighted.py:106",
+      "yields": {
+        "WILSON_ROTOR_GAP_COEFFICIENT": "1/16"
+      },
+      "rests_on": []
+    },
+    {
+      "name": "The rotor gap scale restores the stated four-link Wilson kinetic normalization",
+      "passed": true,
+      "detail": "For H_g=-2g^2 Delta_radius2+2g^-2(2-Tr U), Delta_radius2=Delta_unit/4, c=g^2/2, k=4/g^2, and sqrt(ck)/16=sqrt(2)/16. This clock is fixed-cell scaled",
+      "section": "WILSON_WEIGHTED_REPAIR; G19; G23 WR12",
+      "tier": 1,
+      "line": 129,
+      "source": "src/workhouse/invariants/wilson_weighted.py:129",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Shared-link incidence loss is an exact sum of nonnegative pair differences",
+      "passed": true,
+      "detail": "For four arbitrary incident gradient coordinates, 4 sum v_i^2-(sum v_i)^2 equals sum_(i<j)(v_i-v_j)^2. Zero padding handles boundary edges; the proof for general q is the same exact expansion, without a volume factor",
+      "section": "WILSON_WEIGHTED_REPAIR; G19; G23 WR13 WR16",
+      "tier": 1,
+      "line": 141,
+      "source": "src/workhouse/invariants/wilson_weighted.py:141",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Damping the compact trial absorbs the complete shared-link residual algebra",
+      "passed": true,
+      "detail": "For k=q c a^2/8 the exact interacting residual minus 3c sum(z coth z-1)/4 is (q-1)c sum[a^2 s/8-|phi'|^2] plus the incidence defect. Positivity uses 0<=coth(z)-1/z<=1. This is a residual-floor result, not a many-body gap",
+      "section": "WILSON_WEIGHTED_REPAIR; G19; G23 WR14 WR16",
+      "tier": 1,
+      "line": 160,
+      "source": "src/workhouse/invariants/wilson_weighted.py:160",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "A complete boundary link carries the exact Haar Casimir and growing rank budget",
+      "passed": true,
+      "detail": "The fundamental Haar coordinate has Rayleigh quotient 3, and SU2 degrees 0 through N have dimension (N+1)(N+2)(2N+3)/6. WR20 analytically embeds this entire form in the true-ground four-link patch at every k; the resulting low boundary modes do not themselves satisfy the global Gauss law",
+      "section": "WILSON_WEIGHTED_REPAIR; G19; G23 WR20 WR21",
+      "tier": 1,
+      "line": 187,
+      "source": "src/workhouse/invariants/wilson_weighted.py:187",
+      "yields": {},
+      "rests_on": []
+    }
+  ],
+  "supplementary_exact_conditional_barrier_controls": {
+    "staple_quaternion_gram": true,
+    "threshold_32_bad_region": true,
+    "bad_region_exceeds_good_gap": true,
+    "plaquette_four_edge_allocation": true,
+    "projection_assembly_requires_geometry": true
+  },
+  "spectral_diagnostic_scope": "Floating Rayleigh-Ritz consistency check, c=1 and eight k values; 128/256 basis sizes agree within relative tolerance 0.000001. Differences of variational upper eigenvalues are not certified true gap bounds.",
+  "spectral_diagnostics": [
+    {
+      "c": 1,
+      "k": 0.0,
+      "size_128": {
+        "ground": -6.459587522402255e-27,
+        "radial_first": 3.0,
+        "angular_first": 3.0,
+        "gap_diagnostic": 3.0
+      },
+      "size_256": {
+        "ground": 2.583716679825119e-26,
+        "radial_first": 3.0,
+        "angular_first": 3.0,
+        "gap_diagnostic": 3.0
+      },
+      "gap_drift": 0.0,
+      "analytic_bound_WR11": 0.5
+    },
+    {
+      "c": 1,
+      "k": 0.01,
+      "size_128": {
+        "ground": 0.0099916666811342,
+        "radial_first": 3.0100033333186573,
+        "angular_first": 3.009996666667731,
+        "gap_diagnostic": 3.0000049999865968
+      },
+      "size_256": {
+        "ground": 0.0099916666811342,
+        "radial_first": 3.0100033333186573,
+        "angular_first": 3.009996666667731,
+        "gap_diagnostic": 3.0000049999865968
+      },
+      "gap_drift": 0.0,
+      "analytic_bound_WR11": 0.5
+    },
+    {
+      "c": 1,
+      "k": 1.0,
+      "size_128": {
+        "ground": 0.9180581766242977,
+        "radial_first": 4.031921988130657,
+        "angular_first": 3.9667723246517754,
+        "gap_diagnostic": 3.0487141480274778
+      },
+      "size_256": {
+        "ground": 0.9180581766242977,
+        "radial_first": 4.031921988130657,
+        "angular_first": 3.9667723246517754,
+        "gap_diagnostic": 3.0487141480274778
+      },
+      "gap_drift": 0.0,
+      "analytic_bound_WR11": 0.5
+    },
+    {
+      "c": 1,
+      "k": 2.5,
+      "size_128": {
+        "ground": 2.0248651113716667,
+        "radial_first": 5.662054984292444,
+        "angular_first": 5.295635057504953,
+        "gap_diagnostic": 3.270769946133286
+      },
+      "size_256": {
+        "ground": 2.0248651113716667,
+        "radial_first": 5.662054984292444,
+        "angular_first": 5.295635057504953,
+        "gap_diagnostic": 3.270769946133286
+      },
+      "gap_drift": 0.0,
+      "analytic_bound_WR11": 0.5
+    },
+    {
+      "c": 1,
+      "k": 10.0,
+      "size_128": {
+        "ground": 5.377234186004818,
+        "radial_first": 12.873494394247324,
+        "angular_first": 10.302635644334575,
+        "gap_diagnostic": 4.925401458329757
+      },
+      "size_256": {
+        "ground": 5.377234186004818,
+        "radial_first": 12.873494394247324,
+        "angular_first": 10.302635644334575,
+        "gap_diagnostic": 4.925401458329757
+      },
+      "gap_drift": 0.0,
+      "analytic_bound_WR11": 0.5
+    },
+    {
+      "c": 1,
+      "k": 64.0,
+      "size_128": {
+        "ground": 15.651475013808447,
+        "radial_first": 36.96500799099084,
+        "angular_first": 27.26863259111628,
+        "gap_diagnostic": 11.617157577307832
+      },
+      "size_256": {
+        "ground": 15.651475013808447,
+        "radial_first": 36.96500799099084,
+        "angular_first": 27.26863259111628,
+        "gap_diagnostic": 11.617157577307832
+      },
+      "gap_drift": 0.0,
+      "analytic_bound_WR11": 0.5
+    },
+    {
+      "c": 1,
+      "k": 1000.0,
+      "size_128": {
+        "ground": 65.76794467333542,
+        "radial_first": 153.94592834959707,
+        "angular_first": 110.75099135871636,
+        "gap_diagnostic": 44.98304668538094
+      },
+      "size_256": {
+        "ground": 65.76794467333542,
+        "radial_first": 153.94592834959707,
+        "angular_first": 110.75099135871636,
+        "gap_diagnostic": 44.98304668538094
+      },
+      "gap_drift": 0.0,
+      "analytic_bound_WR11": 1.976423537605237
+    },
+    {
+      "c": 1,
+      "k": 1000000.0,
+      "size_128": {
+        "ground": 2120.0078144807485,
+        "radial_first": 4947.19041483925,
+        "angular_first": 3534.4719324509497,
+        "gap_diagnostic": 1414.4641179702012
+      },
+      "size_256": {
+        "ground": 2120.0077938192408,
+        "radial_first": 4947.184465179162,
+        "angular_first": 3534.4717102298164,
+        "gap_diagnostic": 1414.4639164105756
+      },
+      "gap_drift": 0.0002015596255660057,
+      "analytic_bound_WR11": 62.5
+    }
+  ],
+  "test_runs": [
+    {
+      "file": "wilson-weighted-focused.xml",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "wilson-weighted-graph.xml",
+      "tests": 33,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "wilson-weighted-ledger.xml",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "artifacts": {
+    "docs/derivations/wilson-weighted-repair-and-rotor-gap.md": "fe8c626dcf7d82e3b5a31123465eb47045a6964f8df3cf758c10e30288fde26a",
+    "src/workhouse/invariants/wilson_weighted.py": "9a1d16e71fe1cf427f54262993b1658fd1045ed12aaca34c6c5a5a33011155dd",
+    "src/workhouse/invariants/__init__.py": "638ade94eb8454a932b427f2dcc5e3eea31d6451c360ec834e5f7f1e3cdb6f7a",
+    "scripts/validate_wilson_weighted.py": "7f5dbbfdc2e459884ef5295c0398a4a9ad5bdaa8abc6c9fdb886c8ffaf0665ce",
+    "ledger/documents.yaml": "ff08bfdd320564aab29055a9c4540e6771a86e6139d10809904e098a110728cf",
+    "ledger/gaps.yaml": "3aa77d5015bb9e80524a5d496c88f119d1a0af69e7e51fdcead7479892b796c5",
+    "index/claims.jsonl": "60b69408e4697fd0222a6c5b4468d61ba0af4f5788fd84dc5e9243a6508d74ef",
+    "index/graph.jsonl": "afdbbc61d14b062258f8017373f74b2e0ca08baf9a7072b4bcae56b3bbcc6fc1",
+    "FRONTIER.md": "f7fe88b62216efd0ad6eed4b6cfeafcd18cceca5679d5a02999ae76fdd6989b9",
+    "CERTIFIED.md": "bda8d3c316487aa43b9aa63dde9c4e09a7bcaaac7720da00f444462cc076b4c9"
+  },
+  "method_source": "https://arxiv.org/abs/1304.3595",
+  "guidance_pdf_quote": {
+    "page": 11,
+    "section": "6.5",
+    "text": "One must then verify the existence of limits of appropriate expectations of gauge-invariant observables as the lattice spacing tends to zero and as the volume tends to infinity."
+  }
+}

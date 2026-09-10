@@ -229,6 +229,7 @@ remain established regardless of incomplete Lean coverage or T3 tier.
 - Route: `ROUTE:G19:prove-normalized-rg-and-source-increment-018ddd`
 - Target: `DERIV:YANGMILLS_CONTINUUM_BALABAN_MULTISCALE_PROOF:THEOREM_7_1` — open
 - Scope: The actual normalized RG map and renormalized observables after marginal matching, with all measures/source spaces identified and scale-uniform remainder constants.
+- Source inputs: `RESULT:COMMON_SPACE_CONTRACTIVE_DRIFT` (proven)
 - Readiness: no explicit unresolved completion input is recorded.
 - Consequence: A summable cross-scale increment would supply the missing Cauchy input of Theorem 7.1. Regularity, symmetry restoration, reconstruction and positive finite physical mass remain separately scoped downstream requirements.
 - Decisive next test: Work out one genuine normalized blocking step with its observable transport, isolate the marginal contribution, and calculate the surviving common-norm increment before claiming a power-improved summable bound.

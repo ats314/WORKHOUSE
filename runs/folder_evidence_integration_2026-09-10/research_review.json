@@ -1,0 +1,307 @@
+{
+  "schema": "folder-evidence-research-review/v1",
+  "review_date": "2026-09-10",
+  "reviewer": "research_review subagent",
+  "archive_root": "C:/WORKHOUSE/ALL THEORY/WORKHOUSE",
+  "integration_root": "C:/WORKHOUSE/worktrees/folder-evidence-integration-20260910",
+  "baseline_commit": "42b0762",
+  "review_scope": "All three docs/research files were read in full. Their concrete assertions, hypotheses, historical-status language and machine-check claims were compared to current main's source proofs, result and derivation ledgers, generated catalogue and active Feshbach checks. This is a scoped semantic integration review, not a fresh proof of every dependency or a Lean build.",
+  "summary": "All three research documents are already published in the refreshed baseline. Two match the requested archive bytes exactly; the Feshbach review has a correct newer U7 reconciliation. Correct results are substantially registered. Needed integration repairs are source-to-statement routing and obsolete live gap/route interpretations, not replacement of current main by the older checkout.",
+  "architecture": {
+    "existing": [
+      {
+        "path": "src/workhouse/claims.py",
+        "locator": "load_document_aliases and collect citation aliases",
+        "finding": "Every resolved documents.yaml alias already produces a T3 CITE node; duplicate aliases may legitimately name one review document at different mathematical scopes."
+      },
+      {
+        "path": "src/workhouse/graph.py",
+        "locator": "build document alias relationships",
+        "finding": "Curated cites links target CITE aliases; bears_on, supported_by, cannot_decide and superseded_by accept native graph ids. These existing relations suffice for research/validation routing without promoting a source."
+      },
+      {
+        "path": "src/workhouse/derivation_statements.py",
+        "locator": "validate source path and source SHA-256",
+        "finding": "DERIV inventory deliberately requires top-level docs/derivations Markdown, native CITE identity, digest, section anchor, hypotheses, status and scoped formal links. Preserve this contract; nested source copies and validation JSON should not be forced into DERIV groups."
+      },
+      {
+        "path": "src/workhouse/recent_research.py",
+        "locator": "validate, claim_records, edge_records",
+        "finding": "Recent-campaign registry is source-pinned and has scoped result/route links, but its SOURCE_BASE intentionally restricts it to its preserved September campaign bundle. General folder coverage should not silently broaden this historical source registry."
+      },
+      {
+        "path": "tests/test_documents.py",
+        "locator": "test_legend_is_sound and test_explicit_document_citations_resolve_without_promoting_the_source",
+        "finding": "Existing checks validate existence, closed standing vocabulary, aliases and citation endpoints. They do not require complete representation of the three source folders or machine-validate hashes embedded only in notes."
+      }
+    ],
+    "recommended_minimum": [
+      "Reuse documents.yaml CITE nodes and native document relationships for every selected repository file; keep exact DERIV and RESULT records as the mathematical authority.",
+      "Create a pinned folder-review manifest with one entry per archive path: archive digest/size, selected repository source digest/size, preservation disposition, aliases, source-specific review scope, precise claim ids and locators, and reviewed corrections or historical-status notes.",
+      "Preserve differing archive bytes under the dated run bundle; keep newer valid main sources in their existing paths. Do not promote byte equality to independent scientific support.",
+      "Add completeness and integrity checks: all input folder paths represented, digests/bytes match selected and preserved files, every alias identifies the selected path, every claim endpoint resolves, and review scope is nonempty. Include nested input manifests and README/source copies without claiming they are separate discoveries.",
+      "Emit current document-to-result/DERIV links from the maintained manifest or documents aliases, then regenerate index, frontier and certified in their existing order. Use supported_by only for actual stated support, cites for documentary reference, bears_on for relevance and superseded_by for explicitly replaced historical guidance."
+    ],
+    "avoid": [
+      "No new mathematical verification tier or truth taxonomy.",
+      "No blanket source-theorem certification from graph presence, extraction, copied files, numerical fixtures or partial Lean support.",
+      "No graph dependencies inferred solely from filenames or a shared G19 tag.",
+      "No overwrite of current main's correct U7 record with the archive's earlier branch-local note."
+    ]
+  },
+  "files": [
+    {
+      "path": "docs/research/next-path-wilson-transfer-2026-09-08.md",
+      "summary": "Historical selection of the actual symmetric Wilson marked-shell and uniform Taylor-majorant target. Its opening now points to the completed fixed-spacing continuation; older open-target paragraphs remain evidence of that earlier checkpoint.",
+      "scope": "Fixed spatial spacing, SU(3), small magnetic coupling, actual symmetric Wilson transfer and calibrated fundamental-character clock. Current continuation proves complete shell/source construction and common weighted majorant under stated upstream inputs; summed relative carrier transport remains conditional on the same G18/window hypotheses. This is not a spatial continuum result.",
+      "claim_ids": [
+        "CITE:SEPT_DOC_NEXT_PATH_WILSON_TRANSFER_2026_09_08",
+        "CITE:WILSON_SHELL",
+        "RESULT:WILSON_INFINITE_PHYSICAL_BAND",
+        "DERIV:WILSON_MARKED_SHELL_TRANSPORT:S2_S7",
+        "DERIV:WILSON_MARKED_SHELL_TRANSPORT:S8_S9",
+        "DERIV:WILSON_MARKED_SHELL_TRANSPORT:S10_S15",
+        "DERIV:WILSON_MARKED_SHELL_TRANSPORT:S16_S17",
+        "DERIV:WILSON_MARKED_SHELL_TRANSPORT:S18_S20",
+        "DERIV:WILSON_MARKED_SHELL_TRANSPORT:S21_S22"
+      ],
+      "citations": [
+        {
+          "path": "docs/research/next-path-wilson-transfer-2026-09-08.md",
+          "locator": "Opening continuation notice; The theorem to attempt; What success would give",
+          "relationship": "Historical target and precise W1/h,G,S operator/source requirements."
+        },
+        {
+          "path": "docs/derivations/wilson-marked-shell-transport.md",
+          "locator": "Sections 2-4, S2-S15",
+          "relationship": "Actual marked cancellation, anchored operator comparison, complete odd shell, holomorphic literal-source chart and Gram bounds."
+        },
+        {
+          "path": "docs/derivations/wilson-marked-shell-transport.md",
+          "locator": "Section 5, S16-S17",
+          "relationship": "Cauchy operator bound plus support radius 12n and row count 3(24n+1)^3 gives the common weighted majorant M=187500 M_op and R=R0/(2 exp(12 mu)); intrinsic torus distance includes wrapping."
+        },
+        {
+          "path": "docs/derivations/wilson-marked-shell-transport.md",
+          "locator": "Sections 6-7, S18-S22",
+          "relationship": "Finite-order-plus-tail convergence; no summed O(epsilon^2) rate asserted. Conditional carrier gap >(t3/4)u^2q(k) and onto-frame bound 9/16; a specified observable needs its own positive overlap margin."
+        },
+        {
+          "path": "ledger/derivation_statements.yaml",
+          "locator": "CITE:WILSON_SHELL",
+          "relationship": "Five source groups proven and S18_S20 conditional under explicit hypotheses; no whole-statement Lean certification is claimed."
+        },
+        {
+          "path": "docs/validation/next-path-wilson-transfer-2026-09-08.json",
+          "locator": "Dated route-audit snapshot",
+          "relationship": "Historical target-selection check evidence; registration is not a fresh replay."
+        }
+      ],
+      "correct_work": "The actual transfer operator/clock distinction, fixed-order error plus geometric tail, volume-independent spatial row counting, Gamma degeneracy, full frame versus specified-observable distinction, and temporal versus spatial scope are retained correctly.",
+      "existing_graph_gap": "The source alias carries only G17/G18/G19 relevance at baseline and does not directly lead to the six completed successor groups. A reader of the historical target can unnecessarily reopen a proved construction.",
+      "proposed_changes": [
+        "Add documentary citations to the Wilson-shell derivation and route-audit alias.",
+        "Link the historical proposal via superseded_by to the precise current shell/source/majorant/transport records; preserve S18_S20 conditional status and the later G19 obligations.",
+        "Explain in the maintained alias note that open-target language is historical, already superseded at the recorded fixed-spacing scope."
+      ],
+      "disposition": "Keep existing main file; exact archive match. No missing mathematical result found in this research source.",
+      "archive_sha256": "72c82dbf0d192bfb5eb180984ee1f20ac3cf066ac3e7988aa7aedf1e98f0e67a",
+      "selected_sha256": "72c82dbf0d192bfb5eb180984ee1f20ac3cf066ac3e7988aa7aedf1e98f0e67a",
+      "archive_bytes": 13432,
+      "selected_bytes": 13432,
+      "review_status": "scoped-semantic-review-complete"
+    },
+    {
+      "path": "docs/research/september_feshbach_integration.md",
+      "summary": "Reviewed exact Hodge carrier calculus and resolvent comparison, preserving valid identities while correcting R-degree-only exclusion, Gamma projector degeneracy, numerical-check tiers and the failed sufficient-margin inference.",
+      "scope": "Cubic Laurent identities and exact recorded H4 support; a finite 39-word table through length three; tetrahedral/prism incidence hypotheses; general algebraic/variational resolvent identities under compatible inverse domains with conditional relative-form estimate. These are not higher-order dynamics or a uniform interacting Wilson constant.",
+      "claim_ids": [
+        "CITE:HODGE_FESHBACH",
+        "CITE:FESHBACH_RESOLVENT",
+        "CITE:HODGE_FESHBACH_CHANNEL",
+        "CITE:FESHBACH_RESOLVENT_COMPARISON",
+        "RESULT:HODGE_FESHBACH_SPLITTING",
+        "RESULT:TIER_COLLAPSE_IS_R_DEGREE",
+        "RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT",
+        "RESULT:FESHBACH_RESOLVENT_COMPARISON",
+        "U7",
+        "G14",
+        "G22",
+        "U3"
+      ],
+      "citations": [
+        {
+          "path": "docs/research/september_feshbach_integration.md",
+          "locator": "Hodge channel: preserved identities and corrected scope",
+          "relationship": "q>0 projector scope; sigma(UR)=sigma(RU)=-2q e2; actual H4 support span {q,q^2,e2}; RR/RUR and finite word-table statements."
+        },
+        {
+          "path": "docs/research/september_feshbach_integration.md",
+          "locator": "Hodge-word hypotheses in other cells",
+          "relationship": "Main correctly recognizes registered U7. Tetrahedron/prism carrier eigenvalues are 4/7; prism total Laplacian diag(6,6,5,5,5,5,5) need not be scalar. Proper-return identification remains separate."
+        },
+        {
+          "path": "docs/research/september_feshbach_integration.md",
+          "locator": "Resolvent comparison: exact identities and numerical checks",
+          "relationship": "Mixed-pairing identity, oriented sandwich for either coupling sign, rho/(1-rho)^2 sufficient bound; rho>=1 does not prove loss of positivity."
+        },
+        {
+          "path": "ledger/results.yaml",
+          "locator": "RESULT:HODGE_FESHBACH_SPLITTING, RESULT:TIER_COLLAPSE_IS_R_DEGREE, RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT, RESULT:FESHBACH_RESOLVENT_COMPARISON",
+          "relationship": "Current result statements already preserve proven analytic results, falsified universal inference and scoped native supports."
+        },
+        {
+          "path": "src/workhouse/invariants/hodge_feshbach.py",
+          "locator": "Ten hodge.check definitions including actual H4 support and UR FINDING",
+          "relationship": "Exact controls use Laurent polynomials and actual 189-term kernel reconstruction; normalized carrier exclusions are explicit."
+        },
+        {
+          "path": "src/workhouse/invariants/feshbach_resolvent.py",
+          "locator": "Five feshbach.check definitions and _CASES",
+          "relationship": "Two exact controls on four rational finite fixtures; three floating controls. No uniform Wilson kappa supplied."
+        },
+        {
+          "path": "tests/test_september_feshbach.py",
+          "locator": "All six regression tests",
+          "relationship": "Counterexample/rank, Gamma degeneracy, 2-T1/3-T2 split, oriented sandwich and rho-margin/positivity boundary."
+        }
+      ],
+      "correct_work": "All four substantive current RESULT records are already present. The corrected support mechanism proves B=D=0, and the resolvent comparison remains an available analytic input under explicit relative-form and domain hypotheses.",
+      "existing_graph_gap": "At baseline HODGE_FESHBACH_CHANNEL alias, G14's Feshbach paragraph, G22's resolvent paragraph, U3's cubic-half paragraph and a G14 live route still repeat conclusions explicitly refuted by this review. Main's U7 record itself is already corrected.",
+      "proposed_changes": [
+        "Keep main's newer U7 wording and preserve the archive variant separately.",
+        "Update maintained original-source alias summaries and add explicit links to the corrected review and result ids.",
+        "Retain historical gap paragraphs/route while replacing current interpretations with q>0, actual H4 support, 2 T1+3 T2 and sufficient-margin scope.",
+        "Make the G14 support-explanation route depend on the actual-H4-support result, not the falsified R-degree-only result."
+      ],
+      "disposition": "Keep newer main file. Preserve older archive bytes as provenance. Implemented scoped gap/route repairs; parent owns alias/source integration.",
+      "archive_sha256": "aa67731fa11cb13c272ed7154f368df49627737678e72f6239d15a0188e9b58c",
+      "selected_sha256": "d28bae87bc5bbd3b4e85bd4de45fe7f984132cfed4c39ec8218ca6f54ee2d76d",
+      "archive_bytes": 6360,
+      "selected_bytes": 6498,
+      "review_status": "scoped-semantic-review-complete"
+    },
+    {
+      "path": "docs/research/spatial-continuum-passage-2026-09-08.md",
+      "summary": "Correct concise synthesis of full-reference Schur excess, complete second-order Wilson/source terms, conditional accumulated physical-gap and source budgets, and the Gaussian comparison obstruction leading to selected-inverse W6.",
+      "scope": "Analytic identities and conditional complete-form scale comparison under compatible physical chart/domain, fast floor, direct/force and source remainder, retained energy, induced metric and clock hypotheses. SP11-SP19 jets and SP25 illustrative summability are established at their recorded finite/model scope; actual uniform interacting W6 and continuum construction remain separate.",
+      "claim_ids": [
+        "CITE:SEPT_DOC_SPATIAL_CONTINUUM_PASSAGE_2026_09_08",
+        "CITE:WILSON_SPATIAL",
+        "CITE:WILSON_SELECTED",
+        "DERIV:WILSON_SPATIAL_SCHUR_EXCESS:SP1_SP6",
+        "DERIV:WILSON_SPATIAL_SCHUR_EXCESS:SP7_SP10",
+        "DERIV:WILSON_SPATIAL_SCHUR_EXCESS:SP11_SP16",
+        "DERIV:WILSON_SPATIAL_SCHUR_EXCESS:SP17_SP19",
+        "DERIV:WILSON_SPATIAL_SCHUR_EXCESS:SP20_SP24",
+        "DERIV:WILSON_SPATIAL_SCHUR_EXCESS:SP25",
+        "DERIV:WILSON_SELECTED_INVERSE_WALL:W1_W3_OBSTRUCTION",
+        "DERIV:WILSON_SELECTED_INVERSE_WALL:W4_W5",
+        "DERIV:WILSON_SELECTED_INVERSE_WALL:W6",
+        "RESULT:WILSON_FLAT_BACKGROUND_FAST_SOURCES",
+        "RESULT:WILSON_PHYSICAL_SOURCE_RANK_REPAIR"
+      ],
+      "citations": [
+        {
+          "path": "docs/research/spatial-continuum-passage-2026-09-08.md",
+          "locator": "All paragraphs, including final publication-status sentence",
+          "relationship": "Correct dated scientific synthesis. The final 'not committed, pushed or merged' is historical publication status superseded by the inspected main baseline."
+        },
+        {
+          "path": "docs/derivations/wilson-spatial-schur-excess.md",
+          "locator": "Sections 2-5, SP1-SP19",
+          "relationship": "Full graph, induced metric, cubic remainder reduction, magnetic/electric/Haar/vacuum/moving-source jets and harmonic compact-source effects are explicitly retained."
+        },
+        {
+          "path": "docs/derivations/wilson-spatial-schur-excess.md",
+          "locator": "Section 6, SP20-SP24",
+          "relationship": "Multiplying reciprocal-gap recursion by A_(j+1) and telescoping gives the exact bound; complete-frame composition and specified-observable telescoping have distinct premises."
+        },
+        {
+          "path": "docs/derivations/wilson-spatial-schur-excess.md",
+          "locator": "Section 7, SP25",
+          "relationship": "For hypothetical g_j^2=kappa/(j+j0), cubic errors have the stated finite integral-comparison budget; quadratic majorant alone cannot guarantee summability. No running coupling is derived."
+        },
+        {
+          "path": "docs/derivations/wilson-selected-inverse-wall.md",
+          "locator": "W1-W6",
+          "relationship": "Compact high-character quadratic spectrum versus finitely retained oscillator linear spectrum obstructs global upper relative comparison; selected-force W5 is conditional and actual interacting W6 remains open."
+        },
+        {
+          "path": "ledger/derivation_statements.yaml",
+          "locator": "CITE:WILSON_SPATIAL and CITE:WILSON_SELECTED",
+          "relationship": "All six Schur groups and four selected-inverse groups are already source pinned and scoped. Current abstract Schur/Neumann/variational Lean ingredients exceed the old report's two-lemma checkpoint without solving model identification."
+        },
+        {
+          "path": "docs/current_research.md",
+          "locator": "Current route table and Supported Track A formalization",
+          "relationship": "Confirms established fixed-spacing progress and newer scoped formal support; avoids reopening analytic results merely because their full model formalization remains unfinished."
+        }
+      ],
+      "correct_work": "The entire second-order generated operator and source normalization, physical clock, quadratic memory and selected-inverse repair survive. The displayed gap recursion and illustrative cubic summability are mathematically correct under the recorded premises.",
+      "existing_graph_gap": "Baseline source alias only bears_on G19/G23; it does not directly expose its precise Schur/selected-inverse records. Its historical local-only publication sentence and two-Lean-lemma count must not be read as current main state.",
+      "proposed_changes": [
+        "Add cites to Wilson spatial/selected derivation and validation aliases, with supported_by or bears_on links to the exact statement groups at their recorded scopes.",
+        "Clarify in maintained alias/review notes that publication status and Lean-count sentences describe September 8, while current source/statement records are already in main.",
+        "Preserve actual interacting W6 and full source/clock/continuum obligations without a blanket claim that all fixed-spacing physical construction is absent."
+      ],
+      "disposition": "Keep existing main file; exact archive match. All substantive statements already registered; improve precise retrieval.",
+      "archive_sha256": "6f2595489eaabb401f025e288ec9bdbb6578111df85df88378fde50ec39328ca",
+      "selected_sha256": "6f2595489eaabb401f025e288ec9bdbb6578111df85df88378fde50ec39328ca",
+      "archive_bytes": 3240,
+      "selected_bytes": 3240,
+      "review_status": "scoped-semantic-review-complete"
+    }
+  ],
+  "implemented_changes": [
+    {
+      "path": "ledger/gaps.yaml",
+      "field": "G14.feshbach_channel_2026_09_08",
+      "change": "Replaced R-degree-only/current whole-zone projector interpretation with corrected support result, q>0 scope and finite word-table scope; preserved exact original scalar under historical_feshbach_channel_2026_09_08_before_2026_09_10 and explicit reason."
+    },
+    {
+      "path": "ledger/gaps.yaml",
+      "field": "G22.resolvent_comparison_2026_09_09",
+      "change": "Corrected two-T1/three-T2 split, inverse-domain/relative-form scope and rho>=1 positivity error; preserved exact original scalar under historical_resolvent_comparison_2026_09_09_before_2026_09_10 and explicit reason."
+    },
+    {
+      "path": "ledger/gaps.yaml",
+      "field": "U3.cubic_half_derived_2026_09_08",
+      "change": "Corrected cubic support explanation, distinguished scalar momentum dependence from no dispersion, retained unproved proper-return identification; preserved exact original scalar under historical_cubic_half_derived_2026_09_08_before_2026_09_10 and explicit reason."
+    },
+    {
+      "path": "ledger/gaps.yaml",
+      "field": "G14.plan historical route ROUTE:G14:derive-why-the-fourth-order-dynamics-is--076bf3",
+      "change": "Reframed live task as deriving actual H4 support from histories, including absence of UR/RU and repeated R; dependency is now RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT instead of falsified RESULT:TIER_COLLAPSE_IS_R_DEGREE. Kept state untried. Preserved original step/state/dependencies/cannot_decide under historical_record_before_2026_09_10. Step-derived current route id changes during normal graph regeneration."
+    }
+  ],
+  "verification": [
+    {
+      "check": "Archive/main research SHA-256 comparison",
+      "status": "passed",
+      "scope": "Two exact matches; one intentional newer U7 wording in main."
+    },
+    {
+      "check": "Historical paragraph preservation",
+      "status": "passed",
+      "scope": "All three preserved historical paragraph bodies equal git HEAD originals exactly after line-ending normalization."
+    },
+    {
+      "check": "git diff --check",
+      "status": "passed",
+      "scope": "Owned gap-ledger change checked immediately after edit."
+    },
+    {
+      "check": "Focused pytest attempt",
+      "status": "interrupted",
+      "scope": "Attempted focused Feshbach/ledger/result tests; interrupted at parent request before completion. Not a passing test report. Consolidated parent verification is authoritative for this integration."
+    }
+  ],
+  "limitations": [
+    "No Lean build performed by this subagent.",
+    "No new mathematical theorem claimed.",
+    "No generated catalogue edited or regenerated by this subagent.",
+    "No independent fresh replay of all historical controls; parent records consolidated validation and exact publication state.",
+    "All review conclusions are scoped to the three research documents and the dependencies inspected; the other two folders have separate reviewers."
+  ]
+}

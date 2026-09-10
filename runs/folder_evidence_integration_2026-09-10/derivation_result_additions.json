@@ -1,0 +1,37 @@
+{
+  "schema": "folder-result-additions/v1",
+  "results": [
+    {
+      "id": "RESULT:SOURCE_COMPLEMENT_COMPLETE_WINDOW",
+      "statement": "Let D be a positive self-adjoint contraction and J an injective source synthesis map from C^r, with finite r>=1. Set G=J*J, W=J G^-1/2, P=WW*, Q=I-P, A=W*DW, R=QDW and D_Q=QDQ restricted to QH. If A>=a I_r and D_Q<=b I_Q for real b<a, then D has exactly r eigenvalues above b, counted with multiplicity, all at least a, and no spectrum in (b,a). The high spectral projection Pi has rank r and Pi J maps C^r onto its entire range. Moreover ||Pi-P||<=||R||/(a-b).",
+      "hypotheses": [
+        "H is a complex Hilbert space; D is a bounded positive self-adjoint contraction on H.",
+        "The source dimension r is finite and positive, and J:C^r -> H is bounded and injective, so G is positive definite and W is an isometry.",
+        "The lower bound A>=a I_r and upper bound D_Q<=b I_Q hold as operator inequalities with real b<a. The upper bound is on the entire complementary Hilbert space, not on a finite truncation or source-visible subspace."
+      ],
+      "scope": "An abstract complete-window and onto-source theorem, independently valid without the activity theorem or a small off-diagonal hypothesis. The norm estimate uses the Sylvester equation and the separation a-b. Source moments alone do not establish the full-complement premise. Applying this to an actual Wilson family requires that premise, the specified positive transfer/source normalization and any desired uniform parameter bounds. This analytic extraction is not a Lean certification or a thermodynamic/continuum construction.",
+      "source": "CITE:WILSON_EXCITED_OPERATOR_BRIDGE",
+      "source_section": "Section 6, Theorem 6 and equation (18), lines 453-519; full source/complement separation, finite positive inertia, onto projected sources and the Sylvester projection estimate.",
+      "depends_on": [],
+      "bears_on": [
+        "G18",
+        "G19",
+        "RESULT:LITERAL_ENDPOINT_SPECTRAL_COMPARISON",
+        "RESULT:WILSON_UNIFORM_FINITE_SHELL"
+      ],
+      "supported_by": [
+        {
+          "target": "RUN:excited_wilson_window_2026-09-04",
+          "scope": "Preserved analytic source, exact finite source/complement controls and explicit dark-state counterexample. The report does not freshly replay this historical run or turn the infinite-dimensional spectral argument into a finite check."
+        },
+        {
+          "target": "CHK:the-blocked-wilson-transfer-spectral-blo-699747:the-source-moment-identities-of-the-exci-9a82df",
+          "scope": "Exact six-/seven-dimensional leakage-moment and dark-state controls show why complete complement information is necessary. This check does not prove the general spectral theorem or verify an actual Wilson full-complement bound."
+        }
+      ],
+      "status": "proven",
+      "evidence": "analytic"
+    }
+  ],
+  "proof_review": "For lambda in (b,a), D_Q-lambda is strictly negative and the Schur complement A-lambda+R*(lambda-D_Q)^-1 R is strictly positive. Bounded block congruence yields no spectrum in that interval and positive inertia r. Finite-rank perturbation leaves essential spectrum below b; min-max gives exactly r eigenvalues above b and at least a. Projection onto this high space is injective on ran W because a vector invisible to it would have Rayleigh quotient <=b while the source space has quotient >=a; finite dimensions give onto. For X=Q restricted to ran Pi and Y=P restricted to ran Pi, D_Q X-X D_high=-R Y, and the convergent Sylvester integral bounds ||X||<=||R||/(a-b). Equal finite ranks give ||X||=||Pi-P||. No hidden smallness premise on R or activity norm is required."
+}
