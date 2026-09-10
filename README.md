@@ -54,6 +54,10 @@ treating their earlier executions as new mathematical certification.
 
 From an existing checkout, with Python 3.11 or newer and `uv` available:
 
+The queries below illustrate syntax using real graph IDs and values. Replace
+`G19` and the sample search value with targets relevant to your task; these
+examples do not set research priorities.
+
 ```text
 git status --short --branch
 uv sync --all-extras --frozen
@@ -130,6 +134,9 @@ dependencies together. A hash proves which bytes were used; an inventory or
 extraction does not mean those bytes have received mathematical review.
 
 ## Working with the graph
+
+Choose IDs and filters for your task. `C2`, `G19`, and the values below are
+examples, not required targets.
 
 ```text
 uv run --no-sync workhouse search 109151/249696

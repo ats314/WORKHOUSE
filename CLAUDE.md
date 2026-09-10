@@ -225,6 +225,10 @@ prevent that same failure recurring.
 
 ## Commands
 
+Query IDs, search values and filters below are examples. Select them from the
+user's task; `G19` is not a default or required research target. Follow the
+[shared protocol](docs/theory_graph_protocol.md) for target selection and snapshots.
+
 ```bash
 make verify    # run every registered mathematical check (T1/T2)
 make status    # contradiction and gap registers

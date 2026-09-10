@@ -91,6 +91,9 @@ those packages; a summary filename alone does not establish its scope.
 
 From the repository root in the configured environment:
 
+The IDs and filter below illustrate the commands. Replace them with the
+targets relevant to your task; `G18` and `G19` are examples, not mandatory targets.
+
 ```powershell
 uv run --no-sync workhouse brief --startup
 uv run --no-sync workhouse brief G18 G19 --json

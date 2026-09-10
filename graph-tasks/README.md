@@ -6,7 +6,7 @@ agent read, what it established, and what remains. Automated task-record
 validation is not implemented; reviewers check the record against its retained
 snapshots and sources.
 
-Choose a unique name such as `2026-09-10-g19-operator-review.md`. Do not replace
+Choose a unique name such as `2026-09-10-target-review.md`. Do not replace
 an earlier record or snapshot. Record an explicit continuation when a later
 task updates the result.
 
@@ -24,7 +24,9 @@ For each task, retain these fields in a short Markdown record:
 | End snapshot | New briefing path and fingerprint; explain relevant changed inputs or state why no end briefing was available. |
 | Handoff | Established result or failed route, downstream consequence and remaining successor. |
 
-A typical snapshot pair, using a new task identifier in place of `TASK`, is:
+The snapshot pair below uses `G19` as an example. Replace it with the graph ID
+or IDs relevant to the user's task, and replace `TASK` with a new dated task
+identifier. The example does not require work on G19.
 
 ```text
 uv run --no-sync workhouse brief G19 --json --out .graph-state/TASK/start.json

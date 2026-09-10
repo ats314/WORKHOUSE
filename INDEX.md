@@ -29,6 +29,9 @@ briefing contract across agents and retain [manual task records](graph-tasks/REA
 
 With the checkout environment configured, prefix commands with `uv run --no-sync`:
 
+The IDs and search value below are examples. Replace them with those relevant
+to your task; `G19` is not a default or required target.
+
 ```text
 workhouse search '5/612'
 workhouse brief G19 --json

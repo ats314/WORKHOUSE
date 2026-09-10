@@ -17,6 +17,9 @@ Stage your exact paths; avoid bulk staging another agent's work.
 
 From the checkout root, with Python 3.11 or newer and uv available:
 
+The query uses `G19` as an example. Substitute the graph ID relevant to your
+task; the example does not prescribe a research target.
+
 ```text
 uv sync --all-extras --frozen
 uv run --no-sync workhouse --help
