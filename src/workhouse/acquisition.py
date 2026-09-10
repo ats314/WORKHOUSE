@@ -103,6 +103,8 @@ def browser_links(record: dict[str, Any]) -> list[tuple[str, str]]:
             )
     if record.get("inspire_recid"):
         links.append(("inspire", f"https://inspirehep.net/literature/{record['inspire_recid']}"))
+    if lit_mod.valid_source_url(record.get("source_url")):
+        links.append(("source", record["source_url"]))
     return links
 
 

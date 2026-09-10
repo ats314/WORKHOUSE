@@ -1,0 +1,309 @@
+{
+  "schema": "workhouse-formalization-mapping/v1",
+  "module": "lean/Workhouse/PlateauObstruction.lean",
+  "module_sha256": "8a60bda557a08edc88480cfb4cb619533001e0708027e45c65fcac5f58827b62",
+  "namespace": "Workhouse.PlateauObstruction",
+  "verification": {
+    "command": "lake env lean -DwarningAsError=true --stdin (module source followed by #print axioms for all 14 theorem names)",
+    "exit_code": 0,
+    "all_theorems_compiled": true,
+    "theorems": 14,
+    "sorry": false,
+    "new_axioms": false,
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "audit": "plateau_axioms.log",
+    "global_lake_build_by_agent": false
+  },
+  "coverage": "Exact scalar minimization and a positive two-mode correlation obstruction. Scoped support of source group R4_R5; no project-tier promotion.",
+  "remaining": [
+    "Instantiate the source R1 upper bound from an actual operator spectral measure.",
+    "Formalize the E=0 spectral atom limit.",
+    "The continuous two-mode witness proves the plateau obstruction; the literal source transfer T=diag(1,15/16,3/4), vacuum and observable representation are not constructed in this module."
+  ],
+  "theorems": [
+    {
+      "name": "Workhouse.PlateauObstruction.stationary_global_minimum",
+      "line": 20,
+      "scope": "For positive A and plateau, the explicit derivative-balance equation implies global minimization of the exponential objective over all real times; no minimum is assumed.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 4. What a localization plateau actually proves"
+        }
+      ],
+      "derivation_ids": [
+        "DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.PlateauObstruction.logarithmic_time_is_stationary",
+      "line": 47,
+      "scope": "For A, plateau, a, b positive, t0=log(A*a/(plateau*b))/(a+b) satisfies the exact stationary balance.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 4. What a localization plateau actually proves"
+        }
+      ],
+      "derivation_ids": [
+        "DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.PlateauObstruction.admissible_logarithmic_minimum",
+      "line": 71,
+      "scope": "Under plateau*b <= A*a and positivity, the logarithmic optimum is nonnegative and minimizes the objective over nonnegative physical times.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 4. What a localization plateau actually proves"
+        }
+      ],
+      "derivation_ids": [
+        "DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.PlateauObstruction.endpoint_minimum",
+      "line": 87,
+      "scope": "If A*a <= plateau*b, the constrained objective is bounded below by its attained time-zero value A+plateau.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 4. What a localization plateau actually proves"
+        }
+      ],
+      "derivation_ids": [
+        "DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.PlateauObstruction.interior_minimum_value",
+      "line": 99,
+      "scope": "The exact attained logarithmic minimum equals ((a+b)/a)*plateau*(A*a/(plateau*b))^(b/(a+b)), with every positive-factor condition explicit.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 4. What a localization plateau actually proves"
+        }
+      ],
+      "derivation_ids": [
+        "DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.PlateauObstruction.theta_minimum_value",
+      "line": 122,
+      "scope": "The exact R5 power formula A^theta*plateau^(1-theta)/(theta^theta*(1-theta)^(1-theta)) for positive A, plateau and 0<theta<1.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 4. What a localization plateau actually proves"
+        }
+      ],
+      "derivation_ids": [
+        "DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.PlateauObstruction.bound_time_rescaling",
+      "line": 142,
+      "scope": "Exact conversion between physical time and dimensionless time for E=eta*theta and nonzero eta.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 4. What a localization plateau actually proves"
+        }
+      ],
+      "derivation_ids": [
+        "DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.PlateauObstruction.physical_time_minimum_value",
+      "line": 150,
+      "scope": "The exact R5 value at physical time log(A*(1-theta)/(plateau*theta))/eta, for positive eta and 0<theta<1; time admissibility is separately proved.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 4. What a localization plateau actually proves"
+        }
+      ],
+      "derivation_ids": [
+        "DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.PlateauObstruction.r4_r5_interior_optimum",
+      "line": 162,
+      "scope": "Combines the explicit threshold, nonnegative optimizer, attained R5 formula, and global minimization over every nonnegative physical time.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 4. What a localization plateau actually proves"
+        }
+      ],
+      "derivation_ids": [
+        "DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.PlateauObstruction.r4_r5_optimized_upper_bound",
+      "line": 194,
+      "scope": "Given the spectral scalar upper bound for every nonnegative time as an explicit premise, the proved optimizer implies the exact R5 mass bound. Does not assert an operator spectral representation.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 4. What a localization plateau actually proves"
+        }
+      ],
+      "derivation_ids": [
+        "DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.PlateauObstruction.slow_mode_fits_positive_plateau",
+      "line": 213,
+      "scope": "The actual two-exponential correlation is positive and is bounded by fast decay plus its nonnegative slow-mode weight for all nonnegative times.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 4. What a localization plateau actually proves"
+        }
+      ],
+      "derivation_ids": [
+        "DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.PlateauObstruction.rescaled_correlation_identity",
+      "line": 228,
+      "scope": "Exact faster-rate rescaling of the positive two-mode correlation exposes weight*exp((fast-slow)*t)+1.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 4. What a localization plateau actually proves"
+        }
+      ],
+      "derivation_ids": [
+        "DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.PlateauObstruction.positive_slow_mode_prevents_faster_bound",
+      "line": 239,
+      "scope": "Any positive slow spectral weight with slow<fast defeats every finite nonnegative faster-decay prefactor at an explicitly constructed nonnegative time.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 4. What a localization plateau actually proves"
+        }
+      ],
+      "derivation_ids": [
+        "DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.PlateauObstruction.arbitrarily_small_plateau_obstruction",
+      "line": 266,
+      "scope": "For every positive plateau and positive proposed fast rate, constructs positive weight below the plateau and positive slow energy below fast; the resulting positive two-mode correlation satisfies the plateau bound for all times and defeats every faster prefactor.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 4. What a localization plateau actually proves"
+        }
+      ],
+      "derivation_ids": [
+        "DERIV:YANGMILLS_RECONSTRUCTION:R4_R5"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ]
+}

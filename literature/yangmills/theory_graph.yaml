@@ -1,0 +1,284 @@
+schema: literature-study/v1
+title: Jaffe-Witten Yang-Mills requirements and geometric research routes
+nodes:
+  - id: STUDY:YM:target
+    statement: Construct nontrivial four-dimensional quantum Yang-Mills theory with a finite positive mass gap for every compact simple gauge group.
+    status: open
+    detail: The target is the problem on PDF page 6. Its component obligations are separate graph nodes; this reading does not modify any existing certificate or gap verdict.
+    sources: [{paper: JW_2006, locator: 'p. 6, section 4, problem statement'}]
+    links:
+      - {type: depends_on, target: 'STUDY:YM:group-scope', detail: The quantifier includes every compact simple gauge group.}
+      - {type: depends_on, target: 'STUDY:YM:axioms', detail: Existence includes an appropriate quantum-field axiom system.}
+      - {type: depends_on, target: 'STUDY:YM:local-observables', detail: Local fields must represent gauge-invariant curvature polynomials and derivatives.}
+      - {type: depends_on, target: 'STUDY:YM:uv-matching', detail: Short-distance behavior must identify the constructed theory as Yang-Mills.}
+      - {type: depends_on, target: 'STUDY:YM:nontriviality', detail: A trivial continuum limit does not meet the target.}
+      - {type: depends_on, target: 'STUDY:YM:physical-gap', detail: The positive gap concerns the Hamiltonian of the constructed quantum theory.}
+      - {type: bears_on, target: G19, detail: This is the external specification for the continuum endpoint.}
+  - id: STUDY:YM:group-scope
+    statement: The Clay quantifier ranges over compact simple gauge groups; a result for SU(N) has its explicitly stated group scope.
+    status: open
+    detail: A uniform SU(N) result is a substantial family. Extending it to other classical and exceptional simple groups requires the corresponding representation and analytic input; no extension is inferred from the notation N.
+    sources: [{paper: JW_2006, locator: 'p. 6, section 4'}]
+    links: [{type: bears_on, target: G19, detail: Records the group quantifier of the desired continuum theorem.}]
+  - id: STUDY:YM:axioms
+    statement: A Yang-Mills construction must establish quantum-field axioms at least as strong as the cited Wightman and Osterwalder-Schrader frameworks.
+    status: open
+    detail: The source explicitly points to references [45] and [35]. The selected framework must cover its actual domain and regularity hypotheses.
+    sources: [{paper: JW_2006, locator: 'pp. 5-6, sections 3-4; refs. [35], [45]'}]
+    links:
+      - {type: depends_on, target: 'STUDY:YM:hilbert-vacuum', detail: The representation has a physical Hilbert space and invariant vacuum.}
+      - {type: depends_on, target: 'STUDY:YM:locality-covariance', detail: Locality and spacetime covariance are part of the field-theory structure.}
+      - {type: bears_on, target: G23, detail: Constrains the reconstruction endpoint of the OS bridge.}
+  - id: STUDY:YM:hilbert-vacuum
+    statement: The physical representation has positive energy and a Poincare-invariant vacuum with zero energy.
+    status: open
+    detail: Page 5 describes uniqueness of the vacuum up to phase; page 6 defines the gap using the spectrum of H. Constructing a finite-dimensional operator is an input to, rather than the entirety of, this representation task.
+    sources: [{paper: JW_2006, locator: 'p. 5, section 3; p. 6, section 4'}]
+    links: [{type: bears_on, target: G18, detail: The spectral bridge must identify the physical representation and its vacuum.}]
+  - id: STUDY:YM:locality-covariance
+    statement: The physical local fields transform covariantly and commute at spacelike separation in the bosonic theory.
+    status: open
+    detail: These properties must hold for the limiting fields on spacetime. Lattice symmetry and locality supply finite-regulator structure whose continuum relation must be established.
+    sources: [{paper: JW_2006, locator: 'p. 5, section 3'}]
+    links: [{type: bears_on, target: G19, detail: Records locality and covariance obligations in the continuum limit.}]
+  - id: STUDY:YM:local-observables
+    statement: Local quantum fields should correspond to gauge-invariant local polynomials in curvature and covariant derivatives.
+    status: open
+    detail: The source gives Tr(F_ij F_kl)(x) as an example. WORKHOUSE must identify which continuum local observable its lattice carrier approaches, with its actual normalization and nonzero overlap.
+    sources: [{paper: JW_2006, locator: 'p. 6, section 4, first paragraph and footnote 1'}]
+    links: [{type: bears_on, target: G18, detail: Connects the carrier construction to the local observable requirement.}]
+  - id: STUDY:YM:uv-matching
+    statement: Short-distance correlation functions must have the prescribed asymptotic-freedom and renormalization behavior.
+    status: open
+    detail: The source includes a stress tensor and operator-product singularities in this identification. This is a matching obligation on the limiting observables, not just the sign of a perturbative beta function.
+    sources: [{paper: JW_2006, locator: 'p. 6, section 4; p. 2, refs. [21], [38]'}]
+    links: [{type: bears_on, target: G19, detail: Connects the scaling window to the physical Yang-Mills identification.}]
+  - id: STUDY:YM:nontriviality
+    statement: The continuum construction must retain a nontrivial quantum field theory.
+    status: open
+    detail: The problem explicitly requires nontriviality. Scalar triviality results discussed on page 9 concern other models and are comparisons of construction methods, not a refutation of a gauge-theory result.
+    sources: [{paper: JW_2006, locator: 'p. 6, section 4; p. 9, section 6.2'}]
+    links: [{type: bears_on, target: G19, detail: Existence of limiting expectations must be accompanied by properties identifying a nontrivial theory.}]
+  - id: STUDY:YM:physical-gap
+    statement: The physical Hamiltonian has no spectrum between zero and a positive threshold, and the maximal threshold is finite.
+    status: open
+    detail: Page 6 defines the gap for H with H Omega = 0 and requires finite mass. This is a statement about the entire positive-energy spectrum of the constructed theory.
+    sources: [{paper: JW_2006, locator: 'p. 6, section 4, spectral definition'}]
+    links:
+      - {type: depends_on, target: 'STUDY:YM:hilbert-vacuum', detail: The spectrum belongs to the physical vacuum representation.}
+      - {type: depends_on, target: 'STUDY:YM:sector-completeness', detail: A gap in a selected sector alone cannot exclude lower excitations elsewhere.}
+      - {type: bears_on, target: G18, detail: The physical spectral identification is the endpoint of G18.}
+      - {type: bears_on, target: G19, detail: The gap must survive in the constructed continuum theory.}
+  - id: STUDY:YM:sector-completeness
+    statement: A selected-band or symmetry-sector gap needs a comparison with the full vacuum-orthogonal physical space before it supplies the Clay mass gap.
+    status: open
+    detail: >-
+      Repository inference from the source's full-spectrum definition: an isolated charge-odd band can establish a carrier excitation and remain compatible with a lower excitation in another sector. A full-space bound or exhaustive comparison would close this step.
+    sources: [{paper: JW_2006, locator: 'p. 6, section 4, definition using the spectrum of H'}]
+    links: [{type: bears_on, target: G18, detail: Specifies the operator-space comparison required beyond a selected carrier.}]
+  - id: STUDY:YM:clustering
+    statement: A physical mass gap gives exponential decay of suitably centered local correlations under the source's QFT hypotheses.
+    status: conditional
+    detail: Page 6 gives a large-distance bound for rates below the gap. Using clustering in the reverse direction requires an adequate observable class and reconstruction hypotheses; one correlator is not an automatic full-spectrum bound.
+    sources: [{paper: JW_2006, locator: 'p. 6, section 5, equation (2)'}]
+    links:
+      - {type: depends_on, target: 'STUDY:YM:physical-gap', detail: This is the implication explicitly stated in the source.}
+      - {type: bears_on, target: G23, detail: Identifies the physical correlations that a bridge must control.}
+  - id: STUDY:YM:finite-lattice
+    statement: Compact-group lattice regularization at finite spacetime volume reduces the functional integral to finitely many group integrations.
+    status: conditional
+    detail: This supplies a concrete gauge-invariant approximation from which controlled limits can start; it does not itself perform either limit.
+    sources: [{paper: JW_2006, locator: 'p. 11, section 6.5, Wilson approximation'}]
+    links: [{type: bears_on, target: G17, detail: Establishes the finite-regulator setting for uniform estimates.}]
+  - id: STUDY:YM:wilson-rp
+    statement: The Wilson lattice approximation preserves reflection positivity.
+    status: conditional
+    detail: Jaffe-Witten attributes this property to [36]. Any changed action, blocking map, observable restriction, or transfer construction must carry its own preservation argument.
+    sources: [{paper: JW_2006, locator: 'p. 11, section 6.5; ref. [36]'}]
+    links:
+      - {type: depends_on, target: 'STUDY:YM:finite-lattice', detail: The cited statement concerns the Wilson approximation.}
+      - {type: bears_on, target: G23, detail: Supplies the starting positivity condition for an OS route.}
+  - id: STUDY:YM:os-reconstruction
+    statement: Appropriate Euclidean field axioms permit reconstruction of a Lorentzian quantum theory.
+    status: conditional
+    detail: Reflection positivity is one ingredient. Regularity, covariance, and the other hypotheses of the chosen reconstruction theorem must be carried with the limiting fields.
+    sources: [{paper: JW_2006, locator: 'p. 5, section 3; refs. [13], [33], [35], [46]'}]
+    links:
+      - {type: depends_on, target: 'STUDY:YM:wilson-rp', detail: In the Wilson route the regulator supplies reflection positivity.}
+      - {type: depends_on, target: 'STUDY:YM:observable-limits', detail: Reconstruction must apply to the limiting Euclidean observables.}
+      - {type: bears_on, target: G23, detail: Names the precise endpoint and its hypotheses.}
+  - id: STUDY:YM:observable-limits
+    statement: The lattice construction needs controlled limits of gauge-invariant expectations as spacing vanishes and volume increases.
+    status: open
+    detail: The two limits and their retained properties are distinct obligations. A joint limit or an iterated limit requires an explicit argument appropriate to the estimates proved.
+    sources: [{paper: JW_2006, locator: 'p. 11, section 6.5'}]
+    links:
+      - {type: depends_on, target: 'STUDY:YM:uv-control', detail: The cutoff must be removed with quantitative control.}
+      - {type: depends_on, target: 'STUDY:YM:volume-control', detail: The infinite-volume limit needs uniform estimates.}
+      - {type: bears_on, target: G19, detail: Specifies the gauge-invariant convergence object.}
+  - id: STUDY:YM:uv-control
+    statement: Ultraviolet estimates must remain controlled as the lattice spacing tends to zero.
+    status: open
+    detail: The Balaban discussion distinguishes effective-action estimates from the needed control of gauge-invariant expectations. The continuum-regularization route in [29] has its own infrared cutoff.
+    sources: [{paper: JW_2006, locator: 'pp. 11-12, section 6.5; refs. [2], [3], [29], [39]'}]
+    links: [{type: bears_on, target: G19, detail: Connects constructive ultraviolet control to continuum observables.}]
+  - id: STUDY:YM:volume-control
+    statement: A volume-uniform positive gap is a central proposed input for passage from a compact four-dimensional spacetime to R4.
+    status: open
+    detail: Page 12 presents this as a program requiring new ideas. The source is a historical specification of the task; current WORKHOUSE checks and routes provide the current local evidence.
+    sources: [{paper: JW_2006, locator: 'p. 6, section 5; p. 7, section 6; p. 12, section 6.5'}]
+    links:
+      - {type: bears_on, target: G17, detail: Volume-uniform free-energy and expansion control can feed the construction.}
+      - {type: bears_on, target: G18, detail: A spectral estimate needs constants uniform in the volume.}
+      - {type: bears_on, target: G19, detail: The endpoint is the theory on R4.}
+  - id: STUDY:YM:compactness-properties
+    statement: Weak compactness alone needs additional control proving the required properties of the limiting theory.
+    status: open
+    detail: Footnote 2 on page 12 explicitly requires properties such as the gap and axioms in addition to weak existence. Compactness remains an available component when those properties are established.
+    sources: [{paper: JW_2006, locator: 'p. 12, footnote 2'}]
+    links: [{type: bears_on, target: G19, detail: Identifies what must accompany a subsequence or compactness construction.}]
+  - id: STUDY:YM:convergent-expansion
+    statement: A constructive expansion needs quantitative estimates on its terms sufficient to prove convergence and the desired correlation properties.
+    status: open
+    detail: Exact low-order coefficients are usable inputs. The further step is a controlled tail and a domain of convergence with the needed regulator and volume dependence.
+    sources: [{paper: JW_2006, locator: 'pp. 7-8, section 6.1'}]
+    links:
+      - {type: bears_on, target: G17, detail: Connects exact linked-cluster inputs to the free-energy stability task.}
+      - {type: bears_on, target: G19, detail: Records the further scaling-window requirement.}
+  - id: STUDY:YM:correlation-inequalities
+    statement: Correlation inequalities require interaction-specific hypotheses before they can be used for nonabelian gauge observables.
+    status: conditional
+    detail: Page 8 notes that many inequalities apply only to scalar or abelian interactions. Consult G19's recorded routes before proposing a monotonicity argument already tested there.
+    sources: [{paper: JW_2006, locator: 'pp. 7-8, section 6.1'}]
+    links: [{type: bears_on, target: G19, detail: Supports checking the hypotheses of proposed monotonicity tools.}]
+  - id: STUDY:YM:scalar-comparison
+    statement: Lower-dimensional scalar constructions supply examples of controlled limits, mass gaps, and scattering in interacting QFT.
+    status: conditional
+    detail: References [10], [15]-[23], [26], [32], and [37] are methodological comparison sources. Their dimension, field content, and phase hypotheses must accompany any imported argument.
+    sources: [{paper: JW_2006, locator: 'pp. 8-10, sections 6.2-6.3'}]
+    links: [{type: bears_on, target: G19, detail: Supplies constructive-method comparisons without importing scalar numerical constants.}]
+  - id: STUDY:YM:higgs-comparison
+    statement: Gauge-Higgs constructions provide a distinct comparison family for gauge-invariant measures and mass-gap estimates.
+    status: conditional
+    detail: Pages 10-11 discuss models with matter, particularly a two-dimensional abelian Higgs model and references [4], [7]. Transferring a technique to pure four-dimensional Yang-Mills requires addressing changed field content and dimension.
+    sources: [{paper: JW_2006, locator: 'pp. 10-11, section 6.4; refs. [4], [7]'}]
+    links: [{type: bears_on, target: G23, detail: Provides comparison constructions with reconstruction and gap estimates.}]
+  - id: STUDY:YM:duality-route
+    statement: A suitable nonclassical change of variables could expose a mass-generating mechanism hidden in the classical Yang-Mills variables.
+    status: conditional
+    detail: Section 6.6 proposes this route and cites Debye screening as an example. For WORKHOUSE a proposed transform needs a defined inverse or equivalent observable construction, the measure, and a physical operator correspondence.
+    sources: [{paper: JW_2006, locator: 'p. 12, section 6.6, first paragraph; ref. [6]'}]
+    links: [{type: bears_on, target: G18, detail: A transformed gap becomes relevant through its physical operator correspondence.}]
+  - id: STUDY:YM:debye-screening
+    statement: The Coulomb-gas to sine-Gordon relation is a model example of deriving screening through transformed variables.
+    status: conditional
+    detail: The example cited on page 12 supplies a method and a comparison task. Establishing an analogous transform for the specified nonabelian theory is a separate mathematical construction.
+    sources: [{paper: JW_2006, locator: 'p. 12, section 6.6; ref. [6]'}]
+    links: [{type: bears_on, target: 'STUDY:YM:duality-route', detail: This is the source's explicit example motivating the route.}]
+  - id: STUDY:YM:quartic-route
+    statement: The nonabelian quartic magnetic potential is a proposed ingredient in a quantum mass-generating mechanism.
+    status: conditional
+    detail: Jaffe-Witten cites Feynman's 2+1-dimensional work [11]. The correct comparison requires the dimension, coupling normalization, physical Hilbert space, and kinetic term.
+    sources: [{paper: JW_2006, locator: 'p. 12, section 6.6, second paragraph; ref. [11]'}]
+    links:
+      - {type: depends_on, target: 'STUDY:YM:flat-directions', detail: The classical potential has flat directions that the quantum analysis must address.}
+      - {type: bears_on, target: G22, detail: Connects coercivity questions to the full gauge-coupled potential.}
+  - id: STUDY:YM:orbit-curvature
+    statement: Curvature of the space of connections is an explicitly cited possible source of a Yang-Mills gap.
+    status: conditional
+    detail: Page 12 cites Singer [44]. This is a concrete geometric research lineage. Applying it to a WORKHOUSE Hessian requires identifying the quotient metric and the relevant physical operator, then proving the required curvature bound on its domain.
+    sources: [{paper: JW_2006, locator: 'p. 12, section 6.6, second paragraph; ref. [44]'}]
+    links:
+      - {type: depends_on, target: 'STUDY:YM:operator-identification', detail: A geometric estimate must concern the operator whose gap is sought.}
+      - {type: bears_on, target: G20, detail: Connects the SAFE curvature program to the external geometric route.}
+      - {type: bears_on, target: G23, detail: The physical gap requires a justified bridge from the geometric estimate.}
+  - id: STUDY:YM:flat-directions
+    statement: Classical flat directions can coexist with discrete quantum spectrum in suitable quantum-mechanical models.
+    status: conditional
+    detail: The source cites Simon [43]. This blocks an inference from classical flatness alone to absence of quantum confinement; the kinetic contribution, transverse modes, and domain matter. It does not decide the spectrum of an unspecified Yang-Mills operator.
+    sources: [{paper: JW_2006, locator: 'p. 12, section 6.6, second paragraph; ref. [43]'}]
+    links:
+      - {type: bears_on, target: G22, detail: Identifies why classical flat directions need a quantum analysis.}
+      - {type: bears_on, target: G18, detail: Suggests checking the full physical operator near a classical degeneracy.}
+  - id: STUDY:YM:operator-identification
+    statement: Curvature, diffusion, transfer-matrix, and Hamiltonian estimates require an explicit correspondence before their spectral constants can be compared.
+    status: open
+    detail: Repository synthesis connecting the source's physical Hamiltonian and Euclidean reconstruction discussion to G23's recorded time-splice problem. Specify measure, domain, ground-state transform, time normalization, and any compression or projection.
+    sources: [{paper: JW_2006, locator: 'p. 5, section 3; p. 6, section 4; p. 11, section 6.5'}]
+    links:
+      - {type: bears_on, target: G23, detail: Names the correspondence required by the existing OS time-splice task.}
+      - {type: bears_on, target: G18, detail: Names the physical-operator identification required by the spectral bridge.}
+  - id: STUDY:YM:uniform-curvature
+    statement: A curvature-based route must track regulator and volume dependence of its constants through every proposed implication.
+    status: open
+    detail: Repository synthesis of the curvature proposal and the source's uniform-gap requirement. A local positive bound may be a valid input while a global weighted inequality or uniform physical bound remains to be proved.
+    sources: [{paper: JW_2006, locator: 'p. 12, sections 6.5-6.6'}]
+    links:
+      - {type: depends_on, target: 'STUDY:YM:orbit-curvature', detail: Starts from a well-defined geometric estimate.}
+      - {type: depends_on, target: 'STUDY:YM:operator-identification', detail: Constants must be transported through the actual operator comparison.}
+      - {type: bears_on, target: G20, detail: Makes the domain and scale dependence of local curvature explicit.}
+      - {type: bears_on, target: G23, detail: Connects a curvature estimate to the uniform OS-bridge task.}
+  - id: STUDY:YM:large-n-route
+    statement: Large-N and string-duality ideas form another proposed route with a distinct quantifier and field-content scope.
+    status: conditional
+    detail: Page 12 cites [25], [31], and [41]. A large-N asymptotic result and examples with supersymmetry or matter require additional arguments to establish a theorem for every finite-rank pure compact simple theory.
+    sources: [{paper: JW_2006, locator: 'p. 12, section 6.6, final paragraph'}]
+    links: [{type: bears_on, target: G19, detail: Records the finite-rank and pure-theory matching tasks for a large-N route.}]
+  - id: STUDY:YM:confinement-scope
+    statement: The source distinguishes the mass-gap problem from broader QCD questions involving quark confinement and chiral symmetry breaking.
+    status: conditional
+    detail: Page 3 lists three physical properties, while page 6 states the pure Yang-Mills existence and gap problem. A string-tension result remains a separately defined observable whose relation to the physical spectral gap needs an argument.
+    sources: [{paper: JW_2006, locator: 'p. 3, section 1; p. 6, section 4; p. 7, section 5'}]
+    links: [{type: bears_on, target: G18, detail: Keeps confinement observables and vacuum excitation thresholds identifiable.}]
+  - id: STUDY:YM:historical-status
+    statement: The document's assessments of unfinished constructions describe its historical state of knowledge.
+    status: conditional
+    detail: The attached PDF matches the official hosted bytes. Its comments motivate source acquisition and proof tasks; they do not adjudicate later Lean checks, exact calculations, or new constructions. Current local status comes from the repository's live graph and checks.
+    sources: [{paper: JW_2006, locator: 'pp. 7, 11-12, sections 6 and 6.5-6.6'}]
+    links: [{type: bears_on, target: G19, detail: Keeps historical context separate from current verification evidence.}]
+  - id: STUDY:YM:weighted-curvature
+    statement: The later orbit-space route incorporates the ground-state weight into a Bakry-Emery curvature estimate.
+    status: conditional
+    detail: Moncrief-Marini-Maitra incorporate the magnetic potential through the ground-state functional. Applying this method requires identifying that functional and its weighted operator in the model being studied.
+    sources: [{paper: MMM_2019_CURVATURE, locator: 'PDF pp. 1-2, abstract'}]
+    links:
+      - {type: depends_on, target: 'STUDY:YM:operator-identification', detail: The weight and generator must match the physical operator.}
+      - {type: bears_on, target: 'STUDY:YM:orbit-curvature', detail: Develops the geometric mechanism identified by Singer and cited by Jaffe-Witten.}
+      - {type: bears_on, target: G20, detail: Supplies a weighted geometric comparison for curvature bounds.}
+      - {type: bears_on, target: G23, detail: Identifies the ground-state weight as part of the operator bridge.}
+  - id: STUDY:YM:geometric-conditional-gap
+    statement: Mondal's geometric gap argument explicitly assumes quantization and positivity of regularized Bakry-Emery curvature.
+    status: conditional
+    detail: The abstract labels the calculation at least heuristic and leaves rigorous understanding of the four-dimensional scale identification open. Its hypotheses give a comparison target for the local geometric program.
+    sources: [{paper: MONDAL_2023_GEOMETRIC, locator: 'v7 PDF p. 1, abstract; section 1, Theorem 1.1'}]
+    links:
+      - {type: depends_on, target: 'STUDY:YM:weighted-curvature', detail: Uses weighted curvature in a regularized spectral estimate.}
+      - {type: bears_on, target: G20, detail: Compare the precise positivity hypotheses with the curvature certificate.}
+      - {type: cannot_decide, target: G19, detail: The cited conditional calculation assumes a quantized theory rather than constructing the full Clay endpoint.}
+  - id: STUDY:YM:matrix-commutator-model
+    statement: Simon proves discrete spectrum for a finite-dimensional compact-semisimple commutator-square matrix Hamiltonian.
+    status: conditional
+    detail: Section 7, Theorem 3 and Corollary 4 treat the operator in equation (3), for at least two Lie-algebra variables. This is a direct quantum-mechanical gauge-model comparison with classical flat directions; spatial field modes and regulator limits require further analysis.
+    sources: [{paper: SIMON_1983_DISCRETE, locator: 'article pp. 211, 216-217; equation (3), Theorem 3, Corollary 4'}]
+    links:
+      - {type: bears_on, target: 'STUDY:YM:flat-directions', detail: Supplies the concrete finite-dimensional gauge-model example.}
+      - {type: bears_on, target: G22, detail: Motivates analysis of kinetic confinement near nonabelian potential valleys.}
+      - {type: cannot_decide, target: G19, detail: The finite-dimensional model does not perform a continuum field-theory construction.}
+  - id: STUDY:YM:os-hypothesis-repair
+    statement: Osterwalder-Schrader's second paper corrects and extends the reconstruction hypotheses of the first paper.
+    status: conditional
+    detail: The 1975 introduction identifies a failed lemma and replacement regularity conditions. Any reconstruction argument should specify a valid theorem and its actual hypotheses, including growth conditions.
+    sources: [{paper: OS_1975, locator: 'article p. 282, discussion of Lemma 8.8; chapter IV, linear-growth reconstruction'}]
+    links:
+      - {type: bears_on, target: 'STUDY:YM:os-reconstruction', detail: Makes the reconstruction theorem version and hypothesis repair explicit.}
+      - {type: supported_by, target: 'LIT:OS_1973', detail: The earlier paper is the primary source being corrected and extended.}
+      - {type: bears_on, target: G23, detail: Provides a precise source check for the OS bridge hypotheses.}
+  - id: STUDY:YM:fixed-infrared-construction
+    statement: Magnen-Rivasseau-Seneor study ultraviolet removal for a fixed-infrared-cutoff pure SU(2) theory in the trivial topological sector.
+    status: conditional
+    detail: The introduction states that not all convergence proofs are given in full detail. Large gauge transformations, infrared removal, and the full OS axioms are left outside the construction; the Slavnov identities discussion is also described as a sketch. These explicit qualifications identify concrete continuation tasks.
+    sources: [{paper: MRS_1993, locator: 'printed pp. 326-327, introduction; pp. 377-378, equation VIII.6 and following discussion'}]
+    links:
+      - {type: bears_on, target: 'STUDY:YM:uv-control', detail: Supplies a source for a continuum regularization route and its actual construction scope.}
+      - {type: bears_on, target: 'STUDY:YM:os-reconstruction', detail: Identifies reconstruction properties left for further work.}
+      - {type: bears_on, target: G19, detail: Separates ultraviolet progress from infrared removal and the full existence target.}

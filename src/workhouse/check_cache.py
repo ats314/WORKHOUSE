@@ -49,6 +49,7 @@ INPUT_TREES = (
     "notes",
     "theory",
     "docs/decisions",
+    "docs/derivations",
     "lean",
     "verify_core.py",
     "corpus-import/SHA256SUMS",

@@ -10,7 +10,7 @@ module asks the next question, the one U3 asks in general: **what does the
 Feshbach complement Q see?** The answer here is exact and, on the cubic
 geometry, complete.
 
-At each Bloch point the three-dimensional plaquette fibre splits as
+At each Bloch point with q > 0 the three-dimensional plaquette fibre splits as
 
     C psi  (+)  psi^perp  =  ker L_down  (+)  ker L_up,
 
@@ -25,13 +25,12 @@ in the kernel is ``-2 C_shp`` -- the coefficient the C2 dispute is about.
 Two exact consequences, computed here as Laurent identities over the whole
 zone, no tolerance:
 
-1. The tier collapse is an R-degree statement. Write the carrier symbol of a
-   word W as ``sigma(W) = psi^dagger W psi``. Every word with at most one R
-   factorizes completely -- ``sigma(W) = q prod eps(g)`` over its letters --
-   and the resulting symbols lie in ``{q^n, q^n e_2/q}``: the ``c_0``, ``A``
-   and ``4C`` tiers of the shape ansatz and nothing else. ``e_3`` is not
-   reachable. The fourth-order kernel is linear in R, so ``B = D = 0`` is
-   forced, with nothing to cancel.
+1. The actual fourth-order support {I, U, S, S^2, R} has carrier symbols
+   in span{q, q^2, e_2}, so B = D = 0. R-degree alone is insufficient:
+   sigma(UR) = -2 q e_2 populates B despite containing only one R. The
+   original broader assertion and checker are preserved in the intake run.
+   This module verifies the one-R word formula for lengths at most three,
+   then distinguishes it from the stronger claim about the actual kernel.
 
 2. Two R insertions unlock the ``L^-4`` tier, in a fixed ratio.
    ``sigma(RR) = q e_2 + 3 e_3`` exactly, so the ``R^2`` channel carries the
@@ -44,7 +43,9 @@ shape ansatz. U2 says the obstruction space is spanned by elementary symmetric
 polynomials and nothing else appears; the algebra that produced the
 fourth-order kernel contains a word that violates that at sixth order. Whether
 the sixth-order dynamics populates that word is G9/G10's question -- this
-module does not claim it does.
+module does not claim it does. The cleared Laurent identities also hold at
+Gamma, where q = 0 and psi = 0, but no normalized carrier projector is defined
+there by this calculation.
 
 ADR 0005 is the reason the last paragraph is phrased that way. A degree bound
 was once read off a vertex count, predicted the ``L^-4`` tier first at sixth
@@ -63,7 +64,7 @@ from ._core import _suite
 
 hodge = _suite("the Feshbach channel of the plaquette Hodge algebra")
 
-_SEC = "G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2"
+_SEC = "HODGE_FESHBACH; G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2"
 
 _REACH = 3
 
@@ -135,7 +136,9 @@ def _sub(a, b):
 # -- 1. the splitting ----------------------------------------------------------
 
 
-@hodge.check("Q is the projector onto ker L_up: the fibre splits as ker L_down + ker L_up", _SEC)
+@hodge.check(
+    "for q > 0, Q projects onto ker L_up; the cleared Hodge identities hold everywhere", _SEC
+)
 def _():
     # L_down + L_up is the scalar Laplacian q I per plane component -- no
     # cross-plane entries survive the sum -- so on the three-dimensional fibre
@@ -148,14 +151,28 @@ def _():
     diagonal = {k: v for k, v in total.items() if k[0] == k[1]}
     e1, _e2, _e3 = _elementary()
     scalar = {(p, p, d): c for p in KO.PLANES for d, c in e1.items()}
-    ok = total == diagonal and total == scalar and not KO.compose(l_down, l_up)
+    psi = _psi()
+    outer = {
+        (ip, op, d): value
+        for ip in KO.PLANES
+        for op in KO.PLANES
+        for d, value in KO._mul(psi[op], _conj(psi[ip])).items()
+    }
+    ok = (
+        total == diagonal
+        and total == scalar
+        and not KO.compose(l_down, l_up)
+        and l_up == outer
+        and _ip(psi, psi) == e1
+    )
     return (
         ok,
         (
             f"L_down + L_up has {len(total)} records, all plane-diagonal, and equals q I "
             f"exactly (q = e_1 = sum_j 4 sin^2(k_j/2)); L_down L_up = 0. So on the fibre "
-            "L_up = q I - L_down, the two kernels are complementary, and Q = 1 - P_psi is "
-            "the orthogonal projector onto ker L_up"
+            "L_up = psi psi^dagger and |psi|^2 = q. For q > 0 the two kernels are "
+            "complementary and Q = 1 - P_psi projects onto ker L_up. At Gamma q = 0, "
+            "psi = 0: only the cleared identities apply, not the normalized projector"
         ),
         {"HODGE_FIBRE_DIM": Fraction(3)},
     )
@@ -235,7 +252,7 @@ def _table(max_len: int = 3):
 @hodge.check("the Feshbach defect of a word vanishes unless two R's meet unseparated by U", _SEC)
 def _():
     # The exact selection rule. sigma(W) factorizes over the letters -- i.e.
-    # the word never leaves the carrier -- for every word of length <= 3 except
+    # its total carrier symbol factorizes -- for every word of length <= 3 except
     # RR, RRS, SRR, RSR, RRU, URR, RRR. RUR factorizes and RSR does not,
     # because the intermediate letter acts on phi, and L_up phi = 0 while
     # S phi does not vanish. So it is not "two R's" that costs: it is two R's
@@ -261,19 +278,15 @@ def _():
     )
 
 
-@hodge.check("one R or none reaches only the c_0, A and 4C tiers -- e_3 is unreachable", _SEC)
+@hodge.check(
+    "words of length at most three with at most one R obey the exact carrier formula", _SEC
+)
 def _():
-    # The tier collapse, stated as a property of the algebra instead of the
-    # 189 records. Clearing the ansatz's 1/q, the shape monomials are
-    # {q, q^2, e_2, q e_2, e_3} for {c_0, A, 4C, B, D}. Every word with at most
-    # one R has carrier symbol in the span of {q^n, q^n e_2 / q}: only c_0, A
-    # and 4C, at every length. Neither degree-3 monomial is populated, so
-    # B = D = 0 for any kernel that is linear in R -- which the fourth-order
-    # kernel is (ADR 0019).
+    # This word formula is valid; the original inference that q^n e_2
+    # cannot populate B was false. The next check preserves its counterexample.
     table = _table(3)
-    e1, e2, e3 = _elementary()
+    e1, e2, _e3 = _elementary()
     ok = True
-    reached = set()
     for word, (sigma, defect) in table.items():
         if word.count("R") > 1:
             continue
@@ -287,16 +300,28 @@ def _():
         if n_r:
             base = KO._mul(base, e2)
         ok = ok and sigma == _scale(base, scale)
-        reached.add(("A" if n_u else "c_0") if not n_r else "4C")
-    # and the two degree-3 monomials are genuinely absent
-    absent = all(
-        table[w][0] != KO._mul(e1, e2) and table[w][0] != e3 for w in table if w.count("R") <= 1
-    )
-    return ok and absent and reached <= {"c_0", "A", "4C"}, (
+    return ok, (
         "every word with at most one R has carrier symbol (-4)^#S (-2)^#R q^(#U + 1 - #R) "
-        "e_2^#R exactly -- a closed form verified word by word over the whole zone. The "
-        "monomials reached are q^n and q^n e_2 / q: the c_0, A and 4C tiers. Neither q e_2 "
-        "nor e_3 is populated, so an R-linear kernel has B = D = 0 with nothing to cancel"
+        "e_2^#R exactly, verified for lengths at most three as cleared Laurent identities. "
+        "The U count matters: UR already has sigma = -2 q e_2, so R-degree alone "
+        "does not exclude the B tier"
+    )
+
+
+@hodge.check("FINDING: one R does not exclude B; sigma(UR) = sigma(RU) = -2 q e_2", _SEC)
+def _():
+    table = _table(2)
+    q, e2, _e3 = _elementary()
+    target = _scale(KO._mul(q, e2), Fraction(-2))
+    ok = bool(target) and all(table[w][0] == target and not table[w][1] for w in ("UR", "RU"))
+    return (
+        ok,
+        (
+            "UR and RU each contain exactly one R, have zero Feshbach defect, and have "
+            "sigma = -2 q e_2 exactly. Thus sigma/q = -2 e_2 populates B. The actual "
+            "fourth-order support excludes these words; its tier collapse survives"
+        ),
+        {"UR_CLEARED_B_WEIGHT": Fraction(-2)},
     )
 
 
@@ -358,36 +383,45 @@ def _():
             "sigma(RUR) = 4 e_2^2 exactly, and R U R has zero Feshbach defect, so the value is "
             "the honest carrier symbol of that word and not an artefact of a truncation. Its "
             "shape symbol 4 e_2^2 / q is NOT in the span of the ansatz's cleared monomials "
-            "{q, q^2, e_2, q e_2, e_3} (rank test, exact). PREDICTION, not a result: an order "
-            "whose kernel populates R U R or R^3 is not describable by the four-shape ansatz at "
-            "all, however its coefficients are fitted. Which words order six populates is open "
-            "(G9, G10)"
+            "{q, q^2, e_2, q e_2, e_3} (rank test, exact). A nonzero RUR contribution "
+            "would require an enlarged ansatz unless other contributions cancel its "
+            "out-of-span part. Which words order six populates and how they combine "
+            "remain open (G9, G10)"
         ),
         {"RUR_SHAPE_WEIGHT": Fraction(4)},
     )
 
 
-@hodge.check("the fourth-order kernel is linear in R, so the collapse needs no cancellation", _SEC)
+@hodge.check("the actual fourth-order support I, U, S, S^2, R forces B = D = 0", _SEC)
 def _():
-    # Closing the loop back onto the recorded kernel. ADR 0019's Hodge form is
-    # a polynomial in L_down and L_up plus exactly one R, with coefficient
-    # -2 C_shp. Combined with the two checks above, that IS the mechanism G14
-    # asked for: R-degree one, so only the c_0, A and 4C tiers are reachable,
-    # so B = D = 0. Note what this says about C2: the disputed coefficient is
-    # the amplitude of the unique generator of the Feshbach channel. The
-    # dispute and the collapse are the same structural fact seen twice.
+    # The actual support is narrower than arbitrary words linear in R:
+    # UR and RU are absent. Check each supported word's full coefficient
+    # polynomial rather than testing inequality with one unscaled monomial.
     from ..payloads import kernel_constants, kernel_records
 
     amps = KO.amplitudes(kernel_records())
     form = KO.hodge_form(amps)
     built = KO.hodge_records(form)
     c_shp = kernel_constants()["C_shp"]
-    ok = built == dict(kernel_records()) and form["C"] == c_shp
+    q, e2, _e3 = _elementary()
+    table = _table(2)
+    supported = {
+        "U": KO._mul(q, q),
+        "S": _scale(q, Fraction(-4)),
+        "SS": _scale(q, Fraction(16)),
+        "R": _scale(e2, Fraction(-2)),
+    }
+    ok = (
+        built == dict(kernel_records())
+        and form["C"] == c_shp
+        and all(table[word][0] == value for word, value in supported.items())
+        and _ip(_psi(), _psi()) == q
+    )
     return ok, (
         f"the 189 records are -nu~(L_up - 2) + u S^2 - pi~ S + sigma~ I - 2 C R exactly, with "
-        f"C = {form['C']} = C_shp. R-degree 1: the only non-Hodge insertion appears once, so "
-        "by the two checks above the reachable tiers are c_0, A and 4C and the degree-3 tier "
-        "is unpopulated. C_shp is the amplitude of the sole Feshbach-channel generator"
+        f"C = {form['C']} = C_shp. The supported words I,U,S,SS,R have symbols "
+        "q,q^2,-4q,16q,-2e_2, so their span contains no q e_2 or e_3 tier. "
+        "This proves B = D = 0 for this support, not for every R-linear kernel"
     )
 
 
@@ -397,10 +431,10 @@ def _():
 @hodge.check(
     "the Hodge-word statement needs only L_down psi = 0 and L_up psi = lambda psi, "
     "and both hold in three geometries",
-    "U7; U3; G5; ADR 0008",
+    "HODGE_FESHBACH Hodge-word hypotheses in other cells; U3; G5; ADR 0008",
 )
 def _():
-    # A first draft of U7 asked for L_down + L_up to be a scalar -- "link
+    # The preserved source's proposed U7 asked for L_down + L_up to be scalar -- "link
     # regularity" -- because that is what the cubic lattice does. This check
     # is here because that hypothesis is WRONG, and the pentagonal prism says
     # so: its two caps carry five links and its five sides four, so the sum is
@@ -408,7 +442,8 @@ def _():
     # needed is weaker and holds in all three: psi spans ker L_down, and psi is
     # an eigenvector of L_up. That alone makes every word in the two Laplacians
     # scalar on the carrier -- a word ending in L_down annihilates it, a word
-    # ending in L_up rescales it -- which is the whole Hodge-word half of U7.
+    # ending in L_up rescales it. The proposed U7 is a branch-local label;
+    # the integration review is the registered source for this exact check.
     # Recorded as a check rather than as prose because the over-strong version
     # would have excluded the pentagonal cap, the geometry U3 is about.
     import sympy as sp
@@ -446,5 +481,6 @@ def _():
         f"L_down + L_up is a scalar on the tetrahedron (4 I) and is NOT on the prism "
         f"({rows['pentagonal prism']['diag']}: five links on a cap, four on a side), so the "
         "link-regularity hypothesis is refuted as a requirement and the weaker eigenvector "
-        "hypothesis is what U7 rests on"
+        "hypothesis suffices for scalar Hodge words. No proper-return calculation "
+        "or general U3 conclusion is established in these two cells by this check"
     )

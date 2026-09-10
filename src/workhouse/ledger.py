@@ -141,6 +141,17 @@ def validate(ledgers: Ledgers) -> list[str]:
     problems: list[str] = []
     root = LEDGER_DIR.parent
 
+    # The graph already resolves these namespaces. Check the small curated
+    # registers directly: collecting the whole graph here would recurse through
+    # invariant checks and would confuse structural validation with proof.
+    documents = yaml.safe_load((LEDGER_DIR / "documents.yaml").read_text(encoding="utf-8"))
+    theorems = yaml.safe_load((LEDGER_DIR / "theorems.yaml").read_text(encoding="utf-8"))
+    analytic_closers = {
+        f"CITE:{entry['alias']}"
+        for entry in documents.get("aliases", [])
+        if not entry.get("unresolved") and entry.get("path") and (root / entry["path"]).is_file()
+    } | {f"LEAN:{entry['name']}" for entry in theorems.get("theorems", [])}
+
     def seq_complete(entries: list[dict[str, Any]], prefix: str, label: str) -> None:
         raw = [e["id"] for e in entries]
         ids = set(raw)
@@ -219,6 +230,10 @@ def validate(ledgers: Ledgers) -> list[str]:
                 problems.append(f"{label}: {step['state']} but neither closed_by nor status")
             for ref in step.get("closed_by", []) or []:
                 ref = str(ref)
+                if ref.startswith(("CITE:", "LEAN:")):
+                    if ref not in analytic_closers:
+                        problems.append(f"{label}: closed_by unknown or unresolved {ref}")
+                    continue
                 if re.fullmatch(r"[CG]\d+", ref) and ref not in (
                     ledgers.contradiction_ids | ledgers.gap_ids
                 ):
@@ -230,7 +245,7 @@ def validate(ledgers: Ledgers) -> list[str]:
                 ):
                     problems.append(
                         f"{label}: closed_by {ref!r} is not a ledger, run, check, "
-                        "result, citation or ADR id"
+                        "result, registered citation, Lean theorem or ADR id"
                     )
             dependencies = step.get("depends_on", [])
             if not isinstance(dependencies, list) or not all(map(is_catalogue_id, dependencies)):

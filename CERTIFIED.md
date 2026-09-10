@@ -15,95 +15,176 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 107
+## T0 — proof-checked — 290
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
 **lean core**
 
 - `C_from_beta`
-  - lean/Workhouse/Basic.lean:243
+  - lean/Workhouse/Basic.lean:244
   - `make lean`
 - `adjoint_shelf_numerator`
-  - lean/Workhouse/Basic.lean:187
+  - lean/Workhouse/Basic.lean:188
+  - `make lean`
+- `admissible_logarithmic_minimum`
+  - lean/Workhouse/PlateauObstruction.lean:71
   - `make lean`
 - `alphaPen_eq_neg_four_cube`
-  - lean/Workhouse/Basic.lean:380
+  - lean/Workhouse/Basic.lean:381
   - `make lean`
 - `alphaPen_five`
-  - lean/Workhouse/Basic.lean:215
-  - `make lean`
-- `alphaPen_four`
-  - lean/Workhouse/Basic.lean:214
-  - `make lean`
-- `alphaPen_six`
   - lean/Workhouse/Basic.lean:216
   - `make lean`
+- `alphaPen_four`
+  - lean/Workhouse/Basic.lean:215
+  - `make lean`
+- `alphaPen_six`
+  - lean/Workhouse/Basic.lean:217
+  - `make lean`
 - `alphaPen_three`
-  - lean/Workhouse/Basic.lean:213
+  - lean/Workhouse/Basic.lean:214
   - `make lean`
 - `alphaPen_three_eq_four_A`
-  - lean/Workhouse/Basic.lean:219
+  - lean/Workhouse/Basic.lean:220
+  - `make lean`
+- `anisotropy_axis_node`
+  - lean/Workhouse/AnisotropyVariance.lean:105
+  - `make lean`
+- `anisotropy_body_node`
+  - lean/Workhouse/AnisotropyVariance.lean:115
+  - `make lean`
+- `anisotropy_centered_moment_identity`
+  - lean/Workhouse/AnisotropyVariance.lean:46
+  - `make lean`
+- `anisotropy_face_node`
+  - lean/Workhouse/AnisotropyVariance.lean:110
+  - `make lean`
+- `anisotropy_generic_holdout`
+  - lean/Workhouse/AnisotropyVariance.lean:120
+  - `make lean`
+- `anisotropy_induced_coefficient`
+  - lean/Workhouse/AnisotropyVariance.lean:126
+  - `make lean`
+- `anisotropy_shape_identity`
+  - lean/Workhouse/AnisotropyVariance.lean:37
+  - `make lean`
+- `anisotropy_variance_identity`
+  - lean/Workhouse/AnisotropyVariance.lean:21
+  - `make lean`
+- `anisotropy_variance_nonnegative`
+  - lean/Workhouse/AnisotropyVariance.lean:30
+  - `make lean`
+- `anisotropy_variance_upper_bound`
+  - lean/Workhouse/AnisotropyVariance.lean:57
+  - `make lean`
+- `anisotropy_variance_zero_iff`
+  - lean/Workhouse/AnisotropyVariance.lean:73
+  - `make lean`
+- `arbitrarily_small_plateau_obstruction`
+  - lean/Workhouse/PlateauObstruction.lean:266
+  - `make lean`
+- `assembly_energy`
+  - lean/Workhouse/GroundStateAssembly.lean:504
+  - `make lean`
+- `assembly_kernel_iff`
+  - lean/Workhouse/GroundStateAssembly.lean:516
+  - `make lean`
+- `assembly_square_lower`
+  - lean/Workhouse/GroundStateAssembly.lean:544
+  - `make lean`
+- `assembly_symmetric`
+  - lean/Workhouse/GroundStateAssembly.lean:509
   - `make lean`
 - `assembly_three_cumulants`
-  - lean/Workhouse/Basic.lean:717
+  - lean/Workhouse/Basic.lean:718
+  - `make lean`
+- `balanced_rate_pos`
+  - lean/Workhouse/SpectralReconstruction.lean:127
+  - `make lean`
+- `balancing_radius_nonneg`
+  - lean/Workhouse/SpectralReconstruction.lean:122
   - `make lean`
 - `bandVar_pi`
-  - lean/Workhouse/Basic.lean:489
+  - lean/Workhouse/Basic.lean:490
   - `make lean`
 - `bandVar_pi_div_two`
-  - lean/Workhouse/Basic.lean:492
+  - lean/Workhouse/Basic.lean:493
   - `make lean`
 - `bandVar_zero`
-  - lean/Workhouse/Basic.lean:486
+  - lean/Workhouse/Basic.lean:487
   - `make lean`
 - `betaN_assembled_numerator`
-  - lean/Workhouse/Basic.lean:682
+  - lean/Workhouse/Basic.lean:683
   - `make lean`
 - `betaN_four`
-  - lean/Workhouse/Basic.lean:742
+  - lean/Workhouse/Basic.lean:743
   - `make lean`
 - `betaN_from_three_cumulants`
-  - lean/Workhouse/Basic.lean:726
+  - lean/Workhouse/Basic.lean:727
   - `make lean`
 - `betaN_three`
-  - lean/Workhouse/Basic.lean:738
+  - lean/Workhouse/Basic.lean:739
   - `make lean`
 - `beta_from_A_and_C`
-  - lean/Workhouse/Basic.lean:251
+  - lean/Workhouse/Basic.lean:252
   - `make lean`
 - `beta_shift_from_cShp`
-  - lean/Workhouse/Basic.lean:427
+  - lean/Workhouse/Basic.lean:428
   - `make lean`
 - `blind_holdout`
-  - lean/Workhouse/Basic.lean:229
+  - lean/Workhouse/Basic.lean:230
+  - `make lean`
+- `bound_time_rescaling`
+  - lean/Workhouse/PlateauObstruction.lean:142
+  - `make lean`
+- `bounded_gap_on_range_of_square`
+  - lean/Workhouse/GroundStateAssembly.lean:708
+  - `make lean`
+- `bounded_projection_assembly_gap`
+  - lean/Workhouse/GroundStateAssembly.lean:773
+  - `make lean`
+- `bounded_spectral_gap_of_square`
+  - lean/Workhouse/GroundStateAssembly.lean:737
   - `make lean`
 - `cIso_assembled`
-  - lean/Workhouse/Basic.lean:579
+  - lean/Workhouse/Basic.lean:580
   - `make lean`
 - `cPrimTwo_forms`
-  - lean/Workhouse/Basic.lean:352
+  - lean/Workhouse/Basic.lean:353
   - `make lean`
 - `cShpAssembled_neg`
-  - lean/Workhouse/Basic.lean:575
+  - lean/Workhouse/Basic.lean:576
   - `make lean`
 - `cShp_assembled_value`
-  - lean/Workhouse/Basic.lean:423
+  - lean/Workhouse/Basic.lean:424
   - `make lean`
 - `cShp_from_rho_shift`
-  - lean/Workhouse/Basic.lean:417
+  - lean/Workhouse/Basic.lean:418
   - `make lean`
 - `channel_resolvent_assembly`
-  - lean/Workhouse/Basic.lean:147
+  - lean/Workhouse/Basic.lean:148
+  - `make lean`
+- `closable_of_integration_by_parts`
+  - lean/Workhouse/ThermodynamicLimit.lean:55
+  - `make lean`
+- `closed_extension_of_integration_by_parts`
+  - lean/Workhouse/ThermodynamicLimit.lean:92
+  - `make lean`
+- `combes_thomas_geometric_bound`
+  - lean/Workhouse/Basic.lean:1248
+  - `make lean`
+- `combes_thomas_pairing_volume_independent`
+  - lean/Workhouse/Basic.lean:1260
   - `make lean`
 - `commuting_pair_square`
   - lean/Workhouse/CreatorParent.lean:19
   - `make lean`
 - `cornerDen_cof`
-  - lean/Workhouse/Basic.lean:673
+  - lean/Workhouse/Basic.lean:674
   - `make lean`
 - `cornerDressing_over_R20`
-  - lean/Workhouse/Basic.lean:701
+  - lean/Workhouse/Basic.lean:702
   - `make lean`
 - `corrected_eq_compression`
   - lean/Workhouse/VacuumCompression.lean:55
@@ -121,79 +202,127 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/VacuumChart.lean:80
   - `make lean`
 - `cubeCompletionAdjacent_over_R20`
-  - lean/Workhouse/Basic.lean:707
+  - lean/Workhouse/Basic.lean:708
   - `make lean`
 - `cubeCompletionAdjacent_ratio`
-  - lean/Workhouse/Basic.lean:404
+  - lean/Workhouse/Basic.lean:405
   - `make lean`
 - `cubeCompletionAdjacent_split`
-  - lean/Workhouse/Basic.lean:395
+  - lean/Workhouse/Basic.lean:396
   - `make lean`
 - `cubeCompletionAdjacent_three`
-  - lean/Workhouse/Basic.lean:400
+  - lean/Workhouse/Basic.lean:401
   - `make lean`
 - `cubeCompletion_three`
-  - lean/Workhouse/Basic.lean:371
+  - lean/Workhouse/Basic.lean:372
   - `make lean`
 - `cubeDen_cof`
-  - lean/Workhouse/Basic.lean:676
+  - lean/Workhouse/Basic.lean:677
   - `make lean`
 - `cube_shortfall`
-  - lean/Workhouse/Basic.lean:413
+  - lean/Workhouse/Basic.lean:414
+  - `make lean`
+- `cubicWeight_nonneg`
+  - lean/Workhouse/ResolventLocalization.lean:329
+  - `make lean`
+- `cubic_geometric_hasSum`
+  - lean/Workhouse/ResolventLocalization.lean:337
+  - `make lean`
+- `cubic_localized_pairing`
+  - lean/Workhouse/ResolventLocalization.lean:351
+  - `make lean`
+- `deleted_frame_invisible_sector`
+  - lean/Workhouse/SpectralReconstruction.lean:342
   - `make lean`
 - `delta_M`
-  - lean/Workhouse/Basic.lean:525
+  - lean/Workhouse/Basic.lean:526
   - `make lean`
 - `delta_P`
-  - lean/Workhouse/Basic.lean:531
+  - lean/Workhouse/Basic.lean:532
   - `make lean`
 - `delta_R`
-  - lean/Workhouse/Basic.lean:539
+  - lean/Workhouse/Basic.lean:540
   - `make lean`
 - `delta_X`
-  - lean/Workhouse/Basic.lean:520
+  - lean/Workhouse/Basic.lean:521
   - `make lean`
 - `dim_Z₂`
-  - lean/Workhouse/Basic.lean:327
+  - lean/Workhouse/Basic.lean:328
   - `make lean`
 - `d₃_ledger`
-  - lean/Workhouse/Basic.lean:205
+  - lean/Workhouse/Basic.lean:206
   - `make lean`
 - `endpoint_disjoint_cancellation`
   - lean/Workhouse/VacuumChart.lean:99
   - `make lean`
+- `endpoint_minimum`
+  - lean/Workhouse/PlateauObstruction.lean:87
+  - `make lean`
 - `evenHopping_three`
-  - lean/Workhouse/Basic.lean:466
+  - lean/Workhouse/Basic.lean:467
   - `make lean`
 - `even_cubic_at_sixteen`
-  - lean/Workhouse/Basic.lean:283
+  - lean/Workhouse/Basic.lean:284
   - `make lean`
 - `even_cubic_at_zero`
-  - lean/Workhouse/Basic.lean:277
+  - lean/Workhouse/Basic.lean:278
   - `make lean`
 - `even_cubic_derivative_factors`
-  - lean/Workhouse/Basic.lean:290
+  - lean/Workhouse/Basic.lean:291
   - `make lean`
 - `even_gram_minors`
-  - lean/Workhouse/Basic.lean:270
+  - lean/Workhouse/Basic.lean:271
+  - `make lean`
+- `exists_limit_of_cut_response`
+  - lean/Workhouse/ThermodynamicLimit.lean:22
   - `make lean`
 - `extraction_A`
-  - lean/Workhouse/Basic.lean:309
+  - lean/Workhouse/Basic.lean:310
   - `make lean`
 - `extraction_B`
-  - lean/Workhouse/Basic.lean:311
+  - lean/Workhouse/Basic.lean:312
   - `make lean`
 - `extraction_C`
-  - lean/Workhouse/Basic.lean:315
+  - lean/Workhouse/Basic.lean:316
   - `make lean`
 - `extraction_D`
-  - lean/Workhouse/Basic.lean:319
+  - lean/Workhouse/Basic.lean:320
   - `make lean`
 - `far_affine`
   - lean/Workhouse/GlobalWilsonVertical.lean:73
   - `make lean`
+- `finite_assembly_gap`
+  - lean/Workhouse/GroundStateAssembly.lean:631
+  - `make lean`
+- `finite_ground_state_dirichlet_nonneg`
+  - lean/Workhouse/Basic.lean:845
+  - `make lean`
+- `finite_ground_state_eigenform_identity`
+  - lean/Workhouse/Basic.lean:832
+  - `make lean`
+- `finite_ground_state_gap_transfer`
+  - lean/Workhouse/Basic.lean:865
+  - `make lean`
+- `finite_ground_state_ratio_identity`
+  - lean/Workhouse/Basic.lean:822
+  - `make lean`
+- `finite_ground_state_residual_identity`
+  - lean/Workhouse/Basic.lean:774
+  - `make lean`
+- `finite_source_propagation`
+  - lean/Workhouse/ResolventLocalization.lean:244
+  - `make lean`
+- `finite_spectral_gap_of_square`
+  - lean/Workhouse/GroundStateAssembly.lean:590
+  - `make lean`
+- `finite_transverse_valley_identity`
+  - lean/Workhouse/Basic.lean:944
+  - `make lean`
 - `fixed_vacuum_row`
   - lean/Workhouse/VacuumChart.lean:50
+  - `make lean`
+- `gap_bound_on_graph_limit`
+  - lean/Workhouse/ThermodynamicLimit.lean:75
   - `make lean`
 - `generator_antihermitian`
   - lean/Workhouse/VacuumChart.lean:39
@@ -201,35 +330,146 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `generator_vacuum`
   - lean/Workhouse/VacuumChart.lean:44
   - `make lean`
+- `geom_sum_mul_sub`
+  - lean/Workhouse/Basic.lean:1239
+  - `make lean`
+- `gram_form_nonnegative`
+  - lean/Workhouse/GroundStateAssembly.lean:841
+  - `make lean`
+- `gram_quadratic_eq_squares`
+  - lean/Workhouse/GroundStateAssembly.lean:825
+  - `make lean`
+- `groundStateDirichlet_const`
+  - lean/Workhouse/Basic.lean:897
+  - `make lean`
+- `ground_state_frustration_elimination`
+  - lean/Workhouse/Basic.lean:906
+  - `make lean`
 - `half_potential_threshold`
   - lean/Workhouse/GlobalWilsonVertical.lean:129
   - `make lean`
+- `hardy_linear_lower_bound`
+  - lean/Workhouse/Basic.lean:990
+  - `make lean`
+- `hardy_linear_remainder`
+  - lean/Workhouse/Basic.lean:984
+  - `make lean`
 - `hopping_deficit_numerator`
-  - lean/Workhouse/Basic.lean:47
+  - lean/Workhouse/Basic.lean:48
   - `make lean`
 - `hopping_three`
-  - lean/Workhouse/Basic.lean:40
+  - lean/Workhouse/Basic.lean:41
   - `make lean`
 - `hopping_two`
-  - lean/Workhouse/Basic.lean:43
+  - lean/Workhouse/Basic.lean:44
   - `make lean`
 - `idempotent_square_defect`
   - lean/Workhouse/CreatorParent.lean:10
   - `make lean`
+- `integer_geometric_hasSum`
+  - lean/Workhouse/ResolventLocalization.lean:301
+  - `make lean`
+- `integral_cauchy_schwarz_sq`
+  - lean/Workhouse/GroundStateAssembly.lean:318
+  - `make lean`
+- `integral_mul_eq_L2_inner`
+  - lean/Workhouse/GroundStateAssembly.lean:308
+  - `make lean`
+- `integral_remainder_measure`
+  - lean/Workhouse/GroundStateAssembly.lean:329
+  - `make lean`
+- `integral_under_weak_and_uniform_convergence`
+  - lean/Workhouse/ThermodynamicLimit.lean:111
+  - `make lean`
+- `integration_by_parts_under_weak_limit`
+  - lean/Workhouse/ThermodynamicLimit.lean:135
+  - `make lean`
+- `interior_minimum_value`
+  - lean/Workhouse/PlateauObstruction.lean:99
+  - `make lean`
 - `isolation_condition_assembled`
-  - lean/Workhouse/Basic.lean:570
+  - lean/Workhouse/Basic.lean:571
   - `make lean`
 - `isolation_switch_numerator`
-  - lean/Workhouse/Basic.lean:195
+  - lean/Workhouse/Basic.lean:196
+  - `make lean`
+- `joint_measure_minorization_covariance`
+  - lean/Workhouse/GroundStateAssembly.lean:383
+  - `make lean`
+- `joint_withDensity_covariance_variance`
+  - lean/Workhouse/GroundStateAssembly.lean:441
+  - `make lean`
+- `joint_withDensity_minorization_covariance`
+  - lean/Workhouse/GroundStateAssembly.lean:421
+  - `make lean`
+- `kotecky_preiss_cluster_sum_bound`
+  - lean/Workhouse/Basic.lean:1285
+  - `make lean`
+- `kotecky_preiss_polymer_activity_bound`
+  - lean/Workhouse/Basic.lean:1303
   - `make lean`
 - `lambda2_shelf_numerator`
-  - lean/Workhouse/Basic.lean:179
+  - lean/Workhouse/Basic.lean:180
+  - `make lean`
+- `laplace_decay_excludes_low_energy`
+  - lean/Workhouse/SpectralReconstruction.lean:70
+  - `make lean`
+- `laplace_decay_support_gap`
+  - lean/Workhouse/SpectralReconstruction.lean:99
+  - `make lean`
+- `laplace_integrable`
+  - lean/Workhouse/SpectralReconstruction.lean:28
   - `make lean`
 - `like_family_sum`
-  - lean/Workhouse/Basic.lean:128
+  - lean/Workhouse/Basic.lean:129
+  - `make lean`
+- `limit_preserves_gap_bound`
+  - lean/Workhouse/ThermodynamicLimit.lean:30
+  - `make lean`
+- `local_floor_tensorization`
+  - lean/Workhouse/GroundStateAssembly.lean:648
+  - `make lean`
+- `localization_balanced_decay`
+  - lean/Workhouse/SpectralReconstruction.lean:133
+  - `make lean`
+- `localization_excludes_low_energy`
+  - lean/Workhouse/SpectralReconstruction.lean:152
+  - `make lean`
+- `localized_finite_volume_bound`
+  - lean/Workhouse/ResolventLocalization.lean:289
+  - `make lean`
+- `localized_kernel_pairing`
+  - lean/Workhouse/ResolventLocalization.lean:262
+  - `make lean`
+- `logarithmic_time_is_stationary`
+  - lean/Workhouse/PlateauObstruction.lean:47
+  - `make lean`
+- `low_energy_laplace_lower_bound`
+  - lean/Workhouse/SpectralReconstruction.lean:41
+  - `make lean`
+- `low_energy_mass_bound`
+  - lean/Workhouse/SpectralReconstruction.lean:55
+  - `make lean`
+- `measure_minorization_covariance`
+  - lean/Workhouse/GroundStateAssembly.lean:348
+  - `make lean`
+- `measure_poincare_comparison`
+  - lean/Workhouse/GroundStateAssembly.lean:243
+  - `make lean`
+- `measure_variance_density_lower`
+  - lean/Workhouse/GroundStateAssembly.lean:214
+  - `make lean`
+- `measure_variance_density_upper`
+  - lean/Workhouse/GroundStateAssembly.lean:193
+  - `make lean`
+- `measure_variance_le_deviation`
+  - lean/Workhouse/GroundStateAssembly.lean:184
   - `make lean`
 - `mixed_family_sum`
-  - lean/Workhouse/Basic.lean:117
+  - lean/Workhouse/Basic.lean:118
+  - `make lean`
+- `mul_neumann`
+  - lean/Workhouse/ResolventLocalization.lean:29
   - `make lean`
 - `near_affine`
   - lean/Workhouse/GlobalWilsonVertical.lean:54
@@ -237,92 +477,272 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `near_cap`
   - lean/Workhouse/GlobalWilsonVertical.lean:39
   - `make lean`
+- `neumann_mul`
+  - lean/Workhouse/ResolventLocalization.lean:34
+  - `make lean`
+- `neumann_quadratic_expansion`
+  - lean/Workhouse/ResolventLocalization.lean:389
+  - `make lean`
+- `neumann_quadratic_remainder_identity`
+  - lean/Workhouse/ResolventLocalization.lean:378
+  - `make lean`
+- `neumann_quadratic_remainder_pairing_bound`
+  - lean/Workhouse/ResolventLocalization.lean:431
+  - `make lean`
+- `neumann_summable`
+  - lean/Workhouse/ResolventLocalization.lean:24
+  - `make lean`
 - `newton_three`
-  - lean/Workhouse/Basic.lean:299
+  - lean/Workhouse/Basic.lean:300
+  - `make lean`
+- `norm_neumann_le`
+  - lean/Workhouse/ResolventLocalization.lean:39
+  - `make lean`
+- `norm_neumann_quadratic_remainder_le`
+  - lean/Workhouse/ResolventLocalization.lean:396
+  - `make lean`
+- `norm_neumann_sub_one_le`
+  - lean/Workhouse/ResolventLocalization.lean:44
+  - `make lean`
+- `norm_neumann_sub_one_le_budget`
+  - lean/Workhouse/ResolventLocalization.lean:59
+  - `make lean`
+- `norm_sandwiched_neumann_quadratic_remainder_le`
+  - lean/Workhouse/ResolventLocalization.lean:409
+  - `make lean`
+- `normalized_fast_coercive`
+  - lean/Workhouse/ResolventLocalization.lean:183
+  - `make lean`
+- `normalized_schur_unique_minimizer`
+  - lean/Workhouse/ResolventLocalization.lean:203
+  - `make lean`
+- `normalized_selected_pairing_bound`
+  - lean/Workhouse/ResolventLocalization.lean:92
   - `make lean`
 - `normalized_taylor_growth`
   - lean/Workhouse/RootedScalarBounds.lean:13
   - `make lean`
+- `observable_frame_correlation`
+  - lean/Workhouse/SpectralReconstruction.lean:331
+  - `make lean`
+- `observable_frame_energy`
+  - lean/Workhouse/SpectralReconstruction.lean:314
+  - `make lean`
+- `observable_frame_gram`
+  - lean/Workhouse/SpectralReconstruction.lean:306
+  - `make lean`
+- `observable_frame_lower_bound`
+  - lean/Workhouse/SpectralReconstruction.lean:322
+  - `make lean`
 - `pentCompletion_three`
-  - lean/Workhouse/Basic.lean:375
+  - lean/Workhouse/Basic.lean:376
+  - `make lean`
+- `physical_time_minimum_value`
+  - lean/Workhouse/PlateauObstruction.lean:150
   - `make lean`
 - `piTilde_neg`
-  - lean/Workhouse/Basic.lean:565
+  - lean/Workhouse/Basic.lean:566
+  - `make lean`
+- `poincare_density_comparison`
+  - lean/Workhouse/GroundStateAssembly.lean:91
+  - `make lean`
+- `poincare_under_weak_convergence`
+  - lean/Workhouse/ThermodynamicLimit.lean:157
+  - `make lean`
+- `polymer_free_energy_cauchy_bound`
+  - lean/Workhouse/Basic.lean:1310
+  - `make lean`
+- `positive_slow_mode_prevents_faster_bound`
+  - lean/Workhouse/PlateauObstruction.lean:239
   - `make lean`
 - `prismCompletion_three`
-  - lean/Workhouse/Basic.lean:367
+  - lean/Workhouse/Basic.lean:368
+  - `make lean`
+- `product_minorization_covariance`
+  - lean/Workhouse/GroundStateAssembly.lean:128
+  - `make lean`
+- `projection_energy`
+  - lean/Workhouse/GroundStateAssembly.lean:488
+  - `make lean`
+- `projection_energy_nonneg`
+  - lean/Workhouse/GroundStateAssembly.lean:494
+  - `make lean`
+- `projection_zero_from_total_family`
+  - lean/Workhouse/SpectralReconstruction.lean:171
   - `make lean`
 - `q_at_checkpoints`
-  - lean/Workhouse/Basic.lean:511
+  - lean/Workhouse/Basic.lean:512
+  - `make lean`
+- `quartic_gaussian_frequency_optimal`
+  - lean/Workhouse/Basic.lean:1056
+  - `make lean`
+- `quartic_gaussian_frequency_optimal_iff`
+  - lean/Workhouse/Basic.lean:1065
+  - `make lean`
+- `quartic_gaussian_frequency_remainder`
+  - lean/Workhouse/Basic.lean:1049
+  - `make lean`
+- `quartic_gaussian_gap_budget`
+  - lean/Workhouse/Basic.lean:1043
+  - `make lean`
+- `quartic_trial_residual_completion`
+  - lean/Workhouse/Basic.lean:1019
+  - `make lean`
+- `quartic_trial_residual_floor`
+  - lean/Workhouse/Basic.lean:1032
+  - `make lean`
+- `r4_r5_interior_optimum`
+  - lean/Workhouse/PlateauObstruction.lean:162
+  - `make lean`
+- `r4_r5_optimized_upper_bound`
+  - lean/Workhouse/PlateauObstruction.lean:194
   - `make lean`
 - `rankOne_adjoint`
   - lean/Workhouse/VacuumChart.lean:35
   - `make lean`
 - `rank_law_numerator`
-  - lean/Workhouse/Basic.lean:35
+  - lean/Workhouse/Basic.lean:36
+  - `make lean`
+- `reflection_kernel_gram`
+  - lean/Workhouse/SpectralReconstruction.lean:237
+  - `make lean`
+- `reflection_kernel_nonnegative`
+  - lean/Workhouse/SpectralReconstruction.lean:259
   - `make lean`
 - `relative_gap_pos`
-  - lean/Workhouse/Basic.lean:587
+  - lean/Workhouse/Basic.lean:588
+  - `make lean`
+- `rescaled_correlation_identity`
+  - lean/Workhouse/PlateauObstruction.lean:228
+  - `make lean`
+- `residual_mean_gap_budget`
+  - lean/Workhouse/Basic.lean:1012
+  - `make lean`
+- `residual_mean_slack_identity`
+  - lean/Workhouse/Basic.lean:1006
+  - `make lean`
+- `residual_oscillation_gap_budget`
+  - lean/Workhouse/Basic.lean:922
+  - `make lean`
+- `residual_oscillation_positive_gap`
+  - lean/Workhouse/Basic.lean:928
   - `make lean`
 - `resolventWeight_adjoint`
-  - lean/Workhouse/Basic.lean:79
+  - lean/Workhouse/Basic.lean:80
   - `make lean`
 - `resolventWeight_antisym`
-  - lean/Workhouse/Basic.lean:88
+  - lean/Workhouse/Basic.lean:89
   - `make lean`
 - `resolventWeight_singlet`
-  - lean/Workhouse/Basic.lean:71
+  - lean/Workhouse/Basic.lean:72
   - `make lean`
 - `resolventWeight_sym`
-  - lean/Workhouse/Basic.lean:103
+  - lean/Workhouse/Basic.lean:104
+  - `make lean`
+- `sc17_plaquette_interval`
+  - lean/Workhouse/ThermodynamicLimit.lean:214
   - `make lean`
 - `scalar_vacuum_cancellation`
   - lean/Workhouse/VacuumChart.lean:56
   - `make lean`
+- `schur_minimizer_lower_bound`
+  - lean/Workhouse/ResolventLocalization.lean:173
+  - `make lean`
+- `schur_minimizer_value`
+  - lean/Workhouse/ResolventLocalization.lean:164
+  - `make lean`
+- `schur_square_completion`
+  - lean/Workhouse/ResolventLocalization.lean:150
+  - `make lean`
 - `shell_margin_five`
-  - lean/Workhouse/Basic.lean:173
+  - lean/Workhouse/Basic.lean:174
+  - `make lean`
+- `signed_resolvent_identity`
+  - lean/Workhouse/ResolventLocalization.lean:79
+  - `make lean`
+- `signed_resolvent_pairing`
+  - lean/Workhouse/ResolventLocalization.lean:133
   - `make lean`
 - `singleContactDen_cof`
-  - lean/Workhouse/Basic.lean:669
+  - lean/Workhouse/Basic.lean:670
   - `make lean`
 - `singleContactEven_eq`
-  - lean/Workhouse/Basic.lean:454
+  - lean/Workhouse/Basic.lean:455
   - `make lean`
 - `singleContactEven_three`
-  - lean/Workhouse/Basic.lean:462
+  - lean/Workhouse/Basic.lean:463
   - `make lean`
 - `singleContactOdd_over_R20`
-  - lean/Workhouse/Basic.lean:695
+  - lean/Workhouse/Basic.lean:696
+  - `make lean`
+- `slow_mode_fits_positive_plateau`
+  - lean/Workhouse/PlateauObstruction.lean:213
   - `make lean`
 - `spectral_from_split`
   - lean/Workhouse/GlobalWilsonVertical.lean:86
   - `make lean`
+- `spectral_interval_mass`
+  - lean/Workhouse/ThermodynamicLimit.lean:182
+  - `make lean`
+- `stationary_global_minimum`
+  - lean/Workhouse/PlateauObstruction.lean:20
+  - `make lean`
 - `stencil_zero_mode`
-  - lean/Workhouse/Basic.lean:233
+  - lean/Workhouse/Basic.lean:234
   - `make lean`
 - `strip_factor`
   - lean/Workhouse/GlobalWilsonVertical.lean:13
   - `make lean`
 - `sym2_shelf_numerator`
-  - lean/Workhouse/Basic.lean:183
+  - lean/Workhouse/Basic.lean:184
+  - `make lean`
+- `symmetric_coupling_sum`
+  - lean/Workhouse/GroundStateAssembly.lean:528
   - `make lean`
 - `tetraCompletion_three`
-  - lean/Workhouse/Basic.lean:363
+  - lean/Workhouse/Basic.lean:364
   - `make lean`
 - `tetra_from_count`
-  - lean/Workhouse/Basic.lean:357
+  - lean/Workhouse/Basic.lean:358
+  - `make lean`
+- `theta_minimum_value`
+  - lean/Workhouse/PlateauObstruction.lean:122
+  - `make lean`
+- `total_family_localization_projection_gap`
+  - lean/Workhouse/SpectralReconstruction.lean:202
+  - `make lean`
+- `total_family_spectral_projection_gap`
+  - lean/Workhouse/SpectralReconstruction.lean:182
+  - `make lean`
+- `transfer_energy_nonnegative`
+  - lean/Workhouse/SpectralReconstruction.lean:274
+  - `make lean`
+- `transfer_energy_reconstructs_ratio`
+  - lean/Workhouse/SpectralReconstruction.lean:279
+  - `make lean`
+- `transfer_power_eq_physical_decay`
+  - lean/Workhouse/SpectralReconstruction.lean:287
+  - `make lean`
+- `transverse_slice_form_aggregation`
+  - lean/Workhouse/Basic.lean:970
+  - `make lean`
+- `transverse_slice_form_identity`
+  - lean/Workhouse/Basic.lean:978
   - `make lean`
 - `twoHopDen_cof`
-  - lean/Workhouse/Basic.lean:666
+  - lean/Workhouse/Basic.lean:667
   - `make lean`
 - `twoHopWeight_over_R20`
-  - lean/Workhouse/Basic.lean:689
+  - lean/Workhouse/Basic.lean:690
   - `make lean`
 - `two_sector_form`
   - lean/Workhouse/GlobalWilsonVertical.lean:112
   - `make lean`
 - `uStarSq_isolation`
-  - lean/Workhouse/Basic.lean:583
+  - lean/Workhouse/Basic.lean:584
+  - `make lean`
+- `unitary_ground_state_gap`
+  - lean/Workhouse/GroundStateAssembly.lean:669
   - `make lean`
 - `vacuum_corner_zero`
   - lean/Workhouse/VacuumCompression.lean:31
@@ -330,23 +750,163 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `vacuum_projection`
   - lean/Workhouse/VacuumCompression.lean:24
   - `make lean`
+- `variance_density_upper`
+  - lean/Workhouse/GroundStateAssembly.lean:77
+  - `make lean`
+- `variance_eq_second_moment`
+  - lean/Workhouse/GroundStateAssembly.lean:45
+  - `make lean`
+- `variance_le_deviation`
+  - lean/Workhouse/GroundStateAssembly.lean:59
+  - `make lean`
 - `w4_old_is_alpha_plus_beta`
-  - lean/Workhouse/Basic.lean:435
+  - lean/Workhouse/Basic.lean:436
   - `make lean`
 - `w4_shift_from_beta`
-  - lean/Workhouse/Basic.lean:432
+  - lean/Workhouse/Basic.lean:433
+  - `make lean`
+- `weighted_cauchy_schwarz_sq`
+  - lean/Workhouse/GroundStateAssembly.lean:114
+  - `make lean`
+- `weighted_inverse_difference_bound`
+  - lean/Workhouse/ResolventLocalization.lean:121
+  - `make lean`
+- `weighted_selected_pairing_bound`
+  - lean/Workhouse/ResolventLocalization.lean:111
   - `make lean`
 - `width_eq_alpha_add_beta`
-  - lean/Workhouse/Basic.lean:247
+  - lean/Workhouse/Basic.lean:248
+  - `make lean`
+- `wilson_complex_gram_budget`
+  - lean/Workhouse/Basic.lean:1199
+  - `make lean`
+- `wilson_damped_time_denominator`
+  - lean/Workhouse/Basic.lean:1121
+  - `make lean`
+- `wilson_disconnected_vacuum_cancel`
+  - lean/Workhouse/Basic.lean:1106
   - `make lean`
 - `wilson_gap_constant`
   - lean/Workhouse/CreatorParent.lean:27
   - `make lean`
+- `wilson_geometric_telescope`
+  - lean/Workhouse/Basic.lean:1112
+  - `make lean`
+- `wilson_grid_block_energy_identity`
+  - lean/Workhouse/WilsonGridAlgebra.lean:20
+  - `make lean`
+- `wilson_grid_block_energy_lower_bound`
+  - lean/Workhouse/WilsonGridAlgebra.lean:27
+  - `make lean`
+- `wilson_grid_block_energy_upper_bound`
+  - lean/Workhouse/WilsonGridAlgebra.lean:33
+  - `make lean`
+- `wilson_grid_block_energy_zero_iff`
+  - lean/Workhouse/WilsonGridAlgebra.lean:39
+  - `make lean`
+- `wilson_polymer_kp_budget`
+  - lean/Workhouse/Basic.lean:1139
+  - `make lean`
+- `wilson_relative_gap_budget`
+  - lean/Workhouse/Basic.lean:1153
+  - `make lean`
+- `wilson_relative_gap_positive`
+  - lean/Workhouse/Basic.lean:1158
+  - `make lean`
+- `wilson_sc17_barrier_polynomial`
+  - lean/Workhouse/Basic.lean:1405
+  - `make lean`
+- `wilson_sc17_broad_barrier`
+  - lean/Workhouse/Basic.lean:1377
+  - `make lean`
+- `wilson_sc17_broad_curvature_and_cat`
+  - lean/Workhouse/Basic.lean:1391
+  - `make lean`
+- `wilson_sc17_discriminant_negative_at_seventy_two`
+  - lean/Workhouse/Basic.lean:1411
+  - `make lean`
+- `wilson_sc17_sharp_barrier`
+  - lean/Workhouse/Basic.lean:1349
+  - `make lean`
+- `wilson_sc17_sharp_curvature_and_gap`
+  - lean/Workhouse/Basic.lean:1364
+  - `make lean`
+- `wilson_slab_block_row_and_cat`
+  - lean/Workhouse/Basic.lean:1339
+  - `make lean`
+- `wilson_slab_pinned_activity`
+  - lean/Workhouse/Basic.lean:1331
+  - `make lean`
+- `wilson_source_weight_defect`
+  - lean/Workhouse/Basic.lean:1165
+  - `make lean`
+- `wilson_source_weight_positive`
+  - lean/Workhouse/Basic.lean:1170
+  - `make lean`
+- `wilson_spatial_budget_telescope`
+  - lean/Workhouse/Basic.lean:1222
+  - `make lean`
+- `wilson_spatial_weighted_step`
+  - lean/Workhouse/Basic.lean:1212
+  - `make lean`
+- `wilson_square_finite_radial_synthesis_bound`
+  - lean/Workhouse/WilsonSquareForce.lean:91
+  - `make lean`
+- `wilson_square_first_source_saturates`
+  - lean/Workhouse/WilsonSquareForce.lean:42
+  - `make lean`
+- `wilson_square_radial_ratio_bound`
+  - lean/Workhouse/WilsonSquareForce.lean:63
+  - `make lean`
+- `wilson_square_radial_ratio_difference`
+  - lean/Workhouse/WilsonSquareForce.lean:50
+  - `make lean`
+- `wilson_square_radial_ratio_strict`
+  - lean/Workhouse/WilsonSquareForce.lean:76
+  - `make lean`
+- `wilson_square_sharp_constant`
+  - lean/Workhouse/WilsonSquareForce.lean:25
+  - `make lean`
+- `wilson_square_sharp_constant_pos`
+  - lean/Workhouse/WilsonSquareForce.lean:34
+  - `make lean`
+- `wilson_symmetric_block_identity`
+  - lean/Workhouse/Basic.lean:1092
+  - `make lean`
+- `wilson_taylor_polynomial_envelope`
+  - lean/Workhouse/Basic.lean:1182
+  - `make lean`
+- `wilson_time_kernel_split`
+  - lean/Workhouse/Basic.lean:1132
+  - `make lean`
+- `wilson_uniform_carrier_coefficient`
+  - lean/Workhouse/Basic.lean:1204
+  - `make lean`
+- `withDensity_poincare_comparison`
+  - lean/Workhouse/GroundStateAssembly.lean:267
+  - `make lean`
+- `withDensity_poincare_constant`
+  - lean/Workhouse/GroundStateAssembly.lean:288
+  - `make lean`
+- `withDensity_variance_floor`
+  - lean/Workhouse/GroundStateAssembly.lean:232
+  - `make lean`
 
-## T1 — re-derived exactly — 383
+## T1 — re-derived exactly — 502
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
+**Balaban submission: the two proposed repairs and what they expose**
+
+- `Restoring the action prefactor makes the coarse subtraction a constant competition`
+  - src/workhouse/invariants/balaban_repair.py:85 · YM_BALABAN_MULTISCALE; G19 (4.6) line 176 R2
+  - `workhouse verify --only 'Restoring the action prefactor makes the coarse subtraction a constant competition'`
+- `Scalar interpolation of adjoint values in different fibers is not equivariant`
+  - src/workhouse/invariants/balaban_repair.py:16 · YM_BALABAN_MULTISCALE; G19 (3.3) (3.7) R1
+  - `workhouse verify --only 'Scalar interpolation of adjoint values in different fibers is not equivariant'`
+- `The small-field curvature threshold sign flip preserves the suppression exponent`
+  - src/workhouse/invariants/balaban_repair.py:57 · YM_BALABAN_MULTISCALE; G19 (4.1) (4.6) (5.13) R2
+  - `workhouse verify --only 'The small-field curvature threshold sign flip preserves the suppression exponent'`
 **G17 uniformity: the shell isolation constant**
 
 - `every 5-cycle wraps the torus, so flux empties the five-link shelf`
@@ -413,6 +973,382 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the two band spans ARE the two incidence spectra`
   - src/workhouse/invariants/su3.py:143 · MASTER paper §4.5 / ENGINE_FLUX_su3_domino_d3.py key corrected_Ceven_bandwidth_16|t|
   - `workhouse verify --only 'the two band spans ARE the two incidence spectra'`
+**Wilson PBH proposal: exact orbit curvature and flow tests**
+
+- `FINDING: Wilson gradient flow expands a regular orbit distance by 8/7`
+  - src/workhouse/invariants/ym_pbh.py:85 · PBH_WILSON_TEST; G19; G23 section PBH-5
+  - `workhouse verify --only 'FINDING: Wilson gradient flow expands a regular orbit distance by 8/7'`
+- `FINDING: center-valued Wilson configurations remain rough at positive flow time`
+  - src/workhouse/invariants/ym_pbh.py:105 · PBH_WILSON_TEST; G19; G23 section PBH-5
+  - `workhouse verify --only 'FINDING: center-valued Wilson configurations remain rough at positive flow time'`
+- `FINDING: the actual Wilson orbit curvature is negative at a regular plaquette orbit`
+  - src/workhouse/invariants/ym_pbh.py:15 · PBH_WILSON_TEST; G19; G23 PBH-4
+  - `workhouse verify --only 'FINDING: the actual Wilson orbit curvature is negative at a regular plaquette orbit'`
+- `FINDING: the classical Wilson density is not the exact physical ground-state weight`
+  - src/workhouse/invariants/ym_pbh.py:60 · PBH_WILSON_TEST; G19; G23 PBH-6
+  - `workhouse verify --only 'FINDING: the classical Wilson density is not the exact physical ground-state weight'`
+- `Weighted Gamma2 retains both the kinetic prefactor and signed Hessian`
+  - src/workhouse/invariants/ym_pbh.py:37 · PBH_WILSON_TEST; G19; G23 PBH-1 PBH-4
+  - `workhouse verify --only 'Weighted Gamma2 retains both the kinetic prefactor and signed Hessian'`
+**Wilson SC17: endpoint reanchoring and connected spatial decay**
+
+- `A plaquette mixed Hessian has unit matrix operator norm`
+  - src/workhouse/invariants/wilson_sc17.py:30 · WILSON_SC17; G19; G23 Endpoint reanchoring
+  - `workhouse verify --only 'A plaquette mixed Hessian has unit matrix operator norm'`
+- `A scalar Gaussian square-root precision has the exact critical angle row`
+  - src/workhouse/invariants/wilson_sc17.py:226 · WILSON_SC17; G19; G23 Gaussian reference
+  - `workhouse verify --only 'A scalar Gaussian square-root precision has the exact critical angle row'`
+- `Each Wilson link has twelve signed mixed-potential neighbors`
+  - src/workhouse/invariants/wilson_sc17.py:81 · WILSON_SC17; G19; G23 H1
+  - `workhouse verify --only 'Each Wilson link has twelve signed mixed-potential neighbors'`
+- `Opposite endpoint derivatives rotate the entire raw diagonal Hessian`
+  - src/workhouse/invariants/wilson_sc17.py:47 · WILSON_SC17; G19; G23 Endpoint reanchoring
+  - `workhouse verify --only 'Opposite endpoint derivatives rotate the entire raw diagonal Hessian'`
+- `The SC17 weighted row has a strict rational invariant barrier`
+  - src/workhouse/invariants/wilson_sc17.py:110 · WILSON_SC17; G19; G23 H1-H2
+  - `workhouse verify --only 'The SC17 weighted row has a strict rational invariant barrier'`
+- `The actual two-alias fast conditional precision retains its cubic cusp`
+  - src/workhouse/invariants/wilson_sc17.py:200 · WILSON_SC17; G19; G23 Gaussian reference
+  - `workhouse verify --only 'The actual two-alias fast conditional precision retains its cubic cusp'`
+- `The bare SC17 norm bootstrap has an exact large-coupling obstruction`
+  - src/workhouse/invariants/wilson_sc17.py:164 · WILSON_SC17; G19; G23 Exact wall
+  - `workhouse verify --only 'The bare SC17 norm bootstrap has an exact large-coupling obstruction'`
+- `The massless square-root reference has angle row exactly one in the limit`
+  - src/workhouse/invariants/wilson_sc17.py:249 · WILSON_SC17; G19; G23 Gaussian reference
+  - `workhouse verify --only 'The massless square-root reference has angle row exactly one in the limit'`
+- `True curvature and conditional scores give the sharpened SC17 gap budget`
+  - src/workhouse/invariants/wilson_sc17.py:136 · WILSON_SC17; G19; G23 Curvature and single-link angles
+  - `workhouse verify --only 'True curvature and conditional scores give the sharpened SC17 gap budget'`
+**Wilson background continuation: magnetic comparison and charged covariance**
+
+- `A fixed fast inverse does not prevent a vanishing retained Schur energy`
+  - src/workhouse/invariants/wilson_background.py:143 · WILSON_BACKGROUND; G19; G23 BC1
+  - `workhouse verify --only 'A fixed fast inverse does not prevent a vanishing retained Schur energy'`
+- `Adjoint Casimir and gauge-star residual have exact positive constants`
+  - src/workhouse/invariants/wilson_background.py:16 · WILSON_BACKGROUND; G19; G23 SC5-SC9
+  - `workhouse verify --only 'Adjoint Casimir and gauge-star residual have exact positive constants'`
+- `All-coupling charged covariance constants preserve both cancellation terms`
+  - src/workhouse/invariants/wilson_background.py:159 · WILSON_BACKGROUND; G19; G23 SC10-SC14
+  - `workhouse verify --only 'All-coupling charged covariance constants preserve both cancellation terms'`
+- `Barycenter connection averaging fails its claimed gauge equivariance`
+  - src/workhouse/invariants/wilson_background.py:176 · WILSON_BACKGROUND; G19; G23 BC2
+  - `workhouse verify --only 'Barycenter connection averaging fails its claimed gauge equivariance'`
+- `Cubic incidence gives the uniform magnetic Hessian constant 64`
+  - src/workhouse/invariants/wilson_background.py:97 · WILSON_BACKGROUND; G19; G23 BF4-BF6
+  - `workhouse verify --only 'Cubic incidence gives the uniform magnetic Hessian constant 64'`
+- `SU2 parabolic derivative identities retain the signed product cancellation`
+  - src/workhouse/invariants/wilson_background.py:53 · WILSON_BACKGROUND; G19; G23 SC1-SC4 SC16
+  - `workhouse verify --only 'SU2 parabolic derivative identities retain the signed product cancellation'`
+- `Signed fast resolvent pairing obeys its relative-form bound`
+  - src/workhouse/invariants/wilson_background.py:126 · WILSON_BACKGROUND; G19; G23 BF1-BF3
+  - `workhouse verify --only 'Signed fast resolvent pairing obeys its relative-form bound'`
+**Wilson complete shell: complex anchoring and weighted matching interfaces**
+
+- `FINDING: right vacuum annihilation alone does not give the anchored bilinear bound`
+  - src/workhouse/invariants/wilson_shell.py:78 · WILSON_SHELL; G18; G19 S8
+  - `workhouse verify --only 'FINDING: right vacuum annihilation alone does not give the anchored bilinear bound'`
+- `Wilson Taylor range counting has a certified exponential envelope at every order`
+  - src/workhouse/invariants/wilson_shell.py:144 · WILSON_SHELL; G18; G19 S17
+  - `workhouse verify --only 'Wilson Taylor range counting has a certified exponential envelope at every order'`
+- `Wilson complete-shell complex contour and Gram budgets are strict exact inequalities`
+  - src/workhouse/invariants/wilson_shell.py:94 · WILSON_SHELL; G18; G19 S9-S15
+  - `workhouse verify --only 'Wilson complete-shell complex contour and Gram budgets are strict exact inequalities'`
+- `Wilson disconnected-shell source matrix element excludes an independently rotated spectator`
+  - src/workhouse/invariants/wilson_shell.py:118 · WILSON_SHELL; G18; G19 S2 and support lemma
+  - `workhouse verify --only 'Wilson disconnected-shell source matrix element excludes an independently rotated spectator'`
+- `Wilson holomorphic source Gram uses adjoint reflection rather than conjugating the variable`
+  - src/workhouse/invariants/wilson_shell.py:161 · WILSON_SHELL; G18; G19 S11-S14
+  - `workhouse verify --only 'Wilson holomorphic source Gram uses adjoint reflection rather than conjugating the variable'`
+- `Wilson matching after removal of its equal constant and linear terms has an exact shifted tail`
+  - src/workhouse/invariants/wilson_shell.py:178 · WILSON_SHELL; G18; G19 S18-S20
+  - `workhouse verify --only 'Wilson matching after removal of its equal constant and linear terms has an exact shifted tail'`
+- `Wilson nonnormal anchored activities satisfy an exact full-tensor bilinear certificate`
+  - src/workhouse/invariants/wilson_shell.py:33 · WILSON_SHELL; G18; G19 S8
+  - `workhouse verify --only 'Wilson nonnormal anchored activities satisfy an exact full-tensor bilinear certificate'`
+**Wilson marked expansion: exact blocks and uniform bound algebra**
+
+- `FINDING: a uniform vacuum gap does not determine the multiplicity or source totality of an excited shell`
+  - src/workhouse/invariants/wilson_marked.py:339 · WILSON_MARKED; G17; G18; G19 WT-6
+  - `workhouse verify --only 'FINDING: a uniform vacuum gap does not determine the multiplicity or source totality of an excited shell'`
+- `Wilson activated-block majorant coefficients are onto-label counts divided by factorial`
+  - src/workhouse/invariants/wilson_marked.py:105 · WILSON_MARKED; G17; G18; G19 WT-2
+  - `workhouse verify --only 'Wilson activated-block majorant coefficients are onto-label counts divided by factorial'`
+- `Wilson activation selects exactly the words that contain every active plaquette`
+  - src/workhouse/invariants/wilson_marked.py:85 · WILSON_MARKED; G17; G18; G19 WT-2
+  - `workhouse verify --only 'Wilson activation selects exactly the words that contain every active plaquette'`
+- `Wilson block expansion retains the symmetric endpoint factors at every tested order`
+  - src/workhouse/invariants/wilson_marked.py:69 · WILSON_MARKED; G17; G18; G19 WT-1
+  - `workhouse verify --only 'Wilson block expansion retains the symmetric endpoint factors at every tested order'`
+- `Wilson carrier transport error budgets preserve a relative gap and a positive source amplitude conditionally`
+  - src/workhouse/invariants/wilson_marked.py:323 · WILSON_MARKED; G17; G18; G19 WT-6
+  - `workhouse verify --only 'Wilson carrier transport error budgets preserve a relative gap and a positive source amplitude conditionally'`
+- `Wilson complete finite configuration sum equals the transfer power and factorizes by polymers`
+  - src/workhouse/invariants/wilson_marked.py:176 · WILSON_MARKED; G17; G18; G19 WT-3
+  - `workhouse verify --only 'Wilson complete finite configuration sum equals the transfer power and factorizes by polymers'`
+- `Wilson complex resolvent denominator has an exact radial and angular square decomposition`
+  - src/workhouse/invariants/wilson_marked.py:287 · WILSON_MARKED; G17; G18; G19 WT-5
+  - `workhouse verify --only 'Wilson complex resolvent denominator has an exact radial and angular square decomposition'`
+- `Wilson damped denominators have a finite physical-time limit while a raw transfer resolvent diverges`
+  - src/workhouse/invariants/wilson_marked.py:302 · WILSON_MARKED; G17; G18; G19 WT-5
+  - `workhouse verify --only 'Wilson damped denominators have a finite physical-time limit while a raw transfer resolvent diverges'`
+- `Wilson disconnected components separated in time also factor after a vacuum reset`
+  - src/workhouse/invariants/wilson_marked.py:159 · WILSON_MARKED; G17; G18; G19 WT-3
+  - `workhouse verify --only 'Wilson disconnected components separated in time also factor after a vacuum reset'`
+- `Wilson normalized marked expectation cancels an independent vacuum factor exactly`
+  - src/workhouse/invariants/wilson_marked.py:138 · WILSON_MARKED; G17; G18; G19 WT-3
+  - `workhouse verify --only 'Wilson normalized marked expectation cancels an independent vacuum factor exactly'`
+- `Wilson polymer counting satisfies the Kotecky-Preiss budget when its ratio is at most one half`
+  - src/workhouse/invariants/wilson_marked.py:270 · WILSON_MARKED; G17; G18; G19 WT-4
+  - `workhouse verify --only 'Wilson polymer counting satisfies the Kotecky-Preiss budget when its ratio is at most one half'`
+- `cubic link-time polymer graph has degree at most 38 and at most ten labels per vertex`
+  - src/workhouse/invariants/wilson_marked.py:241 · WILSON_MARKED; G17; G18; G19 WT-4
+  - `workhouse verify --only 'cubic link-time polymer graph has degree at most 38 and at most ten labels per vertex'`
+**Wilson positive repair: weighted gradient, full rotor and shared-link residual**
+
+- `A complete boundary link carries the exact Haar Casimir and growing rank budget`
+  - src/workhouse/invariants/wilson_weighted.py:187 · WILSON_WEIGHTED_REPAIR; G19; G23 WR20 WR21
+  - `workhouse verify --only 'A complete boundary link carries the exact Haar Casimir and growing rank budget'`
+- `Damping the compact trial absorbs the complete shared-link residual algebra`
+  - src/workhouse/invariants/wilson_weighted.py:160 · WILSON_WEIGHTED_REPAIR; G19; G23 WR14 WR16
+  - `workhouse verify --only 'Damping the compact trial absorbs the complete shared-link residual algebra'`
+- `Exact scalar budgets certify the conservative complete-rotor gap constants`
+  - src/workhouse/invariants/wilson_weighted.py:106 · WILSON_WEIGHTED_REPAIR; G19; G23 WR8 WR11
+  - `workhouse verify --only 'Exact scalar budgets certify the conservative complete-rotor gap constants'`
+- `Shared-link incidence loss is an exact sum of nonnegative pair differences`
+  - src/workhouse/invariants/wilson_weighted.py:141 · WILSON_WEIGHTED_REPAIR; G19; G23 WR13 WR16
+  - `workhouse verify --only 'Shared-link incidence loss is an exact sum of nonnegative pair differences'`
+- `The complete SU2 rotor separates into the Dirichlet radial and angular operators`
+  - src/workhouse/invariants/wilson_weighted.py:84 · WILSON_WEIGHTED_REPAIR; G19; G23 WR7
+  - `workhouse verify --only 'The complete SU2 rotor separates into the Dirichlet radial and angular operators'`
+- `The rotor gap scale restores the stated four-link Wilson kinetic normalization`
+  - src/workhouse/invariants/wilson_weighted.py:129 · WILSON_WEIGHTED_REPAIR; G19; G23 WR12
+  - `workhouse verify --only 'The rotor gap scale restores the stated four-link Wilson kinetic normalization'`
+- `The smooth sinh Wilson trial has the exact nonnegative physical residual`
+  - src/workhouse/invariants/wilson_weighted.py:68 · WILSON_WEIGHTED_REPAIR; G19; G23 WR4 WR5
+  - `workhouse verify --only 'The smooth sinh Wilson trial has the exact nonnegative physical residual'`
+- `Weighted derivative energy differs from its positive form by an exact divergence`
+  - src/workhouse/invariants/wilson_weighted.py:49 · WILSON_WEIGHTED_REPAIR; G19; G23 WR2
+  - `workhouse verify --only 'Weighted derivative energy differs from its positive form by an exact divergence'`
+- `Wilson negative curvature cancels in a positive derivative supersolution`
+  - src/workhouse/invariants/wilson_weighted.py:32 · WILSON_WEIGHTED_REPAIR; G19; G23 WR1
+  - `workhouse verify --only 'Wilson negative curvature cancels in a positive derivative supersolution'`
+**Wilson spatial inverse: compact spectral obstruction and selected repair**
+
+- `FINDING: compact Wilson spectral growth defeats a full Gaussian upper form bound`
+  - src/workhouse/invariants/wilson_selected.py:52 · WILSON_SELECTED; G19 W2-W3
+  - `workhouse verify --only 'FINDING: compact Wilson spectral growth defeats a full Gaussian upper form bound'`
+- `FINDING: spectator reference moments grow despite an exact unit excitation gap`
+  - src/workhouse/invariants/wilson_selected.py:124 · WILSON_SELECTED; G19 section 4
+  - `workhouse verify --only 'FINDING: spectator reference moments grow despite an exact unit excitation gap'`
+- `FINDING: true vacuum subtraction reverses the bare positive-perturbation inverse order`
+  - src/workhouse/invariants/wilson_selected.py:98 · WILSON_SELECTED; G19 section 4
+  - `workhouse verify --only 'FINDING: true vacuum subtraction reverses the bare positive-perturbation inverse order'`
+- `SU2 character kinetic normalization uses all four plaquette links`
+  - src/workhouse/invariants/wilson_selected.py:28 · WILSON_SELECTED; G19 W2
+  - `workhouse verify --only 'SU2 character kinetic normalization uses all four plaquette links'`
+- `Selected inverse variation can be bounded with unbounded relative perturbation`
+  - src/workhouse/invariants/wilson_selected.py:76 · WILSON_SELECTED; G19 W4-W5
+  - `workhouse verify --only 'Selected inverse variation can be bounded with unbounded relative perturbation'`
+**Wilson spatial passage: complete Schur excess and scale budgets**
+
+- `Actual SU2 harmonic commutator has nonzero quartic Wilson energy`
+  - src/workhouse/invariants/wilson_spatial.py:137 · WILSON_SPATIAL; G19 SP12-SP13 SP19
+  - `workhouse verify --only 'Actual SU2 harmonic commutator has nonzero quartic Wilson energy'`
+- `Actual SU2 radial Haar flattening retains its electric second-order scalar`
+  - src/workhouse/invariants/wilson_spatial.py:189 · WILSON_SPATIAL; G19 SP14
+  - `workhouse verify --only 'Actual SU2 radial Haar flattening retains its electric second-order scalar'`
+- `Actual averaged-path polar source has the complete second correction`
+  - src/workhouse/invariants/wilson_spatial.py:207 · WILSON_SPATIAL; G19 SP17a; WILSON_SPATIAL_FLAT_INPUT section 4, actual redundant observation geometry
+  - `workhouse verify --only 'Actual averaged-path polar source has the complete second correction'`
+- `Actual nonzero-curl Wilson quartic retains all three logarithmic terms`
+  - src/workhouse/invariants/wilson_spatial.py:163 · WILSON_SPATIAL; G19 SP12-SP13
+  - `workhouse verify --only 'Actual nonzero-curl Wilson quartic retains all three logarithmic terms'`
+- `Spatial Schur excess is exact with noncommuting fast blocks`
+  - src/workhouse/invariants/wilson_spatial.py:34 · WILSON_SPATIAL; G19 SP1-SP5
+  - `workhouse verify --only 'Spatial Schur excess is exact with noncommuting fast blocks'`
+- `Spatial energy derivative retains the full induced graph metric`
+  - src/workhouse/invariants/wilson_spatial.py:91 · WILSON_SPATIAL; G19 SP6; WILSON_SPATIAL_SCHUR_INPUT sections 1 and 5
+  - `workhouse verify --only 'Spatial energy derivative retains the full induced graph metric'`
+- `Spatial gap iteration carries every accumulated comparison loss`
+  - src/workhouse/invariants/wilson_spatial.py:308 · WILSON_SPATIAL; G19 SP20-SP22
+  - `workhouse verify --only 'Spatial gap iteration carries every accumulated comparison loss'`
+- `Spatial normalized moving-source density has the complete second jet`
+  - src/workhouse/invariants/wilson_spatial.py:249 · WILSON_SPATIAL; G19 SP15 SP17-SP18
+  - `workhouse verify --only 'Spatial normalized moving-source density has the complete second jet'`
+- `Spatial onto frames alone cannot preserve a specified observable`
+  - src/workhouse/invariants/wilson_spatial.py:329 · WILSON_SPATIAL; G19 SP23-SP24
+  - `workhouse verify --only 'Spatial onto frames alone cannot preserve a specified observable'`
+- `Spatial second jet includes every baseline and fast-variation cross term`
+  - src/workhouse/invariants/wilson_spatial.py:57 · WILSON_SPATIAL; G19 SP7-SP10
+  - `workhouse verify --only 'Spatial second jet includes every baseline and fast-variation cross term'`
+- `Spatial source straightening has both commutators and the nested term`
+  - src/workhouse/invariants/wilson_spatial.py:106 · WILSON_SPATIAL; G19 SP16
+  - `workhouse verify --only 'Spatial source straightening has both commutators and the nested term'`
+- `Spatial third-order remainder constant bounds a nonzero exact defect`
+  - src/workhouse/invariants/wilson_spatial.py:286 · WILSON_SPATIAL; G19 SP8-SP9
+  - `workhouse verify --only 'Spatial third-order remainder constant bounds a nonzero exact defect'`
+**Wilson vacuum assembly: connected-volume falsifier and true-conditional repair**
+
+- `A conditional one-coordinate projection commutes with every outside phase multiplier`
+  - src/workhouse/invariants/wilson_vacuum.py:112 · WILSON_VACUUM_ASSEMBLY; G19; G23 VA8
+  - `workhouse verify --only 'A conditional one-coordinate projection commutes with every outside phase multiplier'`
+- `A correlated conditional pair has the predicted exact projection angle`
+  - src/workhouse/invariants/wilson_vacuum.py:300 · WILSON_TRUE_BLOCK; G19; G23 BA7
+  - `workhouse verify --only 'A correlated conditional pair has the predicted exact projection angle'`
+- `Conditional pressure can change a frozen finite-block gap`
+  - src/workhouse/invariants/wilson_vacuum.py:326 · WILSON_TRUE_BLOCK; G19; G23 BA9 BA10
+  - `workhouse verify --only 'Conditional pressure can change a frozen finite-block gap'`
+- `Cubic staple controls use four distinct opposite links and at most sixteen plaquettes`
+  - src/workhouse/invariants/wilson_vacuum.py:46 · WILSON_VACUUM_ASSEMBLY; G19; G23 VA6
+  - `workhouse verify --only 'Cubic staple controls use four distinct opposite links and at most sixteen plaquettes'`
+- `Differentiating a normalized tilted expectation gives the signed connected force identity`
+  - src/workhouse/invariants/wilson_vacuum.py:342 · WILSON_TRUE_BLOCK; G19; G23 BA11
+  - `workhouse verify --only 'Differentiating a normalized tilted expectation gives the signed connected force identity'`
+- `Exact Brownian slab factor incidence obeys the bounded-degree polymer geometry`
+  - src/workhouse/invariants/wilson_vacuum.py:368 · WILSON_TRUE_BLOCK; G19; G23 BA20 BA23
+  - `workhouse verify --only 'Exact Brownian slab factor incidence obeys the bounded-degree polymer geometry'`
+- `Exact SU2 heat-kernel tail constants yield the volume-independent local ratio`
+  - src/workhouse/invariants/wilson_vacuum.py:28 · WILSON_VACUUM_ASSEMBLY; G19; G23 VA1 VA4
+  - `workhouse verify --only 'Exact SU2 heat-kernel tail constants yield the volume-independent local ratio'`
+- `Optimizing the actual block heat comparison yields a square-root coupling loss`
+  - src/workhouse/invariants/wilson_vacuum.py:227 · WILSON_TRUE_BLOCK; G19; G23 BA2 BA4
+  - `workhouse verify --only 'Optimizing the actual block heat comparison yields a square-root coupling loss'`
+- `Tail-assigned cubic blocks partition links and have the stated plaquette boundary`
+  - src/workhouse/invariants/wilson_vacuum.py:250 · WILSON_TRUE_BLOCK; G19; G23 BA1
+  - `workhouse verify --only 'Tail-assigned cubic blocks partition links and have the stated plaquette boundary'`
+- `The cancelled-staple region leaves fifteen local gap units in the discarded remainder`
+  - src/workhouse/invariants/wilson_vacuum.py:91 · WILSON_VACUUM_ASSEMBLY; G19; G23 VA5 VA8
+  - `workhouse verify --only 'The cancelled-staple region leaves fifteen local gap units in the discarded remainder'`
+- `The constructed slab activities meet a strict uniform physical angle budget`
+  - src/workhouse/invariants/wilson_vacuum.py:411 · WILSON_TRUE_BLOCK; G19; G23 BA21 BA25
+  - `workhouse verify --only 'The constructed slab activities meet a strict uniform physical angle budget'`
+- `The mixed density ratio averages to the joint-to-product marginal ratio`
+  - src/workhouse/invariants/wilson_vacuum.py:276 · WILSON_TRUE_BLOCK; G19; G23 BA6 BA7
+  - `workhouse verify --only 'The mixed density ratio averages to the joint-to-product marginal ratio'`
+- `The true-conditional Poincare coefficient and pair budget retain their coupling dependence`
+  - src/workhouse/invariants/wilson_vacuum.py:191 · WILSON_VACUUM_ASSEMBLY; G19; G23 VA10 VA16
+  - `workhouse verify --only 'The true-conditional Poincare coefficient and pair budget retain their coupling dependence'`
+- `The true-ground graph form cancels the complete vacuum before any local bound`
+  - src/workhouse/invariants/wilson_vacuum.py:169 · WILSON_VACUUM_ASSEMBLY; G19; G23 VA9
+  - `workhouse verify --only 'The true-ground graph form cancels the complete vacuum before any local bound'`
+- `True conditional projections share the correlated vacuum and are orthogonal in its measure`
+  - src/workhouse/invariants/wilson_vacuum.py:137 · WILSON_VACUUM_ASSEMBLY; G19; G23 VA9 VA11
+  - `workhouse verify --only 'True conditional projections share the correlated vacuum and are orthogonal in its measure'`
+- `Two-projection angle algebra gives the exact sufficient assembly budget`
+  - src/workhouse/invariants/wilson_vacuum.py:208 · WILSON_VACUUM_ASSEMBLY; G19; G23 VA12 VA13
+  - `workhouse verify --only 'Two-projection angle algebra gives the exact sufficient assembly budget'`
+**Yang-Mills GPU archive: exact operator identification audit**
+
+- `Admissible cube basis has magnetic weights missing the shared-edge recoupling ratio`
+  - src/workhouse/invariants/yangmills_gpu_audit.py:148 · YM_GPU_AUDIT; G19; G23 GA10
+  - `workhouse verify --only 'Admissible cube basis has magnetic weights missing the shared-edge recoupling ratio'`
+- `Archived 2x2 shared kinetic expression is exactly a sum of separate Casimirs`
+  - src/workhouse/invariants/yangmills_gpu_audit.py:98 · YM_GPU_AUDIT; G19; G23 GA9
+  - `workhouse verify --only 'Archived 2x2 shared kinetic expression is exactly a sum of separate Casimirs'`
+- `Archived domino builder equals two independent rotors with increased kinetic coefficient`
+  - src/workhouse/invariants/yangmills_gpu_audit.py:49 · YM_GPU_AUDIT; G19; G23 GA5
+  - `workhouse verify --only 'Archived domino builder equals two independent rotors with increased kinetic coefficient'`
+- `Scalar fast model has an exact all-source bound distinct from its delta-source sample`
+  - src/workhouse/invariants/yangmills_gpu_audit.py:30 · YM_GPU_AUDIT; G19; G23 GA1 GA4
+  - `workhouse verify --only 'Scalar fast model has an exact all-source bound distinct from its delta-source sample'`
+- `Scalar telescope recurrence is valid but a squared-time clock is not additive`
+  - src/workhouse/invariants/yangmills_gpu_audit.py:132 · YM_GPU_AUDIT; G19; G23 GA7 GA8
+  - `workhouse verify --only 'Scalar telescope recurrence is valid but a squared-time clock is not additive'`
+- `Shared SU2 derivative produces a nonzero physical channel outside product characters`
+  - src/workhouse/invariants/yangmills_gpu_audit.py:76 · YM_GPU_AUDIT; G19; G23 GA6
+  - `workhouse verify --only 'Shared SU2 derivative produces a nonzero physical channel outside product characters'`
+**Yang-Mills flat directions: exact finite-dimensional algebra**
+
+- `YM flat directions: SU(2) slice has two transverse modes`
+  - src/workhouse/invariants/ym_flat_directions.py:82 · YM_FLAT_DIRECTIONS; SIMON_1983_DISCRETE sections 2, 7; G22, G23
+  - `workhouse verify --only 'YM flat directions: SU(2) slice has two transverse modes'`
+- `YM flat directions: Simon's scalar split retains half the Laplacian`
+  - src/workhouse/invariants/ym_flat_directions.py:63 · YM_FLAT_DIRECTIONS; SIMON_1983_DISCRETE sections 2, 7; G22, G23
+  - `workhouse verify --only 'YM flat directions: Simon'"'"'s scalar split retains half the Laplacian'`
+- `YM flat directions: balanced slice aggregation retains half the kinetic energy`
+  - src/workhouse/invariants/ym_flat_directions.py:174 · YM_FLAT_DIRECTIONS; SIMON_1983_DISCRETE sections 2, 7; G22, G23
+  - `workhouse verify --only 'YM flat directions: balanced slice aggregation retains half the kinetic energy'`
+- `YM flat directions: commutator Jacobian is coercive while the force vanishes`
+  - src/workhouse/invariants/ym_flat_directions.py:107 · YM_FLAT_DIRECTIONS; SIMON_1983_DISCRETE sections 2, 7; G22, G23
+  - `workhouse verify --only 'YM flat directions: commutator Jacobian is coercive while the force vanishes'`
+- `YM flat directions: commuting-valley Hessian is a Gram projector`
+  - src/workhouse/invariants/ym_flat_directions.py:137 · YM_FLAT_DIRECTIONS; SIMON_1983_DISCRETE sections 2, 7; G22, G23
+  - `workhouse verify --only 'YM flat directions: commuting-valley Hessian is a Gram projector'`
+- `YM flat directions: oscillator square completion fixes the zero-point constant`
+  - src/workhouse/invariants/ym_flat_directions.py:39 · YM_FLAT_DIRECTIONS; SIMON_1983_DISCRETE sections 2, 7; G22, G23
+  - `workhouse verify --only 'YM flat directions: oscillator square completion fixes the zero-point constant'`
+- `YM flat directions: quartic coupling dilation scales energies as g^(2/3)`
+  - src/workhouse/invariants/ym_flat_directions.py:243 · YM_FLAT_DIRECTIONS; SIMON_1983_DISCRETE sections 2, 7; G22, G23
+  - `workhouse verify --only 'YM flat directions: quartic coupling dilation scales energies as g^(2/3)'`
+- `YM flat directions: radial lower-bound minimum has cube 27/32`
+  - src/workhouse/invariants/ym_flat_directions.py:218 · YM_FLAT_DIRECTIONS; SIMON_1983_DISCRETE sections 2, 7; G22, G23
+  - `workhouse verify --only 'YM flat directions: radial lower-bound minimum has cube 27/32'`
+- `YM flat directions: three-dimensional Hardy completion has coefficient 1/4`
+  - src/workhouse/invariants/ym_flat_directions.py:195 · YM_FLAT_DIRECTIONS; SIMON_1983_DISCRETE sections 2, 7; G22, G23
+  - `workhouse verify --only 'YM flat directions: three-dimensional Hardy completion has coefficient 1/4'`
+**Yang-Mills ground-state transform and residual certificates (G20, G23)**
+
+- `FINDING: global residual budget loses the tensor product gap at four quartic copies`
+  - src/workhouse/invariants/ym_ground_state.py:328 · YM_GROUND_STATE; G20; G23; derivation GST-9
+  - `workhouse verify --only 'FINDING: global residual budget loses the tensor product gap at four quartic copies'`
+- `FINDING: omitting a nonconstant ground-state residual overstates a finite gap`
+  - src/workhouse/invariants/ym_ground_state.py:272 · YM_GROUND_STATE; G23; derivation GST-8
+  - `workhouse verify --only 'FINDING: omitting a nonconstant ground-state residual overstates a finite gap'`
+- `FINDING: quartic logarithmic trial state has an unbounded negative residual for a quartic potential`
+  - src/workhouse/invariants/ym_ground_state.py:305 · YM_GROUND_STATE; G20; G23; derivation GST-8
+  - `workhouse verify --only 'FINDING: quartic logarithmic trial state has an unbounded negative residual for a quartic potential'`
+- `anisotropic oscillator calibrates curvature gap to hbar omega_min`
+  - src/workhouse/invariants/ym_ground_state.py:146 · YM_GROUND_STATE; G20; G23; MMM_2019_CURVATURE II.24-II.27; derivation GST-5
+  - `workhouse verify --only 'anisotropic oscillator calibrates curvature gap to hbar omega_min'`
+- `finite symmetric matrix ground-state residual identity`
+  - src/workhouse/invariants/ym_ground_state.py:124 · YM_GROUND_STATE; G23; derivation GST-4
+  - `workhouse verify --only 'finite symmetric matrix ground-state residual identity'`
+- `flat weighted Bochner identity has Hessian coefficient 2/hbar`
+  - src/workhouse/invariants/ym_ground_state.py:96 · YM_GROUND_STATE; G20; G23; MMM_2019_CURVATURE II.15-II.16; derivation GST-3
+  - `workhouse verify --only 'flat weighted Bochner identity has Hessian coefficient 2/hbar'`
+- `ground-state trial residual gives exact conjugation in two flat dimensions`
+  - src/workhouse/invariants/ym_ground_state.py:43 · YM_GROUND_STATE; G20; G23; MMM_2019_CURVATURE II.9; derivation GST-1
+  - `workhouse verify --only 'ground-state trial residual gives exact conjugation in two flat dimensions'`
+- `pure quartic oscillator Gaussian residual certificate`
+  - src/workhouse/invariants/ym_ground_state.py:202 · YM_GROUND_STATE; G23; derivation GST-7
+  - `workhouse verify --only 'pure quartic oscillator Gaussian residual certificate'`
+- `quartic Gaussian certificate is optimized at frequency cubed 6 lambda hbar over mass squared`
+  - src/workhouse/invariants/ym_ground_state.py:253 · YM_GROUND_STATE; G23; derivation GST-7
+  - `workhouse verify --only 'quartic Gaussian certificate is optimized at frequency cubed 6 lambda hbar over mass squared'`
+- `trial residual gap budget uses its mean above its floor`
+  - src/workhouse/invariants/ym_ground_state.py:178 · YM_GROUND_STATE; G23; derivation GST-6
+  - `workhouse verify --only 'trial residual gap budget uses its mean above its floor'`
+- `weighted Dirichlet identity retains the trial residual`
+  - src/workhouse/invariants/ym_ground_state.py:74 · YM_GROUND_STATE; G20; G23; MMM_2019_CURVATURE II.13; derivation GST-2
+  - `workhouse verify --only 'weighted Dirichlet identity retains the trial residual'`
+**Yang-Mills source extraction: reconstruction and localization**
+
+- `a complete observable frame detects both excited sectors with exact lower frame bound 2`
+  - src/workhouse/invariants/ym_reconstruction.py:33 · YM_RECONSTRUCTION section 3; OS_1975 p. 291 totality statement; G18 G23
+  - `workhouse verify --only 'a complete observable frame detects both excited sectors with exact lower frame bound 2'`
+- `a positive three-state transfer matrix realizes a hidden slow mode under an arbitrarily small plateau`
+  - src/workhouse/invariants/ym_reconstruction.py:60 · YM_RECONSTRUCTION sections 3-4; JW_2006 p. 6; G18 G23
+  - `workhouse verify --only 'a positive three-state transfer matrix realizes a hidden slow mode under an arbitrarily small plateau'`
+- `adaptive localization balances both exponents at delta=eta*beta/(alpha+beta)`
+  - src/workhouse/invariants/ym_reconstruction.py:110 · YM_RECONSTRUCTION section 5; G23 conditional localization repair
+  - `workhouse verify --only 'adaptive localization balances both exponents at delta=eta*beta/(alpha+beta)'`
+- `spectral leakage optimization has stationary x=A*(1-theta)/(epsilon*theta) with a positive derivative slope`
+  - src/workhouse/invariants/ym_reconstruction.py:86 · YM_RECONSTRUCTION section 4; G23 localization error refinement
+  - `workhouse verify --only 'spectral leakage optimization has stationary x=A*(1-theta)/(epsilon*theta) with a positive derivative slope'`
+- `two-atom reflection kernel is an exact Gram matrix with determinant w1*w2*(r1-r2)^2`
+  - src/workhouse/invariants/ym_reconstruction.py:16 · YM_RECONSTRUCTION section 2; OS_1975 p. 291 equations (5.2)-(5.3); G23
+  - `workhouse verify --only 'two-atom reflection kernel is an exact Gram matrix with determinant w1*w2*(r1-r2)^2'`
+**anisotropy variance: full-kernel mixing and induced sixth order**
+
+- `anisotropy induced sixth-order coefficient is minus four C squared over t3`
+  - src/workhouse/invariants/anisotropy_variance.py:84 · RECENT_ANISOTROPY; THEORY.md sections 2-5; G9; G11; G14; G18
+  - `workhouse verify --only 'anisotropy induced sixth-order coefficient is minus four C squared over t3'`
+- `anisotropy mixing residual matches the full assembled Laurent kernel`
+  - src/workhouse/invariants/anisotropy_variance.py:55 · RECENT_ANISOTROPY; THEORY.md sections 2-5; G9; G11; G14; G18
+  - `workhouse verify --only 'anisotropy mixing residual matches the full assembled Laurent kernel'`
+- `anisotropy variance is exactly the simplex pair sum and cubic shape invariant`
+  - src/workhouse/invariants/anisotropy_variance.py:33 · RECENT_ANISOTROPY; THEORY.md sections 2-5; G9; G11; G14; G18
+  - `workhouse verify --only 'anisotropy variance is exactly the simplex pair sum and cubic shape invariant'`
 **continuum and fixed-spacing bridges (G18, G19)**
 
 - `the G18 sheet coefficient 5/612 is the registered shared-link hopping`
@@ -1144,43 +2080,43 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'the tetrahedral circuit attains its bound with nonzero weight'`
 **the Feshbach channel of the plaquette Hodge algebra**
 
+- `FINDING: one R does not exclude B; sigma(UR) = sigma(RU) = -2 q e_2`
+  - src/workhouse/invariants/hodge_feshbach.py:311 · HODGE_FESHBACH; G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - `workhouse verify --only 'FINDING: one R does not exclude B; sigma(UR) = sigma(RU) = -2 q e_2'`
 - `FINDING: the algebra contains a shape monomial the four-shape ansatz cannot hold`
-  - src/workhouse/invariants/hodge_feshbach.py:328 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - src/workhouse/invariants/hodge_feshbach.py:353 · HODGE_FESHBACH; G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
   - `workhouse verify --only 'FINDING: the algebra contains a shape monomial the four-shape ansatz cannot hold'`
-- `Q is the projector onto ker L_up: the fibre splits as ker L_down + ker L_up`
-  - src/workhouse/invariants/hodge_feshbach.py:138 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
-  - `workhouse verify --only 'Q is the projector onto ker L_up: the fibre splits as ker L_down + ker L_up'`
+- `for q > 0, Q projects onto ker L_up; the cleared Hodge identities hold everywhere`
+  - src/workhouse/invariants/hodge_feshbach.py:139 · HODGE_FESHBACH; G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - `workhouse verify --only 'for q > 0, Q projects onto ker L_up; the cleared Hodge identities hold everywhere'`
 - `neither Hodge generator leaves the carrier: Q L_down psi = Q L_up psi = 0`
-  - src/workhouse/invariants/hodge_feshbach.py:164 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - src/workhouse/invariants/hodge_feshbach.py:181 · HODGE_FESHBACH; G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
   - `workhouse verify --only 'neither Hodge generator leaves the carrier: Q L_down psi = Q L_up psi = 0'`
-- `one R or none reaches only the c_0, A and 4C tiers -- e_3 is unreachable`
-  - src/workhouse/invariants/hodge_feshbach.py:264 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
-  - `workhouse verify --only 'one R or none reaches only the c_0, A and 4C tiers -- e_3 is unreachable'`
 - `the Feshbach defect of a word vanishes unless two R's meet unseparated by U`
-  - src/workhouse/invariants/hodge_feshbach.py:235 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - src/workhouse/invariants/hodge_feshbach.py:252 · HODGE_FESHBACH; G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
   - `workhouse verify --only 'the Feshbach defect of a word vanishes unless two R'"'"'s meet unseparated by U'`
 - `the Hodge-word statement needs only L_down psi = 0 and L_up psi = lambda psi, and both hold in three geometries`
-  - src/workhouse/invariants/hodge_feshbach.py:397 · U7; U3; G5; ADR 0008
+  - src/workhouse/invariants/hodge_feshbach.py:431 · HODGE_FESHBACH Hodge-word hypotheses in other cells; U3; G5; ADR 0008
   - `workhouse verify --only 'the Hodge-word statement needs only L_down psi = 0 and L_up psi = lambda psi, and both hold in three geometries'`
 - `the R-excitation is up-harmonic: L_up (Q R psi) = 0 exactly`
-  - src/workhouse/invariants/hodge_feshbach.py:183 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - src/workhouse/invariants/hodge_feshbach.py:200 · HODGE_FESHBACH; G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
   - `workhouse verify --only 'the R-excitation is up-harmonic: L_up (Q R psi) = 0 exactly'`
-- `the fourth-order kernel is linear in R, so the collapse needs no cancellation`
-  - src/workhouse/invariants/hodge_feshbach.py:370 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
-  - `workhouse verify --only 'the fourth-order kernel is linear in R, so the collapse needs no cancellation'`
+- `the actual fourth-order support I, U, S, S^2, R forces B = D = 0`
+  - src/workhouse/invariants/hodge_feshbach.py:395 · HODGE_FESHBACH; G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - `workhouse verify --only 'the actual fourth-order support I, U, S, S^2, R forces B = D = 0'`
 - `two R insertions unlock the L^-4 tier locked at B : D = 1 : 3`
-  - src/workhouse/invariants/hodge_feshbach.py:303 · G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - src/workhouse/invariants/hodge_feshbach.py:328 · HODGE_FESHBACH; G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
   - `workhouse verify --only 'two R insertions unlock the L^-4 tier locked at B : D = 1 : 3'`
+- `words of length at most three with at most one R obey the exact carrier formula`
+  - src/workhouse/invariants/hodge_feshbach.py:281 · HODGE_FESHBACH; G14; U2; U3; C2; ADR 0019; GLUEBALL v3.1 6.2; THM_FLUX Prop. 2
+  - `workhouse verify --only 'words of length at most three with at most one R obey the exact carrier formula'`
 **the Feshbach resolvent comparison**
 
-- `a relative form bound gives the explicit constant C = kappa/(1-|g|kappa)^2 <R_0 w,w>`
-  - src/workhouse/invariants/feshbach_resolvent.py:117 · G17; G22; G23
-  - `workhouse verify --only 'a relative form bound gives the explicit constant C = kappa/(1-|g|kappa)^2 <R_0 w,w>'`
 - `the interacting inverse image cancels: (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g)w, w>`
-  - src/workhouse/invariants/feshbach_resolvent.py:65 · G17; G22; G23
+  - src/workhouse/invariants/feshbach_resolvent.py:65 · FESHBACH_RESOLVENT; G17; G22; G23
   - `workhouse verify --only 'the interacting inverse image cancels: (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g)w, w>'`
 - `the variational sandwich puts the free optimizer on one side`
-  - src/workhouse/invariants/feshbach_resolvent.py:92 · G17; G22; G23
+  - src/workhouse/invariants/feshbach_resolvent.py:92 · FESHBACH_RESOLVENT; G17; G22; G23
   - `workhouse verify --only 'the variational sandwich puts the free optimizer on one side'`
 **the G18 interpolator: local carrier operators and the sheet no-go**
 
@@ -1601,10 +2537,15 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/two_cube.py:313 · MASTER edition §5.1; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
 
-## T2 — float agreement within a stated tolerance — 58
+## T2 — float agreement within a stated tolerance — 60
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
+**anisotropy variance: full-kernel mixing and induced sixth order**
+
+- `anisotropy finite-order overlap and energy bounds hold in scaled spectral probes`
+  - src/workhouse/invariants/anisotropy_variance.py:100 · RECENT_ANISOTROPY; THEORY.md sections 2-5; G9; G11; G14; G18
+  - `workhouse verify --only 'anisotropy finite-order overlap and energy bounds hold in scaled spectral probes'`
 **finite-rank truncation bridge (published SU(3) truncations)**
 
 - `FINDING: a full T1 = B = 4 cube Hamiltonian reproduces -1/12 and the reversed shell`
@@ -1780,10 +2721,13 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 **the Feshbach resolvent comparison**
 
 - `FINDING: the reduction buys a relative form bound, not the estimate -- void at |g| kappa >= 1`
-  - src/workhouse/invariants/feshbach_resolvent.py:146 · G17; G22; G23
+  - src/workhouse/invariants/feshbach_resolvent.py:149 · FESHBACH_RESOLVENT; G17; G22; G23
   - `workhouse verify --only 'FINDING: the reduction buys a relative form bound, not the estimate -- void at |g| kappa >= 1'`
+- `a relative form bound gives the explicit constant C = kappa/(1-|g|kappa)^2 <R_0 w,w>`
+  - src/workhouse/invariants/feshbach_resolvent.py:118 · FESHBACH_RESOLVENT; G17; G22; G23
+  - `workhouse verify --only 'a relative form bound gives the explicit constant C = kappa/(1-|g|kappa)^2 <R_0 w,w>'`
 - `the relative bound is volume-stable where the Neumann quantity is not`
-  - src/workhouse/invariants/feshbach_resolvent.py:249 · G17; G22; G23
+  - src/workhouse/invariants/feshbach_resolvent.py:254 · FESHBACH_RESOLVENT; G17; G22; G23
   - `workhouse verify --only 'the relative bound is volume-stable where the Neumann quantity is not'`
 **the T1 triplet at Gamma and the uniform isolation of the flat band**
 

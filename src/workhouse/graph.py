@@ -43,10 +43,14 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from . import claims as claims_mod
+from . import derivation_statements as derivation_statements_mod
+from . import lean_dependencies as lean_dependencies_mod
 from . import ledger as ledger_mod
 from . import literature as literature_mod
 from . import notes as notes_mod
+from . import recent_research as recent_research_mod
 from . import results as results_mod
+from . import study_graph as study_graph_mod
 from . import triage as triage_mod
 from .claims import ADR_REF, LEDGER_ID
 from .invariants import SUITES, source_path
@@ -330,6 +334,11 @@ def build(
         for type_ in ("technical_appendix", "navigation", "provenance", "cites"):
             for target in document.get(type_, []):
                 add(src, f"CITE:{target}", type_, "curated", "ledger/documents.yaml")
+        # Research and validation documents also carry explicitly curated
+        # native claim links. These are source relationships, never promotions.
+        for type_ in ("bears_on", "supported_by", "cannot_decide", "superseded_by"):
+            for target in document.get(type_, []):
+                add(src, target, type_, "curated", "ledger/documents.yaml")
 
     # Result dependencies name mathematical inputs; support edges instead
     # name finite checks and keep their exact boundary in the result detail.
@@ -356,12 +365,37 @@ def build(
         for edge in paper.get("bears_on", []):
             target = edge["target"]
             dst = target if LEDGER_ID.fullmatch(target) else f"CONST:{target}"
-            add(f"LIT:{paper['id']}:{target}", dst, "bears_on", "curated", "literature/index.yaml")
+            bearing = f"LIT:{paper['id']}:{target}"
+            add(bearing, dst, "bears_on", "curated", "literature/index.yaml")
+            # Join the citation web to the paper's individual bearing claims.
+            add(f"LIT:{paper['id']}", bearing, "contains", "curated", "literature/index.yaml")
     # The citation web: curated per-paper cites lists, emitted between the
     # paper-level LIT nodes. Bibliography, not endorsement — these edges can
     # rank and connect papers and can promote nothing.
     for src, dst in lit.cites():
         add(f"LIT:{src}", f"LIT:{dst}", "cites", "curated", "literature/index.yaml")
+
+    # Detailed literature studies use existing graph relationships and note
+    # nodes. Every link has a curated explanation and resolvable endpoints;
+    # source membership records the paper and its precise reading locator.
+    for study in study_graph_mod.load():
+        for node in study.nodes:
+            where = f"{study.source}#{node['id']}"
+            for reference in node["sources"]:
+                paper = f"LIT:{reference['paper']}"
+                source = f"{where}.sources ({reference['locator']})"
+                add(node["id"], paper, "supported_by", "curated", source)
+                add(paper, node["id"], "contains", "curated", source)
+            for i, link in enumerate(node.get("links", [])):
+                add(node["id"], link["target"], link["type"], "curated", f"{where}.links[{i}]")
+
+    # Source-pinned recent results preserve authored hypotheses, proofs and
+    # failed routes; native checks and Lean retain their own verification tiers.
+    for edge in recent_research_mod.edge_records():
+        add(edge["src"], edge["dst"], edge["type"], edge["how"], edge["source"])
+
+    for edge in derivation_statements_mod.edge_records():
+        add(edge["src"], edge["dst"], edge["type"], edge["how"], edge["source"])
 
     # The notes archives. `contains` is the archive a document was inventoried
     # in; `bears_on`, `duplicate_of` and `superseded_by` are the verbatim
@@ -478,6 +512,9 @@ def build(
         cid = corpus_by_where.get(str(document.get("path", "")))
         if cid and not document.get("unresolved"):
             add(cid, f"CITE:{document['alias']}", "pinned_as", "curated", "ledger/documents.yaml")
+
+    for edge in lean_dependencies_mod.edge_records():
+        add(edge["src"], edge["dst"], edge["type"], edge["how"], edge["source"])
 
     for theorem in claims_mod.load_theorems():
         tid = f"LEAN:{theorem['name']}"

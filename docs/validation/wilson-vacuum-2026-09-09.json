@@ -1,0 +1,445 @@
+{
+  "recorded_at": "2026-09-09T18:30:02.276818+00:00",
+  "analytic_progress": [
+    "VA1-VA4: actual true-ground local density comparison independent of volume",
+    "VA5-VA8: literal WR26 comparison is negative at large connected physical volume",
+    "VA9-VA11: exact vacuum conditional projections with uniform local Poincare floor",
+    "VA12-VA19: assembly criterion, quantitative decay budget, block repair and clock loss",
+    "GA1-GA10: source-identified scalar theorems and archived operator discrepancies",
+    "GA11: supplied Lean eigenvector identity does not assert F=E0-sum e_*=0"
+  ],
+  "proof_boundary": "VA14 physical approximate tensorization for the true coupled vacuum with a volume-independent constant, plus improved local or physical-block coercivity: VA17 shows the present VA10 floor vanishes on the stated logarithmic trajectory. One sufficient assembly path is a strict summable physical projection-angle budget. Complete shell, source matching and observable transport remain conditional on their actual interacting hypotheses.",
+  "scope": "Analytic semigroup, domain, full-volume and spectral arguments are not Lean formalizations. The exact controls below verify their stated finite identities. The GPU replay is separately labelled T2. No Yang-Mills continuum closure.",
+  "checks": [
+    {
+      "name": "Exact SU2 heat-kernel tail constants yield the volume-independent local ratio",
+      "passed": true,
+      "detail": "Exact character-tail majorant and Taylor lower bound certify 3/4<=p_1<=5/4. Feynman-Kac positivity and cancellation of the common outside integral in VA1-VA2 are analytic; the resulting true-ground local amplitude ratio is volume independent",
+      "section": "WILSON_VACUUM_ASSEMBLY; G19; G23 VA1 VA4",
+      "tier": 1,
+      "line": 28,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:28",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Cubic staple controls use four distinct opposite links and at most sixteen plaquettes",
+      "passed": true,
+      "detail": "Exact incidence enumeration on periodic side lengths 3,4,5 verifies the four independently Haar-variable opposite links and touching-plaquette bound. VA2 states the analytic all-L>=3 geometric argument; these are finite controls",
+      "section": "WILSON_VACUUM_ASSEMBLY; G19; G23 VA6",
+      "tier": 1,
+      "line": 46,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:46",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "The cancelled-staple region leaves fifteen local gap units in the discarded remainder",
+      "passed": true,
+      "detail": "At k/epsilon=32 the bad-region lower floor is sixteen delta; subtracting delta Q retains fifteen delta. The physical local-phase test changes four bounded projections, yielding delta(4-15 p0 |E|) after true-vacuum subtraction",
+      "section": "WILSON_VACUUM_ASSEMBLY; G19; G23 VA5 VA8",
+      "tier": 1,
+      "line": 91,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:91",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "A conditional one-coordinate projection commutes with every outside phase multiplier",
+      "passed": true,
+      "detail": "An arbitrary positive fiber line depending on the outside bit is a projection and commutes exactly with an outside unit-modulus phase. The continuum VA8 proof uses this integration-variable identity, even for boundary-dependent kernels",
+      "section": "WILSON_VACUUM_ASSEMBLY; G19; G23 VA8",
+      "tier": 1,
+      "line": 112,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:112",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "True conditional projections share the correlated vacuum and are orthogonal in its measure",
+      "passed": true,
+      "detail": "In an exact nonproduct four-state vacuum, conditional expectations become symmetric projections sharing the exact vacuum after multiplication by Omega. They need not commute; the sum has a unique zero vector. No frustration scalar is dropped",
+      "section": "WILSON_VACUUM_ASSEMBLY; G19; G23 VA9 VA11",
+      "tier": 1,
+      "line": 137,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:137",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "The true-ground graph form cancels the complete vacuum before any local bound",
+      "passed": true,
+      "detail": "An exact correlated-vacuum discrete ground transform cancels the full energy and yields only positive weighted edge differences. This checks the finite identity underlying the analytic Wilson form VA9, not a continuum statement",
+      "section": "WILSON_VACUUM_ASSEMBLY; G19; G23 VA9",
+      "tier": 1,
+      "line": 169,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:169",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "The true-conditional Poincare coefficient and pair budget retain their coupling dependence",
+      "passed": true,
+      "detail": "gamma_*=(27/25)epsilon exp(-16k/epsilon) and the pair minorization is (3/5)^8 exp(-64k/epsilon). These are volume-independent local bounds, not a summable physical influence budget or a continuum clock bound",
+      "section": "WILSON_VACUUM_ASSEMBLY; G19; G23 VA10 VA16",
+      "tier": 1,
+      "line": 191,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:191",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Two-projection angle algebra gives the exact sufficient assembly budget",
+      "passed": true,
+      "detail": "In each nontrivial angle block the projection sum has eigenvalues 1+/-r and {p,q}=total^2-total, proving {p,q}>=-r(p+q) for 0<=r<=1. VA12 sums this inequality; VA13 proves the separate physical one-cycle identity",
+      "section": "WILSON_VACUUM_ASSEMBLY; G19; G23 VA12 VA13",
+      "tier": 1,
+      "line": 208,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:208",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Optimizing the actual block heat comparison yields a square-root coupling loss",
+      "passed": true,
+      "detail": "Exact minimization and nonnegative-square remainder give exp(-4pi sqrt(r p k/epsilon)); the heat Harnack, true-ground semigroup and full conditional Poincare proofs are analytic in BA2",
+      "section": "WILSON_TRUE_BLOCK; G19; G23 BA2 BA4",
+      "tier": 1,
+      "line": 227,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:227",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Tail-assigned cubic blocks partition links and have the stated plaquette boundary",
+      "passed": true,
+      "detail": "Independent incidence counts for (ell,L)=(1,3),(2,4),(3,6) match r=3ell^3 and p=3ell^3+6ell^2. The all-size disjoint-tail partition proof is BA1; ell=2 uses 24 links, not 12",
+      "section": "WILSON_TRUE_BLOCK; G19; G23 BA1",
+      "tier": 1,
+      "line": 250,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:250",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "The mixed density ratio averages to the joint-to-product marginal ratio",
+      "passed": true,
+      "detail": "For arbitrary positive 2x2 weights the averaging identity holds exactly. BA7 proves its integral version and the same-marginal minorization giving c_phys<=1-exp(-D)",
+      "section": "WILSON_TRUE_BLOCK; G19; G23 BA6 BA7",
+      "tier": 1,
+      "line": 276,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:276",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "A correlated conditional pair has the predicted exact projection angle",
+      "passed": true,
+      "detail": "Exact true-conditional projections in the four-state correlated measure have angle 3/5. Its maximum density cross ratio is 16 and the proved minorization bound is 15/16; this is a finite nonproduct control, not an assumed Wilson angle",
+      "section": "WILSON_TRUE_BLOCK; G19; G23 BA7",
+      "tier": 1,
+      "line": 300,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:300",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Conditional pressure can change a frozen finite-block gap",
+      "passed": true,
+      "detail": "An exact irreducible three-state example has frozen gap 1 and pressure-corrected gap 1/2 with positive ground (2,1,2). A frozen spectral value is not automatically a true conditional gap; BA9 proves the oscillation comparison by min-max",
+      "section": "WILSON_TRUE_BLOCK; G19; G23 BA9 BA10",
+      "tier": 1,
+      "line": 326,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:326",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Differentiating a normalized tilted expectation gives the signed connected force identity",
+      "passed": true,
+      "detail": "An independent finite tilted measure gives d_s d_t log Z=Cov(A,B)-E(C), with the direct second-derivative sign retained. BA11 derives the compact Brownian path identity and its finite-volume limit analytically; no uniform spatial decay is checked",
+      "section": "WILSON_TRUE_BLOCK; G19; G23 BA11",
+      "tier": 1,
+      "line": 342,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:342",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Exact Brownian slab factor incidence obeys the bounded-degree polymer geometry",
+      "passed": true,
+      "detail": "Exact side-3, three-slab incidence control has endpoint multiplicity 10, bridge multiplicity 4, factor degree at most 84 and at most 15 roots per three-link block. BA20 constructs the actual continuous-path factors; this is its finite geometric control",
+      "section": "WILSON_TRUE_BLOCK; G19; G23 BA20 BA23",
+      "tier": 1,
+      "line": 368,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:368",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "The constructed slab activities meet a strict uniform physical angle budget",
+      "passed": true,
+      "detail": "The actual path-factor envelope alpha=1/32000 follows for k/epsilon<=1/256000. Exact KP constants give rooted weighted sum 1/3664, angle row <=30/229 and gap factor 199/229. The analytic polymer construction and ground limit are BA20-BA25",
+      "section": "WILSON_TRUE_BLOCK; G19; G23 BA21 BA25",
+      "tier": 1,
+      "line": 411,
+      "source": "src/workhouse/invariants/wilson_vacuum.py:411",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Scalar fast model has an exact all-source bound distinct from its delta-source sample",
+      "passed": true,
+      "detail": "Exact Fourier multiplier and constant-source witness for the inserted-mass scalar model. The spectral range and analytic monotonicity give norm <=32g/81. This does not identify the actual Wilson selected inverse or its source norm.",
+      "section": "YM_GPU_AUDIT; G19; G23 GA1 GA4",
+      "tier": 1,
+      "line": 30,
+      "source": "src/workhouse/invariants/yangmills_gpu_audit.py:30",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Archived domino builder equals two independent rotors with increased kinetic coefficient",
+      "passed": true,
+      "detail": "Archived builder executed with float literals rationalized, at j_max=1 and symbolic epsilon,v. Its displayed coefficient formula proves the factorization for every cutoff; this finite source equality is the machine control, not a coupled Wilson spectrum.",
+      "section": "YM_GPU_AUDIT; G19; G23 GA5",
+      "tier": 1,
+      "line": 49,
+      "source": "src/workhouse/invariants/yangmills_gpu_audit.py:49",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Shared SU2 derivative produces a nonzero physical channel outside product characters",
+      "passed": true,
+      "detail": "Exact Pauli/Fierz derivative identity. Independent Haar quaternion coordinates have second moments delta_ij/4, giving squared norm 3/16; separate axis averages vanish. The omitted channel is invariant under joint, but not separate, conjugations.",
+      "section": "YM_GPU_AUDIT; G19; G23 GA6",
+      "tier": 1,
+      "line": 76,
+      "source": "src/workhouse/invariants/yangmills_gpu_audit.py:76",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Archived 2x2 shared kinetic expression is exactly a sum of separate Casimirs",
+      "passed": true,
+      "detail": "Source-derived symbolic equality for arbitrary four indices. Together with the four separate nearest-character hops in the source this is four independent h(3epsilon/2,v). The 2401-dimensional spectrum is not a shared-link cluster calculation.",
+      "section": "YM_GPU_AUDIT; G19; G23 GA9",
+      "tier": 1,
+      "line": 98,
+      "source": "src/workhouse/invariants/yangmills_gpu_audit.py:98",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Scalar telescope recurrence is valid but a squared-time clock is not additive",
+      "passed": true,
+      "detail": "Exact scalar recurrence behind SP21, conditional on its inputs. GA8 integral/product bounds separately prove the model's infinite limit. The nonzero clock cross term prevents t->t^2 from intertwining time-translation semigroups.",
+      "section": "YM_GPU_AUDIT; G19; G23 GA7 GA8",
+      "tier": 1,
+      "line": 132,
+      "source": "src/workhouse/invariants/yangmills_gpu_audit.py:132",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Admissible cube basis has magnetic weights missing the shared-edge recoupling ratio",
+      "passed": true,
+      "detail": "Source-executed 1013-state triangle enumeration and two allowed shared-edge channels. GA10 Haar orthogonality gives their squared character-product coefficients 1/4,3/4, hence magnetic amplitude ratio sqrt(3). The source assigns equal v/8 weights, so a global convention change cannot make this the SU2 Wilson magnetic operator.",
+      "section": "YM_GPU_AUDIT; G19; G23 GA10",
+      "tier": 1,
+      "line": 148,
+      "source": "src/workhouse/invariants/yangmills_gpu_audit.py:148",
+      "yields": {},
+      "rests_on": []
+    }
+  ],
+  "supplementary_phase6_exact_controls": {
+    "inserted_mass_cancels_spacing_in_filter": true,
+    "L8_uniform_85_percent_claim_fails_rational_majorant": true
+  },
+  "supplementary_block_exact_controls": {
+    "VA18_shell_series": true,
+    "GA14_exponent_exceeds_five_halves": true,
+    "GA14_exp_five_halves_exceeds_twelve": true,
+    "GA14_exact_infinite_scalar_budget": true
+  },
+  "phase8_source_and_scalar_replay": {
+    "scope": "Eighteen finite scalar kernel sums replayed; GA14 separately bounds the infinite sum. No physical conditional-angle or block-gap identification. Part 1 random binning was source-audited, not replayed.",
+    "files_sha256": {
+      "phase8_approximate_tensorization_va12.py": "422a5072c95f8342673a62260487085d42e0b2f166346f79e5788ba1867dd37f",
+      "phase8_va12_results.json": "82d9f9bfefa46e806d0fbd84d3d0bb9738df636f50ff4c072812d18a069eb6ff"
+    },
+    "scalar_comparisons": [
+      {
+        "half_size": 2,
+        "M": 2.1939,
+        "value": 0.05282614300850678,
+        "error": 2.0816681711721685e-17
+      },
+      {
+        "half_size": 2,
+        "M": 1.5515,
+        "value": 0.25359340269003783,
+        "error": 5.551115123125783e-17
+      },
+      {
+        "half_size": 2,
+        "M": 0.8,
+        "value": 2.355654948745761,
+        "error": 4.440892098500626e-16
+      },
+      {
+        "half_size": 4,
+        "M": 2.1939,
+        "value": 0.05285306286186199,
+        "error": 5.551115123125783e-17
+      },
+      {
+        "half_size": 4,
+        "M": 1.5515,
+        "value": 0.255486410850586,
+        "error": 9.43689570931383e-16
+      },
+      {
+        "half_size": 4,
+        "M": 0.8,
+        "value": 2.7399605926690582,
+        "error": 8.881784197001252e-16
+      },
+      {
+        "half_size": 8,
+        "M": 2.1939,
+        "value": 0.05285306961997602,
+        "error": 8.326672684688674e-17
+      },
+      {
+        "half_size": 8,
+        "M": 1.5515,
+        "value": 0.25549264416945544,
+        "error": 1.7763568394002505e-15
+      },
+      {
+        "half_size": 8,
+        "M": 0.8,
+        "value": 2.768146747499732,
+        "error": 2.220446049250313e-14
+      },
+      {
+        "half_size": 16,
+        "M": 2.1939,
+        "value": 0.0528530696199763,
+        "error": 2.0122792321330962e-16
+      },
+      {
+        "half_size": 16,
+        "M": 1.5515,
+        "value": 0.25549264421377943,
+        "error": 3.6637359812630166e-15
+      },
+      {
+        "half_size": 16,
+        "M": 0.8,
+        "value": 2.768227887689936,
+        "error": 1.8252066524837574e-13
+      },
+      {
+        "half_size": 32,
+        "M": 2.1939,
+        "value": 0.0528530696199763,
+        "error": 2.0122792321330962e-16
+      },
+      {
+        "half_size": 32,
+        "M": 1.5515,
+        "value": 0.25549264421377943,
+        "error": 3.6637359812630166e-15
+      },
+      {
+        "half_size": 32,
+        "M": 0.8,
+        "value": 2.768227888096031,
+        "error": 5.022648963404208e-13
+      },
+      {
+        "half_size": 50,
+        "M": 2.1939,
+        "value": 0.0528530696199763,
+        "error": 2.0122792321330962e-16
+      },
+      {
+        "half_size": 50,
+        "M": 1.5515,
+        "value": 0.25549264421377943,
+        "error": 3.6637359812630166e-15
+      },
+      {
+        "half_size": 50,
+        "M": 0.8,
+        "value": 2.768227888096031,
+        "error": 5.022648963404208e-13
+      }
+    ]
+  },
+  "existing_source_provenance": {
+    "checkout": "C:\\WORKHOUSE\\WORKHOUSE-autonomous-20260905",
+    "source_commit": "4bf812428e0af51d1ffcda299b0d97b38b644926",
+    "files_sha256": {
+      "G19_GROUND_MARGINAL_SCHUR_SCORE_20260905.md": "e5474c4118f001b6771d2049e8021f8be7f7af1617158889891d1bb34b455975",
+      "G19_TRUE_GROUND_LOCALIZED_WILSON_SCORE_20260905.md": "530f1c4b229c6237bf243967aeda998f5eaabcc1e3080c4e096c5b0d9d4706c7",
+      "G19_TRUE_GROUND_CENTER_SCORE_OBSTRUCTION_20260905.md": "2a63346682c6f76e3d114ae0761edd13ce41761419d0758eeba2d433a5bf0b3c"
+    },
+    "use": "Existing exact ground-score theorem and localized score scope; not new results"
+  },
+  "test_runs": [
+    {
+      "file": "wilson-vacuum-focused.xml",
+      "tests": 86,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "wilson-vacuum-graph.xml",
+      "tests": 35,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "wilson-vacuum-ledger.xml",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "lean_diagnostic": "Command (from lean/): lake build --wfail\nExit code: 0\nBuilt Workhouse.Basic and Workhouse.\nBuild completed successfully (3034 jobs).\n\nCommand (from lean/): lake env lean ../tmp/wilson-vacuum-axioms.lean\nExit code: 0\n'Workhouse.groundStateDirichlet_const' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Workhouse.ground_state_frustration_elimination' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Workhouse.geom_sum_mul_sub' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Workhouse.combes_thomas_geometric_bound' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Workhouse.combes_thomas_pairing_volume_independent' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Workhouse.kotecky_preiss_cluster_sum_bound' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Workhouse.kotecky_preiss_polymer_activity_bound' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Workhouse.polymer_free_energy_cauchy_bound' depends on axioms: [propext, Classical.choice, Quot.sound]\n\nScope: the eight literal conditional scalar/finite statements in Basic.lean.\nNo actual Wilson decay hypothesis, uniform physical Poincare estimate,\nconnected polymer construction, or spatial continuum limit is formalized\nby these declarations. See the GPU audit for their exact hypotheses.\n",
+  "artifacts_sha256": {
+    "docs/derivations/wilson-vacuum-aligned-assembly.md": "6c21bda892b88872a311ea5cb6bece001e251b99ef05ea119084737ee1e9a03c",
+    "docs/derivations/yangmills-gpu-resolution-audit.md": "45a72f1f90d9da8fb1f07cb1663dc7df5a53eb3fe8c41377a721c6581344657b",
+    "docs/derivations/wilson-weighted-repair-and-rotor-gap.md": "dac4e8fd2d13f3e78710dfa8dde20e4aee2ac9db388d6f06d6b042644434a819",
+    "docs/derivations/yangmills-resolvent-localization-and-dirichlet-gap.md": "876b76c1aee3eb8e7e3d81ae00ca31182644c77e09c1c8c9434cf75e72128574",
+    "src/workhouse/invariants/wilson_vacuum.py": "a3c85c6411014b285c0640b90f4ec6af7303a79f3a53af483d580ae04d874cc6",
+    "src/workhouse/invariants/yangmills_gpu_audit.py": "b62a4c2cc5fc55704a3abd4379420e50f61d1e340e3187561a6af6f51aa51ce3",
+    "src/workhouse/invariants/__init__.py": "f88e5b4654e824b1d09b8a9e9a87ca6a434eec75ceebdc5b0adf4985df2b560e",
+    "scripts/validate_wilson_vacuum.py": "949fb4fe3b9ad1dc41af8ec50f5b6ed198ec5a36479996a9bf6fca01e89943b3",
+    "scripts/validate_yangmills_gpu_audit.py": "2f9014905312f509a3380e945498974f5249d461fa63a5248b7a050101235f87",
+    "docs/validation/yangmills-gpu-audit-2026-09-09.json": "568e7171b12d6db1a90430292e7cfca3104aa523febfff8f1e08bc77161d6afe",
+    "lean/Workhouse/Basic.lean": "0862bd1dacc6e2d543fcff0741ebfcaf77f88de3abbf4e1c087cfbfc5dae10d3",
+    "ledger/theorems.yaml": "d7438d4f67797c577c0e902a5e3d2524c3f06e95b5212f1b7b7489aa5471a53b",
+    "ledger/documents.yaml": "dd087ca8aa2b3ff6ef54ad3996ac81cc758ccb4e161be87c3a21115cfde3c99e",
+    "ledger/gaps.yaml": "b1fe466d62b83d393193f6a29beee9910cf6917d206fdefad1bf9119be7504e6",
+    "runs/index.yaml": "1c3a8d0a40ffc52718871467e0113dd087b3c85045a58968d4bc192ebbc1b511",
+    "FRONTIER.md": "5fb6faca1190a7a4a1b61e1fbe3b91b0b73b3beb84c7a3ee9f402fb9e35eb74b",
+    "CERTIFIED.md": "0c0da5a808e11e69f03f5ae2d70bb2d5c7929414e2c169eee3c337acfcf7295a",
+    "index/claims.jsonl": "af2f7f72d06e72221f13cd9c7c0f97ab44e735a57dd2172415e19ac3578e71d3",
+    "index/graph.jsonl": "951ca7cbcdde77e16825aa07072ca8c2c98d2cec2a882ed264322554e624fa37"
+  },
+  "guidance_pdf": {
+    "sha256": "3558403ca14c11e382f73a09e548222708540bfdf478cf96aa11c52d43e23e09",
+    "page": 11,
+    "section": "6.5",
+    "quote": "One must then verify the existence of limits of appropriate expectations of gauge-invariant observables as the lattice spacing tends to zero and as the volume tends to infinity."
+  }
+}

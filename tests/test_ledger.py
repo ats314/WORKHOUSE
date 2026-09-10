@@ -1,5 +1,9 @@
 """Structural integrity of the contradiction and gap registers."""
 
+import copy
+
+import pytest
+
 from workhouse import ledger as L
 
 
@@ -7,6 +11,23 @@ def test_ledgers_load_and_validate():
     led = L.load()
     problems = L.validate(led)
     assert not problems, "ledger problems:\n" + "\n".join(f"  - {p}" for p in problems)
+
+
+def test_closed_routes_accept_registered_analytic_sources():
+    led = copy.deepcopy(L.load())
+    route = next(g for g in led.gaps if g["id"] == "G19")["plan"][0]
+    route["closed_by"] = ["CITE:WILSON_SHELL", "LEAN:wilson_taylor_polynomial_envelope"]
+    assert not L.validate(led)
+
+
+@pytest.mark.parametrize(
+    "reference", ["CITE:UNREGISTERED_PROOF", "LEAN:unregistered_theorem", "CITE:CANON"]
+)
+def test_closed_routes_reject_unknown_or_unresolved_analytic_sources(reference):
+    led = copy.deepcopy(L.load())
+    route = next(g for g in led.gaps if g["id"] == "G19")["plan"][0]
+    route["closed_by"] = [reference]
+    assert any(f"unknown or unresolved {reference}" in problem for problem in L.validate(led))
 
 
 def test_registers_are_complete():

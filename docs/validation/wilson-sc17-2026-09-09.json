@@ -1,0 +1,241 @@
+{
+  "recorded_at": "2026-09-09T21:20:44.197783+00:00",
+  "scope": "Nine active exact finite controls: the original eight plus the later supplied 3x3 periodic scalar massless-reference control, independently read and replayed. The analytic proof has a separate independent review. Eight supplied Lean arithmetic lemmas (six SC17, two Brownian-slab budgets) were separately compiled with lake build --wfail and registered without promoting the analytic theorems. The actual finite periodic cubic SU(2) vacuum Hessian has exponential spatial summability for 0<=lambda<lambda_c, the proved threshold in (1/73,1/72), L>=3. At lambda<=1/73 the weighted row is at most 2/7 at weight 1025/1024; true conditional scores give angle row<=10658/24923, C_AT<=24923/14265<7/4 and the direct physical gap is at least (49846/37303)epsilon>4epsilon/3. The narrower lambda<=1/640 corollary retains weighted row<=1/64 at weight 17/16, C_AT<=1567/1542 and physical gap>57epsilon/20. The analytic cut-response continuation constructs canonical fixed-coupling thermodynamic vacuum laws through lambda_c by endpoint continuity. Uniform scores give a closable cylinder-gradient form, a conservative self-adjoint generator with full/physical gap>=4epsilon/3, and plaquette spectral weight >=exp(-24pi lambda)/8 in [4epsilon/3,32epsilon exp(24pi lambda)]. The matrix norm is operator norm. The controls do not formalize the Markov propagator, analytic domains, Bochner, disintegration or infinite-form proofs in Lean. A separately reviewed Hilbert SDE and coordinate-martingale argument identifies actual free/periodic multitime vacuum limits with exp(-t K_mu), through lambda_c, without an operator-core assumption. This fixed-spacing analytic result does not certify continuum source matching or an isolated complete shell.",
+  "controls": [
+    {
+      "name": "A plaquette mixed Hessian has unit matrix operator norm",
+      "passed": true,
+      "detail": "The actual cyclic quaternion mixed matrix, up to orthogonal rotations, obeys M M^T=|q|^2 I-qvec qvec^T. For a unit plaquette quaternion its operator norm is at most one, with no Frobenius dimension factor.",
+      "section": "WILSON_SC17; G19; G23 Endpoint reanchoring",
+      "tier": 1,
+      "line": 30,
+      "source": "src/workhouse/invariants/wilson_sc17.py:30",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Opposite endpoint derivatives rotate the entire raw diagonal Hessian",
+      "passed": true,
+      "detail": "Left-multiplication and right-multiplication fields commute. On |q|=1, YXf=O XXf with O orthogonal, including the diagonal frame derivatives; the coefficient is outside the indicated differentiation.",
+      "section": "WILSON_SC17; G19; G23 Endpoint reanchoring",
+      "tier": 1,
+      "line": 47,
+      "source": "src/workhouse/invariants/wilson_sc17.py:47",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "Each Wilson link has twelve signed mixed-potential neighbors",
+      "passed": true,
+      "detail": "At the identity the original plaquette words give twelve distinct off-diagonal blocks +/-k I per link, on side-three and side-four periodic cubes. Their weighted source row is exactly 12lambda q.",
+      "section": "WILSON_SC17; G19; G23 H1",
+      "tier": 1,
+      "line": 81,
+      "source": "src/workhouse/invariants/wilson_sc17.py:81",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "The SC17 weighted row has a strict rational invariant barrier",
+      "passed": true,
+      "detail": "At lambda=1/73, q=1025/1024 and Sbar=2/7, the connected Volterra majorant has slack 77375/200540928. The sharper lambda=1/640, q=17/16, Sbar=1/64 budget has slack 17/153600. Charged Markov Duhamel estimate supply the analytic first-crossing argument.",
+      "section": "WILSON_SC17; G19; G23 H1-H2",
+      "tier": 1,
+      "line": 110,
+      "source": "src/workhouse/invariants/wilson_sc17.py:110",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "True curvature and conditional scores give the sharpened SC17 gap budget",
+      "passed": true,
+      "detail": "At lambda<=1/73: rho=49846/37303>4/3, angle row<=10658/24923, C_AT<=24923/14265<7/4. At lambda<=1/640: rho=1567/800, link-angle row<=25/1567, C_AT<=1567/1542<51/50. Using pi<22/7 and exp(-x)>1-x gives gap>57epsilon/20. The true conditional curvature/score-to-angle proofs are analytical, not formalized here.",
+      "section": "WILSON_SC17; G19; G23 Curvature and single-link angles",
+      "tier": 1,
+      "line": 136,
+      "source": "src/workhouse/invariants/wilson_sc17.py:136",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "The bare SC17 norm bootstrap has an exact large-coupling obstruction",
+      "passed": true,
+      "detail": "At lambda=1/72 the scalar discriminant is -47/2304 even at q=1. The first threshold solves 6561lambda^4+1458lambda^3-81lambda^2-72lambda+1=0. The older lambda=1/64 obstruction is also retained exactly. Even a zero diagonal loss permits source at most 2/9, requiring lambda<1/(54q). This falsifies extension of this norm bootstrap, not the actual Wilson gap.",
+      "section": "WILSON_SC17; G19; G23 Exact wall",
+      "tier": 1,
+      "line": 164,
+      "source": "src/workhouse/invariants/wilson_sc17.py:164",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "The actual two-alias fast conditional precision retains its cubic cusp",
+      "passed": true,
+      "detail": "The analytic fast vector for the actual ell=2 path-source aliases gives 2(cos(t/4)^3+|sin(t/4)|^3). One-sided cubic coefficients 1/32 and -1/128 in its inverse certify third-derivative jumps 3/8 and -3/32.",
+      "section": "WILSON_SC17; G19; G23 Gaussian reference",
+      "tier": 1,
+      "line": 200,
+      "source": "src/workhouse/invariants/wilson_sc17.py:200",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "A scalar Gaussian square-root precision has the exact critical angle row",
+      "passed": true,
+      "detail": "For r>m>0 this positive square-root precision has c_ij=(r-m)/(m+2r), and its row is 1-m/M_ii, approaching one as m vanishes. It is a scalar Gaussian reference check, not an identification with compact Wilson conditionals.",
+      "section": "WILSON_SC17; G19; G23 Gaussian reference",
+      "tier": 1,
+      "line": 226,
+      "source": "src/workhouse/invariants/wilson_sc17.py:226",
+      "yields": {},
+      "rests_on": []
+    },
+    {
+      "name": "The massless square-root reference has angle row exactly one in the limit",
+      "passed": true,
+      "detail": "(L+m^2)1=m^2 1 gives sqrt(L+m^2)1=m 1, so the row sums are m; the off-diagonal entries are negative, hence sum|M(e,f)|=M(e,e)-m and the conditional maximal correlation row is exactly 1-m/M(e,e), which tends to one as m vanishes. Here M(e,e)=(m+4sqrt(m^2+3)+4sqrt(m^2+6))/9 and kappa=0.5404178 at m=1. This is the uniform lattice form of the three-site scalar instance; it is a statement about a Gaussian reference, not about compact Wilson conditionals.",
+      "section": "WILSON_SC17; G19; G23 Gaussian reference",
+      "tier": 1,
+      "line": 249,
+      "source": "src/workhouse/invariants/wilson_sc17.py:249",
+      "yields": {},
+      "rests_on": []
+    }
+  ],
+  "test_runs": [
+    {
+      "file": "wilson-sc17-graph.xml",
+      "sha256": "03f21269728c3de9d1f13100d55addc6309061e19d6b3f117e9054a8bf79e896",
+      "tests": 34,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "wilson-sc17-invariants.xml",
+      "sha256": "23102c589de140ccbb49def160c6dcc4ed95b26eeff97f9fb4b2fbcdc1fb02fc",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "file": "wilson-sc17-ledger.xml",
+      "sha256": "32c6237b9d670b1d203e8eef5431f421b65b85b4237bffaf0d3bc075756bc490",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "written_native_catalogue": {
+    "passing": 477,
+    "total": 477,
+    "claims": 4158,
+    "input_fingerprint": "3b7ebfff9039d4ed4168338b6654c55c3cbcd7e6ee84bf12fc0e21e44ec93cb4"
+  },
+  "lean_build_jobs": 3034,
+  "supplied_lean_lemma_audit": [
+    {
+      "theorem": "wilson_slab_pinned_activity",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "theorem": "wilson_slab_block_row_and_cat",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "theorem": "wilson_sc17_sharp_barrier",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "theorem": "wilson_sc17_sharp_curvature_and_gap",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "theorem": "wilson_sc17_broad_barrier",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "theorem": "wilson_sc17_broad_curvature_and_cat",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "theorem": "wilson_sc17_barrier_polynomial",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "theorem": "wilson_sc17_discriminant_negative_at_seventy_two",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "remaining_derivation": "The absolute-norm Volterra barrier has threshold lambda_c in (1/73,1/72), with polynomial 6561lambda^4+1458lambda^3-81lambda^2-72lambda+1. At lambda=1/72 its discriminant is -47/2304. The signed background alternative is proved conditionally: on actual compatible fibers establish the strict reference angle margin and the complete nonlinear excess ||(V_B-V_0)''+(W_B-W_0)''||_(s,infty)<=delta with 2 beta_s(A)^2 delta/epsilon<1. Moving-projector, actual metric, cutoff and retained Schur corrections must be included when present. Those actual Wilson inputs and continuum carrier/source transport are not discharged. The broader G19 review supplies beta_s(A)<=sqrt(33)L C_s^2/v for the flat conditioned Gaussian reference at fixed blocking ratio, and exact V_0''+W_0''=2epsilon A^2 including the coupled cross block. The specific Balaban construction stops at (7.6) to Theorem 7.1: O(1/k) increments do not imply a Cauchy limit. Summable changes of the actual matched RG and observable/source maps are a sufficient repair not yet proved.",
+  "artifacts_sha256": {
+    "docs/derivations/wilson-sc17-spatial-closure.md": "eacf05f43bc1ac8caab7fed6f8533539a4e6c87b9fa459de73e32ca729b93654",
+    "docs/derivations/wilson-sc17-thermodynamic-limit.md": "6d72876a35a866768f1b0428847f56df803cb3569eb65c8d96e94ab56996e324",
+    "docs/derivations/wilson-sc17-physical-time-limit.md": "f842a6b9f826a9977cfbcad1de1d3339c2443b5e666b1c200f0bafd791863038",
+    "docs/validation/wilson-sc17-independent-review.md": "32a289eb6e674dace8f102a2bb08be7a7e93e6af07840f493eb1df091d332042",
+    "docs/validation/wilson-sc17-bc2-update-audit.md": "cf4787d261a02492a819226a0b3f19c367ebaf2b8bedd5a65575ff0931bc75d6",
+    "docs/validation/wilson-sc17-late-ledger-audit.md": "97dfe2a6298a70cfe517fdfe89c599c8b922cbaa2d24a41e0c491a3adf2b32d9",
+    "docs/validation/wilson-g19-corpus-reconciliation.md": "73353e899110e02a2db892547280cc9c747080c0f2890332b89772e59f60f5f0",
+    "docs/validation/wilson-g19-corpus-inventory.json": "dca1eabd6624c947027cff286bb095acb47f272e3cdbeeaa6662bf383912a9f6",
+    "docs/validation/wilson-g19-corpus-review-manifest.json": "1918c210295e42b3eae86a1dbc32d9f4341470255748dbd9db04c3227497dd17",
+    "docs/validation/wilson-g19-gaussian-review.md": "2e4a8f93bbfaf3fca485c655369f3796275ed20fb7a7097736566cd9871a9de6",
+    "docs/validation/wilson-g19-sources-review.md": "ae47291247d4da9e26790b31a2b2b802fc5bcd1b6b0363c3c9d8243c67398265",
+    "docs/validation/wilson-g19-fibers-review.md": "09b9944d836d2e248ccbab32f75b03cac1c632e9d7f927afa22c8f510575379a",
+    "docs/validation/wilson-g19-cauchy-repair.md": "3cec88b9af4ae0d1d4d8427fb99821c8a160dc8c700287098b31110a1ace51bb",
+    "docs/validation/wilson-g19-martingale-repair.md": "bf76692cb8e3bf86820751e8bdff02113caafae04b482f6b240fddb5543338da",
+    "docs/validation/wilson-g19-review-2026-09-09.json": "d4b7918598cd1ccfbc22b578916d39afe40e825e5e065755de56164017c3802a",
+    "notes/imported/UPLOADS_2026-09-01/Continuum_Combined.lean": "32c27796ebde6711f9e3ee8b89976016114c5dc9edd3c2c82ca56fd702f3eaee",
+    "docs/derivations/wilson-true-blocks-independent-check.md": "6984f428f801c70efc3270a1efbeb0ebaaddce23bea6b311a1daac7782e3546f",
+    "docs/derivations/yangmills-continuum-balaban-multiscale-proof.md": "0e0f561f2e6b106d5f03ecbd32f1ca31f85f7f3abcb8fb830d759bc5c8eaf68a",
+    "docs/derivations/wilson-background-covariance-continuation.md": "05ee05dc5acf99fabcefcd897cba340f45de94a583ea1d737a9011bb5650ec47",
+    "src/workhouse/invariants/wilson_sc17.py": "14ecc76f771dc9cc4f8b2de1723e533bb7072f19e828028d3140b6673900579c",
+    "src/workhouse/invariants/wilson_background.py": "8fd4e0b31c886fd25cf2af17de2827ff2d07a257e16cac3ad482d5480f627927",
+    "src/workhouse/invariants/__init__.py": "5d9810e9025a9ab16ca41b775dcd72ef79d255abd2d43d5c20d9e0505a3a52f9",
+    "scripts/validate_wilson_sc17.py": "2c1b8616eefa4d7ab49cf6eac47b40a11c71d8cb387f9825971f8fc5172c0b17",
+    "scripts/validate_wilson_g19_review.py": "33889c0a95516722aecc099b1f6dde403ad1269e6f8b88213ec197781084633b",
+    "ledger/documents.yaml": "e926803069fe2cdacd1fa40ee41e1b97b3d9150697ca58f64b2f9331843079e7",
+    "ledger/gaps.yaml": "909373087633f10b153828158e00ee232220d303367072a52ac752ee2de5e1df",
+    "ledger/theorems.yaml": "ac91c9bb6f1f288d676de13ecb014258b9b0baddcd5e155a77f61b3dab5911bf",
+    "lean/Workhouse/Basic.lean": "0ba5aa78230ed19abeb1f384ac86e47f832359efc74ac57401f3af9463b2997b",
+    "docs/validation/wilson-sc17-lean-build.txt": "264a296ae9200ce1301a8e570a9f8dff1c462b48fa5c7f9979522b1a32266c47",
+    "docs/validation/wilson-sc17-lean-axioms.txt": "d4841da21d6779f6841f335855276e09ef6f49b1d3f36840fe288add32931593",
+    "index/claims.jsonl": "55e743bce1a7e04d92a6ae20fd062395f6226b6d672d62bf93b66118f2cf0fbf",
+    "index/graph.jsonl": "bb32eb45e5df27daf78c3e147cebb9dcfcf3f3afa9d37372bec54ec134247a30",
+    "FRONTIER.md": "79627a21dce17a1016e6e9cfb970c823cd3f1993b2026ed02a7e39d3e6df5771",
+    "CERTIFIED.md": "46b12d287cb6c2a86153d41acd44a141d939e309a03f513a370d7765b2ab7f59"
+  }
+}

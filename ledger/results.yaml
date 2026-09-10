@@ -2121,26 +2121,23 @@ results:
         scope: Independent finite creation logarithms, exact SU(3) Weyl moments through order eight and numerical exponentials; the all-n obstruction is the pinned analytic derivation.
 
   - id: RESULT:HODGE_FESHBACH_SPLITTING
-    statement: >
-      On the cubic charge-odd plaquette fibre the Feshbach complement of the
-      homologically protected carrier is a Hodge summand: L_down + L_up = q I
-      per plane component and L_down L_up = 0, so Q = 1 - P_psi is exactly the
-      orthogonal projector onto ker L_up. Consequently both Laplacians act on
-      the carrier line by scalars (L_down psi = 0, L_up psi = q psi), the Hodge
-      algebra generates no off-carrier coupling whatever, and the excitation
-      phi = Q R psi produced by the one non-Hodge operator satisfies
-      L_up phi = 0 identically.
+    statement: 'On each cubic charge-odd plaquette Bloch fibre with q>0, the Feshbach complement of the
+      cube-boundary carrier is the other Hodge summand. The exact identities are L_down+L_up=q I, L_down
+      L_up=0, L_up=psi psi^dagger and psi^dagger psi=q, so Q=I-psi psi^dagger/q is the orthogonal projector
+      onto ker L_up. Both Laplacians act scalarly on the carrier: L_down psi=0 and L_up psi=q psi. The
+      Hodge algebra therefore generates no off-carrier coupling, and the excitation phi=Q R psi satisfies
+      L_up phi=0. The denominator-cleared identities hold on the whole zone.'
     status: proven
     evidence: analytic
     hypotheses:
-      - The cubic three-dimensional plaquette complex with its signed incidence
-        d_1, d_2, d_3 and the cube-boundary carrier psi = (dbar_3, -dbar_2, dbar_1).
-      - Bloch fibre of dimension three at every k; all statements are Laurent
-        identities in z_j = exp(i k_j) over the whole Brillouin zone.
-    scope: >
-      A statement about the incidence algebra of one lattice, not about any
-      dynamics or any coupling. It fixes which operators can leave the retained
-      sector; it says nothing about their amplitudes and does not adjudicate C2.
+      - The cubic three-dimensional plaquette complex with its signed incidence d_1, d_2, d_3 and the
+        cube-boundary carrier psi = (dbar_3, -dbar_2, dbar_1).
+      - Three-dimensional Bloch fibre and the recorded cubic incidence operators. The normalized projector
+        and one-dimensional carrier decomposition require q>0; at Gamma q=0 and psi=0, only the denominator-cleared
+        Laurent identities are asserted.
+    scope: |-
+      A statement about the incidence algebra of one lattice, not about any dynamics or any coupling. It fixes which operators can leave the retained sector; it says nothing about their amplitudes and does not adjudicate C2.
+       The 2026-09-09 integration review corrects the former whole-zone projector wording. At Gamma these identities do not define a normalized carrier projector. The source is preserved verbatim; the review is docs/research/september_feshbach_integration.md.
     source: CITE:HODGE_FESHBACH_CHANNEL
     source_section: The splitting; The word calculus
     depends_on: []
@@ -2149,49 +2146,41 @@ results:
       - U3
       - U7
       - RESULT:TIER_COLLAPSE_IS_R_DEGREE
+      - RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT
     supported_by:
-      - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:q-is-the-projector-onto-ker-l-up-the-fib-6e5732
-        scope: The complementarity of the two kernels as record algebra; no dynamical content.
+      - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:for-q--0-q-projects-onto-ker-l-up-the-cl-36a3f0
+        scope: Exact Laurent outer-product, norm and complementary-kernel identities; normalized Q only
+          for q>0. No dynamical conclusion.
       - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:neither-hodge-generator-leaves-the-carri-e60007
         scope: The three scalar actions on the carrier line only.
       - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:the-r-excitation-is-up-harmonic-l-up-q-r-989c6d
-        scope: L_up phi = 0 record by record for the single operator R; no claim about other non-Hodge operators.
+        scope: L_up phi = 0 record by record for the single operator R; no claim about other non-Hodge
+          operators.
       - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:the-hodge-word-statement-needs-only-l-do-2f714f
-        scope: >
-          The minimal hypothesis (psi spans ker L_down and is an L_up eigenvector) verified on
-          the tetrahedron and the pentagonal prism, and the refutation of the stronger
-          link-regularity hypothesis by the prism. It checks the hypothesis in those two cells,
-          not the conclusion: no proper-return or Q-projected computation is done there.
-
+        scope: |
+          The minimal hypothesis (psi spans ker L_down and is an L_up eigenvector) verified on the tetrahedron and the pentagonal prism, and the refutation of the stronger link-regularity hypothesis by the prism. It checks the hypothesis in those two cells, not the conclusion: no proper-return or Q-projected computation is done there.
   - id: RESULT:TIER_COLLAPSE_IS_R_DEGREE
-    statement: >
-      The cubic tier collapse B_shp = D_shp = 0 is the statement that the
-      fourth-order kernel is linear in R. Every word in (S, U, R) containing at
-      most one R has carrier symbol (-4)^#S (-2)^#R q^(#U + 1 - #R) e_2^#R, so
-      it reaches only the c_0, A and 4C tiers and populates neither q e_2 nor
-      e_3; a word's Feshbach defect is nonzero exactly when it contains two R
-      insertions with no U between them. The recorded fourth-order kernel
-      carries R once, with amplitude -2 C_shp, so the degree-3 tier is
-      unpopulated rather than cancelled. Two insertions unlock it in a fixed
-      ratio: sigma(RR) = q e_2 + 3 e_3, giving D = 3 B for any kernel whose
-      degree-3 tier is carried by R^2 alone.
-    status: proven
+    statement: 'Historical overclaim: an arbitrary word in (S,U,R) with at most one R cannot populate
+      the B tier, so R-degree one alone explains B_shp=D_shp=0. This universal implication is false: sigma(UR)=sigma(RU)=-2
+      q e_2 and sigma(UR)/q=-2 e_2, despite one R and zero Feshbach defect.'
+    status: falsified
     evidence: analytic
     hypotheses:
       - RESULT:HODGE_FESHBACH_SPLITTING.
-      - The Hodge form of the fourth-order kernel, ADR 0019, with R the
-        cross-plane half of S = L_down - 4I.
-      - Words of length at most three; the closed form is verified word by word,
-        not proved by induction here.
-    scope: >
-      This explains the collapse at the order the repository has the kernel for.
-      It does not predict which words a higher order populates: that is open
-      (G9, G10), and ADR 0005 is the retraction that makes the distinction
-      load-bearing. The separate FINDING that sigma(RUR) = 4 e_2^2 lies outside
-      the four-shape ansatz's span is an identity of the algebra and a
-      prediction about order six, nothing more.
+      - The Hodge form of the fourth-order kernel, ADR 0019, with R the cross-plane half of S = L_down
+        - 4I.
+      - Words of length at most three; the closed form is verified word by word, not proved by induction
+        here.
+    scope: Only the R-degree-only exclusion is retracted. The exact one-R word formula, 39-word defect
+      table, RR and RUR identities remain valid, as does the actual fourth-order tier collapse under its
+      narrower support {I,U,S,S^2,R}. Those surviving statements are recorded in RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT.
+      The original full statement and support descriptions remain in this row's historical fields and
+      in the immutable source note and intake snapshot. The original checker compared against a single
+      unscaled q e_2 polynomial and missed its nonzero multiple -2 q e_2; the corrected native FINDING
+      tests the actual counterexample. See docs/research/september_feshbach_integration.md.
     source: CITE:HODGE_FESHBACH_CHANNEL
-    source_section: The mechanism of the tier collapse; What two insertions unlock
+    source_section: The mechanism of the tier collapse; What two insertions unlock; the R-degree inference
+      is corrected by the 2026-09-09 integration review
     depends_on:
       - RESULT:HODGE_FESHBACH_SPLITTING
     bears_on:
@@ -2200,54 +2189,50 @@ results:
       - U3
       - U7
       - C2
+      - RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT
     supported_by:
+      - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:finding-one-r-does-not-exclude-b-sigma-u-e7632d
+        scope: Exact Laurent counterexample supporting the falsified verdict, not the historical universal
+          claim. UR and RU each contain one R and have a nonzero B coefficient.
+    historical_statement_before_2026_09_09: |
+      The cubic tier collapse B_shp = D_shp = 0 is the statement that the fourth-order kernel is linear in R. Every word in (S, U, R) containing at most one R has carrier symbol (-4)^#S (-2)^#R q^(#U + 1 - #R) e_2^#R, so it reaches only the c_0, A and 4C tiers and populates neither q e_2 nor e_3; a word's Feshbach defect is nonzero exactly when it contains two R insertions with no U between them. The recorded fourth-order kernel carries R once, with amplitude -2 C_shp, so the degree-3 tier is unpopulated rather than cancelled. Two insertions unlock it in a fixed ratio: sigma(RR) = q e_2 + 3 e_3, giving D = 3 B for any kernel whose degree-3 tier is carried by R^2 alone.
+    historical_scope_before_2026_09_09: |
+      This explains the collapse at the order the repository has the kernel for. It does not predict which words a higher order populates: that is open (G9, G10), and ADR 0005 is the retraction that makes the distinction load-bearing. The separate FINDING that sigma(RUR) = 4 e_2^2 lies outside the four-shape ansatz's span is an identity of the algebra and a prediction about order six, nothing more.
+    historical_support_before_2026_09_09:
       - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:the-feshbach-defect-of-a-word-vanishes-u-cece8a
         scope: The selection rule for the 39 words of length at most three; no all-length claim.
       - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:one-r-or-none-reaches-only-the-c-0-a-and-01e335
         scope: The closed-form carrier symbol at R-degree at most one, lengths up to three.
       - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:two-r-insertions-unlock-the-l-4-tier-loc-87173c
-        scope: The single identity sigma(RR) = q e_2 + 3 e_3; the 1:3 lock is conditional on R^2 carrying the tier alone.
+        scope: The single identity sigma(RR) = q e_2 + 3 e_3; the 1:3 lock is conditional on R^2 carrying
+          the tier alone.
       - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:the-fourth-order-kernel-is-linear-in-r-s-77483b
         scope: R-degree one of the 189 recorded fourth-order records, and C = C_shp.
       - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:finding-the-algebra-contains-a-shape-mon-c148d1
-        scope: The exact rank test placing 4 e_2^2 / q outside the ansatz span. A prediction about order six, not a result at order six.
-
+        scope: The exact rank test placing 4 e_2^2 / q outside the ansatz span. A prediction about order
+          six, not a result at order six.
   - id: RESULT:FESHBACH_RESOLVENT_COMPARISON
-    statement: >
-      Let A_0 and A_g be symmetric invertible forms on a Feshbach complement,
-      R_0 = A_0^-1, R_g = A_g^-1, and w a source. Then
-      (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g) w, w> identically. If moreover
-      both forms are positive and |V[u,u]| <= kappa A_0[u,u] for V = (A_g -
-      A_0)/g with |g| kappa < 1, then
-      |<(R_0 - R_g) w, w>| <= |g| kappa/(1 - |g| kappa)^2 <R_0 w, w>.
-      Both the mixed pairing and the constant are therefore free of any
-      quantity evaluated on the interacting problem.
+    statement: |
+      Let A_0 and A_g be symmetric invertible forms on a Feshbach complement, R_0 = A_0^-1, R_g = A_g^-1, and w a source. Then (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g) w, w> identically. If moreover both forms are positive and |V[u,u]| <= kappa A_0[u,u] for V = (A_g - A_0)/g with |g| kappa < 1, then |<(R_0 - R_g) w, w>| <= |g| kappa/(1 - |g| kappa)^2 <R_0 w, w>. Both the mixed pairing and the constant are therefore free of any quantity evaluated on the interacting problem.
     status: proven
     evidence: analytic
     hypotheses:
-      - A_0 symmetric and both forms invertible on the complement; nothing else
-        is used for the identity.
-      - For the constant only - A_0, A_g positive on the complement, a relative
-        (KLMN-type) form bound |V[u,u]| <= kappa A_0[u,u], and |g| kappa < 1.
-    scope: >
-      Exact linear algebra on arbitrary symmetric forms. It removes one obstacle
-      from one estimate shape: an absolute volume-uniform bound on an
-      interacting resolvent is replaced by a volume-uniform relative form bound.
-      It does NOT supply the latter, proves nothing about Yang-Mills or any
-      lattice gauge interaction, establishes no infinite-volume or continuum
-      statement, and does not discharge G17, G22 or G23.
-      What the exchange buys is a change of character, not merely of wording:
-      a relative bound is a max over local terms where an operator bound is a
-      sum, so it does not accumulate with the volume. The registered witness
-      shows kappa flat across a factor of sixteen in system size while the
-      Neumann quantity grows linearly -- T2, floating power iteration on a
-      one-dimensional caricature, so suggestive of the direction and not
-      evidence for it. Two consequences follow and are open
-      rather than claimed: a small-field region admits a volume-uniform kappa
-      by locality alone, so only the rough set resists; and the identity
-      itself needs no positivity, so where the variational route voids at
-      |g| kappa >= 1 the collapsed object is still a RESOLVENT DIFFERENCE, for
-      which trace-class and spectral-shift methods remain available.
+      - A_0 symmetric and both forms invertible on the complement; nothing else is used for the identity.
+      - For the constant only - A_0, A_g positive on the complement, a relative (KLMN-type) form bound
+        |V[u,u]| <= kappa A_0[u,u], and |g| kappa < 1.
+    scope: 'The displayed identity and conditional bound have the analytic algebra/variational derivation
+      in the pinned source. The native checks are four finite deterministic matrix fixtures, not machine
+      certification of arbitrary forms or of a general infinite-dimensional resolvent theorem. The identity
+      and oriented sandwich are T1; the relative-constant, sufficient-margin and volume-caricature controls
+      are T2. For an operator or closed-form use, the inverse images and mixed pairings must exist on
+      the stated domains; no such domain, uniform interacting Wilson kappa, infinite-volume or continuum
+      input is supplied here. A uniform local decomposition gives volume-independent kappa only if its
+      termwise domination and compatible positive reference decomposition have actually been proved. Locality
+      or small-field Taylor expansion alone is not that proof. The one-dimensional numerical kinetic example
+      illustrates the distinction from an absolute inverse bound without proving it for gauge theory.
+      Failure of |g|kappa<1 voids this sufficient bound, not necessarily positivity: A0=V=I, g=2 gives
+      Ag=3I>0. Trace-class and spectral-shift routes require their own hypotheses and remain unestablished.
+      G17, G22, G23 and continuum G19 remain open.'
     source: CITE:FESHBACH_RESOLVENT_COMPARISON
     source_section: The mixed form is removable; The constant, when a relative form bound exists
     depends_on: []
@@ -2257,18 +2242,71 @@ results:
       - G23
     supported_by:
       - target: CHK:the-feshbach-resolvent-comparison:the-interacting-inverse-image-cancels--a-ab8923
-        scope: The identity itself, exact on four deterministic form pairs at n = 3..6; no positivity used.
+        scope: 'T1: exact identity on four deterministic finite matrix pairs at n=3..6. These fixtures
+          do not certify the arbitrary-form analytic theorem or its operator domains.'
       - target: CHK:the-feshbach-resolvent-comparison:the-variational-sandwich-puts-the-free-o-87725b
-        scope: The two-sided sandwich on the same four cases; establishes only that one side is free of the interacting optimizer.
+        scope: 'T1: the oriented sandwich g V[u_g,u_g] <= difference <= g V[u_0,u_0] on the same finite
+          positive cases, with both signs of g. No endpoint sorting.'
       - target: CHK:the-feshbach-resolvent-comparison:a-relative-form-bound-gives-the-explicit-5b58ad
-        scope: The explicit constant verified on the same cases. It assumes the relative form bound rather than deriving it.
+        scope: 'T2: the conditional explicit constant on the same finite cases, with kappa computed by
+          floating spectral arithmetic. This is not an exact arbitrary-form check.'
       - target: CHK:the-feshbach-resolvent-comparison:finding-the-reduction-buys-a-relative-fo-13f679
-        scope: >
-          The witness that the reduction is conditional - kappa growth collapses the margin, the
-          constant degrades as margin^-2, and the bound voids at |g| kappa >= 1. This check is the
-          scope limit, not a supporting estimate.
+        scope: 'T2: a finite family exhibits deterioration of the sufficient margin and its margin^-2
+          budget. A failed margin does not itself imply loss of positivity; the separate A0=V=I, g=2 regression
+          keeps this boundary explicit.'
       - target: CHK:the-feshbach-resolvent-comparison:the-relative-bound-is-volume-stable-wher-b1c856
-        scope: >
-          A one-dimensional local kinetic caricature showing kappa volume-independent while
-          ||R_0 V|| grows linearly. It demonstrates why the reduction changes the character of the
-          obstruction; it is not a gauge-theory statement and supplies no kappa for SU(N).
+        scope: 'T2: floating eigenvalue/power-iteration observations on a one-dimensional local kinetic
+          caricature. No uniform kappa or interaction estimate for SU(N).'
+    historical_scope_before_2026_09_09: |
+      Exact linear algebra on arbitrary symmetric forms. It removes one obstacle from one estimate shape: an absolute volume-uniform bound on an interacting resolvent is replaced by a volume-uniform relative form bound. It does NOT supply the latter, proves nothing about Yang-Mills or any lattice gauge interaction, establishes no infinite-volume or continuum statement, and does not discharge G17, G22 or G23. What the exchange buys is a change of character, not merely of wording: a relative bound is a max over local terms where an operator bound is a sum, so it does not accumulate with the volume. The registered witness shows kappa flat across a factor of sixteen in system size while the Neumann quantity grows linearly -- T2, floating power iteration on a one-dimensional caricature, so suggestive of the direction and not evidence for it. Two consequences follow and are open rather than claimed: a small-field region admits a volume-uniform kappa by locality alone, so only the rough set resists; and the identity itself needs no positivity, so where the variational route voids at |g| kappa >= 1 the collapsed object is still a RESOLVENT DIFFERENCE, for which trace-class and spectral-shift methods remain available.
+  - id: RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT
+    statement: The recorded 189-term fourth-order cubic kernel has actual support {I,U,S,S^2,R}, with
+      cleared carrier symbols {q,q^2,-4q,16q,-2e_2}. Their span is {q,q^2,e_2}, so the q e_2 and e_3 tiers
+      are absent and B_shp=D_shp=0. This support restriction, not R-degree one alone, gives the tier collapse.
+      Separately, sigma(RR)=q e_2+3e_3 gives D=3B if R^2 alone supplies that tier, while sigma(RUR)=4e_2^2
+      lies outside the five-monomial cleared ansatz {q,q^2,e_2,q e_2,e_3}.
+    status: proven
+    evidence: analytic
+    hypotheses:
+      - The exact cubic incidence operators and recorded 189-term fourth-order kernel in the ADR 0019
+        Hodge form; U=L_up, S=L_down-4I and R its cross-plane half.
+      - Carrier symbols are denominator-cleared Laurent polynomials sigma(W)=psi^dagger W psi. The normalized
+        shape symbol sigma(W)/q requires q>0.
+      - The separate word table is restricted to lengths one through three; the D=3B conclusion assumes
+        R^2 alone carries that degree-three tier.
+    scope: The original Hodge-channel source supplies the H4 form and exact RR/RUR identities. The integration
+      review and corrected native check distinguish this actual support from the source's falsified arbitrary
+      R-linear claim. The one-R formula (-4)^#S (-2)^#R q^(#U+1-#R)e_2^#R is verified for lengths at most
+      three; it allows the B contribution from UR. The defect classification concerns the 39 Laurent words,
+      not an all-length or pointwise nonvanishing assertion. A sixth-order dynamics that populates RUR,
+      and whether other contributions cancel its extra shape, remain G9/G10 questions. No sixth-order
+      coefficient or continuum theorem follows.
+    source: CITE:HODGE_FESHBACH_CHANNEL
+    source_section: The mechanism of the tier collapse; What two insertions unlock; corrected interpretation
+      in docs/research/september_feshbach_integration.md
+    depends_on:
+      - RESULT:HODGE_FESHBACH_SPLITTING
+    bears_on:
+      - G14
+      - G9
+      - G10
+      - U2
+      - U3
+      - U7
+      - C2
+    supported_by:
+      - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:the-actual-fourth-order-support-i-u-s-s--4bbdbb
+        scope: Exact reconstruction of all 189 recorded kernel terms and each supported word's coefficient
+          polynomial; C=C_shp and no q e_2 or e_3 monomial in this support.
+      - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:words-of-length-at-most-three-with-at-mo-81212b
+        scope: The stated word formula for the finite length-at-most-three Laurent table, without the
+          invalid inference that one R excludes B.
+      - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:the-feshbach-defect-of-a-word-vanishes-u-cece8a
+        scope: The exact seven defective Laurent words among 39 words of lengths one through three; neither
+          an all-length theorem nor pointwise nonzero defect.
+      - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:two-r-insertions-unlock-the-l-4-tier-loc-87173c
+        scope: Only sigma(RR)=q e_2+3e_3 and the conditional D=3B consequence when R^2 supplies the tier
+          alone.
+      - target: CHK:the-feshbach-channel-of-the-plaquette-ho-ef662f:finding-the-algebra-contains-a-shape-mon-c148d1
+        scope: Exact sigma(RUR)=4e_2^2 and rank outside the five-monomial cleared ansatz. The actual higher-order
+          dynamical coefficient is not established.

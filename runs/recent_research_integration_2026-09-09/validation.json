@@ -1,0 +1,132 @@
+{
+  "schema": "september-integration-validation/v1",
+  "validated_at_utc": "2026-09-09T22:25:11.404259+00:00",
+  "focus": "2026-09-01 through 2026-09-09",
+  "checkout": "C:\\WORKHOUSE\\ALL THEORY\\WORKHOUSE",
+  "graph": {
+    "catalogue_records": 4402,
+    "symbols": 28,
+    "edges": 8890,
+    "atlas_nodes": 4403,
+    "validation_errors": 0,
+    "generated_by": [
+      "workhouse index -w",
+      "workhouse frontier --write",
+      "workhouse certified --write",
+      "workhouse atlas"
+    ],
+    "generation_exit_code": 0,
+    "staleness_tests": "passed"
+  },
+  "native_checks": {
+    "passing": 496,
+    "total": 496,
+    "new_checks": 19,
+    "new_checks_passing": 19,
+    "new_check_tiers": {
+      "T1": 15,
+      "T2": 4
+    },
+    "new_checks_report": "native_new_checks.json",
+    "scope": "Full native suite rederived during the live index rebuild; the 19 additions also replayed separately without cache."
+  },
+  "lean": {
+    "registered_declarations": 180,
+    "integrated_declarations": 46,
+    "strict_build_exit_code": 0,
+    "new_axiom_audit": "standard axioms only",
+    "report": "lean_integration_report.json"
+  },
+  "regression_tests": {
+    "unique_tests": 167,
+    "final_passed": 167,
+    "unresolved_failures": 0,
+    "main_report": "regression_initial.xml",
+    "initial_passed": 164,
+    "initial_failures": [
+      "tests.test_graph::test_cli_why_runs_and_exits_nonzero_on_a_miss",
+      "tests.test_frontier::test_the_hook_emits_valid_session_start_json",
+      "tests.test_provenance::test_every_target_resolves_and_the_graph_carries_the_edges"
+    ],
+    "rerun_report": "regression_rerun.xml",
+    "rerun_passed": 3,
+    "environment": [
+      "PYTHONPATH=src",
+      "PYTHONIOENCODING=utf-8",
+      "PYTHONUTF8=1",
+      "Git Bash directory first on PATH"
+    ],
+    "resolution": "Two Windows subprocess environment failures; one exact document-inventory assertion extended for the new source registry. All failed cases passed in the focused rerun. This is the affected regression set, not the entire repository test suite."
+  },
+  "lint": {
+    "result": "passed",
+    "scope": "New native suites and registry, graph/claim adapters, new tests and updated provenance/run tests"
+  },
+  "preservation": {
+    "passed": true,
+    "checked": {
+      "branch_run_files": 686,
+      "campaign_sources": 67,
+      "priority_docs": 77,
+      "ported_lean_modules": 5
+    },
+    "problems": [],
+    "note": "Original provenance paths must be mounted for this optional source audit."
+  },
+  "integration_counts": {
+    "recent_results": 26,
+    "recent_routes": 4,
+    "standalone_campaigns": 9,
+    "preserved_campaign_sources": 67,
+    "priority_documents": 77,
+    "new_priority_document_aliases": 53,
+    "historical_run_packages": 18,
+    "historical_run_files": 686,
+    "active_lean_modules_added": 8
+  },
+  "implementation_sha256": {
+    "README.md": "e67c11f4c54ab3897732593979d6625393b2aa2d6acf02b95dc03e9a30d8be38",
+    "docs/README.md": "8717f8b59b216880f7b57cba733a1596976b6111fb4f1c29c19057fc573b29bc",
+    "docs/research/september_feshbach_integration.md": "aa67731fa11cb13c272ed7154f368df49627737678e72f6239d15a0188e9b58c",
+    "lean/README.md": "b470e5b71bb47c99f5574704f34de592aa78efdb3a0dce6e31926b493e38c4ce",
+    "lean/Workhouse.lean": "4c53ab0cf79b231a395be4067721dbba513ef8615df9709f4df0f3b63d0eb189",
+    "ledger/documents.yaml": "3e5fa7193d90c24a08e374b84cabc3f4a59695a78a5bc624ad9454b38ec77309",
+    "ledger/theorems.yaml": "e6e2f3bf52ca11aa96c6b090e196a094b12bd4b4b621f823b2c7ab1f462cad5b",
+    "ledger/recent_research.yaml": "92d2e4bb04d892ae0f33e60ce5465c63c3ec8dee2fc42f7bc0ad580b6fe7bc0e",
+    "runs/index.yaml": "c008ec2a365b9fa70e503be8a9006991da9695a6227cd1cf6c6e8ba5cf1234f7",
+    "src/workhouse/claims.py": "e580c4096fbcab385640ef57a7bb90145183744d7de2139dae5c3ebac92b0aba",
+    "src/workhouse/graph.py": "fc3d94b5fd5468ff254c542f5babea357b34455850932853c0dd76fcbbd85e3a",
+    "src/workhouse/recent_research.py": "b469385c4c2ad3804dd046511b49a71d057ebdbc1fe068edda71e1cd4b1bd19f",
+    "src/workhouse/invariants/__init__.py": "8a8bf2585d169477ed4fc0d94f0915e2eea0dccb95c0855d455a12cf5f218da3",
+    "src/workhouse/invariants/anisotropy_variance.py": "386fdda204f69a7f05c81639c0d5ed23e727ff98a23c1982ec41a2ad1050b384",
+    "src/workhouse/invariants/hodge_feshbach.py": "10c8c5014ab4e774dfde5d9298ff9b2ddc8dd4d0363b24f4ac1af76922fe3a69",
+    "src/workhouse/invariants/feshbach_resolvent.py": "ccb42da8d5b21de34d833f906debbd8658e00619bc49c461a041ca1ba862b41b",
+    "tests/test_provenance.py": "fda4c5059817dafd99ecdb0941b0bcfdbf4c7a36a4e675785de821bb3374c7cb",
+    "tests/test_runs.py": "52ab48658d4ef5794b707849e9dfc906901245bf05e3f5a1a6e6cfcb9ef7709f",
+    "tests/test_recent_document_routes.py": "91b99ab7b8b24351c2359b244285a0e39d3b26321a35ba6cff55936c700a9732",
+    "tests/test_recent_research.py": "98876303e31852a895b2724487f3ecfdbc0263908386c8d460b0a82a6b7561a1",
+    "tests/test_september_feshbach.py": "db462caca35bd9b157c85428568f785bf5ffee3a5ea37749a41c38a368c223a8",
+    "lean/Workhouse/AnisotropyVariance.lean": "8d7c8fc2006c3457e1f9894939ffd54b4f793deb2ddb74f54a335944f5f263f7",
+    "lean/Workhouse/WilsonSquareForce.lean": "9988f7bc6bf4b8603f8ae669620a2b9863b077c3b06ef02f69f2e6010371a0df",
+    "lean/Workhouse/WilsonGridAlgebra.lean": "ce1df73c483ed495e98f17477ddf9c9cda39e9e3a3248fa03f32a77c006079cd",
+    "lean/Workhouse/VacuumChart.lean": "9ee0c04a68d74b1cf8afa3aeaa2a42c3e94b5a6ce65648e1b04d38cfe05fc334",
+    "lean/Workhouse/VacuumCompression.lean": "407a01823025dc4e6f73a71d13d8ddd8b0457f3e693746702e3ca4f583f274d2",
+    "lean/Workhouse/RootedScalarBounds.lean": "15eb325a92c9ad2594278726ada0d3dc7e52b4c3a9d6f11c10caa0a315aa1a12",
+    "lean/Workhouse/CreatorParent.lean": "d1ed20c248858faf569248b9dc012e5ef021453b5e348b90cb75e3abfe0b4df4",
+    "lean/Workhouse/GlobalWilsonVertical.lean": "f471fa116138e6dfa3557dfe29997d21b1cd5d19cba1fa0c7b35e134208a91b1"
+  },
+  "generated_view_sha256": {
+    "index/claims.jsonl": "e93b54a95a23f5d601bc73de2ba9fd5b759b69e6ec98cd1afc1e5f61e2526f0b",
+    "index/symbols.jsonl": "153b6ecdac62639f5a123d114e1b09502b4dd9a309ea0b77b5d0b4c792e78a82",
+    "index/graph.jsonl": "e5abcb48ba467014c424c7892536065033fefb0f0bf4700b048e6b8e4fe443e2",
+    "FRONTIER.md": "02f628cc6614459a906673cb04c202285fb4c5246e4500c5d1e964f04f9765ef",
+    "CERTIFIED.md": "d1ed40adc3442ea15a5ad332dfd48b90cec274a6b8bc52b5b3b719cec8c6dc45",
+    "atlas.html": "908f9725d502ec98c2fe6cae45fa93233fc40d0c628e72f191964e066900fa40"
+  },
+  "notes": [
+    "No source deletion, move, checkout reset, commit or push was performed.",
+    "Imported historical computations retain their existing run status; they were copied, not described as newly replayed.",
+    "Complete interacting Wilson transfer and continuum hypotheses remain explicit in the registered routes.",
+    "Final evidence reports and hashes were added after generated-view staleness tests; these logs do not change the curated graph records."
+  ]
+}

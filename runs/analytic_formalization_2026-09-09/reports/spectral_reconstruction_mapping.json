@@ -1,0 +1,562 @@
+{
+  "schema": "workhouse-formalization-mapping/v1",
+  "module": "lean/Workhouse/SpectralReconstruction.lean",
+  "module_sha256": "bf97a2b07c1ae25ea84f482d0db1b426dce88e9d5218668384ba07a039289f89",
+  "namespace": "Workhouse.SpectralReconstruction",
+  "verification": {
+    "command": "lake env lean -DwarningAsError=true --stdin (module source followed by #print axioms for all 22 theorems)",
+    "exit_code": 0,
+    "theorems": 22,
+    "all_theorems_compiled": true,
+    "sorry": false,
+    "new_axioms": false,
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "definitions": [
+    "Workhouse.SpectralReconstruction.laplaceCorrelation",
+    "Workhouse.SpectralReconstruction.finiteCorrelation",
+    "Workhouse.SpectralReconstruction.modeAmplitude",
+    "Workhouse.SpectralReconstruction.transferEnergy",
+    "Workhouse.SpectralReconstruction.observableFrame",
+    "Workhouse.SpectralReconstruction.deletedObservableFrame"
+  ],
+  "theorems": [
+    {
+      "name": "Workhouse.SpectralReconstruction.laplace_integrable",
+      "line": 28,
+      "scope": "Finite positive measures on nonnegative energies have integrable Laplace correlations at every nonnegative time.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 1. Source statements and the operator to be bounded",
+          "equations": "(R1)"
+        }
+      ],
+      "inventory_key": "R1",
+      "dependencies": [
+        "Integrable.mono'",
+        "integrable_const",
+        "Real.exp_le_one_iff"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.low_energy_laplace_lower_bound",
+      "line": 41,
+      "scope": "exp(-t*a) times the actual spectral mass of [0,a] is at most the Laplace integral.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 1. Source statements and the operator to be bounded",
+          "equations": "(R1)"
+        }
+      ],
+      "inventory_key": "R1",
+      "dependencies": [
+        "Workhouse.SpectralReconstruction.laplace_integrable",
+        "setIntegral_ge_of_const_le_real",
+        "setIntegral_le_integral"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.low_energy_mass_bound",
+      "line": 55,
+      "scope": "The actual R1 spectral mass inequality sigma([0,a]) <= exp(a*t) C(t).",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 1. Source statements and the operator to be bounded",
+          "equations": "(R1)"
+        }
+      ],
+      "inventory_key": "R1",
+      "dependencies": [
+        "Workhouse.SpectralReconstruction.low_energy_laplace_lower_bound",
+        "Real.exp_add"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.laplace_decay_excludes_low_energy",
+      "line": 70,
+      "scope": "Actual integral decay C(t)<=A exp(-eta*t) for all nonnegative t implies sigma([0,a])=0 for every 0<=a<eta.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 1. Source statements and the operator to be bounded",
+          "equations": "(R1)"
+        }
+      ],
+      "inventory_key": "R1",
+      "dependencies": [
+        "Workhouse.SpectralReconstruction.low_energy_mass_bound",
+        "Real.tendsto_exp_neg_atTop_nhds_zero",
+        "ge_of_tendsto",
+        "measureReal_eq_zero_iff"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.laplace_decay_support_gap",
+      "line": 99,
+      "scope": "Countable exhaustion of [0,eta) proves its entire spectral measure vanishes for eta>0.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 1. Source statements and the operator to be bounded",
+          "equations": "(R1)"
+        }
+      ],
+      "inventory_key": "R1",
+      "dependencies": [
+        "Workhouse.SpectralReconstruction.laplace_decay_excludes_low_energy",
+        "tendsto_natCast_div_add_atTop",
+        "iUnion_Iic_eq_Iio_of_lt_of_tendsto",
+        "measure_iUnion_null"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.balancing_radius_nonneg",
+      "line": 122,
+      "scope": "The chosen localization radius eta*t/(alpha+beta) is admissible for t>=0, eta,beta>0, alpha>=0.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 5. A precise sufficient repair, with its remaining hypothesis exposed",
+          "equations": "(R6)-(R7)"
+        }
+      ],
+      "inventory_key": "R6_R7",
+      "dependencies": [],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.balanced_rate_pos",
+      "line": 127,
+      "scope": "The derived balanced rate eta*beta/(alpha+beta) is positive.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 5. A precise sufficient repair, with its remaining hypothesis exposed",
+          "equations": "(R6)-(R7)"
+        }
+      ],
+      "inventory_key": "R6_R7",
+      "dependencies": [],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.localization_balanced_decay",
+      "line": 133,
+      "scope": "A simultaneous two-parameter bound for all nonnegative R,t yields the actual correlation bound (A+B) exp(-eta*beta/(alpha+beta)*t).",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 5. A precise sufficient repair, with its remaining hypothesis exposed",
+          "equations": "(R6)-(R7)"
+        }
+      ],
+      "inventory_key": "R6_R7",
+      "dependencies": [
+        "Workhouse.SpectralReconstruction.balancing_radius_nonneg"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.localization_excludes_low_energy",
+      "line": 152,
+      "scope": "The two-parameter localization hypothesis yields zero spectral mass below its balanced rate.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 5. A precise sufficient repair, with its remaining hypothesis exposed",
+          "equations": "(R6)-(R7)"
+        }
+      ],
+      "inventory_key": "R6_R7",
+      "dependencies": [
+        "Workhouse.SpectralReconstruction.localization_balanced_decay",
+        "Workhouse.SpectralReconstruction.laplace_decay_excludes_low_energy"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.projection_zero_from_total_family",
+      "line": 171,
+      "scope": "An actual bounded continuous operator vanishing on a total observable family vanishes globally.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 1. Source statements and the operator to be bounded",
+          "equations": "(R1)"
+        }
+      ],
+      "inventory_key": "R1",
+      "dependencies": [
+        "ContinuousLinearMap.ext_on"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.total_family_spectral_projection_gap",
+      "line": 182,
+      "scope": "Finite positive spectral measures, the projection-norm identity, common exponential rate and dense linear span imply zero low-energy projection. Prefactors can depend on each observable.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 1. Source statements and the operator to be bounded",
+          "equations": "(R1)"
+        }
+      ],
+      "inventory_key": "R1",
+      "dependencies": [
+        "Workhouse.SpectralReconstruction.projection_zero_from_total_family",
+        "Workhouse.SpectralReconstruction.laplace_decay_excludes_low_energy",
+        "measureReal_eq_zero_iff",
+        "norm_eq_zero",
+        "sq_eq_zero_iff"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.total_family_localization_projection_gap",
+      "line": 202,
+      "scope": "Composes two-parameter localization with positive spectral measure and actual dense-family operator extension, allowing observable-dependent A and B.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 5. A precise sufficient repair, with its remaining hypothesis exposed",
+          "equations": "(R6)-(R7)"
+        }
+      ],
+      "inventory_key": "R6_R7",
+      "dependencies": [
+        "Workhouse.SpectralReconstruction.total_family_spectral_projection_gap",
+        "Workhouse.SpectralReconstruction.localization_balanced_decay"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.reflection_kernel_gram",
+      "line": 237,
+      "scope": "Exact complex reflection-kernel Gram factorization for arbitrary finite modes and times, using the actual sums of c_k*r_j^k.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 2. A finite reflection-positive model one can inspect exactly",
+          "equations": "(R2)"
+        }
+      ],
+      "inventory_key": "R2",
+      "dependencies": [
+        "Finset.sum_comm",
+        "Complex.normSq_eq_conj_mul_self"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.reflection_kernel_nonnegative",
+      "line": 259,
+      "scope": "Nonnegative real mode weights imply positive semidefiniteness of the complex finite-time reflection kernel.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 2. A finite reflection-positive model one can inspect exactly",
+          "equations": "(R2)"
+        }
+      ],
+      "inventory_key": "R2",
+      "dependencies": [
+        "Workhouse.SpectralReconstruction.reflection_kernel_gram",
+        "Complex.normSq_nonneg"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.transfer_energy_nonnegative",
+      "line": 274,
+      "scope": "E=-log(r)/a is nonnegative for 0<r<=1 and physical step a>0.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 2. A finite reflection-positive model one can inspect exactly",
+          "equations": "(R2)"
+        }
+      ],
+      "inventory_key": "R2",
+      "dependencies": [
+        "Real.log_nonpos"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.transfer_energy_reconstructs_ratio",
+      "line": 279,
+      "scope": "The physical clock exactly reconstructs each mode: exp(-a*E)=r.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 2. A finite reflection-positive model one can inspect exactly",
+          "equations": "(R2)"
+        }
+      ],
+      "inventory_key": "R2",
+      "dependencies": [
+        "Real.exp_log"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.transfer_power_eq_physical_decay",
+      "line": 287,
+      "scope": "Every mode satisfies r^n=exp(-a*n*E), with the time-step factor preserved.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 2. A finite reflection-positive model one can inspect exactly",
+          "equations": "(R2)"
+        }
+      ],
+      "inventory_key": "R2",
+      "dependencies": [
+        "Workhouse.SpectralReconstruction.transfer_energy_reconstructs_ratio",
+        "Real.exp_nat_mul"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.observable_frame_gram",
+      "line": 306,
+      "scope": "The actual complex 3x2 frame [[1,1],[1,-1],[0,1]] has conjugate-transpose Gram matrix diag(2,3).",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 3. Observable completeness is a testable interface",
+          "equations": "(R3)"
+        }
+      ],
+      "inventory_key": "R3",
+      "dependencies": [
+        "Matrix.mul_apply"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.observable_frame_energy",
+      "line": 314,
+      "scope": "For arbitrary complex v, the actual sum of squared row amplitudes minus twice the source squared norm equals normSq(v_1).",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 3. Observable completeness is a testable interface",
+          "equations": "(R3)"
+        }
+      ],
+      "inventory_key": "R3",
+      "dependencies": [
+        "Complex.normSq_apply"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.observable_frame_lower_bound",
+      "line": 322,
+      "scope": "The complete finite observable frame has lower frame bound two in its actual Euclidean squared norm.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 3. Observable completeness is a testable interface",
+          "equations": "(R3)"
+        }
+      ],
+      "inventory_key": "R3",
+      "dependencies": [
+        "Workhouse.SpectralReconstruction.observable_frame_energy",
+        "Complex.normSq_nonneg"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.observable_frame_correlation",
+      "line": 331,
+      "scope": "The summed three-observable correlator is exactly 2*r1^n+3*r2^n.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 3. Observable completeness is a testable interface",
+          "equations": "(R3)"
+        }
+      ],
+      "inventory_key": "R3",
+      "dependencies": [
+        "Complex.normSq_apply"
+      ],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "Workhouse.SpectralReconstruction.deleted_frame_invisible_sector",
+      "line": 342,
+      "scope": "Retaining only row (0,1) leaves the explicit nonzero vector (1,0) invisible.",
+      "sources": [
+        {
+          "path": "docs/derivations/yangmills-reconstruction.md",
+          "anchor": "## 3. Observable completeness is a testable interface",
+          "equations": "(R3)"
+        }
+      ],
+      "inventory_key": "R3",
+      "dependencies": [],
+      "promotes": [],
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "inventory_unit_links": [
+    {
+      "source": "docs/derivations/yangmills-reconstruction.md",
+      "key": "R1",
+      "implemented": "Actual positive finite spectral measure Laplace integral, integrability from positivity/finite mass, R1 mass inequality, infinite-time exclusion, countable open-gap exhaustion and bounded-operator extension from a total family.",
+      "remaining": "Instantiate the abstract positive measure and projection-norm identity using the physical self-adjoint Hamiltonian's spectral theorem, and identify the dense centered observable family from OS reconstruction. The abstract decay-to-support and density mechanism itself is formalized."
+    },
+    {
+      "source": "docs/derivations/yangmills-reconstruction.md",
+      "key": "R6_R7",
+      "implemented": "Positive balancing radius and rate; all-R,t hypothesis yields actual correlation decay, zero low-energy measure, and zero low-energy projection on the total centered family.",
+      "remaining": "Prove the actual Yang-Mills two-parameter localization estimate with one common rate and the required cutoff/volume control. The source's optional integer-radius ceiling variant is not formalized here."
+    },
+    {
+      "source": "docs/derivations/yangmills-reconstruction.md",
+      "key": "R2",
+      "implemented": "Arbitrary finite complex weighted Gram identity and reflection positivity, plus exact positive physical time-step-to-energy correspondence.",
+      "remaining": "This finite positive kernel is not an OS spacetime reconstruction; no continuum claim follows from it."
+    },
+    {
+      "source": "docs/derivations/yangmills-reconstruction.md",
+      "key": "R3",
+      "implemented": "Exact complex 3x2 Gram matrix, full Euclidean squared-norm identity/lower bound, actual two-mode summed correlator, and explicit nonzero invisible vector after the specified row deletion.",
+      "remaining": "No remaining formalization for the finite example. Establishing totality of an actual continuum observable family remains separate from this calibration."
+    }
+  ],
+  "mathematical_scope": [
+    "Energy space is NNReal, exactly representing nonnegative energies and including the vacuum energy zero.",
+    "Measures are arbitrary finite positive measures, not finite atomic test models.",
+    "Every t is a real physical time >=0; the limiting and countable exhaustion arguments use actual analysis.",
+    "The dense-family projection theorems use continuous linear operators on real normed spaces; an underlying real normed structure also covers complex Hilbert-space applications.",
+    "The spectral theorem and OS reconstruction are explicit application inputs; no self-adjoint Hamiltonian or physical measure is manufactured from a decay assumption.",
+    "No spectral-support conclusion or projection-vanishing conclusion is included among the hypotheses."
+  ]
+}

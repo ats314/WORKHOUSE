@@ -1,5 +1,24 @@
 # WORKHOUSE
 
+## Canonical working checkout and archive
+
+On the maintainer's workstation, open **`C:\WORKHOUSE\REPO`** for active work.
+The surrounding `C:\WORKHOUSE` holds the four-year research archive; `ALL THEORY`
+is one collection within it. The older nested checkout remains preserved for
+provenance and recovery. It is not a second default working copy.
+
+Read [INDEX.md](INDEX.md), [the documentation index](docs/README.md), and
+[workspace coordination](docs/workspace_coordination.md) before adding or importing
+work. The [September integration record](runs/recent_research_integration_2026-09-09/README.md)
+preserves the graph and Lean update made in the older checkout; the canonical
+checkout also includes the subsequent GitHub history. Live counts belong in
+[FRONTIER.md](FRONTIER.md) and [CERTIFIED.md](CERTIFIED.md).
+
+The [derivation proof map](docs/derivation_formalization.md) connects the September
+derivations to exact statement IDs, compiled Lean proofs, their actual kernel
+dependencies and the remaining formalization steps. Begin there when extending
+a derivation rather than creating another disconnected proof file.
+
 A mathematical research and verification workspace for the SU(N) cubic
 flux-band spectral program. It connects analytic derivations, exact
 computations, Lean proofs, and their source history in a queryable theory graph.

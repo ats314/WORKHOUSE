@@ -1,0 +1,190 @@
+{
+  "cache_used": false,
+  "checks": [
+    {
+      "detail": "simplex polynomial remainders=[0, 0]; pair sum at (1/6,1/3,1/2)=5/324; each pair term is nonnegative on the nonnegative simplex, with shape coefficients 1:3:-4",
+      "name": "anisotropy variance is exactly the simplex pair sum and cubic shape invariant",
+      "passed": true,
+      "source": "src/workhouse/invariants/anisotropy_variance.py:33",
+      "suite": "anisotropy variance: full-kernel mixing and induced sixth order",
+      "tier": 1,
+      "yields": {
+        "ANISOTROPY_VARIANCE_HOLDOUT": "5/324"
+      }
+    },
+    {
+      "detail": "all 85 nonzero Laurent coefficients agree exactly; C=-13035490122347/550663802582400; q*(psi*H^2*psi)-(psi*H*psi)^2=4C^2 sum(i<j) ai aj (ai-aj)^2; division by q^2 for q>0 gives ||QHp||^2=4C^2 q^2 V",
+      "name": "anisotropy mixing residual matches the full assembled Laurent kernel",
+      "passed": true,
+      "source": "src/workhouse/invariants/anisotropy_variance.py:55",
+      "suite": "anisotropy variance: full-kernel mixing and induced sixth order",
+      "tier": 1,
+      "yields": {}
+    },
+    {
+      "detail": "C=-13035490122347/550663802582400, t3=5/612, induced coefficient=-169924002729806205028788409/619343593697933825385600000; this multiplies q*V in the fourth-order matrix's virtual-mixing term; direct sixth-order contributions remain a separate G9 input",
+      "name": "anisotropy induced sixth-order coefficient is minus four C squared over t3",
+      "passed": true,
+      "source": "src/workhouse/invariants/anisotropy_variance.py:84",
+      "suite": "anisotropy variance: full-kernel mixing and induced sixth order",
+      "tier": 1,
+      "yields": {
+        "ANISOTROPY_INDUCED_SIXTH": "-169924002729806205028788409/619343593697933825385600000"
+      }
+    },
+    {
+      "detail": "18 probes at 80 digits, including q near 1e-23 and three nodal families; largest violation=2.5737788e-85, tolerance=1.0e-28; energy is scaled by q before diagonalization; finite-order in-sector bounds only",
+      "name": "anisotropy finite-order overlap and energy bounds hold in scaled spectral probes",
+      "passed": true,
+      "source": "src/workhouse/invariants/anisotropy_variance.py:100",
+      "suite": "anisotropy variance: full-kernel mixing and induced sixth order",
+      "tier": 2,
+      "yields": {}
+    },
+    {
+      "detail": "L_down + L_up has 21 records, all plane-diagonal, and equals q I exactly (q = e_1 = sum_j 4 sin^2(k_j/2)); L_down L_up = 0. So on the fibre L_up = psi psi^dagger and |psi|^2 = q. For q > 0 the two kernels are complementary and Q = 1 - P_psi projects onto ker L_up. At Gamma q = 0, psi = 0: only the cleared identities apply, not the normalized projector",
+      "name": "for q > 0, Q projects onto ker L_up; the cleared Hodge identities hold everywhere",
+      "passed": true,
+      "source": "src/workhouse/invariants/hodge_feshbach.py:139",
+      "suite": "the Feshbach channel of the plaquette Hodge algebra",
+      "tier": 1,
+      "yields": {
+        "HODGE_FIBRE_DIM": "3/1"
+      }
+    },
+    {
+      "detail": "L_down psi = 0 exactly (homological protection, B^dagger psi = 0), L_up psi = q psi, S psi = -4 psi. All three are scalars on the carrier line, so Q L_down psi = Q L_up psi = Q S psi = 0: the Hodge algebra generates no Feshbach coupling at all",
+      "name": "neither Hodge generator leaves the carrier: Q L_down psi = Q L_up psi = 0",
+      "passed": true,
+      "source": "src/workhouse/invariants/hodge_feshbach.py:181",
+      "suite": "the Feshbach channel of the plaquette Hodge algebra",
+      "tier": 1,
+      "yields": {}
+    },
+    {
+      "detail": "phi = q R psi - <psi, R psi> psi is not identically zero, is orthogonal to the carrier over the whole zone, and L_up phi = 0 record by record. Every excursion off the retained sector in this geometry is an R insertion, and it lands in the up-harmonic summand",
+      "name": "the R-excitation is up-harmonic: L_up (Q R psi) = 0 exactly",
+      "passed": true,
+      "source": "src/workhouse/invariants/hodge_feshbach.py:200",
+      "suite": "the Feshbach channel of the plaquette Hodge algebra",
+      "tier": 1,
+      "yields": {}
+    },
+    {
+      "detail": "39 words of length <= 3 in (S, U, R); exactly 7 have a nonzero Feshbach defect: RR, RRR, RRS, RRU, RSR, SRR, URR. Every one of them contains two R insertions with no U between them, and every word with at most one R factorizes completely. RUR factorizes (L_up phi = 0) and RSR does not -- the rule is about the intermediate excursion, not about counting R's",
+      "name": "the Feshbach defect of a word vanishes unless two R's meet unseparated by U",
+      "passed": true,
+      "source": "src/workhouse/invariants/hodge_feshbach.py:252",
+      "suite": "the Feshbach channel of the plaquette Hodge algebra",
+      "tier": 1,
+      "yields": {}
+    },
+    {
+      "detail": "every word with at most one R has carrier symbol (-4)^#S (-2)^#R q^(#U + 1 - #R) e_2^#R exactly, verified for lengths at most three as cleared Laurent identities. The U count matters: UR already has sigma = -2 q e_2, so R-degree alone does not exclude the B tier",
+      "name": "words of length at most three with at most one R obey the exact carrier formula",
+      "passed": true,
+      "source": "src/workhouse/invariants/hodge_feshbach.py:281",
+      "suite": "the Feshbach channel of the plaquette Hodge algebra",
+      "tier": 1,
+      "yields": {}
+    },
+    {
+      "detail": "UR and RU each contain exactly one R, have zero Feshbach defect, and have sigma = -2 q e_2 exactly. Thus sigma/q = -2 e_2 populates B. The actual fourth-order support excludes these words; its tier collapse survives",
+      "name": "FINDING: one R does not exclude B; sigma(UR) = sigma(RU) = -2 q e_2",
+      "passed": true,
+      "source": "src/workhouse/invariants/hodge_feshbach.py:311",
+      "suite": "the Feshbach channel of the plaquette Hodge algebra",
+      "tier": 1,
+      "yields": {
+        "UR_CLEARED_B_WEIGHT": "-2/1"
+      }
+    },
+    {
+      "detail": "sigma(RR) = q e_2 + 3 e_3 exactly over the whole zone. The B-monomial and the D-monomial enter the R^2 channel at fixed relative weight 1 : 3, so D = 3 B for any kernel whose degree-3 tier is carried by R^2 alone",
+      "name": "two R insertions unlock the L^-4 tier locked at B : D = 1 : 3",
+      "passed": true,
+      "source": "src/workhouse/invariants/hodge_feshbach.py:328",
+      "suite": "the Feshbach channel of the plaquette Hodge algebra",
+      "tier": 1,
+      "yields": {
+        "RR_TIER_RATIO": "3/1"
+      }
+    },
+    {
+      "detail": "sigma(RUR) = 4 e_2^2 exactly, and R U R has zero Feshbach defect, so the value is the honest carrier symbol of that word and not an artefact of a truncation. Its shape symbol 4 e_2^2 / q is NOT in the span of the ansatz's cleared monomials {q, q^2, e_2, q e_2, e_3} (rank test, exact). A nonzero RUR contribution would require an enlarged ansatz unless other contributions cancel its out-of-span part. Which words order six populates and how they combine remain open (G9, G10)",
+      "name": "FINDING: the algebra contains a shape monomial the four-shape ansatz cannot hold",
+      "passed": true,
+      "source": "src/workhouse/invariants/hodge_feshbach.py:353",
+      "suite": "the Feshbach channel of the plaquette Hodge algebra",
+      "tier": 1,
+      "yields": {
+        "RUR_SHAPE_WEIGHT": "4/1"
+      }
+    },
+    {
+      "detail": "the 189 records are -nu~(L_up - 2) + u S^2 - pi~ S + sigma~ I - 2 C R exactly, with C = -211835444920651/4405310420659200 = C_shp. The supported words I,U,S,SS,R have symbols q,q^2,-4q,16q,-2e_2, so their span contains no q e_2 or e_3 tier. This proves B = D = 0 for this support, not for every R-linear kernel",
+      "name": "the actual fourth-order support I, U, S, S^2, R forces B = D = 0",
+      "passed": true,
+      "source": "src/workhouse/invariants/hodge_feshbach.py:395",
+      "suite": "the Feshbach channel of the plaquette Hodge algebra",
+      "tier": 1,
+      "yields": {}
+    },
+    {
+      "detail": "in both cells ker L_down is one-dimensional and spanned by the face-sign carrier, L_down L_up = 0, and L_up psi = |psi|^2 psi (4 psi on the tetrahedron, 7 psi on the prism). So every word in the two Laplacians is scalar on the carrier in both. L_down + L_up is a scalar on the tetrahedron (4 I) and is NOT on the prism ([6, 6, 5, 5, 5, 5, 5]: five links on a cap, four on a side), so the link-regularity hypothesis is refuted as a requirement and the weaker eigenvector hypothesis suffices for scalar Hodge words. No proper-return calculation or general U3 conclusion is established in these two cells by this check",
+      "name": "the Hodge-word statement needs only L_down psi = 0 and L_up psi = lambda psi, and both hold in three geometries",
+      "passed": true,
+      "source": "src/workhouse/invariants/hodge_feshbach.py:431",
+      "suite": "the Feshbach channel of the plaquette Hodge algebra",
+      "tier": 1,
+      "yields": {}
+    },
+    {
+      "detail": "exact over 4 form pairs at n = 3, 4, 5, 6 with rational g: the residual (A_g - A_0)[R_0 w, R_g w] - <(R_0 - R_g)w, w> is {'0'}, identically zero and not merely small. Requires only that A_0 be symmetric and both forms invertible on the complement",
+      "name": "the interacting inverse image cancels: (A_g - A_0)[R_0 w, R_g w] = <(R_0 - R_g)w, w>",
+      "passed": true,
+      "source": "src/workhouse/invariants/feshbach_resolvent.py:65",
+      "suite": "the Feshbach resolvent comparison",
+      "tier": 1,
+      "yields": {}
+    },
+    {
+      "detail": "the sandwich g V[u_g,u_g] <= <(R_0 - R_g)w,w> <= g V[u_0,u_0] holds in all 4 cases. One side is the interaction form on the free optimizer alone, so a Gaussian estimate closes it; the other still names u_g and is what the next check trades for a relative form bound",
+      "name": "the variational sandwich puts the free optimizer on one side",
+      "passed": true,
+      "source": "src/workhouse/invariants/feshbach_resolvent.py:92",
+      "suite": "the Feshbach resolvent comparison",
+      "tier": 1,
+      "yields": {}
+    },
+    {
+      "detail": "the predicted bound holds in every case: n=3 kappa=0.678 |value|=0.007675 <= 0.07564; n=4 kappa=0.317 |value|=0.05662 <= 0.135; n=5 kappa=0.235 |value|=0.00602 <= 0.01274; n=6 kappa=0.325 |value|=0.003521 <= 0.01248. The constant uses only <R_0 w, w> and kappa -- no quantity evaluated on the interacting problem",
+      "name": "a relative form bound gives the explicit constant C = kappa/(1-|g|kappa)^2 <R_0 w,w>",
+      "passed": true,
+      "source": "src/workhouse/invariants/feshbach_resolvent.py:118",
+      "suite": "the Feshbach resolvent comparison",
+      "tier": 2,
+      "yields": {}
+    },
+    {
+      "detail": "kappa scales linearly with the interaction while the margin 1 - |g| kappa collapses: scale 1: kappa=0.32, margin=0.9968, scale 4: kappa=1.27, margin=0.9873, scale 16: kappa=5.08, margin=0.9492, scale 64: kappa=20.31, margin=0.7969, scale 256: kappa=81.23, margin=0.1877. The constant grows as margin^-2 (0.319 to 2306.0 across this family) and the bound is void once |g| kappa >= 1, where this bound no longer certifies positivity. Actual loss of positivity does not follow from failure of this sufficient criterion. So the identity moves the difficulty from an absolute bound on the interacting resolvent to a volume-uniform relative form bound, and does not supply the latter. G22 is where that debt is registered",
+      "name": "FINDING: the reduction buys a relative form bound, not the estimate -- void at |g| kappa >= 1",
+      "passed": true,
+      "source": "src/workhouse/invariants/feshbach_resolvent.py:149",
+      "suite": "the Feshbach resolvent comparison",
+      "tier": 2,
+      "yields": {}
+    },
+    {
+      "detail": "across n = 4..64 with a near-zero mode: kappa is 0.500000, 0.499999, 0.499995, 0.499983, 0.499968 (spread 3.14e-05, volume-independent) while ||R_0 V|| is 1.2, 2.5, 5.1, 10.2, 20.4 (a factor 16.9 across the same range, growing linearly). The quantity Neumann iteration needs diverges with the volume; the quantity the collapse identity needs does not, because a relative bound is a max over local terms and not a sum. One dimension, kinetic interaction: the mechanism, not a gauge statement",
+      "name": "the relative bound is volume-stable where the Neumann quantity is not",
+      "passed": true,
+      "source": "src/workhouse/invariants/feshbach_resolvent.py:254",
+      "suite": "the Feshbach resolvent comparison",
+      "tier": 2,
+      "yields": {}
+    }
+  ],
+  "passed": 19,
+  "total": 19
+}

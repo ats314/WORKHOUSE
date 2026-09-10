@@ -9,9 +9,16 @@ repository has that standing.
 
 ## What belongs here
 
-Pure rational and polynomial algebra — the rank law, the deficit identity, the
-sealed-core arithmetic. If an invariant in `src/workhouse/invariants/` is
-exactly that, prefer promoting it rather than leaving it at T1.
+Formal statements from the research derivations, including rational and
+polynomial algebra, Hilbert and Banach operators, measure-theoretic limits,
+Dirichlet forms and their dependencies. The maintainer's September 9 request
+explicitly extends the earlier algebra-only scope. Preserve precise hypotheses
+and build the actual mathematical objects required by each statement.
+
+If an invariant in `src/workhouse/invariants/` is exactly a formalized statement,
+prefer promoting it rather than leaving it at T1. A useful abstract operator
+lemma must state its remaining Wilson-specific realization inputs; it does not
+by itself formalize a complete source document.
 
 ## What does not
 

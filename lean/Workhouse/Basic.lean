@@ -14,6 +14,7 @@ Provenance for each statement is a section reference, recorded so a reader can
 find what the corpus *claims*; the Lean proof is what makes it true here.
 -/
 import Mathlib.Tactic
+import Mathlib.Analysis.SpecialFunctions.Exp
 
 namespace Workhouse
 
@@ -741,5 +742,677 @@ theorem betaN_three : betaN 3 = 15644916262153 / 34416487661400 := by
 /-- SU(4): the corpus's low-rank table value. -/
 theorem betaN_four : betaN 4 = 3601925923737103752887 / 70481696720359496343750 := by
   unfold betaN P17 R20; norm_num
+
+/-! ## Finite ground-state forms and the residual budget
+
+MMM 2019, equations II.2, II.9 and II.16, and Mondal 2023, equations 4.1 and
+4.9, motivate an operator-identification question: the weighted Dirichlet form
+must belong to the physical Hamiltonian. The finite identities below prove
+that identification for a real symmetric matrix, including a nonconstant trial
+state residual. No infinite-dimensional domain, curvature, continuum limit or
+Yang-Mills existence hypothesis is asserted here.
+-/
+
+open scoped BigOperators
+
+/-- The real quadratic form of a finite matrix. -/
+noncomputable def finiteMatrixForm {ι : Type*} [Fintype ι]
+    (H : ι → ι → ℝ) (x : ι → ℝ) : ℝ :=
+  ∑ i, ∑ j, H i j * x i * x j
+
+/-- Multiplication by `ψ` identifies this weighted norm with the ordinary norm. -/
+noncomputable def groundStateNormSq {ι : Type*} [Fintype ι]
+    (ψ f : ι → ℝ) : ℝ := ∑ i, (ψ i * f i) ^ 2
+
+/-- The finite Dirichlet form, with the factor `1/2` compensating double edge counting. -/
+noncomputable def groundStateDirichlet {ι : Type*} [Fintype ι]
+    (H : ι → ι → ℝ) (ψ f : ι → ℝ) : ℝ :=
+  (1 / 2) * ∑ i, ∑ j, (-H i j) * ψ i * ψ j * (f i - f j) ^ 2
+
+/-- Exact trial-ground-state transform. The residual `R` may vary with the vertex;
+its row equation is a concrete matrix hypothesis, not a spectral-gap assumption. -/
+theorem finite_ground_state_residual_identity {ι : Type*} [Fintype ι]
+    (H : ι → ι → ℝ) (ψ f R : ι → ℝ)
+    (hsymm : ∀ i j, H i j = H j i)
+    (hrow : ∀ i, ∑ j, H i j * ψ j = R i * ψ i) :
+    finiteMatrixForm H (fun i => ψ i * f i) =
+      groundStateDirichlet H ψ f + ∑ i, R i * (ψ i * f i) ^ 2 := by
+  have hleft : (∑ i, ∑ j, H i j * ψ i * ψ j * f i ^ 2) =
+      ∑ i, R i * (ψ i * f i) ^ 2 := by
+    apply Finset.sum_congr rfl
+    intro i _
+    calc
+      (∑ j, H i j * ψ i * ψ j * f i ^ 2) =
+          (ψ i * f i ^ 2) * ∑ j, H i j * ψ j := by
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro j _
+        ring
+      _ = R i * (ψ i * f i) ^ 2 := by rw [hrow i]; ring
+  have hright : (∑ i, ∑ j, H i j * ψ i * ψ j * f j ^ 2) =
+      ∑ i, R i * (ψ i * f i) ^ 2 := by
+    rw [Finset.sum_comm]
+    calc
+      (∑ j, ∑ i, H i j * ψ i * ψ j * f j ^ 2) =
+          ∑ j, ∑ i, H j i * ψ j * ψ i * f j ^ 2 := by
+        apply Finset.sum_congr rfl
+        intro j _
+        apply Finset.sum_congr rfl
+        intro i _
+        rw [hsymm i j]
+        ring
+      _ = _ := hleft
+  have hexpand : (∑ i, ∑ j, (-H i j) * ψ i * ψ j * (f i - f j) ^ 2) =
+      2 * finiteMatrixForm H (fun i => ψ i * f i) -
+        (∑ i, ∑ j, H i j * ψ i * ψ j * f i ^ 2) -
+        (∑ i, ∑ j, H i j * ψ i * ψ j * f j ^ 2) := by
+    unfold finiteMatrixForm
+    simp only [Finset.mul_sum, ← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  unfold groundStateDirichlet
+  rw [hexpand, hleft, hright]
+  ring
+
+/-- For a nonvanishing trial vector the residual is defined by the matrix itself;
+the row hypothesis of the general identity is discharged by division. -/
+theorem finite_ground_state_ratio_identity {ι : Type*} [Fintype ι]
+    (H : ι → ι → ℝ) (ψ f : ι → ℝ)
+    (hsymm : ∀ i j, H i j = H j i) (hψ : ∀ i, ψ i ≠ 0) :
+    finiteMatrixForm H (fun i => ψ i * f i) = groundStateDirichlet H ψ f +
+      ∑ i, ((∑ j, H i j * ψ j) / ψ i) * (ψ i * f i) ^ 2 := by
+  apply finite_ground_state_residual_identity H ψ f _ hsymm
+  intro i
+  field_simp [hψ i]
+
+/-- An exact eigenvector makes the residual constant, leaving precisely a Dirichlet form. -/
+theorem finite_ground_state_eigenform_identity {ι : Type*} [Fintype ι]
+    (H : ι → ι → ℝ) (ψ f : ι → ℝ) (E : ℝ)
+    (hsymm : ∀ i j, H i j = H j i)
+    (heigen : ∀ i, ∑ j, H i j * ψ j = E * ψ i) :
+    finiteMatrixForm H (fun i => ψ i * f i) - E * groundStateNormSq ψ f =
+      groundStateDirichlet H ψ f := by
+  have h := finite_ground_state_residual_identity H ψ f (fun _ => E) hsymm heigen
+  unfold groundStateNormSq
+  rw [Finset.mul_sum]
+  linarith
+
+/-- Nonpositive off-diagonal matrix entries and nonnegative `ψ` give a nonnegative
+Dirichlet form. Diagonal entries need no sign hypothesis, since their differences vanish. -/
+theorem finite_ground_state_dirichlet_nonneg {ι : Type*} [Fintype ι]
+    (H : ι → ι → ℝ) (ψ f : ι → ℝ)
+    (hoff : ∀ i j, i ≠ j → H i j ≤ 0) (hψ : ∀ i, 0 ≤ ψ i) :
+    0 ≤ groundStateDirichlet H ψ f := by
+  classical
+  unfold groundStateDirichlet
+  apply mul_nonneg (by norm_num)
+  apply Finset.sum_nonneg
+  intro i _
+  apply Finset.sum_nonneg
+  intro j _
+  by_cases hij : i = j
+  · subst j
+    simp
+  · exact mul_nonneg (mul_nonneg (mul_nonneg (neg_nonneg.mpr (hoff i j hij))
+      (hψ i)) (hψ j)) (sq_nonneg _)
+
+/-- A weighted Poincare inequality transfers to the centered physical matrix form.
+The inverse map `f_i = x_i / ψ_i` is constructed, so no completeness of the
+weighted test vectors is hidden in an assumption. -/
+theorem finite_ground_state_gap_transfer {ι : Type*} [Fintype ι]
+    (H : ι → ι → ℝ) (ψ : ι → ℝ) (E γ : ℝ)
+    (hsymm : ∀ i j, H i j = H j i) (hψ : ∀ i, ψ i ≠ 0)
+    (heigen : ∀ i, ∑ j, H i j * ψ j = E * ψ i)
+    (hpoincare : ∀ f : ι → ℝ, (∑ i, ψ i ^ 2 * f i) = 0 →
+      γ * groundStateNormSq ψ f ≤ groundStateDirichlet H ψ f)
+    (x : ι → ℝ) (horth : (∑ i, ψ i * x i) = 0) :
+    γ * (∑ i, x i ^ 2) ≤ finiteMatrixForm H x - E * (∑ i, x i ^ 2) := by
+  let f : ι → ℝ := fun i => x i / ψ i
+  have htransport : ∀ i, ψ i * f i = x i := by
+    intro i
+    dsimp [f]
+    field_simp [hψ i]
+  have hzero : (∑ i, ψ i ^ 2 * f i) = 0 := by
+    calc
+      (∑ i, ψ i ^ 2 * f i) = ∑ i, ψ i * x i := by
+        apply Finset.sum_congr rfl
+        intro i _
+        rw [← htransport i]
+        ring
+      _ = 0 := horth
+  have hnorm : groundStateNormSq ψ f = ∑ i, x i ^ 2 := by
+    unfold groundStateNormSq
+    simp_rw [htransport]
+  have hid := finite_ground_state_eigenform_identity H ψ f E hsymm heigen
+  have hvec : (fun i => ψ i * f i) = x := funext htransport
+  rw [hvec, hnorm] at hid
+  have hbound := hpoincare f hzero
+  rw [hnorm, ← hid] at hbound
+  exact hbound
+
+/-- The ground-state Dirichlet form vanishes identically on constant test functions. -/
+theorem groundStateDirichlet_const {ι : Type*} [Fintype ι]
+    (H : ι → ι → ℝ) (ψ : ι → ℝ) (c : ℝ) :
+    groundStateDirichlet H ψ (fun _ => c) = 0 := by
+  unfold groundStateDirichlet
+  simp
+
+/-- Any finite symmetric-matrix eigenvector has zero energy relative to its own eigenvalue.
+This theorem contains no local baselines e_* and does not assert E - sum e_* = 0,
+a positive spectral gap, or the WR26 connected assembly estimate. -/
+theorem ground_state_frustration_elimination {ι : Type*} [Fintype ι]
+    (H : ι → ι → ℝ) (ψ : ι → ℝ) (E : ℝ)
+    (hsymm : ∀ i j, H i j = H j i)
+    (heigen : ∀ i, ∑ j, H i j * ψ j = E * ψ i) :
+    finiteMatrixForm H ψ - E * (∑ i, ψ i ^ 2) = 0 := by
+  have hid := finite_ground_state_eigenform_identity H ψ (fun _ => 1) E hsymm heigen
+  have hD : groundStateDirichlet H ψ (fun _ => 1) = 0 := groundStateDirichlet_const H ψ 1
+  have hnorm : groundStateNormSq ψ (fun _ => 1) = ∑ i, ψ i ^ 2 := by
+    unfold groundStateNormSq
+    simp
+  have hvec : (fun i => ψ i * (1 : ℝ)) = ψ := by ext i; ring
+  rw [hvec, hnorm, hD] at hid
+  exact hid
+
+/-- Residual oscillation, rather than the absolute trial energy, spends the gap budget.
+The eigenvalue comparison hypotheses are explicit; this does not axiomatize min-max. -/
+theorem residual_oscillation_gap_budget (e0 e1 γ rlo rhi : ℝ)
+    (hlower : γ + rlo ≤ e1) (hupper : e0 ≤ rhi) :
+    γ - (rhi - rlo) ≤ e1 - e0 := by
+  linarith
+
+/-- A residual whose oscillation is strictly below the comparison gap leaves a positive gap. -/
+theorem residual_oscillation_positive_gap (e0 e1 γ rlo rhi : ℝ)
+    (hlower : γ + rlo ≤ e1) (hupper : e0 ≤ rhi) (hbudget : rhi - rlo < γ) :
+    0 < e1 - e0 := by
+  linarith [residual_oscillation_gap_budget e0 e1 γ rlo rhi hlower hupper]
+
+/-! ## Algebra behind transverse confinement
+
+Simon 1983 motivates retaining transverse zero-point energy along flat valleys.
+The first identity below applies to each transverse coordinate of an SU(2)
+commuting-valley expansion. The next statements are the finite aggregation and
+one-variable optimization needed after analytic slice and Hardy estimates have
+been established. They are lower-energy estimates, not a vacuum mass gap.
+-/
+
+/-- Lagrange's identity for any finite real family, in double-sum normalization.
+It isolates the transverse quadratic potential from the common longitudinal direction. -/
+theorem finite_transverse_valley_identity {ι : Type*} [Fintype ι]
+    (a u : ι → ℝ) :
+    (∑ i, a i ^ 2) * (∑ i, u i ^ 2) - (∑ i, a i * u i) ^ 2 =
+      (1 / 2) * ∑ i, ∑ j, (a i * u j - a j * u i) ^ 2 := by
+  have hswap : (∑ i, ∑ j, a j ^ 2 * u i ^ 2) = ∑ i, ∑ j, a i ^ 2 * u j ^ 2 := by
+    rw [Finset.sum_comm]
+  have hexpand : (∑ i, ∑ j, (a i * u j - a j * u i) ^ 2) =
+      (∑ i, ∑ j, a i ^ 2 * u j ^ 2) + (∑ i, ∑ j, a j ^ 2 * u i ^ 2) -
+        2 * (∑ i, ∑ j, (a i * u i) * (a j * u j)) := by
+    simp only [Finset.mul_sum, ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  have hprod : (∑ i, a i ^ 2) * (∑ i, u i ^ 2) = ∑ i, ∑ j, a i ^ 2 * u j ^ 2 := by
+    rw [Finset.sum_mul]
+    simp only [Finset.mul_sum]
+  have hcross : (∑ i, a i * u i) ^ 2 = ∑ i, ∑ j, (a i * u i) * (a j * u j) := by
+    rw [pow_two, Finset.sum_mul]
+    simp only [Finset.mul_sum]
+  rw [hexpand, hswap, ← hprod, ← hcross]
+  ring
+
+/-- Summing slice bounds gives `T/2 + cR` from `sumK = n(T+2V)`.
+The slice estimate is an explicit hypothesis; the conclusion does not assume a gap. -/
+theorem transverse_slice_form_aggregation (T V c R n sumK : ℝ) (hn : 0 < n)
+    (hsum : sumK = n * (T + 2 * V)) (hslice : 2 * n * c * R ≤ sumK) :
+    T / 2 + c * R ≤ T + V := by
+  have h : n * (2 * c * R) ≤ n * (T + 2 * V) := by nlinarith [hslice]
+  have hcancel := le_of_mul_le_mul_left h hn
+  linarith
+
+/-- Exact slice remainder, so every positive slice margin survives with factor `1/(2n)`. -/
+theorem transverse_slice_form_identity (T V c R n : ℝ) (hn : 0 < n) :
+    T + V - (T / 2 + c * R) = (n * (T + 2 * V) - 2 * n * c * R) / (2 * n) := by
+  field_simp
+  ring
+
+/-- Exact remainder at the positive radial optimizer. -/
+theorem hardy_linear_remainder (z : ℝ) (hz : 0 < z) :
+    1 / (2 * z ^ 2) + z - 3 / 2 = (z - 1) ^ 2 * (2 * z + 1) / (2 * z ^ 2) := by
+  field_simp
+  ring
+
+/-- The radial `r^-2 + r` balance is globally minimized at the stated scale. -/
+theorem hardy_linear_lower_bound (z : ℝ) (hz : 0 < z) :
+    3 / 2 ≤ 1 / (2 * z ^ 2) + z := by
+  have hrem := hardy_linear_remainder z hz
+  have hpos : 0 ≤ (z - 1) ^ 2 * (2 * z + 1) / (2 * z ^ 2) := by positivity
+  linarith
+
+/-! ## Mean-residual quartic certificate
+
+For a positive trial state the upper comparison for the ground energy can be
+the mean residual, even if its supremum is infinite. The matrix transform above
+and the following arithmetic keep this distinction explicit. The Gaussian
+moments and min-max comparison are analytic inputs, not postulated axioms.
+-/
+
+/-- The gap-budget defect is exactly the sum of the two comparison slacks.
+Here `meanR` may be a trial-state expectation, with no bounded-above residual required. -/
+theorem residual_mean_slack_identity (e0 e1 γ rmin meanR : ℝ) :
+    (e1 - e0) - (γ - (meanR - rmin)) =
+      (e1 - (γ + rmin)) + (meanR - e0) := by
+  ring
+
+/-- A lower residual bound and a variational upper ground-energy bound suffice. -/
+theorem residual_mean_gap_budget (e0 e1 γ rmin meanR : ℝ)
+    (hlower : γ + rmin ≤ e1) (htrial : e0 ≤ meanR) :
+    γ - (meanR - rmin) ≤ e1 - e0 := by
+  linarith [residual_mean_slack_identity e0 e1 γ rmin meanR]
+
+/-- At `m² Ω³ = 6 λ hbar`, the quartic Gaussian trial residual is its floor
+`hbar Ω/8` plus an explicit nonnegative square when `λ > 0`. -/
+theorem quartic_trial_residual_completion (hbar m omega coupling x : ℝ)
+    (hcoupling : coupling ≠ 0) (hscale : m ^ 2 * omega ^ 3 = 6 * coupling * hbar) :
+    hbar * omega / 2 - m * omega ^ 2 * x ^ 2 / 2 + coupling * x ^ 4 =
+      hbar * omega / 8 + coupling * (x ^ 2 - m * omega ^ 2 / (4 * coupling)) ^ 2 := by
+  have hs : m ^ 2 * omega ^ 4 = 6 * coupling * hbar * omega := by
+    calc
+      m ^ 2 * omega ^ 4 = (m ^ 2 * omega ^ 3) * omega := by ring
+      _ = 6 * coupling * hbar * omega := by rw [hscale]
+  field_simp
+  nlinarith [hs]
+
+/-- The optimized Gaussian trial residual has a global lower bound despite growing
+without bound above. This is a polynomial statement for all real `x`. -/
+theorem quartic_trial_residual_floor (hbar m omega coupling x : ℝ)
+    (hcoupling : 0 < coupling) (hscale : m ^ 2 * omega ^ 3 = 6 * coupling * hbar) :
+    hbar * omega / 8 ≤
+      hbar * omega / 2 - m * omega ^ 2 * x ^ 2 / 2 + coupling * x ^ 4 := by
+  rw [quartic_trial_residual_completion hbar m omega coupling x (ne_of_gt hcoupling) hscale]
+  have hsq := mul_nonneg (le_of_lt hcoupling)
+    (sq_nonneg (x ^ 2 - m * omega ^ 2 / (4 * coupling)))
+  linarith
+
+/-- The exact `3/4` budget from comparison gap `hbar Ω`, mean residual `3hbar Ω/8`,
+and residual floor `hbar Ω/8`. Expectations must be established separately. -/
+theorem quartic_gaussian_gap_budget (hbar omega : ℝ) :
+    hbar * omega - (3 * hbar * omega / 8 - hbar * omega / 8) =
+      3 * hbar * omega / 4 := by
+  ring
+
+/-- Exact defect of the normalized trial bound away from `q = Ω/Ω* = 1`. -/
+theorem quartic_gaussian_frequency_remainder (q : ℝ) (hq : 0 < q) :
+    3 / 4 - (5 * q / 4 - 1 / (8 * q ^ 2) - 3 * q ^ 4 / 8) =
+      (q - 1) ^ 2 * (3 * q ^ 4 + 6 * q ^ 3 + 9 * q ^ 2 + 2 * q + 1) / (8 * q ^ 2) := by
+  field_simp
+  ring
+
+/-- Global optimization over every positive normalized Gaussian frequency. -/
+theorem quartic_gaussian_frequency_optimal (q : ℝ) (hq : 0 < q) :
+    5 * q / 4 - 1 / (8 * q ^ 2) - 3 * q ^ 4 / 8 ≤ 3 / 4 := by
+  have hrem := quartic_gaussian_frequency_remainder q hq
+  have hnonneg : 0 ≤
+      (q - 1) ^ 2 * (3 * q ^ 4 + 6 * q ^ 3 + 9 * q ^ 2 + 2 * q + 1) / (8 * q ^ 2) := by
+    positivity
+  linarith
+
+/-- The Gaussian residual certificate's global maximum is attained only at `Ω = Ω*`. -/
+theorem quartic_gaussian_frequency_optimal_iff (q : ℝ) (hq : 0 < q) :
+    (5 * q / 4 - 1 / (8 * q ^ 2) - 3 * q ^ 4 / 8 = 3 / 4) ↔ q = 1 := by
+  constructor
+  · intro heq
+    have hrem := quartic_gaussian_frequency_remainder q hq
+    have hpoly : 0 < 3 * q ^ 4 + 6 * q ^ 3 + 9 * q ^ 2 + 2 * q + 1 := by positivity
+    have hden : 0 < 8 * q ^ 2 := by positivity
+    have hzero :
+        (q - 1) ^ 2 * (3 * q ^ 4 + 6 * q ^ 3 + 9 * q ^ 2 + 2 * q + 1) / (8 * q ^ 2) = 0 := by
+      linarith
+    have hnum := (div_eq_iff (ne_of_gt hden)).mp hzero
+    simp only [zero_mul] at hnum
+    have hsq : (q - 1) ^ 2 = 0 := (mul_eq_zero.mp hnum).resolve_right (ne_of_gt hpoly)
+    have hdiff := sq_eq_zero_iff.mp hsq
+    linarith
+  · intro heq
+    subst q
+    norm_num
+
+/-! ## Actual Wilson transfer blocks and uniform estimate interfaces
+
+These statements prove the displayed algebra and scalar inequalities. They do
+not assume an unproved Wilson shell or turn the polymer argument into an axiom.
+Provenance: docs/derivations/wilson-marked-transfer.md, WT-1 through WT-6.
+-/
+
+/-- The symmetric transfer's two endpoint half factors survive exact blocking. -/
+theorem wilson_symmetric_block_identity {M : Type*} [Monoid M] (A K : M) (n : ℕ) :
+    (A * K * A) ^ (n + 1) = A * (K * A * A) ^ n * K * A := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    calc
+      (A * K * A) ^ (n + 1 + 1) = (A * K * A) ^ (n + 1) * (A * K * A) :=
+        pow_succ _ _
+      _ = (A * (K * A * A) ^ n * K * A) * (A * K * A) := by rw [ih]
+      _ = A * (K * A * A) ^ (n + 1) * K * A := by
+        rw [pow_succ]
+        simp only [mul_assoc]
+
+/-- A disconnected scalar vacuum amplitude cancels if it is nonzero. -/
+theorem wilson_disconnected_vacuum_cancel (marked vacuum spectator : ℝ)
+    (hspectator : spectator ≠ 0) :
+    (marked * spectator) / (vacuum * spectator) = marked / vacuum := by
+  exact mul_div_mul_right marked vacuum hspectator
+
+/-- Finite time sums telescope at every natural block count. -/
+theorem wilson_geometric_telescope (q : ℝ) (n : ℕ) :
+    (1 - q) * (∑ j ∈ Finset.range n, q ^ j) = 1 - q ^ n := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [Finset.sum_range_succ, pow_succ]
+    nlinarith
+
+/-- A microscopic time factor controls the entire positive-energy denominator. -/
+theorem wilson_damped_time_denominator (tau energy : ℝ)
+    (htau : 0 < tau) (henergy : 0 < energy) :
+    tau / (Real.exp (tau * energy) - 1) ≤ 1 / energy := by
+  have hden : 0 < Real.exp (tau * energy) - 1 := by
+    have := Real.one_lt_exp_iff.mpr (mul_pos htau henergy)
+    linarith
+  apply (div_le_div_iff₀ hden henergy).mpr
+  have hexp := Real.add_one_le_exp (tau * energy)
+  nlinarith
+
+/-- The positive geometric kernel is its damped version plus one time step. -/
+theorem wilson_time_kernel_split (tau x : ℝ) (hx : x ≠ 1) :
+    tau * x / (x - 1) = tau + tau / (x - 1) := by
+  have hden : x - 1 ≠ 0 := sub_ne_zero.mpr hx
+  field_simp
+  ring
+
+/-- The geometric counting majorant meets the abstract incompatibility budget. -/
+theorem wilson_polymer_kp_budget (d r : ℝ)
+    (hd : 2 ≤ d) (hhalf : r ≤ 1 / 2) :
+    (d + 1) * r / (d ^ 2 * (1 - r)) ≤ 1 := by
+  have hdpos : 0 < d := by linarith
+  have hrpos : 0 < 1 - r := by linarith
+  have hden : 0 < d ^ 2 * (1 - r) := mul_pos (sq_pos_of_pos hdpos) hrpos
+  apply (div_le_iff₀ hden).mpr
+  have hpoly : d + 1 ≤ d ^ 2 := by nlinarith [sq_nonneg (d - 2)]
+  have hleft : (d + 1) * r ≤ (d + 1) / 2 := by nlinarith
+  have hright : d ^ 2 / 2 ≤ d ^ 2 * (1 - r) := by
+    nlinarith [sq_nonneg d]
+  nlinarith
+
+/-- Two worst-case eigenvalue shifts spend twice the centered error. -/
+theorem wilson_relative_gap_budget (c gamma eta q : ℝ) :
+    c * q - 2 * gamma * eta * q = (c - 2 * gamma * eta) * q := by
+  ring
+
+/-- Once the analytic matching bound is supplied, the remaining relative gap is positive. -/
+theorem wilson_relative_gap_positive (c gamma eta q : ℝ)
+    (hq : 0 < q) (herror : 2 * gamma * eta < c) :
+    0 < c * q - 2 * gamma * eta * q := by
+  rw [wilson_relative_gap_budget]
+  exact mul_pos (sub_pos.mpr herror) hq
+
+/-- Source-amplitude loss is quadratic only after subtracting the amplitude error. -/
+theorem wilson_source_weight_defect (amplitude error : ℝ) :
+    amplitude ^ 2 - (amplitude - error) ^ 2 = error * (2 * amplitude - error) := by
+  ring
+
+/-- A positive remaining frame amplitude gives a strictly positive weight. -/
+theorem wilson_source_weight_positive (amplitude error : ℝ) (herror : error < amplitude) :
+    0 < (amplitude - error) ^ 2 := by
+  exact sq_pos_of_pos (sub_pos.mpr herror)
+
+/-! ## Complex Wilson shell continuation: scalar interfaces only
+
+The anchored operator, holomorphic kernel and support arguments are analytic
+proofs in docs/derivations/wilson-marked-shell-transport.md, not assumptions
+axiomatized here.
+-/
+
+/-- Polynomial row growth is absorbed into an exponential at every order. -/
+theorem wilson_taylor_polynomial_envelope (n : ℕ) : n ^ 3 ≤ 4 * 2 ^ n := by
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+    by_cases hn : n ≤ 4
+    · interval_cases n <;> norm_num
+    · obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
+      have hk : 4 ≤ k := by omega
+      have hprev := ih k (Nat.lt_succ_self k)
+      have hstep : (k + 1) ^ 3 ≤ 2 * k ^ 3 := by
+        obtain ⟨j, rfl⟩ := Nat.exists_eq_add_of_le hk
+        nlinarith [Nat.zero_le (j ^ 3), Nat.zero_le (j ^ 2)]
+      calc
+        (k + 1) ^ 3 ≤ 2 * k ^ 3 := hstep
+        _ ≤ 2 * (4 * 2 ^ k) := Nat.mul_le_mul_left 2 hprev
+        _ = 4 * 2 ^ (k + 1) := by rw [pow_succ]; ring
+
+/-- Exact complex Gram budget, conditional on its operator norm estimates. -/
+theorem wilson_complex_gram_budget :
+    (1 / 9 : ℚ) * (9 / 8) ^ 2 + 2 / 8 + (1 / 8) ^ 2 = 13 / 32 := by
+  norm_num
+
+/-- Removing two equal Taylor terms allows a coupling-independent error budget. -/
+theorem wilson_uniform_carrier_coefficient (t gamma xi : ℝ)
+    (herror : 8 * gamma * xi ≤ t) :
+    t / 4 ≤ t / 2 - 2 * gamma * xi := by
+  nlinarith
+
+/-! ## Spatial Schur comparison: finite-scale budget, not Wilson hypotheses -/
+
+/-- A positive accumulated weight transports the reciprocal-gap inequality. -/
+theorem wilson_spatial_weighted_step (a alpha rnext r f : ℝ)
+    (ha : 0 ≤ a) (halpha : 0 < alpha) (hf : 0 < f)
+    (hstep : rnext ≤ r / alpha + 1 / f) :
+    a * alpha * rnext ≤ a * r + a * alpha / f := by
+  have h := mul_le_mul_of_nonneg_left hstep (mul_nonneg ha (le_of_lt halpha))
+  have heq : a * alpha * (r / alpha + 1 / f) = a * r + a * alpha / f := by
+    field_simp [ne_of_gt halpha, ne_of_gt hf]
+  exact heq ▸ h
+
+/-- Every finite sequence of weighted one-step losses telescopes without omission. -/
+theorem wilson_spatial_budget_telescope (a r b : ℕ → ℝ)
+    (hstep : ∀ j, a (j + 1) * r (j + 1) ≤ a j * r j + b j) (n : ℕ) :
+    a n * r n ≤ a 0 * r 0 + ∑ j ∈ Finset.range n, b j := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [Finset.sum_range_succ]
+    have hs := hstep n
+    linarith
+
+/-! ## Geometric summation interfaces for W6, conditional on the decay input
+
+No Wilson resolvent or source map is defined here. The decay hypothesis needed
+to apply these scalar lemmas remains an analytic operator estimate.
+-/
+
+/-- Telescoping polynomial identity for geometric sums: (1 - ρ) * ∑_{j=0}^{n-1} ρ^j = 1 - ρ^n. -/
+theorem geom_sum_mul_sub (rho : ℝ) (n : ℕ) :
+    (1 - rho) * (∑ j ∈ Finset.range n, rho ^ j) = 1 - rho ^ n := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [Finset.sum_range_succ, mul_add, ih]
+    ring
+
+/-- A non-negative factor rho < 1 yields a bound on every finite geometric sum. -/
+theorem combes_thomas_geometric_bound (rho : ℝ) (hrho_ge : 0 ≤ rho) (hrho_lt : rho < 1) (n : ℕ) :
+    (∑ j ∈ Finset.range n, rho ^ j) ≤ 1 / (1 - rho) := by
+  have hpos : 0 < 1 - rho := by linarith
+  have hmul := geom_sum_mul_sub rho n
+  have hpow : 0 ≤ rho ^ n := by positivity
+  have hle : (1 - rho) * (∑ j ∈ Finset.range n, rho ^ j) ≤ 1 := by
+    linarith [hmul, hpow]
+  exact (le_div_iff₀ hpos).mpr (by linarith)
+
+/-- An assumed geometric envelope bounds a scalar absolute sum uniformly in n.
+The envelope hR is a hypothesis, not a derived Combes-Thomas estimate. The
+parameter g is unused, and the conclusion is not a bilinear resolvent pairing. -/
+theorem combes_thomas_pairing_volume_independent
+    (C rho g : ℝ) (hC : 0 ≤ C) (hrho_ge : 0 ≤ rho) (hrho_lt : rho < 1) (_hg : 0 ≤ g)
+    (n : ℕ) (R : ℕ → ℝ) (hR : ∀ j ∈ Finset.range n, |R j| ≤ C * rho ^ j) :
+    (∑ j ∈ Finset.range n, |R j|) ≤ C / (1 - rho) := by
+  have hbound := combes_thomas_geometric_bound rho hrho_ge hrho_lt n
+  calc
+    (∑ j ∈ Finset.range n, |R j|)
+      ≤ ∑ j ∈ Finset.range n, (C * rho ^ j) := by
+        apply Finset.sum_le_sum
+        intro j hj
+        exact hR j hj
+    _ = C * (∑ j ∈ Finset.range n, rho ^ j) := by rw [← Finset.mul_sum]
+    _ ≤ C * (1 / (1 - rho)) := mul_le_mul_of_nonneg_left hbound hC
+    _ = C / (1 - rho) := by ring
+
+/-! ## Polymer cluster expansion and Kotecký–Preiss bounds for G17
+
+Scalar tree-bound and geometric convergence lemmas for polymer cluster activity.
+These lemmas bound finite geometric sums. The underlying graph coordination,
+actual plaquette activities, Hamiltonian interactions and strict
+Kotecky-Preiss incompatibility budget remain analytic hypotheses.
+-/
+
+/-- A contraction factor rho < 1 bounds the sum of connected polymer clusters of size 1 to n:
+    ∑_{j=0}^{n-1} rho ^ (j + 1) ≤ rho / (1 - rho). -/
+theorem kotecky_preiss_cluster_sum_bound (rho : ℝ) (hrho_ge : 0 ≤ rho) (hrho_lt : rho < 1) (n : ℕ) :
+    (∑ j ∈ Finset.range n, rho ^ (j + 1)) ≤ rho / (1 - rho) := by
+  have hgeom := combes_thomas_geometric_bound rho hrho_ge hrho_lt n
+  have hshift : (∑ j ∈ Finset.range n, rho ^ (j + 1)) = rho * (∑ j ∈ Finset.range n, rho ^ j) := by
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [pow_succ]
+    ring
+  rw [hshift]
+  have hmul : rho * (∑ j ∈ Finset.range n, rho ^ j) ≤ rho * (1 / (1 - rho)) :=
+    mul_le_mul_of_nonneg_left hgeom hrho_ge
+  calc
+    rho * (∑ j ∈ Finset.range n, rho ^ j) ≤ rho * (1 / (1 - rho)) := hmul
+    _ = rho / (1 - rho) := by ring
+
+/-- Substitute rho=D*w in the finite geometric bound. Identifying these scalar
+terms with actual connected activities requires a separate construction. -/
+theorem kotecky_preiss_polymer_activity_bound
+    (D w : ℝ) (hD : 0 ≤ D) (hw : 0 ≤ w) (hbound : D * w < 1) (n : ℕ) :
+    (∑ j ∈ Finset.range n, (D * w) ^ (j + 1)) ≤ (D * w) / (1 - (D * w)) := by
+  have hrho_ge : 0 ≤ D * w := mul_nonneg hD hw
+  exact kotecky_preiss_cluster_sum_bound (D * w) hrho_ge hbound n
+
+/-- Triangle inequality for finite-volume free energy deviations across two volumes. -/
+theorem polymer_free_energy_cauchy_bound
+    (f1 f2 f_inf e1 e2 : ℝ)
+    (h1 : |f1 - f_inf| ≤ e1)
+    (h2 : |f2 - f_inf| ≤ e2) :
+    |f1 - f2| ≤ e1 + e2 := by
+  have heq : f1 - f2 = (f1 - f_inf) + (f_inf - f2) := by ring
+  have hsymm : |f_inf - f2| = |f2 - f_inf| := abs_sub_comm f_inf f2
+  calc
+    |f1 - f2| = |(f1 - f_inf) + (f_inf - f2)| := by rw [heq]
+    _ ≤ |f1 - f_inf| + |f_inf - f2| := abs_add_le (f1 - f_inf) (f_inf - f2)
+    _ = |f1 - f_inf| + |f2 - f_inf| := by rw [hsymm]
+    _ ≤ e1 + e2 := add_le_add h1 h2
+
+/-! ## Wilson True-Vacuum Block Estimates (BA20–BA25) and SC17 Spatial Closure
+
+Exact-rational and polynomial identities underlying the true-vacuum Brownian slab
+and spatial-decay derivations. Analytic operator estimates, diffusion semigroups,
+and Combes-Thomas decays remain separate hypotheses.
+-/
+
+/-- Pinned activity in the Brownian slab polymer expansion at alpha = 1 / 32000 (BA21). -/
+theorem wilson_slab_pinned_activity :
+    let alpha : ℚ := 1 / 32000
+    let degree : ℚ := 84
+    let x : ℚ := 8 * alpha
+    x / (1 - 4 * degree * x) = 1 / 3664 := by
+  norm_num
+
+/-- Slab angle row and approximate-tensorization constant (BA25). -/
+theorem wilson_slab_block_row_and_cat :
+    let pinned : ℚ := 1 / 3664
+    let row : ℚ := 160 * 3 * pinned
+    row = 30 / 229 ∧
+    1 - row = 199 / 229 ∧
+    1 / (1 - row) = 229 / 199 ∧
+    1 / (1 - row) < 29 / 25 := by
+  norm_num
+
+/-- SC17 sharp invariant barrier slack at lambda = 1 / 640, q = 17 / 16, row = 1 / 64. -/
+theorem wilson_sc17_sharp_barrier :
+    let lam : ℚ := 1 / 640
+    let q : ℚ := 17 / 16
+    let row : ℚ := 1 / 64
+    let diag : ℚ := 3 * lam + 27 * lam ^ 2
+    let source : ℚ := 12 * lam * q
+    let slack : ℚ := (4 / 3 - 4 / 200) * row - 2 * row ^ 2 - source
+    diag = 1947 / 409600 ∧
+    diag < 1 / 200 ∧
+    source = 51 / 2560 ∧
+    slack = 17 / 153600 ∧
+    0 < slack := by
+  norm_num
+
+/-- SC17 sharp curvature floor, angle row, and physical gap factor at lambda <= 1 / 640. -/
+theorem wilson_sc17_sharp_curvature_and_gap :
+    let rho : ℚ := 2 * (1 - 1 / 200 - 1 / 64)
+    let kappa : ℚ := 2 * (1 / 64) / rho
+    let cat : ℚ := 1 / (1 - kappa)
+    let gap_factor : ℚ := 3 * (1 - kappa) * (1 - 33 / 1120)
+    rho = 1567 / 800 ∧
+    kappa = 25 / 1567 ∧
+    cat = 1567 / 1542 ∧
+    cat < 51 / 50 ∧
+    57 / 20 < gap_factor := by
+  norm_num
+
+/-- SC17 broad invariant barrier slack at lambda = 1 / 73, q = 1025 / 1024, row = 2 / 7. -/
+theorem wilson_sc17_broad_barrier :
+    let lam : ℚ := 1 / 73
+    let q : ℚ := 1025 / 1024
+    let row : ℚ := 2 / 7
+    let diag : ℚ := 3 * lam + 27 * lam ^ 2
+    let source : ℚ := 12 * lam * q
+    let slack : ℚ := (4 / 3 - 4 * diag) * row - 2 * row ^ 2 - source
+    diag = 246 / 5329 ∧
+    source = 12300 / 74752 ∧
+    slack = 77375 / 200540928 ∧
+    0 < slack := by
+  norm_num
+
+/-- SC17 broad curvature floor, angle row, and C_AT bound at lambda <= 1 / 73. -/
+theorem wilson_sc17_broad_curvature_and_cat :
+    let diag : ℚ := 246 / 5329
+    let row : ℚ := 2 / 7
+    let rho : ℚ := 2 * (1 - diag - row)
+    let kappa : ℚ := 2 * row / rho
+    let cat : ℚ := 1 / (1 - kappa)
+    rho = 49846 / 37303 ∧
+    4 / 3 < rho ∧
+    kappa = 10658 / 24923 ∧
+    cat = 24923 / 14265 ∧
+    cat < 7 / 4 := by
+  norm_num
+
+/-- The exact threshold polynomial identity for the SC17 Volterra discriminant. -/
+theorem wilson_sc17_barrier_polynomial (lam : ℚ) :
+    let mu : ℚ := 4 / 3 - 12 * lam - 108 * lam ^ 2
+    9 * (mu ^ 2 - 96 * lam) = 16 * (6561 * lam ^ 4 + 1458 * lam ^ 3 - 81 * lam ^ 2 - 72 * lam + 1) := by
+  intro mu; ring
+
+/-- The Volterra discriminant is strictly negative at lambda = 1 / 72. -/
+theorem wilson_sc17_discriminant_negative_at_seventy_two :
+    let lam : ℚ := 1 / 72
+    let mu : ℚ := 4 / 3 - 12 * lam - 108 * lam ^ 2
+    mu ^ 2 - 96 * lam = -47 / 2304 ∧
+    mu ^ 2 - 96 * lam < 0 := by
+  norm_num
 
 end Workhouse
