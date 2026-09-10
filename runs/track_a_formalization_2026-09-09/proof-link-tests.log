@@ -1,0 +1,22 @@
+.......F...........................................                      [100%]
+================================== FAILURES ===================================
+_____ test_generated_graph_retains_precise_source_and_kernel_dependencies _____
+
+    def test_generated_graph_retains_precise_source_and_kernel_dependencies():
+        import json
+    
+        from workhouse import lean_dependencies as L
+    
+        kernel = L.load()
+        actual = {
+            (row["src"], row["dst"], row["type"], row["source"])
+            for line in (D.ROOT / "index/graph.jsonl").read_text(encoding="utf-8").splitlines()
+            if (row := json.loads(line))
+        }
+        for edge in D.edge_records() + L.edge_records(kernel):
+>           assert (edge["src"], edge["dst"], edge["type"], edge["source"]) in actual
+E           AssertionError: assert ('DERIV:WILSON_SC17_SPATIAL_CLOSURE:R4_R9', 'LEAN:continuous_riccati_barrier', 'supported_by', 'ledger/derivation_stat...p from the quadratic R8 comparison to the small-root barrier, conditional on deriving R8 from the physical evolution.') in {('ADR:0001', 'C1', 'mentions', 'docs/decisions/0001-verify-do-not-adjudicate.md'), ('ADR:0001', 'C2', 'mentions', 'do...horing-is-not-a-dispute.md'), ('ADR:0002', 'C2', 'mentions', 'docs/decisions/0002-anchoring-is-not-a-dispute.md'), ...}
+
+tests\test_derivation_statements.py:129: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_derivation_statements.py::test_generated_graph_retains_precise_source_and_kernel_dependencies

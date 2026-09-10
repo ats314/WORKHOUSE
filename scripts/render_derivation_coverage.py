@@ -73,6 +73,14 @@ def render() -> str:
         "projection extension |",
         "| [PlateauObstruction](../lean/Workhouse/PlateauObstruction.lean) | Exact "
         "exponential minimum and a positive slow-mode witness for every nonzero plateau |",
+        "| [W6Residual](../lean/Workhouse/W6Residual.lean) | Actual Hilbert-operator "
+        "variational identity, energy dual norm, factorization estimate and sufficient W6 bound |",
+        "| [SC17Riccati](../lean/Workhouse/SC17Riccati.lean) | Continuous Riccati barrier, "
+        "constructed noncommutative fixed point and exact default interval |",
+        "| [SourceTilt](../lean/Workhouse/SourceTilt.lean) | Probability partition bound, "
+        "centered L2 variance, bounded-footprint radius and strict source-tilt obstruction |",
+        "| [SourceRadiusGrowth](../lean/Workhouse/SourceRadiusGrowth.lean) | Actual product "
+        "integrals and variance-per-site divergence, with a constructed atomic example |",
         "",
         "These mechanisms supply reusable formal steps. Their application to the actual "
         "Wilson objects still requires the recorded cylinder, domain, projection, "

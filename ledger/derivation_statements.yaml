@@ -1,7 +1,7 @@
 schema: derivation-statements/v1
 date: '2026-09-09'
-scope: All 20 top-level docs/derivations Markdown documents; proof-block/equation-group granularity. Named
-  inputs and definitions are carried in hypotheses, not promoted into proof claims.
+scope: All top-level docs/derivations Markdown documents; proof-block/equation-group granularity. Named
+  inputs and definitions are hypotheses, not automatically established model identifications.
 coverage_policy: Status and evidence describe the source argument. Only lean records whole-statement formal
   coverage; lean_support is explicitly partial. Empty lean means no complete registered formalization
   in this inventory, not a judgment that an analytic proof is invalid.
@@ -1035,6 +1035,18 @@ documents:
     lean: []
     remaining: Formalize the noncommutative weighted norm, Duhamel Riccati comparison, ground limit and
       curvature-to-gap passage.
+    lean_support:
+    - name: continuous_riccati_barrier
+      scope: The full continuity/IVT step from the quadratic R8 comparison to the small-root barrier,
+        conditional on deriving R8 from the physical evolution.
+    - name: smallRoot_lt_reference_floor
+      scope: The small Riccati root lies below the reference floor under the actual semigroup-budget inequality.
+    - name: exists_riccati_fixedPoint
+      scope: A genuine noncommutative Banach-algebra fixed point in the small-root ball for a supplied
+        bounded inverse; no weighted-Schur construction or ground-Hessian identification.
+    - name: exists_scalar_reference_riccati
+      scope: The scalar-reference inverse is constructed and yields the algebraic Riccati solution within
+        its norm budget; no physical Wilson realization.
   - id: DERIV:WILSON_SC17_SPATIAL_CLOSURE:R10_R11
     statement: Uniform block Hessian floors 2a_B,2a_C and cross norm 2h_BC yield c_BC<=h_BC/sqrt(a_B a_C);
       a reference angle budget plus full Hessian error r yields physical gap >=2epsilon[a0(1-kappa_A)-2r].
@@ -1097,6 +1109,48 @@ documents:
     lean: []
     remaining: Formalize analytic source/fast frames and show the exact scalar compression preserves the
       nonanalytic third-order term.
+  - id: DERIV:WILSON_SC17_SPATIAL_CLOSURE:PROPOSED_QUANTUM_PARAMETER_WINDOW
+    statement: Under the proposed numerical reference and normalized-defect inputs, the scalar Riccati
+      parameter satisfies p(lambda)<=p(3/100)=96228*sqrt(3)/625000<27/100<1, and the small root satisfies
+      0<=r_minus<a_min throughout 0<=lambda<=3/100. These are conditional parameter conclusions;
+      the section's complete Wilson defect estimate and exponential spatial decay are not established
+      by this arithmetic.
+    locator: '## 6. Formal repair of the spatial closure for lambda >= 1/73 via the quantum reference defect (lines 781-821)'
+    anchor: '## 6. Formal repair of the spatial closure for lambda >= 1/73 via the quantum reference defect'
+    source_labels: []
+    status: conditional
+    evidence: analytic
+    hypotheses:
+    - Real coupling 0<=lambda<=3/100; epsilon>0 when interpreting the normalized defect c=delta/(2epsilon).
+    - The companion script's proposed defaults are L=3, C_s=6/5 and reference velocity one;
+      beta=(108/25)*sqrt(33), c=lambda*sqrt(lambda)/48 and a_min=1/(3*sqrt(33)).
+    - p(lambda)=4*beta^2*c and r_minus=(1-sqrt(1-p(lambda)))/(2*beta).
+    - These numerical inputs are supplied parameters. Their identification with a uniform semigroup
+      budget, the complete conditional quantum-pressure defect and the actual reference floor is
+      a separate model obligation, not a consequence of the quartic Taylor coefficient.
+    depends_on:
+    - DERIV:TRACK_A_SUPPORTED:SC17_P
+    lean: []
+    remaining: The scalar comparison is proved in the supported successor SC17_P. To apply it to the
+      source section's spatial-closure claim, establish the actual weighted reference budget and
+      complete outside-pressure, metric, projector and cutoff defect bound, derive the ground-state
+      Riccati comparison, and justify an exponential spatial weight. A polynomial weighted norm
+      alone does not provide exponential decay.
+    lean_support:
+    - name: default_parameter_identity
+      scope: Exact equality p(lambda)=4*defaultBeta^2*defaultDefect(lambda) for the proposed numerical definitions.
+    - name: default_parameter_monotone
+      scope: The proposed scalar parameter is monotone on all nonnegative real couplings.
+    - name: default_parameter_endpoint
+      scope: The endpoint parameter at lambda=3/100 equals 96228*sqrt(3)/625000 exactly.
+    - name: default_reference_product
+      scope: The proposed reference inputs satisfy 2*defaultBeta*defaultReferenceFloor=72/25 exactly.
+    - name: default_parameter_interval
+      scope: Every real coupling in [0,3/100] has parameter between zero and its endpoint value, which is below 27/100.
+    - name: default_small_defect_criterion
+      scope: The proposed numerical inputs satisfy the strict scalar discriminant condition throughout [0,3/100].
+    - name: default_smallRoot_and_gap
+      scope: The proposed small root lies strictly below the proposed reference floor and gives a positive numerical margin; no Wilson defect or physical-gap realization is inferred.
 - id: CITE:WILSON_SC17_LIMIT
   path: docs/derivations/wilson-sc17-thermodynamic-limit.md
   sha256: 6d72876a35a866768f1b0428847f56df803cb3569eb65c8d96e94ab56996e324
@@ -1600,6 +1654,18 @@ documents:
       scope: Noncommutative exact R0-Rg=R0(Fg-F0)Rg under the actual inverse laws.
     - name: signed_resolvent_pairing
       scope: Equality of signed Hilbert-space pairings under inverse laws and symmetry of R0.
+    - name: variational_residual_identity
+      scope: Bounded-Hilbert realization of the exact variational residual identity under inverse laws
+        and symmetry; no unbounded Wilson-domain identification.
+    - name: inverse_energy_le_dual
+      scope: Actual inverse-energy control by the continuous-functional dual norm under supplied lower-energy
+        coercivity.
+    - name: factored_residual_dual_bound
+      scope: The concrete continuous-map factorization gives the residual dual bound; constructing that
+        factorization for the full Wilson force remains separate.
+    - name: factored_w6_bound
+      scope: The sufficient bounded-operator W6 error certificate from actual inverse, factorization,
+        absolute diagonal and coercivity hypotheses; it does not establish those Wilson inputs.
 - id: CITE:WILSON_SPATIAL
   path: docs/derivations/wilson-spatial-schur-excess.md
   sha256: 5ddb7f812a9e6f536180602a55fd3ea5cb1769e807ae2e51237f263ba4ba7f89
@@ -4172,3 +4238,257 @@ documents:
     lean: []
     remaining: Formalize additive trial means/floors and tensor-product gap behavior, distinguishing failure
       of the bound from failure of the spectrum.
+- id: CITE:TRACK_A_SUPPORTED
+  path: docs/derivations/track-a-supported-statements.md
+  sha256: 26efd60d345eb4c961f33474170657e5eff7333a390a1b68841b0b76ecc0e693
+  statements:
+  - id: DERIV:TRACK_A_SUPPORTED:W6_V
+    statement: Exact bounded-Hilbert-operator variational residual identity, continuous-functional energy
+      dual norm, and inverse-energy coercive estimate.
+    locator: '## W6-V: actual variational residual identity and dual energy (from line 18)'
+    anchor: '## W6-V: actual variational residual identity and dual energy'
+    source_labels:
+    - W6-V
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Real inner-product spaces; bounded operators with the stated inverse and symmetry laws; energy represented
+      by a continuous linear equivalence; positive coercivity when used.
+    depends_on: []
+    lean:
+    - functional_le_energyDualNorm
+    - residual_square_completion
+    - variational_residual_identity
+    - inverse_energy_le_dual
+    - inverse_energy_eq_dual_norm_sq
+    - variational_residual_dual_identity
+    remaining: None for this stated abstract result. The separate Wilson-model realization and SU(2) Haar
+      identification boundaries remain as stated in the source.
+  - id: DERIV:TRACK_A_SUPPORTED:W6_F
+    statement: A concrete continuous-functional factorization has energy dual norm at most abs(g)*sqrt(CB*CL*KF)*sqrt(b)
+      under square budgets for its actual maps.
+    locator: '## W6-F: bounded-operator factorization controls the residual functional (from line 43)'
+    anchor: '## W6-F: bounded-operator factorization controls the residual functional'
+    source_labels:
+    - W6-F
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Real inner-product fast/factor spaces, normed source space, continuous linear maps, actual energy-coordinate
+      equivalence, nonnegative square budgets.
+    depends_on: []
+    lean:
+    - factored_residual_dual_bound
+    remaining: None for this stated abstract result. The separate Wilson-model realization and SU(2) Haar
+      identification boundaries remain as stated in the source.
+  - id: DERIV:TRACK_A_SUPPORTED:W6_E
+    statement: The actual bounded-operator selected inverse difference satisfies (a+kappa^-1*c^2*g0)*abs(g)*b
+      under the stated diagonal, residual, inverse, symmetry and coercivity hypotheses.
+    locator: '## W6-E: sufficient selected-inverse error certificate (from line 61)'
+    anchor: '## W6-E: sufficient selected-inverse error certificate'
+    source_labels:
+    - W6-E
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - W6-V inverse/symmetry laws, kappa>0, c,b>=0, abs(g)<=g0, absolute diagonal bound and actual residual
+      bound; the combined theorem uses the explicit W6-F factorization.
+    depends_on:
+    - DERIV:TRACK_A_SUPPORTED:W6_V
+    - DERIV:TRACK_A_SUPPORTED:W6_F
+    lean:
+    - variational_residual_error_bound
+    - factored_w6_bound
+    remaining: None for this stated abstract result. The separate Wilson-model realization and SU(2) Haar
+      identification boundaries remain as stated in the source.
+  - id: DERIV:TRACK_A_SUPPORTED:W6_C
+    statement: The three dynamic Gaussian-energy coefficient substitutions are exact for c=1/(sqrt(33)L),
+      a=c/2, sigma=1/(2c).
+    locator: '## W6-C: exact Gaussian coefficient substitutions (from line 76)'
+    anchor: '## W6-C: exact Gaussian coefficient substitutions'
+    source_labels:
+    - W6-C
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Real block scale L>0; no claim that chosen numerical covariance, coercivity or factorization budgets
+      are model bounds.
+    depends_on: []
+    lean:
+    - gaussian_energy_coefficient_one
+    - gaussian_energy_coefficient_two
+    - gaussian_energy_coefficient_three
+    remaining: None for this stated abstract result. The separate Wilson-model realization and SU(2) Haar
+      identification boundaries remain as stated in the source.
+  - id: DERIV:TRACK_A_SUPPORTED:SC17_R
+    statement: The explicit small Riccati root is nonnegative, solves its quadratic, has a strict contraction/reference
+      margin, and bounds every continuous zero-start path satisfying the quadratic comparison.
+    locator: '## SC17-R: Riccati roots and the continuous barrier (from line 92)'
+    anchor: '## SC17-R: Riccati roots and the continuous barrier'
+    source_labels:
+    - SC17-R
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - beta>0, c>=0, 4*beta^2*c<1, T>=0; path continuous on [0,T], starts at zero, and satisfies M<=beta*M^2+beta*c;
+      reference floor needs 1/(2beta)<=a.
+    depends_on: []
+    lean:
+    - smallRoot_nonneg
+    - smallRoot_equation
+    - smallRoot_lt_half_inverse
+    - smallRoot_contraction_margin
+    - smallRoot_lt_reference_floor
+    - quadratic_forbidden_interval
+    - continuous_riccati_barrier
+    remaining: None for this stated abstract result. The separate Wilson-model realization and SU(2) Haar
+      identification boundaries remain as stated in the source.
+  - id: DERIV:TRACK_A_SUPPORTED:SC17_B
+    statement: A norm-bounded linear inverse on a complete noncommutative real normed algebra gives a
+      unique quadratic fixed point in the explicit small-root ball; an actual inverse yields the Riccati
+      equation and the scalar-reference inverse is constructed.
+    locator: '## SC17-B: constructed noncommutative Banach-algebra fixed point (from line 112)'
+    anchor: '## SC17-B: constructed noncommutative Banach-algebra fixed point'
+    source_labels:
+    - SC17-B
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Complete real normed algebra; bounded continuous linear map S with norm<=beta; norm(D)<=d; beta>0,d>=0,4beta^2*d<1;
+      equation realization requires the displayed inverse identity.
+    depends_on:
+    - DERIV:TRACK_A_SUPPORTED:SC17_R
+    lean:
+    - riccatiMap_norm_le
+    - riccatiMap_lipschitz_on_ball
+    - exists_riccati_fixedPoint
+    - exists_riccati_solution
+    - exists_scalar_reference_riccati
+    remaining: None for this stated abstract result. The separate Wilson-model realization and SU(2) Haar
+      identification boundaries remain as stated in the source.
+  - id: DERIV:TRACK_A_SUPPORTED:SC17_P
+    statement: For every 0<=lambda<=3/100 the proposed default Riccati parameter is below 27/100<1 and
+      the small-root curvature floor is positive; exact default identities and monotonicity are proved.
+    locator: '## SC17-P: exact interval arithmetic under the proposed inputs (from line 132)'
+    anchor: '## SC17-P: exact interval arithmetic under the proposed inputs'
+    source_labels:
+    - SC17-P
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - The proposed default beta, defect and reference floor are defined inputs; their realization as uniform
+      Wilson-model estimates is not concluded.
+    depends_on:
+    - DERIV:TRACK_A_SUPPORTED:SC17_R
+    lean:
+    - defaultBeta_pos
+    - defaultBeta_sq
+    - default_parameter_identity
+    - default_parameter_monotone
+    - default_parameter_endpoint
+    - default_reference_product
+    - default_parameter_interval
+    - default_small_defect_criterion
+    - default_reference_budget
+    - default_smallRoot_and_gap
+    remaining: None for this stated abstract result. The separate Wilson-model realization and SU(2) Haar
+      identification boundaries remain as stated in the source.
+  - id: DERIV:TRACK_A_SUPPORTED:G17_P
+    statement: Actual probability integrals of bounded exponential sources satisfy the source-dependent
+      partition bound; finite half-bounded sources give K_alpha=exp(abs(alpha)/2).
+    locator: '## G17-P: corrected raw partition estimate for actual probability measures (from line 151)'
+    anchor: '## G17-P: corrected raw partition estimate for actual probability measures'
+    source_labels:
+    - G17-P
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Probability measure, a.e. measurable real source with an a.e. absolute bound; finite measure suffices
+      for the Lp integrability helper.
+    depends_on: []
+    lean:
+    - exp_source_bounds
+    - exp_source_memLp
+    - exp_source_integral_le
+    - finite_source_abs_le
+    - finite_source_partition_bound
+    remaining: None for this stated abstract result. The separate Wilson-model realization and SU(2) Haar
+      identification boundaries remain as stated in the source.
+  - id: DERIV:TRACK_A_SUPPORTED:G17_V
+    statement: The centered exponential is an actual L2 vector orthogonal to constants, its squared norm
+      is its variance, and a fixed nonempty footprint cutoff gives the explicit sharp radius bound.
+    locator: '## G17-V: centered L2 source, variance, and bounded footprints (from line 168)'
+    anchor: '## G17-V: centered L2 source, variance, and bounded footprints'
+    source_labels:
+    - G17-V
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Probability measure and bounded a.e. measurable source; 1<=m<=m0 and abs(f)<=m/2 for the footprint
+      theorem; real alpha.
+    depends_on:
+    - DERIV:TRACK_A_SUPPORTED:G17_P
+    lean:
+    - centered_exp_integral_sq
+    - exp_source_variance_le
+    - centeredExpL2_norm_sq
+    - centeredExpL2_orthogonal_constants
+    - centeredExpL2_norm_le
+    - bounded_footprint_radius
+    - bounded_footprint_radius_sharp
+    remaining: None for this stated abstract result. The separate Wilson-model realization and SU(2) Haar
+      identification boundaries remain as stated in the source.
+  - id: DERIV:TRACK_A_SUPPORTED:G17_O
+    statement: Every bounded centered source of positive second moment has raw exponential expectation
+      greater than one and a strict second-moment gap for nonzero tilt; an explicit symmetric two-atom
+      measure realizes the obstruction.
+    locator: '## G17-O: strict obstruction to a constant equal to one (from line 185)'
+    anchor: '## G17-O: strict obstruction to a constant equal to one'
+    source_labels:
+    - G17-O
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Probability measure, bounded a.e. measurable source, mean zero, positive second moment, real nonzero
+      alpha; SU2 moment specialization assumes rather than constructs the Haar moment data.
+    depends_on:
+    - DERIV:TRACK_A_SUPPORTED:G17_P
+    lean:
+    - one_lt_integral_exp_of_centered_nonzero
+    - raw_tilt_gt_one_of_su2_moments
+    - exp_source_variance_pos
+    - exp_source_second_moment_gap
+    - symmetricTwoPoint_integral
+    - symmetricTwoPoint_source_bound
+    - symmetricTwoPoint_raw_tilt_gt_one
+    remaining: None for this stated abstract result. The separate Wilson-model realization and SU(2) Haar
+      identification boundaries remain as stated in the source.
+  - id: DERIV:TRACK_A_SUPPORTED:G17_I
+    statement: Finite product-measure exponential moments factor exactly, and the actual variance per
+      site diverges for a nontrivial centered bounded source; a globally bounded two-atom representative
+      supplies a complete example.
+    locator: '## G17-I: independent product sources have unbounded radius (from line 206)'
+    anchor: '## G17-I: independent product sources have unbounded radius'
+    source_labels:
+    - G17-I
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Sigma-finite measures for moment factorization; probability measure, measurable pointwise bounded
+      real source, nonzero alpha, mean zero and positive second moment for the final variance divergence.
+    depends_on:
+    - DERIV:TRACK_A_SUPPORTED:G17_V
+    - DERIV:TRACK_A_SUPPORTED:G17_O
+    lean:
+    - independent_exp_sum_integral
+    - independent_exp_moment_difference
+    - power_difference_lower
+    - power_difference_per_site_tendsto
+    - independent_exp_radius_squared_tendsto
+    - independent_sum_abs_le
+    - independent_exp_variance
+    - independent_nonzero_source_radius_unbounded
+    - boundedTwoPointSource_abs_le
+    - independent_twoPoint_radius_unbounded
+    remaining: None for this stated abstract result. The separate Wilson-model realization and SU(2) Haar
+      identification boundaries remain as stated in the source.

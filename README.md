@@ -64,6 +64,13 @@ answer different questions; both belong in the graph.
 
 ## What a verification claim means
 
+The [supported Track A statements](docs/derivations/track-a-supported-statements.md)
+connect W6 variational bounds, SC17 Riccati comparison, and corrected G17
+probability-source estimates to their Lean proofs. The original report is
+preserved with [source hashes and verification evidence](runs/track_a_formalization_2026-09-09/README.md).
+The proof map distinguishes these complete abstract results from the remaining
+Wilson-model and SU(2) Haar identifications.
+
 Accept a derivation when its mathematical argument works under its explicit
 hypotheses. Publication status, novelty, and an agent's prior familiarity do
 not determine whether it is valid. Record exactly what its proof establishes.

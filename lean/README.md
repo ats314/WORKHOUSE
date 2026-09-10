@@ -80,6 +80,13 @@ scientific regeneration when those inputs are unchanged.
 
 ## Earlier integration records
 
+The [supported Track A source](../docs/derivations/track-a-supported-statements.md)
+and [verification run](../runs/track_a_formalization_2026-09-09/README.md) cover
+`W6Residual`, `SC17Riccati`, `SourceTilt`, and `SourceRadiusGrowth`. These modules
+include actual continuous-functional dual norms, a noncommutative fixed-point
+construction, centered L2 sources, and independent product-measure variance
+growth. The source records retain the separate physical-model identifications.
+
 The [September integration run](../runs/recent_research_integration_2026-09-09/README.md)
 and its [Lean report](../runs/recent_research_integration_2026-09-09/lean_integration_report.json)
 are preserved evidence of that run. Use the current proof map and fresh build

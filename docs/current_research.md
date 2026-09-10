@@ -85,6 +85,27 @@ follow the later true-vacuum and SC17 results before repeating an older
 
 ## Query and report an exact obligation
 
+### Supported Track A formalization
+
+The [source-linked Track A successor](derivations/track-a-supported-statements.md)
+formalizes the report's supported implications using actual Hilbert operators,
+continuous functionals, noncommutative Banach algebras, probability measures,
+L2 sources, and finite product measures. W6 now has the variational residual
+identity and sufficient error certificate under its stated factorization,
+diagonal and coercivity inputs. SC17 has the continuity barrier, constructed
+small-root fixed point, and exact default interval arithmetic. G17 has the
+source-dependent partition and bounded-footprint estimates, plus a formal
+independent-source obstruction to an unrestricted radius.
+
+The [preserved report and run record](../runs/track_a_formalization_2026-09-09/README.md)
+retain the failed source-independent constant and distinguish the constructed
+two-atom example from SU(2) Haar measure. The latter's moment specialization
+has explicit Haar/moment prerequisites. These proofs do not discharge the
+actual Wilson force factorization, complete quantum-pressure defect, or
+Hamiltonian/continuum identification. Query `DERIV:TRACK_A_SUPPORTED:W6_E`,
+`DERIV:TRACK_A_SUPPORTED:SC17_P`, or `DERIV:TRACK_A_SUPPORTED:G17_I` for the
+precise theorem connections and dependencies.
+
 ```powershell
 uv run --no-sync workhouse why G19
 uv run --no-sync workhouse why RESULT:WILSON_INFINITE_PHYSICAL_BAND
