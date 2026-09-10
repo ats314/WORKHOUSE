@@ -684,12 +684,21 @@ theorems:
       - RUN:wilson_vacuum_chart_2026-09-05
     promotes: []
   - name: vacuum_projection
-    statement: |
-      For a finite vector over a commutative star ring, Omega^* Omega = 1 implies that P = |Omega><Omega| is Hermitian and idempotent: P^dagger = P and P^2 = P. No operator-norm inequality is asserted.
+    statement: 'For a finite vector over a commutative star ring, Omega^* Omega = 1 implies that P = |Omega><Omega|
+      is Hermitian and idempotent: P^dagger = P and P^2 = P. No operator-norm inequality is asserted.
+
+      '
     formalizes:
-      - G18
-      - RUN:wilson_vacuum_compression_2026-09-05
+    - G18
+    - RUN:wilson_vacuum_compression_2026-09-05
     promotes: []
+    proof_sources:
+    - statement: DERIV:THEORY_GEOMETRY_BRIDGES:TG3
+      path: docs/derivations/theory-geometry-and-riccati-bridges.md
+      sha256: 7216dd8c2f263782e0547d03515ab6fee56a0e84bc3ba0b6f83c1b5e9c919835
+      locator: '## TG3: One secular cubic for the recorded Hodge support (lines 94-136)'
+      anchor: '## TG3: One secular cubic for the recorded Hodge support'
+      scope: Existing normalized rank-one Hermitian idempotence ingredient only.
   - name: vacuum_corner_zero
     statement: |
       For finite matrices over a commutative star ring, D^dagger = D, D Omega = Omega, and chi - D chi = A Omega imply P A P = 0 for P = |Omega><Omega|. Neither normalization nor Hermiticity of A is needed for this algebraic vacuum-corner cancellation.
@@ -1145,19 +1154,37 @@ theorems:
       - CITE:YM_GPU_AUDIT
     promotes: []
   - name: anisotropy_variance_identity
-    statement: |
-      For real x+y+z=1, x^3+y^3+z^3-(x^2+y^2+z^2)^2 equals sum(i<j) xi*xj*(xi-xj)^2. No positivity assumption is needed.
+    statement: 'For real x+y+z=1, x^3+y^3+z^3-(x^2+y^2+z^2)^2 equals sum(i<j) xi*xj*(xi-xj)^2. No positivity
+      assumption is needed.
+
+      '
     formalizes:
-      - RESULT:RECENT_ANISOTROPY_VARIANCE_CORE
+    - RESULT:RECENT_ANISOTROPY_VARIANCE_CORE
     promotes:
-      - anisotropy variance is exactly the simplex pair sum and cubic shape invariant
+    - anisotropy variance is exactly the simplex pair sum and cubic shape invariant
+    proof_sources:
+    - statement: DERIV:THEORY_GEOMETRY_BRIDGES:TG1
+      path: docs/derivations/theory-geometry-and-riccati-bridges.md
+      sha256: 7216dd8c2f263782e0547d03515ab6fee56a0e84bc3ba0b6f83c1b5e9c919835
+      locator: '## TG1: The sharp three-coordinate anisotropy constant (lines 14-60)'
+      anchor: '## TG1: The sharp three-coordinate anisotropy constant'
+      scope: Existing simplex polynomial identity only; not the sharp maximum.
   - name: anisotropy_variance_nonnegative
-    statement: |
-      The pair-sum anisotropy variance is nonnegative for nonnegative x,y,z, without requiring normalization.
+    statement: 'The pair-sum anisotropy variance is nonnegative for nonnegative x,y,z, without requiring
+      normalization.
+
+      '
     formalizes:
-      - RESULT:RECENT_ANISOTROPY_VARIANCE_CORE
+    - RESULT:RECENT_ANISOTROPY_VARIANCE_CORE
     promotes:
-      - anisotropy variance is exactly the simplex pair sum and cubic shape invariant
+    - anisotropy variance is exactly the simplex pair sum and cubic shape invariant
+    proof_sources:
+    - statement: DERIV:THEORY_GEOMETRY_BRIDGES:TG1
+      path: docs/derivations/theory-geometry-and-riccati-bridges.md
+      sha256: 7216dd8c2f263782e0547d03515ab6fee56a0e84bc3ba0b6f83c1b5e9c919835
+      locator: '## TG1: The sharp three-coordinate anisotropy constant (lines 14-60)'
+      anchor: '## TG1: The sharp three-coordinate anisotropy constant'
+      scope: Existing nonnegative pair-sum ingredient only.
   - name: anisotropy_shape_identity
     statement: |
       On x+y+z=1, the pair-sum variance equals e2+3*e3-4*e2^2, where e2=xy+xz+yz and e3=xyz.
@@ -1207,12 +1234,22 @@ theorems:
       - anisotropy variance is exactly the simplex pair sum and cubic shape invariant
     value: 5/324
   - name: anisotropy_induced_coefficient
-    statement: |
-      With the existing cShpAssembled and hopping definitions, -4*cShpAssembled^2/hopping(3) equals -169924002729806205028788409/619343593697933825385600000. The operator origin of this induced mixing contribution and the full sixth-order Hamiltonian are not formalized by this rational identity.
+    statement: 'With the existing cShpAssembled and hopping definitions, -4*cShpAssembled^2/hopping(3) equals
+      -169924002729806205028788409/619343593697933825385600000. The operator origin of this induced mixing
+      contribution and the full sixth-order Hamiltonian are not formalized by this rational identity.
+
+      '
     formalizes:
-      - RESULT:RECENT_ANISOTROPY_INDUCED_SIXTH
+    - RESULT:RECENT_ANISOTROPY_INDUCED_SIXTH
     promotes: []
     value: -169924002729806205028788409/619343593697933825385600000
+    proof_sources:
+    - statement: DERIV:THEORY_GEOMETRY_BRIDGES:TG4
+      path: docs/derivations/theory-geometry-and-riccati-bridges.md
+      sha256: 7216dd8c2f263782e0547d03515ab6fee56a0e84bc3ba0b6f83c1b5e9c919835
+      locator: '## TG4: The induced eighth-order moment in the same truncation (lines 137-166)'
+      anchor: '## TG4: The induced eighth-order moment in the same truncation'
+      scope: Exact recorded sixth-order rational coefficient only; not the new eighth-order spectral expansion.
   - name: wilson_square_sharp_constant
     statement: |
       K=(4-sqrt(2))^3/1372 equals gamma^2/[4*(4+sqrt(2))], where gamma=(4*sqrt(2)-2)/7. This is the exact coefficient identity retaining both the retained and fast reference energies.
@@ -2692,6 +2729,13 @@ theorems:
       anchor: '## 1. Source statements and the operator to be bounded'
       scope: Actual integral decay C(t)<=A exp(-eta*t) for all nonnegative t implies sigma([0,a])=0 for
         every 0<=a<eta.
+    - statement: DERIV:SOURCE_CURRENT_BRIDGES:SCB5
+      path: docs/derivations/source-currents-and-spectral-totality.md
+      sha256: 860c81a3fb665d6b9c385365322ff0503e5500d6d79c94d49a0984250a4548a9
+      locator: '## SCB5. Tiny exponential sources imply totality by differentiation (lines 258-298)'
+      anchor: '## SCB5. Tiny exponential sources imply totality by differentiation'
+      scope: The existing positive spectral-measure exclusion theorem with its own all-time decay hypothesis;
+        the source-dependent arbitrarily-late-time extension in SCB5 is analytic.
   - name: laplace_decay_support_gap
     statement: Countable exhaustion of [0,eta) proves its entire spectral measure vanishes for eta>0.
     formalizes: []
@@ -2773,6 +2817,13 @@ theorems:
       anchor: '## 1. Source statements and the operator to be bounded'
       scope: Finite positive spectral measures, the projection-norm identity, common exponential rate and
         dense linear span imply zero low-energy projection. Prefactors can depend on each observable.
+    - statement: DERIV:SOURCE_CURRENT_BRIDGES:SCB5
+      path: docs/derivations/source-currents-and-spectral-totality.md
+      sha256: 860c81a3fb665d6b9c385365322ff0503e5500d6d79c94d49a0984250a4548a9
+      locator: '## SCB5. Tiny exponential sources imply totality by differentiation (lines 258-298)'
+      anchor: '## SCB5. Tiny exponential sources imply totality by differentiation'
+      scope: The existing total-family spectral projection conclusion with its stated decay and density
+        inputs; no actual Wilson continuum source identification is supplied.
   - name: total_family_localization_projection_gap
     statement: Composes two-parameter localization with positive spectral measure and actual dense-family
       operator extension, allowing observable-dependent A and B.
@@ -3112,8 +3163,8 @@ theorems:
       scope: 'R1: completing the interacting quadratic form at two actual solution vectors. The operators need
         not commute.'
   - name: variational_residual_identity
-    statement: 'R1: the exact selected inverse difference is the negative Gaussian diagonal form difference plus
-      the interacting inverse residual energy.'
+    statement: 'R1: the exact selected inverse difference is the negative Gaussian diagonal form difference
+      plus the interacting inverse residual energy.'
     formalizes: []
     promotes: []
     proof_sources:
@@ -3122,15 +3173,22 @@ theorems:
       sha256: 26efd60d345eb4c961f33474170657e5eff7333a390a1b68841b0b76ecc0e693
       locator: '## W6-V: actual variational residual identity and dual energy (from line 18)'
       anchor: '## W6-V: actual variational residual identity and dual energy'
-      scope: 'R1: the exact selected inverse difference is the negative Gaussian diagonal form difference plus
-        the interacting inverse residual energy.'
+      scope: 'R1: the exact selected inverse difference is the negative Gaussian diagonal form difference
+        plus the interacting inverse residual energy.'
     - statement: DERIV:WILSON_SELECTED_INVERSE_WALL:W6
       path: docs/derivations/wilson-selected-inverse-wall.md
       sha256: c0473aca76790ef7adc6e9d90642f94a252d7052e02fa0b7ee79f92afd099cfe
       locator: '## 5. The exact point at which this argument cannot proceed (lines 221-264)'
       anchor: '## 5. The exact point at which this argument cannot proceed'
-      scope: Bounded-Hilbert realization of the exact variational residual identity under inverse laws and symmetry;
-        no unbounded Wilson-domain identification.
+      scope: Bounded-Hilbert realization of the exact variational residual identity under inverse laws and
+        symmetry; no unbounded Wilson-domain identification.
+    - statement: DERIV:SOURCE_CURRENT_BRIDGES:SCB0B
+      path: docs/derivations/source-currents-and-spectral-totality.md
+      sha256: 860c81a3fb665d6b9c385365322ff0503e5500d6d79c94d49a0984250a4548a9
+      locator: '## SCB0B. Bounded-inverse W6 composition (lines 35-59)'
+      anchor: '## SCB0B. Bounded-inverse W6 composition'
+      scope: The existing bounded-inverse variational identity only; all inverse and symmetry hypotheses
+        remain. It does not construct a closed-form identity without an inverse.
   - name: inverse_energy_le_dual
     statement: 'R2: coercivity against an independently supplied lower energy controls the actual interacting
       inverse quadratic form by the lower-energy dual norm. Only a right inverse and the displayed coercivity
@@ -3724,6 +3782,13 @@ theorems:
       anchor: '## G17-V: centered L2 source, variance, and bounded footprints'
       scope: The constructed centered L2 source lies in the orthogonal complement of every constant function,
         in particular the normalized vacuum `1`.
+    - statement: DERIV:SOURCE_CURRENT_BRIDGES:SCB5
+      path: docs/derivations/source-currents-and-spectral-totality.md
+      sha256: 860c81a3fb665d6b9c385365322ff0503e5500d6d79c94d49a0984250a4548a9
+      locator: '## SCB5. Tiny exponential sources imply totality by differentiation (lines 258-298)'
+      anchor: '## SCB5. Tiny exponential sources imply totality by differentiation'
+      scope: The existing centered exponential L2 vector is orthogonal to constants under its probability-space
+        and integrability hypotheses; not the tangent limit or source totality.
   - name: centeredExpL2_norm_le
     statement: Norm version of Popoviciu for the actual projected L2 source.
     formalizes: []
@@ -3971,9 +4036,8 @@ theorems:
       scope: Fully constructed independent-source counterexample. The atomic law is explicitly not asserted to
         be SU(2) Haar measure.
   - name: hodge_algebra_relations
-    statement: >-
-      For linear endomorphisms D,U of a module over a field K, D+U=qI and D composed with U=0
-      imply D squared=qD, U composed with D=0, and U squared=qU.
+    statement: For linear endomorphisms D,U of a module over a field K, D+U=qI and D composed with U=0 imply
+      D squared=qD, U composed with D=0, and U squared=qU.
     formalizes: []
     promotes: []
     proof_sources:
@@ -3982,9 +4046,14 @@ theorems:
       sha256: e0221c892ff185e73e9d535bfae71b48a260d2f114c8d564c55dcb748b9172b3
       locator: '## H1: complementary kernels from Hodge relations (from line 17)'
       anchor: '## H1: complementary kernels from Hodge relations'
-      scope: >-
-        For linear endomorphisms D,U of a module over a field K, D+U=qI and D composed with U=0
-        imply D squared=qD, U composed with D=0, and U squared=qU.
+      scope: For linear endomorphisms D,U of a module over a field K, D+U=qI and D composed with U=0 imply
+        D squared=qD, U composed with D=0, and U squared=qU.
+    - statement: DERIV:THEORY_GEOMETRY_BRIDGES:TG3
+      path: docs/derivations/theory-geometry-and-riccati-bridges.md
+      sha256: 7216dd8c2f263782e0547d03515ab6fee56a0e84bc3ba0b6f83c1b5e9c919835
+      locator: '## TG3: One secular cubic for the recorded Hodge support (lines 94-136)'
+      anchor: '## TG3: One secular cubic for the recorded Hodge support'
+      scope: Existing Laplacian algebra needed to reduce the recorded support; not the secular determinant.
   - name: hodge_ker_disjoint
     statement: >-
       For linear endomorphisms D,U of a module over a field K, if D+U=qI and q is nonzero, then
@@ -4531,3 +4600,158 @@ theorems:
         For real D,c with D>0, there exists beta0>0 such that every real beta with 0<=beta<beta0
         satisfies weightedActivityBase(D,beta,c)=(D beta/4) exp(c)<1. The proof chooses
         beta0=((D/4) exp(c)) inverse; only a scalar geometric radius is asserted.
+  - name: factored_variational_energy_without_inverse
+    statement: For real inner-product spaces E,F, a bounded linear map Y:E->F, a vector j in F, an arbitrary
+      function a:E->R, real g, and kappa>0, if kappa*||Yv||^2<=a(v) for all v, then 2*g*<j,Yv>-a(v)<=g^2*||j||^2/kappa
+      for every v.
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SOURCE_CURRENT_BRIDGES:SCB0A
+      path: docs/derivations/source-currents-and-spectral-totality.md
+      sha256: 860c81a3fb665d6b9c385365322ff0503e5500d6d79c94d49a0984250a4548a9
+      locator: '## SCB0A. Degenerate energy variational certificate (lines 21-34)'
+      anchor: '## SCB0A. Degenerate energy variational certificate'
+      scope: This is the inverse-free statement. Y need not be injective. The function a is not required
+        to be a quadratic, closed, continuous, or physically realized form; such realizations and supremum/Riesz
+        constructions are separate application steps.
+  - name: factored_inverse_energy_without_uniform_gap
+    statement: For real inner-product spaces E,F, bounded linear maps Ag,Rg:E->E and Y:E->F, vectors r in
+      E and j in F, real g, and kappa>0, assume Ag*Rg=I, kappa*||Yv||^2<=<v,Ag v> for every v, and <r,v>=g*<j,Yv>
+      for every v. Then 0<=<r,Rg r><=g^2*||j||^2/kappa.
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SOURCE_CURRENT_BRIDGES:SCB0B
+      path: docs/derivations/source-currents-and-spectral-totality.md
+      sha256: 860c81a3fb665d6b9c385365322ff0503e5500d6d79c94d49a0984250a4548a9
+      locator: '## SCB0B. Bounded-inverse W6 composition (lines 35-59)'
+      anchor: '## SCB0B. Bounded-inverse W6 composition'
+      scope: The lower-energy map Y can have a kernel. Ag and Rg remain bounded operators with an explicit
+        right-inverse identity. Self-adjointness, a left inverse, and completeness are not hypotheses of
+        this particular theorem. It supplies no unbounded inverse or Wilson current construction.
+  - name: gapless_factored_w6_bound
+    statement: For bounded linear maps A0,Ag,R0,Rg on a real inner-product space E, a bounded map Y:E->F,
+      source t and current j, assume A0*R0=I, Ag*Rg=Rg*Ag=I, symmetry <x,Ag y>=<Ag x,y>, kappa>0, C,b>=0,
+      |g|<=g0, and kappa*||Yv||^2<=<v,Ag v>. Let rho=Ag(R0 t)-t. If |<R0 t,(Ag-A0)(R0 t)>|<=a*|g|*b, <rho,v>=g*<j,Yv>
+      for every v, and ||j||^2<=C*b, then |<t,(Rg-R0)t>| <= (a+C*g0/kappa)*|g|*b.
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SOURCE_CURRENT_BRIDGES:SCB0B
+      path: docs/derivations/source-currents-and-spectral-totality.md
+      sha256: 860c81a3fb665d6b9c385365322ff0503e5500d6d79c94d49a0984250a4548a9
+      locator: '## SCB0B. Bounded-inverse W6 composition (lines 35-59)'
+      anchor: '## SCB0B. Bounded-inverse W6 composition'
+      scope: Bounded-operator W6 composition. A0 requires the displayed right inverse only; Ag requires
+        both displayed inverse identities. It assumes a separate diagonal estimate and the complete actual
+        residual factorization. A degenerate Y is permitted, but this is not an inverse-free or unbounded-operator
+        W6 theorem.
+  - name: joint_resolvent_budget
+    statement: For real A,d,m,x with A>=0, m>0, x>=0, and d*m<=2*A, (A+d*x)/(x+m)^2<=A/m^2.
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SOURCE_CURRENT_BRIDGES:SCB2
+      path: docs/derivations/source-currents-and-spectral-totality.md
+      sha256: 860c81a3fb665d6b9c385365322ff0503e5500d6d79c94d49a0984250a4548a9
+      locator: '## SCB2. Exact current moments and an all-source constant (lines 115-172)'
+      anchor: '## SCB2. Exact current moments and an all-source constant'
+      scope: Exact scalar inequality; d is not separately required to be nonnegative. Its application by
+        the spectral theorem, the radial Friedrichs realization, exact current moments, and the specific
+        Kstar arithmetic are separate ingredients, not formalized by this lemma alone.
+  - name: residual_controls_inverse_without_diagonal
+    statement: For real x,y,e with y>=0 and e>=0, if |x^2-y^2|<=e*x, then |x^2-y^2|<=e*y+e^2.
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SOURCE_CURRENT_BRIDGES:SCB3
+      path: docs/derivations/source-currents-and-spectral-totality.md
+      sha256: 860c81a3fb665d6b9c385365322ff0503e5500d6d79c94d49a0984250a4548a9
+      locator: '## SCB3. A selected-inverse implication without a separate diagonal bound (lines 173-197)'
+      anchor: '## SCB3. A selected-inverse implication without a separate diagonal bound'
+      scope: Scalar implication only; x>=0 is not an explicit formal hypothesis. The intended inverse-energy
+        application chooses x=sqrt(Sg), y=sqrt(S0), e=epsilon*sqrt(b), with real S0,Sg>=0, actual compatible
+        inverse/source vectors, and the signed residual identity. It does not itself prove that operator
+        identity or close physical W6.
+  - name: full_graph_source_ward
+    statement: For finite real matrices A,K of size n by n, J,I of size n by m, and S of size m by m, if
+      A^T=A, K^T=-K, S^T=S, and A*J=I*S, then J^T*(A*K-K*A)*J = S*(I^T*K*J)+(I^T*K*J)^T*S.
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:THEORY_GEOMETRY_BRIDGES:TG5
+      path: docs/derivations/theory-geometry-and-riccati-bridges.md
+      sha256: 7216dd8c2f263782e0547d03515ab6fee56a0e84bc3ba0b6f83c1b5e9c919835
+      locator: '## TG5: Complete source motion is a Schur congruence (lines 167-222)'
+      anchor: '## TG5: Complete source motion is a Schur congruence'
+      scope: Finite rectangular-matrix Ward identity with an explicit graph equation. The matrix called
+        I is an arbitrary rectangular matrix; injection/isometry properties are not encoded. No unbounded-operator
+        domains, differentiable transport, or actual physical graph construction is supplied.
+  - name: schur_connection_cancellation
+    statement: In any ring with a star operation, for elements S,D,L,T, star(-L*T)*S*T + star(T)*(D+S*L+star(L)*S)*T
+      + star(T)*S*(-L*T) = star(T)*D*T.
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:THEORY_GEOMETRY_BRIDGES:TG5
+      path: docs/derivations/theory-geometry-and-riccati-bridges.md
+      sha256: 7216dd8c2f263782e0547d03515ab6fee56a0e84bc3ba0b6f83c1b5e9c919835
+      locator: '## TG5: Complete source motion is a Schur congruence (lines 167-222)'
+      anchor: '## TG5: Complete source motion is a Schur congruence'
+      scope: Exact noncommutative algebraic identity. Interpreting the three terms as a derivative additionally
+        requires differentiable operators, the connection equation, common domains, and a product rule.
+        None of those analytic constructions is formalized by this lemma.
+  - name: schur_metric_pairing_on_shell
+    statement: In any ring with a star operation, star(T)*M*T - star(Tz)*S*T - star(T)*S*Tz = star(T)*M*T
+      - (star(Tz)*S*T + star(T)*S*Tz).
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:THEORY_GEOMETRY_BRIDGES:TG6
+      path: docs/derivations/theory-geometry-and-riccati-bridges.md
+      sha256: 7216dd8c2f263782e0547d03515ab6fee56a0e84bc3ba0b6f83c1b5e9c919835
+      locator: '## TG6: The metric and finite source resolvent must travel with the form (lines 223-274)'
+      anchor: '## TG6: The metric and finite source resolvent must travel with the form'
+      scope: Algebraic rearrangement helper. Despite its preserved historical name, no on-shell premise,
+        vanishing pairing, differentiability, or metric theorem is part of this statement. It must not receive
+        a whole-statement formalization edge for TG6.
+  - name: rotated_two_level_schur_numerator
+    statement: For real E,F,z,c,s satisfying c^2+s^2=1, (E*c^2+F*s^2-z)*(E*s^2+F*c^2-z) - (c*s*(F-E))^2
+      = (E-z)*(F-z).
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:THEORY_GEOMETRY_BRIDGES:TG6
+      path: docs/derivations/theory-geometry-and-riccati-bridges.md
+      sha256: 7216dd8c2f263782e0547d03515ab6fee56a0e84bc3ba0b6f83c1b5e9c919835
+      locator: '## TG6: The metric and finite source resolvent must travel with the form (lines 223-274)'
+      anchor: '## TG6: The metric and finite source resolvent must travel with the form'
+      scope: Exact scalar polynomial numerator TG6b under c^2+s^2=1; no fast inverse, metric evolution or
+        physical spectral-gap conclusion.
+  - name: riccati_residual_certificate
+    statement: In a real normed algebra, let T(Z)=S(Z^2-D) for a bounded real-linear map S. If beta>=0,
+      ||S||<=beta, ||X||<=r, ||Y||<=r, 2*beta*r<1, and T(X)=X, then ||Y-X|| <= ||Y-T(Y)||/(1-2*beta*r).
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:THEORY_GEOMETRY_BRIDGES:TG8
+      path: docs/derivations/theory-geometry-and-riccati-bridges.md
+      sha256: 7216dd8c2f263782e0547d03515ab6fee56a0e84bc3ba0b6f83c1b5e9c919835
+      locator: '## TG8: A residual certificate for the abstract Riccati fixed point (lines 314-350)'
+      anchor: '## TG8: A residual certificate for the abstract Riccati fixed point'
+      scope: Conditional norm estimate; no completeness, construction of a fixed point, or identification
+        with the physical Hessian is required or proved. Noncommutativity is allowed. Both vectors must
+        satisfy the same radius bound.
+  - name: riccati_default_contraction_bound
+    statement: For a real lambda with 0<=lambda<=3/100, the existing SC17Riccati definitions satisfy 2*defaultBeta*smallRoot(defaultBeta,defaultDefect(lambda))<3/20.
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:THEORY_GEOMETRY_BRIDGES:TG8
+      path: docs/derivations/theory-geometry-and-riccati-bridges.md
+      sha256: 7216dd8c2f263782e0547d03515ab6fee56a0e84bc3ba0b6f83c1b5e9c919835
+      locator: '## TG8: A residual certificate for the abstract Riccati fixed point (lines 314-350)'
+      anchor: '## TG8: A residual certificate for the abstract Riccati fixed point'
+      scope: Exact scalar consequence of the registered abstract default functions and their interval theorem.
+        It does not establish the physical SC17 defect hypotheses or an actual Wilson closure window.
