@@ -3,7 +3,7 @@
 #
 #   1. On a remote container, make tests and linters runnable before the agent
 #      types anything.
-#   2. Everywhere, inject the frontier brief, so a session opens knowing where
+#   2. Everywhere, inject the shared graph protocol notice, so a session opens knowing where
 #      authority lives instead of inferring it from whichever file it opens
 #      first. That inference is the failure mode this repository exists to
 #      prevent, and it is cheapest to prevent at second zero.
@@ -34,22 +34,15 @@ if [ "${CLAUDE_CODE_REMOTE:-}" = "true" ]; then
   fi
 fi
 
-# The brief is computed from the ledgers and the suites, so it cannot go stale.
-# If the package will not import -- no venv yet, a syntax error mid-edit -- emit
-# the explicit unavailable notice and static orientation below.
-# A uv venv puts the interpreter in bin/ on POSIX and Scripts/ on Windows.
-# Probing only bin/ meant that on the maintainer's own workstation this test
-# always failed, `python3` was not on PATH either, and every session opened on
-# the degraded branch below -- the one whose text says a degraded session is
-# the one that needs orientation most. The hook announced its own failure in
-# the same breath as the orientation it was failing to deliver, for weeks,
-# and nothing was watching stdout closely enough to notice.
+# Startup is a small shared protocol notice. It does not execute checks or
+# silently replace a missing task briefing with a different command.
+# Probe both POSIX and native Windows environments.
 python=python3
 for candidate in .venv/bin/python .venv/Scripts/python.exe; do
   [ -x "$candidate" ] && python=$candidate && break
 done
 
-if brief=$("$python" -m workhouse.cli frontier --brief 2>/dev/null); then
+if brief=$("$python" -m workhouse.cli brief --startup 2>/dev/null); then
   "$python" - "$brief" <<'PY'
 import json, sys
 print(json.dumps({
@@ -64,6 +57,6 @@ else
   # minimal brief instead of silence: where authority lives, that the
   # environment is broken, and the traps that do not need a working venv.
   cat <<'JSON'
-{"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": "WORKHOUSE: the computed frontier brief is UNAVAILABLE (environment missing or package import failed). Read README.md, INDEX.md, AGENTS.md and CLAUDE.md in the selected checkout. On the maintainer workstation the active checkout is C:/WORKHOUSE/REPO; older archive checkouts remain preserved sources. Follow CONTRIBUTING.md to restore the environment, then run uv run --no-sync workhouse frontier --brief. Inspect local changes and live GitHub history before declaring a result missing. Preserve original sources and prior navigation bytes; do not delete, reset or relocate work. Use current_research.md under docs and the derivation proof map for current scope. Keep mathematical status, evidence and machine tier separate; accept valid novel arguments under their hypotheses. Exact rationals stay exact, floats retain _NUM, no 4**r rescaling, and no tolerance weakening. Follow the current ledger resolutions instead of reopening a dated dispute."}}
+{"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": "WORKHOUSE: the graph briefing is UNAVAILABLE (environment missing or package import failed). Read README.md, INDEX.md, AGENTS.md and CLAUDE.md in the selected checkout. On the maintainer workstation the active checkout is C:/WORKHOUSE/REPO; older archive checkouts remain preserved sources. Follow CONTRIBUTING.md to restore the environment, then run uv run --no-sync workhouse brief --startup. Read docs/theory_graph_protocol.md and retain a task-specific workhouse brief ID --json snapshot before mathematical integration. Inspect local changes and live GitHub history before declaring a result missing. Preserve original sources and prior navigation bytes; do not delete, reset or relocate work. Use current_research.md under docs and the derivation proof map for current scope. Keep mathematical status, evidence and machine tier separate; accept valid novel arguments under their hypotheses. Exact rationals stay exact, floats retain _NUM, no 4**r rescaling, and no tolerance weakening. Follow the current ledger resolutions instead of reopening a dated dispute."}}
 JSON
 fi

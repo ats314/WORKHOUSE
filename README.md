@@ -14,7 +14,7 @@ their source histories into a queryable theory graph.
 | Understand the established results and current obligations | [Current research](docs/current_research.md) and [research goal](docs/research_goal.md) |
 | Find a derivation's Lean coverage and remaining work | [Derivation proof map](docs/derivation_formalization.md) |
 | Inspect checked claims and reproduce one | [Frontier](FRONTIER.md), [certified catalogue](CERTIFIED.md), then `workhouse why ID` |
-| Begin an agent session | [Task index](INDEX.md), [research instructions](AGENTS.md), [working agreement](CLAUDE.md) |
+| Begin an agent session | [THEORY GRAPH protocol](docs/theory_graph_protocol.md), [task index](INDEX.md), [research instructions](AGENTS.md), [working agreement](CLAUDE.md) |
 | Coordinate local and GitHub work, intake and task ownership | [Workspace operations](docs/workspace_operations.md) |
 | Set up, test, contribute, and publish | [Contributing](CONTRIBUTING.md) |
 | Add a formal proof and precise dependency links | [Formalization workflow](docs/formalization_workflow.md) |
@@ -58,8 +58,9 @@ From an existing checkout, with Python 3.11 or newer and `uv` available:
 git status --short --branch
 uv sync --all-extras --frozen
 uv run --no-sync workhouse --help
+uv run --no-sync workhouse brief --startup
 uv run --no-sync workhouse search '5/612'
-uv run --no-sync workhouse why G19
+uv run --no-sync workhouse brief G19 --json
 ```
 
 Before starting a new branch, inspect local changes, coordinate the shared-ref
@@ -68,6 +69,12 @@ refresh and select the base under
 Follow [Contributing](CONTRIBUTING.md) for a fresh clone, native PowerShell
 commands, Lean setup, and validation. Existing uncommitted work must be kept.
 Reading the checked-in guides does not require installing anything.
+
+For mathematical work, follow the [shared protocol](docs/theory_graph_protocol.md)
+and retain a briefing with `--out` plus a [manual task record](graph-tasks/README.md).
+A fresh clone's saved graph has unknown freshness until local generation
+provenance exists; saved briefing mode never silently rebuilds it. `--live`
+rebuilds with observed cache use; `--fresh` requests uncached Python checks.
 
 Search by a claim ID, exact value, symbol, or filename before scanning a large
 collection. A useful source-to-proof query pair is:
@@ -126,6 +133,7 @@ extraction does not mean those bytes have received mathematical review.
 
 ```text
 uv run --no-sync workhouse search 109151/249696
+uv run --no-sync workhouse brief C2 G19 --json
 uv run --no-sync workhouse why C2
 uv run --no-sync workhouse verify --only 'h_4^side = A_+'
 uv run --no-sync workhouse notes --queue

@@ -27,6 +27,7 @@ necessary dependencies. `workhouse why G19` exposes the same selected routes.
 
 | Need | Start here | How to use it |
 | --- | --- | --- |
+| Use one graph snapshot and interpretation across agents | [THEORY GRAPH protocol](theory_graph_protocol.md), [manual task records](../graph-tasks/README.md) | Run startup and target briefings; retain fingerprints, freshness and execution provenance. |
 | Governing objective and current research obligations | [Research goal](research_goal.md), [current research map](current_research.md) | Select a precise source/graph obligation and retain its regime and hypotheses. |
 | Mathematical arguments and explicit hypotheses | [derivations/](derivations/) | Follow the stated operator, regime and source references. |
 | Exact statement-to-Lean coverage and remaining work | [Derivation proof map](derivation_formalization.md) | Follow source-pinned statement IDs and kernel-extracted dependencies. |
@@ -91,6 +92,8 @@ those packages; a summary filename alone does not establish its scope.
 From the repository root in the configured environment:
 
 ```powershell
+uv run --no-sync workhouse brief --startup
+uv run --no-sync workhouse brief G18 G19 --json
 uv run --no-sync workhouse why G18
 uv run --no-sync workhouse why G19
 uv run --no-sync workhouse why DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_CLOSABLE

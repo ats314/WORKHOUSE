@@ -16,6 +16,11 @@ Use [workspace operations](docs/workspace_operations.md) as the shared operating
 contract for local and GitHub agents. It defines startup observations, source
 intake, cooperative file ownership, shared writers and preservation at closeout.
 
+Use the shared [THEORY GRAPH protocol](docs/theory_graph_protocol.md) for graph
+interpretation. Run `workhouse brief --startup`, retain the task's target
+briefing, and keep a [manual task record](graph-tasks/README.md). Agent adapters
+must link to that protocol rather than maintain separate graph meanings.
+
 The workstation's active checkout is `C:\WORKHOUSE\REPO`; the outer workspace
 and `ALL THEORY` contain preserved collections. Follow
 [workspace coordination](docs/workspace_coordination.md), inspect local changes
@@ -233,7 +238,9 @@ make manifest  # re-pin theory/ after a deliberate, reviewed corpus change
 
 workhouse verify --only 'h_4^side'  # re-establish ONE claim, with its numbers
 workhouse verify --tier 1           # only the exact re-derivations
-workhouse frontier --brief          # the block injected at session start
+workhouse brief --startup           # shared protocol notice; no calculations
+workhouse brief G19 --json          # saved target snapshot; inspect freshness
+workhouse frontier --brief          # supplementary frontier summary
 workhouse why C2                    # everything recorded about one claim id
 workhouse derive C2 G3 --out f.md   # evidence chains as Markdown, registered edges only
 workhouse branches C2               # every conflicting value, both branches side by side
