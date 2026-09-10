@@ -12,6 +12,10 @@ For documentation work, use the
 
 ## Select the checkout and preserve the work
 
+Use [workspace operations](docs/workspace_operations.md) as the shared operating
+contract for local and GitHub agents. It defines startup observations, source
+intake, cooperative file ownership, shared writers and preservation at closeout.
+
 The workstation's active checkout is `C:\WORKHOUSE\REPO`; the outer workspace
 and `ALL THEORY` contain preserved collections. Follow
 [workspace coordination](docs/workspace_coordination.md), inspect local changes

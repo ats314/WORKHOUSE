@@ -5,6 +5,11 @@ is [ats314/WORKHOUSE](https://github.com/ats314/WORKHOUSE). They coordinate thro
 the canonical checkout **`C:\WORKHOUSE\REPO`**. `ALL THEORY` is an archive
 collection within the larger workspace, not the name or root of the active project.
 
+The versioned [workspace operations](workspace_operations.md) guide is the shared
+operating contract for local and GitHub agents. Follow it for startup, intake,
+task ownership, shared writers, closeout and quarantine review. This guide
+records the workspace layout and reconciliation history.
+
 The canonical reconciliation and source-linked formalization were merged in
 [PR #113](https://github.com/ats314/WORKHOUSE/pull/113), merge commit `742033a`.
 This is the integration baseline, not a permanent assertion about the latest
@@ -16,15 +21,26 @@ copies of the outer archive to run the tracked project. Use repository-relative
 paths for portable docs, proofs and tools, and treat unavailable external source
 paths as provenance to resolve rather than files to invent.
 
+For the workstation's current physical layout, read
+`C:\WORKHOUSE\WORKSPACE.json` and `C:\WORKHOUSE\navigation\relocations.json`.
+The former identifies workspace roles; the latter records each relocated path
+and whether an original-path junction exists. Use these local records when a
+historical path or older folder list differs from the current layout.
+
 ## Which location to use
 
 | Location | Role | Default action |
 | --- | --- | --- |
 | `C:\WORKHOUSE\REPO` | Active GitHub-based source, proofs, graph and curated evidence | Start and integrate new repository work here. |
 | `C:\WORKHOUSE\research` | Dated standalone investigations | Preserve the campaign, then integrate selected results with exact source locators. |
+| `C:\WORKHOUSE\ARCHIVE\collections` | Organized historical proof, manuscript, simulation and reference collections | Follow the archive index and retained source lineage. |
+| `C:\WORKHOUSE\ARCHIVE\publications` | Preserved manuscript and publication packages | Select the exact edition and its evidence. |
+| `C:\WORKHOUSE\ARCHIVE\calculations` | Historical computational campaigns and their outputs | Keep scripts, source inputs, manifests and checkpoints together. |
 | `C:\WORKHOUSE\ALL THEORY` | Historical corpus collection | Search and cite it as source evidence. |
 | `C:\WORKHOUSE\ALL THEORY\WORKHOUSE` | Preserved earlier checkout, local work and shared Git database | Recovery and provenance; do not use as the default for new work. |
+| `C:\WORKHOUSE\worktrees\legacy` | Relocated historical Git worktrees | Inspect Git registration and use only for an explicitly selected source or branch. |
 | Named branch worktrees | Preserved research branches and review checkpoints | Use only when a task selects that branch. Reconcile results into the canonical checkout. |
+| `C:\WORKHOUSE\quarantine` | Recorded preservation batches | Follow their manifests and move records. |
 | Other folders under `C:\WORKHOUSE` | Original proofs, manuscripts, code, archives and references | Follow the workspace directory index and corpus review queue. |
 
 The canonical directory is a real Git worktree, not another copied project or
@@ -36,26 +52,43 @@ sources; neither the older working files nor their Git history were reset.
 That branch was merged through PR #113. It is historical setup information;
 use the current branch and task scope instead of switching back to it by default.
 
-The shared Git administrative directory remains under the preserved nested
-checkout. The local Lean dependency cache also reuses the same pinned packages.
-Do not remove or move that directory. A later physical storage migration must
-repair Git worktree metadata and provision an independent dependency cache.
+The shared Git administrative directory remains at
+`C:\WORKHOUSE\ALL THEORY\WORKHOUSE\.git`. REPO's Lean packages also use a
+junction to that checkout's `lean/.lake/packages`. Both dependencies remain
+operationally required. A later storage migration must preserve the Git and
+working state, repair worktree metadata and provide the required dependencies.
+
+## Physical organization: September 10, 2026
+
+The authorized first physical pass grouped historical sources into
+`ARCHIVE/collections`, `ARCHIVE/publications` and `ARCHIVE/calculations`, moved
+the autonomous worktree with Git to `worktrees/legacy/autonomous-20260905`, and
+preserved the selected clutter/test trees in a dated quarantine batch. File
+hash verification and the move journals are recorded locally under
+`navigation/checkpoints/2026-09-10-workspace-organization/`; the closeout is
+`physical-organization-result.json` in that directory.
+
+Archived collections and the relocated worktree retain hidden directory
+junctions at their original paths. Those entries are compatibility redirects
+to the same files, not duplicate payloads. Preserve them. The archive index
+uses the original-path redirects so historical relative links retain their
+original base. The relocation map separately records quarantine paths without
+redirects; do not infer that every old path has an alias.
+
+At that closeout, Windows denied the flat-holonomy worktree move, so
+`WORKHOUSE-flat-holonomy-20260907` remained at its original root path. Shared Git
+storage under `ALL THEORY/WORKHOUSE`, canonical REPO's dirty-work reconciliation
+and synchronization with GitHub, and the mixed application/runtime collections
+remained for later focused work. The physical organization did not merge that
+pending research. Inspect the current status before continuing a deferred task.
 
 ## Start a session
 
-Read this checkout's README, AGENTS, CLAUDE, generated FRONTIER and CERTIFIED.
-Then read the [current research map](current_research.md) for mathematical work
-and [formalization workflow](formalization_workflow.md) for source-to-proof
-integration. Check identity and pending work:
-
-```powershell
-Set-Location -LiteralPath 'C:\WORKHOUSE\REPO'
-git status --short --branch
-git remote -v
-git fetch origin
-git log --oneline --left-right HEAD...origin/main
-uv run --no-sync workhouse why G19
-```
+Follow the [startup procedure](workspace_operations.md#start-with-an-observed-git-and-command-state)
+to select the checkout, inspect pending work, observe the remote and verify
+available commands. Then read the [current research map](current_research.md)
+for mathematical work and [formalization workflow](formalization_workflow.md)
+for source-to-proof integration.
 
 From the outer workspace, `workhouse.ps1 where`, `workhouse.ps1 doctor`, and
 `workhouse.ps1 why G19` route through the canonical path in `WORKSPACE.json`.
