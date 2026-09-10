@@ -4,7 +4,7 @@ Follow the shared [THEORY GRAPH protocol](../docs/theory_graph_protocol.md).
 Use this directory for dated, task-specific handoffs that preserve what an
 agent read, what it established, and what remains. Automated task-record
 validation is not implemented; reviewers check the record against its retained
-snapshots and sources.
+snapshots and sources. Use [TEMPLATE.md](TEMPLATE.md) as a starter structure.
 
 Choose a unique name such as `2026-09-10-target-review.md`. Do not replace
 an earlier record or snapshot. Record an explicit continuation when a later

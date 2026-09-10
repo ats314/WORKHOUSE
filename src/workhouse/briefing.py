@@ -570,6 +570,49 @@ def render_text(brief: dict) -> str:
     ]
     lines.extend(f"Error: {error}" for error in brief["errors"])
     for target in brief["targets"]:
-        lines.extend(["", json.dumps(target, indent=2, ensure_ascii=True, sort_keys=True)])
+        rec = target.get("record", {})
+        status = rec.get("status", "unknown")
+        tier = rec.get("tier", 3)
+        evidence = rec.get("evidence", "unspecified")
+        lines.extend(
+            [
+                "",
+                f"TARGET: {target.get('id')} [{rec.get('kind', 'claim')}]",
+                f"  Status: {status} | Tier: T{tier} | Evidence: {evidence}",
+                f"  Statement: {rec.get('statement', '')}",
+                f"  Where: {rec.get('where', '')}",
+            ]
+        )
+        if rec.get("detail"):
+            detail_lines = rec["detail"].strip().splitlines()
+            lines.append(f"  Detail: {detail_lines[0]}")
+            if len(detail_lines) > 1:
+                lines.extend(f"    {dl}" for dl in detail_lines[1:6])
+                if len(detail_lines) > 6:
+                    lines.append(f"    ... and {len(detail_lines) - 6} more lines")
+        incoming = target.get("incoming", [])
+        outgoing = target.get("outgoing", [])
+        lines.append(f"  Edges: {len(incoming)} incoming, {len(outgoing)} outgoing")
+        key_out = [
+            f"{e['type']} -> {e['dst']}"
+            for e in outgoing
+            if e["type"] in ("targets", "blocked_by", "depends_on", "cannot_decide", "closed_by")
+        ]
+        if key_out:
+            lines.append("  Key dependencies:")
+            for ko in key_out[:10]:
+                lines.append(f"    - {ko}")
+            if len(key_out) > 10:
+                lines.append(f"    ... and {len(key_out) - 10} more links")
+        routes = target.get("routes", [])
+        if routes:
+            lines.append(f"  Nearby routes ({len(routes)}):")
+            for r in routes[:10]:
+                r_rec = r.get("record", {})
+                r_stmt = r_rec.get("statement", "")[:70]
+                r_stat = r_rec.get("status", "open")
+                lines.append(f"    - {r.get('id')}: {r_stat} — {r_stmt}")
+            if len(routes) > 10:
+                lines.append(f"    ... and {len(routes) - 10} more routes")
     lines.append("\nUse --json --out PATH to retain the full input and graph provenance.")
     return "\n".join(lines)

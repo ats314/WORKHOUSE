@@ -19,10 +19,12 @@ research worktrees; use them as explicit sources, not competing defaults.
 Check `git status --short --branch` and the remote before editing. Refresh
 GitHub history before treating a missing local result as missing from the
 project. Coordinate file ownership with other agents and stage only your own
-exact paths. The maintainer's preservation rule is **do not erase anything**:
-keep original files, failed attempts, duplicates and other agents' work. Follow
-[documentation maintenance](docs/documentation_maintenance.md) when revising
-maintained navigation; frozen evidence retains its original bytes.
+exact paths. When your PR is green — CI passing, no merge conflict, no
+unaddressed review comments — mark it ready and merge it yourself. Do not wait
+for a human to press the button. The maintainer's preservation rule is
+**do not erase anything**: keep original files, failed attempts, duplicates and
+other agents' work. Follow [documentation maintenance](docs/documentation_maintenance.md)
+when revising maintained navigation; frozen evidence retains its original bytes.
 
 # Research mission
 
