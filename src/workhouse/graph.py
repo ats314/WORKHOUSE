@@ -85,6 +85,8 @@ CURATED_TYPES = frozenset(
         "rests_on",  # a check's declared inputs: other registered checks
         "yields",  # a check -> the exact value it returns as a catalogue constant
         "plans",  # gaps.yaml: a gap -> one of its plan steps (a route)
+        "targets",  # selected route -> its exact objective, not a proof dependency
+        "blocked_by",  # explicit unfinished completion input within this route
         "closed_by",  # gaps.yaml plan step -> the run, check or ADR that settled it
         "cannot_decide",  # gaps.yaml plan step -> the claim its instrument cannot reach
         "labels",  # a pinned manuscript -> a check it prints a \chk label for
@@ -293,6 +295,11 @@ def build(
                 add(rid, str(ref), "cannot_decide", "curated", "ledger/gaps.yaml")
             for ref in step.get("depends_on", []) or []:
                 add(rid, ref, "depends_on", "curated", "ledger/gaps.yaml")
+            for field in ("blocked_by", "bears_on"):
+                for ref in step.get(field, []) or []:
+                    add(rid, ref, field, "curated", "ledger/gaps.yaml")
+            if target := (step.get("frontier") or {}).get("target"):
+                add(rid, target, "targets", "curated", "ledger/gaps.yaml#frontier.target")
     for entry in led.register:
         for target in entry["contradictions"]:
             add(entry["id"], target, "contradictions", "curated", "ledger/governing_register.yaml")
@@ -664,6 +671,37 @@ def validate(graph: Graph | None = None) -> list[str]:
 
     for node in sorted(n for n in dependencies if n.startswith(("RESULT:", "ROUTE:"))):
         visit_result(node, [])
+
+    # Check explicit route cycles and directly self-blocking targets only.
+    # Do not expand a target into all routes that can produce it: alternative
+    # producers form an OR, not cumulative prerequisites, and that expansion
+    # would reject a viable alternative route as a false deadlock.
+    targets: dict[str, list[str]] = {}
+    for edge in graph.edges:
+        if edge.type == "targets":
+            targets.setdefault(edge.dst, []).append(edge.src)
+    waiting: dict[str, list[str]] = {}
+    for edge in graph.edges:
+        if edge.type == "blocked_by":
+            waiting.setdefault(edge.src, []).append(edge.dst)
+            if edge.src in targets.get(edge.dst, []):
+                problems.append(f"route blocked_by its own target: {edge.src} -> {edge.dst}")
+    state = {}
+
+    def visit_route(node: str, trail: list[str]) -> None:
+        mark = state.get(node, 0)
+        if mark == 2:
+            return
+        if mark == 1:
+            problems.append(f"route blocked_by cycle: {' -> '.join([*trail, node])}")
+            return
+        state[node] = 1
+        for nxt in waiting.get(node, []):
+            visit_route(nxt, [*trail, node])
+        state[node] = 2
+
+    for node in sorted(waiting):
+        visit_route(node, [])
     return problems
 
 

@@ -192,6 +192,7 @@ def validate(ledgers: Ledgers) -> list[str]:
         if c["status"] == "open" and not c.get("blocks"):
             problems.append(f"{c['id']} is open but names no gap that would resolve it")
 
+    priorities: set[int] = set()
     for g in ledgers.gaps:
         if g["tier"] not in TIERS:
             problems.append(f"{g['id']}: unknown tier {g['tier']!r}")
@@ -250,6 +251,49 @@ def validate(ledgers: Ledgers) -> list[str]:
             dependencies = step.get("depends_on", [])
             if not isinstance(dependencies, list) or not all(map(is_catalogue_id, dependencies)):
                 problems.append(f"{label}: depends_on must be a list of full catalogue ids")
+            for field in ("bears_on", "blocked_by"):
+                refs = step.get(field, [])
+                if not isinstance(refs, list) or not all(map(is_catalogue_id, refs)):
+                    problems.append(f"{label}: {field} must be a list of full catalogue ids")
+            for ref in (
+                step.get("blocked_by", []) if isinstance(step.get("blocked_by", []), list) else []
+            ):
+                if not isinstance(ref, str) or not (
+                    re.fullmatch(r"[CG]\d+", ref) or ref.startswith(("DERIV:", "RESULT:", "ROUTE:"))
+                ):
+                    problems.append(f"{label}: blocked_by must name an authored-status claim")
+            focus = step.get("frontier")
+            if focus is not None:
+                if not isinstance(focus, dict):
+                    problems.append(f"{label}: frontier must be a mapping")
+                    continue
+                priority = focus.get("priority")
+                if type(priority) is not int or priority <= 0:
+                    problems.append(f"{label}: frontier priority must be a positive integer")
+                elif priority in priorities:
+                    problems.append(f"{label}: duplicate frontier priority {priority}")
+                else:
+                    priorities.add(priority)
+                for field in ("scope", "consequence", "decisive_test"):
+                    value = focus.get(field)
+                    if not isinstance(value, str) or not value.strip():
+                        problems.append(f"{label}: frontier {field} must be nonempty text")
+                if "target" in focus and not is_catalogue_id(focus["target"]):
+                    problems.append(f"{label}: frontier target must be a full catalogue id")
+                elif "target" in focus and not (
+                    re.fullmatch(r"[CG]\d+", focus["target"])
+                    or focus["target"].startswith(("DERIV:", "RESULT:", "ROUTE:"))
+                ):
+                    problems.append(f"{label}: frontier target must name an authored-status claim")
+                unknown = set(focus) - {
+                    "priority",
+                    "target",
+                    "scope",
+                    "consequence",
+                    "decisive_test",
+                }
+                if unknown:
+                    problems.append(f"{label}: unknown frontier fields {sorted(unknown)}")
             for ref in step.get("cannot_decide", []) or []:
                 if ref not in (ledgers.contradiction_ids | ledgers.gap_ids):
                     problems.append(f"{label}: cannot_decide unknown {ref}")

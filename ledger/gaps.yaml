@@ -281,6 +281,22 @@ gaps:
     detail: Contraction with external-memory sharding; folded weights and carrier census pre-cleared.
     depends_on:
       - G3
+    plan:
+      - step: Assemble one complete sixth-order cluster and test its extra carrier-shape component
+        state: untried
+        depends_on:
+          - RESULT:HODGE_FESHBACH_SPLITTING
+          - RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT
+        bears_on:
+          - G14
+          - U2
+        status: |
+          The exact symbols sigma(RR)=q e_2+3e_3 and sigma(RUR)=4e_2^2 are established algebraic inputs. Determine which words the actual sixth-order dynamics produces and what survives after all folds and rooted subtraction. R-linearity alone does not explain the fourth-order collapse, and a unit-edge-walk count does not identify plaquette histories or their electric resolvents. This is a bounded calculation before the global census, not an assumed nonzero RUR amplitude or a continuum estimate.
+        frontier:
+          priority: 6
+          scope: One smallest admissible connected plaquette support at fixed SU(3), with exact Haar/Gram quotient, physical Q projections, electric denominators, all folds and rooted subtraction.
+          consequence: A surviving component outside the old five-monomial span identifies an additional sixth-order shape; exact cancellation identifies the next selection-rule question. Neither outcome changes the established fourth-order support theorem.
+          decisive_test: Keep the complete operator histories through folded assembly, then project the exact cleared carrier symbol onto the quotient by span{q,q^2,e_2,q e_2,e_3}; record both individual-word and assembled contributions.
   - id: G10
     tier: 2
     state: open
@@ -321,10 +337,15 @@ gaps:
       Determine r_escape from the energy-decorated incidence/Feshbach graph without exponential enumeration. Would subsume tetra/prism/cube/pentagonal/ hyperhoneycomb as one theorem, and includes proving partition-independence of the linked/folded assembly.
   - id: G14
     tier: 3
-    state: open
-    title: Mechanism of the tier collapse B_shp = D_shp = 0
-    status: open — reduced 2026-09-01 to one dynamical input, the universality of the two-hop weight u
+    state: partial
+    title: Fourth-order support mechanism and its higher-order extension
+    status: |
+      Fourth-order tier collapse is established by RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT: the recorded kernel has support {I,U,S,S^2,R}, with cleared carrier span {q,q^2,e_2}. The broader R-degree inference is falsified by sigma(UR)=-2q e_2. The open successors concern history-to-word support, higher multiplicities and the separate proper-return identification in other geometries; the September channel computations are established inputs.
     detail: |
+      Derive the actual supported operator words from complete physical histories, with the Haar quotient, electric resolvents and folded assembly retained. Use the established fourth-order support theorem as the baseline for a bounded sixth-order calculation. The Hodge splitting alone does not assert an all-length word classification or a dynamical sixth-order coefficient.
+    prior_title_2026_09_01: Mechanism of the tier collapse B_shp = D_shp = 0
+    prior_status_2026_09_01: open — reduced 2026-09-01 to one dynamical input, the universality of the two-hop weight u
+    prior_detail_2026_09_01: |
       Restated: why does the degree-3 part of d^dagger H_4 d vanish, when the two-hop enumeration produces it? MASTER_THEORY 5.1 records that the 144 ordered two-hop sequences give the numerator span at rank five, which INCLUDES q e_2 and e_3. So the terms are generated and the dynamics sets their coefficients to zero — a dynamical vanishing, not a kinematic one.
     exact_reformulation:
       claim: the vanishing pair IS the degree-3 part of the numerator
@@ -433,15 +454,17 @@ gaps:
           DONE 2026-09-04 (ADR 0029), over Q(N) rather than a rank sweep. The fan is universal channel by channel like u (coplanar = -perpendicular in every C-odd channel, equal in every C-even one); so is the single-contact dressing once the two geometries are matched (the straight chain dresses Q, the L chain dresses P, so the direct-term labels correspond reversed in time; a naive pairing had read 24 channels as exceptional for a few hours, retracted); the corner's 87 channels carry at most three doubled links, and every factor it adds to R20 is the resolvent of an identified middle state. beta_N is a sum of 254 resolvent-product channels with the assembly's integer weights, equal to P17(N^2)/(N R20(N^2)) identically: the all-rank formula IS a sum of resolvent products. ORIGINAL: proposed 2026-09-04 (ADR 0026). With u universal channel by channel, the tier collapse B = D = 0 rests on the Hodge form alone (B unpopulated by the carrier projection, D = 0 from u2 = 2u, which is the L-chain equality). The one fourth-order content of the kernel outside the Hodge algebra is C_shp, carried by rho = pair + 14 single + 2 fan + 2 corner + cube. The corner and fan have closed forms in N (ADR 0025); decomposing them the same way, and the cube completion by ordering, would give the shape coefficient C_shp(N) channel by channel -- and say whether the all-rank beta_N formula is itself a sum of resolvent products.
         what: |
           Extend workhouse.chain_channels.decompose to a three-cluster with a shared link between the end faces (the corner and fan geometry need no new machinery beyond labelling three doubled links), sweep N = 3..30, reconstruct each channel, and compare the corner's channels with the fan's. Done over Q(N) instead, with per-link labels (workhouse.symbolic_rank.channels).
-      - step: derive the actual fourth-order Hodge support from the histories, including the absence of
-          UR, RU and repeated R insertions
-        state: untried
-        depends_on:
+      - step: derive why the fourth-order dynamics is R-linear -- why no four-insertion history inserts
+          the cross-plane operator twice -- which is what the tier collapse now reduces to
+        state: dead
+        closed_by:
+          - RESULT:TIER_COLLAPSE_IS_R_DEGREE
           - RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT
+        depends_on:
           - RESULT:HODGE_FESHBACH_SPLITTING
         cannot_decide: []
         status: |
-          Reviewed 2026-09-10. The narrower actual support {I,U,S,S^2,R} already proves the recorded kernel's B=D=0. This route asks for its history-level mechanism and higher-order scope; the falsified R-degree-only claim is not an input. Changing the step text replaces historical graph route ROUTE:G14:derive-why-the-fourth-order-dynamics-is--076bf3; its original statement and dependency are preserved below.
+          The proposed reduction is false: UR contains one R but its symbol -2q e_2 populates the B tier. The actual fourth-order collapse instead follows from support {I,U,S,S^2,R}. The step name is retained to preserve its existing route id; the successor below asks for the history-to-supported-word derivation without this false sufficiency claim.
         historical_record_before_2026_09_10:
           step: derive why the fourth-order dynamics is R-linear -- why no four-insertion history inserts
             the cross-plane operator twice -- which is what the tier collapse now reduces to
@@ -450,6 +473,18 @@ gaps:
             - RESULT:TIER_COLLAPSE_IS_R_DEGREE
             - RESULT:HODGE_FESHBACH_SPLITTING
           cannot_decide: []
+      - step: derive the actual fourth-order Hodge support from the histories, including the absence of
+          UR, RU and repeated R insertions
+        state: untried
+        prior_step_2026_09_10_graph_review: Derive the actual fourth-order supported words from complete physical histories
+        depends_on:
+          - RESULT:HODGE_FESHBACH_SPLITTING
+          - RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT
+        bears_on:
+          - G9
+        cannot_decide: []
+        status: |
+          Reviewed 2026-09-10. The narrower actual support {I,U,S,S^2,R} already proves the recorded kernel's B=D=0. Explain this support from the complete electric/Haar and folded histories, including the absence of UR, RU and repeated R insertions; proving R-linearity alone is insufficient. This route asks for the history-level mechanism and higher-order scope; the falsified R-degree-only claim is not an input. The fourth-order coefficient theorem is already established, while the general support mechanism and sixth-order extension remain separate questions. Historical graph route ROUTE:G14:derive-why-the-fourth-order-dynamics-is--076bf3 is retained above as dead, with its original statement and dependency preserved there.
       - step: test the Hodge-summand mechanism in a second geometry by computing the tetrahedral Q-projected
           proper-return contributions, the first clause of U7's falsifier
         state: untried
@@ -522,22 +557,56 @@ gaps:
   - id: G17
     tier: 3
     state: open
-    title: PC-2 free-energy stability and the source-radius reduction
+    title: Source-family stability and a valid source-radius formulation
     status: |
+      The raw alpha-dependent partition bound is established by DERIV:TRACK_A_SUPPORTED:G17_P with K_alpha=exp(|alpha|/2). The unrestricted centered exponential-source radius is not a consequence of clustering: DERIV:TRACK_A_SUPPORTED:G17_I gives divergence even for independent bounded centered sources. A valid source-family formulation and its actual interacting estimate remain open. The fixed-spacing infinite-volume Wilson band and literal-source frame are already established in G18; G17 is not a necessary gate for every infinite-volume construction.
+    detail: |
+      Identify the exact source operator, normalization and norm consumed by the selected spectral comparison. Derive a local, connected or normalized replacement only with a proof that it preserves that comparison and nonzero physical source weight. Linear susceptibility bounds do not bound the centered exponential source. Scalar KP inequalities and raw moment estimates remain useful ingredients but do not construct actual tilted Hamiltonian activities or imply a spectral gap.
+    prior_title_2026_09_10: PC-2 free-energy stability and the source-radius reduction
+    prior_status_2026_09_10: |
       ATTEMPT RECORDED, NOT DISCHARGED, 2026-09-10. paper/research_notes/G17_HAMILTONIAN_OSTERWALDER_SEILER_TRANSCRIPTION_20260910.md transcribes the Osterwalder--Seiler (1978) Euclidean polymer cluster expansion to the projected transfer/Hamiltonian sector and self-declares "G17 Status: Discharged in the projected transfer sector". It is kept as dated evidence and G17 stays open. Five defects, each verified against the note's own equations rather than inferred. (1) Its eq. (13) DEFINES log K_alpha := (D beta e^c/4)/(1 - D beta e^c/4), a function of beta, D and c ONLY -- it contains no alpha. PC-2 asks for a useful alpha-dependent constant, and <Omega, exp(alpha V_Gamma) Omega> grows with alpha, so an alpha-free bound cannot hold for all alpha; the boxed eq. (14) is false as written. (2) Its eq. (7) asserts spec(H_KS) subset {0} union [Delta_phys, infty) with Delta_phys >= (4/3) epsilon "By the Perron-Frobenius theorem". Perron-Frobenius gives a unique non-degenerate positive ground state, not an isolated volume-uniform gap. Section 4 then CONSUMES that gap -- eq. (18) sets M_gap >= Delta_phys > 0 -- to derive the source-radius reduction, so section 4 assumes the volume-uniform gap G17 exists to establish. (3) Its eq. (22) is exponential in |Gamma| (K_alpha^{|Gamma|} exp(alpha^2 sigma_conn |Gamma| / 2)); the boxed eq. (23) then holds only "for localized cluster sources with bounded diameter |Gamma| <= Gamma_0", so R_0 = R_0(Gamma_0). The reduction G17 asks for is uniform in |Gamma|; this one is capped by a footprint bound. (4) D = 38 and c = 1.0 are asserted, not derived. (5) The stated window conflates two thresholds. beta <= 0.038 is where the geometric series merely converges (x < 1 needs beta < 4/(38 e) = 0.038724); the Kotecky-Preiss tree criterion the note invokes by name needs x/(1-x) <= c = 1, i.e. x <= 1/2, i.e. beta <= 2/(38 e) = 0.019362. At the note's own beta = 0.038, x = 0.981300 and its log K_alpha = 52.4752 -- the same constant runs/gpu_yangmills_millennium_resolutions_2026-09-09/phase7_kotecky_preiss_g17.py produced and that the operator audit already recorded (GA8) as contradicting that archive's stored verdict, exceeding the criterion it is measured against by a factor of 52.5. Separately, beta <= 0.038 is g^2 = 2N/beta = 157.9 at N = 3, i.e. g^4 = 2.49e4 -- deeper into strong coupling than the SC17 window this register records at g^4 above 288, hence further from the interval between the two rigorous constructions rather than inside it. What would make the attempt land: an alpha-dependent log K_alpha, a gap in eq. (7) obtained from something other than the conclusion, and an eq. (23) uniform in |Gamma|.
       Sharpened 2026-08-30, corrected same day, not discharged. The `G17 uniformity` suite (seven T1 checks, algebraic cores at T0) computes the constant any stability argument must keep, EXACTLY: within the trivial-flux sector the gauge-invariant electric spectrum below 2C_F + gamma is exactly {0, 2C_F} at every L >= 3, with gamma = C_F for N = 3 and N >= 5 and gamma = 5/4 = 2(C_L2 - C_F) at SU(4) alone (switch numerator 2(N-5)(N+1), a Lean theorem) -- attained by fundamental dominoes, and by Lambda^2-plaquettes at N = 4. The proof adds one parity lemma to the shell census: every 5-cycle wraps, its flux is winding times N-ality, so the five-link shelf is empty of fundamental flux -- which doubles the first-draft counting floor of C_F/2. CORRECTION, kept on the record: that first draft also read a straight loop's flux as L mod N and claimed the shell lemma's L = 4 exclusion was load-bearing exactly at SU(4); flux is winding times N-ality, so fundamental wrapping loops die at every rank and the L = 4 clause is belt-and-braces (its point is the energy accident 4*C_F/2 = 2C_F). The absent campaign note F1 RECORDS sharp gap 4/3 at SU(3); that row is now checked here rather than cited, and the checkable half of the never-delivered F2 note (the stability hypothesis package: diagonal commuting H_E, product vacuum, local gap C_F/2 per link, range-1 perturbation of norm 2N, four faces per link, first-order shell rigidity via |p Delta p'| >= 6, ratio 2N/gamma = 9/2, 32/5, 25/6 at N = 3, 4, 5, -> 4) is supplied as checks, so the delivered CMP2/CMP3 band theorem's Yarotsky-dependent steps can finally be assessed against stated hypotheses. What G17 still owes: promoting gamma to u > 0 against an EXTENSIVE perturbation, which operator-norm bounds cannot deliver; candidate machinery (unverified leads, like the Osterwalder-Seiler one below): Yarotsky 2006 for the vacuum sector, Bravyi-Hastings-Michalakis gap stability and Froehlich-Pizzo block diagonalisation for the excited band. Acquisition coordinates, primary-sourced 2026-08-30: Osterwalder-Seiler is INSPIRE recid 120117 ("Gauge Field Theories on the Lattice", Annals Phys. 110 (1978) 440; 792 citations as of 2026-08-30); Yarotsky 2006 is not INSPIRE-indexed (Commun. Math. Phys., math-ph), so its entry awaits the pinned PDF route. The recorded F2 row's own claim -- interaction norm 27|u| with a periodic finite-quotient lemma -- remains a citation to an absent document.
-    detail: |
-      The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction. Lead recorded 2026-08-30, unverified here: the Euclidean counterpart of the needed uniform-in-volume strong-coupling control is classical constructive work (the Osterwalder--Seiler cluster expansion for lattice gauge theory, 1978), which proves convergence and a mass gap at strong coupling uniformly in volume for the EUCLIDEAN theory. The open question G17 actually poses is the Hamiltonian transcription of that bound for this projected sector. Indexing the paper awaits a primary-source read (literature/index.yaml requires INSPIRE-sourced fields, never memory); nothing is promoted by this pointer.
+    prior_detail_2026_08_30: |
+      HISTORICAL ROUTE CLAIM, superseded in scope by the current status above and RESULT:WILSON_INFINITE_PHYSICAL_BAND. The two named hypotheses gating EVERY infinite-volume statement: the inhomogeneous Wilson free-energy bound with useful log K_alpha, and the source-radius reduction. Lead recorded 2026-08-30, unverified here: the Euclidean counterpart of the needed uniform-in-volume strong-coupling control is classical constructive work (the Osterwalder--Seiler cluster expansion for lattice gauge theory, 1978), which proves convergence and a mass gap at strong coupling uniformly in volume for the EUCLIDEAN theory. The open question G17 actually poses is the Hamiltonian transcription of that bound for this projected sector. Indexing the paper awaits a primary-source read (literature/index.yaml requires INSPIRE-sourced fields, never memory); nothing is promoted by this pointer.
+    plan:
+      - step: Establish the raw alpha-dependent partition bound for bounded sources
+        state: done
+        closed_by:
+          - CITE:TRACK_A_SUPPORTED
+          - LEAN:finite_source_partition_bound
+        status: DERIV:TRACK_A_SUPPORTED:G17_P proves the actual probability-space bound with K_alpha=exp(|alpha|/2), without a cluster expansion or physical-gap assumption.
+      - step: Infer an unrestricted exponential-source radius from independent bounded sources
+        state: dead
+        closed_by:
+          - CITE:TRACK_A_SUPPORTED
+          - LEAN:independent_twoPoint_radius_unbounded
+        status: DERIV:TRACK_A_SUPPORTED:G17_I constructs an independent bounded centered source whose exponential variance divided by footprint cardinality tends to infinity. This refutes the stated inference, not every localized or normalized source formulation.
+      - step: Reformulate the source family while preserving its downstream spectral comparison
+        state: untried
+        depends_on:
+          - DERIV:TRACK_A_SUPPORTED:G17_P
+          - DERIV:TRACK_A_SUPPORTED:G17_V
+          - DERIV:TRACK_A_SUPPORTED:G17_I
+        status: |
+          Choose a precisely stated local, connected or normalized source formulation and prove the required relationship to the actual spectral comparison, including nonzero physical weight. Test it in the independent product model before seeking an interacting estimate. This is a candidate route with a source-identification obligation, not a claim that the original unrestricted exponential radius can be recovered from covariance summability.
+        frontier:
+          priority: 7
+          scope: The exact source family and norm of a chosen spectral comparison; finite-footprint, linear-source and centered exponential-source estimates remain distinct.
+          consequence: A valid replacement would make a source-stability argument applicable to its stated physical comparison. It does not reopen the completed fixed-spacing G18 band and source construction.
+          decisive_test: Compute the candidate source norm and its spectral normalization in the explicit independent product law; compare it with (M(2alpha)^n-M(alpha)^(2n))/n, then state the precise interacting inequality still required.
     load_bearing: true
   - id: G18
     tier: 3
     state: discharged
     title: The spectral bridge at fixed lattice spacing
     wilson_weighted_activities_2026_09_05: |
+      HISTORICAL STAGE SNAPSHOT. The thermodynamic Riesz-range and source-frame successor named below was later closed by RESULT:WILSON_INFINITE_PHYSICAL_BAND, as recorded in the current detail and completed routes.
       The new creator-velocity chart closes the full-operator activity target. Exact tangent inversion, holomorphic conjugate coordinates, connected assigned footprints and the actual Perron logarithm yield a contour/tree bound sup_i sum 2^|X| norm F_X <=1/2500 on |u|<=u_star/1252800000. The normalized actual transfer is within 1/998 of its free product, so its complete finite physical odd shell is isolated on one interval uniform in volume and temporal mesh. Local-source conjugation retains cardinality and spatial margins. These are activities of a new chart; only the generic partition extraction lemma is reused from the common-filter construction. Complete thermodynamic Riesz range and literal-source-frame invertibility/totality are the next task. Proofs are WILSON_CARDINALITY_CHART and WILSON_WEIGHTED_ACTIVITIES; the earlier dated entries below retain their stage-specific obligations.
     wilson_activity_extraction_2026_09_05: |
+      HISTORICAL STAGE SNAPSHOT. The quantitative successor below was achieved with the distinct creator-velocity chart in RESULT:WILSON_WEIGHTED_ACTIVITIES; the earlier common-filter activity family was not identified with or bounded by that replacement.
       The exact activity family is now constructed. For every induced finite link subsystem, dress its actual normalized Wilson block by its own parent spectral flow, using a common filter, mesh, block power and initial unitary. Partition Mobius inversion of these operators gives the bridge's exact disjoint-support expansion. Every activity is self-adjoint and annihilates the local vacuum on both sides; real component factorization makes it zero on disconnected induced plaquette supports. No restriction identity between subsystem unitaries or multivariate analytic continuation of spectral flow is assumed. The next step is quantitative, proving the sum of (5/4)^|X| norm F_X is at most 1/400, preferably with a positive cardinality margin that also buys an additional spatial weight. The source-transformation norm remains separate. Proof is WILSON_ACTIVITY_EXTRACTION; the already sealed parent proof and run are unchanged.
     wilson_parent_and_spectral_flow_2026_09_05: |
+      HISTORICAL STAGE SNAPSHOT. The later weighted-activity, finite-shell and infinite-volume physical-band results close the construction successors named below at their stated fixed-spacing scopes.
       Half magnetic flow restores the actual symmetric Wilson creators with nonzero scalar normalization and norm at most 1/8 at support weight at least log(2). Their exact-support annihilators define a bounded parent with the same finite-volume Perron vacuum. The independent creator-parent theorem proves H^2 >= (1-K1-M1^2)H and hence gap at least 247/256, uniformly in volume and link Hilbert-space dimension. This is an auxiliary parent gap, not a Wilson excitation-energy bound.
       Connected-face coefficient locality and a strict smaller coupling disk supply spatial decay, path-derivative bounds, and locally uniform interaction convergence. The primary-source NSY spectral-flow theorem then gives a symmetry-covariant quasi-local automorphism transporting the product state to the selected actual Wilson vacuum on every bounded local observable. The limit is pure and locally normal; its GNS representation is the automorphic transport of the product representation. The periodic boundary comparison uses intrinsic torus metrics and embedded interior balls, never a false ambient global norm bound on wrapping interactions. The construction need not be implemented by a global unitary in the original free representation, and spectral-flow tails need not remain exponential. The remaining step is the actual dressed-transfer activity estimate and its source norm, before complete excited Riesz-range transport. Proof and scoped evidence are WILSON_CREATOR_PARENT and runs/wilson_creator_parent_2026-09-05; the analytic result nodes record the individual dependencies and machine-verification boundaries.
     rooted_wilson_contraction_2026_09_05: |
@@ -709,7 +778,9 @@ gaps:
     tier: 3
     state: open
     title: Continuum limit
+    load_bearing: true
     discrete_time_vacuum_2026_09_05: |
+      HISTORICAL STAGE SNAPSHOT. The activity and complete thermodynamic band successors named below were later established at fixed spatial spacing by RESULT:WILSON_WEIGHTED_ACTIVITIES and RESULT:WILSON_INFINITE_PHYSICAL_BAND; sharp projected-kernel and spatial-continuum matching remain separate.
       The imported physical-time blocking construction preserves the actual positive Wilson transfer's excitation energies and spectral projections exactly. From its upstream uniform kinetic window and the stated abstract cluster theorem it derives a mesh-independent scalar polymer criterion, uniform analytic Perron vacuum and unprojected local-source correlations, weighted space-time matching to the Hamiltonian, and a three-source Borel-window Gram >= I/2. The rational convergence margin is 11/56 < 1/4; the resulting coupling disc is existential and very conservative. This advances the preceding note's scalar/vacuum part, but does not turn that window into a complete thermodynamic Riesz band or match sharp projected kernels. The excited-window continuation supplies finite-volume complete isolation and conditional full-operator criteria; its missing exact Wilson activity estimate is recorded on G18. Source material and complete ZIP mappings are pinned under runs/discrete_time_wilson_2026-09-04 and runs/excited_wilson_window_2026-09-04. The analytic theorems remain T3 here; the bounded exact subclaims are checked separately.
     uniform_wilson_window_2026_09_04: |
       A third package from the parallel session (GPT, 2026-09-04, reviewed and integrated by PR) takes the temporal matching one step further. For the calibrated Wilson kinetic energy k_eps(R) = -log(lambda_R)/tau, a pointwise heat-kernel comparison gives k_eps(R) >= c_N min(C_R, 1/eps) for EVERY irrep at once, so no high representation can fall into a fixed low-energy window as eps -> 0, uniformly in the spatial volume; with Revision 6's support census this makes the free physical spectrum below 5 C_F/2 exactly {0, 2 C_F}, vacuum and fundamental plaquette shell, for every periodic L >= 3 and eps below an existential eps_0(N). The actual symmetric transfer generator's second-order reduced-resolvent weight is d_tau(Delta) = (tau/2) coth(tau Delta/2) rather than 1/Delta; with it the complete C-odd shell at finite temporal step is again the signed incidence adjacency, with t_W = 5/612 + 175/280908 eps^2 and s_2W = 11/306 - 89159/2247264 eps^2 from the exact SU(3) multipliers (lambda_3 = 1 - 2/3 eps + 1/36 eps^2 + 13/648 eps^3, lambda_8, lambda_6 from Cartan Gaussian moments), and the first literal-source Gram coefficient is -2 d_tau(E_F) = -3/4 - 4/9 eps^2. The exact part is re-derived here as the suite "the Wilson transfer matrix at finite temporal step", including that the four channel weights reproduce t_N at every rank. Matching of the energy, Gram and source kernels is O(eps^2) at every FIXED magnetic order in the spatially weighted norm, with order-dependent constants; the summed statement for the actual Wilson transfer operator is not established and is reduced to a uniform discrete-time marked-cluster majorant (the note's Section 10). The analytic theorems are research-note proofs, not machine checks; the 231-irrep scans need NumPy and are pinned only. paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md, paper/research_notes/G19_WILSON_KINETIC_WINDOW_INSERT_20260904.tex, runs/uniform_wilson_window_2026-09-04.
@@ -753,21 +824,86 @@ gaps:
           its actual conditional center. Full conditional concentration and a finite-flow speed
           contradiction rule out M10 for that choice. This is an existence counterexample within
           Q8, not a proof against every admissible transport or the synchronized successor.
-      - step: Prove actual M10 score domination for the specified synchronized compact transport
+      - step: Prove the actual conditional-score domination M10
         state: live
         depends_on:
+          - DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:ACTUAL_SOURCE_MOMENT
+          - DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:INTERVAL_OBSTRUCTION_REPAIR
           - RESULT:W6_CONDITIONAL_SCORE_CONTINUITY
           - RESULT:W6_SYNCHRONIZED_CONDITIONAL_DILATION
           - RESULT:W6_SYNCHRONIZED_SCORE_CRITERION
-        cannot_decide: []
-        status: Prove K_g(w)<=C0+C1 g^-2 E_mu_g[V|w] with uniform constants for the
-          specified synchronized field, retaining the S14-S15 conditional amplitude and tube moments,
-          quadratic phase fluctuations,
-          rare-fiber complements and the antipodal degeneracy. Alternatively prove the sufficient
-          source-weighted pairing directly. This is an existence target for a specified admissible
-          transport, not a claim about every Q8 cutoff. M11-M15 remain applicable once their actual
-          score hypothesis is supplied; complete source-energy jets and interacting-grid uniformity
-          remain separate.
+        bears_on:
+          - DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_WEIGHT_FROM_M10
+        status: |
+          The source-potential moment M8-M9 is established. The open target is the actual small-g conditional score K_g<=C0+C1 g^-2 E(V|w), including rare fibers, with uniform nonnegative C0,C1. This sufficient route implies the weighted score/Hardy estimate M11-M15; it is not asserted necessary for every W6 argument and does not imply the full source-energy jets R10. The local near-well estimate and averaged moments alone do not settle it.
+          The selected realization now uses the explicit synchronized S13 radial profiles. The exact conditional continuity identity and tangency are established; an actual counterexample rules out some other admissible Q8 choices. Prove the S14-S15 uniform conditional tube moments, differentiated amplitude control, common-reference outside deviation and antipodal estimate, or obtain a different sufficient source-weighted pairing. DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:M10_SYNCHRONIZED_SCORE records this specialization of the same M10 target, not a separate priority or a prerequisite for every possible proof of M10.
+        frontier:
+          priority: 1
+          target: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10
+          scope: Actual four-face SU(2) conditional source law for the selected synchronized S13 transport, uniformly as g tends to zero, with chart-complement, rare-fiber and antipodal contributions retained.
+          consequence: M10 together with the established source-potential moment makes the M11-M15 uniform weighted score bound applicable. Complete source-energy transport and interacting-grid uniformity remain separate.
+          decisive_test: For the synchronized S13 field, establish the actual conditional tube moments and differentiated amplitude bound in S14, then control the S15 outside deviation with the same reference and a degeneration-uniform antipodal score estimate. Compare the resulting complete variance with 1+g^-2 E(V|w), or prove a sufficient source-weighted pairing directly.
+      - step: Control complete source-vacuum transport energy jets R10
+        state: untried
+        depends_on:
+          - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+        bears_on:
+          - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:COMPLETE_BUDGET
+          - DERIV:WILSON_SELECTED_INVERSE_WALL:W6
+        status: |
+          Raw H_g derivatives and vacuum-only ground jets are established. Prove the complete source/vacuum generator bounds R10, ||A^(r)(g)||_(q_g to q_g)<=d_r g^(-r-1) for r=0,1,2, or use the source's direct mixed-form R11 alternative. These are alternative sufficient entrances to the complete residual budget, not cumulative prerequisites. M10 concerns source-to-L2 control and is not a prerequisite for this route or a proof of its energy derivatives.
+        frontier:
+          priority: 2
+          target: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:SOURCE_ENERGY_JETS_R10
+          scope: The actual complete compact source/vacuum transport, common energy domain and physical clock; a vacuum-only skew generator is insufficient.
+          consequence: The R10 generator bounds, or the stated direct R11 alternative, instantiate the complete-budget implication and its cubic residual estimate at the fixed-block scope. They do not supply interacting-volume constants.
+          decisive_test: Decompose the complete generator into vacuum and conditional-source parts, retain commutator and energy-domain terms through two derivatives, and test the proposed g powers on the full energy graph rather than only on ground vectors.
+      - step: Establish the actual interacting-grid fast and source comparison with uniform constants
+        state: untried
+        depends_on:
+          - RESULT:WILSON_LITERAL_COARSE_FORM
+          - RESULT:WILSON_COVARIANT_BLOCK_SOURCES
+          - RESULT:FORM_SCHUR_SCALE_COMPARISON
+        bears_on:
+          - DERIV:WILSON_SPATIAL_SCHUR_EXCESS:SP20_SP24
+        status: |
+          Construct the true interacting-vacuum fast floor and complete local centered/source comparison uniformly in block count, retaining interfaces, Gauss constraints, nonreducing source directions and the normalized coarse operator. A fixed-square bound, additive tensorization or harmonic floor alone does not prove this target. The chosen physical scale trajectory and summable errors must then satisfy the closed-form iteration theorem's actual hypotheses.
+        frontier:
+          priority: 3
+          target: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:INTERACTING_GRID_COMPARISON
+          scope: Actual coupled Wilson grid with the true vacuum, full fast space, source metrics, interfaces and a common physical clock; uniformity in interacting block count is required.
+          consequence: A complete uniform comparison and matched normalized coarse gap can feed the SP20-SP24 scale iteration when its error and inverse-fast-energy budgets are summable. The fixed-block source routes are possible ingredients, not automatic proofs of this grid statement.
+          decisive_test: Start with two genuinely coupled adjacent blocks, compute the full conditional/source form including interface and high retained directions, and isolate a local estimate whose constants can be summed without a block-count factor.
+      - step: Bound the complete signed SC17 conditional defect in the actual vacuum
+        state: untried
+        depends_on:
+          - DERIV:WILSON_SC17_SPATIAL_CLOSURE:R1_R3
+        bears_on:
+          - DERIV:WILSON_SC17_SPATIAL_CLOSURE:R4_R9
+          - DERIV:WILSON_SC17_SPATIAL_CLOSURE:R10_R11
+        status: |
+          Instantiate the actual uniform smallness input for the Hessian defect D_B=Hess(V_B+(H_out Omega)/Omega)-2epsilon A^2, with pressure, metric, projector, moving-source and cutoff/product-domain terms assigned once. Preserve signed cancellations before bounding the complete expression. The conditional Riccati and block-geometry consequences are available, and the thermodynamic/physical-time constructions already stand at fixed spacing; neither a plaquette Hessian nor a numerical small root supplies this defect estimate.
+        frontier:
+          priority: 4
+          target: DERIV:WILSON_SC17_SPATIAL_CLOSURE:ACTUAL_REFERENCE_DEFECT_BOUND
+          scope: Actual positive Wilson vacuum on compatible finite periodic SU(2) blocks; the full signed conditional reference defect and all localization/domain terms remain in the target.
+          consequence: A verified uniform complete defect estimate would instantiate the conditional Riccati, conditional-variance and block-angle comparison route. This is a candidate spatial-continuum estimate, not missing Lean coverage of the established fixed-spacing theory.
+          decisive_test: On the smallest coupled block, derive outside-pressure and projector derivatives alongside the magnetic and metric terms, check the Gaussian cancellation exactly, then bound the remaining full expression with its cutoff commutators.
+      - step: Prove normalized RG and source increments with a summable common-space remainder
+        state: untried
+        depends_on:
+          - RESULT:COMMON_SPACE_CONTRACTIVE_DRIFT
+        bears_on:
+          - DERIV:YANGMILLS_CONTINUUM_BALABAN_MULTISCALE_PROOF:THEOREM_6_2
+          - DERIV:YANGMILLS_CONTINUUM_BALABAN_MULTISCALE_PROOF:THEOREM_7_2
+        status: |
+          RESULT:COMMON_SPACE_CONTRACTIVE_DRIFT supplies the proved abstract convergence criterion; its actual Wilson map and source hypotheses remain open. Construct the actual RG transformation and matched normalized observable maps on common spaces, subtract the running marginal terms, and bound the remaining expectation/source increments by a summable sequence. The printed O(1/k) estimate is insufficient. A dimension-five exclusion or a formal scaling power alone does not supply the quantitative transformed norm, subtraction, source drift or its uniform constants; an alternative summable bound is admissible. The projective-source martingale and predictable-drift criteria remain alternative routes rather than additional prerequisites here.
+        frontier:
+          priority: 5
+          target: DERIV:YANGMILLS_CONTINUUM_BALABAN_MULTISCALE_PROOF:THEOREM_7_1
+          scope: The actual normalized RG map and renormalized observables after marginal matching, with all measures/source spaces identified and scale-uniform remainder constants.
+          consequence: A summable cross-scale increment would supply the missing Cauchy input of Theorem 7.1. Regularity, symmetry restoration, reconstruction and positive finite physical mass remain separately scoped downstream requirements.
+          decisive_test: Work out one genuine normalized blocking step with its observable transport, isolate the marginal contribution, and calculate the surviving common-norm increment before claiming a power-improved summable bound.
       - step: Control time-integrated conditional cubic energy with retained-mean localization
         state: done
         closed_by:
@@ -1420,11 +1556,19 @@ gaps:
     depends_on:
       - G3
 dependency_spine:
+  - G3 is discharged; its resolved fourth-order assembly is an input to the bounded G9 sixth-order route.
+  - G18 is discharged at fixed spacing, including the actual infinite-volume Wilson band and literal-source frame; G19 carries spatial-continuum comparison and transport.
+  - The selected G19 routes are alternative or complementary estimates, not a chain of necessary conditions; M10 does not imply the complete source-energy jets R10.
+  - G17 now concerns a valid source-family stability formulation; its original unrestricted exponential-radius inference is refuted and it does not gate every infinite-volume result.
+  - G13 remains a separate temporal-history classification program that could consolidate the mobility taxonomy.
+dependency_spine_historical_2026_08_30:
   - G3 -> G9 and the mass ratio at orders 4-6
   - nothing further without G17 + G18
   - G13 is orthogonal and would consolidate the mobility taxonomy
   - G17 + G18 are the prerequisites of every infinite-volume spectral statement
 headline: |
+  The charge-odd fourth-order dispersion and actual fixed-spacing infinite-volume Wilson band/source construction are established in their stated regimes. The current derivation priorities target actual conditional-score and source-energy estimates, interacting spatial comparison, and summable normalized scale/source transport. Their order is editorial research guidance; graph dependencies retain their distinct mathematical meanings.
+headline_historical_2026_08_30: |
   The charge-odd plaquette sector carries a homologically protected flat band whose strong-coupling dispersion is derived exactly through fourth order at every rank; the infinite-volume and spectral statements are G17 and G18.
 unifying_candidates:
   - id: U1
@@ -1448,6 +1592,7 @@ unifying_candidates:
       A fourth-order coefficient of the retained operator that cannot be written in {q_a, e_2, e_3}. The five-shape enumeration of §5.1 would then be incomplete rather than merely unexplained.
     status: supported
     candidate_falsifier_2026_09_08: |
+      HISTORICAL INTERPRETATION, scoped by RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT. The fourth-order ansatz follows the actual support {I,U,S,S^2,R}, not R-linearity alone. A new sixth-order shape would test a proposed higher-order extension, not refute the fourth-order statement of U2.
       Not yet a refutation, and scoped narrowly. U2 is used as the claim that the FIVE-element span {q, q^2, e_2, q e_2, e_3} (the ansatz cleared of its 1/q) holds the shape coefficient. The operator algebra that produced the fourth-order kernel contains a word whose carrier symbol is not in that span: sigma(R U R) = 4 e_2^2 exactly, with zero Feshbach defect, and an exact rank test places 4 e_2^2 / q outside the five monomials (suite "the Feshbach channel of the plaquette Hodge algebra", the FINDING check). This does NOT falsify U2 as literally stated -- 4 e_2^2 / q is still a function of the Bloch scalars -- and it says nothing about fourth order, where the kernel is R-linear and the ansatz is exact. It is a prediction about the first order that inserts the cross-plane operator twice with a Laplacian between, and which words order six populates is open (G9, G10).
   - id: U3
     statement: |
