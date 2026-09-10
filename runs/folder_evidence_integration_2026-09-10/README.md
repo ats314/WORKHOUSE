@@ -71,7 +71,13 @@ clustering requires the stated physical norm and source normalization.
 Supplying these hypotheses for a continuum Wilson trajectory remains distinct
 from having proved the reusable criteria.
 
-Fresh execution details belong in [validation.json](validation.json).
+Fresh execution details are in [local_validation.json](local_validation.json):
+562/562 mathematical checks passed. The full regression collection plus an
+exact rerun of the 181 cases affected by a missing temporary-directory parent
+accounts for 1,347 passes and one Windows symlink skip out of 1,348 cases.
+Both the initial error report and corrected rerun are retained. The earlier
+[integration checkpoint](validation.json) records its then-pending work;
+GitHub CI and merge status are recorded by the publishing pull request.
 `SHA256SUMS` pins this run. Maintained navigation was preserved separately
 under the workstation's `navigation/preserved/2026-09-10-folder-evidence-integration/`;
 those navigation backups are not scientific evidence.

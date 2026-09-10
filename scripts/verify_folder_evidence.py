@@ -74,6 +74,18 @@ def verify(root: Path = ROOT, *, inventory: dict | None = None) -> dict:
         relationships[relationship] += 1
         if relationship != "identical" and not row.get("difference_reason"):
             raise ValueError(f"Unexplained source version difference: {path}")
+        selected = (root / path).read_bytes()
+        if hashlib.sha256(selected).hexdigest() != row["baseline_sha256"]:
+            raise ValueError(f"Reviewed source changed; record a fresh scoped successor: {path}")
+        actual_relationship = (
+            "identical"
+            if raw == selected
+            else "newline_only"
+            if raw.replace(b"\r\n", b"\n") == selected.replace(b"\r\n", b"\n")
+            else "maintained_successor"
+        )
+        if relationship != actual_relationship:
+            raise ValueError(f"Incorrect source version relationship: {path}")
         review = row["review"]
         if not review.get("summary") or not review.get("scope"):
             raise ValueError(f"Missing scoped source review: {path}")
@@ -88,10 +100,14 @@ def verify(root: Path = ROOT, *, inventory: dict | None = None) -> dict:
                 raise ValueError(f"Missing or promoted source node: {cid}")
         primary = cite_ids[0]
         for target in review["claim_ids"]:
+            if target in aliases and aliases[target].get("path") == path:
+                raise ValueError(f"Self-reference is not reviewed claim coverage: {path}")
             if target not in claims or (primary, target, "bears_on") not in edges:
                 raise ValueError(f"Missing reviewed claim connection: {primary} -> {target}")
         for target in review["citations"]:
             target = target if target.startswith("CITE:") else "CITE:" + target
+            if target in aliases and aliases[target].get("path") == path:
+                raise ValueError(f"Self-reference is not reviewed source coverage: {path}")
             if target not in claims or (primary, target, "cites") not in edges:
                 raise ValueError(f"Missing reviewed source citation: {primary} -> {target}")
         if not review["claim_ids"] and not review["citations"]:

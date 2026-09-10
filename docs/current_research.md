@@ -99,6 +99,11 @@ conditional variances. `RESULT:UNIFORM_MARKED_CLUSTERING` converts a uniform
 two-marked physical weighted norm into exponential covariance decay. These are
 proved criteria; applying them to a continuum Wilson trajectory requires the
 specified actual laws, sources, drift estimates and physical normalization.
+`RESULT:SOURCE_COMPLEMENT_COMPLETE_WINDOW` separately proves an onto source
+frame and the complete high spectral window from a finite source lower bound
+and an upper bound on the entire complementary Hilbert space, with an explicit
+projection-angle estimate. Source moments alone do not supply that complement
+bound. Its existing fixed-spacing applications retain their own regimes.
 
 The [September Feshbach review](research/september_feshbach_integration.md)
 preserves both the exact identities and their scope corrections.

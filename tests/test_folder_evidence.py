@@ -25,7 +25,10 @@ def test_received_folder_evidence_has_scoped_graph_coverage():
     assert report["fresh_mathematical_certification"] is False
 
 
-@pytest.mark.parametrize("defect", ["omitted", "duplicate", "digest", "citation", "claim", "scope"])
+@pytest.mark.parametrize(
+    "defect",
+    ["omitted", "duplicate", "digest", "citation", "claim", "scope", "self", "version", "selected"],
+)
 def test_intake_rejects_lost_sources_and_broken_provenance(defect):
     data = copy.deepcopy(inventory())
     row = data["files"][0]
@@ -41,5 +44,15 @@ def test_intake_rejects_lost_sources_and_broken_provenance(defect):
         row["review"]["claim_ids"] = ["RESULT:DOES_NOT_EXIST"]
     elif defect == "scope":
         row["review"]["scope"] = ""
+    elif defect == "self":
+        row["review"]["claim_ids"] = row["citation_ids"]
+        row["review"]["citations"] = []
+    elif defect == "version":
+        row["baseline_relationship"] = (
+            "maintained_successor" if row["baseline_relationship"] == "identical" else "identical"
+        )
+        row["difference_reason"] = "An unsupported description cannot replace byte comparison."
+    elif defect == "selected":
+        row["baseline_sha256"] = "0" * 64
     with pytest.raises(ValueError):
         audit.verify(inventory=data)
