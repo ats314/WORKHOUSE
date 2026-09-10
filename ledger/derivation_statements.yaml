@@ -4767,3 +4767,505 @@ documents:
     remaining: Prove M10 or another sufficient actual conditional score estimate. The source moment alone
       does not establish uniform Hardy control, complete transport derivatives, or an interacting grid
       floor.
+- id: CITE:SOURCE_CURRENT_SPECTRAL_BRIDGES
+  path: docs/derivations/source-currents-and-spectral-totality.md
+  sha256: 860c81a3fb665d6b9c385365322ff0503e5500d6d79c94d49a0984250a4548a9
+  statements:
+  - id: DERIV:SOURCE_CURRENT_BRIDGES:SCB0A
+    statement: For real Hilbert spaces E and L, a bounded linear map Y from E to L, a vector j in L, real
+      g, and positive kappa, any energy function satisfying a(v) >= kappa times the squared norm of Yv
+      obeys 2g times the inner product of j and Yv minus a(v) <= g squared times the squared norm of j
+      divided by kappa. The map Y may have a kernel and no inverse operator is required.
+    locator: '## SCB0A. Degenerate energy variational certificate (lines 21-34)'
+    anchor: '## SCB0A. Degenerate energy variational certificate'
+    source_labels:
+    - SCB0A
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - E and L are real Hilbert spaces and Y:E->L is bounded linear.
+    - j belongs to L, g is real, kappa is strictly positive, and a(v) >= kappa ||Yv||^2 for every tested
+      v.
+    - The residual is the specified functional rho(v)=g<j,Yv>; its vanishing on ker(Y) follows from this
+      factorization.
+    - For an unbounded form-domain application, all pairings and the lower energy inequality must be justified
+      on the common tested domain.
+    depends_on: []
+    lean: []
+    remaining: The abstract bounded-map variational inequality is fully encoded by factored_variational_energy_without_inverse.
+      Its application to actual unbounded Wilson form-domain derivative maps and an actual model residual
+      requires the separately supplied current factorization, domains, and lower energy. This statement
+      does not require or construct an inverse and does not close W6.
+    lean_support:
+    - name: factored_variational_energy_without_inverse
+      scope: This is the inverse-free statement. Y need not be injective. The function a is not required
+        to be a quadratic, closed, continuous, or physically realized form; such realizations and supremum/Riesz
+        constructions are separate application steps.
+  - id: DERIV:SOURCE_CURRENT_BRIDGES:SCB0B
+    statement: For bounded self-adjoint reference and interacting operators with their actual bounded
+      inverses, the factored residual current controls its selected inverse energy without consuming a
+      uniform inverse-norm bound. If the current norm squared is at most CJ b, the interacting form dominates
+      kappa ||Yv||^2, the diagonal defect is at most a|g|b, and |g| <= g0, then the absolute selected
+      inverse difference is at most (a+g0 CJ/kappa)|g|b.
+    locator: '## SCB0B. Bounded-inverse W6 composition (lines 35-59)'
+    anchor: '## SCB0B. Bounded-inverse W6 composition'
+    source_labels:
+    - SCB0B
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - A0 and Ag are bounded self-adjoint operators on the real Hilbert space with the stated actual bounded
+      inverses R0 and Rg.
+    - Set u=R0 t and r=(Ag-A0)u; the current factorization <r,v>=g<j,Yv> holds for every v.
+    - kappa>0 and <v,Ag v> >= kappa ||Yv||^2 for every v; Y need not be injective.
+    - The nonnegative source weight b and nonnegative current constant CJ obey ||j||^2 <= CJ b.
+    - The diagonal defect obeys |<u,(Ag-A0)u>| <= a|g|b and |g| <= g0.
+    depends_on:
+    - DERIV:SOURCE_CURRENT_BRIDGES:SCB0A
+    lean: []
+    remaining: The bounded-map selected inverse-energy statement and the bounded-inverse W6 composition
+      are encoded by factored_inverse_energy_without_uniform_gap and gapless_factored_w6_bound, using
+      the existing variational_residual_identity. Both inverse realizations remain assumptions; the word
+      gapless in the theorem name does not remove them. The actual finite-g coupled Wilson factorization,
+      uniform source current bound, diagonal estimate, and any extension to unbounded closed forms remain
+      application obligations.
+    lean_support:
+    - name: factored_inverse_energy_without_uniform_gap
+      scope: The lower-energy map Y can have a kernel. Ag and Rg remain bounded operators with an explicit
+        right-inverse identity. Self-adjointness, a left inverse, and completeness are not hypotheses
+        of this particular theorem. It supplies no unbounded inverse or Wilson current construction.
+    - name: gapless_factored_w6_bound
+      scope: Bounded-operator W6 composition. A0 requires the displayed right inverse only; Ag requires
+        both displayed inverse identities. It assumes a separate diagonal estimate and the complete actual
+        residual factorization. A degenerate Y is permitted, but this is not an inverse-free or unbounded-operator
+        W6 theorem.
+    - name: variational_residual_identity
+      scope: The existing bounded-inverse variational identity only; all inverse and symmetry hypotheses
+        remain. It does not construct a closed-form identity without an inverse.
+  - id: DERIV:SOURCE_CURRENT_BRIDGES:SCB1
+    statement: For the actual twelve-edge square's complete source-compatible first transported operator
+      on the physical Gaussian polynomial core, the cometric is M0=diag(4Iq,2Iu,8Is,3Iv) and the specified
+      symmetric linear matrix field M1 gives W1tilde=-(2mu0)^(-1) div(mu0 M1 grad). For the inverse-smoothed
+      source u0=delta T psi(a), the complete first fast residual pairs with any physical fast test through
+      the current j1=(1/sqrt(2)) M0^(-1/2) M1 grad(u0). Its dual-energy norm is bounded by the norm of
+      this current, including its nonzero v component.
+    locator: '## SCB1. The complete first current in the actual square convention (lines 60-114)'
+    anchor: '## SCB1. The complete first current in the actual square convention'
+    source_labels:
+    - SCB1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Use exactly the fixed twelve-edge, four-face square geometry and source-compatible full first unitary
+      jet in the preserved source.md Q7-Q16.
+    - The independent Gaussian coordinates q,u,s,v have component variances sqrt(2),1/2,2,sqrt(6)/4, with
+      the corresponding M0 and Gaussian precision in SCB1.
+    - M1 has the five displayed off-diagonal blocks and their transposes; the physical Gauss-divergence
+      relations used by the supplied Q12 normal form hold on the tested polynomial core.
+    - The source is radial, a=|q|^2, T=q dot (u cross s), psi=(S+m)^(-1)phi', and u0=delta T psi uses
+      the full Gaussian inverse before the residual is evaluated.
+    - Tests lie in the physical fast subspace Q0, and Gaussian integration by parts is justified on the
+      polynomial core.
+    depends_on: []
+    lean: []
+    remaining: The exact Python controls reconstruct the original-coordinate cometric, complete Q12 action
+      on T and T*a, vanishing second radial symbol, symmetry, and divergence identities. The analytic
+      physical-core divergence identity and its common-domain extension are not themselves whole-statement
+      Lean formalizations. The current is an admissible dual-norm upper bound, not a claimed Hodge-minimal
+      current or exact inverse-energy representative. No finite-g or coupled-volume residual is constructed.
+  - id: DERIV:SOURCE_CURRENT_BRIDGES:SCB2
+    statement: The complete fixed-square first current has exact squared norm delta^2 E[(cA a^2/4+cD a)|psi|^2+16cA
+      a^2|psi'|^2], with cA=(9-4sqrt(2))/49 and cD=(159+11sqrt(2))/196. Radial Young with parameter 1/12
+      and the joint positive-resolvent estimate imply ||j1||^2 <= Kstar b[phi] for every radial finite-energy
+      source, where Kstar=(48213-16675sqrt(2))/20706224 is strictly less than 1/840. The same non-strict
+      source-energy bound holds for the selected full Gaussian inverse energy of the first residual coefficient.
+    locator: '## SCB2. Exact current moments and an all-source constant (lines 115-172)'
+    anchor: '## SCB2. Exact current moments and an all-source constant'
+    source_labels:
+    - SCB2
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Use the complete current, Gaussian measure, and physical radial source convention of SCB1, retaining
+      the v-current.
+    - The radial measure is proportional to a^(1/2)exp(-a/(2sqrt(2))) da and dnu=a dmu.
+    - S=-8a partial_a^2+(2sqrt(2)a-20)partial_a has its positive radial Friedrichs realization, psi=(S+m)^(-1)phi',
+      and m=4+sqrt(2).
+    - The retained source energy is b[phi]=8||phi'||^2 in L2(dnu).
+    - Polynomial core integration by parts and the supplied Gaussian radial form-core density justify
+      extension of the bounded current map to all radial finite-energy sources; complex cross terms use
+      their real parts.
+    depends_on:
+    - DERIV:SOURCE_CURRENT_BRIDGES:SCB1
+    lean: []
+    remaining: Exact Wick moments, radial integration by parts coefficients, the rational radical enclosure,
+      and the constant comparison are reproduced symbolically. The scalar joint-resolvent inequality is
+      encoded by joint_resolvent_budget. The infinite-dimensional radial spectral-calculus application
+      and form-core extension remain analytic. This improves the prior first-coefficient bound; it does
+      not establish a finite-g residual estimate, a volume-uniform connected current estimate, or an interacting
+      inverse identification.
+    lean_support:
+    - name: joint_resolvent_budget
+      scope: Exact scalar inequality; d is not separately required to be nonnegative. Its application
+        by the spectral theorem, the radial Friedrichs realization, exact current moments, and the specific
+        Kstar arithmetic are separate ingredients, not formalized by this lemma alone.
+  - id: DERIV:SOURCE_CURRENT_BRIDGES:SCB3
+    statement: For positive reference and interacting fast forms with their actual compatible weak inverses,
+      set S0=<t,A0^(-1)t>, Sg=<t,Ag^(-1)t>, u0=A0^(-1)t, and rho(v)=ag[v,u0]-<v,t>. If S0 <= C0 b and
+      ||rho||_(ag*) <= epsilon sqrt(b), then |Sg-S0| <= (epsilon sqrt(C0)+epsilon^2)b, without a separate
+      diagonal-defect estimate. This follows by testing rho against Ag^(-1)t and bounding sqrt(Sg) by
+      sqrt(S0)+epsilon sqrt(b).
+    locator: '## SCB3. A selected-inverse implication without a separate diagonal bound (lines 173-197)'
+    anchor: '## SCB3. A selected-inverse implication without a separate diagonal bound'
+    source_labels:
+    - SCB3
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - The positive closed forms and their actual weak inverse realizations have the domains required for
+      u0=A0^(-1)t to belong to D(ag) and for testing against wg=Ag^(-1)t.
+    - S0 and Sg are nonnegative and the actual residual functional is continuous in the interacting energy
+      norm.
+    - C0,b,epsilon are nonnegative, S0 <= C0 b, and ||rho||_(ag*) <= epsilon sqrt(b).
+    - Any epsilon=O(|g|) application must concern the complete finite-g residual, not merely the coefficient
+      rho1.
+    depends_on: []
+    lean: []
+    remaining: The scalar nonnegative inverse-control implication is encoded by residual_controls_inverse_without_diagonal,
+      while the actual closed-form testing identity and domain realization are analytic premises. The
+      fixed square supplies only its reference constant and first residual coefficient. The complete finite-g
+      residual norm and interacting coercivity remain unsupplied physical inputs, so no W6 target is closed
+      by this implication alone.
+    lean_support:
+    - name: residual_controls_inverse_without_diagonal
+      scope: Scalar implication only; x>=0 is not an explicit formal hypothesis. The intended inverse-energy
+        application chooses x=sqrt(Sg), y=sqrt(S0), e=epsilon*sqrt(b), with real S0,Sg>=0, actual compatible
+        inverse/source vectors, and the signed residual identity. It does not itself prove that operator
+        identity or close physical W6.
+  - id: DERIV:SOURCE_CURRENT_BRIDGES:SCB4
+    statement: For the actual normalized conditional ground density and a retained-only coarse cometric
+      A(U), a finite-cost current representing the intrinsic score as s_a=-div_rho(J_a) gives the exact
+      cross-form current identity and the bound |h[f,v]|^2 <= Jcost[f] ell_F[v]. If the parameter-density
+      score has a solution -div_rho(S grad chi_a)=partial_a log rho, one admissible current is J_a=S grad
+      chi_a-b_a. This current retains the geometric-density cancellation. Source-dependent coefficient
+      differentiation and the projection connection [P'_g,P_g] supply the exact centering corrections
+      and cannot be dropped.
+    locator: '## SCB4. Intrinsic score currents and exact centering corrections (lines 198-257)'
+    anchor: '## SCB4. Intrinsic score currents and exact centering corrections'
+    source_labels:
+    - SCB4
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Adopt the linked ground-marginal derivation's compact smooth product/submersion setting, actual
+      positive ground density, normalized conditional rho_U, and literal conditional expectation projection.
+    - The coarse cometric A=A(U) depends only on retained coordinates, so A grad f is fiber-constant;
+      the vertical cometric S is positive on the tested fiber directions.
+    - The common form core, regularity, conditional differentiation, and fiber integration by parts are
+      justified, including absence or explicit control of boundary terms.
+    - The current representing the intrinsic score exists and its displayed integral Jcost is finite.
+      The Poisson construction is a sufficient construction, not an asserted solved Wilson Poisson equation.
+    - The test v has zero conditional mean and the source f lies in the appropriate retained form domain.
+    - Any positive spectral shift requires its separate lower-form coercivity; a uniform conditional gap
+      is not inferred from the current identity.
+    depends_on: []
+    lean: []
+    remaining: The score-to-current identity, its Cauchy-Schwarz consequence, and the local connection
+      coefficient are analytic compositions under the explicit measure, metric, and current assumptions.
+      The exact Python control verifies finite product-rule and projection-motion centering algebra, not
+      the actual coupled current construction. The balanced strip geometric current is locally controlled,
+      but the parameter-density current, all-volume source transport locality, high retained energies,
+      and uniform finite-g source budget remain open application obligations. No small-k/epsilon SC17
+      estimate is imported into the weak-g large-k/epsilon regime.
+  - id: DERIV:SOURCE_CURRENT_BRIDGES:SCB5
+    statement: For bounded real observables on a probability space, centered exponentials satisfy ||(exp(alpha
+      f)-E exp(alpha f))/alpha-(f-Ef)||_2 <= |alpha| B^2 exp(|alpha|B) when |f|<=B. Therefore a bounded
+      operator killing arbitrarily small nonzero exponential sources kills their centered observable limits.
+      If those limits have dense span in the intended vacuum-orthogonal space and each source has an actual
+      positive spectral correlation bounded by a source-dependent finite prefactor times exp(-m t) at
+      arbitrarily late physical times with one common m>0, the low-energy spectral projection below m
+      vanishes on that whole space. No uniform footprint radius or common source prefactor is needed for
+      this implication.
+    locator: '## SCB5. Tiny exponential sources imply totality by differentiation (lines 258-298)'
+    anchor: '## SCB5. Tiny exponential sources imply totality by differentiation'
+    source_labels:
+    - SCB5
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - mu is a probability measure and each real observable f is measurable and bounded by its own finite
+      B.
+    - For every f there is a sequence of nonzero admissible real alpha tending to zero; the sequence and
+      admissible window may depend on f.
+    - The centered observable family has dense linear span in the explicitly intended vacuum-orthogonal
+      Hilbert space.
+    - The Hamiltonian and source spectral measures have the actual positive spectral representation in
+      the same physical clock.
+    - One rate m>0 is common to all sources, while each fixed source has a finite prefactor and a decay
+      inequality along times unbounded above. Source-dependent onset times are allowed.
+    - Gauge or charge-sector use additionally requires the actual invariant-core density and commuting
+      measure-preserving symmetry projections; plaquette traces alone are not assumed total.
+    depends_on: []
+    lean: []
+    remaining: The uniform Taylor remainder and tangent-density composition are analytic. Existing Lean
+      statements construct actual centered L2 exponential sources and prove positive-spectral decay exclusion
+      and total-family reconstruction under their displayed all-time decay hypotheses. The source-dependent
+      late-time variant and the tangent-to-totality composition are not claimed wholly formalized here.
+      The finite dark-state control demonstrates that omitting totality invalidates the conclusion. No
+      actual continuum spectral representation, common limiting physical rate, or nonzero source limit
+      is established by this abstract bridge.
+    lean_support:
+    - name: centeredExpL2_orthogonal_constants
+      scope: The existing centered exponential L2 vector is orthogonal to constants under its probability-space
+        and integrability hypotheses; not the tangent limit or source totality.
+    - name: laplace_decay_excludes_low_energy
+      scope: The existing positive spectral-measure exclusion theorem with its own all-time decay hypothesis;
+        the source-dependent arbitrarily-late-time extension in SCB5 is analytic.
+    - name: total_family_spectral_projection_gap
+      scope: The existing total-family spectral projection conclusion with its stated decay and density
+        inputs; no actual Wilson continuum source identification is supplied.
+  - id: DERIV:SOURCE_CURRENT_BRIDGES:SCB6
+    statement: For a finite footprint with N>0, let X be its summed observable and K(s)=log E exp(sX).
+      If the actual tilted susceptibility satisfies K''(s)<=sigma N throughout the interval joining zero
+      to 2alpha, the partition-normalized centered exponential Yalpha=exp(alpha X)/E exp(alpha X)-1 has
+      squared norm at most exp(sigma N alpha^2)-1. Consequently alpha=t/sqrt(N) gives a footprint-uniform
+      bound exp(sigma t^2)-1. A lower tilted susceptibility kappa N gives the corresponding noncollapse
+      lower bound exp(kappa t^2)-1.
+    locator: '## SCB6. Uniform normalized mesoscopic source amplitudes (lines 299-316)'
+    anchor: '## SCB6. Uniform normalized mesoscopic source amplitudes'
+    source_labels:
+    - SCB6
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - The footprint cardinality N is strictly positive and the exponential moments at the required parameters
+      exist and are finite.
+    - K(0)=0 and conditional/exponential-moment differentiation is justified on the interval joining zero
+      to 2alpha.
+    - The upper susceptibility bound K''(s)<=sigma N holds throughout that entire tilted interval with
+      nonnegative sigma; unweighted variance at zero alone is insufficient.
+    - For the optional noncollapse conclusion, K''(s)>=kappa N also holds throughout the interval with
+      positive kappa and the chosen t is nonzero.
+    - The source is the displayed partition-normalized mesoscopic source, not the raw fixed-alpha exponential
+      in the existing radius obstruction.
+    depends_on: []
+    lean: []
+    remaining: The normalized variance and double-integral cumulant identities and their bound are analytic
+      consequences of the stated differentiability and susceptibility assumptions. Python verifies the
+      normalization algebra and exact polynomial double-integral controls, not general differentiability
+      or an actual Wilson tilted-susceptibility estimate. This source-family replacement does not discharge
+      the raw fixed-alpha source-radius problem, an interacting source frame, or continuum nontriviality.
+- id: CITE:THEORY_GEOMETRY_RICCATI_BRIDGES
+  path: docs/derivations/theory-geometry-and-riccati-bridges.md
+  sha256: 7216dd8c2f263782e0547d03515ab6fee56a0e84bc3ba0b6f83c1b5e9c919835
+  statements:
+  - id: DERIV:THEORY_GEOMETRY_BRIDGES:TG1
+    statement: On the nonnegative three-coordinate probability simplex, V=sum_{i<j} x_i x_j (x_i-x_j)^2
+      has sharp maximum (827+73 sqrt(73))/18432<2/25, attained precisely at permutations of (a,a,1-2a),
+      a=(13-sqrt(73))/48. The four-coordinate input (4/5,1/15,1/15,1/15) has V=484/5625>2/25 and prevents
+      dimension-free reuse.
+    locator: '## TG1: The sharp three-coordinate anisotropy constant (lines 14-60)'
+    anchor: '## TG1: The sharp three-coordinate anisotropy constant'
+    source_labels:
+    - TG1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Exactly three real nonnegative coordinates summing to one for the maximum theorem.
+    - The four-coordinate pair sum is used only as an explicit scope counterexample.
+    depends_on: []
+    lean: []
+    remaining: The compact-extremum/Lagrange reduction and sharp maximizer classification are analytic,
+      not covered by the existing Lean 1/4 bound. Exact controls check every boundary/stationary value
+      and comparison; no physical model is identified by this scalar theorem.
+    lean_support:
+    - name: anisotropy_variance_identity
+      scope: Existing simplex polynomial identity only; not the sharp maximum.
+    - name: anisotropy_variance_nonnegative
+      scope: Existing nonnegative pair-sum ingredient only.
+  - id: DERIV:THEORY_GEOMETRY_BRIDGES:TG2
+    statement: For a_i>=0, q=sum a_i, the functions q V(a/q) and q^2 V(a/q), defined as zero at q=0, extend
+      continuously and are bounded by K3 q and K3 q^2. Integrating against |f|^2 and a positive measure
+      gives non-strict weighted energy inequalities, including zero and nodal inputs. The established
+      Hodge leakage identity inherits these bounds.
+    locator: '## TG2: Zero extension and integrated energy bounds (lines 61-93)'
+    anchor: '## TG2: Zero extension and integrated energy bounds'
+    source_labels:
+    - TG2
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - The angular simplex has exactly three coordinates.
+    - The measure is positive and the displayed right-hand weighted integrals are finite.
+    - Physical leakage use additionally requires the recorded full-kernel carrier identification and actual
+      lower-energy domination.
+    depends_on:
+    - DERIV:THEORY_GEOMETRY_BRIDGES:TG1
+    lean: []
+    remaining: The scalar extension does not define a normalized carrier or projector at q=0. Measure
+      integration and physical lower-energy/source identifications are not supplied by the finite polynomial
+      control. Strict integrated inequalities require a positive right-hand integral.
+  - id: DERIV:THEORY_GEOMETRY_BRIDGES:TG3
+    statement: For U=psi psi*, a_i=|psi_i|^2, R=diag(a_i)-U and H=alpha I+bU+cR on three coordinates,
+      det(lambda I-H)=xi^3-bq xi^2+c(2b-c)e2 xi-c^2(3b-2c)e3, xi=lambda-alpha. The identity extends to
+      zero coordinates and q=0. The same rank-one structure gives sigma(AUB)=sigma(A)sigma(B).
+    locator: '## TG3: One secular cubic for the recorded Hodge support (lines 94-136)'
+    anchor: '## TG3: One secular cubic for the recorded Hodge support'
+    source_labels:
+    - TG3
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Three-dimensional Hermitian rank-one construction with real alpha,b,c.
+    - q=sum a_i and e2,e3 are elementary symmetric Bloch variables, not representation Casimirs.
+    - Application to the recorded Hodge support uses R=D-U and S^2=(q-8)L_down+16I.
+    depends_on: []
+    lean: []
+    remaining: No physical coefficient of RUR or other higher-order operator word is calculated. Existing
+      Lean Hodge relations and rank-one identities are ingredients; they do not formalize the complete
+      generic determinant statement.
+    lean_support:
+    - name: hodge_algebra_relations
+      scope: Existing Laplacian algebra needed to reduce the recorded support; not the secular determinant.
+    - name: vacuum_projection
+      scope: Existing normalized rank-one Hermitian idempotence ingredient only.
+  - id: DERIV:THEORY_GEOMETRY_BRIDGES:TG4
+    statement: For the fixed-momentum truncation M=q u^2[tQ+u^2 h], h=eta I+beta P+c diag(x_i), |p_i|^2=x_i,
+      its carrier eigenbranch has E0=q[u^4 mu-u^6 c^2 V/t+u^8(c^3 kappa3-beta c^2 V)/t^2+O(u^10)], where
+      kappa3 is the third centered moment of the size-biased coordinate distribution. At V=0 every word
+      in S,U,R preserves the carrier.
+    locator: '## TG4: The induced eighth-order moment in the same truncation (lines 137-166)'
+    anchor: '## TG4: The induced eighth-order moment in the same truncation'
+    source_labels:
+    - TG4
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - q>0, t>0, normalized retained rank-one carrier and three nonnegative x_i summing to one.
+    - Small coupling at fixed nonzero momentum and the displayed finite matrix truncation.
+    - All-word application to later physical kernels additionally requires their representation in the
+      generated S,U,R algebra.
+    depends_on: []
+    lean: []
+    remaining: The eighth-order coefficient is induced by the displayed fourth-order matrix; independent
+      physical sixth-, eighth-, or intervening-order kernels and uniform remainders are not included.
+      Existing Lean coefficient arithmetic supports only the recorded sixth-order specialization.
+    lean_support:
+    - name: anisotropy_induced_coefficient
+      scope: Exact recorded sixth-order rational coefficient only; not the new eighth-order spectral expansion.
+  - id: DERIV:THEORY_GEOMETRY_BRIDGES:TG5
+    statement: For the full reference graph (H-z)J=i_P S and an actual skew source connection K, L=PKJ
+      gives J*[H,K]J=SL+L*S, while Q[H,K]J=F Gamma-CS retains the complete fast force. If Hdot=D+[H,K],
+      the retained evolution Tdot=-LT satisfies d(T*ST)=T*J*D JT. Its complete second source coefficient
+      is a retained congruence coefficient, with direct and exchange terms included together.
+    locator: '## TG5: Complete source motion is a Schur congruence (lines 167-222)'
+    anchor: '## TG5: Complete source motion is a Schur congruence'
+    source_labels:
+    - TG5
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual differentiable source-straightening family, skew connection, and full graph equation including
+      baseline cross blocks.
+    - Common invariant operator/form core with justified differentiations, inverse/graph realizations,
+      and bounded extensions where used.
+    - Retained evolution exists; energy-norm conclusions require B^(1/2)L B^(-1/2) control, not merely
+      a Hilbert-space generator bound.
+    depends_on: []
+    lean: []
+    remaining: The algebra and symbolic matrix checks do not construct unbounded Wilson source transport,
+      its Gauss-compatible common domains, energy-norm bounds, or volume-uniform finite-g residuals. On-shell
+      fast factorization cannot be used off shell after discarding CS.
+    lean_support:
+    - name: full_graph_source_ward
+      scope: Finite rectangular-matrix Ward identity with an explicit graph equation. The matrix called
+        I is an arbitrary rectangular matrix; injection/isometry properties are not encoded. No unbounded-operator
+        domains, differentiable transport, or actual physical graph construction is supplied.
+    - name: schur_connection_cancellation
+      scope: Exact noncommutative algebraic identity. Interpreting the three terms as a derivative additionally
+        requires differentiable operators, the connection equation, common domains, and a product rule.
+        None of those analytic constructions is formalized by this lemma.
+  - id: DERIV:THEORY_GEOMETRY_BRIDGES:TG6
+    statement: 'The generally nonunitary retained congruence must carry its metric: -partial_z(T*ST)=T*MT-(partial_z
+      T)*ST-T*S(partial_z T), M=-partial_z S. The extra pairings vanish on shell only. For a finite source
+      unitary, S_new^(-1)=A*S^(-1)A+D*F^(-1)D with A=J*Ui_P and D=i_Q*Ui_P. A rotated two-level determinant
+      numerator equals (E-z)(F-z) when c^2+s^2=1.'
+    locator: '## TG6: The metric and finite source resolvent must travel with the form (lines 223-274)'
+    anchor: '## TG6: The metric and finite source resolvent must travel with the form'
+    source_labels:
+    - TG6
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - The compatible Schur graph and retained congruence of TG5, with justified z differentiation and
+      M=-partial_z S=J*J.
+    - Actual inverses and source overlap in the finite resolvent identity.
+    - For the rotated numerator only c^2+s^2=1 is required; division additionally requires a nonzero fast
+      denominator.
+    depends_on:
+    - DERIV:THEORY_GEOMETRY_BRIDGES:TG5
+    lean: []
+    remaining: No transformed metric may be frozen off shell. The Lean metric helper only rearranges a
+      supplied expression and proves no derivative or on-shell cancellation. The numerator lemma proves
+      no inverse or physical gap. Continuum residues need actual source/metric/clock identification and
+      common-rate late-time control for a total family.
+    lean_support:
+    - name: schur_metric_pairing_on_shell
+      scope: Algebraic rearrangement helper. Despite its preserved historical name, no on-shell premise,
+        vanishing pairing, differentiability, or metric theorem is part of this statement. It must not
+        receive a whole-statement formalization edge for TG6.
+    - name: rotated_two_level_schur_numerator
+      scope: Exact scalar polynomial numerator TG6b under c^2+s^2=1; no fast inverse, metric evolution
+        or physical spectral-gap conclusion.
+  - id: DERIV:THEORY_GEOMETRY_BRIDGES:TG7
+    statement: For the actual four-face SU(2) square's scalar outer-trace source, signed chart reflection
+      and an equivariant compatible source transport give S(-g,z)=S(g,z). Every existing odd two-sided
+      Schur Taylor coefficient, including the cubic coefficient, vanishes although the full first operator
+      is generally nonzero.
+    locator: '## TG7: Scalar square-source parity eliminates formal odd Schur jets (lines 275-313)'
+    anchor: '## TG7: Scalar square-source parity eliminates formal odd Schur jets'
+    source_labels:
+    - TG7
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - The specified scalar outer-trace observation, actual true-ground marginal, and source range; the
+      Gaussian retained space is pointwise even under joint coordinate reflection.
+    - Signed chart covariance H_-g=Pi H_g Pi and J_-g=Pi J_g, and parity-compatible source transport or
+      formal Kato jets.
+    - An odd coefficient conclusion requires the corresponding two-sided Taylor jet on the actual common
+      core.
+    depends_on: []
+    lean: []
+    remaining: Evenness alone permits |g|^3 and does not prove a uniform O(g^4) remainder. Higher source/domain
+      jets and uniform estimates toward g=0 remain open. The scalar-source conclusion is not asserted
+      for mixed-parity matrix/coarse source spaces.
+  - id: DERIV:THEORY_GEOMETRY_BRIDGES:TG8
+    statement: For the Banach-algebra map T(X)=S(X^2-D), a fixed point X_star and trial Y in the radius-r
+      ball satisfy ||Y-X_star||<=||Y-T(Y)||/(1-2 beta r) when S is bounded real-linear, ||S||<=beta, beta>=0
+      and 2 beta r<1. The existing abstract defaults on lambda in [0,3/100] give contraction<3/20, amplification<20/17,
+      and a non-strict pointwise residual bound with factor20/17.
+    locator: '## TG8: A residual certificate for the abstract Riccati fixed point (lines 314-350)'
+    anchor: '## TG8: A residual certificate for the abstract Riccati fixed point'
+    source_labels:
+    - TG8
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - A real normed Banach algebra, bounded real-linear S, fixed-point identity, and both ball memberships.
+    - The displayed contraction inequality; the default specialization uses exactly the existing defaultBeta/defaultDefect/smallRoot
+      definitions and closed coupling interval.
+    depends_on: []
+    lean: []
+    remaining: This does not construct the actual Wilson pressure defect or identify its physical Hessian/source
+      with the fixed point. Cross-scale use requires residual summability in one common norm or controlled
+      transported norm factors; the default abstract interval is not a new physical closure window.
+    lean_support:
+    - name: riccati_residual_certificate
+      scope: Conditional norm estimate; no completeness, construction of a fixed point, or identification
+        with the physical Hessian is required or proved. Noncommutativity is allowed. Both vectors must
+        satisfy the same radius bound.
+    - name: riccati_default_contraction_bound
+      scope: Exact scalar consequence of the registered abstract default functions and their interval
+        theorem. It does not establish the physical SC17 defect hypotheses or an actual Wilson closure
+        window.

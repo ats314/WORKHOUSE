@@ -11,6 +11,12 @@ The September 9 reconciliation and analytic formalization were integrated in
 below for new work. Derivations, review reports and frozen runs preserve their
 own dated mathematical statements and verification scope.
 
+The [reviewed theory connections](../paper/research_notes/THEORY_CURRENT_BRIDGES_20260910.md)
+link [complete first currents and small-source totality](derivations/source-currents-and-spectral-totality.md)
+with [three-coordinate geometry, Schur metrics and Riccati certificates](derivations/theory-geometry-and-riccati-bridges.md).
+Their [recovery and verification run](../runs/theory_current_bridges_2026-09-10/README.md)
+keeps the independent review, exact controls and strict Lean evidence separate.
+
 ## Choose a route
 
 | Need | Start here | How to use it |

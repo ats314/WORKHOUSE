@@ -18,3 +18,4 @@ import Workhouse.SourceTilt
 import Workhouse.SourceRadiusGrowth
 import Workhouse.HodgeFeshbach
 import Workhouse.PolymerCluster
+import Workhouse.TheoryCurrentBridges

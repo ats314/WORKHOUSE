@@ -817,3 +817,36 @@ results from finite native controls; the exact central identity closes the
 failed global score candidate without changing the generic theorem.
 
 </details>
+
+## Reviewed current and geometry connections
+
+The [September 10 derivations](../paper/research_notes/THEORY_CURRENT_BRIDGES_20260910.md)
+connect the existing square calculation to an explicit complete first-residual
+current. `RESULT:SQUARE_FIRST_RESIDUAL_CURRENT` constructs that current and
+`RESULT:SQUARE_FIRST_CURRENT_BUDGET` gives its all-radial-source constant below
+1/840. Complete means the first coefficient of the fixed twelve-edge square;
+the pairing tests the actual fast subspace.
+
+`RESULT:SELECTED_INVERSE_WITHOUT_DIAGONAL` proves that a complete finite-coupling
+residual bound and a reference-energy bound suffice for the selected-inverse
+estimate without an independent diagonal bound. Its finite-coupling premise
+is still open. `RESULT:SOURCE_CURRENT_VARIATIONAL_ENERGY` is inverse-free;
+`RESULT:SOURCE_CURRENT_BOUNDED_W6` retains bounded inverses. A degenerate lower
+energy coordinate and an operator with no bounded inverse are different claims.
+
+`RESULT:FULL_GRAPH_SOURCE_CONGRUENCE` and
+`RESULT:SOURCE_CONGRUENCE_METRIC_TRANSPORT` remove compatible coordinate-motion
+terms while retaining the generally nonunitary frame's metric. They do not
+bound the actual transport generator. Scalar-source parity eliminates existing
+odd Schur Taylor coefficients, with a controlled fourth-order remainder still
+required. `RESULT:RICCATI_RESIDUAL_CERTIFICATE` converts an approximate fixed
+point's residual into error inside the stated contraction ball; cross-scale
+use must include the transport norms.
+
+The sharp anisotropy maximum is specific to three coordinates. Its soft-energy
+extension is zero at q=0 and uses non-strict integrated comparisons. The
+small-exponential totality criterion allows source-dependent windows and
+prefactors, but requires a common positive decay rate at arbitrarily late
+physical times and the actual spectral/density identifications. These results
+supply inputs and shorter sufficient routes; they do not discharge the
+volume-uniform interacting remainder or continuum matching targets.
