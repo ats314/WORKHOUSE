@@ -48,6 +48,7 @@ SKIP_PARTS = {
     ".cache",
     "__pycache__",
     ".pytest_cache",
+    ".pytest_temp",
     ".ruff_cache",
     ".mypy_cache",
     "build",

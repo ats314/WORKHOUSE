@@ -15,16 +15,57 @@ permissions:
   contents: read
 
 jobs:
+  scope:
+    name: Select checks for changed inputs
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      full: ${{ steps.scope.outputs.full }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Classify changed inputs
+        id: scope
+        env:
+          CI_EVENT_NAME: ${{ github.event_name }}
+          CI_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          if [ "$CI_EVENT_NAME" = "workflow_dispatch" ]; then
+            python scripts/ci_scope.py --full --github-output "$GITHUB_OUTPUT"
+          else
+            python scripts/ci_scope.py --base "$CI_BASE_SHA" --head "$CI_HEAD_SHA" --github-output "$GITHUB_OUTPUT"
+          fi
+
   check:
+    needs: scope
+    if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+      - name: Require a valid scope decision
+        env:
+          SCOPE_RESULT: ${{ needs.scope.result }}
+          SCOPE_FULL: ${{ needs.scope.outputs.full }}
+        run: |
+          if [ "$SCOPE_RESULT" != "success" ]; then
+            echo "CI scope selection failed; checks cannot be treated as passed."
+            exit 1
+          fi
+          case "$SCOPE_FULL" in
+            true|false) ;;
+            *) echo "CI scope selection returned an invalid result."; exit 1 ;;
+          esac
       - uses: actions/checkout@v7
 
-      # Toolchains are set up only when the repo actually contains that stack,
-      # so this workflow stays correct as WORKHOUSE grows into whatever it becomes.
+      # The documentation/help path only needs Python. Full checks retain
+      # the existing stack detection and verification entry points.
       - name: Set up Node
-        if: hashFiles('package.json') != ''
+        if: needs.scope.outputs.full == 'true' && hashFiles('package.json') != ''
         uses: actions/setup-node@v7
         with:
           node-version: '22'
@@ -37,16 +78,31 @@ jobs:
           python-version: '3.11'
 
       - name: Set up Go
-        if: hashFiles('go.mod') != ''
+        if: needs.scope.outputs.full == 'true' && hashFiles('go.mod') != ''
         uses: actions/setup-go@v7
         with:
           go-version: stable
 
       - name: Bootstrap
+        if: needs.scope.outputs.full == 'true'
         run: bash scripts/bootstrap.sh
 
       - name: Lint and test
+        if: needs.scope.outputs.full == 'true'
         run: bash scripts/check.sh
+
+      - name: Install documentation and help check dependencies
+        if: needs.scope.outputs.full == 'false'
+        run: python -m pip install -e ".[dev]"
+
+      - name: Check documentation and help
+        if: needs.scope.outputs.full == 'false'
+        run: |
+          python -m ruff check .
+          python -m ruff format --check .
+          python scripts/check_docs.py
+          python -m pytest tests/test_briefing.py tests/test_docs.py tests/test_ci_scope.py -q
+          python -m workhouse.cli brief --help
 
   shell:
     name: Shell lint
@@ -59,11 +115,12 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
           shellcheck scripts/*.sh .claude/hooks/*.sh
 
-  # The T0 tier means "Lean 4 compiles it, no sorry" — which is only true if
-  # something actually compiles it. The session brief counts theorems by
-  # regex; this job is what makes a green run mean the proofs check.
+  # Full verification compiles Lean with no sorry. A documentation/help run
+  # skips this job and does not claim fresh proof-checking evidence.
   lean:
     name: Lean (T0)
+    needs: scope
+    if: needs.scope.outputs.full == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
@@ -105,6 +162,8 @@ jobs:
   # OS-native path serialization are caught, not papered over.
   windows-smoke:
     name: Windows smoke (encoding and path determinism)
+    needs: scope
+    if: needs.scope.outputs.full == 'true'
     runs-on: windows-latest
     timeout-minutes: 20
     steps:

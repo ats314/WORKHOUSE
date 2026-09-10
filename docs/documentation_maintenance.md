@@ -85,12 +85,23 @@ uv run --no-sync ruff check .
 uv run --no-sync ruff format --check .
 ```
 
-The Python check entry point runs the documentation checker before the test
-suite. GitHub CI also runs shell lint, a strict Lean build, and a Windows
-catalogue reproducibility check. A prose-only update does not require locally
-rebuilding unchanged proofs or regenerating scientific views. If a patch
-changes code, source records or formal statements as well, complete the
-corresponding checks in [Contributing](../CONTRIBUTING.md) and the
+The full Python check entry point runs the documentation checker before the
+test suite. GitHub CI selects checks with an explicit documentation/help
+allowlist and structural checks for permitted Python help edits. That fast
+path runs lint, documentation validation, focused briefing/documentation/
+routing tests and CLI help; shell lint also runs. Scientific, behavioral,
+unclassified and CI changes retain the full test suite, strict Lean build and
+Windows catalogue reproducibility check. Manual dispatch requests full checks.
+See [verification by change type](../CONTRIBUTING.md#verification-by-change-type)
+and the [classifier](../scripts/ci_scope.py) for the exact boundary.
+
+A prose-only update does not require rebuilding unchanged proofs or
+regenerating scientific views. Follow the user's explicit scope for elective
+verification and avoid repeat runs without a changed input or a failure to
+investigate. A skipped scientific job does not establish fresh proof or
+calculation evidence. If a patch changes executable behavior, source records
+or formal statements as well, complete the corresponding checks in
+[Contributing](../CONTRIBUTING.md) and the
 [formalization workflow](formalization_workflow.md).
 
 ## Publish and report the actual state
