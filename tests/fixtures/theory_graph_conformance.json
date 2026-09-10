@@ -1,0 +1,226 @@
+{
+  "schema": "workhouse-theory-graph/conformance-exercise/v1",
+  "protocol_version": "workhouse-theory-graph/v1",
+  "provenance": {
+    "date": "2026-09-10",
+    "checkout_revision": "42b0762e4ce382efa153a969e8bb44bb77537844",
+    "claims_sha256": "742746944aec035d6701a207fa930b797d7b1edef71bf0c22ac9fc4e04523c49",
+    "graph_sha256": "3cd9eda0bc7e44a473cba71ebb775f16a5f3a832243591e8749b8f35794a8f57",
+    "scope": "Frozen selected local records, including existing uncommitted graph content. Source digests identify this exercise; this is not a claim of current or complete graph state."
+  },
+  "briefing": {
+    "records": [
+      {
+        "cites": "",
+        "decimal": 0.06395120243159332,
+        "detail": "",
+        "evidence": "",
+        "id": "CONST:BETA_PEN_3",
+        "kind": "constant",
+        "related": [],
+        "reproduce": "",
+        "statement": "BETA_PEN_3",
+        "status": "module-level, not in REGISTRY",
+        "tier": 3,
+        "value": "17607806155349/275331901291200",
+        "where": "src/workhouse/constants.py"
+      },
+      {
+        "cites": "§5.5",
+        "decimal": null,
+        "detail": "C_shp = C_SHP_HISTORICAL + 25/1024 = -13035490122347/550663802582400 = -0.0236723, the cluster-assembled coefficient read in the kernel's own basis (ADR 0024). Both recorded kernels are wrong on the rotation amplitude: the historical by the sixteen orderings of the adjacent-face cube completion its own Stage-3I ledger lacks (8 of 24, each with the right weight; the shortfall is exactly 25/512 on rho), the cold dump on u, pi and rho alike. Every other cluster of the rotation record is the historical pipeline's own number, to the digit, in three independent implementations. Closed at the maintainer's instruction on the evidence recorded below; the sides stay listed, as C1's and C15's do.",
+        "evidence": "",
+        "id": "C2",
+        "kind": "contradiction",
+        "related": [
+          "G3"
+        ],
+        "reproduce": "",
+        "statement": "Fourth-order off-axis coefficient C_shp — resolved by derivation 2026-09-04",
+        "status": "resolved",
+        "tier": 3,
+        "value": null,
+        "where": "ledger/contradictions.yaml"
+      },
+      {
+        "cites": "G18",
+        "decimal": null,
+        "detail": "Disjoint independently active SU(3) plaquettes give derivative ratio at least ((1+t/2)^n-1)/(4n tau), diverging with n for 0<t<=1/200. This closes the unrestricted active-family proposal, not a separate full-active-lattice assertion. The successful composed-resolvent contraction does not require this estimate.",
+        "evidence": "",
+        "id": "ROUTE:G18:prove-an-undamped-same-weight-lipschitz--0f89c8",
+        "kind": "route",
+        "related": [
+          "G18",
+          "RESULT:WILSON_SAME_WEIGHT_OBSTRUCTION"
+        ],
+        "reproduce": "",
+        "statement": "G18 route: Prove an undamped same-weight Lipschitz bound for arbitrary active plaquette families",
+        "status": "dead",
+        "tier": 3,
+        "value": null,
+        "where": "ledger/gaps.yaml"
+      },
+      {
+        "cites": "",
+        "decimal": null,
+        "detail": "Lean declaration: Workhouse.C_from_beta\nKernel dependency record: ledger/lean_dependencies.json#Workhouse.C_from_beta\nProject theorem dependencies: none\nTransitive axioms: Classical.choice, Quot.sound, propext",
+        "evidence": "",
+        "id": "LEAN:C_from_beta",
+        "kind": "theorem",
+        "related": [
+          "CHK:fourth-order-anchoring-and-the-residual--c05cf5:c-old--beta-pen-3--2-alpha-3-16",
+          "CONST:BETA_PEN_3",
+          "CONST:C_shp (historical)"
+        ],
+        "reproduce": "make lean",
+        "statement": "Historical-kernel internal consistency: C_shp_old = (beta_pen_3 - 2 alpha_3)/16. One kernel's own arithmetic — not an adjudication of C2.",
+        "status": "",
+        "tier": 0,
+        "value": null,
+        "where": "lean/Workhouse/Basic.lean:244"
+      },
+      {
+        "cites": "",
+        "decimal": null,
+        "detail": "Lean declaration: Workhouse.ThermodynamicLimit.closable_of_integration_by_parts\nKernel dependency record: ledger/lean_dependencies.json#Workhouse.ThermodynamicLimit.closable_of_integration_by_parts\nProject theorem dependencies: none\nTransitive axioms: Classical.choice, Quot.sound, propext\nDerivation: DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_CLOSABLE — docs/derivations/wilson-sc17-thermodynamic-limit.md (## 3. Closability and the canonical closed form (lines 393-436)); SHA-256 6d72876a35a866768f1b0428847f56df803cb3569eb65c8d96e94ab56996e324. Scope: A densely defined integration-by-parts adjoint proves sequential closability of an unbounded Hilbert-space operator.",
+        "evidence": "",
+        "id": "LEAN:closable_of_integration_by_parts",
+        "kind": "theorem",
+        "related": [
+          "DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_CLOSABLE"
+        ],
+        "reproduce": "make lean",
+        "statement": "A densely defined integration-by-parts adjoint proves sequential closability of an unbounded Hilbert-space operator.",
+        "status": "",
+        "tier": 0,
+        "value": null,
+        "where": "lean/Workhouse/ThermodynamicLimit.lean:55"
+      },
+      {
+        "cites": "CITE:WILSON_SAME_WEIGHT_OBSTRUCTION Exact SU(3) inputs; explicit positive interval; Failure of the undamped same-weight estimate",
+        "decimal": null,
+        "detail": "Hypotheses: Independent active four-link SU(3) plaquettes, V=Tr(U)+Tr(U)* and eta=V Omega/sqrt(2).; Fixed t=tau u in (0,1/200] and arbitrary giant-support trial creators.\nScope: The derivative lower ratio ((1+t/2)^n-1)/(4n tau) diverges with n. This refutes the unrestricted active-family version of the proposed same-weight estimate. It is not a separate counterexample with every lattice plaquette active at the same nonzero coupling, and it does not refute the resolvent-composed contraction.\n\nSupport LEAN:normalized_taylor_growth: Only the real rational Taylor lower inequality on 0<=t<=1/200; no Haar moment or operator-norm assertion.\nSupport RUN:wilson_rooted_contraction_2026-09-05: Independent finite creation logarithms, exact SU(3) Weyl moments through order eight and numerical exponentials; the all-n obstruction is the pinned analytic derivation.",
+        "evidence": "analytic",
+        "id": "RESULT:WILSON_SAME_WEIGHT_OBSTRUCTION",
+        "kind": "result",
+        "related": [
+          "G18",
+          "RESULT:WILSON_ENDPOINT_EQUATION",
+          "RESULT:WILSON_ROOTED_CONTRACTION"
+        ],
+        "reproduce": "",
+        "statement": "For arbitrarily many disjoint independently active SU(3) Wilson plaquettes, the undamped normalized magnetic creator map has no volume-uniform same-weight Lipschitz bound over arbitrary trial creator families.\n",
+        "status": "proven",
+        "tier": 3,
+        "value": null,
+        "where": "paper/research_notes/G18_SAME_WEIGHT_CREATOR_OBSTRUCTION_20260905.md"
+      },
+      {
+        "cites": "CITE:WILSON_SC17_LIMIT",
+        "decimal": null,
+        "detail": "Hypotheses: Finite periodic cubic SU(2) lattice with nondegenerate plaquettes and side L >= 3.; Product unit-S3 electric metric; epsilon > 0, k >= 0, lambda = k/epsilon; actual positive normalized Wilson ground Omega.; The SC17 optimized interval is 0 <= lambda <= lambda_c, with lambda_c the root in (1/73,1/72) of 6561 lambda^4 + 1458 lambda^3 - 81 lambda^2 - 72 lambda + 1 = 0.; Spatial exponential weights require lambda < lambda_c; free and periodic boxes and gauge-invariant coefficient cuts are the admitted approximations.; The cylinder algebra is dense in L2(mu); beta_e=2F_e is bounded and IF3 holds.; Smooth cylinders are dense in L2(mu); beta_e=2F_e is bounded; IF3 holds for every smooth cylinder test.\nWhole-statement Lean declarations: none\nRemaining formalization: The abstract dense-adjoint criterion and canonical unbounded-operator closure are formalized. Instantiate the actual cylinder gradient, countable derivative Hilbert space, dense test domain and limiting integration-by-parts operator.\nLean support closable_of_integration_by_parts: A densely defined integration-by-parts adjoint proves sequential closability of an unbounded Hilbert-space operator.\nLean support closed_extension_of_integration_by_parts: A densely defined formal adjoint constructs a closed extension and proves the canonical LinearPMap closure is closed.",
+        "evidence": "analytic",
+        "id": "DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_CLOSABLE",
+        "kind": "result",
+        "related": [
+          "CITE:WILSON_SC17_LIMIT",
+          "DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF3",
+          "LEAN:closable_of_integration_by_parts",
+          "LEAN:closed_extension_of_integration_by_parts"
+        ],
+        "reproduce": "",
+        "statement": "The actual cylinder-gradient operator D from L2(mu) to ell2(E x {1,2,3};L2(mu)) is closable: if f_n tends to zero and Df_n tends to v, integration by parts against every cylinder g forces every v_e^a=0.",
+        "status": "proven",
+        "tier": 3,
+        "value": null,
+        "where": "docs/derivations/wilson-sc17-thermodynamic-limit.md (## 3. Closability and the canonical closed form (lines 393-436))"
+      }
+    ],
+    "edges": [
+      {
+        "dst": "LEAN:closable_of_integration_by_parts",
+        "how": "curated",
+        "source": "ledger/derivation_statements.yaml#DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_CLOSABLE (## 3. Closability and the canonical closed form (lines 393-436)): A densely defined integration-by-parts adjoint proves sequential closability of an unbounded Hilbert-space operator.",
+        "src": "DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_CLOSABLE",
+        "type": "supported_by"
+      },
+      {
+        "dst": "CONST:BETA_PEN_3",
+        "how": "curated",
+        "source": "ledger/theorems.yaml",
+        "src": "LEAN:C_from_beta",
+        "type": "formalizes"
+      },
+      {
+        "dst": "RESULT:WILSON_SAME_WEIGHT_OBSTRUCTION",
+        "how": "curated",
+        "source": "ledger/gaps.yaml",
+        "src": "ROUTE:G18:prove-an-undamped-same-weight-lipschitz--0f89c8",
+        "type": "closed_by"
+      }
+    ],
+    "semantics": [
+      "Mathematical status, evidence level, and machine tier are independent. Valid analytic arguments are usable under their explicit hypotheses.",
+      "A formalizes edge means coverage of the whole named statement; supported_by records only the scoped ingredient.",
+      "Loading saved verdicts does not execute their checks. Rebuilding a view with --live can reuse cached checks; --fresh explicitly requests uncached execution."
+    ],
+    "injected_staleness_scenario": {
+      "freshness": "stale",
+      "check_provenance": "saved verdicts",
+      "source_inputs_match_saved_snapshot": false,
+      "note": "Deliberately stale test scenario, not an assertion that the current checkout is stale.",
+      "mode": "saved"
+    }
+  },
+  "questions": {
+    "c2_status": "What status does the contradiction node C2 record?",
+    "c2_resolution_date": "On what date was C2 resolved by derivation (YYYY-MM-DD)?",
+    "analytic_status": "What status does the cylinder-gradient closability DERIV node record?",
+    "analytic_evidence": "What evidence level does that DERIV node record?",
+    "analytic_tier": "What machine-verification tier number does that full DERIV statement record?",
+    "analytic_usable_under_stated_hypotheses": "Can its valid analytic argument be used under its stated hypotheses while full Lean instantiation remains unfinished?",
+    "whole_statement_lean_coverage": "Does the listed Lean support formalize the entire actual cylinder-gradient DERIV statement?",
+    "supported_by_means": "Does supported_by assert a scoped ingredient or whole named statement? Return exactly one of those phrases.",
+    "formalizes_means": "Does formalizes assert a scoped ingredient or whole named statement? Return exactly one of those phrases.",
+    "dead_route_state": "What is the state of the undamped same-weight Lipschitz route?",
+    "dead_route_closer": "Which result ID closes that route?",
+    "dead_route_recommend_as_open": "May the unchanged route be recommended as open work without addressing its recorded closure?",
+    "stale_snapshot_is_current": "Does the injected stale saved snapshot establish current graph state?",
+    "saved_verdicts_executed_now": "Does loading saved verdicts mean their checks executed for this request?",
+    "live_guarantees_uncached_checks": "Does rebuilding a view with --live guarantee every check ran without cache reuse?"
+  },
+  "answer_schema": {
+    "c2_status": "string",
+    "c2_resolution_date": "string",
+    "analytic_status": "string",
+    "analytic_evidence": "string",
+    "analytic_tier": "integer",
+    "analytic_usable_under_stated_hypotheses": "boolean",
+    "whole_statement_lean_coverage": "boolean",
+    "supported_by_means": "string",
+    "formalizes_means": "string",
+    "dead_route_state": "string",
+    "dead_route_closer": "string",
+    "dead_route_recommend_as_open": "boolean",
+    "stale_snapshot_is_current": "boolean",
+    "saved_verdicts_executed_now": "boolean",
+    "live_guarantees_uncached_checks": "boolean"
+  },
+  "expected_answers": {
+    "c2_status": "resolved",
+    "c2_resolution_date": "2026-09-04",
+    "analytic_status": "proven",
+    "analytic_evidence": "analytic",
+    "analytic_tier": 3,
+    "analytic_usable_under_stated_hypotheses": true,
+    "whole_statement_lean_coverage": false,
+    "supported_by_means": "scoped ingredient",
+    "formalizes_means": "whole named statement",
+    "dead_route_state": "dead",
+    "dead_route_closer": "RESULT:WILSON_SAME_WEIGHT_OBSTRUCTION",
+    "dead_route_recommend_as_open": false,
+    "stale_snapshot_is_current": false,
+    "saved_verdicts_executed_now": false,
+    "live_guarantees_uncached_checks": false
+  }
+}
