@@ -200,15 +200,20 @@ merge conflict, no unaddressed review comment — mark it ready and merge it
 yourself.** Do not wait for a human to press the button. The failure this
 prevents: verified work stranded in open PRs while the branch drifts.
 
-Verification follows the changed inputs. Scientific or executable changes need
-the applicable regression checks, `make check` and `make verify`; Lean changes
-also need the strict build and refreshed dependency export. Regenerate views
-when their source inputs changed. For a documentation-only change, inspect the
-diff, resolve relative links, check documented commands against their actual
-entry points and run the documentation checks in the maintenance guide. Do not
-rerun research or rewrite generated scientific evidence merely to edit prose.
-Required remote CI must still pass before merging; a red or conflicted PR is
-yours to fix, never to merge.
+Verification follows the changed inputs. Scientific inputs or executable
+behavior changes need the applicable regression checks, `make check` and
+`make verify`; Lean changes also need the strict build and refreshed dependency
+export. Regenerate views when their source inputs changed. For documentation
+or help text, inspect the diff, resolve relative links, check documented
+commands against their actual entry points and run the focused checks in
+[Contributing](CONTRIBUTING.md#verification-by-change-type). CI uses an explicit
+scope classifier to select that fast path; scientific, behavioral, unknown and
+CI inputs retain full verification. Do not rerun research or rewrite generated
+scientific evidence merely to edit prose. Follow the user's explicit scope for
+elective verification, and do not add repeat checks without a changed input or
+failure to investigate. Required remote checks selected for the current change
+must pass before merging; a failed check or merge conflict is yours to fix.
+A skipped scientific job is not a fresh proof or calculation result.
 
 Recheck the remote base and exact head before merging so concurrent agents'
 changes are included. Use the normal PR merge path without bypassing branch

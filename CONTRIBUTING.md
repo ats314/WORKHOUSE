@@ -75,13 +75,25 @@ git diff --check
 ```
 
 Check that scientific ledgers, proofs, pinned sources, and generated views
-have not drifted. Do not
-rebuild Lean, rerun research suites, or regenerate scientific views solely to
-refresh prose. Record the focused checks actually performed and observe the
-repository's current CI requirements.
+have not drifted. Do not rebuild Lean, rerun research suites, or regenerate
+scientific views solely to refresh prose. Record the focused checks actually
+performed. Follow the user's explicit scope for elective verification; do not
+add repeat runs after the applicable checks pass unless a changed input or
+failure warrants them.
 
-For research, code, proof, or ledger changes, complete their focused checks and
-the required repository verification. Linux/macOS:
+CI selects checks from the changed inputs using
+[`scripts/ci_scope.py`](scripts/ci_scope.py). Its documentation/help path runs
+Python lint and formatting, documentation validation, focused briefing,
+documentation and routing tests, and a CLI help smoke check. Shell lint also
+runs. Lean compilation, scientific catalogue regeneration and the full test
+suite run for scientific or executable behavior changes, unclassified paths,
+CI changes, or a manual full run. The classifier uses an explicit allowlist
+and checks permitted Python help edits structurally; a Markdown extension
+alone does not select the fast path. A failed scope decision fails the `check`
+job. Skipped scientific jobs do not supply new scientific verification.
+
+For scientific inputs or executable behavior changes, complete their focused
+checks and the applicable repository verification. Linux/macOS:
 
 ```bash
 make verify
