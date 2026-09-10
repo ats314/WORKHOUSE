@@ -730,7 +730,7 @@ documents:
       the SDE/form identification with the resulting summable metric.
 - id: CITE:WILSON_SC17
   path: docs/derivations/wilson-sc17-spatial-closure.md
-  sha256: eacf05f43bc1ac8caab7fed6f8533539a4e6c87b9fa459de73e32ca729b93654
+  sha256: d02e906ba0d52d20f3a1cf750347bc89da59ece4bb52d3fae955c71aae6daac8
   statements:
   - id: DERIV:WILSON_SC17_SPATIAL_CLOSURE:REANCHORING
     statement: Changing left/right endpoint derivative anchors preserves the raw mixed operator norm,
@@ -1109,6 +1109,48 @@ documents:
     lean: []
     remaining: Formalize analytic source/fast frames and show the exact scalar compression preserves the
       nonanalytic third-order term.
+  - id: DERIV:WILSON_SC17_SPATIAL_CLOSURE:PROPOSED_QUANTUM_PARAMETER_WINDOW
+    statement: Under the proposed numerical reference and normalized-defect inputs, the scalar Riccati
+      parameter satisfies p(lambda)<=p(3/100)=96228*sqrt(3)/625000<27/100<1, and the small root satisfies
+      0<=r_minus<a_min throughout 0<=lambda<=3/100. These are conditional parameter conclusions;
+      the section's complete Wilson defect estimate and exponential spatial decay are not established
+      by this arithmetic.
+    locator: '## 6. Formal repair of the spatial closure for lambda >= 1/73 via the quantum reference defect (lines 781-821)'
+    anchor: '## 6. Formal repair of the spatial closure for lambda >= 1/73 via the quantum reference defect'
+    source_labels: []
+    status: conditional
+    evidence: analytic
+    hypotheses:
+    - Real coupling 0<=lambda<=3/100; epsilon>0 when interpreting the normalized defect c=delta/(2epsilon).
+    - The companion script's proposed defaults are L=3, C_s=6/5 and reference velocity one;
+      beta=(108/25)*sqrt(33), c=lambda*sqrt(lambda)/48 and a_min=1/(3*sqrt(33)).
+    - p(lambda)=4*beta^2*c and r_minus=(1-sqrt(1-p(lambda)))/(2*beta).
+    - These numerical inputs are supplied parameters. Their identification with a uniform semigroup
+      budget, the complete conditional quantum-pressure defect and the actual reference floor is
+      a separate model obligation, not a consequence of the quartic Taylor coefficient.
+    depends_on:
+    - DERIV:TRACK_A_SUPPORTED:SC17_P
+    lean: []
+    remaining: The scalar comparison is proved in the supported successor SC17_P. To apply it to the
+      source section's spatial-closure claim, establish the actual weighted reference budget and
+      complete outside-pressure, metric, projector and cutoff defect bound, derive the ground-state
+      Riccati comparison, and justify an exponential spatial weight. A polynomial weighted norm
+      alone does not provide exponential decay.
+    lean_support:
+    - name: default_parameter_identity
+      scope: Exact equality p(lambda)=4*defaultBeta^2*defaultDefect(lambda) for the proposed numerical definitions.
+    - name: default_parameter_monotone
+      scope: The proposed scalar parameter is monotone on all nonnegative real couplings.
+    - name: default_parameter_endpoint
+      scope: The endpoint parameter at lambda=3/100 equals 96228*sqrt(3)/625000 exactly.
+    - name: default_reference_product
+      scope: The proposed reference inputs satisfy 2*defaultBeta*defaultReferenceFloor=72/25 exactly.
+    - name: default_parameter_interval
+      scope: Every real coupling in [0,3/100] has parameter between zero and its endpoint value, which is below 27/100.
+    - name: default_small_defect_criterion
+      scope: The proposed numerical inputs satisfy the strict scalar discriminant condition throughout [0,3/100].
+    - name: default_smallRoot_and_gap
+      scope: The proposed small root lies strictly below the proposed reference floor and gives a positive numerical margin; no Wilson defect or physical-gap realization is inferred.
 - id: CITE:WILSON_SC17_LIMIT
   path: docs/derivations/wilson-sc17-thermodynamic-limit.md
   sha256: 6d72876a35a866768f1b0428847f56df803cb3569eb65c8d96e94ab56996e324
