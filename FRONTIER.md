@@ -201,6 +201,8 @@ published. A paper is T3 until something checks it, same as any document.
 | `KPS_1981` | `R14` | corroborates | verified |
 | `MUNSTER_1981` | `G5` | supplies-comparison | not-yet-obtained |
 | `SEO_1982` | `G5` | supplies-comparison | not-yet-obtained |
+| `BB_1983` | `G18` | supplies-method | verified |
+| `BB_1983` | `G19` | supplies-comparison | verified |
 | `IH_1984` | `HAMER_A4_NUM` | supplies-method | not-yet-obtained |
 | `OBZ_1985` | `G5` | supplies-comparison | verified |
 | `MUNSTER_1985_TM` | `G3` | supplies-method | verified |
@@ -231,6 +233,7 @@ published. A paper is T3 until something checks it, same as any document.
 | `CHEN_2006` | `G18` | supplies-comparison | verified |
 | `MORNINGSTAR_2025` | `G18` | supplies-comparison | verified |
 | `FLPS_2026` | `G19` | supplies-comparison | verified |
+| `BESIII_2026` | `G18` | supplies-comparison | verified |
 | `CAO_2023` | `G5` | supplies-comparison | verified |
 | `CAO_2023` | `C7` | supplies-comparison | verified |
 | `BORGA_2024` | `G5` | supplies-comparison | verified |
@@ -341,7 +344,7 @@ published. A paper is T3 until something checks it, same as any document.
 | `BV_1981_GEOMETRY` | `G20` | supplies-method | not-yet-obtained |
 | `BV_1981_GEOMETRY` | `G23` | supplies-method | not-yet-obtained |
 
-**98 of 148 edges rest on a source nobody here has read
+**98 of 151 edges rest on a source nobody here has read
 or pinned.** Obtaining and digest-pinning a primary source upgrades its
 edges from assertion to verification — the Hamer 1989 table did exactly
 that for the program's strongest external agreement.
@@ -356,16 +359,18 @@ different things: **in-web** is how many indexed papers cite this one
 |---|---|---|---|
 | `WILSON_1974` | 10 | 7208 (2026-08-21) | stub |
 | `KS_1975` | 10 | 2815 (2026-08-21) | **not yet obtained** |
-| `KSS_1976` | 6 | 225 (2026-08-21) | **not yet obtained** |
-| `MP_1999` | 5 | 1233 (2026-08-21) | pinned |
+| `KSS_1976` | 7 | 225 (2026-08-21) | **not yet obtained** |
+| `MP_1999` | 6 | 1233 (2026-08-21) | pinned |
 | `MT_1989` | 5 | 202 (2026-08-21) | stub |
-| `BB_1983` | 4 | 207 (2026-08-21) | stub |
+| `MUNSTER_1981` | 5 | 105 (2026-08-21) | **not yet obtained** |
+| `BB_1983` | 4 | 207 (2026-08-21) | pinned |
 | `MUNSTER_1981_VORTICES` | 4 | 112 (2026-08-21) | stub |
-| `MUNSTER_1981` | 4 | 105 (2026-08-21) | **not yet obtained** |
 | `HIP_1986` | 4 | 15 (2026-08-21) | **not yet obtained** |
 | `CS_2006` | 3 | 518 (2026-08-21) | **not yet obtained** |
+| `SMIT_1982` | 3 | 33 (2026-08-21) | stub |
 | `HAMER_1989` | 3 | 10 (2026-08-21) | pinned |
 | `SINGER_1981_ORBIT` | 3 | — | **not yet obtained** |
+| `CHEN_2006` | 2 | 762 (2026-08-21) | pinned |
 | `WEINGARTEN_1978` | 2 | 196 (2026-08-21) | stub |
 | `AT_2020_SU3` | 2 | 184 (2026-08-21) | pinned |
 | `DFSST_1985_STRING` | 2 | 174 (2026-08-21) | stub |
@@ -374,18 +379,18 @@ different things: **in-web** is how many indexed papers cite this one
 | `DFSST_1985_GLUEBALL` | 2 | 115 (2026-08-21) | stub |
 | `BBV_1986` | 2 | 68 (2026-08-21) | stub |
 | `IH_1984` | 2 | 33 (2026-08-21) | **not yet obtained** |
-| `SMIT_1982` | 2 | 33 (2026-08-21) | stub |
 | `MICHAEL_1987` | 2 | 31 (2026-08-21) | stub |
+| `SEO_1982` | 2 | 28 (2026-08-21) | **not yet obtained** |
 | `CAO_2023` | 2 | 23 (2026-08-21) | pinned |
 | `BV_1981_GEOMETRY` | 2 | — | **not yet obtained** |
+| `CREUTZ_1980` | 2 | — | pinned |
 | `JAFFE_2000_CQFT` | 2 | — | pinned |
-| `CHEN_2006` | 1 | 762 (2026-08-21) | pinned |
 | `DZ_1983` | 1 | 345 (2026-08-21) | stub |
 | `CKS_2021` | 1 | 285 (2026-08-21) | pinned |
 | `KAZAKOV_1983` | 1 | 45 (2026-08-21) | stub |
 | `KPS_1981` | 1 | 45 (2026-08-21) | pinned |
 | `SZH_1997` | 1 | 30 (2026-08-21) | pinned |
-| `SEO_1982` | 1 | 28 (2026-08-21) | **not yet obtained** |
+| `MORNINGSTAR_2025` | 1 | 17 (2026-08-21) | pinned |
 | `OBZ_1984` | 1 | 13 (2026-08-21) | stub |
 | `MUNSTER_PLB_1983` | 1 | 11 (2026-08-21) | stub |
 | `BORGA_2024` | 1 | 10 (2026-08-21) | pinned |
@@ -400,7 +405,6 @@ different things: **in-web** is how many indexed papers cite this one
 | `BFS_1981_III` | 1 | — | **not yet obtained** |
 | `BF_1980` | 1 | — | **not yet obtained** |
 | `BRS_1976` | 1 | — | pinned |
-| `CREUTZ_1980` | 1 | — | pinned |
 | `FEYNMAN_1981` | 1 | — | **not yet obtained** |
 | `FOS_1983` | 1 | — | **not yet obtained** |
 | `FO_1976` | 1 | — | **not yet obtained** |
@@ -459,12 +463,12 @@ different things: **in-web** is how many indexed papers cite this one
 | `KRS_2023` | 0 | 67 (2026-08-21) | pinned |
 | `LLL_2006` | 0 | 62 (2026-08-21) | pinned |
 | `OBZ_1985` | 0 | 36 (2026-08-21) | pinned |
-| `MORNINGSTAR_2025` | 0 | 17 (2026-08-21) | pinned |
 | `SCHIERHOLZ_1988` | 0 | 5 (2026-08-21) | pinned |
 | `LEMOINE_2026` | 0 | 3 (2026-08-21) | pinned |
 | `MUNSTER_1985_TM` | 0 | 2 (2026-08-21) | pinned |
 | `CM_2003` | 0 | 1 (2026-08-21) | pinned |
 | `BALAJI_2026` | 0 | — | **not yet obtained** |
+| `BESIII_2026` | 0 | — | pinned |
 | `CBB_2026` | 0 | — | **not yet obtained** |
 | `CB_2024` | 0 | — | **not yet obtained** |
 | `FLPS_2026` | 0 | 0 (2026-08-21) | pinned |
