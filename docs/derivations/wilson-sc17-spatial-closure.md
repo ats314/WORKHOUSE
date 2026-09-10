@@ -778,6 +778,47 @@ the fast coefficient is well-defined there, or can be obtained as a positive
 regulator tends to zero. The contradiction concerns uniform volume/regulator
 locality, not a finite Fourier polynomial on a single fixed lattice.
 
+## 6. Formal repair of the spatial closure for lambda >= 1/73 via the quantum reference defect
+
+The collapse of the bare matrix majorant at lambda_c in (1/73, 1/72) (where
+D(lambda_c) = 0 and D(1/72) = -47/2304 < 0) is an artifact of estimating
+the raw potential Hessian V'' by 12 k I without subtracting the background
+vacuum reference.
+
+Replacing the bare majorant with the signed Riccati defect continuation of
+Part III overcomes this wall. Setting E = J + Omega and matching the
+reference precision A = Omega_F via the exact coupled baseline (R12a):
+
+    V_0,xx'' + W_0,xx'' = 2 epsilon A^2,
+
+the source driving the Riccati equation is not the extensive potential V'',
+but the localized nonlinear quantum defect:
+
+    D_b = (V_B - V_0)'' + (W_B - W_0)'',    ||D_b||_(s, infty) <= delta.
+
+Because the O(lambda) quadratic potential cancels exactly against 2 epsilon A^2,
+the defect delta is governed by the quartic trace expansion
+Tr(U_p) = 2 - (1/2) Tr(F_p^2) + (1/24) Tr(F_p^4) - ...,
+scaling as delta <= (1/24) epsilon lambda^(3/2).
+
+Under the small-defect criterion (R6):
+
+    2 beta_s(A)^2 delta / epsilon < 1,
+
+the actual conditional ground state Hessian satisfies:
+
+    ||Hess log Omega_b + A||_(s, infty) <= r_-,
+    r_- = [1 - sqrt(1 - 2 beta_s(A)^2 delta / epsilon)] / [2 beta_s(A)].
+
+The companion script `scripts/sc17_quantum_defect_check.py` validates that
+while D_bare(1/72) = -0.0204 fails, the Riccati parameter satisfies:
+- At lambda = 1/72 approx 0.013889: 2 beta_s(A)^2 delta / epsilon approx 0.0840 < 1.0, r_- approx 8.648e-4, and gap ratio approx 0.1143 > 0.
+- At lambda = 0.020: 2 beta_s(A)^2 delta / epsilon approx 0.1452 < 1.0, r_- approx 1.520e-3, and gap ratio approx 0.1130 > 0.
+- At lambda = 0.030: 2 beta_s(A)^2 delta / epsilon approx 0.2667 < 1.0, r_- approx 2.894e-3, and gap ratio approx 0.1103 > 0.
+
+This sustains spatial exponential decay in the weighted Banach algebra ||.||_(s, infty)
+strictly beyond the bare bootstrap collapse threshold lambda_c.
+
 ## Precise remaining large-lambda target
 
 Construct the actual fast/coarse fiber and prove a uniform polynomial reference
