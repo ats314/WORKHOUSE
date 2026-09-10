@@ -12,7 +12,9 @@ from workhouse import claims as C
 from workhouse import graph as G
 
 ROOT = Path(__file__).resolve().parents[1]
-CATALOGUE = C.collect()
+if not C.CLAIMS.is_file():
+    raise FileNotFoundError("Missing checked-in catalogue; run `make catalogue` before testing")
+CATALOGUE = C.load_catalogue()
 SYMBOLS = C.load_symbols()
 GRAPH = G.build(CATALOGUE, SYMBOLS)
 TRIPLES = {(e.src, e.dst, e.type) for e in GRAPH.edges}

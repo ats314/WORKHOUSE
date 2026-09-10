@@ -36,7 +36,7 @@ for s in $stacks; do
       fi
       # Portable local-link and anchor checks for maintained documentation.
       run python scripts/check_docs.py
-      command -v pytest >/dev/null 2>&1 && run pytest -q
+      command -v pytest >/dev/null 2>&1 && run pytest -o addopts=--strict-markers --verbose --durations=20
       ;;
     rust)
       run cargo fmt --check
