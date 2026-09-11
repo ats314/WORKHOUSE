@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import os
 import subprocess
 import sys
 from pathlib import Path
@@ -58,7 +57,8 @@ def make_junction(link: Path, target: Path) -> bool:
     result = subprocess.run(
         ["cmd", "/c", "mklink", "/J", str(link), str(target)], capture_output=True, text=True
     )
-    return result.returncode == 0 and os.path.isjunction(link)
+    # os.path.isjunction is 3.12+; the module's own reparse check is portable.
+    return result.returncode == 0 and S.is_reparse_point(link)
 
 
 def make_symlink(link: Path, target: Path) -> bool:

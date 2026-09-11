@@ -146,7 +146,7 @@ class MemoryIndex:
 
     def _chunks(self):
         def passage(id_, path, first, last, claim_spans):
-            text = (self.root / path).read_text(encoding="utf-8", newline="")
+            text = (self.root / path).read_bytes().decode("utf-8")
             return {
                 "id": id_,
                 "kind": "passage",
