@@ -1,0 +1,281 @@
+# STANDING: unreviewed proposal. This file is not a register.
+#
+# No loader reads this file. The ledger loader names
+# ledger/derivation_statements.yaml explicitly
+# (src/workhouse/derivation_statements.py:18), so nothing below is validated,
+# generated from, or reachable by workhouse why.
+#
+# It was originally written to ledger/, which the discovery protocol forbids
+# (docs/graph_discovery.md:9): no agent layer writes ledger/, index/, theory/
+# or docs/derivations/. Registration is a reviewed hand edit landed by pull
+# request, never a file drop.
+#
+# The status and evidence fields below report what the SOURCE argument claims.
+# They are not review verdicts, and nothing here was verified against the saved
+# graph. The companion task record
+# graph-tasks/2026-09-11-unified-master-revision.md compared the parent
+# manuscript against the graph and found its load-bearing rows (M10, the cubic
+# step error / W6, the volume-uniform dressed operator, the Balaban
+# application, the continuum measure with Euclidean invariance) to be open,
+# conditional or hypothesis where the manuscript marked them PROVED. Read that
+# record before treating any status line below as established.
+#
+# Repairs applied on preservation (2026-09-11): the file did not parse as
+# YAML (an unquoted scalar ending in a colon), and all 8 anchors and
+# locators pointed at headings and line ranges that do not exist in the
+# pinned document - one cited lines 389-462 of a 330-line file. The pinned
+# sha256 was correct and is unchanged; anchors and locators were rewritten
+# from the actual headings and now resolve 8/8. The statement text itself
+# was not touched and remains unreviewed.
+#
+schema: derivation-statements/v1
+date: '2026-09-11'
+scope: Novel derivations for the theory graph bridging the 4-year foundational archive (Synthesis10, Comprehensive LaTeX, Appendices B-J, TWO CUBE B6, PMBSF) to modern graph nodes (SP20-SP25, M1-M10, O1-O5, w6, G18-G19).
+coverage_policy: Status and evidence describe the source argument. Only lean records whole-statement formal
+  coverage; lean_support is explicitly partial. Empty lean means no complete registered formalization
+  in this inventory, not a judgment that an analytic proof is invalid.
+documents:
+- id: CITE:NOVEL_THEORY_GRAPH_DERIVATIONS_DOSSIER
+  path: NOVEL_THEORY_GRAPH_DERIVATIONS_DOSSIER.md
+  sha256: 23719429f080577a8335a7aedb97285b537abc9cd52a44b4a744b87036a3e1fe
+  statements:
+  - id: DERIV:HAAR_RICCI_BAKRY_EMERY_MASS_FLOOR
+    statement: The bi-invariant Riemannian Haar metric on SU(N) possesses strictly positive Ricci curvature
+      kappa_G = N/4 > 0, which by the Bochner-Bakry-Emery inequality CD(kappa_G, infinity) establishes a volume-uniform
+      spectral gap floor rho_*(beta, Lambda; L) >= kappa_G = N/4 > 0 for all periodic lattices Lambda as L -> infinity,
+      closing the thermodynamic gap collapse failure mode in spatial Schur reductions (SP20-SP25, G19).
+    locator: '# Novel Derivation 1: Haar Ricci Bakry–Émery Mass Floor (lines 54-86)'
+    anchor: '# Novel Derivation 1: Haar Ricci Bakry–Émery Mass Floor'
+    source_labels:
+    - RicciCurvature
+    - BochnerBakryEmery
+    - CoreCurvatureTheorem
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Bi-invariant Riemannian Haar metric g_G on compact connected simple Lie group G = SU(N) (N >= 2)
+      normalized such that <X, Y> = -(1/(2N)) B(X, Y) = Tr(X^dag Y).
+    - Spatial periodic cubic lattice Lambda with link configuration manifold M_Lambda = G^(E(Lambda))
+      equipped with product Riemannian metric g_Lambda = oplus_e g_{G, e}.
+    - Coexact Maxwell-type gauge-fixing Hodge-de Rham Laplacian with discrete eigenvalue lambda_min^coex(L) ~ 4 sin^2(pi/L).
+    depends_on: []
+    lean: []
+    remaining: Combine Mathlib Lie group curvature tensor definitions with discrete lattice gauge bundle
+      Hodge-de Rham decomposition.
+    lean_support:
+    - name: ricci_constant_pos
+      scope: Strict positivity of Ricci curvature constant kappa_G > 0 for all N >= 2 in RicciCurvature.lean.
+    - name: product_ricci_floor
+      scope: Product Riemannian manifold preserves component Ricci curvature floor in RicciCurvature.lean.
+    - name: ricci_floor_volume_independent
+      scope: Ricci curvature floor is strictly independent of lattice volume |Lambda| in RicciCurvature.lean.
+    - name: spectral_gap_from_curvature
+      scope: Bakry-Emery CD(rho, infinity) condition yields spectral gap rho in BochnerBakryEmery.lean.
+    - name: poincare_constant_from_cd
+      scope: Poincare constant C_P <= 1/rho from curvature lower bound in BochnerBakryEmery.lean.
+    - name: lsi_constant_from_cd
+      scope: Log-Sobolev constant C_LSI <= 2/rho from curvature lower bound in BochnerBakryEmery.lean.
+
+  - id: DERIV:SMOOTH_PLAQUETTE_PROXY_DRIFT_CLOSURE
+    statement: Replacing the non-smooth Riemannian distance dist_G(U_p, I) with the smooth trace proxy
+      vartheta(g) = 1 - (1/N) Re Tr rho(g) and choosing the quadratic Lyapunov functional V_Lambda(U) = sum_p z_p^2
+      (with Phi'(0) = 0) eliminates all cut-locus singularities in the Dirichlet generator L_Lambda and ensures
+      that second-derivative terms 2 z_p Delta_Lambda z_p are bounded by the extensive badness defect D_Lambda = sum_p z_p
+      rather than the raw volume |P(Lambda)|.
+    locator: '# Novel Derivation 2: Smooth Plaquette Proxy & $\Phi''(0)=0$ Drift Closure (lines 87-120)'
+    anchor: '# Novel Derivation 2: Smooth Plaquette Proxy & $\Phi''(0)=0$ Drift Closure'
+    source_labels:
+    - DeterministicBounds
+    - SU3SafeRegion
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Wilson plaquette action S_W(U) = beta sum_p (1 - (1/N) Re Tr U_p) on finite 4D lattice Lambda.
+    - Trace defect proxy vartheta(g) = 1 - (1/N) Re Tr(rho(g)) in C^infty(G, [0, 2]) with smooth potential Phi(s) = s^2.
+    - Quadratic Lyapunov functional V_Lambda(U) = sum_p z_p^2 where z_p = vartheta(U_p).
+    - Extensive badness defect measure D_Lambda(U) = sum_p z_p(U).
+    depends_on: []
+    lean: []
+    remaining: Formalize full nonabelian plaquette chain rule on G^(E(Lambda)) in Lean 4.
+    lean_support:
+    - name: safe_region_def
+      scope: Smooth characterization of trace proxy safe region in SU3SafeRegion.lean.
+    - name: plaquette_bound_from_trace
+      scope: Plaquette trace difference bounded by smooth trace distance in DeterministicBounds.lean.
+    - name: quadratic_drift_control
+      scope: Second derivative of quadratic potential controlled by first-order defect in DeterministicBounds.lean.
+
+  - id: DERIV:PBH_FLOW_PAIRING_COERCIVITY
+    statement: Under deformation along the Parabolic Higgs-Bundle (PBH) gradient flow W_Lambda(U) = sum_p z_p^2,
+      the Dirichlet generator cross-terms reorganize into a discrete spatial Laplacian sum_{p ~ q} Gamma(z_p, z_q) = -sum_e ||nabla_e z||^2 <= 0;
+      its non-positive sign, combined with the Haar Ricci floor kappa_G D_Lambda, proves the pairing coercivity
+      inequality P_Lambda >= A_0 |Lambda| B_Lambda^2 - B_0 |Lambda| and discharges open Ledger Hypothesis I.1 / I.8.
+    locator: '# Novel Derivation 3: Parabolic Higgs-Bundle (PBH) Flow Pairing Coercivity (lines 121-150)'
+    anchor: '# Novel Derivation 3: Parabolic Higgs-Bundle (PBH) Flow Pairing Coercivity'
+    source_labels:
+    - DriftCertificates
+    - RGFlowStability
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Dirichlet generator L_Lambda = Delta_Lambda - <nabla S_W, nabla .> on C^infty(M_Lambda).
+    - PBH flow functional W_Lambda(U) = sum_p Phi(z_p) with quadratic profile Phi(s) = s^2.
+    - Negative-semidefinite spatial cross-term cancellation sum_{p ~ q} Gamma(z_p, z_q) = -sum_e ||nabla_e z||^2 <= 0.
+    - Non-collapsing Ricci floor kappa_G = N/4 > 0.
+    depends_on:
+    - DERIV:HAAR_RICCI_BAKRY_EMERY_MASS_FLOOR
+    - DERIV:SMOOTH_PLAQUETTE_PROXY_DRIFT_CLOSURE
+    lean: []
+    remaining: Machine verify discrete integration by parts for edge-sharing plaquette gradient cross-terms.
+    lean_support:
+    - name: pairing_coercivity_bound
+      scope: Bilinear form coercivity with extensive floor in DriftCertificates.lean.
+    - name: drift_certificate_existence
+      scope: Existence of Foster-Lyapunov drift certificate for dissipative generators in DriftCertificates.lean.
+    - name: flow_stability_uniform
+      scope: Stability of dissipative gradient flow under spatial coarse-graining in RGFlowStability.lean.
+
+  - id: DERIV:AIDA_SHIGEKAWA_HERBST_TYPICALITY
+    statement: Combining the strictly positive Haar Ricci floor kappa_G = N/4 > 0 with PBH flow drift coercivity
+      permits transferring the local spectral gap on good compact cores K_Lambda(epsilon) to a global Log-Sobolev
+      inequality via Aida-Shigekawa perturbation; Herbst concentration on the 1-Lipschitz badness functional yields
+      the exponential tail mu_Lambda(K_Lambda(epsilon)^c) <= C_1 exp(-gamma epsilon^2 |P(Lambda)|), closing the typicality
+      gap between local Combes-Thomas decay and unconditioned covariance in w6.
+    locator: '# Novel Derivation 4: Aida–Shigekawa SPI-to-LSI Transfer & Herbst Typicality (lines 151-182)'
+    anchor: '# Novel Derivation 4: Aida–Shigekawa SPI-to-LSI Transfer & Herbst Typicality'
+    source_labels:
+    - LogSobolev
+    - LogSobolevConstants
+    - HelfferSjostrand
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Strict Foster-Lyapunov drift (L_Lambda W_Lambda)(U) <= -c_1 D_Lambda(U) + C_1 |Lambda|.
+    - Uniform local Poincare inequality on compact core K_Lambda(epsilon) = {U : D_Lambda(U) <= epsilon |Lambda|}.
+    - Aida-Shigekawa perturbation theorem transferring SPI to global LSI with constant rho_* > 0.
+    depends_on:
+    - DERIV:PBH_FLOW_PAIRING_COERCIVITY
+    lean: []
+    remaining: Formalize full Aida-Shigekawa semigroup perturbation theorem in Mathlib.
+    lean_support:
+    - name: lsi_constant_pos
+      scope: Positivity of Log-Sobolev constant from curvature in LogSobolev.lean.
+    - name: lsi_stronger_than_poincare
+      scope: LSI implies Poincare inequality in LogSobolev.lean.
+    - name: entropy_decay_rate
+      scope: Exponential entropy decay under LSI generator in LogSobolev.lean.
+    - name: helffer_sjostrand_covariance_bound
+      scope: Covariance representation via inverse generator in HelfferSjostrand.lean.
+
+  - id: DERIV:REFLECTION_EQUIVARIANT_RG_OS_CONTINUUM
+    statement: Real-space block spinning P_b commutes exactly with the time-reflection involution Theta
+      (P_b circ Theta = Theta circ P_b), preserving reflection positivity <F, F>_OS >= 0 across all scales;
+      along the Callan-Symanzik trajectory a_n -> 0, the dimensionless correlation mass eta(a_n) >= m_0 a_n
+      yields a strictly positive continuum Wightman spectral gap m_gap = liminf eta(a_n)/a_n >= m_0 > 0,
+      completing the Osterwalder-Schrader reconstruction for O1-O5.
+    locator: '# Novel Derivation 5: Reflection-Equivariant RG & Continuum Mass Gap Persistence (lines 183-213)'
+    anchor: '# Novel Derivation 5: Reflection-Equivariant RG & Continuum Mass Gap Persistence'
+    source_labels:
+    - ReflectionPositivity
+    - OSReconstruction
+    - DecayToGap
+    - AsymptoticFreedom
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Wilson lattice gauge action with time-reflection involution Theta.
+    - Block-spin pushforward operator P_b : M(G^(E(Lambda_a))) -> M(G^(E(Lambda_{ba}))) commuting with Theta.
+    - Callan-Symanzik asymptotic freedom scaling a(beta) ~ Lambda_YM^(-1) exp(-beta / (4 b_0)).
+    depends_on:
+    - DERIV:AIDA_SHIGEKAWA_HERBST_TYPICALITY
+    lean: []
+    remaining: Construct infinite-volume cylindrical measure completion and continuum Hilbert space completion in Lean 4.
+    lean_support:
+    - name: reflection_positive
+      scope: Definition and non-negative scaling invariance of reflection positivity in ReflectionPositivity.lean.
+    - name: rp_pushforward_preservation
+      scope: Pushforward under positive-time compatible map preserves RP in ReflectionPositivity.lean.
+    - name: decay_implies_gap
+      scope: Exponential decay rate of Euclidean correlators implies Hamiltonian spectral gap in DecayToGap.lean.
+    - name: mass_gap_from_decay
+      scope: Physical mass gap equals Euclidean correlation decay rate in DecayToGap.lean.
+
+  - id: DERIV:ROOTED_CAPACITY_LCI_M10_CLOSURE
+    statement: Conditioning on a connected defect polymer C_{p_0}(U) rooted at a single plaquette p_0
+      bypasses the Bernoulli rare-box no-go theorem (||P 1_D P|| -> 1); heat-bath von Mises-Fisher cap stability (LCI)
+      on S^3 combined with Balaban localized tree stability (TOS+J) guarantees that Z_A(rho/q_eta) <= e^{K|A|},
+      yielding E[prod_{p in B} X_p] <= (C_Q q_eta)^{|B|} and analytically discharging open Hypothesis M10 in w6.
+    locator: '# Novel Derivation 6: Rooted Projected Capacity & Lemma Q / M10 Closure (lines 214-247)'
+    anchor: '# Novel Derivation 6: Rooted Projected Capacity & Lemma Q / M10 Closure'
+    source_labels:
+    - TypicalityBridge
+    - VolumeUniform
+    - DriftCertificates
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Connected polymer C_{p_0}(U) rooted at fixed plaquette p_0.
+    - 'Heat-bath von Mises-Fisher conditional distribution on S^3 satisfying Local Cap Integration (LCI):
+      P(z_p > tau | U_{sim p}) <= C_HB exp(-alpha beta tau).'
+    - Balaban localized tree expansion with far-source stability (TOS+J).
+    depends_on:
+    - DERIV:SMOOTH_PLAQUETTE_PROXY_DRIFT_CLOSURE
+    lean: []
+    remaining: Formalize connected lattice polymer combinatorics and convergence radius on Z^4 in Lean 4.
+    lean_support:
+    - name: volume_uniform_gap
+      scope: Gap preservation in thermodynamic limit in VolumeUniform.lean.
+    - name: typicality_tail_bound
+      scope: Exponential tail bound for spatial defect averages in TypicalityBridge.lean.
+
+  - id: DERIV:TWO_CUBE_B6_REPRESENTATION_HOPPING_REVERSAL
+    statement: Full-basis Peter-Weyl decomposition of the two-cube composite operator across all six shared-link
+      SU(3) irreducible representation channels (1, 3, 3_bar, 6, 6_bar, 8) restores an omitted positive Casimir
+      contribution of +56/612, overriding the B4 truncation artifact of -51/612 to produce an exact positive hopping
+      coefficient of +5/612 > 0 and resolving the adjacent hopping sign conflict in SP20-SP25.
+    locator: '# Novel Derivation 7: Two-Cube B6 Representation Channel Sign Reversal (lines 248-283)'
+    anchor: '# Novel Derivation 7: Two-Cube B6 Representation Channel Sign Reversal'
+    source_labels:
+    - ChargeConjugation
+    - HaarMassCoeff
+    - SU2Explicit
+    status: proven
+    evidence: cold-reproduced
+    hypotheses:
+    - Two-cube composite operator O_2(x) = Tr(U(C_1)) Tr(U(C_2)) sharing an interface on hypercubic lattice.
+    - Complete Peter-Weyl irreducible decomposition across the 6 shared link channels: 1, 3, 3_bar, 6, 6_bar, 8.
+    - Exact group integration via SU(3) Haar measure and Casimir invariants.
+    depends_on: []
+    lean: []
+    remaining: Formalize full Clebsch-Gordan series for SU(3) tensor products in Lean 4.
+    lean_support:
+    - name: haar_mass_coeff_pos
+      scope: Positivity of effective mass coefficient from group integration in HaarMassCoeff.lean.
+    - name: su2_explicit_gap
+      scope: Explicit SU(2) group integration benchmarks in SU2Explicit.lean.
+
+  - id: DERIV:FOURTH_ORDER_JOINT_TENSOR_ADJUDICATION
+    statement: The fourth-order spatial Schur Hamiltonian reduction kernel dispute in SP20-SP25 is adjudicated
+      by replacing marginal tensor evaluations with the joint tensor M_X[bra, ket, dv, U] over displacement dv in {-1, 0, 1}^3
+      and combined support U = translate(S_left, dv) cup S_right; the axial hopping parameters A = 5/48, alpha = 5/12
+      are invariant, and the planar discrepancy Delta C = 0.027873... is proved to be a marginalization artifact.
+    locator: '# Novel Derivation 8: Fourth-Order Joint Tensor Adjudication (lines 284-313)'
+    anchor: '# Novel Derivation 8: Fourth-Order Joint Tensor Adjudication'
+    source_labels:
+    - SchurComplement
+    - DeterministicBounds
+    status: proven
+    evidence: output-certified
+    hypotheses:
+    - Fourth-order spatial Schur Hamiltonian effective kernel K^(4)(x, y).
+    - Joint tensor distribution M_X[bra, ket, dv, U] over displacement dv and plaquette support U.
+    - Axial displacement parameters A = 5/48, alpha = 5/12.
+    depends_on:
+    - DERIV:TWO_CUBE_B6_REPRESENTATION_HOPPING_REVERSAL
+    lean: []
+    remaining: Formalize high-order multivariate graph Schur complement reductions in Lean 4.
+    lean_support:
+    - name: schur_contraction
+      scope: Contraction property of spatial Schur complement reduction in SchurComplement.lean.
+    - name: deterministic_kernel_bound
+      scope: Operator norm bounds for effective interaction kernels in DeterministicBounds.lean.
