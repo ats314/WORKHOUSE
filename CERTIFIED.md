@@ -1315,7 +1315,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 536
+## T1 — re-derived exactly — 539
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1353,6 +1353,17 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the stability hypothesis package, with its dimensionless ratio`
   - src/workhouse/invariants/isolation.py:299 · G17 / PUB edition Lem. 14
   - `workhouse verify --only 'the stability hypothesis package, with its dimensionless ratio'`
+**G9 direct sixth order on one face and the shared-link pairs, any rank**
+
+- `one face over Q(N): the seven pieces of (F6) are each O(N^-5) and their sum is the character-engine H6, so three orders cancel between channel content and cumulant`
+  - src/workhouse/invariants/sixth_order_cluster.py:166 · G9; G16; runs/g9_direct_h6_pair_2026-09-11 (the N^-(4k-1) conjecture of runs/planar_band_2026-09-11, branch claude/planar-band-20260911)
+  - `workhouse verify --only 'one face over Q(N): the seven pieces of (F6) are each O(N^-5) and their sum is the character-engine H6, so three orders cancel between channel content and cumulant'`
+- `one face over Q(N): the vacuum-subtracted plaquette energy at order 2k is O(N^-(4k-1)) for k = 1, 2, 3, both C sectors, while every order's unsubtracted pieces are larger`
+  - src/workhouse/invariants/sixth_order_cluster.py:122 · G9; G16; runs/g9_direct_h6_pair_2026-09-11 (the N^-(4k-1) conjecture of runs/planar_band_2026-09-11, branch claude/planar-band-20260911)
+  - `workhouse verify --only 'one face over Q(N): the vacuum-subtracted plaquette energy at order 2k is O(N^-(4k-1)) for k = 1, 2, 3, both C sectors, while every order'"'"'s unsubtracted pieces are larger'`
+- `the sixth-order Bloch recursion, the closed word formula and the character engine agree on one face at N = 11 through order six, both C sectors and the vacuum`
+  - src/workhouse/invariants/sixth_order_cluster.py:86 · G9; G16; runs/g9_direct_h6_pair_2026-09-11 (the N^-(4k-1) conjecture of runs/planar_band_2026-09-11, branch claude/planar-band-20260911)
+  - `workhouse verify --only 'the sixth-order Bloch recursion, the closed word formula and the character engine agree on one face at N = 11 through order six, both C sectors and the vacuum'`
 **G9 sixth-order folds and combined carrier shapes**
 
 - `G9 Hodge word reduction agrees with spatial Laurent operators`

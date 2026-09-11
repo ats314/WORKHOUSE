@@ -100,10 +100,23 @@ class RF:
         if n == 0:
             self.num, self.den, self._h = _ZERO, _ONE, None
             return
-        g = n.gcd(d)
-        if g.degree() > 0:
-            n = n // g
-            d = d // g
+        dc = d.coeffs()
+        if all(c == 0 for c in dc[:-1]):
+            # A monomial denominator c N^k (the engine's own constants only carry
+            # powers of N): cancel the common power of N without a gcd, which is
+            # the hot path of the sixth-order resolvent chains.
+            k = len(dc) - 1
+            nc = n.coeffs()
+            v = next(i for i, c in enumerate(nc) if c != 0)
+            s = min(k, v)
+            if s:
+                n = flint.fmpq_poly(nc[s:])
+                d = flint.fmpq_poly(dc[s:])
+        else:
+            g = n.gcd(d)
+            if g.degree() > 0:
+                n = n // g
+                d = d // g
         lc = d.coeffs()[-1]
         if lc != 1:
             n = n / lc
@@ -328,7 +341,7 @@ def irrep_name(lam, mu) -> str:
     return "".join(map(str, first)) + "|" + "".join(map(str, second))
 
 
-def _energy_table(max_boxes: int = 6) -> dict:
+def _energy_table(max_boxes: int = 8) -> dict:
     """energy (C2/2) -> irrep name, for every (lam; mu) with at most ``max_boxes`` boxes."""
     table: dict[RF, str] = {}
     for total in range(max_boxes + 1):
@@ -341,6 +354,8 @@ def _energy_table(max_boxes: int = 6) -> dict:
                         # a genuine Casimir coincidence, e.g. (4,1,1) and (3,3) at six
                         # boxes; no intermediate state of a fourth-order history
                         # carries more than four boxes on a link, so it never labels
+                        # there. Sixth-order words reach eight boxes (the table
+                        # extends to eight); a joined name is a label, not a claim
                         table[e] = table[e] + "/" + name
                     else:
                         table[e] = name
@@ -428,7 +443,13 @@ class Symbolic:
     records are produced in fresh processes.
     """
 
-    def __init__(self):
+    def __init__(self, min_rank: int = 5):
+        # The audit threshold: a word whose nonzero fluxes are all of magnitude
+        # >= min_rank would pass the integer engine's filter at N = min_rank and
+        # fail the symbolic one. Fourth-order words never reach 5; sixth-order
+        # histories carry fluxes up to 8, so their runs declare min_rank = 9 and
+        # the specialisation argument holds for N >= 9.
+        self.min_rank = int(min_rank)
         self.stats = {
             "components_verified": 0,
             "max_weingarten_n": 0,
@@ -501,8 +522,10 @@ class Symbolic:
                 nonzero = [abs(v) for v in cnt.values() if v]
                 if nonzero:
                     st["max_charge"] = max(st["max_charge"], max(nonzero))
-                    if min(nonzero) >= 5:
-                        raise AssertionError(f"a word with every nonzero flux >= 5: {nonzero}")
+                    if min(nonzero) >= self.min_rank:
+                        raise AssertionError(
+                            f"a word with every nonzero flux >= {self.min_rank}: {nonzero}"
+                        )
             return original_inner(bra, vec)
 
         L.inner = inner

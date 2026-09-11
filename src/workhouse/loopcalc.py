@@ -370,8 +370,9 @@ def _link_spectrum(word: tuple, link: int, rank: int, weight: int = 1) -> tuple:
     return tuple(sorted({F(int(r.p), int(r.q)) for r in roots(Poly(coeffs, x), filter="Q")}))
 
 
-def _project_link(vec: dict, link: int):
-    """Split vec into single-link H0 eigencomponents on `link`: yields (energy, component)."""
+def _link_energy_groups(vec: dict, link: int):
+    """The words of ``vec`` grouped by flux content on ``link``, each group with the
+    candidate single-link energies of that content."""
     groups = defaultdict(dict)
     for w, c in vec.items():
         a, b = content(w).get(link, [0, 0])
@@ -381,11 +382,61 @@ def _project_link(vec: dict, link: int):
             energies = [e * link_weight(link) for e in link_energies(a, b)]
         else:
             energies = sorted(set().union(*(link_spectrum(w, link) for w in sub)))
+        yield energies, sub
+
+
+def _project_link_factored(vec: dict, link: int):
+    """The reference projector: every Lagrange factor applied to the vector in turn."""
+    for energies, sub in _link_energy_groups(vec, link):
         for e in energies:
             comp = dict(sub)
             for e2 in energies:
                 if e2 != e:
                     comp = vscale(vadd(apply_h0_link(comp, link), comp, -e2), 1 / (e - e2))
+            if comp:
+                yield e, comp
+
+
+def _project_link(vec: dict, link: int):
+    """Split vec into single-link H0 eigencomponents on `link`: yields (energy, component).
+
+    The Lagrange projector ``l_e(H0) = prod_(e2 != e) (H0 - e2)/(e - e2)`` is
+    expanded once as a polynomial and applied to the Krylov powers ``H0^k vec``,
+    ``k < #energies``, so ``H0`` acts ``#energies`` times per group rather than
+    ``#energies^2`` times. The components are the same exact vectors as the
+    factored form (``_project_link_factored``, kept as the reference)."""
+    for energies, sub in _link_energy_groups(vec, link):
+        count = len(energies)
+        if count == 1:
+            yield energies[0], sub
+            continue
+        powers = [sub]
+        for _ in range(count - 1):
+            powers.append(apply_h0_link(powers[-1], link))
+        zero = energies[0] - energies[0]
+        one = zero + 1
+        # p(x) = prod_i (x - e_i), coefficients low to high
+        poly = [one]
+        for e in energies:
+            nxt = [zero] * (len(poly) + 1)
+            for i, c in enumerate(poly):
+                nxt[i + 1] += c
+                nxt[i] -= c * e
+            poly = nxt
+        for e in energies:
+            # q = p / (x - e) by synthetic division, then l_e = q / q(e)
+            q = [zero] * count
+            q[count - 1] = poly[count]
+            for i in range(count - 1, 0, -1):
+                q[i - 1] = poly[i] + e * q[i]
+            norm = one
+            for e2 in energies:
+                if e2 != e:
+                    norm = norm * (e - e2)
+            comp: dict = {}
+            for k in range(count):
+                if q[k]:
+                    comp = vadd(comp, powers[k], q[k] / norm)
             if comp:
                 yield e, comp
 
