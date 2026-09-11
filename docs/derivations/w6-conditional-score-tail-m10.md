@@ -1,233 +1,226 @@
-﻿# W6 conditional score tail control and M10 domination
+# W6 conditional score domination M10: exact reduction to three obligations
 
 11 September 2026. Reviewed continuation of the
-[conditional score tail control](w6-conditional-score-tail-control.md),
-the [conditional transport obstruction](w6-conditional-transport-obstruction.md),
-and the [antipodal magnetic geometry](w6-antipodal-magnetic-geometry.md).
+[conditional score tail control](w6-conditional-score-tail-control.md) (M1–M15),
+the [conditional transport obstruction](w6-conditional-transport-obstruction.md) (S1–S15),
+and the [antipodal magnetic geometry](w6-antipodal-magnetic-geometry.md) (A1–A15).
 
-This derivation establishes **M10** (`DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10`
-and `DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:M10_SYNCHRONIZED_SCORE`) for the
-synchronized transport field S13 on the twelve-edge compact Wilson square $M = \mathrm{SU}(2)^4$.
-It proves the sufficient tube-moment estimate S14, the outside-deviation bound S15,
-and the antipodal match, thereby establishing:
+This note does **not** prove M10. An earlier draft of this document claimed
+the full domination bound; review found that its three substantive steps
+restated the open items of S6 as assertions. What survives is recorded here:
+the exact algebra that turns the three S6 obligations into M10 with explicit
+constants, one exact obstruction to the naive nine-dimensional tube estimate
+near the antipode, and the precise statements that remain to be proved.
+`DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10` stays **open**.
 
-\[
- K_g(w) \le C_0 + C_1 W_g(w) \quad \nu_g\text{-a.e. on } 0 < g < g_*,
-\]
-
-where $W_g(w) = g^{-2}\mathbb{E}_{\mu_g}(V \mid w)$. This discharges Priority 1
-in the G19 continuum program and directly instantiates the uniform weighted score
-and median Hardy bounds M11–M15.
+Every check named below is in
+`src/workhouse/invariants/w6_score_tail_m10.py` and is exact (symbolic or
+rational), not a float agreement.
 
 ---
 
-## 1. Setup and synchronized tangency
+## 1. Setting and notation
 
-We work on the compact twelve-edge, four-face Wilson square $M = \mathrm{SU}(2)^4$,
-with true normalized positive quantum ground $\Psi_g$, measure $d\mu_g = \Psi_g^2 dU$,
-literal source trace $w = \operatorname{Sc}(U_2 U_3) = \frac{1}{2}\operatorname{tr}(U_2 U_3) \in [-1, 1]$,
-and trace marginal $\nu_g$.
+Fixed twelve-edge, four-face compact Wilson square $M=\mathrm{SU}(2)^4$, true
+normalized positive ground $\Psi_g$, $d\mu_g=\Psi_g^2\,dU$, literal source
+$w=\operatorname{Sc}(U_2U_3)=\tfrac12\operatorname{tr}(U_2U_3)$ with marginal
+$\nu_g$. Conditioning on $w$ and on $Q=U_2U_3$ give the same conditional
+variance of a gauge-invariant score (transport obstruction, S2). Write
+$Q=\exp(i\,q\cdot\sigma/2)$ in Lie-vector convention, $|q|=2\theta$,
+$\theta\in[0,\pi]$.
 
-In Lie-vector convention for $Q = U_2 U_3 = \exp(i q \cdot \sigma / 2)$, write $|q| = 2\theta$
-with $\theta \in [0, \pi]$. Let $m(q)$ denote the smooth constrained minimizing curve
-$U_0 = U_1 = A = \exp(\theta n / 4)$, $U_2 = U_3 = B = A^2$, where $Q = A^4$.
-The classical potential minimum satisfies:
-\[
- v_*(\theta) = 16(1 - \cos(\theta/4)) = 32 \sin^2(\theta/8) \ge \frac{2\theta^2}{\pi^2} = \frac{|q|^2}{2\pi^2}. \tag{T1}
-\]
+The transported score and the two conditional quantities of M10 are
 
-The synchronized radial profiles S13:
 \[
- z_0(r) = z_1(r) = r\chi(4r), \quad z_2(r) = r\chi(2r), \quad z_Q(r) = r\chi(r) \tag{T2}
-\]
-satisfy Q8 and preserve the full Haar divergence. By S12, they cancel the linear normal phase drift exactly:
-\[
- \partial_y (2S - ZS)\big|_{m(q)} = 0. \tag{T3}
+\sigma_g=\frac{\partial_g\Psi_g+D\Psi_g/g}{\Psi_g},\qquad
+K_g(Q)=\operatorname{Var}_{\mu_g}(\sigma_g\mid Q),\qquad
+W_g(Q)=g^{-2}\,\mathbb E_{\mu_g}(V\mid Q). \tag{R1}
 \]
 
-In local transverse coordinates $\eta \in \mathbb{R}^9$ centered at $m(q)$, define the phase functional:
+On the constrained minimizing curve $m(q)$ ($U_0=U_1=A$, $U_2=U_3=A^2$,
+$Q=A^4$, $A=\exp(\theta n/4)$), the four-face potential of A2 at zero
+transverse displacement is
+
 \[
- F(q, \eta) = (2S - ZS)(q, \eta). \tag{T4}
+v_*(\theta)=16\,(1-\cos(\theta/4))=32\sin^2(\theta/8),\qquad
+v_*(\pi)=16-8\sqrt2. \tag{R2}
 \]
-Taylor expansion around $\eta = 0$ yields:
-\[
- F(q, \eta) - F(q, 0) = \nabla_\eta F(q, 0) \cdot \eta + \frac{1}{2} \eta^T \operatorname{Hess}_\eta F(q, 0) \eta + R_F(q, \eta). \tag{T5}
-\]
-By (T3), $\nabla_\eta F(q, 0) = 0$. At $q = 0$, the fast Hessian $\operatorname{Hess}_\eta F(0, 0)$ vanishes
-by Euler homogeneity cancellation in the synchronized field. Since $F$ is smooth on the compact manifold,
-the fast Hessian satisfies $\|\operatorname{Hess}_\eta F(q, 0)\| \le 2 c_{F, 1} |q|$ near the well, and the third
-transverse derivatives are bounded by $6 c_{F, 2}$. Hence, for all $(q, \eta)$ in a uniform tubular neighborhood:
-\[
- \boxed{|F(q, \eta) - F(q, 0)| \le c_F (|q||\eta|^2 + |\eta|^3).} \tag{T6}
-\]
+
+Check `W6 M10 reduction: constrained minimum potential and antipodal value`
+re-derives (R2) from the A2 quaternion expansion (constant term $16-16C$
+with $C=\cos(\theta/4)$) and confirms $v_*(\pi)=16-8\sqrt2$ against A12.
 
 ---
 
-## 2. Fast-mode tube moments and relative amplitude (S14)
+## 2. What is proved exactly
 
-On a uniform tubular neighborhood $U_{\mathrm{tube}} = \{(q, \eta) : |\eta| \le \delta_{\mathrm{tube}}\}$, write the
-ground state as:
-\[
- \Psi_g(q, \eta) = g^{-6} A_g(q, \eta) \exp(-S(q, \eta)/g^2). \tag{T7}
-\]
-The actual conditional measure on the fiber over $Q$ is:
-\[
- d\mu_g(\eta \mid Q) = \frac{1}{Z_g(Q)} A_g(q, \eta)^2 \exp(-2S(q, \eta)/g^2) d\eta. \tag{T8}
-\]
+### 2.1 Synchronized tangency (S12–S13)
 
-### 2.1. Gaussian Agmon moments
-By the magnetic Hessian spectrum (A5), seven transverse directions continue to have uniform
-strictly positive eigenvalues:
-\[
- \lambda_{\mathrm{normal}} \ge 4(\sqrt{2}-1) > 0. \tag{T9}
-\]
-Along these directions, $S(q, \eta) - S(q, 0) \ge \frac{1}{2} \lambda_{\mathrm{normal}} |\eta|^2$.
-For $\theta < \theta_b$, the soft branch (A6) is also strictly positive. Standard Gaussian moment
-comparison on the tube yields:
-\[
- \mathbb{E}_{\mathrm{tube}}[|\eta|^{2j} \mid Q] \le c_{2j} g^{2j}, \quad j = 1, 2, 3, \tag{T10}
-\]
-with finite constants $c_2, c_4, c_6$ independent of $0 < g < g_*$ and $Q$.
+With the S13 profiles $z_0=z_1=r\chi(4r)$, $z_2=r\chi(2r)$, $z_Q=r\chi(r)$
+and an **arbitrary** smooth cutoff $\chi$, the speeds of the four factors on
+$m(q)$ are $(\theta/4)\chi(\theta)$, $(\theta/4)\chi(\theta)$,
+$(\theta/2)\chi(\theta)$, and $\theta\chi(\theta)$, while
+$Dm(q)\,Z_q=(\tfrac14,\tfrac14,\tfrac12)\,\theta\chi(\theta)$. Hence
+$Z_y(m(q),q)-Dm(q)Z_q(q)=0$ identically in $\theta$ and $\chi$, so the linear
+term S12 vanishes:
 
-### 2.2. Differentiated relative amplitude
-Let $a_g = \partial_g \log A_g + g^{-1}[Z \log A_g + \frac{1}{2}\operatorname{div} Z - 6]$.
-By interior elliptic regularity of the ground-state equation on the compact square, the relative
-amplitude $A_g$ has uniformly bounded logarithmic derivatives in the transverse directions:
 \[
- |D_\eta a_g(q, \eta)| \le \frac{c_a}{g}. \tag{T11}
-\]
-Thus, $|a_g(q, \eta) - a_g(q, 0)| \le \frac{c_a}{g} |\eta|$.
-
-### 2.3. The tube variance bound
-Define the conditional reference:
-\[
- \beta_g(q) = \frac{F(q, 0)}{g^3} + a_g(q, 0). \tag{T12}
-\]
-The transported score $\sigma_g = (\partial_g \Psi_g + D\Psi_g/g)/\Psi_g$ decomposes on the tube as:
-\[
- \sigma_g - \beta_g = \frac{F(q, \eta) - F(q, 0)}{g^3} + [a_g(q, \eta) - a_g(q, 0)]. \tag{T13}
-\]
-Using $(a + b)^2 \le 2a^2 + 2b^2$ and (T6), (T11):
-\[
- |\sigma_g - \beta_g|^2 \le 2 g^{-6} c_F^2 [2|q|^2|\eta|^4 + 2|\eta|^6] + 2 c_a^2 g^{-2} |\eta|^2. \tag{T14}
-\]
-Taking conditional expectations on the tube and substituting the moment bounds (T10):
-\[
- \mathbb{E}_{\mathrm{tube}}[|\sigma_g - \beta_g|^2 \mid Q] \le 4 c_F^2 \left(c_4 \frac{|q|^2}{g^2} + c_6\right) + 2 c_a^2 c_2. \tag{T15}
-\]
-Using the lower bound (T1), $|q|^2 \le 2\pi^2 v_*(\theta) \le 2\pi^2 \mathbb{E}(V \mid Q)$. Therefore:
-\[
- \boxed{\mathbb{E}_{\mathrm{tube}}[|\sigma_g - \beta_g|^2 \mid Q] \le C_0^{\mathrm{tube}} + C_1^{\mathrm{tube}} W_g(Q),} \tag{T16}
-\]
-where $C_0^{\mathrm{tube}} = 4 c_F^2 c_6 + 2 c_a^2 c_2$ and $C_1^{\mathrm{tube}} = 8 \pi^2 c_F^2 c_4$.
-
----
-
-## 3. Outside deviation and rare-fiber complement (S15)
-
-The full conditional variance obeys the decomposition S15:
-\[
- K_g(Q) \le p(Q) \mathbb{E}_{\mathrm{tube}}[|\sigma_g - \beta_g|^2 \mid Q] + \mathbb{E}[\mathbf{1}_{\mathrm{outside}} |\sigma_g - \beta_g|^2 \mid Q], \tag{T17}
-\]
-where $p(Q) = \mu_g(U_{\mathrm{tube}} \mid Q) \le 1$.
-
-On the complement $U_{\mathrm{outside}} = \{|\eta| > \delta_{\mathrm{tube}}\}$, we establish:
-\[
- \mathbb{E}[\mathbf{1}_{\mathrm{outside}} |\sigma_g - \beta_g|^2 \mid Q] \le C_0^{\mathrm{outside}}. \tag{T18}
+\partial_y(2S-ZS)\big|_{m(q)}=0. \tag{R3}
 \]
 
-### 3.1. Exponential mass suppression
-By metric coercivity (A11), $\operatorname{Hess} V[\xi, \xi] \ge \frac{\sqrt{2}-1}{2} \operatorname{dist}_G(\xi, T\mathcal{M})^2$.
-Consequently, for any configuration with distance at least $\delta_{\mathrm{tube}}$ from the minimizing set,
-$V(q, \eta) - v_*(q) \ge \kappa_{\mathrm{geom}} \delta_{\mathrm{tube}}^2$.
-The Agmon distance $d_A(y, m(q)) = \inf_\gamma \int \sqrt{V - v_*} ds \ge \sqrt{\kappa_{\mathrm{geom}}} \delta_{\mathrm{tube}}$
-guarantees the exact point-to-set exponential decay:
+Check `W6 M10 reduction: synchronized tangency for every cutoff` verifies
+(R3) with $\chi$ a symbolic function.
+
+### 2.2 The potential floor used by S14
+
 \[
- \mu_g(U_{\mathrm{outside}} \mid Q) \le C_{\mathrm{Agmon}} \exp\left(-\frac{2 c_{\mathrm{tube}}}{g^2}\right), \quad c_{\mathrm{tube}} > 0. \tag{T19}
+v_*(\theta)=32\sin^2(\theta/8)\;\ge\;\frac{2\theta^2}{\pi^2}=\frac{|q|^2}{2\pi^2},
+\qquad 0\le\theta\le\pi. \tag{R4}
 \]
 
-### 3.2. Reference difference control
-The reference satisfies $|\beta_g(q)| \le C_\beta g^{-3}$.
-The unconditioned score satisfies $\|\sigma_g\|_{L^4(\mu_g)} \le C_\sigma g^{-3}$ by the universal
-gap estimate and smooth metric scaling.
-Applying Cauchy-Schwarz to the outside expectation:
+Proof. $f(x)=\sin x-2x/\pi$ has $f(0)=f(\pi/2)=0$ and $f''=-\sin x<0$ on
+$(0,\pi/2)$, so $f\ge0$ there; with $x=\theta/8\in[0,\pi/8]$,
+$32\sin^2(\theta/8)\ge32\cdot4\theta^2/(64\pi^2)=2\theta^2/\pi^2$.
+Since $v_*(\theta)$ is the minimum of $V$ on the fiber,
+$|q|^2\le2\pi^2\,\mathbb E(V\mid Q)=2\pi^2g^2W_g(Q)$.
+Check `W6 M10 reduction: potential floor v_* >= |q|^2/(2 pi^2)`.
+
+### 2.3 Polynomial-times-exponential suprema (used by S15)
+
+For $p>0$, $c>0$:
+
 \[
- \mathbb{E}[\mathbf{1}_{\mathrm{outside}} |\sigma_g - \beta_g|^2 \mid Q]
- \le \left(\mathbb{E}[\mathbf{1}_{\mathrm{outside}} \mid Q]\right)^{1/2} \left(\mathbb{E}[|\sigma_g - \beta_g|^4 \mid Q]\right)^{1/2}
+\sup_{g>0}\,g^{-p}\exp(-c/g^2)=\Big(\frac{p}{2ec}\Big)^{p/2},
+\qquad\text{in particular}\quad
+\sup_{g>0}g^{-6}e^{-c/g^2}=\Big(\frac{3}{ec}\Big)^{3}. \tag{R5}
 \]
+
+Proof. With $t=g^{-2}$ the function is $t^{p/2}e^{-ct}$, stationary at
+$t=p/(2c)$. Consequently an outside term of the form
+$C\,g^{-p}\exp(-c_{\rm tube}/g^2)$ is bounded uniformly on $(0,g_*]$ for
+**any** polynomial order $p$: the rare-fiber obligation in §4.2 therefore
+needs only a polynomial conditional moment bound, not a sharp one.
+Check `W6 M10 reduction: exact supremum of g^-p exp(-c/g^2)`.
+
+### 2.4 Conditional synthesis theorem
+
+**Hypotheses** (all on $0<g<g_*$, with constants independent of $g$ and $Q$).
+
+- **(H1) Tube moments.** On a uniform tube $|\eta|\le\delta_{\rm tube}$ about
+  $m(q)$, $\mathbb E_{\rm tube}[|\eta|^{2j}\mid Q]\le c_{2j}g^{2j}$, $j=1,2,3$.
+- **(H2) Differentiated amplitude.** With $\Psi_g=g^{-6}A_g e^{-S/g^2}$ and
+  $a_g=\partial_g\log A_g+g^{-1}[Z\log A_g+\tfrac12\operatorname{div}Z-6]$,
+  $|D_\eta a_g|\le c_a/g$ on the tube.
+- **(H3) Jet bound.** $|F(q,\eta)-F(q,0)|\le c_F(|q||\eta|^2+|\eta|^3)$ on the
+  tube, $F=2S-ZS$.
+- **(H4) Outside deviation.** $\mathbb E[\mathbf 1_{\rm outside}|\sigma_g-\beta_g|^2\mid Q]\le C_0^{\rm out}$
+  for $\theta<\theta_b$, with $\beta_g(q)=F(q,0)/g^3+a_g(q,0)$.
+- **(H5) Antipodal region.** $K_g(Q)\le C_{\rm ant}\,g^{-2}$ for
+  $\theta\ge\theta_b$, for some fixed $\theta_b\in(0,\pi)$.
+
+**Conclusion.** M10 holds with
+
 \[
- \le C_{\mathrm{Agmon}}^{1/2} \exp\left(-\frac{c_{\mathrm{tube}}}{g^2}\right) \cdot \left[2 \mathbb{E}[|\sigma_g|^4 \mid Q] + 2 |\beta_g|^4\right]^{1/2}
- \le C_{\mathrm{tail}} g^{-6} \exp\left(-\frac{c_{\mathrm{tube}}}{g^2}\right). \tag{T20}
+C_0=4c_F^2c_6+2c_a^2c_2+C_0^{\rm out},\qquad
+C_1=\max\Big(8\pi^2c_F^2c_4,\ \frac{C_{\rm ant}}{v_*(\theta_b)}\Big). \tag{R6}
 \]
-For any $c_{\mathrm{tube}} > 0$, the function $g \mapsto g^{-6} \exp(-c_{\mathrm{tube}}/g^2)$ is uniformly bounded
-on $(0, g_*]$ by $(3/e c_{\mathrm{tube}})^3 < \infty$. Therefore:
-\[
- \boxed{\mathbb{E}[\mathbf{1}_{\mathrm{outside}} |\sigma_g - \beta_g|^2 \mid Q] \le C_0^{\mathrm{outside}} < \infty.} \tag{T21}
-\]
+
+Proof. For $\theta<\theta_b$: (H3) and (H2) give, pointwise on the tube,
+$|\sigma_g-\beta_g|^2\le2g^{-6}c_F^2(2|q|^2|\eta|^4+2|\eta|^6)+2c_a^2g^{-2}|\eta|^2$;
+(H1) gives $\mathbb E_{\rm tube}|\sigma_g-\beta_g|^2\le4c_F^2(c_4|q|^2/g^2+c_6)+2c_a^2c_2$,
+which is S14. By (R4), $c_4|q|^2/g^2\le2\pi^2c_4W_g$. S15 with tube
+probability $p\le1$ and (H4) gives $K_g\le C_0+8\pi^2c_F^2c_4W_g$.
+For $\theta\ge\theta_b$: $W_g\ge g^{-2}v_*(\theta_b)$ by (R2) and monotonicity
+of $v_*$, so (H5) gives $K_g\le C_{\rm ant}g^{-2}\le(C_{\rm ant}/v_*(\theta_b))W_g$.
+Check `W6 M10 reduction: synthesis constants from the five hypotheses` verifies the
+two inequalities symbolically, with $|q|^2=2\pi^2g^2W_gs$, $0\le s\le1$, and
+$p\in[0,1]$ kept as symbols.
+
+### 2.5 Downstream constants (M11–M15, unchanged)
+
+Given M10 with $(C_0,C_1)$, the source-moment bound $e_g\le E$ and the gap
+$\gamma$: M11 reads $\int K_g|f|^2d\nu_g\le C_1b_g[f]+(C_0+C_1E)\|f\|^2$;
+$\|f\|^2\le b_g[f]/\gamma$ for centered $f$ gives the M12 coefficient
+$C_1+(C_0+C_1E)/\gamma$; the half-support median argument
+$\|h\|^2\le2b_g[h]/\gamma$ gives $\mathfrak B_g\le C_1+2(C_0+C_1E)/\gamma$.
+Check `W6 M10 reduction: M12 and M15 coefficients from M11` verifies the
+algebra. These statements were already established as conditional on M10 in
+M.4–M.5 and remain conditional.
 
 ---
 
-## 4. Antipodal region and gauge reduction
+## 3. An exact obstruction: the naive tube estimate fails near the antipode
 
-For $\theta \ge \theta_b > 0$, the potential minimum satisfies $v_*(\theta) \ge v_*(\theta_b) = 32 \sin^2(\theta_b/8) > 0$.
-Hence the potential expectation obeys:
-\[
- W_g(Q) = g^{-2} \mathbb{E}(V \mid Q) \ge g^{-2} v_*(\theta_b) > 0. \tag{T22}
-\]
-In this region, bounding $K_g(Q)$ by $C g^{-2}$ is sufficient to guarantee $K_g(Q) \le C_1 W_g(Q)$ with $C_1 = C / v_*(\theta_b)$.
+By A6 the soft eigenvalue of the fixed-$Q$ Hessian is
+$\lambda_{\rm soft}(\delta)=\sqrt2\,\delta-\tfrac{\sqrt2}{8}\delta^2+O(\delta^3)$,
+$\delta=\pi-\theta$. If (H1) were obtained from a nine-dimensional Gaussian
+comparison with weight $\exp(-\lambda|\eta|^2/g^2)$ direction by direction,
+the soft direction would contribute
 
-### 4.1. Degeneracy at the antipode
-At $\theta = \pi$, $Q = -I$, the minimizing set $\mathcal{M}$ is a smooth 2-sphere gauge orbit (A7).
-By A15, the transported score is constant along this gauge orbit:
 \[
- d\sigma_g\big|_{T\mathcal{M}} = 0. \tag{T23}
-\]
-The soft directions of the Hessian at $\theta = \pi$ are precisely the tangent space $T\mathcal{M}$ (A9).
-The seven normal directions have eigenvalues bounded below by $4(\sqrt{2}-1)$ uniformly.
-Therefore, the variance along the gauge orbit vanishes identically, and the variance across
-the seven normal directions is bounded by:
-\[
- \operatorname{Var}_{\mu_g}(\sigma_g \mid Q) \le C_{\mathrm{normal}} g^{-2}. \tag{T24}
+\mathbb E[\eta_{\rm soft}^2]=\frac{g^2}{2\lambda_{\rm soft}(\delta)}
+=\frac{g^2}{2\sqrt2\,\delta}+\frac{g^2}{16\sqrt2}+O(\delta), \tag{R7}
 \]
 
-### 4.2. Angular continuation
-For $\theta$ in a neighborhood of $\pi$ ($\delta = \pi - \theta < \delta_0$), normal relaxation
-gives the effective angular potential (A13):
-\[
- V_{\mathrm{eff}, \delta}(n) = 16 - 8\sqrt{2} - 2\sqrt{2}\delta n_3 + O(\delta^2). \tag{T25}
-\]
-The normal section has displacement $O(\delta)$, and the angular variation is confined to the compact
-sphere $S^2$. The score variance is uniformly bounded by $C_{\mathrm{antipodal}} g^{-2}$.
-By (T22), this gives:
-\[
- \boxed{K_g(Q) \le C_1^{\mathrm{antipodal}} W_g(Q) \quad \text{for } \theta \ge \theta_b.} \tag{T26}
-\]
+so $c_2(\delta)\ge(2\sqrt2\delta)^{-1}\to\infty$ as $\theta\to\pi$. Hence (H1)
+cannot hold with a $\theta$-uniform constant on the full transverse tube up
+to the antipode, exactly as S6 warned ("a uniform positive nine-dimensional
+conditional Hessian must not be assumed"). The region $\theta\ge\theta_b$
+must be handled by (H5), and the two soft directions must be treated by
+gauge reduction (A15 at $\theta=\pi$) plus a $\delta$-uniform argument, not by
+Gaussian moments. Check `W6 M10 reduction: soft-mode moment diverges like
+1/(2 sqrt2 delta)` computes the series (R7) from the A6 branch.
 
 ---
 
-## 5. The M10 Domination Theorem and Corollaries
+## 4. What remains open, stated precisely
 
-Combining (T16), (T21), and (T26), we establish:
+### 4.1 Tube obligations (H1)–(H3) for $\theta<\theta_b$
 
-### Theorem (M10 Score Domination)
-For the actual twelve-edge compact Wilson square and the specified synchronized transport field S13,
-there exist finite nonnegative constants $C_0, C_1$ independent of $0 < g < g_*$ such that:
-\[
- \boxed{K_g(w) \le C_0 + C_1 W_g(w) \quad \nu_g\text{-a.e. on } 0 < g < g_*,} \tag{M10}
-\]
-where $K_g(w) = \operatorname{Var}_{\mu_g}(\sigma_g \mid w)$ and $W_g(w) = g^{-2}\mathbb{E}_{\mu_g}(V \mid w)$.
+- (H1) with constants uniform in $g$ and $\theta\in[0,\theta_b]$. A Gaussian
+  comparison is plausible here because all nine eigenvalues are bounded below
+  on $[0,\theta_b]$ (A5, A6), but the comparison must be for the **actual**
+  conditional law $A_g^2e^{-2S/g^2}d\eta/Z_g(Q)$, which requires a two-sided
+  control of $A_g$ on the tube. S3 gives only the undifferentiated comparison.
+- (H2) is a semiclassical derivative bound at scale $1/g$; "interior elliptic
+  regularity" gives bounds at a fixed scale and does not by itself give the
+  $g$-dependence. This is the differentiated relative-amplitude control S6
+  names as the missing premise.
+- (H3): the linear term vanishes by (R3). The vanishing of the fast Hessian
+  of $F$ at $q=0$ (Euler cancellation) and the third-derivative bound are
+  stated in S6 without a written computation for the actual $S$; that
+  computation is outstanding.
 
-### Corollary (M11–M15 Instantiation)
-Conditional on M10, by M7 and the established true-ground source form:
-1. **Uniform weighted score bound (M12)**:
-   Every centered finite-energy source $f$ satisfies:
-   \[
-    \boxed{\int K_g |f|^2 d\nu_g \le \left[C_1 + \frac{C_0 + C_1 E}{\gamma}\right] b_g[f].} \tag{M12}
-   \]
-2. **Median-anchored Hardy constant (M15)**:
-   The median Hardy constant satisfies uniformly at small coupling:
-   \[
-    \boxed{\mathfrak{B}_g \le C_1 + \frac{2(C_0 + C_1 E)}{\gamma} < \infty.} \tag{M15}
-   \]
+### 4.2 Rare-fiber obligation (H4)
 
-This completes the analytic proof of M10 and discharges Priority 1 in G19.
+Two conditional inputs are needed, both uniform in $Q$:
+
+- Conditional mass $\mu_g(|\eta|>\delta_{\rm tube}\mid Q)\le C e^{-2c_{\rm tube}/g^2}$.
+  An Agmon estimate relative to the fiber minimum $m(q)$ supplies this only
+  together with a lower bound on $\Psi_g$ at $m(q)$ of the same order; that
+  lower bound is not in the corpus.
+- A conditional fourth moment $\mathbb E[|\sigma_g|^4\mid Q]\le Cg^{-p}$ for
+  some $p$. A **global** $L^4(\mu_g)$ bound on $\sigma_g$ does not give this
+  on a rare fiber. By (R5) any polynomial $p$ suffices.
+
+### 4.3 Antipodal obligation (H5) for $\theta\ge\theta_b$
+
+A15 gives $d\sigma_g|_{T\mathcal M}=0$ at $\theta=\pi$ exactly. For
+$\pi-\delta_0<\theta<\pi$ the near-orbit directions are not gauge, the soft
+eigenvalue is $\sqrt2\delta$, and (R7) shows Gaussian moments are not uniform.
+Required: $\operatorname{Var}(\sigma_g\mid Q)\le C_{\rm ant}g^{-2}$ uniformly
+for $\theta\in[\theta_b,\pi]$, with the angular potential A13 and the
+displaced orbit; and a matching of $\theta_b$ with the neighbourhood
+$\delta_0$ in which A13 is valid (the region $\theta_b\le\theta\le\pi-\delta_0$
+must be covered by one of the two arguments).
+
+---
+
+## 5. Status
+
+- Established here: (R2)–(R7), the conditional synthesis theorem, and the
+  soft-mode obstruction. All are exact checks.
+- Open: (H1)–(H5), hence M10 and the actual application of M11–M15.
+  G19 Priority 1 remains live with these five items as its content.
+- The earlier draft's claims that S14, S15 and the antipodal bound were
+  "established analytically" are withdrawn.

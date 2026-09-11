@@ -5083,6 +5083,77 @@ documents:
       applicable; complete R10 energy jets and interacting-grid uniformity remain separate.
       This is a specialization of DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10,
       tracked by that existing frontier priority rather than a separate live priority.
+- id: CITE:W6_CONDITIONAL_SCORE_TAIL_M10
+  path: docs/derivations/w6-conditional-score-tail-m10.md
+  sha256: 4e300234ba37b1e87e9ca50a54343c921f7b674d1b638f4f4aeb58181b2ccb24
+  statements:
+  - id: DERIV:W6_CONDITIONAL_SCORE_TAIL_M10:CONDITIONAL_SYNTHESIS
+    statement: For the synchronized S13 transport on the actual four-face SU(2) square, the five
+      hypotheses H1 (uniform tube moments), H2 (differentiated relative amplitude c_a/g), H3 (jet
+      bound on F=2S-ZS), H4 (rare-fiber outside deviation for theta<theta_b) and H5 (antipodal
+      variance C_ant g^-2 for theta>=theta_b) imply M10 with C0 = 4c_F^2 c_6 + 2c_a^2 c_2 + C_out and
+      C1 = max(8 pi^2 c_F^2 c_4, C_ant/v_*(theta_b)). The tangency S12, the floor v_*(theta) =
+      32 sin^2(theta/8) >= |q|^2/(2 pi^2), and sup g^-p exp(-c/g^2) = (p/(2ec))^(p/2) are exact.
+    locator: '## 2. What is proved exactly (lines 55-151)'
+    anchor: '## 2. What is proved exactly'
+    source_labels:
+    - R2
+    - R3
+    - R4
+    - R5
+    - R6
+    status: conditional
+    evidence: analytic
+    hypotheses:
+    - H1-H5 as stated in section 2.4; none of them is established in the corpus.
+    - Synchronized S13 profiles with an arbitrary smooth cutoff; A2 four-face potential; A6 soft branch.
+    depends_on:
+    - DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:SYNCHRONIZED_TANGENCY
+    - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:HESSIAN_SPECTRUM
+    lean: []
+    remaining: Prove H1-H5 (section 4). The implication and its constants are exact and checked by
+      the suite "W6 M10 reduction to three obligations"; M10 itself remains open.
+  - id: DERIV:W6_CONDITIONAL_SCORE_TAIL_M10:SOFT_MODE_OBSTRUCTION
+    statement: With the A6 soft eigenvalue lambda_soft = sqrt2 delta - (sqrt2/8) delta^2 near the
+      antipode, a direction-by-direction Gaussian tube comparison gives E[eta_soft^2] = g^2/(2 sqrt2
+      delta) + g^2/(16 sqrt2) + O(delta), so the H1 constant c_2 cannot be uniform in theta up to pi;
+      the antipodal region must be handled by gauge reduction and a delta-uniform score estimate.
+    locator: '## 3. An exact obstruction: the naive tube estimate fails near the antipode (lines 152-175)'
+    anchor: '## 3. An exact obstruction: the naive tube estimate fails near the antipode'
+    source_labels:
+    - R7
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - A6 soft branch of the exact fixed-Q Hessian; Gaussian weight exp(-lambda eta^2/g^2) in that direction.
+    depends_on:
+    - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:HESSIAN_SPECTRUM
+    lean: []
+    remaining: None for the obstruction itself; it constrains how H5 can be proved.
+  - id: DERIV:W6_CONDITIONAL_SCORE_TAIL_M10:OPEN_OBLIGATIONS
+    statement: The M10 target for the synchronized S13 transport is open exactly in H1-H5. Tube
+      obligations need two-sided control of the actual relative amplitude A_g and its g-scaled
+      derivative on the tube and the written fast-Hessian computation for F at q=0. The rare-fiber
+      obligation needs conditional (not global) Agmon mass and a polynomial conditional fourth moment
+      of sigma_g, uniform in Q. The antipodal obligation needs Var(sigma_g|Q) <= C_ant g^-2 uniformly
+      on theta in [theta_b, pi] with theta_b matched to the A13 validity neighbourhood.
+    locator: '## 4. What remains open, stated precisely (lines 176-218)'
+    anchor: '## 4. What remains open, stated precisely'
+    source_labels:
+    - H1
+    - H2
+    - H3
+    - H4
+    - H5
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - Same actual model and synchronized transport as DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:M10_SYNCHRONIZED_SCORE.
+    depends_on:
+    - DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:M10_SYNCHRONIZED_SCORE
+    lean: []
+    remaining: Prove H1-H5, or a different sufficient source-weighted pairing. An earlier draft of
+      this document asserted these as proved; that claim is withdrawn.
 - id: CITE:SOURCE_CURRENT_SPECTRAL_BRIDGES
   path: docs/derivations/source-currents-and-spectral-totality.md
   sha256: 860c81a3fb665d6b9c385365322ff0503e5500d6d79c94d49a0984250a4548a9

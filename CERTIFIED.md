@@ -1339,7 +1339,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 558
+## T1 — re-derived exactly — 565
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1471,6 +1471,29 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the two band spans ARE the two incidence spectra`
   - src/workhouse/invariants/su3.py:143 · MASTER paper §4.5 / ENGINE_FLUX_su3_domino_d3.py key corrected_Ceven_bandwidth_16|t|
   - `workhouse verify --only 'the two band spans ARE the two incidence spectra'`
+**W6 M10 reduction to three obligations**
+
+- `W6 M10 reduction: M12 and M15 coefficients from M11`
+  - src/workhouse/invariants/w6_score_tail_m10.py:148 · W6_CONDITIONAL_SCORE_TAIL_M10 R6 (M11-M15)
+  - `workhouse verify --only 'W6 M10 reduction: M12 and M15 coefficients from M11'`
+- `W6 M10 reduction: constrained minimum potential and antipodal value`
+  - src/workhouse/invariants/w6_score_tail_m10.py:33 · W6_CONDITIONAL_SCORE_TAIL_M10 R2
+  - `workhouse verify --only 'W6 M10 reduction: constrained minimum potential and antipodal value'`
+- `W6 M10 reduction: exact supremum of g^-p exp(-c/g^2)`
+  - src/workhouse/invariants/w6_score_tail_m10.py:99 · W6_CONDITIONAL_SCORE_TAIL_M10 R5
+  - `workhouse verify --only 'W6 M10 reduction: exact supremum of g^-p exp(-c/g^2)'`
+- `W6 M10 reduction: potential floor v_* >= |q|^2/(2 pi^2)`
+  - src/workhouse/invariants/w6_score_tail_m10.py:80 · W6_CONDITIONAL_SCORE_TAIL_M10 R4
+  - `workhouse verify --only 'W6 M10 reduction: potential floor v_* >= |q|^2/(2 pi^2)'`
+- `W6 M10 reduction: soft-mode moment diverges like 1/(2 sqrt2 delta)`
+  - src/workhouse/invariants/w6_score_tail_m10.py:163 · W6_CONDITIONAL_SCORE_TAIL_M10 R7
+  - `workhouse verify --only 'W6 M10 reduction: soft-mode moment diverges like 1/(2 sqrt2 delta)'`
+- `W6 M10 reduction: synchronized tangency for every cutoff`
+  - src/workhouse/invariants/w6_score_tail_m10.py:55 · W6_CONDITIONAL_SCORE_TAIL_M10 R3
+  - `workhouse verify --only 'W6 M10 reduction: synchronized tangency for every cutoff'`
+- `W6 M10 reduction: synthesis constants from the five hypotheses`
+  - src/workhouse/invariants/w6_score_tail_m10.py:116 · W6_CONDITIONAL_SCORE_TAIL_M10 R6
+  - `workhouse verify --only 'W6 M10 reduction: synthesis constants from the five hypotheses'`
 **W6 antipodal conditional magnetic geometry**
 
 - `W6 antipodal: complete nine-dimensional Hessian spectrum`

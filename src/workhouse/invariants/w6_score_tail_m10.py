@@ -1,203 +1,178 @@
-﻿"""Exact verification suite for W6 conditional score tail control (M10).
+"""Exact checks for the M10 reduction (W6 conditional score domination).
 
-Verifies the tube moments, outside-deviation bounds, antipodal gauge invariance,
-and the M10 score-versus-potential domination K_g(w) <= C0 + C1 W_g(w).
+M10 itself is open. These checks establish only the exact pieces recorded in
+docs/derivations/w6-conditional-score-tail-m10.md: the constrained minimum
+potential, the S12 tangency for an arbitrary cutoff, the potential floor, the
+supremum used by the rare-fiber term, the synthesis algebra that turns the
+hypotheses H1-H5 into explicit constants, the M12/M15 coefficient algebra, and
+the soft-mode divergence that obstructs a nine-dimensional Gaussian tube
+estimate near the antipode. Nothing here bounds the actual ground state.
 """
 
 from __future__ import annotations
 
-import math
-from functools import cache
-
 import sympy as sp
 
 from ._core import _suite
+from .w6_antipodal import C, S, _quadratic_data
 
-score_tail = _suite("W6 conditional score tail control (M10)")
+score_tail = _suite("W6 M10 reduction to three obligations")
 CITE = "W6_CONDITIONAL_SCORE_TAIL_M10"
 
-TANGENCY = "W6 score tail: synchronized tangency cancellation S12-S13"
-JET_BOUND = "W6 score tail: quadratic jet bound c_F on F = 2S - ZS"
-AGMON_MOMENTS = "W6 score tail: Gaussian Agmon tube moments S14"
-AMPLITUDE_GRAD = "W6 score tail: relative amplitude fast gradient bound"
-TUBE_VARIANCE = "W6 score tail: tube conditional variance bound S14"
-OUTSIDE_DEVIATION = "W6 score tail: rare-fiber outside deviation S15"
-ANTIPODAL_GAUGE = "W6 score tail: antipodal score gauge invariance and normal variance"
-M10_DOMINATION = "W6 score tail: full conditional score domination M10"
-HARDY_M11_M15 = "W6 score tail: uniform Hardy constant instantiation M11-M15"
+MINIMUM = "W6 M10 reduction: constrained minimum potential and antipodal value"
+TANGENCY = "W6 M10 reduction: synchronized tangency for every cutoff"
+FLOOR = "W6 M10 reduction: potential floor v_* >= |q|^2/(2 pi^2)"
+SUPREMUM = "W6 M10 reduction: exact supremum of g^-p exp(-c/g^2)"
+SYNTHESIS = "W6 M10 reduction: synthesis constants from the five hypotheses"
+HARDY = "W6 M10 reduction: M12 and M15 coefficients from M11"
+SOFT_MODE = "W6 M10 reduction: soft-mode moment diverges like 1/(2 sqrt2 delta)"
 
-# Geometric constants from w6-antipodal-magnetic-geometry
-LAMBDA_NORMAL = 4.0 * (math.sqrt(2.0) - 1.0)  # ~ 1.656854
-V_STAR_PI = 16.0 * (1.0 - 1.0 / math.sqrt(2.0))  # ~ 4.68629
+theta = sp.Symbol("theta", positive=True)
 
 
-@score_tail.check(TANGENCY, CITE + " Section 1")
-def check_synchronized_tangency_s12_s13():
-    """Verify that the synchronized radial profiles S13 cancel the normal phase drift."""
-    theta = sp.Symbol("theta", positive=True)
-    # At S4 near the well, radial speeds are z0=z1=theta/4, z2=theta/2, zQ=theta
-    # S12 evaluates: \partial_y(2S - ZS)|_{m(q)} = -B(q) [Z_y(m(q), q) - Dm(q) Z_q(q)]
-    # For m(q): U0 = U1 = A = exp(theta n / 4), U2 = U3 = B = exp(theta n / 2)
-    # Dm = d/d(theta) (theta/4, theta/4, theta/2) = (1/4, 1/4, 1/2)
-    # Z_q = theta => Dm * Z_q = (theta/4, theta/4, theta/2) = Z_y
-    drift_0 = sp.Rational(1, 4) * theta - sp.Rational(1, 4) * theta
-    drift_1 = sp.Rational(1, 4) * theta - sp.Rational(1, 4) * theta
-    drift_2 = sp.Rational(1, 2) * theta - sp.Rational(1, 2) * theta
-    drift_is_zero = (drift_0 == 0) and (drift_1 == 0) and (drift_2 == 0)
-    return drift_is_zero, (
-        "Synchronized profiles S13 satisfy Z_y(m(q),q) = Dm(q) Z_q(q), exactly "
-        "cancelling the linear normal phase drift: partial_y(2S - ZS)|_{m(q)} = 0."
+@score_tail.check(MINIMUM, CITE + " R2")
+def constrained_minimum_potential():
+    _, _, _, potential, _, _, t = _quadratic_data()
+    constant = sp.expand(potential.coeff(t, 0))
+    # A = (C, 0, 0, S) is the quarter-angle factor, so C = cos(theta/4).
+    v_star = constant.subs({C: sp.cos(theta / 4), S: sp.sin(theta / 4)})
+    closed = 16 * (1 - sp.cos(theta / 4))
+    half_angle = 32 * sp.sin(theta / 8) ** 2
+    at_pi = v_star.subs(theta, sp.pi)
+    ok = (
+        sp.simplify(v_star - closed) == 0
+        and sp.simplify(closed - half_angle) == 0
+        and sp.simplify(at_pi - (16 - 8 * sp.sqrt(2))) == 0
+    )
+    return (
+        ok,
+        "A2 constant term 16 - 16C with C = cos(theta/4) gives v_*(theta) = "
+        "16(1 - cos(theta/4)) = 32 sin^2(theta/8); v_*(pi) = 16 - 8 sqrt2 matches A12.",
+        {"V_STAR_ANTIPODE_THETA": 16 * (1 - sp.cos(theta / 4))},
     )
 
 
-@score_tail.check(JET_BOUND, CITE + " Section 1")
-def check_quadratic_jet_bound_cF():
-    """Verify the quadratic jet bound |F(q, eta) - F(q, 0)| <= c_F (|q||eta|^2 + |eta|^3)."""
-    cF = 3.5
-    q_vals = [0.01 * i for i in range(1, 201, 10)]
-    eta_vals = [0.005 * i for i in range(1, 41, 2)]
-    passed = True
-    for q in q_vals:
-        for eta in eta_vals:
-            diff = 1.5 * q * (eta**2) + 1.0 * (eta**3)
-            bound = cF * (q * (eta**2) + (eta**3))
-            if diff > bound:
-                passed = False
-                break
-    return passed, f"Quadratic jet bound verified with c_F = {cF}."
-
-
-@score_tail.check(AGMON_MOMENTS, CITE + " Section 2.1")
-def check_agmon_tube_moments_s14():
-    """Verify Gaussian Agmon moments E_{tube}|eta|^{2j} <= c_{2j} g^{2j} for j=1,2,3."""
-    c2 = 7.0 / LAMBDA_NORMAL
-    c4 = 63.0 / (LAMBDA_NORMAL**2)
-    c6 = 945.0 / (LAMBDA_NORMAL**3)
-    g_vals = [0.01, 0.05, 0.1, 0.15]
-    passed = True
-    for g in g_vals:
-        m2 = c2 * (g**2)
-        m4 = c4 * (g**4)
-        m6 = c6 * (g**6)
-        if not (m2 > 0 and m4 > 0 and m6 > 0 and m4 <= m2**2 * 2.0):
-            passed = False
-            break
-    return passed, (
-        f"Agmon moments satisfy c2={c2:.3f}, c4={c4:.3f}, c6={c6:.3f} "
-        f"based on lambda_normal={LAMBDA_NORMAL:.4f}."
+@score_tail.check(TANGENCY, CITE + " R3")
+def synchronized_tangency_any_cutoff():
+    chi = sp.Function("chi")
+    r = sp.Symbol("r", positive=True)
+    profiles = {
+        "z0": r * chi(4 * r),
+        "z1": r * chi(4 * r),
+        "z2": r * chi(2 * r),
+        "zQ": r * chi(r),
+    }
+    # Radii of the four factors on m(q): A, A, A^2, Q = A^4 with A = exp(theta n / 4).
+    speeds = (
+        profiles["z0"].subs(r, theta / 4),
+        profiles["z1"].subs(r, theta / 4),
+        profiles["z2"].subs(r, theta / 2),
+    )
+    z_q = profiles["zQ"].subs(r, theta)
+    dm = (sp.Rational(1, 4), sp.Rational(1, 4), sp.Rational(1, 2))
+    drift = [sp.simplify(speed - d * z_q) for speed, d in zip(speeds, dm, strict=True)]
+    return all(entry == 0 for entry in drift), (
+        "With z0 = z1 = r chi(4r), z2 = r chi(2r), zQ = r chi(r) and chi arbitrary, "
+        "Z_y(m(q),q) - Dm(q) Z_q(q) = 0 identically, so the S12 linear term vanishes."
     )
 
 
-@score_tail.check(AMPLITUDE_GRAD, CITE + " Section 2.2")
-def check_relative_amplitude_gradient():
-    """Verify relative amplitude fast gradient bound |D_eta a_g| <= c_a / g."""
-    ca = 1.25
-    g_vals = [0.02, 0.05, 0.1, 0.2]
-    passed = all(ca / g > 0 and ca / g >= ca for g in g_vals)
-    return passed, f"Relative amplitude gradient bound verified with c_a = {ca}."
-
-
-@score_tail.check(TUBE_VARIANCE, CITE + " Section 2.3")
-def check_tube_variance_bound_s14():
-    """Verify tube variance E_{tube}|sigma_g - beta_g|^2 <= C0_tube + C1_tube W_g(Q)."""
-    cF = 3.5
-    ca = 1.25
-    c2 = 7.0 / LAMBDA_NORMAL
-    c4 = 63.0 / (LAMBDA_NORMAL**2)
-    c6 = 945.0 / (LAMBDA_NORMAL**3)
-    C0_tube = 4.0 * (cF**2) * c6 + 2.0 * (ca**2) * c2
-    C1_tube = 8.0 * (math.pi**2) * (cF**2) * c4
-    g_vals = [0.02, 0.05, 0.1]
-    theta_vals = [0.1, 0.5, 1.0, 1.5]
-    passed = True
-    for g in g_vals:
-        for theta in theta_vals:
-            q = 2.0 * theta
-            term = 4.0 * (cF**2) * (c4 * (q**2) / (g**2) + c6) + 2.0 * (ca**2) * c2
-            v_star = 32.0 * (math.sin(theta / 8.0) ** 2)
-            Wg = v_star / (g**2)
-            bound = C0_tube + C1_tube * Wg
-            if term > bound * 1.001:
-                passed = False
-                break
-    return passed, (
-        f"Tube variance bound holds with C0_tube={C0_tube:.2f} and C1_tube={C1_tube:.2f}."
+@score_tail.check(FLOOR, CITE + " R4", rests_on=(MINIMUM,))
+def potential_floor():
+    x = sp.Symbol("x", positive=True)
+    f = sp.sin(x) - 2 * x / sp.pi
+    endpoints = f.subs(x, 0) == 0 and sp.simplify(f.subs(x, sp.pi / 2)) == 0
+    # f'' = -sin x < 0 on (0, pi/2): f is concave with zero endpoints, hence f >= 0.
+    concave = sp.simplify(sp.diff(f, x, 2) + sp.sin(x)) == 0
+    # Exact rational-grid confirmation of the squared consequence on [0, pi].
+    grid_ok = all(
+        (32 * sp.sin(th / 8) ** 2 - 2 * th**2 / sp.pi**2).evalf(60) >= 0
+        for th in [sp.pi * sp.Rational(k, 64) for k in range(65)]
+    )
+    identity = sp.simplify(32 * (2 * x / sp.pi) ** 2 - 128 * x**2 / sp.pi**2) == 0
+    return endpoints and concave and grid_ok and identity, (
+        "sin x >= 2x/pi on [0, pi/2] by concavity with zero endpoints; with x = theta/8 "
+        "this gives 32 sin^2(theta/8) >= 2 theta^2/pi^2 = |q|^2/(2 pi^2) for |q| = 2 theta."
     )
 
 
-@score_tail.check(OUTSIDE_DEVIATION, CITE + " Section 3")
-def check_outside_deviation_bound_s15():
-    """Verify outside deviation bound E[1_outside |sigma_g - beta_g|^2 | Q] <= C0_outside."""
-    c_tube = 0.5
-    C_tail = 10.0
-    max_val = C_tail * (1.0 / (c_tube**3)) * ((3.0 / math.e) ** 3)
-    C0_outside = math.ceil(max_val * 1.1)
-    g_vals = [0.01 + 0.01 * i for i in range(30)]
-    passed = True
-    for g in g_vals:
-        val = C_tail * (g**-6) * math.exp(-c_tube / (g**2))
-        if val > C0_outside:
-            passed = False
-            break
-    return passed, f"Outside deviation bounded uniformly by C0_outside = {C0_outside}."
-
-
-@score_tail.check(ANTIPODAL_GAUGE, CITE + " Section 4")
-def check_antipodal_gauge_variance():
-    """Verify antipodal gauge invariance and normal score variance bound."""
-    C_normal = 25.0
-    C1_antipodal = C_normal / V_STAR_PI
-    passed = (C1_antipodal > 0) and (V_STAR_PI > 4.0)
-    return passed, (
-        f"Antipodal variance bounded with C1_antipodal = {C1_antipodal:.2f} "
-        f"using v_*(pi) = {V_STAR_PI:.3f}."
+@score_tail.check(SUPREMUM, CITE + " R5")
+def exact_supremum():
+    t, c, p = sp.symbols("t c p", positive=True)
+    h = t ** (p / 2) * sp.exp(-c * t)
+    stationary = sp.solve(sp.Eq(sp.diff(sp.log(h), t), 0), t)
+    value = sp.simplify(h.subs(t, p / (2 * c)))
+    general = sp.simplify(value - (p / (2 * sp.E * c)) ** (p / 2)) == 0
+    six = sp.simplify(value.subs(p, 6) - (3 / (sp.E * c)) ** 3) == 0
+    second = sp.simplify(sp.diff(sp.log(h), t, 2))
+    return (
+        stationary == [p / (2 * c)] and general and six and second == -p / (2 * t**2),
+        "sup_g g^-p exp(-c/g^2) = (p/(2ec))^(p/2), attained at g^-2 = p/(2c); "
+        "p = 6 gives (3/(ec))^3. Any polynomial order is absorbed by the exponential.",
+        {"SUP_G6_EXP_COEFFICIENT": (3 / (sp.E * c)) ** 3},
     )
 
 
-@score_tail.check(M10_DOMINATION, CITE + " Section 5")
-def check_m10_score_domination():
-    """Verify full conditional score domination K_g(w) <= C0 + C1 W_g(w)."""
-    cF = 3.5
-    ca = 1.25
-    c2 = 7.0 / LAMBDA_NORMAL
-    c4 = 63.0 / (LAMBDA_NORMAL**2)
-    c6 = 945.0 / (LAMBDA_NORMAL**3)
-    C0_tube = 4.0 * (cF**2) * c6 + 2.0 * (ca**2) * c2
-    C1_tube = 8.0 * (math.pi**2) * (cF**2) * c4
-    C0_outside = 120.0
-    C1_antipodal = 25.0 / V_STAR_PI
+@score_tail.check(SYNTHESIS, CITE + " R6", rests_on=(FLOOR,))
+def synthesis_constants():
+    cF, ca, c2, c4, c6, C_out, C_ant, g, W = sp.symbols(
+        "c_F c_a c_2 c_4 c_6 C_out C_ant g W", positive=True
+    )
+    s, p = sp.symbols("s p", nonnegative=True)  # |q|^2 = 2 pi^2 g^2 W s, tube mass p
+    v_b = sp.Symbol("v_b", positive=True)  # v_*(theta_b)
+    q2 = 2 * sp.pi**2 * g**2 * W * s
+    s14 = 4 * cF**2 * (c4 * q2 / g**2 + c6) + 2 * ca**2 * c2
+    C0 = 4 * cF**2 * c6 + 2 * ca**2 * c2 + C_out
+    C1_tube = 8 * sp.pi**2 * cF**2 * c4
+    C1 = sp.Max(C1_tube, C_ant / v_b)
+    # Region theta < theta_b: K <= p * S14 + C_out with p, s in [0, 1].
+    slack_tube = sp.expand(C0 + C1_tube * W - (p * s14 + C_out))
+    # slack = (1 - p)(4 cF^2 c6 + 2 ca^2 c2) + 8 pi^2 cF^2 c4 W (1 - p s): nonnegative.
+    target = (1 - p) * (4 * cF**2 * c6 + 2 * ca**2 * c2) + C1_tube * W * (1 - p * s)
+    tube_ok = sp.expand(slack_tube - target) == 0
+    # Region theta >= theta_b: W >= v_b / g^2, so C_ant / g^2 <= (C_ant / v_b) W.
+    W_ant = v_b / g**2 + sp.Symbol("excess", nonnegative=True)
+    ant_ok = (
+        sp.simplify((C_ant / v_b) * W_ant - C_ant / g**2)
+        == C_ant * sp.Symbol("excess", nonnegative=True) / v_b
+    )
+    # C1 = Max(C1_tube, C_ant/v_b) dominates each candidate by definition of Max.
+    return bool(tube_ok and ant_ok and set(C1.args) == {C1_tube, C_ant / v_b}), (
+        "H1-H5 give M10 with C0 = 4 c_F^2 c_6 + 2 c_a^2 c_2 + C_out and "
+        "C1 = max(8 pi^2 c_F^2 c_4, C_ant / v_*(theta_b)); the tube slack is "
+        "(1-p)(4 c_F^2 c_6 + 2 c_a^2 c_2) + 8 pi^2 c_F^2 c_4 W (1 - p s) >= 0.",
+        {"C1_TUBE_COEFFICIENT": C1_tube},
+    )
 
-    C0 = C0_tube + C0_outside
-    C1 = max(C1_tube, C1_antipodal)
 
-    theta_vals = [0.01 + 0.12 * i for i in range(26)]
-    g_vals = [0.02, 0.05, 0.1, 0.15, 0.2]
-    passed = True
-    for g in g_vals:
-        for theta in theta_vals:
-            v_star = 32.0 * (math.sin(theta / 8.0) ** 2)
-            Wg = v_star / (g**2)
-            q = 2.0 * theta
-            Kg_tube = 4.0 * (cF**2) * (c4 * (q**2) / (g**2) + c6) + 2.0 * (ca**2) * c2
-            Kg_outside = C0_outside * math.exp(-0.5 / (g**2))
-            Kg_total = Kg_tube + Kg_outside
-            if Kg_total > C0 + C1 * Wg:
-                passed = False
-                break
-    return passed, f"M10 domination verified with C0={C0:.1f}, C1={C1:.1f}."
+@score_tail.check(HARDY, CITE + " R6 (M11-M15)")
+def hardy_coefficients():
+    C0, C1, E, gamma, b, e_g = sp.symbols("C0 C1 E gamma b e_g", positive=True)
+    # M11: int K |f|^2 <= C1 b + (C0 + C1 e_g) ||f||^2 with e_g <= E.
+    m11 = C1 * b + (C0 + C1 * E) * b / gamma  # ||f||^2 <= b / gamma (centered, gap)
+    m12 = (C1 + (C0 + C1 * E) / gamma) * b
+    m14 = C1 * b + (C0 + C1 * E) * 2 * b / gamma  # ||h||^2 <= 2 b / gamma (median half)
+    m15 = (C1 + 2 * (C0 + C1 * E) / gamma) * b
+    monotone = sp.simplify((C0 + C1 * E) - (C0 + C1 * e_g)).subs(e_g, E) == 0
+    return sp.expand(m11 - m12) == 0 and sp.expand(m14 - m15) == 0 and monotone, (
+        "Given M10 (C0, C1), e_g <= E and gap gamma: M12 coefficient C1 + (C0 + C1 E)/gamma, "
+        "median Hardy constant C1 + 2 (C0 + C1 E)/gamma. Both remain conditional on M10."
+    )
 
 
-@score_tail.check(HARDY_M11_M15, CITE + " Section 5 (M11-M15)")
-def check_hardy_constant_instantiation_m11_m15():
-    """Verify uniform weighted score bound and median Hardy constant M11-M15."""
-    C0 = 150.0
-    C1 = 7200.0
-    E_bound = 0.5
-    gamma = 0.2
-    coeff_M12 = C1 + (C0 + C1 * E_bound) / gamma
-    hardy_B = C1 + 2.0 * (C0 + C1 * E_bound) / gamma
-    passed = (coeff_M12 > 0) and (hardy_B > 0) and math.isfinite(hardy_B)
-    return passed, (
-        f"M11-M15 instantiated: weighted score coefficient = {coeff_M12:.1f}, "
-        f"median Hardy constant mathfrak_B_g <= {hardy_B:.1f}."
+@score_tail.check(SOFT_MODE, CITE + " R7")
+def soft_mode_divergence():
+    delta, g = sp.symbols("delta g", positive=True)
+    # A6 soft branch of the fixed-Q Hessian near the antipode.
+    lam_soft = sp.sqrt(2) * delta - sp.sqrt(2) / 8 * delta**2
+    # Gaussian weight exp(-lam eta^2 / g^2) has second moment g^2 / (2 lam).
+    moment = g**2 / (2 * lam_soft)
+    series = sp.series(moment, delta, 0, 1).removeO()
+    leading = sp.simplify(series - (g**2 / (2 * sp.sqrt(2) * delta) + g**2 / (16 * sp.sqrt(2))))
+    diverges = sp.limit(moment / g**2, delta, 0, "+") == sp.oo
+    return leading == 0 and diverges, (
+        "With lambda_soft = sqrt2 delta - (sqrt2/8) delta^2, E[eta_soft^2] = "
+        "g^2/(2 sqrt2 delta) + g^2/(16 sqrt2) + O(delta): the H1 constant c_2 is not "
+        "uniform up to the antipode, so H5 cannot come from a nine-dimensional Gaussian tube.",
+        {"SOFT_MODE_MOMENT_LEADING": 1 / (2 * sp.sqrt(2) * delta)},
     )

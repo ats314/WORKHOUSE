@@ -1,54 +1,38 @@
-﻿"""Tests for W6 conditional score tail control and M10 domination."""
+"""Tests for the exact M10 reduction checks (W6 conditional score domination)."""
+
+import pytest
 
 from workhouse.invariants import w6_score_tail_m10 as m
 
+CHECKS = [
+    m.constrained_minimum_potential,
+    m.synchronized_tangency_any_cutoff,
+    m.potential_floor,
+    m.exact_supremum,
+    m.synthesis_constants,
+    m.hardy_coefficients,
+    m.soft_mode_divergence,
+]
+
 
 def test_suite_registration():
-    suite = m.score_tail
-    assert suite.name == "W6 conditional score tail control (M10)"
-    assert len(suite.checks) == 9
+    assert m.score_tail.name == "W6 M10 reduction to three obligations"
+    assert len(m.score_tail.checks) == len(CHECKS) == 7
 
 
-def test_synchronized_tangency():
-    passed, detail = m.check_synchronized_tangency_s12_s13()
+@pytest.mark.parametrize("check", CHECKS, ids=[c.__name__ for c in CHECKS])
+def test_check_passes(check):
+    result = check()
+    passed, detail = result[0], result[1]
     assert passed, detail
 
 
-def test_quadratic_jet_bound():
-    passed, detail = m.check_quadratic_jet_bound_cF()
-    assert passed, detail
+def test_yields_are_exact_symbolic():
+    import sympy as sp
 
-
-def test_agmon_tube_moments():
-    passed, detail = m.check_agmon_tube_moments_s14()
-    assert passed, detail
-
-
-def test_relative_amplitude_gradient():
-    passed, detail = m.check_relative_amplitude_gradient()
-    assert passed, detail
-
-
-def test_tube_variance_bound():
-    passed, detail = m.check_tube_variance_bound_s14()
-    assert passed, detail
-
-
-def test_outside_deviation_bound():
-    passed, detail = m.check_outside_deviation_bound_s15()
-    assert passed, detail
-
-
-def test_antipodal_gauge_variance():
-    passed, detail = m.check_antipodal_gauge_variance()
-    assert passed, detail
-
-
-def test_m10_score_domination():
-    passed, detail = m.check_m10_score_domination()
-    assert passed, detail
-
-
-def test_hardy_constant_instantiation():
-    passed, detail = m.check_hardy_constant_instantiation_m11_m15()
-    assert passed, detail
+    for check in CHECKS:
+        result = check()
+        if len(result) == 3:
+            for name, value in result[2].items():
+                assert isinstance(value, sp.Basic) and value.free_symbols, name
+                assert not name.endswith("_NUM")
