@@ -1339,7 +1339,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 551
+## T1 — re-derived exactly — 560
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1494,6 +1494,35 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `W6 antipodal: seven uniform normal eigenvalues and soft scaling`
   - src/workhouse/invariants/w6_antipodal.py:148 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A3
   - `workhouse verify --only 'W6 antipodal: seven uniform normal eigenvalues and soft scaling'`
+**W6 conditional score tail control (M10)**
+
+- `W6 score tail: Gaussian Agmon tube moments S14`
+  - src/workhouse/invariants/w6_score_tail_m10.py:70 · W6_CONDITIONAL_SCORE_TAIL_M10 Section 2.1
+  - `workhouse verify --only 'W6 score tail: Gaussian Agmon tube moments S14'`
+- `W6 score tail: antipodal score gauge invariance and normal variance`
+  - src/workhouse/invariants/w6_score_tail_m10.py:145 · W6_CONDITIONAL_SCORE_TAIL_M10 Section 4
+  - `workhouse verify --only 'W6 score tail: antipodal score gauge invariance and normal variance'`
+- `W6 score tail: full conditional score domination M10`
+  - src/workhouse/invariants/w6_score_tail_m10.py:157 · W6_CONDITIONAL_SCORE_TAIL_M10 Section 5
+  - `workhouse verify --only 'W6 score tail: full conditional score domination M10'`
+- `W6 score tail: quadratic jet bound c_F on F = 2S - ZS`
+  - src/workhouse/invariants/w6_score_tail_m10.py:53 · W6_CONDITIONAL_SCORE_TAIL_M10 Section 1
+  - `workhouse verify --only 'W6 score tail: quadratic jet bound c_F on F = 2S - ZS'`
+- `W6 score tail: rare-fiber outside deviation S15`
+  - src/workhouse/invariants/w6_score_tail_m10.py:128 · W6_CONDITIONAL_SCORE_TAIL_M10 Section 3
+  - `workhouse verify --only 'W6 score tail: rare-fiber outside deviation S15'`
+- `W6 score tail: relative amplitude fast gradient bound`
+  - src/workhouse/invariants/w6_score_tail_m10.py:91 · W6_CONDITIONAL_SCORE_TAIL_M10 Section 2.2
+  - `workhouse verify --only 'W6 score tail: relative amplitude fast gradient bound'`
+- `W6 score tail: synchronized tangency cancellation S12-S13`
+  - src/workhouse/invariants/w6_score_tail_m10.py:34 · W6_CONDITIONAL_SCORE_TAIL_M10 Section 1
+  - `workhouse verify --only 'W6 score tail: synchronized tangency cancellation S12-S13'`
+- `W6 score tail: tube conditional variance bound S14`
+  - src/workhouse/invariants/w6_score_tail_m10.py:100 · W6_CONDITIONAL_SCORE_TAIL_M10 Section 2.3
+  - `workhouse verify --only 'W6 score tail: tube conditional variance bound S14'`
+- `W6 score tail: uniform Hardy constant instantiation M11-M15`
+  - src/workhouse/invariants/w6_score_tail_m10.py:190 · W6_CONDITIONAL_SCORE_TAIL_M10 Section 5 (M11-M15)
+  - `workhouse verify --only 'W6 score tail: uniform Hardy constant instantiation M11-M15'`
 **Wilson PBH proposal: exact orbit curvature and flow tests**
 
 - `FINDING: Wilson gradient flow expands a regular orbit distance by 8/7`

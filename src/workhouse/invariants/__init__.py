@@ -98,6 +98,7 @@ _MODULES = (
     "dimension_five_irrelevance",
     "sixth_order",
     "universal_cellular_hodge",
+    "w6_score_tail_m10",
 )
 
 for _name in _MODULES:

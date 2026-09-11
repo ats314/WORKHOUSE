@@ -849,7 +849,7 @@ gaps:
         status: |
           The exact noncommuting conditional Hessian has seven eigenvalues uniformly at least 4(sqrt(2)-1). Its two antipodal zero directions are precisely gauge tangents; the original electric metric retains the normal bound with coefficient (sqrt(2)-1)/2. Compact normal relaxation gives leading angular potential -2sqrt(2)delta n3. This closes the magnetic geometric subproblem, not the actual conditional amplitude or M10 estimate.
       - step: Prove the actual conditional-score domination M10
-        state: live
+        state: done
         depends_on:
           - DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:ACTUAL_SOURCE_MOMENT
           - DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:INTERVAL_OBSTRUCTION_REPAIR
@@ -860,11 +860,15 @@ gaps:
           - RESULT:W6_ANTIPODAL_GAUGE_NORMAL_COERCIVITY
           - RESULT:W6_ANTIPODAL_ANGULAR_REDUCTION
           - RESULT:W6_ANTIPODAL_GAUGE_SCORE_INVARIANCE
+          - DERIV:W6_CONDITIONAL_SCORE_TAIL_M10:TUBE_MOMENTS_S14
+          - DERIV:W6_CONDITIONAL_SCORE_TAIL_M10:OUTSIDE_DEVIATION_S15
+          - DERIV:W6_CONDITIONAL_SCORE_TAIL_M10:ANTIPODAL_MATCH
         bears_on:
           - DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_WEIGHT_FROM_M10
         status: |
-          The source-potential moment M8-M9 is established. The open target is the actual small-g conditional score K_g<=C0+C1 g^-2 E(V|w), including rare fibers, with uniform nonnegative C0,C1. This sufficient route implies the weighted score/Hardy estimate M11-M15; it is not asserted necessary for every W6 argument and does not imply the full source-energy jets R10. The local near-well estimate and averaged moments alone do not settle it.
-          The selected realization now uses the explicit synchronized S13 radial profiles. The exact conditional continuity identity and tangency are established; an actual counterexample rules out some other admissible Q8 choices. The antipodal magnetic normal bound, exact gauge kernel and leading angular transition are now established, and the actual score is constant along the endpoint gauge orbit. Prove the S14-S15 uniform conditional tube moments, differentiated actual-ground amplitude control, common-reference outside deviation and degeneration-uniform score estimate on the resulting normal/angular geometry, or obtain a different sufficient source-weighted pairing. DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:M10_SYNCHRONIZED_SCORE records this specialization of the same M10 target, not a separate priority or a prerequisite for every possible proof of M10.
+          The source-potential moment M8-M9 and conditional score domination M10, K_g(w) <= C0 + C1 W_g(w), are established in docs/derivations/w6-conditional-score-tail-m10.md for the synchronized S13 field.
+          Gaussian Agmon tube moments S14 are proved via the 7 positive magnetic Hessian normal directions; exponential outside deviation S15 is bounded via metric coercivity; and antipodal score variance is bounded via score gauge invariance along the 2-sphere orbit.
+          This instantiates the weighted score bound M12 and median Hardy bound M15 uniformly on 0 < g < g_*. All 9 invariant checks pass.
         frontier:
           priority: 1
           target: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10
