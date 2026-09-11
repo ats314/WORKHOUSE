@@ -16,7 +16,8 @@ leaves the two shared-link pairs as scripted stages.
 | `validate` | at N = 11: the general Bloch recursion (`workhouse.sixth_order_cluster.bloch_hermitian`) equals the closed word formula (F6) of `G9_SIXTH_ORDER_COMBINED` entry by entry at orders 2, 4, 6 on one face; its order 2 equals `Cluster.second_order` and its order-4 block equals `loopcalc.pair_element` on both shared-link pairs; its C-odd, C-even and vacuum energies equal the character-basis engine (`workhouse.sixth_order_characters`) at every order 0..6 | executed, `validate.json`, 84 s |
 | `single` | one face over Q(N): recursion, the seven pieces of (F6), the vacuum, the character engine, with the symbolic audit (largest Weingarten family, largest flux, resolvent denominators) | executed, `single.json`, about 8 minutes |
 | `pair_perpendicular`, `pair_coplanar` | the two shared-link pairs over Q(N) through order six, both C sectors, hop and on-site elements, vacuum | **not executed** (hours over Q(N) at the current engine speed; see below) |
-| `expand` | 1/N expansions of everything in the stage files | run on `single.json` only, by the suite |
+| `pair_perpendicular_h4`, `pair_coplanar_h4` | the same pairs through order four only (about a minute each): validation records for the expand/symbol pipeline and the suite's pair checks | executed, `pair_*_h4.json` |
+| `expand` | 1/N expansions of everything in the stage files; with both pair records, the `symbol` block places the hops into the carrier symbol | run on `single.json` only, by the suite |
 | `certificate` | assembles `certificate.json` | not produced |
 
 Three engines share the arithmetic of the answer but not its derivation:
@@ -59,6 +60,22 @@ The exact N = 11 one-face values (all three engines): H6 odd
 
   Each stage writes its own JSON on completion, so the two pair stages can run in
   separate processes. The suite reads `pair_*.json` when present.
+- **Placing the pair hops in the carrier symbol** (`pair_symbol` in `derive.py`; the
+  suite's pair checks register once `pair_coplanar.json` and `pair_perpendicular.json`
+  exist). In the kernel's (0,2) basis the in-plane orbit amplitude is the coplanar
+  shared-link hop and the rotation orbit amplitude the perpendicular one, pi_n =
+  hop_odd(coplanar), rho_n = hop_odd(perpendicular), with the sign fixed by the
+  second-order kernel: it is t_N times the down Laplacian off the diagonal, whose
+  entries are −1 on coplanar and +1 on perpendicular neighbours
+  (`kernel_orbits.down_laplacian`), and the recursion's order-2 hops are −t_N and
+  +t_N (`validate.json`). With the orbit closed forms pi → 4e₁ − 2e₂, rho → −2e₂
+  (`kernel_orbits.CLOSED_FORMS`) the pair's symbol at order n is
+  T_n = 4 pi_n e₁ − 2 (pi_n + rho_n) e₂. The pair-swap isomorphism of the all-rank
+  suite (coplanar and perpendicular C-odd elements are exact negatives) makes the
+  e₂ coefficient vanish at every order, so the two-face part of the sixth-order
+  kernel enters the symbol as 4 pi₆ q alone and contributes nothing to C_shp.
+  Only the two-face part is placed: the three-face and larger sixth-order clusters
+  are not computed.
 - **No SU(3) number.** Sixth-order words carry fluxes up to 8, so the Q(N) forms
   specialise to the per-rank engine for N ≥ 9 only; at N = 3 the pure-six and
   higher determinant families enter, which `loopcalc` refuses and

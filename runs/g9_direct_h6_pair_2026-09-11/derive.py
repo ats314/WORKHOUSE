@@ -12,9 +12,14 @@ long run can be resumed and every number keeps its own provenance:
                ``Cluster.second_order``, and with the character-basis engine
     single     one face over Q(N): recursion, the seven pieces of (F6), the character
                engine, the vacuum, and their 1/N expansions
-    pair       the perpendicular and coplanar shared-link pairs over Q(N): hop and on-site
-               elements of H2, H4, H6 in both C sectors, resolvent denominators, audit
-    expand     the 1/N expansions and leading powers of everything computed
+    pair_perpendicular, pair_coplanar
+               the shared-link pairs over Q(N) by the word formula (F6): hop and on-site
+               elements of H2, H4, H6 in both C sectors, the seven pieces, the vacuum
+               (Bloch recursion), resolvent denominators, audit
+    pair_perpendicular_h4, pair_coplanar_h4
+               the same through order four (about a minute each): validation records
+    expand     the 1/N expansions and leading powers of everything computed, and with
+               both pair records the hops placed into the carrier symbol (``pair_symbol``)
     certificate assemble certificate.json from the stage files
 
 Nothing here reads a kernel record or a run of either historical pipeline.
@@ -188,26 +193,48 @@ def stage_single() -> dict:
     return out
 
 
-def stage_pair(which: str) -> dict:
+def stage_pair(which: str, order: int = 6) -> dict:
+    """One shared-link pair over Q(N) through ``order`` by the word formula (F6),
+    the vacuum by the Bloch recursion; ``order = 4`` is the fast (about a minute)
+    record used to validate the expand/symbol pipeline and the suite's pair
+    checks before the sixth-order stages finish."""
     t0 = time.time()
-    out: dict = {"cluster": which, "faces": SC.PAIRS[which], "min_rank": MIN_RANK}
+    out: dict = {
+        "cluster": which,
+        "faces": SC.PAIRS[which],
+        "min_rank": MIN_RANK,
+        "order": order,
+    }
     with SR.Symbolic(min_rank=MIN_RANK) as S:
         space = SC.ModelSpace(SC.PAIRS[which], reduced=True)
-        b = SC.bloch_hermitian(space, 6)
-        out["chi_sizes"] = [len(c[0]) for c in b["chi"]]
+        # the word formula (F6): ten times faster than the Bloch recursion on a pair
+        # over Q(N) at order four (44 s against 446 s) and the only engine that
+        # records the seven pieces; the two agree entry by entry at orders 2 and 4
+        # on both pairs (validate.json) and at order 6 on one face (single.json)
+        f = SC.folded_words(space, order)
+        out["engine"] = "folded_words"
         out["elements"] = {}
-        for n in range(7):
-            hop = SC.odd_even(b["H"][n], 0, 1)
-            site = SC.odd_even(b["H"][n], 0, 0)
+        for n in range(2, order + 1, 2):
+            hop = SC.odd_even(f[f"H{n}"], 0, 1)
+            site = SC.odd_even(f[f"H{n}"], 0, 0)
             out["elements"][str(n)] = {
                 "hop_odd": _s(hop[0]),
                 "hop_even": _s(hop[1]),
                 "site_odd": _s(site[0]),
                 "site_even": _s(site[1]),
             }
+        out["pieces"] = {
+            name: {
+                "hop_odd": _s(SC.odd_even(mat, 0, 1)[0]),
+                "hop_even": _s(SC.odd_even(mat, 0, 1)[1]),
+                "site_odd": _s(SC.odd_even(mat, 0, 0)[0]),
+                "site_even": _s(SC.odd_even(mat, 0, 0)[1]),
+            }
+            for name, mat in f["pieces"].items()
+        }
         vac = SC.ModelSpace(SC.PAIRS[which], reduced=True, vacuum=True)
-        bv = SC.bloch_hermitian(vac, 6)
-        out["vacuum"] = {str(n): _s(bv["H"][n][0][0]) for n in range(7)}
+        bv = SC.bloch_hermitian(vac, order)
+        out["vacuum"] = {str(n): _s(bv["H"][n][0][0]) for n in range(order + 1)}
         out["audit"] = {
             "max_weingarten_n": S.stats["max_weingarten_n"],
             "max_charge": S.stats["max_charge"],
@@ -215,7 +242,7 @@ def stage_pair(which: str) -> dict:
             "resolvent_denominators": S.resolvent_denominators(),
         }
     out["seconds"] = time.time() - t0
-    _dump(f"pair_{which}", out)
+    _dump(f"pair_{which}" if order == 6 else f"pair_{which}_h{order}", out)
     return out
 
 
@@ -256,13 +283,14 @@ def stage_expand() -> dict:
         name: {"odd": expansion(v["odd"], 2), "even": expansion(v["even"], 2)}
         for name, v in single["pieces"].items()
     }
+    pairs = {}
     for which in SC.PAIRS:
         path = HERE / f"pair_{which}.json"
         if not path.exists():
             continue
-        pair = _load(f"pair_{which}")
+        pair = pairs[which] = _load(f"pair_{which}")
         out[which] = {}
-        for n in (2, 4, 6):
+        for n in range(2, pair.get("order", 6) + 1, 2):
             el = pair["elements"][str(n)]
             site_single = single["recursion"][str(n)]
             vac_pair, vac_single = pair["vacuum"][str(n)], single["vacuum"][str(n)]
@@ -277,7 +305,40 @@ def stage_expand() -> dict:
                 ),
                 "vacuum_pair_minus_single": expansion(f"({vac_pair})-({vac_single})"),
             }
+    if len(pairs) == 2:
+        out["symbol"] = pair_symbol(pairs["coplanar"], pairs["perpendicular"])
     _dump("expand", out)
+    return out
+
+
+def pair_symbol(coplanar: dict, perpendicular: dict) -> dict:
+    """The two pair hops placed into the carrier symbol, order by order.
+
+    In the kernel's (0,2) basis the in-plane orbit amplitude is the coplanar
+    shared-link hop and the rotation orbit amplitude the perpendicular one:
+    pi_n = hop_odd(coplanar), rho_n = hop_odd(perpendicular). The sign is the
+    second-order kernel's: it is t_N times the down Laplacian off the diagonal,
+    whose entries are -1 on coplanar and +1 on perpendicular neighbours
+    (``kernel_orbits.down_laplacian``), and the recursion's order-2 hops are
+    -t_N and +t_N. With ``kernel_orbits.CLOSED_FORMS`` (pi -> 4 e1 - 2 e2,
+    rho -> -2 e2) the pair's symbol is T_n = 4 pi_n e1 - 2 (pi_n + rho_n) e2.
+    """
+    out = {}
+    order = min(coplanar.get("order", 6), perpendicular.get("order", 6))
+    for n in range(2, order + 1, 2):
+        pi = coplanar["elements"][str(n)]["hop_odd"]
+        rho = perpendicular["elements"][str(n)]["hop_odd"]
+        e1 = sp.cancel(4 * sp.sympify(pi, locals={"N": N_}))
+        e2 = sp.cancel(-2 * (sp.sympify(pi, locals={"N": N_}) + sp.sympify(rho, locals={"N": N_})))
+        out[str(n)] = {
+            "pi": pi,
+            "rho": rho,
+            "pi_plus_rho": str(sp.cancel(e2 / -2)),
+            "e1_coefficient": str(e1),
+            "e2_coefficient": str(e2),
+            "e1_expansion": expansion(str(e1)),
+            "e2_expansion": expansion(str(e2)),
+        }
     return out
 
 
@@ -301,6 +362,8 @@ STAGES = {
     "single": stage_single,
     "pair_perpendicular": lambda: stage_pair("perpendicular"),
     "pair_coplanar": lambda: stage_pair("coplanar"),
+    "pair_perpendicular_h4": lambda: stage_pair("perpendicular", 4),
+    "pair_coplanar_h4": lambda: stage_pair("coplanar", 4),
     "expand": stage_expand,
     "certificate": stage_certificate,
 }
