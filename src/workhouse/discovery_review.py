@@ -307,6 +307,8 @@ class Register:
         is reported as unavailable, not silently accepted, elsewhere.
         """
         relative = relative.replace("\\", "/")
+        if _ABSOLUTE.match(relative):
+            return None, "absolute paths are not accepted; use a checkout-relative or ext: path"
         if relative.startswith("ext:"):
             label, _slash, rest = relative[4:].partition("/")
             root = self._external_roots().get(label)
@@ -334,13 +336,15 @@ class Register:
         """Problems with a seed or target; empty when it names something real."""
         if not isinstance(value, str) or not value.strip():
             return ["endpoint must be a nonempty record id or path:start-end locator"]
+        if _ABSOLUTE.match(value.strip()):
+            # Checked before parsing: a POSIX absolute path has no colon and
+            # would otherwise parse as a locator and resolve to itself.
+            return [
+                f"locator {value!r}: use a checkout-relative path or an "
+                "ext:<label>/path:start-end locator, not an absolute path"
+            ]
         locator = parse_locator(value)
         if locator is None:
-            if _ABSOLUTE.match(value.strip()):
-                return [
-                    f"locator {value!r}: use a checkout-relative path or an "
-                    "ext:<label>/path:start-end locator, not an absolute path"
-                ]
             known = self.catalogue_ids() if ids is None else ids
             if value not in known:
                 return [f"unknown record id {value!r}: not in index/claims.jsonl or symbols"]
