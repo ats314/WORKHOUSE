@@ -4818,8 +4818,8 @@ documents:
     anchor: '### M.4. The precise remaining conditional-score inequality'
     source_labels:
     - M10
-    status: proven
-    evidence: analytic
+    status: open
+    evidence: prose-only
     hypotheses:
     - Actual fixed twelve-edge, four-face compact Wilson square, true normalized quantum ground Psi_g,
       dmu_g=Psi_g^2 dU, literal source w=Tr(U2 U3)/2 and its marginal nu_g.
@@ -4827,11 +4827,14 @@ documents:
       Haar divergence; K_g=Var_(mu_g)(sigma_g|w) retains all compact corrections and rare coarse fibers.
     - The established actual fixed-square gap and ground-energy bounds hold on the specified small-coupling
       interval. Averaged conditional-score control is not assumed to imply pointwise domination.
-    depends_on:
-    - DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:M10_SYNCHRONIZED_SCORE
+    depends_on: []
     lean: []
-    remaining: Established for the synchronized S13 transport in docs/derivations/w6-conditional-score-tail-m10.md.
-      Full-statement Lean formalization remains open.
+    remaining: Prove M10 for the actual conditional law, or retain its open status if a different sufficient
+      source-energy estimate is proved. The phase-adapted local implication requires whole-fiber tails,
+      conditional-mean gluing and consistent global dilation before it can address this target. M10 is
+      not asserted necessary for the Hardy bound or for the separate source-generator energy-jet route.
+      The later synchronized S13 construction is one selected realization of this target; its
+      specialized open record does not make that construction a premise of the generic M10 statement.
   - id: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:ACTUAL_SOURCE_MOMENT
     statement: The actual four-face SU2 product obeys 1-w<=V globally. The exact true-ground source form
       gives g^-2 integral V|f|^2 <= b_g[f]+e_g||f||^2, hence the uniform centered bound integral a_g|f|^2
@@ -4883,7 +4886,7 @@ documents:
     - M13
     - M14
     - M15
-    status: proven
+    status: conditional
     evidence: analytic
     hypotheses:
     - Actual compact-square source form b_g[f]=g^2 integral (1-w^2)|f'|^2 dnu_g, actual ground-energy
@@ -4895,8 +4898,9 @@ documents:
     - DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:ACTUAL_SOURCE_MOMENT
     - DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10
     lean: []
-    remaining: Established. M10 is discharged in docs/derivations/w6-conditional-score-tail-m10.md, proving
-      the uniform weighted score bound and median Hardy constant. Full-statement Lean formalization remains open.
+    remaining: Formalize this already established conditional implication if needed. Actual application
+      requires M10 or another sufficient score estimate; the conclusion controls the source-frame derivative
+      into L2, not spatial energy derivatives, full generator jets, or interacting-volume uniformity.
 - id: CITE:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION
   path: docs/derivations/w6-conditional-transport-obstruction.md
   sha256: 33f5cefc2105ec3ec354edacce46371cfede62a2e46ec1557cacc5ae80f473e5
@@ -5058,7 +5062,7 @@ documents:
     anchor: '## S6 Remaining all-fiber estimate'
     source_labels:
     - M10
-    status: proven
+    status: open
     evidence: analytic
     hypotheses:
     - Actual positive four-face SU(2) square ground and literal retained trace w=tr(U2 U3)/2.
@@ -5073,71 +5077,12 @@ documents:
     - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:GAUGE_NORMAL_COERCIVITY
     - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:ANGULAR_REDUCTION
     - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:GAUGE_SCORE_INVARIANCE
-    - DERIV:W6_CONDITIONAL_SCORE_TAIL_M10:TUBE_MOMENTS_S14
-    - DERIV:W6_CONDITIONAL_SCORE_TAIL_M10:OUTSIDE_DEVIATION_S15
-    - DERIV:W6_CONDITIONAL_SCORE_TAIL_M10:ANTIPODAL_MATCH
     lean: []
-    remaining: Established in docs/derivations/w6-conditional-score-tail-m10.md.
-      Full-statement Lean formalization remains open.
-- id: CITE:W6_CONDITIONAL_SCORE_TAIL_M10
-  path: docs/derivations/w6-conditional-score-tail-m10.md
-  sha256: a1d656cd8ab47c845c8f5a29bc7f891cf888638e199e42841f86104c8b2aefe8
-  statements:
-  - id: DERIV:W6_CONDITIONAL_SCORE_TAIL_M10:TUBE_MOMENTS_S14
-    statement: For the actual four-face SU(2) square and synchronized S13 field, Gaussian Agmon
-      tube moments satisfy E|eta|^(2j) <= c_{2j} g^(2j) for j=1,2,3 and relative amplitude fast
-      derivatives are bounded by c_a/g, proving E_tube|sigma_g - beta_g|^2 <= C0_tube + C1_tube W_g(Q).
-    locator: '## 2. Fast-mode tube moments and relative amplitude (S14) (lines 66-128)'
-    anchor: '## 2. Fast-mode tube moments and relative amplitude (S14)'
-    source_labels:
-    - S14
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Synchronized radial profiles S13 cancelling normal phase drift S12.
-    - Transverse magnetic Hessian spectrum with seven eigenvalues bounded below by 4(sqrt(2)-1).
-    - Interior elliptic regularity on the compact square bounding relative amplitude logarithmic derivatives.
-    depends_on:
-    - DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:SYNCHRONIZED_TANGENCY
-    - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:HESSIAN_SPECTRUM
-    lean: []
-    remaining: Established analytically. Full-statement Lean formalization remains open.
-  - id: DERIV:W6_CONDITIONAL_SCORE_TAIL_M10:OUTSIDE_DEVIATION_S15
-    statement: On the rare-fiber complement |eta| > delta_tube, electric metric coercivity and Agmon
-      exponential decay bound the conditional outside deviation by E[1_outside |sigma_g - beta_g|^2 | Q] <= C0_outside
-      uniformly in small positive g.
-    locator: '## 3. Outside deviation and rare-fiber complement (S15) (lines 130-184)'
-    anchor: '## 3. Outside deviation and rare-fiber complement (S15)'
-    source_labels:
-    - S15
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Electric metric coercivity Hess V >= c dist_G^2 from the constrained minimum set.
-    - Global Agmon exponential mass suppression and universal L4 score bounds.
-    depends_on:
-    - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:GAUGE_NORMAL_COERCIVITY
-    lean: []
-    remaining: Established analytically. Full-statement Lean formalization remains open.
-  - id: DERIV:W6_CONDITIONAL_SCORE_TAIL_M10:ANTIPODAL_MATCH
-    statement: In the antipodal region theta >= theta_b, score gauge invariance d sigma_g |_{TM} = 0 along
-      the two-sphere orbit and uniform normal spectral floor bound the conditional score variance by C1_antipodal W_g(Q).
-    locator: '## 4. Antipodal region and gauge reduction (lines 186-228)'
-    anchor: '## 4. Antipodal region and gauge reduction'
-    source_labels:
-    - A14
-    - A15
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Minimizing set at Q = -I is one smooth two-sphere gauge orbit TM.
-    - Score invariance d sigma_g |_{TM} = 0 under simultaneous conjugation.
-    - Classical potential minimum v_*(theta) >= v_*(theta_b) > 0 bounded below.
-    depends_on:
-    - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:GAUGE_SCORE_INVARIANCE
-    - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:ANGULAR_REDUCTION
-    lean: []
-    remaining: Established analytically. Full-statement Lean formalization remains open.
+    remaining: Prove the actual full conditional score bound, or a sufficient direct
+      source-weighted pairing estimate. The original M11-M15 consequence then becomes
+      applicable; complete R10 energy jets and interacting-grid uniformity remain separate.
+      This is a specialization of DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10,
+      tracked by that existing frontier priority rather than a separate live priority.
 - id: CITE:SOURCE_CURRENT_SPECTRAL_BRIDGES
   path: docs/derivations/source-currents-and-spectral-totality.md
   sha256: 860c81a3fb665d6b9c385365322ff0503e5500d6d79c94d49a0984250a4548a9
