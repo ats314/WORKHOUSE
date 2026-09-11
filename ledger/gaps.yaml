@@ -283,20 +283,23 @@ gaps:
       - G3
     plan:
       - step: Assemble one complete sixth-order cluster and test its extra carrier-shape component
-        state: untried
+        state: live
         depends_on:
           - RESULT:HODGE_FESHBACH_SPLITTING
           - RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT
+          - RESULT:G9_HERMITIAN_FOLDED_SUPPORT
+          - RESULT:G9_LOCAL_SIXTH_NONCANCELLATION
+          - RESULT:G9_ONE_FACE_SIXTH
         bears_on:
           - G14
           - U2
         status: |
-          The exact symbols sigma(RR)=q e_2+3e_3 and sigma(RUR)=4e_2^2 are established algebraic inputs. Determine which words the actual sixth-order dynamics produces and what survives after all folds and rooted subtraction. R-linearity alone does not explain the fourth-order collapse, and a unit-edge-walk count does not identify plaquette histories or their electric resolvents. This is a bounded calculation before the global census, not an assumed nonzero RUR amplitude or a continuum estimate.
+          The September 11 continuation derives all 18 universal Hermitian electric folds, evaluates the complete one-face SU(3) rooted coefficient -2055143/35123200, and reduces all 25 H4 mixing pairs. Under the recorded third-order factorization and local-shell hypotheses, an additional rational shape cannot cancel against any local direct H6: q^3 lambda6 modulo q^2 is 4 kappa e2^2-3 kappa q e3 for symmetric polynomial direct F. The remaining task is the direct connected multi-plane H6 evaluation, including its Haar/Gram quotient, electric resolvents and rooted subtraction. Its q e2/e3 coefficients and direct local RUR support are not determined. The merged edge-walk amplitude claim is disputed, not used as a physical input.
         frontier:
           priority: 6
           scope: One smallest admissible connected plaquette support at fixed SU(3), with exact Haar/Gram quotient, physical Q projections, electric denominators, all folds and rooted subtraction.
-          consequence: A surviving component outside the old five-monomial span identifies an additional sixth-order shape; exact cancellation identifies the next selection-rule question. Neither outcome changes the established fourth-order support theorem.
-          decisive_test: Keep the complete operator histories through folded assembly, then project the exact cleared carrier symbol onto the quotient by span{q,q^2,e_2,q e_2,e_3}; record both individual-word and assembled contributions.
+          consequence: The extra rational band-shape component is already forced under local-shell and H3 hypotheses. Computing direct F now determines its independent polynomial shapes and coefficients, including whether local RUR survives. Neither result changes the fourth-order support theorem or discharges global G9.
+          decisive_test: Evaluate the 18 electric folds on a connected multi-plane support with all Haar weights and rooted subtractions. Reduce direct F=sigma(H6) separately, then combine q^2 F with the known mixing numerator at common denominator q^3; retain both direct polynomial shape coefficients and the invariant remainder modulo q^2.
   - id: G10
     tier: 2
     state: open

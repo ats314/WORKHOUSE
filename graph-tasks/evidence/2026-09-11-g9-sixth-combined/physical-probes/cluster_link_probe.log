@@ -1,0 +1,59 @@
+0.00s spanning tree=[0, 1, 2, 4, 5]
+0.00s started actual SU3 two perpendicular plaquettes; odd model norm squared 2; shifted V=-sum traces-I
+0.00s W P sizes [10, 10]
+0.00s per-link resolver input canonical words 8
+0.00s per-link resolver input canonical words 8
+0.01s D W P sizes [12, 12]
+0.01s per-link resolver input canonical words 12
+0.01s per-link resolver input canonical words 12
+0.01s Haar matrix sizes [8, 8] x [12, 12]
+0.01s Haar matrix sizes [12, 12] x [12, 12]
+0.01s Haar matrix sizes [12, 12] x [12, 12]
+0.02s A2=Matrix([[-317/306, 5/612], [5/612, -317/306]])
+0.02s W D W P sizes [60, 60]
+0.02s per-link resolver input canonical words 52
+0.10s per-link resolver input canonical words 52
+0.17s D W D W P sizes [77, 77]
+0.17s Haar matrix sizes [12, 12] x [52, 52]
+0.21s Haar matrix sizes [12, 12] x [52, 52]
+0.21s Haar matrix sizes [52, 52] x [70, 70]
+0.51s Haar matrix sizes [52, 52] x [70, 70]
+0.54s per-link resolver input canonical words 70
+0.60s per-link resolver input canonical words 70
+0.67s Haar matrix sizes [52, 52] x [70, 70]
+0.70s lower moments complete A4=Matrix([[-222485716183/458900297856, 40097889791/1147250744640], [40097889791/1147250744640, -222485716183/458900297856]])
+0.71s W D W D W P sizes [365, 367]
+0.72s per-link resolver input canonical words 214
+3.23s per-link resolver input canonical words 214
+6.60s D W D W D W P sizes [359, 359]
+6.63s Haar matrix sizes [214, 214] x [272, 272]
+Traceback (most recent call last):
+  File "C:\WORKHOUSE\REPO\.workhouse-local\g9-sixth-combined-20260911\cluster_link_probe.py", line 115, in <module>
+    a6=matrix(u,t);note('A6='+str(a6))
+  File "C:\WORKHOUSE\REPO\.workhouse-local\g9-sixth-combined-20260911\cluster_link_probe.py", line 103, in matrix
+    return sp.Matrix([[ip(x,y) for y in b] for x in a])
+                       ~~^^^^^
+  File "C:\WORKHOUSE\REPO\.workhouse-local\g9-sixth-combined-20260911\cluster_link_probe.py", line 100, in ip
+    def ip(a,b): return sp.Rational(cc.inner(a,b)/2)
+                                    ~~~~~~~~^^^^^
+  File "C:\WORKHOUSE\REPO\.workhouse-local\g9-sixth-combined-20260911\cluster_link_probe.py", line 58, in fast_inner
+    def fast_inner(a,b):return original_inner(gauge_vector(a),gauge_vector(b))
+                               ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\WORKHOUSE\REPO\src\workhouse\chain_cluster.py", line 134, in inner
+    v = M.haar_inner(w1, w2)
+  File "C:\WORKHOUSE\REPO\corpus-import\programs\hodge_o4_adjudication\src\DATA_SU3_Exact_MarkedCluster_m4_Colab.py", line 1121, in haar_inner
+    contracted = contract_link_partition(
+        current,
+    ...<12 lines>...
+        }),
+    )
+  File "C:\WORKHOUSE\REPO\corpus-import\programs\hodge_o4_adjudication\src\DATA_SU3_Exact_MarkedCluster_m4_Colab.py", line 993, in contract_link_partition
+    family = router.require_exact(len(u_occurrences), len(ubar_occurrences))
+  File "C:\WORKHOUSE\REPO\corpus-import\programs\hodge_o4_adjudication\src\DATA_SU3_Exact_MarkedCluster_m4_Colab.py", line 656, in require_exact
+    return self.classify(n_u, n_ubar)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\WORKHOUSE\REPO\corpus-import\programs\hodge_o4_adjudication\src\DATA_SU3_Exact_MarkedCluster_m4_Colab.py", line 651, in classify
+    raise UnsupportedHaarFamily(
+        f"zero-triality local Haar family {counts} is outside the nine-family allowlist"
+    )
+DATA_SU3_Exact_MarkedCluster_m4_Colab.UnsupportedHaarFamily: zero-triality local Haar family (4, 4) is outside the nine-family allowlist

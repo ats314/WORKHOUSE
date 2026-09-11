@@ -1,0 +1,138 @@
+from fractions import Fraction as F
+from time import monotonic
+import sympy as sp
+from workhouse import chain_cluster as cc
+
+start=monotonic()
+def note(text): print(f"{monotonic()-start:.2f}s {text}",flush=True)
+faces=[((0,1),(0,0,0)),((0,2),(0,0,0))]
+cl=cc.Cluster(faces)
+m=len(faces)
+model=[cc.vadd(cl.model[2*i],cl.model[2*i+1],-1) for i in range(m)]
+# Gauge fixing is used only for Haar inner products; H0 acts on original links.
+from functools import cache
+parent={}
+def find(site):
+    parent.setdefault(site,site)
+    if parent[site]!=site: parent[site]=find(parent[site])
+    return parent[site]
+tree=set()
+for (site,axis),lk in sorted(cc.LINKS.items(),key=lambda x:x[1]):
+    other=cc.add(site,cc.e(axis)); aa,bb=find(site),find(other)
+    if aa!=bb: parent[aa]=bb;tree.add(lk)
+original_inner=cc.inner
+@cache
+def gauge(word):
+    removed={i for i,(lk,_) in enumerate(word.occ) if lk in tree}
+    part=cc.M.merge_classes(word.part,[(2*i,2*i+1) for i in removed])
+    kept=[i for i in range(len(word.occ)) if i not in removed]
+    slots=[j for i in kept for j in (2*i,2*i+1)]
+    factor=F(3**len(set(part)-{part[j] for j in slots}))
+    state=cc.M.State(tuple(word.occ[i] for i in kept),cc.M.canon(part[j] for j in slots))
+    f,state=cc.M.simplify_unitarity(state);factor*=f
+    left={}
+    for i,(_,is_u) in enumerate(state.occ):
+        label=state.part[2*i+(0 if is_u else 1)]
+        assert label not in left
+        left[label]=i
+    traces=[];seen=set()
+    for i in range(len(state.occ)):
+        if i in seen:continue
+        cur=i;trace=[]
+        while cur not in seen:
+            seen.add(cur);lk,is_u=state.occ[cur]
+            trace.append((lk,1 if is_u else -1))
+            cur=left[state.part[2*cur+(1 if is_u else 0)]]
+        assert cur==i
+        trace=tuple(trace)
+        traces.append(min(trace[j:]+trace[:j] for j in range(len(trace))))
+    result=cc.M.EMPTY_STATE
+    for trace in sorted(traces):result=cc.M.tensor_product(result,cc.M.trace_state(trace))
+    return factor,result
+
+def gauge_vector(vec):
+    out={}
+    for word,c in vec.items():
+        f,w=gauge(word);out[w]=out.get(w,F(0))+c*f
+    return {w:c for w,c in out.items() if c}
+def fast_inner(a,b):return original_inner(gauge_vector(a),gauge_vector(b))
+cc.inner=fast_inner
+note('spanning tree='+str(sorted(tree)))
+
+from workhouse import loopcalc as lc
+@cache
+def as_loop(state):
+    left={}
+    for i,(_,is_u) in enumerate(state.occ):
+        label=state.part[2*i+(0 if is_u else 1)]
+        assert label not in left
+        left[label]=i
+    traces=[];seen=set()
+    for i in range(len(state.occ)):
+        if i in seen:continue
+        cur=i;trace=[]
+        while cur not in seen:
+            seen.add(cur);lk,is_u=state.occ[cur]
+            trace.append((lk,1 if is_u else -1))
+            cur=left[state.part[2*cur+(1 if is_u else 0)]]
+        assert cur==i
+        traces.append(tuple(trace))
+    return lc.canon(traces)
+
+def link_resolvent(vec,e0):
+    converted={}
+    for state,c in vec.items():
+        word=as_loop(state);converted[word]=converted.get(word,F(0))+c
+    converted={word:c for word,c in converted.items() if c}
+    note('per-link resolver input canonical words '+str(len(converted)))
+    resolved=lc.resolvent(converted,e0)
+    out={}
+    for word,c in resolved.items():
+        state=cc.M.EMPTY_STATE
+        for trace in word:state=cc.M.tensor_product(state,cc.M.trace_state(trace))
+        f,state=cc.M.simplify_unitarity(state)
+        out[state]=out.get(state,F(0))+f*c
+    return {state:c for state,c in out.items() if c}
+cc.resolvent=link_resolvent
+
+
+def w(vec): return cc.vadd({k:-v for k,v in cl.apply_V(vec).items()},vec,-1)
+def ip(a,b): return sp.Rational(cc.inner(a,b)/2)
+def matrix(a,b):
+    note('Haar matrix sizes '+str([len(gauge_vector(x)) for x in a])+' x '+str([len(gauge_vector(x)) for x in b]))
+    return sp.Matrix([[ip(x,y) for y in b] for x in a])
+note('started actual SU3 two perpendicular plaquettes; odd model norm squared 2; shifted V=-sum traces-I')
+x=[w(v) for v in model];note('W P sizes '+str([len(v) for v in x]))
+r=[cc.resolvent(v,cl.e0) for v in x];note('D W P sizes '+str([len(v) for v in r]))
+r2=[cc.resolvent(v,cl.e0) for v in r]
+a2=matrix(x,r);b2=matrix(r,r);c2=matrix(r,r2);note('A2='+str(a2))
+y=[w(v) for v in r];note('W D W P sizes '+str([len(v) for v in y]))
+z=[cc.resolvent(v,cl.e0) for v in y];note('D W D W P sizes '+str([len(v) for v in z]))
+a3=matrix(r,y);k=matrix(r2,y);b3=k+k.T
+a4=matrix(y,z);k=matrix([w(v) for v in r2],z);b4=k+k.T+matrix(y,[cc.resolvent(v,cl.e0) for v in z]);note('lower moments complete A4='+str(a4))
+u=[w(v) for v in z];note('W D W D W P sizes '+str([len(v) for v in u]))
+t=[cc.resolvent(v,cl.e0) for v in u];note('D W D W D W P sizes '+str([len(v) for v in t]))
+
+import json
+from collections import defaultdict,Counter
+
+def anti(a,b):return a*b+b*a
+folds=-(anti(a4,b2)+anti(a3,b3)+anti(a2,b4))/2+anti(a2*a2,c2)/2+sp.Rational(3,8)*anti(a2,b2*b2)+b2*a2*b2/4
+rows=[]
+for i in range(m):
+    for j in range(m):
+        weighted=defaultdict(F)
+        for left,ca in gauge_vector(u[i]).items():
+            for right,cb in gauge_vector(t[j]).items():
+                word=lc.product(lc.conj(as_loop(left)),as_loop(right))
+                if any((a-b)%3 for a,b in lc.content(word).values()):continue
+                weighted[word]+=ca*cb/2
+        weighted[()]+=F(folds[i,j])
+        weighted={w:c for w,c in weighted.items() if c}
+        families=Counter()
+        for word in weighted:
+            for a,b in lc.content(word).values():families[(a,b)]+=1
+        row={'endpoint':[i,j],'combined_integrands':len(weighted),'local_families':{str(k):v for k,v in sorted(families.items())},'fold_constant':str(folds[i,j]),'full_haar_evaluation':'not performed'}
+        rows.append(row);note(str(row))
+Path=__import__('pathlib').Path
+Path('.workhouse-local/g9-sixth-combined-20260911/cluster_weighted_support.json').write_text(json.dumps(rows,indent=2)+'\n')

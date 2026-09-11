@@ -95,6 +95,14 @@ For all September 1 onward sources, also use the
 anisotropy, W6, strip and square-block campaigns without treating every similarly
 named folder as another active repository.
 
+The [G9 sixth-order continuation](../paper/research_notes/G9_SIXTH_ORDER_COMBINED_20260911.md)
+derives the complete formal 18-word electric fold formula and evaluates one
+SU(3) plaquette through order six. Combining all H4-induced terms proves
+that an extra rational band shape survives every local direct H6 under the
+recorded third-order factorization. Direct multi-plaquette H6 word coefficients,
+including the q e2/e3 terms, remain open. The earlier walk census does not
+establish a physical RUR amplitude.
+
 ## Select the kind of work before proceeding
 
 | Kind of obligation | Where to read it | What discharges it |

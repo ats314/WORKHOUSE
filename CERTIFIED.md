@@ -1315,7 +1315,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 519
+## T1 — re-derived exactly — 525
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1353,6 +1353,26 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the stability hypothesis package, with its dimensionless ratio`
   - src/workhouse/invariants/isolation.py:299 · G17 / PUB edition Lem. 14
   - `workhouse verify --only 'the stability hypothesis package, with its dimensionless ratio'`
+**G9 sixth-order folds and combined carrier shapes**
+
+- `G9 Hodge word reduction agrees with spatial Laurent operators`
+  - src/workhouse/invariants/sixth_order.py:103 · G9_SIXTH_ORDER_COMBINED; G9; G14
+  - `workhouse verify --only 'G9 Hodge word reduction agrees with spatial Laurent operators'`
+- `G9 all 25 H4 mixing pairs reduce to RR minus projected RUR`
+  - src/workhouse/invariants/sixth_order.py:118 · G9_SIXTH_ORDER_COMBINED; G9; G14
+  - `workhouse verify --only 'G9 all 25 H4 mixing pairs reduce to RR minus projected RUR'`
+- `G9 folded series satisfies exact invariant-subspace and metric equations`
+  - src/workhouse/invariants/sixth_order.py:74 · G9_SIXTH_ORDER_COMBINED; G9; G14
+  - `workhouse verify --only 'G9 folded series satisfies exact invariant-subspace and metric equations'`
+- `G9 generates all 18 Hermitian sixth-order folded words`
+  - src/workhouse/invariants/sixth_order.py:31 · G9_SIXTH_ORDER_COMBINED; G9; G14
+  - `workhouse verify --only 'G9 generates all 18 Hermitian sixth-order folded words'`
+- `G9 local direct H6 cannot cancel the induced cubic-denominator shape`
+  - src/workhouse/invariants/sixth_order.py:143 · G9_SIXTH_ORDER_COMBINED; G9; G14
+  - `workhouse verify --only 'G9 local direct H6 cannot cancel the induced cubic-denominator shape'`
+- `G9 one-face SU3 sixth-order rooted coefficient from exact character dynamics`
+  - src/workhouse/invariants/sixth_order.py:165 · G9_SIXTH_ORDER_COMBINED; G9; G14
+  - `workhouse verify --only 'G9 one-face SU3 sixth-order rooted coefficient from exact character dynamics'`
 **Hecke cover correspondence table**
 
 - `the geometric A_p column is p^4 times the printed lambda_p`
