@@ -556,7 +556,15 @@ def plan(
         raise ValueError("a plan needs a research question")
     expansion = expand(query, lexicon, max_sub_queries, mode=mode, weight=lexicon_weight)
     queries = [{"text": query.strip(), "weight": 1.0, "origin": "user"}]
+    # Two concepts can produce the same reformulation, and a variant that is
+    # already the question's own wording produces the question again; a plan
+    # that repeats a text would double-count it at fusion time.
+    seen = {" ".join(query.split()).casefold()}
     for row in expansion["detail"]:
+        key = " ".join(str(row["sub_query"]).split()).casefold()
+        if key in seen:
+            continue
+        seen.add(key)
         queries.append(
             {
                 "text": row["sub_query"],

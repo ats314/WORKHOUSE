@@ -306,6 +306,20 @@ def score_row(
     row["relevant_only_in_related"] = bool(related_rank) and not row["any_relevant_hit"]
     families = [hit_family(hit) for hit in ranked]
     row["top_score"] = ranked[0].get("score") if ranked and not error else None
+    # The pre-registered abstention rule: the top direct row covers fewer than
+    # half of the query's content terms and no exact channel contributed.
+    row["weak_match"], row["query_coverage"] = None, None
+    if not error:
+        try:
+            from workhouse.discovery_present import present as compact_present
+
+            hint = compact_present({"query": case["query"], "hits": ranked[:1], "related": []})[
+                "abstention_hint"
+            ]
+            row["weak_match"] = bool(hint.get("weak_match"))
+            row["query_coverage"] = hint.get("coverage")
+        except Exception:  # A presentation failure must not fail the evaluation.
+            pass
     row["families"] = families
     row["distinct_families"] = len(set(families))
     first = row["first_relevant_rank"]
@@ -384,6 +398,10 @@ def summarize_rows(rows: list[dict], limit: int) -> dict:
             ),
             "median_positive_top_score": median_top,
             "negative_controls_passed_below_median": sum(below) if median_top is not None else None,
+            "negative_controls_passed_weak_match": sum(
+                bool(row.get("weak_match")) for row in negative
+            ),
+            "positives_flagged_weak_match": sum(bool(row.get("weak_match")) for row in positive),
             "mean_distinct_families_top_k": (
                 statistics.mean(row["distinct_families"] for row in with_hits)
                 if with_hits
@@ -968,12 +986,13 @@ def render_markdown(report: dict) -> str:
         "## Configurations",
         "",
         "| configuration | status | recall@k | MRR@k | recall incl. related | neg. empty | "
-        "neg. below median | families/top-k | cross-family | median s |",
-        "|---|---|---|---|---|---|---|---|---|---|",
+        "neg. below median | neg. weak-match (positives flagged) | families/top-k | "
+        "cross-family | median s |",
+        "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     for name, data in report.get("configurations", {}).items():
         if data.get("status") != "ran":
-            lines.append(f"| {name} | unavailable: {data.get('reason')} | | | | | | | | |")
+            lines.append(f"| {name} | unavailable: {data.get('reason')} | | | | | | | | | |")
             continue
         s = data["summary"]
         negatives = s["negative_controls"]
@@ -983,6 +1002,8 @@ def render_markdown(report: dict) -> str:
             f"(+{s.get('relevant_only_in_related', 0)}) | "
             f"{s['negative_controls_passed']}/{negatives} | "
             f"{s['negative_controls_passed_below_median']}/{negatives} | "
+            f"{s.get('negative_controls_passed_weak_match', 0)}/{negatives} "
+            f"({s.get('positives_flagged_weak_match', 0)}) | "
             f"{_num(s['mean_distinct_families_top_k'], 2)} | "
             f"{s['cross_family_hits']}/{s['cross_family_assessed']} | "
             f"{_num(s['median_warm_query_seconds'])} |"

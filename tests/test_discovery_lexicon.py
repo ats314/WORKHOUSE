@@ -553,3 +553,24 @@ def test_shipped_lexicon_citations_are_present_in_the_checkout():
     for entry in lexicon["entries"]:
         assert len({variant["family"] for variant in entry["variants"]}) >= 2, entry["concept"]
     assert Path(lexicon["path"]).name == "lexicon.yaml"
+
+
+def test_plan_never_repeats_a_text_or_the_question_itself(monkeypatch):
+    from workhouse import discovery_lexicon as L
+
+    def fake_expand(query, lexicon, max_sub_queries=6, *, mode="focused", weight=0.5):
+        return {
+            "detail": [
+                {"sub_query": "same text", "concept": "a", "alternative": {"source": "x:1"}},
+                {"sub_query": "same  text", "concept": "b", "alternative": {"source": "y:2"}},
+                {"sub_query": query, "concept": "c", "alternative": {"source": "z:3"}},
+                {"sub_query": "other", "concept": "d", "alternative": {"source": "w:4"}},
+            ],
+            "concepts": ["a", "b", "c", "d"],
+            "explanations": [],
+        }
+
+    monkeypatch.setattr(L, "expand", fake_expand)
+    result = L.plan("the question", {"schema": "s", "version": 1})
+    assert [row["text"] for row in result["queries"]] == ["the question", "same text", "other"]
+    assert [row["origin"] for row in result["queries"]] == ["user", "lexicon:a", "lexicon:d"]
