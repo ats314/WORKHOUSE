@@ -1,0 +1,63 @@
+schema: workhouse-discovery-review/v1
+id: 2026-09-11-scope-restriction-deriv-w6-conditional-s-72dd10
+seed: DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10
+target: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md:214-272
+relationship_kind: scope-restriction
+reasoning: 'Investigator (m10-brascamp-lieb): EX-014 sec 3 (2)/(3) supplies a conditional Poincare inequality
+  only on a convex Morse chart of each fibre; M10 asks for a nu_g-a.e. whole-fibre bound on closed fibres
+  SU(2)^3 where BL''s hypothesis Hess W > 0 fails on a positive-measure set (EX-005 Lemma A). Restriction,
+  not a dependency; should land as `remaining` text on the DERIV record, not as depends_on. Next check:
+  Compute the conditional phase Hessian B(theta) along the S4 graph for all 0<theta<pi (solve B G_fib
+  B = Hess_fib V/2 numerically at the S4 point with the S5 cometric, mpmath 9x9), tabulate lambda_min(B(theta));
+  then in the 1-D soft-direction model with density exp(-2S/g^2) on a circle, quadrature Var(2S/g^3) across
+  pi - theta ~ g^2 for g = 0.3, 0.1, 0.03 and test whether it stays <= C g^-2 (the M10 budget is ~4.69
+  g^-2 there).'
+reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+created: '2026-09-11T08:26:03+00:00'
+evidence:
+- command: pair
+  argv:
+  - workhouse
+  - discover
+  - search
+  - ''
+  - --json
+  fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_freshness: matched
+  evidence_file: pair-A-m10-ex014.json
+  evidence_sha256: 4e20385667bfdf7e11c7900d30b8527e15adfe30c025f72134fa38b5dc01e248
+  schema: workhouse-discovery/pair/v1
+  selection: top 0 rows; no row named the seed or target - the evidence may not concern this pair
+  rows: []
+  source_hashes:
+  - path: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md
+    lines:
+    - 214
+    - 272
+    sha256: fc55bb4934560183d5529822693ce7ad90ca9bc6f521546cb505d8e30f6cc703
+    role: endpoint
+  excerpt_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+state: rejected
+updated: '2026-09-11T08:26:06+00:00'
+registered_as: null
+history:
+- state: pending
+  at: '2026-09-11T08:26:03+00:00'
+  reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+  reason: recorded from discovery output; nothing reviewed yet
+- state: reviewing
+  at: '2026-09-11T08:26:05+00:00'
+  reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+  reason: Investigator read both sources in full at the cited lines; an independent skeptic re-read them
+    to refute the proposal.
+- state: rejected
+  at: '2026-09-11T08:26:06+00:00'
+  reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+  reason: 'Skeptic: withdrawn. The pair restates EX-014''s own line-267 caveat and S6''s two-sphere warning;
+    it restricts no claim in the target record, and Lemma A concerns convexity, which the whole-fibre
+    M10 estimate does not require (a harmonic-approximation spectral gap ~ 2 lambda_min / h exists on
+    a closed fibre with a unique nondegenerate minimum).'
+previous: 1924797a3c820a937314bf545f3d833c07d4b9b6bee893767cd9e7d3d51b15cd
+genesis: 3cb646c225067e60a052992b95960edeaaf56e0999e111e18dd230669fd88f35
+sha256: 54bbb502f3c3eb885571c5be1b2f7f5962cc567e560102e62fbcf74cf119ec97

@@ -374,7 +374,21 @@ def _phrase_pattern(text: str) -> re.Pattern:
 
 
 def _protected(query: str) -> list[str]:
-    return [re.sub(r"\s+", "", token) for token in _PROTECTED.findall(query)]
+    """Rationals, decimals and identifiers a sub-query must keep verbatim.
+
+    Bare integers of one or two digits are dropped: the token pattern splits
+    ``C^-1`` and ``a0`` into fragments, and carrying ``-1`` or ``0`` into a
+    reformulation appended noise that investigators had to strip by hand.
+    A short integer that matters to a question is never the join key by
+    itself; the surrounding symbol is.
+    """
+    kept = []
+    for token in (re.sub(r"\s+", "", match) for match in _PROTECTED.findall(query)):
+        bare = token.lstrip("+-")
+        if bare.isdigit() and len(bare) < 3:
+            continue
+        kept.append(token)
+    return kept
 
 
 def _keeps_protected(sub_query: str, protected: list[str]) -> bool:

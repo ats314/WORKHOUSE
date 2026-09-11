@@ -1,0 +1,65 @@
+schema: workhouse-discovery-review/v1
+id: 2026-09-11-reusable-ingredient-deriv-w6-source-gene-3d0c63
+seed: DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:CONDITIONAL_ENERGY_H0_H4
+target: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md:214-272
+relationship_kind: reusable-ingredient
+reasoning: 'Investigator (m10-brascamp-lieb): On the Morse chart the fibrewise Poincare inequality named
+  at score-frame lines 400-402 is EX-014 (2) with explicit constant; applied to the undilated fast score
+  2S/g^3 it yields the H1 shape kappa_0 g^-2 (BL bound on Var(S) for a quadratic phase is g^2 E[S - S_min]
+  = g^4/4 per fast dimension, eigenvalue-independent, true value g^4/8, so Var(2S/g^3|chart) <= 9 g^-2),
+  and H2 follows on the chart from the gradient moment (g^2/2) E|grad(2S/g^3)|^2 = 2 g^-2 per dimension
+  without any Poincare. SF6 gives Delta_mu sigma_g, not the pointwise fibre gradient BL needs; the usable
+  chain is K^0 <= lambda_min(B)^-1 J_g^chart. Chart-only; H1 over all w, and H0, H3, H4, are untouched.
+  Next check: Verify on the nine-dimensional quadratic model with B(0) from S7 that E[grad S^T B(0)^-1
+  grad S] under exp(-2S/g^2) equals 9 g^2/2 independently of the eigenvalues (sympy, exact), giving Var(2S/g^3)
+  <= 9 g^-2; then test the identity K^0_g <= lambda_min(B)^-1 J_g^chart against SF7e integrated over a
+  chart cutoff to see whether the flux term S_g of SF7e is what BL discards.'
+reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+created: '2026-09-11T08:26:16+00:00'
+evidence:
+- command: pair
+  argv:
+  - workhouse
+  - discover
+  - search
+  - ''
+  - --json
+  fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_freshness: matched
+  evidence_file: pair-E-h0h4-ex014.json
+  evidence_sha256: 64c1883200f939c8285a49d1a141218ddcbd20515d72c8e837febec66688e113
+  schema: workhouse-discovery/pair/v1
+  selection: top 0 rows; no row named the seed or target - the evidence may not concern this pair
+  rows: []
+  source_hashes:
+  - path: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md
+    lines:
+    - 214
+    - 272
+    sha256: fc55bb4934560183d5529822693ce7ad90ca9bc6f521546cb505d8e30f6cc703
+    role: endpoint
+  excerpt_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+state: rejected
+updated: '2026-09-11T08:26:18+00:00'
+registered_as: null
+history:
+- state: pending
+  at: '2026-09-11T08:26:16+00:00'
+  reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+  reason: recorded from discovery output; nothing reviewed yet
+- state: reviewing
+  at: '2026-09-11T08:26:18+00:00'
+  reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+  reason: Investigator read both sources in full at the cited lines; an independent skeptic re-read them
+    to refute the proposal.
+- state: rejected
+  at: '2026-09-11T08:26:18+00:00'
+  reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+  reason: 'Skeptic: H1 is a supremum over all w fed through SF6 by a whole-level-set diffusion Poincare
+    inequality, which Brascamp-Lieb cannot supply; the ''kappa_0 = 9'' figure is a Gaussian-model number
+    and the differentiated relative-amplitude control S6 names as missing is still missing. At most a
+    bearing on the chart-restricted Gaussian variance.'
+previous: 19042e1064bbe49260644972b1e17d6ffb709e2e31594ee9584bbd628448e16d
+genesis: b1ed34b0719e6fe8a02e576172ed89c8b11cfac4525fbd81a4b1f8bdb4abe085
+sha256: c261ef52878e234183c15604e4a747c0572834dced6e792d22323cd41936d9d6

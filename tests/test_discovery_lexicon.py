@@ -574,3 +574,11 @@ def test_plan_never_repeats_a_text_or_the_question_itself(monkeypatch):
     result = L.plan("the question", {"schema": "s", "version": 1})
     assert [row["text"] for row in result["queries"]] == ["the question", "same text", "other"]
     assert [row["origin"] for row in result["queries"]] == ["user", "lexicon:a", "lexicon:d"]
+
+
+def test_protected_tokens_drop_tokenizer_fragments_of_symbols():
+    from workhouse.discovery_lexicon import _protected
+
+    kept = _protected("decay of C^-1 with a0 = c uniformly in volume and value 5/612 at -5/48")
+    assert "5/612" in kept and "-5/48" in kept
+    assert "-1" not in kept and "0" not in kept and "1" not in kept
