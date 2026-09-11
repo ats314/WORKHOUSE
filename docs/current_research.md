@@ -37,6 +37,14 @@ establishes energy bounds through order three for the raw Hamiltonian,
 ground energy and ground vector. Explicit bounds on the complete conditional
 source-transport generator would then give `M_j(s) <= c_j s^-j`; those source
 bounds remain to be proved. The
+[ground-frame representation](derivations/w6-source-generator-score-frame.md)
+writes the complete R9 generator through the undilated ground score, its
+conditional mean (the R9 vacuum-cross vector is exactly `m_g(w) Omega_g`) and
+its conditional fluctuation on level sets of `w`, proves that the first ground
+jet is driven by the magnetic fluctuation alone, and reduces the order-zero
+R10 bound to five fiberwise conditional-energy estimates (H0-H4) whose
+averaged forms are established. R10 stays open; the reviewed closure attempt
+that assumed the pointwise score bound is recorded as rejected. The
 [conditional-score analysis](derivations/w6-conditional-score-tail-control.md)
 separates positive-coupling endpoint control from uniform control as `g` tends
 to zero. It proves the actual uniform source moment
