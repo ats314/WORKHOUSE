@@ -136,3 +136,34 @@ def test_related_graph_suggestions_do_not_inflate_primary_hit_metrics():
     assert data["summary"]["mrr_at_k"] == 0
     assert data["queries"][0]["related_first_relevant_rank"] == 1
     assert data["queries"][0]["related"][0]["id"] == "DERIV:A"
+
+
+def test_heldout_fixture_loads_and_is_disjoint_from_the_development_fixture():
+    root = Path(__file__).resolve().parents[1]
+    development = benchmark.load_queries(root / "tests/fixtures/discovery_queries.json")
+    heldout = benchmark.load_queries(root / "tests/fixtures/discovery_heldout_queries.json")
+    dev_ids = {case["id"] for case in development["queries"]}
+    dev_paths = {path for case in development["queries"] for path in case.get("expected_paths", [])}
+    groups = {}
+    for case in heldout["queries"]:
+        assert case["id"] not in dev_ids
+        assert not set(case.get("expected_paths", [])) & dev_paths
+        groups[case["group"]] = groups.get(case["group"], 0) + 1
+        text = case["query"].casefold()
+        # Leakage guard: no expected file stem or expected id inside the query text.
+        for path in case.get("expected_paths", []):
+            assert Path(path).stem.casefold() not in text
+        # Exact controls are the bare token by design; every other group must
+        # not name its answer.
+        if case["group"] != "heldout_exact":
+            for target in case.get("expected_claim_ids", []):
+                assert target.casefold() not in text
+        if case.get("expect_empty"):
+            assert not case.get("expected_paths") and not case.get("expected_claim_ids")
+    assert groups == {
+        "heldout_derivation": 8,
+        "heldout_historical": 8,
+        "heldout_notes_literature": 8,
+        "heldout_exact": 6,
+        "heldout_negative": 6,
+    }
