@@ -1,0 +1,239 @@
+New file: `80_Appendices/H_RP_Permanence_Coarse_Graining_Projective_Limits.md`
+
+---
+
+# Appendix H — Reflection positivity permanence under coarse graining and projective limits
+
+**File status:** **Established** (purely measure-theoretic implications; no model-specific input).
+
+**Scope:** This appendix records two structural facts:
+
+1. **Pushforward permanence:** reflection positivity survives any **reflection-equivariant** coarse-graining map that preserves the positive-time algebra.
+2. **Projective-limit permanence (cylinder level):** reflection positivity survives **inverse/projective limits** on the class of **cylinder observables**.
+
+No OS reconstruction is performed here. No existence of RG maps or projective limits is proved here (that is construction architecture, not a permanence lemma).
+
+---
+
+## H.1 Reflected probability spaces and reflection positivity
+
+### H.1.1 Reflection on configurations and the induced involution on observables
+
+Let ((\Omega,\mathcal F)) be a measurable space.
+
+* A **reflection** is a measurable involution (\Theta:\Omega\to\Omega) with (\Theta^2=\mathrm{Id}).
+* Let (\mathcal A_+\subset L^\infty(\Omega,\mathcal F)) be a *-subalgebra of bounded measurable observables (“positive-time observables”).
+
+Define the induced antilinear map (\theta) on observables by
+[
+(\theta F)(\omega) := \overline{F(\Theta\omega)}.
+]
+
+### H.1.2 Reflection positivity
+
+Let (\mu) be a probability measure on ((\Omega,\mathcal F)).
+
+**Definition H.1 (reflection positivity on ((\Theta,\mathcal A_+))).**
+(\mu) is **reflection positive** (RP) with respect to ((\Theta,\mathcal A_+)) if for every (F\in\mathcal A_+),
+[
+\mu\big((\theta F),F\big)
+=========================
+
+\int_\Omega \overline{F(\Theta\omega)},F(\omega),d\mu(\omega)
+\ \ge\ 0.
+\tag{H.1}
+]
+
+**Equivalent Gram-matrix form.**
+RP is equivalent to: for every finite family (F_1,\dots,F_n\in\mathcal A_+), the matrix
+[
+\Big(\ \langle F_i,\theta F_j\rangle_{L^2(\mu)}\ \Big)*{i,j=1}^n
+\quad\text{with}\quad
+\langle F,\theta G\rangle*{L^2(\mu)}:=\int_\Omega \overline{F(\omega)},G(\Theta\omega),d\mu(\omega)
+\tag{H.2}
+]
+is positive semidefinite.
+
+*Proof sketch of equivalence:* the Gram-matrix form implies (H.1) by taking (n=1); conversely, apply (H.1) to linear combinations (\sum_i c_i F_i) and expand.
+
+---
+
+## H.2 Pushforward permanence under reflection-equivariant coarse graining
+
+### H.2.1 Setup and compatibility axioms
+
+Let ((\Omega_f,\mathcal F_f,\mu_f)) be a “fine” reflected probability space with:
+
+* reflection (\Theta_f),
+* positive-time algebra (\mathcal A_{f,+}\subset L^\infty(\Omega_f)).
+
+Let ((\Omega_c,\mathcal F_c)) be a “coarse” measurable space with:
+
+* reflection (\Theta_c),
+* positive-time algebra (\mathcal A_{c,+}\subset L^\infty(\Omega_c)).
+
+Let (\pi:\Omega_f\to\Omega_c) be a measurable map (“coarse graining”).
+
+**Assumption H.2 (reflection equivariance and positive-time compatibility).**
+
+1. (**Reflection equivariance**)
+   [
+   \pi\circ\Theta_f = \Theta_c\circ\pi.
+   \tag{H.3}
+   ]
+2. (**Positive-time pullback**)
+   [
+   F\in\mathcal A_{c,+}\ \Longrightarrow\ F\circ\pi\in\mathcal A_{f,+}.
+   \tag{H.4}
+   ]
+   Define the pushed-forward measure
+   [
+   \mu_c := \pi_#\mu_f,
+   \qquad
+   \mu_c(B):=\mu_f(\pi^{-1}(B)).
+   \tag{H.5}
+   ]
+
+### H.2.2 Permanence lemma
+
+**Lemma H.3 (RP survives reflection-equivariant pushforward).**
+Assume (\mu_f) is reflection positive with respect to ((\Theta_f,\mathcal A_{f,+})), and (\pi) satisfies Assumption H.2. Then (\mu_c=\pi_#\mu_f) is reflection positive with respect to ((\Theta_c,\mathcal A_{c,+})).
+
+*Proof.* Fix (F\in\mathcal A_{c,+}). By Assumption H.2, (F\circ\pi\in\mathcal A_{f,+}). Also, by equivariance (H.3),
+[
+(\theta_c F)\circ\pi
+====================
+
+# \overline{F(\Theta_c(\pi(\cdot)))}
+
+# \overline{F(\pi(\Theta_f(\cdot)))}
+
+\theta_f(F\circ\pi).
+\tag{H.6}
+]
+Then
+[
+\mu_c\big((\theta_c F)F\big)
+============================
+
+# \mu_f\big(((\theta_c F)F)\circ\pi\big)
+
+\mu_f\big((\theta_f(F\circ\pi)),(F\circ\pi)\big)
+\ \ge\ 0
+\tag{H.7}
+]
+by reflection positivity of (\mu_f). (\square)
+
+**Remark H.4 (what must be checked in applications).**
+Lemma H.3 reduces “RP is preserved by coarse graining” to two explicit checks on (\pi): (i) it commutes with reflection, and (ii) it does not allow coarse positive-time observables to depend on fine negative-time variables.
+
+---
+
+## H.3 Projective limits preserve RP on cylinder observables
+
+### H.3.1 Projective systems with reflection
+
+Let ((I,\succcurlyeq)) be a directed set.
+
+For each (i\in I), let ((\Omega_i,\mathcal F_i)) be a measurable space equipped with:
+
+* a reflection (\Theta_i:\Omega_i\to\Omega_i),
+* a positive-time algebra (\mathcal A_{i,+}\subset L^\infty(\Omega_i)).
+
+For (j\succcurlyeq i), let (\pi_{ji}:\Omega_j\to\Omega_i) be measurable projections, satisfying **projective consistency**
+[
+\pi_{ki}=\pi_{ji}\circ\pi_{kj}
+\qquad (k\succcurlyeq j\succcurlyeq i).
+\tag{H.8}
+]
+
+**Assumption H.5 (reflection/positive-time compatibility of projections).**
+For all (j\succcurlyeq i):
+
+1. (**Reflection equivariance**)
+   [
+   \pi_{ji}\circ\Theta_j=\Theta_i\circ\pi_{ji}.
+   \tag{H.9}
+   ]
+2. (**Positive-time pullback**)
+   [
+   F\in\mathcal A_{i,+}\ \Longrightarrow\ F\circ\pi_{ji}\in\mathcal A_{j,+}.
+   \tag{H.10}
+   ]
+
+### H.3.2 Consistent marginals and the projective limit identity
+
+Let ({\mu_i}*{i\in I}) be probability measures such that for all (j\succcurlyeq i),
+[
+\mu_i = (\pi*{ji})_#\mu_j.
+\tag{H.11}
+]
+
+Assume there exists a probability space ((\Omega_\infty,\mathcal F_\infty,\mu_\infty)) together with measurable maps (\pi_{\infty i}:\Omega_\infty\to\Omega_i) such that:
+[
+(\pi_{\infty i})*#\mu*\infty=\mu_i \quad \text{for all } i\in I,
+\tag{H.12}
+]
+and (\pi_{\infty i}=\pi_{ji}\circ\pi_{\infty j}) for (j\succcurlyeq i). (This is the projective-limit property.)
+
+A **cylinder observable** on (\Omega_\infty) is any function of the form (F\circ\pi_{\infty i}) with (F\in L^\infty(\Omega_i)).
+
+Assume also there is an induced reflection (\Theta_\infty) on (\Omega_\infty) such that
+[
+\pi_{\infty i}\circ\Theta_\infty = \Theta_i\circ\pi_{\infty i}
+\qquad \forall i\in I.
+\tag{H.13}
+]
+(When (\Omega_\infty) is realized as the inverse-limit space, (\Theta_\infty) is forced by (H.13).)
+
+### H.3.3 Cylinder-level permanence lemma
+
+**Lemma H.6 (RP passes to the projective limit on cylinder observables).**
+Assume:
+
+* each (\mu_i) is reflection positive with respect to ((\Theta_i,\mathcal A_{i,+})),
+* the system satisfies Assumption H.5,
+* (\mu_\infty) and (\Theta_\infty) satisfy (H.12)–(H.13).
+
+Then (\mu_\infty) is reflection positive on cylinder observables pulled back from finite levels: for every (i\in I) and every (F\in\mathcal A_{i,+}),
+[
+\mu_\infty\Big(\big(\theta_\infty(F\circ\pi_{\infty i})\big),(F\circ\pi_{\infty i})\Big)\ \ge\ 0,
+\tag{H.14}
+]
+where ((\theta_\infty G)(\omega)=\overline{G(\Theta_\infty\omega)}).
+
+*Proof.* Fix (i) and (F\in\mathcal A_{i,+}). Using the compatibility (H.13),
+[
+\theta_\infty(F\circ\pi_{\infty i})
+===================================
+
+# \overline{F(\pi_{\infty i}(\Theta_\infty\cdot))}
+
+# \overline{F(\Theta_i(\pi_{\infty i}(\cdot)))}
+
+(\theta_i F)\circ\pi_{\infty i}.
+\tag{H.15}
+]
+Therefore the integrand in (H.14) is the cylinder observable (\big((\theta_i F)F\big)\circ\pi_{\infty i}). By the marginal identity (H.12),
+[
+\mu_\infty\Big(\big((\theta_i F)F\big)\circ\pi_{\infty i}\Big)
+==============================================================
+
+\mu_i\big((\theta_i F)F\big)
+\ \ge\ 0,
+\tag{H.16}
+]
+where the last inequality is reflection positivity of (\mu_i). (\square)
+
+**Remark H.7 (why “cylinder level” is the correct target).**
+OS reconstruction is formulated on local/positive-time cylinder observables and then completed. Cylinder-level RP is therefore the minimal permanence statement that is actually consumed downstream.
+
+---
+
+## Source material used (traceability)
+
+* `## 12.1 Reflection positivity permanence under reflection-equivariant coarse graining and under projective limits on cylinder observables.txt` 
+
+---
+
+**Appendix-series status:** Appendices **A–H are complete** (this is the last lettered appendix in the A–H outline).

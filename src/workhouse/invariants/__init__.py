@@ -1,7 +1,7 @@
 """
 Each check answers one question: *does this printed number follow from the
 definition the corpus gives for it?* A check that fails is not automatically a
-physics error â€” it is usually a transcription slip, a normalization erratum, or
+physics error — it is usually a transcription slip, a normalization erratum, or
 a presentation difference. It is always worth knowing about.
 
 Checks never adjudicate the fourth-order dispute. They verify the arithmetic
@@ -101,6 +101,7 @@ _MODULES = (
     "universal_cellular_hodge",
     "sixth_order_cluster",
     "w6_source_energy_r10",
+    "archive_derivations",
     "local_class_wick",
 )
 

@@ -1,0 +1,548 @@
+Appendix E — Smooth plaquette proxy and Lyapunov drift bookkeeping
+
+**File status:** **Established**, except for the explicitly marked **Open input** in §E.7 (the coercive pairing bound).
+
+**Scope.** This appendix isolates (i) a *globally smooth* “distance-from-vacuum” proxy on (G) and its plaquette lifts, (ii) the *uniform (in (\Lambda))* derivative bounds needed for Lyapunov drift computations on (M_\Lambda=G^{E(\Lambda)}), and (iii) the exact drift identity for (W_\Lambda=\exp(\kappa V_\Lambda)) with **all purely diffusion-generated terms** uniformly controlled by (\mathcal D_\Lambda). The only remaining obstruction is the **pairing term** coercivity (Appendix I).
+
+---
+
+## E.0 Context and the one failure mode we are avoiding
+
+A typical “global functional inequality via Lyapunov drift” strategy requires a weight (W_\Lambda\ge 1) with a Foster–Lyapunov drift inequality of the schematic form
+[
+L_\Lambda W_\Lambda ;\le; -\lambda W_\Lambda + b,\mathbf 1_{K_\Lambda},
+]
+with (\lambda,b) independent of (|\Lambda|).
+
+A recurring trap is **volume leakage**: if (L_\Lambda W_\Lambda/W_\Lambda) contains an additive term of order (|P(\Lambda)|), then no volume-uniform inequality can survive.
+
+Two design choices prevent this leak:
+
+1. Use a **globally smooth** proxy (g\mapsto \widetilde z(g)) rather than a nonsmooth seed like (d_G(g,\mathbf 1)^2), whose second derivatives can misbehave due to cut-locus issues.
+2. Build the Lyapunov potential from an outer profile (\Phi) with
+   [
+   \Phi'(0)=0,
+   ]
+   so Laplacian terms are automatically *weighted by badness* (\widetilde z_p) instead of producing an unweighted (|P(\Lambda)|) sum.
+
+Both points are made precise below. 
+
+---
+
+## E.1 Configuration manifold and linkwise differential operators
+
+### E.1.1 Configuration manifold and product metric
+
+Let (G) be a compact Lie group with a **bi-invariant** Riemannian metric (g_G). For a finite periodic lattice (\Lambda), the configuration manifold is
+[
+M_\Lambda := G^{E(\Lambda)},
+]
+equipped with the product metric (g_\Lambda) (factorwise equal to (g_G)).
+
+Tangent vectors are identified (by right trivialization in each link coordinate) with (\mathfrak g)-valued 1-cochains:
+[
+T_U M_\Lambda \simeq \mathfrak g^{E(\Lambda)}.
+]
+
+### E.1.2 Linkwise orthonormal frame, (\Gamma), (\Delta), and the Gibbs generator (L_\Lambda)
+
+Fix an orthonormal basis ({e_a}*{a=1}^{\dim\mathfrak g}) of ((\mathfrak g,\langle\cdot,\cdot\rangle*{\mathfrak g})). For each link (\ell\in E(\Lambda)) and each (a), let (X_\ell^a) be the right-invariant vector field acting in the (\ell)-coordinate, i.e. differentiating (U_\ell\mapsto U_\ell\exp(t e_a)) at (t=0) while keeping all other link variables fixed.
+
+In this frame one has the concrete formulas
+[
+\Gamma_\Lambda(f,g)
+=\sum_{\ell\in E(\Lambda)}\sum_{a} (X_\ell^a f)(X_\ell^a g),
+\qquad
+\Gamma_\Lambda(f)=\Gamma_\Lambda(f,f),
+]
+[
+\Delta_\Lambda f = \sum_{\ell,a} X_\ell^a X_\ell^a f,
+]
+and for the Gibbs diffusion associated to a smooth action (S_\Lambda),
+[
+L_\Lambda f
+=\Delta_\Lambda f ;-; \langle \nabla S_\Lambda,\nabla f\rangle_{g_\Lambda}
+= \sum_{\ell,a} X_\ell^a X_\ell^a f ;-;\sum_{\ell,a}(X_\ell^a S_\Lambda)(X_\ell^a f).
+]
+This is the operator used throughout the drift computations. 
+
+---
+
+## E.2 The global smooth proxy on (G)
+
+### E.2.1 Definition: trace-defect proxy
+
+Fix a unitary representation (\rho:G\to U(n)). Define the **trace-defect proxy**
+[
+\widetilde z(g) ;:=; 1-\frac{1}{n}\Re\mathrm{Tr}(\rho(g)),
+\qquad g\in G.
+]
+This is a continuous conjugation-invariant class function and is smooth because (\rho) is smooth and (\Re\mathrm{Tr}) is smooth on matrices.
+
+(Notation: this is the same (\widetilde z) as in the Lyapunov/drift block of the corpus.) 
+
+### E.2.2 Basic bounds and uniqueness of the minimizer
+
+**Lemma E.1 (range and minimizer).** *(Status: Established.)*
+For all (g\in G),
+[
+0\le \widetilde z(g)\le 2.
+]
+Moreover, (\widetilde z(g)=0) iff (\rho(g)=I_n). In particular, if (\rho) is faithful, then (\widetilde z(g)=0) iff (g=\mathbf 1).
+
+*Proof.* Since (\rho(g)\in U(n)), its eigenvalues are (e^{i\theta_j}) and
+[
+\Re\mathrm{Tr}(\rho(g)) = \sum_{j=1}^n \cos\theta_j \in [-n,n].
+]
+Hence (1-\frac{1}{n}\Re\mathrm{Tr}(\rho(g))\in[0,2]). If (\widetilde z(g)=0), then (\Re\mathrm{Tr}(\rho(g))=n), forcing (\cos\theta_j=1) for all (j), hence (\rho(g)=I_n). Faithfulness then implies (g=\mathbf 1). ∎
+
+(These bounds are used later to convert cubic terms (\widetilde z_p^3) into linear terms (\widetilde z_p).) 
+
+---
+
+## E.3 Plaquette lifts and aggregated “badness” functionals
+
+For each plaquette (p\in P(\Lambda)), let (U_p(U)\in G) denote the plaquette holonomy (ordered product of the four boundary link variables, with inverses on backward-oriented edges).
+
+### E.3.1 Plaquette lift
+
+Define the **plaquette proxy**
+[
+\widetilde z_p(U) ;:=; \widetilde z\big(U_p(U)\big),
+\qquad U\in M_\Lambda.
+]
+
+### E.3.2 Aggregates
+
+Define the aggregate functionals
+[
+\mathcal D_\Lambda(U) ;:=;\sum_{p\in P(\Lambda)} \widetilde z_p(U),
+\qquad
+V_\Lambda(U) ;:=;\sum_{p\in P(\Lambda)} \widetilde z_p(U)^2,
+]
+and for (\kappa>0) the Lyapunov weight
+[
+W_\Lambda(U);:=;\exp\big(\kappa V_\Lambda(U)\big).
+]
+These are the canonical choices in the drift block. 
+
+### E.3.3 Locality and basic comparisons
+
+**Lemma E.2 (locality and bounds).** *(Status: Established.)*
+
+1. Each (\widetilde z_p(U)) depends only on the four link variables in (\partial p).
+2. For all (U),
+   [
+   0\le \widetilde z_p(U)\le 2,\qquad
+   0\le \mathcal D_\Lambda(U)\le 2|P(\Lambda)|,\qquad
+   0\le V_\Lambda(U)\le 4|P(\Lambda)|.
+   ]
+3. Comparison:
+   [
+   V_\Lambda(U)\le 2,\mathcal D_\Lambda(U),
+   \qquad
+   \mathcal D_\Lambda(U)\le \sqrt{|P(\Lambda)|,V_\Lambda(U)}.
+   ]
+
+*Proof.* Item (1) is immediate from the definition of plaquette holonomy as a length-4 word. Item (2) follows from Lemma E.1 and summation. For (3), use (z^2\le 2z) on ([0,2]), and Cauchy–Schwarz for the second bound. ∎
+
+---
+
+## E.4 First- and second-derivative constants on (G)
+
+Because (G) is compact and (\widetilde z\in C^\infty(G)), all sup norms of derivatives are finite. We isolate the constants that are actually used in drift bookkeeping.
+
+### E.4.1 (C^1), (C^2), and Laplacian bounds
+
+Define
+[
+C^{(1)}*{\widetilde z}
+:=\sup*{g\in G} |\nabla_G \widetilde z(g)|,
+\qquad
+C^{(2)}*{\widetilde z}
+:=\sup*{g\in G} \big|\nabla_G^2 \widetilde z(g)\big|*{\mathrm{op}},
+]
+[
+C*\Delta := \sup_{g\in G} |\Delta_G \widetilde z(g)|.
+]
+These are finite by compactness. 
+
+### E.4.2 Global gradient domination constant (C_\nabla)
+
+Define
+[
+C_\nabla
+:=\sup_{g\neq \mathbf 1}\frac{|\nabla_G\widetilde z(g)|^2}{\widetilde z(g)}.
+]
+The nontrivial point is finiteness at (g\to \mathbf 1).
+
+**Lemma E.3 (global gradient domination).** *(Status: Established.)*
+(C_\nabla<\infty), and hence
+[
+|\nabla_G\widetilde z(g)|^2 \le C_\nabla,\widetilde z(g)\qquad\forall g\in G.
+]
+
+*Proof (explicit local analysis + compactness).*
+Away from (\mathbf 1), (\widetilde z) is strictly positive (Lemma E.1), so the ratio is continuous and bounded on compact sets avoiding (\mathbf 1). It remains to show boundedness near (\mathbf 1).
+
+Use exponential coordinates (g=\exp(Y)) for (|Y|) small. Since (\rho(\exp(Y))=\exp(d\rho(Y))) and (d\rho(Y)) is skew-Hermitian, Taylor expansion gives
+[
+\Re\mathrm{Tr}(\rho(\exp(Y)))
+=\Re\mathrm{Tr}\Big(I + d\rho(Y) + \tfrac12 d\rho(Y)^2 + O(|Y|^3)\Big)
+= n + \tfrac12 \Re\mathrm{Tr}(d\rho(Y)^2) + O(|Y|^3),
+]
+because (\Re\mathrm{Tr}(d\rho(Y))=0). By definition of
+[
+B_\rho(Y,Y):=-\Re\mathrm{Tr}(d\rho(Y)^2),
+]
+we obtain
+[
+\widetilde z(\exp(Y))
+= 1-\frac{1}{n}\Re\mathrm{Tr}(\rho(\exp(Y)))
+=\frac{1}{2n}B_\rho(Y,Y)+O(|Y|^3).
+]
+In the normalization where (B_\rho(Y,Y)=\lambda_\rho^{-1}|Y|^2), this reads
+[
+\widetilde z(\exp(Y))=\frac{1}{2n\lambda_\rho}|Y|^2 + O(|Y|^3).
+]
+Differentiating in these normal coordinates yields
+[
+\nabla_G\widetilde z(\exp(Y))
+=\frac{1}{n\lambda_\rho}Y + O(|Y|^2),
+\quad\text{hence}\quad
+|\nabla_G\widetilde z(\exp(Y))|^2
+=\frac{1}{n^2\lambda_\rho^2}|Y|^2 + O(|Y|^3).
+]
+Therefore
+[
+\frac{|\nabla_G\widetilde z(\exp(Y))|^2}{\widetilde z(\exp(Y))}
+\to \frac{\frac{1}{n^2\lambda_\rho^2}|Y|^2}{\frac{1}{2n\lambda_\rho}|Y|^2}
+=\frac{2}{n\lambda_\rho}
+\quad\text{as }Y\to 0.
+]
+So the ratio extends continuously to (g=\mathbf 1) and is bounded on compact (G). ∎
+
+This is exactly the global domination property recorded in the drift constant table. 
+
+---
+
+## E.5 Transfer of group derivative bounds to plaquette lifts
+
+The key locality fact is that, holding all links except (U_\ell) fixed, the plaquette holonomy depends on (U_\ell) by left/right multiplication and possibly inversion.
+
+### E.5.1 Isometries induced by left/right multiplication and inversion
+
+**Lemma E.4 (bi-invariant metric implies standard isometries).** *(Status: Established.)*
+If (g_G) is bi-invariant, then for each fixed (A,B\in G) and (\sigma\in{\pm1}), the map
+[
+\Psi(g):=A,g^\sigma,B
+]
+is an isometry of ((G,g_G)).
+
+*Proof.* Left and right multiplication are isometries by definition of left/right invariance. For inversion, note that on a Lie group with bi-invariant metric, inversion is an isometry because
+[
+\mathrm{inv} = L_{g^{-1}}\circ R_{g^{-1}}
+\quad\text{at the level of differentials, and}\quad
+g_G\text{ is Ad-invariant,}
+]
+so (d(\mathrm{inv})) preserves the inner product. Therefore (\Psi), a composition of isometries, is an isometry. ∎
+
+### E.5.2 Local dependence of (\widetilde z_p) on a single link
+
+**Lemma E.5 (single-link reduction for a plaquette).** *(Status: Established.)*
+Fix a plaquette (p) and a link (\ell). If (\ell\notin\partial p), then (\widetilde z_p) is independent of (U_\ell). If (\ell\in\partial p), then for each fixed configuration (U), the dependence on (g:=U_\ell) has the form
+[
+\widetilde z_p(U)=\widetilde z\big(A,g^\sigma,B\big)
+]
+for some (A,B\in G) determined by the other three boundary links and some (\sigma\in{\pm1}) determined by whether (\ell) appears in (U_p) with exponent (+1) or (-1). In particular, (g\mapsto A g^\sigma B) is an isometry by Lemma E.4.
+
+*Proof.* The plaquette holonomy (U_p(U)) is a word of length 4 in boundary link variables, with inversions for backward edges. Holding three boundary links fixed shows the remaining link enters by left/right multiplication and possibly inversion. ∎ 
+
+### E.5.3 Uniform linkwise derivative bounds for (\widetilde z_p)
+
+**Lemma E.6 (linkwise derivative bounds for plaquette lifts).** *(Status: Established.)*
+For every plaquette (p), link (\ell), and configuration (U\in M_\Lambda),
+[
+|\nabla_\ell \widetilde z_p(U)| \le C^{(1)}*{\widetilde z},\mathbf 1*{{\ell\in\partial p}},
+]
+[
+\big|\nabla_\ell^2 \widetilde z_p(U)\big|*{\mathrm{op}} \le C^{(2)}*{\widetilde z},\mathbf 1_{{\ell\in\partial p}},
+]
+and the linkwise gradient domination holds:
+[
+|\nabla_\ell \widetilde z_p(U)|^2 \le C_\nabla,\widetilde z_p(U),\mathbf 1_{{\ell\in\partial p}}.
+]
+Moreover, the full product Laplacian obeys
+[
+|\Delta_\Lambda \widetilde z_p(U)| \le m_\partial,C_\Delta = 4C_\Delta.
+]
+
+*Proof.* If (\ell\notin\partial p), the function is independent of (U_\ell), so all (\ell)-derivatives vanish. If (\ell\in\partial p), Lemma E.5 writes (\widetilde z_p=\widetilde z\circ\Psi) with (\Psi) an isometry. Composition with an isometry preserves gradient norm, Hessian operator norm, and Laplacian, so the (\ell)-bounds inherit the constants from §E.4. The product Laplacian (\Delta_\Lambda) is the sum over links of link-Laplacians; only the (m_\partial=4) boundary links contribute, and each contributes at most (C_\Delta). ∎
+
+**Corollary E.7 (plaquette carré du champ bound).** *(Status: Established.)*
+For all (p) and (U),
+[
+\Gamma_\Lambda(\widetilde z_p)(U)
+=\sum_{\ell\in E(\Lambda)} |\nabla_\ell \widetilde z_p(U)|^2
+\le m_\partial,C_\nabla,\widetilde z_p(U)
+=4C_\nabla,\widetilde z_p(U).
+]
+
+*Proof.* Only (\ell\in\partial p) contribute, and each contributes at most (C_\nabla\widetilde z_p) by Lemma E.6. ∎
+
+---
+
+## E.6 Why (\Phi'(0)=0) prevents volume leakage
+
+Let (\Phi\in C^2([0,\infty))) and define a general badness potential
+[
+V_\Lambda^\Phi(U):=\sum_{p\in P(\Lambda)} \Phi(\widetilde z_p(U)).
+]
+
+Using the diffusion chain rule (proved below),
+[
+L_\Lambda(\Phi\circ f)
+=\Phi'(f),L_\Lambda f+\Phi''(f),\Gamma_\Lambda(f),
+]
+the dangerous term in (L_\Lambda V_\Lambda^\Phi) is
+[
+\sum_{p} \Phi'(\widetilde z_p),\Delta_\Lambda \widetilde z_p.
+]
+
+Since (|\Delta_\Lambda \widetilde z_p|\le 4C_\Delta) uniformly (Lemma E.6), if (\Phi'(0)\neq 0) then on configurations where many plaquettes are near vacuum ((\widetilde z_p\approx 0)),
+[
+\Phi'(\widetilde z_p)\approx \Phi'(0)
+\quad\Rightarrow\quad
+\left|\sum_p \Phi'(\widetilde z_p)\Delta_\Lambda \widetilde z_p\right|
+\lesssim |\Phi'(0)|,|P(\Lambda)|.
+]
+That is the volume leak.
+
+If instead (\Phi'(0)=0) and (\Phi') grows at most linearly near 0, then (\Phi'(\widetilde z_p)) forces at least a factor (\widetilde z_p), turning the same term into (O(\sum_p \widetilde z_p)=O(\mathcal D_\Lambda)), which is the correct extensive scale.
+
+For the concrete choice
+[
+\Phi(s)=s^2,
+\quad
+\Phi'(s)=2s,
+\quad
+\Phi''(s)=2,
+]
+this weighting is automatic and sharp.
+
+---
+
+## E.7 Diffusion chain rules (from first principles in the linkwise frame)
+
+### E.7.1 Chain rule for (L_\Lambda)
+
+**Lemma E.8 (diffusion chain rule).** *(Status: Established.)*
+Let (\Psi\in C^2(\mathbb R)) and (f\in C^\infty(M_\Lambda)). Then
+[
+L_\Lambda(\Psi\circ f)
+=\Psi'(f),L_\Lambda f+\Psi''(f),\Gamma_\Lambda(f).
+]
+
+*Proof.* In the linkwise orthonormal frame ({X_\ell^a}),
+[
+X_\ell^a(\Psi\circ f)=\Psi'(f),X_\ell^a f,
+]
+[
+X_\ell^aX_\ell^a(\Psi\circ f)
+=\Psi''(f),(X_\ell^a f)^2+\Psi'(f),X_\ell^aX_\ell^a f.
+]
+Summing over ((\ell,a)) gives
+[
+\Delta_\Lambda(\Psi\circ f)
+=\Psi'(f),\Delta_\Lambda f + \Psi''(f)\sum_{\ell,a}(X_\ell^a f)^2
+=\Psi'(f),\Delta_\Lambda f+\Psi''(f),\Gamma_\Lambda(f).
+]
+For the drift part,
+[
+\langle\nabla S_\Lambda,\nabla(\Psi\circ f)\rangle
+=\sum_{\ell,a}(X_\ell^a S_\Lambda),X_\ell^a(\Psi\circ f)
+=\Psi'(f)\sum_{\ell,a}(X_\ell^a S_\Lambda),(X_\ell^a f)
+=\Psi'(f),\langle\nabla S_\Lambda,\nabla f\rangle.
+]
+Combine these with (L_\Lambda=\Delta_\Lambda-\langle\nabla S_\Lambda,\nabla(\cdot)\rangle). ∎
+
+### E.7.2 Exponential chain rule
+
+**Corollary E.9 (exponential rule).** *(Status: Established.)*
+For (\kappa\in\mathbb R) and (V\in C^\infty(M_\Lambda)),
+[
+L_\Lambda(e^{\kappa V})
+=e^{\kappa V}\big(\kappa,L_\Lambda V+\kappa^2,\Gamma_\Lambda(V)\big),
+\qquad
+\text{i.e.}\quad \frac{L_\Lambda W}{W}=\kappa,L_\Lambda V+\kappa^2,\Gamma_\Lambda(V)
+\ \text{for }W=e^{\kappa V}.
+]
+
+*Proof.* Apply Lemma E.8 with (\Psi(s)=e^{\kappa s}), so (\Psi'=\kappa e^{\kappa s}), (\Psi''=\kappa^2 e^{\kappa s}). ∎ 
+
+---
+
+## E.8 Exact drift identity for (V_\Lambda=\sum_p \widetilde z_p^2) and (W_\Lambda=e^{\kappa V_\Lambda})
+
+**Proposition E.10 (exact Lyapunov drift identity; (\Phi(s)=s^2)).** *(Status: Established.)*
+Let
+[
+V_\Lambda=\sum_p \widetilde z_p^2,
+\qquad
+W_\Lambda=e^{\kappa V_\Lambda}.
+]
+Then
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+=\kappa,L_\Lambda V_\Lambda+\kappa^2,\Gamma_\Lambda(V_\Lambda),
+]
+and
+[
+L_\Lambda V_\Lambda
+===================
+
+2\sum_{p}\widetilde z_p,\Delta_\Lambda \widetilde z_p
+;-;
+2\sum_{p}\widetilde z_p,\big\langle\nabla S_\Lambda,\nabla \widetilde z_p\big\rangle_{g_\Lambda}
+;+;
+2\sum_{p}\Gamma_\Lambda(\widetilde z_p).
+]
+
+*Proof.* The first identity is Corollary E.9. For the second, apply Lemma E.8 with (\Psi(s)=s^2) to each term (\widetilde z_p^2):
+[
+L_\Lambda(\widetilde z_p^2)=2\widetilde z_p,L_\Lambda \widetilde z_p + 2,\Gamma_\Lambda(\widetilde z_p),
+]
+sum over (p), and expand (L_\Lambda \widetilde z_p=\Delta_\Lambda \widetilde z_p-\langle\nabla S_\Lambda,\nabla \widetilde z_p\rangle). ∎ 
+
+---
+
+## E.9 Uniform closure of all diffusion-generated terms by (\mathcal D_\Lambda)
+
+The next proposition is the “constant hygiene” core: it shows that every term generated purely by (\Delta_\Lambda), (\Gamma_\Lambda), and the exponential chain rule is controlled by (\mathcal D_\Lambda) with constants independent of (\Lambda).
+
+**Proposition E.11 (uniform control of diffusion terms by (\mathcal D_\Lambda)).** *(Status: Established.)*
+There exist constants (A_1,A_2,A_3<\infty), depending only on ((G,g_G)), (\rho), and the overlap constant (\nu) (hence independent of (\Lambda)), such that for all (U\in M_\Lambda),
+[
+\Big|\sum_{p} 2\widetilde z_p(U),\Delta_\Lambda \widetilde z_p(U)\Big|
+\le A_1,\mathcal D_\Lambda(U),
+]
+[
+2\sum_{p}\Gamma_\Lambda(\widetilde z_p)(U) \le A_2,\mathcal D_\Lambda(U),
+]
+[
+\Gamma_\Lambda(V_\Lambda)(U)\le A_3,\mathcal D_\Lambda(U).
+]
+One explicit choice is
+[
+A_1=8C_\Delta,\qquad A_2=8C_\nabla,\qquad A_3=64,\nu,C_\nabla.
+]
+
+*Proof (three terms).*
+
+1. **Laplacian/Hessian term.** By Lemma E.6, (|\Delta_\Lambda \widetilde z_p|\le 4C_\Delta). Hence
+   [
+   \Big|\sum_{p} 2\widetilde z_p,\Delta_\Lambda \widetilde z_p\Big|
+   \le \sum_p 2\widetilde z_p\cdot 4C_\Delta
+   =8C_\Delta \sum_p \widetilde z_p
+   = A_1,\mathcal D_\Lambda.
+   ]
+
+2. **Chain-rule (\Gamma)-term.** By Corollary E.7,
+   [
+   \Gamma_\Lambda(\widetilde z_p)\le 4C_\nabla \widetilde z_p,
+   ]
+   hence
+   [
+   2\sum_p \Gamma_\Lambda(\widetilde z_p)\le 2\sum_p 4C_\nabla \widetilde z_p
+   =8C_\nabla,\mathcal D_\Lambda
+   =A_2,\mathcal D_\Lambda.
+   ]
+
+3. **Exponential carré du champ term (\Gamma_\Lambda(V_\Lambda)).** For each link (\ell),
+   [
+   \nabla_\ell V_\Lambda
+   =\sum_{p:,\ell\in\partial p}\nabla_\ell(\widetilde z_p^2)
+   =\sum_{p:,\ell\in\partial p} 2\widetilde z_p,\nabla_\ell\widetilde z_p.
+   ]
+   Apply Cauchy–Schwarz over the finite set of plaquettes meeting (\ell):
+   [
+   |\nabla_\ell V_\Lambda|^2
+   \le \Big(#{p:\ell\in\partial p}\Big)\sum_{p:,\ell\in\partial p} 4\widetilde z_p^2,|\nabla_\ell\widetilde z_p|^2.
+   ]
+   By definition of the overlap constant, (#{p:\ell\in\partial p}\le \nu), so
+   [
+   |\nabla_\ell V_\Lambda|^2 \le 4\nu \sum_{p:,\ell\in\partial p}\widetilde z_p^2,|\nabla_\ell\widetilde z_p|^2.
+   ]
+   Sum over links and swap sums:
+   [
+   \Gamma_\Lambda(V_\Lambda)=\sum_\ell |\nabla_\ell V_\Lambda|^2
+   \le 4\nu \sum_p \widetilde z_p^2\sum_{\ell\in\partial p}|\nabla_\ell\widetilde z_p|^2
+   =4\nu\sum_p \widetilde z_p^2,\Gamma_\Lambda(\widetilde z_p).
+   ]
+   Use Corollary E.7 again: (\Gamma_\Lambda(\widetilde z_p)\le 4C_\nabla \widetilde z_p), giving
+   [
+   \Gamma_\Lambda(V_\Lambda)\le 16\nu C_\nabla\sum_p \widetilde z_p^3.
+   ]
+   Finally, since (0\le \widetilde z_p\le 2) (Lemma E.1), we have (\widetilde z_p^3\le 4\widetilde z_p), hence
+   [
+   \Gamma_\Lambda(V_\Lambda)\le 16\nu C_\nabla\sum_p 4\widetilde z_p
+   =64\nu C_\nabla,\mathcal D_\Lambda
+   =A_3,\mathcal D_\Lambda.
+   ]
+   ∎
+
+This proposition is exactly the appendix-level form of the Part 7 “uniform-constant closure.” 
+
+---
+
+## E.10 The drift bound with the unique remaining obstruction
+
+Combine Proposition E.10 (exact identity) with Proposition E.11 (uniform control of diffusion terms) to get:
+
+**Corollary E.12 (uniform upper bound for ((L_\Lambda W_\Lambda)/W_\Lambda)).** *(Status: Established.)*
+For every (\kappa>0), every lattice (\Lambda), and every configuration (U\in M_\Lambda),
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}(U)
+\le
+\big(\kappa(A_1+A_2)+\kappa^2 A_3\big),\mathcal D_\Lambda(U)
+;-;
+2\kappa,\mathcal P_\Lambda(U),
+]
+where the **pairing functional** is
+[
+\mathcal P_\Lambda(U)
+:=\sum_{p\in P(\Lambda)}\widetilde z_p(U),\big\langle\nabla S_\Lambda(U),\nabla \widetilde z_p(U)\big\rangle_{g_\Lambda}.
+]
+
+Everything on the right-hand side is now controlled by constants independent of (\Lambda), **except** the term (\mathcal P_\Lambda), which depends on the detailed structure of (S_\Lambda). 
+
+---
+
+## E.11 Open input: coercive lower bound for the pairing term
+
+**Assumption / Lemma-to-prove E.13 (coercive pairing inequality).** *(Status: Open input; not proved in-corpus.)*
+Find constants (c_{\mathrm{pair}}>0), (C_{\mathrm{pair}}\ge 0), independent of (\Lambda), such that
+[
+\mathcal P_\Lambda(U)
+\ \ge
+c_{\mathrm{pair}}\mathcal D_\Lambda(U);-;C_{\mathrm{pair}}
+\qquad\forall \Lambda,\ \forall U\in M_\Lambda.
+]
+
+This is the *only* remaining estimate required to turn Corollary E.12 into a genuine Foster–Lyapunov drift inequality with volume-uniform constants. It is explicitly isolated in the drift block and expanded algebraically in Appendix I. 
+
+---
+
+## E.12 Source material used (traceability)
+
+Primary sources used to rebuild this appendix:
+
+* `## 7. Lyapunov drift and uniform-in-volume functional inequalities.txt` (definitions of (\widetilde z_p,\mathcal D_\Lambda,V_\Lambda,W_\Lambda); linkwise operator formulas; chain rules; exact drift identity; statement of the remaining pairing obstruction) 
+* `APPENDIX_J.md` (uniform derivative transfer via isometries; constant hygiene proof; explicit (A_1,A_2,A_3); summary of “what is solved vs not”) 
+* `NOTATION_AND_CONSTANTS.md` (definition of proxy constants and drift constants, consistent with the above) 
+* `APPENDIX_I.md` (explicit identification of the pairing functional and the coercivity target; treated there as open) 
+
+Intentionally excluded:
+
+* Any simulation artifacts or numerical “sanity checks.”
+* Any attempt to prove the coercive pairing inequality (left to the dedicated open-gap file / Appendix I development).
