@@ -403,6 +403,23 @@ scalar lemma while its proposed explanation of all projection vanishings
 remains conjectured. The checks do not compute the other cells' proper-return
 or Q-projected histories; that identification remains a separate U3/G14 route.
 
+The [September 11 cellular continuation](derivations/universal-cellular-hodge-tetrahedral.md)
+proves the incidence statements for unweighted regular cellular sphere
+boundaries and computes the tetrahedral commutant from all permutation
+constraints. Its shifted operator is `S=L_down-4I`. The all-power identity
+`R S^m R=(q-4)^m R^2-Pi_m(q) RUR` now has a Lean operator proof under `U^2=qU`,
+with the Laurent carrier evaluations checked separately. The polynomial
+recurrence is defined at q=0 and gives `Pi4=q^3-16q^2+96q-256`.
+
+The submitted 60/36 tetrahedral flux partition does not construct projected
+physical histories: its face projector has `Q e0=(3,-1,-1,-1)/4`, not zero.
+`RESULT:TETRAHEDRAL_FLUX_PROJECTION_BOUNDARY` records this exact missing
+identification. The desired physical vanishing remains open, and U3/U7
+retain conjectured status with their established ingredients. Complete
+source-to-proof links cover the rank-one and abstract operator statements;
+cellular construction, S4 representation, and Laurent realization have
+explicitly scoped support.
+
 ## The Feshbach resolvent comparison
 
 Added 2026-09-09; read the
