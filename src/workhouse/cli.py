@@ -390,7 +390,7 @@ def _discover(args) -> int:
     from pathlib import Path
 
     from . import discovery_present as present_mod
-    from .discovery import DiscoveryEngine, context_pack
+    from .discovery import DiscoveryEngine, context_pack, render_text
 
     # Windows pipes default to a legacy code page; excerpts carry Greek and arrows.
     for stream in (sys.stdout, sys.stderr):
@@ -400,7 +400,8 @@ def _discover(args) -> int:
     full = bool(getattr(args, "full", False))
     excerpt_chars = getattr(args, "excerpt_chars", None) or present_mod.EXCERPT_CHARS
     try:
-        with DiscoveryEngine() as engine:
+        verify = args.discovery_command in ("build", "info")
+        with DiscoveryEngine(verify_cache=True) if verify else DiscoveryEngine() as engine:
             root = engine.root
             if args.discovery_command in ("build", "info"):
                 result = engine.index.metadata()
@@ -435,11 +436,13 @@ def _discover(args) -> int:
                 report = present_mod.render_impact(result)
             elif args.discovery_command == "connections":
                 result = engine.connections(args.id, query=args.query, limit=args.limit)
-                if not full:
+                if full:
+                    report = render_text(result)
+                else:
                     result = present_mod.present_connections(
                         result, max_chars=excerpt_chars, root=root
                     )
-                report = present_mod.render_connections(result)
+                    report = present_mod.render_connections(result)
             else:
                 result = engine.search(
                     args.query,
@@ -452,9 +455,10 @@ def _discover(args) -> int:
                 if args.context_chars:
                     result = context_pack(result, args.context_chars)
                     report = json.dumps(result, ensure_ascii=True, sort_keys=True)
+                elif full:
+                    report = render_text(result)
                 else:
-                    if not full:
-                        result = present_mod.present(result, max_chars=excerpt_chars, root=root)
+                    result = present_mod.present(result, max_chars=excerpt_chars, root=root)
                     report = present_mod.render_compact(result)
         if args.out:
             path = Path(args.out)

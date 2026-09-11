@@ -332,8 +332,13 @@ def _passages(text: str):
 
 
 class DiscoveryIndex:
-    def __init__(self, root: Path, cache_dir: Path | None = None):
+    def __init__(self, root: Path, cache_dir: Path | None = None, *, verify_cache: bool = False):
+        """``verify_cache`` runs SQLite's page-level quick_check when a cache is
+        reused. It costs about half a second per 100 MB, so ordinary queries
+        rely on the identity, row-count and probe checks and let a corrupt
+        page surface as a query error; ``discover build`` and ``info`` verify."""
         self.root = Path(root).resolve()
+        self.verify_cache = verify_cache
         self.cache_dir = (
             Path(cache_dir) if cache_dir is not None else self.root / ".graph-state/discovery"
         )
@@ -493,7 +498,7 @@ class DiscoveryIndex:
         connection = None
         try:
             connection = sqlite3.connect(path.as_uri() + "?mode=ro", uri=True)
-            if connection.execute("PRAGMA quick_check").fetchone()[0] != "ok":
+            if self.verify_cache and connection.execute("PRAGMA quick_check").fetchone()[0] != "ok":
                 raise ValueError("SQLite integrity check failed")
             meta = json.loads(
                 connection.execute("SELECT value FROM metadata WHERE key='build'").fetchone()[0]

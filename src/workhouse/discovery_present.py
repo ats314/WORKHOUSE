@@ -174,6 +174,8 @@ def compact_hit(
             # The excerpt is source text; the statement is the catalogue wording.
             row["statement"] = str(record.get("statement", ""))[: min(400, max_chars)]
         row["commands"] = _commands(hit["id"])
+    if hit.get("query_ranks"):
+        row["query_ranks"] = dict(hit["query_ranks"])
     if hit.get("graph_witness"):
         row["graph_witness"] = _witness_summary(hit["graph_witness"])
     return row

@@ -68,9 +68,12 @@ def _select_diverse(rows: list[dict], limit: int, per_source: int = 2) -> list[d
 class DiscoveryEngine:
     """One indexed corpus and saved graph, reusable across an agent's queries."""
 
-    def __init__(self, root: Path = ROOT, *, cache_dir: Path | None = None):
+    def __init__(
+        self, root: Path = ROOT, *, cache_dir: Path | None = None, verify_cache: bool = False
+    ):
         self.root = Path(root).resolve()
-        self.index = DiscoveryIndex(self.root, cache_dir=cache_dir)
+        options = {"verify_cache": True} if verify_cache else {}
+        self.index = DiscoveryIndex(self.root, cache_dir=cache_dir, **options)
         self.index.build()
         symbols = [
             {
@@ -385,7 +388,8 @@ class DiscoveryEngine:
         ordered = []
         for target, score in fused.items():
             candidate = by_id[target]
-            candidate["connection_rank"] = score
+            candidate["connection_rank"] = score["score"]
+            candidate["connection_channels"] = score["channels"]
             candidate["where"] = self.records[target].get("where", "")
             ordered.append(candidate)
         connections = _select_diverse(ordered, limit)
