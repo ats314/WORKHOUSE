@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 439 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 601/601 checks pass.
+**T1/T2 — re-derived here.** 606/606 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -51,6 +51,7 @@ it cannot drift from what the repository actually checks.
 | the third engine at every rank (all-rank cumulants) | 12/12 |
 | the T1 triplet at Gamma and the uniform isolation of the flat band | 7/7 |
 | the third engine over Q(N): closed forms derived, the degree bound | 10/10 |
+| the planar limit of the fourth-order band (G16) | 5/5 |
 | private-link paths as single links; universality history by history | 6/6 |
 | the Wilson transfer matrix at finite temporal step | 3/3 |
 | the blocked Wilson transfer: spectral block, cluster margin, source moments | 3/3 |

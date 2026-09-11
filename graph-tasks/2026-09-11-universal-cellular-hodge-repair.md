@@ -74,3 +74,10 @@ The initial packaging failures are resolved. The shifted operator and Pi4 are
 corrected, the full S4 commutant is calculated, and the general operator-power
 obligation is discharged. The successor is the physical retained-space and
 projected-history construction; the exact flux census does not supply it.
+
+## Planar-band integration checkpoint
+
+The integration of main at b33f47d passed all 606 fresh checks and the full
+1953-test run (4 Windows skips, 11 passing subtests). The end briefing matched.
+[Full receipt](universal-cellular-hodge-evidence-20260911/planar-integration.md).
+The next main update, 66eb40c from PR 147, is integrated separately.
