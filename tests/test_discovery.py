@@ -126,11 +126,54 @@ def test_rrf_deduplicates_channels_and_explains_each_contribution():
 
 def test_context_budget_counts_json_escaping_and_reports_omissions(engine):
     result = engine.search("score")
-    result["hits"][0]["text"] = 'λ"\\' * 5000
-    pack = D.context_pack(result, 2000)
-    assert len(json.dumps(pack, ensure_ascii=True, sort_keys=True)) <= 2000
-    assert pack["omitted"] > 0
-    assert pack["source_fingerprint"] == "test-snapshot"
+    result["hits"][0]["record"] = dict(result["hits"][0]["record"], statement='λ"\\' * 5000)
+    pack = D.context_pack(result, 2600)
+    assert len(json.dumps(pack, ensure_ascii=True, sort_keys=True)) <= 2600
+    # The top row is kept by shrinking its excerpt; escaping counts toward the budget.
+    assert pack["hits"][0]["id"] == "A"
+    assert pack["hits"][0]["excerpt_truncated"]
+    assert pack["excerpt_chars"] < 700
+    assert pack["omitted"] == len(pack["omitted_ids"])
+    assert pack["provenance"]["fingerprint"] == "test-snapshot"
+
+
+def test_context_pack_drops_lowest_ranks_first_and_names_them():
+    from workhouse.discovery_present import context_pack
+
+    hits = [
+        {
+            "id": f"PASSAGE:{i}",
+            "kind": "passage",
+            "path": f"theory/doc{i}.md",
+            "start_line": 1,
+            "end_line": 3,
+            "source_sha256": "f" * 64,
+            "claim_ids": [],
+            "text": f"score estimate number {i} " * 40,
+            "score": 1.0 / (i + 1),
+            "score_channels": {"lexical": {"rank": i + 1, "contribution": 0.0}},
+        }
+        for i in range(12)
+    ]
+    result = {
+        "query": "score estimate",
+        "hits": hits,
+        "related": [],
+        "provenance": {"fingerprint": "abc", "freshness": "matched"},
+        "meaning": "m",
+        "retrieval": {"channels": ["lexical"]},
+        "execution": {},
+    }
+    pack = context_pack(result, 3000)
+    assert len(json.dumps(pack, ensure_ascii=True, sort_keys=True)) <= 3000
+    kept = [row["rank"] for row in pack["hits"]]
+    assert kept == list(range(1, len(kept) + 1))
+    assert pack["omitted"] == 12 - len(kept) > 0
+    assert [row["rank"] for row in pack["omitted_ids"]] == list(range(12, len(kept), -1))
+    assert pack["hits"][0]["source"]["path"] == "theory/doc0.md"
+    assert pack["hits"][0]["matched_terms"] == ["estimate", "score"]
+    big = context_pack(result, 200000)
+    assert big["omitted"] == 0 and big["excerpt_chars"] == 700
 
 
 def test_source_diversity_keeps_other_sources_visible():
@@ -180,8 +223,8 @@ def test_context_retains_detected_stale_inputs(engine):
     output = engine.search("score")
     output["provenance"].update(freshness="stale", current_fingerprint="new-inputs")
     pack = D.context_pack(output, 4000)
-    assert pack["source_freshness"] == "stale"
-    assert pack["current_source_fingerprint"] == "new-inputs"
+    assert pack["provenance"]["freshness"] == "stale"
+    assert pack["provenance"]["current_fingerprint"] == "new-inputs"
 
 
 def test_cli_context_budget_and_no_overwrite(engine, monkeypatch, capsys, tmp_path):
@@ -205,7 +248,7 @@ def test_cli_context_budget_and_no_overwrite(engine, monkeypatch, capsys, tmp_pa
     assert _discover(args) == 0
     rendered = capsys.readouterr().out.strip()
     assert len(rendered) <= 2000
-    assert json.loads(rendered)["schema"] == "workhouse-discovery/context/v1"
+    assert json.loads(rendered)["schema"] == "workhouse-discovery/context/v2"
     original = output.read_bytes()
     args.json = True
     assert _discover(args) == 1

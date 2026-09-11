@@ -229,9 +229,74 @@ def _locator(where: str, source_paths) -> tuple[str, tuple[int, int] | None]:
     return path, None
 
 
+_FENCE = re.compile(r"^\s*(```|~~~)")
+_MATH_ENV = r"(equation|align|alignat|gather|multline|eqnarray|flalign|displaymath)\*?"
+_ENV_OPEN = re.compile(r"\\begin\{" + _MATH_ENV + r"\}")
+_ENV_CLOSE = re.compile(r"\\end\{" + _MATH_ENV + r"\}")
+
+
+def protected_blocks(lines: list[str]) -> list[tuple[int, int]]:
+    """Inclusive line-index spans of fenced code, display math and equation environments.
+
+    A passage boundary inside one of these blocks separates an equation from
+    its own closing delimiter, so the chunker keeps them whole when the
+    character budget allows. Detection is line-based and conservative: an
+    unclosed block runs to the end of the document.
+    """
+    spans: list[tuple[int, int]] = []
+    state: tuple[str, str] | None = None
+    start = 0
+    for number, line in enumerate(lines):
+        if state is None:
+            fence = _FENCE.match(line)
+            if fence:
+                state, start = ("fence", fence.group(1)), number
+            elif line.count("$$") % 2 == 1:
+                state, start = ("dollar", ""), number
+            elif "\\[" in line and "\\]" not in line[line.index("\\[") + 2 :]:
+                state, start = ("bracket", ""), number
+            else:
+                opened = _ENV_OPEN.search(line)
+                if opened and not _ENV_CLOSE.search(line):
+                    state, start = ("env", opened.group(1)), number
+            continue
+        kind, marker = state
+        if kind == "fence":
+            fence = _FENCE.match(line)
+            closed = bool(fence and fence.group(1) == marker)
+        elif kind == "dollar":
+            closed = line.count("$$") % 2 == 1
+        elif kind == "bracket":
+            closed = "\\]" in line
+        else:
+            ended = _ENV_CLOSE.search(line)
+            closed = bool(ended and ended.group(1) == marker)
+        if closed:
+            spans.append((start, number))
+            state = None
+    if state is not None and lines:
+        spans.append((start, len(lines) - 1))
+    return spans
+
+
+def _block_map(lines: list[str]) -> dict[int, tuple[int, int]]:
+    blocks = {}
+    for span in protected_blocks(lines):
+        for number in range(span[0], span[1] + 1):
+            blocks[number] = span
+    return blocks
+
+
 def _passages(text: str):
-    """Whole-line windows, with bounded slices only for oversized single lines."""
+    """Whole-line windows, with bounded slices only for oversized single lines.
+
+    A window that reaches its token budget inside a protected block keeps
+    growing to the block's end while the character budget allows, and the
+    one-line overlap is skipped when it would open the next window inside a
+    block. Equations therefore travel with their delimiters.
+    """
     lines = text.splitlines(keepends=True)
+    blocks = _block_map(lines)
     start = 0
     while start < len(lines):
         if len(lines[start]) > MAX_CHUNK_CHARS:
@@ -244,7 +309,10 @@ def _passages(text: str):
         while end < len(lines):
             line = lines[end]
             if end > start and (chars + len(line) > MAX_CHUNK_CHARS or count >= CHUNK_TOKENS):
-                break
+                block = blocks.get(end)
+                continuing = block is not None and block[0] < end
+                if not (continuing and chars + len(line) <= MAX_CHUNK_CHARS):
+                    break
             if len(line) > MAX_CHUNK_CHARS:
                 break
             chars += len(line)
@@ -255,8 +323,12 @@ def _passages(text: str):
             yield start + 1, end, 1, len(lines[end - 1]), excerpt
         if end == len(lines):
             break
-        # One complete trailing line overlaps where that still makes progress.
-        start = end - 1 if end - start > 2 and len(tokenize(lines[end - 1])) <= 40 else end
+        # One complete trailing line overlaps where that still makes progress
+        # and does not open the next window inside a protected block.
+        trailing = blocks.get(end - 1)
+        inside_block = trailing is not None and trailing[0] < end - 1
+        overlap = end - start > 2 and len(tokenize(lines[end - 1])) <= 40 and not inside_block
+        start = end - 1 if overlap else end
 
 
 class DiscoveryIndex:
