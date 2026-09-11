@@ -1,0 +1,120 @@
+schema: workhouse-discovery-proposal/v1
+review: 2026-09-11-condgrad-vs-ex014-s1-d681f7
+surface: documents
+ledger_file: ledger/documents.yaml
+meaning: PROPOSAL, not a registration. This file was generated from a review record; nothing in the scientific
+  ledgers or the generated index changed. Applying it is a hand edit of the named ledger file, followed
+  by the validators and a reviewed PR. A discovery score is not evidence and this review is not a proof.
+relationship:
+  seed: RESULT:CONDITIONAL_GRADIENT_REPAIR
+  target: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md:41-121
+  kind: disagreement
+  reviewer: balaban-contraction
+  reasoning: 'Candidate: paper/research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md cites EX-014
+    section 1 STEP 6 by sha256 fc55bb49... and states that the imported reverse gradient bound C_RG <=
+    (1+O(r))/N for averaging is refuted by a linear pullback: for arithmetic averaging of m coordinates
+    the sharp constant in |grad_y Pf|^2 <= C E[|grad_x f|^2 | y] is 1 in the quotient metric B B* and
+    m in the raw coarse metric; the factor 1/m belongs to the pullback F o pi, not to Pf. Same object
+    (the (A3) intertwining constant of a linear averaging block map in the flat chart), opposite value.'
+  history:
+  - state: pending
+    at: '2026-09-11T04:30:25+00:00'
+    reviewer: balaban-contraction
+    reason: recorded from discovery output; nothing reviewed yet
+  - state: reviewing
+    at: '2026-09-11T04:31:21+00:00'
+    reviewer: balaban-contraction
+    reason: Read G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md sections 1 and 4 (lines 11-40, 139-160) against
+      EX-014 section 1 STEP 6-7 (lines 82-96); confirmed the note cites EX-014 by the same sha256 fc55bb49
+      as the current file.
+  - state: established
+    at: '2026-09-11T04:31:21+00:00'
+    reviewer: balaban-contraction
+    reason: 'Same object, contradictory value. EX-014 STEP 6 (lines 82-89) computes sum_b |grad_{X_b}(F
+      o pi)|^2 = (1+O(r))/N |grad_Y F|^2 and concludes C_RG <= (1+O(r))/N for the (A3) hypothesis |grad''(Pf)|^2
+      <= C_RG E[|grad f|^2 | V]. G19_CONDITIONAL_GRADIENT_REPAIR section 1 (lines 11-40) shows that for
+      arithmetic averaging B=(1/m,...,1/m) the chain rule gives the 1/m factor for the pullback F o B,
+      while the reverse conditional-expectation bound has sharp constant 1 in the quotient metric B B*
+      and m in the raw coarse metric, attained by f=y; section 4 (lines 139-160) shows the L^2 scale conversion
+      gives coefficient m/L^2=4 (d=4, L=2), not L^2/m=1/4, so ''correct physical rescaling does not create
+      a geometric contraction''. Regime of both: flat linearised chart of a finite block of m=L^d coordinates
+      (EX-014: SU(2) small-field chart ||X_b||<=r; the repair: Euclidean/Gaussian product coordinates),
+      same normalisation once the metric is named. Consequence: EX-014''s only contractive value of C_RG
+      is the wrong-direction constant, so averaging is no better than decimation for (A3), and EX-014''s
+      r=L^2 C_RG=1/4 is refuted. The citation exists in prose (documents.yaml line 376 ''Corrects the
+      EX-014 averaging direction'') but no graph edge joins CITE:/RESULT:CONDITIONAL_GRADIENT_REPAIR to
+      NOTE:EXTRACT_2026-09-01:ex-014-rg-schur-riccati-md-fc55bb.'
+fragment: |
+  # ledger/documents.yaml -> aliases[] entry `alias: <FILL: alias of the citing document>`; append to the existing
+  # list. Targets must resolve (an alias for cites, a catalogue id for bears_on).
+      bears_on:
+        - <FILL: catalogue id carrying passage notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md:41-121; a passage locator is not a catalogue id - try: uv run --no-sync workhouse why notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md>   # kind `disagreement`
+notes: []
+checklist:
+- item: hypotheses_compared
+  requirement: The hypotheses of both arguments were compared, not their vocabulary.
+  done: false
+- item: regime_stated
+  requirement: The regime (finite lattice, infinite volume, continuum, ...) is stated.
+  done: false
+- item: normalization_compared
+  requirement: Normalizations and coordinates were compared explicitly.
+  done: false
+- item: independence_of_origin_checked
+  requirement: Copied prose was distinguished from an independent origin (a shared source family is not
+    independence).
+  done: false
+- item: falsifier_stated
+  requirement: What would refute the relationship is written down.
+  done: false
+- item: source_hashes_matched
+  requirement: Every recorded source hash matches the file bytes in this checkout.
+  done: true
+  observation: all recorded source hashes match this checkout
+apply:
+- Paste the fragment by hand into the named ledger file; edit exactly one field per proposal and keep
+  every other field.
+- 'Run the read-only validators: uv run --no-sync workhouse status; uv run --no-sync python -c "from workhouse
+  import results; results.load()"; uv run --no-sync python -c "from workhouse import derivation_statements
+  as d; d._checked()"; uv run --no-sync workhouse lit (literature surface).'
+- Regenerate the views in the documented order (workhouse index -w, frontier --write, certified --write)
+  in a reviewed pull request, never from this tool.
+- 'After the PR merges, run: workhouse discover review mark <id> --state registered --registered-as ''<PR
+  or commit> <ledger id and field>'' --reason ''...''.'
+refused:
+  contradictions: 'ledger/contradictions.yaml is a verbatim transcription of the corpus''s own register:
+    tests pin it to C1-C22 with zero open items, so a new contradiction record is a test failure by design.
+    Record a disagreement as a literature relation ''contradicts'' (--surface literature), as a route
+    ''cannot_decide'' on the relevant gap, or as a unifying candidate with status ''refuted'' (--surface
+    gaps).'
+  writes: This tool never writes under ledger/, index/ or any other scientific tree.
+evidence:
+- command: pair
+  argv:
+  - workhouse
+  - discover
+  - search
+  - ''
+  - --json
+  fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_fingerprint: 52c54e76f96d5413edf69155bb70a77fdffc8baf895d776539fd3174787556fe
+  evidence_freshness: matched
+  evidence_file: pair-D-condgrad-vs-ex014-s1.json
+  evidence_sha256: 6d7095c3f8b6a1094e5e296d8ca16a5f78db49fc6047034289d9abddd986138e
+  schema: workhouse-discovery/pair/v1
+  selection: top 0 rows; no row named the seed or target - the evidence may not concern this pair
+  rows: []
+  source_hashes:
+  - path: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md
+    lines: &id001
+    - 41
+    - 121
+    sha256: fc55bb4934560183d5529822693ce7ad90ca9bc6f521546cb505d8e30f6cc703
+    role: endpoint
+  excerpt_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  fingerprint_note: evidence was produced against a different discovery cache than the one observed when
+    this review was recorded
+source_hash_check:
+- path: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md
+  lines: *id001
+  matched: true

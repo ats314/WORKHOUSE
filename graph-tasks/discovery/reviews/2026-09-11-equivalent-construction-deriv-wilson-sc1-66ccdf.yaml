@@ -1,0 +1,71 @@
+schema: workhouse-discovery-review/v1
+id: 2026-09-11-equivalent-construction-deriv-wilson-sc1-66ccdf
+seed: DERIV:WILSON_SC17_SPATIAL_CLOSURE:R12_R14
+target: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md:214-272
+relationship_kind: equivalent-construction
+reasoning: 'Investigator (outside-pressure-schur): NOT the quantum analogue. Exact identity: with u=log
+  Omega, J=Hess u, W_B=V_out-eps(Delta_b u+|grad_b u|^2) (=BA10) and W_B'''' = -2 eps J_xb J_xb^T + K_b
+  J_xx, K_b=-eps(Delta_b+2 grad_b u.grad_b) entrywise; pointwise in (x,b), no fibre expectation, no covariance,
+  no C^{-1}. Gaussian case: W_0''''=-2 eps BB*, V_0''''+W_0''''=2 eps A^2 (= R12a/GC6). R12a states the
+  CONDITIONAL Gaussian precision is the diagonal block A; EX-014''s sharpness check states the MARGINAL
+  Gaussian precision is the Schur complement A-BC^{-1}B^T: different objects, opposite conditioning direction.
+  D_b = 2 eps X^2 - 2 eps(AX+XA) - K_x X is the stationary Riccati source; the pressure excess (W_B-W_0)''''
+  = -2 eps(YY*-BY*-YB*) + K_b X reproduces the R2 cross terms plus K_b X (R5 with U_b is R2 with K=K_x+K_b):
+  quadratic in the mixed log-Hessian defect, not a covariance. EX-014 sec 7 needs a literal conditional-expectation
+  step; Next check: Replace the toy potential in cases/outside-pressure-schur/check_pressure_hessian.py
+  by a two-angle one-plaquette SU(2) potential in the exponential chart (S^3 metric factor of SC17 lines
+  570-573 as first-order correction), eps=1, lambda=1/72 and 0.03; compute (V_B-V_0)'''', -2 eps(YY*-BY*-YB*)
+  and K_b X separately in sup norm over |b|<=pi; decide whether ||K_b X|| is bounded by the R7 output
+  r (a priori it is not: it needs second b-derivatives of X that ||E||_(s,infty) does not control) and
+  whether the total is below the sec 6 budget delta<=eps lambda^(3/2)/24=1.35e-5 at lambda=1/72, which
+  was o'
+reviewer: claude-fable-5.1 case study outside-pressure-schur, skeptic-adjusted
+created: '2026-09-11T08:25:50+00:00'
+evidence:
+- command: pair
+  argv:
+  - workhouse
+  - discover
+  - search
+  - ''
+  - --json
+  fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_freshness: matched
+  evidence_file: pair-R12R14-EX014s3.json
+  evidence_sha256: 4cdbe29e06f5bf2063a3677f8c4b60b1defd17fd5d7c7aca00175950838db533
+  schema: workhouse-discovery/pair/v1
+  selection: top 0 rows; no row named the seed or target - the evidence may not concern this pair
+  rows: []
+  source_hashes:
+  - path: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md
+    lines:
+    - 214
+    - 272
+    sha256: fc55bb4934560183d5529822693ce7ad90ca9bc6f521546cb505d8e30f6cc703
+    role: endpoint
+  excerpt_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+state: rejected
+updated: '2026-09-11T08:25:52+00:00'
+registered_as: null
+history:
+- state: pending
+  at: '2026-09-11T08:25:50+00:00'
+  reviewer: claude-fable-5.1 case study outside-pressure-schur, skeptic-adjusted
+  reason: recorded from discovery output; nothing reviewed yet
+- state: reviewing
+  at: '2026-09-11T08:25:51+00:00'
+  reviewer: claude-fable-5.1 case study outside-pressure-schur, skeptic-adjusted
+  reason: Investigator read both sources in full at the cited lines; an independent skeptic re-read them
+    to refute the proposal.
+- state: rejected
+  at: '2026-09-11T08:25:52+00:00'
+  reviewer: claude-fable-5.1 case study outside-pressure-schur, skeptic-adjusted
+  reason: 'The hypothesised identification is false. Exact identity (verified numerically by the investigator
+    and symbolically by the skeptic): with u = log Omega and V_out independent of the block coordinate
+    (the BA4 convention), Hess_x W_B = -2 eps J_xb J_xb^T + K_b J_xx with K_b the outside Doob generator;
+    pointwise, with no fibre expectation, covariance or C^-1. R12a is the conditional Gaussian precision,
+    EX-014''s sharpness check the marginal one. D_b is a Riccati source, not a Schur-complement defect.'
+previous: bd3248ab837140b541258cefd08eaf524a3e20b14c49070b3a1bbfcadb20d615
+genesis: 8bc6876d99d2a93deaaad7384daab283b635dcfe87780c20ad7ce4f1a9af954c
+sha256: 325629288323e16f64e77efa8352b282f06a0dc049e73aa32474faddb029597a

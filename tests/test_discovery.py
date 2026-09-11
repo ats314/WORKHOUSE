@@ -126,11 +126,54 @@ def test_rrf_deduplicates_channels_and_explains_each_contribution():
 
 def test_context_budget_counts_json_escaping_and_reports_omissions(engine):
     result = engine.search("score")
-    result["hits"][0]["text"] = 'λ"\\' * 5000
-    pack = D.context_pack(result, 2000)
-    assert len(json.dumps(pack, ensure_ascii=True, sort_keys=True)) <= 2000
-    assert pack["omitted"] > 0
-    assert pack["source_fingerprint"] == "test-snapshot"
+    result["hits"][0]["record"] = dict(result["hits"][0]["record"], statement='λ"\\' * 5000)
+    pack = D.context_pack(result, 2600)
+    assert len(json.dumps(pack, ensure_ascii=True, sort_keys=True)) <= 2600
+    # The top row is kept by shrinking its excerpt; escaping counts toward the budget.
+    assert pack["hits"][0]["id"] == "A"
+    assert pack["hits"][0]["excerpt_truncated"]
+    assert pack["excerpt_chars"] < 700
+    assert pack["omitted"] == len(pack["omitted_ids"])
+    assert pack["provenance"]["fingerprint"] == "test-snapshot"
+
+
+def test_context_pack_drops_lowest_ranks_first_and_names_them():
+    from workhouse.discovery_present import context_pack
+
+    hits = [
+        {
+            "id": f"PASSAGE:{i}",
+            "kind": "passage",
+            "path": f"theory/doc{i}.md",
+            "start_line": 1,
+            "end_line": 3,
+            "source_sha256": "f" * 64,
+            "claim_ids": [],
+            "text": f"score estimate number {i} " * 40,
+            "score": 1.0 / (i + 1),
+            "score_channels": {"lexical": {"rank": i + 1, "contribution": 0.0}},
+        }
+        for i in range(12)
+    ]
+    result = {
+        "query": "score estimate",
+        "hits": hits,
+        "related": [],
+        "provenance": {"fingerprint": "abc", "freshness": "matched"},
+        "meaning": "m",
+        "retrieval": {"channels": ["lexical"]},
+        "execution": {},
+    }
+    pack = context_pack(result, 3000)
+    assert len(json.dumps(pack, ensure_ascii=True, sort_keys=True)) <= 3000
+    kept = [row["rank"] for row in pack["hits"]]
+    assert kept == list(range(1, len(kept) + 1))
+    assert pack["omitted"] == 12 - len(kept) > 0
+    assert [row["rank"] for row in pack["omitted_ids"]] == list(range(12, len(kept), -1))
+    assert pack["hits"][0]["source"]["path"] == "theory/doc0.md"
+    assert pack["hits"][0]["matched_terms"] == ["estimate", "score"]
+    big = context_pack(result, 200000)
+    assert big["omitted"] == 0 and big["excerpt_chars"] == 700
 
 
 def test_source_diversity_keeps_other_sources_visible():
@@ -180,8 +223,8 @@ def test_context_retains_detected_stale_inputs(engine):
     output = engine.search("score")
     output["provenance"].update(freshness="stale", current_fingerprint="new-inputs")
     pack = D.context_pack(output, 4000)
-    assert pack["source_freshness"] == "stale"
-    assert pack["current_source_fingerprint"] == "new-inputs"
+    assert pack["provenance"]["freshness"] == "stale"
+    assert pack["provenance"]["current_fingerprint"] == "new-inputs"
 
 
 def test_cli_context_budget_and_no_overwrite(engine, monkeypatch, capsys, tmp_path):
@@ -205,7 +248,7 @@ def test_cli_context_budget_and_no_overwrite(engine, monkeypatch, capsys, tmp_pa
     assert _discover(args) == 0
     rendered = capsys.readouterr().out.strip()
     assert len(rendered) <= 2000
-    assert json.loads(rendered)["schema"] == "workhouse-discovery/context/v1"
+    assert json.loads(rendered)["schema"] == "workhouse-discovery/context/v2"
     original = output.read_bytes()
     args.json = True
     assert _discover(args) == 1
@@ -231,3 +274,112 @@ def test_cli_unknown_path_target_is_structured_failure(engine, monkeypatch, caps
     )
     assert _discover(args) == 1
     assert "unknown path IDs" in json.loads(capsys.readouterr().out)["error"]
+
+
+def test_connections_reserve_slots_for_unlinked_passages(engine, monkeypatch):
+    old_search = engine.index.search
+
+    def passages(query, limit=100):
+        rows = old_search(query, limit)
+        for number in range(3):
+            rows.append(
+                {
+                    "id": f"PASSAGE:unlinked{number}",
+                    "claim_ids": [],
+                    "kind": "passage",
+                    "path": f"notes/imported/note{number}.md",
+                    "start_line": 10,
+                    "end_line": 14,
+                    "source_sha256": "a" * 64,
+                    "text": f"an imported note number {number} about the score estimate",
+                    "score": 0.5 - number * 0.1,
+                }
+            )
+        return rows
+
+    monkeypatch.setattr(engine.index, "search", passages)
+    output = engine.connections("A", query="score", limit=3)
+    kinds = [row["candidate_kind"] for row in output["candidates"]]
+    # One record candidate exists (C); the reserved slot and the record
+    # shortfall are both filled by passages, records first.
+    assert kinds == ["record", "passage", "passage"] and output["passage_quota"] == 1
+    passage = next(row for row in output["candidates"] if row["candidate_kind"] == "passage")
+    assert passage["locator"] == "notes/imported/note0.md:10-14"
+    assert passage["path_found"] is None
+    assert passage["source_family"]["comparison"] == "no_graph_identity"
+    assert output["passage_candidates"] == 3
+    # With a larger quota the record shortfall is filled by passages.
+    wide = engine.connections("A", query="score", limit=6, passage_quota=3)
+    assert [row["candidate_kind"] for row in wide["candidates"]].count("passage") == 3
+    with pytest.raises(ValueError):
+        engine.connections("A", query="score", limit=3, passage_quota=4)
+    from workhouse.discovery_present import present_connections, render_connections
+
+    compact = present_connections(wide)
+    row = next(row for row in compact["candidates"] if row["candidate_kind"] == "passage")
+    assert row["locator"].startswith("notes/imported/")
+    assert "discover pair A notes/imported/note0.md:10-14" in row["commands"]["pair"]
+    assert "notes/imported/note0.md:10-14" in render_connections(compact)
+
+
+def test_abstention_hint_is_a_coverage_rule_not_a_verdict():
+    from workhouse.discovery_present import abstention_hint, content_terms, query_terms
+
+    terms = query_terms("Hardy tail resistance of the score for N 3")
+    assert content_terms(terms) == ["hardy", "resistance", "score", "tail"]
+    strong = [{"matched_terms": ["hardy", "resistance", "tail"], "channels": {"lexical": 1}}]
+    weak = [{"matched_terms": ["score"], "channels": {"lexical": 1}}]
+    exact = [{"matched_terms": ["score"], "channels": {"lexical": 1, "exact": 1}}]
+    assert abstention_hint(strong, terms)["weak_match"] is False
+    assert abstention_hint(weak, terms)["weak_match"] is True
+    assert abstention_hint(weak, terms)["coverage"] == 0.25
+    assert abstention_hint(exact, terms)["weak_match"] is False
+    assert abstention_hint([], terms)["weak_match"] is True
+
+
+def test_identical_passages_collapse_and_external_can_be_excluded(engine, monkeypatch):
+    old_search = engine.index.search
+
+    def passages(query, limit=100):
+        rows = old_search(query, limit)
+        copy_text = "an archive copy of the score estimate\n"
+        rows.append(
+            {
+                "id": "PASSAGE:external-copy",
+                "claim_ids": [],
+                "kind": "passage",
+                "path": "ext:archive/old/copy.md",
+                "start_line": 1,
+                "end_line": 1,
+                "source_sha256": "b" * 64,
+                "text": copy_text,
+                "score": 0.7,
+                "external": True,
+                "source_label": "archive",
+            }
+        )
+        rows.append(
+            {
+                "id": "PASSAGE:internal-original",
+                "claim_ids": [],
+                "kind": "passage",
+                "path": "docs/derivations/original.md",
+                "start_line": 5,
+                "end_line": 5,
+                "source_sha256": "c" * 64,
+                "text": copy_text,
+                "score": 0.7,
+            }
+        )
+        return rows
+
+    monkeypatch.setattr(engine.index, "search", passages)
+    output = engine.search("score", limit=5)
+    ids = [hit["id"] for hit in output["hits"]]
+    assert "PASSAGE:internal-original" in ids and "PASSAGE:external-copy" not in ids
+    original = next(hit for hit in output["hits"] if hit["id"] == "PASSAGE:internal-original")
+    assert original["also_at"] == ["ext:archive/old/copy.md:1"]
+    assert output["retrieval"]["duplicate_passages_collapsed"] == 1
+    internal = engine.search("score", limit=5, include_external=False)
+    assert all(not hit.get("external") for hit in internal["hits"])
+    assert internal["retrieval"]["include_external"] is False

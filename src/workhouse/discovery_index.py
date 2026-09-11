@@ -3,6 +3,13 @@
 This disposable SQLite index never executes a registered check and never writes
 scientific records. Scores select reading candidates; their scientific standing
 remains in the original catalogue. Source excerpts retain line and byte hashes.
+
+External workstation roots declared in ``graph-tasks/discovery/scope.yaml``
+(see :mod:`workhouse.discovery_scope`) are walked after the checkout's own
+roots. Their files carry ``ext:<label>/`` locators, are deduplicated by
+content hash against everything indexed before them, and are freshness-checked
+by size and modification time between builds; the checkout's roots keep the
+full content rehash on every call.
 """
 
 from __future__ import annotations
@@ -12,6 +19,7 @@ import json
 import os
 import re
 import sqlite3
+import stat as stat_module
 import tempfile
 import uuid
 from collections import defaultdict
@@ -19,7 +27,14 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
+from . import discovery_scope as scope_module
+
 SCHEMA = "workhouse-discovery-index/v1"
+FRESHNESS_POLICY = {
+    "internal": "content-hash every call",
+    "external": "stat then content-hash on change",
+}
+INTERNAL_LABEL = "checkout"
 INDEX_PATHS = ("index/claims.jsonl", "index/graph.jsonl", "index/symbols.jsonl")
 SOURCE_ROOTS = (
     "theory",
@@ -228,9 +243,74 @@ def _locator(where: str, source_paths) -> tuple[str, tuple[int, int] | None]:
     return path, None
 
 
+_FENCE = re.compile(r"^\s*(```|~~~)")
+_MATH_ENV = r"(equation|align|alignat|gather|multline|eqnarray|flalign|displaymath)\*?"
+_ENV_OPEN = re.compile(r"\\begin\{" + _MATH_ENV + r"\}")
+_ENV_CLOSE = re.compile(r"\\end\{" + _MATH_ENV + r"\}")
+
+
+def protected_blocks(lines: list[str]) -> list[tuple[int, int]]:
+    """Inclusive line-index spans of fenced code, display math and equation environments.
+
+    A passage boundary inside one of these blocks separates an equation from
+    its own closing delimiter, so the chunker keeps them whole when the
+    character budget allows. Detection is line-based and conservative: an
+    unclosed block runs to the end of the document.
+    """
+    spans: list[tuple[int, int]] = []
+    state: tuple[str, str] | None = None
+    start = 0
+    for number, line in enumerate(lines):
+        if state is None:
+            fence = _FENCE.match(line)
+            if fence:
+                state, start = ("fence", fence.group(1)), number
+            elif line.count("$$") % 2 == 1:
+                state, start = ("dollar", ""), number
+            elif "\\[" in line and "\\]" not in line[line.index("\\[") + 2 :]:
+                state, start = ("bracket", ""), number
+            else:
+                opened = _ENV_OPEN.search(line)
+                if opened and not _ENV_CLOSE.search(line):
+                    state, start = ("env", opened.group(1)), number
+            continue
+        kind, marker = state
+        if kind == "fence":
+            fence = _FENCE.match(line)
+            closed = bool(fence and fence.group(1) == marker)
+        elif kind == "dollar":
+            closed = line.count("$$") % 2 == 1
+        elif kind == "bracket":
+            closed = "\\]" in line
+        else:
+            ended = _ENV_CLOSE.search(line)
+            closed = bool(ended and ended.group(1) == marker)
+        if closed:
+            spans.append((start, number))
+            state = None
+    if state is not None and lines:
+        spans.append((start, len(lines) - 1))
+    return spans
+
+
+def _block_map(lines: list[str]) -> dict[int, tuple[int, int]]:
+    blocks = {}
+    for span in protected_blocks(lines):
+        for number in range(span[0], span[1] + 1):
+            blocks[number] = span
+    return blocks
+
+
 def _passages(text: str):
-    """Whole-line windows, with bounded slices only for oversized single lines."""
+    """Whole-line windows, with bounded slices only for oversized single lines.
+
+    A window that reaches its token budget inside a protected block keeps
+    growing to the block's end while the character budget allows, and the
+    one-line overlap is skipped when it would open the next window inside a
+    block. Equations therefore travel with their delimiters.
+    """
     lines = text.splitlines(keepends=True)
+    blocks = _block_map(lines)
     start = 0
     while start < len(lines):
         if len(lines[start]) > MAX_CHUNK_CHARS:
@@ -243,7 +323,10 @@ def _passages(text: str):
         while end < len(lines):
             line = lines[end]
             if end > start and (chars + len(line) > MAX_CHUNK_CHARS or count >= CHUNK_TOKENS):
-                break
+                block = blocks.get(end)
+                continuing = block is not None and block[0] < end
+                if not (continuing and chars + len(line) <= MAX_CHUNK_CHARS):
+                    break
             if len(line) > MAX_CHUNK_CHARS:
                 break
             chars += len(line)
@@ -254,13 +337,22 @@ def _passages(text: str):
             yield start + 1, end, 1, len(lines[end - 1]), excerpt
         if end == len(lines):
             break
-        # One complete trailing line overlaps where that still makes progress.
-        start = end - 1 if end - start > 2 and len(tokenize(lines[end - 1])) <= 40 else end
+        # One complete trailing line overlaps where that still makes progress
+        # and does not open the next window inside a protected block.
+        trailing = blocks.get(end - 1)
+        inside_block = trailing is not None and trailing[0] < end - 1
+        overlap = end - start > 2 and len(tokenize(lines[end - 1])) <= 40 and not inside_block
+        start = end - 1 if overlap else end
 
 
 class DiscoveryIndex:
-    def __init__(self, root: Path, cache_dir: Path | None = None):
+    def __init__(self, root: Path, cache_dir: Path | None = None, *, verify_cache: bool = False):
+        """``verify_cache`` runs SQLite's page-level quick_check when a cache is
+        reused. It costs about half a second per 100 MB, so ordinary queries
+        rely on the identity, row-count and probe checks and let a corrupt
+        page surface as a query error; ``discover build`` and ``info`` verify."""
         self.root = Path(root).resolve()
+        self.verify_cache = verify_cache
         self.cache_dir = (
             Path(cache_dir) if cache_dir is not None else self.root / ".graph-state/discovery"
         )
@@ -269,12 +361,37 @@ class DiscoveryIndex:
         self.symbols: list[dict] = []
         self._connection: sqlite3.Connection | None = None
         self._meta: dict = {}
+        self._current_fingerprint: str | None = None
+        # External files seen by the last content pass: locator -> size,
+        # mtime_ns and sha256. A later stat-policy pass reuses the hash of a
+        # file whose size and mtime are unchanged and rereads any other.
+        self._external_stat: dict[str, dict] = {}
+        self.scope: scope_module.Scope | None = None
 
     def _safe_path(self, path: Path) -> bool:
         try:
             return path.resolve().is_relative_to(self.root) and not path.is_symlink()
         except (OSError, RuntimeError):
             return False
+
+    @staticmethod
+    def _plain_file(path: Path) -> bool:
+        """A regular file that is not a symlink or Windows reparse point.
+
+        Directories are containment-checked with ``_safe_path`` before the walk
+        descends, and the walk never follows links, so a plain file beneath a
+        safe directory cannot escape the checkout. Resolving every file's real
+        path cost more than hashing it, so files use one ``lstat`` instead.
+        """
+        try:
+            status = os.lstat(path)
+        except OSError:
+            return False
+        if stat_module.S_ISLNK(status.st_mode) or not stat_module.S_ISREG(status.st_mode):
+            return False
+        attributes = getattr(status, "st_file_attributes", 0)
+        reparse = getattr(stat_module, "FILE_ATTRIBUTE_REPARSE_POINT", 0)
+        return not (attributes & reparse)
 
     def _saved(self):
         raw, parsed, manifest = {}, {}, {}
@@ -305,7 +422,11 @@ class DiscoveryIndex:
             manifest[relative] = {"sha256": _sha(data), "bytes": len(data)}
         return raw, parsed, manifest
 
-    def _sources(self):
+    def _sources(self, *, policy: str = "content"):
+        """Checkout sources (always content-hashed), then external roots.
+
+        ``policy`` reaches only the external walk; see ``_external_sources``.
+        """
         sources, exclusions, inaccessible = {}, [], []
         for relative_root in SOURCE_ROOTS:
             directory = self.root / relative_root
@@ -351,7 +472,7 @@ class DiscoveryIndex:
                     if path.suffix.lower() not in EXTENSIONS:
                         continue
                     relative = path.relative_to(self.root).as_posix()
-                    if not self._safe_path(path):
+                    if not self._plain_file(path):
                         exclusions.append({"path": relative, "reason": "unsafe_path"})
                         continue
                     try:
@@ -370,20 +491,240 @@ class DiscoveryIndex:
                         inaccessible.append({"path": relative, "reason": type(exc).__name__})
                         continue
                     sources[relative] = {"sha256": _sha(raw), "bytes": len(raw), "text": content}
-        return sources, exclusions, inaccessible
+        external = self._external_sources(sources, exclusions, inaccessible, policy=policy)
+        return sources, exclusions, inaccessible, external
+
+    def _external_sources(self, sources, exclusions, inaccessible, *, policy: str) -> dict:
+        """Walk the declared external roots after the checkout's own sources.
+
+        ``policy`` is ``"content"`` (read and hash every file; used by
+        ``build``) or ``"stat"`` (reuse the recorded hash of a file whose size
+        and mtime_ns are unchanged; used by ``metadata`` rechecks). Content is
+        deduplicated: a file whose sha256 was already indexed becomes an alias
+        of that source and is not chunked again, so the flat ``GITHUB`` mirror
+        and the three copies of every snapshot cost one passage set.
+        """
+        report: dict[str, Any] = {
+            "declared": False,
+            "base": None,
+            "scope": None,
+            "roots": [],
+            "aliases": {},
+            "stat": {},
+            "labels": [],
+        }
+        self.scope = scope_module.load_scope(self.root)
+        if self.scope is None:
+            return report
+        scope = self.scope
+        report["declared"] = True
+        report["base"] = str(scope.base) if scope.base is not None else None
+        report["scope"] = scope.report(self.root)
+        report["exclude_names"] = list(scope.exclude_names)
+        report["exclude"] = list(scope.exclude)
+        protected = scope_module.protected_paths(scope)
+        name_matcher = scope_module.Matcher(scope.exclude_names)
+        global_matcher = scope_module.Matcher(scope.exclude)
+        by_sha: dict[str, str] = {}
+        for path in sorted(sources):
+            by_sha.setdefault(sources[path]["sha256"], path)
+        aliases: dict[str, list[str]] = {}
+        stat_map: dict[str, dict] = {}
+        rows = scope_module.resolve_roots(scope, self.root)
+        for root, row in zip(scope.roots, rows, strict=True):
+            row.update({"files": 0, "sources": 0, "aliases": 0, "bytes": 0, "passages": 0})
+            report["roots"].append(row)
+            if row["skipped"]:
+                continue
+            report["labels"].append(root.label)
+            self._walk_external(
+                root,
+                Path(row["absolute"]),
+                row,
+                sources=sources,
+                exclusions=exclusions,
+                inaccessible=inaccessible,
+                by_sha=by_sha,
+                aliases=aliases,
+                stat_map=stat_map,
+                matchers=(name_matcher, global_matcher, scope_module.Matcher(root.exclude)),
+                protected=protected,
+                policy=policy,
+            )
+        report["aliases"] = {sha: paths for sha, paths in sorted(aliases.items())}
+        report["stat"] = stat_map
+        return report
+
+    def _walk_external(
+        self,
+        root,
+        directory: Path,
+        row: dict,
+        *,
+        sources,
+        exclusions,
+        inaccessible,
+        by_sha,
+        aliases,
+        stat_map,
+        matchers,
+        protected,
+        policy: str,
+    ) -> None:
+        """One ``scandir`` per directory; no path is resolved or followed below the root.
+
+        The root was resolved and containment-checked by ``resolve_roots``.
+        Reparse points are refused from the directory listing, so a real
+        subdirectory's canonical path is its parent's canonical path plus its
+        name; the containment check against the checkout and the protected
+        subtrees is then path arithmetic, and the per-directory ``resolve``
+        that dominated the freshness recheck is gone. A subdirectory whose
+        listing holds ``.git`` is a nested checkout and is skipped whole.
+        """
+        name_matcher, global_matcher, root_matcher = matchers
+        base_prefix = "" if root.path == "." else root.path + "/"
+        try:
+            resolved_root = directory.resolve(strict=True)
+        except OSError as exc:
+            inaccessible.append({"path": str(directory), "reason": type(exc).__name__})
+            return
+        forbidden = [self.root, *(Path(item) for item in protected)]
+        stack: list[tuple[Path, str]] = [(directory, "")]
+        while stack:
+            current_path, relative_dir = stack.pop()
+            depth = relative_dir.count("/") + 1 if relative_dir else 0
+            try:
+                with os.scandir(current_path) as listing:
+                    entries = sorted(listing, key=lambda entry: entry.name)
+            except OSError as exc:
+                inaccessible.append({"path": str(current_path), "reason": type(exc).__name__})
+                continue
+            if relative_dir and any(entry.name == ".git" for entry in entries):
+                exclusions.append(
+                    {
+                        "path": scope_module.locator(root.label, relative_dir),
+                        "reason": "git_checkout",
+                    }
+                )
+                continue
+            subdirectories: list[tuple[Path, str]] = []
+            for entry in entries:
+                name = entry.name
+                child_relative = f"{relative_dir}/{name}" if relative_dir else name
+                locator = scope_module.locator(root.label, child_relative)
+                try:
+                    status = entry.stat(follow_symlinks=False)
+                except OSError as exc:
+                    inaccessible.append({"path": locator, "reason": type(exc).__name__})
+                    continue
+                reparse = stat_module.S_ISLNK(status.st_mode) or bool(
+                    getattr(status, "st_file_attributes", 0)
+                    & getattr(stat_module, "FILE_ATTRIBUTE_REPARSE_POINT", 0)
+                )
+                if stat_module.S_ISDIR(status.st_mode) or (
+                    reparse and not stat_module.S_ISREG(status.st_mode)
+                ):
+                    reason = None
+                    if root.max_depth is not None and depth >= root.max_depth:
+                        reason = "depth_limit"
+                    elif name.lower() in SKIP_PARTS or name_matcher.match(name):
+                        reason = "excluded_directory"
+                    elif root_matcher.match(child_relative) or global_matcher.match(
+                        base_prefix + child_relative
+                    ):
+                        reason = "scope_exclusion"
+                    elif reparse:
+                        reason = "reparse_point"
+                    else:
+                        canonical = resolved_root.joinpath(*child_relative.split("/"))
+                        if any(
+                            canonical == item or canonical.is_relative_to(item)
+                            for item in forbidden
+                        ):
+                            reason = "unsafe_path"
+                    if reason is None:
+                        subdirectories.append((Path(entry.path), child_relative))
+                    else:
+                        exclusions.append({"path": locator, "reason": reason})
+                    continue
+                if Path(name).suffix.lower() not in EXTENSIONS:
+                    continue
+                file_relative = child_relative
+                path = Path(entry.path)
+                if root_matcher.match(file_relative) or global_matcher.match(
+                    base_prefix + file_relative
+                ):
+                    exclusions.append({"path": locator, "reason": "scope_exclusion"})
+                    continue
+                if reparse or not stat_module.S_ISREG(status.st_mode):
+                    exclusions.append({"path": locator, "reason": "unsafe_path"})
+                    continue
+                if status.st_size > MAX_SOURCE_BYTES:
+                    exclusions.append({"path": locator, "reason": "size_limit"})
+                    continue
+                cached = self._external_stat.get(locator) if policy == "stat" else None
+                if (
+                    cached is not None
+                    and cached["bytes"] == status.st_size
+                    and cached["mtime_ns"] == status.st_mtime_ns
+                ):
+                    sha, size, text = cached["sha256"], cached["bytes"], None
+                else:
+                    try:
+                        raw = path.read_bytes()
+                        if len(raw) > MAX_SOURCE_BYTES:
+                            exclusions.append({"path": locator, "reason": "size_limit"})
+                            continue
+                        text = raw.decode("utf-8")
+                    except UnicodeError:
+                        exclusions.append({"path": locator, "reason": "non_utf8"})
+                        continue
+                    except OSError as exc:
+                        inaccessible.append({"path": locator, "reason": type(exc).__name__})
+                        continue
+                    sha, size = _sha(raw), len(raw)
+                stat_map[locator] = {
+                    "sha256": sha,
+                    "bytes": size,
+                    "mtime_ns": status.st_mtime_ns,
+                }
+                row["files"] += 1
+                if sha in by_sha:
+                    aliases.setdefault(sha, []).append(locator)
+                    row["aliases"] += 1
+                    continue
+                by_sha[sha] = locator
+                sources[locator] = {
+                    "sha256": sha,
+                    "bytes": size,
+                    "text": text,
+                    "external": True,
+                    "source_label": root.label,
+                    "tier": root.tier,
+                }
+                row["sources"] += 1
+                row["bytes"] += size
+            # Depth-first in sorted order, so exclusions and errors are listed
+            # deterministically and the identity is stable across runs.
+            stack.extend(reversed(subdirectories))
 
     @staticmethod
-    def _fingerprint(index_manifest, sources, exclusions, inaccessible):
+    def _fingerprint(index_manifest, sources, exclusions, inaccessible, external=None):
         source_manifest = {
             path: {key: source[key] for key in ("sha256", "bytes")}
             for path, source in sorted(sources.items())
         }
+        external = external or {}
+        scope = external.get("scope") or {}
         identity = {
             "schema": SCHEMA,
             "index_manifest": index_manifest,
             "source_manifest": source_manifest,
             "exclusions": exclusions,
             "inaccessible_files": inaccessible,
+            # Alias groups are part of the identity because passage rows list
+            # them; a new byte-identical copy changes what a reader is shown.
+            "aliases": external.get("aliases", {}),
             "settings": {
                 "roots": SOURCE_ROOTS,
                 "extensions": sorted(EXTENSIONS),
@@ -391,6 +732,32 @@ class DiscoveryIndex:
                 "max_source_bytes": MAX_SOURCE_BYTES,
                 "chunk_tokens": CHUNK_TOKENS,
                 "max_chunk_chars": MAX_CHUNK_CHARS,
+                # Labels of the external roots actually walked, and the full
+                # declaration (paths, tiers, exclusions, presence) behind them.
+                "external_roots": list(external.get("labels", [])),
+                "external_scope": {
+                    "schema": scope.get("schema"),
+                    "version": scope.get("version"),
+                    "roots": [
+                        {
+                            key: row[key]
+                            for key in (
+                                "label",
+                                "path",
+                                "tier",
+                                "max_depth",
+                                "exclude",
+                                "present",
+                                "skipped",
+                            )
+                        }
+                        for row in external.get("roots", [])
+                        if row["enabled"]
+                    ],
+                    "exclude_names": external.get("exclude_names", []),
+                    "exclude": external.get("exclude", []),
+                    "protected": scope.get("protected", []),
+                },
             },
             "implementation_sha256": _sha(Path(__file__).read_bytes()),
         }
@@ -400,7 +767,7 @@ class DiscoveryIndex:
         connection = None
         try:
             connection = sqlite3.connect(path.as_uri() + "?mode=ro", uri=True)
-            if connection.execute("PRAGMA quick_check").fetchone()[0] != "ok":
+            if self.verify_cache and connection.execute("PRAGMA quick_check").fetchone()[0] != "ok":
                 raise ValueError("SQLite integrity check failed")
             meta = json.loads(
                 connection.execute("SELECT value FROM metadata WHERE key='build'").fetchone()[0]
@@ -428,8 +795,12 @@ class DiscoveryIndex:
         self.records = [row[2] for row in parsed["index/claims.jsonl"]]
         self.edges = [row[2] for row in parsed["index/graph.jsonl"]]
         self.symbols = [row[2] for row in parsed["index/symbols.jsonl"]]
-        sources, exclusions, inaccessible = self._sources()
-        fingerprint, identity = self._fingerprint(index_manifest, sources, exclusions, inaccessible)
+        sources, exclusions, inaccessible, external = self._sources()
+        self._external_stat = external["stat"]
+        fingerprint, identity = self._fingerprint(
+            index_manifest, sources, exclusions, inaccessible, external
+        )
+        self._current_fingerprint = fingerprint
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         target = self.cache_dir.resolve() / f"discovery-{fingerprint}.sqlite3"
         cache_problem = None
@@ -483,7 +854,10 @@ class DiscoveryIndex:
                 }
             )
         passage_count = 0
+        aliases = external["aliases"]
+        passages_by_label: dict[str, int] = defaultdict(int)
         for path, source in sorted(sources.items()):
+            label = source.get("source_label", INTERNAL_LABEL)
             for first, last, first_col, last_col, excerpt in _passages(source["text"]):
                 tokens = tokenize(excerpt)
                 if not tokens:
@@ -519,15 +893,24 @@ class DiscoveryIndex:
                         "kind": "passage",
                         "statement": "",
                         "source_locator": f"{path}:{first}",
+                        # Byte-identical copies elsewhere; they were not chunked.
+                        "aliases": list(aliases.get(source["sha256"], [])),
+                        "external": bool(source.get("external", False)),
+                        "source_label": label,
                         "terms": _encoded(tokens),
                         "title_terms": _encoded(tokenize(path)),
                     }
                 )
                 passage_count += 1
+                passages_by_label[label] += 1
+        for row in external["roots"]:
+            row["passages"] = passages_by_label.get(row["label"], 0)
         meta = {
             **identity,
             "fingerprint": fingerprint,
             "source_count": len(sources),
+            "internal_source_count": sum(1 for s in sources.values() if not s.get("external")),
+            "external_source_count": sum(1 for s in sources.values() if s.get("external")),
             "record_count": len(self.records),
             "edge_count": len(self.edges),
             "symbol_count": len(self.symbols),
@@ -536,6 +919,14 @@ class DiscoveryIndex:
             "source_exclusions": exclusions,
             "exclusion_count": len(exclusions),
             "inaccessible_count": len(inaccessible),
+            "external_base": external["base"],
+            "external_scope": external["scope"],
+            "external_roots": [
+                {key: value for key, value in row.items() if key != "exclude"}
+                for row in external["roots"]
+            ],
+            "alias_count": sum(len(paths) for paths in aliases.values()),
+            "freshness_policy": dict(FRESHNESS_POLICY),
             "execution": {"checks_executed": 0, "lean_compiled": False},
             "freshness": "matched",
         }
@@ -609,19 +1000,54 @@ class DiscoveryIndex:
         ).fetchall()
         return [{**json.loads(raw), "score": -float(rank)} for raw, rank in rows]
 
-    def metadata(self, check_current: bool = True) -> dict:
+    def _index_manifest(self) -> dict:
+        """Hashes of the three saved index files, without re-parsing them."""
+        manifest = {}
+        for relative in INDEX_PATHS:
+            path = self.root / relative
+            if not self._safe_path(path):
+                raise ValueError(f"Saved graph path escapes the checkout: {relative}")
+            data = path.read_bytes()
+            manifest[relative] = {"sha256": _sha(data), "bytes": len(data)}
+        return manifest
+
+    def metadata(self, check_current: bool = True, *, recheck: bool = True) -> dict:
+        """Cache scope and freshness.
+
+        By default every call rehashes the checkout's declared sources, so an
+        edit made after the engine started is reported as ``stale`` even when
+        its size and modification time are unchanged. External workstation
+        roots are rechecked by size and ``mtime_ns`` against the last content
+        pass (``freshness_policy``): a changed stat rehashes that file, an
+        edit that preserves both is not detected until the next ``build``.
+        A batch session that issues many queries against inputs it knows are
+        untouched may pass ``recheck=False`` to reuse the observation
+        ``build`` made; the result then says so in ``freshness_observation``.
+        """
         if not self._meta:
             self.build()
         result = json.loads(_json(self._meta))
-        if check_current:
+        if check_current and not recheck and self._current_fingerprint is not None:
+            result["current_fingerprint"] = self._current_fingerprint
+            result["freshness"] = (
+                "matched" if self._current_fingerprint == result["fingerprint"] else "stale"
+            )
+            result["freshness_observation"] = "hashed at engine start in this process"
+        elif check_current:
             try:
-                _raw, _parsed, index_manifest = self._saved()
-                sources, exclusions, inaccessible = self._sources()
+                index_manifest = self._index_manifest()
+                sources, exclusions, inaccessible, external = self._sources(policy="stat")
                 current, _identity = self._fingerprint(
-                    index_manifest, sources, exclusions, inaccessible
+                    index_manifest, sources, exclusions, inaccessible, external
                 )
                 result["current_fingerprint"] = current
                 result["freshness"] = "matched" if current == result["fingerprint"] else "stale"
+                result["freshness_observation"] = "sources rehashed for this call" + (
+                    "; external files stat-checked and rehashed on change"
+                    if external["labels"]
+                    else ""
+                )
+                self._current_fingerprint = current
             except (OSError, ValueError) as exc:
                 result["freshness"] = "unavailable"
                 result["freshness_error"] = str(exc)

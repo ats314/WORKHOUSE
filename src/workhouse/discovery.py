@@ -6,7 +6,6 @@ scientific edges, execute checks, or rewrite a source record's evidence tier.
 
 from __future__ import annotations
 
-import hashlib
 import json
 import re
 from collections import defaultdict
@@ -69,9 +68,12 @@ def _select_diverse(rows: list[dict], limit: int, per_source: int = 2) -> list[d
 class DiscoveryEngine:
     """One indexed corpus and saved graph, reusable across an agent's queries."""
 
-    def __init__(self, root: Path = ROOT, *, cache_dir: Path | None = None):
+    def __init__(
+        self, root: Path = ROOT, *, cache_dir: Path | None = None, verify_cache: bool = False
+    ):
         self.root = Path(root).resolve()
-        self.index = DiscoveryIndex(self.root, cache_dir=cache_dir)
+        options = {"verify_cache": True} if verify_cache else {}
+        self.index = DiscoveryIndex(self.root, cache_dir=cache_dir, **options)
         self.index.build()
         symbols = [
             {
@@ -85,6 +87,10 @@ class DiscoveryEngine:
         ]
         self.records = {row["id"]: row for row in self.index.records + symbols}
         self.graph = GraphDiscovery(list(self.records.values()), self.index.edges)
+        self._catalogue = None
+        # One CLI process rehashes its sources per response so an edit after
+        # start is reported; a batch session may switch this off knowingly.
+        self.recheck_freshness = True
 
     def close(self):
         self.index.close()
@@ -102,8 +108,10 @@ class DiscoveryEngine:
 
         if query.strip() in self.records:
             return [query.strip()]
-        catalogue = [Claim(**row) for row in self.index.records]
-        hits, _ = search(query, catalogue=catalogue, symbols=self.index.symbols)
+        if self._catalogue is None:
+            # The saved catalogue is immutable for this engine's lifetime.
+            self._catalogue = [Claim(**row) for row in self.index.records]
+        hits, _ = search(query, catalogue=self._catalogue, symbols=self.index.symbols)
         return [
             hit.claim.id
             for hit in hits
@@ -133,7 +141,27 @@ class DiscoveryEngine:
         related_limit: int = 5,
         semantic_scores: dict[str, float] | None = None,
         semantic: Path | None = None,
+        queries: list[str] | None = None,
+        query_weights: list[float] | None = None,
+        include_external: bool = True,
     ) -> dict:
+        """Fuse lexical, exact, graph and optional semantic retrieval.
+
+        ``include_external=False`` drops passages indexed from outer-workspace
+        roots before fusion, which is the ablation the evaluation reports.
+        Passages whose whole text is identical to an earlier hit (archive
+        copies of a repository document) collapse into that hit, with the
+        other locations listed in ``also_at``; a repository copy is preferred
+        over an external one at equal score. A copied passage is not another
+        source, and letting copies fill the result list hid the originals.
+
+        ``queries`` adds sub-queries (a decomposed question, lexicon
+        expansions, an agent's reformulations). Each sub-query retrieves its
+        own lexical and exact candidates; those per-query rankings are fused
+        by reciprocal rank into the single ``lexical`` and ``exact`` channels
+        so every downstream step is unchanged. ``query_weights`` scales each
+        text (primary query first); hits report their per-query ranks.
+        """
         if not 1 <= limit <= 100:
             raise ValueError("limit must be between 1 and 100")
         if not 1 <= pool <= 1000:
@@ -146,7 +174,18 @@ class DiscoveryEngine:
         unknown = sorted(set(seeds) - self.records.keys())
         if unknown:
             raise ValueError(f"unknown seed IDs: {', '.join(unknown)}")
-        if not query.strip() and not seeds:
+        texts = list(
+            dict.fromkeys(text.strip() for text in [query, *(queries or [])] if text.strip())
+        )
+        if len(texts) > 32:
+            raise ValueError("at most 32 sub-queries are fused per search")
+        if query_weights is not None:
+            if len(query_weights) != len(texts):
+                raise ValueError("query_weights must match the number of distinct query texts")
+            if any(not 0 < weight <= 10 for weight in query_weights):
+                raise ValueError("query weights must lie in (0, 10]")
+        weights_by_text = dict(zip(texts, query_weights or [1.0] * len(texts), strict=True))
+        if not texts and not seeds:
             raise ValueError("supply a query or at least one seed ID")
         semantic_provenance = None
         if semantic is not None:
@@ -154,7 +193,7 @@ class DiscoveryEngine:
 
             vectors = SemanticVectors.load(semantic, self.index.records)
             semantic_scores = (
-                vectors.search(query, pool) if query.strip() else vectors.neighbors(seeds, pool)
+                vectors.search(texts[0], pool) if texts else vectors.neighbors(seeds, pool)
             )
             semantic_provenance = {
                 "model_id": vectors.model_id,
@@ -162,29 +201,62 @@ class DiscoveryEngine:
                 "fingerprint": vectors.fingerprint,
                 "downloaded": False,
             }
-        lexical = self.index.search(query, limit=max(pool, limit)) if query.strip() else []
-        exact = self._exact(query) if query.strip() else []
-        candidates, lexical_ranking = {}, []
+        candidates: dict[str, dict] = {}
+        per_query_rankings: dict[str, list[str]] = {}
+        per_query_exact: dict[str, list[str]] = {}
+        query_ranks: dict[str, dict[str, int]] = defaultdict(dict)
         seed_weights: dict[str, float] = defaultdict(float)
         best_passage: dict[str, dict] = {}
-        # A source chunk can map to a document and several scoped statements.
-        # Split its restart weight, so richly annotated sources get no free boost.
-        for rank, hit in enumerate(lexical, 1):
-            linked = [node for node in hit.get("claim_ids", []) if node in self.records]
-            hit_key = hit["id"]
-            if hit.get("kind") == "record" and len(linked) == 1:
-                hit_key = linked[0]
-                row = self._record_hit(hit_key)
-                row["matching_passage"] = hit
-            else:
-                row = {**hit, "where": f"{hit['path']}:{hit.get('start_line', 1)}"}
-            row["id"] = hit_key
-            candidates[hit_key] = row
-            lexical_ranking.append(hit_key)
-            for node in linked:
-                seed_weights[node] += 1 / ((60 + rank) * max(1, len(linked)))
+        duplicates: dict[str, str] = {}
+        for number, text in enumerate(texts, 1):
+            label = f"q{number}"
+            weight = weights_by_text[text]
+            lexical = self.index.search(text, limit=max(pool, limit))
+            if not include_external:
+                lexical = [hit for hit in lexical if not hit.get("external")]
+            # Stable: equal scores keep repository copies ahead of external ones.
+            lexical.sort(key=lambda hit: (-float(hit.get("score", 0.0)), bool(hit.get("external"))))
+            per_query_exact[label] = self._exact(text)
+            ranking: list[str] = []
+            # A source chunk can map to a document and several scoped statements.
+            # Split its restart weight, so richly annotated sources get no free boost.
+            for rank, hit in enumerate(lexical, 1):
+                linked = [node for node in hit.get("claim_ids", []) if node in self.records]
+                hit_key = hit["id"]
+                if hit.get("kind") == "record" and len(linked) == 1:
+                    hit_key = linked[0]
+                    row = self._record_hit(hit_key)
+                    row["matching_passage"] = hit
+                else:
+                    row = {**hit, "where": f"{hit['path']}:{hit.get('start_line', 1)}"}
+                row["id"] = hit_key
                 if hit.get("kind") == "passage":
-                    best_passage.setdefault(node, hit)
+                    signature = " ".join(str(hit.get("text", "")).split())
+                    twin = duplicates.setdefault(signature, hit_key)
+                    if twin != hit_key:
+                        twin_row = candidates.get(twin)
+                        if twin_row is not None and row["where"] not in twin_row.get("also_at", []):
+                            twin_row.setdefault("also_at", []).append(row["where"])
+                        continue
+                candidates.setdefault(hit_key, row)
+                ranking.append(hit_key)
+                query_ranks[hit_key].setdefault(label, rank)
+                for node in linked:
+                    seed_weights[node] += weight / ((60 + rank) * max(1, len(linked)))
+                    if hit.get("kind") == "passage":
+                        best_passage.setdefault(node, hit)
+            per_query_rankings[label] = ranking
+        query_weights_by_label = {
+            f"q{number}": weights_by_text[text] for number, text in enumerate(texts, 1)
+        }
+        if len(texts) <= 1:
+            lexical_ranking = next(iter(per_query_rankings.values()), [])
+            exact = next(iter(per_query_exact.values()), [])
+        else:
+            lexical_ranking = list(
+                reciprocal_rank_fusion(per_query_rankings, query_weights_by_label)
+            )
+            exact = list(reciprocal_rank_fusion(per_query_exact, query_weights_by_label))
         for node in exact:
             seed_weights[node] += 0.2
         for node in seeds:
@@ -196,9 +268,9 @@ class DiscoveryEngine:
                 if node in self.records:
                     seed_weights[node] += 1 / (60 + rank)
         propagation = (
-            self.graph.rank(dict(seed_weights), limit=pool, max_iterations=120)
+            self.graph.rank(dict(seed_weights), limit=pool, method="push", push_epsilon=1e-6)
             if seed_weights
-            else {"scores": {}, "iterations": 0, "converged": True}
+            else {"scores": {}, "iterations": 0, "converged": True, "method": "push"}
         )
         channels = {"lexical": lexical_ranking, "exact": exact}
         if graph_weight:
@@ -215,7 +287,7 @@ class DiscoveryEngine:
         # lacking a graph channel. Keep direct matches and associative results
         # in separate bands, as entity/chunk GraphRAG retrieval does.
         primary_channels = {name: ranking for name, ranking in channels.items() if name != "graph"}
-        if not query.strip() and seeds:
+        if not texts and seeds:
             primary_channels = channels
         primary_scores = reciprocal_rank_fusion(
             primary_channels, {"lexical": 1.0, "exact": 2.5, "graph": graph_weight, "semantic": 1.0}
@@ -230,6 +302,8 @@ class DiscoveryEngine:
             row = {**row, "score": scored["score"], "score_channels": scored["channels"]}
             if node in best_passage:
                 row["matching_passage"] = best_passage[node]
+            if len(texts) > 1 and node in query_ranks:
+                row["query_ranks"] = dict(sorted(query_ranks[node].items()))
             rows.append(row)
         rows_by_id = {row["id"]: row for row in rows}
         primary_rows = [
@@ -271,27 +345,38 @@ class DiscoveryEngine:
                             if witness["paths"]:
                                 hit["graph_witness"] = {"seed": seed, **witness}
                                 break
-        metadata = self.index.metadata()
+        metadata = (
+            self.index.metadata() if self.recheck_freshness else self.index.metadata(recheck=False)
+        )
         return {
             "schema": SCHEMA,
             "query": query,
+            "queries": texts,
+            "query_weights": [weights_by_text[text] for text in texts],
             "seeds": seeds,
             "hits": hits,
             "related": related,
             "provenance": metadata,
             "retrieval": {
                 "channels": list(channels),
-                "fusion": "weighted reciprocal rank fusion; k=60",
+                "sub_queries": len(texts),
+                "fusion": "weighted reciprocal rank fusion; k=60"
+                + ("; per-query lexical and exact rankings fused first" if len(texts) > 1 else ""),
                 "selection": "direct source matches and related graph candidates ranked separately",
                 "related_limit": related_limit,
                 "graph_weight": graph_weight,
+                "graph_method": propagation.get("method"),
                 "graph_iterations": propagation.get("iterations"),
                 "graph_converged": propagation.get("converged"),
                 "graph_residual": propagation.get("residual"),
-                "graph_tolerance": 1e-8,
-                "graph_max_iterations": 120,
+                "graph_residual_meaning": propagation.get("residual_meaning"),
+                "graph_tolerance": propagation.get("tolerance", 1e-6),
                 "semantic": semantic_provenance,
                 "candidate_pool": pool,
+                "include_external": include_external,
+                "duplicate_passages_collapsed": sum(
+                    len(row.get("also_at", [])) for row in candidates.values()
+                ),
                 "source_diversity": "two per source before filling unused slots",
                 "saved_graph_freshness": "not assessed; retain workhouse brief for scientific use",
             },
@@ -300,11 +385,82 @@ class DiscoveryEngine:
             "execution": {"python_checks": 0, "lean": False, "scientific_index_written": False},
         }
 
-    def connections(self, node: str, *, query: str = "", limit: int = 10) -> dict:
+    def _passage_candidate(self, hit: dict, rank: int, seed_families: list[str]) -> dict:
+        """A content-related source passage with no graph identity of its own."""
+        path = hit.get("path", "")
+        first = hit.get("start_line", 1)
+        locator = f"{path}:{first}-{hit.get('end_line', first)}"
+        family = "path:" + path
+        if hit.get("external"):
+            family = f"external:{hit.get('source_label', '')}:{path}"
+        return {
+            "id": hit["id"],
+            "kind": "passage",
+            "candidate_kind": "passage",
+            "candidate_only": True,
+            "score": 0.0,
+            "shared_witnesses": [],
+            "shared_witness_count": 0,
+            "existing_relations": [],
+            "has_registered_relation": False,
+            "source_family": {
+                "source": seed_families,
+                "target": [family],
+                "shared": [],
+                "comparison": "no_graph_identity",
+                "semantics": "unlinked passage; source locator comparison only",
+            },
+            "path": [],
+            "path_found": None,
+            "path_truncated": False,
+            "path_truncation_reasons": ["no_graph_identity"],
+            "connection_rank": 1.0 / (60 + rank),
+            "connection_channels": {"retrieval": {"rank": rank}},
+            "where": locator,
+            "locator": locator,
+            "external": bool(hit.get("external")),
+            "source_label": hit.get("source_label"),
+            "matching_passage": hit,
+            "retrieval": hit.get("score_channels", {}),
+            "semantics": "content-related passage for source review; no registered node",
+        }
+
+    def connections(
+        self,
+        node: str,
+        *,
+        query: str = "",
+        limit: int = 10,
+        queries: list[str] | None = None,
+        passage_quota: int | None = None,
+        include_external: bool = True,
+    ) -> dict:
+        """Unlinked candidates for a graph node: registered records and raw passages.
+
+        Record candidates are explained through shared witnesses and bounded
+        paths. Passage candidates are retrieved source excerpts that map to no
+        catalogue record at all; without them every imported note, literature
+        file and research campaign would be unreachable, because those
+        passages carry no claim link. ``passage_quota`` reserves slots for them
+        (default: a third of ``limit``, at least one) so graph-rich records
+        cannot crowd out the cross-family sources the review is looking for.
+        """
         if node not in self.records:
             raise ValueError(f"unknown graph ID: {node}")
+        if passage_quota is None:
+            passage_quota = max(1, limit // 3)
+        if not 0 <= passage_quota <= limit:
+            raise ValueError("passage_quota must lie between 0 and limit")
         query = query or self.records[node].get("statement", "")
-        search = self.search(query, limit=100, seeds=[node], pool=250, related_limit=100)
+        search = self.search(
+            query,
+            limit=100,
+            seeds=[node],
+            pool=250,
+            related_limit=100,
+            queries=queries,
+            include_external=include_external,
+        )
         candidates = list(
             dict.fromkeys(
                 candidate
@@ -313,13 +469,21 @@ class DiscoveryEngine:
                 if candidate != node and candidate in self.records
             )
         )
-        linked = {
-            edge["dst"] if edge["src"] == node else edge["src"]
-            for edge in self.index.edges
-            if node in (edge["src"], edge["dst"])
-        }
+        linked = self.graph.neighbors(node)
+        seed_families = self.graph._source_families(node)
+        passage_rows = []
+        for rank, hit in enumerate(search["hits"] + search["related"], 1):
+            if hit.get("kind") != "passage":
+                continue
+            if any(cid in self.records and cid != node for cid in hit.get("claim_ids", [])):
+                continue
+            passage_rows.append(self._passage_candidate(hit, rank, seed_families))
         new_candidates = [candidate for candidate in candidates if candidate not in linked]
-        explained = self.graph.connections(node, new_candidates, limit=len(new_candidates))
+        # Shared witnesses are cheap for every candidate; bounded path searches
+        # are not, so they run only for the rows an agent will actually read.
+        explained = self.graph.connections(
+            node, new_candidates, limit=len(new_candidates), paths_limit=0
+        )
         by_id = {row["id"]: row for row in explained}
         structural = [row["id"] for row in explained if row.get("score", 0) > 0]
         fused = reciprocal_rank_fusion(
@@ -329,15 +493,28 @@ class DiscoveryEngine:
         ordered = []
         for target, score in fused.items():
             candidate = by_id[target]
-            candidate["connection_rank"] = score
-            candidate["path"] = candidate.get("path", [])
+            candidate["candidate_kind"] = "record"
+            candidate["connection_rank"] = score["score"]
+            candidate["connection_channels"] = score["channels"]
             candidate["where"] = self.records[target].get("where", "")
             ordered.append(candidate)
-        # Keep a slot for a content-related node outside the explored topology.
-        disconnected = [row for row in ordered if not row.get("path")]
-        connections = _select_diverse(ordered, limit)
-        if disconnected and limit > 1 and not any(not row.get("path") for row in connections):
-            connections[-1] = disconnected[0]
+        reserved = min(passage_quota, len(passage_rows))
+        connections = _select_diverse(ordered, max(0, limit - reserved))
+        for row in connections:
+            row.update(self.graph.explain_path(node, row["id"]))
+        # Keep a slot for a content-related node outside the explored topology:
+        # inspect a bounded number of further candidates for one without a path.
+        if limit > 1 and all(row.get("path") for row in connections):
+            selected_ids = {row["id"] for row in connections}
+            budget = 10
+            for row in ordered:
+                if row["id"] in selected_ids or budget == 0:
+                    continue
+                budget -= 1
+                row.update(self.graph.explain_path(node, row["id"]))
+                if not row["path"]:
+                    connections[-1] = row
+                    break
         rankings = {}
         for hit in search["hits"] + search["related"]:
             for target in [hit["id"], *hit.get("claim_ids", [])]:
@@ -359,16 +536,32 @@ class DiscoveryEngine:
                 "query": query,
                 "channels": hit.get("score_channels", {}),
             }
-            candidate["review_required"] = [
-                "Compare the exact objects, hypotheses, regime and normalizations.",
-                "Read each cited argument and distinguish copied sources from independent origins.",
-                "Register a mathematical relationship only after reviewing its implication.",
-            ]
+        review_required = [
+            "Compare the exact objects, hypotheses, regime and normalizations.",
+            "Read each cited argument and distinguish copied sources from independent origins.",
+            "Register a mathematical relationship only after reviewing its implication.",
+        ]
+        # Unlinked passages fill their reserved slots and any record shortfall.
+        selected_passages = _select_diverse(passage_rows, limit - len(connections))
+        for candidate in selected_passages:
+            candidate["retrieval_witness"] = {
+                "hit_id": candidate["id"],
+                "query": query,
+                "channels": candidate["retrieval"],
+            }
+        connections = connections + selected_passages
+        for candidate in connections:
+            candidate["review_required"] = review_required
         return {
             "schema": "workhouse-discovery/connections/v1",
             "seed": self.records[node],
             "query": query,
+            "queries": search.get("queries"),
+            "include_external": include_external,
             "candidates": connections,
+            "record_candidates": len(ordered),
+            "passage_candidates": len(passage_rows),
+            "passage_quota": passage_quota,
             "already_connected_excluded": len(linked),
             "provenance": search["provenance"],
             "meaning": search["meaning"],
@@ -377,40 +570,14 @@ class DiscoveryEngine:
 
 
 def context_pack(result: dict, max_chars: int = 16000) -> dict:
-    """A hard-bounded agent handoff; record every omitted/truncated item."""
-    if max_chars < 2000:
-        raise ValueError("context budget must be at least 2000 characters")
-    provenance = result.get("provenance", {})
-    pack = {
-        "schema": "workhouse-discovery/context/v1",
-        "query": result.get("query", ""),
-        "seeds": result.get("seeds", []),
-        "meaning": result["meaning"],
-        "source_fingerprint": provenance.get("fingerprint"),
-        "source_freshness": provenance.get("freshness", "unknown"),
-        "current_source_fingerprint": provenance.get("current_fingerprint"),
-        "freshness_error": provenance.get("freshness_error"),
-        "scientific_graph_freshness": "not assessed; use a retained workhouse brief",
-        "execution": result.get("execution", {}),
-        "hits": [],
-        "omitted": 0,
-        "budget": {"max_chars": max_chars, "unit": "serialized JSON characters, not tokens"},
-    }
+    """A hard-bounded agent handoff; rank order kept, omissions named.
 
-    def encoded():
-        return json.dumps(pack, ensure_ascii=True, sort_keys=True)
+    Delegates to :func:`workhouse.discovery_present.context_pack`, which
+    shrinks excerpts before dropping the lowest-ranked rows.
+    """
+    from .discovery_present import context_pack as compact_pack
 
-    combined = [dict(hit, retrieval_group="direct") for hit in result.get("hits", [])]
-    combined += [dict(hit, retrieval_group="related") for hit in result.get("related", [])]
-    for hit in combined:
-        pack["hits"].append(hit)
-        if len(encoded()) + 100 > max_chars:
-            pack["hits"].pop()
-            pack["omitted"] += 1
-    if len(encoded()) + 100 > max_chars:
-        raise ValueError("query metadata exceeds context budget")
-    pack["fingerprint"] = hashlib.sha256(encoded().encode()).hexdigest()
-    return pack
+    return compact_pack(result, max_chars)
 
 
 def render_text(result: dict) -> str:

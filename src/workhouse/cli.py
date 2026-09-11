@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
 import os
 import re
@@ -368,16 +369,61 @@ def _ask(query: str, limit: int, as_json: bool) -> int:
     return 0 if rows else 1
 
 
+def _sub_queries(args) -> list[str]:
+    """Extra query texts from repeated ``--query`` and a ``--queries-file``."""
+    from pathlib import Path
+
+    texts = list(getattr(args, "queries", None) or [])
+    queries_file = getattr(args, "queries_file", None)
+    if queries_file:
+        raw = Path(queries_file).read_text(encoding="utf-8")
+        if raw.lstrip().startswith("{"):
+            plan = json.loads(raw)
+            for item in plan.get("queries", []):
+                texts.append(item["text"] if isinstance(item, dict) else str(item))
+        else:
+            texts.extend(line.strip() for line in raw.splitlines() if line.strip())
+    return texts
+
+
 def _discover(args) -> int:
     from pathlib import Path
 
+    from . import discovery_present as present_mod
     from .discovery import DiscoveryEngine, context_pack, render_text
 
+    # Windows pipes default to a legacy code page; excerpts carry Greek and arrows.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            with contextlib.suppress(ValueError, OSError):
+                stream.reconfigure(encoding="utf-8", errors="replace")
+    full = bool(getattr(args, "full", False))
+    excerpt_chars = getattr(args, "excerpt_chars", None) or present_mod.EXCERPT_CHARS
+    # Register, proposal and scope commands own their output and exit codes and
+    # build an engine only when they need one.
+    if args.discovery_command in ("review", "propose"):
+        from . import discovery_review
+
+        return discovery_review.run(args, DiscoveryEngine)
+    if args.discovery_command == "scope":
+        from . import discovery_scope
+
+        return discovery_scope.run(args, DiscoveryEngine)
+    if args.discovery_command in ("plan", "lexicon"):
+        from . import discovery_lexicon
+
+        return discovery_lexicon.run(args, DiscoveryEngine)
+    if args.discovery_command == "pair":
+        from . import discovery_pairs
+
+        return discovery_pairs.run(args, DiscoveryEngine)
     try:
-        with DiscoveryEngine() as engine:
+        verify = args.discovery_command in ("build", "info")
+        with DiscoveryEngine(verify_cache=True) if verify else DiscoveryEngine() as engine:
+            root = engine.root
             if args.discovery_command in ("build", "info"):
                 result = engine.index.metadata()
-                report = json.dumps(result, indent=2, sort_keys=True)
+                report = present_mod.render_info(result)
             elif args.discovery_command == "path":
                 result = engine.graph.paths(
                     args.source,
@@ -389,8 +435,11 @@ def _discover(args) -> int:
                 if result.get("unknown_nodes"):
                     raise ValueError(f"unknown path IDs: {result['unknown_nodes']}")
                 result["schema"] = "workhouse-discovery/paths/v1"
-                result["provenance"] = engine.index.metadata()
-                report = json.dumps(result, indent=2, sort_keys=True)
+                metadata = engine.index.metadata()
+                result["provenance"] = (
+                    metadata if full else present_mod.provenance_summary(metadata, root)
+                )
+                report = present_mod.render_paths(result)
             elif args.discovery_command == "impact":
                 result = engine.graph.dependency_impact(
                     args.id, direction=args.direction, max_depth=args.depth, limit=args.limit
@@ -398,11 +447,26 @@ def _discover(args) -> int:
                 if result.get("unknown_nodes"):
                     raise ValueError(f"unknown impact IDs: {result['unknown_nodes']}")
                 result["schema"] = "workhouse-discovery/impact/v1"
-                result["provenance"] = engine.index.metadata()
-                report = json.dumps(result, indent=2, sort_keys=True)
+                metadata = engine.index.metadata()
+                result["provenance"] = (
+                    metadata if full else present_mod.provenance_summary(metadata, root)
+                )
+                report = present_mod.render_impact(result)
             elif args.discovery_command == "connections":
-                result = engine.connections(args.id, query=args.query, limit=args.limit)
-                report = render_text(result)
+                result = engine.connections(
+                    args.id,
+                    query=args.query,
+                    limit=args.limit,
+                    queries=_sub_queries(args),
+                    include_external=not getattr(args, "internal_only", False),
+                )
+                if full:
+                    report = render_text(result)
+                else:
+                    result = present_mod.present_connections(
+                        result, max_chars=excerpt_chars, root=root
+                    )
+                    report = present_mod.render_connections(result)
             else:
                 result = engine.search(
                     args.query,
@@ -410,12 +474,17 @@ def _discover(args) -> int:
                     seeds=args.seed,
                     graph_weight=args.graph_weight,
                     semantic=Path(args.semantic) if args.semantic else None,
+                    queries=_sub_queries(args),
+                    include_external=not getattr(args, "internal_only", False),
                 )
                 if args.context_chars:
                     result = context_pack(result, args.context_chars)
                     report = json.dumps(result, ensure_ascii=True, sort_keys=True)
-                else:
+                elif full:
                     report = render_text(result)
+                else:
+                    result = present_mod.present(result, max_chars=excerpt_chars, root=root)
+                    report = present_mod.render_compact(result)
         if args.out:
             path = Path(args.out)
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -626,6 +695,12 @@ def main(argv: list[str] | None = None) -> int:
         "discover", help="hybrid corpus search and source-backed connection candidates"
     )
     ds_sub = ds.add_subparsers(dest="discovery_command", required=True)
+    from . import discovery_lexicon, discovery_pairs, discovery_review, discovery_scope
+
+    discovery_review.add_parser(ds_sub)
+    discovery_scope.add_parser(ds_sub)
+    discovery_lexicon.add_parser(ds_sub)
+    discovery_pairs.add_parser(ds_sub)
     for name in ("build", "info"):
         command = ds_sub.add_parser(name, help="prepare the local discovery cache and report scope")
         command.add_argument("--json", action="store_true")
@@ -633,12 +708,35 @@ def main(argv: list[str] | None = None) -> int:
     ds_search = ds_sub.add_parser("search", help="fuse passage, exact-symbol and graph retrieval")
     ds_search.add_argument("query", nargs="?", default="", help="research question or exact value")
     ds_search.add_argument("--seed", action="append", help="graph ID to start from; repeatable")
+    ds_search.add_argument(
+        "--query",
+        dest="queries",
+        action="append",
+        metavar="TEXT",
+        help="an additional sub-query fused with the main one; repeatable",
+    )
+    ds_search.add_argument(
+        "--queries-file",
+        metavar="PATH",
+        help='one sub-query per line, or a JSON query plan {"queries": [{"text": ...}]}',
+    )
     ds_search.add_argument("--limit", type=int, default=10)
     ds_search.add_argument("--graph-weight", type=float, default=0.8)
     ds_search.add_argument(
         "--semantic", help="optional pinned local embedding JSON; no model downloads"
     )
     ds_search.add_argument("--context-chars", type=int, help="emit a bounded agent context package")
+    ds_search.add_argument(
+        "--excerpt-chars", type=int, help="excerpt budget per compact row (default 700)"
+    )
+    ds_search.add_argument(
+        "--internal-only",
+        action="store_true",
+        help="ignore passages indexed from outer-workspace roots",
+    )
+    ds_search.add_argument(
+        "--full", action="store_true", help="full response with every passage and the manifest"
+    )
     ds_search.add_argument("--json", action="store_true")
     ds_search.add_argument("--out", help="retain JSON in a new file; refuse overwrite")
     ds_connections = ds_sub.add_parser(
@@ -649,6 +747,25 @@ def main(argv: list[str] | None = None) -> int:
         "--query", default="", help="optional research question to focus candidates"
     )
     ds_connections.add_argument("--limit", type=int, default=10)
+    ds_connections.add_argument(
+        "--excerpt-chars", type=int, help="excerpt budget per compact candidate (default 700)"
+    )
+    ds_connections.add_argument(
+        "--query-extra",
+        dest="queries",
+        action="append",
+        metavar="TEXT",
+        help="an additional sub-query fused with the focus question; repeatable",
+    )
+    ds_connections.add_argument("--queries-file", metavar="PATH", help="sub-queries or a plan")
+    ds_connections.add_argument(
+        "--internal-only",
+        action="store_true",
+        help="ignore passages indexed from outer-workspace roots",
+    )
+    ds_connections.add_argument(
+        "--full", action="store_true", help="full response with every witness and passage"
+    )
     ds_connections.add_argument("--json", action="store_true")
     ds_connections.add_argument("--out", help="retain JSON in a new file; refuse overwrite")
     ds_impact = ds_sub.add_parser(
@@ -658,6 +775,7 @@ def main(argv: list[str] | None = None) -> int:
     ds_impact.add_argument("--direction", choices=("upstream", "downstream"), default="downstream")
     ds_impact.add_argument("--depth", type=int, default=8)
     ds_impact.add_argument("--limit", type=int, default=100)
+    ds_impact.add_argument("--full", action="store_true", help="embed the full source manifest")
     ds_impact.add_argument("--json", action="store_true")
     ds_impact.add_argument("--out", help="retain JSON in a new file; refuse overwrite")
     ds_path = ds_sub.add_parser("path", help="explain bounded paths with original edge provenance")
@@ -668,6 +786,7 @@ def main(argv: list[str] | None = None) -> int:
     ds_path.add_argument(
         "--dependency-only", action="store_true", help="follow recorded prerequisites only"
     )
+    ds_path.add_argument("--full", action="store_true", help="embed the full source manifest")
     ds_path.add_argument("--json", action="store_true")
     ds_path.add_argument("--out", help="retain JSON in a new file; refuse overwrite")
 

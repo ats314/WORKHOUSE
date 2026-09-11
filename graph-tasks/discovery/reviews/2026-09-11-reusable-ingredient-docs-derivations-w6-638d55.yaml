@@ -1,0 +1,73 @@
+schema: workhouse-discovery-review/v1
+id: 2026-09-11-reusable-ingredient-docs-derivations-w6-638d55
+seed: docs/derivations/w6-conditional-score-tail-control.md:249-270
+target: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md:214-272
+relationship_kind: reusable-ingredient
+reasoning: 'Investigator (m10-brascamp-lieb): The tail-control ''Suppose these chart-restricted conditional
+  laws have a Poincare bound Var_chart(F|q) <= C g^2 E_chart[|d_eta F|^2|q]'' is the EX-014 sec 3 conditional
+  Poincare/Brascamp-Lieb inequality applied to the normalized conditional law on a convex eta-ball in
+  the g-independent Morse coordinate of B6, where Hess_eta(2S/g^2) = 2 g^-2 I exactly; constant C = 1
+  + o(1) given a uniform C^2 bound on log A_g in eta (or, via Holley-Stroock, only the C^0 relative comparison
+  a0 + O(sqrt h) that S3 supplies). Ingredient for one of the three unproved inputs of the local Morse
+  repair; bears_on grade, not depends_on, because no existing argument uses it yet. Next check: Write
+  W(eta) = 2I(q)/g^2 + |eta|^2/g^2 - 2 log A_g(q,eta) + log J(q,eta) on a ball |eta| <= r0 and verify
+  Hess_eta W >= g^-2 I for g < g_0 under sup|Hess_eta log A_g| + sup|Hess log J| <= K; state the resulting
+  chart Poincare constant (2 g^2 for g^2 K <= 1/2) and compare with the B6-B8 conclusion K_g^chart <=
+  C (C'')^2; then check whether S3''s C^0 comparison plus Holley-Stroock gives the same constant times
+  exp(osc 2 log A_g) without any derivative of A_g.'
+reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+created: '2026-09-11T08:26:07+00:00'
+evidence:
+- command: pair
+  argv:
+  - workhouse
+  - discover
+  - search
+  - ''
+  - --json
+  fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_freshness: matched
+  evidence_file: pair-B-chartpoincare-ex014.json
+  evidence_sha256: 470aef0e6da2a7398d0fc89b0cdbf3b0d4ecf4618006607f69f8812de92232e3
+  schema: workhouse-discovery/pair/v1
+  selection: top 0 rows; no row named the seed or target - the evidence may not concern this pair
+  rows: []
+  source_hashes:
+  - path: docs/derivations/w6-conditional-score-tail-control.md
+    lines:
+    - 249
+    - 270
+    sha256: d04ae01d29d33cc5bfcc01abf1844f3e0692d682810ac01ee947a6ec93375471
+    role: endpoint
+  - path: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md
+    lines:
+    - 214
+    - 272
+    sha256: fc55bb4934560183d5529822693ce7ad90ca9bc6f521546cb505d8e30f6cc703
+    role: endpoint
+  excerpt_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+state: established
+updated: '2026-09-11T08:26:09+00:00'
+registered_as: null
+history:
+- state: pending
+  at: '2026-09-11T08:26:07+00:00'
+  reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+  reason: recorded from discovery output; nothing reviewed yet
+- state: reviewing
+  at: '2026-09-11T08:26:08+00:00'
+  reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+  reason: Investigator read both sources in full at the cited lines; an independent skeptic re-read them
+    to refute the proposal.
+- state: established
+  at: '2026-09-11T08:26:09+00:00'
+  reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+  reason: 'Narrowed by the skeptic to what survives: on the well tube |q| <= r0 for g < g0, in the g-independent
+    B6 Morse coordinate, the normalized chart-restricted conditional law on a convex eta-ball satisfies
+    Var_chart(F|q) <= (g^2/2)(1+o(1)) E_chart|d_eta F|^2 by Neumann Bakry-Emery, conditional on the S3
+    amplitude comparison and its external theorem. A bearing on the tail-control chart Poincare supposition,
+    never a depends_on, and never a whole-fibre statement.'
+previous: 3cb646c225067e60a052992b95960edeaaf56e0999e111e18dd230669fd88f35
+genesis: e85c7f9c1ebb155c3d1c376c49753828109989af9ee22173e83db1ceb8bd28a2
+sha256: 0c48d2c83045cfa0fa97a4c2b84468f49de37dca1320c78c68fa3dd7faa4e1eb

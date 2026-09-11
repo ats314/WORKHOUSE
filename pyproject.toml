@@ -44,7 +44,9 @@ src = ["src", "tests"]
 # runs/ and docs/handoff/ are transcripts of executions (runs/ pinned by
 # per-run SHA256SUMS; handoff scripts preserved verbatim from session
 # research/ holds dated research campaigns pinned by internal source_hashes.json.
-extend-exclude = ["settlement", "corpus-import", "lean", "notes/imported", "runs", "docs/handoff", "research"]
+# graph-tasks/evidence holds retained investigation scripts: evidence bytes,
+# not maintained code; linting them would mean editing evidence.
+extend-exclude = ["settlement", "corpus-import", "lean", "notes/imported", "runs", "docs/handoff", "research", "graph-tasks/evidence"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]

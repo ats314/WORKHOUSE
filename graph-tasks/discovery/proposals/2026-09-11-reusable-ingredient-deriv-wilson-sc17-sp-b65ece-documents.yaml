@@ -1,0 +1,115 @@
+schema: workhouse-discovery-proposal/v1
+review: 2026-09-11-reusable-ingredient-deriv-wilson-sc17-sp-b65ece
+surface: documents
+ledger_file: ledger/documents.yaml
+meaning: PROPOSAL, not a registration. This file was generated from a review record; nothing in the scientific
+  ledgers or the generated index changed. Applying it is a hand edit of the named ledger file, followed
+  by the validators and a reviewed PR. A discovery score is not evidence and this review is not a proof.
+relationship:
+  seed: DERIV:WILSON_SC17_SPATIAL_CLOSURE:R10_R11
+  target: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md:214-272
+  kind: reusable-ingredient
+  reviewer: claude-fable-5.1 case study outside-pressure-schur, skeptic-adjusted
+  reasoning: 'Investigator (outside-pressure-schur): SC17 R10''s marginal-curvature step (line 666: ''marginal
+    C curvature at least 2(a_C-h_BC^2/a_B)'') is EX-014 sec 3(3) alpha-M^2/gamma with alpha=2a_C, gamma=2a_B,
+    M=2h_BC, by the same Poincare-only proof (EX-014 lines 245-249); same hypotheses (C^2 density, uniform
+    fibre floor, uniform mixed-Hessian norm), same regime (finite-dimensional Euclidean coordinate blocks,
+    classical Gibbs density: SC17''s Phi=-2 log Omega is the ground-state density), same open compact-group
+    chart/gauge-quotient obligation (EX-014 line 267; SC17 lines 570-573). EX-014 additionally supplies
+    the Brascamp-Lieb sharpening sec 3(2), the Prekopa no-loss theorem sec 3(4), Gaussian sharpness of
+    the constant, and the sec 4 obstruction that the covariance loss is exactly the deficit (so R11''s
+    angle budget cannot be improved by marginalisation alone). Ingredient, not dependency: SC17 proves
+    the step itself. Next check: Instantiate EX-014 sec 3(2) (Brascamp-Lieb form Cov <= E[BC^{-1}B^T])
+    in SC17 R10''s notation and check whether replacing the Poincare bound 2h_BC^2/a_B by E[Phi_BC Phi_BB^{-1}
+    Phi_CB] improves the R11 constant kappa_actual <= (a_0 kappa_A + r)/(a_0 - r) when Phi_BB is not close
+    to 2a_B I; a one-hour symbolic computation on a 2x2 block model with Phi_BB = diag(2a_1, 2a_2).'
+  history:
+  - state: pending
+    at: '2026-09-11T08:25:53+00:00'
+    reviewer: claude-fable-5.1 case study outside-pressure-schur, skeptic-adjusted
+    reason: recorded from discovery output; nothing reviewed yet
+  - state: reviewing
+    at: '2026-09-11T08:25:55+00:00'
+    reviewer: claude-fable-5.1 case study outside-pressure-schur, skeptic-adjusted
+    reason: Investigator read both sources in full at the cited lines; an independent skeptic re-read
+      them to refute the proposal.
+  - state: established
+    at: '2026-09-11T08:25:55+00:00'
+    reviewer: claude-fable-5.1 case study outside-pressure-schur, skeptic-adjusted
+    reason: 'Skeptic confirmed as an identical lemma, not an analogy: SC17 R10''s marginal-curvature step
+      ''at least 2(a_C - h_BC^2/a_B)'' (line 666) is EX-014 section 3(3) alpha - M^2/gamma with alpha
+      = 2a_C, gamma = 2a_B, M = 2h_BC, by the same Poincare-only proof, with the same open compact-group
+      chart obligation on both sides. Landing: documentary link plus the next check (whether the Brascamp-Lieb
+      form Cov <= E[B C^-1 B^T] sharpens R11''s kappa constant).'
+fragment: |
+  # ledger/documents.yaml -> aliases[] entry `alias: <FILL: alias of the citing document>`; append to the existing
+  # list. Targets must resolve (an alias for cites, a catalogue id for bears_on).
+      bears_on:
+        - <FILL: catalogue id carrying passage notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md:214-272; a passage locator is not a catalogue id - try: uv run --no-sync workhouse why notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md>   # kind `reusable-ingredient`
+notes: []
+checklist:
+- item: hypotheses_compared
+  requirement: The hypotheses of both arguments were compared, not their vocabulary.
+  done: false
+- item: regime_stated
+  requirement: The regime (finite lattice, infinite volume, continuum, ...) is stated.
+  done: false
+- item: normalization_compared
+  requirement: Normalizations and coordinates were compared explicitly.
+  done: false
+- item: independence_of_origin_checked
+  requirement: Copied prose was distinguished from an independent origin (a shared source family is not
+    independence).
+  done: false
+- item: falsifier_stated
+  requirement: What would refute the relationship is written down.
+  done: false
+- item: source_hashes_matched
+  requirement: Every recorded source hash matches the file bytes in this checkout.
+  done: true
+  observation: all recorded source hashes match this checkout
+apply:
+- Paste the fragment by hand into the named ledger file; edit exactly one field per proposal and keep
+  every other field.
+- 'Run the read-only validators: uv run --no-sync workhouse status; uv run --no-sync python -c "from workhouse
+  import results; results.load()"; uv run --no-sync python -c "from workhouse import derivation_statements
+  as d; d._checked()"; uv run --no-sync workhouse lit (literature surface).'
+- Regenerate the views in the documented order (workhouse index -w, frontier --write, certified --write)
+  in a reviewed pull request, never from this tool.
+- 'After the PR merges, run: workhouse discover review mark <id> --state registered --registered-as ''<PR
+  or commit> <ledger id and field>'' --reason ''...''.'
+refused:
+  contradictions: 'ledger/contradictions.yaml is a verbatim transcription of the corpus''s own register:
+    tests pin it to C1-C22 with zero open items, so a new contradiction record is a test failure by design.
+    Record a disagreement as a literature relation ''contradicts'' (--surface literature), as a route
+    ''cannot_decide'' on the relevant gap, or as a unifying candidate with status ''refuted'' (--surface
+    gaps).'
+  writes: This tool never writes under ledger/, index/ or any other scientific tree.
+evidence:
+- command: pair
+  argv:
+  - workhouse
+  - discover
+  - search
+  - ''
+  - --json
+  fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_freshness: matched
+  evidence_file: pair-R10R11-EX014s3.json
+  evidence_sha256: c3f0a866093fd87b957bd9e4afddc79954174ff877a273df9b5dac8cb84d73bd
+  schema: workhouse-discovery/pair/v1
+  selection: top 0 rows; no row named the seed or target - the evidence may not concern this pair
+  rows: []
+  source_hashes:
+  - path: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md
+    lines: &id001
+    - 214
+    - 272
+    sha256: fc55bb4934560183d5529822693ce7ad90ca9bc6f521546cb505d8e30f6cc703
+    role: endpoint
+  excerpt_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+source_hash_check:
+- path: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md
+  lines: *id001
+  matched: true

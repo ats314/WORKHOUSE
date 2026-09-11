@@ -1,0 +1,240 @@
+# Discovery scope: external workstation roots read by `workhouse discover`.
+#
+# These are WORKSTATION paths, relative to a base directory, not repository
+# paths. The base is the directory that contains WORKSPACE.json above this
+# checkout (normally C:/WORKHOUSE); it can be overridden by the environment
+# variable WORKHOUSE_DISCOVERY_BASE or by a local, uncommitted file
+# .graph-state/discovery/scope.local.yaml (schema workhouse-discovery-scope-local/v1,
+# keys: base, disable: [labels], enable: [labels]). A root that is absent on
+# the machine running the build is SKIPPED WITH AN EXPLICIT REPORT
+# (`workhouse discover scope`, `discover info --json` -> external_roots[].skipped);
+# it never fails the build, so CI and other workstations index the checkout only.
+#
+# What indexing an external root means: its .md/.tex/.txt files become T3
+# reading candidates with locators `ext:<label>/<relative posix path>`.
+# Nothing here changes a claim's status, evidence or tier, and nothing here is
+# ever written back. A file whose bytes are already indexed (in the checkout or
+# an earlier root) is recorded as an alias of that source, not chunked again;
+# roots are therefore listed in priority order: checkout first, then tier 1,
+# then tier 2. Reparse points (symlinks and NTFS junctions) are never followed.
+#
+# Tier meaning (a reading-priority label, not an evidence tier):
+#   1 current research outside the checkout (post-snapshot notes, intake, campaigns)
+#   2 historical mathematics in ARCHIVE (physical paths only, never the junctions)
+#   3 context and provenance (agent logs, GPT masters, pipeline tools): declared,
+#     disabled by default, enable locally with scope.local.yaml when needed.
+#
+# Provenance of this seed: scratchpad corpus inventory of 2026-09-11 (04_corpus):
+# tier 1 about 273 distinct new files / 6.2 MB / 4,100 passages, tier 2 about
+# 284 / 7.7 MB / 5,250, tier 3 about 1,750 / 37 MB / 25,000 passages of low
+# mathematical signal. Junction list: navigation/relocations.json.
+schema: workhouse-discovery-scope/v1
+version: 1
+
+# Directory names pruned at any depth inside every root (case-insensitive,
+# shell-style patterns). The indexer's own skip list (.git, .venv, .lake,
+# __pycache__, node_modules, .cache, .graph-state, inbox, runs, build, dist,
+# .ipynb_checkpoints) also applies to subfolders of external roots; INBOX is
+# therefore declared as its own root below rather than reached as a subfolder.
+exclude_names:
+  - .git
+  - .lake
+  - .venv
+  - venv
+  - __pycache__
+  - node_modules
+  - .cache
+  - .uv-cache
+  - uv-cache
+  - .pytest_cache
+  - .mypy_cache
+  - .ruff_cache
+  - .ipynb_checkpoints
+  - site-packages
+  - .graph-state
+  - .workhouse-local
+  - .pytest_temp
+  - pytest_temp
+  - "pytest-*"
+
+# Base-relative globs applied inside every root. Git checkouts are excluded
+# because the canonical checkout is indexed in place and every other checkout
+# is a revision of the same repository; quarantine holds duplicates by design.
+# Nested checkouts are also detected structurally (a subfolder holding .git is
+# pruned) so a new worktree needs no edit here.
+exclude:
+  - REPO/**
+  - worktrees/**
+  - WORKHOUSE-flat-holonomy-20260907/**
+  - ALL THEORY/WORKHOUSE/**
+  - ALL THEORY/WORKHOUSE-w98/**
+  - quarantine/**
+  - organized_proofs/**
+  - organized_pdfs/**
+  # The 22 root junctions recorded in navigation/relocations.json. They are
+  # reparse points and would be refused anyway; listing them keeps the decision
+  # explicit should one ever be replaced by a real directory.
+  - 01_PROOFS/**
+  - 02_APPENDICES/**
+  - 03_MANUSCRIPTS/**
+  - 04_SIMULATIONS/**
+  - 05_LEAN/**
+  - 06_RESEARCH_DOCS/**
+  - 08_REFERENCE_PAPERS/**
+  - 10_ALREADY_REVIEWED/**
+  - 11_FUNZONE/**
+  - SYNTH_COPY/**
+  - PAPERS/**
+  - FINAL PAPERS/**
+  - HODGE RUNS/**
+  - o4/**
+  - TWO CUBE B6/**
+  - SIMULATIONS/**
+  - organized_experiments/**
+  - WORKHOUSE-autonomous-20260905/**
+  - 09_ARCHIVE/glacial_uploads/**
+  - 09_ARCHIVE/pdftooltest/**
+  - 09_ARCHIVE/session_logs/**
+  - worktrees/workspace-organization-20260910/**
+
+# Base-relative subtrees that no external path may resolve into, in addition
+# to this checkout itself. The canonical checkout's ledger/ and index/ are the
+# scientific graph; discovery reads them only through the saved catalogue.
+protected:
+  - REPO/ledger
+  - REPO/index
+
+roots:
+  # ---- Tier 1: current research outside the checkout -----------------------
+  - label: all-theory
+    path: ALL THEORY
+    tier: 1
+    note: preserved corpus; post-2026-08-28 notes, conjectures, programs and publication drafts
+    exclude:
+      - GITHUB/**            # flat mirror; 366 duplicate text files
+      - QUARANTINE/**
+      - archive/**           # zips and simulation bundles
+      - .tools/**
+      - .scratch/**
+      - WORKHOUSE/**         # git checkout (shared .git owner)
+      - WORKHOUSE-w98/**     # git checkout
+  - label: work-since
+    path: WORK_SINCE_LAST_SESSION
+    tier: 1
+    note: live successor of the 2026-08-28 WORK_SINCE snapshot in notes/imported
+    exclude:
+      - .scratch/uv-cache/**
+      - .scratch/literature/**        # third-party checkout and arXiv sources
+      - .scratch/arxiv*/**            # extracted arXiv TeX sources
+      - .scratch/render*/**           # render output
+      - .scratch/WORKHOUSE-current/** # git checkout
+      - .scratch/workhouse_remote_ro/**
+      - paper_workspace_20260829/**   # two checkouts and a tectonic binary
+      - CGC_Data/**                   # coefficient data, no prose
+      - tmp/**                        # pdfs
+  - label: inbox
+    path: INBOX
+    tier: 1
+    note: intake batches awaiting a notes.yaml verdict; unreviewed material
+  - label: research
+    path: research
+    tier: 1
+    note: standalone research campaigns; pytest-* trees and runs/ are pruned
+  - label: workspace-root
+    path: .
+    tier: 1
+    max_depth: 0
+    note: top-level workspace Markdown only; CROSS_REFERENCE, DEDUPLICATION_ANALYSIS, EXCLUDED_FILES_MANIFEST and GAP_ANALYSIS are historical
+    exclude:
+      - AGENTS.md            # agent instruction files are not research text
+      - CLAUDE.md
+      - GEMINI.md
+      - FABLE_PROMPT.md
+  - label: tmp
+    path: tmp
+    tier: 1
+    max_depth: 0
+    note: top-level review notes only; the subdirectories are test output and caches
+
+  # ---- Tier 2: historical mathematics in ARCHIVE (physical paths) ----------
+  - label: archive-proofs
+    path: ARCHIVE/collections/01_PROOFS
+    tier: 2
+  - label: archive-appendices
+    path: ARCHIVE/collections/02_APPENDICES
+    tier: 2
+  - label: archive-manuscripts
+    path: ARCHIVE/collections/03_MANUSCRIPTS
+    tier: 2
+  - label: archive-synth-copy
+    path: ARCHIVE/collections/SYNTH_COPY
+    tier: 2
+  - label: archive-reviewed
+    path: ARCHIVE/collections/10_ALREADY_REVIEWED
+    tier: 2
+    note: infrared-glenn "ALREADY REVIEWED" collection (March 2026); the largest tier-2 contributor
+    exclude:
+      - other/MoA_Session_*   # 24 multi-agent session transcripts (2.7 MB); tier-3 material
+  - label: archive-reference-papers
+    path: ARCHIVE/collections/08_REFERENCE_PAPERS
+    tier: 2
+  - label: archive-simulations
+    path: ARCHIVE/collections/04_SIMULATIONS
+    tier: 2
+  - label: archive-lean
+    path: ARCHIVE/collections/05_LEAN
+    tier: 2
+    exclude:
+      - code_tracker_guides/**   # 20 third-party, non-UTF-8 tactic guides
+  - label: publications-papers
+    path: ARCHIVE/publications/PAPERS
+    tier: 2
+  - label: publications-final
+    path: ARCHIVE/publications/FINAL PAPERS
+    tier: 2
+  - label: calc-o4
+    path: ARCHIVE/calculations/o4
+    tier: 2
+  - label: calc-hodge-runs
+    path: ARCHIVE/calculations/HODGE RUNS
+    tier: 2
+    note: notes/imported/HODGE_RUNS_2026-08-28 holds ASCII-renamed copies; expect aliases
+  - label: calc-two-cube-b6
+    path: ARCHIVE/calculations/TWO CUBE B6
+    tier: 2
+  - label: calc-simulations
+    path: ARCHIVE/calculations/SIMULATIONS
+    tier: 2
+  - label: calc-organized-experiments
+    path: ARCHIVE/calculations/organized_experiments
+    tier: 2
+
+  # ---- Tier 3: context and provenance, disabled by default -----------------
+  # About 25,000 passages of agent session logs, chat histories, GPT-generated
+  # masters and off-topic LLM-memory literature. Enable a label locally with
+  # .graph-state/discovery/scope.local.yaml when a task needs that context.
+  - label: archive-research-docs
+    path: ARCHIVE/collections/06_RESEARCH_DOCS
+    tier: 3
+    enabled: false
+    note: GPT masters and mixed research docs, including unrelated IECC material
+  - label: archive-funzone
+    path: ARCHIVE/collections/11_FUNZONE
+    tier: 3
+    enabled: false
+    note: exploratory material; experimental_python duplicates 04_SIMULATIONS
+  - label: provenance-09-archive
+    path: ARCHIVE/provenance/09_ARCHIVE
+    tier: 3
+    enabled: false
+    note: relocated glacial uploads, pdftool tests and session logs
+  - label: pipeline-tools
+    path: 07_PIPELINE_TOOLS
+    tier: 3
+    enabled: false
+    note: pipeline scripts and PDF-to-markdown conversions; UTF-16 logs are skipped as non-UTF-8
+  - label: legacy-09-archive
+    path: 09_ARCHIVE
+    tier: 3
+    enabled: false
+    note: brain_sessions and chat_history agent logs; memory_llm/papers is off-topic

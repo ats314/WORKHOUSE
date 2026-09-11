@@ -253,12 +253,13 @@ def run_benchmark(root: Path, queries_path: Path, limit: int = 10) -> dict:
         },
         "saved_inputs": before,
         "reviewed_source_manifest": {
-            path: _digest(root / path)
+            path: (_digest(root / path) if (root / path).is_file() else {"unavailable": True})
             for path in sorted(
                 {
                     case["source_review"]["path"]
                     for case in fixture["queries"]
-                    if case.get("source_review", {}).get("path")
+                    # Negative controls record "none": nothing to hash.
+                    if case.get("source_review", {}).get("path") not in (None, "", "none")
                 }
             )
         },

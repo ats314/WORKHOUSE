@@ -1,0 +1,1968 @@
+# Discovery concept lexicon: one concept, its spellings across source families.
+#
+# Why this file exists: the discovery engine finds a cross-family source only
+# when the query uses that family's words. September derivations write
+# "conditional score", "outside quantum pressure", "selected inverse"; the
+# imported notes and corpus-import write "Brascamp-Lieb", "effective
+# potential", "Schur complement". An agent that searches in one vocabulary
+# reads the silence of the other families as absence.
+#
+# Every variant is OBSERVED, never invented: `source` is a checkout path with
+# the line(s) where that family uses the spelling, and
+# `workhouse discover lexicon validate` fails when the file, the lines, or the
+# words are gone. A variant without a citation is a guess, and a search that
+# expands through guesses reads its own guesses as corpus evidence.
+#
+# Entries carry terminology only. Status, evidence and tier belong to ledger
+# records; a lexicon entry with those keys is rejected.
+#
+# Families (roots): derivations (docs/derivations, docs/research, research),
+# historical (theory), notes (notes/imported), literature (literature),
+# corpus-import (corpus-import), paper (paper).
+#
+# Maintain with `workhouse discover lexicon add --entry entry.yaml`; keep
+# `entries:` as the last top-level key so appends are textual.
+schema: workhouse-discovery-lexicon/v1
+version: 1
+updated_on: 2026-09-11
+description: >
+  Concept-to-terminology map across the checkout's source families, each
+  variant cited to a line where that family uses it. Seeded on 2026-09-11 by
+  reading docs/derivations, notes/imported, corpus-import, literature, paper
+  and theory; symbol aliases stay in ledger/symbols.yaml.
+entries:
+  - concept: conditional-score
+    meaning: >
+      The gradient of the log ground-state density (or log Gibbs density)
+      conditioned on a coarse observable; its conditional variance is the
+      quantity the W6 tail-control notes call K_g(w).
+    variants:
+      - text: conditional score
+        family: derivations
+        source: docs/derivations/w6-conditional-score-tail-control.md:22
+      - text: conditional score
+        family: paper
+        source: paper/research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md:45
+      - text: Fisher term
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-005-obstruction-global-cd.md:757
+      - text: log derivatives
+        family: paper
+        source: paper/research_notes/G19_TRUE_GROUND_CENTER_SCORE_OBSTRUCTION_20260905.md:124
+    related: [brascamp-lieb, score-frame, rare-fiber]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: rare-fiber
+    meaning: >
+      Level sets of the coarse source observable that carry exponentially
+      small mass; the notes and corpus call the same conditioning "rare-source"
+      factorization.
+    variants:
+      - text: rare fibers
+        family: derivations
+        source: docs/derivations/w6-conditional-transport-obstruction.md:212
+      - text: rare fibers
+        family: paper
+        source: paper/research_notes/G19_WILSON_BLOCK_SCORE_AND_FIBER_OBSTRUCTION_20260905.md:1
+      - text: rare-source tail
+        family: derivations
+        source: docs/derivations/w6-conditional-score-tail-control.md:203
+      - text: rare-source factorization
+        family: corpus-import
+        source: corpus-import/papers/gauge_constrained_spectral_geometry/PAPER_FLUX_gauge_constrained_spectral_geometry_unified_v1_4_2026-08-08.md:610
+      - text: level sets
+        family: derivations
+        source: docs/derivations/w6-source-generator-score-frame.md:204
+      - text: sublevel sets
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-011-matrix-hinge-chain.md:855
+    related: [lemma-q, conditional-score]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: hessian-defect
+    meaning: >
+      The signed shortfall of a conditional Hessian below a target curvature
+      floor, tracked through a Riccati continuation; the notes call it the
+      curvature defect or defect functional.
+    variants:
+      - text: Hessian defect
+        family: derivations
+        source: docs/derivations/wilson-sc17-spatial-closure.md:603
+      - text: signed Riccati defect
+        family: derivations
+        source: docs/derivations/wilson-sc17-spatial-closure.md:788
+      - text: signed defect
+        family: derivations
+        source: docs/research/graph-priorities-2026-09-10.md:25
+      - text: curvature defect
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md:288
+      - text: defect functional
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-005-obstruction-global-cd.md:757
+    related: [riccati-flow, outside-pressure]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: outside-pressure
+    meaning: >
+      The potential a block feels from the rest of the system after the
+      outside variables are integrated out; classical texts call it the
+      effective potential or marginalization.
+    variants:
+      - text: outside quantum pressure
+        family: derivations
+        source: docs/derivations/wilson-sc17-spatial-closure.md:712-713
+      - text: conditional pressure
+        family: derivations
+        source: docs/derivations/wilson-true-vacuum-block-estimates.md:145
+      - text: integrating out
+        family: derivations
+        source: docs/derivations/yangmills-continuum-balaban-multiscale-proof.md:252
+      - text: marginalising
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-005-obstruction-global-cd.md:757
+      - text: effective potential
+        family: corpus-import
+        source: corpus-import/theory/DOC_GOV_proof_chain.md:20
+      - text: source pressure
+        family: corpus-import
+        source: corpus-import/theory/notes/NOTE_PMBSF_su2_closure_full_derivations_2026_05_24.md:152
+      - text: integrating out
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_master_pass19_lci_exacthb_2026_05_26.md:1142
+      - text: quantum effective potential
+        family: paper
+        source: paper/research_notes/G19_ROUGH_GAUGE_COERCIVITY_AND_CURVATURE_20260910.md:56
+    related: [hessian-defect, schur-complement]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: selected-inverse
+    meaning: >
+      The inverse of a fast (hard) block restricted to a selected source
+      direction, and the residual left after correcting the source by that
+      block inverse.
+    variants:
+      - text: selected inverse
+        family: derivations
+        source: docs/derivations/wilson-selected-inverse-wall.md:145
+      - text: corrected residual
+        family: derivations
+        source: research/2026-09-10_w6_soft_residual/README.md:19
+      - text: selected inverse-energy
+        family: paper
+        source: paper/research_notes/THEORY_CURRENT_BRIDGES_20260910.md:19
+      - text: inverse energy
+        family: paper
+        source: paper/research_notes/G19_FULL_GAUSSIAN_FAST_GREEN_20260906.md:155
+      - text: block inverse
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-011-matrix-hinge-chain.md:374
+      - text: high-block inverse
+        family: corpus-import
+        source: corpus-import/papers/gauge_constrained_spectral_geometry/PAPER_FLUX_gauge_constrained_spectral_geometry_unified_v1_4_2026-08-08.md:167
+    related: [schur-complement, gaussian-reference, combes-thomas]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: brascamp-lieb
+    meaning: >
+      The variance bound Var(f) <= E[grad f^T (Hess V)^-1 grad f] for a
+      log-concave measure and its conditional/fiberwise Poincare form.
+    variants:
+      - text: Brascamp-Lieb
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:766
+      - text: Brascamp–Lieb
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_master_pass19_lci_exacthb_2026_05_26.md:184
+      - text: Stein-coupling
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_master_pass19_lci_exacthb_2026_05_26.md:184
+      - text: conditional variance
+        family: derivations
+        source: docs/derivations/w6-conditional-score-tail-control.md:42
+      - text: conditional variance
+        family: paper
+        source: paper/research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md:89
+      - text: Poincaré inequality
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-005-obstruction-global-cd.md:710
+      - text: conditional Poincare inequality
+        family: paper
+        source: paper/research_notes/G19_CONDITIONAL_QUANTUM_PATH_COVARIANCE_20260906.md:90
+    related: [conditional-score, spectral-gap, schur-complement]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: schur-complement
+    meaning: >
+      The block elimination A - B C^-1 B* (Feshbach/Schrieffer-Wolff
+      projection) whose positivity floor and excess control a coupled block.
+    variants:
+      - text: Schur complement
+        family: derivations
+        source: docs/derivations/theory-geometry-and-riccati-bridges.md:256
+      - text: Schur excess
+        family: derivations
+        source: docs/derivations/wilson-spatial-schur-excess.md:1
+      - text: soft Schur floor
+        family: derivations
+        source: research/2026-09-10_w6_soft_residual/README.md:102
+      - text: Schur complement
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md:254
+      - text: Schur complement identity
+        family: corpus-import
+        source: corpus-import/theory/DOC_GOV_open_problems.md:101
+      - text: Schur complement
+        family: paper
+        source: paper/research_notes/G18_EXCITED_WINDOW_OPERATOR_BRIDGE_20260904.md:34
+      - text: Feshbach
+        family: corpus-import
+        source: corpus-import/INDEX.md:38
+      - text: Feshbach channel
+        family: paper
+        source: paper/research_notes/G14_HODGE_FESHBACH_CHANNEL_20260908.md:1
+      - text: Schrieffer-Wolff / Feshbach projection
+        family: literature
+        source: literature/index.yaml:3388
+      - text: Schrieffer-Wolff
+        family: notes
+        source: notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt:6456
+    related: [selected-inverse, riccati-flow, outside-pressure]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: riccati-flow
+    meaning: >
+      The matrix Riccati equation for a Hessian or curvature propagated
+      through scales or time; the notes call the continuous form the vHJ
+      (Hamilton-Jacobi) curvature flow.
+    variants:
+      - text: Riccati equation
+        family: derivations
+        source: docs/derivations/theory-geometry-and-riccati-bridges.md:5
+      - text: vHJ curvature-flow
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md:3
+      - text: Hamilton--Jacobi (vHJ) equation
+        family: notes
+        source: notes/imported/RESEARCH_2026-08/Dynamic_Hessian_Riccati_Flow.tex:22
+      - text: vHJ equation
+        family: corpus-import
+        source: corpus-import/theory/DOC_GOV_open_problems.md:289
+      - text: Riccati
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/NOTE_OP1_unif_conjb_strategy.md:37
+      - text: matrix Riccati
+        family: paper
+        source: paper/research_notes/G19_ROUGH_GAUGE_COERCIVITY_AND_CURVATURE_20260910.md:57
+    related: [hessian-defect, schur-complement, bakry-emery]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: combes-thomas
+    meaning: >
+      Exponential off-diagonal decay of the inverse (resolvent, Green's
+      function) of a uniformly positive finite-range operator.
+    variants:
+      - text: Combes--Thomas type estimate
+        family: derivations
+        source: docs/derivations/yangmills-gpu-resolution-audit.md:64
+      - text: Combes–Thomas resolvent localization
+        family: derivations
+        source: docs/derivations/yangmills-continuum-balaban-multiscale-proof.md:18
+      - text: Combes–Thomas exponential decay of inverse blocks
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-012-combes-thomas.md:34
+      - text: Combes–Thomas / Davies
+        family: notes
+        source: notes/imported/RESEARCH_2026-08/Exciting_06_Sanity_Check_Numerics_Maxwell_Decay.md:16
+      - text: Combes-Thomas
+        family: corpus-import
+        source: corpus-import/numerics/op12_theta/NOTE_OP1_kchain_ledger_2026-06-11.md:3
+      - text: Combes-Thomas inverse kernel
+        family: corpus-import
+        source: corpus-import/theory/under_review/NOTE_HAAR_proof_14_spi_lsi_localization.md:7
+      - text: Combes--Thomas estimate
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:1617
+      - text: Combes–Thomas / Helffer–Sjöstrand
+        family: literature
+        source: literature/library/README.md:50
+    related: [exponential-decay, selected-inverse, helffer-sjostrand]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: lemma-q
+    meaning: >
+      The PMBSF conditional rare-source factorization bound (Lemma Q), also
+      stated in a cavity source-stability form.
+    variants:
+      - text: Lemma Q
+        family: corpus-import
+        source: corpus-import/DECISIONS.md:17
+      - text: conditional rare-source factorization
+        family: corpus-import
+        source: corpus-import/papers/gauge_constrained_spectral_geometry/PAPER_FLUX_gauge_constrained_spectral_geometry_unified_v1_4_2026-08-08.md:610
+      - text: Cavity source-stability
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_expanded_derivations_lemmaq_su3_2026_05_25.md:305
+      - text: Lemma Q
+        family: notes
+        source: notes/imported/WORK_SINCE_2026-08/carrier_persistence_note_rev4.txt:300
+      - text: Lemma Q
+        family: historical
+        source: theory/governance/INDEX.md:40
+      - text: rare-source tail
+        family: derivations
+        source: docs/derivations/w6-conditional-score-tail-control.md:203
+    related: [rare-fiber, polymer-expansion, birman-schwinger]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: kallen-lehmann
+    meaning: >
+      The positive spectral representation of a two-point function or
+      transfer operator; a mass atom is an isolated point of that spectral
+      measure.
+    variants:
+      - text: Källén–Lehmann
+        family: notes
+        source: notes/imported/WORK_SINCE_2026-08/WORKHOUSE_CARRIER4_PART_VI_AUDIT_2026-08-22.md:157
+      - text: matrix Källén–Lehmann carrier-atom
+        family: notes
+        source: notes/imported/WORK_SINCE_2026-08/WORKHOUSE_MATRIX_KL_CARRIER_ATOM_THEOREM_2026-08-22.md:1
+      - text: Källén-Lehmann spectral representation
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/NOTE_OP1_unif_conjb_strategy.md:109
+      - text: Källén-Lehmann Spectral Representation
+        family: literature
+        source: literature/library/volume2/PAPER_INDEX.md:171
+      - text: positive spectral representation
+        family: derivations
+        source: docs/derivations/source-currents-and-spectral-totality.md:273
+      - text: spectral measure
+        family: derivations
+        source: docs/derivations/wilson-sc17-thermodynamic-limit.md:505
+      - text: Positive spectral measures
+        family: literature
+        source: literature/yangmills/DERIVATION_PROGRAM.md:21
+      - text: renormalised spectral measure
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:1592
+    related: [spectral-atom, reflection-positivity, mass-gap]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: hardy-tail
+    meaning: >
+      A Hardy-type weighted inequality controlling the tail of a source
+      derivative; the derivations call its constant the tail resistance.
+    variants:
+      - text: Hardy tail-resistance
+        family: derivations
+        source: docs/derivations/w6-conditional-score-tail-control.md:7
+      - text: Hardy tail-resistance criterion
+        family: derivations
+        source: docs/derivations/w6-ground-jets-and-transport-budget.md:26
+      - text: Hardy inequality
+        family: literature
+        source: literature/yangmills-derivations/theory_graph.yaml:306
+      - text: Hardy completion
+        family: literature
+        source: literature/yangmills-derivations/theory_graph.yaml:292
+      - text: radial inequality
+        family: derivations
+        source: docs/derivations/yangmills-formal-bridges.md:180
+    related: [conditional-score, spectral-gap]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: hodge-laplacian
+    meaning: >
+      The plaquette (discrete Maxwell) operator d1*d1 and its Hodge
+      completion on lattice cochains; the Wilson Hessian at the vacuum.
+    variants:
+      - text: d1*d1
+        family: derivations
+        source: docs/derivations/wilson-spatial-inputs/G19_WILSON_FINITE_CELL_GAP_AND_BOUNDARY_FORM_20260905.md:294
+      - text: Hodge Laplacian
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-012-combes-thomas.md:704
+      - text: discrete Maxwell operator
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:35
+      - text: Discrete Hodge Laplacian
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/defect_gas_docs/NOTE_OP1_synthesis_04_lattice_gauge_theory.md:63
+      - text: lattice-Maxwell operator
+        family: corpus-import
+        source: corpus-import/papers/gauge_constrained_spectral_geometry/PAPER_FLUX_gauge_constrained_spectral_geometry_unified_v1_4_2026-08-08.md:249
+      - text: Single-plaquette Laplacian
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_master_pass19_lci_exacthb_2026_05_26.md:3590
+      - text: Hodge Laplacians
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:715
+      - text: plaquette Laplacians
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:67
+    related: [boundary-operator, wilson-action]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: boundary-operator
+    meaning: >
+      The oriented cellular boundary/coboundary (incidence) map between
+      links, plaquettes and cubes that fixes the band geometry.
+    variants:
+      - text: Bloch incidence operators
+        family: derivations
+        source: docs/derivations/hodge-polymer-supported-statements.md:12
+      - text: Bloch incidence matrix
+        family: historical
+        source: theory/MASTER_THEORY_UNIFIED_2026-08-20_v4_3.md:287
+      - text: plaquette–link incidence matrix
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-010-hessian-numerics.md:267
+      - text: simplicial coboundary
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-011-matrix-hinge-chain.md:184
+      - text: cellular boundary operator
+        family: corpus-import
+        source: corpus-import/papers/gauge_constrained_spectral_geometry/PAPER_FLUX_gauge_constrained_spectral_geometry_unified_v1_4_2026-08-08.md:185
+      - text: plaquette coboundary
+        family: corpus-import
+        source: corpus-import/programs/one_plaquette/NOTE_FLUX_master_one_plaquette_program_v2_7.md:272
+      - text: cellular boundary operator
+        family: paper
+        source: paper/master_paper_2026-08-30.tex:1385
+      - text: Bloch incidence matrix
+        family: paper
+        source: paper/homological_flat_bands_2026-08-28.txt:178
+      - text: cellular coboundary
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:62
+    related: [hodge-laplacian, carrier]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: transfer-matrix
+    meaning: >
+      The Euclidean time-step operator of the lattice theory and its
+      Hamiltonian (Kogut-Susskind) counterpart in temporal gauge.
+    variants:
+      - text: transfer matrix
+        family: derivations
+        source: docs/derivations/yangmills-gpu-resolution-audit.md:130
+      - text: transfer matrix
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:807
+      - text: Effective transfer matrix
+        family: literature
+        source: literature/index.yaml:353
+      - text: transfer matrix
+        family: corpus-import
+        source: corpus-import/literature/LIT_SU3_compass_artifact_wf_1fcca1e0_37f5_5b84_b994.md:88
+      - text: Wilson-action transfer matrix
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:1474
+      - text: Kogut-Susskind Hamiltonian
+        family: literature
+        source: literature/index.yaml:552
+      - text: Kogut-Susskind Hamiltonian
+        family: corpus-import
+        source: corpus-import/programs/one_plaquette/y4_o3_flatband_verification/THM_Y4_theorem_flat_band_breaking_2026-06-13.md:5
+      - text: Hamiltonian lattice gauge theory
+        family: literature
+        source: literature/index.yaml:172
+      - text: Hamiltonian lattice gauge
+        family: paper
+        source: paper/README.md:156
+      - text: Temporal gauge
+        family: paper
+        source: paper/research_notes/G19_TEMPORAL_WILSON_MATCHING_20260904.md:62
+    related: [spectral-gap, reflection-positivity, gauge-fixing]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: spectral-gap
+    meaning: >
+      A positive distance between the ground state and the rest of the
+      spectrum, equivalently a Poincare inequality with a finite constant.
+    variants:
+      - text: conditional spectral gap
+        family: derivations
+        source: docs/derivations/source-currents-and-spectral-totality.md:224
+      - text: Poincare inequality
+        family: derivations
+        source: docs/derivations/wilson-background-covariance-continuation.md:405
+      - text: spectral gap
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:33
+      - text: Poincaré constant
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:458
+      - text: physical spectral gap
+        family: literature
+        source: literature/yangmills/theory_graph.yaml:230
+      - text: weighted Poincare inequality
+        family: literature
+        source: literature/yangmills/DERIVATION_PROGRAM.md:19
+      - text: spectral gap
+        family: corpus-import
+        source: corpus-import/literature/LIT_SU3_compass_artifact_wf_1fcca1e0_37f5_5b84_b994.md:4
+      - text: spectral gap
+        family: paper
+        source: paper/research_notes/G18_EXCITED_WINDOW_OPERATOR_BRIDGE_20260904.md:343
+      - text: Poincare constant
+        family: paper
+        source: paper/research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md:112
+    related: [volume-uniform, mass-gap, log-sobolev, brascamp-lieb]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: volume-uniform
+    meaning: >
+      A constant or gap that does not depend on the lattice volume; the wall
+      every finite-volume estimate must pass before an infinite-volume claim.
+    variants:
+      - text: uniform in volume
+        family: derivations
+        source: docs/derivations/source-currents-and-spectral-totality.md:251
+      - text: volume-uniform gap
+        family: derivations
+        source: docs/research/next-path-wilson-transfer-2026-09-08.md:141
+      - text: uniformly in the volume
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:149
+      - text: uniform spectral gap
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:584
+      - text: uniform in the volume
+        family: literature
+        source: literature/yangmills/theory_graph.yaml:132
+      - text: volume-uniform gap requirement
+        family: literature
+        source: literature/yangmills-derivations/theory_graph.yaml:16
+      - text: uniform in volume
+        family: corpus-import
+        source: corpus-import/literature/LIT_SU3_compass_artifact_wf_1fcca1e0_37f5_5b84_b994.md:88
+      - text: volume-uniform spectral gap
+        family: corpus-import
+        source: corpus-import/literature/LIT_SU3_compass_artifact_wf_1fcca1e0_37f5_5b84_b994.md:92
+      - text: uniform in volume
+        family: paper
+        source: paper/README.md:11
+      - text: volume-uniform gap
+        family: paper
+        source: paper/research_notes/G17_CORRECTED_ALPHA_DEPENDENT_KP_STABILITY_20260910.md:23
+    related: [thermodynamic-limit, spectral-gap]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: linked-cluster
+    meaning: >
+      Connected (cumulant) contributions in a cluster expansion; the
+      historical glueball series and the September symbolic-N cumulants.
+    variants:
+      - text: cumulant
+        family: derivations
+        source: docs/derivations/yangmills-gpu-resolution-audit.md:547
+      - text: connected correlation function
+        family: derivations
+        source: docs/derivations/yangmills-continuum-balaban-multiscale-proof.md:420
+      - text: linked-cluster
+        family: historical
+        source: theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md:6
+      - text: Linked-cluster expansions
+        family: literature
+        source: literature/index.yaml:299
+      - text: one-link cumulant weights
+        family: literature
+        source: literature/index.yaml:340
+      - text: linked-cluster discipline
+        family: corpus-import
+        source: corpus-import/INDEX.md:103
+      - text: rooted cumulants
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/LEM_PMBSF_lemma_q_exacthb_stageb_update_2026_05.md:390
+      - text: linked-cluster
+        family: paper
+        source: paper/homological_flat_bands_2026-08-28.txt:482
+      - text: fourth-order cumulant
+        family: paper
+        source: paper/README.md:174
+      - text: connected correlation function
+        family: paper
+        source: paper/research_notes/G17_CORRECTED_ALPHA_DEPENDENT_KP_STABILITY_20260910.md:240
+    related: [polymer-expansion, hopping, symbolic-n]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: haar-integration
+    meaning: >
+      Integration over the compact gauge group with Haar measure, evaluated
+      through Weingarten moments.
+    variants:
+      - text: Haar measure
+        family: derivations
+        source: docs/derivations/track-a-supported-statements.md:197
+      - text: Haar measure
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-001-haar-jacobian-hessian.md:29
+      - text: Weingarten tensor
+        family: notes
+        source: notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt:4108
+      - text: Haar measure
+        family: literature
+        source: literature/index.yaml:635
+      - text: Weingarten calculus
+        family: literature
+        source: literature/README.md:37
+      - text: Haar integral
+        family: corpus-import
+        source: corpus-import/STATE.md:74
+      - text: Weingarten coefficients
+        family: corpus-import
+        source: corpus-import/papers/flat_band/PAPER_FLUX_glueball_flat_band_v1_1.tex:1034
+      - text: Haar integrals
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:83
+      - text: Weingarten
+        family: paper
+        source: paper/README.md:176
+    related: [character-expansion, haar-jacobian, symbolic-n]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: character-expansion
+    meaning: >
+      Expansion of a class function or Boltzmann weight in group characters
+      (Peter-Weyl), the engine of strong-coupling and high-temperature series.
+    variants:
+      - text: character expansion
+        family: derivations
+        source: docs/derivations/wilson-true-vacuum-block-estimates.md:62
+      - text: Peter-Weyl
+        family: derivations
+        source: docs/derivations/wilson-sc17-thermodynamic-limit.md:395
+      - text: character expansion
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-011-matrix-hinge-chain.md:851
+      - text: Peter-Weyl irrep
+        family: notes
+        source: notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt:2748
+      - text: high-temperature expansion
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:584
+      - text: character expansions
+        family: corpus-import
+        source: corpus-import/literature/LIT_FLUX_compass_artifact_wf_8908dab0_6ef9_5d49_9a5e.md:18
+      - text: sparse-Peter-Weyl
+        family: corpus-import
+        source: corpus-import/papers/THM_SUN_su_n_class_function_theorem_v2_alt.tex:604
+      - text: character expansion
+        family: paper
+        source: paper/research_notes/G19_UNIFORM_WILSON_WINDOW_20260904.md:298
+    related: [haar-integration, strong-coupling]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: thermodynamic-limit
+    meaning: >
+      The infinite-volume limit of finite-lattice quantities at fixed
+      spacing.
+    variants:
+      - text: thermodynamic limit
+        family: derivations
+        source: docs/derivations/wilson-marked-transfer.md:168
+      - text: infinite-volume
+        family: derivations
+        source: docs/derivations/theory-geometry-and-riccati-bridges.md:10
+      - text: infinite-volume
+        family: historical
+        source: theory/MASTER_THEORY_UNIFIED_2026-08-20_v4_3.md:108
+      - text: thermodynamic limit
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:661
+      - text: infinite-volume limit
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-005-obstruction-global-cd.md:462
+      - text: infinite-volume
+        family: literature
+        source: literature/index.yaml:1473
+      - text: thermodynamic limit
+        family: corpus-import
+        source: corpus-import/literature/LIT_SU3_compass_artifact_wf_1fcca1e0_37f5_5b84_b994.md:37
+      - text: infinite-volume
+        family: corpus-import
+        source: corpus-import/INDEX.md:108
+      - text: thermodynamic limit
+        family: paper
+        source: paper/master_paper_2026-08-28.tex:496
+      - text: infinite-volume
+        family: paper
+        source: paper/README.md:63
+    related: [volume-uniform, continuum-limit, mass-gap]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: continuum-limit
+    meaning: >
+      The lattice-spacing-to-zero (scaling) limit along an asymptotically
+      free trajectory.
+    variants:
+      - text: continuum limits
+        family: derivations
+        source: docs/derivations/source-currents-and-spectral-totality.md:325
+      - text: lattice spacing tends to zero
+        family: derivations
+        source: docs/derivations/wilson-sc17-spatial-closure.md:886
+      - text: continuum limit
+        family: historical
+        source: theory/MASTER_THEORY_UNIFIED_2026-08-20_v4_3.md:2025
+      - text: continuum limit
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:724
+      - text: scaling limit
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-015-q6j.md:720
+      - text: continuum limit
+        family: literature
+        source: literature/index.yaml:814
+      - text: lattice spacing tends to zero
+        family: literature
+        source: literature/yangmills/theory_graph.yaml:120
+      - text: continuum limit
+        family: corpus-import
+        source: corpus-import/STATE.md:57
+      - text: scaling limit
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_master_pass19_lci_exacthb_2026_05_26.md:4748
+      - text: continuum limit
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:120
+    related: [thermodynamic-limit, asymptotic-freedom, mass-gap]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: mass-gap
+    meaning: >
+      The lowest excitation energy above the vacuum in physical units; the
+      glueball mass when identified with a particle.
+    variants:
+      - text: mass gap
+        family: derivations
+        source: docs/derivations/wilson-background-covariance-continuation.md:406
+      - text: physical mass gap
+        family: derivations
+        source: docs/derivations/yangmills-continuum-balaban-multiscale-proof.md:433
+      - text: lowest excitation
+        family: derivations
+        source: docs/derivations/yangmills-continuum-balaban-multiscale-proof.md:487
+      - text: mass gap
+        family: historical
+        source: theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md:1446
+      - text: physical glueball mass
+        family: historical
+        source: theory/MASTER_THEORY_UNIFIED_2026-08-20_v4_3.md:126
+      - text: volume-uniform mass gap
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-005-obstruction-global-cd.md:138
+      - text: physical mass
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:185
+      - text: mass gap
+        family: literature
+        source: literature/index.yaml:89
+      - text: physical mass
+        family: literature
+        source: literature/index.yaml:486
+      - text: glueball mass
+        family: literature
+        source: literature/index.yaml:156
+      - text: mass gap
+        family: corpus-import
+        source: corpus-import/DECISIONS.md:23
+      - text: physical mass gap
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_expanded_derivations_lemmaq_su3_2026_05_25.md:1481
+      - text: mass gap
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:121
+      - text: physical mass gap
+        family: paper
+        source: paper/research_notes/G17_HAMILTONIAN_OSTERWALDER_SEILER_TRANSCRIPTION_20260910.md:59
+      - text: physical glueball mass
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:120
+    related: [spectral-gap, continuum-limit, spectral-atom]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: symbolic-n
+    meaning: >
+      Working over the rational function field in the rank N instead of rank
+      by rank; the corpus calls the results the all-rank family or a rank
+      sweep.
+    variants:
+      - text: symbolic all-rank assembly
+        family: derivations
+        source: docs/derivations/wilson-shell-inputs/G18_ROOTED_WILSON_CONTRACTION_20260905.md:428
+      - text: all-rank family
+        family: historical
+        source: theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md:6
+      - text: symbolic N
+        family: notes
+        source: notes/imported/UPLOADS_2026-08-28d/OFF_AXIS_LEDGER.txt:69
+      - text: all-rank shape formula
+        family: notes
+        source: notes/imported/UPLOADS_2026-08-28d/OFF_AXIS_LEDGER.txt:28
+      - text: fixed-rank sweep
+        family: literature
+        source: literature/index.yaml:632
+      - text: symbolic N
+        family: corpus-import
+        source: corpus-import/programs/one_plaquette/sun_band_shape/README.md:45
+      - text: all-rank second-order law
+        family: corpus-import
+        source: corpus-import/INDEX.md:98
+      - text: rational function field
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:87
+      - text: symbolic all-rank assembly
+        family: paper
+        source: paper/README.md:136
+    related: [linked-cluster, hopping]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: wilson-action
+    meaning: >
+      The plaquette (single-plaquette trace) action of lattice gauge theory.
+    variants:
+      - text: Wilson action
+        family: derivations
+        source: docs/derivations/wilson-background-covariance-continuation.md:130
+      - text: plaquette action
+        family: derivations
+        source: docs/derivations/yangmills-pbh-wilson-test.md:109
+      - text: Wilson action
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-001-haar-jacobian-hessian.md:117
+      - text: plaquette action
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:667
+      - text: plaquette actions
+        family: literature
+        source: literature/index.yaml:1049
+      - text: single-plaquette rest energy
+        family: literature
+        source: literature/index.yaml:480
+      - text: Wilson action
+        family: corpus-import
+        source: corpus-import/numerics/op12_theta/NOTE_OP1_results_2026-06-11.md:9
+      - text: plaquette action
+        family: corpus-import
+        source: corpus-import/numerics/scratch_tmp/y4_sos_repro/Y4_REAL_SPACE_SOS_PACKAGE/README.md:16
+      - text: Wilson action
+        family: paper
+        source: paper/research_notes/G19_OS_BLOCKING_AND_REVERSE_MASS_MATCHING_20260905.md:214
+    related: [hodge-laplacian, wilson-loop, heat-kernel]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: area-law
+    meaning: >
+      Area-law decay of large Wilson loops and the string tension it
+      defines.
+    variants:
+      - text: area law
+        family: literature
+        source: literature/index.yaml:991
+      - text: string tension
+        family: literature
+        source: literature/index.yaml:172
+      - text: confinement
+        family: literature
+        source: literature/index.yaml:172
+      - text: area law
+        family: corpus-import
+        source: corpus-import/literature/LIT_SU3_compass_artifact_wf_1fcca1e0_37f5_5b84_b994.md:88
+      - text: string tension
+        family: corpus-import
+        source: corpus-import/INDEX.md:107
+      - text: string tension
+        family: historical
+        source: theory/MASTER_THEORY_UNIFIED_2026-08-20_v4_3.md:1758
+      - text: string tension
+        family: paper
+        source: paper/master_paper_2026-08-30.tex:2644
+    related: [wilson-loop, mass-gap]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: reflection-positivity
+    meaning: >
+      Osterwalder-Schrader (Osterwalder-Seiler for Wilson) positivity under
+      time reflection, and the OS axioms/reconstruction of a Hilbert space and
+      transfer operator from it.
+    variants:
+      - text: reflection positivity
+        family: derivations
+        source: docs/derivations/yangmills-continuum-balaban-multiscale-proof.md:21
+      - text: OS Reconstruction
+        family: derivations
+        source: docs/derivations/yangmills-continuum-balaban-multiscale-proof.md:510
+      - text: reflection positive
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-008-obstruction-entropy.md:80
+      - text: Osterwalder–Seiler
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-008-obstruction-entropy.md:115
+      - text: OS axioms
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:784
+      - text: reflection positivity
+        family: literature
+        source: literature/index.yaml:1382
+      - text: OS reconstruction
+        family: literature
+        source: literature/yangmills/DERIVATION_PROGRAM.md:11
+      - text: Osterwalder–Schrader reflection positivity
+        family: corpus-import
+        source: corpus-import/programs/one_plaquette/NOTE_FLUX_master_one_plaquette_program_v2_7.md:304
+      - text: Osterwalder–Seiler
+        family: corpus-import
+        source: corpus-import/literature/LIT_SU3_compass_artifact_wf_1fcca1e0_37f5_5b84_b994.md:4
+      - text: OS axioms
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/NOTE_OP1_unif_conjb_strategy.md:119
+      - text: reflection positivity
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:1548
+      - text: OS reconstruction
+        family: paper
+        source: paper/research_notes/G19_GAUSSIAN_OS_HISTORY_OBSERVABILITY_20260905.md:147
+    related: [transfer-matrix, chessboard-estimate, kallen-lehmann]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: chessboard-estimate
+    meaning: >
+      The reflection-positivity chessboard bound that spreads a one-tile
+      event over the whole lattice, giving volume-uniform plaquette tails.
+    variants:
+      - text: chessboard estimate
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-008-obstruction-entropy.md:91
+      - text: Chessboard single-plaquette tail bound
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-013-rp-os.md:522
+      - text: chessboard tail bound
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/README.md:61
+      - text: chessboard route
+        family: corpus-import
+        source: corpus-import/records/review/REVIEW_LEDGER.md:23
+      - text: chessboard route opened
+        family: corpus-import
+        source: corpus-import/records/STATE_ARCHIVE_2026-06-15.md:35
+    related: [reflection-positivity, small-field]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: log-sobolev
+    meaning: >
+      The logarithmic Sobolev inequality (LSI), stronger than Poincare, and
+      the constants it yields.
+    variants:
+      - text: LSI
+        family: derivations
+        source: docs/derivations/wilson-weighted-repair-and-rotor-gap.md:58
+      - text: log-Sobolev
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-007-obstruction-scaling.md:67
+      - text: LSI
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:33
+      - text: log-Sobolev
+        family: corpus-import
+        source: corpus-import/literature/LIT_PMBSF_rigorous_mathematical_analysis_n_scaling_vs._athenodorou.md:37
+      - text: Dobrushin LSI window
+        family: corpus-import
+        source: corpus-import/papers/THM_SUN_su_n_class_function_theorem_v2_alt.tex:167
+    related: [bakry-emery, spectral-gap]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: bakry-emery
+    meaning: >
+      The Bakry-Emery curvature-dimension condition CD(rho, infinity): a
+      Ricci-plus-Hessian curvature floor implying Poincare and log-Sobolev
+      constants.
+    variants:
+      - text: Bakry-Emery tensor
+        family: derivations
+        source: docs/derivations/yangmills-pbh-wilson-test.md:43
+      - text: Bakry-Émery estimate
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-001-haar-jacobian-hessian.md:129
+      - text: CD(rho,infinity)
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:35
+      - text: curvature floor
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:149
+      - text: Bakry-Emery curvature
+        family: literature
+        source: literature/index.yaml:3055
+      - text: Bakry–Émery route
+        family: corpus-import
+        source: corpus-import/numerics/clay_verify/README.md:7
+      - text: 'CD(\rho, \infty)'
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/defect_gas_docs/NOTE_OP1_synthesis_04_lattice_gauge_theory.md:152
+      - text: Bakry--Émery Drift Curvature
+        family: paper
+        source: paper/research_notes/G19_ROUGH_GAUGE_COERCIVITY_AND_CURVATURE_20260910.md:1
+    related: [log-sobolev, riccati-flow, haar-jacobian]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: polymer-expansion
+    meaning: >
+      Polymer/cluster expansions with Kotecky-Preiss (Mayer tree) convergence
+      criteria on polymer activities.
+    variants:
+      - text: polymer activity
+        family: derivations
+        source: docs/derivations/hodge-polymer-supported-statements.md:104
+      - text: cluster expansion
+        family: derivations
+        source: docs/derivations/hodge-polymer-supported-statements.md:15
+      - text: Kotecky-Preiss criterion
+        family: derivations
+        source: docs/derivations/wilson-marked-transfer.md:253
+      - text: Mayer Tree-Graph Expansion
+        family: derivations
+        source: docs/derivations/yangmills-continuum-balaban-multiscale-proof.md:269
+      - text: polymer expansion
+        family: notes
+        source: notes/imported/WORK_SINCE_2026-08/WORKHOUSE_UNIFORM_CARRIER_RESIDUE_H3_AUDIT_2026-08-22.md:49
+      - text: Kotecký–Preiss criterion
+        family: notes
+        source: notes/imported/WORK_SINCE_2026-08/carrier_persistence_note_rev4.txt:309
+      - text: polymer expansions
+        family: literature
+        source: literature/library/volume2/CITATION_TRAILS.md:123
+      - text: polymer expansion
+        family: corpus-import
+        source: corpus-import/papers/THM_SUN_su_n_class_function_theorem_v2_alt.tex:726
+      - text: Kotecký–Preiss cluster expansion
+        family: corpus-import
+        source: corpus-import/literature/LIT_SU3_compass_artifact_wf_1fcca1e0_37f5_5b84_b994.md:92
+      - text: polymer activities
+        family: paper
+        source: paper/research_notes/G17_CORRECTED_ALPHA_DEPENDENT_KP_STABILITY_20260910.md:6
+      - text: Kotecký--Preiss
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:1636
+      - text: Mayer / Kotecký–Preiss polymer tree criterion
+        family: paper
+        source: paper/research_notes/G17_HAMILTONIAN_OSTERWALDER_SEILER_TRANSCRIPTION_20260910.md:36
+    related: [linked-cluster, balaban-multiscale, lemma-q]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: balaban-multiscale
+    meaning: >
+      Balaban's block-spin renormalization-group construction of lattice
+      gauge theory across scales, with small/large-field splitting.
+    variants:
+      - text: Balaban
+        family: derivations
+        source: docs/derivations/wilson-background-covariance-continuation.md:231
+      - text: Balaban Renormalization Group
+        family: derivations
+        source: docs/derivations/yangmills-continuum-balaban-multiscale-proof.md:1
+      - text: multiscale
+        family: derivations
+        source: docs/derivations/wilson-background-covariance-continuation.md:545
+      - text: Balaban-type constructions
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-008-obstruction-entropy.md:268
+      - text: multi-scale hinge
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-008-obstruction-entropy.md:400
+      - text: block-spin
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-010-hessian-numerics.md:1093
+      - text: Renormalization group approach
+        family: literature
+        source: literature/index.yaml:1433
+      - text: Bałaban/Dimock
+        family: corpus-import
+        source: corpus-import/papers/gauge_constrained_spectral_geometry/PAPER_FLUX_gauge_constrained_spectral_geometry_unified_v1_4_2026-08-08.md:628
+      - text: Renormalization Group According to Balaban
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_literature_map_lemma_q_block_source_stability.md:49
+      - text: constructive multiscale scheme
+        family: corpus-import
+        source: corpus-import/literature/LIT_SU3_compass_artifact_wf_1fcca1e0_37f5_5b84_b994.md:57
+      - text: block-spin localization
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_master_pass19_lci_exacthb_2026_05_26.md:1622
+      - text: Balaban average
+        family: paper
+        source: paper/master_paper_2026-08-30.tex:2608
+      - text: Balaban multiscale renormalization group
+        family: paper
+        source: paper/research_notes/G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md:13
+    related: [polymer-expansion, small-field, continuum-limit]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: gaussian-reference
+    meaning: >
+      A Gaussian (oscillator) comparison measure or fast space used to
+      dominate or reference the interacting one.
+    variants:
+      - text: Gaussian reference
+        family: derivations
+        source: docs/derivations/w6-conditional-score-tail-control.md:113
+      - text: common Gauss constraint
+        family: derivations
+        source: docs/derivations/wilson-weighted-repair-and-rotor-gap.md:168
+      - text: Gaussian domination
+        family: paper
+        source: paper/research_notes/G19_WILSON_ACTUAL_BLOCK_FAST_COMPLEMENT_20260905.md:282
+      - text: Common-Gauss literal fast space
+        family: paper
+        source: paper/README.md:122
+      - text: Gaussian measures
+        family: paper
+        source: paper/research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md:123
+      - text: Weyl-Gaussian measure
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_expanded_derivations_lemmaq_su3_2026_05_25.md:1292
+    related: [selected-inverse, brascamp-lieb]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: dirichlet-form
+    meaning: >
+      The quadratic (Dirichlet) form of a diffusion generator and its
+      Dirichlet/Neumann boundary versions on a block.
+    variants:
+      - text: Dirichlet form
+        family: derivations
+        source: docs/derivations/w6-source-generator-score-frame.md:381
+      - text: Dirichlet eigenfunction
+        family: derivations
+        source: docs/derivations/w6-conditional-transport-obstruction.md:152
+      - text: Neumann resolvent
+        family: derivations
+        source: docs/derivations/wilson-marked-shell-transport.md:224
+      - text: Dirichlet forms
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:309
+      - text: Dirichlet form
+        family: literature
+        source: literature/yangmills-derivations/theory_graph.yaml:90
+      - text: Dirichlet eigenfunctions
+        family: literature
+        source: literature/index.yaml:63
+      - text: Yang-Mills Dirichlet form
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/defect_gas_docs/NOTE_OP1_synthesis_04_lattice_gauge_theory.md:292
+      - text: Neumann framework
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_master_pass19_lci_exacthb_2026_05_26.md:3760
+      - text: Dirichlet forms
+        family: paper
+        source: paper/research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md:7
+    related: [spectral-gap, log-sobolev]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: flat-directions
+    meaning: >
+      Zero modes of the Wilson Hessian along gauge orbits and torons; the
+      directions a convexity argument cannot see.
+    variants:
+      - text: flat directions
+        family: derivations
+        source: docs/derivations/wilson-sc17-spatial-closure.md:338
+      - text: zero mode
+        family: historical
+        source: theory/MASTER_THEORY_UNIFIED_2026-08-20_v4_3.md:2216
+      - text: Wilson-flat directions
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-010-hessian-numerics.md:408
+      - text: zero modes
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:667
+      - text: classical flat directions
+        family: literature
+        source: literature/index.yaml:1378
+      - text: zero modes
+        family: literature
+        source: literature/index.yaml:1123
+      - text: flat directions
+        family: corpus-import
+        source: corpus-import/theory/under_review/NOTE_HAAR_proof_14_spi_lsi_localization.md:26
+      - text: zero modes
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_master_pass19_lci_exacthb_2026_05_26.md:81
+      - text: flat directions
+        family: paper
+        source: paper/research_notes/G19_CONDITIONAL_QUANTUM_PATH_COVARIANCE_20260906.md:173
+      - text: zero mode
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:192
+    related: [gribov-polarity, gauge-fixing]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: lyapunov-drift
+    meaning: >
+      Foster-Lyapunov drift conditions LV <= -aV + b that yield spectral
+      gaps without global convexity.
+    variants:
+      - text: Foster–Lyapunov route
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-009-obstruction-lyapunov.md:3
+      - text: drift condition
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-009-obstruction-lyapunov.md:463
+      - text: Lyapunov step
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:1103
+      - text: Foster–Lyapunov drift
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_master_pass19_lci_exacthb_2026_05_26.md:3620
+      - text: drift condition
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_master_pass19_lci_exacthb_2026_05_26.md:424
+      - text: Lyapunov methods
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/NOTE_OP1_unif_conjb_strategy.md:213
+      - text: drift bound
+        family: paper
+        source: paper/research_notes/G19_PROJECTIVE_MARTINGALE_REPAIR_20260909.md:128
+    related: [spectral-gap, bakry-emery]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: haar-jacobian
+    meaning: >
+      The Jacobian of Haar measure in exponential coordinates (Weyl
+      denominator) read as a potential whose Hessian is a curvature floor.
+    variants:
+      - text: exponential coordinates
+        family: derivations
+        source: docs/derivations/wilson-spatial-inputs/G19_CUBIC_GROUND_TRANSFER_20260906.md:34
+      - text: Haar Jacobian potential
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-001-haar-jacobian-hessian.md:3
+      - text: exponential coordinates
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:191
+      - text: Weyl denominator
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-007-obstruction-scaling.md:97
+      - text: Haar Jacobian Derivation
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/defect_gas_docs/NOTE_OP1_synthesis_04_lattice_gauge_theory.md:582
+      - text: Exponential Coordinates
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/defect_gas_docs/NOTE_OP1_synthesis_04_lattice_gauge_theory.md:42
+      - text: Weyl denominator
+        family: corpus-import
+        source: corpus-import/literature/LIT_FLUX_compass_artifact_wf_8908dab0_6ef9_5d49_9a5e.md:25
+      - text: exponential-coordinate Haar Jacobian
+        family: paper
+        source: paper/research_notes/G19_TEMPORAL_WILSON_MATCHING_20260904.md:138
+    related: [haar-integration, bakry-emery]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: score-frame
+    meaning: >
+      Conjugating a Schroedinger operator by its ground state (ground-state
+      transform, Doob h-transform) so the generator acts on the ground-state
+      density and the score obeys a Poisson equation.
+    variants:
+      - text: ground frame
+        family: derivations
+        source: docs/derivations/w6-source-generator-score-frame.md:80
+      - text: score Poisson equation
+        family: derivations
+        source: docs/derivations/w6-source-generator-score-frame.md:1
+      - text: ground-state transform
+        family: derivations
+        source: docs/derivations/wilson-vacuum-aligned-assembly.md:167
+      - text: ground state transformation
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-015-q6j.md:576
+      - text: Doob chain
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-015-q6j.md:576
+      - text: Ground-state transform
+        family: literature
+        source: literature/yangmills/DERIVATION_PROGRAM.md:19
+      - text: q-Racah/Doob gap
+        family: corpus-import
+        source: corpus-import/papers/gauge_constrained_spectral_geometry/PAPER_FLUX_gauge_constrained_spectral_geometry_unified_v1_4_2026-08-08.md:740
+      - text: ground-state transform
+        family: paper
+        source: paper/research_notes/G19_GROUND_MARGINAL_SCHUR_SCORE_20260905.md:4
+      - text: Doob operator
+        family: paper
+        source: paper/research_notes/G18_EXCITED_WINDOW_OPERATOR_BRIDGE_20260904.md:446
+    related: [conditional-score, dirichlet-form]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: carrier
+    meaning: >
+      The homological (cube-boundary) carrier subspace of the charge-odd
+      one-plaquette sector on which the effective operator acts as a scalar.
+    variants:
+      - text: carrier action
+        family: derivations
+        source: docs/derivations/hodge-polymer-supported-statements.md:33
+      - text: homological carrier
+        family: historical
+        source: theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md:6
+      - text: carrier dispersion
+        family: notes
+        source: notes/imported/UPLOADS_2026-08-28d/OFF_AXIS_LEDGER.txt:15
+      - text: carrier
+        family: literature
+        source: literature/index.yaml:276
+      - text: carrier energy
+        family: corpus-import
+        source: corpus-import/README.md:27
+      - text: homological carrier
+        family: paper
+        source: paper/README.md:156
+    related: [boundary-operator, spectral-atom, hopping]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: spectral-atom
+    meaning: >
+      An isolated eigenvalue (point mass) at the bottom of a spectral measure
+      and its persistence under limits.
+    variants:
+      - text: isolated eigenvalue
+        family: derivations
+        source: docs/derivations/wilson-sc17-thermodynamic-limit.md:523
+      - text: delta atom
+        family: notes
+        source: notes/imported/WORK_SINCE_2026-08/WORKHOUSE_CARRIER4_PART_VI_AUDIT_2026-08-22.md:157
+      - text: carrier-atom theorem
+        family: notes
+        source: notes/imported/WORK_SINCE_2026-08/WORKHOUSE_MATRIX_KL_CARRIER_ATOM_THEOREM_2026-08-22.md:1
+      - text: two-atom
+        family: literature
+        source: literature/yangmills-derivations/theory_graph.yaml:331
+      - text: gap persistence
+        family: corpus-import
+        source: corpus-import/literature/LIT_SU3_compass_artifact_wf_1fcca1e0_37f5_5b84_b994.md:10
+      - text: isolated eigenvalues
+        family: corpus-import
+        source: corpus-import/literature/LIT_SU3_compass_artifact_wf_1fcca1e0_37f5_5b84_b994.md:30
+      - text: bottom atom
+        family: paper
+        source: paper/master_paper_2026-08-30.tex:2605
+      - text: persistence island
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:438
+      - text: isolated eigenvalue
+        family: paper
+        source: paper/research_notes/G19_FORM_SCHUR_SCALE_COMPARISON_20260905.md:94
+    related: [kallen-lehmann, carrier, mass-gap]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: band-edge
+    meaning: >
+      The edges of a spectral band of the finite-lattice operator and the
+      fixed band a moving frame is compared against.
+    variants:
+      - text: first-band edge
+        family: derivations
+        source: research/2026-09-10_interacting_angular_window/README.md:158
+      - text: fixed spectral band
+        family: derivations
+        source: docs/derivations/wilson-spatial-inputs/G19_DYNAMIC_FIBER_COVARIANCE_AND_CUBIC_ENERGY_20260906.md:54
+      - text: bottom of the spectrum
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-011-matrix-hinge-chain.md:242
+      - text: band edges
+        family: corpus-import
+        source: corpus-import/STATE.md:51
+      - text: spectral bands
+        family: corpus-import
+        source: corpus-import/literature/LIT_SU3_compass_artifact_wf_1fcca1e0_37f5_5b84_b994.md:76
+      - text: fixed spectral band
+        family: paper
+        source: paper/research_notes/G19_DYNAMIC_FIBER_COVARIANCE_AND_CUBIC_ENERGY_20260906.md:54
+    related: [spectral-atom, excited-window]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: wilson-loop
+    meaning: >
+      Traced holonomy (parallel transport) around a closed lattice or smooth
+      loop.
+    variants:
+      - text: Wilson Loops
+        family: derivations
+        source: docs/derivations/yangmills-continuum-balaban-multiscale-proof.md:63
+      - text: holonomy
+        family: derivations
+        source: docs/derivations/w6-conditional-score-tail-control.md:391
+      - text: parallel transports
+        family: derivations
+        source: docs/derivations/yangmills-continuum-balaban-multiscale-proof.md:78
+      - text: Wilson loops
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:452
+      - text: plaquette holonomy
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:49
+      - text: Wilson loops
+        family: literature
+        source: literature/index.yaml:274
+      - text: parallel transport
+        family: literature
+        source: literature/index.yaml:847
+      - text: Wilson loops
+        family: corpus-import
+        source: corpus-import/literature/LIT_FLUX_compass_artifact_wf_8908dab0_6ef9_5d49_9a5e.md:18
+      - text: trivial holonomy
+        family: corpus-import
+        source: corpus-import/literature/LIT_PMBSF_rigorous_mathematical_analysis_n_scaling_vs._athenodorou.md:57
+      - text: holonomy integral
+        family: paper
+        source: paper/research_notes/G18_SAME_WEIGHT_CREATOR_OBSTRUCTION_20260905.md:47
+    related: [wilson-action, area-law, gauge-fixing]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: gauge-fixing
+    meaning: >
+      Fixing a gauge (maximal tree, axial, temporal) and the Faddeev-Popov
+      determinant it introduces.
+    variants:
+      - text: gauge fixing
+        family: derivations
+        source: docs/derivations/wilson-weighted-repair-and-rotor-gap.md:192
+      - text: maximal tree
+        family: derivations
+        source: docs/derivations/wilson-spatial-inputs/G19_WILSON_FINITE_CELL_GAP_AND_BOUNDARY_FORM_20260905.md:129
+      - text: Faddeev–Popov
+        family: derivations
+        source: docs/derivations/yangmills-continuum-balaban-multiscale-proof.md:198
+      - text: gauge-fixing
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:684
+      - text: Faddeev-Popov determinant
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:1064
+      - text: gauge fixing
+        family: literature
+        source: literature/index.yaml:1693
+      - text: axial gauge
+        family: literature
+        source: literature/index.yaml:2438
+      - text: gauge-fixing term
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/NOTE_OP1_unif_conjb_strategy.md:89
+      - text: axial gauge
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_master_pass19_lci_exacthb_2026_05_26.md:1866
+      - text: Faddeev-Popov operator
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/defect_gas_docs/NOTE_OP1_synthesis_04_lattice_gauge_theory.md:255
+      - text: gauge-fixing
+        family: paper
+        source: paper/research_notes/G19_BALABAN_BLOCKING_REFLECTION_POSITIVITY_20260830.md:8
+      - text: Temporal gauge
+        family: paper
+        source: paper/research_notes/G19_TEMPORAL_WILSON_MATCHING_20260904.md:62
+    related: [gribov-polarity, transfer-matrix, flat-directions]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: green-function
+    meaning: >
+      The inverse of a positive operator viewed as a kernel: Green's
+      function, propagator, resolvent, covariance operator.
+    variants:
+      - text: Green's function decay
+        family: derivations
+        source: docs/derivations/yangmills-continuum-balaban-multiscale-proof.md:18
+      - text: propagator
+        family: derivations
+        source: docs/derivations/wilson-sc17-spatial-closure.md:79
+      - text: reduced resolvent
+        family: derivations
+        source: docs/derivations/w6-ground-jets-and-transport-budget.md:73
+      - text: reduced resolvent
+        family: historical
+        source: theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md:1136
+      - text: Green's function
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-007-obstruction-scaling.md:225
+      - text: massive-propagator
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:482
+      - text: covariance operator
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:682
+      - text: free propagator
+        family: literature
+        source: literature/wilson-marked/theory_graph.yaml:127
+      - text: Green's function
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/PAPER_PMBSF_su2_manuscript_v3_3_unified_core_2026.md:491
+      - text: Haar-electric resolvent
+        family: corpus-import
+        source: corpus-import/INDEX.md:38
+      - text: covariance operator
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_master_pass19_lci_exacthb_2026_05_26.md:1480
+      - text: propagator
+        family: paper
+        source: paper/research_notes/G19_COUPLED_OSCILLATOR_METHOD_REVIEW_20260905.md:22
+      - text: covariance matrix
+        family: paper
+        source: paper/research_notes/G19_CONDITIONAL_GRADIENT_REPAIR_20260905.md:131
+    related: [combes-thomas, exponential-decay, selected-inverse]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: exponential-decay
+    meaning: >
+      Exponential spatial decay (clustering, localization) of correlations
+      or kernels.
+    variants:
+      - text: localization
+        family: derivations
+        source: docs/derivations/wilson-sc17-physical-time-limit.md:396
+      - text: exponential decay
+        family: derivations
+        source: docs/derivations/wilson-sc17-spatial-closure.md:352
+      - text: spatial clustering
+        family: derivations
+        source: docs/derivations/yangmills-pbh-wilson-test.md:255
+      - text: exponential clustering
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:766
+      - text: exponential decay
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:784
+      - text: exponential decay of correlations
+        family: literature
+        source: literature/library/volume2/CITATION_TRAILS.md:120
+      - text: exponential decay
+        family: corpus-import
+        source: corpus-import/literature/LIT_PMBSF_rigorous_mathematical_analysis_n_scaling_vs._athenodorou.md:73
+      - text: Exponential decay
+        family: paper
+        source: paper/research_notes/G17_CORRECTED_ALPHA_DEPENDENT_KP_STABILITY_20260910.md:289
+      - text: localization
+        family: paper
+        source: paper/README.md:29
+    related: [combes-thomas, green-function, mass-gap]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: small-field
+    meaning: >
+      The small-field/large-field (good set/bad set) decomposition of gauge
+      configurations behind every localization or convexity argument.
+    variants:
+      - text: small-field chart
+        family: derivations
+        source: docs/derivations/w6-conditional-score-tail-control.md:420
+      - text: large-field probability
+        family: derivations
+        source: docs/derivations/wilson-true-vacuum-block-estimates.md:430
+      - text: large-field asymptotics
+        family: historical
+        source: theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md:99
+      - text: small-field set
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:466
+      - text: large-field/small-field decomposition
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-008-obstruction-entropy.md:268
+      - text: bad set
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:832
+      - text: small field approximation
+        family: literature
+        source: literature/index.yaml:1434
+      - text: small-field event
+        family: corpus-import
+        source: corpus-import/papers/THM_SUN_su_n_class_function_theorem_v2_alt.tex:1058
+      - text: bad set
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/PLAN_OP1_unif_closure.md:86
+      - text: large/small-field
+        family: paper
+        source: paper/research_notes/G19_BALABAN_BLOCKING_REFLECTION_POSITIVITY_20260830.md:8
+    related: [balaban-multiscale, chessboard-estimate]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: birman-schwinger
+    meaning: >
+      The Birman-Schwinger comparator framework of the OP1/PMBSF programs:
+      defect sparsity against a massive Maxwell comparator operator.
+    variants:
+      - text: Birman–Schwinger defect sparsity
+        family: historical
+        source: theory/governance/INDEX.md:39
+      - text: comparator calibration
+        family: historical
+        source: theory/GLUEBALL_SOURCE_CONSOLIDATION_GUIDE_2026-08-20_v4_3.md:110
+      - text: Birman–Schwinger
+        family: notes
+        source: notes/imported/WORK_SINCE_2026-08/carrier_persistence_note_rev4.txt:298
+      - text: Birman–Schwinger defect-sparsity framework
+        family: corpus-import
+        source: corpus-import/DECISIONS.md:23
+      - text: comparator form
+        family: corpus-import
+        source: corpus-import/DECISIONS.md:17
+      - text: Birman–Schwinger / source frame
+        family: paper
+        source: paper/research_notes/G17_CORRECTED_ALPHA_DEPENDENT_KP_STABILITY_20260910.md:256
+    related: [lemma-q, hodge-laplacian]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: helffer-sjostrand
+    meaning: >
+      The Helffer-Sjostrand representation of covariances through the
+      Witten Laplacian on one-forms.
+    variants:
+      - text: Helffer-Sjöstrand
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:766
+      - text: Witten Laplacian
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:772
+      - text: Helffer–Sjöstrand
+        family: literature
+        source: literature/library/README.md:50
+      - text: 'Helffer--Sj\"ostrand'
+        family: corpus-import
+        source: corpus-import/papers/THM_SUN_su_n_class_function_theorem_v2_alt.tex:88
+      - text: Helffer–Sjöstrand leakage
+        family: corpus-import
+        source: corpus-import/papers/gauge_constrained_spectral_geometry/PAPER_FLUX_gauge_constrained_spectral_geometry_unified_v1_4_2026-08-08.md:69
+    related: [combes-thomas, brascamp-lieb]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: agmon-tunneling
+    meaning: >
+      Semiclassical (WKB, Agmon) decay and tunneling between wells of a
+      Schroedinger operator.
+    variants:
+      - text: Agmon action
+        family: derivations
+        source: docs/derivations/w6-conditional-transport-obstruction.md:96
+      - text: Tunneling Effect
+        family: derivations
+        source: docs/derivations/w6-conditional-transport-obstruction.md:149
+      - text: WKB series
+        family: derivations
+        source: docs/derivations/w6-conditional-transport-obstruction.md:10
+      - text: semiclassical theorem
+        family: historical
+        source: theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md:1389
+      - text: Agmon/Carleman weighted estimate
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-012-combes-thomas.md:849
+      - text: Tunneling Effect
+        family: literature
+        source: literature/index.yaml:42
+      - text: Agmon/IMS localization
+        family: corpus-import
+        source: corpus-import/papers/gauge_constrained_spectral_geometry/PAPER_FLUX_gauge_constrained_spectral_geometry_unified_v1_4_2026-08-08.md:116
+      - text: tunneling
+        family: paper
+        source: paper/research_notes/G19_WILSON_PHYSICAL_FIBER_FAST_GAP_20260905.md:84
+      - text: WKB approximation
+        family: paper
+        source: paper/research_notes/G19_TRUE_GROUND_CENTER_SCORE_OBSTRUCTION_20260905.md:8
+    related: [rare-fiber, small-field]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: asymptotic-freedom
+    meaning: >
+      The running of the coupling to zero at short distance (beta function)
+      that fixes how the lattice coupling must scale with the spacing.
+    variants:
+      - text: asymptotic freedom
+        family: derivations
+        source: docs/derivations/wilson-vacuum-aligned-assembly.md:364
+      - text: beta-function derivation
+        family: derivations
+        source: docs/derivations/wilson-spatial-schur-excess.md:493
+      - text: running coupling
+        family: derivations
+        source: docs/derivations/wilson-spatial-schur-excess.md:304
+      - text: asymptotically free
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-002-su2-convexity-threshold.md:106
+      - text: lattice beta function
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:730
+      - text: asymptotic freedom
+        family: literature
+        source: literature/index.yaml:2164
+      - text: QCD beta function
+        family: literature
+        source: literature/index.yaml:3188
+      - text: asymptotic freedom
+        family: corpus-import
+        source: corpus-import/numerics/op12_theta/m4_scaling/NOTE_OP1_m4_tc_closed_form_2026-06-12.md:137
+      - text: running coupling
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/NOTE_OP1_unif_gap_protection_factorization.md:14
+      - text: asymptotically free trajectory
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:437
+      - text: beta-function coefficients
+        family: paper
+        source: paper/research_notes/G19_CONTINUUM_BRIDGE_INSERT.tex:29
+      - text: running coupling
+        family: paper
+        source: paper/research_notes/G19_CUBIC_GROUND_TRANSFER_20260906.md:192
+    related: [continuum-limit, strong-coupling]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: strong-coupling
+    meaning: >
+      The small-beta (high-temperature) regime where character/cluster
+      expansions converge and glueball series are computed.
+    variants:
+      - text: strong-coupling window
+        family: derivations
+        source: docs/derivations/wilson-true-vacuum-block-estimates.md:270
+      - text: strong-coupling coordinate
+        family: historical
+        source: theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md:37
+      - text: strong coupling
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-002-su2-convexity-threshold.md:106
+      - text: high-temperature expansion
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:584
+      - text: strong-coupling glueball mass series
+        family: literature
+        source: literature/index.yaml:156
+      - text: strong-coupling spectroscopy
+        family: corpus-import
+        source: corpus-import/STATE.md:114
+      - text: strong-coupling
+        family: paper
+        source: paper/README.md:156
+    related: [character-expansion, asymptotic-freedom, hopping]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: heat-kernel
+    meaning: >
+      Heat-kernel (Villain) plaquette weights as the smooth alternative to
+      the Wilson action.
+    variants:
+      - text: heat kernel
+        family: derivations
+        source: docs/derivations/wilson-sc17-spatial-closure.md:369
+      - text: heat-kernel (Villain) plaquette weights
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-005-obstruction-global-cd.md:757
+      - text: Villain action
+        family: literature
+        source: literature/library/LATEST_2024_2026.md:18
+      - text: heat kernel
+        family: corpus-import
+        source: corpus-import/literature/LIT_SUN_compass_artifact_wf_23dbcd45_8079_5886_b02d.md:92
+      - text: Villain
+        family: corpus-import
+        source: corpus-import/programs/pmbsf/NOTE_PMBSF_master_pass19_lci_exacthb_2026_05_26.md:2475
+      - text: heat kernel
+        family: paper
+        source: paper/research_notes/G19_DISCRETE_TIME_VACUUM_AND_WINDOW_20260904.md:56
+    related: [wilson-action, bakry-emery]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: gribov-polarity
+    meaning: >
+      Gribov copies and reducible (polar) configurations: the singular
+      stratum of the gauge orbit space and its capacity.
+    variants:
+      - text: Gribov copies
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:1064
+      - text: polarity/capacity arguments
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-005-obstruction-global-cd.md:448
+      - text: reducible connections
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md:1109
+      - text: Gribov ambiguity
+        family: literature
+        source: literature/index.yaml:3144
+      - text: Gribov
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/defect_gas_docs/NOTE_OP1_source_tracker.md:31
+      - text: Polarity-excess law
+        family: corpus-import
+        source: corpus-import/papers/gauge_constrained_spectral_geometry/PAPER_FLUX_gauge_constrained_spectral_geometry_unified_v1_4_2026-08-08.md:149
+      - text: reducible configurations
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/defect_gas_docs/NOTE_OP1_synthesis_04_lattice_gauge_theory.md:15
+    related: [gauge-fixing, flat-directions]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: excited-window
+    meaning: >
+      A spectral window/projection isolating the first excited shell above
+      the vacuum.
+    variants:
+      - text: excited-window bridge
+        family: derivations
+        source: docs/derivations/wilson-marked-shell-transport.md:174
+      - text: Spectral projection
+        family: derivations
+        source: docs/derivations/w6-conditional-transport-obstruction.md:193
+      - text: spectral window
+        family: derivations
+        source: docs/derivations/w6-ground-jets-and-transport-budget.md:258
+      - text: spectral projection
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-013-rp-os.md:249
+      - text: spectral projection
+        family: literature
+        source: literature/yangmills-derivations/theory_graph.yaml:366
+      - text: spectral window
+        family: corpus-import
+        source: corpus-import/programs/op1_defect_sparsity/NOTE_PMBSF_lemmaq_comparator_translation.md:18
+      - text: excited-window separation
+        family: paper
+        source: paper/research_notes/G18_SECOND_ORDER_WILSON_VACUUM_CHART_20260905.md:493
+      - text: spectral projections
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:465
+      - text: electric spectral window
+        family: paper
+        source: paper/master_paper_2026-08-30.tex:337
+    related: [band-edge, spectral-gap]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: hopping
+    meaning: >
+      The second-order shared-link hopping amplitude t_N of the charge-odd
+      carrier across ranks.
+    variants:
+      - text: second-order shell hopping
+        family: derivations
+        source: docs/research/next-path-wilson-transfer-2026-09-08.md:36
+      - text: second-order hopping
+        family: historical
+        source: theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md:1419
+      - text: hoppings
+        family: notes
+        source: notes/imported/HODGE_RUNS_2026-08-28/15_hour_RUN.txt:1000
+      - text: charge-odd hopping
+        family: literature
+        source: literature/index.yaml:1078
+      - text: second-order hopping
+        family: corpus-import
+        source: corpus-import/README.md:27
+      - text: shared-link hopping
+        family: paper
+        source: paper/README.md:155
+    related: [symbolic-n, linked-cluster, carrier]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: ground-state
+    meaning: >
+      The true vacuum (ground state) of the finite-volume operator and the
+      block it occupies.
+    variants:
+      - text: true vacuum
+        family: derivations
+        source: docs/derivations/wilson-background-covariance-continuation.md:510
+      - text: vacuum block
+        family: derivations
+        source: docs/derivations/wilson-marked-shell-transport.md:71
+      - text: ground-state identity
+        family: derivations
+        source: docs/derivations/w6-conditional-score-tail-control.md:429
+      - text: ground-state fraction
+        family: historical
+        source: theory/MASTER_THEORY_UNIFIED_2026-08-20_v4_3.md:1659
+      - text: ground-state density
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-015-q6j.md:576
+      - text: ground-state sector
+        family: literature
+        source: literature/index.yaml:578
+      - text: ground-state
+        family: corpus-import
+        source: corpus-import/corpus/MASTER_THEORY_UNIFIED_2026-08-20_v3.md:1459
+      - text: true vacuum
+        family: paper
+        source: paper/research_notes/G19_GAUSSIAN_QUANTUM_FAST_SOURCES_20260905.md:45
+      - text: vacuum block
+        family: paper
+        source: paper/research_notes/G18_VACUUM_COMPRESSION_BOUND_20260905.md:312
+      - text: thermodynamic ground state
+        family: paper
+        source: paper/fourth_order_all_rank_2026-09-09.tex:1466
+    related: [score-frame, spectral-gap]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
+
+  - concept: rotor
+    meaning: >
+      A compact (U(1) or non-abelian) rigid-rotor model used as the
+      one-dimensional check of a gap mechanism.
+    variants:
+      - text: rotor check
+        family: derivations
+        source: docs/derivations/w6-source-generator-score-frame.md:404
+      - text: rotor winding number
+        family: notes
+        source: notes/imported/EXTRACT_2026-09-01/EX-015-q6j.md:966
+      - text: compact rotor
+        family: paper
+        source: paper/README.md:77
+    related: [spectral-gap]
+    added_by: claude-fable-5.1 (discovery lexicon seed)
+    added_on: 2026-09-11
