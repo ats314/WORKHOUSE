@@ -12,6 +12,7 @@ import json
 import os
 import re
 import sqlite3
+import stat as stat_module
 import tempfile
 import uuid
 from collections import defaultdict
@@ -269,12 +270,32 @@ class DiscoveryIndex:
         self.symbols: list[dict] = []
         self._connection: sqlite3.Connection | None = None
         self._meta: dict = {}
+        self._current_fingerprint: str | None = None
 
     def _safe_path(self, path: Path) -> bool:
         try:
             return path.resolve().is_relative_to(self.root) and not path.is_symlink()
         except (OSError, RuntimeError):
             return False
+
+    @staticmethod
+    def _plain_file(path: Path) -> bool:
+        """A regular file that is not a symlink or Windows reparse point.
+
+        Directories are containment-checked with ``_safe_path`` before the walk
+        descends, and the walk never follows links, so a plain file beneath a
+        safe directory cannot escape the checkout. Resolving every file's real
+        path cost more than hashing it, so files use one ``lstat`` instead.
+        """
+        try:
+            status = os.lstat(path)
+        except OSError:
+            return False
+        if stat_module.S_ISLNK(status.st_mode) or not stat_module.S_ISREG(status.st_mode):
+            return False
+        attributes = getattr(status, "st_file_attributes", 0)
+        reparse = getattr(stat_module, "FILE_ATTRIBUTE_REPARSE_POINT", 0)
+        return not (attributes & reparse)
 
     def _saved(self):
         raw, parsed, manifest = {}, {}, {}
@@ -351,7 +372,7 @@ class DiscoveryIndex:
                     if path.suffix.lower() not in EXTENSIONS:
                         continue
                     relative = path.relative_to(self.root).as_posix()
-                    if not self._safe_path(path):
+                    if not self._plain_file(path):
                         exclusions.append({"path": relative, "reason": "unsafe_path"})
                         continue
                     try:
@@ -430,6 +451,7 @@ class DiscoveryIndex:
         self.symbols = [row[2] for row in parsed["index/symbols.jsonl"]]
         sources, exclusions, inaccessible = self._sources()
         fingerprint, identity = self._fingerprint(index_manifest, sources, exclusions, inaccessible)
+        self._current_fingerprint = fingerprint
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         target = self.cache_dir.resolve() / f"discovery-{fingerprint}.sqlite3"
         cache_problem = None
@@ -609,19 +631,47 @@ class DiscoveryIndex:
         ).fetchall()
         return [{**json.loads(raw), "score": -float(rank)} for raw, rank in rows]
 
-    def metadata(self, check_current: bool = True) -> dict:
+    def _index_manifest(self) -> dict:
+        """Hashes of the three saved index files, without re-parsing them."""
+        manifest = {}
+        for relative in INDEX_PATHS:
+            path = self.root / relative
+            if not self._safe_path(path):
+                raise ValueError(f"Saved graph path escapes the checkout: {relative}")
+            data = path.read_bytes()
+            manifest[relative] = {"sha256": _sha(data), "bytes": len(data)}
+        return manifest
+
+    def metadata(self, check_current: bool = True, *, recheck: bool = True) -> dict:
+        """Cache scope and freshness.
+
+        By default every call rehashes the declared sources, so an edit made
+        after the engine started is reported as ``stale`` even when its size
+        and modification time are unchanged. A batch session that issues many
+        queries against inputs it knows are untouched may pass
+        ``recheck=False`` to reuse the observation ``build`` made; the result
+        then says so in ``freshness_observation``.
+        """
         if not self._meta:
             self.build()
         result = json.loads(_json(self._meta))
-        if check_current:
+        if check_current and not recheck and self._current_fingerprint is not None:
+            result["current_fingerprint"] = self._current_fingerprint
+            result["freshness"] = (
+                "matched" if self._current_fingerprint == result["fingerprint"] else "stale"
+            )
+            result["freshness_observation"] = "hashed at engine start in this process"
+        elif check_current:
             try:
-                _raw, _parsed, index_manifest = self._saved()
+                index_manifest = self._index_manifest()
                 sources, exclusions, inaccessible = self._sources()
                 current, _identity = self._fingerprint(
                     index_manifest, sources, exclusions, inaccessible
                 )
                 result["current_fingerprint"] = current
                 result["freshness"] = "matched" if current == result["fingerprint"] else "stale"
+                result["freshness_observation"] = "sources rehashed for this call"
+                self._current_fingerprint = current
             except (OSError, ValueError) as exc:
                 result["freshness"] = "unavailable"
                 result["freshness_error"] = str(exc)

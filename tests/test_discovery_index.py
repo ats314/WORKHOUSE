@@ -255,3 +255,35 @@ def test_rational_plus_and_denominator_signs_are_canonical():
     assert tokenize("+10/96 10/+96 -10/-96") == ["5/48"] * 3
     assert tokenize("10/-96 −10/+96") == ["-5/48"] * 2
     assert tokenize("−5/5") == tokenize("-1") == ["-1"]
+
+
+def test_metadata_can_reuse_the_build_observation_only_when_asked(tmp_path):
+    root = _repo(tmp_path)
+    _write(root, "theory/note.md", "original content\n")
+    index = DiscoveryIndex(root, cache_dir=tmp_path / "cache")
+    first = index.build()
+    (root / "theory" / "note.md").write_text("changed content\n", encoding="utf-8")
+    reused = index.metadata(recheck=False)
+    assert reused["freshness"] == "matched"
+    assert reused["freshness_observation"] == "hashed at engine start in this process"
+    assert reused["current_fingerprint"] == first["fingerprint"]
+    rechecked = index.metadata()
+    assert rechecked["freshness"] == "stale"
+    assert rechecked["freshness_observation"] == "sources rehashed for this call"
+    # A recheck refreshes the observation that later reuse reports.
+    assert index.metadata(recheck=False)["freshness"] == "stale"
+    index.close()
+
+
+def test_plain_file_rejects_links_and_directories(tmp_path):
+    target = tmp_path / "real.md"
+    target.write_text("x\n", encoding="utf-8")
+    assert DiscoveryIndex._plain_file(target)
+    assert not DiscoveryIndex._plain_file(tmp_path)
+    assert not DiscoveryIndex._plain_file(tmp_path / "missing.md")
+    link = tmp_path / "link.md"
+    try:
+        link.symlink_to(target)
+    except (OSError, NotImplementedError):
+        pytest.skip("symlinks unavailable")
+    assert not DiscoveryIndex._plain_file(link)

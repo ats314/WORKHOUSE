@@ -98,7 +98,9 @@ class GraphDiscovery:
                 raise ValueError("every catalogue record needs a nonempty string id")
             if id_ in self.records:
                 raise ValueError(f"duplicate catalogue id: {id_}")
-            self.records[id_] = deepcopy(record)
+            # Saved records are read-only retrieval inputs; copying 17k of them
+            # per engine start cost more than every query it served.
+            self.records[id_] = record
         self.records = dict(sorted(self.records.items()))
         self._adj: dict[str, list[tuple[str, int, str, float]]] = defaultdict(list)
         self._dependencies: dict[str, list[tuple[str, int, str, float]]] = defaultdict(list)
@@ -109,9 +111,12 @@ class GraphDiscovery:
         dangling: list[dict] = []
         malformed: list[dict] = []
         archive_edges = 0
-        serialized = sorted({json.dumps(e, sort_keys=True) for e in edges})
+        by_text: dict[str, dict] = {}
+        for candidate in edges:
+            by_text.setdefault(json.dumps(candidate, sort_keys=True), candidate)
+        serialized = sorted(by_text)
         for encoded in serialized:
-            edge = json.loads(encoded)
+            edge = dict(by_text[encoded])
             if any(
                 not isinstance(edge.get(key), str) or not edge[key]
                 for key in ("src", "dst", "type", "how", "source")
@@ -176,6 +181,54 @@ class GraphDiscovery:
             "malformed_edges": malformed,
         }
 
+    def neighbors(self, node_id: str) -> set[str]:
+        """Nodes sharing a registered edge with ``node_id`` in either direction."""
+        return {other for (start, other) in self._direct if start == node_id}
+
+    def _push(
+        self,
+        personalization: dict[str, float],
+        alpha: float,
+        epsilon: float,
+        max_pushes: int,
+    ) -> tuple[dict[str, float], float, int, bool]:
+        """Local forward-push approximation of the same personalized PageRank.
+
+        Mass pushed from a node's residual settles ``(1 - alpha)`` of it into
+        the score and forwards ``alpha`` of it along the recorded transitions;
+        a dangling node restarts through the personalization, exactly as the
+        power iteration does. The invariant ``exact = scores + PPR(residual)``
+        makes the remaining residual mass an exact L1 error bound. Work is
+        proportional to ``1 / ((1 - alpha) * epsilon)`` rather than to the size
+        of the whole graph, so a query touches only the seeds' neighbourhood.
+        """
+        scores: dict[str, float] = {}
+        residual = dict(personalization)
+        queue = deque(personalization)
+        queued = set(personalization)
+        pushes = 0
+        transitions = self._transitions
+        while queue:
+            if pushes >= max_pushes:
+                return scores, math.fsum(residual.values()), pushes, True
+            node = queue.popleft()
+            queued.discard(node)
+            mass = residual.get(node, 0.0)
+            if mass <= epsilon:
+                continue
+            pushes += 1
+            scores[node] = scores.get(node, 0.0) + (1 - alpha) * mass
+            residual[node] = 0.0
+            forwarded = alpha * mass
+            targets = transitions.get(node) or tuple(personalization.items())
+            for neighbor, probability in targets:
+                updated = residual.get(neighbor, 0.0) + forwarded * probability
+                residual[neighbor] = updated
+                if updated > epsilon and neighbor not in queued:
+                    queue.append(neighbor)
+                    queued.add(neighbor)
+        return scores, math.fsum(residual.values()), pushes, False
+
     def rank(
         self,
         seeds: dict[str, float],
@@ -184,21 +237,36 @@ class GraphDiscovery:
         alpha: float = 0.85,
         max_iterations: int = 60,
         tolerance: float = 1e-8,
+        method: str = "power",
+        push_epsilon: float = 1e-6,
+        max_pushes: int = 2_000_000,
     ) -> dict[str, Any]:
         """Weighted personalized PageRank with seed-directed dangling mass.
 
         Destination degree correction reduces hub attraction. ``scores`` contains
         the top positive scores, without renormalizing after ``limit``; omitted
-        score mass is reported. Convergence uses the absolute L1 residual.
+        score mass is reported. ``method="power"`` iterates the whole graph and
+        converges on the absolute L1 residual between iterations.
+        ``method="push"`` runs the local forward-push approximation of the same
+        stationary vector; its ``residual`` is the exact L1 distance to that
+        vector, ``iterations`` counts pushes, and ``converged`` means every
+        residual entry fell below ``push_epsilon`` before ``max_pushes``.
         """
         _nonnegative_int(limit, "limit")
         _nonnegative_int(max_iterations, "max_iterations")
+        _nonnegative_int(max_pushes, "max_pushes")
         if max_iterations == 0:
             raise ValueError("max_iterations must be positive")
+        if max_pushes == 0:
+            raise ValueError("max_pushes must be positive")
+        if method not in {"power", "push"}:
+            raise ValueError("method must be power or push")
         if not math.isfinite(alpha) or not 0 <= alpha < 1:
             raise ValueError("alpha must be finite and in [0, 1)")
         if not math.isfinite(tolerance) or tolerance <= 0:
             raise ValueError("tolerance must be finite and positive")
+        if not math.isfinite(push_epsilon) or push_epsilon <= 0:
+            raise ValueError("push_epsilon must be finite and positive")
         if any(not math.isfinite(v) or v < 0 for v in seeds.values()):
             raise ValueError("seed weights must be finite and nonnegative")
         known = {
@@ -213,7 +281,12 @@ class GraphDiscovery:
         personalization = {key: (value / scale) / total for key, value in known.items()}
         scores = dict(personalization)
         iterations, residual, converged = 0, 0.0, not bool(scores)
-        for iteration in range(1, max_iterations + 1) if scores else ():
+        if method == "push" and scores:
+            scores, residual, iterations, exhausted = self._push(
+                personalization, alpha, push_epsilon, max_pushes
+            )
+            converged = not exhausted
+        for iteration in range(1, max_iterations + 1) if scores and method == "power" else ():
             dangling = math.fsum(
                 value for node, value in scores.items() if node not in self._transitions
             )
@@ -238,11 +311,17 @@ class GraphDiscovery:
         selected = dict(ordered[:limit])
         return {
             "scores": selected,
+            "method": method,
             "iterations": iterations,
             "converged": converged,
             "residual": residual,
+            "residual_meaning": (
+                "exact L1 distance to the stationary vector"
+                if method == "push"
+                else "L1 change over the final power iteration"
+            ),
             "alpha": alpha,
-            "tolerance": tolerance,
+            "tolerance": tolerance if method == "power" else push_epsilon,
             "seed_weights": personalization,
             "unknown_seeds": unknown,
             "total_score_mass": math.fsum(scores.values()),
@@ -309,7 +388,9 @@ class GraphDiscovery:
         if src == dst:
             result["paths"] = [[]]
             return result
-        queue = deque([(src, [], frozenset({src}))])
+        # Trails hold (node, adjacency item) pairs; the edge dictionaries are
+        # copied only for paths that are actually returned.
+        queue = deque([(src, (), frozenset({src}))])
         stop = False
         while queue and not stop:
             node, trail, seen = queue.popleft()
@@ -327,9 +408,9 @@ class GraphDiscovery:
                 nxt = item[0]
                 if nxt in seen:
                     continue
-                next_trail = [*trail, self._step(node, item)]
+                next_trail = (*trail, (node, item))
                 if nxt == dst:
-                    result["paths"].append(next_trail)
+                    result["paths"].append([self._step(start, step) for start, step in next_trail])
                     if len(result["paths"]) >= limit:
                         reasons.add("limit")
                         stop = True
@@ -449,6 +530,7 @@ class GraphDiscovery:
         candidates: list[str],
         *,
         limit: int = 10,
+        paths_limit: int | None = None,
     ) -> list[dict[str, Any]]:
         """Explain candidate pairs using shared witnesses and bounded paths.
 
@@ -456,8 +538,13 @@ class GraphDiscovery:
         Source-family overlap is a provenance-navigation hint, never a count of
         independent computations. Unknown candidate IDs are omitted; no candidate
         is inserted into the registered graph or promoted to a scientific edge.
+        ``paths_limit`` bounds how many of the returned rows receive a bounded
+        path search (default: all of them); rows beyond it report
+        ``path_found`` as ``None`` rather than a negative result.
         """
         _nonnegative_int(limit, "limit")
+        if paths_limit is not None:
+            _nonnegative_int(paths_limit, "paths_limit")
         if node_id not in self.records or limit == 0:
             return []
         neighbors = self._weights.get(node_id, {})
@@ -515,10 +602,26 @@ class GraphDiscovery:
                 }
             )
         output.sort(key=lambda item: (-item["score"], item["id"]))
-        for item in output[:limit]:
+        for position, item in enumerate(output[:limit]):
+            if paths_limit is not None and position >= paths_limit:
+                item["path"] = []
+                item["path_found"] = None
+                item["path_truncated"] = True
+                item["path_truncation_reasons"] = ["paths_limit"]
+                continue
             paths = self.paths(node_id, item["id"], limit=1, max_visits=1000)
             item["path"] = paths["paths"][0] if paths["paths"] else []
             item["path_found"] = bool(paths["paths"])
             item["path_truncated"] = paths["truncated"]
             item["path_truncation_reasons"] = paths["truncation_reasons"]
         return output[:limit]
+
+    def explain_path(self, node_id: str, target: str) -> dict[str, Any]:
+        """One bounded path for a row previously skipped by ``paths_limit``."""
+        paths = self.paths(node_id, target, limit=1, max_visits=1000)
+        return {
+            "path": paths["paths"][0] if paths["paths"] else [],
+            "path_found": bool(paths["paths"]),
+            "path_truncated": paths["truncated"],
+            "path_truncation_reasons": paths["truncation_reasons"],
+        }

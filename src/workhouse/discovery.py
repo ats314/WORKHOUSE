@@ -85,6 +85,7 @@ class DiscoveryEngine:
         ]
         self.records = {row["id"]: row for row in self.index.records + symbols}
         self.graph = GraphDiscovery(list(self.records.values()), self.index.edges)
+        self._catalogue = None
 
     def close(self):
         self.index.close()
@@ -102,8 +103,10 @@ class DiscoveryEngine:
 
         if query.strip() in self.records:
             return [query.strip()]
-        catalogue = [Claim(**row) for row in self.index.records]
-        hits, _ = search(query, catalogue=catalogue, symbols=self.index.symbols)
+        if self._catalogue is None:
+            # The saved catalogue is immutable for this engine's lifetime.
+            self._catalogue = [Claim(**row) for row in self.index.records]
+        hits, _ = search(query, catalogue=self._catalogue, symbols=self.index.symbols)
         return [
             hit.claim.id
             for hit in hits
@@ -196,9 +199,9 @@ class DiscoveryEngine:
                 if node in self.records:
                     seed_weights[node] += 1 / (60 + rank)
         propagation = (
-            self.graph.rank(dict(seed_weights), limit=pool, max_iterations=120)
+            self.graph.rank(dict(seed_weights), limit=pool, method="push", push_epsilon=1e-6)
             if seed_weights
-            else {"scores": {}, "iterations": 0, "converged": True}
+            else {"scores": {}, "iterations": 0, "converged": True, "method": "push"}
         )
         channels = {"lexical": lexical_ranking, "exact": exact}
         if graph_weight:
@@ -285,11 +288,12 @@ class DiscoveryEngine:
                 "selection": "direct source matches and related graph candidates ranked separately",
                 "related_limit": related_limit,
                 "graph_weight": graph_weight,
+                "graph_method": propagation.get("method"),
                 "graph_iterations": propagation.get("iterations"),
                 "graph_converged": propagation.get("converged"),
                 "graph_residual": propagation.get("residual"),
-                "graph_tolerance": 1e-8,
-                "graph_max_iterations": 120,
+                "graph_residual_meaning": propagation.get("residual_meaning"),
+                "graph_tolerance": propagation.get("tolerance", 1e-6),
                 "semantic": semantic_provenance,
                 "candidate_pool": pool,
                 "source_diversity": "two per source before filling unused slots",
@@ -313,13 +317,13 @@ class DiscoveryEngine:
                 if candidate != node and candidate in self.records
             )
         )
-        linked = {
-            edge["dst"] if edge["src"] == node else edge["src"]
-            for edge in self.index.edges
-            if node in (edge["src"], edge["dst"])
-        }
+        linked = self.graph.neighbors(node)
         new_candidates = [candidate for candidate in candidates if candidate not in linked]
-        explained = self.graph.connections(node, new_candidates, limit=len(new_candidates))
+        # Shared witnesses are cheap for every candidate; bounded path searches
+        # are not, so they run only for the rows an agent will actually read.
+        explained = self.graph.connections(
+            node, new_candidates, limit=len(new_candidates), paths_limit=0
+        )
         by_id = {row["id"]: row for row in explained}
         structural = [row["id"] for row in explained if row.get("score", 0) > 0]
         fused = reciprocal_rank_fusion(
@@ -330,14 +334,24 @@ class DiscoveryEngine:
         for target, score in fused.items():
             candidate = by_id[target]
             candidate["connection_rank"] = score
-            candidate["path"] = candidate.get("path", [])
             candidate["where"] = self.records[target].get("where", "")
             ordered.append(candidate)
-        # Keep a slot for a content-related node outside the explored topology.
-        disconnected = [row for row in ordered if not row.get("path")]
         connections = _select_diverse(ordered, limit)
-        if disconnected and limit > 1 and not any(not row.get("path") for row in connections):
-            connections[-1] = disconnected[0]
+        for row in connections:
+            row.update(self.graph.explain_path(node, row["id"]))
+        # Keep a slot for a content-related node outside the explored topology:
+        # inspect a bounded number of further candidates for one without a path.
+        if limit > 1 and all(row.get("path") for row in connections):
+            selected_ids = {row["id"] for row in connections}
+            budget = 10
+            for row in ordered:
+                if row["id"] in selected_ids or budget == 0:
+                    continue
+                budget -= 1
+                row.update(self.graph.explain_path(node, row["id"]))
+                if not row["path"]:
+                    connections[-1] = row
+                    break
         rankings = {}
         for hit in search["hits"] + search["related"]:
             for target in [hit["id"], *hit.get("claim_ids", [])]:

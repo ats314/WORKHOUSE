@@ -373,3 +373,77 @@ def test_source_families_strip_derivation_locators_but_preserve_literal_filename
     assert results["PARENS"]["source_family"]["target"] == [
         "path:corpus-import/STATUS_fourth_order_build (2).md"
     ]
+
+
+def test_push_rank_matches_power_iteration_within_its_reported_residual():
+    documents = [f"D{i:03}" for i in range(40)]
+    graph = GraphDiscovery(
+        nodes("S", "T", "U", "HUB", *documents),
+        [
+            edge("S", "T"),
+            edge("T", "U", "supported_by"),
+            edge("S", "HUB", "cites"),
+            edge("U", "S", "bears_on"),
+            *(edge("HUB", document, "contains") for document in documents),
+        ],
+    )
+    exact = graph.rank({"S": 1, "T": 0.5}, limit=200, max_iterations=500, tolerance=1e-12)
+    approx = graph.rank({"S": 1, "T": 0.5}, limit=200, method="push", push_epsilon=1e-9)
+    assert approx["method"] == "push"
+    assert approx["converged"]
+    assert approx["residual_meaning"].startswith("exact L1 distance")
+    distance = sum(
+        abs(exact["scores"].get(node, 0.0) - approx["scores"].get(node, 0.0))
+        for node in exact["scores"].keys() | approx["scores"].keys()
+    )
+    # The residual mass bounds the L1 error exactly; the power iteration
+    # itself stopped at a 1e-12 change, so allow that slack too.
+    assert distance <= approx["residual"] + 1e-9
+    assert list(exact["scores"])[:5] == list(approx["scores"])[:5]
+    assert approx["total_score_mass"] + approx["residual"] == pytest.approx(1.0, abs=1e-9)
+
+
+def test_push_rank_restarts_dangling_mass_and_reports_push_cap():
+    graph = GraphDiscovery(nodes("A", "B"), [edge("A", "B")])
+    result = graph.rank({"A": 1}, method="push", push_epsilon=1e-12)
+    exact = graph.rank({"A": 1}, max_iterations=400, tolerance=1e-13)
+    assert result["scores"] == pytest.approx(exact["scores"], abs=1e-9)
+    capped = graph.rank({"A": 1}, method="push", push_epsilon=1e-12, max_pushes=1)
+    assert capped["iterations"] == 1
+    assert not capped["converged"]
+    assert capped["residual"] > 0
+    with pytest.raises(ValueError):
+        graph.rank({"A": 1}, method="jump")
+    with pytest.raises(ValueError):
+        graph.rank({"A": 1}, method="push", push_epsilon=0)
+    with pytest.raises(ValueError):
+        graph.rank({"A": 1}, method="push", max_pushes=0)
+
+
+def test_neighbors_and_paths_limit_are_explicit_about_unexplored_rows():
+    graph = GraphDiscovery(
+        nodes("S", "W", "A", "B", "C"),
+        [edge("S", "W"), edge("A", "W"), edge("B", "W"), edge("C", "W"), edge("S", "C", "cites")],
+    )
+    assert graph.neighbors("S") == {"W", "C"}
+    assert graph.neighbors("A") == {"W"}
+    assert graph.neighbors("missing") == set()
+    rows = graph.connections("S", ["A", "B"], limit=2, paths_limit=1)
+    assert [row["id"] for row in rows] == ["A", "B"]
+    assert rows[0]["path_found"] is True
+    assert rows[1]["path_found"] is None
+    assert rows[1]["path_truncation_reasons"] == ["paths_limit"]
+    explained = graph.explain_path("S", "B")
+    assert explained["path_found"] is True
+    assert [step["to"] for step in explained["path"]] == ["W", "B"]
+    with pytest.raises(ValueError):
+        graph.connections("S", ["A"], paths_limit=-1)
+
+
+def test_paths_copy_edges_only_for_returned_paths():
+    graph = GraphDiscovery(nodes("A", "B", "C"), [edge("A", "B"), edge("B", "C")])
+    found = graph.paths("A", "C", max_depth=3)
+    assert len(found["paths"]) == 1
+    steps = found["paths"][0]
+    steps[0]["edge"]["type"] = "mutated"
+    assert graph.edges[0]["type"] == "depends_on"
