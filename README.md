@@ -37,7 +37,9 @@ separates abstract operator proofs and scalar ingredients from their remaining
 physical-model identifications, with preserved source inputs and exact proof links.
 The [W6 continuation](docs/derivations/w6-ground-jets-and-transport-budget.md)
 adds actual fixed-square ground and operator derivative bounds and an explicit
-criterion for the complete source-transport budget.
+criterion for the complete source-transport budget. The [R10 repair](docs/derivations/w6-source-energy-jets-r10.md)
+corrects conditional and projection derivatives and derives H4 from H0;
+the complete actual-source energy estimates remain open.
 The [conditional transport continuation](docs/derivations/w6-conditional-transport-obstruction.md)
 derives the exact true-ground conditional score, locates its constrained Agmon
 centers, and proves that some admissible Q8 cutoffs fail M10 in the actual model.

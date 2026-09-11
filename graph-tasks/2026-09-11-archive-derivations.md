@@ -80,6 +80,31 @@ remain separate. These are new deductions, not claims attributed to the archive.
 
 ## Validation and end snapshot
 
-In progress. Final commands, outcomes, retained logs and end snapshot are recorded
-below before publication. First-pass sources and control receipts are preserved
-when the targeted follow-up supersedes them. No stopped process counts as a pass.
+The final index rebuild passed at its fixpoint: 17,594 catalogue records,
+28 symbol records, 17,622 graph nodes and 29,926 edges. All 31 new derivations,
+10 result groups and 18 new checks are present. Graph validation reported no
+problems. Current-main ledger records were compared structurally and all
+remain unchanged; the [preservation receipt](evidence/archive-derivations-20260911/integration-preservation.json)
+identifies the integrated base `bc9da0233ceb72ed76739dc9b892d9c6ca1b50d5`.
+
+The [end snapshot](evidence/archive-derivations-20260911/end.json) was produced by
+`workhouse brief G19 G23 G17 G3 G7 G9 RESULT:ARCHIVE_GLOBAL_PAIRING_OBSTRUCTION RESULT:ARCHIVE_SIGNED_SU2_DIFFUSION --json --live`.
+Its snapshot fingerprint is
+`d64204497c75fd5f1f4517a83f263a5a2fc4cac763cd72478a698db6bbf96de4`;
+its input-manifest digest is
+`d1ad69c0efaf9e95f8d00910f0226b9e38212185304e27718fa19ac9146a5a70`.
+Freshness is **matched**. This briefing reused all 645 byte-matched results,
+executed zero new checks and did not compile Lean. Frontier and certified
+views also reused those results via the same cache-observation context;
+[the receipt](evidence/archive-derivations-20260911/view-generation.json) records
+that reuse explicitly. A separate uncached full verifier run is recorded below.
+
+Completed checks so far: 18/18 exact archive controls; source identity for
+11/11 retained originals; seven source-inventory integrity tests; ruff lint
+and format checks (596 files); documentation validation (38 maintained files,
+572 local links, zero errors/warnings); `git diff --check`. The first index
+pass also passed before F16/F17 were added. The failed discovery-index attempt,
+intermediate encoding repair and merge conflict bytes remain preserved locally.
+No stopped process counts as a pass.
+
+Full verifier and pytest outcomes: pending completion before publication.

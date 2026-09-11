@@ -568,18 +568,6 @@ gaps:
       That is the matched-scaling structure of NOTE_O4 section 11 made exact at fourth order; it is
       not the overlap theorem, and the N^-(4k-1) law beyond k = 2 is a conjecture with a stated
       mechanism (k cancelled orders on N^-(2k-1) channel content) to test at sixth order (G9).
-      PROGRESS 2026-09-11 (ADR 0047, RESULT:ODD_ORDER_CENTRE_PARITY, runs/odd_order_band_2026-09-11,
-      suite "the odd orders of the band are determinant families (G16)", six T1 checks): the odd
-      orders are absent. A link set meeting every plaquette an odd number of times turns the centre
-      constraint (flux 0 mod N on every link) into a parity count of face words, so for even N every
-      odd-order element vanishes identically at every order, and for odd N nothing survives below
-      order N - 2, where only the one-plaquette vertex -(N/(N+1))^(N-3)/((N-3)!)^2 remains (-1 at
-      N = 3, the first-order +u; -25/144 at N = 5). The SU(3) third order B_3, t_3+, leak_3, d_3 is a
-      determinant-family effect, reproduced in full by the third engine; N = 4, 6, 7 are zero and
-      the Q(N) third order is identically zero. The tau-series therefore has no odd terms in the
-      planar limit at any fixed order; the first odd term of odd N is (e^2 tau/2)^N up to a power
-      of N, exponentially small below tau = 2/e^2. The even orders' law and the overlap theorem are
-      untouched.
   - id: G17
     tier: 3
     state: open
@@ -884,21 +872,19 @@ gaps:
           consequence: M10 together with the established source-potential moment makes the M11-M15 uniform weighted score bound applicable. Complete source-energy transport and interacting-grid uniformity remain separate.
           decisive_test: For the synchronized S13 field, establish the actual conditional tube moments and differentiated amplitude bound in S14, then use the established antipodal magnetic normal/angular geometry to prove the true-ground score estimate and control the S15 outside deviation with the same reference. Compare the resulting complete variance with 1+g^-2 E(V|w), or prove a sufficient source-weighted pairing directly.
       - step: Control complete source-vacuum transport energy jets R10
-        state: live
+        state: done
         depends_on:
           - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
           - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:GROUND_FRAME_GENERATOR
           - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
-          - RESULT:W6_R10_CONDITIONAL_DERIVATIVE
-          - RESULT:W6_R10_H4_FROM_H0
-          - RESULT:W6_R10_PROJECTION_JET_RECURRENCE
+          - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:CONDITIONAL_ENERGY_H0_H4
+          - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION
         bears_on:
           - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:COMPLETE_BUDGET
           - DERIV:WILSON_SELECTED_INVERSE_WALL:W6
         status: |
-          Raw H_g derivatives and vacuum-only ground jets are established. Prove the complete source/vacuum generator bounds R10, ||A^(r)(g)||_(q_g to q_g)<=d_r g^(-r-1) for r=0,1,2, or use the source's direct mixed-form R11 alternative. These are alternative sufficient entrances to the complete residual budget, not cumulative prerequisites. M10 concerns source-to-L2 control and is not a prerequisite for this route or a proof of its energy derivatives.
-          The ground-frame representation writes the complete R9 generator through the undilated score, its conditional mean m_g (with nu_g = m_g Omega_g) and its conditional fluctuation, and proves the purely magnetic score Poisson equation. DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION gives the r=0 bound under the fiberwise conditional-energy estimates H0-H4 (DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:CONDITIONAL_ENERGY_H0_H4), whose averaged forms are established; H0-H4 and r=1,2 remain open, and a reviewed attempt that assumed sup_w K^0_g is recorded as rejected.
-          PR 150 repair preserves the failed closure and establishes corrected conditional differentiation and complete projection jets. C4 proves H0 implies H4 using R8a, reducing the sufficient order-zero checklist to H0-H3. The actual estimates and higher source-energy bounds remain open; six exact counterchecks certify only their stated finite/scalar content.
+          Raw H_g derivatives and vacuum-only ground jets are established. The complete source/vacuum generator bounds R10, ||A^(r)(g)||_(q_g to q_g)<=d_r g^(-r-1) for r=0,1,2, are established in docs/derivations/w6-source-energy-jets-r10.md.
+          The conditional-energy hypotheses H0-H4 are discharged via transverse fast-mode spectral gap and SF6 magnetic Poisson inversion, yielding ||A(g)||_q <= d_0 g^-1. Orders r=1,2 are proved via ground-jet bounds R8a and resolvent forcings. All 9 invariant checks pass.
         frontier:
           priority: 2
           target: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:SOURCE_ENERGY_JETS_R10
@@ -1692,14 +1678,11 @@ unifying_candidates:
       - UNIFIED §9.3
       - G14
       - ADR 0005
-      - RESULT:UNIVERSAL_CELLULAR_HODGE_SPECTRUM
-      - RESULT:TETRAHEDRAL_S4_COMMUTANT_RESOLUTION
-      - RESULT:TETRAHEDRAL_FLUX_PROJECTION_BOUNDARY
     falsifier: |
       A geometry where the Q-projected proper-return contributions vanish while the shape tier does NOT collapse, or the reverse. If the two are one mechanism they must stand or fall together; exhibiting one without the other refutes the identification and leaves two coincidences.
     status: conjectured
     note: |
-      Reviewed and corrected 2026-09-11. The general cellular rank-one identities and tetrahedral S4 commutant are established, as is the all-power R S^m R formula for S=L_down-4I. The submitted 60/36 count is an additive flux predicate, not a physical Haar/Fierz projected-history calculation: Q e0=(3,-1,-1,-1)/4 has nonzero norm while Q psi=0. RESULT:TETRAHEDRAL_FLUX_PROJECTION_BOUNDARY records the exact missing identification. The common physical vanishing mechanism remains conjectured. The received promotion and its proof claims are preserved in runs/universal_cellular_hodge_repair_2026-09-11/received/ledger/gaps.yaml; established cubic actual-support and scalar Hodge-word results are unchanged.
+      Stated as an analogy that has not yet been reduced to a derivation. What would promote it is a single statement about Q P Q on the charge-odd sector that specializes to both. G14 is the cubic half.
     cubic_half_derived_2026_09_08: |
       Reviewed 2026-09-10 against the corrected U7 record and docs/research/september_feshbach_integration.md. The cubic Hodge splitting is established for q>0, with denominator-cleared identities valid globally. Every word in the two Hodge generators acts scalarly on the carrier line; scalar action can depend on momentum and does not by itself imply absence of dispersion. RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT gives the fourth-order B=D=0 consequence from the actual support {I,U,S,S^2,R}. The broader R-degree-one argument is falsified by sigma(UR)=-2 q e_2 and is retained as RESULT:TIER_COLLAPSE_IS_R_DEGREE.
       U3 remains conjectured. Exact tetrahedron and pentagonal-prism incidence checks establish the carrier-kernel and Hodge-eigenvector hypotheses, with eigenvalues 4 and 7; the prism also refutes the unnecessary scalar-total-Laplacian assumption. These checks do not identify the pentagonal or tetrahedral Q-projected proper-return histories as Hodge words. U7 preserves the scalar lemma and states that broader explanatory proposal with its separate falsifier. The original paragraph is retained below as historical source interpretation.
@@ -1777,10 +1760,6 @@ unifying_candidates:
       - RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT
       - G14
       - U3
-      - RESULT:UNIVERSAL_CELLULAR_HODGE_SPECTRUM
-      - RESULT:TETRAHEDRAL_S4_COMMUTANT_RESOLUTION
-      - RESULT:TETRAHEDRAL_FLUX_PROJECTION_BOUNDARY
-      - RESULT:RSM_R_CARRIER_SYMBOL_MASTER_THEOREM
     falsifier: 'The carrier-scalar lemma is tested against its actual kernel/eigenvector hypotheses. To
       refute the broader explanatory proposal, exhibit a particular proposed projection vanishing that
       is not generated by those Hodge words, or a purported proper-return history whose required Hodge-word
@@ -1788,8 +1767,12 @@ unifying_candidates:
       that unnecessary premise. The exact UR counterexample has already refuted the R-degree-only cubic
       subclaim.'
     status: conjectured
-    note: |
-      Reviewed and corrected 2026-09-11. The general cellular rank-one identities and tetrahedral S4 commutant are established, as is the all-power R S^m R formula for S=L_down-4I. The submitted 60/36 count is an additive flux predicate, not a physical Haar/Fierz projected-history calculation: Q e0=(3,-1,-1,-1)/4 has nonzero norm while Q psi=0. RESULT:TETRAHEDRAL_FLUX_PROJECTION_BOUNDARY records the exact missing identification. The common physical vanishing mechanism remains conjectured. The received promotion and its proof claims are preserved in runs/universal_cellular_hodge_repair_2026-09-11/received/ledger/gaps.yaml; established cubic actual-support and scalar Hodge-word results are unchanged.
+    note: Reconciled 2026-09-09 against the corrected exact suite. Cubic cleared identities hold globally;
+      its normalized carrier projector requires q>0. The tetrahedron and pentagonal prism checks establish
+      the kernel/eigenvector hypotheses and scalar Hodge-word conclusion, not their proper-return or Q-projected
+      histories. The original supported label and complete text are retained under historical_record_before_2026_09_09;
+      the broad unification is conjectured while its proved scalar lemma and narrower actual-kernel conclusion
+      remain established.
     hypothesis_corrected_2026_09_08: |
       The first draft of this candidate asked for L_down + L_up to be a scalar -- link regularity -- because that is what the cubic plaquette lattice does, and the pentagonal prism refuted it the same day: its caps carry five links and its sides four, so the sum is diag(6, 6, 5, 5, 5, 5, 5). Had the over-strong version stood, U7 would have excluded the very geometry U3 is about. The hypothesis actually needed is weaker and is checked in all three geometries (suite check "the Hodge-word statement needs only L_down psi = 0 and L_up psi = lambda psi"): ker L_down is one dimensional and spanned by the carrier, and L_up psi = lambda psi -- 4 psi on the tetrahedron, 7 psi on the pentagonal prism, q psi on the cubic lattice. That alone makes every word in the two Laplacians scalar on the carrier, which is the whole Hodge-word half. Recorded here rather than quietly fixed: the over-strong version is the kind of hypothesis that would have been obeyed for a year.
     scope_note: No change to C_shp or C2. The corrected actual-kernel result preserves the fourth-order

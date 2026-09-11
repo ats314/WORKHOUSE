@@ -1339,10 +1339,66 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 561
+## T1 — re-derived exactly — 585
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
+**Archive functional inequalities and source transport**
+
+- `Archive Chernoff optimization has the stated Herbst exponent`
+  - src/workhouse/invariants/archive_derivations.py:134 · ARCHIVE_FUNCTIONAL F11
+  - `workhouse verify --only 'Archive Chernoff optimization has the stated Herbst exponent'`
+- `Archive SU2 signed diffusion is exact in quaternion generator coordinates`
+  - src/workhouse/invariants/archive_derivations.py:361 · ARCHIVE_FUNCTIONAL F17
+  - `workhouse verify --only 'Archive SU2 signed diffusion is exact in quaternion generator coordinates'`
+- `Archive covariance decomposition is exact for a two-event mixture`
+  - src/workhouse/invariants/archive_derivations.py:102 · ARCHIVE_FUNCTIONAL F12
+  - `workhouse verify --only 'Archive covariance decomposition is exact for a two-event mixture'`
+- `Archive drift-to-energy remainder is an exact square`
+  - src/workhouse/invariants/archive_derivations.py:49 · ARCHIVE_FUNCTIONAL F8
+  - `workhouse verify --only 'Archive drift-to-energy remainder is an exact square'`
+- `Archive even tori realize extensive stationary center defects`
+  - src/workhouse/invariants/archive_derivations.py:329 · ARCHIVE_FUNCTIONAL F16
+  - `workhouse verify --only 'Archive even tori realize extensive stationary center defects'`
+- `Archive finite-range inverse bound holds on a nontrivial exact tridiagonal family`
+  - src/workhouse/invariants/archive_derivations.py:269 · ARCHIVE_SOURCE_TRANSPORT S10 S11 S12
+  - `workhouse verify --only 'Archive finite-range inverse bound holds on a nontrivial exact tridiagonal family'`
+- `Archive horizontal inverse zero-extension is nonlocal on exact cycles`
+  - src/workhouse/invariants/archive_derivations.py:289 · ARCHIVE_SOURCE_TRANSPORT S13 S14
+  - `workhouse verify --only 'Archive horizontal inverse zero-extension is nonlocal on exact cycles'`
+- `Archive likelihood-ratio transfer bounds normalized event probabilities`
+  - src/workhouse/invariants/archive_derivations.py:184 · ARCHIVE_SOURCE_TRANSPORT S4
+  - `workhouse verify --only 'Archive likelihood-ratio transfer bounds normalized event probabilities'`
+- `Archive mean threshold is independent of concentration around the mean`
+  - src/workhouse/invariants/archive_derivations.py:120 · ARCHIVE_FUNCTIONAL F11
+  - `workhouse verify --only 'Archive mean threshold is independent of concentration around the mean'`
+- `Archive nonnegative Taylor bound gives gradient domination`
+  - src/workhouse/invariants/archive_derivations.py:35 · ARCHIVE_FUNCTIONAL F2
+  - `workhouse verify --only 'Archive nonnegative Taylor bound gives gradient domination'`
+- `Archive normalized envelope tilts violate the claimed ordering`
+  - src/workhouse/invariants/archive_derivations.py:147 · ARCHIVE_SOURCE_TRANSPORT S3
+  - `workhouse verify --only 'Archive normalized envelope tilts violate the claimed ordering'`
+- `Archive overlap and defect budgets hold on an actual periodic four-dimensional complex`
+  - src/workhouse/invariants/archive_derivations.py:59 · ARCHIVE_FUNCTIONAL F3 F4 F5 F10 F14 F15
+  - `workhouse verify --only 'Archive overlap and defect budgets hold on an actual periodic four-dimensional complex'`
+- `Archive reflection-equivariant map has a negative coarse OS form`
+  - src/workhouse/invariants/archive_derivations.py:224 · ARCHIVE_SOURCE_TRANSPORT S7 S9
+  - `workhouse verify --only 'Archive reflection-equivariant map has a negative coarse OS form'`
+- `Archive reported full-rank fit and held-out fit are different formulas`
+  - src/workhouse/invariants/archive_derivations.py:313 · ARCHIVE_REVIEW_SOURCES numerical provenance
+  - `workhouse verify --only 'Archive reported full-rank fit and held-out fit are different formulas'`
+- `Archive rooted series retains the animal-count factor`
+  - src/workhouse/invariants/archive_derivations.py:208 · ARCHIVE_SOURCE_TRANSPORT S5 S6
+  - `workhouse verify --only 'Archive rooted series retains the animal-count factor'`
+- `Archive source log-partition Hessian equals a finite tilted covariance`
+  - src/workhouse/invariants/archive_derivations.py:161 · ARCHIVE_SOURCE_TRANSPORT S1 S2
+  - `workhouse verify --only 'Archive source log-partition Hessian equals a finite tilted covariance'`
+- `Archive square-profile chain rule retains the signed action pairing`
+  - src/workhouse/invariants/archive_derivations.py:16 · ARCHIVE_FUNCTIONAL F5
+  - `workhouse verify --only 'Archive square-profile chain rule retains the signed action pairing'`
+- `Archive support-preserving pushforward has an exact positive OS Gram matrix`
+  - src/workhouse/invariants/archive_derivations.py:244 · ARCHIVE_SOURCE_TRANSPORT S7 S8
+  - `workhouse verify --only 'Archive support-preserving pushforward has an exact positive OS Gram matrix'`
 **Balaban submission: the two proposed repairs and what they expose**
 
 - `Restoring the action prefactor makes the coarse subtraction a constant competition`
@@ -1482,6 +1538,26 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the two band spans ARE the two incidence spectra`
   - src/workhouse/invariants/su3.py:143 · MASTER paper §4.5 / ENGINE_FLUX_su3_domino_d3.py key corrected_Ceven_bandwidth_16|t|
   - `workhouse verify --only 'the two band spans ARE the two incidence spectra'`
+**W6 R10 repaired identities and counterchecks**
+
+- `W6 R10 repair: H2 proposed uniform Young bound fails`
+  - src/workhouse/invariants/w6_source_energy_r10.py:108 · W6_SOURCE_ENERGY_JETS_R10 C6b
+  - `workhouse verify --only 'W6 R10 repair: H2 proposed uniform Young bound fails'`
+- `W6 R10 repair: centered product retains covariance`
+  - src/workhouse/invariants/w6_source_energy_r10.py:66 · W6_SOURCE_ENERGY_JETS_R10 C2
+  - `workhouse verify --only 'W6 R10 repair: centered product retains covariance'`
+- `W6 R10 repair: conditional measure derivative finite example`
+  - src/workhouse/invariants/w6_source_energy_r10.py:57 · W6_SOURCE_ENERGY_JETS_R10 C1
+  - `workhouse verify --only 'W6 R10 repair: conditional measure derivative finite example'`
+- `W6 R10 repair: diffusion-gap inverse has g^-3 scaling`
+  - src/workhouse/invariants/w6_source_energy_r10.py:98 · W6_SOURCE_ENERGY_JETS_R10 C6a
+  - `workhouse verify --only 'W6 R10 repair: diffusion-gap inverse has g^-3 scaling'`
+- `W6 R10 repair: omitted projection mixed terms are nonzero`
+  - src/workhouse/invariants/w6_source_energy_r10.py:88 · W6_SOURCE_ENERGY_JETS_R10 C5a
+  - `workhouse verify --only 'W6 R10 repair: omitted projection mixed terms are nonzero'`
+- `W6 R10 repair: projection recurrence through third derivative finite model`
+  - src/workhouse/invariants/w6_source_energy_r10.py:76 · W6_SOURCE_ENERGY_JETS_R10 C5
+  - `workhouse verify --only 'W6 R10 repair: projection recurrence through third derivative finite model'`
 **W6 antipodal conditional magnetic geometry**
 
 - `W6 antipodal: complete nine-dimensional Hessian spectrum`
