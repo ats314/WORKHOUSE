@@ -4716,6 +4716,8 @@ documents:
       generator. A direct proof of mixed-form R11 is an alternative sufficient route and need not prove
       R10 itself. M10 and the Hardy source-to-L2 bound are not prerequisites of R10 and do not imply it;
       a different source chart requires its own consistent transformed operator and covariant derivatives.
+      The ground-frame reduction DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION gives the
+      r=0 case under its conditional-energy hypotheses H0-H4; those and r=1,2 remain open.
   - id: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:COMPLETE_BUDGET
     statement: For the complete actual positive-reference source/vacuum transport, energy-operator bounds
       ||A^(r)(g)||_(q_g->q_g)<=d_r g^(-r-1), r=0,1,2, imply explicit all-energy M_j(s)<=c_j s^-j for j=1,2,3
@@ -5579,3 +5581,119 @@ documents:
       scope: Exact scalar consequence of the registered abstract default functions and their interval
         theorem. It does not establish the physical SC17 defect hypotheses or an actual Wilson closure
         window.
+- id: CITE:W6_SOURCE_GENERATOR_SCORE_FRAME
+  path: docs/derivations/w6-source-generator-score-frame.md
+  sha256: 20b070cb78311187d8e28170ac6179aca8ca0646e868c72c113e902500b68b01
+  statements:
+  - id: DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:GROUND_FRAME_GENERATOR
+    statement: In the ground-state frame U_g psi=psi/Omega_g, the shifted fixed-square Hamiltonian is
+      -(g^2/2) times the mu_g-symmetric diffusion generator, the C1 literal source projection is the
+      mu_g conditional expectation given w, the Kato generator [P'_g,P_g] equals (I-Pi_w) sigma~ Pi_w
+      - Pi_w sigma~ (I-Pi_w) with sigma~ the conditionally centered ground score, and the R9 vacuum-cross
+      vector is nu_g = P_g chi_g = m_g(w) Omega_g with m_g the conditional mean of the score. The complete
+      R9 generator is thereby written through the score, its conditional mean and its conditional fluctuation.
+    locator: '## 2. The ground-state frame (SF1-SF2) and ## 3. The complete R9 generator in the ground-state frame (SF3-SF5)'
+    anchor: 'nu_g = P_g chi_g = m_g(w) Omega_g'
+    source_labels:
+    - SF1
+    - SF2
+    - SF3
+    - SF4
+    - SF5
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual fixed compact square H_g=(g^2/2)T+g^-2 V at fixed positive g; simple normalized positive smooth
+      ground, smooth chi_g and h_g with positive minimum, and norm-smooth P_g as in C1.
+    - P_g is exactly the C1 literal source projection and A(g) is exactly the R9 source/vacuum generator
+      with nu_g = chi_g - [P'_g,P_g]Omega_g.
+    depends_on: []
+    lean: []
+    remaining: No Lean formalization. Exact identities at fixed positive coupling; no uniform-in-g bound
+      is asserted by this record.
+  - id: DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
+    statement: The first ground jet satisfies L_g[chi_g,u] = 4 g^-3 <(V-<V>_mu)Omega_g,u> on the common form
+      domain, equivalently -(g^2/2)Delta_mu sigma_g = 4 g^-3 (V-<V>_mu) in L2(mu_g), with e'_g = 2e_g/g
+      - 4 g^-3 <V>_mu; the electric form is absent from the forcing. Consequently L_g[chi_g] = 4 g^-3
+      Cov_mu(sigma_g,V), the averaged conditional score variance obeys integral K^0_g dnu_g <= 4 e_g h_g/(gamma
+      g^2), and Cov_mu(sigma_g,V) <= e_g h_g g.
+    locator: '## 4. The score Poisson equation (SF6-SF7)'
+    anchor: 'L_g[chi_g, u] = 4 g^-3 < (V - <V>_(mu_g)) Omega_g , u >'
+    source_labels:
+    - SF6
+    - SF7
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - The R3 form identity and R4 bounds for the actual fixed square at small positive coupling.
+    - Bounded nonnegative V, so that (V-<V>)Omega_g is an L2 vector.
+    depends_on:
+    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+    lean: []
+    remaining: No Lean formalization. The purely magnetic forcing is a first-order statement; the second
+      ground jet is driven by (H'_g-e'_g)chi_g, which contains the electric term.
+  - id: DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:FIBER_ENERGY_IDENTITY
+    statement: For a smooth vector field X, E_mu[div_mu X | w] = rho_g^-1 d/dw(rho_g E_mu[X(w)|w]) as
+      distributions on (-1,1). Applied to the centered score, the conditional score energy density J_g(w)
+      equals 4 g^-3 Cov_mu(sigma_g,V|w) + g^2 m'_g D_g plus an explicit second-order flux in rho_g K^0_g and
+      the conditional flux S_g, at fixed positive g.
+    locator: '## 4. The score Poisson equation (SF6-SF7), conditional divergence identity and fiber identity'
+    anchor: 'Fiber identity for the conditional score energy. Put'
+    source_labels:
+    - SF7
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Fixed positive g; smooth ground, score, conditional mean and marginal density on the open interval.
+    - Gamma(w,w)=2(1-w^2) and Delta w = -c_w w, both functions of w, in the M6 normalization.
+    depends_on:
+    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
+    lean: []
+    remaining: No Lean formalization. The identity exhibits the fiber objects K^0_g, D_g, S_g; it does not
+      bound any of them, and pairing it with |f|^2 does not yield an energy-form bound without further
+      regularity.
+  - id: DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION
+    statement: Under the conditional-energy hypotheses H0-H4 (uniform q_g-boundedness of P_g, sup_w K^0_g
+      <= kappa_0 g^-2, J_g <= kappa_1 g^-2 (1+g^-2 E[V|w]), the fast-to-source conditional energy bound,
+      and b_g[m_g] <= kappa_3 g^-2), the complete R9 generator satisfies ||A(g)||_(q_g->q_g) <= d_0 g^-1
+      with the displayed explicit d_0. This is the r=0 case of R10 only.
+    locator: '## 5. Exact reduction of the order-zero R10 bound (SF8-SF9)'
+    anchor: '||A(g) u||_(q_g) <= d_0 g^-1 ||u||_(q_g),'
+    source_labels:
+    - SF8
+    - SF9
+    status: conditional
+    evidence: analytic
+    hypotheses:
+    - H0-H4 with constants independent of g on 0<g<g_*; each is stated explicitly in section 5.
+    - The rank-one q_g operator bound and R4 from the transport-budget note; 0<=e_g<=E and gap gamma>0.
+    depends_on:
+    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:GROUND_FRAME_GENERATOR
+    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
+    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:FIBER_ENERGY_IDENTITY
+    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+    lean: []
+    remaining: Prove H0-H4. The r=1,2 cases of R10 are not reduced; their forcing contains the electric
+      term and P''_g involves sigma_g^2 and its derivative. R10 remains open.
+  - id: DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:CONDITIONAL_ENERGY_H0_H4
+    statement: Prove, uniformly on 0<g<g_*, the fiberwise conditional-energy estimates H0-H4 for the
+      undilated ground score on level sets of w. Their averaged forms are established (SF7b and the
+      integrated J_g bound conditional on H4); the fiberwise forms are open.
+    locator: '## 5. Exact reduction of the order-zero R10 bound (SF8-SF9), conditional-energy hypotheses'
+    anchor: '(H1)  sup_w K^0_g(w)'
+    source_labels:
+    - H0
+    - H1
+    - H2
+    - H3
+    - H4
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - Actual fixed square, undilated score partial_g log Omega_g; K^0_g is not the dilated K_g of M10.
+    depends_on:
+    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
+    lean: []
+    remaining: A fiberwise Poincare-type inequality for -Delta_mu restricted to level sets of w, uniform
+      in g, would give H1 and H2 from SF6. H0, H3 and H4 concern the source energy of conditional
+      expectations and need a separate argument. No route is claimed dead.
