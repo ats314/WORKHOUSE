@@ -46,6 +46,14 @@ uniform M10 estimate remains open.
 
 For questions spanning the corpus, use the [discovery engine](docs/graph_discovery.md) to combine source passages, exact symbols and graph paths across the checkout and the declared workstation archive, compare candidate pairs, and retain each reading in the [review register](graph-tasks/discovery/README.md); registration stays a reviewed hand edit.
 
+The [G9 sixth-order continuation](paper/research_notes/G9_SIXTH_ORDER_COMBINED_20260911.md)
+derives the complete formal 18-word electric fold formula and evaluates one
+SU(3) plaquette through order six. Combining all H4-induced terms proves
+that an extra rational band shape survives every local direct H6 under the
+recorded third-order factorization. Direct multi-plaquette H6 word coefficients,
+including the q e2/e3 terms, remain open. The earlier walk census does not
+establish a physical RUR amplitude.
+
 ## Quick start
 
 The [September 10 folder review](runs/folder_evidence_integration_2026-09-10/README.md)

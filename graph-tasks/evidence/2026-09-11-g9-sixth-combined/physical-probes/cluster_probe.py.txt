@@ -1,0 +1,30 @@
+from fractions import Fraction as F
+from time import monotonic
+import sympy as sp
+from workhouse import chain_cluster as cc
+
+start=monotonic()
+def note(text): print(f"{monotonic()-start:.2f}s {text}",flush=True)
+faces=[((0,1),(0,0,0)),((0,2),(0,0,0))]
+cl=cc.Cluster(faces)
+m=len(faces)
+model=[cc.vadd(cl.model[2*i],cl.model[2*i+1],-1) for i in range(m)]
+def w(vec): return cc.vadd({k:-v for k,v in cl.apply_V(vec).items()},vec,-1)
+def ip(a,b): return sp.Rational(cc.inner(a,b)/2)
+def matrix(a,b): return sp.Matrix([[ip(x,y) for y in b] for x in a])
+note('started actual SU3 two perpendicular plaquettes; odd model norm squared 2; shifted V=-sum traces-I')
+x=[w(v) for v in model];note('W P sizes '+str([len(v) for v in x]))
+r=[cc.resolvent(v,cl.e0) for v in x];note('D W P sizes '+str([len(v) for v in r]))
+r2=[cc.resolvent(v,cl.e0) for v in r]
+a2=matrix(x,r);b2=matrix(r,r);c2=matrix(r,r2);note('A2='+str(a2))
+y=[w(v) for v in r];note('W D W P sizes '+str([len(v) for v in y]))
+z=[cc.resolvent(v,cl.e0) for v in y];note('D W D W P sizes '+str([len(v) for v in z]))
+a3=matrix(r,y);k=matrix(r2,y);b3=k+k.T
+a4=matrix(y,z);k=matrix([w(v) for v in r2],z);b4=k+k.T+matrix(z,z);note('lower moments complete A4='+str(a4))
+u=[w(v) for v in z];note('W D W D W P sizes '+str([len(v) for v in u]))
+t=[cc.resolvent(v,cl.e0) for v in u];note('D W D W D W P sizes '+str([len(v) for v in t]))
+a6=matrix(u,t);note('A6='+str(a6))
+def anti(a,b):return a*b+b*a
+h6=a6-(anti(a4,b2)+anti(a3,b3)+anti(a2,b4))/2+anti(a2*a2,c2)/2+sp.Rational(3,8)*anti(a2,b2*b2)+b2*a2*b2/4
+note('H6='+str(h6))
+note('STATS='+str(cc.STATS))

@@ -92,6 +92,7 @@ _MODULES = (
     "anisotropy_variance",
     "theory_current_bridges",
     "dimension_five_irrelevance",
+    "sixth_order",
 )
 
 for _name in _MODULES:
