@@ -5987,3 +5987,112 @@ documents:
     remaining: A fiberwise Poincare-type inequality for -Delta_mu restricted to level sets of w, uniform
       in g, would give H1 and H2 from SF6. H0, H3 and H4 concern the source energy of conditional
       expectations and need a separate argument. No route is claimed dead.
+
+- id: CITE:MOVING_TIME_SPECTRAL_GAP
+  path: docs/derivations/moving-time-spectral-gap.md
+  sha256: d0a20c25e023bff70dec2ad61995860ceb3eb8476c651b2fc6275ff64d059a75
+  statements:
+  - id: DERIV:MOVING_TIME_SPECTRAL_GAP:PROJECTION
+    statement: The projected target norm is bounded by the probe norm error plus exp(E t/2) times the
+      square root of the probe correlation.
+    locator: '## 1. Premises and the finite-cutoff projection estimate (MT1) (lines 17-43)'
+    anchor: '## 1. Premises and the finite-cutoff projection estimate (MT1)'
+    source_labels:
+    - MT1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - H_n are nonnegative self-adjoint operators in the physical clock; target f_n and approximate probe
+      v_n belong to the same cutoff Hilbert space and ||f_n-v_n|| tends to zero.
+    depends_on:
+    - DERIV:YANGMILLS_RECONSTRUCTION:R1
+    lean: []
+    remaining: The full analytic argument is not formalized in Lean. Exact finite controls retain their
+      narrower scopes; actual Wilson continuum/source realization is a separate open application.
+  - id: DERIV:MOVING_TIME_SPECTRAL_GAP:VAGUE_LIMIT
+    statement: Vanishing moving-time low-energy bounds and unquantified norm approximation imply spectral
+      exclusion for the vague target limit; actual totality gives the common limiting gap.
+    locator: '## 2. Moving-time exclusion and totality (MT2) (lines 44-91)'
+    anchor: '## 2. Moving-time exclusion and totality (MT2)'
+    source_labels:
+    - MT2
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - H_n are nonnegative self-adjoint operators in the physical clock; target f_n and approximate probe
+      v_n belong to the same cutoff Hilbert space and ||f_n-v_n|| tends to zero.
+    - The target positive spectral measures converge vaguely to the stated limiting measures on [0,infinity).
+    - For the full-space conclusion, the limiting measures are actual spectral measures of one reconstructed
+      H and the intended centered source family has dense span in the vacuum complement; one positive
+      rate is common to the family.
+    depends_on:
+    - DERIV:MOVING_TIME_SPECTRAL_GAP:PROJECTION
+    lean: []
+    remaining: The full analytic argument is not formalized in Lean. Exact finite controls retain their
+      narrower scopes; actual Wilson continuum/source realization is a separate open application.
+  - id: DERIV:MOVING_TIME_SPECTRAL_GAP:SHRINKING_TILTS
+    statement: Centered exponential probes obey the MT3 low-energy estimate with K_n/alpha_n^2 and a Taylor
+      error outside the time exponential.
+    locator: '## 3. Shrinking exponential sources without a Taylor rate penalty (MT3) (lines 92-126)'
+    anchor: '## 3. Shrinking exponential sources without a Taylor rate penalty (MT3)'
+    source_labels:
+    - MT3
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - H_n are nonnegative self-adjoint operators in the physical clock; target f_n and approximate probe
+      v_n belong to the same cutoff Hilbert space and ||f_n-v_n|| tends to zero.
+    - The target positive spectral measures converge vaguely to the stated limiting measures on [0,infinity).
+    - For the full-space conclusion, the limiting measures are actual spectral measures of one reconstructed
+      H and the intended centered source family has dense span in the vacuum complement; one positive
+      rate is common to the family.
+    - The uniform bounded-observable or stated growing-B_n Taylor condition holds.
+    depends_on:
+    - DERIV:MOVING_TIME_SPECTRAL_GAP:PROJECTION
+    - DERIV:SOURCE_CURRENT_BRIDGES:SCB5
+    lean: []
+    remaining: The full analytic argument is not formalized in Lean. Exact finite controls retain their
+      narrower scopes; actual Wilson continuum/source realization is a separate open application.
+  - id: DERIV:MOVING_TIME_SPECTRAL_GAP:OPTIMAL_BUDGET
+    statement: For raw bound K_n(t)<=A a_n^-p exp(-m t)+B a_n^r and |alpha_n|>=c_alpha a_n^s, the optimized
+      moving-time gap is M_*=m(r-2s)/(p+r) at t_n=((p+r)/m)log(1/a_n), provided r>2s. A horizon c_max
+      uses c_opt=min(c_max,(p+r)/m) and M_opt=min(m-(p+2s)/c_opt,(r-2s)/c_opt). Positive guarantees require
+      c_max>(p+2s)/m. One-atom measures prove sharpness, including the shortened-horizon case.
+    locator: '## 4. Optimal power-law budget and finite observation horizon (MT4) (lines 127-179)'
+    anchor: '## 4. Optimal power-law budget and finite observation horizon (MT4)'
+    source_labels:
+    - MT4
+    status: proven
+    evidence: analytic
+    hypotheses: &id001
+    - H_n are nonnegative self-adjoint operators in the physical clock; target f_n and approximate probe
+      v_n belong to the same cutoff Hilbert space and ||f_n-v_n|| tends to zero.
+    - The target positive spectral measures converge vaguely to the stated limiting measures on [0,infinity).
+    - For the full-space conclusion, the limiting measures are actual spectral measures of one reconstructed
+      H and the intended centered source family has dense span in the vacuum complement; one positive
+      rate is common to the family.
+    - 0<a_n<1 tends to zero; p,s>=0 and r,m>0; A,B,c_alpha are positive and independent of n; the estimate
+      is available at the selected physical times.
+    - The normalized probe and target approximation satisfy the moving-time theorem; s=0 exact probes
+      are allowed, while shrinking sub-polynomial tilts are handled by taking arbitrarily small s>0.
+    depends_on:
+    - DERIV:MOVING_TIME_SPECTRAL_GAP:VAGUE_LIMIT
+    - DERIV:MOVING_TIME_SPECTRAL_GAP:SHRINKING_TILTS
+    lean: []
+    remaining: The full analytic argument is not formalized in Lean. Exact finite controls retain their
+      narrower scopes; actual Wilson continuum/source realization is a separate open application.
+  - id: DERIV:MOVING_TIME_SPECTRAL_GAP:SHARPNESS
+    statement: Positive one-atom measures attain the full and shortened-horizon guaranteed rates; normalization,
+      clock, density and plateau negative controls retain each missing hypothesis.
+    locator: '## 5. Sharpness and falsifiers (MT5) (lines 180-234)'
+    anchor: '## 5. Sharpness and falsifiers (MT5)'
+    source_labels:
+    - MT5
+    status: proven
+    evidence: analytic
+    hypotheses: *id001
+    depends_on:
+    - DERIV:MOVING_TIME_SPECTRAL_GAP:OPTIMAL_BUDGET
+    lean: []
+    remaining: The full analytic argument is not formalized in Lean. Exact finite controls retain their
+      narrower scopes; actual Wilson continuum/source realization is a separate open application.

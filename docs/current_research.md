@@ -115,6 +115,12 @@ recorded third-order factorization. Direct multi-plaquette H6 word coefficients,
 including the q e2/e3 terms, remain open. The earlier walk census does not
 establish a physical RUR amplitude.
 
+The [moving-time gap criterion](derivations/moving-time-spectral-gap.md)
+proves a limiting spectral gap from approximate sources and one growing physical
+observation time per cutoff. Its sharp power-law budget retains source-amplitude
+and finite-horizon losses. Actual continuum measures, source totality and the
+Wilson one-time estimates remain explicit application hypotheses.
+
 ## Select the kind of work before proceeding
 
 | Kind of obligation | Where to read it | What discharges it |
