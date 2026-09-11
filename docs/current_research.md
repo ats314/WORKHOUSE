@@ -234,6 +234,26 @@ a quarter. This is the strong-coupling side of G16 made exact through fourth
 order; the overlap theorem G16 asks for remains open, and the N⁻⁽⁴ᵏ⁻¹⁾ law
 beyond k = 2 is a conjecture for the sixth-order clusters of G9.
 
+## The odd orders of the band
+
+On 2026-09-11 ([ADR 0047](decisions/0047-the-odd-orders-of-the-band-are-determinant-families.md),
+[note](../paper/research_notes/ODD_ORDER_CENTRE_PARITY_20260911.md),
+[run](../runs/odd_order_band_2026-09-11/README.md), suite "the odd orders of the
+band are determinant families (G16)", `RESULT:ODD_ORDER_CENTRE_PARITY`) the odd
+orders of the strong-coupling band were shown to be determinant families. A
+link set meeting every plaquette an odd number of times turns the centre
+constraint of the Haar integral into a parity count of face words: for even N
+every odd-order element of the effective operator vanishes identically at every
+order, and for odd N nothing survives below order N − 2, where the only term is
+the one-plaquette vertex `−(N/(N+1))^{N−3}/((N−3)!)²` (−1 at N = 3, the
+first-order `+u`; −25/144 at N = 5). The third-order des Cloizeaux operator,
+built in the third engine for the first time, reproduces the entire SU(3) third
+order (`B_3`, `t_3+`, `leak_3`, `d_3`, both domino diagonals, the vacuum route
+−9/32), is zero at N = 4, 6, 7, gives ±25/144 at N = 5, and is identically zero
+over ℚ(N). The τ-series of ADR 0046 therefore has no odd terms in the planar
+limit at any fixed order. The even orders' N⁻⁽⁴ᵏ⁻¹⁾ law and the overlap theorem
+of G16 are untouched.
+
 ## Dated route history
 
 The collapsed narrative below preserves the earlier September 5–9 guide and

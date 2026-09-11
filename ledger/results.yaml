@@ -3312,6 +3312,50 @@ results:
     status: proven
     evidence: analytic
 
+  - id: RESULT:ODD_ORDER_CENTRE_PARITY
+    statement: For even N every odd-order matrix element of the des Cloizeaux effective operator of the
+      strong-coupling band vanishes identically, on every cluster and in both C-parity sectors, at every
+      order. For odd N an odd order m vanishes unless m >= N - 2, and at m = N - 2 the only surviving
+      element is the one-plaquette vertex H_(N-2)(F-bar, F) = -(N/(N+1))^(N-3)/((N-3)!)^2, which is -1 at
+      N = 3 and -25/144 at N = 5; hops and leakages vanish at that order.
+    hypotheses:
+    - Kogut-Susskind strong-coupling Hamiltonian on Z^3 with H0 = (1/2) sum E^2 and V = -u W, W the sum of
+      plaquette characters in both orientations, u = beta_N/(2N); degenerate perturbation theory on the
+      one-plaquette sector at fixed order on finite clusters.
+    - The SU(N) Haar integral of a word vanishes unless every link's net flux is 0 mod N; on one plaquette
+      the four links are private, so the states are characters with energy 2 C_2(R).
+    scope: Statements about the coefficients of the strong-coupling series at fixed order, not about
+      convergence; on a periodic lattice the link-set lemma needs even extents. The even orders and the
+      G16 overlap theorem are not addressed.
+    source: CITE:ODD_ORDER_CENTRE_PARITY
+    source_section: Sections 2 and 3
+    depends_on: []
+    bears_on:
+    - G16
+    - G14
+    - G6
+    supported_by:
+    - target: CHK:the-odd-orders-of-the-band-are-determina-18f122:centre-parity-the-link-set-t-x-links-at--cae628
+      scope: The link set T meets every face of a 6^3 block an odd number of times; the criterion tabulated
+        for N <= 12, m <= 11.
+    - target: CHK:the-odd-orders-of-the-band-are-determina-18f122:the-third-engine-reproduces-the-su-3-thi-9bdc6d
+      scope: The third-order operator at N = 3 reproduces the SU(3) third-order ledger; the m = N - 2 = 1
+        vertex is -1.
+    - target: CHK:the-odd-orders-of-the-band-are-determina-18f122:at-n--4-and-n--6-every-third-order-eleme-b41234
+      scope: Theorem A at N = 4 (live) and N = 6 (pinned) on the single plaquette and both pairs at orders
+        1 and 3 only.
+    - target: CHK:the-odd-orders-of-the-band-are-determina-18f122:the-one-plaquette-character-engine-pieri-ece51a
+      scope: One-plaquette towers and vacuum by characters, in agreement with the word engine at N = 3, 4,
+        6, 7 through third order; the vertex at N = 5, 7, 9 (orders 3, 5, 7) with lower odd orders zero;
+        no odd order through 7 at N = 4, 6, 8.
+    - target: CHK:the-odd-orders-of-the-band-are-determina-18f122:at-n--5-the-third-order-is-the-one-plaqu-62e413
+      scope: Theorem B at N = 5, the vertex by characters and the Peter-Weyl path, the word engine's
+        hops and X-touched leakages zero; the emptiness of orders 1 and 3 at N = 7.
+    - target: CHK:the-odd-orders-of-the-band-are-determina-18f122:over-q-n-the-third-order-hops-of-both-pa-3993b1
+      scope: The eight third-order pair elements over Q(N) with balanced families only.
+    status: proven
+    evidence: analytic
+
   - id: RESULT:MOVING_TIME_SPECTRAL_GAP
     statement: If C_n(t_n)<=b_n at physical times t_n tending to infinity and exp(E t_n)b_n tends to zero
       for every E<M, then every vague limit of target spectral measures with ||f_n-v_n|| tending to zero
