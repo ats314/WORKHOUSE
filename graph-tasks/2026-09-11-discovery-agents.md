@@ -173,6 +173,13 @@ and were not edited.
   The fingerprint differs because the input manifest includes the new and
   changed discovery code.
 
+## Publication
+
+Branch `claude/discovery-agents-20260911` pushed to origin; pull request
+[#142](https://github.com/ats314/WORKHOUSE/pull/142) opened against `main`
+from head `c87c894`. CI results and the merge commit are recorded in the
+outer ownership register at closeout.
+
 ## Handoff
 
 Established here: the tooling and its evaluation, with the case studies as
