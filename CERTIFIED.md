@@ -1315,7 +1315,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 536
+## T1 — re-derived exactly — 541
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -2883,6 +2883,23 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the local vacuum chart repairs a genuine quadratic creation term: the two-level symmetric transfer leaves 97/96 after the first rotation, and the exact second generator 97/24 cancels it on both vacuum legs`
   - src/workhouse/invariants/wilson_vacuum_chart.py:25 · G18; paper/research_notes/G18_SECOND_ORDER_WILSON_VACUUM_CHART_20260905.md sections 4 and 8; finite exact two-level model
   - `workhouse verify --only 'the local vacuum chart repairs a genuine quadratic creation term: the two-level symmetric transfer leaves 97/96 after the first rotation, and the exact second generator 97/24 cancels it on both vacuum legs'`
+**the planar limit of the fourth-order band (G16)**
+
+- `N^7 beta_N, N^7 W_4 and N^7 corner_N are positive and decrease strictly to their planar limits for real N >= 3, and no closed form of the assembly has a pole or zero at real N >= 3`
+  - src/workhouse/invariants/planar_band.py:283 · G16; G14; G6; runs/planar_band_2026-09-11; runs/beta_n_symbolic_rank_2026-09-04; runs/channels_symbolic_rank_2026-09-04; ADR 0046; ADR 0029
+  - `workhouse verify --only 'N^7 beta_N, N^7 W_4 and N^7 corner_N are positive and decrease strictly to their planar limits for real N >= 3, and no closed form of the assembly has a pole or zero at real N >= 3'`
+- `every fourth-order cumulant of the beta_N assembly is O(N^-7) in both sectors, the order of the cube completions, and the planar limit of beta_N is 6170/9 = -16(11/576) + 32(5/16) - 16(6197/576) + 848`
+  - src/workhouse/invariants/planar_band.py:159 · G16; G14; G6; runs/planar_band_2026-09-11; runs/beta_n_symbolic_rank_2026-09-04; runs/channels_symbolic_rank_2026-09-04; ADR 0046; ADR 0029
+  - `workhouse verify --only 'every fourth-order cumulant of the beta_N assembly is O(N^-7) in both sectors, the order of the cube completions, and the planar limit of beta_N is 6170/9 = -16(11/576) + 32(5/16) - 16(6197/576) + 848'`
+- `the band coefficients scale as N^-(4k-1) at order 2k (k = 1, 2), so W_4/W_2 = (11930/27) u^2/N^4 (1 + O(N^-2)); with u = beta/(2N) this is (5965/54) tau^2, tau = beta/N^3`
+  - src/workhouse/invariants/planar_band.py:262 · G16; G14; G6; runs/planar_band_2026-09-11; runs/beta_n_symbolic_rank_2026-09-04; runs/channels_symbolic_rank_2026-09-04; ADR 0046; ADR 0029; NOTE_O4 §11
+  - `workhouse verify --only 'the band coefficients scale as N^-(4k-1) at order 2k (k = 1, 2), so W_4/W_2 = (11930/27) u^2/N^4 (1 + O(N^-2)); with u = beta/(2N) this is (5965/54) tau^2, tau = beta/N^3'`
+- `the second-order hop cancels one order: A_N and B_N are -1/N + O(N^-3) each and their difference t_N is 1/(4N^3) + O(N^-5)`
+  - src/workhouse/invariants/planar_band.py:240 · G16; G14; G6; runs/planar_band_2026-09-11; runs/beta_n_symbolic_rank_2026-09-04; runs/channels_symbolic_rank_2026-09-04; ADR 0046; ADR 0029; MASTER_THEORY §4.3
+  - `workhouse verify --only 'the second-order hop cancels one order: A_N and B_N are -1/N + O(N^-3) each and their difference t_N is 1/(4N^3) + O(N^-5)'`
+- `two orders cancel in every cluster: the largest resolvent channels of every fourth-order cumulant are O(N^-3) and the N^-3 and N^-5 channel totals vanish identically, in all eight clusters and both sectors`
+  - src/workhouse/invariants/planar_band.py:207 · G16; G14; G6; runs/planar_band_2026-09-11; runs/beta_n_symbolic_rank_2026-09-04; runs/channels_symbolic_rank_2026-09-04; ADR 0046; ADR 0029
+  - `workhouse verify --only 'two orders cancel in every cluster: the largest resolvent channels of every fourth-order cumulant are O(N^-3) and the N^-3 and N^-5 channel totals vanish identically, in all eight clusters and both sectors'`
 **the resolvent-composed rooted creator map: exact finite controls**
 
 - `finite disjoint-support creator exp/log invert exactly, and a Pauli-flip negative control detects replacement of the nilpotent creator product`
