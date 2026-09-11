@@ -1,0 +1,1239 @@
+## 7. Lyapunov drift and uniform-in-volume functional inequalities
+
+The local analysis in Parts 5–6 produces strong, *structured* coercivity and covariance control on the canonical small-field region (K_\Lambda(r)). To turn this into *volume-uniform* functional inequalities (Poincaré/LSI) for the full Gibbs law, we use a standard “local-to-global” strategy: establish a good inequality on a good set (K), and control the complement (K^c) by a Lyapunov drift condition for the diffusion generator.
+
+The first step in that strategy is to choose a Lyapunov function (W_\Lambda) built from a **plaquette-local, gauge-invariant, globally smooth** proxy for “plaquette badness.” This subsection fixes that proxy and the associated Lyapunov candidate.
+
+---
+
+## 7.1 Smooth plaquette proxy and Lyapunov candidate
+
+### 7.1.1 A globally smooth plaquette deviation function
+
+A tempting “large-field control” seed is the squared distance (d_G(g,\mathbf 1)^2), but on a compact Lie group the cut locus prevents this function from being globally (C^2). Since the Lyapunov drift computation necessarily differentiates twice (via the Laplacian piece in the generator), we instead use a *globally smooth* conjugation-invariant proxy.
+
+Let (\rho:G\to U(n)) be the fixed faithful unitary representation used in the Wilson action (cf. §2.3), and write (\Re\mathrm{Tr}(\rho(g))) simply as (\Re\mathrm{Tr}(g)) when no confusion is possible.
+
+**Definition 7.1 (smooth plaquette proxy on (G)).**
+Define the class function
+[
+\vartheta:G\longrightarrow [0,\infty),\qquad
+\vartheta(g);:=;1-\frac{1}{n},\Re\mathrm{Tr}\big(\rho(g)\big).
+\tag{7.1}
+]
+Equivalently, (\Phi_\beta(g)=\beta,\vartheta(g)) is exactly the single-plaquette Wilson potential from §2.3.
+
+We record the elementary properties needed later.
+
+**Lemma 7.2 (basic properties of (\vartheta)).**
+The function (\vartheta) satisfies:
+
+1. (\vartheta\in C^\infty(G)) and (\vartheta(hgh^{-1})=\vartheta(g)) for all (g,h\in G).
+2. (\vartheta(\mathbf 1)=0) and (0\le \vartheta(g)\le 2) for all (g\in G).
+3. (\nabla\vartheta(\mathbf 1)=0).
+4. (Quadratic comparability near (\mathbf 1).) There exist (r_\vartheta>0) and constants (c_-,c_+>0), depending only on ((G,g_G)) and (\rho), such that for all (g\in B_{r_\vartheta}^G(\mathbf 1)),
+   [
+   c_-,d_G(g,\mathbf 1)^2\ \le\ \vartheta(g)\ \le\ c_+,d_G(g,\mathbf 1)^2.
+   \tag{7.2}
+   ]
+5. (Global gradient domination.) There exists a constant (C_{\nabla/\vartheta}<\infty), depending only on ((G,g_G)) and (\rho), such that
+   [
+   |\nabla\vartheta(g)|*{g_G}^2\ \le\ C*{\nabla/\vartheta},\vartheta(g)
+   \qquad\text{for all }g\in G.
+   \tag{7.3}
+   ]
+
+**Proof.**
+
+1. Smoothness is immediate since (g\mapsto \mathrm{Tr}(\rho(g))) is smooth. Conjugation invariance holds because (\rho(hgh^{-1})=\rho(h)\rho(g)\rho(h)^{-1}) and the trace is conjugation-invariant.
+2. Since (\rho(g)\in U(n)), its eigenvalues lie on the unit circle, so (\Re\mathrm{Tr}(\rho(g))\in[-n,n]). Hence
+   [
+   0 \le 1-\frac{1}{n}\Re\mathrm{Tr}(\rho(g)) \le 1-\frac{1}{n}(-n)=2.
+   ]
+   Also (\vartheta(\mathbf 1)=1-\frac1n\Re\mathrm{Tr}(I_n)=0).
+3. For (X\in\mathfrak g=T_{\mathbf 1}G), consider (g(t)=\exp(tX)). Then
+   [
+   \left.\frac{d}{dt}\right|_{t=0}\vartheta(\exp(tX))
+   =
+   -\frac{1}{n}\Re\mathrm{Tr}\big(d\rho(X)\big)=0,
+   ]
+   because (d\rho(X)\in\mathfrak u(n)) is skew-Hermitian and hence has purely imaginary trace. Thus the differential vanishes at (\mathbf 1), i.e. (\nabla\vartheta(\mathbf 1)=0).
+4. By Lemma 5.4 with (\beta=1), there exists (r_{\mathrm{Tr}}>0) such that for (|Y|\le r_{\mathrm{Tr}}),
+   [
+   \vartheta(\exp Y)
+   =
+   \frac{1}{2n\lambda_\rho},|Y|*{\mathfrak g}^2 + O(|Y|*{\mathfrak g}^3).
+   ]
+   Choose (r_\vartheta\in(0,\min{r_{\mathrm{Tr}},\iota_G})) small enough that the (O(|Y|^3)) term is bounded in magnitude by (\frac{1}{4n\lambda_\rho}|Y|^2) whenever (|Y|\le r_\vartheta). Then for (g=\exp Y\in B_{r_\vartheta}(\mathbf 1)),
+   [
+   \frac{1}{4n\lambda_\rho}|Y|^2 \le \vartheta(\exp Y)\le \frac{3}{4n\lambda_\rho}|Y|^2.
+   ]
+   Since (|Y|=d_G(\exp Y,\mathbf 1)) for (|Y|<\iota_G), this gives (7.2) with (c_-=\frac{1}{4n\lambda_\rho}), (c_+=\frac{3}{4n\lambda_\rho}).
+5. Define on (G\setminus{\mathbf 1}) the continuous function
+   [
+   R(g):=\frac{|\nabla\vartheta(g)|^2}{\vartheta(g)}.
+   ]
+   Because (\vartheta(g)>0) for (g\neq \mathbf 1) (faithfulness of (\rho) implies (\rho(g)=I\iff g=\mathbf 1), and (\Re\mathrm{Tr}(\rho(g))=n) forces (\rho(g)=I)), this is well-defined. Using the Taylor expansion near (\mathbf 1) from (4), one has (\vartheta(\exp Y)\asymp |Y|^2) and (|\nabla\vartheta(\exp Y)|\asymp |Y|), hence (R(\exp Y)) remains bounded as (Y\to 0). Therefore (R) extends continuously to (g=\mathbf 1) by defining (R(\mathbf 1):=\limsup_{g\to \mathbf 1}R(g)<\infty). Since (G) is compact, (\sup_{g\in G}R(g)<\infty). Taking (C_{\nabla/\vartheta}:=\sup_G R) yields (7.3). ∎
+
+---
+
+### 7.1.2 Pullback to configuration space: plaquette fields and drift functionals
+
+For each oriented plaquette (p\in P(\Lambda)), recall the plaquette holonomy map (U\mapsto U_p(U)\in G) from §2.3. We now define the corresponding plaquette “badness field” on configuration space.
+
+**Definition 7.3 (plaquette proxy field).**
+For (p\in P(\Lambda)), define
+[
+z_p:M_\Lambda\to[0,\infty),\qquad
+z_p(U);:=;\vartheta!\big(U_p(U)\big).
+\tag{7.4}
+]
+Define also the *linear badness* (or drift functional)
+[
+D_\Lambda(U);:=;\sum_{p\in P(\Lambda)} z_p(U),
+\tag{7.5}
+]
+and the *quadratic badness*
+[
+V_\Lambda(U);:=;\sum_{p\in P(\Lambda)} z_p(U)^2.
+\tag{7.6}
+]
+
+**Lemma 7.4 (gauge invariance, locality, and basic bounds).**
+
+1. Each (z_p), and hence (D_\Lambda) and (V_\Lambda), is gauge invariant.
+2. Each (z_p) depends only on the four link variables on (\partial p).
+3. One has the uniform bounds
+   [
+   0\le z_p(U)\le 2,\qquad
+   0\le D_\Lambda(U)\le 2|P(\Lambda)|,\qquad
+   0\le V_\Lambda(U)\le 4|P(\Lambda)|.
+   \tag{7.7}
+   ]
+4. The linear and quadratic functionals are comparable (with absolute constants):
+   [
+   V_\Lambda(U)\ \le\ 2,D_\Lambda(U),
+   \qquad
+   D_\Lambda(U)\ \le\ \sqrt{|P(\Lambda)|,V_\Lambda(U)}.
+   \tag{7.8}
+   ]
+
+**Proof.**
+
+1. Under a gauge transform (g\in\mathcal G_\Lambda), the plaquette holonomy transforms by conjugation at the plaquette basepoint:
+   [
+   U_p(g\cdot U)=g_x,U_p(U),g_x^{-1}
+   ]
+   (where (x) is the base vertex of (p)). Since (\vartheta) is conjugation-invariant (Lemma 7.2(1)), (z_p(g\cdot U)=z_p(U)). Summing over (p) preserves invariance for (D_\Lambda,V_\Lambda).
+2. By construction (U_p(U)) is the ordered product of the four boundary links of (p) (with inverses depending on orientation), hence depends only on those four link coordinates. Composing with (\vartheta) preserves this locality.
+3. The pointwise bound (0\le z_p\le 2) follows from Lemma 7.2(2). The bounds for (D_\Lambda) and (V_\Lambda) follow by summing and using (z_p^2\le 4).
+4. For (z\in[0,2]) one has (z^2\le 2z). Summing over plaquettes gives (V_\Lambda\le 2D_\Lambda). The second inequality is Cauchy–Schwarz:
+   [
+   D_\Lambda=\sum_p z_p \le \sqrt{|P(\Lambda)|},\Big(\sum_p z_p^2\Big)^{1/2}
+   =\sqrt{|P(\Lambda)|,V_\Lambda}.
+   ]
+   ∎
+
+**Remark 7.5 (relation to the Wilson action).**
+With (\vartheta) as in (7.1), the Wilson action is exactly
+[
+S_W(U)=\sum_{p\in P(\Lambda)}\Phi_\beta(U_p(U))=\beta\sum_{p\in P(\Lambda)}\vartheta(U_p(U))
+=\beta,D_\Lambda(U).
+\tag{7.9}
+]
+Thus (D_\Lambda) is the action density at (\beta=1), and the Gibbs weight is (e^{-\beta D_\Lambda}).
+
+---
+
+### 7.1.3 The Lyapunov candidate (W_\Lambda) and the “(\Phi'(0)=0)” design choice
+
+The diffusion generator associated to (\mu_{\Lambda,\beta}) (cf. §6.1) has the form
+[
+L_\Lambda f
+===========
+
+## \Delta_{g_\Lambda} f
+
+\langle \nabla S_W,\nabla f\rangle_{g_\Lambda},
+\tag{7.10}
+]
+and Lyapunov drift estimates are obtained by computing (L_\Lambda W_\Lambda) for a suitable weight (W_\Lambda\ge 1).
+
+A key bookkeeping issue in high dimension is to prevent “one constant per plaquette” from leaking into ((L_\Lambda W_\Lambda)/W_\Lambda), which would immediately destroy volume-uniformity. The robust way to enforce this is to build (W_\Lambda) from a scalar shaping function (\Phi) satisfying (\Phi'(0)=0). The canonical choice is (\Phi(s)=s^2).
+
+**Definition 7.6 (Lyapunov weight).**
+Fix (\kappa>0). Define
+[
+W_\Lambda(U);:=;\exp!\big(\kappa,V_\Lambda(U)\big)
+=\exp!\Big(\kappa\sum_{p\in P(\Lambda)} z_p(U)^2\Big).
+\tag{7.11}
+]
+
+**Remark 7.7 (why the square matters).**
+If one attempted instead (W_\Lambda=\exp(\kappa\sum_p z_p)), then (L_\Lambda(\sum_p z_p)) contains a Laplacian term (\sum_p \Delta z_p). Even though each (\Delta z_p) is uniformly bounded (local dependence + compactness), the sum would typically be (O(|P(\Lambda)|)), producing an unacceptable additive volume growth in ((L_\Lambda W_\Lambda)/W_\Lambda).
+
+With (V_\Lambda=\sum_p z_p^2), the diffusion chain rule gives
+[
+L_\Lambda(z_p^2)=2 z_p,L_\Lambda z_p + 2,\Gamma_\Lambda(z_p),
+]
+so the potentially dangerous Laplacian contribution becomes (2z_p,\Delta z_p), which is automatically weighted by the plaquette deviation (z_p) and hence is controlled by (D_\Lambda=\sum_p z_p) rather than by (|P(\Lambda)|). This is the “(\Phi'(0)=0)” mechanism that keeps all constants volume-uniform in the drift expansion.
+
+---
+
+This completes the definition of the smooth plaquette proxy and the canonical Lyapunov candidate (W_\Lambda). In §7.2 we record the uniform (in (\Lambda)) first- and second-derivative bounds for (z_p) needed to control the Laplacian/Hessian and carré-du-champ terms in the drift computation, and in §7.3 we compute ((L_\Lambda W_\Lambda)/W_\Lambda) in a form that isolates the single remaining coercivity input required to close a negative drift inequality.
+
+
+
+
+## 7.2 Uniform derivative bounds for the plaquette proxy
+
+The Lyapunov strategy in §7.1 is brutally sensitive to *how* we measure “distance from the good set.” If one uses a nonsmooth seed such as the squared Riemannian distance (d_G(,\cdot,,\mathbf 1)^2) on the plaquette holonomy, then the drift computation for (W_\Lambda=\exp(\kappa V_\Lambda)) produces second-derivative terms ((X_\ell^aX_\ell^a z_p)) that are **not** uniformly controlled in (\Lambda). The fix is to work with a **globally smooth** conjugation-invariant proxy (g\mapsto \widetilde z(g)), so that all first and second derivatives are uniformly bounded on (G), and to choose the outer profile (\Phi) with (\Phi'(0)=0) so that second-order contributions are automatically *weighted* by (\widetilde z_p) (hence by a “badness functional” rather than by (|P(\Lambda)|)).
+
+We now record the uniform derivative bounds in the precise form needed later for the drift estimate in §7.3.
+
+Throughout, (G) is compact with bi-invariant metric (g_G), (\rho:G\to U(n)) is the fixed faithful unitary representation used in the Wilson action, and (\Lambda) is the periodic lattice from §2.1. We work on the configuration manifold
+[
+M_\Lambda=G^{E(\Lambda)}
+]
+with the product bi-invariant metric (g_\Lambda) (§3.1), and we use the linkwise differential operators from §3.5:
+[
+\Gamma_\Lambda(f):=|\nabla f|^2,\qquad
+\Delta_\Lambda f:=\mathrm{div}(\nabla f),
+\qquad
+L_\Lambda:=\Delta_\Lambda-\langle \nabla S_\Lambda,\nabla(\cdot)\rangle_{g_\Lambda}.
+]
+
+We recall the bounded overlap constant (\nu) from §3.4: each link lies in the boundary of at most (\nu) plaquettes; on the 4D hypercubic lattice (\nu\le 6). Each plaquette boundary has perimeter (m_\partial=4).
+
+---
+
+### 7.2.1 The global smooth proxy on (G)
+
+We take the simplest globally smooth class function attached to the same representation (\rho) as the Wilson action.
+
+**Definition 7.23 (trace-defect proxy on (G)).**
+Define
+[
+\widetilde z:G\to\mathbb R,\qquad
+\widetilde z(g):=1-\frac1n\Re\mathrm{Tr}(\rho(g)).
+\tag{7.15}
+]
+For each plaquette (p\in P(\Lambda)), define its lift
+[
+\widetilde z_p:M_\Lambda\to\mathbb R,\qquad
+\widetilde z_p(U):=\widetilde z\big(U_p(U)\big),
+\tag{7.16}
+]
+where (U_p(U)) is the oriented plaquette holonomy from §2.3.
+
+We start with the basic range and nondegeneracy properties.
+
+**Lemma 7.24 (range and uniqueness of the minimum).**
+For all (g\in G),
+[
+0\le \widetilde z(g)\le 2,
+]
+and (\widetilde z(g)=0) if and only if (g=\mathbf 1).
+
+**Proof.**
+Since (\rho(g)\in U(n)), its eigenvalues lie on the unit circle, hence (\Re\mathrm{Tr}(\rho(g))\le n). Therefore (\widetilde z(g)\ge 0). Also (\Re\mathrm{Tr}(\rho(g))\ge -n), hence (\widetilde z(g)\le 2).
+
+If (\widetilde z(g)=0), then (\Re\mathrm{Tr}(\rho(g))=n). For a unitary matrix this forces all eigenvalues to have real part (1), hence all eigenvalues are (1), so (\rho(g)=I_n). Faithfulness of (\rho) gives (g=\mathbf 1). Conversely (\widetilde z(\mathbf 1)=0) is immediate. (\square)
+
+Next we record global (C^2) bounds and the “gradient domination” inequality (|\nabla \widetilde z|^2\lesssim \widetilde z). This inequality is the key structural input that prevents (\sum_p\Gamma(\widetilde z_p)) from producing an (\mathrm{O}(|P(\Lambda)|)) contribution.
+
+**Lemma 7.25 (uniform (C^2) bounds on (G)).**
+There exist finite constants (C^{(1)}*{\widetilde z},C^{(2)}*{\widetilde z}<\infty), depending only on ((G,g_G)) and (\rho), such that for all (g\in G),
+[
+|\nabla_G\widetilde z(g)|\le C^{(1)}*{\widetilde z},
+\qquad
+\big|\nabla_G^2\widetilde z(g)\big|*{\mathrm{op}}\le C^{(2)}*{\widetilde z}.
+\tag{7.17}
+]
+In particular, the group Laplacian satisfies
+[
+|\Delta_G\widetilde z(g)|\le (\dim G),C^{(2)}*{\widetilde z}
+\qquad\forall g\in G.
+\tag{7.18}
+]
+
+**Proof.**
+(\widetilde z\in C^\infty(G)) because (g\mapsto \rho(g)) and matrix trace/real part are smooth. Hence (\nabla_G\widetilde z) and (\nabla_G^2\widetilde z) are continuous tensor fields on the compact manifold (G), so their pointwise norms attain finite maxima. This gives (7.17).
+
+For (7.18), let ({e_a}*{a=1}^{\dim G}) be any orthonormal basis of (T_gG). Then
+[
+\Delta_G\widetilde z(g)=\sum_a \nabla_G^2\widetilde z(g)[e_a,e_a],
+]
+so
+[
+|\Delta_G\widetilde z(g)|
+\le \sum_a \big|\nabla_G^2\widetilde z(g)\big|*{\mathrm{op}},|e_a|^2
+= (\dim G),\big|\nabla_G^2\widetilde z(g)\big|*{\mathrm{op}}
+\le (\dim G),C^{(2)}*{\widetilde z}.
+]
+(\square)
+
+We now prove the weighted gradient bound.
+
+**Lemma 7.26 (global gradient domination on (G)).**
+There exists a finite constant (C_\nabla<\infty), depending only on ((G,g_G)) and (\rho), such that
+[
+|\nabla_G\widetilde z(g)|^2 \ \le\ C_\nabla,\widetilde z(g)
+\qquad\forall g\in G.
+\tag{7.19}
+]
+Moreover, (C_\nabla) may be taken as
+[
+C_\nabla := \sup_{g\in G\setminus{\mathbf 1}}\frac{|\nabla_G\widetilde z(g)|^2}{\widetilde z(g)},
+\tag{7.20}
+]
+where the ratio extends continuously to (g=\mathbf 1) with the limit value (2/(n\lambda_\rho)) (with (\lambda_\rho) from §5.1–§5.2).
+
+**Proof.**
+Define the ratio function on (G\setminus{\mathbf 1}),
+[
+Q(g):=\frac{|\nabla_G\widetilde z(g)|^2}{\widetilde z(g)}.
+]
+By Lemma 7.24, (\widetilde z(g)>0) on (G\setminus{\mathbf 1}), and since (\widetilde z) is smooth, (Q) is continuous on (G\setminus{\mathbf 1}).
+
+It remains to check that (Q) stays bounded as (g\to\mathbf 1). For this we use the vacuum Taylor expansion already established in §5.1–§5.2. Since (\Phi_\beta(g)=\beta,\widetilde z(g)), Lemma 5.4 implies (with (\beta) removed) that in exponential coordinates (g=\exp(Y)) near (Y=0),
+[
+\widetilde z(\exp Y)
+====================
+
+\frac{1}{2n\lambda_\rho}|Y|_{\mathfrak g}^2 + \mathrm{O}(|Y|^3).
+\tag{7.21}
+]
+Likewise, Lemma 5.7 identifies the Hessian at the identity:
+[
+\nabla_G^2\widetilde z(\mathbf 1)[A,B]
+======================================
+
+\frac{1}{n\lambda_\rho}\langle A,B\rangle_{\mathfrak g}.
+\tag{7.22}
+]
+Now consider the smooth vector field (F(g):=\nabla_G\widetilde z(g)). Since (\mathbf 1) is a minimum of (\widetilde z), we have (F(\mathbf 1)=0). In normal coordinates (Y\mapsto \exp(Y)) at (\mathbf 1), Taylor’s theorem for the smooth map (Y\mapsto F(\exp Y)) gives
+[
+\nabla_G\widetilde z(\exp Y)
+============================
+
+# \big(\nabla_G^2\widetilde z(\mathbf 1)\big),Y ;+; \mathrm{O}(|Y|^2)
+
+\frac{1}{n\lambda_\rho}Y + \mathrm{O}(|Y|^2).
+\tag{7.23}
+]
+Squaring (in the (\mathfrak g) norm) yields
+[
+|\nabla_G\widetilde z(\exp Y)|^2
+================================
+
+\frac{1}{(n\lambda_\rho)^2}|Y|^2 + \mathrm{O}(|Y|^3).
+\tag{7.24}
+]
+Dividing (7.24) by (7.21) gives
+[
+Q(\exp Y)
+=========
+
+\frac{\frac{1}{(n\lambda_\rho)^2}|Y|^2 + \mathrm{O}(|Y|^3)}
+{\frac{1}{2n\lambda_\rho}|Y|^2 + \mathrm{O}(|Y|^3)}
+\longrightarrow \frac{2}{n\lambda_\rho}
+\qquad\text{as }Y\to 0.
+\tag{7.25}
+]
+Thus (Q) extends continuously to (g=\mathbf 1) with value (2/(n\lambda_\rho)). Since (G) is compact, the continuous extension of (Q) attains a finite supremum on (G), and defining (C_\nabla:=\sup Q) gives (7.19). (\square)
+
+**Remark 7.27 (why this inequality is the workhorse).**
+The naive bound (\Gamma(\widetilde z_p)\le \sup|\nabla\widetilde z|^2) is *true* but useless: summing over (p) gives (\mathrm{O}(|P(\Lambda)|)). The weighted bound (|\nabla\widetilde z|^2\lesssim \widetilde z) converts (\sum_p\Gamma(\widetilde z_p)) into (\mathrm{O}(\sum_p \widetilde z_p)), which is precisely the drift functional used to define the good set in Part 8.
+
+---
+
+### 7.2.2 Lifting derivative bounds to plaquettes: locality and isometries
+
+We now transfer the group bounds to the lattice plaquette lifts (\widetilde z_p(U)=\widetilde z(U_p(U))). The key structural fact is that for each fixed plaquette (p), (\widetilde z_p) depends on **exactly four** link variables, and the dependence on each single link is by composition with an **isometry** of (G) (left/right multiplication and inversion), because the metric is bi-invariant.
+
+To make the linkwise differentiation explicit, fix an orthonormal basis ({e_a}*{a=1}^{\dim\mathfrak g}) of ((\mathfrak g,\langle\cdot,\cdot\rangle*{\mathfrak g})). For each oriented link (\ell\in E(\Lambda)) and basis index (a), define the link vector field (X_\ell^a) on (M_\Lambda) by right multiplication in the (\ell)-coordinate:
+[
+(X_\ell^a f)(U)
+:=
+\left.\frac{d}{dt}\right|*{t=0}
+f\big(U^{(\ell,a)}(t)\big),
+\qquad
+U^{(\ell,a)}(t)*b
+:=
+\begin{cases}
+U*\ell,\exp(t e_a),& b=\ell,\
+U_b,& b\neq \ell.
+\end{cases}
+\tag{7.26}
+]
+Then ({X*\ell^a}*{\ell,a}) is an orthonormal frame for the product metric, and (cf. §3.5)
+[
+\Gamma*\Lambda(f)=\sum_{\ell,a}(X_\ell^a f)^2,
+\qquad
+\Delta_\Lambda f=\sum_{\ell,a}X_\ell^aX_\ell^a f.
+\tag{7.27}
+]
+
+**Lemma 7.28 (support and one-link factorization of (\widetilde z_p)).**
+Fix a plaquette (p) with boundary links (\partial p={b_1,b_2,b_3,b_4}) (in the ordered convention of §2.3). Then:
+
+1. If (\ell\notin \partial p), then (X_\ell^a\widetilde z_p\equiv 0) and (X_\ell^aX_\ell^a\widetilde z_p\equiv 0).
+
+2. If (\ell\in \partial p), then for each fixed configuration (U\in M_\Lambda), the function of the single variable (g:=U_\ell\in G) given by
+   [
+   g\longmapsto \widetilde z_p(U)
+   ]
+   can be written in the form
+   [
+   g\longmapsto \widetilde z\big(A,g^\sigma,B\big)
+   \tag{7.28}
+   ]
+   for some (A,B\in G) depending only on the other three boundary links and some (\sigma\in{+1,-1}) depending only on whether (\ell) appears in (U_p) with exponent (+1) or (-1).
+
+In particular, the map (g\mapsto A g^\sigma B) is an isometry of ((G,g_G)).
+
+**Proof.**
+(1) If (\ell\notin\partial p), then (U_p(U)) is independent of (U_\ell), hence (\widetilde z_p(U)) is independent of (U_\ell), and the corresponding link derivatives vanish identically.
+
+(2) By definition, (U_p(U)) is a word of length 4 in the boundary link variables, with inversions on the two “backward” edges. Holding the three other boundary links fixed and varying only (U_\ell) shows that (U_p(U)) depends on (U_\ell) by left/right multiplication and possibly inversion, giving the representation (7.28).
+
+Finally, on a bi-invariant metric, left/right multiplication and inversion are isometries, hence so is (g\mapsto A g^\sigma B). (\square)
+
+Now we can transfer the group derivative bounds with *the same constants*.
+
+**Lemma 7.29 (uniform linkwise derivative bounds for plaquette lifts).**
+Let (C^{(1)}*{\widetilde z}), (C^{(2)}*{\widetilde z}), (C_\nabla) be as in Lemmas 7.25–7.26, and define also
+[
+C_\Delta:=\sup_{g\in G}|\Delta_G\widetilde z(g)|<\infty
+\tag{7.29}
+]
+(which is finite by Lemma 7.25). Then for every plaquette (p), every link (\ell), every basis index (a), and every configuration (U\in M_\Lambda),
+
+1. **First derivative bound**
+   [
+   |X_\ell^a\widetilde z_p(U)|
+   \ \le
+   C^{(1)}*{\widetilde z},\mathbf 1*{{\ell\in\partial p}}.
+   \tag{7.30}
+   ]
+
+2. **Second derivative bound**
+   [
+   |X_\ell^aX_\ell^a\widetilde z_p(U)|
+   \ \le
+   C^{(2)}*{\widetilde z},\mathbf 1*{{\ell\in\partial p}}.
+   \tag{7.31}
+   ]
+
+3. **Gradient domination on each link**
+   [
+   \sum_a (X_\ell^a\widetilde z_p(U))^2
+   ====================================
+
+   |\nabla_\ell \widetilde z_p(U)|^2
+   \ \le
+   C_\nabla,\widetilde z_p(U),\mathbf 1_{{\ell\in\partial p}}.
+   \tag{7.32}
+   ]
+
+4. **Laplacian bound**
+   [
+   |\Delta_\Lambda \widetilde z_p(U)|
+   \ \le
+   m_\partial,C_\Delta
+   ===================
+
+   4C_\Delta.
+   \tag{7.33}
+   ]
+
+**Proof.**
+If (\ell\notin\partial p), all statements hold by Lemma 7.28(1). Assume (\ell\in\partial p). By Lemma 7.28(2), as a function of the single link variable (g=U_\ell) (with all other links held fixed), (\widetilde z_p) has the form (g\mapsto \widetilde z(A g^\sigma B)), where (\Psi(g):=A g^\sigma B) is an isometry of (G). For any smooth (f) on a Riemannian manifold and any isometry (\Psi), one has the basic covariance identities
+[
+|\nabla(f\circ\Psi)|(g)=|\nabla f|(\Psi(g)),
+\qquad
+\Delta(f\circ\Psi)(g)=(\Delta f)(\Psi(g)),
+\tag{7.34}
+]
+and similarly the operator norm of the Hessian is preserved under composition with an isometry.
+
+Applying (7.34) to (f=\widetilde z) gives:
+
+* the bound (7.30) because (X_\ell^a) differentiates (g\mapsto \widetilde z(\Psi(g))) in a unit-speed direction, hence its magnitude is bounded by (\sup|\nabla_G\widetilde z|=C^{(1)}_{\widetilde z});
+
+* the bound (7.31) because second directional derivatives along unit vectors are bounded by (\sup|\nabla_G^2\widetilde z|*{\mathrm{op}}=C^{(2)}*{\widetilde z});
+
+* the bound (7.32) because (\sum_a(X_\ell^a\widetilde z_p)^2) is exactly the squared norm of the gradient in the (\ell)-coordinate, which equals (|\nabla_G\widetilde z|^2) at the point (U_p(U)) up to isometry, and Lemma 7.26 gives (|\nabla_G\widetilde z|^2\le C_\nabla \widetilde z);
+
+* the Laplacian bound (7.33) follows because (\Delta_\Lambda) is a sum over links of link-Laplacians, and only the four links in (\partial p) contribute. For each such link, the link-Laplacian acting on (\widetilde z_p) is the group Laplacian of (\widetilde z) composed with an isometry, hence bounded by (C_\Delta). Summing over the (m_\partial=4) links yields (7.33). (\square)
+
+**Corollary 7.30 (plaquette carré du champ bound).**
+For every plaquette (p) and every (U\in M_\Lambda),
+[
+\Gamma_\Lambda(\widetilde z_p)(U)
+=\sum_{\ell}|\nabla_\ell\widetilde z_p(U)|^2
+\le
+m_\partial,C_\nabla,\widetilde z_p(U)
+=====================================
+
+4C_\nabla,\widetilde z_p(U).
+\tag{7.35}
+]
+
+**Proof.**
+By (7.32), each link contributes at most (C_\nabla\widetilde z_p), and only the (m_\partial=4) boundary links contribute. (\square)
+
+---
+
+### 7.2.3 Volume-uniform bounds for the aggregated derivative terms
+
+The drift computation in §7.3 will apply diffusion chain rules to the global functionals
+[
+\mathcal D_\Lambda(U):=\sum_{p\in P(\Lambda)}\widetilde z_p(U),
+\qquad
+V_\Lambda(U):=\sum_{p\in P(\Lambda)}\Phi(\widetilde z_p(U)),
+\qquad
+W_\Lambda(U):=e^{\kappa V_\Lambda(U)},
+\tag{7.36}
+]
+and in the concrete choice of §7.1 we take (\Phi(s)=s^2). The dangerous place where one can accidentally generate a (\mathrm{O}(|P(\Lambda)|)) constant is the Laplacian/Hessian contribution in (L_\Lambda V_\Lambda) and the carré du champ (\Gamma_\Lambda(V_\Lambda)).
+
+The next proposition is the quantitative content of “uniform derivative bounds for the proxy.”
+
+**Proposition 7.31 (uniform control of all positive terms by (\mathcal D_\Lambda) for (\Phi(s)=s^2)).**
+Assume (\Phi(s)=s^2), so (\Phi'(s)=2s) and (\Phi''(s)=2). Then there exist constants (A_1,A_2,A_3<\infty), depending only on ((G,g_G)), (\rho), and the overlap constant (\nu) (hence independent of (\Lambda)), such that for every lattice (\Lambda) and every configuration (U\in M_\Lambda),
+[
+\Big|\sum_{p\in P(\Lambda)} \Phi'(\widetilde z_p(U)),\Delta_\Lambda \widetilde z_p(U)\Big|
+\ \le\ A_1,\mathcal D_\Lambda(U),
+\tag{7.37}
+]
+[
+\sum_{p\in P(\Lambda)} \Phi''(\widetilde z_p(U)),\Gamma_\Lambda(\widetilde z_p)(U)
+\ \le\ A_2,\mathcal D_\Lambda(U),
+\tag{7.38}
+]
+[
+\Gamma_\Lambda(V_\Lambda)(U)
+\ \le\ A_3,\mathcal D_\Lambda(U).
+\tag{7.39}
+]
+One may take explicitly
+[
+A_1=8C_\Delta,\qquad
+A_2=8C_\nabla,\qquad
+A_3=64,\nu,C_\nabla,
+\tag{7.40}
+]
+with (C_\Delta) and (C_\nabla) from Lemmas 7.29–7.26.
+
+**Proof.**
+
+**(1) The Laplacian/Hessian term.**
+Using (\Phi'(\widetilde z_p)=2\widetilde z_p) and the uniform bound (7.33),
+[
+\Big|\sum_{p} \Phi'(\widetilde z_p),\Delta_\Lambda \widetilde z_p\Big|
+\le
+\sum_{p} 2\widetilde z_p\cdot |\Delta_\Lambda \widetilde z_p|
+\le
+\sum_{p} 2\widetilde z_p\cdot (4C_\Delta)
+=========================================
+
+# 8C_\Delta \sum_{p}\widetilde z_p
+
+A_1,\mathcal D_\Lambda,
+]
+which is (7.37) with (A_1=8C_\Delta).
+
+The conceptual point is visible right here: the factor (2\widetilde z_p) coming from (\Phi'(s)=2s) *forces* the sum to be weighted by (\widetilde z_p). If (\Phi'(0)\neq0), the same bound would instead give (\mathrm{O}(|P(\Lambda)|)).
+
+**(2) The chain-rule (\Gamma)-term.**
+Since (\Phi''\equiv 2), and using Corollary 7.30,
+[
+\sum_{p} \Phi''(\widetilde z_p),\Gamma_\Lambda(\widetilde z_p)
+==============================================================
+
+2\sum_{p}\Gamma_\Lambda(\widetilde z_p)
+\le
+2\sum_{p} (4C_\nabla),\widetilde z_p
+====================================
+
+# 8C_\nabla \sum_{p}\widetilde z_p
+
+A_2,\mathcal D_\Lambda,
+]
+which is (7.38) with (A_2=8C_\nabla).
+
+**(3) The exponential carré du champ (\Gamma(V_\Lambda)).**
+First compute the linkwise gradient of (V_\Lambda=\sum_p \widetilde z_p^2):
+[
+\nabla_\ell V_\Lambda
+=====================
+
+# \sum_{p:,\ell\in\partial p} \nabla_\ell(\widetilde z_p^2)
+
+\sum_{p:,\ell\in\partial p} 2\widetilde z_p,\nabla_\ell \widetilde z_p.
+\tag{7.41}
+]
+Apply Cauchy–Schwarz in the finite sum over plaquettes meeting (\ell):
+[
+|\nabla_\ell V_\Lambda|^2
+\le
+\Big(#{p:\ell\in\partial p}\Big)\sum_{p:,\ell\in\partial p} 4\widetilde z_p^2,|\nabla_\ell \widetilde z_p|^2.
+\tag{7.42}
+]
+By definition of the overlap constant, (#{p:\ell\in\partial p}\le \nu). Summing (7.42) over all links (\ell) yields
+[
+\Gamma_\Lambda(V_\Lambda)
+=========================
+
+\sum_\ell |\nabla_\ell V_\Lambda|^2
+\le
+4\nu \sum_\ell \sum_{p:,\ell\in\partial p} \widetilde z_p^2,|\nabla_\ell\widetilde z_p|^2
+=========================================================================================
+
+4\nu \sum_p \widetilde z_p^2\sum_{\ell\in\partial p}|\nabla_\ell\widetilde z_p|^2.
+\tag{7.43}
+]
+But (\sum_{\ell\in\partial p}|\nabla_\ell\widetilde z_p|^2\le \Gamma_\Lambda(\widetilde z_p)), and Corollary 7.30 gives (\Gamma_\Lambda(\widetilde z_p)\le 4C_\nabla \widetilde z_p). Thus
+[
+\Gamma_\Lambda(V_\Lambda)
+\le
+4\nu \sum_p \widetilde z_p^2 \cdot (4C_\nabla \widetilde z_p)
+=============================================================
+
+16\nu C_\nabla \sum_p \widetilde z_p^3.
+\tag{7.44}
+]
+Finally use the range bound (0\le \widetilde z_p\le 2) (Lemma 7.24), which implies (\widetilde z_p^3\le 4\widetilde z_p). Therefore
+[
+\Gamma_\Lambda(V_\Lambda)
+\le
+16\nu C_\nabla \sum_p 4\widetilde z_p
+=====================================
+
+# 64\nu C_\nabla \sum_p \widetilde z_p
+
+A_3,\mathcal D_\Lambda,
+]
+which is (7.39) with (A_3=64\nu C_\nabla). (\square)
+
+**Remark 7.32 (what is now “closed,” and what is not).**
+Proposition 7.31 is the promised uniform-constant closure of *all purely second-order contributions* coming from the diffusion part of (L_\Lambda) and from the exponential chain rule for (W_\Lambda=e^{\kappa V_\Lambda}): every such term is controlled by (\mathcal D_\Lambda(U)=\sum_p \widetilde z_p(U)), with constants independent of (|\Lambda|).
+
+What remains (and is logically separate) is the genuinely model-dependent coercivity/sign estimate needed in §7.3 for the drift term
+[
+\sum_{p}\widetilde z_p(U),\big\langle \nabla S_\Lambda(U),,\nabla \widetilde z_p(U)\big\rangle,
+]
+which is the only place where the specific structure of the lattice action (S_\Lambda) (Wilson or “effective”/flowed variants) enters the Lyapunov negativity.
+
+---
+
+This completes the derivative bookkeeping needed for the Lyapunov mechanism. In §7.3 we insert these bounds into the exact identity for ((L_\Lambda W_\Lambda)/W_\Lambda) and isolate the single remaining coercive input required to obtain a volume-uniform drift inequality.
+
+
+
+
+
+### 7.3 Drift computation for the Lyapunov function (W_\Lambda=e^{\kappa V_\Lambda}) and isolation of the remaining coercive input
+
+This subsection carries out the exact generator expansion for the Lyapunov candidate from §7.1 and then inserts the uniform derivative bookkeeping from §7.2. The outcome is a clean, volume-uniform upper bound for ((L_\Lambda W_\Lambda)/W_\Lambda) in which **every term coming from the diffusion part (\Delta_\Lambda)** is controlled by the “plaquette deviation total”
+[
+\mathcal D_\Lambda(U);:=;\sum_{p\in P(\Lambda)}\widetilde z_p(U),
+]
+with constants independent of (|\Lambda|). The only remaining term that is not automatically controlled is the **pairing term**
+[
+\sum_{p}\widetilde z_p,\big\langle \nabla S_\Lambda,\nabla \widetilde z_p\big\rangle,
+]
+which is the uniquely model-dependent coercivity input singled out in the outline.
+
+Throughout, (M_\Lambda=G^{E(\Lambda)}) carries the product bi-invariant metric (g_\Lambda), the Gibbs potential is (S_\Lambda) (for the Wilson measure (S_\Lambda=S_W)), and
+[
+L_\Lambda f ;=;\Delta_\Lambda f-\big\langle \nabla S_\Lambda,\nabla f\big\rangle_{g_\Lambda},
+\qquad
+\Gamma_\Lambda(f,g):=\langle \nabla f,\nabla g\rangle_{g_\Lambda},
+\quad
+\Gamma_\Lambda(f):=\Gamma_\Lambda(f,f).
+]
+
+We keep the global smooth plaquette proxy from §7.2:
+[
+\widetilde z_p(U)=\widetilde z!\big(U_p(U)\big),
+\qquad
+\widetilde z(g)=1-\frac1n\Re\mathrm{Tr}(\rho(g)),
+\qquad 0\le \widetilde z\le 2,
+]
+and (as in (7.36)) we work with the concrete choice (\Phi(s)=s^2):
+[
+V_\Lambda(U):=\sum_{p\in P(\Lambda)}\Phi(\widetilde z_p(U))=\sum_{p}\widetilde z_p(U)^2,
+\qquad
+W_\Lambda(U):=\exp!\big(\kappa V_\Lambda(U)\big),
+\qquad
+\mathcal D_\Lambda(U):=\sum_p \widetilde z_p(U).
+\tag{7.45}
+]
+
+---
+
+#### 7.3.1 Diffusion chain rules for (L_\Lambda) and for exponentials
+
+We first record the two diffusion identities used repeatedly below. These are standard, but we include proofs in our linkwise orthonormal frame to keep signs and constants explicit.
+
+Recall the linkwise orthonormal frame ({X_\ell^a}*{\ell\in E(\Lambda),,a=1,\dots,\dim\mathfrak g}) from §7.2, defined by right multiplication in the (\ell)-coordinate (cf. (7.26)–(7.27)). In this frame one has the concrete formulas
+[
+\Gamma*\Lambda(f,g)=\sum_{\ell,a} (X_\ell^a f)(X_\ell^a g),
+\qquad
+\Delta_\Lambda f=\sum_{\ell,a}X_\ell^aX_\ell^a f,
+\qquad
+L_\Lambda f=\sum_{\ell,a}X_\ell^aX_\ell^a f-\sum_{\ell,a}(X_\ell^a S_\Lambda)(X_\ell^a f).
+\tag{7.46}
+]
+
+**Lemma 7.33 (diffusion chain rule for (L_\Lambda)).**
+Let (\Psi\in C^2(\mathbb R)) and (f\in C^\infty(M_\Lambda)). Then
+[
+L_\Lambda(\Psi!\circ f)
+=======================
+
+\Psi'(f),L_\Lambda f
++
+\Psi''(f),\Gamma_\Lambda(f).
+\tag{7.47}
+]
+
+*Proof.* Fix ((\ell,a)). By the 1D chain rule,
+[
+X_\ell^a(\Psi(f))=\Psi'(f),X_\ell^a f,
+\qquad
+X_\ell^aX_\ell^a(\Psi(f))
+=========================
+
+\Psi'(f),X_\ell^aX_\ell^a f+\Psi''(f),(X_\ell^a f)^2.
+]
+Summing (X_\ell^aX_\ell^a(\Psi(f))) over ((\ell,a)) yields
+[
+\Delta_\Lambda(\Psi(f))
+=======================
+
+# \Psi'(f),\Delta_\Lambda f+\Psi''(f)\sum_{\ell,a}(X_\ell^a f)^2
+
+\Psi'(f),\Delta_\Lambda f+\Psi''(f),\Gamma_\Lambda(f).
+]
+For the drift part,
+[
+-\langle \nabla S_\Lambda,\nabla(\Psi(f))\rangle
+================================================
+
+# -\Psi'(f),\langle \nabla S_\Lambda,\nabla f\rangle
+
+-\Psi'(f),\big(\Delta_\Lambda f-L_\Lambda f\big),
+]
+so combining with (\Delta_\Lambda(\Psi(f))) gives (7.47). (\square)
+
+As an immediate corollary, we obtain the exponential rule used in Lyapunov drift estimates.
+
+**Lemma 7.34 (exponential chain rule).**
+For any (\kappa\in\mathbb R) and (V\in C^\infty(M_\Lambda)),
+[
+L_\Lambda\big(e^{\kappa V}\big)
+===============================
+
+e^{\kappa V}\Big(\kappa,L_\Lambda V+\kappa^2,\Gamma_\Lambda(V)\Big),
+\qquad\text{i.e.}\qquad
+\frac{L_\Lambda W}{W}=\kappa,L_\Lambda V+\kappa^2,\Gamma_\Lambda(V)
+\ \ \text{for }W=e^{\kappa V}.
+\tag{7.48}
+]
+
+*Proof.* Apply Lemma 7.33 with (\Psi(s)=e^{\kappa s}), so (\Psi'=\kappa e^{\kappa s}) and (\Psi''=\kappa^2 e^{\kappa s}). (\square)
+
+---
+
+#### 7.3.2 Exact drift expansion for (V_\Lambda=\sum_p \widetilde z_p^2) and (W_\Lambda=e^{\kappa V_\Lambda})
+
+We now compute (L_\Lambda V_\Lambda) and then ((L_\Lambda W_\Lambda)/W_\Lambda).
+
+**Proposition 7.35 (exact Lyapunov drift identity for (\Phi(s)=s^2)).**
+Let (V_\Lambda=\sum_{p}\widetilde z_p^2) and (W_\Lambda=e^{\kappa V_\Lambda}). Then
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+=====================================
+
+\kappa,L_\Lambda V_\Lambda+\kappa^2,\Gamma_\Lambda(V_\Lambda),
+\tag{7.49}
+]
+and
+[
+L_\Lambda V_\Lambda
+===================
+
+2\sum_{p\in P(\Lambda)}\widetilde z_p,\Delta_\Lambda \widetilde z_p
+;-;
+2\sum_{p\in P(\Lambda)}\widetilde z_p,\big\langle \nabla S_\Lambda,\nabla \widetilde z_p\big\rangle_{g_\Lambda}
+;+;
+2\sum_{p\in P(\Lambda)}\Gamma_\Lambda(\widetilde z_p).
+\tag{7.50}
+]
+
+*Proof.* The identity (7.49) is Lemma 7.34.
+
+For (7.50), apply Lemma 7.33 with (\Psi(s)=s^2) to each plaquette term (\widetilde z_p^2):
+[
+L_\Lambda(\widetilde z_p^2)
+===========================
+
+2\widetilde z_p,L_\Lambda \widetilde z_p
++
+2,\Gamma_\Lambda(\widetilde z_p).
+\tag{7.51}
+]
+Summing (7.51) over (p) gives
+[
+L_\Lambda V_\Lambda
+===================
+
+2\sum_p \widetilde z_p,L_\Lambda \widetilde z_p
++
+2\sum_p \Gamma_\Lambda(\widetilde z_p).
+]
+Finally expand (L_\Lambda \widetilde z_p=\Delta_\Lambda \widetilde z_p-\langle \nabla S_\Lambda,\nabla \widetilde z_p\rangle) to obtain (7.50). (\square)
+
+The decomposition (7.50) separates (L_\Lambda V_\Lambda) into:
+
+* a Laplacian/Hessian contribution (2\sum_p \widetilde z_p,\Delta_\Lambda \widetilde z_p),
+* the **pairing/drift term** (-2\sum_p \widetilde z_p\langle \nabla S_\Lambda,\nabla \widetilde z_p\rangle),
+* a positive carré-du-champ term (2\sum_p \Gamma_\Lambda(\widetilde z_p)).
+
+The next step is to bound the first and third contributions (and also (\Gamma_\Lambda(V_\Lambda))) by (\mathcal D_\Lambda) using the uniform constants from §7.2.
+
+---
+
+#### 7.3.3 Uniform-constant closure: all diffusion-generated terms are controlled by (\mathcal D_\Lambda)
+
+We now insert Proposition 7.31 (the “uniform derivative bounds for the proxy”) into the drift identity.
+
+Define the **geometric drift constants**
+[
+C_V ;:=; A_1+A_2,
+\qquad
+C_\Gamma ;:=; A_3,
+\tag{7.52}
+]
+where (A_1,A_2,A_3) are the volume-uniform constants from Proposition 7.31. With the explicit choices (7.40),
+[
+C_V
+===
+
+8C_\Delta+8C_\nabla,
+\qquad
+C_\Gamma
+========
+
+64,\nu,C_\nabla.
+\tag{7.53}
+]
+
+**Corollary 7.36 (uniform upper bound for ((L_\Lambda W_\Lambda)/W_\Lambda) in terms of (\mathcal D_\Lambda) and the pairing term).**
+For every lattice (\Lambda), every configuration (U\in M_\Lambda), and every (\kappa>0),
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}(U)
+;\le;
+\big(\kappa,C_V+\kappa^2,C_\Gamma\big),\mathcal D_\Lambda(U)
+;-;
+2\kappa\sum_{p\in P(\Lambda)}\widetilde z_p(U),\big\langle \nabla S_\Lambda(U),\nabla \widetilde z_p(U)\big\rangle_{g_\Lambda}.
+\tag{7.54}
+]
+In particular, every term on the right-hand side is controlled by constants depending only on ((G,g_G)), (\rho), and the overlap constant (\nu), **except** for the last pairing term, which is the only place where the detailed structure of (S_\Lambda) enters.
+
+*Proof.* Start from (7.49)–(7.50) and bound term-by-term.
+
+* The Laplacian/Hessian term: by (7.37),
+  [
+  2\sum_p \widetilde z_p,\Delta_\Lambda \widetilde z_p
+  \ \le
+  \Big|2\sum_p \widetilde z_p,\Delta_\Lambda \widetilde z_p\Big|
+  =
+  \Big|\sum_p \Phi'(\widetilde z_p),\Delta_\Lambda \widetilde z_p\Big|
+  \ \le\ A_1,\mathcal D_\Lambda.
+  \tag{7.55}
+  ]
+
+* The positive chain-rule term: by (7.38),
+  [
+  2\sum_p \Gamma_\Lambda(\widetilde z_p)
+  =
+  \sum_p \Phi''(\widetilde z_p),\Gamma_\Lambda(\widetilde z_p)
+  \ \le\ A_2,\mathcal D_\Lambda.
+  \tag{7.56}
+  ]
+
+* The exponential carré du champ: by (7.39),
+  [
+  \Gamma_\Lambda(V_\Lambda)\ \le\ A_3,\mathcal D_\Lambda.
+  \tag{7.57}
+  ]
+
+Insert (7.55)–(7.57) into (7.49)–(7.50) and collect constants to get (7.54) with (C_V=A_1+A_2) and (C_\Gamma=A_3). (\square)
+
+**Remark 7.37 (what has been “closed” and why (\Phi'(0)=0) matters).**
+The key point in (7.54) is that the potentially dangerous (\Delta_\Lambda)-generated contributions are weighted by (\widetilde z_p) (via (\Phi'(s)=2s)) and hence sum to (\mathrm O(\sum_p \widetilde z_p)) rather than (\mathrm O(|P(\Lambda)|)). This is exactly the constant-leak obstruction that would reappear immediately for a profile (\Phi) with (\Phi'(0)\neq 0).
+
+---
+
+#### 7.3.4 The remaining coercive input and the resulting Lyapunov drift inequality
+
+Corollary 7.36 shows that the Lyapunov drift is “one inequality away” from a standard Foster–Lyapunov condition: it remains to control
+[
+\mathcal P_\Lambda(U)
+;:=;
+\sum_{p\in P(\Lambda)}\widetilde z_p(U),\big\langle \nabla S_\Lambda(U),\nabla \widetilde z_p(U)\big\rangle_{g_\Lambda}.
+\tag{7.58}
+]
+Everything else is already reduced to the extensive badness functional (\mathcal D_\Lambda(U)=\sum_p \widetilde z_p(U)) with volume-uniform constants.
+
+A natural target is a **linear coercivity bound** of the form
+[
+\mathcal P_\Lambda(U)\ \ge\ c_{\mathrm{pair}},\mathcal D_\Lambda(U)-C_{\mathrm{pair}},
+\tag{7.59}
+]
+with constants (c_{\mathrm{pair}}>0), (C_{\mathrm{pair}}\ge 0) independent of (\Lambda). (In the Wilson case, any such bound would necessarily encode nontrivial geometry of plaquette-to-link interactions; this is the “term II dominates term I” inequality flagged in the outline.)
+
+For bookkeeping purposes we isolate this as a named hypothesis/lemma-to-prove.
+
+**Assumption 7.38 (coercive pairing inequality; open input).**
+There exist constants (c_{\mathrm{pair}}>0) and (C_{\mathrm{pair}}\ge 0), depending only on ((G,g_G)), (\rho), and the choice of action family ({S_\Lambda}) (but not on (\Lambda)), such that for all (\Lambda) and all (U\in M_\Lambda),
+[
+\sum_{p\in P(\Lambda)}\widetilde z_p(U),\big\langle \nabla S_\Lambda(U),\nabla \widetilde z_p(U)\big\rangle_{g_\Lambda}
+\ \ge
+c_{\mathrm{pair}}\sum_{p\in P(\Lambda)}\widetilde z_p(U)
+;-;
+C_{\mathrm{pair}}.
+\tag{7.60}
+]
+
+Under this assumption, Corollary 7.36 immediately yields the desired drift negativity for a suitable choice of (\kappa).
+
+**Proposition 7.39 (Lyapunov drift bound under the coercive pairing input).**
+Assume (7.60). Set (C_V,C_\Gamma) as in (7.52). Choose (\kappa>0) such that
+[
+\kappa \le \frac{c_{\mathrm{pair}}-C_V}{2C_\Gamma}
+\qquad\text{and}\qquad
+c_{\mathrm{pair}}>C_V.
+\tag{7.61}
+]
+Then for all (U\in M_\Lambda),
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}(U)
+;\le;
+-\kappa,\frac{c_{\mathrm{pair}}-C_V}{2},\mathcal D_\Lambda(U)
+;+;
+2\kappa,C_{\mathrm{pair}}.
+\tag{7.62}
+]
+Consequently, defining the sublevel set
+[
+K_\Lambda^{\mathrm{drift}}(D_0):={U\in M_\Lambda:\ \mathcal D_\Lambda(U)\le D_0},
+\tag{7.63}
+]
+and choosing (D_0:=\frac{8C_{\mathrm{pair}}}{c_{\mathrm{pair}}-C_V}), one obtains the (pointwise) Foster–Lyapunov form
+[
+L_\Lambda W_\Lambda
+;\le;
+-\alpha,W_\Lambda;+;\beta,\mathbf 1_{K_\Lambda^{\mathrm{drift}}(D_0)},
+\tag{7.64}
+]
+with
+[
+\alpha:=\kappa,\frac{c_{\mathrm{pair}}-C_V}{4},D_0,
+\qquad
+\beta:=\sup_{U\in K_\Lambda^{\mathrm{drift}}(D_0)} \big(L_\Lambda W_\Lambda(U)+\alpha W_\Lambda(U)\big)
+\ <\ \infty.
+\tag{7.65}
+]
+
+*Proof.* Start from Corollary 7.36 and apply the lower bound (7.60):
+[
+\frac{L_\Lambda W_\Lambda}{W_\Lambda}
+\le
+(\kappa C_V+\kappa^2 C_\Gamma)\mathcal D_\Lambda
+-2\kappa\big(c_{\mathrm{pair}}\mathcal D_\Lambda-C_{\mathrm{pair}}\big)
+=======================================================================
+
+-\kappa(2c_{\mathrm{pair}}-C_V-\kappa C_\Gamma)\mathcal D_\Lambda
++2\kappa C_{\mathrm{pair}}.
+\tag{7.66}
+]
+If (\kappa\le \frac{c_{\mathrm{pair}}-C_V}{2C_\Gamma}), then
+[
+2c_{\mathrm{pair}}-C_V-\kappa C_\Gamma
+;\ge;
+2c_{\mathrm{pair}}-C_V-\frac{c_{\mathrm{pair}}-C_V}{2}
+======================================================
+
+\frac{3}{2}c_{\mathrm{pair}}-\frac{1}{2}C_V
+;\ge;
+\frac{c_{\mathrm{pair}}-C_V}{2},
+]
+and (7.62) follows (after slightly simplifying constants).
+
+To convert (7.62) into a standard Lyapunov inequality, note that on the complement of (K_\Lambda^{\mathrm{drift}}(D_0)) we have (\mathcal D_\Lambda\ge D_0), hence the right-hand side of (7.62) is bounded by a negative constant (-\alpha) with (\alpha) proportional to (D_0). On the compact set (K_\Lambda^{\mathrm{drift}}(D_0)), the smooth function (L_\Lambda W_\Lambda+\alpha W_\Lambda) attains a finite supremum (\beta), yielding (7.64). (\square)
+
+**Remark 7.40 (what §7.3 accomplishes).**
+The purpose of §7.3 is not to “finish” the global Lyapunov step by fiat, but to make the logic referee-auditable:
+
+* the exact drift identity (Proposition 7.35) is purely diffusion calculus;
+* the bounds (Corollary 7.36) are now completely **uniform in (|\Lambda|)** thanks to §7.2;
+* the only remaining obstruction is the coercive pairing inequality (Assumption 7.38), which is where the specific action (S_\Lambda) must finally enter.
+
+In §7.4 we plug a Lyapunov bound of the form (7.64) (once established) together with the local inequalities from Part 6 into the local-to-global theorem that yields volume-uniform Poincaré (and, when required, LSI) for the Gibbs measure.
+
+
+
+## 7.4 Local-to-global assembly: Lyapunov drift + local inequality ⇒ global Poincaré (and, conditionally, global LSI)
+
+The computation in §7.3 isolates a Lyapunov drift inequality of the form
+[
+L_\Lambda W_\Lambda ;\le; -\lambda,W_\Lambda ;+; b,\mathbf 1_{K_\Lambda},
+\tag{7.67}
+]
+with constants (\lambda>0), (b\ge 0) that are intended to be **uniform in the volume**. The remaining task is to show that such a drift estimate, combined with a **local functional inequality on the same core set** (K_\Lambda), forces a **global** Poincaré inequality (and, with stronger hypotheses, a global log-Sobolev inequality) with constants uniform in (|\Lambda|).
+
+This section is purely “functional-analytic plumbing”: it does not use any special structure of the Wilson action beyond (\mu_\Lambda)-reversibility of (L_\Lambda) and the availability of the two local inputs.
+
+Throughout, (\mu_\Lambda) denotes the finite-volume Gibbs measure on the compact manifold (M_\Lambda),
+[
+d\mu_\Lambda(U)=Z_\Lambda^{-1}e^{-S_\Lambda(U)},d\mathrm{vol}*{g*\Lambda}(U),
+]
+and
+[
+L_\Lambda f=\Delta_\Lambda f-\langle \nabla S_\Lambda,\nabla f\rangle_{g_\Lambda},
+\qquad
+\Gamma_\Lambda(f,g)=\langle \nabla f,\nabla g\rangle_{g_\Lambda},
+\qquad
+\mathcal E_\Lambda(f)=\int_{M_\Lambda}\Gamma_\Lambda(f),d\mu_\Lambda.
+\tag{7.68}
+]
+We also write (\mathrm{Var}*{\mu*\Lambda}(f)=\int (f-\mu_\Lambda f)^2,d\mu_\Lambda).
+
+⸻
+
+### 7.4.1 The two patching inputs
+
+The Lyapunov method needs two ingredients on the same measurable “core” set (K_\Lambda\subset M_\Lambda) with (\mu_\Lambda(K_\Lambda)>0).
+
+**Definition 7.41 (localized mean).**
+For a measurable (K_\Lambda\subset M_\Lambda) with (\mu_\Lambda(K_\Lambda)>0), define
+[
+\mu_{\Lambda,K}(f);:=;\frac{1}{\mu_\Lambda(K_\Lambda)}\int_{K_\Lambda} f,d\mu_\Lambda.
+\tag{7.69}
+]
+
+**Assumption 7.42 (local Poincaré on the core set (K_\Lambda)).**
+There exists (\kappa_K<\infty) such that for every smooth (f),
+[
+\int_{K_\Lambda}\bigl(f-\mu_{\Lambda,K}(f)\bigr)^2,d\mu_\Lambda
+;\le;
+\kappa_K\int_{M_\Lambda}\Gamma_\Lambda(f),d\mu_\Lambda.
+\tag{7.70}
+]
+As emphasized throughout the outline, the crucial interface condition is that (\kappa_K) be bounded **uniformly in** (\Lambda).
+
+*(In the intended application, §6.2 provides such an estimate on a canonical “good” region by proving a local LSI/Poincaré for the reflected dynamics and then using LSI (\Rightarrow) Poincaré. The point of the present section is that once (7.70) is in hand, the rest of the argument is abstract.)*
+
+**Assumption 7.43 (linear Foster–Lyapunov drift into (K_\Lambda)).**
+There exists (W_\Lambda\in C^2(M_\Lambda)) with (W_\Lambda\ge 1) and constants (\lambda>0), (b\ge 0) such that
+[
+L_\Lambda W_\Lambda ;\le; -\lambda,W_\Lambda ;+; b,\mathbf 1_{K_\Lambda}
+\qquad\text{pointwise on }M_\Lambda.
+\tag{7.71}
+]
+Again, the volume-uniformity interface is explicit: (\lambda) and (b) must be bounded uniformly in (\Lambda).
+
+Remark 7.44 (where §7.3 plugs in).
+Under Assumption 7.38 (the coercive pairing inequality) and the choice of (\kappa>0) made there, Proposition 7.39 produces precisely a drift bound of the form (7.71) for the Lyapunov function (W_\Lambda=\exp(\kappa V_\Lambda)), with (K_\Lambda) taken to be the corresponding drift sublevel set (K_\Lambda^{\mathrm{drift}}(D_0)) from (7.63). The entire “drift package” is therefore reduced to verifying Assumption 7.38 (and then checking that the same choice of (K_\Lambda) is admissible for the local inequality input (7.70)).
+
+⸻
+
+### 7.4.2 The workhorse inequality: drift-to-energy conversion
+
+The next lemma is the algebraic core of Lyapunov patching. It converts the pointwise quantity (-L_\Lambda h/h) into the Dirichlet form (\int \Gamma_\Lambda(\cdot),d\mu_\Lambda).
+
+Lemma 7.45 (Lyapunov–(\Gamma) inequality).
+Let (h\in C^2(M_\Lambda)) satisfy (h>0). Then for every smooth (f),
+[
+\int_{M_\Lambda}\left(-\frac{L_\Lambda h}{h}\right) f^2,d\mu_\Lambda
+;\le;
+\int_{M_\Lambda}\Gamma_\Lambda(f),d\mu_\Lambda.
+\tag{7.72}
+]
+
+Proof.
+Using (\mu_\Lambda)-symmetry of (L_\Lambda) (integration by parts),
+[
+\int \left(-\frac{L_\Lambda h}{h}\right) f^2,d\mu_\Lambda
+=========================================================
+
+# -\int \frac{f^2}{h},L_\Lambda h,d\mu_\Lambda
+
+\int \Gamma_\Lambda!\left(\frac{f^2}{h},,h\right)d\mu_\Lambda.
+\tag{7.73}
+]
+Compute pointwise using (\Gamma_\Lambda(u,v)=\langle \nabla u,\nabla v\rangle) and
+[
+\nabla!\left(\frac{f^2}{h}\right)=\frac{2f,\nabla f}{h}-\frac{f^2,\nabla h}{h^2}.
+\tag{7.74}
+]
+Then
+[
+\Gamma_\Lambda!\left(\frac{f^2}{h},,h\right)
+============================================
+
+# \left\langle \frac{2f,\nabla f}{h}-\frac{f^2,\nabla h}{h^2},,\nabla h\right\rangle
+
+\frac{2f}{h}\Gamma_\Lambda(f,h)-\frac{f^2}{h^2}\Gamma_\Lambda(h).
+\tag{7.75}
+]
+By Cauchy–Schwarz, (|\Gamma_\Lambda(f,h)|\le \sqrt{\Gamma_\Lambda(f)}\sqrt{\Gamma_\Lambda(h)}), hence
+[
+\frac{2|f|}{h}|\Gamma_\Lambda(f,h)|
+\le
+\frac{2|f|}{h}\sqrt{\Gamma_\Lambda(f)}\sqrt{\Gamma_\Lambda(h)}
+\le
+\Gamma_\Lambda(f)+\frac{f^2}{h^2}\Gamma_\Lambda(h).
+\tag{7.76}
+]
+This implies
+[
+\frac{2f}{h}\Gamma_\Lambda(f,h)-\frac{f^2}{h^2}\Gamma_\Lambda(h)\le \Gamma_\Lambda(f),
+\tag{7.77}
+]
+and integrating (7.75)–(7.77) gives (7.72). (\square)
+
+⸻
+
+### 7.4.3 Global Poincaré from local Poincaré + linear Lyapunov drift
+
+We now state and prove the local-to-global assembly theorem at the level of the Poincaré inequality (equivalently, the (L^2(\mu_\Lambda)) spectral gap of (-L_\Lambda)).
+
+Theorem 7.46 (local-to-global Poincaré via Lyapunov drift).
+Assume the local Poincaré inequality (7.70) on (K_\Lambda) and the drift condition (7.71) with (W_\Lambda\ge 1). Then (\mu_\Lambda) satisfies the global Poincaré inequality
+[
+\mathrm{Var}*{\mu*\Lambda}(f)
+;\le;
+C_P\int_{M_\Lambda}\Gamma_\Lambda(f),d\mu_\Lambda,
+\qquad
+C_P:=\frac{1+b\kappa_K}{\lambda},
+\tag{7.78}
+for all smooth (f). In particular, the (L^2(\mu_\Lambda)) spectral gap of (-L_\Lambda) is at least
+[
+\lambda_1(-L_\Lambda)\ \ge\ \frac{\lambda}{1+b\kappa_K}.
+\tag{7.79}
+]
+
+Proof.
+Fix smooth (f). By the definition of variance,
+[
+\mathrm{Var}*{\mu*\Lambda}(f)=\inf_{c\in\mathbb R}\int_{M_\Lambda}(f-c)^2,d\mu_\Lambda.
+\tag{7.80}
+]
+Choose (c:=\mu_{\Lambda,K}(f)) and set
+[
+g:=f-\mu_{\Lambda,K}(f).
+\tag{7.81}
+]
+Then (\mathrm{Var}*{\mu*\Lambda}(f)\le \int g^2,d\mu_\Lambda) and (\Gamma_\Lambda(g)=\Gamma_\Lambda(f)), since (g) differs from (f) by a constant.
+
+From the drift inequality (7.71) and (W_\Lambda\ge 1),
+[
+-\frac{L_\Lambda W_\Lambda}{\lambda W_\Lambda}
+\ge
+1-\frac{b}{\lambda}\frac{\mathbf 1_{K_\Lambda}}{W_\Lambda}
+\ge
+1-\frac{b}{\lambda}\mathbf 1_{K_\Lambda},
+]
+so
+[
+1\le -\frac{L_\Lambda W_\Lambda}{\lambda W_\Lambda}+\frac{b}{\lambda}\mathbf 1_{K_\Lambda}.
+\tag{7.82}
+]
+Multiply by (g^2\ge 0) and integrate to obtain
+[
+\int g^2,d\mu_\Lambda
+\le
+\frac{1}{\lambda}\int \left(-\frac{L_\Lambda W_\Lambda}{W_\Lambda}\right)g^2,d\mu_\Lambda
++
+\frac{b}{\lambda}\int_{K_\Lambda} g^2,d\mu_\Lambda.
+\tag{7.83}
+]
+
+Apply Lemma 7.45 with (h=W_\Lambda) and (f=g):
+[
+\int \left(-\frac{L_\Lambda W_\Lambda}{W_\Lambda}\right)g^2,d\mu_\Lambda
+\le
+\int \Gamma_\Lambda(g),d\mu_\Lambda
+===================================
+
+\int \Gamma_\Lambda(f),d\mu_\Lambda.
+\tag{7.84}
+]
+Apply the local Poincaré inequality (7.70) to (g), noting (\mu_{\Lambda,K}(g)=0):
+[
+\int_{K_\Lambda} g^2,d\mu_\Lambda
+=================================
+
+\int_{K_\Lambda}(g-\mu_{\Lambda,K}(g))^2,d\mu_\Lambda
+\le
+\kappa_K\int \Gamma_\Lambda(g),d\mu_\Lambda
+===========================================
+
+\kappa_K\int \Gamma_\Lambda(f),d\mu_\Lambda.
+\tag{7.85}
+]
+Insert (7.84)–(7.85) into (7.83):
+[
+\int g^2,d\mu_\Lambda
+\le
+\frac{1}{\lambda}\int \Gamma_\Lambda(f),d\mu_\Lambda
++
+\frac{b}{\lambda}\kappa_K\int \Gamma_\Lambda(f),d\mu_\Lambda
+============================================================
+
+\frac{1+b\kappa_K}{\lambda}\int \Gamma_\Lambda(f),d\mu_\Lambda.
+\tag{7.86}
+]
+Finally, (\mathrm{Var}*{\mu*\Lambda}(f)\le \int g^2,d\mu_\Lambda) gives (7.78). The spectral gap bound (7.79) is the standard equivalence between Poincaré and the bottom of (\sigma(-L_\Lambda)\setminus{0}). (\square)
+
+Corollary 7.47 (volume-uniform Poincaré from volume-uniform inputs).
+If the constants (\kappa_K,\lambda,b) in (7.70)–(7.71) can be chosen uniformly in (\Lambda), then the global Poincaré constant (C_P) in (7.78) and the spectral gap lower bound (7.79) are uniform in (|\Lambda|).
+
+Remark 7.48 (restriction to gauge-invariant observables).
+All statements above are written for arbitrary smooth (f). If one only needs the Poincaré inequality on the subspace of gauge-invariant observables, the same proof applies verbatim (with “for all (f)” replaced by “for all gauge-invariant (f)”), since the integration-by-parts and carré-du-champ identities remain valid after restricting the class of test functions.
+
+⸻
+
+### 7.4.4 Optional: from superlinear drift to global super-Poincaré (and the LSI bottleneck)
+
+The linear drift inequality (7.71) is perfectly matched to global **Poincaré**. For global **log-Sobolev** (LSI), one typically needs a stronger mechanism: either a superlinear Lyapunov drift (yielding a global super-Poincaré inequality, SPI) or an explicit defective-LSI stage plus a tightening argument (e.g. Rothaus).
+
+Rather than commit to one route prematurely, we record the standard “output interface” used later:
+
+1. **If only a global Poincaré inequality is needed** (e.g. to justify ((-L_\Lambda)^{-1}) on mean-zero functions and to bound variances), Theorem 7.46 is the appropriate assembly statement.
+
+2. **If a global LSI is needed downstream** (e.g. for Gaussian concentration of averaged observables, as in the localization/typicality step of Part 8), then one must supply an additional globalization theorem. A common route is:
+
+   * prove a global SPI via superlinear drift + local SPI on core sets,
+   * then invoke a fully justified SPI (\Rightarrow) LSI conversion theorem for the profile at hand (often an (\exp(B/s))-type profile), or use an alternative “defective LSI + Poincaré ⇒ LSI” tightening where the defective stage is proved internally.
+
+In this manuscript’s dependency ledger, the SPI (\Rightarrow) LSI conversion is treated as an **external input unless proved explicitly** (this is one of the “referee-facing gaps” flagged in the outline).
+
+⸻
+
+This completes the local-to-global assembly step. The logic now cleanly separates:
+
+* **local analytic input** (Part 6): a local inequality on a canonical good region with constants uniform in (|\Lambda|);
+* **global drift input** (Part 7.3): a Lyapunov function and a drift inequality with constants uniform in (|\Lambda|) (the only model-dependent obstruction being the coercive pairing inequality, Assumption 7.38);
+* **abstract patching** (this section): a deterministic theorem producing a global, volume-uniform Poincaré inequality (and, with additional hypotheses, a route toward global LSI/SPI).
+
+The next steps (Part 8 onward) use these uniform functional inequalities as quantitative tools: they control localization errors, typicality bounds, and ultimately allow the massive-Maxwell Green’s function decay from Part 9 to turn into exponential clustering.
+
+

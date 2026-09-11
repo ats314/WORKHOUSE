@@ -1,0 +1,657 @@
+## 8.1 Covariance decomposition across an event (K)
+
+Part 6 produced a *conditional* (good–set) covariance bound—on a region (K) where the matrix hinge holds—of the schematic form
+[
+\big|\mathrm{Cov}*{\mu*{\Lambda,K}}(F,G)\big|;\lesssim; e^{-\eta,\mathrm{dist}(\mathrm{supp}F,\mathrm{supp}G)}.
+]
+Part 7 produced mechanisms intended to make such a region (K) *typical* (high probability), via drift/functional inequalities. Part 8 now formalizes the bridge:
+
+> **Goal of localization:** upgrade a covariance bound under (\mu_{\Lambda,K}:=\mu_\Lambda(\cdot\mid K)) to a covariance bound under the full Gibbs measure (\mu_\Lambda), paying an explicit error proportional to (\mu_\Lambda(K^c)).
+
+Nothing deep is happening here—this is the law of total covariance—but the *bookkeeping* matters, because we want an error term that is (i) explicit, (ii) uniform in volume, and (iii) doesn’t contaminate the distance exponent coming from the massive Maxwell inverse.
+
+Throughout this subsection, ((\Omega,\mathcal F)) is a measurable space (in our application (\Omega=M_\Lambda)), (\mu=\mu_\Lambda) is a probability measure, and (K\in\mathcal F) satisfies
+[
+0<\mu(K)<1.
+]
+For a measurable (H), write
+[
+\mu_K(H);:=;\mu(H\mid K)=\frac{\mu(H\cap K)}{\mu(K)},
+\qquad
+\mu_{K^c}(H);:=;\mu(H\mid K^c)=\frac{\mu(H\cap K^c)}{\mu(K^c)}.
+\tag{8.1}
+]
+For integrable (F,G), recall
+[
+\mathrm{Cov}_\nu(F,G):=\nu(FG)-\nu(F)\nu(G).
+]
+
+---
+
+### Lemma 8.1 Covariance decomposition across an event
+
+For any bounded measurable (F,G:\Omega\to\mathbb R),
+[
+\mathrm{Cov}_\mu(F,G)
+=====================
+
+\mu(K),\mathrm{Cov}*{\mu_K}(F,G)
+;+;
+\mu(K^c),\mathrm{Cov}*{\mu_{K^c}}(F,G)
+;+;
+\mu(K)\mu(K^c),\Delta_KF,\Delta_KG,
+\tag{8.2}
+]
+where
+[
+\Delta_KF;:=;\mu_K(F)-\mu_{K^c}(F),
+\qquad
+\Delta_KG;:=;\mu_K(G)-\mu_{K^c}(G).
+\tag{8.3}
+]
+
+**Proof.** Let (\alpha:=\mu(K)\in(0,1)). Then (\mu) decomposes as the convex mixture
+[
+\mu(\cdot)=\alpha,\mu_K(\cdot)+(1-\alpha),\mu_{K^c}(\cdot).
+\tag{8.4}
+]
+In particular,
+[
+\mu(FG)=\alpha,\mu_K(FG)+(1-\alpha),\mu_{K^c}(FG),
+\tag{8.5}
+]
+and
+[
+\mu(F)=\alpha,\mu_K(F)+(1-\alpha),\mu_{K^c}(F),
+\qquad
+\mu(G)=\alpha,\mu_K(G)+(1-\alpha),\mu_{K^c}(G).
+\tag{8.6}
+]
+Introduce the shorthand
+[
+A:=\mu_K(F),\quad B:=\mu_{K^c}(F),\quad C:=\mu_K(G),\quad D:=\mu_{K^c}(G).
+]
+Then
+[
+\mu(F)\mu(G)=\big(\alpha A+(1-\alpha)B\big)\big(\alpha C+(1-\alpha)D\big)
+=\alpha^2 AC+\alpha(1-\alpha)(AD+BC)+(1-\alpha)^2 BD.
+\tag{8.7}
+]
+Now compute
+[
+\mu(FG)-\mu(F)\mu(G)
+====================
+
+\alpha\mu_K(FG)+(1-\alpha)\mu_{K^c}(FG)-\Big[\alpha^2 AC+\alpha(1-\alpha)(AD+BC)+(1-\alpha)^2 BD\Big].
+]
+Add and subtract (\alpha AC) and ((1-\alpha)BD) to isolate conditional covariances:
+[
+\begin{aligned}
+\mu(FG)-\mu(F)\mu(G)
+&=\alpha\big(\mu_K(FG)-AC\big)+(1-\alpha)\big(\mu_{K^c}(FG)-BD\big) \
+&\quad+\Big(\alpha AC+(1-\alpha)BD-\alpha^2AC-\alpha(1-\alpha)(AD+BC)-(1-\alpha)^2BD\Big).
+\end{aligned}
+\tag{8.8}
+]
+The first two terms are (\alpha,\mathrm{Cov}*{\mu_K}(F,G)+(1-\alpha),\mathrm{Cov}*{\mu_{K^c}}(F,G)). For the bracketed term, simplify:
+[
+\alpha AC-\alpha^2AC=\alpha(1-\alpha)AC,\qquad (1-\alpha)BD-(1-\alpha)^2BD=\alpha(1-\alpha)BD,
+]
+so the bracket becomes
+[
+\alpha(1-\alpha)\big(AC+BD-AD-BC\big)=\alpha(1-\alpha)(A-B)(C-D).
+\tag{8.9}
+]
+Recognizing (A-B=\Delta_KF) and (C-D=\Delta_KG), we obtain exactly (8.2)–(8.3). (\square)
+
+*A version of this identity appears in the earlier localization notes, with the same three-term structure.* 
+
+---
+
+### Corollary 8.2 A raw localization error bound in terms of (\mu(K^c))
+
+For bounded measurable (F,G),
+[
+\big|\mathrm{Cov}*\mu(F,G)\big|
+;\le;
+\big|\mathrm{Cov}*{\mu_K}(F,G)\big|
+;+;
+8,|F|*\infty,|G|*\infty,\mu(K^c).
+\tag{8.10}
+]
+
+**Proof.** Start from the decomposition (8.2) and use (\mu(K)\le 1):
+[
+|\mathrm{Cov}*\mu(F,G)|
+\le
+|\mathrm{Cov}*{\mu_K}(F,G)|
++
+\mu(K^c),|\mathrm{Cov}*{\mu*{K^c}}(F,G)|
++
+\mu(K)\mu(K^c),|\Delta_KF|,|\Delta_KG|.
+\tag{8.11}
+]
+Two elementary bounds suffice:
+
+1. For any probability measure (\nu) and bounded (F,G),
+   [
+   |\mathrm{Cov}*\nu(F,G)|
+   =
+   \big|\nu\big((F-\nu F)(G-\nu G)\big)\big|
+   \le
+   |F-\nu F|*\infty,|G-\nu G|*\infty
+   \le
+   (2|F|*\infty)(2|G|*\infty)
+   =
+   4|F|*\infty|G|_\infty.
+   \tag{8.12}
+   ]
+2. Since (|\mu_K(F)|\le|F|*\infty) and (|\mu*{K^c}(F)|\le|F|*\infty),
+   [
+   |\Delta_KF|=|\mu_K(F)-\mu*{K^c}(F)|\le 2|F|*\infty,
+   \qquad
+   |\Delta_KG|\le 2|G|*\infty.
+   \tag{8.13}
+   ]
+
+Insert (8.12)–(8.13) into (8.11):
+[
+\mu(K^c),|\mathrm{Cov}*{\mu*{K^c}}(F,G)|
+\le 4|F|*\infty|G|*\infty,\mu(K^c),
+]
+and
+[
+\mu(K)\mu(K^c)|\Delta_KF||\Delta_KG|
+\le
+\mu(K^c)\cdot (2|F|*\infty)(2|G|*\infty)
+========================================
+
+4|F|*\infty|G|*\infty,\mu(K^c).
+]
+Summing gives (8.10). (\square)
+
+*This is exactly the “error ledger” we want: conditional covariance on (K) plus an explicit additive term proportional to (\mu(K^c)).* 
+
+---
+
+### Remark 8.3 What this buys us in the mass-gap chain
+
+Corollary 8.2 says: once Part 6 gives an exponential-in-distance bound on (\mathrm{Cov}_{\mu_K}(F,G)) (via Helffer–Sjöstrand + massive Maxwell kernel decay), the only obstruction to upgrading that bound to (\mu) is proving that (\mu(K^c)) is small enough.
+
+Crucially, the localization term in (8.10) is **distance-independent**. So if we can arrange (for a carefully chosen canonical (K)) that (\mu(K^c)) decays *exponentially in the volume* (or at least fast enough that it is negligible compared to (e^{-\eta,\mathrm{dist}}) in the regimes we care about), then localization does **not** spoil the distance exponent coming from the Green kernel of (M^{-1}).
+
+Section 8.2 will specify the canonical choice of (K) (an averaged plaquette “badness” constraint), and §8.3 will isolate the remaining “typicality” estimate required to make (\mu(K^c)) quantitatively small.
+
+
+
+
+
+### 8.2 Choice of canonical set: an averaged plaquette badness constraint
+
+Section 8.1 is the purely algebraic part of localization: it tells us that to upgrade a “good–set covariance bound” to a full covariance bound, we pay an additive error proportional to (\mu_\Lambda(K^c)). The present subsection fixes the canonical choice of the event (K) that will be used in that decomposition.
+
+There are two design constraints that matter for the rest of the program:
+
+1. **Gauge invariance.** Since we ultimately care about gauge-invariant observables and the Gibbs measure is gauge invariant, the localization event should be gauge invariant as well—otherwise “typicality” becomes a hostage to arbitrary gauge representatives.
+
+2. **Averaging rather than maxima.** Sets defined by (\max_p(\text{badness}_p)) typically have complements controlled only by a union bound, which introduces an explicit (|P(\Lambda)|) prefactor and is exactly the sort of volume leakage that later wrecks exponential-in-distance estimates. Averaged constraints naturally come with (|P(\Lambda)|^{-1/2}) Lipschitz scaling, which is the right shape for concentration once a volume-uniform functional inequality is available.
+
+Accordingly, we choose (K) by imposing a smallness condition on an **averaged plaquette badness**.
+
+---
+
+#### 8.2.1 A plaquette “badness interface” and the averaged functional
+
+Fix once and for all a function
+[
+\vartheta:G\to[0,\infty)
+]
+satisfying the following standing hypotheses:
+
+* (\vartheta\in C^1(G)),
+* (\vartheta) is conjugation invariant: (\vartheta(hgh^{-1})=\vartheta(g)) for all (g,h\in G),
+* (\vartheta(\mathbf 1)=0),
+* (|\nabla_G\vartheta|*\infty:=\sup*{g\in G}|\nabla_G\vartheta(g)|<\infty).
+
+In the intended application we take (\vartheta=\widetilde z) from §7.2,
+[
+\widetilde z(g)=1-\frac1n\Re\mathrm{Tr}(\rho(g)),
+]
+so that (\vartheta) is smooth, conjugation invariant, and (0\le \vartheta\le 2). We keep (\vartheta) abstract for the localization bookkeeping, because the only properties needed in §8.2–§8.3 are the (C^1) bound and conjugation invariance.
+
+For each plaquette (p\in P(\Lambda)), define the lifted plaquette observable
+[
+\vartheta_p:M_\Lambda\to[0,\infty),
+\qquad
+\vartheta_p(U):=\vartheta\big(U_p(U)\big),
+\tag{8.14}
+]
+where (U_p(U)\in G) is the oriented plaquette holonomy (cf. §2.3).
+
+**Definition 8.4 (averaged plaquette badness and canonical set).**
+Define the averaged badness functional
+[
+\mathcal B_\Lambda(U)
+;:=;
+\frac{1}{|P(\Lambda)|}\sum_{p\in P(\Lambda)}\vartheta_p(U)
+==========================================================
+
+\frac{1}{|P(\Lambda)|}\sum_{p\in P(\Lambda)}\vartheta\big(U_p(U)\big),
+\tag{8.15}
+]
+and for (\varepsilon>0) define the canonical “good” event
+[
+K_\Lambda(\varepsilon)
+;:=;
+\big{,U\in M_\Lambda:\ \mathcal B_\Lambda(U)\le \varepsilon,\big}.
+\tag{8.16}
+]
+
+Two immediate remarks:
+
+* If (\vartheta=\widetilde z) (trace defect), then (\mathcal B_\Lambda) is essentially the **Wilson action density**:
+  [
+  S_W(U)=\beta\sum_{p}\widetilde z\big(U_p(U)\big)
+  \quad\Longrightarrow\quad
+  \mathcal B_\Lambda(U)=\frac{1}{\beta,|P(\Lambda)|},S_W(U).
+  \tag{8.17}
+  ]
+  So (K_\Lambda(\varepsilon)) is a low-action-density event.
+* Because (\vartheta\ge 0), one always has (\mathcal B_\Lambda(U)\ge 0). If (\vartheta) is bounded (as for (\widetilde z)), then (\mathcal B_\Lambda) is bounded uniformly in (\Lambda) as well.
+
+We record gauge invariance explicitly.
+
+**Lemma 8.5 (gauge invariance of (\mathcal B_\Lambda) and (K_\Lambda(\varepsilon))).**
+The functional (\mathcal B_\Lambda) is gauge invariant. Consequently, the event (K_\Lambda(\varepsilon)) is gauge invariant.
+
+**Proof.**
+Under a gauge transformation (g\in G^{V(\Lambda)}), the plaquette holonomy transforms by conjugation at the basepoint:
+[
+U_p(g\cdot U)=g_x,U_p(U),g_x^{-1},
+]
+for the appropriate corner (x) of (p). Since (\vartheta) is conjugation invariant, (\vartheta(U_p(g\cdot U))=\vartheta(U_p(U))) for every plaquette (p). Averaging over (p) gives (\mathcal B_\Lambda(g\cdot U)=\mathcal B_\Lambda(U)), and therefore (K_\Lambda(\varepsilon)) is gauge invariant. (\square)
+
+---
+
+#### 8.2.2 The max-version set and a basic inclusion
+
+The averaged set (K_\Lambda(\varepsilon)) is designed for concentration. Sometimes it is also useful to name the stronger “uniform smallness” event.
+
+**Definition 8.6 (pointwise plaallowess / max version).**
+Define
+[
+K_\Lambda^{\max}(\varepsilon)
+;:=;
+\big{,U\in M_\Lambda:\ \vartheta\big(U_p(U)\big)\le \varepsilon\ \text{for every }p\in P(\Lambda),\big}.
+\tag{8.18}
+]
+
+**Lemma 8.7 (trivial inclusion).**
+[
+K_\Lambda^{\max}(\varepsilon)\ \subseteq\ K_\Lambda(\varepsilon).
+\tag{8.19}
+]
+
+**Proof.** If (\vartheta(U_p)\le \varepsilon) for all (p), then their average is also (\le\varepsilon). (\square)
+
+Finally, to keep the interface with the small-field region from Part 5 visible, we record the easy direction: linkwise small field implies small plaquette badness (hence implies membership in (K_\Lambda(\varepsilon)) for a suitable (\varepsilon)).
+
+**Lemma 8.8 (linkwise small field (\Rightarrow) small averaged badness).**
+Assume (\vartheta) satisfies a quadratic upper bound near the identity: there exist (r_0>0) and (c_+<\infty) such that
+[
+\vartheta(g)\ \le\ c_+,d_G(g,\mathbf 1)^2
+\qquad\forall g\in B_{r_0}^G(\mathbf 1).
+\tag{8.20}
+]
+(For (\vartheta=\widetilde z), this holds by the Taylor expansion at (\mathbf 1); cf. §7.2.)
+
+Then for any (0<r\le r_0/4),
+[
+K_\Lambda(r)\ \subseteq\ K_\Lambda^{\max}(16c_+r^2)\ \subseteq\ K_\Lambda(16c_+r^2),
+\tag{8.21}
+]
+where (K_\Lambda(r)) is the linkwise small-field region from §5.3.
+
+**Proof.**
+If (U\in K_\Lambda(r)), then every link (U_b) lies in (B_r^G(\mathbf 1)). For a plaquette (p) with boundary word (U_p=U_{b_1}U_{b_2}U_{b_3}^{-1}U_{b_4}^{-1}), repeated use of the triangle inequality plus left/right invariance gives
+[
+d_G(U_p,\mathbf 1)
+\le
+d_G(U_{b_1},\mathbf 1)+d_G(U_{b_2},\mathbf 1)+d_G(U_{b_3},\mathbf 1)+d_G(U_{b_4},\mathbf 1)
+\le 4r.
+\tag{8.22}
+]
+Thus (U_p\in B_{4r}^G(\mathbf 1)\subset B_{r_0}^G(\mathbf 1)), and (8.20) yields
+[
+\vartheta(U_p)\le c_+,d_G(U_p,\mathbf 1)^2 \le c_+,(4r)^2 = 16c_+r^2.
+\tag{8.23}
+]
+This holds for every plaquette (p), giving (U\in K_\Lambda^{\max}(16c_+r^2)), and then Lemma 8.7 gives the averaged inclusion. (\square)
+
+Remark 8.9. The inclusion (8.21) is one-way. An averaged constraint (\mathcal B_\Lambda\le\varepsilon) does *not* force every plaquette (let alone every link) to be small. That asymmetry is deliberate: (K_\Lambda(\varepsilon)) is chosen for **typicality**, not for uniform pointwise control.
+
+---
+
+#### 8.2.3 Lipschitz scaling of (\mathcal B_\Lambda) and why averaging is the right normalization
+
+The typicality estimate in §8.3 will require that (\mathcal B_\Lambda) be Lipschitz with a constant that improves with volume. This is exactly where locality and bounded overlap enter.
+
+Let (\nabla) be the Riemannian gradient on (M_\Lambda) with respect to the product metric (g_\Lambda), and decompose it into link-gradients as in §3.5 / §7.2:
+[
+|\nabla f|*{g*\Lambda}^2=\sum_{\ell\in E(\Lambda)}|\nabla_\ell f|_{\mathfrak g}^2.
+\tag{8.24}
+]
+Let (\deg_P(\ell)) denote the number of plaquettes whose boundary contains the link (\ell). By the bounded overlap constant from §3.4, there is (\nu<\infty) (depending only on the lattice dimension) such that
+[
+\deg_P(\ell)\le \nu
+\qquad\forall \ell\in E(\Lambda).
+\tag{8.25}
+]
+
+**Lemma 8.10 (uniform linkwise gradient bound for (\vartheta_p)).**
+For every plaquette (p), every link (\ell), and every (U\in M_\Lambda),
+[
+|\nabla_\ell \vartheta_p(U)|
+\ \le
+|\nabla_G\vartheta|*\infty\ \mathbf 1*{{\ell\in\partial p}}.
+\tag{8.26}
+]
+
+**Proof.**
+If (\ell\notin\partial p), then (\vartheta_p(U)) is independent of (U_\ell), so (\nabla_\ell\vartheta_p\equiv 0).
+
+If (\ell\in\partial p), varying (U_\ell) while holding the other three boundary links fixed changes (U_p) by left/right multiplication and possibly inversion in (G). Since the metric on (G) is bi-invariant, left/right multiplication and inversion are isometries, so composing (\vartheta) with this map does not increase the gradient norm. Therefore the link-gradient norm is bounded by (\sup_G|\nabla_G\vartheta|=|\nabla_G\vartheta|_\infty). (\square)
+
+We now bound the gradient of the averaged functional (\mathcal B_\Lambda).
+
+**Lemma 8.11 (Lipschitz constant of the averaged badness).**
+There exists a constant (L_0<\infty), depending only on (\nu), the dimension-dependent ratio (|E(\Lambda)|/|P(\Lambda)|), and (|\nabla_G\vartheta|*\infty), such that for every finite periodic (\Lambda),
+[
+\sup*{U\in M_\Lambda}|\nabla \mathcal B_\Lambda(U)|*{g*\Lambda}
+\ \le
+\frac{L_0}{\sqrt{|P(\Lambda)|}}.
+\tag{8.27}
+]
+In particular, (\mathcal B_\Lambda) is (\frac{L_0}{\sqrt{|P(\Lambda)|}})-Lipschitz with respect to the Riemannian distance on ((M_\Lambda,g_\Lambda)).
+
+**Proof.**
+Fix a link (\ell). Differentiating the average (8.15) in the (\ell)-direction gives
+[
+\nabla_\ell \mathcal B_\Lambda(U)
+=================================
+
+# \frac{1}{|P(\Lambda)|}\sum_{p\in P(\Lambda)} \nabla_\ell \vartheta_p(U)
+
+\frac{1}{|P(\Lambda)|}\sum_{p:,\ell\in\partial p} \nabla_\ell \vartheta_p(U).
+\tag{8.28}
+]
+By the triangle inequality, Lemma 8.10, and (\deg_P(\ell)\le \nu),
+[
+|\nabla_\ell \mathcal B_\Lambda(U)|
+\le
+\frac{1}{|P(\Lambda)|}\sum_{p:,\ell\in\partial p}|\nabla_\ell \vartheta_p(U)|
+\le
+\frac{\deg_P(\ell)}{|P(\Lambda)|},|\nabla_G\vartheta|*\infty
+\le
+\frac{\nu}{|P(\Lambda)|},|\nabla_G\vartheta|*\infty.
+\tag{8.29}
+]
+Now sum over all links:
+[
+|\nabla \mathcal B_\Lambda(U)|^2
+================================
+
+\sum_{\ell\in E(\Lambda)}|\nabla_\ell \mathcal B_\Lambda(U)|^2
+\le
+|E(\Lambda)|\left(\frac{\nu}{|P(\Lambda)|},|\nabla_G\vartheta|*\infty\right)^2.
+\tag{8.30}
+]
+On the periodic hypercubic lattice in fixed dimension, (|E(\Lambda)|/|P(\Lambda)|) is a dimension-dependent constant (in (d=4), (|E|/|P|=2/3)). Thus there is (C*{E/P}<\infty), independent of (\Lambda), such that
+[
+|E(\Lambda)|\le C_{E/P},|P(\Lambda)|.
+\tag{8.31}
+]
+Insert (8.31) into (8.30) to get
+[
+|\nabla \mathcal B_\Lambda(U)|^2
+\le
+\frac{C_{E/P},\nu^2,|\nabla_G\vartheta|*\infty^2}{|P(\Lambda)|},
+\tag{8.32}
+]
+hence
+[
+\sup*{U}|\nabla \mathcal B_\Lambda(U)|
+\le
+\frac{\sqrt{C_{E/P}},\nu,|\nabla_G\vartheta|*\infty}{\sqrt{|P(\Lambda)|}}.
+]
+This is (8.27) with (L_0:=\sqrt{C*{E/P}},\nu,|\nabla_G\vartheta|_\infty). (\square)
+
+**Remark 8.12 (why this exact scaling matters).**
+The bound (8.27) is the quantitative reason we localize using an **averaged** event. Once a volume-uniform LSI (or a suitable concentration mechanism) is available, a Lipschitz constant of order (|P|^{-1/2}) yields Gaussian tails with an exponent proportional to (|P(\Lambda)|). This is precisely the scale needed for (\mu_\Lambda(K_\Lambda(\varepsilon)^c)) to be negligible in the covariance decomposition of §8.1 without spoiling the distance exponent coming from the massive Maxwell inverse.
+
+---
+
+This fixes the canonical choice of (K) and the geometric estimate (the (|P|^{-1/2}) Lipschitz scaling) that will be fed into the typicality step. Section 8.3 isolates the remaining probabilistic/functional-inequality input needed to turn this into an explicit bound on (\mu_\Lambda(K_\Lambda(\varepsilon)^c)).
+
+
+
+
+### 8.3 Typicality / concentration estimate for (K_\Lambda(\varepsilon))
+
+Section 8.1 shows that localization across an event (K) costs an additive error proportional to (\mu_\Lambda(K^c)). For the canonical choice
+[
+K_\Lambda(\varepsilon)={,\mathcal B_\Lambda\le \varepsilon,},
+\qquad
+\mathcal B_\Lambda(U)=\frac1{|P(\Lambda)|}\sum_{p\in P(\Lambda)}\vartheta\big(U_p(U)\big),
+]
+the central task is therefore:
+
+> **Typicality goal.** Prove that (\mu_\Lambda(K_\Lambda(\varepsilon)^c)=\mu_\Lambda(\mathcal B_\Lambda>\varepsilon)) is *exponentially small in (|P(\Lambda)|)* (with constants uniform in (\Lambda)), so that the distance exponent coming from the massive-Maxwell inverse is not polluted.
+
+The geometric ingredient needed for such a statement was already established in §8.2.3: (\mathcal B_\Lambda) is (\mathrm{O}(|P(\Lambda)|^{-1/2}))-Lipschitz. What remains is a **concentration mechanism** for Lipschitz observables under (\mu_\Lambda), and a **centering/mean control** ensuring the hinge threshold (\varepsilon) lies above the typical value of (\mathcal B_\Lambda).
+
+---
+
+#### 8.3.1 Gaussian concentration from a global log-Sobolev inequality
+
+We use the standard Herbst argument. We state it in a form adapted to our Riemannian setting ((M_\Lambda,g_\Lambda)).
+
+Assumption 8.13 (volume-uniform global LSI).
+There exists a constant (\rho_0>0), independent of (\Lambda), such that for every smooth (f),
+[
+\mathrm{Ent}*{\mu*\Lambda}(f^2)
+;\le;
+\frac{2}{\rho_0}\int_{M_\Lambda}|\nabla f|*{g*\Lambda}^2,d\mu_\Lambda.
+\tag{8.33}
+]
+(Equivalently, (\mu_\Lambda) satisfies an LSI with constant (C_{\mathrm{LS}}=1/\rho_0) in the common normalization.)
+
+Proposition 8.14 (Herbst concentration from LSI).
+Assume (8.33). Let (H:M_\Lambda\to\mathbb R) be (L)-Lipschitz with respect to the Riemannian distance on ((M_\Lambda,g_\Lambda)), equivalently
+[
+|\nabla H(U)|*{g*\Lambda}\le L\qquad\forall U\in M_\Lambda.
+\tag{8.34}
+]
+Then for all (t\ge 0),
+[
+\mu_\Lambda\big(H-\mu_\Lambda H\ge t\big)
+;\le;
+\exp!\left(-\frac{\rho_0,t^2}{2L^2}\right),
+\qquad
+\mu_\Lambda\big(H-\mu_\Lambda H\le -t\big)
+;\le;
+\exp!\left(-\frac{\rho_0,t^2}{2L^2}\right).
+\tag{8.35}
+]
+
+Proof.
+Fix (s>0) and define the log-moment generating function
+[
+\Lambda(s):=\log\mu_\Lambda\big(e^{sH}\big).
+]
+Let
+[
+g_s(U):=\frac{e^{\frac{s}{2}H(U)}}{\big(\mu_\Lambda(e^{sH})\big)^{1/2}},
+\qquad\text{so that}\qquad
+\mu_\Lambda(g_s^2)=1.
+]
+By the definition of entropy,
+[
+\mathrm{Ent}*{\mu*\Lambda}(g_s^2)
+=================================
+
+# \mu_\Lambda(g_s^2\log g_s^2)
+
+# \mu_\Lambda!\left(\frac{e^{sH}}{\mu_\Lambda(e^{sH})}\Big(sH-\Lambda(s)\Big)\right)
+
+s,\Lambda'(s)-\Lambda(s).
+\tag{8.36}
+]
+On the other hand,
+[
+\nabla g_s=\frac{s}{2},g_s,\nabla H,
+\qquad
+|\nabla g_s|^2=\frac{s^2}{4},g_s^2,|\nabla H|^2,
+]
+hence, using (|\nabla H|\le L) and (\mu_\Lambda(g_s^2)=1),
+[
+\int |\nabla g_s|^2,d\mu_\Lambda
+\le
+\frac{s^2L^2}{4}.
+\tag{8.37}
+]
+Insert (8.36)–(8.37) into the LSI (8.33):
+[
+s\Lambda'(s)-\Lambda(s)
+\le
+\frac{2}{\rho_0}\cdot \frac{s^2L^2}{4}
+======================================
+
+\frac{s^2L^2}{2\rho_0}.
+\tag{8.38}
+]
+Since (\Lambda'(0)=\mu_\Lambda(H)), integrating (8.38) from (0) to (s) yields the standard bound
+[
+\Lambda(s)-s\Lambda'(0)\le \frac{s^2L^2}{2\rho_0},
+\qquad\text{i.e.}\qquad
+\log\mu_\Lambda\big(e^{s(H-\mu_\Lambda H)}\big)\le \frac{s^2L^2}{2\rho_0}.
+\tag{8.39}
+]
+Finally, Markov’s inequality gives for (t\ge 0),
+[
+\mu_\Lambda(H-\mu_\Lambda H\ge t)
+=================================
+
+\mu_\Lambda\big(e^{s(H-\mu_\Lambda H)}\ge e^{st}\big)
+\le
+e^{-st},\mu_\Lambda\big(e^{s(H-\mu_\Lambda H)}\big)
+\le
+\exp!\left(-st+\frac{s^2L^2}{2\rho_0}\right).
+]
+Optimizing over (s>0) at (s=\rho_0 t/L^2) yields the upper-tail bound in (8.35). The lower-tail bound follows by applying the same argument to (-H). (\square)
+
+Remark 8.15 (where the “LSI bottleneck” sits).
+Proposition 8.14 is exactly the point at which a **global LSI** (uniform in (\Lambda)) becomes a quantitative tool downstream. If one only has a global Poincaré inequality, one gets (\mathrm{Var}(\mathcal B_\Lambda)=\mathrm{O}(|P|^{-1})) and hence only polynomial (Chebyshev) tails, which is typically too weak for the localization error budget in §8.1.
+
+---
+
+#### 8.3.2 Concentration of (\mathcal B_\Lambda) and an exponential volume bound for (\mu_\Lambda(K_\Lambda(\varepsilon)^c))
+
+We now apply Proposition 8.14 to (H=\mathcal B_\Lambda). Recall the Lipschitz estimate from Lemma 8.11: there is (L_0<\infty), independent of (\Lambda), such that
+[
+\sup_{U\in M_\Lambda}|\nabla\mathcal B_\Lambda(U)|*{g*\Lambda}
+\le
+\frac{L_0}{\sqrt{|P(\Lambda)|}}.
+\tag{8.40}
+]
+Thus (\mathcal B_\Lambda) is (\frac{L_0}{\sqrt{|P(\Lambda)|}})-Lipschitz.
+
+Corollary 8.16 (conditional: Gaussian concentration for (\mathcal B_\Lambda)).
+Assume the global LSI (8.33) holds with constant (\rho_0>0). Then for all (t\ge 0),
+[
+\mu_\Lambda\big(\mathcal B_\Lambda-\mu_\Lambda\mathcal B_\Lambda\ge t\big)
+;\le;
+\exp!\left(
+-\frac{\rho_0 t^2}{2}\cdot \frac{|P(\Lambda)|}{L_0^2}
+\right),
+\tag{8.41}
+]
+and the same bound holds for the lower tail.
+
+Proof.
+Apply Proposition 8.14 with (H=\mathcal B_\Lambda) and (L=L_0/\sqrt{|P(\Lambda)|}). (\square)
+
+To convert (8.41) into a bound on (\mu_\Lambda(\mathcal B_\Lambda>\varepsilon)), we must position (\varepsilon) *above the mean* by a uniform margin.
+
+Corollary 8.17 (volume-exponential typicality of (K_\Lambda(\varepsilon)) under a mean gap).
+Assume the global LSI (8.33). Fix (\varepsilon>0). Suppose there exists (t>0), independent of (\Lambda), such that
+[
+\mu_\Lambda(\mathcal B_\Lambda)\ \le\ \varepsilon-t.
+\tag{8.42}
+]
+Then
+[
+\mu_\Lambda\big(K_\Lambda(\varepsilon)^c\big)
+=============================================
+
+\mu_\Lambda(\mathcal B_\Lambda>\varepsilon)
+;\le;
+\exp!\left(
+-\frac{\rho_0 t^2}{2}\cdot \frac{|P(\Lambda)|}{L_0^2}
+\right).
+\tag{8.43}
+]
+
+Proof.
+If (8.42) holds then ({\mathcal B_\Lambda>\varepsilon}\subseteq {\mathcal B_\Lambda-\mu_\Lambda\mathcal B_\Lambda\ge t}). Apply (8.41). (\square)
+
+Remark 8.18 (what this does to the localization error ledger).
+Combine Corollary 8.2 with (8.43): for bounded (F,G),
+[
+\big|\mathrm{Cov}*{\mu*\Lambda}(F,G)\big|
+\le
+\big|\mathrm{Cov}*{\mu*{\Lambda,K_\Lambda(\varepsilon)}}(F,G)\big|
++
+8|F|*\infty|G|*\infty,
+\exp!\left(
+-\frac{\rho_0 t^2}{2}\cdot \frac{|P(\Lambda)|}{L_0^2}
+\right).
+\tag{8.44}
+]
+The first term is where the distance-dependent decay (from the massive Maxwell inverse) enters; the second term is distance-independent and exponentially small in volume, hence does not spoil the distance exponent.
+
+---
+
+#### 8.3.3 The remaining “typicality” input (explicitly isolated)
+
+Corollary 8.17 reduces typicality of (K_\Lambda(\varepsilon)) to verifying (8.42), i.e. a **uniform gap between the hinge threshold (\varepsilon)** and the **mean badness** (\mu_\Lambda(\mathcal B_\Lambda)).
+
+Assumption 8.19 (uniform mean-below-threshold typicality; open input).
+There exist (\varepsilon>0) and (t>0), independent of (\Lambda), such that
+[
+\mu_\Lambda(\mathcal B_\Lambda)\ \le\ \varepsilon-t
+\qquad\text{for all finite periodic }\Lambda.
+\tag{8.45}
+]
+
+Remarks.
+
+1. **Why this is the real content.** Concentration (8.41) is “automatic” once a uniform LSI is available and once we chose an averaged observable with Lipschitz constant (\mathrm{O}(|P|^{-1/2})). The genuinely model-dependent step is to show that the Gibbs state actually sits below the required threshold (\varepsilon) (with a margin (t)).
+2. **Reduction to a one-plaquette expectation.** On a periodic lattice, translation invariance implies
+   [
+   \mu_\Lambda(\mathcal B_\Lambda)=\mu_\Lambda(\vartheta_{p_0})
+   \quad\text{for any fixed reference plaquette }p_0,
+   ]
+   so (8.45) is equivalent to a uniform finite-volume control of a single local observable.
+3. **In the Wilson choice (\vartheta=\widetilde z).** Using (8.17),
+   [
+   \mu_\Lambda(\mathcal B_\Lambda)=\frac{1}{\beta |P(\Lambda)|},\mu_\Lambda(S_W),
+   ]
+   so (8.45) is a uniform bound on the action density (equivalently, on the derivative of the free energy with respect to (\beta)). Establishing such bounds in the weak-coupling regime is a substantive input (typically via expansion, RG control, or a separate coercive mechanism).
+4. **Relation to the outline’s flagged gap.** In the dependency ledger, Assumption 8.19 is precisely the “typicality/localization” gap: without it, Gaussian concentration around the mean does not imply that the hinge-valid region is typical.
+
+---
+
+This completes the localization-typicality interface: once (i) a uniform global LSI is available and (ii) the mean-below-threshold input (8.45) is proved, the complement probability (\mu_\Lambda(K_\Lambda(\varepsilon)^c)) becomes exponentially small in (|P(\Lambda)|), and therefore the localization error from §8.1 does not interfere with the distance-dependent exponential decay produced by the massive Maxwell Green kernel.
+
+

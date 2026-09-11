@@ -3576,3 +3576,326 @@ results:
         is analytic.
     status: proven
     evidence: analytic
+
+  - id: RESULT:ARCHIVE_SMOOTH_PROFILES
+    statement: The smooth trace defect has range [0,2] and zero set ker rho; faithfulness makes the
+      vacuum unique. A nonnegative C2 function on a complete manifold with Hess z<=H g satisfies |grad
+      z|^2<=2H z. Distinct-link plaquette lifts have gradient square r times the group gradient square
+      and Laplacian r times the group Laplacian. Bounded nonnegative defects satisfy D^2/P<=V<=B D<=B^2
+      P. The squared-profile exponential drift has the exact signed pairing identity and volume-independent
+      Cv=2r(Cd+Cg), Cgamma=4nu r Cg B^2. Every C2 profile with Phi prime at zero equal to zero and bounded
+      second derivative has diffusion and exponential budgets proportional to D.
+    hypotheses:
+    - Compact Lie group and smooth unitary representation rho:G->U(n); faithfulness only for the unique-zero
+      conclusion.
+    - Complete Riemannian manifold, z>=0 of class C2, global Hessian upper bound H>0.
+    - Bi-invariant group metric, product link metric, r distinct links each used once, and the stated
+      group derivative bounds.
+    - P>0, 0<=z_p<=B, D=sum z_p and V=sum z_p^2.
+    - Symmetric diffusion L=Delta-grad S.grad; bounded defects, distinct-link lifts and link overlap
+      at most nu.
+    - F3 geometry, overlap nu, defects in [0,B], Phi prime(0)=0, and sup absolute Phi second<=M.
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Smooth profiles'
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F1
+    - DERIV:ARCHIVE_FUNCTIONAL:F2
+    - DERIV:ARCHIVE_FUNCTIONAL:F3
+    - DERIV:ARCHIVE_FUNCTIONAL:F4
+    - DERIV:ARCHIVE_FUNCTIONAL:F5
+    - DERIV:ARCHIVE_FUNCTIONAL:F6
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-square-profile-chain-rule-retain-626294
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-nonnegative-taylor-bound-gives-g-2e0769
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-overlap-and-defect-budgets-hold--7825d1
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ARCHIVE_LYAPUNOV_PATCHING
+    statement: A volume-independent linear pairing bound gives an explicit volume-independent small-set
+      Foster-Lyapunov inequality. The integrated Lyapunov energy deficit equals a nonnegative completed
+      square. Local core Poincare and linear Lyapunov drift imply global Poincare with constant (1+b_core
+      kappa_K)/lambda.
+    hypotheses:
+    - P_S>=aD-b with b>=0 independent of volume; k>0 and c=2a-Cv-k Cgamma>0; D0>2b/c.
+    - Symmetric diffusion on a compact boundaryless manifold or a common core with valid integration
+      by parts; smooth h>0 and real f.
+    - F8 core; mu(K)>0, W>=1, LW<=-lambda W+b_core 1_K, and the stated local conditional-mean Poincare
+      bound.
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Lyapunov patching'
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F7
+    - DERIV:ARCHIVE_FUNCTIONAL:F8
+    - DERIV:ARCHIVE_FUNCTIONAL:F9
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-drift-to-energy-remainder-is-an--ed4daa
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ARCHIVE_CONCENTRATION_LOCALIZATION
+    statement: The averaged defect gradient square is at most r nu C1^2/P. Uniform LSI and the averaged-gradient
+      bound give a volume-exponential tail only after a uniform mean-below-threshold margin is supplied.
+      The exact two-event covariance decomposition gives localization error at most 8||F||inf||G||inf
+      mu(Kc). A volume-exponential localization error is absorbed into a distance exponent min(m,c/d0)
+      when R<=d0 P.
+    hypotheses:
+    - F3 distinct-link geometry, bounded link overlap nu, and |grad_G z|<=C1.
+    - Ent(f^2)<=2/rho E(f,f), rho>0; bounded smooth H with bounded gradient; for the bad-set conclusion
+      epsilon-E Bbar>=d>0.
+    - Bounded real observables F,G, probability measure mu, and 0<mu(K)<1.
+    - Conditional covariance bound on the same K, bounded observables, mu(Kc)<=A exp(-cP), and R<=d0
+      P.
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Concentration and covariance'
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F10
+    - DERIV:ARCHIVE_FUNCTIONAL:F11
+    - DERIV:ARCHIVE_FUNCTIONAL:F12
+    - DERIV:ARCHIVE_FUNCTIONAL:F13
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-covariance-decomposition-is-exac-ed86d5
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-mean-threshold-is-independent-of-238b06
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-chernoff-optimization-has-the-st-814a90
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ARCHIVE_CENTER_DEFECT_OBSTRUCTIONS
+    statement: A single negative center link has averaged defect 12/P but maximum plaquette defect 2
+      in four dimensions. The proposed equality of plaquette gradient cross terms and a spatial graph
+      Laplacian fails on a nonconstant center defect field.
+    hypotheses:
+    - Sufficiently large periodic four-dimensional SU(2) lattice with ordinary distinct-link square
+      plaquettes.
+    - F14 center field and a connected shared-link plaquette adjacency graph with the standard negative
+      graph Laplacian.
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Center defects'
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F14
+    - DERIV:ARCHIVE_FUNCTIONAL:F15
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-overlap-and-defect-budgets-hold--7825d1
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ARCHIVE_SOURCE_TILT_AND_ROOTED_BOUNDS
+    statement: The exact finite inhomogeneous source moment is the shifted partition ratio Z(beta-t)/Z(beta).
+      Source derivatives are tilted expectations and covariances; the log-partition Hessian is positive
+      semidefinite. Pointwise source domination does not order normalized tilted expectations. Essential
+      bounds on a positive likelihood ratio transfer normalized nonnegative expectations with factor
+      b/a. A uniform exponential source-moment bound and capacity bound imply rooted summability when
+      mu q<1. Maximum degree Delta bounds rooted n-vertex animals by Delta^(2n-2); shared-link four-dimensional
+      plaquettes admit mu=400.
+    hypotheses:
+    - Finite reference measure, finitely many bounded real plaquette potentials, and real source parameters.
+    - S1 bounded setting and bounded observable O for response differentiation.
+    - Disjoint events of probabilities q and 1/2, 0<q<1/2, with the explicit positive weights 1+X/q
+      and 1+Y/q.
+    - Positive integrable weights v,w and 0<a<=w/v<=b<infinity almost everywhere.
+    - Nonnegative defects, t>0, s>=0, uniform moment K^n, capacity <=gamma n, and at most mu^(n-1) rooted
+      animals.
+    - Graph with fixed neighbor orderings and maximum degree Delta>=1; for the plaquette specialization
+      r=4 and nu<=6.
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Source tilts'
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S1
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S2
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S3
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S4
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S5
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S6
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-normalized-envelope-tilts-violat-e8eb14
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-source-log-partition-hessian-equ-e63e11
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-likelihood-ratio-transfer-bounds-d9f852
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-rooted-series-retains-the-animal-9d9fd0
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ARCHIVE_REFLECTION_PERMANENCE
+    statement: A reflection-equivariant measurable deterministic map preserving the positive-time algebra
+      preserves reflection positivity. Existing compatible projective limits preserve RP on the cylinder
+      algebra; convergence of OS product expectations also preserves positivity. A reflection-equivariant
+      map can produce a negative OS form when it mixes the positive and negative half spaces.
+    hypotheses:
+    - Fine measure is reflection positive; the map intertwines reflections and pulls every coarse positive-time
+      observable into the fine positive-time algebra.
+    - Directed reflected system, compatible positive-time pullbacks, and an existing measure with the
+      stated marginals; for weak limits use bounded continuous OS products or justified uniform integrability.
+    - Independent fair signs, exchange reflection and pi(x,y)=(x-y,y-x).
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Reflection positivity'
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S7
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S8
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S9
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-reflection-equivariant-map-has-a-c6d0d9
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-support-preserving-pushforward-h-045170
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ARCHIVE_FINITE_RANGE_INVERSE
+    statement: A bounded block operator with row sum R0 and column sum C0 has norm at most sqrt(R0 C0).
+      A positive finite-range self-adjoint block operator has inverse decay with eta=log(1+a0/(2B))/R
+      and prefactor 2/a0. Massive Maxwell incidence gives range one, floor m^2 and row sum at most alpha(r-1)nu,
+      hence the explicit inverse exponent.
+    hypotheses:
+    - Finite direct sum of Hilbert fibers and bounded blocks with both stated absolute row and column
+      sums.
+    - Finite graph, bounded self-adjoint A>=a0 I, a0>0, finite range R and off-diagonal row sum B; B=0
+      is diagonal.
+    - Signed unit incidence, r distinct entries per plaquette, overlap nu, m^2>0 and alpha>=0.
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Local inverse'
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S10
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S11
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S12
+    bears_on:
+    - G17
+    - G19
+    - G23
+    - G21
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-finite-range-inverse-bound-holds-6259d2
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ARCHIVE_HORIZONTAL_RESTRICTION_BOUNDARY
+    statement: The massive Maxwell operator reduces ker d0 star and its restricted inverse is the restriction
+      of the full inverse. The ambient zero-extension of a horizontal inverse need not obey a volume-uniform
+      local kernel bound.
+    hypotheses:
+    - Finite cochain complex d1 d0=0, M=m^2 I+alpha d1 star d1 with m^2>0, alpha>=0.
+    - Cycle cochain complexes with d1=0 and M=I; horizontal projection is the constant-edge projector
+      11^T/n.
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Horizontal restriction'
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S13
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S14
+    bears_on:
+    - G17
+    - G19
+    - G23
+    - G21
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-horizontal-inverse-zero-extensio-06a484
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+
+  - id: RESULT:ARCHIVE_GLOBAL_PAIRING_OBSTRUCTION
+    statement: All-even four-dimensional SU(2) center fields have D=2P and zero pairing, disproving
+      the proposed volume-uniform linear and off-core pairing bounds; the quadratic target cannot supply
+      a positive lower bound.
+    hypotheses:
+    - Even L>=2 periodic four-dimensional SU(2) lattice, fundamental trace defect and any smooth action;
+      a positive coefficient and volume-independent additive constant for the linear target.
+    scope: The specific Appendix I global pairing targets on the displayed family only. No refutation
+      of all Lyapunov drift or continuum claim.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Global pairing obstruction'
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F16
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-even-tori-realize-extensive-stat-a06d3f
+      scope: Exact periodic link and plaquette construction at L=2,4,6 only; the arbitrary even-L argument
+        is analytic.
+    status: proven
+    evidence: analytic
+
+  - id: RESULT:ARCHIVE_SIGNED_SU2_DIFFUSION
+    statement: For fundamental SU(2) with the unit-S3 metric, Delta V=40D-32V and Gamma(V)<=16nu sum
+      z_p^3(2-z_p); all-center configurations have exact negative exponential drift LW/W=-24kD despite
+      zero action pairing.
+    hypotheses:
+    - Fundamental SU(2), unit-S3 product link metric, distinct-link square plaquettes, bounded overlap
+      nu, V=sum z_p^2, D=sum z_p, W=exp(kV), and L=Delta-grad S.grad with smooth S.
+    scope: Exact signed diffusion and center-field drift for the stated metric and geometry. Global
+      off-core and physical-transfer estimates remain separate.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Signed SU2 diffusion repair'
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F17
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-su2-signed-diffusion-is-exact-in-0d57d4
+      scope: Exact quaternion-coordinate second derivatives and single-plaquette identities; the global
+        analytical interpretation retains its stated hypotheses.
+    status: proven
+    evidence: analytic
