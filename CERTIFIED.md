@@ -15,7 +15,7 @@ workhouse verify --tier 1         # only the exact re-derivations
 workhouse verify --only 'h_4^side'   # one claim, with its numbers
 ```
 
-## T0 — proof-checked — 431
+## T0 — proof-checked — 439
 
 Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`, `Classical.choice`, `Quot.sound`. Nothing a document says can weaken this.
 
@@ -188,6 +188,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `carrier_s_eigenvalue`
   - lean/Workhouse/HodgeFeshbach.lean:134
+  - `make lean`
+- `cellular_excursion_up_harmonic`
+  - lean/Workhouse/HodgeFeshbach.lean:384
   - `make lean`
 - `centeredExpL2_norm_le`
   - lean/Workhouse/SourceTilt.lean:153
@@ -435,6 +438,12 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `feshbach_hodge_no_coupling`
   - lean/Workhouse/HodgeFeshbach.lean:141
   - `make lean`
+- `feshbach_intermediate_return_annihilation`
+  - lean/Workhouse/HodgeFeshbach.lean:391
+  - `make lean`
+- `feshbach_q_annihilates_l_up`
+  - lean/Workhouse/HodgeFeshbach.lean:377
+  - `make lean`
 - `finite_assembly_gap`
   - lean/Workhouse/GroundStateAssembly.lean:631
   - `make lean`
@@ -554,6 +563,15 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `hodge_ker_disjoint`
   - lean/Workhouse/HodgeFeshbach.lean:55
+  - `make lean`
+- `hodge_pi_cleared`
+  - lean/Workhouse/HodgeFeshbach.lean:447
+  - `make lean`
+- `hodge_sandwiched_power`
+  - lean/Workhouse/HodgeFeshbach.lean:472
+  - `make lean`
+- `hodge_shifted_power`
+  - lean/Workhouse/HodgeFeshbach.lean:458
   - `make lean`
 - `hodge_vector_decomposition`
   - lean/Workhouse/HodgeFeshbach.lean:73
@@ -1065,6 +1083,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
 - `tetra_from_count`
   - lean/Workhouse/Basic.lean:358
   - `make lean`
+- `tetrahedral_hodge_duality`
+  - lean/Workhouse/HodgeFeshbach.lean:405
+  - `make lean`
 - `theta_minimum_value`
   - lean/Workhouse/PlateauObstruction.lean:122
   - `make lean`
@@ -1085,6 +1106,9 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - `make lean`
 - `total_family_spectral_projection_gap`
   - lean/Workhouse/SpectralReconstruction.lean:182
+  - `make lean`
+- `traceless_compression_vanishes`
+  - lean/Workhouse/HodgeFeshbach.lean:431
   - `make lean`
 - `transfer_energy_nonnegative`
   - lean/Workhouse/SpectralReconstruction.lean:274
@@ -1315,7 +1339,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 540
+## T1 — re-derived exactly — 565
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1378,6 +1402,37 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the geometric A_p column is p^4 times the printed lambda_p`
   - src/workhouse/invariants/hecke.py:44 · U6; corpus-import/programs/hecke_cover_correspondence/NOTE_FLUX_hecke_cover_correspondence_2026-08-31.md, target-blind prime table
   - `workhouse verify --only 'the geometric A_p column is p^4 times the printed lambda_p'`
+**Moving-time spectral gap: exact budgets and falsifiers**
+
+- `moving-time amplitude plateau clock and dark-sector falsifiers remain exact`
+  - src/workhouse/invariants/moving_time_gap.py:140 · MOVING_TIME_SPECTRAL_GAP section 5 MT5
+  - `workhouse verify --only 'moving-time amplitude plateau clock and dark-sector falsifiers remain exact'`
+- `moving-time finite positive transfer controls tolerate approximate probes`
+  - src/workhouse/invariants/moving_time_gap.py:110 · MOVING_TIME_SPECTRAL_GAP sections 1-2 MT1-MT2
+  - `workhouse verify --only 'moving-time finite positive transfer controls tolerate approximate probes'`
+- `moving-time power exponents balance with the source amplitude squared`
+  - src/workhouse/invariants/moving_time_gap.py:49 · MOVING_TIME_SPECTRAL_GAP section 4 MT4b-MT4e
+  - `workhouse verify --only 'moving-time power exponents balance with the source amplitude squared'`
+- `moving-time sharpness reconstructs the one-atom weighted geometric mean`
+  - src/workhouse/invariants/moving_time_gap.py:84 · MOVING_TIME_SPECTRAL_GAP section 5 MT5
+  - `workhouse verify --only 'moving-time sharpness reconstructs the one-atom weighted geometric mean'`
+**OS kernel gap: reconstruction and nontriviality controls**
+
+- `kernel continuity and weak coupling inputs cannot be replaced by bounded limits`
+  - src/workhouse/invariants/os_kernel_gap.py:101 · OS_KERNEL_GAP K4; exact cutoff families and normalized action denominator
+  - `workhouse verify --only 'kernel continuity and weak coupling inputs cannot be replaced by bounded limits'`
+- `kernel log convexity has a positive two-atom defect and exact transfer iteration`
+  - src/workhouse/invariants/os_kernel_gap.py:49 · OS_KERNEL_GAP K2 equation K3; two-atom midpoint and dyadic controls
+  - `workhouse verify --only 'kernel log convexity has a positive two-atom defect and exact transfer iteration'`
+- `kernel positive time correlation yields the stated finite energy weight floor`
+  - src/workhouse/invariants/os_kernel_gap.py:73 · OS_KERNEL_GAP K3 equation K8; exact finite positive spectral measures
+  - `workhouse verify --only 'kernel positive time correlation yields the stated finite energy weight floor'`
+- `kernel positive time smoothing has the exact rational extremum and a uniform continuity bound`
+  - src/workhouse/invariants/os_kernel_gap.py:128 · OS_KERNEL_GAP K5 equations K9-K11; exact rational time ratios
+  - `workhouse verify --only 'kernel positive time smoothing has the exact rational extremum and a uniform continuity bound'`
+- `kernel quotient centering and transfer compatibility survive a vanishing source direction`
+  - src/workhouse/invariants/os_kernel_gap.py:11 · OS_KERNEL_GAP K1 equations K1-K2; finite rational Gram model only
+  - `workhouse verify --only 'kernel quotient centering and transfer compatibility survive a vanishing source direction'`
 **SU(3) second and third order**
 
 - `C-even bandwidth = top - bottom = 88/153`
@@ -1441,30 +1496,48 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - `workhouse verify --only 'W6 antipodal: seven uniform normal eigenvalues and soft scaling'`
 **W6 synchronized M10 conditional score**
 
-- `W6 synchronized: Euler dilation cancellation at q=0`
-  - src/workhouse/invariants/w6_synchronized_m10.py:61 · W6_SYNCHRONIZED_M10_DOMINATION Section 3
-  - `workhouse verify --only 'W6 synchronized: Euler dilation cancellation at q=0'`
-- `W6 synchronized: WKB amplitude gradient scaling`
-  - src/workhouse/invariants/w6_synchronized_m10.py:104 · W6_SYNCHRONIZED_M10_DOMINATION Section 5
-  - `workhouse verify --only 'W6 synchronized: WKB amplitude gradient scaling'`
-- `W6 synchronized: antipodal spectrum and gauge score invariance`
-  - src/workhouse/invariants/w6_synchronized_m10.py:91 · W6_SYNCHRONIZED_M10_DOMINATION Section 4
-  - `workhouse verify --only 'W6 synchronized: antipodal spectrum and gauge score invariance'`
-- `W6 synchronized: exact tangency eliminates linear phase drift`
-  - src/workhouse/invariants/w6_synchronized_m10.py:24 · W6_SYNCHRONIZED_M10_DOMINATION Section 2
-  - `workhouse verify --only 'W6 synchronized: exact tangency eliminates linear phase drift'`
-- `W6 synchronized: score variance denominator cancellation`
-  - src/workhouse/invariants/w6_synchronized_m10.py:129 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
-  - `workhouse verify --only 'W6 synchronized: score variance denominator cancellation'`
-- `W6 synchronized: transverse Agmon gap and potential floor`
-  - src/workhouse/invariants/w6_synchronized_m10.py:147 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
-  - `workhouse verify --only 'W6 synchronized: transverse Agmon gap and potential floor'`
-- `W6 synchronized: tube variance reduces to quadratic potential floor`
-  - src/workhouse/invariants/w6_synchronized_m10.py:77 · W6_SYNCHRONIZED_M10_DOMINATION Section 3
-  - `workhouse verify --only 'W6 synchronized: tube variance reduces to quadratic potential floor'`
-- `W6 synchronized: unsynchronized identical cutoff has non-zero drift`
-  - src/workhouse/invariants/w6_synchronized_m10.py:42 · W6_SYNCHRONIZED_M10_DOMINATION Section 2
-  - `workhouse verify --only 'W6 synchronized: unsynchronized identical cutoff has non-zero drift'`
+- `W6 synchronized: Euler cancellation of any quadratic jet`
+  - src/workhouse/invariants/w6_synchronized_m10.py:40 · W6_SYNCHRONIZED_M10_DOMINATION Section 3
+  - `workhouse verify --only 'W6 synchronized: Euler cancellation of any quadratic jet'`
+- `W6 synchronized: actual first-jet forcing normalization`
+  - src/workhouse/invariants/w6_synchronized_m10.py:176 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: actual first-jet forcing normalization'`
+- `W6 synchronized: angular crossover endpoint limits`
+  - src/workhouse/invariants/w6_synchronized_m10.py:152 · W6_SYNCHRONIZED_M10_DOMINATION Section 4
+  - `workhouse verify --only 'W6 synchronized: angular crossover endpoint limits'`
+- `W6 synchronized: centered numerator retains fiber normalization`
+  - src/workhouse/invariants/w6_synchronized_m10.py:104 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: centered numerator retains fiber normalization'`
+- `W6 synchronized: control-action and exponential-slack normalization`
+  - src/workhouse/invariants/w6_synchronized_m10.py:204 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: control-action and exponential-slack normalization'`
+- `W6 synchronized: exact angular crossover moments`
+  - src/workhouse/invariants/w6_synchronized_m10.py:138 · W6_SYNCHRONIZED_M10_DOMINATION Section 4
+  - `workhouse verify --only 'W6 synchronized: exact angular crossover moments'`
+- `W6 synchronized: exact center tangency identity`
+  - src/workhouse/invariants/w6_synchronized_m10.py:17 · W6_SYNCHRONIZED_M10_DOMINATION Section 2
+  - `workhouse verify --only 'W6 synchronized: exact center tangency identity'`
+- `W6 synchronized: identical cutoffs need not be tangent`
+  - src/workhouse/invariants/w6_synchronized_m10.py:26 · W6_SYNCHRONIZED_M10_DOMINATION Section 2
+  - `workhouse verify --only 'W6 synchronized: identical cutoffs need not be tangent'`
+- `W6 synchronized: logarithmic-parameter amplitude identity`
+  - src/workhouse/invariants/w6_synchronized_m10.py:68 · W6_SYNCHRONIZED_M10_DOMINATION Section 5
+  - `workhouse verify --only 'W6 synchronized: logarithmic-parameter amplitude identity'`
+- `W6 synchronized: positive potential Hessian is not an action Hessian`
+  - src/workhouse/invariants/w6_synchronized_m10.py:117 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: positive potential Hessian is not an action Hessian'`
+- `W6 synchronized: seven-normal reference score budget`
+  - src/workhouse/invariants/w6_synchronized_m10.py:160 · W6_SYNCHRONIZED_M10_DOMINATION Section 4
+  - `workhouse verify --only 'W6 synchronized: seven-normal reference score budget'`
+- `W6 synchronized: sine-square potential-floor identity`
+  - src/workhouse/invariants/w6_synchronized_m10.py:55 · W6_SYNCHRONIZED_M10_DOMINATION Section 3
+  - `workhouse verify --only 'W6 synchronized: sine-square potential-floor identity'`
+- `W6 synchronized: spatial remainder does not control parameter derivative`
+  - src/workhouse/invariants/w6_synchronized_m10.py:91 · W6_SYNCHRONIZED_M10_DOMINATION Section 5
+  - `workhouse verify --only 'W6 synchronized: spatial remainder does not control parameter derivative'`
+- `W6 synchronized: weighted-jet Young absorption algebra`
+  - src/workhouse/invariants/w6_synchronized_m10.py:190 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: weighted-jet Young absorption algebra'`
 **Wilson PBH proposal: exact orbit curvature and flow tests**
 
 - `FINDING: Wilson gradient flow expands a regular orbit distance by 8/7`
@@ -2895,6 +2968,23 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the local vacuum chart repairs a genuine quadratic creation term: the two-level symmetric transfer leaves 97/96 after the first rotation, and the exact second generator 97/24 cancels it on both vacuum legs`
   - src/workhouse/invariants/wilson_vacuum_chart.py:25 · G18; paper/research_notes/G18_SECOND_ORDER_WILSON_VACUUM_CHART_20260905.md sections 4 and 8; finite exact two-level model
   - `workhouse verify --only 'the local vacuum chart repairs a genuine quadratic creation term: the two-level symmetric transfer leaves 97/96 after the first rotation, and the exact second generator 97/24 cancels it on both vacuum legs'`
+**the planar limit of the fourth-order band (G16)**
+
+- `N^7 beta_N, N^7 W_4 and N^7 corner_N are positive and decrease strictly to their planar limits for real N >= 3, and no closed form of the assembly has a pole or zero at real N >= 3`
+  - src/workhouse/invariants/planar_band.py:283 · G16; G14; G6; runs/planar_band_2026-09-11; runs/beta_n_symbolic_rank_2026-09-04; runs/channels_symbolic_rank_2026-09-04; ADR 0046; ADR 0029
+  - `workhouse verify --only 'N^7 beta_N, N^7 W_4 and N^7 corner_N are positive and decrease strictly to their planar limits for real N >= 3, and no closed form of the assembly has a pole or zero at real N >= 3'`
+- `every fourth-order cumulant of the beta_N assembly is O(N^-7) in both sectors, the order of the cube completions, and the planar limit of beta_N is 6170/9 = -16(11/576) + 32(5/16) - 16(6197/576) + 848`
+  - src/workhouse/invariants/planar_band.py:159 · G16; G14; G6; runs/planar_band_2026-09-11; runs/beta_n_symbolic_rank_2026-09-04; runs/channels_symbolic_rank_2026-09-04; ADR 0046; ADR 0029
+  - `workhouse verify --only 'every fourth-order cumulant of the beta_N assembly is O(N^-7) in both sectors, the order of the cube completions, and the planar limit of beta_N is 6170/9 = -16(11/576) + 32(5/16) - 16(6197/576) + 848'`
+- `the band coefficients scale as N^-(4k-1) at order 2k (k = 1, 2), so W_4/W_2 = (11930/27) u^2/N^4 (1 + O(N^-2)); with u = beta/(2N) this is (5965/54) tau^2, tau = beta/N^3`
+  - src/workhouse/invariants/planar_band.py:262 · G16; G14; G6; runs/planar_band_2026-09-11; runs/beta_n_symbolic_rank_2026-09-04; runs/channels_symbolic_rank_2026-09-04; ADR 0046; ADR 0029; NOTE_O4 §11
+  - `workhouse verify --only 'the band coefficients scale as N^-(4k-1) at order 2k (k = 1, 2), so W_4/W_2 = (11930/27) u^2/N^4 (1 + O(N^-2)); with u = beta/(2N) this is (5965/54) tau^2, tau = beta/N^3'`
+- `the second-order hop cancels one order: A_N and B_N are -1/N + O(N^-3) each and their difference t_N is 1/(4N^3) + O(N^-5)`
+  - src/workhouse/invariants/planar_band.py:240 · G16; G14; G6; runs/planar_band_2026-09-11; runs/beta_n_symbolic_rank_2026-09-04; runs/channels_symbolic_rank_2026-09-04; ADR 0046; ADR 0029; MASTER_THEORY §4.3
+  - `workhouse verify --only 'the second-order hop cancels one order: A_N and B_N are -1/N + O(N^-3) each and their difference t_N is 1/(4N^3) + O(N^-5)'`
+- `two orders cancel in every cluster: the largest resolvent channels of every fourth-order cumulant are O(N^-3) and the N^-3 and N^-5 channel totals vanish identically, in all eight clusters and both sectors`
+  - src/workhouse/invariants/planar_band.py:207 · G16; G14; G6; runs/planar_band_2026-09-11; runs/beta_n_symbolic_rank_2026-09-04; runs/channels_symbolic_rank_2026-09-04; ADR 0046; ADR 0029
+  - `workhouse verify --only 'two orders cancel in every cluster: the largest resolvent channels of every fourth-order cumulant are O(N^-3) and the N^-3 and N^-5 channel totals vanish identically, in all eight clusters and both sectors'`
 **the resolvent-composed rooted creator map: exact finite controls**
 
 - `finite disjoint-support creator exp/log invert exactly, and a Pauli-flip negative control detects replacement of the nilpotent creator product`
@@ -3083,6 +3173,23 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities`
   - src/workhouse/invariants/two_cube.py:313 · MASTER edition §5.1; runs/two_cube_codd_o2_2026-08-29 §6.4
   - `workhouse verify --only 'the retention rule is C2(rho) + 2 C2(3) <= B, and both retentions it decides are equalities'`
+**universal cellular Hodge and tetrahedral algebra**
+
+- `FINDING: tetrahedral flux return counts do not identify the carrier projector`
+  - src/workhouse/invariants/universal_cellular_hodge.py:209 · UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL Theorem 6 and physical-history obligation; U3; U7; ADR 0008
+  - `workhouse verify --only 'FINDING: tetrahedral flux return counts do not identify the carrier projector'`
+- `R S^m R Carrier Symbol Master Theorem: exact closed polynomial for m=0..4`
+  - src/workhouse/invariants/universal_cellular_hodge.py:233 · UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL Theorem 7; G9; G14
+  - `workhouse verify --only 'R S^m R Carrier Symbol Master Theorem: exact closed polynomial for m=0..4'`
+- `tetrahedral Hodge duality and S_4 commutant theorem`
+  - src/workhouse/invariants/universal_cellular_hodge.py:195 · UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL Theorems 4 and 5; U3; U7
+  - `workhouse verify --only 'tetrahedral Hodge duality and S_4 commutant theorem'`
+- `total Laplacian diagonal equals face perimeter plus one`
+  - src/workhouse/invariants/universal_cellular_hodge.py:182 · UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL Theorem 3; U7
+  - `workhouse verify --only 'total Laplacian diagonal equals face perimeter plus one'`
+- `universal cellular Hodge spectrum: lambda = |F| and excursions are up-harmonic`
+  - src/workhouse/invariants/universal_cellular_hodge.py:169 · UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL Theorems 1 and 2; U7; G14
+  - `workhouse verify --only 'universal cellular Hodge spectrum: lambda = |F| and excursions are up-harmonic'`
 
 ## T2 — float agreement within a stated tolerance — 60
 
