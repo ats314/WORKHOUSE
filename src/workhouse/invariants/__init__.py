@@ -99,6 +99,7 @@ _MODULES = (
     "dimension_five_irrelevance",
     "sixth_order",
     "universal_cellular_hodge",
+    "sixth_order_cluster",
 )
 
 for _name in _MODULES:
