@@ -110,7 +110,9 @@ an identical passage (`also_at`), and follow-up commands with the
 response also reports an `abstention_hint`: OR-ed lexical matching returns
 something for almost any question, so the hint says whether the top direct
 row matched fewer than half of the query's content terms without an exact
-match. It is a pre-registered signal for the reader, not a verdict.
+match. On the held-out evaluation the rule flagged three of six negative
+controls and more than half of the paraphrased positives, so read it as
+coverage information, never as a verdict that nothing relevant exists.
 
 `--full` returns the complete response with every passage and the per-file
 manifest; `--out PATH` retains whichever shape was printed and refuses to
@@ -184,13 +186,19 @@ never share a file.
 No embedding model is downloaded or evaluated by default. Semantic recall
 comes from two sources an agent controls:
 
+- The agent writes the reformulations. On the held-out evaluation, two to
+  four restatements of the question in other families' vocabulary, written
+  by a frontier-model agent from the question alone, raised the mean
+  reciprocal rank from 0.560 to 0.688 and recall from 25 to 26 of 30. Pass
+  them with repeated `--query` or as a plan through `--queries-file`.
 - The versioned [lexicon](../graph-tasks/discovery/lexicon.yaml) maps a
   mathematical concept to its terminology variants across source families,
   each variant cited to a source line. `workhouse discover plan "question"`
-  expands a question with the variants it matches and writes a query plan
-  for `--queries-file`, with room for the agent's own reformulations;
-  `discover lexicon list|show|add|validate` maintains the file, and an entry
-  without a verified citation is rejected.
+  writes a plan seeded with the variants the question matches, for the agent
+  to prune and extend; `discover lexicon list|show|add|validate` maintains
+  the file, and an entry without a verified citation is rejected. Applied
+  automatically, without an agent's judgement, the same expansions lowered
+  recall on both fixtures, so search never expands a query on its own.
 - The agent itself rereads the shortlist: a compact result or context pack is
   small enough to judge in one pass, and a judgement is retained through the
   review register rather than by re-ranking inside the engine.
@@ -213,8 +221,12 @@ authored by four independent readers from source passages without running
 the engine, paraphrased away from the target wording, mechanically checked for
 leakage, and frozen before any lexicon, plan or ranking change of the second
 iteration. `evaluate_discovery.py` compares lexical-only, graph-assisted,
-lexicon-expanded and plan-driven configurations, measures runtime and memory,
-and runs a link-recovery test that hides registered edges in memory and asks
-whether `connections` recovers them. The dated
-[benchmark reports](benchmarks/) retain the measured numbers; a small purposive
-fixture is not a corpus-wide quality guarantee or a mathematical evaluation.
+lexicon-expanded and plan-driven configurations (`--plans DIR` with one
+`<query id>.json` plan per query), measures runtime and memory, reports the
+weak-match rule beside the two score criteria for negative controls, and runs
+a link-recovery test that hides registered edges in memory and asks whether
+`connections` recovers them. The
+[second-iteration report](benchmarks/graph-discovery-agents-2026-09-11.md)
+records what each addition changed, including the additions that did not
+help; a small purposive fixture is not a corpus-wide quality guarantee or a
+mathematical evaluation.

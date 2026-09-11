@@ -125,6 +125,18 @@ Hits report their per-query ranks. This is the substrate for agent-written
 query plans and for lexicon expansion, both of which are documented in the
 [agent guide](../graph_discovery.md).
 
+## What the held-out evaluation showed
+
+The [dated report](../benchmarks/graph-discovery-agents-2026-09-11.md)
+carries the tables. Three findings shaped the final defaults. Blind agent
+plans were the only semantic addition that helped (held-out MRR 0.560 to
+0.688); automatic lexicon expansion lowered recall on both fixtures and was
+therefore kept out of the search path; and no configuration can abstain on
+a negative control, because every top reciprocal-rank score is 1/61 and the
+coverage rule flags half of the paraphrased positives. Hiding registered
+edges showed that shared-witness explanation triples the reciprocal rank of
+`connections` over retrieval alone, almost entirely within a source family.
+
 ## The research-map server
 
 A user-scope MCP registration named `research-map` reaches every Claude Code
