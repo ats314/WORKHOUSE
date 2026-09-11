@@ -368,6 +368,67 @@ def _ask(query: str, limit: int, as_json: bool) -> int:
     return 0 if rows else 1
 
 
+def _discover(args) -> int:
+    from pathlib import Path
+
+    from .discovery import DiscoveryEngine, context_pack, render_text
+
+    try:
+        with DiscoveryEngine() as engine:
+            if args.discovery_command in ("build", "info"):
+                result = engine.index.metadata()
+                report = json.dumps(result, indent=2, sort_keys=True)
+            elif args.discovery_command == "path":
+                result = engine.graph.paths(
+                    args.source,
+                    args.target,
+                    max_depth=args.depth,
+                    limit=args.limit,
+                    dependency_only=args.dependency_only,
+                )
+                if result.get("unknown_nodes"):
+                    raise ValueError(f"unknown path IDs: {result['unknown_nodes']}")
+                result["schema"] = "workhouse-discovery/paths/v1"
+                result["provenance"] = engine.index.metadata()
+                report = json.dumps(result, indent=2, sort_keys=True)
+            elif args.discovery_command == "impact":
+                result = engine.graph.dependency_impact(
+                    args.id, direction=args.direction, max_depth=args.depth, limit=args.limit
+                )
+                if result.get("unknown_nodes"):
+                    raise ValueError(f"unknown impact IDs: {result['unknown_nodes']}")
+                result["schema"] = "workhouse-discovery/impact/v1"
+                result["provenance"] = engine.index.metadata()
+                report = json.dumps(result, indent=2, sort_keys=True)
+            elif args.discovery_command == "connections":
+                result = engine.connections(args.id, query=args.query, limit=args.limit)
+                report = render_text(result)
+            else:
+                result = engine.search(
+                    args.query,
+                    limit=args.limit,
+                    seeds=args.seed,
+                    graph_weight=args.graph_weight,
+                    semantic=Path(args.semantic) if args.semantic else None,
+                )
+                if args.context_chars:
+                    result = context_pack(result, args.context_chars)
+                    report = json.dumps(result, ensure_ascii=True, sort_keys=True)
+                else:
+                    report = render_text(result)
+        if args.out:
+            path = Path(args.out)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with path.open("x", encoding="utf-8", newline="\n") as handle:
+                handle.write(json.dumps(result, sort_keys=True, ensure_ascii=True) + "\n")
+        print(json.dumps(result, sort_keys=True) if args.json else report)
+        return 0
+    except (OSError, ValueError, KeyError) as exc:
+        error = {"schema": "workhouse-discovery/error/v1", "error": str(exc)}
+        print(json.dumps(error) if args.json else f"Discovery unavailable: {exc}")
+        return 1
+
+
 def _cache(clear: bool) -> int:
     from . import check_cache
 
@@ -561,6 +622,55 @@ def main(argv: list[str] | None = None) -> int:
     ak.add_argument("--limit", type=int, default=10, help="candidates to show (default 10)")
     ak.add_argument("--json", action="store_true", help="machine-readable candidates")
 
+    ds = sub.add_parser(
+        "discover", help="hybrid corpus search and source-backed connection candidates"
+    )
+    ds_sub = ds.add_subparsers(dest="discovery_command", required=True)
+    for name in ("build", "info"):
+        command = ds_sub.add_parser(name, help="prepare the local discovery cache and report scope")
+        command.add_argument("--json", action="store_true")
+        command.add_argument("--out", help="retain JSON in a new file; refuse overwrite")
+    ds_search = ds_sub.add_parser("search", help="fuse passage, exact-symbol and graph retrieval")
+    ds_search.add_argument("query", nargs="?", default="", help="research question or exact value")
+    ds_search.add_argument("--seed", action="append", help="graph ID to start from; repeatable")
+    ds_search.add_argument("--limit", type=int, default=10)
+    ds_search.add_argument("--graph-weight", type=float, default=0.8)
+    ds_search.add_argument(
+        "--semantic", help="optional pinned local embedding JSON; no model downloads"
+    )
+    ds_search.add_argument("--context-chars", type=int, help="emit a bounded agent context package")
+    ds_search.add_argument("--json", action="store_true")
+    ds_search.add_argument("--out", help="retain JSON in a new file; refuse overwrite")
+    ds_connections = ds_sub.add_parser(
+        "connections", help="find unlinked research candidates for an ID"
+    )
+    ds_connections.add_argument("id")
+    ds_connections.add_argument(
+        "--query", default="", help="optional research question to focus candidates"
+    )
+    ds_connections.add_argument("--limit", type=int, default=10)
+    ds_connections.add_argument("--json", action="store_true")
+    ds_connections.add_argument("--out", help="retain JSON in a new file; refuse overwrite")
+    ds_impact = ds_sub.add_parser(
+        "impact", help="follow recorded prerequisites or downstream dependents"
+    )
+    ds_impact.add_argument("id")
+    ds_impact.add_argument("--direction", choices=("upstream", "downstream"), default="downstream")
+    ds_impact.add_argument("--depth", type=int, default=8)
+    ds_impact.add_argument("--limit", type=int, default=100)
+    ds_impact.add_argument("--json", action="store_true")
+    ds_impact.add_argument("--out", help="retain JSON in a new file; refuse overwrite")
+    ds_path = ds_sub.add_parser("path", help="explain bounded paths with original edge provenance")
+    ds_path.add_argument("source")
+    ds_path.add_argument("target")
+    ds_path.add_argument("--depth", type=int, default=4)
+    ds_path.add_argument("--limit", type=int, default=3)
+    ds_path.add_argument(
+        "--dependency-only", action="store_true", help="follow recorded prerequisites only"
+    )
+    ds_path.add_argument("--json", action="store_true")
+    ds_path.add_argument("--out", help="retain JSON in a new file; refuse overwrite")
+
     ca = sub.add_parser("cache", help="the per-check result cache the collectors use")
     ca.add_argument("--clear", action="store_true", help="delete every cached check result")
 
@@ -719,6 +829,8 @@ def main(argv: list[str] | None = None) -> int:
         return _why(args.id, args.json, args.live)
     if args.command == "ask":
         return _ask(args.query, args.limit, args.json)
+    if args.command == "discover":
+        return _discover(args)
     if args.command == "cache":
         return _cache(args.clear)
     if args.command == "derive":
