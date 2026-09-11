@@ -1467,15 +1467,18 @@ def _excerpt_for(endpoint: dict, terms: list[str], max_chars: int) -> dict:
     }
 
 
-def _commands(a: dict, b: dict, kind: str) -> dict:
+def _commands(a: dict, b: dict, kind: str | None) -> dict:
     prefix = "uv run --no-sync workhouse"
     commands = {
         "pair": f"{prefix} discover pair {a['id_or_locator']!r} {b['id_or_locator']!r} --json "
         "--out .graph-state/TASK/pair.json",
-        "review_add": f"{prefix} discover review add --seed {a['id_or_locator']!r} "
-        f"--target {b['id_or_locator']!r} --kind {kind} "
-        "--note '<what you read in both sources that decides it>'",
     }
+    if kind:
+        commands["review_add"] = (
+            f"{prefix} discover review add --seed {a['id_or_locator']!r} "
+            f"--target {b['id_or_locator']!r} --kind {kind} "
+            "--note '<what you read in both sources that decides it>'"
+        )
     for side, endpoint in (("a", a), ("b", b)):
         if endpoint["kind"] == "record":
             commands[f"why_{side}"] = f"{prefix} why {endpoint['id']}"
@@ -1508,7 +1511,32 @@ def pair(engine, a_spec: str, b_spec: str, *, excerpt_chars: int = PAIR_EXCERPT_
     conflicts = value_conflicts(compare_a, compare_b, tokens_a, tokens_b, shared)
     citations = documentary_citations(a, b)
     graph = graph_relations(engine, a, b)
-    proposal = propose(a, b, shared, lexicon, markers, conflicts, citations, graph)
+    endpoints = {"a": a, "b": b}
+    unavailable = [
+        side
+        for side, endpoint in endpoints.items()
+        if endpoint["kind"] == "passage" and not endpoint["source"].get("available")
+    ]
+    if unavailable:
+        # An endpoint whose bytes cannot be read compares as empty text; the
+        # rules would call that 'unrelated' and print a review command for
+        # a reading nobody could have done.
+        proposal = {
+            "kind": None,
+            "rule": 0,
+            "confidence": None,
+            "reasons": [
+                f"endpoint {side} unavailable: {endpoints[side]['source'].get('reason')}"
+                for side in unavailable
+            ],
+            "registrable_as": "nothing until the endpoint's bytes are readable here",
+            "check_next": [
+                "Mount or index the external root named by the locator, or point the "
+                "locator at a checkout-relative copy, then rerun the pair.",
+            ],
+        }
+    else:
+        proposal = propose(a, b, shared, lexicon, markers, conflicts, citations, graph)
     for endpoint in (a, b):
         endpoint["text_chars"] = len(endpoint.pop("_text"))
         endpoint.pop("_base_line", None)
@@ -1516,6 +1544,7 @@ def pair(engine, a_spec: str, b_spec: str, *, excerpt_chars: int = PAIR_EXCERPT_
     return {
         "schema": SCHEMA,
         "pair": [a_spec.strip(), b_spec.strip()],
+        "argv": ["workhouse", "discover", "pair", a_spec.strip(), b_spec.strip(), "--json"],
         "a": a,
         "b": b,
         "shared": {**shared, "lexicon": lexicon},

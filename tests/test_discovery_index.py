@@ -581,3 +581,16 @@ def test_external_non_utf8_and_oversized_files_are_excluded(tmp_path, monkeypatc
         assert reasons["ext:ws/bad.md"] == "non_utf8"
         assert reasons["ext:ws/big.md"] == "size_limit"
         assert _passages(index, "okneedle")
+
+
+def test_lost_math_opener_does_not_protect_the_rest_of_the_document():
+    from workhouse.discovery_index import MAX_PROTECTED_LINES, protected_blocks
+
+    lines = ["prose\n"] * 5 + ["\\end{cases}$$\n"] + ["more prose\n"] * 300
+    assert protected_blocks(lines) == []
+    unclosed = ["$$\n"] + ["x\n"] * 400
+    assert protected_blocks(unclosed) == []
+    long_closed = ["$$\n"] + ["x\n"] * (MAX_PROTECTED_LINES + 5) + ["$$\n"]
+    assert protected_blocks(long_closed) == []
+    short_closed = ["$$\n"] + ["x\n"] * 10 + ["$$\n"]
+    assert protected_blocks(short_closed) == [(0, 11)]

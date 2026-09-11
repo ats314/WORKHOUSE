@@ -899,3 +899,59 @@ def test_register_directory_can_be_relocated_outside_the_checkout(checkout, tmp_
     )
     assert (elsewhere / "reviews" / f"{record['id']}.yaml").is_file()
     assert not (checkout / "graph-tasks").exists()
+
+
+def test_external_locators_resolve_through_the_declared_scope(tmp_path, monkeypatch):
+    """D1: a reading of an intake passage can be recorded on the workstation that holds it."""
+    from workhouse import discovery_review as R
+    from workhouse import discovery_scope as S
+
+    base = tmp_path / "workspace"
+    checkout = base / "REPO"
+    (checkout / "index").mkdir(parents=True)
+    for name in ("claims", "graph", "symbols"):
+        (checkout / "index" / f"{name}.jsonl").write_text("", encoding="utf-8")
+    (base / "WORKSPACE.json").write_text('{"canonical_repository": "REPO"}', encoding="utf-8")
+    (base / "INBOX").mkdir()
+    (base / "INBOX" / "note.md").write_text("alpha\nbeta\ngamma\n", encoding="utf-8")
+    scope_dir = checkout / "graph-tasks" / "discovery"
+    scope_dir.mkdir(parents=True)
+    (scope_dir / "scope.yaml").write_text(
+        "schema: workhouse-discovery-scope/v1\nversion: 1\nroots:\n"
+        "  - label: inbox\n    path: INBOX\n    tier: 1\n"
+        "  - label: absent\n    path: NOWHERE\n    tier: 1\n",
+        encoding="utf-8",
+    )
+    monkeypatch.delenv(S.BASE_ENV, raising=False)
+    register = R.Register(checkout, tmp_path / "register")
+    assert R.parse_locator("ext:inbox/note.md:1-2") == ("ext:inbox/note.md", 1, 2)
+    assert register.resolve_endpoint("ext:inbox/note.md:1-2") == []
+    assert register.resolve_endpoint("ext:inbox/note.md:1-9")[0].startswith("locator")
+    assert "not present" in register.resolve_endpoint("ext:absent/note.md:1-2")[0]
+    assert (
+        "not an absolute path" in register.resolve_endpoint(str(base / "INBOX/note.md") + ":1-2")[0]
+    )
+    assert register.file_sha256("ext:inbox/note.md") is not None
+    assert register.file_sha256("ext:absent/note.md") is None
+
+
+def test_pair_evidence_rows_and_argv_are_recorded_for_replay(tmp_path):
+    """D4: pair JSON contributes its endpoints as rows and its own argv."""
+    from workhouse import discovery_review as R
+
+    register = R.Register(tmp_path / "checkout", tmp_path / "register")
+    result = {
+        "schema": "workhouse-discovery/pair/v1",
+        "argv": ["workhouse", "discover", "pair", "A", "docs/x.md:1-3", "--json"],
+        "a": {"id": "A", "id_or_locator": "A", "kind": "record", "source": {"where": "l.yaml"}},
+        "b": {
+            "id_or_locator": "docs/x.md:1-3",
+            "kind": "passage",
+            "source": {"path": "docs/x.md", "lines": [1, 3], "sha256": "f" * 64},
+            "excerpt": {"text": "alpha beta"},
+        },
+    }
+    command, rows = register._rows(result)
+    assert command == "pair" and [row["id"] for row in rows] == ["A", "docs/x.md:1-3"]
+    assert rows[1]["excerpt"] == "alpha beta"
+    assert register._argv(command, result)[:3] == ["workhouse", "discover", "pair"]

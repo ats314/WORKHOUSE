@@ -37,7 +37,7 @@ Fields, and the rule each one enforces:
 
 | Field | Rule and the failure it prevents |
 | --- | --- |
-| `seed`, `target` | A record id from `index/claims.jsonl` (or `SYM:` symbol) or a passage locator `path:start-end` that points at an existing UTF-8 file with a sane line range. Both are checked on `add` and on `validate`, so a review cannot name something that does not exist. |
+| `seed`, `target` | A record id from `index/claims.jsonl` (or `SYM:` symbol) or a passage locator `path:start-end` that points at an existing UTF-8 file with a sane line range; an `ext:<label>/path:start-end` locator names a file under a declared external root and is accepted only on a workstation where that root is present. Both are checked on `add` and on `validate`, so a review cannot name something that does not exist. |
 | `relationship_kind` | Closed: `shared-operator`, `compatible-hypothesis`, `reusable-ingredient`, `equivalent-construction`, `scope-restriction`, `disagreement`, `literature-bearing`, `documentary`, `unrelated`. A free-text kind lets "related" stand in for a dependency. |
 | `state` | Closed: `pending → reviewing → established | rejected`, then `established → registered`. No step is skippable, so nothing is called established without a recorded reading step, and no state is ever silently reverted. `rejected` and `registered` are terminal. |
 | `reasoning`, `reviewer` | Mandatory. An unattributed or unreasoned review cannot be questioned later. `--reviewer` may come from `WORKHOUSE_REVIEWER`. |
