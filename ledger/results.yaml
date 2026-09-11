@@ -3425,3 +3425,154 @@ results:
         and limiting sharpness are separately proved.
     status: proven
     evidence: analytic
+  - id: RESULT:UNIVERSAL_CELLULAR_HODGE_SPECTRUM
+    statement: For a connected regular cellular sphere bounding one 3-cell in unweighted real incidence
+      bases, ker L_down=R psi, L_down L_up=0, L_up psi=F psi, and L_up Q=Q L_up=0. Every excursion Q R psi
+      is up-harmonic, and (L_tot)_ff=p_f+1.
+    hypotheses:
+    - Connected closed orientable regular polyhedral sphere boundary, with each edge in two faces and unit
+      incidence entries.
+    - L_down=B^T B, L_up=psi psi^T, signed fundamental cycle psi, and Q=I-psi psi^T/F.
+    scope: Unweighted finite cellular sphere boundaries; analytic general theorem with scoped finite and
+      rank-one controls.
+    source_section: Part I, Theorems 1-3
+    depends_on: []
+    bears_on:
+    - U7
+    - G14
+    supported_by:
+    - target: LEAN:cellular_excursion_up_harmonic
+      scope: Rank-one excursion identity, without a cellular construction.
+    - target: LEAN:feshbach_q_annihilates_l_up
+      scope: Rank-one L_up Q=0 identity.
+    - target: CHK:universal-cellular-hodge-and-tetrahedral-efb55c:universal-cellular-hodge-spectrum-lambda-427f0e
+      scope: Exact finite controls for tetrahedron and prisms n=3..8.
+    - target: CHK:universal-cellular-hodge-and-tetrahedral-efb55c:total-laplacian-diagonal-equals-face-per-e254fa
+      scope: Exact diagonal identity in the seven finite examples.
+    source: CITE:G14_UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL
+    status: proven
+    evidence: analytic
+  - id: RESULT:TETRAHEDRAL_S4_COMMUTANT_RESOLUTION
+    statement: On the tetrahedral face permutation representation L_down=4Q, L_up=4P and Comm(S4)=span(P,Q);
+      every commuting face operator has zero off-carrier compression and scalar Q compression.
+    hypotheses:
+    - Coherently oriented tetrahedron, unweighted face basis, and an operator commuting with all 24 face
+      permutations.
+    scope: Tetrahedral face algebra and invariant compression; no physical-history or momentum-dispersion
+      conclusion.
+    source_section: Part II, Theorems 4-5
+    depends_on:
+    - RESULT:UNIVERSAL_CELLULAR_HODGE_SPECTRUM
+    bears_on:
+    - U3
+    - U7
+    - G14
+    supported_by:
+    - target: LEAN:tetrahedral_hodge_duality
+      scope: Assuming complementary maps and L_down=4Q, L_up=4P, proves their sum is 4I and product zero;
+        no incidence or S4 construction.
+    - target: LEAN:traceless_compression_vanishes
+      scope: Scalar arithmetic c-(3c)/3=0 when 3 is nonzero; no representation or trace construction.
+    - target: CHK:universal-cellular-hodge-and-tetrahedral-efb55c:tetrahedral-hodge-duality-and-s-4-commut-ba4abe
+      scope: Exact incidence identities and all 24 permutation constraints on 16 unknown matrix entries.
+    source: CITE:G14_UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL
+    status: proven
+    evidence: analytic
+  - id: RESULT:RSM_R_CARRIER_SYMBOL_MASTER_THEOREM
+    statement: For the cubic Laurent operators with S=L_down-4I, sigma(R S^m R)=(q-4)^m(q e2+3e3)-4 Pi_m(q)e2^2
+      for every natural m, with Pi defined polynomially also at q=0.
+    hypotheses:
+    - Cubic Laurent Hodge operators with L_down+U=qI, U^2=qU, S=L_down-4I.
+    - Unnormalized carrier symbol, sigma(RR)=q e2+3e3 and sigma(RUR)=4e2^2.
+    scope: All-natural-power algebra identity for the shifted cubic operator, without a sixth-order dynamical
+      population claim.
+    source_section: Part III, Theorems 7-8
+    depends_on:
+    - RESULT:HODGE_FESHBACH_SPLITTING
+    bears_on:
+    - G9
+    - G14
+    supported_by:
+    - target: LEAN:hodge_sandwiched_power
+      scope: For any linear endomorphisms with U^2=qU and S=(q-4)I-U, proves the R S^m R operator decomposition
+        for every natural m; Laurent carrier evaluations are separate.
+    - target: LEAN:hodge_pi_cleared
+      scope: All-natural-power cleared recurrence identity without dividing by q.
+    - target: CHK:universal-cellular-hodge-and-tetrahedral-efb55c:r-s-m-r-carrier-symbol-master-theorem-ex-89a303
+      scope: Exact Laurent premises and carrier-symbol controls for m=0..4, including the correct Pi4.
+    source: CITE:G14_UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL
+    status: proven
+    evidence: analytic
+  - id: RESULT:TETRAHEDRAL_FLUX_PROJECTION_BOUNDARY
+    statement: The additive tetrahedral four-insertion flux census has 96 paths, of which 60 meet the endpoint-or-zero
+      prefix predicate; this does not identify physical retained-sector returns. For the face-space carrier
+      projector Q e0=(3,-1,-1,-1)/4, of squared norm 3/4, while Q psi=0.
+    hypotheses:
+    - Tetrahedral unweighted incidence matrix, start face 0, end face 1, four signed face insertions, and
+      Q=I-psi psi^T/4.
+    scope: Exact flux-count diagnostic and face-space projection obstruction to the submitted identification;
+      the desired physical vanishing remains open.
+    source_section: Part II, section 3.4
+    depends_on:
+    - RESULT:UNIVERSAL_CELLULAR_HODGE_SPECTRUM
+    bears_on:
+    - U3
+    - U7
+    - G14
+    supported_by:
+    - target: CHK:universal-cellular-hodge-and-tetrahedral-efb55c:finding-tetrahedral-flux-return-counts-d-ea756e
+      scope: Exact flux counts and face-projector counterexample; no physical Haar-state calculation.
+    source: CITE:G14_UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL
+    status: proven
+    evidence: analytic
+
+  - id: RESULT:OS_KERNEL_MOVING_TIME_GAP
+    statement: Compatible finite limiting Gram kernels with zero-time continuity (automatic on positive-time-divisible
+      history cores) construct the quotient physical semigroup H>=0. Norm-approximate sources and one growing-time
+      rate M yield C_f(t)<=||f_c||^2 exp(-Mt) at every limiting fixed time; the complete centered defining
+      space gives H on Omega-perp>=M. If one separated-time C>0 and V=||f_c||^2, spectral weight in [M,tau^-1
+      log(2V/C)] is at least C/(2-C/V)>=C/2.
+    hypotheses:
+    - A common defining vector space D has vacuum 1 and a physical-time shift semigroup S_t preserving 1;
+      cutoff linear embeddings send 1 to unit vacua of H_n>=0.
+    - All fixed-vector Gram kernels converge to finite values; fixed-time embedding/semigroup defects tend
+      to zero in norm.
+    - The limiting diagonal kernels are continuous at zero time, or the full defining history space is positive-time
+      divisible D=union_(tau>0)S_tau D; the latter supplies that continuity by the cutoff-uniform smoothing
+      bound K10.
+    - For a spanning family of D, approximate centered probes converge in norm and obey one growing physical-time
+      estimate with liminf -log(b_n)/T_n>=M>0 common to that family.
+    - The finite-energy nontriviality conclusion additionally requires one actual positive limiting separated-time
+      correlation.
+    scope: Analytic implication on the full defining history space. Positive-time divisibility supplies
+      semigroup continuity. Actual Wilson continuum kernel convergence, fixed-time compatibility, weak-coupling
+      positive rate, a nonzero limiting correlator and Euclidean field axioms are not supplied. G19 remains
+      open.
+    source: CITE:OS_KERNEL_GAP_RESULT
+    source_section: A-B; full proof K1-K3 and positive-time continuity K5 in docs/derivations/os-kernel-moving-time-gap.md;
+      application boundary C and K4
+    depends_on:
+    - DERIV:YANGMILLS_RECONSTRUCTION:R1
+    - RESULT:MOVING_TIME_SPECTRAL_GAP
+    - RESULT:SHARP_CUTOFF_SOURCE_GAP_BUDGET
+    - DERIV:OS_KERNEL_GAP:POSITIVE_HISTORY
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:os-kernel-gap-reconstruction-and-nontriv-0f694d:kernel-quotient-centering-and-transfer-c-00d284
+      scope: Exact finite nonorthogonal Gram quotient, null-space preservation and centering; not the Hilbert
+        completion or strong-continuity proof.
+    - target: CHK:os-kernel-gap-reconstruction-and-nontriv-0f694d:kernel-log-convexity-has-a-positive-two--8b3370
+      scope: Exact two-atom midpoint defect and rational interpolation controls; Holder and limit passage
+        are analytic.
+    - target: CHK:os-kernel-gap-reconstruction-and-nontriv-0f694d:kernel-positive-time-correlation-yields--e6a67d
+      scope: Exact weight-floor algebra and 49 finite rational spectral measures; no Wilson nontriviality
+        assertion.
+    - target: CHK:os-kernel-gap-reconstruction-and-nontriv-0f694d:kernel-continuity-and-weak-coupling-inpu-a52345
+      scope: Explicit missing-continuity and soft-mode limits plus the normalized coupling denominator;
+        not a counterexample to Wilson Yang-Mills.
+    - target: CHK:os-kernel-gap-reconstruction-and-nontriv-0f694d:kernel-positive-time-smoothing-has-the-e-2cff87
+      scope: Exact extrema of y^k(1-y) for 32 rational time ratios; the full spectral and limiting argument
+        is analytic.
+    status: proven
+    evidence: analytic

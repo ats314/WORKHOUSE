@@ -79,6 +79,7 @@ _MODULES = (
     "feshbach_resolvent",
     "ym_reconstruction",
     "moving_time_gap",
+    "os_kernel_gap",
     "ym_flat_directions",
     "ym_ground_state",
     "wilson_marked",
@@ -97,6 +98,7 @@ _MODULES = (
     "w6_antipodal",
     "dimension_five_irrelevance",
     "sixth_order",
+    "universal_cellular_hodge",
 )
 
 for _name in _MODULES:

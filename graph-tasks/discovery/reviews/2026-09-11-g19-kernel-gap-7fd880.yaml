@@ -1,0 +1,119 @@
+schema: workhouse-discovery-review/v1
+id: 2026-09-11-g19-kernel-gap-7fd880
+seed: DERIV:MOVING_TIME_SPECTRAL_GAP:VAGUE_LIMIT
+target: DERIV:YANGMILLS_RECONSTRUCTION:R1
+relationship_kind: reusable-ingredient
+reasoning: Read the actual projection and positive-measure proofs. Compatible defining kernels and zero-time
+  continuity construct the limiting semigroup and total centered space; Holder interpolation then replaces
+  a separate vague-limit premise by fixed-time kernel convergence. This does not supply the weak-coupling
+  Wilson kernel limits or rate.
+reviewer: Codex root
+created: '2026-09-11T17:47:52+00:00'
+evidence:
+- command: pair
+  argv:
+  - workhouse
+  - discover
+  - pair
+  - DERIV:MOVING_TIME_SPECTRAL_GAP:VAGUE_LIMIT
+  - DERIV:YANGMILLS_RECONSTRUCTION:R1
+  - --json
+  fingerprint: ace6a62de3be188c52501eb7ed7a842e9cbe9ed5dc8ace7dde00537f97362740
+  evidence_fingerprint: 9fffceec72c70823e8cace9a4a80720014b12ba8d0196c9c6728a462ae9aa2de
+  evidence_freshness: matched
+  evidence_file: g19-kernel-pair-20260911.json
+  evidence_sha256: ec55a492cf77e0a97523bba1cd6da009004e09e64ef2b717f0bf7a6888a31110
+  schema: workhouse-discovery/pair/v1
+  selection: rows naming the seed or target (by id, claim id or passage overlap)
+  rows:
+  - claim_ids:
+    - DERIV:MOVING_TIME_SPECTRAL_GAP:VAGUE_LIMIT
+    excerpt: |2-
+
+      with -log(0)=+infinity. For any E<M choose E<E'<M. Eventually
+      b_n<=exp(-E' t_n), which proves MT2a. No assertion is made about an atom at M.
+      The theorem does not assert a uniform gap for the cutoff operators H_n.
+
+      For a physical-space consequence, suppose the limiting measures are the
+      ACTUAL spectral measures nu_f(B)=||1_B(H)f||^2 of one reconstructed H>=0,
+      for a family whose span is dense in Omega-perp. Apply MT2 separately to
+      each member, allowing its own t_n, approximate probes, and prefactors, with
+      one common M>0. The bounded projection 1_[0,E](H) kills the dense family
+      and hence Omega-perp. Thus
+
+          H restricted to Omega-perp >= M,                       (MT2c)
+
+      and no additional zero-
+    excerpt_truncated: true
+    id: DERIV:MOVING_TIME_SPECTRAL_GAP:VAGUE_LIMIT
+    kind: record
+    source:
+      available: true
+      bytes: 12872
+      index_sha256_match: true
+      lines:
+      - 44
+      - 91
+      path: docs/derivations/moving-time-spectral-gap.md
+      sha256: d0a20c25e023bff70dec2ad61995860ceb3eb8476c651b2fc6275ff64d059a75
+  - claim_ids:
+    - DERIV:YANGMILLS_RECONSTRUCTION:R1
+    excerpt: |-
+      - [OS 1973](https://doi.org/10.1007/BF01645738), p. 89, remark 2 after (3.1), relates exponential clustering to a mass gap. Apply this within a reconstruction framework with its corrected hypotheses.
+      - [Jaffe–Witten](https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf), p. 6, sections 4–5, specifies a gap for the physical Hamiltonian and the resulting clustering. The full positive-energy spectrum is the target, beyond one carrier correlator.
+
+      Assume a reconstructed nonnegative self-adjoint `H`, a vacuum `Omega`, and a centered vector `F` in its physical Hilbert space. The spectral theorem gives a finite positive measure
+
+      \[
+       C_F(t)=\langle F,e^{-tH}F\rangle
+             =\int_{[0,\in
+    excerpt_truncated: true
+    id: DERIV:YANGMILLS_RECONSTRUCTION:R1
+    kind: record
+    source:
+      available: true
+      bytes: 8022
+      index_sha256_match: true
+      lines:
+      - 5
+      - 27
+      path: docs/derivations/yangmills-reconstruction.md
+      sha256: a180dddf141798385fceeec35d0e3cd1fecf0df126a1d12c43bb8abf1fdbd5a2
+  source_hashes:
+  - path: docs/derivations/moving-time-spectral-gap.md
+    lines:
+    - 44
+    - 91
+    sha256: d0a20c25e023bff70dec2ad61995860ceb3eb8476c651b2fc6275ff64d059a75
+    role: row
+  - path: docs/derivations/yangmills-reconstruction.md
+    lines:
+    - 5
+    - 27
+    sha256: a180dddf141798385fceeec35d0e3cd1fecf0df126a1d12c43bb8abf1fdbd5a2
+    role: row
+  excerpt_sha256: f099cec89648eeb1f5e2abaea1e32e744d513a037bf5661c785c2dc1c65df112
+  fingerprint_note: evidence was produced against a different discovery cache than the one observed when
+    this review was recorded
+state: established
+updated: '2026-09-11T17:50:45+00:00'
+registered_as: null
+history:
+- state: pending
+  at: '2026-09-11T17:47:52+00:00'
+  reviewer: Codex root
+  reason: recorded from discovery output; nothing reviewed yet
+- state: reviewing
+  at: '2026-09-11T17:50:44+00:00'
+  reviewer: Codex root
+  reason: Read both source arguments and the earlier matrix Laplace-convergence theorem; checking the
+    quotient, centering, fixed-time defects and Holder limit with the full defining history space.
+- state: established
+  at: '2026-09-11T17:50:45+00:00'
+  reviewer: Codex root
+  reason: The K1 quotient/continuity proof, K2 interpolation and K3 positive-time weight bound are analytic
+    and the scoped finite controls pass. K4 retains explicit missing-hypothesis counterexamples. This
+    establishes the reusable connection and new implication, not the actual Wilson kernel or rate inputs.
+previous: f6e5da64b073f6c6d7736982a69658f6c2d9a65ca1a4f2b0ccaad7deafb74a32
+genesis: 8a1511e1be87d069932e8d62230346dda6b3b9dbccb4a59d7aba233312e9e152
+sha256: 6e7911f30f8bfe021d62efedeb9e20f82b751bdeab7e44db582f441ae0bd9423

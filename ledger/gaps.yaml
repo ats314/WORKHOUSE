@@ -1312,16 +1312,29 @@ gaps:
           then supplies the selected-inverse estimate. Compatible source domains and metric transport remain
           explicit, and coupled-volume extension is a further step. This is an alternative sufficient current
           route, not a claim that a fixed-square coefficient settles the existing W6 target.
+      - step: Derive the compatible-kernel reconstruction and moving-time full-space implication
+        state: done
+        closed_by:
+        - RESULT:OS_KERNEL_MOVING_TIME_GAP
+        depends_on:
+        - RESULT:MOVING_TIME_SPECTRAL_GAP
+        cannot_decide:
+        - G19
+        status: The analytic implication and finite-energy weight criterion are proved under their explicit
+          kernel/rate hypotheses. Positive-time divisibility supplies semigroup continuity. No actual weak-coupling Wilson kernel or rate input is marked discharged.
       - step: Transfer a physical continuum gap from one growing-time estimate per cutoff and approximate sources
         state: live
         depends_on:
         - RESULT:MOVING_TIME_SPECTRAL_GAP
         - RESULT:SHARP_CUTOFF_SOURCE_GAP_BUDGET
-        status: The analytic implication and sharp rate budget are proved. Supply actual nontrivial continuum
-          spectral measures, vague convergence for a total centered family, and one-time normalized cutoff estimates
-          with a common positive physical rate. The power-law route requires r>2s and a long enough physical
-          horizon. It avoids quantitative convergence at the moving times and all-late-time control per cutoff,
-          but does not establish the Wilson trajectory estimates, continuum existence or source identification.
+        - RESULT:OS_KERNEL_MOVING_TIME_GAP
+        status: The original spectral-measure theorem and sharp rate budget are proved. The compatible-kernel
+          successor now constructs the limiting physical semigroup and total centered defining space from finite
+          Gram limits and fixed-time compatibility; positive-time divisibility supplies zero-time continuity, so a separate vague-limit or frame estimate
+          is then unnecessary. Supply these actual Wilson kernel inputs, one positive separated-time source
+          limit, and the normalized growing-time bound with common positive physical rate on the weak-coupling
+          trajectory. The power-law route requires r>2s. Full field-theory structure remains separate. G19 is
+          open.
     status: |
       Reconciled 2026-09-09 after reviewing 43 distinct G19 document versions. Nonlinear finite-cell shells and scores, complete Gaussian fast/source bounds, fixed-spacing matching, and conditional continuum/OS transport are retained. The newly cited Balaban continuum proof stops at (7.6): its O(1/k) expectation increments do not imply the Cauchy conclusion in Theorem 7.1, which invokes a nonexistent O(1/k^2) estimate. Its (6.10) weight kappa_k=(3/4)^k kappa_0 also fails the positive entropy margin required in (8.14). WILSON_G19_REVIEW gives an exact bounded counterexample and sufficient summable-map/source repair.
     continuation_2026_09_09: |
@@ -1675,11 +1688,14 @@ unifying_candidates:
       - UNIFIED §9.3
       - G14
       - ADR 0005
+      - RESULT:UNIVERSAL_CELLULAR_HODGE_SPECTRUM
+      - RESULT:TETRAHEDRAL_S4_COMMUTANT_RESOLUTION
+      - RESULT:TETRAHEDRAL_FLUX_PROJECTION_BOUNDARY
     falsifier: |
       A geometry where the Q-projected proper-return contributions vanish while the shape tier does NOT collapse, or the reverse. If the two are one mechanism they must stand or fall together; exhibiting one without the other refutes the identification and leaves two coincidences.
     status: conjectured
     note: |
-      Stated as an analogy that has not yet been reduced to a derivation. What would promote it is a single statement about Q P Q on the charge-odd sector that specializes to both. G14 is the cubic half.
+      Reviewed and corrected 2026-09-11. The general cellular rank-one identities and tetrahedral S4 commutant are established, as is the all-power R S^m R formula for S=L_down-4I. The submitted 60/36 count is an additive flux predicate, not a physical Haar/Fierz projected-history calculation: Q e0=(3,-1,-1,-1)/4 has nonzero norm while Q psi=0. RESULT:TETRAHEDRAL_FLUX_PROJECTION_BOUNDARY records the exact missing identification. The common physical vanishing mechanism remains conjectured. The received promotion and its proof claims are preserved in runs/universal_cellular_hodge_repair_2026-09-11/received/ledger/gaps.yaml; established cubic actual-support and scalar Hodge-word results are unchanged.
     cubic_half_derived_2026_09_08: |
       Reviewed 2026-09-10 against the corrected U7 record and docs/research/september_feshbach_integration.md. The cubic Hodge splitting is established for q>0, with denominator-cleared identities valid globally. Every word in the two Hodge generators acts scalarly on the carrier line; scalar action can depend on momentum and does not by itself imply absence of dispersion. RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT gives the fourth-order B=D=0 consequence from the actual support {I,U,S,S^2,R}. The broader R-degree-one argument is falsified by sigma(UR)=-2 q e_2 and is retained as RESULT:TIER_COLLAPSE_IS_R_DEGREE.
       U3 remains conjectured. Exact tetrahedron and pentagonal-prism incidence checks establish the carrier-kernel and Hodge-eigenvector hypotheses, with eigenvalues 4 and 7; the prism also refutes the unnecessary scalar-total-Laplacian assumption. These checks do not identify the pentagonal or tetrahedral Q-projected proper-return histories as Hodge words. U7 preserves the scalar lemma and states that broader explanatory proposal with its separate falsifier. The original paragraph is retained below as historical source interpretation.
@@ -1757,6 +1773,10 @@ unifying_candidates:
       - RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT
       - G14
       - U3
+      - RESULT:UNIVERSAL_CELLULAR_HODGE_SPECTRUM
+      - RESULT:TETRAHEDRAL_S4_COMMUTANT_RESOLUTION
+      - RESULT:TETRAHEDRAL_FLUX_PROJECTION_BOUNDARY
+      - RESULT:RSM_R_CARRIER_SYMBOL_MASTER_THEOREM
     falsifier: 'The carrier-scalar lemma is tested against its actual kernel/eigenvector hypotheses. To
       refute the broader explanatory proposal, exhibit a particular proposed projection vanishing that
       is not generated by those Hodge words, or a purported proper-return history whose required Hodge-word
@@ -1764,12 +1784,8 @@ unifying_candidates:
       that unnecessary premise. The exact UR counterexample has already refuted the R-degree-only cubic
       subclaim.'
     status: conjectured
-    note: Reconciled 2026-09-09 against the corrected exact suite. Cubic cleared identities hold globally;
-      its normalized carrier projector requires q>0. The tetrahedron and pentagonal prism checks establish
-      the kernel/eigenvector hypotheses and scalar Hodge-word conclusion, not their proper-return or Q-projected
-      histories. The original supported label and complete text are retained under historical_record_before_2026_09_09;
-      the broad unification is conjectured while its proved scalar lemma and narrower actual-kernel conclusion
-      remain established.
+    note: |
+      Reviewed and corrected 2026-09-11. The general cellular rank-one identities and tetrahedral S4 commutant are established, as is the all-power R S^m R formula for S=L_down-4I. The submitted 60/36 count is an additive flux predicate, not a physical Haar/Fierz projected-history calculation: Q e0=(3,-1,-1,-1)/4 has nonzero norm while Q psi=0. RESULT:TETRAHEDRAL_FLUX_PROJECTION_BOUNDARY records the exact missing identification. The common physical vanishing mechanism remains conjectured. The received promotion and its proof claims are preserved in runs/universal_cellular_hodge_repair_2026-09-11/received/ledger/gaps.yaml; established cubic actual-support and scalar Hodge-word results are unchanged.
     hypothesis_corrected_2026_09_08: |
       The first draft of this candidate asked for L_down + L_up to be a scalar -- link regularity -- because that is what the cubic plaquette lattice does, and the pentagonal prism refuted it the same day: its caps carry five links and its sides four, so the sum is diag(6, 6, 5, 5, 5, 5, 5). Had the over-strong version stood, U7 would have excluded the very geometry U3 is about. The hypothesis actually needed is weaker and is checked in all three geometries (suite check "the Hodge-word statement needs only L_down psi = 0 and L_up psi = lambda psi"): ker L_down is one dimensional and spanned by the carrier, and L_up psi = lambda psi -- 4 psi on the tetrahedron, 7 psi on the pentagonal prism, q psi on the cubic lattice. That alone makes every word in the two Laplacians scalar on the carrier, which is the whole Hodge-word half. Recorded here rather than quietly fixed: the over-strong version is the kind of hypothesis that would have been obeyed for a year.
     scope_note: No change to C_shp or C2. The corrected actual-kernel result preserves the fourth-order

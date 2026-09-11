@@ -1,0 +1,20 @@
+RESULT:RSM_R_CARRIER_SYMBOL_MASTER_THEOREM � For the cubic Laurent operators with S=L_down-4I, sigma(R S^m R)=(q-4)^m(q e2+3e3)-4 Pi_m(q)e2^2 for every natural m, with Pi defined polynomially also at q=0.
+  result � T3 � proven � analytic
+  paper/research_notes/G14_UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL_20260911.md � CITE:G14_UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL Part III, Theorems 7-8
+  Hypotheses: Cubic Laurent Hodge operators with L_down+U=qI, U^2=qU, S=L_down-4I.; Unnormalized carrier symbol, sigma(RR)=q e2+3e3 and sigma(RUR)=4e2^2.
+  Scope: All-natural-power algebra identity for the shifted cubic operator, without a sixth-order dynamical population claim.
+  Support LEAN:hodge_sandwiched_power: For any linear endomorphisms with U^2=qU and S=(q-4)I-U, proves the R S^m R operator decomposition for every natural m; Laurent carrier evaluations are separate.
+  Support LEAN:hodge_pi_cleared: All-natural-power cleared recurrence identity without dividing by q.
+  Support CHK:universal-cellular-hodge-and-tetrahedral-efb55c:r-s-m-r-carrier-symbol-master-theorem-ex-89a303: Exact Laurent premises and carrier-symbol controls for m=0..4, including the correct Pi4.
+
+This record points at
+  bears_on \u2192 G14  T3  Fourth-order support mechanism and its higher-order extensi�
+  bears_on \u2192 G9  T3  m_6: global sixth-order geometry census
+  cites \u2192 CITE:G14_UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL  T3  Universal Cellular Hodge-Feshbach Algebra and Tetrahedral S�
+  depends_on \u2192 RESULT:HODGE_FESHBACH_SPLITTING  T3  On each cubic charge-odd plaquette Bloch fibre with q>0, th�
+  supported_by \u2192 CHK:universal-cellular-hodge-and-tetrahedral-efb55c:r-s-m-r-carrier-symbol-master-theorem-ex-89a303  T1 PASS  R S^m R Carrier Symbol Master Theorem: exact closed polynom�
+  supported_by \u2192 LEAN:hodge_pi_cleared  T0  The recurrence Pi_0=0, Pi_(m+1)=(q-4)^m-4Pi_m satisfies q P�
+  supported_by \u2192 LEAN:hodge_sandwiched_power  T0  For any linear endomorphisms with U^2=qU and S=(q-4)I-U, pr�
+
+Re-check it yourself
+  workhouse verify --only 'R S^m R Carrier Symbol Master Theorem: exact closed polynomial for m=0..4'

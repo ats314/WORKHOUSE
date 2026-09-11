@@ -5296,3 +5296,124 @@ theorems:
       scope: 'Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named
         lemma adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive
         floor over unbounded L is encoded. Exact declaration: volume_uniform_coercivity_hierarchy.'
+  - name: feshbach_q_annihilates_l_up
+    statement: 'In a real inner-product space, the Feshbach complement projector Q = id - P annihilates
+      the unnormalized rank-one Laplacian L_up v = inner(psi,v) psi identically: L_up Q = 0.'
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:UNIVERSAL_CELLULAR_HODGE:SPECTRUM_EIGENVALUE
+      path: docs/derivations/universal-cellular-hodge-tetrahedral.md
+      sha256: 427974f8eda3ae77db78809fd091d4e2ecc6980ab8459eae9207a348089b81c7
+      locator: '### 2.2 Universal spectral identities (lines 45-58)'
+      anchor: '### 2.2 Universal spectral identities'
+      scope: The rank-one inner-product identity L_up Q=0 under lam=inner(psi,psi) != 0.
+  - name: cellular_excursion_up_harmonic
+    statement: 'For any bounded linear operator R on the face space, the Feshbach excursion phi = Q (R psi)
+      is identically up-harmonic: L_up phi = 0.'
+    formalizes:
+    - DERIV:UNIVERSAL_CELLULAR_HODGE:UP_HARMONIC_EXCURSION
+    promotes: []
+    proof_sources:
+    - statement: DERIV:UNIVERSAL_CELLULAR_HODGE:UP_HARMONIC_EXCURSION
+      path: docs/derivations/universal-cellular-hodge-tetrahedral.md
+      sha256: 427974f8eda3ae77db78809fd091d4e2ecc6980ab8459eae9207a348089b81c7
+      locator: '### 2.3 Universal Up-Harmonicity of Excursions (lines 59-67)'
+      anchor: '### 2.3 Universal Up-Harmonicity of Excursions'
+      scope: 'For any bounded linear operator R on the face space, the Feshbach excursion phi = Q (R psi)
+        is identically up-harmonic: L_up phi = 0.'
+  - name: feshbach_intermediate_return_annihilation
+    statement: In Feshbach-Schur perturbation theory, the intermediate Q projection annihilates any state
+      that returns to the carrier line Im(P).
+    formalizes:
+    - DERIV:UNIVERSAL_CELLULAR_HODGE:RETAINED_VECTOR_RANK_ONE
+    promotes: []
+    proof_sources:
+    - statement: DERIV:UNIVERSAL_CELLULAR_HODGE:PROPER_RETURN_Q_ANNIHILATION
+      path: docs/derivations/universal-cellular-hodge-tetrahedral.md
+      sha256: 427974f8eda3ae77db78809fd091d4e2ecc6980ab8459eae9207a348089b81c7
+      locator: '### 3.4 Open physical-history identification (lines 133-156)'
+      anchor: '### 3.4 Open physical-history identification'
+      scope: Under lam=inner(psi,psi) != 0, the rank-one complement kills every scalar multiple c psi; no
+        history identification is proved.
+    - statement: DERIV:UNIVERSAL_CELLULAR_HODGE:RETAINED_VECTOR_RANK_ONE
+      path: docs/derivations/universal-cellular-hodge-tetrahedral.md
+      sha256: 427974f8eda3ae77db78809fd091d4e2ecc6980ab8459eae9207a348089b81c7
+      locator: '### 3.3 Feshbach Intermediate Annihilation of Retained Vectors (lines 120-132)'
+      anchor: '### 3.3 Feshbach Intermediate Annihilation of Retained Vectors'
+      scope: In Feshbach-Schur perturbation theory, the intermediate Q projection annihilates any state
+        that returns to the carrier line Im(P).
+  - name: tetrahedral_hodge_duality
+    statement: On a 4-dimensional face space, if L_down = 4 Q and L_up = 4 P where P + Q = id and P comp
+      Q = 0, then L_down + L_up = 4 id and L_down comp L_up = 0.
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:UNIVERSAL_CELLULAR_HODGE:TETRAHEDRAL_S4_COMMUTANT
+      path: docs/derivations/universal-cellular-hodge-tetrahedral.md
+      sha256: 427974f8eda3ae77db78809fd091d4e2ecc6980ab8459eae9207a348089b81c7
+      locator: '### 3.1 Tetrahedral Hodge duality and 3.2 The S4 commutant (lines 86-119)'
+      anchor: '### 3.2 The S4 commutant'
+      scope: Assuming complementary maps and L_down=4Q, L_up=4P, proves their sum is 4I and product zero;
+        no incidence or S4 construction.
+  - name: traceless_compression_vanishes
+    statement: For any scalar c in a field K with 3 != 0, c - (3 * c) / 3 = 0, proving that any scalar operator
+      compression on a 3-dimensional subspace has zero traceless component.
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:UNIVERSAL_CELLULAR_HODGE:TETRAHEDRAL_S4_COMMUTANT
+      path: docs/derivations/universal-cellular-hodge-tetrahedral.md
+      sha256: 427974f8eda3ae77db78809fd091d4e2ecc6980ab8459eae9207a348089b81c7
+      locator: '### 3.1 Tetrahedral Hodge duality and 3.2 The S4 commutant (lines 86-119)'
+      anchor: '### 3.2 The S4 commutant'
+      scope: Scalar arithmetic c-(3c)/3=0 when 3 is nonzero; no representation or trace construction.
+  - name: hodge_pi_cleared
+    statement: The recurrence Pi_0=0, Pi_(m+1)=(q-4)^m-4Pi_m satisfies q Pi_m=(q-4)^m-(-4)^m for every natural
+      m over any field.
+    formalizes:
+    - DERIV:UNIVERSAL_CELLULAR_HODGE:SHIFTED_OPERATOR_POWERS
+    promotes: []
+    proof_sources:
+    - statement: DERIV:UNIVERSAL_CELLULAR_HODGE:SHIFTED_OPERATOR_POWERS
+      path: docs/derivations/universal-cellular-hodge-tetrahedral.md
+      sha256: 427974f8eda3ae77db78809fd091d4e2ecc6980ab8459eae9207a348089b81c7
+      locator: '### 4.2 Polynomial recurrence and operator powers (lines 172-195)'
+      anchor: '### 4.2 Polynomial recurrence and operator powers'
+      scope: The recurrence Pi_0=0, Pi_(m+1)=(q-4)^m-4Pi_m satisfies q Pi_m=(q-4)^m-(-4)^m for every natural
+        m over any field.
+  - name: hodge_shifted_power
+    statement: For linear endomorphisms with U^2=qU, ((q-4)I-U)^m=(q-4)^m I-Pi_m U for every natural m,
+      including q=0.
+    formalizes:
+    - DERIV:UNIVERSAL_CELLULAR_HODGE:SHIFTED_OPERATOR_POWERS
+    promotes: []
+    proof_sources:
+    - statement: DERIV:UNIVERSAL_CELLULAR_HODGE:SHIFTED_OPERATOR_POWERS
+      path: docs/derivations/universal-cellular-hodge-tetrahedral.md
+      sha256: 427974f8eda3ae77db78809fd091d4e2ecc6980ab8459eae9207a348089b81c7
+      locator: '### 4.2 Polynomial recurrence and operator powers (lines 172-195)'
+      anchor: '### 4.2 Polynomial recurrence and operator powers'
+      scope: For linear endomorphisms with U^2=qU, ((q-4)I-U)^m=(q-4)^m I-Pi_m U for every natural m, including
+        q=0.
+  - name: hodge_sandwiched_power
+    statement: For any linear endomorphisms with U^2=qU and S=(q-4)I-U, proves the R S^m R operator decomposition
+      for every natural m; Laurent carrier evaluations are separate.
+    formalizes:
+    - DERIV:UNIVERSAL_CELLULAR_HODGE:SHIFTED_OPERATOR_POWERS
+    promotes: []
+    proof_sources:
+    - statement: DERIV:UNIVERSAL_CELLULAR_HODGE:RSMR_MASTER_THEOREM
+      path: docs/derivations/universal-cellular-hodge-tetrahedral.md
+      sha256: 427974f8eda3ae77db78809fd091d4e2ecc6980ab8459eae9207a348089b81c7
+      locator: '### 4.3 The carrier symbol (lines 196-221)'
+      anchor: '### 4.3 The carrier symbol'
+      scope: For any linear endomorphisms with U^2=qU and S=(q-4)I-U, proves the R S^m R operator decomposition
+        for every natural m; Laurent carrier evaluations are separate.
+    - statement: DERIV:UNIVERSAL_CELLULAR_HODGE:SHIFTED_OPERATOR_POWERS
+      path: docs/derivations/universal-cellular-hodge-tetrahedral.md
+      sha256: 427974f8eda3ae77db78809fd091d4e2ecc6980ab8459eae9207a348089b81c7
+      locator: '### 4.2 Polynomial recurrence and operator powers (lines 172-195)'
+      anchor: '### 4.2 Polynomial recurrence and operator powers'
+      scope: For any linear endomorphisms with U^2=qU and S=(q-4)I-U, proves the R S^m R operator decomposition
+        for every natural m; Laurent carrier evaluations are separate.
