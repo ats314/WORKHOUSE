@@ -1339,7 +1339,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 567
+## T1 — re-derived exactly — 572
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -2261,6 +2261,23 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `two exact time lags and a complete discarded cap determine strict spectral counts`
   - src/workhouse/invariants/endpoint_window.py:38 · paper/research_notes/G19_LITERAL_ENDPOINT_COMPLETE_WINDOW_20260905.md section 3.1 and section 5; finite matrix extension of the prior excited bridge
   - `workhouse verify --only 'two exact time lags and a complete discarded cap determine strict spectral counts'`
+**local class Wick spectrum over all ranks**
+
+- `local class Wick coefficients reproduce the retained all-rank certificate`
+  - src/workhouse/invariants/local_class_wick.py:41 · LOCAL_CLASS_WICK_SPECTRUM sections 4-4.1
+  - `workhouse verify --only 'local class Wick coefficients reproduce the retained all-rank certificate'`
+- `local class Wick corrections c0 through c4 are negative at every allowed rank`
+  - src/workhouse/invariants/local_class_wick.py:82 · LOCAL_CLASS_WICK_SPECTRUM section 4.2
+  - `workhouse verify --only 'local class Wick corrections c0 through c4 are negative at every allowed rank'`
+- `local class Wick independent Cartesian SU3 and SU2 expansions through order five`
+  - src/workhouse/invariants/local_class_wick.py:139 · LOCAL_CLASS_WICK_SPECTRUM section 5
+  - `workhouse verify --only 'local class Wick independent Cartesian SU3 and SU2 expansions through order five'`
+- `local class Wick recurrence has zero polynomial residuals through order five`
+  - src/workhouse/invariants/local_class_wick.py:30 · LOCAL_CLASS_WICK_SPECTRUM section 3
+  - `workhouse verify --only 'local class Wick recurrence has zero polynomial residuals through order five'`
+- `local class Wick small-rank trace quotient and SU2 odd exclusion`
+  - src/workhouse/invariants/local_class_wick.py:95 · LOCAL_CLASS_WICK_SPECTRUM sections 1-2
+  - `workhouse verify --only 'local class Wick small-rank trace quotient and SU2 odd exclusion'`
 **native string tension through fifth order (v4.3 §11.2)**
 
 - `a weight u^k, k >= 1, flips the small-u direction: the sign is the weight's, not evidence`

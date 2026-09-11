@@ -1,0 +1,34 @@
+{
+  "schema": "local-class-wick-integration-validation/v1",
+  "base_at_verification_start": "bc9da0233ceb72ed76739dc9b892d9c6ca1b50d5",
+  "integrated_remote_base": "0b6671610d230bf6b3bcd44484a024b44637bd37",
+  "full_verify": {
+    "command": "workhouse verify",
+    "passed": 632,
+    "failed": 0,
+    "receipt": "full-verify.log",
+    "note": "Fresh uncached run. During execution, the Cartesian source loader was changed to compile the same pinned code in memory to prevent bytecode writes. The final loader is covered by graph generation and final tests. The remote fast-forward added only an unrelated graph-task review record."
+  },
+  "focused_tests": {
+    "command": "python -B -m pytest tests/test_local_class_wick.py tests/test_runs.py -q",
+    "passed": 16,
+    "failed": 0,
+    "receipt": "focused-tests.log"
+  },
+  "lint": "ruff check . and ruff format --check . passed; 598 files formatted",
+  "documentation": "38 maintained files, 574 local links, 0 errors, 0 warnings",
+  "original_source_identity": "All 25 received files match C:/WORKHOUSE/research/local_class_wick_20260911/completed byte-for-byte; no extra received files.",
+  "source_sha256": {
+    "src/workhouse/local_class_wick.py": "7fa060e9e442d1ca15e261bd6a262890abe8642ec9a51eccdae730e046525fe0",
+    "src/workhouse/invariants/local_class_wick.py": "bf9b1363da525bf6e17afb7d536a3e216245d26622d7b5b0de5af1368f4c4f7e",
+    "tests/test_local_class_wick.py": "e73f6a42908e9a6e0f547c9f2fdf25f72e1e56b68bbd2eb6ae45d99f74042503",
+    "docs/derivations/local-class-wick-spectrum.md": "5cde9ee4fe88bd47d8dec5a6ad5819ebe6f8316d1fb631f1145cae723a880c5e",
+    "paper/research_notes/LOCAL_CLASS_WICK_SPECTRUM_20260911.md": "e838f1c5c5ab1c7ce5001a338c1f7ba58f65b01de5879ec79aad34bb71763225"
+  },
+  "full_pytest": "pending",
+  "graph_generation": "pending",
+  "scope": "Formal local oscillator only. No compact-group remainder, interacting-volume control, G19 route closure or Lean coverage promotion.",
+  "source_hash_mode": "Raw bytes in the local execution checkout; ordinary Git text line-ending conversion can change raw source hashes on another platform.",
+  "staged_source_identity": "30 byte-pinned derivation, paper and run files were compared byte-for-byte with the staged Git blobs and matched.",
+  "diff_check": "Passed for native changes. Nine received historical files retain original terminal blank lines, intentionally unmodified to preserve their recorded hashes."
+}

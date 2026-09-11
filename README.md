@@ -225,3 +225,7 @@ and live graph before reopening a completed route.
 
 All rights reserved. See [NOTICE](NOTICE). Third-party source records retain
 their own declared licences and storage restrictions.
+
+## Local class spectrum continuation
+
+The [rank-uniform Wick recurrence](docs/derivations/local-class-wick-spectrum.md) computes both local SU(N) charge sectors through beta^-2, recovers the archived lower coefficients and derives explicit c3- and c4+/- formulas. Exact native checks and independent Cartesian controls accompany the analytic all-order construction. The coefficient calculation advances local spectral input control; compact-group eigenvalue remainders, interacting-volume estimates and continuum source transport remain separate.

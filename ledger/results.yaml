@@ -3640,3 +3640,68 @@ results:
       scope: Exact finite-model identity or counterexample only; not full analytic or actual-model certification.
     status: proven
     evidence: analytic
+
+
+  - id: RESULT:LOCAL_CLASS_WICK_RECURRENCE
+    statement: The terminating Wick conjugation gives exact shell projectors and a unique all-order simple-branch
+      formal recursion in Q[N,N^-1], with state degree at most s+4r.
+    hypotheses: &local_class_wick_hypotheses
+    - Traceless Hermitian Gaussian covariance as displayed; P0=N, P1=0.
+    - Formal Wilson local oscillator K(g), g=sqrt(2N/beta); even N>=2 and odd N>=3.
+    scope: Formal local class oscillator only. No compact-group eigenvalue remainder, interacting-volume
+      estimate or continuum source identification.
+    source: CITE:LOCAL_CLASS_WICK_RESULTS
+    source_section: W1
+    depends_on:
+    - DERIV:LOCAL_CLASS_WICK:RECURRENCE
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:local-class-wick-spectrum-over-all-ranks-4db298:local-class-wick-recurrence-has-zero-pol-a32ebe
+      scope: Finite exact residual checks through order five; the arbitrary-order construction remains analytic.
+    - target: CHK:local-class-wick-spectrum-over-all-ranks-4db298:local-class-wick-small-rank-trace-quotie-777e4b
+      scope: Finite exact residual checks through order five; the arbitrary-order construction remains analytic.
+    status: proven
+    evidence: analytic
+  - id: RESULT:LOCAL_CLASS_WICK_COEFFICIENTS
+    statement: The two formal local gaps have the displayed exact all-rank coefficients through beta^-2,
+      including c3- and c4+/-.
+    hypotheses: *local_class_wick_hypotheses
+    scope: Formal local class oscillator only. No compact-group eigenvalue remainder, interacting-volume
+      estimate or continuum source identification.
+    source: CITE:LOCAL_CLASS_WICK_RESULTS
+    source_section: W2
+    depends_on:
+    - DERIV:LOCAL_CLASS_WICK:COEFFICIENTS
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:local-class-wick-spectrum-over-all-ranks-4db298:local-class-wick-recurrence-has-zero-pol-a32ebe
+      scope: Exact symbolic coefficients/signs or stated independent fixed-rank Cartesian controls, without
+        remainder or continuum claims.
+    - target: CHK:local-class-wick-spectrum-over-all-ranks-4db298:local-class-wick-coefficients-reproduce--34a838
+      scope: Exact symbolic coefficients/signs or stated independent fixed-rank Cartesian controls, without
+        remainder or continuum claims.
+    - target: CHK:local-class-wick-spectrum-over-all-ranks-4db298:local-class-wick-independent-cartesian-s-12c3b2
+      scope: Exact symbolic coefficients/signs or stated independent fixed-rank Cartesian controls, without
+        remainder or continuum claims.
+    status: proven
+    evidence: analytic
+  - id: RESULT:LOCAL_CLASS_WICK_SIGNS
+    statement: The five corrections c0..c4 are strictly negative for all allowed ranks, by positive shifted
+      numerator polynomials.
+    hypotheses: *local_class_wick_hypotheses
+    scope: Formal local class oscillator only. No compact-group eigenvalue remainder, interacting-volume
+      estimate or continuum source identification.
+    source: CITE:LOCAL_CLASS_WICK_RESULTS
+    source_section: W3
+    depends_on:
+    - DERIV:LOCAL_CLASS_WICK:SIGNS
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:local-class-wick-spectrum-over-all-ranks-4db298:local-class-wick-corrections-c0-through--a51d0a
+      scope: Exact symbolic coefficients/signs or stated independent fixed-rank Cartesian controls, without
+        remainder or continuum claims.
+    status: proven
+    evidence: analytic
