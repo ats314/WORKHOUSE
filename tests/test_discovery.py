@@ -274,3 +274,49 @@ def test_cli_unknown_path_target_is_structured_failure(engine, monkeypatch, caps
     )
     assert _discover(args) == 1
     assert "unknown path IDs" in json.loads(capsys.readouterr().out)["error"]
+
+
+def test_connections_reserve_slots_for_unlinked_passages(engine, monkeypatch):
+    old_search = engine.index.search
+
+    def passages(query, limit=100):
+        rows = old_search(query, limit)
+        for number in range(3):
+            rows.append(
+                {
+                    "id": f"PASSAGE:unlinked{number}",
+                    "claim_ids": [],
+                    "kind": "passage",
+                    "path": f"notes/imported/note{number}.md",
+                    "start_line": 10,
+                    "end_line": 14,
+                    "source_sha256": "a" * 64,
+                    "text": "an imported note about the score estimate",
+                    "score": 0.5 - number * 0.1,
+                }
+            )
+        return rows
+
+    monkeypatch.setattr(engine.index, "search", passages)
+    output = engine.connections("A", query="score", limit=3)
+    kinds = [row["candidate_kind"] for row in output["candidates"]]
+    # One record candidate exists (C); the reserved slot and the record
+    # shortfall are both filled by passages, records first.
+    assert kinds == ["record", "passage", "passage"] and output["passage_quota"] == 1
+    passage = next(row for row in output["candidates"] if row["candidate_kind"] == "passage")
+    assert passage["locator"] == "notes/imported/note0.md:10-14"
+    assert passage["path_found"] is None
+    assert passage["source_family"]["comparison"] == "no_graph_identity"
+    assert output["passage_candidates"] == 3
+    # With a larger quota the record shortfall is filled by passages.
+    wide = engine.connections("A", query="score", limit=6, passage_quota=3)
+    assert [row["candidate_kind"] for row in wide["candidates"]].count("passage") == 3
+    with pytest.raises(ValueError):
+        engine.connections("A", query="score", limit=3, passage_quota=4)
+    from workhouse.discovery_present import present_connections, render_connections
+
+    compact = present_connections(wide)
+    row = next(row for row in compact["candidates"] if row["candidate_kind"] == "passage")
+    assert row["locator"].startswith("notes/imported/")
+    assert "discover pair A notes/imported/note0.md:10-14" in row["commands"]["pair"]
+    assert "notes/imported/note0.md:10-14" in render_connections(compact)

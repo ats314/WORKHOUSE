@@ -359,11 +359,75 @@ class DiscoveryEngine:
             "execution": {"python_checks": 0, "lean": False, "scientific_index_written": False},
         }
 
-    def connections(self, node: str, *, query: str = "", limit: int = 10) -> dict:
+    def _passage_candidate(self, hit: dict, rank: int, seed_families: list[str]) -> dict:
+        """A content-related source passage with no graph identity of its own."""
+        path = hit.get("path", "")
+        first = hit.get("start_line", 1)
+        locator = f"{path}:{first}-{hit.get('end_line', first)}"
+        family = "path:" + path
+        if hit.get("external"):
+            family = f"external:{hit.get('source_label', '')}:{path}"
+        return {
+            "id": hit["id"],
+            "kind": "passage",
+            "candidate_kind": "passage",
+            "candidate_only": True,
+            "score": 0.0,
+            "shared_witnesses": [],
+            "shared_witness_count": 0,
+            "existing_relations": [],
+            "has_registered_relation": False,
+            "source_family": {
+                "source": seed_families,
+                "target": [family],
+                "shared": [],
+                "comparison": "no_graph_identity",
+                "semantics": "unlinked passage; source locator comparison only",
+            },
+            "path": [],
+            "path_found": None,
+            "path_truncated": False,
+            "path_truncation_reasons": ["no_graph_identity"],
+            "connection_rank": 1.0 / (60 + rank),
+            "connection_channels": {"retrieval": {"rank": rank}},
+            "where": locator,
+            "locator": locator,
+            "external": bool(hit.get("external")),
+            "source_label": hit.get("source_label"),
+            "matching_passage": hit,
+            "retrieval": hit.get("score_channels", {}),
+            "semantics": "content-related passage for source review; no registered node",
+        }
+
+    def connections(
+        self,
+        node: str,
+        *,
+        query: str = "",
+        limit: int = 10,
+        queries: list[str] | None = None,
+        passage_quota: int | None = None,
+    ) -> dict:
+        """Unlinked candidates for a graph node: registered records and raw passages.
+
+        Record candidates are explained through shared witnesses and bounded
+        paths. Passage candidates are retrieved source excerpts that map to no
+        catalogue record at all; without them every imported note, literature
+        file and research campaign would be unreachable, because those
+        passages carry no claim link. ``passage_quota`` reserves slots for them
+        (default: a third of ``limit``, at least one) so graph-rich records
+        cannot crowd out the cross-family sources the review is looking for.
+        """
         if node not in self.records:
             raise ValueError(f"unknown graph ID: {node}")
+        if passage_quota is None:
+            passage_quota = max(1, limit // 3)
+        if not 0 <= passage_quota <= limit:
+            raise ValueError("passage_quota must lie between 0 and limit")
         query = query or self.records[node].get("statement", "")
-        search = self.search(query, limit=100, seeds=[node], pool=250, related_limit=100)
+        search = self.search(
+            query, limit=100, seeds=[node], pool=250, related_limit=100, queries=queries
+        )
         candidates = list(
             dict.fromkeys(
                 candidate
@@ -373,6 +437,14 @@ class DiscoveryEngine:
             )
         )
         linked = self.graph.neighbors(node)
+        seed_families = self.graph._source_families(node)
+        passage_rows = []
+        for rank, hit in enumerate(search["hits"] + search["related"], 1):
+            if hit.get("kind") != "passage":
+                continue
+            if any(cid in self.records and cid != node for cid in hit.get("claim_ids", [])):
+                continue
+            passage_rows.append(self._passage_candidate(hit, rank, seed_families))
         new_candidates = [candidate for candidate in candidates if candidate not in linked]
         # Shared witnesses are cheap for every candidate; bounded path searches
         # are not, so they run only for the rows an agent will actually read.
@@ -388,11 +460,13 @@ class DiscoveryEngine:
         ordered = []
         for target, score in fused.items():
             candidate = by_id[target]
+            candidate["candidate_kind"] = "record"
             candidate["connection_rank"] = score["score"]
             candidate["connection_channels"] = score["channels"]
             candidate["where"] = self.records[target].get("where", "")
             ordered.append(candidate)
-        connections = _select_diverse(ordered, limit)
+        reserved = min(passage_quota, len(passage_rows))
+        connections = _select_diverse(ordered, max(0, limit - reserved))
         for row in connections:
             row.update(self.graph.explain_path(node, row["id"]))
         # Keep a slot for a content-related node outside the explored topology:
@@ -429,16 +503,31 @@ class DiscoveryEngine:
                 "query": query,
                 "channels": hit.get("score_channels", {}),
             }
-            candidate["review_required"] = [
-                "Compare the exact objects, hypotheses, regime and normalizations.",
-                "Read each cited argument and distinguish copied sources from independent origins.",
-                "Register a mathematical relationship only after reviewing its implication.",
-            ]
+        review_required = [
+            "Compare the exact objects, hypotheses, regime and normalizations.",
+            "Read each cited argument and distinguish copied sources from independent origins.",
+            "Register a mathematical relationship only after reviewing its implication.",
+        ]
+        # Unlinked passages fill their reserved slots and any record shortfall.
+        selected_passages = _select_diverse(passage_rows, limit - len(connections))
+        for candidate in selected_passages:
+            candidate["retrieval_witness"] = {
+                "hit_id": candidate["id"],
+                "query": query,
+                "channels": candidate["retrieval"],
+            }
+        connections = connections + selected_passages
+        for candidate in connections:
+            candidate["review_required"] = review_required
         return {
             "schema": "workhouse-discovery/connections/v1",
             "seed": self.records[node],
             "query": query,
+            "queries": search.get("queries"),
             "candidates": connections,
+            "record_candidates": len(ordered),
+            "passage_candidates": len(passage_rows),
+            "passage_quota": passage_quota,
             "already_connected_excluded": len(linked),
             "provenance": search["provenance"],
             "meaning": search["meaning"],

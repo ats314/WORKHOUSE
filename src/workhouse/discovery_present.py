@@ -323,6 +323,7 @@ def present_connections(result: dict, *, max_chars: int = EXCERPT_CHARS, root=No
         row = {
             "rank": rank,
             "id": candidate["id"],
+            "candidate_kind": candidate.get("candidate_kind", "record"),
             "connection_rank": round(float(candidate.get("connection_rank", 0.0)), 6),
             "record": {key: record.get(key) for key in RECORD_FIELDS if record.get(key)},
             "statement": str(record.get("statement", ""))[:400],
@@ -345,8 +346,20 @@ def present_connections(result: dict, *, max_chars: int = EXCERPT_CHARS, root=No
             "path_found": candidate.get("path_found"),
             "existing_relations": len(candidate.get("existing_relations", [])),
             "source_family": (candidate.get("source_family") or {}).get("comparison"),
-            "commands": _commands(candidate["id"]),
         }
+        if candidate.get("candidate_kind", "record") == "record":
+            row["commands"] = _commands(candidate["id"])
+        else:
+            row["locator"] = candidate.get("locator")
+            row["external"] = bool(candidate.get("external"))
+            if candidate.get("source_label"):
+                row["source_label"] = candidate["source_label"]
+            row["commands"] = {
+                "pair": (
+                    f"uv run --no-sync workhouse discover pair {seed.get('id')} "
+                    f"{candidate.get('locator')} --json"
+                )
+            }
         passage = candidate.get("matching_passage")
         if passage and passage.get("kind") == "passage":
             window = excerpt(passage["text"], terms, max_chars)
@@ -371,6 +384,9 @@ def present_connections(result: dict, *, max_chars: int = EXCERPT_CHARS, root=No
         },
         "query": result.get("query", ""),
         "candidates": rows,
+        "record_candidates": result.get("record_candidates"),
+        "passage_candidates": result.get("passage_candidates"),
+        "passage_quota": result.get("passage_quota"),
         "already_connected_excluded": result.get("already_connected_excluded"),
         "review_required": [
             "Compare the exact objects, hypotheses, regime and normalizations.",
@@ -462,11 +478,15 @@ def render_connections(result: dict) -> str:
     for row in result.get("candidates", []):
         record = row.get("record", {}) or {}
         statement = row.get("statement") or str(record.get("statement", ""))[:200]
+        if not statement and row.get("excerpt"):
+            statement = " ".join(row["excerpt"].split())[:200]
         rank = row.get("rank", "")
         lines.append(f"{rank:>2}. {row['id']}  witnesses {row.get('shared_witness_count', 0)}")
         lines.append(f"    {statement[:200]}")
         location = row.get("source", {}) if isinstance(row.get("source"), dict) else {}
-        if location.get("path"):
+        if row.get("locator"):
+            lines.append(f"    {row['locator']}")
+        elif location.get("path"):
             first, last = (location.get("lines") or ["?", "?"])[:2]
             lines.append(f"    {location['path']}:{first}-{last}")
         else:
