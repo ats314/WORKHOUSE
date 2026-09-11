@@ -287,3 +287,297 @@ def test_plain_file_rejects_links_and_directories(tmp_path):
     except (OSError, NotImplementedError):
         pytest.skip("symlinks unavailable")
     assert not DiscoveryIndex._plain_file(link)
+
+
+# --- external workstation roots ----------------------------------------------
+
+
+def _external(tmp_path, monkeypatch, roots, records=None, **scope_extra):
+    """A checkout plus a workstation base holding the declared external roots."""
+    import yaml
+
+    from workhouse import discovery_scope as S
+
+    root = _repo(tmp_path, records)
+    base = tmp_path / "ws"
+    base.mkdir(exist_ok=True)
+    monkeypatch.setenv(S.BASE_ENV, str(base))
+    scope = {"schema": S.SCHEMA, "version": 1, "roots": roots, **scope_extra}
+    _write(root, S.SCOPE_PATH, yaml.safe_dump(scope))
+    return root, base
+
+
+def _passages(index, query):
+    return [row for row in index.search(query) if row["kind"] == "passage"]
+
+
+def test_external_locator_prefix_and_row_provenance(tmp_path, monkeypatch):
+    root, base = _external(tmp_path, monkeypatch, [{"label": "notes", "path": "notes", "tier": 1}])
+    _write(base, "notes/deep/#odd (1).md", "externalneedle geometry\n")
+    _write(root, "theory/inside.md", "internalneedle geometry\n")
+    with DiscoveryIndex(root) as index:
+        meta = index.build()
+        hit = _passages(index, "externalneedle")[0]
+        assert hit["path"] == "ext:notes/deep/#odd (1).md"
+        assert hit["source_locator"] == "ext:notes/deep/#odd (1).md:1"
+        assert hit["external"] is True and hit["source_label"] == "notes"
+        assert hit["aliases"] == [] and hit["claim_ids"] == []
+        internal = _passages(index, "internalneedle")[0]
+        assert internal["external"] is False and internal["source_label"] == "checkout"
+        assert meta["source_count"] == 2
+        assert meta["internal_source_count"] == 1 and meta["external_source_count"] == 1
+        assert meta["settings"]["external_roots"] == ["notes"]
+        assert meta["external_base"] == str(base.resolve())
+        assert meta["freshness_policy"] == {
+            "internal": "content-hash every call",
+            "external": "stat then content-hash on change",
+        }
+        (row,) = meta["external_roots"]
+        assert row["label"] == "notes" and row["present"] and row["skipped"] is None
+        assert (row["files"], row["sources"], row["aliases"], row["passages"]) == (1, 1, 0, 1)
+        assert row["bytes"] == len("externalneedle geometry\n")
+
+
+def test_external_content_dedup_records_aliases_and_does_not_rechunk(tmp_path, monkeypatch):
+    root, base = _external(
+        tmp_path,
+        monkeypatch,
+        [
+            {"label": "first", "path": "first", "tier": 1},
+            {"label": "second", "path": "second", "tier": 2},
+        ],
+    )
+    text = "sharedneedle appears in every copy\n"
+    _write(root, "corpus-import/origin.md", text)
+    _write(base, "first/copy_a.md", text)
+    _write(base, "first/copy_b.md", text)
+    _write(base, "second/copy_c.md", text)
+    _write(base, "second/only_here.md", "secondneedle\n")
+    _write(base, "first/unique.md", "uniqueneedle\n")
+    _write(base, "second/unique_copy.md", "uniqueneedle\n")
+    with DiscoveryIndex(root) as index:
+        meta = index.build()
+        hits = _passages(index, "sharedneedle")
+        assert [hit["path"] for hit in hits] == ["corpus-import/origin.md"]
+        assert hits[0]["aliases"] == [
+            "ext:first/copy_a.md",
+            "ext:first/copy_b.md",
+            "ext:second/copy_c.md",
+        ]
+        unique = _passages(index, "uniqueneedle")
+        assert [hit["path"] for hit in unique] == ["ext:first/unique.md"]
+        assert unique[0]["aliases"] == ["ext:second/unique_copy.md"]
+        sha = hits[0]["source_sha256"]
+        assert meta["aliases"][sha] == hits[0]["aliases"]
+        assert meta["alias_count"] == 4
+        rows = {row["label"]: row for row in meta["external_roots"]}
+        assert (rows["first"]["files"], rows["first"]["sources"], rows["first"]["aliases"]) == (
+            3,
+            1,
+            2,
+        )
+        assert (
+            rows["second"]["files"],
+            rows["second"]["sources"],
+            rows["second"]["aliases"],
+        ) == (3, 1, 2)
+        assert meta["source_count"] == 3
+
+
+def test_external_disabled_and_absent_roots_are_reported_not_failures(tmp_path, monkeypatch):
+    root, base = _external(
+        tmp_path,
+        monkeypatch,
+        [
+            {"label": "gone", "path": "does-not-exist", "tier": 1},
+            {"label": "off", "path": "off", "tier": 3, "enabled": False},
+            {"label": "here", "path": "here", "tier": 1},
+        ],
+    )
+    _write(base, "off/secret.md", "disabledneedle\n")
+    _write(base, "here/note.md", "presentneedle\n")
+    with DiscoveryIndex(root) as index:
+        meta = index.build()
+        assert index.search("disabledneedle") == []
+        assert _passages(index, "presentneedle")
+        rows = {row["label"]: row for row in meta["external_roots"]}
+        assert rows["gone"]["skipped"] == "absent" and rows["gone"]["present"] is False
+        assert rows["off"]["skipped"] == "disabled" and rows["off"]["present"] is True
+        assert rows["here"]["skipped"] is None
+        assert meta["settings"]["external_roots"] == ["here"]
+
+
+def test_external_exclusion_globs_names_depth_and_nested_checkouts(tmp_path, monkeypatch):
+    root, base = _external(
+        tmp_path,
+        monkeypatch,
+        [
+            {"label": "arc", "path": "arc", "tier": 2, "exclude": ["mirror/**", "*.draft.md"]},
+            {"label": "top", "path": ".", "tier": 1, "max_depth": 0},
+        ],
+        exclude_names=["cache-*"],
+        exclude=["arc/global-skip/**", "junk/**"],
+    )
+    for relative in (
+        "arc/keep/a.md",
+        "arc/mirror/b.md",
+        "arc/c.draft.md",
+        "arc/global-skip/d.md",
+        "arc/cache-1/e.md",
+        "arc/__pycache__/f.md",
+        "arc/nested/g.md",
+        "top.md",
+        "junk/h.md",
+        "deeper/i.md",
+    ):
+        _write(base, relative, f"needle {relative}\n")
+    (base / "arc/nested/.git").mkdir()
+    with DiscoveryIndex(root) as index:
+        meta = index.build()
+        paths = sorted(hit["path"] for hit in _passages(index, "needle"))
+        assert paths == ["ext:arc/keep/a.md", "ext:top/top.md"]
+        reasons = {row["path"]: row["reason"] for row in meta["source_exclusions"]}
+        assert reasons["ext:arc/mirror"] == "scope_exclusion"
+        assert reasons["ext:arc/c.draft.md"] == "scope_exclusion"
+        assert reasons["ext:arc/global-skip"] == "scope_exclusion"
+        assert reasons["ext:arc/cache-1"] == "excluded_directory"
+        assert reasons["ext:arc/__pycache__"] == "excluded_directory"
+        assert reasons["ext:arc/nested"] == "git_checkout"
+        assert reasons["ext:top/deeper"] == "depth_limit"
+        assert reasons["ext:top/junk"] == "depth_limit"
+        assert reasons["ext:top/arc"] == "depth_limit"
+
+
+def test_external_paths_inside_checkout_or_protected_subtrees_are_refused(tmp_path, monkeypatch):
+    root, base = _external(
+        tmp_path,
+        monkeypatch,
+        [
+            {"label": "self", "path": "repo", "tier": 1},
+            {"label": "ledger", "path": "REPO/ledger", "tier": 1},
+            {"label": "around", "path": "around", "tier": 1},
+        ],
+    )
+    # With the base at tmp_path the checkout itself is "repo"; REPO/ledger is protected.
+    _write(base, "REPO/ledger/results.md", "ledgerneedle\n")
+    _write(base, "REPO/index/claims.md", "indexneedle\n")
+    _write(base, "around/ok.md", "aroundneedle\n")
+    monkeypatch.setenv("WORKHOUSE_DISCOVERY_BASE", str(tmp_path))
+    with DiscoveryIndex(root) as index:
+        meta = index.build()
+        rows = {row["label"]: row for row in meta["external_roots"]}
+        assert rows["self"]["skipped"] == "unsafe_path"
+        assert index.search("ledgerneedle") == [] and index.search("indexneedle") == []
+        assert rows["ledger"]["skipped"] in ("unsafe_path", "absent")
+    monkeypatch.setenv("WORKHOUSE_DISCOVERY_BASE", str(base))
+    with DiscoveryIndex(root) as index:
+        meta = index.build()
+        rows = {row["label"]: row for row in meta["external_roots"]}
+        assert rows["ledger"]["skipped"] == "unsafe_path"
+        assert index.search("ledgerneedle") == []
+        assert _passages(index, "aroundneedle")
+
+
+def test_external_junction_or_symlink_inside_root_is_refused(tmp_path, monkeypatch):
+    from test_discovery_scope import make_junction, make_symlink
+
+    root, base = _external(tmp_path, monkeypatch, [{"label": "ws", "path": "ws-root", "tier": 1}])
+    target = tmp_path / "elsewhere"
+    _write(target, "hidden.md", "linkedneedle\n")
+    _write(base, "ws-root/plain.md", "plainneedle\n")
+    link = base / "ws-root/link"
+    if not (make_junction(link, target) or make_symlink(link, target)):
+        pytest.skip("host cannot create junctions or symlinks")
+    file_link = base / "ws-root/file-link.md"
+    file_link_made = make_symlink(file_link, target / "hidden.md")
+    with DiscoveryIndex(root) as index:
+        meta = index.build()
+        assert index.search("linkedneedle") == []
+        assert _passages(index, "plainneedle")
+        reasons = {row["path"]: row["reason"] for row in meta["source_exclusions"]}
+        assert reasons["ext:ws/link"] == "reparse_point"
+        if file_link_made:
+            assert reasons["ext:ws/file-link.md"] == "reparse_point"
+
+
+def test_external_freshness_is_stat_based_between_builds(tmp_path, monkeypatch):
+    root, base = _external(tmp_path, monkeypatch, [{"label": "ws", "path": "ws-root", "tier": 1}])
+    external = _write(base, "ws-root/note.md", "alpha external\n")
+    with DiscoveryIndex(root) as index:
+        first = index.build()
+        stamp = external.stat()
+        # A same-size, same-mtime edit is invisible to the stat policy until rebuild.
+        external.write_text("gamma external\n", encoding="utf-8", newline="")
+        os.utime(external, ns=(stamp.st_atime_ns, stamp.st_mtime_ns))
+        rechecked = index.metadata()
+        assert rechecked["freshness"] == "matched"
+        assert rechecked["freshness_observation"].endswith("rehashed on change")
+        # A changed stat rehashes that file and reports the edit.
+        os.utime(external, ns=(stamp.st_atime_ns, stamp.st_mtime_ns + 1_000_000_000))
+        stale = index.metadata()
+        assert stale["freshness"] == "stale"
+        second = index.build()
+        assert second["fingerprint"] != first["fingerprint"]
+        assert index.search("alpha") == [] and _passages(index, "gamma")
+        # A new external file is seen without any prior stat record.
+        _write(base, "ws-root/new.md", "delta external\n")
+        assert index.metadata()["freshness"] == "stale"
+
+
+def test_external_scope_changes_and_labels_enter_the_fingerprint(tmp_path, monkeypatch):
+    import yaml
+
+    from workhouse import discovery_scope as S
+
+    root, base = _external(
+        tmp_path,
+        monkeypatch,
+        [
+            {"label": "a", "path": "a", "tier": 1},
+            {"label": "b", "path": "b", "tier": 2},
+        ],
+    )
+    _write(base, "a/x.md", "needle a\n")
+    _write(base, "b/y.md", "needle b\n")
+    with DiscoveryIndex(root) as index:
+        first = index.build()
+        assert first["settings"]["external_roots"] == ["a", "b"]
+        declared = first["settings"]["external_scope"]
+        assert [row["label"] for row in declared["roots"]] == ["a", "b"]
+        assert index.metadata()["freshness"] == "matched"
+        local = root / S.LOCAL_PATH
+        local.parent.mkdir(parents=True, exist_ok=True)
+        local.write_text(
+            yaml.safe_dump({"schema": S.LOCAL_SCHEMA, "disable": ["b"]}), encoding="utf-8"
+        )
+        assert index.metadata()["freshness"] == "stale"
+        second = index.build()
+        assert second["fingerprint"] != first["fingerprint"]
+        assert second["settings"]["external_roots"] == ["a"]
+        assert index.search("needle b") == [] or all(
+            hit["path"] != "ext:b/y.md" for hit in index.search("needle b")
+        )
+        assert second["external_scope"]["local_disabled"] == ["b"]
+
+
+def test_malformed_scope_file_is_an_explicit_error(tmp_path, monkeypatch):
+    root, _base = _external(tmp_path, monkeypatch, [{"label": "a", "path": "a", "tier": 1}])
+    _write(root, "graph-tasks/discovery/scope.yaml", "schema: workhouse-discovery-scope/v1\n")
+    with DiscoveryIndex(root) as index, pytest.raises(ValueError, match="version"):
+        index.build()
+
+
+def test_external_non_utf8_and_oversized_files_are_excluded(tmp_path, monkeypatch):
+    from workhouse import discovery_index as module
+
+    root, base = _external(tmp_path, monkeypatch, [{"label": "ws", "path": "ws-root", "tier": 1}])
+    _write(base, "ws-root/bad.md", "x").write_bytes(b"\xff\xfe\x00")
+    _write(base, "ws-root/big.md", "x" * 32)
+    _write(base, "ws-root/ok.md", "okneedle\n")
+    monkeypatch.setattr(module, "MAX_SOURCE_BYTES", 16)
+    with DiscoveryIndex(root) as index:
+        meta = index.build()
+        reasons = {row["path"]: row["reason"] for row in meta["source_exclusions"]}
+        assert reasons["ext:ws/bad.md"] == "non_utf8"
+        assert reasons["ext:ws/big.md"] == "size_limit"
+        assert _passages(index, "okneedle")

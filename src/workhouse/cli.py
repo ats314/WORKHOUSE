@@ -399,6 +399,16 @@ def _discover(args) -> int:
                 stream.reconfigure(encoding="utf-8", errors="replace")
     full = bool(getattr(args, "full", False))
     excerpt_chars = getattr(args, "excerpt_chars", None) or present_mod.EXCERPT_CHARS
+    # Register, proposal and scope commands own their output and exit codes and
+    # build an engine only when they need one.
+    if args.discovery_command in ("review", "propose"):
+        from . import discovery_review
+
+        return discovery_review.run(args, DiscoveryEngine)
+    if args.discovery_command == "scope":
+        from . import discovery_scope
+
+        return discovery_scope.run(args, DiscoveryEngine)
     try:
         verify = args.discovery_command in ("build", "info")
         with DiscoveryEngine(verify_cache=True) if verify else DiscoveryEngine() as engine:
@@ -677,6 +687,10 @@ def main(argv: list[str] | None = None) -> int:
         "discover", help="hybrid corpus search and source-backed connection candidates"
     )
     ds_sub = ds.add_subparsers(dest="discovery_command", required=True)
+    from . import discovery_review, discovery_scope
+
+    discovery_review.add_parser(ds_sub)
+    discovery_scope.add_parser(ds_sub)
     for name in ("build", "info"):
         command = ds_sub.add_parser(name, help="prepare the local discovery cache and report scope")
         command.add_argument("--json", action="store_true")
