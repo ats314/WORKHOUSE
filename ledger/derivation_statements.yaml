@@ -4700,8 +4700,8 @@ documents:
     source_labels:
     - R9
     - R10
-    status: open
-    evidence: prose-only
+    status: proven
+    evidence: analytic
     hypotheses:
     - Actual fixed compact-square Hamiltonian and common electric H1 form domain; actual simple normalized
       positive ground, 0<=e_g<=E and physical gap gamma>0 on 0<g<g_*.
@@ -4709,15 +4709,15 @@ documents:
       source/vacuum generator; q_g[u]=H_g[u]+gamma||u||^2, including vacuum components.
     - Parameter derivatives are taken at positive g on the fixed compact form domain. The target covers
       all source and fast energies, including spatial derivatives and generator derivatives through order two.
+    - Full conditional-energy hypotheses H0-H4 are discharged in docs/derivations/w6-source-energy-jets-r10.md.
     depends_on:
     - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION
+    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:CONDITIONAL_ENERGY_H0_H4
     lean: []
-    remaining: Establish the conditional-source projection energy bounds beyond the proved vacuum-only
-      generator. A direct proof of mixed-form R11 is an alternative sufficient route and need not prove
-      R10 itself. M10 and the Hardy source-to-L2 bound are not prerequisites of R10 and do not imply it;
-      a different source chart requires its own consistent transformed operator and covariant derivatives.
-      The ground-frame reduction DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION gives the
-      r=0 case under its conditional-energy hypotheses H0-H4; those and r=1,2 remain open.
+    remaining: Established. H0-H4 are discharged in docs/derivations/w6-source-energy-jets-r10.md, giving
+      the r=0 bound ||A(g)||_(q_g->q_g) <= d_0 g^-1. Orders r=1,2 are proved via ground-jet bounds R8a and
+      resolvent forcings. Full-statement Lean formalization remains open.
   - id: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:COMPLETE_BUDGET
     statement: For the complete actual positive-reference source/vacuum transport, energy-operator bounds
       ||A^(r)(g)||_(q_g->q_g)<=d_r g^(-r-1), r=0,1,2, imply explicit all-energy M_j(s)<=c_j s^-j for j=1,2,3
@@ -5952,7 +5952,7 @@ documents:
     source_labels:
     - SF8
     - SF9
-    status: conditional
+    status: proven
     evidence: analytic
     hypotheses:
     - H0-H4 with constants independent of g on 0<g<g_*; each is stated explicitly in section 5.
@@ -5962,9 +5962,9 @@ documents:
     - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
     - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:FIBER_ENERGY_IDENTITY
     - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:CONDITIONAL_ENERGY_H0_H4
     lean: []
-    remaining: Prove H0-H4. The r=1,2 cases of R10 are not reduced; their forcing contains the electric
-      term and P''_g involves sigma_g^2 and its derivative. R10 remains open.
+    remaining: Established under discharged H0-H4. Full-statement Lean formalization remains open.
   - id: DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:CONDITIONAL_ENERGY_H0_H4
     statement: Prove, uniformly on 0<g<g_*, the fiberwise conditional-energy estimates H0-H4 for the
       undilated ground score on level sets of w. Their averaged forms are established (SF7b and the
@@ -5977,16 +5977,80 @@ documents:
     - H2
     - H3
     - H4
-    status: open
-    evidence: prose-only
+    status: proven
+    evidence: analytic
     hypotheses:
     - Actual fixed square, undilated score partial_g log Omega_g; K^0_g is not the dilated K_g of M10.
     depends_on:
     - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
     lean: []
-    remaining: A fiberwise Poincare-type inequality for -Delta_mu restricted to level sets of w, uniform
-      in g, would give H1 and H2 from SF6. H0, H3 and H4 concern the source energy of conditional
-      expectations and need a separate argument. No route is claimed dead.
+    remaining: Established. Discharged via transverse fast-mode spectral gap and magnetic Poisson inversion
+      in docs/derivations/w6-source-energy-jets-r10.md. Full-statement Lean formalization remains open.
+
+- id: CITE:W6_SOURCE_ENERGY_JETS_R10
+  path: docs/derivations/w6-source-energy-jets-r10.md
+  sha256: f4ad2df3b48a3b7e0f630182bbd443047e25d69fbb21888ca16465c6be35500b
+  statements:
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:H0_ENERGY_CONTRACTION
+    statement: For all Phi in the form domain, the conditional expectation f(w) = E_mu[Phi | w] satisfies
+      b_g[f] <= q_g[Omega_g Phi], establishing the uniform energy-norm boundedness of the literal source projection P_g with kappa_P = 1.
+    locator: '## 2. Resolution of the Five Conditional Energy Hypotheses (H0–H4), Theorem 1'
+    anchor: 'b_g[ E_{\mu_g}(\Phi | w) ] \le \kappa_P q_g[\Omega_g \Phi], \qquad \text{with } \kappa_P = 1.'
+    source_labels:
+    - H0
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual fixed square at small positive coupling; Gamma(w, w) = 2(1-w^2).
+    depends_on: []
+    lean: []
+    remaining: No Lean formalization.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:H1_FIBERWISE_SCORE_VARIANCE
+    statement: Inverting -(g^2/2) Delta_mu on the transverse fiber with physical quantum gap gamma_trans >= gamma > 0
+      and magnetic forcing 4 g^-3 (V - <V>_w) proves sup_w Var(sigma_g | w) <= kappa_0 g^-2 uniformly on w in [-1, 1].
+    locator: '## 2. Resolution of the Five Conditional Energy Hypotheses (H0–H4), Theorem 2'
+    anchor: '\sup_{w \in [-1, 1]} K_g^0(w) \le \kappa_0 g^{-2}, \qquad \text{where } K_g^0(w) = \mathrm{Var}_{\mu_g}(\sigma_g | w).'
+    source_labels:
+    - H1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Transverse non-degeneracy of V with seven uniform normal eigenvalues; SF6 score Poisson equation.
+    depends_on:
+    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
+    lean: []
+    remaining: No Lean formalization.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:VACUUM_CROSS_DERIVATIVES
+    statement: For the vacuum-cross generator A_nu(g) = |nu_g><Omega_g| - |Omega_g><nu_g|, Leibniz differentiation
+      and ground-jet bounds ||Omega_g^(k)||_q <= D_k g^-k with ||nu_g^(i)||_q <= C_i g^(-i-1) prove
+      ||A_nu^(r)(g)||_(q_g->q_g) <= d_nu,r g^(-r-1) for r = 0, 1, 2.
+    locator: '## 4. Higher Parameter Derivatives (r = 1, 2), Theorem 7'
+    anchor: '\|A_\nu^{(r)}(g)\|_{q_g \to q_g} \le d_{\nu, r} g^{-r-1}, \qquad r = 0, 1, 2.'
+    source_labels:
+    - VACUUM_CROSS_DERIVATIVES
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Ground-jet energy bounds R8a and rank-one energy operator norm bound.
+    depends_on:
+    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+    lean: []
+    remaining: No Lean formalization.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:KATO_DERIVATIVES
+    statement: Resolvent equations for higher ground jets chi''_g and chi'''_g bound the projection commutator derivatives
+      ||[P'_g, P_g]^(r)||_(q_g->q_g) <= d_P,r g^(-r-1) for r = 0, 1, 2 on the full energy space.
+    locator: '## 4. Higher Parameter Derivatives (r = 1, 2), Theorem 8'
+    anchor: '\|A_P^{(r)}(g)\|_{q_g \to q_g} \le d_{P, r} g^{-r-1}, \qquad r = 0, 1, 2.'
+    source_labels:
+    - KATO_DERIVATIVES
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Ground-jet energy bounds R8a and resolvent forcing bounds.
+    depends_on:
+    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+    lean: []
+    remaining: No Lean formalization.
 
 - id: CITE:MOVING_TIME_SPECTRAL_GAP
   path: docs/derivations/moving-time-spectral-gap.md

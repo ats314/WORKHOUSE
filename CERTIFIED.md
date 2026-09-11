@@ -1315,7 +1315,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 546
+## T1 — re-derived exactly — 555
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1470,6 +1470,35 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `W6 antipodal: seven uniform normal eigenvalues and soft scaling`
   - src/workhouse/invariants/w6_antipodal.py:148 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A3
   - `workhouse verify --only 'W6 antipodal: seven uniform normal eigenvalues and soft scaling'`
+**W6 source-vacuum energy transport jets (R10)**
+
+- `W6 R10: H0 conditional expectation energy contraction`
+  - src/workhouse/invariants/w6_source_energy_r10.py:25 · W6_SOURCE_ENERGY_JETS_R10 H0
+  - `workhouse verify --only 'W6 R10: H0 conditional expectation energy contraction'`
+- `W6 R10: H1 fiberwise score variance scaling`
+  - src/workhouse/invariants/w6_source_energy_r10.py:44 · W6_SOURCE_ENERGY_JETS_R10 H1
+  - `workhouse verify --only 'W6 R10: H1 fiberwise score variance scaling'`
+- `W6 R10: H2 conditional Dirichlet score energy`
+  - src/workhouse/invariants/w6_source_energy_r10.py:69 · W6_SOURCE_ENERGY_JETS_R10 H2
+  - `workhouse verify --only 'W6 R10: H2 conditional Dirichlet score energy'`
+- `W6 R10: H3 fast-to-source energy coupling`
+  - src/workhouse/invariants/w6_source_energy_r10.py:92 · W6_SOURCE_ENERGY_JETS_R10 H3
+  - `workhouse verify --only 'W6 R10: H3 fast-to-source energy coupling'`
+- `W6 R10: H4 vacuum-cross source energy`
+  - src/workhouse/invariants/w6_source_energy_r10.py:105 · W6_SOURCE_ENERGY_JETS_R10 H4
+  - `workhouse verify --only 'W6 R10: H4 vacuum-cross source energy'`
+- `W6 R10: Kato projection parameter derivatives`
+  - src/workhouse/invariants/w6_source_energy_r10.py:158 · W6_SOURCE_ENERGY_JETS_R10 KATO_DERIVATIVES
+  - `workhouse verify --only 'W6 R10: Kato projection parameter derivatives'`
+- `W6 R10: order zero explicit d_0 generator bound`
+  - src/workhouse/invariants/w6_source_energy_r10.py:122 · W6_SOURCE_ENERGY_JETS_R10 R10_ORDER_ZERO
+  - `workhouse verify --only 'W6 R10: order zero explicit d_0 generator bound'`
+- `W6 R10: transported residual bridge R11-R12`
+  - src/workhouse/invariants/w6_source_energy_r10.py:170 · W6_SOURCE_ENERGY_JETS_R10 RESIDUAL_BRIDGE
+  - `workhouse verify --only 'W6 R10: transported residual bridge R11-R12'`
+- `W6 R10: vacuum-cross parameter derivatives`
+  - src/workhouse/invariants/w6_source_energy_r10.py:141 · W6_SOURCE_ENERGY_JETS_R10 VACUUM_CROSS_DERIVATIVES
+  - `workhouse verify --only 'W6 R10: vacuum-cross parameter derivatives'`
 **Wilson PBH proposal: exact orbit curvature and flow tests**
 
 - `FINDING: Wilson gradient flow expands a regular orbit distance by 8/7`

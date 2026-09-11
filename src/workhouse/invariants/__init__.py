@@ -97,6 +97,7 @@ _MODULES = (
     "w6_antipodal",
     "dimension_five_irrelevance",
     "sixth_order",
+    "w6_source_energy_r10",
 )
 
 for _name in _MODULES:

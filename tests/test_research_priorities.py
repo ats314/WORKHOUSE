@@ -342,16 +342,19 @@ def test_real_g19_priorities_target_actual_open_derivations(live_registry):
     rows = [r for r in research_priorities.collect(led, statuses) if r["gap"] == "G19"]
     assert [r["target"] for r in rows] == [
         M10,
-        R10,
         GRID,
         SC17,
         "DERIV:YANGMILLS_CONTINUUM_BALABAN_MULTISCALE_PROOF:THEOREM_7_1",
     ]
-    assert [r["priority"] for r in rows] == [1, 2, 3, 4, 5]
-    for ref in (M10, R10, GRID, SC17):
+    assert [r["priority"] for r in rows] == [1, 3, 4, 5]
+    for ref in (M10, GRID, SC17):
         assert statements[ref]["status"] == "open"
-    r10 = next(r for r in rows if r["target"] == R10)
-    assert M10 not in r10["inputs"] + r10["pending"]
+    assert statements[R10]["status"] == "proven"
+    assert not any(r["target"] == R10 for r in rows)
+    g19 = next(g for g in led.gaps if g["id"] == "G19")
+    r10_step = next(s for s in g19["plan"] if s.get("frontier", {}).get("target") == R10)
+    assert r10_step["state"] == "done"
+    assert M10 not in r10_step.get("depends_on", []) + r10_step.get("blocked_by", [])
     assert M10 not in statements[R10]["depends_on"]
 
 
