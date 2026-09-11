@@ -1339,7 +1339,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 565
+## T1 — re-derived exactly — 575
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1377,6 +1377,17 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the stability hypothesis package, with its dimensionless ratio`
   - src/workhouse/invariants/isolation.py:299 · G17 / PUB edition Lem. 14
   - `workhouse verify --only 'the stability hypothesis package, with its dimensionless ratio'`
+**G9 direct sixth order on one face and the shared-link pairs, any rank**
+
+- `one face over Q(N): the seven pieces of (F6) are each O(N^-5) and their sum is the character-engine H6, so three orders cancel between channel content and cumulant`
+  - src/workhouse/invariants/sixth_order_cluster.py:168 · G9; G16; ADR 0046 conjecture 4; runs/g9_direct_h6_pair_2026-09-11
+  - `workhouse verify --only 'one face over Q(N): the seven pieces of (F6) are each O(N^-5) and their sum is the character-engine H6, so three orders cancel between channel content and cumulant'`
+- `one face over Q(N): the vacuum-subtracted plaquette energy at order 2k is O(N^-(4k-1)) for k = 1, 2, 3, both C sectors, while every order's unsubtracted pieces are larger`
+  - src/workhouse/invariants/sixth_order_cluster.py:124 · G9; G16; ADR 0046 conjecture 4; runs/g9_direct_h6_pair_2026-09-11
+  - `workhouse verify --only 'one face over Q(N): the vacuum-subtracted plaquette energy at order 2k is O(N^-(4k-1)) for k = 1, 2, 3, both C sectors, while every order'"'"'s unsubtracted pieces are larger'`
+- `the sixth-order Bloch recursion, the closed word formula and the character engine agree on one face at N = 11 through order six, both C sectors and the vacuum`
+  - src/workhouse/invariants/sixth_order_cluster.py:88 · G9; G16; ADR 0046 conjecture 4; runs/g9_direct_h6_pair_2026-09-11
+  - `workhouse verify --only 'the sixth-order Bloch recursion, the closed word formula and the character engine agree on one face at N = 11 through order six, both C sectors and the vacuum'`
 **G9 sixth-order folds and combined carrier shapes**
 
 - `G9 Hodge word reduction agrees with spatial Laurent operators`
@@ -2968,6 +2979,29 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the local vacuum chart repairs a genuine quadratic creation term: the two-level symmetric transfer leaves 97/96 after the first rotation, and the exact second generator 97/24 cancels it on both vacuum legs`
   - src/workhouse/invariants/wilson_vacuum_chart.py:25 · G18; paper/research_notes/G18_SECOND_ORDER_WILSON_VACUUM_CHART_20260905.md sections 4 and 8; finite exact two-level model
   - `workhouse verify --only 'the local vacuum chart repairs a genuine quadratic creation term: the two-level symmetric transfer leaves 97/96 after the first rotation, and the exact second generator 97/24 cancels it on both vacuum legs'`
+**the odd orders of the band are determinant families (G16)**
+
+- `at N = 4 and N = 6 every third-order element of the single plaquette and of both pairs is zero in both sectors, and so is the first order: the band is even in u`
+  - src/workhouse/invariants/odd_order.py:494 · G16; G14; G6; runs/odd_order_band_2026-09-11; ADR 0047; ADR 0046; MASTER_THEORY §4.4
+  - `workhouse verify --only 'at N = 4 and N = 6 every third-order element of the single plaquette and of both pairs is zero in both sectors, and so is the first order: the band is even in u'`
+- `at N = 5 the third order is the one-plaquette five-word vertex alone: the towers split by -+25/144 = -+(5/6)^2/(2!)^2, the hops and leakages vanish; at N = 7 everything vanishes`
+  - src/workhouse/invariants/odd_order.py:519 · G16; G14; G6; runs/odd_order_band_2026-09-11; ADR 0047; ADR 0046; MASTER_THEORY §4.4
+  - `workhouse verify --only 'at N = 5 the third order is the one-plaquette five-word vertex alone: the towers split by -+25/144 = -+(5/6)^2/(2!)^2, the hops and leakages vanish; at N = 7 everything vanishes'`
+- `centre parity: the link set T (x-links at even y, y-links at even z, z-links at even x) meets every plaquette of Z^3 an odd number of times, so a history with an odd number of face words has a link of odd flux; for even N every odd order vanishes identically, and for odd N the order m vanishes unless m >= N - 2`
+  - src/workhouse/invariants/odd_order.py:358 · G16; G14; G6; runs/odd_order_band_2026-09-11; ADR 0047; ADR 0046; MASTER_THEORY §4.4
+  - `workhouse verify --only 'centre parity: the link set T (x-links at even y, y-links at even z, z-links at even x) meets every plaquette of Z^3 an odd number of times, so a history with an odd number of face words has a link of odd flux; for even N every odd order vanishes identically, and for odd N the order m vanishes unless m >= N - 2'`
+- `consequence for G16: for even N the band is even in u at every order, for odd N through order N - 3, so the tau-series of ADR 0046 has no odd terms in the planar limit; the first odd term at odd N is the baryonic vertex (N/(N+1))^(N-3)/((N-3)!)^2 at order N - 2`
+  - src/workhouse/invariants/odd_order.py:588 · G16; G14; G6; runs/odd_order_band_2026-09-11; ADR 0047; ADR 0046; MASTER_THEORY §4.4; NOTE_O4 §11
+  - `workhouse verify --only 'consequence for G16: for even N the band is even in u at every order, for odd N through order N - 3, so the tau-series of ADR 0046 has no odd terms in the planar limit; the first odd term at odd N is the baryonic vertex (N/(N+1))^(N-3)/((N-3)!)^2 at order N - 2'`
+- `over Q(N) the third-order hops of both pairs are identically zero in both sectors: no balanced Haar family reaches an odd order, so every nonzero odd-order number of the corpus is a determinant-family number`
+  - src/workhouse/invariants/odd_order.py:559 · G16; G14; G6; runs/odd_order_band_2026-09-11; ADR 0047; ADR 0046; MASTER_THEORY §4.4; ADR 0029
+  - `workhouse verify --only 'over Q(N) the third-order hops of both pairs are identically zero in both sectors: no balanced Haar family reaches an odd order, so every nonzero odd-order number of the corpus is a determinant-family number'`
+- `the one-plaquette character engine (Pieri rule, Rayleigh-Schrodinger) agrees with the third engine's towers and vacuum at N = 3, 4, 6, 7 through third order, and shows the first odd order of odd N at m = N - 2 with vertex (N/(N+1))^(N-3)/((N-3)!)^2 at N = 5, 7, 9 and no odd order through 7 at N = 4, 6, 8`
+  - src/workhouse/invariants/odd_order.py:445 · G16; G14; G6; runs/odd_order_band_2026-09-11; ADR 0047; ADR 0046; MASTER_THEORY §4.4
+  - `workhouse verify --only 'the one-plaquette character engine (Pieri rule, Rayleigh-Schrodinger) agrees with the third engine'"'"'s towers and vacuum at N = 3, 4, 6, 7 through third order, and shows the first odd order of odd N at m = N - 2 with vertex (N/(N+1))^(N-3)/((N-3)!)^2 at N = 5, 7, 9 and no odd order through 7 at N = 4, 6, 8'`
+- `the third engine reproduces the SU(3) third order: B_3 = 1975/124848, t_3+ = -6335/249696, the domino diagonals -24541/62424 and -517313/6242400, the vacuum route -9/32, the towers 7/32 and 101/200, leak_3 = -12331/249696 and d_3 = -109151/249696`
+  - src/workhouse/invariants/odd_order.py:381 · G16; G14; G6; runs/odd_order_band_2026-09-11; ADR 0047; ADR 0046; MASTER_THEORY §4.4; ENGINE_FLUX_su3_domino_d3.py; ADR 0023
+  - `workhouse verify --only 'the third engine reproduces the SU(3) third order: B_3 = 1975/124848, t_3+ = -6335/249696, the domino diagonals -24541/62424 and -517313/6242400, the vacuum route -9/32, the towers 7/32 and 101/200, leak_3 = -12331/249696 and d_3 = -109151/249696'`
 **the planar limit of the fourth-order band (G16)**
 
 - `N^7 beta_N, N^7 W_4 and N^7 corner_N are positive and decrease strictly to their planar limits for real N >= 3, and no closed form of the assembly has a pole or zero at real N >= 3`
