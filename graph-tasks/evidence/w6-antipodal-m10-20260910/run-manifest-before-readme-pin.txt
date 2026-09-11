@@ -1,0 +1,4 @@
+f73c2df7382b2b03b21fe33f9099a895b1eabf5a5ec87e04e0d27023f46af2f0  checks.json
+8ff768f0dd06bad76773f39c253863ded91518fccfc820977761995819a6f13d  SOURCE.json
+b19a94fcf454fd0b02aa1e51917a3dcd0f26ec5ee1775c0cc4b7201b03672239  sources/pasted-text.txt
+5b3e0b2312f11ee8d367fb582de1baa3f22346355485abcd849c186d1e539310  sources/w6-antipodal-magnetic-geometry.md

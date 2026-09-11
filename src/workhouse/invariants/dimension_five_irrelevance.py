@@ -1,11 +1,8 @@
-"""Dimension-five operator irrelevance theorem, multiscale Cauchy convergence,
-and rotational restoration.
+"""Exact dimension-count and geometric-sequence controls for the September source.
 
-Analytic proof: pure 4D SU(N) Yang-Mills carries no local, gauge-invariant,
-parity-even scalar operator of canonical dimension d = 5 under either SO(4)
-or the hypercubic point group H_4. The leading irrelevant operators have
-dimension d = 6, providing an exact multiscale scaling gain of L^-2 = 1/9 for L = 3.
-This resolves the Cauchy summability defect in Theorem 7.1 and unblocks OS1.
+These checks establish the stated arithmetic. Applying the canonical scaling
+factor to an actual interacting RG map, Cauchy increment or anisotropy requires
+the analytic model estimates; this module does not machine-certify OS1.
 """
 
 from __future__ import annotations
@@ -14,19 +11,17 @@ import sympy as sp
 
 from ._core import _suite
 
-dim5 = _suite("dimension-five irrelevance and Cauchy summability (G19)")
+dim5 = _suite("dimension counts and geometric scaling controls (G19)")
 _CITE = (
     "G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; "
     "YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19"
 )
 
-_NO_DIM_5 = "pure Yang-Mills carries no gauge-invariant dimension-five local operator"
-_DIM_6_LEADING = "the leading irrelevant operators in pure Yang-Mills have mass dimension six"
-_SCALING_GAIN = "multiscale block scaling gain is L^-2 = 1/9, strictly satisfying lambda <= 1/2"
-_CAUCHY_SUM = (
-    "multiscale Cauchy expectation increment is bounded by a geometrically convergent series"
-)
-_SO4_RESTORATION = "hypercubic anisotropic directional variance contracts as 9^-k, restoring SO(4)"
+_NO_DIM_5 = "dimension-five monomial partitions have odd index and derivative counts"
+_DIM_6_LEADING = "parity-even monomial partitions omit dimension five and allow dimension six"
+_SCALING_GAIN = "canonical dimension-six scaling at L=3 equals 1/9 and is below 1/2"
+_CAUCHY_SUM = "the geometric ratio 1/9 has exact sum 9/8 and the stated finite tail"
+_SO4_RESTORATION = "the prescribed geometric sequence (1/9)^k tends to zero"
 
 
 @dim5.check(_NO_DIM_5, _CITE)
@@ -82,7 +77,7 @@ def _check_dim_6_leading():
     detail = (
         f"allowed parity-even partitions: d=4 -> {allowed_by_dim[4]}; "
         f"d=5 -> {allowed_by_dim[5]}; d=6 -> {allowed_by_dim[6]}; "
-        "lowest non-marginal dimension is strictly d=6"
+        "dimension six is permitted by these parity/index counts; operator realization is separate"
     )
     return passed, detail
 
@@ -99,7 +94,7 @@ def _check_scaling_gain():
     passed = bool(scaling_exponent == 2 and gain == sp.Rational(1, 9) and gain < lambda_bound)
     detail = (
         f"L={L}, d={d} -> scaling gain L^-(d-4) = {gain} = 1/9; "
-        f"strictly satisfies single-block polymer contraction lambda <= {lambda_bound}"
+        f"is below {lambda_bound}; actual polymer contraction is an additional analytic input"
     )
     return passed, detail, {"DIM6_MULTISCALE_GAIN": gain}
 
@@ -124,7 +119,7 @@ def _check_cauchy_sum():
     detail = (
         f"geometric sum sum_{{k=0}}^oo (1/9)^k = {geom_sum} = 9/8; "
         f"tail at n={n} is exactly {exact_tail}; "
-        "expectation values form a provable Cauchy sequence in C"
+        "actual expectation increments need a separately established domination by this sequence"
     )
     return passed, detail, {"CAUCHY_GEOMETRIC_SUM": geom_sum}
 
@@ -141,6 +136,6 @@ def _check_so4_restoration():
     passed = bool(lim_k == 0)
     detail = (
         f"anisotropy coefficient c_aniso(k) = (1/9)^k; limit as k -> oo is {lim_k}; "
-        "hypercubic lattice anisotropy vanishes identically in continuum limit, establishing OS1"
+        "identifying this sequence with actual anisotropy requires the separate model estimates"
     )
     return passed, detail

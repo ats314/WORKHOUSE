@@ -25,233 +25,6 @@
 schema: theorems/v1
 source: lean/Workhouse
 theorems:
-  - name: quantum_curvature_restoration
-    statement: |
-      Quantum curvature restoration: when ground-state quantum covariance dominates the classical negative Hessian, effective Bakry-Emery curvature satisfies Ric_infty >= rho.
-    formalizes:
-      - G19
-      - G20
-      - G22
-      - RESULT:ROUGH_GAUGE_COERCIVITY_LOWER_BOUND
-  - name: ricInfty_pos_of_quantum_restoration
-    statement: |
-      Positivity of the effective Bakry-Emery Ricci curvature under quantum restoration with positive spectral gap rho > 0.
-    formalizes:
-      - G19
-      - G20
-      - G22
-      - RESULT:ROUGH_GAUGE_COERCIVITY_LOWER_BOUND
-  - name: bochner_gamma2_lower_bound
-    statement: |
-      The Bochner Gamma_2 lower bound: Gamma_2 >= eps^2 * hess_sq + eps^2 * rho * grad_sq.
-    formalizes:
-      - G19
-      - G20
-      - G22
-      - RESULT:ROUGH_GAUGE_COERCIVITY_LOWER_BOUND
-  - name: coercivityConstant_pos
-    statement: |
-      Strict positivity of the coercivity constant kappa = rho / (1 + rho) when rho > 0.
-    formalizes:
-      - G19
-      - G20
-      - G22
-      - RESULT:ROUGH_GAUGE_COERCIVITY_LOWER_BOUND
-  - name: coercivityConstant_lt_one
-    statement: |
-      The coercivity constant kappa = rho / (1 + rho) is strictly bounded above by 1 for any rho > 0.
-    formalizes:
-      - G19
-      - G20
-      - G22
-      - RESULT:ROUGH_GAUGE_COERCIVITY_LOWER_BOUND
-  - name: coercivityConstant_mono
-    statement: |
-      Monotonicity of the coercivity constant: a larger spectral gap implies larger coercivity.
-    formalizes:
-      - G19
-      - G20
-      - G22
-      - RESULT:ROUGH_GAUGE_COERCIVITY_LOWER_BOUND
-  - name: form_coercivity_bound
-    statement: |
-      Quadratic form coercivity: if the kinetic form is non-negative and the potential/Dirichlet form satisfies rho * V <= H, then (rho / (1 + rho)) * (T + V) <= T + H.
-    formalizes:
-      - G19
-      - G20
-      - G22
-      - RESULT:ROUGH_GAUGE_COERCIVITY_LOWER_BOUND
-  - name: quantum_restoration_ratio_gt_one
-    statement: |
-      In dimension 3 for SU(2) (C_A = 2), since sqrt(33) > 5 and sqrt(L) >= 1, the quantum restoration ratio strictly exceeds 1.
-    formalizes:
-      - G19
-      - G20
-      - G22
-      - RESULT:ROUGH_GAUGE_COERCIVITY_LOWER_BOUND
-  - name: volume_uniform_rho_pos
-    statement: |
-      Volume-uniform spectral lower bound along scale hierarchy: if rho(L) >= rho_0 / L^2 with rho_0 > 0, then rho(L) > 0 for all finite L > 0.
-    formalizes:
-      - G19
-      - G20
-      - G22
-      - RESULT:ROUGH_GAUGE_COERCIVITY_LOWER_BOUND
-  - name: volume_uniform_coercivity_hierarchy
-    statement: |
-      Volume-uniform coercivity lower bound: for any scale L in (0, L_max], the coercivity constant satisfies kappa(L) >= kappa(L_max) > 0.
-    formalizes:
-      - G19
-      - G20
-      - G22
-      - RESULT:ROUGH_GAUGE_COERCIVITY_LOWER_BOUND
-  - name: tiltedKpParameter_nonneg
-    statement: |
-      The tilted Kotecky-Preiss parameter is non-negative for non-negative dimension and coupling.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: tiltedKpParameter_at_alpha_zero
-    statement: |
-      At tilt alpha = 0, the tilted KP parameter reduces to the untilted parameter weightedActivityBase.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: strict_kp_criterion_lt_one
-    statement: |
-      When x <= c / (1 + c) for c >= 0, x is strictly less than 1.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: strict_kotecky_preiss_criterion
-    statement: |
-      Strict Kotecky-Preiss criterion: when x <= c / (1 + c), the tree activity satisfies x / (1 - x) <= c.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: strict_kotecky_preiss_iff
-    statement: |
-      Strict Kotecky-Preiss equivalence: for 0 <= x < 1 and c >= 0, x / (1 - x) <= c holds if and only if x <= c / (1 + c).
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: tilted_kotecky_preiss_tree_bound
-    statement: |
-      Under the strict criterion tiltedKpParameter <= c / (1 + c), the tree sum is bounded by c.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: tilted_kotecky_preiss_convergent
-    statement: |
-      Convergence of the tilted geometric polymer tree series under the strict KP criterion.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: betaStabilityWindow_pos
-    statement: |
-      The certified coupling-tilt stability threshold beta_*(D, c, alpha) is strictly positive for D > 0 and c > 0.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: beta_le_window_implies_tiltedKp_le
-    statement: |
-      When beta <= betaStabilityWindow, the strict Kotecky-Preiss condition tiltedKpParameter <= c / (1 + c) holds.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: beta_le_window_implies_tree_bound
-    statement: |
-      When beta <= betaStabilityWindow, the tilted tree activity is bounded by c.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: cluster_free_energy_density_bound_le
-    statement: |
-      The cluster free-energy density bound is majorized by |alpha| / 2 + c.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: cluster_free_energy_density_bound_le_window
-    statement: |
-      Under the stability window beta <= betaStabilityWindow, the free energy density bound is majorized by |alpha| / 2 + c.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: cluster_free_energy_density_bound_nonneg
-    statement: |
-      The cluster free-energy density bound is non-negative.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: clusterMassGap_pos
-    statement: |
-      Strict positivity of the cluster mass gap m_gap = -log(x) > 0 when 0 < x < 1.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: clusterMassGap_ge_log_kp
-    statement: |
-      Under the strict KP condition x <= c / (1 + c), the mass gap satisfies m_gap >= log((1 + c) / c) > 0.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: log_one_add_div_pos
-    statement: |
-      For c > 0, the logarithmic lower bound log((1 + c) / c) is strictly positive.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: clusterMassGap_pos_of_strict_kp
-    statement: |
-      Under the strict KP condition x <= c / (1 + c), the mass gap is strictly positive.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: cluster_correlation_exponential_decay
-    statement: |
-      Exponential tree correlation decay: x^d = exp(-d * m_gap).
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: uniform_source_radius_bound_le
-    statement: |
-      The uniform source-radius bound is majorized by sqrt(C_0 * (1 + c)) uniformly in volume.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: uniform_source_radius_bound_nonneg
-    statement: |
-      The uniform source-radius bound is non-negative.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
-  - name: uniform_source_radius_bound_le_window
-    statement: |
-      Under the stability window beta <= betaStabilityWindow, the uniform source-radius bound is majorized by sqrt(C_0 * (1 + c)) uniformly in volume.
-    formalizes:
-      - G17
-      - RESULT:WILSON_ENDPOINT_COMPLETE_CLUSTER
-      - RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
   - name: rank_law_numerator
     statement: |
       The rank law with denominators cleared: the channel difference has numerator 2N(N^2-4), which is the hopping numerator.
@@ -4982,3 +4755,544 @@ theorems:
       anchor: '## TG8: A residual certificate for the abstract Riccati fixed point'
       scope: Exact scalar consequence of the registered abstract default functions and their interval theorem.
         It does not establish the physical SC17 defect hypotheses or an actual Wilson closure window.
+  - name: tiltedKpParameter_nonneg
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem tiltedKpParameter_nonneg\
+      \ (D beta c alpha : \u211D) (hD : 0 \u2264 D) (hbeta : 0 \u2264 beta) : 0 \u2264 tiltedKpParameter\
+      \ D beta c alpha. Scope: Scalar tilted-activity, geometric-series, coupling-window, logarithm and\
+      \ source-radius inequalities under their displayed real-number hypotheses. The source-parameter formulas\
+      \ are definitions; their Wilson activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration tiltedKpParameter_nonneg'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: tiltedKpParameter_nonneg.'
+  - name: tiltedKpParameter_at_alpha_zero
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem tiltedKpParameter_at_alpha_zero\
+      \ (D beta c : \u211D) : tiltedKpParameter D beta c 0 = weightedActivityBase D beta c. Scope: Scalar\
+      \ tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities under\
+      \ their displayed real-number hypotheses. The source-parameter formulas are definitions; their Wilson\
+      \ activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration tiltedKpParameter_at_alpha_zero'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: tiltedKpParameter_at_alpha_zero.'
+  - name: strict_kp_criterion_lt_one
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem strict_kp_criterion_lt_one\
+      \ (x c : \u211D) (hc : 0 \u2264 c) (hxc : x \u2264 c / (1 + c)) : x < 1. Scope: Scalar tilted-activity,\
+      \ geometric-series, coupling-window, logarithm and source-radius inequalities under their displayed\
+      \ real-number hypotheses. The source-parameter formulas are definitions; their Wilson activity, Hamiltonian\
+      \ or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration strict_kp_criterion_lt_one'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: strict_kp_criterion_lt_one.'
+  - name: strict_kotecky_preiss_criterion
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem strict_kotecky_preiss_criterion\
+      \ (x c : \u211D) (hc : 0 \u2264 c) (_hx0 : 0 \u2264 x) (hxc : x \u2264 c / (1 + c)) : x / (1 - x)\
+      \ \u2264 c. Scope: Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius\
+      \ inequalities under their displayed real-number hypotheses. The source-parameter formulas are definitions;\
+      \ their Wilson activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration strict_kotecky_preiss_criterion'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: strict_kotecky_preiss_criterion.'
+  - name: strict_kotecky_preiss_iff
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem strict_kotecky_preiss_iff\
+      \ (x c : \u211D) (hc : 0 \u2264 c) (hx0 : 0 \u2264 x) (hx1 : x < 1) : x / (1 - x) \u2264 c \u2194\
+      \ x \u2264 c / (1 + c). Scope: Scalar tilted-activity, geometric-series, coupling-window, logarithm\
+      \ and source-radius inequalities under their displayed real-number hypotheses. The source-parameter\
+      \ formulas are definitions; their Wilson activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration strict_kotecky_preiss_iff'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: strict_kotecky_preiss_iff.'
+  - name: tilted_kotecky_preiss_tree_bound
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem tilted_kotecky_preiss_tree_bound\
+      \ (D beta c alpha : \u211D) (hc : 0 \u2264 c) (hD : 0 \u2264 D) (hbeta : 0 \u2264 beta) (hcond : tiltedKpParameter\
+      \ D beta c alpha \u2264 c / (1 + c)) : tiltedKpParameter D beta c alpha / (1 - tiltedKpParameter D\
+      \ beta c alpha) \u2264 c. Scope: Scalar tilted-activity, geometric-series, coupling-window, logarithm\
+      \ and source-radius inequalities under their displayed real-number hypotheses. The source-parameter\
+      \ formulas are definitions; their Wilson activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration tilted_kotecky_preiss_tree_bound'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: tilted_kotecky_preiss_tree_bound.'
+  - name: tilted_kotecky_preiss_convergent
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem tilted_kotecky_preiss_convergent\
+      \ (D beta c alpha : \u211D) (hc : 0 \u2264 c) (hD : 0 \u2264 D) (hbeta : 0 \u2264 beta) (hcond : tiltedKpParameter\
+      \ D beta c alpha \u2264 c / (1 + c)) : HasSum (fun n : \u2115 => (tiltedKpParameter D beta c alpha)\
+      \ ^ (n + 1)) (tiltedKpParameter D beta c alpha / (1 - tiltedKpParameter D beta c alpha)). Scope: Scalar\
+      \ tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities under\
+      \ their displayed real-number hypotheses. The source-parameter formulas are definitions; their Wilson\
+      \ activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration tilted_kotecky_preiss_convergent'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: tilted_kotecky_preiss_convergent.'
+  - name: betaStabilityWindow_pos
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem betaStabilityWindow_pos\
+      \ (D c alpha : \u211D) (hD : 0 < D) (hc : 0 < c) : 0 < betaStabilityWindow D c alpha. Scope: Scalar\
+      \ tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities under\
+      \ their displayed real-number hypotheses. The source-parameter formulas are definitions; their Wilson\
+      \ activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration betaStabilityWindow_pos'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: betaStabilityWindow_pos.'
+  - name: beta_le_window_implies_tiltedKp_le
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem beta_le_window_implies_tiltedKp_le\
+      \ (D beta c alpha : \u211D) (hc : 0 \u2264 c) (hD : 0 < D) (_hbeta : 0 \u2264 beta) (hwin : beta \u2264\
+      \ betaStabilityWindow D c alpha) : tiltedKpParameter D beta c alpha \u2264 c / (1 + c). Scope: Scalar\
+      \ tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities under\
+      \ their displayed real-number hypotheses. The source-parameter formulas are definitions; their Wilson\
+      \ activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration beta_le_window_implies_tiltedKp_le'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: beta_le_window_implies_tiltedKp_le.'
+  - name: beta_le_window_implies_tree_bound
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem beta_le_window_implies_tree_bound\
+      \ (D beta c alpha : \u211D) (hc : 0 \u2264 c) (hD : 0 < D) (hbeta : 0 \u2264 beta) (hwin : beta \u2264\
+      \ betaStabilityWindow D c alpha) : tiltedKpParameter D beta c alpha / (1 - tiltedKpParameter D beta\
+      \ c alpha) \u2264 c. Scope: Scalar tilted-activity, geometric-series, coupling-window, logarithm and\
+      \ source-radius inequalities under their displayed real-number hypotheses. The source-parameter formulas\
+      \ are definitions; their Wilson activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration beta_le_window_implies_tree_bound'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: beta_le_window_implies_tree_bound.'
+  - name: cluster_free_energy_density_bound_le
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem cluster_free_energy_density_bound_le\
+      \ (D beta c alpha : \u211D) (hc : 0 \u2264 c) (hD : 0 \u2264 D) (hbeta : 0 \u2264 beta) (hcond : tiltedKpParameter\
+      \ D beta c alpha \u2264 c / (1 + c)) : clusterFreeEnergyDensityBound D beta c alpha \u2264 |alpha|\
+      \ / 2 + c. Scope: Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius\
+      \ inequalities under their displayed real-number hypotheses. The source-parameter formulas are definitions;\
+      \ their Wilson activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration cluster_free_energy_density_bound_le'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: cluster_free_energy_density_bound_le.'
+  - name: cluster_free_energy_density_bound_le_window
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem cluster_free_energy_density_bound_le_window\
+      \ (D beta c alpha : \u211D) (hc : 0 \u2264 c) (hD : 0 < D) (hbeta : 0 \u2264 beta) (hwin : beta \u2264\
+      \ betaStabilityWindow D c alpha) : clusterFreeEnergyDensityBound D beta c alpha \u2264 |alpha| / 2\
+      \ + c. Scope: Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius\
+      \ inequalities under their displayed real-number hypotheses. The source-parameter formulas are definitions;\
+      \ their Wilson activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration cluster_free_energy_density_bound_le_window'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: cluster_free_energy_density_bound_le_window.'
+  - name: cluster_free_energy_density_bound_nonneg
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem cluster_free_energy_density_bound_nonneg\
+      \ (D beta c alpha : \u211D) (hD : 0 \u2264 D) (hbeta : 0 \u2264 beta) (hc : 0 \u2264 c) (hcond : tiltedKpParameter\
+      \ D beta c alpha \u2264 c / (1 + c)) : 0 \u2264 clusterFreeEnergyDensityBound D beta c alpha. Scope:\
+      \ Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities\
+      \ under their displayed real-number hypotheses. The source-parameter formulas are definitions; their\
+      \ Wilson activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration cluster_free_energy_density_bound_nonneg'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: cluster_free_energy_density_bound_nonneg.'
+  - name: clusterMassGap_pos
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem clusterMassGap_pos\
+      \ (x : \u211D) (hx0 : 0 < x) (hx1 : x < 1) : 0 < clusterMassGap x. Scope: Scalar tilted-activity,\
+      \ geometric-series, coupling-window, logarithm and source-radius inequalities under their displayed\
+      \ real-number hypotheses. The source-parameter formulas are definitions; their Wilson activity, Hamiltonian\
+      \ or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration clusterMassGap_pos'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: clusterMassGap_pos.'
+  - name: clusterMassGap_ge_log_kp
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem clusterMassGap_ge_log_kp\
+      \ (x c : \u211D) (hx0 : 0 < x) (hc : 0 < c) (hxc : x \u2264 c / (1 + c)) : Real.log ((1 + c) / c)\
+      \ \u2264 clusterMassGap x. Scope: Scalar tilted-activity, geometric-series, coupling-window, logarithm\
+      \ and source-radius inequalities under their displayed real-number hypotheses. The source-parameter\
+      \ formulas are definitions; their Wilson activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration clusterMassGap_ge_log_kp'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: clusterMassGap_ge_log_kp.'
+  - name: log_one_add_div_pos
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem log_one_add_div_pos\
+      \ (c : \u211D) (hc : 0 < c) : 0 < Real.log ((1 + c) / c). Scope: Scalar tilted-activity, geometric-series,\
+      \ coupling-window, logarithm and source-radius inequalities under their displayed real-number hypotheses.\
+      \ The source-parameter formulas are definitions; their Wilson activity, Hamiltonian or spectral identifications\
+      \ are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration log_one_add_div_pos'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: log_one_add_div_pos.'
+  - name: clusterMassGap_pos_of_strict_kp
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem clusterMassGap_pos_of_strict_kp\
+      \ (x c : \u211D) (hx0 : 0 < x) (hc : 0 < c) (hxc : x \u2264 c / (1 + c)) : 0 < clusterMassGap x. Scope:\
+      \ Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities\
+      \ under their displayed real-number hypotheses. The source-parameter formulas are definitions; their\
+      \ Wilson activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration clusterMassGap_pos_of_strict_kp'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: clusterMassGap_pos_of_strict_kp.'
+  - name: cluster_correlation_exponential_decay
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem cluster_correlation_exponential_decay\
+      \ (x : \u211D) (hx0 : 0 < x) (d : \u2115) : x ^ d = Real.exp (- ((d : \u211D) * clusterMassGap x)).\
+      \ Scope: Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities\
+      \ under their displayed real-number hypotheses. The source-parameter formulas are definitions; their\
+      \ Wilson activity, Hamiltonian or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration cluster_correlation_exponential_decay'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: cluster_correlation_exponential_decay.'
+  - name: uniform_source_radius_bound_le
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem uniform_source_radius_bound_le\
+      \ (C0 x c : \u211D) (hC0 : 0 \u2264 C0) (hc : 0 \u2264 c) (_hx0 : 0 \u2264 x) (hxc : x \u2264 c /\
+      \ (1 + c)) : uniformSourceRadiusBound C0 x \u2264 Real.sqrt (C0 * (1 + c)). Scope: Scalar tilted-activity,\
+      \ geometric-series, coupling-window, logarithm and source-radius inequalities under their displayed\
+      \ real-number hypotheses. The source-parameter formulas are definitions; their Wilson activity, Hamiltonian\
+      \ or spectral identifications are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration uniform_source_radius_bound_le'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: uniform_source_radius_bound_le.'
+  - name: uniform_source_radius_bound_nonneg
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem uniform_source_radius_bound_nonneg\
+      \ (C0 x : \u211D) : 0 \u2264 uniformSourceRadiusBound C0 x. Scope: Scalar tilted-activity, geometric-series,\
+      \ coupling-window, logarithm and source-radius inequalities under their displayed real-number hypotheses.\
+      \ The source-parameter formulas are definitions; their Wilson activity, Hamiltonian or spectral identifications\
+      \ are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration uniform_source_radius_bound_nonneg'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: uniform_source_radius_bound_nonneg.'
+  - name: uniform_source_radius_bound_le_window
+    statement: "Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem uniform_source_radius_bound_le_window\
+      \ (D beta c alpha C0 : \u211D) (hC0 : 0 \u2264 C0) (hc : 0 \u2264 c) (hD : 0 < D) (hbeta : 0 \u2264\
+      \ beta) (hwin : beta \u2264 betaStabilityWindow D c alpha) : uniformSourceRadiusBound C0 (tiltedKpParameter\
+      \ D beta c alpha) \u2264 Real.sqrt (C0 * (1 + c)). Scope: Scalar tilted-activity, geometric-series,\
+      \ coupling-window, logarithm and source-radius inequalities under their displayed real-number hypotheses.\
+      \ The source-parameter formulas are definitions; their Wilson activity, Hamiltonian or spectral identifications\
+      \ are separate."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:KP_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U1 Tilted KP scalar ingredients; declaration uniform_source_radius_bound_le_window'
+      anchor: '## U1 Tilted KP scalar ingredients'
+      scope: 'Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities
+        under their displayed real-number hypotheses. The source-parameter formulas are definitions; their
+        Wilson activity, Hamiltonian or spectral identifications are separate. Exact declaration: uniform_source_radius_bound_le_window.'
+  - name: quantum_curvature_restoration
+    statement: "Encoded statement in Workhouse.BakryEmeryCoercivity, with its explicit hypotheses: theorem\
+      \ quantum_curvature_restoration (ric hess_u rho : \u211D) (hdom : -ric + rho \u2264 2 * hess_u) :\
+      \ rho \u2264 ricInftyLowerBound ric hess_u. Scope: Real-number curvature/coercivity arithmetic under\
+      \ the stated inequalities. The Bochner-named lemma adds a nonnegative square to real numbers. The\
+      \ scale hierarchy is bounded by L_max; no positive floor over unbounded L is encoded."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:COERCIVITY_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U2 Coercivity scalar ingredients; declaration quantum_curvature_restoration'
+      anchor: '## U2 Coercivity scalar ingredients'
+      scope: 'Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named
+        lemma adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive
+        floor over unbounded L is encoded. Exact declaration: quantum_curvature_restoration.'
+  - name: ricInfty_pos_of_quantum_restoration
+    statement: "Encoded statement in Workhouse.BakryEmeryCoercivity, with its explicit hypotheses: theorem\
+      \ ricInfty_pos_of_quantum_restoration (ric hess_u rho : \u211D) (hrho : 0 < rho) (hdom : -ric + rho\
+      \ \u2264 2 * hess_u) : 0 < ricInftyLowerBound ric hess_u. Scope: Real-number curvature/coercivity\
+      \ arithmetic under the stated inequalities. The Bochner-named lemma adds a nonnegative square to real\
+      \ numbers. The scale hierarchy is bounded by L_max; no positive floor over unbounded L is encoded."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:COERCIVITY_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U2 Coercivity scalar ingredients; declaration ricInfty_pos_of_quantum_restoration'
+      anchor: '## U2 Coercivity scalar ingredients'
+      scope: 'Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named
+        lemma adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive
+        floor over unbounded L is encoded. Exact declaration: ricInfty_pos_of_quantum_restoration.'
+  - name: bochner_gamma2_lower_bound
+    statement: "Encoded statement in Workhouse.BakryEmeryCoercivity, with its explicit hypotheses: theorem\
+      \ bochner_gamma2_lower_bound (eps rho hess_sq grad_sq : \u211D) (_heps : 0 \u2264 eps) (_hrho : 0\
+      \ \u2264 rho) (hhess : 0 \u2264 hess_sq) (_hgrad : 0 \u2264 grad_sq) : eps ^ 2 * rho * grad_sq \u2264\
+      \ eps ^ 2 * hess_sq + eps ^ 2 * rho * grad_sq. Scope: Real-number curvature/coercivity arithmetic\
+      \ under the stated inequalities. The Bochner-named lemma adds a nonnegative square to real numbers.\
+      \ The scale hierarchy is bounded by L_max; no positive floor over unbounded L is encoded."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:COERCIVITY_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U2 Coercivity scalar ingredients; declaration bochner_gamma2_lower_bound'
+      anchor: '## U2 Coercivity scalar ingredients'
+      scope: 'Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named
+        lemma adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive
+        floor over unbounded L is encoded. Exact declaration: bochner_gamma2_lower_bound.'
+  - name: coercivityConstant_pos
+    statement: "Encoded statement in Workhouse.BakryEmeryCoercivity, with its explicit hypotheses: theorem\
+      \ coercivityConstant_pos (rho : \u211D) (hrho : 0 < rho) : 0 < coercivityConstant rho. Scope: Real-number\
+      \ curvature/coercivity arithmetic under the stated inequalities. The Bochner-named lemma adds a nonnegative\
+      \ square to real numbers. The scale hierarchy is bounded by L_max; no positive floor over unbounded\
+      \ L is encoded."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:COERCIVITY_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U2 Coercivity scalar ingredients; declaration coercivityConstant_pos'
+      anchor: '## U2 Coercivity scalar ingredients'
+      scope: 'Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named
+        lemma adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive
+        floor over unbounded L is encoded. Exact declaration: coercivityConstant_pos.'
+  - name: coercivityConstant_lt_one
+    statement: "Encoded statement in Workhouse.BakryEmeryCoercivity, with its explicit hypotheses: theorem\
+      \ coercivityConstant_lt_one (rho : \u211D) (hrho : 0 < rho) : coercivityConstant rho < 1. Scope: Real-number\
+      \ curvature/coercivity arithmetic under the stated inequalities. The Bochner-named lemma adds a nonnegative\
+      \ square to real numbers. The scale hierarchy is bounded by L_max; no positive floor over unbounded\
+      \ L is encoded."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:COERCIVITY_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U2 Coercivity scalar ingredients; declaration coercivityConstant_lt_one'
+      anchor: '## U2 Coercivity scalar ingredients'
+      scope: 'Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named
+        lemma adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive
+        floor over unbounded L is encoded. Exact declaration: coercivityConstant_lt_one.'
+  - name: coercivityConstant_mono
+    statement: "Encoded statement in Workhouse.BakryEmeryCoercivity, with its explicit hypotheses: theorem\
+      \ coercivityConstant_mono (rho1 rho2 : \u211D) (h1 : 0 \u2264 rho1) (hle : rho1 \u2264 rho2) : coercivityConstant\
+      \ rho1 \u2264 coercivityConstant rho2. Scope: Real-number curvature/coercivity arithmetic under the\
+      \ stated inequalities. The Bochner-named lemma adds a nonnegative square to real numbers. The scale\
+      \ hierarchy is bounded by L_max; no positive floor over unbounded L is encoded."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:COERCIVITY_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U2 Coercivity scalar ingredients; declaration coercivityConstant_mono'
+      anchor: '## U2 Coercivity scalar ingredients'
+      scope: 'Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named
+        lemma adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive
+        floor over unbounded L is encoded. Exact declaration: coercivityConstant_mono.'
+  - name: form_coercivity_bound
+    statement: "Encoded statement in Workhouse.BakryEmeryCoercivity, with its explicit hypotheses: theorem\
+      \ form_coercivity_bound (T V H rho : \u211D) (hT : 0 \u2264 T) (hV : 0 \u2264 V) (hrho : 0 < rho)\
+      \ (hgap : rho * V \u2264 H) : coercivityConstant rho * (T + V) \u2264 T + H. Scope: Real-number curvature/coercivity\
+      \ arithmetic under the stated inequalities. The Bochner-named lemma adds a nonnegative square to real\
+      \ numbers. The scale hierarchy is bounded by L_max; no positive floor over unbounded L is encoded."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:COERCIVITY_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U2 Coercivity scalar ingredients; declaration form_coercivity_bound'
+      anchor: '## U2 Coercivity scalar ingredients'
+      scope: 'Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named
+        lemma adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive
+        floor over unbounded L is encoded. Exact declaration: form_coercivity_bound.'
+  - name: quantum_restoration_ratio_gt_one
+    statement: "Encoded statement in Workhouse.BakryEmeryCoercivity, with its explicit hypotheses: theorem\
+      \ quantum_restoration_ratio_gt_one (cA sqrt33 L_sqrt : \u211D) (hcA : 2 \u2264 cA) (h33 : 5 \u2264\
+      \ sqrt33) (hL : 1 \u2264 L_sqrt) : 1 < quantumRestorationRatio cA sqrt33 L_sqrt. Scope: Real-number\
+      \ curvature/coercivity arithmetic under the stated inequalities. The Bochner-named lemma adds a nonnegative\
+      \ square to real numbers. The scale hierarchy is bounded by L_max; no positive floor over unbounded\
+      \ L is encoded."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:COERCIVITY_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U2 Coercivity scalar ingredients; declaration quantum_restoration_ratio_gt_one'
+      anchor: '## U2 Coercivity scalar ingredients'
+      scope: 'Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named
+        lemma adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive
+        floor over unbounded L is encoded. Exact declaration: quantum_restoration_ratio_gt_one.'
+  - name: volume_uniform_rho_pos
+    statement: "Encoded statement in Workhouse.BakryEmeryCoercivity, with its explicit hypotheses: theorem\
+      \ volume_uniform_rho_pos (rho0 L : \u211D) (hrho0 : 0 < rho0) (hL : 0 < L) : 0 < rho0 / L ^ 2. Scope:\
+      \ Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named lemma\
+      \ adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive\
+      \ floor over unbounded L is encoded."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:COERCIVITY_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U2 Coercivity scalar ingredients; declaration volume_uniform_rho_pos'
+      anchor: '## U2 Coercivity scalar ingredients'
+      scope: 'Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named
+        lemma adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive
+        floor over unbounded L is encoded. Exact declaration: volume_uniform_rho_pos.'
+  - name: volume_uniform_coercivity_hierarchy
+    statement: "Encoded statement in Workhouse.BakryEmeryCoercivity, with its explicit hypotheses: theorem\
+      \ volume_uniform_coercivity_hierarchy (rho0 L L_max : \u211D) (hrho0 : 0 < rho0) (hLpos : 0 < L) (hLle\
+      \ : L \u2264 L_max) : coercivityConstant (rho0 / L_max ^ 2) \u2264 coercivityConstant (rho0 / L ^\
+      \ 2). Scope: Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named\
+      \ lemma adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive\
+      \ floor over unbounded L is encoded."
+    formalizes: []
+    promotes: []
+    proof_sources:
+    - statement: DERIV:SEPTEMBER10_UPSTREAM_SCALARS:COERCIVITY_SCALARS
+      path: docs/derivations/september10-upstream-scalar-inventory.md
+      sha256: 75a6b78ebaed289feb3cb6018b8f7923030032f722dcda49d2f8ff323a658aab
+      locator: '## U2 Coercivity scalar ingredients; declaration volume_uniform_coercivity_hierarchy'
+      anchor: '## U2 Coercivity scalar ingredients'
+      scope: 'Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named
+        lemma adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive
+        floor over unbounded L is encoded. Exact declaration: volume_uniform_coercivity_hierarchy.'

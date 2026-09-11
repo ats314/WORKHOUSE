@@ -1,0 +1,39 @@
+{
+  "base_commit": "b080d122c8f11d95576256bd5cadc8ad9a2e5837",
+  "commands": [
+    {
+      "command": "python -m ruff check .",
+      "exit_code": 0
+    },
+    {
+      "command": "python -m ruff format --check .",
+      "exit_code": 0,
+      "files": 509
+    },
+    {
+      "command": "python scripts/check_docs.py",
+      "exit_code": 0,
+      "maintained_files": 31,
+      "local_links": 527,
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "command": "python scripts/render_derivation_coverage.py --check",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "scope": "Tracked edits before new byte-preserved evidence was staged."
+    }
+  ],
+  "scope": "Observed commands on the uncommitted integration. Graph and full regression outcomes are recorded separately.",
+  "staged_whitespace": {
+    "crlf_aware_exit_code": 2,
+    "finding": "Only one terminal blank line in the SHA-pinned scalar inventory. Default Git checking also flags preserved CRLF receipt bytes.",
+    "explicit_format_command": "git -c core.whitespace=cr-at-eol,-blank-at-eof diff --cached --check",
+    "explicit_format_exit_code": 0,
+    "scope": "Formatting inspection; no mathematical check, test assertion, or tolerance disabled."
+  }
+}

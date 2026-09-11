@@ -15,12 +15,12 @@ results:
     depends_on: []
     bears_on: [G19]
     supported_by:
-      - target: CHK:dimension-five-irrelevance-and-cauchy-su-2f3882:pure-yang-mills-carries-no-gauge-invaria-d69715
-        scope: Vanishing of odd-parity local gauge-invariant polynomials.
-      - target: CHK:dimension-five-irrelevance-and-cauchy-su-2f3882:the-leading-irrelevant-operators-in-pure-0097f7
-        scope: Classification of leading dimension 6 operators.
-      - target: CHK:dimension-five-irrelevance-and-cauchy-su-2f3882:multiscale-block-scaling-gain-is-l-2--1--3e4ccf
-        scope: Scaling contraction factor lambda = 1/9 <= 1/2.
+      - target: CHK:dimension-counts-and-geometric-scaling-c-586f1c:dimension-five-monomial-partitions-have--a44f45
+        scope: "Exact monomial partition and index-parity enumeration only; operator realization and RG estimates are separate."
+      - target: CHK:dimension-counts-and-geometric-scaling-c-586f1c:parity-even-monomial-partitions-omit-dim-6c272c
+        scope: "Parity/index counts omit dimension five and permit dimension six; no complete operator classification is machine-proved here."
+      - target: CHK:dimension-counts-and-geometric-scaling-c-586f1c:canonical-dimension-six-scaling-at-l-3-e-3c5acf
+        scope: "Canonical dimension-six scaling at L=3 equals 1/9 and is below 1/2; an actual RG contraction estimate is a separate model input."
     status: proven
     evidence: analytic
   - id: RESULT:BALABAN_MULTISCALE_CAUCHY_SUMMABILITY
@@ -34,10 +34,10 @@ results:
       - RESULT:DIMENSION_FIVE_OPERATOR_IRRELEVANCE
     bears_on: [G19]
     supported_by:
-      - target: CHK:dimension-five-irrelevance-and-cauchy-su-2f3882:multiscale-cauchy-expectation-increment--62b2b1
-        scope: Cauchy geometric decay factor lambda < 1.
-      - target: CHK:dimension-five-irrelevance-and-cauchy-su-2f3882:hypercubic-anisotropic-directional-varia-442910
-        scope: Geometric series tail sum bound 2 lambda^j.
+      - target: CHK:dimension-counts-and-geometric-scaling-c-586f1c:the-geometric-ratio-1-9-has-exact-sum-9--bcd692
+        scope: "Exact scalar geometric-series sum and finite tail at the prescribed ratio 1/9; actual expectation-increment domination is separate."
+      - target: CHK:dimension-counts-and-geometric-scaling-c-586f1c:the-prescribed-geometric-sequence-1-9-k--b49b39
+        scope: "The prescribed scalar sequence (1/9)^k tends to zero; its identification with physical anisotropy or a Cauchy increment is separate."
     status: proven
     evidence: analytic
   - id: RESULT:ROUGH_GAUGE_COERCIVITY_LOWER_BOUND
@@ -51,9 +51,9 @@ results:
     bears_on: [G19, G20, G22]
     supported_by:
       - target: LEAN:quantum_curvature_restoration
-        scope: Strict positivity of restored Ricci curvature.
+        scope: "Scoped real-scalar ingredient: Encoded statement in Workhouse.BakryEmeryCoercivity, with its explicit hypotheses: theorem quantum_curvature_restoration (ric hess_u rho : ℝ) (hdom : -ric + rho ≤ 2 * hess_u) : rho ≤ ricInftyLowerBound ric hess_u. Scope: Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named lemma adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive floor over unbounded L is encoded. Actual model identification is separate."
       - target: LEAN:volume_uniform_coercivity_hierarchy
-        scope: Scale hierarchy form bound.
+        scope: "Scoped real-scalar ingredient: Encoded statement in Workhouse.BakryEmeryCoercivity, with its explicit hypotheses: theorem volume_uniform_coercivity_hierarchy (rho0 L L_max : ℝ) (hrho0 : 0 < rho0) (hLpos : 0 < L) (hLle : L ≤ L_max) : coercivityConstant (rho0 / L_max ^ 2) ≤ coercivityConstant (rho0 / L ^ 2). Scope: Real-number curvature/coercivity arithmetic under the stated inequalities. The Bochner-named lemma adds a nonnegative square to real numbers. The scale hierarchy is bounded by L_max; no positive floor over unbounded L is encoded. Actual model identification is separate."
     status: proven
     evidence: analytic
   - id: RESULT:G9_SIXTH_ORDER_RUR_ACTIVATION
@@ -79,11 +79,11 @@ results:
     bears_on: [G17]
     supported_by:
       - target: LEAN:tilted_kotecky_preiss_convergent
-        scope: Convergence of the polymer tree bound.
+        scope: "Scoped real-scalar ingredient: Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem tilted_kotecky_preiss_convergent (D beta c alpha : ℝ) (hc : 0 ≤ c) (hD : 0 ≤ D) (hbeta : 0 ≤ beta) (hcond : tiltedKpParameter D beta c alpha ≤ c / (1 + c)) : HasSum (fun n : ℕ => (tiltedKpParameter D beta c alpha) ^ (n + 1)) (tiltedKpParameter D beta c alpha / (1 - tiltedKpParameter D beta c alpha)). Scope: Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities under their displayed real-number hypotheses. The source-parameter formulas are definitions; their Wilson activity, Hamiltonian or spectral identifications are separate. Actual model identification is separate."
       - target: LEAN:clusterMassGap_pos_of_strict_kp
-        scope: Strictly positive mass gap from strict KP criterion.
+        scope: "Scoped real-scalar ingredient: Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem clusterMassGap_pos_of_strict_kp (x c : ℝ) (hx0 : 0 < x) (hc : 0 < c) (hxc : x ≤ c / (1 + c)) : 0 < clusterMassGap x. Scope: Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities under their displayed real-number hypotheses. The source-parameter formulas are definitions; their Wilson activity, Hamiltonian or spectral identifications are separate. Actual model identification is separate."
       - target: LEAN:uniform_source_radius_bound_le_window
-        scope: Volume-uniform source radius reduction in the stability window.
+        scope: "Scoped real-scalar ingredient: Encoded statement in Workhouse.PolymerCluster, with its explicit hypotheses: theorem uniform_source_radius_bound_le_window (D beta c alpha C0 : ℝ) (hC0 : 0 ≤ C0) (hc : 0 ≤ c) (hD : 0 < D) (hbeta : 0 ≤ beta) (hwin : beta ≤ betaStabilityWindow D c alpha) : uniformSourceRadiusBound C0 (tiltedKpParameter D beta c alpha) ≤ Real.sqrt (C0 * (1 + c)). Scope: Scalar tilted-activity, geometric-series, coupling-window, logarithm and source-radius inequalities under their displayed real-number hypotheses. The source-parameter formulas are definitions; their Wilson activity, Hamiltonian or spectral identifications are separate. Actual model identification is separate."
     status: proven
     evidence: analytic
   - id: RESULT:WILSON_FLAT_BACKGROUND_FAST_SOURCES

@@ -1315,7 +1315,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 525
+## T1 — re-derived exactly — 532
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1416,6 +1416,29 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the two band spans ARE the two incidence spectra`
   - src/workhouse/invariants/su3.py:143 · MASTER paper §4.5 / ENGINE_FLUX_su3_domino_d3.py key corrected_Ceven_bandwidth_16|t|
   - `workhouse verify --only 'the two band spans ARE the two incidence spectra'`
+**W6 antipodal conditional magnetic geometry**
+
+- `W6 antipodal: complete nine-dimensional Hessian spectrum`
+  - src/workhouse/invariants/w6_antipodal.py:114 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A3
+  - `workhouse verify --only 'W6 antipodal: complete nine-dimensional Hessian spectrum'`
+- `W6 antipodal: exact displaced-orbit angular potential`
+  - src/workhouse/invariants/w6_antipodal.py:213 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A6
+  - `workhouse verify --only 'W6 antipodal: exact displaced-orbit angular potential'`
+- `W6 antipodal: exact noncommuting fixed-Q chart`
+  - src/workhouse/invariants/w6_antipodal.py:47 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A1
+  - `workhouse verify --only 'W6 antipodal: exact noncommuting fixed-Q chart'`
+- `W6 antipodal: gauge tangent equals the two-dimensional kernel`
+  - src/workhouse/invariants/w6_antipodal.py:169 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A4
+  - `workhouse verify --only 'W6 antipodal: gauge tangent equals the two-dimensional kernel'`
+- `W6 antipodal: original four-face quadratic expansion`
+  - src/workhouse/invariants/w6_antipodal.py:100 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A2
+  - `workhouse verify --only 'W6 antipodal: original four-face quadratic expansion'`
+- `W6 antipodal: original-edge metric comparison constants`
+  - src/workhouse/invariants/w6_antipodal.py:194 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A5
+  - `workhouse verify --only 'W6 antipodal: original-edge metric comparison constants'`
+- `W6 antipodal: seven uniform normal eigenvalues and soft scaling`
+  - src/workhouse/invariants/w6_antipodal.py:148 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A3
+  - `workhouse verify --only 'W6 antipodal: seven uniform normal eigenvalues and soft scaling'`
 **Wilson PBH proposal: exact orbit curvature and flow tests**
 
 - `FINDING: Wilson gradient flow expands a regular orbit distance by 8/7`
@@ -1834,23 +1857,23 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the printed towers are canonical-u: 4*Delta(3u/2) reproduces them verbatim`
   - src/workhouse/invariants/coupling.py:21 · UNIFIED §2.1 / C4
   - `workhouse verify --only 'the printed towers are canonical-u: 4*Delta(3u/2) reproduces them verbatim'`
-**dimension-five irrelevance and Cauchy summability (G19)**
+**dimension counts and geometric scaling controls (G19)**
 
-- `hypercubic anisotropic directional variance contracts as 9^-k, restoring SO(4)`
-  - src/workhouse/invariants/dimension_five_irrelevance.py:132 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
-  - `workhouse verify --only 'hypercubic anisotropic directional variance contracts as 9^-k, restoring SO(4)'`
-- `multiscale Cauchy expectation increment is bounded by a geometrically convergent series`
-  - src/workhouse/invariants/dimension_five_irrelevance.py:107 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
-  - `workhouse verify --only 'multiscale Cauchy expectation increment is bounded by a geometrically convergent series'`
-- `multiscale block scaling gain is L^-2 = 1/9, strictly satisfying lambda <= 1/2`
-  - src/workhouse/invariants/dimension_five_irrelevance.py:90 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
-  - `workhouse verify --only 'multiscale block scaling gain is L^-2 = 1/9, strictly satisfying lambda <= 1/2'`
-- `pure Yang-Mills carries no gauge-invariant dimension-five local operator`
-  - src/workhouse/invariants/dimension_five_irrelevance.py:32 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
-  - `workhouse verify --only 'pure Yang-Mills carries no gauge-invariant dimension-five local operator'`
-- `the leading irrelevant operators in pure Yang-Mills have mass dimension six`
-  - src/workhouse/invariants/dimension_five_irrelevance.py:58 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
-  - `workhouse verify --only 'the leading irrelevant operators in pure Yang-Mills have mass dimension six'`
+- `canonical dimension-six scaling at L=3 equals 1/9 and is below 1/2`
+  - src/workhouse/invariants/dimension_five_irrelevance.py:85 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
+  - `workhouse verify --only 'canonical dimension-six scaling at L=3 equals 1/9 and is below 1/2'`
+- `dimension-five monomial partitions have odd index and derivative counts`
+  - src/workhouse/invariants/dimension_five_irrelevance.py:27 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
+  - `workhouse verify --only 'dimension-five monomial partitions have odd index and derivative counts'`
+- `parity-even monomial partitions omit dimension five and allow dimension six`
+  - src/workhouse/invariants/dimension_five_irrelevance.py:53 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
+  - `workhouse verify --only 'parity-even monomial partitions omit dimension five and allow dimension six'`
+- `the geometric ratio 1/9 has exact sum 9/8 and the stated finite tail`
+  - src/workhouse/invariants/dimension_five_irrelevance.py:102 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
+  - `workhouse verify --only 'the geometric ratio 1/9 has exact sum 9/8 and the stated finite tail'`
+- `the prescribed geometric sequence (1/9)^k tends to zero`
+  - src/workhouse/invariants/dimension_five_irrelevance.py:127 · G19_DIMENSION_FIVE_IRRELEVANCE_LEMMA_20260910.md; YM_BALABAN_MULTISCALE Theorem 7.1, 6.2, OS1; G19
+  - `workhouse verify --only 'the prescribed geometric sequence (1/9)^k tends to zero'`
 **finite-rank truncation bridge (published SU(3) truncations)**
 
 - `FINDING: the T1 link cutoff reverses the sign of t_3, and 14/153 is what it omits`
