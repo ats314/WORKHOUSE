@@ -364,3 +364,16 @@ def test_cli_scope_report_surfaces_a_malformed_file_as_an_error(tmp_path, monkey
     args = SimpleNamespace(build=True, json=True, out=None)
     assert S.run(args, lambda: pytest.fail("no engine for a broken scope")) == 1
     assert "schema" in json.loads(capsys.readouterr().out)["error"]
+
+
+def test_reparse_point_is_refused_before_the_directory_test(tmp_path, monkeypatch):
+    # A POSIX symlink's lstat is a link, not a directory; the refusal must
+    # still say reparse_point. Simulated without creating a symlink.
+    (tmp_path / "ws").mkdir()
+    (tmp_path / "ws/link").write_text("not a directory\n", encoding="utf-8")
+    checkout = _checkout(tmp_path)
+    _write_scope(checkout, minimal(roots=[{"label": "link", "path": "link", "tier": 1}]))
+    monkeypatch.delenv(S.BASE_ENV, raising=False)
+    monkeypatch.setattr(S, "is_reparse_point", lambda path: str(path).endswith("link"))
+    rows = S.resolve_roots(S.load_scope(checkout), checkout)
+    assert rows[0]["skipped"] == "reparse_point" and rows[0]["present"] is False

@@ -496,14 +496,17 @@ def resolve_roots(scope: Scope, checkout: Path) -> list[dict]:
             row["skipped"] = "disabled"
         elif directory is None:
             row["skipped"] = "base_unavailable"
+        elif is_reparse_point(directory):
+            # Checked before the directory test: lstat of a POSIX symlink is a
+            # link, not a directory, and the refusal must name the real reason.
+            row["present"] = False
+            row["skipped"] = "reparse_point"
         elif not row["present"]:
             try:
                 os.lstat(directory)
                 row["skipped"] = "not_a_directory"
             except OSError:
                 row["skipped"] = "absent"
-        elif is_reparse_point(directory):
-            row["skipped"] = "reparse_point"
         elif not safe_external(directory, checkout, protected):
             row["skipped"] = "unsafe_path"
         rows.append(row)
