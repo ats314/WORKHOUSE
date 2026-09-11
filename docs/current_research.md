@@ -55,7 +55,11 @@ conditional mean (the R9 vacuum-cross vector is exactly `m_g(w) Omega_g`) and
 its conditional fluctuation on level sets of `w`, proves that the first ground
 jet is driven by the magnetic fluctuation alone, and reduces the order-zero
 R10 bound to five fiberwise conditional-energy estimates (H0-H4) whose
-averaged forms are established. R10 stays open; the reviewed closure attempt
+averaged forms are established. The [R10 proof repair](derivations/w6-source-energy-jets-r10.md) retains the
+conditional-measure covariance and all projection-jet product terms, and proves
+that H4 follows from H0 and the first ground jet. Thus H0-H3 suffice as separate
+order-zero inputs. These estimates and the higher source jets remain open.
+R10 stays open; the reviewed closure attempt
 that assumed the pointwise score bound is recorded as rejected. The
 [conditional-score analysis](derivations/w6-conditional-score-tail-control.md)
 separates positive-coupling endpoint control from uniform control as `g` tends

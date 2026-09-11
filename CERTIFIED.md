@@ -1339,7 +1339,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 575
+## T1 — re-derived exactly — 581
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1482,6 +1482,26 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the two band spans ARE the two incidence spectra`
   - src/workhouse/invariants/su3.py:143 · MASTER paper §4.5 / ENGINE_FLUX_su3_domino_d3.py key corrected_Ceven_bandwidth_16|t|
   - `workhouse verify --only 'the two band spans ARE the two incidence spectra'`
+**W6 R10 repaired identities and counterchecks**
+
+- `W6 R10 repair: H2 proposed uniform Young bound fails`
+  - src/workhouse/invariants/w6_source_energy_r10.py:108 · W6_SOURCE_ENERGY_JETS_R10 C6b
+  - `workhouse verify --only 'W6 R10 repair: H2 proposed uniform Young bound fails'`
+- `W6 R10 repair: centered product retains covariance`
+  - src/workhouse/invariants/w6_source_energy_r10.py:66 · W6_SOURCE_ENERGY_JETS_R10 C2
+  - `workhouse verify --only 'W6 R10 repair: centered product retains covariance'`
+- `W6 R10 repair: conditional measure derivative finite example`
+  - src/workhouse/invariants/w6_source_energy_r10.py:57 · W6_SOURCE_ENERGY_JETS_R10 C1
+  - `workhouse verify --only 'W6 R10 repair: conditional measure derivative finite example'`
+- `W6 R10 repair: diffusion-gap inverse has g^-3 scaling`
+  - src/workhouse/invariants/w6_source_energy_r10.py:98 · W6_SOURCE_ENERGY_JETS_R10 C6a
+  - `workhouse verify --only 'W6 R10 repair: diffusion-gap inverse has g^-3 scaling'`
+- `W6 R10 repair: omitted projection mixed terms are nonzero`
+  - src/workhouse/invariants/w6_source_energy_r10.py:88 · W6_SOURCE_ENERGY_JETS_R10 C5a
+  - `workhouse verify --only 'W6 R10 repair: omitted projection mixed terms are nonzero'`
+- `W6 R10 repair: projection recurrence through third derivative finite model`
+  - src/workhouse/invariants/w6_source_energy_r10.py:76 · W6_SOURCE_ENERGY_JETS_R10 C5
+  - `workhouse verify --only 'W6 R10 repair: projection recurrence through third derivative finite model'`
 **W6 antipodal conditional magnetic geometry**
 
 - `W6 antipodal: complete nine-dimensional Hessian spectrum`

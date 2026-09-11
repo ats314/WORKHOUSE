@@ -101,6 +101,7 @@ _MODULES = (
     "w6_synchronized_m10",
     "universal_cellular_hodge",
     "sixth_order_cluster",
+    "w6_source_energy_r10",
 )
 
 for _name in _MODULES:
