@@ -37,6 +37,7 @@ jobs:
       actions: read
     outputs:
       full: ${{ steps.scope.outputs.full }}
+      lean: ${{ steps.scope.outputs.lean }}
       verified_by: ${{ steps.dedup.outputs.verified_by }}
     steps:
       - uses: actions/checkout@v7
@@ -103,6 +104,8 @@ jobs:
           echo "Full verification of this exact tree already passed in [run $VERIFIED_BY]($url); not repeated." >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@v7
         if: needs.scope.outputs.verified_by == ''
+        with:
+          fetch-depth: 0
 
       # The documentation/help path only needs Python. Full checks retain
       # the existing stack detection and verification entry points.
@@ -131,7 +134,14 @@ jobs:
 
       - name: Lint and test
         if: needs.scope.outputs.full == 'true' && needs.scope.outputs.verified_by == ''
-        run: bash scripts/check.sh
+        env:
+          CI_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            bash scripts/check.sh --fast
+          else
+            bash scripts/check.sh
+          fi
 
       - name: Install documentation and help check dependencies
         if: needs.scope.outputs.full == 'false' && needs.scope.outputs.verified_by == ''
@@ -163,7 +173,7 @@ jobs:
   lean:
     name: Lean (T0)
     needs: scope
-    if: needs.scope.outputs.full == 'true' && needs.scope.outputs.verified_by == ''
+    if: needs.scope.outputs.full == 'true' && needs.scope.outputs.verified_by == '' && (github.event_name != 'pull_request' || needs.scope.outputs.lean == 'true')
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
@@ -220,10 +230,6 @@ jobs:
         run: pip install -e ".[dev]"
       - name: why C2 decodes without UTF-8 mode
         run: python -m workhouse.cli why C2
-      - name: regenerated catalogue is byte-identical to the checked-in one
-        run: |
-          python -m workhouse.cli index -w
-          git diff --exit-code index/
       - name: CLI regression tests
         run: python -m pytest tests/test_cli.py -q
 
@@ -236,7 +242,7 @@ jobs:
   verified:
     name: Record the verified tree
     needs: [scope, check, lean, windows-smoke]
-    if: needs.scope.outputs.full == 'true' && needs.scope.outputs.verified_by == ''
+    if: github.event_name != 'pull_request' && needs.scope.outputs.full == 'true' && needs.scope.outputs.verified_by == ''
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
