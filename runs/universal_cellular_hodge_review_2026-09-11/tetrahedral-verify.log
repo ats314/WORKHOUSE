@@ -1,0 +1,26 @@
+
+restored payloads (G1)
+  PASS  T1  FINDING: no tetrahedral certificate exists, and no reference SHA is recorded for one
+        no pinned path and no canonical-manifest row mentions a tetrahedral artifact, and no digest for one is recorded anywhere � so C15 cannot be closed by shipping; only the G5 re-derivation of the claimed -8/(N(N^2-1)) can close it
+        src/workhouse/invariants/restored.py:224
+
+tetrahedral Haar-resolvent coefficient (G5)
+  PASS  T1  G5: the tetrahedral coefficient is exactly -8/(N(N^2-1))
+        all 12 ordered endpoint pairs agree: 2 histories each, the single intermediate is always the 4-link loop (denominator -C_F/2, i.e. weight -2 per history), S_2 = -4, c_2 = -8/(N**3 - N) -> -1/3 at N = 3 � exactly the value C15 records as asserted-without-artifact; primitive channel only, per the law's own scope
+        src/workhouse/invariants/tetrahedral.py:356
+  PASS  T1  the tetrahedral circuit attains its bound with nonzero weight
+        ker_Z B_2 = [(1, 1, 1, 1)]: one primitive unit-coefficient circuit, w_min = 4, r = 2 = w_min - 2; c_2 = -8/N*(N**2 - 1) < 0 for all N >= 2 (checked exactly at N = 2..12, and the numerator is the constant -8), so the r = 2 allowance carries nonzero primitive Haar-resolvent weight � the falsification test the theorem proposed did not kill the coefficient
+        src/workhouse/invariants/tetrahedral.py:382
+  PASS  T1  primitive proper returns are scalar on the tetrahedral face space
+        per-face return sums [-6, -6, -6, -6]: all four faces give -6 in C_F units (three 4-link returns at weight -2 each), so the return operator is -12/(N**3 - N) times the identity and its traceless compression is 0 � shape-inert at the primitive level; the Q-projected analogue of the pentagonal 28-history vanishing remains uncomputed, so U3 gains a consistent partial point, not a verdict
+        src/workhouse/invariants/tetrahedral.py:407
+
+universal cellular Hodge and tetrahedral resolution
+  PASS  T1  tetrahedral Hodge duality and S_4 commutant theorem
+        on the tetrahedron: L_down = 4Q, L_up = 4P, L_down + L_up = 4I. The permutation representation decomposes as 1 (+) 3 of S_4, so Comm(S_4) = span{P, Q} = Hodge algebra. For ANY S_4-invariant operator M, Q M P = 0 and the traceless compression Q M Q - (Tr/3) Q = 0 identically. No S_4-symmetric dynamics can generate off-carrier coupling or shape dispersion at any order.
+        src/workhouse/invariants/universal_cellular_hodge.py:130
+  PASS  T1  tetrahedral proper returns: all 60 fourth-order histories vanish under intermediate Q-projection
+        tetrahedral 4th-order chains: 60 proper returns (intermediate return to origin/carrier), 36 direct transports. Because Q P = 0 identically, all 60 proper-return histories are annihilated individually by intermediate Feshbach resolvent Q. This confirms candidate U3's conjecture and resolves the challenge in ADR 0008 and ADR 0045.
+        src/workhouse/invariants/universal_cellular_hodge.py:173
+
+6/6 checks passed
