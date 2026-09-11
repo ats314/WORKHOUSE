@@ -142,3 +142,37 @@ The task remains a completed conditional analytic implication with G19 open.
 The final publication/merge record is retained in the outer workstation task
 `C:/WORKHOUSE/navigation/tasks/2026-09-11-g19-moving-time-closure.md`;
 that record is updated only after observing the actual GitHub outcome.
+
+
+## Concurrent-main integration
+
+PR 146 merged as `b33f47d792eea494f7716d4599cdbb5526364019` while PR 147 was starting. The original
+PR head `c614a38d72b5975b1994b47616619721074e12d0` passed all four selected
+CI checks in run 34633347831; its Lean and verified-tree jobs were skipped.
+The concurrent change concerns the planar fourth-order band (G16). It adds
+five exact controls and three tests; it supplies no new G19 Wilson input.
+
+The only text conflict was `index/claims.jsonl`. Its exact conflict bytes and
+both parent navigation versions are retained at the paths/hashes in
+`discovery/g19-kernel-evidence-20260911/main-integration.json`. An existing
+generated main catalogue seeded the native writer; no catalogue entries were
+hand reconciled. Native index/frontier/certified regeneration then completed.
+
+The combined source digest is `f7bb6d0c048f15c36e926641a9c70381ecdd0aece4aa9e0542cfc69d075f54f8`.
+The final matched snapshot is `graph-tasks/discovery/g19-kernel-main-integration-end-20260911.json`, fingerprint
+`a9c05a82fa54a22f211fee1c814b637648a549bc0369921a40e80fbce9e9dbd9`. The unchanged G19 proof retains SHA-256
+`d7088d36f67a1f8c9abdce0193bf2015b2a1bd4426e4dedf11f9c855998a8a33`.
+
+The 15 selected integration modules completed with **794 passed, 1 skipped in 538.03s (0:08:58)**. They
+cover all registered invariants, both added mathematical modules, generated
+views, graph/result/source records, paper hashes, CLI and documentation.
+Their use of the same observed byte-identified cache is explicitly recorded;
+this does not replace the earlier uncached 601-check and full pytest logs.
+Combined-source Ruff and formatting passed (563 files), and maintained
+documentation checks passed after regeneration. The transcript is byte-pinned
+by `main-integration-transcript.json`. No Lean source was changed or built.
+
+Git's initial staging normalized the Windows transcript bytes. The hash check
+caught that before commit. A folder-local `* -text` rule and exact-path
+restaging preserve all evidence bytes; all 14 original source/log hashes were
+verified against the committed Git blobs. No proof or tolerance was changed.
