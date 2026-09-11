@@ -97,6 +97,7 @@ _MODULES = (
     "w6_antipodal",
     "dimension_five_irrelevance",
     "sixth_order",
+    "universal_cellular_hodge",
 )
 
 for _name in _MODULES:

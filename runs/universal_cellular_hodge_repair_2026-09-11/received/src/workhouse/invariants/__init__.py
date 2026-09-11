@@ -1,0 +1,109 @@
+"""
+Each check answers one question: *does this printed number follow from the
+definition the corpus gives for it?* A check that fails is not automatically a
+physics error — it is usually a transcription slip, a normalization erratum, or
+a presentation difference. It is always worth knowing about.
+
+Checks never adjudicate the fourth-order dispute. They verify the arithmetic
+each side reports, and the exact size of the disagreement between them.
+
+One module per subject, assembled here. This file fixes the order the
+suites register in, which is the order ``workhouse verify`` and
+``FRONTIER.md`` print them; importing a suite module has the side effect
+of registering its suite, so the import list below is not decoration.
+"""
+
+from __future__ import annotations
+
+import importlib
+
+from ._core import SUITES, Result, Suite, source_path
+
+#: Suite modules, in the order their suites must register.
+#:
+#: Walked by ``import_module`` rather than written as a block of import
+#: statements because an import block is sorted alphabetically by the
+#: formatter, which would silently reorder every suite in
+#: ``workhouse verify`` and in ``FRONTIER.md``. The order here is the
+#: order the single-file version defined them in.
+_MODULES = (
+    "rank_law",
+    "assembly",
+    "su3",
+    "charge_even",
+    "fourth_order",
+    "homology",
+    "interpolator",
+    "isolation",
+    "adjudication",
+    "uniformity",
+    "tier",
+    "pentagonal",
+    "string_tension",
+    "published",
+    "restored",
+    "coupling",
+    "tetrahedral",
+    "notes_program",
+    "channels",
+    "manuscript",
+    "bridge",
+    "two_cube",
+    "electric_shell",
+    "orbits",
+    "continuum",
+    "swap_odd",
+    "hecke",
+    "third_implementation",
+    "all_rank",
+    "gamma_isolation",
+    "rank_field",
+    "path_reduction",
+    "wilson_step",
+    "wilson_block",
+    "wilson_vacuum_chart",
+    "wilson_compression",
+    "rooted_creator",
+    "wilson_creator_parent",
+    "wilson_activity_extraction",
+    "wilson_creator_velocity",
+    "wilson_physical_band",
+    "continuum_wilson_block",
+    "continuum_scale_comparison",
+    "nonlinear_wilson_block",
+    "literal_coarse_sources",
+    "endpoint_window",
+    "hodge_feshbach",
+    "feshbach_resolvent",
+    "ym_reconstruction",
+    "ym_flat_directions",
+    "ym_ground_state",
+    "wilson_marked",
+    "wilson_shell",
+    "wilson_spatial",
+    "wilson_selected",
+    "ym_pbh",
+    "wilson_weighted",
+    "wilson_vacuum",
+    "wilson_background",
+    "wilson_sc17",
+    "yangmills_gpu_audit",
+    "balaban_repair",
+    "anisotropy_variance",
+    "theory_current_bridges",
+    "w6_antipodal",
+    "dimension_five_irrelevance",
+    "sixth_order",
+    "universal_cellular_hodge",
+)
+
+for _name in _MODULES:
+    importlib.import_module(f"{__name__}.{_name}")
+
+
+def run_all() -> list[Result]:
+    """Run every suite and return a flat list of results."""
+    return [r for s in SUITES for r in s.run()]
+
+
+__all__ = ["SUITES", "Result", "Suite", "_MODULES", "run_all", "source_path"]

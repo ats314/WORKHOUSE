@@ -6096,6 +6096,158 @@ documents:
     lean: []
     remaining: The full analytic argument is not formalized in Lean. Exact finite controls retain their
       narrower scopes; actual Wilson continuum/source realization is a separate open application.
+- id: CITE:UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL
+  path: docs/derivations/universal-cellular-hodge-tetrahedral.md
+  sha256: 427974f8eda3ae77db78809fd091d4e2ecc6980ab8459eae9207a348089b81c7
+  statements:
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:SPECTRUM_EIGENVALUE
+    statement: For a connected regular cellular sphere bounding one 3-cell in unweighted real incidence
+      bases, ker L_down=R psi, L_down L_up=0, L_up psi=F psi, and L_up Q=Q L_up=0.
+    locator: '### 2.2 Universal spectral identities (lines 45-58)'
+    anchor: '### 2.2 Universal spectral identities'
+    source_labels:
+    - Theorem 1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Connected closed orientable regular polyhedral sphere boundary, with each edge in two faces and
+      unit incidence entries.
+    - L_down=B^T B, L_up=psi psi^T, signed fundamental cycle psi, and Q=I-psi psi^T/F.
+    depends_on: []
+    lean: []
+    lean_support:
+    - name: feshbach_q_annihilates_l_up
+      scope: The rank-one inner-product identity L_up Q=0 under lam=inner(psi,psi) != 0.
+    remaining: Cellular incidence construction and one-dimensional cycle kernel remain unformalized.
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:UP_HARMONIC_EXCURSION
+    statement: For a linear operator R on finite-dimensional real face space, the rank-one complement
+      excursion Q R psi is killed by L_up.
+    locator: '### 2.3 Universal Up-Harmonicity of Excursions (lines 59-67)'
+    anchor: '### 2.3 Universal Up-Harmonicity of Excursions'
+    source_labels:
+    - Theorem 2
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Rank-one up-Laplacian, nonzero carrier norm, and orthogonal rank-one complement.
+    depends_on:
+    - DERIV:UNIVERSAL_CELLULAR_HODGE:SPECTRUM_EIGENVALUE
+    lean:
+    - cellular_excursion_up_harmonic
+    remaining: None for the rank-one identity; its cellular realization is covered separately.
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:TOTAL_LAPLACIAN_DIAGONAL
+    statement: The total face Laplacian has diagonal p_f+1; its diagonal is scalar exactly when all face
+      perimeters agree, without geometric regularity.
+    locator: '### 2.4 Total Laplacian Diagonal & Regularity Criterion (lines 68-83)'
+    anchor: '### 2.4 Total Laplacian Diagonal & Regularity Criterion'
+    source_labels:
+    - Theorem 3
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Regular cellulation with unit unweighted incidence bases and fundamental face coordinates of magnitude
+      one.
+    depends_on: []
+    lean: []
+    remaining: Combinatorial incidence and perimeter identities remain unformalized.
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:TETRAHEDRAL_S4_COMMUTANT
+    statement: On the tetrahedral face permutation representation L_down=4Q, L_up=4P and Comm(S4)=span(P,Q);
+      every commuting face operator has zero off-carrier compression and scalar Q compression.
+    locator: '### 3.1 Tetrahedral Hodge duality and 3.2 The S4 commutant (lines 86-119)'
+    anchor: '### 3.2 The S4 commutant'
+    source_labels:
+    - Theorem 4
+    - Theorem 5
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Coherently oriented tetrahedron, unweighted face basis, and an operator commuting with all 24 face
+      permutations.
+    depends_on:
+    - DERIV:UNIVERSAL_CELLULAR_HODGE:SPECTRUM_EIGENVALUE
+    lean: []
+    lean_support:
+    - name: tetrahedral_hodge_duality
+      scope: Assuming complementary maps and L_down=4Q, L_up=4P, proves their sum is 4I and product zero;
+        no incidence or S4 construction.
+    - name: traceless_compression_vanishes
+      scope: Scalar arithmetic c-(3c)/3=0 when 3 is nonzero; no representation or trace construction.
+    remaining: Actual incidence matrices, the S4 commutant, and matrix trace remain unformalized.
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:PROPER_RETURN_Q_ANNIHILATION
+    statement: The 60 paths flagged by the submitted endpoint-or-zero flux predicate identify physical
+      tetrahedral retained-sector returns that vanish individually under intermediate Q projection.
+    locator: '### 3.4 Open physical-history identification (lines 133-156)'
+    anchor: '### 3.4 Open physical-history identification'
+    source_labels:
+    - Physical-history obligation
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - An actual Haar/Fierz Hilbert space, physical retained projector, insertion channels, and projected
+      resolvent states matching the enumerated paths.
+    depends_on: []
+    lean: []
+    lean_support:
+    - name: feshbach_intermediate_return_annihilation
+      scope: Under lam=inner(psi,psi) != 0, the rank-one complement kills every scalar multiple c psi;
+        no history identification is proved.
+    remaining: 'Open: construct and identify the physical states/projector and calculate each projected
+      contribution. The 60/36 flux count and Q psi=0 do not establish this identification.'
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:RETAINED_VECTOR_RANK_ONE
+    statement: In a real inner-product space with lam=inner(psi,psi) != 0, the complement v -> v-(inner(psi,v)/lam)
+      psi annihilates every vector c psi.
+    locator: '### 3.3 Feshbach Intermediate Annihilation of Retained Vectors (lines 120-132)'
+    anchor: '### 3.3 Feshbach Intermediate Annihilation of Retained Vectors'
+    source_labels:
+    - Theorem 6, rank-one clause
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Real inner-product space, lam=inner(psi,psi) != 0, and scalar c.
+    depends_on: []
+    lean:
+    - feshbach_intermediate_return_annihilation
+    remaining: None for this rank-one identity; physical history membership is a separate open statement.
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:RSMR_MASTER_THEOREM
+    statement: For the cubic Laurent operators with S=L_down-4I, sigma(R S^m R)=(q-4)^m(q e2+3e3)-4 Pi_m(q)e2^2
+      for every natural m, with Pi defined polynomially also at q=0.
+    locator: '### 4.3 The carrier symbol (lines 196-221)'
+    anchor: '### 4.3 The carrier symbol'
+    source_labels:
+    - Theorem 7
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Cubic Laurent Hodge operators with L_down+U=qI, U^2=qU, S=L_down-4I.
+    - Unnormalized carrier symbol, sigma(RR)=q e2+3e3 and sigma(RUR)=4e2^2.
+    depends_on:
+    - DERIV:UNIVERSAL_CELLULAR_HODGE:SHIFTED_OPERATOR_POWERS
+    lean: []
+    lean_support:
+    - name: hodge_sandwiched_power
+      scope: For any linear endomorphisms with U^2=qU and S=(q-4)I-U, proves the R S^m R operator decomposition
+        for every natural m; Laurent carrier evaluations are separate.
+    remaining: Laurent realization, carrier symbols, and identification of the all-power operator theorem
+      with this realization remain outside Lean.
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:SHIFTED_OPERATOR_POWERS
+    statement: For linear endomorphisms over a field with U^2=qU and S=(q-4)I-U, S^m=(q-4)^m I-Pi_m U,
+      R S^m R=(q-4)^m R^2-Pi_m RUR, and q Pi_m=(q-4)^m-(-4)^m for every natural m.
+    locator: '### 4.2 Polynomial recurrence and operator powers (lines 172-195)'
+    anchor: '### 4.2 Polynomial recurrence and operator powers'
+    source_labels:
+    - Theorem 8
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Field K, a K-module, endomorphisms U and R, and U^2=qU.
+    - Pi_0=0 and Pi_(m+1)=(q-4)^m-4Pi_m; no division or nonzero-q premise.
+    depends_on: []
+    lean:
+    - hodge_pi_cleared
+    - hodge_shifted_power
+    - hodge_sandwiched_power
+    remaining: None for the operator and cleared recurrence identities; physical and Laurent realizations
+      are separate.
 
 - id: CITE:OS_KERNEL_GAP
   path: docs/derivations/os-kernel-moving-time-gap.md
