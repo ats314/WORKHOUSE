@@ -435,7 +435,13 @@ def _discover(args) -> int:
                 )
                 report = present_mod.render_impact(result)
             elif args.discovery_command == "connections":
-                result = engine.connections(args.id, query=args.query, limit=args.limit)
+                result = engine.connections(
+                    args.id,
+                    query=args.query,
+                    limit=args.limit,
+                    queries=_sub_queries(args),
+                    include_external=not getattr(args, "internal_only", False),
+                )
                 if full:
                     report = render_text(result)
                 else:
@@ -451,6 +457,7 @@ def _discover(args) -> int:
                     graph_weight=args.graph_weight,
                     semantic=Path(args.semantic) if args.semantic else None,
                     queries=_sub_queries(args),
+                    include_external=not getattr(args, "internal_only", False),
                 )
                 if args.context_chars:
                     result = context_pack(result, args.context_chars)
@@ -699,6 +706,11 @@ def main(argv: list[str] | None = None) -> int:
         "--excerpt-chars", type=int, help="excerpt budget per compact row (default 700)"
     )
     ds_search.add_argument(
+        "--internal-only",
+        action="store_true",
+        help="ignore passages indexed from outer-workspace roots",
+    )
+    ds_search.add_argument(
         "--full", action="store_true", help="full response with every passage and the manifest"
     )
     ds_search.add_argument("--json", action="store_true")
@@ -713,6 +725,19 @@ def main(argv: list[str] | None = None) -> int:
     ds_connections.add_argument("--limit", type=int, default=10)
     ds_connections.add_argument(
         "--excerpt-chars", type=int, help="excerpt budget per compact candidate (default 700)"
+    )
+    ds_connections.add_argument(
+        "--query-extra",
+        dest="queries",
+        action="append",
+        metavar="TEXT",
+        help="an additional sub-query fused with the focus question; repeatable",
+    )
+    ds_connections.add_argument("--queries-file", metavar="PATH", help="sub-queries or a plan")
+    ds_connections.add_argument(
+        "--internal-only",
+        action="store_true",
+        help="ignore passages indexed from outer-workspace roots",
     )
     ds_connections.add_argument(
         "--full", action="store_true", help="full response with every witness and passage"

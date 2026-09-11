@@ -291,7 +291,7 @@ def test_connections_reserve_slots_for_unlinked_passages(engine, monkeypatch):
                     "start_line": 10,
                     "end_line": 14,
                     "source_sha256": "a" * 64,
-                    "text": "an imported note about the score estimate",
+                    "text": f"an imported note number {number} about the score estimate",
                     "score": 0.5 - number * 0.1,
                 }
             )
@@ -320,3 +320,66 @@ def test_connections_reserve_slots_for_unlinked_passages(engine, monkeypatch):
     assert row["locator"].startswith("notes/imported/")
     assert "discover pair A notes/imported/note0.md:10-14" in row["commands"]["pair"]
     assert "notes/imported/note0.md:10-14" in render_connections(compact)
+
+
+def test_abstention_hint_is_a_coverage_rule_not_a_verdict():
+    from workhouse.discovery_present import abstention_hint, content_terms, query_terms
+
+    terms = query_terms("Hardy tail resistance of the score for N 3")
+    assert content_terms(terms) == ["hardy", "resistance", "score", "tail"]
+    strong = [{"matched_terms": ["hardy", "resistance", "tail"], "channels": {"lexical": 1}}]
+    weak = [{"matched_terms": ["score"], "channels": {"lexical": 1}}]
+    exact = [{"matched_terms": ["score"], "channels": {"lexical": 1, "exact": 1}}]
+    assert abstention_hint(strong, terms)["weak_match"] is False
+    assert abstention_hint(weak, terms)["weak_match"] is True
+    assert abstention_hint(weak, terms)["coverage"] == 0.25
+    assert abstention_hint(exact, terms)["weak_match"] is False
+    assert abstention_hint([], terms)["weak_match"] is True
+
+
+def test_identical_passages_collapse_and_external_can_be_excluded(engine, monkeypatch):
+    old_search = engine.index.search
+
+    def passages(query, limit=100):
+        rows = old_search(query, limit)
+        copy_text = "an archive copy of the score estimate\n"
+        rows.append(
+            {
+                "id": "PASSAGE:external-copy",
+                "claim_ids": [],
+                "kind": "passage",
+                "path": "ext:archive/old/copy.md",
+                "start_line": 1,
+                "end_line": 1,
+                "source_sha256": "b" * 64,
+                "text": copy_text,
+                "score": 0.7,
+                "external": True,
+                "source_label": "archive",
+            }
+        )
+        rows.append(
+            {
+                "id": "PASSAGE:internal-original",
+                "claim_ids": [],
+                "kind": "passage",
+                "path": "docs/derivations/original.md",
+                "start_line": 5,
+                "end_line": 5,
+                "source_sha256": "c" * 64,
+                "text": copy_text,
+                "score": 0.7,
+            }
+        )
+        return rows
+
+    monkeypatch.setattr(engine.index, "search", passages)
+    output = engine.search("score", limit=5)
+    ids = [hit["id"] for hit in output["hits"]]
+    assert "PASSAGE:internal-original" in ids and "PASSAGE:external-copy" not in ids
+    original = next(hit for hit in output["hits"] if hit["id"] == "PASSAGE:internal-original")
+    assert original["also_at"] == ["ext:archive/old/copy.md:1"]
+    assert output["retrieval"]["duplicate_passages_collapsed"] == 1
+    internal = engine.search("score", limit=5, include_external=False)
+    assert all(not hit.get("external") for hit in internal["hits"])
+    assert internal["retrieval"]["include_external"] is False

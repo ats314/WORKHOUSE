@@ -143,8 +143,17 @@ class DiscoveryEngine:
         semantic: Path | None = None,
         queries: list[str] | None = None,
         query_weights: list[float] | None = None,
+        include_external: bool = True,
     ) -> dict:
         """Fuse lexical, exact, graph and optional semantic retrieval.
+
+        ``include_external=False`` drops passages indexed from outer-workspace
+        roots before fusion, which is the ablation the evaluation reports.
+        Passages whose whole text is identical to an earlier hit (archive
+        copies of a repository document) collapse into that hit, with the
+        other locations listed in ``also_at``; a repository copy is preferred
+        over an external one at equal score. A copied passage is not another
+        source, and letting copies fill the result list hid the originals.
 
         ``queries`` adds sub-queries (a decomposed question, lexicon
         expansions, an agent's reformulations). Each sub-query retrieves its
@@ -198,10 +207,15 @@ class DiscoveryEngine:
         query_ranks: dict[str, dict[str, int]] = defaultdict(dict)
         seed_weights: dict[str, float] = defaultdict(float)
         best_passage: dict[str, dict] = {}
+        duplicates: dict[str, str] = {}
         for number, text in enumerate(texts, 1):
             label = f"q{number}"
             weight = weights_by_text[text]
             lexical = self.index.search(text, limit=max(pool, limit))
+            if not include_external:
+                lexical = [hit for hit in lexical if not hit.get("external")]
+            # Stable: equal scores keep repository copies ahead of external ones.
+            lexical.sort(key=lambda hit: (-float(hit.get("score", 0.0)), bool(hit.get("external"))))
             per_query_exact[label] = self._exact(text)
             ranking: list[str] = []
             # A source chunk can map to a document and several scoped statements.
@@ -216,6 +230,14 @@ class DiscoveryEngine:
                 else:
                     row = {**hit, "where": f"{hit['path']}:{hit.get('start_line', 1)}"}
                 row["id"] = hit_key
+                if hit.get("kind") == "passage":
+                    signature = " ".join(str(hit.get("text", "")).split())
+                    twin = duplicates.setdefault(signature, hit_key)
+                    if twin != hit_key:
+                        twin_row = candidates.get(twin)
+                        if twin_row is not None and row["where"] not in twin_row.get("also_at", []):
+                            twin_row.setdefault("also_at", []).append(row["where"])
+                        continue
                 candidates.setdefault(hit_key, row)
                 ranking.append(hit_key)
                 query_ranks[hit_key].setdefault(label, rank)
@@ -351,6 +373,10 @@ class DiscoveryEngine:
                 "graph_tolerance": propagation.get("tolerance", 1e-6),
                 "semantic": semantic_provenance,
                 "candidate_pool": pool,
+                "include_external": include_external,
+                "duplicate_passages_collapsed": sum(
+                    len(row.get("also_at", [])) for row in candidates.values()
+                ),
                 "source_diversity": "two per source before filling unused slots",
                 "saved_graph_freshness": "not assessed; retain workhouse brief for scientific use",
             },
@@ -407,6 +433,7 @@ class DiscoveryEngine:
         limit: int = 10,
         queries: list[str] | None = None,
         passage_quota: int | None = None,
+        include_external: bool = True,
     ) -> dict:
         """Unlinked candidates for a graph node: registered records and raw passages.
 
@@ -426,7 +453,13 @@ class DiscoveryEngine:
             raise ValueError("passage_quota must lie between 0 and limit")
         query = query or self.records[node].get("statement", "")
         search = self.search(
-            query, limit=100, seeds=[node], pool=250, related_limit=100, queries=queries
+            query,
+            limit=100,
+            seeds=[node],
+            pool=250,
+            related_limit=100,
+            queries=queries,
+            include_external=include_external,
         )
         candidates = list(
             dict.fromkeys(
@@ -524,6 +557,7 @@ class DiscoveryEngine:
             "seed": self.records[node],
             "query": query,
             "queries": search.get("queries"),
+            "include_external": include_external,
             "candidates": connections,
             "record_candidates": len(ordered),
             "passage_candidates": len(passage_rows),

@@ -174,6 +174,8 @@ def compact_hit(
             # The excerpt is source text; the statement is the catalogue wording.
             row["statement"] = str(record.get("statement", ""))[: min(400, max_chars)]
         row["commands"] = _commands(hit["id"])
+    if hit.get("also_at"):
+        row["also_at"] = list(hit["also_at"])
     if hit.get("query_ranks"):
         row["query_ranks"] = dict(hit["query_ranks"])
     if hit.get("graph_witness"):
@@ -211,6 +213,42 @@ def provenance_summary(meta: dict, root: Path | None = None) -> dict:
     return {key: value for key, value in summary.items() if value is not None}
 
 
+ABSTENTION_COVERAGE = 0.5
+
+
+def content_terms(terms: list[str]) -> list[str]:
+    """Query tokens that can carry meaning: no bare one-letter or integer tokens."""
+    return [term for term in terms if len(term) > 1 and not term.lstrip("-").isdigit()]
+
+
+def abstention_hint(rows: list[dict], terms: list[str]) -> dict:
+    """A pre-registered weak-match signal; the engine itself never abstains.
+
+    OR-ed lexical matching returns something for almost any query, so a
+    caller cannot read "no hits" as "nothing relevant". The hint is true when
+    the top direct row matches fewer than half of the query's distinct
+    content terms and no exact channel contributed. The rule was fixed before
+    any held-out negative control was inspected beyond its pass count, and
+    the evaluation reports how it behaves rather than tuning it.
+    """
+    wanted = content_terms(terms)
+    rule = "top direct row matches < 50% of content terms and no exact channel"
+    if not rows or not wanted:
+        return {"weak_match": not rows, "coverage": 0.0, "rule": rule}
+    top = rows[0]
+    matched = [term for term in top.get("matched_terms", []) if term in wanted]
+    coverage = len(matched) / len(wanted)
+    exact = "exact" in (top.get("channels") or {})
+    return {
+        "weak_match": coverage < ABSTENTION_COVERAGE and not exact,
+        "coverage": round(coverage, 3),
+        "content_terms": len(wanted),
+        "matched_content_terms": len(matched),
+        "exact_channel": exact,
+        "rule": rule,
+    }
+
+
 def present(result: dict, *, max_chars: int = EXCERPT_CHARS, root: Path | None = None) -> dict:
     """Render a search result as compact rows; scores and order are unchanged."""
     terms = query_terms(result.get("queries") or result.get("query", ""))
@@ -229,6 +267,7 @@ def present(result: dict, *, max_chars: int = EXCERPT_CHARS, root: Path | None =
         "seeds": result.get("seeds", []),
         "hits": rows,
         "related": related,
+        "abstention_hint": abstention_hint(rows, terms),
         "retrieval": result.get("retrieval"),
         "provenance": provenance_summary(result.get("provenance", {}), root),
         "meaning": result.get("meaning"),
@@ -263,6 +302,7 @@ def context_pack(result: dict, max_chars: int = 16000, *, root: Path | None = No
             for key, value in (compact.get("retrieval") or {}).items()
             if key in {"channels", "fusion", "graph_method", "graph_residual", "candidate_pool"}
         },
+        "abstention_hint": compact.get("abstention_hint"),
         "hits": [],
         "omitted": 0,
         "omitted_ids": [],
