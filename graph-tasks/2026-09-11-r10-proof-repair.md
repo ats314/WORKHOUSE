@@ -48,3 +48,21 @@ preliminary focused run was interrupted; final validation starts after repairs.
 Integration update: main advanced through PR 151 to 60728319516c6af49c700b7791f52ecf772f4bc3. Its odd-order results, source and registers are preserved. Final snapshot and validation logs belong to graph-tasks/evidence/r10-proof-repair-20260911/ (owned), protected by a narrow .gitattributes entry. Scientific inputs are now frozen for final validation.
 
 Registry correction: runs/index.yaml is additionally owned. The full suite found the missing preservation-run entry (1987 passed, 4 skipped, 1 failed; 11 subtests passed). Registration is corrected and affected catalogue checks will be rerun. All 624 fresh mathematical checks passed.
+
+Final integration update: PR 149 advanced main to ffff7bb2e67b976ba50fe5cf7184966dd581535f. Both sixth_order_cluster and the R10 invariant remain registered. Shared generated views are regenerated from the integrated sources; the preceding registry-only regeneration was interrupted and is not counted as a pass.
+
+Final source snapshot: graph-tasks/evidence/r10-proof-repair-20260911/end-integrated.json.
+Fingerprint: 981bd01c610b0851d749406ce1532824121053297376be956404dd5a9b272931.
+Input manifest: 9bf2aba02c4d49ed2040905d003431eb84549953c76d81706de17da754c5d5e7.
+Saved/matched; executed 0, cache reused 0, recorded 627. This is a freshness
+receipt, not a fresh proof run. Index generation converged at 17,525 claims,
+28 symbols and 29,700 graph edges; frontier and certified views were regenerated.
+
+Final integration checks: 87 R10/sixth-order/priority tests passed; all six R10
+checks were freshly rerun and passed; ruff check and formatting (591 files)
+passed; documentation checked 572 links with no errors or warnings. The earlier
+624/624 full invariant run and 1987-pass full test run belong to the preceding
+6072831 integration, as recorded above, rather than this later upstream tree.
+Original preservation hashes and the pinned repaired paper source were verified.
+
+Final regression receipts: pytest-graph-final.log reports 59 passed; pytest-views-final.log reports 21 passed. The derivation proof-map freshness check passed. No unresolved merge conflicts remain. Publication uses PR 150 with its corrected title and scope; exact-head CI and merge receipts will be recorded in the workstation task closeout.

@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 439 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 624/624 checks pass.
+**T1/T2 — re-derived here.** 627/627 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -92,6 +92,7 @@ it cannot drift from what the repository actually checks.
 | dimension counts and geometric scaling controls (G19) | 5/5 |
 | G9 sixth-order folds and combined carrier shapes | 6/6 |
 | universal cellular Hodge and tetrahedral algebra | 5/5 |
+| G9 direct sixth order on one face and the shared-link pairs, any rank | 3/3 |
 | W6 R10 repaired identities and counterchecks | 6/6 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
