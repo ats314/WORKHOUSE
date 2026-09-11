@@ -90,3 +90,15 @@ def test_script_reports_only_scoped_controls(script, tmp_path):
     assert report["checks"] and all(row["passed"] for row in report["checks"])
     assert report["actual_m10_status"] == "open"
     assert "Global domination bound holds" not in run.stdout
+
+
+@pytest.mark.parametrize(
+    "check",
+    [
+        m10.check_actual_jet_forcing,
+        m10.check_weighted_jet_absorption,
+        m10.check_control_action_and_slack,
+    ],
+)
+def test_actual_complement_normalizations(check):
+    assert check()[0]

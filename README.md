@@ -1,6 +1,6 @@
 # WORKHOUSE
 
-The [M10 proof repair](docs/derivations/w6-synchronized-m10-domination.md) establishes a uniform action gap outside a neighborhood of the complete minimizing set and an exact angular reference-score budget. Actual M10 remains open: parameter-differentiated amplitudes, actual normal/angular comparison and normalized complements still require estimates. The earlier completion claim is preserved and corrected.
+The [M10 proof repair](docs/derivations/w6-synchronized-m10-domination.md) establishes actual centered conditional complement suppression outside a neighborhood of the complete minimizing set and an exact angular reference-score budget. Actual M10 remains open: polynomial relative-amplitude control, tube moments and actual normal/angular comparison still require estimates. The earlier completion claim is preserved and corrected.
 
 [![CI](https://github.com/ats314/WORKHOUSE/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ats314/WORKHOUSE/actions/workflows/ci.yml)
 

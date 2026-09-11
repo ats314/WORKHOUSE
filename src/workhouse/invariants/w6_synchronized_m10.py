@@ -171,3 +171,51 @@ def check_normal_angular_budget():
         "E[(|z|^2/g^2+lambda(1-t))^2]<=99/4 for every lambda>=0. "
         "Actual-law comparison and score error must still be supplied."
     )
+
+
+@synchronized_m10.check(
+    "W6 synchronized: actual first-jet forcing normalization", CITE + " Section 6"
+)
+def check_actual_jet_forcing():
+    g, lam, potential, mean = sp.symbols("g lambda V mean", positive=True)
+    # Differentiate P_h Psi=lambda Psi using the established energy derivative.
+    eigenvalue_derivative = 4 * (lam - mean) / g
+    differentiated_operator_on_ground = 4 * (lam - potential) / g
+    residual = sp.simplify(
+        eigenvalue_derivative - differentiated_operator_on_ground - 4 * (potential - mean) / g
+    )
+    return residual == 0, "(P_h-lambda) partial_g Psi=(4/g)(V-mean V)Psi; forcing factor checked."
+
+
+@synchronized_m10.check(
+    "W6 synchronized: weighted-jet Young absorption algebra", CITE + " Section 6"
+)
+def check_weighted_jet_absorption():
+    h = sp.Symbol("h", positive=True)
+    v, f = sp.symbols("v f", real=True)
+    remainder = h * v**2 / 2 + f**2 / (2 * h) - v * f
+    square = (sp.sqrt(h) * v - f / sp.sqrt(h)) ** 2 / 2
+    return sp.simplify(remainder - square) == 0, (
+        "Young remainder is a nonnegative square: h||v||^2 absorption loses h^-2||f||^2. "
+        "Actual PDE and Lipschitz-weight arguments are analytic."
+    )
+
+
+@synchronized_m10.check(
+    "W6 synchronized: control-action and exponential-slack normalization", CITE + " Section 6"
+)
+def check_control_action_and_slack():
+    speed, potential = sp.symbols("speed V", positive=True)
+    action_residual = sp.simplify(
+        speed**2 / 2
+        + potential
+        - sp.sqrt(2 * potential) * speed
+        - (speed - sp.sqrt(2 * potential)) ** 2 / 2
+    )
+    action, minimum, gap, slack = sp.symbols("S I kappa b", real=True)
+    exponent = (-2 * (action - slack) + 2 * (minimum + slack)).subs(action, minimum + gap)
+    return action_residual == 0 and sp.simplify(exponent + 2 * (gap - 2 * slack)) == 0, (
+        "Control action uses |velocity|_G^2/2+V; conditioned tail exponent is "
+        "-2(kappa-2b)/g^2. Girsanov propagation and actual fiber normalization "
+        "are proved analytically in the source."
+    )

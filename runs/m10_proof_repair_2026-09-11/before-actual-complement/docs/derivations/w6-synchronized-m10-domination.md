@@ -223,48 +223,15 @@ for a=kappa-2epsilon>0 and m=max(2p+r,0), the function
 is `(m/(2 a e))^(m/2)`, and for m=0 it is at most one. Therefore R10 is
 bounded by a constant times exp(-a/g^2). This proves the normalized
 complement implication without assuming exact polynomial prefactors.
-### Actual complement hypothesis discharged
-
-For the actual fixed square, R9 is now established with any prescribed
-positive slack epsilon, r=0, and the center reference
-`beta_g(Q)=sigma_g(y_*(Q),Q)`. The complete proof is in
-[the actual complement theorem](../../paper/research_notes/W6_M10_REPAIR_RESULTS_20260911.md#actual-centered-conditional-complement-theorem).
-Its steps are:
-
-1. The existing actual first-jet equation is
-   `(P_h-lambda_h) partial_g Psi_g=(4/g)(V-<V>)Psi_g`.
-   The Agmon form identity with the Lipschitz weight (1-a)S gives
-   `||exp((1-a)S/h)Psi||<=C_a` and
-   `||exp((1-a)S/h)partial_g Psi||<=C_a g^-3`.
-   Rescaled elliptic estimates lose only polynomial powers of g, yielding
-   pointwise weighted bounds for Psi and N_g for each a>0.
-2. Feynman--Kac and a finite-time controlled diffusion path of action
-   arbitrarily close to S propagate the established positive local ground
-   lower bound. Girsanov's deterministic-control density and a finite compact
-   cover prove, for every b>0,
-   `Psi_g(x)>=exp(-(S(x)+b)/g^2)` uniformly in x for sufficiently small g.
-3. Integrating on a uniform small fiber ball about a minimizer gives
-   `h_g(Q)>=c_b exp(-2(I(theta)+b)/g^2)` uniformly in Q.
-   The upper and lower bounds imply that the actual score, hence its center
-   value beta, has arbitrarily small exponential growth. Combining this with
-   the weighted Psi bound yields the centered numerator estimate R9 with
-   arbitrarily small slack as well.
-
-Choose the slack below kappa/2 and apply R10. This proves actual exponential
-complement suppression outside the enlarged tube U, with the same reference
-used in the smooth small-angle tube argument. At Q=-I the center score is
-independent of the selected minimizer by gauge symmetry. No smooth global
-phase, magnetic/action Hessian equality, or differentiation of a WKB
-remainder enters this proof. These are analytic PDE/probability arguments;
-the added exact checks guard their scalar normalization, not the full theorem.
-The actual tube amplitude and normal/angular comparison estimates remain open.
+The actual uniform differentiated numerator and normalization in R9 remain
+unsupplied. Denominator cancellation and R8 alone do not imply R9.
 
 ## 7. Assembly criterion and actual status
 
 Assume the actual small-angle hypotheses of section 3, bounded uniform
 phase/amplitude/moment controls on the intermediate annulus, the actual
-comparison/error hypotheses of R5 near the antipode, and the center reference beta on the respective fibers. The actual
-complement theorem in section 6 supplies R9 for this reference. Then
+comparison/error hypotheses of R5 near the antipode, and R9 for the same
+reference beta on the respective fibers. Then
 
 ```
 Var(sigma|Q) <= E[1_tube |sigma-beta|^2|Q]
@@ -279,9 +246,9 @@ the antipodal tube term. On both latter regimes theta>=theta0>0, so
 complement. Taking the maximum of the finitely many constants proves M10.
 Class invariance from section 1 transfers the result to w.
 
-This is a proven assembly implication. Its actual tube hypotheses remain open; the complement is now discharged.
-M11--M15 cannot yet be invoked using this submission as their M10 input.
-The repair establishes actual centered complement suppression and the
+This is a proven assembly implication. Its actual-model hypotheses remain
+open. M11--M15 cannot yet be invoked using this submission as their M10 input.
+The repair establishes a correctly chosen uniform action-gap domain and the
 reference angular crossover bound, but has not completed actual M10.
 
 ## 8. Verification and provenance
