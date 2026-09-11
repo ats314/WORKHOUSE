@@ -16,6 +16,16 @@ hashes, section locators, dependencies, whole-statement proofs, scoped ingredien
 and remaining formalization. Counts belong there and in the generated
 [frontier](../FRONTIER.md), not in another manually maintained total.
 
+
+The [G19 compatible-kernel continuation](derivations/os-kernel-moving-time-gap.md)
+constructs a physical semigroup and total centered history space from
+compatible kernel limits; positive-time history separation supplies the
+needed continuity. One growing-time
+estimate then gives the limiting full-space gap, and one positive
+separated-time correlator gives finite-energy weight. The actual Wilson
+kernel limits, weak-coupling decay rate and nontriviality remain open;
+the fixed-spacing SC17 interval does not contain the continuum trajectory.
+
 ## Read the current claim at its own scope
 
 Use the generated [derivation priority queue](../FRONTIER.md#7-current-derivation-priorities)

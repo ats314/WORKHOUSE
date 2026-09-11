@@ -78,6 +78,7 @@ _MODULES = (
     "feshbach_resolvent",
     "ym_reconstruction",
     "moving_time_gap",
+    "os_kernel_gap",
     "ym_flat_directions",
     "ym_ground_state",
     "wilson_marked",
