@@ -107,4 +107,25 @@ pass also passed before F16/F17 were added. The failed discovery-index attempt,
 intermediate encoding repair and merge conflict bytes remain preserved locally.
 No stopped process counts as a pass.
 
-Full verifier and pytest outcomes: pending completion before publication.
+The separate **fresh** `workhouse verify --json` run passed **645/645**.
+The full pytest command exited **0**; its retained progress marks record
+**2017 passed, 4 skipped**, with no failures.
+The [validation receipt](evidence/archive-derivations-20260911/validation.json)
+and [pinned evidence directory](evidence/archive-derivations-20260911/README.md)
+retain the outputs. Preserved source whitespace is excluded from the maintained
+edit diff check; CRLF receipt bytes are retained, not normalized.
+
+## Publication and stopping point
+
+[PR #155](https://github.com/ats314/WORKHOUSE/pull/155) contains the graph update.
+Its initial draft head passed the PR merge checks, and no review comments were
+present. Main's subsequent PR #154 added only an R10 review task record, which
+has no effect on the scientific-input manifest. The final publication commit
+retains these validation receipts; its exact CI and merge status are confirmed
+in the outer task record and the user-facing completion message.
+
+The original archive, preserved pending worktree and canonical checkout were
+not edited. The isolated worktree and failed discovery cache remain available.
+The next mathematical obligation is the uniform signed off-core drift estimate
+and compatible local/source inequalities, not another assertion of global
+pairing positivity. G17/G19/G23 remain at their existing scoped statuses.
