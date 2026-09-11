@@ -1,0 +1,118 @@
+schema: workhouse-discovery-review/v1
+id: 2026-09-11-moving-time-source-gap-01f32e
+seed: DERIV:YANGMILLS_RECONSTRUCTION:R1
+target: DERIV:SOURCE_CURRENT_BRIDGES:SCB5
+relationship_kind: reusable-ingredient
+reasoning: R1 bounds low-energy projections by positive correlations. SCB5 approximates centered observables
+  by normalized small exponential sources. Applying the projection before the Taylor bound gives a joint
+  cutoff-time theorem with no time-amplified norm error; the actual continuum measure and totality remain
+  hypotheses.
+reviewer: Codex root
+created: '2026-09-11T16:23:01+00:00'
+evidence:
+- command: pair
+  argv:
+  - workhouse
+  - discover
+  - pair
+  - DERIV:YANGMILLS_RECONSTRUCTION:R1
+  - DERIV:SOURCE_CURRENT_BRIDGES:SCB5
+  - --json
+  fingerprint: 316a85c428dd2151e2f5627b33b4ecf85394ebf2c49e076e5b2877c5becfcb2f
+  evidence_fingerprint: 04ada8a976c0ea0817f29c2dab7dc273ef20e2fc2d4c64e035b5988e3f250502
+  evidence_freshness: matched
+  evidence_file: moving-time-pair-20260911.json
+  evidence_sha256: d386ed17dd53fbfc82e5b38311a8a7ccbdb9f85017b864046b8250949becd40a
+  schema: workhouse-discovery/pair/v1
+  selection: rows naming the seed or target (by id, claim id or passage overlap)
+  rows:
+  - claim_ids:
+    - DERIV:YANGMILLS_RECONSTRUCTION:R1
+    excerpt: "\n\\[\n C_F(t)=\\langle F,e^{-tH}F\\rangle\n       =\\int_{[0,\\infty)}e^{-tE}\\,d\\nu_F(E),\\\
+      qquad\n \\nu_F(B)=\\|P_H(B)F\\|^2.\n\\]\n\nFor every `0 <= E < eta` and `t >= 0`, positivity gives\n\
+      \n\\[\n \\nu_F([0,E])\\le e^{Et}C_F(t). \\tag{R1}\n\\]\n\nIf `C_F(t) <= A_F exp(-eta t)` for every\
+      \ `t`, (R1) and `t -> infinity` force `P_H([0,E])F=0`. If this holds with **one common eta > 0**\
+      \ for a dense linear set of centered physical vectors, boundedness of the spectral projection extends\
+      \ it to the whole vacuum orthocomplement. Taking a countable sequence `E` increasing to `eta` excludes\
+      \ spectrum in `(0,eta)`. The prefactor `A_F` may depend on `F`. Neither an upper bound on one correlator\
+      \ nor finitely many observables without "
+    excerpt_truncated: true
+    id: DERIV:YANGMILLS_RECONSTRUCTION:R1
+    kind: record
+    source:
+      available: true
+      bytes: 8022
+      index_sha256_match: true
+      lines:
+      - 5
+      - 27
+      path: docs/derivations/yangmills-reconstruction.md
+      sha256: a180dddf141798385fceeec35d0e3cd1fecf0df126a1d12c43bb8abf1fdbd5a2
+  - claim_ids:
+    - DERIV:SOURCE_CURRENT_BRIDGES:SCB5
+    excerpt: |-
+      For f in A put s_alpha(f)=exp(alpha f)-E exp(alpha f). If |f|<=B and alpha!=0,
+
+          ||s_alpha(f)/alpha-(f-Ef)||_2
+              <= |alpha| B^2 exp(|alpha|B).                    (SCB9)
+
+      This follows from the uniform Taylor remainder
+      |exp(alpha f)-1-alpha f|<=alpha^2 B^2 exp(|alpha|B)/2 and subtracting its
+      expectation. Hence any bounded operator killing s_alpha_n(f) for a sequence
+      of nonzero alpha_n tending to zero kills f-Ef. Density then kills the entire
+      operator on the intended vacuum-orthogonal space.
+
+      Assume an actual positive spectral representation for H>=0. For every such
+      f,n, suppose its centered exponential source has temporal correlation at
+      most A_fn exp(-m t), with a common m>0 and finit
+    excerpt_truncated: true
+    id: DERIV:SOURCE_CURRENT_BRIDGES:SCB5
+    kind: record
+    source:
+      available: true
+      bytes: 16085
+      index_sha256_match: true
+      lines:
+      - 258
+      - 298
+      path: docs/derivations/source-currents-and-spectral-totality.md
+      sha256: 860c81a3fb665d6b9c385365322ff0503e5500d6d79c94d49a0984250a4548a9
+  source_hashes:
+  - path: docs/derivations/source-currents-and-spectral-totality.md
+    lines:
+    - 258
+    - 298
+    sha256: 860c81a3fb665d6b9c385365322ff0503e5500d6d79c94d49a0984250a4548a9
+    role: row
+  - path: docs/derivations/yangmills-reconstruction.md
+    lines:
+    - 5
+    - 27
+    sha256: a180dddf141798385fceeec35d0e3cd1fecf0df126a1d12c43bb8abf1fdbd5a2
+    role: row
+  excerpt_sha256: baf8f7070f4a4b850258aeeefe1d254921d2bbaf8f768aa024818d9ad3ca30fd
+  fingerprint_note: evidence was produced against a different discovery cache than the one observed when
+    this review was recorded
+state: established
+updated: '2026-09-11T16:24:55+00:00'
+registered_as: null
+history:
+- state: pending
+  at: '2026-09-11T16:23:01+00:00'
+  reviewer: Codex root
+  reason: recorded from discovery output; nothing reviewed yet
+- state: reviewing
+  at: '2026-09-11T16:24:55+00:00'
+  reviewer: Codex root
+  reason: Read R1 and SCB5 in full and inspected the historical carrier-measure support and UV-escape
+    argument; checking the joint limit with projected approximate sources.
+- state: established
+  at: '2026-09-11T16:24:55+00:00'
+  reviewer: Codex root
+  reason: MT1 projects before estimating the norm error; compactly supported tests then give MT2. The
+    new theorem uses both premises without asserting a new dependency between the old R1 and SCB5 statements.
+    Exact rate identities and endpoint counterexamples pass; the full continuum identification remains
+    an application hypothesis.
+previous: b1ed34b0719e6fe8a02e576172ed89c8b11cfac4525fbd81a4b1f8bdb4abe085
+genesis: f6e5da64b073f6c6d7736982a69658f6c2d9a65ca1a4f2b0ccaad7deafb74a32
+sha256: a85a8b0daef9037471bc3eb82048556110268810de72df76f573831bc244cdf1
