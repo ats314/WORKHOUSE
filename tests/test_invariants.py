@@ -4,25 +4,44 @@ import pytest
 
 from workhouse.invariants import SUITES
 
-CASES = [(s.name, name, tier, fn) for s in SUITES for name, _sec, tier, fn in s.checks]
+CASES = [(s.name, name, tier) for s in SUITES for name, _sec, tier, _fn in s.checks]
+
+
+@pytest.fixture(scope="session")
+def verdicts():
+    """Every suite's results, computed once per pytest session.
+
+    The suites run through the same per-check cache the collectors use
+    (``check_cache.CheckCache``), so within one session each check executes
+    once however many tests want its verdict: ``test_certified`` renders
+    CERTIFIED.md from the same cache, and whichever runs first pays for the
+    computation. Before this fixture each parametrised case called its check
+    body directly, past the cache, so CI computed every check twice -- about
+    six of the fourteen minutes the check job took on 2026-09-10.
+
+    A cached verdict is keyed on every input a check can read (see
+    ``check_cache``), so a hit means nothing changed since the check last
+    ran. ``WORKHOUSE_NO_CACHE=1`` makes every check execute, and a fresh CI
+    container has nothing to hit.
+    """
+    from workhouse.check_cache import CheckCache
+
+    cache = CheckCache()
+    return {(s.name, r.name): r for s in SUITES for r in s.run(cache=cache)}
 
 
 @pytest.mark.parametrize(
-    ("suite", "name", "tier", "fn"),
+    ("suite", "name", "tier"),
     CASES,
-    ids=[f"{s}::{n}" for s, n, _t, _f in CASES],
+    ids=[f"{s}::{n}" for s, n, _t in CASES],
 )
-def test_invariant(suite, name, tier, fn):
+def test_invariant(suite, name, tier, verdicts):
     # A check returns (passed, detail) or, since 2026-09-01, (passed, detail,
-    # yields). The third element is normalised by the same function the suite
-    # runner uses, so a yielded float without the _NUM suffix fails here too.
-    from workhouse.invariants._core import _exact_yields
-
-    outcome = fn()
-    passed, detail = outcome[0], outcome[1]
-    assert passed, f"[{suite}] T{tier} {name}: {detail}"
-    if len(outcome) == 3:
-        assert _exact_yields(name, outcome[2]), f"[{suite}] {name}: empty yields"
+    # yields). The suite runner normalises the third element with
+    # ``_exact_yields``, so a yielded float without the _NUM suffix fails here
+    # too: the runner records it as a failed result with the reason in detail.
+    result = verdicts[(suite, name)]
+    assert result.passed, f"[{suite}] T{tier} {name}: {result.detail}"
 
 
 def test_every_suite_has_checks():

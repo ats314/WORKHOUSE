@@ -92,6 +92,14 @@ and checks permitted Python help edits structurally; a Markdown extension
 alone does not select the fast path. A failed scope decision fails the `check`
 job. Skipped scientific jobs do not supply new scientific verification.
 
+CI verifies each tree once. A run that passes full verification records the
+tree it checked; a later run for the same tree, normally the push to `main`
+after a merge onto an unmoved base, reports that earlier run and skips the
+scientific jobs. Closing a pull request cancels its in-flight run
+([`ci-supersede.yml`](.github/workflows/ci-supersede.yml)), so the push to
+`main` is the run that counts. A different base, a squash or a rebase gives a
+different tree and verifies in full; a manual dispatch always verifies in full.
+
 For scientific inputs or executable behavior changes, complete their focused
 checks and the applicable repository verification. Linux/macOS:
 
