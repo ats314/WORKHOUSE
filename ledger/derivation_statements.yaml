@@ -6096,3 +6096,118 @@ documents:
     lean: []
     remaining: The full analytic argument is not formalized in Lean. Exact finite controls retain their
       narrower scopes; actual Wilson continuum/source realization is a separate open application.
+
+- id: CITE:OS_KERNEL_GAP
+  path: docs/derivations/os-kernel-moving-time-gap.md
+  sha256: d7088d36f67a1f8c9abdce0193bf2015b2a1bd4426e4dedf11f9c855998a8a33
+  statements:
+  - id: DERIV:OS_KERNEL_GAP:KERNEL
+    statement: Compatible kernel limits and zero-time continuity construct the physical quotient semigroup;
+      centered defining vectors are total.
+    locator: '## K1. Construct the physical semigroup from compatible limiting kernels (lines 10-61)'
+    anchor: '## K1. Construct the physical semigroup from compatible limiting kernels'
+    source_labels:
+    - K1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - A common defining vector space D has vacuum 1 and a physical-time shift semigroup S_t preserving
+      1; cutoff linear embeddings send 1 to unit vacua of H_n>=0.
+    - All fixed-vector Gram kernels converge to finite values; fixed-time embedding/semigroup defects
+      tend to zero in norm.
+    - The limiting diagonal kernels are continuous at zero time, or the full defining history space is
+      positive-time divisible D=union_(tau>0)S_tau D; the latter supplies that continuity by the cutoff-uniform
+      smoothing bound K10.
+    depends_on:
+    - DERIV:OS_KERNEL_GAP:POSITIVE_HISTORY
+    lean: []
+    remaining: The complete analytic Hilbert/semigroup and limit argument is not formalized in Lean; finite
+      controls have narrower scope. Actual Wilson kernel, rate, regularity and nontriviality inputs remain
+      separate.
+  - id: DERIV:OS_KERNEL_GAP:LATE_TIME
+    statement: Log-convex interpolation transfers one growing-time bound per cutoff to every limiting
+      fixed time and yields the full centered gap.
+    locator: '## K2. A single late-time bound controls every limiting fixed time (lines 62-110)'
+    anchor: '## K2. A single late-time bound controls every limiting fixed time'
+    source_labels:
+    - K2
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - A common defining vector space D has vacuum 1 and a physical-time shift semigroup S_t preserving
+      1; cutoff linear embeddings send 1 to unit vacua of H_n>=0.
+    - All fixed-vector Gram kernels converge to finite values; fixed-time embedding/semigroup defects
+      tend to zero in norm.
+    - The limiting diagonal kernels are continuous at zero time, or the full defining history space is
+      positive-time divisible D=union_(tau>0)S_tau D; the latter supplies that continuity by the cutoff-uniform
+      smoothing bound K10.
+    - For a spanning family of D, approximate centered probes converge in norm and obey one growing physical-time
+      estimate with liminf -log(b_n)/T_n>=M>0 common to that family.
+    depends_on:
+    - DERIV:OS_KERNEL_GAP:KERNEL
+    - DERIV:YANGMILLS_RECONSTRUCTION:R1
+    - DERIV:MOVING_TIME_SPECTRAL_GAP:OPTIMAL_BUDGET
+    lean: []
+    remaining: The complete analytic Hilbert/semigroup and limit argument is not formalized in Lean; finite
+      controls have narrower scope. Actual Wilson kernel, rate, regularity and nontriviality inputs remain
+      separate.
+  - id: DERIV:OS_KERNEL_GAP:WEIGHT
+    statement: One positive separated-time limiting correlation supplies explicit nonzero finite-energy
+      spectral weight without an atom hypothesis.
+    locator: '## K3. Nontrivial finite-energy weight from one separated-time lower bound (lines 111-132)'
+    anchor: '## K3. Nontrivial finite-energy weight from one separated-time lower bound'
+    source_labels:
+    - K3
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - H>=0 is the actual self-adjoint physical Hamiltonian; V=||f_c||^2 is finite and C=<f_c,exp(-tau
+      H)f_c>>0 for tau>0.
+    - For the interval [M,R] conclusion, the centered spectrum is already bounded below by M.
+    depends_on:
+    - DERIV:OS_KERNEL_GAP:LATE_TIME
+    lean: []
+    remaining: The complete analytic Hilbert/semigroup and limit argument is not formalized in Lean; finite
+      controls have narrower scope. Actual Wilson kernel, rate, regularity and nontriviality inputs remain
+      separate.
+  - id: DERIV:OS_KERNEL_GAP:LIMITATIONS
+    statement: Explicit cutoff families separate zero-time regularity, full-space scope, positive rate
+      and physical clock; bounded normalized covariance alone need not give a summable scale increment.
+    locator: '## K4. Falsifiers and actual Wilson application check (lines 133-175)'
+    anchor: '## K4. Falsifiers and actual Wilson application check'
+    source_labels:
+    - K4
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - The examples are the displayed finite positive transfer families and reciprocal-affine coupling
+      sequence.
+    depends_on: []
+    lean: []
+    remaining: The complete analytic Hilbert/semigroup and limit argument is not formalized in Lean; finite
+      controls have narrower scope. Actual Wilson kernel, rate, regularity and nontriviality inputs remain
+      separate.
+  - id: DERIV:OS_KERNEL_GAP:POSITIVE_HISTORY
+    statement: Positive-time divisibility of the full defining history space and finite compatible kernel
+      limits imply zero-time continuity, using ||(exp(-tH_n)-I)exp(-tau H_n)||<=t/(e tau) uniformly in
+      the cutoff.
+    anchor: '## K5. Positive-time history separation supplies zero-time continuity'
+    source_labels:
+    - K5
+    - K9
+    - K10
+    - K11
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - A common defining vector space D has vacuum 1 and a physical-time shift semigroup S_t preserving
+      1; cutoff linear embeddings send 1 to unit vacua of H_n>=0.
+    - All fixed-vector Gram kernels converge to finite values; fixed-time embedding/semigroup defects
+      tend to zero in norm.
+    - Each defining vector is S_tau g for some tau>0 and g in the same full history space.
+    depends_on: []
+    lean: []
+    remaining: Spectral-calculus smoothing, Hilbert limit and support-divisibility arguments are analytic;
+      no whole Lean formalization. Actual Wilson fixed-time kernels and compatibility remain application
+      hypotheses.
+    locator: '## K5. Positive-time history separation supplies zero-time continuity (lines 176-221)'
