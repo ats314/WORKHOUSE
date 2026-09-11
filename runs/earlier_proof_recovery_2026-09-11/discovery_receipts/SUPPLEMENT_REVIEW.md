@@ -1,0 +1,27 @@
+# Additional review of recovered earlier revisions
+
+The supplemental search found earlier .resolved versions that were not part of the initial extension pass. Four high-ranked proof revisions were read in full. They add historical context and some usable conditional reasoning but do not increase the accepted shortlist. The following observations refer only to these exact revisions, not to later repaired work.
+
+## PROOF_05_Lifting_Lemma.md.resolved.3
+
+[Source](<C:/WORKHOUSE/09_ARCHIVE/brain_sessions/1442f8a1-b45f-4838-86a9-d87f4f7d8aec/PROOF_05_Lifting_Lemma.md.resolved.3>), lines 1-106, SHA-256 `ddb2a8ed6309cbf1d24c9095c2f72037cdeeac5a2dc8b838c0096956af6416c3`.
+
+The conditional Dirichlet/LSI route is worth retaining as history, but line 77 supplies no construction identifying stochastic time with physical time. Lines 87-92 use a vacuum autocorrelation, which is constant for a normalized zero-energy vacuum. These lines cannot establish the claimed physical gap.
+
+## PROOF_08_IR_Topology_Decoupling.md.resolved.1
+
+[Source](<C:/WORKHOUSE/09_ARCHIVE/brain_sessions/1442f8a1-b45f-4838-86a9-d87f4f7d8aec/PROOF_08_IR_Topology_Decoupling.md.resolved.1>), lines 1-75, SHA-256 `1ee3aa903f7743ea4b85c3c21b5fb2071b425a764912ee216ff7b2f8d8e322ea`.
+
+The projected block identity has the useful off-diagonal square BB^T. However, the stated polylogarithmic error bound does not imply the small error needed for the positive forcing asserted at lines 58-62. Also a lower Hessian bound gives an upper bound for its inverse, so lines 68-71 do not give the asserted lower bound on that inverse quadratic form.
+
+## PROOF_10_Mosco_Convergence.md.resolved.0
+
+[Source](<C:/WORKHOUSE/09_ARCHIVE/brain_sessions/1442f8a1-b45f-4838-86a9-d87f4f7d8aec/PROOF_10_Mosco_Convergence.md.resolved.0>), lines 1-59, SHA-256 `4f1eec94937259c19eaadc8cfa7d82c5fb9e8aa62799c9de4a07cc8fc8ec0f80`.
+
+The recovery/liminf architecture is useful under actual identified spaces and forms. Lines 20-33 assert, rather than establish, cross-cutoff gradient identification and O(a^2) energy convergence. The global gradient norm decay displayed at lines 43-50 is weaker than pointwise curvature-dimension control. This revision does not by itself establish the stated physical convergence.
+
+## PROOF_12_OS_Reconstruction.md.resolved.0
+
+[Source](<C:/WORKHOUSE/09_ARCHIVE/brain_sessions/1442f8a1-b45f-4838-86a9-d87f4f7d8aec/PROOF_12_OS_Reconstruction.md.resolved.0>), lines 1-52, SHA-256 `dcbd2ac4e9af4c4ddd45bfc43c9511e3b4bed841c99d291d38758252c50c6c23`.
+
+Positivity survives a limit for suitably bounded continuous cylinder products, with density/continuity assumptions. The later source-density, strong-continuity and stochastic-to-physical identification assertions are additional inputs, not consequences merely of the listed finite-lattice facts. Current OS-kernel results give a more explicit conditional framework.

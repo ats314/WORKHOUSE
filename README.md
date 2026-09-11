@@ -32,6 +32,11 @@ integration milestone; use the live guides and generated views for current
 scope and counts. GitHub holds the versioned verification project and selected
 evidence, while the larger local archive retains its original files.
 
+The [earlier-proof recovery](docs/research/earlier-proof-discovery-2026-09-11.md)
+registers the reviewed archive derivations and corrected identities, retains their
+original source files, and resolves every distinct keyword-search hit to a graph
+source node. Unreviewed sources remain visible in the pending queue.
+
 The [September 10 Hodge and polymer scope correction](docs/research/formalization-scope-2026-09-10.md)
 separates abstract operator proofs and scalar ingredients from their remaining
 physical-model identifications, with preserved source inputs and exact proof links.
