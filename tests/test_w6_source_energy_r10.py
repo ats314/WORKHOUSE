@@ -1,57 +1,66 @@
-﻿"""Tests for W6 source-vacuum energy transport jets (R10)."""
+"""Adversarial checks for R10 proof repairs and scientific-status boundaries."""
 
-from workhouse.invariants import w6_source_energy_r10
+import sympy as sp
 
-
-def test_h0_energy_contraction():
-    ok, msg = w6_source_energy_r10.check_h0_energy_contraction()
-    assert ok
-    assert "kappa_P = 1" in msg
+from workhouse import derivation_statements
+from workhouse.invariants import w6_source_energy_r10 as r10
 
 
-def test_h1_fiberwise_score_variance():
-    ok, msg = w6_source_energy_r10.check_h1_fiberwise_score_variance()
-    assert ok
-    assert "kappa_0 g^-2" in msg
+def test_changing_measure_term_is_required():
+    actual, frozen, correction = r10.conditional_derivative_terms(r10.Y)
+    assert actual == sp.Rational(1, 6)
+    assert actual != frozen
+    assert actual == frozen + correction
 
 
-def test_h2_conditional_dirichlet_energy():
-    ok, msg = w6_source_energy_r10.check_h2_conditional_dirichlet_energy()
-    assert ok
-    assert "kappa_1 g^-2" in msg
+def test_corrected_rule_handles_explicit_w_dependence():
+    phi = r10.Y + r10.W * r10.Y**2
+    actual, frozen, correction = r10.conditional_derivative_terms(phi)
+    assert frozen == sp.Rational(1, 3)
+    assert correction == sp.Rational(1, 6)
+    assert actual == sp.Rational(1, 2)
 
 
-def test_h3_fast_to_source_coupling():
-    ok, msg = w6_source_energy_r10.check_h3_fast_to_source_coupling()
-    assert ok
-    assert "kappa_2 g^-2" in msg
+def test_independent_measure_has_zero_correction():
+    actual, frozen, correction = r10.conditional_derivative_terms(r10.W * r10.Y**2, a=0)
+    assert actual == frozen == sp.Rational(1, 3)
+    assert correction == 0
 
 
-def test_h4_vacuum_cross_source_energy():
-    ok, msg = w6_source_energy_r10.check_h4_vacuum_cross_source_energy()
-    assert ok
-    assert "kappa_3 g^-2" in msg
+def test_centered_product_cannot_drop_measure_derivative():
+    actual, frozen, correction = r10.conditional_derivative_terms((r10.Y - r10.W / 6) ** 2)
+    assert actual == -r10.W / 18
+    assert frozen == 0
+    assert correction == actual
 
 
-def test_r10_order_zero_bound():
-    ok, msg = w6_source_energy_r10.check_r10_order_zero_bound()
-    assert ok
-    assert "d_0 g^-1" in msg
+def test_full_projection_recurrence_and_missing_term_mutant():
+    t, jets, missing = r10.projection_jet_data()
+    assert all(
+        (actual - represented).applyfunc(sp.simplify) == sp.zeros(2) for actual, represented in jets
+    )
+    actual, represented = jets[2]
+    truncated = represented - missing
+    assert (actual - truncated).subs(t, 1) == sp.Matrix([[0, -1], [-1, 0]])
 
 
-def test_vacuum_cross_derivatives():
-    ok, msg = w6_source_energy_r10.check_vacuum_cross_derivatives()
-    assert ok
-    assert "d_nu,r g^(-r-1)" in msg
+def test_registered_counterchecks_detect_the_two_power_errors():
+    assert r10.check_diffusion_gap_power()[0]
+    assert r10.check_covariance_power_obstruction()[0]
 
 
-def test_kato_projection_derivatives():
-    ok, msg = w6_source_energy_r10.check_kato_projection_derivatives()
-    assert ok
-    assert "d_P,r g^(-r-1)" in msg
-
-
-def test_transported_residual_bridge():
-    ok, msg = w6_source_energy_r10.check_transported_residual_bridge()
-    assert ok
-    assert "M_j(s) <= c_j s^-j" in msg
+def test_conditional_repair_does_not_close_the_actual_target():
+    docs = derivation_statements.load()["documents"]
+    rows = {s["id"]: s for d in docs for s in d["statements"]}
+    assert rows["DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:SOURCE_ENERGY_JETS_R10"]["status"] == "open"
+    assert (
+        rows["DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:CONDITIONAL_ENERGY_H0_H4"]["status"] == "open"
+    )
+    assert (
+        rows["DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION"]["status"]
+        == "conditional"
+    )
+    reduction = rows["DERIV:W6_SOURCE_ENERGY_JETS_R10:H4_FROM_H0"]
+    assert reduction["status"] == "proven"
+    assert any("H0" in h for h in reduction["hypotheses"])
+    assert reduction["lean"] == []

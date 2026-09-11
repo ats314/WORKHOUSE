@@ -37,7 +37,9 @@ separates abstract operator proofs and scalar ingredients from their remaining
 physical-model identifications, with preserved source inputs and exact proof links.
 The [W6 continuation](docs/derivations/w6-ground-jets-and-transport-budget.md)
 adds actual fixed-square ground and operator derivative bounds and an explicit
-criterion for the complete source-transport budget.
+criterion for the complete source-transport budget. The [R10 repair](docs/derivations/w6-source-energy-jets-r10.md)
+corrects conditional and projection derivatives and derives H4 from H0;
+the complete actual-source energy estimates remain open.
 The [conditional transport continuation](docs/derivations/w6-conditional-transport-obstruction.md)
 derives the exact true-ground conditional score, locates its constrained Agmon
 centers, and proves that some admissible Q8 cutoffs fail M10 in the actual model.
@@ -59,6 +61,15 @@ proves a limiting spectral gap from approximate sources and one growing physical
 observation time per cutoff. Its sharp power-law budget retains source-amplitude
 and finite-horizon losses. Actual continuum measures, source totality and the
 Wilson one-time estimates remain explicit application hypotheses.
+
+The [cellular Hodge correction](docs/derivations/universal-cellular-hodge-tetrahedral.md)
+establishes the finite-cell incidence identities and tetrahedral face commutant,
+and adds an all-power Lean operator proof for the shifted `R S^m R` formula.
+An exact projection diagnostic keeps the physical tetrahedral history
+identification and the broader U3/U7 unification open. The received claims,
+review findings, and corrected verification are preserved with the source package.
+The [completed repair record](graph-tasks/2026-09-11-universal-cellular-hodge-repair.md)
+retains the final full verification and matched graph snapshot.
 
 ## Quick start
 

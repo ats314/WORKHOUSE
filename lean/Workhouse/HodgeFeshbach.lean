@@ -367,4 +367,115 @@ theorem hodge_word_is_scalar (L_d L_u : V →ₗ[K] V) (eig : K) (ψ : V)
 
 end GeneralGeometry
 
+section UniversalCellularHodge
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+/-- The Feshbach complement projector Q = id - P where P v = (⟨ψ, v⟩ / λ) • ψ
+annihilates the unnormalized rank-one Laplacian L_up v = ⟨ψ, v⟩ • ψ identically:
+L_up ∘ Q = 0. -/
+theorem feshbach_q_annihilates_l_up (lam : ℝ) (hlam : lam ≠ 0) (ψ : E)
+    (hψ_norm : inner ℝ ψ ψ = lam) (v : E) :
+    (inner ℝ ψ (v - (inner ℝ ψ v / lam) • ψ)) • ψ = (0 : E) := by
+  rw [inner_sub_right, inner_smul_right, hψ_norm, div_mul_cancel₀ _ hlam, sub_self, zero_smul]
+
+/-- Universal up-harmonicity: for any bounded linear operator R on the face space,
+the Feshbach excursion φ = Q (R ψ) is identically up-harmonic: L_up φ = 0. -/
+theorem cellular_excursion_up_harmonic (lam : ℝ) (hlam : lam ≠ 0) (ψ : E)
+    (hψ_norm : inner ℝ ψ ψ = lam) (R : E →L[ℝ] E) :
+    (inner ℝ ψ (R ψ - (inner ℝ ψ (R ψ) / lam) • ψ)) • ψ = (0 : E) := by
+  exact feshbach_q_annihilates_l_up lam hlam ψ hψ_norm (R ψ)
+
+/-- In Feshbach-Schur perturbation theory, the intermediate Q projection annihilates
+any state that returns to the carrier line Im(P). -/
+theorem feshbach_intermediate_return_annihilation (lam : ℝ) (hlam : lam ≠ 0) (ψ : E)
+    (hψ_norm : inner ℝ ψ ψ = lam) (c : ℝ) :
+    (c • ψ) - (inner ℝ ψ (c • ψ) / lam) • ψ = (0 : E) := by
+  rw [inner_smul_right, hψ_norm, mul_div_cancel_right₀ c hlam, sub_self]
+
+end UniversalCellularHodge
+
+section TetrahedralDuality
+
+variable {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
+
+/-- Tetrahedral Hodge duality: on a 4-dimensional face space, if L_down = 4 • Q
+and L_up = 4 • P where P + Q = id and P ∘ Q = 0, then L_down + L_up = 4 • id
+and L_down ∘ L_up = 0. -/
+theorem tetrahedral_hodge_duality (P Q L_d L_u : V →ₗ[K] V)
+    (hPQ : P + Q = LinearMap.id)
+    (hPcompQ : P.comp Q = 0)
+    (hd : L_d = (4 : K) • Q)
+    (hu : L_u = (4 : K) • P) :
+    L_d + L_u = (4 : K) • LinearMap.id ∧
+    L_d.comp L_u = 0 := by
+  constructor
+  · rw [hd, hu, ← smul_add, add_comm Q P, hPQ]
+  · rw [hd, hu, LinearMap.comp_smul, LinearMap.smul_comp, smul_smul]
+    have hQP : Q.comp P = 0 := by
+      have h1 : (P + Q).comp P = LinearMap.id.comp P := by rw [hPQ]
+      have h2 : P.comp P + Q.comp P = P := by
+        rw [LinearMap.add_comp, LinearMap.id_comp] at h1; exact h1
+      have hP2 : P.comp P = P := by
+        have h3 : P.comp (P + Q) = P.comp LinearMap.id := by rw [hPQ]
+        rw [LinearMap.comp_add, hPcompQ, add_zero, LinearMap.comp_id] at h3
+        exact h3
+      rw [hP2] at h2
+      have : P + Q.comp P = P + 0 := by rw [add_zero, h2]
+      exact add_left_cancel this
+    rw [hQP, smul_zero]
+
+/-- Traceless compression theorem: if an operator M on a 3-dimensional subspace
+acts as a scalar multiple c • id (as guaranteed by Schur's Lemma for the 3
+irrep of S_4), its traceless part vanishes identically: c • id - (Tr(c • id)/3) • id = 0. -/
+theorem traceless_compression_vanishes (c : K) (h3 : (3 : K) ≠ 0) :
+    c - (3 * c) / 3 = 0 := by
+  rw [mul_comm 3 c, mul_div_cancel_right₀ c h3, sub_self]
+
+end TetrahedralDuality
+
+section ShiftedHodgePowers
+
+variable {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
+
+/-- The geometric polynomial coefficient, defined without division at q = 0. -/
+def hodgePi (q : K) : ℕ → K
+  | 0 => 0
+  | n + 1 => (q - 4) ^ n - 4 * hodgePi q n
+
+/-- The cleared geometric-sum identity holds even when q = 0. -/
+theorem hodge_pi_cleared (q : K) (n : ℕ) :
+    q * hodgePi q n = (q - 4) ^ n - (-4 : K) ^ n := by
+  induction n with
+  | zero => simp [hodgePi]
+  | succ n ih =>
+    simp only [hodgePi, pow_succ]
+    rw [mul_sub, show q * (4 * hodgePi q n) = 4 * (q * hodgePi q n) by ring, ih]
+    ring
+
+/-- All powers of S = (q - 4) I - U reduce to I and U when U² = q U.
+This is an operator identity, with no invertibility or q ≠ 0 premise. -/
+theorem hodge_shifted_power (q : K) (U : Module.End K V)
+    (hU : U * U = q • U) (n : ℕ) :
+    ((q - 4) • (1 : Module.End K V) - U) ^ n =
+      (q - 4) ^ n • (1 : Module.End K V) - hodgePi q n • U := by
+  induction n with
+  | zero => simp [hodgePi]
+  | succ n ih =>
+    rw [pow_succ, ih]
+    simp only [sub_mul, mul_sub, smul_mul_assoc, mul_smul_comm, one_mul, mul_one,
+      hU, smul_smul, hodgePi, pow_succ]
+    module
+
+/-- Sandwiching the exact power identity gives the all-length R S^n R
+ decomposition. Identifying its carrier symbols is a separate Laurent calculation. -/
+theorem hodge_sandwiched_power (q : K) (U R : Module.End K V)
+    (hU : U * U = q • U) (n : ℕ) :
+    R * ((q - 4) • (1 : Module.End K V) - U) ^ n * R =
+      (q - 4) ^ n • (R * R) - hodgePi q n • (R * U * R) := by
+  rw [hodge_shifted_power q U hU n]
+  simp only [mul_sub, sub_mul, mul_smul_comm, smul_mul_assoc, mul_one]
+
+end ShiftedHodgePowers
+
 end Workhouse.HodgeFeshbach

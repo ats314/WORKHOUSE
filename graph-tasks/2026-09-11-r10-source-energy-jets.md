@@ -1,3 +1,5 @@
+> Historical campaign record: its R10 closure verdict was rejected in review and superseded by [the repair record](2026-09-11-r10-proof-repair.md). Original bytes are retained under runs/r10_proof_repair_2026-09-11/submitted/. The claims below describe the submitted campaign, not the current scientific status.
+
 # Task Record: 2026-09-11-r10-source-energy-jets
 
 ## Identity

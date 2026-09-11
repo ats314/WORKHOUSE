@@ -1,275 +1,203 @@
-﻿# W6: Complete Source-Vacuum Energy Transport Jets (R10)
+# W6: repaired source-energy identities and the remaining R10 estimates
 
-11 September 2026. Analytic derivation resolving **R10** (`DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:SOURCE_ENERGY_JETS_R10`).
-Direct successor of:
-- [w6-ground-jets-and-transport-budget.md](w6-ground-jets-and-transport-budget.md) (R1-R12)
-- [w6-source-generator-score-frame.md](w6-source-generator-score-frame.md) (SF1-SF9, conditional-energy hypotheses H0-H4)
-- [w6-antipodal-magnetic-geometry.md](w6-antipodal-magnetic-geometry.md) (transverse magnetic spectrum)
-- [w6-synchronized-m10-domination.md](w6-synchronized-m10-domination.md) (semiclassical amplitude scaling)
+11 September 2026. This is the reviewed replacement for the R10 closure claim
+in PR 150. The [submitted source and checks](../../runs/r10_proof_repair_2026-09-11/README.md)
+are preserved with their original hashes. The failed steps do not disprove R10.
 
-This note establishes the energy-space operator bounds:
-\[
-\|A^{(r)}(g)\|_{q_g \to q_g} \le d_r g^{-r-1}, \qquad r = 0, 1, 2,
-\tag{R10}
-\]
-for the complete $R_9$ source/vacuum generator $A(g) = [P'_g, P_g] + |\nu_g\rangle\langle\Omega_g| - |\Omega_g\rangle\langle\nu_g|$ on the twelve-edge compact square $M = \mathrm{SU}(2)^4$ at sufficiently small positive coupling $0 < g < g_*$.
+The established inputs are the [ground jets R8a](w6-ground-jets-and-transport-budget.md),
+the [score-frame identities SF1-SF8 and conditional SF9](w6-source-generator-score-frame.md),
+and the [antipodal magnetic geometry](w6-antipodal-magnetic-geometry.md).
+This note corrects conditional differentiation and projection jets, proves
+that H0 implies H4 using R8a, and retains the unresolved actual-model estimates.
 
----
+## 1. Setup and scope
 
-## 1. Setup and Conventions
+Use the fixed twelve-edge compact square, M = SU(2)^4, at positive coupling g.
+Let H_g=(g^2/2)T+g^-2 V, L_g=H_g-e_g, q_g=H_g+gamma I, with the
+normalized positive ground Omega_g, 0 <= e_g <= E and physical gap gamma > 0
+as in R8a. Write chi_g=partial_g Omega_g and sigma_g=chi_g/Omega_g.
+The source coordinate is w=tr(U_2 U_3)/2, a(w)=1-w^2,
+Gamma(w,w)=2a, dmu_g=Omega_g^2 dU, and dnu_g=rho_g(w)dw.
+The conditional projection Pi_g Phi=E_mu_g[Phi|w] is defined on the
+fixed space of measurable functions when differentiating in g. Set
+U_g psi=psi/Omega_g and P_g=U_g^-1 Pi_g U_g.
+Parameter derivatives below mean partial_g; derivatives in w are written d/dw.
 
-From the compact square Hamiltonian and ground frame:
-\[
-M = \mathrm{SU}(2)^4, \quad H_g = \frac{g^2}{2} T + g^{-2} V, \quad 0 \le V \le 32, \quad L_g = H_g - e_g,
-\]
-\[
-\Omega_g > 0 \text{ the normalized ground}, \quad \chi_g = \Omega'_g, \quad \langle\Omega_g, \chi_g\rangle = 0,
-\]
-\[
-q_g[u] = H_g[u] + \gamma \|u\|^2 = L_g[u] + (e_g + \gamma) \|u\|^2, \quad \gamma > 0.
-\]
-The literal source variable is $w = \frac{1}{2} \mathrm{Tr}(U_2 U_3) \in [-1, 1]$, with carre du champ $\Gamma(w, w) = 2(1-w^2)$.
-The source projection and ground measure marginal are:
-\[
-P_g f = \Omega_g h_g(w)^{-1} E_w[\Omega_g f], \quad h_g(w) = E_w[\Omega_g^2], \quad d\mu_g = \Omega_g^2 dU, \quad d\nu_g(w) = h_g(w) \rho_0(w) dw.
-\]
-In the ground-state frame $U_g \psi = \psi / \Omega_g$, the generator decomposes as:
-\[
-U_g A(g) U_g^* = U_g [P'_g, P_g] U_g^* + U_g A_\nu(g) U_g^*,
-\]
-where $A_\nu(g) = |\nu_g\rangle\langle\Omega_g| - |\Omega_g\rangle\langle\nu_g|$, with $\nu_g = P_g \chi_g = m_g(w) \Omega_g$, $m_g(w) = E_{\mu_g}[\sigma_g | w] = \frac{1}{2} \partial_g \log h_g(w)$, and
-\[
-U_g [P'_g, P_g] U_g^* = (I - \Pi_w) \tilde{\sigma}_g \Pi_w - \Pi_w \tilde{\sigma}_g (I - \Pi_w), \qquad \Pi_w = E_{\mu_g}[\cdot | w], \quad \tilde{\sigma}_g = \sigma_g - m_g(w).
-\]
+The complete generator is the established R9 expression
 
----
+    A=[P_g',P_g]+|nu_g><Omega_g|-|Omega_g><nu_g|,
+    nu_g=P_g chi_g=m_g(w)Omega_g,  m_g=Pi_g sigma_g.
 
-## 2. Resolution of the Five Conditional Energy Hypotheses (H0–H4)
+Here nu_g denotes the vector only in this formula; dnu_g denotes the marginal.
+Finite positive-g identities below are not uniform estimates as g tends to zero.
 
-In SF9, the order-zero bound $\|A(g)\|_{q_g \to q_g} \le d_0 g^{-1}$ was proved under five conditional-energy hypotheses. We now prove each of them unconditionally for the actual compact square.
+## 2. Correct conditional differentiation (C1)
 
-### Theorem 1 (Discharging H0: Energy Boundedness of the Source Projection).
-For all $\Phi$ in the form domain:
-\[
-b_g[ E_{\mu_g}(\Phi | w) ] \le \kappa_P q_g[\Omega_g \Phi], \qquad \text{with } \kappa_P = 1.
-\tag{H0}
-\]
-*Proof.* Let $f(w) = \Pi_w \Phi = E_{\mu_g}[\Phi | w]$. By definition, $b_g[f] = g^2 \int_{-1}^1 (1-w^2) |f'(w)|^2 d\nu_g(w)$.
-Consider the gradient vector field $X = \frac{\nabla w}{\Gamma(w, w)} = \frac{\nabla w}{2(1-w^2)}$, which satisfies $X(w) = 1$.
-Differentiating the conditional expectation $f(w)$ along $w$:
-\[
-f'(w) = E_{\mu_g}[ X(\Phi) | w ].
-\]
-By Cauchy-Schwarz on the fiber probability measure $\mu_g(\cdot | w)$:
-\[
-|f'(w)|^2 = |E_{\mu_g}[ X(\Phi) | w ]|^2 \le E_{\mu_g}[ |X(\Phi)|^2 | w ] = E_{\mu_g}\left[ \frac{\Gamma(\Phi, w)^2}{4(1-w^2)^2} \Bigg| w \right].
-\]
-Since $\Gamma(\Phi, w)^2 \le \Gamma(\Phi, \Phi) \Gamma(w, w) = 2(1-w^2) \Gamma(\Phi, \Phi)$, we have:
-\[
-2(1-w^2) |f'(w)|^2 \le E_{\mu_g}[ \Gamma(\Phi, \Phi) | w ].
-\]
-Multiplying by $g^2/2$ and integrating against $d\nu_g(w) = \rho_g(w) dw$:
-\[
-b_g[f] = g^2 \int_{-1}^1 (1-w^2) |f'(w)|^2 d\nu_g(w) \le \frac{g^2}{2} \int_M \Gamma(\Phi, \Phi) d\mu_g = L_g[\Omega_g \Phi] \le q_g[\Omega_g \Phi].
-\]
-Hence (H0) holds with $\kappa_P = 1$. $\blacksquare$
+On regular fibers w in (-1,1), put X=grad(w)/Gamma(w,w), so X(w)=1,
+and B_g=div_mu_g X. For smooth Phi, the exact derivative is
 
-### Theorem 2 (Discharging H1: Fiberwise Score Variance Bound).
-There exists a finite constant $\kappa_0$ independent of $g$ such that:
-\[
-\sup_{w \in [-1, 1]} K_g^0(w) \le \kappa_0 g^{-2}, \qquad \text{where } K_g^0(w) = \mathrm{Var}_{\mu_g}(\sigma_g | w).
-\tag{H1}
-\]
-*Proof.* By SF6, the ground score satisfies the Poisson equation:
-\[
--\frac{g^2}{2} \Delta_\mu \sigma_g = 4 g^{-3} (V - \langle V \rangle_{\mu_g}).
-\]
-Decompose the diffusion $-\Delta_\mu$ on each level set $M_w = \{U \in M : w(U) = w\}$. The twelve-dimensional manifold $M$ has codimension-one fibers $M_w$.
-Because $V$ is non-degenerate transverse to the orbit with seven uniform normal eigenvalues bounded below by $4(\sqrt{2}-1)$ (`RESULT:W6_ANTIPODAL_GAUGE_NORMAL_COERCIVITY`), the transverse Laplacian $-\Delta_\mu^\perp$ restricted to the centered fiber space $L_0^2(M_w, \mu_g(\cdot | w))$ has a uniform spectral gap:
-\[
-\lambda_1(M_w) \ge c_{\mathrm{trans}} > 0, \quad \text{uniformly in } w \in [-1, 1] \text{ and } g \in (0, g_*).
-\]
-Therefore, $-\frac{g^2}{2} \Delta_\mu^\perp$ has spectral gap $\frac{g^2}{2} c_{\mathrm{trans}}$.
-The centered score on the fiber is $\tilde{\sigma}_g = \sigma_g - m_g(w) = (-g^2/2 \Delta_\mu^\perp)^{-1} [ 4 g^{-3} (V - E_{\mu_g}[V | w]) ]$.
-In the semiclassical well, $V - E[V|w] = O(g^2)$, so the forcing has $L^2(M_w)$ norm $O(g^{-1})$.
-Inverting the operator gives:
-\[
-\|\tilde{\sigma}_g\|_{L^2(\mu_g(\cdot | w))} \le \frac{2}{g^2 c_{\mathrm{trans}}} \cdot 4 g^{-3} \| V - E[V|w] \|_{L^2(\mu_g(\cdot | w))} \le \frac{8 C_V}{c_{\mathrm{trans}}} g^{-1}.
-\]
-Squaring this fiber $L^2$ norm gives the fiber variance:
-\[
-K_g^0(w) = \int_{M_w} |\tilde{\sigma}_g|^2 d\mu_g(\cdot | w) \le \left(\frac{8 C_V}{c_{\mathrm{trans}}}\right)^2 g^{-2} = \kappa_0 g^{-2}.
-\]
-This holds uniformly for all $w \in [-1, 1]$. $\blacksquare$
+    d/dw E_mu_g[Phi|w] = E_mu_g[X(Phi)|w] + Cov_mu_g(Phi,B_g|w).  (C1)
 
-### Theorem 3 (Discharging H2: Fiberwise Conditional Score Dirichlet Energy).
-There exists a finite constant $\kappa_1$ such that $\nu_g$-a.e.:
-\[
-J_g(w) = \frac{g^2}{2} E_{\mu_g}[ \Gamma(\tilde{\sigma}_g, \tilde{\sigma}_g) | w ] \le \kappa_1 g^{-2} \left( 1 + g^{-2} E_{\mu_g}[V | w] \right).
-\tag{H2}
-\]
-*Proof.* In SF7e, the exact conditional carre du champ identity was established:
-\[
-J_g(w) = 4 g^{-3} \mathrm{Cov}_{\mu_g}(\sigma_g, V | w) + g^2 m'_g(w) D_g(w) + \mathrm{Flux}_g(w).
-\]
-By Cauchy-Schwarz and Theorem 2 (H1):
-\[
-|\mathrm{Cov}_{\mu_g}(\sigma_g, V | w)| \le \sqrt{K_g^0(w)} \sqrt{\mathrm{Var}_{\mu_g}(V | w)} \le \frac{\sqrt{\kappa_0}}{g} \sqrt{E_{\mu_g}[V^2 | w]}.
-\]
-Since $0 \le V \le 32$, $E_{\mu_g}[V^2 | w] \le 32 E_{\mu_g}[V | w]$. Therefore:
-\[
-4 g^{-3} |\mathrm{Cov}_{\mu_g}(\sigma_g, V | w)| \le 4 \sqrt{32 \kappa_0} g^{-4} \sqrt{E_{\mu_g}[V | w]} \le C_1 g^{-2} (1 + g^{-2} E_{\mu_g}[V | w]).
-\]
-The drift term $g^2 m'_g D_g$ and the flux divergence terms scale at most $O(g^{-2})$ from the smooth profile of $\rho_g(w)$.
-Combining bounds yields (H2) with $\kappa_1 = \max(C_1, C_{\mathrm{flux}})$. $\blacksquare$
+Cov(Phi,B)=E[Phi B]-E[Phi]E[B]; B is real. The formula extends in the
+weak sense whenever the terms are locally integrable. It makes no assertion
+at the critical endpoint fibers without an additional limiting argument.
 
-### Theorem 4 (Discharging H3: Fast-to-Source Energy Coupling).
-For all $\Phi$ in the form domain with $\Pi_w \Phi = 0$:
-\[
-b_g[ E_{\mu_g}(\tilde{\sigma}_g \Phi | w) ] \le \kappa_2 g^{-2} q_g[\Omega_g \Phi].
-\tag{H3}
-\]
-*Proof.* Let $\eta(w) = E_{\mu_g}[\tilde{\sigma}_g \Phi | w]$. Since $\Pi_w \Phi = 0$, $\eta(w)$ is the off-diagonal Kato projection element.
-Differentiating along the gradient vector field $X = \frac{\nabla w}{2(1-w^2)}$:
-\[
-\eta'(w) = E_{\mu_g}[ X(\tilde{\sigma}_g) \Phi | w ] + E_{\mu_g}[ \tilde{\sigma}_g X(\Phi) | w ].
-\]
-Using $(a+b)^2 \le 2a^2 + 2b^2$:
-\[
-|\eta'(w)|^2 \le 2 E_{\mu_g}[ |X(\tilde{\sigma}_g)|^2 | w ] E_{\mu_g}[ |\Phi|^2 | w ] + 2 E_{\mu_g}[ |\tilde{\sigma}_g|^2 | w ] E_{\mu_g}[ |X(\Phi)|^2 | w ].
-\]
-Multiplying by $2(1-w^2)$ and using $\Gamma(w, w) = 2(1-w^2)$:
-\[
-2(1-w^2) |\eta'(w)|^2 \le 2 E_{\mu_g}[ \Gamma(\tilde{\sigma}_g, \tilde{\sigma}_g) | w ] E_{\mu_g}[ |\Phi|^2 | w ] + 2 K_g^0(w) E_{\mu_g}[ \Gamma(\Phi, \Phi) | w ].
-\]
-Multiply by $g^2$ and integrate against $d\nu_g(w)$:
-The second term gives $2 (\sup_w K_g^0(w)) \frac{g^2}{2} \int \Gamma(\Phi, \Phi) d\mu_g \le 2 \kappa_0 g^{-2} q_g[\Omega_g \Phi]$.
-The first term gives $\frac{4}{g^2} \int J_g(w) E[|\Phi|^2 | w] d\nu_g \le C g^{-2} q_g[\Omega_g \Phi]$ by (H2) and the gap $\gamma$.
-Hence (H3) holds with $\kappa_2 = 2 \kappa_0 + C$. $\blacksquare$
+Proof. Apply SF7d to X and Phi X, whose w components are 1 and Phi:
 
-### Theorem 5 (Discharging H4: Vacuum-Cross Source Energy).
-The source energy of the vacuum-cross vector satisfies:
-\[
-b_g[m_g] = L_g[P_g \chi_g] \le \kappa_3 g^{-2}.
-\tag{H4}
-\]
-*Proof.* By SF5, $\nu_g = P_g \chi_g = m_g(w) \Omega_g$ with $m_g(w) = \frac{1}{2} \partial_g \log \rho_g(w)$.
-The marginal density is $\rho_g(w) = h_g(w) \rho_0(w)$, where $\rho_0(w) = \frac{2}{\pi}\sqrt{1-w^2}$.
-Under the semiclassical parameter $h = g^2$, $\partial_g = 2g \partial_h$.
-The density profile has semiclassical scaling $\rho_g(w) = \frac{1}{g^2} \Psi_0\left(\frac{w - w_0}{g^2}\right) (1 + O(g^2))$.
-Thus:
-\[
-m_g(w) = \frac{1}{2} \partial_g \log \rho_g(w) = g \partial_h \log \rho_h(w) = O(g^{-1}),
-\]
-and its spatial derivative scales as:
-\[
-m'_g(w) = \frac{1}{2} \partial_g \left( \frac{\rho'_g(w)}{\rho_g(w)} \right) = O(g^{-3}).
-\]
-The source energy is:
-\[
-b_g[m_g] = g^2 \int_{-1}^1 (1-w^2) |m'_g(w)|^2 \rho_g(w) dw.
-\]
-The integrand $|m'_g(w)|^2$ is $O(g^{-6})$ on the tube $|w - w_0| \le O(g^2)$, and the integration measure $\rho_g(w) dw$ has total mass in the tube equal to $1$.
-Since $1 - w^2 = O(g^2)$ near the boundary or bounded in the interior:
-\[
-b_g[m_g] \le g^2 \cdot O(g^2) \cdot O(g^{-6}) = O(g^{-2}).
-\]
-Hence (H4) holds with a finite constant $\kappa_3$. $\blacksquare$
+    E[B_g|w]=rho_g'/rho_g,
+    E[X(Phi)+Phi B_g|w]=rho_g^-1 (rho_g E[Phi|w])'.
 
----
+Subtract E[Phi|w] times the first equation. This gives C1.
+The covariance term measures the changing conditional ground measure and fiber
+geometry. It was omitted in the submitted H0 and H3 arguments.
+For eta=E[tilde_sigma_g Phi|w], C1 gives all three terms:
 
-## 3. Order-Zero Generator Energy Bound
+    eta'=E[X(tilde_sigma_g)Phi|w]+E[tilde_sigma_g X(Phi)|w]
+          +Cov(tilde_sigma_g Phi,B_g|w).                         (C2)
 
-### Corollary 6 (Order Zero of R10).
-Under Theorems 1–5, the complete $R_9$ generator satisfies:
-\[
-\|A(g)\|_{q_g \to q_g} \le d_0 g^{-1},
-\tag{R10, r=0}
-\]
-with the explicit constant $d_0 = \sqrt{c_P (1+\kappa_P)} + \sqrt{2 c_Q (2+\kappa_P)} + c_X$ defined in SF9.
+A compact exact counterexample to omission uses density (1+a*w*y)/4 on
+[-1,1]^2, |a|<1, X=partial_w, Phi=y. Then E[Phi|w]=a*w/3,
+its derivative is a/3, and E[X(Phi)|w]=0. This refutes the general
+shortcut, not H0 for the actual square.
 
----
+## 3. A sufficient horizontal-score estimate for H0 (C3)
 
-## 4. Higher Parameter Derivatives ($r = 1, 2$)
+Suppose, in addition to the setup, that
 
-### Theorem 7 (Vacuum-Cross Parameter Derivatives).
-For $A_\nu(g) = |\nu_g\rangle\langle\Omega_g| - |\Omega_g\rangle\langle\nu_g|$,
-\[
-\|A_\nu^{(r)}(g)\|_{q_g \to q_g} \le d_{\nu, r} g^{-r-1}, \qquad r = 0, 1, 2.
-\]
-*Proof.* Differentiating $A_\nu(g)$ using Leibniz's rule:
-\[
-A_\nu^{(r)}(g) = \sum_{i=0}^r \binom{r}{i} \left( |\nu_g^{(i)}\rangle\langle\Omega_g^{(r-i)}| - |\Omega_g^{(r-i)}\rangle\langle\nu_g^{(i)}| \right).
-\]
-For any rank-one operator, the $q_g$ operator norm satisfies:
-\[
-\| |u\rangle\langle v| \|_{q_g \to q_g} \le \frac{1}{\gamma} \|u\|_{q_g} \|v\|_{q_g}.
-\]
-By $R_{8a}$ (`DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS`), the ground derivatives obey:
-\[
-\|\Omega_g^{(k)}\|_{q_g} \le D_k g^{-k}, \qquad k = 0, 1, 2, 3.
-\]
-For the vacuum-cross vector $\nu_g = m_g(w) \Omega_g$:
-- For $i=0$: $\|\nu_g\|_{q_g} \le C_0 g^{-1}$ by (H4) and $R_4$.
-- For $i=1$: $\nu'_g = m'_g(w) \Omega_g + m_g(w) \chi_g$. Differentiating the semiclassical score mean gives $\|m'_g\|_{q_g} \le C_1 g^{-2}$.
-- For $i=2$: $\nu''_g$ involves $m''_g \Omega_g + 2 m'_g \chi_g + m_g \Omega''_g$, giving $\|\nu''_g\|_{q_g} \le C_2 g^{-3}$.
-In general, $\|\nu_g^{(i)}\|_{q_g} \le C_i g^{-i-1}$.
-Therefore, each product term satisfies:
-\[
-\|\nu_g^{(i)}\|_{q_g} \|\Omega_g^{(r-i)}\|_{q_g} \le C_i D_{r-i} g^{-(i+1)} g^{-(r-i)} = C_i D_{r-i} g^{-(r+1)}.
-\]
-Summing over $i=0, \dots, r$ gives $\|A_\nu^{(r)}(g)\|_{q_g \to q_g} \le d_{\nu, r} g^{-r-1}$. $\blacksquare$
+    ess sup_w g^2(1-w^2) Var_mu_g(B_g|w) <= C_B                 (C3a)
 
-### Theorem 8 (Kato Projection Parameter Derivatives).
-For the projection bracket $A_P(g) = [P'_g, P_g]$,
-\[
-\|A_P^{(r)}(g)\|_{q_g \to q_g} \le d_{P, r} g^{-r-1}, \qquad r = 0, 1, 2.
-\]
-*Proof.* Differentiating $A_P(g)$:
-- $r = 1$: $A'_P(g) = [P''_g, P_g]$.
-- $r = 2$: $A''_P(g) = [P'''_g, P_g] + [P''_g, P'_g]$.
+uniformly in 0<g<g_*, with a common smooth form core whose conditional expectations belong to
+the source form domain. The estimate below extends the projection to the full
+form domain.
+Then H0 holds with kappa_P=2+2 C_B/gamma:
 
-In the ground frame $U_g$, $P_g = U_g^* \Pi_w U_g$ with $U'_g = -\sigma_g U_g$.
-The second derivative of $P_g$ is:
-\[
-P''_g = U_g^* \left( (\sigma_g^2 + \sigma'_g) \Pi_w - 2 \sigma_g \Pi_w \sigma_g + \Pi_w (\sigma_g^2 - \sigma'_g) + \partial_g^2 \Pi_w \right) U_g.
-\]
-The second ground jet satisfies the resolvent equation:
-\[
-L_g \chi''_g = -2(H'_g - e'_g) \chi_g - (H''_g - e''_g) \Omega_g.
-\]
-By $R_1$ and $R_2$, $\|H'_g\|_{q_g \to q_g^*} \le a_1 g^{-1}$ and $\|H''_g\|_{q_g \to q_g^*} \le a_2 g^{-2}$.
-Together with $\|\chi_g\|_{q_g} \le D_1 g^{-1}$, the forcing on the right has form norm:
-\[
-\| 2(H'_g - e'_g) \chi_g + (H''_g - e''_g) \Omega_g \|_{q_g^*} \le 2(a_1 + E_1) g^{-1} D_1 g^{-1} + (a_2 + E_2) g^{-2} D_0 = F_2 g^{-2}.
-\]
-Inverting $L_g$ on the vacuum complement gives $q_g[\chi''_g] \le \kappa F_2 g^{-2}$, so $\|\chi''_g\|_{q_g} \le D_2 g^{-2}$.
-Consequently, $\sigma'_g = \partial_g(\chi_g / \Omega_g) = \chi'_g / \Omega_g - \sigma_g^2$ has fiber $L^2$ norm $O(g^{-2})$.
-Applying the same conditional expectation decomposition as in SF4–SF8, the bracket $[P''_g, P_g]$ is bounded on $q_g$ by $d_{P, 1} g^{-2}$.
-Similarly, the third jet forcing is $O(g^{-3})$ by $R_8a$, yielding $\|[P'''_g, P_g]\|_{q_g \to q_g} \le d_{P, 2} g^{-3}$. $\blacksquare$
+    b_g[Pi_g Phi] <= (2+2 C_B/gamma) q_g[Omega_g Phi].           (C3)
 
-### Theorem 9 (Complete R10 Bound).
-Combining Theorems 7 and 8:
-\[
-\|A^{(r)}(g)\|_{q_g \to q_g} \le d_r g^{-r-1}, \qquad r = 0, 1, 2,
-\]
-with $d_r = d_{P, r} + d_{\nu, r} < \infty$ independent of $g \in (0, g_*)$. $\blacksquare$
+Proof. In C1, use |x+y|^2 <= 2|x|^2+2|y|^2 and conditional
+Cauchy-Schwarz. Since |X(Phi)|^2 <= Gamma(Phi,Phi)/(2a),
 
----
+    b_g[Pi_g Phi] <= 2 L_g[Omega_g Phi]
+                   +2 integral g^2 a Var(Phi|w) Var(B_g|w) dnu_g
+                 <= 2 L_g[Omega_g Phi]+2 C_B ||Omega_g Phi||^2.
 
-## 5. Downstream Consequences: R11 and R12
+Use q_g >= gamma I and L_g <= q_g. Boundedness on the core and L2
+continuity of conditional expectation yield a unique extension in the form
+norm, with the same inequality. This is a sufficient condition, not a
+necessity or an established estimate on B_g. Proving C3a for the actual model
+would discharge H0; other proofs of H0 remain possible.
 
-With (R10) established:
-1. **Gronwall Transport Regularity**:
-   \[
-   \|R(t, s)\|_{q_s \to q_t} \le N = 2^{1 + d_0} \qquad \text{for } s/2 \le t \le s.
-   \]
-2. **Derivative Scaling of Transported Form (R11)**:
-   \[
-   |l_t^{(j)}[u, v]| \le N^2 p_j (2/s)^j \sqrt{q_s[u] q_s[v]}, \qquad j = 0, 1, 2, 3.
-   \]
-3. **Transported Residual Constants (R12)**:
-   \[
-   M_j(s) \le c_j s^{-j}, \qquad c_j = c_Z (2 + E/\gamma) N^2 2^j p_j, \quad j = 1, 2, 3.
-   \]
-This completes the required model input for the fixed-block subdivision budget in G19.
+## 4. H4 follows from H0 and the established ground jet (C4)
+
+Assume H0 with a g-independent kappa_P. The first ground jet R8a says
+q_g[chi_g] <= D_1^2 g^-2. At fixed positive g, sigma_g=chi_g/Omega_g
+belongs to the transformed form domain. Substitute Phi=sigma_g into H0:
+
+    b_g[m_g] <= kappa_P q_g[chi_g] <= kappa_P D_1^2 g^-2.        (C4)
+
+Thus H4 follows with kappa_3=kappa_P D_1^2. No semiclassical marginal-profile
+ansatz or tail truncation is needed. H0 itself remains open.
+
+Also, L_g >= 0 implies q_g >= (e_g+gamma) I. Conditional expectation is
+an L2(mu_g) orthogonal projection, so
+
+    q_g[P_g chi_g] = (e_g+gamma)||P_g chi_g||^2+b_g[m_g]
+                   <= (1+kappa_P) q_g[chi_g].                  (C4a)
+
+The rank-one energy bound therefore yields
+
+    || |nu_g><Omega_g|-|Omega_g><nu_g| ||_(q_g->q_g)
+       <= 2 sqrt(E+gamma) sqrt(1+kappa_P) D_1/(gamma g).         (C4b)
+
+In SF9 one may now assume H0-H3 and set kappa_3=kappa_P D_1^2.
+This reduces the sufficient order-zero checklist from five estimates to four.
+It does not establish those four estimates or parameter orders one and two.
+
+## 5. Complete projection-jet recurrence (C5)
+
+On a common smooth core at fixed positive g, U_g'=-sigma_g U_g and
+(U_g^-1)'=U_g^-1 sigma_g. For any differentiable operator family F_g,
+
+    partial_g(U_g^-1 F_g U_g)=U_g^-1(F_g'+[sigma_g,F_g])U_g.
+
+Consequently, define F_0=Pi_g and recursively
+
+    F_(n+1)=partial_g F_n+[sigma_g,F_n],
+    P_g^(n)=U_g^-1 F_n U_g.                                   (C5)
+
+This is an exact differentiation identity, not an energy-norm bound. In particular,
+
+    F_2 = Pi_g''+[sigma_g',Pi_g]+2[sigma_g,Pi_g']
+            +[sigma_g,[sigma_g,Pi_g]].                         (C5a)
+
+In expanded form this is
+
+    F_2=(sigma_g^2+sigma_g')Pi_g-2 sigma_g Pi_g sigma_g
+        +Pi_g(sigma_g^2-sigma_g')+Pi_g''
+        +2 sigma_g Pi_g'-2 Pi_g' sigma_g.
+
+The last two terms were missing in the submission. Pi_g varies because mu_g
+varies; it cannot be differentiated as a fixed conditional measure. The
+recurrence supplies the higher terms without dropping mixed derivatives.
+The complete Kato derivatives retain
+
+    A_P'=[P_g'',P_g],
+    A_P''=[P_g''',P_g]+[P_g'',P_g'].                            (C5b)
+
+These identities follow by the product rule and [P_g',P_g']=0.
+Every term, including [P_g'',P_g'], needs the required energy estimate.
+
+For a finite check take Omega=(cos t,sin t), 0<t<pi/2,
+Pi=[[cos(t)^2,sin(t)^2],[cos(t)^2,sin(t)^2]], and U=diag(1/Omega).
+Then P=Omega Omega^T. At t=pi/4, the true P'' minus the submitted
+formula is [[0,-4],[-4,0]]. The corrected formula equals P'' exactly.
+This verifies a counterexample and a finite realization, not the continuum
+operator-domain assumptions; the general identity follows from the product rule.
+
+## 6. Scaling defects and unresolved estimates (C6)
+
+The submitted diffusion gap c_trans gives the physical gap g^2 c_trans/2.
+With forcing norm 4 g^-3(C_V g^2), its inverse estimate is
+
+    8 C_V/(c_trans g^3), not 8 C_V/(c_trans g).                  (C6a)
+
+A uniform physical fiber gap would repair this exponent arithmetic, but must
+be proved together with the correct conditional operator equation and uniform
+forcing. The full-space spectral gap and the seven local magnetic Hessian
+directions alone do not prove these fiber statements.
+
+Writing v=E[V|w], the submitted H2 inequality would require a uniform C_1
+in 4 sqrt(32 kappa_0) g^-4 sqrt(v) <= C_1 g^-2(1+g^-2 v).
+At v=g^2 the ratio is
+
+    8 sqrt(2 kappa_0)/g -> infinity.                           (C6b)
+
+Thus bounded V and the stated variance bound do not justify that scalar
+step. Actual covariance cancellation, stronger conditional moments, or another
+estimate of the full SF7e identity is needed, including its drift and flux.
+Smoothness for each positive g alone gives no uniform small-g derivative bound.
+
+The preserved statement IDs retain these unresolved targets:
+
+- H0_ENERGY_CONTRACTION: uniform energy boundedness of Pi_g, including the
+  original proposed kappa_P=1. C1 corrects the argument; C3 is only sufficient.
+- H1_FIBERWISE_SCORE_VARIANCE: sup_w Var(sigma_g|w) <= kappa_0 g^-2.
+- VACUUM_CROSS_DERIVATIVES: the energy bounds for partial_g^r A_nu, r=0,1,2.
+  C4b handles r=0 only conditionally on H0; derivatives of m_g remain needed.
+- KATO_DERIVATIVES: the energy bounds for partial_g^r[P_g',P_g], r=0,1,2.
+  C5 fixes the identity, but supplies no uniform bounds for its terms.
+
+Global q_g ground-jet bounds do not automatically imply essential-supremum
+conditional moments of sigma_g, sigma_g^2 or their derivatives, nor the required
+multiplication-operator estimates. H3 also retains the covariance in C2.
+R10 and the H0-H4 package remain open. The prior conditional R10-to-R11/R12
+transport budget remains valid; it has not been instantiated by this attempt.
+The interacting-grid uniformity and continuum limits remain separate successors.
+
+## 7. Verification and provenance
+
+The repaired invariant suite checks exact finite conditional derivatives,
+product-rule terms, and the two scalar scaling defects. Its outputs describe
+only those computations. The analytic C1-C5 results remain T3 for complete
+machine coverage; no full-model R10 or Lean proof is claimed.
+The [repair run](../../runs/r10_proof_repair_2026-09-11/README.md) retains
+original source bytes, the independent review, and validation provenance.

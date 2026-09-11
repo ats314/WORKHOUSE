@@ -4692,32 +4692,35 @@ documents:
     remaining: No full-statement Lean formalization. Full conditional source-generator jets and growing-grid
       uniformity are not conclusions.
   - id: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:SOURCE_ENERGY_JETS_R10
-    statement: For the actual complete compact-square source/vacuum generator A(g) in R9, prove
-      ||A^(r)(g)||_(q_g->q_g)<=d_r g^(-r-1) for r=0,1,2 with finite constants independent of small positive
-      g. This is the open model input R10, not the already proved conditional implication R10 to R12.
-    locator: '## 4. An explicit bridge from the actual transport generator to M1,M2,M3 (lines 199-218); section 5 (lines 271-309)'
+    statement: For the actual complete compact-square source/vacuum generator A(g) in R9, prove ||A^(r)(g)||_(q_g->q_g)<=d_r
+      g^(-r-1) for r=0,1,2 with finite constants independent of small positive g. This is the open model input
+      R10, not the already proved conditional implication R10 to R12.
+    locator: '## 4. An explicit bridge from the actual transport generator to M1,M2,M3 (lines 199-218); section
+      5 (lines 271-309)'
     anchor: '||A^(r)(g)||_(q_g -> q_g) <= d_r g^(-r-1),  r=0,1,2,      (R10)'
     source_labels:
     - R9
     - R10
-    status: proven
-    evidence: analytic
+    status: open
+    evidence: prose-only
     hypotheses:
-    - Actual fixed compact-square Hamiltonian and common electric H1 form domain; actual simple normalized
-      positive ground, 0<=e_g<=E and physical gap gamma>0 on 0<g<g_*.
-    - P_g is the complete true-ground literal-source projection from C1, and A(g) is exactly the R9
-      source/vacuum generator; q_g[u]=H_g[u]+gamma||u||^2, including vacuum components.
-    - Parameter derivatives are taken at positive g on the fixed compact form domain. The target covers
-      all source and fast energies, including spatial derivatives and generator derivatives through order two.
-    - Full conditional-energy hypotheses H0-H4 are discharged in docs/derivations/w6-source-energy-jets-r10.md.
+    - Actual fixed compact-square Hamiltonian and common electric H1 form domain; actual simple normalized positive
+      ground, 0<=e_g<=E and physical gap gamma>0 on 0<g<g_*.
+    - P_g is the complete true-ground literal-source projection from C1, and A(g) is exactly the R9 source/vacuum
+      generator; q_g[u]=H_g[u]+gamma||u||^2, including vacuum components.
+    - Parameter derivatives are taken at positive g on the fixed compact form domain. The target covers all source
+      and fast energies, including spatial derivatives and generator derivatives through order two.
     depends_on:
     - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
-    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION
-    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:CONDITIONAL_ENERGY_H0_H4
     lean: []
-    remaining: Established. H0-H4 are discharged in docs/derivations/w6-source-energy-jets-r10.md, giving
-      the r=0 bound ||A(g)||_(q_g->q_g) <= d_0 g^-1. Orders r=1,2 are proved via ground-jet bounds R8a and
-      resolvent forcings. Full-statement Lean formalization remains open.
+    remaining: Establish the conditional-source projection energy bounds beyond the proved vacuum-only generator.
+      A direct proof of mixed-form R11 is an alternative sufficient route and need not prove R10 itself. M10
+      and the Hardy source-to-L2 bound are not prerequisites of R10 and do not imply it; a different source chart
+      requires its own consistent transformed operator and covariant derivatives. The ground-frame reduction
+      DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION gives the r=0 case under its conditional-energy
+      hypotheses H0-H4; those and r=1,2 remain open. The PR 150 repair establishes conditional differentiation
+      and projection-jet identities; H4 follows from H0 and R8a, but H0-H3 and higher source-energy bounds remain
+      unresolved.
   - id: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:COMPLETE_BUDGET
     statement: For the complete actual positive-reference source/vacuum transport, energy-operator bounds
       ||A^(r)(g)||_(q_g->q_g)<=d_r g^(-r-1), r=0,1,2, imply explicit all-energy M_j(s)<=c_j s^-j for j=1,2,3
@@ -5943,16 +5946,16 @@ documents:
       bound any of them, and pairing it with |f|^2 does not yield an energy-form bound without further
       regularity.
   - id: DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION
-    statement: Under the conditional-energy hypotheses H0-H4 (uniform q_g-boundedness of P_g, sup_w K^0_g
-      <= kappa_0 g^-2, J_g <= kappa_1 g^-2 (1+g^-2 E[V|w]), the fast-to-source conditional energy bound,
-      and b_g[m_g] <= kappa_3 g^-2), the complete R9 generator satisfies ||A(g)||_(q_g->q_g) <= d_0 g^-1
-      with the displayed explicit d_0. This is the r=0 case of R10 only.
+    statement: Under the conditional-energy hypotheses H0-H4 (uniform q_g-boundedness of P_g, sup_w K^0_g <=
+      kappa_0 g^-2, J_g <= kappa_1 g^-2 (1+g^-2 E[V|w]), the fast-to-source conditional energy bound, and b_g[m_g]
+      <= kappa_3 g^-2), the complete R9 generator satisfies ||A(g)||_(q_g->q_g) <= d_0 g^-1 with the displayed
+      explicit d_0. This is the r=0 case of R10 only.
     locator: '## 5. Exact reduction of the order-zero R10 bound (SF8-SF9)'
     anchor: '||A(g) u||_(q_g) <= d_0 g^-1 ||u||_(q_g),'
     source_labels:
     - SF8
     - SF9
-    status: proven
+    status: conditional
     evidence: analytic
     hypotheses:
     - H0-H4 with constants independent of g on 0<g<g_*; each is stated explicitly in section 5.
@@ -5962,96 +5965,33 @@ documents:
     - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
     - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:FIBER_ENERGY_IDENTITY
     - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
-    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:CONDITIONAL_ENERGY_H0_H4
     lean: []
-    remaining: Established under discharged H0-H4. Full-statement Lean formalization remains open.
+    remaining: Prove H0-H4. The r=1,2 cases of R10 are not reduced; their forcing contains the electric term
+      and P''_g involves sigma_g^2 and its derivative. R10 remains open. C4 in the R10 repair derives H4 from
+      H0 and R8a, so H0-H3 suffice as separate hypotheses; they remain undischarged.
   - id: DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:CONDITIONAL_ENERGY_H0_H4
-    statement: Prove, uniformly on 0<g<g_*, the fiberwise conditional-energy estimates H0-H4 for the
-      undilated ground score on level sets of w. Their averaged forms are established (SF7b and the
-      integrated J_g bound conditional on H4); the fiberwise forms are open.
+    statement: Prove, uniformly on 0<g<g_*, the fiberwise conditional-energy estimates H0-H4 for the undilated
+      ground score on level sets of w. Their averaged forms are established (SF7b and the integrated J_g bound
+      conditional on H4); the fiberwise forms are open.
     locator: '## 5. Exact reduction of the order-zero R10 bound (SF8-SF9), conditional-energy hypotheses'
-    anchor: '(H1)  sup_w K^0_g(w)'
+    anchor: (H1)  sup_w K^0_g(w)
     source_labels:
     - H0
     - H1
     - H2
     - H3
     - H4
-    status: proven
-    evidence: analytic
+    status: open
+    evidence: prose-only
     hypotheses:
     - Actual fixed square, undilated score partial_g log Omega_g; K^0_g is not the dilated K_g of M10.
     depends_on:
     - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
     lean: []
-    remaining: Established. Discharged via transverse fast-mode spectral gap and magnetic Poisson inversion
-      in docs/derivations/w6-source-energy-jets-r10.md. Full-statement Lean formalization remains open.
-
-- id: CITE:W6_SOURCE_ENERGY_JETS_R10
-  path: docs/derivations/w6-source-energy-jets-r10.md
-  sha256: f4ad2df3b48a3b7e0f630182bbd443047e25d69fbb21888ca16465c6be35500b
-  statements:
-  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:H0_ENERGY_CONTRACTION
-    statement: For all Phi in the form domain, the conditional expectation f(w) = E_mu[Phi | w] satisfies
-      b_g[f] <= q_g[Omega_g Phi], establishing the uniform energy-norm boundedness of the literal source projection P_g with kappa_P = 1.
-    locator: '## 2. Resolution of the Five Conditional Energy Hypotheses (H0–H4), Theorem 1'
-    anchor: 'b_g[ E_{\mu_g}(\Phi | w) ] \le \kappa_P q_g[\Omega_g \Phi], \qquad \text{with } \kappa_P = 1.'
-    source_labels:
-    - H0
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Actual fixed square at small positive coupling; Gamma(w, w) = 2(1-w^2).
-    depends_on: []
-    lean: []
-    remaining: No Lean formalization.
-  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:H1_FIBERWISE_SCORE_VARIANCE
-    statement: Inverting -(g^2/2) Delta_mu on the transverse fiber with physical quantum gap gamma_trans >= gamma > 0
-      and magnetic forcing 4 g^-3 (V - <V>_w) proves sup_w Var(sigma_g | w) <= kappa_0 g^-2 uniformly on w in [-1, 1].
-    locator: '## 2. Resolution of the Five Conditional Energy Hypotheses (H0–H4), Theorem 2'
-    anchor: '\sup_{w \in [-1, 1]} K_g^0(w) \le \kappa_0 g^{-2}, \qquad \text{where } K_g^0(w) = \mathrm{Var}_{\mu_g}(\sigma_g | w).'
-    source_labels:
-    - H1
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Transverse non-degeneracy of V with seven uniform normal eigenvalues; SF6 score Poisson equation.
-    depends_on:
-    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
-    lean: []
-    remaining: No Lean formalization.
-  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:VACUUM_CROSS_DERIVATIVES
-    statement: For the vacuum-cross generator A_nu(g) = |nu_g><Omega_g| - |Omega_g><nu_g|, Leibniz differentiation
-      and ground-jet bounds ||Omega_g^(k)||_q <= D_k g^-k with ||nu_g^(i)||_q <= C_i g^(-i-1) prove
-      ||A_nu^(r)(g)||_(q_g->q_g) <= d_nu,r g^(-r-1) for r = 0, 1, 2.
-    locator: '## 4. Higher Parameter Derivatives (r = 1, 2), Theorem 7'
-    anchor: '\|A_\nu^{(r)}(g)\|_{q_g \to q_g} \le d_{\nu, r} g^{-r-1}, \qquad r = 0, 1, 2.'
-    source_labels:
-    - VACUUM_CROSS_DERIVATIVES
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Ground-jet energy bounds R8a and rank-one energy operator norm bound.
-    depends_on:
-    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
-    lean: []
-    remaining: No Lean formalization.
-  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:KATO_DERIVATIVES
-    statement: Resolvent equations for higher ground jets chi''_g and chi'''_g bound the projection commutator derivatives
-      ||[P'_g, P_g]^(r)||_(q_g->q_g) <= d_P,r g^(-r-1) for r = 0, 1, 2 on the full energy space.
-    locator: '## 4. Higher Parameter Derivatives (r = 1, 2), Theorem 8'
-    anchor: '\|A_P^{(r)}(g)\|_{q_g \to q_g} \le d_{P, r} g^{-r-1}, \qquad r = 0, 1, 2.'
-    source_labels:
-    - KATO_DERIVATIVES
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Ground-jet energy bounds R8a and resolvent forcing bounds.
-    depends_on:
-    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
-    lean: []
-    remaining: No Lean formalization.
-
+    remaining: A fiberwise Poincare-type inequality for -Delta_mu restricted to level sets of w, uniform in g,
+      would give H1 and H2 from SF6. H0, H3 and H4 concern the source energy of conditional expectations and
+      need a separate argument. No route is claimed dead. The repaired C4 implication derives H4 from H0 and
+      the established first ground jet. The H0-H3 actual-model estimates remain open.
 - id: CITE:MOVING_TIME_SPECTRAL_GAP
   path: docs/derivations/moving-time-spectral-gap.md
   sha256: d0a20c25e023bff70dec2ad61995860ceb3eb8476c651b2fc6275ff64d059a75
@@ -6160,6 +6100,158 @@ documents:
     lean: []
     remaining: The full analytic argument is not formalized in Lean. Exact finite controls retain their
       narrower scopes; actual Wilson continuum/source realization is a separate open application.
+- id: CITE:UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL
+  path: docs/derivations/universal-cellular-hodge-tetrahedral.md
+  sha256: 427974f8eda3ae77db78809fd091d4e2ecc6980ab8459eae9207a348089b81c7
+  statements:
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:SPECTRUM_EIGENVALUE
+    statement: For a connected regular cellular sphere bounding one 3-cell in unweighted real incidence
+      bases, ker L_down=R psi, L_down L_up=0, L_up psi=F psi, and L_up Q=Q L_up=0.
+    locator: '### 2.2 Universal spectral identities (lines 45-58)'
+    anchor: '### 2.2 Universal spectral identities'
+    source_labels:
+    - Theorem 1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Connected closed orientable regular polyhedral sphere boundary, with each edge in two faces and
+      unit incidence entries.
+    - L_down=B^T B, L_up=psi psi^T, signed fundamental cycle psi, and Q=I-psi psi^T/F.
+    depends_on: []
+    lean: []
+    lean_support:
+    - name: feshbach_q_annihilates_l_up
+      scope: The rank-one inner-product identity L_up Q=0 under lam=inner(psi,psi) != 0.
+    remaining: Cellular incidence construction and one-dimensional cycle kernel remain unformalized.
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:UP_HARMONIC_EXCURSION
+    statement: For a linear operator R on finite-dimensional real face space, the rank-one complement
+      excursion Q R psi is killed by L_up.
+    locator: '### 2.3 Universal Up-Harmonicity of Excursions (lines 59-67)'
+    anchor: '### 2.3 Universal Up-Harmonicity of Excursions'
+    source_labels:
+    - Theorem 2
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Rank-one up-Laplacian, nonzero carrier norm, and orthogonal rank-one complement.
+    depends_on:
+    - DERIV:UNIVERSAL_CELLULAR_HODGE:SPECTRUM_EIGENVALUE
+    lean:
+    - cellular_excursion_up_harmonic
+    remaining: None for the rank-one identity; its cellular realization is covered separately.
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:TOTAL_LAPLACIAN_DIAGONAL
+    statement: The total face Laplacian has diagonal p_f+1; its diagonal is scalar exactly when all face
+      perimeters agree, without geometric regularity.
+    locator: '### 2.4 Total Laplacian Diagonal & Regularity Criterion (lines 68-83)'
+    anchor: '### 2.4 Total Laplacian Diagonal & Regularity Criterion'
+    source_labels:
+    - Theorem 3
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Regular cellulation with unit unweighted incidence bases and fundamental face coordinates of magnitude
+      one.
+    depends_on: []
+    lean: []
+    remaining: Combinatorial incidence and perimeter identities remain unformalized.
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:TETRAHEDRAL_S4_COMMUTANT
+    statement: On the tetrahedral face permutation representation L_down=4Q, L_up=4P and Comm(S4)=span(P,Q);
+      every commuting face operator has zero off-carrier compression and scalar Q compression.
+    locator: '### 3.1 Tetrahedral Hodge duality and 3.2 The S4 commutant (lines 86-119)'
+    anchor: '### 3.2 The S4 commutant'
+    source_labels:
+    - Theorem 4
+    - Theorem 5
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Coherently oriented tetrahedron, unweighted face basis, and an operator commuting with all 24 face
+      permutations.
+    depends_on:
+    - DERIV:UNIVERSAL_CELLULAR_HODGE:SPECTRUM_EIGENVALUE
+    lean: []
+    lean_support:
+    - name: tetrahedral_hodge_duality
+      scope: Assuming complementary maps and L_down=4Q, L_up=4P, proves their sum is 4I and product zero;
+        no incidence or S4 construction.
+    - name: traceless_compression_vanishes
+      scope: Scalar arithmetic c-(3c)/3=0 when 3 is nonzero; no representation or trace construction.
+    remaining: Actual incidence matrices, the S4 commutant, and matrix trace remain unformalized.
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:PROPER_RETURN_Q_ANNIHILATION
+    statement: The 60 paths flagged by the submitted endpoint-or-zero flux predicate identify physical
+      tetrahedral retained-sector returns that vanish individually under intermediate Q projection.
+    locator: '### 3.4 Open physical-history identification (lines 133-156)'
+    anchor: '### 3.4 Open physical-history identification'
+    source_labels:
+    - Physical-history obligation
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - An actual Haar/Fierz Hilbert space, physical retained projector, insertion channels, and projected
+      resolvent states matching the enumerated paths.
+    depends_on: []
+    lean: []
+    lean_support:
+    - name: feshbach_intermediate_return_annihilation
+      scope: Under lam=inner(psi,psi) != 0, the rank-one complement kills every scalar multiple c psi;
+        no history identification is proved.
+    remaining: 'Open: construct and identify the physical states/projector and calculate each projected
+      contribution. The 60/36 flux count and Q psi=0 do not establish this identification.'
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:RETAINED_VECTOR_RANK_ONE
+    statement: In a real inner-product space with lam=inner(psi,psi) != 0, the complement v -> v-(inner(psi,v)/lam)
+      psi annihilates every vector c psi.
+    locator: '### 3.3 Feshbach Intermediate Annihilation of Retained Vectors (lines 120-132)'
+    anchor: '### 3.3 Feshbach Intermediate Annihilation of Retained Vectors'
+    source_labels:
+    - Theorem 6, rank-one clause
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Real inner-product space, lam=inner(psi,psi) != 0, and scalar c.
+    depends_on: []
+    lean:
+    - feshbach_intermediate_return_annihilation
+    remaining: None for this rank-one identity; physical history membership is a separate open statement.
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:RSMR_MASTER_THEOREM
+    statement: For the cubic Laurent operators with S=L_down-4I, sigma(R S^m R)=(q-4)^m(q e2+3e3)-4 Pi_m(q)e2^2
+      for every natural m, with Pi defined polynomially also at q=0.
+    locator: '### 4.3 The carrier symbol (lines 196-221)'
+    anchor: '### 4.3 The carrier symbol'
+    source_labels:
+    - Theorem 7
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Cubic Laurent Hodge operators with L_down+U=qI, U^2=qU, S=L_down-4I.
+    - Unnormalized carrier symbol, sigma(RR)=q e2+3e3 and sigma(RUR)=4e2^2.
+    depends_on:
+    - DERIV:UNIVERSAL_CELLULAR_HODGE:SHIFTED_OPERATOR_POWERS
+    lean: []
+    lean_support:
+    - name: hodge_sandwiched_power
+      scope: For any linear endomorphisms with U^2=qU and S=(q-4)I-U, proves the R S^m R operator decomposition
+        for every natural m; Laurent carrier evaluations are separate.
+    remaining: Laurent realization, carrier symbols, and identification of the all-power operator theorem
+      with this realization remain outside Lean.
+  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:SHIFTED_OPERATOR_POWERS
+    statement: For linear endomorphisms over a field with U^2=qU and S=(q-4)I-U, S^m=(q-4)^m I-Pi_m U,
+      R S^m R=(q-4)^m R^2-Pi_m RUR, and q Pi_m=(q-4)^m-(-4)^m for every natural m.
+    locator: '### 4.2 Polynomial recurrence and operator powers (lines 172-195)'
+    anchor: '### 4.2 Polynomial recurrence and operator powers'
+    source_labels:
+    - Theorem 8
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Field K, a K-module, endomorphisms U and R, and U^2=qU.
+    - Pi_0=0 and Pi_(m+1)=(q-4)^m-4Pi_m; no division or nonzero-q premise.
+    depends_on: []
+    lean:
+    - hodge_pi_cleared
+    - hodge_shifted_power
+    - hodge_sandwiched_power
+    remaining: None for the operator and cleared recurrence identities; physical and Laurent realizations
+      are separate.
 
 - id: CITE:OS_KERNEL_GAP
   path: docs/derivations/os-kernel-moving-time-gap.md
@@ -6275,3 +6367,151 @@ documents:
       no whole Lean formalization. Actual Wilson fixed-time kernels and compatibility remain application
       hypotheses.
     locator: '## K5. Positive-time history separation supplies zero-time continuity (lines 176-221)'
+
+- id: CITE:W6_SOURCE_ENERGY_JETS_R10
+  path: docs/derivations/w6-source-energy-jets-r10.md
+  sha256: 7cb2ad710a35e1ddf049b814ebd7e2ad9a3b7717d6cb8893b136149d1617ecf5
+  statements:
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:H0_ENERGY_CONTRACTION
+    statement: Establish the proposed bound b_g[Pi_g Phi] <= q_g[Omega_g Phi] with kappa_P=1 on the actual
+      model; the weaker uniform finite-kappa_P H0 also suffices for R10.
+    locator: '## 6. Scaling defects and unresolved estimates (C6)'
+    anchor: 'H0_ENERGY_CONTRACTION:'
+    source_labels:
+    - H0_ENERGY_CONTRACTION
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - Constants must be independent of g on 0<g<g_*.
+    depends_on: []
+    lean: []
+    remaining: The submitted proof is not a discharge. C1-C5 repair identities and conditional reductions;
+      full actual-model energy estimates remain open.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:H1_FIBERWISE_SCORE_VARIANCE
+    statement: Establish sup_w Var_mu_g(sigma_g|w) <= kappa_0 g^-2 uniformly at small positive coupling.
+    locator: '## 6. Scaling defects and unresolved estimates (C6)'
+    anchor: 'H1_FIBERWISE_SCORE_VARIANCE:'
+    source_labels:
+    - H1_FIBERWISE_SCORE_VARIANCE
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - Constants must be independent of g on 0<g<g_*.
+    depends_on: []
+    lean: []
+    remaining: The submitted proof is not a discharge. C1-C5 repair identities and conditional reductions;
+      full actual-model energy estimates remain open.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:VACUUM_CROSS_DERIVATIVES
+    statement: Establish ||partial_g^r A_nu||_(q_g->q_g) <= d_nu,r g^(-r-1), r=0,1,2, for the actual vacuum-cross
+      source vector.
+    locator: '## 6. Scaling defects and unresolved estimates (C6)'
+    anchor: 'VACUUM_CROSS_DERIVATIVES:'
+    source_labels:
+    - VACUUM_CROSS_DERIVATIVES
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - Constants must be independent of g on 0<g<g_*.
+    depends_on: []
+    lean: []
+    remaining: The submitted proof is not a discharge. C1-C5 repair identities and conditional reductions;
+      full actual-model energy estimates remain open.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:KATO_DERIVATIVES
+    statement: Establish ||partial_g^r[P_g prime,P_g]||_(q_g->q_g) <= d_P,r g^(-r-1), r=0,1,2, for the actual
+      source projection.
+    locator: '## 6. Scaling defects and unresolved estimates (C6)'
+    anchor: 'KATO_DERIVATIVES:'
+    source_labels:
+    - KATO_DERIVATIVES
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - Constants must be independent of g on 0<g<g_*.
+    depends_on: []
+    lean: []
+    remaining: The submitted proof is not a discharge. C1-C5 repair identities and conditional reductions;
+      full actual-model energy estimates remain open.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:CONDITIONAL_DERIVATIVE
+    statement: On regular fibers, d_w E_mu[Phi|w]=E_mu[X(Phi)|w]+Cov_mu(Phi,div_mu X|w), with the covariance
+      retained also for tilde_sigma Phi.
+    locator: '## 2. Correct conditional differentiation (C1)'
+    anchor: d/dw E_mu_g[Phi|w] = E_mu_g[X(Phi)|w] + Cov_mu_g(Phi,B_g|w).  (C1)
+    source_labels:
+    - CONDITIONAL_DERIVATIVE
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - X=grad(w)/Gamma(w,w), X(w)=1 on (-1,1); smooth fields or the stated locally integrable weak formulation.
+    depends_on:
+    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:FIBER_ENERGY_IDENTITY
+    lean: []
+    remaining: Analytic statement; no full Lean formalization. Finite checks have only their declared scope.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:HORIZONTAL_SCORE_SUFFICIENT
+    statement: A uniform bound ess sup_w g^2(1-w^2)Var_mu(B_g|w)<=C_B implies H0 with kappa_P=2+2C_B/gamma.
+    locator: '## 3. A sufficient horizontal-score estimate for H0 (C3)'
+    anchor: b_g[Pi_g Phi] <= (2+2 C_B/gamma) q_g[Omega_g Phi].           (C3)
+    source_labels:
+    - HORIZONTAL_SCORE_SUFFICIENT
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - The additional horizontal-score variance bound C3a holds uniformly; common smooth form core and closure
+      as specified.
+    depends_on:
+    - DERIV:W6_SOURCE_ENERGY_JETS_R10:CONDITIONAL_DERIVATIVE
+    lean: []
+    remaining: The sufficient implication is proved; C3a has not been established for the actual model. No
+      Lean formalization.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:H4_FROM_H0
+    statement: H0 and the first ground jet R8a imply H4 with kappa_3=kappa_P D_1^2; SF9 therefore needs only
+      H0-H3 as separate sufficient estimates.
+    locator: '## 4. H4 follows from H0 and the established ground jet (C4)'
+    anchor: b_g[m_g] <= kappa_P q_g[chi_g] <= kappa_P D_1^2 g^-2.        (C4)
+    source_labels:
+    - H4_FROM_H0
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - Assume H0 with a uniform kappa_P; q_g[chi_g]<=D_1^2 g^-2 is established by R8a.
+    depends_on:
+    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+    lean: []
+    remaining: The implication is proved. H0 is an explicit unresolved application hypothesis; it is not discharged
+      by this result. No Lean formalization.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:PROJECTION_JET_RECURRENCE
+    statement: For P_g=U_g^-1 Pi_g U_g and U_g prime=-sigma_g U_g, F_0=Pi_g, F_(n+1)=partial_g F_n+[sigma_g,F_n]
+      gives P_g^(n)=U_g^-1 F_n U_g, retaining the mixed terms in P_g second derivative.
+    locator: '## 5. Complete projection-jet recurrence (C5)'
+    anchor: P_g^(n)=U_g^-1 F_n U_g.                                   (C5)
+    source_labels:
+    - PROJECTION_JET_RECURRENCE
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - Differentiable operator families on a common smooth core at fixed positive g; uniform energy operator
+      bounds are not assumed or concluded.
+    depends_on: []
+    lean: []
+    remaining: Analytic statement; no full Lean formalization. Finite checks have only their declared scope.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:SCALING_OBSTRUCTIONS
+    statement: The submitted H1 inverse estimate scales as g^-3, and the submitted H2 scalar domination requires
+      an unbounded constant 8 sqrt(2 kappa_0)/g at v=g^2. These invalidate the proof steps, not R10 itself.
+    locator: '## 6. Scaling defects and unresolved estimates (C6)'
+    anchor: 8 sqrt(2 kappa_0)/g -> infinity.                           (C6b)
+    source_labels:
+    - SCALING_OBSTRUCTIONS
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Positive g,c_trans,C_V,kappa_0 and v; exactly the displayed scalar premises, not actual-model coercivity.
+    depends_on: []
+    lean: []
+    remaining: Analytic statement; no full Lean formalization. Finite checks have only their declared scope.
