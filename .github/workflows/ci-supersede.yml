@@ -1,0 +1,42 @@
+name: CI supersede
+
+# Closing a pull request makes its in-flight CI run pointless. A merged PR's
+# content is verified again by the push to main — or found already verified
+# there, see the one-tree-once note in ci.yml — and an abandoned PR's verdict
+# has no reader. Until 2026-09-10 every merge ran the full suite twice in
+# parallel, once on the PR and once on main; this cancels the PR side.
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  actions: write
+
+jobs:
+  cancel:
+    name: Cancel the closed PR's in-flight run
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Cancel queued or running CI for this PR head
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          ids="$(for status in queued in_progress; do
+            gh run list --repo "$GITHUB_REPOSITORY" --workflow ci.yml \
+              --event pull_request --branch "$HEAD_REF" --status "$status" \
+              --json databaseId,headSha \
+              --jq '.[] | select(.headSha == $ENV.HEAD_SHA) | .databaseId'
+          done | sort -u)"
+          if [ -z "$ids" ]; then
+            echo "no CI run in flight for $HEAD_REF@$HEAD_SHA"
+            exit 0
+          fi
+          for run_id in $ids; do
+            echo "cancelling CI run $run_id ($HEAD_REF@$HEAD_SHA)"
+            # A fork's closed event carries a read-only token; then this is a
+            # no-op and the PR run simply finishes, as it always did.
+            gh run cancel --repo "$GITHUB_REPOSITORY" "$run_id" || true
+          done

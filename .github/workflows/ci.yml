@@ -14,13 +14,30 @@ concurrency:
 permissions:
   contents: read
 
+# One tree, one full verification. A pull request's run checks out the merge
+# of the PR onto its base; if main has not moved by the time the PR merges,
+# the merge commit on main has byte-for-byte the same tree, and running
+# fifteen minutes of checks on it again is evidence of nothing. Until
+# 2026-09-10 every merge of a derivation paid exactly that: one full run on
+# the PR and an identical one on main. So a run that passes full verification
+# records the tree it verified (the `verified` job, an artifact named after
+# the tree hash), and the scope job looks that marker up before anything
+# heavy starts. The marker is keyed on the tree, not the commit: a different
+# base, a squash or a rebase gives a different tree and verifies in full.
+# ci-supersede.yml covers the other half — a PR run still in flight when the
+# PR merges — by cancelling it, so the push to main is the one run that counts.
+
 jobs:
   scope:
     name: Select checks for changed inputs
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
     outputs:
       full: ${{ steps.scope.outputs.full }}
+      verified_by: ${{ steps.dedup.outputs.verified_by }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -40,6 +57,22 @@ jobs:
           else
             python scripts/ci_scope.py --base "$CI_BASE_SHA" --head "$CI_HEAD_SHA" --github-output "$GITHUB_OUTPUT"
           fi
+      # A manual dispatch is a request to verify again, so it never dedups.
+      - name: Look for an earlier full verification of this exact tree
+        id: dedup
+        if: github.event_name != 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tree="$(git rev-parse 'HEAD^{tree}')"
+          run_id="$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=verified-tree-$tree&per_page=10" \
+            --jq '[.artifacts[] | select(.expired | not)] | sort_by(.created_at) | last | .workflow_run.id // empty')"
+          if [ -n "$run_id" ]; then
+            echo "tree $tree already passed full verification in run $run_id"
+          else
+            echo "tree $tree has no recorded full verification"
+          fi
+          echo "verified_by=$run_id" >> "$GITHUB_OUTPUT"
 
   check:
     needs: scope
@@ -60,43 +93,52 @@ jobs:
             true|false) ;;
             *) echo "CI scope selection returned an invalid result."; exit 1 ;;
           esac
+      - name: Report an already-verified tree
+        if: needs.scope.outputs.verified_by != ''
+        env:
+          VERIFIED_BY: ${{ needs.scope.outputs.verified_by }}
+        run: |
+          url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$VERIFIED_BY"
+          echo "This exact tree already passed full verification: $url"
+          echo "Full verification of this exact tree already passed in [run $VERIFIED_BY]($url); not repeated." >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@v7
+        if: needs.scope.outputs.verified_by == ''
 
       # The documentation/help path only needs Python. Full checks retain
       # the existing stack detection and verification entry points.
       - name: Set up Node
-        if: needs.scope.outputs.full == 'true' && hashFiles('package.json') != ''
+        if: needs.scope.outputs.full == 'true' && needs.scope.outputs.verified_by == '' && hashFiles('package.json') != ''
         uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: npm
 
       - name: Set up Python
-        if: hashFiles('pyproject.toml', 'requirements.txt', 'setup.py') != ''
+        if: needs.scope.outputs.verified_by == '' && hashFiles('pyproject.toml', 'requirements.txt', 'setup.py') != ''
         uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
       - name: Set up Go
-        if: needs.scope.outputs.full == 'true' && hashFiles('go.mod') != ''
+        if: needs.scope.outputs.full == 'true' && needs.scope.outputs.verified_by == '' && hashFiles('go.mod') != ''
         uses: actions/setup-go@v7
         with:
           go-version: stable
 
       - name: Bootstrap
-        if: needs.scope.outputs.full == 'true'
+        if: needs.scope.outputs.full == 'true' && needs.scope.outputs.verified_by == ''
         run: bash scripts/bootstrap.sh
 
       - name: Lint and test
-        if: needs.scope.outputs.full == 'true'
+        if: needs.scope.outputs.full == 'true' && needs.scope.outputs.verified_by == ''
         run: bash scripts/check.sh
 
       - name: Install documentation and help check dependencies
-        if: needs.scope.outputs.full == 'false'
+        if: needs.scope.outputs.full == 'false' && needs.scope.outputs.verified_by == ''
         run: python -m pip install -e ".[dev]"
 
       - name: Check documentation and help
-        if: needs.scope.outputs.full == 'false'
+        if: needs.scope.outputs.full == 'false' && needs.scope.outputs.verified_by == ''
         run: |
           python -m ruff check .
           python -m ruff format --check .
@@ -116,11 +158,12 @@ jobs:
           shellcheck scripts/*.sh .claude/hooks/*.sh
 
   # Full verification compiles Lean with no sorry. A documentation/help run
-  # skips this job and does not claim fresh proof-checking evidence.
+  # skips this job and does not claim fresh proof-checking evidence; a run
+  # whose tree was already verified in full points at that evidence instead.
   lean:
     name: Lean (T0)
     needs: scope
-    if: needs.scope.outputs.full == 'true'
+    if: needs.scope.outputs.full == 'true' && needs.scope.outputs.verified_by == ''
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
@@ -163,7 +206,7 @@ jobs:
   windows-smoke:
     name: Windows smoke (encoding and path determinism)
     needs: scope
-    if: needs.scope.outputs.full == 'true'
+    if: needs.scope.outputs.full == 'true' && needs.scope.outputs.verified_by == ''
     runs-on: windows-latest
     timeout-minutes: 20
     steps:
@@ -183,3 +226,35 @@ jobs:
           git diff --exit-code index/
       - name: CLI regression tests
         run: python -m pytest tests/test_cli.py -q
+
+  # Records that this tree passed the full set — check, Lean and Windows —
+  # so the scope job of a later run for the same tree (normally the push to
+  # main after a merge onto an unmoved base) finds the marker and skips them.
+  # Only a run that did the work records it: a docs-only run, a failed run
+  # and an already-verified run leave no marker. Default `needs` semantics
+  # skip this job unless every listed job succeeded.
+  verified:
+    name: Record the verified tree
+    needs: [scope, check, lean, windows-smoke]
+    if: needs.scope.outputs.full == 'true' && needs.scope.outputs.verified_by == ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: Name the marker after the tree
+        id: tree
+        run: |
+          tree="$(git rev-parse 'HEAD^{tree}')"
+          echo "tree=$tree" >> "$GITHUB_OUTPUT"
+          {
+            echo "tree $tree"
+            echo "commit $GITHUB_SHA"
+            echo "event $GITHUB_EVENT_NAME"
+            echo "run $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          } > verified-tree.txt
+          cat verified-tree.txt
+      - uses: actions/upload-artifact@v7
+        with:
+          name: verified-tree-${{ steps.tree.outputs.tree }}
+          path: verified-tree.txt
+          retention-days: 30
