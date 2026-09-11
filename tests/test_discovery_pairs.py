@@ -354,7 +354,10 @@ def test_external_locator_without_mounted_root_is_unavailable_not_an_error(engin
     assert b["source"]["available"] is False
     assert "archive" in b["source"]["reason"]
     assert b["excerpt"]["text"] == ""
-    assert result["proposal"]["kind"] == "unrelated"
+    # An unreadable endpoint is reported, never classified (it used to read
+    # as 'unrelated' and print a review command for a reading nobody did).
+    assert result["proposal"]["kind"] is None
+    assert "review_add" not in result["commands"]
 
 
 def test_external_locator_reads_a_mounted_root(engine, tmp_path):
@@ -732,3 +735,17 @@ def test_lexicon_load_failure_is_reported_not_raised(engine, root, monkeypatch):
     monkeypatch.setattr(workhouse, "discovery_lexicon", fake, raising=False)
     lexicon = P.pair(engine, "DERIV:A", NOTE_PATH + ":1-5")["shared"]["lexicon"]
     assert lexicon["available"] is False and "bad citation" in lexicon["reason"]
+
+
+def test_unavailable_endpoint_yields_no_kind_and_no_review_command(engine, tmp_path):
+    """D2: an unreadable endpoint is reported, never classified as unrelated."""
+    from workhouse import discovery_pairs as P
+
+    result = P.pair(engine, "ext:nowhere/missing.md:1-2", "DERIV:A")
+    assert result["a"]["source"]["available"] is False
+    assert result["proposal"]["kind"] is None
+    assert result["proposal"]["reasons"][0].startswith("endpoint a unavailable")
+    assert "review_add" not in result["commands"]
+    assert result["argv"][:3] == ["workhouse", "discover", "pair"]
+    rendered = P.render_pair(result)
+    assert "unavailable" in rendered

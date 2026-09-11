@@ -244,6 +244,9 @@ def _locator(where: str, source_paths) -> tuple[str, tuple[int, int] | None]:
 
 
 _FENCE = re.compile(r"^\s*(```|~~~)")
+# A protected block longer than this is not kept whole: a lost opening
+# delimiter would otherwise turn the rest of a document into one passage.
+MAX_PROTECTED_LINES = 120
 _MATH_ENV = r"(equation|align|alignat|gather|multline|eqnarray|flalign|displaymath)\*?"
 _ENV_OPEN = re.compile(r"\\begin\{" + _MATH_ENV + r"\}")
 _ENV_CLOSE = re.compile(r"\\end\{" + _MATH_ENV + r"\}")
@@ -254,8 +257,12 @@ def protected_blocks(lines: list[str]) -> list[tuple[int, int]]:
 
     A passage boundary inside one of these blocks separates an equation from
     its own closing delimiter, so the chunker keeps them whole when the
-    character budget allows. Detection is line-based and conservative: an
-    unclosed block runs to the end of the document.
+    character budget allows. Detection is line-based and conservative in the
+    other direction too: a block that never closes, or one longer than
+    ``MAX_PROTECTED_LINES``, is left unprotected, because a stray closing
+    delimiter (an exported ``\\end{cases}$$`` whose opener was lost) once
+    swallowed 1,276 lines into a single passage. A line that carries a
+    ``\\end{...}`` never opens a dollar block for the same reason.
     """
     spans: list[tuple[int, int]] = []
     state: tuple[str, str] | None = None
@@ -265,7 +272,7 @@ def protected_blocks(lines: list[str]) -> list[tuple[int, int]]:
             fence = _FENCE.match(line)
             if fence:
                 state, start = ("fence", fence.group(1)), number
-            elif line.count("$$") % 2 == 1:
+            elif line.count("$$") % 2 == 1 and "\\end{" not in line:
                 state, start = ("dollar", ""), number
             elif "\\[" in line and "\\]" not in line[line.index("\\[") + 2 :]:
                 state, start = ("bracket", ""), number
@@ -286,10 +293,12 @@ def protected_blocks(lines: list[str]) -> list[tuple[int, int]]:
             ended = _ENV_CLOSE.search(line)
             closed = bool(ended and ended.group(1) == marker)
         if closed:
-            spans.append((start, number))
+            if number - start < MAX_PROTECTED_LINES:
+                spans.append((start, number))
             state = None
-    if state is not None and lines:
-        spans.append((start, len(lines) - 1))
+        elif number - start >= MAX_PROTECTED_LINES:
+            # Too long to be one equation: stop protecting and rescan from here.
+            state = None
     return spans
 
 

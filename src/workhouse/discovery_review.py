@@ -166,7 +166,10 @@ APPLY_STEPS = (
     "--registered-as '<PR or commit> <ledger id and field>' --reason '...'.",
 )
 _ID = re.compile(r"\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-[0-9a-f]{6}\Z")
-_LOCATOR = re.compile(r"(?P<path>[^:\\]+\.[A-Za-z0-9]+):(?P<start>\d+)(?:-(?P<end>\d+))?\Z")
+_LOCATOR = re.compile(
+    r"(?P<path>(?:ext:[^/:\\]+/)?[^:\\]+\.[A-Za-z0-9]+):(?P<start>\d+)(?:-(?P<end>\d+))?\Z"
+)
+_ABSOLUTE = re.compile(r"^(?:[A-Za-z]:[/\\]|/)")
 _LEDGER_ID = re.compile(
     r"\b(?:[CGRU]\d+|(?:RESULT|CHK|LEAN|RUN|CITE|CONST|DOC|CORPUS|ARCHIVE|NOTE|LIT|ADR|ROUTE|DERIV)"
     r":[^\s,;]+)"
@@ -276,6 +279,43 @@ class Register:
         self.dir = Path(register).resolve() if register else self.root / REGISTER
         self.reviews = self.dir / "reviews"
         self.proposals = self.dir / "proposals"
+        self._external: dict[str, Path | None] | None = None
+
+    def _external_roots(self) -> dict[str, Path | None]:
+        """Present external roots by label, from the declared discovery scope."""
+        if self._external is None:
+            from . import discovery_scope
+
+            roots: dict[str, Path | None] = {}
+            try:
+                scope = discovery_scope.load_scope(self.root)
+            except ValueError:
+                scope = None
+            if scope is not None:
+                for row in discovery_scope.resolve_roots(scope, self.root):
+                    present = row.get("present") and not row.get("skipped")
+                    roots[row["label"]] = Path(row["absolute"]) if present else None
+            self._external = roots
+        return self._external
+
+    def locate(self, relative: str) -> tuple[Path | None, str | None]:
+        """The file a locator path names, or the reason it cannot be read.
+
+        Checkout-relative paths resolve under the checkout; ``ext:<label>/``
+        paths resolve through the declared external root, so a reading of an
+        intake passage can be recorded on the workstation that holds it and
+        is reported as unavailable, not silently accepted, elsewhere.
+        """
+        relative = relative.replace("\\", "/")
+        if _ABSOLUTE.match(relative):
+            return None, "absolute paths are not accepted; use a checkout-relative or ext: path"
+        if relative.startswith("ext:"):
+            label, _slash, rest = relative[4:].partition("/")
+            root = self._external_roots().get(label)
+            if root is None:
+                return None, f"external root {label!r} is not present on this workstation"
+            return root / rest, None
+        return self.root / relative, None
 
     # -- resolution against the saved catalogue and the checkout -----------------
 
@@ -296,6 +336,13 @@ class Register:
         """Problems with a seed or target; empty when it names something real."""
         if not isinstance(value, str) or not value.strip():
             return ["endpoint must be a nonempty record id or path:start-end locator"]
+        if _ABSOLUTE.match(value.strip()):
+            # Checked before parsing: a POSIX absolute path has no colon and
+            # would otherwise parse as a locator and resolve to itself.
+            return [
+                f"locator {value!r}: use a checkout-relative path or an "
+                "ext:<label>/path:start-end locator, not an absolute path"
+            ]
         locator = parse_locator(value)
         if locator is None:
             known = self.catalogue_ids() if ids is None else ids
@@ -303,9 +350,11 @@ class Register:
                 return [f"unknown record id {value!r}: not in index/claims.jsonl or symbols"]
             return []
         relative, first, last = locator
-        path = self.root / relative
+        path, reason = self.locate(relative)
+        if path is None:
+            return [f"locator {value!r}: {reason}"]
         if not path.is_file():
-            return [f"locator {value!r}: no such file in the checkout"]
+            return [f"locator {value!r}: no such file in the checkout or its external root"]
         try:
             count = len(path.read_bytes().decode("utf-8").splitlines())
         except UnicodeError:
@@ -315,8 +364,8 @@ class Register:
         return []
 
     def file_sha256(self, relative: str) -> str | None:
-        path = self.root / relative.replace("\\", "/")
-        if not path.is_file():
+        path, _reason = self.locate(relative)
+        if path is None or not path.is_file():
             return None
         return _sha(path.read_bytes())
 
@@ -377,6 +426,23 @@ class Register:
             return "connections", list(result.get("candidates", []))
         if schema.startswith(("workhouse-discovery/compact", "workhouse-discovery/context")):
             return "search", list(result.get("hits", [])) + list(result.get("related", []))
+        if schema.startswith("workhouse-discovery/pair"):
+            rows = []
+            for side in ("a", "b"):
+                endpoint = result.get(side)
+                if not isinstance(endpoint, dict):
+                    continue
+                excerpt = endpoint.get("excerpt")
+                rows.append(
+                    {
+                        "id": endpoint.get("id") or endpoint.get("id_or_locator"),
+                        "kind": endpoint.get("kind"),
+                        "source": endpoint.get("source"),
+                        "claim_ids": list(endpoint.get("claim_ids") or []),
+                        "excerpt": (excerpt.get("text") if isinstance(excerpt, dict) else excerpt),
+                    }
+                )
+            return "pair", rows
         command = result.get("command") or (schema.split("/")[1] if "/" in schema else "unknown")
         rows = []
         for key in ("hits", "related", "candidates", "pairs", "rows"):
