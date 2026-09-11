@@ -1315,7 +1315,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 532
+## T1 — re-derived exactly — 536
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1378,6 +1378,20 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the geometric A_p column is p^4 times the printed lambda_p`
   - src/workhouse/invariants/hecke.py:44 · U6; corpus-import/programs/hecke_cover_correspondence/NOTE_FLUX_hecke_cover_correspondence_2026-08-31.md, target-blind prime table
   - `workhouse verify --only 'the geometric A_p column is p^4 times the printed lambda_p'`
+**Moving-time spectral gap: exact budgets and falsifiers**
+
+- `moving-time amplitude plateau clock and dark-sector falsifiers remain exact`
+  - src/workhouse/invariants/moving_time_gap.py:140 · MOVING_TIME_SPECTRAL_GAP section 5 MT5
+  - `workhouse verify --only 'moving-time amplitude plateau clock and dark-sector falsifiers remain exact'`
+- `moving-time finite positive transfer controls tolerate approximate probes`
+  - src/workhouse/invariants/moving_time_gap.py:110 · MOVING_TIME_SPECTRAL_GAP sections 1-2 MT1-MT2
+  - `workhouse verify --only 'moving-time finite positive transfer controls tolerate approximate probes'`
+- `moving-time power exponents balance with the source amplitude squared`
+  - src/workhouse/invariants/moving_time_gap.py:49 · MOVING_TIME_SPECTRAL_GAP section 4 MT4b-MT4e
+  - `workhouse verify --only 'moving-time power exponents balance with the source amplitude squared'`
+- `moving-time sharpness reconstructs the one-atom weighted geometric mean`
+  - src/workhouse/invariants/moving_time_gap.py:84 · MOVING_TIME_SPECTRAL_GAP section 5 MT5
+  - `workhouse verify --only 'moving-time sharpness reconstructs the one-atom weighted geometric mean'`
 **SU(3) second and third order**
 
 - `C-even bandwidth = top - bottom = 88/153`

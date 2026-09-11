@@ -76,6 +76,7 @@ _MODULES = (
     "hodge_feshbach",
     "feshbach_resolvent",
     "ym_reconstruction",
+    "moving_time_gap",
     "ym_flat_directions",
     "ym_ground_state",
     "wilson_marked",

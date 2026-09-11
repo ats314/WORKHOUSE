@@ -3311,3 +3311,73 @@ results:
         is in tests/test_sixth_order.py.
     status: proven
     evidence: analytic
+
+  - id: RESULT:MOVING_TIME_SPECTRAL_GAP
+    statement: If C_n(t_n)<=b_n at physical times t_n tending to infinity and exp(E t_n)b_n tends to zero
+      for every E<M, then every vague limit of target spectral measures with ||f_n-v_n|| tending to zero
+      vanishes on [0,M). The finite estimate is sqrt(nu_f_n([0,E]))<=||f_n-v_n||+exp(E t/2)sqrt(C_n(t)).
+      With the actual reconstructed spectral identification and a total centered family this yields H on
+      the vacuum complement >=M. Shrinking exponential probes use K_n/alpha_n^2, with no time-amplified
+      Taylor error.
+    hypotheses:
+    - H_n are nonnegative self-adjoint operators in the physical clock; target f_n and approximate probe
+      v_n belong to the same cutoff Hilbert space and ||f_n-v_n|| tends to zero.
+    - The target positive spectral measures converge vaguely to the stated limiting measures on [0,infinity).
+    - For the full-space conclusion, the limiting measures are actual spectral measures of one reconstructed
+      H and the intended centered source family has dense span in the vacuum complement; one positive rate
+      is common to the family.
+    - For exponential probes, real bounded observables have an L2 spectral identification and |alpha_n|B_n^2
+      exp(|alpha_n|B_n) tends to zero; alpha_n is nonzero.
+    scope: Analytic support and totality theorem across varying cutoff spaces. One observation time per
+      cutoff suffices; no quantitative moving-time convergence or rate for probe norm approximation is consumed.
+      Does not establish Wilson estimates, a nontrivial continuum object, cutoff gaps, or uniqueness of
+      the limiting object.
+    source: CITE:MOVING_TIME_GAP_RESULTS
+    source_section: A; full proof MT1-MT3 in docs/derivations/moving-time-spectral-gap.md sections 1-3
+    depends_on:
+    - DERIV:YANGMILLS_RECONSTRUCTION:R1
+    - RESULT:EXPONENTIAL_SOURCE_TOTALITY
+    bears_on:
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:moving-time-spectral-gap-exact-budgets-a-bca638:moving-time-finite-positive-transfer-con-092a87
+      scope: 81 exact finite rational transfer/probe cases; no measure-limit or density certification.
+    - target: CHK:moving-time-spectral-gap-exact-budgets-a-bca638:moving-time-amplitude-plateau-clock-and--4e8da2
+      scope: Exact source-normalization, plateau, dark-sector and physical-clock counterexamples.
+    status: proven
+    evidence: analytic
+  - id: RESULT:SHARP_CUTOFF_SOURCE_GAP_BUDGET
+    statement: For raw bound K_n(t)<=A a_n^-p exp(-m t)+B a_n^r and |alpha_n|>=c_alpha a_n^s, the optimized
+      moving-time gap is M_*=m(r-2s)/(p+r) at t_n=((p+r)/m)log(1/a_n), provided r>2s. A horizon c_max uses
+      c_opt=min(c_max,(p+r)/m) and M_opt=min(m-(p+2s)/c_opt,(r-2s)/c_opt). Positive guarantees require c_max>(p+2s)/m.
+      One-atom measures prove sharpness, including the shortened-horizon case.
+    hypotheses:
+    - H_n are nonnegative self-adjoint operators in the physical clock; target f_n and approximate probe
+      v_n belong to the same cutoff Hilbert space and ||f_n-v_n|| tends to zero.
+    - The target positive spectral measures converge vaguely to the stated limiting measures on [0,infinity).
+    - For the full-space conclusion, the limiting measures are actual spectral measures of one reconstructed
+      H and the intended centered source family has dense span in the vacuum complement; one positive rate
+      is common to the family.
+    - 0<a_n<1 tends to zero; p,s>=0 and r,m>0; A,B,c_alpha are positive and independent of n; the estimate
+      is available at the selected physical times.
+    - The normalized probe and target approximation satisfy the moving-time theorem; s=0 exact probes are
+      allowed, while shrinking sub-polynomial tilts are handled by taking arbitrarily small s>0.
+    scope: Sharp analytic sufficient-rate optimization with explicit source amplitude and horizon losses.
+      No actual Wilson values of p,r,s,m or continuum trajectory estimate are supplied. Zero returned by
+      the exact budget routine means no positive guarantee from these data, not a no-gap theorem for a model.
+    source: CITE:MOVING_TIME_GAP_RESULTS
+    source_section: B; full proof MT4-MT5 in docs/derivations/moving-time-spectral-gap.md sections 4-5
+    depends_on:
+    - RESULT:MOVING_TIME_SPECTRAL_GAP
+    bears_on:
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:moving-time-spectral-gap-exact-budgets-a-bca638:moving-time-power-exponents-balance-with-df5dc5
+      scope: Exact symbolic exponent balance, branch derivatives and rational horizon/margin checks.
+    - target: CHK:moving-time-spectral-gap-exact-budgets-a-bca638:moving-time-sharpness-reconstructs-the-o-5237a7
+      scope: Exact weighted-product and horizon exponents and 16 rational endpoint instances; analytic AM-GM
+        and limiting sharpness are separately proved.
+    status: proven
+    evidence: analytic

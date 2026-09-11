@@ -1,0 +1,102 @@
+........................................................................ [  3%]
+..........F............................................................. [  7%]
+........................................................................ [ 11%]
+........................................................................ [ 14%]
+...........................................................s.........s.. [ 18%]
+........................................................................ [ 22%]
+........................................................................ [ 26%]
+..............................................s......................... [ 29%]
+..............s......................................................... [ 33%]
+...F........................................................F........... [ 37%]
+........................................................................ [ 40%]
+........................................................................ [ 44%]
+........................................................................ [ 48%]
+........................................................................ [ 52%]
+........................................................................ [ 55%]
+........................................................................ [ 59%]
+........................................................................ [ 63%]
+........................................................................ [ 66%]
+........................................................................ [ 70%]
+........................................................................ [ 74%]
+........................................................................ [ 78%]
+........................................................................ [ 81%]
+........................................................................ [ 85%]
+........................................................................ [ 89%]
+........................................................................ [ 92%]
+........................................................................ [ 96%]
+............................................................. [ 99%]
+...                                                                      [100%]
+================================== FAILURES ===================================
+________________________ test_certified_md_is_current _________________________
+
+    def test_certified_md_is_current():
+>       assert C.render() == (ROOT / "CERTIFIED.md").read_text(encoding="utf-8"), (
+            "CERTIFIED.md is stale; run `make certified`"
+        )
+E       AssertionError: CERTIFIED.md is stale; run `make certified`
+E       assert '# Certified ...t is wrong.\n' == '# Certified ...t is wrong.\n'
+E         
+E         Skipping 38878 identical leading characters in diff, use -v to show
+E         - actly � 532
+E         ?           ^
+E         + actly � 536
+E         ?           ^
+E           ...
+E         
+E         ...Full output truncated (1984 lines hidden), use '-vv' to show
+
+tests\test_certified.py:14: AssertionError
+_________________________ test_frontier_md_is_current _________________________
+
+    def test_frontier_md_is_current():
+        """A checked-in generated file is a lie the moment the inputs move.
+    
+        Regenerating must be a no-op. If this fails, run `make frontier` � the
+        failure is the point: something changed and the orientation file did not.
+        """
+        on_disk = (ROOT / "FRONTIER.md").read_text(encoding="utf-8")
+>       assert F.render(F.compute()) == on_disk, "FRONTIER.md is stale; run `make frontier`"
+E       AssertionError: FRONTIER.md is stale; run `make frontier`
+E       assert '# Frontier\n...njectured\n\n' == '# Frontier\n...njectured\n\n'
+E         
+E         Skipping 817 identical leading characters in diff, use -v to show
+E         - here.** 592/592 checks pass.
+E         ?           ^   ^
+E         + here.** 596/596 checks pass.
+E         ?           ^   ^
+E           ...
+E         
+E         ...Full output truncated (620 lines hidden), use '-vv' to show
+
+tests\test_frontier.py:41: AssertionError
+__________________ test_run_register_matches_runs_directory ___________________
+
+    def test_run_register_matches_runs_directory():
+        """Every pinned run directory has a register entry and vice versa.
+    
+        The failure this prevents: a run record cited by checks only as a
+        file-path string, invisible to `workhouse why` � or a register entry
+        whose directory (or SHA256SUMS pin) quietly disappeared.
+        """
+        from workhouse import claims
+    
+        root = Path(claims.ROOT)
+        registered = {run["id"]: run for run in claims.load_runs()}
+        on_disk = {p.name for p in (root / "runs").iterdir() if p.is_dir()}
+>       assert set(registered) == on_disk, (
+            f"register vs runs/: only in register {sorted(set(registered) - on_disk)}, "
+            f"only on disk {sorted(on_disk - set(registered))}"
+        )
+E       AssertionError: register vs runs/: only in register [], only on disk ['moving_time_gap_2026-09-11']
+E       assert {'analytic_fo...6-08-28', ...} == {'analytic_fo...6-08-28', ...}
+E         
+E         Extra items in the right set:
+E         'moving_time_gap_2026-09-11'
+E         Use -v to get more diff
+
+tests\test_graph.py:237: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_certified.py::test_certified_md_is_current - AssertionError...
+FAILED tests/test_frontier.py::test_frontier_md_is_current - AssertionError: ...
+FAILED tests/test_graph.py::test_run_register_matches_runs_directory - Assert...
+3 failed, 1929 passed, 4 skipped, 11 subtests passed in 905.41s (0:15:05)
