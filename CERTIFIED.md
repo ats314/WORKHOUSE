@@ -1339,7 +1339,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 546
+## T1 — re-derived exactly — 551
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1416,6 +1416,23 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `moving-time sharpness reconstructs the one-atom weighted geometric mean`
   - src/workhouse/invariants/moving_time_gap.py:84 · MOVING_TIME_SPECTRAL_GAP section 5 MT5
   - `workhouse verify --only 'moving-time sharpness reconstructs the one-atom weighted geometric mean'`
+**OS kernel gap: reconstruction and nontriviality controls**
+
+- `kernel continuity and weak coupling inputs cannot be replaced by bounded limits`
+  - src/workhouse/invariants/os_kernel_gap.py:101 · OS_KERNEL_GAP K4; exact cutoff families and normalized action denominator
+  - `workhouse verify --only 'kernel continuity and weak coupling inputs cannot be replaced by bounded limits'`
+- `kernel log convexity has a positive two-atom defect and exact transfer iteration`
+  - src/workhouse/invariants/os_kernel_gap.py:49 · OS_KERNEL_GAP K2 equation K3; two-atom midpoint and dyadic controls
+  - `workhouse verify --only 'kernel log convexity has a positive two-atom defect and exact transfer iteration'`
+- `kernel positive time correlation yields the stated finite energy weight floor`
+  - src/workhouse/invariants/os_kernel_gap.py:73 · OS_KERNEL_GAP K3 equation K8; exact finite positive spectral measures
+  - `workhouse verify --only 'kernel positive time correlation yields the stated finite energy weight floor'`
+- `kernel positive time smoothing has the exact rational extremum and a uniform continuity bound`
+  - src/workhouse/invariants/os_kernel_gap.py:128 · OS_KERNEL_GAP K5 equations K9-K11; exact rational time ratios
+  - `workhouse verify --only 'kernel positive time smoothing has the exact rational extremum and a uniform continuity bound'`
+- `kernel quotient centering and transfer compatibility survive a vanishing source direction`
+  - src/workhouse/invariants/os_kernel_gap.py:11 · OS_KERNEL_GAP K1 equations K1-K2; finite rational Gram model only
+  - `workhouse verify --only 'kernel quotient centering and transfer compatibility survive a vanishing source direction'`
 **SU(3) second and third order**
 
 - `C-even bandwidth = top - bottom = 88/153`

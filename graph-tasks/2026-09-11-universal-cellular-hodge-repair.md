@@ -81,3 +81,13 @@ The integration of main at b33f47d passed all 606 fresh checks and the full
 1953-test run (4 Windows skips, 11 passing subtests). The end briefing matched.
 [Full receipt](universal-cellular-hodge-evidence-20260911/planar-integration.md).
 The next main update, 66eb40c from PR 147, is integrated separately.
+
+## Final current-main integration
+
+Main at 66eb40c is integrated with all source additions preserved.
+[Final verification receipt](universal-cellular-hodge-evidence-20260911/kernel-integration.md):
+611/611 fresh checks; 1964 tests passed, 4 Windows skips, 11 passing subtests;
+567 checked local links; current strict Lean export (439 theorems, 910 declarations).
+The retained matched end snapshot is kernel-integrated-end.json; its complete
+input manifest also matches after the full test run. PR 148 records publication.
+The physical-history obligation and U3/U7 unification remain open.
