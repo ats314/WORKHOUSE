@@ -409,6 +409,14 @@ def _discover(args) -> int:
         from . import discovery_scope
 
         return discovery_scope.run(args, DiscoveryEngine)
+    if args.discovery_command in ("plan", "lexicon"):
+        from . import discovery_lexicon
+
+        return discovery_lexicon.run(args, DiscoveryEngine)
+    if args.discovery_command == "pair":
+        from . import discovery_pairs
+
+        return discovery_pairs.run(args, DiscoveryEngine)
     try:
         verify = args.discovery_command in ("build", "info")
         with DiscoveryEngine(verify_cache=True) if verify else DiscoveryEngine() as engine:
@@ -687,10 +695,12 @@ def main(argv: list[str] | None = None) -> int:
         "discover", help="hybrid corpus search and source-backed connection candidates"
     )
     ds_sub = ds.add_subparsers(dest="discovery_command", required=True)
-    from . import discovery_review, discovery_scope
+    from . import discovery_lexicon, discovery_pairs, discovery_review, discovery_scope
 
     discovery_review.add_parser(ds_sub)
     discovery_scope.add_parser(ds_sub)
+    discovery_lexicon.add_parser(ds_sub)
+    discovery_pairs.add_parser(ds_sub)
     for name in ("build", "info"):
         command = ds_sub.add_parser(name, help="prepare the local discovery cache and report scope")
         command.add_argument("--json", action="store_true")
