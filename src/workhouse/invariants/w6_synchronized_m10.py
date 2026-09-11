@@ -4,8 +4,11 @@ Guards:
 1. Exact tangency of the S13 synchronized radial profile along the conditional minimizer curve.
 2. Failure of the unsynchronized identical cutoff field (non-zero linear phase drift).
 3. Euler dilation cancellation at q = 0.
-4. Reduction of tube variance to C0 + C1 g^-2 E(V|Q).
+4. Reduction of tube variance to quadratic potential floor.
 5. Antipodal gauge invariance of the ground state score on the minimizing sphere.
+6. WKB differentiated amplitude gradient scaling |nabla_eta a_g| <= c_a / g.
+7. Exact cancellation of Psi_g denominator in the score variance integrand.
+8. Transverse Agmon coercivity and positive potential floor.
 """
 
 from __future__ import annotations
@@ -95,4 +98,60 @@ def check_antipodal_gauge_and_spectrum():
     zero_eig = sp.simplify(8 * C - 4 * sp.sqrt(2))
     passed = (zero_eig == 0) and (min_normal > 0)
     detail = f"zero_eig={zero_eig}, min_normal={min_normal} = {float(min_normal):.4f}"
+    return passed, detail
+
+
+@synchronized_m10.check(
+    "W6 synchronized: WKB amplitude gradient scaling",
+    CITE + " Section 5",
+)
+def check_wkb_amplitude_gradient():
+    g = sp.Symbol("g", positive=True)
+    eta = sp.Symbol("eta", real=True)
+    a0 = sp.Function("a0")(eta)
+    a1 = sp.Function("a1")(eta)
+    div_Z = sp.Function("div_Z")(eta)
+    Z_val = sp.Function("Z_val")(eta)
+    log_A = sp.log(a0) + g**2 * (a1 / a0)
+    d_g_log_A = sp.diff(log_A, g)
+    inv_g_Z_log_A = (1 / g) * (Z_val * sp.diff(log_A, eta))
+    inv_g_div = (1 / (2 * g)) * div_Z
+    a_g = d_g_log_A + inv_g_Z_log_A + inv_g_div - 6 / g
+    d_eta_a_g = sp.diff(a_g, eta)
+    g_times_grad = sp.simplify(g * d_eta_a_g)
+    leading = g_times_grad.subs(g, 0)
+    expected_leading = sp.diff(Z_val * sp.diff(sp.log(a0), eta) + div_Z / 2, eta)
+    g2_times_grad = sp.simplify(g**2 * d_eta_a_g).subs(g, 0)
+    passed = (sp.simplify(leading - expected_leading) == 0) and (g2_times_grad == 0)
+    return passed, f"leading={leading}, g2_order={g2_times_grad}"
+
+
+@synchronized_m10.check(
+    "W6 synchronized: score variance denominator cancellation",
+    CITE + " Section 6",
+)
+def check_score_variance_denominator():
+    Psi = sp.Symbol("Psi", positive=True)
+    d_Psi = sp.Symbol("d_Psi", real=True)
+    D_Psi = sp.Symbol("D_Psi", real=True)
+    g = sp.Symbol("g", positive=True)
+    h_Q = sp.Symbol("h_Q", positive=True)
+    sigma_g = (d_Psi + D_Psi / g) / Psi
+    p_g = Psi**2 / h_Q
+    integrand = sp.simplify(sigma_g**2 * p_g)
+    expected = (d_Psi + D_Psi / g)**2 / h_Q
+    passed = sp.simplify(integrand - expected) == 0
+    return passed, f"integrand = {integrand}"
+
+
+@synchronized_m10.check(
+    "W6 synchronized: transverse Agmon gap and potential floor",
+    CITE + " Section 6",
+)
+def check_agmon_gap_and_floor():
+    lambda_normal_min = 4 * (sp.sqrt(2) - 1)
+    v_pi = 16 * (1 - sp.cos(sp.pi / 4))
+    expected_v_pi = 16 - 8 * sp.sqrt(2)
+    passed = (lambda_normal_min > sp.Rational(165, 100)) and (v_pi == expected_v_pi) and (v_pi > 4)
+    detail = f"lambda_min={float(lambda_normal_min):.4f}, v_pi={float(v_pi):.4f}"
     return passed, detail

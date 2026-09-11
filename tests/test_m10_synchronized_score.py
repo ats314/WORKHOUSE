@@ -4,10 +4,13 @@ Guards:
 1. Tangency cancellation of the linear phase drift along the conditional minimizer.
 2. Non-zero drift of the failed unsynchronized counterexample field.
 3. Euler dilation cancellation at q = 0.
-4. Reduction of tube variance to C0 + C1 g^-2 E(V|Q).
+4. Reduction of tube variance to quadratic potential floor.
 5. Exact antipodal Hessian spectrum and normal spectral gap.
 6. Monotone global potential quadratic floor.
 7. Gauge invariance of the ground state score on the antipodal minimizing sphere.
+8. Semiclassical amplitude gradient scaling |nabla_eta a_g| <= c_a / g.
+9. Cancellation of Psi_g denominator in the score variance integrand.
+10. Global full-fiber domination bound.
 """
 
 from __future__ import annotations
@@ -33,6 +36,15 @@ def tube_script():
 def antipodal_script():
     script_path = ROOT / "scripts" / "check_antipodal_score_bound.py"
     spec = importlib.util.spec_from_file_location("check_antipodal_score_bound", script_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+@pytest.fixture(scope="module")
+def amp_script():
+    script_path = ROOT / "scripts" / "verify_m10_amplitude_and_complement.py"
+    spec = importlib.util.spec_from_file_location("verify_m10_amplitude_and_complement", script_path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -85,3 +97,16 @@ def test_antipodal_gauge_score_invariance(antipodal_script):
     assert res["orbit_is_homogeneous"] is True
     assert res["differential_vanishes"] is True
     assert res["angular_first_order_variance"] == 0.0
+
+
+def test_amplitude_gradient_scaling(amp_script):
+    assert amp_script.verify_amplitude_scaling() is True
+
+
+def test_score_integrand_denominator_cancellation(amp_script):
+    assert amp_script.verify_integrand_denominator_cancellation() is True
+
+
+def test_agmon_gap_and_global_domination(amp_script):
+    assert amp_script.verify_agmon_gap() is True
+    assert amp_script.verify_global_domination_bound() is True

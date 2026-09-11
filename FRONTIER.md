@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 431 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 597/597 checks pass.
+**T1/T2 — re-derived here.** 600/600 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -87,7 +87,7 @@ it cannot drift from what the repository actually checks.
 | W6 antipodal conditional magnetic geometry | 7/7 |
 | dimension counts and geometric scaling controls (G19) | 5/5 |
 | G9 sixth-order folds and combined carrier shapes | 6/6 |
-| W6 synchronized M10 conditional score | 5/5 |
+| W6 synchronized M10 conditional score | 8/8 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:

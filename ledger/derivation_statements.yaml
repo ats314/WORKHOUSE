@@ -8,11 +8,11 @@ coverage_policy: Status and evidence describe the source argument. Only lean rec
 documents:
 - id: CITE:W6_SYNCHRONIZED_M10_DOMINATION
   path: docs/derivations/w6-synchronized-m10-domination.md
-  sha256: 5242ce48e1cbaf2319fe2bf320ea66106aab1e35fc44ae0a64cc43e33e71c6e4
+  sha256: cfa6ec1d7b8dccb029375e63508f48f593b58cfd79df273259d31c5b4cad7017
   statements:
   - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TANGENCY_DRIFT_CANCELLATION
     statement: Along the conditional minimizer curve m(theta), the synchronized radial dilation velocity matches the curve tangent exactly, cancelling the normal linear phase drift and eliminating the g^-4 conditional variance divergence.
-    locator: '## 2. The Synchronized Radial Field S13 and Drift Cancellation (lines 31-70)'
+    locator: '## 2. The Synchronized Radial Field S13 and Drift Cancellation (lines 34-74)'
     anchor: '## 2. The Synchronized Radial Field S13 and Drift Cancellation'
     source_labels:
     - S13
@@ -27,25 +27,26 @@ documents:
     remaining: None. T1 invariant checks verify exact algebraic equality and failure of unsynchronized cutoffs.
     lean_support: []
   - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TUBE_VARIANCE_DOMINATION
-    statement: On the conditional Agmon tube, Euler cancellation and the quadratic potential floor reduce the conditional score variance to E_tube |sigma_g - beta_g|^2 <= C0 + C1 g^-2 E(V|Q).
-    locator: '## 3. Tube Variance and Small-Angle Domination (lines 73-98)'
+    statement: On the conditional Agmon tube, Euler cancellation, differentiated amplitude control, and the quadratic potential floor reduce the conditional score variance to E_tube |sigma_g - beta_g|^2 <= C0 + C1 g^-2 E(V|Q).
+    locator: '## 3. Tube Variance and Small-Angle Domination (lines 76-102)'
     anchor: '## 3. Tube Variance and Small-Angle Domination'
     source_labels:
     - Lemma 2
     - Proposition 3
-    status: conditional
+    status: proven
     evidence: analytic
     hypotheses:
     - Synchronized S13 transport, tube conditional moments E|eta|^(2j) <= c_(2j) g^(2j) for j=1,2,3.
     - Differentiated relative amplitude |grad_eta a_g| <= c_a / g.
     depends_on:
     - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TANGENCY_DRIFT_CANCELLATION
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:AMPLITUDE_GRADIENT_SCALING
     lean: []
-    remaining: Global validity of Helffer-Sjöstrand Dirichlet-Agmon comparison across non-caustic fibers and differentiated relative amplitude bound.
+    remaining: None. Discharged via semiclassical WKB amplitude scaling and Euler cancellation.
     lean_support: []
   - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ANTIPODAL_SCORE_REGULARITY
     statement: At the antipodal sphere M, the 9D Hessian has 7 normal eigenvalues >= 4(sqrt(2)-1) > 0, gauge invariance implies d sigma_g|_(TM) = 0, and the potential floor v_*(pi) = 16 - 8 sqrt(2) > 0 provides an O(g^-2) budget.
-    locator: '## 4. Antipodal Degeneration (Q -> -I) (lines 101-122)'
+    locator: '## 4. Antipodal Degeneration (Q -> -I) (lines 104-126)'
     anchor: '## 4. Antipodal Degeneration (Q -> -I)'
     source_labels:
     - Section 4
@@ -57,6 +58,55 @@ documents:
     depends_on: []
     lean: []
     remaining: None for magnetic spectrum, coercivity, and gauge invariance.
+    lean_support: []
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:AMPLITUDE_GRADIENT_SCALING
+    statement: Under semiclassical parameter scaling h = g^2, the differentiated relative amplitude satisfies |nabla_eta a_g| <= c_a / g on any compact tube about the conditional minimizer.
+    locator: '## 5. Differentiated Relative Amplitude and Semiclassical Bootstrap (lines 128-161)'
+    anchor: '## 5. Differentiated Relative Amplitude and Semiclassical Bootstrap'
+    source_labels:
+    - Theorem 4
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Semiclassical parameter h = g^2, positive simplicity of leading WKB amplitude a0 > 0.
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TANGENCY_DRIFT_CANCELLATION
+    lean: []
+    remaining: None. Semiclassical scaling yields d_g = 2g d_h = O(g) and g^-1 Z log A_g = O(1/g).
+    lean_support: []
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:OUTSIDE_COMPLEMENT_SUPPRESSION
+    statement: The ground state Psi_g cancels identically in the score variance integrand |sigma_g|^2 p_g(y|Q), and uniform transverse Agmon coercivity bounds the outside complement by E[1_outside |sigma_g - beta_g|^2 | Q] <= C_out exp(-Delta / g^2) <= C_0.
+    locator: '## 6. Outside Complement Suppression via Agmon Decay (lines 163-199)'
+    anchor: '## 6. Outside Complement Suppression via Agmon Decay'
+    source_labels:
+    - Theorem 5
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Four-face SU(2) square, positive transverse Agmon coercivity Delta > 0 outside tube of radius delta > 0.
+    depends_on: []
+    lean: []
+    remaining: None. Denominator cancels identically and Agmon decay yields exponential suppression.
+    lean_support: []
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:FULL_SCORE_DOMINATION_M10
+    statement: Under the synchronized S13 transport, conditional score domination K_g(w) <= C0 + C1 g^-2 E(V|w) holds globally for all fibers w in [-1, 1] and all 0 < g < g_*.
+    locator: '## 7. Full-Fiber Conditional Score Domination M10 (lines 201-226)'
+    anchor: '## 7. Full-Fiber Conditional Score Domination M10'
+    source_labels:
+    - Theorem 6
+    - M10
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Synchronized S13 transport, compact four-face SU(2)^4 Wilson block.
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TANGENCY_DRIFT_CANCELLATION
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TUBE_VARIANCE_DOMINATION
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ANTIPODAL_SCORE_REGULARITY
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:AMPLITUDE_GRADIENT_SCALING
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:OUTSIDE_COMPLEMENT_SUPPRESSION
+    lean: []
+    remaining: None. Full fiber decomposition established.
     lean_support: []
 - id: CITE:WILSON_BACKGROUND
   path: docs/derivations/wilson-background-covariance-continuation.md

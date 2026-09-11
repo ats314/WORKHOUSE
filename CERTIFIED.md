@@ -1315,7 +1315,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 537
+## T1 — re-derived exactly — 540
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1442,19 +1442,28 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **W6 synchronized M10 conditional score**
 
 - `W6 synchronized: Euler dilation cancellation at q=0`
-  - src/workhouse/invariants/w6_synchronized_m10.py:58 · W6_SYNCHRONIZED_M10_DOMINATION Section 3
+  - src/workhouse/invariants/w6_synchronized_m10.py:61 · W6_SYNCHRONIZED_M10_DOMINATION Section 3
   - `workhouse verify --only 'W6 synchronized: Euler dilation cancellation at q=0'`
+- `W6 synchronized: WKB amplitude gradient scaling`
+  - src/workhouse/invariants/w6_synchronized_m10.py:104 · W6_SYNCHRONIZED_M10_DOMINATION Section 5
+  - `workhouse verify --only 'W6 synchronized: WKB amplitude gradient scaling'`
 - `W6 synchronized: antipodal spectrum and gauge score invariance`
-  - src/workhouse/invariants/w6_synchronized_m10.py:88 · W6_SYNCHRONIZED_M10_DOMINATION Section 4
+  - src/workhouse/invariants/w6_synchronized_m10.py:91 · W6_SYNCHRONIZED_M10_DOMINATION Section 4
   - `workhouse verify --only 'W6 synchronized: antipodal spectrum and gauge score invariance'`
 - `W6 synchronized: exact tangency eliminates linear phase drift`
-  - src/workhouse/invariants/w6_synchronized_m10.py:21 · W6_SYNCHRONIZED_M10_DOMINATION Section 2
+  - src/workhouse/invariants/w6_synchronized_m10.py:24 · W6_SYNCHRONIZED_M10_DOMINATION Section 2
   - `workhouse verify --only 'W6 synchronized: exact tangency eliminates linear phase drift'`
+- `W6 synchronized: score variance denominator cancellation`
+  - src/workhouse/invariants/w6_synchronized_m10.py:129 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: score variance denominator cancellation'`
+- `W6 synchronized: transverse Agmon gap and potential floor`
+  - src/workhouse/invariants/w6_synchronized_m10.py:147 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: transverse Agmon gap and potential floor'`
 - `W6 synchronized: tube variance reduces to quadratic potential floor`
-  - src/workhouse/invariants/w6_synchronized_m10.py:74 · W6_SYNCHRONIZED_M10_DOMINATION Section 3
+  - src/workhouse/invariants/w6_synchronized_m10.py:77 · W6_SYNCHRONIZED_M10_DOMINATION Section 3
   - `workhouse verify --only 'W6 synchronized: tube variance reduces to quadratic potential floor'`
 - `W6 synchronized: unsynchronized identical cutoff has non-zero drift`
-  - src/workhouse/invariants/w6_synchronized_m10.py:39 · W6_SYNCHRONIZED_M10_DOMINATION Section 2
+  - src/workhouse/invariants/w6_synchronized_m10.py:42 · W6_SYNCHRONIZED_M10_DOMINATION Section 2
   - `workhouse verify --only 'W6 synchronized: unsynchronized identical cutoff has non-zero drift'`
 **Wilson PBH proposal: exact orbit curvature and flow tests**
 
