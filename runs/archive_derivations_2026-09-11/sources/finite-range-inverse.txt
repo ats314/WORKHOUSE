@@ -1,0 +1,339 @@
+Appendix G — Finite-range inverse decay via Combes–Thomas conjugation
+
+**File status:** Established (self-contained deterministic estimate).
+
+**Scope:** This appendix proves an exponential off-diagonal decay bound for the inverse kernel of a uniformly positive, finite-range, self-adjoint operator on a finite graph with a finite-dimensional fiber (“matrix-valued entries”). It then specializes the abstract lemma to the massive Maxwell operator
+\[
+M = m^2 I + \alpha\, d_1^\* d_1
+\]
+on 1-cochains (link variables), yielding a volume-uniform exponential Green-kernel bound in the link distance \(\mathrm{dist}_E\). No probabilistic input is used here.
+
+
+## G.1 Abstract setup: operators on a finite graph with fiber
+
+Let \(V\) be a finite set equipped with a graph distance
+\[
+\mathrm{dist}:V\times V\to\mathbb N\cup\{0\}.
+\]
+
+Let \(\mathsf H_0\) be a finite-dimensional real Hilbert space. Define the Hilbert space
+\[
+\mathsf H:=\ell^2(V;\mathsf H_0)
+=\Bigl\{f:V\to\mathsf H_0:\ \|f\|_{\mathsf H}^2:=\sum_{x\in V}\|f(x)\|_{\mathsf H_0}^2<\infty\Bigr\}.
+\]
+
+Any linear operator \(A:\mathsf H\to\mathsf H\) can be written in block-matrix form:
+\[
+(Af)(x)=\sum_{y\in V} A_{xy}\,f(y),
+\qquad A_{xy}\in\mathrm{End}(\mathsf H_0).
+\]
+We write \(\|\cdot\|_{\mathrm{op}}\) for the operator norm on \(\mathrm{End}(\mathsf H_0)\), and also for the induced operator norm on \(\mathsf H\).
+
+
+## G.2 Assumptions for Combes–Thomas
+
+**Assumption G.1 (positivity gap, finite range, row-sum bound).**  
+Let \(A:\mathsf H\to\mathsf H\) be self-adjoint. Assume:
+
+1. **Uniform positivity (mass gap).** There exists \(a_0>0\) such that
+   \[
+   A \succeq a_0 I
+   \quad\text{as quadratic forms on }\mathsf H.
+   \]
+   In particular \(A\) is invertible and \(\|A^{-1}\|_{\mathrm{op}}\le a_0^{-1}\).
+
+2. **Finite range.** There exists \(R\in\mathbb N\), \(R\ge 1\), such that
+   \[
+   A_{xy}=0 \quad\text{whenever}\quad \mathrm{dist}(x,y)>R.
+   \]
+
+3. **Off-diagonal row-sum bound.** Define
+   \[
+   B:=\sup_{x\in V}\ \sum_{\substack{y\in V\\y\neq x}} \|A_{xy}\|_{\mathrm{op}} <\infty.
+   \]
+
+These hypotheses are purely deterministic and “local”: on bounded-degree graphs, \(B\) is controlled by a bounded neighbor count times a uniform block bound.
+
+
+## G.3 A block-Schur bound (used once)
+
+**Lemma G.2 (block Schur test, symmetric case).**  
+Let \(K:\mathsf H\to\mathsf H\) have blocks \(K_{xy}\in\mathrm{End}(\mathsf H_0)\). Assume
+\[
+\sup_{x\in V}\sum_{y\in V}\|K_{xy}\|_{\mathrm{op}}\le R_0,
+\qquad
+\sup_{y\in V}\sum_{x\in V}\|K_{xy}\|_{\mathrm{op}}\le C_0.
+\]
+Then
+\[
+\|K\|_{\mathrm{op}} \le \sqrt{R_0\,C_0}.
+\]
+In particular, if \(K\) is self-adjoint, then the row bound implies the column bound (with the same constant), and thus
+\[
+\|K\|_{\mathrm{op}}\le R_0.
+\]
+
+*Proof (from first principles).*  
+Fix \(f,g\in\mathsf H\). Using Cauchy–Schwarz in \(\mathsf H_0\),
+\[
+|\langle g(x),K_{xy} f(y)\rangle_{\mathsf H_0}|
+\le \|g(x)\|\,\|K_{xy}\|_{\mathrm{op}}\,\|f(y)\|.
+\]
+Hence
+\[
+|\langle g, K f\rangle_{\mathsf H}|
+=
+\Big|\sum_{x}\sum_{y}\langle g(x),K_{xy}f(y)\rangle\Big|
+\le
+\sum_x \|g(x)\|\sum_y \|K_{xy}\|_{\mathrm{op}}\,\|f(y)\|.
+\]
+Define \(r_x:=\sum_y \|K_{xy}\|_{\mathrm{op}}\) and \(c_y:=\sum_x \|K_{xy}\|_{\mathrm{op}}\). Then
+\[
+|\langle g, K f\rangle|
+\le \sum_{x,y}\|K_{xy}\|_{\mathrm{op}}\,\|g(x)\|\,\|f(y)\|
+\le \sum_{x,y}\|K_{xy}\|_{\mathrm{op}}\cdot \frac12\Big(\|g(x)\|^2 + \|f(y)\|^2\Big)
+\]
+(using \(ab\le \frac12(a^2+b^2)\)). Therefore
+\[
+|\langle g,Kf\rangle|
+\le \frac12\sum_x\|g(x)\|^2\sum_y \|K_{xy}\|_{\mathrm{op}}
++\frac12\sum_y\|f(y)\|^2\sum_x \|K_{xy}\|_{\mathrm{op}}
+\le \frac12 R_0\|g\|^2 + \frac12 C_0\|f\|^2.
+\]
+Now scale \(g\mapsto \lambda g\) and optimize in \(\lambda>0\) to obtain
+\[
+|\langle g,Kf\rangle|
+\le \sqrt{R_0 C_0}\ \|g\|\ \|f\|.
+\]
+Taking \(\|g\|=\|f\|=1\) and the supremum gives \(\|K\|_{\mathrm{op}}\le \sqrt{R_0C_0}\).  
+If \(K\) is self-adjoint then \(\|K_{xy}\|_{\mathrm{op}}=\|K_{yx}\|_{\mathrm{op}}\), so row and column sums coincide and \(R_0=C_0\), giving \(\|K\|\le R_0\). ∎
+
+
+## G.4 Combes–Thomas inverse-decay lemma
+
+**Lemma G.3 (finite-range inverse decays exponentially; Combes–Thomas).**  
+Assume \(A\) satisfies Assumption G.1. Then for all \(x,y\in V\),
+\[
+\|(A^{-1})_{xy}\|_{\mathrm{op}}
+\ \le\ \frac{2}{a_0}\,\exp\!\big(-\eta\,\mathrm{dist}(x,y)\big),
+\]
+where one may choose
+\[
+\eta:=\frac{1}{R}\log\!\Bigl(1+\frac{a_0}{2B}\Bigr).
+\]
+(If \(B=0\), then \(A\) is diagonal in the \(V\)-index and the bound is trivial with \(\eta=+\infty\).)
+
+*Proof.* Fix \(y\in V\). Define the 1-Lipschitz weight function
+\[
+\phi_y(x):=\mathrm{dist}(x,y),
+\qquad x\in V,
+\]
+so that \(|\phi_y(x)-\phi_y(x')|\le \mathrm{dist}(x,x')\) for all \(x,x'\).
+
+For \(t\ge 0\), define the diagonal multiplication operator \(W_t:\mathsf H\to\mathsf H\) by
+\[
+(W_t f)(x):=e^{t\phi_y(x)}\,f(x),
+\qquad
+(W_t^{-1}f)(x)=e^{-t\phi_y(x)}\,f(x).
+\]
+Define the conjugated operator
+\[
+A_t := W_t A W_t^{-1}.
+\]
+Then its blocks satisfy
+\[
+(A_t)_{xy}=e^{t(\phi_y(x)-\phi_y(y))}\,A_{xy}.
+\]
+
+### Step 1: bound the perturbation \(K_t:=A_t-A\)
+We have
+\[
+(K_t)_{xy} = \big(e^{t(\phi_y(x)-\phi_y(y))}-1\big)\,A_{xy}.
+\]
+If \(A_{xy}\neq 0\), then \(\mathrm{dist}(x,y)\le R\) by finite range. Since \(\phi_y\) is 1-Lipschitz,
+\[
+|\phi_y(x)-\phi_y(y)|\le \mathrm{dist}(x,y)\le R,
+\]
+and hence
+\[
+\|(K_t)_{xy}\|_{\mathrm{op}}
+\le (e^{tR}-1)\,\|A_{xy}\|_{\mathrm{op}}.
+\]
+Summing over \(y\neq x\),
+\[
+\sum_{y\neq x}\|(K_t)_{xy}\|_{\mathrm{op}}
+\le (e^{tR}-1)\sum_{y\neq x}\|A_{xy}\|_{\mathrm{op}}
+\le (e^{tR}-1)\,B.
+\]
+Because \(A\) is self-adjoint, \(\|A_{xy}\|_{\mathrm{op}}=\|A_{yx}\|_{\mathrm{op}}\), so the same bound holds for column sums. By Lemma G.2,
+\[
+\|K_t\|_{\mathrm{op}}\ \le\ (e^{tR}-1)\,B.
+\]
+
+### Step 2: invertibility and norm control of \(A_t^{-1}\)
+Since \(A\succeq a_0 I\), we have \(\|A^{-1}\|_{\mathrm{op}}\le a_0^{-1}\).
+If we choose \(t\ge 0\) so that
+\[
+\|K_t\|_{\mathrm{op}}\le \frac{a_0}{2},
+\]
+then
+\[
+\|K_t A^{-1}\|_{\mathrm{op}}
+\le \|K_t\|\,\|A^{-1}\|
+\le \frac{a_0}{2}\cdot \frac{1}{a_0}
+=\frac12.
+\]
+Therefore \(I+K_tA^{-1}\) is invertible, and
+\[
+A_t^{-1}=(A+K_t)^{-1}=A^{-1}\,(I+K_tA^{-1})^{-1}.
+\]
+Using \(\|(I+T)^{-1}\|\le (1-\|T\|)^{-1}\) when \(\|T\|<1\),
+\[
+\|A_t^{-1}\|
+\le \|A^{-1}\|\cdot \frac{1}{1-\|K_tA^{-1}\|}
+\le \frac{1}{a_0}\cdot \frac{1}{1-1/2}
+=\frac{2}{a_0}.
+\]
+The sufficient condition \(\|K_t\|\le a_0/2\) holds if
+\[
+(e^{tR}-1)\,B \le \frac{a_0}{2},
+\]
+i.e.
+\[
+t \le \frac{1}{R}\log\!\Bigl(1+\frac{a_0}{2B}\Bigr).
+\]
+
+### Step 3: extract off-diagonal decay of \(A^{-1}\)
+Since \(A_t=W_tAW_t^{-1}\), we have
+\[
+A^{-1}=W_t^{-1}A_t^{-1}W_t.
+\]
+Therefore for blocks,
+\[
+(A^{-1})_{xy}
+= e^{-t\phi_y(x)}\,(A_t^{-1})_{xy}\,e^{t\phi_y(y)}.
+\]
+But \(\phi_y(y)=\mathrm{dist}(y,y)=0\) and \(\phi_y(x)=\mathrm{dist}(x,y)\), hence
+\[
+\|(A^{-1})_{xy}\|_{\mathrm{op}}
+\le e^{-t\,\mathrm{dist}(x,y)}\,\|A_t^{-1}\|
+\le e^{-t\,\mathrm{dist}(x,y)}\cdot \frac{2}{a_0}.
+\]
+Choose \(t\) as large as allowed, namely
+\[
+t=\eta:=\frac{1}{R}\log\!\Bigl(1+\frac{a_0}{2B}\Bigr),
+\]
+to obtain the stated exponential decay bound. ∎
+
+
+## G.5 Specialization: the massive Maxwell operator on the link graph
+
+This section packages the inputs \((a_0,B,R)\) needed to apply Lemma G.3 to the operator
+\[
+M := m^2 I + \alpha\, d_1^\* d_1
+\quad\text{acting on}\quad
+\mathcal C^1(\Lambda;\mathfrak g)\cong \ell^2(E(\Lambda);\mathfrak g).
+\]
+Here:
+- \(E(\Lambda)\) is the oriented link set,
+- \(\mathfrak g\) is the Lie algebra fiber with its fixed inner product,
+- \(\mathrm{dist}_E\) is the link-graph distance (Appendix A / Definition 6.19 in the source corpus),
+- \(\nu\) is the bounded overlap constant: each link belongs to at most \(\nu\) plaquettes (Appendix A).
+
+### G.5.1 Link adjacency distance and bounded degree
+Define link adjacency \(b\sim b'\) iff there exists a plaquette whose boundary contains both links. Let \(\mathrm{dist}_E\) be the induced graph distance on \(E(\Lambda)\).
+
+If each link belongs to at most \(\nu\) plaquettes and each plaquette boundary has 4 links, then a fixed link can share a plaquette with at most 3 other links per incident plaquette, hence the number of adjacent neighbors is bounded by \(3\nu\). This is the combinatorial input behind uniformity in volume.
+
+### G.5.2 Verifying Assumption G.1 for \(M\)
+
+**Lemma G.4 (Combes–Thomas parameters for \(M\); volume-uniform).**  
+Let \(M=m^2 I+\alpha d_1^\*d_1\) on \(\ell^2(E(\Lambda);\mathfrak g)\), measured with \(\mathrm{dist}_E\). Then:
+
+1. **Uniform positivity:** \(M\succeq m^2 I\). In particular, one may take \(a_0=m^2\).
+
+2. **Finite range:** in link coordinates, \(M_{bb'}=0\) whenever \(\mathrm{dist}_E(b,b')>1\). Thus one may take \(R=1\).
+
+3. **Row-sum bound:** the off-diagonal row-sum constant \(B\) satisfies
+   \[
+   B \le \alpha\,C_B,
+   \qquad C_B:=3\nu,
+   \]
+   uniformly in \(\Lambda\) and (for standard local cochain boundary conventions) uniformly across spatial boundary conditions. In particular in \(d=4\), \(\nu\le 6\) gives \(C_B\le 18\).
+
+*Proof.*  
+(1) Since \(d_1^\*d_1\succeq 0\), for any \(X\in\mathcal C^1(\Lambda;\mathfrak g)\),
+\[
+\langle X,MX\rangle = m^2\|X\|^2 + \alpha\|d_1 X\|^2 \ge m^2\|X\|^2.
+\]
+
+(2) Plaquette locality: \((d_1X)_p\) depends only on the four boundary links of \(p\), and \((d_1^\*F)_b\) depends only on plaquettes containing \(b\). Therefore \((d_1^\*d_1X)_b\) depends only on \(X_{b'}\) for links \(b'\) that share a plaquette with \(b\), i.e. \(\mathrm{dist}_E(b,b')\le 1\). The diagonal term \(m^2I\) has range 0.
+
+(3) Only \(\alpha d_1^\*d_1\) contributes off-diagonal blocks. In an oriented cochain convention,
+\[
+(d_1^\*d_1X)_b
+=\sum_{p:\,b\in\partial p}\varepsilon(b,p)\,(d_1X)_p,
+\qquad
+(d_1X)_p=\sum_{b'\in\partial p}\varepsilon(b',p)\,X_{b'},
+\qquad \varepsilon(\cdot,\cdot)\in\{\pm 1\}.
+\]
+Hence interactions come from plaquettes containing \(b\), and each such plaquette couples \(b\) to at most 3 other boundary links. With at most \(\nu\) incident plaquettes, the number of off-diagonal interacting neighbors is \(\le 3\nu\), and the coefficient norms are bounded by 1 (incidence signs, componentwise action in \(\mathfrak g\)). Therefore
+\[
+\sum_{b'\neq b}\|M_{bb'}\|_{\mathrm{op}}
+=\alpha \sum_{b'\neq b}\|(d_1^\*d_1)_{bb'}\|_{\mathrm{op}}
+\le \alpha\cdot 3\nu
+=\alpha C_B.
+\]
+Uniformity across spatial boundary conditions follows because boundary links participate in fewer plaquettes than in the periodic case, which can only decrease the row sums. ∎
+
+
+### G.5.3 Exponential decay of the massive Maxwell Green kernel
+
+**Corollary G.5 (Combes–Thomas decay for \(M^{-1}\)).**  
+Assume \(m^2>0\), \(\alpha>0\). For any finite \(\Lambda\) and all links \(b,b'\in E(\Lambda)\),
+\[
+\|(M^{-1})_{bb'}\|_{\mathrm{op}}
+\ \le\ \frac{2}{m^2}\,\exp\!\big(-\eta\,\mathrm{dist}_E(b,b')\big),
+\]
+where one may choose
+\[
+\eta := \log\!\Bigl(1+\frac{m^2}{2\alpha C_B}\Bigr),
+\qquad C_B=3\nu.
+\]
+The constants depend only on \((m^2,\alpha)\) and the fixed local lattice combinatorics (via \(\nu\)), and do not depend on \(|\Lambda|\).
+
+*Proof.* Apply Lemma G.3 with \(A=M\), \(a_0=m^2\), \(R=1\), and \(B\le \alpha C_B\) from Lemma G.4. ∎
+
+
+## G.6 Horizontal sector compatibility (needed for HS covariance bounds)
+
+Let \(H^{(0)}:=\ker(d_0^\*)\subseteq \mathcal C^1(\Lambda;\mathfrak g)\) be the vacuum horizontal subspace.
+
+**Lemma G.6 (invariance of horizontals).**  
+The operator \(d_1^\*d_1\) preserves \(\ker(d_0^\*)\), hence so does \(M\). Consequently \(M|_{H^{(0)}}\) is invertible when \(m^2>0\), and its inverse agrees with \(M^{-1}\) restricted to \(H^{(0)}\).
+
+(*Justification.* In the cochain complex, \(d_1 d_0=0\) implies \((d_1 d_0)^\*=d_0^\* d_1^\*=0\), so \(d_0^\*(d_1^\*d_1)=0\) on \(\ker(d_0^\*)\).)
+
+**Corollary G.7 (kernel decay for the horizontal Green operator).**  
+Let
+\[
+G_{\Lambda,H}:=\big(M|_{H^{(0)}}\big)^{-1}.
+\]
+Then the same pointwise kernel bound as in Corollary G.5 holds for \(G_{\Lambda,H}\), with the same constants and the same \(\mathrm{dist}_E\) exponent.
+
+*Proof.* Since \(M\) preserves \(H^{(0)}\) and is invertible, the inverse on \(H^{(0)}\) is just the restriction of \(M^{-1}\). Interpret matrix elements of \(G_{\Lambda,H}\) in the ambient link-coordinate basis; the estimate follows from Corollary G.5. ∎
+
+
+## G.7 Boundary conditions and torus wrap-around distance (uniformity bookkeeping)
+
+1. **Spatial boundary conditions (periodic vs finite box).**  
+The Combes–Thomas constants for \(M\) depend only on the positivity \(m^2\), the coefficient \(\alpha\), and the local incidence bounds (e.g. \(\nu\)). Passing from periodic boundary conditions to standard local cochain boundary conventions can only *decrease* the number of plaquettes incident to a boundary link, hence cannot increase the row-sum constant \(B\) and does not increase the range \(R\). Therefore the same decay constants remain valid uniformly across these boundary choices.
+
+2. **Wrap-around distance on a torus.**  
+On a periodic lattice, \(\mathrm{dist}_E\) is the graph distance on the wrapped link graph, so it already incorporates “going around the torus.” This is the correct distance notion for volume-uniform bounds. In the thermodynamic limit, for fixed local observables and separations much smaller than the linear size, \(\mathrm{dist}_E\) agrees with the infinite-lattice distance, so the decay exponent passes to the limit without degradation.
+
+
+## Source material used (for traceability)
+- `### 9.1 Abstract finite-range inverse decay lemma via Combes–Thomas conjugation.txt` (Assumption 9.1; Lemma 9.2 with proof; specialization to massive Maxwell operator; boundary/uniformity notes).
+- `## 6.1 Bochner Γ_2 identity with drift and the Bakry–Émery curvature matrix.txt` (definition of \(\mathrm{dist}_E\) and the target Green-kernel statement location).
+- `NOTATION_AND_CONSTANTS.md` (parameter naming conventions \(m^2,\alpha\); Combes–Thomas constants summary).
