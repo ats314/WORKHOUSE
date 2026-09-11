@@ -1,0 +1,73 @@
+schema: workhouse-discovery-review/v1
+id: 2026-09-11-equivalent-construction-result-w6-energy-03f46a
+seed: RESULT:W6_ENERGY_WEIGHTED_CT
+target: notes/imported/EXTRACT_2026-09-01/EX-012-combes-thomas.md:34-53
+relationship_kind: equivalent-construction
+reasoning: 'Investigator (w6-combes-thomas): The localization theorem CT5-CT7 in ct_repair.md (lines 67-97;
+  source of the RESULT) is Theorem CT of EX-012 (lines 42-50, Appendix G) with (a0, R, B0) renamed (kappa,
+  R, J): same hypotheses (uniform floor, finite off-diagonal range R, off-diagonal row sum), same conclusion
+  ||inverse block|| <= (2/floor) exp(-(1/R) log(1 + floor/(2 rowsum)) dist), same three-step proof (weight
+  conjugation, block Schur bound, Neumann inversion at half gap). Different normalization only: ct_repair
+  applies it to the preconditioned B = D^-1/2 A D^-1/2 so the decaying kernel is the energy-weighted D^1/2
+  A^-1 D^1/2 (CT8); it uses truncated weights exp(mu min(d,L)) for countable graphs (EX-012 states countable
+  V but conjugates by an unbounded weight; EX-011 section 6 lines 380-390 states V finite and allows an
+  arbitrary Hilbert fibre, matching ct_repair''s Hilbert blocks). CT9-CT16 (energy-weighted local input,  Next
+  check: Compare the two proofs line by line under D = I: verify that ct_repair CT5-CT7 with D = I and
+  finite X reduces to EX-012 Theorem CT with the identical constant 2/kappa and exponent, then confirm
+  the only additions are (i) the D^1/2 weighting in CT8 and (ii) the truncated-weight limit L -> infinity;
+  if so, land a bears_on from RESULT:W6_ENERGY_WEIGHTED_CT to a catalogue record of EX-012 section 1 (which
+  must first be created, since notes/imported passages carry no id) with scope ''localization core only;
+  CT9-CT16 not in EX-012''.'
+reviewer: claude-fable-5.1 case study w6-combes-thomas, skeptic-adjusted
+created: '2026-09-11T08:25:37+00:00'
+evidence:
+- command: pair
+  argv:
+  - workhouse
+  - discover
+  - search
+  - ''
+  - --json
+  fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_fingerprint: 52c54e76f96d5413edf69155bb70a77fdffc8baf895d776539fd3174787556fe
+  evidence_freshness: matched
+  evidence_file: pairA.json
+  evidence_sha256: 927a2643120b15169d589fa0af6e6a7dd18d3b7b4b72c810c2dc22056f46e1f7
+  schema: workhouse-discovery/pair/v1
+  selection: top 0 rows; no row named the seed or target - the evidence may not concern this pair
+  rows: []
+  source_hashes:
+  - path: notes/imported/EXTRACT_2026-09-01/EX-012-combes-thomas.md
+    lines:
+    - 34
+    - 53
+    sha256: 6469e3e341396b88b6842def7919ff3fe7025ec222764579a1e9b855fcd11430
+    role: endpoint
+  excerpt_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  fingerprint_note: evidence was produced against a different discovery cache than the one observed when
+    this review was recorded
+state: established
+updated: '2026-09-11T08:25:39+00:00'
+registered_as: null
+history:
+- state: pending
+  at: '2026-09-11T08:25:37+00:00'
+  reviewer: claude-fable-5.1 case study w6-combes-thomas, skeptic-adjusted
+  reason: recorded from discovery output; nothing reviewed yet
+- state: reviewing
+  at: '2026-09-11T08:25:38+00:00'
+  reviewer: claude-fable-5.1 case study w6-combes-thomas, skeptic-adjusted
+  reason: Investigator read both sources in full at the cited lines; an independent skeptic re-read them
+    to refute the proposal.
+- state: established
+  at: '2026-09-11T08:25:39+00:00'
+  reviewer: claude-fable-5.1 case study w6-combes-thomas, skeptic-adjusted
+  reason: 'Skeptic verified line by line: ct_repair.md CT5-CT7 with D = I is the Combes-Thomas theorem
+    of which EX-011 section 6 and EX-012 Theorem CT are imported special cases with the identical three-step
+    proof (weight conjugation, block Schur bound, Neumann inversion at half gap). Scope: localization
+    core only; CT8''s D^(+-1/2) weighting and the truncated-weight limit are the September additions.
+    Landing: the existing RESULT:W6_ENERGY_WEIGHTED_CT bears_on G21 scope plus a documentary link to the
+    imported note; not a new dependency.'
+previous: 4cd2ef4f6fc2d376c222b546bc548c98f4d99e08098c9ca3af21b65066990734
+genesis: c046aabe693dd79d2aa9add5b7973e8b7de6830a79c59e415f7b9d7963dfe030
+sha256: 1dad16490a0ae2202483af60930222618bad00ba2c8ec66044218bfa360e040b

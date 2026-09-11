@@ -1,0 +1,63 @@
+schema: workhouse-discovery-review/v1
+id: 2026-09-11-scope-restriction-deriv-w6-conditional-t-18680c
+seed: DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:M10_SYNCHRONIZED_SCORE
+target: notes/imported/EXTRACT_2026-09-01/EX-005-obstruction-global-cd.md:31-78
+relationship_kind: scope-restriction
+reasoning: 'Investigator (m10-brascamp-lieb): EX-005 Lemma A (closed connected manifold, non-constant
+  C^2 function => strictly negative Hessian direction, on a set of positive measure) applies verbatim
+  to -2 log Psi_g on every fibre SU(2)^3 of the synchronized M10 target: no global fibrewise Brascamp-Lieb
+  / CD(rho>0) Poincare exists at any g or Q, so the S15 tube/complement split with measure control of
+  the complement (Q5) is forced. Consistent with S6 lines 364-366 and EX-014 line 267. Restriction to
+  record as derivation `remaining` text, not a dependency. Next check: Quantify the crossover: for the
+  soft doublet lambda(theta) = (pi - theta)/(2 sqrt2), find the theta(g) where the Gaussian width g/sqrt(lambda)
+  equals the Morse-chart radius r0, i.e. pi - theta ~ 2 sqrt2 g^2/r0^2; on fibres closer to the antipode
+  compute the variance of the ordinary score along the soft plane using the actual conjugation-invariant
+  density (a two-parameter quadrature), and compare with the M10 budget C0 + C1 v_*(theta)/g^2 ~ 4.69
+  C1/g^2.'
+reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+created: '2026-09-11T08:26:13+00:00'
+evidence:
+- command: pair
+  argv:
+  - workhouse
+  - discover
+  - search
+  - ''
+  - --json
+  fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_freshness: matched
+  evidence_file: pair-D-sync-ex005.json
+  evidence_sha256: f9d52e3b67c2643a4ea47fa049a14c69c238891820de7715df1c8b44ede2fe51
+  schema: workhouse-discovery/pair/v1
+  selection: top 0 rows; no row named the seed or target - the evidence may not concern this pair
+  rows: []
+  source_hashes:
+  - path: notes/imported/EXTRACT_2026-09-01/EX-005-obstruction-global-cd.md
+    lines:
+    - 31
+    - 78
+    sha256: b3a9c999d3af1d0e999cfa2325233761445e34ea6a833fd4f62e33a55ada99eb
+    role: endpoint
+  excerpt_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+state: rejected
+updated: '2026-09-11T08:26:15+00:00'
+registered_as: null
+history:
+- state: pending
+  at: '2026-09-11T08:26:13+00:00'
+  reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+  reason: recorded from discovery output; nothing reviewed yet
+- state: reviewing
+  at: '2026-09-11T08:26:15+00:00'
+  reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+  reason: Investigator read both sources in full at the cited lines; an independent skeptic re-read them
+    to refute the proposal.
+- state: rejected
+  at: '2026-09-11T08:26:15+00:00'
+  reviewer: claude-fable-5.1 case study m10-brascamp-lieb, skeptic-adjusted
+  reason: 'Skeptic: withdrawn for the same reason as the first pair; EX-005 Lemma A restates a known warning
+    and convexity is not what the whole-fibre estimate requires.'
+previous: 3ba04b32a7e530b4725c54c692403502a18722b048f9be2ca8c9b5d1a55b63e5
+genesis: 19042e1064bbe49260644972b1e17d6ffb709e2e31594ee9584bbd628448e16d
+sha256: c282646b23d409c28d777e87f238813bfab01f83b49f62af252fa5c78b6b6f6c

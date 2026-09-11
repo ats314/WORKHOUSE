@@ -1,0 +1,65 @@
+schema: workhouse-discovery-review/v1
+id: 2026-09-11-scope-restriction-notes-imported-researc-62c34d
+seed: notes/imported/RESEARCH_2026-08/Dynamic_Hessian_Riccati_Flow.tex:107-152
+target: DERIV:WILSON_SC17_SPATIAL_CLOSURE:R1_R3
+relationship_kind: scope-restriction
+reasoning: 'Investigator (outside-pressure-schur): The tex Hessian evolution d_t h = Delta h - 2(grad
+  S.grad)h - 2h^2 (Prop. 2.2) is SC17 R1 (lines 541-546) at eps=1, V=0 under h=-J, S=-u: (d_t+K_t)J =
+  2 eps J^2 - V'''' with K_t=-eps(Delta+2 grad u.grad); signs and constants agree exactly. SC17 adds the
+  potential source -V'''', the constant reference precision Omega (E=J+Omega) and the projected cross
+  terms R2/R3. The tex''s scalar Riccati inequality drops diffusion and advection heuristically with an
+  unspecified anomaly source sigma; SC17 R8 keeps K_t and bounds sup_t ||E_t||_(s,infty) by Duhamel in
+  a weighted Banach algebra rather than by a maximum principle. Next check: Verify by one line of algebra
+  (or a symbolic script) that substituting h=-J, S=-u, eps=1, V=0 into SC17 R1 reproduces the tex Prop.
+  2.2 term by term, and that EX-014 sec 8''s exact heat-flow solution H_t^{-1}=H_0^{-1}+2 nu t is the
+  V=0, Omega=0 solution of R1 (convexity decays like 1/(2t)); this fixes that the tex''s ''positive source''
+  must be the signed defect -[V''''-2 eps Omega^2] of R1, not an anomaly term.'
+reviewer: claude-fable-5.1 case study outside-pressure-schur, skeptic-adjusted
+created: '2026-09-11T08:26:00+00:00'
+evidence:
+- command: pair
+  argv:
+  - workhouse
+  - discover
+  - search
+  - ''
+  - --json
+  fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_freshness: matched
+  evidence_file: pair-tex-R1R3.json
+  evidence_sha256: 8e85d6c7e53a0a626ff3a7d3b42a33b23976f8cfe68ae66bdb165a1f606d45b7
+  schema: workhouse-discovery/pair/v1
+  selection: top 0 rows; no row named the seed or target - the evidence may not concern this pair
+  rows: []
+  source_hashes:
+  - path: notes/imported/RESEARCH_2026-08/Dynamic_Hessian_Riccati_Flow.tex
+    lines:
+    - 107
+    - 152
+    sha256: 4a3235840d7db4cbf29e1b1f419bbb3eb6cc5bd64454aec568d80f500f1d1b83
+    role: endpoint
+  excerpt_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+state: established
+updated: '2026-09-11T08:26:02+00:00'
+registered_as: null
+history:
+- state: pending
+  at: '2026-09-11T08:26:00+00:00'
+  reviewer: claude-fable-5.1 case study outside-pressure-schur, skeptic-adjusted
+  reason: recorded from discovery output; nothing reviewed yet
+- state: reviewing
+  at: '2026-09-11T08:26:01+00:00'
+  reviewer: claude-fable-5.1 case study outside-pressure-schur, skeptic-adjusted
+  reason: Investigator read both sources in full at the cited lines; an independent skeptic re-read them
+    to refute the proposal.
+- state: established
+  at: '2026-09-11T08:26:02+00:00'
+  reviewer: claude-fable-5.1 case study outside-pressure-schur, skeptic-adjusted
+  reason: 'Skeptic confirmed: the tex Hessian evolution d_t h = Delta h - 2(grad S . grad) h - 2h^2 (Prop.
+    2.2) is SC17 R1 at eps = 1, V = 0 under h = -J, S = -u, term by term. SC17 adds the potential source,
+    the constant reference precision and the projected cross terms; the tex''s scalar Riccati inequality
+    drops diffusion and advection heuristically.'
+previous: 983524494c134b3d1397d384c8c7bc7e316cb45e38bc6ad12ac0edf11fc9f90b
+genesis: 1924797a3c820a937314bf545f3d833c07d4b9b6bee893767cd9e7d3d51b15cd
+sha256: d27a4f3bca5dd742b43ec7bae4af0ed8affdf6170daebb52ebbf9335f60df1bb

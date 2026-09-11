@@ -1,0 +1,884 @@
+{
+  "schema": "workhouse-discovery-benchmark/v1",
+  "frozen_at": "2026-09-11",
+  "source_commit": "acc3e912410f2b051cd7c4547afc705010177e58",
+  "selection": "Held-out retrieval set authored blind to the discovery engine by four independent readers (derivation family, historical corpus-import, notes/literature, and exact/negative controls), each of whom read source passages with file reading and grep only and never ran workhouse discover, search, ask or why. No expected file or query of tests/fixtures/discovery_queries.json is reused. Every positive query paraphrases the mathematics of its target passage in different terminology (no file name, section label, DERIV/RESULT id or coined identifier from the passage; terminology_note records the wording avoided). A fifth validator pass checked mechanically that every expected path exists at the source commit, every text_any marker occurs in every expected file, source_review.lines lie inside the file, no query contains an expected file's basename stem or an expected id (outside the exact-control group), and no run of four or more consecutive words of a query appears verbatim in an expected file; eight queries were reworded and six marker lists repaired to pass, one thin companion file was dropped, and the negative-control greps were re-run over theory, docs, corpus-import, notes, paper, research, literature, ledger and src. It is a small purposive set, not a random sample or a mathematical validity benchmark.",
+  "relevance": "A listed expected id, or a listed expected path with at least one text_any marker when markers are supplied. Historical sources remain relevant as dated records; retrieval does not endorse their current scientific status. Queries with negative true expect no relevant result and are reported as empty-result checks, excluded from positive-query recall and MRR.",
+  "queries": [
+    {
+      "id": "heldout_deriv_01",
+      "group": "heldout_derivation",
+      "query": "Which four uniform operator inequalities on the weighted retained-space coefficients - a cubic remainder, a quadratic remainder on the coupling vector, a first-order size bound, and a strict contraction of the fast-block perturbation - must hold uniformly with respect to volume, background field, regulator and real energy before the third-order bound on the excess of the reduced form follows?",
+      "expected_paths": [
+        "docs/derivations/wilson-spatial-schur-excess.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "uniformity costs",
+        "regulators",
+        "theta < 1",
+        "removable extension"
+      ],
+      "source_review": {
+        "path": "docs/derivations/wilson-spatial-schur-excess.md",
+        "lines": [
+          131,
+          162
+        ],
+        "reason": "HYPOTHESIS passage: the block states the four uniform bounds (cubic A-remainder, quadratic V-remainder, first-order V size, contraction of C_g below theta<1) that the third-order excess theorem assumes, rather than the headline reduction identity."
+      },
+      "terminology_note": "Avoided 'Schur', 'SP8/SP9', the symbols A_g, V_g, C_g, B^(-1/2), 'theta', and the passage's list phrase 'volumes, backgrounds, regulators and real energies'; described the perturbation blocks as retained-space coefficient, coupling vector and fast-block perturbation instead.",
+      "negative": false
+    },
+    {
+      "id": "heldout_deriv_02",
+      "group": "heldout_derivation",
+      "query": "How is the countable product of unit three-spheres shown to be invariant under the Lipschitz stochastic equation built on the weighted sequence space, without appealing to an unproved invariance result for infinite-dimensional manifolds, and why does each link's Euclidean norm stay constant along the extended drift?",
+      "expected_paths": [
+        "docs/derivations/wilson-sc17-physical-time-limit.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "quaternion",
+        "skew orthogonal",
+        "radial",
+        "unit vectors"
+      ],
+      "source_review": {
+        "path": "docs/derivations/wilson-sc17-physical-time-limit.md",
+        "lines": [
+          134,
+          219
+        ],
+        "reason": "The passage extends the limiting score by a Hilbert-space Lipschitz extension composed with a radial ball projection, and shows by the stochastic product rule that each link norm is conserved because the projection is radial and the tangent multiplications are skew."
+      },
+      "terminology_note": "Avoided 'Ito', 'Kirszbraun', 'chi', 'score', 'P8-P13', 'H_w', 'T_a', 'Stratonovich' and the passage's phrase 'infinite-dimensional manifold invariance theorem'; said 'logarithmic-derivative drift' implicitly via 'extended drift' and 'weighted sequence space' instead of the named Hilbert space.",
+      "negative": false
+    },
+    {
+      "id": "heldout_deriv_03",
+      "group": "heldout_derivation",
+      "query": "Which five coupling-uniform conditional energy assumptions about the ground state's logarithmic derivative in the coupling, taken on level sets of the loop-trace variable, reduce the zeroth-order transport generator bound on the fixed compact square, and which one of them is just a scalar quantity with no established estimate?",
+      "expected_paths": [
+        "docs/derivations/w6-source-generator-score-frame.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "fiberwise",
+        "kappa_0",
+        "strengthenings",
+        "form domain"
+      ],
+      "source_review": {
+        "path": "docs/derivations/w6-source-generator-score-frame.md",
+        "lines": [
+          313,
+          331
+        ],
+        "reason": "HYPOTHESIS passage: lists H0-H4 (uniform energy boundedness of the source projection, fiberwise variance and energy bounds on the centered ground score, a fast-to-source bound, and the single scalar source energy of the conditional mean) with the explanation that only their averaged forms are established."
+      },
+      "terminology_note": "Avoided 'score' (used 'logarithmic derivative in the coupling'), 'fiberwise' (used 'on level sets'), 'K^0_g', 'J_g', 'H0-H4', 'kappa', 'SF7b/SF8', 'source projection', 'R10', and the passage's phrase 'is a single number'.",
+      "negative": false
+    },
+    {
+      "id": "heldout_deriv_04",
+      "group": "heldout_derivation",
+      "query": "At the zero-momentum point where the scalar Laplacian coefficient vanishes, why is there no normalized projector onto the cube-boundary line and no complementary one-dimensional summand, although the cleared operator relations between the two boundary Laplacians remain valid?",
+      "expected_paths": [
+        "docs/research/september_feshbach_integration.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "q = 0",
+        "psi = 0",
+        "cleared identities",
+        "orthogonal complement"
+      ],
+      "source_review": {
+        "path": "docs/research/september_feshbach_integration.md",
+        "lines": [
+          14,
+          30
+        ],
+        "reason": "SCOPE RESTRICTION passage: after the exact down/up Laplacian identities, it states that at Gamma the coefficient q and the boundary vector vanish, so the cleared identities hold but no normalized carrier projector or one-dimensional complement follows, and the active check states this restriction."
+      },
+      "terminology_note": "Avoided 'Gamma', 'carrier', 'Hodge', 'Feshbach', 'L_down/L_up', 'psi', 'q', and 'splitting check'; described the objects as scalar Laplacian coefficient, cube-boundary line, and cleared operator relations.",
+      "negative": false
+    },
+    {
+      "id": "heldout_deriv_05",
+      "group": "heldout_derivation",
+      "query": "Show that the difference of two inverse pairings against a test source splits into a negative energy-difference term plus a nonnegative remainder built from the mismatch vector, and how a three-constant factorization through the fast space bounds that mismatch functional by the square root of the source energy.",
+      "expected_paths": [
+        "docs/derivations/track-a-supported-statements.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "factorization",
+        "dual norm",
+        "commuting operators",
+        "budgets"
+      ],
+      "source_review": {
+        "path": "docs/derivations/track-a-supported-statements.md",
+        "lines": [
+          18,
+          59
+        ],
+        "reason": "W6-V gives the exact identity <t,(R_g-R_0)t> = -<u,(A_g-A_0)u> + <rho,R_g rho> with the coercivity dual-norm bound, and W6-F bounds the residual functional by |g| sqrt(C_B C_L K_F) sqrt(b[p]) under three operator budgets."
+      },
+      "terminology_note": "Avoided 'residual', 'rho', 'dual norm', 'coercivity', 'W6-V/W6-F', 'energy coordinate', the symbols A_g, R_g, C_B, C_L, K_F, and 'Track A'; used 'mismatch vector', 'inverse pairings' and 'three-constant factorization' instead.",
+      "negative": false
+    },
+    {
+      "id": "heldout_deriv_06",
+      "group": "heldout_derivation",
+      "query": "Why can the supremum of the weighted deviation between the time-dependent log-density Hessian and a fixed reference precision never pass the smaller of two roots of a quadratic majorant, and how does that confinement convert into a lower bound on the conditional gap in terms of the reference's smallest eigenvalue?",
+      "expected_paths": [
+        "docs/derivations/wilson-sc17-spatial-closure.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "r_-",
+        "two distinct nonnegative roots",
+        "beta_s",
+        "conservative"
+      ],
+      "source_review": {
+        "path": "docs/derivations/wilson-sc17-spatial-closure.md",
+        "lines": [
+          574,
+          647
+        ],
+        "reason": "Part III.2 proves the conditional small-defect criterion: a Duhamel bound M_T <= beta M_T^2 + beta delta/(2 epsilon) with M_0 = 0 traps M_T below the smaller root r_- by continuity, giving -Hess log Omega_b >= (a - r_-) I and gamma_b >= 2 epsilon (a - r_-)."
+      },
+      "terminology_note": "Avoided 'Riccati', 'Duhamel', 'defect', 'r_-', 'beta_s', 'R4-R9', 'Schur norm', 'ground-transformed Markov evolution' and 'Bochner/Poincare'; described the objects as log-density Hessian, reference precision, quadratic majorant and smallest eigenvalue.",
+      "negative": false
+    },
+    {
+      "id": "heldout_deriv_07",
+      "group": "heldout_derivation",
+      "query": "For several three-vectors coupled by squared cross products, why is the total squared derivative of the commutator components a constant multiple of the summed squared lengths even at aligned configurations where the potential gradient vanishes, and what stiffness and multiplicity do the transverse normal modes have there?",
+      "expected_paths": [
+        "docs/derivations/yangmills-simon-flat-directions.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "2(m-1)",
+        "commuting configuration",
+        "multiplicity",
+        "normal stiffness"
+      ],
+      "source_review": {
+        "path": "docs/derivations/yangmills-simon-flat-directions.md",
+        "lines": [
+          276,
+          323
+        ],
+        "reason": "Section 6 proves the all-matrix identity sum |dQ|^2 = 2(m-1) sum |A_i|^2, contrasts it with grad V = 0 on commuting configurations, and derives the transverse Hessian eigenvalue 2 g^2 rho^2 with multiplicity 2(m-1) plus the zero modes."
+      },
+      "terminology_note": "Avoided 'Jacobian', 'Simon', 'Theorem 3', 'Cartan', 'valley', 'flat directions', 'Q_(ij,a)', 'Gram projector', 'Hess V' and 'grad V'; said 'aligned configurations', 'commutator components' and 'transverse normal modes' instead.",
+      "negative": false
+    },
+    {
+      "id": "heldout_deriv_08",
+      "group": "heldout_derivation",
+      "query": "Why does applying the trial-state gap certificate once to many decoupled identical copies of a quartic oscillator give a bound that turns negative at five copies, while certifying a single factor and afterwards exploiting the spectral structure of a sum of commuting one-body operators keeps a positive bound independent of the number of copies?",
+      "expected_paths": [
+        "docs/derivations/yangmills-weighted-curvature.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "tensorize",
+        "four copies",
+        "intensive quantity",
+        "accumulat"
+      ],
+      "source_review": {
+        "path": "docs/derivations/yangmills-weighted-curvature.md",
+        "lines": [
+          267,
+          287
+        ],
+        "reason": "GST-9 is the exact volume-accumulation falsifier: residuals add while the weighted gap tensorizes, so the global certificate is (1 - n/4) hbar Omega_*, zero at four copies and negative at five, whereas the one-body certificate plus the tensor-sum spectrum keeps 3 hbar Omega_*/4 for every n."
+      },
+      "terminology_note": "Avoided 'GST-9', 'falsifier', 'residual', 'hbar Omega_*', 'tensor sum' (passage phrase 'the spectrum of the tensor sum'), 'independent identical copies' and 'volume-accumulation'; used 'decoupled identical copies', 'sum of commuting one-body operators' and 'trial-state gap certificate'.",
+      "negative": false
+    },
+    {
+      "id": "heldout_hist_01",
+      "group": "heldout_historical",
+      "query": "When a historical Hamiltonian strong-coupling series is written in an expansion variable equal to twice the canonical coupling, and the historical operator is twice the project's, by what power of two must each order's coefficient be multiplied to land in the canonical coordinate?",
+      "expected_paths": [
+        "theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md",
+        "corpus-import/corpus/GLUEBALL_DETAILED_FORMULA_DOCUMENT_2026-08-20_v3_1.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "2^{r-1}a_r",
+        "x=2u",
+        "a_rx^r"
+      ],
+      "source_review": {
+        "path": "theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md",
+        "lines": [
+          77,
+          95
+        ],
+        "reason": "Section 2.3 states the historical-comparison bridge H_project = W/2, x = 2u and the exact per-order rule m_r = 2^{r-1} a_r; the corpus-import duplicate carries the same lines 77-95, and this rule is absent from the fixture's MASTER_THEORY file (which only mentions the decimal transcription)."
+      },
+      "terminology_note": "Avoided the passage's names 'Hamiltonian-series bridge', 'H_project', 'W/2', 'M_A', 'm_r=2^{r-1}a_r', 'x=2u', 'Hamer' and 'notebook transcription'. Old document phrases the comparison in the historical x = 2/g_H^4 bracket variable; the query uses the current 'canonical coupling' (u = beta_N/(2N)) wording and describes the factor rather than naming it.",
+      "negative": false
+    },
+    {
+      "id": "heldout_hist_02",
+      "group": "heldout_historical",
+      "query": "Which theorem shows that every three-by-three finite-range lattice operator whose Fourier symbol kills the flat one-form vector is a left multiple of one fixed matrix assembled from the shifted phase factors, proved row by row by reducing modulo a single coordinate factor in a unique-factorization ring, and why is that left factor not unique?",
+      "expected_paths": [
+        "corpus-import/theory/theorems/THM_FLUX_incidence_syzygy_factor_theorem_2026-08-08.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "annihilator",
+        "koszul",
+        "relatively prime",
+        "not unique"
+      ],
+      "source_review": {
+        "path": "corpus-import/theory/theorems/THM_FLUX_incidence_syzygy_factor_theorem_2026-08-08.md",
+        "lines": [
+          119,
+          263
+        ],
+        "reason": "Sections 3-4 state and prove the exact annihilator-module theorem (R psi = 0 iff R = C S) by a row-wise reduction modulo v_0 and exhibit the Koszul relation that makes the factor C non-unique; the term 'Koszul' occurs only in this file, its companion theorem and one note that cites it without proof."
+      },
+      "terminology_note": "Avoided 'Laurent-Koszul', 'cage-annihilator', 'caged plaquette fiber', 'Theorem KAF', 'syzygy', 'annihilator module', 'UFD', 'relatively prime', 'second Koszul relation' and the incidence-symbol name N-tilde. The old note calls the flat carrier the 'caged vector'; the query says 'flat one-form vector' and describes S(z) as 'one fixed matrix assembled from the shifted phase factors'.",
+      "negative": false
+    },
+    {
+      "id": "heldout_hist_03",
+      "group": "heldout_historical",
+      "query": "Why does a residual of finite range, equal to its own transpose, that annihilates the half-angle sine vector admit a two-sided sandwich factorization through the cross-product matrix of that vector, and where does the proof use that a first-degree term cannot be simultaneously symmetric and skew?",
+      "expected_paths": [
+        "corpus-import/theory/theorems/THM_FLUX_centered_double_incidence_theorem_2026-08-08.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "regular sequence",
+        "skew-symmetric",
+        "two-sided",
+        "symmetric part"
+      ],
+      "source_review": {
+        "path": "corpus-import/theory/theorems/THM_FLUX_centered_double_incidence_theorem_2026-08-08.md",
+        "lines": [
+          110,
+          304
+        ],
+        "reason": "Theorem CDI and its proof derive R = K^T B K from R^T = R and R x = 0 using exactness of the three-variable Koszul complex and the step a_0 = 0 forced by symmetry versus skew-symmetry when 2 is invertible; this two-sided strengthening appears only in this file."
+      },
+      "terminology_note": "Avoided 'Centered Double-Incidence', 'Theorem CDI', 'centered Hodge gauge', 'boundary ideal', '[s]_x', 'K(s)', 'regular sequence', 'Koszul complex is exact', 'skew-symmetric', 'symmetric part' and 'transpose-symmetric finite-range matrix'. Old note speaks of 'double incidence' membership in the 'boundary ideal'; the query says 'two-sided sandwich factorization through the cross-product matrix'.",
+      "negative": false
+    },
+    {
+      "id": "heldout_hist_04",
+      "group": "heldout_historical",
+      "query": "How does conjugating the heat semigroup of the massive link Laplacian by the exponential of a graph-distance weight centred on one link give an inverse-kernel decay exponent that grows linearly rather than quadratically in the mass when the mass is small?",
+      "expected_paths": [
+        "corpus-import/programs/op1_defect_sparsity/red_davies_toolkit/NOTE_OP1_red_003_proposition_9_x_davies_type.md",
+        "corpus-import/programs/op1_defect_sparsity/red_davies_toolkit/NOTE_OP1_red_006_proposition_9_x_davies_decay.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "arsinh",
+        "cosh",
+        "davies",
+        "m^2"
+      ],
+      "source_review": {
+        "path": "corpus-import/programs/op1_defect_sparsity/red_davies_toolkit/NOTE_OP1_red_003_proposition_9_x_davies_type.md",
+        "lines": [
+          1,
+          138
+        ],
+        "reason": "Proposition 9.X proves |(M^-1)_{bb'}| <= (2/m^2) exp(-eta dist) with eta = 2 arsinh(m / 2 sqrt(alpha D_E)) by conjugating e^{-tL} with a 1-Lipschitz exponential weight, a Gronwall bound and the Laplace-transform resolvent; red_006 restates the same rate with the sharper row-sum constant C_0 and spells out the m-versus-m^2 scaling improvement. The 'arsinh' rate is absent from the fixture's MASTER_THEORY file. (Validator: red_008, a one-paragraph corollary that only tightens the constant, was dropped as too thin to answer the query on its own.)"
+      },
+      "terminology_note": "Avoided 'Davies-type decay', 'Davies/Dirichlet-form method', 'massive Maxwell Green kernel', 'Proposition 9.X', 'eta_DG', 'eta_CT', '1-Lipschitz weight', 'Gronwall', 'Laplace transform representation', 'Combes-Thomas' and 'link-graph degree constant'. Old note names the operator 'Maxwell' and the estimate after Davies; the query says 'massive link Laplacian' and describes the exponential-weight conjugation directly.",
+      "negative": false
+    },
+    {
+      "id": "heldout_hist_05",
+      "group": "heldout_historical",
+      "query": "Which certified argument bounds, for every time at least four, the square root of 4 pi t times the angular average over [0, pi] of exp(-2t(1 - cos theta)) by one plus one sixteenth over t plus an explicit rational constant over t squared, using a change of variable to a Gaussian integral on the unit interval and a Taylor remainder split at four fifths?",
+      "expected_paths": [
+        "corpus-import/programs/op1_defect_sparsity/LEM_OP1_lemma_b_proof_2026-06-12.md",
+        "corpus-import/theory/theorems/LEM_O4_lemma_b_review_2026-06-12.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "1/(16t)",
+        "upper bound",
+        "arcsin",
+        "master bound"
+      ],
+      "source_review": {
+        "path": "corpus-import/programs/op1_defect_sparsity/LEM_OP1_lemma_b_proof_2026-06-12.md",
+        "lines": [
+          42,
+          90
+        ],
+        "reason": "Section 3 proves r(t) <= 1 + 1/(16t) + C_2/t^2 for t >= 4 via theta = 2 arcsin u, a Taylor-Lagrange split at b = 4/5, Gaussian moments and an absorbed wrap term, feeding the section 2 master bound; the independent review file re-derives the same steps (its lines 51-66). The constants 2311/10000 and 9375/41472 occur only in these two files."
+      },
+      "terminology_note": "Avoided 'Lemma B', 'Tier-2 C-form pin', 'M5', 'r(t)', 'q(t)', 'Bessel', 'I_0', 'C_2 = 2311/10000', 'Taylor-Lagrange', 'Gaussian moments', 'wrap term', 'gate LB' and 'master bound'. The old note calls the kernel a Bessel two-sided bound; the query describes the function as an angular average of exp(-2t(1-cos theta)) instead of naming the modified Bessel function.",
+      "negative": false
+    },
+    {
+      "id": "heldout_hist_06",
+      "group": "heldout_historical",
+      "query": "For each odd prime p, summing a fourth-order lattice kernel over the p+1 index-p neighbour lattices attached to the null lines of a conic in the projective plane over the prime field rescales the rotation-invariant coefficient by p+1 and the cubic-harmonic coefficient by a prime-indexed eigenvalue; where is this scaling law and its table of eigenvalues recorded?",
+      "expected_paths": [
+        "corpus-import/programs/hecke_cover_correspondence/NOTE_FLUX_hecke_cover_correspondence_2026-08-31.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "lambda_p",
+        "p^4",
+        "neighbors",
+        "harmonic"
+      ],
+      "source_review": {
+        "path": "corpus-import/programs/hecke_cover_correspondence/NOTE_FLUX_hecke_cover_correspondence_2026-08-31.md",
+        "lines": [
+          54,
+          109
+        ],
+        "reason": "The note tabulates lambda_p and A_p = p^4 lambda_p for ten odd primes from the p+1 neighbours L_ell and states the boxed transformation S_0 -> (p+1) S_0, C -> lambda_p C of the infrared parameters; the F_p line construction appears in no other corpus file."
+      },
+      "terminology_note": "Avoided 'Hecke', 'cover correspondence', 'strict-infrared cubic-chain', 'target-blind', 'neighbor sum acts on the infrared parameters', 'Hecke eigenline', 'eta/Eisenstein newform', 'A_p = p^4 lambda_p', 'Q(ell) = 0' and 'homology push-pull'. The old note names the operator after Hecke and calls the coefficients 'infrared parameters'; the query says 'prime-indexed eigenvalue', 'neighbour lattices' and 'rotation-invariant / cubic-harmonic coefficient'.",
+      "negative": false
+    },
+    {
+      "id": "heldout_hist_07",
+      "group": "heldout_historical",
+      "query": "Which audit settled the sign of the odd-order fundamental string-tension coefficients by testing two candidate substitutions of the published strong-coupling polynomial, argument equal to twice the canonical coupling versus minus twice a rescaled coupling, against an independently contracted third-order value, and what did it conclude about the fifth- and sixth-order signs?",
+      "expected_paths": [
+        "corpus-import/programs/one_plaquette/su3_string_tension/AUDIT_STRING_batch_verification_sigma_reconciliation_2026-06-14.md",
+        "corpus-import/programs/one_plaquette/su3_string_tension/README.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "odd orders",
+        "sign error",
+        "wrong sign"
+      ],
+      "source_review": {
+        "path": "corpus-import/programs/one_plaquette/su3_string_tension/AUDIT_STRING_batch_verification_sigma_reconciliation_2026-06-14.md",
+        "lines": [
+          39,
+          72
+        ],
+        "reason": "Section 2 compares sigma = W(2u)/2 against sigma = W(-2y)/2 on the natively contracted sigma_3 = -61/408, identifies the second as a sign error at odd orders and fixes sigma_5, sigma_6 negative; the README summarises the same reconciliation at lines 61-67. The fixture's MASTER_THEORY file contains neither W(2u) nor 61/408."
+      },
+      "terminology_note": "Avoided 'KPS', 'W(2u)', 'W(-2y)', 'sigma convention - RESOLVED', 'both candidate conventions', 'native engine', 'ground truth', 'consolidated theorem', 'SU3_KPS_STRING_COEFFICIENT_EXTRACTION' and the value 61/408. Old documents use the historical bracket W(x) and the y = beta_lat/6 variable; the query says 'published strong-coupling polynomial' and 'canonical coupling'. Retrieval of this dated audit does not endorse the superseded (-1/4)^n normalization discussed elsewhere in the same folder.",
+      "negative": false
+    },
+    {
+      "id": "heldout_hist_08",
+      "group": "heldout_historical",
+      "query": "Conditioning on every other link, why is a single two-colour link variable distributed as a concentrated directional law on the three-sphere whose mean direction is obtained by adding up, over the plaquettes containing it, the ordered product of each plaquette's three remaining links, and how does that turn a large plaquette-deviation event into an exponentially small cap probability whose rate depends on the alignment between that mean direction and the cap centre?",
+      "expected_paths": [
+        "corpus-import/programs/pmbsf/LEM_PMBSF_lemma_q_su2_local_rare_source_factorization.md",
+        "corpus-import/programs/pmbsf/NOTE_PMBSF_expanded_derivations_lemmaq_su3_2026_05_25.md",
+        "corpus-import/programs/pmbsf/NOTE_PMBSF_master_pass19_lci_exacthb_2026_05_26.md",
+        "corpus-import/theory/notes/NOTE_PMBSF_su2_closure_full_derivations_2026_05_24.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "staple",
+        "heat-bath",
+        "quaternion",
+        "vmf"
+      ],
+      "source_review": {
+        "path": "corpus-import/programs/pmbsf/LEM_PMBSF_lemma_q_su2_local_rare_source_factorization.md",
+        "lines": [
+          376,
+          519
+        ],
+        "reason": "Sections 6-7 derive the conditional vMF_4(m_ell, kappa_ell) law of one SU(2) link from the staple quaternion, identify the defect event with a spherical cap, and prove the cap bound with rate (1 - delta) - F(rho, a), F(rho,a) = rho a + sqrt(1-rho^2) sqrt(1-a^2); the three companion pmbsf notes restate the same one-link cap estimate."
+      },
+      "terminology_note": "Avoided 'Lemma Q', 'one-link heat-bath mechanism', 'vMF', 'von Mises-Fisher', 'staple quaternion', 'good-staple cap bound', 'hard defect event', 'spherical cap', 'F(rho,a)', 'c_cap', 'Laplace bound' and 'X_{p,eta}'. Old notes name the law 'vMF_4' and the geometry a 'staple'; the query says 'concentrated directional law on the three-sphere' and describes the staple as the sum over plaquettes of the product of the other three links.",
+      "negative": false
+    },
+    {
+      "id": "heldout_nl_01",
+      "group": "heldout_notes_literature",
+      "query": "At what coupling strength does the potential for one group-valued link, combining the measure Jacobian term with a single plaquette term, stop being convex, and why does the failure occur only along the geodesic-distance direction rather than in the sphere directions?",
+      "expected_paths": [
+        "notes/imported/EXTRACT_2026-09-01/EX-002-su2-convexity-threshold.md",
+        "notes/imported/EXTRACT_2026-09-01/EX-004-be-mechanism.md",
+        "notes/imported/EXTRACT_2026-09-01/EX-010-hessian-numerics.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "radial",
+        "convexity",
+        "annulus",
+        "tangential"
+      ],
+      "source_review": {
+        "path": "notes/imported/EXTRACT_2026-09-01/EX-002-su2-convexity-threshold.md",
+        "lines": [
+          18,
+          75
+        ],
+        "reason": "The setup reduces the Hessian to a radial and a tangential eigenvalue, shows the tangential one is always positive, and derives the closed-form threshold as the minimum of a curve with a double root."
+      },
+      "terminology_note": "Avoided 'convexity threshold', 'beta_c', 'radial/tangential eigenvalue', 'SU(2) single-link Wilson+Haar model', 'double root', 'annulus', 'Bakry-Emery' and the EX-002 label; wrote 'measure Jacobian term', 'geodesic-distance direction', 'stop being convex' instead.",
+      "negative": false
+    },
+    {
+      "id": "heldout_nl_02",
+      "group": "heldout_notes_literature",
+      "query": "For any probability law on lattice link variables that is unchanged by every local gauge transformation, why is the event that every link stays near the identity suppressed exponentially in the lattice volume regardless of coupling, and which family of mutually independent uniformly distributed links supplies the exponent?",
+      "expected_paths": [
+        "notes/imported/EXTRACT_2026-09-01/EX-006-obstruction-haar-marginal.md",
+        "notes/imported/EXTRACT_2026-09-01/EX-010-hessian-numerics.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "haar",
+        "gauge-invariant",
+        "exponential",
+        "small-field"
+      ],
+      "source_review": {
+        "path": "notes/imported/EXTRACT_2026-09-01/EX-006-obstruction-haar-marginal.md",
+        "lines": [
+          78,
+          140
+        ],
+        "reason": "Theorem 2 factorizes any gauge-invariant measure in tree-gauge coordinates, proves the spanning-tree links are i.i.d. Haar, and bounds the all-links-small event by a small-ball volume to the power of the vertex count minus one."
+      },
+      "terminology_note": "Avoided 'Haar', 'i.i.d.', 'spanning tree', 'tree-gauge factorization', 'small-field set', 'K_Lambda(r)', 'Assumption A.11.2' and 'link marginal'; wrote 'uniformly distributed', 'mutually independent', 'near the identity', 'full local gauge group' instead.",
+      "negative": false
+    },
+    {
+      "id": "heldout_nl_03",
+      "group": "heldout_notes_literature",
+      "query": "If the coarse-scale Hamiltonian carries a bounded interaction whose commutator with each rotation generator can be nonzero, how far above the bottom of the relevant symmetry sector may the spectral parameter sit before the second-order exchange term outweighs the direct three-quarters rotational term?",
+      "expected_paths": [
+        "research/2026-09-10_interacting_angular_window/README.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "interacting",
+        "angular",
+        "window",
+        "positiv"
+      ],
+      "source_review": {
+        "path": "research/2026-09-10_interacting_angular_window/README.md",
+        "lines": [
+          72,
+          92
+        ],
+        "reason": "Section 2 states the positivity coefficient (11 beta - 60 delta)/(80 (beta - delta)) and the sharp threshold delta < 11 beta/60 for an interacting coarse Hamiltonian bounded below on a reducing subspace."
+      },
+      "terminology_note": "Avoided 'interacting angular-energy window', 'two-strip', '11/80', 'c(delta)', 'source-sector energy window', 'first fiber chaos', 'angular correction', 'does not commute with individual L_i' and the A1-A5 labels; wrote 'rotation generator', 'exchange term', 'three-quarters rotational term', 'bottom of the symmetry sector' instead.",
+      "negative": false
+    },
+    {
+      "id": "heldout_nl_04",
+      "group": "heldout_notes_literature",
+      "query": "Split a self-adjoint block operator into a soft sector and a stiff sector: how does the inverse-weighted energy of a defect vector decompose into a stiff-block piece plus a Schur-complement piece, and why does merely having zero component in the soft sector fail to make the small-coupling inverse difference small?",
+      "expected_paths": [
+        "research/2026-09-10_w6_soft_residual/README.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "residual",
+        "schur",
+        "orthogonality",
+        "soft"
+      ],
+      "source_review": {
+        "path": "research/2026-09-10_w6_soft_residual/README.md",
+        "lines": [
+          23,
+          91
+        ],
+        "reason": "The theorem gives the exact two-term identity for the inverse energy of a split residual via the corrected soft component, and the following section exhibits 2x2 examples where vanishing soft projection still gives an order-one inverse difference."
+      },
+      "terminology_note": "Avoided 'corrected residual', 'eta', 'raw orthogonality', 'soft Schur floor', 'split inverse-energy certificate', 'selected inverse', 'W6' and 'rho'; wrote 'defect vector', 'inverse-weighted energy', 'stiff sector', 'zero component in the soft sector' instead.",
+      "negative": false
+    },
+    {
+      "id": "heldout_nl_05",
+      "group": "heldout_notes_literature",
+      "query": "Using a Gaussian guess for the ground state of a one-dimensional oscillator with a pure fourth-power potential, which lower estimate of the spectral gap follows from the weighted Poincare constant minus the excess of the averaged remainder over its floor, and what is the optimal Gaussian width?",
+      "expected_paths": [
+        "literature/yangmills/DERIVATION_PROGRAM.md",
+        "docs/derivations/yangmills-weighted-curvature.md",
+        "docs/derivations/yangmills-formal-bridges.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "quartic",
+        "gaussian",
+        "residual",
+        "gap"
+      ],
+      "source_review": {
+        "path": "literature/yangmills/DERIVATION_PROGRAM.md",
+        "lines": [
+          23,
+          43
+        ],
+        "reason": "The worked certificate states the optimized Gaussian frequency, the remainder floor and mean, the weighted gap, and the resulting three-quarters bound on the gap."
+      },
+      "terminology_note": "Avoided 'quartic', 'residual', 'trial-state residual method', 'gap(H) >= 3/4 hbar Omega', 'inf R', 'mean R', 'GST-7' and 'certificate'; wrote 'pure fourth-power potential', 'averaged remainder over its floor', 'Gaussian guess', 'optimal Gaussian width' instead.",
+      "negative": false
+    },
+    {
+      "id": "heldout_nl_06",
+      "group": "heldout_notes_literature",
+      "query": "Which published result explains how a finite-dimensional quantum Hamiltonian whose potential vanishes along classical valleys can still have purely discrete spectrum, and how is that mechanism applied to a matrix model with a squared-commutator potential?",
+      "expected_paths": [
+        "literature/yangmills/THEORY_MAP.md",
+        "literature/index.yaml",
+        "docs/derivations/yangmills-simon-flat-directions.md",
+        "literature/yangmills/DERIVATION_PROGRAM.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "simon",
+        "flat",
+        "confinement"
+      ],
+      "source_review": {
+        "path": "literature/yangmills/THEORY_MAP.md",
+        "lines": [
+          34,
+          52
+        ],
+        "reason": "The geometric-route map names the 1983 quantum-confinement source and the paragraph explains that its section-7 finite-dimensional commutator-square model has discrete spectrum despite classical flat directions."
+      },
+      "terminology_note": "Avoided the author name, the literature id SIMON_1983_DISCRETE, '-Delta + x^2 y^2', 'commutator-square model', 'flat directions', 'transverse confinement' and 'compact resolvent'; wrote 'potential vanishes along classical valleys', 'squared-commutator potential', 'purely discrete spectrum' instead.",
+      "negative": false
+    },
+    {
+      "id": "heldout_nl_07",
+      "group": "heldout_notes_literature",
+      "query": "Among generator words of length up to three acting on the retained plaquette state, which ones move amplitude off that state and back, and by which rule: two insertions of the non-Laplacian operator with no up-Laplacian in between, so that the word with the up-Laplacian in the middle factorizes while the word with the adjacency operator in the middle does not?",
+      "expected_paths": [
+        "paper/fourth_order_all_rank_2026-09-09.tex",
+        "paper/research_notes/G14_HODGE_FESHBACH_CHANNEL_20260908.md",
+        "docs/decisions/0045-the-feshbach-channel-is-generated-by-one-operator.md",
+        "docs/derivations/hodge-polymer-supported-statements.md"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "defect",
+        "feshbach",
+        "words",
+        "factori"
+      ],
+      "source_review": {
+        "path": "paper/fourth_order_all_rank_2026-09-09.tex",
+        "lines": [
+          614,
+          654
+        ],
+        "reason": "The complement proposition identifies the off-carrier projector and the defect proposition lists the seven words with nonzero defect together with the intermediate-excursion rule and the RUR/RSR contrast."
+      },
+      "terminology_note": "Avoided 'Feshbach defect', '39 words', the word list RR/RRR/RRS/RRU/RSR/SRR/URR, 'RUR', 'RSR', 'Hodge', 'L_up', 'carrier symbol', 'R-excitation' and the section/proposition labels; wrote 'retained plaquette state', 'non-Laplacian operator', 'up-Laplacian', 'adjacency operator', 'move amplitude off and back' instead.",
+      "negative": false
+    },
+    {
+      "id": "heldout_nl_08",
+      "group": "heldout_notes_literature",
+      "query": "At which gauge-group rank does an intermediate state with every plaquette link carrying the totally antisymmetric three-box representation become degenerate in energy with the single plaquette, so that one energy denominator in the closed-form cluster sums has a zero at an integer value of the rank?",
+      "expected_paths": [
+        "docs/decisions/0029-the-degree-bound-is-proved-by-removing-it.md",
+        "paper/fourth_order_all_rank_2026-09-09.tex"
+      ],
+      "expected_ids": [],
+      "text_any": [
+        "degenerate",
+        "resolvent",
+        "integer root",
+        "n = 4"
+      ],
+      "source_review": {
+        "path": "docs/decisions/0029-the-degree-bound-is-proved-by-removing-it.md",
+        "lines": [
+          54,
+          69
+        ],
+        "reason": "Finding 2 records that the resolvent denominators have exactly one integer root at rank four, from the plaquette-cubed state with every link in the third antisymmetric power, which is the antifundamental there and hence degenerate with the plaquette."
+      },
+      "terminology_note": "Avoided 'resolvent denominator', 'E0 - E', 'Lambda^3 F', 'P^3', 'F-bar', '(4,0) family', 'Q(N)', 'third engine', 'per-rank engine' and the ADR numbers; wrote 'totally antisymmetric three-box representation', 'energy denominator', 'closed-form cluster sums', 'integer rank' instead.",
+      "negative": false
+    },
+    {
+      "id": "heldout_exact_01",
+      "group": "heldout_exact",
+      "query": "35/384",
+      "expected_paths": [
+        "src/workhouse/cellular.py",
+        "docs/referee/cellular_completion_family.md"
+      ],
+      "expected_ids": [
+        "LEAN:pentCompletion_three",
+        "CONST:PENT_COMPLETION_5_SU3",
+        "CHK:tetrahedral-haar-resolvent-coefficient-g-377153:the-n-gonal-cap-family-is-catalan-the-pe-d6688a"
+      ],
+      "text_any": [
+        "35/384"
+      ],
+      "source_review": {
+        "path": "src/workhouse/cellular.py",
+        "lines": [
+          47,
+          52
+        ],
+        "reason": "The engine docstring states that the pentagonal cap sector's 120 histories with S_5 = 70 give 35/384 at SU(3), the same rational the Lean theorem pentCompletion_three and the constant PENT_COMPLETION_5_SU3 carry (claims.jsonl lines 203, 760, 2262); docs/referee/cellular_completion_family.md line 220 tabulates the same three numbers."
+      },
+      "terminology_note": "Bare exact rational; no paraphrase. The LEAN record's statement carries it verbatim (c_5^pent(3) = 35/384), the CONST record carries it as its value, and the CHK record carries it in its detail line.",
+      "negative": false,
+      "expected_claim_ids": [
+        "LEAN:pentCompletion_three",
+        "CONST:PENT_COMPLETION_5_SU3",
+        "CHK:tetrahedral-haar-resolvent-coefficient-g-377153:the-n-gonal-cap-family-is-catalan-the-pe-d6688a"
+      ]
+    },
+    {
+      "id": "heldout_exact_02",
+      "group": "heldout_exact",
+      "query": "5/324",
+      "expected_paths": [
+        "paper/fourth_order_all_rank_2026-09-09.tex"
+      ],
+      "expected_ids": [
+        "LEAN:anisotropy_generic_holdout",
+        "CONST:ANISOTROPY_VARIANCE_HOLDOUT",
+        "CHK:anisotropy-variance-full-kernel-mixing-a-f83a4a:anisotropy-variance-is-exactly-the-simpl-e46297",
+        "RESULT:RECENT_ANISOTROPY_NODAL_SET"
+      ],
+      "text_any": [
+        "5/324"
+      ],
+      "source_review": {
+        "path": "paper/fourth_order_all_rank_2026-09-09.tex",
+        "lines": [
+          1290,
+          1296
+        ],
+        "reason": "The nodal-classification proposition states the generic holdout V(1/6,1/3,1/2) = 5/324 > 0 for the anisotropy variance, matching LEAN:anisotropy_generic_holdout (claims.jsonl line 2208) and CONST:ANISOTROPY_VARIANCE_HOLDOUT value 5/324 (line 638); ledger/recent_research.yaml lines 757 and 776 carry the same value."
+      },
+      "terminology_note": "Bare exact rational; no paraphrase. The LEAN statement carries it verbatim, the CONST value is 5/324, the CHK and RESULT records carry it in their detail text.",
+      "negative": false,
+      "expected_claim_ids": [
+        "LEAN:anisotropy_generic_holdout",
+        "CONST:ANISOTROPY_VARIANCE_HOLDOUT",
+        "CHK:anisotropy-variance-full-kernel-mixing-a-f83a4a:anisotropy-variance-is-exactly-the-simpl-e46297",
+        "RESULT:RECENT_ANISOTROPY_NODAL_SET"
+      ]
+    },
+    {
+      "id": "heldout_exact_03",
+      "group": "heldout_exact",
+      "query": "tau_4",
+      "expected_paths": [
+        "theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md",
+        "src/workhouse/constants.py"
+      ],
+      "expected_ids": [
+        "CHK:isotropic-pentagonal-cap-band-v4-3-9-3:the-h-4-side--tau-4-factor-is-exactly-5",
+        "CHK:isotropic-pentagonal-cap-band-v4-3-9-3:the-tau-4--delta-e-cap-factor-is-exactly-3ab65c",
+        "CHK:isotropic-pentagonal-cap-band-v4-3-9-3:bandwidth--4-tau-4-and-the-band-minimum--fe23b7",
+        "CONST:TAU_4"
+      ],
+      "text_any": [
+        "tau_4"
+      ],
+      "source_review": {
+        "path": "theory/GLUEBALL_DETAILED_FORMULA_2026-08-20_v3.1.md",
+        "lines": [
+          1352,
+          1362
+        ],
+        "reason": "The boxed display gives tau_4 = -2861009/16877460600 immediately after h_4^side = -2861009/84387303000, the exact D_5-covariance factor of five that the three pentagonal CHK statements (claims.jsonl lines 146-148) and CONST:TAU_4 (line 794) record; src/workhouse/constants.py line 766 documents the same constant."
+      },
+      "terminology_note": "Bare symbol alias from ledger/symbols.yaml (id tau_4, corpus spellings '\\tau_4' and 'tau_4'); no paraphrase. Three CHK statements carry tau_4 verbatim; CONST:TAU_4 carries the value -2861009/16877460600.",
+      "negative": false,
+      "expected_claim_ids": [
+        "CHK:isotropic-pentagonal-cap-band-v4-3-9-3:the-h-4-side--tau-4-factor-is-exactly-5",
+        "CHK:isotropic-pentagonal-cap-band-v4-3-9-3:the-tau-4--delta-e-cap-factor-is-exactly-3ab65c",
+        "CHK:isotropic-pentagonal-cap-band-v4-3-9-3:bandwidth--4-tau-4-and-the-band-minimum--fe23b7",
+        "CONST:TAU_4"
+      ]
+    },
+    {
+      "id": "heldout_exact_04",
+      "group": "heldout_exact",
+      "query": "C15",
+      "expected_paths": [
+        "ledger/contradictions.yaml"
+      ],
+      "expected_ids": [
+        "C15",
+        "CONST:c_2^tet (primitive)",
+        "DOC:thm-flux-cellular-circuit-mobility"
+      ],
+      "text_any": [
+        "C15"
+      ],
+      "source_review": {
+        "path": "ledger/contradictions.yaml",
+        "lines": [
+          394,
+          412
+        ],
+        "reason": "The C15 entry records the tetrahedral local coefficient -8/(N(N^2-1)) resolved by symbolic-N re-derivation with its three ingredients and its scope to the primitive simple-loop channel; claims.jsonl line 1753 is the catalogue record, and the statements of CONST:c_2^tet (primitive) and DOC:thm-flux-cellular-circuit-mobility name C15."
+      },
+      "terminology_note": "Bare contradiction-register id; no paraphrase. The record C15 itself (statement 'Tetrahedral local coefficient') plus the two records whose statement text names C15.",
+      "negative": false,
+      "expected_claim_ids": [
+        "C15",
+        "CONST:c_2^tet (primitive)",
+        "DOC:thm-flux-cellular-circuit-mobility"
+      ]
+    },
+    {
+      "id": "heldout_exact_05",
+      "group": "heldout_exact",
+      "query": "DERIV:WILSON_MARKED_TRANSFER:WT3",
+      "expected_paths": [
+        "ledger/derivation_statements.yaml",
+        "docs/derivation_formalization.md"
+      ],
+      "expected_ids": [
+        "DERIV:WILSON_MARKED_TRANSFER:WT3"
+      ],
+      "text_any": [
+        "DERIV:WILSON_MARKED_TRANSFER:WT3"
+      ],
+      "source_review": {
+        "path": "ledger/derivation_statements.yaml",
+        "lines": [
+          447,
+          465
+        ],
+        "reason": "The WT3 statement record asserts the exact block configuration expansion bound |w(C)| <= alpha^a beta^b with cancellation of disconnected vacuum polymers from normalized marked observables, under finite cubic link Hilbert product and bounded plaquette interaction hypotheses; claims.jsonl line 17179 is its catalogue record and docs/derivation_formalization.md line 109 lists the id in the proof map."
+      },
+      "terminology_note": "Bare DERIV statement id; no paraphrase. Unused by the existing fixture, which has no DERIV controls.",
+      "negative": false,
+      "expected_claim_ids": [
+        "DERIV:WILSON_MARKED_TRANSFER:WT3"
+      ]
+    },
+    {
+      "id": "heldout_exact_06",
+      "group": "heldout_exact",
+      "query": "RESULT:COMPACT_ROTOR_FAST_GAP",
+      "expected_paths": [
+        "ledger/results.yaml",
+        "docs/current_research.md"
+      ],
+      "expected_ids": [
+        "RESULT:COMPACT_ROTOR_FAST_GAP"
+      ],
+      "text_any": [
+        "RESULT:COMPACT_ROTOR_FAST_GAP"
+      ],
+      "source_review": {
+        "path": "ledger/results.yaml",
+        "lines": [
+          1532,
+          1558
+        ],
+        "reason": "The result record states that for a compact connected group with simple Lie algebra and faithful unitary representation the character potential has a unique nondegenerate minimum and the rotor -kappa Delta + lambda v has leading gap omega_rho = sqrt(2 b_rho kappa lambda) with class-function gap 2 omega_rho; claims.jsonl line 16936 is the catalogue record and docs/current_research.md line 815 cites the id."
+      },
+      "terminology_note": "Bare RESULT id; no paraphrase. Unused by the existing fixture, which has no RESULT controls.",
+      "negative": false,
+      "expected_claim_ids": [
+        "RESULT:COMPACT_ROTOR_FAST_GAP"
+      ]
+    },
+    {
+      "id": "heldout_neg_01",
+      "group": "heldout_negative",
+      "query": "Global regularity of weak solutions to the three-dimensional incompressible Navier-Stokes equations",
+      "source_review": {
+        "path": "none",
+        "reason": "grep -rli 'Navier' theory docs corpus-import notes paper -> 0 files; grep -rli 'incompressib' -> 1 file, used only in the 3-manifold sense (incompressible surface, Lemma 4.13 of an imported topology extract); grep -rli 'Stokes' -> 2 files (Stokes' theorem for an exact 1-form, and a Borel/Stokes-phenomenon heading); no fluid-dynamics or Navier-Stokes source exists."
+      },
+      "terminology_note": "Plausible mathematics (a Clay problem adjacent to the corpus's Yang-Mills objective) that no source treats.",
+      "negative": true,
+      "expect_empty": true
+    },
+    {
+      "id": "heldout_neg_02",
+      "group": "heldout_negative",
+      "query": "Exponential localization of eigenfunctions for a random Schrödinger operator at strong disorder, the Anderson localization regime",
+      "source_review": {
+        "path": "none",
+        "reason": "grep -rli 'Anderson localization' theory docs corpus-import notes paper -> 0; grep -rliE 'localization length' -> 0; grep -rliE 'random Schr' -> 0; grep -rli 'Anderson' -> 1 file, a notes inventory line naming the pdf 2016_Anderson_1612.08140 (a rigorous lattice Yang-Mills paper by an author named Anderson, unrelated to localization); 'disorder' occurs in 11 files but never with a random-potential localization statement."
+      },
+      "terminology_note": "Spectral theory of random lattice operators is near the corpus's domain (lattice Hamiltonians, spectral gaps) but the localization topic is absent.",
+      "negative": true,
+      "expect_empty": true
+    },
+    {
+      "id": "heldout_neg_03",
+      "group": "heldout_negative",
+      "query": "Vortex-unbinding Kosterlitz-Thouless transition of the two-dimensional XY model",
+      "source_review": {
+        "path": "none",
+        "reason": "grep -rli 'Kosterlitz' theory docs corpus-import notes paper -> 0; 'Thouless' -> 0; 'Berezinskii' -> 0; grep -rIlE '\\bBKT\\b' -> 0 text files; 'XY model' -> 1 file (a '1D XY Model Heat Flow: Defect Growth Report' heading in a notes inventory, one-dimensional and no transition); 'vortex' -> 3 files, all Cao's minimal 6-plaquette vortex bound in lattice gauge theory, not vortex unbinding. Validator re-grep: one literature-manifest abstract (Cubitt-Montanaro-Piddock universal Hamiltonians) mentions XY models as universal examples; no transition or vortex-unbinding source."
+      },
+      "terminology_note": "Statistical-mechanics phase transition absent from the corpus; the residual words 'vortex' and 'XY model' occur only in unrelated senses.",
+      "negative": true,
+      "expect_empty": true
+    },
+    {
+      "id": "heldout_neg_04",
+      "group": "heldout_negative",
+      "query": "Second-order hopping coefficient of the plaquette band on the kagome lattice",
+      "source_review": {
+        "path": "none",
+        "reason": "grep -rIlE '[Kk]agom' theory docs corpus-import notes paper -> 0 text files; the single case-insensitive hit for 'kagom' is a base64 image cell inside corpus-import/numerics/notebooks/NB_Y6_su3_m6_self_contained_v4.ipynb, not prose; the corpus's lattice geometries are cubic, pentagonal prism, tetrahedral and the hyperhoneycomb candidate G12, none kagome."
+      },
+      "terminology_note": "Near-miss: 'second-order hopping coefficient' and 'plaquette band' are common corpus phrases (cubic and pentagonal-prism geometries), but the kagome geometry is never treated.",
+      "negative": true,
+      "expect_empty": true
+    },
+    {
+      "id": "heldout_neg_05",
+      "group": "heldout_negative",
+      "query": "Regularity degree of the plaquette adjacency graph of the body-centered cubic lattice",
+      "source_review": {
+        "path": "none",
+        "reason": "grep -rIlE 'body.cent(er|re)' theory docs corpus-import notes paper -> 0; grep -rIlE '\\bbcc\\b' (case-sensitive) -> 0 text files; 'face.cent(er|re)' -> 0; 'diamond lattice' -> 0; the 21 case-insensitive 'bcc' hits are hex hash suffixes, not the lattice; every plaquette-graph statement in the corpus is for the simple cubic or hypercubic lattice."
+      },
+      "terminology_note": "Near-miss: the corpus proves the simple-cubic plaquette graph is 12-regular and uses 'cubic' and 'hypercubic' throughout, but the body-centered cubic lattice never appears.",
+      "negative": true,
+      "expect_empty": true
+    },
+    {
+      "id": "heldout_neg_06",
+      "group": "heldout_negative",
+      "query": "Strong-coupling string tension for lattice gauge theory with the exceptional Lie group G_2 as gauge group",
+      "source_review": {
+        "path": "none",
+        "reason": "grep -rIlE '\\bG_2\\b' theory docs corpus-import notes paper -> 0 text files; grep -rIlE 'exceptional (Lie|gauge|group)' -> 0; grep -rlE 'G\\(2\\)' (case-sensitive) -> 1 file, a Combes-Thomas extract where G(2) is a function value; case-sensitive '\\bG2\\b' hits (docs/referee/final_paper_2026-08-28.md, docs/validation/*.yaml, theory/superseded/MASTER_THEORY.md) are all the repository gap id G2 'Regenerate all displayed tables in canonical u'; the gauge groups the corpus treats are SU(N), with Sp(2N) and SO(N) appearing only in imported literature titles. Validator re-grep over research, literature, ledger and src as well: the only extra hit is one literature-manifest abstract (Diez-Miaskiwskyi Weingarten moments on general compact Lie groups) listing G_2 among worked examples; it is not a lattice string-tension source."
+      },
+      "terminology_note": "Near-miss: 'string tension', 'strong coupling' and 'gauge group' are core corpus vocabulary for SU(N) (with literature mentions of Sp(2N) and SO(N)), but the exceptional group G_2 is never treated; the token G2 in the repository is the gap id G2 (table regeneration), not a group.",
+      "negative": true,
+      "expect_empty": true
+    }
+  ],
+  "normalization": "Authored blind by four independent readers and leakage-checked mechanically; the orchestrator then added expect_empty for negative controls and expected_claim_ids mirroring expected_ids for exact controls so scripts/benchmark_discovery.load_queries accepts the file. No query text, target path or marker was changed in that step."
+}

@@ -1,0 +1,68 @@
+schema: workhouse-discovery-review/v1
+id: 2026-09-11-scope-restriction-deriv-yangmills-contin-95d18d
+seed: DERIV:YANGMILLS_CONTINUUM_BALABAN_MULTISCALE_PROOF:THEOREM_6_2
+target: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md:839-893
+relationship_kind: scope-restriction
+reasoning: 'Investigator (balaban-contraction): EX-014 obstruction O3 (decimation C_RG = 1 exactly; averaging
+  contracts only in the linearised small-field chart) does not restrict Theorem 6.2''s scope because Theorem
+  6.2''s lambda is not a block-map gradient constant: (6.10) is a cell-count factor L^-4 on the weight
+  e^{kappa|X|} (asserted, not derived, after the delta=0 repair) and the repair record replaces it by
+  the power-counting L^-2. The manuscript''s map Q_{B_k} (3.2) exists only on small-field cells (A_k =
+  B_k + z_k); large-field cells go through Theorem 4.2''s damping, whose Case 1 constant is itself conditional
+  on the same irrelevance lemma (line ~166), so there is no large-field gradient bound for O3 to restrict.
+  O3 closes one route to lambda (block-map gradient intertwining) but attaches nothing to (6.5). Next
+  check: Compute the (A3) constant of the manuscript''s map z -> Q_{B_k} z in the flat adjoint chart with
+  the orientation fixed by RESULT:CONDITIONAL_GRADIENT_REPAIR section 1: transported arithmetic average
+  over N = L^4 = 81 sub-cells, pullback factor 1/N, reverse (conditional-expectation) constant 1 in the
+  quotient metric B B* and m = 81 in the raw metric; physical rescaling coefficient m/L^2 = 9 > 1. Confirm
+  no contraction in any chart, and record that outside the small-field set the map is undefined on z_k
+  (Definition 4.1), so the only large-field input is Theorem 4.2, itself conditional on the lemm'
+reviewer: claude-fable-5.1 case study balaban-contraction, skeptic-adjusted
+created: '2026-09-11T08:25:31+00:00'
+evidence:
+- command: pair
+  argv:
+  - workhouse
+  - discover
+  - search
+  - ''
+  - --json
+  fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_fingerprint: 52c54e76f96d5413edf69155bb70a77fdffc8baf895d776539fd3174787556fe
+  evidence_freshness: matched
+  evidence_file: pair-B-thm62-vs-ex014-o3.json
+  evidence_sha256: 4dc73b512b23fd232c5b8d70959af9efa4453c8ed5b0c7fa7fab3828532d7ffc
+  schema: workhouse-discovery/pair/v1
+  selection: top 0 rows; no row named the seed or target - the evidence may not concern this pair
+  rows: []
+  source_hashes:
+  - path: notes/imported/EXTRACT_2026-09-01/EX-014-rg-schur-riccati.md
+    lines:
+    - 839
+    - 893
+    sha256: fc55bb4934560183d5529822693ce7ad90ca9bc6f521546cb505d8e30f6cc703
+    role: endpoint
+  excerpt_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  fingerprint_note: evidence was produced against a different discovery cache than the one observed when
+    this review was recorded
+state: rejected
+updated: '2026-09-11T08:25:33+00:00'
+registered_as: null
+history:
+- state: pending
+  at: '2026-09-11T08:25:31+00:00'
+  reviewer: claude-fable-5.1 case study balaban-contraction, skeptic-adjusted
+  reason: recorded from discovery output; nothing reviewed yet
+- state: reviewing
+  at: '2026-09-11T08:25:32+00:00'
+  reviewer: claude-fable-5.1 case study balaban-contraction, skeptic-adjusted
+  reason: Investigator read both sources in full at the cited lines; an independent skeptic re-read them
+    to refute the proposal.
+- state: rejected
+  at: '2026-09-11T08:25:33+00:00'
+  reviewer: claude-fable-5.1 case study balaban-contraction, skeptic-adjusted
+  reason: Theorem 6.2's lambda is a polymer cell-count factor (manuscript lines 286-291), not a property
+    of the block map, so EX-014 obstruction O3 restricts nothing in it.
+previous: 0689f477698f0ab6a6304321107e97ed4e3ef08e16b08590c0620f25199d627b
+genesis: 23d82ce227a08aba88cf63b3a9018a7d30fa6c81c9639ef9c9ada9b05c242959
+sha256: 24885a2eced440a4fce1de7b57ee04154f4954ff195b685473dac20403f943ee

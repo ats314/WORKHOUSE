@@ -202,7 +202,7 @@ remain established regardless of incomplete Lean coverage or T3 tier.
 - Route: `ROUTE:G19:control-complete-source-vacuum-transport-460a40`
 - Target: `DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:SOURCE_ENERGY_JETS_R10` — open
 - Scope: The actual complete compact source/vacuum transport, common energy domain and physical clock; a vacuum-only skew generator is insufficient.
-- Source inputs: `DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS` (proven)
+- Source inputs: `DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS` (proven), `DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:GROUND_FRAME_GENERATOR` (proven), `DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON` (proven)
 - Readiness: no explicit unresolved completion input is recorded.
 - Consequence: The R10 generator bounds, or the stated direct R11 alternative, instantiate the complete-budget implication and its cubic residual estimate at the fixed-block scope. They do not supply interacting-volume constants.
 - Decisive next test: Decompose the complete generator into vacuum and conditional-source parts, retain commutator and energy-domain terms through two derivatives, and test the proposed g powers on the full energy graph rather than only on ground vectors.

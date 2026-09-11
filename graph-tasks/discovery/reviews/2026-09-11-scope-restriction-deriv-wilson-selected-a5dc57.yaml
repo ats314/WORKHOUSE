@@ -1,0 +1,72 @@
+schema: workhouse-discovery-review/v1
+id: 2026-09-11-scope-restriction-deriv-wilson-selected-a5dc57
+seed: DERIV:WILSON_SELECTED_INVERSE_WALL:W6
+target: research/2026-09-10_w6_soft_residual/README.md:92-111
+relationship_kind: scope-restriction
+reasoning: 'Investigator (w6-combes-thomas): The README''s hard-block floor c is the wall''s uniform lower
+  floor for F_g restricted to the hard sector H_h and used only inside the residual certificate W6-E (track-a
+  lines 61-74); it is not the missing floor the wall names. Wall line 130 assumes F_g - z >= f > 0 on
+  the whole fast space inside (W5) and line 142 uses f in the cubic remainder (2 t0 t2 + g0 t2^2)/f; wall
+  lines 249-251 name that uniform floor as still required. README lines 28-29 need only C >= cI on H_h
+  plus a degenerating soft Schur floor S >= s g^2 (lines 64-67), and README line 21 states explicitly
+  that this does not remove the separate fast-floor requirement elsewhere in W5. Same normalization in
+  both (A_g = F_g - z, t = t1 p, weight b[p]); README equation (3) restates the wall''s open coupled ground/source
+  estimate for the corrected residual and does not prove it. Regime: finite spatial lattice, 0 < g <=
+  g0, uniformly  Next check: Hypothesis comparison (under an hour): list side by side the floor hypotheses
+  of W5 (F_g - z >= f on Q, wall line 130), W6-E (kappa ||Uv||^2 <= <v, Ag v> globally, track-a line 33),
+  and the README theorem (C >= cI on H_h, S >= s|g|^alpha on H_s, README lines 28-29), and state for each
+  downstream use (cubic remainder, residual certificate, selected inverse norm) which floor it consumes;
+  confirm that only the residual certificate is weakened by the README and that W5''s cubic remainder
+  still consumes the full floor. Then decide whether the README should be registered as a RESULT bearing
+  on DERIV:'
+reviewer: claude-fable-5.1 case study w6-combes-thomas, skeptic-adjusted
+created: '2026-09-11T08:25:44+00:00'
+evidence:
+- command: pair
+  argv:
+  - workhouse
+  - discover
+  - search
+  - ''
+  - --json
+  fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_fingerprint: 52c54e76f96d5413edf69155bb70a77fdffc8baf895d776539fd3174787556fe
+  evidence_freshness: matched
+  evidence_file: pairC.json
+  evidence_sha256: 979944c9752670f1fe1df8fde7ac1df70818656f3e2945798fa91a0bba8e2b5b
+  schema: workhouse-discovery/pair/v1
+  selection: top 0 rows; no row named the seed or target - the evidence may not concern this pair
+  rows: []
+  source_hashes:
+  - path: research/2026-09-10_w6_soft_residual/README.md
+    lines:
+    - 92
+    - 111
+    sha256: f939ae6ddf794611c06d7c9951bd82f85e9254c813138d486ca12b4e4776dff6
+    role: endpoint
+  excerpt_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  fingerprint_note: evidence was produced against a different discovery cache than the one observed when
+    this review was recorded
+state: established
+updated: '2026-09-11T08:25:46+00:00'
+registered_as: null
+history:
+- state: pending
+  at: '2026-09-11T08:25:44+00:00'
+  reviewer: claude-fable-5.1 case study w6-combes-thomas, skeptic-adjusted
+  reason: recorded from discovery output; nothing reviewed yet
+- state: reviewing
+  at: '2026-09-11T08:25:45+00:00'
+  reviewer: claude-fable-5.1 case study w6-combes-thomas, skeptic-adjusted
+  reason: Investigator read both sources in full at the cited lines; an independent skeptic re-read them
+    to refute the proposal.
+- state: established
+  at: '2026-09-11T08:25:46+00:00'
+  reviewer: claude-fable-5.1 case study w6-combes-thomas, skeptic-adjusted
+  reason: 'Skeptic confirmed at the cited lines: the wall assumes F_g - z >= f on all of Q (line 130)
+    and lists that floor as still required (249-251); the README''s floor c is on the hard sector only
+    and its full floor degenerates like 2g^2 (README 28-29, 87-90). A scope restriction between two September
+    sources; record as remaining-work text, not an edge.'
+previous: 2822ff3670be9fd4e054b9ddd4f7bad73582962e624c9d09604622f02b19fcdc
+genesis: e6dd47ec1ae2808ab5510eb5855145193112e9862907d94fecddcdb3f5571ad0
+sha256: 9f8476cc5688da6c52e01011d09d71774fb0109e236efcea75052fd5c6c14c56

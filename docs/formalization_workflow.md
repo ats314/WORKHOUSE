@@ -234,3 +234,6 @@ strict Lean build, and Windows catalogue/CLI checks. Its Lean job runs
 `make lean`; it does not freshly export kernel dependencies. The Python checks
 validate the committed export. Perform the local export when its inputs change
 and preserve the corresponding verification evidence.
+A run whose exact tree an earlier run already verified in full reports that
+run and skips the scientific jobs; see
+[Contributing](../CONTRIBUTING.md#verification-by-change-type).

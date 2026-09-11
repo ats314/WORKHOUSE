@@ -1,0 +1,120 @@
+schema: workhouse-discovery-proposal/v1
+review: 2026-09-11-equivalent-construction-result-w6-energy-03f46a
+surface: documents
+ledger_file: ledger/documents.yaml
+meaning: PROPOSAL, not a registration. This file was generated from a review record; nothing in the scientific
+  ledgers or the generated index changed. Applying it is a hand edit of the named ledger file, followed
+  by the validators and a reviewed PR. A discovery score is not evidence and this review is not a proof.
+relationship:
+  seed: RESULT:W6_ENERGY_WEIGHTED_CT
+  target: notes/imported/EXTRACT_2026-09-01/EX-012-combes-thomas.md:34-53
+  kind: equivalent-construction
+  reviewer: claude-fable-5.1 case study w6-combes-thomas, skeptic-adjusted
+  reasoning: 'Investigator (w6-combes-thomas): The localization theorem CT5-CT7 in ct_repair.md (lines
+    67-97; source of the RESULT) is Theorem CT of EX-012 (lines 42-50, Appendix G) with (a0, R, B0) renamed
+    (kappa, R, J): same hypotheses (uniform floor, finite off-diagonal range R, off-diagonal row sum),
+    same conclusion ||inverse block|| <= (2/floor) exp(-(1/R) log(1 + floor/(2 rowsum)) dist), same three-step
+    proof (weight conjugation, block Schur bound, Neumann inversion at half gap). Different normalization
+    only: ct_repair applies it to the preconditioned B = D^-1/2 A D^-1/2 so the decaying kernel is the
+    energy-weighted D^1/2 A^-1 D^1/2 (CT8); it uses truncated weights exp(mu min(d,L)) for countable graphs
+    (EX-012 states countable V but conjugates by an unbounded weight; EX-011 section 6 lines 380-390 states
+    V finite and allows an arbitrary Hilbert fibre, matching ct_repair''s Hilbert blocks). CT9-CT16 (energy-weighted
+    local input,  Next check: Compare the two proofs line by line under D = I: verify that ct_repair CT5-CT7
+    with D = I and finite X reduces to EX-012 Theorem CT with the identical constant 2/kappa and exponent,
+    then confirm the only additions are (i) the D^1/2 weighting in CT8 and (ii) the truncated-weight limit
+    L -> infinity; if so, land a bears_on from RESULT:W6_ENERGY_WEIGHTED_CT to a catalogue record of EX-012
+    section 1 (which must first be created, since notes/imported passages carry no id) with scope ''localization
+    core only; CT9-CT16 not in EX-012''.'
+  history:
+  - state: pending
+    at: '2026-09-11T08:25:37+00:00'
+    reviewer: claude-fable-5.1 case study w6-combes-thomas, skeptic-adjusted
+    reason: recorded from discovery output; nothing reviewed yet
+  - state: reviewing
+    at: '2026-09-11T08:25:38+00:00'
+    reviewer: claude-fable-5.1 case study w6-combes-thomas, skeptic-adjusted
+    reason: Investigator read both sources in full at the cited lines; an independent skeptic re-read
+      them to refute the proposal.
+  - state: established
+    at: '2026-09-11T08:25:39+00:00'
+    reviewer: claude-fable-5.1 case study w6-combes-thomas, skeptic-adjusted
+    reason: 'Skeptic verified line by line: ct_repair.md CT5-CT7 with D = I is the Combes-Thomas theorem
+      of which EX-011 section 6 and EX-012 Theorem CT are imported special cases with the identical three-step
+      proof (weight conjugation, block Schur bound, Neumann inversion at half gap). Scope: localization
+      core only; CT8''s D^(+-1/2) weighting and the truncated-weight limit are the September additions.
+      Landing: the existing RESULT:W6_ENERGY_WEIGHTED_CT bears_on G21 scope plus a documentary link to
+      the imported note; not a new dependency.'
+fragment: |
+  # ledger/documents.yaml -> aliases[] entry `alias: <FILL: alias of the citing document>`; append to the existing
+  # list. Targets must resolve (an alias for cites, a catalogue id for bears_on).
+      bears_on:
+        - <FILL: catalogue id carrying passage notes/imported/EXTRACT_2026-09-01/EX-012-combes-thomas.md:34-53; a passage locator is not a catalogue id - try: uv run --no-sync workhouse why notes/imported/EXTRACT_2026-09-01/EX-012-combes-thomas.md>   # kind `equivalent-construction`
+notes: []
+checklist:
+- item: hypotheses_compared
+  requirement: The hypotheses of both arguments were compared, not their vocabulary.
+  done: false
+- item: regime_stated
+  requirement: The regime (finite lattice, infinite volume, continuum, ...) is stated.
+  done: false
+- item: normalization_compared
+  requirement: Normalizations and coordinates were compared explicitly.
+  done: false
+- item: independence_of_origin_checked
+  requirement: Copied prose was distinguished from an independent origin (a shared source family is not
+    independence).
+  done: false
+- item: falsifier_stated
+  requirement: What would refute the relationship is written down.
+  done: false
+- item: source_hashes_matched
+  requirement: Every recorded source hash matches the file bytes in this checkout.
+  done: true
+  observation: all recorded source hashes match this checkout
+apply:
+- Paste the fragment by hand into the named ledger file; edit exactly one field per proposal and keep
+  every other field.
+- 'Run the read-only validators: uv run --no-sync workhouse status; uv run --no-sync python -c "from workhouse
+  import results; results.load()"; uv run --no-sync python -c "from workhouse import derivation_statements
+  as d; d._checked()"; uv run --no-sync workhouse lit (literature surface).'
+- Regenerate the views in the documented order (workhouse index -w, frontier --write, certified --write)
+  in a reviewed pull request, never from this tool.
+- 'After the PR merges, run: workhouse discover review mark <id> --state registered --registered-as ''<PR
+  or commit> <ledger id and field>'' --reason ''...''.'
+refused:
+  contradictions: 'ledger/contradictions.yaml is a verbatim transcription of the corpus''s own register:
+    tests pin it to C1-C22 with zero open items, so a new contradiction record is a test failure by design.
+    Record a disagreement as a literature relation ''contradicts'' (--surface literature), as a route
+    ''cannot_decide'' on the relevant gap, or as a unifying candidate with status ''refuted'' (--surface
+    gaps).'
+  writes: This tool never writes under ledger/, index/ or any other scientific tree.
+evidence:
+- command: pair
+  argv:
+  - workhouse
+  - discover
+  - search
+  - ''
+  - --json
+  fingerprint: 42678b342872ea5338b1f04035381b851599ff1fc91de8b17f10f82d8e0fb440
+  evidence_fingerprint: 52c54e76f96d5413edf69155bb70a77fdffc8baf895d776539fd3174787556fe
+  evidence_freshness: matched
+  evidence_file: pairA.json
+  evidence_sha256: 927a2643120b15169d589fa0af6e6a7dd18d3b7b4b72c810c2dc22056f46e1f7
+  schema: workhouse-discovery/pair/v1
+  selection: top 0 rows; no row named the seed or target - the evidence may not concern this pair
+  rows: []
+  source_hashes:
+  - path: notes/imported/EXTRACT_2026-09-01/EX-012-combes-thomas.md
+    lines: &id001
+    - 34
+    - 53
+    sha256: 6469e3e341396b88b6842def7919ff3fe7025ec222764579a1e9b855fcd11430
+    role: endpoint
+  excerpt_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  fingerprint_note: evidence was produced against a different discovery cache than the one observed when
+    this review was recorded
+source_hash_check:
+- path: notes/imported/EXTRACT_2026-09-01/EX-012-combes-thomas.md
+  lines: *id001
+  matched: true

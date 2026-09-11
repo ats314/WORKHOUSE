@@ -861,11 +861,14 @@ gaps:
         state: untried
         depends_on:
           - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+          - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:GROUND_FRAME_GENERATOR
+          - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
         bears_on:
           - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:COMPLETE_BUDGET
           - DERIV:WILSON_SELECTED_INVERSE_WALL:W6
         status: |
           Raw H_g derivatives and vacuum-only ground jets are established. Prove the complete source/vacuum generator bounds R10, ||A^(r)(g)||_(q_g to q_g)<=d_r g^(-r-1) for r=0,1,2, or use the source's direct mixed-form R11 alternative. These are alternative sufficient entrances to the complete residual budget, not cumulative prerequisites. M10 concerns source-to-L2 control and is not a prerequisite for this route or a proof of its energy derivatives.
+          The ground-frame representation writes the complete R9 generator through the undilated score, its conditional mean m_g (with nu_g = m_g Omega_g) and its conditional fluctuation, and proves the purely magnetic score Poisson equation. DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION gives the r=0 bound under the fiberwise conditional-energy estimates H0-H4 (DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:CONDITIONAL_ENERGY_H0_H4), whose averaged forms are established; H0-H4 and r=1,2 remain open, and a reviewed attempt that assumed sup_w K^0_g is recorded as rejected.
         frontier:
           priority: 2
           target: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:SOURCE_ENERGY_JETS_R10

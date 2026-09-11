@@ -87,6 +87,8 @@ are preserved with their source hashes in the integration run's
 Use the recent research ledger to select the result and proof locator within
 those packages; a summary filename alone does not establish its scope.
 
+The [corpus discovery guide](graph_discovery.md) covers hybrid search, unlinked connection candidates, original-edge path explanations and bounded agent context packages.
+
 ## Agent workflow and evidence
 
 From the repository root in the configured environment:

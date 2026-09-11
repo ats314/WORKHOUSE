@@ -44,6 +44,8 @@ centers, and proves that some admissible Q8 cutoffs fail M10 in the actual model
 It specifies synchronized radial profiles that follow those centers; their
 uniform M10 estimate remains open.
 
+For questions spanning the corpus, use the [discovery engine](docs/graph_discovery.md) to combine source passages, exact symbols and graph paths across the checkout and the declared workstation archive, compare candidate pairs, and retain each reading in the [review register](graph-tasks/discovery/README.md); registration stays a reviewed hand edit.
+
 ## Quick start
 
 The [September 10 folder review](runs/folder_evidence_integration_2026-09-10/README.md)

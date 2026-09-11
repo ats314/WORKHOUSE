@@ -43,6 +43,10 @@ envelope with the [manual task record](../graph-tasks/README.md), rather than
 copying only a conclusion. Inspect live GitHub history before declaring that a
 result is absent from the project.
 
+## Discover related sources before choosing targets
+
+Use the [discovery engine](graph_discovery.md) when the task spans differently worded sources or requires unexplored connections. `workhouse discover search "research question" --json` combines source passages, exact-value matches and weighted traversal of the saved graph, and accepts sub-queries in another family's vocabulary (`--query`, or a plan from `workhouse discover plan`). `workhouse discover connections ID --json` proposes unlinked record and passage candidates with recorded path witnesses; `workhouse discover pair A B` compares two sources before a reading. The discovery cache and relevance scores are retrieval metadata: they do not change source status, evidence, tier or scientific graph edges. Discovery indexes its explicit local source scope plus the declared external workstation roots and records content hashes; it does not establish scientific-graph freshness. Retain a target-specific `brief` before mathematical work on selected candidates, and retain the reading itself in the [review register](../graph-tasks/discovery/README.md): a relationship reaches a ledger only through a proposal file applied by hand in a reviewed pull request.
+
 ## Distinguish freshness from execution
 
 | Command mode | Recorded meaning |
