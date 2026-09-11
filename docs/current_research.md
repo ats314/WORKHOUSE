@@ -16,6 +16,16 @@ hashes, section locators, dependencies, whole-statement proofs, scoped ingredien
 and remaining formalization. Counts belong there and in the generated
 [frontier](../FRONTIER.md), not in another manually maintained total.
 
+
+The [G19 compatible-kernel continuation](derivations/os-kernel-moving-time-gap.md)
+constructs a physical semigroup and total centered history space from
+compatible kernel limits; positive-time history separation supplies the
+needed continuity. One growing-time
+estimate then gives the limiting full-space gap, and one positive
+separated-time correlator gives finite-energy weight. The actual Wilson
+kernel limits, weak-coupling decay rate and nontriviality remain open;
+the fixed-spacing SC17 interval does not contain the continuum trajectory.
+
 ## Read the current claim at its own scope
 
 Use the generated [derivation priority queue](../FRONTIER.md#7-current-derivation-priorities)
@@ -216,6 +226,23 @@ blocker and verification performed. Preserve analytic status, machine tier,
 source provenance and publication state as separate facts. Follow the
 [formalization workflow](formalization_workflow.md) for edits to proof mappings;
 do not hand-edit the generated proof map, frontier, certified view or graph.
+
+## The strong-coupling band at large rank
+
+On 2026-09-11 ([ADR 0046](decisions/0046-the-fourth-order-band-is-planar-suppressed-two-orders-below-its-channels.md),
+[run](../runs/planar_band_2026-09-11/README.md), suite "the planar limit of the
+fourth-order band (G16)") the exact rational functions of N behind the
+fourth-order band were expanded at large N. Every fourth-order cumulant of the
+β_N assembly is O(N⁻⁷) in both C-parity sectors although its resolvent channels
+are O(N⁻³): the N⁻³ and N⁻⁵ channel totals vanish identically in all sixteen
+cluster/sector pairs. With the second-order hop (`A_N, B_N = −1/N + …`,
+`t_N = 1/(4N³) + …`) the order-2k coefficient scales as N⁻⁽⁴ᵏ⁻¹⁾ for k = 1, 2,
+so relative to the plaquette energy the band is a series in τ² = (β/N³)² with
+N-independent limits: `W₂/(2C_F) = (3/4)τ²`, `W₄/W₂ = (5965/54)τ²`. The planar
+`β_N → 6170/9` is the adjacent-face cube completion 848 with the corner removing
+a quarter. This is the strong-coupling side of G16 made exact through fourth
+order; the overlap theorem G16 asks for remains open, and the N⁻⁽⁴ᵏ⁻¹⁾ law
+beyond k = 2 is a conjecture for the sixth-order clusters of G9.
 
 ## Dated route history
 

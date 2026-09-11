@@ -3381,3 +3381,54 @@ results:
         and limiting sharpness are separately proved.
     status: proven
     evidence: analytic
+
+  - id: RESULT:OS_KERNEL_MOVING_TIME_GAP
+    statement: Compatible finite limiting Gram kernels with zero-time continuity (automatic on positive-time-divisible
+      history cores) construct the quotient physical semigroup H>=0. Norm-approximate sources and one growing-time
+      rate M yield C_f(t)<=||f_c||^2 exp(-Mt) at every limiting fixed time; the complete centered defining
+      space gives H on Omega-perp>=M. If one separated-time C>0 and V=||f_c||^2, spectral weight in [M,tau^-1
+      log(2V/C)] is at least C/(2-C/V)>=C/2.
+    hypotheses:
+    - A common defining vector space D has vacuum 1 and a physical-time shift semigroup S_t preserving 1;
+      cutoff linear embeddings send 1 to unit vacua of H_n>=0.
+    - All fixed-vector Gram kernels converge to finite values; fixed-time embedding/semigroup defects tend
+      to zero in norm.
+    - The limiting diagonal kernels are continuous at zero time, or the full defining history space is positive-time
+      divisible D=union_(tau>0)S_tau D; the latter supplies that continuity by the cutoff-uniform smoothing
+      bound K10.
+    - For a spanning family of D, approximate centered probes converge in norm and obey one growing physical-time
+      estimate with liminf -log(b_n)/T_n>=M>0 common to that family.
+    - The finite-energy nontriviality conclusion additionally requires one actual positive limiting separated-time
+      correlation.
+    scope: Analytic implication on the full defining history space. Positive-time divisibility supplies
+      semigroup continuity. Actual Wilson continuum kernel convergence, fixed-time compatibility, weak-coupling
+      positive rate, a nonzero limiting correlator and Euclidean field axioms are not supplied. G19 remains
+      open.
+    source: CITE:OS_KERNEL_GAP_RESULT
+    source_section: A-B; full proof K1-K3 and positive-time continuity K5 in docs/derivations/os-kernel-moving-time-gap.md;
+      application boundary C and K4
+    depends_on:
+    - DERIV:YANGMILLS_RECONSTRUCTION:R1
+    - RESULT:MOVING_TIME_SPECTRAL_GAP
+    - RESULT:SHARP_CUTOFF_SOURCE_GAP_BUDGET
+    - DERIV:OS_KERNEL_GAP:POSITIVE_HISTORY
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:os-kernel-gap-reconstruction-and-nontriv-0f694d:kernel-quotient-centering-and-transfer-c-00d284
+      scope: Exact finite nonorthogonal Gram quotient, null-space preservation and centering; not the Hilbert
+        completion or strong-continuity proof.
+    - target: CHK:os-kernel-gap-reconstruction-and-nontriv-0f694d:kernel-log-convexity-has-a-positive-two--8b3370
+      scope: Exact two-atom midpoint defect and rational interpolation controls; Holder and limit passage
+        are analytic.
+    - target: CHK:os-kernel-gap-reconstruction-and-nontriv-0f694d:kernel-positive-time-correlation-yields--e6a67d
+      scope: Exact weight-floor algebra and 49 finite rational spectral measures; no Wilson nontriviality
+        assertion.
+    - target: CHK:os-kernel-gap-reconstruction-and-nontriv-0f694d:kernel-continuity-and-weak-coupling-inpu-a52345
+      scope: Explicit missing-continuity and soft-mode limits plus the normalized coupling denominator;
+        not a counterexample to Wilson Yang-Mills.
+    - target: CHK:os-kernel-gap-reconstruction-and-nontriv-0f694d:kernel-positive-time-smoothing-has-the-e-2cff87
+      scope: Exact extrema of y^k(1-y) for 32 rational time ratios; the full spectral and limiting argument
+        is analytic.
+    status: proven
+    evidence: analytic
