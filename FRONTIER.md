@@ -10,9 +10,9 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 400 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 431 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 574/574 checks pass.
+**T1/T2 — re-derived here.** 579/579 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -84,6 +84,7 @@ it cannot drift from what the repository actually checks.
 | Balaban submission: the two proposed repairs and what they expose | 3/3 |
 | anisotropy variance: full-kernel mixing and induced sixth order | 4/4 |
 | reviewed theory current and geometry bridges | 12/12 |
+| dimension-five irrelevance and Cauchy summability (G19) | 5/5 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:

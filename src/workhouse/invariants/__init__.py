@@ -91,6 +91,7 @@ _MODULES = (
     "balaban_repair",
     "anisotropy_variance",
     "theory_current_bridges",
+    "dimension_five_irrelevance",
 )
 
 for _name in _MODULES:

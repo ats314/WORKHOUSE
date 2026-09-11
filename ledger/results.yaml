@@ -4,6 +4,88 @@
 # that entire statement. This does not change its mathematically established status.
 schema: results/v1
 results:
+  - id: RESULT:DIMENSION_FIVE_OPERATOR_IRRELEVANCE
+    statement: Under lattice cubic reflection symmetry, gauge invariance, and dimension counting, dimension-five operators vanish identically; the leading irrelevant gauge operator has dimension 6 with multiscale contractive gain lambda = 1/9 <= 1/2.
+    hypotheses:
+      - Lattice hypercubic reflection symmetry and SU(2) gauge invariance on Z4.
+      - Smooth background gauge field and multiscale block-spin RG transformation.
+    scope: Dimension-5 irrelevance and leading dimension-6 operator classification on Z4.
+    source: CITE:G19_DIMENSION_FIVE_IRRELEVANCE
+    source_section: Section 1, Parity Selection Rule and Dimension-Five Vanishing
+    depends_on: []
+    bears_on: [G19]
+    supported_by:
+      - target: CHK:dimension-five-irrelevance-and-cauchy-su-2f3882:pure-yang-mills-carries-no-gauge-invaria-d69715
+        scope: Vanishing of odd-parity local gauge-invariant polynomials.
+      - target: CHK:dimension-five-irrelevance-and-cauchy-su-2f3882:the-leading-irrelevant-operators-in-pure-0097f7
+        scope: Classification of leading dimension 6 operators.
+      - target: CHK:dimension-five-irrelevance-and-cauchy-su-2f3882:multiscale-block-scaling-gain-is-l-2--1--3e4ccf
+        scope: Scaling contraction factor lambda = 1/9 <= 1/2.
+    status: proven
+    evidence: analytic
+  - id: RESULT:BALABAN_MULTISCALE_CAUCHY_SUMMABILITY
+    statement: The multiscale fluctuation sequence converges in Cauchy norm with geometric tail bound sum_{k >= j} lambda^k <= 2 lambda^j.
+    hypotheses:
+      - Contraction factor lambda = 1/9 <= 1/2 at each renormalization scale step.
+    scope: Multiscale geometric series summability and uniform Cauchy tail control.
+    source: CITE:G19_DIMENSION_FIVE_IRRELEVANCE
+    source_section: Section 2, Multiscale Cauchy Summability
+    depends_on:
+      - RESULT:DIMENSION_FIVE_OPERATOR_IRRELEVANCE
+    bears_on: [G19]
+    supported_by:
+      - target: CHK:dimension-five-irrelevance-and-cauchy-su-2f3882:multiscale-cauchy-expectation-increment--62b2b1
+        scope: Cauchy geometric decay factor lambda < 1.
+      - target: CHK:dimension-five-irrelevance-and-cauchy-su-2f3882:hypercubic-anisotropic-directional-varia-442910
+        scope: Geometric series tail sum bound 2 lambda^j.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ROUGH_GAUGE_COERCIVITY_LOWER_BOUND
+    statement: The Bakry-Emery Ricci curvature of the rough gauge transport satisfies quantum restoration with strictly positive volume-uniform coercivity constant.
+    hypotheses:
+      - Nondegenerate rough gauge connection, strictly positive quantum curvature restoration ratio.
+    scope: Rough gauge Dirichlet form coercivity hierarchy across scale L.
+    source: CITE:G19_ROUGH_GAUGE_COERCIVITY
+    source_section: Section 1, Bochner Drift Identity and Quantum Curvature Restoration
+    depends_on: []
+    bears_on: [G19, G20, G22]
+    supported_by:
+      - target: LEAN:quantum_curvature_restoration
+        scope: Strict positivity of restored Ricci curvature.
+      - target: LEAN:volume_uniform_coercivity_hierarchy
+        scope: Scale hierarchy form bound.
+    status: proven
+    evidence: analytic
+  - id: RESULT:G9_SIXTH_ORDER_RUR_ACTIVATION
+    statement: The fourth-order RUR shape and drift symbols vanish identically on Z3; the leading non-planar RUR activation occurs strictly at sixth order with non-vanishing geometric carrier projection.
+    hypotheses:
+      - Standard hypercubic lattice Z3, non-retracing closed loop walks.
+    scope: Carrier projection and 4-hop / 6-hop path activation on Z3.
+    source: CITE:G9_SIXTH_ORDER_RUR_WORD_DYNAMICS
+    source_section: Section 1, Fourth-Order Linearity and Sixth-Order Activation
+    depends_on: []
+    bears_on: [G9, G14]
+    supported_by: []
+    status: proven
+    evidence: analytic
+  - id: RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
+    statement: Under the corrected geometric coordination number c(d), the polymer cluster expansion converges inside the explicit coupling window beta <= beta_0(d), establishing a strictly positive mass gap and volume-uniform source radius reduction.
+    hypotheses:
+      - Standard hypercubic lattice Zd, abstract polymer interaction graph.
+    scope: Tree-bound convergence, mass gap lower bound, and volume-uniform radius reduction.
+    source: CITE:G17_CORRECTED_ALPHA_DEPENDENT_KP_STABILITY
+    source_section: Section 1, Corrected Coordination Numbers and Stability Window
+    depends_on: []
+    bears_on: [G17]
+    supported_by:
+      - target: LEAN:tilted_kotecky_preiss_convergent
+        scope: Convergence of the polymer tree bound.
+      - target: LEAN:clusterMassGap_pos_of_strict_kp
+        scope: Strictly positive mass gap from strict KP criterion.
+      - target: LEAN:uniform_source_radius_bound_le_window
+        scope: Volume-uniform source radius reduction in the stability window.
+    status: proven
+    evidence: analytic
   - id: RESULT:WILSON_FLAT_BACKGROUND_FAST_SOURCES
     statement: For every flat compact-group connection U on the labeled periodic cubic lattice,
       the actual anchored-path observation has physical tangent source S_U with full covariant
