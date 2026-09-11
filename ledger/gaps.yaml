@@ -1326,11 +1326,24 @@ gaps:
         - G19
         status: The analytic implication and finite-energy weight criterion are proved under their explicit
           kernel/rate hypotheses. Positive-time divisibility supplies semigroup continuity. No actual weak-coupling Wilson kernel or rate input is marked discharged.
+      - step: Optimize finite decay channels and time-amplified errors in the physical clock
+        state: done
+        closed_by:
+        - RESULT:MOVING_TIME_MULTICHANNEL_RATE
+        - RESULT:MOVING_TIME_MULTICHANNEL_SHARPNESS
+        depends_on:
+        - RESULT:MOVING_TIME_SPECTRAL_GAP
+        cannot_decide:
+        - G19
+        status: Pairwise inequalities give the sharp normalized rate, a witnessing logarithmic time
+          and finite-horizon penalty; one-atom examples prove sharpness. Actual Wilson estimates,
+          full defining-history kernels and nontriviality remain application inputs.
       - step: Transfer a physical continuum gap from one growing-time estimate per cutoff and approximate sources
         state: live
         depends_on:
         - RESULT:MOVING_TIME_SPECTRAL_GAP
         - RESULT:SHARP_CUTOFF_SOURCE_GAP_BUDGET
+        - RESULT:MOVING_TIME_MULTICHANNEL_RATE
         - RESULT:OS_KERNEL_MOVING_TIME_GAP
         status: The original spectral-measure theorem and sharp rate budget are proved. The compatible-kernel
           successor now constructs the limiting physical semigroup and total centered defining space from finite
