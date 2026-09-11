@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 431 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 586/586 checks pass.
+**T1/T2 — re-derived here.** 592/592 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -86,6 +86,7 @@ it cannot drift from what the repository actually checks.
 | reviewed theory current and geometry bridges | 12/12 |
 | W6 antipodal conditional magnetic geometry | 7/7 |
 | dimension counts and geometric scaling controls (G19) | 5/5 |
+| G9 sixth-order folds and combined carrier shapes | 6/6 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -241,10 +242,10 @@ remain established regardless of incomplete Lean coverage or T3 tier.
 
 - Route: `ROUTE:G9:assemble-one-complete-sixth-order-cluste-55f2b8`
 - Scope: One smallest admissible connected plaquette support at fixed SU(3), with exact Haar/Gram quotient, physical Q projections, electric denominators, all folds and rooted subtraction.
-- Source inputs: `RESULT:HODGE_FESHBACH_SPLITTING` (proven), `RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT` (proven)
+- Source inputs: `RESULT:HODGE_FESHBACH_SPLITTING` (proven), `RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT` (proven), `RESULT:G9_HERMITIAN_FOLDED_SUPPORT` (proven), `RESULT:G9_LOCAL_SIXTH_NONCANCELLATION` (proven), `RESULT:G9_ONE_FACE_SIXTH` (proven)
 - Readiness: no explicit unresolved completion input is recorded.
-- Consequence: A surviving component outside the old five-monomial span identifies an additional sixth-order shape; exact cancellation identifies the next selection-rule question. Neither outcome changes the established fourth-order support theorem.
-- Decisive next test: Keep the complete operator histories through folded assembly, then project the exact cleared carrier symbol onto the quotient by span{q,q^2,e_2,q e_2,e_3}; record both individual-word and assembled contributions.
+- Consequence: The extra rational band-shape component is already forced under local-shell and H3 hypotheses. Computing direct F now determines its independent polynomial shapes and coefficients, including whether local RUR survives. Neither result changes the fourth-order support theorem or discharges global G9.
+- Decisive next test: Evaluate the 18 electric folds on a connected multi-plane support with all Haar weights and rooted subtractions. Reduce direct F=sigma(H6) separately, then combine q^2 F with the known mixing numerator at common denominator q^3; retain both direct polynomial shape coefficients and the invariant remainder modulo q^2.
 
 ### 7. Reformulate the source family while preserving its downstream spectral comparison (G17)
 

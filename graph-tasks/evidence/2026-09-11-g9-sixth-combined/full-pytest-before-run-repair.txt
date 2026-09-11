@@ -1,0 +1,90 @@
+........................................................................ [  3%]
+........................................................................ [  7%]
+........................................................................ [ 11%]
+........................................................................ [ 15%]
+...........................................................s.........s.. [ 18%]
+........................................................................ [ 22%]
+........................................................................ [ 26%]
+..........................................s............................. [ 30%]
+..........s............................................................. [ 33%]
+........................................................F............... [ 37%]
+........................................................................ [ 41%]
+........................................................................ [ 45%]
+........................................................................ [ 49%]
+........................................................................ [ 52%]
+........................................................................ [ 56%]
+........................................................................ [ 60%]
+........................................................................ [ 64%]
+........................................................................ [ 67%]
+........................................................................ [ 71%]
+........................................................................ [ 75%]
+........................................................................ [ 79%]
+........................................................................ [ 82%]
+........................................................................ [ 86%]
+.............................F.......................................... [ 90%]
+........................................................................ [ 94%]
+........................................................................ [ 98%]
+......................................                        [100%]
+================================== FAILURES ===================================
+__________________ test_run_register_matches_runs_directory ___________________
+
+    def test_run_register_matches_runs_directory():
+        """Every pinned run directory has a register entry and vice versa.
+    
+        The failure this prevents: a run record cited by checks only as a
+        file-path string, invisible to `workhouse why` ï¿½ or a register entry
+        whose directory (or SHA256SUMS pin) quietly disappeared.
+        """
+        from workhouse import claims
+    
+        root = Path(claims.ROOT)
+        registered = {run["id"]: run for run in claims.load_runs()}
+        on_disk = {p.name for p in (root / "runs").iterdir() if p.is_dir()}
+>       assert set(registered) == on_disk, (
+            f"register vs runs/: only in register {sorted(set(registered) - on_disk)}, "
+            f"only on disk {sorted(on_disk - set(registered))}"
+        )
+E       AssertionError: register vs runs/: only in register [], only on disk ['g9_sixth_combined_2026-09-11']
+E       assert {'analytic_fo...6-08-28', ...} == {'analytic_fo...6-08-28', ...}
+E         
+E         Extra items in the right set:
+E         'g9_sixth_combined_2026-09-11'
+E         Use -v to get more diff
+
+tests\test_graph.py:237: AssertionError
+_____________________ test_every_run_dir_is_fully_pinned ______________________
+
+    def test_every_run_dir_is_fully_pinned():
+        for run_dir in sorted(p for p in RUNS.iterdir() if p.is_dir()):
+>           _check_run_pins(run_dir)
+
+tests\test_runs.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+run_dir = WindowsPath('C:/WORKHOUSE/REPO/runs/g9_sixth_combined_2026-09-11')
+
+    def _check_run_pins(run_dir):
+        """A run can contain source subdirectories; every file still needs a pin."""
+        manifest = run_dir / "SHA256SUMS"
+>       assert manifest.exists(), f"{run_dir.name}/SHA256SUMS is missing"
+E       AssertionError: g9_sixth_combined_2026-09-11/SHA256SUMS is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = WindowsPath('C:/WORKHOUSE/REPO/runs/g9_sixth_combined_2026-09-11/SHA256SUMS').exists
+
+tests\test_runs.py:25: AssertionError
+============================ slowest 10 durations =============================
+26.79s call     tests/test_loopcalc.py::test_rank_generic_second_order_matches_the_all_rank_formulas
+17.14s call     tests/test_literal_coarse_sources.py::test_fresh_runner_read_only_replay_and_corruptions
+13.05s call     tests/test_continuum_wilson_block.py::test_native_suite_checks_all_six_scoped_controls
+12.93s call     tests/test_chain_channels.py::test_coplanar_chain_decomposes_into_74_channels_summing_to_x_quantum
+12.59s call     tests/test_recent_document_routes.py::test_review_and_formal_source_links_are_curated_without_tier_promotion
+12.02s setup    tests/test_results.py::test_curated_result_edges_are_exact_and_all_endpoints_resolve
+10.85s call     tests/test_endpoint_window.py::test_selected_runner_cold_replay_overwrite_and_optimization
+10.47s call     tests/test_provenance.py::test_every_target_resolves_and_the_graph_carries_the_edges
+8.47s call     tests/test_recent_document_routes.py::test_september_document_coverage_has_native_nodes
+8.36s call     tests/test_search.py::test_catalogue_files_are_current
+=========================== short test summary info ===========================
+FAILED tests/test_graph.py::test_run_register_matches_runs_directory - Assert...
+FAILED tests/test_runs.py::test_every_run_dir_is_fully_pinned - AssertionErro...
+2 failed, 1904 passed, 4 skipped, 11 subtests passed in 366.35s (0:06:06)

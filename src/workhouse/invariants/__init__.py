@@ -93,6 +93,7 @@ _MODULES = (
     "theory_current_bridges",
     "w6_antipodal",
     "dimension_five_irrelevance",
+    "sixth_order",
 )
 
 for _name in _MODULES:

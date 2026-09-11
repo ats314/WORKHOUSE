@@ -60,14 +60,14 @@ results:
     statement: The fourth-order RUR shape and drift symbols vanish identically on Z3; the leading non-planar RUR activation occurs strictly at sixth order with non-vanishing geometric carrier projection.
     hypotheses:
       - Standard hypercubic lattice Z3, non-retracing closed loop walks.
-    scope: Carrier projection and 4-hop / 6-hop path activation on Z3.
+    scope: Historical claimed dynamical activation, disputed by G9_SIXTH_ORDER_COMBINED section 1. The 192 edge walks are reproduced but have no supplied map to weighted electric/plaquette histories. The original source and claim are preserved; no nonzero physical RUR amplitude follows from its census.
     source: CITE:G9_SIXTH_ORDER_RUR_WORD_DYNAMICS
     source_section: Section 1, Fourth-Order Linearity and Sixth-Order Activation
     depends_on: []
     bears_on: [G9, G14]
     supported_by: []
-    status: proven
-    evidence: analytic
+    status: disputed
+    evidence: record-backed
   - id: RESULT:G17_CORRECTED_KP_POLYMER_STABILITY
     statement: Under the corrected geometric coordination number c(d), the polymer cluster expansion converges inside the explicit coupling window beta <= beta_0(d), establishing a strictly positive mass gap and volume-uniform source radius reduction.
     hypotheses:
@@ -3217,5 +3217,97 @@ results:
     - target: LEAN:riccati_default_contraction_bound
       scope: Exact scalar consequence of the registered abstract default functions and their interval theorem.
         It does not establish the physical SC17 defect hypotheses or an actual Wilson closure window.
+    status: proven
+    evidence: analytic
+
+  - id: RESULT:G9_HERMITIAN_FOLDED_SUPPORT
+    statement: The scalar-first-order isolated-shell expansion has exactly 18 universal Hermitian sixth-order folded
+      words in P_E,V,D, including the odd-order cross folds.
+    hypotheses:
+    - An isolated electric model space P_E at E0 and self-adjoint perturbation V0 with P_E V0 P_E=a P_E.
+    - V=V0-aI on the entire space; D=Q_E/(E0-H0); canonical Hermitian metric convention.
+    scope: Formal finite-order operator identity; physical Wilson matrix elements and connected multi-face rooted
+      subtraction are not evaluated.
+    source: CITE:G9_SIXTH_ORDER_COMBINED
+    source_section: Section 2, equation (F6)
+    depends_on: []
+    bears_on:
+    - G9
+    - G14
+    supported_by:
+    - target: CHK:g9-sixth-order-folds-and-combined-carrie-47ffec:g9-generates-all-18-hermitian-sixth-orde-3de7ea
+      scope: Exact free-word recurrence and coefficients.
+    - target: CHK:g9-sixth-order-folds-and-combined-carrie-47ffec:g9-folded-series-satisfies-exact-invaria-d3a02e
+      scope: Independent rational rank-two retained-space regression through order six, not Wilson identification.
+    status: proven
+    evidence: analytic
+  - id: RESULT:G9_COMBINED_MIXING_SUPPORT
+    statement: 'All 25 ordered H4-Q_c-H4 terms reduce to the RR pair: lambda6=F/q-kappa*(e2/q+3e3/q^2-4e2^2/q^3),
+      with F=sigma(H6) and kappa=4 C_shp^2/t3.'
+    hypotheses:
+    - Fixed nonzero Bloch momentum in the SU(3) odd plaquette shell with H2=t3 L_down.
+    - Recorded H3=b3 L_down modulo a scalar, so it preserves the carrier.
+    - The assembled H4 has support I,U,S,S^2,R and H6 contains all electric folds in the same orthonormal shell convention.
+    scope: Complete spectral order-six reduction to an unknown direct F and a computed mixing term. H5 is not assumed
+      zero; no direct multi-face H6 coefficients are supplied.
+    source: CITE:G9_SIXTH_ORDER_COMBINED
+    source_section: Sections 3-4, equation (S6)
+    depends_on:
+    - RESULT:HODGE_FESHBACH_SPLITTING
+    - RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT
+    - RESULT:RECENT_ANISOTROPY_INDUCED_SIXTH
+    bears_on:
+    - G9
+    - G14
+    supported_by:
+    - target: CHK:g9-sixth-order-folds-and-combined-carrie-47ffec:g9-hodge-word-reduction-agrees-with-spat-78bf8d
+      scope: All 40 length-zero-through-three Hodge symbols agree with spatial Laurent operators.
+    - target: CHK:g9-sixth-order-folds-and-combined-carrie-47ffec:g9-all-25-h4-mixing-pairs-reduce-to-rr-m-28ce10
+      scope: All 25 mixing pairs and independent full-kernel composition.
+    status: proven
+    evidence: analytic
+  - id: RESULT:G9_LOCAL_SIXTH_NONCANCELLATION
+    statement: For every Laurent-polynomial direct H6 in the recorded shell convention, q^3 lambda6 is not divisible
+      by q; the additional rational carrier shape survives complete direct-plus-induced assembly. For symmetric polynomial
+      F, the remainder modulo q^2 is 4 kappa e2^2-3 kappa q e3.
+    hypotheses:
+    - The hypotheses of RESULT:G9_COMBINED_MIXING_SUPPORT, with assembled C_shp nonzero.
+    - Direct H6 is a finite-range translation-covariant shell stencil, before in-shell carrier elimination, over the
+      whole Bloch zone.
+    - The stronger canonical modulo-q^2 statement uses F in Q[q,e2,e3].
+    scope: Noncancellation theorem for the complete finite-order band coefficient under the stated locality and H3
+      hypotheses. Does not identify a direct RUR word, determine direct q e2/e3 coefficients, assert a physical Gamma
+      pole, or establish convergence/continuum control.
+    source: CITE:G9_SIXTH_ORDER_COMBINED
+    source_section: Section 5, equations (N6) and (R6)
+    depends_on:
+    - RESULT:G9_COMBINED_MIXING_SUPPORT
+    bears_on:
+    - G9
+    - G14
+    supported_by:
+    - target: CHK:g9-sixth-order-folds-and-combined-carrie-47ffec:g9-local-direct-h6-cannot-cancel-the-ind-4569d0
+      scope: Exact quotient and Laurent q=0 witness; supports the analytic divisibility argument.
+    status: proven
+    evidence: analytic
+  - id: RESULT:G9_ONE_FACE_SIXTH
+    statement: The actual single-plaquette SU(3) sixth-order odd energy is 407/702464, the vacuum coefficient is 6051/102400,
+      and their rooted difference is -2055143/35123200.
+    hypotheses:
+    - One square with H0=2 C2 on Haar-orthonormal SU(3) characters and V0=-(chi3+chi3bar).
+    - Odd branch starts at (chi_(1,0)-chi_(0,1))/sqrt(2); vacuum branch starts at chi_(0,0).
+    scope: Complete one-face physical electric/Haar recurrence and vacuum subtraction through order six; on-site contribution
+      only. Not a nonplanar connected cluster or global m6.
+    source: CITE:G9_SIXTH_ORDER_COMBINED
+    source_section: Section 6, coefficient table
+    depends_on:
+    - RESULT:G9_HERMITIAN_FOLDED_SUPPORT
+    bears_on:
+    - G9
+    - G14
+    supported_by:
+    - target: CHK:g9-sixth-order-folds-and-combined-carrie-47ffec:g9-one-face-su3-sixth-order-rooted-coeff-bb6b41
+      scope: Exact generated representation support and scalar recurrence; independent 18-word matrix reproduction
+        is in tests/test_sixth_order.py.
     status: proven
     evidence: analytic
