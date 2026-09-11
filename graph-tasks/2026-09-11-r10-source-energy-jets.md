@@ -90,4 +90,3 @@
 - **Successor Obligation:**
   - G19 Priority 1 (`DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10`): Four-face SU(2) conditional score tail control.
   - G19 Priority 3 (`DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:INTERACTING_GRID_COMPARISON`): Multi-block interacting lattice volume uniformity (N-block coupling).
-

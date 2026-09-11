@@ -59,6 +59,7 @@ _MODULES = (
     "gamma_isolation",
     "rank_field",
     "planar_band",
+    "odd_order",
     "path_reduction",
     "wilson_step",
     "wilson_block",

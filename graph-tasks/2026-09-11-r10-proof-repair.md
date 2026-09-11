@@ -44,3 +44,7 @@ Additional owned paths: paper/research_notes/W6_R10_REPAIRED_IDENTITIES_20260911
 and its additive paper/SHA256SUMS pin. The results registry requires pinned
 paper sources; this note preserves the actual C1-C5 proof text. The obsolete
 preliminary focused run was interrupted; final validation starts after repairs.
+
+Integration update: main advanced through PR 151 to 60728319516c6af49c700b7791f52ecf772f4bc3. Its odd-order results, source and registers are preserved. Final snapshot and validation logs belong to graph-tasks/evidence/r10-proof-repair-20260911/ (owned), protected by a narrow .gitattributes entry. Scientific inputs are now frozen for final validation.
+
+Registry correction: runs/index.yaml is additionally owned. The full suite found the missing preservation-run entry (1987 passed, 4 skipped, 1 failed; 11 subtests passed). Registration is corrected and affected catalogue checks will be rerun. All 624 fresh mathematical checks passed.

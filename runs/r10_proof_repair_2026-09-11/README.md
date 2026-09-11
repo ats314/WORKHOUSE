@@ -13,9 +13,15 @@ H0 implies H4 using the established first ground jet. H0-H3 and higher actual
 source-energy bounds remain open. The original success stubs were replaced
 with six exact checks of explicitly scoped finite identities and scalar defects.
 
-start.json is the pre-repair saved graph; end.json retains the final saved graph.
+start.json is the pre-repair saved graph. The saved end snapshots are retained
+under graph-tasks/evidence/r10-proof-repair-20260911/, outside the
+catalogue input trees to avoid making the snapshot its own input.
 Their fingerprints describe source/catalogue identity, not mathematical proof.
 The [task record](../../graph-tasks/2026-09-11-r10-proof-repair.md) records observed
-verification and publication status. Validation logs are retained alongside it.
+verification and publication status. Validation logs are retained under graph-tasks/evidence/r10-proof-repair-20260911/.
 No original evidence was removed. Navigation preservation lives separately in
 the workstation's navigation/preserved/2026-09-11-r10-proof-repair/ directory.
+
+Integration base advanced to 60728319516c6af49c700b7791f52ecf772f4bc3
+(PR 151) before final validation. Earlier full runs interrupted by registry
+repair or upstream advancement are not reported as passes.
