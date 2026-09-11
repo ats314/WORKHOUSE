@@ -101,6 +101,7 @@ _MODULES = (
     "universal_cellular_hodge",
     "sixth_order_cluster",
     "w6_source_energy_r10",
+    "archive_derivations",
     "earlier_proof_recovery",
 )
 

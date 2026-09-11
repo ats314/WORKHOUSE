@@ -6516,6 +6516,549 @@ documents:
     lean: []
     remaining: Analytic statement; no full Lean formalization. Finite checks have only their declared scope.
 
+- id: CITE:ARCHIVE_FUNCTIONAL
+  path: docs/derivations/archive-functional-inequalities.md
+  sha256: 048fbf01cdc55ee428b50f7fdbf86a3569a107631705c46314da88f8b00f3a00
+  statements:
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F1
+    statement: The smooth trace defect has range [0,2] and zero set ker rho; faithfulness makes the
+      vacuum unique.
+    locator: '## F1. Trace defect, faithfulness and the vacuum set (lines 13-22)'
+    anchor: '## F1. Trace defect, faithfulness and the vacuum set'
+    source_labels:
+    - F1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Compact Lie group and smooth unitary representation rho:G->U(n); faithfulness only for the unique-zero
+      conclusion.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F2
+    statement: A nonnegative C2 function on a complete manifold with Hess z<=H g satisfies |grad z|^2<=2H
+      z.
+    locator: '## F2. Global gradient domination without a quotient singularity (lines 23-37)'
+    anchor: '## F2. Global gradient domination without a quotient singularity'
+    source_labels:
+    - F2
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Complete Riemannian manifold, z>=0 of class C2, global Hessian upper bound H>0.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F3
+    statement: Distinct-link plaquette lifts have gradient square r times the group gradient square
+      and Laplacian r times the group Laplacian.
+    locator: '## F3. Plaquette lifts preserve link derivatives (lines 38-53)'
+    anchor: '## F3. Plaquette lifts preserve link derivatives'
+    source_labels:
+    - F3
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Bi-invariant group metric, product link metric, r distinct links each used once, and the stated
+      group derivative bounds.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F2
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F4
+    statement: Bounded nonnegative defects satisfy D^2/P<=V<=B D<=B^2 P.
+    locator: '## F4. Aggregate defect comparisons (lines 54-64)'
+    anchor: '## F4. Aggregate defect comparisons'
+    source_labels:
+    - F4
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - P>0, 0<=z_p<=B, D=sum z_p and V=sum z_p^2.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F5
+    statement: The squared-profile exponential drift has the exact signed pairing identity and volume-independent
+      Cv=2r(Cd+Cg), Cgamma=4nu r Cg B^2.
+    locator: '## F5. Exact drift identity and the squared-profile budget (lines 65-82)'
+    anchor: '## F5. Exact drift identity and the squared-profile budget'
+    source_labels:
+    - F5
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Symmetric diffusion L=Delta-grad S.grad; bounded defects, distinct-link lifts and link overlap
+      at most nu.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F3
+    - DERIV:ARCHIVE_FUNCTIONAL:F4
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F6
+    statement: Every C2 profile with Phi prime at zero equal to zero and bounded second derivative
+      has diffusion and exponential budgets proportional to D.
+    locator: '## F6. General profiles with vanishing derivative at zero (lines 83-96)'
+    anchor: '## F6. General profiles with vanishing derivative at zero'
+    source_labels:
+    - F6
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - F3 geometry, overlap nu, defects in [0,B], Phi prime(0)=0, and sup absolute Phi second<=M.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F3
+    - DERIV:ARCHIVE_FUNCTIONAL:F4
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F7
+    statement: A volume-independent linear pairing bound gives an explicit volume-independent small-set
+      Foster-Lyapunov inequality.
+    locator: '## F7. Linear pairing implies a genuinely uniform small-set drift (lines 97-114)'
+    anchor: '## F7. Linear pairing implies a genuinely uniform small-set drift'
+    source_labels:
+    - F7
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - P_S>=aD-b with b>=0 independent of volume; k>0 and c=2a-Cv-k Cgamma>0; D0>2b/c.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F4
+    - DERIV:ARCHIVE_FUNCTIONAL:F5
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F8
+    statement: The integrated Lyapunov energy deficit equals a nonnegative completed square.
+    locator: '## F8. Lyapunov energy conversion as a completed square (lines 115-129)'
+    anchor: '## F8. Lyapunov energy conversion as a completed square'
+    source_labels:
+    - F8
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Symmetric diffusion on a compact boundaryless manifold or a common core with valid integration
+      by parts; smooth h>0 and real f.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F9
+    statement: Local core Poincare and linear Lyapunov drift imply global Poincare with constant (1+b_core
+      kappa_K)/lambda.
+    locator: '## F9. Local-to-global Poincare patching (lines 130-144)'
+    anchor: '## F9. Local-to-global Poincare patching'
+    source_labels:
+    - F9
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - F8 core; mu(K)>0, W>=1, LW<=-lambda W+b_core 1_K, and the stated local conditional-mean Poincare
+      bound.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F8
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F10
+    statement: The averaged defect gradient square is at most r nu C1^2/P.
+    locator: '## F10. Averaging gives a volume-scale gradient bound (lines 145-156)'
+    anchor: '## F10. Averaging gives a volume-scale gradient bound'
+    source_labels:
+    - F10
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - F3 distinct-link geometry, bounded link overlap nu, and |grad_G z|<=C1.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F3
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F11
+    statement: Uniform LSI and the averaged-gradient bound give a volume-exponential tail only after
+      a uniform mean-below-threshold margin is supplied.
+    locator: '## F11. Herbst concentration and the mean threshold (lines 157-172)'
+    anchor: '## F11. Herbst concentration and the mean threshold'
+    source_labels:
+    - F11
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Ent(f^2)<=2/rho E(f,f), rho>0; bounded smooth H with bounded gradient; for the bad-set conclusion
+      epsilon-E Bbar>=d>0.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F10
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F12
+    statement: The exact two-event covariance decomposition gives localization error at most 8||F||inf||G||inf
+      mu(Kc).
+    locator: '## F12. Covariance localization with an explicit error budget (lines 173-190)'
+    anchor: '## F12. Covariance localization with an explicit error budget'
+    source_labels:
+    - F12
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Bounded real observables F,G, probability measure mu, and 0<mu(K)<1.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F13
+    statement: A volume-exponential localization error is absorbed into a distance exponent min(m,c/d0)
+      when R<=d0 P.
+    locator: '## F13. Absorbing a volume tail into a distance exponent (lines 191-203)'
+    anchor: '## F13. Absorbing a volume tail into a distance exponent'
+    source_labels:
+    - F13
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Conditional covariance bound on the same K, bounded observables, mu(Kc)<=A exp(-cP), and R<=d0
+      P.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F12
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F14
+    statement: A single negative center link has averaged defect 12/P but maximum plaquette defect
+      2 in four dimensions.
+    locator: '## F14. Averaged smallness does not imply plaquettewise smallness (lines 204-213)'
+    anchor: '## F14. Averaged smallness does not imply plaquettewise smallness'
+    source_labels:
+    - F14
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Sufficiently large periodic four-dimensional SU(2) lattice with ordinary distinct-link square
+      plaquettes.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F15
+    statement: The proposed equality of plaquette gradient cross terms and a spatial graph Laplacian
+      fails on a nonconstant center defect field.
+    locator: '## F15. Center configurations refute the proposed Laplacian identity (lines 214-229)'
+    anchor: '## F15. Center configurations refute the proposed Laplacian identity'
+    source_labels:
+    - F15
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - F14 center field and a connected shared-link plaquette adjacency graph with the standard negative
+      graph Laplacian.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F14
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F16
+    statement: All-even four-dimensional SU(2) center fields have D=2P and zero pairing, disproving
+      the proposed volume-uniform linear and off-core pairing bounds; the quadratic target cannot
+      supply a positive lower bound.
+    locator: '## F16. Extensive center defects obstruct uniform pairing coercivity (lines 230-270)'
+    anchor: '## F16. Extensive center defects obstruct uniform pairing coercivity'
+    source_labels:
+    - F16
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Even L>=2 periodic four-dimensional SU(2) lattice, fundamental trace defect and any smooth action;
+      a positive coefficient and volume-independent additive constant for the linear target.
+    depends_on: []
+    lean: []
+    remaining: The all-even-L analytic construction is not Lean-formalized. The finite controls cover
+      L=2,4,6. This rules out the stated pairing targets, not all signed-diffusion or Lyapunov arguments.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F17
+    statement: For fundamental SU(2) with the unit-S3 metric, Delta V=40D-32V and Gamma(V)<=16nu sum
+      z_p^3(2-z_p); all-center configurations have exact negative exponential drift LW/W=-24kD despite
+      zero action pairing.
+    locator: '## F17. The exact SU(2) diffusion budget retains favorable signs (lines 271-311)'
+    anchor: '## F17. The exact SU(2) diffusion budget retains favorable signs'
+    source_labels:
+    - F17
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Fundamental SU(2), unit-S3 product link metric, distinct-link square plaquettes, bounded overlap
+      nu, V=sum z_p^2, D=sum z_p, W=exp(kV), and L=Delta-grad S.grad with smooth S.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F3
+    - DERIV:ARCHIVE_FUNCTIONAL:F5
+    lean: []
+    remaining: The manifold and all-volume argument is analytic, not Lean-formalized. Exact quaternion-coordinate
+      algebra is T1. A uniform off-core signed drift estimate away from center fields remains a successor
+      obligation.
+
+- id: CITE:ARCHIVE_SOURCE_TRANSPORT
+  path: docs/derivations/archive-source-transport.md
+  sha256: 4a9d953d888e1b0eb775d22001e1abb0f41a3621b040fdc4d319e71971a60ddd
+  statements:
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S1
+    statement: The exact finite inhomogeneous source moment is the shifted partition ratio Z(beta-t)/Z(beta).
+    locator: '## S1. Inhomogeneous source tilting is a partition ratio (lines 10-19)'
+    anchor: '## S1. Inhomogeneous source tilting is a partition ratio'
+    source_labels:
+    - S1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Finite reference measure, finitely many bounded real plaquette potentials, and real source parameters.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S2
+    statement: Source derivatives are tilted expectations and covariances; the log-partition Hessian
+      is positive semidefinite.
+    locator: '## S2. Source response is covariance and log partition is convex (lines 20-31)'
+    anchor: '## S2. Source response is covariance and log partition is convex'
+    source_labels:
+    - S2
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - S1 bounded setting and bounded observable O for response differentiation.
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S1
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S3
+    statement: Pointwise source domination does not order normalized tilted expectations.
+    locator: '## S3. Pointwise envelopes do not order normalized tilts (lines 32-44)'
+    anchor: '## S3. Pointwise envelopes do not order normalized tilts'
+    source_labels:
+    - S3
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Disjoint events of probabilities q and 1/2, 0<q<1/2, with the explicit positive weights 1+X/q
+      and 1+Y/q.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S4
+    statement: Essential bounds on a positive likelihood ratio transfer normalized nonnegative expectations
+      with factor b/a.
+    locator: '## S4. Bounded log likelihood ratios transfer tilted estimates (lines 45-57)'
+    anchor: '## S4. Bounded log likelihood ratios transfer tilted estimates'
+    source_labels:
+    - S4
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Positive integrable weights v,w and 0<a<=w/v<=b<infinity almost everywhere.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S5
+    statement: A uniform exponential source-moment bound and capacity bound imply rooted summability
+      when mu q<1.
+    locator: '## S5. Free energy implies conditional rooted-capacity summability (lines 58-78)'
+    anchor: '## S5. Free energy implies conditional rooted-capacity summability'
+    source_labels:
+    - S5
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Nonnegative defects, t>0, s>=0, uniform moment K^n, capacity <=gamma n, and at most mu^(n-1)
+      rooted animals.
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S1
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S6
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S6
+    statement: Maximum degree Delta bounds rooted n-vertex animals by Delta^(2n-2); shared-link four-dimensional
+      plaquettes admit mu=400.
+    locator: '## S6. A conservative rooted-animal count (lines 79-94)'
+    anchor: '## S6. A conservative rooted-animal count'
+    source_labels:
+    - S6
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Graph with fixed neighbor orderings and maximum degree Delta>=1; for the plaquette specialization
+      r=4 and nu<=6.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S7
+    statement: A reflection-equivariant measurable deterministic map preserving the positive-time
+      algebra preserves reflection positivity.
+    locator: '## S7. Reflection-positive deterministic pushforward (lines 95-107)'
+    anchor: '## S7. Reflection-positive deterministic pushforward'
+    source_labels:
+    - S7
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Fine measure is reflection positive; the map intertwines reflections and pulls every coarse
+      positive-time observable into the fine positive-time algebra.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S8
+    statement: Existing compatible projective limits preserve RP on the cylinder algebra; convergence
+      of OS product expectations also preserves positivity.
+    locator: '## S8. Projective and weak limits preserve the stated OS forms (lines 108-122)'
+    anchor: '## S8. Projective and weak limits preserve the stated OS forms'
+    source_labels:
+    - S8
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Directed reflected system, compatible positive-time pullbacks, and an existing measure with
+      the stated marginals; for weak limits use bounded continuous OS products or justified uniform
+      integrability.
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S7
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S9
+    statement: A reflection-equivariant map can produce a negative OS form when it mixes the positive
+      and negative half spaces.
+    locator: '## S9. Reflection equivariance alone has a counterexample (lines 123-134)'
+    anchor: '## S9. Reflection equivariance alone has a counterexample'
+    source_labels:
+    - S9
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Independent fair signs, exchange reflection and pi(x,y)=(x-y,y-x).
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S10
+    statement: A bounded block operator with row sum R0 and column sum C0 has norm at most sqrt(R0
+      C0).
+    locator: '## S10. Block Schur bound with row and column control (lines 135-147)'
+    anchor: '## S10. Block Schur bound with row and column control'
+    source_labels:
+    - S10
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Finite direct sum of Hilbert fibers and bounded blocks with both stated absolute row and column
+      sums.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S11
+    statement: A positive finite-range self-adjoint block operator has inverse decay with eta=log(1+a0/(2B))/R
+      and prefactor 2/a0.
+    locator: '## S11. Finite-range inverse transport with an explicit exponent (lines 148-162)'
+    anchor: '## S11. Finite-range inverse transport with an explicit exponent'
+    source_labels:
+    - S11
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Finite graph, bounded self-adjoint A>=a0 I, a0>0, finite range R and off-diagonal row sum B;
+      B=0 is diagonal.
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S10
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S12
+    statement: Massive Maxwell incidence gives range one, floor m^2 and row sum at most alpha(r-1)nu,
+      hence the explicit inverse exponent.
+    locator: '## S12. Massive Maxwell row sums from incidence counting (lines 163-178)'
+    anchor: '## S12. Massive Maxwell row sums from incidence counting'
+    source_labels:
+    - S12
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Signed unit incidence, r distinct entries per plaquette, overlap nu, m^2>0 and alpha>=0.
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S11
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S13
+    statement: The massive Maxwell operator reduces ker d0 star and its restricted inverse is the
+      restriction of the full inverse.
+    locator: '## S13. Cochain horizontals reduce the massive Maxwell operator (lines 179-186)'
+    anchor: '## S13. Cochain horizontals reduce the massive Maxwell operator'
+    source_labels:
+    - S13
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Finite cochain complex d1 d0=0, M=m^2 I+alpha d1 star d1 with m^2>0, alpha>=0.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S14
+    statement: The ambient zero-extension of a horizontal inverse need not obey a volume-uniform local
+      kernel bound.
+    locator: '## S14. Restriction need not preserve an ambient local kernel (lines 187-201)'
+    anchor: '## S14. Restriction need not preserve an ambient local kernel'
+    source_labels:
+    - S14
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Cycle cochain complexes with d1=0 and M=I; horizontal projection is the constant-edge projector
+      11^T/n.
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S13
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+
 - id: CITE:EARLIER_PROOF_RECOVERY
   path: docs/derivations/earlier-proof-recovery.md
   sha256: 5d306200d1456d15cc059dc327a46bfe8e835dddcb19e16be2acc18df8e07a5c
