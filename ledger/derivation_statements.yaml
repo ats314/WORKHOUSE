@@ -6,6 +6,58 @@ coverage_policy: Status and evidence describe the source argument. Only lean rec
   coverage; lean_support is explicitly partial. Empty lean means no complete registered formalization
   in this inventory, not a judgment that an analytic proof is invalid.
 documents:
+- id: CITE:W6_SYNCHRONIZED_M10_DOMINATION
+  path: docs/derivations/w6-synchronized-m10-domination.md
+  sha256: 5242ce48e1cbaf2319fe2bf320ea66106aab1e35fc44ae0a64cc43e33e71c6e4
+  statements:
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TANGENCY_DRIFT_CANCELLATION
+    statement: Along the conditional minimizer curve m(theta), the synchronized radial dilation velocity matches the curve tangent exactly, cancelling the normal linear phase drift and eliminating the g^-4 conditional variance divergence.
+    locator: '## 2. The Synchronized Radial Field S13 and Drift Cancellation (lines 31-70)'
+    anchor: '## 2. The Synchronized Radial Field S13 and Drift Cancellation'
+    source_labels:
+    - S13
+    - Theorem 1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Four-face SU(2) square, synchronized radial profiles z_0(r)=z_1(r)=r chi(4r), z_2(r)=r chi(2r), z_Q(r)=r chi(r).
+    - Minimizer curve m(theta) = (theta/4, theta/4, theta/2).
+    depends_on: []
+    lean: []
+    remaining: None. T1 invariant checks verify exact algebraic equality and failure of unsynchronized cutoffs.
+    lean_support: []
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TUBE_VARIANCE_DOMINATION
+    statement: On the conditional Agmon tube, Euler cancellation and the quadratic potential floor reduce the conditional score variance to E_tube |sigma_g - beta_g|^2 <= C0 + C1 g^-2 E(V|Q).
+    locator: '## 3. Tube Variance and Small-Angle Domination (lines 73-98)'
+    anchor: '## 3. Tube Variance and Small-Angle Domination'
+    source_labels:
+    - Lemma 2
+    - Proposition 3
+    status: conditional
+    evidence: analytic
+    hypotheses:
+    - Synchronized S13 transport, tube conditional moments E|eta|^(2j) <= c_(2j) g^(2j) for j=1,2,3.
+    - Differentiated relative amplitude |grad_eta a_g| <= c_a / g.
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TANGENCY_DRIFT_CANCELLATION
+    lean: []
+    remaining: Global validity of Helffer-Sjöstrand Dirichlet-Agmon comparison across non-caustic fibers and differentiated relative amplitude bound.
+    lean_support: []
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ANTIPODAL_SCORE_REGULARITY
+    statement: At the antipodal sphere M, the 9D Hessian has 7 normal eigenvalues >= 4(sqrt(2)-1) > 0, gauge invariance implies d sigma_g|_(TM) = 0, and the potential floor v_*(pi) = 16 - 8 sqrt(2) > 0 provides an O(g^-2) budget.
+    locator: '## 4. Antipodal Degeneration (Q -> -I) (lines 101-122)'
+    anchor: '## 4. Antipodal Degeneration (Q -> -I)'
+    source_labels:
+    - Section 4
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Unit quaternion representation, antipodal configuration Q = -I (theta = pi).
+    - Conjugation equivariance of Hamiltonian, Haar measure, and dilation operator.
+    depends_on: []
+    lean: []
+    remaining: None for magnetic spectrum, coercivity, and gauge invariance.
+    lean_support: []
 - id: CITE:WILSON_BACKGROUND
   path: docs/derivations/wilson-background-covariance-continuation.md
   sha256: 05ee05dc5acf99fabcefcd897cba340f45de94a583ea1d737a9011bb5650ec47

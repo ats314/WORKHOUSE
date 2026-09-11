@@ -10,9 +10,9 @@ it cannot drift from what the repository actually checks.
 
 ## 1. What is established
 
-**T0 — proof-checked.** 439 Lean theorems, 0 `sorry`.
+**T0 — proof-checked.** 431 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 621/621 checks pass.
+**T1/T2 — re-derived here.** 597/597 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -51,8 +51,6 @@ it cannot drift from what the repository actually checks.
 | the third engine at every rank (all-rank cumulants) | 12/12 |
 | the T1 triplet at Gamma and the uniform isolation of the flat band | 7/7 |
 | the third engine over Q(N): closed forms derived, the degree bound | 10/10 |
-| the planar limit of the fourth-order band (G16) | 5/5 |
-| the odd orders of the band are determinant families (G16) | 7/7 |
 | private-link paths as single links; universality history by history | 6/6 |
 | the Wilson transfer matrix at finite temporal step | 3/3 |
 | the blocked Wilson transfer: spectral block, cluster margin, source moments | 3/3 |
@@ -71,8 +69,6 @@ it cannot drift from what the repository actually checks.
 | the Feshbach channel of the plaquette Hodge algebra | 10/10 |
 | the Feshbach resolvent comparison | 5/5 |
 | Yang-Mills source extraction: reconstruction and localization | 5/5 |
-| Moving-time spectral gap: exact budgets and falsifiers | 4/4 |
-| OS kernel gap: reconstruction and nontriviality controls | 5/5 |
 | Yang-Mills flat directions: exact finite-dimensional algebra | 9/9 |
 | Yang-Mills ground-state transform and residual certificates (G20, G23) | 11/11 |
 | Wilson marked expansion: exact blocks and uniform bound algebra | 12/12 |
@@ -91,8 +87,7 @@ it cannot drift from what the repository actually checks.
 | W6 antipodal conditional magnetic geometry | 7/7 |
 | dimension counts and geometric scaling controls (G19) | 5/5 |
 | G9 sixth-order folds and combined carrier shapes | 6/6 |
-| universal cellular Hodge and tetrahedral algebra | 5/5 |
-| G9 direct sixth order on one face and the shared-link pairs, any rank | 3/3 |
+| W6 synchronized M10 conditional score | 5/5 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
@@ -275,9 +270,9 @@ settles nothing is excluded however cheap it looks.
   - routes dead: Infer an unrestricted exponential-source radius from independent bounded sources
 - `G19` (unbounded) Continuum limit — settles load-bearing
   - The actual infinite-volume Wilson construction and complete physical source band are now established at fixed spatial spacing on a common small-u interval. A controlled scale trajectory connecting it to large u, renormalized continuum correlations and a positive physical mass gap remain open. Borel-Pade consistency is not that trajectory.
-  - routes live: Prove the actual conditional-score domination M10; Control the interacting quantum comparison in redundant compact coarse variables; Bound the nonlinear excess above the exact quadratic memory on complete physical source windows; Transport the endpoint and localized true-ground estimates through actual interacting scale blocks; Connect the actual Wilson fixed-scale construction to a controlled continuum trajectory; Control the true interacting Wilson score and forms on the relevant energy space; prove actual interacting W6 and coarse/source matching through spatial refinement; supply the dimension-five irrelevance lemma, then close the coupling window between the two constructions; Extend the explicit square current to the complete finite-coupling residual; Transfer a physical continuum gap from one growing-time estimate per cutoff and approximate sources
+  - routes live: Prove the actual conditional-score domination M10; Control the interacting quantum comparison in redundant compact coarse variables; Bound the nonlinear excess above the exact quadratic memory on complete physical source windows; Transport the endpoint and localized true-ground estimates through actual interacting scale blocks; Connect the actual Wilson fixed-scale construction to a controlled continuum trajectory; Control the true interacting Wilson score and forms on the relevant energy space; prove actual interacting W6 and coarse/source matching through spatial refinement; supply the dimension-five irrelevance lemma, then close the coupling window between the two constructions; Extend the explicit square current to the complete finite-coupling residual
   - routes untried: Control complete source-vacuum transport energy jets R10; Establish the actual interacting-grid fast and source comparison with uniform constants; Bound the complete signed SC17 conditional defect in the actual vacuum; Prove normalized RG and source increments with a summable common-space remainder
-  - routes done: Derive the actual conditional continuity score and locate the constrained Agmon centers; Synchronize compact radial dilation with the actual conditional minimum curve; Resolve the antipodal conditional magnetic normal geometry; Control time-integrated conditional cubic energy with retained-mean localization; Identify the actual nonreducing Gaussian fast inverse with its energy prior; Resolve the unlocalized local harmonic cubic exchange target; Keep the exact quadratic endpoint and its complete low-frequency source normalization; Control the entire conditioned quantum Gaussian fiber at each fixed block scale; Determine the first actual Wilson ground and chosen-chart source correction; Extend the actual path-source fast bound over every flat holonomy; Realize the uniform transverse harmonic source as an actual local covariant path observation; Compare the complete actual endpoint spectrum with all retained source directions included; Establish actual local true-ground score loss on complete additive selected source charts; Identify the true-vacuum literal coarse form and additive physical fast space; Lift the full harmonic boundary inequality to the entire Gaussian quantum fast form; Establish the actual two-face vertical, coarse and full-vacuum complementary forms; Retain planar and periodic three-dimensional harmonic interfaces while isolating box-scale fast modes; Derive an energy comparison that retains arbitrary cross coupling and the induced norm; construct actual discrete-time Wilson blocks and cancel disconnected vacuum factors at a fixed observable; control the complete marked shell and onto literal source frame at fixed spatial spacing; sum temporal Wilson matching and transport the carrier with its specified observable overlap; assemble the full spatial Schur excess, second Wilson and source jets and accumulated physical-clock budget; replace the failed global fast-form comparison by an admissible selected-resolvent Schur identity; reconcile the broader G19 corpus and derive the flat reference and Cauchy repair inputs; audit the GPU and Lean closure claims against their actual operators and hypotheses; Construct the complete first residual current for the fixed twelve-edge square; Derive the compatible-kernel reconstruction and moving-time full-space implication
+  - routes done: Derive the actual conditional continuity score and locate the constrained Agmon centers; Synchronize compact radial dilation with the actual conditional minimum curve; Resolve the antipodal conditional magnetic normal geometry; Control time-integrated conditional cubic energy with retained-mean localization; Identify the actual nonreducing Gaussian fast inverse with its energy prior; Resolve the unlocalized local harmonic cubic exchange target; Keep the exact quadratic endpoint and its complete low-frequency source normalization; Control the entire conditioned quantum Gaussian fiber at each fixed block scale; Determine the first actual Wilson ground and chosen-chart source correction; Extend the actual path-source fast bound over every flat holonomy; Realize the uniform transverse harmonic source as an actual local covariant path observation; Compare the complete actual endpoint spectrum with all retained source directions included; Establish actual local true-ground score loss on complete additive selected source charts; Identify the true-vacuum literal coarse form and additive physical fast space; Lift the full harmonic boundary inequality to the entire Gaussian quantum fast form; Establish the actual two-face vertical, coarse and full-vacuum complementary forms; Retain planar and periodic three-dimensional harmonic interfaces while isolating box-scale fast modes; Derive an energy comparison that retains arbitrary cross coupling and the induced norm; construct actual discrete-time Wilson blocks and cancel disconnected vacuum factors at a fixed observable; control the complete marked shell and onto literal source frame at fixed spatial spacing; sum temporal Wilson matching and transport the carrier with its specified observable overlap; assemble the full spatial Schur excess, second Wilson and source jets and accumulated physical-clock budget; replace the failed global fast-form comparison by an admissible selected-resolvent Schur identity; reconcile the broader G19 corpus and derive the flat reference and Cauchy repair inputs; audit the GPU and Lean closure claims against their actual operators and hypotheses; Construct the complete first residual current for the fixed twelve-edge square
   - routes dead: Infer actual uniform M10 from the endpoint requirements on arbitrary Q8 cutoffs; Differentiate a global fixed-rank physical Coulomb source projection across flat holonomies; Bound the global true-ground Fisher matrix by C0+C1 sqrt(u)v(U); Infer a scale contraction from the forward averaging derivative and a uniform raw fiber diffusion gap; Griffiths-type monotonicity of the electric-flux sector free energies in beta; compare the whole compact Wilson fast form from above by a Gaussian form after finite-rank retention; infer a regulator-uniform scalar single-site angle margin from the full square-root Gaussian precision
 
 ## 7b. What published work bears on this
@@ -604,7 +599,7 @@ falsifier is an analogy, and analogies do not belong on this list.
 
 **U3 — The two vanishings in this corpus are one mechanism. The cubic shape tier collapses (B_shp = D_shp = 0) even though the carrier projection makes a-degree 3 reachable, and all 28 proper-return pentagonal histories vanish individually after exact Q projection. Both are "reachable by degree count, zero after projection off the retained sector", in two unrelated geometries. Candidate: the vanishing is a property of the Feshbach Q projection rather than of either geometry.**
 
-- supported by: UNIFIED §5.1, UNIFIED §9.3, G14, ADR 0005, RESULT:UNIVERSAL_CELLULAR_HODGE_SPECTRUM, RESULT:TETRAHEDRAL_S4_COMMUTANT_RESOLUTION, RESULT:TETRAHEDRAL_FLUX_PROJECTION_BOUNDARY
+- supported by: UNIFIED §5.1, UNIFIED §9.3, G14, ADR 0005
 - would be falsified by: A geometry where the Q-projected proper-return contributions vanish while the shape tier does NOT collapse, or the reverse. If the two are one mechanism they must stand or fall together; exhibiting one without the other refutes the identification and leaves two coincidences.
 - status: conjectured
 
@@ -633,7 +628,7 @@ Historical rho + pi~ = -17607806155349/2202655210329600 (2*X_QUANTUM above the e
 
 **U7 — If the retained line spans ker L_down and its carrier psi is an L_up eigenvector, every word in the two Hodge generators acts scalarly on that line and has zero off-carrier coupling. This does not forbid momentum-dependent scalar dispersion. The further proposal that this mechanism explains every projection vanishing in the corpus remains a cross-geometry conjecture. On the cubic lattice the actual H4 support {I,U,S,S^2,R} proves B=D=0; R-degree one alone does not, as sigma(UR)=-2 q e_2 shows. Proper-return identification in the pentagonal and tetrahedral problems remains separate.**
 
-- supported by: CITE:HODGE_FESHBACH_CHANNEL, CITE:HODGE_FESHBACH, RESULT:HODGE_FESHBACH_SPLITTING, RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT, G14, U3, RESULT:UNIVERSAL_CELLULAR_HODGE_SPECTRUM, RESULT:TETRAHEDRAL_S4_COMMUTANT_RESOLUTION, RESULT:TETRAHEDRAL_FLUX_PROJECTION_BOUNDARY, RESULT:RSM_R_CARRIER_SYMBOL_MASTER_THEOREM
+- supported by: CITE:HODGE_FESHBACH_CHANNEL, CITE:HODGE_FESHBACH, RESULT:HODGE_FESHBACH_SPLITTING, RESULT:TIER_COLLAPSE_ACTUAL_H4_SUPPORT, G14, U3
 - would be falsified by: The carrier-scalar lemma is tested against its actual kernel/eigenvector hypotheses. To refute the broader explanatory proposal, exhibit a particular proposed projection vanishing that is not generated by those Hodge words, or a purported proper-return history whose required Hodge-word identification fails. A scalar total Laplacian is not required: the pentagonal prism already excludes that unnecessary premise. The exact UR counterexample has already refuted the R-degree-only cubic subclaim.
 - status: conjectured
 
