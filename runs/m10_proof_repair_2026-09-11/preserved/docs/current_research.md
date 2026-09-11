@@ -1,7 +1,5 @@
 # Current research map
 
-The [M10 proof repair](derivations/w6-synchronized-m10-domination.md) establishes a uniform action gap outside a neighborhood of the complete minimizing set and an exact angular reference-score budget. Actual M10 remains open: parameter-differentiated amplitudes, actual normal/angular comparison and normalized complements still require estimates. The earlier completion claim is preserved and corrected.
-
 Maintained guide, reconciled with the source and statement ledgers on **10 September
 2026**. The workspace reconciliation and source-linked analytic formalization
 were merged in [PR #113](https://github.com/ats314/WORKHOUSE/pull/113), merge
@@ -17,16 +15,6 @@ statement into a reviewed Lean proof and graph relationship. The
 hashes, section locators, dependencies, whole-statement proofs, scoped ingredients
 and remaining formalization. Counts belong there and in the generated
 [frontier](../FRONTIER.md), not in another manually maintained total.
-
-
-The [G19 compatible-kernel continuation](derivations/os-kernel-moving-time-gap.md)
-constructs a physical semigroup and total centered history space from
-compatible kernel limits; positive-time history separation supplies the
-needed continuity. One growing-time
-estimate then gives the limiting full-space gap, and one positive
-separated-time correlator gives finite-energy weight. The actual Wilson
-kernel limits, weak-coupling decay rate and nontriviality remain open;
-the fixed-spacing SC17 interval does not contain the continuum trajectory.
 
 ## Read the current claim at its own scope
 
@@ -127,12 +115,6 @@ recorded third-order factorization. Direct multi-plaquette H6 word coefficients,
 including the q e2/e3 terms, remain open. The earlier walk census does not
 establish a physical RUR amplitude.
 
-The [moving-time gap criterion](derivations/moving-time-spectral-gap.md)
-proves a limiting spectral gap from approximate sources and one growing physical
-observation time per cutoff. Its sharp power-law budget retains source-amplitude
-and finite-horizon losses. Actual continuum measures, source totality and the
-Wilson one-time estimates remain explicit application hypotheses.
-
 ## Select the kind of work before proceeding
 
 | Kind of obligation | Where to read it | What discharges it |
@@ -228,43 +210,6 @@ blocker and verification performed. Preserve analytic status, machine tier,
 source provenance and publication state as separate facts. Follow the
 [formalization workflow](formalization_workflow.md) for edits to proof mappings;
 do not hand-edit the generated proof map, frontier, certified view or graph.
-
-## The strong-coupling band at large rank
-
-On 2026-09-11 ([ADR 0046](decisions/0046-the-fourth-order-band-is-planar-suppressed-two-orders-below-its-channels.md),
-[run](../runs/planar_band_2026-09-11/README.md), suite "the planar limit of the
-fourth-order band (G16)") the exact rational functions of N behind the
-fourth-order band were expanded at large N. Every fourth-order cumulant of the
-β_N assembly is O(N⁻⁷) in both C-parity sectors although its resolvent channels
-are O(N⁻³): the N⁻³ and N⁻⁵ channel totals vanish identically in all sixteen
-cluster/sector pairs. With the second-order hop (`A_N, B_N = −1/N + …`,
-`t_N = 1/(4N³) + …`) the order-2k coefficient scales as N⁻⁽⁴ᵏ⁻¹⁾ for k = 1, 2,
-so relative to the plaquette energy the band is a series in τ² = (β/N³)² with
-N-independent limits: `W₂/(2C_F) = (3/4)τ²`, `W₄/W₂ = (5965/54)τ²`. The planar
-`β_N → 6170/9` is the adjacent-face cube completion 848 with the corner removing
-a quarter. This is the strong-coupling side of G16 made exact through fourth
-order; the overlap theorem G16 asks for remains open, and the N⁻⁽⁴ᵏ⁻¹⁾ law
-beyond k = 2 is a conjecture for the sixth-order clusters of G9.
-
-## The odd orders of the band
-
-On 2026-09-11 ([ADR 0047](decisions/0047-the-odd-orders-of-the-band-are-determinant-families.md),
-[note](../paper/research_notes/ODD_ORDER_CENTRE_PARITY_20260911.md),
-[run](../runs/odd_order_band_2026-09-11/README.md), suite "the odd orders of the
-band are determinant families (G16)", `RESULT:ODD_ORDER_CENTRE_PARITY`) the odd
-orders of the strong-coupling band were shown to be determinant families. A
-link set meeting every plaquette an odd number of times turns the centre
-constraint of the Haar integral into a parity count of face words: for even N
-every odd-order element of the effective operator vanishes identically at every
-order, and for odd N nothing survives below order N − 2, where the only term is
-the one-plaquette vertex `−(N/(N+1))^{N−3}/((N−3)!)²` (−1 at N = 3, the
-first-order `+u`; −25/144 at N = 5). The third-order des Cloizeaux operator,
-built in the third engine for the first time, reproduces the entire SU(3) third
-order (`B_3`, `t_3+`, `leak_3`, `d_3`, both domino diagonals, the vacuum route
-−9/32), is zero at N = 4, 6, 7, gives ±25/144 at N = 5, and is identically zero
-over ℚ(N). The τ-series of ADR 0046 therefore has no odd terms in the planar
-limit at any fixed order. The even orders' N⁻⁽⁴ᵏ⁻¹⁾ law and the overlap theorem
-of G16 are untouched.
 
 ## Dated route history
 
@@ -424,23 +369,6 @@ carrier. A scalar total Laplacian is unnecessary: the prism sum is
 scalar lemma while its proposed explanation of all projection vanishings
 remains conjectured. The checks do not compute the other cells' proper-return
 or Q-projected histories; that identification remains a separate U3/G14 route.
-
-The [September 11 cellular continuation](derivations/universal-cellular-hodge-tetrahedral.md)
-proves the incidence statements for unweighted regular cellular sphere
-boundaries and computes the tetrahedral commutant from all permutation
-constraints. Its shifted operator is `S=L_down-4I`. The all-power identity
-`R S^m R=(q-4)^m R^2-Pi_m(q) RUR` now has a Lean operator proof under `U^2=qU`,
-with the Laurent carrier evaluations checked separately. The polynomial
-recurrence is defined at q=0 and gives `Pi4=q^3-16q^2+96q-256`.
-
-The submitted 60/36 tetrahedral flux partition does not construct projected
-physical histories: its face projector has `Q e0=(3,-1,-1,-1)/4`, not zero.
-`RESULT:TETRAHEDRAL_FLUX_PROJECTION_BOUNDARY` records this exact missing
-identification. The desired physical vanishing remains open, and U3/U7
-retain conjectured status with their established ingredients. Complete
-source-to-proof links cover the rank-one and abstract operator statements;
-cellular construction, S4 representation, and Laurent realization have
-explicitly scoped support.
 
 ## The Feshbach resolvent comparison
 

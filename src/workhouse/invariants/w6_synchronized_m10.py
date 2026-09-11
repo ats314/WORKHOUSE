@@ -1,14 +1,7 @@
-"""Exact symbolic invariants for W6 synchronized M10 conditional score domination.
+"""Exact ingredients and obstruction witnesses for the conditional M10 route.
 
-Guards:
-1. Exact tangency of the S13 synchronized radial profile along the conditional minimizer curve.
-2. Failure of the unsynchronized identical cutoff field (non-zero linear phase drift).
-3. Euler dilation cancellation at q = 0.
-4. Reduction of tube variance to quadratic potential floor.
-5. Antipodal gauge invariance of the ground state score on the minimizing sphere.
-6. WKB differentiated amplitude gradient scaling |nabla_eta a_g| <= c_a / g.
-7. Exact cancellation of Psi_g denominator in the score variance integrand.
-8. Transverse Agmon coercivity and positive potential floor.
+No check here certifies the actual quantum all-fiber estimate. Analytic
+implications and outstanding model identifications are stated in the source.
 """
 
 from __future__ import annotations
@@ -21,137 +14,160 @@ synchronized_m10 = _suite("W6 synchronized M10 conditional score")
 CITE = "W6_SYNCHRONIZED_M10_DOMINATION"
 
 
-@synchronized_m10.check(
-    "W6 synchronized: exact tangency eliminates linear phase drift",
-    CITE + " Section 2",
-)
+@synchronized_m10.check("W6 synchronized: exact center tangency identity", CITE + " Section 2")
 def check_synchronized_tangency():
     theta = sp.Symbol("theta", real=True)
     chi = sp.Function("chi")
-    z0 = (theta / 4) * chi(4 * (theta / 4))
-    z1 = (theta / 4) * chi(4 * (theta / 4))
-    z2 = (theta / 2) * chi(2 * (theta / 2))
-    zQ = theta * chi(theta)
-    Zy = sp.Matrix([z0, z1, z2])
-    Dm = sp.Matrix([sp.Rational(1, 4), sp.Rational(1, 4), sp.Rational(1, 2)])
-    drift = sp.simplify(Zy - Dm * zQ)
-    passed = all(entry == 0 for entry in drift)
-    return passed, f"Zy - Dm ZQ = {list(drift)}"
+    scales = (sp.Integer(4), sp.Integer(4), sp.Integer(2))
+    drift = [sp.simplify(theta / k * chi(k * theta / k) - theta * chi(theta) / k) for k in scales]
+    return all(v == 0 for v in drift), f"Zy-Dm ZQ={drift}; phase implication needs a smooth phase."
 
 
 @synchronized_m10.check(
-    "W6 synchronized: unsynchronized identical cutoff has non-zero drift",
-    CITE + " Section 2",
+    "W6 synchronized: identical cutoffs need not be tangent", CITE + " Section 2"
 )
 def check_unsynchronized_failure():
-    theta = sp.Symbol("theta", real=True)
-    chi = sp.Function("chi")
-    Zy_failed = sp.Matrix([
-        (theta / 4) * chi(theta / 4),
-        (theta / 4) * chi(theta / 4),
-        (theta / 2) * chi(theta / 2),
-    ])
-    Dm = sp.Matrix([sp.Rational(1, 4), sp.Rational(1, 4), sp.Rational(1, 2)])
-    zQ = theta * chi(theta)
-    drift = sp.simplify(Zy_failed - Dm * zQ)
-    passed = any(entry != 0 for entry in drift)
-    return passed, f"Failed drift = {list(drift)}"
+    # One explicit profile value witness; no assertion that every cutoff fails.
+    theta = sp.Integer(1)
+
+    def chi(t):
+        return 1 - t**2
+
+    drift = [sp.simplify(theta * (chi(theta / k) - chi(theta)) / k) for k in (4, 4, 2)]
+    return any(v != 0 for v in drift), f"Polynomial profile witness: {drift}."
 
 
 @synchronized_m10.check(
-    "W6 synchronized: Euler dilation cancellation at q=0",
-    CITE + " Section 3",
+    "W6 synchronized: Euler cancellation of any quadratic jet", CITE + " Section 3"
 )
 def check_euler_cancellation():
-    x1, x2, x3 = sp.symbols("x1 x2 x3", real=True)
-    x = sp.Matrix([x1, x2, x3])
-    M = sp.Matrix([[2, 1, 0], [1, 3, 1], [0, 1, 4]])
-    S = sp.Rational(1, 2) * (x.T * M * x)[0]
-    ZS = sum(x[i] * sp.diff(S, x[i]) for i in range(3))
-    F = sp.simplify(2 * S - ZS)
-    hessian_F = sp.Matrix([[sp.diff(F, xi, xj) for xj in x] for xi in x])
-    passed = (F == 0) and all(entry == 0 for entry in hessian_F)
-    return passed, f"F = {F}, Hess(F) = 0"
+    x = sp.Matrix(sp.symbols("x0:3"))
+    a, b, c, d, e, f = sp.symbols("a b c d e f")
+    matrix = sp.Matrix([[a, b, c], [b, d, e], [c, e, f]])
+    phase_jet = (x.T * matrix * x)[0] / 2
+    defect = sp.expand(2 * phase_jet - sum(xi * sp.diff(phase_jet, xi) for xi in x))
+    return (
+        defect == 0,
+        "Euler identity for a general quadratic jet; higher phase terms are retained.",
+    )
 
 
 @synchronized_m10.check(
-    "W6 synchronized: tube variance reduces to quadratic potential floor",
-    CITE + " Section 3",
+    "W6 synchronized: sine-square potential-floor identity", CITE + " Section 3"
 )
-def check_tube_variance_reduction():
-    t = sp.Symbol("t", real=True)
-    min_ratio = sp.limit(16 * (1 - sp.cos(t / 4)) / t**2, t, 0)
-    antipodal_ratio = (16 * (1 - sp.cos(sp.pi / 4))) / sp.pi**2
-    lower_bound = 2 / sp.pi**2
-    passed = bool(antipodal_ratio > lower_bound) and bool(min_ratio == sp.Rational(1, 2))
-    detail = f"min_ratio={min_ratio}, antipodal_ratio={float(antipodal_ratio):.4f} > {float(lower_bound):.4f}"
-    return passed, detail
+def check_potential_floor_identity():
+    t = sp.Symbol("theta", real=True)
+    potential = 16 * (1 - sp.cos(t / 4))
+    defect = sp.trigsimp(potential - 32 * sp.sin(t / 8) ** 2)
+    coefficient = sp.simplify(32 * (2 / (8 * sp.pi)) ** 2)
+    return defect == 0 and coefficient == 2 / sp.pi**2, (
+        "v=32 sin^2(theta/8); concavity sin(x)>=2x/pi supplies the analytic interval bound."
+    )
 
 
 @synchronized_m10.check(
-    "W6 synchronized: antipodal spectrum and gauge score invariance",
-    CITE + " Section 4",
+    "W6 synchronized: logarithmic-parameter amplitude identity", CITE + " Section 5"
 )
-def check_antipodal_gauge_and_spectrum():
-    C = sp.sqrt(2) / 2
-    min_normal = sp.simplify((8 - 4 * sp.sqrt(2)) * C)
-    zero_eig = sp.simplify(8 * C - 4 * sp.sqrt(2))
-    passed = (zero_eig == 0) and (min_normal > 0)
-    detail = f"zero_eig={zero_eig}, min_normal={min_normal} = {float(min_normal):.4f}"
-    return passed, detail
+def check_log_parameter_amplitude():
+    g, h, eta = sp.symbols("g h eta", positive=True)
+    ell = sp.Function("ell")(eta, h)
+    z, div = sp.Function("z")(eta), sp.Function("div")(eta)
+    amplitude_score = 2 * g * sp.diff(ell, h) + (z * sp.diff(ell, eta) + div / 2 - 6) / g
+    lhs = (g * sp.diff(amplitude_score, eta)).subs(g**2, h)
+    rhs = 2 * h * sp.diff(ell, eta, h) + sp.diff(z * sp.diff(ell, eta) + div / 2, eta)
+    return sp.simplify(lhs - rhs) == 0, (
+        "g grad(a_g)=2 grad(h partial_h log A)+grad(Z log A+div Z/2). "
+        "Uniform bounds for the actual amplitude remain hypotheses."
+    )
+
+
+def remainder_witness():
+    g, eta = sp.symbols("g eta", positive=True)
+    amplitude = 1 + eta * g**4 * sp.sin(g**-6)
+    score = sp.diff(sp.log(amplitude), g) + eta * sp.diff(sp.log(amplitude), eta) / g
+    return g, sp.simplify(sp.diff(score, eta).subs(eta, 0))
 
 
 @synchronized_m10.check(
-    "W6 synchronized: WKB amplitude gradient scaling",
-    CITE + " Section 5",
+    "W6 synchronized: spatial remainder does not control parameter derivative", CITE + " Section 5"
 )
-def check_wkb_amplitude_gradient():
-    g = sp.Symbol("g", positive=True)
-    eta = sp.Symbol("eta", real=True)
-    a0 = sp.Function("a0")(eta)
-    a1 = sp.Function("a1")(eta)
-    div_Z = sp.Function("div_Z")(eta)
-    Z_val = sp.Function("Z_val")(eta)
-    log_A = sp.log(a0) + g**2 * (a1 / a0)
-    d_g_log_A = sp.diff(log_A, g)
-    inv_g_Z_log_A = (1 / g) * (Z_val * sp.diff(log_A, eta))
-    inv_g_div = (1 / (2 * g)) * div_Z
-    a_g = d_g_log_A + inv_g_Z_log_A + inv_g_div - 6 / g
-    d_eta_a_g = sp.diff(a_g, eta)
-    g_times_grad = sp.simplify(g * d_eta_a_g)
-    leading = g_times_grad.subs(g, 0)
-    expected_leading = sp.diff(Z_val * sp.diff(sp.log(a0), eta) + div_Z / 2, eta)
-    g2_times_grad = sp.simplify(g**2 * d_eta_a_g).subs(g, 0)
-    passed = (sp.simplify(leading - expected_leading) == 0) and (g2_times_grad == 0)
-    return passed, f"leading={leading}, g2_order={g2_times_grad}"
+def check_remainder_obstruction():
+    g, actual = remainder_witness()
+    expected = 5 * g**3 * sp.sin(g**-6) - 6 * g**-3 * sp.cos(g**-6)
+    return sp.simplify(actual - expected) == 0, (
+        "For A=1+eta*g^4*sin(g^-6), gradient=5g^3 sin(g^-6)-6g^-3 cos(g^-6). "
+        "At g=(2pi n)^(-1/6), g*gradient=-6/g^2: no O(1/g) bound. "
+        "Counterexample to a remainder inference, not to the Wilson ground."
+    )
 
 
 @synchronized_m10.check(
-    "W6 synchronized: score variance denominator cancellation",
-    CITE + " Section 6",
+    "W6 synchronized: centered numerator retains fiber normalization", CITE + " Section 6"
 )
 def check_score_variance_denominator():
-    Psi = sp.Symbol("Psi", positive=True)
-    d_Psi = sp.Symbol("d_Psi", real=True)
-    D_Psi = sp.Symbol("D_Psi", real=True)
-    g = sp.Symbol("g", positive=True)
-    h_Q = sp.Symbol("h_Q", positive=True)
-    sigma_g = (d_Psi + D_Psi / g) / Psi
-    p_g = Psi**2 / h_Q
-    integrand = sp.simplify(sigma_g**2 * p_g)
-    expected = (d_Psi + D_Psi / g)**2 / h_Q
-    passed = sp.simplify(integrand - expected) == 0
-    return passed, f"integrand = {integrand}"
+    psi, hq = sp.symbols("psi h_Q", positive=True)
+    numerator, beta = sp.symbols("N beta", real=True)
+    actual = (numerator / psi - beta) ** 2 * psi**2 / hq
+    expected = (numerator - beta * psi) ** 2 / hq
+    return sp.simplify(
+        actual - expected
+    ) == 0, "Centered integrand=(N-beta*Psi)^2/h_Q; h_Q remains."
 
 
 @synchronized_m10.check(
-    "W6 synchronized: transverse Agmon gap and potential floor",
-    CITE + " Section 6",
+    "W6 synchronized: positive potential Hessian is not an action Hessian", CITE + " Section 6"
 )
-def check_agmon_gap_and_floor():
-    lambda_normal_min = 4 * (sp.sqrt(2) - 1)
-    v_pi = 16 * (1 - sp.cos(sp.pi / 4))
-    expected_v_pi = 16 - 8 * sp.sqrt(2)
-    passed = (lambda_normal_min > sp.Rational(165, 100)) and (v_pi == expected_v_pi) and (v_pi > 4)
-    detail = f"lambda_min={float(lambda_normal_min):.4f}, v_pi={float(v_pi):.4f}"
-    return passed, detail
+def check_hessian_distinction():
+    x = sp.Symbol("x", real=True)
+    potential, action = 2 * x**2, x**2
+    eikonal = sp.diff(action, x) ** 2 / 2 - potential
+    claimed_gap_defect = action - sp.diff(potential, x, 2) * x**2 / 2
+    return sp.expand(eikonal) == 0 and sp.expand(claimed_gap_defect) == -(x**2), (
+        "V=2x^2, S=x^2 solve |S'|^2/2=V; Hess V=4, Hess S=2. "
+        "The asserted magnetic-Hessian action-gap constant fails even here."
+    )
+
+
+def angular_moments():
+    """Exact moments of x=lambda*(1-t); density proportional to exp(-x)."""
+    x, length = sp.symbols("x L", positive=True)
+    integrals = [sp.integrate(x**j * sp.exp(-x), (x, 0, length)) for j in range(3)]
+    return length, [sp.simplify(v / integrals[0]) for v in integrals]
+
+
+@synchronized_m10.check("W6 synchronized: exact angular crossover moments", CITE + " Section 4")
+def check_angular_moments():
+    length, moments = angular_moments()
+    expected = [
+        1,
+        1 - length / (sp.exp(length) - 1),
+        2 - (length**2 + 2 * length) / (sp.exp(length) - 1),
+    ]
+    return all(sp.simplify(a - b) == 0 for a, b in zip(moments, expected, strict=True)), (
+        "For L=2lambda>0: E[x]=1-L/(exp(L)-1)<=1; "
+        "E[x^2]=2-(L^2+2L)/(exp(L)-1)<=2. Reference angular law only."
+    )
+
+
+@synchronized_m10.check("W6 synchronized: angular crossover endpoint limits", CITE + " Section 4")
+def check_angular_limits():
+    length, moments = angular_moments()
+    zero = [sp.limit(v, length, 0, dir="+") for v in moments[1:]]
+    large = [sp.limit(v, length, sp.oo) for v in moments[1:]]
+    return zero == [0, 0] and large == [1, 2], f"Moment limits: L->0 {zero}; L->infinity {large}."
+
+
+@synchronized_m10.check("W6 synchronized: seven-normal reference score budget", CITE + " Section 4")
+def check_normal_angular_budget():
+    x = sp.Symbol("x", real=True)
+    mass = sp.integrate(sp.exp(-(x**2)), (x, -sp.oo, sp.oo))
+    second = sp.integrate(x**2 * sp.exp(-(x**2)), (x, -sp.oo, sp.oo)) / mass
+    fourth = sp.integrate(x**4 * sp.exp(-(x**2)), (x, -sp.oo, sp.oo)) / mass
+    k = 7
+    radial_second = k * fourth + k * (k - 1) * second**2
+    budget = radial_second + 2 * (k * second) * 1 + 2
+    return budget == sp.Rational(99, 4), (
+        "Independent seven-normal Gaussian plus truncated-exponential angle: "
+        "E[(|z|^2/g^2+lambda(1-t))^2]<=99/4 for every lambda>=0. "
+        "Actual-law comparison and score error must still be supplied."
+    )

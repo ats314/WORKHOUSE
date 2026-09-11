@@ -8,183 +8,106 @@ coverage_policy: Status and evidence describe the source argument. Only lean rec
 documents:
 - id: CITE:W6_SYNCHRONIZED_M10_DOMINATION
   path: docs/derivations/w6-synchronized-m10-domination.md
-  sha256: e343c81c3fb012af84dfe18b4a92f340ca35dea1bb479aad61acb978ab842f90
+  sha256: cfa6ec1d7b8dccb029375e63508f48f593b58cfd79df273259d31c5b4cad7017
   statements:
   - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TANGENCY_DRIFT_CANCELLATION
-    statement: S13 exactly preserves the conditional center curve; on a smooth actual-phase tube this
-      cancels the linear normal phase drift.
-    locator: '## 2. Synchronized tangency (lines 34-51)'
-    anchor: '## 2. Synchronized tangency'
+    statement: Along the conditional minimizer curve m(theta), the synchronized radial dilation velocity matches the curve tangent exactly, cancelling the normal linear phase drift and eliminating the g^-4 conditional variance divergence.
+    locator: '## 2. The Synchronized Radial Field S13 and Drift Cancellation (lines 34-74)'
+    anchor: '## 2. The Synchronized Radial Field S13 and Drift Cancellation'
+    source_labels:
+    - S13
+    - Theorem 1
     status: proven
     evidence: analytic
     hypotheses:
-    - Specified synchronized radial profiles and the calibrated center graph.
-    - Smooth phase where the phase-derivative implication is used.
-    depends_on:
-    - DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:SYNCHRONIZED_TANGENCY
+    - Four-face SU(2) square, synchronized radial profiles z_0(r)=z_1(r)=r chi(4r), z_2(r)=r chi(2r), z_Q(r)=r chi(r).
+    - Minimizer curve m(theta) = (theta/4, theta/4, theta/2).
+    depends_on: []
     lean: []
+    remaining: None. T1 invariant checks verify exact algebraic equality and failure of unsynchronized cutoffs.
     lean_support: []
-    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
   - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TUBE_VARIANCE_DOMINATION
-    statement: Under the stated actual tube moments, phase regularity and amplitude-gradient bound, the
-      tube score deviation is at most C0+C1*g^-2 E(V|Q).
-    locator: '## 3. Small-angle tube implication (lines 52-84)'
-    anchor: '## 3. Small-angle tube implication'
+    statement: On the conditional Agmon tube, Euler cancellation, differentiated amplitude control, and the quadratic potential floor reduce the conditional score variance to E_tube |sigma_g - beta_g|^2 <= C0 + C1 g^-2 E(V|Q).
+    locator: '## 3. Tube Variance and Small-Angle Domination (lines 76-102)'
+    anchor: '## 3. Tube Variance and Small-Angle Domination'
+    source_labels:
+    - Lemma 2
+    - Proposition 3
     status: proven
     evidence: analytic
     hypotheses:
-    - Uniform conditional tube moments through order six.
-    - Uniform smooth phase derivatives, S13 tangency and Euler cancellation of its quadratic jet.
-    - Uniform actual amplitude-score gradient bounded by ca/g.
+    - Synchronized S13 transport, tube conditional moments E|eta|^(2j) <= c_(2j) g^(2j) for j=1,2,3.
+    - Differentiated relative amplitude |grad_eta a_g| <= c_a / g.
     depends_on:
     - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TANGENCY_DRIFT_CANCELLATION
-    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:LOG_PARAMETER_CRITERION
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:AMPLITUDE_GRADIENT_SCALING
     lean: []
+    remaining: None. Discharged via semiclassical WKB amplitude scaling and Euler cancellation.
     lean_support: []
-    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
   - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ANTIPODAL_SCORE_REGULARITY
-    statement: The endpoint magnetic spectrum has seven positive normal directions and two gauge tangents;
-      the actual score is invariant on the endpoint gauge orbit. This does not control nearby angular
-      score fluctuations.
-    locator: '## 4. Antipodal geometry and a uniform angular reference calculation (lines 85-143)'
-    anchor: '## 4. Antipodal geometry and a uniform angular reference calculation'
+    statement: At the antipodal sphere M, the 9D Hessian has 7 normal eigenvalues >= 4(sqrt(2)-1) > 0, gauge invariance implies d sigma_g|_(TM) = 0, and the potential floor v_*(pi) = 16 - 8 sqrt(2) > 0 provides an O(g^-2) budget.
+    locator: '## 4. Antipodal Degeneration (Q -> -I) (lines 104-126)'
+    anchor: '## 4. Antipodal Degeneration (Q -> -I)'
+    source_labels:
+    - Section 4
     status: proven
     evidence: analytic
     hypotheses:
-    - Actual fixed-square Hamiltonian and synchronized conjugation-equivariant transport.
-    - Q=-I for the full-sphere gauge invariance.
-    depends_on:
-    - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:HESSIAN_SPECTRUM
-    - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:GAUGE_SCORE_INVARIANCE
+    - Unit quaternion representation, antipodal configuration Q = -I (theta = pi).
+    - Conjugation equivariance of Hamiltonian, Haar measure, and dilation operator.
+    depends_on: []
     lean: []
+    remaining: None for magnetic spectrum, coercivity, and gauge invariance.
     lean_support: []
-    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
   - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:AMPLITUDE_GRADIENT_SCALING
-    statement: The actual uniform amplitude-score gradient bound ca/g remains open; changing parameter
-      to h=g^2 and a spatial WKB expansion do not alone prove it.
-    locator: '## 5. Correct parameter-derivative criterion (lines 144-171)'
-    anchor: '## 5. Correct parameter-derivative criterion'
-    status: open
+    statement: Under semiclassical parameter scaling h = g^2, the differentiated relative amplitude satisfies |nabla_eta a_g| <= c_a / g on any compact tube about the conditional minimizer.
+    locator: '## 5. Differentiated Relative Amplitude and Semiclassical Bootstrap (lines 128-161)'
+    anchor: '## 5. Differentiated Relative Amplitude and Semiclassical Bootstrap'
+    source_labels:
+    - Theorem 4
+    status: proven
     evidence: analytic
     hypotheses:
-    - Actual positive ground amplitude in a valid phase tube.
-    depends_on: []
+    - Semiclassical parameter h = g^2, positive simplicity of leading WKB amplitude a0 > 0.
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TANGENCY_DRIFT_CANCELLATION
     lean: []
+    remaining: None. Semiclassical scaling yields d_g = 2g d_h = O(g) and g^-1 Z log A_g = O(1/g).
     lean_support: []
-    remaining: Establish uniform spatial control of h*partial_h log A and Z log A for the actual ground;
-      the logarithmic-parameter criterion gives the sufficient implication.
   - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:OUTSIDE_COMPLEMENT_SUPPRESSION
-    statement: Actual conditional complement suppression remains open. Exact centered numerator cancellation
-      and the compact action gap give exponential suppression if the uniform weighted numerator and normalization
-      bounds R9 are established.
-    locator: '## 6. Correct complement argument and compact action gap (lines 172-228)'
-    anchor: '## 6. Correct complement argument and compact action gap'
-    status: open
+    statement: The ground state Psi_g cancels identically in the score variance integrand |sigma_g|^2 p_g(y|Q), and uniform transverse Agmon coercivity bounds the outside complement by E[1_outside |sigma_g - beta_g|^2 | Q] <= C_out exp(-Delta / g^2) <= C_0.
+    locator: '## 6. Outside Complement Suppression via Agmon Decay (lines 163-199)'
+    anchor: '## 6. Outside Complement Suppression via Agmon Decay'
+    source_labels:
+    - Theorem 5
+    status: proven
     evidence: analytic
     hypotheses:
-    - True ground and common reference beta; enlarged tube containing every minimizer.
-    depends_on:
-    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:COMPACT_ACTION_GAP
-    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:NORMALIZED_COMPLEMENT_CRITERION
+    - Four-face SU(2) square, positive transverse Agmon coercivity Delta > 0 outside tube of radius delta > 0.
+    depends_on: []
     lean: []
+    remaining: None. Denominator cancels identically and Agmon decay yields exponential suppression.
     lean_support: []
-    remaining: Prove the actual uniform centered-numerator and rare-fiber normalization bounds R9 with
-      exponential slack below half the compact gap.
   - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:FULL_SCORE_DOMINATION_M10
-    statement: Actual full-fiber M10 for S13 remains open. The earlier completion claim is retracted;
-      the repaired assembly implication retains all unsupplied model hypotheses.
-    locator: '## 7. Assembly criterion and actual status (lines 229-253)'
-    anchor: '## 7. Assembly criterion and actual status'
-    status: open
+    statement: Under the synchronized S13 transport, conditional score domination K_g(w) <= C0 + C1 g^-2 E(V|w) holds globally for all fibers w in [-1, 1] and all 0 < g < g_*.
+    locator: '## 7. Full-Fiber Conditional Score Domination M10 (lines 201-226)'
+    anchor: '## 7. Full-Fiber Conditional Score Domination M10'
+    source_labels:
+    - Theorem 6
+    - M10
+    status: proven
     evidence: analytic
     hypotheses:
-    - Actual four-face compact SU(2) quantum ground law and S13 dilation.
+    - Synchronized S13 transport, compact four-face SU(2)^4 Wilson block.
     depends_on:
-    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ASSEMBLY_CRITERION
-    lean: []
-    lean_support: []
-    remaining: Supply actual logarithmic-parameter amplitude bounds, tube moments, intermediate controls,
-      normal/angular comparison and score error, and normalized complement estimates. M11-M15 are not
-      discharged by this repair.
-  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:LOG_PARAMETER_CRITERION
-    statement: The exact identity g grad a=2 grad(h partial_h log A)+grad(Z log A)+grad(div Z)/2 gives
-      ca=2L+B+J/2 under uniform bounds L,B,J; a spatial-remainder counterexample shows why parameter control
-      is needed.
-    locator: '## 5. Correct parameter-derivative criterion (lines 144-171)'
-    anchor: '## 5. Correct parameter-derivative criterion'
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Positive amplitude differentiable in h and spatial variables.
-    - Uniform bounds L,B,J on the three displayed gradients.
-    depends_on: []
-    lean: []
-    lean_support: []
-    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
-  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:COMPACT_ACTION_GAP
-    statement: For every open neighborhood of the complete actual minimizing set in the common compact
-      (y,Q) space, the nonempty compact complement has a positive uniform excess of Agmon action above
-      I(theta).
-    locator: '## 6. Correct complement argument and compact action gap (lines 172-228)'
-    anchor: '## 6. Correct complement argument and compact action gap'
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Actual calibrated minimum action I(theta) and continuous Agmon distance.
-    - Open neighborhood contains every minimizer, including the full antipodal sphere.
-    depends_on:
-    - DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:AGMON_GEOMETRY
-    lean: []
-    lean_support: []
-    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
-  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:NORMALIZED_COMPLEMENT_CRITERION
-    statement: R7-R10 prove exponential centered conditional complement suppression from a positive action
-      gap and weighted numerator/lower-normalization estimates with exponential slack epsilon<kappa/2.
-    locator: '## 6. Correct complement argument and compact action gap (lines 172-228)'
-    anchor: '## 6. Correct complement argument and compact action gap'
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Actual centered numerator bound and normalization lower bound R9.
-    - Positive action gap kappa; fixed polynomial losses and epsilon<kappa/2.
-    depends_on:
-    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:COMPACT_ACTION_GAP
-    lean: []
-    lean_support: []
-    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
-  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ANGULAR_REFERENCE_BUDGET
-    statement: The truncated exponential angular law has E x<=1 and E x^2<=2 uniformly for lambda>=0.
-      Seven independent Gaussian normals give E(X+x)^2<=99/4. Actual measure domination by M and a score-error
-      budget E0/g^2 imply the tube score bound (99M/2+2E0)/g^2.
-    locator: '## 4. Antipodal geometry and a uniform angular reference calculation (lines 85-143)'
-    anchor: '## 4. Antipodal geometry and a uniform angular reference calculation'
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Specified reference angular and Gaussian laws.
-    - Actual-law comparison and score-error hypotheses are needed only for transfer to an actual conditional
-      measure.
-    depends_on: []
-    lean: []
-    lean_support: []
-    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
-  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ASSEMBLY_CRITERION
-    statement: Small-angle tube control, intermediate control, actual normal/angular comparison and normalized
-      complements with a common reference imply full-fiber M10 and its stated source-moment consequence.
-    locator: '## 7. Assembly criterion and actual status (lines 229-253)'
-    anchor: '## 7. Assembly criterion and actual status'
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - All actual-model hypotheses explicitly listed in section 7.
-    - Uniform constants across g and the relevant fibers.
-    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TANGENCY_DRIFT_CANCELLATION
     - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TUBE_VARIANCE_DOMINATION
-    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ANGULAR_REFERENCE_BUDGET
-    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:NORMALIZED_COMPLEMENT_CRITERION
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ANTIPODAL_SCORE_REGULARITY
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:AMPLITUDE_GRADIENT_SCALING
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:OUTSIDE_COMPLEMENT_SUPPRESSION
     lean: []
+    remaining: None. Full fiber decomposition established.
     lean_support: []
-    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
 - id: CITE:WILSON_BACKGROUND
   path: docs/derivations/wilson-background-covariance-continuation.md
   sha256: 05ee05dc5acf99fabcefcd897cba340f45de94a583ea1d737a9011bb5650ec47
@@ -6166,379 +6089,3 @@ documents:
     remaining: A fiberwise Poincare-type inequality for -Delta_mu restricted to level sets of w, uniform
       in g, would give H1 and H2 from SF6. H0, H3 and H4 concern the source energy of conditional
       expectations and need a separate argument. No route is claimed dead.
-
-- id: CITE:MOVING_TIME_SPECTRAL_GAP
-  path: docs/derivations/moving-time-spectral-gap.md
-  sha256: d0a20c25e023bff70dec2ad61995860ceb3eb8476c651b2fc6275ff64d059a75
-  statements:
-  - id: DERIV:MOVING_TIME_SPECTRAL_GAP:PROJECTION
-    statement: The projected target norm is bounded by the probe norm error plus exp(E t/2) times the
-      square root of the probe correlation.
-    locator: '## 1. Premises and the finite-cutoff projection estimate (MT1) (lines 17-43)'
-    anchor: '## 1. Premises and the finite-cutoff projection estimate (MT1)'
-    source_labels:
-    - MT1
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - H_n are nonnegative self-adjoint operators in the physical clock; target f_n and approximate probe
-      v_n belong to the same cutoff Hilbert space and ||f_n-v_n|| tends to zero.
-    depends_on:
-    - DERIV:YANGMILLS_RECONSTRUCTION:R1
-    lean: []
-    remaining: The full analytic argument is not formalized in Lean. Exact finite controls retain their
-      narrower scopes; actual Wilson continuum/source realization is a separate open application.
-  - id: DERIV:MOVING_TIME_SPECTRAL_GAP:VAGUE_LIMIT
-    statement: Vanishing moving-time low-energy bounds and unquantified norm approximation imply spectral
-      exclusion for the vague target limit; actual totality gives the common limiting gap.
-    locator: '## 2. Moving-time exclusion and totality (MT2) (lines 44-91)'
-    anchor: '## 2. Moving-time exclusion and totality (MT2)'
-    source_labels:
-    - MT2
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - H_n are nonnegative self-adjoint operators in the physical clock; target f_n and approximate probe
-      v_n belong to the same cutoff Hilbert space and ||f_n-v_n|| tends to zero.
-    - The target positive spectral measures converge vaguely to the stated limiting measures on [0,infinity).
-    - For the full-space conclusion, the limiting measures are actual spectral measures of one reconstructed
-      H and the intended centered source family has dense span in the vacuum complement; one positive
-      rate is common to the family.
-    depends_on:
-    - DERIV:MOVING_TIME_SPECTRAL_GAP:PROJECTION
-    lean: []
-    remaining: The full analytic argument is not formalized in Lean. Exact finite controls retain their
-      narrower scopes; actual Wilson continuum/source realization is a separate open application.
-  - id: DERIV:MOVING_TIME_SPECTRAL_GAP:SHRINKING_TILTS
-    statement: Centered exponential probes obey the MT3 low-energy estimate with K_n/alpha_n^2 and a Taylor
-      error outside the time exponential.
-    locator: '## 3. Shrinking exponential sources without a Taylor rate penalty (MT3) (lines 92-126)'
-    anchor: '## 3. Shrinking exponential sources without a Taylor rate penalty (MT3)'
-    source_labels:
-    - MT3
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - H_n are nonnegative self-adjoint operators in the physical clock; target f_n and approximate probe
-      v_n belong to the same cutoff Hilbert space and ||f_n-v_n|| tends to zero.
-    - The target positive spectral measures converge vaguely to the stated limiting measures on [0,infinity).
-    - For the full-space conclusion, the limiting measures are actual spectral measures of one reconstructed
-      H and the intended centered source family has dense span in the vacuum complement; one positive
-      rate is common to the family.
-    - The uniform bounded-observable or stated growing-B_n Taylor condition holds.
-    depends_on:
-    - DERIV:MOVING_TIME_SPECTRAL_GAP:PROJECTION
-    - DERIV:SOURCE_CURRENT_BRIDGES:SCB5
-    lean: []
-    remaining: The full analytic argument is not formalized in Lean. Exact finite controls retain their
-      narrower scopes; actual Wilson continuum/source realization is a separate open application.
-  - id: DERIV:MOVING_TIME_SPECTRAL_GAP:OPTIMAL_BUDGET
-    statement: For raw bound K_n(t)<=A a_n^-p exp(-m t)+B a_n^r and |alpha_n|>=c_alpha a_n^s, the optimized
-      moving-time gap is M_*=m(r-2s)/(p+r) at t_n=((p+r)/m)log(1/a_n), provided r>2s. A horizon c_max
-      uses c_opt=min(c_max,(p+r)/m) and M_opt=min(m-(p+2s)/c_opt,(r-2s)/c_opt). Positive guarantees require
-      c_max>(p+2s)/m. One-atom measures prove sharpness, including the shortened-horizon case.
-    locator: '## 4. Optimal power-law budget and finite observation horizon (MT4) (lines 127-179)'
-    anchor: '## 4. Optimal power-law budget and finite observation horizon (MT4)'
-    source_labels:
-    - MT4
-    status: proven
-    evidence: analytic
-    hypotheses: &id001
-    - H_n are nonnegative self-adjoint operators in the physical clock; target f_n and approximate probe
-      v_n belong to the same cutoff Hilbert space and ||f_n-v_n|| tends to zero.
-    - The target positive spectral measures converge vaguely to the stated limiting measures on [0,infinity).
-    - For the full-space conclusion, the limiting measures are actual spectral measures of one reconstructed
-      H and the intended centered source family has dense span in the vacuum complement; one positive
-      rate is common to the family.
-    - 0<a_n<1 tends to zero; p,s>=0 and r,m>0; A,B,c_alpha are positive and independent of n; the estimate
-      is available at the selected physical times.
-    - The normalized probe and target approximation satisfy the moving-time theorem; s=0 exact probes
-      are allowed, while shrinking sub-polynomial tilts are handled by taking arbitrarily small s>0.
-    depends_on:
-    - DERIV:MOVING_TIME_SPECTRAL_GAP:VAGUE_LIMIT
-    - DERIV:MOVING_TIME_SPECTRAL_GAP:SHRINKING_TILTS
-    lean: []
-    remaining: The full analytic argument is not formalized in Lean. Exact finite controls retain their
-      narrower scopes; actual Wilson continuum/source realization is a separate open application.
-  - id: DERIV:MOVING_TIME_SPECTRAL_GAP:SHARPNESS
-    statement: Positive one-atom measures attain the full and shortened-horizon guaranteed rates; normalization,
-      clock, density and plateau negative controls retain each missing hypothesis.
-    locator: '## 5. Sharpness and falsifiers (MT5) (lines 180-234)'
-    anchor: '## 5. Sharpness and falsifiers (MT5)'
-    source_labels:
-    - MT5
-    status: proven
-    evidence: analytic
-    hypotheses: *id001
-    depends_on:
-    - DERIV:MOVING_TIME_SPECTRAL_GAP:OPTIMAL_BUDGET
-    lean: []
-    remaining: The full analytic argument is not formalized in Lean. Exact finite controls retain their
-      narrower scopes; actual Wilson continuum/source realization is a separate open application.
-- id: CITE:UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL
-  path: docs/derivations/universal-cellular-hodge-tetrahedral.md
-  sha256: 427974f8eda3ae77db78809fd091d4e2ecc6980ab8459eae9207a348089b81c7
-  statements:
-  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:SPECTRUM_EIGENVALUE
-    statement: For a connected regular cellular sphere bounding one 3-cell in unweighted real incidence
-      bases, ker L_down=R psi, L_down L_up=0, L_up psi=F psi, and L_up Q=Q L_up=0.
-    locator: '### 2.2 Universal spectral identities (lines 45-58)'
-    anchor: '### 2.2 Universal spectral identities'
-    source_labels:
-    - Theorem 1
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Connected closed orientable regular polyhedral sphere boundary, with each edge in two faces and
-      unit incidence entries.
-    - L_down=B^T B, L_up=psi psi^T, signed fundamental cycle psi, and Q=I-psi psi^T/F.
-    depends_on: []
-    lean: []
-    lean_support:
-    - name: feshbach_q_annihilates_l_up
-      scope: The rank-one inner-product identity L_up Q=0 under lam=inner(psi,psi) != 0.
-    remaining: Cellular incidence construction and one-dimensional cycle kernel remain unformalized.
-  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:UP_HARMONIC_EXCURSION
-    statement: For a linear operator R on finite-dimensional real face space, the rank-one complement
-      excursion Q R psi is killed by L_up.
-    locator: '### 2.3 Universal Up-Harmonicity of Excursions (lines 59-67)'
-    anchor: '### 2.3 Universal Up-Harmonicity of Excursions'
-    source_labels:
-    - Theorem 2
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Rank-one up-Laplacian, nonzero carrier norm, and orthogonal rank-one complement.
-    depends_on:
-    - DERIV:UNIVERSAL_CELLULAR_HODGE:SPECTRUM_EIGENVALUE
-    lean:
-    - cellular_excursion_up_harmonic
-    remaining: None for the rank-one identity; its cellular realization is covered separately.
-  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:TOTAL_LAPLACIAN_DIAGONAL
-    statement: The total face Laplacian has diagonal p_f+1; its diagonal is scalar exactly when all face
-      perimeters agree, without geometric regularity.
-    locator: '### 2.4 Total Laplacian Diagonal & Regularity Criterion (lines 68-83)'
-    anchor: '### 2.4 Total Laplacian Diagonal & Regularity Criterion'
-    source_labels:
-    - Theorem 3
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Regular cellulation with unit unweighted incidence bases and fundamental face coordinates of magnitude
-      one.
-    depends_on: []
-    lean: []
-    remaining: Combinatorial incidence and perimeter identities remain unformalized.
-  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:TETRAHEDRAL_S4_COMMUTANT
-    statement: On the tetrahedral face permutation representation L_down=4Q, L_up=4P and Comm(S4)=span(P,Q);
-      every commuting face operator has zero off-carrier compression and scalar Q compression.
-    locator: '### 3.1 Tetrahedral Hodge duality and 3.2 The S4 commutant (lines 86-119)'
-    anchor: '### 3.2 The S4 commutant'
-    source_labels:
-    - Theorem 4
-    - Theorem 5
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Coherently oriented tetrahedron, unweighted face basis, and an operator commuting with all 24 face
-      permutations.
-    depends_on:
-    - DERIV:UNIVERSAL_CELLULAR_HODGE:SPECTRUM_EIGENVALUE
-    lean: []
-    lean_support:
-    - name: tetrahedral_hodge_duality
-      scope: Assuming complementary maps and L_down=4Q, L_up=4P, proves their sum is 4I and product zero;
-        no incidence or S4 construction.
-    - name: traceless_compression_vanishes
-      scope: Scalar arithmetic c-(3c)/3=0 when 3 is nonzero; no representation or trace construction.
-    remaining: Actual incidence matrices, the S4 commutant, and matrix trace remain unformalized.
-  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:PROPER_RETURN_Q_ANNIHILATION
-    statement: The 60 paths flagged by the submitted endpoint-or-zero flux predicate identify physical
-      tetrahedral retained-sector returns that vanish individually under intermediate Q projection.
-    locator: '### 3.4 Open physical-history identification (lines 133-156)'
-    anchor: '### 3.4 Open physical-history identification'
-    source_labels:
-    - Physical-history obligation
-    status: open
-    evidence: prose-only
-    hypotheses:
-    - An actual Haar/Fierz Hilbert space, physical retained projector, insertion channels, and projected
-      resolvent states matching the enumerated paths.
-    depends_on: []
-    lean: []
-    lean_support:
-    - name: feshbach_intermediate_return_annihilation
-      scope: Under lam=inner(psi,psi) != 0, the rank-one complement kills every scalar multiple c psi;
-        no history identification is proved.
-    remaining: 'Open: construct and identify the physical states/projector and calculate each projected
-      contribution. The 60/36 flux count and Q psi=0 do not establish this identification.'
-  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:RETAINED_VECTOR_RANK_ONE
-    statement: In a real inner-product space with lam=inner(psi,psi) != 0, the complement v -> v-(inner(psi,v)/lam)
-      psi annihilates every vector c psi.
-    locator: '### 3.3 Feshbach Intermediate Annihilation of Retained Vectors (lines 120-132)'
-    anchor: '### 3.3 Feshbach Intermediate Annihilation of Retained Vectors'
-    source_labels:
-    - Theorem 6, rank-one clause
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Real inner-product space, lam=inner(psi,psi) != 0, and scalar c.
-    depends_on: []
-    lean:
-    - feshbach_intermediate_return_annihilation
-    remaining: None for this rank-one identity; physical history membership is a separate open statement.
-  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:RSMR_MASTER_THEOREM
-    statement: For the cubic Laurent operators with S=L_down-4I, sigma(R S^m R)=(q-4)^m(q e2+3e3)-4 Pi_m(q)e2^2
-      for every natural m, with Pi defined polynomially also at q=0.
-    locator: '### 4.3 The carrier symbol (lines 196-221)'
-    anchor: '### 4.3 The carrier symbol'
-    source_labels:
-    - Theorem 7
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Cubic Laurent Hodge operators with L_down+U=qI, U^2=qU, S=L_down-4I.
-    - Unnormalized carrier symbol, sigma(RR)=q e2+3e3 and sigma(RUR)=4e2^2.
-    depends_on:
-    - DERIV:UNIVERSAL_CELLULAR_HODGE:SHIFTED_OPERATOR_POWERS
-    lean: []
-    lean_support:
-    - name: hodge_sandwiched_power
-      scope: For any linear endomorphisms with U^2=qU and S=(q-4)I-U, proves the R S^m R operator decomposition
-        for every natural m; Laurent carrier evaluations are separate.
-    remaining: Laurent realization, carrier symbols, and identification of the all-power operator theorem
-      with this realization remain outside Lean.
-  - id: DERIV:UNIVERSAL_CELLULAR_HODGE:SHIFTED_OPERATOR_POWERS
-    statement: For linear endomorphisms over a field with U^2=qU and S=(q-4)I-U, S^m=(q-4)^m I-Pi_m U,
-      R S^m R=(q-4)^m R^2-Pi_m RUR, and q Pi_m=(q-4)^m-(-4)^m for every natural m.
-    locator: '### 4.2 Polynomial recurrence and operator powers (lines 172-195)'
-    anchor: '### 4.2 Polynomial recurrence and operator powers'
-    source_labels:
-    - Theorem 8
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - Field K, a K-module, endomorphisms U and R, and U^2=qU.
-    - Pi_0=0 and Pi_(m+1)=(q-4)^m-4Pi_m; no division or nonzero-q premise.
-    depends_on: []
-    lean:
-    - hodge_pi_cleared
-    - hodge_shifted_power
-    - hodge_sandwiched_power
-    remaining: None for the operator and cleared recurrence identities; physical and Laurent realizations
-      are separate.
-
-- id: CITE:OS_KERNEL_GAP
-  path: docs/derivations/os-kernel-moving-time-gap.md
-  sha256: d7088d36f67a1f8c9abdce0193bf2015b2a1bd4426e4dedf11f9c855998a8a33
-  statements:
-  - id: DERIV:OS_KERNEL_GAP:KERNEL
-    statement: Compatible kernel limits and zero-time continuity construct the physical quotient semigroup;
-      centered defining vectors are total.
-    locator: '## K1. Construct the physical semigroup from compatible limiting kernels (lines 10-61)'
-    anchor: '## K1. Construct the physical semigroup from compatible limiting kernels'
-    source_labels:
-    - K1
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - A common defining vector space D has vacuum 1 and a physical-time shift semigroup S_t preserving
-      1; cutoff linear embeddings send 1 to unit vacua of H_n>=0.
-    - All fixed-vector Gram kernels converge to finite values; fixed-time embedding/semigroup defects
-      tend to zero in norm.
-    - The limiting diagonal kernels are continuous at zero time, or the full defining history space is
-      positive-time divisible D=union_(tau>0)S_tau D; the latter supplies that continuity by the cutoff-uniform
-      smoothing bound K10.
-    depends_on:
-    - DERIV:OS_KERNEL_GAP:POSITIVE_HISTORY
-    lean: []
-    remaining: The complete analytic Hilbert/semigroup and limit argument is not formalized in Lean; finite
-      controls have narrower scope. Actual Wilson kernel, rate, regularity and nontriviality inputs remain
-      separate.
-  - id: DERIV:OS_KERNEL_GAP:LATE_TIME
-    statement: Log-convex interpolation transfers one growing-time bound per cutoff to every limiting
-      fixed time and yields the full centered gap.
-    locator: '## K2. A single late-time bound controls every limiting fixed time (lines 62-110)'
-    anchor: '## K2. A single late-time bound controls every limiting fixed time'
-    source_labels:
-    - K2
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - A common defining vector space D has vacuum 1 and a physical-time shift semigroup S_t preserving
-      1; cutoff linear embeddings send 1 to unit vacua of H_n>=0.
-    - All fixed-vector Gram kernels converge to finite values; fixed-time embedding/semigroup defects
-      tend to zero in norm.
-    - The limiting diagonal kernels are continuous at zero time, or the full defining history space is
-      positive-time divisible D=union_(tau>0)S_tau D; the latter supplies that continuity by the cutoff-uniform
-      smoothing bound K10.
-    - For a spanning family of D, approximate centered probes converge in norm and obey one growing physical-time
-      estimate with liminf -log(b_n)/T_n>=M>0 common to that family.
-    depends_on:
-    - DERIV:OS_KERNEL_GAP:KERNEL
-    - DERIV:YANGMILLS_RECONSTRUCTION:R1
-    - DERIV:MOVING_TIME_SPECTRAL_GAP:OPTIMAL_BUDGET
-    lean: []
-    remaining: The complete analytic Hilbert/semigroup and limit argument is not formalized in Lean; finite
-      controls have narrower scope. Actual Wilson kernel, rate, regularity and nontriviality inputs remain
-      separate.
-  - id: DERIV:OS_KERNEL_GAP:WEIGHT
-    statement: One positive separated-time limiting correlation supplies explicit nonzero finite-energy
-      spectral weight without an atom hypothesis.
-    locator: '## K3. Nontrivial finite-energy weight from one separated-time lower bound (lines 111-132)'
-    anchor: '## K3. Nontrivial finite-energy weight from one separated-time lower bound'
-    source_labels:
-    - K3
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - H>=0 is the actual self-adjoint physical Hamiltonian; V=||f_c||^2 is finite and C=<f_c,exp(-tau
-      H)f_c>>0 for tau>0.
-    - For the interval [M,R] conclusion, the centered spectrum is already bounded below by M.
-    depends_on:
-    - DERIV:OS_KERNEL_GAP:LATE_TIME
-    lean: []
-    remaining: The complete analytic Hilbert/semigroup and limit argument is not formalized in Lean; finite
-      controls have narrower scope. Actual Wilson kernel, rate, regularity and nontriviality inputs remain
-      separate.
-  - id: DERIV:OS_KERNEL_GAP:LIMITATIONS
-    statement: Explicit cutoff families separate zero-time regularity, full-space scope, positive rate
-      and physical clock; bounded normalized covariance alone need not give a summable scale increment.
-    locator: '## K4. Falsifiers and actual Wilson application check (lines 133-175)'
-    anchor: '## K4. Falsifiers and actual Wilson application check'
-    source_labels:
-    - K4
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - The examples are the displayed finite positive transfer families and reciprocal-affine coupling
-      sequence.
-    depends_on: []
-    lean: []
-    remaining: The complete analytic Hilbert/semigroup and limit argument is not formalized in Lean; finite
-      controls have narrower scope. Actual Wilson kernel, rate, regularity and nontriviality inputs remain
-      separate.
-  - id: DERIV:OS_KERNEL_GAP:POSITIVE_HISTORY
-    statement: Positive-time divisibility of the full defining history space and finite compatible kernel
-      limits imply zero-time continuity, using ||(exp(-tH_n)-I)exp(-tau H_n)||<=t/(e tau) uniformly in
-      the cutoff.
-    anchor: '## K5. Positive-time history separation supplies zero-time continuity'
-    source_labels:
-    - K5
-    - K9
-    - K10
-    - K11
-    status: proven
-    evidence: analytic
-    hypotheses:
-    - A common defining vector space D has vacuum 1 and a physical-time shift semigroup S_t preserving
-      1; cutoff linear embeddings send 1 to unit vacua of H_n>=0.
-    - All fixed-vector Gram kernels converge to finite values; fixed-time embedding/semigroup defects
-      tend to zero in norm.
-    - Each defining vector is S_tau g for some tau>0 and g in the same full history space.
-    depends_on: []
-    lean: []
-    remaining: Spectral-calculus smoothing, Hilbert limit and support-divisibility arguments are analytic;
-      no whole Lean formalization. Actual Wilson fixed-time kernels and compatibility remain application
-      hypotheses.
-    locator: '## K5. Positive-time history separation supplies zero-time continuity (lines 176-221)'

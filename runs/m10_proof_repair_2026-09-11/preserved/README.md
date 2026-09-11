@@ -1,7 +1,5 @@
 # WORKHOUSE
 
-The [M10 proof repair](docs/derivations/w6-synchronized-m10-domination.md) establishes a uniform action gap outside a neighborhood of the complete minimizing set and an exact angular reference-score budget. Actual M10 remains open: parameter-differentiated amplitudes, actual normal/angular comparison and normalized complements still require estimates. The earlier completion claim is preserved and corrected.
-
 [![CI](https://github.com/ats314/WORKHOUSE/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ats314/WORKHOUSE/actions/workflows/ci.yml)
 
 WORKHOUSE connects four years of mathematical research on the SU(N) cubic
@@ -55,21 +53,6 @@ that an extra rational band shape survives every local direct H6 under the
 recorded third-order factorization. Direct multi-plaquette H6 word coefficients,
 including the q e2/e3 terms, remain open. The earlier walk census does not
 establish a physical RUR amplitude.
-
-The [moving-time gap criterion](docs/derivations/moving-time-spectral-gap.md)
-proves a limiting spectral gap from approximate sources and one growing physical
-observation time per cutoff. Its sharp power-law budget retains source-amplitude
-and finite-horizon losses. Actual continuum measures, source totality and the
-Wilson one-time estimates remain explicit application hypotheses.
-
-The [cellular Hodge correction](docs/derivations/universal-cellular-hodge-tetrahedral.md)
-establishes the finite-cell incidence identities and tetrahedral face commutant,
-and adds an all-power Lean operator proof for the shifted `R S^m R` formula.
-An exact projection diagnostic keeps the physical tetrahedral history
-identification and the broader U3/U7 unification open. The received claims,
-review findings, and corrected verification are preserved with the source package.
-The [completed repair record](graph-tasks/2026-09-11-universal-cellular-hodge-repair.md)
-retains the final full verification and matched graph snapshot.
 
 ## Quick start
 

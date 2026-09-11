@@ -1,236 +1,266 @@
-# W6 Synchronized Transport and Conditional-Score Domination M10
+# W6 synchronized M10: repaired criteria and remaining actual-ground estimate
 
-## 1. Statement and Scope
+Repaired 11 September 2026 after independent review of commit `85675ed`.
+The received completion claim and scripts are preserved byte for byte in
+[runs/m10_proof_repair_2026-09-11](../../runs/m10_proof_repair_2026-09-11/README.md).
+The earlier all-fiber proof did not justify parameter differentiation,
+conditional normalization, or the antipodal angular transition. The corrected
+actual-model M10 status is **open**. This note proves the implications below
+and identifies their unsupplied actual-ground inputs; it does not assert that
+changing a status resolves the mathematical target.
 
-The target inequality is conditional-score domination for the four-face compact $SU(2)^4$ Wilson block:
-\[
-  K_g(w) \le C_0 + C_1 g^{-2} \mathbb{E}_{\mu_g}(V \mid w) \quad \text{for } 0 < g < g_*, \tag{M10}
-\]
-where $w = \operatorname{Sc}(Q) = \operatorname{tr}(U_2 U_3)/2 \in [-1, 1]$, $K_g(w) = \operatorname{Var}_{\mu_g}(\sigma_g \mid w)$, and
-\[
-  \sigma_g = \frac{\partial_g \Psi_g + D \Psi_g / g}{\Psi_g}
-\]
-is the score of the quantum ground state under the dilation operator $D = Z + \frac{1}{2} \operatorname{div}_{\mathrm{Haar}} Z$.
+## 1. Statement and scope
 
-This derivation establishes:
-1. **Exact Linear Phase Drift Cancellation (T1)**: The synchronized radial transport $S_{13}$ satisfies
-   \[
-     \partial_y(2S - ZS)\big|_{m(q)} \equiv 0 \quad \text{identically for all } \theta \in [0, \pi),
-   \]
-   completely eliminating the $g^{-4}$ divergence that falsified unsynchronized cutoffs.
-2. **Euler Cancellation at the Well (T1)**: At $q = 0$, $F = 2S - ZS \equiv 0$ to second order in $\eta$, yielding the sharp remainder bound $|F(q, \eta) - F(q, 0)| \le c_F (|q| |\eta|^2 + |\eta|^3)$.
-3. **Tube Variance Domination (T1 / Analytic)**: On the conditional Agmon tube,
-   \[
-     \mathbb{E}_{\text{tube}} |\sigma_g - \beta_g|^2 \le C_0 + C_1 g^{-2} \mathbb{E}_{\mu_g}(V \mid Q),
-   \]
-   with explicit constants $C_0 = 4 c_F^2 c_6 + 2 c_a^2 c_2$ and $C_1 = 8 \pi^2 c_F^2 c_4$.
-4. **Antipodal Morse-Bott Regularity & Score Invariance (T1 / Analytic)**: At $Q \to -I$, the 2-sphere minimizer $\mathcal{M}$ has 7 normal directions with $\lambda \ge 4(\sqrt{2}-1) > 0$. Gauge symmetry guarantees $d\sigma_g|_{T\mathcal{M}} = 0$, and the potential floor $v_*(\pi) = 16 - 8\sqrt{2} > 0$ provides a strictly positive $O(g^{-2})$ budget.
-5. **Differentiated Amplitude Gradient Scaling (T1 / Analytic)**: Semiclassical parameter scaling with $h = g^2$ yields $\partial_g = 2g \partial_h$, proving $|\nabla_\eta a_g| \le c_a / g$.
-6. **Outside Complement Suppression (T1 / Analytic)**: The ground state $\Psi_g$ in the denominator of $\sigma_g$ cancels identically in $|\sigma_g|^2 p_g(y \mid Q)$, and uniform Agmon decay guarantees $\mathbb{E}[1_{\text{outside}} |\sigma_g - \beta_g|^2 \mid Q] \le C_{\text{out}} \exp(-\Delta / g^2) \le C_0$.
-7. **Full-Fiber M10 Domination**: Combination across small-angle, intermediate, and antipodal fibers establishes M10 globally for all $w \in [-1, 1]$.
+On the fixed four-face compact SU(2) block, let
+`N_g=partial_g Psi_g+D Psi_g/g`, `sigma_g=N_g/Psi_g`,
+`D=Z+(div_Haar Z)/2`, and `K_g(w)=Var(sigma_g|w)`.
+The target is
 
----
+```
+K_g(w) <= C0+C1*g^-2 E(V|w),  0<g<g_*,  w in [-1,1].       (M10)
+```
 
-## 2. The Synchronized Radial Field S13 and Drift Cancellation
+Constants must be independent of both g and the fiber. We use normalized
+Haar measure in the common full-Q fiber y=(U0,U1,U2), with U3=U2^-1 Q, and
+`h_g(Q)=integral Psi_g(y,Q)^2 dy`. Simultaneous conjugation makes both
+conditional mean and variance class functions of Q. Thus conditioning on w
+introduces no extra variance of the full-Q conditional means. At the central
+fibers use the continuous positive-ground disintegration in full Q.
 
-Let $Q = \exp(\theta n)$ with $n \in S^2$ and $\theta \in [0, \pi]$. In unit quaternions, $\alpha = \theta/4$. The conditional minimizer curve in fiber coordinates $y = (U_0, U_1, U_2)$ is:
-\[
-  m(\theta) = (\theta/4, \theta/4, \theta/2)^T, \quad U_3 = U_2^{-1} Q.
-\]
-The synchronized radial profiles are defined by:
-\[
-  z_0(r) = r \chi(4r), \quad z_1(r) = r \chi(4r), \quad z_2(r) = r \chi(2r), \quad z_Q(r) = r \chi(r),
-\]
-where $\chi$ is a smooth cutoff equal to $1$ near $0$ and supported on $[0, \theta_a]$ with $\theta_a < \pi$.
+S13 tangency, the quadratic phase jet at the well, the magnetic spectrum and
+endpoint gauge invariance are established project inputs. The true quantum
+conditional law is not the magnetic Gibbs measure or the reference law below.
 
-### Theorem 1 (Synchronized Tangency)
-Along the minimizer curve $m(\theta)$, the dilation velocity matches the curve tangent exactly:
-\[
-  Z_y(m(\theta), \theta) - Dm(\theta) Z_Q(\theta) \equiv 0.
-\]
+## 2. Synchronized tangency
 
-#### Proof
-At the minimizer, the angles on each factor are $r_0 = \theta/4$, $r_1 = \theta/4$, $r_2 = \theta/2$, and $r_Q = \theta$. Evaluating:
-\[
-  z_0(\theta/4) = \frac{\theta}{4} \chi(\theta), \quad z_1(\theta/4) = \frac{\theta}{4} \chi(\theta), \quad z_2(\theta/2) = \frac{\theta}{2} \chi(\theta), \quad z_Q(\theta) = \theta \chi(\theta).
-\]
-Since $Dm(\theta) = (1/4, 1/4, 1/2)^T$, we have:
-\[
-  Dm(\theta) Z_Q(\theta) = \begin{pmatrix} 1/4 \\ 1/4 \\ 1/2 \end{pmatrix} \theta \chi(\theta) = \begin{pmatrix} \frac{\theta}{4} \chi(\theta) \\ \frac{\theta}{4} \chi(\theta) \\ \frac{\theta}{2} \chi(\theta) \end{pmatrix} = Z_y(m(\theta), \theta).
-\]
-Differentiating the phase $F = 2S - ZS$ with respect to fiber variations $\eta = y - m(q)$ gives:
-\[
-  \partial_y (2S - ZS)\big|_{m(q)} = - B(q) [Z_y(m(q), q) - Dm(q) Z_Q(q)] \equiv 0.
-\]
-This completes the proof.
+For one smooth cutoff chi, supported below pi and equal to one near zero,
 
-#### Contrast with Failed Unsynchronized Cutoffs
-In the counterexample field where $z_i(r) = r \chi(r)$ on all factors,
-\[
-  Z_y(m(\theta)) - Dm(\theta) Z_Q(\theta) = \begin{pmatrix} \frac{\theta}{4} (\chi(\theta/4) - \chi(\theta)) \\ \frac{\theta}{4} (\chi(\theta/4) - \chi(\theta)) \\ \frac{\theta}{2} (\chi(\theta/2) - \chi(\theta)) \end{pmatrix} \ne 0.
-\]
-This generated a non-zero linear phase derivative, resulting in an uncontrollable $g^{-4}$ divergence in the conditional variance.
+```
+z0(r)=z1(r)=r chi(4r), z2(r)=r chi(2r), zQ(r)=r chi(r).
+m(theta)=(theta/4,theta/4,theta/2).
+Zy(m(theta))-Dm(theta) ZQ(theta)=0.                         (R1)
+```
 
----
+Substitution proves this identity. Where the actual phase is smooth, with
+conditional minimum graph m, differentiate S_y(m(q),q)=0 to obtain
+`partial_y(2S-ZS)=-B(q)(Zy-Dm ZQ)=0` at the center. This proves cancellation
+of the linear phase drift in that regime. It does not construct a smooth
+phase at an angular degeneration. Identical unsynchronized profiles need
+not obey R1; the exact check supplies an explicit nonzero profile witness.
+See [the original transport argument](w6-conditional-transport-obstruction.md).
 
-## 3. Tube Variance and Small-Angle Domination
+## 3. Small-angle tube implication
 
-Let $F(q, \eta) = 2S(m(q) + \eta, q) - ZS(m(q) + \eta, q)$.
+Only the quadratic jet S2 is homogeneous: `Z S2=2S2`. The actual phase may
+have higher terms. Smoothness, R1, the zero fast Hessian of 2S2-ZS2 at q=0,
+and bounded third derivatives give
 
-### Lemma 2 (Euler Cancellation at the Well)
-At $q = 0$, $F(\eta) \equiv 0$ to second order in $\eta$.
+```
+|F(q,eta)-F(q,0)| <= cF (|q| |eta|^2+|eta|^3), F=2S-ZS.
+```
 
-#### Proof
-At $q = 0$, near the origin $\chi \equiv 1$, so $Z x = x$ is the linear Euler field. The Agmon phase $S(x)$ is a positive definite quadratic form $\frac{1}{2} x^T M x$. Thus $ZS = x \cdot \nabla S = 2S$, so $F = 2S - ZS \equiv 0$ identically. The Hessian $\partial_\eta^2 F$ vanishes at $q = 0$.
+Assume the actual conditional tube moments are bounded by
+`E_tube |eta|^(2j)<=c_(2j) g^(2j)`, j=1,2,3, and
+`|grad_eta a_g|<=ca/g`. With `beta=F(q,0)/g^3+a_g(q,0)`, two applications
+of (x+y)^2<=2x^2+2y^2 prove
 
-### Proposition 3 (Remainder and Tube Variance Bound)
-For $q$ in a neighborhood of $0$,
-\[
-  |F(q, \eta) - F(q, 0)| \le c_F (|q| |\eta|^2 + |\eta|^3).
-\]
-Under the conditional tube moment hypotheses $\mathbb{E}|\eta|^{2j} \le c_{2j} g^{2j}$ ($j=1,2,3$) and differentiated relative-amplitude bound $|\nabla_\eta a_g| \le c_a / g$, with $\beta_g(q) = F(q, 0)/g^3 + a_g(q, 0)$:
-\[
-  \mathbb{E}_{\text{tube}} |\sigma_g - \beta_g|^2 \le 4 c_F^2 \left( c_4 \frac{|q|^2}{g^2} + c_6 \right) + 2 c_a^2 c_2.
-\]
-Since in Lie coordinates $|q| = 2\theta$ and $v_*(\theta) = 16(1 - \cos(\theta/4)) \ge \frac{2}{\pi^2} \theta^2 = \frac{1}{2\pi^2} |q|^2$, we have $|q|^2 \le 2\pi^2 v_*(\theta) \le 2\pi^2 \mathbb{E}(V \mid Q)$.
-Therefore:
-\[
-  \mathbb{E}_{\text{tube}} |\sigma_g - \beta_g|^2 \le C_0 + C_1 g^{-2} \mathbb{E}(V \mid Q),
-\]
-with $C_0 = 4 c_F^2 c_6 + 2 c_a^2 c_2$ and $C_1 = 8\pi^2 c_F^2 c_4$.
+```
+E_tube |sigma-beta|^2 <=4 cF^2(c4 |q|^2/g^2+c6)+2 ca^2 c2. (R2)
+```
 
----
+Here the tube expectation is normalized on the tube; its probability in the
+full-fiber decomposition is at most one. A line segment used for the amplitude
+estimate must stay in the coordinate tube; choose a convex small normal chart.
 
-## 4. Antipodal Degeneration (Q -> -I)
+For the actual magnetic minimum,
+`v_*(theta)=16(1-cos(theta/4))=32 sin^2(theta/8)`.
+Concavity of sin on [0,pi/2] gives sin x>=2x/pi, so
+`v_*>=2 theta^2/pi^2`. Since |q|=2theta,
+`|q|^2<=2 pi^2 v_*<=2 pi^2 E(V|Q)`.
+Thus R2 is bounded by C0+C1*g^-2 E(V|Q), with
+`C0=4 cF^2 c6+2 ca^2 c2`, `C1=8 pi^2 cF^2 c4`.
+This is a proved sufficient implication; its actual uniform amplitude and
+moment premises are not discharged by the finite algebra.
 
-At $\theta = \pi$ ($Q = -I$), the minimizer set is the 2-sphere $\mathcal{M} = S^2$.
+## 4. Antipodal geometry and a uniform angular reference calculation
 
-1. **Normal Coercivity**: The 9D Hessian decomposes into:
-   - 2 zero eigenvalues spanning the gauge orbit $T\mathcal{M}$.
-   - 7 normal eigenvalues satisfying $\lambda_{\text{normal}} \ge 4(\sqrt{2} - 1) > 0$.
-2. **Gauge Invariance**: The Hamiltonian, Haar measure, ground state $\Psi_g$, and dilation $D$ are simultaneous-conjugation equivariant. The score $\sigma_g$ is invariant under the gauge action:
-   \[
-     d\sigma_g\big|_{T\mathcal{M}} = 0.
-   \]
-   Thus, there is zero first-order variance along the degenerate sphere $\mathcal{M}$.
-3. **Strictly Positive Floor**:
-   \[
-     v_*(\pi) = 16 - 8\sqrt{2} \approx 4.68629 > 0.
-   \]
-   The potential expectation provides a strictly positive floor:
-   \[
-     g^{-2} \mathbb{E}(V \mid Q = -I) \ge \frac{16 - 8\sqrt{2}}{g^2} \ge \frac{4.68}{g^2}.
-   \]
-   Any $O(g^{-2})$ or $O(1)$ fluctuation near the antipode is absorbed by this divergent positive budget.
+The [magnetic geometry](w6-antipodal-magnetic-geometry.md) establishes seven
+normal magnetic eigenvalues >=4(sqrt(2)-1), and two soft eigenvalues
 
----
+```
+8 cos(theta/4)-4 sqrt(2)=sqrt(2) delta+O(delta^2), delta=pi-theta.
+```
 
-## 5. Differentiated Relative Amplitude and Semiclassical Bootstrap
+At Q=-I the minimizing sphere is one conjugation orbit, and the actual score
+is constant on it. For delta>0 only the stabilizer of Q acts within its fiber;
+the full angular variable remains. These statements do not identify the
+magnetic Hessian with the action Hessian or quantum conditional precision.
 
-### Theorem 4 (Differentiated Amplitude Scaling)
-On any compact tube about the conditional minimizer, the relative amplitude $a_g = \partial_g \log A_g + g^{-1} [Z \log A_g + \frac{1}{2} \operatorname{div} Z - 6]$ satisfies:
-\[
-  |\nabla_\eta a_g| \le \frac{c_a}{g} \quad \text{for } 0 < g < g_*.
-\]
+The following calculation resolves the elementary crossover for a specified
+reference law, including delta/g^2 tending to zero, a finite value, or infinity.
+For lambda>=0 let t=n3 in [-1,1], with density proportional to
+`exp(-lambda(1-t)) dt`, the rotational surface measure reduced to t. For
+lambda>0 put x=lambda(1-t) and L=2lambda. Direct integration gives
 
-#### Proof
-Setting $h = g^2$, the operator $P_h = - \frac{h^2}{2} \Delta + V$ has ground state $\Psi_g(x) = g^{-6} A_g(x) \exp(-S(x)/g^2)$ with $A_g(x) = a(x; g^2) \sim a_0(x) + g^2 a_1(x) + O(g^4)$ in $C^\infty(K)$ on the well domain $K$ (by standard semiclassical WKB comparison, e.g., Helffer-Sjostrand 1984, Klein-Rosenberger 2005 Theorem 6.5).
-Since $a_0(x) > 0$ on $K$:
-\[
-  \log A_g(x) = \log a_0(x) + g^2 \frac{a_1(x)}{a_0(x)} + O(g^4).
-\]
-Differentiating with respect to $g$:
-\[
-  \partial_g \log A_g = 2g \frac{\partial \log a}{\partial h}\bigg|_{h=g^2} = 2g \frac{a_1(x)}{a_0(x)} + O(g^3) = O(g) \quad \text{in } C^k(K).
-\]
-The spatial dilation term satisfies:
-\[
-  g^{-1} Z \log A_g = g^{-1} \left[ Z \log a_0(x) + O(g^2) \right] = \frac{1}{g} Z \log a_0(x) + O(g) \quad \text{in } C^k(K).
-\]
-The divergence term $g^{-1} \frac{1}{2} \operatorname{div} Z$ is $O(1/g)$ in $C^k(K)$, and the constant term $-6/g$ has vanishing spatial gradient.
-Taking the gradient with respect to fiber coordinates $\eta$:
-\[
-  \nabla_\eta a_g = \nabla_\eta \partial_g \log A_g + g^{-1} \nabla_\eta (Z \log A_g) + \frac{1}{2g} \nabla_\eta \operatorname{div} Z.
-\]
-Since $Z$, $\operatorname{div} Z$, and $a_0$ are smooth spatial objects independent of $g$, their spatial derivatives are $O(1)$ on $K$. Thus:
-\[
-  |\nabla_\eta a_g| \le O(g) + \frac{1}{g} |\nabla_\eta (Z \log a_0)| + \frac{1}{2g} |\nabla_\eta \operatorname{div} Z| \le \frac{c_a}{g}.
-\]
-Because the asymptotic parameter is $h = g^2$, the $g$-derivative produces an extra factor of $2g$, ensuring $\partial_g \log A_g = O(g)$ and preventing any $O(1/g^2)$ contribution.
+```
+E x   =1-L/(exp(L)-1) <=1,
+E x^2 =2-(L^2+2L)/(exp(L)-1) <=2.                          (R3)
+```
 
----
+The subtracted quantities are nonnegative. At lambda=0, x=0 identically;
+the limits of the moments are zero. As lambda tends to infinity the moments
+tend to 1 and 2. No positive angular Hessian lower bound is needed.
 
-## 6. Outside Complement Suppression via Agmon Decay
+Adjoin seven independent normal coordinates with density proportional to
+`exp(-|z|^2/g^2)`. With X=|z|^2/g^2, Gaussian integration gives
+`E X=7/2`, `E X^2=63/4`. Independence and R3 imply
 
-### Theorem 5 (Exponential Complement Suppression)
-For any radius $\delta > 0$ defining the tube $T_\delta(Q)$, there exist $C_{\text{out}} > 0$ and $\Delta > 0$ such that:
-\[
-  \mathbb{E}[1_{\text{outside}} |\sigma_g - \beta_g|^2 \mid Q] \le C_{\text{out}} \exp(-\Delta / g^2) \le C_0 \quad \text{for } 0 < g < g_*.
-\]
+```
+E_ref (X+x)^2 <=63/4+7+2=99/4.                             (R4)
+```
 
-#### Proof
-1. **Cancellation of Ground State Denominator**:
-   In the conditional expectation:
-   \[
-     \mathbb{E}[1_{\text{outside}} |\sigma_g|^2 \mid Q] = \int_{\text{outside}} |\sigma_g(y, Q)|^2 p_g(y \mid Q) \, dy.
-   \]
-   Using $\sigma_g = \frac{\partial_g \Psi_g + D\Psi_g / g}{\Psi_g}$ and $p_g(y \mid Q) = \frac{\Psi_g(y, Q)^2}{h_g(Q)}$:
-   \[
-     |\sigma_g(y, Q)|^2 p_g(y \mid Q) = \frac{|\partial_g \Psi_g + D\Psi_g / g|^2}{h_g(Q)}.
-   \]
-   The denominator $\Psi_g$ cancels identically; no small-denominator singularity occurs.
-2. **Agmon Decay of Derivatives**:
-   By the Agmon energy estimate, $\Psi_g(y, Q) \le C g^{-N} \exp(-S(y, Q)/g^2)$. Differentiating the eigenvalue equation $(H_g - E_g)\Psi_g = 0$ with respect to $g$ and applying the Agmon-weighted resolvent estimate and elliptic regularity:
-   \[
-     |\partial_g \Psi_g(y, Q) + D\Psi_g(y, Q)/g| \le C' g^{-N'} \exp(-S(y, Q)/g^2).
-   \]
-3. **Action Gap**:
-   Outside $T_\delta(Q)$, the Agmon distance satisfies $S(y, Q) \ge I(\theta) + \Delta$ where $\Delta = \frac{1}{2} \lambda_{\min} \delta^2 > 0$, by transverse coercivity.
-4. **Conditional Normalization**:
-   The fiber integral has leading behavior $h_g(Q) \ge c g^{-3} \exp(-2 I(\theta)/g^2)$. The minimal action factor $\exp(-2 I(\theta)/g^2)$ cancels, yielding:
-   \[
-     \frac{|\partial_g \Psi_g + D\Psi_g / g|^2}{h_g(Q)} \le \frac{C'^2 g^{-2N'} \exp(-2(I(\theta) + \Delta)/g^2)}{c g^{-3} \exp(-2 I(\theta)/g^2)} = \tilde{C} g^{-M} \exp(-2\Delta / g^2).
-   \]
-   Since $\beta_g(q) = O(g^{-3})$:
-   \[
-     \mathbb{E}[1_{\text{outside}} |\sigma_g - \beta_g|^2 \mid Q] \le C_{\text{out}} \exp(-\Delta / g^2) \le C_0.
-   \]
+This is the score budget for a reference wave proportional to
+`exp(-|z|^2/(2g^2)-delta(1-t)/g^2)`, where lambda=2delta/g^2.
+Its nonconstant g-score equals (X+x)/g; normalization changes only a fiber
+constant absorbed into beta.
 
----
+**Comparison implication.** Suppose the actual conditional tube submeasure,
+in specified normal/angular coordinates, is <=M times this reference
+probability measure, with M independent of g and delta. Suppose also that
+its actual score is `sigma-beta=(X+x)/g+epsilon`, with
+`E[1_tube epsilon^2|Q]<=E0/g^2`. Then
 
-## 7. Full-Fiber Conditional Score Domination M10
+```
+E[1_tube |sigma-beta|^2|Q] <= (99 M/2+2 E0)/g^2.            (R5)
+```
 
-### Theorem 6 (Complete M10 Domination)
-There exist constants $C_0, C_1 \ge 0$ such that for all $0 < g < g_*$ and all fibers $w \in [-1, 1]$:
-\[
-  K_g(w) \le C_0 + C_1 g^{-2} \mathbb{E}_{\mu_g}(V \mid w).
-\]
+This follows by the same square inequality. An amplitude bounded above and
+below relative to a reference law supplies a density comparison after
+normalization, but **neither that comparison nor the score error estimate
+has been proved for the actual Wilson ground here**. The magnetic angular
+expansion alone does not supply them: its O(delta^2) error divided by g^2
+is not uniformly small over a fixed antipodal neighborhood.
 
-#### Proof
-By the total variance decomposition on each fiber:
-\[
-  K_g(w) \le \mathbb{E}_{\text{tube}} |\sigma_g - \beta_g|^2 + \mathbb{E}[1_{\text{outside}} |\sigma_g - \beta_g|^2 \mid Q].
-\]
-1. **Small-angle fibers $\theta \in [0, \theta_0]$**:
-   By Proposition 3, Theorem 4, and Theorem 5:
-   \[
-     K_g(w) \le \left[ 4 c_F^2 \left(c_4 \frac{|q|^2}{g^2} + c_6\right) + 2 c_a^2 c_2 \right] + C_0 \le (4 c_F^2 c_6 + 2 c_a^2 c_2 + C_0) + 8\pi^2 c_F^2 c_4 g^{-2} \mathbb{E}(V \mid w).
-   \]
-2. **Intermediate fibers $\theta \in [\theta_0, \pi - \epsilon]$**:
-   Synchronized tangency (Theorem 1) eliminates the linear drift $\partial_\eta F(q, 0) \equiv 0$ on all fibers. The transverse Hessian contributes $O(g^{-2})$. Since $v_*(\theta) \ge v_*(\theta_0) > 0$, the potential term $C_1 g^{-2} \mathbb{E}(V \mid w) \ge C_1 v_*(\theta_0) g^{-2}$ provides an $O(g^{-2})$ budget. Choosing $C_1 \ge \frac{C_{\text{Hess}}^2 c_4}{v_*(\theta_0)}$ guarantees domination.
-3. **Antipodal fibers $\theta \in [\pi - \epsilon, \pi]$**:
-   Along the 2-sphere $\mathcal{M}$, gauge invariance implies $d\sigma_g|_{T\mathcal{M}} = 0$. The 7 normal modes have $\lambda \ge 4(\sqrt{2}-1) > 0$. The potential floor $v_*(\pi) = 16 - 8\sqrt{2} > 0$ provides a strictly positive $O(g^{-2})$ budget, absorbing all transverse fluctuations.
+## 5. Correct parameter-derivative criterion
 
-This completes the proof of M10.
+Write the true local ground as `Psi_g=g^-6 A(q,eta;h) exp(-S/h)`, h=g^2,
+where this phase representation is valid. Put ell=log A. The exact identity is
 
----
+```
+g grad_eta a_g = 2 grad_eta(h partial_h ell)
+                 +grad_eta(Z ell)+(1/2)grad_eta div Z.    (R6)
+```
 
-## 8. Summary of Verification and Standing
+Consequently uniform bounds L, B, J on the three gradients on the right
+give `|grad_eta a_g| <= (2L+B+J/2)/g`. This **weaker logarithmic-parameter
+criterion** suffices; the old claim `partial_g log A=O(g)` is unnecessary.
+It is a proved implication with explicit independent premises.
 
-- S13 tangency drift cancellation: **Proven (T1)**
-- Euler cancellation at $q=0$: **Proven (T1)**
-- Quadratic potential floor: **Proven (T1)**
-- Antipodal spectrum and gauge score invariance: **Proven (T1)**
-- Semiclassical amplitude gradient scaling: **Proven (T1 / Analytic)**
-- Outside complement denominator cancellation and Agmon decay: **Proven (T1 / Analytic)**
-- Full-fiber conditional score domination M10: **Proven (T1 / Analytic)**
+A spatial asymptotic series does not supply the first premise. For example,
+`A=1+eta*g^4*sin(g^-6)` is positive on a bounded eta interval for sufficiently
+small g and equals 1+O(g^4) in every spatial C^k norm. For Z=eta partial_eta,
+the spatial gradient of its relative score at eta=0 is
+`5g^3 sin(g^-6)-6g^-3 cos(g^-6)`, which is not O(1/g).
+This refutes the inference, not the actual-ground bound.
+
+The cited [Klein--Rosenberger Theorem 6.5](https://arxiv.org/html/2005.13852#S6)
+(2020 preprint) gives spatial weighted comparison under its Hypothesis 6.1.
+An actual parameter-differentiated comparison and its valid domain must be
+proved separately. Existing global ground-jet energy bounds do not by
+themselves supply a relative estimate on exponentially rare fibers.
+
+## 6. Correct complement argument and compact action gap
+
+For any reference beta(Q), exact cancellation gives
+
+```
+E[1_out |sigma-beta|^2|Q]
+ = h_g(Q)^-1 integral_out |N_g-beta Psi_g|^2 dy.             (R7)
+```
+
+The conditional denominator and the common reference are both retained.
+
+**Actual geometric gap.** Use the common compact total space
+`X=SU(2)^3 x SU(2)` of (y,Q). The actual Agmon distance S from the unique
+well is continuous: its weighted path length is locally bounded above by
+a constant times the smooth electric-metric distance. The calibrated result
+S5 in the original transport argument proves
+`min_y S(y,Q)=I(theta(Q))`, where `I(theta)=32 sqrt(2)(1-cos(theta/8))`.
+Its equality set Zmin contains all regular minimizers and the entire
+antipodal minimizing sphere. Choose an open set U containing **all** of
+Zmin, including that sphere. On the compact complement X\U, the continuous
+nonnegative function `S-I(theta)` has no zeros. If the complement is nonempty,
+it therefore attains a minimum kappa>0:
+
+```
+S(y,Q)>=I(theta(Q))+kappa on X\U.                          (R8)
+```
+
+This proves a uniform positive action gap for this appropriately enlarged
+family of tubes. It supplies no numerical value from a magnetic Hessian.
+A fixed-radius tube around only the single regular minimizer cannot be used
+uniformly: other limiting sphere points have action excess tending to zero.
+
+**Weighted comparison implication.** Suppose, in addition to R8, the actual
+centered numerator and normalization satisfy, uniformly in Q,
+
+```
+|N_g-beta Psi_g| <= B g^-p exp(-(S-epsilon)/g^2),
+h_g(Q) >= b g^r exp(-2(I(theta)+epsilon)/g^2),              (R9)
+```
+
+where B,b>0, p,r are fixed and `0<=epsilon<kappa/2`. Normalized fiber Haar
+volume is one. Integration in R7 gives
+
+```
+E[1_out |sigma-beta|^2|Q]
+ <= (B^2/b) g^(-2p-r) exp(-2(kappa-2epsilon)/g^2).          (R10)
+```
+
+Polynomial losses are absorbed into a smaller positive exponent. Indeed,
+for a=kappa-2epsilon>0 and m=max(2p+r,0), the function
+`t^(m/2) exp(-a t)` is bounded for t=g^-2, g<=1; for m>0 its global maximum
+is `(m/(2 a e))^(m/2)`, and for m=0 it is at most one. Therefore R10 is
+bounded by a constant times exp(-a/g^2). This proves the normalized
+complement implication without assuming exact polynomial prefactors.
+The actual uniform differentiated numerator and normalization in R9 remain
+unsupplied. Denominator cancellation and R8 alone do not imply R9.
+
+## 7. Assembly criterion and actual status
+
+Assume the actual small-angle hypotheses of section 3, bounded uniform
+phase/amplitude/moment controls on the intermediate annulus, the actual
+comparison/error hypotheses of R5 near the antipode, and R9 for the same
+reference beta on the respective fibers. Then
+
+```
+Var(sigma|Q) <= E[1_tube |sigma-beta|^2|Q]
+              +E[1_out |sigma-beta|^2|Q].                 (R11)
+```
+
+Section 3 bounds the small-angle term by C0+C1*g^-2 E(V|Q). On the
+intermediate annulus tangency, bounded second phase derivatives, fourth
+moments O(g^4), and the amplitude bound give an O(g^-2) tube term. R5 gives
+the antipodal tube term. On both latter regimes theta>=theta0>0, so
+`E(V|Q)>=v_*(theta0)>0` absorbs their O(g^-2) constants. R10 bounds the
+complement. Taking the maximum of the finitely many constants proves M10.
+Class invariance from section 1 transfers the result to w.
+
+This is a proven assembly implication. Its actual-model hypotheses remain
+open. M11--M15 cannot yet be invoked using this submission as their M10 input.
+The repair establishes a correctly chosen uniform action-gap domain and the
+reference angular crossover bound, but has not completed actual M10.
+
+## 8. Verification and provenance
+
+The registered suite checks exact tangency, a general quadratic jet,
+sine-square algebra, the logarithmic-parameter identity, the remainder
+counterexample, centered denominator cancellation, a magnetic/action Hessian
+counterexample, and exact reference angular/Gaussian moments. The original
+antipodal suite independently derives the magnetic Hessian from face words.
+No Boolean fixture or finite potential sample is labeled a score proof.
+
+Analytic compactness, sine concavity, measure comparison, and the conditional
+assembly arguments retain their stated mathematical scope. Their full
+statements have no dedicated Lean formalization. T1 applies to the exact
+computations, not to the actual all-fiber target.
