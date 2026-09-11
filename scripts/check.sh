@@ -15,6 +15,13 @@ run() {
   "$@" || status=1
 }
 
+fast=0
+for arg in "$@"; do
+  case "$arg" in
+    --fast) fast=1 ;;
+  esac
+done
+
 for s in $stacks; do
   case "$s" in
     node)
@@ -27,7 +34,11 @@ for s in $stacks; do
       ;;
     python)
       # shellcheck disable=SC1091  # generated at bootstrap time, absent when linting
-      [ -d .venv ] && . .venv/bin/activate
+      if [ -f .venv/bin/activate ]; then
+        . .venv/bin/activate
+      elif [ -f .venv/Scripts/activate ]; then
+        . .venv/Scripts/activate
+      fi
       command -v ruff   >/dev/null 2>&1 && { run ruff check .; run ruff format --check .; }
       # Gate on opt-in config, not on the binary merely being present: an
       # ambient mypy with no project config only produces missing-stub noise.
@@ -36,7 +47,23 @@ for s in $stacks; do
       fi
       # Portable local-link and anchor checks for maintained documentation.
       run python scripts/check_docs.py
-      command -v pytest >/dev/null 2>&1 && run pytest -o addopts=--strict-markers --verbose --durations=20
+      if command -v pytest >/dev/null 2>&1; then
+        if [ "$fast" -eq 1 ]; then
+          targets="tests/test_cli.py tests/test_docs.py tests/test_briefing.py tests/test_ci_scope.py"
+          if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+            base_ref="${CI_BASE_SHA:-HEAD~1}"
+            for f in $(git diff --name-only "$base_ref" HEAD 2>/dev/null | grep -E '^tests/test_.*\.py$' || true); do
+              if [ -f "$f" ] && [ "$f" != "tests/test_certified.py" ]; then
+                targets="$targets $f"
+              fi
+            done
+          fi
+          # shellcheck disable=SC2086
+          run pytest -o addopts=--strict-markers -q $targets
+        else
+          run pytest -o addopts=--strict-markers --verbose --durations=20
+        fi
+      fi
       ;;
     rust)
       run cargo fmt --check

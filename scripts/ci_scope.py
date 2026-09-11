@@ -26,6 +26,16 @@ ALLOWLIST_ROOT_FILES = {
     "docs/documentation_manifest.json",
 }
 
+LEAN_PATHS = {"Makefile", "scripts/bootstrap-lean.sh"}
+
+
+def has_lean_changes(files: list[str]) -> bool:
+    for f in files:
+        posix = Path(f).as_posix()
+        if posix.startswith("lean/") or posix in LEAN_PATHS:
+            return True
+    return False
+
 
 def load_maintained_docs(root: Path = ROOT) -> set[str]:
     manifest_path = root / "docs" / "documentation_manifest.json"
@@ -155,26 +165,33 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.full:
         full = True
+        lean = True
         reason = "Manual full run requested (--full)"
     elif args.files:
         full, reason = classify_changes(args.files, base_sha=args.base)
+        lean = has_lean_changes(args.files)
     else:
         changed = get_changed_files(args.base, args.head)
         if changed is None:
             full = True
+            lean = True
             reason = "Could not determine changed files; falling back to full verification"
         else:
             full, reason = classify_changes(changed, base_sha=args.base)
+            lean = has_lean_changes(changed)
 
     if args.github_output:
         out_path = Path(args.github_output)
         out_path.parent.mkdir(parents=True, exist_ok=True)
         flag = "true" if full else "false"
+        lean_flag = "true" if lean else "false"
         with out_path.open("a", encoding="utf-8", newline="\n") as f:
             f.write(f"full={flag}\n")
+            f.write(f"lean={lean_flag}\n")
 
     flag = "true" if full else "false"
-    print(f"CI Scope: full={flag} ({reason})")
+    lean_flag = "true" if lean else "false"
+    print(f"CI Scope: full={flag} lean={lean_flag} ({reason})")
     return 0
 
 

@@ -92,10 +92,14 @@ and checks permitted Python help edits structurally; a Markdown extension
 alone does not select the fast path. A failed scope decision fails the `check`
 job. Skipped scientific jobs do not supply new scientific verification.
 
-CI verifies each tree once. A run that passes full verification records the
-tree it checked; a later run for the same tree, normally the push to `main`
-after a merge onto an unmoved base, reports that earlier run and skips the
-scientific jobs. Closing a pull request cancels its in-flight run
+CI decouples pull request turnaround from full verification. A pull request runs
+a fast merge gate (lint, formatting, documentation validation, regression tests,
+and Windows encoding/CLI checks) in under 2 minutes. Lean proof compilation on PRs
+is scoped to changes touching `lean/` or toolchain files. The push to `main` runs
+full verification (the full invariant and catalogue suite, complete Lean proofs)
+asynchronously in the background and records the verified tree hash. A later run
+for an identical tree reports that earlier run and skips redundant scientific jobs.
+Closing a pull request cancels its in-flight run
 ([`ci-supersede.yml`](.github/workflows/ci-supersede.yml)), so the push to
 `main` is the run that counts. A different base, a squash or a rebase gives a
 different tree and verifies in full; a manual dispatch always verifies in full.
