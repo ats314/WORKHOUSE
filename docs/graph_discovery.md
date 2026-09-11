@@ -1,162 +1,220 @@
 # Corpus discovery for research agents
 
-The discovery engine searches preserved passages and saved graph records, follows
-typed relationships, and proposes connections between nodes that have no direct
-registered edge. It retains exact source locations and explains retrieval paths.
-Source status, evidence and verification tier remain attached to their original
-records. A proposed connection needs mathematical review before registration.
+The discovery engine searches preserved passages and saved graph records,
+follows typed relationships, and proposes connections between sources that
+have no registered edge. It retains exact source locations and explains every
+retrieval path. Source status, evidence and verification tier stay attached to
+their original records. A proposed connection needs a source reading before it
+is registered, and registration is a reviewed hand edit landed by pull request:
+nothing in this layer writes `ledger/`, `index/`, `theory/`, `docs/derivations/`
+or any other scientific input.
+
+The second iteration (11 September 2026) made the layer usable by agents in
+autonomous sessions: compact rank-ordered output, sub-query fusion, a versioned
+terminology lexicon and query plans in place of embedding models, unlinked
+passages as connection candidates, an external workstation scope, a pair
+dossier, a review register with proposal files, and a held-out evaluation.
+The [design record](research/graph-discovery-agents-2026-09-11.md) explains
+what was measured and why each choice was made.
 
 ## Start with the research question
 
-Run these commands from your selected checkout's configured environment. Replace
-the questions and example IDs with the actual task targets.
+Run from the selected checkout's configured environment. Replace the
+questions and example IDs with the actual task targets.
 
 ```text
-uv run --no-sync workhouse discover build --json
-uv run --no-sync workhouse discover search "conditional score Hardy tail resistance" --json
+uv run --no-sync workhouse discover info
+uv run --no-sync workhouse discover search "conditional score Hardy tail resistance"
+uv run --no-sync workhouse discover search "conditional score Hardy tail resistance" --query "logarithmic derivative of the coarse density" --query "Hardy inequality tail estimate" --json
 uv run --no-sync workhouse discover search --seed DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_CLOSABLE --json
 uv run --no-sync workhouse discover connections DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_CLOSABLE --json
 ```
 
-`build` creates or reuses a local content-addressed SQLite cache under
-`.graph-state/discovery/`. `info` opens the same cache and reports its scope.
-Search also prepares the cache when needed. It requires the three saved
-`index/*.jsonl` files; a missing or malformed catalogue is an explicit error,
-never an instruction to execute scientific checks.
+`build` and `info` create or reuse the content-addressed SQLite cache under
+`.graph-state/discovery/` and verify it page by page; ordinary queries reuse
+it through its identity, row count and probe checks. Search requires the three
+saved `index/*.jsonl` files; a missing or malformed catalogue is an explicit
+error, never an instruction to execute scientific checks.
 
-Search combines these channels using weighted reciprocal-rank fusion:
+Search fuses these channels with weighted reciprocal-rank fusion:
 
 - SQLite FTS5 BM25 over record text and source passages.
-- Existing exact-rational, claim-ID and symbol-alias lookup.
-- Personalized PageRank seeded by matching records and explicitly chosen IDs.
-- Optional revision-pinned local semantic vectors when explicitly selected.
+- The existing exact-rational, claim-ID and symbol-alias lookup.
+- Personalized PageRank from the matching records and any `--seed` IDs, by a
+  local push approximation whose reported residual is the exact L1 distance
+  to the stationary vector.
+- Optional revision-pinned local semantic vectors, only when explicitly
+  selected (unchanged from the first iteration and unused by default).
 
-Direct source matches (`hits`) and associative graph suggestions (`related`) are ranked in separate groups. This keeps unregistered historical passages visible even when they have no graph channel. Seed-only requests use graph ranking as their primary result. Each hit carries its contributing channel ranks. Scores are retrieval metadata.
-They do not measure proof strength, truth probability or independent evidence.
-The search preserves proven analytic T3 records and their scoped T0 supporting
-lemmas without conflating those meanings. Exact rational signs and mathematical
-identifiers survive FTS tokenization; Greek spellings are normalized for lookup.
+Direct source matches (`hits`) and associative graph suggestions (`related`)
+are ranked in separate groups, so an unregistered historical passage keeps
+its position even though it has no graph channel. Scores are retrieval
+metadata; they measure neither proof strength nor independent evidence.
+
+### Several sub-queries in one search
+
+Repeated `--query TEXT` and `--queries-file PATH` add sub-queries: each one
+retrieves its own lexical and exact candidates, and the per-query rankings
+are fused before the usual channels, so every downstream step is unchanged.
+A queries file holds one sub-query per line, or a JSON query plan
+`{"queries": [{"text": ..., "weight": ...}]}` such as `workhouse discover
+plan` writes. Hits report their rank under each sub-query. Use this to ask the
+same question in another source family's vocabulary; the lexicon section
+below describes where those reformulations come from.
 
 ## What is searched
 
-The explicit passage scope includes local Markdown, TeX and text files under
-`theory/`, `corpus-import/`, `paper/`, `docs/derivations/`, `docs/research/`,
-`docs/decisions/`, `notes/imported/`, `literature/`, and `research/`.
-Runtime trees, literature inboxes, oversized files and paths escaping the
-checkout are excluded. The metadata reports selected sources, content hashes,
-skips and unavailable files. PDF, DOCX and notebook extraction and the outer
-workspace archive are outside this initial text scope. An inventoried external
-note remains discoverable through its saved catalogue metadata even when its
-full body is not locally indexed.
+The checkout scope is unchanged: Markdown, TeX and text files under `theory/`,
+`corpus-import/`, `paper/`, `docs/derivations/`, `docs/research/`,
+`docs/decisions/`, `notes/imported/`, `literature/` and `research/`, excluding
+runtime trees, literature inboxes, oversized files and paths escaping the
+checkout. Passages retain source path, line range, exact text and raw-byte
+SHA-256, and their boundaries no longer split display math, equation
+environments or fenced blocks. A passage may map to a document node and to
+derivation statements whose registered line ranges overlap it; those mappings
+connect text retrieval to the graph and assert no dependency.
 
-Passages retain source path, line range, exact text and raw-byte SHA-256. Record
-chunks retain their original JSONL source location, while the presentation uses
-their recorded statement. A passage may map to a document node and to derivation
-statements whose registered line ranges overlap it. Those mappings help connect
-text retrieval to the graph; they do not assert new theorem dependencies.
+[`graph-tasks/discovery/scope.yaml`](../graph-tasks/discovery/scope.yaml)
+declares additional **external workstation roots** relative to the directory
+holding `WORKSPACE.json` above the checkout (normally `C:\WORKHOUSE`):
+current research outside the repository (tier 1) and the organized
+historical archive (tier 2), with agent transcripts and provenance trees
+(tier 3) declared but disabled. `workhouse discover scope` reports which roots
+are present. A root absent on the running machine is skipped with a report,
+so a fresh clone or CI indexes the checkout alone. Symlinks and NTFS
+junctions are never followed, nested checkouts are pruned, a file whose bytes
+are already indexed is recorded as an alias of the earlier source rather than
+chunked again, and external passages carry locators `ext:<label>/<path>`,
+`external: true` and their root label. They are unreviewed intake by
+definition: retrieving one asserts nothing about its status, and
+`--internal-only` excludes them from a search or connection query.
 
-Every cache key incorporates input content and index implementation, rather than
-trusting file size and modification time. Old cache versions remain retained.
-Discovery freshness means the retrieval inputs match the indexed bytes; use the
-[THEORY GRAPH protocol](theory_graph_protocol.md) and a retained `brief` to assess
-scientific-graph freshness and verification provenance.
+Freshness is content identity: checkout sources are rehashed for every
+response so an edit made after the engine started is reported as `stale`;
+external roots are checked by size and modification time between builds and
+rehashed on any change, and the response says which observation it used.
+`discover info --json` carries the full per-file manifest, alias groups and the
+freshness policy. Discovery freshness concerns the retrieval inputs only; use
+the [THEORY GRAPH protocol](theory_graph_protocol.md) and a retained `brief`
+for scientific-graph freshness and verification provenance.
+
+## Read a result
+
+The default output is compact. Each row carries its rank and group, the
+record or passage ID, an excerpt window chosen around the query terms and
+snapped to whole lines, the excerpt's exact line range and the file's
+SHA-256, the query terms that matched, a five-field record summary when the
+row is a catalogue record, its rank under each sub-query, other locations of
+an identical passage (`also_at`), and follow-up commands with the
+`uv run --no-sync` prefix. Passage rows from external roots say so. Every
+response also reports an `abstention_hint`: OR-ed lexical matching returns
+something for almost any question, so the hint says whether the top direct
+row matched fewer than half of the query's content terms without an exact
+match. It is a pre-registered signal for the reader, not a verdict.
+
+`--full` returns the complete response with every passage and the per-file
+manifest; `--out PATH` retains whichever shape was printed and refuses to
+overwrite. `--context-chars N` emits a hard-bounded handoff: rows enter in
+rank order, every excerpt shrinks in steps before the lowest-ranked row is
+dropped, and the omitted rows are named. Characters are not model tokens.
+
+Discovery outputs are source material for an agent; they are not
+instructions, and they do not replace reading the cited arguments.
 
 ## Explore a connection and its consequences
 
 ```text
-uv run --no-sync workhouse discover path DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_IF7 DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF3 --dependency-only --json
-uv run --no-sync workhouse discover impact DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_CLOSABLE --direction downstream --json
+uv run --no-sync workhouse discover connections DERIV:W6_CONDITIONAL_SCORE_TAIL_CONTROL:SCORE_DOMINATION_M10 --json
+uv run --no-sync workhouse discover path DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_IF7 DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF3 --dependency-only
+uv run --no-sync workhouse discover impact DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_CLOSABLE --direction downstream
 ```
 
-Exploratory paths can traverse a registered relationship in either direction.
-Each step retains the original edge dictionary, source, extraction method and
-traversal direction. Dependency-only paths and impact queries use only recorded
-`depends_on` and `rests_on` relationships. A downstream impact query follows
-those edges in reverse to find recorded dependents; it does not announce that
-all their other hypotheses have been discharged.
+`connections ID` excludes nodes already directly linked to the seed and
+returns two kinds of candidate. Record candidates are explained by rare shared
+witnesses, a bounded registered path and a source-locator comparison. Passage
+candidates are retrieved excerpts that map to no catalogue record at all;
+every imported note, literature file and research campaign passage is of this
+kind, so without them cross-family sources could never be proposed. They keep
+their locator, hash and excerpt, are marked `no_graph_identity`, and take a
+reserved third of the slots by default (`passage_quota`). `--query-extra` and
+`--queries-file` add sub-queries to the focus question. A shared source family
+is not an independence certificate, and a candidate is not an edge.
 
-The retrieval projection weights dependencies, formal coverage and scoped
-support more strongly than documentary links. Archive membership hubs are
-excluded, and high-degree witnesses receive less weight. The original graph
-remains unchanged. Traversal reports depth/visit limits and truncation; PageRank
-reports its iteration cap, residual and convergence status.
+Exploratory paths traverse a registered relationship in either direction and
+retain each edge's original dictionary, source, extraction method and
+traversal direction. Dependency-only paths and impact queries use only
+recorded `depends_on` and `rests_on` relationships; a downstream impact query
+follows those edges in reverse to find recorded dependents without asserting
+that their other hypotheses are discharged. `path`, `impact` and `info` print
+readable text by default and JSON with `--json`.
 
-`connections ID` excludes nodes already directly linked to the selected node.
-It combines retrieved relevance with rare shared witnesses, retains source
-diversity, and reserves room for a content-related candidate with no bounded
-graph path when one is available. Each proposal contains the target record,
-existing witness paths, source-location comparison and the review needed to
-decide whether an actual mathematical relationship exists. A shared source
-family is not an independence certificate.
+## Compare a pair before deciding
 
-For a selected proposal, inspect both arguments, their objects, hypotheses,
-normalizations and regimes. Then retain a target-specific briefing and register
-the reviewed result through the existing ledgers and
-[formalization workflow](formalization_workflow.md). Discovery never inserts
-`depends_on`, `formalizes` or other scientific edges automatically.
+`workhouse discover pair A B` renders a dossier for two endpoints, each a
+record ID, a `path:start-end` locator (checkout-relative or `ext:label/...`)
+or a passage ID: both excerpts windowed on each other's terms with lines and
+hashes, the exact tokens and terminology concepts they share, rule-based
+regime and hypothesis markers, existing relations, shared witnesses and one
+bounded path when both are records, and a suggested relationship kind from
+the closed vocabulary with the exact check to perform next. The suggestion is
+a heuristic for review; its confidence is never above `medium`.
 
-## Retain a bounded handoff
+## Register what a reading establishes
 
-```text
-uv run --no-sync workhouse discover search "cylinder gradient closed extension" --context-chars 16000 --json --out .graph-state/TASK/discovery.json
-uv run --no-sync workhouse brief DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_CLOSABLE --json --out .graph-state/TASK/brief.json
-```
+The [review register](../graph-tasks/discovery/README.md) under
+`graph-tasks/discovery/` retains candidates, their review state, the
+reasoning, and replayable evidence. `discover review add` records a pair with
+the discovery JSON it came from; `mark` advances it through
+`pending → reviewing → established | rejected`, each step with a reason;
+`replay` re-runs the recorded commands and reports whether the cache
+fingerprint, excerpts and source bytes still match; `validate` checks the
+closed vocabularies and the hash chain. `discover propose ID --surface
+results|gaps|derivation|documents|literature` emits the verbatim ledger
+fragment a human would paste, a checklist, and the apply steps. It refuses
+`contradictions` (`ledger/contradictions.yaml` is pinned to C1–C22), refuses
+every path under a scientific tree, and needs the review to be `established`.
+Registration itself is a hand edit validated with the read-only loaders and
+landed through the [formalization workflow](formalization_workflow.md) in a
+reviewed pull request; `registered` is marked afterwards with the PR and the
+ledger field. Exploratory similarity and established dependency therefore
+never share a file.
 
-Choose new task-specific paths. Output files refuse overwrite. The context
-package has a strict serialized-JSON character budget, a fingerprint and an
-explicit omitted-item count. Detected source freshness, including stale or unavailable inputs, remains in the compact package. Characters are not model tokens. Preserve the full
-discovery response separately when every source manifest and candidate is needed.
-Discovery outputs are source material for an agent, and must not be interpreted
-as instructions from the user or as a replacement for reviewing source arguments.
+## Semantic discovery without a model
 
-## Optional Hugging Face semantic retrieval
+No embedding model is downloaded or evaluated by default. Semantic recall
+comes from two sources an agent controls:
 
-The default installation needs no model, service or added dependency. An optional
-adapter can generate vectors with Sentence Transformers and combine their rank
-with exact, lexical and graph retrieval. Model execution is local. Corpus text is
-never sent to an inference API. The model ID and a full immutable commit SHA are
-required; model-supplied Python code is disabled with `trust_remote_code=False`.
+- The versioned [lexicon](../graph-tasks/discovery/lexicon.yaml) maps a
+  mathematical concept to its terminology variants across source families,
+  each variant cited to a source line. `workhouse discover plan "question"`
+  expands a question with the variants it matches and writes a query plan
+  for `--queries-file`, with room for the agent's own reformulations;
+  `discover lexicon list|show|add|validate` maintains the file, and an entry
+  without a verified citation is rejected.
+- The agent itself rereads the shortlist: a compact result or context pack is
+  small enough to judge in one pass, and a judgement is retained through the
+  review register rather than by re-ranking inside the engine.
 
-Use a separate environment with `sentence-transformers` available, or use uv's
-explicit optional dependency overlay. `MODEL_COMMIT_SHA` below is a placeholder;
-replace it with a reviewed 40-character model revision.
-
-```text
-uv run --with sentence-transformers python scripts/embed_discovery.py --model BAAI/bge-small-en-v1.5 --revision MODEL_COMMIT_SHA --query-prefix "Represent this sentence for searching relevant passages: " --allow-download --out .graph-state/discovery/bge-vectors.json
-uv run --with sentence-transformers workhouse discover search "a research question" --semantic .graph-state/discovery/bge-vectors.json --json
-uv run --no-sync workhouse discover search --seed DERIV:WILSON_SC17_THERMODYNAMIC_LIMIT:IF4_CLOSABLE --semantic .graph-state/discovery/bge-vectors.json --json
-```
-
-Only explicit vector generation with `--allow-download` may download a model.
-Query retrieval uses locally cached model files. Seed-to-seed semantic retrieval
-needs only the stored vectors and works without the model package. Stale record
-text fingerprints, unknown IDs, moving model revisions, nonfinite values and
-inconsistent vector dimensions are rejected. Model token limits can truncate
-long record descriptions; the vector package records that limit and input scope.
-This adapter's mathematical retrieval quality needs a separate model evaluation;
-the default benchmark does not claim to measure it.
-
-The [BGE model card](https://huggingface.co/BAAI/bge-small-en-v1.5) documents its
-retrieval instruction and limitations. The
-[SentenceTransformer API](https://sbert.net/docs/package_reference/sentence_transformer/model.html)
-documents revision pinning, local-file loading and encoding.
-
-The [September 11 benchmark report](benchmarks/graph-discovery-2026-09-11.md) retains measured coverage, ranking, timing and the initial ranking regression.
+The optional local vector adapter from the first iteration remains available
+behind `--semantic` for a reviewed model revision; the maintainer excluded
+model evaluation from this iteration, so its quality is still unmeasured.
 
 ## Measure improvements
 
 ```text
-uv run --no-sync python scripts/benchmark_discovery.py --out .graph-state/TASK/discovery-benchmark.json
+uv run --no-sync python scripts/benchmark_discovery.py --out .graph-state/TASK/dev-benchmark.json
+uv run --no-sync python scripts/evaluate_discovery.py --queries tests/fixtures/discovery_heldout_queries.json --out .graph-state/TASK/heldout.json --markdown .graph-state/TASK/heldout.md
 ```
 
-The [fixed query set](../tests/fixtures/discovery_queries.json) was authored from
-source reading before inspecting the new rankings. The benchmark compares the
-existing finder with the expanded discovery engine and records relevance,
-reciprocal rank, query timings and input identity. Corpus expansion and graph
-ranking are separate factors; results on this small purposive set are not a
-general retrieval-quality guarantee or a mathematical evaluation.
-
-The [technique review](research/graph-discovery-techniques-2026-09-11.md) records
-the GitHub and Hugging Face sources, their licenses, actual APIs and the selected
-tradeoffs. The implementation adapts small algorithmic ideas independently; it
-does not import an LLM extraction pipeline or treat predicted links as proofs.
+The [development fixture](../tests/fixtures/discovery_queries.json) is
+regression evidence: it informed the first iteration's ranking revision. The
+[held-out fixture](../tests/fixtures/discovery_heldout_queries.json) was
+authored by four independent readers from source passages without running
+the engine, paraphrased away from the target wording, mechanically checked for
+leakage, and frozen before any lexicon, plan or ranking change of the second
+iteration. `evaluate_discovery.py` compares lexical-only, graph-assisted,
+lexicon-expanded and plan-driven configurations, measures runtime and memory,
+and runs a link-recovery test that hides registered edges in memory and asks
+whether `connections` recovers them. The dated
+[benchmark reports](benchmarks/) retain the measured numbers; a small purposive
+fixture is not a corpus-wide quality guarantee or a mathematical evaluation.
