@@ -82,9 +82,9 @@ def exact_checks():
     out["nine_eigenvalues"] = len(spectrum(theta)) == 9
 
     soft = 8 * sp.cos((sp.pi - delta) / 4) - 4 * R2
-    out["A6_expansion"] = sp.simplify(
-        sp.series(soft, delta, 0, 3).removeO() - (R2 * delta - R2 / 8 * delta**2)
-    ) == 0
+    out["A6_expansion"] = (
+        sp.simplify(sp.series(soft, delta, 0, 3).removeO() - (R2 * delta - R2 / 8 * delta**2)) == 0
+    )
     out["soft_vanishes_at_pi"] = sp.simplify(soft.subs(delta, 0)) == 0
 
     # (A5)'s constant is the (8-4sqrt2)C singlet evaluated at theta = pi, not a 7-fold value.
