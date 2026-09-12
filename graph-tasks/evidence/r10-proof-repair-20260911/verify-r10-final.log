@@ -1,0 +1,22 @@
+
+W6 R10 repaired identities and counterchecks
+  PASS  T1  W6 R10 repair: conditional measure derivative finite example
+        Density (1+w*y/2)/4: d_w E[y|w]=1/6, E[d_w y|w]=0, covariance=1/6. Exact counterexample to frozen-measure differentiation; actual-model H0 remains open.
+        src/workhouse/invariants/w6_source_energy_r10.py:57
+  PASS  T1  W6 R10 repair: centered product retains covariance
+        For centered y-w/6, d_w E[(y-w/6)^2|w]=-w/18; frozen derivative is zero. The product conditional derivative retains its covariance; this does not prove H3.
+        src/workhouse/invariants/w6_source_energy_r10.py:66
+  PASS  T1  W6 R10 repair: projection recurrence through third derivative finite model
+        Normalized Omega=(1,t)/sqrt(1+t^2): F_(n+1)=F_n'+[sigma,F_n] reproduces P^(n) exactly for n=0,1,2,3. Finite matrix control only; no uniform energy bound.
+        src/workhouse/invariants/w6_source_energy_r10.py:76
+  PASS  T1  W6 R10 repair: omitted projection mixed terms are nonzero
+        At t=1 in the rational two-point frame, the omitted 2 U^-1[sigma,Pi']U equals [[0,-1],[-1,0]], not zero. This falsifies the submitted product formula.
+        src/workhouse/invariants/w6_source_energy_r10.py:88
+  PASS  T1  W6 R10 repair: diffusion-gap inverse has g^-3 scaling
+        Given diffusion gap c and potential fluctuation C_V*g^2, inverse arithmetic is 8*C_V/(c*g^3), not g^-1. No actual fiber gap or forcing estimate is certified.
+        src/workhouse/invariants/w6_source_energy_r10.py:98
+  PASS  T1  W6 R10 repair: H2 proposed uniform Young bound fails
+        At v=g^2 the required Young constant is 8*sqrt(2*kappa_0)/g, unbounded at zero. The scalar implication fails; actual-model H2 is not disproved.
+        src/workhouse/invariants/w6_source_energy_r10.py:108
+
+6/6 checks passed

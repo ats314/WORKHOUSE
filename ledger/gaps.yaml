@@ -568,6 +568,18 @@ gaps:
       That is the matched-scaling structure of NOTE_O4 section 11 made exact at fourth order; it is
       not the overlap theorem, and the N^-(4k-1) law beyond k = 2 is a conjecture with a stated
       mechanism (k cancelled orders on N^-(2k-1) channel content) to test at sixth order (G9).
+      PROGRESS 2026-09-11 (ADR 0047, RESULT:ODD_ORDER_CENTRE_PARITY, runs/odd_order_band_2026-09-11,
+      suite "the odd orders of the band are determinant families (G16)", six T1 checks): the odd
+      orders are absent. A link set meeting every plaquette an odd number of times turns the centre
+      constraint (flux 0 mod N on every link) into a parity count of face words, so for even N every
+      odd-order element vanishes identically at every order, and for odd N nothing survives below
+      order N - 2, where only the one-plaquette vertex -(N/(N+1))^(N-3)/((N-3)!)^2 remains (-1 at
+      N = 3, the first-order +u; -25/144 at N = 5). The SU(3) third order B_3, t_3+, leak_3, d_3 is a
+      determinant-family effect, reproduced in full by the third engine; N = 4, 6, 7 are zero and
+      the Q(N) third order is identically zero. The tau-series therefore has no odd terms in the
+      planar limit at any fixed order; the first odd term of odd N is (e^2 tau/2)^N up to a power
+      of N, exponentially small below tau = 2/e^2. The even orders' law and the overlap theorem are
+      untouched.
   - id: G17
     tier: 3
     state: open
@@ -872,17 +884,21 @@ gaps:
           consequence: M10 together with the established source-potential moment makes the M11-M15 uniform weighted score bound applicable. Complete source-energy transport and interacting-grid uniformity remain separate.
           decisive_test: For the synchronized S13 field, establish the actual conditional tube moments and differentiated amplitude bound in S14, then use the established antipodal magnetic normal/angular geometry to prove the true-ground score estimate and control the S15 outside deviation with the same reference. Compare the resulting complete variance with 1+g^-2 E(V|w), or prove a sufficient source-weighted pairing directly.
       - step: Control complete source-vacuum transport energy jets R10
-        state: untried
+        state: live
         depends_on:
           - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
           - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:GROUND_FRAME_GENERATOR
           - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
+          - RESULT:W6_R10_CONDITIONAL_DERIVATIVE
+          - RESULT:W6_R10_H4_FROM_H0
+          - RESULT:W6_R10_PROJECTION_JET_RECURRENCE
         bears_on:
           - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:COMPLETE_BUDGET
           - DERIV:WILSON_SELECTED_INVERSE_WALL:W6
         status: |
           Raw H_g derivatives and vacuum-only ground jets are established. Prove the complete source/vacuum generator bounds R10, ||A^(r)(g)||_(q_g to q_g)<=d_r g^(-r-1) for r=0,1,2, or use the source's direct mixed-form R11 alternative. These are alternative sufficient entrances to the complete residual budget, not cumulative prerequisites. M10 concerns source-to-L2 control and is not a prerequisite for this route or a proof of its energy derivatives.
           The ground-frame representation writes the complete R9 generator through the undilated score, its conditional mean m_g (with nu_g = m_g Omega_g) and its conditional fluctuation, and proves the purely magnetic score Poisson equation. DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION gives the r=0 bound under the fiberwise conditional-energy estimates H0-H4 (DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:CONDITIONAL_ENERGY_H0_H4), whose averaged forms are established; H0-H4 and r=1,2 remain open, and a reviewed attempt that assumed sup_w K^0_g is recorded as rejected.
+          PR 150 repair preserves the failed closure and establishes corrected conditional differentiation and complete projection jets. C4 proves H0 implies H4 using R8a, reducing the sufficient order-zero checklist to H0-H3. The actual estimates and higher source-energy bounds remain open; six exact counterchecks certify only their stated finite/scalar content.
         frontier:
           priority: 2
           target: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:SOURCE_ENERGY_JETS_R10
@@ -1310,11 +1326,24 @@ gaps:
         - G19
         status: The analytic implication and finite-energy weight criterion are proved under their explicit
           kernel/rate hypotheses. Positive-time divisibility supplies semigroup continuity. No actual weak-coupling Wilson kernel or rate input is marked discharged.
+      - step: Optimize finite decay channels and time-amplified errors in the physical clock
+        state: done
+        closed_by:
+        - RESULT:MOVING_TIME_MULTICHANNEL_RATE
+        - RESULT:MOVING_TIME_MULTICHANNEL_SHARPNESS
+        depends_on:
+        - RESULT:MOVING_TIME_SPECTRAL_GAP
+        cannot_decide:
+        - G19
+        status: Pairwise inequalities give the sharp normalized rate, a witnessing logarithmic time
+          and finite-horizon penalty; one-atom examples prove sharpness. Actual Wilson estimates,
+          full defining-history kernels and nontriviality remain application inputs.
       - step: Transfer a physical continuum gap from one growing-time estimate per cutoff and approximate sources
         state: live
         depends_on:
         - RESULT:MOVING_TIME_SPECTRAL_GAP
         - RESULT:SHARP_CUTOFF_SOURCE_GAP_BUDGET
+        - RESULT:MOVING_TIME_MULTICHANNEL_RATE
         - RESULT:OS_KERNEL_MOVING_TIME_GAP
         status: The original spectral-measure theorem and sharp rate budget are proved. The compatible-kernel
           successor now constructs the limiting physical semigroup and total centered defining space from finite

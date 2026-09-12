@@ -1339,10 +1339,66 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 551
+## T1 — re-derived exactly — 617
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
+**Archive functional inequalities and source transport**
+
+- `Archive Chernoff optimization has the stated Herbst exponent`
+  - src/workhouse/invariants/archive_derivations.py:134 · ARCHIVE_FUNCTIONAL F11
+  - `workhouse verify --only 'Archive Chernoff optimization has the stated Herbst exponent'`
+- `Archive SU2 signed diffusion is exact in quaternion generator coordinates`
+  - src/workhouse/invariants/archive_derivations.py:361 · ARCHIVE_FUNCTIONAL F17
+  - `workhouse verify --only 'Archive SU2 signed diffusion is exact in quaternion generator coordinates'`
+- `Archive covariance decomposition is exact for a two-event mixture`
+  - src/workhouse/invariants/archive_derivations.py:102 · ARCHIVE_FUNCTIONAL F12
+  - `workhouse verify --only 'Archive covariance decomposition is exact for a two-event mixture'`
+- `Archive drift-to-energy remainder is an exact square`
+  - src/workhouse/invariants/archive_derivations.py:49 · ARCHIVE_FUNCTIONAL F8
+  - `workhouse verify --only 'Archive drift-to-energy remainder is an exact square'`
+- `Archive even tori realize extensive stationary center defects`
+  - src/workhouse/invariants/archive_derivations.py:329 · ARCHIVE_FUNCTIONAL F16
+  - `workhouse verify --only 'Archive even tori realize extensive stationary center defects'`
+- `Archive finite-range inverse bound holds on a nontrivial exact tridiagonal family`
+  - src/workhouse/invariants/archive_derivations.py:269 · ARCHIVE_SOURCE_TRANSPORT S10 S11 S12
+  - `workhouse verify --only 'Archive finite-range inverse bound holds on a nontrivial exact tridiagonal family'`
+- `Archive horizontal inverse zero-extension is nonlocal on exact cycles`
+  - src/workhouse/invariants/archive_derivations.py:289 · ARCHIVE_SOURCE_TRANSPORT S13 S14
+  - `workhouse verify --only 'Archive horizontal inverse zero-extension is nonlocal on exact cycles'`
+- `Archive likelihood-ratio transfer bounds normalized event probabilities`
+  - src/workhouse/invariants/archive_derivations.py:184 · ARCHIVE_SOURCE_TRANSPORT S4
+  - `workhouse verify --only 'Archive likelihood-ratio transfer bounds normalized event probabilities'`
+- `Archive mean threshold is independent of concentration around the mean`
+  - src/workhouse/invariants/archive_derivations.py:120 · ARCHIVE_FUNCTIONAL F11
+  - `workhouse verify --only 'Archive mean threshold is independent of concentration around the mean'`
+- `Archive nonnegative Taylor bound gives gradient domination`
+  - src/workhouse/invariants/archive_derivations.py:35 · ARCHIVE_FUNCTIONAL F2
+  - `workhouse verify --only 'Archive nonnegative Taylor bound gives gradient domination'`
+- `Archive normalized envelope tilts violate the claimed ordering`
+  - src/workhouse/invariants/archive_derivations.py:147 · ARCHIVE_SOURCE_TRANSPORT S3
+  - `workhouse verify --only 'Archive normalized envelope tilts violate the claimed ordering'`
+- `Archive overlap and defect budgets hold on an actual periodic four-dimensional complex`
+  - src/workhouse/invariants/archive_derivations.py:59 · ARCHIVE_FUNCTIONAL F3 F4 F5 F10 F14 F15
+  - `workhouse verify --only 'Archive overlap and defect budgets hold on an actual periodic four-dimensional complex'`
+- `Archive reflection-equivariant map has a negative coarse OS form`
+  - src/workhouse/invariants/archive_derivations.py:224 · ARCHIVE_SOURCE_TRANSPORT S7 S9
+  - `workhouse verify --only 'Archive reflection-equivariant map has a negative coarse OS form'`
+- `Archive reported full-rank fit and held-out fit are different formulas`
+  - src/workhouse/invariants/archive_derivations.py:313 · ARCHIVE_REVIEW_SOURCES numerical provenance
+  - `workhouse verify --only 'Archive reported full-rank fit and held-out fit are different formulas'`
+- `Archive rooted series retains the animal-count factor`
+  - src/workhouse/invariants/archive_derivations.py:208 · ARCHIVE_SOURCE_TRANSPORT S5 S6
+  - `workhouse verify --only 'Archive rooted series retains the animal-count factor'`
+- `Archive source log-partition Hessian equals a finite tilted covariance`
+  - src/workhouse/invariants/archive_derivations.py:161 · ARCHIVE_SOURCE_TRANSPORT S1 S2
+  - `workhouse verify --only 'Archive source log-partition Hessian equals a finite tilted covariance'`
+- `Archive square-profile chain rule retains the signed action pairing`
+  - src/workhouse/invariants/archive_derivations.py:16 · ARCHIVE_FUNCTIONAL F5
+  - `workhouse verify --only 'Archive square-profile chain rule retains the signed action pairing'`
+- `Archive support-preserving pushforward has an exact positive OS Gram matrix`
+  - src/workhouse/invariants/archive_derivations.py:244 · ARCHIVE_SOURCE_TRANSPORT S7 S8
+  - `workhouse verify --only 'Archive support-preserving pushforward has an exact positive OS Gram matrix'`
 **Balaban submission: the two proposed repairs and what they expose**
 
 - `Restoring the action prefactor makes the coarse subtraction a constant competition`
@@ -1354,6 +1410,50 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `The small-field curvature threshold sign flip preserves the suppression exponent`
   - src/workhouse/invariants/balaban_repair.py:57 · YM_BALABAN_MULTISCALE; G19 (4.1) (4.6) (5.13) R2
   - `workhouse verify --only 'The small-field curvature threshold sign flip preserves the suppression exponent'`
+**Earlier proof recovery: exact controls**
+
+- `Gram null decoupling preserves the physical operator`
+  - src/workhouse/invariants/earlier_proof_recovery.py:61 · EARLIER_PROOF_RECOVERY E5
+  - `workhouse verify --only 'Gram null decoupling preserves the physical operator'`
+- `Hermitian Ritz residual bounds the nearest exact eigenvalue`
+  - src/workhouse/invariants/earlier_proof_recovery.py:82 · EARLIER_PROOF_RECOVERY E6
+  - `workhouse verify --only 'Hermitian Ritz residual bounds the nearest exact eigenvalue'`
+- `SU3 twice wound covariance and crossed Haar coefficient are negative`
+  - src/workhouse/invariants/earlier_proof_recovery.py:243 · EARLIER_PROOF_RECOVERY E15
+  - `workhouse verify --only 'SU3 twice wound covariance and crossed Haar coefficient are negative'`
+- `VSU action derivatives and both energy asymptotics are exact`
+  - src/workhouse/invariants/earlier_proof_recovery.py:172 · EARLIER_PROOF_RECOVERY E11
+  - `workhouse verify --only 'VSU action derivatives and both energy asymptotics are exact'`
+- `all twelve nondegenerate staple incidence controls pass`
+  - src/workhouse/invariants/earlier_proof_recovery.py:153 · EARLIER_PROOF_RECOVERY E9
+  - `workhouse verify --only 'all twelve nondegenerate staple incidence controls pass'`
+- `archived singular geometry has all sixteen exact gates`
+  - src/workhouse/invariants/earlier_proof_recovery.py:29 · EARLIER_PROOF_RECOVERY E1-E4
+  - `workhouse verify --only 'archived singular geometry has all sixteen exact gates'`
+- `conditional spectral floor accepts noncommuting matrices`
+  - src/workhouse/invariants/earlier_proof_recovery.py:112 · EARLIER_PROOF_RECOVERY E8
+  - `workhouse verify --only 'conditional spectral floor accepts noncommuting matrices'`
+- `determinant reduction retains every row permutation sign`
+  - src/workhouse/invariants/earlier_proof_recovery.py:189 · EARLIER_PROOF_RECOVERY E12
+  - `workhouse verify --only 'determinant reduction retains every row permutation sign'`
+- `frame ray limits differ and rank volume endpoint needs L at least three`
+  - src/workhouse/invariants/earlier_proof_recovery.py:42 · EARLIER_PROOF_RECOVERY E3-E4
+  - `workhouse verify --only 'frame ray limits differ and rank volume endpoint needs L at least three'`
+- `literal Balaban corner paths have exact fourth order trace defect`
+  - src/workhouse/invariants/earlier_proof_recovery.py:266 · EARLIER_PROOF_RECOVERY E17
+  - `workhouse verify --only 'literal Balaban corner paths have exact fourth order trace defect'`
+- `moving adjoint force retains its own derivative`
+  - src/workhouse/invariants/earlier_proof_recovery.py:210 · EARLIER_PROOF_RECOVERY E13
+  - `workhouse verify --only 'moving adjoint force retains its own derivative'`
+- `positive matrix atom controls retain full rank and an empty annulus`
+  - src/workhouse/invariants/earlier_proof_recovery.py:95 · EARLIER_PROOF_RECOVERY E7
+  - `workhouse verify --only 'positive matrix atom controls retain full rank and an empty annulus'`
+- `positive sector transfer retains Laurent coefficients`
+  - src/workhouse/invariants/earlier_proof_recovery.py:161 · EARLIER_PROOF_RECOVERY E10
+  - `workhouse verify --only 'positive sector transfer retains Laurent coefficients'`
+- `same coupling score covariance is a positive pair sum`
+  - src/workhouse/invariants/earlier_proof_recovery.py:224 · EARLIER_PROOF_RECOVERY E14
+  - `workhouse verify --only 'same coupling score covariance is a positive pair sum'`
 **G17 uniformity: the shell isolation constant**
 
 - `every 5-cycle wraps the torus, so flux empties the five-link shelf`
@@ -1377,6 +1477,17 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the stability hypothesis package, with its dimensionless ratio`
   - src/workhouse/invariants/isolation.py:299 · G17 / PUB edition Lem. 14
   - `workhouse verify --only 'the stability hypothesis package, with its dimensionless ratio'`
+**G9 direct sixth order on one face and the shared-link pairs, any rank**
+
+- `one face over Q(N): the seven pieces of (F6) are each O(N^-5) and their sum is the character-engine H6, so three orders cancel between channel content and cumulant`
+  - src/workhouse/invariants/sixth_order_cluster.py:168 · G9; G16; ADR 0046 conjecture 4; runs/g9_direct_h6_pair_2026-09-11
+  - `workhouse verify --only 'one face over Q(N): the seven pieces of (F6) are each O(N^-5) and their sum is the character-engine H6, so three orders cancel between channel content and cumulant'`
+- `one face over Q(N): the vacuum-subtracted plaquette energy at order 2k is O(N^-(4k-1)) for k = 1, 2, 3, both C sectors, while every order's unsubtracted pieces are larger`
+  - src/workhouse/invariants/sixth_order_cluster.py:124 · G9; G16; ADR 0046 conjecture 4; runs/g9_direct_h6_pair_2026-09-11
+  - `workhouse verify --only 'one face over Q(N): the vacuum-subtracted plaquette energy at order 2k is O(N^-(4k-1)) for k = 1, 2, 3, both C sectors, while every order'"'"'s unsubtracted pieces are larger'`
+- `the sixth-order Bloch recursion, the closed word formula and the character engine agree on one face at N = 11 through order six, both C sectors and the vacuum`
+  - src/workhouse/invariants/sixth_order_cluster.py:88 · G9; G16; ADR 0046 conjecture 4; runs/g9_direct_h6_pair_2026-09-11
+  - `workhouse verify --only 'the sixth-order Bloch recursion, the closed word formula and the character engine agree on one face at N = 11 through order six, both C sectors and the vacuum'`
 **G9 sixth-order folds and combined carrier shapes**
 
 - `G9 Hodge word reduction agrees with spatial Laurent operators`
@@ -1433,6 +1544,20 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `kernel quotient centering and transfer compatibility survive a vanishing source direction`
   - src/workhouse/invariants/os_kernel_gap.py:11 · OS_KERNEL_GAP K1 equations K1-K2; finite rational Gram model only
   - `workhouse verify --only 'kernel quotient centering and transfer compatibility survive a vanishing source direction'`
+**Review-derived coercivity and multichannel spectral budgets**
+
+- `assembled Q4 has the corrected sharp coercivity and sum of squares`
+  - src/workhouse/invariants/spectral_budgets.py:61 · REVIEW_SPECTRAL_BUDGETS Q1-Q2
+  - `workhouse verify --only 'assembled Q4 has the corrected sharp coercivity and sum of squares'`
+- `multichannel optimum respects all errors and the physical horizon`
+  - src/workhouse/invariants/spectral_budgets.py:111 · REVIEW_SPECTRAL_BUDGETS M2
+  - `workhouse verify --only 'multichannel optimum respects all errors and the physical horizon'`
+- `multichannel sharpness retains the exact one-atom and horizon exponents`
+  - src/workhouse/invariants/spectral_budgets.py:137 · REVIEW_SPECTRAL_BUDGETS M3
+  - `workhouse verify --only 'multichannel sharpness retains the exact one-atom and horizon exponents'`
+- `multichannel target intervals yield every sharp pairwise rate`
+  - src/workhouse/invariants/spectral_budgets.py:91 · REVIEW_SPECTRAL_BUDGETS M1-M6
+  - `workhouse verify --only 'multichannel target intervals yield every sharp pairwise rate'`
 **SU(3) second and third order**
 
 - `C-even bandwidth = top - bottom = 88/153`
@@ -1471,6 +1596,26 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the two band spans ARE the two incidence spectra`
   - src/workhouse/invariants/su3.py:143 · MASTER paper §4.5 / ENGINE_FLUX_su3_domino_d3.py key corrected_Ceven_bandwidth_16|t|
   - `workhouse verify --only 'the two band spans ARE the two incidence spectra'`
+**W6 R10 repaired identities and counterchecks**
+
+- `W6 R10 repair: H2 proposed uniform Young bound fails`
+  - src/workhouse/invariants/w6_source_energy_r10.py:108 · W6_SOURCE_ENERGY_JETS_R10 C6b
+  - `workhouse verify --only 'W6 R10 repair: H2 proposed uniform Young bound fails'`
+- `W6 R10 repair: centered product retains covariance`
+  - src/workhouse/invariants/w6_source_energy_r10.py:66 · W6_SOURCE_ENERGY_JETS_R10 C2
+  - `workhouse verify --only 'W6 R10 repair: centered product retains covariance'`
+- `W6 R10 repair: conditional measure derivative finite example`
+  - src/workhouse/invariants/w6_source_energy_r10.py:57 · W6_SOURCE_ENERGY_JETS_R10 C1
+  - `workhouse verify --only 'W6 R10 repair: conditional measure derivative finite example'`
+- `W6 R10 repair: diffusion-gap inverse has g^-3 scaling`
+  - src/workhouse/invariants/w6_source_energy_r10.py:98 · W6_SOURCE_ENERGY_JETS_R10 C6a
+  - `workhouse verify --only 'W6 R10 repair: diffusion-gap inverse has g^-3 scaling'`
+- `W6 R10 repair: omitted projection mixed terms are nonzero`
+  - src/workhouse/invariants/w6_source_energy_r10.py:88 · W6_SOURCE_ENERGY_JETS_R10 C5a
+  - `workhouse verify --only 'W6 R10 repair: omitted projection mixed terms are nonzero'`
+- `W6 R10 repair: projection recurrence through third derivative finite model`
+  - src/workhouse/invariants/w6_source_energy_r10.py:76 · W6_SOURCE_ENERGY_JETS_R10 C5
+  - `workhouse verify --only 'W6 R10 repair: projection recurrence through third derivative finite model'`
 **W6 antipodal conditional magnetic geometry**
 
 - `W6 antipodal: complete nine-dimensional Hessian spectrum`
@@ -1494,6 +1639,50 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `W6 antipodal: seven uniform normal eigenvalues and soft scaling`
   - src/workhouse/invariants/w6_antipodal.py:148 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A3
   - `workhouse verify --only 'W6 antipodal: seven uniform normal eigenvalues and soft scaling'`
+**W6 synchronized M10 conditional score**
+
+- `W6 synchronized: Euler cancellation of any quadratic jet`
+  - src/workhouse/invariants/w6_synchronized_m10.py:40 · W6_SYNCHRONIZED_M10_DOMINATION Section 3
+  - `workhouse verify --only 'W6 synchronized: Euler cancellation of any quadratic jet'`
+- `W6 synchronized: actual first-jet forcing normalization`
+  - src/workhouse/invariants/w6_synchronized_m10.py:176 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: actual first-jet forcing normalization'`
+- `W6 synchronized: angular crossover endpoint limits`
+  - src/workhouse/invariants/w6_synchronized_m10.py:152 · W6_SYNCHRONIZED_M10_DOMINATION Section 4
+  - `workhouse verify --only 'W6 synchronized: angular crossover endpoint limits'`
+- `W6 synchronized: centered numerator retains fiber normalization`
+  - src/workhouse/invariants/w6_synchronized_m10.py:104 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: centered numerator retains fiber normalization'`
+- `W6 synchronized: control-action and exponential-slack normalization`
+  - src/workhouse/invariants/w6_synchronized_m10.py:204 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: control-action and exponential-slack normalization'`
+- `W6 synchronized: exact angular crossover moments`
+  - src/workhouse/invariants/w6_synchronized_m10.py:138 · W6_SYNCHRONIZED_M10_DOMINATION Section 4
+  - `workhouse verify --only 'W6 synchronized: exact angular crossover moments'`
+- `W6 synchronized: exact center tangency identity`
+  - src/workhouse/invariants/w6_synchronized_m10.py:17 · W6_SYNCHRONIZED_M10_DOMINATION Section 2
+  - `workhouse verify --only 'W6 synchronized: exact center tangency identity'`
+- `W6 synchronized: identical cutoffs need not be tangent`
+  - src/workhouse/invariants/w6_synchronized_m10.py:26 · W6_SYNCHRONIZED_M10_DOMINATION Section 2
+  - `workhouse verify --only 'W6 synchronized: identical cutoffs need not be tangent'`
+- `W6 synchronized: logarithmic-parameter amplitude identity`
+  - src/workhouse/invariants/w6_synchronized_m10.py:68 · W6_SYNCHRONIZED_M10_DOMINATION Section 5
+  - `workhouse verify --only 'W6 synchronized: logarithmic-parameter amplitude identity'`
+- `W6 synchronized: positive potential Hessian is not an action Hessian`
+  - src/workhouse/invariants/w6_synchronized_m10.py:117 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: positive potential Hessian is not an action Hessian'`
+- `W6 synchronized: seven-normal reference score budget`
+  - src/workhouse/invariants/w6_synchronized_m10.py:160 · W6_SYNCHRONIZED_M10_DOMINATION Section 4
+  - `workhouse verify --only 'W6 synchronized: seven-normal reference score budget'`
+- `W6 synchronized: sine-square potential-floor identity`
+  - src/workhouse/invariants/w6_synchronized_m10.py:55 · W6_SYNCHRONIZED_M10_DOMINATION Section 3
+  - `workhouse verify --only 'W6 synchronized: sine-square potential-floor identity'`
+- `W6 synchronized: spatial remainder does not control parameter derivative`
+  - src/workhouse/invariants/w6_synchronized_m10.py:91 · W6_SYNCHRONIZED_M10_DOMINATION Section 5
+  - `workhouse verify --only 'W6 synchronized: spatial remainder does not control parameter derivative'`
+- `W6 synchronized: weighted-jet Young absorption algebra`
+  - src/workhouse/invariants/w6_synchronized_m10.py:190 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: weighted-jet Young absorption algebra'`
 **Wilson PBH proposal: exact orbit curvature and flow tests**
 
 - `FINDING: Wilson gradient flow expands a regular orbit distance by 8/7`
@@ -2924,6 +3113,29 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the local vacuum chart repairs a genuine quadratic creation term: the two-level symmetric transfer leaves 97/96 after the first rotation, and the exact second generator 97/24 cancels it on both vacuum legs`
   - src/workhouse/invariants/wilson_vacuum_chart.py:25 · G18; paper/research_notes/G18_SECOND_ORDER_WILSON_VACUUM_CHART_20260905.md sections 4 and 8; finite exact two-level model
   - `workhouse verify --only 'the local vacuum chart repairs a genuine quadratic creation term: the two-level symmetric transfer leaves 97/96 after the first rotation, and the exact second generator 97/24 cancels it on both vacuum legs'`
+**the odd orders of the band are determinant families (G16)**
+
+- `at N = 4 and N = 6 every third-order element of the single plaquette and of both pairs is zero in both sectors, and so is the first order: the band is even in u`
+  - src/workhouse/invariants/odd_order.py:494 · G16; G14; G6; runs/odd_order_band_2026-09-11; ADR 0047; ADR 0046; MASTER_THEORY §4.4
+  - `workhouse verify --only 'at N = 4 and N = 6 every third-order element of the single plaquette and of both pairs is zero in both sectors, and so is the first order: the band is even in u'`
+- `at N = 5 the third order is the one-plaquette five-word vertex alone: the towers split by -+25/144 = -+(5/6)^2/(2!)^2, the hops and leakages vanish; at N = 7 everything vanishes`
+  - src/workhouse/invariants/odd_order.py:519 · G16; G14; G6; runs/odd_order_band_2026-09-11; ADR 0047; ADR 0046; MASTER_THEORY §4.4
+  - `workhouse verify --only 'at N = 5 the third order is the one-plaquette five-word vertex alone: the towers split by -+25/144 = -+(5/6)^2/(2!)^2, the hops and leakages vanish; at N = 7 everything vanishes'`
+- `centre parity: the link set T (x-links at even y, y-links at even z, z-links at even x) meets every plaquette of Z^3 an odd number of times, so a history with an odd number of face words has a link of odd flux; for even N every odd order vanishes identically, and for odd N the order m vanishes unless m >= N - 2`
+  - src/workhouse/invariants/odd_order.py:358 · G16; G14; G6; runs/odd_order_band_2026-09-11; ADR 0047; ADR 0046; MASTER_THEORY §4.4
+  - `workhouse verify --only 'centre parity: the link set T (x-links at even y, y-links at even z, z-links at even x) meets every plaquette of Z^3 an odd number of times, so a history with an odd number of face words has a link of odd flux; for even N every odd order vanishes identically, and for odd N the order m vanishes unless m >= N - 2'`
+- `consequence for G16: for even N the band is even in u at every order, for odd N through order N - 3, so the tau-series of ADR 0046 has no odd terms in the planar limit; the first odd term at odd N is the baryonic vertex (N/(N+1))^(N-3)/((N-3)!)^2 at order N - 2`
+  - src/workhouse/invariants/odd_order.py:588 · G16; G14; G6; runs/odd_order_band_2026-09-11; ADR 0047; ADR 0046; MASTER_THEORY §4.4; NOTE_O4 §11
+  - `workhouse verify --only 'consequence for G16: for even N the band is even in u at every order, for odd N through order N - 3, so the tau-series of ADR 0046 has no odd terms in the planar limit; the first odd term at odd N is the baryonic vertex (N/(N+1))^(N-3)/((N-3)!)^2 at order N - 2'`
+- `over Q(N) the third-order hops of both pairs are identically zero in both sectors: no balanced Haar family reaches an odd order, so every nonzero odd-order number of the corpus is a determinant-family number`
+  - src/workhouse/invariants/odd_order.py:559 · G16; G14; G6; runs/odd_order_band_2026-09-11; ADR 0047; ADR 0046; MASTER_THEORY §4.4; ADR 0029
+  - `workhouse verify --only 'over Q(N) the third-order hops of both pairs are identically zero in both sectors: no balanced Haar family reaches an odd order, so every nonzero odd-order number of the corpus is a determinant-family number'`
+- `the one-plaquette character engine (Pieri rule, Rayleigh-Schrodinger) agrees with the third engine's towers and vacuum at N = 3, 4, 6, 7 through third order, and shows the first odd order of odd N at m = N - 2 with vertex (N/(N+1))^(N-3)/((N-3)!)^2 at N = 5, 7, 9 and no odd order through 7 at N = 4, 6, 8`
+  - src/workhouse/invariants/odd_order.py:445 · G16; G14; G6; runs/odd_order_band_2026-09-11; ADR 0047; ADR 0046; MASTER_THEORY §4.4
+  - `workhouse verify --only 'the one-plaquette character engine (Pieri rule, Rayleigh-Schrodinger) agrees with the third engine'"'"'s towers and vacuum at N = 3, 4, 6, 7 through third order, and shows the first odd order of odd N at m = N - 2 with vertex (N/(N+1))^(N-3)/((N-3)!)^2 at N = 5, 7, 9 and no odd order through 7 at N = 4, 6, 8'`
+- `the third engine reproduces the SU(3) third order: B_3 = 1975/124848, t_3+ = -6335/249696, the domino diagonals -24541/62424 and -517313/6242400, the vacuum route -9/32, the towers 7/32 and 101/200, leak_3 = -12331/249696 and d_3 = -109151/249696`
+  - src/workhouse/invariants/odd_order.py:381 · G16; G14; G6; runs/odd_order_band_2026-09-11; ADR 0047; ADR 0046; MASTER_THEORY §4.4; ENGINE_FLUX_su3_domino_d3.py; ADR 0023
+  - `workhouse verify --only 'the third engine reproduces the SU(3) third order: B_3 = 1975/124848, t_3+ = -6335/249696, the domino diagonals -24541/62424 and -517313/6242400, the vacuum route -9/32, the towers 7/32 and 101/200, leak_3 = -12331/249696 and d_3 = -109151/249696'`
 **the planar limit of the fourth-order band (G16)**
 
 - `N^7 beta_N, N^7 W_4 and N^7 corner_N are positive and decrease strictly to their planar limits for real N >= 3, and no closed form of the assembly has a pole or zero at real N >= 3`

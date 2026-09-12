@@ -4,6 +4,61 @@
 # that entire statement. This does not change its mathematically established status.
 schema: results/v1
 results:
+  - id: RESULT:W6_ACTUAL_CENTERED_COMPLEMENT_SUPPRESSION
+    statement: The actual fixed-square centered conditional score has an exponentially small complement
+      outside a neighborhood of the complete action-minimizing set, uniformly in every full-Q fiber and
+      small positive g.
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual compact elliptic square and established unique nondegenerate well, energy, first-jet and positive
+      local-ground inputs.
+    - Fixed smooth synchronized transport; center reference beta=sigma at any conditional minimizer.
+    - Open tube contains all minimizers, including the complete antipodal sphere.
+    scope: Actual fixed-block normalized conditional complement only. Polynomial relative-amplitude control,
+      tube moments and actual normal/angular comparison remain open; no full M10 or volume-uniform conclusion.
+    source: CITE:W6_M10_REPAIR_RESULTS
+    source_section: Actual centered conditional complement theorem
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:OUTSIDE_COMPLEMENT_SUPPRESSION
+    bears_on:
+    - G19
+    supported_by: []
+  - id: RESULT:W6_UNIFORM_AGMON_COMPLEMENT_GAP
+    statement: Every open neighborhood of the complete calibrated minimizer set has a positive uniform Agmon
+      action gap on its nonempty compact complement.
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual calibrated minimum action I(theta) and continuous Agmon distance.
+    - Open neighborhood contains every minimizer, including the full antipodal sphere.
+    scope: Actual fixed compact square geometry only; no numerical gap constant, amplitude bound or normalized
+      score estimate.
+    source: CITE:W6_M10_REPAIR_RESULTS
+    source_section: Uniform action gap outside the full minimizing set
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:COMPACT_ACTION_GAP
+    bears_on:
+    - G19
+    supported_by: []
+  - id: RESULT:W6_ANGULAR_REFERENCE_SCORE_BUDGET
+    statement: Exact truncated-exponential angular moments and seven Gaussian normals give the uniform reference
+      score budget 99/4 through the entire angular crossover.
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Specified reference angular and Gaussian laws.
+    - Actual-law comparison and score-error hypotheses are needed only for transfer to an actual conditional
+      measure.
+    scope: Specified reference law; transfer to the actual quantum law requires the explicit measure-comparison
+      and score-error assumptions.
+    source: CITE:W6_M10_REPAIR_RESULTS
+    source_section: Uniform reference angular and normal score budget
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ANGULAR_REFERENCE_BUDGET
+    bears_on:
+    - G19
+    supported_by: []
   - id: RESULT:DIMENSION_FIVE_OPERATOR_IRRELEVANCE
     statement: Under lattice cubic reflection symmetry, gauge invariance, and dimension counting, dimension-five operators vanish identically; the leading irrelevant gauge operator has dimension 6 with multiscale contractive gain lambda = 1/9 <= 1/2.
     hypotheses:
@@ -3312,6 +3367,50 @@ results:
     status: proven
     evidence: analytic
 
+  - id: RESULT:ODD_ORDER_CENTRE_PARITY
+    statement: For even N every odd-order matrix element of the des Cloizeaux effective operator of the
+      strong-coupling band vanishes identically, on every cluster and in both C-parity sectors, at every
+      order. For odd N an odd order m vanishes unless m >= N - 2, and at m = N - 2 the only surviving
+      element is the one-plaquette vertex H_(N-2)(F-bar, F) = -(N/(N+1))^(N-3)/((N-3)!)^2, which is -1 at
+      N = 3 and -25/144 at N = 5; hops and leakages vanish at that order.
+    hypotheses:
+    - Kogut-Susskind strong-coupling Hamiltonian on Z^3 with H0 = (1/2) sum E^2 and V = -u W, W the sum of
+      plaquette characters in both orientations, u = beta_N/(2N); degenerate perturbation theory on the
+      one-plaquette sector at fixed order on finite clusters.
+    - The SU(N) Haar integral of a word vanishes unless every link's net flux is 0 mod N; on one plaquette
+      the four links are private, so the states are characters with energy 2 C_2(R).
+    scope: Statements about the coefficients of the strong-coupling series at fixed order, not about
+      convergence; on a periodic lattice the link-set lemma needs even extents. The even orders and the
+      G16 overlap theorem are not addressed.
+    source: CITE:ODD_ORDER_CENTRE_PARITY
+    source_section: Sections 2 and 3
+    depends_on: []
+    bears_on:
+    - G16
+    - G14
+    - G6
+    supported_by:
+    - target: CHK:the-odd-orders-of-the-band-are-determina-18f122:centre-parity-the-link-set-t-x-links-at--cae628
+      scope: The link set T meets every face of a 6^3 block an odd number of times; the criterion tabulated
+        for N <= 12, m <= 11.
+    - target: CHK:the-odd-orders-of-the-band-are-determina-18f122:the-third-engine-reproduces-the-su-3-thi-9bdc6d
+      scope: The third-order operator at N = 3 reproduces the SU(3) third-order ledger; the m = N - 2 = 1
+        vertex is -1.
+    - target: CHK:the-odd-orders-of-the-band-are-determina-18f122:at-n--4-and-n--6-every-third-order-eleme-b41234
+      scope: Theorem A at N = 4 (live) and N = 6 (pinned) on the single plaquette and both pairs at orders
+        1 and 3 only.
+    - target: CHK:the-odd-orders-of-the-band-are-determina-18f122:the-one-plaquette-character-engine-pieri-ece51a
+      scope: One-plaquette towers and vacuum by characters, in agreement with the word engine at N = 3, 4,
+        6, 7 through third order; the vertex at N = 5, 7, 9 (orders 3, 5, 7) with lower odd orders zero;
+        no odd order through 7 at N = 4, 6, 8.
+    - target: CHK:the-odd-orders-of-the-band-are-determina-18f122:at-n--5-the-third-order-is-the-one-plaqu-62e413
+      scope: Theorem B at N = 5, the vertex by characters and the Peter-Weyl path, the word engine's
+        hops and X-touched leakages zero; the emptiness of orders 1 and 3 at N = 7.
+    - target: CHK:the-odd-orders-of-the-band-are-determina-18f122:over-q-n-the-third-order-hops-of-both-pa-3993b1
+      scope: The eight third-order pair elements over Q(N) with balanced families only.
+    status: proven
+    evidence: analytic
+
   - id: RESULT:MOVING_TIME_SPECTRAL_GAP
     statement: If C_n(t_n)<=b_n at physical times t_n tending to infinity and exp(E t_n)b_n tends to zero
       for every E<M, then every vague limit of target spectral measures with ||f_n-v_n|| tending to zero
@@ -3532,3 +3631,883 @@ results:
         is analytic.
     status: proven
     evidence: analytic
+
+  - id: RESULT:W6_R10_CONDITIONAL_DERIVATIVE
+    statement: On regular fibers, d_w E_mu[Phi|w]=E_mu[X(Phi)|w]+Cov_mu(Phi,div_mu X|w), with the covariance
+      retained also for tilde_sigma Phi.
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - X=grad(w)/Gamma(w,w), X(w)=1 on (-1,1); smooth fields or the stated locally integrable weak formulation.
+    scope: Fixed compact-square analytic identity or conditional implication as stated; no uniform actual-source
+      energy closure.
+    source: CITE:W6_R10_REPAIRED_RESULTS
+    source_section: '## 2. Correct conditional differentiation (C1)'
+    depends_on:
+    - DERIV:W6_SOURCE_ENERGY_JETS_R10:CONDITIONAL_DERIVATIVE
+    bears_on:
+    - G19
+    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:SOURCE_ENERGY_JETS_R10
+    supported_by:
+    - target: CHK:w6-r10-repaired-identities-and-counterch-026c9e:w6-r10-repair-conditional-measure-deriva-679774
+      scope: Exact finite-model identity or counterexample only; not full analytic or actual-model certification.
+    - target: CHK:w6-r10-repaired-identities-and-counterch-026c9e:w6-r10-repair-centered-product-retains-c-b29f26
+      scope: Exact finite-model identity or counterexample only; not full analytic or actual-model certification.
+    status: proven
+    evidence: analytic
+  - id: RESULT:W6_R10_H4_FROM_H0
+    statement: H0 and the first ground jet R8a imply H4 with kappa_3=kappa_P D_1^2; SF9 therefore needs only
+      H0-H3 as separate sufficient estimates.
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - Assume H0 with a uniform kappa_P; q_g[chi_g]<=D_1^2 g^-2 is established by R8a.
+    scope: Fixed compact-square analytic identity or conditional implication as stated; no uniform actual-source
+      energy closure.
+    source: CITE:W6_R10_REPAIRED_RESULTS
+    source_section: '## 4. H4 follows from H0 and the established ground jet (C4)'
+    depends_on:
+    - DERIV:W6_SOURCE_ENERGY_JETS_R10:H4_FROM_H0
+    bears_on:
+    - G19
+    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:SOURCE_ENERGY_JETS_R10
+    supported_by: []
+    status: proven
+    evidence: analytic
+  - id: RESULT:W6_R10_PROJECTION_JET_RECURRENCE
+    statement: For P_g=U_g^-1 Pi_g U_g and U_g prime=-sigma_g U_g, F_0=Pi_g, F_(n+1)=partial_g F_n+[sigma_g,F_n]
+      gives P_g^(n)=U_g^-1 F_n U_g, retaining the mixed terms in P_g second derivative.
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - Differentiable operator families on a common smooth core at fixed positive g; uniform energy operator bounds
+      are not assumed or concluded.
+    scope: Fixed compact-square analytic identity or conditional implication as stated; no uniform actual-source
+      energy closure.
+    source: CITE:W6_R10_REPAIRED_RESULTS
+    source_section: '## 5. Complete projection-jet recurrence (C5)'
+    depends_on:
+    - DERIV:W6_SOURCE_ENERGY_JETS_R10:PROJECTION_JET_RECURRENCE
+    bears_on:
+    - G19
+    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:SOURCE_ENERGY_JETS_R10
+    supported_by:
+    - target: CHK:w6-r10-repaired-identities-and-counterch-026c9e:w6-r10-repair-projection-recurrence-thro-c9a272
+      scope: Exact finite-model identity or counterexample only; not full analytic or actual-model certification.
+    - target: CHK:w6-r10-repaired-identities-and-counterch-026c9e:w6-r10-repair-omitted-projection-mixed-t-22e86a
+      scope: Exact finite-model identity or counterexample only; not full analytic or actual-model certification.
+    status: proven
+    evidence: analytic
+
+  - id: RESULT:ARCHIVE_SMOOTH_PROFILES
+    statement: The smooth trace defect has range [0,2] and zero set ker rho; faithfulness makes the
+      vacuum unique. A nonnegative C2 function on a complete manifold with Hess z<=H g satisfies |grad
+      z|^2<=2H z. Distinct-link plaquette lifts have gradient square r times the group gradient square
+      and Laplacian r times the group Laplacian. Bounded nonnegative defects satisfy D^2/P<=V<=B D<=B^2
+      P. The squared-profile exponential drift has the exact signed pairing identity and volume-independent
+      Cv=2r(Cd+Cg), Cgamma=4nu r Cg B^2. Every C2 profile with Phi prime at zero equal to zero and bounded
+      second derivative has diffusion and exponential budgets proportional to D.
+    hypotheses:
+    - Compact Lie group and smooth unitary representation rho:G->U(n); faithfulness only for the unique-zero
+      conclusion.
+    - Complete Riemannian manifold, z>=0 of class C2, global Hessian upper bound H>0.
+    - Bi-invariant group metric, product link metric, r distinct links each used once, and the stated
+      group derivative bounds.
+    - P>0, 0<=z_p<=B, D=sum z_p and V=sum z_p^2.
+    - Symmetric diffusion L=Delta-grad S.grad; bounded defects, distinct-link lifts and link overlap
+      at most nu.
+    - F3 geometry, overlap nu, defects in [0,B], Phi prime(0)=0, and sup absolute Phi second<=M.
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Smooth profiles'
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F1
+    - DERIV:ARCHIVE_FUNCTIONAL:F2
+    - DERIV:ARCHIVE_FUNCTIONAL:F3
+    - DERIV:ARCHIVE_FUNCTIONAL:F4
+    - DERIV:ARCHIVE_FUNCTIONAL:F5
+    - DERIV:ARCHIVE_FUNCTIONAL:F6
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-square-profile-chain-rule-retain-626294
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-nonnegative-taylor-bound-gives-g-2e0769
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-overlap-and-defect-budgets-hold--7825d1
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ARCHIVE_LYAPUNOV_PATCHING
+    statement: A volume-independent linear pairing bound gives an explicit volume-independent small-set
+      Foster-Lyapunov inequality. The integrated Lyapunov energy deficit equals a nonnegative completed
+      square. Local core Poincare and linear Lyapunov drift imply global Poincare with constant (1+b_core
+      kappa_K)/lambda.
+    hypotheses:
+    - P_S>=aD-b with b>=0 independent of volume; k>0 and c=2a-Cv-k Cgamma>0; D0>2b/c.
+    - Symmetric diffusion on a compact boundaryless manifold or a common core with valid integration
+      by parts; smooth h>0 and real f.
+    - F8 core; mu(K)>0, W>=1, LW<=-lambda W+b_core 1_K, and the stated local conditional-mean Poincare
+      bound.
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Lyapunov patching'
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F7
+    - DERIV:ARCHIVE_FUNCTIONAL:F8
+    - DERIV:ARCHIVE_FUNCTIONAL:F9
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-drift-to-energy-remainder-is-an--ed4daa
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ARCHIVE_CONCENTRATION_LOCALIZATION
+    statement: The averaged defect gradient square is at most r nu C1^2/P. Uniform LSI and the averaged-gradient
+      bound give a volume-exponential tail only after a uniform mean-below-threshold margin is supplied.
+      The exact two-event covariance decomposition gives localization error at most 8||F||inf||G||inf
+      mu(Kc). A volume-exponential localization error is absorbed into a distance exponent min(m,c/d0)
+      when R<=d0 P.
+    hypotheses:
+    - F3 distinct-link geometry, bounded link overlap nu, and |grad_G z|<=C1.
+    - Ent(f^2)<=2/rho E(f,f), rho>0; bounded smooth H with bounded gradient; for the bad-set conclusion
+      epsilon-E Bbar>=d>0.
+    - Bounded real observables F,G, probability measure mu, and 0<mu(K)<1.
+    - Conditional covariance bound on the same K, bounded observables, mu(Kc)<=A exp(-cP), and R<=d0
+      P.
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Concentration and covariance'
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F10
+    - DERIV:ARCHIVE_FUNCTIONAL:F11
+    - DERIV:ARCHIVE_FUNCTIONAL:F12
+    - DERIV:ARCHIVE_FUNCTIONAL:F13
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-covariance-decomposition-is-exac-ed86d5
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-mean-threshold-is-independent-of-238b06
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-chernoff-optimization-has-the-st-814a90
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ARCHIVE_CENTER_DEFECT_OBSTRUCTIONS
+    statement: A single negative center link has averaged defect 12/P but maximum plaquette defect 2
+      in four dimensions. The proposed equality of plaquette gradient cross terms and a spatial graph
+      Laplacian fails on a nonconstant center defect field.
+    hypotheses:
+    - Sufficiently large periodic four-dimensional SU(2) lattice with ordinary distinct-link square
+      plaquettes.
+    - F14 center field and a connected shared-link plaquette adjacency graph with the standard negative
+      graph Laplacian.
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Center defects'
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F14
+    - DERIV:ARCHIVE_FUNCTIONAL:F15
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-overlap-and-defect-budgets-hold--7825d1
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ARCHIVE_SOURCE_TILT_AND_ROOTED_BOUNDS
+    statement: The exact finite inhomogeneous source moment is the shifted partition ratio Z(beta-t)/Z(beta).
+      Source derivatives are tilted expectations and covariances; the log-partition Hessian is positive
+      semidefinite. Pointwise source domination does not order normalized tilted expectations. Essential
+      bounds on a positive likelihood ratio transfer normalized nonnegative expectations with factor
+      b/a. A uniform exponential source-moment bound and capacity bound imply rooted summability when
+      mu q<1. Maximum degree Delta bounds rooted n-vertex animals by Delta^(2n-2); shared-link four-dimensional
+      plaquettes admit mu=400.
+    hypotheses:
+    - Finite reference measure, finitely many bounded real plaquette potentials, and real source parameters.
+    - S1 bounded setting and bounded observable O for response differentiation.
+    - Disjoint events of probabilities q and 1/2, 0<q<1/2, with the explicit positive weights 1+X/q
+      and 1+Y/q.
+    - Positive integrable weights v,w and 0<a<=w/v<=b<infinity almost everywhere.
+    - Nonnegative defects, t>0, s>=0, uniform moment K^n, capacity <=gamma n, and at most mu^(n-1) rooted
+      animals.
+    - Graph with fixed neighbor orderings and maximum degree Delta>=1; for the plaquette specialization
+      r=4 and nu<=6.
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Source tilts'
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S1
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S2
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S3
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S4
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S5
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S6
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-normalized-envelope-tilts-violat-e8eb14
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-source-log-partition-hessian-equ-e63e11
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-likelihood-ratio-transfer-bounds-d9f852
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-rooted-series-retains-the-animal-9d9fd0
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ARCHIVE_REFLECTION_PERMANENCE
+    statement: A reflection-equivariant measurable deterministic map preserving the positive-time algebra
+      preserves reflection positivity. Existing compatible projective limits preserve RP on the cylinder
+      algebra; convergence of OS product expectations also preserves positivity. A reflection-equivariant
+      map can produce a negative OS form when it mixes the positive and negative half spaces.
+    hypotheses:
+    - Fine measure is reflection positive; the map intertwines reflections and pulls every coarse positive-time
+      observable into the fine positive-time algebra.
+    - Directed reflected system, compatible positive-time pullbacks, and an existing measure with the
+      stated marginals; for weak limits use bounded continuous OS products or justified uniform integrability.
+    - Independent fair signs, exchange reflection and pi(x,y)=(x-y,y-x).
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Reflection positivity'
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S7
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S8
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S9
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-reflection-equivariant-map-has-a-c6d0d9
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-support-preserving-pushforward-h-045170
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ARCHIVE_FINITE_RANGE_INVERSE
+    statement: A bounded block operator with row sum R0 and column sum C0 has norm at most sqrt(R0 C0).
+      A positive finite-range self-adjoint block operator has inverse decay with eta=log(1+a0/(2B))/R
+      and prefactor 2/a0. Massive Maxwell incidence gives range one, floor m^2 and row sum at most alpha(r-1)nu,
+      hence the explicit inverse exponent.
+    hypotheses:
+    - Finite direct sum of Hilbert fibers and bounded blocks with both stated absolute row and column
+      sums.
+    - Finite graph, bounded self-adjoint A>=a0 I, a0>0, finite range R and off-diagonal row sum B; B=0
+      is diagonal.
+    - Signed unit incidence, r distinct entries per plaquette, overlap nu, m^2>0 and alpha>=0.
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Local inverse'
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S10
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S11
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S12
+    bears_on:
+    - G17
+    - G19
+    - G23
+    - G21
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-finite-range-inverse-bound-holds-6259d2
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:ARCHIVE_HORIZONTAL_RESTRICTION_BOUNDARY
+    statement: The massive Maxwell operator reduces ker d0 star and its restricted inverse is the restriction
+      of the full inverse. The ambient zero-extension of a horizontal inverse need not obey a volume-uniform
+      local kernel bound.
+    hypotheses:
+    - Finite cochain complex d1 d0=0, M=m^2 I+alpha d1 star d1 with m^2>0, alpha>=0.
+    - Cycle cochain complexes with d1=0 and M=I; horizontal projection is the constant-edge projector
+      11^T/n.
+    scope: The stated analytic implications and explicit counterexamples only. No Wilson weak-coupling
+      or continuum closure.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Horizontal restriction'
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S13
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S14
+    bears_on:
+    - G17
+    - G19
+    - G23
+    - G21
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-horizontal-inverse-zero-extensio-06a484
+      scope: Exact finite or symbolic control only; the full analytic theorem and Wilson application
+        premises remain separate.
+    status: proven
+    evidence: analytic
+
+  - id: RESULT:ARCHIVE_GLOBAL_PAIRING_OBSTRUCTION
+    statement: All-even four-dimensional SU(2) center fields have D=2P and zero pairing, disproving
+      the proposed volume-uniform linear and off-core pairing bounds; the quadratic target cannot supply
+      a positive lower bound.
+    hypotheses:
+    - Even L>=2 periodic four-dimensional SU(2) lattice, fundamental trace defect and any smooth action;
+      a positive coefficient and volume-independent additive constant for the linear target.
+    scope: The specific Appendix I global pairing targets on the displayed family only. No refutation
+      of all Lyapunov drift or continuum claim.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Global pairing obstruction'
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F16
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-even-tori-realize-extensive-stat-a06d3f
+      scope: Exact periodic link and plaquette construction at L=2,4,6 only; the arbitrary even-L argument
+        is analytic.
+    status: proven
+    evidence: analytic
+
+  - id: RESULT:ARCHIVE_SIGNED_SU2_DIFFUSION
+    statement: For fundamental SU(2) with the unit-S3 metric, Delta V=40D-32V and Gamma(V)<=16nu sum
+      z_p^3(2-z_p); all-center configurations have exact negative exponential drift LW/W=-24kD despite
+      zero action pairing.
+    hypotheses:
+    - Fundamental SU(2), unit-S3 product link metric, distinct-link square plaquettes, bounded overlap
+      nu, V=sum z_p^2, D=sum z_p, W=exp(kV), and L=Delta-grad S.grad with smooth S.
+    scope: Exact signed diffusion and center-field drift for the stated metric and geometry. Global
+      off-core and physical-transfer estimates remain separate.
+    source: CITE:ARCHIVE_DERIVATION_CHAIN
+    source_section: '## Signed SU2 diffusion repair'
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F17
+    bears_on:
+    - G17
+    - G19
+    - G23
+    supported_by:
+    - target: CHK:archive-functional-inequalities-and-sour-de280c:archive-su2-signed-diffusion-is-exact-in-0d57d4
+      scope: Exact quaternion-coordinate second derivatives and single-plaquette identities; the global
+        analytical interpretation retains its stated hypotheses.
+    status: proven
+    evidence: analytic
+
+  - id: RESULT:ASSEMBLED_Q4_COERCIVITY
+    statement: For real L, the adjudicated Q4 equals d||L||^2+e(sum L_i)^2 with d=13035490122347/275331901291200>0
+      and e=15644916262153/275331901291200>0. Its sharp lower and upper coefficients are d and 29985119454403/137665950645600;
+      the assembled cross coefficient is the historical one plus 25/256.
+    hypotheses:
+    - Real L in R3, Q=A sum Li^2+(2A+4C) sum LiLj with A=5/48 and the ADR 0024 adjudicated C.
+    scope: Exact real quadratic-polynomial consequence of existing fourth-order assembly. Not a full Hamiltonian
+      or all-orders coercivity theorem.
+    source_section: Q1, equations Q1-Q2
+    depends_on:
+    - DERIV:REVIEW_SPECTRAL_BUDGETS:Q1
+    - CHK:the-third-implementation-and-the-histori-334c14:finding-c-shp-from-the-assembled-amplitu-deda6d
+    bears_on:
+    - G3
+    - G14
+    supported_by:
+    - target: CHK:review-derived-coercivity-and-multichann-8dd636:assembled-q4-has-the-corrected-sharp-coe-c84029
+      scope: Exact symbolic polynomial identity, rational coefficients and full 3 by 3 eigenspectrum; no physical
+        all-orders implication.
+    source: CITE:REVIEW_SPECTRAL_BUDGET_RESULTS
+    status: proven
+    evidence: analytic
+  - id: RESULT:MOVING_TIME_MULTICHANNEL_RATE
+    statement: For raw terms A_j a^-p_j exp(-m_j t) and B_l a^r_l exp(ell_l t) with squared-source normalization
+      a^-2s, the sharp positive logarithmic-time guarantee is min_jl (R_l m_j-P_j ell_l)/(P_j+R_l), capped by
+      min_j(m_j-P_j/h). A target 0<M<min m_j is admissible iff max_j P_j/(m_j-M)<=min_l R_l/(M+ell_l) and <=h;
+      its lower time endpoint is a witness.
+    hypotheses:
+    - 'Finite nonempty decay/error families: p_j>=0, m_j>0, ell_l>=0, s>=0, P_j=p_j+2s>0 and R_l=r_l-2s>0.'
+    - Positive cutoff-independent bound coefficients, 0<a_n<1 tending to zero and |alpha_n|>=c_alpha a_n^s.
+    - Raw bound M1 is available at selected physical times c log(1/a_n); optional horizon c<=h has h>0.
+    - Spectral consequences additionally require actual norm approximation and MT2 measure/totality or compatible-history-kernel
+      hypotheses.
+    scope: Analytic finite-family optimization with source normalization, time amplification and physical horizon.
+      Extends MT4; a nonpositive bound means no positive guarantee. Actual Wilson and continuum-kernel inputs
+      remain open.
+    source_section: M1-M2, equations M1-M6
+    depends_on:
+    - RESULT:MOVING_TIME_SPECTRAL_GAP
+    - DERIV:REVIEW_SPECTRAL_BUDGETS:M2
+    bears_on:
+    - G19
+    - RESULT:OS_KERNEL_MOVING_TIME_GAP
+    supported_by:
+    - target: CHK:review-derived-coercivity-and-multichann-8dd636:multichannel-target-intervals-yield-ever-df0588
+      scope: Exact cross-multiplication, pair intersection and single-plateau specialization identities.
+    - target: CHK:review-derived-coercivity-and-multichann-8dd636:multichannel-optimum-respects-all-errors-3ad24b
+      scope: Finite rational multi-term, horizon, amplification and zero-margin cases, not a proof of Wilson
+        estimates.
+    source: CITE:REVIEW_SPECTRAL_BUDGET_RESULTS
+    status: proven
+    evidence: analytic
+  - id: RESULT:MOVING_TIME_MULTICHANNEL_SHARPNESS
+    statement: One positive-energy atom saturates each binding pair or horizon rate of the multichannel budget.
+      A nonpositive binding constraint permits a centered zero-energy atom. Two-point exponential probes realize
+      the same sharp exponents for s>0 after a cutoff-independent prefactor enlargement.
+    hypotheses:
+    - 'Finite nonempty decay/error families: p_j>=0, m_j>0, ell_l>=0, s>=0, P_j=p_j+2s>0 and R_l=r_l-2s>0.'
+    - Positive cutoff-independent bound coefficients, 0<a_n<1 tending to zero and |alpha_n|>=c_alpha a_n^s.
+    - Raw bound M1 is available at selected physical times c log(1/a_n); optional horizon c<=h has h>0.
+    - Spectral consequences additionally require actual norm approximation and MT2 measure/totality or compatible-history-kernel
+      hypotheses.
+    - For examples, the bound holds throughout the available horizon, the coefficients can be chosen once, and
+      the target has unit norm.
+    scope: Sharpness among abstract positive spectral models satisfying the budget. Not a counterexample to Wilson
+      Yang-Mills or a supplied Wilson estimate.
+    source_section: M3, equation M7 and horizon/zero-mode examples
+    depends_on:
+    - RESULT:MOVING_TIME_MULTICHANNEL_RATE
+    - DERIV:REVIEW_SPECTRAL_BUDGETS:M3
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:review-derived-coercivity-and-multichann-8dd636:multichannel-sharpness-retains-the-exact-d717c8
+      scope: Exact weighted-product and horizon exponents and 16 rational one-atom examples. AM-GM and limiting
+        sharpness remain analytic.
+    source: CITE:REVIEW_SPECTRAL_BUDGET_RESULTS
+    status: proven
+    evidence: analytic
+
+  - id: RESULT:EARLIER_CUBIC_QUOTIENT_REGULARITY
+    statement: 'The cubic four-shape dispersion has the exact regularity trichotomy C nonzero: C^{1,1} not
+      C^2; C=0,D nonzero: C^{3,1} not C^4; C=D=0: analytic.'
+    hypotheses:
+    - Real A,B,C,D; a_i=4 sin^2(k_i/2), q=sum a_i, e2=sum a_i a_j, e3=product a_i; Delta=Aq+Be2+4C e2/q+D
+      e3/q extended by zero at Gamma.
+    scope: Local differentiability at the cubic Gamma point for the specified four-shape formula.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E1. Cubic quotient regularity trichotomy'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:CUBIC_QUOTIENT_REGULARITY
+    bears_on:
+    - G11
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:archived-singular-geometry-has-all-sixte-d01f40
+      scope: Replayed the original exact ray, radial, incidence, derivative and endpoint algebra. The regularity,
+        frame and analytic asymptotic proofs remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_EQUAL_RAY_IDENTIFICATION
+    statement: Equal-ray data recover A=R1, B=m2, C=b2/2-A and D=3m3-9m2, with independent holdout b3=2b2-R1.
+    hypotheses:
+    - The dispersion consists of exactly the four shapes in E1; two distinct nonzero a values determine
+      each affine divided ray.
+    scope: Exact finite linear identification in the displayed basis; extra shapes require more data.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E2. Equal-ray recovery and an independent holdout'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:EQUAL_RAY_IDENTIFICATION
+    bears_on:
+    - G11
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:archived-singular-geometry-has-all-sixte-d01f40
+      scope: Replayed the original exact ray, radial, incidence, derivative and endpoint algebra. The regularity,
+        frame and analytic asymptotic proofs remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_LOCALIZED_FRAME_OBSTRUCTION
+    statement: A rank-one Bloch fiber with direction-dependent projector limits at Gamma has no finite exponentially
+      localized translation frame with a uniform lower bound; its compact cube frame floor is 4 sin^2(pi/L).
+    hypotheses:
+    - Analytic rank-one generators with S=sP; a positive frame floor approaching Gamma; P=w w*/q with leading
+      w=Jk and q=|k|^2+O(|k|^4).
+    - For the explicit floor, q=sum_i 4 sin^2(k_i/2) on the nonzero periodic momentum grid.
+    scope: Infinite-volume uniform localization obstruction and exact finite-volume frame conditioning;
+      no dipolar remainder estimate.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E3. No uniformly localized finite translation frame'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:LOCALIZED_FRAME_OBSTRUCTION
+    bears_on:
+    - G11
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:archived-singular-geometry-has-all-sixte-d01f40
+      scope: Replayed the original exact ray, radial, incidence, derivative and endpoint algebra. The regularity,
+        frame and analytic asymptotic proofs remain separate.
+    - target: CHK:earlier-proof-recovery-exact-controls:frame-ray-limits-differ-and-rank-volume--f5be76
+      scope: Two axis limits of J n n^T J^T differ. G(3,3)=405/68; G(3,2)=60/17 is smaller, retaining the
+        theorem's N,L>=3 domain.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_JOINT_RANK_VOLUME_SCALING
+    statement: For N,L>=3 the rescaled second-order carrier gap G=4N^3 t_N L^2 sin^2(pi/L) increases in
+      both variables, has sharp floor 405/68, strict ceiling pi^2 and joint limit pi^2; t_N decreases for
+      real N>=3.
+    hypotheses:
+    - Integer N,L>=3; u nonzero; t_N=2N(N^2-4)/[(N^2-1)(2N^2-1)(4N^2-9)]; Delta2=4t_N u^2 sin^2(pi/L).
+    scope: Second-order coefficient and finite-volume scaling only; L=2 is excluded by an exact countercontrol.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E4. Sharp joint rank-volume scaling'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:JOINT_RANK_VOLUME_SCALING
+    bears_on:
+    - G11
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:archived-singular-geometry-has-all-sixte-d01f40
+      scope: Replayed the original exact ray, radial, incidence, derivative and endpoint algebra. The regularity,
+        frame and analytic asymptotic proofs remain separate.
+    - target: CHK:earlier-proof-recovery-exact-controls:frame-ray-limits-differ-and-rank-volume--f5be76
+      scope: Two axis limits of J n n^T J^T differ. G(3,3)=405/68; G(3,2)=60/17 is smaller, retaining the
+        theorem's N,L>=3 domain.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_FINITE_ORDER_SUPPORT
+    statement: At fixed order r a connected interaction history rooted in a finite support reaches only
+      a finite union in its r-step support neighborhood.
+    hypotheses:
+    - Bounded-support insertions; locally finite interaction support graph; finite root; at most r insertions.
+    scope: Finite support combinatorics; not finite local Hilbert dimension.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E5a. Bounded support at a fixed order'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:FINITE_ORDER_SUPPORT
+    bears_on:
+    - G13
+    supported_by: []
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_GRAM_NULL_OPERATOR_QUOTIENT
+    statement: For G=C*C and B=C*AC, ker G=ker C is killed by B; G^+B is the physical Gram-quotient coordinate
+      action, and C G^+B=AC on an invariant physical span.
+    hypotheses:
+    - C maps a finite coefficient space onto its physical span; A is defined there, and the last intertwining
+      conclusion assumes A-invariance.
+    scope: Exact finite-dimensional physical quotient, with domains and invariance explicit.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E5b. Gram-null decoupling'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:GRAM_NULL_OPERATOR_QUOTIENT
+    bears_on:
+    - G13
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:gram-null-decoupling-preserves-the-physi-8e396a
+      scope: Exact nonorthogonal rank-two synthesis verifies null decoupling and G^+B, and rejects using
+        the raw overlap B as coordinate action. No general history closure.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_DECORATED_HISTORY_MERGING
+    statement: Histories with identical complete continuation data can be merged by summing amplitudes without
+      changing the fixed-order expansion.
+    hypotheses:
+    - Finite reachable quotient states and known exact edge amplitudes; identical remaining state, support
+      union, order, energy-resolvent data and fold ancestry.
+    scope: Decorated dynamic programming; matching an endpoint alone is insufficient.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E5c. Exact merging of decorated histories'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:DECORATED_HISTORY_MERGING
+    bears_on:
+    - G13
+    supported_by: []
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_NESTED_QUOTIENT_REDUCTION
+    statement: The complete finite energy-decorated quotient history graph determines the connected effective
+      operator through order r exactly, including direct/folded words, ordered support-union convolution
+      and rooted subtraction.
+    hypotheses:
+    - E5a locality and fixed order; finite retained space and finite reachable Wilson/Gram quotient.
+    - Nonresonant eliminated resolvents; complete direct and folded words; disconnected-vacuum removal.
+    - Complete ordered support-union convolution before rooted Mobius subtraction on a complete finite inclusion
+      poset; fixed canonical Hermitian normalization.
+    scope: Conditional finite-order reconstruction; no unrestricted G13 classification or momentum-shape
+      absorption into a scalar shift.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E5d. Finite-order nested-quotient spectral reduction'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:NESTED_QUOTIENT_REDUCTION
+    bears_on:
+    - G13
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:gram-null-decoupling-preserves-the-physi-8e396a
+      scope: Exact nonorthogonal rank-two synthesis verifies null decoupling and G^+B, and rejects using
+        the raw overlap B as coordinate action. No general history closure.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_SHELL_SYMMETRY_RITZ_CONTROL
+    statement: Commuting finite Hermitian shell operators reduce to multiplicity-space matrices; every normalized
+      lifted Ritz vector satisfies dist(lambda,Spec(E-uM))<=||(E-uM-lambda)v||.
+    hypotheses:
+    - Finite Hermitian E,M commute with a finite unitary group action; real u,lambda; residual is evaluated
+      in the full retained physical space.
+    scope: Analytic isotypic reduction and full-space residual theorem; no uniform branch identification.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E6a. Symmetry and residual control for a reduced shell'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:SHELL_SYMMETRY_RITZ_CONTROL
+    bears_on:
+    - G13
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:hermitian-ritz-residual-bounds-the-neare-b23f2b
+      scope: A rational three-level Hermitian model verifies the squared residual enclosure; this is not
+        a rerun of the saved B6 numerical campaign or an all-coupling enclosure.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_B6_RETAINED_KRYLOV_CAMPAIGN
+    statement: The retained SU(3) B6 certificate reports radial dimensions 67,155,133 and maximum full-space
+      Ritz residual 8.775675697349887e-14 on 201 g-values in [1,2], with crossing g=1.3039546641713.
+    hypotheses:
+    - Historical source K6(u)=E-uM, source coupling conversion and branch choices; level-eight 511-column
+      word spaces; relative SVD cutoff 1e-10.
+    - The certificate is retained and hash-verified; the B6 eigensolver was not rerun in this integration.
+    scope: Historical finite-campaign numerical evidence only, with 355 representative coordinates and 798
+      including multiplicities.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E6b. Retained B6 numerical campaign'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:B6_RETAINED_KRYLOV_CAMPAIGN
+    bears_on:
+    - G13
+    supported_by: []
+    status: conditional
+    evidence: numerical
+  - id: RESULT:EARLIER_ISOLATED_POSITIVE_MATRIX_ATOM
+    statement: Normalized positive matrix measures with locally uniform Laplace convergence through zero,
+      a collapsing interval of uniformly positive matrix mass and a fixed empty annulus retain an isolated
+      full-rank atom at the limiting positive energy.
+    hypotheses:
+    - Finite d-by-d positive matrix measures on [0,infinity) of total mass I; locally uniform Laplace-transform
+      convergence including zero.
+    - Closed intervals I_n converge to {M}, M>0; nu_n(I_n)>=z_*I for z_*>0; no mass at 0<dist(E,I_n)<Delta_*
+      outside I_n.
+    - The scalar-residue conclusion additionally assumes covariance under one irreducible source representation.
+    scope: Source-visible spectral pole theorem; no actual-source construction, unseen-sector gap or exact
+      triplet stability.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E7. Isolated positive matrix atom persists'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:ISOLATED_POSITIVE_MATRIX_ATOM
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:positive-matrix-atom-controls-retain-ful-753a47
+      scope: 29 positive three-component finite measures have total I, atom floor I/3, and a fixed empty
+        annulus. Weak convergence and Portmanteau are analytic, not this test.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_CONDITIONAL_SPECTRAL_FLOOR
+    statement: 'Conditional averaging raises the smallest eigenvalue relative to its conditional mean and
+      contracts the positive spectral-floor defect: (c-lambda_min(E[H|G]))_+<=E[(c-lambda_min(H))_+|G].'
+    hypotheses:
+    - Integrable random symmetric matrices on one fixed finite-dimensional space; a sigma-algebra G and
+      real c.
+    scope: Finite matrix conditional Jensen statement; a marginalized Hessian can have an additional covariance
+      subtraction.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E8. Conditional spectral floor and defect contraction'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:CONDITIONAL_SPECTRAL_FLOOR
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:conditional-spectral-floor-accepts-nonco-5b8e91
+      scope: A and B do not commute; lambda_min((A+B)/2)>=3/2, the average of their floors. This checks
+        a finite instance, not a coarse-marginal Hessian identification.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_D4_DISJOINT_STAPLE_COORDINATES
+    statement: Each of the six staples incident to a fixed D=4 link has a distinct selected link coordinate
+      affecting only that staple within the star.
+    hypotheses:
+    - Periodic nondegenerate cubic lattice with L>=3; for nu!=mu use (x+e_mu,nu) and (x+e_mu-e_nu,nu).
+    scope: Exact incidence theorem; no statistical independence or force-rank conclusion.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E9. Six disjoint staple coordinates in four dimensions'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:D4_DISJOINT_STAPLE_COORDINATES
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:all-twelve-nondegenerate-staple-incidenc-f1eaef
+      scope: Every selected link belongs to its own incident staple only in twelve exact periodic cases.
+        This asserts coordinate incidence, not statistical independence.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_POSITIVE_SECTOR_PHASE_ISOLATION
+    statement: Nonnegative local weights with additive integer charge give nonnegative Laurent sector coefficients
+      preserved by tensor multiplication and summation, with theta dependence evaluated last at z=exp(i
+      theta).
+    hypotheses:
+    - Finite configuration/charge sums, or absolute convergence justifying all expansions and evaluation;
+      nonnegative local weights.
+    scope: Sector-polynomial algebra; no general positive non-Abelian representation or efficient sign-problem
+      solution.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E10. Positive-sector phase isolation'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:POSITIVE_SECTOR_PHASE_ISOLATION
+    bears_on: []
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:positive-sector-transfer-retains-laurent-4e3957
+      scope: All coefficients of z^3 tr(T(z)^3) are nonnegative exactly. General gauge-theory positivity
+        and final Fourier cancellation are not supplied.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_VSU_BOUNDED_DOMAIN_WELLPOSEDNESS
+    statement: The VSU primitive F(s)=s-2+2(sqrt(s)+1)exp(-sqrt(s)) yields a strictly convex, quadratically
+      coercive gradient energy and a unique weak Dirichlet solution on bounded Lipschitz domains.
+    hypotheses:
+    - a0,G>0; mu(x)=1-exp(-x); bounded Lipschitz Omega in R^3; rho in L^(6/5)(Omega); phi in W_0^(1,2)(Omega).
+    scope: Bounded-domain variational theorem for the specified constitutive model; whole-space and far-field
+      limits remain separate.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E11. Convex VSU action on a bounded domain'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:VSU_BOUNDED_DOMAIN_WELLPOSEDNESS
+    bears_on: []
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:vsu-action-derivatives-and-both-energy-a-6611e9
+      scope: The constitutive primitive, radial Hessian factor, cubic small-gradient and quadratic large-gradient
+        limits hold exactly. Bounded-domain existence is analytic.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_DETERMINANT_PARITY_REPAIR
+    statement: When w_r=0, det[x,u,w]=sgn(r,p,q)[x_r(u_p w_q-u_q w_p)-u_r(x_p w_q-x_q w_p)]; the parity
+      factor is indispensable.
+    hypotheses:
+    - Three-dimensional columns x,u,w; (r,p,q) is a permutation of (0,1,2); w_r=0.
+    scope: Corrected exact determinant identity with all six row orders checked; original source preserved
+      unchanged.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E12. Determinant reduction with the missing parity restored'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:DETERMINANT_PARITY_REPAIR
+    bears_on: []
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:determinant-reduction-retains-every-row--1ca336
+      scope: All six symbolic row permutations pass; the historical middle-row formula needs -1.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_MOVING_ADJOINT_FORCE_DERIVATIVE
+    statement: The moving adjoint force obeys d(Ad_g X)/dt=[g′g^-1,Ad_g X]+Ad_g X′; the selected staple
+      can have a nonzero own-force derivative.
+    hypotheses:
+    - Differentiable matrix-group path g and Lie-algebra path X; full product rule.
+    scope: Exact derivative correction; the historical transversality/tube estimate requires a separate
+      repaired proof.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E13. A moving adjoint force has two derivative terms'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:MOVING_ADJOINT_FORCE_DERIVATIVE
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:moving-adjoint-force-retains-its-own-der-33d964
+      scope: The missing Ad_g dX term is nonzero in an exact rotating force example. This repairs the differentiation
+        rule, not the archive's subsequent rank/tube theorem.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_SPHERE_EQUAL_COUPLING_COVARIANCE
+    statement: Two distinct equal-coupling SU(3) Wilson faces on a finite genus-zero cellulation have nonnegative
+      normalized-trace covariance, equal to a variance of representation scores.
+    hypotheses:
+    - Finite oriented cellulation of S^2 with normalized edge Haar measure and face weights exp(b_f ReTr(U_f)/3),
+      all b_f>=0.
+    - The two distinct faces have identical coupling; zero-coupling endpoints are taken by continuity.
+    scope: Genus-zero same-coupling covariance only; no cross-class or higher-dimensional plaquette closure.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E14. Equal-coupling SU(3) faces on a sphere have nonnegative covariance'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:SPHERE_EQUAL_COUPLING_COVARIANCE
+    bears_on:
+    - G17
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:same-coupling-score-covariance-is-a-posi-081f26
+      scope: The equal-score covariance numerator is an exact positive weighted square sum. The SU3 sphere
+        character integration and infinite-series limit are analytic.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_SU3_POSITIVITY_BOUNDARIES
+    statement: At SU(3) Haar measure Cov(ReTr(U)/3,ReTr(U^2)/3)=-1/18 and the balanced-degree-two crossed
+      Weingarten coefficient is -1/24 (the direct coefficient is 1/8).
+    hypotheses:
+    - Normalized Haar SU(3); the second observable is the twice-wound trace, not a second elementary plaquette.
+    scope: Exact countercontrols to generic loop or coefficientwise positivity; no refutation of fully summed
+      elementary-plaquette covariance.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E15. Exact SU(3) boundaries of the covariance argument'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:SU3_POSITIVITY_BOUNDARIES
+    bears_on:
+    - G17
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:su3-twice-wound-covariance-and-crossed-h-584f1a
+      scope: Character orthogonality gives normalized covariance -1/18 for a twice-wound loop, and the balanced
+        rank-three crossed Weingarten coefficient is -1/24. Neither is an elementary-plaquette counterexample.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_REFLECTION_ADAPTED_BLOCKING
+    statement: Reflection-adapted centered odd blocks and compatible deterministic Balaban-form path averages
+      preserve reflection positivity on the coarse gauge-invariant positive-time algebra.
+    hypotheses:
+    - Reflection-positive fine measure; reflection-permuted centered blocks with odd L and reflection/orientation-compatible
+      path families.
+    - Conjugation-compatible logarithm on a reflection-invariant full-measure regular domain; positive coarse
+      bonds have both endpoint blocks wholly in the fine positive half.
+    scope: Specified deterministic raw blocking geometry; extra field partitions, stochastic kernels and
+      multistep effective actions need their own hypotheses.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E16. Reflection-adapted deterministic blocking preserves positivity'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:REFLECTION_ADAPTED_BLOCKING
+    bears_on:
+    - G19
+    - RESULT:OS_HISTORY_BLOCK_INTERTWINER
+    supported_by: []
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_CORNER_BLOCKING_REFLECTION_DEFECT
+    statement: The literal lower-corner ordered-path L=3 blocking has gauge-invariant reflected coarse-plaquette
+      trace defect (4/81)epsilon^4+O(epsilon^5), so that convention fails the required reflection identity.
+    hypotheses:
+    - SU(2) periodic 12-by-12 lattice; source coordinate-order (0,1) trees; reflection (x,t)->(x,2-t); only
+      exp(i epsilon sigma_x),exp(i epsilon sigma_y) at the two specified origin links.
+    - Analytic log/exp near identity; compare the coarse plaquette based at (9,9) using the retained source
+      instrument.
+    scope: Exact local failure of this intertwining convention; not a proof that every blocked measure violates
+      reflection positivity.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E17. Literal corner paths fail the required reflection identity'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:CORNER_BLOCKING_REFLECTION_DEFECT
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:literal-balaban-corner-paths-have-exact--219e93
+      scope: 'Replayed exact Q(i) matrix-log/exp arithmetic for SU2 on 12x12, L=3: degrees 0..3 vanish and
+        epsilon^4=4/81. Distinct gauge-invariant traces exclude reflection equivariance modulo coarse gauge
+        for this convention.'
+    status: proven
+    evidence: analytic
+

@@ -1,5 +1,7 @@
 # Current research map
 
+The [M10 proof repair](derivations/w6-synchronized-m10-domination.md) establishes actual centered conditional complement suppression outside a neighborhood of the complete minimizing set and an exact angular reference-score budget. Actual M10 remains open: polynomial relative-amplitude control, tube moments and actual normal/angular comparison still require estimates. The earlier completion claim is preserved and corrected.
+
 Maintained guide, reconciled with the source and statement ledgers on **10 September
 2026**. The workspace reconciliation and source-linked analytic formalization
 were merged in [PR #113](https://github.com/ats314/WORKHOUSE/pull/113), merge
@@ -17,6 +19,16 @@ and remaining formalization. Counts belong there and in the generated
 [frontier](../FRONTIER.md), not in another manually maintained total.
 
 
+The [earlier-proof recovery](research/earlier-proof-discovery-2026-09-11.md)
+adds the archive's singular-geometry and rank-volume laws, finite-order quotient
+reduction, B6 residual interpretation, positive matrix-atom criterion, conditional
+matrix floor, disjoint staple coordinates, positive-sector algebra, bounded-domain
+VSU theorem, equal-coupling sphere covariance, and reflection-adapted blocking.
+It retains exact corrections to the determinant parity and moving-adjoint
+formulas, a literal corner-path counterexample, and four explicit application
+obligations. The complete keyword queue is mapped to source identities; a pending
+source node is not a reviewed proof. See the [source-linked statements](derivations/earlier-proof-recovery.md).
+
 The [G19 compatible-kernel continuation](derivations/os-kernel-moving-time-gap.md)
 constructs a physical semigroup and total centered history space from
 compatible kernel limits; positive-time history separation supplies the
@@ -25,6 +37,8 @@ estimate then gives the limiting full-space gap, and one positive
 separated-time correlator gives finite-energy weight. The actual Wilson
 kernel limits, weak-coupling decay rate and nontriviality remain open;
 the fixed-spacing SC17 interval does not contain the continuum trajectory.
+
+The [review-derived spectral budgets](derivations/review-derived-spectral-budgets.md) retain the corrected fourth-order polynomial with sharp coercivity and extend the moving-time theorem to finite decay channels and errors that grow with physical time. Pairwise inequalities give the optimal normalized rate, horizon penalty and a witnessing time; one-atom examples prove sharpness. Actual Wilson estimates, full history-kernel convergence and continuum realization remain inputs.
 
 ## Read the current claim at its own scope
 
@@ -53,7 +67,11 @@ conditional mean (the R9 vacuum-cross vector is exactly `m_g(w) Omega_g`) and
 its conditional fluctuation on level sets of `w`, proves that the first ground
 jet is driven by the magnetic fluctuation alone, and reduces the order-zero
 R10 bound to five fiberwise conditional-energy estimates (H0-H4) whose
-averaged forms are established. R10 stays open; the reviewed closure attempt
+averaged forms are established. The [R10 proof repair](derivations/w6-source-energy-jets-r10.md) retains the
+conditional-measure covariance and all projection-jet product terms, and proves
+that H4 follows from H0 and the first ground jet. Thus H0-H3 suffice as separate
+order-zero inputs. These estimates and the higher source jets remain open.
+R10 stays open; the reviewed closure attempt
 that assumed the pointwise score bound is recorded as rejected. The
 [conditional-score analysis](derivations/w6-conditional-score-tail-control.md)
 separates positive-coupling endpoint control from uniform control as `g` tends
@@ -69,8 +87,9 @@ now expresses the actual score as a conditional continuity residual and derives
 the constrained Agmon center using the original electric metric. Its specified
 synchronized radial profiles follow that center exactly, cancelling the linear
 normal phase drift. M10 remains open for this choice: the conditional amplitude,
-quadratic phase fluctuations, rare-fiber complements and antipodal degeneracy
-still need estimates. A finite-flow argument using actual conditional
+quadratic phase fluctuations and the nearby antipodal angular regime
+still need estimates. The [M10 repair](derivations/w6-synchronized-m10-domination.md)
+now controls the actual centered complement outside enlarged minimizing-set tubes. A finite-flow argument using actual conditional
 concentration proves that some permitted Q8 cutoffs fail M10. This leaves the
 specified synchronized successor open; no actual g^-4 score asymptotic is
 assumed in that counterexample. The established source-moment implication
@@ -88,8 +107,9 @@ zero directions are exactly gauge tangents. The original electric metric
 retains positive normal coercivity. Normal relaxation gives the leading
 angular potential -2sqrt(2)delta n3, while the actual endpoint score is
 constant along the gauge orbit. These inputs resolve the magnetic geometric
-subproblem. Uniform true-ground amplitude, score and complement estimates
-on this normal/angular geometry remain the M10 successor. Start with
+subproblem. Uniform true-ground amplitude and tube-score estimates
+on this normal/angular geometry remain the M10 successor; the centered
+complement estimate is established by the M10 repair. Start with
 `RESULT:W6_ANTIPODAL_GAUGE_NORMAL_COERCIVITY` and
 `RESULT:W6_ANTIPODAL_ANGULAR_REDUCTION`.
 
@@ -243,6 +263,26 @@ N-independent limits: `W₂/(2C_F) = (3/4)τ²`, `W₄/W₂ = (5965/54)τ²`. Th
 a quarter. This is the strong-coupling side of G16 made exact through fourth
 order; the overlap theorem G16 asks for remains open, and the N⁻⁽⁴ᵏ⁻¹⁾ law
 beyond k = 2 is a conjecture for the sixth-order clusters of G9.
+
+## The odd orders of the band
+
+On 2026-09-11 ([ADR 0047](decisions/0047-the-odd-orders-of-the-band-are-determinant-families.md),
+[note](../paper/research_notes/ODD_ORDER_CENTRE_PARITY_20260911.md),
+[run](../runs/odd_order_band_2026-09-11/README.md), suite "the odd orders of the
+band are determinant families (G16)", `RESULT:ODD_ORDER_CENTRE_PARITY`) the odd
+orders of the strong-coupling band were shown to be determinant families. A
+link set meeting every plaquette an odd number of times turns the centre
+constraint of the Haar integral into a parity count of face words: for even N
+every odd-order element of the effective operator vanishes identically at every
+order, and for odd N nothing survives below order N − 2, where the only term is
+the one-plaquette vertex `−(N/(N+1))^{N−3}/((N−3)!)²` (−1 at N = 3, the
+first-order `+u`; −25/144 at N = 5). The third-order des Cloizeaux operator,
+built in the third engine for the first time, reproduces the entire SU(3) third
+order (`B_3`, `t_3+`, `leak_3`, `d_3`, both domino diagonals, the vacuum route
+−9/32), is zero at N = 4, 6, 7, gives ±25/144 at N = 5, and is identically zero
+over ℚ(N). The τ-series of ADR 0046 therefore has no odd terms in the planar
+limit at any fixed order. The even orders' N⁻⁽⁴ᵏ⁻¹⁾ law and the overlap theorem
+of G16 are untouched.
 
 ## Dated route history
 

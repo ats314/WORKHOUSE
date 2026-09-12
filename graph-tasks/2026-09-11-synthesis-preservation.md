@@ -11,7 +11,7 @@ with proof claims." That decision was taken by the maintainer: keep on branch.
 - **Date:** 2026-09-11
 - **Agent / Model:** Claude Code, `claude-opus-5`
 - **Checkout:** `C:\WORKHOUSE\worktrees\general-theory-20260911`
-- **Branch / Revision:** `antigravity/general-theory-20260911` @ `28599ed` then `70ea3a1` (parent `b9651be`; 28 commits behind `origin/main` at close)
+- **Branch / Revision:** `antigravity/general-theory-20260911`, commits `28599ed`, `70ea3a1`, `aed3716`, `242b634`, `b1ae2b7` on parent `b9651be`, then merged with `origin/main` @ `832b967`
 
 ## Target
 - **Graph IDs:** none. No graph node is read, proposed or changed by this task.
@@ -55,7 +55,8 @@ evidence of this one.
 
 ## Obligation
 The preserved documents must not be readable as established results. Four
-defects in the proposal file were found and are recorded in its header.
+defects in the proposal file were found and are recorded in its header; a fifth,
+in this task's own record-keeping, is listed with them.
 
 ## Ownership
 - **Changed:** this record; `graph-tasks/2026-09-11-novel-derivation-proposals.yaml`
@@ -135,7 +136,7 @@ coincidence only: that file states no metric at all, so it is not evidence eithe
 way, and its surrounding comment writes both `-(1/4) Tr(ad_X^2)` and `(1/4)
 B(X,X)` for the same quantity, which differ in sign.
 
-**Check:** `graph-tasks/synthesis-preservation-evidence-20260911/ricci_normalization_check.py`
+**Check:** `graph-tasks/evidence/synthesis-preservation-20260911/ricci_normalization_check.py`
 builds `su(N)` for `N = 2..6`, Gram-Schmidts an orthonormal basis for
 `Tr(X^dag Y)`, and computes `B(X,X) = tr(ad_X^2)` and
 `Ric(X,X) = (1/4) sum_a |[X,e_a]|^2` independently. Output retained at

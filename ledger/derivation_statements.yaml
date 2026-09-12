@@ -6,6 +6,663 @@ coverage_policy: Status and evidence describe the source argument. Only lean rec
   coverage; lean_support is explicitly partial. Empty lean means no complete registered formalization
   in this inventory, not a judgment that an analytic proof is invalid.
 documents:
+- id: CITE:W6_SYNCHRONIZED_M10_DOMINATION
+  path: docs/derivations/w6-synchronized-m10-domination.md
+  sha256: e81031e9f7d13467bfe6a037248216460d21766736fce6f4ad8e830a7ba5519e
+  statements:
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TANGENCY_DRIFT_CANCELLATION
+    statement: S13 exactly preserves the conditional center curve; on a smooth actual-phase tube this
+      cancels the linear normal phase drift.
+    locator: '## 2. Synchronized tangency (lines 34-51)'
+    anchor: '## 2. Synchronized tangency'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Specified synchronized radial profiles and the calibrated center graph.
+    - Smooth phase where the phase-derivative implication is used.
+    depends_on:
+    - DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:SYNCHRONIZED_TANGENCY
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TUBE_VARIANCE_DOMINATION
+    statement: Under the stated actual tube moments, phase regularity and amplitude-gradient bound, the
+      tube score deviation is at most C0+C1*g^-2 E(V|Q).
+    locator: '## 3. Small-angle tube implication (lines 52-84)'
+    anchor: '## 3. Small-angle tube implication'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Uniform conditional tube moments through order six.
+    - Uniform smooth phase derivatives, S13 tangency and Euler cancellation of its quadratic jet.
+    - Uniform actual amplitude-score gradient bounded by ca/g.
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TANGENCY_DRIFT_CANCELLATION
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:LOG_PARAMETER_CRITERION
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ANTIPODAL_SCORE_REGULARITY
+    statement: The endpoint magnetic spectrum has seven positive normal directions and two gauge tangents;
+      the actual score is invariant on the endpoint gauge orbit. This does not control nearby angular
+      score fluctuations.
+    locator: '## 4. Antipodal geometry and a uniform angular reference calculation (lines 85-143)'
+    anchor: '## 4. Antipodal geometry and a uniform angular reference calculation'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual fixed-square Hamiltonian and synchronized conjugation-equivariant transport.
+    - Q=-I for the full-sphere gauge invariance.
+    depends_on:
+    - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:HESSIAN_SPECTRUM
+    - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:GAUGE_SCORE_INVARIANCE
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:AMPLITUDE_GRADIENT_SCALING
+    statement: The actual uniform amplitude-score gradient bound ca/g remains open; changing parameter
+      to h=g^2 and a spatial WKB expansion do not alone prove it.
+    locator: '## 5. Correct parameter-derivative criterion (lines 144-171)'
+    anchor: '## 5. Correct parameter-derivative criterion'
+    status: open
+    evidence: analytic
+    hypotheses:
+    - Actual positive ground amplitude in a valid phase tube.
+    depends_on: []
+    lean: []
+    lean_support: []
+    remaining: Establish uniform spatial control of h*partial_h log A and Z log A for the actual ground;
+      the logarithmic-parameter criterion gives the sufficient implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:OUTSIDE_COMPLEMENT_SUPPRESSION
+    statement: The actual centered conditional score complement is exponentially suppressed uniformly
+      in all Q outside any open neighborhood of the complete minimizing set, using beta equal to the actual
+      score at a conditional minimizer.
+    locator: '## 6. Correct complement argument and compact action gap (lines 172-261)'
+    anchor: '## 6. Correct complement argument and compact action gap'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual fixed compact elliptic Wilson square with unique nondegenerate well, bounded ground energy
+      and the established first-jet L2 bound.
+    - Established positive local actual-ground comparison; fixed smooth S13 transport.
+    - Tube contains the entire minimizing set including the antipodal sphere.
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:COMPACT_ACTION_GAP
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ACTUAL_WEIGHTED_JET_AND_LOWER_BOUND
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:NORMALIZED_COMPLEMENT_CRITERION
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is absent. The actual tube score estimates remain separate.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:FULL_SCORE_DOMINATION_M10
+    statement: Actual full-fiber M10 for S13 remains open. The earlier completion claim is retracted;
+      the repaired assembly implication retains all unsupplied model hypotheses.
+    locator: '## 7. Assembly criterion and actual status (lines 262-286)'
+    anchor: '## 7. Assembly criterion and actual status'
+    status: open
+    evidence: analytic
+    hypotheses:
+    - Actual four-face compact SU(2) quantum ground law and S13 dilation.
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ASSEMBLY_CRITERION
+    lean: []
+    lean_support: []
+    remaining: Actual complement is discharged. Supply the polynomial relative-amplitude and tube moment
+      estimates, intermediate controls, and actual normal/angular comparison and score error. M11-M15
+      remain conditional on full M10.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:LOG_PARAMETER_CRITERION
+    statement: The exact identity g grad a=2 grad(h partial_h log A)+grad(Z log A)+grad(div Z)/2 gives
+      ca=2L+B+J/2 under uniform bounds L,B,J; a spatial-remainder counterexample shows why parameter control
+      is needed.
+    locator: '## 5. Correct parameter-derivative criterion (lines 144-171)'
+    anchor: '## 5. Correct parameter-derivative criterion'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Positive amplitude differentiable in h and spatial variables.
+    - Uniform bounds L,B,J on the three displayed gradients.
+    depends_on: []
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:COMPACT_ACTION_GAP
+    statement: For every open neighborhood of the complete actual minimizing set in the common compact
+      (y,Q) space, the nonempty compact complement has a positive uniform excess of Agmon action above
+      I(theta).
+    locator: '## 6. Correct complement argument and compact action gap (lines 172-261)'
+    anchor: '## 6. Correct complement argument and compact action gap'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual calibrated minimum action I(theta) and continuous Agmon distance.
+    - Open neighborhood contains every minimizer, including the full antipodal sphere.
+    depends_on:
+    - DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:AGMON_GEOMETRY
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:NORMALIZED_COMPLEMENT_CRITERION
+    statement: R7-R10 prove exponential centered conditional complement suppression from a positive action
+      gap and weighted numerator/lower-normalization estimates with exponential slack epsilon<kappa/2.
+    locator: '## 6. Correct complement argument and compact action gap (lines 172-261)'
+    anchor: '## 6. Correct complement argument and compact action gap'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual centered numerator bound and normalization lower bound R9.
+    - Positive action gap kappa; fixed polynomial losses and epsilon<kappa/2.
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:COMPACT_ACTION_GAP
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ANGULAR_REFERENCE_BUDGET
+    statement: The truncated exponential angular law has E x<=1 and E x^2<=2 uniformly for lambda>=0.
+      Seven independent Gaussian normals give E(X+x)^2<=99/4. Actual measure domination by M and a score-error
+      budget E0/g^2 imply the tube score bound (99M/2+2E0)/g^2.
+    locator: '## 4. Antipodal geometry and a uniform angular reference calculation (lines 85-143)'
+    anchor: '## 4. Antipodal geometry and a uniform angular reference calculation'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Specified reference angular and Gaussian laws.
+    - Actual-law comparison and score-error hypotheses are needed only for transfer to an actual conditional
+      measure.
+    depends_on: []
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ASSEMBLY_CRITERION
+    statement: Small-angle tube control, intermediate control, actual normal/angular comparison and normalized
+      complements with a common reference imply full-fiber M10 and its stated source-moment consequence.
+    locator: '## 7. Assembly criterion and actual status (lines 262-286)'
+    anchor: '## 7. Assembly criterion and actual status'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - All actual-model hypotheses explicitly listed in section 7.
+    - Uniform constants across g and the relevant fibers.
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TUBE_VARIANCE_DOMINATION
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ANGULAR_REFERENCE_BUDGET
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:NORMALIZED_COMPLEMENT_CRITERION
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ACTUAL_WEIGHTED_JET_AND_LOWER_BOUND
+    statement: Weighted actual first-jet estimates and controlled-diffusion propagation give arbitrarily-small-slack
+      global pointwise numerator and lower-ground bounds. Uniform fiber balls then give the actual rare-fiber
+      normalization and centered R9 bounds.
+    anchor: '## 6. Correct complement argument and compact action gap'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual compact smooth elliptic square, V nonnegative with a unique nondegenerate well, 0<=e_g<=E.
+    - Established actual ||partial_g Psi_g||_2<=C/g and positive undifferentiated local WKB comparison.
+    - Ordinary finite-time Ito, Girsanov and elliptic interior estimates with the stated smooth compact
+      coefficients.
+    depends_on:
+    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
+    - DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:CONDITIONAL_CONCENTRATION
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is absent; the proof supplies exponential slack, not
+      a polynomial relative-amplitude comparison.
+    locator: '## 6. Correct complement argument and compact action gap (lines 172-261)'
+
+- id: CITE:EARLIER_PROOF_RECOVERY
+  path: docs/derivations/earlier-proof-recovery.md
+  sha256: 4b5b067ee7697cf5a1e032ba3d9edb15f50879d6704e7dc4b5bfea2bf89a1e9d
+  statements:
+  - id: DERIV:EARLIER_PROOF_RECOVERY:CUBIC_QUOTIENT_REGULARITY
+    statement: 'The cubic four-shape dispersion has the exact regularity trichotomy C nonzero: C^{1,1}
+      not C^2; C=0,D nonzero: C^{3,1} not C^4; C=D=0: analytic.'
+    locator: '## E1. Cubic quotient regularity trichotomy'
+    anchor: '## E1. Cubic quotient regularity trichotomy'
+    source_labels:
+    - E1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Real A,B,C,D; a_i=4 sin^2(k_i/2), q=sum a_i, e2=sum a_i a_j, e3=product a_i; Delta=Aq+Be2+4C e2/q+D
+      e3/q extended by zero at Gamma.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:EQUAL_RAY_IDENTIFICATION
+    statement: Equal-ray data recover A=R1, B=m2, C=b2/2-A and D=3m3-9m2, with independent holdout b3=2b2-R1.
+    locator: '## E2. Equal-ray recovery and an independent holdout'
+    anchor: '## E2. Equal-ray recovery and an independent holdout'
+    source_labels:
+    - E2
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - The dispersion consists of exactly the four shapes in E1; two distinct nonzero a values determine
+      each affine divided ray.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:LOCALIZED_FRAME_OBSTRUCTION
+    statement: A rank-one Bloch fiber with direction-dependent projector limits at Gamma has no finite
+      exponentially localized translation frame with a uniform lower bound; its compact cube frame floor
+      is 4 sin^2(pi/L).
+    locator: '## E3. No uniformly localized finite translation frame'
+    anchor: '## E3. No uniformly localized finite translation frame'
+    source_labels:
+    - E3
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Analytic rank-one generators with S=sP; a positive frame floor approaching Gamma; P=w w*/q with
+      leading w=Jk and q=|k|^2+O(|k|^4).
+    - For the explicit floor, q=sum_i 4 sin^2(k_i/2) on the nonzero periodic momentum grid.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:JOINT_RANK_VOLUME_SCALING
+    statement: For N,L>=3 the rescaled second-order carrier gap G=4N^3 t_N L^2 sin^2(pi/L) increases in
+      both variables, has sharp floor 405/68, strict ceiling pi^2 and joint limit pi^2; t_N decreases
+      for real N>=3.
+    locator: '## E4. Sharp joint rank-volume scaling'
+    anchor: '## E4. Sharp joint rank-volume scaling'
+    source_labels:
+    - E4
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Integer N,L>=3; u nonzero; t_N=2N(N^2-4)/[(N^2-1)(2N^2-1)(4N^2-9)]; Delta2=4t_N u^2 sin^2(pi/L).
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:FINITE_ORDER_SUPPORT
+    statement: At fixed order r a connected interaction history rooted in a finite support reaches only
+      a finite union in its r-step support neighborhood.
+    locator: '## E5a. Bounded support at a fixed order'
+    anchor: '## E5a. Bounded support at a fixed order'
+    source_labels:
+    - E5a
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Bounded-support insertions; locally finite interaction support graph; finite root; at most r insertions.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:GRAM_NULL_OPERATOR_QUOTIENT
+    statement: For G=C*C and B=C*AC, ker G=ker C is killed by B; G^+B is the physical Gram-quotient coordinate
+      action, and C G^+B=AC on an invariant physical span.
+    locator: '## E5b. Gram-null decoupling'
+    anchor: '## E5b. Gram-null decoupling'
+    source_labels:
+    - E5b
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - C maps a finite coefficient space onto its physical span; A is defined there, and the last intertwining
+      conclusion assumes A-invariance.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:DECORATED_HISTORY_MERGING
+    statement: Histories with identical complete continuation data can be merged by summing amplitudes
+      without changing the fixed-order expansion.
+    locator: '## E5c. Exact merging of decorated histories'
+    anchor: '## E5c. Exact merging of decorated histories'
+    source_labels:
+    - E5c
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Finite reachable quotient states and known exact edge amplitudes; identical remaining state, support
+      union, order, energy-resolvent data and fold ancestry.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:NESTED_QUOTIENT_REDUCTION
+    statement: The complete finite energy-decorated quotient history graph determines the connected effective
+      operator through order r exactly, including direct/folded words, ordered support-union convolution
+      and rooted subtraction.
+    locator: '## E5d. Finite-order nested-quotient spectral reduction'
+    anchor: '## E5d. Finite-order nested-quotient spectral reduction'
+    source_labels:
+    - E5d
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - E5a locality and fixed order; finite retained space and finite reachable Wilson/Gram quotient.
+    - Nonresonant eliminated resolvents; complete direct and folded words; disconnected-vacuum removal.
+    - Complete ordered support-union convolution before rooted Mobius subtraction on a complete finite
+      inclusion poset; fixed canonical Hermitian normalization.
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:FINITE_ORDER_SUPPORT
+    - DERIV:EARLIER_PROOF_RECOVERY:GRAM_NULL_OPERATOR_QUOTIENT
+    - DERIV:EARLIER_PROOF_RECOVERY:DECORATED_HISTORY_MERGING
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:SHELL_SYMMETRY_RITZ_CONTROL
+    statement: Commuting finite Hermitian shell operators reduce to multiplicity-space matrices; every
+      normalized lifted Ritz vector satisfies dist(lambda,Spec(E-uM))<=||(E-uM-lambda)v||.
+    locator: '## E6a. Symmetry and residual control for a reduced shell'
+    anchor: '## E6a. Symmetry and residual control for a reduced shell'
+    source_labels:
+    - E6a
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Finite Hermitian E,M commute with a finite unitary group action; real u,lambda; residual is evaluated
+      in the full retained physical space.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:B6_RETAINED_KRYLOV_CAMPAIGN
+    statement: The retained SU(3) B6 certificate reports radial dimensions 67,155,133 and maximum full-space
+      Ritz residual 8.775675697349887e-14 on 201 g-values in [1,2], with crossing g=1.3039546641713.
+    locator: '## E6b. Retained B6 numerical campaign'
+    anchor: '## E6b. Retained B6 numerical campaign'
+    source_labels:
+    - E6b
+    status: conditional
+    evidence: numerical
+    hypotheses:
+    - Historical source K6(u)=E-uM, source coupling conversion and branch choices; level-eight 511-column
+      word spaces; relative SVD cutoff 1e-10.
+    - The certificate is retained and hash-verified; the B6 eigensolver was not rerun in this integration.
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:SHELL_SYMMETRY_RITZ_CONTROL
+    lean: []
+    remaining: The original numerical certificate is preserved. A fresh B6 eigensolver replay and any
+      uniform-in-coupling or full-shell conclusion are not supplied.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:ISOLATED_POSITIVE_MATRIX_ATOM
+    statement: Normalized positive matrix measures with locally uniform Laplace convergence through zero,
+      a collapsing interval of uniformly positive matrix mass and a fixed empty annulus retain an isolated
+      full-rank atom at the limiting positive energy.
+    locator: '## E7. Isolated positive matrix atom persists'
+    anchor: '## E7. Isolated positive matrix atom persists'
+    source_labels:
+    - E7
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Finite d-by-d positive matrix measures on [0,infinity) of total mass I; locally uniform Laplace-transform
+      convergence including zero.
+    - Closed intervals I_n converge to {M}, M>0; nu_n(I_n)>=z_*I for z_*>0; no mass at 0<dist(E,I_n)<Delta_*
+      outside I_n.
+    - The scalar-residue conclusion additionally assumes covariance under one irreducible source representation.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:CONDITIONAL_SPECTRAL_FLOOR
+    statement: 'Conditional averaging raises the smallest eigenvalue relative to its conditional mean
+      and contracts the positive spectral-floor defect: (c-lambda_min(E[H|G]))_+<=E[(c-lambda_min(H))_+|G].'
+    locator: '## E8. Conditional spectral floor and defect contraction'
+    anchor: '## E8. Conditional spectral floor and defect contraction'
+    source_labels:
+    - E8
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Integrable random symmetric matrices on one fixed finite-dimensional space; a sigma-algebra G and
+      real c.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:D4_DISJOINT_STAPLE_COORDINATES
+    statement: Each of the six staples incident to a fixed D=4 link has a distinct selected link coordinate
+      affecting only that staple within the star.
+    locator: '## E9. Six disjoint staple coordinates in four dimensions'
+    anchor: '## E9. Six disjoint staple coordinates in four dimensions'
+    source_labels:
+    - E9
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Periodic nondegenerate cubic lattice with L>=3; for nu!=mu use (x+e_mu,nu) and (x+e_mu-e_nu,nu).
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:POSITIVE_SECTOR_PHASE_ISOLATION
+    statement: Nonnegative local weights with additive integer charge give nonnegative Laurent sector
+      coefficients preserved by tensor multiplication and summation, with theta dependence evaluated last
+      at z=exp(i theta).
+    locator: '## E10. Positive-sector phase isolation'
+    anchor: '## E10. Positive-sector phase isolation'
+    source_labels:
+    - E10
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Finite configuration/charge sums, or absolute convergence justifying all expansions and evaluation;
+      nonnegative local weights.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:VSU_BOUNDED_DOMAIN_WELLPOSEDNESS
+    statement: The VSU primitive F(s)=s-2+2(sqrt(s)+1)exp(-sqrt(s)) yields a strictly convex, quadratically
+      coercive gradient energy and a unique weak Dirichlet solution on bounded Lipschitz domains.
+    locator: '## E11. Convex VSU action on a bounded domain'
+    anchor: '## E11. Convex VSU action on a bounded domain'
+    source_labels:
+    - E11
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - a0,G>0; mu(x)=1-exp(-x); bounded Lipschitz Omega in R^3; rho in L^(6/5)(Omega); phi in W_0^(1,2)(Omega).
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:DETERMINANT_PARITY_REPAIR
+    statement: When w_r=0, det[x,u,w]=sgn(r,p,q)[x_r(u_p w_q-u_q w_p)-u_r(x_p w_q-x_q w_p)]; the parity
+      factor is indispensable.
+    locator: '## E12. Determinant reduction with the missing parity restored'
+    anchor: '## E12. Determinant reduction with the missing parity restored'
+    source_labels:
+    - E12
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Three-dimensional columns x,u,w; (r,p,q) is a permutation of (0,1,2); w_r=0.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:MOVING_ADJOINT_FORCE_DERIVATIVE
+    statement: The moving adjoint force obeys d(Ad_g X)/dt=[g′g^-1,Ad_g X]+Ad_g X′; the selected staple
+      can have a nonzero own-force derivative.
+    locator: '## E13. A moving adjoint force has two derivative terms'
+    anchor: '## E13. A moving adjoint force has two derivative terms'
+    source_labels:
+    - E13
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Differentiable matrix-group path g and Lie-algebra path X; full product rule.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:SPHERE_EQUAL_COUPLING_COVARIANCE
+    statement: Two distinct equal-coupling SU(3) Wilson faces on a finite genus-zero cellulation have
+      nonnegative normalized-trace covariance, equal to a variance of representation scores.
+    locator: '## E14. Equal-coupling SU(3) faces on a sphere have nonnegative covariance'
+    anchor: '## E14. Equal-coupling SU(3) faces on a sphere have nonnegative covariance'
+    source_labels:
+    - E14
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Finite oriented cellulation of S^2 with normalized edge Haar measure and face weights exp(b_f ReTr(U_f)/3),
+      all b_f>=0.
+    - The two distinct faces have identical coupling; zero-coupling endpoints are taken by continuity.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:SU3_POSITIVITY_BOUNDARIES
+    statement: At SU(3) Haar measure Cov(ReTr(U)/3,ReTr(U^2)/3)=-1/18 and the balanced-degree-two crossed
+      Weingarten coefficient is -1/24 (the direct coefficient is 1/8).
+    locator: '## E15. Exact SU(3) boundaries of the covariance argument'
+    anchor: '## E15. Exact SU(3) boundaries of the covariance argument'
+    source_labels:
+    - E15
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Normalized Haar SU(3); the second observable is the twice-wound trace, not a second elementary plaquette.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:REFLECTION_ADAPTED_BLOCKING
+    statement: Reflection-adapted centered odd blocks and compatible deterministic Balaban-form path averages
+      preserve reflection positivity on the coarse gauge-invariant positive-time algebra.
+    locator: '## E16. Reflection-adapted deterministic blocking preserves positivity'
+    anchor: '## E16. Reflection-adapted deterministic blocking preserves positivity'
+    source_labels:
+    - E16
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Reflection-positive fine measure; reflection-permuted centered blocks with odd L and reflection/orientation-compatible
+      path families.
+    - Conjugation-compatible logarithm on a reflection-invariant full-measure regular domain; positive
+      coarse bonds have both endpoint blocks wholly in the fine positive half.
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S7
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:CORNER_BLOCKING_REFLECTION_DEFECT
+    statement: The literal lower-corner ordered-path L=3 blocking has gauge-invariant reflected coarse-plaquette
+      trace defect (4/81)epsilon^4+O(epsilon^5), so that convention fails the required reflection identity.
+    locator: '## E17. Literal corner paths fail the required reflection identity'
+    anchor: '## E17. Literal corner paths fail the required reflection identity'
+    source_labels:
+    - E17
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - SU(2) periodic 12-by-12 lattice; source coordinate-order (0,1) trees; reflection (x,t)->(x,2-t);
+      only exp(i epsilon sigma_x),exp(i epsilon sigma_y) at the two specified origin links.
+    - Analytic log/exp near identity; compare the coarse plaquette based at (9,9) using the retained source
+      instrument.
+    depends_on: []
+    lean: []
+    remaining: Analytic proof retained at its stated hypotheses; no whole-statement Lean proof is claimed.
+      Exact controls support only their recorded algebra.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:DIPOLAR_REMAINDER
+    statement: Establish the archived O(|x|^-4) remainder of the dipolar lattice kernel with the required
+      Fourier-cutoff and derivative bounds.
+    locator: '## E18. Explicit remaining application obligations'
+    anchor: 'DIPOLAR_REMAINDER:'
+    source_labels:
+    - E18
+    - DIPOLAR_REMAINDER
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - The exact source assumptions and required estimates described in E18.
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:LOCALIZED_FRAME_OBSTRUCTION
+    lean: []
+    remaining: Explicit pending application or extension; neither the exact finite controls nor the narrower
+      recovered theorem discharge it.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:PHYSICAL_CARRIER_REALIZATION
+    statement: Construct actual cutoff sources, residue floor, collapsing isolated intervals, true-sector
+      gap, physical clock and limiting identifications needed to apply the positive matrix atom theorem.
+    locator: '## E18. Explicit remaining application obligations'
+    anchor: 'PHYSICAL_CARRIER_REALIZATION:'
+    source_labels:
+    - E18
+    - PHYSICAL_CARRIER_REALIZATION
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - The exact source assumptions and required estimates described in E18.
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:ISOLATED_POSITIVE_MATRIX_ATOM
+    lean: []
+    remaining: Explicit pending application or extension; neither the exact finite controls nor the narrower
+      recovered theorem discharge it.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:STAPLE_TRANSVERSALITY_REPAIR
+    statement: Repair the force-rank and tube estimates with the full moving-adjoint derivative.
+    locator: '## E18. Explicit remaining application obligations'
+    anchor: 'STAPLE_TRANSVERSALITY_REPAIR:'
+    source_labels:
+    - E18
+    - STAPLE_TRANSVERSALITY_REPAIR
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - The exact source assumptions and required estimates described in E18.
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:D4_DISJOINT_STAPLE_COORDINATES
+    - DERIV:EARLIER_PROOF_RECOVERY:MOVING_ADJOINT_FORCE_DERIVATIVE
+    lean: []
+    remaining: Explicit pending application or extension; neither the exact finite controls nor the narrower
+      recovered theorem discharge it.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:VSU_WHOLE_SPACE
+    statement: Establish compatible normalization and uniform local estimates for the whole-space VSU
+      limit, then justify the claimed far-field law.
+    locator: '## E18. Explicit remaining application obligations'
+    anchor: 'VSU_WHOLE_SPACE:'
+    source_labels:
+    - E18
+    - VSU_WHOLE_SPACE
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - The exact source assumptions and required estimates described in E18.
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:VSU_BOUNDED_DOMAIN_WELLPOSEDNESS
+    lean: []
+    remaining: Explicit pending application or extension; neither the exact finite controls nor the narrower
+      recovered theorem discharge it.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:OMITTED_DETERMINANT_PARITY
+    statement: The original zero-row determinant formula is valid for all rows without a permutation sign.
+    locator: '## E12. Determinant reduction with the missing parity restored'
+    anchor: '## E12. Determinant reduction with the missing parity restored'
+    source_labels:
+    - E12
+    - historical assertion
+    status: falsified
+    evidence: analytic
+    hypotheses:
+    - Exactly the unqualified historical formula discussed in this section.
+    depends_on: []
+    lean: []
+    remaining: The displayed exact counterexample refutes this formula; the corrected result and surviving
+      open application are registered separately.
+  - id: DERIV:EARLIER_PROOF_RECOVERY:OMITTED_OWN_FORCE_DERIVATIVE
+    statement: The original moving-staple derivative may omit Ad_g X prime without an additional hypothesis.
+    locator: '## E13. A moving adjoint force has two derivative terms'
+    anchor: '## E13. A moving adjoint force has two derivative terms'
+    source_labels:
+    - E13
+    - historical assertion
+    status: falsified
+    evidence: analytic
+    hypotheses:
+    - Exactly the unqualified historical formula discussed in this section.
+    depends_on: []
+    lean: []
+    remaining: The displayed exact counterexample refutes this formula; the corrected result and surviving
+      open application are registered separately.
+
 - id: CITE:WILSON_BACKGROUND
   path: docs/derivations/wilson-background-covariance-continuation.md
   sha256: 05ee05dc5acf99fabcefcd897cba340f45de94a583ea1d737a9011bb5650ec47
@@ -4692,10 +5349,11 @@ documents:
     remaining: No full-statement Lean formalization. Full conditional source-generator jets and growing-grid
       uniformity are not conclusions.
   - id: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:SOURCE_ENERGY_JETS_R10
-    statement: For the actual complete compact-square source/vacuum generator A(g) in R9, prove
-      ||A^(r)(g)||_(q_g->q_g)<=d_r g^(-r-1) for r=0,1,2 with finite constants independent of small positive
-      g. This is the open model input R10, not the already proved conditional implication R10 to R12.
-    locator: '## 4. An explicit bridge from the actual transport generator to M1,M2,M3 (lines 199-218); section 5 (lines 271-309)'
+    statement: For the actual complete compact-square source/vacuum generator A(g) in R9, prove ||A^(r)(g)||_(q_g->q_g)<=d_r
+      g^(-r-1) for r=0,1,2 with finite constants independent of small positive g. This is the open model input
+      R10, not the already proved conditional implication R10 to R12.
+    locator: '## 4. An explicit bridge from the actual transport generator to M1,M2,M3 (lines 199-218); section
+      5 (lines 271-309)'
     anchor: '||A^(r)(g)||_(q_g -> q_g) <= d_r g^(-r-1),  r=0,1,2,      (R10)'
     source_labels:
     - R9
@@ -4703,21 +5361,23 @@ documents:
     status: open
     evidence: prose-only
     hypotheses:
-    - Actual fixed compact-square Hamiltonian and common electric H1 form domain; actual simple normalized
-      positive ground, 0<=e_g<=E and physical gap gamma>0 on 0<g<g_*.
-    - P_g is the complete true-ground literal-source projection from C1, and A(g) is exactly the R9
-      source/vacuum generator; q_g[u]=H_g[u]+gamma||u||^2, including vacuum components.
-    - Parameter derivatives are taken at positive g on the fixed compact form domain. The target covers
-      all source and fast energies, including spatial derivatives and generator derivatives through order two.
+    - Actual fixed compact-square Hamiltonian and common electric H1 form domain; actual simple normalized positive
+      ground, 0<=e_g<=E and physical gap gamma>0 on 0<g<g_*.
+    - P_g is the complete true-ground literal-source projection from C1, and A(g) is exactly the R9 source/vacuum
+      generator; q_g[u]=H_g[u]+gamma||u||^2, including vacuum components.
+    - Parameter derivatives are taken at positive g on the fixed compact form domain. The target covers all source
+      and fast energies, including spatial derivatives and generator derivatives through order two.
     depends_on:
     - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
     lean: []
-    remaining: Establish the conditional-source projection energy bounds beyond the proved vacuum-only
-      generator. A direct proof of mixed-form R11 is an alternative sufficient route and need not prove
-      R10 itself. M10 and the Hardy source-to-L2 bound are not prerequisites of R10 and do not imply it;
-      a different source chart requires its own consistent transformed operator and covariant derivatives.
-      The ground-frame reduction DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION gives the
-      r=0 case under its conditional-energy hypotheses H0-H4; those and r=1,2 remain open.
+    remaining: Establish the conditional-source projection energy bounds beyond the proved vacuum-only generator.
+      A direct proof of mixed-form R11 is an alternative sufficient route and need not prove R10 itself. M10
+      and the Hardy source-to-L2 bound are not prerequisites of R10 and do not imply it; a different source chart
+      requires its own consistent transformed operator and covariant derivatives. The ground-frame reduction
+      DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION gives the r=0 case under its conditional-energy
+      hypotheses H0-H4; those and r=1,2 remain open. The PR 150 repair establishes conditional differentiation
+      and projection-jet identities; H4 follows from H0 and R8a, but H0-H3 and higher source-energy bounds remain
+      unresolved.
   - id: DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:COMPLETE_BUDGET
     statement: For the complete actual positive-reference source/vacuum transport, energy-operator bounds
       ||A^(r)(g)||_(q_g->q_g)<=d_r g^(-r-1), r=0,1,2, imply explicit all-energy M_j(s)<=c_j s^-j for j=1,2,3
@@ -5943,10 +6603,10 @@ documents:
       bound any of them, and pairing it with |f|^2 does not yield an energy-form bound without further
       regularity.
   - id: DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:R10_ORDER_ZERO_REDUCTION
-    statement: Under the conditional-energy hypotheses H0-H4 (uniform q_g-boundedness of P_g, sup_w K^0_g
-      <= kappa_0 g^-2, J_g <= kappa_1 g^-2 (1+g^-2 E[V|w]), the fast-to-source conditional energy bound,
-      and b_g[m_g] <= kappa_3 g^-2), the complete R9 generator satisfies ||A(g)||_(q_g->q_g) <= d_0 g^-1
-      with the displayed explicit d_0. This is the r=0 case of R10 only.
+    statement: Under the conditional-energy hypotheses H0-H4 (uniform q_g-boundedness of P_g, sup_w K^0_g <=
+      kappa_0 g^-2, J_g <= kappa_1 g^-2 (1+g^-2 E[V|w]), the fast-to-source conditional energy bound, and b_g[m_g]
+      <= kappa_3 g^-2), the complete R9 generator satisfies ||A(g)||_(q_g->q_g) <= d_0 g^-1 with the displayed
+      explicit d_0. This is the r=0 case of R10 only.
     locator: '## 5. Exact reduction of the order-zero R10 bound (SF8-SF9)'
     anchor: '||A(g) u||_(q_g) <= d_0 g^-1 ||u||_(q_g),'
     source_labels:
@@ -5963,14 +6623,15 @@ documents:
     - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:FIBER_ENERGY_IDENTITY
     - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
     lean: []
-    remaining: Prove H0-H4. The r=1,2 cases of R10 are not reduced; their forcing contains the electric
-      term and P''_g involves sigma_g^2 and its derivative. R10 remains open.
+    remaining: Prove H0-H4. The r=1,2 cases of R10 are not reduced; their forcing contains the electric term
+      and P''_g involves sigma_g^2 and its derivative. R10 remains open. C4 in the R10 repair derives H4 from
+      H0 and R8a, so H0-H3 suffice as separate hypotheses; they remain undischarged.
   - id: DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:CONDITIONAL_ENERGY_H0_H4
-    statement: Prove, uniformly on 0<g<g_*, the fiberwise conditional-energy estimates H0-H4 for the
-      undilated ground score on level sets of w. Their averaged forms are established (SF7b and the
-      integrated J_g bound conditional on H4); the fiberwise forms are open.
+    statement: Prove, uniformly on 0<g<g_*, the fiberwise conditional-energy estimates H0-H4 for the undilated
+      ground score on level sets of w. Their averaged forms are established (SF7b and the integrated J_g bound
+      conditional on H4); the fiberwise forms are open.
     locator: '## 5. Exact reduction of the order-zero R10 bound (SF8-SF9), conditional-energy hypotheses'
-    anchor: '(H1)  sup_w K^0_g(w)'
+    anchor: (H1)  sup_w K^0_g(w)
     source_labels:
     - H0
     - H1
@@ -5984,10 +6645,10 @@ documents:
     depends_on:
     - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
     lean: []
-    remaining: A fiberwise Poincare-type inequality for -Delta_mu restricted to level sets of w, uniform
-      in g, would give H1 and H2 from SF6. H0, H3 and H4 concern the source energy of conditional
-      expectations and need a separate argument. No route is claimed dead.
-
+    remaining: A fiberwise Poincare-type inequality for -Delta_mu restricted to level sets of w, uniform in g,
+      would give H1 and H2 from SF6. H0, H3 and H4 concern the source energy of conditional expectations and
+      need a separate argument. No route is claimed dead. The repaired C4 implication derives H4 from H0 and
+      the established first ground jet. The H0-H3 actual-model estimates remain open.
 - id: CITE:MOVING_TIME_SPECTRAL_GAP
   path: docs/derivations/moving-time-spectral-gap.md
   sha256: d0a20c25e023bff70dec2ad61995860ceb3eb8476c651b2fc6275ff64d059a75
@@ -6363,3 +7024,774 @@ documents:
       no whole Lean formalization. Actual Wilson fixed-time kernels and compatibility remain application
       hypotheses.
     locator: '## K5. Positive-time history separation supplies zero-time continuity (lines 176-221)'
+
+- id: CITE:W6_SOURCE_ENERGY_JETS_R10
+  path: docs/derivations/w6-source-energy-jets-r10.md
+  sha256: 7cb2ad710a35e1ddf049b814ebd7e2ad9a3b7717d6cb8893b136149d1617ecf5
+  statements:
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:H0_ENERGY_CONTRACTION
+    statement: Establish the proposed bound b_g[Pi_g Phi] <= q_g[Omega_g Phi] with kappa_P=1 on the actual
+      model; the weaker uniform finite-kappa_P H0 also suffices for R10.
+    locator: '## 6. Scaling defects and unresolved estimates (C6)'
+    anchor: 'H0_ENERGY_CONTRACTION:'
+    source_labels:
+    - H0_ENERGY_CONTRACTION
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - Constants must be independent of g on 0<g<g_*.
+    depends_on: []
+    lean: []
+    remaining: The submitted proof is not a discharge. C1-C5 repair identities and conditional reductions;
+      full actual-model energy estimates remain open.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:H1_FIBERWISE_SCORE_VARIANCE
+    statement: Establish sup_w Var_mu_g(sigma_g|w) <= kappa_0 g^-2 uniformly at small positive coupling.
+    locator: '## 6. Scaling defects and unresolved estimates (C6)'
+    anchor: 'H1_FIBERWISE_SCORE_VARIANCE:'
+    source_labels:
+    - H1_FIBERWISE_SCORE_VARIANCE
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - Constants must be independent of g on 0<g<g_*.
+    depends_on: []
+    lean: []
+    remaining: The submitted proof is not a discharge. C1-C5 repair identities and conditional reductions;
+      full actual-model energy estimates remain open.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:VACUUM_CROSS_DERIVATIVES
+    statement: Establish ||partial_g^r A_nu||_(q_g->q_g) <= d_nu,r g^(-r-1), r=0,1,2, for the actual vacuum-cross
+      source vector.
+    locator: '## 6. Scaling defects and unresolved estimates (C6)'
+    anchor: 'VACUUM_CROSS_DERIVATIVES:'
+    source_labels:
+    - VACUUM_CROSS_DERIVATIVES
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - Constants must be independent of g on 0<g<g_*.
+    depends_on: []
+    lean: []
+    remaining: The submitted proof is not a discharge. C1-C5 repair identities and conditional reductions;
+      full actual-model energy estimates remain open.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:KATO_DERIVATIVES
+    statement: Establish ||partial_g^r[P_g prime,P_g]||_(q_g->q_g) <= d_P,r g^(-r-1), r=0,1,2, for the actual
+      source projection.
+    locator: '## 6. Scaling defects and unresolved estimates (C6)'
+    anchor: 'KATO_DERIVATIVES:'
+    source_labels:
+    - KATO_DERIVATIVES
+    status: open
+    evidence: prose-only
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - Constants must be independent of g on 0<g<g_*.
+    depends_on: []
+    lean: []
+    remaining: The submitted proof is not a discharge. C1-C5 repair identities and conditional reductions;
+      full actual-model energy estimates remain open.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:CONDITIONAL_DERIVATIVE
+    statement: On regular fibers, d_w E_mu[Phi|w]=E_mu[X(Phi)|w]+Cov_mu(Phi,div_mu X|w), with the covariance
+      retained also for tilde_sigma Phi.
+    locator: '## 2. Correct conditional differentiation (C1)'
+    anchor: d/dw E_mu_g[Phi|w] = E_mu_g[X(Phi)|w] + Cov_mu_g(Phi,B_g|w).  (C1)
+    source_labels:
+    - CONDITIONAL_DERIVATIVE
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - X=grad(w)/Gamma(w,w), X(w)=1 on (-1,1); smooth fields or the stated locally integrable weak formulation.
+    depends_on:
+    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:FIBER_ENERGY_IDENTITY
+    lean: []
+    remaining: Analytic statement; no full Lean formalization. Finite checks have only their declared scope.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:HORIZONTAL_SCORE_SUFFICIENT
+    statement: A uniform bound ess sup_w g^2(1-w^2)Var_mu(B_g|w)<=C_B implies H0 with kappa_P=2+2C_B/gamma.
+    locator: '## 3. A sufficient horizontal-score estimate for H0 (C3)'
+    anchor: b_g[Pi_g Phi] <= (2+2 C_B/gamma) q_g[Omega_g Phi].           (C3)
+    source_labels:
+    - HORIZONTAL_SCORE_SUFFICIENT
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - The additional horizontal-score variance bound C3a holds uniformly; common smooth form core and closure
+      as specified.
+    depends_on:
+    - DERIV:W6_SOURCE_ENERGY_JETS_R10:CONDITIONAL_DERIVATIVE
+    lean: []
+    remaining: The sufficient implication is proved; C3a has not been established for the actual model. No
+      Lean formalization.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:H4_FROM_H0
+    statement: H0 and the first ground jet R8a imply H4 with kappa_3=kappa_P D_1^2; SF9 therefore needs only
+      H0-H3 as separate sufficient estimates.
+    locator: '## 4. H4 follows from H0 and the established ground jet (C4)'
+    anchor: b_g[m_g] <= kappa_P q_g[chi_g] <= kappa_P D_1^2 g^-2.        (C4)
+    source_labels:
+    - H4_FROM_H0
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - Assume H0 with a uniform kappa_P; q_g[chi_g]<=D_1^2 g^-2 is established by R8a.
+    depends_on:
+    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+    lean: []
+    remaining: The implication is proved. H0 is an explicit unresolved application hypothesis; it is not discharged
+      by this result. No Lean formalization.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:PROJECTION_JET_RECURRENCE
+    statement: For P_g=U_g^-1 Pi_g U_g and U_g prime=-sigma_g U_g, F_0=Pi_g, F_(n+1)=partial_g F_n+[sigma_g,F_n]
+      gives P_g^(n)=U_g^-1 F_n U_g, retaining the mixed terms in P_g second derivative.
+    locator: '## 5. Complete projection-jet recurrence (C5)'
+    anchor: P_g^(n)=U_g^-1 F_n U_g.                                   (C5)
+    source_labels:
+    - PROJECTION_JET_RECURRENCE
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual fixed compact square at positive g; normalized positive ground, q_g=H_g+gamma I, common form domain.
+    - Differentiable operator families on a common smooth core at fixed positive g; uniform energy operator
+      bounds are not assumed or concluded.
+    depends_on: []
+    lean: []
+    remaining: Analytic statement; no full Lean formalization. Finite checks have only their declared scope.
+  - id: DERIV:W6_SOURCE_ENERGY_JETS_R10:SCALING_OBSTRUCTIONS
+    statement: The submitted H1 inverse estimate scales as g^-3, and the submitted H2 scalar domination requires
+      an unbounded constant 8 sqrt(2 kappa_0)/g at v=g^2. These invalidate the proof steps, not R10 itself.
+    locator: '## 6. Scaling defects and unresolved estimates (C6)'
+    anchor: 8 sqrt(2 kappa_0)/g -> infinity.                           (C6b)
+    source_labels:
+    - SCALING_OBSTRUCTIONS
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Positive g,c_trans,C_V,kappa_0 and v; exactly the displayed scalar premises, not actual-model coercivity.
+    depends_on: []
+    lean: []
+    remaining: Analytic statement; no full Lean formalization. Finite checks have only their declared scope.
+
+- id: CITE:ARCHIVE_FUNCTIONAL
+  path: docs/derivations/archive-functional-inequalities.md
+  sha256: 048fbf01cdc55ee428b50f7fdbf86a3569a107631705c46314da88f8b00f3a00
+  statements:
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F1
+    statement: The smooth trace defect has range [0,2] and zero set ker rho; faithfulness makes the
+      vacuum unique.
+    locator: '## F1. Trace defect, faithfulness and the vacuum set (lines 13-22)'
+    anchor: '## F1. Trace defect, faithfulness and the vacuum set'
+    source_labels:
+    - F1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Compact Lie group and smooth unitary representation rho:G->U(n); faithfulness only for the unique-zero
+      conclusion.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F2
+    statement: A nonnegative C2 function on a complete manifold with Hess z<=H g satisfies |grad z|^2<=2H
+      z.
+    locator: '## F2. Global gradient domination without a quotient singularity (lines 23-37)'
+    anchor: '## F2. Global gradient domination without a quotient singularity'
+    source_labels:
+    - F2
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Complete Riemannian manifold, z>=0 of class C2, global Hessian upper bound H>0.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F3
+    statement: Distinct-link plaquette lifts have gradient square r times the group gradient square
+      and Laplacian r times the group Laplacian.
+    locator: '## F3. Plaquette lifts preserve link derivatives (lines 38-53)'
+    anchor: '## F3. Plaquette lifts preserve link derivatives'
+    source_labels:
+    - F3
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Bi-invariant group metric, product link metric, r distinct links each used once, and the stated
+      group derivative bounds.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F2
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F4
+    statement: Bounded nonnegative defects satisfy D^2/P<=V<=B D<=B^2 P.
+    locator: '## F4. Aggregate defect comparisons (lines 54-64)'
+    anchor: '## F4. Aggregate defect comparisons'
+    source_labels:
+    - F4
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - P>0, 0<=z_p<=B, D=sum z_p and V=sum z_p^2.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F5
+    statement: The squared-profile exponential drift has the exact signed pairing identity and volume-independent
+      Cv=2r(Cd+Cg), Cgamma=4nu r Cg B^2.
+    locator: '## F5. Exact drift identity and the squared-profile budget (lines 65-82)'
+    anchor: '## F5. Exact drift identity and the squared-profile budget'
+    source_labels:
+    - F5
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Symmetric diffusion L=Delta-grad S.grad; bounded defects, distinct-link lifts and link overlap
+      at most nu.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F3
+    - DERIV:ARCHIVE_FUNCTIONAL:F4
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F6
+    statement: Every C2 profile with Phi prime at zero equal to zero and bounded second derivative
+      has diffusion and exponential budgets proportional to D.
+    locator: '## F6. General profiles with vanishing derivative at zero (lines 83-96)'
+    anchor: '## F6. General profiles with vanishing derivative at zero'
+    source_labels:
+    - F6
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - F3 geometry, overlap nu, defects in [0,B], Phi prime(0)=0, and sup absolute Phi second<=M.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F3
+    - DERIV:ARCHIVE_FUNCTIONAL:F4
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F7
+    statement: A volume-independent linear pairing bound gives an explicit volume-independent small-set
+      Foster-Lyapunov inequality.
+    locator: '## F7. Linear pairing implies a genuinely uniform small-set drift (lines 97-114)'
+    anchor: '## F7. Linear pairing implies a genuinely uniform small-set drift'
+    source_labels:
+    - F7
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - P_S>=aD-b with b>=0 independent of volume; k>0 and c=2a-Cv-k Cgamma>0; D0>2b/c.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F4
+    - DERIV:ARCHIVE_FUNCTIONAL:F5
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F8
+    statement: The integrated Lyapunov energy deficit equals a nonnegative completed square.
+    locator: '## F8. Lyapunov energy conversion as a completed square (lines 115-129)'
+    anchor: '## F8. Lyapunov energy conversion as a completed square'
+    source_labels:
+    - F8
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Symmetric diffusion on a compact boundaryless manifold or a common core with valid integration
+      by parts; smooth h>0 and real f.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F9
+    statement: Local core Poincare and linear Lyapunov drift imply global Poincare with constant (1+b_core
+      kappa_K)/lambda.
+    locator: '## F9. Local-to-global Poincare patching (lines 130-144)'
+    anchor: '## F9. Local-to-global Poincare patching'
+    source_labels:
+    - F9
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - F8 core; mu(K)>0, W>=1, LW<=-lambda W+b_core 1_K, and the stated local conditional-mean Poincare
+      bound.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F8
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F10
+    statement: The averaged defect gradient square is at most r nu C1^2/P.
+    locator: '## F10. Averaging gives a volume-scale gradient bound (lines 145-156)'
+    anchor: '## F10. Averaging gives a volume-scale gradient bound'
+    source_labels:
+    - F10
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - F3 distinct-link geometry, bounded link overlap nu, and |grad_G z|<=C1.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F3
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F11
+    statement: Uniform LSI and the averaged-gradient bound give a volume-exponential tail only after
+      a uniform mean-below-threshold margin is supplied.
+    locator: '## F11. Herbst concentration and the mean threshold (lines 157-172)'
+    anchor: '## F11. Herbst concentration and the mean threshold'
+    source_labels:
+    - F11
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Ent(f^2)<=2/rho E(f,f), rho>0; bounded smooth H with bounded gradient; for the bad-set conclusion
+      epsilon-E Bbar>=d>0.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F10
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F12
+    statement: The exact two-event covariance decomposition gives localization error at most 8||F||inf||G||inf
+      mu(Kc).
+    locator: '## F12. Covariance localization with an explicit error budget (lines 173-190)'
+    anchor: '## F12. Covariance localization with an explicit error budget'
+    source_labels:
+    - F12
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Bounded real observables F,G, probability measure mu, and 0<mu(K)<1.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F13
+    statement: A volume-exponential localization error is absorbed into a distance exponent min(m,c/d0)
+      when R<=d0 P.
+    locator: '## F13. Absorbing a volume tail into a distance exponent (lines 191-203)'
+    anchor: '## F13. Absorbing a volume tail into a distance exponent'
+    source_labels:
+    - F13
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Conditional covariance bound on the same K, bounded observables, mu(Kc)<=A exp(-cP), and R<=d0
+      P.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F12
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F14
+    statement: A single negative center link has averaged defect 12/P but maximum plaquette defect
+      2 in four dimensions.
+    locator: '## F14. Averaged smallness does not imply plaquettewise smallness (lines 204-213)'
+    anchor: '## F14. Averaged smallness does not imply plaquettewise smallness'
+    source_labels:
+    - F14
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Sufficiently large periodic four-dimensional SU(2) lattice with ordinary distinct-link square
+      plaquettes.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F15
+    statement: The proposed equality of plaquette gradient cross terms and a spatial graph Laplacian
+      fails on a nonconstant center defect field.
+    locator: '## F15. Center configurations refute the proposed Laplacian identity (lines 214-229)'
+    anchor: '## F15. Center configurations refute the proposed Laplacian identity'
+    source_labels:
+    - F15
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - F14 center field and a connected shared-link plaquette adjacency graph with the standard negative
+      graph Laplacian.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F14
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F16
+    statement: All-even four-dimensional SU(2) center fields have D=2P and zero pairing, disproving
+      the proposed volume-uniform linear and off-core pairing bounds; the quadratic target cannot
+      supply a positive lower bound.
+    locator: '## F16. Extensive center defects obstruct uniform pairing coercivity (lines 230-270)'
+    anchor: '## F16. Extensive center defects obstruct uniform pairing coercivity'
+    source_labels:
+    - F16
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Even L>=2 periodic four-dimensional SU(2) lattice, fundamental trace defect and any smooth action;
+      a positive coefficient and volume-independent additive constant for the linear target.
+    depends_on: []
+    lean: []
+    remaining: The all-even-L analytic construction is not Lean-formalized. The finite controls cover
+      L=2,4,6. This rules out the stated pairing targets, not all signed-diffusion or Lyapunov arguments.
+  - id: DERIV:ARCHIVE_FUNCTIONAL:F17
+    statement: For fundamental SU(2) with the unit-S3 metric, Delta V=40D-32V and Gamma(V)<=16nu sum
+      z_p^3(2-z_p); all-center configurations have exact negative exponential drift LW/W=-24kD despite
+      zero action pairing.
+    locator: '## F17. The exact SU(2) diffusion budget retains favorable signs (lines 271-311)'
+    anchor: '## F17. The exact SU(2) diffusion budget retains favorable signs'
+    source_labels:
+    - F17
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Fundamental SU(2), unit-S3 product link metric, distinct-link square plaquettes, bounded overlap
+      nu, V=sum z_p^2, D=sum z_p, W=exp(kV), and L=Delta-grad S.grad with smooth S.
+    depends_on:
+    - DERIV:ARCHIVE_FUNCTIONAL:F3
+    - DERIV:ARCHIVE_FUNCTIONAL:F5
+    lean: []
+    remaining: The manifold and all-volume argument is analytic, not Lean-formalized. Exact quaternion-coordinate
+      algebra is T1. A uniform off-core signed drift estimate away from center fields remains a successor
+      obligation.
+
+- id: CITE:ARCHIVE_SOURCE_TRANSPORT
+  path: docs/derivations/archive-source-transport.md
+  sha256: 4a9d953d888e1b0eb775d22001e1abb0f41a3621b040fdc4d319e71971a60ddd
+  statements:
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S1
+    statement: The exact finite inhomogeneous source moment is the shifted partition ratio Z(beta-t)/Z(beta).
+    locator: '## S1. Inhomogeneous source tilting is a partition ratio (lines 10-19)'
+    anchor: '## S1. Inhomogeneous source tilting is a partition ratio'
+    source_labels:
+    - S1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Finite reference measure, finitely many bounded real plaquette potentials, and real source parameters.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S2
+    statement: Source derivatives are tilted expectations and covariances; the log-partition Hessian
+      is positive semidefinite.
+    locator: '## S2. Source response is covariance and log partition is convex (lines 20-31)'
+    anchor: '## S2. Source response is covariance and log partition is convex'
+    source_labels:
+    - S2
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - S1 bounded setting and bounded observable O for response differentiation.
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S1
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S3
+    statement: Pointwise source domination does not order normalized tilted expectations.
+    locator: '## S3. Pointwise envelopes do not order normalized tilts (lines 32-44)'
+    anchor: '## S3. Pointwise envelopes do not order normalized tilts'
+    source_labels:
+    - S3
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Disjoint events of probabilities q and 1/2, 0<q<1/2, with the explicit positive weights 1+X/q
+      and 1+Y/q.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S4
+    statement: Essential bounds on a positive likelihood ratio transfer normalized nonnegative expectations
+      with factor b/a.
+    locator: '## S4. Bounded log likelihood ratios transfer tilted estimates (lines 45-57)'
+    anchor: '## S4. Bounded log likelihood ratios transfer tilted estimates'
+    source_labels:
+    - S4
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Positive integrable weights v,w and 0<a<=w/v<=b<infinity almost everywhere.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S5
+    statement: A uniform exponential source-moment bound and capacity bound imply rooted summability
+      when mu q<1.
+    locator: '## S5. Free energy implies conditional rooted-capacity summability (lines 58-78)'
+    anchor: '## S5. Free energy implies conditional rooted-capacity summability'
+    source_labels:
+    - S5
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Nonnegative defects, t>0, s>=0, uniform moment K^n, capacity <=gamma n, and at most mu^(n-1)
+      rooted animals.
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S1
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S6
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S6
+    statement: Maximum degree Delta bounds rooted n-vertex animals by Delta^(2n-2); shared-link four-dimensional
+      plaquettes admit mu=400.
+    locator: '## S6. A conservative rooted-animal count (lines 79-94)'
+    anchor: '## S6. A conservative rooted-animal count'
+    source_labels:
+    - S6
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Graph with fixed neighbor orderings and maximum degree Delta>=1; for the plaquette specialization
+      r=4 and nu<=6.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S7
+    statement: A reflection-equivariant measurable deterministic map preserving the positive-time
+      algebra preserves reflection positivity.
+    locator: '## S7. Reflection-positive deterministic pushforward (lines 95-107)'
+    anchor: '## S7. Reflection-positive deterministic pushforward'
+    source_labels:
+    - S7
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Fine measure is reflection positive; the map intertwines reflections and pulls every coarse
+      positive-time observable into the fine positive-time algebra.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S8
+    statement: Existing compatible projective limits preserve RP on the cylinder algebra; convergence
+      of OS product expectations also preserves positivity.
+    locator: '## S8. Projective and weak limits preserve the stated OS forms (lines 108-122)'
+    anchor: '## S8. Projective and weak limits preserve the stated OS forms'
+    source_labels:
+    - S8
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Directed reflected system, compatible positive-time pullbacks, and an existing measure with
+      the stated marginals; for weak limits use bounded continuous OS products or justified uniform
+      integrability.
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S7
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S9
+    statement: A reflection-equivariant map can produce a negative OS form when it mixes the positive
+      and negative half spaces.
+    locator: '## S9. Reflection equivariance alone has a counterexample (lines 123-134)'
+    anchor: '## S9. Reflection equivariance alone has a counterexample'
+    source_labels:
+    - S9
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Independent fair signs, exchange reflection and pi(x,y)=(x-y,y-x).
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S10
+    statement: A bounded block operator with row sum R0 and column sum C0 has norm at most sqrt(R0
+      C0).
+    locator: '## S10. Block Schur bound with row and column control (lines 135-147)'
+    anchor: '## S10. Block Schur bound with row and column control'
+    source_labels:
+    - S10
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Finite direct sum of Hilbert fibers and bounded blocks with both stated absolute row and column
+      sums.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S11
+    statement: A positive finite-range self-adjoint block operator has inverse decay with eta=log(1+a0/(2B))/R
+      and prefactor 2/a0.
+    locator: '## S11. Finite-range inverse transport with an explicit exponent (lines 148-162)'
+    anchor: '## S11. Finite-range inverse transport with an explicit exponent'
+    source_labels:
+    - S11
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Finite graph, bounded self-adjoint A>=a0 I, a0>0, finite range R and off-diagonal row sum B;
+      B=0 is diagonal.
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S10
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S12
+    statement: Massive Maxwell incidence gives range one, floor m^2 and row sum at most alpha(r-1)nu,
+      hence the explicit inverse exponent.
+    locator: '## S12. Massive Maxwell row sums from incidence counting (lines 163-178)'
+    anchor: '## S12. Massive Maxwell row sums from incidence counting'
+    source_labels:
+    - S12
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Signed unit incidence, r distinct entries per plaquette, overlap nu, m^2>0 and alpha>=0.
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S11
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S13
+    statement: The massive Maxwell operator reduces ker d0 star and its restricted inverse is the
+      restriction of the full inverse.
+    locator: '## S13. Cochain horizontals reduce the massive Maxwell operator (lines 179-186)'
+    anchor: '## S13. Cochain horizontals reduce the massive Maxwell operator'
+    source_labels:
+    - S13
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Finite cochain complex d1 d0=0, M=m^2 I+alpha d1 star d1 with m^2>0, alpha>=0.
+    depends_on: []
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+  - id: DERIV:ARCHIVE_SOURCE_TRANSPORT:S14
+    statement: The ambient zero-extension of a horizontal inverse need not obey a volume-uniform local
+      kernel bound.
+    locator: '## S14. Restriction need not preserve an ambient local kernel (lines 187-201)'
+    anchor: '## S14. Restriction need not preserve an ambient local kernel'
+    source_labels:
+    - S14
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Cycle cochain complexes with d1=0 and M=I; horizontal projection is the constant-edge projector
+      11^T/n.
+    depends_on:
+    - DERIV:ARCHIVE_SOURCE_TRANSPORT:S13
+    lean: []
+    remaining: The full analytic argument and its manifold, measure or all-size construction are not
+      formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
+      scopes; Wilson application hypotheses remain separate.
+
+- id: CITE:REVIEW_SPECTRAL_BUDGETS
+  path: docs/derivations/review-derived-spectral-budgets.md
+  sha256: 96037da9bfc029436bff4d4de69c7da8090138e39c1dcbd1fca3f372607447bb
+  statements:
+  - id: DERIV:REVIEW_SPECTRAL_BUDGETS:Q1
+    statement: The assembled Q4 polynomial has an exact positive sum of squares and sharp Euclidean coercivity
+      constants Q1-Q2.
+    locator: '## Q1. The assembled fourth-order polynomial is coercive (lines 11-42)'
+    anchor: '## Q1. The assembled fourth-order polynomial is coercive'
+    source_labels:
+    - Q1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Real L in R3, Q=A sum Li^2+(2A+4C) sum LiLj with A=5/48 and the ADR 0024 adjudicated C.
+    depends_on: []
+    lean: []
+    remaining: The quantified polynomial or analytic optimization, sharpness and limit argument is not registered
+      in Lean. Exact controls have separately scoped support. Actual Wilson estimates and continuum realization
+      are application inputs.
+  - id: DERIV:REVIEW_SPECTRAL_BUDGETS:M1
+    statement: Normalized multichannel cutoff exponents give F(c) and the exact target interval L(M)<=c<=U(M),
+      c<=h.
+    locator: '## M1. Several decay channels and time-amplified remainders (lines 43-89)'
+    anchor: '## M1. Several decay channels and time-amplified remainders'
+    source_labels:
+    - M1
+    status: proven
+    evidence: analytic
+    hypotheses: &pillars_id001
+    - 'Finite nonempty decay/error families: p_j>=0, m_j>0, ell_l>=0, s>=0, P_j=p_j+2s>0 and R_l=r_l-2s>0.'
+    - Positive cutoff-independent bound coefficients, 0<a_n<1 tending to zero and |alpha_n|>=c_alpha a_n^s.
+    - Raw bound M1 is available at selected physical times c log(1/a_n); optional horizon c<=h has h>0.
+    - Spectral consequences additionally require actual norm approximation and MT2 measure/totality or compatible-history-kernel
+      hypotheses.
+    depends_on:
+    - DERIV:MOVING_TIME_SPECTRAL_GAP:VAGUE_LIMIT
+    lean: []
+    remaining: The quantified polynomial or analytic optimization, sharpness and limit argument is not registered
+      in Lean. Exact controls have separately scoped support. Actual Wilson estimates and continuum realization
+      are application inputs.
+  - id: DERIV:REVIEW_SPECTRAL_BUDGETS:M2
+    statement: The sharp positive rate is min_jl (R_l m_j-P_j ell_l)/(P_j+R_l), capped by min_j(m_j-P_j/h);
+      c=max_j P_j/(m_j-M) witnesses a positive optimum.
+    locator: '## M2. Closed optimal rate and a witnessing observation time (lines 90-125)'
+    anchor: '## M2. Closed optimal rate and a witnessing observation time'
+    source_labels:
+    - M2
+    status: proven
+    evidence: analytic
+    hypotheses: *pillars_id001
+    depends_on:
+    - DERIV:REVIEW_SPECTRAL_BUDGETS:M1
+    lean: []
+    remaining: The quantified polynomial or analytic optimization, sharpness and limit argument is not registered
+      in Lean. Exact controls have separately scoped support. Actual Wilson estimates and continuum realization
+      are application inputs.
+  - id: DERIV:REVIEW_SPECTRAL_BUDGETS:M3
+    statement: One-atom and horizon examples saturate the multichannel rate; a nonpositive binding bound permits
+      a centered zero-energy atom.
+    locator: '## M3. Sharpness, failure cases and physical scope (lines 126-171)'
+    anchor: '## M3. Sharpness, failure cases and physical scope'
+    source_labels:
+    - M3
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - 'Finite nonempty decay/error families: p_j>=0, m_j>0, ell_l>=0, s>=0, P_j=p_j+2s>0 and R_l=r_l-2s>0.'
+    - Positive cutoff-independent bound coefficients, 0<a_n<1 tending to zero and |alpha_n|>=c_alpha a_n^s.
+    - Raw bound M1 is available at selected physical times c log(1/a_n); optional horizon c<=h has h>0.
+    - Spectral consequences additionally require actual norm approximation and MT2 measure/totality or compatible-history-kernel
+      hypotheses.
+    - Sharpness examples satisfy M1 throughout the available horizon.
+    depends_on:
+    - DERIV:REVIEW_SPECTRAL_BUDGETS:M2
+    lean: []
+    remaining: The quantified polynomial or analytic optimization, sharpness and limit argument is not registered
+      in Lean. Exact controls have separately scoped support. Actual Wilson estimates and continuum realization
+      are application inputs.

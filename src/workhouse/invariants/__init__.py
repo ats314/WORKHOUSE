@@ -59,6 +59,7 @@ _MODULES = (
     "gamma_isolation",
     "rank_field",
     "planar_band",
+    "odd_order",
     "path_reduction",
     "wilson_step",
     "wilson_block",
@@ -79,6 +80,7 @@ _MODULES = (
     "ym_reconstruction",
     "moving_time_gap",
     "os_kernel_gap",
+    "spectral_budgets",
     "ym_flat_directions",
     "ym_ground_state",
     "wilson_marked",
@@ -97,7 +99,12 @@ _MODULES = (
     "w6_antipodal",
     "dimension_five_irrelevance",
     "sixth_order",
+    "w6_synchronized_m10",
     "universal_cellular_hodge",
+    "sixth_order_cluster",
+    "w6_source_energy_r10",
+    "archive_derivations",
+    "earlier_proof_recovery",
 )
 
 for _name in _MODULES:
