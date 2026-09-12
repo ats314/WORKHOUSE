@@ -174,7 +174,7 @@ any of them moves.
 | `fourth_order_all_rank_2026-09-09.tex` | **the fourth-order edition, 9 September 2026 — draft, source only, not built here (no TeX toolchain on the authoring host).** The first manuscript written after C2 closed, and the successor to the fourth-order sections of every edition below. It carries what the master edition could not: the Hodge decomposition `H_4 = -ν̃(L↑ - 2) + u S² - π̃ S + σ̃ I - 2 C_shp R` with `ν̃ = -5/48` (ADR 0019); the tier collapse as a statement about the operator algebra — the Feshbach complement is exactly `ker L↑`, every excursion costs one `R`, and the actual support `{I, U, S, S², R}` has carrier symbols in `span{q, q², e_2}` (ADR 0045, whose algebraic core is now the Lean module `Workhouse/HodgeFeshbach.lean`) — with the two findings that kill the weaker readings, `σ(UR) = -2 q e_2` and `σ(RUR) = 4 e_2²`; the universality lemma of the two-hop weight and the `φ` map (ADRs 0030–0033), reported with its exhaustion **and its sampling** stated exactly; every fourth-order cumulant as a derived rational function of `N` over `ℚ(N)` (ADR 0029), with the pair cluster's parity cancellation separated out as the one that is argued rather than computed; `β_N = -16u + 32 d - 16 corner + 848/(N(N²-1)³) = P17(N²)/(N R20(N²))` with the Lean identity; the C2 adjudication and the sixteen missing cube orderings (ADR 0024); the anisotropy variance `‖QHp‖² = 4C² q² V` and the induced sixth-order coefficient `-4C²/t_3`. Its scope section states the four premises by name, records that one engine carries every all-rank claim, notes that `RESULT:WILSON_INFINITE_PHYSICAL_BAND` reaches infinite volume at fixed spacing by a route this paper neither uses nor asserts, and says which of this program's own gaps the September GPU archive does **not** discharge. Pinned like every other file here; `tests/test_paper.py` reads it. |
 | `workhouse_publication_edition_rev5_2026-08-30.tex` | **publication edition, revision 5** — the maintainer's latest single-column article, pinned verbatim on 2026-09-01 (source only; no build, see **Revision 5** below). Same lineage as v2, rewritten around the volume-uniform electric window (Thm. 1), the periodic Yarotsky descent and the SU(3) Riesz island, the small-support two-cycle and reduced same-face lemmas that make second-order process completeness a theorem, the fixed-momentum carrier, the radius-two Ritz extension, the exact G17 reduction, and a new external-comparisons section that places Schor, O'Carroll–Dantas Barbosa, Bricmont–Fröhlich, Münster and Yarotsky against the paper's own claim boundary. |
 | `master_paper_2026-08-30.tex` | **the master edition, the current artifact of record.** The two lineages merged. From the publication edition rev. 4: the volume-uniform electric window `spec(H_E) ∩ [0, 5C_F/2) = {0, 2C_F}` with an external margin ≥ `C_F/2` (Thm. 1, which proves more than the retained-shell premise asked for); the SU(3) all-orders finite-volume Riesz island from Yarotsky's local spectral enclosure (Thm. 2); the fixed-momentum carrier and the exact locality/sharp-momentum tradeoff (Prop. 10); the centre-charge process-completeness lemma and the explicit projector cross matrix element, which make the global order-u² assembly a corollary with no completeness hypothesis; the detached-replayed radius-two Ritz extension with its onset proposition; and the exact G17 free-energy reduction. From the 29 August master paper: the **retraction** of the Bloch–chain "coincidence" reading (the Γ block *is* `b_2(T^3)`) and the harmonic representatives that follow; the executed `B = 7` six-face probe; the sharp zone minimum `min_{|k|≥r} q = 4 sin²(r/2)`, which corrects the crossover constants from 17.04/23.66 to 10.85/15.06; the weak-inequality retention rule and what it does *not* confirm; the Weingarten `SU(N)`-vs-`U(N)` rank argument; the tier counter table and the Lean paragraph, including the retraction of "nothing that bears on `C_shp` appears there". Kept from v2 and dropped by both uploads: the planar closed form `1 - 4N^3 t_N = (2N^4+31N^2-9)/((N^2-1)(2N^2-1)(4N^2-9))` and the coverage appendix. |
-| `master_paper_2026-08-30.pdf` | its build (Tectonic 0.15.0, 46 pages, clean log: zero undefined references, zero overfull boxes). Rebuild: `python3 make_coverage.py && tectonic master_paper_2026-08-30.tex`. |
+| `master_paper_2026-08-30.pdf` | its build (Tectonic 0.15.0, 69 pages, clean log: zero undefined references, zero overfull boxes). Rebuild: `python3 make_coverage.py && tectonic master_paper_2026-08-30.tex`. |
 | `coverage_master.tex` | its generated coverage appendix: all 126 inline `\chk` markers, verbatim, under the section that carries each. |
 | `workhouse_publication_edition_v2_2026-08-30.tex` | the publication edition v2, superseded by the master edition above and kept pinned. Built from the 29 August publication edition plus, most importantly: proofs of the two formerly load-bearing prose premises — the retained shell and second-order process exhaustion — so the global order-u² torus assembly is now a theorem (new, flagged as not yet externally refereed; the combinatorial cores are machine-enumerated and the two classical representation inputs named). Also: the planar closed form `1 - 4N^3 t_N = (2N^4+31N^2-9)/((N^2-1)(2N^2-1)(4N^2-9))` with checked positivity and monotonicity; the per-channel resolvent matrix-element equation closing the projector-norm-to-hopping step; torus rank/kernel checks extended through L = 5; a subsection reporting the sealed cutoff-free radius-two delivery, whose second-order block contains a rational sub-block with straddle exactly `2 t_3 = 5/306`; and a generated appendix printing all 119 inline `\chk` markers so coverage is auditable. |
 | `workhouse_publication_edition_v2_2026-08-30.pdf` | its build (Tectonic 0.15.0, 38 pages, clean log). Rebuilt on 2026-08-30 after eleven of its `\chk` labels were corrected — see **Label drift**, below. |
@@ -287,8 +287,10 @@ stating because a reader will otherwise wonder which text won:
    are kept: losing an established exact result to a merge would be a
    regression the merge has no reason to make.
 
-The merged edition is 46 pages against 40 and 22, and its build carries zero
-undefined references and zero overfull boxes.
+The merged edition was 46 pages at the merge, against 40 and 22, and its build
+carries zero undefined references and zero overfull boxes. The pinned build is
+69 pages: the fourth-order kernel, the G18/G19 inserts and the U5 rebuild each
+grew it, and the page count here was not updated at the time.
 
 ## The united edition (2026-08-28)
 
@@ -396,7 +398,7 @@ original manuscripts and remains measured for them.
 ```bash
 cd paper
 python3 make_coverage.py                       # regenerate both appendices
-tectonic master_paper_2026-08-30.tex           # 46 pages
+tectonic master_paper_2026-08-30.tex           # 69 pages
 ```
 
 Tectonic 0.15.0. Zero overfull boxes and zero undefined references is the
@@ -417,6 +419,29 @@ digest in `SHA256SUMS` reproducible — without it `pdflatex` stamps the build
 time into the PDF and the pin fails on a rebuild that changed nothing. Needs
 `texlive-latex-base` and `texlive-latex-recommended` (for `booktabs`); that
 build is 7 pages.
+
+### Checking the source without a toolchain
+
+A structural checker run on `master_paper_2026-08-30.tex` **alone** will report
+references that the build resolves. Two mechanisms put a label somewhere other
+than the file that uses it, and both are deliberate:
+
+- The master edition `\input`s the G18 carrier bridge at line 2589, the G19
+  continuum bridge at 2613 and the generated coverage appendix at 3265; the
+  G18 insert in turn `\input`s two more received files, so expansion has to
+  recurse. `\ref{prop:g19-axis}` and `\ref{cor:g19-polynomial-obstruction}` in
+  the Scope section point at statements in
+  `research_notes/G19_CONTINUUM_BRIDGE_INSERT.tex`, and typeset as
+  Proposition 62 and Corollary 64.
+- `\whlabelalias` and `\whcitealias` (defined at line 2558) let an insert keep
+  the label and cite keys it was received with. `\whlabelalias{eq:riesz-contour}{eq:rieszcircle}`
+  is why the G18 insert's `\eqref{eq:riesz-contour}` resolves against this
+  manuscript's `eq:rieszcircle`. The point of the aliases is that the received
+  files stay byte-identical; editing them to match would defeat it.
+
+So expand `\input` and honour the two alias macros before believing a report of
+an unresolved reference. Checked on 2026-09-12 against the pinned PDF: no `??`
+appears on any of its 69 pages.
 
 ## What the manuscript says about this repository
 
