@@ -36,13 +36,51 @@ integration. The first graph generation was stopped before completion and is
 not reported as passing. Both sides of the append-only registry conflicts were
 preserved; all incoming archive results were retained. The combined branch
 records exact source links to the signed SU(2) diffusion result and the S7
-reflection-positive pushforward theorem. Final validation uses this combined base.
+reflection-positive pushforward theorem. A later attempt ended during the user's
+disk-space interruption; its partial output is not reported as a pass. The resumed
+generation completed on this base, with 659/659 uncached native checks and a full
+regression run of 2,043 passed, four skipped and eleven passed subtests.
+
+Main then advanced through PRs #156 and #158 to
+`bd7b16d3fd440d3c5e0f2ff9db60b8cd64ca9109`. Both were incorporated in
+`8d6079c`. The final preservation audit confirms every incoming result, derivation
+document, source review and run record remains unchanged. The additional native
+controls are included in the final 663-check verification. Both merge sides and
+the navigation bytes are retained separately in local operational storage.
 
 ## Executed checks and end snapshot
 
-Integration validation is in progress. This record will be completed with
-executed commands, outcomes and a retained end snapshot before publication.
-No successful full test run or completed merge is asserted at this stage.
+Executed from the isolated checkout using canonical REPO's Python executable,
+explicit `PYTHONPATH` to this checkout's `src`, UTF-8 mode and its own local cache:
+
+- `ruff check .` and `ruff format --check .`: passed; 609 files formatted.
+- `python scripts/check_docs.py`: 42 maintained files, 596 links, zero errors/warnings.
+- Full `pytest -o addopts=--strict-markers -q --durations=15` before the final
+  main integration: 2,043 passed, four skipped, eleven passed subtests (572.21 s).
+- Final-base `workhouse verify --json`: 663/663 passed, uncached.
+- Final combined graph/source/provenance/spectral-budget tests: 152 passed in 681.52s (0:11:21).
+- Final frontier/certification checks: 20 passed in 43.44s.
+- `python scripts/render_derivation_coverage.py`, `workhouse index -w`,
+  `workhouse frontier --write`, `workhouse certified --write`: completed in order.
+- Final graph: 19,769 claims/source records, 28
+  symbols, 32,339 relationships; zero dangling references/errors.
+- `workhouse why` for G13, G19, the recovered nested-quotient result and its open
+  physical-carrier successor: all returned successfully; JSON receipts retained.
+- Whitespace review found three non-semantic trailing separator lines in appended
+  YAML registries. Received source formatting is preserved and checked by hash.
+
+The [final execution receipt](evidence/earlier-proof-integration-20260911/validation-final.json)
+and [saved end snapshot](evidence/earlier-proof-integration-20260911/end-v2.json)
+retain the exact scope. End fingerprint: `a5323dae5f2fe4734833d5dff2b37488356095dc5d37af78bedcdeafd7f078c8`.
+Input SHA-256: `b9084a2a72ccc4369146744b5342b6d8db1bbcdb1aae9f5d3556701efad11021`. Freshness is `matched` in this
+validation checkout. This saved snapshot records 663 checks and executes zero;
+execution is established by the separate uncached verification receipt. Earlier
+snapshots are retained. No new Lean build or B6 eigensolver run is asserted.
+
+Publication follows through the normal PR path after the exact head's required
+CI checks and reviews pass. The workspace completion record records the eventual
+PR/merge SHA and canonical checkout state; this pre-publication record does not
+assert a merge that has not yet happened.
 
 ## Handoff
 
@@ -50,6 +88,6 @@ Twenty-one scoped result records and twenty-seven derivation statements expose
 the recovered inputs. Four explicit open extensions preserve the next work.
 Fourteen exact controls support their stated calculations. The original B6
 numerical solver was not rerun and no new whole-statement Lean proof is claimed.
-All 6,882 search-hit contents have source mappings; 6,680 of those remain pending
+All 6,882 search-hit contents have source mappings; 6,649 of those remain pending
 substantive review. The [research report](../docs/research/earlier-proof-discovery-2026-09-11.md)
 gives the full scope and the exact stopping boundary.

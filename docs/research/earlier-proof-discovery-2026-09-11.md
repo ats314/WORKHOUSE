@@ -22,9 +22,11 @@ imports, including three auxiliary source/certificate files outside the keyword 
 The scan's original digest set is fixed by SHA-256 in
 [coverage_summary.json](../../runs/earlier_proof_recovery_2026-09-11/coverage_summary.json).
 Its [complete mapping](../../runs/earlier_proof_recovery_2026-09-11/keyword_coverage.jsonl)
-records every graph identity and initial disposition. At integration, 6,680
-keyword-hit contents remain pending substantive review; 188 have pre-existing
-reviews and fourteen are reviewed-source imports from this campaign.
+records every graph identity and initial disposition. At the initial baseline,
+6,680 keyword-hit contents were pending substantive review; 188 had pre-existing
+reviews and fourteen were reviewed-source imports from this campaign.
+After incorporating main through PR #158, 6,649 remain pending and 233
+have registered source reviews. The immutable mapping keeps its initial dispositions.
 These counts describe source review, not the number of proved mathematical claims.
 
 The search includes supported text, PDF/DOCX extraction and archive members.
