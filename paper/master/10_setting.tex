@@ -1,0 +1,89 @@
+\section{Setting and conventions}
+\label{sec:setting}
+
+\subsection{The Hamiltonian}
+
+Work on the cubic lattice $\Z^3$ with gauge group $G = \SU(N)$, one
+group element $U_\ell$ per oriented link. The Kogut--Susskind
+Hamiltonian is
+\begin{equation}
+  H \;=\; H_0 + V,
+  \qquad
+  H_0 = \tfrac12 \sum_{\ell} E_\ell^2,
+  \qquad
+  V = -\,u\, W,
+  \label{eq:KS}
+\end{equation}
+where $E_\ell^2$ is the quadratic Casimir of the left-invariant electric
+field on link $\ell$, and $W$ is the sum of plaquette characters in both
+orientations,
+\begin{equation}
+  W = \sum_{p} \big(\chi_p + \bar\chi_p\big),
+  \qquad
+  \chi_p = \Tr \prod_{\ell \in \partial p} U_\ell .
+\end{equation}
+
+Strong-coupling perturbation theory is the expansion in $u$ around the
+electric vacuum, organized as degenerate perturbation theory --- a des
+Cloizeaux effective operator --- on the sector of interest.
+
+\subsection{The coupling, and one erratum that matters}
+
+The canonical coupling variable throughout is
+\begin{equation}
+  u \;=\; \frac{\beta_N}{2N},
+  \label{eq:coupling}
+\end{equation}
+whose $\SU(3)$ specialization is $u = \beta_3/6$.
+
+A warning, because it has corrupted transcriptions of this material
+before. An archived line reading $Y = 2\beta/3 = 4u$ is a
+definition-label erratum, not a change of variable. The coefficients
+printed alongside it were \emph{already} in the canonical coordinate
+\eqref{eq:coupling}. Applying a $4^r$ rescaling at order $r$ to
+``correct'' them corrupts every order, and the repository carries an
+explicit check that the printed towers reproduce their canonical values
+verbatim.
+
+For rank-uniform statements the natural variable is the planar one,
+\begin{equation}
+  \tau \;=\; \frac{2u}{N^2} \;=\; \frac{\beta_N}{N^3},
+  \label{eq:tau}
+\end{equation}
+in which the grading theorems of \S\ref{sec:grading} take their simplest
+form: every even order of the one-plaquette splitting then carries the
+same single power of $N$.
+
+\subsection{Two projections that must not be conflated}
+
+Two distinct projections appear throughout, and several contradictions
+in this program's own register were naming collisions between them.
+
+The \emph{band} projection is onto the degenerate strong-coupling
+subspace carrying the excitation of interest --- for the flux band, the
+cellular subspace of \S\ref{sec:carrier}. Coefficients anchored to it
+are band-kernel quantities.
+
+The \emph{physical} projection is onto the gauge-invariant,
+vacuum-subtracted spectrum at a definite momentum. Coefficients anchored
+to it are physical quantities.
+
+These are related by translation-local scalar shifts, and such a shift
+changes neither the centered operator, nor its eigenvectors, nor the
+bandwidth. It does change the scalar. Consequently the band-kernel
+anchor and the physical $\Gamma$-point coefficient are two differently
+anchored coordinates, not two competing estimates of one quantity, and
+they are written $q^{(4)}_{\mathrm{band}}$ and $m^{(4)}_{\Gamma}$
+respectively. Writing either as ``$m_4$'' regenerates a contradiction
+that does not exist, and the repository's search tooling refuses the
+name for that reason.
+
+\subsection{Exactness}
+
+Every coefficient displayed in Part~\ref{part:exact} is an exact
+rational, or an exact rational function of $N$. Where a quantity is
+known here only numerically it carries an explicit numerical marker in
+the source registry and is never displayed as though exact. The single
+most dangerous defect available in this material is a float that reads
+as exact, and the boundary between the two is machine-guarded rather
+than maintained by care.

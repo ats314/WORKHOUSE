@@ -1,0 +1,121 @@
+\section{External comparison}
+\label{sec:external}
+
+Published work enters this program as evidence rather than as authority.
+A paper is unchecked until something checks it, exactly like an internal
+document; the reason an external agreement counts for more is not that
+it is published but that it was produced without knowledge of this
+program, so agreement is not bookkeeping.
+
+The map holds \LitPapers{} indexed papers and \LitEdges{} recorded
+relations to named claims here. \LitVerified{} of those edges are
+verified --- the paper was obtained, read, and compared against the
+claim --- across \LitObtained{} distinct papers. The remainder are
+recorded targets for papers not yet obtained, which is itself useful: a
+paper heavily cited within this web and still unobtained is
+automatically the next acquisition target.
+
+An entry earns its place by naming a specific claim and saying what
+relationship it has to it. \texttt{workhouse lit --for G19} answers the
+query in the other direction, and validation rejects an entry whose
+target does not resolve.
+
+\subsection{A 1989 table, and rationals computed cold}
+
+The sharpest external check available to this program is a
+Hamiltonian strong-coupling series for $\SU(3)$ glueball masses
+published in 1989~\cite{HAMER_1989}, whose Table~1 is pinned here by
+digest. Under the normalization bridge $m_n = 2^{\,n-1} a_n$, its
+coefficients are compared against the $\Gamma$-point coefficients this
+program derives as exact rationals.
+
+In the $C$-odd ($1^{+-}$) channel --- the sector of the carrier, whose
+series is \eqref{eq:thirdorder} --- the agreement runs through third
+order:
+
+\begin{center}
+\begin{tabular}{@{}l l l l@{}}
+\toprule
+Order & Published & This program & Gap (bound) \\
+\midrule
+$n=0$ & $\tfrac{16}{3}/2$ & $\tfrac83 = E_{\mathrm{flat}}(0)$ & exact \\
+$n=1$ & $a_1 = +1$ & the $u$ coefficient $+1$ & exact \\
+$n=2$ & $2a_2 = 0.0359477124184$ & $\tfrac{11}{306}$
+      & $9.94\times10^{-14}$ ($2\times10^{-13}$) \\
+$n=3$ & $4a_3 = -0.437135556836$ & $-\tfrac{109151}{249696}$
+      & $1.11\times10^{-12}$ ($3\times10^{-12}$) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent In the $C$-even ($0^{++}$) channel, $2a_2 = -0.21274509804$
+against $-\tfrac{217}{1020}$ with gap $7.84\times10^{-13}$, and
+$4a_3 = -0.1039004229144$ against $-\tfrac{54049}{520200}$ with gap
+$1.36\times10^{-13}$. The sign structure matches as well: $a_1 = -1$ in
+the scalar channel, where the carrier's is $+1$.
+
+Each bound above is the printed half-ulp of the published table scaled
+with margin, so these are agreements to the precision at which the 1989
+table was printed --- not approximate corroborations. The rationals
+$11/306$ and $109151/249696$ are the third-order coefficients of
+$E_{\mathrm{flat}}$ in \eqref{eq:thirdorder}, computed here from Haar
+integration and the cellular complex with no knowledge of the table.
+
+At fourth order, $8a_4 = -0.7751458630184$ against
+$m^{(4)}_{\Gamma} = -0.7751458630189173$, gap $5.17\times10^{-13}$
+against a bound of $5.3\times10^{-13}$.
+
+\begin{scopenote}
+These are \Ttwo{} checks: float agreement within a stated tolerance, to
+the precision of a printed table. They corroborate the coefficients;
+they do not prove them, and the exact statements of
+\S\ref{sec:second}--\S\ref{sec:grading} do not rest on them. Note also
+that the pinned revision of the source compares only $2a_2$ and $4a_3$
+in its own text --- the fourth-order agreement is registered here and
+not leaned on there.
+\end{scopenote}
+
+\subsection{The two contradicting edges}
+
+Two edges in the map are recorded as \emph{contradicts}, both from a
+1976 strong-coupling series, and both against this program: one against
+the third-order $C$-odd coefficient, one against the $\Gamma$-point
+fourth-order value. They originate in a disagreement the 1989 paper
+itself reports at orders $x^3$ and $x^4$ with the series it supersedes.
+
+Both are recorded as not yet obtained. Until that primary source is
+read, this program has two unresolved external contradictions against
+coefficients it otherwise regards as settled, and says so rather than
+resolving them by the age of the sources. Obtaining that paper is
+listed with the acquisition targets below.
+
+\subsection{How far a novelty claim here can be trusted}
+
+Not as far as the size of the index suggests, and the limitation is
+worth stating precisely rather than as a disclaimer.
+
+Only \LitVerified{} of \LitEdges{} recorded edges are verified. The
+unverified remainder is not a random sample: it includes several of the
+\emph{nearest} neighbours to this program's own results. The main
+Nuclear Physics B paper of the 1981 strong-coupling glueball series is
+recorded as not obtained --- only its errata were --- and the 1974 and
+1979 large-$N$ papers that bear most directly on the rank grading of
+\S\ref{sec:grading} are likewise unobtained, with the ledger noting for
+one of them that its definitions were used from memory and only their
+sign consequences checked.
+
+Consequently: where this document says a result is novel, that means
+\emph{no verified entry in this index contains it}, which is a weaker
+statement than priority. Two of the strongest results are affected. The
+rank-grading cancellation of \S\ref{sec:grading} sits closest to
+large-$N$ counting arguments in papers this program has not read; and
+the fixed-spacing transfer construction of \S\ref{sec:wilson} sits
+alongside the classical positivity and self-adjoint transfer-matrix
+results of Osterwalder and Seiler, which the index does register.
+
+Acquiring the unobtained near neighbours is cheap relative to
+everything else in \S\ref{sec:obligations}, and it is the one item on
+that list that could \emph{subtract} from the program rather than add
+to it. That is a reason to do it, not a reason to defer it.
+
+\input{gen_literature}

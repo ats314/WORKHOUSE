@@ -1,0 +1,258 @@
+\section{The source layers}
+\label{sec:sources}
+
+Every derivation in this program can be traced to bytes. This section
+says how, because the tracing is not uniform: there are three source
+systems, they certify different things, and reading a statement out of
+the wrong one is the most common way to get this corpus wrong.
+
+An agent that internalizes only one thing from this document should
+internalize the table below.
+
+\begin{center}
+\begin{tabular}{@{}p{0.19\linewidth} p{0.34\linewidth} p{0.38\linewidth}@{}}
+\toprule
+Layer & What it holds & What it certifies \\
+\midrule
+\textbf{Theory graph} &
+\DerivStatements{} derivation statements in \CiteDocs{} documents;
+\ResTotal{} results; \LeanTotal{} theorems; \RouteTotal{} routes;
+\GraphEdges{} edges in \GraphEdgeKinds{} relations &
+That a statement was \emph{recorded} with a status, hypotheses, a
+source locator, and a digest of the bytes it was read from. It does
+not certify the mathematics; the tier does that separately. \\
+\addlinespace
+\textbf{Published work} &
+\LitPapers{} papers in the evidence map, \LitVerified{} edges verified;
+\LibraryPapers{} acquired papers in the reading library;
+\ExtractedPages{} extracted pages across \ExtractedWorks{} works &
+That an external result exists and, for a verified edge, that it was
+read against a named claim here. Obtained is not read; read is not
+checked. \\
+\addlinespace
+\textbf{Local archive} &
+Four years of manuscripts, runs, notes and Lean, with
+\AliasCount{} aliased documents, \NoteArchives{} note archives and
+\NoteReviews{} recorded reviews &
+That the bytes are preserved and pinned. Nothing about whether the
+content is current, or correct. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Layer 1: the theory graph}
+
+The graph is the index of record. Its node identifiers are prefixed,
+and the prefix tells you what kind of object you are holding and
+therefore what it can support.
+
+\begin{description}[leftmargin=1.1em,style=nextline]
+\item[\texttt{CITE:}] A source document, pinned by path and SHA-256.
+  \CiteDocs{} of them. A \texttt{CITE:} record is bytes, not a claim.
+\item[\texttt{DERIV:}] A statement located \emph{inside} a
+  \texttt{CITE:} document, by heading and line range.
+  \DerivStatements{} of them, every one with a locator. This is the
+  finest granularity the corpus tracks, and it is the right unit to
+  work at.
+\item[\texttt{RESULT:}] A first-class analytic claim, independent of any
+  one document. \ResTotal{} of them, each with status, evidence,
+  hypotheses, scope, \texttt{depends\_on} and \texttt{bears\_on}.
+\item[\texttt{LEAN:}] A registered theorem. \LeanTotal{} of them.
+  \texttt{formalizes} links it to a catalogue record;
+  \texttt{promotes} --- which only 49 carry --- means it proves an
+  entire named check and therefore lifts that check's tier.
+\item[\texttt{CHK:}] A registered invariant check, carrying its tier and
+  the numbers it establishes. A \texttt{FINDING:} check is one that
+  asserts a \emph{discrepancy} rather than an agreement.
+\item[\texttt{RUN:}] A pinned computational run, with its own manifest.
+\item[\texttt{ADR:}] A numbered decision record: what was decided, on
+  what evidence, and what it retracts or amends.
+\item[\texttt{CONST:}, \texttt{SYM:}] A named constant and its symbol
+  registry entry --- canonical name, corpus spellings, code names, and
+  exact values. Appendix~\ref{app:symbols}.
+\item[\texttt{G}$n$, \texttt{C}$n$, \texttt{U}$n$, \texttt{R}$n$] Gaps,
+  contradictions, unifying candidates and registry claims.
+\end{description}
+
+The edges matter as much as the nodes. \GraphEdges{} of them across
+\GraphEdgeKinds{} relations, and three deserve separate mention because
+they are routinely confused. \texttt{depends\_on} is a mathematical
+input: if it falls, the dependent falls. \texttt{supported\_by} is
+narrower --- a control that bears on part of a statement, and a result
+with \texttt{supported\_by: []} has no registered machine support at
+all, which is a fact worth checking before quoting a tier.
+\texttt{bears\_on} is looser still: a topical connection, and it
+establishes nothing.
+
+\subsection{Layer 2: published work}
+
+There are two published-work systems and they answer different
+questions. Using the wrong one produces either a false novelty claim or
+a false authority claim.
+
+\emph{The evidence map} (\srcpath{literature/index.yaml}) is small,
+curated and adversarial. \LitPapers{} papers, \LitEdges{} recorded
+relations, \LitVerified{} of them verified against a named claim of
+this program. An entry earns its place by naming a specific claim.
+Query it with \texttt{workhouse lit -{}-for G19}. This is the only
+layer from which an agreement or a contradiction may be quoted.
+
+\emph{The reading library}
+(\srcpath{literature/library/paper\_manifest.csv} and
+\srcpath{volume2/}) is large and inclusive: \LibraryPapers{} acquired
+papers --- \LibraryVolOne{} and \LibraryVolTwo{} --- each with tier,
+category, journal reference, DOI, arXiv identifier, INSPIRE citation
+count, local file, page count, SHA-256, abstract, and a curated
+one-line \texttt{workhouse\_connection}. Appendix~\ref{app:library}
+reproduces it. Its purpose is coverage: to answer ``has anyone done
+this?'' before an agent spends a week. Its connection field is a
+reading note and carries no evidential weight.
+
+The gap between the two is the useful measurement. \LitObtained{}
+papers have been read against a claim; \LibraryPapers{} have been
+acquired. Most of the library has never been checked against anything
+here, and a novelty claim asserted against the library is therefore
+weaker than one asserted against the evidence map --- which is itself
+weaker than priority, for the reasons in \S\ref{sec:external}.
+
+\subsection{Layer 2b: the page-level extraction index}
+
+This is the piece an agent is most likely to miss, and it is the one
+that saves the most time.
+
+\ExtractedPages{} pages of local PDFs have been extracted and indexed
+at \srcpath{literature/yangmills/extraction/pages.jsonl}, covering
+\ExtractedWorks{} works. Each record carries the paper identifier, the
+PDF page number, the SHA-256 of the source \emph{and} of the extracted
+text, the path of the reading copy, and the line positions of every hit
+against \ExtractedTopics{} topic keys. Appendix~\ref{app:extraction}
+tabulates it.
+
+The workflow it supports:
+
+\begin{enumerate}
+  \item Search \srcpath{pages.jsonl} for a paper identifier and a topic
+    key (\texttt{ground\_state}, \texttt{spectral\_gap},
+    \texttt{curvature}, \texttt{reconstruction},
+    \texttt{uniform\_limits}, \texttt{constructive},
+    \texttt{gauge\_geometry}).
+  \item Follow the page and line locator into the reading copy under
+    \srcpath{literature/inbox/<ID>/extracted/}.
+  \item Verify any equation you intend to use against the pinned PDF.
+\end{enumerate}
+
+Three cautions the index states about itself. A topic hit may be a
+citation rather than a result, or an extraction error. Candidate
+theorem labels are recorded on many pages, but a label can sit inside a
+citation or carry an OCR fault --- the index is a search aid and
+asserts nothing. And five pages extracted fewer than eighty characters
+and are explicitly flagged as unreliable; their contents must not be
+inferred from the text index. Exact equations from legacy scans must be
+checked in the PDF.
+
+\subsection{Layer 3: the local archive}
+
+The archive is preserved rather than curated, and its governing
+instruction is that nothing is erased. Failed attempts, superseded
+drafts, duplicates and uncommitted work are all kept, because deleting
+a refuted claim destroys the evidence that it was tried.
+
+Consequently the field that matters when reading an archive document is
+its \emph{standing}. \AliasCount{} documents carry a registered alias
+and a standing, tabulated in Appendix~\ref{app:documents}. A superseded
+document is not marked in its own text and reads exactly like a current
+one; the register is the only thing that distinguishes them. Anything
+under \srcpath{theory/superseded/} is retained for audit and must never
+be read as current.
+
+The maintainer's own research notes enter through a separate
+discipline: \NoteArchives{} declared archives with \NoteReviews{}
+recorded reviews, each carrying a content digest, a verdict from a
+closed vocabulary, and a mandatory reason. An \texttt{import} is
+byte-verified against its digest; an \texttt{extract} must name the
+claims it entered through; a \texttt{set-aside} is a recorded judgement
+and never a deletion. No verdict promotes anything past the default
+machine tier.
+
+\subsection{Finding things: the corpus joins on values, not concepts}
+
+The single most important retrieval fact about this corpus:
+\emph{its join keys are exact rationals and spellings, not concepts.}
+No semantic query retrieves $109151/249696$, and the same quantity
+appears in a manuscript, in code, and in a claim record under three
+different names.
+
+\texttt{workhouse search} exists for this. It matches by \emph{value}
+rather than spelling --- searching $-10/96$ finds $-5/48$ --- across
+the prose index, the code and certificate index, the claim catalogue,
+and the curated alias table of Appendix~\ref{app:symbols}. It also
+carries two warnings no text search can: names the register
+\emph{forbids} because using them regenerates a dissolved
+contradiction, and names coined inside this program that its own source
+corpus never uses.
+
+Two indexes sit underneath it, and the second exists because the first
+could not see the sealed core: values such as $5/48$, $5/12$, $5/612$,
+$11/306$ and $7/102$ can be absent from the prose index while their
+computations are present in code.
+
+\subsection{The queries worth knowing}
+
+\begin{verbatim}
+workhouse why <id>          everything recorded about one claim:
+                            both sides of a dispute, every check and
+                            its verdict, routes tried and which died
+workhouse search '5/612'    search by exact VALUE, not by name
+workhouse branches C2       both sides of a dispute, side by side
+workhouse derive C2 G3      the evidence chain, registered edges only
+workhouse lit --for G19     published work bearing on a claim
+workhouse notes --queue     the next unreviewed notes, by signal
+workhouse triage <path>     survey an unpinned collection
+workhouse ask "<question>"  candidate finder over prose; ends in `why`
+workhouse brief <gap> --json  target snapshot, with freshness
+\end{verbatim}
+
+\texttt{why} is the front door. It resolves a claim identifier, a
+constant, a gap, an ADR, or a corpus file path, and it prints the
+routes with their states --- which is how a dead route announces itself
+before an agent re-runs it.
+
+\subsection{What each layer cannot do}
+
+\begin{itemize}
+  \item The graph cannot tell you a statement is \emph{true}. It tells
+    you what was recorded, by whom, from which bytes, under which
+    hypotheses. Status, evidence and machine tier are three
+    independent fields precisely so that this stays visible.
+  \item The library cannot establish novelty. It establishes that a
+    paper was acquired.
+  \item The extraction index cannot establish what a paper says. It
+    tells you which page to read.
+  \item The archive cannot tell you what is current. Standing does.
+  \item A digest cannot tell you an anchor resolves. Check both: a
+    correct SHA-256 over a fabricated locator has occurred here.
+\end{itemize}
+
+\subsection{Operational rules live elsewhere, deliberately}
+
+How to add an invariant, register a Lean theorem, record a route, order
+the regeneration passes, and land work: those are specified in
+\srcpath{CLAUDE.md} (the working agreement), \srcpath{AGENTS.md} (the
+research posture) and \srcpath{CONTRIBUTING.md}. They are not restated
+here.
+
+That is a decision, not an omission. Those files are binding and they
+change; a copy in a document that is rebuilt on its own schedule would
+drift, and an agent following a stale copy of a rule is worse off than
+one following no copy. This document carries the \emph{mathematical}
+working knowledge --- which sources support what, how the derivations
+connect, and where the traps are. For procedure, read the source of
+record.
+
+Two of its rules are worth naming here anyway, because they explain the
+shape of everything above. A claim is established by its proof or
+computation under explicit hypotheses, and its artefact must not claim
+more than that argument establishes. And a disputed value closes by
+derivation or not at all: both sides stay recorded, and no code path
+may pick one, average them, or prefer whichever is an exact rational
+because exactness reads as authority.

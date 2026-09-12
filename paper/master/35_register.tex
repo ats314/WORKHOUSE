@@ -1,0 +1,92 @@
+\section{The refutation register}
+\label{sec:register}
+
+A refuted claim is evidence that it was tried. This section reproduces
+the register of every claim this program made, or inherited from its own
+sources, and then lost --- together with the exact thing that killed it.
+
+The register carries \ContradictionTotal{} entries in three states.
+\ContraFalsified{} are \emph{falsified}: a counterexample or an exact
+computation contradicted them. \ContraSuperseded{} are
+\emph{superseded}: replaced by a sharper statement. \ContraResolved{} are
+\emph{resolved}: the apparent conflict dissolved, in most cases because
+the two sides turned out to be differently anchored quantities rather
+than competing values for the same quantity.
+
+Three features of how this register is maintained matter to a reader
+deciding how much to trust the rest of the document.
+
+First, a dispute closes by derivation or it does not close. Both values
+stay recorded side by side, and no code path is permitted to pick one,
+average them, or prefer whichever is an exact rational because exactness
+reads as authority. The fourth-order off-axis coefficient closed that way:
+every cluster of the rotation record reproduces the historical pipeline's
+own number, and the single cluster that does not is explained ordering by
+ordering (\S\ref{sec:fourth}). Its two recorded values remain in the
+registry with their verdicts attached.
+
+Second, a resolved entry is not a win. The largest class here is
+resolutions in which a contradiction turned out to be a naming
+collision --- two differently anchored coordinates both called $m_4$, for
+instance. Those cost real time and produced no mathematics, and the
+register's response was to forbid the ambiguous name rather than to
+record a victory.
+
+Third, this program has retracted a mechanism of its own. The
+\emph{tier collapse} --- the observation that two of the four
+fourth-order shape coefficients vanish at every solved rank --- was
+proposed here as a kinematic degree bound with a falsifiable
+prediction, and the mechanism was withdrawn a fortnight later when one
+projection turned out to be uncounted (\S\ref{sec:fourth}). The
+withdrawal is a numbered decision record rather than a silent edit,
+because the next attempt at that mechanism needs to know which step
+failed. The reformulation survives; the mechanism and its prediction do
+not.
+
+That is a different object from the degree bound of
+\S\ref{sec:symbolic}, which was never retracted --- it was made
+unnecessary. The two are easy to confuse and this document keeps them
+apart deliberately.
+
+\medskip
+\input{gen_verification_register}
+
+\subsection{Claims withdrawn by this program}
+
+Distinct from the register above, the following are claims this
+repository itself advanced and then withdrew. They are listed separately
+because their failure mode is different: nobody contradicted them, the
+argument was found not to close.
+
+\begin{itemize}
+  \item \textbf{The tier collapse as a kinematic degree bound.}
+    Proposed with a falsifiable prediction --- that the next shape tier
+    would first appear at sixth order --- and retracted eleven days
+    later. The count bounded the vertices of $H_4$; the carrier
+    projection $d^{\dagger}(\cdot)d$ contributes one further power of
+    the Bloch variable that the argument did not carry. Recorded as
+    \srcpath{docs/decisions/0005-retracting-the-degree-bound.md}. The
+    reformulation stands, the mechanism does not, and the collapse is
+    now established by the range-one argument of \S\ref{sec:fourth}
+    instead.
+  \item \textbf{An unrestricted exponential-source radius.} Inferred from
+    independent bounded sources; the inference does not hold, and the
+    reformulation is Problem~\ref{prob:g17}.
+  \item \textbf{Closure of the source-energy transport budget.} Claimed
+    complete, rejected on review: a vacuum-only skew generator does not
+    control a source that the generator transports rather than
+    annihilates. The corrected partial results are retained and the
+    obligation is Problem~\ref{prob:r10}.
+\end{itemize}
+
+\noindent The falsified entries above --- the mobility rule, the
+stranded-flux backend, the dark centre-only circuits and the global
+fixed-window firewall --- are a different category and are not repeated
+here: each was killed by a counterexample or an exact computation
+rather than by an argument failing to close.
+
+Each of these was, at some point, written down in this program's own
+documents as established. That is the reason the machine-verification
+tier of \S\ref{sec:howto} is computed rather than assigned, and the
+reason the present document quotes its counts from the ledgers by macro
+rather than by hand.

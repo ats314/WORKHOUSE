@@ -1,0 +1,24 @@
+\section{The Lean tree}
+\label{app:lean}
+
+Every registered theorem, by module, with its line and what the
+registry links it to.
+
+\LeanTotal{} theorems, \LeanSorry{} occurrences of \texttt{sorry},
+axioms restricted to \texttt{propext}, \texttt{Classical.choice} and
+\texttt{Quot.sound}. The axiom set is exported and validated rather
+than asserted: the strict build records elaborated constants and
+transitive axioms, and the loader checks them against the declaration
+records and source fingerprints. Identifiers mentioned in comments are
+not proof dependencies.
+
+Read the third column carefully. \texttt{promotes} appears on 49 of the
+\LeanTotal{} theorems and means the theorem proves an \emph{entire}
+named check, so that check's tier is the Lean tier. Everything else is
+an ingredient. A theorem count is not a coverage measure, and the
+proportion of ingredients to whole-statement proofs is the honest shape
+of the tree rather than a defect in it --- see \S\ref{app:repro} for
+the case in this program's own archive where seventy-one
+\texttt{sorry}-free modules proved tautologies.
+
+\input{gen_lean}

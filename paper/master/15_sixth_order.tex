@@ -1,0 +1,217 @@
+\section{Sixth order: a shape that cannot be removed}
+\label{sec:sixth}
+
+The fourth-order shape data closes in a five-element span. The question
+this section answers is whether the sixth order stays inside it. It does
+not, and the proof is a divisibility argument that needs no knowledge of
+the sixth-order dynamics at all.
+
+\subsection{Conventions}
+
+In the Bloch variables $z_j$ write
+\begin{equation}
+  a_j = 2 - z_j - z_j^{-1},
+  \qquad q = \sum_j a_j,
+  \qquad e_2 = \sum_{i<j} a_i a_j,
+  \qquad e_3 = a_1 a_2 a_3 ,
+\end{equation}
+and let $U = \psi\psi^{*}$ with $\psi^{*}\psi = q$, $P_c = U/q$,
+$Q_c = I - P_c$, $S = L_{\downarrow} - 4I$, and $R$ the cross-plane part
+of $S$.
+
+Two warnings, both of which have caused errors here. The invariants
+$e_2, e_3$ are Bloch invariants, \emph{not} representation Casimirs;
+and $U$ is the up-Laplacian, not its normalized projector, so its kernel
+is the complementary plane rather than the carrier line. Cleared
+identities hold at $q = 0$; normalized carrier formulas require
+$q > 0$.
+
+\subsection{The complete folded operator}
+
+Let $P_E$ be the isolated electric model-space projector,
+$D = Q_E/(E_0 - H_0)$, and $V_0$ the perturbation. If
+$P_E V_0 P_E = a P_E$, set $V = V_0 - aI$ \emph{on the whole Hilbert
+space}: shifting the complementary block as well is essential. With
+$\chi_0 = P_E$, intermediate normalization gives the exact recursions
+\begin{equation}
+  K_n = P_E V \chi_{n-1},
+  \qquad
+  \chi_n = D V \chi_{n-1} - D \sum_{j=1}^{n-1} \chi_{n-j} K_j ,
+\end{equation}
+and with $M = P_E + \chi^{*}\chi$ the canonical Hermitian effective
+operator is $M^{1/2} K M^{-1/2}$. Writing
+\begin{equation}
+  A_m = P_E V (DV)^{m-1} P_E,
+  \qquad
+  C_2 = P_E V D^3 V P_E,
+\end{equation}
+and $B_m$ for the sum of $A_m$ with exactly one of its $m-1$ slots
+replaced by $D^2$:
+
+\begin{theorem}[The eighteen-word sixth-order fold]
+\label{thm:folds}
+\begin{equation}
+  H_6 = A_6 - \tfrac12\{A_4,B_2\} - \tfrac12\{A_3,B_3\}
+        - \tfrac12\{A_2,B_4\} + \tfrac12\{A_2^2,C_2\}
+        + \tfrac38\{A_2,B_2^2\} + \tfrac14 B_2 A_2 B_2 .
+  \label{eq:F6}
+\end{equation}
+Expanded, this is exactly eighteen words in $P_E, V, D$. The same
+recursion reproduces the established $H_4 = A_4 - \tfrac12\{A_2,B_2\}$.
+\end{theorem}
+\gid{RESULT:G9\_HERMITIAN\_FOLDED\_SUPPORT}
+
+The $\{A_3,B_3\}$ term is present and it matters: dropping odd electric
+histories gives an incomplete formula. No odd order is dropped anywhere
+in the recursion. Independent rational matrix checks verify both the
+invariant-subspace equation and the normalization through degree six,
+with a rank-two $P_E$ and non-commuting effective coefficients.
+
+\notasserted{Equation~\eqref{eq:F6} is the universal folded operator
+support in this convention. It does not evaluate Wilson plaquette matrix
+elements, establish a specific support, or carry out connected
+multi-plaquette rooted subtraction. Those require the actual electric
+and Haar implementation on each support.}
+
+\subsection{Exact word symbols}
+
+In a polynomial carrier gauge, exact symmetrization gives each word its
+cleared symbol in $\Q[q, e_2, e_3]$. The table below is computed, not
+inferred, and all forty words of length zero through three agree
+coefficient by coefficient with independently implemented spatial
+Laurent operators.
+
+\begin{center}
+\begin{tabular}{@{}ll@{\qquad}ll@{}}
+\toprule
+Word & $\sigma(W)$ & Word & $\sigma(W)$ \\
+\midrule
+$I$        & $q$          & $RR$        & $q e_2 + 3 e_3$ \\
+$U$        & $q^2$        & $RUR$       & $4 e_2^2$ \\
+$S$        & $-4q$        & $RSR$       & $(q-4)(q e_2 + 3e_3) - 4e_2^2$ \\
+$S^2$      & $16q$        & $RRR$       & $-2e_2^2 - 2q e_3$ \\
+$R$        & $-2e_2$      & $URR,\,RRU$ & $q^2 e_2 + 3 q e_3$ \\
+$UR,\,RU$  & $-2q e_2$    &             & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+A word census must retain coefficients and combine them before testing
+shape membership: $\sigma(RUR + 2\,RRR) = -4q e_3$, although both
+individual words contain $e_2^2$. Support is not unique modulo operator
+identities, and the invariant object being tested is the complete
+carrier polynomial. Missing direct input is represented as unknown, not
+as zero.
+
+\subsection{The band coefficient at sixth order}
+
+At fixed nonzero momentum, with scalar anchors removed,
+\begin{equation}
+  H_{\mathrm{eff}}(u) = u^2 t_3\, q\, Q_c + u^3 H_3 + u^4 H_4
+    + u^5 H_5 + u^6 H_6 + O(u^7).
+\end{equation}
+The recorded $\SU(3)$ third-order factorization gives
+$Q_c H_3 P_c = 0$, so the off-diagonal block first appears at order
+$u^2$ in the scaled operator, from $H_4$. Expanding the Schur complement
+for the scalar carrier branch,
+\begin{equation}
+  \lambda_6 = \frac{\sigma(H_6)}{q}
+    - \frac{q\,\sigma(H_4^2) - \sigma(H_4)^2}{t_3\, q^3}.
+  \label{eq:S6}
+\end{equation}
+This is not an assumption that $H_5$ vanishes. $H_5$ first couples to
+$H_4$ at order $u^7$ in $H_{\mathrm{eff}}$, as does the $uH_3$
+correction to the complementary inverse, and unknown off-diagonal $H_6$
+contributes later still. The decoupling of $H_3$ is an explicit recorded
+input rather than an assumption, and any scalar vacuum subtraction is
+part of $H_6$ and changes nothing.
+
+Evaluating all twenty-five ordered pairs from the actual $H_4$ support
+$\{I,U,S,S^2,R\}$, including their projected subtraction, gives zero for
+twenty-four of them. Only $RR$ survives, in agreement with direct
+composition of the full assembled spatial kernel. With
+\begin{equation}
+  \kappa = \frac{4C_{\mathrm{shp}}^2}{t_3}
+  = \frac{169924002729806205028788409}{619343593697933825385600000} > 0,
+  \qquad t_3 = \tfrac{5}{612},
+\end{equation}
+the known dynamical mixing support is
+$-(\kappa/q)\,RR + (\kappa/q^2)\,RUR$, with normalized expectation
+\begin{equation}
+  \lambda_6^{\mathrm{mix}}
+  = -\kappa\left(\frac{e_2}{q} + \frac{3e_3}{q^2}
+      - \frac{4e_2^2}{q^3}\right).
+\end{equation}
+
+\notasserted{The $RUR$ here arises from inserting $P_c = U/q$ in the
+projected subtraction. It is not evidence that a direct six-insertion
+electric history carries the local word $RUR$, and the ratio $1:3:-4$
+belongs to this mixing term rather than to the full coefficient.}
+
+\subsection{Non-cancellation}
+
+\begin{theorem}[An extra rational shape survives every local direct term]
+\label{thm:noncancellation}
+Assume the order-six electric-shell effective operator is a
+finite-range, translation-covariant stencil with Laurent-polynomial
+entries in this basis, and write $F = \sigma(H_6)$. Then \eqref{eq:S6}
+gives
+\begin{equation}
+  q^3 \lambda_6 = q^2 F - \kappa\big(q^2 e_2 + 3q e_3 - 4e_2^2\big),
+  \label{eq:N6}
+\end{equation}
+and $q$ does not divide the right-hand side, for \emph{any} Laurent
+polynomial $F$.
+\end{theorem}
+
+\begin{proof}
+Modulo $q$, the right-hand side of \eqref{eq:N6} is $4\kappa e_2^2$.
+Evaluate at
+\begin{equation}
+  z_1 = z_2 = -1, \qquad z_3 = 5 + 2\sqrt{6},
+\end{equation}
+all nonzero, so the point lies in the Laurent ring. Since
+$z_3^{-1} = 5 - 2\sqrt6$, we get $a = (4, 4, -8)$, hence $q = 0$ and
+$e_2 = -48$. The value there is $4\kappa \cdot 48^2 = 9216\,\kappa \neq 0$,
+and a Laurent polynomial divisible by $q$ would vanish at that point.
+\end{proof}
+\gid{RESULT:G9\_LOCAL\_SIXTH\_NONCANCELLATION}
+
+\noindent\Tone{}. Consequently $\lambda_6$ cannot lie in the
+fourth-order shape span $\{1, q, e_2, 4e_2/q, e_3/q\}$, and no local
+direct $RUR$ term removes the extra rational shape: a direct $h\,RUR$
+contributes $4h e_2^2/q$, which cannot cancel an $e_2^2/q^3$ component.
+For symmetric $F$ the remainder modulo $q^2$ is exactly
+$4\kappa e_2^2 - 3\kappa q e_3$, so both $e_3/q^2$ and $e_2^2/q^3$ are
+present. The $e_2/q$ term alone \emph{can} be cancelled, by
+$F = \kappa e_2$ --- for instance a local $H_6 = -(\kappa/2)R$ --- so
+the $1:3:-4$ ratio is not a constraint on all sixth-order shapes.
+
+Note what the proof does not use: any knowledge of $F$. The extra shape
+is forced by the fourth-order data alone, through the Schur complement,
+whatever the sixth-order dynamics turns out to be.
+
+\subsection{A withdrawn derivation}
+
+An earlier version of this work enumerated closed rooted walks --- $90$
+four-step unit-edge walks, of which $66$ retrace immediately and $24$
+are planar squares, together with $192$ non-retracing six-step walks
+using all three axes --- and read a sixth-order amplitude off that
+census.
+
+The derivation is withdrawn. Edge walks are not ordered plaquette
+insertions with electric states, Haar weights, projectors and folds, and
+no map between them was supplied; the census therefore determines no net
+coefficient of any of the candidate words. The old amplitude formula was
+assigned rather than derived. The old carrier function used
+$\sigma(R) = 0$ and $\sigma(U) = q$, where the actual unnormalized
+symbols are $-2e_2$ and $q^2$; it returned a nonzero expression for a
+defect it separately reported as zero. The implementation now computes
+the symbols and tests the defect, and the old interface raises an
+explicit missing-dynamics error rather than returning a number.
+
+What is withdrawn is a claimed derivation, not the possibility of a
+physical amplitude of that shape. Theorem~\ref{thm:noncancellation} is
+independent of the census entirely. Computing the direct term on a
+connected multi-plane support is Problem~\ref{prob:g9}, and it is the
+cheapest decisive computation currently open in this program.

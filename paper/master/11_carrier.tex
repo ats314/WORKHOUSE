@@ -1,0 +1,114 @@
+\section{The homological carrier}
+\label{sec:carrier}
+
+\subsection{Where the flat band comes from}
+
+Project the Kogut--Susskind Hamiltonian \eqref{eq:KS} onto the
+fundamental, charge-odd, one-plaquette manifold. In three spatial
+dimensions a fundamental plaquette excitation carries one of three face
+orientations, and at second order neighbouring faces communicate
+through a shared link. The projected problem is therefore a
+three-orbital Bloch Hamiltonian, and it looks at first like a
+tight-binding model.
+
+It is not an engineered one. The signs of the matrix elements are fixed
+by the orientation of the plaquette boundary and by charge conjugation,
+and non-abelian group integration generates, exactly, the oriented
+edge--face boundary Gram operator
+\begin{equation}
+  B(k)B(k)^{\dagger},
+  \qquad B = \partial_2^{\dagger},
+\end{equation}
+with the coefficient of \S\ref{sec:second} in front of it. The
+structure of the result is a clean separation:
+\begin{equation}
+  \boxed{\ \text{colour dynamics} \longrightarrow t_N,
+  \qquad
+  \text{cellular geometry} \longrightarrow BB^{\dagger}. \ }
+  \label{eq:separation}
+\end{equation}
+Representation theory fixes the amplitude; the cubical chain complex
+fixes the kernel and the spectrum. Neither borrows from the other.
+
+\subsection{The projected spectrum}
+
+\begin{theorem}[Second-order projected spectrum]
+\label{thm:projspec}
+The projected second-order spectrum consists of one
+momentum-independent level together with a doubly degenerate branch
+shifted by $t_N u^2 q(k)$, where
+\begin{equation}
+  q(k) \;=\; 4\sum_{j=1}^{3} \sin^2\!\big(k_j/2\big).
+\end{equation}
+\end{theorem}
+
+The flat level is exact and it is exact for a reason: the flat carrier
+is $\ker \partial_2$.
+
+\begin{theorem}[The carrier and its multiplicity]
+\label{thm:multiplicity}
+Elementary cube boundaries are compact localized states of the carrier;
+three wrapping sheets complete it on the torus. For $L \ge 3$ the exact
+multiplicity is
+\begin{equation}
+  (L^3 - 1) + 3 \;=\; L^3 + 2 .
+\end{equation}
+\end{theorem}
+\gid{RESULT:UNIVERSAL\_CELLULAR\_HODGE\_SPECTRUM}
+
+The two contributions are structurally different and the distinction
+matters later. The $L^3 - 1$ cube boundaries are local and finitely
+supported. The three sheets are not: they wrap the torus, and they are
+the entire zero-momentum content of the carrier. \S\ref{sec:wilson}
+returns to the consequence --- that no finitely supported exactly-flat
+local operator can see the $\Gamma$ point at all.
+
+\subsection{Third order, and the coefficients that survive}
+
+For $\SU(3)$, exact third-order perturbation theory stays inside the
+same boundary-factorized algebra. It does not generate a new operator
+structure; it renormalizes the coefficient in front of the same
+$BB^{\dagger}$:
+\begin{equation}
+  H_{\mathrm{eff},-}
+  \;=\; E_{\mathrm{flat}}(u)\, I
+  \;+\; \left(\frac{5}{612}u^2 + \frac{1975}{124848}u^3\right) BB^{\dagger}
+  \;+\; O(u^4),
+  \label{eq:thirdorder}
+\end{equation}
+with
+\begin{equation}
+  E_{\mathrm{flat}}(u)
+  \;=\; \frac{8}{3} + u + \frac{11}{306}u^2
+        - \frac{109151}{249696}u^3 .
+\end{equation}
+
+That \eqref{eq:thirdorder} remains boundary-factorized through third
+order is the non-trivial part. It is what makes the fourth order the
+first place where the carrier can couple to its complement, and
+\S\ref{sec:fourth} is about exactly that coupling.
+
+\subsection{What is and is not novel here}
+
+This program does not claim that incidence flatness, cellular compact
+localized states, or homological counting of zero modes are new. All
+three have a substantial prior literature --- line-graph constructions,
+compact localized states, the necessity of non-contractible states on
+periodic systems, rectangular factorizations and index arguments, and
+closely related closed-surface structures in two-form spin liquids ---
+and a recent independent construction treats face-graph and higher-cell
+flat bands directly.
+
+What is claimed is that the flatness here is \emph{dynamical}: it is
+produced by exact strong-coupling matrix elements of non-abelian
+$\SU(N)$ Hamiltonian lattice gauge theory, with the amplitude fixed by
+group representation theory and the kernel fixed by the cubical chain
+complex, as in \eqref{eq:separation}. The flat band is not put in; it
+comes out.
+
+\begin{scopenote}
+Theorem~\ref{thm:projspec} and \eqref{eq:thirdorder} are finite-volume,
+finite-order statements about a projected flux sector. They are not a
+continuum glueball theorem and not a mass-gap theorem, and the source
+manuscript says so in its own abstract.
+\end{scopenote}

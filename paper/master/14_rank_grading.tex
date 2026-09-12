@@ -1,0 +1,155 @@
+\section{Rank grading: cancellation and determinant families}
+\label{sec:grading}
+
+The strong-coupling coefficients of \S\ref{sec:second} and
+\S\ref{sec:fourth} are exact rational functions of $N$. That makes a
+question available which is invisible at any single rank: how does each
+order of the series scale with the rank, and why?
+
+The answer has two halves. At even orders the scaling is fixed by an
+exact cancellation among four representation channels. At odd orders
+the coefficients vanish outright for even $N$, and for odd $N$ they
+first appear at order $N-2$ with a closed-form vertex. Neither statement
+can be seen from numerics at $N = 3$.
+
+\subsection{The one-face grading law}
+
+Let $S_m(N)$ be the $C$-parity splitting of the one-plaquette
+strong-coupling diagonal at order $m$,
+\begin{equation}
+  S_m(N) \;=\; (\text{odd})_m - (\text{even})_m \;=\; -2\,K_m[0][1].
+\end{equation}
+
+\begin{theorem}[Single-face planar grading through tenth order]
+\label{thm:grading}
+At even orders $m = 2, 4, 6, 8, 10$ the exact rational function of $N$
+satisfies
+\begin{equation}
+  S_m(N) \;=\; c_m\, N^{-(2m-1)}\big(1 + O(N^{-2})\big),
+  \label{eq:grading}
+\end{equation}
+with
+\begin{equation}
+  c_2 = -4, \quad c_4 = -32, \quad c_6 = -\tfrac{1748}{3},
+  \quad c_8 = -\tfrac{123332}{9}, \quad c_{10} = -\tfrac{49593808}{135}.
+\end{equation}
+Writing $u = N^2\tau/2$ as in \eqref{eq:tau}, the \emph{leading} part of
+the order-$m$ contribution is $(c_m/2^m)\, N \tau^m$. Every even order
+therefore carries the same single power of $N$, with
+\begin{equation}
+  b_2 = -1, \quad b_4 = -2, \quad b_6 = -\tfrac{437}{48},
+  \quad b_8 = -\tfrac{30833}{576}, \quad b_{10} = -\tfrac{3099613}{8640},
+  \qquad b_m = c_m/2^m .
+\end{equation}
+\end{theorem}
+\gid{RESULT:SINGLE\_FACE\_PLANAR\_GRADING}
+
+\noindent Recorded \texttt{proven} with \texttt{output-certified}
+evidence. The exponent and the coefficients are exact limits of exact
+rational functions of $N$, not numerical extrapolations. An independent
+integer-rank engine reproduces $c_2, c_4, c_6, c_8$ by extrapolation to
+within $1.4 \times 10^{-5}$ relative --- a cross-check by a different
+method, not the source of the values.
+
+The word \emph{leading} in Theorem~\ref{thm:grading} is doing work and
+should not be dropped. Each $S_m$ is an exact rational function of $N$
+with relative corrections in $N^{-2}$, so the reduction to $\tau$ is a
+planar-limit statement, not an identity at finite rank. Explicitly, at
+second order
+\begin{equation}
+  S_2(N) = -4N^{-3} - 4N^{-7},
+  \qquad\text{so}\qquad
+  \frac{S_2\,u^2}{N} = -\tau^2 - \frac{\tau^2}{N^4}.
+\end{equation}
+The single-face band per unit $N$ is therefore a function of $\tau$
+alone \emph{as} $N \to \infty$ at fixed $\tau$, and not at finite $N$.
+A statement of the second form would be false, and an earlier internal
+summary of this result made it.
+
+\subsection{The grading is a cancellation theorem}
+
+Equation~\eqref{eq:grading} is a much smaller number than its
+constituents, and the reason is exact.
+
+\begin{theorem}[Four-channel cancellation]
+\label{thm:cancellation}
+Decomposing $S_m$ by the intermediate state of the perturbed vector
+gives exactly four contributing channels at every even $m$ from $4$ to
+$10$: the singlet $\big((),()\big)$, the adjoint
+$\big((1),(1)\big)$, and the two-box states $\big((2),()\big)$ and
+$\big((1,1),()\big)$. Each is of order $N^{-(m-1)}$, with leading
+coefficients
+\begin{equation}
+  (-4,\ +2,\ +1,\ +1) \times 2^{\,m/2-2},
+\end{equation}
+which \emph{sum to zero}. At $m = 2$ only the singlet and the adjoint
+contribute, at $-2$ and $+2$, and these also cancel.
+\end{theorem}
+\gid{RESULT:SINGLE\_FACE\_PLANAR\_GRADING}
+
+So the individual channels are of order $N^{-(m-1)}$ and their leading
+behaviour annihilates, leaving \eqref{eq:grading} at $N^{-(2m-1)}$ ---
+two further orders down in the $N^{-2}$ expansion. At $m = 4$ this is
+the statement that channels of order $N^{-3}$ conspire to produce a band
+of order $N^{-7}$.
+
+This is why the grading is stated as a theorem about a mechanism rather
+than as an observed power. A power law read off from fitted data at
+several ranks would carry no information about \emph{why} the leading
+terms are absent, and would give no reason to expect
+\eqref{eq:grading} to persist. The cancellation does.
+
+\begin{scopenote}
+Theorem~\ref{thm:grading} concerns the \emph{one-plaquette} diagonal
+splitting at even orders $m \le 10$. It is not the cluster cumulant of
+the multi-face conjecture, which is not discharged by it: the one-face
+case at sixth order was already established separately, and the
+shared-link pair route carries the multi-face statement. The general-$m$
+law remains a conjecture. All statements are about coefficients at fixed
+order, not about convergence.
+\end{scopenote}
+
+\subsection{Odd orders are determinant families}
+
+\begin{theorem}[Centre parity]
+\label{thm:centreparity}
+For \emph{even} $N$, every odd-order matrix element of the des Cloizeaux
+effective operator of the strong-coupling band vanishes identically ---
+on every cluster, in both $C$-parity sectors, at every order.
+
+For \emph{odd} $N$, an odd order $m$ vanishes unless $m \ge N-2$. At
+$m = N-2$ the only surviving element is the one-plaquette vertex
+\begin{equation}
+  H_{N-2}(\bar F, F)
+  \;=\; -\,\frac{\big(N/(N+1)\big)^{N-3}}{\big((N-3)!\big)^2},
+  \label{eq:centrevertex}
+\end{equation}
+which is $-1$ at $N = 3$ and $-\tfrac{25}{144}$ at $N = 5$. Hops and
+leakages vanish at that order.
+\end{theorem}
+\gid{RESULT:ODD\_ORDER\_CENTRE\_PARITY}
+
+The mechanism is the centre. The $\SU(N)$ Haar integral of a word
+vanishes unless every link's net flux is $0 \bmod N$; on a single
+plaquette the four links are private, so the intermediate states are
+characters with energy $2C_2(R)$, and the flux condition at odd order
+can be met only once enough boxes have accumulated to close modulo $N$.
+That threshold is $N-2$, and it is why the first odd order is a
+function of the rank rather than a fixed number.
+
+\begin{scopenote}
+Statements about coefficients of the strong-coupling series at fixed
+order, not about convergence. On a periodic lattice the link-set lemma
+requires even extents. The even orders and the overlap theorem are not
+addressed here.
+\end{scopenote}
+
+\subsection{Why this refuted a claim}
+
+The register records a claim that centre-only circuits are dynamically
+dark --- that configurations carrying only centre flux cannot contribute
+to the dynamics. Theorem~\ref{thm:centreparity} and its fifth-order
+companion refute it: the exact fifth-order determinant correction
+$\delta c_{5,\mathrm{det}}$ is nonzero. The claim was falsified by an
+exact computation rather than by an estimate, which is the only way a
+claim of that shape can be settled.

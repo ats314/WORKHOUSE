@@ -1,0 +1,109 @@
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{What is actually here}
+
+Strong-coupling expansions of Hamiltonian lattice gauge theory are old.
+What is not old is the object this program organizes them around.
+
+Write the cellular chain complex of the cubic lattice as
+$C_3 \xrightarrow{\partial_3} C_2 \xrightarrow{\partial_2} C_1$, with
+$C_2$ spanned by plaquettes. The subspace
+\begin{equation}
+  Z_2 = \ker \partial_2 \subset C_2
+\end{equation}
+--- the closed plaquette chains --- is the carrier of the strong-coupling
+band. It is a homological object, fixed before any perturbation theory
+is done, and the entire content of Parts~\ref{part:exact} and
+\ref{part:fixed} is a description of what the Kogut--Susskind Hamiltonian
+does to it, order by order and rank by rank.
+
+Three things follow from taking that object seriously, and they are the
+three claims of this document.
+
+\emph{First: the coefficients are exact rational functions of the rank.}
+Not asymptotic in $N$, not fitted, not computed rank by rank and
+extrapolated. The second-order hopping amplitude is
+\begin{equation}
+  t_N = \frac{2N\,(N^2-4)}{(N^2-1)(2N^2-1)(4N^2-9)},
+  \qquad t_2 = 0, \quad t_3 = \tfrac{5}{612},
+  \label{eq:intro-tN}
+\end{equation}
+and the four channel weights behind it are order-two Weingarten values,
+so \eqref{eq:intro-tN} imports nothing from any expansion. The factor
+$N^2-4$ is not a coincidence of small rank: it is why $\SU(2)$ has no
+band at this order at all. The same discipline runs through fourth
+order, through the rank grading of \S\ref{sec:grading}, and into a
+symbolic engine that works over $\Q(N)$ with $N$ an indeterminate rather
+than a number.
+
+\emph{Second: the rank grading has exact structure, and it comes from
+cancellation.} For the $C$-parity splitting of the one-plaquette
+diagonal, every even order carries the same single power of $N$ once the
+coupling is written in the planar variable, and the leading coefficients
+of the four contributing intermediate channels are in the ratio
+$(-4, +2, +1, +1)$ and \emph{sum to zero}. The grading is a cancellation
+theorem, not a power count. Complementarily, the odd orders vanish
+identically for even $N$, and for odd $N$ the first surviving one is
+order $N-2$, with a closed-form vertex. Neither statement is visible from
+any single rank.
+
+\emph{Third: the construction at fixed lattice spacing is complete, and
+it does not reach the continuum.} \S\ref{sec:wilson} states an actual
+infinite-volume Wilson transfer limit with a complete physical odd band
+and a literal plaquette-source frame that is onto it. \S\ref{sec:breaks}
+states why that is not a continuum mass gap, in six independent ways,
+five of them with finite counterexamples. The most important is
+structural rather than technical: the theorem holds on
+$\abs{u} \le u_*/(10\,022\,400\,000 N)$ and the continuum trajectory runs
+to $u \to \infty$, so the two are disjoint and no sharpening of the
+constant changes that.
+
+\subsection{Why the document is shaped this way}
+
+Alex, the maintainer of this program, asked for a paper that would serve
+as the base for further work on the mass gap rather than as a report of
+work completed. That request has consequences for the form.
+
+It means that failure is content. \S\ref{sec:breaks} and
+\S\ref{sec:register} exist because a route this program has already
+closed is more valuable to the next attempt than a route it has already
+opened, and because at least four arguments were written down here as
+complete and then found not to be. It means the route register in
+\S\ref{sec:obligations} reproduces \RouteDead{} dead routes at length,
+including their measured costs, rather than listing only the \RouteLive{}
+live ones. And it means every count in the prose is a macro generated
+from the repository's ledgers, so that a stale number is a build failure
+rather than a quiet misstatement.
+
+It also means the document distinguishes, everywhere and visibly, three
+things that are routinely conflated: what a statement mathematically
+establishes, what artefact backs it, and what a machine checks. A result
+can be fully proved analytically and carry the weakest machine badge.
+A Lean theorem can be checked by the kernel and prove something
+trivial. This program has made both errors and the notation of
+\S\ref{sec:howto} is the correction.
+
+\subsection{Relation to the literature}
+
+The external comparisons are recorded as an evidence map rather than a
+citation list: \LitPapers{} indexed papers, \LitEdges{} recorded
+relations, of which \LitVerified{} are verified against a named claim
+here. A published paper is not authority in this program --- it is
+unchecked until something checks it, exactly like an internal document.
+What makes an external agreement evidence is that it was produced
+without knowledge of this program, and \S\ref{sec:external} reports the
+comparisons that hold and, separately, the two that contradict.
+
+\subsection{What is claimed, and what is not}
+
+Claimed: the contents of Part~\ref{part:exact}, unconditionally, at the
+tiers recorded; and the contents of Part~\ref{part:fixed} on the stated
+interval and under the stated hypotheses.
+
+Not claimed: the existence of continuum four-dimensional Yang--Mills
+theory; a continuum mass gap; Poincar\'e covariance; restoration of
+rotational invariance from the hypercubic lattice; or the construction of
+a continuum measure. None of these has an argument in this document, and
+\S\ref{sec:breaks} explains for each of the six obstructions why the
+present machinery does not supply one.

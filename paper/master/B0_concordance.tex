@@ -1,0 +1,37 @@
+\section{Derivation concordance}
+\label{app:concordance}
+
+Every registered derivation statement, grouped by the document it lives
+in, with the digest of the bytes it was read from and the heading and
+line range that locate it inside that document.
+
+\DerivStatements{} statements across \CiteDocs{} documents. The
+\emph{Formal} column is \texttt{full} when a Lean theorem covers the
+whole statement, \texttt{partial} when a theorem is registered as
+supporting one ingredient of it, and \texttt{---} when neither. Partial
+support never promotes the whole statement's tier, which is why the
+two are separate columns of the underlying registry rather than one.
+
+A caution on using this table. The status recorded here describes the
+\emph{source argument} as the corpus assessed it, not an independent
+re-derivation. Empty formal coverage means no complete registered
+formalization exists in this inventory --- it is not a judgement that
+the analytic proof is invalid, and reading it as one would invert the
+meaning of the default tier (\S\ref{sec:howto}).
+
+\input{gen_concordance}
+
+\section{Statements that do not close}
+\label{app:open}
+
+\DerivOpen{} of the \DerivStatements{} registered statements are
+recorded as open, conditional, or disputed. They are extracted here
+with their hypotheses and the corpus's own sentence on what remains,
+because this is the shortest complete list of places where an agent can
+do mathematics that the program has already established is missing.
+
+Read alongside \S\ref{sec:obligations}, which curates the subset the
+program judges decisive, and \S\ref{sec:attack}, which is about how to
+start on one.
+
+\input{gen_open_statements}

@@ -1,0 +1,111 @@
+\section{The symbolic-rank engine}
+\label{sec:symbolic}
+
+Every closed form in \S\ref{sec:second}--\S\ref{sec:grading} is a
+rational function of $N$ computed as such, not interpolated through
+ranks. This section explains how, because the method is the most
+transferable thing in the program and because getting it wrong is the
+default.
+
+\subsection{The problem with sweeping ranks}
+
+The natural procedure is to run an exact engine at $N = 3, 4, 5, \ldots$
+and fit a rational function. That is what was done first. An assembled
+cluster cumulant $\beta_N$ agreed with a candidate closed form
+$P_{17}(N^2)\big/\big(N\,R_{20}(N^2)\big)$ at every rank from $4$ to
+$70$: sixty-seven exact agreements between exact rationals.
+
+Sixty-seven exact agreements do not prove the identity. Rational
+interpolation is unique only once the degrees are bounded, and without
+a degree bound the agreements constrain nothing about $N = 71$. The
+review of that work made exactly this objection --- no ``for all $N$''
+without a degree bound --- and it was correct.
+
+A degree bound could have been argued: Weingarten denominators, energy
+denominators, and a count of vertices together bound the degree, and
+the sixty-seven agreements would then prove the identity by uniqueness.
+That argument was not made. What was done instead makes it unnecessary,
+and is better.
+
+\subsection{Running the engine over \texorpdfstring{$\Q(N)$}{Q(N)}}
+
+Inspect where the rank actually enters the exact engine. It enters in
+exactly two places that are not rational arithmetic:
+\begin{itemize}
+  \item the charge predicate, $\text{charge} \equiv 0 \bmod N$;
+  \item the flux-difference predicate, $\abs{\mathrm{diff}} \le N$.
+\end{itemize}
+Everywhere else the rank appears only through rational expressions in
+$C_F = (N^2-1)/(2N)$, in $1/(2N)$, and in $N^{\text{closed}}$.
+
+So make the two predicates overridable and promote everything else to
+the rational function field:
+\begin{itemize}
+  \item scalars become elements of $\Q(N)$, carried as a numerator and
+    a monic denominator in exact polynomial arithmetic;
+  \item the Weingarten function becomes the symbolic inverse of the
+    Gram matrix $N^{\text{cycles}}$ on $S_n$;
+  \item the single-link spectra become the $\SU(N)$ quadratic Casimirs
+    of the irreducible representations that link's flux content can
+    carry.
+\end{itemize}
+
+A cumulant then emerges as \emph{one rational function of $N$},
+computed rather than fitted. The per-rank engine is otherwise untouched
+and its own test suite still holds --- which is the check that the
+symbolic run is the same calculation and not a different one.
+
+\begin{theorem}[Closed forms over $\Q(N)$]
+\label{thm:symbolic}
+The fourth-order cluster cumulants, the two-hop weight in both
+$C$-parity sectors, and the assembled $\beta_N$ are exact elements of
+$\Q(N)$ produced by the symbolic engine. The identity
+$\beta_N = P_{17}(N^2)\big/\big(N\,R_{20}(N^2)\big)$ holds as an
+identity of rational functions.
+\end{theorem}
+\gid{ADR:0029}
+
+\noindent The final polynomial identity is promoted to \Tzero{}, and it
+is worth saying exactly which identity that is. The corpus \emph{states}
+$\beta_N = P_{17}(N^2)/(N R_{20}(N^2))$ and never derives it. What Lean
+checks is that the closed forms the symbolic engine returns for the
+three cumulants and the adjacent-face cube completion \emph{sum to} the
+corpus's coefficient --- a polynomial identity between the engine's
+output and the corpus's formula. It is not a Lean derivation of the
+cumulants, and the Lean source says so in its own docstring. This
+document repeats the qualification because an internal summary of the
+same fact dropped it.
+
+Every eigencomponent of every resolvent is verified to be an exact
+eigenvector of every single-link $H_0$, symbolically --- a check that
+has no per-rank analogue, because at a fixed rank a coincidence of
+numbers is indistinguishable from an identity.
+
+\subsection{Why this is the right shape of argument}
+
+The methodological content generalizes beyond this program.
+
+An identity between rational functions can be established in two ways:
+verify it at enough points and bound the degrees, or compute in the
+function field. The first requires an argument about the size of the
+objects, which is a second piece of mathematics and is where the
+difficulty hides. The second requires only that the algorithm's
+dependence on the parameter be rational --- which is a property one can
+\emph{inspect}, predicate by predicate, rather than estimate.
+
+The title of the decision record is the summary: the degree bound is
+proved by removing it.
+
+\begin{scopenote}
+The symbolic engine is valid at ranks where the generic partition
+labelling applies. Exceptional low ranks, where representations
+degenerate, are handled separately and are the reason $\SU(2)$ and in
+places $\SU(4)$ carry their own entries in the register.
+
+This degree bound must not be confused with the \emph{other} degree
+bound in this program's history --- the proposed kinematic mechanism
+for the fourth-order tier collapse, which was retracted
+(\S\ref{sec:fourth}, \S\ref{sec:register}). That one was withdrawn
+because it was wrong. This one was removed because it became
+unnecessary.
+\end{scopenote}

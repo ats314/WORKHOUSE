@@ -1,0 +1,89 @@
+% Shared preamble for both drivers: the monograph and the extractable Part I.
+% Conventions follow paper/workhouse_publication_edition_rev5_2026-08-30.tex
+% so that material can move between editions without renaming symbols.
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,array,longtable,enumitem}
+\usepackage{xcolor,microtype,xurl}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\hypersetup{colorlinks=true,
+  linkcolor=blue!45!black, citecolor=blue!45!black, urlcolor=blue!45!black}
+
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{2pt}
+\setlist{itemsep=2pt,topsep=4pt}
+\numberwithin{equation}{section}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{problem}{Problem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{scopenote}[theorem]{Scope}
+
+% ---------------------------------------------------------------- notation
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\Ric}{\operatorname{Ric}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\ip}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\Hil}{\mathcal{H}}
+\newcommand{\Alg}{\mathcal{A}}
+\newcommand{\gp}{\mathfrak{g}}
+\newcommand{\Hph}{\Hil_{\mathrm{phys}}}
+
+% ------------------------------------------------- verification-tier badges
+% The badge records how a statement is machine-certified in the repository.
+% It is INDEPENDENT of mathematical status: a T3 badge on a proven theorem
+% means the proof is analytic and no machine check covers the whole
+% statement.  Conflating the two is the error this notation exists to stop.
+\definecolor{tierzero}{RGB}{20,90,40}
+\definecolor{tierone}{RGB}{25,70,140}
+\definecolor{tiertwo}{RGB}{130,90,10}
+\definecolor{tierthree}{RGB}{100,100,105}
+
+\newcommand{\tierbadge}[2]{%
+  \textcolor{#1}{\footnotesize\textsf{[#2]}}}
+\newcommand{\Tzero}{\tierbadge{tierzero}{T0 Lean}}
+\newcommand{\Tone}{\tierbadge{tierone}{T1 exact}}
+\newcommand{\Ttwo}{\tierbadge{tiertwo}{T2 numeric}}
+\newcommand{\Tthree}{\tierbadge{tierthree}{T3 analytic}}
+
+% Graph identity of a statement, so a reader or an agent can run
+% `workhouse why <id>` on anything asserted here.
+\newcommand{\gid}[1]{\par\nobreak\smallskip\noindent
+  {\footnotesize\textsf{Graph id:} \nolinkurl{#1}}\par\smallskip}
+\newcommand{\gidc}[2]{\par\nobreak\smallskip\noindent
+  {\footnotesize\textsf{Graph id:} \nolinkurl{#1}\quad
+   \textsf{Reproduce:} \texttt{#2}}\par\smallskip}
+\newcommand{\srcpath}[1]{\nolinkurl{#1}}
+
+% An explicit, visible statement of what a theorem does NOT say.  Used
+% wherever the corpus records a scope limit, which is most places.
+\newcommand{\notasserted}[1]{\par\smallskip\noindent
+  {\small\textbf{Does not assert.} #1}\par\smallskip}
+
+% The obligation register's problem headers.
+\newcommand{\obligation}[2]{\par\medskip\noindent
+  \textbf{#1}\ \ \textit{#2}\par\smallskip}

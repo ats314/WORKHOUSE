@@ -1,0 +1,126 @@
+\section{Reproducibility}
+\label{app:repro}
+
+Every claim in this document that carries a \Tzero{}, \Tone{} or
+\Ttwo{} badge can be re-established from a clean checkout in seconds to
+minutes. This appendix says how, and --- more usefully --- says what each
+kind of re-establishment does and does not prove.
+
+\subsection{From a clean checkout}
+
+\begin{verbatim}
+git clone https://github.com/ats314/WORKHOUSE
+cd WORKHOUSE
+uv sync --all-extras --frozen
+uv run --no-sync workhouse --help
+\end{verbatim}
+
+Then:
+
+\begin{verbatim}
+make verify        # every registered check: T1 and T2, a few seconds
+make lean          # T0: proof-check the Lean core (requires elan)
+make status        # the contradiction and gap registers
+workhouse verify --tier 1              # only the exact re-derivations
+workhouse verify -v                    # every tolerance, printed
+workhouse verify --only 'h_4^side'     # one claim, with its numbers
+\end{verbatim}
+
+A single claim is the useful unit. \texttt{workhouse verify -{}-only} takes a
+claim name and prints the numbers it establishes, which is what makes a
+disagreement arguable rather than merely reported. A certification a
+reader cannot cheaply reproduce is a claim of authority, not evidence,
+and the design of this repository takes that seriously enough to attach
+the reproducing command to every row of \srcpath{CERTIFIED.md}.
+
+\subsection{Querying a claim}
+
+\begin{verbatim}
+workhouse why C2                   # everything recorded about one id
+workhouse why t_N                  # a constant: value, formalizations, sources
+workhouse branches C2              # both sides of a dispute, side by side
+workhouse derive C2 G3 --out f.md  # evidence chain, registered edges only
+workhouse search '5/612'           # search by exact VALUE, not by name
+workhouse lit --for G19            # published work bearing on a claim
+workhouse brief G19 --json         # target snapshot with freshness
+\end{verbatim}
+
+\texttt{search} matches by value rather than spelling, which matters
+because the join keys of this corpus are exact rationals and no
+natural-language query retrieves $109151/249696$. It also carries two
+warnings a text search cannot: names the register forbids because they
+regenerate a dissolved contradiction, and names coined in this program
+that its own source corpus never uses.
+
+\subsection{What each tier actually establishes}
+
+\begin{description}[leftmargin=1.2em,style=nextline]
+\item[\Tzero{} --- Lean 4, no \texttt{sorry}.]
+  The statement is checked by the Lean kernel from explicit definitions,
+  with axioms restricted to \texttt{propext}, \texttt{Classical.choice}
+  and \texttt{Quot.sound}. The axiom set is exported and validated rather
+  than asserted: \srcpath{scripts/export\_lean\_dependencies.py} builds
+  strictly and records elaborated constants and transitive axioms into
+  \srcpath{ledger/lean\_dependencies.json}, and the loader checks these
+  against declaration records and source fingerprints. Identifiers
+  mentioned in comments are not proof dependencies.
+
+  What a T0 badge does \emph{not} establish is importance. Several
+  registered theorems formalize arithmetic evaluations of named
+  rationals. The registry records for each theorem whether it proves an
+  entire named check (\texttt{promotes}) or one ingredient of a larger
+  statement (\texttt{lean\_support}); supporting a statement never
+  silently promotes the whole statement's tier.
+
+\item[\Tone{} --- exact re-derivation.]
+  The statement is recomputed symbolically in exact arithmetic from
+  stated definitions. Corpus rationals are \texttt{sympy.Rational};
+  values the corpus records only as floats carry a \texttt{\_NUM} suffix
+  and are Python floats. A float that reads as exact is the most
+  dangerous defect available in this repository, and the boundary is
+  guarded by a dedicated test.
+
+\item[\Ttwo{} --- numerical agreement.]
+  Float agreement within a tolerance the check itself prints. A T2 pass
+  is that and nothing more. Tolerances are never widened to make a
+  disagreement disappear; a disagreement is registered as an explicit
+  finding that asserts the discrepancy.
+
+\item[\Tthree{} --- no whole-statement machine certification.]
+  The default. An analytic result may be fully proved and still be T3:
+  the badge reports machine coverage, not mathematical status. Status,
+  evidence and tier are three independent fields in
+  \srcpath{ledger/results.yaml} for exactly this reason.
+\end{description}
+
+\subsection{The one inference this apparatus does not license}
+
+A finite check certifies the statement it checks. It does not certify a
+general theorem of which that statement is an instance, and the converse
+also holds: a complete analytic proof is not weakened by absent Lean
+coverage.
+
+This cuts both ways in practice, and both directions have caused errors
+here. A suite of exact checks passing at ranks $N = 3, 4, 5, 6$ is not a
+statement about all $N$ --- which is why the symbolic-$N$ engine of
+\S\ref{sec:symbolic} exists, and why its degree bound was retracted when
+one projection turned out to be uncounted. Conversely, a separate Lean
+library in this program's archive comprises seventy-one modules with no
+\texttt{sorry} and was found on audit to prove mostly tautologies; a
+theorem count is not a measure of coverage, and no count in this
+document should be read as one.
+
+\subsection{Regenerating this document}
+
+\begin{verbatim}
+python paper/master/generate_apparatus.py
+tectonic paper/master/workhouse_master.tex        # the monograph
+tectonic paper/master/workhouse_band_paper.tex    # Part I, standalone
+\end{verbatim}
+
+The generator reads \srcpath{literature/index.yaml} and
+\srcpath{ledger/\{gaps,results,theorems,contradictions\}.yaml} and writes
+the bibliography, the external-evidence table, the route register, the
+results table and the count macros. Every number the prose quotes is one
+of those macros. If a count here disagrees with the repository, the
+generator has not been re-run; the repository is right.

@@ -1,0 +1,207 @@
+\section{Working the problems}
+\label{sec:attack}
+
+\S\ref{sec:obligations} states what must be proved.
+This section is about how to start, and it is written for an agent with
+a fresh context window and a week.
+
+\subsection{Choosing}
+
+Three properties make a target worth taking, and they are independent.
+
+\emph{Decisive} --- solving it resolves a contradiction, discharges a
+gap, or unblocks another problem. \emph{Ready} --- no unresolved input
+is recorded. \emph{Bounded} --- someone has measured, or can cheaply
+estimate, what it costs.
+
+Most of the problems in \S\ref{sec:obligations} are decisive and ready.
+Almost none are bounded, and that is the honest difficulty: they are
+open analytic estimates, not computations waiting for a machine. The
+two exceptions are worth naming, because an agent looking for
+tractable decisive work should start at one of them.
+
+\begin{itemize}
+  \item \textbf{Problem~\ref{prob:g9}}, one complete sixth-order
+    cluster. Finite, priced, and it determines an object that is
+    already proved to exist (\S\ref{sec:sixth}): the extra rational
+    band shape survives every local direct term, so computing the
+    direct term settles its coefficients rather than gambling on
+    whether there is anything there.
+  \item \textbf{Acquiring the unobtained near neighbours}
+    (\S\ref{sec:external}). Days, not weeks. It is the only item that
+    can \emph{subtract} from the program, which is exactly why it
+    should not keep being deferred in favour of items that can only
+    add.
+\end{itemize}
+
+\subsection{What the published methods actually supply}
+
+Several of the continuum problems have a named external method
+attached. The attachment is real but narrower than it looks in a
+citation list, and the narrowing is the useful part.
+
+\begin{description}[leftmargin=1.1em,style=nextline]
+\item[Quantum-perturbation Riesz projection, and ground-state methods.]
+  Verified against the fixed-spacing bridge and against the
+  source-family problem. This is the machinery behind the discharged
+  fixed-spacing construction; it is method, not result, and it is
+  already spent --- it got the program to \S\ref{sec:wilson} and does
+  not by itself go further.
+\item[Cluster expansion methods.] Verified against the source-family
+  problem and the continuum gap. Break~\ref{sec:break2} is the
+  cautionary result here: the expansion's activity and a
+  scale-independent physical mass cannot be read off one schedule.
+  Scalar Kotecky--Preiss inequalities and raw moment estimates remain
+  useful ingredients, but they construct neither the tilted activities
+  nor a gap.
+\item[WKB and tunnelling for operators on a vector bundle.] Supplies
+  the local weighted comparison with actual Dirichlet eigenfunctions
+  used in the conditional-transport route. It does \emph{not} supply
+  the all-fiber domination of Problem~\ref{prob:m10}, nor the
+  differentiated coupling-score asymptotics. The scalar one-well
+  application is what has been used; the vector case is what is
+  needed.
+\item[Renormalization-group multiscale methods.] Supply the shape of
+  Problem~\ref{prob:cauchy} and nothing about its missing power.
+  Break~\ref{sec:break1} localizes the difficulty to an exact
+  cancellation of the leading partition-function covariance.
+\item[Osterwalder--Seiler positivity and transfer matrices.] Registered
+  in the evidence map, and the classical background against which the
+  fixed-spacing construction of \S\ref{sec:wilson} should be read.
+  Novelty claims in that section must clear it.
+\item[Stochastic-analysis approaches at strong coupling.] Present in
+  the reading library, with mass-gap and exponential-clustering results
+  at explicit small-coupling bounds. These live in the \emph{same}
+  regime as \S\ref{sec:wilson} --- neighbourhoods of zero coupling ---
+  and therefore also do not cross Break~\ref{sec:break5}. They are
+  comparison, not a route.
+\end{description}
+
+The pattern is worth stating plainly: every external method that has
+been verified against this program supplies control \emph{at fixed
+scale or small coupling}. None of them supplies continuation in the
+coupling, which is the one thing Problem~\ref{prob:trajectory} needs.
+An agent that finds a method claiming otherwise should treat that as
+the most interesting thing it found that week.
+
+\subsection{A procedure for one problem}
+
+\begin{enumerate}
+  \item \textbf{Resolve the target to graph identifiers.} Run
+    \texttt{workhouse why} on the gap and on each named input. Retain
+    the briefing. You now have the routes, their states, and the
+    \texttt{cannot\_decide} annotations.
+  \item \textbf{Read the dead routes first} (\S\ref{sec:obligations}).
+    If your idea matches one, read why it died before deciding it
+    died for a reason that no longer applies. Sometimes that is true;
+    the register records the reason so the judgement can be made
+    rather than guessed.
+  \item \textbf{Locate the available lemmas as \texttt{DERIV}
+    statements}, not as prose. Appendix~\ref{app:concordance} gives
+    each one a document, a digest and a line range. Read the
+    hypotheses; the corpus records them separately from the statement
+    because they are what gets dropped.
+  \item \textbf{Check the literature both ways.} The evidence map for
+    what has been verified against this claim; the reading library
+    (Appendix~\ref{app:library}) and the extraction index
+    (Appendix~\ref{app:extraction}) for whether the estimate you are
+    about to attempt already exists somewhere.
+  \item \textbf{Do the smallest instance first.} Every decisive-next-test
+    in \S\ref{sec:obligations} is phrased this way --- two coupled
+    blocks, one cluster, one blocking step --- because the program's
+    own experience is that the general case hides which term is the
+    obstruction and the smallest instance exposes it.
+  \item \textbf{Record the attempt, including its failure.} A dead
+    route is a result. The procedure is in the working agreement.
+\end{enumerate}
+
+\subsection{Failure modes with a track record}
+
+Each of these has cost this program real time. They are listed in
+descending order of how much.
+
+\begin{description}[leftmargin=1.1em,style=nextline]
+\item[Running an instrument that cannot decide the question.]
+  Four sessions went into a sealed sweep that a static argument had
+  already shown emits only a scalar at one momentum, a quantity
+  structurally incapable of constraining the coefficient it was aimed
+  at. The register now carries \texttt{cannot\_decide} for exactly this
+  reason. Check it before running anything expensive.
+\item[Interpolating without a degree bound.] Sixty-seven exact
+  agreements between exact rationals do not determine a rational
+  function. The fix that worked was not to prove the bound but to
+  remove the need for it by computing in the function field
+  (\S\ref{sec:symbolic}).
+\item[Counting vertices and forgetting the projection.] The retracted
+  tier-collapse mechanism (\S\ref{sec:fourth}) bounded the degree of
+  the operator and omitted the power contributed by the carrier
+  projection itself. Any degree argument in this setting must count the
+  projection.
+\item[A correct calculation in the wrong basis.] An assembled amplitude
+  was right and was read in the conjugate basis, producing a third
+  value in a two-value dispute. The signature was visible in the data:
+  every $C$-odd component negated, every $C$-even one identical. When a
+  new value appears in an existing dispute, test for conjugation before
+  believing it.
+\item[Quoting a tier from a record instead of a run.] A registered
+  axiom set is evidence; it is not a build. If a tier is load-bearing
+  for what you are about to claim, re-establish it --- the commands
+  are in Appendix~\ref{app:repro} and take seconds.
+\item[Treating a summary as a source.] Measured in this program at
+  thirteen out of thirteen (Appendix~\ref{app:provenance}). Cite the
+  primary, and check that the anchor resolves rather than only that the
+  digest matches.
+\end{description}
+
+\subsection{Where new mathematics is cheap}
+
+The mass-gap problems are hard by construction. The structural
+questions below are not, and several are decisive for the theory even
+though none of them is on the continuum path. An agent looking to
+produce new results rather than to close the Clay problem should read
+this list first.
+
+\begin{description}[leftmargin=1.1em,style=nextline]
+\item[The general grading law.] \S\ref{sec:grading} establishes
+  $S_m(N) = c_m N^{-(2m-1)}(1+O(N^{-2}))$ for even $m \le 10$, by a
+  four-channel cancellation with leading coefficients in the ratio
+  $(-4,+2,+1,+1)$ summing to zero. The law for general $m$ is a
+  conjecture. The cancellation is a statement about four specific
+  intermediate representations, which is the kind of statement a
+  character-theoretic argument settles at all orders at once. This is
+  the most likely place in the program for a clean general theorem.
+\item[The multi-face cumulant.] The one-face law is proved; the cluster
+  cumulant version is not discharged, and the shared-link pair route
+  carries it. Distinct from the item above and often conflated with it.
+\item[The fifth-order pentagonal coefficient.] Registered open, finite,
+  and it interacts with the centre-parity theorem of
+  \S\ref{sec:grading}: the odd orders are determinant families, and the
+  fifth-order determinant correction is what refuted the
+  centre-only-circuits-are-dark claim. Computing the full coefficient
+  is bounded work with a known consumer.
+\item[The rank holdout ledger.] Fixed-rank values for a mid-range band
+  of $N$. Pure computation, and it is the natural holdout against every
+  closed form the symbolic engine has produced --- exactly the kind of
+  check that would have caught an interpolation error before the
+  function-field method removed the risk.
+\item[Native torelon reruns.] Two string-tension coefficients, by a
+  method the program already has.
+\item[The hyperhoneycomb candidate.] An alternative tessellation with a
+  first-order term. The reading library has a substantial
+  Hamiltonian-and-quantum-simulation category, including improved
+  honeycomb and hyperhoneycomb Hamiltonians, so the external groundwork
+  exists.
+\item[Classification of shortest physical temporal histories.] Open and
+  unbounded, but it would consolidate the mobility taxonomy --- which
+  is where the falsified $F{-}2$ rule lived, and where a replacement is
+  still missing.
+\item[The symbolic Gram transcript.] Would make the function-field
+  method of \S\ref{sec:symbolic} auditable end to end rather than
+  trusted at its output.
+\end{description}
+
+Three of these --- the general grading law, the fifth-order
+coefficient, and the multi-face cumulant --- are in the same
+neighbourhood as results this program has already proved, with the same
+tools. That is the definition of cheap here, and it is where the next
+novel theorem most plausibly comes from.

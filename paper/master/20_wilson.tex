@@ -1,0 +1,184 @@
+\section{The construction at fixed lattice spacing}
+\label{sec:wilson}
+
+This is the strongest constructive statement in the program. It is also
+the one most often misread, so it is stated here with its hypotheses,
+its interval, and an explicit list of what it does not assert.
+
+Throughout this section $\varepsilon$ denotes the temporal mesh. It is
+\emph{not} the planar variable $\tau$ of \eqref{eq:tau}; the two are
+unrelated and the symbols are kept distinct deliberately.
+
+\subsection{The theorem}
+
+\begin{theorem}[Infinite-volume Wilson band and literal source frame]
+\label{thm:wilsonband}
+Under the hypotheses listed below, the Perron-normalized Wilson transfer
+operator has a common strong limit along open-box and centered-periodic
+exhaustions, in the transported product representation. The limit is a
+positive contraction fixing the vacuum; it differs from the free product
+in norm by at most $1/998$, and its norm on the non-vacuum subspace is
+at most $\tfrac45 + \tfrac1{998}$.
+
+On the coupling interval
+\begin{equation}
+  \abs{u} \;\le\; \frac{u_*}{10\,022\,400\,000\,N},
+  \label{eq:wilson-interval}
+\end{equation}
+the complete infinite-volume physical odd band is isomorphic to
+$\ell^2(\Z^3) \otimes \C^3$. The projected literal plaquette-source
+synthesis is \emph{onto} that entire band, with Gram bounds
+\begin{equation}
+  \tfrac{9}{16}\,I \;<\; \mathcal{G} \;\le\; \tfrac{81}{64}\,I .
+\end{equation}
+The Euclidean Osterwalder--Schrader band and the quantum GNS band
+coincide, intertwining the physical transfer and the sources.
+\end{theorem}
+\gid{RESULT:WILSON\_INFINITE\_PHYSICAL\_BAND}
+
+\noindent Recorded \texttt{proven} with \texttt{analytic} evidence;
+\Tthree{} for whole-statement machine certification, with its component
+estimates checked across several suites.
+
+\subsection{Hypotheses}
+
+\begin{enumerate}
+  \item All calibrated kinetic, positive Wilson-kernel, incidence and
+    common-disk hypotheses of the weighted-activity and cardinality-chart
+    theorems.
+  \item Fixed $\SU(N)$ with $N \ge 3$, and fixed \emph{spatial} lattice
+    spacing. Compatible induced open boxes, or centered periodic
+    exhaustions, carrying the same local data.
+  \item Temporal mesh
+    $0 < \varepsilon \le \varepsilon_0 \le \log(5/4)/(4\gamma)$, with
+    $m = \lceil \log(5/4)/(\gamma\varepsilon) \rceil$, and the full
+    neutral physical odd free-window premise.
+  \item $\gamma = C_F/2 = (N^2-1)/(4N)$, the \emph{exact} calibrated
+    fundamental-link energy. This is a hypothesis about an identity, not
+    a gap lower bound one is free to weaken: substituting a smaller
+    number invalidates the conclusion rather than weakening it.
+  \item Literal odd sources
+    $\mathcal{O}_p = (\chi_p - \bar\chi_p)/\sqrt2$, with free
+    orthonormal plaquette vectors of norm at most $\sqrt2\,N$.
+  \item The calibrated representation-uniform kinetic-window mesh
+    premise, whose $N$-dependent admissible temporal threshold is the
+    previously established one. Every estimate is uniform in volume and
+    in meshes satisfying these premises, and the common coupling
+    interval depends on fixed $N$ and is nonzero.
+\end{enumerate}
+
+\noindent The interval \eqref{eq:wilson-interval} unpacks as
+$u_0 = u_*/1252800000$ and $u_1 = u_0/(8N)$, with the accompanying
+constants $\eta_{\mathrm{act}} = 1/2500$, $\epsilon = 1/998$,
+$g_* = 1024/15625$ and $q_0 = \tfrac45 + \tfrac1{998} < 1$. The bound
+$\eta_{\mathrm{act}} \le 1/2500$ on the integrated generator norm at
+weight $1 + \log 2$ is a \emph{hypothesis} of the source
+specialization, not a conclusion of the theorem; it is listed here to
+prevent the reading in which the theorem is taken to establish it.
+
+\subsection{Why totality is the substance}
+
+The clause that carries the physical content of
+Theorem~\ref{thm:wilsonband} is that the source synthesis is \emph{onto}
+the band, not merely bounded into it.
+
+Break~\ref{sec:break4} is the reason. A local probe family can decay at
+one rate while the true spectrum contains a much slower state the probe
+cannot see; the three-dimensional model of Proposition~\ref{prop:break4}
+exhibits a factor of twenty-one between the observed rate and the actual
+gap. A construction that produced a band and a decay estimate, without
+totality, would prove nothing about the spectrum.
+
+Totality here is a conclusion. The tagged source norm controls the
+entire synthesis operator; close projections and a Neumann inverse
+establish surjectivity in infinite dimension; and reflection-positive
+history completion contains the whole band by selective source
+cyclicity. Fine time steps are the positive $m$-th root of the block.
+
+\subsection{What Theorem~\ref{thm:wilsonband} does not assert}
+
+\notasserted{Global equality of the Osterwalder--Schrader and full
+quantum high-energy spaces. Global transfer injectivity. Any spatial
+continuum limit. Extension beyond $\SU(N)$, $N \ge 3$. The positive
+energy gap is in electric-time units, and its conversion to physical
+units is not part of the statement.}
+
+Most importantly, and separately from the list above: the interval
+\eqref{eq:wilson-interval} is a neighbourhood of $u = 0$, and the
+continuum limit is taken along a trajectory on which $u \to \infty$.
+Theorem~\ref{thm:wilsonband} therefore supplies no control whatever on
+the continuum limit. This is Break~\ref{sec:break5}, it is structural,
+and no improvement of the constant $10\,022\,400\,000$ addresses it.
+A version of exactly that inference was made in this program's own
+drafts and retracted; see \S\ref{sec:register}.
+
+\subsection{The relation to the Hamiltonian carrier}
+
+Theorem~\ref{thm:wilsonband} is a statement about the Wilson transfer
+operator. The Hamiltonian carrier of Part~\ref{part:exact} is a
+different object, spectrally identified with the band only on momentum
+patches away from zero.
+
+The obstruction at zero momentum is proved, not merely encountered, and
+it is a statement about \emph{chains}:
+\begin{enumerate}
+  \item every vector in the image of the cube boundary map has exactly
+    zero zone-average component;
+  \item the zero-momentum carrier content is therefore carried entirely
+    by the three wrapping sheets of \S\ref{sec:carrier};
+  \item a sheet's normalized overlap with any fixed local observable is
+    exactly $1/L$;
+  \item compact two-cycles on open windows are exactly cube boundaries
+    --- checked directly for small windows, and Alexander duality in
+    general.
+\end{enumerate}
+The repository's own prose summarizes (i)--(iv) as ``every finitely
+supported exactly-flat operator is $\Gamma$-blind''. That phrasing is a
+convenient shorthand and this document does not adopt it: the four
+statements are about chain vectors, and read literally as a claim about
+arbitrary operators the shorthand is false. What follows from (i)--(iv)
+is the thing actually needed --- that an interpolator for the
+zero-momentum protected level must leave the exactly-flat local algebra,
+coupling either through in-sector directions that are flat-degenerate at
+$\Gamma$ anyway, or through out-of-sector multi-plaquette content.
+
+\subsection{A prediction, sharper than the measurement it explains}
+
+The published few-percent overlap of a local operator with the lightest
+state is not a constant: it degrades toward the continuum. For a local
+lattice source whose lowest-dimension continuum operator has dimension
+$d$, the overlap law is
+\begin{equation}
+  Z_0(a) \;\sim\; \frac{\abs{f_d}^2\, a^{2d-3}}{2M},
+  \label{eq:overlaplaw}
+\end{equation}
+which at $d = 4$ gives $a^5$ and so reproduces the published
+measurement --- the agreement that makes \eqref{eq:overlaplaw} worth
+recording at all.
+
+But $a^5$ is the wrong exponent for \emph{this} carrier. The C-odd
+carrier's leading continuum operator is $d^{abc}F^aF^bF^c$, of dimension
+six, so the applicable exponent is $a^{2\cdot 6-3} = a^9$. The
+extrapolation is brutal: $Z_0 \approx 1.2\times10^{-6}$ at
+$a\sqrt\sigma = 0.10$ and $2.4\times10^{-9}$ at $0.05$. Still a power,
+so formally survivable, and a serious practical obstacle to measuring
+this state with a local operator.
+
+The same law is the argument for smearing, quantitatively: at fixed
+physical radius $R$, $Z_0 = \abs{f_R}^2 R^{2d-3}/(2M)$ is
+$a$-independent. A smeared basis is structural here, not a convenience.
+
+\begin{scopenote}
+Equation~\eqref{eq:overlaplaw} is asserted, not proved here. What is
+checked is the dimension arithmetic and the agreement of its $d = 4$
+case with the published $a^5$. An earlier version of this program's
+notes quoted $a^5$ for the carrier itself; that is corrected above.
+\end{scopenote}
+
+\begin{scopenote}
+The out-of-sector dressing, the transfer-matrix identification at zero
+momentum, and everything non-perturbative remain open. A particle
+statement lives at fixed nonzero momentum, where no collapse occurs; the
+$L^{-2}$ statement in the literature is a minimal-grid-momentum
+statement governing the approach to $\Gamma$, not a fixed-momentum one.
+\end{scopenote}
