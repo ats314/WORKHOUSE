@@ -1339,7 +1339,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 599
+## T1 — re-derived exactly — 589
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1410,50 +1410,6 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `The small-field curvature threshold sign flip preserves the suppression exponent`
   - src/workhouse/invariants/balaban_repair.py:57 · YM_BALABAN_MULTISCALE; G19 (4.1) (4.6) (5.13) R2
   - `workhouse verify --only 'The small-field curvature threshold sign flip preserves the suppression exponent'`
-**Earlier proof recovery: exact controls**
-
-- `Gram null decoupling preserves the physical operator`
-  - src/workhouse/invariants/earlier_proof_recovery.py:61 · EARLIER_PROOF_RECOVERY E5
-  - `workhouse verify --only 'Gram null decoupling preserves the physical operator'`
-- `Hermitian Ritz residual bounds the nearest exact eigenvalue`
-  - src/workhouse/invariants/earlier_proof_recovery.py:82 · EARLIER_PROOF_RECOVERY E6
-  - `workhouse verify --only 'Hermitian Ritz residual bounds the nearest exact eigenvalue'`
-- `SU3 twice wound covariance and crossed Haar coefficient are negative`
-  - src/workhouse/invariants/earlier_proof_recovery.py:243 · EARLIER_PROOF_RECOVERY E15
-  - `workhouse verify --only 'SU3 twice wound covariance and crossed Haar coefficient are negative'`
-- `VSU action derivatives and both energy asymptotics are exact`
-  - src/workhouse/invariants/earlier_proof_recovery.py:172 · EARLIER_PROOF_RECOVERY E11
-  - `workhouse verify --only 'VSU action derivatives and both energy asymptotics are exact'`
-- `all twelve nondegenerate staple incidence controls pass`
-  - src/workhouse/invariants/earlier_proof_recovery.py:153 · EARLIER_PROOF_RECOVERY E9
-  - `workhouse verify --only 'all twelve nondegenerate staple incidence controls pass'`
-- `archived singular geometry has all sixteen exact gates`
-  - src/workhouse/invariants/earlier_proof_recovery.py:29 · EARLIER_PROOF_RECOVERY E1-E4
-  - `workhouse verify --only 'archived singular geometry has all sixteen exact gates'`
-- `conditional spectral floor accepts noncommuting matrices`
-  - src/workhouse/invariants/earlier_proof_recovery.py:112 · EARLIER_PROOF_RECOVERY E8
-  - `workhouse verify --only 'conditional spectral floor accepts noncommuting matrices'`
-- `determinant reduction retains every row permutation sign`
-  - src/workhouse/invariants/earlier_proof_recovery.py:189 · EARLIER_PROOF_RECOVERY E12
-  - `workhouse verify --only 'determinant reduction retains every row permutation sign'`
-- `frame ray limits differ and rank volume endpoint needs L at least three`
-  - src/workhouse/invariants/earlier_proof_recovery.py:42 · EARLIER_PROOF_RECOVERY E3-E4
-  - `workhouse verify --only 'frame ray limits differ and rank volume endpoint needs L at least three'`
-- `literal Balaban corner paths have exact fourth order trace defect`
-  - src/workhouse/invariants/earlier_proof_recovery.py:266 · EARLIER_PROOF_RECOVERY E17
-  - `workhouse verify --only 'literal Balaban corner paths have exact fourth order trace defect'`
-- `moving adjoint force retains its own derivative`
-  - src/workhouse/invariants/earlier_proof_recovery.py:210 · EARLIER_PROOF_RECOVERY E13
-  - `workhouse verify --only 'moving adjoint force retains its own derivative'`
-- `positive matrix atom controls retain full rank and an empty annulus`
-  - src/workhouse/invariants/earlier_proof_recovery.py:95 · EARLIER_PROOF_RECOVERY E7
-  - `workhouse verify --only 'positive matrix atom controls retain full rank and an empty annulus'`
-- `positive sector transfer retains Laurent coefficients`
-  - src/workhouse/invariants/earlier_proof_recovery.py:161 · EARLIER_PROOF_RECOVERY E10
-  - `workhouse verify --only 'positive sector transfer retains Laurent coefficients'`
-- `same coupling score covariance is a positive pair sum`
-  - src/workhouse/invariants/earlier_proof_recovery.py:224 · EARLIER_PROOF_RECOVERY E14
-  - `workhouse verify --only 'same coupling score covariance is a positive pair sum'`
 **G17 uniformity: the shell isolation constant**
 
 - `every 5-cycle wraps the torus, so flux empties the five-link shelf`
@@ -1544,6 +1500,20 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `kernel quotient centering and transfer compatibility survive a vanishing source direction`
   - src/workhouse/invariants/os_kernel_gap.py:11 · OS_KERNEL_GAP K1 equations K1-K2; finite rational Gram model only
   - `workhouse verify --only 'kernel quotient centering and transfer compatibility survive a vanishing source direction'`
+**Review-derived coercivity and multichannel spectral budgets**
+
+- `assembled Q4 has the corrected sharp coercivity and sum of squares`
+  - src/workhouse/invariants/spectral_budgets.py:61 · REVIEW_SPECTRAL_BUDGETS Q1-Q2
+  - `workhouse verify --only 'assembled Q4 has the corrected sharp coercivity and sum of squares'`
+- `multichannel optimum respects all errors and the physical horizon`
+  - src/workhouse/invariants/spectral_budgets.py:111 · REVIEW_SPECTRAL_BUDGETS M2
+  - `workhouse verify --only 'multichannel optimum respects all errors and the physical horizon'`
+- `multichannel sharpness retains the exact one-atom and horizon exponents`
+  - src/workhouse/invariants/spectral_budgets.py:137 · REVIEW_SPECTRAL_BUDGETS M3
+  - `workhouse verify --only 'multichannel sharpness retains the exact one-atom and horizon exponents'`
+- `multichannel target intervals yield every sharp pairwise rate`
+  - src/workhouse/invariants/spectral_budgets.py:91 · REVIEW_SPECTRAL_BUDGETS M1-M6
+  - `workhouse verify --only 'multichannel target intervals yield every sharp pairwise rate'`
 **SU(3) second and third order**
 
 - `C-even bandwidth = top - bottom = 88/153`
