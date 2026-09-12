@@ -1,0 +1,65 @@
+\section{Source atlas}
+\label{app:atlas}
+
+\AtlasRecords{} source records: what each file is, what is located inside
+it, and the scope within which it may be used.
+
+Two of those fields --- \textit{Located} and \textit{Scope} --- are
+curated judgement, carried over from a companion edition of this
+program (\S\ref{sec:lineage}). Everything else on each row is
+re-derived when this document is built: the file is looked for, its
+bytes are hashed against the recorded digest, and its graph identifiers
+are looked up in the catalogue. A record therefore carries a state, and
+the states mean different things:
+
+\begin{description}[leftmargin=1.2em,style=nextline]
+\item[verified] The file is in this checkout and its bytes are the ones
+  the note was written against. \AtlasVerified{} of \AtlasRecords{}.
+\item[changed since curated] The file is here and its bytes have moved
+  on. This is expected for the maintained ledgers and the generated
+  catalogues, which change whenever research lands; it is a signal to
+  re-read the note, not evidence of an error.
+\item[outside this checkout] A real source in the wider workspace
+  archive or in a sibling worktree. This build cannot hash it. These
+  are among the oldest and most load-bearing material in the program
+  and their absence here is a property of the repository boundary, not
+  of the source.
+\item[not on this branch] A repository path this branch does not carry
+  --- in practice, a source still on an open pull request. The curation
+  is ahead of \texttt{main} rather than wrong.
+\end{description}
+
+That split is the reason this appendix is generated rather than
+transcribed. A hand-maintained atlas states a digest once and goes on
+stating it; this one re-checks on every build, so the drift is visible
+in the document instead of waiting to mislead someone.
+
+\input{gen_atlas}
+
+\section{Statement-to-evidence crosswalk}
+\label{app:crosswalk}
+
+\CrosswalkRows{} numbered statements, each mapped to the source that
+proves it, the labelled theorem inside that source, the graph entry
+that records it, the scope of that evidence, and the file that checks
+it.
+
+Follow the source before treating a neighbouring graph node as the same
+theorem. \texttt{RESULT} records an analytic result; \texttt{DERIV}
+records a located source statement; a gap or a decision record is
+research context and not evidence. None of the four is interchangeable,
+and a crosswalk is the place that distinction is most often lost.
+
+One consequence deserves stating separately, because it governs how the
+\textit{Checked by} column should be read. A source ledger's
+whole-statement formalization covers its entire named source statement;
+a support entry covers only a recorded ingredient. That distinction
+survives when several source statements are assembled into one theorem
+of this document --- so a theorem here can be fully proved while no
+single registered formalization covers it, and the absence of a
+standalone registration below invalidates nothing.
+
+Every graph entry in the table was resolved against the catalogue when
+this document was built; \CrosswalkUnresolved{} did not resolve.
+
+\input{gen_crosswalk}

@@ -6,7 +6,7 @@ evidence map.  This one answers the different question an agent asks:
 *given a statement, what do I read, and how do I know I am reading the
 bytes it was derived from?*
 
-Seven artefacts, all derived:
+Nine artefacts, all derived:
 
   gen_concordance.tex   every DERIV statement -> document, SHA-256, locator
   gen_lean.tex          every Lean theorem -> module:line, what it covers
@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import collections
 import csv
+import hashlib
 import json
 import pathlib
 import re
@@ -259,9 +260,7 @@ def make_lean(theorems, locations) -> str:
             # Escape first, then add markup: running tex() over the markup
             # turns \textbf into literal backslash-t-e-x-t-b-f in the PDF.
             links = [tex(x) for x in (t.get("formalizes") or [])]
-            links += [
-                "\\textbf{promotes} " + tex(p) for p in (t.get("promotes") or [])
-            ]
+            links += ["\\textbf{promotes} " + tex(p) for p in (t.get("promotes") or [])]
             out.append(
                 row(
                     mono(tex(t["name"])),
@@ -503,6 +502,180 @@ def make_documents(aliases) -> str:
 
 
 # --------------------------------------------------------------------------
+# 7.  The source atlas and the statement crosswalk
+#
+# Curated judgement comes from curation.yaml, lifted from a separate
+# agent's edition.  Everything checkable is re-checked here against the
+# working tree, so that a moved file or a renamed identifier surfaces as a
+# marked row rather than as a sentence that quietly stopped being true.
+# --------------------------------------------------------------------------
+
+
+def known_ids() -> set[str]:
+    """Every identifier the catalogue knows, for validating curated rows."""
+    ids: set[str] = set()
+    path = ROOT / "index/claims.jsonl"
+    if path.exists():
+        for line in path.open(encoding="utf-8"):
+            try:
+                d = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if d.get("id"):
+                ids.add(d["id"])
+    return ids
+
+
+REPO_PREFIX = "C:/WORKHOUSE/REPO/"
+WORKSPACE_PREFIX = "C:/WORKHOUSE/"
+
+
+def check_source(rec: dict, ids: set[str]) -> tuple[str, list[str]]:
+    """Re-derive what can be re-derived.  Returns (state, notes).
+
+    Four outcomes, deliberately distinguished, because they mean different
+    things to a reader:
+
+      verified              the file is here and its bytes are the curated ones
+      changed since curated the file is here and its bytes are not
+      outside this checkout the source is real but lives in the wider archive
+                            or another worktree, so this build cannot hash it
+      not on this branch    a repository path that this branch does not carry
+                            --- usually a source still on an open pull request
+
+    Collapsing the third into a failure would libel the archive sources,
+    which are the oldest and most load-bearing material in the program; and
+    collapsing the fourth would hide the more interesting case, where the
+    curation is ahead of main rather than wrong.
+    """
+    notes: list[str] = []
+    raw = str(rec.get("local_file") or "").replace("\\", "/")
+
+    if raw.startswith(REPO_PREFIX):
+        candidate = ROOT / raw[len(REPO_PREFIX) :]
+    elif raw.startswith(WORKSPACE_PREFIX):
+        # Outside the repository: the wider workspace archive, or a sibling
+        # worktree. Resolvable on the maintainer's workstation, not from a
+        # clone, and never part of this repository's verified surface.
+        where = raw[len(WORKSPACE_PREFIX) :].split("/", 1)[0]
+        notes.append(f"workspace path under {where}/")
+        unknown = [g for g in (rec.get("graph_ids") or []) if g not in ids]
+        if unknown:
+            notes.append("unresolved: " + ", ".join(unknown[:3]))
+        return "outside this checkout", notes
+    else:
+        candidate = ROOT / raw
+
+    if not candidate.exists():
+        return "not on this branch", notes
+
+    digest = hashlib.sha256(candidate.read_bytes()).hexdigest()
+    want = str(rec.get("sha256_prefix") or "").lower()
+    if want and not digest.startswith(want):
+        notes.append(f"now {digest[:16]}")
+        state = "changed since curated"
+    else:
+        state = "verified"
+
+    unknown = [g for g in (rec.get("graph_ids") or []) if g not in ids]
+    if unknown:
+        notes.append("unresolved: " + ", ".join(unknown[:3]))
+    return state, notes
+
+
+def make_atlas(curation: dict, ids: set[str]) -> tuple[str, dict]:
+    recs = curation.get("sources") or []
+    tally: collections.Counter = collections.Counter()
+
+    out = header()
+    out.append(
+        f"\\noindent {len(recs)} source records. Each names a local file, what "
+        f"is located in it, and the scope within which it may be used. The "
+        f"first two fields are curated judgement; the rest is re-derived at "
+        f"generation time --- the file is hashed and its identifiers are "
+        f"looked up in the catalogue, so a moved file or a renamed claim "
+        f"appears below as a marked row instead of as a sentence that "
+        f"quietly stopped being true.\\par\\medskip"
+    )
+    out.append("\\begingroup\\sloppy")
+    for rec in sorted(recs, key=lambda r: str(r.get("key"))):
+        state, notes = check_source(rec, ids)
+        tally[state] += 1
+        out.append(
+            f"\\noindent\\textbf{{\\texttt{{{tex(rec.get('key'))}}}}} "
+            f"\\hfill {{\\footnotesize {tex(state)}}}\\par"
+        )
+        if rec.get("title"):
+            out.append(f"{{\\small {tex(rec['title'])}}}\\par")
+        out.append(f"{{\\footnotesize\\ttfamily {breakable(rec.get('local_file'))}}}\\par")
+        if rec.get("located_content"):
+            out.append(
+                f"{{\\footnotesize \\textit{{Located.}} {tex(rec['located_content'])}}}\\par"
+            )
+        if rec.get("use_and_scope"):
+            out.append(f"{{\\footnotesize \\textit{{Scope.}} {tex(rec['use_and_scope'])}}}\\par")
+        bits = []
+        if rec.get("sha256_prefix"):
+            bits.append(f"SHA-256 \\texttt{{{tex(rec['sha256_prefix'])}}}")
+        if rec.get("graph_ids"):
+            bits.append(
+                "graph: " + ", ".join(f"\\texttt{{{tex(g)}}}" for g in rec["graph_ids"][:6])
+            )
+        if rec.get("reading_copy"):
+            bits.append(f"reading copy: {tex(rec['reading_copy'])}")
+        for n in notes:
+            bits.append("\\textbf{" + tex(n) + "}")
+        if bits:
+            out.append("{\\footnotesize " + " \\quad ".join(bits) + "}\\par")
+        out.append("\\smallskip")
+    out.append("\\endgroup")
+    return "\n".join(out), dict(tally)
+
+
+def make_crosswalk(curation: dict, ids: set[str]) -> tuple[str, int]:
+    rows = curation.get("crosswalk") or []
+    unresolved = 0
+
+    out = header()
+    out.append(
+        f"\\noindent {len(rows)} numbered statements, each mapped to the "
+        f"source that proves it, the graph entry that records it, the scope "
+        f"of that evidence, and the file that checks it. Follow the source "
+        f"before treating a neighbouring graph node as the same theorem: "
+        f"\\texttt{{RESULT}} is an analytic result, \\texttt{{DERIV}} a "
+        f"located source statement, and a gap or decision is context rather "
+        f"than evidence. None of the types is interchangeable."
+        f"\\par\\medskip"
+    )
+    out.append("\\begingroup\\sloppy")
+    for r in sorted(rows, key=lambda x: x.get("number") or 999):
+        entry = str(r.get("graph_entry") or "")
+        mark = ""
+        if entry and entry not in ids:
+            unresolved += 1
+            mark = " \\textbf{[unresolved in this catalogue]}"
+        num = r.get("number")
+        out.append(f"\\noindent\\textbf{{{num if num else '--'}. {tex(r.get('name'))}}}\\par")
+        if r.get("sources"):
+            src = ", ".join(f"\\texttt{{{tex(s)}}}" for s in r["sources"])
+            out.append(f"{{\\footnotesize \\textit{{Source.}} {src}}}\\par")
+        if r.get("source_labels"):
+            lab = ", ".join(f"\\texttt{{{tex(s)}}}" for s in r["source_labels"][:8])
+            out.append(f"{{\\footnotesize \\textit{{At.}} {lab}}}\\par")
+        if entry:
+            out.append(f"{{\\footnotesize \\textit{{Graph.}} \\texttt{{{tex(entry)}}}{mark}}}\\par")
+        if r.get("scope_note"):
+            out.append(f"{{\\footnotesize \\textit{{Scope.}} {tex(r['scope_note'])}}}\\par")
+        if r.get("evidence_locator"):
+            out.append(
+                f"{{\\footnotesize \\textit{{Checked by.}} {tex(r['evidence_locator'])}}}\\par"
+            )
+        out.append("\\smallskip")
+    out.append("\\endgroup")
+    return "\n".join(out), unresolved
+
+
+# --------------------------------------------------------------------------
 
 
 def graph_stats() -> dict:
@@ -536,6 +709,16 @@ def main() -> int:
     extraction, xstats = make_extraction()
     g = graph_stats()
 
+    cur_path = OUT / "curation.yaml"
+    curation = (
+        yaml.safe_load(cur_path.read_text(encoding="utf-8"))
+        if cur_path.exists()
+        else {"sources": [], "crosswalk": []}
+    )
+    ids = known_ids()
+    atlas, atlas_tally = make_atlas(curation, ids)
+    crosswalk, n_unresolved = make_crosswalk(curation, ids)
+
     n_deriv = sum(len(d.get("statements") or []) for d in docs)
     n_open = sum(
         1
@@ -554,6 +737,8 @@ def main() -> int:
         "gen_extraction.tex": extraction,
         "gen_symbols.tex": make_symbols(symbols),
         "gen_documents.tex": make_documents(aliases),
+        "gen_atlas.tex": atlas,
+        "gen_crosswalk.tex": crosswalk,
         "gen_srcmacros.tex": "\n".join(
             header(
                 "% Counts for the source-provenance sections.",
@@ -573,6 +758,10 @@ def main() -> int:
                 f"\\newcommand{{\\NoteReviews}}{{{len(notes.get('reviews') or [])}}}",
                 f"\\newcommand{{\\GraphEdges}}{{{g['lines']}}}",
                 f"\\newcommand{{\\GraphEdgeKinds}}{{{len(g['kinds'])}}}",
+                f"\\newcommand{{\\AtlasRecords}}{{{len(curation.get('sources') or [])}}}",
+                f"\\newcommand{{\\AtlasVerified}}{{{atlas_tally.get('verified', 0)}}}",
+                f"\\newcommand{{\\CrosswalkRows}}{{{len(curation.get('crosswalk') or [])}}}",
+                f"\\newcommand{{\\CrosswalkUnresolved}}{{{n_unresolved}}}",
             )
         ),
     }
