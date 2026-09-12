@@ -1,5 +1,7 @@
 # Current research map
 
+The [M10 proof repair](derivations/w6-synchronized-m10-domination.md) establishes actual centered conditional complement suppression outside a neighborhood of the complete minimizing set and an exact angular reference-score budget. Actual M10 remains open: polynomial relative-amplitude control, tube moments and actual normal/angular comparison still require estimates. The earlier completion claim is preserved and corrected.
+
 Maintained guide, reconciled with the source and statement ledgers on **10 September
 2026**. The workspace reconciliation and source-linked analytic formalization
 were merged in [PR #113](https://github.com/ats314/WORKHOUSE/pull/113), merge
@@ -85,8 +87,9 @@ now expresses the actual score as a conditional continuity residual and derives
 the constrained Agmon center using the original electric metric. Its specified
 synchronized radial profiles follow that center exactly, cancelling the linear
 normal phase drift. M10 remains open for this choice: the conditional amplitude,
-quadratic phase fluctuations, rare-fiber complements and antipodal degeneracy
-still need estimates. A finite-flow argument using actual conditional
+quadratic phase fluctuations and the nearby antipodal angular regime
+still need estimates. The [M10 repair](derivations/w6-synchronized-m10-domination.md)
+now controls the actual centered complement outside enlarged minimizing-set tubes. A finite-flow argument using actual conditional
 concentration proves that some permitted Q8 cutoffs fail M10. This leaves the
 specified synchronized successor open; no actual g^-4 score asymptotic is
 assumed in that counterexample. The established source-moment implication
@@ -104,8 +107,9 @@ zero directions are exactly gauge tangents. The original electric metric
 retains positive normal coercivity. Normal relaxation gives the leading
 angular potential -2sqrt(2)delta n3, while the actual endpoint score is
 constant along the gauge orbit. These inputs resolve the magnetic geometric
-subproblem. Uniform true-ground amplitude, score and complement estimates
-on this normal/angular geometry remain the M10 successor. Start with
+subproblem. Uniform true-ground amplitude and tube-score estimates
+on this normal/angular geometry remain the M10 successor; the centered
+complement estimate is established by the M10 repair. Start with
 `RESULT:W6_ANTIPODAL_GAUGE_NORMAL_COERCIVITY` and
 `RESULT:W6_ANTIPODAL_ANGULAR_REDUCTION`.
 
@@ -308,6 +312,26 @@ view: the object is the one-plaquette diagonal, **not** the cluster cumulant
 pair route carries the multi-face statement; and each order is an exact
 computation at that order, so the general-m law remains a conjecture, now
 verified at `k = 1..5` on this channel.
+The same engine now derives the **linked two-face vacuum weight** that U4's
+fourth-order falsifier needs, which this repository carried at T3 because the
+v10a.7 Hodge engine gates it as a float with rational recognition. At SU(3) the
+two-face vacuum sector minus twice the one face is `0, 0, 0, 0, −327/83776`:
+the linked O(u²) and O(u³) weights vanish exactly, `ω₄ = −327/83776` is the
+corpus's own number, and the coplanar and perpendicular pairs agree at every
+order through four. The one-face series `−3/4`, `−39/1280` is the control, being
+the engine-free SU(3) fusion rotor's own vacuum. Over ℚ(N) the retained pair
+record (valid for N ≥ 9) against the character engine gives
+`ω₄(N) = −8N³(14N²−17) / (3(N−1)³(N+1)³(4N−5)(4N+5)(4N²−3))`, leading
+`−(7/12)N⁻⁵`, regular at N = 3 and equal to `−327/83776` there — corroboration
+of the continuation, not a derivation at a rank that record does not cover.
+U4's fourth-order equality therefore holds if and only if the connected
+swap-odd excited diagram is `conn_A = ω₄ − 63/800 = −173109/2094400`, a target
+that now rests on a derivation rather than a float gate. `conn_A` itself stays
+open, with a wall that is now specific: the excited fourth-order walk beside a
+charged neighbour reaches Haar link family `(6, 0)`, which the loop calculus
+does not implement. At SU(3) that family is nonzero only through the
+epsilon-tensor invariants that exist because `6 = 2N`, and supplying them is the
+concrete remaining cost.
 
 ## Dated route history
 
@@ -1018,3 +1042,7 @@ prefactors, but requires a common positive decay rate at arbitrarily late
 physical times and the actual spectral/density identifications. These results
 supply inputs and shorter sufficient routes; they do not discharge the
 volume-uniform interacting remainder or continuum matching targets.
+
+## Local class spectrum continuation
+
+The [rank-uniform Wick recurrence](../docs/derivations/local-class-wick-spectrum.md) computes both local SU(N) charge sectors through beta^-2, recovers the archived lower coefficients and derives explicit c3- and c4+/- formulas. Exact native checks and independent Cartesian controls accompany the analytic all-order construction. The coefficient calculation advances local spectral input control; compact-group eigenvalue remainders, interacting-volume estimates and continuum source transport remain separate.

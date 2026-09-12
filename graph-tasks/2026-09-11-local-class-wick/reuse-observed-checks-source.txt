@@ -1,0 +1,56 @@
+"""Reuse verified content-cache entries without changing check verdicts.
+
+This preserves CheckCache's ordinary fingerprint guards. It neither executes
+nor suppresses pytest tests; mathematical result reuse is recorded explicitly.
+"""
+import inspect
+import json
+from pathlib import Path
+
+from workhouse import briefing
+from workhouse.check_cache import CheckCache
+from workhouse.invariants import SUITES
+from workhouse.invariants._core import Result, source_path
+
+root = Path.cwd()
+assert briefing.ROOT.resolve() == root.resolve(), "Wrong checkout runtime"
+inputs = briefing.content_manifest()
+rows = []
+with briefing.cache_observation(inputs):
+    observed = CheckCache()
+    for suite in SUITES:
+        for name, section, tier, fn in suite.checks:
+            source = inspect.getsource(fn)
+            hit = observed.get(observed.key(suite.name, name, source))
+            assert hit is not None, (suite.name, name, "no byte-matched result")
+            assert hit["passed"] is True, (suite.name, name, "failed result")
+            assert hit["name"] == name and hit["tier"] == tier
+            assert hit["source"] == source_path(fn)
+            assert hit["line"] == fn.__code__.co_firstlineno
+            hit["rests_on"] = tuple(hit.get("rests_on", ()))
+            rows.append((suite.name, name, source, Result(**hit)))
+    observed_key = observed.core
+
+ordinary = CheckCache()
+assert ordinary.observation is None and ordinary.on
+for suite, name, source, result in rows:
+    ordinary.put(ordinary.key(suite, name, source), result)
+assert briefing.content_manifest() == inputs, "Scientific inputs changed"
+for suite, name, source, result in rows:
+    actual = ordinary.get(ordinary.key(suite, name, source))
+    assert actual is not None and actual["passed"] is True
+    assert actual["detail"] == result.detail and actual["yields"] == result.yields
+
+receipt = {
+    "method": "Copy exact current-content CheckCache results into the standard metadata cache via CheckCache.put; preserve all verdicts, details, source metadata, yields and fingerprint guards.",
+    "count": len(rows),
+    "input_manifest_sha256": inputs["sha256"],
+    "observed_content_cache_key": observed_key,
+    "ordinary_metadata_cache_key": ordinary.core,
+    "index_metadata_cache_key": ordinary.index,
+    "fresh_math_execution_claimed": False,
+    "purpose": "Allow standard full pytest to reuse calculations already completed by the current-input index build. Tests and pass/fail logic are unchanged.",
+}
+out = root / "graph-tasks/2026-09-11-local-class-wick/check-cache-reuse.json"
+out.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+print(json.dumps(receipt, indent=2))

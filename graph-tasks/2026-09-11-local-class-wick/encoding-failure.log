@@ -1,0 +1,33 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+_______________________ test_text_io_names_its_encoding _______________________
+
+    def test_text_io_names_its_encoding():
+        """No text read or write in src/ may inherit the platform's locale encoding.
+    
+        `workhouse why C2` died on byte 0x81 in a Lean source until the caller set
+        PYTHONUTF8=1. Reported against this repository in
+        notes/imported/UPLOADS_2026-08-28i/THEORY_GRAPH_AGENT_EXPERIENCE_NOTES_20260828.md
+        and fixed by naming utf-8 at every call site. Parsed rather than grepped so
+        a call split across lines is judged by its keywords, not by its first line.
+        """
+        offenders = []
+        for path in sorted(SRC.rglob("*.py")):
+            tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+            for node in ast.walk(tree):
+                if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Attribute):
+                    continue
+                if node.func.attr not in LOCALE_SENSITIVE or _binary_mode(node):
+                    continue
+                if any(k.arg == "encoding" for k in node.keywords):
+                    continue
+                offenders.append(f"{path.relative_to(ROOT)}:{node.lineno}: .{node.func.attr}()")
+>       assert not offenders, "text I/O without an explicit encoding:\n" + "\n".join(offenders)
+E       AssertionError: text I/O without an explicit encoding:
+E         src\workhouse\invariants\local_class_wick.py:43: .read_text()
+E       assert not ['src\\workhouse\\invariants\\local_class_wick.py:43: .read_text()']
+
+tests\test_portability.py:47: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_portability.py::test_text_io_names_its_encoding - Assertion...
+1 failed in 0.79s

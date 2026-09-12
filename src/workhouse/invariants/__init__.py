@@ -100,11 +100,13 @@ _MODULES = (
     "w6_antipodal",
     "dimension_five_irrelevance",
     "sixth_order",
+    "w6_synchronized_m10",
     "universal_cellular_hodge",
     "sixth_order_cluster",
     "w6_source_energy_r10",
     "archive_derivations",
     "earlier_proof_recovery",
+    "local_class_wick",
 )
 
 for _name in _MODULES:

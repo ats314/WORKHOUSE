@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 439 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 667/667 checks pass.
+**T1/T2 — re-derived here.** 687/687 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -45,7 +45,7 @@ it cannot drift from what the repository actually checks.
 | the electric shell, and what isolates it | 8/8 |
 | fourth-order kernel orbits | 28/28 |
 | continuum and fixed-spacing bridges (G18, G19) | 3/3 |
-| the swap-odd domino state (U4, ADR 0023) | 5/5 |
+| the swap-odd domino state (U4, ADR 0023) | 6/6 |
 | Hecke cover correspondence table | 1/1 |
 | the third implementation and the historical ledger (G3, C2) | 11/11 |
 | the third engine at every rank (all-rank cumulants) | 12/12 |
@@ -93,11 +93,13 @@ it cannot drift from what the repository actually checks.
 | W6 antipodal conditional magnetic geometry | 7/7 |
 | dimension counts and geometric scaling controls (G19) | 5/5 |
 | G9 sixth-order folds and combined carrier shapes | 6/6 |
+| W6 synchronized M10 conditional score | 14/14 |
 | universal cellular Hodge and tetrahedral algebra | 5/5 |
 | G9 direct sixth order on one face and the shared-link pairs, any rank | 3/3 |
 | W6 R10 repaired identities and counterchecks | 6/6 |
 | Archive functional inequalities and source transport | 18/18 |
 | Earlier proof recovery: exact controls | 14/14 |
+| local class Wick spectrum over all ranks | 5/5 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
