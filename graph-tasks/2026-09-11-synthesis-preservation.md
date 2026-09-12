@@ -107,14 +107,51 @@ defects in the proposal file were found and are recorded in its header.
   verification or discovery command, and any review of the mathematics. Nothing
   here checks whether a single statement in the preserved documents is true.
 
-## Open Conflict (not resolved here)
-The parent record states it corrected the Ricci constant "from N/4 to N/2 for the
-metric -Tr(XY)". `ARCHIVE/.../RicciCurvature.lean:25` also uses `N / 2`. Other
-2026-09-11 session notes call `kappa_G = N/4` the correct Haar Ricci floor, and
-the proposal file asserts `N/4` under the normalization
-`<X,Y> = -(1/(2N)) B(X,Y) = Tr(X^dag Y)`. These cannot both hold for one
-normalization. No graph node depends on the proposal file, so nothing is blocked,
-but the discrepancy should be settled before any of this is registered.
+## Resolved Conflict: the Haar Ricci constant
+Both `N/2` and `N/4` are correct, for different metrics. The defect is that the
+proposal file pairs the value `N/4` with the normalization that yields `N/2`.
+
+For a bi-invariant metric on a compact group, `Ric = -(1/4) B` as bilinear forms,
+independently of which bi-invariant metric is chosen; the metric enters only when
+`Ric` is written as `kappa * g`. On `su(N)` in the fundamental,
+`B(X,Y) = 2N tr(XY)`. Therefore:
+
+| metric `g(X,Y)` | relation to `B` | `kappa` with `Ric = kappa g` |
+| --- | --- | --- |
+| `Tr(X^dag Y) = -tr(XY)` | `g = -(1/(2N)) B` | `N/2` |
+| `2 Tr(X^dag Y) = -2 tr(XY)` | `g = -(1/N) B` | `N/4` |
+
+The second row is the common gauge-theory convention in which generators
+normalized by `tr(T^a T^b) = delta^{ab}/2` are orthonormal, which is why `N/4`
+circulates in the sources.
+
+The proposal file states its normalization explicitly as
+`<X,Y> = -(1/(2N)) B(X,Y) = Tr(X^dag Y)` (row 1) and then asserts
+`kappa_G = N/4` (row 2), at
+`graph-tasks/2026-09-11-novel-derivation-proposals.yaml` lines 59-60, 72, 139 and
+154. Under its own stated metric the value is `N/2`. The parent record's
+correction was therefore right, and `RicciCurvature.lean:25` (`N / 2`) agrees by
+coincidence only: that file states no metric at all, so it is not evidence either
+way, and its surrounding comment writes both `-(1/4) Tr(ad_X^2)` and `(1/4)
+B(X,X)` for the same quantity, which differ in sign.
+
+**Check:** `graph-tasks/synthesis-preservation-evidence-20260911/ricci_normalization_check.py`
+builds `su(N)` for `N = 2..6`, Gram-Schmidts an orthonormal basis for
+`Tr(X^dag Y)`, and computes `B(X,X) = tr(ad_X^2)` and
+`Ric(X,X) = (1/4) sum_a |[X,e_a]|^2` independently. Output retained at
+`ricci_normalization_check.out`: `B(X,X)/tr(XX) = 2N` exactly, `Ric = -(1/4)B`
+holds to `1e-8`, and `kappa = N/2` for every `N` tested. Independent cross-check
+at `N = 2`: `Tr(X^dag Y)` makes `SU(2)` the round 3-sphere of radius `sqrt(2)`,
+where `Ric = (2/r^2) g = g`, and `N/2 = 1`.
+
+**Consequence and its limit.** `kappa_G` is convention-dependent, so a floor
+stated as `rho_* >= kappa_G` carries no information until the metric, and with it
+the Laplacian normalization, is fixed; the gap rescales with the same factor, so
+no physical statement changes. This settles a normalization, nothing more. It
+does not make the curvature argument of
+`DERIV:HAAR_RICCI_BAKRY_EMERY_MASS_FLOOR` a proof of a volume-uniform gap: the
+reduction from the lattice manifold to the group factor is the open part, and it
+is untouched here.
 
 ## Handoff
 - **Established Result:** Thirteen files are under version control on this branch
