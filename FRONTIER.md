@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 439 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 641/641 checks pass.
+**T1/T2 — re-derived here.** 659/659 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -95,6 +95,7 @@ it cannot drift from what the repository actually checks.
 | universal cellular Hodge and tetrahedral algebra | 5/5 |
 | G9 direct sixth order on one face and the shared-link pairs, any rank | 3/3 |
 | W6 R10 repaired identities and counterchecks | 6/6 |
+| Archive functional inequalities and source transport | 18/18 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by
 tier, each with the command that re-establishes it in about a second:
