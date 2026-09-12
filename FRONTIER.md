@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 439 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 654/654 checks pass.
+**T1/T2 — re-derived here.** 668/668 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -96,6 +96,7 @@ it cannot drift from what the repository actually checks.
 | G9 direct sixth order on one face and the shared-link pairs, any rank | 3/3 |
 | W6 R10 repaired identities and counterchecks | 6/6 |
 | Archive functional inequalities and source transport | 18/18 |
+| Earlier proof recovery: exact controls | 14/14 |
 | local class Wick spectrum over all ranks | 5/5 |
 
 `CERTIFIED.md` lists every one of these claims individually, ranked by

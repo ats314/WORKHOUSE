@@ -74,3 +74,13 @@ Final ordered graph generation and the full regression suite passed: 2066 passed
 End briefing: `2026-09-11-local-class-wick/end-main158.json`; freshness `matched`; fingerprint `da46b4e97b0f92a00f68cf88ce814e7519c675eadec24acd96eddd0b0f9c5f64`; input manifest `096ee7acba0d723dca6671e89f182ed3db16ea9a6ea5d059c1c5b38827a9d323`. The end briefing reuses 654 current-content results from the preceding generation. Full commands, cache reuse, sources and log hashes are retained in the same evidence directory.
 
 All three results remain proven analytic statements, with five T1 supporting checks. The finite formal calculation discharges the Gram-inversion and coefficient-sign obligations; compact-group remainders and the continuum G19 successor remain separate. No Lean source or T0 coverage changes. Publication is through [PR 157](https://github.com/ats314/WORKHOUSE/pull/157); the outer task record retains final commit and GitHub check links.
+
+## Final validation on recovered-proof main
+
+PR 159 merged after the preceding 2,066-test pass. Its full source records and citation correction were retained together with the Wick additions. The final base is `294c22497d7e0200c9a7fabf7be827a44ffc8f08`; the preservation receipt confirms all 137 prior results, 38 prior derivation documents and 244 prior citation aliases remain unchanged.
+
+The complete ordered graph build, frontier, certified view, live brief and full regression suite passed: 2092 passed, 4 skipped, 11 subtests passed in 440.41s (0:07:20). There are 19786 catalogue records, 28 symbols and 32378 edges; all 668 mathematical checks pass. Lint and formatting pass, and the documentation check reports 42 maintained files, 598 local links, zero errors and zero warnings.
+
+Final end briefing: `2026-09-11-local-class-wick/end-main159.json`, freshness `matched`, fingerprint `9a0e893e9be67373ec300811766878ef118949af0013f0554db7ddd24d57fa88`, input manifest `3a8fdc80a0f0a5c76bc9906ca67e5a26d0e0ed5063642827d3f0908399519ff8`. The briefing reuses 668 current-content results from the preceding graph build. The ordered commands, cache reuse and log hashes are retained in `validation-main159-phases.json` and the accompanying source/receipt files.
+
+All 19769 existing catalogue IDs and their values are retained; the Wick integration adds 17 IDs. The three established analytic results and five T1 supporting checks keep their recorded hypotheses and scope. The next analytic obligation remains the compact-group remainder; no G19 closure or new Lean coverage is claimed. Final PR, merge, CI and canonical synchronization evidence is recorded in the outer task register.

@@ -4044,6 +4044,419 @@ results:
     status: proven
     evidence: analytic
 
+  - id: RESULT:EARLIER_CUBIC_QUOTIENT_REGULARITY
+    statement: 'The cubic four-shape dispersion has the exact regularity trichotomy C nonzero: C^{1,1} not
+      C^2; C=0,D nonzero: C^{3,1} not C^4; C=D=0: analytic.'
+    hypotheses:
+    - Real A,B,C,D; a_i=4 sin^2(k_i/2), q=sum a_i, e2=sum a_i a_j, e3=product a_i; Delta=Aq+Be2+4C e2/q+D
+      e3/q extended by zero at Gamma.
+    scope: Local differentiability at the cubic Gamma point for the specified four-shape formula.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E1. Cubic quotient regularity trichotomy'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:CUBIC_QUOTIENT_REGULARITY
+    bears_on:
+    - G11
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:archived-singular-geometry-has-all-sixte-d01f40
+      scope: Replayed the original exact ray, radial, incidence, derivative and endpoint algebra. The regularity,
+        frame and analytic asymptotic proofs remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_EQUAL_RAY_IDENTIFICATION
+    statement: Equal-ray data recover A=R1, B=m2, C=b2/2-A and D=3m3-9m2, with independent holdout b3=2b2-R1.
+    hypotheses:
+    - The dispersion consists of exactly the four shapes in E1; two distinct nonzero a values determine
+      each affine divided ray.
+    scope: Exact finite linear identification in the displayed basis; extra shapes require more data.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E2. Equal-ray recovery and an independent holdout'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:EQUAL_RAY_IDENTIFICATION
+    bears_on:
+    - G11
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:archived-singular-geometry-has-all-sixte-d01f40
+      scope: Replayed the original exact ray, radial, incidence, derivative and endpoint algebra. The regularity,
+        frame and analytic asymptotic proofs remain separate.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_LOCALIZED_FRAME_OBSTRUCTION
+    statement: A rank-one Bloch fiber with direction-dependent projector limits at Gamma has no finite exponentially
+      localized translation frame with a uniform lower bound; its compact cube frame floor is 4 sin^2(pi/L).
+    hypotheses:
+    - Analytic rank-one generators with S=sP; a positive frame floor approaching Gamma; P=w w*/q with leading
+      w=Jk and q=|k|^2+O(|k|^4).
+    - For the explicit floor, q=sum_i 4 sin^2(k_i/2) on the nonzero periodic momentum grid.
+    scope: Infinite-volume uniform localization obstruction and exact finite-volume frame conditioning;
+      no dipolar remainder estimate.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E3. No uniformly localized finite translation frame'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:LOCALIZED_FRAME_OBSTRUCTION
+    bears_on:
+    - G11
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:archived-singular-geometry-has-all-sixte-d01f40
+      scope: Replayed the original exact ray, radial, incidence, derivative and endpoint algebra. The regularity,
+        frame and analytic asymptotic proofs remain separate.
+    - target: CHK:earlier-proof-recovery-exact-controls:frame-ray-limits-differ-and-rank-volume--f5be76
+      scope: Two axis limits of J n n^T J^T differ. G(3,3)=405/68; G(3,2)=60/17 is smaller, retaining the
+        theorem's N,L>=3 domain.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_JOINT_RANK_VOLUME_SCALING
+    statement: For N,L>=3 the rescaled second-order carrier gap G=4N^3 t_N L^2 sin^2(pi/L) increases in
+      both variables, has sharp floor 405/68, strict ceiling pi^2 and joint limit pi^2; t_N decreases for
+      real N>=3.
+    hypotheses:
+    - Integer N,L>=3; u nonzero; t_N=2N(N^2-4)/[(N^2-1)(2N^2-1)(4N^2-9)]; Delta2=4t_N u^2 sin^2(pi/L).
+    scope: Second-order coefficient and finite-volume scaling only; L=2 is excluded by an exact countercontrol.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E4. Sharp joint rank-volume scaling'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:JOINT_RANK_VOLUME_SCALING
+    bears_on:
+    - G11
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:archived-singular-geometry-has-all-sixte-d01f40
+      scope: Replayed the original exact ray, radial, incidence, derivative and endpoint algebra. The regularity,
+        frame and analytic asymptotic proofs remain separate.
+    - target: CHK:earlier-proof-recovery-exact-controls:frame-ray-limits-differ-and-rank-volume--f5be76
+      scope: Two axis limits of J n n^T J^T differ. G(3,3)=405/68; G(3,2)=60/17 is smaller, retaining the
+        theorem's N,L>=3 domain.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_FINITE_ORDER_SUPPORT
+    statement: At fixed order r a connected interaction history rooted in a finite support reaches only
+      a finite union in its r-step support neighborhood.
+    hypotheses:
+    - Bounded-support insertions; locally finite interaction support graph; finite root; at most r insertions.
+    scope: Finite support combinatorics; not finite local Hilbert dimension.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E5a. Bounded support at a fixed order'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:FINITE_ORDER_SUPPORT
+    bears_on:
+    - G13
+    supported_by: []
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_GRAM_NULL_OPERATOR_QUOTIENT
+    statement: For G=C*C and B=C*AC, ker G=ker C is killed by B; G^+B is the physical Gram-quotient coordinate
+      action, and C G^+B=AC on an invariant physical span.
+    hypotheses:
+    - C maps a finite coefficient space onto its physical span; A is defined there, and the last intertwining
+      conclusion assumes A-invariance.
+    scope: Exact finite-dimensional physical quotient, with domains and invariance explicit.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E5b. Gram-null decoupling'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:GRAM_NULL_OPERATOR_QUOTIENT
+    bears_on:
+    - G13
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:gram-null-decoupling-preserves-the-physi-8e396a
+      scope: Exact nonorthogonal rank-two synthesis verifies null decoupling and G^+B, and rejects using
+        the raw overlap B as coordinate action. No general history closure.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_DECORATED_HISTORY_MERGING
+    statement: Histories with identical complete continuation data can be merged by summing amplitudes without
+      changing the fixed-order expansion.
+    hypotheses:
+    - Finite reachable quotient states and known exact edge amplitudes; identical remaining state, support
+      union, order, energy-resolvent data and fold ancestry.
+    scope: Decorated dynamic programming; matching an endpoint alone is insufficient.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E5c. Exact merging of decorated histories'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:DECORATED_HISTORY_MERGING
+    bears_on:
+    - G13
+    supported_by: []
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_NESTED_QUOTIENT_REDUCTION
+    statement: The complete finite energy-decorated quotient history graph determines the connected effective
+      operator through order r exactly, including direct/folded words, ordered support-union convolution
+      and rooted subtraction.
+    hypotheses:
+    - E5a locality and fixed order; finite retained space and finite reachable Wilson/Gram quotient.
+    - Nonresonant eliminated resolvents; complete direct and folded words; disconnected-vacuum removal.
+    - Complete ordered support-union convolution before rooted Mobius subtraction on a complete finite inclusion
+      poset; fixed canonical Hermitian normalization.
+    scope: Conditional finite-order reconstruction; no unrestricted G13 classification or momentum-shape
+      absorption into a scalar shift.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E5d. Finite-order nested-quotient spectral reduction'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:NESTED_QUOTIENT_REDUCTION
+    bears_on:
+    - G13
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:gram-null-decoupling-preserves-the-physi-8e396a
+      scope: Exact nonorthogonal rank-two synthesis verifies null decoupling and G^+B, and rejects using
+        the raw overlap B as coordinate action. No general history closure.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_SHELL_SYMMETRY_RITZ_CONTROL
+    statement: Commuting finite Hermitian shell operators reduce to multiplicity-space matrices; every normalized
+      lifted Ritz vector satisfies dist(lambda,Spec(E-uM))<=||(E-uM-lambda)v||.
+    hypotheses:
+    - Finite Hermitian E,M commute with a finite unitary group action; real u,lambda; residual is evaluated
+      in the full retained physical space.
+    scope: Analytic isotypic reduction and full-space residual theorem; no uniform branch identification.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E6a. Symmetry and residual control for a reduced shell'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:SHELL_SYMMETRY_RITZ_CONTROL
+    bears_on:
+    - G13
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:hermitian-ritz-residual-bounds-the-neare-b23f2b
+      scope: A rational three-level Hermitian model verifies the squared residual enclosure; this is not
+        a rerun of the saved B6 numerical campaign or an all-coupling enclosure.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_B6_RETAINED_KRYLOV_CAMPAIGN
+    statement: The retained SU(3) B6 certificate reports radial dimensions 67,155,133 and maximum full-space
+      Ritz residual 8.775675697349887e-14 on 201 g-values in [1,2], with crossing g=1.3039546641713.
+    hypotheses:
+    - Historical source K6(u)=E-uM, source coupling conversion and branch choices; level-eight 511-column
+      word spaces; relative SVD cutoff 1e-10.
+    - The certificate is retained and hash-verified; the B6 eigensolver was not rerun in this integration.
+    scope: Historical finite-campaign numerical evidence only, with 355 representative coordinates and 798
+      including multiplicities.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E6b. Retained B6 numerical campaign'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:B6_RETAINED_KRYLOV_CAMPAIGN
+    bears_on:
+    - G13
+    supported_by: []
+    status: conditional
+    evidence: numerical
+  - id: RESULT:EARLIER_ISOLATED_POSITIVE_MATRIX_ATOM
+    statement: Normalized positive matrix measures with locally uniform Laplace convergence through zero,
+      a collapsing interval of uniformly positive matrix mass and a fixed empty annulus retain an isolated
+      full-rank atom at the limiting positive energy.
+    hypotheses:
+    - Finite d-by-d positive matrix measures on [0,infinity) of total mass I; locally uniform Laplace-transform
+      convergence including zero.
+    - Closed intervals I_n converge to {M}, M>0; nu_n(I_n)>=z_*I for z_*>0; no mass at 0<dist(E,I_n)<Delta_*
+      outside I_n.
+    - The scalar-residue conclusion additionally assumes covariance under one irreducible source representation.
+    scope: Source-visible spectral pole theorem; no actual-source construction, unseen-sector gap or exact
+      triplet stability.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E7. Isolated positive matrix atom persists'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:ISOLATED_POSITIVE_MATRIX_ATOM
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:positive-matrix-atom-controls-retain-ful-753a47
+      scope: 29 positive three-component finite measures have total I, atom floor I/3, and a fixed empty
+        annulus. Weak convergence and Portmanteau are analytic, not this test.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_CONDITIONAL_SPECTRAL_FLOOR
+    statement: 'Conditional averaging raises the smallest eigenvalue relative to its conditional mean and
+      contracts the positive spectral-floor defect: (c-lambda_min(E[H|G]))_+<=E[(c-lambda_min(H))_+|G].'
+    hypotheses:
+    - Integrable random symmetric matrices on one fixed finite-dimensional space; a sigma-algebra G and
+      real c.
+    scope: Finite matrix conditional Jensen statement; a marginalized Hessian can have an additional covariance
+      subtraction.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E8. Conditional spectral floor and defect contraction'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:CONDITIONAL_SPECTRAL_FLOOR
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:conditional-spectral-floor-accepts-nonco-5b8e91
+      scope: A and B do not commute; lambda_min((A+B)/2)>=3/2, the average of their floors. This checks
+        a finite instance, not a coarse-marginal Hessian identification.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_D4_DISJOINT_STAPLE_COORDINATES
+    statement: Each of the six staples incident to a fixed D=4 link has a distinct selected link coordinate
+      affecting only that staple within the star.
+    hypotheses:
+    - Periodic nondegenerate cubic lattice with L>=3; for nu!=mu use (x+e_mu,nu) and (x+e_mu-e_nu,nu).
+    scope: Exact incidence theorem; no statistical independence or force-rank conclusion.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E9. Six disjoint staple coordinates in four dimensions'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:D4_DISJOINT_STAPLE_COORDINATES
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:all-twelve-nondegenerate-staple-incidenc-f1eaef
+      scope: Every selected link belongs to its own incident staple only in twelve exact periodic cases.
+        This asserts coordinate incidence, not statistical independence.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_POSITIVE_SECTOR_PHASE_ISOLATION
+    statement: Nonnegative local weights with additive integer charge give nonnegative Laurent sector coefficients
+      preserved by tensor multiplication and summation, with theta dependence evaluated last at z=exp(i
+      theta).
+    hypotheses:
+    - Finite configuration/charge sums, or absolute convergence justifying all expansions and evaluation;
+      nonnegative local weights.
+    scope: Sector-polynomial algebra; no general positive non-Abelian representation or efficient sign-problem
+      solution.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E10. Positive-sector phase isolation'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:POSITIVE_SECTOR_PHASE_ISOLATION
+    bears_on: []
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:positive-sector-transfer-retains-laurent-4e3957
+      scope: All coefficients of z^3 tr(T(z)^3) are nonnegative exactly. General gauge-theory positivity
+        and final Fourier cancellation are not supplied.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_VSU_BOUNDED_DOMAIN_WELLPOSEDNESS
+    statement: The VSU primitive F(s)=s-2+2(sqrt(s)+1)exp(-sqrt(s)) yields a strictly convex, quadratically
+      coercive gradient energy and a unique weak Dirichlet solution on bounded Lipschitz domains.
+    hypotheses:
+    - a0,G>0; mu(x)=1-exp(-x); bounded Lipschitz Omega in R^3; rho in L^(6/5)(Omega); phi in W_0^(1,2)(Omega).
+    scope: Bounded-domain variational theorem for the specified constitutive model; whole-space and far-field
+      limits remain separate.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E11. Convex VSU action on a bounded domain'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:VSU_BOUNDED_DOMAIN_WELLPOSEDNESS
+    bears_on: []
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:vsu-action-derivatives-and-both-energy-a-6611e9
+      scope: The constitutive primitive, radial Hessian factor, cubic small-gradient and quadratic large-gradient
+        limits hold exactly. Bounded-domain existence is analytic.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_DETERMINANT_PARITY_REPAIR
+    statement: When w_r=0, det[x,u,w]=sgn(r,p,q)[x_r(u_p w_q-u_q w_p)-u_r(x_p w_q-x_q w_p)]; the parity
+      factor is indispensable.
+    hypotheses:
+    - Three-dimensional columns x,u,w; (r,p,q) is a permutation of (0,1,2); w_r=0.
+    scope: Corrected exact determinant identity with all six row orders checked; original source preserved
+      unchanged.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E12. Determinant reduction with the missing parity restored'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:DETERMINANT_PARITY_REPAIR
+    bears_on: []
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:determinant-reduction-retains-every-row--1ca336
+      scope: All six symbolic row permutations pass; the historical middle-row formula needs -1.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_MOVING_ADJOINT_FORCE_DERIVATIVE
+    statement: The moving adjoint force obeys d(Ad_g X)/dt=[g′g^-1,Ad_g X]+Ad_g X′; the selected staple
+      can have a nonzero own-force derivative.
+    hypotheses:
+    - Differentiable matrix-group path g and Lie-algebra path X; full product rule.
+    scope: Exact derivative correction; the historical transversality/tube estimate requires a separate
+      repaired proof.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E13. A moving adjoint force has two derivative terms'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:MOVING_ADJOINT_FORCE_DERIVATIVE
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:moving-adjoint-force-retains-its-own-der-33d964
+      scope: The missing Ad_g dX term is nonzero in an exact rotating force example. This repairs the differentiation
+        rule, not the archive's subsequent rank/tube theorem.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_SPHERE_EQUAL_COUPLING_COVARIANCE
+    statement: Two distinct equal-coupling SU(3) Wilson faces on a finite genus-zero cellulation have nonnegative
+      normalized-trace covariance, equal to a variance of representation scores.
+    hypotheses:
+    - Finite oriented cellulation of S^2 with normalized edge Haar measure and face weights exp(b_f ReTr(U_f)/3),
+      all b_f>=0.
+    - The two distinct faces have identical coupling; zero-coupling endpoints are taken by continuity.
+    scope: Genus-zero same-coupling covariance only; no cross-class or higher-dimensional plaquette closure.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E14. Equal-coupling SU(3) faces on a sphere have nonnegative covariance'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:SPHERE_EQUAL_COUPLING_COVARIANCE
+    bears_on:
+    - G17
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:same-coupling-score-covariance-is-a-posi-081f26
+      scope: The equal-score covariance numerator is an exact positive weighted square sum. The SU3 sphere
+        character integration and infinite-series limit are analytic.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_SU3_POSITIVITY_BOUNDARIES
+    statement: At SU(3) Haar measure Cov(ReTr(U)/3,ReTr(U^2)/3)=-1/18 and the balanced-degree-two crossed
+      Weingarten coefficient is -1/24 (the direct coefficient is 1/8).
+    hypotheses:
+    - Normalized Haar SU(3); the second observable is the twice-wound trace, not a second elementary plaquette.
+    scope: Exact countercontrols to generic loop or coefficientwise positivity; no refutation of fully summed
+      elementary-plaquette covariance.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E15. Exact SU(3) boundaries of the covariance argument'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:SU3_POSITIVITY_BOUNDARIES
+    bears_on:
+    - G17
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:su3-twice-wound-covariance-and-crossed-h-584f1a
+      scope: Character orthogonality gives normalized covariance -1/18 for a twice-wound loop, and the balanced
+        rank-three crossed Weingarten coefficient is -1/24. Neither is an elementary-plaquette counterexample.
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_REFLECTION_ADAPTED_BLOCKING
+    statement: Reflection-adapted centered odd blocks and compatible deterministic Balaban-form path averages
+      preserve reflection positivity on the coarse gauge-invariant positive-time algebra.
+    hypotheses:
+    - Reflection-positive fine measure; reflection-permuted centered blocks with odd L and reflection/orientation-compatible
+      path families.
+    - Conjugation-compatible logarithm on a reflection-invariant full-measure regular domain; positive coarse
+      bonds have both endpoint blocks wholly in the fine positive half.
+    scope: Specified deterministic raw blocking geometry; extra field partitions, stochastic kernels and
+      multistep effective actions need their own hypotheses.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E16. Reflection-adapted deterministic blocking preserves positivity'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:REFLECTION_ADAPTED_BLOCKING
+    bears_on:
+    - G19
+    - RESULT:OS_HISTORY_BLOCK_INTERTWINER
+    supported_by: []
+    status: proven
+    evidence: analytic
+  - id: RESULT:EARLIER_CORNER_BLOCKING_REFLECTION_DEFECT
+    statement: The literal lower-corner ordered-path L=3 blocking has gauge-invariant reflected coarse-plaquette
+      trace defect (4/81)epsilon^4+O(epsilon^5), so that convention fails the required reflection identity.
+    hypotheses:
+    - SU(2) periodic 12-by-12 lattice; source coordinate-order (0,1) trees; reflection (x,t)->(x,2-t); only
+      exp(i epsilon sigma_x),exp(i epsilon sigma_y) at the two specified origin links.
+    - Analytic log/exp near identity; compare the coarse plaquette based at (9,9) using the retained source
+      instrument.
+    scope: Exact local failure of this intertwining convention; not a proof that every blocked measure violates
+      reflection positivity.
+    source: CITE:EARLIER_PROOF_RECOVERY_RESULT
+    source_section: '## E17. Literal corner paths fail the required reflection identity'
+    depends_on:
+    - DERIV:EARLIER_PROOF_RECOVERY:CORNER_BLOCKING_REFLECTION_DEFECT
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:earlier-proof-recovery-exact-controls:literal-balaban-corner-paths-have-exact--219e93
+      scope: 'Replayed exact Q(i) matrix-log/exp arithmetic for SU2 on 12x12, L=3: degrees 0..3 vanish and
+        epsilon^4=4/81. Distinct gauge-invariant traces exclude reflection equivariance modulo coarse gauge
+        for this convention.'
+    status: proven
+    evidence: analytic
+
+
 
   - id: RESULT:LOCAL_CLASS_WICK_RECURRENCE
     statement: The terminating Wick conjugation gives exact shell projectors and a unique all-order simple-branch

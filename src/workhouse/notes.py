@@ -156,9 +156,24 @@ def write_manifest(
 
 
 def _known_targets() -> set[str]:
-    from . import literature as lit_mod
+    """Resolve source reviews to live authored records, without collecting checks.
 
-    return lit_mod._known_targets()
+    Legacy gap/constant names remain valid. Recovered derivations must also
+    be able to name the exact result, statement or registered check they enter
+    through, before the generated catalogue has been refreshed.
+    """
+    from . import derivation_statements, results
+    from . import literature as lit_mod
+    from .claims import check_id
+    from .invariants import SUITES
+
+    ids = lit_mod._known_targets()
+    ids.update(row["id"] for row in results.load())
+    ids.update(
+        row["id"] for doc in derivation_statements.load()["documents"] for row in doc["statements"]
+    )
+    ids.update(check_id(suite.name, name) for suite in SUITES for name, *_ in suite.checks)
+    return ids
 
 
 def validate(notes: Notes | None = None, root: Path | None = None) -> list[str]:
