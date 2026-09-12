@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 439 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 668/668 checks pass.
+**T1/T2 — re-derived here.** 682/682 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -92,6 +92,7 @@ it cannot drift from what the repository actually checks.
 | W6 antipodal conditional magnetic geometry | 7/7 |
 | dimension counts and geometric scaling controls (G19) | 5/5 |
 | G9 sixth-order folds and combined carrier shapes | 6/6 |
+| W6 synchronized M10 conditional score | 14/14 |
 | universal cellular Hodge and tetrahedral algebra | 5/5 |
 | G9 direct sixth order on one face and the shared-link pairs, any rank | 3/3 |
 | W6 R10 repaired identities and counterchecks | 6/6 |

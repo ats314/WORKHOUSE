@@ -6,6 +6,209 @@ coverage_policy: Status and evidence describe the source argument. Only lean rec
   coverage; lean_support is explicitly partial. Empty lean means no complete registered formalization
   in this inventory, not a judgment that an analytic proof is invalid.
 documents:
+- id: CITE:W6_SYNCHRONIZED_M10_DOMINATION
+  path: docs/derivations/w6-synchronized-m10-domination.md
+  sha256: e81031e9f7d13467bfe6a037248216460d21766736fce6f4ad8e830a7ba5519e
+  statements:
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TANGENCY_DRIFT_CANCELLATION
+    statement: S13 exactly preserves the conditional center curve; on a smooth actual-phase tube this
+      cancels the linear normal phase drift.
+    locator: '## 2. Synchronized tangency (lines 34-51)'
+    anchor: '## 2. Synchronized tangency'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Specified synchronized radial profiles and the calibrated center graph.
+    - Smooth phase where the phase-derivative implication is used.
+    depends_on:
+    - DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:SYNCHRONIZED_TANGENCY
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TUBE_VARIANCE_DOMINATION
+    statement: Under the stated actual tube moments, phase regularity and amplitude-gradient bound, the
+      tube score deviation is at most C0+C1*g^-2 E(V|Q).
+    locator: '## 3. Small-angle tube implication (lines 52-84)'
+    anchor: '## 3. Small-angle tube implication'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Uniform conditional tube moments through order six.
+    - Uniform smooth phase derivatives, S13 tangency and Euler cancellation of its quadratic jet.
+    - Uniform actual amplitude-score gradient bounded by ca/g.
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TANGENCY_DRIFT_CANCELLATION
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:LOG_PARAMETER_CRITERION
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ANTIPODAL_SCORE_REGULARITY
+    statement: The endpoint magnetic spectrum has seven positive normal directions and two gauge tangents;
+      the actual score is invariant on the endpoint gauge orbit. This does not control nearby angular
+      score fluctuations.
+    locator: '## 4. Antipodal geometry and a uniform angular reference calculation (lines 85-143)'
+    anchor: '## 4. Antipodal geometry and a uniform angular reference calculation'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual fixed-square Hamiltonian and synchronized conjugation-equivariant transport.
+    - Q=-I for the full-sphere gauge invariance.
+    depends_on:
+    - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:HESSIAN_SPECTRUM
+    - DERIV:W6_ANTIPODAL_MAGNETIC_GEOMETRY:GAUGE_SCORE_INVARIANCE
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:AMPLITUDE_GRADIENT_SCALING
+    statement: The actual uniform amplitude-score gradient bound ca/g remains open; changing parameter
+      to h=g^2 and a spatial WKB expansion do not alone prove it.
+    locator: '## 5. Correct parameter-derivative criterion (lines 144-171)'
+    anchor: '## 5. Correct parameter-derivative criterion'
+    status: open
+    evidence: analytic
+    hypotheses:
+    - Actual positive ground amplitude in a valid phase tube.
+    depends_on: []
+    lean: []
+    lean_support: []
+    remaining: Establish uniform spatial control of h*partial_h log A and Z log A for the actual ground;
+      the logarithmic-parameter criterion gives the sufficient implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:OUTSIDE_COMPLEMENT_SUPPRESSION
+    statement: The actual centered conditional score complement is exponentially suppressed uniformly
+      in all Q outside any open neighborhood of the complete minimizing set, using beta equal to the actual
+      score at a conditional minimizer.
+    locator: '## 6. Correct complement argument and compact action gap (lines 172-261)'
+    anchor: '## 6. Correct complement argument and compact action gap'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual fixed compact elliptic Wilson square with unique nondegenerate well, bounded ground energy
+      and the established first-jet L2 bound.
+    - Established positive local actual-ground comparison; fixed smooth S13 transport.
+    - Tube contains the entire minimizing set including the antipodal sphere.
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:COMPACT_ACTION_GAP
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ACTUAL_WEIGHTED_JET_AND_LOWER_BOUND
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:NORMALIZED_COMPLEMENT_CRITERION
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is absent. The actual tube score estimates remain separate.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:FULL_SCORE_DOMINATION_M10
+    statement: Actual full-fiber M10 for S13 remains open. The earlier completion claim is retracted;
+      the repaired assembly implication retains all unsupplied model hypotheses.
+    locator: '## 7. Assembly criterion and actual status (lines 262-286)'
+    anchor: '## 7. Assembly criterion and actual status'
+    status: open
+    evidence: analytic
+    hypotheses:
+    - Actual four-face compact SU(2) quantum ground law and S13 dilation.
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ASSEMBLY_CRITERION
+    lean: []
+    lean_support: []
+    remaining: Actual complement is discharged. Supply the polynomial relative-amplitude and tube moment
+      estimates, intermediate controls, and actual normal/angular comparison and score error. M11-M15
+      remain conditional on full M10.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:LOG_PARAMETER_CRITERION
+    statement: The exact identity g grad a=2 grad(h partial_h log A)+grad(Z log A)+grad(div Z)/2 gives
+      ca=2L+B+J/2 under uniform bounds L,B,J; a spatial-remainder counterexample shows why parameter control
+      is needed.
+    locator: '## 5. Correct parameter-derivative criterion (lines 144-171)'
+    anchor: '## 5. Correct parameter-derivative criterion'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Positive amplitude differentiable in h and spatial variables.
+    - Uniform bounds L,B,J on the three displayed gradients.
+    depends_on: []
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:COMPACT_ACTION_GAP
+    statement: For every open neighborhood of the complete actual minimizing set in the common compact
+      (y,Q) space, the nonempty compact complement has a positive uniform excess of Agmon action above
+      I(theta).
+    locator: '## 6. Correct complement argument and compact action gap (lines 172-261)'
+    anchor: '## 6. Correct complement argument and compact action gap'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual calibrated minimum action I(theta) and continuous Agmon distance.
+    - Open neighborhood contains every minimizer, including the full antipodal sphere.
+    depends_on:
+    - DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:AGMON_GEOMETRY
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:NORMALIZED_COMPLEMENT_CRITERION
+    statement: R7-R10 prove exponential centered conditional complement suppression from a positive action
+      gap and weighted numerator/lower-normalization estimates with exponential slack epsilon<kappa/2.
+    locator: '## 6. Correct complement argument and compact action gap (lines 172-261)'
+    anchor: '## 6. Correct complement argument and compact action gap'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual centered numerator bound and normalization lower bound R9.
+    - Positive action gap kappa; fixed polynomial losses and epsilon<kappa/2.
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:COMPACT_ACTION_GAP
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ANGULAR_REFERENCE_BUDGET
+    statement: The truncated exponential angular law has E x<=1 and E x^2<=2 uniformly for lambda>=0.
+      Seven independent Gaussian normals give E(X+x)^2<=99/4. Actual measure domination by M and a score-error
+      budget E0/g^2 imply the tube score bound (99M/2+2E0)/g^2.
+    locator: '## 4. Antipodal geometry and a uniform angular reference calculation (lines 85-143)'
+    anchor: '## 4. Antipodal geometry and a uniform angular reference calculation'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Specified reference angular and Gaussian laws.
+    - Actual-law comparison and score-error hypotheses are needed only for transfer to an actual conditional
+      measure.
+    depends_on: []
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ASSEMBLY_CRITERION
+    statement: Small-angle tube control, intermediate control, actual normal/angular comparison and normalized
+      complements with a common reference imply full-fiber M10 and its stated source-moment consequence.
+    locator: '## 7. Assembly criterion and actual status (lines 262-286)'
+    anchor: '## 7. Assembly criterion and actual status'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - All actual-model hypotheses explicitly listed in section 7.
+    - Uniform constants across g and the relevant fibers.
+    depends_on:
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:TUBE_VARIANCE_DOMINATION
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ANGULAR_REFERENCE_BUDGET
+    - DERIV:W6_SYNCHRONIZED_M10_DOMINATION:NORMALIZED_COMPLEMENT_CRITERION
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is not provided; mathematical scope is the stated implication.
+  - id: DERIV:W6_SYNCHRONIZED_M10_DOMINATION:ACTUAL_WEIGHTED_JET_AND_LOWER_BOUND
+    statement: Weighted actual first-jet estimates and controlled-diffusion propagation give arbitrarily-small-slack
+      global pointwise numerator and lower-ground bounds. Uniform fiber balls then give the actual rare-fiber
+      normalization and centered R9 bounds.
+    anchor: '## 6. Correct complement argument and compact action gap'
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Actual compact smooth elliptic square, V nonnegative with a unique nondegenerate well, 0<=e_g<=E.
+    - Established actual ||partial_g Psi_g||_2<=C/g and positive undifferentiated local WKB comparison.
+    - Ordinary finite-time Ito, Girsanov and elliptic interior estimates with the stated smooth compact
+      coefficients.
+    depends_on:
+    - DERIV:W6_GROUND_JETS_TRANSPORT_BUDGET:GROUND_JETS
+    - DERIV:W6_SOURCE_GENERATOR_SCORE_FRAME:SCORE_POISSON
+    - DERIV:W6_CONDITIONAL_TRANSPORT_OBSTRUCTION:CONDITIONAL_CONCENTRATION
+    lean: []
+    lean_support: []
+    remaining: Full-statement Lean formalization is absent; the proof supplies exponential slack, not
+      a polynomial relative-amplitude comparison.
+    locator: '## 6. Correct complement argument and compact action gap (lines 172-261)'
 
 - id: CITE:EARLIER_PROOF_RECOVERY
   path: docs/derivations/earlier-proof-recovery.md

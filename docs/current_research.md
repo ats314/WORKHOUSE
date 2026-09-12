@@ -1,5 +1,7 @@
 # Current research map
 
+The [M10 proof repair](derivations/w6-synchronized-m10-domination.md) establishes actual centered conditional complement suppression outside a neighborhood of the complete minimizing set and an exact angular reference-score budget. Actual M10 remains open: polynomial relative-amplitude control, tube moments and actual normal/angular comparison still require estimates. The earlier completion claim is preserved and corrected.
+
 Maintained guide, reconciled with the source and statement ledgers on **10 September
 2026**. The workspace reconciliation and source-linked analytic formalization
 were merged in [PR #113](https://github.com/ats314/WORKHOUSE/pull/113), merge
@@ -85,8 +87,9 @@ now expresses the actual score as a conditional continuity residual and derives
 the constrained Agmon center using the original electric metric. Its specified
 synchronized radial profiles follow that center exactly, cancelling the linear
 normal phase drift. M10 remains open for this choice: the conditional amplitude,
-quadratic phase fluctuations, rare-fiber complements and antipodal degeneracy
-still need estimates. A finite-flow argument using actual conditional
+quadratic phase fluctuations and the nearby antipodal angular regime
+still need estimates. The [M10 repair](derivations/w6-synchronized-m10-domination.md)
+now controls the actual centered complement outside enlarged minimizing-set tubes. A finite-flow argument using actual conditional
 concentration proves that some permitted Q8 cutoffs fail M10. This leaves the
 specified synchronized successor open; no actual g^-4 score asymptotic is
 assumed in that counterexample. The established source-moment implication
@@ -104,8 +107,9 @@ zero directions are exactly gauge tangents. The original electric metric
 retains positive normal coercivity. Normal relaxation gives the leading
 angular potential -2sqrt(2)delta n3, while the actual endpoint score is
 constant along the gauge orbit. These inputs resolve the magnetic geometric
-subproblem. Uniform true-ground amplitude, score and complement estimates
-on this normal/angular geometry remain the M10 successor. Start with
+subproblem. Uniform true-ground amplitude and tube-score estimates
+on this normal/angular geometry remain the M10 successor; the centered
+complement estimate is established by the M10 repair. Start with
 `RESULT:W6_ANTIPODAL_GAUGE_NORMAL_COERCIVITY` and
 `RESULT:W6_ANTIPODAL_ANGULAR_REDUCTION`.
 
