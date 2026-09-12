@@ -40,7 +40,7 @@ def check_recurrence():
 
 @suite.check(COEFFICIENTS, CITE + " sections 4-4.1", rests_on=(RECURRENCE,))
 def check_coefficients():
-    received = json.loads((RECEIVED / "coefficients_order5.json").read_text())
+    received = json.loads((RECEIVED / "coefficients_order5.json").read_text(encoding="utf-8"))
     passed = True
     for parity in ("even", "odd"):
         expected = tuple(

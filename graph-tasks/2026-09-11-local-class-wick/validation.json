@@ -1,7 +1,7 @@
 {
   "schema": "local-class-wick-integration-validation/v1",
   "base_at_verification_start": "bc9da0233ceb72ed76739dc9b892d9c6ca1b50d5",
-  "integrated_remote_base": "0b6671610d230bf6b3bcd44484a024b44637bd37",
+  "integrated_remote_base": "be26515f7da56cc3fd9ed870deea03ec59e18be1",
   "full_verify": {
     "command": "workhouse verify",
     "passed": 632,
@@ -30,5 +30,26 @@
   "scope": "Formal local oscillator only. No compact-group remainder, interacting-volume control, G19 route closure or Lean coverage promotion.",
   "source_hash_mode": "Raw bytes in the local execution checkout; ordinary Git text line-ending conversion can change raw source hashes on another platform.",
   "staged_source_identity": "30 byte-pinned derivation, paper and run files were compared byte-for-byte with the staged Git blobs and matched.",
-  "diff_check": "Passed for native changes. Nine received historical files retain original terminal blank lines, intentionally unmodified to preserve their recorded hashes."
+  "diff_check": "Passed for native changes. Nine received historical files retain original terminal blank lines, intentionally unmodified to preserve their recorded hashes.",
+  "initial_full_pytest": {
+    "passed": 2029,
+    "failed": 1,
+    "skipped": 4,
+    "subtests_passed": 11,
+    "receipt": "pytest-full.log",
+    "failure": "test_portability.py::test_text_io_names_its_encoding"
+  },
+  "portability_fix": {
+    "change": "Name encoding=utf-8 when reading the ASCII coefficient certificate. No coefficient or recurrence change.",
+    "targeted_tests_passed": 10,
+    "receipt": "pytest-utf8-fixed.log"
+  },
+  "source_sha256_after_utf8": {
+    "src/workhouse/local_class_wick.py": "7fa060e9e442d1ca15e261bd6a262890abe8642ec9a51eccdae730e046525fe0",
+    "src/workhouse/invariants/local_class_wick.py": "e5a330ca8a202bfd93d797fcea8eb5b55936136880869d3ce6a1c15320946b2a",
+    "tests/test_local_class_wick.py": "e73f6a42908e9a6e0f547c9f2fdf25f72e1e56b68bbd2eb6ae45d99f74042503",
+    "docs/derivations/local-class-wick-spectrum.md": "5cde9ee4fe88bd47d8dec5a6ad5819ebe6f8316d1fb631f1145cae723a880c5e",
+    "paper/research_notes/LOCAL_CLASS_WICK_SPECTRUM_20260911.md": "e838f1c5c5ab1c7ce5001a338c1f7ba58f65b01de5879ec79aad34bb71763225"
+  },
+  "final_validation": "Ordered index, frontier, certified, live brief and full pytest, using normal CLI and test entry points in one Python process; validation-utf8-phases.json records each outcome."
 }
