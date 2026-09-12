@@ -1,0 +1,189 @@
+\section{Second order at every rank}
+\label{sec:second}
+
+This section is the algebraic base of the whole program. Everything in
+it is proof-checked, and its conclusion --- that the band exists for
+$N \ge 3$ and not for $N = 2$, with an exact amplitude --- follows from
+representation theory with no input from any expansion.
+
+\subsection{The shared-link weights are Weingarten values}
+
+Two plaquettes contributing at second order either share a link or do
+not. The amplitude for the shared-link case was for a long time taken
+in this program with an isotropy premise: that the four contributing
+representation channels carry weights in a fixed ratio. That premise
+is not needed. It is a consequence of the order-two Weingarten values.
+
+\begin{proposition}[The shared-link weights, from representation theory alone]
+\label{prop:weingarten}
+Let two plaquettes share exactly one link. Then:
+\begin{enumerate}
+  \item The six non-shared links collapse. Each plaquette contributes a
+    product of three independent Haar links, and a product of
+    independent Haar matrices is Haar. So the two-plaquette amplitude
+    reduces to $\Tr(A U)\,\Tr(B U^{\pm 1})$ with $A$ and $B$ independent
+    Haar, and integrating them out leaves a pure degree-$(2,2)$ moment of
+    the shared link $U$.
+  \item Two such moments settle both families. With
+    $M_{\mathrm{direct}} = N^2$ and $M_{\mathrm{cross}} = N$, the like
+    family splits as $(N+1)/(2N)$ and $(N-1)/(2N)$; and the singlet
+    component of $U_{ij}\overline{U_{lk}}$ is
+    $\delta_{il}\delta_{jk}/N$, of squared norm $1$, giving $1/N^2$.
+\end{enumerate}
+All four weights are exactly $d_R/N^2$, where $d_R$ is the dimension of
+the channel.
+\end{proposition}
+\gidc{the shared-link weights are Weingarten, not an isotropy assumption}{workhouse verify --only 'the shared-link weights are Weingarten, not an isotropy assumption'}
+
+\noindent\Tone{}. The relevant Weingarten pair is the inverse of the
+$S_2$ Gram matrix and the index sums are explicit, so the check imports
+nothing from the corpus. Registered as the discharge of the gap that
+had carried this premise as the one unproved input of the second-order
+chain; it was opened and closed on the same day, 28~August 2026, once
+the question was asked in the right form.
+
+\subsection{The four channels in closed form}
+
+Write $C_F = (N^2-1)/(2N)$ for the fundamental Casimir. Each channel
+$R$ contributes a resolvent weight $-(d_R/N^2)/(C_F + \tfrac12 \Delta C_2(R))$,
+and all four evaluate in closed form.
+
+\begin{theorem}[Per-channel resolvent weights]
+\label{thm:channels}
+\begin{align}
+  w_{\mathbf 1}   &= -\frac{1/N^2}{C_F}
+    &&= -\frac{2}{N(N^2-1)},
+  \\[3pt]
+  w_{\mathrm{Adj}} &= -\frac{(N^2-1)/N^2}{C_F + N/2}
+    &&= -\frac{2(N^2-1)}{N(2N^2-1)},
+  \\[3pt]
+  w_{\mathrm{Sym}} &= -\frac{N(N+1)/2N^2}
+                        {C_F + \frac{(N-1)(N+2)}{2N}}
+    &&= -\frac{N+1}{(N-1)(2N+3)},
+  \\[3pt]
+  w_{\Lambda} &= -\frac{N(N-1)/2N^2}
+                    {C_F + \frac{(N+1)(N-2)}{2N}}
+    &&= -\frac{N-1}{(N+1)(2N-3)} .
+\end{align}
+\end{theorem}
+\gid{LEAN:resolventWeight\_singlet, LEAN:resolventWeight\_adjoint, LEAN:resolventWeight\_sym, LEAN:resolventWeight\_antisym}
+
+\noindent\Tzero{} --- all four, at
+\srcpath{lean/Workhouse/Basic.lean:72,80,89,104}. Reproduce with
+\texttt{make lean}.
+
+\subsection{The two family sums}
+
+The channels group into a \emph{mixed} family $\{\mathbf 1, \mathrm{Adj}\}$
+and a \emph{like} family $\{\Lambda^2 F, \mathrm{Sym}^2 F\}$, and these
+are the antiparallel and parallel channel sums.
+
+\begin{theorem}[Family sums]
+\label{thm:families}
+\begin{equation}
+  A_N \;=\; w_{\mathbf 1} + w_{\mathrm{Adj}}
+    \;=\; -\,\frac{2N^3}{(N^2-1)(2N^2-1)},
+  \qquad
+  B_N \;=\; w_{\mathrm{Sym}} + w_{\Lambda}
+    \;=\; -\,\frac{4N(N^2-2)}{(N^2-1)(4N^2-9)} .
+\end{equation}
+\end{theorem}
+\gid{LEAN:mixed\_family\_sum, LEAN:like\_family\_sum}
+
+\noindent\Tzero{}, at \srcpath{lean/Workhouse/Basic.lean:118,129}. The
+mixed sum is obtained from the dimension and Casimir table rather than
+by transcription from any source document, which is the point: the
+family sums are re-derived, not quoted.
+
+\subsection{The hopping amplitude}
+
+\begin{theorem}[The all-rank second-order hopping amplitude]
+\label{thm:tN}
+\begin{equation}
+  t_N \;=\; B_N - A_N
+  \;=\; \frac{2N\,(N^2-4)}{(N^2-1)(2N^2-1)(4N^2-9)} .
+  \label{eq:tN}
+\end{equation}
+It is strictly positive for every $N \ge 3$, and
+\begin{equation}
+  t_2 = 0, \qquad t_3 = \tfrac{5}{612}.
+\end{equation}
+\end{theorem}
+\gidc{CONST:t\_N}{workhouse why t\_N}
+
+\noindent\Tzero{} for the rank law and for both special values
+(\srcpath{lean/Workhouse/Basic.lean}: \texttt{rank\_law\_numerator},
+\texttt{hopping\_two}, \texttt{hopping\_three}). Clearing denominators,
+the channel difference has numerator exactly $2N(N^2-4)$.
+
+Two consequences deserve to be stated separately, because both are
+structural rather than numerical.
+
+\begin{corollary}[$\SU(2)$ has no band at this order]
+\label{cor:su2}
+The factor $N^2 - 4$ in \eqref{eq:tN} vanishes at $N = 2$. The exclusion
+of $\SU(2)$ is therefore not a smallness but an identity: the parallel
+and antiparallel channel sums coincide exactly at rank two.
+\end{corollary}
+\gid{LEAN:hopping\_two}
+
+\begin{corollary}[The planar approach is from below]
+\label{cor:deficit}
+With $D = (N^2-1)(2N^2-1)(4N^2-9)$,
+\begin{equation}
+  D - 4N^3 \cdot 2N(N^2-4) \;=\; 2N^4 + 31N^2 - 9 \;>\; 0
+  \qquad (N \ge 1),
+\end{equation}
+so $4N^3 t_N = 1 - (2N^4+31N^2-9)/D < 1$. Hence
+$t_N < 1/(4N^3)$ for every $N$, and $t_N \sim 1/(4N^3)$: the
+$N^{-3}$ cancellation is exact and what it leaves is a strictly positive
+deficit.
+\end{corollary}
+\gid{LEAN:hopping\_deficit\_numerator}
+
+\noindent\Tzero{}, at \srcpath{lean/Workhouse/Basic.lean:48}.
+Corollary~\ref{cor:deficit} is the first appearance of the rank grading
+that \S\ref{sec:grading} develops: the leading power of $N$ is fixed by
+a cancellation, and the surviving term is a polynomial one can write
+down.
+
+\subsection{Independent corroboration of the channel weights}
+
+The weights of Proposition~\ref{prop:weingarten} have an external
+provenance, from work written without knowledge of this program.
+
+An efficient-truncation study of $\SU(N_c)$ lattice gauge theory for
+quantum simulation~\cite{CBB_2026} gives, in its Appendix~D, the exact
+finite-rank plaquette matrix element
+\begin{equation}
+  \abs{M_\rho} = \sqrt{\frac{\dim\rho}{\dim A \,\dim R}} .
+\end{equation}
+Taking both factors fundamental gives $\abs{M_\rho}^2 = d_\rho/N^2$,
+which is \emph{identically} the numerator of the weight formula used
+here. The four shared-link channel weights, and with them $A_N$, $B_N$
+and $t_N = B_N - A_N$, therefore rest on a matrix element an
+independent group wrote down for an unrelated purpose. That truncation
+is also the first published one retaining all four shared-link
+irreducible representations.
+
+The agreement is evidence rather than bookkeeping precisely because
+neither side knew of the other. It does not make $t_N$ published: the
+rank law \eqref{eq:tN}, the vanishing at $N = 2$, and the deficit of
+Corollary~\ref{cor:deficit} are assembled here.
+
+A caution attaches in the other direction. The leading-large-$N_c$
+qutrit plaquette Hamiltonian~\cite{CB_2024} explicitly decouples the
+charge-odd combination, so the sector in which $t_N$ lives is inert in
+that model --- effectively $t_3 = 0$ at leading order in large $N_c$,
+against the finite-$N$ channel-complete value $5/612$. That paper is
+recorded in this program's index as not yet obtained, and the statement
+here is taken from imported bridge documents rather than checked
+against the paper itself.
+
+\subsection{What this section does not establish}
+
+\notasserted{Convergence of the strong-coupling series; anything about
+the spectrum at finite $u$ beyond second order; and nothing about
+$\SU(2)$ at higher orders, where Corollary~\ref{cor:su2} does not
+apply. Theorem~\ref{thm:tN} is a statement about one coefficient of a
+formal expansion, established exactly.}

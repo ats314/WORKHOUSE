@@ -1,0 +1,74 @@
+% ===================================================================
+% THE WORKHOUSE PROGRAM --- master edition
+%
+% Driver for the full monograph.  Build:
+%     tectonic paper/master/workhouse_master.tex
+% or
+%     pdflatex ... ; bibtex ... ; pdflatex ... ; pdflatex ...
+%
+% Part I (sections \ref{part:exact}) is written to be extractable on its
+% own: paper/master/workhouse_band_paper.tex compiles exactly those files
+% as a standalone paper with no dangling references.
+%
+% Regenerate the apparatus before building:
+%     python paper/master/generate_apparatus.py
+% ===================================================================
+\documentclass[11pt,letterpaper]{article}
+\input{preamble}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small The WORKHOUSE program}
+\fancyhead[R]{\small master edition, 12 September 2026}
+\fancyfoot[C]{\thepage}
+
+\input{gen_macros}
+
+\title{\bfseries The WORKHOUSE Program\\[4pt]
+\large Exact \texorpdfstring{$\SU(N)$}{SU(N)} Flux-Band Spectra, the Fixed-Spacing Wilson
+Construction,\\ and a Verified Register of What the Continuum Limit
+Still Requires}
+\author{Alexander Smith\\\small Independent Researcher}
+\date{Master edition, 12 September 2026}
+
+\begin{document}
+\maketitle
+
+\input{00_abstract}
+
+\tableofcontents
+\bigskip
+
+\input{01_introduction}
+\input{02_how_to_use}
+
+\part{Exact spectral structure at strong coupling}\label{part:exact}
+\input{10_setting}
+\input{11_carrier}
+\input{12_second_order}
+\input{13_fourth_order}
+\input{14_rank_grading}
+\input{15_symbolic}
+\input{15_sixth_order}
+\input{16_wick_shell}
+\input{17_external}
+
+\part{The construction at fixed lattice spacing}\label{part:fixed}
+\input{20_wilson}
+
+\part{The continuum limit: what is required, and what is ruled out}\label{part:continuum}
+\input{30_continuum}
+\input{34_breaks}
+\input{35_register}
+\input{36_obligations}
+
+\appendix
+\part*{Appendices}
+\addcontentsline{toc}{part}{Appendices}
+\input{A0_reproducibility}
+\input{A1_verification}
+\input{A2_provenance}
+
+\bibliographystyle{plain}
+\bibliography{refs_generated}
+
+\end{document}

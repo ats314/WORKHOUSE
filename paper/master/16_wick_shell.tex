@@ -1,0 +1,123 @@
+\section{A rank-uniform local shell construction}
+\label{sec:wick}
+
+This section is a separate result in its own regime, included because it
+is exact, rank-uniform, and independent of everything above --- not
+because it continues it. The object is the formal local Wilson
+oscillator expansion around a single plaquette, and the point is that
+its spectrum admits a finite exact recursion at every perturbative
+order with coefficients in $\Q[N, N^{-1}]$, needing no Gram-matrix
+inversion.
+
+Conflating this construction with the flux band of
+\S\ref{sec:carrier}--\S\ref{sec:sixth}, or with the Wilson transfer
+operator of \S\ref{sec:wilson}, would be an error. They are four
+different objects --- the physical $\SU(N)$ transfer band, the $\SU(3)$
+internal Hamiltonian carrier, the conditional block, and this local
+oscillator --- and no cross-regime continuation between them is
+asserted anywhere in this document.
+
+\subsection{The exact algebra}
+
+Let $X$ be a traceless Hermitian $N \times N$ matrix with density
+proportional to $e^{-\Tr(X^2)}$, write $P_k = \Tr(X^k)$ with $P_0 = N$
+and $P_1 = 0$, and use a traceless Hermitian basis normalized by
+$\Tr(T_a T_b) = \delta_{ab}$. The covariance is
+\begin{equation}
+  \mathbb{E}\big[X_{ab} X_{cd}\big]
+  = \tfrac12\left(\delta_{ad}\delta_{bc}
+    - \tfrac{1}{N}\delta_{ab}\delta_{cd}\right).
+\end{equation}
+With $D = \tfrac12\Delta$ and $E$ the polynomial Euler operator, the
+completeness identity for this basis gives the exact relations
+\begin{align}
+  D P_k &= \frac{k}{2}\sum_{l=0}^{k-2} P_l P_{k-2-l}
+           - \frac{k(k-1)}{2N} P_{k-2},
+  \\
+  D(fg) &= (Df)g + f(Dg) + \nabla f \cdot \nabla g,
+  \\
+  \nabla P_k \cdot \nabla P_l
+        &= k\,l\left(P_{k+l-2} - \frac{1}{N} P_{k-1}P_{l-1}\right).
+\end{align}
+These are exact at every integer rank, including ranks at which some
+traces become dependent --- which is the property that makes the
+construction rank-uniform rather than rank-by-rank. For homogeneous $F$
+of positive degree $d$, Gaussian integration by parts gives
+$\mathbb{E}_\mu[F] = \mathbb{E}_\mu[DF]/d$, and with
+$\mathbb{E}_\mu[1] = 1$ and vanishing odd moments this is a finite exact
+moment recursion.
+
+\subsection{Shell projectors without a Gram inverse}
+
+\begin{proposition}[Terminating Wick conjugation]
+\label{prop:wick}
+Put $L = E - D$. Since $[E, D] = -2D$, the terminating exponential
+$W = \exp(-D/2)$ satisfies
+\begin{equation}
+  L\,W = W\,E .
+\end{equation}
+Hence, with $H_d$ the extraction of the homogeneous degree-$d$ part,
+\begin{equation}
+  \Pi_d = \exp(-D/2)\, H_d \,\exp(D/2)
+\end{equation}
+is the exact oscillator-shell projector, and on each finite polynomial
+space $R_s = \sum_{d \neq s} \Pi_d/(s-d)$ is the exact shell resolvent.
+\end{proposition}
+
+The content of Proposition~\ref{prop:wick} is that $L$ and $E$ are
+conjugate by a \emph{terminating} exponential, so the shell
+decomposition of the interacting operator is the shell decomposition of
+the Euler operator, transported. No Gram matrix is formed and none is
+inverted, which is precisely the step that makes rank-uniformity
+delicate elsewhere in this program.
+
+\subsection{The coefficients}
+
+\begin{theorem}[All-rank local coefficients]
+\label{thm:wickcoeffs}
+The terminating conjugation gives exact shell projectors and a unique
+all-order simple-branch formal recursion in $\Q[N, N^{-1}]$, with state
+degree at most $s + 4r$. The two formal local gaps have exact all-rank
+coefficients through $\beta^{-2}$, including $c_3^{-}$ and
+$c_4^{\pm}$. The five corrections $c_0, \ldots, c_4$ are strictly
+negative at every allowed rank, by positive shifted numerator
+polynomials.
+\end{theorem}
+\gid{RESULT:LOCAL\_CLASS\_WICK\_RECURRENCE, RESULT:LOCAL\_CLASS\_WICK\_COEFFICIENTS, RESULT:LOCAL\_CLASS\_WICK\_SIGNS}
+
+The construction applies to the vacuum, the first charge-even shell for
+$N \ge 2$, and the first charge-odd shell for $N \ge 3$. It recovers the
+previously archived $c_0$, $c_1$, $c_2$ formulas in both sectors and the
+archived all-rank $c_3^{+}$, and additionally derives $c_3^{-}$ and both
+all-rank $c_4$ formulas. The certificate carries full polynomial
+eigen-equation residuals rather than only agreement with the archived
+constants --- a distinction worth stating, because agreement with a
+previous value is a weaker check than satisfying the equation.
+
+The recovery is by an independent route: the archive engine uses
+full-GUE cut-and-join and then subtracts the trace, while this one
+applies $D$ directly in traceless coordinates.
+
+\subsection{A companion algebraic identity}
+
+\begin{theorem}[Shifted-power carrier symbols]
+\label{thm:rsmr}
+For the cubic Laurent operators with $S = L_{\downarrow} - 4I$,
+\begin{equation}
+  \sigma(R S^m R) = (q-4)^m\big(q e_2 + 3 e_3\big) - 4\,\Pi_m(q)\, e_2^2
+\end{equation}
+for every natural $m$, with $\Pi$ defined polynomially also at $q = 0$.
+\end{theorem}
+\gid{RESULT:RSM\_R\_CARRIER\_SYMBOL\_MASTER\_THEOREM}
+
+\noindent This closes the word table of \S\ref{sec:sixth} at all powers,
+and is formalized in Lean as an all-power operator statement.
+
+\begin{scopenote}
+Theorem~\ref{thm:wickcoeffs} concerns the \emph{formal} local class
+oscillator only. No error bound for the compact-group eigenvalues is
+claimed, and local spectral coefficients do not by themselves identify
+the interacting Wilson spectrum, an interacting-volume estimate, or a
+continuum source measure. Theorem~\ref{thm:rsmr} is an algebra identity
+and carries no sixth-order dynamical population claim.
+\end{scopenote}

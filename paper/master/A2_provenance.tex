@@ -1,0 +1,55 @@
+\section{Provenance}
+\label{app:provenance}
+
+The verification repository is one layer over a larger research archive.
+Both are needed to read a result's history, and they answer different
+questions: the repository says what is currently checked, the archive
+says what was actually done and when.
+
+\subsection{The two layers}
+
+The repository (\srcpath{https://github.com/ats314/WORKHOUSE}) holds the
+ledgers, the invariant suites, the Lean tree, the generated views
+(\srcpath{FRONTIER.md}, \srcpath{CERTIFIED.md}, \srcpath{index/}) and the
+manuscripts. Its generated views are maintained by the verifier commands
+and are never hand-edited: a test fails if either has drifted, because a
+generated file that has drifted still reads as current.
+
+The archive holds the primary sources: manuscripts, proof collections,
+appendices, simulation campaigns, a separate Lean library, reference
+papers and the raw computational runs. Its organizing rule is that
+nothing is erased --- failed attempts, duplicates, superseded drafts and
+uncommitted work are all preserved, because deleting a refuted claim
+destroys the evidence that it was tried.
+
+\subsection{Reading a source document}
+
+Documents under \srcpath{theory/}, \srcpath{corpus-import/} and
+\srcpath{settlement/} state what someone believed at the time. They are
+immutable evidence and are never edited to make a check pass; when a
+check disagrees with a document, the disagreement is registered as a
+finding. \srcpath{theory/SHA256SUMS} pins the contents.
+\srcpath{theory/superseded/} holds documents kept for the audit trail,
+and none of them should be read as current.
+
+This matters more than it usually would, because parts of the corpus
+were written with AI assistance and some of it is wrong. The repository
+has already caught a reversed tensor-product identity, a one-ulp
+transcription error, a tolerance quoted tighter than its own data, and a
+mechanism proposed here and then retracted. Confidence of phrasing
+carries no evidential weight in either direction.
+
+\subsection{Synthesis documents are not evidence}
+
+A specific hazard, recorded because it has cost this program time. Several
+large synthesis documents in the archive were produced by automated
+agents summarizing primary sources. Audit found the primary sources
+honest about their own scope and the synthesis layer systematically
+stripping their caveats --- upgrading conditional statements to proven,
+attaching Lean support that does not cover the statement it is attached
+to, and citing a formalization library whose theorems are tautologies.
+
+The rule this produced: cite the primary source, never the synthesis of
+it, and verify that a claimed anchor resolves rather than only that its
+hash matches. A correct SHA-256 over a fabricated locator is a failure
+mode that has actually occurred here.

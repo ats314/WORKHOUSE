@@ -1,0 +1,25 @@
+\section{Verification index}
+\label{app:verification}
+
+Table~\ref{tab:results} lists every registered analytic result with its
+recorded status and evidence level. The two columns are independent
+fields and are meant to be read against each other: \texttt{proven} with
+\texttt{record-backed} evidence means the argument exists and the machine
+artefact does not.
+
+Of \ResTotal{} registered results, \ResProven{} are recorded
+\texttt{proven}, \ResConditional{} \texttt{conditional},
+\ResDisputed{} \texttt{disputed} and \ResFalsified{} \texttt{falsified}.
+The Lean tree carries \LeanTotal{} registered theorems with
+\LeanSorry{} occurrences of \texttt{sorry}.
+
+A caution on both counts. \ResProven{} out of \ResTotal{} is a high
+proportion because a claim is not registered here until its argument is
+written down; the register measures what has been recorded, not what
+fraction of the problem is solved. Likewise \LeanTotal{} theorems is a
+count of declarations, not of mathematical content --- see
+\S\ref{app:repro}, which explains why a theorem count is not a coverage
+measure and cites a case in this program's own archive where seventy-one
+\texttt{sorry}-free modules turned out to prove tautologies.
+
+\input{gen_verification}

@@ -1,0 +1,170 @@
+\section{Fourth order, and how a disputed coefficient was decided}
+\label{sec:fourth}
+
+Fourth order is where the carrier first couples to its complement, and
+it is where this program spent the largest single block of its effort.
+The mathematics is one theorem and one number. The number was disputed
+for months between two irreconcilable values, and the way it was settled
+is, in this author's view, the more instructive half of the story.
+
+\subsection{The structure}
+
+The fourth-order effective operator splits into Hodge terms and one
+geometric term coupling the carrier to its complement. Restricted to
+range-one operator structures, the shape content collapses: each such
+structure contributes a fixed shape coefficient, and every one of them
+gives $B = D = 0$ identically. The tier collapse is simply what
+range-one looks like.
+
+\begin{theorem}[Fourth-order support, at $\SU(3)$]
+\label{thm:tiercollapse}
+The recorded fourth-order kernel has support
+$\{I, U, S, S^2, R\}$, and the shape data closes in that span. Solved
+over the whole Brillouin zone in exact rationals rather than fitted, the
+shape table is determined by three signed amplitudes:
+\begin{equation}
+  C_{\mathrm{shp}} \;=\; -\tfrac{5}{96} - u - \tfrac12(\rho + \pi),
+  \qquad
+  u_2 = 2u, \qquad \nu = -\big(\tfrac{5}{48} + 4u\big),
+  \label{eq:kernelform}
+\end{equation}
+where $u$ is the two-hop chain cumulant.
+\end{theorem}
+\gid{RESULT:TIER\_COLLAPSE\_ACTUAL\_H4\_SUPPORT, RESULT:TIER\_COLLAPSE\_IS\_R\_DEGREE}
+
+\begin{scopenote}
+``The recorded kernel'' means the $189$-record historical kernel, which
+is $N = 3$. The operator splitting is an $\SU(3)$ statement; it is not
+established at general rank, and framing it as an $\SU(N)$ identity
+would be an overreach. The rank-uniform statements of this program are
+the coefficient laws of \S\ref{sec:second} and \S\ref{sec:grading}, not
+this splitting.
+\end{scopenote}
+
+Clearing the $1/q$ makes the shape ansatz a linear system over Laurent
+polynomials in $e^{ik_j}$, which is why the whole zone can be solved
+exactly instead of sampled.
+
+There is a second, equivalent presentation. In the Hodge form the
+two-hop weight is absorbed, $\tilde\pi = \pi + 2u$, and
+\begin{equation}
+  C_{\mathrm{shp}} \;=\; -\tfrac{5}{96} - \tfrac12\big(\rho + \tilde\pi\big),
+  \label{eq:hodgeform}
+\end{equation}
+so that $u$ drops out of $C$ entirely and exactly two shared-link
+amplitudes remain. Equations \eqref{eq:kernelform} and
+\eqref{eq:hodgeform} are the same statement. They must not be
+combined --- writing $u$ and $\tilde\pi$ in the same expression
+double-counts the two-hop weight, and that error has been made.
+
+\subsection{The dispute}
+
+Two independently recorded kernels --- a historical pipeline from June
+2026 and a later cold dump --- gave different values for the off-axis
+shape coefficient $C_{\mathrm{shp}}$. Both were exact rationals. Neither
+could be promoted, because the repository's governing rule is that a
+dispute closes by derivation or not at all: code may not pick a side,
+average them, or prefer whichever rational looks more authoritative.
+
+Comparing the two kernels record by record localized the disagreement
+rather than resolving it. Both have the same six weight orbits and the
+same normalized shape table; both satisfy the same two relations above.
+What differs is the skeleton scale and the \emph{signs} of two
+amplitudes. One scale factor explains $144$ of the $189$ records to
+$2\times10^{-12}$: the rotation bulk is structurally shared, and the
+dispute is three amplitudes, not two kernels.
+
+\subsection{How it was settled}
+
+By building a third implementation that shares no primitive with either,
+and by recovering the historical pipeline's own intermediate ledger.
+
+The third implementation is a Wilson-loop calculus written from scratch:
+the free Hamiltonian by the Fierz identity as a rewiring of index ports
+--- a like pair swaps wires, an unlike pair is cut and crossed, which is
+unitarity; Haar integrals by the $U(N)$ Weingarten function as the Gram
+pseudoinverse on $S_n$, with $\det U = 1$ inserted on virtual slots for
+the determinant families; and the resolvent by per-link irreducible
+projectors, so that every component is an exact eigenvector of $H_0$
+with a known energy. It reproduces the four second-order constants, the
+two-hop weight with the correct sign on three chain types, and the
+single-contact and shared-link dressings, in seconds --- and then gives
+the corner cumulant to the digit.
+
+Separately, a survey of the corpus located the historical pipeline's own
+Stage-3I ledger: $4{,}221$ ordered words whose hash matches the input
+the kernel copies quote. Its rooted assembly, ported verbatim, reproduces
+the pinned $189$ records exactly. Grouping each word's rooted images by
+the set of plaquettes it touches then yields the historical kernel's own
+connected cumulants --- a reading the original pipeline never performed
+on its own data.
+
+\begin{theorem}[Adjudication of the off-axis coefficient]
+\label{thm:cshp}
+The historical kernel and the independent assembly agree on \emph{every}
+cluster of the rotation record --- pair, fourteen chains, two fans, two
+corners --- with identical rationals in both $C$-parity sectors, except
+one. The exception is the adjacent-face cube completion. The historical
+ledger holds $8$ of the $24$ insertion orderings, each with exactly the
+weight the multi-loop model assigns it, namely
+$(2,1,4,2,8,8,2,4)$ in units of $1/1536$, totalling $31/1536$; the
+sixteen it lacks sum to $-25/512$. The opposite-face completion in the
+same ledger has all $24$.
+
+Consequently, in the kernel's basis,
+\begin{equation}
+  C_{\mathrm{shp}}
+  \;=\; C_{\mathrm{historical}} + \frac{25}{1024}
+  \;=\; -\,\frac{13035490122347}{550663802582400}
+  \;=\; -0.0236723\ldots
+  \label{eq:cshp}
+\end{equation}
+Substituted into the $24$ records and solved over the whole zone, this
+gives $A = 5/48$ and $B = D = 0$ with no residual.
+\end{theorem}
+\gidc{C2, ADR:0024}{workhouse why C2}
+
+\noindent\Tone{}, suite ``the third implementation and the historical
+ledger'': nine exact checks, three of them registered findings.
+
+The shortfall has a closed form at every rank. The adjacent-face
+completion is
+\begin{equation}
+  c_4^{\,\mathrm{adj}}(N) = \frac{-106}{N(N^2-1)^3},
+  \qquad
+  c_4^{\,\mathrm{adj}}(3) = -\frac{53}{768},
+\end{equation}
+in ratio $53/80$ to the opposite-face completion $-160/(N(N^2-1)^3)$;
+the $-106$ is the primitive $-88$ plus ten multi-loop orderings at
+$-18$.
+
+\subsection{Three things this episode establishes}
+
+\emph{The disagreement was an enumeration shortfall, not a
+disagreement about mathematics.} A pipeline dropped sixteen of
+twenty-four orderings on one cluster and nowhere else. That is a
+diagnosable defect, and it was diagnosed ordering by ordering rather
+than adjudicated by preference.
+
+\emph{A basis error can survive validation.} An earlier assembly of the
+same amplitude was correct and was read in the conjugate basis, giving
+a third value. Every $C$-odd component of the historical ledger is the
+negative of the assembly's value in one traversal while every $C$-even
+one is identical --- the signature of conjugating a single face. The
+assembly was right; its basis was not. The decision record amends it
+rather than withdrawing it.
+
+\emph{The right answer arrived by a forbidden route first.} The value
+\eqref{eq:cshp} is the one an all-rank continuation formula produces at
+$N=3$ --- and that derivation was retracted, because the substitution it
+used is not permitted. The retraction stands. That the forbidden route
+happened to reach the number the legitimate assembly later confirmed is
+not a vindication of the route, and the register keeps both facts.
+
+\begin{scopenote}
+Both recorded kernels remain in the registry with their verdicts: the
+historical superseded, the cold dump falsified, beside the proven
+assembled value. Nothing was deleted. One follow-up remains untried ---
+the pair cluster from the third engine, pure-six family included ---
+which can sharpen this result but not overturn it.
+\end{scopenote}

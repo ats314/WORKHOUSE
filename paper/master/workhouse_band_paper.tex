@@ -1,0 +1,51 @@
+% ===================================================================
+% Part I, extracted as a standalone paper.
+%
+%     tectonic paper/master/workhouse_band_paper.tex
+%
+% This driver compiles exactly the Part I source files of the master
+% edition with no other changes, so the two editions cannot drift.  The
+% \onlypartone switch suppresses forward references into Parts II and
+% III, which are the only text that differs between the two builds.
+% ===================================================================
+\documentclass[11pt,letterpaper]{article}
+\newcommand{\onlypartone}{1}
+\input{preamble}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small Exact SU(N) flux-band spectra}
+\fancyhead[R]{\small 12 September 2026}
+\fancyfoot[C]{\thepage}
+
+\input{gen_macros}
+
+\title{\bfseries Exact Flux-Band Spectra of Hamiltonian \texorpdfstring{$\SU(N)$}{SU(N)}
+Lattice Gauge Theory\\[4pt]
+\large The homological carrier, its all-rank coefficients,
+and the grading of the strong-coupling series}
+\author{Alexander Smith\\\small Independent Researcher}
+\date{12 September 2026}
+
+\begin{document}
+\maketitle
+\input{00_abstract_band}
+\tableofcontents
+\bigskip
+
+\input{10_setting}
+\input{11_carrier}
+\input{12_second_order}
+\input{13_fourth_order}
+\input{14_rank_grading}
+\input{15_symbolic}
+\input{15_sixth_order}
+\input{16_wick_shell}
+\input{17_external}
+
+\appendix
+\input{A0_reproducibility}
+\input{A1_verification}
+
+\bibliographystyle{plain}
+\bibliography{refs_generated}
+\end{document}

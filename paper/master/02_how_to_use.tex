@@ -1,0 +1,136 @@
+\section{How to use this document}
+\label{sec:howto}
+
+This document has two audiences and it is worth saying which paragraph is
+for whom.
+
+A reader who wants the mathematics should read Part~\ref{part:exact},
+which is self-contained and compiles on its own as a separate paper
+(\srcpath{paper/master/workhouse_band_paper.tex}). Nothing in
+Part~\ref{part:exact} depends on anything later, and nothing in it is
+conditional on an open estimate.
+
+A reader who intends to \emph{work} on the continuum problem should read
+\S\ref{sec:breaks}, \S\ref{sec:register} and \S\ref{sec:obligations}
+first, in that order, and only then come back for the mathematics. The
+reason is economic. This program has spent four years discovering that
+most of the obvious routes to the continuum limit are closed, and the
+record of \emph{which} routes are closed and \emph{why} is worth more
+than the record of what is open. Four sessions of one earlier effort were
+spent on a single route that a static argument had already shown could
+not decide the question it was aimed at; that experience is why the
+route register in \S\ref{sec:obligations} exists and why dead routes are
+reproduced in it at full length rather than deleted.
+
+\subsection{What the badges mean}
+
+Every statement in this document carries a machine-verification badge.
+
+\begin{itemize}
+  \item \Tzero{} --- Lean~4 compiles the statement from explicit
+    definitions with no \texttt{sorry}, using only \texttt{propext},
+    \texttt{Classical.choice} and \texttt{Quot.sound}. Nothing written
+    in prose can weaken a T0 badge.
+  \item \Tone{} --- the statement is re-derived symbolically, in exact
+    arithmetic, from stated definitions.
+  \item \Ttwo{} --- floating-point agreement within a tolerance that the
+    check itself prints.
+  \item \Tthree{} --- no single repository check covers the whole
+    statement.
+\end{itemize}
+
+The badge is \emph{independent} of mathematical status. A theorem with a
+complete analytic proof and no formalization carries \Tthree{}: the badge
+says what the machine checks, not what the mathematics establishes. This
+is the one convention a reader must internalize to read the document
+correctly, because the opposite reading --- T3 as a synonym for
+``unproved'' --- makes most of Part~\ref{part:continuum} look weaker than
+it is, and the reading of T0 as a synonym for ``important'' makes it look
+stronger. Both errors have been made in this program's own internal
+documents and corrected.
+
+Where a statement's scope is narrower than its headline suggests, a
+\textbf{Does not assert} paragraph follows it. Those paragraphs are not
+hedging. They are the part of each result that took longest to get right,
+and several of them exist because an earlier version of the claim was
+broader and was refuted.
+
+\subsection{If you are the next agent on this program}
+
+The following is an operating procedure, not advice. It is written for
+the case --- now the normal case --- in which the next piece of work on
+this program is done by an automated agent with a fresh context window.
+
+\begin{enumerate}
+  \item \textbf{Do not trust this document over the ledgers.} Every
+    number quoted in the prose here is generated from
+    \srcpath{ledger/*.yaml} by \srcpath{paper/master/generate\_apparatus.py}.
+    If the ledger and this document disagree, the ledger is right and
+    this document is stale; regenerate it. The counts in
+    \S\ref{sec:obligations}, \S\ref{sec:external} and
+    Appendix~\ref{app:verification} are macros, not typed literals,
+    precisely so that this failure mode is visible rather than silent.
+
+  \item \textbf{Establish the state before choosing a target.} Run
+    \texttt{workhouse brief -{}-startup}, then \texttt{workhouse brief <gap> -{}-json}
+    for the gap you mean to work on, and retain the snapshot. A saved
+    graph in a fresh clone reports freshness \texttt{unknown} until local
+    generation provenance exists; saved briefing mode never silently
+    rebuilds it.
+
+  \item \textbf{Read the dead routes for your gap before starting.}
+    \texttt{workhouse why <gap>} prints them. \S\ref{sec:obligations}
+    reproduces them here. Of \RouteTotal{} recorded routes across all
+    gaps, \RouteDead{} are dead, and several died only after substantial
+    expenditure with a measured cost recorded in the ledger. A route
+    marked \texttt{cannot\_decide} is not merely unpromising: it is
+    structurally incapable of resolving the claim it was aimed at, and
+    re-running it will produce output that answers a different question.
+
+  \item \textbf{Do not aim at the continuum limit directly.}
+    \S\ref{sec:breaks} states six independent obstructions, five of them
+    with explicit finite counterexamples. Each is a constraint on what a
+    correct argument can look like, and an argument that does not
+    explicitly clear all six is not a candidate. In particular, Break~5
+    (\S\ref{sec:break5}) shows that the regime in which this program's
+    strongest construction holds and the regime in which the continuum
+    limit lives are disjoint sets of couplings. That is a statement about
+    the shape of any possible proof, not a gap in the present one.
+
+  \item \textbf{Pick a numbered Problem from \S\ref{sec:obligations}}, not
+    a topic. Each Problem states its available hypotheses, what it
+    unblocks downstream, and the specific next computation. Problems are
+    ordered by the ledger's research judgement, which is not a claim that
+    earlier ones are prerequisites for later ones.
+
+  \item \textbf{Record the attempt, including its failure.} A route that
+    dies is a result. Set its state in \srcpath{ledger/gaps.yaml}, name
+    what closed it in \texttt{closed\_by}, and if the instrument could
+    not have reached the claim, say so in \texttt{cannot\_decide}. The
+    working agreement in \srcpath{CLAUDE.md} is the binding version of
+    this instruction; this paragraph only explains why it is there.
+\end{enumerate}
+
+\subsection{What would falsify the contents of this document}
+
+Three things, in decreasing order of how much they would cost.
+
+First, an error in the Haar or Weingarten input to \S\ref{sec:second}
+would propagate to every order and to both the fourth-order band and its
+rank grading. That input is now representation theory rather than
+assumption (\S\ref{sec:second}), and it is the load-bearing algebraic
+fact of Part~\ref{part:exact}.
+
+Second, a demonstration that the plaquette source family of
+\S\ref{sec:wilson} is not total in the physical complement would empty
+the fixed-spacing band theorem of physical content without making it
+false --- this is exactly the failure mode that Break~4
+(\S\ref{sec:break4}) exhibits in a three-dimensional model, and totality
+is therefore asserted in that theorem as a proved conclusion rather than
+assumed.
+
+Third, and least costly, a published result reproducing any of the exact
+coefficients of \S\ref{sec:grading} or \S\ref{sec:fourth} would remove
+this program's claim to have derived them first without touching their
+correctness. \S\ref{sec:external} records the searches already performed
+against \LitPapers{} indexed papers.

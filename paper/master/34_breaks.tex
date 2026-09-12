@@ -1,0 +1,306 @@
+\section{Six obstructions, with counterexamples}
+\label{sec:breaks}
+
+This section states the obstructions that any argument from the
+fixed-spacing construction of \S\ref{sec:wilson} to a continuum mass gap
+must clear. They were produced by a deliberate adversarial audit of this
+program's own drafts, and four of them killed arguments that had been
+written down here as complete.
+
+They are stated as mathematics, not as caveats. Five carry explicit
+finite counterexamples, and a finite counterexample to a proof strategy
+is a permanent fact about that strategy. A reader who wants to know
+where the remaining difficulty of the problem actually sits should read
+this section and \S\ref{sec:obligations} and can safely skip everything
+else in Part~\ref{part:continuum}.
+
+\subsection{Break 1: an \texorpdfstring{$O(g_k^2)$}{O(g\_k\textasciicircum 2)} increment bound does not give convergence}
+\label{sec:break1}
+
+A renormalization-group argument for the continuum limit produces a
+sequence of effective actions $S_k^{\mathrm{eff}}$ and observable
+expectations $m_k(\mathcal{O})$ indexed by scale, and controls the
+one-step increment by the running coupling:
+\begin{equation}
+  \abs{m_{k+1}(\mathcal{O}) - m_k(\mathcal{O})}
+  \;\le\; C_{\mathcal{O}}\, g_k^2
+  \;\le\; \frac{C_{\mathcal{O}}'}{k + k_0},
+  \label{eq:break1-bound}
+\end{equation}
+the second inequality being asymptotic freedom, $g_k^2 = \kappa/(k+k_0)$.
+The step that must not be taken is to conclude from
+\eqref{eq:break1-bound} that $(m_k)$ is Cauchy. Telescoping gives only
+\begin{equation}
+  \abs{m_n(\mathcal{O}) - m_m(\mathcal{O})}
+  \;\le\; C_{\mathcal{O}}' \sum_{k=m}^{n-1} \frac{1}{k+k_0}
+  \;\asymp\; C_{\mathcal{O}}' \log\!\left(\frac{n}{m}\right),
+\end{equation}
+which does not tend to zero as $m, n \to \infty$.
+
+\begin{proposition}[Counterexample]
+\label{prop:break1}
+Let $x_k = \sin\!\big(\log(k+1)\big)$. Then $x_k \in [-1,1]$ and, by the
+mean value theorem, $\abs{x_{k+1} - x_k} \le 1/(k+1) \to 0$, yet the set
+of subsequential limits of $(x_k)$ is the whole interval $[-1,1]$.
+\end{proposition}
+
+So the increment bound \eqref{eq:break1-bound} is consistent with the
+observable expectations oscillating forever across a fixed interval. What
+is needed is one more power: $\abs{m_{k+1} - m_k} = O(g_k^4) = O(k^{-2})$.
+
+The obstruction to obtaining it is not technical. On the asymptotically
+free trajectory $u_k = (\alpha + \beta k)^{-1}$,
+\begin{equation}
+  \Delta u_k = -\frac{\beta}{(\alpha+\beta k)\big(\alpha + \beta(k+1)\big)},
+  \qquad
+  \frac{\abs{\Delta u_k}}{4 u_k u_{k+1}} = \frac{\beta}{4} = O(1),
+\end{equation}
+and differentiating an expectation along the trajectory,
+\begin{equation}
+  \frac{d}{ds}\,\mu_s(\mathcal{O}_s)
+  = \mu_s(\partial_s \mathcal{O}_s)
+  - \operatorname{Cov}_{\mu_s}\!\big(\mathcal{O}_s, \partial_s S_s\big),
+  \label{eq:break1-cov}
+\end{equation}
+the normalization carries no small factor. The natural size of the
+variation is therefore $O(g_k^2)$, and a bounded-covariance estimate
+cannot improve it. Converting $1/k$ into $1/k^2$ requires an exact
+cancellation of the leading partition-function covariance in
+\eqref{eq:break1-cov}. No such cancellation is proved here.
+
+\begin{scopenote}
+This obstruction applies to the multiscale route recorded as\\
+\texttt{\small DERIV:YANGMILLS\_CONTINUUM\_\allowbreak{}BALABAN\_\allowbreak{}MULTISCALE\_\allowbreak{}PROOF:\allowbreak{}THEOREM\_7\_1},\\
+whose Cauchy input is exactly what \eqref{eq:break1-bound} fails to
+supply. It does not bear on any statement in
+Part~\ref{part:exact} or \ref{part:fixed}, which are at fixed scale.
+\end{scopenote}
+
+\subsection{Break 2: the polymer activity and the mass schedule are algebraically incompatible}
+\label{sec:break2}
+
+A multiscale polymer cluster expansion carries an activity parameter
+$\kappa_k$ that must contract for the expansion to converge, say
+\begin{equation}
+  \kappa_{k+1} = \tfrac{3}{4}\,\kappa_k,
+  \qquad \kappa_k = \kappa_0 \left(\tfrac{3}{4}\right)^{k} \longrightarrow 0,
+\end{equation}
+while a physical mass is extracted at each scale by
+\begin{equation}
+  \frac{\kappa_k - \log C_4}{a_k} = c_0 \Lambda > 0
+  \quad\text{for all } k \ge 0,
+  \qquad a_k = a_0 L^{-k},\ L = 3,
+  \label{eq:break2-mass}
+\end{equation}
+with $C_4 > 1$ the polymer coordination constant.
+
+\begin{proposition}
+\label{prop:break2}
+The two displays above are incompatible. Since $\kappa_k \to 0$ and
+$\log C_4 > 0$, there is a finite
+\[
+  k_* = \left\lceil \frac{\log\!\big(\kappa_0/\log C_4\big)}{\log(4/3)} \right\rceil
+\]
+with $\kappa_k - \log C_4 < 0$ for every $k > k_*$; beyond that scale the
+cluster sum $\sum_n e^{-(\kappa_k - \log C_4)n}$ diverges and the
+expansion does not exist. Setting $C_4 = 1$, which discards polymer
+entropy, does not repair it: then
+$\kappa_k / a_k = (\kappa_0/a_0)(3L/4)^k = (\kappa_0/a_0)(9/4)^k \to \infty$,
+so \eqref{eq:break2-mass} cannot equal a finite constant either.
+\end{proposition}
+
+The content of Proposition~\ref{prop:break2} is that a contracting
+activity and a scale-independent physical mass cannot both be read off
+the same schedule. Any repair must decouple them --- the mass must come
+from a quantity that is not the activity divided by the spacing.
+
+\subsection{Break 3: the moving-time gap can be exactly zero}
+\label{sec:break3}
+
+The moving-time theorem of \S\ref{sec:continuum} extracts a limiting
+gap from approximate sources and one growing observation time per
+cutoff. Under the error bound
+$K_n(t) \le A a_n^{-p} e^{-mt} + B a_n^{r}$ and probe tilt
+$\abs{\alpha_n} \ge c_\alpha a_n^{s}$, it gives
+\begin{equation}
+  M_* = \frac{m\,(r - 2s)}{p + r}
+  \qquad\text{at}\qquad
+  t_n = \frac{p+r}{m}\,\log\frac{1}{a_n}.
+  \label{eq:break3}
+\end{equation}
+Two ways this returns nothing.
+
+\emph{Zero margin.} If $r \le 2s$ then $M_* \le 0$: the theorem is
+sharp and it yields exactly zero. Here $r$ is the convergence rate of the
+coarse-graining background and $s$ the rate at which probes must shrink
+to stay in the quadratic basin of the Wilson action. No calculation in
+this program, or to this author's knowledge anywhere, certifies
+$r > 2s$ for four-dimensional Yang--Mills. The inequality $r > 2s$ is
+therefore a hypothesis with no current route, not a technical condition.
+
+\emph{Finite horizon.} If the observation time is capped by the box,
+$t_n \le c_{\max}\log(1/a_n)$, the optimum becomes
+\begin{equation}
+  M_{\mathrm{opt}} = \min\!\left(m - \frac{p+2s}{c_{\mathrm{opt}}},\
+  \frac{r-2s}{c_{\mathrm{opt}}}\right),
+  \qquad
+  c_{\mathrm{opt}} = \min\!\left(c_{\max},\ \frac{p+r}{m}\right),
+\end{equation}
+and $c_{\max} \le (p+2s)/m$ forces $M_{\mathrm{opt}} \le 0$. Both
+collapses are registered checks rather than remarks.
+
+\subsection{Break 4: a local probe can be blind to the lightest state}
+\label{sec:break4}
+
+Suppose one measures a plaquette correlator and observes
+\begin{equation}
+  \ip{\mathcal{O}_{\mathrm{plaq}}}{e^{-tH}\mathcal{O}_{\mathrm{plaq}}}
+  \le C e^{-M_{\mathrm{obs}} t},
+  \qquad M_{\mathrm{obs}} = \log 4 \approx 1.386 .
+\end{equation}
+This does not bound the spectrum.
+
+\begin{proposition}[Dark sector]
+\label{prop:break4}
+On $\C^3$ let
+\[
+  T = \operatorname{diag}\!\left(1,\ \tfrac{15}{16},\ \tfrac14\right),
+  \qquad \Omega = e_1,\qquad v_{\mathrm{obs}} = e_3 .
+\]
+Then $\ip{v_{\mathrm{obs}}}{T^t v_{\mathrm{obs}}} = 4^{-t} = e^{-t\log 4}$,
+while the true first excited energy is
+$-\log(15/16) \approx 0.0645$, smaller by a factor above $21$. The probe
+has zero overlap with the state realizing the gap.
+\end{proposition}
+
+Consequently a decay rate for local plaquettes is a statement about the
+gap only after the plaquette family is proved \emph{total} in
+$\Omega^{\perp}$. This is why totality is a conclusion, not a hypothesis,
+in the fixed-spacing band theorem (\S\ref{sec:wilson}); and it is why a
+continuum argument may not inherit totality from the fixed-spacing
+statement without proving it again in the limit.
+
+A second, subtler version of the same failure concerns positivity rather
+than overlap.
+
+\begin{proposition}[Osterwalder--Schrader null states]
+\label{prop:break4b}
+Let $(x,y) \in \{-1,1\}^2$ be uniform and let time reflection act by
+$\Theta(x,y) = (y,x)$. The centered observable $F(x,y) = y$ has Euclidean
+variance $\mathbb{E}[F^2] = 1 > 0$ but physical norm
+$\norm{F}_{\mathrm{OS}}^2 = \ip{\Theta F}{F} = \mathbb{E}[xy] = 0$.
+\end{proposition}
+
+So positive Euclidean variance does not certify that a probe exists in
+the physical Hilbert space at all. An algorithm that selects probes by
+Euclidean variance can select states that vanish after reconstruction.
+
+A third version concerns the generator rather than the states: with
+$H_n = \operatorname{diag}(0,n)$ one has
+$e^{-tH_n} \to \operatorname{diag}(1,0)$ for every $t>0$, so the limiting
+semigroup is not strongly continuous at $t=0$ and no self-adjoint
+generator exists on the second coordinate. Convergence of Gram matrices
+alone therefore does not produce a limiting Hamiltonian.
+
+\subsection{Break 5: the proved regime and the continuum regime are disjoint}
+\label{sec:break5}
+
+This is the structural obstruction, and the one that most changes what a
+correct argument must look like.
+
+The fixed-spacing band theorem (\S\ref{sec:wilson}) holds on
+\begin{equation}
+  \abs{u} \;\le\; \frac{u_*}{10\,022\,400\,000\,N},
+  \label{eq:break5-u}
+\end{equation}
+and the spatial-closure estimates hold for
+$0 \le \lambda \le \lambda_c$ with
+$\lambda_c \in \left(\tfrac{1}{73}, \tfrac{1}{72}\right)$. Both are
+neighbourhoods of zero in the strong-coupling variable.
+
+The continuum limit lives elsewhere. With
+$g^{-2}(a) = \beta_0 \log(1/a\Lambda)$ and $u = 2/\big(g^2(a)N\big)$,
+\begin{equation}
+  u(a) \longrightarrow \infty,
+  \qquad
+  \lambda(a) \sim g^{-4}(a) \longrightarrow \infty
+  \qquad (a \to 0).
+\end{equation}
+So the interval on which the theorem is proved and the trajectory along
+which the continuum is taken have empty intersection:
+\begin{equation}
+  \left[0, \lambda_c\right] \,\cap\, \left[\lambda(a), \infty\right) = \emptyset
+  \quad\text{for all sufficiently small } a .
+\end{equation}
+
+\begin{scopenote}
+The fixed-spacing results establish a strictly positive gap at fixed
+lattice spacing in a neighbourhood of strong coupling. They supply no
+control on the weak-coupling trajectory. An inference from
+\eqref{eq:break5-u} to a continuum mass gap is a regime error, and this
+program has made and retracted a version of it.
+\end{scopenote}
+
+What Break~5 demands of a future argument is a \emph{controlled
+trajectory}: an estimate that survives continuation in the coupling, not
+a better constant at $u \approx 0$. Improving the constant
+$10\,022\,400\,000$ in \eqref{eq:break5-u} by any finite factor does not
+move the boundary of the difficulty. This is why Problem~\ref{prob:trajectory}
+in \S\ref{sec:obligations}, and not a sharper fixed-spacing estimate, is
+the load-bearing open problem.
+
+\subsection{Break 6: diffusion time is not Euclidean time}
+\label{sec:break6}
+
+A recurring route derives a spectral gap from curvature: positive
+Bakry--\'Emery--Ricci curvature on the configuration manifold gives a
+logarithmic Sobolev inequality, which gives a spectral gap
+$\lambda_{\mathrm{diff}} > 0$ for the Langevin generator. The step that
+fails is the identification of $\lambda_{\mathrm{diff}}$ with a physical
+mass.
+
+Langevin time is a fictitious parabolic parameter; Euclidean time is a
+spacetime coordinate of the reconstructed theory. In free models the two
+are related by $\Delta_{\mathrm{phys}} = \sqrt{\lambda_{\mathrm{diff}}}$,
+but that relation is a consequence of Gaussian structure and not a
+general isometry. For non-abelian gauge theory no such correspondence is
+available here.
+
+The companion obstruction concerns the coarse-graining itself. A scale
+map built from a gauge-covariant Markov kernel that preserves both
+reflection positivity and locality is not available: any such kernel
+either forces the holonomies to commute --- reducing the theory to an
+abelian one --- or destroys reflection positivity, so that the
+reconstructed inner product is indefinite. This is why the scale route
+actually used in \S\ref{sec:continuum} is a \emph{deterministic}
+pushforward rather than a Markov kernel, and why the two-spin
+counterexample $\mathbb{E}[s_- s_+] = -1$ is recorded as a proposition
+rather than as an anecdote.
+
+\begin{scopenote}
+Break~6 does not refute the curvature computations themselves. The Haar
+Ricci constant and the Wilson Hessian bound are correct statements about
+the configuration manifold. What is refuted is their use as a route to
+$\Delta_{\mathrm{phys}}$, and the curvature results are consequently
+recorded in this program as inputs to coercivity estimates rather than
+as a mass-gap mechanism.
+\end{scopenote}
+
+\subsection{What survives}
+
+\begin{enumerate}
+  \item The exact strong-coupling spectral theory of
+    Part~\ref{part:exact}, in its entirety. None of the six obstructions
+    touches a fixed-order statement.
+  \item The fixed-spacing infinite-volume Wilson band and its literal
+    source frame (\S\ref{sec:wilson}), on the interval
+    \eqref{eq:break5-u}, with the scope stated there.
+  \item The moving-time spectral exclusion as an abstract interface: the
+    implication from its hypotheses to a limiting gap is proved and
+    sharp. Break~3 is a statement about whether its hypotheses hold for
+    Yang--Mills, not about the implication.
+\end{enumerate}
+
+What does not survive is any inference from the above to a continuum
+Yang--Mills mass gap. The program states that plainly, and
+\S\ref{sec:obligations} is the list of what would have to change.
