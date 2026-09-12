@@ -284,6 +284,27 @@ over ℚ(N). The τ-series of ADR 0046 therefore has no odd terms in the planar
 limit at any fixed order. The even orders' N⁻⁽⁴ᵏ⁻¹⁾ law and the overlap theorem
 of G16 are untouched.
 
+The same engine now derives the **linked two-face vacuum weight** that U4's
+fourth-order falsifier needs, which this repository carried at T3 because the
+v10a.7 Hodge engine gates it as a float with rational recognition. At SU(3) the
+two-face vacuum sector minus twice the one face is `0, 0, 0, 0, −327/83776`:
+the linked O(u²) and O(u³) weights vanish exactly, `ω₄ = −327/83776` is the
+corpus's own number, and the coplanar and perpendicular pairs agree at every
+order through four. The one-face series `−3/4`, `−39/1280` is the control, being
+the engine-free SU(3) fusion rotor's own vacuum. Over ℚ(N) the retained pair
+record (valid for N ≥ 9) against the character engine gives
+`ω₄(N) = −8N³(14N²−17) / (3(N−1)³(N+1)³(4N−5)(4N+5)(4N²−3))`, leading
+`−(7/12)N⁻⁵`, regular at N = 3 and equal to `−327/83776` there — corroboration
+of the continuation, not a derivation at a rank that record does not cover.
+U4's fourth-order equality therefore holds if and only if the connected
+swap-odd excited diagram is `conn_A = ω₄ − 63/800 = −173109/2094400`, a target
+that now rests on a derivation rather than a float gate. `conn_A` itself stays
+open, with a wall that is now specific: the excited fourth-order walk beside a
+charged neighbour reaches Haar link family `(6, 0)`, which the loop calculus
+does not implement. At SU(3) that family is nonzero only through the
+epsilon-tensor invariants that exist because `6 = 2N`, and supplying them is the
+concrete remaining cost.
+
 ## Dated route history
 
 The collapsed narrative below preserves the earlier September 5–9 guide and

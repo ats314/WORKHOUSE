@@ -30,10 +30,21 @@ engine-free: SU(3) characters, tensor-product rules and exact rationals.
 
 from __future__ import annotations
 
-from sympy import Matrix, Rational, cancel, expand, eye, symbols, zeros
+import json
+
+from sympy import Matrix, Rational, Symbol, cancel, expand, eye, factor, symbols, sympify, zeros
 
 from .. import constants as K
-from ._core import _suite
+from .. import sixth_order_characters as CH
+from .. import sixth_order_cluster as SC
+from ._core import ROOT, _suite
+
+_N = Symbol("N")
+
+
+def _form(expr: str):
+    return cancel(sympify(expr, locals={"N": _N}))
+
 
 # ==========================================================================
 swap_odd = _suite("the swap-odd domino state (U4, ADR 0023)")
@@ -373,5 +384,125 @@ def _():
             "GAP_5_EVEN": gap_even[4],
             "GAP_5_ODD": gap_odd[4],
             "ROUTE_4_PLUS_VAC_4": route_plus_vac[3],
+        },
+    )
+
+
+def _connected_pair_vacuum_su3(order: int = 4):
+    """The linked two-face vacuum weight at SU(3), per pair geometry.
+
+    The third engine's loop calculus at its default rank: the two-face vacuum
+    sector minus twice the one-face vacuum is the connected (linked) cumulant,
+    because a two-face cluster has exactly two proper sub-clusters and both are
+    one face. The excited sector at this order is NOT reachable the same way --
+    a fourth-order walk beside a charged neighbour reaches link family (6, 0),
+    which the Haar layer does not implement -- so this supplies ``conn_vac``
+    and not ``conn_A``.
+    """
+    single = SC.bloch_hermitian(
+        SC.ModelSpace(SC.PAIRS["coplanar"][:1], reduced=True, vacuum=True), order
+    )["H"]
+    one = [_scalar(single[n][0][0]) for n in range(order + 1)]
+    out = {}
+    for name in ("coplanar", "perpendicular"):
+        pair = SC.bloch_hermitian(SC.ModelSpace(SC.PAIRS[name], reduced=True, vacuum=True), order)[
+            "H"
+        ]
+        two = [_scalar(pair[n][0][0]) for n in range(order + 1)]
+        out[name] = {
+            "pair": two,
+            "connected": [cancel(two[n] - 2 * one[n]) for n in range(order + 1)],
+        }
+    return one, out
+
+
+def _scalar(x):
+    """A loopcalc scalar as a sympy expression, at integer or symbolic rank."""
+    return cancel(x.to_sympy()) if hasattr(x, "to_sympy") else Rational(x)
+
+
+def _connected_pair_vacuum_all_rank(order: int = 4):
+    """The same cumulant over Q(N): the retained pair record's vacuum series
+    (word formula, ``min_rank`` 9) minus twice the character-engine one face."""
+    one = [_scalar(e) for e in CH.bloch_series(6, CH.VACUUM, sign=1)["energies"]]
+    out = {}
+    for name in ("coplanar", "perpendicular"):
+        path = ROOT / "runs" / "g9_direct_h6_pair_2026-09-11" / f"pair_{name}_h4.json"
+        record = json.loads(path.read_text(encoding="utf-8"))
+        pair = [_form(record["vacuum"][str(n)]) for n in range(order + 1)]
+        out[name] = {
+            "min_rank": record["min_rank"],
+            "connected": [cancel(pair[n] - 2 * one[n]) for n in range(order + 1)],
+        }
+    return one, out
+
+
+@swap_odd.check(
+    "the linked two-face vacuum is exact: zero below order four, omega_4 = -327/83776 at SU(3) "
+    "and the same closed form for both pair geometries, so U4's falsifier target is derived",
+    "G25 step 'fourth-order domino, the U4 falsifier'; ADR 0023 addendum; "
+    "ENGINE_O4_hodge_v10a7_marked_linked_scalar.py (the float gate this replaces); "
+    "runs/g9_direct_h6_pair_2026-09-11",
+    rests_on=(
+        "fourth-order rotor: gaps 1657/28000 and 143/8960, vacuum -39/1280, route + vac = -63/800",
+    ),
+)
+def _():
+    # conn_vac was the one half of U4's fourth-order falsifier that this
+    # repository carried at T3: the v10a.7 engine gates the linked O(u^4)
+    # two-face vacuum weight as a float at a stated tolerance with rational
+    # recognition, and G25 recorded it as "T3 here until re-derived". Two
+    # exact routes now give it, and they agree.
+    #
+    # The first is the third engine at SU(3): the two-face vacuum sector minus
+    # twice the one face. Its one-face series is the control -- -3/4 and
+    # -39/1280 are the engine-free rotor's own vacuum at orders two and four,
+    # by SU(3) fusion with no word calculus, and the odd order differs only by
+    # the sign convention of V, which even orders cannot see.
+    #
+    # The second is Q(N): the retained pair record's vacuum series against the
+    # character engine's one face. That record's words are valid for N >= 9, so
+    # the closed form is asserted as an all-rank statement there; its value at
+    # N = 3 is corroboration of the continuation by the first route, not a
+    # derivation at a rank the record does not cover.
+    one_su3, su3 = _connected_pair_vacuum_su3()
+    one_q, allrank = _connected_pair_vacuum_all_rank()
+    omega4 = Rational(-327, 83776)
+    rotor = _rayleigh_schroedinger({(0, 0): 1}, [(0, 0)], 4)
+    control = one_su3[2] == rotor[1] == Rational(-3, 4) and one_su3[4] == rotor[3] == Rational(
+        -39, 1280
+    )
+    su3_ok = all(
+        d["connected"][:4] == [0, 0, 0, 0] and d["connected"][4] == omega4 for d in su3.values()
+    )
+    form = allrank["coplanar"]["connected"][4]
+    q_ok = (
+        all(d["connected"][:4] == [0, 0, 0, 0] for d in allrank.values())
+        and cancel(form - allrank["perpendicular"]["connected"][4]) == 0
+        and cancel(form.subs(_N, 3) - omega4) == 0
+        and allrank["coplanar"]["min_rank"] == 9
+    )
+    # the falsifier target, now resting on a derivation rather than a float gate
+    target = omega4 - Rational(63, 800)
+    ok = control and su3_ok and q_ok and target == Rational(-173109, 2094400)
+    return (
+        ok,
+        (
+            f"SU(3), third engine: one-face vacuum {one_su3}, two-face {su3['coplanar']['pair']}, "
+            f"so the linked weight is {su3['coplanar']['connected']} -- zero at orders two and "
+            f"three and omega_4 = {omega4} at order four, identical for the coplanar and the "
+            f"perpendicular pair. Control: the one-face -3/4 and -39/1280 are the engine-free "
+            f"rotor's own, from SU(3) fusion. Over Q(N) (pair record, min_rank 9): "
+            f"omega_4(N) = {factor(form)}, the same for both geometries, regular at N = 3 where "
+            f"it is "
+            f"{omega4} -- the two routes agree. So U4's fourth-order equality holds if and only "
+            f"if conn_A = omega_4 - 63/800 = {target}, a target now derived rather than gated by "
+            "a float. conn_A itself stays open: the excited fourth-order walk beside a charged "
+            "neighbour reaches Haar family (6, 0), which the loop calculus does not implement"
+        ),
+        {
+            "OMEGA_4_LINKED_PAIR_VACUUM": omega4,
+            "U4_CONN_A_TARGET": target,
+            "E_VAC_PAIR_4_SU3": su3["coplanar"]["pair"][4],
         },
     )

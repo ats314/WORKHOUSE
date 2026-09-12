@@ -12,7 +12,7 @@ it cannot drift from what the repository actually checks.
 
 **T0 — proof-checked.** 439 Lean theorems, 0 `sorry`.
 
-**T1/T2 — re-derived here.** 682/682 checks pass.
+**T1/T2 — re-derived here.** 683/683 checks pass.
 
 | Suite | Passing |
 |---|---|
@@ -45,7 +45,7 @@ it cannot drift from what the repository actually checks.
 | the electric shell, and what isolates it | 8/8 |
 | fourth-order kernel orbits | 28/28 |
 | continuum and fixed-spacing bridges (G18, G19) | 3/3 |
-| the swap-odd domino state (U4, ADR 0023) | 5/5 |
+| the swap-odd domino state (U4, ADR 0023) | 6/6 |
 | Hecke cover correspondence table | 1/1 |
 | the third implementation and the historical ledger (G3, C2) | 11/11 |
 | the third engine at every rank (all-rank cumulants) | 12/12 |
