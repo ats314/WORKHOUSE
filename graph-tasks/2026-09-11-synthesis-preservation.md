@@ -36,10 +36,22 @@ evidence of this one.
   `878afb28541bf99f6e5119788abba3a6106dc3722f9278a910d90b24a08b167c`. The
   original reviewed by Codex (`298ab8e8...`) is **not** in git; it survives only
   in `C:/WORKHOUSE/research/unified-master-critical-review_20260911/manuscript-revisions.json`.
-- `graph-tasks/2026-09-11-unified-master-critical-review.md` was copied
-  byte-for-byte from `C:\WORKHOUSE\REPO` (untracked there, SHA-256
-  `428525db7ff7511195831378d48dfd0cd4500c7efb71a217eea0f6860765c164`, verified
-  identical after copy). The REPO original was left in place and unmodified.
+- `graph-tasks/2026-09-11-unified-master-critical-review.md` was copied from
+  `C:\WORKHOUSE\REPO` (untracked there, SHA-256
+  `428525db7ff7511195831378d48dfd0cd4500c7efb71a217eea0f6860765c164`). The source
+  carries CRLF, so the first commit of it (`aed3716`) stored a normalized blob
+  hashing to `42cd82b8de51fca1777196b5a3bfb6875d228702703decd37b692b82c62db5f5`
+  instead - the exact failure the `-text` section of `.gitattributes` was written
+  to prevent. A `-text` rule was added for this path and the file re-added; the
+  stored blob now hashes to `428525db...`, verified with
+  `git cat-file -p :<path> | sha256sum`. The REPO original was left in place and
+  unmodified.
+- The retained snapshots `unified-master-revision-evidence-20260911/{start,end}.json`
+  were checked the same way: both are LF, both blobs hash to
+  `ef2f61ac31e623100ca1c20f5d360da9ff91aa23967550a30f525f20ef1aa503`, matching the
+  pin in the parent record, so nothing was rewritten. They are byte-identical to
+  each other, consistent with that record reporting an unchanged fingerprint. A
+  protective `-text` rule was added for them as well.
 
 ## Obligation
 The preserved documents must not be readable as established results. Four
@@ -80,10 +92,17 @@ defects in the proposal file were found and are recorded in its header.
   standing stated in the file header. Independently reached by
   `research/dossier-claims-audit_20260911/AUDIT.md` and by the set-aside verdicts
   in `ledger/notes.yaml` on branch `claude/synthesis10-lean-review-20260911`.
+- **Defect 5 - a pin recorded against the wrong bytes (this task's own).** The
+  first commit of the Codex record normalized its CRLF, so the sha256 written
+  into this record described the working file and not the stored blob. Corrected
+  as described under Established Inputs. The lesson generalizes: verify a pin
+  with `git cat-file -p :<path> | sha256sum`, not `sha256sum <path>`, or the
+  digest passes in the tree it was written in and fails in a fresh clone.
 - **Checks executed:** `sha256sum` on the pinned document, the preserved
-  manuscript and both copies of the Codex record; YAML parse; anchor resolution
-  8/8; Lean name resolution 14/26; `pytest tests/test_ledger.py tests/test_graph.py`
-  (50 passed) with `REPO/.venv`.
+  manuscript and both copies of the Codex record; `git cat-file` blob-hash
+  verification on the Codex record and both snapshots; YAML parse; anchor
+  resolution 8/8; Lean name resolution 14/26;
+  `pytest tests/test_ledger.py tests/test_graph.py` (50 passed) with `REPO/.venv`.
 - **Not executed:** the full CI suite, any Lean build, any `workhouse` briefing,
   verification or discovery command, and any review of the mathematics. Nothing
   here checks whether a single statement in the preserved documents is true.
