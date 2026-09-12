@@ -433,10 +433,9 @@ def build(
             if not review:
                 continue
             for target in review.get("bears_on", []):
-                # Same id-space rule the literature edges use: a bears_on
-                # target is either a ledger id (C2, G14) or a bare constant
-                # name, which is a CONST record.
-                dst = target if LEDGER_ID.fullmatch(target) else f"CONST:{target}"
+                # Preserve full native identities for reviewed extractions;
+                # only a legacy bare constant needs the CONST prefix.
+                dst = target if results_mod.is_catalogue_id(target) else f"CONST:{target}"
                 add(nid, dst, "bears_on", "curated", "ledger/notes.yaml")
             for field_, type_ in (
                 ("duplicate_of", "duplicate_of"),

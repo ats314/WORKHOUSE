@@ -1,0 +1,32 @@
+.....F....                                                               [100%]
+================================== FAILURES ===================================
+____ test_reviews_accept_live_registered_targets_without_collecting[C_SHP] ____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025CABE087C0>
+target = 'C_SHP'
+
+    @pytest.mark.parametrize(
+        "target",
+        [
+            "RESULT:EARLIER_GRAM_NULL_OPERATOR_QUOTIENT",
+            "DERIV:EARLIER_PROOF_RECOVERY:GRAM_NULL_OPERATOR_QUOTIENT",
+            SUMMARY["check_ids"][0],
+            "G19",
+            "C_SHP",
+        ],
+    )
+    def test_reviews_accept_live_registered_targets_without_collecting(monkeypatch, target):
+        def forbidden(*args, **kwargs):
+            raise AssertionError("Source validation must not collect or execute the graph")
+    
+        monkeypatch.setattr(claims, "collect", forbidden)
+>       assert notes.validate(_fixture_review(target)) == []
+E       assert ["review of a...rget 'C_SHP'"] == []
+E         
+E         Left contains one more item: "review of abababababab: bears on unknown target 'C_SHP'"
+E         Use -v to get more diff
+
+tests\test_earlier_proof_recovery.py:121: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_earlier_proof_recovery.py::test_reviews_accept_live_registered_targets_without_collecting[C_SHP]
+1 failed, 9 passed, 2 deselected in 14.41s
