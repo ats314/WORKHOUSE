@@ -88,7 +88,17 @@ the constrained Agmon center using the original electric metric. Its specified
 synchronized radial profiles follow that center exactly, cancelling the linear
 normal phase drift. M10 remains open for this choice: the conditional amplitude,
 quadratic phase fluctuations and the nearby antipodal angular regime
-still need estimates. The [M10 repair](derivations/w6-synchronized-m10-domination.md)
+still need estimates. The
+[antipodal moment scaling](../paper/research_notes/W6_M10_ANTIPODAL_MOMENT_SCALING_20260912.md)
+makes that angular regime quantitative: the double soft branch of the A5/A6
+spectrum vanishes exactly at `theta = pi`, so with `delta = pi - theta` the tube
+moments diverge as `c2 ~ 2^(-1/4) delta^(-1/2)`, `c4 ~ 2^(1/2) delta^(-1)` and
+`c6 ~ 6*2^(-3/4) delta^(-3/2)`, with the interior gradient prefactor
+`4/lambda_min^S ~ 4*2^(-1/4) delta^(-1/2)`. No fixed-radius conditional tube
+admits a theta-uniform moment bound on this family, and the scale-invariant
+ratio `c4/c2^2`, whose minimum over `[0, pi]` is `1.2553363` at `theta = 0`,
+rejects submitted moment triples that belong to no fiber. The
+[M10 repair](derivations/w6-synchronized-m10-domination.md)
 now controls the actual centered complement outside enlarged minimizing-set tubes. A finite-flow argument using actual conditional
 concentration proves that some permitted Q8 cutoffs fail M10. This leaves the
 specified synchronized successor open; no actual g^-4 score asymptotic is
