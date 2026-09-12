@@ -21,6 +21,21 @@ tectonic paper/master/workhouse_band_paper.tex
 `pdflatex` + `bibtex` + `pdflatex` × 2 works equally well. There is no
 shell escape and no image dependency.
 
+### One file, for handing to someone
+
+```bash
+python paper/master/assemble_selfcontained.py
+```
+
+Flattens each driver's `\input` tree and inlines the compiled `.bbl`,
+producing `workhouse_master_selfcontained.tex` (~665 KB) and
+`workhouse_band_paper_selfcontained.tex` (~122 KB). Each builds alone in
+an empty directory with no `.bib`, no images and no other file.
+
+These are **derived**. The modular sources are the source of truth; edit
+those and re-assemble. Build the drivers first so the `.bbl` exists,
+otherwise the assembler leaves `\bibliography` in place and says so.
+
 Regenerate both generators **before** every build. If you skip them, the
 paper still compiles — with counts from whenever they last ran.
 

@@ -1,4 +1,4 @@
-.PHONY: help bootstrap check quick lint test verify status frontier certified lit catalogue atlas fmt manifest corpus-manifest lean lean-setup corpus-index lock clean paper paper-master paper-master-apparatus
+.PHONY: help bootstrap check quick lint test verify status frontier certified lit catalogue atlas fmt manifest corpus-manifest lean lean-setup corpus-index lock clean paper paper-master paper-master-apparatus paper-master-single
 
 help:            ## Show this help
 	@grep -hE '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk -F':.*?## ' '{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -75,6 +75,13 @@ paper-master:    ## Regenerate the master edition apparatus and build both drive
 paper-master-apparatus: ## Regenerate the master edition's generated LaTeX from the ledgers
 	@python3 paper/master/generate_apparatus.py
 	@python3 paper/master/generate_sources.py
+
+# Flatten each driver's \input tree and inline the bibliography, giving one
+# file that builds alone with no .bib and no other input -- the form to hand
+# to someone. Derived: the modular sources stay the source of truth. Run
+# after paper-master, which produces the .bbl this inlines.
+paper-master-single: ## Assemble the self-contained single-file editions
+	@python3 paper/master/assemble_selfcontained.py
 
 
 lit:             ## Published work, and which claim each paper bears on
