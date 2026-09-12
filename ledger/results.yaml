@@ -3411,6 +3411,57 @@ results:
     status: proven
     evidence: analytic
 
+  - id: RESULT:SINGLE_FACE_PLANAR_GRADING
+    statement: For the C-parity splitting of the one-plaquette strong-coupling diagonal,
+      S_m(N) = odd_m - even_m = -2 K_m[0][1], at even orders m = 2, 4, 6, 8, 10 the exact rational
+      function of N satisfies S_m(N) = c_m N^-(2m-1) (1 + O(N^-2)) with c_2 = -4, c_4 = -32,
+      c_6 = -1748/3, c_8 = -123332/9 and c_10 = -49593808/135. Writing u = N^2 tau/2, the order-m
+      contribution is (c_m/2^m) N tau^m, so every even order carries the same single power of N and
+      the single-face band per unit N is a function of tau alone, with b_2 = -1, b_4 = -2,
+      b_6 = -437/48, b_8 = -30833/576, b_10 = -3099613/8640. Decomposing S_m by the intermediate
+      state of the perturbed vector gives exactly four contributing channels at every even m from 4
+      to 10 -- the singlet ((), ()), the adjoint ((1,), (1,)), and the two-box states ((2,), ()) and
+      ((1,1), ()) -- each of order N^-(m-1), with leading coefficients (-4, +2, +1, +1) times
+      2^(m/2-2), summing to zero; at m = 2 only the singlet and adjoint contribute, at -2 and +2.
+    hypotheses:
+    - Kogut-Susskind strong-coupling Hamiltonian with V = -u W and u = beta_N/(2N); the single
+      plaquette, whose four links are private, so the states are SU(N) irreps labelled by a pair of
+      partitions with energy 2 C_2 and W acts by the Pieri rule.
+    - The rank-generic Bloch series of sixth_order_characters over Q(N), valid at ranks where the
+      generic partition labelling applies; each order is an exact computation at that order.
+    - The exponent and the coefficients are exact limits of exact rational functions of N, not
+      numerical extrapolations. An independent integer-rank engine (RESULT:ODD_ORDER_CENTRE_PARITY)
+      reproduces c_2, c_4, c_6, c_8 by extrapolation to within 1.4e-5 relative.
+    scope: The one-plaquette diagonal splitting at even orders m <= 10 only. This is NOT the cluster
+      cumulant beta_N of ADR 0046, whose conjecture is not discharged here; the k = 3 one-face case
+      was already established by the G9 suite, and the shared-link pair route carries the multi-face
+      statement. The general-m law remains a conjecture. Statements are about coefficients at fixed
+      order, not convergence, and the G16 overlap theorem is untouched.
+    source: CITE:PLANAR_GRADING_SINGLE_FACE
+    source_section: Results 1 to 3
+    depends_on:
+    - RESULT:ODD_ORDER_CENTRE_PARITY
+    bears_on:
+    - G16
+    - G14
+    - G9
+    supported_by:
+    - target: CHK:the-single-face-planar-grading-law-throu-845f86:one-face-over-q-n--the-c-parity-splittin-23b6ca
+      scope: The exponent -(2m-1) and the exact coefficients c_m at m = 2, 4, 6, 8, re-derived live
+        over Q(N); c_10 is read from the run. T1.
+    - target: CHK:the-single-face-planar-grading-law-throu-845f86:the-tau-normalisation-with-u--n-2-tau-2--518ca4
+      scope: b_m = c_m/2^m at m = 2, 4, 6, 8, 10, and the substitution u = N^2 tau/2 turning
+        c_m N^-(2m-1) u^m into b_m N tau^m at every one of them. T1.
+    - target: CHK:the-single-face-planar-grading-law-throu-845f86:the-cancellation-is-between-channels-of--7d4a20
+      scope: The channel split is verified to be an exact decomposition of S_m over Q(N) at
+        m = 2, 4, 6, 8; four channels at m >= 4, each of order N^-(m-1), coefficients
+        (-4, +2, +1, +1) x 2^(m/2-2) summing to zero. T1.
+    - target: CHK:the-single-face-planar-grading-law-throu-845f86:an-independent-integer-rank-engine-agree-53b21d
+      scope: The ADR 0047 integer-rank engine at N = 60..200, extrapolated in 1/N^2, reproduces
+        c_2, c_4, c_6, c_8 within 1e-4 relative. T2; a tolerance on an extrapolated value.
+    status: proven
+    evidence: output-certified
+
   - id: RESULT:MOVING_TIME_SPECTRAL_GAP
     statement: If C_n(t_n)<=b_n at physical times t_n tending to infinity and exp(E t_n)b_n tends to zero
       for every E<M, then every vague limit of target spectral measures with ||f_n-v_n|| tending to zero

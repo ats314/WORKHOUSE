@@ -284,6 +284,34 @@ over ℚ(N). The τ-series of ADR 0046 therefore has no odd terms in the planar
 limit at any fixed order. The even orders' N⁻⁽⁴ᵏ⁻¹⁾ law and the overlap theorem
 of G16 are untouched.
 
+On 2026-09-11 ([ADR 0048](decisions/0048-one-grading-behind-the-odd-order-theorem-and-the-even-order-cancellation.md),
+[note](../paper/research_notes/PLANAR_GRADING_SINGLE_FACE_20260911.md),
+[run](../runs/planar_grading_2026-09-11/README.md), suite "the single-face
+planar grading law through tenth order (G16)",
+`RESULT:SINGLE_FACE_PLANAR_GRADING`) the one-face even-order law was carried two
+rungs further and its mechanism exhibited, all exactly over ℚ(N). The G9 suite
+had already settled the one-face `k = 3` case exactly, including the `N⁻¹¹`
+order-six splitting; an earlier draft of ADR 0048 claimed `k = 3` as new and is
+corrected on the record. What is new: for the C-parity splitting of the
+one-plaquette diagonal `S_m = odd_m − even_m = −2·K_m[0][1]` at even `m ≤ 10`,
+`S_m = c_m N^−(2m−1)(1 + O(N⁻²))` with `c₂ = −4`, `c₄ = −32`, `c₆ = −1748/3`,
+`c₈ = −123332/9`, `c₁₀ = −49593808/135` — **orders eight and ten had not been
+reached on this object**. Because `u = N²τ/2`, every even order carries the same
+single power of N, so the single-face band per unit N is a function of τ alone:
+`b₂ = −1`, `b₄ = −2`, `b₆ = −437/48`, `b₈ = −30833/576`, `b₁₀ = −3099613/8640`.
+Decomposing `S_m` by the intermediate state gives **exactly four** channels at
+every even m ≥ 4 — singlet, adjoint, and the two two-box states — **each of
+order `N^−(m−1)`**, with leading coefficients `(−4, +2, +1, +1) × 2^(m/2−2)`
+summing to zero. So the cancellation is between channels of *equal* order,
+carried entirely by their relative coefficients, which is why ADR 0046's
+per-channel label rule failed on 47 of its 1,772 forms: there is no per-channel
+rule of that kind to be had. This is a different decomposition from the
+word-formula pieces of (F6) that the G9 suite bounds. Two limits are kept in
+view: the object is the one-plaquette diagonal, **not** the cluster cumulant
+`β_N`, so ADR 0046's cluster conjecture is not discharged and the shared-link
+pair route carries the multi-face statement; and each order is an exact
+computation at that order, so the general-m law remains a conjecture, now
+verified at `k = 1..5` on this channel.
 The same engine now derives the **linked two-face vacuum weight** that U4's
 fourth-order falsifier needs, which this repository carried at T3 because the
 v10a.7 Hodge engine gates it as a float with rational recognition. At SU(3) the

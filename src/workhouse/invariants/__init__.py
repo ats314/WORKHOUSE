@@ -60,6 +60,7 @@ _MODULES = (
     "rank_field",
     "planar_band",
     "odd_order",
+    "planar_grading",
     "path_reduction",
     "wilson_step",
     "wilson_block",

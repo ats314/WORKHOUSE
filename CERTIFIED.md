@@ -1339,7 +1339,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 623
+## T1 — re-derived exactly — 626
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -3184,6 +3184,17 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `the normalized magnetic creator-flow differential equals direct nilpotent operator conjugation on three exact six-link families`
   - src/workhouse/invariants/rooted_creator.py:64 · G18; paper/research_notes/G18_ROOTED_WILSON_CONTRACTION_20260905.md sections 2 and 4; separate output-partition and basis-action paths
   - `workhouse verify --only 'the normalized magnetic creator-flow differential equals direct nilpotent operator conjugation on three exact six-link families'`
+**the single-face planar grading law through tenth order (G16)**
+
+- `one face over Q(N): the C-parity splitting at even order m is exactly c_m N^-(2m-1) for m = 2, 4, 6, 8 with c_m = -4, -32, -1748/3, -123332/9 -- the ADR 0046 law at k = 4, past the k = 3 the G9 one-face suite already settled`
+  - src/workhouse/invariants/planar_grading.py:147 · G16; G14; G9; runs/planar_grading_2026-09-11; ADR 0048; ADR 0046; ADR 0047; the G9 one-face suite
+  - `workhouse verify --only 'one face over Q(N): the C-parity splitting at even order m is exactly c_m N^-(2m-1) for m = 2, 4, 6, 8 with c_m = -4, -32, -1748/3, -123332/9 -- the ADR 0046 law at k = 4, past the k = 3 the G9 one-face suite already settled'`
+- `the cancellation is between channels of EQUAL order: splitting S_m by the intermediate state gives exactly four channels at every even m >= 4, each O(N^-(m-1)), with leading coefficients (-4, +2, +1, +1) x 2^(m/2-2) summing to zero`
+  - src/workhouse/invariants/planar_grading.py:211 · G16; G14; G9; runs/planar_grading_2026-09-11; ADR 0048; ADR 0046; ADR 0047; the G9 one-face suite
+  - `workhouse verify --only 'the cancellation is between channels of EQUAL order: splitting S_m by the intermediate state gives exactly four channels at every even m >= 4, each O(N^-(m-1)), with leading coefficients (-4, +2, +1, +1) x 2^(m/2-2) summing to zero'`
+- `the tau-normalisation: with u = N^2 tau/2 every even order of the single-face band carries the same single power of N, so S(u)/N is a function of tau alone with b_2 = -1, b_4 = -2`
+  - src/workhouse/invariants/planar_grading.py:182 · G16; G14; G9; runs/planar_grading_2026-09-11; ADR 0048; ADR 0046; ADR 0047; the G9 one-face suite
+  - `workhouse verify --only 'the tau-normalisation: with u = N^2 tau/2 every even order of the single-face band carries the same single power of N, so S(u)/N is a function of tau alone with b_2 = -1, b_4 = -2'`
 **the swap-odd domino state (U4, ADR 0023)**
 
 - `W psi_A has no two-plaquette and no vacuum image for C-even; C-odd keeps the like-family pair`
@@ -3379,7 +3390,7 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
   - src/workhouse/invariants/universal_cellular_hodge.py:169 · UNIVERSAL_CELLULAR_HODGE_TETRAHEDRAL Theorems 1 and 2; U7; G14
   - `workhouse verify --only 'universal cellular Hodge spectrum: lambda = |F| and excursions are up-harmonic'`
 
-## T2 — float agreement within a stated tolerance — 60
+## T2 — float agreement within a stated tolerance — 61
 
 Floating-point agreement inside a tolerance printed in the detail line. Read the tolerance before quoting the claim — numerical agreement is not proof, and one of these checks exists precisely because a corpus tolerance was quoted tighter than its own data.
 
@@ -3589,6 +3600,11 @@ Floating-point agreement inside a tolerance printed in the detail line. Read the
 - `every node the theory graph strands is stranded for a stated reason`
   - src/workhouse/invariants/manuscript.py:179 · index/graph.jsonl, index/claims.jsonl, ledger/theorems.yaml
   - `workhouse verify --only 'every node the theory graph strands is stranded for a stated reason'`
+**the single-face planar grading law through tenth order (G16)**
+
+- `an independent integer-rank engine agrees: the one-plaquette character engine of ADR 0047 at N = 60..200, extrapolated in 1/N^2, reproduces c_2, c_4, c_6, c_8`
+  - src/workhouse/invariants/planar_grading.py:244 · G16; G14; G9; runs/planar_grading_2026-09-11; ADR 0048; ADR 0046; ADR 0047; the G9 one-face suite
+  - `workhouse verify --only 'an independent integer-rank engine agrees: the one-plaquette character engine of ADR 0047 at N = 60..200, extrapolated in 1/N^2, reproduces c_2, c_4, c_6, c_8'`
 **two-cube charge-odd second-order closure (B=4 and B=6)**
 
 - `every shared-link channel is separately proportional to the geometry, on all 56 pairs`
