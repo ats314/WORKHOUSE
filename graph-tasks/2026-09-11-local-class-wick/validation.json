@@ -1,0 +1,70 @@
+{
+  "schema": "local-class-wick-integration-validation/v1",
+  "base_at_verification_start": "bc9da0233ceb72ed76739dc9b892d9c6ca1b50d5",
+  "integrated_remote_base": "294c22497d7e0200c9a7fabf7be827a44ffc8f08",
+  "full_verify": {
+    "command": "workhouse verify",
+    "passed": 632,
+    "failed": 0,
+    "receipt": "full-verify.log",
+    "note": "Fresh uncached run. During execution, the Cartesian source loader was changed to compile the same pinned code in memory to prevent bytecode writes. The final loader is covered by graph generation and final tests. The remote fast-forward added only an unrelated graph-task review record."
+  },
+  "focused_tests": {
+    "command": "python -B -m pytest tests/test_local_class_wick.py tests/test_runs.py -q",
+    "passed": 16,
+    "failed": 0,
+    "receipt": "focused-tests.log"
+  },
+  "lint": "ruff check . and ruff format --check . passed; 615 files formatted",
+  "documentation": "42 maintained files, 598 local links, 0 errors, 0 warnings",
+  "original_source_identity": "All 25 received files match C:/WORKHOUSE/research/local_class_wick_20260911/completed byte-for-byte; no extra received files.",
+  "source_sha256": {
+    "src/workhouse/local_class_wick.py": "7fa060e9e442d1ca15e261bd6a262890abe8642ec9a51eccdae730e046525fe0",
+    "src/workhouse/invariants/local_class_wick.py": "bf9b1363da525bf6e17afb7d536a3e216245d26622d7b5b0de5af1368f4c4f7e",
+    "tests/test_local_class_wick.py": "e73f6a42908e9a6e0f547c9f2fdf25f72e1e56b68bbd2eb6ae45d99f74042503",
+    "docs/derivations/local-class-wick-spectrum.md": "5cde9ee4fe88bd47d8dec5a6ad5819ebe6f8316d1fb631f1145cae723a880c5e",
+    "paper/research_notes/LOCAL_CLASS_WICK_SPECTRUM_20260911.md": "e838f1c5c5ab1c7ce5001a338c1f7ba58f65b01de5879ec79aad34bb71763225"
+  },
+  "full_pytest": {
+    "passed": 2092,
+    "failed": 0,
+    "summary": "2092 passed, 4 skipped, 11 subtests passed in 440.41s (0:07:20)",
+    "receipt": "pytest-full-main159.log"
+  },
+  "graph_generation": {
+    "catalogue_records": 19786,
+    "symbol_records": 28,
+    "edges": 32378,
+    "checks_passed": 668,
+    "failed": 0,
+    "snapshot_freshness": "matched",
+    "snapshot_fingerprint": "9a0e893e9be67373ec300811766878ef118949af0013f0554db7ddd24d57fa88",
+    "input_manifest_sha256": "3a8fdc80a0f0a5c76bc9906ca67e5a26d0e0ed5063642827d3f0908399519ff8",
+    "receipt": "validation-main159-phases.json"
+  },
+  "scope": "Formal local oscillator only. No compact-group remainder, interacting-volume control, G19 route closure or Lean coverage promotion.",
+  "source_hash_mode": "Raw bytes in the local execution checkout; ordinary Git text line-ending conversion can change raw source hashes on another platform.",
+  "staged_source_identity": "30 byte-pinned derivation, paper and run files were compared byte-for-byte with the staged Git blobs and matched.",
+  "diff_check": "Passed for native changes. Nine received historical files retain original terminal blank lines, intentionally unmodified to preserve their recorded hashes.",
+  "initial_full_pytest": {
+    "passed": 2029,
+    "failed": 1,
+    "skipped": 4,
+    "subtests_passed": 11,
+    "receipt": "pytest-full.log",
+    "failure": "test_portability.py::test_text_io_names_its_encoding"
+  },
+  "portability_fix": {
+    "change": "Name encoding=utf-8 when reading the ASCII coefficient certificate. No coefficient or recurrence change.",
+    "targeted_tests_passed": 10,
+    "receipt": "pytest-utf8-fixed.log"
+  },
+  "source_sha256_after_utf8": {
+    "src/workhouse/local_class_wick.py": "7fa060e9e442d1ca15e261bd6a262890abe8642ec9a51eccdae730e046525fe0",
+    "src/workhouse/invariants/local_class_wick.py": "e5a330ca8a202bfd93d797fcea8eb5b55936136880869d3ce6a1c15320946b2a",
+    "tests/test_local_class_wick.py": "e73f6a42908e9a6e0f547c9f2fdf25f72e1e56b68bbd2eb6ae45d99f74042503",
+    "docs/derivations/local-class-wick-spectrum.md": "5cde9ee4fe88bd47d8dec5a6ad5819ebe6f8316d1fb631f1145cae723a880c5e",
+    "paper/research_notes/LOCAL_CLASS_WICK_SPECTRUM_20260911.md": "e838f1c5c5ab1c7ce5001a338c1f7ba58f65b01de5879ec79aad34bb71763225"
+  },
+  "final_validation": "Ordered index, frontier, certified, live brief and full pytest in one Python process. Views reuse byte-matched content-cache results from this index build. The unchanged normal pytest entry point uses copies of those same current-content results in the standard metadata cache; check-cache-reuse-main159.json and retained helper source record that reuse. No cached result is called fresh execution."
+}

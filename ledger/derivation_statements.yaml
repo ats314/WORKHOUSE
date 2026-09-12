@@ -7795,3 +7795,55 @@ documents:
     remaining: The quantified polynomial or analytic optimization, sharpness and limit argument is not registered
       in Lean. Exact controls have separately scoped support. Actual Wilson estimates and continuum realization
       are application inputs.
+
+
+- id: CITE:LOCAL_CLASS_WICK_SPECTRUM
+  path: docs/derivations/local-class-wick-spectrum.md
+  sha256: 5cde9ee4fe88bd47d8dec5a6ad5819ebe6f8316d1fb631f1145cae723a880c5e
+  statements:
+  - id: DERIV:LOCAL_CLASS_WICK:RECURRENCE
+    statement: The terminating Wick conjugation gives exact shell projectors and a unique all-order simple-branch
+      formal recursion in Q[N,N^-1], with state degree at most s+4r.
+    locator: '## 3. All-order constructive theorem'
+    anchor: '## 3. All-order constructive theorem'
+    source_labels:
+    - RECURRENCE
+    status: proven
+    evidence: analytic
+    hypotheses: &local_class_wick_hypotheses
+    - Traceless Hermitian Gaussian covariance as displayed; P0=N, P1=0.
+    - Formal Wilson local oscillator K(g), g=sqrt(2N/beta); even N>=2 and odd N>=3.
+    depends_on: []
+    lean: []
+    remaining: The all-order algebraic theorem is analytic; no full Lean encoding or compact-group spectral
+      remainder.
+  - id: DERIV:LOCAL_CLASS_WICK:COEFFICIENTS
+    statement: The two formal local gaps have the displayed exact all-rank coefficients through beta^-2,
+      including c3- and c4+/-.
+    locator: '## 4. Recovered coefficients and the next odd term'
+    anchor: '## 4. Recovered coefficients and the next odd term'
+    source_labels:
+    - COEFFICIENTS
+    status: proven
+    evidence: analytic
+    hypotheses: *local_class_wick_hypotheses
+    depends_on:
+    - DERIV:LOCAL_CLASS_WICK:RECURRENCE
+    lean: []
+    remaining: Native exact symbolic computation covers these coefficients, without a Lean encoding or
+      a finite-beta remainder.
+  - id: DERIV:LOCAL_CLASS_WICK:SIGNS
+    statement: The five corrections c0..c4 are strictly negative for all allowed ranks, by positive shifted
+      numerator polynomials.
+    locator: '## 4.2 Sign corollary'
+    anchor: '## 4.2 Sign corollary'
+    source_labels:
+    - SIGNS
+    status: proven
+    evidence: analytic
+    hypotheses: *local_class_wick_hypotheses
+    depends_on:
+    - DERIV:LOCAL_CLASS_WICK:COEFFICIENTS
+    lean: []
+    remaining: Exact coefficient sign proof; no Lean encoding or inference about the remainder or infinite
+      series.

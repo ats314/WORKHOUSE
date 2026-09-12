@@ -1,0 +1,48 @@
+from pathlib import Path
+from contextlib import redirect_stdout, redirect_stderr
+from datetime import datetime, timezone
+import hashlib
+import json
+import time
+
+from workhouse import briefing, cli
+
+root = Path.cwd()
+assert briefing.ROOT.resolve() == root.resolve()
+out = root / "graph-tasks/2026-09-11-local-class-wick"
+phases = []
+inputs = briefing.content_manifest()
+
+def phase(name, command, function):
+    print("START", name, flush=True)
+    started = time.monotonic()
+    log = out / (name + ".log")
+    assert not log.exists(), log
+    with log.open("w", encoding="utf-8", buffering=1) as stream:
+        with redirect_stdout(stream), redirect_stderr(stream):
+            code = function()
+    record = {"phase": name, "command": command, "exit_code": code,
+              "elapsed_seconds": round(time.monotonic() - started, 3),
+              "completed_utc": datetime.now(timezone.utc).isoformat(),
+              "log_sha256": hashlib.sha256(log.read_bytes()).hexdigest()}
+    phases.append(record)
+    (out / "validation-main159-phases.json").write_text(json.dumps(phases, indent=2) + "\n", encoding="utf-8")
+    print("DONE", json.dumps(record), flush=True)
+    assert code == 0, record
+    assert briefing.content_manifest() == inputs, "Scientific inputs changed"
+
+phase("index-main159", "workhouse index -w", lambda: cli.main(["index", "-w"]))
+with briefing.cache_observation(inputs):
+    phase("frontier-main159", "workhouse frontier --write", lambda: cli.main(["frontier", "--write"]))
+    phase("certified-main159", "workhouse certified --write", lambda: cli.main(["certified", "--write"]))
+phase("brief-main159", "workhouse brief RESULT:LOCAL_CLASS_WICK_RECURRENCE RESULT:LOCAL_CLASS_WICK_COEFFICIENTS RESULT:LOCAL_CLASS_WICK_SIGNS G19 --json --live", lambda: cli.main(["brief", "RESULT:LOCAL_CLASS_WICK_RECURRENCE", "RESULT:LOCAL_CLASS_WICK_COEFFICIENTS", "RESULT:LOCAL_CLASS_WICK_SIGNS", "G19", "--json", "--live", "--out", str(out / "end-main159.json")]))
+
+import runpy
+runpy.run_path(str(root / ".workhouse-local/local-class-wick/reuse_observed_checks_main159.py"))
+
+import pytest
+base = Path("D:/WORKHOUSE-output/local_class_wick_20260911/pytest-final-main159-20260911")
+assert not base.exists(), base
+args = ["-o", "addopts=--strict-markers", "-q", "--durations=12", "--basetemp=" + str(base)]
+phase("pytest-full-main159", "pytest " + " ".join(args), lambda: int(pytest.main(args)))
+print("ALL FINAL PHASES PASSED", flush=True)

@@ -993,3 +993,7 @@ prefactors, but requires a common positive decay rate at arbitrarily late
 physical times and the actual spectral/density identifications. These results
 supply inputs and shorter sufficient routes; they do not discharge the
 volume-uniform interacting remainder or continuum matching targets.
+
+## Local class spectrum continuation
+
+The [rank-uniform Wick recurrence](../docs/derivations/local-class-wick-spectrum.md) computes both local SU(N) charge sectors through beta^-2, recovers the archived lower coefficients and derives explicit c3- and c4+/- formulas. Exact native checks and independent Cartesian controls accompany the analytic all-order construction. The coefficient calculation advances local spectral input control; compact-group eigenvalue remainders, interacting-volume estimates and continuum source transport remain separate.
