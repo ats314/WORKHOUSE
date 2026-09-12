@@ -7261,3 +7261,83 @@ documents:
     remaining: The full analytic argument and its manifold, measure or all-size construction are not
       formalized in Lean. Native controls certify only their explicitly stated finite or algebraic
       scopes; Wilson application hypotheses remain separate.
+
+- id: CITE:REVIEW_SPECTRAL_BUDGETS
+  path: docs/derivations/review-derived-spectral-budgets.md
+  sha256: 96037da9bfc029436bff4d4de69c7da8090138e39c1dcbd1fca3f372607447bb
+  statements:
+  - id: DERIV:REVIEW_SPECTRAL_BUDGETS:Q1
+    statement: The assembled Q4 polynomial has an exact positive sum of squares and sharp Euclidean coercivity
+      constants Q1-Q2.
+    locator: '## Q1. The assembled fourth-order polynomial is coercive (lines 11-42)'
+    anchor: '## Q1. The assembled fourth-order polynomial is coercive'
+    source_labels:
+    - Q1
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - Real L in R3, Q=A sum Li^2+(2A+4C) sum LiLj with A=5/48 and the ADR 0024 adjudicated C.
+    depends_on: []
+    lean: []
+    remaining: The quantified polynomial or analytic optimization, sharpness and limit argument is not registered
+      in Lean. Exact controls have separately scoped support. Actual Wilson estimates and continuum realization
+      are application inputs.
+  - id: DERIV:REVIEW_SPECTRAL_BUDGETS:M1
+    statement: Normalized multichannel cutoff exponents give F(c) and the exact target interval L(M)<=c<=U(M),
+      c<=h.
+    locator: '## M1. Several decay channels and time-amplified remainders (lines 43-89)'
+    anchor: '## M1. Several decay channels and time-amplified remainders'
+    source_labels:
+    - M1
+    status: proven
+    evidence: analytic
+    hypotheses: &pillars_id001
+    - 'Finite nonempty decay/error families: p_j>=0, m_j>0, ell_l>=0, s>=0, P_j=p_j+2s>0 and R_l=r_l-2s>0.'
+    - Positive cutoff-independent bound coefficients, 0<a_n<1 tending to zero and |alpha_n|>=c_alpha a_n^s.
+    - Raw bound M1 is available at selected physical times c log(1/a_n); optional horizon c<=h has h>0.
+    - Spectral consequences additionally require actual norm approximation and MT2 measure/totality or compatible-history-kernel
+      hypotheses.
+    depends_on:
+    - DERIV:MOVING_TIME_SPECTRAL_GAP:VAGUE_LIMIT
+    lean: []
+    remaining: The quantified polynomial or analytic optimization, sharpness and limit argument is not registered
+      in Lean. Exact controls have separately scoped support. Actual Wilson estimates and continuum realization
+      are application inputs.
+  - id: DERIV:REVIEW_SPECTRAL_BUDGETS:M2
+    statement: The sharp positive rate is min_jl (R_l m_j-P_j ell_l)/(P_j+R_l), capped by min_j(m_j-P_j/h);
+      c=max_j P_j/(m_j-M) witnesses a positive optimum.
+    locator: '## M2. Closed optimal rate and a witnessing observation time (lines 90-125)'
+    anchor: '## M2. Closed optimal rate and a witnessing observation time'
+    source_labels:
+    - M2
+    status: proven
+    evidence: analytic
+    hypotheses: *pillars_id001
+    depends_on:
+    - DERIV:REVIEW_SPECTRAL_BUDGETS:M1
+    lean: []
+    remaining: The quantified polynomial or analytic optimization, sharpness and limit argument is not registered
+      in Lean. Exact controls have separately scoped support. Actual Wilson estimates and continuum realization
+      are application inputs.
+  - id: DERIV:REVIEW_SPECTRAL_BUDGETS:M3
+    statement: One-atom and horizon examples saturate the multichannel rate; a nonpositive binding bound permits
+      a centered zero-energy atom.
+    locator: '## M3. Sharpness, failure cases and physical scope (lines 126-171)'
+    anchor: '## M3. Sharpness, failure cases and physical scope'
+    source_labels:
+    - M3
+    status: proven
+    evidence: analytic
+    hypotheses:
+    - 'Finite nonempty decay/error families: p_j>=0, m_j>0, ell_l>=0, s>=0, P_j=p_j+2s>0 and R_l=r_l-2s>0.'
+    - Positive cutoff-independent bound coefficients, 0<a_n<1 tending to zero and |alpha_n|>=c_alpha a_n^s.
+    - Raw bound M1 is available at selected physical times c log(1/a_n); optional horizon c<=h has h>0.
+    - Spectral consequences additionally require actual norm approximation and MT2 measure/totality or compatible-history-kernel
+      hypotheses.
+    - Sharpness examples satisfy M1 throughout the available horizon.
+    depends_on:
+    - DERIV:REVIEW_SPECTRAL_BUDGETS:M2
+    lean: []
+    remaining: The quantified polynomial or analytic optimization, sharpness and limit argument is not registered
+      in Lean. Exact controls have separately scoped support. Actual Wilson estimates and continuum realization
+      are application inputs.

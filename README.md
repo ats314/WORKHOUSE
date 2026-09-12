@@ -9,6 +9,8 @@ flux-band spectral program and the Yang-Mills existence and mass-gap problem.
 It brings analytic derivations, exact and numerical checks, Lean proofs, and
 their source histories into a queryable theory graph.
 
+The [review-derived spectral budgets](docs/derivations/review-derived-spectral-budgets.md) retain the corrected fourth-order polynomial with sharp coercivity and extend the moving-time theorem to finite decay channels and errors that grow with physical time. Pairwise inequalities give the optimal normalized rate, horizon penalty and a witnessing time; one-atom examples prove sharpness. Actual Wilson estimates, full history-kernel convergence and continuum realization remain inputs.
+
 ## Start here
 
 | Need | Read |
