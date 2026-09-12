@@ -80,6 +80,7 @@ _MODULES = (
     "ym_reconstruction",
     "moving_time_gap",
     "os_kernel_gap",
+    "spectral_budgets",
     "ym_flat_directions",
     "ym_ground_state",
     "wilson_marked",

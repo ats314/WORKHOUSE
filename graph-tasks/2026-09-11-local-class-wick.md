@@ -62,3 +62,15 @@ The research checkpoint is pushed in [PR 157](https://github.com/ats314/WORKHOUS
 Its initial draft head `261b175` passed the four selected PR checks; Lean was
 skipped because this work changes no Lean source. Final graph, regression and
 publication receipts follow in the same evidence directory.
+
+## Combined validation on PR 158 main
+
+PR 158 advanced main during validation. Its complete source records and the Wick additions were preserved together; the new base is `bd7b16d3fd440d3c5e0f2ff9db60b8cd64ca9109`. All 17611 existing catalogue IDs and their values remain present. The combined graph adds 17 Wick IDs.
+
+The first full pytest run exposed a missing explicit UTF-8 encoding on certificate input (2,029 passed, one failed). The read now names UTF-8; ten focused tests passed. The corrected candidate index passed before PR 158 landed. Its remaining view/test phases were stopped as superseded; the retained `utf8-candidate-superseded.json` does not count them as passes.
+
+Final ordered graph generation and the full regression suite passed: 2066 passed, 4 skipped, 11 subtests passed in 306.55s (0:05:06). The graph contains 17628 claims, 28 symbol records and 30022 edges; all 654 registered checks pass. Lint, formatting and 576 maintained documentation links also pass.
+
+End briefing: `2026-09-11-local-class-wick/end-main158.json`; freshness `matched`; fingerprint `da46b4e97b0f92a00f68cf88ce814e7519c675eadec24acd96eddd0b0f9c5f64`; input manifest `096ee7acba0d723dca6671e89f182ed3db16ea9a6ea5d059c1c5b38827a9d323`. The end briefing reuses 654 current-content results from the preceding generation. Full commands, cache reuse, sources and log hashes are retained in the same evidence directory.
+
+All three results remain proven analytic statements, with five T1 supporting checks. The finite formal calculation discharges the Gram-inversion and coefficient-sign obligations; compact-group remainders and the continuum G19 successor remain separate. No Lean source or T0 coverage changes. Publication is through [PR 157](https://github.com/ats314/WORKHOUSE/pull/157); the outer task record retains final commit and GitHub check links.

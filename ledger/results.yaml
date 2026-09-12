@@ -3964,6 +3964,86 @@ results:
     status: proven
     evidence: analytic
 
+  - id: RESULT:ASSEMBLED_Q4_COERCIVITY
+    statement: For real L, the adjudicated Q4 equals d||L||^2+e(sum L_i)^2 with d=13035490122347/275331901291200>0
+      and e=15644916262153/275331901291200>0. Its sharp lower and upper coefficients are d and 29985119454403/137665950645600;
+      the assembled cross coefficient is the historical one plus 25/256.
+    hypotheses:
+    - Real L in R3, Q=A sum Li^2+(2A+4C) sum LiLj with A=5/48 and the ADR 0024 adjudicated C.
+    scope: Exact real quadratic-polynomial consequence of existing fourth-order assembly. Not a full Hamiltonian
+      or all-orders coercivity theorem.
+    source_section: Q1, equations Q1-Q2
+    depends_on:
+    - DERIV:REVIEW_SPECTRAL_BUDGETS:Q1
+    - CHK:the-third-implementation-and-the-histori-334c14:finding-c-shp-from-the-assembled-amplitu-deda6d
+    bears_on:
+    - G3
+    - G14
+    supported_by:
+    - target: CHK:review-derived-coercivity-and-multichann-8dd636:assembled-q4-has-the-corrected-sharp-coe-c84029
+      scope: Exact symbolic polynomial identity, rational coefficients and full 3 by 3 eigenspectrum; no physical
+        all-orders implication.
+    source: CITE:REVIEW_SPECTRAL_BUDGET_RESULTS
+    status: proven
+    evidence: analytic
+  - id: RESULT:MOVING_TIME_MULTICHANNEL_RATE
+    statement: For raw terms A_j a^-p_j exp(-m_j t) and B_l a^r_l exp(ell_l t) with squared-source normalization
+      a^-2s, the sharp positive logarithmic-time guarantee is min_jl (R_l m_j-P_j ell_l)/(P_j+R_l), capped by
+      min_j(m_j-P_j/h). A target 0<M<min m_j is admissible iff max_j P_j/(m_j-M)<=min_l R_l/(M+ell_l) and <=h;
+      its lower time endpoint is a witness.
+    hypotheses:
+    - 'Finite nonempty decay/error families: p_j>=0, m_j>0, ell_l>=0, s>=0, P_j=p_j+2s>0 and R_l=r_l-2s>0.'
+    - Positive cutoff-independent bound coefficients, 0<a_n<1 tending to zero and |alpha_n|>=c_alpha a_n^s.
+    - Raw bound M1 is available at selected physical times c log(1/a_n); optional horizon c<=h has h>0.
+    - Spectral consequences additionally require actual norm approximation and MT2 measure/totality or compatible-history-kernel
+      hypotheses.
+    scope: Analytic finite-family optimization with source normalization, time amplification and physical horizon.
+      Extends MT4; a nonpositive bound means no positive guarantee. Actual Wilson and continuum-kernel inputs
+      remain open.
+    source_section: M1-M2, equations M1-M6
+    depends_on:
+    - RESULT:MOVING_TIME_SPECTRAL_GAP
+    - DERIV:REVIEW_SPECTRAL_BUDGETS:M2
+    bears_on:
+    - G19
+    - RESULT:OS_KERNEL_MOVING_TIME_GAP
+    supported_by:
+    - target: CHK:review-derived-coercivity-and-multichann-8dd636:multichannel-target-intervals-yield-ever-df0588
+      scope: Exact cross-multiplication, pair intersection and single-plateau specialization identities.
+    - target: CHK:review-derived-coercivity-and-multichann-8dd636:multichannel-optimum-respects-all-errors-3ad24b
+      scope: Finite rational multi-term, horizon, amplification and zero-margin cases, not a proof of Wilson
+        estimates.
+    source: CITE:REVIEW_SPECTRAL_BUDGET_RESULTS
+    status: proven
+    evidence: analytic
+  - id: RESULT:MOVING_TIME_MULTICHANNEL_SHARPNESS
+    statement: One positive-energy atom saturates each binding pair or horizon rate of the multichannel budget.
+      A nonpositive binding constraint permits a centered zero-energy atom. Two-point exponential probes realize
+      the same sharp exponents for s>0 after a cutoff-independent prefactor enlargement.
+    hypotheses:
+    - 'Finite nonempty decay/error families: p_j>=0, m_j>0, ell_l>=0, s>=0, P_j=p_j+2s>0 and R_l=r_l-2s>0.'
+    - Positive cutoff-independent bound coefficients, 0<a_n<1 tending to zero and |alpha_n|>=c_alpha a_n^s.
+    - Raw bound M1 is available at selected physical times c log(1/a_n); optional horizon c<=h has h>0.
+    - Spectral consequences additionally require actual norm approximation and MT2 measure/totality or compatible-history-kernel
+      hypotheses.
+    - For examples, the bound holds throughout the available horizon, the coefficients can be chosen once, and
+      the target has unit norm.
+    scope: Sharpness among abstract positive spectral models satisfying the budget. Not a counterexample to Wilson
+      Yang-Mills or a supplied Wilson estimate.
+    source_section: M3, equation M7 and horizon/zero-mode examples
+    depends_on:
+    - RESULT:MOVING_TIME_MULTICHANNEL_RATE
+    - DERIV:REVIEW_SPECTRAL_BUDGETS:M3
+    bears_on:
+    - G19
+    supported_by:
+    - target: CHK:review-derived-coercivity-and-multichann-8dd636:multichannel-sharpness-retains-the-exact-d717c8
+      scope: Exact weighted-product and horizon exponents and 16 rational one-atom examples. AM-GM and limiting
+        sharpness remain analytic.
+    source: CITE:REVIEW_SPECTRAL_BUDGET_RESULTS
+    status: proven
+    evidence: analytic
+
 
   - id: RESULT:LOCAL_CLASS_WICK_RECURRENCE
     statement: The terminating Wick conjugation gives exact shell projectors and a unique all-order simple-branch
