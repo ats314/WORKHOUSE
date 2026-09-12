@@ -17,6 +17,16 @@ and remaining formalization. Counts belong there and in the generated
 [frontier](../FRONTIER.md), not in another manually maintained total.
 
 
+The [earlier-proof recovery](research/earlier-proof-discovery-2026-09-11.md)
+adds the archive's singular-geometry and rank-volume laws, finite-order quotient
+reduction, B6 residual interpretation, positive matrix-atom criterion, conditional
+matrix floor, disjoint staple coordinates, positive-sector algebra, bounded-domain
+VSU theorem, equal-coupling sphere covariance, and reflection-adapted blocking.
+It retains exact corrections to the determinant parity and moving-adjoint
+formulas, a literal corner-path counterexample, and four explicit application
+obligations. The complete keyword queue is mapped to source identities; a pending
+source node is not a reviewed proof. See the [source-linked statements](derivations/earlier-proof-recovery.md).
+
 The [G19 compatible-kernel continuation](derivations/os-kernel-moving-time-gap.md)
 constructs a physical semigroup and total centered history space from
 compatible kernel limits; positive-time history separation supplies the
