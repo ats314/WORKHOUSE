@@ -23,8 +23,20 @@
 ## Start snapshot
 
 The unchanged [starting briefing](../runs/earlier_proof_recovery_2026-09-11/start-brief.json)
-uses the saved graph. Its fingerprint, freshness and execution provenance will
-be recorded below from the actual JSON; a saved graph does not imply a new run.
+uses the saved graph. Fingerprint: `f3bde3de1144c2211b44807291c5a07dd02b830a83e991a6a22f87a5a437a141`.
+Input-manifest SHA-256: `1f61251d4990abc3d5c14285ee03f2cf0f512322cc0f38bf3fa1cfc3700b853f`.
+Freshness was `unknown` because this new worktree had no successful local
+index-generation record. The snapshot recorded 627 checks and executed zero;
+Lean was not executed. It is a starting source snapshot, not a fresh verification.
+
+## Current-main reconciliation
+
+Main advanced to `103838d3a1c64082a65e00cfc89ec9a5ad7bfd8c` (PR #155) during
+integration. The first graph generation was stopped before completion and is
+not reported as passing. Both sides of the append-only registry conflicts were
+preserved; all incoming archive results were retained. The combined branch
+records exact source links to the signed SU(2) diffusion result and the S7
+reflection-positive pushforward theorem. Final validation uses this combined base.
 
 ## Executed checks and end snapshot
 

@@ -381,8 +381,8 @@ holonomy, conjugation of log/exp and the paired orientations give
 P theta=theta' P, or its gauge-equivalent version for gauge-invariant tests.
 Locality in the two endpoint blocks gives one-sided pullback. For a coarse
 test F, integral (Theta'F)F d(P_#mu)=integral (Theta(F o P))(F o P) dmu>=0.
-This instantiates the already registered deterministic OS-history intertwiner
-with the specified geometry. Additional gauge fixing, field partitions,
+The last step applies the [registered deterministic pushforward theorem](archive-source-transport.md#s7-reflection-positive-deterministic-pushforward)
+to this specified geometry. Additional gauge fixing, field partitions,
 stochastic softening and multistep effective actions need their own checks.
 Origin: NOTE_G19_balaban_blocking_reflection_positivity_2026-08-30.md, Lemma 3.1.
 

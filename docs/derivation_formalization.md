@@ -617,7 +617,7 @@ The full formal declarations carry their own explicit hypotheses. The table belo
 
 ### earlier-proof-recovery
 
-[Source](../docs/derivations/earlier-proof-recovery.md) — `5d306200d1456d15cc059dc327a46bfe8e835dddcb19e16be2acc18df8e07a5c`
+[Source](../docs/derivations/earlier-proof-recovery.md) — `4b5b067ee7697cf5a1e032ba3d9edb15f50879d6704e7dc4b5bfea2bf89a1e9d`
 
 | Statement ID | Coverage | Remaining formalization |
 | --- | --- | --- |
