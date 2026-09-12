@@ -1339,7 +1339,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 585
+## T1 — re-derived exactly — 589
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1500,6 +1500,20 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `kernel quotient centering and transfer compatibility survive a vanishing source direction`
   - src/workhouse/invariants/os_kernel_gap.py:11 · OS_KERNEL_GAP K1 equations K1-K2; finite rational Gram model only
   - `workhouse verify --only 'kernel quotient centering and transfer compatibility survive a vanishing source direction'`
+**Review-derived coercivity and multichannel spectral budgets**
+
+- `assembled Q4 has the corrected sharp coercivity and sum of squares`
+  - src/workhouse/invariants/spectral_budgets.py:61 · REVIEW_SPECTRAL_BUDGETS Q1-Q2
+  - `workhouse verify --only 'assembled Q4 has the corrected sharp coercivity and sum of squares'`
+- `multichannel optimum respects all errors and the physical horizon`
+  - src/workhouse/invariants/spectral_budgets.py:111 · REVIEW_SPECTRAL_BUDGETS M2
+  - `workhouse verify --only 'multichannel optimum respects all errors and the physical horizon'`
+- `multichannel sharpness retains the exact one-atom and horizon exponents`
+  - src/workhouse/invariants/spectral_budgets.py:137 · REVIEW_SPECTRAL_BUDGETS M3
+  - `workhouse verify --only 'multichannel sharpness retains the exact one-atom and horizon exponents'`
+- `multichannel target intervals yield every sharp pairwise rate`
+  - src/workhouse/invariants/spectral_budgets.py:91 · REVIEW_SPECTRAL_BUDGETS M1-M6
+  - `workhouse verify --only 'multichannel target intervals yield every sharp pairwise rate'`
 **SU(3) second and third order**
 
 - `C-even bandwidth = top - bottom = 88/153`

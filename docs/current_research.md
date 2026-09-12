@@ -26,6 +26,8 @@ separated-time correlator gives finite-energy weight. The actual Wilson
 kernel limits, weak-coupling decay rate and nontriviality remain open;
 the fixed-spacing SC17 interval does not contain the continuum trajectory.
 
+The [review-derived spectral budgets](derivations/review-derived-spectral-budgets.md) retain the corrected fourth-order polynomial with sharp coercivity and extend the moving-time theorem to finite decay channels and errors that grow with physical time. Pairwise inequalities give the optimal normalized rate, horizon penalty and a witnessing time; one-atom examples prove sharpness. Actual Wilson estimates, full history-kernel convergence and continuum realization remain inputs.
+
 ## Read the current claim at its own scope
 
 Use the generated [derivation priority queue](../FRONTIER.md#7-current-derivation-priorities)
