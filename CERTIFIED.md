@@ -1339,7 +1339,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 603
+## T1 — re-derived exactly — 617
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -1639,6 +1639,50 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 - `W6 antipodal: seven uniform normal eigenvalues and soft scaling`
   - src/workhouse/invariants/w6_antipodal.py:148 · W6_ANTIPODAL_MAGNETIC_GEOMETRY A3
   - `workhouse verify --only 'W6 antipodal: seven uniform normal eigenvalues and soft scaling'`
+**W6 synchronized M10 conditional score**
+
+- `W6 synchronized: Euler cancellation of any quadratic jet`
+  - src/workhouse/invariants/w6_synchronized_m10.py:40 · W6_SYNCHRONIZED_M10_DOMINATION Section 3
+  - `workhouse verify --only 'W6 synchronized: Euler cancellation of any quadratic jet'`
+- `W6 synchronized: actual first-jet forcing normalization`
+  - src/workhouse/invariants/w6_synchronized_m10.py:176 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: actual first-jet forcing normalization'`
+- `W6 synchronized: angular crossover endpoint limits`
+  - src/workhouse/invariants/w6_synchronized_m10.py:152 · W6_SYNCHRONIZED_M10_DOMINATION Section 4
+  - `workhouse verify --only 'W6 synchronized: angular crossover endpoint limits'`
+- `W6 synchronized: centered numerator retains fiber normalization`
+  - src/workhouse/invariants/w6_synchronized_m10.py:104 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: centered numerator retains fiber normalization'`
+- `W6 synchronized: control-action and exponential-slack normalization`
+  - src/workhouse/invariants/w6_synchronized_m10.py:204 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: control-action and exponential-slack normalization'`
+- `W6 synchronized: exact angular crossover moments`
+  - src/workhouse/invariants/w6_synchronized_m10.py:138 · W6_SYNCHRONIZED_M10_DOMINATION Section 4
+  - `workhouse verify --only 'W6 synchronized: exact angular crossover moments'`
+- `W6 synchronized: exact center tangency identity`
+  - src/workhouse/invariants/w6_synchronized_m10.py:17 · W6_SYNCHRONIZED_M10_DOMINATION Section 2
+  - `workhouse verify --only 'W6 synchronized: exact center tangency identity'`
+- `W6 synchronized: identical cutoffs need not be tangent`
+  - src/workhouse/invariants/w6_synchronized_m10.py:26 · W6_SYNCHRONIZED_M10_DOMINATION Section 2
+  - `workhouse verify --only 'W6 synchronized: identical cutoffs need not be tangent'`
+- `W6 synchronized: logarithmic-parameter amplitude identity`
+  - src/workhouse/invariants/w6_synchronized_m10.py:68 · W6_SYNCHRONIZED_M10_DOMINATION Section 5
+  - `workhouse verify --only 'W6 synchronized: logarithmic-parameter amplitude identity'`
+- `W6 synchronized: positive potential Hessian is not an action Hessian`
+  - src/workhouse/invariants/w6_synchronized_m10.py:117 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: positive potential Hessian is not an action Hessian'`
+- `W6 synchronized: seven-normal reference score budget`
+  - src/workhouse/invariants/w6_synchronized_m10.py:160 · W6_SYNCHRONIZED_M10_DOMINATION Section 4
+  - `workhouse verify --only 'W6 synchronized: seven-normal reference score budget'`
+- `W6 synchronized: sine-square potential-floor identity`
+  - src/workhouse/invariants/w6_synchronized_m10.py:55 · W6_SYNCHRONIZED_M10_DOMINATION Section 3
+  - `workhouse verify --only 'W6 synchronized: sine-square potential-floor identity'`
+- `W6 synchronized: spatial remainder does not control parameter derivative`
+  - src/workhouse/invariants/w6_synchronized_m10.py:91 · W6_SYNCHRONIZED_M10_DOMINATION Section 5
+  - `workhouse verify --only 'W6 synchronized: spatial remainder does not control parameter derivative'`
+- `W6 synchronized: weighted-jet Young absorption algebra`
+  - src/workhouse/invariants/w6_synchronized_m10.py:190 · W6_SYNCHRONIZED_M10_DOMINATION Section 6
+  - `workhouse verify --only 'W6 synchronized: weighted-jet Young absorption algebra'`
 **Wilson PBH proposal: exact orbit curvature and flow tests**
 
 - `FINDING: Wilson gradient flow expands a regular orbit distance by 8/7`

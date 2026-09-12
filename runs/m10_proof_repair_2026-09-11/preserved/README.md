@@ -1,15 +1,11 @@
 # WORKHOUSE
 
-The [M10 proof repair](docs/derivations/w6-synchronized-m10-domination.md) establishes actual centered conditional complement suppression outside a neighborhood of the complete minimizing set and an exact angular reference-score budget. Actual M10 remains open: polynomial relative-amplitude control, tube moments and actual normal/angular comparison still require estimates. The earlier completion claim is preserved and corrected.
-
 [![CI](https://github.com/ats314/WORKHOUSE/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ats314/WORKHOUSE/actions/workflows/ci.yml)
 
 WORKHOUSE connects four years of mathematical research on the SU(N) cubic
 flux-band spectral program and the Yang-Mills existence and mass-gap problem.
 It brings analytic derivations, exact and numerical checks, Lean proofs, and
 their source histories into a queryable theory graph.
-
-The [review-derived spectral budgets](docs/derivations/review-derived-spectral-budgets.md) retain the corrected fourth-order polynomial with sharp coercivity and extend the moving-time theorem to finite decay channels and errors that grow with physical time. Pairwise inequalities give the optimal normalized rate, horizon penalty and a witnessing time; one-atom examples prove sharpness. Actual Wilson estimates, full history-kernel convergence and continuum realization remain inputs.
 
 ## Start here
 
@@ -36,19 +32,12 @@ integration milestone; use the live guides and generated views for current
 scope and counts. GitHub holds the versioned verification project and selected
 evidence, while the larger local archive retains its original files.
 
-The [earlier-proof recovery](docs/research/earlier-proof-discovery-2026-09-11.md)
-registers the reviewed archive derivations and corrected identities, retains their
-original source files, and resolves every distinct keyword-search hit to a graph
-source node. Unreviewed sources remain visible in the pending queue.
-
 The [September 10 Hodge and polymer scope correction](docs/research/formalization-scope-2026-09-10.md)
 separates abstract operator proofs and scalar ingredients from their remaining
 physical-model identifications, with preserved source inputs and exact proof links.
 The [W6 continuation](docs/derivations/w6-ground-jets-and-transport-budget.md)
 adds actual fixed-square ground and operator derivative bounds and an explicit
-criterion for the complete source-transport budget. The [R10 repair](docs/derivations/w6-source-energy-jets-r10.md)
-corrects conditional and projection derivatives and derives H4 from H0;
-the complete actual-source energy estimates remain open.
+criterion for the complete source-transport budget.
 The [conditional transport continuation](docs/derivations/w6-conditional-transport-obstruction.md)
 derives the exact true-ground conditional score, locates its constrained Agmon
 centers, and proves that some admissible Q8 cutoffs fail M10 in the actual model.
@@ -64,21 +53,6 @@ that an extra rational band shape survives every local direct H6 under the
 recorded third-order factorization. Direct multi-plaquette H6 word coefficients,
 including the q e2/e3 terms, remain open. The earlier walk census does not
 establish a physical RUR amplitude.
-
-The [moving-time gap criterion](docs/derivations/moving-time-spectral-gap.md)
-proves a limiting spectral gap from approximate sources and one growing physical
-observation time per cutoff. Its sharp power-law budget retains source-amplitude
-and finite-horizon losses. Actual continuum measures, source totality and the
-Wilson one-time estimates remain explicit application hypotheses.
-
-The [cellular Hodge correction](docs/derivations/universal-cellular-hodge-tetrahedral.md)
-establishes the finite-cell incidence identities and tetrahedral face commutant,
-and adds an all-power Lean operator proof for the shifted `R S^m R` formula.
-An exact projection diagnostic keeps the physical tetrahedral history
-identification and the broader U3/U7 unification open. The received claims,
-review findings, and corrected verification are preserved with the source package.
-The [completed repair record](graph-tasks/2026-09-11-universal-cellular-hodge-repair.md)
-retains the final full verification and matched graph snapshot.
 
 ## Quick start
 
