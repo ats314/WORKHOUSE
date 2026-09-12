@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """Generate the master paper's apparatus from the ledgers.
 
-Four artefacts, all derived and none hand-maintained:
+Six artefacts, all derived and none hand-maintained:
 
-  refs_generated.bib     every literature/index.yaml paper as BibTeX
-  gen_literature.tex     the verified external-evidence map
-  gen_obligations.tex    the route register: live, untried and DEAD routes
-  gen_verification.tex   claim -> tier -> reproducing command
+  refs_generated.bib            every literature/index.yaml paper as BibTeX
+  gen_literature.tex            the verified external-evidence map
+  gen_obligations.tex           the route register: live, untried and DEAD routes
+  gen_verification.tex          every analytic result by status and evidence
+  gen_verification_register.tex the refutation register
+  gen_macros.tex                every count the prose quotes, as a \newcommand
+
+The macros live in their own file because the counts appear in the
+abstract, which is typeset before any other body text.
 
 The point of generating these is that the paper cannot drift from the
 repository.  Re-run after any ledger change:
@@ -38,25 +43,65 @@ OUT = ROOT / "paper" / "master"
 # rather than passed through; an untransliterated character is silently
 # dropped from the PDF, which is the worst of the available outcomes.
 _UNICODE = {
-    "—": "---", "–": "--", "−": "$-$",
-    "‘": "`", "’": "'", "“": "``", "”": "''",
-    "…": r"\ldots{}", " ": " ", "​": "",
-    "≥": r"$\geq$", "≤": r"$\leq$", "≠": r"$\neq$",
-    "≈": r"$\approx$", "×": r"$\times$", "±": r"$\pm$",
-    "→": r"$\to$", "←": r"$\leftarrow$", "⇒": r"$\Rightarrow$",
-    "∞": r"$\infty$", "∑": r"$\sum$", "√": r"$\sqrt{\ }$",
-    "∈": r"$\in$", "⊆": r"$\subseteq$", "⊂": r"$\subset$",
-    "·": r"$\cdot$", "°": r"$^\circ$", "§": r"\S{}",
-    "α": r"$\alpha$", "β": r"$\beta$", "γ": r"$\gamma$",
-    "δ": r"$\delta$", "ε": r"$\epsilon$", "η": r"$\eta$",
-    "θ": r"$\theta$", "κ": r"$\kappa$", "λ": r"$\lambda$",
-    "μ": r"$\mu$", "ν": r"$\nu$", "π": r"$\pi$",
-    "ρ": r"$\rho$", "σ": r"$\sigma$", "τ": r"$\tau$",
-    "φ": r"$\varphi$", "χ": r"$\chi$", "ψ": r"$\psi$",
-    "ω": r"$\omega$", "Γ": r"$\Gamma$", "Δ": r"$\Delta$",
-    "Λ": r"$\Lambda$", "Σ": r"$\Sigma$", "Ω": r"$\Omega$",
-    "é": r"\'e", "è": r"\`e", "ü": r'\"u', "ö": r'\"o',
-    "ä": r'\"a', "ß": r"\ss{}", "ć": r"\'c",
+    "—": "---",
+    "–": "--",
+    "−": "$-$",
+    "‘": "`",
+    "’": "'",
+    "“": "``",
+    "”": "''",
+    "…": r"\ldots{}",
+    " ": " ",
+    "​": "",
+    "≥": r"$\geq$",
+    "≤": r"$\leq$",
+    "≠": r"$\neq$",
+    "≈": r"$\approx$",
+    "×": r"$\times$",
+    "±": r"$\pm$",
+    "→": r"$\to$",
+    "←": r"$\leftarrow$",
+    "⇒": r"$\Rightarrow$",
+    "∞": r"$\infty$",
+    "∑": r"$\sum$",
+    "√": r"$\sqrt{\ }$",
+    "∈": r"$\in$",
+    "⊆": r"$\subseteq$",
+    "⊂": r"$\subset$",
+    "·": r"$\cdot$",
+    "°": r"$^\circ$",
+    "§": r"\S{}",
+    "α": r"$\alpha$",
+    "β": r"$\beta$",
+    "γ": r"$\gamma$",
+    "δ": r"$\delta$",
+    "ε": r"$\epsilon$",
+    "η": r"$\eta$",
+    "θ": r"$\theta$",
+    "κ": r"$\kappa$",
+    "λ": r"$\lambda$",
+    "μ": r"$\mu$",
+    "ν": r"$\nu$",
+    "π": r"$\pi$",
+    "ρ": r"$\rho$",
+    "σ": r"$\sigma$",
+    "τ": r"$\tau$",
+    "φ": r"$\varphi$",
+    "χ": r"$\chi$",
+    "ψ": r"$\psi$",
+    "ω": r"$\omega$",
+    "Γ": r"$\Gamma$",
+    "Δ": r"$\Delta$",
+    "Λ": r"$\Lambda$",
+    "Σ": r"$\Sigma$",
+    "Ω": r"$\Omega$",
+    "é": r"\'e",
+    "è": r"\`e",
+    "ü": r"\"u",
+    "ö": r"\"o",
+    "ä": r"\"a",
+    "ß": r"\ss{}",
+    "ć": r"\'c",
 }
 
 _ESCAPES = {
@@ -127,13 +172,26 @@ def load(name: str):
 # BibTeX passes them through to an 8-bit font encoding, where an unmapped
 # character is dropped silently, so they are transliterated at generation.
 _BIB_UNICODE = dict(_UNICODE)
-_BIB_UNICODE.update({
-    "ę": r"\k{e}", "ł": r"\l{}", "ϕ": r"$\phi$",
-    "⁴": r"$^4$", "₂": r"$_2$", "₃": r"$_3$",
-    "₁": r"$_1$", "ç": r"\c{c}", "ñ": r"\~n",
-    "á": r"\'a", "í": r"\'i", "ó": r"\'o", "ú": r"\'u",
-    "š": r"\v{s}", "č": r"\v{c}", "ž": r"\v{z}",
-})
+_BIB_UNICODE.update(
+    {
+        "ę": r"\k{e}",
+        "ł": r"\l{}",
+        "ϕ": r"$\phi$",
+        "⁴": r"$^4$",
+        "₂": r"$_2$",
+        "₃": r"$_3$",
+        "₁": r"$_1$",
+        "ç": r"\c{c}",
+        "ñ": r"\~n",
+        "á": r"\'a",
+        "í": r"\'i",
+        "ó": r"\'o",
+        "ú": r"\'u",
+        "š": r"\v{s}",
+        "č": r"\v{c}",
+        "ž": r"\v{z}",
+    }
+)
 
 
 def bib_escape(s: object) -> str:
@@ -256,8 +314,7 @@ def make_literature(papers) -> str:
         "Paper & Ref. & Year & Bears on & Relation \\\\",
         "\\midrule",
         "\\endfirsthead",
-        "\\toprule Paper & Ref. & Year & Bears on & Relation \\\\"
-        " \\midrule \\endhead",
+        "\\toprule Paper & Ref. & Year & Bears on & Relation \\\\ \\midrule \\endhead",
         "\\bottomrule",
         "\\endfoot",
     ]
@@ -360,9 +417,7 @@ def make_obligations(gaps) -> str:
                 if cd:
                     names = ", ".join(f"\\texttt{{{tex(c)}}}" for c in cd)
                     extra = f" \\emph{{Cannot decide:}} {names}."
-                out.append(
-                    f"  \\item \\textbf{{{tex(s.get('step'))}.}} {body}{extra}"
-                )
+                out.append(f"  \\item \\textbf{{{tex(s.get('step'))}.}} {body}{extra}")
             out.append("\\end{itemize}")
         # Completed routes are listed by name only: their content is in the body.
         finished = [s for s in plan if s.get("state") == "done"]
@@ -403,6 +458,7 @@ def make_obligations(gaps) -> str:
 # --------------------------------------------------------------------------
 # 4.  Verification index
 # --------------------------------------------------------------------------
+
 
 def make_verification(results, theorems, contradictions) -> tuple[str, str]:
     """Return (results table, refutation register) as two LaTeX bodies.
@@ -486,9 +542,7 @@ def make_verification(results, theorems, contradictions) -> tuple[str, str]:
         for c in entries:
             title = tex(c.get("title") or "")
             res = first_sentences(c.get("resolution") or c.get("detail") or "", 3)
-            out.append(
-                f"  \\item \\texttt{{{tex(c['id'])}}} \\textbf{{{title}.}} {res}"
-            )
+            out.append(f"  \\item \\texttt{{{tex(c['id'])}}} \\textbf{{{title}.}} {res}")
         out.append("\\end{itemize}")
         out.append("")
 
@@ -504,8 +558,7 @@ def make_verification(results, theorems, contradictions) -> tuple[str, str]:
         f"\\newcommand{{\\ContradictionTotal}}{{{len(contradictions)}}}"
         f"\\newcommand{{\\ContraFalsified}}{{{len(by_status.get('falsified', []))}}}"
         f"\\newcommand{{\\ContraSuperseded}}{{{len(by_status.get('superseded', []))}}}"
-        f"\\newcommand{{\\ContraResolved}}{{{len(by_status.get('resolved', []))}}}"
-        + counts
+        f"\\newcommand{{\\ContraResolved}}{{{len(by_status.get('resolved', []))}}}" + counts
     )
     out.append("")
     out.append("% status histogram: " + repr(dict(status)))
@@ -514,6 +567,7 @@ def make_verification(results, theorems, contradictions) -> tuple[str, str]:
 
 
 # --------------------------------------------------------------------------
+
 
 def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
@@ -537,7 +591,12 @@ def main() -> int:
     # macro file the drivers input first; the content files keep only content.
     macro_re = re.compile(r"\\newcommand\{\\[A-Za-z]+\}\{[^}]*\}")
     macros: list[str] = []
-    for name in ("gen_literature.tex", "gen_obligations.tex", "gen_verification.tex", "gen_verification_register.tex"):
+    for name in (
+        "gen_literature.tex",
+        "gen_obligations.tex",
+        "gen_verification.tex",
+        "gen_verification_register.tex",
+    ):
         body = artefacts[name]
         macros.extend(macro_re.findall(body))
         artefacts[name] = "\n".join(
@@ -546,8 +605,7 @@ def main() -> int:
     artefacts["gen_macros.tex"] = (
         "% Generated by paper/master/generate_apparatus.py.  Do not edit.\n"
         "% Every count the prose quotes is defined here, from the ledgers, so\n"
-        "% the paper cannot state a number the repository has moved past.\n"
-        + "\n".join(macros)
+        "% the paper cannot state a number the repository has moved past.\n" + "\n".join(macros)
     )
 
     for name, body in artefacts.items():
