@@ -62,6 +62,7 @@ paper:           ## Build the 2026-08-28 paper PDF and run both stdlib core veri
 # paper/master/README.md.
 paper-master:    ## Regenerate the master edition apparatus and build both drivers
 	@python3 paper/master/generate_apparatus.py
+	@python3 paper/master/generate_sources.py
 	@cd paper/master \
 		&& tectonic workhouse_master.tex \
 		&& tectonic workhouse_band_paper.tex \
@@ -73,6 +74,7 @@ paper-master:    ## Regenerate the master edition apparatus and build both drive
 # in the diff.
 paper-master-apparatus: ## Regenerate the master edition's generated LaTeX from the ledgers
 	@python3 paper/master/generate_apparatus.py
+	@python3 paper/master/generate_sources.py
 
 
 lit:             ## Published work, and which claim each paper bears on
