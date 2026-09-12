@@ -1339,7 +1339,7 @@ Lean 4 compiles it from explicit definitions with no `sorry` and only `propext`,
   - lean/Workhouse/GroundStateAssembly.lean:232
   - `make lean`
 
-## T1 — re-derived exactly — 622
+## T1 — re-derived exactly — 623
 
 Re-derived symbolically from the definitions the corpus states, in exact rationals. Strong, and still only as good as the definitions: a T1 pass certifies the arithmetic, not the modelling.
 
@@ -3187,19 +3187,22 @@ Re-derived symbolically from the definitions the corpus states, in exact rationa
 **the swap-odd domino state (U4, ADR 0023)**
 
 - `W psi_A has no two-plaquette and no vacuum image for C-even; C-odd keeps the like-family pair`
-  - src/workhouse/invariants/swap_odd.py:132 · ADR 0023 (the swap-odd lemma)
+  - src/workhouse/invariants/swap_odd.py:143 · ADR 0023 (the swap-odd lemma)
   - `workhouse verify --only 'W psi_A has no two-plaquette and no vacuum image for C-even; C-odd keeps the like-family pair'`
 - `fourth-order rotor: gaps 1657/28000 and 143/8960, vacuum -39/1280, route + vac = -63/800`
-  - src/workhouse/invariants/swap_odd.py:311 · ADR 0023 addendum; v10a.7 one-face vacuum gate; channels suite size-1 row
+  - src/workhouse/invariants/swap_odd.py:322 · ADR 0023 addendum; v10a.7 one-face vacuum gate; channels suite size-1 row
   - `workhouse verify --only 'fourth-order rotor: gaps 1657/28000 and 143/8960, vacuum -39/1280, route + vac = -63/800'`
 - `the C-odd swap-odd gap is 2 A_N + 1/C_F: -3/68 at N = 3, the like family and not the mixed`
-  - src/workhouse/invariants/swap_odd.py:218 · ADR 0023; MASTER_THEORY §4.3 (A_N, B_N)
+  - src/workhouse/invariants/swap_odd.py:229 · ADR 0023; MASTER_THEORY §4.3 (A_N, B_N)
   - `workhouse verify --only 'the C-odd swap-odd gap is 2 A_N + 1/C_F: -3/68 at N = 3, the like family and not the mixed'`
+- `the linked two-face vacuum is exact: zero below order four, omega_4 = -327/83776 at SU(3) and the same closed form for both pair geometries, so U4's falsifier target is derived`
+  - src/workhouse/invariants/swap_odd.py:440 · G25 step 'fourth-order domino, the U4 falsifier'; ADR 0023 addendum; ENGINE_O4_hodge_v10a7_marked_linked_scalar.py (the float gate this replaces); runs/g9_direct_h6_pair_2026-09-11
+  - `workhouse verify --only 'the linked two-face vacuum is exact: zero below order four, omega_4 = -327/83776 at SU(3) and the same closed form for both pair geometries, so U4'"'"'s falsifier target is derived'`
 - `the rotor towers 13/20, 1/2, 101/200, 7/32 and vacuum -3/4, -9/32 follow from SU(3) fusion`
-  - src/workhouse/invariants/swap_odd.py:91 · ENGINE_FLUX_su3_domino_d3.py (spectral cross-validation); UNIFIED §2.1 towers
+  - src/workhouse/invariants/swap_odd.py:102 · ENGINE_FLUX_su3_domino_d3.py (spectral cross-validation); UNIFIED §2.1 towers
   - `workhouse verify --only 'the rotor towers 13/20, 1/2, 101/200, 7/32 and vacuum -3/4, -9/32 follow from SU(3) fusion'`
 - `the |0> route is minus the vacuum energy at orders 2 and 3, so leak_(k,+) = t_(k,+) follows`
-  - src/workhouse/invariants/swap_odd.py:164 · ADR 0023; CERT_FLUX_d3 'exact identity (gated)'
+  - src/workhouse/invariants/swap_odd.py:175 · ADR 0023; CERT_FLUX_d3 'exact identity (gated)'
   - `workhouse verify --only 'the |0> route is minus the vacuum energy at orders 2 and 3, so leak_(k,+) = t_(k,+) follows'`
 **the third engine at every rank (all-rank cumulants)**
 
