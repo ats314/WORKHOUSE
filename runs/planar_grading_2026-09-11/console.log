@@ -1,0 +1,19 @@
+Q(N) Bloch series to order 10 in 59.5 s
+1. the exponent law and the planar coefficients, exactly over Q(N)
+   m = 2:  S_m = (-4) N^-3 (1 + O(N^-2));  b_2 = -1
+   m = 4:  S_m = (-32) N^-7 (1 + O(N^-2));  b_4 = -2
+   m = 6:  S_m = (-1748/3) N^-11 (1 + O(N^-2));  b_6 = -437/48
+   m = 8:  S_m = (-123332/9) N^-15 (1 + O(N^-2));  b_8 = -30833/576
+   m = 10:  S_m = (-49593808/135) N^-19 (1 + O(N^-2));  b_10 = -3099613/8640
+2. where the cancellation lives: the irrep channels, exactly
+   m = 2:  N^-1 x [((), ()) -2, ((1,), (1,)) 2];  sum 0
+   m = 4:  N^-3 x [((), ()) -4, ((1, 1), ()) 1, ((1,), (1,)) 2, ((2,), ()) 1];  sum 0
+   m = 6:  N^-5 x [((), ()) -8, ((1, 1), ()) 2, ((1,), (1,)) 4, ((2,), ()) 2];  sum 0
+   m = 8:  N^-7 x [((), ()) -16, ((1, 1), ()) 4, ((1,), (1,)) 8, ((2,), ()) 4];  sum 0
+   m = 10:  N^-9 x [((), ()) -32, ((1, 1), ()) 8, ((1,), (1,)) 16, ((2,), ()) 8];  sum 0
+3. independent integer-rank cross-check (ADR 0047 engine, N <= 200)
+   m = 2: -4.000000004 vs exact -4.000000000  (rel 9.47e-10)
+   m = 4: -31.999990460 vs exact -32.000000000  (rel 2.98e-07)
+   m = 6: -582.664862255 vs exact -582.666666667  (rel 3.10e-06)
+   m = 8: -13703.363230249 vs exact -13703.555555556  (rel 1.40e-05)
+wrote certificate.json

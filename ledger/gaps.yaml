@@ -580,6 +580,30 @@ gaps:
       planar limit at any fixed order; the first odd term of odd N is (e^2 tau/2)^N up to a power
       of N, exponentially small below tau = 2/e^2. The even orders' law and the overlap theorem are
       untouched.
+      PROGRESS 2026-09-11 (ADR 0048, RESULT:SINGLE_FACE_PLANAR_GRADING, runs/planar_grading_2026-09-11,
+      suite "the single-face planar grading law through tenth order (G16)", three T1 and one T2
+      check): the one-face even-order law is carried to k = 4 and k = 5 and its mechanism is
+      exhibited, all exactly over Q(N). Credit where it belongs first: the G9 suite had ALREADY
+      settled the one-face k = 3 case exactly, including the N^-11 order-six splitting; an earlier
+      draft of ADR 0048 wrongly claimed k = 3 as new and is corrected on the record. What is new:
+      for the C-parity splitting of the one-plaquette diagonal S_m = odd_m - even_m = -2 K_m[0][1]
+      at even m <= 10, S_m = c_m N^-(2m-1) (1 + O(N^-2)) with c_2 = -4, c_4 = -32, c_6 = -1748/3,
+      c_8 = -123332/9, c_10 = -49593808/135 -- orders eight and ten had not been reached on this
+      object. Since u = N^2 tau/2 every even order carries the same single power of N, so the
+      single-face band per unit N is a function of tau alone: b_2 = -1, b_4 = -2, b_6 = -437/48,
+      b_8 = -30833/576, b_10 = -3099613/8640. Decomposing S_m by the intermediate state gives
+      EXACTLY FOUR channels at every even m >= 4 -- singlet, adjoint and the two two-box states --
+      each of order N^-(m-1), with leading coefficients (-4, +2, +1, +1) x 2^(m/2-2) summing to
+      zero. So the cancellation is between channels of EQUAL order, carried by their relative
+      coefficients, which is why ADR 0046's per-channel label rule failed on 47 of 1,772 forms;
+      this is a different decomposition from the word-formula pieces of (F6) the G9 suite bounds.
+      Caveats kept: the object is the one-plaquette diagonal, not the cluster cumulant beta_N, so
+      ADR 0046's cluster conjecture is NOT discharged and the shared-link pair route carries the
+      multi-face statement; and each order is an exact computation at that order, so the general-m
+      law remains a conjecture, now verified at k = 1..5 on this channel. Falsifier for the
+      mechanism: regrouping ADR 0046's 1,772 fourth-order channel forms by intermediate-irrep
+      content should make their orders uniform at N^-3 and their leading coefficients sum to zero.
+      Next rung: order 12 predicts N^-23. The overlap theorem is untouched.
   - id: G17
     tier: 3
     state: open
